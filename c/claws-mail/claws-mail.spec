@@ -2,6 +2,8 @@
 %def_disable	gtk3
 %def_disable 	debug
 
+%def_enable 	appdata
+
 # libchamplain-gtk is only gtk3
 %if_enabled gtk3
 %def_enable 	geolocation
@@ -12,8 +14,8 @@
 %def_disable	tnef
 
 Name:   	claws-mail
-Version:	3.10.1
-Release: 	alt3
+Version:	3.11.0
+Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -29,7 +31,7 @@ Provides:	%_oldname
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildPreReq:	autoconf-common gettext-tools 
+BuildPreReq:	autoconf-common gettext-tools intltool
 
 BuildRequires: NetworkManager-devel flex libSM-devel libcompface-devel libdbus-glib-devel libenchant-devel libetpan-devel libgnutls-devel libgpgme-devel libldap-devel libpilot-link-devel libstartup-notification-devel libgcrypt-devel zlib-devel
 %if_enabled gtk3
@@ -56,7 +58,7 @@ BuildRequires: libsoup-gnome-devel
 BuildRequires: libgdata-devel
 
 # For plugin-rssyl
-BuildRequires: libxml2-devel
+BuildRequires: libexpat-devel
 
 # For plugin-pdfviewer
 BuildRequires: libpoppler-glib-devel
@@ -557,6 +559,7 @@ echo 'echo "%version"' >./version
 		--with-manualdir=%_datadir/%name \
 		--with-config-dir=.%name \
 		--disable-manual \
+		%{subst_enable appdata} \
 		%{subst_enable gtk3} \
 		%if_disabled geolocation
 		--disable-geolocation-plugin \
@@ -611,7 +614,9 @@ EOF
 %_bindir/%_oldname
 %_man1dir/%name.1.gz
 %_desktopdir/*.desktop
-%_datadir/appdata/*
+%if_enabled appdata
+%_datadir/appdata/claws-mail.appdata.xml
+%endif
 %_iconsdir/%name.png
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_pixmapsdir/%name.png
@@ -630,102 +635,199 @@ EOF
 %files plugin-spamassassin
 %doc src/plugins/spamassassin/README*
 %_claws_plugins_path/spamassassin.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-spamassassin.metainfo.xml
+%endif
 
 %files plugin-bogofilter
 %_claws_plugins_path/bogofilter.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-bogofilter.metainfo.xml
+%endif
 
 %files plugin-pgpcore
 %_claws_plugins_path/pgpcore.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-pgpcore.metainfo.xml
+%endif
 
 %files plugin-pgpmime
 %_claws_plugins_path/pgpmime.so
 %_claws_plugins_path/pgpmime.deps
+%if_enabled appdata
+%_datadir/appdata/claws-mail-pgpmime.metainfo.xml
+%endif
 
 %files plugin-pgpinline
 %_claws_plugins_path/pgpinline.so
 %_claws_plugins_path/pgpinline.deps
+%if_enabled appdata
+%_datadir/appdata/claws-mail-pgpinline.metainfo.xml
+%endif
 
 %files plugin-smime
 %_claws_plugins_path/smime.so
 %_claws_plugins_path/smime.deps
+%if_enabled appdata
+%_datadir/appdata/claws-mail-smime.metainfo.xml
+%endif
 
 %files plugin-acpinotifier
 %_claws_plugins_path/acpi_notifier.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-acpi_notifier.metainfo.xml
+%endif
 
 %files plugin-addresskeeper
 %_claws_plugins_path/address_keeper.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-address_keeper.metainfo.xml
+%endif
 
 %files plugin-archive
 %_claws_plugins_path/archive.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-archive.metainfo.xml
+%endif
 
 %files plugin-attachwarner
 %_claws_plugins_path/attachwarner.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-attachwarner.metainfo.xml
+%endif
 
 %files plugin-attremover
 %_claws_plugins_path/att_remover.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-att_remover.metainfo.xml
+%endif
 
 %if_enabled bsfilter
 %files plugin-bsfilter
 %_claws_plugins_path/bsfilter.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-bsfilter.metainfo.xml
+%endif
+%else
+%if_enabled appdata
+%exclude %_datadir/appdata/claws-mail-bsfilter.metainfo.xml
+%endif
 %endif
 
 %files plugin-clamd
 %_claws_plugins_path/clamd.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-clamd.metainfo.xml
+%endif
 
 %files plugin-fancy
 %_claws_plugins_path/fancy.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-fancy.metainfo.xml
+%endif
 
 %files plugin-fetchinfo
 %_claws_plugins_path/fetchinfo.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-fetchinfo.metainfo.xml
+%endif
 
 %files plugin-gdata
 %_claws_plugins_path/gdata.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-gdata.metainfo.xml
+%endif
 
 %if_enabled geolocation
 %files plugin-geolocation
 %_claws_plugins_path/geolocation.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-geolocation.metainfo.xml
+%endif
+%else
+%if_enabled appdata
+%exclude %_datadir/appdata/claws-mail-geolocation.metainfo.xml
+%endif
 %endif
 
 %files plugin-libravatar
 %doc src/plugins/libravatar/README*
 %_claws_plugins_path/libravatar.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-libravatar.metainfo.xml
+%endif
 
 %files plugin-mailmbox
 %_claws_plugins_path/mailmbox.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-mailmbox.metainfo.xml
+%endif
 
 %files plugin-newmail
 %_claws_plugins_path/newmail.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-newmail.metainfo.xml
+%endif
 
 %files plugin-notification
 %_claws_plugins_path/notification.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-notification.metainfo.xml
+%endif
 
 %files plugin-pdfviewer
 %_claws_plugins_path/pdf_viewer.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-pdf_viewer.metainfo.xml
+%endif
 
 %files plugin-perl
 %_claws_plugins_path/perl.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-perl.metainfo.xml
+%endif
 
 %files plugin-python
 %_claws_plugins_path/python.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-python.metainfo.xml
+%endif
 
 %files plugin-rssyl
 %_claws_plugins_path/rssyl.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-rssyl.metainfo.xml
+%endif
 
 %files plugin-spamreport
 %_claws_plugins_path/spamreport.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-spam_report.metainfo.xml
+%endif
 
 %if_enabled tnef
 %files plugin-tnef
 %_claws_plugins_path/tnef_parse.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-tnef_parse.metainfo.xml
+%endif
+%else
+%if_enabled appdata
+%exclude %_datadir/appdata/claws-mail-tnef_parse.metainfo.xml
+%endif
 %endif
 
 %files plugin-vcalendar
 %_claws_plugins_path/vcalendar.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-vcalendar.metainfo.xml
+%endif
 
 %files tools
 %doc tools/README*
 %_datadir/%name/tools/
 %exclude %_datadir/%name/tools/update-po
+%exclude %_datadir/%name/tools/check-appstream.sh
 
 %exclude %_claws_plugins_path/*.la
 %exclude %_datadir/doc/%name/RELEASE_NOTES
@@ -735,6 +837,23 @@ EOF
 
 
 %changelog
+* Wed Oct 22 2014 Mikhail Efremov <sem@altlinux.org> 3.11.0-alt1
+- Fixes from upstream git:
+  + Use gnutls_priority override also for POP3 connections.
+  + RSSyl: fix markup escaping in one more alertpanel_error in
+    rssyl_update_feed().
+  + fix bug 3306, 'HTML tag </b> is not always rendered in error
+    dialog'.
+  + use standard hyphen-less "Claws Mail" in user-facing
+    strings.
+  + fix some missing whitespace, and standardise the placement of
+    the whitespace.
+  + some improvement to appdata summaries.
+- tools: Don't package check-appstream script.
+- Explicitly enable build with appdata.
+- Updated BR.
+- Updated to 3.11.0.
+
 * Fri Aug 22 2014 Mikhail Efremov <sem@altlinux.org> 3.10.1-alt3
 - Rebuild with libetpan-1.5.
 
