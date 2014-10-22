@@ -1,7 +1,7 @@
 %define oname plone.openid
 Name: python-module-%oname
 Version: 2.0.3
-Release: alt1.dev0.git20140826
+Release: alt2.dev0.git20140826
 Summary: OpenID authentication support for PAS
 License: BSD
 Group: Development/Python
@@ -74,6 +74,9 @@ python setup.py test
 %python_sitelibdir/plone/*/tests
 
 %changelog
+* Wed Oct 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt2.dev0.git20140826
+- Fixed requirements
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1.dev0.git20140826
 - Initial build for Sisyphus
 
