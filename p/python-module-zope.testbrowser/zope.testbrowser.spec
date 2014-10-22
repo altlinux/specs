@@ -1,10 +1,11 @@
 %define oname zope.testbrowser
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 4.0.4
-Release: alt2
+Version: 5.0.0
+Release: alt1.dev0.git20140125
 Summary: Programmable browser for functional black-box tests
 License: ZPLv2.1
 Group: Development/Python
@@ -13,12 +14,30 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.testing python-module-zope.interface
+BuildPreReq: python-module-zope.schema python-module-pytz
+BuildPreReq: python-module-zope.cachedescriptors
+BuildPreReq: python-module-pytz python-module-webtest
+BuildPreReq: python-module-WSGIProxy2 python-module-six
+BuildPreReq: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python-tools-2to3 python3-module-zope.interface
+BuildPreReq: python3-module-zope.testing
+BuildPreReq: python3-module-zope.schema
+BuildPreReq: python3-module-zope.cachedescriptors
+BuildPreReq: python3-module-pytz python3-module-webtest
+BuildPreReq: python3-module-WSGIProxy2 python-module-six
+BuildPreReq: python3-module-nose
 %endif
+
+%py_provides %oname
+Requires: python-module-WSGIProxy2
+%py_requires zope.interface zope.schema zope.cachedescriptors
+# for tests:
+%py_requires zope.testing
 
 %description
 zope.testbrowser provides an easy-to-use programmable web browser with
@@ -38,6 +57,8 @@ any web site.
 
 %prep
 %setup
+
+ln -s README.rst README.txt
 
 %if_with python3
 cp -fR . ../python3
@@ -72,6 +93,14 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.rst
 %python_sitelibdir/*
@@ -85,6 +114,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Oct 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.0-alt1.dev0.git20140125
+- Version 5.0.0.dev0
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt2
 - Added module for Python 3
 
