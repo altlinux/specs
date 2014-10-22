@@ -12,14 +12,13 @@
 
 %define _libexecdir %_prefix/libexec
 %define _switchdir %_libexecdir/X11/drv.d
-%define _fdidir %_datadir/hal/fdi/policy/20thirdparty
 
 %define bname fglrx
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
 Version: 14.301.1001
-Release: alt2
+Release: alt2.1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -32,8 +31,6 @@ Source8: a-lid-aticonfig
 Source9: ati-powermode.sh
 Source11: atieventsd.init
 Source12: aticonfig.1
-Source13: %{bname}_create.xinf
-Source14: xinf2fdi
 Patch0: %bname-13.20.16-printk-loglevel.patch
 Patch1: %bname-14.10-remove-unused.patch
 Patch2: %bname-14.10-linux-3.14.patch
@@ -46,8 +43,6 @@ Provides: xorg-drv-%bname
 
 Requires: xorg-server >= 1.5.0
 Requires: libdrm >= 2.4.5-alt2
-Requires: XORG_ABI_VIDEODRV < 16
-Requires: hwdatabase
 Requires: libGL libXrandr libXi libXcursor libXinerama
 
 BuildPreReq: kernel-build-tools
@@ -129,15 +124,8 @@ ln -sf ../../../../../$(ls %archdir/lib/modules/%bname/build_mod/*) common/lib/m
 install -d -m 0755 %{bname}_tools
 tar -C %{bname}_tools -xf common/usr/src/ati/%{bname}_sample_source.tgz
 
-install -p -m 0755 %SOURCE13 %{bname}_create.xinf
-install -p -m 0755 %SOURCE14 xinf2fdi
-
-
 %build
 %__cc %optflags -fpic -o %{bname} %SOURCE2
-# generate .xinf
-./%{bname}_create.xinf common/lib/modules/%bname/build_mod/%{bname}ko_pci_ids.h %bname.xinf > /dev/null
-./xinf2fdi -x %bname.xinf -f x11-video-%bname.fdi -d %bname
 
 convert common/usr/share/icons/ccc_large.{xpm,png}
 
@@ -218,9 +206,6 @@ for d in articles user-manual; do
 	install -p -m 0644 common/usr/share/doc/%bname/$d/* %buildroot%_docdir/%name-%version/$d/
 done
 
-install -pD -m 0644 {,%buildroot%_datadir/hwdatabase/videoaliases/}%bname.xinf
-install -pD -m 0644 {,%buildroot%_fdidir/20-}x11-video-%bname.fdi
-
 chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 %{?brp_strip_none:%brp_strip_none %_x11x11libdir/fgl*.so}
@@ -246,14 +231,10 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 %_libdir/%bname
 %_libdir/lib*
 %exclude %_libdir/*.a
-%_datadir/hwdatabase/videoaliases
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/LICENSE*
 %_switchdir/*
 %_sysconfdir/X11/%_lib/libGL.so.1.*
-# excluded hal:
-%exclude %_datadir/hal
-#%_fdidir/*
 
 
 %files -n %bname-tools -f %bname-tools.lang
@@ -279,6 +260,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Wed Oct 22 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:14.301.1001-alt2.1
+- removed requires XORG_ABI_VIDEODRV
+
 * Thu Oct 09 2014 barssc <barssc@altlinux.ru> 2:14.301.1001-alt2
 - kernel module: fixed build
 
