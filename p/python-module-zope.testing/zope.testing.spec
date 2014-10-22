@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.3
-Release: alt1
+Version: 4.1.4
+Release: alt1.dev.git20140319
 Summary: Zope testing helpers
 License: ZPL
 Group: Development/Python
@@ -13,10 +13,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.exceptions
+BuildPreReq: python-module-zope.interface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.exceptions
+BuildPreReq: python3-module-zope.interface
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -71,6 +75,14 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -84,6 +96,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Oct 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.4-alt1.dev.git20140319
+- Version 4.1.4dev
+
 * Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt1
 - Version 4.1.3
 
