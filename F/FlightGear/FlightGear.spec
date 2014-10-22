@@ -1,6 +1,8 @@
+%def_without dbus
+
 Name: FlightGear
-Version: 3.0.0
-Release: alt1.2
+Version: 3.2.0
+Release: alt1
 
 Summary: open-source flight simulator
 License: GPL
@@ -40,6 +42,12 @@ BuildPreReq: libXft-devel libXinerama-devel libxkbfile-devel
 BuildPreReq: libXpm-devel libXrandr-devel libXrender-devel
 BuildPreReq: libXScrnSaver-devel libXv-devel libXxf86misc-devel
 BuildPreReq: libXxf86vm-devel libXxf86vm-devel libapr1-devel
+
+%if_with dbus
+# disables screensaver; requires running messagebus service
+BuildRequires: libdbus-devel
+Requires: dbus
+%endif
 
 %description
 FlightGear is a free, open-source, multi-platform, and sophisticated
@@ -103,6 +111,9 @@ rm -rf %buildroot%_datadir/locale
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Oct 22 2014 Michael Shigorin <mike@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Tue Jul 29 2014 Michael Shigorin <mike@altlinux.org> 3.0.0-alt1.2
 - rebuilt with OpenSceneGraph 3.2.1
 

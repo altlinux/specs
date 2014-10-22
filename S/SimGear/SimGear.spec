@@ -1,5 +1,5 @@
 Name: SimGear
-Version: 3.0.0
+Version: 3.2.0
 Release: alt1
 
 Summary: Simulator Construction Tools
@@ -10,7 +10,6 @@ Url: http://www.flightgear.org
 Packager: Michael Shigorin <mike@altlinux.org>
 Source: %name-%version.tar.gz
 Patch0: simgear-2.6.0-fedora-format.patch
-Patch1: SimGear-2.8.0-alt-boost-1.51.0-compatibility.patch
 
 # Automatically added by buildreq on Sat Mar 03 2012
 # optimized out: cmake-modules libGL-devel libICE-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
@@ -42,7 +41,6 @@ This package contains header files for SimGear.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p2
 
 %build
 %add_optflags %optflags_shared
@@ -57,6 +55,9 @@ This package contains header files for SimGear.
 %_includedir/simgear
 
 %changelog
+* Wed Oct 22 2014 Michael Shigorin <mike@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Sat Feb 22 2014 Michael Shigorin <mike@altlinux.org> 3.0.0-alt1
 - 3.0.0
 
