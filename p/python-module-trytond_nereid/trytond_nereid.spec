@@ -1,7 +1,7 @@
 %define oname trytond_nereid
 Name: python-module-%oname
 Version: 3.2.0.5
-Release: alt2.git20141013
+Release: alt3.git20141013
 Summary: Tryton base module for Nereid
 License: GPLv3
 Group: Development/Python
@@ -23,9 +23,10 @@ BuildPreReq: python-module-flake8
 BuildPreReq: python-module-coverage
 BuildPreReq: python-module-sphinx-devel flask-sphinx-themes
 BuildPreReq: python-module-trytond-tests
-#BuildPreReq: python-module-trytond_nereid_test
+BuildPreReq: python-module-trytond_nereid_test
 
 %py_provides %oname
+Requires: python-module-trytond_nereid_test
 %py_requires trytond
 
 %description
@@ -105,6 +106,9 @@ cp -fR %_datadir/flask-sphinx-themes/* docs/_themes/
 #doc docs/_build/html/*
 
 %changelog
+* Wed Oct 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0.5-alt3.git20141013
+- Built with python-module-trytond_nereid_test
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0.5-alt2.git20141013
 - Don't requires distribute
 
