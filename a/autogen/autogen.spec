@@ -1,29 +1,35 @@
 Name: autogen
-Version: 5.9.9
-Release: alt1.1.qa1
+Version: 5.18.4
+Release: alt1
 
 Summary: AutoGen - The Automated Program Generator
-License: %gpl2plus
+License: %gpl3plus
 Group: Development/Other
-Url: http://autogen.sourceforge.net/
+Url: http://www.gnu.org/software/autogen/
 
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
-Patch: autogen-5.8-fix-linking.patch
-Patch2: %name-5.9.6-fix-libtool.patch
-Packager: Alexey Rusakov <ktirf@altlinux.org>
+Source: %name-%version.tar
+Patch1: autogen-5.18.4-masquerade-deps.patch
 
 BuildPreReq: rpm-build-licenses rpm-build-compat
 
 BuildPreReq: texi2html guile18-devel libxml2-devel
 
 %description
-AutoGen is a tool designed to simplify the creation and maintenance of programs that contain large amounts of repetitious text. It is especially valuable in programs that have several blocks of text that must be kept synchronized.
+AutoGen is a tool designed to simplify the creation and maintenance
+of programs that contain large amounts of repetitious text.
+It is especially valuable in programs that have several blocks of text
+that must be kept synchronized.
 
-AutoGen can now accept XML files as definition input, in addition to CGI data (for producing dynamic HTML) and traditional AutoGen definitions.
+AutoGen can now accept XML files as definition input, in addition to CGI
+data (for producing dynamic HTML) and traditional AutoGen definitions.
 
-A common example where this would be useful is in creating and maintaining the code required for processing program options. Processing options requires multiple constructs to be maintained in parallel in different places in your program. Options maintenance needs to be done countless times. So, AutoGen comes with an add-on package named AutoOpts that simplifies the maintenance and documentation of program options.
-
-The Copyright itself is privately held by Bruce Korb.
+A common example where this would be useful is in creating and
+maintaining the code required for processing program options. Processing
+options requires multiple constructs to be maintained in parallel
+in different places in your program. Options maintenance needs to be
+done countless times. So, AutoGen comes with an add-on package named
+AutoOpts that simplifies the maintenance and documentation of program
+options.
 
 %package -n libopts
 Summary: Command line option parser based on AutoGen
@@ -31,7 +37,11 @@ Group: Development/Other
 License: %lgpl3plus, %bsd
 
 %description -n libopts
-AutoOpts is a very powerful command line option parser consisting of a set of AutoGen templates and a run time library that nearly eliminates the hassle of parsing and documenting command line options. This package allows you to specify several program attributes, up to 100 option types and many attributes for each option.
+AutoOpts is a very powerful command line option parser consisting of
+a set of AutoGen templates and a run time library that nearly eliminates
+the hassle of parsing and documenting command line options.
+This package allows you to specify several program attributes, up to 100
+option types and many attributes for each option.
 
 %package -n libopts-devel
 Summary: AutoGen development files and libraries
@@ -42,32 +52,34 @@ Obsoletes: autogen-devel = %version-%release
 Provides: autogen-devel = %version-%release
 
 %description -n libopts-devel
-AutoOpts is a very powerful command line option parser consisting of a set
-of AutoGen templates and a run time library that nearly eliminates the
-hassle of parsing and documenting command line options. This package allows
-you to specify several program attributes, up to 100 option types and many
-attributes for each option.
+AutoOpts is a very powerful command line option parser consisting of
+a set of AutoGen templates and a run time library that nearly eliminates
+the hassle of parsing and documenting command line options. This package
+allows you to specify several program attributes, up to 100 option types
+and many attributes for each option.
 
 This package is needed to write programs that use AutoOpts API.
 
 %prep
-%setup -q
-%patch -b .fix-linking
-# The libtool.m4 that is bundled with Autogen uses capitalized ECHO
-# variable. System-wide libtool mentions lowercase echo variable. This
-# leads to the messed libtool script.
-%patch2 -b .fix-libtool
+%setup
+%patch1 -p1
 
 %build
 %autoreconf
-%configure
+%configure \
+	--disable-static \
+	--with-libguile
 %make_build
 
 %install
 %makeinstall_std
 
+# Move pkgconfig file to the proper place
+mkdir -p %buildroot%_pkgconfigdir/
+mv %buildroot%_datadir/pkgconfig/*.pc %buildroot%_pkgconfigdir/
+
 %files
-%doc AUTHORS TODO COPYING NEWS NOTES THANKS README VERSION
+%doc AUTHORS TODO COPYING NEWS THANKS README VERSION
 %_bindir/autogen
 %_bindir/columns
 %_bindir/getdefs
@@ -75,29 +87,35 @@ This package is needed to write programs that use AutoOpts API.
 %dir %_datadir/%name
 %_datadir/%name/*
 %_infodir/%{name}*
-%_man1dir/autogen.1.*
-%_man1dir/columns.1.*
-%_man1dir/getdefs.1.*
-%_man1dir/xml2ag.1.*
+%_man1dir/autogen.1*
+%_man1dir/columns.1*
+%_man1dir/getdefs.1*
+%_man1dir/xml2ag.1*
 
 %files -n libopts
 %_libdir/libopts.so.*
-%_libdir/libguileopts.so.*
 
 %files -n libopts-devel
 %_bindir/autoopts-config
 %dir %_includedir/autoopts
 %_includedir/autoopts/*
-%_libdir/pkgconfig/autoopts.pc
+%_pkgconfigdir/autoopts.pc
 %_libdir/*.so
 %_datadir/aclocal/autoopts.m4
-%_datadir/aclocal/liboptschk.m4
 %_man1dir/autoopts-config.1.*
 %_man3dir/*.3.*
 
-%exclude %_libdir/*.a
-
 %changelog
+* Thu Oct 16 2014 Mikhail Efremov <sem@altlinux.org> 5.18.4-alt1
+- Don't require /usr/xpg4/bin/sh.
+- Minor spec cleanup.
+- Fix pkgfile placement.
+- Updated License.
+- Updated Url.
+- Drop old patches.
+- Source archive: tar.gz -> tar.
+- Updated to 5.18.4.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.9.9-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
