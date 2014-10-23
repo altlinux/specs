@@ -4,7 +4,7 @@
 %define pre %nil
 Name: inkscape
 Version: 0.48.5
-Release: alt1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
@@ -126,6 +126,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Thu Oct 23 2014 Anton Farygin <rider@altlinux.ru> 0.48.5-alt2
+- Rebuild with new libImageMagick
+
 * Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.48.5-alt1
 - new version 0.48.5 (with rpmrb script)
 
