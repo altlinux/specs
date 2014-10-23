@@ -1,6 +1,6 @@
 Name: xorg-drv-s3virge
 Version: 1.10.6
-Release: alt4
+Release: alt5
 Epoch: 1
 Summary: S3 ViRGE video driver
 License: MIT/X11
@@ -46,6 +46,9 @@ on other chipsets are untested.
 %_man4dir/*
 
 %changelog
+* Fri Oct 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:1.10.6-alt5
+- requires XORG_ABI_VIDEODRV = 18.0
+
 * Fri Jan 31 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:1.10.6-alt4
 - requires XORG_ABI_VIDEODRV = 15.0
 

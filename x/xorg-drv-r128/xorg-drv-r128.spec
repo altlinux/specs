@@ -1,6 +1,6 @@
 Name: xorg-drv-r128
 Version: 6.9.2
-Release: alt1
+Release: alt2
 Epoch: 4
 Summary: ATI Rage 128 video driver
 License: MIT/X11
@@ -45,6 +45,9 @@ mode restoration for VT switching. Dualhead is supported on M3/M4 mobile chips.
 %_man4dir/r128.4*
 
 %changelog
+* Fri Oct 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:6.9.2-alt2
+- requires XORG_ABI_VIDEODRV = 18.0
+
 * Fri Jan 31 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:6.9.2-alt1
 - 6.9.2
 

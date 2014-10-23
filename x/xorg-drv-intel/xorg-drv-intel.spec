@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
 Version: 2.99.916
-Release: alt2
+Release: alt3
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -57,6 +57,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Fri Oct 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.916-alt3
+- requires XORG_ABI_VIDEODRV = 18.0
+
 * Mon Sep 08 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.916-alt2
 - disabled dri3
 

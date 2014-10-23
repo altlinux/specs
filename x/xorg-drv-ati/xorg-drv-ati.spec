@@ -1,5 +1,5 @@
 Name: xorg-drv-ati
-Version: 7.4.0
+Version: 7.5.0
 Release: alt1
 Epoch: 4
 Summary: ATI video driver
@@ -17,7 +17,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(Pre): xorg-sdk
 BuildRequires: libGL-devel libXext-devel xorg-fontsproto-devel xorg-randrproto-devel xorg-renderproto-devel
 BuildRequires: xorg-videoproto-devel xorg-xf86driproto-devel xorg-xineramaproto-devel libudev-devel xorg-glproto-devel
-BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-glamor-devel
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 ati  is an Xorg wrapper driver for ATI video cards.  It autodetects whether your hardware has a Radeon,
@@ -45,7 +45,6 @@ and the Xinerama extension.
 %autoreconf
 %configure \
 	--with-xorg-module-dir=%_x11modulesdir \
-	--enable-glamor \
 	--disable-static
 
 %make_build
@@ -62,6 +61,9 @@ and the Xinerama extension.
 %_man4dir/radeon.4*
 
 %changelog
+* Fri Oct 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:7.5.0-alt1
+- 7.5.0
+
 * Thu Jun 26 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:7.4.0-alt1
 - 7.4.0
 
