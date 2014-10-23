@@ -1,6 +1,6 @@
 Name: acpi_call
 Version: 0.1
-Release: alt2
+Release: alt3
 
 Summary: scripts for disabling discrete GPU on some laptops
 License: GPL
@@ -44,6 +44,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Oct 20 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.1-alt3
+- build with kernel 3.17 fixed
+
 * Tue Jul 16 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.1-alt2
 - updated from github/mkottman/acpi_call
 

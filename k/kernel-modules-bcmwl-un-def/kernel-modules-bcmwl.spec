@@ -1,6 +1,6 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.248
-%define module_release alt1
+%define module_release alt4
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
@@ -24,6 +24,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 ExclusiveOS: Linux
 Url: http://www.broadcom.com/support/802.11/linux_sta.php
 Patch1: bcmwl-build-kernel3.15.patch
+Patch2: bcmwl-build-kernel3.17.patch
 BuildRequires: perl sharutils
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-source-%module_name = %module_version
@@ -51,6 +52,7 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 pushd bcmwl
 %patch1 -p1
+%patch2 -p1
 popd
 
 %build
@@ -77,6 +79,11 @@ cat > %buildroot/%_sysconfdir/modprobe.d/blacklist-bcm.conf << __EOF__
 blacklist bcm43xx
 blacklist ssb
 blacklist b43
+blacklist b44
+blacklist b43legacy
+blacklist bcma
+blacklist brcmsmac
+blacklist bcma-pci-bridge
 __EOF__
 
 %files
@@ -86,6 +93,10 @@ __EOF__
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Oct 21 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt4
+- build with kernel 3.17 fixed
+- increased blacklist
 
 * Mon Sep  8 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt3
 - new version
