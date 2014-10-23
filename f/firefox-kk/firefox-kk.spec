@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-kk
-Version:	32.0
+Version:	33.0
 Release:	alt1
 Summary:	Kazakh (KZ) Language Pack for Firefox
 
@@ -70,6 +70,9 @@ ln -s %_datadir/myspell/kk_KZ.dic %buildroot/%cid_dict_dir/dictionaries/kk.dic
 %cid_dict_dir
 
 %changelog
+* Fri Oct 24 2014 Alexey Gladkov <legion@altlinux.ru> 33.0-alt1
+- New version (33.0).
+
 * Wed Oct 01 2014 Alexey Gladkov <legion@altlinux.ru> 32.0-alt1
 - New version (32.0).
 
