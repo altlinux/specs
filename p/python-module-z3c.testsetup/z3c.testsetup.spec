@@ -3,21 +3,39 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.3
-Release: alt3
+Version: 0.8.4
+Release: alt1.dev.svn20100915
 Summary: Easier test setup for Zope 3 projects and other Python packages
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/z3c.testsetup/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# svn://svn.zope.org/repos/main/z3c.testsetup/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.testing
+BuildPreReq: python-module-martian
+BuildPreReq: python-module-zope.app.testing
+BuildPreReq: python-module-zope.app.zcmlfiles
+BuildPreReq: python-module-zope.component
+BuildPreReq: python-module-zope.untrustedpython
+BuildPreReq: python-module-zope.hookable
+BuildPreReq: python-module-WSGIProxy2
+BuildPreReq: python-module-zodbpickle
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python-tools-2to3
+BuildPreReq: python3-module-zope.testing
+BuildPreReq: python3-module-martian
+BuildPreReq: python3-module-zope.app.testing
+BuildPreReq: python3-module-zope.app.zcmlfiles
+BuildPreReq: python3-module-zope.component
+BuildPreReq: python3-module-zope.hookable
+BuildPreReq: python3-module-WSGIProxy2
+BuildPreReq: python3-module-zodbpickle
 %endif
 
 %py_requires zope.testing martian zope.app.testing zope.app.zcmlfiles
@@ -100,6 +118,14 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.txt
 %python_sitelibdir/*
@@ -113,6 +139,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Oct 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1.dev.svn20100915
+- Version 0.8.4dev
+
 * Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt3
 - Added module for Python 3
 
