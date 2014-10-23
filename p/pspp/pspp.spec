@@ -1,19 +1,13 @@
 Name: pspp
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 Summary: A program for statistical analysis of sampled data
 Group: Sciences/Mathematics
 License: GPLv3+
 Url: http://www.gnu.org/software/pspp/
 Source0: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
-#BuildRequires: plotutils-devel, ncurses-devel, readline-devel
-#BuildRequires: gsl-devel >= 1.11-2
-#BuildRequires: postgresql-devel
-#BuildRequires: glade3-libgladeui-devel, libglade2-devel
-#BuildRequires: gettext, desktop-file-utils
-#BuildRequires: perl(ExtUtils::MakeMaker)
-#BuildRequires: autoconf automake libtool gettext-devel texinfo libxml2
-#BuildRequires: gtksourceview2-devel
+
+BuildRequires: fonts-ttf-liberation
 
 # Automatically added by buildreq on Mon May 26 2014
 # optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libncurses-devel libpango-devel libtinfo-devel libwayland-client libwayland-server makeinfo pkg-config tzdata xml-utils zlib-devel
@@ -73,6 +67,10 @@ make check
 %_mandir/man1/pspp-convert.1.*
 
 %changelog
+* Thu Oct 23 2014 Fr. Br. George <george@altlinux.ru> 0.8.4-alt1
+- Autobuild version bump to 0.8.4
+- Fix buildreq for pango warning evasion
+
 * Tue May 27 2014 Fr. Br. George <george@altlinux.ru> 0.8.3-alt1
 - Autobuild version bump to 0.8.3
 
