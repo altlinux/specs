@@ -4,7 +4,7 @@
 %define pear_name VersionControl_SVN
 
 Name: pear-%pear_name
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: PHP/PEAR simple OO interface for the Subversion
@@ -52,6 +52,9 @@ text files, image files -- just about any collection of files.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Oct 23 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.5.2-alt1
+- New version 0.5.2
+
 * Tue Jun 11 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.5.1-alt1
 - New version 0.5.1
 
