@@ -13,7 +13,7 @@
 %define nv_version 173
 %define nv_release 14
 %define nv_minor 39
-%define pkg_rel alt71
+%define pkg_rel alt72
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -77,6 +77,7 @@ Source100: nvidia_create_xinf
 
 Patch1: buildfix_kernel_3.13.patch
 Patch2: buildfix_kernel_3.14.patch
+Patch3: buildfix_kernel_3.17.patch
 
 BuildRequires: kernel-build-tools libsysfs-devel
 ExclusiveArch: %ix86 x86_64
@@ -189,6 +190,7 @@ pushd usr/src/nv/
 rm -rf precompiled
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 popd
 
 
@@ -408,6 +410,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 23 2014 Sergey V Turchin <zerg@altlinux.org> 173.14.39-alt72
+- add patch against 3.17 kernel
+
 * Fri May 16 2014 Sergey V Turchin <zerg@altlinux.org> 173.14.39-alt71
 - add patch against 3.14 kernel
 
