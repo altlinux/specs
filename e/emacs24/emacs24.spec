@@ -1,19 +1,21 @@
 # -*- coding: utf-8; mode: rpm-spec -*-
 # $Id: emacs22.spec,v 1.60 2006/09/12 18:38:21 eugene Exp $
 
-%define emacs_version 24.3
+%set_compress_method skip
+
+%define emacs_version 24.4
 %define gnus_version 5.13
 %define shortname emacs
-%define tramp_version 2.2.6
+%define tramp_version 2.2.9
 %define speedbar_version 1.0
 %define erc_version 5.3
 %define nxml_version 0.2.20041004
-%define cedet_version 1.0
+%define cedet_version 2.0
 
-%define cedet_release alt10.1
+%define cedet_release alt1
 
 %define cvsdate 20090110
-%define rel_base alt10.1
+%define rel_base alt11
 
 # subpackages to build;
 %def_enable nox
@@ -156,6 +158,15 @@ BuildRequires(build): libdbus-devel
 # for update_desktopdb
 # Requires(post,postun): desktop-file-utils
 # BuildPreReq: desktop-file-utils
+
+# ACL support (24.4):
+BuildRequires: libacl-devel
+
+# Notify support (24.4):
+BuildRequires: inotify-tools-devel
+
+# Zlib support (24.4):
+BuildRequires: zlib-devel
 
 # Strange build deps:
 #BuildRequires: postfix, w3m
@@ -863,24 +874,24 @@ popd
 %endif
 %if_enabled athena
 pushd build-athena
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=athena --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --without-compress-info --with-wide-int --enable-link-time-optimization
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=athena --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --with-wide-int --enable-link-time-optimization
 popd
 %endif
 %if_enabled gtk
 pushd build-gtk
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --without-compress-info --with-wide-int
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int
 popd
 %endif
 %if_enabled motif
 # export CFLAGS="%optflags -I%_prefix/X11R6/include"
 # export LDFLAGS="-Wl,-L%_prefix/X11R6/%_lib"
 pushd build-motif
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=motif --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --without-compress-info --with-wide-int --enable-link-time-optimization
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=motif --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --with-wide-int --enable-link-time-optimization
 popd
 %endif
 %if_enabled gtk3
 pushd build-gtk3
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk3 --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --without-compress-info --with-wide-int
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk3 --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --with-wide-int
 popd
 %endif
 
@@ -1067,7 +1078,7 @@ mv %buildroot%_iconsdir/hicolor/scalable/apps/emacs.svg %buildroot%_iconsdir/hic
 pushd %buildroot # there will be a popd below
 
 # leim's Makefile doesn't ignore .orig; remove them:
-find .%_datadir/%shortname/%emacs_version/leim -type f -name '*.orig' -print0 \
+find .%_datadir/%shortname/%emacs_version/lisp/leim -type f -name '*.orig' -print0 \
      | xargs -0 rm -f
 
 # Site start configuration:
@@ -1083,7 +1094,7 @@ install -p -m0644 %SOURCE41 %buildroot%_emacs_sitestart_dir/rus-win-keyboard.el
 
 # mkdir -p .%_libdir/%shortname/site-lisp
 
-mv .%_mandir/man1/{,g}ctags.1
+mv .%_mandir/man1/{,g}ctags.1.gz
 mv .%_bindir/{,g}ctags
 
 # Exclude speedbar:
@@ -1135,7 +1146,7 @@ popd # "$RPM_BUILD_ROOT"
 # Create file lists #
 #####################
 # INFO
-%define common_infos ada-mode,auth,autotype,bovine,calc,ccmode,cl,dbus,dired-x,ebrowse,ediff,edt,efaq,emacs,emacs-gnutls,epa,ert,eshell,eudc,flymake,forms,htmlfontify,idlwave,mairix-el,mh-e,newsticker,org,pcl-cvs,pgg,rcirc,reftex,remember,sasl,sc,ses,smtpmail,srecode,url,vip,viper,widget,wisent,woman
+%define common_infos ada-mode.info.gz,auth.info.gz,autotype.info.gz,bovine.info.gz,calc.info.gz,ccmode.info.gz,cl.info.gz,dbus.info.gz,dired-x.info.gz,ebrowse.info.gz,ediff.info.gz,edt.info.gz,efaq.info.gz,emacs-gnutls.info.gz,emacs.info.gz,epa.info.gz,ert.info.gz,eshell.info.gz,eudc.info.gz,eww.info.gz,flymake.info.gz,forms.info.gz,htmlfontify.info.gz,idlwave.info.gz,ido.info.gz,mairix-el.info.gz,mh-e.info.gz,newsticker.info.gz,octave-mode.info.gz,org.info.gz,pcl-cvs.info.gz,pgg.info.gz,rcirc.info.gz,reftex.info.gz,remember.info.gz,sasl.info.gz,sc.info.gz,ses.info.gz,smtpmail.info.gz,srecode.info.gz,todo-mode.info.gz,url.info.gz,vip.info.gz,viper.info.gz,widget.info.gz,wisent.info.gz,woman.info.gz
 %define gnus_infos emacs-mime,gnus,message,sieve
 %define gnus_infos_pattern gnus\\|emacs-mime\\|message\\|sieve
 %define speedbar_infos_pattern speedbar
@@ -1156,7 +1167,7 @@ rm -f {main,leim}{,-el}.ls info.ls
 
 # Generate them:
 # INFO
-common_infos=( $(ls "$RPM_BUILD_ROOT"%_infodir/*.info \
+common_infos=( $(ls "$RPM_BUILD_ROOT"%_infodir/*.info.gz \
 | sed -e "s:^$RPM_BUILD_ROOT%_infodir/::" \
 | sed -e 's:\.info$::' | sort -u \
 | egrep -v %gnus_infos_pattern \
@@ -1194,10 +1205,10 @@ find "$RPM_BUILD_ROOT%_datadir/%shortname/%emacs_version/etc" -type f -print | a
 
 # FIXME look into el-pkgutils.el to see what broken
 # standard_fraction_el_elc main "%_datadir/%shortname/%emacs_version/lisp"
-# standard_fraction_el_elc leim "%_datadir/%shortname/%emacs_version/leim"
+# standard_fraction_el_elc leim "%_datadir/%shortname/%emacs_version/lisp/leim"
 
 # INFO
-printf '%%s\n' %_infodir/{%common_infos}'.info*' > info.ls
+printf '%%s\n' %_infodir/{%common_infos}'' > info.ls
 # mv $RPM_BUILD_ROOT%_infodir/dir $RPM_BUILD_ROOT%_infodir/elisp.dir
 
 # Prepare the trick for linking etc/ into docs:
@@ -1328,6 +1339,8 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 %exclude %_emacs_datadir/%emacs_version/etc/NXML-NEWS
 %exclude %_emacs_datadir/%emacs_version/etc/nxml/
 %exclude %_emacs_datadir/%emacs_version/etc/schema/
+# leim into separate package
+%exclude %_emacs_datadir/%emacs_version/lisp/leim/
 
 %_emacs_sitestart_dir/*
 
@@ -1372,15 +1385,15 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 %files leim
 # Substitute for buidreq
 %_sysconfdir/buildreqs/packages/substitute.d/%name-leim
-%_emacs_datadir/%emacs_version/leim/
+%_emacs_datadir/%emacs_version/lisp/leim/
 # except *.el.gz files
-%exclude %_emacs_datadir/%emacs_version/leim/ja-dic/*.el.gz
-%exclude %_emacs_datadir/%emacs_version/leim/quail/*.el.gz
+%exclude %_emacs_datadir/%emacs_version/lisp/leim/ja-dic/*.el.gz
+%exclude %_emacs_datadir/%emacs_version/lisp/leim/quail/*.el.gz
 
 #
 %files leim-el
-%_emacs_datadir/%emacs_version/leim/ja-dic/*.el.gz
-%_emacs_datadir/%emacs_version/leim/quail/*.el.gz
+%_emacs_datadir/%emacs_version/lisp/leim/ja-dic/*.el.gz
+%_emacs_datadir/%emacs_version/lisp/leim/quail/*.el.gz
 
 #
 %if_enabled nox
@@ -1544,6 +1557,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Thu Oct 23 2014 Evgenii Terechkov <evg@altlinux.org> 24.4-alt11
+- 24.4
+
 * Mon Apr  7 2014 Terechkov Evgenii <evg@altlinux.org> 24.3-alt10.1
 - Cedet release updated
 
