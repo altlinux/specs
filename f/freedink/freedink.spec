@@ -1,5 +1,5 @@
 Name: freedink
-Version: 108.2
+Version: 108.4
 Release: alt1
 Summary: Adventure and role-playing game
 Group: Games/Adventure
@@ -11,7 +11,7 @@ Source: %name-%version.tar.gz
 Requires: freedink-engine = %version-%release  freedink-dfarc freedink-data
 
 # Automatically added by buildreq on Wed Sep 23 2009
-BuildRequires: fontconfig-devel help2man libSDL-devel libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel
+BuildRequires: fontconfig-devel help2man libSDL-devel libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libcheck-devel
 
 %description
 Dink Smallwood is an adventure/role-playing game, similar to Zelda,
@@ -69,6 +69,10 @@ cat %name-gnulib.lang >> %name.lang
 %_mandir/man6/*
 
 %changelog
+* Thu Oct 23 2014 Fr. Br. George <george@altlinux.ru> 108.4-alt1
+- Autobuild version bump to 108.4
+- Fix buildreq
+
 * Mon Jun 09 2014 Fr. Br. George <george@altlinux.ru> 108.2-alt1
 - Autobuild version bump to 108.2
 
