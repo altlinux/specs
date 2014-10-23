@@ -2,13 +2,13 @@
 ## Used in SVK
 
 Name: perl-Text-Aligner
-Version: 0.10
+Version: 0.12
 Release: alt1
 
 Summary: align output with given style
 Summary(ru_RU.UTF-8): выравнивает вывод согласно заданному стилю
 
-License: %perl_license
+License: %mit
 Group: Development/Perl
 
 %define real_name Text-Aligner
@@ -45,10 +45,13 @@ alignment styles.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README LICENSE
 %perl_vendor_privlib/Text/Aligner*
 
 %changelog
+* Thu Oct 23 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.12-alt1
+- New version
+
 * Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.10-alt1
 - New version
 
