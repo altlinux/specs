@@ -1,16 +1,16 @@
 %define origname tox-prpl
 
 Name: purple-plugin-tox
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Tox Protocol Plugin For Pidgin / libpurple
-License: GPLv3+
+License: GPLv3
 Group: Networking/Instant messaging
-URL: https://github.com/jin-eld/tox-prpl
+URL: http://tox.dhs.org
 Packager: Mikhail Kolchin <mvk@altlinux.org>
 
-Source: %origname-%version.tar.gz
+Source: http://tox.dhs.org/downloads/%origname-%version.tar.gz
 
 Requires: libtoxcore0
 
@@ -19,7 +19,7 @@ Requires: libtoxcore0
 BuildRequires: libpurple-devel toxcore-devel
 
 %description
-Tox Protocol Plugin For Pidgin / libpurple.
+%origname - Tox Protocol Plugin For Pidgin / libpurple.
 
 %prep
 %setup -n %origname-%version
@@ -38,5 +38,8 @@ Tox Protocol Plugin For Pidgin / libpurple.
 %_pixmapsdir/pidgin/protocols/*/tox.png
 
 %changelog
+* Thu Oct 23 2014 Mikhail Kolchin <mvk@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Fri Aug 08 2014 Mikhail Kolchin <mvk@altlinux.org> 0.4.1-alt1
 - initial build for ALT Linux Sisyphus
