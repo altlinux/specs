@@ -1,5 +1,5 @@
 Name: alterator-net-iptables
-Version: 4.19.2
+Version: 4.19.3
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -58,6 +58,9 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Thu Oct 23 2014 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
+- Fix disabling firewall.
+
 * Mon Aug 11 2014 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
 - Don't show IPv6 in the list if IPv6 is disabled.
 
