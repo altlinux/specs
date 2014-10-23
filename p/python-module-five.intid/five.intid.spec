@@ -1,7 +1,7 @@
 %define oname five.intid
 Name: python-module-%oname
 Version: 1.0.3
-Release: alt1.git20121005
+Release: alt2.git20121005
 Summary: Zope2 support for zope.intid
 License: ZPL
 Group: Development/Python
@@ -56,6 +56,9 @@ This package contains tests for %oname.
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+install -p -m644 five/intid/*.zcml five/intid/*.pt \
+	%buildroot%python_sitelibdir/five/intid/
+
 %check
 python setup.py test
 
@@ -69,6 +72,9 @@ python setup.py test
 %python_sitelibdir/five/*/tests.*
 
 %changelog
+* Thu Oct 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt2.git20121005
+- Added *.zcml and *.pt
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1.git20121005
 - Initial build for Sisyphus
 
