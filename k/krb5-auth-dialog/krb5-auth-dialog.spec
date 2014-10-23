@@ -1,4 +1,4 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define gtk_api_ver 3.0
 %def_with pkcs11
 
@@ -27,7 +27,7 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: NetworkManager-glib-devel >= %nm_ver
-BuildRequires: flex libgio-devel libkrb5-devel libcap-devel libpam-devel
+BuildRequires: flex libgio-devel libkrb5-devel libcap-devel libcap-utils libpam-devel
 BuildRequires: intltool perl-XML-Parser gnome-doc-utils
 BuildRequires: gnome-control-center-devel >= %control_center_ver
 %{?_with_pkcs11:BuildRequires: libopensc}
@@ -73,6 +73,9 @@ pops up a dialog when they are about to expire.
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Thu Oct 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Thu Jun 19 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
