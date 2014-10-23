@@ -2,7 +2,7 @@
 %define oname %mname.namedfile
 Name: python-module-%oname
 Version: 1.0.12
-Release: alt1.dev0.git20141008
+Release: alt2.dev0.git20141008
 Summary: z3c.form widgets for file and image upload/download
 License: GPL
 Group: Development/Python
@@ -48,6 +48,7 @@ This package contains tests for %oname.
 %package -n python-module-%mname
 Summary: Core files of %mname
 Group: Development/Python
+%py_provides %mname
 %py_requires plone
 
 %description -n python-module-%mname
@@ -87,6 +88,9 @@ python setup.py test
 %python_sitelibdir/plone/formwidget/__init__.py*
 
 %changelog
+* Thu Oct 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.12-alt2.dev0.git20141008
+- Added necessary provides
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.12-alt1.dev0.git20141008
 - Initial build for Sisyphus
 
