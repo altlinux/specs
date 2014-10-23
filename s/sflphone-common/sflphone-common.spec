@@ -1,8 +1,8 @@
 %define rname sflphone
 
 Name: sflphone-common
-Version: 1.4.0
-Release: alt2
+Version: 1.4.1
+Release: alt1
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -13,7 +13,6 @@ Conflicts: sflphone
 
 Source: %name-%version.tar
 Patch1: sflphone-1.3.0-alt-find-gsm.patch
-Patch2: sflphone-1.2.2-alt-find-pcre.patch
 Patch10: pjproject-2.0.1-alt-libav.patch
 Patch11: sflphone-1.3.0-alt-libav10.patch
 Patch12:sflphone-1.4.0-alt-fix-compile.patch
@@ -41,7 +40,6 @@ Authors:
 %prep
 %setup -qn %name-%version
 %patch1 -p1
-%patch2 -p1
 pushd libs/pjproject-*/
 %patch10 -p1
 %patch11 -p1
@@ -85,8 +83,14 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Thu Oct 23 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.1-alt1
+- new version
+
+* Thu Oct 23 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1.M70P.1
+- built for M70P
+
 * Thu Sep 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt2
-- build wit new ilbc
+- build with new ilbc
 
 * Wed Sep 24 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1
 - new version
