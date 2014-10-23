@@ -1,10 +1,10 @@
 %define		php5_extension	timezonedb
 %define 	real_name	timezonedb
-%define		real_version	2011.13
+%define		real_version	2014.8
 
 Name:	 	php5-%{php5_extension}
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 
 Summary:	PHP5 Timezone Database
 
@@ -66,6 +66,7 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+- Database version 2014.8 (2014h)
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
 - Rebuild with php5-5.3.18.20121017-alt1
