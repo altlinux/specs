@@ -1,10 +1,11 @@
-%define version 4.1.1
+%define version 4.1.2
 #define subver c1
-%define release alt2
+%define release alt1.dev.git20140319
 %define oname zope.interface
 %setup_python_module %oname
 
 %def_with python3
+%def_disable check
 
 Summary: Zope interfaces package
 Name: python-module-%oname
@@ -20,11 +21,20 @@ Source0: %name-%version.tar
 License: ZPL
 Group: Development/Python
 
-BuildPreReq: python-module-setuptools python-module-zope.fixers
+BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-zope.fixers-tests
+BuildPreReq: python-module-zope.event-tests
+BuildPreReq: python-module-nose
+BuildPreReq: python-module-coverage
+BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-repoze.sphinx.autointerface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-zope.fixers
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.fixers-tests
+BuildPreReq: python3-module-zope.event-tests
+BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-coverage
 %endif
 
 %description
@@ -44,6 +54,7 @@ Zope 3, along with the packages it depends on.
 Summary: Tests for zope.interface (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
+%py3_requires zope.event
 
 %description -n python3-module-%oname-tests
 This is a separate distribution of the zope.interface package used in
@@ -56,6 +67,7 @@ This package contains tests for zope.interface.
 Summary: Tests for zope.interface
 Group: Development/Python
 Requires: %name = %version-%release
+%py_requires zope.event
 
 %description tests
 This is a separate distribution of the zope.interface package used in
@@ -63,12 +75,36 @@ Zope 3, along with the packages it depends on.
 
 This package contains tests for zope.interface.
 
+%package pickles
+Summary: Pickles for zope.interface
+Group: Development/Python
+
+%description pickles
+This is a separate distribution of the zope.interface package used in
+Zope 3, along with the packages it depends on.
+
+This package contains pickles for zope.interface.
+
+%package docs
+Summary: Documentation for zope.interface
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+This is a separate distribution of the zope.interface package used in
+Zope 3, along with the packages it depends on.
+
+This package contains documentation for zope.interface.
+
 %prep
 %setup
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 %endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -88,12 +124,35 @@ pushd ../python3
 %python3_install
 popd
 %endif
+
+export PYTHONPATH=$PWD/src
+%make -C docs pickle
+%make -C docs html
+
+install -d %buildroot%python_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
  
 %files
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*.pth
+%exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/zope/interface/tests
 %exclude %python_sitelibdir/zope/interface/common/tests
-%doc *.txt
+%doc *.txt *.rst
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%files docs
+%doc docs/_build/html/*
 
 %files tests
 %python_sitelibdir/zope/interface/tests
@@ -101,6 +160,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/zope/interface/tests
 %exclude %python3_sitelibdir/zope/interface/common/tests
@@ -111,6 +171,10 @@ popd
 %endif
 
 %changelog
+* Thu Oct 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt1.dev.git20140319
+- Version 4.1.2dev
+- Added docs
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt2
 - Moved all tests into tests subpackage
 
