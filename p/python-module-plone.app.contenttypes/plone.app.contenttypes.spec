@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt1.a5.dev0.git20141013
+Release: alt1.dev0.git20141023
 Summary: Default content types for Plone based on Dexterity
 License: GPL
 Group: Development/Python
@@ -82,6 +82,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.dev0.git20141023
+- Version 1.2.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.a5.dev0.git20141013
 - New snapshot
 - Added necessary requirements
