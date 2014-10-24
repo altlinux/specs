@@ -14,7 +14,7 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.29.1
+Version: 2.30
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -84,6 +84,8 @@ BuildRequires: libstartup-notification-devel libfreetype-devel fontconfig-devel 
 BuildRequires: libffi-devel libgio-devel
 BuildRequires: gst-plugins-devel >= 0.10.25
 BuildRequires: libpulseaudio-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXdamage-devel
 
 # Mozilla requires
 BuildRequires:	libnspr-devel       >= 4.9.2-alt1
@@ -396,6 +398,9 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Mon Oct 20 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.30-alt1
+- New version
+
 * Fri Sep 26 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.29.1-alt1
 - New version with security fix:
   + MFSA 2014-73 RSA Signature Forgery in NSS
