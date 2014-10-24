@@ -1,5 +1,5 @@
 Name: clawsker
-Version: 0.7.11
+Version: 0.7.12
 Release: alt1
 
 Summary: Clawsker is an applet to edit Claws Mail's hidden preferences.
@@ -44,6 +44,9 @@ desktop-file-install --dir=%buildroot/%_desktopdir %SOURCE1
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Oct 24 2014 Mikhail Efremov <sem@altlinux.org> 0.7.12-alt1
+- Updated to 0.7.12.
+
 * Mon Jun 16 2014 Mikhail Efremov <sem@altlinux.org> 0.7.11-alt1
 - Fix Url.
 - Updated to 0.7.11.
