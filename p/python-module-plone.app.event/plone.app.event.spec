@@ -1,8 +1,8 @@
 %define oname plone.app.event
 
 Name: python-module-%oname
-Version: 2.0
-Release: alt1.a5.dev0.git20141014
+Version: 2.0.0
+Release: alt1.dev0.git20141023
 Summary: The Plone calendar framework
 License: GPL
 Group: Development/Python
@@ -177,6 +177,9 @@ python setup.py test
 %doc docs/build/html/*
 
 %changelog
+* Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.dev0.git20141023
+- Version 2.0.0.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.a5.dev0.git20141014
 - New snapshot
 - Added necessary requirements
