@@ -1,8 +1,8 @@
 %define oname plone.app.dexterity
 
 Name: python-module-%oname
-Version: 2.1.2
-Release: alt2.dev0.git20141009
+Version: 2.1.3
+Release: alt1.dev0.git20141023
 Summary: Dexterity is a content type system for Plone
 License: GPL
 Group: Development/Python
@@ -46,6 +46,7 @@ BuildPreReq: python-module-plone.app.relationfield
 BuildPreReq: python-module-plone.app.intid
 BuildPreReq: python-module-z3c.relationfield
 BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-plone.app.event
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -70,7 +71,7 @@ Archetypes that is more light-weight and modular.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires plone.app.robotframework plone.app.testing
+%py_requires plone.app.robotframework plone.app.testing plone.app.event
 
 %description tests
 Dexterity is a content type framework for CMF applications, with
@@ -144,6 +145,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.3-alt1.dev0.git20141023
+- Version 2.1.3.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2-alt2.dev0.git20141009
 - Added necessary requirements
 - Enabled testing
