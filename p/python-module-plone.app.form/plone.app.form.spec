@@ -1,8 +1,8 @@
 %define oname plone.app.form
 
 Name: python-module-%oname
-Version: 2.3.1
-Release: alt2.dev0.git20140925
+Version: 2.3.2
+Release: alt1.dev0.git20141023
 Summary: zope.formlib integration for Plone
 License: GPLv2
 Group: Development/Python
@@ -88,6 +88,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.2-alt1.dev0.git20141023
+- Version 2.3.2.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.1-alt2.dev0.git20140925
 - Enabled testing
 
