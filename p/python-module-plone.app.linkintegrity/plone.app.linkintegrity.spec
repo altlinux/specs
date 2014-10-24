@@ -1,8 +1,8 @@
 %define oname plone.app.linkintegrity
 
 Name: python-module-%oname
-Version: 2.1.0
-Release: alt2.dev0.git20141009
+Version: 2.1.1.dev0
+Release: alt1.dev0.git20141023
 Summary: Manage link integrity in Plone
 License: GPLv2
 Group: Development/Python
@@ -70,6 +70,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1.dev0-alt1.dev0.git20141023
+- Version 2.1.1.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt2.dev0.git20141009
 - Added necessary requirements
 - Enabled testing
