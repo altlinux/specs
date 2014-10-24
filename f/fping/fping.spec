@@ -1,5 +1,5 @@
 Name: fping
-Version: 3.8
+Version: 3.10
 Release: alt1
 
 Summary: %name - A tool to quickly ping N number of hosts to determine their reachability
@@ -61,6 +61,9 @@ chmod +x %buildroot%_controldir/fping*
 %doc README doc/README.1992 INSTALL ChangeLog COPYING
 
 %changelog
+* Fri Oct 24 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.10-alt1
+- 3.10
+
 * Fri Dec 20 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.8-alt1
 - 3.8 (ALT 29657)
 
