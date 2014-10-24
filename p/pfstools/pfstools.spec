@@ -2,7 +2,7 @@
 
 Name: pfstools
 Version: 1.8.5
-Release: alt1.6
+Release: alt1.7
 
 Summary: High Dynamic Range (HDR) Images and Video manipulation tools
 License: GPLv2+
@@ -187,6 +187,9 @@ export CXXFLAGS="%optflags"
 %_man1dir/pfsingdal.*
 
 %changelog
+* Thu Oct 23 2014 Anton Farygin <rider@altlinux.ru> 1.8.5-alt1.7
+- Rebuild with new libImageMagick
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.org> 1.8.5-alt1.6
 - Rebuild with the new version of Octave: 3.8.0.
 

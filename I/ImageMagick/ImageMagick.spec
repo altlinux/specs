@@ -1,6 +1,6 @@
 %define mversion	6
-%define dversion	%mversion.8.8
-%define drelease	10
+%define dversion	%mversion.8.9
+%define drelease	8
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -10,7 +10,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -225,6 +225,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Mon Oct 20 2014 Anton Farygin <rider@altlinux.ru> 6.8.9.8-alt1
+- new version 6.8.9.8
+
 * Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 6.8.8.10-alt2
 - NMU: rebuilt against current libgraphviz
 - drop self-requires for build
