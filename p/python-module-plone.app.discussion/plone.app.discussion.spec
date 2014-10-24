@@ -1,8 +1,8 @@
 %define oname plone.app.discussion
 
 Name: python-module-%oname
-Version: 2.3.3
-Release: alt2.dev0.git20141009
+Version: 2.3.4
+Release: alt1.dev0.git20141023
 Summary: Enhanced discussion support for Plone
 License: GPL
 Group: Development/Python
@@ -137,6 +137,9 @@ python setup.py test
 %doc docs/build/html/*
 
 %changelog
+* Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.4-alt1.dev0.git20141023
+- Version 2.3.4.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.3-alt2.dev0.git20141009
 - Added necessary requirements
 - Enabled testing
