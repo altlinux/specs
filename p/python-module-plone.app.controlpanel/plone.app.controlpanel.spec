@@ -1,8 +1,8 @@
 %define oname plone.app.controlpanel
 
 Name: python-module-%oname
-Version: 2.4.5
-Release: alt2.dev0.git20141009
+Version: 2.4.6
+Release: alt1.dev0.git20141023
 Summary: Formlib-based controlpanels for Plone
 License: GPLv2
 Group: Development/Python
@@ -95,6 +95,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests
 
 %changelog
+* Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.6-alt1.dev0.git20141023
+- Version 2.4.6.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.5-alt2.dev0.git20141009
 - Added necessary requirements
 - Enabled testing
