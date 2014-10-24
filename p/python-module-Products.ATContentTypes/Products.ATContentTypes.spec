@@ -1,8 +1,8 @@
 %define oname Products.ATContentTypes
 
 Name: python-module-%oname
-Version: 2.2.2
-Release: alt2.dev0.git20141009
+Version: 2.2.3
+Release: alt1.dev0.git20141023
 Summary: Core content types for Plone 2.1 - 4.3
 License: GPL
 Group: Development/Python
@@ -97,6 +97,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/tests
 
 %changelog
+* Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.3-alt1.dev0.git20141023
+- Version 2.2.3.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt2.dev0.git20141009
 - Added necessary requirements
 - Enabled testing
