@@ -1,12 +1,12 @@
 Name: installer-feature-server-raid-fixup
-Version: 0.4.2
+Version: 0.5.0
 Release: alt1
 
-Summary: Create mdadm.conf, tune sync speeds and WIB
+Summary: Tune mdraid sync speeds and write-intent bitmaps
 License: GPL
 Group: System/Configuration/Other
 
-Url: http://wiki.sisyphus.ru/devel/installer/features
+Url: http://www.altlinux.org/Installer/beans
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 BuildArch: noarch
@@ -15,16 +15,16 @@ BuildArch: noarch
 %summary
 
 %package stage2
-Summary: Create mdadm.conf, tune sync speeds and WIB
+Summary: Tune mdraid sync speeds and write-intent bitmaps
 License: GPL
 Group: System/Configuration/Other
-Requires: installer-stage2
+Requires: installer-common-stage2 >= 1.8.0
 
 %description stage2
 %summary
 
 %prep
-%setup -q
+%setup
 
 %install
 %makeinstall
@@ -35,6 +35,10 @@ Requires: installer-stage2
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Fri Oct 24 2014 Michael Shigorin <mike@altlinux.org> 0.5.0-alt1
+- updated for current installer (including remount scripts)
+  + do not modify mdadm.conf, it's been cared for already
+
 * Thu May 22 2008 Michael Shigorin <mike@altlinux.org> 0.4.2-alt1
 - fix postinstall script (thanks ldv@ for diags/hint)
 
