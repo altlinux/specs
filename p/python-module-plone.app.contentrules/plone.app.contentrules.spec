@@ -1,8 +1,8 @@
 %define oname plone.app.contentrules
 
 Name: python-module-%oname
-Version: 3.0.8
-Release: alt2.dev0.git20141009
+Version: 4.0.1
+Release: alt1.dev0.git20141023
 Summary: Plone integration for plone.contentrules
 License: GPLv2
 Group: Development/Python
@@ -93,6 +93,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests
 
 %changelog
+* Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev0.git20141023
+- Version 4.0.1.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.8-alt2.dev0.git20141009
 - Added necessary requirements
 - Enabled testing
