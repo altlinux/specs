@@ -1,8 +1,8 @@
 %define oname plone.app.portlets
 
 Name: python-module-%oname
-Version: 3.0.2
-Release: alt2.dev0.git20141009
+Version: 3.0.3
+Release: alt1.dev0.git20141023
 Summary: Plone integration for the basic plone.portlets package
 License: GPLv2
 Group: Development/Python
@@ -99,6 +99,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt1.dev0.git20141023
+- Version 3.0.3.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt2.dev0.git20141009
 - Added necessary requirements
 - Enabled testing
