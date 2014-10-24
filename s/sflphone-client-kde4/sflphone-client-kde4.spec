@@ -2,9 +2,9 @@
 
 %define rname sflphone-client-kde
 Name: sflphone-client-kde4
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
-%define sflphone_version 1.4.0
+%define sflphone_version 1.4.1
 
 Group: Communications
 Summary: KDE client for SFLphone
@@ -99,6 +99,12 @@ Requires: %name-common = %EVR
 %_K4libdir/libqtsflphone.so.*
 
 %changelog
+* Thu Oct 23 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.1-alt1
+- new version
+
+* Thu Oct 23 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt0.M70P.1
+- built for M70P
+
 * Wed Sep 24 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1
 - new version
 
