@@ -1,8 +1,8 @@
 %def_with python3
 
 Name: py
-Version: 1.4.26
-Release: alt1.dev1.hg20141008
+Version: 1.4.27.dev1
+Release: alt1.dev1.hg20141024
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
@@ -16,10 +16,10 @@ Source: %name-%version.tar.gz
 Requires: python-module-%name = %version-%release
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %description
@@ -120,6 +120,19 @@ do
 done
 %endif
 
+%check
+export LC_ALL=en_US.UTF-8
+python setup.py test
+rm -fR build
+py.test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+rm -fR build
+py.test-%_python3_version
+popd
+%endif
+
 #files
 #_bindir/*
 
@@ -150,6 +163,9 @@ done
 %endif
 
 %changelog
+* Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.27.dev1-alt1.dev1.hg20141024
+- Version 1.4.27.dev1
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.26-alt1.dev1.hg20141008
 - Version 1.4.26.dev1
 
