@@ -1,5 +1,5 @@
 Name: libdvdcss
-Version: 1.2.12
+Version: 1.3.0
 Release: alt1
 Summary: A portable abstraction library for DVD decryption
 License: GPL
@@ -47,12 +47,15 @@ This package contains development files required for building
 %_libdir/*.so.*
 
 %files devel
-%doc doc/html
+%doc doc/html/*
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Oct 26 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.3.0-alt1
+- 1.3.0
+
 * Sun Feb 24 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.2.12-alt1
 - 1.2.12
 
