@@ -4,8 +4,8 @@
 %def_enable xa
 
 Name: Mesa
-Version: 10.3.1
-Release: alt2
+Version: 10.3.2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -109,6 +109,7 @@ Mesa Wayland-EGL development package
 %package -n libxatracker
 Summary: Mesa XA state tracker
 Group: System/Libraries
+Requires: libxatracker = %epoch:%version-%release
 
 %description -n libxatracker
 Xorg Gallium3D acceleration library
@@ -383,6 +384,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sat Oct 25 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.3.2-alt1
+- 10.3.2
+
 * Tue Oct 21 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.3.1-alt2
 - enabled XA state tracker
 
