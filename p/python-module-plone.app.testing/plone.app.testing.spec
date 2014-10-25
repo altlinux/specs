@@ -1,8 +1,8 @@
 %define oname plone.app.testing
 
 Name: python-module-%oname
-Version: 5.0a3
-Release: alt2.dev0.git20140823
+Version: 5.0b2
+Release: alt1.dev0.git20141023
 Summary: Testing tools for Plone-the-application, based on plone.testing
 License: GPLv2
 Group: Development/Python
@@ -72,6 +72,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0b2-alt1.dev0.git20141023
+- Version 5.0b2.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0a3-alt2.dev0.git20140823
 - Added necessary requirements
 - Enabled testing
