@@ -1,7 +1,7 @@
 %define oname Products.CMFQuickInstallerTool
 Name: python-module-%oname
-Version: 3.0.6
-Release: alt1.git20140921
+Version: 3.0.8
+Release: alt1.dev0.git20141024
 Summary: Facility for comfortable activation/deactivation of CMF compliant products
 License: GPL
 Group: Development/Python
@@ -68,6 +68,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/test
 
 %changelog
+* Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.8-alt1.dev0.git20141024
+- Version 3.0.8.dev0
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.6-alt1.git20140921
 - Initial build for Sisyphus
 
