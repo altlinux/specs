@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 Summary: virtualenv-based automation of test activities
 License: MIT
@@ -159,6 +159,9 @@ popd
 %endif
 
 %changelog
+* Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt1
+- Version 1.8.1
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1
 - Initial build for Sisyphus
 
