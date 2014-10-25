@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.5
-Release: alt1.git20141023
+Release: alt1.git20141024
 Summary: Customizable User Account Management for Flask
 License: BSD
 Group: Development/Python
@@ -27,6 +27,7 @@ BuildPreReq: python-module-flask-wtf
 BuildPreReq: python-module-speaklater
 BuildPreReq: python-module-flask-babel
 BuildPreReq: python-module-pysqlite2
+BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -58,6 +59,27 @@ Login, Change username, Change password, Forgot password and more.
 
 This package contains tests for %oname.
 
+%package pickles
+Summary: Pickles for %oname
+Group: Development/Python
+
+%description pickles
+Customizable User Account Management for Flask: Register, Confirm email,
+Login, Change username, Change password, Forgot password and more.
+
+This package contains pickles for %oname.
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+Customizable User Account Management for Flask: Register, Confirm email,
+Login, Change username, Change password, Forgot password and more.
+
+This package contains documentation for %oname.
+
 %package -n python3-module-%oname
 Summary: Customizable User Account Management for Flask
 Group: Development/Python3
@@ -81,6 +103,9 @@ This package contains tests for %oname.
 %prep
 %setup
 
+%prepare_sphinx docs
+ln -s ../objects.inv docs/source/
+
 %if_with python3
 cp -fR . ../python3
 %endif
@@ -103,6 +128,14 @@ pushd ../python3
 popd
 %endif
 
+export PYTHONPATH=$PWD
+pushd docs
+sphinx-build -b pickle -d build/doctrees source build/pickle
+sphinx-build -b html -d build/doctrees source build/html
+popd
+
+cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
+
 %check
 python setup.py test
 #if_with python3
@@ -116,6 +149,13 @@ popd
 %doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%files docs
+%doc docs/build/html/*
 
 %files tests
 %python_sitelibdir/*/tests
@@ -131,6 +171,10 @@ popd
 %endif
 
 %changelog
+* Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.5-alt1.git20141024
+- New snapshot
+- Added documentation
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.5-alt1.git20141023
 - Initial build for Sisyphus
 
