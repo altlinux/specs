@@ -1,10 +1,10 @@
 Name: libdvdread
-Version: 4.2.0
+Version: 5.0.0
 Release: alt1
 Summary: A library for reading DVD-Video images
 License: GPL
 Group: System/Libraries
-Url: http://www.mplayerhq.hu/MPlayer/releases/dvdnav/
+Url: https://dvdnav.mplayerhq.hu/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar.bz2
@@ -46,12 +46,13 @@ applications reading DVD-video images
 
 %files devel
 %_includedir/*
-%_bindir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_datadir/aclocal/*.m4
 
 %changelog
+* Sat Oct 25 2014 Valery Inozemtsev <shrek@altlinux.ru> 5.0.0-alt1
+- 5.0.0
+
 * Sun Feb 24 2013 Valery Inozemtsev <shrek@altlinux.ru> 4.2.0-alt1
 - 4.2.0
 
