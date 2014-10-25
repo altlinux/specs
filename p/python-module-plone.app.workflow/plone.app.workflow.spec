@@ -1,8 +1,8 @@
 %define oname plone.app.workflow
 
 Name: python-module-%oname
-Version: 2.2.2
-Release: alt2.dev0.git20140826
+Version: 2.2.3
+Release: alt1.dev0.git20141023
 Summary: Workflow and security settings for Plone
 License: GPLv2
 Group: Development/Python
@@ -80,6 +80,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests
 
 %changelog
+* Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.3-alt1.dev0.git20141023
+- Version 2.2.3.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt2.dev0.git20140826
 - Added necessary requirements
 - Enabled testing
