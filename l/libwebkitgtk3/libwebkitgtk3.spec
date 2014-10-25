@@ -17,7 +17,7 @@
 %def_disable webkit2
 
 Name: libwebkitgtk3
-Version: 2.4.6
+Version: 2.4.7
 Release: alt1
 
 Summary: Web browser engine
@@ -340,6 +340,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Sat Oct 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.7-alt1
+- 2.4.7
+
 * Mon Oct 06 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.6-alt1
 - 2.4.6
 - disabled webkit2
