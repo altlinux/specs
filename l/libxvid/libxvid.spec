@@ -2,7 +2,7 @@
 %define Name XviD
 
 Name: lib%bname
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 Summary: Shared library of %Name video codec
 Group: System/Libraries
@@ -52,7 +52,7 @@ pushd build/generic
 %make DESTDIR=%buildroot install
 popd
 
-ln -s %{name}core.so.4.3 %buildroot%_libdir/%{name}core.so
+#ln -s %{name}core.so.4.3 %buildroot%_libdir/%{name}core.so
 rm -f %buildroot%_libdir/*.a
 
 %files
@@ -64,6 +64,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Fri Oct 24 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.3.3-alt1
+- 1.3.3
+
 * Wed May 04 2011 Valery Inozemtsev <shrek@altlinux.ru> 1.3.2-alt1
 - 1.3.2
 
