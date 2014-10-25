@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-simplejson
-Version: 3.5.3
+Version: 3.6.5
 Release: alt1
 
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.5-alt1
+- Version 3.6.5
+
 * Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.3-alt1
 - Version 3.5.3
 - Added module for Python 3
