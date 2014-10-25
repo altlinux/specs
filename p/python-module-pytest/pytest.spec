@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.6.4
-Release: alt2.dev1.hg20141009
+Release: alt2.dev1.hg20141025
 Summary: Simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
@@ -139,6 +139,9 @@ cp -fR doc/en/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.4-alt2.dev1.hg20141025
+- New snapshot
+
 * Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.4-alt2.dev1.hg20141009
 - Added requirement on py
 
