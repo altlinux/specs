@@ -1,5 +1,7 @@
+%define _libexecdir %_prefix/libexec
+
 Name: gphotoframe
-Version: 1.5.1
+Version: 2.0
 Release: alt1
 
 Summary: Gnome Photo Frame
@@ -12,11 +14,8 @@ Source: http://gphotoframe.googlecode.com/files/gphotoframe-%version.tar.gz
 %_python_set_noarch
 BuildArch: noarch
 
-# Automatically added by buildreq on Sat Jul 16 2011 (-bi)
-BuildRequires: gnome-doc-utils intltool python-module-distutils-extra python-module-pyxdg rpm-build-gir time
-
-# Contains macro definition for %%_omfdir
-BuildRequires: rpm-build-gnome
+BuildRequires: rpm-build-gnome rpm-build-gir intltool gnome-doc-utils
+BuildRequires: python-module-distutils-extra python-module-pyxdg
 
 %description
 Gnome Photo Frame is a photo frame gadget for the GNOME Desktop.
@@ -44,26 +43,24 @@ chmod 755 gphotoframe-screensaver
 %install
 %python_build_install
 
-mkdir -p %buildroot%gconf_schemasdir
-mv %buildroot%_datadir/gconf/schemas/%name.schemas %buildroot%gconf_schemasdir
-
-%find_lang %name
+%find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/*
-%python_sitelibdir/gphotoframe
-%_datadir/gphotoframe
+%_bindir/%name
+%python_sitelibdir/gphotoframe/
+%_datadir/%name/
 %_desktopdir/*.desktop
-%gconf_schemasdir/*
-%_datadir/gnome/help/%name/
-%_omfdir/%name/
+%_datadir/glib-2.0/schemas/com.googlecode.%name.gschema.xml
 %_iconsdir/hicolor/*/apps/*
 
 %files gss
-/usr/libexec/gnome-screensaver/*
-%_desktopdir/screensavers/*
+%_libexecdir/gnome-screensaver/%name-screensaver
+%_desktopdir/screensavers/%name-screensaver.desktop
 
 %changelog
+* Sun Oct 26 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
+- 2.0
+
 * Sat Feb 25 2012 Victor Forsiuk <force@altlinux.org> 1.5.1-alt1
 - 1.5.1
 
