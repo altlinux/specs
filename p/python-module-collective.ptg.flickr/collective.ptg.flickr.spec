@@ -2,7 +2,7 @@
 %define oname %mname.flickr
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.git20130901
+Release: alt2.git20130901
 Summary: Adds flickr support to truegallery
 License: GPL
 Group: Development/Python
@@ -49,6 +49,9 @@ This package contains tests for %oname
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+install -p -m644 collective/ptg/flickr/configure.zcml \
+	%buildroot%python_sitelibdir/collective/ptg/flickr/
+
 %check
 python setup.py test
 
@@ -62,6 +65,9 @@ python setup.py test
 %python_sitelibdir/collective/ptg/*/tests
 
 %changelog
+* Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.git20130901
+- Added collective/ptg/flickr/configure.zcml
+
 * Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.git20130901
 - Initial build for Sisyphus
 
