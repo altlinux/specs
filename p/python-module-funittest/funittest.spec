@@ -1,7 +1,7 @@
 %define oname funittest
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.beta2.svn20100131
+Release: alt2.beta2.svn20100131
 Summary: Making it easy to go from use case to functional test
 License: GPL
 Group: Development/Python
@@ -23,6 +23,7 @@ BuildPreReq: python-module-selenium python-module-lxml
 
 %py_provides %oname
 %py_requires zope.interface zope.component zope.pagetemplate
+%py_requires %oname.plone
 
 %description
 Funittest is a functional test tool based on Selenium Remote Control.
@@ -50,6 +51,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.beta2.svn20100131
+- Added requirement on %oname.plone
+
 * Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.beta2.svn20100131
 - Initial build for Sisyphus
 
