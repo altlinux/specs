@@ -1,11 +1,9 @@
 %define mname collective.ptg
 %define oname %mname.galleria
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.3.0
-Release: alt1.git20130524
+Release: alt2.git20130524
 Summary: galleria integration with plonetruegallery
 License: GPL
 Group: Development/Python
@@ -16,11 +14,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests
-#BuildPreReq: python-module-collective.plonetruegallery
+BuildPreReq: python-module-collective.plonetruegallery
+BuildPreReq: python-module-initgroups
+BuildPreReq: python-module-unittest2
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
-#py_provides collective.plonetruegallery
+%py_provides collective.plonetruegallery
 
 %description
 Basic integration of the Galleria javascript gallery with
@@ -64,6 +64,10 @@ python setup.py test
 %python_sitelibdir/collective/ptg/__init__.py*
 
 %changelog
+* Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2.git20130524
+- Added necessary requirements
+- Enabled testing
+
 * Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20130524
 - Initial build for Sisyphus
 
