@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	31.1.2
+Version:	31.2.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -453,6 +453,16 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Oct 23 2014 Alexey Gladkov <legion@altlinux.ru> 31.2.0-alt1
+- New version (31.2.0).
+- Fixed:
+  + MFSA 2014-81 Inconsistent video sharing within iframe
+  + MFSA 2014-79 Use-after-free interacting with text directionality
+  + MFSA 2014-77 Out-of-bounds write with WebM video
+  + MFSA 2014-76 Web Audio memory corruption issues with custom waveforms
+  + MFSA 2014-75 Buffer overflow during CSS manipulation
+  + MFSA 2014-74 Miscellaneous memory safety hazards (rv:33.0 / rv:31.2)
+
 * Thu Sep 25 2014 Alexey Gladkov <legion@altlinux.ru> 31.1.2-alt1
 - New version (31.1.2).
 - Fixed:

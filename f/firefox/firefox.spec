@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        32.0.3
+Version:        33.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -37,6 +37,8 @@ BuildRequires(pre): browser-plugins-npapi-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXdamage-devel
 BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: zip unzip
@@ -294,6 +296,19 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun Oct 19 2014 Alexey Gladkov <legion@altlinux.ru> 33.0-alt1
+- New release (33.0).
+- Fixed:
+  + MFSA 2014-82 Accessing cross-origin objects via the Alarms API
+  + MFSA 2014-81 Inconsistent video sharing within iframe
+  + MFSA 2014-80 Key pinning bypasses
+  + MFSA 2014-79 Use-after-free interacting with text directionality
+  + MFSA 2014-78 Further uninitialized memory use during GIF
+  + MFSA 2014-77 Out-of-bounds write with WebM video
+  + MFSA 2014-76 Web Audio memory corruption issues with custom waveforms
+  + MFSA 2014-75 Buffer overflow during CSS manipulation
+  + MFSA 2014-74 Miscellaneous memory safety hazards (rv:33.0 / rv:31.2)
+
 * Wed Sep 24 2014 Alexey Gladkov <legion@altlinux.ru> 32.0.3-alt1
 - New release (32.0.3).
 - Fixed:
