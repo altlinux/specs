@@ -2,7 +2,7 @@
 
 Name: wxGTK3.1
 Version: %wxbranch.0
-Release: alt1.svn20140708
+Release: alt2.svn20140708
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -305,7 +305,8 @@ DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1 -DwxDEBUG_LEVEL=0"
 	--with-sdl \
 	--with-zlib \
 	--with-expat \
-	--with-x
+	--with-x \
+	--enable-compat28
 
 %make SHARED_LD_CXX='perl %SOURCE2 $(CXX) -shared -fPIC -g -o'
 
@@ -340,6 +341,9 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt2.svn20140708
+- Enabled compatibility with 2.8 (ALT #30419)
+
 * Wed Jul 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt1.svn20140708
 - New snapshot
 
