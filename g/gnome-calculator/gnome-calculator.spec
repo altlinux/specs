@@ -2,12 +2,13 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
 License: %gpl2plus
 Group: Sciences/Mathematics
+Url: https://wiki.gnome.org/Apps/Calculator
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
@@ -18,7 +19,7 @@ BuildPreReq: rpm-build-licenses rpm-build-gnome
 
 BuildPreReq: intltool yelp-tools itstool
 BuildPreReq: libgtk+3-devel >= 3.12
-BuildRequires: libgio-devel >= 2.31.0 libxml2-devel vala-tools >= 0.22
+BuildRequires: libgio-devel >= 2.40.0 libxml2-devel vala-tools >= 0.24
 BuildRequires: libgtksourceview3-devel
 
 %description
@@ -57,6 +58,9 @@ install -pD -m644 data/%name.1 %buildroot%_man1dir/%name.1
 %doc NEWS
 
 %changelog
+* Sun Oct 26 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
