@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.0
-Release: alt2
+Version: 4.0.1
+Release: alt1.dev.git10140113
 Summary: Zope 3 Template Application Languate (TAL)
 License: ZPL
 Group: Development/Python
@@ -13,14 +13,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.testing
+BuildPreReq: python-module-zope.testrunner
+BuildPreReq: python-module-zope.i18nmessageid
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.testing
+BuildPreReq: python3-module-zope.testrunner
+BuildPreReq: python3-module-zope.i18nmessageid
 BuildPreReq: python-tools-2to3
 %endif
 
 %py_requires zope zope.i18nmessageid zope.interface
+# for tests:
+%py_requires zope.testing
 
 %description
 The Zope3 Template Attribute Languate (TAL) specifies the custom
@@ -121,6 +129,14 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.rst
 %python_sitelibdir/*
@@ -148,6 +164,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev.git10140113
+- Version 4.0.1dev
+
 * Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2
 - Version 4.0.0
 
