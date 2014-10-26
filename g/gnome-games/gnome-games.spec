@@ -2,31 +2,31 @@
 
 Name: gnome-games
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME games
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 URL: http://live.gnome.org/GnomeGames/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 BuildArch: noarch
 
-Requires: %name-glines >= %version-%release
-Requires: %name-gnect >= %version-%release
-Requires: %name-gnibbles >= %version-%release
-Requires: %name-gnobots >= %version-%release
-Requires: %name-quadrapassel >= %version-%release
-Requires: %name-gnomine >= %version-%release
-Requires: %name-gnotravex >= %version-%release
-Requires: %name-gnotski >= %version-%release
-Requires: %name-gtali >= %version-%release
-Requires: %name-iagno >= %version-%release
-Requires: %name-mahjongg >= %version-%release
-Requires: %name-swell-foop >= %version-%release
-Requires: %name-sudoku >= %version-%release
-Requires: %name-glchess >= %version-%release
-Requires: %name-lightsoff >= %version-%release
+Requires: %name-glines >= %ver_major
+Requires: %name-gnect >= %ver_major
+Requires: %name-gnibbles >= %ver_major
+Requires: %name-gnobots >= %ver_major
+Requires: %name-quadrapassel >= %ver_major
+Requires: %name-gnomine >= %ver_major
+Requires: %name-gnotravex >= %ver_major
+Requires: %name-gnotski >= %ver_major
+Requires: %name-gtali >= %ver_major
+Requires: %name-iagno >= %ver_major
+Requires: %name-mahjongg >= %ver_major
+Requires: %name-swell-foop >= %ver_major
+Requires: %name-sudoku >= %ver_major
+Requires: %name-glchess >= %ver_major
+Requires: %name-lightsoff >= %ver_major
+Requires: %name-hitori >= %ver_major
 
 BuildRequires: rpm-build-licenses
 
@@ -52,6 +52,9 @@ GlChess:	a chess game which supports several chess engines.
 %files
 
 %changelog
+* Sun Oct 26 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
+- added hitori
+
 * Sun Sep 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
