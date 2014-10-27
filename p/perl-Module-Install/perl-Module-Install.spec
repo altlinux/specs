@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Install
 Name: perl-%dist
-Version: 1.12
+Version: 1.14
 Release: alt1
 
 Summary: Standalone, extensible Perl module installer
@@ -17,7 +17,7 @@ BuildArch: noarch
 %filter_from_requires /CPANPLUS/d
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-Archive-Tar perl-File-Remove perl-JSON perl-Module-CoreList perl-Module-ScanDeps perl-PAR-Dist perl-Parse-CPAN-Meta perl-Pod-Escapes perl-YAML-Tiny
+BuildRequires: perl-Archive-Tar perl-File-Remove perl-JSON perl-Module-CoreList perl-Module-ScanDeps perl-PAR-Dist perl-Parse-CPAN-Meta perl-Pod-Escapes perl-YAML-Tiny perl(autodie.pm)
 
 %description
 This module provides a drop-in replacement for ExtUtils::MakeMaker.
@@ -48,6 +48,9 @@ EOF
 /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
+- automated CPAN update
+
 * Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
