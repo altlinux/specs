@@ -8,13 +8,14 @@ BuildRequires: unzip
 
 Name:		fonts-otf-drehatlas-xaporho
 Version:	1.0.3.3
-Release:	alt3_10
+Release:	alt3_11
 Summary:	A Latin typeface that is sharp and angular
 Group:		System/Fonts/True type
 License:	OFL
 URL:		http://sourceforge.net/projects/drehatlas-fonts/
 Source0:	http://downloads.sourceforge.net/project/drehatlas-fonts/Font-Packages/COMPLETE/drehatlas-fonts-%{metapkgver}.zip
 Source1:	%{fontconf}
+Source2:	%{fontname}.metainfo.xml
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel fontforge
 Source44: import.info
@@ -47,6 +48,10 @@ install -m 0644 -p %{SOURCE1} \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -86,9 +91,13 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 %doc drehatlas-fonts-%{metapkgver}/Xaporho-%{version}/LICENSE drehatlas-fonts-%{metapkgver}/Xaporho-%{version}/FONTLOG
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3.3-alt3_11
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3.3-alt3_10
 - update to new release by fcimport
 
