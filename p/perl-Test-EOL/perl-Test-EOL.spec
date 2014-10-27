@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtU
 # END SourceDeps(oneline)
 Name:		perl-Test-EOL
 Version:	1.5
-Release:	alt2_5
+Release:	alt2_6
 Summary:	Check the correct line endings in your project
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -48,6 +48,9 @@ make test RELEASE_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_6
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_5
 - update to new release by fcimport
 
