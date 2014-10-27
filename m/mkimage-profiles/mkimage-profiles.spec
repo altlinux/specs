@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.48
+Version: 1.1.50
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,12 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Oct 27 2014 Michael Shigorin <mike@altlinux.org> 1.1.50-alt1
+- minor tweaks
+
+* Mon Oct 13 2014 Michael Shigorin <mike@altlinux.org> 1.1.49-alt1
+- pkglist updates
+
 * Mon Sep 29 2014 Michael Shigorin <mike@altlinux.org> 1.1.48-alt1
 - (sysv)init: exclude systemd explicitly
 
