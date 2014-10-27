@@ -4,7 +4,7 @@ BuildRequires: perl(DateTime/Span.pm) perl(DateTime/SpanSet.pm) perl(Params/Vali
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Event-Recurrence
 Version:        0.16
-Release:        alt2_21
+Release:        alt2_22
 Summary:        DateTime::Set extension for create basic recurrence sets
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2_22
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2_21
 - update to new release by fcimport
 
