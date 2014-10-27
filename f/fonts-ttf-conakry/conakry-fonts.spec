@@ -1,25 +1,21 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname conakry-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name conakry-fonts
-%define version 20070829
 %global fontname conakry
 %global fontconf 65-%{fontname}.conf
 
-#global archivename %{oldname}-%{version} a..
-
 Name:		fonts-ttf-conakry
 Version:	20070829
-Release:	alt3_9
+Release:	alt3_10
 Summary:	N'Ko font by Michael Everson
 
-Group:		System/Fonts/True type
 License:	OFL
 URL:		http://www.evertype.com/fonts/nko/
 Source0:	http://www.evertype.com/fonts/nko/ConakryFont.zip
 Source1:	%{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -41,8 +37,6 @@ done
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -53,6 +47,10 @@ install -m 0644 -p %{SOURCE1} \
 	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
 	%{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -88,15 +86,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc *.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20070829-alt3_10
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20070829-alt3_9
 - update to new release by fcimport
 
