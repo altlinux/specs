@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Term-Size-Perl
 Version:        0.029
-Release:        alt3_16
+Release:        alt3_17
 Summary:        Perl extension for retrieving terminal size (Perl version)
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_17
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_16
 - update to new release by fcimport
 
