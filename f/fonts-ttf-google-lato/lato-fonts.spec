@@ -6,14 +6,14 @@ BuildRequires: unzip
 %global fontconf 61-%{fontname}.conf
 
 Name:           fonts-ttf-google-lato
-Version:        2.007
+Version:        2.010
 Release:        alt1_2
 Summary:        A sanserif typeface family
 
 Group:          System/Fonts/True type
 License:        OFL
 URL:            http://www.latofonts.com/
-# Fonts retrieved 2014-04-02 from http://www.latofonts.com/download/Lato2OFL.zip
+# Fonts retrieved 2014-09-04 from http://www.latofonts.com/download/Lato2OFL.zip
 Source0:        %{oldname}-%{version}.zip
 Source1:        %{oldname}-fontconfig.conf
 
@@ -67,6 +67,27 @@ install -m 0755 -d $RPM_BUILD_ROOT%{_fontconfig_templatedir} $RPM_BUILD_ROOT%{_f
 
 install -m 0644 -p %{SOURCE1} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} $RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/Lato.metainfo.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<component type="font">
+  <id>Lato</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>Lato</name>
+  <summary>A classical sans-serif font family</summary>
+  <description>
+    <p>
+      The semi-rounded details of the letters give Lato a feeling of warmth,
+      while the strong structure provides stability and seriousness.
+    </p>
+  </description>
+  <updatecontact>richard_at_hughsie_dot_com</updatecontact>
+  <url type="homepage">http://www.latofonts.com/</url>
+</component>
+EOF
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -102,15 +123,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc Lato2OFL/{OFL.txt,README.txt}
+%{_datadir}/appdata/Lato.metainfo.xml
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.010-alt1_2
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.007-alt1_2
 - update to new release by fcimport
 
