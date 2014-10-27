@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-jomolhari
 Version:	0.003
-Release:	alt3_18
+Release:	alt3_19
 Summary:	Jomolhari a Bhutanese style font for Tibetan and Dzongkha
 
-Group:		System/Fonts/True type
 License:	OFL
 # Looks like currently following URL is gone now. Maybe temporary issue
 #URL:		http://chris.fynn.googlepages.com/jomolhari
@@ -18,6 +18,7 @@ License:	OFL
 #URL:           https://sites.google.com/site/chrisfynn2/home/fonts/jomolhari
 Source0:	http://chris.fynn.googlepages.com/jomolhari-alpha003c.zip
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -52,6 +53,10 @@ do
 	tr -d '\r' < $i > ${i}.tmp
 	mv -f ${i}.tmp $i
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -92,8 +97,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/65-0-%{fontname}.conf
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc FONTLOG.txt OFL-FAQ.txt OFL.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_19
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_18
 - update to new release by fcimport
 
