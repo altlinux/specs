@@ -4,7 +4,7 @@ Requires: bash-completion
 
 Name:           autojump
 Version:        21.7.1
-Release:        alt1_3
+Release:        alt1_4
 
 Summary:        A fast way to navigate your filesystem from the command line
 
@@ -14,8 +14,6 @@ URL:            http://wiki.github.com/joelthelion/autojump
 Source:         https://github.com/%{owner}/%{name}/archive/%{commit}/%{name}-%{commit}.tar.gz
 Patch1:         fix-bash-completion.patch
 
-# pandoc doesnt build on arm, so lets build on intel arch only
-ExclusiveArch:  %{ix86} noarch
 BuildArch:      noarch
 
 BuildRequires:  pandoc python-devel
@@ -79,6 +77,9 @@ rm -f %{buildroot}/_j
 %config(noreplace) %{_sysconfdir}/profile.d/%{name}.fish
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 21.7.1-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 21.7.1-alt1_3
 - update to new release by fcimport
 
