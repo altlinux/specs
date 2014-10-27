@@ -1,0 +1,60 @@
+%define oname numpy-stl
+Name: python-module-%oname
+Version: 1.3.3
+Release: alt1.git20141024
+Summary: Library to make reading, writing and modifying both binary and ascii STL files easy
+License: BSD
+Group: Development/Python
+Url: https://pypi.python.org/pypi/numpy-stl/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/WoLpH/numpy-stl.git
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-pytest libnumpy-devel
+BuildPreReq: python-module-argparse python-module-cov-core
+BuildPreReq: python-module-coverage python-module-docutils
+BuildPreReq: python-module-execnet python-tools-pep8 pyflakes
+BuildPreReq: python-module-pytest-cache python-module-pytest-cov
+BuildPreReq: python-module-pytest-flakes python-module-pytest-pep8
+BuildPreReq: python-module-sphinx-devel python-module-python_utils
+
+%py_provides stl
+
+%description
+Simple library to make working with STL files (and 3D objects in
+general) fast and easy.
+
+Due to all operations heavily relying on numpy this is one of the
+fastest STL editing libraries for Python available.
+
+%prep
+%setup
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+
+%build
+%python_build_debug
+
+%install
+%python_install
+
+%make -C docs html
+
+%check
+rm -fR build conf.py*
+python setup.py test
+
+%files
+%doc *.rst docs/_build/html
+%_bindir/*
+%python_sitelibdir/stl
+%python_sitelibdir/*.egg-info
+
+%changelog
+* Mon Oct 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.3-alt1.git20141024
+- Initial build for Sisyphus
+
