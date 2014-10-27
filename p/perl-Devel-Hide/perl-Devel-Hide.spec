@@ -4,7 +4,7 @@ BuildRequires: perl(File/Temp.pm) perl(Module/CoreList.pm) perl-devel perl-podla
 # END SourceDeps(oneline)
 Name:           perl-Devel-Hide
 Version:        0.0009
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -44,6 +44,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_5
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_4
 - update to new release by fcimport
 
