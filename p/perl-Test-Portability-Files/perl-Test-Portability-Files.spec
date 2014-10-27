@@ -7,7 +7,7 @@ BuildRequires: perl(English.pm) perl-devel perl-podlators
 
 Name:           perl-Test-Portability-Files
 Version:        0.06
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_2
 - update to new release by fcimport
 
