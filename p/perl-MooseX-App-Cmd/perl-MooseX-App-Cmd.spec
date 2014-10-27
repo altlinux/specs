@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/CPAN/Changes.pm) perl(Test/EOL.pm) perl(Test/Kwalitee.pm) perl(Test/NoTabs.pm) perl-devel perl-podlators
+BuildRequires: perl(FindBin.pm) perl(Test/CPAN/Changes.pm) perl(Test/EOL.pm) perl(Test/Kwalitee.pm) perl(Test/NoTabs.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-MooseX-App-Cmd
 Version:    0.27
-Release:    alt1_3
+Release:    alt1_4
 # see lib/MooseX/App/Cmd.pm
 License:    GPL+ or Artistic
 Group:      Development/Perl
@@ -140,6 +140,9 @@ make test
 %{perl_vendor_privlib}/MouseX
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1_4
+- update to new release by fcimport
+
 * Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1_3
 - moved to Sisyphus as dependency
 
