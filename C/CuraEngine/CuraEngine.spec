@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           CuraEngine
 Version:        14.03
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Engine for processing 3D models into G-code instructions for 3D printers
 License:        AGPLv3
 URL:            https://github.com/Ultimaker/%{name}
@@ -47,6 +47,9 @@ make test
 %{_bindir}/%{name}
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 14.03-alt1_3
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 14.03-alt1_2
 - update to new release by fcimport
 
