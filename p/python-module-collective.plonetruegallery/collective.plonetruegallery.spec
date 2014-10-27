@@ -2,7 +2,7 @@
 %define oname %mname.plonetruegallery
 Name: python-module-%oname
 Version: 3.4.5
-Release: alt1.dev.git20140605
+Release: alt2.dev.git20140605
 Summary: Implements a very customizable and sophisticated gallery
 License: GPL
 Group: Development/Python
@@ -79,6 +79,12 @@ This package contains tests for %oname.
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %check
 python setup.py test
 
@@ -92,6 +98,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Mon Oct 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.5-alt2.dev.git20140605
+- Applied python-module-collective.plonetruegallery-3.4.5-alt1.dev.git20140605.diff
+
 * Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.5-alt1.dev.git20140605
 - Initial build for Sisyphus
 
