@@ -13,15 +13,15 @@ BuildRequires: librest-gir-devel pkgconfig(gio-2.0)
 
 Summary: A GObject library for interacting with oVirt REST API
 Name: libgovirt
-Version: 0.3.0
-Release: alt1_7%{?extra_release}
+Version: 0.3.2
+Release: alt1_1
 License: LGPLv2+
 Group: Development/C
-Source: http://people.freedesktop.org/~teuf/govirt/%{name}-%{version}.tar.xz
-Patch0: 0001-Fix-memory-corruption-when-RestProxy-ssl-ca-file-doe.patch
+Source: http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
 URL: http://people.freedesktop.org/~teuf/govirt/
 BuildRequires: glib2-devel
-BuildRequires: librest-devel >= 0.7.90
+BuildRequires: intltool
+BuildRequires: librest-devel >= 0.7.92
 %if %{with_gir}
 BuildRequires: gobject-introspection-devel
 %endif
@@ -46,7 +46,6 @@ Libraries, includes, etc. to compile with the libgovirt library
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %if %{with_gir}
@@ -62,11 +61,12 @@ Libraries, includes, etc. to compile with the libgovirt library
 %__make install DESTDIR=%{buildroot}
 rm -f %{buildroot}%{_libdir}/*.a
 rm -f %{buildroot}%{_libdir}/*.la
+%find_lang %{name} --with-gnome
 
 %check
 make check
 
-%files
+%files -f %{name}.lang
 %doc AUTHORS COPYING MAINTAINERS README
 %{_libdir}/%{name}.so.2*
 %if %{with_gir}
@@ -84,6 +84,9 @@ make check
 %endif
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_7
 - update to new release by fcimport
 
