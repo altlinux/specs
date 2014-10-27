@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -7,13 +8,14 @@ BuildRequires: unzip
 
 Name: fonts-ttf-grimmer-proggy-tinysz
 Version: 1.0
-Release: alt3_10
+Release: alt3_11
 License: MIT
 URL: http://proggyfonts.com/
 Source0: http://proggyfonts.com/download/ProggyTinySZ.ttf.zip
 Source1: 66-grimmer-proggy-tinysz.conf
+Source2: %{fontname}.metainfo.xml
+
 BuildArch: noarch
-Group: System/Fonts/True type
 Summary: Proggy Tiny with slashed zero programming font
 BuildRequires: fontpackages-devel
 Source44: import.info
@@ -30,7 +32,6 @@ slashed zero instead of a dot.
 sed -i 's/\r//' Licence.txt
 
 %install
-
 mkdir -p %{buildroot}/%{_fontdir}
 
 install -m 0644 ProggyTinySZ.ttf %{buildroot}%{_fontdir}
@@ -42,6 +43,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -81,10 +86,13 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc Licence.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_11
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_10
 - update to new release by fcimport
 
