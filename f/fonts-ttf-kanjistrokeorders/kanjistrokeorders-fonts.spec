@@ -4,19 +4,19 @@ BuildRequires: unzip
 %define oldname kanjistrokeorders-fonts
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name kanjistrokeorders-fonts
-%define version 3.000
+%define version 3.001
 %global fontname kanjistrokeorders
 %global fontconf 69-%{fontname}.conf
 %global archivename KanjiStrokeOrders_v%{version}
 
 Name:    fonts-ttf-kanjistrokeorders
-Version: 3.000
-Release: alt1_4
+Version: 3.001
+Release: alt1_1
 Summary: Font to view stroke order diagrams for Kanji, Kana and etc
 License: BSD
 Group:   System/Fonts/True type
 URL:     http://sites.google.com/site/nihilistorguk/
-Source0: http://sites.google.com/site/nihilistorguk/Home/%{archivename}.zip
+Source0: https://dl.dropboxusercontent.com/u/39004158/%{archivename}.zip
 Source1: %{oldname}-fontconfig.conf
 BuildArch: noarch
 BuildRequires: fontpackages-devel
@@ -25,7 +25,7 @@ Source44: import.info
 This font will assist people who are learning kanji, and will help teachers of
 Japanese in the preparation of classroom material.
 In the parts of your document where you want the kanji to be annotated with
-stroke order numbers simply set your document s font to KanjiStrokeOrders.
+stroke order numbers simply set your document's font to KanjiStrokeOrders.
 You will need to set the size of the font to be large to allow the stroke
 order numbers to show up: 100pt seems to be the minimum usable size.
 
@@ -33,7 +33,7 @@ order numbers to show up: 100pt seems to be the minimum usable size.
 %prep
 %setup -n %{oldname}-%{version} -q -c
 sed -i 's#\r##g' copyright.txt
-sed -i 's#\r##g' readme_en_v%{version}.txt
+sed -i 's#\r##g' readme_en_v%{version}.utf
 
 %build
 %{nil}
@@ -91,10 +91,13 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc *.pdf *.txt
+%doc *.pdf *.txt *.utf
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.001-alt1_1
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 3.000-alt1_4
 - update to new release by fcimport
 
