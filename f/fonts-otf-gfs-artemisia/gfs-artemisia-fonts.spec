@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -9,15 +10,14 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-artemisia
 Version: 20070415
-Release: alt3_18
+Release: alt3_19
 Summary: GFS Artemisia fonts
 
-Group:     System/Fonts/True type
 License:   OFL
 URL:       http://www.greekfontsociety.gr/pages/en_typefaces20th.html
 Source0:   http://www.greekfontsociety.gr/%{archivename}.zip
 Source1:   %{oldname}-fontconfig.conf
-
+Source2:   %{fontname}.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
@@ -49,8 +49,6 @@ done
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.otf %{buildroot}%{_fontdir}
 
@@ -61,6 +59,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -96,16 +98,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
-
 %doc *.txt *.pdf
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_19
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_18
 - update to new release by fcimport
 
