@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/
 # END SourceDeps(oneline)
 Name:           perl-Data-Float
 Version:        0.012
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Details of the floating point data type
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -56,6 +56,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.012-alt2_5
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.012-alt2_4
 - update to new release by fcimport
 
