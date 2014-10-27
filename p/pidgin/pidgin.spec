@@ -32,7 +32,7 @@
 %def_enable vv
 
 Name: pidgin
-Version: 2.10.9
+Version: 2.10.10
 Release: alt1
 
 Summary: A GTK+ based multiprotocol instant messaging client
@@ -446,6 +446,10 @@ fi
 %endif
 
 %changelog
+* Mon Oct 27 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.10.10-alt1
+- New version (CVE-2014-3694, CVE-2014-3695, CVE-2014-3696, CVE-2014-3697
+  CVE-2014-3698).
+
 * Tue Apr 08 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.10.9-alt1
 - New version (#29937).
 
