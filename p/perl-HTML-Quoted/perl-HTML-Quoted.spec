@@ -4,7 +4,7 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) p
 # END SourceDeps(oneline)
 Name:           perl-HTML-Quoted
 Version:        0.04
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Extract structure of quoted HTML mail message
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -43,6 +43,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_5
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_4
 - update to new release by fcimport
 
