@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 2.1.2
-Release: alt1.git20140829
+Version: 3.0.1
+Release: alt1.git20141027
 Group: Development/Python
 License: BSD License
 Summary: Provides a country field for Django models.
@@ -18,12 +18,15 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
+%py_provides django_countries
+
 %description
 Provides a country field for Django models.
 
 %package -n python3-module-%module_name
 Summary: Provides a country field for Django models
 Group: Development/Python3
+%py3_provides django_countries
 
 %description -n python3-module-%module_name
 Provides a country field for Django models.
@@ -68,6 +71,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Mon Oct 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.git20141027
+- Version 3.0.1
+
 * Tue Sep 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2-alt1.git20140829
 - Version 2.1.2
 - Added module for Python 3
