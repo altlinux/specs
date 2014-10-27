@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.9.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -24,7 +24,7 @@ Url: http://gcc.gnu.org/
 %endif
 
 %define priority 491
-%define snapshot 20140922
+%define snapshot 20141024
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -164,7 +164,6 @@ Patch112: gcc49-no-add-needed.patch
 Patch114: gcc49-pr56493.patch
 Patch115: gcc49-color-auto.patch
 Patch117: gcc49-aarch64-async-unw-tables.patch
-Patch119: gcc49-pr63285.patch
 
 
 # Debian patches.
@@ -216,6 +215,7 @@ Patch717: alt-escalate-always-overflow.patch
 Patch718: alt-libgo-weak.patch
 Patch719: alt-libitm-fix-build-with-_FORTIFY_SOURCE.patch
 Patch720: alt-linaro.patch
+Patch721: alt-alt-gcc-base-version.patch
 Patch800: alt-libtool.m4-gcj.patch
 
 Provides: gcc = %version, %_bindir/%gcc_target_platform-gcc, %_bindir/gcc
@@ -1083,7 +1083,6 @@ version %version.
 %patch114 -p0
 %patch115 -p0
 %patch117 -p0
-%patch119 -p0
 
 # Debian patches.
 %patch200 -p2
@@ -1107,7 +1106,7 @@ version %version.
 %patch223 -p2
 %endif
 %patch224 -p2
-%patch225 -p2
+# 225: Upstream as of redhat/gcc-4_9-branch@216625
 %patch226 -p2
 %patch227 -p2
 %patch228 -p2
@@ -1134,6 +1133,7 @@ version %version.
 %patch718 -p1
 %patch719 -p1
 %patch720 -p1
+%patch721 -p1
 
 # Set proper version info.
 echo %gcc_branch > gcc/BASE-VER
@@ -1830,6 +1830,8 @@ EOF
 %endif
 %if_with libsanitizer
 %gcc_target_libdir/libsanitizer.spec
+%dir %gcc_target_libdir/include/sanitizer/
+%gcc_target_libdir/include/sanitizer/common_interface_defs.h
 %endif
 %ifndef _cross_platform
 %ifarch x86_64
@@ -1939,6 +1941,9 @@ EOF
 %files -n libasan%gcc_branch-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/libasan%gcc_branch-devel-static
 %dir %gcc_target_libdir/
+%dir %gcc_target_libdir/include/
+%dir %gcc_target_libdir/include/sanitizer/
+%gcc_target_libdir/include/sanitizer/asan_interface.h
 %gcc_target_libdir/libasan.a
 %endif
 
@@ -2003,6 +2008,9 @@ EOF
 %files -n liblsan%gcc_branch-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/liblsan%gcc_branch-devel-static
 %dir %gcc_target_libdir/
+%dir %gcc_target_libdir/include/
+%dir %gcc_target_libdir/include/sanitizer/
+%gcc_target_libdir/include/sanitizer/lsan_interface.h
 %gcc_target_libdir/liblsan.a
 %endif
 
@@ -2319,6 +2327,11 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Mon Oct 27 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.1-alt2
+- Updated to redhat/gcc-4_9-branch r216625.
+- Synced with Fedora gcc-4.9.1-13.
+- Fixed base version.
+
 * Mon Sep 22 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.1-alt1
 - Updated to redhat/gcc-4_9-branch r215456.
 - Synced with Fedora gcc-4.9.1-10 and Debian 4.9.1-15.
