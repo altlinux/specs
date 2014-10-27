@@ -1,7 +1,7 @@
 %define oname Products.Relations
 Name: python-module-%oname
 Version: 0.9
-Release: alt1.b2.git20110919
+Release: alt2.b2.git20110919
 Summary: Define sets of rules for validation, creation and lifetime of Archetypes references
 License: GPL
 Group: Development/Python
@@ -65,6 +65,9 @@ This package contains tests for %oname.
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+cp -fR Products/Relations/skins \
+	%buildroot%python_sitelibdir/Products/Relations/
+
 %check
 python setup.py test
 
@@ -78,6 +81,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Mon Oct 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt2.b2.git20110919
+- Added skins
+
 * Mon Oct 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1.b2.git20110919
 - Initial build for Sisyphus
 
