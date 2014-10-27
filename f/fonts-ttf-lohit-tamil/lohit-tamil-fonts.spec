@@ -3,9 +3,9 @@
 %global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-tamil
-Version:        2.5.3
-Release:        alt1_3
-Summary:        Free Tamil font
+Version:        2.91.0
+Release:        alt1_1
+Summary:        Free truetype font for Tamil language
 
 Group:          System/Fonts/True type
 License:        OFL
@@ -14,7 +14,6 @@ Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{versio
 BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
-Obsoletes: lohit-fonts-common < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -27,7 +26,7 @@ mv 66-lohit-tamil.conf 65-0-lohit-tamil.conf
 
 
 %build
-make
+make ttf %{?_smp_mflags}
 
 %install
 rm -fr %{buildroot}
@@ -83,10 +82,13 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README ChangeLog.old
+%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-tamil.txt
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.91.0-alt1_1
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_3
 - update to new release by fcimport
 
