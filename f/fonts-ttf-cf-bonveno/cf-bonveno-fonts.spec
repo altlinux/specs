@@ -8,7 +8,7 @@ BuildRequires: python unzip
 
 Name:		fonts-ttf-cf-bonveno
 Version:	1.1
-Release:	alt3_15
+Release:	alt3_16
 Summary:	A fun font by Barry Schwartz
 
 Group:		System/Fonts/True type
@@ -16,6 +16,7 @@ License:	GPLv2+
 URL:		http://home.comcast.net/~crudfactory/cf3/bonveno.xhtml
 Source0:	http://home.comcast.net/~crudfactory/cf3/fonts/BonvenoCF-1.1.zip
 Source1:	%{oldname}-fontconfig.conf
+Source2:	%{fontname}.metainfo.xml
 
 BuildArch: 	noarch
 BuildRequires:	fontforge fontpackages-devel
@@ -62,6 +63,10 @@ install -m 644 -p %{SOURCE1} \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
 	%{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -97,11 +102,11 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %doc  COPYING* README*
@@ -109,6 +114,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}/
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_16
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_15
 - update to new release by fcimport
 
