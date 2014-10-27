@@ -4,7 +4,7 @@ BuildRequires: perl(Color/Library/Dictionary/NBS_ISCC/B.pm) perl(Exporter.pm) pe
 # END SourceDeps(oneline)
 Name:           perl-Graphics-ColorNames
 Version:        2.11
-Release:        alt2_17
+Release:        alt2_18
 Summary:        Defines RGB values for common color names
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -56,6 +56,9 @@ DEVEL_TESTS=1 ./Build test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.11-alt2_18
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.11-alt2_17
 - update to new release by fcimport
 
