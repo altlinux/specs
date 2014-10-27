@@ -1,14 +1,14 @@
 %define oldname lklug-fonts
 %global fontname lklug
 %global cvsdate 20090803
-%global fontconf	65-%{fontname}.conf
+%global fontconf 65-%{fontname}.conf
 
 Name:	fonts-ttf-lklug
 # Do not trust font metadata versionning unless you've checked upstream does
 # update versions on file changes. When in doubt use the timestamp of the most
 # recent file as version.
 Version:	0.6
-Release:	alt3_11.%{cvsdate}cvs
+Release:	alt3_12.%{cvsdate}cvs
 Summary:	Fonts for Sinhala language
 Group:	System/Fonts/True type
 License:	GPLv2
@@ -16,10 +16,11 @@ URL:	http://sinhala.sourceforge.net/
 # cvs snapshot created with following steps
 #cvs -z3 -d:pserver:anonymous@sinhala.cvs.sourceforge.net:/cvsroot/sinhala co -P sinhala/fonts
 #cd sinhala/fonts/
-#tar -czf lklug-%{cvsdate}.tar.gz convert.ff COPYING  CREDITS lklug.sfd Makefile README.fonts
+#tar -czf lklug-%%{cvsdate}.tar.gz convert.ff COPYING  CREDITS lklug.sfd Makefile README.fonts
 
 Source:	lklug-%{cvsdate}.tar.gz
 Source1:	%{fontconf}
+Source2:	%{fontname}.metainfo.xml
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel fontforge
 Source44: import.info
@@ -48,6 +49,10 @@ install -m 0644 -p %{SOURCE1} \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
 		%{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+	%{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -89,9 +94,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc CREDITS COPYING README.fonts 
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_12.20090803cvs
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_11.20090803cvs
 - update to new release by fcimport
 
