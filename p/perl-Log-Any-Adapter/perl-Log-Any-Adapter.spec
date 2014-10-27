@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Log-Any-Adapter
 Version:        0.11
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Tell Log::Any where to send its logs
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_6
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_5
 - update to new release by fcimport
 
