@@ -24,7 +24,7 @@ Name: parted
 %define lname lib%name
 Version: 3.2
 %define prerel %nil
-Release: alt1
+Release: alt2
 
 Summary: Flexible partitioning tool
 Summary(uk_UA.CP1251): Универсальний інструмент для роботи з разділами диску
@@ -36,6 +36,7 @@ URL: http://www.gnu.org/software/%name
 Source: ftp://ftp.gnu.org/gnu/%name/%name-%version%prerel.tar.xz
 Source1: %name-pam
 Source2: %name-security
+Patch: parted-3.2-fat16-bgo735669.patch
 
 Requires: %lname = %version-%release
 
@@ -125,6 +126,7 @@ with %lname.
 
 %prep
 %setup -n %name-%version%prerel
+%patch -p1
 
 %build
 %autoreconf
@@ -219,6 +221,9 @@ __MENU__
 
 
 %changelog
+* Mon Oct 27 2014 Michael Shigorin <mike@altlinux.org> 3.2-alt2
+- added patch to fix crash on FAT16 resize (bgo#735669)
+
 * Tue Oct 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
 - 3.2
 
