@@ -16,7 +16,7 @@ BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/
 
 Name:           perl-DateTime-Format-MySQL
 Version:        0.04        
-Release:        alt2_21
+Release:        alt2_22
 Summary:        Parse and format MySQL dates and times 
 
 Group:          Development/Perl
@@ -75,6 +75,9 @@ make test
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_22
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_21
 - update to new release by fcimport
 
