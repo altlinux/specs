@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:          fonts-ttf-dustin-domestic-manners
 Version:       20030527
-Release:       alt3_10
+Release:       alt3_11
 Summary:       Handwriting font by Dustin Norlander
 
 Group:         System/Fonts/True type
@@ -17,6 +17,7 @@ URL:           http://www.dustismo.com
 #URL:           http://ftp.de.debian.org/debian/pool/main/t/ttf-dustin/ttf-dustin_20030517.orig.tar.gz 
 Source0:       Domestic_Manners.zip
 Source1:       %{oldname}-fontconfig.conf
+Source2:       %{fontname}.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
@@ -46,6 +47,10 @@ install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} %{buildroot}%{_fontcon
 install -m 0644 -p %{SOURCE1} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -85,11 +90,15 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %doc license.txt
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20030527-alt3_11
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20030527-alt3_10
 - update to new release by fcimport
 
