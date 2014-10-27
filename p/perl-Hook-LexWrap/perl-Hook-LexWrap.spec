@@ -15,7 +15,7 @@ BuildRequires: perl(Module/Build.pm)
 %define _enable_test 1
 
 Name: perl-Hook-LexWrap
-Version: 0.24
+Version: 0.25
 Release: alt1
 
 Summary: Hook-LexWrap - Perl module
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/C/CH/CHORNY/Hook-LexWrap-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/Hook-LexWrap-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Sep 02 2005
 BuildRequires: perl-devel unzip
@@ -53,6 +53,9 @@ works correctly within the wrapped subroutine.
 %perl_vendor_privlib/Hook/
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated CPAN update
+
 * Sun Sep 25 2011 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
