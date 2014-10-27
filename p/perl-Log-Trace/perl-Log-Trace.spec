@@ -4,7 +4,7 @@ BuildRequires: perl(Data/Dumper.pm) perl(Data/Serializer.pm) perl(Fcntl.pm) perl
 # END SourceDeps(oneline)
 Name:       perl-Log-Trace 
 Version:    1.070 
-Release:    alt2_15
+Release:    alt2_16
 # lib/Log/Trace.pm -> GPLv2+ 
 License:    GPLv2+
 Group:      Development/Perl
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_16
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_15
 - update to new release by fcimport
 
