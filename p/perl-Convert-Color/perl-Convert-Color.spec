@@ -4,7 +4,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(List/Util.pm) perl(base.pm) perl
 # END SourceDeps(oneline)
 Name:           perl-Convert-Color
 Version:        0.11
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Color space conversions and named lookups
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -52,6 +52,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_2
 - update to new release by fcimport
 
