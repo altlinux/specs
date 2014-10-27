@@ -7,12 +7,12 @@
 #
 # Spec file for Fedora modified by Eric Smith <eric@brouhaha.com>
 
-%global patchlevel bld92
+%global patchlevel bld93
 
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.21.%{patchlevel}
+Release:        alt2_0.23.%{patchlevel}
 Group:          Development/Tools
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -21,6 +21,7 @@ Patch0:         asl-Makefile.def.patch
 Patch1:         asl-sysdefs.h.patch
 Patch2:         asl-install.sh.patch
 Patch3:         asl-Makefile-DESTDIR.patch
+Patch4:         asl-aarch64.patch
 BuildRequires: /usr/bin/latex texlive-latex-recommended
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
 BuildRequires:  texlive-latex-recommended
@@ -45,6 +46,7 @@ used in workstations and PCs in the target list.
 %patch1 -p0 -b .sysdefs
 %patch2 -p1 -b .install
 %patch3 -p0 -b .destdir
+%patch4 -p1 -b .aarch64
 
 %build
 # make seems to have problems with %{_smp_mflags}
@@ -87,6 +89,9 @@ done
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.23.bld93
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.21.bld92
 - update to new release by fcimport
 
