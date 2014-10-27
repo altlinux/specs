@@ -1,5 +1,5 @@
 Name: gear-cronbuild
-Version: 1.29
+Version: 1.30
 Release: alt1
 
 Summary: gear repository automated build utility
@@ -45,6 +45,9 @@ install -m 644 *.1 %buildroot%_man1dir/
 %_mandir/man?/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
+- exclude pattern support
+
 * Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
 - specgen support
 
