@@ -12,7 +12,7 @@ this package.
 
 Name:    fonts-ttf-ecolier-court
 Version: 20070702
-Release: alt3_18
+Release: alt3_19
 Summary: Schoolchildren cursive fonts
 
 Group:     System/Fonts/True type
@@ -25,6 +25,8 @@ Source2:   http://perso.orange.fr/jm.douteau/polices/lisez_moi.txt
 Source3:   README-Fedora.txt
 Source4:   %{oldname}-fontconfig.conf
 Source5:   %{oldname}-lignes-fontconfig.conf
+Source6:   %{fontname}.metainfo.xml
+Source7:   %{fontname}-lignes.metainfo.xml
 
 
 BuildArch:     noarch
@@ -39,13 +41,14 @@ Source44: import.info
 %{_fontconfig_templatedir}/%{fontconf}-lignes.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-lignes.conf
 %{_fontbasedir}/*/%{_fontstem}/ecl_cour.ttf
+%{_datadir}/appdata/%{fontname}-lignes.metainfo.xml
 
 
-%package common
+%package -n fonts-ttf-ecolier-court-common
 Group: System/Fonts/True type
 Summary:  Common files of the A.colier Court font set
 
-%description common
+%description -n fonts-ttf-ecolier-court-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
@@ -68,6 +71,7 @@ commonly used by schoolchildren notepads.
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/ec_cour.ttf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %prep
@@ -105,6 +109,12 @@ for fconf in %{fontconf}.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE6} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE7} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-lignes.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -140,11 +150,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-%files common
+%files -n fonts-ttf-ecolier-court-common
 %doc *.txt
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20070702-alt3_19
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20070702-alt3_18
 - update to new release by fcimport
 
