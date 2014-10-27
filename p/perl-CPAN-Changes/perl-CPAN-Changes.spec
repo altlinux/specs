@@ -5,7 +5,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(ExtUtils/Command.pm) perl(ExtU
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
 Version:	0.30
-Release:	alt1_1
+Release:	alt1_2
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/CPAN-Changes/
@@ -64,6 +64,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_1
 - update to new release by fcimport
 
