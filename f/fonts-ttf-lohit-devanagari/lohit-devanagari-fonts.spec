@@ -1,16 +1,16 @@
-BuildRequires: libfontforge-devel
 %define oldname lohit-devanagari-fonts
 %global fontname lohit-devanagari
-%global fontconf 65-0-%{fontname}.conf
+%global fontconf 65-1-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-devanagari
 Version:        2.94.0
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Free Devanagari Script Font
 Group:          System/Fonts/True type
 License:        OFL
 URL:            https://fedorahosted.org/lohit/
 Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
+Source1:       %{fontname}.metainfo.xml
 BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
@@ -21,7 +21,7 @@ This package provides a free Devanagari Script TrueType/OpenType font.
 
 %prep
 %setup -q -n %{fontname}-%{version} 
-mv 66-%{fontname}.conf 65-0-lohit-devanagari.conf
+mv 66-%{fontname}.conf 65-1-lohit-devanagari.conf
 
 %build
 make ttf %{?_smp_mflags}
@@ -38,6 +38,10 @@ install -m 0644 -p %{fontconf} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE1} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -73,17 +77,19 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-devanagari.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.94.0-alt1_4
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.94.0-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
