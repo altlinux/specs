@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-IO-Capture-Extended
 Version:        0.12
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Extend functionality of IO::Capture
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_2
 - update to new release by fcimport
 
