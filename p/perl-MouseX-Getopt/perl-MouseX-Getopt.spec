@@ -6,7 +6,7 @@ BuildRequires: perl-Module-Build perl-devel perl-podlators
 Name:		perl-MouseX-Getopt
 Summary:	Mouse role for processing command line options
 Version:	0.35
-Release:	alt1_4
+Release:	alt1_6
 License:	GPL+ or Artistic
 # Hotfix release with different case, expected to revert to normal in subsequent releases
 #URL:		http://search.cpan.org/dist/MouseX-Getopt/
@@ -76,6 +76,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/MouseX/
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1_6
+- update to new release by fcimport
+
 * Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1_4
 - moved to Sisyphus as dependency
 
