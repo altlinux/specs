@@ -5,7 +5,7 @@ BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(IO/Socket/INET.pm) perl(L
 %add_findreq_skiplist %perl_vendor_privlib/Gearman/Task.pm
 Name:           perl-Gearman
 Version:        1.11
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Distributed job system
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_11
 - update to new release by fcimport
 
