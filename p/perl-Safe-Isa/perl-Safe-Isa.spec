@@ -1,27 +1,28 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Safe-Isa
 Version:        1.000005
-Release:        alt1
+Release:        alt1_1
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Safe-Isa/
-Source:        http://www.cpan.org/authors/id/E/ET/ETHER/Safe-Isa-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Safe-Isa-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(Exporter.pm)
+# Build
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Module
+BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(Scalar/Util.pm)
-BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(base.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
-
-
+# Test Suite
+BuildRequires:  perl(Test/More.pm)
 Source44: import.info
+# Runtime
 
 %description
 How many times have you found yourself writing:
@@ -38,24 +39,25 @@ Right. That's why this module exists.
 %setup -q -n Safe-Isa-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor --skipdeps
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-
-# %{_fixperms} %{buildroot}/*
+# %{_fixperms} %{buildroot}
 
 %check
 make test
 
 %files
 %doc Changes README
-%{perl_vendor_privlib}/*
+%{perl_vendor_privlib}/Safe/
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.000005-alt1_1
+- update to new release by fcimport
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.000005-alt1
 - automated CPAN update
 
