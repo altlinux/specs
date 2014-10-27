@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-manchu
 Version:        2.006
-Release:        alt3_8
+Release:        alt3_9
 Summary:        A Manchu OpenType (TrueType-flavored) font
 
 Group:          System/Fonts/True type
@@ -17,6 +17,7 @@ License:        GPLv2+
 URL:            http://sourceforge.net/projects/manchufont/
 Source0:        http://sourceforge.net/projects/manchufont/files/ManchuFont2005%%20%%28Obsolete%%29/ManchuFont2005%%20v2.006/%{archivename}
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -44,6 +45,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -79,16 +84,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc GNU\ GENERAL\ PUBLIC\ LICENSE.txt
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.006-alt3_9
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.006-alt3_8
 - update to new release by fcimport
 
