@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.
 # END SourceDeps(oneline)
 Name:           perl-File-Find-Rule-Perl
 Version:        1.13
-Release:        alt3_6
+Release:        alt3_8
 Summary:        Common rules for searching for Perl things
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -64,6 +64,9 @@ cd ..
 %{perl_vendor_privlib}/File
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt3_8
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt3_6
 - update to new release by fcimport
 
