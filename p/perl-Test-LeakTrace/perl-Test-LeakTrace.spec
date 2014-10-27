@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Class/Struct.pm) perl(Data/Dumper.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Find.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Test/Builder/Module.pm) perl(XSLoader.pm) perl(YAML/Tiny.pm) perl(autouse.pm) perl(base.pm) perl(inc/Module/Install.pm) perl(threads.pm) perl-devel perl-podlators
+BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Find.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 # Pick up the right dictionary for the spell check
 %if %(perl -e 'print $] >= 5.010000 ? 1 : 0;')
@@ -10,21 +10,38 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Class/Struct.pm) perl(Data/
 %endif
 
 # some arches don't have valgrind so we need to disable its support on them
-%ifarch %{ix86} x86_64 ppc ppc64 s390x %{arm}
+%ifarch %{ix86} x86_64 ppc ppc64 ppc64le s390x %{arm} aarch64
 %global with_valgrind 1
 %endif
 
 Name:		perl-Test-LeakTrace
 Summary:	Trace memory leaks
 Version:	0.14
-Release:	alt3_10
+Release:	alt3_13
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-LeakTrace/
 Source0:	http://search.cpan.org/CPAN/authors/id/G/GF/GFUJI/Test-LeakTrace-%{version}.tar.gz
-BuildRequires:	perl(Exporter.pm)
+# Module Build
+BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+BuildRequires:	perl(inc/Module/Install.pm)
+BuildRequires:	perl(Module/Install/AuthorTests.pm)
+BuildRequires:	perl(Module/Install/Repository.pm)
+# Module Runtime
+BuildRequires:	perl(Exporter.pm)
+BuildRequires:	perl(strict.pm)
+BuildRequires:	perl(Test/Builder/Module.pm)
+BuildRequires:	perl(warnings.pm)
+BuildRequires:	perl(XSLoader.pm)
+# Test Suite
+BuildRequires:	perl(autouse.pm)
+BuildRequires:	perl(Class/Struct.pm)
+BuildRequires:	perl(constant.pm)
+BuildRequires:	perl(Data/Dumper.pm)
 BuildRequires:	perl(Test/More.pm)
+BuildRequires:	perl(threads.pm)
+# Extra Tests
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 %if !%{defined perl_bootstrap}
@@ -37,13 +54,7 @@ BuildRequires:	perl(Test/Synopsis.pm)
 %if 0%{?with_valgrind}
 BuildRequires:	perl(Test/Valgrind.pm)
 %endif
-
-# Obsolete/Provide old tests subpackage
-# Can be removed during F19 development cycle
-%if 0%{?perl_default_filter:1}
-Obsoletes:	%{name}-tests < 0.14
-Provides:	%{name}-tests = %{version}-%{release}
-%endif
+# Runtime
 
 # Don't provide private perl libs
 
@@ -68,6 +79,10 @@ chmod -c -x lib/Test/LeakTrace/Script.pm t/lib/foo.pl
 
 # Fix up shellbangs in doc scripts
 sed -i -e 's|^#!perl|#!/usr/bin/perl|' benchmark/*.pl example/*.{pl,t} {t,xt}/*.t
+
+# Avoid bundled Module::Install and use the system version instead
+rm -rf inc/
+sed -i -e '/^inc\//d' MANIFEST
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
@@ -100,6 +115,9 @@ mv ./JA.pod lib/Test/LeakTrace/
 %{perl_vendor_archlib}/Test/
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt3_13
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt3_10
 - update to new release by fcimport
 
