@@ -1,6 +1,6 @@
 %define dist B-Lint
 Name: perl-%dist
-Version: 1.17
+Version: 1.20
 Release: alt1
 
 Summary: Perl lint
@@ -36,6 +36,9 @@ process for C programs.
 %perl_vendor_privlib/B
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
+- automated CPAN update
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
 - automated CPAN update
 
