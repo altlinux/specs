@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -8,14 +9,14 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-apa-new-athena-unicode
 Version:	3.4
-Release:	alt3_9
+Release:	alt3_10
 Summary:	New Athena Unicode is a libre/open multilingual font
 
-Group:		System/Fonts/True type
 License:	OFL
 URL:		http://apagreekkeys.org/NAUdownload.html
 Source0:	http://apagreekkeys.org/fonts/NAU3_4ttf.zip
 Source1:	%{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -23,11 +24,11 @@ Source44: import.info
 
 %description
 New Athena Unicode is an libre/open multilingual font distributed by
- the American Philological Association. It follows the latest version
- of the Unicode standard and includes characters for English and 
+the American Philological Association. It follows the latest version
+of the Unicode standard and includes characters for English and
 Western European languages, polytonic Greek, Coptic, Old Italic, 
 and Demotic Egyptian transliteration, as well as metrical symbols
- and other characters used by classical scholars.
+and other characters used by classical scholars.
 
 %prep
 %setup -q -n NAU3_4ttf
@@ -35,8 +36,6 @@ and Demotic Egyptian transliteration, as well as metrical symbols
 %build
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -47,6 +46,10 @@ install -m 0644 -p %{SOURCE1} \
 	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
 	%{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -82,15 +85,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc *.pdf *.rtf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.4-alt3_10
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 3.4-alt3_9
 - update to new release by fcimport
 
