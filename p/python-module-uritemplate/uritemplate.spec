@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Summary: Python implementation of RFC6570, URI Template
 License: Apache Software License
@@ -22,6 +22,7 @@ BuildPreReq: python3-devel
 %endif
 
 %setup_python_module %oname
+%py_provides %oname
 
 %description
 This is a Python implementation of RFC6570, URI Template, and can expand
@@ -30,6 +31,7 @@ templates up to and including Level 4 in that specification.
 %package -n python3-module-%oname
 Summary: Python implementation of RFC6570, URI Template
 Group: Development/Python3
+%py3_provides %oname
 
 %description -n python3-module-%oname
 This is a Python implementation of RFC6570, URI Template, and can expand
@@ -71,6 +73,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt3
+- Added provides %oname
+
 * Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2
 - Added module for Python 3
 
