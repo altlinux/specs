@@ -22,13 +22,15 @@ elements designed in an atmosphere of diversity.
 
 Name:		fonts-otf-ht-alegreya
 Version:	1.004
-Release:	alt1_4
+Release:	alt1_5
 Summary:	A Serif typeface originally intended for literature
 License:	OFL
 URL:		http://www.huertatipografica.com.ar/tipografias/alegreya/ejemplos.html
 Source0:	http://www.huertatipografica.com.ar/descargas/Alegreya.zip
 Source1:	%{oldname}-fontconfig.conf
 Source2:	ht-%{fontname}SC-fonts-fontconfig.conf
+Source3:	%{fontname}.metainfo.xml
+Source4:	%{fontname}SC.metainfo.xml
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 Source44: import.info
@@ -70,6 +72,12 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
 
 ln -s %{_fontconfig_templatedir}/60-%{fontname}SC.conf \
 	%{buildroot}%{_fontconfig_confdir}/60-%{fontname}SC.conf
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}SC.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -109,15 +117,20 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/Alegreya-*.otf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 %doc OFL.txt
 
 %files -n fonts-otf-ht-alegreya-smallcaps
 %{_fontconfig_templatedir}/60-%{fontname}SC.conf
 %config(noreplace) %{_fontconfig_confdir}/60-%{fontname}SC.conf
 %{_fontbasedir}/*/%{_fontstem}/AlegreyaSC-*.otf
+%{_datadir}/appdata/%{fontname}SC.metainfo.xml
 %doc OFL.txt
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_5
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_4
 - update to new release by fcimport
 
