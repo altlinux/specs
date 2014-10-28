@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(cairo) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0)
+BuildRequires: libgio-devel pkgconfig(cairo) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0)
 # END SourceDeps(oneline)
 Name:		hitori
-Version:	0.4.0
-Release:	alt1_4
+Version:	3.14.0.1
+Release:	alt1_1
 Summary:	Logic puzzle game for GNOME
 Summary(de):	Logikpuzzle für GNOME
 
@@ -11,8 +11,7 @@ Group:		Games/Other
 # The executable is licensed under GPLv3+, while the user manual is CC-BY-SA.
 License:	GPLv3+ and CC-BY-SA
 URL:		http://live.gnome.org/Hitori
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.4/%{name}-%{version}.tar.xz
-Patch0:         %{name}-%{version}-translation.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/3.14/%{name}-%{version}.tar.xz
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	itstool
@@ -42,7 +41,6 @@ Lösung zu erleichtern. Mögliche Spielfeldgrößen reichen von 5x5 bis hin zu
 
 %prep
 %setup -q
-%patch0 -p0
 
 %build
 %configure
@@ -52,21 +50,24 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=%{buildroot}
 
-%find_lang %{name}
+%find_lang %{name} --with-gnome
 
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 %files -f %{name}.lang
-%%doc AUTHORS ChangeLog COPYING COPYING-DOCS MAINTAINERS NEWS README
+%doc AUTHORS COPYING COPYING-DOCS MAINTAINERS NEWS README
 %{_bindir}/%{name}
+%{_datadir}/appdata/hitori.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/help/*/%{name}
-%dir %{_datadir}/%{name}/
-%{_datadir}/%{name}/%{name}.ui
+%{_datadir}/glib-2.0/schemas/org.gnome.hitori.gschema.xml
+%{_datadir}/%{name}/
 %{_datadir}/icons/hicolor/*x*/apps/%{name}.png
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.14.0.1-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_4
 - update to new release by fcimport
 
