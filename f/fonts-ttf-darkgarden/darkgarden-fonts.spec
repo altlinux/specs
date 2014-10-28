@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -17,16 +18,15 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-darkgarden
 Version:	1.1
-Release:        alt3_17
+Release:        alt3_18
 Summary:	Dark Garden is a decorative outline font of unusual shape
 
-Group:          System/Fonts/True type
 License:        GPLv2
 URL:            http://darkgarden.sourceforge.net/
 
 Source0:        http://darkgarden.sourceforge.net/darkgarden-1.1.src.zip
 Source1:        %{oldname}-fontconfig.conf
-
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
@@ -50,8 +50,6 @@ such as titles or lyrics / poetry look very well.
 fontforge -lang=ff -c 'Open($1); Generate($2)' DarkGarden.sfd DarkGarden.ttf
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
@@ -64,6 +62,10 @@ install -m 0644 -p %{SOURCE1} \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -103,13 +105,15 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc COPYING.txt
 %doc README.txt
 %doc COPYING-GPL.txt
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_18
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_17
 - update to new release by fcimport
 
