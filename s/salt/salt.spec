@@ -1,11 +1,13 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 0.17.5
+Version: 2014.7
 Release: alt1
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
 Group: System/Configuration/Other
+
+Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 
 BuildRequires: python-module-setuptools perl-podlators python-module-nose libzeromq-devel python-module-zmq-devel python-module-Crypto python-module-msgpack python-module-yaml
 
@@ -82,6 +84,14 @@ install -D -m 0644 pkg/salt.bash %buildroot%_sysconfdir/bash_completion.d/salt
 install -D -m 0644 pkg/altlinux/master.logrotate %buildroot%_sysconfdir/logrotate.d/salt-master
 install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotate.d/salt-minion
 
+#TODO: temp fix
+rm -rf %python_sitelibdir/salt/cloud/deploy
+rm -rf %buildroot%python_sitelibdir/salt/cloud/deploy
+
+#create symlink for opennode
+cd %buildroot%python_sitelibdir/salt/modules
+ln -s ../../opennode/cli/actions/ onode
+
 #check
 #__python setup.py test --runtests-opts=-u
 
@@ -128,6 +138,9 @@ install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotat
 %_bindir/salt-key
 %_bindir/salt-run
 %_bindir/salt-ssh
+%_bindir/salt-api
+%_bindir/salt-cloud
+%_bindir/salt-unity
 
 %_man1dir/salt-master.1.*
 %_man1dir/salt.1.*
@@ -136,7 +149,9 @@ install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotat
 %_man1dir/salt-run.1.*
 %_man1dir/salt-syndic.1.*
 %_man1dir/salt-ssh.1.*
-
+%_man1dir/salt-api.1.*
+%_man1dir/salt-cloud.1.*
+%_man1dir/salt-unity.1.*
 
 %files minion
 %config(noreplace) %dir %_sysconfdir/salt
@@ -155,6 +170,9 @@ install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotat
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Tue Oct 28 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2014.7-alt1
+- New version
+
 * Tue May 13 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.17.5-alt1
 - New version
 
