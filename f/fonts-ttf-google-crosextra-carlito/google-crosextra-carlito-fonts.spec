@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname google-crosextra-carlito-fonts
 %global fontname google-crosextra-carlito
 %global fontconf62 62-%{fontname}
@@ -7,15 +8,15 @@
 
 Name:           fonts-ttf-google-crosextra-carlito
 Version:        1.103
-Release:        alt1_0.2.20130920
+Release:        alt1_0.3.20130920
 Summary:        Sans-serif font metric-compatible with Calibri font
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://code.google.com/p/chromium/issues/detail?id=280557
 Source0:        http://gsdview.appspot.com/chromeos-localmirror/distfiles/%{archivename}.tar.gz
 Source1:        30-0-%{fontname}-fontconfig.conf
 Source2:        62-%{fontname}-fontconfig.conf
+Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -50,6 +51,10 @@ ln -s %{_fontconfig_templatedir}/%{fontconf30}-fontconfig.conf \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf30}-fontconfig.conf
 ln -s %{_fontconfig_templatedir}/%{fontconf62}-fontconfig.conf \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf62}-fontconfig.conf
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -89,11 +94,14 @@ fi
 %{_fontconfig_templatedir}/*-%{fontname}-fontconfig.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-fontconfig.conf
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc LICENSE
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.103-alt1_0.3.20130920
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.103-alt1_0.2.20130920
 - converted for ALT Linux by srpmconvert tools
 
