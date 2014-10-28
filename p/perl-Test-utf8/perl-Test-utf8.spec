@@ -1,19 +1,31 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Encode.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(Test/More.pm) perl(charnames.pm) perl-devel perl-podlators
+BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Html.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-utf8
 Version:        1.01
-Release:        alt1
+Release:        alt1_1
 Summary:        Handy utf8 tests
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-utf8/
-Source:        http://www.cpan.org/authors/id/M/MA/MARKF/Test-utf8-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/M/MA/MARKF/Test-utf8-%{version}.tar.gz
 BuildArch:      noarch
+# Module Build
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Module Runtime
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(charnames.pm)
+BuildRequires:  perl(Encode.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/Builder.pm)
+BuildRequires:  perl(warnings.pm)
+# Test Suite
 BuildRequires:  perl(Test/Builder/Tester.pm)
+BuildRequires:  perl(Test/More.pm)
+# Runtime
 
 
 Source44: import.info
@@ -26,25 +38,25 @@ strings in Perl.
 %setup -q -n Test-utf8-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} %{buildroot}/*
+# %{_fixperms} %{buildroot}
 
 %check
 make test
 
 %files
-%doc CHANGES
-%{perl_vendor_privlib}/*
+%doc CHANGES README
+%{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_1
+- update to new release by fcimport
+
 * Tue Jan 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
 - automated CPAN update
 
