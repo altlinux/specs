@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:               python-module-oauthlib
-Version:            0.6.3
+Version:            0.7.1
 Release:            alt1
 Summary:            An implementation of the OAuth request-signing logic
 
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1
+- Version 0.7.1
+
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3-alt1
 - Version 0.6.3
 
