@@ -4,7 +4,7 @@ BuildRequires: perl(IO/Handle.pm) perl(Test.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-IO-Null
 Version:        1.01
-Release:        alt2_18
+Release:        alt2_19
 Summary:        Class for null filehandles
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_19
+- update to new release by fcimport
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_18
 - moved to Sysiphus as dependency
 
