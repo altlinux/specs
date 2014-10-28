@@ -1,5 +1,4 @@
 Group: System/Fonts/True type
-BuildRequires: libfontforge-devel
 %define oldname lohit-gurmukhi-fonts
 %global fontname lohit-gurmukhi
 %global fontconf0 65-0-%{fontname}.conf
@@ -7,7 +6,7 @@ BuildRequires: libfontforge-devel
 
 Name:           fonts-ttf-lohit-gurmukhi
 Version:        2.91.0
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Free Gurmukhi truetype font for Punjabi language
 
 License:        OFL
@@ -18,7 +17,7 @@ BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
 Provides:       lohit-punjabi-fonts = %{version}-%{release}
-Obsoletes:      lohit-punjabi-fonts < 2.5.3-4
+Obsoletes:      lohit-punjabi-fonts < 2.5.3-5
 Source44: import.info
 
 
@@ -96,6 +95,9 @@ fi
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.91.0-alt1_4
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.91.0-alt1_3
 - converted for ALT Linux by srpmconvert tools
 
