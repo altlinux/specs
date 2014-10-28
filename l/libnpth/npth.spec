@@ -1,15 +1,15 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname npth
-Summary:        The New GNU Portable Threads library
 Name:           libnpth
-Version:        0.91
-Release:        alt1_8
+Version:        1.0
+Release:        alt1_1
+Summary:        The New GNU Portable Threads library
 # software uses dual licensing (or both in parallel)
 License:        LGPLv3+ or GPLv2+ or (LGPLv3+ and GPLv2+)
-Group:          System/Libraries
-URL:            ftp://ftp.gnupg.org/gcrypt/npth/
+URL:            http://git.gnupg.org/cgi-bin/gitweb.cgi?p=npth.git
 Source:         ftp://ftp.gnupg.org/gcrypt/npth/npth-%{version}.tar.bz2
-Source1:        ftp://ftp.gnupg.org/gcrypt/npth/npth-%{version}.tar.bz2.sig
+#Source1:        ftp://ftp.gnupg.org/gcrypt/npth/npth-%{version}.tar.bz2.sig
 # Manual page is re-used and changed pth-config.1 from pth-devel package
 Source2:        npth-config.1
 Source44: import.info
@@ -22,48 +22,50 @@ GNU Pth for non-ancient operating systems.  In contrast to GNU Pth is is
 based on the system's standard threads implementation.  Thus nPth allows
 the use of libraries which are not compatible to GNU Pth.
 
-%package devel
-Summary:        Development headers and libraries for GNU nPth
-Group:          Development/C
+%package        devel
+Group: Development/C
+Summary:        Development files for %{oldname}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Provides: npth-devel = %{version}-%{release}
 
-%description devel
-Development headers and libraries for GNU Pth.
+%description    devel
+This package contains libraries and header files for
+developing applications that use %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q
 
-
 %build
 %configure --disable-static
-make %{?_smp_mflags}
-
+%make_build
 
 %install
-make install DESTDIR=${RPM_BUILD_ROOT} INSTALL='install -p'
-mkdir -p ${RPM_BUILD_ROOT}%{_mandir}/man1/
-install -p -c -m 644 %{SOURCE2} ${RPM_BUILD_ROOT}%{_mandir}/man1/
-rm -f ${RPM_BUILD_ROOT}%{_libdir}/*.la
+%makeinstall_std INSTALL='install -p'
 
+mkdir -p %{buildroot}%{_mandir}/man1/
+install -pm0644 %{S:2} %{buildroot}%{_mandir}/man1/
+
+find %{buildroot} -name '*.la' -delete -print
 
 %check
 make check
 
-
 %files
-%doc AUTHORS COPYING COPYING.LESSER ChangeLog NEWS README
+%doc COPYING COPYING.LESSER
 %{_libdir}/*.so.*
 
 %files devel
+%doc AUTHORS ChangeLog NEWS README
 %{_bindir}/*
 %{_libdir}/*.so
 %{_includedir}/*.h
 %{_mandir}/*/*
 %{_datadir}/aclocal/*
 
-
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_8
 - update to new release by fcimport
 
