@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-IBeat
 Version:        0.161
-Release:        alt2_20
+Release:        alt2_21
 Summary:        Format times in .beat notation 
 
 Group:          Development/Perl
@@ -57,6 +57,9 @@ make test
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_21
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_20
 - update to new release by fcimport
 
