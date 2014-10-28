@@ -1,5 +1,5 @@
 Name: alterator-bacula
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Source:%name-%version.tar
@@ -81,6 +81,10 @@ done
 %altdir/desktop-directories/*
 
 %changelog
+* Tue Oct 28 2014 Mikhail Efremov <sem@altlinux.org> 1.3.2-alt1
+- If bacula-fd is running returns mode "on".
+- Don't overwrite exclude-user filelist if exists.
+
 * Tue Jul 22 2014 Mikhail Efremov <sem@altlinux.org> 1.3.1-alt1
 - Ensure that mysqld is really started.
 - Use alterator-service-functions.
