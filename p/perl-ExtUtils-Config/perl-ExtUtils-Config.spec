@@ -7,7 +7,7 @@ BuildRequires: perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Pod/Coverage/TrustPod.
 
 Name:		perl-ExtUtils-Config
 Version:	0.008
-Release:	alt1_1
+Release:	alt1_2
 Summary:	A wrapper for perl's configuration
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_1
 - update to new release by fcimport
 
