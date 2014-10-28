@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-levien-museum
 Version:        1.0
-Release:        alt3_7
+Release:        alt3_8
 Summary:        Based on historical metal Centaur fonts
 
 Group:          System/Fonts/True type
@@ -15,6 +15,7 @@ License:        OFL
 URL:            http://levien.com/type/myfonts/museum.html
 Source0:        http://levien.com/type/myfonts/museum.zip
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 Source44: import.info
@@ -39,6 +40,10 @@ install -m 0644 -p %{SOURCE1} \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -75,14 +80,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_8
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_7
 - update to new release by fcimport
 
