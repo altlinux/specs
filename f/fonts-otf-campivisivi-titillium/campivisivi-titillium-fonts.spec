@@ -8,13 +8,14 @@ BuildRequires: unzip
 
 Name:           fonts-otf-campivisivi-titillium
 Version:        20120913
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Sans-serif typeface designed inside Campi Visivi's Type Design course
 
 License:        OFL
 URL:            http://www.campivisivi.net/titillium/
 Source0:        http://www.campivisivi.net/titillium/download/Titillium_roman_upright_italic_2_0_OT.zip
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -47,6 +48,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -86,11 +91,15 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %doc OFL-FAQ.txt OFL-titillium.txt
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20120913-alt1_5
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 20120913-alt1_4
 - converted for ALT Linux by srpmconvert tools
 
