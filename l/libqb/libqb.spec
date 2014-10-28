@@ -1,17 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ pkgconfig(glib-2.0)
+BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ libsocket pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libqb
-Version:        0.17.0
-Release:        alt1_3
+Version:        0.17.1
+Release:        alt1_1
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://www.libqb.org
 Source0:        https://fedorahosted.org/releases/q/u/quarterback/%{name}-%{version}.tar.xz
-Patch0:			test-timeout-fix.patch	
 
 BuildRequires:  libtool doxygen procps libcheck-devel automake
 Source44: import.info
@@ -24,7 +23,6 @@ Initially these are IPC and poll.
 
 %prep
 %setup -q
-%patch0 -p1
 
 # Make sure the timestamps are correct
 find . -exec touch \{\} \;
@@ -61,6 +59,9 @@ developing applications that use %{name}.
 %{_mandir}/man8/qb-blackbox.8*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.17.1-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.17.0-alt1_3
 - update to new release by fcimport
 
