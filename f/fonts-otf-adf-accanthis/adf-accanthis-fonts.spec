@@ -21,7 +21,7 @@ Accanthis is well suited to book typesetting and refined presentations.
 Name:      fonts-otf-adf-accanthis
 # Use the main PS version (as documented in NOTICE)
 Version:   1.8
-Release:   alt1_5
+Release:   alt1_6
 Summary:   A a.'modernizeda.' garaldic serif typeface, a.'Galliarda.' alternative
 
 Group:     System/Fonts/True type
@@ -32,6 +32,9 @@ Source1:   http://arkandis.tuxfamily.org/docs/Accanthis-Cat.pdf
 Source11:  %{oldname}-fontconfig.conf
 Source12:  %{oldname}-fontconfig-2.conf
 Source13:  %{oldname}-fontconfig-3.conf
+Source14:  %{fontname}.metainfo.xml
+Source15:  %{fontname}-2.metainfo.xml
+Source16:  %{fontname}-3.metainfo.xml
 
 
 BuildArch:     noarch
@@ -47,13 +50,14 @@ It is intended to serve as alternative to the a.'Galliarda.' typeface.
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/AccanthisADFStd-*.otf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
-%package common
+%package -n fonts-otf-adf-accanthis-common
 Group: System/Fonts/True type
 Summary:  Common files of %{oldname}
 
-%description common
+%description -n fonts-otf-adf-accanthis-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
@@ -74,6 +78,7 @@ version.
 %{_fontconfig_templatedir}/%{fontconf}-2.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-2.conf
 %{_fontbasedir}/*/%{_fontstem}/AccanthisADFStdNo2-*.otf
+%{_datadir}/appdata/%{fontname}-2.metainfo.xml
 
 
 %package -n fonts-ttf-adf-accanthis-3
@@ -92,6 +97,7 @@ original Italic and changes to k, p, z and numbers.
 %{_fontconfig_templatedir}/%{fontconf}-3.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-3.conf
 %{_fontbasedir}/*/%{_fontstem}/AccanthisADFStdNo3-*.otf
+%{_datadir}/appdata/%{fontname}-3.metainfo.xml
 
 
 %prep
@@ -123,6 +129,14 @@ install -m 0644 -p %{SOURCE12} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-2.conf
 install -m 0644 -p %{SOURCE13} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-3.conf
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE14} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE15} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-2.metainfo.xml
+install -Dm 0644 -p %{SOURCE16} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-3.metainfo.xml
 
 for fconf in %{fontconf}.conf \
              %{fontconf}-2.conf \
@@ -166,11 +180,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
-%files common
+%files -n fonts-otf-adf-accanthis-common
 %doc NOTICE.txt OTF/COPYING *.pdf
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_6
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_5
 - update to new release by fcimport
 
