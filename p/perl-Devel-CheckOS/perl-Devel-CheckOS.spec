@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-CheckOS
 Version:        1.73
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Check what OS we're running on
 License:        GPLv2 or Artistic
 Group:          Development/Perl
@@ -65,6 +65,9 @@ make test
 %{_mandir}/man1/use-devel-assertos.1*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.73-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.73-alt1_1
 - update to new release by fcimport
 
