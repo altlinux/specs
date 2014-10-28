@@ -12,12 +12,13 @@ BuildRequires: unzip
 
 Name:		fonts-otf-drehatlas-widelands
 Version:	1.0.3.1
-Release:	alt3_12
+Release:	alt3_13
 Summary:	A Latin typeface inspired by feudal calligraphy
 License:	OFL
 URL:		http://www.drehatlas.de/
 Source0:	http://downloads.sourceforge.net/project/drehatlas-fonts/Font-Packages/COMPLETE/drehatlas-fonts-%{metapkgver}.zip
 Source1:	%{fontconf}
+Source2:	%{fontname}.metainfo.xml
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel fontforge
 Source44: import.info
@@ -52,6 +53,10 @@ install -m 0644 -p %{SOURCE1} \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -91,9 +96,13 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 %doc drehatlas-fonts-%{metapkgver}/Widelands-%{version}/LICENSE drehatlas-fonts-%{metapkgver}/Widelands-%{version}/FONTLOG
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3.1-alt3_13
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3.1-alt3_12
 - update to new release by fcimport
 
