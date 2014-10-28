@@ -1,7 +1,7 @@
 %add_findreq_skiplist %_datadir/sgml/docbook/xsl-ns-stylesheets-*/slides/slidy/help/help.html.*
 Name: docbook5-style-xsl
 Version: 1.78.1
-Release: alt1_5
+Release: alt1_6
 Group: Text tools
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
@@ -29,6 +29,11 @@ DocBook 5 document to other formats, such as HTML, manpages, FO,
 XHMTL and other formats. They are highly customizable. For more
 information see W3C page about XSL.
 
+#Don't ship Java extensions in Fedora as they are not compiled from the source
+#Shiping sources instead of binary jars was requested by
+#https://lists.oasis-open.org/archives/docbook-apps/201408/msg00008.html
+#Sources available in the docbook stylesheets svn repository, but not packaged.
+%if 0%{?rhel} >= 7
 %package extensions
 Group: Text tools
 Summary: Norman Walsh's XSL stylesheets extensions for DocBook 5.X
@@ -39,6 +44,7 @@ Requires: docbook-xsl-ns = %{version}
 
 %description extensions
 This package contains Java extensions for XSL namespace aware stylesheets.
+%endif
 
 %prep
 %setup -q -n docbook-xsl-ns-%{version}
@@ -71,9 +77,11 @@ rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/install.sh
 %{_datadir}/sgml/docbook/xsl-ns-stylesheets
 %exclude %{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}/extensions
 
+%if 0%{?rhel} >= 7
 %files extensions
 %doc extensions/README.txt extensions/LICENSE.txt
 %{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}/extensions
+%endif
 
 %post
 CATALOG=%{_sysconfdir}/xml/catalog
@@ -99,6 +107,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.78.1-alt1_6
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.78.1-alt1_5
 - update to new release by fcimport
 
