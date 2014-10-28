@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname almas-mongolian-title-fonts
 %global fontname almas-mongolian-title
 %global fontconf 61-%{fontname}.conf
@@ -5,14 +6,14 @@
 
 Name:           fonts-ttf-almas-mongolian-title
 Version:        1.0
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Mongolian Title font
 
-Group:          System/Fonts/True type
 License:        GPLv2
 URL:            http://www.mongolfont.com/en/font/mngltitleotf.html
 Source0:        http://www.mongolfont.com/jAlmas/cms/documents/mongolfont/font/mngltitleotf.ttf
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -39,6 +40,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -74,16 +79,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_5
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_4
 - update to new release by fcimport
 
