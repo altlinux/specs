@@ -2,7 +2,7 @@
 %def_disable	gtk3
 %def_disable 	debug
 
-%def_enable 	appdata
+%def_disable 	appdata
 
 # libchamplain-gtk is only gtk3
 %if_enabled gtk3
@@ -14,7 +14,7 @@
 %def_disable	tnef
 
 Name:   	claws-mail
-Version:	3.11.0
+Version:	3.11.1
 Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
@@ -31,7 +31,7 @@ Provides:	%_oldname
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildPreReq:	autoconf-common gettext-tools intltool
+BuildPreReq:	autoconf-common gettext-tools
 
 BuildRequires: NetworkManager-devel flex libSM-devel libcompface-devel libdbus-glib-devel libenchant-devel libetpan-devel libgnutls-devel libgpgme-devel libldap-devel libpilot-link-devel libstartup-notification-devel libgcrypt-devel zlib-devel
 %if_enabled gtk3
@@ -837,6 +837,13 @@ EOF
 
 
 %changelog
+* Tue Oct 28 2014 Mikhail Efremov <sem@altlinux.org> 3.11.1-alt1
+- Fixes from upstream git:
+  + Recover desktop file installation.
+  + Fix categories and recover keywords in desktop file.
+- Disable appdata and update BR.
+- Updated to 3.11.1.
+
 * Wed Oct 22 2014 Mikhail Efremov <sem@altlinux.org> 3.11.0-alt1
 - Fixes from upstream git:
   + Use gnutls_priority override also for POP3 connections.
