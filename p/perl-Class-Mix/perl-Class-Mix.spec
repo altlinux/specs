@@ -5,7 +5,7 @@ BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(File/Spec.pm) perl-Module-Build p
 Name:           perl-Class-Mix
 Summary:        Dynamic class mixing
 Version:        0.005
-Release:        alt2_9
+Release:        alt2_10
 License:        GPL+ or Artistic
 Group:          Development/Perl
 Source0:        http://search.cpan.org/CPAN/authors/id/Z/ZE/ZEFRAM/Class-Mix-%{version}.tar.gz
@@ -59,6 +59,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.005-alt2_10
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.005-alt2_9
 - update to new release by fcimport
 
