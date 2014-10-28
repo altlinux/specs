@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.
 # END SourceDeps(oneline)
 Name:           perl-File-Find-Rule-VCS
 Version:        1.08
-Release:        alt3_10
+Release:        alt3_11
 Summary:        Exclude files/directories for Version Control Systems
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -46,6 +46,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.08-alt3_11
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.08-alt3_10
 - update to new release by fcimport
 
