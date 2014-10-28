@@ -1,6 +1,6 @@
 Name: quakespasm
-Version: 0.85.9
-Release: alt2
+Version: 0.90.0
+Release: alt1
 
 Summary: Quake engine
 License: GPL
@@ -34,19 +34,27 @@ install -pm755 Quake/quakespasm %buildroot/%_bindir/
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
-install -pm644 gnu.txt %buildroot%docdir/
-install -pm644 README.txt %buildroot%docdir/
-install -pm644 README.music %buildroot%docdir/
+
+install -pm644 LICENSE.txt %buildroot%docdir/
+install -pm644 Quakespasm.html %buildroot%docdir/
+install -pm644 Quakespasm.txt %buildroot%docdir/
+install -pm644 Quakespasm-Music.txt %buildroot%docdir/
+
 install -pm644 %SOURCE1 %buildroot%docdir/
 
 %files
 %_bindir/quakespasm
 %dir %docdir
-%docdir/README.music
+%docdir/LICENSE.txt
+%docdir/Quakespasm.html
+%docdir/Quakespasm.txt
+%docdir/Quakespasm-Music.txt
 %docdir/README.maintainer
-%docdir/*.txt
 
 %changelog
+* Tue Oct 28 2014 Andrey Bergman <vkni@altlinux.org> 0.90.0-alt1
+- Version update.
+
 * Sat Mar 22 2014 Andrey Bergman <vkni@altlinux.org> 0.85.9-alt2
 - Corrected Group, added README.maintainer.
 
