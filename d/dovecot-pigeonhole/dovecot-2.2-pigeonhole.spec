@@ -1,6 +1,6 @@
 %define dovecot_version 2.2
 Name: dovecot-pigeonhole
-Version: 0.4.3
+Version: 0.4.4
 Serial: 1
 Release: alt1
 Summary: Sieve language and the ManageSieve protocol for the Dovecot Secure IMAP Server
@@ -10,9 +10,9 @@ Source: dovecot-2.2-pigeonhole-%version.tar.gz
 Source1: postfix+sieve.patch
 Url: http://pigeonhole.dovecot.org/
 
-Requires: dovecot = %dovecot_version.13
+Requires: dovecot = %dovecot_version.14
 
-BuildRequires: dovecot-devel = %dovecot_version.13
+BuildRequires: dovecot-devel = %dovecot_version.14
 
 %description
 This package is part of the Pigeonhole project
@@ -63,15 +63,16 @@ install -pD -m 644 %buildroot/%_defaultdocdir/dovecot-%dovecot_version/example-c
 %doc %_defaultdocdir/dovecot-%dovecot_version/example-config/conf.d/*
 %doc %_defaultdocdir/dovecot-%dovecot_version/sieve
 %exclude %_libdir/dovecot/*.la
+%exclude %_libdir/dovecot/modules/*.la
 %_bindir/*
 %prefix/libexec/*
 %_mandir/*/*
 # XXX behold, verifyelf
 %_libdir/lib*.so.*
 %_libdir/dovecot/lib*.so.*
-%_libdir/dovecot/sieve/lib90_sieve_extprograms_plugin.*
 %_libdir/dovecot/modules/doveadm/lib10_doveadm_sieve_plugin.*
-%_libdir/dovecot/modules/lib90_sieve_plugin.*
+%_libdir/dovecot/modules/lib90_sieve*
+%_libdir/dovecot/modules/sieve
 %_libdir/dovecot/modules/settings/lib*
 
 %config(noreplace) %_sysconfdir/dovecot/conf.d/20-managesieve.conf
@@ -83,6 +84,10 @@ install -pD -m 644 %buildroot/%_defaultdocdir/dovecot-%dovecot_version/example-c
 %_libdir/dovecot/lib*.so
 
 %changelog
+* Tue Oct 28 2014 Fr. Br. George <george@altlinux.ru> 1:0.4.4-alt1
+- Autobuild version bump to 0.4.4
+- Build with new dovecot
+
 * Tue May 13 2014 Fr. Br. George <george@altlinux.ru> 1:0.4.3-alt1
 - Autobuild version bump to 0.4.3
 - Build with new dovecot
