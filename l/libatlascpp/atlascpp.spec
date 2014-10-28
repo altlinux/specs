@@ -5,15 +5,13 @@ BuildRequires: bzlib-devel gcc-c++
 %define oldname atlascpp
 Name:           libatlascpp
 Version:        0.6.3
-Release:        alt1
+Release:        alt1_3
 Summary:        WorldForge message protocol library
 
 Group:          Development/C++
 License:        LGPLv2+
 URL:            http://worldforge.org/dev/eng/libraries/atlas_cpp
 Source0:        http://downloads.sourceforge.net/sourceforge/worldforge/Atlas-C++-%{version}.tar.bz2
-Patch1:         atlascpp-0.6.1-gcc44.patch
-Patch2:         atlascpp-0.6.2-Werror.patch
 
 BuildRequires:  doxygen zlib-devel bzip2-devel
 # Provide the other name that this package is commonly known by
@@ -42,19 +40,14 @@ Libraries and header files for developing applications that use Atlas-C++
 
 %prep
 %setup -q -n Atlas-C++-%{version}
-%patch1 -p1
-%patch2 -p0
 
 
 %build
-%autoreconf
-%configure \
-	--enable-debug
+%configure
 
-# simple hack to remove -Werror from the test suite, which causes
-# it to fail.
-sed -i -e 's#-Werror##' benchmark/Makefile
-sed -i -e 's#-Werror##' tests/Objects/Makefile
+# simple hack to remove -Werror from the test suite, which causes it to fail
+sed -i -e 's#-Werror\(=[^ ]*\)\?##' benchmark/Makefile
+sed -i -e 's#-Werror\(=[^ ]*\)\?##' tests/Objects/Makefile
 
 make %{?_smp_mflags}
 make docs
@@ -88,6 +81,9 @@ make %{?_smp_mflags} check
 %{_mandir}/man3/Atlas*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt1_3
+- update to new release by fcimport
+
 * Thu Sep 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3-alt1
 - Version 0.6.3
 
