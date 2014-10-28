@@ -4,7 +4,7 @@ BuildRequires: perl(File/Spec/Functions.pm) perl(base.pm) perl-devel perl-podlat
 # END SourceDeps(oneline)
 Name:           perl-File-Pid
 Version:        1.01
-Release:        alt3_14
+Release:        alt3_15
 Summary:        Pid File Manipulation
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -46,6 +46,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_15
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_14
 - update to new release by fcimport
 
