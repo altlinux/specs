@@ -1,6 +1,6 @@
 Name:           icc-profiles-openicc
 Version:        1.3.1
-Release:        alt2_7
+Release:        alt2_8
 Summary:        The OpenICC profiles
 
 Group:          Graphics
@@ -36,6 +36,9 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/{pixmaps,mime/packages}
 
 install -pm 0644 *.png $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
+
+%post
+/bin/touch --no-create %{_datadir}/mime/packages &>/dev/null || :
 
 %files
 %doc AUTHORS ChangeLog COPYING
@@ -78,6 +81,9 @@ install -pm 0644 *.png $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_8
+- update to new release by fcimport
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_7
 - moved to Sisyphus as dependency to fop
 
