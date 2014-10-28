@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(ExtUtils/MM_Unix
 # END SourceDeps(oneline)
 Name:		perl-Test-NoTabs
 Version:	1.3
-Release:	alt2_9
+Release:	alt2_10
 Summary:	Check the presence of tabs in your project
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_10
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_9
 - update to new release by fcimport
 
