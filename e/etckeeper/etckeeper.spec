@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: etckeeper
-Version: 1.12
+Version: 1.15
 Release: alt1
 
 Summary: Etckeeper help to keep your /etc directory in VCS repository
@@ -40,6 +40,8 @@ rm -rf %buildroot%_libdir/python*
 # There is no cruft package for ALT:
 rm -rf %buildroot%_sysconfdir/cruft
 
+mv -v %buildroot%_sysconfdir/apt/apt.conf.d/05%name %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
+
 %post
 if [ -e %_sysconfdir/.git/hooks/pre-commit ] && egrep '^(/us[rb]/s?bin/)?%name' %_sysconfdir/.git/hooks/pre-commit >/dev/null 2>&1; then
  echo "Replacing path to etckeeper in %_sysconfdir/.git/hooks/pre-commit"
@@ -58,6 +60,9 @@ fi
 %doc README.md TODO
 
 %changelog
+* Tue Oct 28 2014 Terechkov Evgenii <evg@altlinux.org> 1.15-alt1
+- 1.15
+
 * Sat Jun 28 2014 Terechkov Evgenii <evg@altlinux.org> 1.12-alt1
 - 1.12
 
