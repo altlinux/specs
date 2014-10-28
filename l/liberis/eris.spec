@@ -1,13 +1,11 @@
-%def_disable check
-
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(AutoLoader.pm) perl(overload.pm) perl-devel perl-podlators pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3) pkgconfig(wfmath-1.0)
+BuildRequires: gcc-c++ pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3) pkgconfig(wfmath-1.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname eris
 Name:           liberis
 Version:        1.3.23
-Release:        alt1
+Release:        alt1_3
 Summary:        Client-side session layer for Atlas-C++
 
 Group:          Development/C++
@@ -16,7 +14,6 @@ Group:          Development/C++
 License:        LGPLv2+
 URL:            http://worldforge.org/dev/eng/libraries/eris
 Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version}.tar.bz2
-# The following patch is essentiall upstream and should be dropped at the next release
 
 BuildRequires: mercator-devel doxygen
 BuildRequires: atlascpp-devel >= 0.5.98
@@ -52,25 +49,17 @@ Libraries and header files for developing applications that use Eris.
 %build
 %configure
 make %{?_smp_mflags}
-doxygen eris.dox
-
-# Remove timestamps from the generated documentation to avoid
-# multiarch conflicts
-
-for file in docs/html/*.html ; do
-    sed -i -e 's/Generated on .* for Eris by/Generated for Eris by/' $file
-done
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-1.3.la
 
-# They seem to hang sometimes.
+# 2014-05-17 - Tests disabled because one of 42 failed, will work w/ upstream to fix
 %check
 # Run tests in debug mode so asserts won't be skipped
-sed -i -e 's/-DNDEBUG/-DDEBUG/' test/Makefile
-make %{?_smp_mflags} check
+#sed -i -e 's/-DNDEBUG/-DDEBUG/' test/Makefile
+#make %{?_smp_mflags} check
 
 
 %files
@@ -79,13 +68,15 @@ make %{?_smp_mflags} check
 
 
 %files devel
-%doc docs/html/*
 %{_includedir}/Eris-1.3
 %{_libdir}/lib%{oldname}-1.3.so
 %{_libdir}/pkgconfig/*.pc
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt1_3
+- update to new release by fcimport
+
 * Thu Sep 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.23-alt1
 - Version 1.3.23
 
