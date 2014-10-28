@@ -4,7 +4,7 @@ BuildRequires: perl(Danga/Socket.pm) perl(Errno.pm) perl(FindBin.pm) perl(Gearma
 # END SourceDeps(oneline)
 Name:           perl-Gearman-Server
 Version:        1.11
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Function call "router" and load balancer
 License:        GPL+ or Artistic
 Group:          System/Servers
@@ -48,6 +48,9 @@ make test
 %{_mandir}/man1/gearmand.*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_11
 - update to new release by fcimport
 
