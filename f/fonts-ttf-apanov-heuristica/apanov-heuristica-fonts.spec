@@ -1,30 +1,33 @@
+Group: System/Fonts/True type
 %define oldname apanov-heuristica-fonts
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name apanov-heuristica-fonts
-%define version 0.2.2
+%define version 1.0.2
 %global fontname apanov-heuristica
 %global fontconf 61-%{fontname}.conf
 
-%global archivename heuristica-src-%{version}
+%global archivename heuristica-ttf-%{version}
 %global googlename  evristika
 
 Name:    fonts-ttf-apanov-heuristica
-Version: 0.2.2
-Release: alt3_8
+Version: 1.0.2
+Release: alt1_3
 Epoch:   1
 Summary: A serif latin & cyrillic font
 
-Group:     System/Fonts/True type
 License:   OFL
-URL:       http://code.google.com/p/%{googlename}/
+URL:       http://sourceforge.net/projects/heuristica/
 
-Source0:   http://%{googlename}.googlecode.com/files/%{archivename}.tar.xz
+#we are using binary ttf archive as source archive
+#is currently missing required fontforge scripts
+#to compile and generate ttf files
+Source0:   http://downloads.sourceforge.net/project/heuristica/%{archivename}.tar.xz
 Source1:   %{oldname}-fontconfig.conf
-
+Source2:   %{fontname}.metainfo.xml
 
 BuildArch:     noarch
-BuildRequires: fontforge xgridfit
 BuildRequires: fontpackages-devel
+BuildRequires: dos2unix
 Source44: import.info
 
 %description
@@ -34,21 +37,11 @@ font that was released to the TeX Users Group under a liberal license.
 
 %prep
 %setup -n %{oldname}-%{version} -q -c
-for txt in *.txt ; do
-   fold -s $txt > $txt.new
-   sed -i 's/\r//' $txt.new
-   touch -r $txt $txt.new
-   mv $txt.new $txt
-done
-
+dos2unix OFL-FAQ.txt
 
 %build
-make %{?_smp_mflags}
-rm *\.gen\.ttf
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *\.ttf %{buildroot}%{_fontdir}
 
@@ -59,6 +52,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -94,15 +91,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc *.txt
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_3
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.2.2-alt3_8
 - update to new release by fcimport
 
