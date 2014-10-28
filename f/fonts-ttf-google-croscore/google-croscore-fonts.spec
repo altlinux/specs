@@ -12,7 +12,7 @@ portability across platforms.
 
 Name:           fonts-ttf-google-croscore
 Version:        1.23.0
-Release:        alt2_4
+Release:        alt2_6
 Summary:        The width-compatible fonts for improved on-screen readability
 
 Group:          Graphical desktop/Other
@@ -25,11 +25,18 @@ Source3:        62-%{fontname}-tinos-fontconfig.conf
 Source4:        30-0-%{fontname}-arimo-fontconfig.conf
 Source5:        30-0-%{fontname}-cousine-fontconfig.conf
 Source6:        30-0-%{fontname}-tinos-fontconfig.conf
-Source7:        62-%{fontname}-symbolneu-fontconfig.conf
+#Symbol font is not Unicode compatible
+#https://bugzilla.redhat.com/show_bug.cgi?id=1037882
+#Source7:        62-%{fontname}-symbolneu-fontconfig.conf
 
 # Upstream has not provided license text in this 1.23.0 release
 # Add ASL2.0 license text in LICENSE-2.0.txt file
 Source8:        LICENSE-2.0.txt
+
+# metainfo files for gnome-software
+Source9:        %{fontname}-arimo.metainfo.xml
+Source10:        %{fontname}-cousine.metainfo.xml
+Source11:        %{fontname}-tinos.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -39,11 +46,11 @@ Source44: import.info
 %common_desc
 
 
-%package common
+%package -n fonts-ttf-google-croscore-common
 Group: System/Fonts/True type
 Summary:        Common files of %{oldname}
 
-%description common
+%description -n fonts-ttf-google-croscore-common
 This package consists of files used by other %{oldname} packages.
 
 # Repeat for every font family
@@ -64,6 +71,7 @@ address document portability across platforms.
 %{_fontconfig_templatedir}/*-%{fontname}-arimo.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-arimo.conf
 %{_fontbasedir}/*/%{_fontstem}/Arimo*.ttf
+%{_datadir}/appdata/%{fontname}-arimo.metainfo.xml
 
 %package -n fonts-ttf-google-croscore-cousine
 Group: System/Fonts/True type
@@ -82,6 +90,7 @@ address document portability across platforms.
 %{_fontconfig_templatedir}/*-%{fontname}-cousine.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-cousine.conf
 %{_fontbasedir}/*/%{_fontstem}/Cousine*.ttf
+%{_datadir}/appdata/%{fontname}-cousine.metainfo.xml
 
 %package -n fonts-ttf-google-croscore-tinos
 Group: System/Fonts/True type
@@ -100,6 +109,7 @@ address document portability across platforms.
 %{_fontconfig_templatedir}/*-%{fontname}-tinos.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-tinos.conf
 %{_fontbasedir}/*/%{_fontstem}/Tinos*.ttf
+%{_datadir}/appdata/%{fontname}-tinos.metainfo.xml
 
 %package -n fonts-ttf-google-croscore-symbolneu
 Group: System/Fonts/True type
@@ -111,8 +121,6 @@ Requires:       %{name}-common = %{version}-%{release}
 Symbol Neu is a metrically compatible font to Symbol.
 
 %files -n fonts-ttf-google-croscore-symbolneu
-%{_fontconfig_templatedir}/*-%{fontname}-symbolneu.conf
-%config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-symbolneu.conf
 %{_fontbasedir}/*/%{_fontstem}/SymbolNeu.ttf
 
 %prep
@@ -142,16 +150,25 @@ install -m 0644 -p %{SOURCE5} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf30}-cousine.conf
 install -m 0644 -p %{SOURCE6} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf30}-tinos.conf
-install -m 0644 -p %{SOURCE7} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf62}-symbolneu.conf
+#install -m 0644 -p %{SOURCE7} \
+#        %{buildroot}%{_fontconfig_templatedir}/%{fontconf62}-symbolneu.conf
 
 for fconf in %{fontconf62}-arimo.conf %{fontconf30}-arimo.conf \
              %{fontconf62}-cousine.conf %{fontconf30}-cousine.conf \
              %{fontconf62}-tinos.conf %{fontconf30}-tinos.conf \
-       %{fontconf62}-symbolneu.conf; do
+#       %{fontconf62}-symbolneu.conf; do
+        do
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE9} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-arimo.metainfo.xml
+install -Dm 0644 -p %{SOURCE10} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-cousine.metainfo.xml
+install -Dm 0644 -p %{SOURCE11} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-tinos.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -187,12 +204,13 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
-%files common
+%files -n fonts-ttf-google-croscore-common
 %doc LICENSE-2.0.txt
 
-
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.23.0-alt2_6
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.23.0-alt2_4
 - update to new release by fcimport
 
