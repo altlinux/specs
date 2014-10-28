@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ python-devel unzip
+# END SourceDeps(oneline)
 %define oldname google-noto-fonts
 %global fontname google-noto
 %global fontconf 66-%{fontname}
@@ -8,14 +11,14 @@ between multiple scripts. Noto family supports almost all script available \
 in Unicode.
 
 Name:           fonts-ttf-google-noto
-Version:        20130807
-Release:        alt1_2
-Summary:        Hinted and Unhinted open type fonts for Unicode scripts
+Version:        20141001
+Release:        alt1_1
+Summary:        Hinted and Non Hinted open type fonts for Unicode scripts
 Group:          System/Fonts/True type
 License:        ASL 2.0
 URL:            https://code.google.com/p/noto
-Source0:        http://noto.googlecode.com/svn/trunk/packages/NotoFonts-hinted-2013-08-07.tgz
-Source1:        http://noto.googlecode.com/svn/trunk/packages/NotoFonts-unhinted-2013-08-07.tgz
+# Downloaded from github zip
+Source0:        https://noto.googlecode.com/archive/396bf23e32cf53820681144e109270ae1f4ee7c3.zip
 Source2:        %{fontconf}-sans.conf
 Source3:        %{fontconf}-sans-armenian.conf
 Source4:        %{fontconf}-sans-avestan.conf
@@ -78,11 +81,55 @@ Source60:        %{fontconf}-sans-gujarati.conf
 Source61:        %{fontconf}-sans-gujarati-ui.conf
 Source62:        %{fontconf}-sans-hanunno.conf
 Source63:        %{fontconf}-sans-tai-viet.conf
+Source64:        %{fontconf}-kufi-arabic.conf
+Source65:        %{fontconf}-naskh-arabic.conf
+Source66:        %{fontconf}-naskh-arabic-ui.conf
+Source67:        %{fontconf}-sans-balinese.conf
+Source68:        %{fontconf}-sans-bamum.conf
+Source69:        %{fontconf}-sans-batak.conf
+Source70:        %{fontconf}-sans-buginese.conf
+Source71:        %{fontconf}-sans-buhid.conf
+Source72:        %{fontconf}-sans-canadian-aboriginal.conf
+Source73:        %{fontconf}-sans-cham.conf
+Source74:        %{fontconf}-sans-cuneiform.conf
+Source75:        %{fontconf}-sans-cypriot.conf
+Source76:        %{fontconf}-sans-gothic.conf
+Source77:        %{fontconf}-sans-gurmukhi.conf
+Source78:        %{fontconf}-sans-gurmukhi-ui.conf
+Source79:        %{fontconf}-sans-inscriptional-pahlavi.conf
+Source80:        %{fontconf}-sans-inscriptional-parthian.conf
+Source81:        %{fontconf}-sans-javanese.conf
+Source82:        %{fontconf}-sans-lepcha.conf
+Source83:        %{fontconf}-sans-limbu.conf
+Source84:        %{fontconf}-sans-linearb.conf
+Source85:        %{fontconf}-sans-mongolian.conf
+Source86:        %{fontconf}-sans-myanmar.conf
+Source87:        %{fontconf}-sans-myanmar-ui.conf
+Source88:        %{fontconf}-sans-new-tai-lue.conf
+Source89:        %{fontconf}-sans-ogham.conf
+Source90:        %{fontconf}-sans-ol-chiki.conf
+Source91:        %{fontconf}-sans-old-italic.conf
+Source92:        %{fontconf}-sans-old-persian.conf
+Source93:        %{fontconf}-sans-phags-pa.conf
+Source94:        %{fontconf}-sans-rejang.conf
+Source95:        %{fontconf}-sans-runic.conf
+Source96:        %{fontconf}-sans-samaritan.conf
+Source97:        %{fontconf}-sans-saurashtra.conf
+Source98:        %{fontconf}-sans-sinhala.conf
+Source99:        %{fontconf}-sans-sundanese.conf
+Source100:        %{fontconf}-sans-syloti-nagri.conf
+Source101:        %{fontconf}-sans-syriac-eastern.conf
+Source102:        %{fontconf}-sans-syriac-estrangela.conf
+Source103:        %{fontconf}-sans-syriac-western.conf
+Source104:        %{fontconf}-sans-tai-le.conf
+Source105:        %{fontconf}-sans-tifinagh.conf
+Source106:        %{fontconf}-sans-yi.conf
+Source107:        %{fontconf}-sans-tagbanwa.conf
 
 BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
-Source64: import.info
+Source108: import.info
 
 %description
 %common_desc
@@ -124,7 +171,7 @@ Summary:        Free sans-serif font for Avestan script
 
 %description -n fonts-ttf-google-noto-sans-avestan
 %common_desc
-Unhinted sans-serif fonts for Avestan script.
+Non Hinted sans-serif fonts for Avestan script.
 
 %files -n fonts-ttf-google-noto-sans-avestan
 %{_fontconfig_templatedir}/%{fontconf}-sans-avestan.conf
@@ -139,7 +186,7 @@ Summary:        Free sans-serif font for Bengali script
 
 %description -n fonts-ttf-google-noto-sans-bengali
 %common_desc
-Unhinted sans-serif fonts for Bengali script.
+Non Hinted sans-serif fonts for Bengali script.
 
 %files -n fonts-ttf-google-noto-sans-bengali
 %{_fontconfig_templatedir}/%{fontconf}-sans-bengali.conf
@@ -153,7 +200,7 @@ Summary:        Free sans-serif UI font for Bengali script
 
 %description -n fonts-ttf-google-noto-sans-bengali-ui
 %common_desc
-Unhinted sans-serif UI fonts for Bengali script.
+Non Hinted sans-serif UI fonts for Bengali script.
 
 %files -n fonts-ttf-google-noto-sans-bengali-ui
 %{_fontconfig_templatedir}/%{fontconf}-sans-bengali-ui.conf
@@ -167,7 +214,7 @@ Summary:        Free sans-serif font for Brahmi script
 
 %description -n fonts-ttf-google-noto-sans-brahmi
 %common_desc
-Unhinted sans-serif fonts for Brahmi script.
+Non Hinted sans-serif fonts for Brahmi script.
 
 %files -n fonts-ttf-google-noto-sans-brahmi
 %{_fontconfig_templatedir}/%{fontconf}-sans-brahmi.conf
@@ -181,7 +228,7 @@ Summary:        Free sans-serif font for Carian script
 
 %description -n fonts-ttf-google-noto-sans-carian
 %common_desc
-Unhinted sans-serif fonts for Carian script.
+Non Hinted sans-serif fonts for Carian script.
 
 %files -n fonts-ttf-google-noto-sans-carian
 %{_fontconfig_templatedir}/%{fontconf}-sans-carian.conf
@@ -195,7 +242,7 @@ Summary:        Free sans-serif font for Cherokee script
 
 %description -n fonts-ttf-google-noto-sans-cherokee
 %common_desc
-Unhinted sans-serif fonts for Cherokee script.
+Non Hinted sans-serif fonts for Cherokee script.
 
 %files -n fonts-ttf-google-noto-sans-cherokee
 %{_fontconfig_templatedir}/%{fontconf}-sans-cherokee.conf
@@ -209,7 +256,7 @@ Summary:        Free sans-serif font for Coptic script
 
 %description -n fonts-ttf-google-noto-sans-coptic
 %common_desc
-Unhinted sans-serif fonts for Coptic script.
+Non Hinted sans-serif fonts for Coptic script.
 
 %files -n fonts-ttf-google-noto-sans-coptic
 %{_fontconfig_templatedir}/%{fontconf}-sans-coptic.conf
@@ -223,7 +270,7 @@ Summary:        Free sans-serif font for Deseret script
 
 %description -n fonts-ttf-google-noto-sans-deseret
 %common_desc
-Unhinted sans-serif fonts for Deseret script.
+Non Hinted sans-serif fonts for Deseret script.
 
 %files -n fonts-ttf-google-noto-sans-deseret
 %{_fontconfig_templatedir}/%{fontconf}-sans-deseret.conf
@@ -279,7 +326,7 @@ Summary:        Free sans-serif font for Egyptian Hieroglyphs script
 
 %description -n fonts-ttf-google-noto-sans-egyptian-hieroglyphs
 %common_desc
-Unhinted sans-serif fonts for Egyptian Hieroglyphs script.
+Non Hinted sans-serif fonts for Egyptian Hieroglyphs script.
 
 %files -n fonts-ttf-google-noto-sans-egyptian-hieroglyphs
 %{_fontconfig_templatedir}/%{fontconf}-sans-egyptian-hieroglyphs.conf
@@ -308,7 +355,7 @@ Summary:        Free sans-serif font for Glagolitic script
 
 %description -n fonts-ttf-google-noto-sans-glagolitic
 %common_desc
-Unhinted sans-serif fonts for Glagolitic script.
+Non Hinted sans-serif fonts for Glagolitic script.
 
 %files -n fonts-ttf-google-noto-sans-glagolitic
 %{_fontconfig_templatedir}/%{fontconf}-sans-glagolitic.conf
@@ -337,7 +384,7 @@ Summary:        Free sans-serif font for Imperial Aramaic script
 
 %description -n fonts-ttf-google-noto-sans-imperial-aramaic
 %common_desc
-Unhinted sans-serif fonts for Imperial Aramaic script.
+Non Hinted sans-serif fonts for Imperial Aramaic script.
 
 %files -n fonts-ttf-google-noto-sans-imperial-aramaic
 %{_fontconfig_templatedir}/%{fontconf}-sans-imperial-aramaic.conf
@@ -352,7 +399,7 @@ Summary:        Free sans-serif font for Kaithi script
 
 %description -n fonts-ttf-google-noto-sans-kaithi
 %common_desc
-Unhinted sans-serif fonts for Kaithi script.
+Non Hinted sans-serif fonts for Kaithi script.
 
 %files -n fonts-ttf-google-noto-sans-kaithi
 %{_fontconfig_templatedir}/%{fontconf}-sans-kaithi.conf
@@ -367,7 +414,7 @@ Summary:        Free sans-serif font for Kannada script
 
 %description -n fonts-ttf-google-noto-sans-kannada
 %common_desc
-Unhinted sans-serif fonts for Kannada script.
+Non Hinted sans-serif fonts for Kannada script.
 
 %files -n fonts-ttf-google-noto-sans-kannada
 %{_fontconfig_templatedir}/%{fontconf}-sans-kannada.conf
@@ -382,7 +429,7 @@ Summary:        Free sans-serif font for Kayah Li script
 
 %description -n fonts-ttf-google-noto-sans-kayah-li
 %common_desc
-Unhinted sans-serif fonts for Kayah Li script.
+Non Hinted sans-serif fonts for Kayah Li script.
 
 %files -n fonts-ttf-google-noto-sans-kayah-li
 %{_fontconfig_templatedir}/%{fontconf}-sans-kayah-li.conf
@@ -397,7 +444,7 @@ Summary:        Free sans-serif font for Kharoshthi script
 
 %description -n fonts-ttf-google-noto-sans-kharoshthi
 %common_desc
-Unhinted sans-serif fonts for Kharoshthi script.
+Non Hinted sans-serif fonts for Kharoshthi script.
 
 %files -n fonts-ttf-google-noto-sans-kharoshthi
 %{_fontconfig_templatedir}/%{fontconf}-sans-kharoshthi.conf
@@ -468,7 +515,7 @@ Summary:        Free Lisu script sans-serif fonts for UI
 
 %description -n fonts-ttf-google-noto-sans-lisu
 %common_desc
-Unhinted sans-serif UI fonts for Lisu script.
+Non Hinted sans-serif UI fonts for Lisu script.
 
 %files -n fonts-ttf-google-noto-sans-lisu
 %{_fontconfig_templatedir}/%{fontconf}-sans-lisu.conf
@@ -483,7 +530,7 @@ Summary:        Free Lycian script sans-serif fonts for UI
 
 %description -n fonts-ttf-google-noto-sans-lycian
 %common_desc
-Unhinted sans-serif UI fonts for Lycian script.
+Non Hinted sans-serif UI fonts for Lycian script.
 
 %files -n fonts-ttf-google-noto-sans-lycian
 %{_fontconfig_templatedir}/%{fontconf}-sans-lycian.conf
@@ -498,7 +545,7 @@ Summary:        Free Lydian script sans-serif fonts for UI
 
 %description -n fonts-ttf-google-noto-sans-lydian
 %common_desc
-Unhinted sans-serif UI fonts for Lydian script.
+Non Hinted sans-serif UI fonts for Lydian script.
 
 %files -n fonts-ttf-google-noto-sans-lydian
 %{_fontconfig_templatedir}/%{fontconf}-sans-lydian.conf
@@ -514,7 +561,7 @@ Summary:        Free Malayalam script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-malayalam
 %common_desc
-Unhinted sans-serif fonts for Malayalam script.
+Non Hinted sans-serif fonts for Malayalam script.
 
 %files -n fonts-ttf-google-noto-sans-malayalam
 %{_fontconfig_templatedir}/%{fontconf}-sans-malayalam.conf
@@ -529,7 +576,7 @@ Summary:        Free Malayalam script sans-serif fonts for UI
 
 %description -n fonts-ttf-google-noto-sans-malayalam-ui
 %common_desc
-Unhinted sans-serif UI fonts for Malayalam script.
+Non Hinted sans-serif UI fonts for Malayalam script.
 
 %files -n fonts-ttf-google-noto-sans-malayalam-ui
 %{_fontconfig_templatedir}/%{fontconf}-sans-malayalam-ui.conf
@@ -544,7 +591,7 @@ Summary:        Free Mandaic script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-mandaic
 %common_desc
-Unhinted sans-serif fonts for Mandaic script.
+Non Hinted sans-serif fonts for Mandaic script.
 
 %files -n fonts-ttf-google-noto-sans-mandaic
 %{_fontconfig_templatedir}/%{fontconf}-sans-mandaic.conf
@@ -559,7 +606,7 @@ Summary:        Free Meetei Mayek script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-meeteimayek
 %common_desc
-Unhinted sans-serif fonts for Meetei Mayek script.
+Non Hinted sans-serif fonts for Meetei Mayek script.
 
 %files -n fonts-ttf-google-noto-sans-meeteimayek
 %{_fontconfig_templatedir}/%{fontconf}-sans-meeteimayek.conf
@@ -573,7 +620,7 @@ Summary:        Free NKo script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-nko
 %common_desc
-Unhinted sans-serif fonts for NKo script.
+Non Hinted sans-serif fonts for NKo script.
 
 %files -n fonts-ttf-google-noto-sans-nko
 %{_fontconfig_templatedir}/%{fontconf}-sans-nko.conf
@@ -581,14 +628,13 @@ Unhinted sans-serif fonts for NKo script.
 %{_fontbasedir}/*/%{_fontstem}/NotoSansNKo*.ttf
 %doc LICENSE
 
-
 %package -n fonts-ttf-google-noto-sans-old-south-arabian
 Group: System/Fonts/True type
 Summary:        Free Old South Arabian script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-old-south-arabian
 %common_desc
-Unhinted sans-serif fonts for Old South Arabian script.
+Non Hinted sans-serif fonts for Old South Arabian script.
 
 %files -n fonts-ttf-google-noto-sans-old-south-arabian
 %{_fontconfig_templatedir}/%{fontconf}-sans-old-south-arabian.conf
@@ -603,7 +649,7 @@ Summary:        Free Old Turkic script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-old-turkic
 %common_desc
-Unhinted sans-serif fonts for Old Turkic script.
+Non Hinted sans-serif fonts for Old Turkic script.
 
 %files -n fonts-ttf-google-noto-sans-old-turkic
 %{_fontconfig_templatedir}/%{fontconf}-sans-old-turkic.conf
@@ -618,7 +664,7 @@ Summary:        Free Osmanya script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-osmanya
 %common_desc
-Unhinted sans-serif fonts for Osmanya script.
+Non Hinted sans-serif fonts for Osmanya script.
 
 %files -n fonts-ttf-google-noto-sans-osmanya
 %{_fontconfig_templatedir}/%{fontconf}-sans-osmanya.conf
@@ -633,7 +679,7 @@ Summary:        Free Phoenician script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-phoenician
 %common_desc
-Unhinted sans-serif fonts for Phoenician script.
+Non Hinted sans-serif fonts for Phoenician script.
 
 %files -n fonts-ttf-google-noto-sans-phoenician
 %{_fontconfig_templatedir}/%{fontconf}-sans-phoenician.conf
@@ -649,7 +695,7 @@ Summary:        Free Shavian script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-shavian
 %common_desc
-Unhinted sans-serif fonts for Shavian script.
+Non Hinted sans-serif fonts for Shavian script.
 
 %files -n fonts-ttf-google-noto-sans-shavian
 %{_fontconfig_templatedir}/%{fontconf}-sans-shavian.conf
@@ -664,7 +710,7 @@ Summary:        Free Symbols script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-symbols
 %common_desc
-Unhinted sans-serif fonts for Symbols script.
+Non Hinted sans-serif fonts for Symbols script.
 
 %files -n fonts-ttf-google-noto-sans-symbols
 %{_fontconfig_templatedir}/%{fontconf}-sans-symbols.conf
@@ -680,7 +726,7 @@ Summary:        Free tagalog script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-tagalog
 %common_desc
-Unhinted sans-serif fonts for tagalog script.
+Non Hinted sans-serif fonts for tagalog script.
 
 %files -n fonts-ttf-google-noto-sans-tagalog
 %{_fontconfig_templatedir}/%{fontconf}-sans-tagalog.conf
@@ -695,7 +741,7 @@ Summary:        Free Tai Tham script sans-serif fonts
 
 %description -n fonts-ttf-google-noto-sans-tai-tham
 %common_desc
-Unhinted sans-serif fonts for Tai Tham script.
+Non Hinted sans-serif fonts for Tai Tham script.
 
 %files -n fonts-ttf-google-noto-sans-tai-tham
 %{_fontconfig_templatedir}/%{fontconf}-sans-tai-tham.conf
@@ -739,7 +785,7 @@ Summary:        Free Telugu script sans-serif font
 
 %description -n fonts-ttf-google-noto-sans-telugu
 %common_desc
-Unhinted sans-serif fonts for Telugu script.
+Non Hinted sans-serif fonts for Telugu script.
 
 %files -n fonts-ttf-google-noto-sans-telugu
 %{_fontconfig_templatedir}/%{fontconf}-sans-telugu.conf
@@ -783,7 +829,7 @@ Summary:        Free Ugaritic script sans-serif font
 
 %description -n fonts-ttf-google-noto-sans-ugaritic
 %common_desc
-Unhinted sans-serif fonts for Ugaritic script.
+Non Hinted sans-serif fonts for Ugaritic script.
 
 %files -n fonts-ttf-google-noto-sans-ugaritic
 %{_fontconfig_templatedir}/%{fontconf}-sans-ugaritic.conf
@@ -811,7 +857,7 @@ Summary:        Free Vai script sans-serif font
 
 %description -n fonts-ttf-google-noto-sans-vai
 %common_desc
-Unhinted sans-serif fonts for Vai script.
+Non Hinted sans-serif fonts for Vai script.
 
 %files -n fonts-ttf-google-noto-sans-vai
 %{_fontconfig_templatedir}/%{fontconf}-sans-vai.conf
@@ -909,11 +955,11 @@ Hinted serif fonts for Thai script.
 
 %package -n fonts-ttf-google-noto-sans-kannada-ui
 Group: System/Fonts/True type
-Summary:        Free Unhinted Kannada script sans fonts
+Summary:        Free Non Hinted Kannada script sans fonts
 
 %description -n fonts-ttf-google-noto-sans-kannada-ui
 %common_desc
-Unhinted sanserif UI fonts for Kannada script.
+Non Hinted sanserif UI fonts for Kannada script.
 
 %files -n fonts-ttf-google-noto-sans-kannada-ui
 %{_fontconfig_templatedir}/%{fontconf}-sans-kannada-ui.conf
@@ -923,11 +969,11 @@ Unhinted sanserif UI fonts for Kannada script.
 
 %package -n fonts-ttf-google-noto-sans-telugu-ui
 Group: System/Fonts/True type
-Summary:        Free Unhinted Telugu script sans fonts
+Summary:        Free Non Hinted Telugu script sans fonts
 
 %description -n fonts-ttf-google-noto-sans-telugu-ui
 %common_desc
-Unhinted sanserif UI fonts for Telugu script.
+Non Hinted sanserif UI fonts for Telugu script.
 
 %files -n fonts-ttf-google-noto-sans-telugu-ui
 %{_fontconfig_templatedir}/%{fontconf}-sans-telugu-ui.conf
@@ -938,11 +984,11 @@ Unhinted sanserif UI fonts for Telugu script.
 
 %package -n fonts-ttf-google-noto-sans-gujarati
 Group: System/Fonts/True type
-Summary:        Free Unhinted Gujarati script sans fonts
+Summary:        Free Non Hinted Gujarati script sans fonts
 
 %description -n fonts-ttf-google-noto-sans-gujarati
 %common_desc
-Unhinted sanserif fonts for Gujarati script.
+Non Hinted sanserif fonts for Gujarati script.
 
 %files -n fonts-ttf-google-noto-sans-gujarati
 %{_fontconfig_templatedir}/%{fontconf}-sans-gujarati.conf
@@ -952,11 +998,11 @@ Unhinted sanserif fonts for Gujarati script.
 
 %package -n fonts-ttf-google-noto-sans-gujarati-ui
 Group: System/Fonts/True type
-Summary:        Free Unhinted Gujarati script sans UI fonts
+Summary:        Free Non Hinted Gujarati script sans UI fonts
 
 %description -n fonts-ttf-google-noto-sans-gujarati-ui
 %common_desc
-Unhinted sanserif UI fonts for Gujarati script.
+Non Hinted sanserif UI fonts for Gujarati script.
 
 %files -n fonts-ttf-google-noto-sans-gujarati-ui
 %{_fontconfig_templatedir}/%{fontconf}-sans-gujarati-ui.conf
@@ -967,11 +1013,11 @@ Unhinted sanserif UI fonts for Gujarati script.
 
 %package -n fonts-ttf-google-noto-sans-hanunno
 Group: System/Fonts/True type
-Summary:        Free Unhinted Hanunno script sans fonts
+Summary:        Free Non Hinted Hanunno script sans fonts
 
 %description -n fonts-ttf-google-noto-sans-hanunno
 %common_desc
-Unhinted sanserif fonts for Hanunno script.
+Non Hinted sanserif fonts for Hanunno script.
 
 %files -n fonts-ttf-google-noto-sans-hanunno
 %{_fontconfig_templatedir}/%{fontconf}-sans-hanunno.conf
@@ -982,11 +1028,11 @@ Unhinted sanserif fonts for Hanunno script.
 
 %package -n fonts-ttf-google-noto-sans-tai-viet
 Group: System/Fonts/True type
-Summary:        Free Unhinted Tai Viet script sans fonts
+Summary:        Free Non Hinted Tai Viet script sans fonts
 
 %description -n fonts-ttf-google-noto-sans-tai-viet
 %common_desc
-Unhinted sanserif fonts for Tai Viet script.
+Non Hinted sanserif fonts for Tai Viet script.
 
 %files -n fonts-ttf-google-noto-sans-tai-viet
 %{_fontconfig_templatedir}/%{fontconf}-sans-tai-viet.conf
@@ -994,12 +1040,636 @@ Unhinted sanserif fonts for Tai Viet script.
 %{_fontbasedir}/*/%{_fontstem}/NotoSansTaiViet*.ttf
 %doc LICENSE
 
+
+%package -n fonts-ttf-google-noto-kufi-arabic
+Group: System/Fonts/True type
+Summary:        Free font for Kufi Arabic script
+
+%description -n fonts-ttf-google-noto-kufi-arabic
+%common_desc
+Hinted fonts for Kufi Arabic script.
+
+%files -n fonts-ttf-google-noto-kufi-arabic
+%{_fontconfig_templatedir}/%{fontconf}-kufi-arabic.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-kufi-arabic.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoKufiArabic-*.ttf
+%doc LICENSE
+
+
+%package -n fonts-ttf-google-noto-naskh-arabic
+Group: System/Fonts/True type
+Summary:        Free font for Naskh Arabic script
+
+%description -n fonts-ttf-google-noto-naskh-arabic
+%common_desc
+Hinted fonts for Naskh Arabic script.
+
+%files -n fonts-ttf-google-noto-naskh-arabic
+%{_fontconfig_templatedir}/%{fontconf}-naskh-arabic.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-naskh-arabic.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoNaskhArabic-*.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-naskh-arabic-ui
+Group: System/Fonts/True type
+Summary:        Free UI font for Naskh Arabic script
+
+%description -n fonts-ttf-google-noto-naskh-arabic-ui
+%common_desc
+Non Hinted fonts for Naskh Arabic script.
+
+%files -n fonts-ttf-google-noto-naskh-arabic-ui
+%{_fontconfig_templatedir}/%{fontconf}-naskh-arabic-ui.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-naskh-arabic-ui.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoNaskhArabicUI-*.ttf
+%doc LICENSE
+
+
+%package -n fonts-ttf-google-noto-sans-balinese
+Group: System/Fonts/True type
+Summary:        Free sans-serif font for Balinese script
+
+%description -n fonts-ttf-google-noto-sans-balinese
+%common_desc
+Non Hinted fonts for Balinese script.
+
+%files -n fonts-ttf-google-noto-sans-balinese
+%{_fontconfig_templatedir}/%{fontconf}-sans-balinese.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-balinese.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansBalinese-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-bamum
+Group: System/Fonts/True type
+Summary:        Free sans-serif font for Bamum script
+
+%description -n fonts-ttf-google-noto-sans-bamum
+%common_desc
+Non Hinted fonts for Bamum script.
+
+%files -n fonts-ttf-google-noto-sans-bamum
+%{_fontconfig_templatedir}/%{fontconf}-sans-bamum.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-bamum.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansBamum-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-batak
+Group: System/Fonts/True type
+Summary:        Free sans-serif font for Batak script
+
+%description -n fonts-ttf-google-noto-sans-batak
+%common_desc
+Non Hinted fonts for Batak script.
+
+%files -n fonts-ttf-google-noto-sans-batak
+%{_fontconfig_templatedir}/%{fontconf}-sans-batak.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-batak.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansBatak-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-buginese
+Group: System/Fonts/True type
+Summary:        Free sans-serif font for Buginese script
+
+%description -n fonts-ttf-google-noto-sans-buginese
+%common_desc
+Non Hinted fonts for Buginese script.
+
+%files -n fonts-ttf-google-noto-sans-buginese
+%{_fontconfig_templatedir}/%{fontconf}-sans-buginese.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-buginese.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansBuginese-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-buhid
+Group: System/Fonts/True type
+Summary:        Free sans-serif font for Buhid script
+
+%description -n fonts-ttf-google-noto-sans-buhid
+%common_desc
+Non Hinted fonts for Buhid script.
+
+%files -n fonts-ttf-google-noto-sans-buhid
+%{_fontconfig_templatedir}/%{fontconf}-sans-buhid.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-buhid.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansBuhid-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-canadian-aboriginal
+Group: System/Fonts/True type
+Summary:        Free sans-serif font for Canadian Aboriginal script
+
+%description -n fonts-ttf-google-noto-sans-canadian-aboriginal
+%common_desc
+Non Hinted fonts for Canadian Aboriginal script.
+
+%files -n fonts-ttf-google-noto-sans-canadian-aboriginal
+%{_fontconfig_templatedir}/%{fontconf}-sans-canadian-aboriginal.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-canadian-aboriginal.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansCanadianAboriginal*.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-cham
+Group: System/Fonts/True type
+Summary:        Free sans-serif font for Cham script
+
+%description -n fonts-ttf-google-noto-sans-cham
+%common_desc
+Non Hinted fonts for Cham script.
+
+%files -n fonts-ttf-google-noto-sans-cham
+%{_fontconfig_templatedir}/%{fontconf}-sans-cham.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-cham.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansCham-*.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-cuneiform
+Group: System/Fonts/True type
+Summary:        Free sans-serif font for Cuneiform script
+
+%description -n fonts-ttf-google-noto-sans-cuneiform
+%common_desc
+Non Hinted fonts for Cuneiform script.
+
+%files -n fonts-ttf-google-noto-sans-cuneiform
+%{_fontconfig_templatedir}/%{fontconf}-sans-cuneiform.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-cuneiform.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansCuneiform-*.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-cypriot
+Group: System/Fonts/True type
+Summary:        Free sans-serif font for Cypriot script
+
+%description -n fonts-ttf-google-noto-sans-cypriot
+%common_desc
+Non Hinted fonts for Cypriot script.
+
+%files -n fonts-ttf-google-noto-sans-cypriot
+%{_fontconfig_templatedir}/%{fontconf}-sans-cypriot.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-cypriot.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansCypriot-*.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-gothic
+Group: System/Fonts/True type
+Summary:        Free sans-serif font for Gothic script
+
+%description -n fonts-ttf-google-noto-sans-gothic
+%common_desc
+Non Hinted fonts for Gothic script.
+
+%files -n fonts-ttf-google-noto-sans-gothic
+%{_fontconfig_templatedir}/%{fontconf}-sans-gothic.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-gothic.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansGothic-*.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-gurmukhi
+Group: System/Fonts/True type
+Summary:        Free sans-serif font for Gurmukhi script
+
+%description -n fonts-ttf-google-noto-sans-gurmukhi
+%common_desc
+Hinted fonts for Gurmukhi script.
+
+%files -n fonts-ttf-google-noto-sans-gurmukhi
+%{_fontconfig_templatedir}/%{fontconf}-sans-gurmukhi.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-gurmukhi.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansGurmukhi-*.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-gurmukhi-ui
+Group: System/Fonts/True type
+Summary:        Free sans-serif UI fonts for Gurmukhi script
+
+%description -n fonts-ttf-google-noto-sans-gurmukhi-ui
+%common_desc
+Hinted fonts for Gurmukhi script.
+
+%files -n fonts-ttf-google-noto-sans-gurmukhi-ui
+%{_fontconfig_templatedir}/%{fontconf}-sans-gurmukhi-ui.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-gurmukhi-ui.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansGurmukhiUI-*.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-inscriptional-pahlavi
+Group: System/Fonts/True type
+Summary:        Free sans-serif UI font for Inscriptional Pahlavi script
+
+%description -n fonts-ttf-google-noto-sans-inscriptional-pahlavi
+%common_desc
+Non Hinted font for Inscriptional Pahlavi script.
+
+%files -n fonts-ttf-google-noto-sans-inscriptional-pahlavi
+%{_fontconfig_templatedir}/%{fontconf}-sans-inscriptional-pahlavi.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-inscriptional-pahlavi.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansInscriptionalPahlavi-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-inscriptional-parthian
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Inscriptional Parthian script
+
+%description -n fonts-ttf-google-noto-sans-inscriptional-parthian
+%common_desc
+Non Hinted fonts for Inscriptional Parthian script.
+
+%files -n fonts-ttf-google-noto-sans-inscriptional-parthian
+%{_fontconfig_templatedir}/%{fontconf}-sans-inscriptional-parthian.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-inscriptional-parthian.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansInscriptionalParthian-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-javanese
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Javanese script
+
+%description -n fonts-ttf-google-noto-sans-javanese
+%common_desc
+Non Hinted fonts for Javanese script.
+
+%files -n fonts-ttf-google-noto-sans-javanese
+%{_fontconfig_templatedir}/%{fontconf}-sans-javanese.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-javanese.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansJavanese-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-lepcha
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Lepcha script
+
+%description -n fonts-ttf-google-noto-sans-lepcha
+%common_desc
+Non Hinted fonts for Lepcha script.
+
+%files -n fonts-ttf-google-noto-sans-lepcha
+%{_fontconfig_templatedir}/%{fontconf}-sans-lepcha.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-lepcha.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansLepcha-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-limbu
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Limbu script
+
+%description -n fonts-ttf-google-noto-sans-limbu
+%common_desc
+Non Hinted fonts for Limbu script.
+
+%files -n fonts-ttf-google-noto-sans-limbu
+%{_fontconfig_templatedir}/%{fontconf}-sans-limbu.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-limbu.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansLimbu-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-linearb
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Linearb script
+
+%description -n fonts-ttf-google-noto-sans-linearb
+%common_desc
+Non Hinted fonts for Linearb script.
+
+%files -n fonts-ttf-google-noto-sans-linearb
+%{_fontconfig_templatedir}/%{fontconf}-sans-linearb.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-linearb.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansLinearB-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-mongolian
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Mongolian script
+
+%description -n fonts-ttf-google-noto-sans-mongolian
+%common_desc
+Non Hinted fonts for Mongolian script.
+
+%files -n fonts-ttf-google-noto-sans-mongolian
+%{_fontconfig_templatedir}/%{fontconf}-sans-mongolian.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-mongolian.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansMongolian-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-myanmar
+Group: System/Fonts/True type
+Summary:        Free sans-serif UI fonts for Myanmar script
+
+%description -n fonts-ttf-google-noto-sans-myanmar
+%common_desc
+Non Hinted fonts for Myanmar script.
+
+%files -n fonts-ttf-google-noto-sans-myanmar
+%{_fontconfig_templatedir}/%{fontconf}-sans-myanmar.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-myanmar.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansMyanmar-*.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-myanmar-ui
+Group: System/Fonts/True type
+Summary:        Free sans-serif UI fonts for Myanmar script
+
+%description -n fonts-ttf-google-noto-sans-myanmar-ui
+%common_desc
+Non Hinted fonts for Myanmar script.
+
+%files -n fonts-ttf-google-noto-sans-myanmar-ui
+%{_fontconfig_templatedir}/%{fontconf}-sans-myanmar-ui.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-myanmar-ui.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansMyanmarUI-*.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-new-tai-lue
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Tai Lue script
+
+%description -n fonts-ttf-google-noto-sans-new-tai-lue
+%common_desc
+Non Hinted fonts for Tai Lue script.
+
+%files -n fonts-ttf-google-noto-sans-new-tai-lue
+%{_fontconfig_templatedir}/%{fontconf}-sans-new-tai-lue.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-new-tai-lue.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansNewTaiLue-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-ogham
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Ogham script
+
+%description -n fonts-ttf-google-noto-sans-ogham
+%common_desc
+Non Hinted fonts for Ogham script.
+
+%files -n fonts-ttf-google-noto-sans-ogham
+%{_fontconfig_templatedir}/%{fontconf}-sans-ogham.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-ogham.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansOgham-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-ol-chiki
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Ol Chiki script
+
+%description -n fonts-ttf-google-noto-sans-ol-chiki
+%common_desc
+Non Hinted fonts for Ol Chiki script.
+
+%files -n fonts-ttf-google-noto-sans-ol-chiki
+%{_fontconfig_templatedir}/%{fontconf}-sans-ol-chiki.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-ol-chiki.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansOlChiki-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-old-italic
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Old Italic script
+
+%description -n fonts-ttf-google-noto-sans-old-italic
+%common_desc
+Non Hinted fonts for Old Italic script.
+
+%files -n fonts-ttf-google-noto-sans-old-italic
+%{_fontconfig_templatedir}/%{fontconf}-sans-old-italic.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-old-italic.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansOldItalic-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-old-persian
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Old Persian script
+
+%description -n fonts-ttf-google-noto-sans-old-persian
+%common_desc
+Non Hinted fonts for Old Persian script.
+
+%files -n fonts-ttf-google-noto-sans-old-persian
+%{_fontconfig_templatedir}/%{fontconf}-sans-old-persian.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-old-persian.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansOldPersian-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-phags-pa
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Phags Pa script
+
+%description -n fonts-ttf-google-noto-sans-phags-pa
+%common_desc
+Non Hinted fonts for Phags Pa script.
+
+%files -n fonts-ttf-google-noto-sans-phags-pa
+%{_fontconfig_templatedir}/%{fontconf}-sans-phags-pa.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-phags-pa.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansPhagsPa-Regular.ttf
+%doc LICENSE
+
+
+%package -n fonts-ttf-google-noto-sans-rejang
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Rejang script
+
+%description -n fonts-ttf-google-noto-sans-rejang
+%common_desc
+Non Hinted fonts for Rejang script.
+
+%files -n fonts-ttf-google-noto-sans-rejang
+%{_fontconfig_templatedir}/%{fontconf}-sans-rejang.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-rejang.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansRejang-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-runic
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Runic script
+
+%description -n fonts-ttf-google-noto-sans-runic
+%common_desc
+Non Hinted fonts for Runic script.
+
+%files -n fonts-ttf-google-noto-sans-runic
+%{_fontconfig_templatedir}/%{fontconf}-sans-runic.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-runic.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansRunic-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-samaritan
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Samaritan script
+
+%description -n fonts-ttf-google-noto-sans-samaritan
+%common_desc
+Non Hinted fonts for Samaritan script.
+
+%files -n fonts-ttf-google-noto-sans-samaritan
+%{_fontconfig_templatedir}/%{fontconf}-sans-samaritan.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-samaritan.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansSamaritan-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-saurashtra
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Saurashtra script
+
+%description -n fonts-ttf-google-noto-sans-saurashtra
+%common_desc
+Non Hinted fonts for Saurashtra script.
+
+%files -n fonts-ttf-google-noto-sans-saurashtra
+%{_fontconfig_templatedir}/%{fontconf}-sans-saurashtra.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-saurashtra.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansSaurashtra-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-sinhala
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Sinhala script
+
+%description -n fonts-ttf-google-noto-sans-sinhala
+%common_desc
+Non Hinted fonts for sinhala script.
+
+%files -n fonts-ttf-google-noto-sans-sinhala
+%{_fontconfig_templatedir}/%{fontconf}-sans-sinhala.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-sinhala.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansSinhala-*.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-sundanese
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Sundanese script
+
+%description -n fonts-ttf-google-noto-sans-sundanese
+%common_desc
+Non Hinted fonts for Sundanese script.
+
+%files -n fonts-ttf-google-noto-sans-sundanese
+%{_fontconfig_templatedir}/%{fontconf}-sans-sundanese.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-sundanese.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansSundanese-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-syloti-nagri
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Syloti Nagri script
+
+%description -n fonts-ttf-google-noto-sans-syloti-nagri
+%common_desc
+Non Hinted fonts for Syloti Nagri script.
+
+%files -n fonts-ttf-google-noto-sans-syloti-nagri
+%{_fontconfig_templatedir}/%{fontconf}-sans-syloti-nagri.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-syloti-nagri.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansSylotiNagri-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-syriac-eastern
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Syriac Eastern script
+
+%description -n fonts-ttf-google-noto-sans-syriac-eastern
+%common_desc
+Non Hinted fonts for Syriac Eastern script.
+
+%files -n fonts-ttf-google-noto-sans-syriac-eastern
+%{_fontconfig_templatedir}/%{fontconf}-sans-syriac-eastern.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-syriac-eastern.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansSyriacEastern-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-syriac-estrangela
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Syriac Estrangela script
+
+%description -n fonts-ttf-google-noto-sans-syriac-estrangela
+%common_desc
+Non Hinted fonts for Syriac Estrangela script.
+
+%files -n fonts-ttf-google-noto-sans-syriac-estrangela
+%{_fontconfig_templatedir}/%{fontconf}-sans-syriac-estrangela.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-syriac-estrangela.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansSyriacEstrangela-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-syriac-western
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Syriac Western script
+
+%description -n fonts-ttf-google-noto-sans-syriac-western
+%common_desc
+Non Hinted fonts for Syriac Western script.
+
+%files -n fonts-ttf-google-noto-sans-syriac-western
+%{_fontconfig_templatedir}/%{fontconf}-sans-syriac-western.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-syriac-western.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansSyriacWestern-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-tai-le
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Tai Le script
+
+%description -n fonts-ttf-google-noto-sans-tai-le
+%common_desc
+Non Hinted fonts for Tai Le script.
+
+%files -n fonts-ttf-google-noto-sans-tai-le
+%{_fontconfig_templatedir}/%{fontconf}-sans-tai-le.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-tai-le.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansTaiLe-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-tifinagh
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Tifinagh script
+
+%description -n fonts-ttf-google-noto-sans-tifinagh
+%common_desc
+Non Hinted fonts for Tifinagh script.
+
+%files -n fonts-ttf-google-noto-sans-tifinagh
+%{_fontconfig_templatedir}/%{fontconf}-sans-tifinagh.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-tifinagh.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansTifinagh-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-yi
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Yi script
+
+%description -n fonts-ttf-google-noto-sans-yi
+%common_desc
+Non Hinted fonts for Yi script.
+
+%files -n fonts-ttf-google-noto-sans-yi
+%{_fontconfig_templatedir}/%{fontconf}-sans-yi.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-yi.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansYi-Regular.ttf
+%doc LICENSE
+
+%package -n fonts-ttf-google-noto-sans-tagbanwa
+Group: System/Fonts/True type
+Summary:        Free sans-serif fonts for Tagbanwa script
+
+%description -n fonts-ttf-google-noto-sans-tagbanwa
+%common_desc
+Non Hinted fonts for Tagbanwa script.
+
+%files -n fonts-ttf-google-noto-sans-tagbanwa
+%{_fontconfig_templatedir}/%{fontconf}-sans-tagbanwa.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-tagbanwa.conf
+%{_fontbasedir}/*/%{_fontstem}/NotoSansTagbanwa-Regular.ttf
+%doc LICENSE
+
+
+
 %prep
 %setup -n %{oldname}-%{version} -q -c
-%setup -n %{oldname}-%{version} -c -q -a 1
-cp -p fonts/individual/hinted/*.ttf .
-rm -rf fonts/individual/unhinted/*Khmer* fonts/individual/unhinted/*Lao* fonts/individual/unhinted/*Hebrew*
-cp -p fonts/individual/unhinted/*.ttf .
+rm -rf noto-396bf23e32cf/color_emoji
+cp noto-396bf23e32cf/AUTHORS noto-396bf23e32cf/CONTRIBUTORS noto-396bf23e32cf/LICENSE .
+cp noto-396bf23e32cf/fonts/individual/unhinted/* .
+cp -f noto-396bf23e32cf/fonts/individual/hinted/* .
+rm -rf Arimo-* Cousine-* Tinos-*
+
 
 %build
 
@@ -1136,7 +1806,94 @@ install -m 0644 -p %{SOURCE62} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-hanunno.conf
 install -m 0644 -p %{SOURCE63} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-tai-viet.conf
-
+install -m 0644 -p %{SOURCE64} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-kufi-arabic.conf
+install -m 0644 -p %{SOURCE65} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-naskh-arabic.conf
+install -m 0644 -p %{SOURCE66} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-naskh-arabic-ui.conf
+install -m 0644 -p %{SOURCE67} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-balinese.conf
+install -m 0644 -p %{SOURCE68} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-bamum.conf
+install -m 0644 -p %{SOURCE69} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-batak.conf
+install -m 0644 -p %{SOURCE70} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-buginese.conf
+install -m 0644 -p %{SOURCE71} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-buhid.conf
+install -m 0644 -p %{SOURCE72} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-canadian-aboriginal.conf
+install -m 0644 -p %{SOURCE73} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-cham.conf
+install -m 0644 -p %{SOURCE74} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-cuneiform.conf
+install -m 0644 -p %{SOURCE75} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-cypriot.conf
+install -m 0644 -p %{SOURCE76} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-gothic.conf
+install -m 0644 -p %{SOURCE77} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-gurmukhi.conf
+install -m 0644 -p %{SOURCE78} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-gurmukhi-ui.conf
+install -m 0644 -p %{SOURCE79} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-inscriptional-pahlavi.conf
+install -m 0644 -p %{SOURCE80} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-inscriptional-parthian.conf
+install -m 0644 -p %{SOURCE81} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-javanese.conf
+install -m 0644 -p %{SOURCE82} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-lepcha.conf
+install -m 0644 -p %{SOURCE83} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-limbu.conf
+install -m 0644 -p %{SOURCE84} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-linearb.conf
+install -m 0644 -p %{SOURCE85} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-mongolian.conf
+install -m 0644 -p %{SOURCE86} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-myanmar.conf
+install -m 0644 -p %{SOURCE87} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-myanmar-ui.conf
+install -m 0644 -p %{SOURCE88} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-new-tai-lue.conf
+install -m 0644 -p %{SOURCE89} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-ogham.conf
+install -m 0644 -p %{SOURCE90} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-ol-chiki.conf
+install -m 0644 -p %{SOURCE91} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-old-italic.conf
+install -m 0644 -p %{SOURCE92} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-old-persian.conf
+install -m 0644 -p %{SOURCE93} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-phags-pa.conf
+install -m 0644 -p %{SOURCE94} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-rejang.conf
+install -m 0644 -p %{SOURCE95} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-runic.conf
+install -m 0644 -p %{SOURCE96} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-samaritan.conf
+install -m 0644 -p %{SOURCE97} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-saurashtra.conf
+install -m 0644 -p %{SOURCE98} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-sinhala.conf
+install -m 0644 -p %{SOURCE99} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-sundanese.conf
+install -m 0644 -p %{SOURCE100} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-syloti-nagri.conf
+install -m 0644 -p %{SOURCE101} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-syriac-eastern.conf
+install -m 0644 -p %{SOURCE102} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-syriac-estrangela.conf
+install -m 0644 -p %{SOURCE103} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-syriac-western.conf
+install -m 0644 -p %{SOURCE104} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-tai-le.conf
+install -m 0644 -p %{SOURCE105} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-tifinagh.conf
+install -m 0644 -p %{SOURCE106} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-yi.conf
+install -m 0644 -p %{SOURCE107} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans-tagbanwa.conf
 
 for fconf in %{fontconf}-sans.conf \
              %{fontconf}-sans-armenian.conf \
@@ -1199,7 +1956,51 @@ for fconf in %{fontconf}-sans.conf \
              %{fontconf}-sans-gujarati.conf \
              %{fontconf}-sans-gujarati-ui.conf \
              %{fontconf}-sans-hanunno.conf \
-             %{fontconf}-sans-tai-viet.conf ; do
+             %{fontconf}-sans-tai-viet.conf \
+             %{fontconf}-kufi-arabic.conf \
+             %{fontconf}-naskh-arabic.conf \
+             %{fontconf}-naskh-arabic-ui.conf \
+             %{fontconf}-sans-balinese.conf \
+             %{fontconf}-sans-bamum.conf \
+             %{fontconf}-sans-batak.conf \
+             %{fontconf}-sans-buginese.conf \
+             %{fontconf}-sans-buhid.conf \
+             %{fontconf}-sans-canadian-aboriginal.conf \
+             %{fontconf}-sans-cham.conf \
+             %{fontconf}-sans-cuneiform.conf \
+             %{fontconf}-sans-cypriot.conf \
+             %{fontconf}-sans-gothic.conf \
+             %{fontconf}-sans-gurmukhi.conf \
+             %{fontconf}-sans-gurmukhi-ui.conf \
+             %{fontconf}-sans-inscriptional-pahlavi.conf \
+             %{fontconf}-sans-inscriptional-parthian.conf \
+             %{fontconf}-sans-javanese.conf \
+             %{fontconf}-sans-lepcha.conf \
+             %{fontconf}-sans-limbu.conf \
+             %{fontconf}-sans-linearb.conf \
+             %{fontconf}-sans-mongolian.conf \
+             %{fontconf}-sans-myanmar.conf \
+             %{fontconf}-sans-myanmar-ui.conf \
+             %{fontconf}-sans-new-tai-lue.conf \
+             %{fontconf}-sans-ogham.conf \
+             %{fontconf}-sans-ol-chiki.conf \
+             %{fontconf}-sans-old-italic.conf \
+             %{fontconf}-sans-old-persian.conf \
+             %{fontconf}-sans-phags-pa.conf \
+             %{fontconf}-sans-rejang.conf \
+             %{fontconf}-sans-runic.conf \
+             %{fontconf}-sans-samaritan.conf \
+             %{fontconf}-sans-saurashtra.conf \
+             %{fontconf}-sans-sinhala.conf \
+             %{fontconf}-sans-sundanese.conf \
+             %{fontconf}-sans-syloti-nagri.conf \
+             %{fontconf}-sans-syriac-eastern.conf \
+             %{fontconf}-sans-syriac-estrangela.conf \
+             %{fontconf}-sans-syriac-western.conf \
+             %{fontconf}-sans-tai-le.conf \
+             %{fontconf}-sans-tifinagh.conf \
+             %{fontconf}-sans-yi.conf \
+             %{fontconf}-sans-tagbanwa.conf ; do
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
@@ -1238,8 +2039,10 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20141001-alt1_1
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 20130807-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
