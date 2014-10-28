@@ -4,7 +4,7 @@ BuildRequires: perl(Devel/TimeThis.pm) perl(ExtUtils/MakeMaker.pm) perl(XSLoader
 # END SourceDeps(oneline)
 Name:           perl-Math-Prime-XS
 Version:        0.26
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Detect and calculate prime numbers with deterministic tests
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -57,6 +57,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.26-alt3_12
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.26-alt3_11
 - update to new release by fcimport
 
