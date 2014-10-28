@@ -5,7 +5,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.
 # END SourceDeps(oneline)
 Name:           perl-MooseX-AttributeHelpers
 Version:        0.23
-Release:        alt3_12
+Release:        alt3_13
 Summary:        Extended Moose attribute interfaces
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/MooseX-AttributeHelpers/
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt3_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt3_12
 - update to new release by fcimport
 
