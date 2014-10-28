@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(DBIx/Class/Schema
 # END SourceDeps(oneline)
 Name:       perl-DBIx-Class-DynamicDefault 
 Version:    0.04
-Release:    alt2_6
+Release:    alt2_7
 # lib/DBIx/Class/DynamicDefault.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
@@ -49,6 +49,9 @@ make test
 %{perl_vendor_privlib}/DBIx/Class/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_7
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_6
 - update to new release by fcimport
 
