@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libexpat-devel perl(English.pm) zlib-devel
 BuildRequires: boost-python-devel
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt3_13.r1.1
+Release:        alt3_19.r1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -28,8 +28,9 @@ Patch14:        vegastrike-0.5.1-gcc47.patch
 Patch15:        vegastrike-0.5.1-music.patch
 Patch16:        vegastrike-0.5.1-gcc48.patch
 Patch17:        vegastrike-0.5.1-boost154.patch
+Patch18:        vegastrike-aarch64.patch
 BuildRequires:  libGLU-devel libfreeglut-devel libXi-devel libXmu-devel gtk2-devel
-BuildRequires:  libjpeg-devel libpng-devel boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel expat-devel python-devel
+BuildRequires:  libjpeg-devel libpng-devel boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel expat-devel python-devel
 BuildRequires:  libSDL_mixer-devel libopenal-devel libalut-devel
 BuildRequires:  libvorbis-devel libogre-devel cegui-devel desktop-file-utils
 Requires:       %{name}-data = %{version} icon-theme-hicolor xdg-utils
@@ -59,6 +60,7 @@ Yet danger lurks in the space beyond.
 %patch15 -p3
 %patch16 -p0
 %patch17 -p1
+%patch18 -p1
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
@@ -71,7 +73,7 @@ rm objconv/mesher/expat.h
 %build
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 %configure --with-data-dir=%{_datadir}/%{name} --with-boost=system \
-  --enable-release --enable-flags="-DBOOST_PYTHON_NO_PY_SIGNATURES %optflags" --disable-ffmpeg \
+  --enable-release --enable-flags="-DBOOST_PYTHON_NO_PY_SIGNATURES $RPM_OPT_FLAGS" --disable-ffmpeg \
   --enable-stencil-buffer
 make %{?_smp_mflags} CXXLD="g++ -Wl,--no-as-needed"
 
@@ -110,6 +112,9 @@ desktop-file-install            \
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt3_19.r1
+- update to new release by fcimport
+
 * Thu Sep 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt3_13.r1.1
 - Rebuilt with new libogre
 
