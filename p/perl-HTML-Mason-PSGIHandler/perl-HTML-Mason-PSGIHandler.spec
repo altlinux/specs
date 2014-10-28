@@ -5,7 +5,7 @@ BuildRequires: perl(FindBin.pm) perl(HTML/Mason/CGIHandler.pm) perl(HTML/Mason/E
 # END SourceDeps(oneline)
 Name:           perl-HTML-Mason-PSGIHandler
 Version:        0.53
-Release:        alt1_2
+Release:        alt1_3
 Summary:        PSGI handler for HTML::Mason
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/HTML-Mason-PSGIHandler/
@@ -46,6 +46,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1_2
 - update to new release by fcimport
 
