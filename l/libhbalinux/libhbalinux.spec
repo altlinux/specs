@@ -1,15 +1,17 @@
 %add_optflags %optflags_shared
 Name:               libhbalinux
 Version:            1.0.16
-Release:            alt1_4
+Release:            alt1_5
 Summary:            FC-HBAAPI implementation using scsi_transport_fc interfaces
 Group:              System/Libraries
 License:            LGPLv2
 URL:                http://www.open-fcoe.org
 Source0:            %{name}-%{version}.tar.gz
 Patch0:             libhbalinux-1.0.13-conf.patch
-BuildRequires:      libhbaapi-devel libpciaccess-devel libtool automake
-Requires:           libhbaapi
+Patch1:             libhbalinux-1.0.16-portspeed.patch
+BuildRequires:      libhbaapi-devel >= 2.2.9-6
+BuildRequires:      libpciaccess-devel libtool automake
+Requires:           libhbaapi >= 2.2.9-6
 Requires(post):     grep
 Requires(postun):   grep
 Source44: import.info
@@ -28,6 +30,7 @@ The libhbalinux-devel package contains the library pkgconfig file.
 %prep
 %setup -q
 %patch0 -p1 -b .conf
+%patch1 -p1 -b .portspeed
 
 %build
 ./bootstrap.sh
@@ -67,6 +70,9 @@ fi
 %{_libdir}/%{name}.so
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.16-alt1_5
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.16-alt1_4
 - update to new release by fcimport
 
