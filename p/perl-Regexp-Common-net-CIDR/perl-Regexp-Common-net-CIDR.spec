@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Ext
 # END SourceDeps(oneline)
 Name:           perl-Regexp-Common-net-CIDR
 Version:        0.02
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Provide patterns for CIDR blocks
 License:        GPLv2
 Group:          Development/Perl
@@ -49,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_11
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_10
 - update to new release by fcimport
 
