@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(DBI
 # END SourceDeps(oneline)
 Name:           perl-DBIx-Class-TimeStamp
 Version:        0.14
-Release:        alt2_10
+Release:        alt2_11
 Summary:        DBIx::Class extension to update and create date and time based fields
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -57,6 +57,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_11
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_10
 - update to new release by fcimport
 
