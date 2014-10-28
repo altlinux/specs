@@ -6,7 +6,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-lohit-odia
 Version:        2.5.5
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Free truetype font for Odia language
 
 License:        OFL
@@ -17,7 +17,7 @@ BuildArch:      noarch
 BuildRequires:  fontforge >= 20080429
 BuildRequires:  fontpackages-devel
 Provides:       lohit-oriya-fonts = %{version}-%{release}
-Obsoletes:      lohit-oriya-fonts < 2.5.4.1-3
+Obsoletes:      lohit-oriya-fonts < 2.5.4.1-4
 Source44: import.info
 
 
@@ -96,6 +96,9 @@ fi
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_4
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_3
 - converted for ALT Linux by srpmconvert tools
 
