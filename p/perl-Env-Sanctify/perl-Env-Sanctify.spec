@@ -6,7 +6,7 @@ BuildRequires: perl-devel perl-podlators
 Name:		perl-Env-Sanctify
 Summary:	Lexically scoped sanctification of %%ENV
 Version:	1.12
-Release:	alt1_2
+Release:	alt1_3
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Env-Sanctify/
@@ -62,6 +62,9 @@ make test AUTHOR_TESTING=1
 %{perl_vendor_privlib}/Env/
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_2
 - update to new release by fcimport
 
