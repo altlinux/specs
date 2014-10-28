@@ -4,7 +4,7 @@ BuildRequires: perl(Carp.pm) perl(File/Compare.pm) perl(File/Spec.pm) perl(File/
 # END SourceDeps(oneline)
 Name:           perl-Test-Assertions
 Version:        1.054
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Simple set of building blocks for both unit and runtime testing
 License:        GPLv2
 Group:          Development/Perl
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_16
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_15
 - update to new release by fcimport
 
