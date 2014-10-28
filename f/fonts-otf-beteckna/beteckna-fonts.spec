@@ -14,7 +14,7 @@ Special character &#x2708; ( a'. ) depicts two cats.
 
 Name:		fonts-otf-beteckna
 Version:	0.3
-Release:	alt4_12
+Release:	alt4_13
 Summary:	Beteckna sans-serif fonts
 
 Group:		System/Fonts/True type
@@ -24,6 +24,9 @@ Source0:	http://gnu.ethz.ch/linuks.mine.nu/beteckna/beteckna-0.3.tar.gz
 Source1:	%{oldname}-fontconfig.conf
 Source2:	%{oldname}-lower-case-fontconfig.conf
 Source3:	%{oldname}-small-caps-fontconfig.conf
+Source4:	%{fontname}.metainfo.xml
+Source5:	%{fontname}-lower-case.metainfo.xml
+Source6:	%{fontname}-small-caps.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontforge fontpackages-devel
@@ -63,6 +66,7 @@ These are lower case Beteckna Fonts.
 %{_fontconfig_templatedir}/%{fontconf}-lower-case.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-lower-case.conf
 %{_fontbasedir}/*/%{_fontstem}/BetecknaLowerCase*.otf
+%{_datadir}/appdata/%{fontname}-lower-case.metainfo.xml
 
 
 # 1 Small Caps
@@ -80,6 +84,7 @@ These are small caps Beteckna Fonts.
 %{_fontconfig_templatedir}/%{fontconf}-small-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-small-caps.conf
 %{_fontbasedir}/*/%{_fontstem}/BetecknaSmallCaps.otf
+%{_datadir}/appdata/%{fontname}-small-caps.metainfo.xml
 
 %prep
 %setup -q -n beteckna-0.3
@@ -122,6 +127,14 @@ for fconf in %{fontconf}.conf %{fontconf}-lower-case.conf %{fontconf}-small-caps
 do
 	ln -s %{_fontconfig_templatedir}/$fconf %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE5} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-lower-case.metainfo.xml
+install -Dm 0644 -p %{SOURCE6} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-small-caps.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -158,9 +171,13 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %files -n fonts-otf-beteckna-common
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 %doc AUTHORS LICENSE CHANGELOG readme.html
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt4_13
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt4_12
 - bugfix: fixed subpackage name
 
