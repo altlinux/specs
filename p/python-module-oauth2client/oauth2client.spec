@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2
-Release: alt2
+Version: 1.3.1
+Release: alt1.git20141027
 
 Summary: OAuth 2.0 client library
 License: Apache Software License
@@ -16,10 +16,16 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-module-setuptools
+BuildPreReq: python-module-setuptools-tests python-modules-json
+BuildPreReq: python-module-httplib2 python-module-pyasn1
+BuildPreReq: python-module-pyasn1-modules python-module-rsa
+BuildPreReq: python-module-keyring python-module-mox
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-httplib2 python3-module-pyasn1
+BuildPreReq: python3-module-pyasn1-modules python3-module-rsa
+BuildPreReq: python3-module-keyring python3-module-mox
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -27,6 +33,15 @@ BuildPreReq: python-tools-2to3
 
 %description
 The oauth2client is a client library for OAuth 2.0.
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+
+%description docs
+The oauth2client is a client library for OAuth 2.0.
+
+This package contains documentation for %oname.
 
 %package -n python3-module-%oname
 Summary: OAuth 2.0 client library
@@ -62,17 +77,31 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
-%doc README
+%doc CHANGELOG *.md
 %python_sitelibdir/*
+
+%files docs
+%doc docs/epy/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README
+%doc CHANGELOG *.md
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1.git20141027
+- Version 1.3.1
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2
 - Added module for Python 3
 
