@@ -6,7 +6,7 @@ BuildRequires: perl(APR/Table.pm) perl(Apache.pm) perl(Apache/Constants.pm) perl
 
 Name:      perl-Apache2-SOAP
 Version:   0.73
-Release:   alt1_16
+Release:   alt1_17
 Summary:   A replacement for Apache::SOAP designed to work with mod_perl 2
 
 Group:     Development/Perl
@@ -66,6 +66,9 @@ chmod -R u+rwX,go+rX,go-w %{buildroot}/*
 
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1_17
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1_16
 - update to new release by fcimport
 
