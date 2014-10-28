@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libhbaapi
 Version:        2.2.9
-Release:        alt1_5
+Release:        alt1_6
 Summary:        SNIA HBAAPI library
 Group:          System/Libraries
 License:        SNIA
@@ -9,6 +9,7 @@ URL:            http://open-fcoe.org/
 # This source was cloned from upstream git (libHBAAPI)
 Source:         %{name}-%{version}.tar.gz
 Patch0:         libhbaapi-2.2.9-dl-linking.patch
+Patch1:         libhbaapi-2.2.9-portspeed.patch
 BuildRequires:  automake libtool
 Source44: import.info
 
@@ -28,6 +29,7 @@ developing applications that use %{name}.
 %prep
 %setup
 %patch0 -p1 -b .ld-linking
+%patch1 -p1 -b .portspeed
 
 %build
 ./bootstrap.sh
@@ -49,6 +51,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt1_6
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt1_5
 - update to new release by fcimport
 
