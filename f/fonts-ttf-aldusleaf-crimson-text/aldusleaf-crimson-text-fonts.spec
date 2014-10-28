@@ -1,18 +1,19 @@
+Group: System/Fonts/True type
 %define oldname aldusleaf-crimson-text-fonts
 %global fontname aldusleaf-crimson-text
 %global fontconf 62-%{fontname}.conf
 
 Name:           fonts-ttf-aldusleaf-crimson-text
 Version:        0.8
-Release:        alt1_0.3.20130806
+Release:        alt1_0.4.20130806
 Summary:        A latin font for the production of technical books and papers
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://aldusleaf.org/0-crimson.html
 Source0:        https://github.com/skosch/Crimson/archive/webfonts-august2013-2.tar.gz
 Source1:        %{oldname}-fontconfig.conf
 Source2:        generate.pe
+Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel fontforge
@@ -43,6 +44,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -78,16 +83,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_0.4.20130806
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_0.3.20130806
 - update to new release by fcimport
 
