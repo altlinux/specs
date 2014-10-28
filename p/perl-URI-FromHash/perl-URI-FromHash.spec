@@ -5,7 +5,7 @@ BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(Test/CPAN/Changes.pm) perl(U
 # END SourceDeps(oneline)
 Name:          perl-URI-FromHash 
 Version:       0.04
-Release:       alt2_4
+Release:       alt2_5
 Summary:       Build a URI from a set of named parameters 
 # see lib/URI/FromHash.pm
 License:       GPL+ or Artistic
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_5
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_4
 - update to new release by fcimport
 
