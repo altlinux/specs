@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -7,14 +8,14 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-symbola
 Version:        6.13
-Release:        alt1_5
+Release:        alt1_6
 Summary:        A symbol font
 
-Group:          System/Fonts/True type
 License:        Copyright only
 URL:            http://users.teilar.gr/~g1951d/
 Source0:        http://users.teilar.gr/~g1951d/Symbola613.zip
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -59,6 +60,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -94,18 +99,19 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/Symbola.ttf
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %files doc
 %doc Symbola.pdf
 
-
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 6.13-alt1_6
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 6.13-alt1_5
 - update to new release by fcimport
 
