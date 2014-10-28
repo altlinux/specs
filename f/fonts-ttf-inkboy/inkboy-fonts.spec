@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -6,12 +7,13 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 Name:           fonts-ttf-inkboy
 Version:        20070624
-Release:        alt3_11
+Release:        alt3_12
 Summary:        A clean and usable latin fantasy font
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://inkboy.fr/html/telechargement-ressources.php
 Source0:        http://inkboy.fr/fichiers/inkboyfont.zip
+Source1:        %{fontname}.metainfo.xml
+
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 Source44: import.info
@@ -31,8 +33,6 @@ for i in FONTLOG.txt; do
 done
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d       %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -60,6 +60,10 @@ install -m 0644 -p %{fontconf} %{buildroot}%{_fontconfig_templatedir}
 install -m 0755 -d             %{buildroot}%{_fontconfig_confdir}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
                                %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE1} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -100,8 +104,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc FONTLOG.txt OFL.txt OFL-FAQ.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20070624-alt3_12
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20070624-alt3_11
 - update to new release by fcimport
 
