@@ -1,4 +1,4 @@
-%define ver_major 3.10
+%define ver_major 3.14
 %define panel_api_ver 5.0
 %def_enable frequency_selector
 %def_disable mini_commander
@@ -15,8 +15,8 @@ License: GPL
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 Source1: 01-cpufreq.pkla
 Patch: %name-2.9.90-alt-modemlights.patch
 
@@ -63,10 +63,9 @@ BuildPreReq: intltool >= 0.35
 BuildPreReq: libX11-devel libXt-devel
 BuildPreReq: libgucharmap-devel >= 2.33.2
 BuildPreReq: libgweather-devel >= %libgweather_ver
-BuildPreReq: NetworkManager-devel >= 0.7
 BuildRequires: rpm-build-gnome
 BuildRequires: python-devel python-modules-compiler gnome-settings-daemon-devel libxml2-devel
-BuildRequires: libdbus-devel libdbus-glib-devel gst-plugins-devel libSM-devel libgdbm-devel
+BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: libpolkit1-devel gnome-common xorg-cf-files yelp-tools xsltproc
 %{?_with_upower:BuildRequires: libupower-devel}
 # for invest applet
@@ -425,6 +424,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_datadir/gnome-applets/ui/menu.xml
 
 %changelog
+* Wed Oct 29 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Wed Oct 29 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
