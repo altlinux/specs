@@ -1,5 +1,5 @@
 Name: installer-feature-quota-stage2
-Version: 0.6
+Version: 0.6.1
 Release: alt1
 
 Summary: Setup quota on local filesystems
@@ -25,6 +25,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Oct 29 2014 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt1
+- Don't skip /var if there is no OVZ.
+
 * Tue Jul 01 2014 Mikhail Efremov <sem@altlinux.org> 0.6-alt1
 - Setup quota for all supported filesystems.
 
