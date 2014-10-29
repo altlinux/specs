@@ -1,3 +1,5 @@
+%define _libexecdir /usr/libexec
+
 %def_enable daemon
 %def_disable appliance
 %def_enable fuse
@@ -9,14 +11,14 @@
 %def_disable php
 %def_disable erlang
 %def_disable lua
-%def_disable goolang
+%def_disable golang
 %def_disable static
 %def_disable bash_completion
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.23.19
-Release: alt2
+Version: 1.29.2
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -30,13 +32,13 @@ Patch1: %name-%version-alt-fixes.patch
 #%%Source3: 99-guestfsd.rules
 
 BuildPreReq: /proc
-BuildRequires: gcc gcc-c++
+BuildRequires: gcc gcc-c++ flex
 BuildRequires: glibc-utils libselinux-devel libaugeas-devel
-BuildRequires: libgio-devel
+BuildRequires: libgio-devel libgtk+2-devel
 BuildRequires: gtk-doc
 BuildRequires: gettext-tools
 BuildRequires: gobject-introspection-devel libgjs
-BuildRequires: cpio gperf perl-podlators perl-devel genisoimage xml-utils db4-utils
+BuildRequires: cpio gperf perl-podlators perl-devel genisoimage xml-utils db4-utils zip unzip
 # po4a 
 BuildRequires: qemu-kvm qemu-system
 BuildRequires: libncurses-devel libreadline-devel
@@ -44,12 +46,14 @@ BuildRequires: libpcre-devel libmagic-devel libvirt-devel libxml2-devel libconfi
 BuildRequires: libacl-devel libcap-devel
 BuildRequires: netpbm
 BuildRequires: libyajl-devel
-BuildRequires: libsystemd-journal-devel
+BuildRequires: libsystemd-journal-devel >= 196
+BuildRequires: liblzma-devel
+# BuildRequires: supermin >= 5.1.0
 %if_enabled fuse
 BuildRequires: libfuse-devel
 %endif
 %if_enabled ocaml
-BuildRequires: ocaml findlib ocamldoc ocamlbuild
+BuildRequires: ocaml4 ocaml4-findlib ocaml4-ocamldoc ocaml4-ocamlbuild
 #BuildRequires: ocaml-gettext
 %endif
 %if_enabled python
@@ -69,10 +73,10 @@ BuildRequires: php5-devel
 BuildRequires: erlang-devel
 %endif
 %if_enabled perl
-BuildRequires: perl-Pod-Parser perl-Sys-Virt perl-libintl perl-hivex perl-String-ShellQuote
+BuildRequires: perl-Pod-Parser perl-Sys-Virt perl-libintl perl-hivex
 %endif
-%if_enabled goolang
-BuildRequires: goolang
+%if_enabled golang
+BuildRequires: golang
 %endif
 %if_enabled bash_completion
 BuildRequires: bash-completion >= 2.0
@@ -136,6 +140,15 @@ Requires: %name-devel = %version-%release %name-gir = %version-%release
 
 %description gir-devel
 GObject introspection devel data for the libguestfs library
+
+%package -n golang-guestfs
+Summary: Golang bindings for %name
+Group: Development/Other
+Requires: %name = %version-%release
+Requires: golang
+
+%description -n golang-guestfs
+golang-%name contains Go language bindings for %name.
 
 %package tools
 Summary: System administration tools for virtual machines
@@ -252,6 +265,27 @@ Requires: %name = %version-%release
 %description -n erlang-%name
 erlang-%name contains Erlang bindings for %name.
 
+%package -n virt-v2v
+Summary: Convert a virtual machine to run on KVM
+Group: Development/Other
+License: GPLv2+
+Requires: %name = %version-%release
+Requires: %name-tools = %version-%release
+Requires: gawk
+Requires: gzip
+Requires: unzip
+Requires: curl
+Requires: /usr/bin/virsh
+# 'strip' binary is required by virt-p2v-make-kickstart.
+Requires: binutils
+
+# For rhsrvany.exe, used to install firstboot scripts in Windows guests.
+# Requires: mingw32-srvany >= 1.0-13
+
+%description -n virt-v2v
+Virt-v2v and virt-p2v are tools that convert virtual machines from
+non-KVM hypervisors, or physical machines, to run under KVM.
+
 %package -n bash-completion-libguestfs
 Summary: bash-completion for libguestfs tools
 Group: Shells
@@ -346,12 +380,12 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man8dir/guestfsd.*
 
 %files devel
-%doc AUTHORS BUGS HACKING TODO README ROADMAP
+%doc AUTHORS BUGS HACKING TODO README
 %doc examples/*.c
 %doc installed-docs/*
 %_libdir/libguestfs.so
-%_sbindir/libguestfs-make-fixed-appliance
-%_man1dir/libguestfs-make-fixed-appliance.1*
+#%_sbindir/libguestfs-make-fixed-appliance
+#%_man1dir/libguestfs-make-fixed-appliance.1*
 %_man1dir/guestfs-recipes.1*
 %_man3dir/guestfs.3*
 %_man3dir/guestfs-examples.3*
@@ -374,9 +408,23 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %files gir-devel
 %_girdir/*.gir
 
+%if_enabled golang
+%files -n golang-guestfs
+%doc golang/examples/*.go
+%doc golang/examples/LICENSE
+%_libdir/golang/src/libguestfs.org
+%_man3dir/guestfs-golang.3*
+%endif
+
 %files tools
 %doc README
 %config(noreplace) %_sysconfdir/libguestfs-tools.conf
+%_man5dir/libguestfs-tools.conf.5*
+%_sysconfdir/virt-builder
+%dir %_sysconfdir/xdg/virt-builder
+%dir %_sysconfdir/xdg/virt-builder/repos.d
+%config %_sysconfdir/xdg/virt-builder/repos.d/libguestfs.conf
+%config %_sysconfdir/xdg/virt-builder/repos.d/libguestfs.gpg
 %_bindir/guestfish
 %_man1dir/guestfish.1*
 %_bindir/guestmount
@@ -385,22 +433,32 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man1dir/guestunmount.1*
 %_bindir/virt-alignment-scan
 %_man1dir/virt-alignment-scan.1*
+%_bindir/virt-builder
+%_man1dir/virt-builder.1*
 %_bindir/virt-cat
 %_man1dir/virt-cat.1*
 %_bindir/virt-copy-in
 %_man1dir/virt-copy-in.1*
 %_bindir/virt-copy-out
 %_man1dir/virt-copy-out.1*
+%_bindir/virt-customize
+%_man1dir/virt-customize.1*
 %_bindir/virt-df
 %_man1dir/virt-df.1*
+%_bindir/virt-diff
+%_man1dir/virt-diff.1*
 %_bindir/virt-edit
 %_man1dir/virt-edit.1*
 %_bindir/virt-filesystems
 %_man1dir/virt-filesystems.1*
 %_bindir/virt-format
 %_man1dir/virt-format.1*
+%_bindir/virt-index-validate
+%_man1dir/virt-index-validate.1*
 %_bindir/virt-inspector
 %_man1dir/virt-inspector.1*
+%_bindir/virt-log
+%_man1dir/virt-log.1*
 %_bindir/virt-ls
 %_man1dir/virt-ls.1*
 %_bindir/virt-rescue
@@ -428,6 +486,19 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man1dir/guestfs-faq.1*
 %_man1dir/guestfs-performance.1*
 %_man1dir/guestfs-release-notes.1*
+
+%files -n virt-v2v
+%doc COPYING README v2v/TODO
+%_libexecdir/virt-p2v
+%_bindir/virt-p2v-make-disk
+%_bindir/virt-p2v-make-kickstart
+%_bindir/virt-v2v
+%_man1dir/virt-p2v.1*
+%_man1dir/virt-p2v-make-disk.1*
+%_man1dir/virt-p2v-make-kickstart.1*
+%_mandir/man1/virt-v2v.1*
+%_datadir/virt-p2v
+#%_datadir/virt-tools
 
 #%files live-service
 #%doc COPYING README
@@ -515,6 +586,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Tue Oct 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.29.2-alt1
+- 1.29.2
+
 * Tue Sep 03 2013 Vladimir Lettiev <crux@altlinux.ru> 1.23.19-alt2
 - built for perl 5.18
 
