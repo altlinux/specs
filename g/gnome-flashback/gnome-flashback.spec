@@ -3,7 +3,7 @@
 
 Name: gnome-flashback
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME Flashback session
 License: GPLv3
@@ -12,13 +12,13 @@ Url: https://wiki.gnome.org/Projects/GnomeFlashback
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
+Source1: polkit-gnome-authentication-agent4gnome-flashback.desktop
 
 %define glib_ver 2.40.0
 %define gtk_ver 3.12.0
 %define desktop_ver 3.12.0
 %define dbus_glib_ver 0.76
 %define gsds_ver 3.12.0
-
 
 PreReq: xinitrc
 Requires: gnome-session gnome-settings-daemon gnome-panel gnome-applets metacity3.0
@@ -29,6 +29,9 @@ Requires: gnome-filesystem
 Requires: xdg-user-dirs
 Requires: gnome-icon-theme gnome-icon-theme-symbolic
 Requires: gnome-screensaver
+Requires: gnome-keyring polkit-gnome
+Requires: gnome-control-center
+Requires: nautilus
 
 BuildRequires: rpm-build-gnome gnome-common intltool
 BuildRequires: libgio-devel >= %glib_ver
@@ -83,7 +86,11 @@ SCRIPT:
 exec %_bindir/start%name
 __EOF__
 
+# link to our gnome3 menus
 ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
+
+# install polkit-gnome desktop file
+install -pD -m644 %SOURCE1 %buildroot%_datadir/gnome/autostart/gnome-authentication-agent.desktop
 
 %find_lang --with-gnome --output=%name.lang %name
 
@@ -102,6 +109,7 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 #%config %_sysconfdir/X11/wmsession.d/09GnomeFlashback
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_xdgmenusdir/%name-applications.menu
+%_datadir/gnome/autostart/gnome-authentication-agent.desktop
 %_datadir/xsessions/%name-metacity.desktop
 %doc AUTHORS NEWS README
 
@@ -109,6 +117,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Wed Oct 29 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
+- run polkit-gnome-authentication-agent-1 if session is gnome-flashback
+
 * Mon Oct 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - first build for Sisyphus
 
