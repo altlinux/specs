@@ -1,15 +1,16 @@
 Name: potrace
 Version: 1.11
-Release: alt1
+Release: alt2
 
 Summary: Potrace is a utility for transform bitmaps into vector graphics
 License: GPLv2+
-Group: Office
-
+Group: Graphics
 Url: http://potrace.sourceforge.net
+
 Source: http://potrace.sourceforge.net/download/potrace-%version.tar.gz
 
-# Automatically added by buildreq on Tue Aug 23 2011
+Requires: lib%name = %EVR
+
 BuildRequires: zlib-devel
 
 # for check
@@ -23,11 +24,41 @@ create EPS files from scanned data, such as company or university logos,
 handwritten notes, etc. The resulting image is not "jaggy" like a bitmap, but
 smooth. It can then be rendered at any resolution.
 
+%package -n lib%name
+Summary: Potrace library
+Group: System/Libraries
+
+%description -n lib%name
+Potrace is a utility for tracing a bitmap, which means, transforming a
+bitmap into a smooth, scalable image.
+
+This package provides shared Potrace library.
+
+%package -n lib%name-devel
+Summary: Potrace development files
+Group: Development/C
+Requires: lib%name = %EVR
+
+%description -n lib%name-devel
+Potrace is a utility for tracing a bitmap, which means, transforming a
+bitmap into a smooth, scalable image.
+
+This package provides files necessary to develop applications that use
+Potrace library.
+
+
 %prep
 %setup
 
 %build
-%configure --enable-a4 --enable-metric
+%autoreconf
+%configure \
+	--with-libpotrace \
+	--enable-shared \
+	--disable-static \
+	--with-pic \
+	--enable-metric \
+	--enable-a4
 %make_build
 
 %install
@@ -37,11 +68,24 @@ smooth. It can then be rendered at any resolution.
 %make check
 
 %files
-%_bindir/*
-%_man1dir/*
+%_bindir/mkbitmap
+%_bindir/%name
+%_man1dir/mkbitmap.1.*
+%_man1dir/%name.1.*
 %doc NEWS README ChangeLog doc/placement.pdf
 
+%files -n lib%name
+%_libdir/lib%name.so.*
+
+%files -n lib%name-devel
+%_includedir/potracelib.h
+%_libdir/lib%name.so
+
+
 %changelog
+* Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt2
+- new lib%%name{,-devel} subpackages (ALT #30432)
+
 * Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt1
 - 1.11
 
