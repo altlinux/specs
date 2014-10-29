@@ -1,7 +1,11 @@
+%define oname libcloud
+
+%def_with python3
+
 Summary: A Python library to address multiple cloud provider APIs
-Name: python-module-libcloud
+Name: python-module-%oname
 Version: 0.15.1
-Release: alt1
+Release: alt2
 Url: http://libcloud.apache.org/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -11,29 +15,69 @@ Group: Development/Python
 BuildArch: noarch
 BuildRequires: python-dev python-module-setupdocs python-module-setuptools
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-module-setupdocs python3-module-setuptools
+%endif
+
 %description
 libcloud is a client library for interacting with many of the popular cloud 
 server providers.  It was created to make it easy for developers to build 
 products that work between any of the services that it supports.
+
+%package -n python3-module-%oname
+Summary: A Python library to address multiple cloud provider APIs
+Group: Development/Python3
+
+%description -n python3-module-%oname
+libcloud is a client library for interacting with many of the popular cloud 
+server providers.  It was created to make it easy for developers to build 
+products that work between any of the services that it supports.
+
 
 %package tests
 Summary: Unit tests
 Group: Development/Python
 
 %description tests
+Unit tests for python-module-%oname-tests
+
+%package -n python3-module-%oname-tests
+Summary: Unit tests
+Group: Development/Python3
+
+%description -n python3-module-%oname-tests
 Unit tests for python-module-libcloud
 
 
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
+%add_optflags -fno-strict-aliasing
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 
 %install
 #__python setup.py install --prefix=/usr --root=%buildroot
 %python_build_install --prefix=/usr
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 
 %files tests
 %dir %python_sitelibdir/libcloud/test
@@ -44,9 +88,24 @@ Unit tests for python-module-libcloud
 %python_sitelibdir/*
 %exclude %python_sitelibdir/libcloud/test
 
+%if_with python3
+%files -n python3-module-%oname-tests
+%dir %python3_sitelibdir/libcloud/test
+%python3_sitelibdir/libcloud/test/*
+
+%files -n python3-module-%oname
+%doc CHANGES.rst CONTRIBUTING.rst NOTICE README.rst
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/libcloud/test
+%endif
+
+
 %changelog
+* Wed Oct 29 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.15.1-alt2
+- Added module for Python 3
+
 * Fri Jul 11 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.15.1-alt1
-- New version 
+- New version
 
 * Sat Jul 05 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.15.0-alt1
 - New version
