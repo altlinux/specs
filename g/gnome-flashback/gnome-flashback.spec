@@ -3,7 +3,7 @@
 
 Name: gnome-flashback
 Version: %ver_major.0
-Release: alt2
+Release: alt2.1
 
 Summary: GNOME Flashback session
 License: GPLv3
@@ -12,7 +12,6 @@ Url: https://wiki.gnome.org/Projects/GnomeFlashback
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
-Source1: polkit-gnome-authentication-agent4gnome-flashback.desktop
 
 %define glib_ver 2.40.0
 %define gtk_ver 3.12.0
@@ -89,8 +88,18 @@ __EOF__
 # link to our gnome3 menus
 ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
-# install polkit-gnome desktop file
-install -pD -m644 %SOURCE1 %buildroot%_datadir/gnome/autostart/gnome-authentication-agent.desktop
+# polkit-gnome desktop file
+mkdir -p %buildroot%_datadir/gnome/autostart
+cat > %buildroot%_datadir/gnome/autostart/gnome-authentication-agent.desktop << _EOF_
+[Desktop Entry]
+Name=Authentication Agent
+Comment=PolicyKit Authentication Agent for the GNOME Flashback session
+Exec=/usr/libexec/polkit-1/polkit-gnome-authentication-agent-1
+Terminal=false
+Type=Application
+NoDisplay=true
+OnlyShowIn=GNOME-Flashback;
+_EOF_
 
 %find_lang --with-gnome --output=%name.lang %name
 
@@ -117,6 +126,9 @@ install -pD -m644 %SOURCE1 %buildroot%_datadir/gnome/autostart/gnome-authenticat
 
 
 %changelog
+* Wed Oct 29 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2.1
+- fixed gnome-authentication-agent.desktop
+
 * Wed Oct 29 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
 - run polkit-gnome-authentication-agent-1 if session is gnome-flashback
 
