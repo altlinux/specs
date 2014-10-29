@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        4.26
+Version:        4.29
 Release:        alt1
 Summary:        Python Remote Objects
 Group:          Development/Python
@@ -14,9 +14,12 @@ BuildArch:      noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildPreReq: python-devel python-module-sphinx-devel
+BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-serpent
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-serpent
 %endif
 
 Provides: python-module-Pyro = %version-%release
@@ -144,12 +147,18 @@ popd
 %endif
 
 %install
-%python_install
 %if_with python3
 pushd ../python3
 %python3_install
 popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
 %endif
+
+%python_install
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 ln -s $PWD/docs/objects.inv %buildroot%python_sitelibdir
@@ -160,8 +169,20 @@ popd
 rm -f %buildroot%python_sitelibdir/objects.inv
 cp -fR build/sphinx/pickle %buildroot%python_sitelibdir/%oname/
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
-%doc LICENSE README.txt
+%doc LICENSE *.txt
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
 %exclude %python_sitelibdir/%oname/test
@@ -181,7 +202,8 @@ cp -fR build/sphinx/pickle %buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE README.txt
+%doc LICENSE *.txt
+%_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/test
 
@@ -190,6 +212,9 @@ cp -fR build/sphinx/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Oct 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.29-alt1
+- Version 4.29
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.26-alt1
 - Version 4.26
 
