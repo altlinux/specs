@@ -2,7 +2,7 @@
 %define oname %mname.bootstrapModern
 Name: python-module-%oname
 Version: 0.46
-Release: alt1
+Release: alt2
 Summary: An installable theme for Plone 4
 License: GPL
 Group: Development/Python
@@ -51,6 +51,12 @@ This package contains tests for %oname.
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %check
 python setup.py test
 nosetests
@@ -65,6 +71,9 @@ nosetests
 %python_sitelibdir/%mname/*/tests.*
 
 %changelog
+* Wed Oct 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.46-alt2
+- Applied python-module-plonetheme.bootstrapModern-0.46-alt1.diff
+
 * Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.46-alt1
 - Initial build for Sisyphus
 
