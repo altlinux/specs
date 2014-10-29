@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-vsftpd
-Version: 0.10
+Version: 0.10.1
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -41,6 +41,9 @@ alterator module for vsftpd configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Oct 29 2014 Mikhail Efremov <sem@altlinux.org> 0.10.1-alt1
+- Disable UI for local users setting.
+
 * Fri Dec 18 2009 Vladislav Zavjalov <slazav@altlinux.org> 0.10-alt1
 - update translations in desktop files
 - tune UI
