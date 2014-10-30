@@ -5,7 +5,7 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.2.13
+Version: 2.2.14
 Release: alt1
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -187,6 +187,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 2.2.14-alt1
+- Autobuild version bump to 2.2.14
+
 * Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 2.2.13-alt1
 - Autobuild version bump to 2.2.13
 
