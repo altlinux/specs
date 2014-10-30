@@ -1,5 +1,5 @@
 Name: tatham-puzzles
-Version: 10274
+Version: 10286
 Release: alt1
 License: MIT
 Group: Games/Puzzles
@@ -111,6 +111,9 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 10286-alt1
+- Autobuild version bump to 10286
+
 * Mon Sep 29 2014 Fr. Br. George <george@altlinux.ru> 10274-alt1
 - Autobuild version bump to 10274
 
