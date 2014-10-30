@@ -1,26 +1,24 @@
-%def_without devel
-
-%define vrs	3.0
-%define tstamp 	20121213
+%define vrs	3.1
+%define tstamp 	20141030
 #def_enable Werror
 
-Name: libedit
+Name: libedit3
 Version: %vrs.%tstamp
-Release: alt2
+Release: alt1
 
 Summary: libedit is a replacement or alternative to the GNU readline commandline editing functionality.
 License: BSD
-Group: System/Legacy libraries
+Group: System/Libraries
 Url: http://www.thrysoee.dk/editline/
 
-Source: http://www.thrysoee.dk/editline/%name-%tstamp-%vrs.tar.gz
+Source: http://www.thrysoee.dk/editline/libedit-%tstamp-%vrs.tar.gz
 
-Patch0: libedit-alt-examples-disable.patch
-Patch1: libedit-alt-configure-fix.patch
-Patch2: libedit-alt-fix-warnings.patch
+Patch0: libedit-alt-use-OpenBSD-soname.patch
 
 # Automatically added by buildreq on Tue Feb 15 2011
 BuildRequires: groff-base libncurses-devel
+
+Provides: libedit = %version-%release
 
 %description
 This is an autotool- and libtoolized port of the NetBSD Editline
@@ -28,26 +26,24 @@ library (libedit). This Berkeley-style licensed command line
 editor library provides generic line editing, history, and
 tokenization functions, similar to those found in GNU Readline.
 
-%package -n %{name}0-devel
+%package -n libedit-devel
 Summary: Files needed to develop programs which use the %name library
 Group: Development/C
 PreReq: %name = %version-%release
 
-%description -n %{name}0-devel
+%description -n libedit-devel
 This package contains the files needed to develop programs which use
 the %name library to provide an easy to use and more intuitive
 command line interface for users.
 
 %prep
-%setup -q -n %name-%tstamp-%vrs
-%patch0 -p1 -b .fix0
-#patch1 -p1 -b .fix1
-#patch2 -p1 -b .fix2
+%setup -q -n libedit-%tstamp-%vrs
+%patch0 -p2
 
 %build
 %add_optflags %optflags_warnings -Wunused-function -Wunused-label -Wunused-variable -Wunused-value
 %autoreconf
-%configure --enable-widec
+%configure --enable-widec --disable-examples
 %make_build
 
 %install
@@ -56,19 +52,18 @@ command line interface for users.
 %files
 %_libdir/*.so.*
 
-%if_with devel
-%files -n %{name}0-devel
+%files -n libedit-devel
 %_libdir/*.a
 %_libdir/*.so
 %_libdir/pkgconfig/libedit.pc
 %_includedir/*
 %_man3dir/*
 %_man5dir/*
-%endif
 
 %changelog
-* Thu Oct 30 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.20121213-alt2
-- Packaged libedit0 as a legacy library.
+* Thu Oct 30 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.20141030-alt1
+- Build new version.
+- Made use of OpenBSD soname for library.
 
 * Sat Mar 23 2013 Alexey Gladkov <legion@altlinux.ru> 3.0.20121213-alt1
 - New version.
