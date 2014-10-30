@@ -1,5 +1,5 @@
 Name: openssl10
-Version: 1.0.1h
+Version: 1.0.1j
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -29,7 +29,6 @@ Patch13: openssl-rh-default-paths.patch
 Patch14: openssl-rh-x509-issuer-hash.patch
 Patch15: openssl-rh-X509_load_cert_file.patch
 Patch16: openssl-rh-version-engines.patch
-Patch17: openssl-rh-doc-noeof.patch
 Patch18: openssl-rh-ipv6-apps.patch
 Patch19: openssl-rh-env-zlib.patch
 Patch21: openssl-rh-algo-doc.patch
@@ -40,7 +39,7 @@ Patch25: openssl-rh-alt-secure-getenv.patch
 Patch26: openssl-rh-dh-1024.patch
 Patch27: openssl-rh-padlock64.patch
 Patch28: openssl-rh-SSL_DEFAULT_CIPHER_LIST.patch
-Patch29: openssl-rh-3des-strength.patch
+Patch30: openssl-rh-disable-sslv2v3.patch
 
 %define shlib_soversion 10
 %define openssldir /var/lib/ssl
@@ -232,7 +231,6 @@ on the command line.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
 %patch18 -p1
 %patch19 -p1
 %patch21 -p1
@@ -243,7 +241,7 @@ on the command line.
 %patch26 -p1
 %patch27 -p1
 %patch28 -p1
-%patch29 -p1
+%patch30 -p1
 
 find -type f -name \*.orig -delete
 
@@ -441,6 +439,14 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Thu Oct 30 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1j-alt1
+- Updated to 1.0.1j (fixes CVE-2014-3512, CVE-2014-3511, CVE-2014-3510,
+  CVE-2014-3507, CVE-2014-3506, CVE-2014-3505, CVE-2014-3509,
+  CVE-2014-5139,  CVE-2014-3508, CVE-2014-3513, CVE-2014-3567,
+  CVE-2014-3566, CVE-2014-3568).
+- Updated patches from Fedora openssl-1.0.1j-2.
+- kssl.h: include <krb5/krb5.h> instead of <krb5/krb5/krb5.h> (ldv@).
+
 * Thu Jun 05 2014 Dmitry V. Levin <ldv@altlinux.org> 1.0.1h-alt1
 - Updated to 1.0.1h (fixes CVE-2014-0224, CVE-2014-022, CVE-2014-019,
   CVE-2014-347, and CVE-2010-5298).
