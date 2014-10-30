@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.2.0
-Release: alt1.git20141022
+Release: alt2.git20141022
 Summary: Python client for Elasticsearch
 License: ASL
 Group: Development/Python
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2.git20141022
+- Tuned requirements
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.git20141022
 - Initial build for Sisyphus
 
