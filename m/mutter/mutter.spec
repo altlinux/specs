@@ -4,15 +4,14 @@
 %def_enable gtk_doc
 
 Name: mutter
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.1.5
+Release: alt1
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
 Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: http://ftp.gnome.org/pub/gnome/sources/%name
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Requires: lib%name = %epoch:%version-%release
 Requires: zenity
@@ -164,6 +163,9 @@ DATADIRNAME=share %configure \
 %endif
 
 %changelog
+* Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 1:3.14.1.5-alt1
+- 3.14.1.5
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1:3.14.1-alt2
 - rebuilt against libupower-glib.so.3
 

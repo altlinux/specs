@@ -2,7 +2,7 @@
 %define ver_major 3.14
 
 Name: icon-theme-adwaita
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Adwaita icon theme
@@ -42,6 +42,9 @@ Adwaita icon theme for GTK+.
 %doc AUTHORS README NEWS COPYING
 
 %changelog
+* Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 

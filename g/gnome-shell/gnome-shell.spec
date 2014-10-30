@@ -4,8 +4,8 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.1.5
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -223,6 +223,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1.5-alt1
+- 3.14.1.5
+
 * Fri Oct 17 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1.1
 - fixed reqs
 
