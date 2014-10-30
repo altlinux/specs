@@ -1,5 +1,5 @@
 Name: PsychoPy
-Version: 1.80.07
+Version: 1.81.01
 Release: alt1
 Summary: Psychophysics toolkit for Python
 Url: http://www.psychopy.org
@@ -9,7 +9,7 @@ License: GPLv3+
 BuildArch: noarch
 
 %setup_python_module psychopy
-%add_python_req_skip AppKit Quartz pyHook
+%add_python_req_skip AppKit Quartz pyHook CoreFoundation objc
 # TODO device-specific:
 ## https://github.com/labjack/LabJackPython
 ## https://github.com/cedrus-opensource/pyxid
@@ -18,7 +18,7 @@ BuildArch: noarch
 %add_python_req_skip pylabjack pylink textgrid
 
 # optimized out: dvipng fontconfig libgdk-pixbuf libwayland-client libwayland-server python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-beaker python-module-dateutil python-module-distribute python-module-docutils python-module-genshi python-module-html5lib python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-mako python-module-matplotlib python-module-mpmath python-module-nose python-module-nss python-module-numpy python-module-numpy-testing python-module-protobuf python-module-py python-module-pyExcelerator python-module-pyglet python-module-pytz python-module-simplejson python-module-sympy python-module-whoosh python-module-xlwt python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-tkinter python-modules-unittest t1lib tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended
-BuildRequires: ImageMagick-tools ctags openssl python-module-OpenGL python-module-imaging python-module-pygame python-module-scipy python-module-sphinx python-module-wx python-modules-json time unzip
+BuildRequires: ImageMagick-tools ctags openssl python-module-OpenGL python-module-imaging python-module-pygame python-module-scipy python-module-sphinx python-module-wx python-modules-json time unzip xvfb-run
 
 BuildRequires: python2.7(setuptools) texlive-latex-recommended
 
@@ -60,10 +60,11 @@ Categories=Science;Humanities;
 
 %build
 %python_build
-PYTHONPATH=`pwd`/build/lib sphinx-build docs/source HTML
+PYTHONPATH=`pwd`/build/lib xvfb-run sphinx-build docs/source HTML
 
 %install
 %python_install
+ln -s psychopyApp.py %buildroot%_bindir/%name
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 for N in *.png; do
 	S=${N%%.*}
@@ -82,6 +83,14 @@ done
 %python_sitelibdir_noarch/%name-*
 
 %changelog
+* Wed Oct 29 2014 Fr. Br. George <george@altlinux.ru> 1.81.01-alt1
+- Autobuild version bump to 1.81.01
+- Wipe Mac requirements
+
+* Thu Oct 23 2014 Fr. Br. George <george@altlinux.ru> 1.81.00-alt1
+- Autobuild version bump to 1.81.00
+- Add xvfb-run for fake X11
+
 * Tue Aug 19 2014 Fr. Br. George <george@altlinux.ru> 1.80.07-alt1
 - Autobuild version bump to 1.80.07
 
