@@ -1,6 +1,6 @@
 Name: curl
 Version: 7.38.0
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -142,6 +142,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Thu Oct 30 2014 Anton Farygin <rider@altlinux.ru> 7.38.0-alt2
+- threaded-resolver: revert Curl_expire_latest() switch (closes: #30427)
+
 * Wed Sep 10 2014 Anton Farygin <rider@altlinux.ru> 7.38.0-alt1
 - new version
 
