@@ -1,6 +1,6 @@
 Summary: MoinMoin is a Python clone of WikiWiki
 Name: moin
-Version: 1.9.7
+Version: 1.9.8
 Release: alt1
 License: GPL
 Group: Networking/Other
@@ -87,6 +87,9 @@ cp -a MoinMoin/web/static/htdocs %buildroot%htdocs
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 1.9.8-alt1
+- Autobuild version bump to 1.9.8
+
 * Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 1.9.7-alt1
 - Autobuild version bump to 1.9.7
 
