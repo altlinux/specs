@@ -2,7 +2,7 @@
 
 Summary: Package maintenance system for Debian Linux
 Name: dpkg
-Version: 1.17.13
+Version: 1.17.19
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Packaging
@@ -89,6 +89,9 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 1.17.19-alt1
+- Autobuild version bump to 1.17.19
+
 * Sat Sep 27 2014 Fr. Br. George <george@altlinux.ru> 1.17.13-alt1
 - Autobuild version bump to 1.17.13
 
