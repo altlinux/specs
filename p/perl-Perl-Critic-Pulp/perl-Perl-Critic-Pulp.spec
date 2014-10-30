@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(AptPkg/Policy.pm) perl(B/Concise.pm) perl(Devel/Mallinfo.pm) perl(Digest/MD5.pm) perl(Encode.pm) perl(Fcntl.pm) perl(File/Slurp.pm) perl(FindBin.pm) perl(IO/File.pm) perl(IO/Uncompress/AnyInflate.pm) perl(Iterator/Simple.pm) perl(Locale/TextDomain.pm) perl(Math/Complex.pm) perl(Pod/Simple.pm) perl(Readonly.pm) perl(Regexp/Common.pm) perl(SDBM_File.pm) perl(Smart/Comments.pm) perl(Socket.pm) perl(Test/Without/Module.pm) perl(Text/Tabs.pm) perl(Tie/IxHash.pm) perl(blib.pm) perl(lib/abs.pm) perl-devel perl-podlators
+BuildRequires: perl(AptPkg/Policy.pm) perl(B/Concise.pm) perl(Devel/Mallinfo.pm) perl(Digest/MD5.pm) perl(Encode.pm) perl(Fcntl.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Perl-Critic-Pulp
 Version:        85
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Some add-on perlcritic policies
 License:        GPLv3+
 Group:          Development/Perl
@@ -112,6 +112,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Oct 30 2014 Igor Vlasenko <viy@altlinux.ru> 85-alt1_3
+- new release
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 85-alt1_2
 - update to new release by fcimport
 
