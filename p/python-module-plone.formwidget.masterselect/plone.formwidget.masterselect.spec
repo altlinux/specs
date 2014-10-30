@@ -2,7 +2,7 @@
 %define oname %mname.masterselect
 Name: python-module-%oname
 Version: 1.5
-Release: alt1.dev0.git20141010
+Release: alt1.dev0.git20141030
 Summary: A widget that controls the vocabulary / display of other fields on an edit page
 License: GPL
 Group: Development/Python
@@ -74,6 +74,9 @@ py.test
 %python_sitelibdir/plone/formwidget/*/test*
 
 %changelog
+* Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.dev0.git20141030
+- New snapshot
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.dev0.git20141010
 - Initial build for Sisyphus
 
