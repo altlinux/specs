@@ -1,6 +1,6 @@
 Name: bitstream-headers
 Version: 1.0
-Release: alt5
+Release: alt6
 Summary: biTStream is a set of C headers allowing a simpler access to binary structures such as specified by MPEG, DVB, IETF, etc.
 Group: Development/C
 
@@ -32,6 +32,10 @@ make PREFIX=%buildroot/usr install
 %_includedir/bitstream
 
 %changelog
+* Thu Oct 30 2014 Alexei Takaseev <taf@altlinux.org> 1.0-alt6
+- Add support for SMPTE 2022-1 Forward Error Correction
+- add rtp_clear_marker
+
 * Sun Jun 29 2014 Alexei Takaseev <taf@altlinux.org> 1.0-alt5
 - update to git:047c02753ca8b6b3e8d69b9b9a4790559d6aa8b7
 
