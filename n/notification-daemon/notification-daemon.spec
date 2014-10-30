@@ -1,15 +1,14 @@
-%define ver_major 0.7
+%define ver_major 3.14
 %define _libexecdir %_prefix/libexec
 
 Name: notification-daemon
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Desktop Notification Daemon
 Group: Graphical desktop/GNOME
 License: %gpl2plus
-URL: http://www.galago-project.org/specs/notification/index.php
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Url: https://wiki.gnome.org/Projects/NotificationDaemon
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 # http://bugzilla-attachments.gnome.org/attachment.cgi?id=195633
@@ -19,21 +18,21 @@ Requires: dbus >= 0.36
 
 Conflicts: notification-daemon-xfce
 
-# From configure.ac
 BuildPrereq: gnome-common intltool
 BuildPrereq: libgio-devel >= 2.27.0
-BuildPrereq: libgtk+3-devel >= 2.91.0
+BuildPrereq: libgtk+3-devel >= 3.8.0
 BuildPrereq: libcanberra-gtk3-devel
-
-BuildRequires: rpm-build-licenses rpm-build-gnome
+BuildRequires: rpm-build-licenses rpm-build-gnome rpm-build-xdg
 
 %description
-A daemon that displays passive pop-up notifications as per the
-Desktop Notifications specification
-(http://www.galago-project.org/specs/notification/index.php).
+%name is the server implementation of the freedesktop.org desktop
+notification specification.
+
+Since 3.14.0 Notification Daemon now is maintained as part of GNOME
+Flashback. This is reason for version number change.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -43,16 +42,19 @@ Desktop Notifications specification
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
 %files -f %name.lang
 %_libexecdir/%name
-%_datadir/applications/notification-daemon.desktop
+%_xdgconfigdir/autostart/%name.desktop
 %doc AUTHORS NEWS
 
 %changelog
+* Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Fri Sep 07 2012 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt1
 - 0.7.6
 
