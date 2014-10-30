@@ -1,7 +1,7 @@
 %define rel 1
 Summary: 2D Platform Game
 Name: edgar
-Version: 1.17
+Version: 1.18
 Release: alt1
 Source: %name-%version-1.tar.gz
 Url: http://www.parallelrealities.co.uk/p/legend-of-edgar.html
@@ -36,17 +36,22 @@ This package contains official level set for Edgar.
 %setup
 %patch
 
+# XXX "Game;RolePlaying instead of GameRolePlaying"
+sed -i 's/Categories=Game$/Categories=Game;/' icons/edgar.desktop
+
 %build
 %make_build VERSION=%version RELEASE=%rel DATA_DIR=%_gamesdatadir/%name/ BIN_DIR=%_gamesbindir/ DOC_DIR=%_defaultdocdir/%name-%version ICON_DIR=%_iconsdir/hicolor/ DESKTOP_DIR=%_desktopdir LOCALE_DIR=%_datadir/locale/
 
 %install
 %makeinstall VERSION=%version RELEASE=%rel DATA_DIR=%buildroot%_gamesdatadir/%name/ BIN_DIR=%buildroot%_gamesbindir/ DOC_DIR=`pwd`/localdoc ICON_DIR=%buildroot%_iconsdir/hicolor/ DESKTOP_DIR=%buildroot%_desktopdir/ LOCALE_DIR=%buildroot%_datadir/locale/
 
-%find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Application \
 	--add-category=RolePlaying \
 	%buildroot%_desktopdir/edgar.desktop
+
+
+%find_lang %name
 
 %files -f %name.lang
 %doc localdoc
@@ -59,6 +64,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_gamesdatadir/%name/*
 
 %changelog
+* Thu Oct 23 2014 Fr. Br. George <george@altlinux.ru> 1.18-alt1
+- Autobuild version bump to 1.18
+- Desktop modification fixed
+
 * Tue Aug 19 2014 Fr. Br. George <george@altlinux.ru> 1.17-alt1
 - Autobuild version bump to 1.17
 
