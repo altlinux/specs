@@ -1,5 +1,5 @@
 Name: mupdf
-Version: 1.4
+Version: 1.6
 Release: alt1
 Summary: A lightweight PDF viewer and toolkit
 Group: Office
@@ -7,6 +7,7 @@ License: GPLv3
 Url: http://mupdf.com/
 Source0: http://mupdf.com/download/%name-%version-source.tar.gz
 Source1: %name.desktop
+Source2: debian.tar
 Patch0: %name-upstream.patch
 
 # Automatically added by buildreq on Thu Aug 22 2013
@@ -39,13 +40,13 @@ The mupdf-devel package contains header files for developing
 applications that use mupdf and static libraries
 
 %prep
-%setup -n %name-%version-source
+%setup -n %name-%version-source -a2
 #patch0 -p1
 
 # TODO rebuild with new openjpeg
 #BuildRequires: openjpeg-devel
 rm -rf thirdparty/[^o]*
-sed -i 's/-lopenjpeg //' platform/debian/mupdf.pc
+sed -i 's/-lopenjpeg //' debian/mupdf.pc
 
 %build
 %make_build
@@ -54,8 +55,9 @@ sed -i 's/-lopenjpeg //' platform/debian/mupdf.pc
 # TODO deal with platform/debian/mupdf.install / iconsdirs
 %makeinstall
 install -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
-install -D -m644 platform/debian/%name.xpm %buildroot/%_datadir/pixmaps/%name.xpm
-install -D platform/debian/mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
+install -D -m644 debian/%name.xpm %buildroot/%_datadir/pixmaps/%name.xpm
+sed 's/@VERSION@/%version/g' < debian/mupdf.pc > mupdf.pc
+install -D mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
 
 %files
 %doc %_defaultdocdir/%name
@@ -70,6 +72,13 @@ install -D platform/debian/mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
 %_libdir/lib*.a
 
 %changelog
+* Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 1.6-alt1
+- Autobuild version bump to 1.6
+
+* Mon Aug 25 2014 Fr. Br. George <george@altlinux.ru> 1.5-alt1
+- Autobuild version bump to 1.5
+- Partly resurrect debian platform files
+
 * Tue Jun 03 2014 Fr. Br. George <george@altlinux.ru> 1.4-alt1
 - Autobuild version bump to 1.4
 
