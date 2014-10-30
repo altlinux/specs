@@ -1,7 +1,7 @@
 %define oname dateutil
 Name: python3-module-%oname
 Version: 2.2
-Release: alt1.bzr20131101
+Release: alt2.bzr20131101
 
 Summary: Extensions to the standard datetime module (Python 3)
 
@@ -20,6 +20,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
+BuildPreReq: python3-module-pytz
 # texlive-base-bin
 
 
@@ -42,19 +43,23 @@ datetime module, available in Python 2.3+. Allows:
 %install
 %python3_install
 #NOTE: Not sure, but seems zoneinfo is needed under windows only
-rm -rf %buildroot%python_sitelibdir/%oname/zoneinfo
+rm -rf %buildroot%python3_sitelibdir/%oname/zoneinfo/*.tar.gz
+
+cp -fR %python3_sitelibdir/pytz/zoneinfo ./
+cd zoneinfo
+tar -czf \
+	%buildroot%python3_sitelibdir/dateutil/zoneinfo/zoneinfo.tar.gz *
 
 %files
 %doc LICENSE NEWS README
-%dir %python3_sitelibdir/%oname/
-%python3_sitelibdir/*egg-info/
-%python3_sitelibdir/%oname/*.py*
-%python3_sitelibdir/%oname/__pycache__
-#%%dir %python_sitelibdir/%oname/zoneinfo
-#%%{py_sitescriptdir}/%oname/zoneinfo/*.py[co]
+%python3_sitelibdir/*egg-info
+%python3_sitelibdir/%oname
 
 
 %changelog
+* Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt2.bzr20131101
+- Don't delete zoneinfo
+
 * Wed Oct 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.bzr20131101
 - Version 2.2
 
