@@ -1,5 +1,5 @@
 Name: libtasn1
-Version: 3.4
+Version: 4.2
 Release: alt1
 
 Summary: The ASN.1 library used in GNUTLS
@@ -8,6 +8,8 @@ License: LGPLv2.1+
 URL: http://www.gnu.org/software/libtasn1/
 # git://git.altlinux.org/gears/l/libtasn1.git
 Source: %name-%version.tar
+
+BuildRequires: gtk-doc
 
 %description
 This is GNU Libtasn1, a library that provides Abstract Syntax Notation
@@ -65,6 +67,7 @@ This package contains libtasn1 development documentation.
 %setup
 
 %build
+%autoreconf
 %configure --disable-static --disable-silent-rules
 touch doc/stamp_docs
 %make_build
@@ -109,6 +112,9 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %docdir/reference/
 
 %changelog
+* Thu Oct 30 2014 Mikhail Efremov <sem@altlinux.org> 4.2-alt1
+- Updated to 4.2.
+
 * Wed Mar 05 2014 Dmitry V. Levin <ldv@altlinux.org> 3.4-alt1
 - Updated to 3.4.
 
