@@ -10,7 +10,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -141,6 +141,7 @@ subst 's,2.69,2.68,' configure.ac
 	--with-rsvg=yes \
 	--with-lqr=yes \
 	--disable-hdri \
+	--with-gcc-arch=no \
 	--with-perl \
 	%{subst_enable x} \
 	--with-perl-options="PREFIX=%_prefix INSTALLDIRS=vendor" \
@@ -225,6 +226,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu Oct 30 2014 Anton Farygin <rider@altlinux.ru> 6.8.9.8-alt2
+- disable auto gcc arch (closes: #30431)
+
 * Mon Oct 20 2014 Anton Farygin <rider@altlinux.ru> 6.8.9.8-alt1
 - new version 6.8.9.8
 
