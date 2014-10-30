@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.9
-Release: alt1.dev.git20140915
+Release: alt2.dev.git20140915
 Summary: Various utilities for Mozilla apps
 License: MPLv2.0
 Group: Development/Python
@@ -27,7 +27,7 @@ BuildPreReq: python-module-testfixtures python-module-zope.interface
 BuildPreReq: python-module-argparse python-module-PasteDeploy
 BuildPreReq: python-module-zope.deprecation python-module-repoze.lru
 BuildPreReq: python-module-zope.component
-#BuildPreReq: python-module-cornice
+BuildPreReq: python-module-cornice
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -41,12 +41,11 @@ BuildPreReq: python3-module-testfixtures python3-module-zope.interface
 BuildPreReq: python3-module-argparse python3-module-PasteDeploy
 BuildPreReq: python3-module-zope.deprecation python3-module-repoze.lru
 BuildPreReq: python3-module-zope.component
-#BuildPreReq: python3-module-cornice
+BuildPreReq: python3-module-cornice
 %endif
 
 %py_provides %oname
 %py_requires zope.interface
-%add_python_req_skip cornice
 
 %description
 Various utilities for Pyramid-based Mozilla applications.
@@ -106,7 +105,7 @@ popd
 %endif
 
 %check
-#python setup.py test
+python setup.py test
 %if_with python3
 pushd ../python3
 python3 setup.py test
@@ -132,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt2.dev.git20140915
+- Added necessaary requirements
+
 * Wed Oct 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1.dev.git20140915
 - Initial build for Sisyphus
 
