@@ -2,7 +2,7 @@
 %def_disable gnome
 
 Name: glade3
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GTK+2%{?_enable_gnome:/GNOME2} widget builder
@@ -109,6 +109,9 @@ cat %name.lang glade.lang > lang
 %exclude %_libdir/glade3/modules/*.la
 
 %changelog
+* Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.8.5-alt1
+- 3.8.5
+
 * Thu Sep 19 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 
