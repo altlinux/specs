@@ -1,0 +1,90 @@
+%define oname junos-eznc
+
+Summary: Junos 'EZ' automation for non-programmers
+Name: python-module-%oname
+Version: 1.0.2
+Release: alt1
+Url: https://github.com/Juniper/py-junos-eznc
+Source: %name-%version.tar
+Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
+License: ASL 2.0
+Group: Development/Python
+
+BuildArch: noarch
+BuildRequires: python-dev python-module-setupdocs python-module-setuptools
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-module-setupdocs python3-module-setuptools
+%endif
+
+%description
+Junos PyEZ is a Python library to remotely manage/automate Junos
+devices. The user is NOT required: (a) to be a "Software Programmer",
+(b) have sophisticated knowledge of Junos, or (b) have a complex
+understanding of the Junos XML API.
+
+%package -n python3-module-%oname
+Summary: Junos 'EZ' automation for non-programmers
+Group: Development/Python3
+
+%description -n python3-module-%oname
+Junos PyEZ is a Python library to remotely manage/automate Junos
+devices. The user is NOT required: (a) to be a "Software Programmer",
+(b) have sophisticated knowledge of Junos, or (b) have a complex
+understanding of the Junos XML API.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%build
+%add_optflags -fno-strict-aliasing
+%python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
+
+%install
+%python_build_install --prefix=/usr
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+mv %buildroot%python_sitelibdir/jnpr/junos %buildroot%python_sitelibdir/
+rm -rf %buildroot%python_sitelibdir/jnpr
+mv %buildroot%python_sitelibdir/junos %buildroot%python_sitelibdir/jnpr
+
+%if_with python3
+mv %buildroot%python3_sitelibdir/jnpr/junos %buildroot%python3_sitelibdir/
+rm -rf %buildroot%python3_sitelibdir/jnpr
+mv %buildroot%python3_sitelibdir/junos %buildroot%python3_sitelibdir/jnpr
+%endif
+
+
+
+%files
+%doc COPYRIGHT INSTALL-FEDORA.md INSTALL-FREEBSD.md INSTALL-OSX.md INSTALL-UBUNTU-DEBIAN.md LICENSE README.md README.txt RELEASE-NOTES.md development.txt docreq.txt requirements.txt
+%python_sitelibdir/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc COPYRIGHT INSTALL-FEDORA.md INSTALL-FREEBSD.md INSTALL-OSX.md INSTALL-UBUNTU-DEBIAN.md LICENSE README.md README.txt RELEASE-NOTES.md development.txt docreq.txt requirements.txt
+%python3_sitelibdir/*
+%endif
+
+
+%changelog
+* Thu Oct 30 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0.2-alt1
+- Initial build for ALT
+
