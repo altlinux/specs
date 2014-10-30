@@ -1,11 +1,11 @@
 %define oname demoapp
 
 %def_without python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt1.git20141017
+Release: alt2.git20141017
 Summary: An empty app for the next-gen Services app
 License: CC0 Public Domain
 Group: Development/Python
@@ -28,7 +28,7 @@ BuildPreReq: python-module-zope.component python-module-zope.deprecation
 BuildPreReq: python-module-zope.event python-module-zope.interface
 BuildPreReq: python-module-pyramid_who python-module-repoze.who
 BuildPreReq: python-module-unittest2 python-module-argparse
-#BuildPreReq: python-module-cornice
+BuildPreReq: python-module-cornice
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python-3module-setuptools-tests
@@ -43,13 +43,12 @@ BuildPreReq: python3-module-zope.component python3-module-zope.deprecation
 BuildPreReq: python3-module-zope.event python3-module-zope.interface
 BuildPreReq: python3-module-pyramid_who python3-module-repoze.who
 BuildPreReq: python3-module-unittest2 python3-module-argparse
-#BuildPreReq: python3-module-cornice
+BuildPreReq: python3-module-cornice
 %endif
 
 %py_provides %oname
 %py_requires paste.deploy repoze.lru zope.component zope.deprecation
 %py_requires zope.event zope.interface repoze.who
-%add_python_req_skip cornice
 
 %description
 An empty app for the next-gen Services app.
@@ -138,6 +137,10 @@ popd
 %endif
 
 %changelog
+* Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2.git20141017
+- Added necessary requirements
+- Enabled testing
+
 * Wed Oct 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20141017
 - Initial build for Sisyphus
 
