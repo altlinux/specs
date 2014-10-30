@@ -1,6 +1,6 @@
 Name: python-module-dateutil
 Version: 1.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Extensions to the standard datetime module
 
@@ -18,6 +18,7 @@ Source: http://labix.org/download/python-dateutil/python-dateutil-%version.tar
 BuildArch: noarch
 
 BuildRequires: python-devel python-modules-encodings python-module-setuptools
+BuildPreReq: python-module-pytz
 # texlive-base-bin
 
 
@@ -40,18 +41,26 @@ datetime module, available in Python 2.3+. Allows:
 %install
 %python_install
 #NOTE: Not sure, but seems zoneinfo is needed under windows only
-rm -rf %buildroot%python_sitelibdir/dateutil/zoneinfo
+rm -f %buildroot%python_sitelibdir/dateutil/zoneinfo/*.tar.gz
+
+cp -fR %python_sitelibdir/pytz/zoneinfo ./
+cd zoneinfo
+tar -czf \
+	%buildroot%python_sitelibdir/dateutil/zoneinfo/zoneinfo.tar.gz *
 
 %files
 %doc LICENSE NEWS README
 %dir %python_sitelibdir/dateutil/
 %python_sitelibdir/*egg-info/
-%python_sitelibdir/dateutil/*.py*
+%python_sitelibdir/dateutil
 #%%dir %python_sitelibdir/dateutil/zoneinfo
 #%%{py_sitescriptdir}/dateutil/zoneinfo/*.py[co]
 
 
 %changelog
+* Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.2
+- Don't delete zoneinfo
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5-alt1.1
 - Rebuild with Python-2.7
 
