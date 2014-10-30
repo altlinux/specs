@@ -1,7 +1,7 @@
 %define api_ver 0
 
 Name: libmp3splt
-Version: 0.9.0
+Version: 0.9.1b
 Release: alt1
 
 Summary: library for mp3splt, a mp3/ogg/flac splitter
@@ -53,6 +53,9 @@ Development files for libmp3splt.
 %_datadir/doc/%name/
 
 %changelog
+* Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.1b-alt1
+- 0.9.1b
+
 * Thu Dec 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - 0.9.0
 - removed obsolete patches
