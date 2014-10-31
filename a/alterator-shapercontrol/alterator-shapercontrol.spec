@@ -2,7 +2,7 @@
 
 Name: alterator-shapercontrol
 Version: 0.4
-Release: alt1
+Release: alt2
 License: %gpl2plus
 Group: System/Configuration/Other
 Summary: Alterator module for shapercontrol administration
@@ -37,6 +37,9 @@ Alterator module for shapercontrol administration.
 %_libexecdir/%name/
 
 %changelog
+* Fri Oct 31 2014 Andriy Stepanov <stanv@altlinux.ru> 0.4-alt2
+- List all interfaces at in/out fields
+
 * Wed Sep 03 2014 Mikhail Efremov <sem@altlinux.org> 0.4-alt1
 - Use alterator-service-functions.
 - Add string to translation.
