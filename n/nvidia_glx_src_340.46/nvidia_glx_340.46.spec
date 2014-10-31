@@ -15,7 +15,7 @@
 %define nv_version 340
 %define nv_release 46
 %define nv_minor %nil
-%define pkg_rel alt133
+%define pkg_rel alt134
 %ifarch x86_64
 %def_enable egl
 %else
@@ -268,6 +268,8 @@ fi
 
 %__install -m 0644 nvidia-application-profiles-%version-rc \
     %buildroot/%_datadir/nvidia/nvidia-application-profiles-%version-rc
+%__install -m 0644 nvidia-application-profiles-%version-key-documentation \
+    %buildroot/%_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
 
 # kernel-source install
 %__rm -rf kernel-source-%module_name-%module_version/
@@ -335,6 +337,7 @@ fi
 %nv_lib_dir/nvidia.xinf
 %xinf_dir/nvidia-%version.xinf
 %_datadir/nvidia/nvidia-application-profiles-%version-rc
+%_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
 
 %if_enabled kernelsource
 %files -n kernel-source-%module_name-%module_version
@@ -342,6 +345,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 31 2014 Sergey V Turchin <zerg@altlinux.org> 340.46-alt134
+- package nvidia-application-profiles-key-documentation
+
 * Mon Oct 06 2014 Sergey V Turchin <zerg@altlinux.org> 340.46-alt133
 - new version
 
