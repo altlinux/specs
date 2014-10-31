@@ -9,7 +9,7 @@
 
 Name: python-module-SQLObject
 Version: 2.0.0
-Release: alt1.a1dev.20140817
+Release: alt1.a2dev.20141028
 
 Summary: Object-Relational Manager, aka database wrapper for Python
 
@@ -138,6 +138,9 @@ popd
 %doc docs/*
 
 %changelog
+* Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a2dev.20141028
+- Version 2.0.0a2dev-20141028
+
 * Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1dev.20140817
 - Version 2.0.0a1dev-20140817
 
