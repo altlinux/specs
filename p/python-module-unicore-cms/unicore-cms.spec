@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.4
-Release: alt1
+Release: alt2
 Summary: JSON based CMS for Universal Core
 License: BSD
 Group: Development/Python
@@ -106,6 +106,12 @@ pushd ../python3
 popd
 %endif
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %check
 python setup.py test
 %if_with python3
@@ -137,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt2
+- Applied python-module-unicore-cms-1.0.4-alt1.diff
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt1
 - Initial build for Sisyphus
 
