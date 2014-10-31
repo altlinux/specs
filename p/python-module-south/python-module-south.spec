@@ -1,4 +1,4 @@
-%define version 0.8.4
+%define version 1.0.1
 %define release alt1
 %define oname south
 %setup_python_module %oname
@@ -23,10 +23,12 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Mon Mar 01 2010
 BuildRequires: python-devel
 
-BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-sphinx-devel python-module-setuptools-tests
+BuildPreReq: python-module-django
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-django
 %endif
 
 %description
@@ -118,6 +120,14 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc AUTHORS README
 %python_sitelibdir/*
@@ -152,6 +162,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1
+- Version 1.0.1
+
 * Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1
 - Version 0.8.4
 - Added module for Python 3
