@@ -1,26 +1,42 @@
 %define oname z3c.rml
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 2.5.0
-Release: alt1
+Version: 2.7.3
+Release: alt1.dev0.git20141028
 Summary: An alternative implementation of RML
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/z3c.rml/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/z3c.rml.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-Pygments python-module-lxml
+BuildPreReq: python-module-PyPDF2 python-module-Reportlab
+BuildPreReq: python-module-svg2rlg python-module-zope.interface
+BuildPreReq: python-module-zope.schema python-module-zope.pagetemplate
+BuildPreReq: python-module-Pillow python-module-coverage
+BuildPreReq: python-module-zope.testrunner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-Pygments python3-module-lxml
+BuildPreReq: python3-module-PyPDF2 python3-module-Reportlab
+BuildPreReq: python3-module-zope.interface
+BuildPreReq: python3-module-zope.schema python3-module-zope.pagetemplate
+BuildPreReq: python3-module-Pillow python3-module-coverage
+BuildPreReq: python3-module-zope.testrunner
 BuildPreReq: python-tools-2to3
 %endif
 
-%py_requires lxml pyPdf reportlab zope.interface zope.schema
+%py_provides %oname
+%py_requires z3c lxml pyPdf reportlab zope.interface zope.schema
+%py_requires zope.pagetemplate
 
 %description
 This is an alternative implementation of ReportLab's RML PDF generation
@@ -34,7 +50,9 @@ http://svn.zope.org/z3c.rml/trunk/src/z3c/rml/rml-reference.pdf?view=auto
 %package -n python3-module-%oname
 Summary: An alternative implementation of RML
 Group: Development/Python3
-%py3_requires lxml pyPdf reportlab zope.interface zope.schema
+%py3_provides %oname
+%py3_requires z3c lxml pyPdf reportlab zope.interface zope.schema
+%py3_requires zope.pagetemplate
 
 %description -n python3-module-%oname
 This is an alternative implementation of ReportLab's RML PDF generation
@@ -120,6 +138,14 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
+%check
+py.test
+%if_with python3
+pushd ../python3
+py.test-%_python3_version
+popd
+%endif
+
 %files
 %doc *.txt
 %_bindir/*
@@ -146,6 +172,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.3-alt1.dev0.git20141028
+- Version 2.7.3.dev0
+
 * Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt1
 - Version 2.5.0
 - Added module for Python 3
