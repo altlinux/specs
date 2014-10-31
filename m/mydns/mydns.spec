@@ -1,6 +1,6 @@
 Name: mydns
 Version: 1.2.8.31
-Release: alt2.qa1
+Release: alt3
 License: GPL
 Summary: A MySQL-based Internet DNS server
 Group: System/Servers
@@ -8,6 +8,7 @@ Url: http://www.mydns-ng.com
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Source: %name-%version.tar
 Source1: %name.alt
+Source2: %name.service
 
 # Automatically added by buildreq on Sat Jul 05 2008
 BuildRequires: cvs libMySQL-devel libssl-devel-static zlib-devel texlive-latex-recommended
@@ -74,11 +75,13 @@ export DONT_GPRINTIFY=1
 %makeinstall_std
 
 %__install -d %buildroot%_initdir
-%__install -d %buildroot/var/run/%name
+%__install -d %buildroot%_unitdir
+#__install -d %buildroot/var/run/%name
 %__install -m640 %name.conf %buildroot%_sysconfdir/%name.conf
 
-# install sysv script
+# install sysv script and service file
 %__install -m0755 %SOURCE1 %buildroot%_initdir/%name
+%__install -m0644 %SOURCE2 %buildroot%_unitdir/%name.service
 
 %if %admin
 %__install -d %buildroot%webadminroot/%name
@@ -103,11 +106,12 @@ export DONT_GPRINTIFY=1
 %doc contrib/README.alias
 %config(noreplace) %attr(0640,root,mydns) %_sysconfdir/%name.conf
 %_initdir/%name
+%_unitdir/%name.service
 %_bindir/*
 %_sbindir/*
 %_mandir/man?/*
 %_infodir/*
-%dir %attr(0755,%name,%name) /var/run/%name
+#dir %attr(0755,%name,%name) /var/run/%name
 
 %if %admin
 %files admin
@@ -118,6 +122,9 @@ export DONT_GPRINTIFY=1
 %endif
 
 %changelog
+* Fri Oct 31 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.2.8.31-alt3
+- Some repocop warning fixed, taked package also
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.8.31-alt2.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 
