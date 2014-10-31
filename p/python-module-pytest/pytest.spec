@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.6.4
-Release: alt2.dev1.hg20141025
+Version: 2.7.0
+Release: alt1.dev1.hg20141030
 Summary: Simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
@@ -139,6 +139,9 @@ cp -fR doc/en/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1.dev1.hg20141030
+- Version 2.7.0.dev1
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.4-alt2.dev1.hg20141025
 - New snapshot
 
