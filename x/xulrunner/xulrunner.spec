@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	31.0
+Version:	33.0.2
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -49,6 +49,8 @@ Obsoletes:	xulrunner-2.0-gnome-support
 
 BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXdamage-devel
 BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: zip unzip
@@ -341,6 +343,9 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Wed Oct 29 2014 Alexey Gladkov <legion@altlinux.ru> 33.0.2-alt1
+- New release (33.0.2).
+
 * Wed Jul 23 2014 Alexey Gladkov <legion@altlinux.ru> 31.0-alt1
 - New release (31.0).
 - Fixed:
