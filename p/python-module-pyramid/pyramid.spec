@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.6
-Release: alt1.dev.git20141020
+Release: alt2.dev.git20141020
 Summary: Small, fast, down-to-earth Python web application development framework
 License: Repoze Public License
 Group: Development/Python
@@ -40,7 +40,7 @@ BuildPreReq: python3-module-repoze.sphinx.autointerface
 BuildPreReq: python3-module-webtest python3-module-zope.event
 %endif
 
-%py_requires paste.deploy repoze.lru zope.deprecation
+%py_requires paste.deploy repoze.lru zope.deprecation zope.component
 
 %description
 Pyramid is a small, fast, down-to-earth, open source Python web
@@ -52,7 +52,7 @@ productive.
 %package -n python3-module-%oname
 Summary: Small, fast, down-to-earth Python 3 web application development framework
 Group: Development/Python3
-%py3_requires paste.deploy repoze.lru zope.deprecation
+%py3_requires paste.deploy repoze.lru zope.deprecation zope.component
 
 %description -n python3-module-%oname
 Pyramid is a small, fast, down-to-earth, open source Python web
@@ -197,6 +197,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt2.dev.git20141020
+- Added some other requirements
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1.dev.git20141020
 - New snapshot
 - Added necessary requirements
