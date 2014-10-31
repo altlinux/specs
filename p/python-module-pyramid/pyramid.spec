@@ -1,10 +1,11 @@
 %define oname pyramid
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 1.6
-Release: alt1.dev.git20140728
+Release: alt1.dev.git20141020
 Summary: Small, fast, down-to-earth Python web application development framework
 License: Repoze Public License
 Group: Development/Python
@@ -15,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel pylons_sphinx_theme
 BuildPreReq: python-module-PasteDeploy python-module-translationstring
 BuildPreReq: python-module-venusian python-module-zope.deprecation
@@ -28,7 +29,7 @@ BuildPreReq: python-module-webtest python-module-zope.event
 BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-PasteDeploy python3-module-translationstring
 BuildPreReq: python3-module-venusian python3-module-zope.deprecation
 BuildPreReq: python3-module-zope.interface python3-module-repoze.lru
@@ -38,6 +39,8 @@ BuildPreReq: python3-module-zope.component python3-module-virtualenv
 BuildPreReq: python3-module-repoze.sphinx.autointerface
 BuildPreReq: python3-module-webtest python3-module-zope.event
 %endif
+
+%py_requires paste.deploy repoze.lru zope.deprecation
 
 %description
 Pyramid is a small, fast, down-to-earth, open source Python web
@@ -49,6 +52,7 @@ productive.
 %package -n python3-module-%oname
 Summary: Small, fast, down-to-earth Python 3 web application development framework
 Group: Development/Python3
+%py3_requires paste.deploy repoze.lru zope.deprecation
 
 %description -n python3-module-%oname
 Pyramid is a small, fast, down-to-earth, open source Python web
@@ -140,17 +144,15 @@ popd
 %python_install
 
 export PYTHONPATH=%python_sitelibdir:%buildroot%python_sitelibdir
-rm -f docs/api/interfaces.rst
 pushd docs
 %make pickle
 %make html
 cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
 popd
 
-#check
-#python setup.py test
-#if_with python3
-%if 0
+%check
+python setup.py test
+%if_with python3
 pushd ../python3
 python3 setup.py test
 popd
@@ -195,6 +197,10 @@ popd
 %endif
 
 %changelog
+* Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1.dev.git20141020
+- New snapshot
+- Added necessary requirements
+
 * Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1.dev.git20140728
 - New snapshot
 
