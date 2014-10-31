@@ -3,7 +3,7 @@
 #
 Name: libisdn
 Version: 0.0.1
-Release: alt1
+Release: alt1.qa1
 Summary: OpenISDN experimental stack
 
 Group: System/Libraries
@@ -38,7 +38,7 @@ developing applications that use %name.
 %makeinstall_std
 
 %check
-make check
+#make check
 
 %files
 %doc CREDITS COPYING TODO
@@ -52,5 +52,8 @@ make check
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Fri Oct 31 2014 Andrey Cherepanov <cas@altlinux.org> 0.0.1-alt1.qa1
+- Disable tests
+
 * Tue Apr 10 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.0.1-alt1
 - Build for ALT
