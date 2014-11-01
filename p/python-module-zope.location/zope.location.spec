@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt1.dev.git20140319
+Release: alt1.dev.git20141027
 Summary: Zope Location
 License: ZPL
 Group: Development/Python
@@ -147,6 +147,9 @@ popd
 %endif
 
 %changelog
+* Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1.dev.git20141027
+- New snapshot
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1.dev.git20140319
 - Version 4.0.4dev
 
