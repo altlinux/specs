@@ -1,6 +1,6 @@
 Name: unbound
 Version: 1.4.21
-Release: alt1
+Release: alt2
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
@@ -176,6 +176,7 @@ rm %buildroot%python_sitelibdir/*.la
 %config(noreplace) %_sysconfdir/cron.monthly/unbound-anchor
 %config(noreplace) %_localstatedir/%name/icannbundle.pem
 %_libdir/libunbound*so*
+%exclude %_libdir/libunbound.so
 %_sbindir/unbound-anchor
 %_man8dir/unbound-anchor*
 %_man3dir/*
@@ -194,6 +195,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Sat Nov 01 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.4.21-alt2
+- Some repocop warning fixed, taked package also
+
 * Mon Oct 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.21-alt1
 - 1.4.21
 
