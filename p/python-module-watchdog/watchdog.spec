@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.8.1
-Release: alt1.git20140916
+Version: 0.8.2
+Release: alt1.git20141031
 Summary: Filesystem events monitoring
 License: ASLv2.0
 Group: Development/Python
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.git20141031
+- Version 0.8.2
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1.git20140916
 - Initial build for Sisyphus
 
