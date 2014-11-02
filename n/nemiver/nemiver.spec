@@ -1,16 +1,16 @@
 %define ver_major 0.9
 
 Name: nemiver
-Version: %ver_major.5
-Release: alt0.2
+Version: %ver_major.6
+Release: alt0.1
 
 Summary: A GNOME C/C++ Debugger
 Group: Development/Debuggers
 License: GPLv2+
 Url: http://projects.gnome.org/nemiver/
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 Requires: gdb
 
@@ -60,6 +60,7 @@ export ac_cv_path_GDB_PROG=%_bindir/gdb
 %_iconsdir/hicolor/*/apps/%name.*
 %_iconsdir/HighContrast/*x*/apps/%name.png
 %_datadir/%name/
+%_datadir/appdata/%name.appdata.xml
 %_man1dir/*
 %doc AUTHORS NEWS README TODO
 
@@ -67,6 +68,9 @@ export ac_cv_path_GDB_PROG=%_bindir/gdb
 %_includedir/%name/
 
 %changelog
+* Mon Nov 03 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt0.1
+- 0.9.6 snapshot (ef396727ad)
+
 * Tue Jun 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt0.2
 - rebuilt against libgtop-2.0.so.10
 
