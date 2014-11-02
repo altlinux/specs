@@ -14,7 +14,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 7.2.0
+Version: 7.3.0
 Release: alt1
 
 Summary: Tools to create, alter and inspect Matroska files
@@ -30,7 +30,7 @@ BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-de
 BuildRequires: libexpat-devel libvorbis-devel ImageMagick ruby ruby-stdlibs symlinks
 BuildRequires: libcurl-devel libebml-devel >= 1.3.0 libmatroska-devel >= 1.4.0
 
-%{?_enable_wxwidgets:BuildRequires: libpango-devel libwxGTK-devel}
+%{?_enable_wxwidgets:BuildRequires: libpango-devel libwxGTK3.0-devel}
 %{?_enable_qt:BuildRequires: libSM-devel libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel libqt4-devel}
 %{?_enable_bz2:BuildRequires: bzlib-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
@@ -163,6 +163,9 @@ find %buildroot%_datadir -name 'mkvmergeGUI.*' -exec rename mkvmergeGUI %gname "
 %endif
 
 %changelog
+* Sun Nov 02 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.3.0-alt1
+- 7.3.0 released
+
 * Sun Sep 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.2.0-alt1
 - 7.2.0 released
 
