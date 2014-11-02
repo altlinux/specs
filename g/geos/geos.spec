@@ -1,6 +1,8 @@
+%def_with python3
+
 Name: geos
 Version: 3.5.0
-Release: alt1.dev.svn20140630
+Release: alt1.dev.svn20140925
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -16,6 +18,10 @@ Source: %name-%version.tar
 BuildRequires: gcc-c++ python-devel swig
 
 BuildPreReq: cmake doxygen graphviz
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+%endif
 
 %description
 GEOS (Geometry Engine - Open Source) is a C++ port of the Java
@@ -68,6 +74,14 @@ Requires: lib%name = %version-%release
 %description -n python-module-%name
 Python bindings for the lib%name library.
 
+%package -n python3-module-%name
+Summary: Python bindings for the lib%name library
+Group: Development/Python3
+Requires: lib%name = %version-%release
+
+%description -n python3-module-%name
+Python bindings for the lib%name library.
+
 %package -n ruby-%name
 Summary: Ruby bindings for the lib%name library
 Group: Development/Ruby
@@ -79,12 +93,31 @@ Ruby bindings for the lib%name library.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 ./autogen.sh
 %configure \
 	--disable-static \
 	--enable-python \
 	--disable-ruby
+
+%if_with python3
+pushd ../python3
+sed -i 's|\(\-python\)|\1 -py3|' macros/ac_pkg_swig.m4
+sed -i 's|python\${PYTHON_VERSION}|python\${PYTHON_VERSION}m|' \
+	macros/ac_python_devel.m4
+export PYTHON=python3
+./autogen.sh
+%configure \
+	--disable-static \
+	--enable-python \
+	--disable-ruby
+export PYTHON=
+popd
+%endif
 
 %if %_lib == lib64
 LIB_SUFFIX=64
@@ -108,6 +141,12 @@ popd
 %make -C swig/python LIB_SUFFIX=$LIB_SUFFIX \
 	ENABLE_PYTHON=1 ENABLE_SWIG=1
 
+%if_with python3
+ln -s $PWD/BUILD ../python3/
+%make -C ../python3/swig/python LIB_SUFFIX=$LIB_SUFFIX \
+	ENABLE_PYTHON=1 ENABLE_SWIG=1
+%endif
+
 %make -C doc doxygen-html
 
 %install
@@ -121,6 +160,12 @@ LIB_SUFFIX=64
 
 rm -f %buildroot%python_sitelibdir/geos/*.la
 rm -f %buildroot%ruby_sitearchdir/*.la
+
+%if_with python3
+%makeinstall_std -C ../python3/swig/python LIB_SUFFIX=$LIB_SUFFIX \
+	ENABLE_PYTHON=1 ENABLE_SWIG=1
+rm -f %buildroot%python3_sitelibdir/geos/*.la
+%endif
 
 bzip2 ChangeLog
 
@@ -136,6 +181,11 @@ bzip2 ChangeLog
 %files -n python-module-%name
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%name
+%python3_sitelibdir/*
+%endif
+
 %if 0
 %files -n ruby-%name
 %ruby_sitearchdir/*
@@ -145,6 +195,10 @@ bzip2 ChangeLog
 %doc doc/doxygen_docs/html/*
 
 %changelog
+* Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt1.dev.svn20140925
+- New snapshot
+- Added module for Python 3
+
 * Thu Jul 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt1.dev.svn20140630
 - New snapshot
 
