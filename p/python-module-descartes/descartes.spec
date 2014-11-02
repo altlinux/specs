@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt2
 Summary: Use geometric objects as matplotlib paths and patches
 License: BSD
 Group: Development/Python
@@ -15,11 +15,12 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: libnumpy-devel python-module-shapely
+BuildPreReq: libnumpy-devel python-module-shapely python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: libnumpy-py3-devel
+BuildPreReq: libnumpy-py3-devel python3-module-shapely
+BuildPreReq: python3-module-nose
 %endif
 
 %py_provides %oname
@@ -52,7 +53,6 @@ patches.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
-%add_python3_req_skip shapely
 
 %description -n python3-module-%oname-tests
 Use Shapely or GeoJSON-like geometric objects as matplotlib paths and
@@ -87,9 +87,11 @@ popd
 
 %check
 python setup.py test
+nosetests
 %if_with python3
 pushd ../python3
 python3 setup.py test
+nosetests3
 popd
 %endif
 
@@ -114,6 +116,10 @@ popd
 %endif
 
 %changelog
+* Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2
+- Added requirement on shapely for Python 3 (for tests)
+- Enabled testing with nose
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus
 
