@@ -3,7 +3,7 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.22.1
+Version: 2.25.2
 Release: alt1
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
@@ -30,10 +30,13 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 %def_disable eject
 
 ### Dependences
-BuildRequires: /dev/pts
-# Automatically added by buildreq on Mon Mar 24 2008
+BuildRequires: /proc,/dev/pts
+BuildRequires: bash4
 BuildRequires: glibc-devel-static klibc-devel
-BuildRequires: libncursesw-devel libpopt-devel zlib-devel
+BuildRequires: zlib-devel
+BuildRequires: libncursesw-devel
+BuildRequires: libpopt-devel
+BuildRequires: libcap-ng-devel
 %{?_with_selinux:BuildRequires: libselinux-devel}
 %{?_with_audit:BuildRequires: libaudit-devel}
 %{?_with_udev:BuildRequires: libudev-devel}
@@ -46,6 +49,7 @@ Source1: util-linux-login.pamd
 Source3: util-linux-chsh-chfn.pamd
 Source5: mount.control
 Source6: write.control
+Source7: vol_id
 Source8: nologin.c
 Source9: nologin.8
 Source10: pause.c
@@ -70,35 +74,27 @@ Conflicts: e2fsprogs < 0:1.41.9-alt3
 
 PreReq: %name-control = %version-%release
 Requires: coreutils > 6.10-alt2
+Requires: libsmartcols = %version-%release
 
 #due to findmnt
 Requires: libmount = %version-%release
 
 # 151635 - makeing /var/log/lastlog
 Patch5: util-linux-ng-2.21-login-lastlog.patch
-# 231192 - ipcs is not printing correct values on pLinux
-Patch8: util-linux-2.21-ipcs-32bit.patch
 
 # move /var/lib/lastdate -> /var/lib/hwclock/lastdate
-Patch13: util-linux-2.20-alt-hwclock-badyear.patch
-
-# libmount: fix support of comma-separated fs types lists
-Patch14: util-linux-alt-libmount-comma-separated-fstypes.patch
+Patch13: util-linux-2.25.2-alt-hwclock-badyear.patch
 
 # Owl
-Patch40: util-linux-2.22-owl-alt-mtab-umask-for-mount-deprecated.patch
-Patch41: util-linux-2.22-owl-write.patch
+Patch41: util-linux-2.25.2-owl-write.patch
 
-Patch50: util-linux-2.20-alt-pg.patch
-Patch51: util-linux-ng-2.22.1-mount-pamconsole.patch
+Patch50: util-linux-2.25.2-alt-pg.patch
+Patch51: util-linux-ng-2.25.2-mount-pamconsole.patch
 Patch52: util-linux-2.11a-gecossize.patch
 Patch54: util-linux-2.11f-rh-rawman.patch
-Patch56: util-linux-2.12r-cal-trim_trailing_spaces.patch
 Patch58: util-linux-2.12r-alt-mount-MS_SILENT.patch
 Patch59: util-linux-tests.patch
 Patch60: util-linux-2.20-alt-agetty-release.patch
-Patch61: util-linux-2.19.1-alt-selinux-libs.patch
-Patch62: util-linux-secure_getenv.patch
 
 %description
 The util-linux package contains a large variety of low-level system
@@ -117,6 +113,7 @@ This package contains control(8) scripts used by %name and mount packages.
 %package -n lsblk
 Summary: List block devices
 Group: System/Base
+Requires: libsmartcols = %version-%release
 
 %description -n lsblk
 lsblk lists information about all or the specified block devices.
@@ -127,6 +124,7 @@ Group: System/Base
 PreReq: %name-control = %version-%release
 Requires: libblkid = %version-%release
 Requires: libmount = %version-%release
+Requires: libsmartcols = %version-%release
 %{!?_with_nfs:Requires: nfs-utils >= 1:1.0.10-alt3}
 
 %description -n mount
@@ -142,6 +140,7 @@ devices and files for paging and swapping.
 Summary: Programs for setting up and configuring loopback devices
 Group: System/Base
 Requires: hashalot
+Requires: libsmartcols = %version-%release
 
 %description -n losetup
 Linux supports a special block device called the loop device, which
@@ -162,6 +161,7 @@ The alternative getty program for Linux.
 Summary: The partitioning program with ncurses interface
 Group: System/Configuration/Hardware
 Requires: libblkid = %version-%release
+Requires: libsmartcols = %version-%release
 
 %description -n cfdisk
 Small user-friendly ncurses-based partitioning program, which will help you
@@ -171,6 +171,7 @@ to partition your disk easily.
 Summary: The Partitioning Program
 Group: System/Configuration/Hardware
 Requires: libblkid = %version-%release
+Requires: libsmartcols = %version-%release
 
 %description -n fdisk
 Small partitioning program with command line interface, that will be hard
@@ -354,6 +355,30 @@ Requires: libmount-devel = %version-%release
 %description -n libmount-devel-static
 This is the device mounting development static library.
 
+%package -n libsmartcols
+Summary: table or tree library
+Group: System/Libraries
+
+%description -n libsmartcols
+The libsmartcols library is used for smart adaptive formatting of tabular data.
+
+%package -n libsmartcols-devel
+Summary: table or tree library
+Group: Development/C
+Requires: libsmartcols = %version-%release
+
+%description -n libsmartcols-devel
+This is the smartcols development library and headers,
+part of util-linux-ng.
+
+%package -n libsmartcols-devel-static
+Summary: Table or tree static library
+Group: Development/C
+Requires: libsmartcols-devel = %version-%release
+
+%description -n libsmartcols-devel-static
+This is the smartcols development static library.
+
 %package initramfs
 Summary: Utilities for use in initramfs
 Group: System/Base
@@ -361,30 +386,35 @@ Group: System/Base
 %description initramfs
 Utilities for use in initramfs.
 
+%package -n bash-completion-%name
+Summary: Bash completion for %name utils
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+Requires: %name = %version-%release
+
+%description -n bash-completion-%name
+Bash completion for %name.
+
 %prep
 %setup -q
 cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 
 %patch5 -p1
-%patch8 -p1
 %patch13 -p1
-%patch14 -p1
 
-%patch40 -p1
 %patch41 -p1
 
 %patch50 -p1
-%patch51 -p1
+%patch51 -p1 -b .pamconsole
 %patch52 -p1
 %patch54 -p1
-%patch56 -p1
-#%patch58 -p1
-#%patch59 -p1
-%patch60 -p1
-%patch61 -p1
-%patch62 -p1
+%patch59 -p2
 
 echo %version > .tarball-version
+
+mkdir -p rpm
+cp -- %SOURCE7 rpm/
 
 %build
 #add_optflags %(getconf LFS_CFLAGS) -D_LARGEFILE64_SOURCE
@@ -404,6 +434,8 @@ automake --add-missing --force-missing
 	--enable-libblkid \
 	--enable-libuuid \
 	--enable-static-programs=blkid \
+	--disable-pylibmount \
+	--without-python \
 	--without-ncurses \
 	--disable-shared \
 	--disable-login \
@@ -421,6 +453,10 @@ mv blkid.static rpm/blkid.initramfs
 	--disable-kill \
 	--disable-wall \
 	--disable-arch \
+	--disable-last \
+	--disable-mesg \
+	--disable-pylibmount \
+	--without-python \
 	--enable-partx \
 	--enable-write \
 	--enable-rdev \
@@ -432,6 +468,7 @@ mv blkid.static rpm/blkid.initramfs
 	%{subst_enable newgrp} \
 	%{subst_enable vipw} \
 	%{subst_enable schedutils} \
+	--enable-libsmartcols \
 	--enable-libblkid \
 	--enable-libuuid \
 	%{subst_enable fsck} \
@@ -462,7 +499,7 @@ klcc -Wall -Wextra -Werror nologin.c -o nologin
 # cal: broken.
 # mount, swapon: required real root and ignored in hasher.
 # ipcs/limits*: failed in hasher.
-rm -rf tests/ts/{cal,login,look,ipcs/limits*,libmount/utils}
+rm -rf tests/ts/{cal,login,look,ipcs/limits*,libmount/utils,misc/ionice,more/regexp}
 LANG=C %make check-local-tests
 
 %install
@@ -605,6 +642,11 @@ done > setarch.files
 		egrep -v '^(eject|getopt|login|look|taskset|chrt|ionice)' |
 		sed -e 's|^\(.*\)$|%%_man1dir/\1*|g'
 
+	# man5dir
+	ls -1 %buildroot%_man5dir |
+		egrep    '^(terminal-colors\.d)' |
+		sed -e 's|^\(.*\)$|%%_man5dir/\1*|g'
+
 	# man8dir
 	ls -1 %buildroot%_man8dir |
 		egrep -v "^($exclude_archs)\.8*\$" |
@@ -719,19 +761,16 @@ fi
 %files -n cfdisk
 %_sbindir/cfdisk
 %_man8dir/cfdisk.*
-%doc Documentation/cfdisk.txt
 
 %files -n fdisk
 /sbin/fdisk
 /sbin/*part*
 %_man8dir/fdisk.*
 %_man8dir/*part*.*
-%doc Documentation/fdisk.txt
 
 %files -n sfdisk
 /sbin/sfdisk
 %_man8dir/sfdisk.*
-%doc Documentation/sfdisk.txt
 
 %files -n look
 %_bindir/look
@@ -803,15 +842,33 @@ fi
 %files -n libmount-devel-static
 %_libdir/libmount.a
 
+%files -n libsmartcols
+/%_lib/libsmartcols.so.*
+
+%files -n libsmartcols-devel
+%_includedir/libsmartcols
+%_libdir/libsmartcols.so
+%_pkgconfigdir/smartcols.pc
+
+%files -n libsmartcols-devel-static
+%_libdir/libsmartcols.a
+
 %files initramfs
 /lib/mkinitrd/udev/sbin/blkid
 /lib/mkinitrd/udev/lib/udev/vol_id
+
+%files -n bash-completion-%name
+%_datadir/bash-completion/completions/*
 
 %files -f %name.files
 %attr(2711,root,tty) %_bindir/write
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Sun Nov 02 2014 Alexey Gladkov <legion@altlinux.ru> 2.25.2-alt1
+- New version (2.25.2).
+- Use tarballs to import upstream sources.
+
 * Tue Apr 02 2013 Alexey Gladkov <legion@altlinux.ru> 2.22.1-alt1
 - New version (2.22.1).
 
