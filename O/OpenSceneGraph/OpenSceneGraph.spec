@@ -10,7 +10,7 @@
 
 Name: OpenSceneGraph
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: High performance real-time graphics toolkit
 License: OSGPL (wxWidgets, clarified LGPL)
@@ -18,7 +18,8 @@ Group: System/Libraries
 
 Url: http://www.openscenegraph.org
 Source: %url/downloads/stable_releases/OpenSceneGraph-%osgbranch/OpenSceneGraph-%version.zip
-Patch: OpenSceneGraph-3.0.0-alt-cmake.patch
+Patch0: OpenSceneGraph-3.0.0-alt-cmake.patch
+Patch1: OpenSceneGraph-3.2.1-r14400-fix.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed Nov 30 2011
@@ -41,7 +42,8 @@ for rapid development of graphics applications.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 mkdir BUILD
@@ -334,6 +336,10 @@ Development files for OpenThreads
 %_includedir/OpenThreads
 
 %changelog
+* Fri Oct 24 2014 Michael Shigorin <mike@altlinux.org> 3.2.1-alt2
+- applied upstream patch (svn rev14400) to fix use-after-free
+  + see also http://bugs.debian.org/765855
+
 * Tue Jul 29 2014 Michael Shigorin <mike@altlinux.org> 3.2.1-alt1
 - 3.2.1
 
