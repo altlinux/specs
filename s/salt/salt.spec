@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 2014.7
-Release: alt1
+Release: alt2
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
@@ -90,7 +90,7 @@ rm -rf %buildroot%python_sitelibdir/salt/cloud/deploy
 
 #create symlink for opennode
 cd %buildroot%python_sitelibdir/salt/modules
-ln -s ../../opennode/cli/actions/ onode
+ln -s ../../opennode/cli/actions onode
 
 #check
 #__python setup.py test --runtests-opts=-u
@@ -170,6 +170,9 @@ ln -s ../../opennode/cli/actions/ onode
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Mon Nov 03 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2014.7-alt2
+- Fix repocop info symlink-extra-slash
+
 * Tue Oct 28 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2014.7-alt1
 - New version
 
