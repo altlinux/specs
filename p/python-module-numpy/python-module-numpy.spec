@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt12.git20141102
+Release: alt13.git20141102
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -1068,6 +1068,10 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt13.git20141102
+- Fixed numpy.distutils.misc_util.get_num_build_jobs for cases when
+  --jobs command line argument doesn't recognized by setup.py
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt12.git20141102
 - New snapshot
 
