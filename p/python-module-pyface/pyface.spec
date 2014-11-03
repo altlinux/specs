@@ -1,7 +1,7 @@
 %define oname pyface
 Name: python-module-%oname
 Version: 4.4.0
-Release: alt1.git20140430
+Release: alt1.git20140923
 Summary: Traits-capable windowing framework
 
 Group: Development/Python
@@ -100,6 +100,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.0-alt1.git20140923
+- New snapshot
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.0-alt1.git20140430
 - Version 4.4.0
 
