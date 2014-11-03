@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.6.0
-Release:        alt1.git20140507
+Release:        alt1.git20141007
 Summary:        Explicitly typed attributes for Python
 
 Group:          Development/Python
@@ -181,8 +181,8 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*/testing
 
 %files doc
-%doc examples docs/*.pdf html
-%doc docs/*.txt docs/*.pdf docs/*.doc
+%doc examples html
+%doc docs/*.txt
 
 %files pickles
 %dir %python_sitelibdir/%oname
@@ -201,6 +201,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6.0-alt1.git20141007
+- New snapshot
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6.0-alt1.git20140507
 - Version 4.6.0
 
