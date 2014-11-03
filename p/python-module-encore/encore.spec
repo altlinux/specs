@@ -1,7 +1,7 @@
 %define oname encore
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt2.git20140422
+Release: alt2.git20140910
 Summary: A Collection of core-level utility modules for Enthought projects
 License: BSD
 Group: Development/Python
@@ -84,11 +84,11 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/testing
 
-#files docs
-#doc docs/build/html/*
+%files docs
+%doc docs/build/html/*
 
-#files pickles
-#python_sitelibdir/%oname/pickle
+%files pickles
+%python_sitelibdir/%oname/pickle
 
 %files tests
 %python_sitelibdir/*/*/*/tests
@@ -96,6 +96,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*/testing
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt2.git20140910
+- New snapshot
+
 * Thu May 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt2.git20140422
 - Moved tests into tests subpackage
 
