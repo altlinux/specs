@@ -1,6 +1,6 @@
 Name: libspf2
-Version: 1.2.9
-Release: alt4
+Version: 1.2.10
+Release: alt1
 
 Summary: Implementation of the SPF specification
 License: LGPLv2.1+
@@ -70,6 +70,9 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %exclude %_libdir/*.a
 
 %changelog
+* Mon Nov 03 2014 Anton Gorlov <stalker@altlinux.ru> 1.2.10-alt1
+- New version 
+
 * Tue Dec 27 2011 Victor Forsiuk <force@altlinux.org> 1.2.9-alt4
 - Fix RPATH issue.
 
