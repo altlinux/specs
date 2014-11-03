@@ -20,7 +20,7 @@ under OSI-approved licenses.
 
 Name: %oname
 Version: 2267
-Release: alt14
+Release: alt15
 Summary: Add-on packages for SciPy
 License: OSI-approved licenses
 Group: Sciences/Other
@@ -679,6 +679,9 @@ done
 %endif
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt15
+- Rebuilt with updated SciPy
+
 * Thu May 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt14
 - Moved all tests from python-module-%name.statsmodels into
   python-module-%name-examples
