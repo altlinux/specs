@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.2.1
-Release:        alt2.git20140408
+Release:        alt2.git20140919
 Summary:        Enthough Tool Suite Application Tools
 
 Group:          Development/Python
@@ -169,6 +169,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt2.git20140919
+- New snapshot
+
 * Thu May 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt2.git20140408
 - Moved tests into tests subpackage
 
