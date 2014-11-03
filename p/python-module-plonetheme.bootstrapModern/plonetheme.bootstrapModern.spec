@@ -1,7 +1,7 @@
 %define mname plonetheme
 %define oname %mname.bootstrapModern
 Name: python-module-%oname
-Version: 0.48
+Version: 0.50
 Release: alt1
 Summary: An installable theme for Plone 4
 License: GPL
@@ -71,6 +71,9 @@ nosetests
 %python_sitelibdir/%mname/*/tests.*
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.50-alt1
+- Version 0.50
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.48-alt1
 - Version 0.48
 
