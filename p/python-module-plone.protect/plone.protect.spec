@@ -1,7 +1,7 @@
 %define oname plone.protect
 Name: python-module-%oname
-Version: 3.0.1
-Release: alt2.dev0.git20140826
+Version: 3.0.2
+Release: alt1.dev0.git20141101
 Summary: Security for browser forms
 License: BSD
 Group: Development/Python
@@ -69,6 +69,9 @@ python setup.py test
 %python_sitelibdir/plone/*/test*
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt1.dev0.git20141101
+- Version 3.0.2.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt2.dev0.git20140826
 - Added necessary requirements
 
