@@ -1,7 +1,7 @@
 %define oname SciMath
 Name: python-module-%oname
 Version: 4.1.2
-Release: alt2.git20140415
+Release: alt2.git20140829
 Summary:  Scientific and Mathematical calculations
 
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: python-devel, python-module-setuptools gcc-c++
 BuildPreReq: python-module-setupdocs libnumpy-devel
-BuildPreReq: python-module-sphinx python-module-Pygments
+BuildPreReq: python-module-sphinx-devel python-module-Pygments
 
 %description
 The SciMath project includes packages to support scientific and
@@ -34,8 +34,32 @@ mathematical calculations, beyond the capabilities offered by SciPy.
 
 This package contains tests for SciMath.
 
+%package pickles
+Summary: Pickles for Scientific and Mathematical calculations
+Group: Development/Python
+
+%description pickles
+The SciMath project includes packages to support scientific and
+mathematical calculations, beyond the capabilities offered by SciPy.
+
+This package contains pickles for SciMath.
+
+%package docs
+Summary: Documentation for Scientific and Mathematical calculations
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+The SciMath project includes packages to support scientific and
+mathematical calculations, beyond the capabilities offered by SciPy.
+
+This package contains documentation for SciMath.
+
 %prep
 %setup
+
+%prepare_sphinx docs
+ln -s ../objects.inv docs/source/
 
 %build
 %python_build_debug
@@ -43,15 +67,33 @@ This package contains tests for SciMath.
 %install
 %python_install
 
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C docs pickle
+%make -C docs html
+
+install -d %buildroot%python_sitelibdir/%oname
+cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
+
 %files
 %doc *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%files docs
+%doc docs/build/html/*
 
 %files tests
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt2.git20140829
+- New snapshot
+- Added docs
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt2.git20140415
 - New snapshot
 
