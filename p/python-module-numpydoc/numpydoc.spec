@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt1.dev.git20140608
+Release: alt1.dev.git20140907
 Epoch: 1
 
 Summary: Numpy's Sphinx extensions
@@ -119,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.6-alt1.dev.git20140907
+- New snapshot
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.6-alt1.dev.git20140608
 - Version 0.6.dev
 
