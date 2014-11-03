@@ -1,8 +1,8 @@
 # vim:set ft=spec:
 Name: swig
 Epoch: 1
-Version: 3.0.0
-Release: alt2
+Version: 3.0.2
+Release: alt1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
@@ -207,6 +207,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.2-alt1
+- Version 3.0.2
+
 * Wed Sep 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.0-alt2
 - Added perl support
 
