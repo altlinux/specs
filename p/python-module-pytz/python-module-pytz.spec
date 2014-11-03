@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 2014.7
+Version: 2014.9
 Release: alt1
 
 %setup_python_module %oname
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2014.9-alt1
+- Version 2014.9
+
 * Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2014.7-alt1
 - Version 2014.7
 
