@@ -5,8 +5,8 @@
 %define scalar_type real
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 1.3.0
-Release: alt3.git20140506
+Version: 1.4.0
+Release: alt1.git20141028
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -362,6 +362,9 @@ export LD_LIBRARY_PATH=%buildroot%ldir/lib
 %ldir/python/%{oname}_utils
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4.0-alt1.git20141028
+- Version 1.4.0
+
 * Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.0-alt3.git20140506
 - Fixed build
 
