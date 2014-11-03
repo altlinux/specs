@@ -1,7 +1,7 @@
 %define oname BlockCanvas
 Name: python-module-%oname
 Version: 4.0.3
-Release: alt2.git20130328
+Release: alt3.git20130328
 Summary: Enthought Numerical Modeling
 
 Group: Development/Python
@@ -69,6 +69,9 @@ This package contains tests for BlockCanvas.
 %python_sitelibdir/*/*/*/*/*/tests
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt3.git20130328
+- Rebuilt with updated NumPy
+
 * Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt2.git20130328
 - Rebuilt with updated NumPy
 
