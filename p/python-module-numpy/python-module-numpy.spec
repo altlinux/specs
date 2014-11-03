@@ -1,5 +1,5 @@
 %define oname numpy
-%define svnver b2b3347
+%define svnver cfa095a
 %define majver 2
 %def_without latex
 %def_with doc
@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt12.git20140505
+Release: alt12.git20141102
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -814,7 +814,7 @@ fi
 #exclude %python_sitelibdir/%oname/numarray/include
 %exclude %python_sitelibdir/%oname/distutils
 %exclude %python_sitelibdir/%oname/f2py/src
-%exclude %python_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
+#exclude %python_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 %if_with doc
 %exclude %python_sitelibdir/%oname/pickle
 %endif
@@ -862,13 +862,13 @@ fi
 #exclude %python3_sitelibdir/%oname/numarray/include
 %exclude %python3_sitelibdir/%oname/distutils
 %exclude %python3_sitelibdir/%oname/f2py/src
-%exclude %python3_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
+#exclude %python3_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 #if_with doc
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.h
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.c
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.pxi
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.pyx
-%exclude %python3_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
+#exclude %python3_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 #exclude %python3_sitelibdir/%oname/numarray/*.c
 %exclude %python3_sitelibdir/%oname/core/src/multiarray/*.h
 %exclude %python3_sitelibdir/%oname/core/src/multiarray/*.c*
@@ -923,7 +923,7 @@ fi
 %python_sitelibdir/pyrex_ext*
 %python_sitelibdir/swig_ext*
 %python_sitelibdir/testnumpydistutils*
-%python_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
+#python_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 %endif
 
 %if_with python3
@@ -940,7 +940,7 @@ fi
 #python3_sitelibdir/pyrex_ext*
 %python3_sitelibdir/swig_ext*
 %python3_sitelibdir/testnumpydistutils*
-%python3_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
+#python3_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 %endif
 %endif
 
@@ -1068,6 +1068,9 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt12.git20141102
+- New snapshot
+
 * Tue May 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt12.git20140505
 - New snapshot
 
