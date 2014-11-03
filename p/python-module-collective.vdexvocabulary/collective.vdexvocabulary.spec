@@ -1,8 +1,8 @@
 %define mname collective
 %define oname %mname.vdexvocabulary
 Name: python-module-%oname
-Version: 0.2
-Release: alt1.dev.git20140205
+Version: 0.3
+Release: alt1.dev.git20141103
 Summary: IMS VDEX Vocabularies as Zope Vocabulary
 License: GPL
 Group: Development/Python
@@ -73,6 +73,9 @@ nosetests
 %python_sitelibdir/%mname/*/tests.*
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.dev.git20141103
+- Version 0.3.dev0
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.dev.git20140205
 - Initial build for Sisyphus
 
