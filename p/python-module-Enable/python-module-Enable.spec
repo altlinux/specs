@@ -1,7 +1,7 @@
 %define oname Enable
 Name: python-module-%oname
 Version: 4.5.0
-Release: alt1.git20140501
+Release: alt1.git20141003
 Summary: Drawing and interaction packages
 
 Group: Development/Python
@@ -98,7 +98,7 @@ install -d %buildroot%python_sitelibdir/enable
 cp -fR pickle %buildroot%python_sitelibdir/enable/
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/tests
@@ -115,9 +115,12 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %python_sitelibdir/*/*/*/tests
 
 %files doc
-%doc docs/kiva docs/*.txt examples html
+%doc docs/kiva examples html
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.0-alt1.git20141003
+- New snapshot
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.0-alt1.git20140501
 - Version 4.5.0
 
