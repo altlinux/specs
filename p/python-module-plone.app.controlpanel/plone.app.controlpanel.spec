@@ -1,8 +1,8 @@
 %define oname plone.app.controlpanel
 
 Name: python-module-%oname
-Version: 2.4.6
-Release: alt1.dev0.git20141023
+Version: 2.4.7
+Release: alt1.dev0.git20141101
 Summary: Formlib-based controlpanels for Plone
 License: GPLv2
 Group: Development/Python
@@ -39,6 +39,7 @@ BuildPreReq: python-module-Products.statusmessages
 BuildPreReq: python-module-Products.PloneTestCase
 BuildPreReq: python-module-plone.app.testing
 BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-zope.security-tests
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -61,6 +62,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires Products.PloneTestCase plone.app.testing
+%py_requires zope.security.testing
 
 %description tests
 This package provides various control panels for Plone and some
@@ -95,6 +97,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.7-alt1.dev0.git20141101
+- Version 2.4.7.dev0
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.6-alt1.dev0.git20141023
 - Version 2.4.6.dev0
 
