@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.27.6
-Release: alt1.git20141029
+Version: 0.27.7
+Release: alt1.git20141103
 Summary: Various utility functions for SQLAlchemy
 License: BSD
 Group: Development/Python
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.27.7-alt1.git20141103
+- Version 0.27.7
+
 * Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.27.6-alt1.git20141029
 - Initial build for Sisyphus
 
