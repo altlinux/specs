@@ -1,6 +1,6 @@
 Name: python-module-dateutil
 Version: 1.5
-Release: alt1.2
+Release: alt1.3
 
 Summary: Extensions to the standard datetime module
 
@@ -58,6 +58,9 @@ tar -czf \
 
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.3
+- Rebuilt with new pytz
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.2
 - Don't delete zoneinfo
 
