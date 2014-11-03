@@ -2,14 +2,14 @@
 # TODO: Move mpl-data to share?
 
 %define oname matplotlib
-%define major 1.4
+%define major 1.5
 
 %def_disable docs
 %def_with python3
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt5.git20140504
+Release: alt1.git20141101
 
 Summary: Matlab(TM) style python plotting package
 
@@ -330,15 +330,15 @@ find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' + ||:
 
 %build
 export XDG_RUNTIME_DIR=%_xdgdatadir
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing -fpermissive
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.h') \
-	 $(find ./ -name '*.c') \
-	 $(find ./ -name '*.cpp')
-do
-	sed -i 's|\(include.*numpy\)/|\1-py3/|' $i
-done
+#for i in $(find ./ -name '*.h') \
+#	 $(find ./ -name '*.c') \
+#	 $(find ./ -name '*.cpp')
+#do
+#	sed -i 's|\(include.*numpy\)/|\1-py3/|' $i
+#done
 sed -i 's|^\(gtkagg\).*|\1 = False|' setup.cfg
 sed -i 's|^\(gtk3agg\).*|\1 = False|' setup.cfg
 sed -i 's|^\(tkagg\).*|\1 = False|' setup.cfg
@@ -413,7 +413,7 @@ popd
 
 install -d %buildroot%_docdir/%name/pdf
 cp -fR examples LICENSE %buildroot%_docdir/%name/
-install -p -m644 README.rst CHANGELOG INSTALL TODO \
+install -p -m644 README.rst CHANGELOG INSTALL \
 	%buildroot%_docdir/%name
 
 %if_enabled docs
@@ -462,7 +462,6 @@ done
 %doc %_docdir/%name/README.rst
 %doc %_docdir/%name/CHANGELOG
 %doc %_docdir/%name/INSTALL
-%doc %_docdir/%name/TODO
 %python_sitelibdir/*.py*
 %python_sitelibdir/*.egg-info
 %dir %python_sitelibdir/matplotlib/
@@ -525,7 +524,7 @@ done
 %files qt4
 %python_sitelibdir/matplotlib/backends/backend_qt4*
 %python_sitelibdir/matplotlib/backends/qt4_compat.*
-%python_sitelibdir/matplotlib/backends/qt4_editor
+%python_sitelibdir/matplotlib/backends/qt_editor
 
 %files examples
 %doc %dir %_docdir/%name
@@ -568,7 +567,7 @@ rm -fR %_docdir/%name/pdf
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE README.rst CHANGELOG INSTALL TODO
+%doc LICENSE README.rst CHANGELOG INSTALL
 %python3_sitelibdir/*.py*
 #exclude %python3_sitelibdir/six.py*
 %python3_sitelibdir/__pycache__/*
@@ -649,7 +648,7 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt4*
 %python3_sitelibdir/matplotlib/backends/qt4_compat.*
 %python3_sitelibdir/matplotlib/backends/__pycache__/qt4_compat.*
-%python3_sitelibdir/matplotlib/backends/qt4_editor
+%python3_sitelibdir/matplotlib/backends/qt_editor
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/testing
@@ -667,6 +666,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.git20141101
+- Version 1.5.x
+
 * Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt5.git20140504
 - Fixed build
 
