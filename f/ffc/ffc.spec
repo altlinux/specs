@@ -1,6 +1,6 @@
 Name:           ffc
-Version:        1.3.0
-Release:        alt2.git20140430
+Version:        1.4.0
+Release:        alt1.git20141022
 Epoch: 1
 Summary:        Compiler for finite element variational forms
 Group:          Development/Tools
@@ -100,6 +100,8 @@ install -d %buildroot%_pkgconfigdir
 mv %buildroot%_libexecdir/pkgconfig/* %buildroot%_pkgconfigdir/
 %endif
 
+touch %buildroot%python_sitelibdir/ffc_time_ext/__init__.py
+
 %files
 %doc README* AUTHORS ChangeLog COPYING
 %_bindir/*
@@ -118,6 +120,9 @@ mv %buildroot%_libexecdir/pkgconfig/* %buildroot%_pkgconfigdir/
 %_datadir/ufc
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4.0-alt1.git20141022
+- Version 1.4.0
+
 * Thu May 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.0-alt2.git20140430
 - Obsoletes: python-module-ufc
 
