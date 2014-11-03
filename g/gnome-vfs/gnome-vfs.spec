@@ -31,7 +31,7 @@
 
 Name: gnome-vfs
 Version: %ver_major.4
-Release: alt8
+Release: alt9
 Serial: 1
 
 Summary: The GNOME virtual file-system libraries
@@ -260,6 +260,7 @@ This package contains command line tools for GNOME VFS.
 %build
 mkdir -p %buildroot%_datadir/dbus-1/services/
 %autoreconf
+export LIBS="$LIBS `%_bindir/libgcrypt-config --libs`"
 %configure \
         %{subst_enable static} \
         %{subst_enable howl} \
@@ -273,6 +274,7 @@ mkdir -p %buildroot%_datadir/dbus-1/services/
         %{subst_enable fam} \
         %{?_enable_gamin:--enable-fam} \
         %{subst_enable daemon} \
+        --enable-ipv6 \
 	--disable-selinux \
         --disable-schemas-install \
         --enable-gtk-doc
@@ -368,6 +370,9 @@ fi
 %exclude %vfsmodulesdir/*.la
 
 %changelog
+* Mon Nov 03 2014 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt9
+- fixed build
+
 * Mon Apr 07 2014 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt8
 - fixed build with gnome-common-3.12
 
