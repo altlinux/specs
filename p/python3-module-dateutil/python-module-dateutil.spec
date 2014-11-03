@@ -1,7 +1,7 @@
 %define oname dateutil
 Name: python3-module-%oname
 Version: 2.2
-Release: alt2.bzr20131101
+Release: alt3.bzr20131101
 
 Summary: Extensions to the standard datetime module (Python 3)
 
@@ -57,6 +57,9 @@ tar -czf \
 
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt3.bzr20131101
+- Rebuilt with new pytz
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt2.bzr20131101
 - Don't delete zoneinfo
 
