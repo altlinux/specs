@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: py%oname
-Version: 3.1.1
-Release: alt3.git20140325
+Version: 3.1.2
+Release: alt1.dev.git20141012
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -192,7 +192,7 @@ This package contains python module of PyTables.
 %package -n python-module-%oname-tests
 Summary: Tests and examples for PyTables
 Group: Development/Python
-%add_python_req_skip numarray
+%add_python_req_skip numarray queue
 Requires: python-module-%oname = %EVR
 
 %description -n python-module-%oname-tests
@@ -249,15 +249,13 @@ find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %add_optflags -fno-strict-aliasing
+export NPY_NUM_BUILD_JOBS=%__nprocs
 %python_build_debug --hdf5=%hdf5dir
 %if_with python3
 pushd ../python3
 %python3_build_debug --hdf5=%hdf5dir
 popd
 %endif
-
-%make_build -C doc pickle
-%make_build -C doc html
 
 %install
 %if_with python3
@@ -276,8 +274,12 @@ popd
 
 %python_install --hdf5=%hdf5dir --root=%buildroot
 
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make_build -C doc pickle
+%make_build -C doc html
+
 install -d %buildroot%_docdir/%name/pdf
-install -p -m644 LICENSE.txt README.txt RELEASE_NOTES.txt THANKS \
+install -p -m644 LICENSE.txt README.rst RELEASE_NOTES.txt THANKS \
 	%buildroot%_docdir/%name
 cp -fR LICENSES %buildroot%_docdir/%name
 #install -p -m644 doc/build/latex/*.pdf %buildroot%_docdir/%name/pdf
@@ -332,6 +334,9 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %_docdir/%name
 
 %changelog
+* Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.1.2-alt1.dev.git20141012
+- Version 3.1.2dev
+
 * Sat Aug 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.1.1-alt3.git20140325
 - Added module for Python 3
 
