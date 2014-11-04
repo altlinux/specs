@@ -1,6 +1,6 @@
 Name: libspf2
 Version: 1.2.10
-Release: alt1
+Release: alt2
 
 Summary: Implementation of the SPF specification
 License: LGPLv2.1+
@@ -14,7 +14,7 @@ BuildRequires: gcc-c++
 
 %description
 Libspf2 is an implementation of the SPF specification as found at
-http://www.ietf.org/internet-drafts/draft-mengwong-spf-01.txt
+http://tools.ietf.org/html/rfc7208
 
 %package tools
 Summary: Tools distributed with libspf2
@@ -70,6 +70,9 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %exclude %_libdir/*.a
 
 %changelog
+* Tue Nov 04 2014 Anton Gorlov <stalker@altlinux.ru> 1.2.10-alt2
+- replace draft with rfc in description
+
 * Mon Nov 03 2014 Anton Gorlov <stalker@altlinux.ru> 1.2.10-alt1
 - New version 
 
