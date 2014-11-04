@@ -1,7 +1,7 @@
 %define oname Products.TinyMCE
 Name: python-module-%oname
-Version: 1.4.2
-Release: alt1.dev0.git20141023
+Version: 1.4.3
+Release: alt1.dev0.git20141101
 Summary: TinyMCE integration for Plone
 License: LGPL
 Group: Development/Python
@@ -77,6 +77,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/testing
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt1.dev0.git20141101
+- Version 1.4.3.dev0
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1.dev0.git20141023
 - Initial build for Sisyphus
 
