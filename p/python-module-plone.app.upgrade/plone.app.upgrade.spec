@@ -1,8 +1,8 @@
 %define oname plone.app.upgrade
 
 Name: python-module-%oname
-Version: 1.3.7
-Release: alt2.dev0.git20140920
+Version: 1.3.9
+Release: alt1.dev0.git20141102
 Summary: Database upgrade steps for the Plone CMS
 License: GPLv2
 Group: Development/Python
@@ -119,6 +119,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/*/test*
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.9-alt1.dev0.git20141102
+- Version 1.3.9.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7-alt2.dev0.git20140920
 - Added necessary requirements
 - Enabled testing
