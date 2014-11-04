@@ -1,7 +1,7 @@
 %define oname Persistence
 Name: python-module-%oname
-Version: 2.13.2
-Release: alt5
+Version: 3.0
+Release: alt1.a1
 Summary: Persistent ExtensionClass
 License: ZPLv2.1
 Group: Development/Python
@@ -45,7 +45,7 @@ This package contains tests for Persistent ExtensionClass.
 python setup.py test
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -53,6 +53,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1.a1
+- Version 3.0a1
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.2-alt5
 - Enabled testing
 
