@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 6.3.0
-Release: alt1.git20141026
+Version: 7.0.0
+Release: alt1.git20141102
 Summary: Python port of Google's libphonenumber
 License: ASLv2.0
 Group: Development/Python
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0.0-alt1.git20141102
+- Version 7.0.0
+
 * Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.3.0-alt1.git20141026
 - Initial build for Sisyphus
 
