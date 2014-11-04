@@ -1,10 +1,10 @@
 %define		php5_extension	magickwand
 %define 	real_name	MagickWandForPHP
-%define		real_version	1.0.9
+%define		real_version	1.0.9-2
 
 Name:	 	php5-%{php5_extension}
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 
 Summary:	PHP5 extension to access the ImageMagick MagickWand API
 
@@ -17,8 +17,6 @@ Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
 Source0:	%real_name-%real_version.tar
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
-
-Patch0:		magickwand-alt-build.patch
 
 BuildRequires(pre): rpm-build-php5
 
@@ -40,7 +38,6 @@ manipulation, and special effects capabilities and more.
 %prep
 %setup -T -c
 tar xvf %SOURCE0
-%patch0 -p2
 
 %build
 phpize
@@ -75,6 +72,7 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+- New version 1.0.9-2
 
 * Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 5.5.10.20140305-alt1.3
 - rebuild with ImageMagick 6.8.8.10-alt1 
