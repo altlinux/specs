@@ -1,8 +1,8 @@
 %define oname Products.ExternalMethod
 
 Name: python-module-%oname
-Version: 2.13.1
-Release: alt1.dev.git20130313
+Version: 2.13.2
+Release: alt1.git20141102
 Summary: Provides support for external Python methods within a Zope 2 environment
 License: ZPLv2.1
 Group: Development/Python
@@ -61,6 +61,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.2-alt1.git20141102
+- Version 2.13.2
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.1-alt1.dev.git20130313
 - Version 2.13.1dev
 - Enabled testing
