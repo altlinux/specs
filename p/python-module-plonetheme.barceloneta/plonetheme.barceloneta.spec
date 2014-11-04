@@ -2,8 +2,8 @@
 %define oname %mname.barceloneta
 
 Name: python-module-%oname
-Version: 1.6.0
-Release: alt2.git20141009
+Version: 1.6.2
+Release: alt1.dev0.git20141101
 Summary: The default theme for Plone 5
 License: GPLv2
 Group: Development/Python
@@ -63,6 +63,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt1.dev0.git20141101
+- Version 1.6.2.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt2.git20141009
 - Enabled testing
 
