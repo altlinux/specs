@@ -1,10 +1,10 @@
 %define		php5_extension	gmagick
 %define 	real_name	gmagick
-%define		real_version	1.1.2RC1
+%define		real_version	1.1.7RC2
 
 Name:	 	php5-%{php5_extension}
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 
 Summary:	PHP5 extension to work with images using the GraphicsMagick API
 
@@ -71,6 +71,7 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+- New version 1.1.7RC2
 
 * Tue May 21 2013 Aleksey Avdeev <solo@altlinux.ru> 5.3.25.20130509-alt1.1
 - 1.1.2RC1
