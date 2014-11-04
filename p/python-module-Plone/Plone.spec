@@ -1,7 +1,7 @@
 %define oname Plone
 Name: python-module-%oname
-Version: 5.0a3
-Release: alt1.dev0.git20140718
+Version: 5.0b1
+Release: alt1.dev0.git20141101
 Summary: The Plone Content Management System
 License: GPLv2
 Group: Development/Python
@@ -61,6 +61,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0b1-alt1.dev0.git20141101
+- Version 5.0b1.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0a3-alt1.dev0.git20140718
 - Initial build for Sisyphus
 
