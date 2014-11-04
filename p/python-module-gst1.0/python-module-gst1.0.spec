@@ -5,7 +5,7 @@
 
 Name: python-module-gst%gst_api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for GStreamer-1.0
 Group: Development/Python
@@ -25,12 +25,12 @@ BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
 This module contains a wrapper that allows GStreamer applications
 to be written in Python.
 
-%package -n python3-module-gst
+%package -n python3-module-gst%gst_api_ver
 Summary: Python3 bindings for GStreamer-1.0
 Group: Development/Python3
 License: LGPL2.1+
 
-%description -n python3-module-gst
+%description -n python3-module-gst%gst_api_ver
 This module contains a wrapper that allows GStreamer applications
 to be written in Python3.
 
@@ -68,7 +68,7 @@ popd
 
 %exclude %python_sitelibdir/gi/overrides/*.la
 
-%files -n python3-module-gst
+%files -n python3-module-gst%gst_api_ver
 %_gst_libdir/libgstpython3plugin.so
 %python3_sitelibdir/gi/overrides/*
 
@@ -76,6 +76,9 @@ popd
 %exclude %_gst_libdir/*.la
 
 %changelog
+* Tue Nov 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1.1
+- fixed name of python3 package
+
 * Mon Nov 03 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - first build for Sisyphus
 
