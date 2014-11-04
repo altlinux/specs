@@ -1,7 +1,7 @@
 %define oname plone.stringinterp
 Name: python-module-%oname
-Version: 1.1.1
-Release: alt1.dev0.git20140826
+Version: 1.1.2
+Release: alt1.dev0.git20141101
 Summary: Adaptable string interpolation
 License: GPLv2
 Group: Development/Python
@@ -61,6 +61,9 @@ python setup.py test
 %python_sitelibdir/plone/*/tests
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.dev0.git20141101
+- Version 1.1.2.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.dev0.git20140826
 - Initial build for Sisyphus
 
