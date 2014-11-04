@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.4.2
+Version: 2.5.0
 Release: alt1
 Summary: A simple and efficient access to R from Python, version 2
 License: MPL/GPL/LGPL
@@ -16,13 +16,15 @@ Source: %oname-%version.tar.gz
 Requires: R-base
 
 BuildRequires(pre): rpm-build-python
+BuildPreReq: libpcre-devel liblzma-devel bzlib-devel zlib-devel
+BuildPreReq: libicu-devel
 BuildPreReq: python-devel R-devel liblapack-devel libreadline-devel
-BuildPreReq: python-module-setuptools
+BuildPreReq: python-module-setuptools-tests python-module-singledispatch
 #BuildPreReq: python-module-sphinx-devel python-module-Pygments
 #BuildPreReq: graphviz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 %setup_python_module %oname
 
@@ -196,8 +198,16 @@ cat <<EOF > %buildroot%_sysconfdir/profile.d/%oname.sh
 export R_HOME=%_libdir/R
 EOF
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests*
 %exclude %python_sitelibdir/*/*/tests
@@ -221,7 +231,7 @@ EOF
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests*
 %exclude %python3_sitelibdir/*/*/tests
@@ -234,6 +244,9 @@ EOF
 %endif
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt1
+- Version 2.5.0
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1
 - Version 2.4.2
 - Added module for Python 3
