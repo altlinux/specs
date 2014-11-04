@@ -1,10 +1,10 @@
 %define		php5_extension	yaml
 %define 	real_name	yaml
-%define		real_version	1.1.0
+%define		real_version	1.1.1
 
 Name:	 	php5-%{php5_extension}
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 
 Summary:	PHP5 YAML-1.1 parser and emitter
 
@@ -60,6 +60,7 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+- New version 1.1.1
 
 * Fri Jan 04 2013 Nikolay A. Fetisov <naf@altlinux.ru> 5.3.18.20121017-alt1
 - Initial build for ALT Linux Sisyphus
