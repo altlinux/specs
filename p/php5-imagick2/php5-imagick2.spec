@@ -1,10 +1,10 @@
 %define		php5_extension	imagick
 %define 	real_name	imagick
-%define		real_version	3.1.0
+%define		real_version	3.2.0RC1
 
 Name:	 	php5-%{php5_extension}2
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 
 Summary:	PHP5 wrapper to the ImageMagick library
 
@@ -17,7 +17,6 @@ Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
 Source0:	%real_name-%real_version.tar
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
-Patch: imagick-alt-build.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires: php5-devel = %php5_version
@@ -37,7 +36,6 @@ tar xvf %SOURCE0
 # ./imagick-2.x.x -> ./
 mv -- %real_name-%real_version/* .
 rm -fr -- %real_name-%real_version
-%patch -p2
 
 %build
 phpize
@@ -58,7 +56,7 @@ install -D -m 644 -- %SOURCE1 %buildroot/%php5_extconf/%php5_extension/config
 install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 
 %files
-%doc CREDITS INSTALL
+%doc CREDITS
 %doc examples*
 
 %php5_extconf/%php5_extension
@@ -73,6 +71,7 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+- New version 3.2.0RC1
 
 * Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 5.5.10.20140305-alt1.1
 - rebuild with ImageMagick 6.8.8.10-alt1
