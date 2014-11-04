@@ -1,55 +1,70 @@
+%define ver_major 0.94
+%define gst_api_ver 1.0
+%define gst_ver 1.4.0
+
 Name: pitivi
-Version: 0.15.2
+Version: %ver_major
 Release: alt1
+
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
 Group: Video
 Url: http://www.pitivi.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires: python%__python_version(gtk.glade) libgnonlin gst-ffmpeg gst-plugins-good gst-plugins-base gst-plugins-bad gst-plugins-ugly
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
-Source: %name-%version.tar
-Source1: common.tar
-Patch: %name-%version-%release.patch
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+%add_python3_compile_include %_libdir/%name/python
 
-BuildRequires: gnome-doc-utils intltool python-modules
+Requires: python3-module-gst%gst_api_ver  >= %gst_ver
+Requires: gst-plugins-gnonlin%gst_api_ver
+Requires: gst-libav >= %gst_ver
+Requires: gst-plugins-base%gst_api_ver >= %gst_ver
+Requires: gst-plugins-good%gst_api_ver >= %gst_ver
+Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
+Requires: gst-plugins-ugly%gst_api_ver >= %gst_ver
+
+BuildRequires: intltool yelp-tools rpm-build-gir libcairo-devel
+BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
+BuildRequires: python3-module-pycairo-devel
 
 %description
-PiTiVi allows users to easily edit audio/video projects based on the
-GStreamer framework: Capture audio and video; mix, resize, cut, apply
-effects to audio/video sources; Render/Save the projects to any format
-supported by the GStreamer framework. PiTiVi is still in a very early
-stage of development, and contributions are much welcome.
+Pitivi is a video editor built upon the GStreamer Editing Services.
+It aims to be an intuitive and flexible application that can appeal to
+newbies and professionals alike.
 
 %prep
-%setup -q -a1
-%patch -p1
+%setup
 
 %build
-intltoolize --force
-gnome-doc-prepare
-aclocal -I common/m4 --force
-autoconf --force
-automake --force --add-missing
+#NOCONFIGURE=1 ./autogen.sh
+#%autoreconf
 %configure
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
 %doc AUTHORS NEWS RELEASE
 %_bindir/*
-%_libdir/%name
-%_datadir/%name
+%_libdir/%name/
+%_datadir/%name/
 %_datadir/mime/packages/%name.xml
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
 %_man1dir/%name.1*
+%_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Nov 03 2014 Yuri N. Sedunov <aris@altlinux.org> 0.94-alt1
+- 0.94
+
 * Thu May 31 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.15.2-alt1
 - 0.15.2
 
