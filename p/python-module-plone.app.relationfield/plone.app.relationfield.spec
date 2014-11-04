@@ -1,8 +1,8 @@
 %define oname plone.app.relationfield
 
 Name: python-module-%oname
-Version: 1.2.3
-Release: alt2.dev0.git20140910
+Version: 1.3.1
+Release: alt1.dev0.git20141102
 Summary: Plone support for z3c.relationfield
 License: GPL
 Group: Development/Python
@@ -81,6 +81,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1.dev0.git20141102
+- Version 1.3.1.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.3-alt2.dev0.git20140910
 - Added necessary requirements
 - Enabled testing
