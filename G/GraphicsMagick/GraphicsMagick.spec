@@ -27,6 +27,7 @@
 %def_with tiff
 %def_without trio
 %def_with ttf
+%def_with webp
 %def_with wmf
 %def_with xml
 %def_with zlib
@@ -42,8 +43,8 @@
 %define Name GraphicsMagick
 Name: %Name
 %define lname lib%name
-Version: 1.3.18
-Release: alt3
+Version: 1.3.20
+Release: alt1
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -53,9 +54,6 @@ Source: ftp://ftp.graphicsmagick.org/pub/%Name/%Name-%version.tar
 Patch: %name-%version-%release.patch
 %{?_enable_shared:Requires: %lname = %version-%release}
 Requires: %name-common = %version-%release
-
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Fri Jan 19 2007
@@ -69,6 +67,7 @@ BuildRequires: chrpath dcraw enscript libgegl ghostscript-classic gnuplot graphv
 %{?_with_lcms2:BuildRequires: liblcms2-devel}
 %{?_with_lzma:BuildRequires: liblzma-devel}
 %{?_with_tiff:BuildRequires: libtiff-devel}
+%{?_with_webp:BuildRequires: libwebp-devel}
 %{?_with_wmf:BuildRequires: libwmf-devel}
 %{?_with_xml:BuildRequires: libxml2-devel}
 %{?_with_jpeg:BuildRequires: libjpeg-devel}
@@ -293,6 +292,7 @@ rm PerlMagick/t/zlib/read.t
     %{subst_with tiff} \\\
     %{subst_with trio} \\\
     %{subst_with ttf} \\\
+    %{subst_with webp} \\\
     %{subst_with wmf} \\\
     %{subst_with xml} \\\
     %{subst_with zlib} \\\
@@ -505,6 +505,9 @@ __MENU__
 %endif
 
 %changelog
+* Tue Nov 04 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.20-alt1
+- 1.3.20
+
 * Wed Jun 04 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.18-alt3
 - drop ps/read.t from PerlMagick testsuite
 
