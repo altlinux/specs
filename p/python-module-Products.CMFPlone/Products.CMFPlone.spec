@@ -1,7 +1,7 @@
 %define oname Products.CMFPlone
 Name: python-module-%oname
 Version: 5.0
-Release: alt2.a3.dev0.git20141009
+Release: alt2.b1.dev0.git20141102
 Summary: The Plone Content Management System (core)
 License: GPLv2
 Group: Development/Python
@@ -203,6 +203,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/*/*/test*
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt2.b1.dev0.git20141102
+- Version 5.0b1.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt2.a3.dev0.git20141009
 - Added requirement on markdown
 
