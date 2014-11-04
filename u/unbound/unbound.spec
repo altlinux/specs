@@ -1,6 +1,6 @@
 Name: unbound
-Version: 1.4.21
-Release: alt2
+Version: 1.4.22
+Release: alt1
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
@@ -195,6 +195,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Tue Nov 04 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.4.22-alt1
+- New version, see Changelog
+
 * Sat Nov 01 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.4.21-alt2
 - Some repocop warning fixed, taked package also
 
