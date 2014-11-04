@@ -1,7 +1,7 @@
 %define oname plone.app.locales
 Name: python-module-%oname
-Version: 4.3.4
-Release: alt1.dev0.git20141006
+Version: 4.3.5
+Release: alt1.dev0.git20141101
 Summary: Translation files for Plone
 License: GPLv2
 Group: Development/Python
@@ -42,9 +42,13 @@ python setup.py test
 
 %files
 %doc *.txt *.rst docs
-%python_sitelibdir/*
+%python_sitelibdir/plone/app/*
+%python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.5-alt1.dev0.git20141101
+- Version 4.3.5.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.4-alt1.dev0.git20141006
 - Initial build for Sisyphus
 
