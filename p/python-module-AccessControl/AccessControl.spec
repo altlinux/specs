@@ -1,8 +1,8 @@
 %define oname AccessControl
 
 Name: python-module-%oname
-Version: 3.0.10
-Release: alt1.dev.git20140808
+Version: 3.0.11
+Release: alt1.git20141102
 Summary: Security framework for Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -61,6 +61,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.11-alt1.git20141102
+- Version 3.0.11
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.10-alt1.dev.git20140808
 - Version 3.0.10dev
 - Enabled testing
