@@ -1,6 +1,6 @@
 Name: libgit2
-Version: 0.21.0
-Release: alt2
+Version: 0.21.2
+Release: alt1
 
 Summary: linkable library for Git
 License: GPLv2 with linking exception
@@ -57,6 +57,9 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Nov 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.21.2-alt1
+- 0.21.2
+
 * Tue Jul 01 2014 Yuri N. Sedunov <aris@altlinux.org> 0.21.0-alt2
 - built as threadsafe
 
