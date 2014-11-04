@@ -3,8 +3,8 @@
 %def_with static
 
 Name: miredo
-Version: 1.2.5
-Release: alt2
+Version: 1.2.6
+Release: alt1
 
 Summary: Teredo IPv6 tunneling through NATs
 
@@ -22,14 +22,21 @@ Source2: %name.sysconfig
 
 Source3: %name-server.init
 Source4: %name-server.sysconfig
+Source5: %name-server.service
 
 Patch0: %name-%version-%release.patch
 
+Patch1: %name-1.2.6-alt-fix_includes.patch
+Patch2: %name-1.2.6-alt-fix_memset_typo.patch
+Patch3: %name-1.2.6-alt-fix_strerror_r_usage.patch
+Patch4: %name-1.2.6-alt-tune_service_file.patch
+Patch5: %name-1.2.6-alt-fix_clobbered.patch
+
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Wed Jun 22 2011
-# optimized out: xz
-BuildRequires: libcap-devel
+# Automatically added by buildreq on Tue Nov 04 2014
+# optimized out: libcloog-isl4 xz
+BuildRequires: glibc-devel-static libcap-devel
 
 %description
 The Teredo IPv6 tunneling protocol encapsulates IPv6 packets into
@@ -109,12 +116,17 @@ This package contains a Miredo client static libraries.
 %setup
 %patch0 -p1
 
+%patch1
+%patch2
+%patch3
+%patch4
+%patch5
+
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
-%def_disable Werror
-sed -e '/# include <stdbool.h>/ i# include <stddef.h>' -i libteredo/tunnel.h
+%def_enable Werror
 
 %add_optflags -std=gnu99
 ./autogen.sh
@@ -136,7 +148,12 @@ install -m 0644 -- %SOURCE4 %buildroot%_sysconfdir/sysconfig/%name-server
 
 install -m 0644 -- misc/%name-server.conf %buildroot%_sysconfdir/%name/%name-server.conf
 
-
+# Moving service file to the proper location
+mkdir -p -- %buildroot%_unitdir
+mv -f -- %buildroot%_libdir/systemd/system/%name.service %buildroot%_unitdir/%name.service
+sed -e 's/##USER##/%miredo_user/' -i %buildroot%_unitdir/%name.service
+install -m 0755 -- %SOURCE5 %buildroot%_unitdir/%name-server.service
+sed -e 's/##USER##/%miredo_user/' -i %buildroot%_unitdir/%name-server.service
 
 %pre
 # Add the "_miredo" user
@@ -173,6 +190,7 @@ install -m 0644 -- misc/%name-server.conf %buildroot%_sysconfdir/%name/%name-ser
 %config(noreplace)  %_sysconfdir/sysconfig/%name
 
 %config  %_initdir/%name
+%_unitdir/%name.service
 
 %exclude %_docdir/miredo/examples/
 
@@ -194,6 +212,7 @@ install -m 0644 -- misc/%name-server.conf %buildroot%_sysconfdir/%name/%name-ser
 %config(noreplace)  %_sysconfdir/sysconfig/%name-server
 
 %config  %_initdir/%name-server
+%_unitdir/%name-server.service
 
 %_sbindir/%name-server
 
@@ -222,6 +241,9 @@ install -m 0644 -- misc/%name-server.conf %buildroot%_sysconfdir/%name/%name-ser
 %endif
 
 %changelog
+* Tue Nov 04 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.2.6-alt1
+- New version
+
 * Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.2.5-alt2
 - Fix build with gettext-tools 0.18.2.1
 
