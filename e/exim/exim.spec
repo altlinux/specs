@@ -8,7 +8,7 @@
 %define openssldir /var/lib/ssl
 
 Name: exim
-Version: 4.82
+Version: 4.84
 Release: alt1
 
 Summary: Exim Mail Transport Agent
@@ -47,7 +47,7 @@ Source36: README.ALT
 Source38: eximon.png
 Source43: smtpauthpwd
 
-Patch1: exim-4.82-buildoptions.patch
+Patch1: exim-4.84-buildoptions.patch
 Patch3: exim-4.34-texinfo.patch
 Patch4: exim-4.76-pcre.patch
 Patch5: CVE-2012-5671.patch
@@ -456,6 +456,9 @@ ln -sf /usr/sbin/exim-ldap /usr/sbin/exim
 %_bindir/exipick
 
 %changelog
+* Tue Nov 04 2014 Anton Gorlov <stalker@altlinux.ru> 4.84-alt1
+- 4.84
+
 * Sun May 18 2014 Anton Gorlov <stalker@altlinux.ru> 4.82-alt1
 - 4.82 
 
