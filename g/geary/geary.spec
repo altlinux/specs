@@ -1,7 +1,8 @@
 %define ver_major 0.8
+%def_disable contractor
 
 Name: geary
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Email client
@@ -9,7 +10,7 @@ License: LGPLv2.1+
 Group: Networking/Mail
 Url: https://wiki.gnome.org/Apps/Geary
 
-Source: ftp://ftp.gnome.org/pub/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -54,7 +55,8 @@ Geary's development.
 %build
 %cmake -DGSETTINGS_COMPILE:BOOL=OFF \
 	-DICON_UPDATE:BOOL=OFF \
-	-DDESKTOP_UPDATE:BOOL=OFF
+	-DDESKTOP_UPDATE:BOOL=OFF \
+	
 %cmake_build VERBOSE=1
 
 %install
@@ -65,6 +67,7 @@ Geary's development.
 %files -f %name.lang
 %doc AUTHORS MAINTAINERS NEWS README THANKS
 %_bindir/%name
+%{?_enable_contractor:%_bindir/%name-attach}
 %dir %_datadir/%name
 %_datadir/%name/
 %_desktopdir/%name.desktop
@@ -72,8 +75,12 @@ Geary's development.
 %_datadir/glib-2.0/schemas/org.yorba.%name.gschema.xml
 %_iconsdir/*/*/apps/*
 %_datadir/appdata/%name.appdata.xml
+%{?_enable_contractor:%_datadir/contractor/geary-attach.contract}
 
 %changelog
+* Wed Nov 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
+- 0.8.2
+
 * Wed Oct 08 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1
 
