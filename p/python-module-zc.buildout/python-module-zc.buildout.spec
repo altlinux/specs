@@ -1,6 +1,6 @@
-%define version 2.2.1
+%define version 2.2.4
 #define subver b20
-%define release alt3
+%define release alt1
 %define oname zc.buildout
 %setup_python_module %oname
 
@@ -150,6 +150,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.4-alt1
+- Version 2.2.4
+
 * Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt3
 - Added necessary requirements
 
