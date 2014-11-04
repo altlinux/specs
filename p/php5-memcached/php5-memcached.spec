@@ -1,10 +1,10 @@
 %define		php5_extension	memcached
 %define 	real_name	memcached
-%define		real_version	2.1.0
+%define		real_version	2.2.0
 
 Name:	 	php5-%{php5_extension}
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 
 Summary:	PHP5 extension for interfacing with memcached via libmemcached library
 
@@ -17,8 +17,6 @@ Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
 Source0:	%real_name-%real_version.tar
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
-
-Patch0:		php-memcached-2.1.0-debian-fix_symbols.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires: php5-devel = %php5_version
@@ -35,7 +33,6 @@ load.
 
 %prep
 %setup -c
-%patch0 -p2
 
 %build
 phpize
@@ -49,6 +46,7 @@ export LDFLAGS=-lphp-%_php5_version
 	--with-libdir=%_lib \
 	--enable-memcached \
 	--enable-memcached-json \
+	--disable-memcached-sasl \
 	%nil
 #	--enable-memcached-igbinary \
 
@@ -74,6 +72,7 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+- New version 2.2.0
 
 * Fri Jan 04 2013 Nikolay A. Fetisov <naf@altlinux.ru> 5.3.18.20121017-alt1.1
 - rebuild with php5-5.3.18.20121017-alt1.1
