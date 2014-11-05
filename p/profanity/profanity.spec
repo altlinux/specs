@@ -1,19 +1,37 @@
 Name: profanity
 Version: 0.4.4
-Release: alt1
+Release: alt2
 Summary: A console based jabber client inspired by irssi
 Group: Networking/Instant messaging
 License: GPLv3
 Source: %name-%version.tar.gz
 # wget -q -O- http://www.profanity.im/configuration.html | sed -n '/\[ui]/,/<\/code>/{s@ *</\?.*>@@g;p}' > profrc
 Source1: profrc
+URL: http://www.profanity.im
 
-# Automatically added by buildreq on Wed May 28 2014
-# optimized out: glib2-devel libX11-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libncurses-devel libp11-kit libtinfo-devel pkg-config xorg-scrnsaverproto-devel xorg-xproto-devel
-BuildRequires: libXScrnSaver-devel libcurl-devel libgnutls-devel libncursesw-devel libnotify-devel libssl-devel libstrophe-devel libxml2-devel libotr-devel
+BuildRequires: libcmocka-devel
+
+# Automatically added by buildreq on Wed Nov 05 2014
+# optimized out: glib2-devel libX11-devel libcloog-isl4 libgcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libncurses-devel libtinfo-devel pkg-config xorg-scrnsaverproto-devel xorg-xproto-devel
+BuildRequires: libXScrnSaver-devel libcurl-devel libncursesw-devel libnotify-devel libotr-devel libssl-devel libstrophe-devel libxml2-devel
 
 %description
 %summary
+  Supports XMPP chat services
+  Command driven user interface
+  MUC chat room support
+  OTR message encryption
+  Roster management
+  Flexible resource and priority settings
+  Desktop notifications
+  Unicode support
+
+%package X11
+Group: Networking/Instant messaging
+Summary: A console based jabber client inspired by irssi (X11 support)
+Requires: %name = %version-%release
+%description X11
+XScrnSaver and notify support for %name
 
 %prep
 %setup
@@ -25,17 +43,33 @@ cp %SOURCE1 profrc.exmaple2
 %configure --with-libxml2 --enable-notifications --enable-otr
 
 %make_build
+mv %name %name.app
+
+make distclean
+%configure --with-libxml2 --disable-notifications --enable-otr --without-xscreensaver
+%make_build
 
 %install
 %makeinstall
+install %name.app %buildroot%_bindir/%name.app
+
+%check
+%make check
 
 %files
 %doc themes profrc.example*
-%_bindir/*
+%_bindir/%name
 %_man1dir/*
 %_datadir/%name
 
+%files X11
+%_bindir/%name.app
+
 %changelog
+* Wed Nov 05 2014 Fr. Br. George <george@altlinux.ru> 0.4.4-alt2
+- Separate X11-required package
+- Provide check session
+
 * Sat Sep 27 2014 Fr. Br. George <george@altlinux.ru> 0.4.4-alt1
 - Autobuild version bump to 0.4.4
 
