@@ -1,4 +1,4 @@
-%define ver_major 2.2
+%define ver_major 2.4
 %def_disable static
 %def_disable docbook
 %def_enable consolekit
@@ -7,13 +7,13 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
 Group: Graphical desktop/GNOME
-Url: cinnamon-screensaver
+Url: https://github.com/linuxmint/cinnamon-screensaver
 
 Provides: screen-saver-engine
 Provides: screen-saver-frontend
@@ -85,6 +85,12 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Oct 31 2014 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
+* Tue Oct 14 2014 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt1
+- git20140923
+
 * Tue Jul 22 2014 Vladimir Didenko <cow@altlinux.org> 2.2.4-alt1
 - 2.2.4
 

@@ -1,4 +1,4 @@
-%define ver_major 2.2
+%define ver_major 2.4
 %define _name cjs
 %define api_ver 1.0
 
@@ -23,6 +23,8 @@ Source: %_name-%version.tar
 BuildRequires: gcc-c++ libmozjs-devel >= 1.8.5 libcairo-devel
 BuildRequires: glib2-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libdbus-glib-devel libreadline-devel libcairo-gobject-devel
+BuildRequires: gnome-common
+BuildRequires: libmozjs24-devel
 
 # for check
 BuildRequires: /proc dbus-tools-gui
@@ -63,26 +65,26 @@ Files for development with %name.
 %_bindir/%_name
 %_bindir/%_name-console
 %_libdir/*.so.*
-%dir %_libdir/%_name-%api_ver
-%_libdir/%_name-%api_ver/*.so
 %dir %_libdir/%_name/
 %dir %_libdir/%_name/girepository-1.0
 %_libdir/%_name/girepository-1.0/CjsPrivate-%api_ver.typelib
-%_datadir/%_name-%api_ver
 %doc COPYING NEWS README
-
-%exclude %_libdir/cjs-1.0/*.la
 
 %files devel
 %_includedir/%_name-%api_ver/
 %_libdir/*.so
 %_libdir/pkgconfig/%_name-%api_ver.pc
-%_libdir/pkgconfig/%_name-dbus-%api_ver.pc
 %_libdir/pkgconfig/%_name-internals-%api_ver.pc
 
 %doc examples/*
 
 %changelog
+* Fri Oct 31 2014 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
+* Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.3.1-alt1
+- git 20141014
+
 * Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
