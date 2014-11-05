@@ -1,7 +1,7 @@
 %define oname robotframework-selenium2library
 Name: python-module-%oname
-Version: 1.5.0
-Release: alt1.git20141008
+Version: 1.6.0
+Release: alt1.git20141102
 Summary: Web testing library for Robot Framework
 License: ASLv2.0
 Group: Development/Python
@@ -38,6 +38,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Nov 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.git20141102
+- Version 1.6.0
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.git20141008
 - Initial build for Sisyphus
 
