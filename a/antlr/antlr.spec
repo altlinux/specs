@@ -61,7 +61,7 @@ BuildRequires: jpackage-compat
 
 Name:           antlr
 Version:        2.7.7
-Release:	alt11_13jpp6
+Release:	alt11_13jpp6.1
 Epoch:          0
 Summary:        ANother Tool for Language Recognition
 License:        Public Domain
@@ -201,6 +201,14 @@ ANTLR mode for jEdit. To enable this mode, insert the following into your
   <MODE NAME="antlr" FILE="antlr.xml" FILE_NAME_GLOB="*.g"/>
 %endif #jedit
 
+%package -n python-module-%{name}2
+Group: Development/Python
+Summary: Python module of %name
+BuildArch: noarch
+
+%description -n python-module-%{name}2
+Python module of %name.
+
 %prep
 %setup -q
 find . -name "*.jar" | xargs -t rm
@@ -225,7 +233,7 @@ export OPT_JAR_LIST=:
   --with-javacflags="+ -source 1.5 -target 1.5" \
   --disable-java \
   --enable-cxx \
-  --disable-python \
+  --enable-python \
   --disable-csharp \
 
 
@@ -299,6 +307,10 @@ install -m 755 scripts/antlr-config $RPM_BUILD_ROOT%{_bindir}
 %{_bindir}/aot-compile-rpm
 %endif
 
+pushd lib/python
+%python_build_install
+popd
+
 %if %with native
 %files native
 %_altdir/%{name}_antlr-native
@@ -347,8 +359,13 @@ install -m 755 scripts/antlr-config $RPM_BUILD_ROOT%{_bindir}
 %{_libdir}/gcj/%{name}
 %endif
 
+%files -n python-module-%{name}2
+%python_sitelibdir_noarch/*
 
 %changelog
+* Wed Nov  5 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0:2.7.7-alt11_13jpp6.1
+- Added module for Python
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt11_13jpp6
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
