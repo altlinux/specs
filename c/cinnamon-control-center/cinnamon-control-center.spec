@@ -1,4 +1,4 @@
-%define ver_major 2.2
+%define ver_major 2.4
 %define api_ver 1.0
 
 %def_disable debug
@@ -9,8 +9,8 @@
 %def_enable ibus
 
 Name: cinnamon-control-center
-Version: %ver_major.10
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -30,7 +30,7 @@ Patch: %name-%version-%release.patch
 %define libmetacity_ver 2.30.0
 %define gsds_ver 3.6.0
 %define notify_ver 0.7.3
-%define nm_ver 0.9.1.90
+%define nm_ver 0.9.8
 %define gnome_menus_ver 3.5.5
 %define goa_ver 3.5.90
 %define sett_daemon_ver 0.0.1
@@ -78,6 +78,10 @@ BuildRequires: libcinnamon-menus-devel
 # for test-endianess
 BuildRequires: glibc-i18ndata
 BuildRequires: libnm-gtk-devel >= %nm_ver
+BuildRequires: libnm-glib-devel >= %nm_ver 
+BuildRequires: libnm-glib-vpn-devel >= %nm_ver
+BuildRequires: libnm-util-devel >= %nm_ver
+BuildRequires: libmm-glib-devel
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver colord-devel
 BuildRequires: libgnome-bluetooth-devel >= %bt_ver
 BuildRequires: libclutter-gtk3-devel
@@ -174,6 +178,12 @@ you'll want to install this package.
 
 
 %changelog
+* Wed Nov 5 2014 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
+- 2.4.0-4-g19f5232
+
+* Thu Oct 16 2014 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt1
+- git 20140923
+
 * Wed Oct 15 2014 Vladimir Didenko <cow@altlinux.org> 2.2.10-alt2
 - rebuild with new upower
 

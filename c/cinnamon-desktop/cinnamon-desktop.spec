@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.2
+%define ver_major 2.4
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -8,8 +8,8 @@
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
 License: %gpl2plus, %fdl
@@ -49,10 +49,20 @@ put on making users feel at home and providing them with an easy to use and
 comfortable desktop experience. The Cinnamon Desktop provides the core libraries
 for the Cinnamon desktop.
 
+%package -n %name-schemas
+Summary: A collection of GSettings schemas for Cinnamon
+Group: Graphical desktop/GNOME
+License: %lgpl2plus
+BuildArch: noarch
+
+%description -n %name-schemas
+A collection of GSettings schemas for Cinnamon
+
 %package -n lib%name
 Summary: Cinnamon desktop core libraries
 Group: Graphical desktop/GNOME
 License: %lgpl2plus
+Requires: %name-schemas
 
 %description -n lib%name
 Cinnamon desktop libraries.
@@ -115,11 +125,12 @@ GObject introspection devel data for the %name library
 
 %find_lang --with-gnome --output=%name.lang %name fdl gpl lgpl
 
-%files
+%files -n %name-schemas
+%_bindir/%name-migrate-mediakeys
+%_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
 %files -n lib%name -f %name.lang
 %_libdir/*.so.*
-%_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 %doc AUTHORS README
 
 %files -n lib%name-devel
@@ -143,6 +154,15 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Fri Oct 31 2014 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
+* Mon Oct 20 2014 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt2
+- change default background path
+
+* Tue Oct 14 2014 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt1
+- git20141014
+
 * Thu May 29 2014 Vladimir Didenko <cow@altlinux.org> 2.2.3-alt2
 - remove not needed more locale schema
 

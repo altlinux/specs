@@ -1,4 +1,4 @@
-%define ver_major 2.2
+%define ver_major 2.4
 
 Name: cinnamon-meta
 Version: %ver_major.0
@@ -27,7 +27,7 @@ Group: Graphical desktop/GNOME
 Requires: cinnamon >= %ver_major
 Requires: cinnamon-session
 # Window manager
-Requires: muffin >= 1.0.5
+Requires: muffin >= %ver_major
 
 %description -n cinnamon-minimal
 This package provides minimal set of components to run 
@@ -56,7 +56,6 @@ Requires: gvfs gvfs-backends
 Requires: gnome-icon-theme >= %ver_major
 Requires: gnome-icon-theme-symbolic >= %ver_major
 Requires: gnome-themes-standard >= %ver_major
-Requires: libgtk3-engine-adwaita
 Requires: libgtk2-engine-adwaita
 # default font
 Requires: fonts-otf-abattis-cantarell
@@ -102,7 +101,7 @@ Requires: dconf-editor >= 0.10
 Requires: gcalctool
 
 # Default music player
-Requires: rhythmbox
+Requires: gnome-music
 # Default video player
 Requires: totem gst-libav
 # Default image viewer
@@ -124,6 +123,13 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Wed Nov 5 2014 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
+* Thu Oct 23 2014 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt1
+- 2.3.0
+- replace rhythmbox by gnome-music
+
 * Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
 - 2.2.0
 

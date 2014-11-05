@@ -1,6 +1,6 @@
 Name: cinnamon
-Version: 2.2.16
-Release: alt3
+Version: 2.4.0
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -57,10 +57,7 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libcjs-devel >= %cjs_ver
 BuildPreReq: libjson-glib-devel >= %json_glib_ver
 BuildPreReq: evolution-data-server-devel >= %eds_ver
-BuildPreReq: libgnome-bluetooth-devel >= %bt_ver
-#BuildPreReq: libtelepathy-glib-devel >= %tp_glib_ver
-#BuildPreReq: libtelepathy-logger-devel >= %tp_logger_ver
-#BuildPreReq: libfolks-devel >= %folks_ver
+BuildRequires: gcc-c++
 BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menus-devel libstartup-notification-devel
 BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel libnm-glib-devel
 BuildRequires: libcanberra-gtk3-devel libcroco-devel GConf libGConf-devel
@@ -95,6 +92,8 @@ BuildArch: noarch
 %description data
 This package provides noarch data needed for Cinnamon to work.
 
+%add_verify_elf_skiplist %_bindir/%name
+
 # Cinnamon.typelib should be installed in %%_typelibdir for automatic provides,
 # but other typelibs (Gvs, St) conflict with gnome-shell
 # Provides: typelib(Cinnamon)
@@ -116,26 +115,37 @@ find files/usr/share/cinnamon-settings/bin/* ! -name capi.py -exec sed -i -e 's@
   
 # make changes for menu-editor move to /usr/share
 mv files/usr/lib/cinnamon-menu-editor files/usr/share
+
 # make changes for cinnamon-screensaver-lock-dialog move to /usr/share
 mv files/usr/lib/cinnamon-screensaver-lock-dialog files/usr/share
 sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-screensaver-lock-dialog \
   files/usr/share/cinnamon-screensaver-lock-dialog/cinnamon-screensaver-lock-dialog.py
+
 # make changes for cinnamon-desktop-editor move to /usr/share
 mv files/usr/lib/cinnamon-desktop-editor files/usr/share
 sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-desktop-editor \
   files/usr/share/cinnamon-desktop-editor/cinnamon-desktop-editor.py
+
 # make changes for cinnamon-json-makepot move to /usr/share
 mv files/usr/lib/cinnamon-json-makepot files/usr/share
 sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-json-makepot \
   files/usr/share/cinnamon-json-makepot/cinnamon-json-makepot.py
+
 # make changes for cinnamon-settings-users move to /usr/share
 mv files/usr/lib/cinnamon-settings-users files/usr/share
 sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-settings-users \
   files/usr/share/cinnamon-settings-users/cinnamon-settings-users.py
+
 # make changes for cinnamon-looking-glass move to /usr/share
 mv files/usr/lib/cinnamon-looking-glass files/usr/share
 sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-looking-glass \
   files/usr/share/cinnamon-looking-glass/cinnamon-looking-glass.py
+
+# make changes for cinnamon-slideshow move to /usr/share
+mv files/usr/lib/cinnamon-slideshow files/usr/share
+sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-slideshow \
+  files/usr/share/cinnamon-slideshow/cinnamon-slideshow.py
+
 #rm -rf files/usr/lib
 sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-menu-editor 
 
@@ -222,15 +232,24 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/cinnamon-settings-users/
 %_datadir/cinnamon-desktop-editor/
 %_datadir/cinnamon-json-makepot/
+%_datadir/cinnamon-slideshow/
 %_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
 %_datadir/icons/hicolor/*/categories/*.svg
 %_datadir/icons/hicolor/*/emblems/*.svg
 
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
+%_datadir/dbus-1/services/org.Cinnamon.Melange.service
+%_datadir/dbus-1/services/org.Cinnamon.Slideshow.service
 %_mandir/man1/*.1.*
 %doc NEWS README
 
 %changelog
+* Wed Nov 5 2014 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
+- 2.4.0-23-gbad763d
+
+* Tue Oct 14 2014 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt1
+- git20141013
+
 * Tue Oct 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.16-alt3
 - theme fixes for gtk 3.14
 

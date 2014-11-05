@@ -1,4 +1,4 @@
-%define ver_major 2.2
+%define ver_major 2.4
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -9,8 +9,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -140,6 +140,7 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libdir/%name-%api_ver/libxrandr.so
 %_libdir/%name-%api_ver/libxsettings.so
 %_libdir/%name-%api_ver/libautomount.so
+%_libdir/%name-%api_ver/libbackground.so
 %_libdir/%name-%api_ver/media-keys.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/mouse.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/orientation.cinnamon-settings-plugin
@@ -151,6 +152,7 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libdir/%name-%api_ver/xrandr.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/xsettings.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/automount.cinnamon-settings-plugin
+%_libdir/%name-%api_ver/background.cinnamon-settings-plugin
 %_libexecdir/%name
 %_libexecdir/csd-locate-pointer
 %_libexecdir/csd-printer
@@ -191,8 +193,15 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-sound
 %_libexecdir/csd-test-xsettings
 %_libexecdir/csd-test-automount
+%_libexecdir/csd-test-background
 
 %changelog
+* Fri Oct 31 2014 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
+* Wed Oct 15 2014 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt1
+- git20141013
+
 * Wed Oct 15 2014 Vladimir Didenko <cow@altlinux.org> 2.2.4-alt2
 - rebuild with new upower
 
