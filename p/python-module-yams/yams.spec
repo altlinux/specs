@@ -1,6 +1,6 @@
 %define oname yams
 Name: python-module-%oname
-Version: 0.39.1
+Version: 0.40.0
 Release: alt1
 Summary: Entity / relation schema
 License: LGPL
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-module-logilab-common
-BuildPreReq: python-module-logilab-database
+BuildPreReq: python-module-logilab-database python-module-six
 
 %py_provides %oname
 
@@ -55,6 +55,9 @@ python setup.py test
 %python_sitelibdir/*/test
 
 %changelog
+* Wed Nov 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.40.0-alt1
+- Version 0.40.0
+
 * Wed Nov 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.39.1-alt1
 - Initial build for Sisyphus
 
