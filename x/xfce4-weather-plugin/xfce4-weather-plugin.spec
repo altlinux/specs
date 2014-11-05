@@ -1,6 +1,6 @@
 Name: xfce4-weather-plugin
-Version: 0.8.3
-Release: alt5
+Version: 0.8.4
+Release: alt1
 
 Summary: Weather plugin for the Xfce panel
 License: %gpl2plus
@@ -26,6 +26,7 @@ Requires: xfce4-panel >= 4.8.0
 %prep
 %setup
 %patch -p1
+mkdir m4
 
 %build
 %xfce4reconf
@@ -48,6 +49,9 @@ Requires: xfce4-panel >= 4.8.0
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Nov 05 2014 Mikhail Efremov <sem@altlinux.org> 0.8.4-alt1
+- Updated to 0.8.4.
+
 * Wed Oct 15 2014 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt5
 - Rebuild with upower-0.99.1
 
