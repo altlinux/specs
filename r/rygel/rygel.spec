@@ -19,16 +19,16 @@
 %endif
 
 Name: rygel
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Summary: A UPnP v2 Media Server
 
 Group: System/Servers
 License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Rygel
-Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define libxml_ver 2.7
 %define vala_ver 0.22.0
@@ -118,7 +118,7 @@ Requires: %name-gir = %version-%release
 GObject introspection devel data for the %name
 
 %prep
-%setup -q
+%setup
 echo %version > .tarball-version
 
 %build
@@ -141,13 +141,12 @@ echo %version > .tarball-version
 
 %install
 
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%doc AUTHORS COPYING README TODO NEWS
-%config(noreplace) %_sysconfdir/rygel.conf
+%config(noreplace) %_sysconfdir/%name.conf
 %_bindir/*
 %_libdir/librygel-*.so.*
 %_libdir/%name-*
@@ -159,6 +158,7 @@ echo %version > .tarball-version
 %_man1dir/*
 %_man5dir/*
 %exclude %_libdir/%name-*/*/*.la
+%doc AUTHORS COPYING README TODO NEWS
 
 %files tracker
 %_libdir/%name-*/plugins/librygel-tracker.so
@@ -176,6 +176,9 @@ echo %version > .tarball-version
 %_girdir/*.gir
 
 %changelog
+* Wed Nov 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt1
+- 0.24.1
+
 * Tue Sep 23 2014 Alexey Shabalin <shaba@altlinux.ru> 0.24.0-alt1
 - 0.24.0
 
