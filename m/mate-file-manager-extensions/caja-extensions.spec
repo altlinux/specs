@@ -25,7 +25,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/pkg-config l
 Name:           mate-file-manager-extensions
 Summary:        Set of extensions for caja file manager
 Version:        %{branch}.0
-Release:        alt1_1
+Release:        alt2_1
 #Release:        0.4%{?git_rel}%{?dist}
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -69,7 +69,7 @@ BuildArch:  noarch
 Group: Graphical desktop/MATE
 Summary:    MATE file manager image converter extension
 Requires:   %{name}-common = %{version}-%{release}
-Requires:   ImageMagick
+Requires:   /usr/bin/convert
 %description -n mate-file-manager-image-converter
 The caja-image-converter extension allows you to
 re-size/rotate images from Caja.
@@ -197,6 +197,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/caja-open-terminal.convert
 
 
 %changelog
+* Wed Nov 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
+- fixed requires ImageMagick -> /usr/bin/convert (closes: #30444)
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
