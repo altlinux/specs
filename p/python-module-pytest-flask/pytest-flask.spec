@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.0
-Release: alt1.git20141028
+Version: 0.5.0
+Release: alt1.git20141103
 Summary: A set of py.test fixtures to test Flask applications
 License: MIT
 Group: Development/Python
@@ -96,6 +96,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.git20141103
+- Version 0.5.0
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20141028
 - Initial build for Sisyphus
 
