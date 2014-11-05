@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 1.4.3
-Release: alt1.git20141031
+Version: 1.4.4
+Release: alt1.git20141102
 
 Summary: Planar geometries, predicates, and operations
 
@@ -121,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.4-alt1.git20141102
+- Version 1.4.4
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt1.git20141031
 - Version 1.4.3
 - Added module for Python 3
