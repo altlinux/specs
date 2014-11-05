@@ -4,7 +4,7 @@
 Summary: 389 Directory Server
 Name: 389-ds
 Version: 1.3.2.15
-Release: alt2.e9f86dab
+Release: alt3.e9f86dab
 License: GPLv2
 Url: http://port389.org
 Group: System/Servers
@@ -136,6 +136,9 @@ echo "Upgrading 389-ds < 1.2.10.0, manual Offline upgrade is required!
 Turn 389-ds off and make 'setup-ds -u' then"
 
 %changelog
+* Wed Nov 05 2014 Michael Shigorin <mike@altlinux.org> 1.3.2.15-alt3.e9f86dab
+- cherry-picked 9df31ed to fix https://fedorahosted.org/389/ticket/47589
+
 * Mon May 19 2014 Timur Aitov <timonbl4@altlinux.org> 1.3.2.15-alt2.e9f86dab
 - git e9f86dab
 
