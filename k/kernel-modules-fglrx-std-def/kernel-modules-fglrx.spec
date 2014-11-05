@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	14.301.1001
-%define module_release alt2
+%define module_release alt3
 
 %define flavour std-def
 BuildRequires(pre): kernel-headers-modules-std-def
@@ -25,7 +25,7 @@ ExclusiveOS: Linux
 Url: http://ati.amd.com/support/drivers/linux/linux-radeonhdd.html
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
-BuildRequires: kernel-source-%module_name = %module_version-%module_release
+BuildRequires: kernel-source-%module_name = %module_version
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %EVR
 %{?epoch:Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release}
@@ -65,6 +65,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Nov  4 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 2:14.301.1001-alt3
+- don't build depend on source release
 
 * Fri Oct 10 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 2:14.301.1001-alt1
 - 14.301.1001
