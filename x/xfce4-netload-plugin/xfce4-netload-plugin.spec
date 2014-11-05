@@ -1,13 +1,13 @@
 Name: xfce4-netload-plugin
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1
 
-Summary: Netload monitor plugin for the XFce panel
-Summary(ru_RU.CP1251): Модуль для просмотра загрузки сети на панели XFce
+Summary: Netload monitor plugin for the Xfce panel
+Summary(ru_RU.CP1251): Модуль для просмотра загрузки сети на панели Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 # git://git.xfce.org/panel-plugins/xfce4-netload-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -23,10 +23,10 @@ BuildRequires: perl-XML-Parser intltool
 Requires: xfce4-panel >= 4.8
 
 %description
-%name is the netload monitor plugin for the XFce panel.
+%name is the netload monitor plugin for the Xfce panel.
 
 %description -l ru_RU.CP1251
-%name -- это монитор загрузки сети для панели XFce.
+%name -- это монитор загрузки сети для панели Xfce.
 
 %prep
 %setup
@@ -44,11 +44,17 @@ Requires: xfce4-panel >= 4.8
 
 %files -f %name.lang
 %doc README AUTHORS
-%_libexecdir/xfce4/panel-plugins/*
+%_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
 %_datadir/icons/hicolor/*/*/*
 
+%exclude %_libdir/xfce4/panel/plugins/*.la
+
 %changelog
+* Wed Nov 05 2014 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated to 1.2.2.
+
 * Thu Jul 19 2012 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Updated translations from upstream git.
 - Updated to 1.2.0.
