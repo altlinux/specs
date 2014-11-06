@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.3
-Release: alt1.git20141003
+Version: 3.4
+Release: alt1.git20141103
 Summary: Translation toolset
 License: BSD
 Group: Development/Python
@@ -16,9 +16,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-polib python-module-chameleon.core
+BuildPreReq: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-polib python3-module-chameleon.core
+BuildPreReq: python3-module-mock
 %endif
 
 %py_provides %oname
@@ -68,6 +72,14 @@ popd
 
 %python_install
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.rst docs/examples
 %_bindir/*
@@ -84,6 +96,10 @@ popd
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20141103
+- Version 3.4
+- Enabled testing
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.git20141003
 - Initial build for Sisyphus
 
