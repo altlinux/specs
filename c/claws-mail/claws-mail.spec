@@ -15,7 +15,7 @@
 
 Name:   	claws-mail
 Version:	3.11.1
-Release: 	alt1
+Release: 	alt2
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -24,6 +24,7 @@ Group: 		Networking/Mail
 Url:		http://www.claws-mail.org
 
 Source: %name-%version.tar
+Source1: ru.po
 Patch:	%name-%version-%release.patch
 
 Obsoletes:	%_oldname < %version
@@ -130,7 +131,6 @@ Group:          Development/C
 Requires:	%name = %version-%release
 Obsoletes:	%_oldname-devel < %version
 Provides:	%_oldname-devel
-Requires: rpm-macros-%{name} = %{version}-%{release}
 
 %description 	devel
 This package contains the header files and libraries for building
@@ -522,24 +522,10 @@ Provides:	%_oldname-tools
 %description	tools
 additional tools for %name.
 
-%package -n rpm-macros-%{name}
-Summary: Set of RPM macros for packaging %name-based applications
-Group: Development/Other
-# uncomment if macroses are platform-neutral
-BuildArch: noarch
-# helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
-Conflicts: claws-mail-devel <= 3.7.9-alt1
-
-%description -n rpm-macros-%{name}
-Set of RPM macros for packaging %name-based applications for ALT Linux.
-Install this package if you want to create RPM packages that use %name.
-
 %prep
 %setup
 
-subst "s,\#\!/usr/bin/python2.2,\#\!/usr/bin/python," tools/vcard2xml.py 
 subst "s,\#\!/usr/bin/perl,\#\!/usr/bin/perl -w," tools/OOo2claws-mail.pl
-subst "s,sylpheed,sylpheed-claws," tools/OOo2claws-mail.pl
 subst "s,%%f,%%N," ./src/prefs_quote.c
 echo "Libs: -lenchant -lgnutls" >>%name.pc.in
 
@@ -547,6 +533,10 @@ echo "Libs: -lenchant -lgnutls" >>%name.pc.in
 echo 'echo "%version"' >./version
 
 %patch -p1
+
+# Replace Russian translation from the claws-mail repository
+# with translation from Serg A. Kotlyarov
+cp -p %SOURCE1 po/
 
 %autoreconf
 
@@ -592,17 +582,6 @@ install -p -m644 %name.png %buildroot/%_iconsdir/%name.png
 mkdir -p %buildroot%_pixmapsdir
 ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 
-mkdir -p %buildroot%_rpmmacrosdir
-cat << EOF >  %buildroot%_rpmmacrosdir/%name
-%%_claws_version	%version
-%%_claws_plugins_path %%_libdir/%name/plugins
-%if_enabled gtk3
-%%_claws_gtkver	3
-%else
-%%_claws_gtkver	2
-%endif
-EOF
-
 # XXX: Make sure the path below is the same as the path above.
 %define _claws_plugins_path %_libdir/%name/plugins
 
@@ -627,8 +606,6 @@ EOF
 %files devel
 %_includedir/%name
 %_pkgconfigdir/%name.pc
-%exclude %_rpmmacrosdir/*
-#%_rpmmacrosdir/%name
 
 %files plugins
 
@@ -832,11 +809,12 @@ EOF
 %exclude %_claws_plugins_path/*.la
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
-%files -n rpm-macros-%{name}
-%_rpmmacrosdir/*
-
-
 %changelog
+* Thu Nov 06 2014 Mikhail Efremov <sem@altlinux.org> 3.11.1-alt2
+- Drop rpm-macros-claws-mail subpackage.
+- Drop obsoleted substs.
+- Add Russion translation from Serg A. Kotlyarov.
+
 * Tue Oct 28 2014 Mikhail Efremov <sem@altlinux.org> 3.11.1-alt1
 - Fixes from upstream git:
   + Recover desktop file installation.
