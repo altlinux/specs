@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2014.10.24
+Version: 2014.11.03
 Release: alt1
 Summary: Alternate regular expression module, to replace re
 License: PSFL
@@ -13,10 +13,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests python-test
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests python3-test
 %endif
 
 %description
@@ -57,6 +57,18 @@ pushd ../python3
 popd
 %endif
 
+%check
+export PYTHONPATH=%buildroot%python_sitelibdir
+rm -fR build Python3
+py.test
+%if_with python3
+pushd ../python3
+export PYTHONPATH=%buildroot%python3_sitelibdir
+rm -fR build Python2
+py.test-%_python3_version
+popd
+%endif
+
 %files
 %doc README docs/*
 %python_sitelibdir/*
@@ -71,6 +83,10 @@ popd
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.11.03-alt1
+- Version 2014.11.03
+- Enabled testing
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.10.24-alt1
 - Version 2014.10.24
 
