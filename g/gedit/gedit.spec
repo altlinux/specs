@@ -11,12 +11,16 @@
 
 Name: gedit
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: gEdit is a small but powerful text editor for GNOME
 License: GPLv2
 Group: Editors
-Url: ftp://ftp.gnome.org/
+Url: http://www.gedit.org
+
+Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Patch: %name-3.10.1-alt-settings.patch
 
 # use python3
 AutoReqProv: nopython
@@ -30,10 +34,6 @@ AutoReqProv: nopython
 %set_typelibdir %pkglibdir
 %set_girdir %pkgdatadir
 
-Source: %name-%version.tar
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-3.10.1-alt-settings.patch
-Patch1: %name-2.91.6-alt-link.patch
 
 # From configure.ac
 %define glib_ver 2.40.0
@@ -54,7 +54,7 @@ BuildPreReq: rpm-build-gnome >= 0.6
 BuildPreReq: intltool >= 0.50.1
 BuildRequires: yelp-tools xmllint itstool
 BuildPreReq: gtk-doc >= 1.0
-BuildPreReq: desktop-file-utils >= 0.21
+BuildPreReq: desktop-file-utils >= 0.22
 BuildPreReq: libenchant-devel >= %enchant_ver
 BuildPreReq: iso-codes-devel >= 0.35
 BuildPreReq: libgio-devel >= %glib_ver
@@ -63,7 +63,7 @@ BuildPreReq: libpeas-devel >= %peas_ver
 BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
 BuildRequires: libattr-devel gnome-common libxml2-devel libsoup-devel gsettings-desktop-schemas-devel
 BuildRequires: vala-tools
-%{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
+%{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel libzeitgeist2.0-gir-devel}
 %{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel libgtksourceview3-gir-devel}
 
@@ -123,9 +123,7 @@ This package contains documentation needed to develop plugins for gedit.
 %setup
 
 %patch -p1 -b .settings
-%patch1 -b .link
 rm -f data/gedit.desktop.in
-subst 's@\/bin\/env python3@/usr/bin/python3@' plugins/externaltools/data/send-to-fpaste.tool.in
 
 %build
 %autoreconf
@@ -142,7 +140,6 @@ subst 's@\/bin\/env python3@/usr/bin/python3@' plugins/externaltools/data/send-t
 %install
 %makeinstall_std
 
-%if 0
 # additional mime types
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-mime-type=text/css \
@@ -176,7 +173,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-mime-type=text/x-tcl \
 	--add-mime-type=text/x-tex \
 	%buildroot%_desktopdir/%_name.desktop
-%endif
 
 %find_lang --with-gnome %name
 
@@ -223,6 +219,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Thu Nov 06 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
+- updated to 3.14.0_1d884236
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 

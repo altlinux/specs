@@ -5,33 +5,35 @@
 
 Name: gedit-plugins
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Plugins for GEdit
 License: GPL
 Group: Editors
-Url: http://gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Url: https://wiki.gnome.org/Apps/Gedit/ShippedPlugins
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gedit >= %ver_major
-Requires: libpeas-python3-loader
-
-AutoReqProv: nopython
-%define __python %nil
-
-# From configure.in
 %define glib_ver 2.40.0
 %define gtk_ver 3.14.0
 %define gtksourceview_ver 3.14.0
 %define gedit_ver 3.14.0
 %define peas_ver 1.7.0
 %define git2_ver 0.0.12
+%define vte_ver 0.38
+
+Requires: gedit >= %ver_major
+Requires: libpeas-python3-loader
+Requires: libvte3-gir >= %vte_ver
+
+AutoReqProv: nopython
+%define __python %nil
 
 BuildPreReq: rpm-build-gnome >= 0.6
 
-# From configure.in
+# From configure.ac
+BuildPreReq: gnome-common
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -62,6 +64,7 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %setup
 
 %build
+%autoreconf
 %configure \
     --disable-static \
     --disable-schemas-compile
@@ -84,6 +87,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Thu Nov 06 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
+- updated to 3.14.0_811c94af
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
