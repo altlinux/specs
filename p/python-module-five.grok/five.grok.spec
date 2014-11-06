@@ -1,7 +1,7 @@
 %define oname five.grok
 Name: python-module-%oname
 Version: 1.4
-Release: alt1.dev.git20130411
+Release: alt2.dev.git20130411
 Summary: Grok-like layer for Zope 2
 License: ZPL
 Group: Development/Python
@@ -56,6 +56,9 @@ Grok framework.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
+%py_requires grokcore.component.testing grokcore.annotation.testing
+%py_requires grokcore.security.testing grokcore.site.testing
+%py_requires grokcore.view.testing grokcore.viewlet.testing
 
 %description tests
 five.grok is a development layer for Zope 2, based on Grok framework
@@ -95,6 +98,9 @@ python setup.py test
 %python_sitelibdir/five/*/*test*
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2.dev.git20130411
+- Added necessary requirements for tests
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1.dev.git20130411
 - Initial build for Sisyphus
 
