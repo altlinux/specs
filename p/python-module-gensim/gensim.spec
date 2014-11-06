@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.10.2
-Release: alt1.git20140918
+Release: alt2.git20140918
 Summary: Python framework for fast Vector Space Modelling
 License: LGPL
 Group: Development/Python
@@ -18,18 +18,17 @@ Source: %name-%version.tar
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-scipy python-module-six
 BuildPreReq: python-module-Pyro4 libnumpy-devel
-#BuildPreReq: python-module-simserver
+BuildPreReq: python-module-simserver
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-scipy python3-module-six
 BuildPreReq: python3-module-Pyro4 libnumpy-py3-devel
-#BuildPreReq: python3-module-simserver
 %endif
 
 %py_provides %oname
-#py_requires simserver
+%py_requires simserver
 
 %description
 Gensim is a Python library for topic modelling, document indexing and
@@ -52,7 +51,6 @@ This package contains tests for %oname.
 Summary: Python framework for fast Vector Space Modelling
 Group: Development/Python3
 %py3_provides %oname
-#py3_requires simserver
 
 %description -n python3-module-%oname
 Gensim is a Python library for topic modelling, document indexing and
@@ -162,6 +160,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt2.git20140918
+- Added necessary requirements
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt1.git20140918
 - Initial build for Sisyphus
 
