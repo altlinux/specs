@@ -1,8 +1,8 @@
 %define mname plone.formwidget
 %define oname %mname.querystring
 Name: python-module-%oname
-Version: 1.1.4
-Release: alt1.dev0.git20141101
+Version: 1.1.5
+Release: alt1.dev0.git20141105
 Summary: A widget for composing a Query string/search
 License: GPL
 Group: Development/Python
@@ -61,6 +61,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.5-alt1.dev0.git20141105
+- Version 1.1.5.dev0
+
 * Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.4-alt1.dev0.git20141101
 - Initial build for Sisyphus
 
