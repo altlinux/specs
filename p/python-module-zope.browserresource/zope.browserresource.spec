@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
-Release: alt2
+Version: 4.0.3
+Release: alt1.dev0.git20141104
 Summary: Browser resources implementation for Zope
 License: ZPL
 Group: Development/Python
@@ -13,10 +13,32 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.component-tests
+BuildPreReq: python-module-zope.configuration python-module-transaction
+BuildPreReq: python-module-zope.contenttype
+BuildPreReq: python-module-zope.i18n-tests
+BuildPreReq: python-module-zope.interface
+BuildPreReq: python-module-zope.location
+BuildPreReq: python-module-zope.publisher
+BuildPreReq: python-module-zope.schema
+BuildPreReq: python-module-zope.traversing
+BuildPreReq: python-module-zope.testing
+BuildPreReq: python-module-zope.testrunner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.component-tests
+BuildPreReq: python3-module-zope.configuration
+BuildPreReq: python3-module-zope.contenttype
+BuildPreReq: python3-module-zope.i18n-tests
+BuildPreReq: python3-module-zope.interface python3-module-transaction
+BuildPreReq: python3-module-zope.location
+BuildPreReq: python3-module-zope.publisher
+BuildPreReq: python3-module-zope.schema
+BuildPreReq: python3-module-zope.traversing
+BuildPreReq: python3-module-zope.testing
+BuildPreReq: python3-module-zope.testrunner
 %endif
 
 %py_requires zope zope.component zope.configuration zope.contenttype
@@ -101,6 +123,15 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test
+#if_with python3
+%if 0
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.txt
 %python_sitelibdir/*
@@ -122,6 +153,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt1.dev0.git20141104
+- Version 4.0.3.dev0
+- Enabled testing
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt2
 - Added module for Python 3
 
