@@ -1,7 +1,7 @@
 %define oname elastic-git
 Name: python-module-%oname
-Version: 0.2.4
-Release: alt1.git20141024
+Version: 0.2.6
+Release: alt1.git20141104
 Summary: JSON Object storage backed by Git & Elastic Search
 License: BSD
 Group: Development/Python
@@ -18,7 +18,7 @@ BuildPreReq: python-module-GitPython python-module-jinja2
 BuildPreReq: python-module-pytest python-module-pytest-cov
 BuildPreReq: python-module-pytest-xdist python-module-sphinx-devel
 BuildPreReq: python-module-sphinx_rtd_theme python-module-GitDB
-BuildPreReq: python-module-sphinx-argparse
+BuildPreReq: python-module-sphinx-argparse python-module-unidecode
 
 %py_provides elasticgit
 
@@ -100,6 +100,9 @@ python setup.py test
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.6-alt1.git20141104
+- Version 0.2.6
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1.git20141024
 - Initial build for Sisyphus
 
