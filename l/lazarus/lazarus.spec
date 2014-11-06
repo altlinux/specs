@@ -2,8 +2,8 @@
 %define rev 44302
 
 Name:       lazarus
-Version:    1.2.4
-Release:    alt3
+Version:    1.2.6
+Release:    alt1
 Epoch:      1
 
 Summary:    Lazarus Component Library and IDE
@@ -193,6 +193,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Thu Nov 06 2014 Andrey Cherepanov <cas@altlinux.org> 1:1.2.6-alt1
+- New version
+
 * Tue Oct 14 2014 Andrey Cherepanov <cas@altlinux.org> 1:1.2.4-alt3
 - Place TestBuildDirectory in ~/.lazarus/tmp by default and if /tmp/ is
   used from previous configuration
