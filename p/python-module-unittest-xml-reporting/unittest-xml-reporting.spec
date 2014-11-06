@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.9.2
-Release: alt1.git20141020
+Version: 1.9.4
+Release: alt1.git20141104
 Summary: unittest-based test runner with Ant/JUnit like XML reporting
 License: BSD
 Group: Development/Python
@@ -116,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt1.git20141104
+- Version 1.9.4
+
 * Wed Oct 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.2-alt1.git20141020
 - Initial build for Sisyphus
 
