@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.21.1
-Release: alt1.git20141030
+Version: 0.23.0
+Release: alt1.git20141105
 Summary: A pure python, thread-safe, minimalistic and pythonic RabbitMQ client library
 License: BSD
 Group: Development/Python
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt1.git20141105
+- Version 0.23.0
+
 * Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.21.1-alt1.git20141030
 - Initial build for Sisyphus
 
