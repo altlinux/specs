@@ -1,5 +1,5 @@
 %define ver_major 2.18
-%define ver_minor 0
+%define ver_minor 2
 %define _lily_dir %_datadir/%name/%version
 %define _texmf %_datadir/texmf
 
@@ -9,7 +9,7 @@ Release: alt0.1
 
 Group: Publishing
 Summary: A program for printing sheet music
-License: %gpl2only
+License: GPL v.3
 Url: http://www.lilypond.org
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 
@@ -22,7 +22,6 @@ BuildRequires: texi2html >= 1.82
 BuildRequires: dblatex convert zip rsync zlib-devel fontforge guile-devel
 BuildRequires: perl-Math-Complex perl-podlators
 BuildRequires: emacs-devel emacs24
-BuildRequires: rpm-build-licenses
 
 # Automatically added by buildreq on Tue Mar 17 2009
 BuildRequires: flex fontforge fonts-type1-urw gcc-c++ guile18-devel libpango-devel python-devel python-modules-compiler python-modules-encodings t1utils texlive-metapost
@@ -157,6 +156,9 @@ done
 #%_datadir/omf/*
 
 %changelog
+* Thu Nov 06 2014 Michael Pozhidaev <msp@altlinux.ru> 2.18.2-alt0.1
+- New version: 2.18.2
+
 * Thu Jan 02 2014 Michael Pozhidaev <msp@altlinux.ru> 2.18.0-alt0.1
 - New version: 2.18.0
 
