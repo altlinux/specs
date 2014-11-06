@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.1
-Release: alt1.git20141005
+Version: 0.8.2
+Release: alt1.git20141103
 Summary: Bash tab completion for argparse
 License: ASL v2.0
 Group: Development/Python
@@ -15,10 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-argparse
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-argparse
 %endif
 
 %py_provides %oname
@@ -76,6 +78,17 @@ popd
 
 %python_install
 
+%check
+export LC_ALL=en_US.UTF-8
+python setup.py test
+python test/test.py
+%if_with python3
+pushd ../python3
+python3 setup.py test
+python3 test/test.py
+popd
+%endif
+
 %files
 %doc *.rst docs/*.rst docs/examples
 %_bindir/*
@@ -92,6 +105,10 @@ popd
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.git20141103
+- Version 0.8.2
+- Enabled testing
+
 * Fri Oct 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1.git20141005
 - Initial build for Sisyphus
 
