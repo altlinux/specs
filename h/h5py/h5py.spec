@@ -4,7 +4,7 @@
 
 Name: h5py
 Version: 2.4.0
-Release: alt1.a0.git20140805
+Release: alt1.b1.git20141031
 Summary: Python interface to the Hierarchical Data Format library, version 5
 License: MIT
 Group: Development/Python
@@ -18,10 +18,12 @@ BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel libnumpy-devel libhdf5-devel
 BuildPreReq: libsz2-devel python-module-Cython python-module-Pyrex
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
+BuildPreReq: python-module-setuptools-tests
 #BuildPreReq: texlive-latex-recommended
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libnumpy-py3-devel python3-module-setuptools
+BuildPreReq: python3-devel libnumpy-py3-devel
+BuildPreReq: python3-module-setuptools-tests
 BuildPreReq: python3-module-Cython
 %endif
 
@@ -253,6 +255,14 @@ cp -fR lzf %buildroot%_docdir/%name/
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%name/
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files -n python-module-%name
 %doc licenses *.rst
 %python_sitelibdir/*
@@ -282,6 +292,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%name/
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.b1.git20141031
+- Version 2.4.0b1
+- Enabled testing
+
 * Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.a0.git20140805
 - New snapshot
 - Added module for Python 3
