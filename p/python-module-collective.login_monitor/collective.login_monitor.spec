@@ -1,8 +1,8 @@
 %define mname collective
 %define oname %mname.login_monitor
 Name: python-module-%oname
-Version: 0.3.1
-Release: alt1.dev0.git20141031
+Version: 0.3.2
+Release: alt1.dev0.git20141106
 Summary: Store and monitor login access to your Plone site
 License: GPL
 Group: Development/Python
@@ -18,6 +18,7 @@ BuildPreReq: python-module-collective.js.jqueryui
 BuildPreReq: python-module-Products.CMFPlone
 BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-zope.i18nmessageid
+BuildPreReq: python-module-unittest2 python-module-argparse
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -51,6 +52,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.dev0.git20141106
+- Version 0.3.2.dev0
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.dev0.git20141031
 - Initial build for Sisyphus
 
