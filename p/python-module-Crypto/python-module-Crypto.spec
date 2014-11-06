@@ -15,7 +15,7 @@ Summary: Cryptography Toolkit for python
 Summary(ru_RU.UTF-8): Криптографический инструментарий для python
 Name: %packagename
 Version: %version
-Release: alt1
+Release: alt1.1
 # git://git.pycrypto.org:9419/crypto/pycrypto-2.x.git
 Source: %sourcename-%modulever.tar.bz2
 Patch0: python-crypto-2.4-optflags.patch
@@ -27,7 +27,6 @@ Url: http://www.amk.ca/python/code/crypto.html
 Packager: Python Development Team <python@packages.altlinux.org>
 
 Provides: %{__python_module_prefix}-pycrypto
-Obsoletes: %{__python_module_prefix}-pycrypto
 BuildRequires: rpm-build-python > 0.12-alt3
 
 %if_without doc_package
@@ -197,6 +196,9 @@ python setup.py test
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.1-alt1.1
+- Don't obsolete live package
+
 * Fri Jul 18 2014 Lenar Shakirov <snejok@altlinux.ru> 2.6.1-alt1
 - Version 2.6.1
 - Based on Fedora 2.6.1-5.fc21.src.rpm
