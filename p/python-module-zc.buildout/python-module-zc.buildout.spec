@@ -1,4 +1,4 @@
-%define version 2.2.4
+%define version 2.2.5
 #define subver b20
 %define release alt1
 %define oname zc.buildout
@@ -150,6 +150,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.5-alt1
+- Version 2.2.5
+
 * Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.4-alt1
 - Version 2.2.4
 
