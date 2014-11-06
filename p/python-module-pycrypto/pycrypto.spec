@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.7
-Release: alt1.a1.git20140620
+Release: alt2.a1.git20140620
 Summary: Cryptographic modules for Python
 License: Public domain
 Group: Development/Python
@@ -22,7 +22,9 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
-Conflicts: python-module-Crypto
+Conflicts: python-module-Crypto < %EVR
+Obsoletes: python-module-Crypto < %EVR
+Provides: python-module-Crypto = %EVR
 %py_provides Crypto
 
 %description
@@ -66,7 +68,9 @@ This package contains documentation for %oname.
 %package -n python3-module-%oname
 Summary: Cryptographic modules for Python
 Group: Development/Python3
-Conflicts: python3-module-Crypto
+Conflicts: python3-module-Crypto < %EVR
+Obsoletes: python3-module-Crypto < %EVR
+Provides: python3-module-Crypto = %EVR
 %py3_provides Crypto
 
 %description -n python3-module-%oname
@@ -153,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt2.a1.git20140620
+- Obsoletes python-module-Crypto and provides it
+
 * Wed Nov 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1.a1.git20140620
 - Initial build for Sisyphus
 
