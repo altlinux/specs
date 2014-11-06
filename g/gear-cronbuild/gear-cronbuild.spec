@@ -1,6 +1,6 @@
 Name: gear-cronbuild
 Version: 1.30
-Release: alt1
+Release: alt2
 
 Summary: gear repository automated build utility
 License: GPL
@@ -45,6 +45,9 @@ install -m 644 *.1 %buildroot%_man1dir/
 %_mandir/man?/*
 
 %changelog
+* Thu Nov 06 2014 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2
+- bugfixes for --exclude thanks to mithraen@
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
 - exclude pattern support
 
