@@ -1,0 +1,112 @@
+%define oname pyasn
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 1.5.0
+Release: alt1.b6.git20141105
+Summary: Offline IP address to Autonomous System Number lookup module
+License: MIT
+Group: Development/Python
+Url: https://pypi.python.org/pypi/pyasn/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/hadiasghari/pyasn.git
+Source: %name-%version.tar
+
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-nose python-module-coverage
+BuildPreReq: python-module-backport_ipaddress
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose python3-module-coverage
+BuildPreReq: python3-module-ipaddress
+%endif
+
+%py_provides %oname
+%py_requires backport_ipaddress
+
+%description
+pyasn is a Python extension module that enables very fast IP address to
+Autonomous System Number lookups. Current state and Historical lookups
+can be done, based on the BGP / MRT file used as input.
+
+pyasn is different from other ASN lookup tools in that it providers
+offline and historical lookups. It provides utility scripts for users to
+build their own lookup databases based on any BGP/MRT dump file. This
+makes pyasn much faster than online dig/whois/json lookups.
+
+%package -n python3-module-%oname
+Summary: Offline IP address to Autonomous System Number lookup module
+Group: Development/Python3
+%py3_provides %oname
+%py3_requires ipaddress
+
+%description -n python3-module-%oname
+pyasn is a Python extension module that enables very fast IP address to
+Autonomous System Number lookups. Current state and Historical lookups
+can be done, based on the BGP / MRT file used as input.
+
+pyasn is different from other ASN lookup tools in that it providers
+offline and historical lookups. It provides utility scripts for users to
+build their own lookup databases based on any BGP/MRT dump file. This
+makes pyasn much faster than online dig/whois/json lookups.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%build
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i ${i}3
+done
+popd
+%endif
+
+%python_install
+
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
+%files
+%doc *.md *.txt
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
+%python_sitelibdir/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.md *.txt
+%_bindir/*.py3
+%python3_sitelibdir/*
+%endif
+
+%changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.b6.git20141105
+- Initial build for Sisyphus
+
