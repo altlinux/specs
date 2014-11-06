@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.3
-Release: alt1.git20141105
+Version: 0.0.4
+Release: alt1.git20141106
 Summary: Add attributes next to the original docstring
 License: ASLv2.0
 Group: Development/Python
@@ -84,6 +84,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.4-alt1.git20141106
+- Version 0.0.4
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20141105
 - Initial build for Sisyphus
 
