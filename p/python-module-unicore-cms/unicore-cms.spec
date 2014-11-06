@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.0.4
-Release: alt2
+Version: 1.0.10
+Release: alt1
 Summary: JSON based CMS for Universal Core
 License: BSD
 Group: Development/Python
@@ -143,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.10-alt1
+- Version 1.0.10
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt2
 - Applied python-module-unicore-cms-1.0.4-alt1.diff
 
