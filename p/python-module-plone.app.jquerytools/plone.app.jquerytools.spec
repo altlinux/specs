@@ -1,7 +1,7 @@
 %define oname plone.app.jquerytools
 Name: python-module-%oname
-Version: 1.6.2
-Release: alt1.dev0.git20140923
+Version: 1.6.3
+Release: alt1.dev0.git20141104
 Summary: jQuery Tools integration for Plone plus overlay and AJAX form helpers
 License: GPLv2
 Group: Development/Python
@@ -64,6 +64,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.3-alt1.dev0.git20141104
+- Version 1.6.3.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt1.dev0.git20140923
 - Initial build for Sisyphus
 
