@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname.core
-Version: 2.16
-Release: alt1.git20140506
+Version: 2.19
+Release: alt1.dev.git20141103
 Summary: Chameleon Template Compiler
 License: BSD
 Group: Development/Python
@@ -105,6 +105,14 @@ popd
 
 cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -131,6 +139,10 @@ cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.19-alt1.dev.git20141103
+- Version 2.19-dev
+- Enabled testing
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.16-alt1.git20140506
 - Version 2.16
 
