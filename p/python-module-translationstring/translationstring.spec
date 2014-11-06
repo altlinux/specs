@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1
-Release: alt1.1
+Version: 1.4
+Release: alt1.dev.git20141105
 Summary: Utility library for i18n relied on by various Repoze packages
 License: BSD-like
 Group: Development/Python
@@ -14,11 +14,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel pylons_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %description
@@ -128,6 +128,8 @@ cp -a . ../python3
 
 %prepare_sphinx .
 ln -s ../objects.inv docs
+rm -fR docs/_themes
+cp -fR %_datadir/pylons_sphinx_theme docs/_themes
 
 %build
 %python_build
@@ -151,6 +153,14 @@ popd
 %endif
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
 
 %files
 %doc *.txt
@@ -177,6 +187,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1.dev.git20141105
+- Version 1.4dev
+- Enabled testing
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.1-alt1.1
 - Rebuild with Python-3.3
 
