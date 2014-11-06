@@ -1,25 +1,55 @@
-Name: fldigi
-Version: 3.21.58
-Release: alt1.qa5
-Summary: Digital modem program
-License: GPL
-Group: Communications
-Source0: %name-%version.tar
+Name:    fldigi
+Version: 3.22.01
+Release: alt1
+Summary: Fldigi is a software modem for Amateur Radio use
 
-# Automatically added by buildreq on Mon Jan 04 2010 (-bi)
-BuildRequires: gcc-c++ libX11-devel libXext-devel libXft-devel libfltk-devel libjpeg-devel libpng-devel libsamplerate-devel libXcursor-devel
+License: GPLv3+
+Group:   Communications
+Source0: %name-%version.tar
 
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
 BuildPreReq: libXfixes-devel
 
+BuildRequires: gcc-c++ libX11-devel libXext-devel libXft-devel libfltk-devel libjpeg-devel libpng-devel libsamplerate-devel libXcursor-devel
+BuildRequires: asciidoc-a2x
+# TODO BuildRequires: hamlib-devel
+BuildRequires: libportaudio2-devel
+BuildRequires: libpulseaudio-devel
+BuildRequires: libsndfile-devel
+BuildRequires: perl-RPC-XML
+BuildRequires: perl-Term-ReadLine-Gnu
+
 %description
-Digital modem program
+Fldigi is a software modem for Amateur Radio use. It is a sound card
+based program that is used for both transmitting and receiving data in
+any of the following modes:
+
+BPSK and QPSK       31, 63, 125, 250 (both), and 63F and 500 (BPSK only)
+PSKR                125, 250, and 500
+CW                  speeds from 5 to 200 wpm
+DominoEX            4, 5, 8, 11, 16 and 22; also with FEC
+Hellschreiber       Feld Hell, Slow Hell, Hell x5/x9, FSKHell(-105) and
+                    Hell 80
+MFSK                4, 8, 11, 16, 22, 31, 32 and 64; most with image
+                    support
+MT63                500, 1000 and 2000
+OLIVIA              various tones and bandwidths
+RTTY                various baud rates, shifts, nbr. of data bits, etc.
+THOR                4, 5, 8, 11, 16 and 22
+Throb and ThrobX    1, 2, and 4
+WWV                 receive only - calibrate your sound card to WWV
+Frequency Analysis  receive only - measure the frequency of a carrier
+
+Fldigi can also control a transceiver using Hamlib or RigCAT I/O,
+perform online or cdrom QRZ queries, log QSOs with the built-in logbook
+or Xlog, and send reception reports to the PSK Automatic Propagation
+Reporter.
 
 %prep
 %setup
 
 %build
-%configure --enable-optimizations=native --with-xmlrpc=no
+%configure --enable-optimizations=sse
 %make_build
 
 %install
@@ -28,12 +58,20 @@ Digital modem program
 %find_lang %name
 
 %files -f %name.lang
+%doc ABOUT-NLS AUTHORS COPYING NEWS README
 %_bindir/*
+%_datadir/%name/*
 %_desktopdir/*.desktop
 %_pixmapsdir/*.xpm
-%_man1dir/*
+%doc %_man1dir/*
 
 %changelog
+* Thu Nov 06 2014 Andrey Cherepanov <cas@altlinux.org> 3.22.01-alt1
+- New version
+- Add support additional libraries
+- Package documentation
+- Set CPU optimization to sse to prevent 'Illegal instruction' crash
+
 * Fri Oct 31 2014 Andrey Cherepanov <cas@altlinux.org> 3.21.58-alt1.qa5
 - Add libXcursor-devel to fix build
 
