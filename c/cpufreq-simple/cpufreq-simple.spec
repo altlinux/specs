@@ -1,5 +1,5 @@
 Name: cpufreq-simple
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Simple scripts for managing CPUfreq settings
@@ -47,6 +47,10 @@ install -pDm644 %name-wake.service %buildroot%_unitdir/%name-wake.service
 %_libexecdir/pm-utils/sleep.d/*
 
 %changelog
+* Thu Nov 06 2014 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
+- cpufreq-simple.sysconfig: Update comments.
+- Set 'powersave' governor as default on AC for intel_pstate.
+
 * Mon Apr 21 2014 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
 - Use cpupower instead of cpufrequtils.
 
