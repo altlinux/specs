@@ -1,8 +1,8 @@
 %define oname plone.app.event
 
 Name: python-module-%oname
-Version: 2.0.0
-Release: alt1.dev0.git20141023
+Version: 2.0a5
+Release: alt1.git20141107
 Summary: The Plone calendar framework
 License: GPL
 Group: Development/Python
@@ -58,7 +58,7 @@ BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-zope.lifecycleevent
 BuildPreReq: python-module-zope.publisher
 BuildPreReq: python-module-zope.schema
-BuildPreReq: python-module-plone.app.robotframework
+BuildPreReq: python-module-plone.app.robotframework-tests
 BuildPreReq: python-module-plone.app.testing
 BuildPreReq: python-module-plone.testing
 BuildPreReq: python-module-mock python-module-robotsuite
@@ -99,6 +99,7 @@ Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.robotframework plone.app.testing plone.testing
 %py_requires plone.app.collection plone.app.contenttypes
+%py_requires plone.app.robotframework.testing
 
 %description tests
 Plone.app.event is the calendaring framework for Plone. It provides
@@ -177,6 +178,9 @@ python setup.py test
 %doc docs/build/html/*
 
 %changelog
+* Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0a5-alt1.git20141107
+- Version 2.0a5
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.dev0.git20141023
 - Version 2.0.0.dev0
 
