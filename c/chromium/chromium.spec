@@ -11,7 +11,7 @@
 %endif
 
 Name:           chromium
-Version:        38.0.2125.101
+Version:        38.0.2125.111
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -244,7 +244,7 @@ tar xf %SOURCE10 -C src
 %patch94 -p1
 %patch95 -p0
 %patch96 -p0
-%patch97 -p1
+%patch97 -p1 -d src
 %patch98 -p0
 %patch110 -p1 -d src
 
@@ -452,7 +452,7 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %config %_sysconfdir/%name
 %dir %_datadir/gnome-control-center
 %dir %_datadir/gnome-control-center/default-apps
-%config(noreplace) %_sysconfdir/%name/default
+%config %_sysconfdir/%name/default
 %dir %_libdir/chromium/
 %attr(4711,root,root) %_libdir/chromium/chrome-sandbox
 %_libdir/chromium/chromium
@@ -486,6 +486,13 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Thu Nov 06 2014 Andrey Cherepanov <cas@altlinux.org> 38.0.2125.111-alt1
+- New version
+- Use sed insted of strings utility from binutils for detect PepperFlash
+  plugin version
+- Remove second tab in master preferences
+- Replace default config
+
 * Thu Oct 09 2014 Andrey Cherepanov <cas@altlinux.org> 38.0.2125.101-alt1
 - New version
 - Security fixes:
