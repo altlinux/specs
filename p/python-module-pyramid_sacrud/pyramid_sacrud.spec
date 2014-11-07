@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.git20141106
+Release: alt2.git20141106
 Summary: Pyramid CRUD interface based on sacrud and SQLAlchemy
 License: MIT
 Group: Development/Python
@@ -131,10 +131,12 @@ popd
 
 %install
 %python_install
+cp -fR %oname/locale %buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 pushd ../python3
 %python3_install
+cp -fR %oname/locale %buildroot%python3_sitelibdir/%oname/
 popd
 %endif
 
@@ -180,6 +182,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt2.git20141106
+- Added %oname/locale
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20141106
 - Initial build for Sisyphus
 
