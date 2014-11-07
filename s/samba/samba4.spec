@@ -30,7 +30,7 @@
 %def_enable avahi
 
 Name: samba
-Version: 4.1.12
+Version: 4.1.13
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1083,6 +1083,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/winbind_krb5_locator.7*
 
 %changelog
+* Fri Nov 07 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.13-alt1
+- 4.1.13
+
 * Mon Sep 22 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.12-alt1
 - 4.1.12
 
