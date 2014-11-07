@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt1.a2.git20141001
+Release: alt2.a2.git20141001
 Summary: Another form generation library
 License: BSD
 Group: Development/Python
@@ -100,10 +100,14 @@ popd
 
 %install
 %python_install
+cp -fR %oname/templates %oname/static \
+	%buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 pushd ../python3
 %python3_install
+cp -fR %oname/templates %oname/static \
+	%buildroot%python3_sitelibdir/%oname/
 popd
 %endif
 
@@ -139,6 +143,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt2.a2.git20141001
+- Added necessary files
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.a2.git20141001
 - Initial build for Sisyphus
 
