@@ -1,6 +1,6 @@
 Name: gwibber
 Version: 3.1.90
-Release: alt1.1
+Release: alt2
 Summary: Microblogging client for Gnome desktop
 License: GPLv2
 Group: Networking/Instant messaging
@@ -13,7 +13,7 @@ BuildArch: noarch
 BuildRequires: python-devel >= 2.5
 BuildPreReq: python-module-setuptools python-module-distutils-extra
 BuildRequires: intltool
-BuildRequires: python-module-pygtk-devel python-module-dbus-devel python-module-pygnome-devel python-module-imaging-devel
+BuildRequires: python-module-pygtk-devel python-module-dbus-devel python-module-pygnome-devel
 
 Requires: python-module-pygnome-gconf python-module-notify python-module-pywebkitgtk python-module-simplejson python-module-egenix-mx-base python-module-feedparser python-module-pyxdg python-module-mako
 
@@ -47,6 +47,9 @@ install -m644 build/share/applications/* %buildroot/%_desktopdir/
 %_desktopdir/*
 
 %changelog
+* Fri Nov 07 2014 Andrey Cherepanov <cas@altlinux.org> 3.1.90-alt2
+- Remove nonexisting Python module from requirements
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.1.90-alt1.1
 - Rebuild with Python-2.7
 
