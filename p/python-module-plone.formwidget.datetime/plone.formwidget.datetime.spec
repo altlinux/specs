@@ -1,8 +1,8 @@
 %define mname plone.formwidget
 %define oname %mname.datetime
 Name: python-module-%oname
-Version: 1.1
-Release: alt1.dev0.git20141020
+Version: 1.2
+Release: alt1.dev0.git20141106
 Summary: Datetime widgets for Plone
 License: GPL
 Group: Development/Python
@@ -94,6 +94,9 @@ python setup.py test
 %python_sitelibdir/plone/formwidget/*/*/test*
 
 %changelog
+* Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.dev0.git20141106
+- Version 1.2.dev0
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.dev0.git20141020
 - Initial build for Sisyphus
 
