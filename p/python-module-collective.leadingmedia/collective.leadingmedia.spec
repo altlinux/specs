@@ -1,7 +1,7 @@
 %define mname collective
 %define oname %mname.leadingmedia
 Name: python-module-%oname
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 Summary: Adds functionality to retrieve and prioritize media inside of dexterity containers
 License: GPL
@@ -69,6 +69,9 @@ python collective/leadingmedia/tests.py
 %python_sitelibdir/%mname/*/tests.*
 
 %changelog
+* Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1
+- Version 0.0.6
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1
 - Initial build for Sisyphus
 
