@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.8.0
-Release: alt1.git20140822
+Version: 1.8.1
+Release: alt1.git20141106
 Summary: py.test plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
 Group: Development/Python
@@ -15,14 +15,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-coverage python-module-cov-core
+BuildPreReq: python-module-virtualenv python-module-pytest-xdist
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-coverage python3-module-cov-core
+BuildPreReq: python3-module-virtualenv python3-module-pytest-xdist
 %endif
 
 %py_provides pytest_cov
-%py_requires pytest
+%py_requires pytest cov_core
 
 %description
 This plugin produces coverage reports. It supports centralised testing
@@ -36,7 +40,7 @@ through pytest-cov or through coverage's config file.
 Summary: py.test plugin for coverage reporting with support for centralised and distributed testing
 Group: Development/Python3
 %py3_provides pytest_cov
-%py3_requires pytest
+%py3_requires pytest cov_core
 
 %description -n python3-module-%oname
 This plugin produces coverage reports. It supports centralised testing
@@ -71,6 +75,14 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.rst
 %python_sitelibdir/*
@@ -82,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt1.git20141106
+- Version 1.8.1
+
 * Fri Oct 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.git20140822
 - Initial build for Sisyphus
 
