@@ -1,8 +1,8 @@
 %define pkgname io-extra
 
 Name: ruby-%pkgname
-Version: 1.2.2
-Release: alt1.2
+Version: 1.2.7
+Release: alt1
 
 Summary: Adds IO.fdwalk, IO.closefrom and IO.directio
 Group: Development/Ruby
@@ -49,6 +49,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/IO*
 
 %changelog
+* Wed Nov 05 2014 Anton Gorlov <stalker@altlinux.ru> 1.2.7-alt1
+- New version
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 1.2.2-alt1.2
 - Rebuilt with ruby-2.0.0-alt1
 
