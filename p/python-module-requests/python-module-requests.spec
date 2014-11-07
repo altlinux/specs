@@ -2,8 +2,8 @@
 %def_with python3
 
 Name:           python-module-requests
-Version:        2.3.0
-Release:        alt1
+Version:        2.4.3
+Release:        alt1.git20141101
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
@@ -58,9 +58,9 @@ designed to make HTTP requests easy for developers.
 %prep
 %setup
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+#patch0 -p1
+#patch1 -p1
+#patch2 -p1
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.3-alt1.git20141101
+- Version 2.4.3 (ALT #30439)
+
 * Tue Jul 22 2014 Lenar Shakirov <snejok@altlinux.ru> 2.3.0-alt1
 - New version (based on Fedora - 2.3.0-2.fc21.src)
 - Unbundle urllib3 and chardet packages (use system modules)
