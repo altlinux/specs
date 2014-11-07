@@ -1,7 +1,10 @@
 %define oname Zope2
+
+%def_disable check
+
 Name: python-module-%oname
 Version: 4.0
-Release: alt2.a1.dev.git20140402
+Release: alt2.a1.dev.git20141102
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -73,6 +76,7 @@ BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-zope.traversing
 BuildPreReq: python-module-zope.viewlet
 BuildPreReq: python-module-zope.filerepresentation
+#BuildPreReq: python-module-Products.SiteErrorLog
 
 %add_python_req_skip ntsecuritycon pywintypes win32api win32con win32event
 %py_requires zope.testbrowser zope.testing zope.traversing zope.viewlet
@@ -86,6 +90,8 @@ BuildPreReq: python-module-zope.filerepresentation
 %py_requires ZODB3 Products.OFSP Products.ZCatalog Products.ZCTextIndex
 %py_requires docutils pytz zope.browser zope.browsermenu zope.browserpage
 %py_requires zope.browserresource zope.component zope.configuration
+%py_requires Products.PythonScripts zLOG Products.MIMETools
+#py_requires Products.SiteErrorLog
 
 %description
 Zope2 is an open-source web application server.
@@ -118,6 +124,10 @@ Requires: python-module-Products.ZCatalog-tests
 Requires: python-module-Products.ExternalMethod-tests
 Requires: python-module-Products.BTreeFolder2-tests
 Requires: python-module-Products.OFSP
+Requires: python-module-zope.component-tests
+Requires: python-module-zope.security-tests
+#Requires: python-module-Products.SiteErrorLog-tests
+Requires: python-module-Products.PloneTestCase
 
 %add_python_req_skip http_date
 
@@ -217,6 +227,9 @@ python setup.py test
 %doc doc/.build/html/*
 
 %changelog
+* Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt2.a1.dev.git20141102
+- New snapshot (bootstrap)
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt2.a1.dev.git20140402
 - More requirements
 - Enabled testing
