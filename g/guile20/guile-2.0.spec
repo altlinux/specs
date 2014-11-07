@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: %{_name}20
-Version: %api_ver.9
+Version: %api_ver.11
 Release: alt1
 
 Summary: A GNU implementation of Scheme (version 2.0)
@@ -23,7 +23,6 @@ BuildRequires: /proc
 BuildRequires: gcc-c++ libgmp-devel libltdl-devel libncurses-devel libreadline-devel
 BuildRequires: libffi-devel libunistring-devel libgc-devel ccache
 %{?_enable_static:BuildRequires: glibc-devel-static}
-
 #%%add_findreq_skiplist %_datadir/%_name/%api_ver/scripts/*
 
 %description
@@ -119,8 +118,8 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 %files devel
 %_bindir/%_name-snarf
 %exclude %_bindir/%_name-config
-%exclude %_bindir/guild
 %exclude %_bindir/%_name-tools
+%exclude %_bindir/guild
 %_datadir/aclocal/%_name.m4
 %_datadir/info/*.info*
 %endif
@@ -149,6 +148,9 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 #%dir %_datadir/%_name
 
 %changelog
+* Fri Nov 07 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.11-alt1
+- 2.0.11
+
 * Fri Oct 11 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.9-alt1
 - 2.0.9
 
