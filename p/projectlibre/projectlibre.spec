@@ -1,10 +1,10 @@
 Name: projectlibre
 Version: 1.5.9
-Release: alt1
+Release: alt3
 
 Summary: ProjectLibre - The open source replacement of Microsoft Project
 
-License: LGPL
+License: CPAL
 Group: Office
 Url: https://sourceforge.net/projects/projectlibre/
 
@@ -18,11 +18,12 @@ Packager: Danil Mikhailov <danil@altlinux.org>
 #PreReq:
 Requires: java
 
+BuildArch: noarch
 BuildPreReq: rpm-build-compat
 BuildRequires: ant
 
-%define distrname %(distr_vendor -d)
 %define projectlibredir /var/lib/projectlibre
+#%define projectlibredir %_datadir/%name
 
 %description
 ProjectLibre is an open source alternative to Microsoft Project.
@@ -70,9 +71,12 @@ cp -a openproj_build/dist/* %buildroot/%projectlibredir/
 %attr(755,root,root) %_bindir/projectlibre
 
 %changelog
+* Fri Nov 07 2014 Danil Mikhailov <danil@altlinux.org> 1.5.9-alt3
+- set BuildArch: noarch
+
+* Wed Oct 29 2014 Danil Mikhailov <danil@altlinux.org> 1.5.9-alt2
+- Some cleaup
+
 * Wed Oct 15 2014 Danil Mikhailov <danil@altlinux.org> 1.5.9-alt1
 - Added right pixmap, and run script
 - Change to right version
-
-* Wed Oct 15 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt16
-- initial build 1.5.9
