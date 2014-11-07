@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 Summary: Google Login for Pyramid
 License: BSD
@@ -149,6 +149,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1
+- Version 0.5.0
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1
 - Version 0.4.0
 
