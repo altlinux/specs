@@ -1,0 +1,133 @@
+%define oname tzlocal
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 1.1.3
+Release: alt1.dev0.git20141018
+Summary: tzinfo object for the local timezone
+License: CC0 1.0 Universal
+Group: Development/Python
+Url: https://pypi.python.org/pypi/tzlocal/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/regebro/tzlocal.git
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-pytz
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-pytz
+%endif
+
+%py_provides %oname
+
+%description
+This Python module returns a tzinfo object with the local timezone
+information under Unix and Win-32. It requires pytz, and returns pytz
+tzinfo objects.
+
+This module attempts to fix a glaring hole in pytz, that there is no way
+to get the local timezone information, unless you know the zoneinfo
+name, and under several Linux distros that's hard or impossible to
+figure out.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This Python module returns a tzinfo object with the local timezone
+information under Unix and Win-32. It requires pytz, and returns pytz
+tzinfo objects.
+
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
+Summary: tzinfo object for the local timezone
+Group: Development/Python3
+%py3_provides %oname
+
+%description -n python3-module-%oname
+This Python module returns a tzinfo object with the local timezone
+information under Unix and Win-32. It requires pytz, and returns pytz
+tzinfo objects.
+
+This module attempts to fix a glaring hole in pytz, that there is no way
+to get the local timezone information, unless you know the zoneinfo
+name, and under several Linux distros that's hard or impossible to
+figure out.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This Python module returns a tzinfo object with the local timezone
+information under Unix and Win-32. It requires pytz, and returns pytz
+tzinfo objects.
+
+This package contains tests for %oname.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%build
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
+%files
+%doc *.txt *.rst
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/test*
+
+%files tests
+%python_sitelibdir/*/test*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt *.rst
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/*/*/test*
+%endif
+
+%changelog
+* Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.dev0.git20141018
+- Initial build for Sisyphus
+
