@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.3
-Release: alt1
+Release: alt1.git20140919
 Summary: Useful extra bits for Python - things that shold be in the standard library
 License: MIT
 Group: Development/Python
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20140919
+- New snapshot
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1
 - Initial build for Sisyphus
 
