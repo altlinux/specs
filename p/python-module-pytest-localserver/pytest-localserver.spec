@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.3
-Release: alt1
+Release: alt2
 Summary: py.test plugin to test server connections locally
 License: MIT
 Group: Development/Python
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt2
+- Fixed requirements
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1
 - Initial build for Sisyphus
 
