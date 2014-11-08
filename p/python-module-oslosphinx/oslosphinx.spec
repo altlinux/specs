@@ -1,11 +1,10 @@
 %define oname oslosphinx
 
 %def_with python3
-%def_disable check
 
 Name: python-module-%oname
 Version: 2.2.0
-Release: alt1.git20141011
+Release: alt2.git20141011
 Summary: OpenStack Sphinx Extensions and Theme
 License: ASLv2.0
 Group: Development/Python
@@ -19,15 +18,18 @@ BuildArch: noarch
 BuildPreReq: git
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-pbr python-module-sphinx-devel
-#BuildPreReq: python-module-hacking
+BuildPreReq: python-module-hacking python-module-mccabe
+BuildPreReq: python-module-flake8 pyflakes
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-pbr python3-module-sphinx
-#BuildPreReq: python3-module-hacking
+BuildPreReq: python3-module-hacking python3-module-mccabe
+BuildPreReq: python3-module-flake8 python3-pyflakes
 %endif
 
 %py_provides %oname
+%py_requires hacking
 
 %description
 Theme and extension support for Sphinx documentation from the OpenStack
@@ -37,6 +39,7 @@ project.
 Summary: OpenStack Sphinx Extensions and Theme
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires hacking
 
 %description -n python3-module-%oname
 Theme and extension support for Sphinx documentation from the OpenStack
@@ -112,9 +115,11 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
+py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
+py.test-%_python3_version
 popd
 %endif
 
@@ -136,6 +141,10 @@ popd
 %endif
 
 %changelog
+* Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt2.git20141011
+- Added necessary requirements
+- Enabled testing
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1.git20141011
 - Initial build for Sisyphus
 
