@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt1.dev0.git20141018
+Release: alt2.dev0.git20141018
 Summary: tzinfo object for the local timezone
 License: CC0 1.0 Universal
 Group: Development/Python
@@ -79,7 +79,10 @@ This package contains tests for %oname.
 
 %if_with python3
 cp -fR . ../python3
+sed -i 's|@PYVER@|%_python3_version|' ../python3/tzlocal/unix.py
 %endif
+
+sed -i 's|@PYVER@|%_python_version|' tzlocal/unix.py
 
 %build
 %python_build_debug
@@ -128,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt2.dev0.git20141018
+- tzlocal.unix: added path to localtime in pytz
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.dev0.git20141018
 - Initial build for Sisyphus
 
