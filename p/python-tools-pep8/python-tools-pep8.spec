@@ -3,7 +3,7 @@
 %global module_name pep8
 
 Name:           python-tools-%{module_name}
-Version:        1.5.6
+Version:        1.5.7
 Release:        alt1
 Summary:        Python style guide checker
 
@@ -103,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.7-alt1
+- Version 1.5.7
+
 * Fri Aug 01 2014 Lenar Shakirov <snejok@altlinux.ru> 1.5.6-alt1
 - New version (based on Fedora 1.5.6-3.fc21.src)
 
