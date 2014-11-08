@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: extensions to the Python standard library's unit testing framework
 
 Group: Development/Python
@@ -66,6 +66,8 @@ sources.
 %prep
 %setup
 
+sed -i 's|python-mimeparse|mimeparse|' setup.py
+
 %prepare_sphinx .
 ln -s ../objects.inv doc/
 
@@ -114,6 +116,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2
+- Fixed requirements
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
 - Version 1.1.0
 - Added docs
