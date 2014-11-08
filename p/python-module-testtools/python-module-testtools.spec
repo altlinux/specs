@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.8
-Release: alt1.2.1
+Version: 1.1.0
+Release: alt1
 Summary: extensions to the Python standard library's unit testing framework
 
 Group: Development/Python
@@ -16,6 +16,7 @@ Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildArch: noarch
 BuildRequires: python-module-setuptools
+BuildRequires: python-module-sphinx-devel python-module-extras
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -26,6 +27,28 @@ testtools is a set of extensions to the Python standard library's unit
 testing framework. These extensions have been derived from years of
 experience with unit testing in Python and come from many different
 sources.
+
+%package pickles
+Summary: Pickles for %oname
+Group: Development/Python
+
+%description pickles
+testtools is a set of extensions to the Python standard library's unit
+testing framework. These extensions have been derived from years of
+experience with unit testing in Python and come from many different
+sources.
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+
+%description docs
+testtools is a set of extensions to the Python standard library's unit
+testing framework. These extensions have been derived from years of
+experience with unit testing in Python and come from many different
+sources.
+
+This package contains documentation for %oname.
 
 %if_with python3
 %package -n python3-module-%oname
@@ -41,7 +64,11 @@ sources.
 %endif
 
 %prep
-%setup -q
+%setup
+
+%prepare_sphinx .
+ln -s ../objects.inv doc/
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -55,6 +82,10 @@ pushd ../python3
 popd
 %endif
 
+export PYTHONPATH=$PWD
+%make -C doc pickle
+%make -C doc html
+
 %install
 %python_install
 %if_with python3
@@ -63,17 +94,30 @@ pushd ../python3
 popd
 %endif
 
+cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+
 %files
 %python_sitelibdir/testtools*
-%doc HACKING LICENSE MANUAL NEWS README
+%doc LICENSE NEWS README*
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%files docs
+%doc doc/_build/html/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc HACKING LICENSE MANUAL NEWS README
+%doc LICENSE NEWS README*
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
+- Version 1.1.0
+- Added docs
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.9.8-alt1.2.1
 - Rebuild with Python-3.3
 
