@@ -2,10 +2,14 @@
 BuildRequires: /usr/bin/flock /usr/bin/gunzip /usr/bin/less /usr/bin/renice /usr/bin/zcat perl(Text/ParseWords.pm)
 # END SourceDeps(oneline)
 
+# do not package fireqos due to bash4 bashisms (regexp in case)
+# TODO: backport rate2bps() function in fireqos from bash 4
+%def_without fireqos
+
 Summary: An easy to use but powerfull iptables stateful firewall
 Name: firehol
 Version: 2.0.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Configuration/Networking
 Source0: %name-%version.tar
@@ -79,8 +83,10 @@ mkdir -p %buildroot%_sysconfdir/firehol/services
 install -m 640 examples/client-all.conf %buildroot%_sysconfdir/firehol/firehol.conf
 %endif
 
+%if_without fireqos
 # TODO: backport fireqos to bash3
 rm -f %buildroot%_sbindir/fireqos %{buildroot}%{_unitdir}/fireqos.service
+%endif
 
 %pre
 %post
@@ -94,11 +100,15 @@ then
 	echo
 fi
 %post_service firehol
+%if_with fireqos
 %post_service fireqos
+%endif
 
 %preun
 %preun_service firehol
-%preun_service fireqos
+%if_with fireqos
+%post_service fireqos
+%endif
 
 %files
 %doc AUTHORS COPYING NEWS README ChangeLog
@@ -118,6 +128,9 @@ fi
 %doc doc/*
 
 %changelog
+* Sat Nov 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2
+- clean def_without fireqos
+
 * Fri Nov 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1
 - new version
 - systemd support
