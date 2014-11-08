@@ -1,23 +1,29 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/flock /usr/bin/gunzip /usr/bin/less /usr/bin/renice /usr/bin/zcat perl(Text/ParseWords.pm)
+# END SourceDeps(oneline)
+
 Summary: An easy to use but powerfull iptables stateful firewall
 Name: firehol
-Version: 1.282
-Release: alt2.cvs20090219
+Version: 2.0.0
+Release: alt1
 License: GPL
 Group: System/Configuration/Networking
 Source0: %name-%version.tar
 Source1: ftp_ssl.conf
-# checkout 2009-04-11
-Source2: RESERVED_IPS
-Patch1: firehol.sh-alt-iptables.patch
-Patch2: firehol.sh-alt-init.patch
-Patch3: firehol.sh-alt-init-prio.patch
-Patch4: alt-get-iana.patch
-Patch5: alt-check-iana.patch
-Url: http://firehol.sourceforge.net
-
-Packager: L.A. Kostis <lakostis@altlinux.ru>
+Source2: firehol.service
+Source3: fireqos.service
+Patch1: firehol-sbin-alt-init.patch
+Patch2: firehol-sbin-alt-iptables.patch
+Url: http://firehol.org/
 
 BuildArch: noarch
+
+BuildRequires:  /sbin/insmod /sbin/modprobe
+BuildRequires:  coreutils
+BuildRequires:  iproute
+BuildRequires:  iptables
+BuildRequires:  procps-ng
+BuildRequires:  systemd
 
 Requires: which
 
@@ -38,32 +44,43 @@ interfaces.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p2
-%patch4 -p2
-%patch5 -p2
+%patch1 -p2
+%patch2 -p2
 
 %build
+%configure
+%make
+
 %install
-rm -rf doc/create_services.sh
-mkdir -p %buildroot%_sysconfdir/firehol/examples
-mkdir -p %buildroot%_sysconfdir/firehol/services
+
+%makeinstall_std
+
+# Hack for documentation without crufts.
+rm -frv %{buildroot}%{_docdir}
+find doc/ examples/ -name "Makefile*" -delete -print
+
+# Install systemd units.
+mkdir -p %{buildroot}%{_unitdir}
+install -pm644 %{S:2} %{S:3} %{buildroot}%{_unitdir}
+
 mkdir -p %buildroot%_initdir
-install -m 750 firehol.sh %buildroot%_initdir/firehol
+install -m 750 sbin/firehol %buildroot%_initdir/firehol
+
+# Install runtime directories.
+mkdir -p %{buildroot}%{_sysconfdir}/firehol/services
+mkdir -p %{buildroot}%{_var}/spool/firehol
+
+# Ghost configurations.
+touch %{buildroot}%{_sysconfdir}/firehol/firehol.conf \
+      %{buildroot}%{_sysconfdir}/firehol/fireqos.conf
+
+%if 0
+mkdir -p %buildroot%_sysconfdir/firehol/services
 install -m 640 examples/client-all.conf %buildroot%_sysconfdir/firehol/firehol.conf
-mkdir -p %buildroot/%_man1dir
-mkdir -p %buildroot/%_man5dir
-install -m 644 man/firehol.1 %buildroot/%_mandir/man1/
-install -m 644 man/firehol.conf.5 %buildroot/%_mandir/man5/
-install -m 640 %SOURCE1 %buildroot%_sysconfdir/firehol/services/
-install -m 640 %SOURCE2 %buildroot%_sysconfdir/firehol/
-install -m 644 examples/home-adsl.conf %buildroot%_sysconfdir/firehol/examples/home-adsl.conf
-install -m 644 examples/home-dialup.conf %buildroot%_sysconfdir/firehol/examples/home-dialup.conf
-install -m 644 examples/office.conf %buildroot%_sysconfdir/firehol/examples/office.conf
-install -m 644 examples/server-dmz.conf %buildroot%_sysconfdir/firehol/examples/server-dmz.conf
-install -m 644 examples/client-all.conf %buildroot%_sysconfdir/firehol/examples/client-all.conf
-install -m 644 examples/lan-gateway.conf %buildroot%_sysconfdir/firehol/examples/lan-gateway.conf
+%endif
+
+# TODO: backport fireqos to bash3
+rm -f %buildroot%_sbindir/fireqos %{buildroot}%{_unitdir}/fireqos.service
 
 %pre
 %post
@@ -77,26 +94,37 @@ then
 	echo
 fi
 %post_service firehol
+%post_service fireqos
 
 %preun
 %preun_service firehol
+%preun_service fireqos
 
 %files
-%doc README TODO COPYING ChangeLog WhatIsNew
+%doc AUTHORS COPYING NEWS README ChangeLog
 %dir %_sysconfdir/firehol
-%dir %_sysconfdir/firehol/examples
 %dir %_sysconfdir/firehol/services
 %_sysconfdir/firehol/services/*
+%_sbindir/*
 %_initdir/firehol
+%{_unitdir}/*
 %_man1dir/*
 %_man5dir/*
 %config(noreplace) %_sysconfdir/firehol/firehol.conf
-%config(noreplace) %_sysconfdir/firehol/RESERVED_IPS
-%_sysconfdir/firehol/examples/*
-%doc adblock.sh get-iana.sh check-iana.sh
+%config(noreplace) %_sysconfdir/firehol/fireqos.conf
+%_sysconfdir/firehol/firehol.conf.example
+%_sysconfdir/firehol/fireqos.conf.example
+%doc examples
 %doc doc/*
 
 %changelog
+* Fri Nov 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1
+- new version
+- systemd support
+- dropped custom RESERVED_IPS list, no need as ipv4 is allocated.
+- do not package fireqos due to bash4 bashisms (regexp in case)
+- TODO: backport rate2bps() function in fireqos from bash 4
+
 * Tue Aug 24 2010 L.A. Kostis <lakostis@altlinux.ru> 1.282-alt2.cvs20090219
 - Added patches:
   + {alt-get-iana,alt-check-iana}.patch: update to latest
