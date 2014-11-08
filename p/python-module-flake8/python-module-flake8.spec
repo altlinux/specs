@@ -3,7 +3,7 @@
 %global modname flake8
 
 Name:             python-module-%{modname}
-Version:          2.1.0
+Version:          2.2.5
 Release:          alt1
 Summary:          Code checking using pep8 and pyflakes
 
@@ -150,6 +150,9 @@ popd
 
 
 %changelog
+* Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.5-alt1
+- Version 2.2.5
+
 * Fri Aug 01 2014 Lenar Shakirov <snejok@altlinux.ru> 2.1.0-alt1
 - First build for ALT (based on Fedora 2.1.0-3.fc21.src)
 
