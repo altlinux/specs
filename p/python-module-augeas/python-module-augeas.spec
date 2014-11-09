@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1.git20140831
+Release: alt2.git20140831
 Summary: Python bindings to augeas
 Group: Development/Python
 License: LGPLv2+
@@ -19,12 +19,15 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools python3-devel
 %endif
 
+Requires: libaugeas
+
 %description
 python-augeas is a set of Python bindings around augeas.
 
 %package -n python3-module-%oname
 Summary: Python bindings to augeas
 Group: Development/Python3
+Requires: libaugeas
 
 %description -n python3-module-%oname
 python-augeas is a set of Python bindings around augeas.
@@ -77,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt2.git20140831
+- Added requirement on libaugeas (ALT #30455)
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.git20140831
 - Version 0.5.0
 - Added module for Python 3
