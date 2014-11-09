@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt2.git20141106
+Version: 0.0.2
+Release: alt1.git20141107
 Summary: Pyramid CRUD interface based on sacrud and SQLAlchemy
 License: MIT
 Group: Development/Python
@@ -182,6 +182,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20141107
+- Version 0.0.2
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt2.git20141106
 - Added %oname/locale
 
