@@ -1,6 +1,6 @@
 Name: mksh
 Version: 50d
-Release: alt1
+Release: alt2
 
 Summary: MirBSD enhanced version of the Korn Shell
 License: BSD
@@ -8,8 +8,11 @@ Group: Shells
 
 URL: http://www.mirbsd.de/mksh.htm
 
-# http://www.mirbsd.org/MirOS/dist/mir/%{name}/%{name}-R%{version}.cpio.gz
-Source: %{name}-%{version}.tar
+# http://www.mirbsd.org/MirOS/dist/mir/%{name}/%{name}-R%{version}.tgz
+Source0: %{name}-%{version}.tar
+Source1: %{name}.watch
+
+Patch0: cvs.patch
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
@@ -22,6 +25,7 @@ bourne shell replacement, pdksh successor and an alternative to the C shell.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
 %add_optflags %optflags_warnings
@@ -37,6 +41,9 @@ install -D -m 644 %name.1 %buildroot/%_man1dir/%name.1
 %doc dot.mkshrc
 
 %changelog
+* Sun Nov 09 2014 Alexey Gladkov <legion@altlinux.ru> 50d-alt2
+- Add upstream bugfixes.
+
 * Wed Oct 22 2014 Alexey Gladkov <legion@altlinux.ru> 50d-alt1
 - new version (R50d).
 
