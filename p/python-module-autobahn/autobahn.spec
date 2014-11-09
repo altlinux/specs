@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.10
-Release: alt2.git20140710
+Version: 0.9.2
+Release: alt1.git20141025
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -13,15 +13,30 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/tavendo/AutobahnPython.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
-BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-trollius python-module-futures
+BuildPreReq: python-module-six python-module-zope.interface
+BuildPreReq: python-module-twisted-core-test python-module-twisted-web
+BuildPreReq: python-module-twisted-words python-module-wsaccel
+BuildPreReq: python-module-ujson python-module-snappy
+BuildPreReq: python-module-lz4 python-module-msgpack
+BuildPreReq: python-module-sphinx-devel scons python-module-boto
+BuildPreReq: python-module-taschenmesser python-module-scour
+BuildPreReq: python-module-sphinx-bootstrap-theme
+BuildPreReq: python-module-sphinxcontrib-spelling libenchant
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python-tools-2to3 python3-module-asyncio
+BuildPreReq: python3-module-six python3-module-zope.interface
+BuildPreReq: python3-module-twisted-core-test python3-module-twisted-web
+BuildPreReq: python3-module-twisted-words python3-module-wsaccel
+BuildPreReq: python3-module-ujson python3-module-snappy
+BuildPreReq: python3-module-lz4 python3-module-msgpack
 %endif
+
+%py_requires twisted.internet twisted.web twisted.words
 
 %description
 Autobahn WebSockets for Python provides an implementation of the
@@ -32,6 +47,7 @@ servers.
 Summary: Tests for Autobahn
 Group: Development/Python
 Requires: %name = %EVR
+Requires: python-module-twisted-core-test
 
 %description tests
 Autobahn WebSockets for Python provides an implementation of the
@@ -66,6 +82,7 @@ This package contains documentation and examples for Autobahn.
 %package -n python3-module-%oname
 Summary: WebSocket & WAMP for Python3/Twisted
 Group: Development/Python3
+%py3_requires twisted.internet twisted.web twisted.words
 
 %description -n python3-module-%oname
 Autobahn WebSockets for Python provides an implementation of the
@@ -76,6 +93,7 @@ servers.
 Summary: Tests for Autobahn
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
+Requires: python3-module-twisted-core-test
 
 %description -n python3-module-%oname-tests
 Autobahn WebSockets for Python provides an implementation of the
@@ -107,22 +125,38 @@ find -type f -name '*.py' -exec 2to3 -w '{}' +
 popd
 %endif
 
+export PYTHONPATH=$PWD
 pushd doc
-%make pickle
-%make html
+sphinx-build -b pickle -d build/doctrees . build/pickle
+scons
 popd
+mv doc/_build html
 
 %install
 pushd %oname
 %python_install
 popd
 
-cp -fR doc/_build/pickle \
-	%buildroot%python_sitelibdir/%oname/
-
 %if_with python3
 pushd ../python3/%oname
 %python3_install
+popd
+%endif
+
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
+cp -fR doc/build/pickle \
+	%buildroot%python_sitelibdir/%oname/
+
+%check
+pushd %oname
+python setup.py test
+popd
+%if_with python3
+pushd ../python3/%oname
+python3 setup.py test
 popd
 %endif
 
@@ -139,7 +173,7 @@ popd
 %python_sitelibdir/*/pickle
 
 %files docs
-%doc doc/_build/html examples
+%doc html examples
 
 %if_with python3
 %files -n python3-module-%oname
@@ -152,6 +186,10 @@ popd
 %endif
 
 %changelog
+* Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1.git20141025
+- Version 0.9.2
+- Enabled testing
+
 * Sun Jul 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.10-alt2.git20140710
 - Moved tests into separate package
 
