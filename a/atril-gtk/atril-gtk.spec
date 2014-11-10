@@ -7,7 +7,7 @@
 %def_disable libs_subpackage
 
 Name:           %_name-gtk
-Version:        1.8.0
+Version:        1.8.1
 Release:        alt1
 Summary:        Document viewer
 
@@ -239,6 +239,9 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_libdir}/atril/3/backends/pixbufdocument.atril-backend
 
 %changelog
+* Mon Nov 10 2014 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt1
+- Updated to 1.8.1.
+
 * Wed Mar 12 2014 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
 - Don't package atril libs as separate subpackage.
 - Updated to 1.8.0.
