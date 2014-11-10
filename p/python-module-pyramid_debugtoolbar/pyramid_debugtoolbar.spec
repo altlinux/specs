@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.2
-Release: alt1.git20140828
+Version: 2.2.1
+Release: alt1.git20141109
 Summary: A package which provides an interactive HTML debugger for Pyramid application development
 License: RPL
 Group: Development/Python
@@ -170,6 +170,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt1.git20141109
+- Version 2.2.1
+
 * Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.git20140828
 - Initial build for Sisyphus
 
