@@ -3,7 +3,7 @@
 %def_enable goa
 
 Name: libgdata
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -11,7 +11,7 @@ Group: System/Libraries
 License: LGPLv2+
 URL: http://live.gnome.org/libgdata
 
-Source: ftp://ftp//ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define soup_ver 2.37.91
 %define goa_ver 3.7.90
@@ -94,6 +94,9 @@ GObject introspection devel data for the GData library.
 %_girdir/*.gir
 
 %changelog
+* Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.16.1-alt1
+- 0.16.1
+
 * Thu Sep 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
 - 0.16.0
 
