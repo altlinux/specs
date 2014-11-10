@@ -9,7 +9,7 @@
 %def_enable ssh
 
 Name: vinagre
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: VNC client for the GNOME Desktop
@@ -77,6 +77,9 @@ rm -rf %buildroot%_datadir/doc
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
+- 3.14.2
+
 * Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 
