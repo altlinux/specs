@@ -5,7 +5,6 @@
 %def_enable libcryptsetup
 %def_enable logind
 %def_enable vconsole
-%def_enable readahead
 %def_enable quotacheck
 %def_enable randomseed
 %def_enable coredump
@@ -21,7 +20,9 @@
 %def_enable networkd
 %def_enable timesyncd
 %def_enable resolved
+%def_disable terminal
 %def_disable kdbus
+%def_enable utmp
 %def_with python
 %def_enable gtk_doc
 %def_enable xz
@@ -55,8 +56,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 216
-Release: alt4
+Version: 217
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -156,12 +157,14 @@ BuildRequires: libgcrypt-devel
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
 %{?_enable_libcurl:BuildRequires: pkgconfig(libcurl)}
 %{?_enable_libidn:BuildRequires: pkgconfig(libidn)}
+%{?_enable_terminal:BuildRequires: pkgconfig(libevdev) >= 1.2 pkgconfig(xkbcommon) >= 0.4  pkgconfig(libdrm) >= 2.4}
 
 Requires: dbus >= %dbus_ver
 Requires: udev = %epoch:%version-%release
 Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 Requires: acl
+Requires: util-linux >= 2.25
 
 # Requires: selinux-policy >= 3.8.5
 
@@ -372,7 +375,7 @@ as well as creating virtual network devices.
 Group: System/Configuration/Other
 Summary: Network Time Synchronization
 Conflicts: %name < 1:214-alt13
-Requires: %name = %epoch:%version-%release
+Requires: %name-networkd = %epoch:%version-%release
 Provides: ntp-client
 
 %description timesyncd
@@ -704,7 +707,6 @@ intltoolize --force --automake
 	%{subst_enable libcryptsetup} \
 	%{subst_enable logind} \
 	%{subst_enable vconsole} \
-	%{subst_enable readahead} \
 	%{subst_enable quotacheck} \
 	%{subst_enable randomseed} \
 	%{subst_enable coredump} \
@@ -724,12 +726,13 @@ intltoolize --force --automake
 	%{subst_enable sysusers} \
 	%{subst_enable ldconfig} \
 	%{subst_enable firstboot} \
+	%{subst_enable terminal} \
 	%{subst_enable kdbus} \
 	%{subst_enable seccomp} \
 	%{subst_enable ima} \
 	%{subst_enable selinux} \
 	%{subst_enable apparmor} \
-	--with-firmware-path="/lib/firmware/updates:/lib/firmware" \
+	%{subst_enable utmp} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--enable-introspection
 
@@ -979,9 +982,6 @@ do
 	ln -s ../rules.d/"$f" \
 		%buildroot/lib/udev/initramfs-rules.d/
 done
-# firmware dirs
-mkdir -p %buildroot%firmwaredir/updates
-mkdir -p %buildroot/lib/mkinitrd/udev/%firmwaredir/updates
 # Create ghost files
 touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-net.rules
 touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-cd.rules
@@ -1041,8 +1041,6 @@ if [ $1 -eq 1 ] ; then
                 console-getty.service \
                 console-shell.service \
                 debug-shell.service \
-                systemd-readahead-replay.service \
-                systemd-readahead-collect.service \
                  >/dev/null 2>&1 || :
 fi
 
@@ -1060,8 +1058,6 @@ if [ $1 -eq 0 ] ; then
                 console-getty.service \
                 console-shell.service \
                 debug-shell.service \
-                systemd-readahead-replay.service \
-                systemd-readahead-collect.service \
                  >/dev/null 2>&1 || :
 
         rm -f /etc/systemd/system/default.target > /dev/null 2>&1 || :
@@ -1237,10 +1233,8 @@ update_chrooted all
 /lib/systemd/systemd-fsck
 /lib/systemd/systemd-initctl
 /lib/systemd/systemd-journald
-/lib/systemd/systemd-multi-seat-x
 /lib/systemd/systemd-quotacheck
 /lib/systemd/systemd-random-seed
-/lib/systemd/systemd-readahead
 /lib/systemd/systemd-remount-fs
 /lib/systemd/systemd-reply-password
 /lib/systemd/systemd-rfkill
@@ -1330,7 +1324,6 @@ update_chrooted all
 %_man8dir/systemd-kexec*
 %_man8dir/systemd-quota*
 %_man8dir/systemd-random-seed*
-%_man8dir/systemd-readahead*
 %_man8dir/systemd-remount*
 %_man8dir/systemd-rfkill*
 %_man8dir/systemd-socket-proxyd*
@@ -1678,8 +1671,6 @@ update_chrooted all
 %_initdir/udev*
 %_unitdir/*udev*
 %_unitdir/*/*udev*
-%dir %firmwaredir
-%dir %firmwaredir/updates
 %dir /lib/udev
 %dir /lib/udev/devices
 %dir /lib/systemd/network
@@ -1740,6 +1731,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Oct 29 2014 Alexey Shabalin <shaba@altlinux.ru> 1:217-alt1
+- 217
+
 * Tue Sep 23 2014 Alexey Shabalin <shaba@altlinux.ru> 1:216-alt4
 - backport fixes for timesyncd from upstream master
 - backport many fixes for mem leak from upstream master
