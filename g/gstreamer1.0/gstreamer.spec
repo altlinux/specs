@@ -7,7 +7,7 @@
 %def_disable gtk-doc
 
 Name: %_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -156,6 +156,9 @@ Gstreamer plugins.
 %_datadir/doc/%_name-%api_ver
 
 %changelog
+* Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
+- 1.4.4
+
 * Wed Sep 24 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.3-alt1
 - 1.4.3
 
