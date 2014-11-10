@@ -7,14 +7,15 @@
 %def_enable vala
 %def_enable smartcard
 %def_enable usbredir
+%def_enable webdav
 %def_disable gtk_doc
 # gstreamer/pulse/no
 %define audio pulse
 %def_with gtk3
 
 Name: libspice-gtk
-Version: 0.25
-Release: alt2
+Version: 0.26
+Release: alt1
 Summary: A GTK widget for SPICE clients
 
 Group: System/Libraries
@@ -25,7 +26,7 @@ Source: %name-%version.tar
 Source2: spice-common.tar
 Source3: spice-protocol.tar
 # Patch: %name-%version-%release.patch
-Patch2: %name-alt-fix.patch
+# Patch2: %name-alt-fix.patch
 
 %define vala_ver 0.14
 
@@ -40,8 +41,7 @@ BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
 BuildRequires: spice-protocol >= 0.10.1
 BuildRequires: libgio-devel libcairo-devel
 BuildRequires: libopus-devel >= 0.9.14
-BuildRequires: libsoup-devel
-BuildRequires: libphodav-devel
+%{?_enable_webdav:BuildRequires: libphodav-devel}
 %{?_with_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vala:BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver vala-tools}
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 0.1.2}
@@ -61,6 +61,7 @@ BuildRequires: gstreamer-devel gst-plugins-devel
 BuildRequires: libpulseaudio-devel
 %endif
 BuildRequires: perl-Text-CSV perl-Text-CSV_XS python-module-pygtk-devel python-module-pyparsing
+BuildRequires: /usr/bin/pod2man
 
 %description
 A Gtk client and libraries for SPICE remote desktop servers.
@@ -205,7 +206,7 @@ screen-shots of a SPICE desktop
 mv %name-%version %_name-%version
 cd %_name-%version
 # %patch -p1
-%patch2 -p1
+# %patch2 -p1
 echo "%version" > .tarball-version
 cd ..
 %if_with gtk3
@@ -220,6 +221,7 @@ cd %_name-%version
 	%{subst_with sasl} \
 	%{subst_enable vala} \
 	%{subst_enable smartcard} \
+	%{subst_enable webdav} \
 %if_disabled usbredir
 	--enable-usbredir=no \
 %endif
@@ -244,6 +246,7 @@ cd spice-gtk3-%version
 	%{subst_with sasl} \
 	%{subst_enable vala} \
 	%{subst_enable smartcard} \
+	%{subst_enable webdav} \
 %if_disabled usbredir
 	--enable-usbredir=no \
 %endif
@@ -319,6 +322,7 @@ cd ..
 
 %files tools
 %_bindir/*
+%_man1dir/*.1*
 
 %if_enabled introspection
 %files -n libspice-glib-gir
@@ -342,6 +346,9 @@ cd ..
 %endif
 
 %changelog
+* Mon Nov 10 2014 Alexey Shabalin <shaba@altlinux.ru> 0.26-alt1
+- 0.26
+
 * Tue Jun 24 2014 Alexey Shabalin <shaba@altlinux.ru> 0.25-alt2
 - rebuild without libcelt051
 
