@@ -1,5 +1,5 @@
 Name: gnutls28
-Version: 3.3.9
+Version: 3.3.10
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -187,7 +187,7 @@ sed -i 's/^\(test_[^ +=]\+\)_LDADD.*@LIBMULTITHREAD@.*/&\n\1_LDFLAGS = -Wl,--no-
 	--disable-rpath \
 	--disable-static \
 	--disable-silent-rules \
-	-disable-libdane  \
+	--disable-libdane  \
 	--without-tpm \
 	--with-default-trust-store-file=/usr/share/ca-certificates/ca-bundle.crt \
 	%{subst_enable guile} \
@@ -271,6 +271,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Mon Nov 10 2014 Mikhail Efremov <sem@altlinux.org> 3.3.10-alt1
+- Updated to 3.3.10.
+
 * Thu Oct 16 2014 Mikhail Efremov <sem@altlinux.org> 3.3.9-alt1
 - Build with external libopts.
 - Updated to 3.3.9.
