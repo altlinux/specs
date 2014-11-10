@@ -19,18 +19,19 @@
 %def_enable gtk
 %def_enable systemd_login
 %def_disable gtk_doc
+%def_enable installed_tests
 
 Name: gvfs
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
 Group: System/Libraries
 URL: ftp://ftp.gnome.org
 
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 Patch: gvfs-1.11.3-alt-gettext.patch
 Patch1: gvfs-1.16.0-archive-integration.patch
 Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
@@ -110,7 +111,7 @@ Group: Development/GNOME and GTK+
 BuildArch: noarch
 Requires: %name = %version-%release
 
-%package -n fuse-gvfs
+%package -n fuse-%name
 Summary: gvfs fuse gateway
 Group: System/Kernel and hardware
 Requires: %name = %version-%release
@@ -163,7 +164,6 @@ Summary: MTP support for gvfs
 Group: System/Libraries
 Requires: %name = %version-%release
 
-
 %package backends
 Summary: All backends for gvfs
 Group: System/Libraries
@@ -207,7 +207,7 @@ supports exposing the gvfs mounts to non-gio applications using fuse.
 
 This package contains the libgvfscommon development files.
 
-%description -n fuse-gvfs
+%description -n fuse-%name
 fuse-gvfs is a bridge between the gvfs filesystem design and fuse, a
 program to mount user-space filesystems.
 
@@ -250,6 +250,13 @@ This package contains command line tools for gvfs.
 %description -n bash-completion-gvfs
 Bash completion for gvfs.
 
+%package tests
+Summary: GVFS test programms
+Group: Development/GNOME and GTK+
+Requires: %name-backends = %version-%release fuse-%name
+
+%description tests
+The %name-tests package provides programms for testing GVFS.
 
 %define _libexecdir %_prefix/libexec/%name
 
@@ -284,13 +291,13 @@ Bash completion for gvfs.
         %{subst_enable libmtp} \
         %{subst_enable bluray} \
         %{subst_enable gtk} \
-        %{?_enable_systemd_login:--enable-libsystemd-login}
-        %{?_enable_gtk_doc:--enable-gtk-doc}
-
+        %{?_enable_systemd_login:--enable-libsystemd-login} \
+        %{?_enable_gtk_doc:--enable-gtk-doc} \
+        %{?_enable_installed_tests:--enable-installed-tests}
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %find_lang %name
 
@@ -377,7 +384,7 @@ killall -USR1 gvfsd >&/dev/null || :
 %files devel
 %_includedir/*
 
-%files -n fuse-gvfs
+%files -n fuse-%name
 %_libexecdir/gvfsd-fuse
 /lib/tmpfiles.d/gvfsd-fuse-tmpfiles.conf
 
@@ -454,9 +461,19 @@ killall -USR1 gvfsd >&/dev/null || :
 %files -n bash-completion-gvfs
 %_datadir/bash-completion/completions/%name
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/
+%_datadir/installed-tests/%name/
+%endif
+
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt1
+- 1.22.2
+- new -tests subpackage
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.22.1-alt2
 - rebuilt against libimobiledevice.so.5
 
