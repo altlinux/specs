@@ -1,26 +1,24 @@
 %define oname eventlet
 
-%def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.15.0
-Release: alt2
+Version: 0.16.0
+Release: alt1.dev.git20141106
 Summary: Highly concurrent networking library
 License: MIT
 Group: Development/Python
 Url: http://pypi.python.org/pypi/eventlet/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/eventlet/eventlet.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-greenlet python-module-nose
+BuildPreReq: python-module-OpenSSL
 BuildPreReq: python-module-sphinx-devel
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
-%endif
 %add_python_req_skip stackless
 
 %description
@@ -33,24 +31,6 @@ programming that is similar to threading, but provide the benefits of
 non-blocking I/O. The event dispatch is implicit, which means you can
 easily use Eventlet from the Python interpreter, or as a small part of a
 larger application.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Highly concurrent networking library (Python 3)
-Group: Development/Python3
-%add_python3_req_skip stackless
-
-%description -n python3-module-%oname
-Eventlet is a concurrent networking library for Python that allows you
-to change how you run your code, not how you write it.
-
-It uses epoll or libevent for highly scalable non-blocking I/O.
-Coroutines ensure that the developer uses a blocking style of
-programming that is similar to threading, but provide the benefits of
-non-blocking I/O. The event dispatch is implicit, which means you can
-easily use Eventlet from the Python interpreter, or as a small part of a
-larger application.
-%endif
 
 %package pickles
 Summary: Pickles for Eventlet
@@ -89,39 +69,29 @@ This package contains documentation for Eventlet.
 
 %prep
 %setup
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
 
 %prepare_sphinx .
 ln -s ../objects.inv doc/
 
 %build
 %python_build
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
 
 %make -C doc pickle
 %make -C doc html
 
 %install
 %python_install
-%if_with python3
-pushd ../python3
-%python3_install
-popd
-%endif
 
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+rm -fR build
+python setup.py test
 
 %files
 %doc AUTHORS NEWS README*
 %python_sitelibdir/*
+%exclude %python_sitelibdir/tests
 %exclude %python_sitelibdir/*/pickle
 
 %files docs
@@ -130,13 +100,10 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %files pickles
 %python_sitelibdir/*/pickle
 
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS NEWS README*
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16.0-alt1.dev.git20141106
+- Version 0.16.0.dev
+
 * Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.0-alt2
 - Added module for Python 3
 
