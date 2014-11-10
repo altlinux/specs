@@ -4,8 +4,8 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	340.46
-%define module_release	alt2
+%define module_version	340.58
+%define module_release	alt1
 %define flavour		std-def
 
 %setup_kernel_module %flavour
@@ -190,8 +190,8 @@ fi
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Wed Nov  5 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 340.46-alt2
-- release up for building to p7
+* Mon Nov 10 2014 Sergey V Turchin <zerg at altlinux dot org> 340.58-alt1..
+- new release (340.58)
 
 * Mon Oct 06 2014 Sergey V Turchin <zerg at altlinux dot org> 340.46-alt1..
 - new release (340.46)
