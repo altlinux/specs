@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.2
-Release: alt1.git20141103
+Version: 0.8.3
+Release: alt1.git20141109
 Summary: Bash tab completion for argparse
 License: ASL v2.0
 Group: Development/Python
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20141109
+- Version 0.8.3
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.git20141103
 - Version 0.8.2
 - Enabled testing
