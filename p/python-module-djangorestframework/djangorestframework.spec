@@ -1,0 +1,149 @@
+%define oname djangorestframework
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 3.0.0
+Release: alt1.git20141108
+Summary: Web APIs for Django, made easy
+License: BSD
+Group: Development/Python
+Url: https://pypi.python.org/pypi/djangorestframework/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/tomchristie/django-rest-framework.git
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-django-tests python-module-pytest-django
+BuildPreReq: python-module-pytest-cov python-module-flake8
+BuildPreReq: python-module-markdown python-module-yaml
+BuildPreReq: python-module-defusedxml python-module-django-guardian
+BuildPreReq: python-module-django-filter python-module-django-oauth-plus
+BuildPreReq: python-module-oauth2 python-module-django-oauth2-provider
+BuildPreReq: python-module-django-dbbackend-sqlite3
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-django-tests python3-module-pytest-django
+BuildPreReq: python3-module-pytest-cov python3-module-flake8
+BuildPreReq: python3-module-markdown python3-module-yaml
+BuildPreReq: python3-module-defusedxml python3-module-django-guardian
+BuildPreReq: python3-module-django-filter python3-module-django-oauth-plus
+BuildPreReq: python3-module-oauth2 python3-module-django-oauth2-provider
+BuildPreReq: python3-module-django-dbbackend-sqlite3
+%endif
+
+%py_provides rest_framework
+
+%description
+Django REST framework is a powerful and flexible toolkit for building
+Web APIs.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+%py_requires django.test
+
+%description tests
+Django REST framework is a powerful and flexible toolkit for building
+Web APIs.
+
+This package contains tests for %oname.
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+
+%description docs
+Django REST framework is a powerful and flexible toolkit for building
+Web APIs.
+
+This package contains documentation for %oname.
+
+%package -n python3-module-%oname
+Summary: Web APIs for Django, made easy
+Group: Development/Python3
+%py3_provides rest_framework
+
+%description -n python3-module-%oname
+Django REST framework is a powerful and flexible toolkit for building
+Web APIs.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+%py3_requires django.test
+
+%description -n python3-module-%oname-tests
+Django REST framework is a powerful and flexible toolkit for building
+Web APIs.
+
+This package contains tests for %oname.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%build
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+./mkdocs.py
+
+%install
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+%check
+python runtests.py
+#if_with python3
+%if 0
+pushd ../python3
+python3 runtests.py
+popd
+%endif
+
+%files
+%doc *.md
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/test.*
+
+%files tests
+%python_sitelibdir/*/test.*
+
+%files docs
+%doc html/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.md
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test.*
+%exclude %python3_sitelibdir/*/*/test.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/test.*
+%python3_sitelibdir/*/*/test.*
+%endif
+
+%changelog
+* Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.git20141108
+- Initial build for Sisyphus
+
