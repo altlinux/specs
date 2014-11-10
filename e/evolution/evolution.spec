@@ -14,7 +14,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -40,7 +40,7 @@ Provides: camel
 %define glib_ver 2.36.0
 %define gtk_ver 3.4
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.12.7
+%define eds_ver 3.12.8
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.8.5
@@ -78,7 +78,7 @@ BuildPreReq: libpst-devel >= %pst_ver
 BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
-%{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel libgeocode-glib-devel >= %geocode_ver}
+%{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_image_inline:BuildRequires: libgtkimageview-devel}
 
 BuildRequires: docbook-utils intltool yelp-tools itstool gtk-doc
@@ -284,12 +284,17 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %files bogofilter
 %evo_module_dir/module-bogofilter.so
 %_datadir/glib-2.0/schemas/org.gnome.evolution.bogofilter.gschema.xml
+%_datadir/appdata/%name-bogofilter.metainfo.xml
 
 %files spamassassin
 %evo_module_dir/module-spamassassin.so
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
+%_datadir/appdata/%name-spamassassin.metainfo.xml
 
 %changelog
+* Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.8-alt1
+- 3.12.8
+
 * Mon Oct 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.7-alt1
 - 3.12.7 release
 
