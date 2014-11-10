@@ -11,7 +11,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: Color daemon
@@ -102,7 +102,7 @@ More color profiles for color management that are less commonly used.
 This may be useful for CMYK soft-proofing or for extra device support.
 
 %package tests
-Summary: Tests for the Colord 
+Summary: Tests for the Colord
 Group: Development/Other
 Requires: lib%name = %version-%release
 
@@ -177,6 +177,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_man1dir/cd-create-profile.1.*
 %_man1dir/colormgr.*
 %_man1dir/cd-fix-profile.*
+%_man1dir/cd-it8.1.*
 #%_man1dir/colord.conf.1.*
 %attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name
 %attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name/icc
@@ -279,6 +280,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
+- 1.2.5
+
 * Sun Oct 12 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
