@@ -1,0 +1,174 @@
+%define oname django-oauth2-provider
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 0.2.7
+Release: alt1.dev.git20140318
+Summary: Provide OAuth2 access to your app
+License: MIT
+Group: Development/Python
+Url: https://pypi.python.org/pypi/django-oauth2-provider/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/caffeinehit/django-oauth2-provider.git 
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-django-tests python-module-shortuuid
+BuildPreReq: python-module-django-dbbackend-sqlite3
+BuildPreReq: python-module-oauth2
+BuildPreReq: python-module-sphinx-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-django-tests python3-module-shortuuid
+BuildPreReq: python3-module-django-dbbackend-sqlite3
+BuildPreReq: python3-module-oauth2
+BuildPreReq: python-tools-2to3
+%endif
+
+%py_provides provider
+%py_requires oauth2
+
+%description
+django-oauth2-provider is a Django application that provides
+customizable OAuth2-authentication for your Django projects.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+%py_requires django.test
+
+%description tests
+django-oauth2-provider is a Django application that provides
+customizable OAuth2-authentication for your Django projects.
+
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
+Summary: Provide OAuth2 access to your app
+Group: Development/Python3
+%py3_provides provider
+%py3_requires oauth2
+
+%description -n python3-module-%oname
+django-oauth2-provider is a Django application that provides
+customizable OAuth2-authentication for your Django projects.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+%py3_requires django.test
+
+%description -n python3-module-%oname-tests
+django-oauth2-provider is a Django application that provides
+customizable OAuth2-authentication for your Django projects.
+
+This package contains tests for %oname.
+
+%package pickles
+Summary: Pickles for %oname
+Group: Development/Python
+
+%description pickles
+django-oauth2-provider is a Django application that provides
+customizable OAuth2-authentication for your Django projects.
+
+This package contains pickles for %oname.
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+django-oauth2-provider is a Django application that provides
+customizable OAuth2-authentication for your Django projects.
+
+This package contains documentation for %oname.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+
+%build
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C docs pickle
+%make -C docs html
+
+install -d %buildroot%python_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
+%files
+%doc *.rst
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/pickle
+%exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/*/test*
+%exclude %python_sitelibdir/*/*/*/test*
+
+%files tests
+%python_sitelibdir/*/tests
+%python_sitelibdir/*/*/test*
+%python_sitelibdir/*/*/*/test*
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%files docs
+%doc docs/_build/html/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
+%endif
+
+%changelog
+* Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.7-alt1.dev.git20140318
+- Initial build for Sisyphus
+
