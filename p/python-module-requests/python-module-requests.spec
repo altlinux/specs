@@ -3,7 +3,7 @@
 
 Name:           python-module-requests
 Version:        2.4.3
-Release:        alt2.git20141101
+Release:        alt2.git20141107
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
@@ -90,6 +90,7 @@ popd
 
 %install
 %python_install
+
 %if_with python3
 pushd ../python3
 %python3_install
@@ -120,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.3-alt2.git20141107
+- New snapshot
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.3-alt2.git20141101
 - I took it
 
