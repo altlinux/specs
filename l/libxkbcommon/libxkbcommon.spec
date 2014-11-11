@@ -1,7 +1,7 @@
 %def_enable x11
 
 Name: libxkbcommon
-Version: 0.4.3
+Version: 0.5.0
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -11,7 +11,6 @@ Url: http://www.x.org
 
 Source0: http://xkbcommon.org/download/%name-%version.tar.xz
 Source1: make-git-snapshot.sh
-Source44: import.info
 
 BuildRequires: xorg-util-macros bison flex bison
 BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel
@@ -26,6 +25,7 @@ BuildRequires: xorg-xproto-devel libX11-devel
 BuildRequires: xkeyboard-config-devel
 BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xcb-xkb) >= 1.10
+BuildRequires: doxygen
 
 %description
 %name is the X.Org library for compiling XKB maps into formats usable by
@@ -52,6 +52,7 @@ server.
 Summary: X.Org X11 XKB keymap creation library
 Group: System/Libraries
 Requires: %name-x11 = %version-%release
+Requires: %name-devel = %version-%release
 
 %description x11-devel
 X.Org X11 XKB keymap creation library development package
@@ -80,9 +81,11 @@ X.Org X11 XKB keymap creation library development package
 %dir %_includedir/xkbcommon/
 %_includedir/xkbcommon/xkbcommon.h
 %_includedir/xkbcommon/xkbcommon-compat.h
+%_includedir/xkbcommon/xkbcommon-compose.h
 %_includedir/xkbcommon/xkbcommon-keysyms.h
 %_includedir/xkbcommon/xkbcommon-names.h
 %_pkgconfigdir/xkbcommon.pc
+%doc %_datadir/doc/%name/
 
 %if_enabled x11
 %files x11
@@ -95,6 +98,9 @@ X.Org X11 XKB keymap creation library development package
 %endif
 
 %changelog
+* Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Tue Aug 26 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
 - 0.4.3
 
