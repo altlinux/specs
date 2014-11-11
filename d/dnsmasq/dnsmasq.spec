@@ -1,7 +1,7 @@
 Name: dnsmasq
 Version: 2.72
 
-Release: alt1
+Release: alt2
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -80,7 +80,7 @@ install -d -m770 %buildroot%_sysconfdir/dnsmasq.conf.d
 install -pD -m744 %SOURCE1            %buildroot%_initdir/%name
 install -pD -m600 %SOURCE2            %buildroot%sysconfig_file
 install -pD -m600 %name.conf.example  %buildroot%_sysconfdir/%name.conf
-install -pD -m700 %SOURCE3            %buildroot%_sbindir/%name-helper
+install -pD -m755 %SOURCE3            %buildroot%_sbindir/%name-helper
 install -pD -m644 %SOURCE4            %buildroot%_unitdir/%name.service
 
 # For utils package
@@ -118,7 +118,7 @@ fi
 %dir %_sysconfdir/dnsmasq.conf.d
 %_unitdir/%name.service
 %_initdir/%name
-%attr(700,root,root) %_sbindir/%{name}*
+%_sbindir/%{name}*
 %_man8dir/%{name}*
 %doc contrib/dnslist contrib/dynamic-dnsmasq
 
@@ -127,6 +127,9 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Tue Nov 11 2014 Lenar Shakirov <snejok@altlinux.ru> 2.72-alt2
+- /usr/sbin/dnsmasq{-helper} mode relaxed from 700 to 755
+
 * Mon Sep 29 2014 Mikhail Efremov <sem@altlinux.org> 2.72-alt1
 - Updated to 2.72.
 
