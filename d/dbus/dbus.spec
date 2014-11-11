@@ -7,8 +7,8 @@
 %define	systemdsystemunitdir /lib/systemd/system
 
 Name: dbus
-Version: 1.8.8
-Release: alt2
+Version: 1.8.10
+Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -158,7 +158,7 @@ fi
 %dir %_sysconfdir/dbus-1/session.d
 %ghost %_sysconfdir/machine-id
 %_initdir/messagebus
-%_unitdir/*
+%systemdsystemunitdir/*
 /bin/dbus-cleanup-sockets
 /bin/dbus-daemon
 /bin/dbus-uuidgen
@@ -203,6 +203,9 @@ fi
 %dir %_datadir/dbus-1/interfaces
 
 %changelog
+* Tue Nov 11 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.8.10-alt1
+- 1.8.10
+
 * Sun Sep 21 2014 Alexey Shabalin <shaba@altlinux.ru> 1.8.8-alt2
 - revert "refuse manual start/stop=yes" for systemd(ALT#30338)
 - recovery support condrestart for sysv init script(ALT#30328)
