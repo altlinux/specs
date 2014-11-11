@@ -1,5 +1,5 @@
 Name: zathura
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -63,6 +63,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Nov 11 2014 Mikhail Efremov <sem@altlinux.org> 0.3.2-alt1
+- Updated to 0.3.2.
+
 * Fri Oct 24 2014 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
 - Updated to 0.3.1.
 
