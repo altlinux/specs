@@ -1,6 +1,6 @@
 %define oname sphinx-bootstrap-theme
 Name: python-module-%oname
-Version: 0.4.0
+Version: 0.4.3
 Release: alt1
 Summary: Sphinx Bootstrap Theme
 License: MIT
@@ -35,6 +35,9 @@ can use any number of different Bootswatch CSS themes.
 %python_sitelibdir/*
 
 %changelog
+* Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt1
+- VErsion 0.4.3
+
 * Fri Jun 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus
 
