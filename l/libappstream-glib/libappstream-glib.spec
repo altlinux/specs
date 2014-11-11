@@ -4,7 +4,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: 0.3.0
+Version: 0.3.2
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -13,6 +13,9 @@ License: LGPLv2+
 Url: http://www.freedesktop.org/wiki/Distributions/AppStream/
 
 Source: http://people.freedesktop.org/~hughsient/%_name/releases/%_name-%version.tar.xz
+
+Obsoletes: appdata-tools < 0.1.9
+Provides: appdata-tools = %version-%release
 
 BuildRequires: intltool glib2-devel >= 2.16.1 libgtk+3-devel
 BuildRequires: libarchive-devel libsoup-devel libgdk-pixbuf-devel
@@ -131,6 +134,7 @@ the functionality of the installed %_name library.
 
 %files -f %_name.lang
 %_bindir/appstream-util
+%_bindir/appdata-validate
 %_libdir/%name.so.*
 %_man1dir/appstream-util.1.*
 %_datadir/bash-completion/completions/appstream-util
@@ -141,6 +145,7 @@ the functionality of the installed %_name library.
 %_libdir/%name.so
 %_pkgconfigdir/%_name.pc
 %_datadir/aclocal/appstream-xml.m4
+%_datadir/aclocal/appdata-xml.m4
 
 %files gir
 %_typelibdir/AppStreamGlib-%api_ver.typelib
@@ -180,8 +185,11 @@ the functionality of the installed %_name library.
 #%files -n libappstream-builder-devel-doc
 #%_datadir/gtk-doc/html/appstream-builder/
 
-
 %changelog
+* Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+- obsoletes/provides appdata-tools
+
 * Fri Sep 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
