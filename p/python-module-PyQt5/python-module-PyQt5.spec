@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.3.1
-Release: alt2
+Version: 5.3.2
+Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -90,6 +90,7 @@ subst 's|/lib/libpython|/%_lib/libpython|g' configure.py
 subst 's|/lib" |/%_lib" |g' configure.py
 subst 's|#include <QTextStream>|#include <QTextStream>\n#define QT_SHARED\n|g' \
 	configure.py
+sed -i 's|@LIBDIR@|%_libdir|g' configure.py
 find . -type f -name \*.pro -o -name '*.pro-in' |while read f; do
 cat >> $f << 'E_O_F'
 QMAKE_CFLAGS += %optflags %optflags_shared
@@ -102,7 +103,7 @@ cp -fR . ../python3
 %endif
 
 %build
-%add_optflags -I$PWD/qpy/QtGui
+%add_optflags -I$PWD/qpy/QtGui -I%_includedir/qt5/QtPrintSupport
 export PATH=$PATH:%_qt5_bindir
 
 echo 'yes' | python configure.py \
@@ -194,6 +195,9 @@ rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 %endif
 
 %changelog
+* Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.2-alt1
+- Version 5.3.2
+
 * Mon Aug 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.1-alt2
 - Added module for Python 3
 

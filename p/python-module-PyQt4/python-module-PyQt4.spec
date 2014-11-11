@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.11.1
-Release: alt2
+Version: 4.11.3
+Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -220,6 +220,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.3-alt1
+- Version 4.11.3
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.1-alt2
 - Added module for Python 3 (ALT #30196)
 
