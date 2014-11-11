@@ -1,7 +1,7 @@
 %define ver_major 3.14
 
 Name: gnome-themes-standard
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A set of standard themes for GNOME desktop
@@ -102,6 +102,9 @@ This package provides a GTK+2 theme engine Adwaita.
 %exclude %_libdir/gtk-2.0/2.10.0/engines/libadwaita.la
 
 %changelog
+* Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
+- 3.14.2
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
