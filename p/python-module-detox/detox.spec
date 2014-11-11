@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.3
-Release: alt1
+Release: alt2
 Summary: Distributing activities of the tox tool
 License: AGPLv3
 Group: Development/Python
@@ -79,6 +79,9 @@ py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
+export PYTHONPATH=%buildroot%python_sitelibdir
+sed -i 's|"detox"|"detox.py3"|' tests/conftest.py
+py.test-%_python3_version
 popd
 %endif
 
@@ -98,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt2
+- Enabled tesing for Python 3 module
+
 * Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1
 - Initial build for Sisyphus
 
