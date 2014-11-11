@@ -1,4 +1,4 @@
-%define ver_major 0.10
+%define ver_major 0.11
 %def_disable static
 
 Name: libwacom
@@ -53,7 +53,7 @@ The %name-devel-doc package contains documentation for
 developing applications that use %name.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure \
@@ -62,7 +62,7 @@ developing applications that use %name.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %check
 %make check
@@ -87,6 +87,9 @@ developing applications that use %name.
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
+- 0.11
+
 * Sat Aug 23 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10-alt1
 - 0.10
 
