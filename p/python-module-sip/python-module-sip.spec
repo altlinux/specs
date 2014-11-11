@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.16.2
+Version: 4.16.4
 Release: alt1
 Summary: Python bindings generator for C++ class libraries
 License: PSF
@@ -74,8 +74,8 @@ Header files for sip
 rm -f siplib/libsip.a
 
 # fix versions sets
-#subst 's/version = (0, 1, 0)/version = (%pkg_version)/' build.py
-#python build.py prepare
+subst 's/version = (0, 1, 0)/version = (%pkg_version)/' build.py
+python build.py prepare
 
 %if_with python3
 rm -rf ../python3
@@ -124,7 +124,7 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 
 %files devel
 %python_includedir/*
-%doc doc/*
+#doc doc/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -134,10 +134,13 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 
 %files -n python3-module-%oname-devel
 %python3_includedir%_python3_abiflags/*
-%doc doc/*
+#doc doc/*
 %endif
 
 %changelog
+* Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.16.4-alt1
+- Version 4.16.4
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.16.2-alt1
 - Version 4.16.2
 
