@@ -1,6 +1,6 @@
 Name: libxslt
 Version: 1.1.28
-Release: alt1
+Release: alt2
 
 Summary: Library providing XSLT support
 License: MIT
@@ -8,7 +8,7 @@ Group: System/Libraries
 Url: http://xmlsoft.org/
 
 %def_disable static
-%define srcname %name-v1.1.28-3-g3fcf11e
+%define srcname %name-v1.1.28-36-g73e08bf
 
 # git://git.gnome.org/libxslt.git
 Source: %srcname.tar
@@ -175,6 +175,9 @@ make check
 %pkgdocdir/python/examples/*.xsl
 
 %changelog
+* Wed Nov 12 2014 Dmitry V. Levin <ldv@altlinux.org> 1.1.28-alt2
+- Updated to v1.1.28-36-g73e08bf.
+
 * Wed Mar 27 2013 Dmitry V. Levin <ldv@altlinux.org> 1.1.28-alt1
 - Updated to v1.1.28-3-g3fcf11e.
 

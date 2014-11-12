@@ -1,5 +1,5 @@
 Name: libxml2
-Version: 2.9.0
+Version: 2.9.2
 Release: alt1
 Epoch: 1
 
@@ -8,8 +8,9 @@ License: MIT
 Group: System/Libraries
 Url: http://xmlsoft.org/
 
+%def_with python3
 %def_disable static
-%define srcname libxml2-v2.9.0-42-gf7aeda2
+%define srcname libxml2-v2.9.2-5-g7580ce0
 
 Source: %srcname.tar
 # http://www.w3.org/XML/Test/xmlts20080827.tar.gz
@@ -21,29 +22,39 @@ Requires: xml-common
 # Automatically added by buildreq on Sun Feb 27 2011
 BuildRequires: liblzma-devel python-devel python-modules-compiler python-modules-xml zlib-devel
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
+
 %package devel
 Summary: Development environment for building applications manipulating XML files
 Group: Development/C
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %package devel-static
 Summary: Static library for building applications manipulating XML files
 Group: Development/C
-Requires: %name-devel = %epoch:%version-%release
+Requires: %name-devel = %EVR
 
 %package -n xml-utils
 Summary: Various XML utilities
 Group: Text tools
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 Provides: xmllint = %epoch:%version
 Obsoletes: xmllint < %epoch:%version
 
 %package -n python-module-%name
 Summary: Python bindings for the %name library
 Group: Development/Python
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 Provides: libxml2-python = %epoch:%version, python-modules-%name = %epoch:%version
 Obsoletes: libxml2-python < %epoch:%version, python-modules-%name < %epoch:%version
+
+%package -n python3-module-%name
+Summary: Python3 bindings for the %name library
+Group: Development/Python3
+Requires: %name = %EVR
 
 %package doc
 Summary: Documentation for the %name library
@@ -109,6 +120,16 @@ to read, modify and write XML and HTML files.  There is DTDs support
 this includes parsing and validation even with complex DTDs, either
 at parse time or later once the document has been modified.
 
+%description -n python3-module-%name
+This package contains a module that permits applications
+written in the Python3 programming language to use the interface
+supplied by the %name library to manipulate XML files.
+
+This library allows to manipulate XML files.  It includes support
+to read, modify and write XML and HTML files.  There is DTDs support
+this includes parsing and validation even with complex DTDs, either
+at parse time or later once the document has been modified.
+
 %description doc
 This package contains documentation on the XML C library.
 
@@ -124,20 +145,40 @@ export ac_cv_path_XSLTPROC=/usr/bin/xsltproc
 export ac_cv_header_ansidecl_h=no
 mkdir -p m4
 %autoreconf
+
+mkdir build
+cd build
+ln -s ../xmlconf
+%define _configure_script ../configure
+
 %configure \
     --with-python \
     --with-html-dir=%_docdir \
     --with-html-subdir=%name-%version \
     %{subst_enable static} \
     --disable-silent-rules
-
 %make_build
 
+%if_with python3
+mkdir ../python3
+cd ../python3
+%configure \
+	--with-python=%_bindir/python3 \
+	--disable-static \
+	--disable-silent-rules
+cp -la ../build/{*.la,.libs} .
+%make_build -C python
+%endif
+
 %check
-%make_build -k check
+%make_build -k check -C build
 
 %install
-%makeinstall_std
+%makeinstall_std -C build
+%if_with python3
+%makeinstall_std -C python3/python
+rm %buildroot%python3_sitelibdir/*.la
+%endif
 
 mv %buildroot%_datadir/aclocal/libxml{,2}.m4
 
@@ -164,8 +205,9 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %_libdir/*.so
 %_libdir/*.sh
 %_includedir/*
-%_libdir/pkgconfig/*
-%_datadir/aclocal/*
+%_pkgconfigdir/*
+%_libdir/cmake/*
+%_aclocaldir/*
 %_man1dir/*-config*
 %_man3dir/*
 
@@ -180,6 +222,12 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %dir %pkgdocdir/python
 %pkgdocdir/python/TODO
 %pkgdocdir/python/examples
+
+%if_with python3
+%files -n python3-module-%name
+%python3_sitelibdir/*.*
+%python3_sitelibdir/__pycache__/*
+%endif
 
 %files doc
 %dir %pkgdocdir
@@ -196,6 +244,10 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Wed Nov 12 2014 Dmitry V. Levin <ldv@altlinux.org> 1:2.9.2-alt1
+- Updated to v2.9.2-5-g7580ce0 (closes: #30267).
+- Built and packaged python3-module-%name.
+
 * Wed Mar 27 2013 Dmitry V. Levin <ldv@altlinux.org> 1:2.9.0-alt1
 - Updated to v2.9.0-42-gf7aeda2.
 

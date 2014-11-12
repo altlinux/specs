@@ -1,7 +1,7 @@
 %define dist XML-LibXML
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.0116
+Version: 2.0117
 Release: alt1
 
 Summary: Perl binding for libxml2
@@ -59,6 +59,9 @@ mv t/14sax.t t/14sax.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Wed Nov 12 2014 Dmitry V. Levin <ldv@altlinux.org> 2.0117-alt1
+- 2.0116 -> 2.0117.
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 2.0116-alt1
 - new version 2.0116
 
