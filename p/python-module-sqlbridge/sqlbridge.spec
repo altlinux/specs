@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.1
-Release: alt1.git20141107
+Version: 0.1.9
+Release: alt1.git20141111
 Summary: Basic database connectivity for Autobahn web sockets
 License: ASLv2.0
 Group: Development/Python
@@ -108,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.9-alt1.git20141111
+- Version 0.1.9
+
 * Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20141107
 - Initial build for Sisyphus
 
