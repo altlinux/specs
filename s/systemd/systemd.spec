@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 217
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1731,6 +1731,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Nov 12 2014 Alexey Shabalin <shaba@altlinux.ru> 1:217-alt2
+- udev hwdb: Change error message regarding missing hwdb.bin back to debug.
+
 * Wed Oct 29 2014 Alexey Shabalin <shaba@altlinux.ru> 1:217-alt1
 - 217
 
