@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        4.29
+Version:        4.30
 Release:        alt1
 Summary:        Python Remote Objects
 Group:          Development/Python
@@ -212,6 +212,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.30-alt1
+- Version 4.30
+
 * Wed Oct 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.29-alt1
 - Version 4.29
 
