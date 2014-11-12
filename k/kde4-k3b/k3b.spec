@@ -12,8 +12,8 @@
 
 %define rname k3b
 Name: kde4-%rname
-Version: 2.0.2
-Release: alt8
+Version: 2.0.3
+Release: alt1
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -26,24 +26,19 @@ Requires: %req_all
 Conflicts: k3b-mini < 1.0.5-alt7
 
 Source0: %rname-%version.tar
-# Debian
-Patch1: Fixed_compilation_with_new_FFMPEG.patch
-Patch2: Fix-K3B-to-build-with-recent-FFMPEG-versions.patch
-Patch3: ffmpeg-more.diff
-# FC
 # ALT
 Patch101: k3b-1.92-alt-check-cdrecord-ver.patch
 Patch102: k3b-2.0.2-alt-k3bsetup.patch
-Patch103: k3b-2.0-alt-dvd-default-grouwisofs.patch
-Patch104: k3b-1.69.0-alt-messages.patch
-Patch105: k3b-2.0.2-libav10.patch
+Patch103: k3b-2.0.3-libav10.patch
 
-# Automatically added by buildreq on Thu Apr 16 2009 (-bi)
-#BuildRequires: gcc-c++ kde4multimedia-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libavformat-devel libdvdread-devel libflac++-devel liblame-devel libmad-devel libmpcdec-devel libmusicbrainz-devel libqt3-devel libsamplerate-devel libsndfile-devel libtag-devel libvorbis-devel libxkbfile-devel xorg-xf86vidmodeproto-devel
+# Automatically added by buildreq on Wed Nov 12 2014 (-bi)
+# optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libavcodec-devel libavutil-devel libcloog-isl4 libdbus-devel libdbusmenu-qt2 libflac-devel libfreetype-devel libgpg-error libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-svg libqt4-webkit libqt4-xml libsoprano-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby ruby-stdlibs shared-mime-info xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
+#BuildRequires: gcc-c++ glib2-devel kde4base-runtime-core libXxf86misc-devel libavdevice-devel libavformat-devel libdvdread-devel libflac++-devel libicu50 libkcddb4-devel liblame-devel libmad-devel libmpcdec-devel libmusicbrainz-devel libmusicbrainz3-devel libpostproc-devel libqt3-devel libsamplerate-devel libsndfile-devel libswscale-devel libtag-devel libvorbis-devel python-module-google qt4-designer rpm-build-ruby zlib-devel-static
 BuildRequires(pre): kde4libs-devel
-BuildRequires: gcc-c++ kde4multimedia-devel libavformat-devel libdvdread-devel libflac++-devel
-BuildRequires: liblame-devel libmad-devel libmpcdec-devel libmusicbrainz-devel
-BuildRequires: libsamplerate-devel libsndfile-devel libtag-devel libvorbis-devel
+BuildRequires: gcc-c++
+BuildRequires: libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel
+BuildRequires: libdvdread-devel libflac++-devel libkcddb4-devel liblame-devel libmad-devel libmpcdec-devel
+BuildRequires: libmusicbrainz-devel libsamplerate-devel libsndfile-devel libtag-devel libvorbis-devel
 
 %description
 K3b is a GUI frontend to the cd recording programs. 
@@ -112,15 +107,9 @@ KDE 4 library.
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-#
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
-#%patch104 -p0
-%patch105 -p1
 
 
 %build
@@ -165,6 +154,9 @@ KDE 4 library.
 %_K4includedir/*.h
 
 %changelog
+* Wed Nov 12 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt1
+- new version
+
 * Tue May 27 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt8
 - built with new libav
 
