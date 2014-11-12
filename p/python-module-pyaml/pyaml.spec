@@ -1,7 +1,7 @@
 %define oname pyaml
 Name: python-module-%oname
-Version: 14.05.7
-Release: alt1.git20140528
+Version: 14.11.3
+Release: alt1.git20141110
 Summary: pretty-yaml: Pretty YAML serialization
 License: WTFPL
 Group: Development/Python
@@ -20,6 +20,16 @@ BuildPreReq: python-module-unidecode
 %description
 PyYAML-based module to produce pretty and readable YAML-serialized data.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+PyYAML-based module to produce pretty and readable YAML-serialized data.
+
+This package contains tests for %oname.
+
 %prep
 %setup
 
@@ -37,8 +47,15 @@ python pyaml/tests/dump.py
 %files
 %doc COPYING *.md
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %changelog
+* Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.11.3-alt1.git20141110
+- Version 14.11.3
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.05.7-alt1.git20140528
 - Initial build for Sisyphus
 
