@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-Pygments
-Version: 1.6
-Release: alt1.1
+Version: 2.0.1
+Release: alt1
 
 Summary: Pygments is a syntax highlighting package written in Python
 
@@ -54,6 +54,23 @@ to prettify source code. Highlights are:
  * support for new languages and formats are added easily
  * a number of output formats, presently HTML, LaTeX, RTF, SVG and ANSI sequences
  * it is usable as a command-line tool and as a library
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %name
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+It is a generic syntax highlighter for general use in all kinds of
+software such as forum systems, wikis or other applications that need
+to prettify source code. Highlights are:
+ * a wide range of common languages and markup formats is supported
+ * special attention is paid to details, increasing quality by a fair amount
+ * support for new languages and formats are added easily
+ * a number of output formats, presently HTML, LaTeX, RTF, SVG and ANSI sequences
+ * it is usable as a command-line tool and as a library
+
+This package contains tests for %name.
 %endif
 
 %package tests
@@ -109,18 +126,20 @@ to prettify source code. Highlights are:
 This package contains pickles for %name.
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 %endif
 
 %prepare_sphinx .
+ln -s ../objects.inv doc/
 
 %build
 %python_build
 
-%generate_pickles $PWD $PWD/docs/build pygments
+%make -C doc pickle
+%make -C doc html
 
 %if_with python3
 pushd ../python3
@@ -138,15 +157,15 @@ mv %buildroot%_bindir/pygmentize %buildroot%_bindir/pygmentize3
 %python_install
 
 install -d %buildroot%_man1dir
-install -d %buildroot%_docdir/%name/html
+install -d %buildroot%_docdir/%name
 	
 install -p -m644 AUTHORS CHANGES LICENSE TODO \
-	%buildroot%_docdir/%name
-install -p -m644 docs/build/* %buildroot%_docdir/%name/html
+	%buildroot%_docdir/%name/
+cp -fR doc/_build/html %buildroot%_docdir/%name/
 
-install -p -m644 docs/pygmentize.1 %buildroot%_man1dir
+install -p -m644 doc/pygmentize.1 %buildroot%_man1dir
 cp -fR tests %buildroot%python_sitelibdir/pygments/
-cp -fR pickle %buildroot%python_sitelibdir/pygments/
+cp -fR doc/_build/pickle %buildroot%python_sitelibdir/pygments/
 
 %files
 %doc %dir %_docdir/%name
@@ -155,11 +174,13 @@ cp -fR pickle %buildroot%python_sitelibdir/pygments/
 %_bindir/pygmentize
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/*/test*
 %exclude %python_sitelibdir/*/pickle
 %_man1dir/*
 
 %files tests
 %python_sitelibdir/*/tests
+%python_sitelibdir/*/*/test*
 
 %files doc
 %doc %dir %_docdir/%name
@@ -172,9 +193,18 @@ cp -fR pickle %buildroot%python_sitelibdir/pygments/
 %files -n python3-module-%oname
 %_bindir/pygmentize3
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
 %endif
 
 %changelog
+* Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1
+- Version 2.0.1
+
 * Wed Mar 20 2013 Aleksey Avdeev <solo@altlinux.ru> 1.6-alt1.1
 - Rebuild with Python-3.3
 
