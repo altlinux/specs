@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.87
+Version: 0.88
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -192,6 +192,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/rados
 %_bindir/rbd
 %_bindir/rbd-replay
+%_bindir/rbd-replay-many
 %_bindir/ceph-debugpack
 %_bindir/ceph-coverage
 %_sbindir/ceph-create-keys
@@ -229,6 +230,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_mandir/man8/rbd.8*
 %_mandir/man8/rbd-replay-prep.8*
 %_mandir/man8/rbd-replay.8*
+%_mandir/man8/rbd-replay-many.8.gz
 %_mandir/man8/ceph-rbdnamer.8*
 %_mandir/man8/ceph-authtool.8*
 %_mandir/man8/ceph-debugpack.8*
@@ -286,6 +288,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Nov 12 2014 Alexei Takaseev <taf@altlinux.org> 0.88-alt1
+- 0.88
+
 * Thu Oct 30 2014 Alexei Takaseev <taf@altlinux.org> 0.87-alt1
 - 0.87
 
