@@ -1,22 +1,23 @@
+%define ver_major 3.14
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-disk-utility
-Version: 3.12.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Disk management application
 License: LGPLv2+
 Group: System/Libraries
-URL: http://git.gnome.org/cgit/gnome-disk-utility
+URL: http://git.gnome.org/%name
 
 Requires: udisks2 cryptsetup
 
-Source: %name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-3.8.0-alt-lfs.patch
 
 %define udisks_ver 2.1.1
 %define glib_ver 2.31.0
-%define gtk_ver 3.10.0
+%define gtk_ver 3.12.0
 %define secret_ver 0.7
 %define pwquality_ver 1.0.0
 %define gsd_ver 3.6
@@ -33,7 +34,7 @@ BuildPreReq: gnome-settings-daemon-devel >= %gsd_ver
 BuildPreReq: libdvdread-devel >= %dvdread_ver
 BuildPreReq: liblzma-devel >= %lzma_ver
 BuildRequires: libnotify-devel libcanberra-gtk3-devel
-BuildRequires: systemd-devel libsystemd-login-devel
+BuildRequires: systemd-devel libsystemd-devel
 BuildRequires: xsltproc docbook-style-xsl
 
 %description
@@ -75,6 +76,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Thu Nov 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Sat Apr 19 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 
