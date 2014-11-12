@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.4
-Release: alt1.dev0.git20141009
+Version: 0.9.5
+Release: alt1.dev0.git20141110
 Summary: GuessIt - a library for guessing information from video files
 License: LGPLv3
 Group: Development/Python
@@ -198,6 +198,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1.dev0.git20141110
+- Version 0.9.5.dev0
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
