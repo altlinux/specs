@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.9.4
-Release: alt1.git20141104
+Release: alt1.git20141109
 Summary: unittest-based test runner with Ant/JUnit like XML reporting
 License: BSD
 Group: Development/Python
@@ -116,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt1.git20141109
+- New snapshot
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt1.git20141104
 - Version 1.9.4
 
