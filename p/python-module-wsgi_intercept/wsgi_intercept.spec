@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1.git20140806
 Summary: wsgi_intercept installs a WSGI application in place of a real URI for testing
 License: MIT
@@ -177,6 +177,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.git20140806
+- Version 0.9.0
+
 * Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1.git20140806
 - Initial build for Sisyphus
 
