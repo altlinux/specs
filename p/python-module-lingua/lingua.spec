@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.4
-Release: alt1.git20141103
+Version: 3.7
+Release: alt1.git20141111
 Summary: Translation toolset
 License: BSD
 Group: Development/Python
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7-alt1.git20141111
+- Version 3.7
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20141103
 - Version 3.4
 - Enabled testing
