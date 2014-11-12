@@ -2,7 +2,7 @@
 
 Summary: A strictly RFC 4511 conforming LDAP V3 pure Python 3 client - Python 2 compatible
 Name: python3-module-ldap3
-Version: 0.9.5
+Version: 0.9.6.1
 Release: alt1
 Source0: %name-%version.tar
 BuildArch: noarch
@@ -36,6 +36,9 @@ stuff (e.g. processing LDIF, LDAPURLs, LDAPv3 sub-schema, etc.).
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.6.1-alt1
+- Version 0.9.6.1
+
 * Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1
 - Initial build for Sisyphus
 
