@@ -18,12 +18,13 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Provide online accounts information
 Group: Graphical desktop/GNOME
 License: LGPLv2+
+Url: https://live.gnome.org/GnomeOnlineAccounts
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -169,6 +170,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/goa
 
 %changelog
+* Wed Nov 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
+- 3.14.2
+
 * Thu Oct 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 
