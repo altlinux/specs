@@ -4,7 +4,7 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.1.5
+Version: %ver_major.2
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -21,7 +21,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define clutter_ver 1.15.90
 %define gjs_ver 1.39.0
-%define mutter_ver 3.14.0
+%define mutter_ver 3.14.2
 %define gtk_ver 3.7.9
 %define gio_ver 2.37.0
 %define gstreamer_ver 0.11.92
@@ -223,6 +223,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Wed Nov 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
+- 3.14.2
+
 * Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1.5-alt1
 - 3.14.1.5
 
