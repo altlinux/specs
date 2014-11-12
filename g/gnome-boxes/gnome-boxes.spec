@@ -4,7 +4,7 @@
 %def_enable smartcard
 
 Name: gnome-boxes
-Version: 3.14.0
+Version: 3.14.2
 Release: alt1
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -102,6 +102,9 @@ intltoolize -f
 %_datadir/appdata/*.xml
 
 %changelog
+* Wed Nov 12 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.2-alt1
+- 3.14.2
+
 * Tue Sep 30 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt1
 - 3.14.0
 
