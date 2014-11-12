@@ -11,7 +11,7 @@
 %endif
 
 Name:           chromium
-Version:        38.0.2125.111
+Version:        38.0.2125.122
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -486,6 +486,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Nov 12 2014 Andrey Cherepanov <cas@altlinux.org> 38.0.2125.122-alt1
+- New version
+
 * Thu Nov 06 2014 Andrey Cherepanov <cas@altlinux.org> 38.0.2125.111-alt1
 - New version
 - Use sed insted of strings utility from binutils for detect PepperFlash
