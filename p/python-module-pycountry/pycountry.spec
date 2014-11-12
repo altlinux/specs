@@ -8,7 +8,7 @@
 %endif
 
 Name: python-module-%oname
-Version: 1.8
+Version: 1.10
 Release: alt1
 Summary: ISO country, subdivision, language, currency and script definitions
 License: LGPLv2.1
@@ -22,11 +22,12 @@ Patch10: %name-%version-alt-python3.patch
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-nose
 
 %if_with python3
 BuildPreReq: rpm-build-python3
 BuildPreReq: python3-devel
-BuildPreReq: python3-module-setuptools-tests
+BuildPreReq: python3-module-setuptools-tests python3-module-nose
 %endif
 
 %description
@@ -90,7 +91,14 @@ popd
 %endif
 
 %check
-%__python setup.py test
+python setup.py test
+nosetests
+%if_with python3
+pushd ../%py3dir
+python3 setup.py test
+nosetests3
+popd
+%endif
 
 %files
 %doc *.txt
@@ -113,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10-alt1
+- Version 1.10
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt1
 - Version 1.8
 
