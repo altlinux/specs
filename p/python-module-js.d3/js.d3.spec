@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.3.13
-Release: alt1.git20140104
+Version: 3.4.14
+Release: alt1.dev0.git20141112
 Summary: Fanstatic package for D3.js
 License: BSD
 Group: Development/Python
@@ -82,18 +82,21 @@ popd
 %endif
 
 %files
-%doc *.txt
+%doc *.rst
 %python_sitelibdir/js/*
 %python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.rst
 %python3_sitelibdir/js/*
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.14-alt1.dev0.git20141112
+- Version 3.4.14.dev0
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.13-alt1.git20140104
 - Initial build for Sisyphus
 
