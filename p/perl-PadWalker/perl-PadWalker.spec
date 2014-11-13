@@ -1,6 +1,6 @@
 %define dist PadWalker
 Name: perl-%dist
-Version: 1.98
+Version: 1.99
 Release: alt1
 
 Summary: Inspect lexical variables in any subroutine which called you
@@ -42,6 +42,9 @@ in production.
 %perl_vendor_autolib/PadWalker*
 
 %changelog
+* Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.99-alt1
+- automated CPAN update
+
 * Mon Oct 28 2013 Igor Vlasenko <viy@altlinux.ru> 1.98-alt1
 - automated CPAN update
 
