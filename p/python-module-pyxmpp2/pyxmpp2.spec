@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt1.git20130922
+Release: alt2.git20130922
 Summary: The new and shiny XMPP implementation for Python
 License: LGPLv2.1
 Group: Development/Python
@@ -37,7 +37,6 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: The new and shiny XMPP implementation for Python
 Group: Development/Python3
-%add_python3_req_skip libxml2
 
 %description -n python3-module-%oname
 The new and shiny XMPP implementation for Python.
@@ -95,9 +94,10 @@ popd
 %python3_sitelibdir/*/test
 %endif
 
-# TODO: enable requires libxml2 (wait libxml2 >= 2.9.1)
-
 %changelog
+* Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt2.git20130922
+- Enabled requirement on python3-module-libxml2
+
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.git20130922
 - Initial build for Sisyphus
 
