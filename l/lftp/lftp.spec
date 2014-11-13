@@ -1,5 +1,5 @@
 Name: lftp
-Version: 4.4.15
+Version: 4.6.0
 Release: alt1
 
 Summary: Sophisticated command line file transfer program
@@ -85,6 +85,9 @@ desktop-file-install --dir %buildroot%_desktopdir %_sourcedir/lftp.desktop
 %doc AUTHORS README.* THANKS TODO lftp.lsm BUGS
 
 %changelog
+* Thu Nov 13 2014 Dmitry V. Levin <ldv@altlinux.org> 4.6.0-alt1
+- Updated to 4.6.0.
+
 * Sun Feb 16 2014 Dmitry V. Levin <ldv@altlinux.org> 4.4.15-alt1
 - Updated to 4.4.15.
 
