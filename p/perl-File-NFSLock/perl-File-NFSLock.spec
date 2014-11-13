@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-File-NFSLock
-Version: 1.24
+Version: 1.27
 Release: alt1
 
 Summary: File-NFSLock - perl module to do NFS (or not) locking
@@ -58,6 +58,9 @@ chmod -R u+w %_builddir/%module-%version
 %perl_vendor_privlib/File/
 
 %changelog
+* Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
+- automated CPAN update
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
 - automated CPAN update
 
