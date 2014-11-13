@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Pg-PQ
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Perl wrapper for PostgreSQL libpq
@@ -58,6 +58,9 @@ even the Coro manpage.
 %perl_vendor_autolib/Pg/*
 
 %changelog
+* Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
