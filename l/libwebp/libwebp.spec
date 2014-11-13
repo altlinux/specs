@@ -5,7 +5,7 @@
 %define soversion 5
 
 Name: libwebp
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Library and tools for the WebP graphics format
@@ -13,7 +13,7 @@ License: BSD
 Group: System/Libraries
 
 URL: http://webmproject.org/
-Source: http://webp.googlecode.com/files/%name-%version.tar.gz
+Source: http://downloads.webmproject.org/releases/webp/%name-%version.tar.gz
 # init only
 Patch: %name-0.4.1-alt-lfs.patch
 
@@ -120,6 +120,9 @@ images more efficiently.
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Thu Nov 13 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Sat Aug 23 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
