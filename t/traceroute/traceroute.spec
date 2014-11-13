@@ -1,5 +1,5 @@
 Name: traceroute
-Version: 2.0.19
+Version: 2.0.21
 Release: alt1
 Epoch: 1
 
@@ -40,6 +40,9 @@ ln -s traceroute.1 %buildroot%_man1dir/traceroute6.1
 %_man1dir/*
 
 %changelog
+* Thu Nov 13 2014 Dmitry V. Levin <ldv@altlinux.org> 1:2.0.21-alt1
+- Updated to 2.0.21.
+
 * Thu Dec 27 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.0.19-alt1
 - Updated to 2.0.19.
 
