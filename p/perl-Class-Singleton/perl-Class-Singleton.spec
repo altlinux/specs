@@ -1,14 +1,14 @@
 %define dist Class-Singleton
 Name: perl-%dist
-Version: 1.4
-Release: alt2
+Version: 1.5
+Release: alt1
 
 Summary: Implementation of a "Singleton" class
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SH/SHAY/Class-Singleton-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ method and can implement whatever specific functionality is required.
 %perl_vendor_privlib/Class*
 
 %changelog
+* Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1
+- automated CPAN update
+
 * Mon Sep 26 2011 Alexey Tourbin <at@altlinux.ru> 1.4-alt2
 - rebuilt as plain src.rpm
 
