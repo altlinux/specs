@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt1.git20141101
+Release: alt1.git20141112
 Summary: Various batteries for SQLAlchemy models
 License: BSD
 Group: Development/Python
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20141112
+- New snapshot
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20141101
 - Initial build for Sisyphus
 
