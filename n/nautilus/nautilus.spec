@@ -11,16 +11,16 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Nautilus is a network user environment
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Nautilus
 
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 # http://bugzilla.gnome.org/show_bug.cgi?id=519743
 Patch17: %name-filetype-symlink-fix.patch
@@ -215,6 +215,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Thu Nov 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Mon Oct 20 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
 - updated to 3.14.0_0b5db3e2d (fixed BGO #738280, 738430, 738087)
 
