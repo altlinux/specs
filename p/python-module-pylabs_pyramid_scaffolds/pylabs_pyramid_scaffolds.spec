@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 Summary: Provides some pyramid scaffold templates with useful default settings
 License: Free
@@ -79,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1
+- Version 0.0.6
+
 * Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1
 - Initial build for Sisyphus
 
