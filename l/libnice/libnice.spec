@@ -1,4 +1,6 @@
 %define _name nice
+%define ver_major 0.1
+%define api_ver %ver_major
 %def_disable static
 %def_disable gtk_doc
 
@@ -6,7 +8,7 @@
 %define old_gst_api_ver 0.10
 
 Name: libnice
-Version: 0.1.4
+Version: %ver_major.8
 Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
@@ -19,6 +21,7 @@ Source: http://nice.freedesktop.org/releases/%name-%version.tar.gz
 BuildRequires: glib2-devel gtk-doc libgupnp-igd-devel
 BuildRequires: gst-plugins-devel
 BuildRequires: gst-plugins%gst_api_ver-devel
+BuildRequires: gobject-introspection-devel
 
 %description
 Nice is an implementation of the IETF's draft Interactice Connectivity
@@ -46,6 +49,24 @@ Nice is an implementation of the IETF's draft Interactice Connectivity
 Establishment standard (ICE). It provides GLib-based library, libnice.
 
 This package contains development documentation for %name.
+
+%package gir
+Summary: GObject introspection data for the Nice library
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gir
+GObject introspection data for the Nice library.
+
+%package gir-devel
+Summary: GObject introspection devel data for the Nice library
+Group: Development/Other
+BuildArch: noarch
+Requires: %name-gir = %version-%release
+Requires: %name-devel = %version-%release
+
+%description gir-devel
+GObject introspection devel data for the Nice library.
 
 %package devel-static
 Summary: Static library for %name
@@ -83,7 +104,7 @@ This package provides Interactive UDP connectivity establishment plugin
 for Gstreamer (1.0 API version)
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure \
@@ -93,7 +114,7 @@ for Gstreamer (1.0 API version)
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -112,6 +133,12 @@ for Gstreamer (1.0 API version)
 %_libdir/*.a
 %endif
 
+%files gir
+%_typelibdir/Nice-%api_ver.typelib
+
+%files gir-devel
+%_girdir/Nice-%api_ver.gir
+
 %files -n gst-plugins-nice
 %_libdir/gstreamer-%old_gst_api_ver/libgstnice010.so
 
@@ -125,7 +152,12 @@ for Gstreamer (1.0 API version)
 # and example progs
 %exclude %_bindir/*example
 
+
 %changelog
+* Thu Nov 13 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt1
+- 0.1.8
+- new gir{,-devel} subpackages
+
 * Thu May 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.4-alt1
 - 0.1.4
 
