@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Parallel-ForkManager
 Name: perl-%dist
-Version: 1.06
+Version: 1.07
 Release: alt1
 
 Summary: A simple parallel processing fork manager
@@ -37,6 +37,9 @@ use is a downloader which will be retrieving hundreds/thousands of files.
 %perl_vendor_privlib/Parallel/ForkManager.pm
 
 %changelog
+* Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
 - automated CPAN update
 
