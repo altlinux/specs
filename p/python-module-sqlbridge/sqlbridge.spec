@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.9
-Release: alt1.git20141111
+Version: 0.1.11
+Release: alt1.git20141112
 Summary: Basic database connectivity for Autobahn web sockets
 License: ASLv2.0
 Group: Development/Python
@@ -18,13 +18,15 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-autobahn python-module-twisted-core
 BuildPreReq: python-module-txpostgres python-module-psycopg2
-BuildPreReq: python-module-six
+BuildPreReq: python-module-six python-module-taskforce
+BuildPreReq: python-module-inotifyx python-module-yaml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-autobahn python3-module-twisted-core
 BuildPreReq: python3-module-txpostgres python3-module-psycopg2
-BuildPreReq: python3-module-six
+BuildPreReq: python3-module-six python3-module-taskforce
+BuildPreReq: python3-module-inotifyx python3-module-yaml
 %endif
 
 %py_provides %oname
@@ -108,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.11-alt1.git20141112
+- Version 0.1.11
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.9-alt1.git20141111
 - Version 0.1.9
 
