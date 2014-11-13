@@ -9,8 +9,8 @@
 %def_enable x
 
 Name: ImageMagick
-Version: %dversion.%drelease
-Release: alt2
+Version: 6.8.9.10
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -226,6 +226,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu Nov 13 2014 Anton Farygin <rider@altlinux.ru> 6.8.9.10-alt1
+- new version 6.8.9.10
+
 * Thu Oct 30 2014 Anton Farygin <rider@altlinux.ru> 6.8.9.8-alt2
 - disable auto gcc arch (closes: #30431)
 
