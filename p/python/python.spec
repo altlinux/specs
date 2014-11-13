@@ -3,8 +3,8 @@
 %define real_name               python
 Name: %real_name
 
-Version: 2.7.6
-Release: alt3
+Version: 2.7.8
+Release: alt1
 
 %define package_name		%real_name
 %define weight			1001
@@ -972,6 +972,7 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 
 %files tools-idle
 %python_libdir/idlelib
+%exclude %python_libdir/idlelib/idle_test/
 %_bindir/idle
 %_bindir/idle%suffix_ver
 %exclude %_bindir/idle
@@ -1047,6 +1048,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %python_libdir/lib-dynload/_tkinter.so
 
 %changelog
+* Thu Nov 13 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.8-alt1
+- New version.
+
 * Thu Jan 30 2014 Fr. Br. George <george@altlinux.ru> 2.7.6-alt3
 - Build and install shared build, separate static (was contrariwise).
 - Fix for python issue 20445.
