@@ -1,19 +1,20 @@
 Name: libtar
-Version: 1.2.11
-Release: alt1.1.qa1
+Version: 1.2.20
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
 Summary: C library for manipulating POSIX tar files
 License: BSD
 Group: System/Libraries
+Url: http://www.feep.net/libtar/
 
-URL: http://www.feep.net/libtar/
-Source: ftp://ftp.feep.net/pub/software/libtar/libtar-%version.tar.gz
-Patch0: http://ftp.debian.org/debian/pool/main/libt/libtar/libtar_1.2.11-4.diff.gz
-Patch1: libtar-1.2.11-tar_header.patch
-Patch2: libtar-1.2.11-mem-deref.patch
-Patch3: libtar-1.2.11-missing-protos.patch
+#Source: ftp://ftp.feep.net/pub/software/libtar/%name-%version.tar.gz
+# VCS: http://repo.or.cz/libtar.git
+# 6d0ab4c7
+Source: %name-%version.tar
+# (fc) don't strip while install
+Patch: libtar-1.2.11-bz729009.patch
 
 # Automatically added by buildreq on Tue Mar 09 2010
 BuildRequires: zlib-devel
@@ -33,27 +34,15 @@ programs which will use the %name library.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch -p1
 
-# Patches and build magic borrowed from Fedora spec.
+# set correct version for .so build
+%define ltversion %(echo %{version} | tr '.' ':')
+sed -i 's/-rpath $(libdir)/-rpath $(libdir) -version-number %ltversion/' \
+lib/Makefile.in
 
 %build
-%define ltversion %(echo %{version} | tr '.' ':')
-subst 's/-rpath $(libdir)/-rpath $(libdir) -version-number %{ltversion}/' lib/Makefile.in
-# sanitize the macro definitions so that aclocal can find them:
-cd autoconf
-sed '/^m4_include/d;s/ m4_include/ m4][_include/g' aclocal.m4 >psg.m4
-rm -f acsite.m4 aclocal.m4
-cd ..
-
-cp -p /usr/share/libtool/config/config.sub autoconf
-libtoolize --copy
-aclocal -I autoconf
-autoconf
-
+%autoreconf
 %configure --disable-static
 %make_build
 
@@ -61,15 +50,19 @@ autoconf
 %makeinstall_std
 
 %files
-%_bindir/*
-%_libdir/lib*.so.*
+%_bindir/%name
+%_libdir/%name.so.*
 
 %files devel
-%_includedir/*
-%_libdir/lib*.so
+%_includedir/*.h
+%_libdir/%name.so
 %_man3dir/*
 
 %changelog
+* Thu Nov 13 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.20-alt1
+- 1.2.20
+- removed obsolete patches
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.11-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
