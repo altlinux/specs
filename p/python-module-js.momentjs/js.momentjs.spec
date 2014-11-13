@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.8.3
+Version: 2.8.3.1
 Release: alt1
 Summary: Fanstatic packaging of Moment.js
 License: BSD
@@ -90,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.3.1-alt1
+- Version 2.8.3-1
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.3-alt1
 - Initial build for Sisyphus
 
