@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt1.git20141110
+Release: alt1.git20141112
 Summary: Lets you use the page object pattern with Robot Framework and plain python
 License: Free
 Group: Development/Python
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20141112
+- New snapshot
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20141110
 - Initial build for Sisyphus
 
