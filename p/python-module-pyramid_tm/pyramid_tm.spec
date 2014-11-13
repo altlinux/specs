@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7
-Release: alt2
+Version: 0.8
+Release: alt1.git20141112
 Summary: A package which allows Pyramid requests to join the active transaction
 License: BSD
 Group: Development/Python
@@ -14,10 +14,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-transaction python-module-nose
+BuildPreReq: python-module-coverage python-module-pyramid-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-transaction python3-module-nose
+BuildPreReq: python3-module-coverage python3-module-pyramid-tests
 %endif
 
 %py_requires pyramid transaction
@@ -39,6 +43,7 @@ transaction as provided by the transaction package.
 Summary: Tests for pyramid_tm
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
+%py3_requires pyramid.testing
 
 %description -n python3-module-%oname-tests
 pyramid_tm is a package which allows Pyramid requests to join the active
@@ -50,6 +55,7 @@ This package contains tests for pyramid_tm.
 Summary: Tests for pyramid_tm
 Group: Development/Python
 Requires: %name = %version-%release
+%py_requires pyramid.testing
 
 %description tests
 pyramid_tm is a package which allows Pyramid requests to join the active
@@ -82,6 +88,14 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.txt *.rst docs/*.rst
 %python_sitelibdir/*
@@ -103,6 +117,10 @@ popd
 %endif
 
 %changelog
+* Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.git20141112
+- Version 0.8
+- Enabled testing
+
 * Sat Aug 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt2
 - Added module for Python 3
 
