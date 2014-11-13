@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 Summary: A simple and efficient access to R from Python, version 2
 License: MPL/GPL/LGPL
@@ -207,7 +207,7 @@ popd
 %endif
 
 %files
-%doc AUTHORS NEWS
+%doc AUTHORS NEWS *.md
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests*
 %exclude %python_sitelibdir/*/*/tests
@@ -231,7 +231,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS NEWS
+%doc AUTHORS NEWS *.md
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests*
 %exclude %python3_sitelibdir/*/*/tests
@@ -244,6 +244,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt1
+- Version 2.5.1
+
 * Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt1
 - Version 2.5.0
 
