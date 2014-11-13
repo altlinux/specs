@@ -1,4 +1,4 @@
-%define ver_major 3.11
+%define ver_major 3.12
 %define brasero_api_ver 3
 %define nau_api_ver 3.0
 %define gst_api_ver 1.0
@@ -15,7 +15,7 @@
 %def_disable introspection
 
 Name: brasero
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: CD/DVD burning tool for GNOME.
@@ -134,7 +134,7 @@ Requires: lib%name-gir = %version-%release
 GObject introspection devel data for the Brasero
 
 %prep
-%setup -q
+%setup
 %patch -p1 -b .link
 %patch1 -p1 -b .button_underline
 %patch2 -b .schemas_convert
@@ -231,6 +231,9 @@ GObject introspection devel data for the Brasero
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Thu Nov 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Thu Sep 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.4-alt1
 - 3.11.4
 
