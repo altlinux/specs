@@ -1,7 +1,7 @@
 
 Name: krb5
-Version: 1.12
-Release: alt2
+Version: 1.13
+Release: alt1
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -14,27 +14,40 @@ Source0: %name-%version.tar
 Source2: %name-alt.tar
 
 Patch1: krb5-1.10.1-alt-export-krb5int_get_fq_local_hostname.patch
-Patch2: krb5-1.3.1-fedora-dns.patch
-Patch3: krb5-1.12-fedora-ktany.patch
-Patch4: krb5-1.12-fedora-api.patch
-Patch5: krb5-1.11-fedora-dirsrv-accountlock.patch
-Patch6: krb5-1.10-fedora-doublelog.patch
-Patch8: krb5-1.10-fedora-kpasswd_tcp.patch
-Patch9: krb5-1.10-fedora-kprop-mktemp.patch
-Patch11: krb5-1.12-fedora-selinux-label.patch
-Patch12: krb5-fedora-kvno-230379.patch
-Patch13: krb5-1.12-master-acquire_cred-memleak-gitdecccbcb.patch
-Patch14: krb5-1.12-master-spnego-memleak-git1cda48a.patch
-Patch15: krb5-1.12-db2-fix.patch
 
+# fedora patches:
+Patch6: krb5-1.12-fedora-ksu-path.patch
+Patch12: krb5-1.12-fedora-ktany.patch
+Patch23: krb5-1.3.1-fedora-dns.patch
+Patch39: krb5-1.12-fedora-api.patch
+Patch60: krb5-1.12.1-fedora-pam.patch
+Patch63: krb5-1.13-fedora-selinux-label.patch
+Patch71: krb5-1.13-fedora-dirsrv-accountlock.patch
+Patch86: krb5-1.9-fedora-debuginfo.patch
+Patch105: krb5-fedora-kvno-230379.patch
+Patch129: krb5-1.11-fedora-run_user_0.patch
+Patch134: krb5-1.11-fedora-kpasswdtest.patch
+
+# upstrem patches:
 
 BuildRequires: /dev/pts /proc
-BuildRequires: flex libcom_err-devel libkeyutils-devel libldap-devel
+BuildRequires: flex libcom_err-devel libkeyutils-devel
+BuildRequires: libldap-devel libsasl2-devel
 BuildRequires: libncurses-devel libss-devel libssl-devel libtinfo-devel
-BuildRequires: tcl-devel libverto-devel libselinux-devel
+BuildRequires: libverto-devel libselinux-devel
+BuildRequires: libpam-devel
+
+BuildRequires: python-module-sphinx
+BuildRequires: texlive-latex-base texlive-base-bin texlive-latex-recommended
+
+%ifarch %{ix86} x86_64
+BuildRequires: yasm
+%endif
 
 # for tests
 BuildRequires: libverto-libev python-modules gcc-c++
+# dejagnu tests disabled
+# BuildRequires: dejagnu tcl-devel
 
 %description
 Kerberos V5 is a trusted-third-party network authentication system,
@@ -135,24 +148,35 @@ MIT Kerberos.
 %setup
 
 %patch1 -p2
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch8 -p1
-%patch9 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
+
+# fedora patches:
+%patch60 -p1 -b .pam
+%patch63 -p1 -b .selinux-label
+%patch6  -p1 -b .ksu-path
+%patch12 -p1 -b .ktany
+%patch23 -p1 -b .dns
+%patch39 -p1 -b .api
+%patch71 -p1 -b .dirsrv-accountlock
+%patch86 -p0 -b .debuginfo
+%patch105 -p1 -b .kvno
+# Apply when the hard-wired or configured default location is
+# DIR:/run/user/%%{uid}/krb5cc.
+%patch129 -p1 -b .run_user_0
+%patch134 -p1 -b .kpasswdtest
+
+# upstream patches:
 
 %build
+# Go ahead and supply tcl info, because configure doesn't know how to find it.
+# . %_libdir/tclConfig.sh
 
 DEFINES="-D_FILE_OFFSET_BITS=64" ; export DEFINES
 %add_optflags -I/usr/include/et
 %add_optflags -DKRB5_DNS_LOOKUP
+
+# Set this so that configure will have a value even if the current version of
+# autoconf doesn't set one.
+runstatedir=%_runtimedir; export runstatedir
 
 pushd src
 util/reconf --verbose --force
@@ -161,27 +185,51 @@ util/reconf --verbose --force
 	--localstatedir=%_localstatedir/kerberos \
 	--with-system-et \
 	--with-system-ss \
-	--without-krb4 \
 	--with-ldap \
-	--enable-dns \
-	--enable-dns-for-kdc \
 	--enable-dns-for-realm \
+	--with-dirsrv-account-locking \
+	--enable-pkinit \
+	--with-pkinit-crypto-impl=openssl \
+	--with-tls-impl=openssl \
+	--with-pam \
 	--with-netlib=-lresolv \
-	--includedir=%_includedir/%name \
 	--disable-rpath \
 	--with-selinux
 	#
 
-make all
+# dejagnu tests disabled
+# 	--with-tcl=%_libdir \
+%make
 popd
 
+# Sanity check the KDC_RUN_DIR.
+configured_kdcrundir=`grep KDC_RUN_DIR src/include/osconf.h | awk '{print $NF}'`
+configured_kdcrundir=`eval echo $configured_kdcrundir`
+if test "$configured_kdcrundir" != %_runtimedir/krb5kdc ; then
+    exit 1
+fi
+
+# Build the docs.
+make -C src/doc paths.py version.py
+cp src/doc/paths.py doc/
+mkdir -p build-man build-html build-pdf
+sphinx-build -a -b man   -t pathsubs doc build-man
+sphinx-build -a -b html  -t pathsubs doc build-html
+rm -fr build-html/_sources
+sphinx-build -a -b latex -t pathsubs doc build-pdf
+# Build the PDFs if we didn't have pre-built ones.
+for pdf in admin appdev basic build plugindev user ; do
+    test -s build-pdf/$pdf.pdf || make -C build-pdf
+done
+
 %check
+make -C src runenv.py
 # NOTE(iv@): this test hangs for too long, look at this later
 echo > src/tests/t_iprop.py
 
 # skip this test, because getaddrinfo with flag AI_ADDRCONFIG return error in hasher
 echo > src/tests/t_kprop.py
-make -C src check
+make -C src check TMPDIR=%_tmppath OFFLINE=yes PYTESTFLAGS="-v"
 
 %install
 
@@ -194,7 +242,7 @@ make -C src install \
 tar xf %SOURCE2 -C %buildroot
 
 # Fix preporcessor loop
-sed -i 's,<krb5/krb5.h>,<krb5/krb5/krb5.h>,' %buildroot%_includedir/krb5/krb5.h
+# sed -i 's,<krb5/krb5.h>,<krb5/krb5/krb5.h>,' %buildroot%_includedir/krb5/krb5.h
 
 # Relocate *some* shared libraries
 mkdir -p %buildroot/%_lib
@@ -207,11 +255,21 @@ done
 mv -f %buildroot%_bindir/uuclient %buildroot%_bindir/%name-uuclient
 mv -f %buildroot%_sbindir/uuserver %buildroot%_sbindir/%name-uuserver
 
+# Where per-user keytabs live by default.
+mkdir -p %buildroot%_localstatedir/kerberos/krb5/user
+
+# Parent of configuration file for list of loadable GSS mechs ("mechs").  This
+# location is not relative to sysconfdir, but is hard-coded in g_initialize.c.
+mkdir -m 755 -p %buildroot%_sysconfdir/gss
+# Parent of groups of configuration files for a list of loadable GSS mechs
+# ("mechs").  This location is not relative to sysconfdir, and is also
+# hard-coded in g_initialize.c.
+mkdir -m 755 -p %buildroot%_sysconfdir/gss/mech.d
+
 # Install docs
 mkdir -p %buildroot%_docdir/pdf
-cp doc/pdf/*.pdf %buildroot%_docdir/pdf/
-cp -R doc/html/ %buildroot/%_docdir/
-rm -rf %buildroot/%_docdir/html/_sources/
+cp build-pdf/*.pdf %buildroot%_docdir/pdf/
+cp -R build-html/ %buildroot/%_docdir/
 cp -p src/plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} %buildroot%_docdir/
 
 # cleanups
@@ -232,9 +290,13 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %preun_service kprop
 
 %files -n lib%name -f mit-krb5.lang
-%config %_initdir/kdcrotate
 %config(noreplace) %_sysconfdir/krb5.conf
 %ghost %config(noreplace) %attr(600,root,root) %_sysconfdir/krb5.keytab
+%dir /etc/gss
+%dir /etc/gss/mech.d
+%dir %_localstatedir/kerberos
+%dir %_localstatedir/kerberos/krb5
+%dir %_localstatedir/kerberos/krb5/user
 
 /%_lib/lib*.so.*
 
@@ -248,9 +310,11 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %dir %_libdir/%name/plugins
 %dir %_libdir/%name/plugins/kdb
 %dir %_libdir/%name/plugins/preauth
+%dir %_libdir/%name/plugins/tls
 %_libdir/%name/plugins/kdb/db2.so
 %_libdir/%name/plugins/preauth/pkinit.so
 %_libdir/%name/plugins/preauth/otp.so
+%_libdir/%name/plugins/tls/k5tls.so
 
 %_man5dir/krb5.conf.5*
 
@@ -259,8 +323,7 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %_libdir/%name/plugins/kdb/kldap.so
 
 %files -n lib%name-devel
-%dir %_includedir/krb5
-%_includedir/krb5/*
+%_includedir/*
 %_libdir/lib*.so
 %_bindir/gss-client
 %_bindir/sclient
@@ -274,12 +337,10 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %_sbindir/sserver
 %_man1dir/sclient.1*
 %_man1dir/krb5-config.1*
-%exclude %_man1dir/krb5-send-pr.1*
 %_man8dir/sserver.8*
 %_pkgconfigdir/*
 
 %files kdc
-%dir %_localstatedir/kerberos
 %dir %_localstatedir/kerberos/krb5kdc
 %config(noreplace) %_localstatedir/kerberos/krb5kdc/kdc.conf
 %config(noreplace) %_localstatedir/kerberos/krb5kdc/kadm5.acl
@@ -332,6 +393,7 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %_bindir/ksu
 %_bindir/kvno
 %_bindir/kswitch
+%config(noreplace) %_sysconfdir/pam.d/ksu
 
 %_man1dir/kdestroy.1*
 # %%_man1dir/kerberos.1*
@@ -352,6 +414,17 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Fri Oct 31 2014 Alexey Shabalin <shaba@altlinux.ru> 1.13-alt1
+- 1.13
+- fixed CVE-2014-5351
+- move header from /usr/include/krb5 to /usr/include
+- drop kdcrotate service
+- update krb5.conf:
+  + add [logging] example
+  + add [realms] example
+  + add [domain_realm] example
+  + define default_ccache_name as KEYRING:persistent:%%{uid}
+
 * Thu Mar 27 2014 Timur Aitov <timonbl4@altlinux.org> 1.12-alt2
 - applied upstream fix for libdb2
 - disabled t_kprop.py test

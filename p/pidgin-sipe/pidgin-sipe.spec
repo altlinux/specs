@@ -4,7 +4,7 @@
 %def_enable telepathy
 
 Name: pidgin-sipe
-Version: 1.18.3
+Version: 1.18.4
 Release: alt1
 Summary: Pidgin plugin for connecting to MS Communications Server
 
@@ -14,17 +14,19 @@ Url: http://sipe.sourceforge.net/
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 Source: %name-%version.tar
-Patch1: %name-%version-git_snapshot.patch
+# Patch1: %name-%version-git_snapshot.patch
 
-Requires: libpurple pidgin
+Requires: pidgin
+Requires: gst-plugins-nice
+Requires: gssntlmssp
 
 BuildRequires: intltool libxml2-devel
-# BuildRequires: libssl-devel
 BuildRequires: glib2-devel >= 2.28.0
 BuildRequires: libpurple-devel >= 2.8.0
 %{?_with_vv:BuildRequires: libnice-devel >= 0.1.0 gstreamer-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel gssntlmssp-devel}
 %{?_enable_telepathy:BuildRequires: libtelepathy-glib-devel >= 0.18.0 libdbus-glib-devel libgio-devel >= 2.32.0}
+# BuildRequires: libssl-devel
 BuildRequires: libnss-devel
 BuildRequires: libgmime-devel >= 2.4.16
 
@@ -43,6 +45,8 @@ Communicator client with Pidgin.
 %package -n telepathy-sipe
 Summary: Telepathy connection manager to connect to MS Office Communicator
 Group: Networking/Instant messaging
+Requires: gssntlmssp
+Requires: gst-plugins-nice
 
 %description -n telepathy-sipe
 A Telepathy connection manager that implements the extended version of
@@ -57,11 +61,9 @@ This package provides the protocol support for Telepathy clients.
 
 %prep
 %setup -q
-%patch1 -p1
+# %patch1 -p1
 
 %build
-%add_optflags -I%_includedir/krb5
-# export KRB5_CFLAGS=`krb5-config --cflags`
 %autoreconf
 %configure \
 	--disable-quality-check \
@@ -89,6 +91,9 @@ rm -f %buildroot%_libdir/purple-2/*.la
 %_datadir/telepathy/profiles/sipe.profile
 
 %changelog
+* Thu Nov 13 2014 Alexey Shabalin <shaba@altlinux.ru> 1.18.4-alt1
+- 1.18.4
+
 * Thu Aug 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.18.3-alt1
 - 1.18.3
 
