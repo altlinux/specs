@@ -12,7 +12,7 @@
 %def_enable test
 
 Name: perl-Catalyst-Plugin-Static-Simple
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: %m_name - Make serving static pages painless
@@ -49,6 +49,9 @@ without requiring a single line of code from you.
 %doc Changes
 
 %changelog
+* Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
