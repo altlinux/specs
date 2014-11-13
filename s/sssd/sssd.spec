@@ -1,6 +1,6 @@
 
 Name: sssd
-Version: 1.12.1
+Version: 1.12.2
 Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
@@ -435,7 +435,7 @@ unset CK_TIMEOUT_MULTIPLIER
 %attr(700,root,root) %dir %pipepath/private
 %attr(750,root,root) %dir %_var/log/%name
 %attr(700,root,root) %dir %_sysconfdir/sssd
-%ghost %attr(0600,root,root) %config(noreplace) %_sysconfdir/sssd/sssd.conf
+%attr(0600,root,root) %config(noreplace) %_sysconfdir/sssd/sssd.conf
 %dir %_sysconfdir/systemd/system/sssd.service.d
 %config(noreplace) %_sysconfdir/systemd/system/sssd.service.d/journal.conf
 %config(noreplace) %_sysconfdir/logrotate.d/sssd
@@ -573,6 +573,9 @@ unset CK_TIMEOUT_MULTIPLIER
 %_pkgconfigdir/wbclient_sssd.pc
 
 %changelog
+* Thu Nov 13 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.2-alt1
+- 1.12.2
+
 * Wed Sep 10 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.1-alt1
 - 1.12.1
 - add libwbclient package
