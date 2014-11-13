@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Test-LongString
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: Test-LongString - tests strings for equality, with more helpful failures
@@ -51,6 +51,9 @@ specific items in binary data, this is the module for you.
 %perl_vendor_privlib/Test/*
 
 %changelog
+* Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
