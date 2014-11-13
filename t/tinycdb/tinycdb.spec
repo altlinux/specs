@@ -1,17 +1,17 @@
 Name: tinycdb
-Version: 0.77
-Release: alt2
+Version: 0.78
+Release: alt1
 
 Summary: A package for maintenance of constant databases
 License: GPLv2+
 Group: Databases
 Url: http://www.corpit.ru/mjt/tinycdb.html
 
-# http://www.corpit.ru/mjt/tinycdb/tinycdb_%version.tar.gz
+# ftp://ftp.debian.org/debian/pool/main/t/tinycdb/tinycdb_%version.tar.gz
 Source: tinycdb-%version.tar
 
-Patch1: tinycdb-0.76-alt-makefile.patch
-Patch2: tinycdb-0.77-alt-warnings.patch
+Patch1: tinycdb-alt-makefile.patch
+Patch2: tinycdb-alt-warnings.patch
 
 Requires: libcdb = %version-%release
 
@@ -79,6 +79,7 @@ This package contains development static library.
 %build
 %def_enable Werror
 %make_build CFLAGS="%optflags -W -D_GNU_SOURCE" %{?_enable_static:static} shared
+sed 's/@VERSION@/%version/' debian/libcdb.pc > libcdb.pc
 
 %install
 %make_install \
@@ -95,6 +96,8 @@ This package contains development static library.
 	DESTDIR=%buildroot \
 	INSTALLPROG=cdb-shared \
 	CP='cp -p'
+
+install -Dpm644 libcdb.pc %buildroot%_pkgconfigdir/libcdb.pc
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot/%docdir
@@ -115,6 +118,7 @@ make %{?_enable_static:test} test-shared
 %_libdir/libcdb.so
 %_mandir/man[35]/*
 %_includedir/*
+%_pkgconfigdir/libcdb.pc
 
 %if_enabled static
 %files -n libcdb-devel-static
@@ -122,6 +126,9 @@ make %{?_enable_static:test} test-shared
 %endif
 
 %changelog
+* Thu Nov 13 2014 Dmitry V. Levin <ldv@altlinux.org> 0.78-alt1
+- Updated to 0.78.
+
 * Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.77-alt2
 - Fixed build with fresh glibc.
 
