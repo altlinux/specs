@@ -1,6 +1,6 @@
 Name: astra
-Version: 4.3
-Release: alt6
+Version: 4.4
+Release: alt1
 Summary: Astra is a highly-customizable software for processing IPTV streams
 Group: Networking/Other
 
@@ -31,17 +31,19 @@ Astra consists of the following components:
 pushd contrib
 ./ffmpeg.sh
 popd
-./configure.sh --bin=%_bindir/astra --scripts=%_sysconfdir/%name/scripts
+./configure.sh --bin=%_bindir/astra
 %make_build
 
 %install
 install -m 0755 -D %name %buildroot%_bindir/%name
 install -m 0755 -D scripts/analyze.lua %buildroot%_sysconfdir/%name/scripts/analyze.lua
+install -m 0755 -D scripts/base.lua %buildroot%_sysconfdir/%name/scripts/base.lua
 install -m 0755 -D scripts/dvbls.lua %buildroot%_sysconfdir/%name/scripts/dvbls.lua
-install -m 0755 -D scripts/xproxy.lua %buildroot%_sysconfdir/%name/scripts/xproxy.lua
+install -m 0755 -D scripts/relay.lua %buildroot%_sysconfdir/%name/scripts/relay.lua
+install -m 0755 -D scripts/stream.lua %buildroot%_sysconfdir/%name/scripts/stream.lua
 
 %files
-%doc COPYING README.md Astra.sublime-project scripts/stream.lua scripts/examples/*
+%doc COPYING README.md Astra.sublime-project scripts/examples/*
 #%config(noreplace) %_initdir/*
 #%config(noreplace) %_sysconfdir/sysconfig/*
 #%config %_sysconfdir/logrotate.d/*
@@ -50,6 +52,9 @@ install -m 0755 -D scripts/xproxy.lua %buildroot%_sysconfdir/%name/scripts/xprox
 %_bindir/*
 
 %changelog
+* Thu Nov 13 2014 Alexei Takaseev <taf@altlinux.org> 4.4-alt1
+- update to 4.4.76
+
 * Wed Oct 15 2014 Alexei Takaseev <taf@altlinux.org> 4.3-alt6
 - ffmpeg libs: disable sse3, ssse3, sse4, sse42
 - update to 4.3.118
