@@ -1,15 +1,16 @@
+%set_verify_elf_method unresolved=relaxed
+%define ver_major 0.6
 %def_disable static
 %def_disable gtk_doc
-%define api_ver 0.5
+%define api_ver %ver_major
 
 Name: libinfinity
-Version: 0.5.5
+Version: %ver_major.4
 Release: alt1
 
 Summary: A library to build collaborative text editors
 Group: System/Libraries
 License: LGPLv2.1+
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Url: http://gobby.0x539.de/
 
 Source: http://releases.0x539.de/%name/%name-%version.tar.gz
@@ -77,6 +78,7 @@ Gtk-based applications.
 Summary: Libraries and headers for %name (GTK+3 widgets)
 Group: Development/C
 Requires: %name-gtk3 = %version-%release
+Requires: %name-devel = %version-%release
 
 %description gtk3-devel
 libinfinity is library to build collaborative text editors. Changes to
@@ -120,7 +122,7 @@ This package contains development documentation for %name (GTK+3 widgets).
 
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -131,46 +133,63 @@ This package contains development documentation for %name (GTK+3 widgets).
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --output=%name.lang %name-%api_ver
 
 %files -n infinoted
 %_bindir/*
 %_man1dir/infinoted*
-%_libdir/infinoted-%api_ver/note-plugins/libinfd-note-plugin-text.so
+%dir %_libdir/infinoted-%api_ver
+%dir %_libdir/infinoted-%api_ver/plugins
+%_libdir/infinoted-%api_ver/plugins/libinfinoted-plugin-autosave.so
+%_libdir/infinoted-%api_ver/plugins/libinfinoted-plugin-certificate-auth.so
+%_libdir/infinoted-%api_ver/plugins/libinfinoted-plugin-directory-sync.so
+%_libdir/infinoted-%api_ver/plugins/libinfinoted-plugin-document-stream.so
+%_libdir/infinoted-%api_ver/plugins/libinfinoted-plugin-linekeeper.so
+%_libdir/infinoted-%api_ver/plugins/libinfinoted-plugin-logging.so
+%_libdir/infinoted-%api_ver/plugins/libinfinoted-plugin-note-chat.so
+%_libdir/infinoted-%api_ver/plugins/libinfinoted-plugin-note-text.so
+%_libdir/infinoted-%api_ver/plugins/libinfinoted-plugin-record.so
+%_libdir/infinoted-%api_ver/plugins/libinfinoted-plugin-traffic-logging.so
+%_libdir/infinoted-%api_ver/plugins/libinfinoted-plugin-transformation-protection.so
 
-%exclude %_libdir/infinoted-%api_ver/note-plugins/libinfd-note-plugin-text.la
+%exclude %_libdir/infinoted-%api_ver/plugins/*.la
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
 %_libdir/libinftext-%api_ver.so.*
-%doc AUTHORS NEWS README
+%_libdir/libinfinoted-plugin-manager-%api_ver.so.*
+%doc AUTHORS NEWS README*
 
 %files devel
 %_includedir/%name-%api_ver/
 %_includedir/libinftext-%api_ver/
+%_includedir/libinfinoted-plugin-manager-%api_ver/
 %_libdir/%name-%api_ver.so
 %_libdir/libinftext-%api_ver.so
+%_libdir/libinfinoted-plugin-manager-%api_ver.so
 %_pkgconfigdir/%name-%api_ver.pc
 %_pkgconfigdir/libinftext-%api_ver.pc
+%_pkgconfigdir/libinfinoted-plugin-manager-%api_ver.pc
 
 %files gtk3
-%_libdir/libinfgtk-%api_ver.so.*
-%_libdir/libinftextgtk-%api_ver.so.*
+%_libdir/libinfgtk3-%api_ver.so.*
+%_libdir/libinftextgtk3-%api_ver.so.*
 %_iconsdir/hicolor/*/*/*
 
 %files gtk3-devel
-%_includedir/libinfgtk-%api_ver/
-%_includedir/libinftextgtk-%api_ver/
-%_libdir/libinfgtk-%api_ver.so
-%_libdir/libinftextgtk-%api_ver.so
-%_pkgconfigdir/libinfgtk-%api_ver.pc
-%_pkgconfigdir/libinftextgtk-%api_ver.pc
+%_includedir/libinfgtk3-%api_ver/
+%_includedir/libinftextgtk3-%api_ver/
+%_libdir/libinfgtk3-%api_ver.so
+%_libdir/libinftextgtk3-%api_ver.so
+%_pkgconfigdir/libinfgtk3-%api_ver.pc
+%_pkgconfigdir/libinftextgtk3-%api_ver.pc
 
 %files devel-doc
 %_datadir/gtk-doc/html/%name-%api_ver/
 %_datadir/gtk-doc/html/libinftext-%api_ver/
+%_datadir/gtk-doc/html/libinfinoted-plugin-manager-%api_ver/
 
 %files gtk3-devel-doc
 %_datadir/gtk-doc/html/libinfgtk-%api_ver/
@@ -178,6 +197,9 @@ This package contains development documentation for %name (GTK+3 widgets).
 
 
 %changelog
+* Thu Nov 13 2014 Yuri N. Sedunov <aris@altlinux.org> 0.6.4-alt1
+- 0.6.4
+
 * Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5.5-alt1
 - 0.5.5
 
