@@ -2,7 +2,7 @@
 %def_enable    opengl
 
 Name:		gambas3
-Version:	3.6.0
+Version:	3.6.2
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -1366,6 +1366,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Fri Nov 14 2014 Andrey Cherepanov <cas@altlinux.org> 3.6.2-alt1
+- New version
+
 * Tue Oct 14 2014 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
 - New version
 - New subpackages: gambas3-gb-inotify and gambas3-gb-markdown
