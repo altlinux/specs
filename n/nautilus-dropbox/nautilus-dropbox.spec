@@ -1,5 +1,5 @@
 Name: nautilus-dropbox
-Version: 1.4.0
+Version: 1.6.2
 Release: alt1
 
 Summary: Dropbox integration for Nautilus
@@ -12,8 +12,6 @@ Url: http://www.dropbox.com/
 Packager: Maxim Zhukov <mzhukov@altlinux.org>
 
 Source: https://www.dropbox.com/download?dl=packages/%name-%version.tar
-Source1: dropbox.desktop
-Source2: dropbox-wrapper
 
 BuildRequires:glib2-devel >= 2.14.0
 BuildRequires:gtk+2-devel >= 2.12.0
@@ -59,9 +57,6 @@ The *dropbox* command provides a command line interface to the Dropbox.
 %install
 %makeinstall_std
 
-install -Dm0644 %SOURCE1 %buildroot%_desktopdir/dropbox.desktop
-install -Dm755 %SOURCE2 %buildroot%_bindir/dropbox-wrapper
-
 %files
 %doc AUTHORS COPYING ChangeLog NEWS README
 %_libdir/nautilus/extensions-*/libnautilus-dropbox.so
@@ -76,6 +71,10 @@ install -Dm755 %SOURCE2 %buildroot%_bindir/dropbox-wrapper
 %_man1dir/*.1*
 
 %changelog
+* Fri Nov 14 2014 Mikhail Efremov <sem@altlinux.org> 1.6.2-alt1
+- Drop dropbox-wrapper.
+- Updated to 1.6.2 (closes: #30278).
+
 * Sat Apr 12 2014 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0 (with rpmrb script)
 
