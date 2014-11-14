@@ -21,11 +21,11 @@
 
 %define major 4
 %define minor 11
-%define bugfix 13
+%define bugfix 14
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -63,7 +63,7 @@ Patch29: kde-workspace-4.11.1-kdm-logind-multiseat.patch
 Patch850: kubuntu_11_fix_root_only_kcms.diff
 Patch851: kubuntu_always_show_kickoff_subtext.diff
 # ROSA
-Patch900: kde-workspace-4.14.2-alt-screenlocker-background.patch
+Patch900: kde-workspace-4.11.13-alt-screenlocker-background.patch
 # ALT
 Patch1000: kdebase-workspace-4.11.1-alt-startkde.patch
 Patch1001: kdebase-workspace-4.6.0-alt-kdm-confdir.patch
@@ -953,6 +953,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Nov 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.14-alt1
+- new version
+
 * Wed Oct 29 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.13-alt2
 - set screen locker wallpaper from desktop wallpaper
 
