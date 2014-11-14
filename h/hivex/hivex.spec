@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: hivex
-Version: 1.3.10
+Version: 1.3.11
 Release: alt1
 Summary: Read and write Windows Registry binary hive files
 
@@ -20,7 +20,7 @@ Patch1: %name-%version-%release.patch
 BuildRequires: perl-Test-Pod
 BuildRequires: perl-Test-Pod-Coverage
 BuildRequires: perl-libintl
-%{?_enable_ocaml:BuildRequires: ocaml findlib ocamldoc ocamlbuild}
+%{?_enable_ocaml:BuildRequires: ocaml4 ocaml4-findlib ocaml4-ocamldoc ocaml4-ocamlbuild}
 %{?_enable_ruby:BuildRequires: ruby rpm-build-ruby ruby-rake ruby-mkrf libruby-devel rubygems}
 %{?_enable_perl:BuildRequires: perl(Test/More.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Stringy.pm)}
 %{?_enable_python:BuildRequires: python-devel}
@@ -228,6 +228,10 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Fri Nov 14 2014 Alexey Shabalin <shaba@altlinux.ru> 1.3.11-alt1
+- 1.3.11
+- build with ocaml4
+
 * Tue Sep 02 2014 Alexey Shabalin <shaba@altlinux.ru> 1.3.10-alt1
 - 1.3.10
 
