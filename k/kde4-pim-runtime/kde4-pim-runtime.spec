@@ -4,7 +4,7 @@
 %define rname kdepim-runtime
 %define major 4
 %define minor 14
-%define bugfix 2
+%define bugfix 3
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -147,6 +147,7 @@ based on kdepim.
 
 %build
 %K4build \
+    -DKDE4_BUILD_TESTS=OFF \
     -DKDE4_ENABLE_FPIE:BOOL=ON \
     -DKDEPIM_BUILD_DESKTOP:BOOL=ON \
     -DKDEPIM_BUILD_MOBILE:BOOL=ON \
@@ -232,6 +233,9 @@ based on kdepim.
 
 
 %changelog
+* Fri Nov 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
+- new version
+
 * Tue Oct 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.2-alt1
 - new version
 
