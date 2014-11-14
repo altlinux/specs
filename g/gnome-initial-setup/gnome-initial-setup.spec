@@ -4,7 +4,7 @@
 %define _localstatedir %_var
 
 Name: gnome-initial-setup
-Version: %ver_major.2
+Version: %ver_major.2.1
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -77,6 +77,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Fri Nov 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2.1-alt1
+- 3.14.2.1
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 
