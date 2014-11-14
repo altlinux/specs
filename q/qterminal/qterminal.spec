@@ -1,17 +1,17 @@
 Name: qterminal
-Version: 0.4.0
+Version: 0.6.0
 Release: alt1
 
 Summary: QT-based multitab terminal emulator
 License: GPL
 Group: Terminals
 
-Url: http://gitorious.org/qterminal
+Url: http://github.com/qterminal/qterminal
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++, cmake, qt4-devel
-BuildRequires: libqtermwidget-devel >= 0.4.0
+BuildRequires: libqtermwidget-devel >= 0.6.0
 
 %description
 QT-based multitab terminal emulator based on QTermWidget.
@@ -26,14 +26,14 @@ Actually I didn't pay much effort for its improvement, I've just put it
 into tab widget, add basic config and some useful actions. Seems that's
 pretty much enough for now.
 
-0.4.0 is a friendly fork, the original project is still available
+0.4.0+ is a friendly fork, the original project is still available
 at http://qterminal.sourceforge.net/
 
 %prep
 %setup
 
 %build
-%cmake -DQTERMWIDGET_PATH_SHARE=%_datadir/qtermwidget
+%cmake -DUSE_SYSTEM_QXT=0 -DQTERMWIDGET_PATH_SHARE=%_datadir/qtermwidget
 %make_build -C BUILD
 
 %install
@@ -47,7 +47,15 @@ at http://qterminal.sourceforge.net/
 %_desktopdir/*.desktop
 %_pixmapsdir/%name.png
 
+# TODO:
+# - package system libqxt (lots of macros missing in rpm-macros-qt4)
+
 %changelog
+* Fri Nov 14 2014 Michael Shigorin <mike@altlinux.org> 0.6.0-alt1
+- 0.6.0 (closes: #30468)
+- updated Url:
+- use bundled libqxt
+
 * Wed Mar 07 2012 Michael Shigorin <mike@altlinux.org> 0.4.0-alt1
 - moved to gitorius 0.4.0 fork
 - spec cleanup

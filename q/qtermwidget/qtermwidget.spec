@@ -1,12 +1,12 @@
 Name: qtermwidget
-Version: 0.4.0
+Version: 0.6.0
 Release: alt1
 
 Summary: unicode-enabled, embeddable QT4 terminal widget
 License: GPL
 Group: Terminals
 
-Url: http://gitorious.org/qtermwidget
+Url: http://github.com/qterminal/qtermwidget
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -24,7 +24,7 @@ Of course I`m aware about embedding abilities of original
 Konsole, but once I had Qt without KDE, and it was a serious
 problem.
 
-0.4.0 is a friendly fork, the original project is still available
+0.4.0+ is a friendly fork, the original project is still available
 at http://qtermwidget.sourceforge.net/
 
 %package data
@@ -78,18 +78,24 @@ This package contains the development headers for the library.
 %files
 
 %files data
-%_datadir/%name
+%_datadir/%{name}*
 
 %files -n lib%name
 %_libdir/*.so.*
 
 %files -n lib%name-devel
 %doc AUTHORS COPYING README
-%_includedir/*.h
+%_includedir/*
 %_libdir/*.so
-%_libdir/qt4/plugins/designer/lib%{name}plugin.so
+%_libdir/qt4/plugins/designer/lib%{name}*plugin.so
+%_pkgconfigdir/*.pc
+%_datadir/cmake/*/
 
 %changelog
+* Fri Nov 14 2014 Michael Shigorin <mike@altlinux.org> 0.6.0-alt1
+- 0.6.0 (see also #30468)
+- updated Url:
+
 * Wed Mar 07 2012 Michael Shigorin <mike@altlinux.org> 0.4.0-alt1
 - initial build (loosely based on qterminal.spec and upstream one)
 
