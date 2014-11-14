@@ -1,11 +1,17 @@
 Name: stardict
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: StarDict dictionary
-License: GPLv3+
+# The entire source code is GPLv3+ except
+# dict/src/lib/ctype-{uca,utf8}.cpp which is GPLv2+
+# dict/src/lib/ctype-uca.cpp which is GPLv2+
+# dict/src/eggaccelerators.{h,cpp which is GPLv2+
+# dict/stardict-plugins/stardict-wordnet-plugin/tenis.h is CPL
+# refer to README
+License: GPLv3+ and GPLv2+ and CPL
 Group: System/Internationalization
-Url: http://code.google.com/p/stardict-3/
+URL: http://stardict-4.sourceforge.net
 
 # http://stardict-3.googlecode.com/files/%name-%version.tar.bz2
 Source: %name-%version.tar
@@ -15,12 +21,10 @@ Source5: docklet_stop.png
 Source6: slovnyktodict.awk
 Source7: mueller2stardict.sh
 
-Patch1: stardict-hg597.patch
-Patch2: stardict-hg598.patch
-Patch3: stardict-3.0.3-alt-dsl2dict.patch
-Patch4: stardict-3.0.3-alt-linkage.patch
-Patch5: stardict-3.0.4-alt-desktop.patch
-Patch6: stardict-3.0.4-alt-tabfile.patch
+Patch1: stardict-3.0.3-alt-dsl2dict.patch
+Patch2: stardict-3.0.3-alt-linkage.patch
+Patch3: stardict-3.0.4-alt-desktop.patch
+Patch4: stardict-3.0.5-alt-tabfile.patch
 
 Provides: %name-common = %version
 Obsoletes: %name-common < %version
@@ -97,8 +101,6 @@ sed -i '/AM_GCONF_SOURCE_2/d' dict/configure.ac
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
 install -pm644 %_sourcedir/docklet_*.png dict/src/pixmaps/
 
 %build
@@ -137,7 +139,7 @@ install -pm755 %_sourcedir/{slovnyktodict.awk,mueller2stardict.sh} \
 
 hardlink -cv %buildroot%_datadir
 
-%set_verify_elf_method strict
+%set_verify_elf_method strict,lint=relaxed
 
 %files -f %name.lang
 %_bindir/%name
@@ -177,6 +179,9 @@ hardlink -cv %buildroot%_datadir
 %endif
 
 %changelog
+* Fri Nov 14 2014 Dmitry V. Levin <ldv@altlinux.org> 3.0.5-alt1
+- 3.0.4 -> 3.0.5.
+
 * Fri Jan 10 2014 Dmitry V. Levin <ldv@altlinux.org> 3.0.4-alt1
 - 3.0.3 -> 3.0.4 (closes: #28649).
 - Updated ru.po (closes: #29035).
