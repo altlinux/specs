@@ -1,6 +1,6 @@
 Name: xmms-in-modplug
 Version: 2.05
-Release: alt4.qa1
+Release: alt5
 
 Summary: Xmms plugin based on libmodplug library.
 License: GPL
@@ -10,7 +10,8 @@ Group: Sound
 
 Url: http://modplug-xmms.sourceforge.net
 Source: http://dl.sf.net/modplug-xmms/%_progname-%version.tar.gz
-Patch: modplugxmms-2.05-alt-gcc43.patch
+Patch0: modplugxmms-2.05-alt-gcc43.patch
+Patch1: modplugxmms-2.05-alt-include.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Obsoletes: %_progname
@@ -35,7 +36,8 @@ This package contains console module player based on libmodplug library
 
 %prep
 %setup -n %_progname-%version
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %configure
@@ -55,6 +57,9 @@ This package contains console module player based on libmodplug library
 %_bindir/*
 
 %changelog
+* Fri Nov 14 2014 Michael Shigorin <mike@altlinux.org> 2.05-alt5
+- fixed build against current libmodplug
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.05-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
