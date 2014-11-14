@@ -1,6 +1,6 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.248
-%define module_release alt4
+%define module_release alt5
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
@@ -79,6 +79,8 @@ cat > %buildroot/%_sysconfdir/modprobe.d/blacklist-bcm.conf << __EOF__
 blacklist bcm43xx
 blacklist ssb
 blacklist b43
+__EOF__
+cat > %buildroot/%_sysconfdir/modprobe.d/blacklist-bcm2.conf << __EOF__
 blacklist b44
 blacklist b43legacy
 blacklist bcma
@@ -89,10 +91,14 @@ __EOF__
 %files
 %module_dir
 %config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm.conf
+%config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm2.conf
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Nov 14 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt5
+- blacklist split
 
 * Tue Oct 21 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt4
 - build with kernel 3.17 fixed
