@@ -1,6 +1,6 @@
 
 Name: poppler-data
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 
 Group: Publishing
@@ -11,7 +11,7 @@ License: GPLv2 / MIT / ADOBE
 BuildArch: noarch
 
 Source: %name-%version.tar
-
+Patch1: alt-pkgconfig.patch
 
 %description
 This package consists of encoding files for use with poppler.  The
@@ -24,11 +24,13 @@ and licensed much more strictly, and thus distributed separately.
 
 %prep
 %setup -q
+%patch1 -p1
+rm -rf poppler-data.pc
 #__autoreconf
 
 
 %build
-
+%make_build prefix=%prefix
 
 %install
 %makeinstall
@@ -37,8 +39,12 @@ and licensed much more strictly, and thus distributed separately.
 %files
 %doc COPYING* README
 %_datadir/poppler
+%_datadir/pkgconfig/%name.pc
 
 %changelog
+* Fri Nov 14 2014 Sergey V Turchin <zerg@altlinux.org> 0.4.7-alt1
+- new version
+
 * Wed Feb 13 2013 Sergey V Turchin <zerg@altlinux.org> 0.4.6-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -29,18 +29,18 @@
 %endif
 
 %define rname poppler
-%define somajor 46
+%define somajor 47
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 26
-%define bugfix 4
+%define minor 28
+%define bugfix 1
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -82,7 +82,7 @@ BuildRequires: glib2-devel
 BuildRequires: gcc-c++ glibc-devel libcurl-devel libgtk+2-devel zlib-devel
 BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms2-devel libopenjpeg-devel libtiff-devel
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
-BuildRequires: libXt-devel
+BuildRequires: libXt-devel poppler-data
 
 %description
 Poppler is a fork of the xpdf PDF viewer developed by Derek Noonburg
@@ -395,8 +395,8 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
-* Fri Nov 14 2014 Sergey V Turchin <zerg@altlinux.org> 0.26.4-alt2
-- build compat libraries
+* Fri Nov 14 2014 Sergey V Turchin <zerg@altlinux.org> 0.28.1-alt1
+- new version
 
 * Mon Sep 15 2014 Sergey V Turchin <zerg@altlinux.org> 0.26.4-alt1
 - new version
