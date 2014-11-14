@@ -2,7 +2,7 @@
 %define ver_major 3.14
 
 Name: gnome-tweak-tool
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -21,7 +21,7 @@ Patch: gnome-tweak-tool-3.8.0-alt-desktop.patch
 BuildArch: noarch
 Requires: gnome-shell >= %ver_major
 
-BuildRequires: GConf gnome-common intltool libgio-devel libgtk+3-devel >= 3.9.10
+BuildRequires: GConf gnome-common intltool libgio-devel libgtk+3-devel >= 3.12.0
 BuildRequires: gsettings-desktop-schemas-devel >= 3.4.0
 BuildRequires: python-module-pygobject3-devel >= 3.2.1
 
@@ -68,6 +68,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Nov 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
+- 3.14.2
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
