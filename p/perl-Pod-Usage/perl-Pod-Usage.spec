@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.64
-Release: alt1
+Release: alt2
 Summary: Pod::Usage extracts POD documentation and shows usage information
 Group: Development/Perl
 License: perl
@@ -16,6 +16,7 @@ Url: %CPAN %module_name
 
 Source: http://www.cpan.org/authors/id/M/MA/MAREKR/Pod-Usage-%{version}.tar.gz
 BuildArch: noarch
+Conflicts: perl-Pod-Parser < 1.60
 
 %description
 %summary
@@ -36,6 +37,9 @@ BuildArch: noarch
 %_man1dir/*
 
 %changelog
+* Fri Nov 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.64-alt2
+- added explicit Conflict to perl-Pod-Parser < 1.60 (closes: #30470)
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.64-alt1
 - automated CPAN update
 
