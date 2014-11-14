@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.10
-Release:	alt14
+Release:	alt15
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -139,6 +139,9 @@ fi
 %files full
 
 %changelog
+* Fri Nov 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt15
+- l2tp support added
+
 * Thu Oct 02 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt14
 - use '--release' option to stop dhcpcd (closes: #30369)
 
