@@ -1,7 +1,6 @@
-%set_automake_version 1.11
 
-%define ver_major 1.4
-%define libsynthesis_ver 3.4.0.47.1
+%define ver_major 1.5
+%define libsynthesis_ver 3.4.0.47.5
 %define _libexecdir %_prefix/libexec
 
 %def_enable libsoup
@@ -20,10 +19,12 @@
 %def_disable qtcontacts
 
 #SySync_ConsolePrintf is expected by libsmltk and has to be provided by caller
-%set_verify_elf_skiplist %_libdir/libsmltk.so.0.6.0
+%add_verify_elf_skiplist %_libdir/libsmltk.so.0.6.0
+
+%add_verify_elf_skiplist %_libdir/libgdbussyncevo.so.0.0.0
 
 Name: syncevolution
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 Summary: SyncEvolution synchronizes personal information management (PIM) data like contacts, calenders, tasks and memos
 
@@ -200,6 +201,9 @@ rm -f %buildroot%_libdir/*/*/*.{a,la}
 %_iconsdir/hicolor/48x48/apps/sync.png
 
 %changelog
+* Fri Nov 14 2014 Alexey Shabalin <shaba@altlinux.ru> 1.5-alt1
+- 1.5
+
 * Mon Apr 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.4.1-alt1
 - 1.4.1
 
