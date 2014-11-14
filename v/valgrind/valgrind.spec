@@ -1,6 +1,6 @@
 Name: valgrind
-Version: 3.8.1
-Release: alt2
+Version: 3.10.0
+Release: alt1
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
 License: GPLv2+
@@ -13,32 +13,20 @@ Source: %name-%cvsdate.tar
 Source: http://www.valgrind.org/downloads/%name-%version.tar
 %endif
 
-Patch1: valgrind-3.8.1-rh-cachegrind-improvements.patch
-Patch2: valgrind-3.8.1-rh-openat.patch
-Patch3: valgrind-3.8.1-rh-helgrind-race-supp.patch
-Patch4: valgrind-3.8.1-rh-stat_h.patch
-Patch5: valgrind-3.8.1-rh-config_h.patch
-Patch6: valgrind-3.8.1-rh-capget.patch
-Patch7: valgrind-3.8.1-rh-pie.patch
-Patch8: valgrind-3.8.1-alt-arm.patch
-Patch9: valgrind-3.8.1-rh-ldso-supp.patch
-Patch10: valgrind-3.8.1-rh-x86-backtrace.patch
-Patch11: valgrind-3.8.1-rh-find-buildid.patch
-Patch12: valgrind-3.8.1-rh-abbrev-parsing.patch
-Patch13: valgrind-3.8.1-rh-cfi_dw_ops.patch
-Patch14: valgrind-3.8.1-rh-gdbserver_tests-mcinvoke-ppc64.patch
-Patch15: valgrind-3.8.1-rh-x86_amd64_features-avx.patch
-Patch16: valgrind-3.8.1-rh-gdbserver_tests-syscall-template-source.patch
-Patch17: valgrind-3.8.1-rh-overlap_memcpy_filter.patch
-Patch21: valgrind-3.8.1-rh-avx2-bmi-fma.patch
-Patch22: valgrind-3.8.1-rh-bmi-conf-check.patch
-Patch23: valgrind-3.8.1-rh-memcheck-mc_translate-Iop_8HLto16.patch
-Patch24: valgrind-3.8.1-rh-avx2-prereq.patch
-Patch25: valgrind-3.8.1-rh-glibc-2.17.patch
+Patch0: valgrind-alt-arm.patch
+Patch1: valgrind-rh-cachegrind-improvements.patch
+Patch2: valgrind-rh-helgrind-race-supp.patch
+Patch3: valgrind-rh-stat_h.patch
+Patch4: valgrind-rh-ldso-supp.patch
+Patch6: valgrind-rh-aarch64-syscalls.patch
+Patch7: valgrind-rh-aarch64-dmb-sy.patch
+Patch8: valgrind-rh-aarch64-frint.patch
+Patch9: valgrind-rh-aarch64-fcvtmu.patch
+Patch10:valgrind-rh-aarch64-fcvta.patch
 
 # valgrind needs /proc to work
 Requires: /proc
-%{?!_disable_check:BuildRequires: /proc}
+%{?!_disable_check:BuildRequires: /proc gdb}
 
 # Automatically added by buildreq on Fri Dec 12 2008
 BuildRequires: gcc-c++ libX11-devel
@@ -92,31 +80,17 @@ needed to compile Valgrind tools separately from the Valgrind core.
 %prep
 %setup %{?cvsdate:-n %name}
 
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+#patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-
-chmod a+x memcheck/tests/filter_memcpy
-touch none/tests/amd64/{avx2-1,fma,bmi}.stderr.exp
 
 %build
 #%{?cvsdate:./autogen.sh}
@@ -152,7 +126,11 @@ if [ ! -r /proc/self/exe ]; then
 	echo '/proc/self/exe is not available, regression test SKIPPED' >&2
 	exit
 fi
-%make_build check ||:
+
+# Make sure a basic binary runs.
+./vg-in-place /bin/echo
+
+%make_build CFLAGS= check ||:
 
 # Ensure there are no unexpected file descriptors open,
 # the testsuite otherwise fails.
@@ -170,10 +148,11 @@ int main(int argc, char **argv)
 	return 1;
 }
 EOF
-%__cc %optflags -o close_fds close_fds.c
+gcc %optflags -o close_fds close_fds.c
 
 echo "===============TESTING==================="
 ./close_fds make regtest ||:
+find -type f -name '*.diff' |sort
 echo "===============END TESTING==============="
 
 %files
@@ -203,6 +182,10 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Fri Nov 14 2014 Dmitry V. Levin <ldv@altlinux.org> 3.10.0-alt1
+- Updated to 3.10.0.
+- Merged with valgrind-3.10.0-5 from Fedora.
+
 * Mon Mar 25 2013 Dmitry V. Levin <ldv@altlinux.org> 3.8.1-alt2
 - Fixed build with glibc 2.17.
 
