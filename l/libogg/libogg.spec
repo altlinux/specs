@@ -1,5 +1,5 @@
 Name: libogg
-Version: 1.3.0
+Version: 1.3.2
 Release: alt1
 
 Summary: Ogg Bitstream Library
@@ -55,21 +55,21 @@ statically linked libogg-based software.
 
 %install
 %makeinstall_std
-%define docdir %_docdir/%name-%version
+%define docdir %_docdir/%name
 install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 
 %files
 %_libdir/*.so.*
-%dir %docdir
-%docdir/[A-Z]*
+%dir %docdir/
+%docdir/[AC]*
 
 %files devel
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
-%_datadir/aclocal/*
-%dir %docdir
-%docdir/[a-z]*
+%_aclocaldir/*
+%docdir/
+%exclude %docdir/[AC]*
 
 %if_enabled static
 %files devel-static
@@ -77,6 +77,9 @@ install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 %endif
 
 %changelog
+* Sat Nov 15 2014 Dmitry V. Levin <ldv@altlinux.org> 1.3.2-alt1
+- Updated to 1.3.2.
+
 * Mon Jul 23 2012 L.A. Kostis <lakostis@altlinux.ru> 1.3.0-alt1
 - Updated to 1.3.0.
 
