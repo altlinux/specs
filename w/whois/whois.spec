@@ -1,5 +1,5 @@
 Name: whois
-Version: 5.0.26
+Version: 5.2.2
 Release: alt1
 
 Summary: Intelligent WHOIS client
@@ -7,12 +7,10 @@ License: GPLv2+
 Group: Networking/Other
 Url: http://www.linux.it/~md/software
 
-# ftp://ftp.debian.org/debian/pool/main/w/whois/whois_%version.tar.xz
-Source: whois_%version.tar
+# git://git.altlinux.org/gears/w/whois.git
+Source: %name-%version-%release.tar
 
-Patch: whois-%version-%release.patch
-
-BuildRequires: libidn-devel
+BuildRequires: libidn-devel perl-autodie
 
 %description
 This package provides a commandline client for the WHOIS (RFC 3912)
@@ -23,29 +21,30 @@ This version of the WHOIS client tries to guess the right server to ask
 for the specified object.
 
 %prep
-%setup
-%patch -p1
-sed -n 's/^\([a-z][^:]\+\.h\):.*\.pl.*/\1/p' Makefile |
-	xargs -r rm -fv -- # these headers have to be regenerated
-bzip2 -9k debian/changelog
+%setup -n %name-%version-%release
+gzip -9k debian/changelog
 
 %build
 %make_build whois pos \
-	CFLAGS='%optflags' HAVE_LIBIDN=1 HAVE_ICONV=1 CONFIG_FILE=/etc/whois.conf
+	CFLAGS='%optflags' CONFIG_FILE=/etc/whois.conf \
+	HAVE_LIBIDN=1 HAVE_ICONV=1
 
 %install
 %make_install install-whois install-pos BASEDIR=%buildroot prefix=%prefix
-install -pDm644 whois.conf %buildroot/etc/whois.conf
+install -Dpm644 whois.conf %buildroot/etc/whois.conf
 
 %find_lang %name
 
 %files -f %name.lang
-%doc README debian/changelog.bz2 debian/copyright
+%doc README debian/changelog.gz debian/copyright
 %_bindir/*
 %_mandir/man?/*
 %config(noreplace) /etc/whois.conf
 
 %changelog
+* Sat Nov 15 2014 Dmitry V. Levin <ldv@altlinux.org> 5.2.2-alt1
+- Updated to 5.2.2.
+
 * Sat Sep 21 2013 Dmitry V. Levin <ldv@altlinux.org> 5.0.26-alt1
 - Updated to 5.0.26.
 
