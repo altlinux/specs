@@ -1,5 +1,5 @@
 Name: diffstat
-Version: 1.57
+Version: 1.59
 Release: alt1
 
 Summary: An utility which provides statistics based on the output of diff
@@ -33,9 +33,12 @@ to provide a summary of the changes in large, complex patch files.
 %files
 %_bindir/*
 %_mandir/man?/*
-%doc CHANGES README
+%doc CHANGES COPYING README
 
 %changelog
+* Sat Nov 15 2014 Dmitry V. Levin <ldv@altlinux.org> 1.59-alt1
+- Updated to 1.59.
+
 * Fri Apr 26 2013 Dmitry V. Levin <ldv@altlinux.org> 1.57-alt1
 - Updated to 1.57.
 

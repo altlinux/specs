@@ -1,5 +1,5 @@
 Name: hdparm
-Version: 9.43
+Version: 9.45
 Release: alt1
 
 Summary: An utility for displaying and/or setting hard disk parameters
@@ -23,7 +23,7 @@ rm contrib/fix_standby
 
 %build
 export CFLAGS='%optflags'
-%make_build CC=%__cc LDFLAGS= STRIP=:
+%make_build CC=gcc LDFLAGS= STRIP=:
 
 %install
 install -pD -m755 hdparm %buildroot/sbin/hdparm
@@ -39,6 +39,9 @@ mkdir -p %buildroot%_sysconfdir/sysconfig/harddisk
 %doc *.lsm Changelog LICENSE.TXT README* contrib wiper
 
 %changelog
+* Sat Nov 15 2014 Dmitry V. Levin <ldv@altlinux.org> 9.45-alt1
+- Updated to 9.45.
+
 * Fri Apr 26 2013 Dmitry V. Levin <ldv@altlinux.org> 9.43-alt1
 - Updated to 9.43.
 
