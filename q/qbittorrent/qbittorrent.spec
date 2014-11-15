@@ -1,16 +1,17 @@
 Name: qbittorrent
-Version: 3.1.10
+Version: 3.1.11
 Epoch: 1
 Release: alt1
 
 Summary: qBittorrent is a bittorrent client written in C++ / Qt4 using the good libtorrent library.
-Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написаный на C++ / Qt4, использующий библиотеку libtorrent.
-License: GPL
+Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написанный на C++ / Qt4, использующий библиотеку libtorrent.
+Summary(uk_UA.UTF-8): qBittorrent - bittorrent-клієнт, написаний на C++ / Qt4, використовує бібліотеку libtorrent.
+License: GPLv2
 Group: Networking/File transfer
 Url: http://qbittorrent.org
 
 Packager: Alexey Morsov <swi@altlinux.ru>
-Source: %name-%version.tar
+Source: %name-%version.tar.xz
 Patch: qbittorrent-2.9.3-alt-glibc-2.16.patch
 
 %define libtorrent_version 2:0.15.9-alt0.1.svn6292
@@ -35,12 +36,19 @@ clients. The Author is Christophe Dumez, French Student in
 computer science (IT).
 
 %description -l ru_RU.UTF8
-qBittorrent - клиент bittorrent написаный на C++ / Qt4, использующий 
+qBittorrent - клиент bittorrent написанный на C++ / Qt4, использующий 
 библиотеку libtorrent-rasterbar (Arvid Nordberg). qBittorrent свободное 
-ПО с открытм исходным кодом, распространяющийся под лицензией GNU GPL. 
-qBittorrent стремиться быть хорошей альтернативой всем другим bittorrent 
+ПО с открытым исходным кодом, распространяющийся под лицензией GNU GPL. 
+qBittorrent стремится быть хорошей альтернативой всем другим bittorrent 
 клиентам. Автор Christophe Dumez, французский студент в области IT.
-   
+
+%description -l uk_UA.UTF8
+qBittorrent - клієнт bittorrent, написаний на C++ / Qt4, використовує
+бібліотеку libtorrent-rasterbar (Arvid Nordberg). qBittorrent є вільне
+ПЗ з відкритим вихідним кодом, розповсюджується під ліцензією GNU GPL.
+qBittorrent прагне бути хорошою альтернативою всім іншим bittorrent
+клієнтам. Автор Christophe Dumez, французьський студент в області IT.
+
 %package nox
 Summary: qbittorrent version without GUI (WebUI version)
 Group: Networking/File transfer
@@ -54,6 +62,11 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 Веб-интерфейс для qbittorrent
 
 По умолчанию открывается порт 8080 с логином/паролем admin/adminadmin
+
+%description -l uk_UA.UTF8 nox
+Веб-інтерфейс для qbittorrent
+
+За замовчанням доступний на порту 8080 з логіном/паролем admin/adminadmin
 
 %prep
 %setup
@@ -92,6 +105,9 @@ make clean
 %_datadir/icons/hicolor/*/*/*
 
 %changelog
+* Sat Nov 15 2014 Motsyo Gennadi <drool@altlinux.ru> 1:3.1.11-alt1
+- 3.1.11
+
 * Tue Oct 07 2014 Motsyo Gennadi <drool@altlinux.ru> 1:3.1.10-alt1
 - 3.1.10 (ALT #30384)
 
