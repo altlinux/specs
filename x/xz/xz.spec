@@ -1,5 +1,5 @@
 Name: xz
-Version: 5.0.5
+Version: 5.0.7
 Release: alt1
 
 Summary: LZMA/XZ compression programs
@@ -69,18 +69,12 @@ rm src/liblzma/*.lo src/liblzma/liblzma.la
 %make_build -C src/liblzma CFLAGS="$cflags -fprofile-generate %{!?_enable_debug:-O3}" liblzma_la-lzma_decoder.lo
 %make_build -C src/liblzma CFLAGS="$cflags -fprofile-generate"
 ./libtool --tag=CC --mode=link gcc %optflags -fprofile-generate -static src/xz/xz-*.o src/liblzma/liblzma.la -o xz.static
-tar cf - . |./src/xz/xz -0 |./xz.static -d >/dev/null
-tar cf - . |./src/xz/xz -2 |./xz.static -d >/dev/null
-tar cf - . |./src/xz/xz -6 |./xz.static -d >/dev/null
-tar cf - . |./xz.static -0 |./src/xz/xz -d >/dev/null
-tar cf - . |./xz.static -2 |./src/xz/xz -d >/dev/null
-tar cf - . |./xz.static -6 |./src/xz/xz -d >/dev/null
-tar cf - . |./src/xz/xz --format=lzma -0 |./xz.static -d >/dev/null
-tar cf - . |./src/xz/xz --format=lzma -2 |./xz.static -d >/dev/null
-tar cf - . |./src/xz/xz --format=lzma -6 |./xz.static -d >/dev/null
-tar cf - . |./xz.static --format=lzma -0 |./src/xz/xz -d >/dev/null
-tar cf - . |./xz.static --format=lzma -2 |./src/xz/xz -d >/dev/null
-tar cf - . |./xz.static --format=lzma -6 |./src/xz/xz -d >/dev/null
+for i in 0 2 6; do
+	tar cf - . |./src/xz/xz -$i |./xz.static -d >/dev/null
+	tar cf - . |./xz.static -$i |./src/xz/xz -d >/dev/null
+	tar cf - . |./src/xz/xz --format=lzma -$i |./xz.static -d >/dev/null
+	tar cf - . |./xz.static --format=lzma -$i |./src/xz/xz -d >/dev/null
+done
 rm src/liblzma/*.lo src/liblzma/liblzma.la
 %make_build -C src/liblzma CFLAGS="$cflags -fprofile-use %{!?_enable_debug:-O3}" liblzma_la-lzma_decoder.lo
 %make_build -C src/liblzma CFLAGS="$cflags -fprofile-use"
@@ -128,6 +122,9 @@ make -k check
 %_libdir/liblzma.a
 
 %changelog
+* Sat Nov 15 2014 Dmitry V. Levin <ldv@altlinux.org> 5.0.7-alt1
+- 5.0.5 -> 5.0.7.
+
 * Sun Sep 29 2013 Dmitry V. Levin <ldv@altlinux.org> 5.0.5-alt1
 - Updated to 5.0.5 (closes: #29406).
 
