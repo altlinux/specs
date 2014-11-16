@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6
-Release: alt1.dev0.git20141111
+Version: 0.8
+Release: alt1.dev0.git20141115
 Summary: A Bower-centric static file server for WSGI
 License: BSD
 Group: Development/Python
@@ -162,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.dev0.git20141115
+- Version 0.8.dev0
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.dev0.git20141111
 - Initial build for Sisyphus
 
