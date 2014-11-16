@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.71.0
-Release: alt1.git20141110
+Version: 0.73.0
+Release: alt1.git20141112
 Summary: The low-level, core functionality of boto 3
 License: ASLv2.0
 Group: Development/Python
@@ -12,6 +12,7 @@ Url: https://pypi.python.org/pypi/botocore/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/boto/botocore.git
+# branch: develop
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -140,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.73.0-alt1.git20141112
+- Version 0.73.0
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.71.0-alt1.git20141110
 - Initial build for Sisyphus
 
