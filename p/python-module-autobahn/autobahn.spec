@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.3
-Release: alt1.git20141110
+Version: 0.9.3.3
+Release: alt1.git20141115
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -25,6 +25,7 @@ BuildPreReq: python-module-sphinx-devel scons python-module-boto
 BuildPreReq: python-module-taschenmesser python-module-scour
 BuildPreReq: python-module-sphinx-bootstrap-theme
 BuildPreReq: python-module-sphinxcontrib-spelling libenchant
+BuildPreReq: inkscape
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
@@ -165,6 +166,7 @@ popd
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/*/test
+%exclude %python_sitelibdir/twisted/plugins/__init__.py*
 
 %files tests
 %python_sitelibdir/*/*/test
@@ -180,12 +182,16 @@ popd
 %doc *.md
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/*/test
+%exclude %python3_sitelibdir/twisted/plugins/__init__.py
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/test
 %endif
 
 %changelog
+* Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3.3-alt1.git20141115
+- Version 0.9.3-3
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1.git20141110
 - Version 0.9.3
 
