@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.27.7
-Release: alt1.git20141103
+Version: 0.27.8
+Release: alt1.git20141113
 Summary: Various utility functions for SQLAlchemy
 License: BSD
 Group: Development/Python
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.27.8-alt1.git20141113
+- Version 0.27.8
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.27.7-alt1.git20141103
 - Version 0.27.7
 
