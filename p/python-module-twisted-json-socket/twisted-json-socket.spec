@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.2
-Release: alt1.git20141112
+Version: 0.1.3
+Release: alt1.git20141113
 Summary: Protocol for twisted json socket
 License: BSD
 Group: Development/Python
@@ -16,16 +16,15 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-twisted-core
+BuildPreReq: python-module-twisted-core python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-twisted-core
-
+BuildPreReq: python3-module-twisted-core python-tools-2to3
 %endif
 
 %py_provides twistedjsonsocket
-%py_requires twisted.python
+%py_requires twisted.python json
 
 %description
 Handles all connections to clients. Clienthandler maintains connections
@@ -52,6 +51,7 @@ lineReceived.
 
 %if_with python3
 cp -fR . ../python3
+find ../python3/tests -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -74,7 +74,8 @@ popd
 
 %check
 python setup.py test
-%if_with python3
+#if_with python3
+%if 0
 pushd ../python3
 python3 setup.py test
 popd
@@ -91,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20141113
+- Version 0.1.3
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20141112
 - Initial build for Sisyphus
 
