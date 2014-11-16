@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.11
-Release: alt1.git20141111
+Version: 0.11.1
+Release: alt1.git20141115
 Summary: A collection of network utilities used by pathod and mitmproxy
 License: MIT
 Group: Development/Python
@@ -72,6 +72,9 @@ py.test
 %python_sitelibdir/*/test.*
 
 %changelog
+* Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.1-alt1.git20141115
+- Version 0.11.1
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.git20141111
 - Initial build for Sisyphus
 
