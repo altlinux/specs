@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: wmsystemtray
-Version: 1.2
-Release: alt1.qa1
+Version: 1.4
+Release: alt1
 
 Summary: A freedesktop.org system tray as a Window Maker dock app
 Group: Graphical desktop/Window Maker
@@ -13,7 +13,6 @@ Url: http://wmsystemtray.sourceforge.net/
 BuildRequires: libXext-devel libXfixes-devel libXmu-devel libXpm-devel
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 %description
 wmsystemtray is a system tray using the freedesktop.org system tray
@@ -24,7 +23,6 @@ will fit.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -39,6 +37,10 @@ will fit.
 %_man1dir/wmsystemtray.1*
 
 %changelog
+* Sat Nov 15 2014 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1
+- New version
+- Simplify gear rules
+
 * Tue May 10 2011 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1.qa1
 - Disclosure xorg-devel build requirement
 
