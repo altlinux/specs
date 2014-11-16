@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.2
-Release: alt1.git20141112
+Version: 1.1.0
+Release: alt1.git20141116
 Summary: Dependency injection and management tool for Python
 License: BSD
 Group: Development/Python
@@ -76,16 +76,19 @@ popd
 %endif
 
 %files
-%doc *.rst examples
+%doc *.md examples
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst examples
+%doc *.md examples
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20141116
+- Version 1.1.0
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.git20141112
 - Initial build for Sisyphus
 
