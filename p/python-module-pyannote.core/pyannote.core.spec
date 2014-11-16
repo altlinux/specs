@@ -1,14 +1,15 @@
 %define mname pyannote
 %define oname %mname.core
 Name: python-module-%oname
-Version: 0.2.2
-Release: alt1.git20141112
+Version: 0.2.3
+Release: alt1.git20141114
 Summary: PyAnnote core
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pyannote.core/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/pyannote/pyannote-core.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -59,6 +60,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt1.git20141114
+- Version 0.2.3
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1.git20141112
 - Initial build for Sisyphus
 
