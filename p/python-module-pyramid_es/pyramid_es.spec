@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.2.2
-Release: alt1.git20141109
+Version: 0.3.0
+Release: alt1.git20141113
 Summary: Elasticsearch integration for Pyramid
 License: MIT
 Group: Development/Python
@@ -20,7 +20,8 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-pyramid-tests python-module-SQLAlchemy
 BuildPreReq: python-module-six python-module-elasticsearch
 BuildPreReq: python-module-nose python-module-nose-cover3
-BuildPreReq: python-module-webtest
+BuildPreReq: python-module-webtest python-module-transaction
+BuildPreReq: python-module-pyramid_tm
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -28,7 +29,8 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-pyramid-tests python3-module-SQLAlchemy
 BuildPreReq: python3-module-six python3-module-elasticsearch
 BuildPreReq: python3-module-nose python3-module-nose-cover3
-BuildPreReq: python3-module-webtest
+BuildPreReq: python3-module-webtest python3-module-transaction
+BuildPreReq: python3-module-pyramid_tm
 %endif
 
 %py_provides %oname
@@ -143,7 +145,6 @@ pushd ../python3
 python3 setup.py test
 popd
 %endif
-exit 1
 
 %files
 %doc CHANGES *.rst
@@ -171,6 +172,9 @@ exit 1
 %endif
 
 %changelog
+* Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20141113
+- Version 0.3.0
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1.git20141109
 - Initial build for Sisyphus
 
