@@ -3,8 +3,8 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        1.2
-Release:        alt2.hg20110331.1
+Version:        1.2.2
+Release:        alt1.hg20141115
 Summary:        Python command line parser
 
 Group:          Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 %setup_python_module %oname
 
 BuildArch:      noarch
-BuildRequires: python-module-setuptools, python-devel
+BuildRequires: python-module-setuptools-tests python-devel
 BuildPreReq: python-module-setupdocs python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %description
@@ -60,6 +60,9 @@ This package contains pickles for argparse.
 
 %prep
 %setup
+
+touch test/__init__.py
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -86,6 +89,17 @@ popd
 %generate_pickles doc/source doc/source %oname
 cp -fR pickle %buildroot%python_sitelibdir/%oname
 
+%check
+python setup.py test
+py.test
+#if_with python3
+%if 0
+pushd ../python3
+python3 setup.py test
+py.test-%_python3_version
+popd
+%endif
+
 %files
 %doc NEWS.txt README.txt
 %python_sitelibdir/*
@@ -105,6 +119,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname
 %endif
 
 %changelog
+* Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.hg20141115
+- Version 1.2.2
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2-alt2.hg20110331.1
 - Rebuild with Python-3.3
 
