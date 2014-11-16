@@ -2,20 +2,19 @@
 # The magical name baserelease is matched by the rpmdev-bumpspec tool, which
 # you should use.
 %global pkg_name jogl
-%global pkg_version 2.0
-%global pkg_release 11
+%global pkg_version 2.0.2
 %set_verify_elf_method unresolved=relaxed
 
 Name:           jogl2
-Version:        2.0
-Release:        alt%{pkg_release}.2
+Version:        2.0.2
+Release:        alt1
 Summary:        Java bindings for the OpenGL API
 
 Group:          Development/Java
 # For a breakdown of the licensing, see LICENSE.txt 
 License:        BSD and MIT and ASL 2.0 and ASL 1.1 
 URL:            http://jogamp.org/
-Source0:        %pkg_name-v%version-rc%pkg_release.tar
+Source0:        %pkg_name-v%version.tar
 Source1:        %name-pom.xml
 
 # https://github.com/sgothel/jogl/pull/51
@@ -70,7 +69,7 @@ Requires:       %name = %version-%release
 User manual for jogl2.
 
 %prep
-%setup -n %pkg_name-v%version-rc%pkg_release
+%setup -n %pkg_name-v%version
 %patch1 -p1
 %patch2 -p1
 %patch3 -p2
@@ -155,6 +154,9 @@ subst "s|/deployment/jogamp-next/javadoc/jogl/javadoc|%_javadocdir/%name|g" \
 %_docdir/%name
 
 %changelog
+* Sun Nov 16 2014 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt1
+- New version
+
 * Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt11.2
 - NMU: fixed BR: junit-junit4 no more
 
