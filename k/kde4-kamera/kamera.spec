@@ -2,7 +2,7 @@
 
 %define rname kamera
 Name: kde4-kamera
-Version: 4.14.0
+Version: 4.14.3
 Release: alt1
 
 Group: Graphics
@@ -59,6 +59,9 @@ Development files for %name
 
 
 %changelog
+* Mon Nov 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
+- new version
+
 * Thu Aug 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - new version
 
