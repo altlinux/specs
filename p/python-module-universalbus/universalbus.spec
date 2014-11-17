@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.5
-Release: alt1.git20141113
+Version: 0.0.6
+Release: alt1.git20141116
 Summary: Universal Bus over rabbitmq
 License: Free
 Group: Development/Python
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Mon Nov 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1.git20141116
+- Version 0.0.6
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1.git20141113
 - Initial build for Sisyphus
 
