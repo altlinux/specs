@@ -4,14 +4,14 @@
 %def_without freehep
 
 Name:     scilab
-Version:  5.5.0
+Version:  5.5.1
 Release:  alt1
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
 Group:    Sciences/Mathematics
 
-Packager: Andrey Cherepanov <cas@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Obsoletes:%name-doc
 
@@ -61,6 +61,7 @@ BuildRequires: fop
 BuildRequires: jeuclid
 BuildRequires: batik
 BuildRequires: xmlgraphics-commons
+BuildRequires: ecj
 %if_with freehep
 BuildRequires: freehep-graphics2d
 BuildRequires: freehep-util
@@ -98,11 +99,6 @@ BuildRequires: libcurl-devel
 
 # For generated documentation
 BuildRequires: fonts-ttf-liberation
-
-# hdf5 does not bump soname but check at runtime
-#?Requires:      libhdf5-7-seq = %hdf5_version
-#?Requires:      jhdf5
-#BuildRequires: imake libICE-devel xorg-cf-files
 
 Requires: flexdock scirenderer jrosetta
 Requires: apache-commons-logging
@@ -194,6 +190,12 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Sun Nov 16 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.1-alt1
+- New version
+
+* Mon Nov 10 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt2
+- Add ecj to requirements to fix build documentation
+
 * Mon Apr 14 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt1
 - New version
 - Do not use freehep* package for EMF support
