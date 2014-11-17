@@ -1,5 +1,5 @@
 Name: hello
-Version: 2.9
+Version: 2.10
 Release: alt1
 
 Summary: GNU hello, THE greeting printing program
@@ -17,9 +17,10 @@ would otherwise be unavailable to them.  Because it is protected by the
 GNU General Public License, users are free to share and change it.
 
 %prep
-%setup
+%setup -a0
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -28,12 +29,18 @@ GNU General Public License, users are free to share and change it.
 %find_lang %name
 
 %files -f %name.lang
-%doc ABOUT-NLS AUTHORS ChangeLog ChangeLog.O NEWS README THANKS TODO contrib/ tests/
+%doc AUTHORS ChangeLog ChangeLog.O NEWS README THANKS TODO
+%doc %name-%version
 %_bindir/*
 %_infodir/*
 %_mandir/man?/*
 
 %changelog
+* Mon Nov 17 2014 Fr. Br. George <george@altlinux.ru> 2.10-alt1
+- Autobuild version bump to 2.10
+- Use autoreconf for educational purpose
+- Add full source tree in documentation
+
 * Thu Apr 17 2014 Fr. Br. George <george@altlinux.ru> 2.9-alt1
 - Autobuild version bump to 2.9
 
