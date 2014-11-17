@@ -20,8 +20,8 @@
 
 %define rname kopete
 Name: kde4-kopete
-Version: 4.14.0
-Release: alt2
+Version: 4.14.3
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -314,6 +314,12 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Nov 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
+- new version
+
+* Thu Aug 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1.M70P.1
+- built for M70P
+
 * Wed Aug 27 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt2
 - fix xmpp service register form layout (ALT#30254)
 
