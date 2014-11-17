@@ -1,9 +1,10 @@
 # TODO: fix urls and install icons like
 #/usr/share/linuxmint/mintMenu/search_engines/dictionary.png
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
+%define l10n_ver 2014.11.11
 
 Name:           mintmenu
-Version:        5.5.9
+Version:        5.6.0
 Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -13,7 +14,7 @@ Group:          Graphical desktop/GNOME
 Url:            http://packages.linuxmint.com/pool/main/m/mintmenu/
 # VCS:		https://github.com/linuxmint/mintmenu.git
 Source0:        http://packages.linuxmint.com/pool/main/m/mintmenu/%{name}_%{version}.tar.gz
-Source1:        http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_2014.05.25.tar.gz
+Source1:        http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_%l10n_ver.tar.gz
 Source33:	mintmenu_test.sh
 Source34:	list-mintmenu.conf
 Source35:	list-mintmenu.lua
@@ -101,7 +102,7 @@ rm -f usr/lib/linuxmint/mintMenu/plugins/easygconf.py
 find . -name '*.orig' -exec rm -f {} ';'
 find . -name '*.pyc' -exec rm -f {} ';'
 find . -name '*.pot' -exec rm -f {} ';'
-find mint-translations-2014.05.25/ -not -name 'mintmenu.mo' -type f -exec rm -f {} ';'
+find mint-translations-%l10n_ver -not -name 'mintmenu.mo' -type f -exec rm -f {} ';'
 
 mkdir -p %buildroot%prefix
 cp -av usr/bin usr/share %buildroot%prefix
@@ -111,7 +112,7 @@ cp -av usr/lib/linuxmint %buildroot%_datadir
 # Make utilites executable
 chmod +x %buildroot%_datadir/linuxmint/mintMenu/*.py
 
-cp -r mint-translations-2014.05.25/usr/share/linuxmint/* %buildroot%_datadir
+cp -r mint-translations-%l10n_ver/usr/share/linuxmint/* %buildroot%_datadir
 chmod -R u+rw,g-w,g+r,o+r,o-w %buildroot%_datadir/locale/*
 
 %find_lang %name --with-gnome
@@ -136,6 +137,10 @@ sh -v %SOURCE33
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Fri Nov 14 2014 Andrey Cherepanov <cas@altlinux.org> 5.6.0-alt1
+- New version
+- Update translations to 2014.11.11
+
 * Thu Oct 02 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.9-alt1
 - New version
 
