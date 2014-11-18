@@ -1,11 +1,11 @@
 Name: synfigstudio
-Version: 0.64.1
+Version: 0.64.2
 Release: alt1
 
 Summary: Synfig studio - animation program
 Group: Office
 License: GPL
-Url: http://synfig.com
+Url: http://www.synfig.org
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -72,6 +72,10 @@ Header files for Synfig studio.
 %_includedir/synfigapp*/
 
 %changelog
+* Mon Nov 17 2014 Andrey Cherepanov <cas@altlinux.org> 0.64.2-alt1
+- New version
+- Fix project URL
+
 * Fri Nov 15 2013 Andrey Cherepanov <cas@altlinux.org> 0.64.1-alt1
 - New version
 
