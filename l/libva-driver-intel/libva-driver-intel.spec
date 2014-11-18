@@ -1,5 +1,5 @@
 Name: libva-driver-intel
-Version: 1.2.2
+Version: 1.4.1
 Release: alt1
 
 Summary: VDPAU-based backend for VA API
@@ -36,6 +36,9 @@ Note that contents of this package were previously in libva package.
 %_libdir/dri/*.so
 
 %changelog
+* Tue Nov 18 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.1-alt1
+- 1.4.1
+
 * Fri Jan 24 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt1
 - 1.2.2
 
