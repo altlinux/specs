@@ -5,7 +5,7 @@
 
 Name: almanah
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Diary editor for GNOME
 License: LGPLv3+
@@ -14,7 +14,7 @@ Url: http://wiki.gnome.org/Apps/Almanah_Diary
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires: intltool desktop-file-utils appdata-tools libappstream-glib-devel
+BuildRequires: intltool desktop-file-utils libappstream-glib-devel
 BuildRequires: libgio-devel libgtkspell3-devel
 BuildRequires: libsqlite3-devel libcryptui-devel
 %{?_enable_eds:BuildRequires: evolution-data-server-devel >= 3.5.91}
@@ -25,6 +25,8 @@ Almanah is a small GTK+3 application to allow you to keep a diary of your life.
 
 %prep
 %setup
+subst 's/APPDATA_XML/APPSTREAM_XML/
+	s/appdata_/appstream_/g' configure.ac data/Makefile.am
 
 %build
 %autoreconf
@@ -57,6 +59,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README AUTHORS NEWS
 
 %changelog
+* Tue Nov 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt2
+- APPSTREAM_XML used instead of APPDATA_XML
+
 * Thu Sep 25 2014 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
 - 0.11.1
 
