@@ -1,12 +1,10 @@
 %define oname ptyprocess
 
 %def_with python3
-# /dev/pts not work
-%def_disable check
 
 Name: python-module-%oname
 Version: 0.3.1
-Release: alt1.git20141013
+Release: alt2.git20141013
 Summary: Run a subprocess in a pseudo terminal
 License: ISCL
 Group: Development/Python
@@ -17,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -140,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt2.git20141013
+- Enabled testing
+
 * Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20141013
 - Initial build for Sisyphus
 
