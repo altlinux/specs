@@ -1,0 +1,155 @@
+%define oname terminado
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 0.3.1
+Release: alt1.git20141117
+Summary: Terminals served by tornado websockets
+License: BSD
+Group: Development/Python
+Url: https://pypi.python.org/pypi/terminado/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/takluyver/terminado.git
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-tornado_xstatic python-module-ptyprocess
+BuildPreReq: python-module-xstatic-term.js
+BuildPreReq: python-module-sphinx-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-tornado_xstatic python3-module-ptyprocess
+BuildPreReq: python3-module-xstatic-term.js
+%endif
+
+%py_provides %oname
+%py_requires xstatic.pkg.termjs ptyprocess tornado_xstatic
+
+%description
+This is a Tornado websocket backend for the term.js Javascript terminal
+emulator library.
+
+Modules:
+
+* terminado.management: controls launching virtual terminals, connecting
+  them to Tornado's event loop, and closing them down.
+* terminado.websocket: Provides a websocket handler for communicating
+  with a terminal.
+* terminado.uimodule: Provides a Terminal Tornado UI Module.
+
+JS:
+
+* terminado/_static/terminado.js: A lightweight wrapper to set up a
+  term.js terminal with a websocket.
+
+%package pickles
+Summary: Pickles for %oname
+Group: Development/Python
+
+%description pickles
+This is a Tornado websocket backend for the term.js Javascript terminal
+emulator library.
+
+This package contains pickles for %oname.
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+This is a Tornado websocket backend for the term.js Javascript terminal
+emulator library.
+
+This package contains documentation for %oname.
+
+%package -n python3-module-%oname
+Summary: Terminals served by tornado websockets
+Group: Development/Python3
+%py3_provides %oname
+%py3_requires xstatic.pkg.termjs ptyprocess tornado_xstatic
+
+%description -n python3-module-%oname
+This is a Tornado websocket backend for the term.js Javascript terminal
+emulator library.
+
+Modules:
+
+* terminado.management: controls launching virtual terminals, connecting
+  them to Tornado's event loop, and closing them down.
+* terminado.websocket: Provides a websocket handler for communicating
+  with a terminal.
+* terminado.uimodule: Provides a Terminal Tornado UI Module.
+
+JS:
+
+* terminado/_static/terminado.js: A lightweight wrapper to set up a
+  term.js terminal with a websocket.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%prepare_sphinx .
+ln -s ../objects.inv doc/
+
+%build
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+export PYTHONPATH=$PWD
+%make -C doc pickle
+%make -C doc html
+
+cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+py.test
+%if_with python3
+pushd ../python3
+py.test-%_python3_version
+popd
+%endif
+
+%files
+%doc *.rst
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%files docs
+%doc doc/_build/html/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst
+%python3_sitelibdir/*
+%endif
+
+%changelog
+* Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20141117
+- Initial build for Sisyphus
+
