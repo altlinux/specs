@@ -40,6 +40,7 @@
 %def_disable sidplay
 %def_enable doc
 %def_without tremor
+%def_enable mpg123
 # auto|avahi|bonjour|no
 %define zeroconf avahi
 %define mpd_user _mpd
@@ -57,7 +58,7 @@
 %define  Name MPD
 Name: 	 mpd
 Version: 0.18.14
-Release: alt1
+Release: alt2
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 
 License: %gpl2plus
@@ -105,6 +106,7 @@ BuildRequires: zlib-devel gcc-c++
 %{?_enable_iso9660:BuildRequires: libcdio-devel}
 %{?_enable_sqlite:BuildRequires: libsqlite3-devel}
 %{?_enable_fluidsynth:BuildRequires: libfluidsynth-devel}
+%{?_enable_mpg123:BuildRequires: libmpg123-devel}
 %{?_enable_doc:BuildRequires: docbook-dtds doxygen xmlto >= 0.0.21-alt2}
 BuildRequires: systemd-devel
 %if %zeroconf == avahi
@@ -207,6 +209,7 @@ sed -i 's/\[mad\]/[libmad]/' configure.ac
     %{subst_enable sqlite} \
     %{subst_enable fluidsynth} \
     %{subst_enable wildmidi} \
+    %{subst_enable mpg123} \
     %{subst_enable_to doc documentation} \
     --with-systemdsystemunitdir=/lib/systemd/system \
     --with-zeroconf=%zeroconf \
@@ -287,6 +290,9 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 
 
 %changelog
+* Tue Nov 18 2014 Denis Smirnov <mithraen@altlinux.ru> 0.18.14-alt2
+- add mpg123 decoder
+
 * Fri Sep 12 2014 Alexey Shabalin <shaba@altlinux.ru> 0.18.14-alt1
 - 0.18.14
 - fix init script
