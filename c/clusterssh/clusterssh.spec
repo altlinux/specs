@@ -1,14 +1,16 @@
 Name: clusterssh
 Version: 3.28
-Release: alt1
+Release: alt2
 
 Summary: Run commands on multiple servers over ssh
 Group: Networking/Remote access
-License: GPL
+License: %gpl2plus
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
 
 Url: http://clusterssh.sourceforge.net/
 Source: clusterssh-%version.tar.gz
+
+BuildRequires: rpm-build-licenses
 
 # make findrequires happy
 # BuildPreReq: perl-base, perl(Config/Simple.pm) >= 0:4.55, perl(Fcntl.pm)
@@ -19,6 +21,8 @@ BuildPreReq: perl(Tk/Dialog.pm), perl(Tk/LabEntry.pm), perl-X11-Protocol
 
 BuildArch: noarch
 BuildRequires: perl-Pod-Parser perl-Pod-Checker
+
+Requires: perl-podlators
 
 %description
 ClusterSSH controls a number of xterm windows via
@@ -56,6 +60,10 @@ done
 %_datadir/applications/%name.desktop
 
 %changelog
+* Tue Nov 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.28-alt2
+- Added perl-podlators to Requires
+- Used rpm-build-licenses
+
 * Fri Dec 20 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.28-alt1
 - 3.28 release.
 - Added perl-Pod-Checker to BuildRequires
