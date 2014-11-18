@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt1.git20141106
+Version: 0.0.2
+Release: alt1.git20141116
 Summary: Tree pages for pyramid CRUD interface sacrud
 License: MIT
 Group: Development/Python
@@ -177,6 +177,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20141116
+- Version 0.0.2
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20141106
 - Initial build for Sisyphus
 
