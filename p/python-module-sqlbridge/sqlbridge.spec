@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.14
-Release: alt1.git20141113
+Version: 0.1.33
+Release: alt1.git20141117
 Summary: Basic database connectivity for Autobahn web sockets
 License: ASLv2.0
 Group: Development/Python
@@ -30,6 +30,7 @@ BuildPreReq: python3-module-inotifyx python3-module-yaml
 %endif
 
 %py_provides %oname
+Requires: %oname-common = %EVR
 %py_requires twisted.python
 
 %description
@@ -41,10 +42,26 @@ included can be used to connect an sqlbridge to an already operating
 Autobahn router. There are three test scripts included in this
 distribution, sqlrouter, sqlbridge and sqlcmd.
 
+%package -n %oname-common
+Summary: Common config files for %oname
+Group: System/Configuration/Other
+
+%description -n %oname-common
+A simple database access component for Autobahn. This component builds
+bridges to database backends making them accessible to Autobahn via
+topics. The component can be used in its raw form to build custom
+Autobahn deployments, or, the convenience scripts that haver been
+included can be used to connect an sqlbridge to an already operating
+Autobahn router. There are three test scripts included in this
+distribution, sqlrouter, sqlbridge and sqlcmd.
+
+This package contains common config files for %oname.
+
 %package -n python3-module-%oname
 Summary: Basic database connectivity for Autobahn web sockets
 Group: Development/Python3
 %py3_provides %oname
+Requires: %oname-common = %EVR
 %py3_requires twisted.python
 
 %description -n python3-module-%oname
@@ -86,6 +103,9 @@ popd
 
 %python_install
 
+install -d %buildroot%_sysconfdir
+mv %buildroot%prefix/taskforce/* %buildroot%_sysconfdir/
+
 %check
 python setup.py test
 %if_with python3
@@ -102,6 +122,9 @@ popd
 %endif
 %python_sitelibdir/*
 
+%files -n %oname-common
+%_sysconfdir/*
+
 %if_with python3
 %files -n python3-module-%oname
 %doc *.md
@@ -110,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.33-alt1.git20141117
+- Version 0.1.33
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.14-alt1.git20141113
 - Version 0.1.14
 
