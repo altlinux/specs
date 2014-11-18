@@ -5,7 +5,7 @@
 
 Name: freevo
 Version: 1.8.3
-Release: alt1.3.1
+Release: alt1.3.2
 
 Summary: Freevo
 
@@ -48,7 +48,7 @@ BuildRequires: python-module-kaa-metadata libnumpy-devel python-module-pygame
 BuildRequires: python-module-PyXML python-module-setuptools
 BuildRequires: python-module-twisted-web rpm-build-mono
 
-BuildPreReq: python-module-imaging-devel rpm-build-compat >= 1.2
+BuildPreReq: rpm-build-compat >= 1.2
 
 %description
 Freevo is a Linux application that turns a PC with a TV capture card
@@ -149,6 +149,9 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/freevo.mo
 %preun_service freevo_web
 
 %changelog
+* Tue Nov 18 2014 Andrey Cherepanov <cas@altlinux.org> 1.8.3-alt1.3.2
+- Remove deprecated requirements on python-module-imaging-devel
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.8.3-alt1.3.1
 - Rebuild with Python-2.7
 
