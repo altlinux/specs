@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.0
-Release: alt1.git20141106
+Version: 0.7.0
+Release: alt1.git20141117
 Summary: Databases fixtures plugin for py.test
 License: LGPLv3
 Group: Development/Python
@@ -140,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1.git20141117
+- Version 0.7.0
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20141106
 - Version 0.6.0
 
