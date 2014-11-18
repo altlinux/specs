@@ -1,7 +1,7 @@
 Summary: Comic book viewer
 Name: comix
 Version: 4.0.4
-Release: alt2.1
+Release: alt2.2
 License: GPLv2+
 Group: Graphics
 Url: http://comix.sourceforge.net/
@@ -15,7 +15,7 @@ Requires: python-module-imaging
 
 BuildPreReq: desktop-file-utils shared-mime-info GConf
 # Automatically added by buildreq on Thu Apr 03 2008 (-bi)
-BuildRequires: GConf libjpeg-utils python-module-imaging python-module-imaging-devel python-module-pygobject unrar python-module-pygtk-devel python-module-pygtk libsqlite3-devel
+BuildRequires: GConf libjpeg-utils python-module-imaging python-module-pygobject unrar python-module-pygtk-devel python-module-pygtk libsqlite3-devel
 
 %description
 Comix is a comic book viewer. It reads zip, rar, tar, tar.gz, and tar.bz2
@@ -108,6 +108,9 @@ exit 0
 %exclude %_datadir/mime/version
 
 %changelog
+* Tue Nov 18 2014 Andrey Cherepanov <cas@altlinux.org> 4.0.4-alt2.2
+- Remove deprecated requirements on python-module-imaging-devel
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 4.0.4-alt2.1
 - Rebuild with Python-2.7
 
