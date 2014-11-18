@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%module_name
-Version: 1.5.2
-Release: alt1.git20140528
+Version: 1.6.1
+Release: alt1.git20141117
 Group: Development/Python
 License: GPLv2
 Summary: Experimental Python bindings to the RabbitMQ C-library librabbitmq
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.git20141117
+- Version 1.6.1
+
 * Tue Sep 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt1.git20140528
 - Version 1.5.2
 
