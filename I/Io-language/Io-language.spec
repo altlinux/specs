@@ -12,7 +12,7 @@ BuildRequires: gcc-c++
  
 Name:           Io-language
 Version:        20080330
-Release:        alt2_9.2.2.qa1
+Release:        alt2_9.2.2.qa2
 Summary:        Io is a small, prototype-based programming language
 Group:          System/Libraries
 License:        BSD
@@ -219,6 +219,9 @@ done
 
 
 %changelog
+* Tue Nov 18 2014 Igor Vlasenko <viy@altlinux.ru> 20080330-alt2_9.2.2.qa2
+- rebuild
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20080330-alt2_9.2.2.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 

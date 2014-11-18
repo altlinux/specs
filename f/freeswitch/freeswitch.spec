@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.5.13
-Release: alt1
+Release: alt2
 
 Summary: FreeSWITCH open source telephony platform
 License: MPL
@@ -12,7 +12,7 @@ Source: %name-%version-%release.tar
 BuildRequires: gcc-c++ gsmlib-devel libalsa-devel
 BuildRequires: libgnutls-devel libncurses-devel libssl-devel libunixODBC-devel
 BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
-BuildRequires: libspeex-devel libsqlite3-devel libX11-devel libmpeg4ip-devel
+BuildRequires: libspeex-devel libsqlite3-devel libX11-devel libmp4v2-devel
 BuildRequires: libxmlrpc-devel libyaml-devel libiksemel-devel libedit-devel
 BuildRequires: libsndfile-devel libpcre-devel libapr1-devel libaprutil1-devel
 BuildRequires: libilbc1-devel libjs-devel libjson-devel flite-devel
@@ -680,6 +680,9 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Nov 18 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.13-alt2
+- rebuilt with recent libsoundtouch
+
 * Fri Jul 25 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.13-alt1
 - 1.5.13 released
 

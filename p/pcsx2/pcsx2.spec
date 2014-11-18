@@ -2,7 +2,7 @@
 
 Name: pcsx2
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: Playstation 2 console emulator
 License: GPLv3
@@ -237,6 +237,12 @@ popd
 %_libdir/%name/libzzogl-cg-0.3.0.so
 
 %changelog
+* Tue Nov 18 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.2-alt2
+- Rebuild with libsoundtouch 1.8.0
+
+* Sun Feb 16 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.2-alt0.M70T.1
+- Build for branch t7
+
 * Sun Feb 16 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.2-alt1
 - Version 1.2.2
 

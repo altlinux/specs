@@ -8,7 +8,7 @@
 
 Name: %gst_plugins-bad
 Version: %ver_major.23
-Release: alt2
+Release: alt3
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
 License: LGPL
@@ -65,6 +65,9 @@ This package contains documentation for %name
 %setup -q -a1
 %patch -p1
 
+subst 's@\(stdafx.h\)@libmodplug/\1@' ext/modplug/gstmodplug.cc
+subst 's@  neon <= 0.29.99@@' configure.ac
+
 touch ABOUT-NLS config.rpath
 
 %build
@@ -103,6 +106,9 @@ gtkdocize
 %endif
 
 %changelog
+* Wed Nov 19 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10.23-alt3
+- rebuilt with libsoundtouch-1.8.0
+
 * Wed Apr 17 2013 Andrey Cherepanov <cas@altlinux.org> 0.10.23-alt2
 - Add missing plugin documentation (plugin-voamrwbenc.xml)
 
