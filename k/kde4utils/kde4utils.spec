@@ -7,7 +7,7 @@
 Name: kde4utils
 %define major 4
 %define minor 14
-%define bugfix 2
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -48,7 +48,7 @@ Patch2: kdeutils-4.2.2-alt-autostart.patch
 Patch3: kdeutils-4.2.2-alt-ark-zip-filenames.patch
 Patch4: kdeutils-4.3.0-alt-ark-kerfuffle-open.patch
 Patch5: kdeutils-4.6.0-alt-ark-rar-header-encrypted.patch
-Patch6: kdeutils-4.6.5-alt-ark-drop-to-desktop.patch
+Patch6: kdeutils-4.14.3-alt-ark-drop-to-desktop.patch
 Patch7: kdeutils-4.7.1-alt-fix-compile.patch
 # KDEBUG#179066
 Patch100: ark-preview-with.patch
@@ -498,6 +498,9 @@ done
 
 
 %changelog
+* Tue Nov 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
+- new version
+
 * Thu Oct 16 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.2-alt1
 - new version
 
