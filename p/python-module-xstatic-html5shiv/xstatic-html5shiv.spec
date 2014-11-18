@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.6.1
-Release: alt1
+Release: alt2
 Summary: html5shiv 3.6 (XStatic packaging standard)
 License: MIT & GPLv2
 Group: Development/Python
@@ -72,6 +72,12 @@ popd
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %check
 python setup.py test
 %if_with python3
@@ -93,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt2
+- Applied python-module-xstatic-html5shiv-3.6.1-alt1.diff
+
 * Mon Nov 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt1
 - Initial build for Sisyphus
 
