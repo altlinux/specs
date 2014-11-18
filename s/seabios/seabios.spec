@@ -1,8 +1,8 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.7.5
-Release: alt2
+Version: 1.7.5.1
+Release: alt1
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -108,6 +108,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Tue Nov 18 2014 Alexey Shabalin <shaba@altlinux.ru> 1.7.5.1-alt1
+- 1.7.5.1
+
 * Tue Aug 05 2014 Alexey Shabalin <shaba@altlinux.ru> 1.7.5-alt2
 - Fix PCI-e hotplug
 
