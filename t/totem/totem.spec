@@ -33,13 +33,12 @@
 
 Name: totem
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Movie player for GNOME 3
 Group: Video
 License: GPL%def_disable static
 URL: http://www.gnome.org/projects/totem
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
@@ -49,6 +48,7 @@ Obsoletes: mozilla-plugin-%name
 Provides: %name-backend = %version %name-backend-gstreamer = %version %name-backend-xine = %version
 
 Requires: lib%name = %version-%release
+Requires: libpeas-python3-loader
 Requires: %name-video-thumbnailer = %version-%release
 Requires: dconf gnome-icon-theme
 Requires: gstreamer%gst_api_ver >= %gst_ver
@@ -66,9 +66,14 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
 Source1: totem-bin-backend-ondemand.sh
 
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+%add_python3_compile_include %_libdir/%name/plugins
+
 BuildPreReq: rpm-build-gnome gnome-common gtk-doc
 BuildPreReq: intltool >= 0.40.0
-BuildRequires: appdata-tools
+BuildRequires: libappstream-glib-devel
 %{?_enable_nvtv:BuildRequires: libnvtv-devel >= 0.4.5}
 
 BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver
@@ -87,7 +92,7 @@ BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildPreReq: libclutter-gst2.0-devel >= %clutter_gst_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libgnome-desktop3-devel
-%{?_enable_python:BuildRequires: python-devel python-module-pygobject3-devel pylint}
+%{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel pylint-py3}
 %{?_enable_vala:BuildRequires: libvala-devel >= 0.14 vala-tools}
 BuildRequires: libdbus-devel libgdata-devel gsettings-desktop-schemas-devel
 %{?_enable_lirc:BuildRequires: liblirc-devel}
@@ -271,11 +276,14 @@ This package provides a video thumbnailer from Totem package that can be
 used by other applications like filemanagers.
 
 %prep
-%setup -n %name-%version
+%setup
+subst 's/APPDATA_XML/APPSTREAM_XML/
+    s/appdata_/appstream_/g' configure.ac data/appdata/Makefile.am
 
 [ ! -d m4 ] && mkdir m4
 
 %build
+export ac_cv_path_PYLINT=%_bindir/pylint.py3
 %autoreconf
 %configure \
 	%{subst_enable static} \
@@ -338,7 +346,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/%name/plugins/properties/
 %_libdir/%name/plugins/media-player-keys/
 %_libdir/%name/plugins/pythonconsole/
-#%_libdir/%name/plugins/opensubtitles/
+%_libdir/%name/plugins/opensubtitles/
 %_libdir/%name/plugins/screenshot/
 %_libdir/%name/plugins/chapters/
 %_libdir/%name/plugins/save-file/
@@ -402,6 +410,11 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Tue Nov 18 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
+- used APPSTREAM_XML instead of APPDATA_XML
+- used python3
+- packaged opensubtitles plugin again
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
