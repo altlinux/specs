@@ -1,7 +1,7 @@
 %define oname plone.api
 Name: python-module-%oname
-Version: 1.2.2
-Release: alt1.dev.git20140813
+Version: 1.3.3
+Release: alt1.dev0.git20141118
 Summary: Elegant and simple API, built for humans wishing to develop with Plone
 License: GPLv2
 Group: Development/Python
@@ -130,6 +130,9 @@ python setup.py test
 %doc docs/build/html/*
 
 %changelog
+* Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.3-alt1.dev0.git20141118
+- Version 1.3.3.dev0
+
 * Thu Oct 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.dev.git20140813
 - Initial build for Sisyphus
 
