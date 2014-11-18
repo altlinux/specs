@@ -1,6 +1,6 @@
 Name: quiterss
-Version: 0.17.0
-Release: alt2
+Version: 0.17.1
+Release: alt1
 
 Summary: RSS/Atom aggregator
 License: GPLv3
@@ -55,6 +55,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/%name/lang
 
 %changelog
+* Tue Nov 18 2014 Michael Shigorin <mike@altlinux.org> 0.17.1-alt1
+- new version (watch file uupdate)
+
 * Thu Oct 30 2014 Michael Shigorin <mike@altlinux.org> 0.17.0-alt2
 - no need to fcimport it anymore
 
