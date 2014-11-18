@@ -5,7 +5,7 @@
 
 Name: gst-validate
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GStreamer Validate Tools and Library
 Group: System/Libraries
@@ -81,7 +81,8 @@ GObject introspection devel data for the Gst Validate library.
 
 %build
 %autoreconf
-%configure --enable-gtk-doc
+%configure --enable-gtk-doc \
+	--disable-sphinx-doc
 %make_build
 
 %install
@@ -118,6 +119,9 @@ GObject introspection devel data for the Gst Validate library.
 %_datadir/gtk-doc/html/%name-%api_ver/
 
 %changelog
+* Tue Nov 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt2
+- disabled build of incomplete docs for launcher
+
 * Tue Nov 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - first build for Sisyphus
 

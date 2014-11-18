@@ -5,7 +5,7 @@
 
 Name: gpaste
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: GPaste is a clipboard management system
 Group: Text tools
@@ -83,6 +83,8 @@ in notification area.
 
 %prep
 %setup
+subst 's/APPDATA_XML/APPSTREAM_XML/
+	s/appdata_/appstream_/g' configure.ac data/appdata.mk
 
 %build
 %autoreconf
@@ -137,6 +139,9 @@ in notification area.
 
 
 %changelog
+* Tue Nov 18 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14-alt2
+- APPSTREAM_XML used instead of APPDATA_XML
+
 * Sun Oct 19 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14-alt1
 - 3.14
 
