@@ -2,11 +2,11 @@
 # vim: set ft=spec:
 # vim600: set fdm=marker:
 
-%define patchlevel -P1
+%define patchlevel %nil
 
 Name: dhcp
-Version: 4.2.5
-Release: alt3
+Version: 4.3.1
+Release: alt2
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -57,32 +57,27 @@ Patch0012: 0012-Build-with-libisc-export-devel-RH-dhcp-4.2.2-remove-.patch
 Patch0013: 0013-dhclient-Add-several-command-line-options-which-etcn.patch
 Patch0014: 0014-Don-t-build-libdst.patch
 Patch0015: 0015-dhclient-Check-if-dhclient-already-running.patch
-Patch0016: 0016-dhclient-Wait-if-DHCP-offer-was-DECLINEd.patch
-Patch0017: 0017-dhclient-Request-more-options-by-default.patch
-Patch0018: 0018-Prevent-file-descriptors-leak.patch
-Patch0019: 0019-Drop-garbage-char.patch
-Patch0020: 0020-Do-not-segfault-if-the-ipv6-kernel-module-is-not-loa.patch
-Patch0021: 0021-Fix-segfault-in-case-of-NULL-timeout.patch
-Patch0022: 0022-Ensure-64-bit-platforms-parse-lease-file-dates-times.patch
-Patch0023: 0023-dhclient-Log-pid.patch
-Patch0024: 0024-dhcpv6-Reject-unicast-messages-unless-we-set-unicast.patch
-Patch0025: 0025-dhclient-Send-a-Decline-message-to-the-server.patch
-Patch0026: 0026-dhclient-Fix-MRD-handling.patch
-Patch0027: 0027-Support-Classless-Static-Route-Option-for-DHCPv4-RFC.patch
-Patch0028: 0028-dhclient-Don-t-confirm-expired-lease.patch
-Patch0029: 0029-Build-dhcp-s-libraries-as-shared-libs-instead-of-sta.patch
-Patch0030: 0030-dhclient-Don-t-retry-on-DECLINE-when-1-option-used.patch
-Patch0031: 0031-Don-t-send-log-messages-to-the-stderr-with-f-option.patch
-Patch0032: 0032-Use-getifaddrs-to-scan-for-interfaces.patch
-Patch0033: 0033-dhclient-Don-t-use-fallback_interface-when-releasing.patch
-Patch0034: 0034-Support-DHCPv6-Options-for-Network-Boot-RFC5970.patch
-Patch0035: 0035-Fix-infinite-leases-on-x64.patch
-Patch0036: 0036-Fix-do-forward-updates-statement.patch
-Patch0037: 0037-Document-ALT-specific-in-the-dhclient-script-manpage.patch
-Patch0038: 0038-Ignore-checksums-on-the-loopback-interface.patch
-Patch0039: 0039-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
-Patch0040: 0040-examples-dhcpd-dhcpv6.conf-Drop-dhcpv6-lease-file-na.patch
-Patch0041: 0041-fix-segfault-on-x86-64-on-8-network.patch
+Patch0016: 0016-dhclient-Request-more-options-by-default.patch
+Patch0017: 0017-Prevent-file-descriptors-leak.patch
+Patch0018: 0018-Drop-garbage-char.patch
+Patch0019: 0019-Do-not-segfault-if-the-ipv6-kernel-module-is-not-loa.patch
+Patch0020: 0020-Fix-segfault-in-case-of-NULL-timeout.patch
+Patch0021: 0021-Ensure-64-bit-platforms-parse-lease-file-dates-times.patch
+Patch0022: 0022-Support-Classless-Static-Route-Option-for-DHCPv4-RFC.patch
+Patch0023: 0023-dhclient-Don-t-confirm-expired-lease.patch
+Patch0024: 0024-Build-dhcp-s-libraries-as-shared-libs-instead-of-sta.patch
+Patch0025: 0025-Don-t-send-log-messages-to-the-stderr-with-f-option.patch
+Patch0026: 0026-Use-getifaddrs-to-scan-for-interfaces.patch
+Patch0027: 0027-dhclient-Don-t-use-fallback_interface-when-releasing.patch
+Patch0028: 0028-Support-DHCPv6-Options-for-Network-Boot-RFC5970.patch
+Patch0029: 0029-Fix-infinite-leases-on-x64.patch
+Patch0030: 0030-Document-ALT-specific-in-the-dhclient-script-manpage.patch
+Patch0031: 0031-Ignore-checksums-on-the-loopback-interface.patch
+Patch0032: 0032-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
+Patch0033: 0033-examples-dhcpd-dhcpv6.conf-Drop-dhcpv6-lease-file-na.patch
+Patch0034: 0034-fix-segfault-on-x86-64-on-8-network.patch
+Patch0035: 0035-Fix-Makefiles-for-dhcpctl-relay-and-omapip.patch
+Patch0036: 0036-Remove-duplicate-ISC_R_MULTIPLE-definition.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -234,11 +229,6 @@ server
 %patch0034 -p2
 %patch0035 -p2
 %patch0036 -p2
-%patch0037 -p2
-%patch0038 -p2
-%patch0039 -p2
-%patch0040 -p2
-%patch0041 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -557,6 +547,20 @@ fi
 # }}}
 
 %changelog
+* Tue Nov 25 2014 Fr. Br. George <george@altlinux.ru> 1:4.3.1-alt2
+- Rebuild with bind-9.9.6
+
+* Tue Sep 23 2014 Fr. Br. George <george@altlinux.ru> 1:4.3.1-alt1
+- Update to ftp://ftp.isc.org/isc/dhcp/4.3.1/dhcp-4.3.1.tar.gz
+- Fix patches (drop some reimplemented by upstream)
+
+* Thu Sep 18 2014 Fr. Br. George <george@altlinux.ru> 1:4.3.0-alt1
+- Update to ftp://ftp.isc.org/isc/dhcp/4.3.0/dhcp-4.3.0.tar.gz
+- Fix patches
+
+* Wed Feb 05 2014 Fr. Br. George <george@altlinux.ru> 1:4.2.6-alt1
+- Update to ftp://ftp.isc.org/isc/dhcp/4.2.6/dhcp-4.2.6.tar.gz
+
 * Wed Oct 02 2013 Fr. Br. George <george@altlinux.ru> 1:4.2.5-alt3
 - Rebuild with bind-9.9.4
 
