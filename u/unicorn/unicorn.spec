@@ -1,14 +1,14 @@
 %define pkgname unicorn
 
 Name: %pkgname
-Version: 4.7.0
-Release: alt1.1
+Version: 4.8.3
+Release: alt1
 Summary: Unicorn: Rack HTTP server for fast clients and Unix
 License: GPL2
 Group: System/Servers
 Url: http://unicorn.bogomips.org/
 
-Source: %pkgname-%version.tar
+Source: %pkgname-%version.tar.gz
 
 # Automatically added by buildreq on Tue Aug 09 2011
 # optimized out: ruby ruby-stdlibs ruby-tool-rdoc
@@ -52,6 +52,9 @@ Documentation files for %pkgname
 %ruby_ri_sitedir/Unicorn*
 
 %changelog
+* Wed Nov 19 2014 Anton Gorlov <stalker@altlinux.ru> 4.8.3-alt1
+- update to  new version 
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 4.7.0-alt1.1
 - Rebuilt with ruby-2.0.0-alt1
 
