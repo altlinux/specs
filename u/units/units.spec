@@ -1,5 +1,5 @@
 Name: units
-Version: 2.02
+Version: 2.11
 Release: alt1
 
 Summary: A utility for converting amounts from one unit to another
@@ -40,6 +40,9 @@ ln -s units.1 %buildroot%_man1dir/units_cur.1
 %doc NEWS README
 
 %changelog
+* Wed Nov 19 2014 Dmitry V. Levin <ldv@altlinux.org> 2.11-alt1
+- 2.02 -> 2.11.
+
 * Sat Sep 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.02-alt1
 - Updated to 2.02.
 
