@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.22
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm)
 %_bindir/distrodb*
 
 %changelog
+* Wed Nov 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt2
+- added texlive-python exception
+
 * Wed Apr 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - API cleanup
 
