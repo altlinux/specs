@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.1
-Release: alt2.git20140903
+Version: 1.1.3
+Release: alt1.git20141112
 Summary: The Jmbo base product introduces a content type and various tools required to build Jmbo products
 License: BSD
 Group: Development/Python
@@ -135,6 +135,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20141112
+- Version 1.1.3
+
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt2.git20140903
 - Applied python-module-jmbo-1.1.1-alt1.git20140903.diff
 
