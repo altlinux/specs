@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.git20140711
+Version: 0.5
+Release: alt1.git20141106
 Summary: Jmbo banner app
 License: BSD
 Group: Development/Python
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20141106
+- Version 0.5
+
 * Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20140711
 - Initial build for Sisyphus
 
