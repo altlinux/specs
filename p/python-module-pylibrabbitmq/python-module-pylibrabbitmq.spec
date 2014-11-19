@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.6.1
-Release: alt1.git20141117
+Release: alt2.git20141117
 Group: Development/Python
 License: GPLv2
 Summary: Experimental Python bindings to the RabbitMQ C-library librabbitmq
@@ -26,12 +26,32 @@ BuildPreReq: python3-devel python3-module-setuptools
 %description
 Experimental Python bindings to the RabbitMQ C-library librabbitmq
 
+%package tests
+Summary: Tests for %module_name
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+Experimental Python bindings to the RabbitMQ C-library librabbitmq
+
+This package contains tests for %module_name.
+
 %package -n python3-module-%module_name
 Summary: Experimental Python bindings to the RabbitMQ C-library librabbitmq
 Group: Development/Python3
 
 %description -n python3-module-%module_name
 Experimental Python bindings to the RabbitMQ C-library librabbitmq
+
+%package -n python3-module-%module_name-tests
+Summary: Tests for %module_name
+Group: Development/Python3
+Requires: python3-module-%module_name = %EVR
+
+%description -n python3-module-%module_name-tests
+Experimental Python bindings to the RabbitMQ C-library librabbitmq
+
+This package contains tests for %module_name.
 
 %prep
 %setup
@@ -68,14 +88,25 @@ popd
 %doc AUTHORS Changelog LICENSE-GPL-2.0 LICENSE-MPL-RabbitMQ README.rst TODO
 %python_sitelibdir/librabbitmq*
 %python_sitelibdir/_librabbitmq*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
 %files -n python3-module-%module_name
 %doc AUTHORS Changelog LICENSE-GPL-2.0 LICENSE-MPL-RabbitMQ README.rst TODO
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%module_name-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt2.git20141117
+- Extracted tests into separate package
+
 * Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.git20141117
 - Version 1.6.1
 
