@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.7.4
-Release: alt1.git20141029
+Version: 0.7.5
+Release: alt1.git20141118
 Summary: Resume-based WSGI load balancer
 License: ZPLv2.1
 Group: Development/Python
@@ -159,6 +159,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.5-alt1.git20141118
+- Version 0.7.5
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.4-alt1.git20141029
 - Initial build for Sisyphus
 
