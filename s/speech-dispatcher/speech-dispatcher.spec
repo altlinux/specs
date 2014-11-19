@@ -1,7 +1,7 @@
 
 Name: speech-dispatcher
-Version: 0.8
-Release: alt2
+Version: 0.8.1
+Release: alt1
 License: %gpl2plus
 Group: Sound
 Summary: A speech output processing service
@@ -171,6 +171,9 @@ This python module allows programmsaccess speech-dispatcher service.
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Nov 18 2014 Paul Wolneykien <manowar@altlinux.org> 0.8.1-alt1
+- Freshed up to v0.8.1 with the help of cronbuild and update-source-functions.
+
 * Wed Jul 03 2013 Paul Wolneykien <manowar@altlinux.org> 0.8-alt2
 - Require speech-dispatcher in all modules.
 - Exclude the static libs.
