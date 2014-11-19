@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 0.12.1
-Release: alt1.dev.git20140925
+Version: 0.12.2
+Release: alt1.dev.git20141022
 Group: Development/Python
 License: BSD License
 Summary: Creating delicious APIs for Django apps since 2010
@@ -100,6 +100,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.2-alt1.dev.git20141022
+- Version 0.12.2-dev
+
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.1-alt1.dev.git20140925
 - Version 0.12.1-dev
 
