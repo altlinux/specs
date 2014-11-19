@@ -2,7 +2,7 @@
 
 Name: libvdpau
 Version: 0.8
-Release: alt1
+Release: alt2
 Epoch: 1
 Group: System/Libraries
 Summary: VDPAU library
@@ -10,6 +10,7 @@ Url: http://cgit.freedesktop.org/~aplattner/libvdpau
 License: Nvidia Free
 
 Source: %name-%version.tar
+Patch1: alt-allow-force-flash.patch
 
 Provides: libvdpau1 = %version-%release
 Obsoletes: libvdpau1
@@ -50,6 +51,7 @@ Documentation for VDPAU library
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -76,6 +78,9 @@ Documentation for VDPAU library
 %docdir/html
 
 %changelog
+* Wed Nov 19 2014 Sergey V Turchin <zerg@altlinux.org> 1:0.8-alt2
+- allow to force flash workaround in vdpau_wrapper.cfg
+
 * Wed Nov 19 2014 Sergey V Turchin <zerg@altlinux.org> 1:0.8-alt1
 - new version
 
