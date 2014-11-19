@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.18
-Release: alt3
+Version: 1.0.0
+Release: alt1
 Summary: Python implementation of subunit test streaming protocol
 License: Apache or BSD
 Group: Development/Python
@@ -14,12 +14,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
-BuildPreReq: python-module-testtools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-testtools python-module-mimeparse
+BuildPreReq: python-module-testscenarios
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-testtools python-tools-2to3
+BuildPreReq: python3-module-mimeparse
+BuildPreReq: python3-module-testscenarios
 %endif
 
 Provides: python-module-python-%oname = %EVR
@@ -122,6 +125,14 @@ popd
 
 %python_install
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc NEWS README
 %_bindir/*
@@ -146,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
+- Version 1.0.0
+
 * Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.18-alt3
 - Added necessary obsoletes
 
