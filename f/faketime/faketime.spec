@@ -1,6 +1,6 @@
 Name: faketime
 Version: 0.2.5
-Release: alt1
+Release: alt2
 
 Summary: Execute program with changed notion of system time
 License: GPLv3+
@@ -9,7 +9,7 @@ Group: Development/Other
 # git://git.altlinux.org/gears/f/faketime.git
 Source: %name-%version.tar
 
-BuildRequires: help2man, gnulib >= 0.0.7902.92f3a4c
+BuildRequires: help2man, gnulib >= 0.1.585.2fda85
 
 %description
 The faketime utility helps to execute programs with changed notion of
@@ -35,12 +35,22 @@ rm %buildroot%_libdir/*.la
 %check
 %make_build -k check
 
+cat > exp <<'EOF'
+Fri Feb 13 20:44:50 UTC 2009
+EOF
+LC_ALL=C TZ=UTC LD_LIBRARY_PATH=%buildroot%_libdir \
+	%buildroot%_bindir/faketime -d '1970-01-01 1234557890 seconds' -- date > out
+diff exp out
+
 %files
 %_bindir/*
 %_libdir/*.so
 %_man1dir/*
 
 %changelog
+* Wed Oct 07 2015 Dmitry V. Levin <ldv@altlinux.org> 0.2.5-alt2
+- Built with gnulib v0.1-585-g2fda85e.
+
 * Wed Apr 17 2013 Dmitry V. Levin <ldv@altlinux.org> 0.2.5-alt1
 - Converted from getdate to parse_datetime gnulib module.
 - Enabled gnulib testsuite.

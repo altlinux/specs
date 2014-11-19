@@ -1,6 +1,6 @@
 Name: gnulib
 Version: 0.1.585.2fda85
-Release: alt1
+Release: alt2
 
 Summary: GNU Portability Library
 License: Freely distributable
@@ -8,7 +8,8 @@ Group: Development/C
 BuildArch: noarch
 Url: http://www.gnu.org/software/gnulib/
 Source: %name-%version.tar
-Patch: gnulib-alt-utimens.patch
+Patch1: gnulib-alt-utimens.patch
+Patch2: gnulib-alt-mktime-internal.patch
 AutoReqProv: no
 BuildRequires: gnu-config makeinfo
 
@@ -23,7 +24,9 @@ source repository.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+
 install -pm755 %_datadir/gnu-config/config.{guess,sub} build-aux/
 # Thanks to USE_POSIX_THREADS_WEAK feature, we have to link
 # tests with @LIBMULTITHREAD@ in --no-as-needed mode.
@@ -50,6 +53,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Wed Oct 07 2015 Dmitry V. Levin <ldv@altlinux.org> 0.1.585.2fda85-alt2
+- Hacked forced mktime replacement out of mktime-internal module.
+
 * Tue Oct 06 2015 Dmitry V. Levin <ldv@altlinux.org> 0.1.585.2fda85-alt1
 - Updated to gnulib snapshot v0.1-585-g2fda85e.
 

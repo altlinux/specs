@@ -1,6 +1,6 @@
 Name: sed
-Version: 4.2.2
-Release: alt4
+Version: 4.2.2.0.93.31c8
+Release: alt1
 Epoch: 1
 
 Summary: A GNU stream text editor
@@ -19,7 +19,7 @@ Patch: %srcname.patch
 
 %def_enable selinux
 
-BuildRequires: makeinfo, gnulib >= 0.1.58.0f3a662
+BuildRequires: makeinfo, gnulib >= 0.1.585.2fda85
 
 # for acl copying support.
 BuildRequires: libacl-devel
@@ -40,15 +40,9 @@ specified in a script file or from the command line.
 # Build scripts expect to find package version in this file.
 echo -n %version-%release > .tarball-version
 
-# Fix "gettext infrastructure mismatch" error.
-sed -i 's/^\(AM_GNU_GETTEXT_VERSION\).*/\1('"$(gettext --version | sed -n 's/^gettext.* \([0-9][^ ]*\)$/\1/p')"')/' configure.ac
-
 # Generate LINGUAS file.
 ls po/*.po 2>/dev/null |
 	sed 's|.*/||; s|\.po$||' > po/LINGUAS
-
-# Use bootstrap from gnulib
-install -pm755 %_datadir/gnulib/build-aux/bootstrap .
 
 # Compress docs for packaging.
 bzip2 -9 doc/*.txt
@@ -79,9 +73,14 @@ bzip2 -9k NEWS
 %_bindir/*
 %_mandir/man?/*
 %_infodir/*.info*
-%doc BUGS NEWS.bz2 README THANKS doc/*.txt.bz2
+%doc BUGS NEWS.bz2 README doc/*.txt.bz2
 
 %changelog
+* Mon Aug 24 2015 Dmitry V. Levin <ldv@altlinux.org> 1:4.2.2.0.93.31c8-alt1
+- Updated to v4.2.2-93-g31c84cb.
+- Updated translations from translationproject.org.
+- Built with gnulib v0.1-585-g2fda85e.
+
 * Tue Jan 07 2014 Dmitry V. Levin <ldv@altlinux.org> 1:4.2.2-alt4
 - Updated translations from translationproject.org.
 - Built with gnulib v0.1-58-g0f3a662.
