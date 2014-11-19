@@ -1,7 +1,7 @@
 %define docdir %_docdir/%name
 
 Name: libvdpau
-Version: 0.7
+Version: 0.8
 Release: alt1
 Epoch: 1
 Group: System/Libraries
@@ -76,6 +76,12 @@ Documentation for VDPAU library
 %docdir/html
 
 %changelog
+* Wed Nov 19 2014 Sergey V Turchin <zerg@altlinux.org> 1:0.8-alt1
+- new version
+
+* Wed Jan 15 2014 Sergey V Turchin <zerg@altlinux.org> 1:0.7-alt0.M70P.1
+- built for M70P
+
 * Mon Sep 02 2013 Sergey V Turchin <zerg@altlinux.org> 1:0.7-alt1
 - new version
 
