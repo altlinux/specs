@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.5.1
-Release: alt1.git20140715
+Version: 1.2.6.1
+Release: alt1.git20141107
 Summary: Jmbo generic behaviour/templates app
 License: BSD
 Group: Development/Python
@@ -111,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6.1-alt1.git20141107
+- Version 1.2.6.1
+
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.5.1-alt1.git20140715
 - Initial build for Sisyphus
 
