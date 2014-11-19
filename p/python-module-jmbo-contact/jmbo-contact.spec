@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.1
-Release: alt1.git20120801
+Version: 0.1.2
+Release: alt1.git20141107
 Summary: Jmbo contact form app
 License: BSD
 Group: Development/Python
@@ -67,6 +67,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20141107
+- Version 0.1.2
+
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20120801
 - Initial build for Sisyphus
 
