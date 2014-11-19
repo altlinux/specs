@@ -9,7 +9,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -110,6 +110,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Nov 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt2
+- rebuilt with libsoundtouch-1.8.0
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
 - 1.4.4
 
