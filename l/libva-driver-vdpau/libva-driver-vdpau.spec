@@ -1,6 +1,6 @@
 Name: libva-driver-vdpau
 Version: 0.7.4
-Release: alt1
+Release: alt2
 
 Summary: VDPAU-based backend for VA API
 License: GPLv2
@@ -32,6 +32,9 @@ Video decode driver for NVIDIA chipsets (VDPAU implementation)
 %_libdir/dri/*.so
 
 %changelog
+* Wed Nov 19 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.4-alt2
+- rebuilt with libva 1.4
+
 * Fri Jan 24 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.4-alt1
 - 0.7.4
 
