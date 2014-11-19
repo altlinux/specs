@@ -1,10 +1,10 @@
 %define oname furl
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 0.3.95
-Release: alt1.git20140717
+Version: 0.4.0
+Release: alt1.git20141118
 Summary: URL manipulation made simple
 License: Public domain
 Group: Development/Python
@@ -82,6 +82,10 @@ popd
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20141118
+- Version 0.4.0
+- Added module for Python 3
+
 * Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.95-alt1.git20140717
 - Initial build for Sisyphus
 
