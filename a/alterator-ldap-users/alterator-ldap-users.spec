@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ldap-users
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Source: %name-%version.tar
@@ -42,6 +42,9 @@ Alterator module for local and ldap users administration
 %_datadir/alterator/type/*
 
 %changelog
+* Wed Nov 19 2014 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt1
+- Fix email list.
+
 * Thu Nov 06 2014 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
 - Hide user settings if no user is selected.
 
