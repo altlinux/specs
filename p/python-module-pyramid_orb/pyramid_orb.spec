@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.1
-Release: alt1.git20141110
+Version: 1.1.2
+Release: alt1.git20141118
 Summary: Bindings for the pyramid webframework and the ORB database ORM library
 License: LGPLv3
 Group: Development/Python
@@ -37,6 +37,7 @@ Summary: Bindings for the pyramid webframework and the ORB database ORM library
 Group: Development/Python3
 %py3_provides %oname
 %py3_requires webhelpers projex
+%add_python3_req_skip orb
 
 %description -n python3-module-%oname
 The pyramid_orb project is aimed at providing an integration layer
@@ -88,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.git20141118
+- Version 1.1.2
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20141110
 - Initial build for Sisyphus
 
