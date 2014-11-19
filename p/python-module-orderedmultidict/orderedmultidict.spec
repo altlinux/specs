@@ -1,10 +1,10 @@
 %define oname orderedmultidict
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 0.7.3
-Release: alt1.git20140705
+Version: 0.7.4
+Release: alt1.git20141118
 Summary: Ordered Multivalue Dictionary - omdict
 License: Public domain
 Group: Development/Python
@@ -16,9 +16,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-six
 %endif
 
 %py_provides %oname
@@ -88,6 +90,10 @@ popd
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.4-alt1.git20141118
+- Version 0.7.4
+- Added module for Python 3
+
 * Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1.git20140705
 - Initial build for Sisyphus
 
