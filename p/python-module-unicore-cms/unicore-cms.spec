@@ -4,14 +4,16 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.0.13
-Release: alt1.git20141111
+Version: 1.1.1
+Release: alt1.git20141119
 Summary: JSON based CMS for Universal Core
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/unicore-cms/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/praekelt/unicore-cms.git
+# https://github.com/universalcore/unicore-cms.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -143,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20141119
+- Version 1.1.1
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.13-alt1.git20141111
 - Version 1.0.13
 
