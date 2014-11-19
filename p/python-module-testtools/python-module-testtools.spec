@@ -1,10 +1,11 @@
 %define oname testtools
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 1.1.0
-Release: alt2
+Version: 1.4.0
+Release: alt1
 Summary: extensions to the Python standard library's unit testing framework
 
 Group: Development/Python
@@ -15,11 +16,16 @@ Source: %name-%version.tar
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-unittest2 python-module-mimeparse
+BuildRequires: python-module-six python-module-argparse
 BuildRequires: python-module-sphinx-devel python-module-extras
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-unittest2 python3-module-mimeparse
+BuildRequires: python3-module-six python3-module-argparse
+BuildPreReq: python3-module-extras
 %endif
 
 %description
@@ -67,6 +73,7 @@ sources.
 %setup
 
 sed -i 's|python-mimeparse|mimeparse|' setup.py
+sed -i "s|.*unittest2.*||" setup.py
 
 %prepare_sphinx .
 ln -s ../objects.inv doc/
@@ -98,6 +105,14 @@ popd
 
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %python_sitelibdir/testtools*
 %doc LICENSE NEWS README*
@@ -116,6 +131,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1
+- Version 1.4.0
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2
 - Fixed requirements
 
