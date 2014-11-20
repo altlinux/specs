@@ -3,8 +3,8 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        0.9.1
-Release:        alt1.1
+Version:        0.9.2
+Release:        alt1
 Summary:        Python bindings for the Apache Thrift RPC system
 License:        Apache-2.0
 Group:          Development/Python
@@ -71,18 +71,21 @@ popd
 %endif
 
 %files
-%doc README
+#doc README
 %{python_sitelibdir}/%oname-%{version}-py?.?.egg-info
 %{python_sitelibdir}/%oname
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README
+#doc README
 %{python3_sitelibdir}/%oname-%{version}-py?.?.egg-info
 %{python3_sitelibdir}/%oname
 %endif
 
 %changelog
+* Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1
+- Version 0.9.2
+
 * Tue Sep 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.1
 - Added module for Python 3
 
