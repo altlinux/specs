@@ -6,7 +6,7 @@
 
 %define teuver 10
 Name: dakota
-Version: 6.0
+Version: 6.1
 %define somver 0
 %define sover %somver.0.0
 Release: alt1
@@ -365,6 +365,9 @@ install -m644 \
 %_libdir/*.a
 
 %changelog
+* Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:6.1-alt1
+- Version 6.1
+
 * Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:6.0-alt1
 - Version 6.0
 
