@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.5
-Release: alt1.git20140614
+Version: 0.0.6
+Release: alt1.git20141118
 Summary: converts and manipulates various color representation (HSL, RVB, web, X11, ...)
 License: BSD
 Group: Development/Python
@@ -114,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1.git20141118
+- Version 0.0.6
+
 * Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1.git20140614
 - Initial build for Sisyphus
 
