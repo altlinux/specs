@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.2
-Release: alt1.git20140714
+Version: 0.8.3
+Release: alt1.git20141113
 
 Summary:  Sliding window memory map manager
 
@@ -13,15 +13,18 @@ Group: Development/Python
 Url: git://github.com/Byron/smmap.git
 
 Source: %name-%version.tar
-Patch: smmap-alt-docs.patch
 
 %setup_python_module %oname
 
-BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-nose python-module-nosexcover
+BuildPreReq: python-module-coverage
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose python3-module-nosexcover
+BuildPreReq: python3-module-coverage
 %endif
 
 BuildArch: noarch
@@ -58,7 +61,6 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -88,6 +90,14 @@ popd
 export PYTHONOPATH=%buildroot%python_sitelibdir
 %make -C doc html
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc README.md doc/build/html
 %python_sitelibdir/%modulename/
@@ -109,6 +119,9 @@ export PYTHONOPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20141113
+- Version 0.8.3
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.git20140714
 - New snapshot
 - Added module for Python 3
