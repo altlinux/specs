@@ -18,14 +18,14 @@
 %define altlinux 1
 
 Name:           osc
-Version:        0.147.0
+Version:        0.149.0
 Release:        alt1
 License:        GPLv2+
 Summary:        openSUSE Build Service Commander
 Url:            http://www.gitorious.org/opensuse/osc
 Group:          Development/Tools
 Source:         %{name}-%{version}.tar.gz
-Packager: Denis Pynkin <dans@altlinux.org>
+Packager:       Denis Pynkin <dans@altlinux.org>
 
 %if !0%{?altlinux}
 %if 0%{?mandriva_version} < 02010
@@ -152,6 +152,13 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Nov 20 2014 Denis Pynkin <dans@altlinux.org> 0.149.0-alt1
+- New version
+
+* Tue Nov 18 2014 Denis Pynkin <dpynkin@infoblox.com> 0.147.0-alt2
+- Added patch for kernel and initrd options in config:
+  build-kernel and build-initrd
+
 * Mon Sep 08 2014 Denis Pynkin <dans@altlinux.org> 0.147.0-alt1
 - New version
 
