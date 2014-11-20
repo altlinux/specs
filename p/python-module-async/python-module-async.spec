@@ -1,39 +1,161 @@
-Name: python-module-async
-Version: 0.6.1
-Release: alt1.1.1
+%define oname async
 
-Summary: Contains the async project data
+%def_with python3
+%def_disable check
+
+Name: python-module-%oname
+Version: 0.6.2
+Release: alt1
+
+Summary: Async Framework
 
 License: BSD
 Group: Development/Python
 Url: http://pypi.python.org/pypi/GitPython/
 
 Source: %name-%version.tar
+BuildArch: noarch
 
-%setup_python_module async
+%setup_python_module %oname
 
-# Automatically added by buildreq on Fri Oct 08 2010
-BuildRequires: python-devel zlib-devel
-
-BuildRequires: python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-nose
+BuildPreReq: python-module-sphinx-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose
+%endif
 
 %description
-Contains the async project data.
+Async is a framework to process interdependent tasks in a pool of
+workers.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+Async is a framework to process interdependent tasks in a pool of
+workers.
+
+This package contains tests for %oname.
+
+%package pickles
+Summary: Pickles for %oname
+Group: Development/Python
+
+%description pickles
+Async is a framework to process interdependent tasks in a pool of
+workers.
+
+This package contains pickles for %oname.
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+Async is a framework to process interdependent tasks in a pool of
+workers.
+
+This package contains documentation for %oname.
+
+%package -n python3-module-%oname
+Summary: Async Framework
+Group: Development/Python3
+%py3_provides %oname
+
+%description -n python3-module-%oname
+Async is a framework to process interdependent tasks in a pool of
+workers.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+Async is a framework to process interdependent tasks in a pool of
+workers.
+
+This package contains tests for %oname.
 
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%prepare_sphinx doc
+ln -s ../objects.inv doc/source/
+
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+%make -C doc pickle
+%make -C doc html
+
+cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
-%python_sitelibdir/%modulename/
+%doc AUTHORS *.md
+%python_sitelibdir/%oname
 %python_sitelibdir/*.egg-info
+%exclude %python_sitelibdir/%oname/pickle
+%exclude %python_sitelibdir/%oname/test
+
+%files tests
+%python_sitelibdir/%oname/test
+
+%files pickles
+%python_sitelibdir/%oname/pickle
+
+%files docs
+%doc doc/build/html/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc AUTHORS *.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/%oname/test
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/test
+%endif
 
 %changelog
+* Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1
+- Version 0.6.2
+- Added module for Python 3
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.1-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
