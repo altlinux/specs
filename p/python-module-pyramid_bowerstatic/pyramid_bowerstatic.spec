@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2
-Release: alt1.dev0.git20141108
+Version: 0.4
+Release: alt1.dev0.git20141119
 Summary: BowerStatic integration for Pyramid
 License: BSD
 Group: Development/Python
@@ -121,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.dev0.git20141119
+- Version 0.4.dev0
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.dev0.git20141108
 - Initial build for Sisyphus
 
