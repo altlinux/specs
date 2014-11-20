@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.29
-Release: alt1.git20140316
+Release: alt2.git20140316
 Summary: A command line application framework
 License: MIT
 Group: Development/Python
@@ -27,6 +27,7 @@ BuildPreReq: python3-module-nose python3-module-Cython
 %endif
 
 %py_provides %oname
+%py_requires requests yaml json
 
 %description
 Naked is a new Python command line application framework that is in
@@ -47,6 +48,7 @@ This package contains test for %oname.
 Summary: A command line application framework
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires requests yaml
 
 %description -n python3-module-%oname
 Naked is a new Python command line application framework that is in
@@ -176,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.29-alt2.git20140316
+- Added necessary requirements
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.29-alt1.git20140316
 - Initial build for Sisyphus
 
