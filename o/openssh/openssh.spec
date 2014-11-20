@@ -1,6 +1,6 @@
 Name: openssh
-Version: 6.6p1
-Release: alt3
+Version: 6.7p1
+Release: alt1
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: BSD-style
@@ -25,7 +25,7 @@ Requires: %name-clients = %version-%release
 Requires: %name-server = %version-%release
 
 # Automatically added by buildreq on Wed Apr 04 2007
-BuildRequires: libssl-devel libwrap-devel pam_userpass-devel zlib-devel
+BuildRequires: libssl-devel pam_userpass-devel zlib-devel
 %{?_with_libedit:BuildRequires: libedit-devel}
 %{?_with_libaudit:BuildRequires: libaudit-devel}
 %{?_with_kerberos5:BuildRequires: libkrb5-devel}
@@ -154,7 +154,6 @@ not invoked directly.
 
 %prep
 %setup -n %name-%version-%release
-bzip2 -9k ChangeLog
 
 %build
 %autoreconf
@@ -175,7 +174,6 @@ export ac_cv_path_xauth_path=/usr/bin/xauth
 	--disable-strip \
 	--with-mantype=doc \
 	--with-pam \
-	--with-tcp-wrappers \
 	--with-ipaddr-display \
 	--with-privsep-user=sshd \
 	--with-privsep-path=%_chrootdir \
@@ -225,7 +223,7 @@ install -p -m755 alt/ssh-askpass.{sh,csh} \
 	%buildroot%_sysconfdir/profile.d/
 
 mkdir -p %buildroot%docdir
-install -pm644 ChangeLog.bz2 CREDITS LICENCE README* PROTOCOL* alt/[CR]* alt/faq.html \
+install -pm644 CREDITS LICENCE README* PROTOCOL* alt/[CR]* alt/faq.html \
 	%buildroot%docdir/
 
 %pre clients
@@ -343,6 +341,9 @@ printf 'op\nsgr0\n' | tput -S 2>/dev/null ||:
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Thu Nov 20 2014 Dmitry V. Levin <ldv@altlinux.org> 6.7p1-alt1
+- Updated to 6.7p1-29-g51b64e4.
+
 * Fri Apr 25 2014 Dmitry V. Levin <ldv@altlinux.org> 6.6p1-alt3
 - ssh-agent: fixed unintended socket removal (closes: #30029).
 
