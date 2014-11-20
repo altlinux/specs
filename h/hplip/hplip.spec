@@ -16,7 +16,7 @@
 %endif
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
-Version: 3.14.6
+Version: 3.14.10
 Release: alt1
 License: GPL/MIT/BSD
 Group: Publishing
@@ -41,6 +41,9 @@ Requires: %name-hpcups = %version-%release
 # Main package requires wget to avoid
 # misleading errors about network connectivity (fc bug #705843).
 Requires: wget
+
+# for hplip/base/validation.py (fc bug #1118724).
+Requires: gnupg
 
 %if_enabled python_code
 ###Requires: python
@@ -100,25 +103,29 @@ Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.
 Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
 
 # fedora patches
-Patch101: fedora-3.14.6-4-hplip-pstotiff-is-rubbish.patch
-Patch102: fedora-3.14.6-4-hplip-strstr-const.patch
-Patch103: fedora-3.14.6-4-hplip-ui-optional.patch
-Patch104: fedora-3.14.6-4-hplip-no-asm.patch
-Patch105: fedora-3.14.6-4-hplip-deviceIDs-drv.patch
-Patch106: fedora-3.14.6-4-hplip-udev-rules.patch
-Patch107: fedora-3.14.6-4-hplip-retry-open.patch
-Patch108: fedora-3.14.6-4-hplip-snmp-quirks.patch
-Patch109: fedora-3.14.6-4-hplip-hpijs-marker-supply.patch
-Patch110: fedora-3.14.6-4-hplip-clear-old-state-reasons.patch
-Patch111: fedora-3.14.6-4-hplip-hpcups-sigpipe.patch
-Patch112: fedora-3.14.6-4-hplip-logdir.patch
-Patch113: fedora-3.14.6-4-hplip-bad-low-ink-warning.patch
-Patch114: fedora-3.14.6-4-hplip-deviceIDs-ppd.patch
-Patch115: fedora-3.14.6-4-hplip-ppd-ImageableArea.patch
-Patch116: fedora-3.14.6-4-hplip-scan-tmp.patch
-Patch117: fedora-3.14.6-4-hplip-codec.patch
-Patch118: fedora-3.14.6-4-hplip-log-stderr.patch
-Patch119: fedora-3.14.6-4-hplip-avahi-parsing.patch
+Patch101: fedora-3.14.10-4-hplip-pstotiff-is-rubbish.patch
+Patch102: fedora-3.14.10-4-hplip-strstr-const.patch
+Patch103: fedora-3.14.10-4-hplip-ui-optional.patch
+Patch104: fedora-3.14.10-4-hplip-no-asm.patch
+Patch105: fedora-3.14.10-4-hplip-deviceIDs-drv.patch
+Patch106: fedora-3.14.10-4-hplip-udev-rules.patch
+Patch107: fedora-3.14.10-4-hplip-retry-open.patch
+Patch108: fedora-3.14.10-4-hplip-snmp-quirks.patch
+Patch109: fedora-3.14.10-4-hplip-hpijs-marker-supply.patch
+Patch110: fedora-3.14.10-4-hplip-clear-old-state-reasons.patch
+Patch111: fedora-3.14.10-4-hplip-hpcups-sigpipe.patch
+Patch112: fedora-3.14.10-4-hplip-logdir.patch
+Patch113: fedora-3.14.10-4-hplip-bad-low-ink-warning.patch
+Patch114: fedora-3.14.10-4-hplip-deviceIDs-ppd.patch
+Patch115: fedora-3.14.10-4-hplip-ppd-ImageableArea.patch
+Patch116: fedora-3.14.10-4-hplip-scan-tmp.patch
+Patch117: fedora-3.14.10-4-hplip-codec.patch
+Patch118: fedora-3.14.10-4-hplip-log-stderr.patch
+Patch119: fedora-3.14.10-4-hplip-avahi-parsing.patch
+Patch120: fedora-3.14.10-4-hplip-reportlab.patch
+Patch121: fedora-3.14.10-4-hplip-device_open.patch
+#TODO:Fixed build against libjpeg-turbo 1.3.90.
+#Patch122: fedora-3.14.10-4-hplip-jpeg.patch
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -408,6 +415,7 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 # LaserJet Professional P1102w (bug #795958)
 # Color LaserJet CM4540 MFP (bug #968177)
 # Color LaserJet cp4005 (bug #980976)
+# HP LaserJet Professional M1132 MFP (bug #1158743)
 %patch105 -p1 -b .deviceIDs-drv
 chmod +x %{SOURCE102}
 mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
@@ -457,6 +465,7 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 # Designjet T770 (bug #747957)
 # Color LaserJet CM4540 MFP (bug #968177)
 # Color LaserJet cp4005 (bug #980976)
+# HP LaserJet Color M451dn (bug #1159380)
 %patch114 -p1 -b .deviceIDs-ppd
 
 # Fix ImageableArea for Laserjet 8150/9000 (bug #596298).
@@ -473,6 +482,17 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 
 # Fix parsing of avahi-daemon output (bug #1096939).
 %patch119 -p1 -b .parsing
+
+# Fixed version comparisons for x.y.z-style versions such as
+# reportlab (bug #1121433).
+%patch120 -p1 -b .reportlab
+
+# Fixed incorrect name in function call in makeURI when a parallel
+# port device is used (bug #1159161).
+%patch121 -p1 -b .device_open
+
+# Fixed build against libjpeg-turbo 1.3.90.
+#patch122 -p1 -b .jpeg
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -956,6 +976,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Nov 20 2014 Igor Vlasenko <viy@altlinux.ru> 3.14.10-alt1
+- new version
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 3.14.6-alt1
 - new version (closes: #30203)
 
