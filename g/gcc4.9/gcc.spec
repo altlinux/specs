@@ -8,8 +8,8 @@
 %define if_gcc_arch() %if %(A='%{?_cross_platform:%_cross_platform}%{!?_cross_platform:%_target_platform}'; [ %1 = ${A%%%%-*} ] && echo 1 || echo 0)
 
 Name: gcc%gcc_branch
-Version: 4.9.1
-Release: alt2
+Version: 4.9.2
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -23,8 +23,8 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define priority 491
-%define snapshot 20141024
+%define priority 492
+%define snapshot 20141101
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -164,6 +164,7 @@ Patch112: gcc49-no-add-needed.patch
 Patch114: gcc49-pr56493.patch
 Patch115: gcc49-color-auto.patch
 Patch117: gcc49-aarch64-async-unw-tables.patch
+Patch119: gcc49-pr63659.patch
 
 
 # Debian patches.
@@ -1083,6 +1084,7 @@ version %version.
 %patch114 -p0
 %patch115 -p0
 %patch117 -p0
+%patch119 -p0
 
 # Debian patches.
 %patch200 -p2
@@ -2327,6 +2329,10 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Thu Nov 13 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt1
+- Updated to redhat/gcc-4_9-branch r216995.
+- Synced with Fedora gcc-4.9.2-1.
+
 * Mon Oct 27 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.1-alt2
 - Updated to redhat/gcc-4_9-branch r216625.
 - Synced with Fedora gcc-4.9.1-13.
