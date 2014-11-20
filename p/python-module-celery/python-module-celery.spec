@@ -1,10 +1,11 @@
 %define module_name celery
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%module_name
-Version: 3.1.16
-Release: alt1.git20141003
+Version: 3.1.17
+Release: alt1.git20141119
 Group: Development/Python
 License: BSD License
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
@@ -113,6 +114,14 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs html
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc Changelog *.txt *.rst TODO
 %_bindir/*
@@ -132,6 +141,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.17-alt1.git20141119
+- Version 3.1.17
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.16-alt1.git20141003
 - Version 3.1.16
 
