@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.22
+Version: 0.0.24
 Release: alt1.git20141119
 Summary: Provider JSON - Command Line Utitlity and Python Library
 License: Public domain
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.24-alt1.git20141119
+- Version 0.0.24
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.22-alt1.git20141119
 - Initial build for Sisyphus
 
