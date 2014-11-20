@@ -1,5 +1,5 @@
-%define version 2.5.1
-%define release alt1.git20141028
+%define version 2.5.2
+%define release alt1.git20141119
 %define modulename markdown
 
 %def_with python3
@@ -103,6 +103,9 @@ ln -s %{modulename}_py %buildroot%_bindir/%modulename
 %endif
 
 %changelog
+* Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.2-alt1.git20141119
+- Version 2.5.2
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt1.git20141028
 - Version 2.5.1
 
