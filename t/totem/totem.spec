@@ -32,13 +32,20 @@
 %def_disable jamendo
 
 Name: totem
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Movie player for GNOME 3
 Group: Video
 License: GPL%def_disable static
 URL: http://www.gnome.org/projects/totem
+
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%endif
+Source1: totem-bin-backend-ondemand.sh
 
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
@@ -58,13 +65,6 @@ Requires: gst-plugins-bad%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 Requires: gst-libav
 Requires: iso-codes
-
-%if_enabled snapshot
-Source: %name-%version.tar
-%else
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-%endif
-Source1: totem-bin-backend-ondemand.sh
 
 # use python3
 AutoReqProv: nopython
@@ -277,9 +277,6 @@ used by other applications like filemanagers.
 
 %prep
 %setup
-subst 's/APPDATA_XML/APPSTREAM_XML/
-    s/appdata_/appstream_/g' configure.ac data/appdata/Makefile.am
-
 [ ! -d m4 ] && mkdir m4
 
 %build
@@ -410,6 +407,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Thu Nov 20 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Tue Nov 18 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
 - used APPSTREAM_XML instead of APPDATA_XML
 - used python3
