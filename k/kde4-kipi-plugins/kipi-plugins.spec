@@ -4,7 +4,7 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 4.4.0
+Version: 4.5.0
 Release: alt1
 
 Group: Graphics
@@ -19,8 +19,8 @@ Source2: %rname-doc-%version.tar
 Source10: FindOpenCV.cmake
 Source11: FindKSane.cmake
 Source12: FindKipi.cmake
-Patch1: kipi-plugins-2.6.0-arm-cast-to-qreal.patch
-Patch2: kipi-plugins-4.0.0-alt-lib-version.patch
+Patch1: alt-arm-cast-to-qreal.patch
+Patch2: alt-lib-version.patch
 
 Requires: %name-core = %version-%release
 Requires: %name-expoblending = %version-%release
@@ -160,6 +160,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Thu Nov 20 2014 Sergey V Turchin <zerg@altlinux.org> 4.5.0-alt1
+- new version
+
 * Fri Oct 10 2014 Sergey V Turchin <zerg@altlinux.org> 4.4.0-alt1
 - new version
 
