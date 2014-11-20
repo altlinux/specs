@@ -1,11 +1,14 @@
 Name: zpaq
-Version: 622
+Version: 655
 Release: alt1
+
 Summary: A journaling archiver optimized for backup
+
 Group: Archiving/Compression
 License: GPLv3
-Source: %name%version.zip
 Url: http://mattmahoney.net/dc/zpaq.html
+
+Source: http://mattmahoney.net/dc/%name%version.zip
 
 # Automatically added by buildreq on Thu Mar 21 2013
 # optimized out: libstdc++-devel
@@ -45,12 +48,13 @@ development environment.
 %add_optflags -Wall
 g++ %optflags -Dunix -shared -fPIC libzpaq.cpp -Wl,-soname,%name.so.0 -o lib%name.so.0 -lm
 ln -s lib%name.so.0 lib%name.so
-g++ %optflags -Dunix -DNDEBUG -fopenmp zpaq.cpp divsufsort.c -L.  -o zpaq -l%name -lm
-g++ %optflags -Dunix zpaqd.cpp -L. -l%name -o zpaqd -L. -lzpaq -lm
+gcc %optflags -c -DNDEBUG divsufsort.c
+g++ %optflags -Dunix -DNDEBUG -fopenmp zpaq.cpp divsufsort.o -L.  -o zpaq -l%name -lm
+#g++ %optflags -Dunix zpaqd.cpp -L. -l%name -o zpaqd -L. -lzpaq -lm
 
 %install
 install -D zpaq %buildroot%_bindir/zpaq
-install -D zpaq zpaqd %buildroot%_bindir/
+install -D zpaq %buildroot%_bindir/
 install -D lib%name.so.0 %buildroot%_libdir/lib%name.so.0
 install -D libzpaq.h %buildroot%_includedir/libzpaq.h
 ln -s lib%name.so.0 %buildroot%_libdir/lib%name.so
@@ -67,6 +71,9 @@ ln -s lib%name.so.0 %buildroot%_libdir/lib%name.so
 %_includedir/*.h
 
 %changelog
+* Thu Nov 20 2014 Vitaly Lipatov <lav@altlinux.ru> 655-alt1
+- new version 655 (with rpmrb script) (ALT bug #30313)
+
 * Thu Mar 21 2013 Fr. Br. George <george@altlinux.ru> 622-alt1
 - Autobuild version bump to 622
 
