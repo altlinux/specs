@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1.git20141110
+Release: alt1.git20141119
 Summary: Customizable User Account Management for Flask
 License: BSD
 Group: Development/Python
@@ -171,6 +171,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20141119
+- New snapshot
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20141110
 - Version 0.6.1
 
