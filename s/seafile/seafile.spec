@@ -1,6 +1,7 @@
 Name: seafile
-Version: 3.1.5
-Release: alt2
+Version: 3.1.11
+Release: alt1
+
 Summary: Full-fledged cloud storage platform
 
 Group: Networking/File transfer
@@ -27,7 +28,7 @@ BuildRequires: intltool libssl-devel libuuid-devel python-module-mwlib python-mo
 BuildRequires: zlib-devel libfuse-devel vala libjansson-devel libjson-glib-devel
 
 BuildRequires: libsearpc-devel >= 3.0.4
-BuildRequires: libccnet-devel >= 3.1.0
+BuildRequires: libccnet-devel >= 3.1.11
 
 BuildRequires: libsqlite3-devel >= 3.7
 BuildRequires: libevent-devel >= 2.0
@@ -37,7 +38,7 @@ BuildRequires: libarchive-devel >= 2.8.5
 BuildRequires: libzdb-devel >= 2.12
 BuildRequires: libevhtp-devel >= 1.2.9
 
-Requires: ccnet >= 3.1.0
+Requires: ccnet >= 3.1.11
 
 %description
 Seafile is a next-generation open source cloud storage system
@@ -157,6 +158,9 @@ install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/nginx.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Fri Nov 21 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.11-alt1
+- new version 3.1.11 (with rpmrb script)
+
 * Sun Aug 31 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.5-alt2
 - separate seafile fuse client
 - add nginx server config

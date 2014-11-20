@@ -1,5 +1,5 @@
 Name: ccnet
-Version: 3.1.5
+Version: 3.1.11
 Release: alt1
 
 Summary: Framework for writing networked applications in C
@@ -101,6 +101,9 @@ Ccnet python module.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Fri Nov 21 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.11-alt1
+- new version 3.1.11 (with rpmrb script)
+
 * Thu Aug 28 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.5-alt1
 - new version 3.1.5 (with rpmrb script)
 
