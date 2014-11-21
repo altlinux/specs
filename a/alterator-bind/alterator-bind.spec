@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-bind
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Source:%name-%version.tar
@@ -49,6 +49,9 @@ alterator module to create and manage dynamic dns
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Fri Nov 21 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1
+- Fix key upload input decoration as button (class "btn")
+
 * Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 0.9.3-alt1
 - Use alterator-service-functions.
 
