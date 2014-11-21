@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-lxml
-Version: 3.3.5
-Release: alt1.git20140418
+Version: 3.4.1
+Release: alt1.git20141120
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 
@@ -15,8 +15,6 @@ Source: %name-%version.tar
 License: BSD/GPLv2/ZPL/PSF
 Group: Development/Python
 URL: http://codespeak.net/lxml
-
-Packager: Python Development Team <python@packages.altlinux.org>
 
 BuildPreReq: libxslt-devel python-module-distribute zlib-devel
 # see doc/build.txt
@@ -134,6 +132,9 @@ popd
 %doc doc samples
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.1-alt1.git20141120
+- Version 3.4.1
+
 * Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.5-alt1.git20140418
 - Version 3.3.5
 
