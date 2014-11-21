@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.54
-Release: alt1.dev0.git20141110
+Release: alt1.dev0.git20141121
 
 Summary: Software releasing made easy and repeatable
 License: GPLv2+
@@ -171,6 +171,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.54-alt1.dev0.git20141121
+- New snapshot
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.54-alt1.dev0.git20141110
 - Version 3.54.dev0
 
