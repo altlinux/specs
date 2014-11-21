@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 Summary: extensions to the Python standard library's unit testing framework
 
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1
+- Version 1.5.0
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1
 - Version 1.4.0
 
