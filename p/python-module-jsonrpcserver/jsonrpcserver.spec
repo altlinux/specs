@@ -4,7 +4,7 @@
 %def_without python2
 
 Name: python-module-%oname
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 Summary: JSON-RPC 2.0 server library
 License: LGPL
@@ -113,15 +113,18 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*_test.*
-%exclude %python3_sitelibdir/*/*/*_test.*
+#exclude %python3_sitelibdir/*/*_test.*
+#exclude %python3_sitelibdir/*/*/*_test.*
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*_test.*
-%python3_sitelibdir/*/*/*_test.*
+#files -n python3-module-%oname-tests
+#python3_sitelibdir/*/*_test.*
+#python3_sitelibdir/*/*/*_test.*
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1
+- Version 1.0.3
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus
 
