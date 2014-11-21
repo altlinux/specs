@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.33
-Release: alt1.git20141117
+Version: 0.1.40
+Release: alt1.git20141120
 Summary: Basic database connectivity for Autobahn web sockets
 License: ASLv2.0
 Group: Development/Python
@@ -104,7 +104,7 @@ popd
 %python_install
 
 install -d %buildroot%_sysconfdir
-mv %buildroot%prefix/taskforce/* %buildroot%_sysconfdir/
+mv %buildroot%prefix/%oname/* %buildroot%_sysconfdir/
 
 %check
 python setup.py test
@@ -133,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.40-alt1.git20141120
+- Version 0.1.40
+
 * Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.33-alt1.git20141117
 - Version 0.1.33
 
