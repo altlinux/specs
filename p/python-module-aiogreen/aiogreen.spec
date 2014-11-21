@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1
+Version: 0.2
 Release: alt1
 Summary: asyncio event loop scheduling callbacks in eventlet
 License: ASLv2.0
@@ -25,6 +25,7 @@ BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %oname
+%py_requires trollius
 
 %description
 asyncio event loop scheduling callbacks in eventlet.
@@ -33,6 +34,7 @@ asyncio event loop scheduling callbacks in eventlet.
 Summary: asyncio event loop scheduling callbacks in eventlet
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires asyncio
 
 %description -n python3-module-%oname
 asyncio event loop scheduling callbacks in eventlet.
@@ -64,9 +66,11 @@ popd
 
 %check
 python setup.py test
+py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
+py.test-%_python3_version
 popd
 %endif
 
@@ -81,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1
+- Version 0.2
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1
 - Initial build for Sisyphus
 
