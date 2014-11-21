@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.24
-Release: alt1.git20141119
+Version: 0.0.28
+Release: alt1.git20141120
 Summary: Provider JSON - Command Line Utitlity and Python Library
 License: Public domain
 Group: Development/Python
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.28-alt1.git20141120
+- Version 0.0.28
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.24-alt1.git20141119
 - Version 0.0.24
 
