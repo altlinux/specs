@@ -9,6 +9,9 @@ BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 %endif
 
+# don't try connect to the server:
+%def_disable check
+
 # Fix private-shared-object-provides error
 %{echo 
 
@@ -16,8 +19,8 @@ BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
 }
 
 Name:           python-module-pymongo
-Version:        2.5.2
-Release:        alt1_6
+Version:        2.7.2
+Release:        alt1
 Summary:        Python driver for MongoDB
 
 Group:          Development/Python
@@ -234,6 +237,9 @@ nosetests --exclude="$exclude"
 popd
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.2-alt1
+- Version 2.7.2
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_6
 - update to new release by fcimport
 
