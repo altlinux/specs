@@ -1,7 +1,7 @@
 %define oname Products.CacheSetup
 Name: python-module-%oname
 Version: 1.2.2
-Release: alt1.svn20101013
+Release: alt2.svn20101013
 Summary: Control caching of Plone sites
 License: ZPL
 Group: Development/Python
@@ -85,6 +85,9 @@ This package contains tests for %oname.
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+install -p -m644 Products/CacheSetup/VERSION.txt \
+	%buildroot%python_sitelibdir/Products/CacheSetup/
+
 %check
 python setup.py test
 
@@ -98,6 +101,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt2.svn20101013
+- Added necessary files
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.svn20101013
 - Initial build for Sisyphus
 
