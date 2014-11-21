@@ -1,5 +1,5 @@
 Name: apt-cacher-ng
-Version: 0.7.27
+Version: 0.8.0
 Release: alt2
 
 Summary: Caching HTTP download proxy for software packages
@@ -10,15 +10,13 @@ Url: http://www.unix-ag.uni-kl.de/~bloch/acng/
 
 Source: http://ftp.debian.org/debian/pool/main/a/apt-cacher-ng/%{name}_%version.orig.tar
 Source1: acng.service
+Source2: acng.init
 Patch0: acng-conf.patch
-Patch1: acng-init.patch
-Patch2: acng-alt-vfilepattern.patch
+Patch1: acng-0.8.0-alt-vfilepattern.patch
 
 # Automatically added by buildreq on Wed May 30 2012
 # optimized out: cmake cmake-modules libstdc++-devel pkg-config
-BuildRequires: boost-devel-headers bzlib-devel ccmake gcc-c++ libfuse-devel liblzma-devel zlib-devel
-
-BuildRequires: boost-devel bzlib-devel gcc-c++ libfuse-devel zlib-devel liblzma-devel
+BuildRequires: boost-devel boost-devel-headers bzlib-devel ccmake gcc-c++ libfuse-devel liblzma-devel zlib-devel openssl-devel
 
 %description
 Apt-Cacher NG is a caching HTTP download proxy for software packages,
@@ -30,7 +28,6 @@ resource usage.
 %setup
 %patch0 -p 1
 %patch1 -p 1
-%patch2 -p 1
 echo "-llzma" >> link.flags
 
 %build
@@ -42,7 +39,7 @@ install build/apt-cacher-ng %buildroot%_sbindir/
 install build/in.acng %buildroot%_sbindir/
 
 mkdir -p %buildroot%_libdir/%name
-install expire-caller.pl distkill.pl urlencode-fixer.pl %buildroot%_libdir/%name/
+install scripts/{expire-caller.pl,distkill.pl,urlencode-fixer.pl} %buildroot%_libdir/%name/
 
 mkdir -p %buildroot%_sysconfdir/%name
 cp -a conf/* %buildroot%_sysconfdir/%name/
@@ -54,7 +51,7 @@ cat <<'_EOF'_ > %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 _EOF_
 
 mkdir -p %buildroot%_initdir
-install -m755 acng.init %buildroot%_initdir/acng
+install -m755 %SOURCE2 %buildroot%_initdir/acng
 
 mkdir -p %buildroot%_man8dir
 install -m644 doc/man/*.8 %buildroot%_man8dir
@@ -63,9 +60,16 @@ mkdir -p %buildroot%_logdir/%name/
 mkdir -p %buildroot%_cachedir/%name/
 
 install -pDm 644 %SOURCE1 %buildroot%_unitdir/acng.service
+install -pDm 644 systemd/%name.conf %buildroot/lib/tmpfiles.d/%name.conf
+
+%pre
+/usr/sbin/groupadd -r -f %name ||:
+/usr/sbin/useradd -g %name -c '%name pseudouser' \
+	-d %_cachedir/%name -s /dev/null -r %name >/dev/null 2>&1 ||:
 
 %files
 %_unitdir/acng.service
+/lib/tmpfiles.d/*
 %_sbindir/apt-cacher-ng
 %_sbindir/in.acng
 %_libdir/%name/
@@ -76,16 +80,27 @@ install -pDm 644 %SOURCE1 %buildroot%_unitdir/acng.service
 %doc COPYING README TODO
 %doc doc/html
 %doc doc/apt-cacher-ng.pdf
-%dir %_logdir/%name/
-%dir %_cachedir/%name/
+%dir %attr(0775,root,%name) %_logdir/%name/
+%dir %attr(0770,root,%name) %_cachedir/%name/
 
 %post
+chown -R root:%name %_cachedir/%name ||:
+chmod -R ug+rw %_cachedir/%name ||:
+chown root:%name %_logdir/%name/* ||:
+chmod ug+rw %_logdir/%name/* ||:
 %post_service acng
 
 %preun
 %preun_service acng
 
 %changelog
+* Fri Nov 21 2014 Terechkov Evgenii <evg@altlinux.org> 0.8.0-alt2
+- 0.8.0
+- %name pseudouser/group (just as in upstream) for daemon
+- vfilepattern patch updated
+- Cleanup BuildRequires
+- Update sysv init script to run as pseudouser and extract it from patch
+
 * Sun Aug 17 2014 Terechkov Evgenii <evg@altlinux.org> 0.7.27-alt2
 - Set (noreplace) on config files
 
