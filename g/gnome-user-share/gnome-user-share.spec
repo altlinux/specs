@@ -5,7 +5,7 @@
 %def_enable bluetooth
 
 Name: gnome-user-share
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Gnome user file sharing
@@ -71,6 +71,9 @@ mDNSResolver running.
 %exclude %_libdir/nautilus/extensions-3.0/*.la
 
 %changelog
+* Fri Nov 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Thu Oct 02 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - first build for Sisyphus
 
