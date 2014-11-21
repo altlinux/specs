@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.1.5.1
-Release: alt1.git20141112
+Version: 0.1.6
+Release: alt1.git20141121
 Summary: Backup of Banyan Python module
 License: BSD
 Group: Development/Python
@@ -86,7 +86,6 @@ pushd ../python3
 python3 setup.py test
 popd
 %endif
-exit 1
 
 %files
 %doc *.txt
@@ -102,6 +101,9 @@ exit 1
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.6-alt1.git20141121
+- Version 0.1.6
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5.1-alt1.git20141112
 - Initial build for Sisyphus
 
