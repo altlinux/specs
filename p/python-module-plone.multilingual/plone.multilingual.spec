@@ -1,7 +1,7 @@
 %define oname plone.multilingual
 Name: python-module-%oname
 Version: 1.2.1
-Release: alt1.git20141015
+Release: alt2.git20141015
 Summary: Multilingual extensions core package
 License: GPL
 Group: Development/Python
@@ -24,8 +24,8 @@ BuildPreReq: python-module-zope.container
 BuildPreReq: python-module-zope.lifecycleevent
 BuildPreReq: python-module-Products.ATContentTypes
 BuildPreReq: python-module-zope.configuration
-#BuildPreReq: python-module-plone.multilingualbehavior
-#BuildPreReq: python-module-archetypes.multilingual
+BuildPreReq: python-module-plone.multilingualbehavior
+BuildPreReq: python-module-archetypes.multilingual
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -33,7 +33,7 @@ Requires: python-module-Zope2
 %py_requires Products.CMFCore plone.dexterity
 %py_requires zope.interface zope.component zope.container
 %py_requires zope.lifecycleevent
-#py_requires archetypes.multilingual plone.multilingualbehavior
+%py_requires archetypes.multilingual plone.multilingualbehavior
 
 %description
 This package contains the core functionality for the next generation
@@ -78,6 +78,9 @@ python setup.py test
 %python_sitelibdir/plone/*/test*
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt2.git20141015
+- Added necessary requirements
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.git20141015
 - Initial build for Sisyphus
 
