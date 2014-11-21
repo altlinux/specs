@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 Summary: Port of the Tulip project (asyncio module, PEP 3156) on Python 2
 License: ASLv2.0
@@ -15,13 +15,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
 BuildPreReq: python-module-futures python-module-sphinx-devel
 BuildPreReq: python-modules-wsgiref python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-mock
+BuildPreReq: python3-module-mock python3-module-asyncio
 %endif
 
 %py_provides %oname
@@ -51,6 +51,7 @@ Summary: Port of the Tulip project (asyncio module, PEP 3156) on Python 2
 Group: Development/Python3
 %py3_provides %oname
 %add_python3_req_skip msvcrt
+%py3_requires asyncio
 
 %description -n python3-module-%oname
 Trollius provides infrastructure for writing single-threaded concurrent
@@ -136,7 +137,6 @@ pushd ../python3
 python3 setup.py test
 popd
 %endif
-exit 1
 
 %files
 %doc AUTHORS README TODO
@@ -166,6 +166,9 @@ exit 1
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1
+- Version 1.0.3
+
 * Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus
 
