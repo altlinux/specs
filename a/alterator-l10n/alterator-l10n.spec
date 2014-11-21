@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.7
+Version: 2.9.8
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,12 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Nov 21 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.8-alt1
+- Update translation for:
+  + alterator-chainmail
+  + alterator-drweb
+  + alterator-net-eth
+
 * Tue Oct 14 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.7-alt1
 - Complete Russian translation of alterator-postfix-dovecot
 
