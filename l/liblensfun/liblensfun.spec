@@ -1,36 +1,50 @@
 Name: liblensfun
-Version: 0.2.8
+Version: 0.3.0
 Release: alt1
 
 Summary: A library to rectifying the defects introduced by your photographic equipment
+Group: System/Libraries
 License: LGPLv3 and CC-BY-SA
-Group: Graphics
+Url: http://sourceforge.net/projects/lensfun/
 
-Url: http://lensfun.berlios.de/
-Source: http://download.berlios.de/lensfun/lensfun-%version.tar.bz2
-Patch: lensfun-0.2.5-lensdbadditions.patch
-Patch1: lensfun-0.2.8-alt-debuginfo.patch
+Source: http://downloads.sourceforge.net/lensfun/lensfun-%version.tar.bz2
+Patch: lensfun-0.3.0-fc-mandir.patch
 
-BuildRequires: cmake doxygen gcc-c++ glib2-devel libpng-devel python-modules
+BuildRequires: cmake gcc-c++ glib2-devel libpng-devel
+BuildRequires: doxygen rpm-build-python3 python3-module-docutils
 
 %description
 A library to rectifying the defects introduced by your photographic equipment.
 
 %package devel
 Summary: Development tools for programs which will use the lensfun library
-Group: Development/C
+Group: Development/C++
 Requires: liblensfun = %version-%release
 
 %description devel
 Development tools for programs which will use the lensfun library.
 
+%package tools
+Summary: Tools for managing lensfun data
+Group: Graphics
+License: LGPLv3
+Requires: %name = %version-%release
+
+%description tools
+This package contains tools to fetch lens database, updates and manage lens
+adapters in lensfun.
+
 %prep
 %setup -n lensfun-%version
 %patch -p1
-%patch1 -p1
+subst 's/rst2man/py3_rst2man.py/g' docs/CMakeLists.txt
+subst 's/\t/      /' apps/lensfun-add-adapter
 
 %build
-%cmake -DBUILD_TESTS:BOOL=OFF
+%cmake \
+	-DBUILD_TESTS:BOOL=OFF \
+	-DBUILD_DOC:BOOL=ON
+
 %cmake_build
 
 %install
@@ -39,13 +53,27 @@ Development tools for programs which will use the lensfun library.
 %files
 %_libdir/%name.so.*
 %_datadir/lensfun/
+%doc ChangeLog README
 
 %files devel
 %_includedir/lensfun/
 %_libdir/%name.so
 %_pkgconfigdir/lensfun.pc
+%doc %_datadir/doc/lensfun*/
+
+%files tools
+%_bindir/g-lensfun-update-data
+%_bindir/lensfun-add-adapter
+%_bindir/lensfun-update-data
+%_man1dir/*
+
 
 %changelog
+* Fri Nov 21 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+- removed obsolete patches
+- new -tools subpackage
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.8-alt1
 - 0.2.8
 - removed old patches
