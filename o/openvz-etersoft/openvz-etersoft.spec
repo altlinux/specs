@@ -1,6 +1,6 @@
 Name: openvz-etersoft
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: Etersoft's collection of OpenVZ additional utilities
 
@@ -44,5 +44,8 @@ ln -s vzenter %buildroot%_sbindir/e
 %_sbindir/e
 
 %changelog
+* Fri Nov 21 2014 Danil Mikhailov <danil@altlinux.org> 0.1-alt2
+- fixed vzclone, added start old ve and private dir creation
+
 * Wed Sep 28 2011 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
 - initial build for ALT Linux Sisyphus
