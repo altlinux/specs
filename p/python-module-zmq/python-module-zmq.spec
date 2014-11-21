@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 14.3.1
-Release: alt1.1
+Version: 14.4.1
+Release: alt1
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -173,6 +173,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 21 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 14.4.1-alt1
+- New version
+
 * Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.3.1-alt1.1
 - Added module for Python 3
 
