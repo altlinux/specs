@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt1.git20141111
+Version: 0.0.2
+Release: alt1.git20141120
 Summary: The AWS SDK for Python
 License: ASLv2.0
 Group: Development/Python
@@ -112,12 +112,14 @@ export PYTHONPATH=$PWD
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
+export PYTHONPATH=$PWD
 python setup.py test
-py.test
+#py.test
 %if_with python3
 pushd ../python3
+export PYTHONPATH=$PWD
 python3 setup.py test
-py.test-%_python3_version
+#py.test-%_python3_version
 popd
 %endif
 
@@ -139,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20141120
+- Version 0.0.2
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20141111
 - Initial build for Sisyphus
 
