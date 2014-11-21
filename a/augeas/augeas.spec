@@ -1,5 +1,5 @@
 Name: augeas
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 Summary: A library for changing configuration files
 
@@ -71,6 +71,9 @@ The libraries for %name.
 %_libdir/pkgconfig/augeas.pc
 
 %changelog
+* Fri Nov 21 2014 Anton Farygin <rider@altlinux.ru> 1.3.0-alt1
+- new version
+
 * Thu Feb 20 2014 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
 - new version
 
