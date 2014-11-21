@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.9
-Release: alt1.git20141031
+Version: 0.1.0
+Release: alt1.git20141118
 Summary: SQLAlchemy MPTT mixins (Nested Sets)
 License: MIT
 Group: Development/Python
@@ -133,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20141118
+- Version 0.1.0
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.9-alt1.git20141031
 - Initial build for Sisyphus
 
