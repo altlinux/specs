@@ -1,8 +1,8 @@
 %define mname pyannote
 %define oname %mname.core
 Name: python-module-%oname
-Version: 0.2.4
-Release: alt1.git20141118
+Version: 0.2.5
+Release: alt1.git20141121
 Summary: PyAnnote core
 License: MIT
 Group: Development/Python
@@ -60,6 +60,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.git20141121
+- Version 0.2.5
+
 * Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1.git20141118
 - Version 0.2.4
 
