@@ -1,8 +1,8 @@
 %define mname pyannote
 %define oname %mname.metrics
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.git20141031
+Version: 0.4.1
+Release: alt1.git20141120
 Summary: PyAnnote metrics
 License: MIT
 Group: Development/Python
@@ -50,6 +50,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20141120
+- Version 0.4.1
+
 * Sat Nov 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20141031
 - Initial build for Sisyphus
 
