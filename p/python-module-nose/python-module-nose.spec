@@ -4,8 +4,8 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 1.3.3
-Release: alt1.git20140506
+Version: 1.3.4
+Release: alt1.git20140929
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.4-alt1.git20140929
+- Version 1.3.4
+
 * Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.3-alt1.git20140506
 - Version 1.3.3
 
