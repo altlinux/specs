@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.4
-Release: alt1.git20130830
+Version: 0.3.1
+Release: alt1.git20141022
 Summary: Yet another nose colorer
 License: GPL
 Group: Development/Python
@@ -33,6 +33,16 @@ YANC is color output plugin for nose that plays nicely with others.
 
 To enable the plugin pass --with-yanc to nosetests.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+YANC is color output plugin for nose that plays nicely with others.
+
+This package contains tests for %oname.
+
 %package -n python3-module-%oname
 Summary: Yet another nose colorer
 Group: Development/Python3
@@ -43,10 +53,20 @@ YANC is color output plugin for nose that plays nicely with others.
 
 To enable the plugin pass --with-yanc to nosetests.
 
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+YANC is color output plugin for nose that plays nicely with others.
+
+This package contains tests for %oname.
+
 %prep
 %setup
 
-rmdir .makeenv
+#rmdir .makeenv
 tar -xf %SOURCE1
 
 %if_with python3
@@ -84,14 +104,27 @@ popd
 %files
 %doc *.rst
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/test*
+
+%files tests
+%python_sitelibdir/*/test*
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/*/*/test*
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20141022
+- Version 0.3.1
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1.git20130830
 - Initial build for Sisyphus
 
