@@ -11,7 +11,7 @@
 %endif
 
 Name:           chromium
-Version:        38.0.2125.122
+Version:        39.0.2171.65
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -82,12 +82,7 @@ Patch94:	chromium-linker-flags.patch
 # Patches from ALT Linux
 Patch95:	chromium-fix-shrank-by-one-character.patch
 Patch96:	chromium-set-ffmpeg-flags-for-multimedia.patch
-# See https://code.google.com/p/chromium/issues/detail?id=393535
-Patch97:	chromium-fix-russian-translations.patch
 Patch98: 	chromium-fix-ffmpeg-build-on-ia32.patch
-
-# Backport from upstream
-Patch110:   chromium-support-ModeSwitch-key.patch
 
 %add_findreq_skiplist %_libdir/%name/xdg-settings
 %add_findreq_skiplist %_libdir/%name/xdg-mime
@@ -244,9 +239,7 @@ tar xf %SOURCE10 -C src
 %patch94 -p1
 %patch95 -p0
 %patch96 -p0
-%patch97 -p1 -d src
 %patch98 -p0
-%patch110 -p1 -d src
 
 # Move vpx/internal/vpx_codec_internal.h to one directory up
 grep -Rl 'vpx/internal/vpx_codec_internal.h' src/third_party/libvpx | xargs subst 's,vpx/internal/vpx_codec_internal.h,vpx/vpx_codec_internal.h,'
@@ -447,12 +440,14 @@ printf '%_bindir/%name\t%_libdir/%name/%name-generic\t10\n' > %buildroot%_altdir
 printf '%_bindir/%name\t%_libdir/%name/%name-kde\t15\n' > %buildroot%_altdir/%name-kde
 printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%name-gnome
 
+# Strip Chromium executables to disable debuginfo generation (became too huge)
+strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver,libffmpegsumo.so,libpdf.so}
+
 %files
 %doc AUTHORS LICENSE
-%config %_sysconfdir/%name
 %dir %_datadir/gnome-control-center
 %dir %_datadir/gnome-control-center/default-apps
-%config %_sysconfdir/%name/default
+%config %_sysconfdir/%name/*
 %dir %_libdir/chromium/
 %attr(4711,root,root) %_libdir/chromium/chrome-sandbox
 %_libdir/chromium/chromium
@@ -486,6 +481,26 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Fri Nov 21 2014 Andrey Cherepanov <cas@altlinux.org> 39.0.2171.65-alt1
+- New version
+- Security fixes:
+  - High CVE-2014-7899: Address bar spoofing.
+  - High CVE-2014-7900: Use-after-free in pdfium.
+  - High CVE-2014-7901: Integer overflow in pdfium.
+  - High CVE-2014-7902: Use-after-free in pdfium.
+  - High CVE-2014-7903: Buffer overflow in pdfium.
+  - High CVE-2014-7904: Buffer overflow in Skia.
+  - High CVE-2014-7905: Flaw allowing navigation to intents that do not
+    have the BROWSABLE category.
+  - High CVE-2014-7906: Use-after-free in pepper plugins.
+  - High CVE-2014-0574: Double-free in Flash.
+  - High CVE-2014-7907: Use-after-free in blink.
+  - High CVE-2014-7908: Integer overflow in media.
+  - Medium CVE-2014-7909: Uninitialized memory read in Skia.
+- Mark all files in /etc/chromium as config
+- Strip Chromium executables to disable debuginfo generation (became too
+  huge)
+
 * Wed Nov 12 2014 Andrey Cherepanov <cas@altlinux.org> 38.0.2125.122-alt1
 - New version
 
