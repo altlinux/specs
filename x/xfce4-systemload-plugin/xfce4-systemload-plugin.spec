@@ -1,13 +1,13 @@
 Name: xfce4-systemload-plugin
-Version: 1.1.1
-Release: alt2
+Version: 1.1.2
+Release: alt1
 
-Summary: System load plugin for the XFce panel
-Summary(ru_RU.CP1251): Отображение использования ресурсов системы на панели XFce
+Summary: System load plugin for the Xfce panel
+Summary(ru_RU.CP1251): Отображение использования ресурсов системы на панели Xfce
 License: %bsdstyle
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # git://git.xfce.org/panel-plugins/xfce4-systemload-plugin
 Source: %name-%version.tar
@@ -18,16 +18,16 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4util-devel libxfce4ui-devel libxfce4panel-devel
 
-BuildRequires: intltool fontconfig libX11-devel libgtk+2-devel libstartup-notification perl-XML-Parser
+BuildRequires: intltool fontconfig libX11-devel libgtk+2-devel libstartup-notification libupower-devel perl-XML-Parser
 
 Requires: xfce4-panel >= 4.9
 
 %description
-%name is the system load plugin for the XFce panel.
+%name is the system load plugin for the Xfce panel.
 
 %description -l ru_RU.CP1251
 %name -- это модуль, отображающий уровень использования системных ресурсов
-на панели графической среды XFce.
+на панели графической среды Xfce.
 
 %prep
 %setup
@@ -36,7 +36,8 @@ Requires: xfce4-panel >= 4.9
 %build
 %xfce4reconf
 %configure \
-    --enable-debug=no
+	--enable-upower \
+	--enable-debug=no
 %make_build
 
 %install
@@ -52,6 +53,11 @@ Requires: xfce4-panel >= 4.9
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Nov 21 2014 Mikhail Efremov <sem@altlinux.org> 1.1.2-alt1
+- Build with libupower support.
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated to 1.1.2.
+
 * Wed Jun 05 2013 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt2
 - Updated translations from upstream git.
 
