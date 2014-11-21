@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.3
-Release: alt1.git20140626
+Version: 0.2.4
+Release: alt1
 Summary: Global base classes for Pyramid SQLAlchemy applications
 License: Public domain
 Group: Development/Python
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1
+- Version 0.2.4
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt1.git20140626
 - Initial build for Sisyphus
 
