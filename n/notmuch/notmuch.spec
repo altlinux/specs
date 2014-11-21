@@ -1,5 +1,5 @@
 Name: notmuch
-Version: 0.18.1
+Version: 0.19
 Release: alt1
 
 Summary: new email reading system called notmuch
@@ -105,6 +105,9 @@ EOF
 %_libdir/lib%name.so
 
 %changelog
+* Thu Nov 20 2014 Terechkov Evgenii <evg@altlinux.org> 0.19-alt1
+- 0.19
+
 * Thu Jul  3 2014 Terechkov Evgenii <evg@altlinux.org> 0.18.1-alt1
 - 0.18.1
 
