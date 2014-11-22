@@ -7,7 +7,7 @@
 
 #Name: moodle%moodlebranch-lang-cronbuild
 Name: moodle-lang-cronbuild
-Version: 0.1.2
+Version: 0.2.0
 Release: %branch_release alt1
 
 Summary: Shell functions for moodle-lang cronbuild scripts
@@ -22,6 +22,7 @@ Source1: moodle%moodlebranch.lang.xslt
 
 Requires: %_bindir/moodle-lang-cronbuild-common-sh-functions
 Requires: %moodle_lang_cronbuildcommondir
+Requires: moodle-lang-cronbuild-common >= 0.1.0
 Requires: cronbuild-sh-functions >= 0.1.0
 Requires: perl-Gear-Rules >= 0.08-alt4
 Requires: xsltproc
@@ -48,6 +49,9 @@ find %buildroot%_bindir -type f -print0 \
 %moodle_lang_cronbuildcommondir/*
 
 %changelog
+* Sun Nov 23 2014 Aleksey Avdeev <solo@altlinux.ru> 0.2.0-alt1
+- Fix for the new langpacks site
+
 * Thu Jan 05 2012 Aleksey Avdeev <solo@altlinux.ru> 0.1.2-alt1
 - Fix lang branch update
 
