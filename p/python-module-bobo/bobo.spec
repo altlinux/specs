@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.1
-Release: alt1.git20140710
+Version: 2.3.0
+Release: alt1.git20141121
 Summary: Web application framework for the impatient
 License: ZPL
 Group: Development/Python
@@ -220,6 +220,9 @@ popd
 %endif
 
 %changelog
+* Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1.git20141121
+- Version 2.3.0
+
 * Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1.git20140710
 - Initial build for Sisyphus
 
