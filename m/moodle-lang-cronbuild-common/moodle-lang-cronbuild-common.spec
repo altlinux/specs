@@ -6,7 +6,7 @@
 %define macrosname %name
 
 Name: moodle-lang-cronbuild-common
-Version: 0.0.1
+Version: 0.1.0
 Release: %branch_release alt1
 
 Summary: Shell functions for moodle-lang cronbuild scripts
@@ -53,5 +53,8 @@ echo "%%moodle_lang_cronbuildcommondir	%moodle_lang_cronbuildcommondir" \
 %_rpmmacrosdir/%macrosname
 
 %changelog
+* Sat Nov 22 2011 Aleksey Avdeev <solo@altlinux.ru> 0.1.0-alt1
+- Fix langpacks url for Moodle 1.x
+
 * Fri Nov 11 2011 Aleksey Avdeev <solo@altlinux.ru> 0.0.1-alt1
 - Initial build for ALT Linux Sisyphus
