@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	3.14
-%define kernel_sublevel	.24
+%define kernel_sublevel	.25
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -547,8 +547,12 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Sat Nov 22 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.25-alt1
+- 3.14.25
+- set HZ=1000 on x86_64
+
 * Sun Nov 16 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.24-alt1
-- 3.4.24
+- 3.14.24
 
 * Fri Oct 31 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.23-alt1
 - 3.14.23
