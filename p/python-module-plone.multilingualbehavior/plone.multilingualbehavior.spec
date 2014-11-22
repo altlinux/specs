@@ -1,7 +1,7 @@
 %define oname plone.multilingualbehavior
 Name: python-module-%oname
 Version: 1.2.2
-Release: alt1.dev0.git20140523
+Release: alt2.dev0.git20140523
 Summary: Dexterity behavior for enabling multilingual extensions
 License: GPL
 Group: Development/Python
@@ -89,6 +89,12 @@ This package contains tests for %oname.
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %check
 python setup.py test
 nosetests
@@ -103,6 +109,9 @@ nosetests
 %python_sitelibdir/plone/*/test*
 
 %changelog
+* Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt2.dev0.git20140523
+- Applied python-module-plone.multilingualbehavior-1.2.2-alt1.dev0.git20140523.diff
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.dev0.git20140523
 - Initial build for Sisyphus
 
