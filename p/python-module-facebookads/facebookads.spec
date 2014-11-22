@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.2.1
-Release: alt1.git20141107
+Version: 2.2.2
+Release: alt1.git20141121
 Summary: An SDK built to facilitate application development for Facebook Ads API
 License: MIT
 Group: Development/Python
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt1.git20141121
+- Version 2.2.2
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt1.git20141107
 - Version 2.2.1
 
