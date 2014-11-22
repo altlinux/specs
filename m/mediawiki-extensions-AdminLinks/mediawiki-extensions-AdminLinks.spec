@@ -1,7 +1,7 @@
 %define ShortName AdminLinks
 
 Name: mediawiki-extensions-%ShortName
-Version: 0.1.4
+Version: 0.2
 Release: alt1
 
 BuildArch: noarch
@@ -15,10 +15,9 @@ Summary: Defines a special page that holds links meant to be helpful for wiki ad
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.15.1-alt4
+Requires: mediawiki-common >= 1.23
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: http://discoursedb.org/AdminLinks/admin_links_%version.tar.gz
+# Source-url: https://git.wikimedia.org/zip/?r=mediawiki/extensions/AdminLinks&format=gz
 Source: %name-%version.tar
 
 %description
@@ -39,5 +38,8 @@ in their user/navigation links, between "my talk" and "my preferences".
 %files -f %ShortName.files
 
 %changelog
+* Sat Nov 22 2014 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
+- new version 0.2 (with rpmrb script)
+
 * Sat Mar 19 2011 Vitaly Lipatov <lav@altlinux.ru> 0.1.4-alt1
 - initial build for ALT Linux Sisyphus
