@@ -1,10 +1,9 @@
 Name: iozone
-%define minor 303
-Version: 3.%minor
-Release: alt1.qa1
+Version: 3.429
+Release: alt1
 
 Summary: IOzone Filesystem Benchmark
-Summary(ru_RU.KOI8-R): Эталонный тест файловой подсистемы IOzone
+Summary(ru_RU.UTF-8): п╜я┌п╟п╩п╬п╫п╫я▀п╧ я┌п╣я│я┌ я└п╟п╧п╩п╬п╡п╬п╧ п©п╬п╢я│п╦я│я┌п╣п╪я▀ IOzone
 
 License: Freeware
 Group: File tools
@@ -12,7 +11,9 @@ Url: http://www.iozone.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.iozone.org/src/current/%{name}3_%minor.tar.bz2
+%define oversion %(echo %version | sed -e "s|\\.|_|g")
+# Source-url: http://www.iozone.org/src/current/%name%oversion.tar
+Source: %name-%version.tar
 Source1: %name-graphs
 Patch: %name.patch
 
@@ -29,39 +30,45 @@ computer platform. The benchmark tests file I/O performance for the following
 operations: Read, write, re-read, re-write, read backwards, read strided,
 fread, fwrite, random read, pread, mmap, aio_read, aio_write.
 
-%description -l ru_RU.KOI8-R
-IOzone - это инструмент для эталонного тестирования
-производительности файловой подсистемы. Этот тест производит
-различные операции над файлами и выполняет тестовые замеры.
-Iozone портирована на различные машины и запускается под многими
-операционными системами.
+%description -l ru_RU.UTF-8
+IOzone - я█я┌п╬ п╦п╫я│я┌я─я┐п╪п╣п╫я┌ п╢п╩я▐ я█я┌п╟п╩п╬п╫п╫п╬пЁп╬ я┌п╣я│я┌п╦я─п╬п╡п╟п╫п╦я▐
+п©я─п╬п╦п╥п╡п╬п╢п╦я┌п╣п╩я▄п╫п╬я│я┌п╦ я└п╟п╧п╩п╬п╡п╬п╧ п©п╬п╢я│п╦я│я┌п╣п╪я▀. п╜я┌п╬я┌ я┌п╣я│я┌ п©я─п╬п╦п╥п╡п╬п╢п╦я┌
+я─п╟п╥п╩п╦я┤п╫я▀п╣ п╬п©п╣я─п╟я├п╦п╦ п╫п╟п╢ я└п╟п╧п╩п╟п╪п╦ п╦ п╡я▀п©п╬п╩п╫я▐п╣я┌ я┌п╣я│я┌п╬п╡я▀п╣ п╥п╟п╪п╣я─я▀.
+Iozone п©п╬я─я┌п╦я─п╬п╡п╟п╫п╟ п╫п╟ я─п╟п╥п╩п╦я┤п╫я▀п╣ п╪п╟я┬п╦п╫я▀ п╦ п╥п╟п©я┐я│п╨п╟п╣я┌я│я▐ п©п╬п╢ п╪п╫п╬пЁп╦п╪п╦
+п╬п©п╣я─п╟я├п╦п╬п╫п╫я▀п╪п╦ я│п╦я│я┌п╣п╪п╟п╪п╦.
 
-Iozone полезна для выполнения обширного анализа файловых подсистем
-поставщиков компьютерных платформ. Этот тест исследует
-производительность файлового ввода-вывода для следующих операций:
-чтение, запись, повторное чтение, повторная запись,
-чтение назад, чтение с большим шагом, выполнение функций fread и fwrite,
-случайное чтение, выполнение pread, mmap, aio_read, aio_write
+Iozone п©п╬п╩п╣п╥п╫п╟ п╢п╩я▐ п╡я▀п©п╬п╩п╫п╣п╫п╦я▐ п╬п╠я┬п╦я─п╫п╬пЁп╬ п╟п╫п╟п╩п╦п╥п╟ я└п╟п╧п╩п╬п╡я▀я┘ п©п╬п╢я│п╦я│я┌п╣п╪
+п©п╬я│я┌п╟п╡я┴п╦п╨п╬п╡ п╨п╬п╪п©я▄я▌я┌п╣я─п╫я▀я┘ п©п╩п╟я┌я└п╬я─п╪. п╜я┌п╬я┌ я┌п╣я│я┌ п╦я│я│п╩п╣п╢я┐п╣я┌
+п©я─п╬п╦п╥п╡п╬п╢п╦я┌п╣п╩я▄п╫п╬я│я┌я▄ я└п╟п╧п╩п╬п╡п╬пЁп╬ п╡п╡п╬п╢п╟-п╡я▀п╡п╬п╢п╟ п╢п╩я▐ я│п╩п╣п╢я┐я▌я┴п╦я┘ п╬п©п╣я─п╟я├п╦п╧:
+я┤я┌п╣п╫п╦п╣, п╥п╟п©п╦я│я▄, п©п╬п╡я┌п╬я─п╫п╬п╣ я┤я┌п╣п╫п╦п╣, п©п╬п╡я┌п╬я─п╫п╟я▐ п╥п╟п©п╦я│я▄,
+я┤я┌п╣п╫п╦п╣ п╫п╟п╥п╟п╢, я┤я┌п╣п╫п╦п╣ я│ п╠п╬п╩я▄я┬п╦п╪ я┬п╟пЁп╬п╪, п╡я▀п©п╬п╩п╫п╣п╫п╦п╣ я└я┐п╫п╨я├п╦п╧ fread п╦ fwrite,
+я│п╩я┐я┤п╟п╧п╫п╬п╣ я┤я┌п╣п╫п╦п╣, п╡я▀п©п╬п╩п╫п╣п╫п╦п╣ pread, mmap, aio_read, aio_write
 
-Запускайте iozone-graphs для получения графиков в каталоге,
-расположенном на тестируемой файловой системе. Учтите, что в ходе тестирования
-будет занято до 550 мегабайт, и результаты тестирования будут записаны
-в текущем каталоге. Также можно указать iozone-graphs файл, полученный в результате
-выполнения любым способом iozone -a.
-ВНИМАНИЕ! Тест может выполняться десятки минут, столько требуется для
-передачи нескольких десятков гигабайт.
+п≈п╟п©я┐я│п╨п╟п╧я┌п╣ iozone-graphs п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╦я▐ пЁя─п╟я└п╦п╨п╬п╡ п╡ п╨п╟я┌п╟п╩п╬пЁп╣,
+я─п╟я│п©п╬п╩п╬п╤п╣п╫п╫п╬п╪ п╫п╟ я┌п╣я│я┌п╦я─я┐п╣п╪п╬п╧ я└п╟п╧п╩п╬п╡п╬п╧ я│п╦я│я┌п╣п╪п╣. пёя┤я┌п╦я┌п╣, я┤я┌п╬ п╡ я┘п╬п╢п╣ я┌п╣я│я┌п╦я─п╬п╡п╟п╫п╦я▐
+п╠я┐п╢п╣я┌ п╥п╟п╫я▐я┌п╬ п╢п╬ 550 п╪п╣пЁп╟п╠п╟п╧я┌, п╦ я─п╣п╥я┐п╩я▄я┌п╟я┌я▀ я┌п╣я│я┌п╦я─п╬п╡п╟п╫п╦я▐ п╠я┐п╢я┐я┌ п╥п╟п©п╦я│п╟п╫я▀
+п╡ я┌п╣п╨я┐я┴п╣п╪ п╨п╟я┌п╟п╩п╬пЁп╣. п╒п╟п╨п╤п╣ п╪п╬п╤п╫п╬ я┐п╨п╟п╥п╟я┌я▄ iozone-graphs я└п╟п╧п╩, п©п╬п╩я┐я┤п╣п╫п╫я▀п╧ п╡ я─п╣п╥я┐п╩я▄я┌п╟я┌п╣
+п╡я▀п©п╬п╩п╫п╣п╫п╦я▐ п╩я▌п╠я▀п╪ я│п©п╬я│п╬п╠п╬п╪ iozone -a.
+п▓п²п≤п°п░п²п≤п∙! п╒п╣я│я┌ п╪п╬п╤п╣я┌ п╡я▀п©п╬п╩п╫я▐я┌я▄я│я▐ п╢п╣я│я▐я┌п╨п╦ п╪п╦п╫я┐я┌, я│я┌п╬п╩я▄п╨п╬ я┌я─п╣п╠я┐п╣я┌я│я▐ п╢п╩я▐
+п©п╣я─п╣п╢п╟я┤п╦ п╫п╣я│п╨п╬п╩я▄п╨п╦я┘ п╢п╣я│я▐я┌п╨п╬п╡ пЁп╦пЁп╟п╠п╟п╧я┌.
 
 %prep
-%setup -n %{name}3_%minor/src/current -q
-%patch
+%setup
+#patch
 
 %build
+cd src/current
+%ifarch x86_64
+%make_build linux-AMD64
+%else
 %make_build linux
+%endif
 
 # fix hard xrange
 #%__subst "s/set xrange/#set xrange/" $RPM_BUILD_DIR/src/current/gnu3d.dem
 
 %install
+cd src/current
 %define iozonebin %buildroot%_bindir
 install -D -m755 %name %iozonebin/%name
 install -D -m755 %SOURCE1 %iozonebin/%name-graphs
@@ -74,7 +81,7 @@ install -D iozone.1 %buildroot%_man1dir/iozone.1
 catdoc Run_rules.doc >Run_rules.txt
 
 %files
-%doc Gnuplot.txt ../../docs/IOzone_msword_98.pdf ../../docs/Run_rules.txt
+%doc src/current/Gnuplot.txt docs/IOzone_msword_98.pdf docs/Run_rules.txt
 %_bindir/iozone
 %_bindir/iozone-graphs
 %_bindir/iozone-gnuplot.sh
@@ -82,6 +89,11 @@ catdoc Run_rules.doc >Run_rules.txt
 %_datadir/%name/
 
 %changelog
+* Sat Nov 22 2014 Vitaly Lipatov <lav@altlinux.ru> 3.429-alt1
+- new version (3.429) with rpmgs script
+- recode spec to utf-8
+- cleanup spec
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.303-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
