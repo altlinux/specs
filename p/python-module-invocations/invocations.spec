@@ -1,11 +1,10 @@
 %define oname invocations
 
 %def_with python3
-%def_disable check
 
 Name: python-module-%oname
 Version: 0.6.2
-Release: alt1.git20141113
+Release: alt2.git20141113
 Summary: Reusable Invoke tasks
 License: BSD
 Group: Development/Python
@@ -18,16 +17,15 @@ Buildarch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-nose
-#BuildPreReq: python-module-invoke
+BuildPreReq: python-module-invoke
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-nose
-#BuildPreReq: python3-module-invoke
+BuildPreReq: python3-module-invoke
 %endif
 
 %py_provides %oname
-%add_python_req_skip invoke
 
 %description
 Invocations is a collection of reusable Invoke tasks/task modules,
@@ -41,7 +39,6 @@ your pre-existing Invoke task files.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%add_python_req_skip invoke
 
 %description tests
 Invocations is a collection of reusable Invoke tasks/task modules,
@@ -57,7 +54,6 @@ This package contains tests for %oname.
 Summary: Reusable Invoke tasks
 Group: Development/Python3
 %py3_provides %oname
-%add_python3_req_skip invoke
 
 %description -n python3-module-%oname
 Invocations is a collection of reusable Invoke tasks/task modules,
@@ -71,7 +67,6 @@ your pre-existing Invoke task files.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
-%add_python3_req_skip invoke
 
 %description -n python3-module-%oname-tests
 Invocations is a collection of reusable Invoke tasks/task modules,
@@ -139,6 +134,10 @@ popd
 %endif
 
 %changelog
+* Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt2.git20141113
+- Added necessary requirements
+- Enabled testing
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20141113
 - Initial build for Sisyphus
 
