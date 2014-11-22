@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.3
-Release: alt1.git20141119
+Version: 1.1.5
+Release: alt1.git20141121
 Summary: Bindings for the pyramid webframework and the ORB database ORM library
 License: LGPLv3
 Group: Development/Python
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.5-alt1.git20141121
+- Version 1.1.5
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20141119
 - Version 1.1.3
 
