@@ -5,7 +5,7 @@
 %def_with python3
 
 Name:           python-module-%{pypi_name}
-Version:        1.2
+Version:        1.9
 Release:        alt1
 Summary:        Applying JSON Patches in Python
 Group:          Development/Python
@@ -60,14 +60,19 @@ popd
 %endif
 
 %install
-%python_install
-
 %if_with python3
 pushd ../python3
 export LC_ALL=en_US.UTF-8
 %python3_install
 popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
 %endif
+
+%python_install
 
 %check
 %{__python} tests.py
@@ -80,17 +85,25 @@ popd
 
 %files
 %doc README.md COPYING
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %{python_sitelibdir}/%{pypi_name}.py*
 %{python_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
 
 %if_with python3
 %files -n python3-module-%{pypi_name}
 %doc README.md COPYING
+%_bindir/*.py3
 %{python3_sitelibdir}/%{pypi_name}.py*
 %{python3_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
 %endif
 
 %changelog
+* Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9-alt1
+- Version 1.9
+
 * Wed Jul 23 2014 Lenar Shakirov <snejok@altlinux.ru> 1.2-alt1
 - First build for ALT (based on Fedora 1.2-3.fc21.src)
 
