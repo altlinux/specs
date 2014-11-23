@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.14.0
-Release: alt1.git20140822
+Version: 1.15.0
+Release: alt1.git20141122
 Summary: plugin core for use by pytest-cov, nose-cov and nose2-cov
 License: MIT
 Group: Development/Python
@@ -68,16 +68,19 @@ popd
 %endif
 
 %files
-%doc *.rst
+%doc *.rst *.md
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst
+%doc *.rst *.md
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Sun Nov 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15.0-alt1.git20141122
+- Version 1.15.0
+
 * Fri Oct 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14.0-alt1.git20140822
 - Initial build for Sisyphus
 
