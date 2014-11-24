@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2014.3
+Version: 2014.3.4
 Release: alt1
 Summary: A collection of tools for Python
 License: MIT
@@ -13,12 +13,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %oname-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-appdirs python-module-decorator
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-appdirs python3-module-decorator
+BuildPreReq: python-tools-2to3
 %endif
 BuildArch: noarch
+
+%py_requires appdirs decorator
 
 %description
 Pytools is a big bag of things that are "missing" from the Python
@@ -30,6 +35,7 @@ those.
 %package -n python3-module-%oname
 Summary: A collection of tools for Python 3
 Group: Development/Python3
+%py3_requires appdirs decorator
 
 %description -n python3-module-%oname
 Pytools is a big bag of things that are "missing" from the Python
@@ -70,6 +76,7 @@ This package contains test for Pytools.
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -85,6 +92,18 @@ popd
 %if_with python3
 pushd ../python3
 %python3_install
+popd
+%endif
+
+%check
+python setup.py test
+export PYTHONPATH=$PWD
+py.test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+export PYTHONPATH=$PWD
+py.test-%_python3_version
 popd
 %endif
 
@@ -109,6 +128,10 @@ popd
 %endif
 
 %changelog
+* Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.3.4-alt1
+- Version 2014.3.4
+- Enabled testing
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.3-alt1
 - Version 2014.3
 
