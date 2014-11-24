@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.6
-Release: alt1.git20141122
+Release: alt2.git20141122
 Summary: Kalman filtering and optimal estimation library
 License: MIT
 Group: Development/Python
@@ -43,6 +43,7 @@ discrete Bayes, and more.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
+%add_python_req_skip SigmaPoints
 
 %description tests
 This library provides Kalman filtering and various related optimal and
@@ -69,6 +70,7 @@ discrete Bayes, and more.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
+%add_python3_req_skip SigmaPoints
 
 %description -n python3-module-%oname-tests
 This library provides Kalman filtering and various related optimal and
@@ -155,9 +157,11 @@ popd
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/*/test*
+%exclude %python_sitelibdir/*/examples
 
 %files tests
 %python_sitelibdir/*/*/test*
+%python_sitelibdir/*/examples
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -171,13 +175,18 @@ popd
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/examples
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/examples
 %endif
 
 %changelog
+* Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt2.git20141122
+- Moved examples into tests subpackage
+
 * Sun Nov 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1.git20141122
 - Initial build for Sisyphus
 
