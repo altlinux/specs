@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-eth
-Version: 4.18.0
+Version: 4.19.0
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -83,6 +83,18 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Mon Nov 24 2014 Mikhail Efremov <sem@altlinux.org> 4.19.0-alt1
+- Don't allow to change hostname if ALT domain is exists.
+- Use IPv4 as default.
+- Fix vlan Qt interface.
+- Show "Vlan" button for ethernet interfaces only.
+- Don't show "Vlan " button for vlan interfaces.
+- Fix "Wireless' button visibility.
+- Update Qt interface for vlan.
+- Hide IP version selection if IPv4 only case (by Andriy Stepanov).
+- Cleanup spaces.
+- Refactor web UI for VLAN configuration (by Andrey Cherepanov).
+
 * Mon Oct 06 2014 Andriy Stepanov <stanv@altlinux.ru> 4.18.0-alt1
 - Add VLAN for X/qt
 
