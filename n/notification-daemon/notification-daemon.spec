@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: notification-daemon
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Desktop Notification Daemon
@@ -48,10 +48,14 @@ Flashback. This is reason for version number change.
 
 %files -f %name.lang
 %_libexecdir/%name
-%_xdgconfigdir/autostart/%name.desktop
+%_desktopdir/%name.desktop
+%_xdgconfigdir/autostart/%name-autostart.desktop
 %doc AUTHORS NEWS
 
 %changelog
+* Mon Nov 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
