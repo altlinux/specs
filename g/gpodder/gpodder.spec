@@ -1,5 +1,5 @@
 Name: gpodder
-Version: 3.8.1
+Version: 3.8.3
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
@@ -38,6 +38,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/*
 %python_sitelibdir/*
 %_desktopdir/%name.desktop
+%_desktopdir/%name-url-handler.desktop
 %_datadir/dbus-1/services/org.gpodder.service
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/%name.svg
@@ -54,6 +55,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/%name/extensions/sonos.py*
 
 %changelog
+* Mon Nov 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+
 * Wed Oct 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
