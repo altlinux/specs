@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.11.3
-Release: alt2
+Release: alt3
 Summary: A Smashing Web Framework
 License: ZPL
 Group: Development/Python
@@ -54,6 +54,10 @@ BuildPreReq: python-tools-2to3
 %py_requires zope.principalregistry zope.publisher zope.schema
 %py_requires zope.security zope.securitypolicy zope.site zope.traversing
 %py_requires grokcore.layout zope.filerepresentation grokcore.catalog
+%py_requires grokcore.component.testing grokcore.security.testing
+%py_requires grokcore.view.testing grokcore.viewlet.testing
+%py_requires grokcore.formlib.testing grokcore.annotation.testing
+%py_requires grokcore.site.testing grok.testing
 
 %description
 Grok is a smashing web framework based on Zope Toolkit technology.
@@ -83,6 +87,10 @@ Group: Development/Python3
 %py3_requires zope.principalregistry zope.publisher zope.schema
 %py3_requires zope.security zope.securitypolicy zope.site zope.traversing
 %py3_requires grokcore.layout zope.filerepresentation grokcore.catalog
+%py3_requires grokcore.component.testing grokcore.security.testing
+%py3_requires grokcore.view.testing grokcore.viewlet.testing
+%py3_requires grokcore.formlib.testing grokcore.annotation.testing
+%py3_requires grokcore.site.testing grok.testing
 
 %description -n python3-module-%oname
 Grok is a smashing web framework based on Zope Toolkit technology.
@@ -233,6 +241,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.3-alt3
+- Added necessary requirements
+
 * Tue Jul 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.3-alt2
 - Added module for Python 3
 
