@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.8
-Release: alt3
+Version: 0.9.9
+Release: alt1
 Summary: Pure python package for DICOM medical file reading and writing
 License: MIT
 Group: Development/Python
@@ -149,6 +149,9 @@ popd
 %endif
 
 %changelog
+* Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.9-alt1
+- Version 0.9.9
+
 * Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt3
 - Added module for Python 3
 
