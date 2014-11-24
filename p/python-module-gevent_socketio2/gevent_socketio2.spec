@@ -1,7 +1,7 @@
 %define oname gevent_socketio2
 Name: python-module-%oname
-Version: 0.2.5
-Release: alt1.git20141112
+Version: 0.2.7
+Release: alt1.git20141124
 Summary: A gevent implementation for socketio protocol 1.0
 License: MIT
 Group: Development/Python
@@ -58,7 +58,7 @@ cp -fR socketio_client %buildroot%python_sitelibdir/
 python setup.py test
 
 %files
-%doc AUTHORS NOTES *.rst docs/*.rst
+%doc AUTHORS NOTES *.md docs/*.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/*/test.*
 
@@ -66,6 +66,9 @@ python setup.py test
 %python_sitelibdir/*/*/test.*
 
 %changelog
+* Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.7-alt1.git20141124
+- Version 0.2.7
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.git20141112
 - Version 0.2.5
 
