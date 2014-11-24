@@ -1,4 +1,4 @@
-%define		svn 6415
+%define		svn 6465
 
 Name:		smplayer
 Summary:	A great MPlayer front-end (QT4)
@@ -75,6 +75,9 @@ export OPTFLAGS="%optflags"
 %_man1dir/*
 
 %changelog
+* Mon Nov 24 2014 Motsyo Gennadi <drool@altlinux.ru> 14.9.0-alt1.6465
+- svn6465
+
 * Fri Oct 17 2014 Motsyo Gennadi <drool@altlinux.ru> 14.9.0-alt1.6415
 - 14.9.0 svn6415
 
