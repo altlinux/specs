@@ -1,11 +1,9 @@
 %define mname zopyx.txng3
 %define oname %mname.core
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.6.1.1
-Release: alt1.git20141102
+Release: alt2.git20141102
 Summary: TextIndexNG3 core implementation
 License: ZPLv2.1
 Group: Development/Python
@@ -16,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
-BuildPreReq: python-module-nose python-module-zope.testing
+BuildPreReq: python-module-nose python-module-zope.testing poppler
 BuildPreReq: python-module-zope.componentvocabulary
 BuildPreReq: python-module-Products.ZCatalog
 BuildPreReq: python-module-zope.schema
@@ -24,14 +22,14 @@ BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-zope.app.catalog
 BuildPreReq: python-module-zope.component-tests
 BuildPreReq: python-module-grok
-#BuildPreReq: python-module-zopyx.txng3.ext
+BuildPreReq: python-module-zopyx.txng3.ext
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
 %py_requires ZODB3 zope.component zope.componentvocabulary zope.schema
 %py_requires zope.interface Products.ZCatalog zope.i18nmessageid
 %py_requires zope.app.catalog grok
-#py_requires zopyx.txng3.ext
+%py_requires zopyx.txng3.ext
 
 %description
 TextIndexNG3 core implementation.
@@ -66,6 +64,8 @@ Core files of zopyx.
 
 %prep
 %setup
+
+rm -fR $(find ./ -name .svn)
 
 %build
 %python_build_debug
@@ -111,6 +111,10 @@ python setup.py test
 %python_sitelibdir/zopyx/__init__.py*
 
 %changelog
+* Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1.1-alt2.git20141102
+- Added necessary requirements
+- Enabled testing
+
 * Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1.1-alt1.git20141102
 - Initial build for Sisyphus
 
