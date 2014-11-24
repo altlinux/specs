@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.11
-Release: alt1.dev.git20141123
+Release: alt1.dev.git20141124
 Summary: Image processing routines for SciPy
 License: BSD
 Group: Development/Python
@@ -150,9 +150,11 @@ popd
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/*/test*
+%exclude %python_sitelibdir/*/*/*/test*
 
 %files tests
 %python_sitelibdir/*/*/test*
+%python_sitelibdir/*/*/*/test*
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -167,13 +169,19 @@ popd
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/*/test*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/*/*/*/test*
 %endif
 
 %changelog
+* Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.dev.git20141124
+- New snapshot
+- Moved all tests into tests subpackage
+
 * Sun Nov 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.dev.git20141123
 - Initial build for Sisyphus
 
