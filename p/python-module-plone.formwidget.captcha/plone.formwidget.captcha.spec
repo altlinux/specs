@@ -2,7 +2,7 @@
 %define oname %mname.captcha
 Name: python-module-%oname
 Version: 1.0.3
-Release: alt1.dev0.git20140903
+Release: alt2.dev0.git20140903
 Summary: A z3c.form captcha widget for use with Plone
 License: GPL
 Group: Development/Python
@@ -63,6 +63,7 @@ nosetests
 %files
 %doc *.rst docs/*
 %python_sitelibdir/plone/formwidget/*
+%exclude %python_sitelibdir/plone/formwidget/__init__.py*
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/plone/formwidget/*/test*
 %exclude %python_sitelibdir/plone/formwidget/*/*/test*
@@ -72,6 +73,9 @@ nosetests
 %python_sitelibdir/plone/formwidget/*/*/test*
 
 %changelog
+* Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt2.dev0.git20140903
+- Avoid conflict with plone.formwidget.captcha and plone.formwidget
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1.dev0.git20140903
 - Initial build for Sisyphus
 
