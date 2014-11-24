@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: pylint
-Version: 1.1.0
-Release: alt1.1
+Version: 1.4.0
+Release: alt1
 
 Summary: Python code static checker
 License: GPLv2+
@@ -115,6 +115,9 @@ PYTHONPATH=$(pwd)/build/lib/ pytest -t test
 %endif
 
 %changelog
+* Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1
+- Version 1.4.0
+
 * Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.1
 - Added module for Python 3
 
