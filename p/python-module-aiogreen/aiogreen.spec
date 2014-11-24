@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2
+Version: 0.3
 Release: alt1
 Summary: asyncio event loop scheduling callbacks in eventlet
 License: ASLv2.0
@@ -17,11 +17,12 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-eventlet python-module-futures
 BuildPreReq: python-module-trollius python-module-greenlet
+BuildPreReq: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-eventlet python3-module-greenlet
-BuildPreReq: python3-module-asyncio
+BuildPreReq: python3-module-asyncio python3-module-mock
 %endif
 
 %py_provides %oname
@@ -85,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1
+- Version 0.3
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1
 - Version 0.2
 
