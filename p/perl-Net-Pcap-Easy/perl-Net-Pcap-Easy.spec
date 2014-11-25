@@ -5,7 +5,7 @@
 %endif
 
 Name: perl-%dist
-Version: 1.4207
+Version: 1.4209
 Release: alt1
 
 Summary: Net::Pcap is awesome, but it's difficult to bootstrap
@@ -14,7 +14,7 @@ License: GPL or Artistic
 BuildArch: noarch
 
 Url: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JE/JETTERO/Net-Pcap-Easy-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-Net-Pcap perl-NetPacket perl-Net-Netmask
 
@@ -35,5 +35,8 @@ This module is little more than a collection of macros and convenience functions
 %doc README
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.4209-alt1
+- automated CPAN update
+
 * Mon Dec 12 2011 Eugene Prokopiev <enp@altlinux.ru> 1.4207-alt1
 - First build for Sisyphus
