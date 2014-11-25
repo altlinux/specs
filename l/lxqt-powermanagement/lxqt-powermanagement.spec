@@ -1,6 +1,6 @@
 Name: lxqt-powermanagement
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: Powermanagement module for LXQt
 License: LGPL
@@ -13,6 +13,8 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel libqt4-devel
 BuildRequires: libqtxdg-devel
+
+Requires: upower
 
 Provides: razorqt-autosuspend = %version
 Obsoletes: razorqt-autosuspend < 0.7.0
@@ -40,6 +42,9 @@ Obsoletes: razorqt-power < 0.7.0
 %doc AUTHORS
 
 %changelog
+* Tue Nov 25 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt2
+- added Requires: upower (closes: #30507)
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
