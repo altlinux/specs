@@ -1,5 +1,5 @@
 Name: xfce4-netload-plugin
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 
 Summary: Netload monitor plugin for the Xfce panel
@@ -51,6 +51,9 @@ Requires: xfce4-panel >= 4.8
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Tue Nov 25 2014 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
+- Updated to 1.2.4.
+
 * Sun Nov 16 2014 Mikhail Efremov <sem@altlinux.org> 1.2.3-alt1
 - Updated to 1.2.3.
 
