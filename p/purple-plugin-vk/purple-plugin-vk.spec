@@ -3,7 +3,7 @@
 
 Name: purple-plugin-vk
 Version: 0.9
-Release: alt1.hg.r341
+Release: alt1.hg.r402
 Summary: vk.com plugin for pidgin
 
 Group: Networking/Instant messaging
@@ -21,7 +21,7 @@ BuildRequires: libxml2-devel
 
 %description
 Purple-vk-plugin is plugin for Pidgin that allows to receive
-and send personal messages from web site Vk.com(VKontakte) 
+and send personal messages from web site Vk.com(VKontakte)
 
 %prep
 %setup
@@ -33,12 +33,17 @@ and send personal messages from web site Vk.com(VKontakte)
 %install
 %makeinstall_std
 
-%files
+%find_lang purple-vk-plugin
+
+%files -f purple-vk-plugin.lang
 %doc COPYING README.rst TODO.txt
 %_libdir/purple-2/libpurple-vk-plugin.so
 %_datadir/pixmaps/pidgin/emotes/vk
 %_datadir/pixmaps/pidgin/protocols/*/vkontakte.png
 
 %changelog
+* Tue Nov 25 2014 Vladimir Didenko <cow@altlinux.org> 0.9-alt1.hg.r402
+- r402
+
 * Mon Jul 14 2014 Vladimir Didenko <cow@altlinux.org> 0.9-alt1.hg.r341
 - Initial build
