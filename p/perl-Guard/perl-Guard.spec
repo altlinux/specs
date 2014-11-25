@@ -1,15 +1,15 @@
 %define module Guard
 
 Name: perl-%module
-Version: 1.022
-Release: alt4
+Version: 1.023
+Release: alt1
 
 Summary: Safe cleanup blocks for Perl
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: %module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/Guard-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-devel
@@ -33,6 +33,9 @@ object) that "guards" a resource, ensuring that it is cleaned up when expected.
 %perl_vendor_autolib/Guard
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.023-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.022-alt4
 - built for perl 5.18
 
