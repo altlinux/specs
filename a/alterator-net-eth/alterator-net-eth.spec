@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-eth
-Version: 4.19.0
+Version: 4.19.1
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -83,6 +83,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Tue Nov 25 2014 Mikhail Efremov <sem@altlinux.org> 4.19.1-alt1
+- Hide IP version selector in the Qt interface too.
+
 * Mon Nov 24 2014 Mikhail Efremov <sem@altlinux.org> 4.19.0-alt1
 - Don't allow to change hostname if ALT domain is exists.
 - Use IPv4 as default.
