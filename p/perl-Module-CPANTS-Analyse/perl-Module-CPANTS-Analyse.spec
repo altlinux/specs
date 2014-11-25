@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators perl(File/Find/Object.pm)
 # END SourceDeps(oneline)
 #TODO: BR:/R: perl(WorePAN) a.. 0.09 when available
 
 Name:           perl-Module-CPANTS-Analyse
-Version:        0.95
-Release:        alt1_2
+Version:        0.96
+Release:        alt1
 Summary:        Generate Kwalitee ratings for a distribution
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Module-CPANTS-Analyse/
-Source0:        http://search.cpan.org/CPAN/authors/id/I/IS/ISHIGAKI/Module-CPANTS-Analyse-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Module-CPANTS-Analyse-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  perl
@@ -124,6 +125,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Module/CPANTS/Kwalitee/*.pm
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1
+- automated CPAN update
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1_2
 - update to new release by fcimport
 
