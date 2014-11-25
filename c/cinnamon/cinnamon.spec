@@ -1,5 +1,5 @@
 Name: cinnamon
-Version: 2.4.3
+Version: 2.4.4
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -111,8 +111,8 @@ sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-settings \
   files/usr/share/cinnamon-settings/cinnamon-settings.py \
   files/usr/share/cinnamon-settings/modules/*
 
-find files/usr/share/cinnamon-settings/bin/* ! -name capi.py -exec sed -i -e 's@/usr/lib@/usr/share@g' {} + 
-  
+find files/usr/share/cinnamon-settings/bin/* ! -name capi.py -exec sed -i -e 's@/usr/lib@/usr/share@g' {} +
+
 # make changes for menu-editor move to /usr/share
 mv files/usr/lib/cinnamon-menu-editor files/usr/share
 
@@ -147,12 +147,12 @@ sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-slideshow \
   files/usr/share/cinnamon-slideshow/cinnamon-slideshow.py
 
 #rm -rf files/usr/lib
-sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-menu-editor 
+sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-menu-editor
 
 # remove and replace the session files as they don't work with alt linux (can't be bothered to patch it)
 rm -f files/usr/share/xsessions/cinnamon.desktop \
  files/usr/share/cinnamon-session/sessions/cinnamon2d.session \
- files/usr/share/cinnamon-session/sessions/cinnamon.session 
+ files/usr/share/cinnamon-session/sessions/cinnamon.session
 
 
 # files replaced with alt linux files
@@ -227,7 +227,7 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/cinnamon/
 %_datadir/cinnamon-menu-editor/
 %_datadir/cinnamon-settings/
-%_datadir/cinnamon-looking-glass/ 
+%_datadir/cinnamon-looking-glass/
 %_datadir/cinnamon-screensaver-lock-dialog/
 %_datadir/cinnamon-settings-users/
 %_datadir/cinnamon-desktop-editor/
@@ -244,6 +244,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %doc NEWS README
 
 %changelog
+* Tue Nov 25 2014 Vladimir Didenko <cow@altlinux.org> 2.4.4-alt1
+- 2.4.4
+
 * Thu Nov 20 2014 Vladimir Didenko <cow@altlinux.org> 2.4.3-alt1
 - 2.4.3-14-gcca2d02
 
@@ -495,4 +498,3 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 * Fri Dec 30 2011 Leigh Scott <leigh123linux@fedoraproject.org> - 1.1.2-1
 - first build based on gnome-shell srpm
 - add session files
-
