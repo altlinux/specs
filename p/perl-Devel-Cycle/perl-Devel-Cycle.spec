@@ -1,8 +1,8 @@
 %define module Devel-Cycle
 
 Name: perl-%module
-Version: 1.11
-Release: alt1.1
+Version: 1.12
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Devel/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/L/LD/LDS/Devel-Cycle-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ management, circular references will cause memory leaks.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
