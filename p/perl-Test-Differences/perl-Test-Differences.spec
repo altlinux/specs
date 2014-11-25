@@ -2,7 +2,7 @@
 %define module Test-Differences
 
 Name: perl-%module
-Version: 0.62
+Version: 0.63
 Release: alt1
 Serial: 1
 
@@ -39,6 +39,9 @@ sed -i "s,2\.126,2.125," Makefile.PL Build.PL
 %perl_vendor_privlib/Test
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.63-alt1
+- automated CPAN update
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.62-alt1
 - automated CPAN update
 
