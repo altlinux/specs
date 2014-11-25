@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5
+Version: 0.6
 Release: alt1
 Summary: Highly flexible, no magic input validation library
 License: MIT
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1
+- Version 0.6
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1
 - Version 0.5
 
