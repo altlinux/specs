@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.51
-Release: alt1.git20141024
+Version: 0.1.52
+Release: alt1.git20141125
 Summary: Python client for the Facebook Ads API
 License: MIT
 Group: Development/Python
@@ -69,6 +69,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.52-alt1.git20141125
+- Version 0.1.52
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.51-alt1.git20141024
 - Version 0.1.51
 
