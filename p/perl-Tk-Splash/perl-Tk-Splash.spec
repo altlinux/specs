@@ -2,15 +2,15 @@
 %def_without test
 
 Name: perl-%module
-Version: 0.14
-Release: alt1.1
+Version: 0.16
+Release: alt1
 
 Summary: A perl/Tk module for creating splash screens
 License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Tk/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SR/SREZIC/Tk-Splash-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ This is Tk::Splash, a perl/Tk module for creating splash screens.
 %perl_vendor_privlib/Tk/*
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
