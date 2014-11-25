@@ -1,10 +1,11 @@
 %define oname pandas
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.14.1
-Release: alt2
+Version: 0.15.1
+Release: alt1
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -17,13 +18,18 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python
 BuildPreReq: libnumpy-devel python-module-Cython
 BuildPreReq: python-module-sphinx-devel python-module-json ipython
+BuildPreReq: python-module-pytz python-module-dateutil
+BuildPreReq: python-module-nose python-module-setuptools-tests
 BuildPreReq: gcc-c++
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel libnumpy-py3-devel python3-module-Cython
+BuildPreReq: python3-module-pytz python3-module-dateutil
+BuildPreReq: python3-module-nose python3-module-setuptools-tests
 %endif
 
 %setup_python_module %oname
+%py_requires pytz pandas.util.testing dateutil
 
 %description
 pandas is an open source, BSD-licensed library providing
@@ -33,6 +39,7 @@ for the Python programming language.
 %package -n python3-module-%oname
 Summary: Python Data Analysis Library
 Group: Development/Python3
+%py3_requires pytz pandas.util.testing dateutil
 
 %description -n python3-module-%oname
 pandas is an open source, BSD-licensed library providing
@@ -116,6 +123,14 @@ pushd doc
 ./make.py html
 popd
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.md
 %python_sitelibdir/*
@@ -137,13 +152,18 @@ popd
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
 %endif
 
 %changelog
+* Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.1-alt1
+- Version 0.15.1
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.1-alt2
 - Added module for Python 3
 
