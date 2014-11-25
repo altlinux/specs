@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-CSV_XS
 Name: perl-%dist
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: Comma-separated values manipulation routines
@@ -34,6 +34,9 @@ fields into a CSV string and parse a CSV string into fields.
 %perl_vendor_autolib/Text
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
 - automated CPAN update
 
