@@ -5,10 +5,41 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt3jpp
+Release: alt4jpp
 
-# can't afford to kill it yet
-Requires: jansi-native
+Requires: activemq
+Requires: apache-commons-math
+Requires: arquillian-osgi
+Requires: eclipse-cdt
+Requires: eclipse-jgit
+Requires: eclipse-swtbot
+#Requires: fest-assert
+Requires: gshell
+Requires: hibernate3
+Requires: hibernate-validator
+Requires: infinispan
+Requires: jacoco
+Requires: jasypt
+Requires: jaxb2-maven-plugin
+Requires: jbosgi-deployment
+Requires: jbosgi-framework
+Requires: jboss-metadata
+Requires: jboss-naming
+Requires: jboss-remoting
+Requires: jboss-web
+Requires: jersey
+Requires: jetty
+Requires: maven
+Requires: maven-ant-tasks
+Requires: maven-indexer
+Requires: maven-jflex-plugin
+Requires: maven-site-plugin
+Requires: mojo-signatures
+Requires: plexus-container-default
+Requires: springframework
+Requires: tomcat6
+Requires: weld-api
+Requires: xnio
 
 %description
 Maven3 transaction unfinished files.
@@ -24,6 +55,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4jpp
+- updated dependencies
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3jpp
 - updated dependencies
 
