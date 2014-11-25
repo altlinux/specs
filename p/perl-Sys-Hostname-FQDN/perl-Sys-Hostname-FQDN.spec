@@ -1,8 +1,8 @@
 %define module Sys-Hostname-FQDN
 
 Name: perl-%module
-Version: 0.11
-Release: alt4
+Version: 0.12
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -11,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: %module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MI/MIKER/Sys-Hostname-FQDN-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-devel
@@ -35,6 +35,9 @@ host name, then uses (perl) gethostbyname to extract the real hostname.
 %perl_vendor_autolib/Sys
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.11-alt4
 - built for perl 5.18
 
