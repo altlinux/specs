@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.1
-Release: alt1.git20141115
+Version: 1.4.2
+Release: alt1.git20141124
 
 Summary: OAuth 2.0 client library
 License: Apache Software License
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1.git20141124
+- Version 1.4.2
+
 * Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1.git20141115
 - Version 1.4.1
 
