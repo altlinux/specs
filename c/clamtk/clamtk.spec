@@ -1,5 +1,5 @@
 Name: clamtk
-Version: 5.10
+Version: 5.11
 Release: alt1
 
 Summary: Easy to use front-end for ClamAV
@@ -23,7 +23,7 @@ Requires(post,postun): desktop-file-utils
 
 # Automatically added by buildreq on Tue Sep 02 2014 (-bi)
 # optimized out: fontconfig libX11-locales libgdk-pixbuf libwayland-client libwayland-server perl-Cairo perl-Encode perl-Glib perl-HTTP-Date perl-HTTP-Message perl-IO-Socket-IP perl-IO-Socket-SSL perl-JSON-XS perl-Net-HTTP perl-Net-HTTPS perl-Net-SSLeay perl-Pango perl-Time-Piece perl-Types-Serialiser perl-URI perl-common-sense perl-libwww python-base python3 python3-base
-BuildRequires: perl-Digest-SHA perl-Gtk2 perl-JSON perl-LWP-Protocol-https perl-Locale-gettext perl-Text-CSV perl-Text-CSV_XS 
+BuildRequires: perl-Digest-SHA perl-Gtk2 perl-JSON perl-LWP-Protocol-https perl-Locale-gettext perl-Text-CSV perl-Text-CSV_XS perl-JSON
 
 %description
 ClamTk is a front-end, point and click gui for ClamAV on Linux systems.
@@ -59,6 +59,9 @@ done
 %_man1dir/*
 
 %changelog
+* Tue Nov 25 2014 Vitaly Lipatov <lav@altlinux.ru> 5.11-alt1
+- new version 5.11 (with rpmrb script) (ALT bug #30502)
+
 * Sat Nov 08 2014 Vitaly Lipatov <lav@altlinux.ru> 5.10-alt1
 - new version 5.10 (with rpmrb script)
 
