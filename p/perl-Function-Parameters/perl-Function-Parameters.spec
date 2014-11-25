@@ -1,4 +1,4 @@
-%define module_version 1.0602
+%define module_version 1.0603
 %define module_name Function-Parameters
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Dir/Self.pm) perl(ExtUtils/MakeMaker.pm) perl(Moo.pm) perl(Moose.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Types.pm) perl(MooseX/Types/Moose.pm) perl(Test/Deep.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(aliased.pm) perl(attributes.pm) perl(constant.pm) perl(overload.pm) perl(strict.pm) perl(utf8.pm) perl(warnings.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(Carp.pm) perl(Dir/Self.pm) perl(ExtUtils/MakeMaker.pm) perl(
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.0602
+Version: 1.0603
 Release: alt1
 Summary: subroutine definitions with parameter lists
 Group: Development/Perl
@@ -41,6 +41,9 @@ rm t/unicode*.t
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0603-alt1
+- automated CPAN update
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0602-alt1
 - automated CPAN update
 
