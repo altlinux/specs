@@ -1,7 +1,7 @@
 %def_enable static
 
 Name: libgpg-error
-Version: 1.13
+Version: 1.17
 Release: alt1
 
 Group: System/Libraries
@@ -17,7 +17,7 @@ Source2: compat.lds
 # PLD
 Patch1: libgpg-error-am18.patch
 # ALT
-Patch10: libgpg-error-1.8-alt-version-script.patch
+Patch10: libgpg-error-alt-version-script.patch
 
 # Automatically added by buildreq on Wed Jun 02 2010 (-bi)
 #BuildRequires: cvs glibc-devel-static libsubversion-auth-gnome-keyring libsubversion-auth-kwallet rpm-build-qt4 subversion
@@ -51,10 +51,10 @@ Static build of the GnuPG error library.
 %prep
 %setup -q
 #%patch1 -p1
-%patch10 -p1
+#%patch10 -p1
 
-install -m 0644 %SOURCE1 src/
-install -m 0644 %SOURCE2 src/
+#cat %SOURCE1 >>src/gpg-error.vers
+#install -m 0644 %SOURCE2 src/
 %autoreconf
 
 %build
@@ -83,6 +83,12 @@ install -m 0644 %SOURCE2 src/
 %endif
 
 %changelog
+* Tue Nov 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.17-alt1
+- new version
+
+* Thu Jun 19 2014 Sergey V Turchin <zerg@altlinux.org> 1.13-alt0.M70P.1
+- built for M70P
+
 * Thu Jun 05 2014 Sergey V Turchin <zerg@altlinux.org> 1.13-alt1
 - new version
 
