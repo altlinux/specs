@@ -1,16 +1,13 @@
 %def_disable static
 
 Name: libksba
-Version: 1.3.0
+Version: 1.3.2
 Release: alt1
 
 Group: System/Libraries
 Summary: X.509 library
 URL: http://www.gnupg.org/
 License: LGPLv3 / GPLv2
-
-Requires: libgpg-error >= 0.6
-
 
 Source0: %name-%version.tar.bz2
 Patch1:		%{name}-info.patch
@@ -83,6 +80,9 @@ Static libraries for the %name-devel package
 %endif
 
 %changelog
+* Tue Nov 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt1
+- new version
+
 * Thu Sep 27 2012 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1
 - new version
 
