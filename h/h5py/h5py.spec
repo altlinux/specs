@@ -4,7 +4,7 @@
 
 Name: h5py
 Version: 2.4.0
-Release: alt1.b1.git20141031
+Release: alt1.b1.git20141107
 Summary: Python interface to the Hierarchical Data Format library, version 5
 License: MIT
 Group: Development/Python
@@ -51,6 +51,7 @@ Summary: Python interface to the Hierarchical Data Format library, version 5
 Group: Development/Python
 %setup_python_module %name
 %py_requires multiprocessing
+%py_requires h5py.tests
 
 %description -n python-module-%name
 HDF5 for Python (h5py) is a general-purpose Python interface to the
@@ -74,6 +75,7 @@ presented using a dictionary metaphor, indexed by name.
 %package -n python3-module-%name
 Summary: Python interface to the Hierarchical Data Format library, version 5
 Group: Development/Python3
+%py3_requires h5py.tests
 
 %description -n python3-module-%name
 HDF5 for Python (h5py) is a general-purpose Python interface to the
@@ -292,6 +294,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.b1.git20141107
+- New snapshot
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.b1.git20141031
 - Version 2.4.0b1
 - Enabled testing
