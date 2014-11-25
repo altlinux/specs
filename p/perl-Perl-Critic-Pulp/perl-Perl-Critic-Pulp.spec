@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(AptPkg/Policy.pm) perl(B/Concise.pm) perl(Devel/Mallinfo.pm) perl(Digest/MD5.pm) perl(Encode.pm) perl(Fcntl.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Perl-Critic-Pulp
-Version:        85
-Release:        alt1_3
+Version:        88
+Release:        alt1
 Summary:        Some add-on perlcritic policies
 License:        GPLv3+
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Perl-Critic-Pulp/
-Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Perl-Critic-Pulp-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/K/KR/KRYDE/Perl-Critic-Pulp-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -112,6 +112,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 88-alt1
+- automated CPAN update
+
 * Thu Oct 30 2014 Igor Vlasenko <viy@altlinux.ru> 85-alt1_3
 - new release
 
