@@ -1,6 +1,6 @@
 %define dist XML-SAX-Writer
 Name: perl-%dist
-Version: 0.55
+Version: 0.56
 Release: alt1
 
 Summary: SAX2 XML Writer
@@ -32,6 +32,9 @@ Yet Another SAX2 XML Writer.
 %perl_vendor_privlib/XML
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
+- automated CPAN update
+
 * Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
 - automated CPAN update
 
