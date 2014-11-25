@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Role-WithOverloading
 Name: perl-%dist
-Version: 0.15
+Version: 0.16
 Release: alt1
 
 Summary: Roles which support overloading
@@ -35,6 +35,9 @@ composed into the classes/roles/instances it's compiled to, while plain
 %perl_vendor_autolib/MooseX
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
