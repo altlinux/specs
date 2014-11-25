@@ -1,9 +1,8 @@
-%define qtdir %_qt3dir
-%def_enable libcap
+%def_disable libcap
 
 Name: pinentry
-Version: 0.8.3
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Group: File tools
 Summary: Simple PIN or passphrase entry dialog
@@ -13,25 +12,21 @@ License: GPLv2+
 Requires: %name-common = %version-%release
 
 Requires: %name-qt4 = %version-%release
-Requires: %name-gtk = %version-%release
-Requires: %name-curses = %version-%release
+Requires: %name-gtk2 = %version-%release
 
 # ftp://ftp.gnupg.org/gcrypt/pinentry/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch4: 0004-Fix-qt4-pinentry-window-created-in-the-background.patch
-# ALT
-Patch100: pinentry-0.7.6-alt-system-assuan.patch
+Source1: pinentry-wrapper
+# FC
+Patch2: 0002-Fix-qt4-pinentry-window-created-in-the-background.patch
 
 
 # due to qt macros
-BuildRequires(pre): libqt3-devel libqt4-devel
-
+BuildRequires(pre): libqt4-devel
 %if_enabled libcap
 BuildRequires: libcap-devel
 %endif
-
-# Automatically added by buildreq on Sun Feb 07 2010
-BuildRequires: gcc-c++ libassuan0-devel libgtk+2-devel libncursesw-devel
+BuildRequires: gcc-c++ libgtk+2-devel libncursesw-devel
 
 %description
 This is simple PIN or passphrase entry dialog which
@@ -40,54 +35,37 @@ utilize the Assuan protocol as described by the aegypten project.
 %package common
 Group: %group
 Summary: %summary
+Provides: %name = %version-%release
+Provides: %name-terminal = %version-%release
+Provides: %name-console = %version-%release
+Provides: %name-curses = %EVR
+Obsoletes: %name-curses < %EVR
 Conflicts: pinentry < 0.7.2 pinentry-curses < 0.7.2
 Conflicts: pinentry-qt < 0.7.2 pinentry-gtk < 0.7.2
 
-%package curses
-Group: %group
-Summary: %summary
-Provides: %name-terminal = %version-%release
-Provides: %name-console = %version-%release
-Provides: %name = %version-%release
-Requires: %name-common = %version-%release
-
-%package gtk
+%package gtk2
 Group: %group
 Summary: %summary
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
+Provides: pinentry-gtk = %EVR
+Obsoletes: pinentry-gtk < %EVR
 
 %package qt4
 Group: %group
 Summary: %summary
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
-Requires: %name-common = %version-%release
-#
+Requires: %name-common = %EVR
 Provides: pinentry-qt = %EVR
 Obsoletes: pinentry-qt < %EVR
 
-%package qt3
-Group: %group
-Summary: %summary
-Provides: %name = %version-%release
-Provides: %name-x11 = %version-%release
-Requires: %name-common = %version-%release
-
-%description curses
-This is simple PIN or passphrase entry dialog which
-utilize the Assuan protocol as described by the aegypten project.
-
-%description gtk
+%description gtk2
 This is simple PIN or passphrase entry dialog which
 utilize the Assuan protocol as described by the aegypten project.
 
 %description qt4
-This is simple PIN or passphrase entry dialog which
-utilize the Assuan protocol as described by the aegypten project.
-
-%description qt3
 This is simple PIN or passphrase entry dialog which
 utilize the Assuan protocol as described by the aegypten project.
 
@@ -96,14 +74,13 @@ This package contains common files and documentation for %name.
 
 %prep
 %setup
-%patch4 -p1
-%patch100 -p1
+%patch2 -p1
 
 rm doc/*.info
 
 pushd qt4
-for h in pinentrydialog.h qsecurelineedit.h; do
-    m="${h%%.h}.moc"
+for m in *.moc; do
+    h="${m%%.moc}.h"
     rm $m
     moc-qt4 $h -o $m
 done
@@ -111,16 +88,12 @@ popd
 %autoreconf
 
 %build
-export QTDIR=%qtdir
-
 %configure \
     --disable-rpath \
-    --disable-pinentry-gtk \
     --enable-pinentry-gtk2 \
-    --enable-pinentry-qt \
     --enable-pinentry-qt4 \
     --enable-pinentry-curses \
-    %{subst_enable libcap} \
+    %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
     #
 
 %make_build
@@ -128,42 +101,31 @@ export QTDIR=%qtdir
 %install
 %makeinstall_std
 rm %buildroot%_bindir/%name
-mv %buildroot%_bindir/%name-gtk{-2,}
-mv %buildroot%_bindir/%name-qt{,3}
-#mv %buildroot%_bindir/%name-qt{4,}
-ln -s %name-qt4 %buildroot%_bindir/%name-qt
 
-mkdir -p %buildroot%_altdir
-WEIGHT=10
-for i in curses qt3 gtk qt4; do
-cat >%buildroot%_altdir/%name-$i<<EOF
-%_bindir/%name	%_bindir/%name-$i	$WEIGHT
-EOF
-((WEIGHT+=10))
-done
+ln -s %name-gtk-2 %buildroot/%_bindir/%name-gtk
+ln -s %name-qt4 %buildroot/%_bindir/%name-qt
 
-%files curses
-%_altdir/%name-curses
-%_bindir/%name-curses
+install -p -m0755 -D %SOURCE1 %buildroot/%_bindir/pinentry
 
-%files gtk
-%_altdir/%name-gtk
+%files gtk2
 %_bindir/%name-gtk
+%_bindir/%name-gtk-2
 
 %files qt4
-%_altdir/%name-qt4
 %_bindir/%name-qt4
 %_bindir/%name-qt
 
-%files qt3
-%_altdir/%name-qt3
-%_bindir/%name-qt3
-
 %files common
 %doc AUTHORS NEWS README THANKS
+%_bindir/%name
+%_bindir/%name-curses
 %_infodir/*.info*
 
 %changelog
+* Tue Nov 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
+- new version
+- using wrapper script instead of alternatives
+
 * Fri Jun 20 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.3-alt2
 - rename pinentry-qt to pinentry-qt4
 
