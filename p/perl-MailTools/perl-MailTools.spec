@@ -1,6 +1,6 @@
 %define dist MailTools
 Name: perl-%dist
-Version: 2.13
+Version: 2.14
 Release: alt1
 
 Summary: Perl modules related to mail applications
@@ -39,6 +39,9 @@ This is MailTools, a set of perl modules related to mail applications.
 	%perl_vendor_privlib/Mail/Mailer/*.pm
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1
+- automated CPAN update
+
 * Mon Jan 06 2014 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1
 - automated CPAN update
 
