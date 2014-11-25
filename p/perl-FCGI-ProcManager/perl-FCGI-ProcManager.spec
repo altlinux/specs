@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-FCGI-ProcManager
-Version: 0.24
+Version: 0.25
 Release: alt1
 
 Summary: %m_name - A perl-based FastCGI process manager
@@ -23,7 +23,7 @@ Url: http://search.cpan.org/dist/FCGI-ProcManager/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/B/BO/BOBTFISH/FCGI-ProcManager-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/A/AR/ARODLAND/FCGI-ProcManager-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Nov 09 2009 (-bi)
 BuildRequires: perl-devel
@@ -49,6 +49,9 @@ be invoked before the caller''s request loop
 %doc COPYING README ChangeLog TODO 
 
 %changelog
+* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
