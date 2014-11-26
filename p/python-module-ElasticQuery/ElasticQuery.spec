@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.18
-Release: alt1.git20141106
+Version: 0.2.0
+Release: alt1.git20141125
 Summary: A simple query builder for Elasticsearch
 License: MIT
 Group: Development/Python
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20141125
+- Version 0.2.0
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.18-alt1.git20141106
 - Version 0.1.18
 
