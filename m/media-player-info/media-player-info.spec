@@ -1,5 +1,5 @@
 Name:	 media-player-info
-Version: 17
+Version: 21
 Release: alt1
 
 License: BSD
@@ -8,9 +8,12 @@ Summary: Media player identification files
 
 BuildArch: noarch
 Url:	http://people.freedesktop.org/~teuf/media-player-info/
-Source: http://people.freedesktop.org/~teuf/media-player-info/%name-%version.tar.gz
 
-BuildRequires: libudev-devel
+Source: %name-%version.tar
+# SuSE
+Patch1: fix-udev-rules-creator.patch
+
+BuildRequires: libudev-devel python3
 
 %description
 media-player-info is a repository of data files describing media player
@@ -23,6 +26,7 @@ ini-like files), together with udev rules to identify these devices.
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %configure
@@ -34,9 +38,13 @@ ini-like files), together with udev rules to identify these devices.
 %files
 %doc ChangeLog COPYING NEWS README
 %_datadir/%name
-/lib/udev/rules.d/*
+%_udevrulesdir/40-usb-media-players.rules
+%_udevhwdbdir/20-usb-media-players.hwdb
 
 %changelog
+* Wed Nov 26 2014 Sergey V Turchin <zerg@altlinux.org> 21-alt1
+- new version
+
 * Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 17-alt1
 - new version
 
