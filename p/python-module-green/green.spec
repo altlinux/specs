@@ -1,10 +1,11 @@
 %define oname green
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 1.4.4
-Release: alt1.git20140826
+Version: 1.7.1
+Release: alt1.git20141125
 Summary: Clean, colorful test runner for Python unit tests
 License: MIT
 Group: Development/Python
@@ -15,15 +16,28 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-termstyle python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-termstyle
 %endif
 
 %description
 Green is a colorful, clean, fast and powerful test runner for Python
 unit tests. Compare it to trial or nose.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+Green is a colorful, clean, fast and powerful test runner for Python
+unit tests. Compare it to trial or nose.
+
+This package contains tests for %oname.
 
 %package -n python3-module-%oname
 Summary: Clean, colorful test runner for Python unit tests
@@ -32,6 +46,17 @@ Group: Development/Python3
 %description -n python3-module-%oname
 Green is a colorful, clean, fast and powerful test runner for Python
 unit tests. Compare it to trial or nose.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+Green is a colorful, clean, fast and powerful test runner for Python
+unit tests. Compare it to trial or nose.
+
+This package contains tests for %oname.
 
 %prep
 %setup
@@ -58,20 +83,39 @@ popd
 
 %python_install
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc CHANGELOG *.rst *.md *.txt example
 %_bindir/%oname
 %_bindir/%{oname}2*
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/test
+
+%files tests
+%python_sitelibdir/*/test
 
 %if_with python3
 %files -n python3-module-%oname
 %doc CHANGELOG *.rst *.md *.txt example
 %_bindir/%{oname}3*
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/test
 %endif
 
 %changelog
+* Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt1.git20141125
+- Version 1.7.1
+
 * Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.4-alt1.git20140826
 - Initial build for Sisyphus
 
