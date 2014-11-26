@@ -1,6 +1,6 @@
 
 Name: libmygpo-qt
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 %define sover 1
 %define libname %name%sover
@@ -54,7 +54,10 @@ libsuffix=
 %if "%_lib" == "lib64"
 libsuffix="64"
 %endif
-%Kbuild -DLIB_INSTALL_DIR_SUFFIX="$libsuffix"
+%Kbuild \
+    -DLIB_INSTALL_DIR_SUFFIX="$libsuffix" \
+    -DBUILD_WITH_QT4=ON \
+    #
 
 %install
 %Kinstall
@@ -72,6 +75,9 @@ libsuffix="64"
 
 
 %changelog
+* Wed Nov 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.8-alt1
+- new version
+
 * Tue Sep 17 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.7-alt1
 - new version
 
