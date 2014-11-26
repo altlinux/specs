@@ -11,7 +11,7 @@
 
 Name: libwebkitgtk4
 Version: 2.6.4
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -55,6 +55,8 @@ BuildRequires: libXdmcp-devel libxshmfence-devel libXxf86vm-devel
 BuildRequires: libXinerama-devel libXi-devel libXrandr-devel
 BuildRequires: libXcursor-devel libxkbcommon-devel
 BuildRequires: libwayland-cursor-devel
+# for battery status
+BuildRequires: libupower-devel
 
 %description
 WebKit is an open source web browser engine.
@@ -181,7 +183,12 @@ rm -rf Source/ThirdParty/qunit/
 %cmake \
 -DPORT=GTK \
 %{?_enable_gtkdoc:-DENABLE_GTKDOC:BOOL=ON} \
--DCMAKE_BUILD_TYPE=Release
+-DCMAKE_BUILD_TYPE=Release \
+-DENABLE_TOUCH_ICON_LOADING:BOOL=ON \
+-DENABLE_TOUCH_SLIDER:BOOL=ON
+#-DENABLE_BATTERY_STATUS:BOOL=ON \
+#-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
+#-DENABLE_ORIENTATION_EVENTS:BOOL=ON
 
 %cmake_build
 
@@ -242,6 +249,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Wed Nov 26 2014 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt2
+- enabled touch (slider/icon loading) support
+
 * Fri Nov 21 2014 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt1
 - 2.6.4
 
