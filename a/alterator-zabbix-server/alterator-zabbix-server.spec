@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-zabbix-server
-Version: 0.0.2
+Version: 0.0.3
 Release: alt1
 
 Summary: Alterator module for Zabbix server setup
@@ -47,6 +47,9 @@ Alterator module for Zabbix server setup
 %_sysconfdir/nginx/webapps-available.d/alterator-zabbix-server.conf
 
 %changelog
+* Wed Nov 26 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt1
+- ru_RU web interface, admin pass
+
 * Mon Aug 18 2014 Mikhail Efremov <sem@altlinux.org> 0.0.2-alt1
 - Don't expose password in the UI.
 - Use nginx-webapps.
