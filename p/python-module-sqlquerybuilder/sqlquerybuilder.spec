@@ -1,0 +1,115 @@
+%define oname sqlquerybuilder
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 0.0.3
+Release: alt1.git20141125
+Summary: Python SQL Query Builder based on django ORM
+License: MIT
+Group: Development/Python
+Url: https://pypi.python.org/pypi/sqlquerybuilder/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/josesanch/sqlquerybuilder.git
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools-tests
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+%endif
+
+%py_provides %oname
+
+%description
+SQL Query Builder inspired on django ORM Syntax.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+SQL Query Builder inspired on django ORM Syntax.
+
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
+Summary: Python SQL Query Builder based on django ORM
+Group: Development/Python3
+%py3_provides %oname
+
+%description -n python3-module-%oname
+SQL Query Builder inspired on django ORM Syntax.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+SQL Query Builder inspired on django ORM Syntax.
+
+This package contains tests for %oname.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%build
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+%check
+python setup.py test
+py.test %oname/tests.py
+%if_with python3
+pushd ../python3
+python3 setup.py test
+py.test-%_python3_version %oname/tests.py
+popd
+%endif
+
+%files
+%doc *.rst
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests.*
+
+%files tests
+%python_sitelibdir/*/tests.*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests.*
+%exclude %python3_sitelibdir/*/*/tests.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests.*
+%python3_sitelibdir/*/*/tests.*
+%endif
+
+%changelog
+* Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20141125
+- Initial build for Sisyphus
+
