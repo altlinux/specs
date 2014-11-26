@@ -2,7 +2,7 @@
 %define oname %mname.fotorama
 Name: python-module-%oname
 Version: 4.6.3
-Release: alt1.dev.git20141121
+Release: alt1.dev.git20141124
 Summary: Fotorama slideshow for Plone
 License: GPL
 Group: Development/Python
@@ -84,6 +84,9 @@ python setup.py test
 %python_sitelibdir/ps/plone/__init__.py*
 
 %changelog
+* Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6.3-alt1.dev.git20141124
+- New snapshot
+
 * Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6.3-alt1.dev.git20141121
 - Initial build for Sisyphus
 
