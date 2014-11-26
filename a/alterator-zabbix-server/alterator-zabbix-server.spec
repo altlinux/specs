@@ -4,7 +4,7 @@
 
 Name: alterator-zabbix-server
 Version: 0.0.3
-Release: alt1
+Release: alt2
 
 Summary: Alterator module for Zabbix server setup
 License: GPL
@@ -47,6 +47,9 @@ Alterator module for Zabbix server setup
 %_sysconfdir/nginx/webapps-available.d/alterator-zabbix-server.conf
 
 %changelog
+* Wed Nov 26 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt2
+- fix typo
+
 * Wed Nov 26 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt1
 - ru_RU web interface, admin pass
 
