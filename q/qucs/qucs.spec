@@ -1,5 +1,5 @@
 Name: qucs
-Version: 0.0.17
+Version: 0.0.18
 Release: alt1
 Summary: Circuit simulator
 License: GPL
@@ -24,16 +24,29 @@ Qucs is a circuit simulator with graphical user interface.  The
 software aims to support all kinds of circuit simulation types,
 e.g. DC, AC, S-parameter and harmonic balance analysis.
 
+%package -n libqucs
+Group:	 Education
+Summary: Supplemental library for Qucs, a circuit simulator
+%description -n libqucs
+Supplemental library for Qucs, a circuit simulator
+
+%package -n libqucs-devel
+Group:	Development/C++
+Summary: Development environment for Qucs, a circuit simulator
+%description -n libqucs-devel
+Development environment for Qucs, a circuit simulator
+
 %prep
 %setup
 tar -xjf %SOURCE2 -C qucs
+touch qucs-core/deps/adms/README
 ##sed -i '\@<tr1/complex>@d' qucs-core/configure
-%patch -p1
+##patch -p1
 
 %build
 %autoreconf
-%configure
-%make_build
+%configure --disable-asco --disable-adms
+%make_build RCC=rcc-qt4
 
 %install
 mkdir -p %buildroot%_defaultdocdir/%name-%version
@@ -55,7 +68,8 @@ done > %name.lang
 %_bindir/*
 %dir %_datadir/%name
 %dir %_datadir/%name/lang
-%_datadir/%name/bitmaps
+# XXX GONE?
+##_datadir/%name/bitmaps
 %_datadir/%name/library
 %_datadir/%name/tline
 %_datadir/%name/octave
@@ -70,10 +84,22 @@ done > %name.lang
 %lang(cs) %_datadir/%name/docs/cs
 %lang(pt) %_datadir/%name/docs/pt
 %_desktopdir/*
-%_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/*/apps/*
 %_man1dir/*
 
+%files -n libqucs
+%_libdir/*.so.*
+
+%files -n libqucs-devel
+%_libdir/*.so
+%_includedir/qucs-core
+
 %changelog
+* Tue Sep 30 2014 Fr. Br. George <george@altlinux.ru> 0.0.18-alt1
+- Autobuild version bump to 0.0.18
+- Separate lib packages
+- Do not build 3d-party projects
+
 * Mon Jan 13 2014 Fr. Br. George <george@altlinux.ru> 0.0.17-alt1
 - Autobuild version bump to 0.0.17
 - Drop inactual patch
