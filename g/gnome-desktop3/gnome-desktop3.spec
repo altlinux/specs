@@ -10,15 +10,15 @@
 
 Name: %{_name}3
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
 Group: Graphical desktop/GNOME
 Url: ftp://ftp.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+#Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+Source: %_name-%version.tar
 Source1: gnome-about.png
 
 Obsoletes: %_name
@@ -157,6 +157,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Wed Nov 26 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt2
+- updated to 3.14_2b563b26 (fixed BGO #740289)
+
 * Wed Nov 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 
