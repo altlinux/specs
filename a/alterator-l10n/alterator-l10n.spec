@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.8
+Version: 2.9.9
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,11 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Nov 26 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.9-alt1
+- Update translation for:
+  + alterator-zabbix-server
+  + alterator-net-eth
+
 * Fri Nov 21 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.8-alt1
 - Update translation for:
   + alterator-chainmail
