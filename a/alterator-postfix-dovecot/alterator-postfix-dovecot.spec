@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-postfix-dovecot
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: Alterator module for Postfix/Dovecot setup
@@ -60,6 +60,9 @@ fi
 %_sysconfdir/control.d/facilities/*
 
 %changelog
+* Wed Nov 26 2014 Andriy Stepanov <stanv@altlinux.ru> 0.8.2-alt1
+- Fix: SpamAssassin checkbox
+
 * Mon Sep 29 2014 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
 - Fix postfix inject port (by "Valery V. Inozemtsev").
 
