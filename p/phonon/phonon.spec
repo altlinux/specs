@@ -1,7 +1,7 @@
 %def_disable zeitgeist
 
 Name: phonon
-Version: 4.8.1
+Version: 4.8.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -99,6 +99,9 @@ mkdir -p %buildroot/%_qt4dir/plugins/phonon_backend
 %_K4dbus_interfaces/org.kde.Phonon.AudioOutput.xml
 
 %changelog
+* Wed Nov 26 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt1
+- new version
+
 * Tue Oct 21 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.1-alt1
 - new version
 
