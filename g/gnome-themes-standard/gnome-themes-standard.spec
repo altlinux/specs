@@ -2,13 +2,12 @@
 
 Name: gnome-themes-standard
 Version: %ver_major.2.1
-Release: alt1
+Release: alt2
 
 Summary: A set of standard themes for GNOME desktop
 License: LGPLv2.1+
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -50,6 +49,9 @@ This package provides a GTK+2 theme engine Adwaita.
 
 %prep
 %setup
+for name in iagno gnome-music gnome-clocks gnome-photos dconf-editor;
+do find ./themes/HighContrast/ -name "$name.png" -delete;
+done
 
 %build
 %configure
@@ -102,6 +104,9 @@ This package provides a GTK+2 theme engine Adwaita.
 %exclude %_libdir/gtk-2.0/2.10.0/engines/libadwaita.la
 
 %changelog
+* Thu Nov 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2.1-alt2
+- fixed file conflicts with some packages with the same HC icons
+
 * Wed Nov 26 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2.1-alt1
 - 3.14.2.1
 
