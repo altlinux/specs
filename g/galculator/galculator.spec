@@ -1,5 +1,5 @@
 Name: galculator
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 
 Summary: GTK3 based scientific calculator
@@ -10,14 +10,11 @@ Url: http://galculator.sourceforge.net
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source100: galculator.watch
 Patch: galculator-1.3.4-alt-desktop.patch
-Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Sat Apr 13 2013
-# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gnu-config libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-cursor libwayland-server perl-Encode pkg-config
 BuildRequires: flex intltool libgtk+3-devel
 
 %description
-Galculator is a GTK 2 based scientific RPN calculator
+Galculator is a GTK3 based scientific RPN calculator
 
 %prep
 %setup
@@ -28,7 +25,7 @@ Galculator is a GTK 2 based scientific RPN calculator
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 %find_lang --with-gnome %name
 install -pD pixmaps/%name.svg \
 		%buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
@@ -52,6 +49,9 @@ rm -rf %buildroot%_pixmapsdir/
 # - 32x32 and 16x16? (%%_niconsdir and %%_miconsdir)
 
 %changelog
+* Wed Nov 26 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt1
+- 2.1.3
+
 * Wed May 22 2013 Michael Shigorin <mike@altlinux.org> 2.1.2-alt1
 - new version (watch file uupdate)
 - gtk3 patch merged upstream
