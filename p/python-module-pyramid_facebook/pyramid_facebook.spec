@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.7
+Version: 2.0.1
 Release: alt1
 Summary: Pyramid routes and helpers for Facebook canvas applications
 License: Free
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1
+- Version 2.0.1
+
 * Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.7-alt1
 - Initial build for Sisyphus
 
