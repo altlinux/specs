@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.7
-Release: alt1.git20141113
+Version: 1.2.9
+Release: alt1.git20141125
 Summary: Fortran Parsing, Unit Testing and Intellisense
 License: MIT
 Group: Development/Python
@@ -157,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.9-alt1.git20141125
+- Version 1.2.9
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.7-alt1.git20141113
 - Initial build for Sisyphus
 
