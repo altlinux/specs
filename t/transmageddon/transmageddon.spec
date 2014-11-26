@@ -1,6 +1,6 @@
 
 Name: transmageddon
-Version: 1.3
+Version: 1.5
 Release: alt1
 
 Summary: Video transcoder
@@ -29,7 +29,7 @@ Requires: typelib(GstPbutils) = 1.0
 Requires: typelib(GstTag) = 1.0
 Requires: typelib(GUdev)
 
-BuildRequires: intltool appdata-tools gobject-introspection-devel
+BuildRequires: intltool libappstream-glib-devel gobject-introspection-devel
 BuildRequires: gstreamer1.0-devel >= 1.2.0
 BuildRequires: python3 python3-module-pygobject3
 
@@ -60,6 +60,9 @@ tar -xf %SOURCE2 -C common
 %_man1dir/%name.*
 
 %changelog
+* Fri Nov 14 2014 Alexey Shabalin <shaba@altlinux.ru> 1.5-alt1
+- 1.5
+
 * Thu Aug 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.3-alt1
 - 1.3
 - define strict requires (ALT#30250)
