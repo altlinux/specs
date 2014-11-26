@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.3.2
-Release: alt1.git20141124
+Version: 0.3.3
+Release: alt1.git20141125
 Summary: Python toolkit for nanoscience
 License: BSD
 Group: Development/Python
@@ -19,7 +19,7 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-scipy libnumpy-devel
-BuildPreReq: python-module-nose
+BuildPreReq: python-module-nose python-module-six
 BuildPreReq: python-module-sphinx-devel ipython python-module-numpydoc
 BuildPreReq: python-module-matplotlib-sphinxext python-module-PyQt4
 BuildPreReq: python-module-sphinx-argparse
@@ -27,7 +27,7 @@ BuildPreReq: python-module-sphinx-argparse
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-scipy libnumpy-py3-devel
-BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-nose python3-module-six
 %endif
 
 %py_provides sknano
@@ -175,6 +175,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1.git20141125
+- Version 0.3.3
+
 * Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.git20141124
 - Initial build for Sisyphus
 
