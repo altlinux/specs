@@ -1,6 +1,6 @@
 %define oname alabaster
 Name: python-module-%oname
-Version: 0.6.0
+Version: 0.6.2
 Release: alt1
 Summary: A configurable sidebar-enabled Sphinx theme
 License: BSD
@@ -33,6 +33,9 @@ for [Flask](http://flask.pocoo.org/) & related projects.
 %python_sitelibdir/*
 
 %changelog
+* Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1
+- Version 0.6.2
+
 * Fri Jun 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1
 - Initial build for Sisyphus
 
