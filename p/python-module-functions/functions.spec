@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.5
-Release: alt1.git20141116
+Version: 0.7.0
+Release: alt1.git20141126
 Summary: Functional programming in Python
 License: MIT
 Group: Development/Python
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1.git20141126
+- Version 0.7.0
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.5-alt1.git20141116
 - Initial build for Sisyphus
 
