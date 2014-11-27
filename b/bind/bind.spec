@@ -1,5 +1,5 @@
 Name: bind
-Version: 9.9.5
+Version: 9.9.6
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -7,7 +7,7 @@ License: BSD-style
 Group: System/Servers
 Url: http://www.isc.org/products/BIND/
 
-%define vsuffix "P1"
+%define vsuffix %nil
 # NOTE: vsuffix removed from Source0
 # ftp://ftp.isc.org/isc/bind9/%version%vsuffix/bind-%version%vsuffix.tar.gz
 Source0: %name-%version.tar
@@ -217,6 +217,9 @@ s,@DOCDIR@,%docdir,g;
 s,@SBINDIR@,%_sbindir,g;
 ' --
 
+# XXX oldish stuff introduced in 9.9.6
+sed -i 's/AC_DEFINE(\(.*\), 1)/AC_DEFINE(\1, 1, [\1])/' configure.in
+
 %build
 %autoreconf
 %configure \
@@ -227,12 +230,15 @@ s,@SBINDIR@,%_sbindir,g;
 	 %{subst_with openssl} \
 	 %{subst_enable ipv6} \
 	 %{subst_enable static} \
+	--enable-rrl \
 	--enable-exportlib \
 	--with-export-libdir=%{_libdir} \
 	--with-export-includedir=%{_includedir} \
 	--includedir=%{_includedir}/bind9 \
 	--disable-openssl-version-check \
 	--with-libtool \
+	--with-gssapi=yes \
+	--disable-isc-spnego \
 	
 %make_build
 # Build queryperf
@@ -379,6 +385,10 @@ fi
 %exclude %_sbindir/lwresd
 %exclude %_man8dir/lwresd*
 %_sbindir/*
+ 
+# TODO
+#    /usr/bin/bind9-config
+#    /usr/share/man/man1/bind9-config.1.gz
 
 %_sysconfdir/named.conf
 %_sysconfdir/bind.keys
@@ -440,6 +450,18 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Tue Nov 18 2014 Fr. Br. George <george@altlinux.ru> 9.9.6-alt1
+- Update to ftp://ftp.isc.org/isc/bind9/9.9.6/bind-9.9.6.tar.gz
+- Fix old style autoheader AC_DEFINE
+- Enable ratelimits (Closes: #30398)
+- Provide initial rndc_keygen (Closes: #28034)
+
+* Mon Oct 06 2014 Fr. Br. George <george@altlinux.ru> 9.9.5-alt3
+- Build with GSSAPI
+
+* Tue Jun 17 2014 Fr. Br. George <george@altlinux.ru> 9.9.5-alt2
+- Updated to ftp://ftp.isc.org/isc/bind9/9.9.5-P1/bind-9.9.5-P1.tar.gz
+
 * Mon Feb 03 2014 Fr. Br. George <george@altlinux.ru> 9.9.5-alt1
 - Update to ftp://ftp.isc.org/isc/bind9/9.9.5/bind-9.9.5.tar.gz
 - Don't package bind9-config (in favour of lib*-export)
