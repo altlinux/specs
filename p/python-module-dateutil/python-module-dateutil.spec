@@ -1,23 +1,24 @@
 Name: python-module-dateutil
-Version: 1.5
-Release: alt1.3
+Version: 2.2
+Release: alt1
 
 Summary: Extensions to the standard datetime module
 
 License: PSF
 Group: Development/Python
-Url: http://labix.org/python-dateutil
+Url: https://pypi.python.org/pypi/python-dateutil/2.2
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 %setup_python_module dateutil
-%add_python_req_skip _winreg
+%add_python_req_skip _winreg winreg
 
-Source: http://labix.org/download/python-dateutil/python-dateutil-%version.tar
+Source: python-dateutil-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python-devel python-modules-encodings python-module-setuptools
+BuildRequires: python-devel python-modules-encodings
+BuildPreReq: python-module-setuptools-tests python-module-six
 BuildPreReq: python-module-pytz
 # texlive-base-bin
 
@@ -48,6 +49,10 @@ cd zoneinfo
 tar -czf \
 	%buildroot%python_sitelibdir/dateutil/zoneinfo/zoneinfo.tar.gz *
 
+%check
+python setup.py test
+python test.py
+
 %files
 %doc LICENSE NEWS README
 %dir %python_sitelibdir/dateutil/
@@ -58,6 +63,9 @@ tar -czf \
 
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1
+- Version 2.2
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.3
 - Rebuilt with new pytz
 
