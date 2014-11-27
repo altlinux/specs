@@ -1,6 +1,6 @@
 Name: ipmiutil
 Version: 2.8.3
-Release: alt1
+Release: alt2
 
 Summary: IPMI server management utilities
 License: BSD
@@ -52,17 +52,22 @@ make
 %install
 %makeinstall_std
 install -pDm755 scripts/checksel %buildroot%_sysconfdir/cron.daily/checksel
+install -dm700 %buildroot%_localstatedir/%name
 
 %files
 %_bindir/*
 %_sbindir/*
 %_datadir/%name/
 %_man8dir/*
+%attr(700,root,root) %_localstatedir/%name/
 
 %files cronjob
 %_sysconfdir/cron.daily/checksel
 
 %changelog
+* Thu Nov 27 2014 Michael Shigorin <mike@altlinux.org> 2.8.3-alt2
+- added %_localstatedir/%name (closes: #30515)
+
 * Sun May 06 2012 Michael Shigorin <mike@altlinux.org> 2.8.3-alt1
 - 2.8.3
 - single-threaded build (closes: #27254)
