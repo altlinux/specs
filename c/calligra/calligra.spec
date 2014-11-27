@@ -8,8 +8,8 @@
 %def_disable RDF
 
 Name: calligra
-Version: 2.8.5
-Release: alt3
+Version: 2.8.6
+Release: alt1
 Epoch: 0
 %define libname lib%name
 
@@ -103,7 +103,7 @@ Group: System/Libraries
 Summary: Map element for Calligra Reports
 Requires: %name-core = %EVR
 Requires: %libname = %EVR
-Requires: kde4edu-marble
+Requires: kde4-marble
 %description reports-map-element
 %summary.
 
@@ -202,7 +202,6 @@ Provides: koffice-kexi = %koffice_ver
 Obsoletes: koffice-kexi < %koffice_ver
 Requires: %name-core = %EVR
 Requires: %libname = %EVR
-Requires: kde4edu-marble
 %description kexi
 Kexi is an integrated data management application.  It can be used for
 creating database schemas, inserting data, performing queries, and
@@ -281,6 +280,7 @@ cp -ar %SOURCE1 cmake/modules/
 
 %files
 %files common
+%dir %_K4srv/calligra/
 %doc AUTHORS README
 
 %files devel
@@ -318,7 +318,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/koreport_barcodeplugin.so
 #%_K4lib/koreport_chartplugin.so
 %_K4lib/koreport_webplugin.so
-%_K4srv/koreport_webplugin.desktop
+%_K4srv/calligra/koreport_webplugin.desktop
 %_K4lib/calligra_filter_eps2svgai.so
 %_K4lib/calligra_filter_pdf2svg.so
 %_K4lib/calligra_filter_kpr2odp.so
@@ -355,7 +355,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/calligradocinfopropspage.desktop
 %_K4srv/kolcmsengine.desktop
 %_K4srv/kopabackgroundtool.desktop
-%_K4srv/koreport_barcodeplugin.desktop
+%_K4srv/calligra/koreport_barcodeplugin.desktop
 #%_K4srv/koreport_chartplugin.desktop
 %_K4srv/calligra_filter_eps2svgai.desktop
 %_K4srv/calligra_filter_pdf2svg.desktop
@@ -385,7 +385,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/calligra_shape_chart.desktop
 #%_K4srv/kchartpart.desktop
 %_K4srv/kformulapart.desktop
-%_K4srv/kexirelationdesignshape.desktop
+#%_K4srv/kexirelationdesignshape.desktop
 %_K4srv/calligra_shape_formular.desktop
 %_K4srv/calligra_shape_music.desktop
 %_K4srv/calligra_shape_picture.desktop
@@ -425,7 +425,7 @@ cp -ar %SOURCE1 cmake/modules/
 
 %files reports-map-element
 %_K4lib/koreport_mapsplugin.so
-%_K4srv/koreport_mapsplugin.desktop
+%_K4srv/calligra/koreport_mapsplugin.desktop
 
 %files sheets
 %_K4bindir/calligrasheets
@@ -541,11 +541,7 @@ cp -ar %SOURCE1 cmake/modules/
 %doc kexi/CHANGES kexi/README
 %_K4apps/kexi/
 %_K4bindir/kexi*
-%_K4lib/kformdesigner_containers.so
-%_K4lib/kformdesigner_kexidbwidgets.so
-%_K4lib/kformdesigner_mapbrowser.so
-%_K4lib/kformdesigner_stdwidgets.so
-%_K4lib/kformdesigner_webbrowser.so
+%_K4lib/kformdesigner_*.so
 %_K4lib/kexihandler_*.so
 %_K4lib/krossmodulekexidb.so
 %_K4lib/kexidb_*driver.so
@@ -555,17 +551,18 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4xdg_apps/*kexi.desktop
 %_K4conf/kexirc
 %_K4srvtyp/kexi*.desktop
-%_K4srv/kexi/
-%_K4srv/kexidb_*driver.desktop
-%_K4srv/keximigrate_*.desktop
-%_K4srv/kformdesigner/kformdesigner_containers.desktop
-%_K4srv/kformdesigner/kformdesigner_kexidbfactory.desktop
-%_K4srv/kformdesigner/kformdesigner_stdwidgets.desktop
-%_K4srv/kformdesigner/kformdesigner_webbrowser.desktop
+%_K4srv/calligra/kexicsv_importexporthandler.desktop
+%_K4srv/calligra/kexiformhandler.desktop
+%_K4srv/calligra/keximigrationhandler.desktop
+%_K4srv/calligra/kexiqueryhandler.desktop
+%_K4srv/calligra/kexirelationdesignshape.desktop
+%_K4srv/calligra/kexireporthandler.desktop
+%_K4srv/calligra/kexiscripthandler.desktop
+%_K4srv/calligra/kexitablehandler.desktop
+%_K4srv/calligra/kexidb_*driver.desktop
+%_K4srv/calligra/keximigrate_*.desktop
+%_K4srv/calligra/kformdesigner_*.desktop
 %_K4doc/en/kexi/
-#
-%_K4lib/kformdesigner_mapbrowser.so
-%_K4srv/kformdesigner/kformdesigner_mapbrowser.desktop
 
 %files flow
 %doc flow/AUTHORS flow/CHANGE* flow/NOTES flow/README
@@ -674,6 +671,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libkritasketchlib.so
 
 %changelog
+* Thu Nov 27 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.6-alt1
+- new version
+
 * Mon Sep 15 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.5-alt3
 - rebuild
 
