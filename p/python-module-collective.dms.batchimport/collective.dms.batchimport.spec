@@ -1,8 +1,9 @@
 %define mname collective.dms
 %define oname %mname.batchimport
 Name: python-module-%oname
-Version: 1.3
-Release: alt1.dev0.git20141024
+Epoch: 1
+Version: 1.2.2
+Release: alt1.dev0.git20141127
 Summary: Batch import of files into the Documents Management System
 License: GPL
 Group: Development/Python
@@ -64,6 +65,9 @@ python setup.py test
 %python_sitelibdir/collective/dms/*/test*
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.2-alt1.dev0.git20141127
+- Version 1.2.2.dev0
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.dev0.git20141024
 - Initial build for Sisyphus
 
