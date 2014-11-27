@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.76.0
-Release: alt1.git20141125
+Release: alt1.git20141126
 Summary: The low-level, core functionality of boto 3
 License: ASLv2.0
 Group: Development/Python
@@ -141,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.76.0-alt1.git20141126
+- New snapshot
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.76.0-alt1.git20141125
 - Version 0.76.0
 
