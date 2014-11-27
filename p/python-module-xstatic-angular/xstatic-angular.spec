@@ -4,9 +4,9 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.1.1
+Version: 1.2.16.0
 Release: alt1
-Summary: Angular 1.2.1 (XStatic packaging standard)
+Summary: Angular 1.2.16 (XStatic packaging standard)
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/XStatic-Angular/
@@ -32,7 +32,7 @@ This package is intended to be used by any project that needs these
 files.
 
 %package -n python3-module-%oname
-Summary: Angular 1.2.1 (XStatic packaging standard)
+Summary: Angular 1.2.16 (XStatic packaging standard)
 Group: Development/Python3
 %py3_provides %mname.pkg.angular
 %py3_requires %mname.pkg
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.16.0-alt1
+- Version 1.2.16.0
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1.1-alt1
 - Initial build for Sisyphus
 
