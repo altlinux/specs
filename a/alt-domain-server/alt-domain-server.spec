@@ -1,5 +1,5 @@
 Name: alt-domain-server 
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: All needed for alt-domain server
@@ -34,6 +34,9 @@ cp preinstall.d/* %buildroot/usr/share/install2/preinstall.d/
 /usr/share/install2/preinstall.d/*
 
 %changelog
+* Thu Nov 27 2014 Mikhail Efremov <sem@altlinux.org> 0.4-alt1
+- Use variable to control Samba services activation.
+
 * Fri Feb 01 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
 - version independent samba dependence
 
