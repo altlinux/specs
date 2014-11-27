@@ -1,6 +1,6 @@
 Name:           python-module-kerberos
-Version:        1.1
-Release:        alt1.1.1
+Version:        1.1.1
+Release:        alt1
 Summary:        A high-level wrapper for Kerberos (GSSAPI) operations
 
 Group:          System/Libraries
@@ -29,21 +29,25 @@ Much of the C-code here is adapted from Apache's mod_auth_kerb-5.0rc7.
 
 
 %prep
-%setup -q
-%patch0 -p1 -b .delegation
+%setup
+#patch0 -p1 -b .delegation
 
 %build
-python setup.py build
+%add_optflags -fno-strict-aliasing
+%python_build
 
 %install
-python setup.py install --skip-build --root $RPM_BUILD_ROOT
+%python_install
 
 %files
-%doc README.txt LICENSE test.py
+%doc README.txt LICENSE
 %python_sitelibdir/*
 
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1
+- Version 1.1.1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt1.1.1
 - Rebuild with Python-2.7
 
