@@ -1,8 +1,8 @@
 %define mname collective.dms
 %define oname %mname.mailcontent
 Name: python-module-%oname
-Version: 0.1.7
-Release: alt1.dev0.git20141016
+Version: 0.1.8
+Release: alt1.dev0.git20141126
 Summary: Mail content type for document management system
 License: GPL
 Group: Development/Python
@@ -71,6 +71,9 @@ python setup.py test
 %python_sitelibdir/collective/dms/*/*/test*
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.8-alt1.dev0.git20141126
+- Version 0.1.8.dev0
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.7-alt1.dev0.git20141016
 - Initial build for Sisyphus
 
