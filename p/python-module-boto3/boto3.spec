@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.2
-Release: alt1.git20141120
+Version: 0.0.3
+Release: alt1.git20141126
 Summary: The AWS SDK for Python
 License: ASLv2.0
 Group: Development/Python
@@ -141,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20141126
+- Version 0.0.3
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20141120
 - Version 0.0.2
 
