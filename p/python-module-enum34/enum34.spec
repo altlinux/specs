@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0
+Version: 1.0.4
 Release: alt1
 Summary: Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4
 License: BSD
@@ -86,6 +86,16 @@ pushd ../python3
 popd
 %endif
 
+%check
+rm -fR build
+py.test --fixtures enum
+%if_with python3
+pushd ../python3
+rm -fR build
+py.test-%_python3_version --fixtures enum
+popd
+%endif
+
 %files
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test*
@@ -105,6 +115,10 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt1
+- Version 1.0.4
+- Enabled testing
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
 - Initial build for Sisyphus
 
