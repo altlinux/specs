@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.43
+Version: 0.44
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -78,6 +78,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Thu Nov 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- better py3copycat support
+
 * Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.43-alt1
 - new version
 
