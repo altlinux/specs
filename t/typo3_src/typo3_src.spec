@@ -6,7 +6,7 @@
 %define beta %nil
 
 Name: typo3_src
-Version: 4.5.37
+Version: 4.5.38
 Release: alt1
 
 Summary: A free, feature rich, Content Management Framework/System
@@ -90,6 +90,9 @@ ln -s %name-%version %buildroot%_datadir/%name-%t3branch
 %files -n typo3-apache2
 
 %changelog
+* Thu Nov 27 2014 Michael Shigorin <mike@altlinux.org> 4.5.38-alt1
+- 4.5.38
+
 * Wed Oct 22 2014 Michael Shigorin <mike@altlinux.org> 4.5.37-alt1
 - 4.5.37: major security fixes, see
   https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2014-002/
