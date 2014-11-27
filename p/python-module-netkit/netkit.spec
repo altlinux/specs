@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.115
-Release: alt1.git20141125
+Version: 0.2.116
+Release: alt1.git20141127
 Summary: Useful kit for network programming
 License: MIT
 Group: Development/Python
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.116-alt1.git20141127
+- Version 0.2.116
+
 * Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.115-alt1.git20141125
 - Initial build for Sisyphus
 
