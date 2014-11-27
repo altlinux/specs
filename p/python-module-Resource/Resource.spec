@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.2
-Release: alt1.git20141121
+Version: 0.1.3
+Release: alt1.git20141127
 Summary: A Python library concentrated on the Resource layer of RESTful APIs
 License: MIT
 Group: Development/Python
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20141127
+- Version 0.1.3
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20141121
 - Initial build for Sisyphus
 
