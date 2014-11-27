@@ -1,7 +1,10 @@
 %define oname dateutil
+
+%def_disable check
+
 Name: python3-module-%oname
 Version: 2.2
-Release: alt3.bzr20131101
+Release: alt4.bzr20131101
 
 Summary: Extensions to the standard datetime module (Python 3)
 
@@ -19,8 +22,8 @@ Source: python-dateutil-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-pytz
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-pytz python3-module-six
 # texlive-base-bin
 
 
@@ -50,6 +53,10 @@ cd zoneinfo
 tar -czf \
 	%buildroot%python3_sitelibdir/dateutil/zoneinfo/zoneinfo.tar.gz *
 
+%check
+python3 setup.py test
+python3 test.py
+
 %files
 %doc LICENSE NEWS README
 %python3_sitelibdir/*egg-info
@@ -57,6 +64,9 @@ tar -czf \
 
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt4.bzr20131101
+- Rebuilt with new pytz
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt3.bzr20131101
 - Rebuilt with new pytz
 
