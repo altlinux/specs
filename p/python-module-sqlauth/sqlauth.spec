@@ -1,7 +1,7 @@
 %define oname sqlauth
 Name: python-module-%oname
-Version: 0.1.54
-Release: alt1.git20141126
+Version: 0.1.56
+Release: alt1.git20141127
 Summary: Authentication and Authorization via SQL for Autobahn
 License: ASLv2.0
 Group: Development/Python
@@ -46,6 +46,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.56-alt1.git20141127
+- Version 0.1.56
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.54-alt1.git20141126
 - Version 0.1.54
 
