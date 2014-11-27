@@ -4,9 +4,9 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.1.1
+Version: 2.1.2.0
 Release: alt1
-Summary: Jasmine 1.3.1 (XStatic packaging standard)
+Summary: Jasmine 2.1.2 (XStatic packaging standard)
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/XStatic-Jasmine/
@@ -32,7 +32,7 @@ This package is intended to be used by **any** project that needs these
 files.
 
 %package -n python3-module-%oname
-Summary: Jasmine 1.3.1 (XStatic packaging standard)
+Summary: Jasmine 2.1.2 (XStatic packaging standard)
 Group: Development/Python3
 %py3_provides %mname.pkg.jasmine
 %py3_requires %mname.pkg
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2.0-alt1
+- Version 2.1.2.0
+
 * Mon Nov 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1.1-alt1
 - Initial build for Sisyphus
 
