@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 Summary: Sentry configuration middleware
 License: ZPLv2.1
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
+- Version 1.1.0
+
 * Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
 
