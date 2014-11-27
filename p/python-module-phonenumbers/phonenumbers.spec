@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 7.0.0
-Release: alt1.git20141102
+Version: 7.0.1
+Release: alt1.git20141126
 Summary: Python port of Google's libphonenumber
 License: ASLv2.0
 Group: Development/Python
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0.1-alt1.git20141126
+- Version 7.0.1
+
 * Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0.0-alt1.git20141102
 - Version 7.0.0
 
