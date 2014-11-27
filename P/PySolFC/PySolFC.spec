@@ -1,6 +1,6 @@
 Name: PySolFC
 Version: 2.0
-Release: alt1.1
+Release: alt2
 %setup_python_module %name
 Summary: A collection of solitare card games
 Group: Games/Cards
@@ -10,6 +10,7 @@ Source0: http://downloads.sourceforge.net/pysolfc/%name-%version.tar.bz2
 Source1: PySol.desktop
 Source2: pysol-start-script
 Patch0: pysolfc-setup.py-noglade.patch
+Patch1: PySolFC-pillow.patch
 
 Provides: pysol = 5.%version
 
@@ -34,6 +35,7 @@ Supplemental python module for %name solitaire game collection
 %prep
 %setup
 %patch0 -p0
+%patch1 -p1
 
 %build
 %python_build
@@ -69,6 +71,9 @@ install -m755 %SOURCE2 %buildroot/%_bindir/pysol
 %python_sitelibdir/*egg-info
 
 %changelog
+* Thu Nov 27 2014 Fr. Br. George <george@altlinux.ru> 2.0-alt2
+- Import FC patch
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0-alt1.1
 - Rebuild with Python-2.7
 
