@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0
-Release: alt1.b1.git20140910
+Version: 1.1
+Release: alt1.dev.git20141126
 Summary: A serialization/deserialization/validation library for strings, mappings and lists
 License: BSD
 Group: Development/Python
@@ -20,7 +20,8 @@ BuildPreReq: python-module-sphinx-devel pylons_sphinx_theme
 BuildPreReq: python-module-iso8601 python-module-translationstring
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-iso8601 python3-module-translationstring
 %endif
 
 %py_provides %oname
@@ -154,6 +155,14 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.txt
 %python_sitelibdir/*
@@ -180,6 +189,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.dev.git20141126
+- Version 1.1dev
+- Enabled testing
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.b1.git20140910
 - Initial build for Sisyphus
 
