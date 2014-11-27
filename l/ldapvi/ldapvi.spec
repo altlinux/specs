@@ -1,6 +1,6 @@
 Name: ldapvi
 Version: 1.7
-Release: alt1
+Release: alt2
 Summary: Interactive LDAP client for Unix terminal
 Group: Networking/Remote access
 Url: http://www.lichteblau.com/ldapvi/
@@ -37,6 +37,9 @@ install -D %name.1 %buildroot/%_man1dir/%name.1
 %_bindir/*
 
 %changelog
+* Thu Nov 27 2014 Fr. Br. George <george@altlinux.ru> 1.7-alt2
+- Make Fedoraimport happy
+
 * Mon Nov 17 2014 Fr. Br. George <george@altlinux.ru> 1.7-alt1
 - Autobuild version bump to 1.7
 
