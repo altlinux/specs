@@ -1,4 +1,4 @@
-%define	version	1.14.0
+%define	version	1.15.1
 %define release alt1
 %define source_version %version
 %define source_name  paramiko
@@ -19,9 +19,12 @@ Prefix: %_prefix
 Url: http://www.lag.net/paramiko
 BuildArch: noarch
 
+BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-ecdsa python-module-pycrypto
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-ecdsa python3-module-pycrypto
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -79,6 +82,14 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %python_sitelibdir/%source_name
 %python_sitelibdir/*.egg-info
@@ -95,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15.1-alt1
+- Version 1.15.1
+
 * Fri Jul 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14.0-alt1
 - Version 1.14.0
 - Added module for Python 3
