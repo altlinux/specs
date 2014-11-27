@@ -1,7 +1,7 @@
 %define oname cubicweb
 Name: python-module-%oname
 Version: 3.19.5
-Release: alt1.hg20141124
+Release: alt2.hg20141124
 Summary: A repository of entities / relations for knowledge management
 License: LGPL
 Group: Development/Python
@@ -26,6 +26,7 @@ BuildPreReq: python-module-logilab-database-tests
 
 %py_requires twisted.internet twisted.web logilab.common docutils rdflib
 %py_requires logilab.mtconverter logilab.database Pyro4 PIL vobject
+%py_requires cubicweb.devtools.testlib sqlite3
 
 %description
 CubicWeb is a entities / relations based knowledge management system
@@ -100,6 +101,9 @@ python setup.py test
 %doc doc/*
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.19.5-alt2.hg20141124
+- Added necessary requirements
+
 * Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.19.5-alt1.hg20141124
 - New snapshot
 
