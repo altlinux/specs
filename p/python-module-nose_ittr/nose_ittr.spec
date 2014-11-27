@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt1.git20141126
+Version: 0.0.2
+Release: alt1.git20141127
 Summary: nose extension for supporting parametrized testing
 License: ASLv2.0
 Group: Development/Python
@@ -93,7 +93,12 @@ popd
 %python3_sitelibdir/*
 %endif
 
+# TODO: enable test_ittr_params_to_setup
+
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20141127
+- Version 0.0.2
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20141126
 - Initial build for Sisyphus
 
