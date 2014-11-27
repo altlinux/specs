@@ -1,6 +1,6 @@
 Name: lxqt-panel
 Version: 0.8.0
-Release: alt2
+Release: alt3
 
 Summary: Desktop panel
 License: LGPL
@@ -26,6 +26,7 @@ Provides: razorqt-panel = %version
 Obsoletes: razorqt-panel < 0.7.0
 
 Requires: menu-cache
+Requires: udisks2 gvfs qt4-dbus
 
 %description
 %summary
@@ -66,6 +67,9 @@ rm -f %buildroot%_libdir/%name/libpanelkbindicator.so
 %_includedir/*/*.h
 
 %changelog
+* Thu Nov 27 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt3
+- require media related packages (closes: #30516)
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt2
 - bad ELF symbols still in libpanelkbindicator.so, sigh
 
