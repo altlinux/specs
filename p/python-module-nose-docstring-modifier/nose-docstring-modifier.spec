@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.5
-Release: alt1.git20141124
+Version: 0.0.6
+Release: alt1.git20141126
 Summary: Add attributes next to the original docstring
 License: ASLv2.0
 Group: Development/Python
@@ -21,6 +21,7 @@ BuildPreReq: python-module-nose
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-nose
+BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides nose_docstring_modifier
@@ -45,6 +46,7 @@ ln -s README.rst README.md
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -84,6 +86,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1.git20141126
+- Version 0.0.6
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1.git20141124
 - Version 0.0.5
 
