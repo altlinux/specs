@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.2.2
-Release: alt1.git20141120
+Version: 1.3.0
+Release: alt1.git20141127
 Summary: JSON based CMS for Universal Core
 License: BSD
 Group: Development/Python
@@ -145,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20141127
+- Version 1.3.0
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.git20141120
 - Version 1.2.2
 
