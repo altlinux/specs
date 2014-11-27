@@ -2,12 +2,12 @@
 
 
 Name: indilib
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
-%add_verify_elf_skiplist %_libdir/libAlignmentDriver.so
+%add_verify_elf_skiplist %_libdir/libindiAlignmentDriver.so.%version
 
 Group: Development/C
 Summary: Library to control astronomical devices
@@ -73,14 +73,6 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 %install
 %Kinstall
 
-mkdir -p %buildroot/%_libdir/%shortname/MathPlugins/
-mv %buildroot/%_datadir/%shortname/MathPlugins/*.so %buildroot/%_libdir/%shortname/MathPlugins/
-for f in %buildroot/%_libdir/%shortname/MathPlugins/*.so
-do
-    fname=`basename $f`
-    ln -s `relative %buildroot/%_libdir/%shortname/MathPlugins/$fname %buildroot/%_datadir/%shortname/MathPlugins/$fname` %buildroot/%_datadir/%shortname/MathPlugins/$fname
-done
-
 %files
 %doc ChangeLog README
 %_bindir/*
@@ -104,6 +96,9 @@ done
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Thu Nov 27 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.9-alt1
+- new version
+
 * Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt1
 - new version
 
