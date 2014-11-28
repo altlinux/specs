@@ -1,10 +1,10 @@
 Name: rsync
-Version: 3.0.9
-Release: alt2
+Version: 3.1.1
+Release: alt1
 %define srcname rsync-%version
 
 Summary: A program for synchronizing files over a network
-License: GPLv3
+License: GPLv3+
 Group: Networking/File transfer
 Url: http://rsync.samba.org
 
@@ -51,10 +51,10 @@ xz -9 OLDNEWS
 ./prepare-source
 %add_optflags -fno-strict-aliasing
 %configure
-%make_build CCOPTFLAGS="%optflags"
+%make_build
 
 %install
-%makeinstall_std
+%makeinstall_std INSTALLCMD='install -p' INSTALLMAN='install -p'
 install -pD -m640 packaging/lsb/rsync.xinetd \
 	%buildroot%_sysconfdir/xinetd.d/rsync
 install -pD -m600 rsyncd.conf \
@@ -62,6 +62,10 @@ install -pD -m600 rsyncd.conf \
 install -pD -m640 rsyncd.logrotate \
 	%buildroot%_sysconfdir/logrotate.d/rsyncd
 install -pD /dev/null %buildroot%_logdir/rsyncd/rsyncd.log
+mkdir -p %buildroot%_unitdir
+install -pm644 rsyncd.socket rsyncd@.service \
+	%buildroot%_unitdir/
+install -Dpm644 /dev/null %buildroot%_sysconfdir/sysconfig/rsyncd
 
 %check
 make -k check
@@ -91,11 +95,18 @@ done
 %config(noreplace) %_sysconfdir/logrotate.d/rsyncd
 %config(noreplace) %_sysconfdir/xinetd.d/rsync
 %config(noreplace) %_sysconfdir/rsyncd.conf
+%_unitdir/rsyncd.socket
+%_unitdir/rsyncd@.service
+%ghost %config(noreplace,missingok) %_sysconfdir/sysconfig/rsyncd
 %_man5dir/*
 %attr(750,root,adm) %dir %_logdir/rsyncd
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Fri Nov 28 2014 Dmitry V. Levin <ldv@altlinux.org> 3.1.1-alt1
+- Updated to v3.1.1.
+- server: packaged systemd unit files (closes: #30508).
+
 * Mon Apr 23 2012 Dmitry V. Levin <ldv@altlinux.org> 3.0.9-alt2
 - Reverted default timeout value to upstream value 0.
   It used to be 60 seconds more than 10 years, but some subtle change
