@@ -5,7 +5,7 @@
 Name: asterisk11
 Summary: Open source PBX
 Version: 11.14.1
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 %if_with corosync
@@ -33,9 +33,7 @@ BuildPreReq: libhoard-devel
 BuildPreReq: asterisk-build-hacks
 BuildPreReq: libresample-devel
 BuildPreReq: libvpb-devel libsqlite3-devel libsqlite-devel libfreetds-devel
-%ifnarch %arm
 BuildPreReq: libgmime-devel
-%endif
 BuildPreReq: libportaudio2-devel libavcodec-devel
 BuildPreReq: libSDL_image-devel libSDL-devel libX11-devel libgtk+2-devel
 BuildPreReq: libxml2-devel
@@ -92,8 +90,6 @@ BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
 %if_with ss7
 %endif
 %if_with hoard
-%endif
-%ifnarch %arm
 %endif
 %set_autoconf_version 2.60
 %define modules_dir	%_libdir/asterisk/%version/modules
@@ -640,10 +636,10 @@ rm -f */.makeopts
 export CC=gcc
 %autoreconf -I autoconf
 ./configure --build=%_build_alias --host=%_host_alias \
+	--libdir=%_libdir \
 %if_with hoard
     --with-hoard=/usr/include/hoard \
 %endif
-	--libdir=%_libdir \
 	--enable-dev-mode
 make -C menuselect libdir=%_libdir
 make menuselect.makeopts \
@@ -655,14 +651,36 @@ menuselect/menuselect  \
     --enable DO_CRASH \
     --enable BETTER_BACKTRACES \
     --enable G711_NEW_ALGORITHM \
+    --enable res_pktccops \
+    --enable app_mysql \
+    --enable app_saycountpl \
+    --enable app_dahdibarge \
+    --enable app_fax \
+    --enable app_meetme \
+    --enable app_readfile \
+    --enable app_saycounted \
+    --enable app_setcallerid \
+    --enable cdr_mysql \
+    --enable cdr_sqlite \
     --enable chan_usbradio \
-    --enable chan_misdn \
-    --enable res_jabber \
     --enable chan_gtalk \
     --enable chan_jingle \
+    --enable chan_mobile \
+    --enable chan_ooh323 \
+    --enable chan_mgcp \
+    --enable chan_vpb \
+    --enable codec_ilbc \
+    --enable res_jabber \
     --enable res_rtp_asterisk \
     --enable res_rtp_multicast \
-    --disable chan_h323
+    --enable res_config_mysql \
+    --disable chan_h323 \
+    --enable format_mp3 \
+    --enable aelparse \
+    --enable conf2ael \
+    --enable chan_misdn \
+    --disable CORE-SOUNDS-EN-GSM \
+    --disable MENUSELECT_MOH
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
 make libdir=%_libdir NOISY_BUILD=yes
@@ -1253,6 +1271,10 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %_libdir/libasteriskssl11.so.1
 
 %changelog
+* Thu Nov 27 2014 Denis Smirnov <mithraen@altlinux.ru> 11.14.1-alt2
+- fix armh support
+- cleanup
+
 * Thu Nov 27 2014 Denis Smirnov <mithraen@altlinux.ru> 11.14.1-alt1
 - new version 11.14.1
 
