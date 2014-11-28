@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.54
+Version: 0.1.59
 Release: alt1.git20141127
 Summary: Basic database connectivity for Autobahn web sockets
 License: ASLv2.0
@@ -133,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.59-alt1.git20141127
+- Version 0.1.59
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.54-alt1.git20141127
 - Version 0.1.54
 
