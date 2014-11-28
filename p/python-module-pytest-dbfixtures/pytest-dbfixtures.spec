@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.0
-Release: alt1.git20141117
+Version: 0.8.0
+Release: alt1.git20141127
 Summary: Databases fixtures plugin for py.test
 License: LGPLv3
 Group: Development/Python
@@ -23,6 +23,7 @@ BuildPreReq: python-module-pymongo python-module-elasticsearch
 BuildPreReq: python-module-redis-py python-module-rabbitpy
 BuildPreReq: python-module-pytest-cov python-module-pytest-xdist
 BuildPreReq: python-module-coveralls python-module-pylama
+BuildPreReq: python-module-port-for
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -34,6 +35,7 @@ BuildPreReq: python3-module-pymongo python3-module-elasticsearch
 BuildPreReq: python3-module-redis-py python3-module-rabbitpy
 BuildPreReq: python3-module-pytest-cov python3-module-pytest-xdist
 BuildPreReq: python3-module-coveralls python3-module-pylama
+BuildPreReq: python3-module-port-for
 %endif
 
 %py_provides pytest_dbfixtures
@@ -140,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.git20141127
+- Version 0.8.0
+
 * Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1.git20141117
 - Version 0.7.0
 
