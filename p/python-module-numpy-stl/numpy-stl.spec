@@ -1,7 +1,7 @@
 %define oname numpy-stl
 Name: python-module-%oname
-Version: 1.3.4
-Release: alt1.git20141104
+Version: 1.3.5
+Release: alt1.git20141127
 Summary: Library to make reading, writing and modifying both binary and ascii STL files easy
 License: BSD
 Group: Development/Python
@@ -55,6 +55,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.5-alt1.git20141127
+- Version 1.3.5
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt1.git20141104
 - Version 1.3.4
 
