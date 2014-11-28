@@ -1,7 +1,7 @@
 %define oname thumbor
 Name: python-module-%oname
-Version: 4.7.0
-Release: alt1.git20141126
+Version: 4.7.1
+Release: alt1.git20141127
 Summary: thumbor is an open-source photo thumbnail service by globo.com
 License: MIT
 Group: Development/Python
@@ -73,6 +73,9 @@ python setup.py test
 %python_sitelibdir/*/integration_tests
 
 %changelog
+* Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.7.1-alt1.git20141127
+- Version 4.7.1
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.7.0-alt1.git20141126
 - Version 4.7.0
 
