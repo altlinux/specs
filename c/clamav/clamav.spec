@@ -12,7 +12,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.98.4
+Version: 0.98.5
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -49,8 +49,6 @@ Source23: virusstat.cron.example
 Patch1: clamav-config.patch
 Patch2: freshclam-config.patch
 
-Patch10: clamav-0.98-alt-arm.patch
-
 Patch20: clamav-0.97.2-libs.private.patch
 
 # Package with clamd should require libclamav, not vice versa.
@@ -67,7 +65,7 @@ Requires(post): sed >= 1:3.02-alt1
 BuildRequires: sed
 
 BuildRequires: gcc-c++ bzlib-devel libcheck-devel libncurses-devel zlib-devel libcurl-devel libssl-devel libxml2-devel
-BuildRequires: git-core subversion graphviz groff-extra gv zip doxygen
+BuildRequires: git-core graphviz groff-extra gv zip doxygen
 
 # ...and edited manually to separate conditional buildreqs
 %{?_with_milter:BuildRequires: sendmail-devel}
@@ -128,8 +126,6 @@ database automatically. It uses the freshclam(1) utility for this task.
 %setup %{?snap: -n clamav-devel-%snap} %{?rctag: -n clamav-%{version}%{rctag}}
 %patch1 -p1
 %patch2 -p1
-
-#patch10 -p1
 
 %patch20 -p1
 
@@ -310,6 +306,11 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Fri Nov 28 2014 Sergey Y. Afonin <asy@altlinux.ru> 0.98.5-alt1
+- 0.98.5 (ALT #30501)
+- removed clamav-0.98-alt-arm.patch
+- removed subversion from BuildRequires
+
 * Wed Jun 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 0.98.4-alt1
 - 0.98.4 (ALT #30087)
 - updated BuildRequires
