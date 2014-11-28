@@ -2,18 +2,18 @@
 %global require_libhangul_version 0.1.0
 
 Name:       ibus-hangul
-Version:    1.4.2
+Version:    1.5.0
 Release:    alt1
 Summary:    The Hangul engine for IBus input platform
 License:    GPLv2+
 Group:      System/Libraries
 URL:        http://code.google.com/p/ibus/
 Source0:    http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
+# VCS: git://github.com/choehwanjin/ibus-hangul.git
 # upstreamed patches
 #Patch0:     ibus-hangul-HEAD.patch
 # not upstreamed patches
-Patch1:     ibus-hangul-dconf-prefix.patch
-Patch2:     ibus-hangul-setup-abspath.patch
+Patch1:     ibus-hangul-setup-abspath.patch
 
 BuildRequires:  gettext-devel, automake, libtool
 BuildRequires:  intltool
@@ -34,8 +34,7 @@ libhangul.
 
 %prep
 %setup -q
-%patch1 -p1 -b .dconf-prefix
-%patch2 -p1 -b .setup-abspath
+%patch1 -p1 -b .setup-abspath
 
 #№autopoint -f
 #AUTOPOINT='intltoolize --automake --copy' autoreconf -fi
@@ -62,11 +61,15 @@ desktop-file-validate ${RPM_BUILD_ROOT}%{_datadir}/applications/ibus-setup-hangu
 %{_libexecdir}/ibus-setup-hangul
 %{_datadir}/ibus-hangul
 %{_datadir}/ibus/component/*
-%{_libdir}/ibus-hangul/setup/*
 %_desktopdir/ibus-setup-hangul.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Nov 28 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
+- New version
+- Build from upstream Git repository
+  git://github.com/choehwanjin/ibus-hangul.git
+
 * Fri May 30 2014 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
 - Import from Fedora
 
