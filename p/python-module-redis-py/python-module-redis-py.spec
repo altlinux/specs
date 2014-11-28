@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.10.1
+Version: 2.10.3
 Release: alt1
 Group: Development/Python
 License: MIT License
@@ -72,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10.3-alt1
+- Version 2.10.3
+
 * Mon Jun 23 2014 Vladimir Didenko <cow@altlinux.org> 2.10.1-alt1
 - new version
 - python 3 support
