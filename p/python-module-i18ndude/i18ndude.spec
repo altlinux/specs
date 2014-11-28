@@ -1,7 +1,7 @@
 %define oname i18ndude
 Name: python-module-%oname
-Version: 3.3.6
-Release: alt1.dev0.git20140805
+Version: 3.4.1
+Release: alt1.dev0.git20141127
 Summary: i18ndude performs various tasks related to ZPT's, Python Scripts and i18n
 License: GPL
 Group: Development/Python
@@ -62,6 +62,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.1-alt1.dev0.git20141127
+- Version 3.4.1.dev0
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.6-alt1.dev0.git20140805
 - Initial build for Sisyphus
 
