@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.5
-Release: alt1.git20141126
+Version: 0.1.6
+Release: alt1.git20141127
 Summary: Test a couple of hundred urls in seconds
 License: Free
 Group: Development/Python
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.6-alt1.git20141127
+- Version 0.1.6
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt1.git20141126
 - Initial build for Sisyphus
 
