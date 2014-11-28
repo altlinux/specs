@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt47
+Release: alt49
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -238,6 +238,8 @@ done
 
 unset RPM_PYTHON
 
+%set_verify_elf_method strict
+
 %files -f %name.lang
 %_bindir/apt-*
 %_libdir/%name
@@ -274,6 +276,12 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Fri Nov 28 2014 Dmitry V. Levin <ldv@altlinux.org> 0.5.15lorg2-alt49
+- Reintroduced '%%set_verify_elf_method strict'.
+
+* Tue Nov 25 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt48
+- Added buildtime to downloaded package name.
+
 * Fri Sep 12 2014 Dmitry V. Levin <ldv@altlinux.org> 0.5.15lorg2-alt47
 - Added apt's package NEVRA string to OptionsHash.
 
