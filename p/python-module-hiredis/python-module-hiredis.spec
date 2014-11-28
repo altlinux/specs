@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.3
+Version: 0.1.5
 Release: alt1
 
 Summary: Python wrapper for hiredis
@@ -34,7 +34,7 @@ Summary: Python wrapper for hiredis (Python 3)
 Group: Development/Python3
 
 %description -n python3-module-%oname
-Python wrapper for hiredis 
+Python wrapper for hiredis
 %endif
 
 
@@ -76,5 +76,8 @@ popd
 %endif
 
 %changelog
+* Fri Nov 28 2014 Vladimir Didenko <cow@altlinux.ru> 0.1.5-alt1
+- 0.1.5
+
 * Tue Jun 24 2014 Vladimir Didenko <cow@altlinux.ru> 0.1.3-alt1
 - initial build for Sisyphus
