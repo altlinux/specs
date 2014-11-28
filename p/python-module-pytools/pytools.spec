@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2014.3.4
+Version: 2014.3.5
 Release: alt1
 Summary: A collection of tools for Python
 License: MIT
@@ -15,10 +15,12 @@ Source: %oname-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-appdirs python-module-decorator
+BuildPreReq: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-appdirs python3-module-decorator
+BuildPreReq: python3-module-six
 BuildPreReq: python-tools-2to3
 %endif
 BuildArch: noarch
@@ -128,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.3.5-alt1
+- Version 2014.3.5
+
 * Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.3.4-alt1
 - Version 2014.3.4
 - Enabled testing
