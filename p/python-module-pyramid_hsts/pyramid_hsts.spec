@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.4
-Release: alt1.git20140224
+Version: 1.2.2
+Release: alt1.git20141127
 Summary: HTTP Strict Transport Security for a Pyramid application
 License: Public domain
 Group: Development/Python
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.git20141127
+- Version 1.2.2
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.4-alt1.git20140224
 - Initial build for Sisyphus
 
