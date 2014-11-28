@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.0.1
+Version: 5.1.0
 Release: alt1
 
 Summary: Python module to generate QR Codes
@@ -17,7 +17,7 @@ Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildPreReq: rpm-build-python
-BuildRequires: python-devel python-module-distribute 
+BuildRequires: python-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 28 2014 Vladimir Didenko <cow@altlinux.ru> 5.1.0-alt1
+- new version
+
 * Tue Sep 16 2014 Vladimir Didenko <cow@altlinux.ru> 5.0.1-alt1
 - new version
 
