@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.15
-Release: alt1.1
+Version: 0.23
+Release: alt1
 Summary: implements a XML/HTML/XHTML Markup safe string for Python
 
 Group: Development/Python
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23-alt1
+- Version 0.23
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.15-alt1.1
 - Rebuild with Python-3.3
 
