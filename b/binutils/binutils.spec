@@ -1,6 +1,6 @@
 Name: binutils
 Version: 2.24.0
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -32,6 +32,8 @@ Patch0012: 0012-gold-enable-z-relro-by-default.patch
 Patch0013: 0013-ld-testsuite-restore-upstream-default-options.patch
 Patch0014: 0014-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
 Patch0015: 0015-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
+
+Patch16: binutils-2.24-amodra-pr16457.patch
 
 Patch100: binutils-alt-ld-testsuite-workaround-x86.patch
 Patch101: binutils-2.24-alt-fix-gold-testsuite.patch
@@ -93,6 +95,8 @@ libiberty.
 %patch0013 -p1
 %patch0014 -p1
 %patch0015 -p1
+
+%patch16 -p1
 
 %ifarch %ix86
 %patch100 -p1
@@ -266,6 +270,9 @@ XFAIL_TESTS="$XFAIL_TESTS debug_msg.sh"
 %doc NEWS*
 
 %changelog
+* Fri Nov 28 2014 Dmitry V. Levin <ldv@altlinux.org> 1:2.24.0-alt3
+- Applied upstream fix for sw#16457.
+
 * Fri Oct 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.24.0-alt2
 - Fixed ld and gold tests (gcc4.9).
 
