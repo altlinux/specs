@@ -5,15 +5,15 @@
 
 Name: gnome-shell
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: https://live.gnome.org/GnomeShell
 
-#Source: %name-%version.tar
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: gnome-shell-3.11.90-alt-gir.patch
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 Patch4: gnome-shell-3.9.92-alt-makefile.patch
@@ -48,6 +48,11 @@ Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
 Requires: at-spi2-atk ca-certificates polkit caribou
 # since 3.11.x requires org.gnome.login-screen schema
 Requires: gdm-data
+# gkbd-keyboard-display required to show keyboard layouts
+Requires: libgnomekbd
+# network.js requires
+Requires: gnome-control-center
+
 # find ./ -name *.js |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(AccountsService)
 Requires: typelib(Atk)
@@ -223,6 +228,10 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Fri Nov 28 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt2
+- updated to 3.14.2_2ceaa05a (fixed BGO #740141, 740227)
+- requires: added libgnomekbd (gkbd-keyboard-display) to show keyboard layouts
+
 * Wed Nov 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 
