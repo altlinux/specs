@@ -1,6 +1,6 @@
 Name:         xfig
-Version:      3.2.5b
-Release:      alt9
+Version:      3.2.5c
+Release:      alt1
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -62,7 +62,7 @@ make DESTDIR=%buildroot
 %install
 make DESTDIR=%buildroot install.all
 
-install -D -m 755 xfig.sh %buildroot/%_bindir/xfig.sh
+install -D -m 755 xfig.sh      %buildroot/%_bindir/xfig.sh
 install -D -m 644 xfig48.png   %buildroot/%_liconsdir/xfig.png
 install -D -m 644 xfig32.png   %buildroot/%_niconsdir/xfig.png
 install -D -m 644 xfig16.png   %buildroot/%_miconsdir/xfig.png
@@ -87,6 +87,9 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Sat Nov 29 2014 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5c-alt1
+- 3.2.5c
+
 * Mon Nov 11 2013 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5b-alt9
 - fix error with filled objects in new xlib
 
