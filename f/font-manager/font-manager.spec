@@ -1,19 +1,19 @@
 Name: font-manager
-Version: 0.5.7
-Release: alt2
+Version: 0.7.1
+Release: alt1
 
 Summary: A font management application for the GNOME desktop
 License: GPLv3
 Group: Graphical desktop/GNOME
 Url: http://code.google.com/p/%name
 
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
-
 Source: http://%name.googlecode.com/files/%name-%version.tar.bz2
-Patch: %name-0.5.7-alt-include.patch
 
-BuildRequires: glib2-devel fontconfig-devel libfreetype-devel libpango-devel
-BuildRequires: libsqlite3-devel python-devel
+BuildRequires: libgtk+3-devel libjson-glib-devel libgee0.8-devel
+BuildRequires: libgucharmap-devel libsqlite3-devel libxml2-devel
+BuildRequires: intltool yelp-tools
+BuildRequires: vala-tools
+BuildRequires: gobject-introspection-devel libgucharmap-gir-devel
 
 %description
 Font Manager is an application that allows users to easily manage fonts
@@ -31,26 +31,31 @@ Enlightenment, and even KDE.
 
 %prep
 %setup
-%patch -p1
 
 %build
+%autoreconf
+export ac_cv_prog_HAVE_FILE_ROLLER="yes"
 %configure
-%make_build
+# SMP-incompatible build
+%make
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/*
-%_libdir/%name/
-%_datadir/%name/
-%_datadir/applications/*
-%doc AUTHORS NEWS README ChangeLog
+%_bindir/%name
+%_desktopdir/%name.desktop
+%_datadir/glib-2.0/schemas/org.gnome.FontManager.gschema.xml
+%_datadir/appdata/%name.appdata.xml
+%doc README
 
 
 %changelog
+* Sat Nov 29 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Sat Mar 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.5.7-alt2
 - fixed build
 
