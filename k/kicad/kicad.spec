@@ -2,16 +2,15 @@
 
 Summary: An open source software for the creation of electronic schematic diagrams
 Name: kicad
-Version: 20110522
-Release: alt2.1
-Source0: %name-%version.tar.bz2
+Version: r4029
+Release: alt1
+Source0: ~registry-%name-stable-%version.tgz
 License: GPLv2+
 Group: Sciences/Computer science
-Url: http://kicad.sourceforge.net/
-Packager: Alexey Shentzev <ashen@altlinux.ru>
+Url: https://code.launchpad.net/kicad
+#Url: https://code.launchpad.net/~registry/kicad/stable
 
-# Automatically added by buildreq on Fri Feb 13 2009
-BuildRequires: boost-devel ccmake cmake cmake-modules gcc-c++ libGL-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel
+BuildRequires: boost-devel ccmake cmake >= 2.6.4 cmake-modules gcc-c++ libGL-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel
 BuildRequires: libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel
 BuildRequires: libXxf86misc-devel libxkbfile-devel wxGTK-devel xorg-xf86vidmodeproto-devel zlib-devel
 BuildRequires: fontconfig glibc-pthread libGLU-devel libICE-devel libSM-devel libX11-devel libXdamage-devel libXfixes-devel libXrender-devel
@@ -35,17 +34,19 @@ Cvpcb :     footprint selector for components used in the circuit design.
 Kicad:      project manager.
 
 %prep
-%setup -n %name
+%setup -n ~registry/kicad/stable
 
 %build
-export LC_ALL=C
-%add_optflags -fpermissive
+#export LC_ALL=C
+#%add_optflags -fpermissive
 cmake \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DCMAKE_INSTALL_PREFIX=/usr \
-	-DCMAKE_C_FLAGS="%optflags" \
-	-DCMAKE_CXX_FLAGS="%optflags" \
+	-DwxUSE_UNICODE=ON \
+	-DKICAD_GOST=ON \
 	-DKICAD_STABLE_VERSION=ON
+#	-DCMAKE_C_FLAGS="%optflags" \
+#	-DCMAKE_CXX_FLAGS="%optflags" \	
 %make
 
 %install
@@ -56,26 +57,28 @@ install -p -m 644 resources/linux/mime/applications/* %buildroot%_datadir/applic
 
 mkdir -p %buildroot%_datadir/icons/
 cp -r resources/linux/mime/icons/hicolor %buildroot%_datadir/icons/
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Engineering \
-	%buildroot%_desktopdir/eeschema.desktop
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Engineering \
-	%buildroot%_desktopdir/kicad.desktop
-#mv %{buildroot}usr/lib/kicad/plugins/netlist_form_pads-pcb.xsl %buildroot%_datadir/%name/
 
+#mv %{buildroot}usr/lib/kicad/plugins/netlist_form_pads-pcb.xsl %buildroot%_datadir/%name/
+%ifarch x86_64
+mkdir -p %buildroot%_libdir/%name/plugins/
+mv -f %buildroot/usr/lib/%name/plugins/ %buildroot%_libdir/%name/plugins/
+%endif
 
 %files
 %_bindir/*
-%_datadir/%name
+%_datadir/%name/
 %_liconsdir/%name.png
 %_datadir/applications/*.desktop
 %_datadir/icons/hicolor/*/*/*kicad*
 %_datadir/mimelnk/application/*kicad*
 %_datadir/mime/packages/kicad.xml
+%_libdir/%name/plugins/*
 %doc %_datadir/doc/%name
 
 %changelog
+* Sat Nov 29 2014 barssc <barssc@altlinux.ru> r4029-alt1
+- new version
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110522-alt2.1
 - Fixed build with gcc 4.7
 
