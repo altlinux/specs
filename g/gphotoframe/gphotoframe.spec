@@ -1,15 +1,15 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gphotoframe
-Version: 2.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Gnome Photo Frame
 License: GPLv3
 Group: Graphics
 
-Url: http://code.google.com/p/gphotoframe/
-Source: http://gphotoframe.googlecode.com/files/gphotoframe-%version.tar.gz
+Url: http://code.google.com/p/%name/
+Source: http://gphotoframe.googlecode.com/files/%name-%version-b1.tar.gz
 
 %_python_set_noarch
 BuildArch: noarch
@@ -31,7 +31,7 @@ This package contains scripts and desktop files of %name for
 gnome-screensaver compatibility.
 
 %prep
-%setup
+%setup -n %name-%version-b1
 
 %build
 # Fix installation path
@@ -58,6 +58,9 @@ chmod 755 gphotoframe-screensaver
 %_desktopdir/screensavers/%name-screensaver.desktop
 
 %changelog
+* Sat Nov 29 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1-b1
+
 * Sun Oct 26 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
 - 2.0
 
