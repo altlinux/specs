@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 3.1.1
+Version: 4.0.2
 Release: alt1
 Summary: Scalable, non-blocking web server and tools
 
@@ -12,7 +12,6 @@ Group: Development/Python
 Url: http://www.tornadoweb.org
 
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildRequires: python-devel python-module-distribute
 %if_with python3
@@ -95,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
+- Version 4.0.2
+
 * Mon Sep 09 2013 Alexey Shabalin <shaba@altlinux.ru> 3.1.1-alt1
 - 3.1.1
 
