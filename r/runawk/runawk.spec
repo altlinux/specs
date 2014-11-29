@@ -1,6 +1,6 @@
 Name: runawk
-Version: 1.4.4
-Release: alt1
+Version: 1.5.1
+Release: alt2
 
 Summary: Wrapper for AWK providing modules
 License: MIT
@@ -8,12 +8,9 @@ Group: Development/Other
 
 Url: http://runawk.sourceforge.net
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
+Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
-BuildPreReq: mk-configure >= 0.21.0
-
-# Automatically added by buildreq on Mon Nov 07 2011
-BuildRequires: bmake mk-configure
+BuildRequires: mk-configure >= 0.26.0
 
 %description
 RUNAWK is a small wrapper for AWK interpreter that helps to write
@@ -56,7 +53,7 @@ mkcmake install
 #mkcmake install-a_getopt
 
 %files
-%doc doc/*
+%doc doc/LICENSE doc/NEWS doc/TODO README
 %_bindir/*
 %_man1dir/*
 %_man3dir/*
@@ -70,6 +67,12 @@ mkcmake install
 #   (uses runawk, isn't used by runawk)
 
 %changelog
+* Mon Dec  1 2014 Aleksey Cheusov <cheusov@altlinux.org> 1.5.1-alt2
+- Fix in .gear/rules
+
+* Sat Nov 29 2014 Aleksey Cheusov <cheusov@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Sun Mar 10 2013 Michael Shigorin <mike@altlinux.org> 1.4.4-alt1
 - 1.4.4
 - added man3

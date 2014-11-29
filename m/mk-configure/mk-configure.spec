@@ -1,20 +1,24 @@
 Name: mk-configure
-Version: 0.24.0
-Release: alt1
+Version: 0.28.0
+Release: alt5
 
 Summary: Lightweight replacement for GNU autotools
 License: BSD
 Group: Development/Tools
 
 Url: http://sourceforge.net/projects/mk-configure/
-Source: http://prdownloads.sf.net/%name/%name-%version.tar.bz2
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+# Source: http://prdownloads.sf.net/%name/%name-%version.tar
+Source: %name-%version.tar.bz2
+Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Thu Jun 24 2010
-BuildRequires: bmake flex gcc-c++ glib2-devel groff-base zlib-devel
-BuildRequires: perl-podlators perl-devel liblua5-devel
+Requires:      bmake bmkdep
+BuildRequires: bmake binutils
+
+# required for tests
+BuildRequires: flex bison gcc-c++ glib2-devel groff-base zlib-devel bmkdep
+BuildRequires: perl-podlators perl-devel liblua5-devel info-install makeinfo m4
 
 %description
 mk-configure is a lightweight replacement for GNU autotools, written in
@@ -24,10 +28,8 @@ bmake (portable version of NetBSD make), POSIX shell and POSIX utilities.
 %setup
 
 %define env \
-unset MAKEFLAGS \
-export PREFIX=%prefix \
-export MANDIR=%_mandir \
-export CFLAGS=-O2
+  unset MAKEFLAGS; \
+  export PREFIX=%prefix MANDIR=%_mandir SYSCONFDIR=%_sysconfdir
 
 # examples are built and tested either,
 # let's keep a pristine copy
@@ -44,13 +46,16 @@ rm -rf %buildroot%_docdir/%name
 
 %check
 unset MAKEFLAGS
-export CFLAGS=-O3
-# lua tests expect /usr/share where we do /usr/lib
-env NOSUBDIR='lua_dirs hello_lua hello_lua2 hello_lua3 hello_reqd' \
-	bmake test
+# lua tests expect correct lua.pc
+export NOSUBDIR='lua_dirs hello_lua hello_lua2 hello_lua3 hello_reqd'
+# hello_libdeps was already fixed in upstream, for now we skip it too
+export NOSUBDIR="$NOSUBDIR examples/hello_libdeps"
+# /sbin/install-info
+export PATH=/sbin:$PATH
+bmake test
 
 %files
-%doc NEWS README TODO doc/presentation.pdf
+%doc doc/FAQ doc/LICENSE doc/NEWS doc/NOTES README presentation/presentation.pdf
 %doc doc/examples/
 %_bindir/*
 %_datadir/mk-configure/
@@ -59,6 +64,21 @@ env NOSUBDIR='lua_dirs hello_lua hello_lua2 hello_lua3 hello_reqd' \
 %_man7dir/*
 
 %changelog
+* Sat Nov 29 2014 Aleksey Cheusov <cheusov@altlinux.org> 0.28.0-alt5
+- Fix .gear/rules
+
+* Sat Nov 29 2014 Aleksey Cheusov <cheusov@altlinux.org> 0.28.0-alt4
+- Remove bad requirement "install"
+
+* Sat Nov 29 2014 Aleksey Cheusov <cheusov@altlinux.org> 0.28.0-alt3
+- Make hasher(1) happy
+
+* Thu Nov 27 2014 Aleksey Cheusov <cheusov@altlinux.org> 0.28.0-alt2
+- 0.28.0-alt2
+
+* Thu Nov 27 2014 Aleksey Cheusov <vle@gmx.net> 0.28.0-alt1
+- 0.28.0
+
 * Mon Mar 11 2013 Michael Shigorin <mike@altlinux.org> 0.24.0-alt1
 - 0.24.0
 
