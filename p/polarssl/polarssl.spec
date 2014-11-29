@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: polarssl
-Version: 1.3.8
+Version: 1.3.9
 Release: alt1
 
 Summary: Light-weight cryptographic and SSL/TLS library
@@ -106,6 +106,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Sat Nov 29 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.9-alt1
+- Version 1.3.9
+
 * Thu Aug 07 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.8-alt1
 - Version 1.3.8
 
