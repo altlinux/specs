@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.beta2.git20130913
+Release: alt2.beta2.git20130913
 Summary: Allows for the dynamic alteration of images using the URL
 License: ASL
 Group: Development/Python
@@ -11,7 +11,6 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/callowayproject/Transmogrify.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Pillow python-modules-wsgiref
@@ -59,6 +58,10 @@ This package contains tests for %oname.
 %install
 %python_install
 
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
 %check
 python setup.py test
 
@@ -73,6 +76,9 @@ python setup.py test
 %python_sitelibdir/*/test*
 
 %changelog
+* Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2.beta2.git20130913
+- Set as archdep
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.beta2.git20130913
 - Initial build for Sisyphus
 
