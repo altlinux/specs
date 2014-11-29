@@ -1,11 +1,9 @@
 %define mname simplelayout
 %define oname %mname.types.common
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.1.1
-Release: alt1.dev0.git20141107
+Release: alt2.dev0.git20141107
 Summary: Simplelayout component providing content types
 License: GPLv2+
 Group: Development/Python
@@ -98,6 +96,9 @@ python setup.py test
 %python_sitelibdir/%mname/types/__init__.py*
 
 %changelog
+* Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt2.dev0.git20141107
+- Enabled testing
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt1.dev0.git20141107
 - Initial build for Sisyphus
 
