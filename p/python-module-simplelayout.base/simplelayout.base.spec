@@ -1,11 +1,9 @@
 %define mname simplelayout
 %define oname %mname.base
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt1.dev0.git20141107
+Release: alt2.dev0.git20141107
 Summary: SimpleLayout is an easy to use plone package for creating content pages
 License: GPLv2+
 Group: Development/Python
@@ -16,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
-BuildPreReq: python-module-ftw.builder
+BuildPreReq: python-module-ftw.builder-tests
 BuildPreReq: python-module-ftw.testbrowser
 BuildPreReq: python-module-ftw.testing
 BuildPreReq: python-module-plone.app.testing
@@ -47,9 +45,9 @@ BuildPreReq: python-module-zope.annotation
 BuildPreReq: python-module-Products.Archetypes
 BuildPreReq: python-module-zope.configuration
 BuildPreReq: python-module-zope.lifecycleevent
-#BuildPreReq: python-module-simplelayout.ui.base
-#BuildPreReq: python-module-simplelayout.types.common
-#BuildPreReq: python-module-simplelayout.ui.dragndrop
+BuildPreReq: python-module-simplelayout.ui.base
+BuildPreReq: python-module-simplelayout.types.common
+BuildPreReq: python-module-simplelayout.ui.dragndrop
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
@@ -62,7 +60,7 @@ Requires: python-module-Zope2
 %py_requires plone.app.contentmenu plone.app.layout plone.app.form
 %py_requires Products.CMFPlone Products.statusmessages plone.protect
 %py_requires archetypes.schemaextender Products.CMFCore plone.memoize
-#py_requires simplelayout.ui.base simplelayout.ui.dragndrop
+%py_requires simplelayout.ui.base simplelayout.ui.dragndrop
 
 %description
 SimpleLayout provides an intuitive way of adding and arranging the
@@ -76,9 +74,10 @@ result is content with a uniform look and feel throughout the site.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires ftw.builder ftw.testbrowser ftw.testing plone.app.testing
+%py_requires ftw.testbrowser ftw.testing plone.app.testing
 %py_requires plone.mocktestcase Products.Archetypes zope.configuration
-#py_requires simplelayout.types.common
+%py_requires simplelayout.types.common ftw.builder.testing
+%py_requires simplelayout.ui.base.tests simplelayout.ui.dragndrop.tests
 
 %description tests
 SimpleLayout provides an intuitive way of adding and arranging the
@@ -132,6 +131,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt2.dev0.git20141107
+- Added necessary requirements
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1.dev0.git20141107
 - Initial build for Sisyphus
 
