@@ -1,11 +1,9 @@
 %define mname plone.app
 %define oname %mname.kss
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.8.0
-Release: alt1.dev0.git20121117
+Release: alt2.dev0.git20121117
 Summary: KSS (Kinetic Style Sheets) for Plone
 License: GPLv2
 Group: Development/Python
@@ -31,7 +29,7 @@ BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-Products.DCWorkflow
 BuildPreReq: python-module-Products.statusmessages
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-archetypes.kss
+BuildPreReq: python-module-archetypes.kss
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -41,7 +39,7 @@ Requires: python-module-Zope2
 %py_requires zope.interface zope.lifecycleevent zope.viewlet
 %py_requires Products.CMFCore Products.DCWorkflow
 %py_requires Products.statusmessages
-#py_requires archetypes.kss
+%py_requires archetypes.kss
 
 %description
 This product gives generic KSS support for Plone.
@@ -83,6 +81,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests
 
 %changelog
+* Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt2.dev0.git20121117
+- Added necessary requirements
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.dev0.git20121117
 - Initial build for Sisyphus
 
