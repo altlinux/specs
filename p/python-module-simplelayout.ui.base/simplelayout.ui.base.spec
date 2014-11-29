@@ -1,11 +1,9 @@
 %define mname simplelayout
 %define oname %mname.ui.base
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.0.2
-Release: alt1.dev0.git20141107
+Release: alt2.dev0.git20141107
 Summary: Simplelayout user interface component
 License: GPLv2+
 Group: Development/Python
@@ -110,6 +108,9 @@ python setup.py test
 %python_sitelibdir/%mname/ui/__init__.py*
 
 %changelog
+* Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt2.dev0.git20141107
+- Enabled testing
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt1.dev0.git20141107
 - Initial build for Sisyphus
 
