@@ -3,7 +3,7 @@
 %define api_ver 1.0
 
 Name: guvcview
-Version: %ver_major.0.0
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: A GTK UVC video viewer
@@ -11,7 +11,7 @@ License: GPLv3+
 Group: Video
 Url: http://%name.sourceforge.net/
 
-Source: http://prdownload.sourceforge.net/%name/%name-src-%version.tar.gz
+Source: http://download.sourceforge.net/%name/%name-src-%version.tar.gz
 
 Requires: lib%name = %version-%release
 
@@ -99,6 +99,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Sun Nov 30 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Sun Sep 14 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 - new lib%%name{,-devel} subpackages
