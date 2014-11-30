@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.10.3
-Release: alt1.a.git20141125
+Version: 0.11.0
+Release: alt1.git20141129
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -178,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.0-alt1.git20141129
+- Version 0.11.0
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.3-alt1.a.git20141125
 - Initial build for Sisyphus
 
