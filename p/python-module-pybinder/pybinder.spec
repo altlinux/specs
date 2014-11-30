@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.4
-Release: alt1.git20141119
+Version: 1.3.0
+Release: alt1.git20141130
 Summary: Dependency injection and management tool for Python
 License: BSD
 Group: Development/Python
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20141130
+- Version 1.3.0
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.4-alt1.git20141119
 - Version 1.2.4
 
