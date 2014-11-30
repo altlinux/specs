@@ -4,7 +4,7 @@
 
 Name: gitg
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: git repository viewer targeting gtk+/GNOME
 Group: Development/Other
@@ -36,12 +36,12 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgit2-glib-devel >= %git2_ver
 BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
-BuildPreReq: libwebkitgtk4-devel >= %webkit_ver
+BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
 BuildPreReq: libgtkspell3-devel >= %gtkspell_ver
 BuildRequires: gnome-common intltool desktop-file-utils
 BuildRequires: libgee0.8-devel libjson-glib-devel libpeas-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-BuildRequires: libgit2-glib-gir-devel libwebkitgtk4-gir-devel libgee0.8-gir-devel
+BuildRequires: libgit2-glib-gir-devel libwebkit2gtk-gir-devel libgee0.8-gir-devel
 BuildRequires: vala-tools
 BuildRequires: gsettings-desktop-schemas-devel
 %{?_enable_python:BuildRequires: python3-devel rpm-build-python3 python3-module-pygobject3-devel}
@@ -115,6 +115,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=RevisionControl \
 	%buildroot%_desktopdir/gitg.desktop
 
+%check
+%make check
+
 %files -f %name.lang
 %_bindir/%name
 %gitg_pluginsdir/
@@ -152,6 +155,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Sun Nov 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt3
+- fixed buildreqs
+- %%check section
+
 * Mon Oct 06 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
 - rebuilt with libwebkit2gtk-4.0
 
