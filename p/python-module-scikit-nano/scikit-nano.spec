@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.3.3
-Release: alt1.git20141125
+Version: 0.3.4
+Release: alt1.git20141129
 Summary: Python toolkit for nanoscience
 License: BSD
 Group: Development/Python
@@ -31,6 +31,7 @@ BuildPreReq: python3-module-nose python3-module-six
 %endif
 
 %py_provides sknano
+%py_requires PyQt4
 
 %description
 scikit-nano is a python toolkit for generating and analyzing
@@ -51,6 +52,7 @@ This package contains tests for %oname.
 Summary: Python toolkit for nanoscience
 Group: Development/Python3
 %py3_provides sknano
+%py3_requires PyQt4
 
 %description -n python3-module-%oname
 scikit-nano is a python toolkit for generating and analyzing
@@ -175,6 +177,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt1.git20141129
+- Version 0.3.4
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1.git20141125
 - Version 0.3.3
 
