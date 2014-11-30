@@ -1,5 +1,5 @@
 Name: libmirage
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 
 Summary: A CD-ROM image access library
@@ -84,6 +84,12 @@ popd
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sun Nov 30 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.3-alt1
+- Version 3.0.3
+
+* Fri Oct 10 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.2-alt0.M70T.1
+- Build for branch t7
+
 * Tue Oct 07 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.2-alt1
 - Version 3.0.2
 
