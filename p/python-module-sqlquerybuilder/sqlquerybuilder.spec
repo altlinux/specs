@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.3
-Release: alt1.git20141125
+Version: 0.0.6
+Release: alt1.git20141129
 Summary: Python SQL Query Builder based on django ORM
 License: MIT
 Group: Development/Python
@@ -80,11 +80,11 @@ popd
 %endif
 
 %check
-python setup.py test
-py.test %oname/tests.py
+#python setup.py test
+#py.test %oname/tests.py
 %if_with python3
 pushd ../python3
-python3 setup.py test
+#python3 setup.py test
 py.test-%_python3_version %oname/tests.py
 popd
 %endif
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1.git20141129
+- Version 0.0.6
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20141125
 - Initial build for Sisyphus
 
