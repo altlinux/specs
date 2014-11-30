@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.12
-Release: alt1.git20141120
+Version: 0.1.14
+Release: alt1.git20141129
 Summary: Starts and restarts daemon processes
 License: ASLv2.0
 Group: Development/Python
@@ -84,7 +84,7 @@ popd
 %endif
 
 %files
-%doc README*
+%doc README* examples
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -93,12 +93,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README*
+%doc README* examples
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Sun Nov 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.14-alt1.git20141129
+- Version 0.1.14
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.12-alt1.git20141120
 - Version 0.1.12
 
