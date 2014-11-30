@@ -2,7 +2,7 @@
 %define oname %mname.colorpicker
 Name: python-module-%oname
 Version: 1.2
-Release: alt1.dev0.git20140621
+Release: alt2.dev0.git20140621
 Summary: Colorpicker widget for Plone
 License: GPLv2+
 Group: Development/Python
@@ -46,6 +46,12 @@ widgets:
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+# It is the file in the package named Thumbs.db or Thumbs.db.gz, 
+# which is normally a Windows image thumbnail database. 
+# Such databases are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
+
 %check
 python setup.py test
 
@@ -55,6 +61,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Nov 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.dev0.git20140621
+- Applied python-module-collective.z3cform.colorpicker-1.2-alt1.dev0.git20140621.diff
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.dev0.git20140621
 - Initial build for Sisyphus
 
