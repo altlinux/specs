@@ -6,7 +6,7 @@
 
 Name: sushi
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A quick previewer for Nautilus
 Group: Graphical desktop/GNOME
@@ -96,6 +96,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Mon Dec 01 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt2
+- rebuilt against libmusicbrainz5.so.1
+
 * Wed Apr 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
