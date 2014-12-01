@@ -1,10 +1,10 @@
-%define ver_major 3.2
+%define ver_major 3.3
 %define gst_api_ver 1.0
 %def_enable libcoverart
 
 Name: goobox
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.2
+Release: alt2
 
 Summary: CD player and ripper for GNOME
 License: LGPLv2+
@@ -15,6 +15,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 # from configure.in
 %define gtk_ver 3.6.0
+
+Requires: dconf gnome-icon-theme
 
 BuildRequires: gcc-c++ gnome-common intltool yelp-tools
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -48,10 +50,14 @@ subst 's|1\.0\.0beta1|1.0.0|' configure*
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_datadir/glib-2.0/schemas/org.gnome.Goobox.gschema.xml
 %_datadir/GConf/gsettings/goobox.convert
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS NEWS README TODO
 
 
 %changelog
+* Mon Dec 01 2014 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt2
+- rebuilt against libmusicbrainz5.so.1
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 

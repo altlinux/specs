@@ -3,7 +3,7 @@
 
 Name: sound-juicer
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Clean and lean CD ripper
 Group: Sound
@@ -62,6 +62,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Dec 01 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
+- rebuilt against libmusicbrainz5.so.1
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
