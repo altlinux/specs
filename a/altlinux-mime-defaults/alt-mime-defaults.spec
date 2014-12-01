@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -39,6 +39,10 @@ touch %buildroot/%_desktopdir/defaults.list
 %_desktopdir/defaults.list
 
 %changelog
+* Mon Dec 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- updated tex priorities
+- new release to repair broken p7
+
 * Sat Nov 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - updated priorities
 
