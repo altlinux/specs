@@ -1,7 +1,7 @@
 %define oname robotframework-lint
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20141125
+Release: alt1.git20141130
 Summary: Static analysis tool for robotframework plain text files
 License: ASLv2.0
 Group: Development/Python
@@ -39,6 +39,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Mon Dec 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20141130
+- New snapshot
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20141125
 - Initial build for Sisyphus
 
