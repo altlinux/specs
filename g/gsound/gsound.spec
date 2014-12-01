@@ -3,21 +3,22 @@
 %define api_ver 1.0
 
 Name: gsound
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GSound is a small library for playing system sounds
 Group: Sound
 License: LGPLv2+
-Url: https://live.gnome.org/GSound
+Url: https://wiki.gnome.org/Projects/GSound
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: lib%name = %version-%release
 
 %define glib_ver 2.36.0
+%define gtk_doc_ver 1.20
 BuildPreReq: libgio-devel >= %glib_ver
-BuildRequires: libcanberra-devel gobject-introspection-devel gtk-doc
+BuildRequires: libcanberra-devel gobject-introspection-devel gtk-doc >= %gtk_doc_ver
 BuildRequires: vala-tools libcanberra-vala
 
 %description
@@ -110,6 +111,9 @@ GObject introspection devel data for the GSound library.
 %_girdir/GSound-%api_ver.gir
 
 %changelog
+* Mon Dec 01 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Wed Nov 26 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus
 
