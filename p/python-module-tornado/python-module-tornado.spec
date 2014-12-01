@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 4.0.2
-Release: alt1
+Release: alt2
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache
@@ -20,6 +20,8 @@ BuildRequires: python3-devel python3-module-distribute
 %endif
 Requires: python-module-simplejson
 Requires: ca-certificates
+# required by tornado/netutil.py for Python2 version.
+Requires: python-module-backports.ssl_match_hostname
 
 %description
 Tornado is an open source version of the scalable, non-blocking web
@@ -94,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 1 2014 Vladimir Didenko (REAL) <cow@altlinux.org> 4.0.2-alt2
+- Add dependency to python-module-backports.ssl_match_hostname
+
 * Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
 - Version 4.0.2
 
