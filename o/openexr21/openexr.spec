@@ -1,13 +1,12 @@
-%define libsover 22
+%define libsover 21
 
 %define rname OpenEXR
-Name: openexr
-Version: 2.2.0
-Release: alt1
+Name: openexr21
+Version: 2.1.0
+Release: alt2
 
-%define common %name%libsover-common
+%define common %name-common
 %define libilmimf libilmimf%libsover
-%define libilmimfutil libilmimfutil%libsover
 
 Group: System/Libraries
 Summary: A high-dynamic-range image file library
@@ -20,18 +19,18 @@ Obsoletes: %rname < %version-%release
 Provides: %name-utils = %version-%release
 Obsoletes: %name-utils < %version-%release
 
-Source: %name-%version.tar
+Source: openexr-%version.tar
 # FC
 Patch1: openexr-2.1.0-bigendian.patch
 # ALT
-Patch10: openexr-2.2.0-alt-build.patch
+Patch10: openexr-2.1.0-alt-build.patch
 Patch11: openexr-2.1.0-alt-libdir.patch
 Patch12: openexr-2.1.0-alt-pkgconfig.patch
 
 # Automatically added by buildreq on Thu Apr 21 2011 (-bi)
 # optimized out: elfutils libstdc++-devel pkg-config
 #BuildRequires: gcc-c++ glibc-devel-static ilmbase-devel zlib-devel
-BuildRequires: gcc-c++ glibc-devel ilmbase-devel zlib-devel
+BuildRequires: gcc-c++ glibc-devel ilmbase11-devel zlib-devel
 BuildRequires: cmake kde-common-devel
 
 %description
@@ -55,26 +54,18 @@ Conflicts: openexr <= 1.6.1-alt1
 %description -n %libilmimf
 libIlmImf %rname library
 
-%package -n %libilmimfutil
-Group: System/Libraries
-Summary: libIlmImfUtil %rname library
-Requires: %common = %version-%release
-Conflicts: openexr <= 1.6.1-alt1
-%description -n %libilmimfutil
-libIlmImfUtil %rname library
-
 %package devel
 Summary: Headers for developing programs that will use %rname
 Group: Development/Other
 Requires: %common = %version-%release
-Requires: ilmbase-devel
+Requires: ilmbase11-devel
 #
 %description devel
 This package contains the static libraries and header files needed for
 developing applications with %rname
 
 %prep
-%setup -q -n %name-%version
+%setup -q -n openexr-%version
 %patch1 -p1
 %patch10 -p1
 %patch11 -p1
@@ -110,9 +101,6 @@ install -m 0644 README %buildroot/%_docdir/%name-%version/
 %files -n %libilmimf
 %_libdir/libIlmImf-*.so.%libsover
 %_libdir/libIlmImf-*.so.%libsover.*
-%files -n %libilmimfutil
-%_libdir/libIlmImfUtil-*.so.%libsover
-%_libdir/libIlmImfUtil-*.so.%libsover.*
 
 %files devel
 %doc %_docdir/%name-%version/
@@ -123,8 +111,8 @@ install -m 0644 README %buildroot/%_docdir/%name-%version/
 
 
 %changelog
-* Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt1
-- new version
+* Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
+- create compatibility package
 
 * Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
 - new version
