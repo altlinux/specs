@@ -2,7 +2,7 @@
 
 Name: pinentry
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Group: File tools
 Summary: Simple PIN or passphrase entry dialog
@@ -19,6 +19,8 @@ Source: %name-%version.tar
 Source1: pinentry-wrapper
 # FC
 Patch2: 0002-Fix-qt4-pinentry-window-created-in-the-background.patch
+# ALT
+Patch10: alt-mask-xprop.patch
 
 
 # due to qt macros
@@ -46,18 +48,20 @@ Conflicts: pinentry-qt < 0.7.2 pinentry-gtk < 0.7.2
 %package gtk2
 Group: %group
 Summary: %summary
+Requires: %name-common = %EVR
+Requires: xprop
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
-Requires: %name-common = %EVR
 Provides: pinentry-gtk = %EVR
 Obsoletes: pinentry-gtk < %EVR
 
 %package qt4
 Group: %group
 Summary: %summary
+Requires: xprop
+Requires: %name-common = %EVR
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
-Requires: %name-common = %EVR
 Provides: pinentry-qt = %EVR
 Obsoletes: pinentry-qt < %EVR
 
@@ -74,7 +78,10 @@ This package contains common files and documentation for %name.
 
 %prep
 %setup
+install -m0644 %SOURCE1 pinentry-wrapper
 %patch2 -p1
+%patch10 -p0
+
 
 rm doc/*.info
 
@@ -105,7 +112,7 @@ rm %buildroot%_bindir/%name
 ln -s %name-gtk-2 %buildroot/%_bindir/%name-gtk
 ln -s %name-qt4 %buildroot/%_bindir/%name-qt
 
-install -p -m0755 -D %SOURCE1 %buildroot/%_bindir/pinentry
+install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 
 %files gtk2
 %_bindir/%name-gtk
@@ -122,6 +129,9 @@ install -p -m0755 -D %SOURCE1 %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt2
+- don't require xprop for console subpackage
+
 * Tue Nov 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
 - new version
 - using wrapper script instead of alternatives
