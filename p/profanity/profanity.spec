@@ -1,13 +1,13 @@
 Name: profanity
-Version: 0.4.4
-Release: alt2
+Version: 0.4.5
+Release: alt1
 Summary: A console based jabber client inspired by irssi
 Group: Networking/Instant messaging
 License: GPLv3
 Source: %name-%version.tar.gz
 # wget -q -O- http://www.profanity.im/configuration.html | sed -n '/\[ui]/,/<\/code>/{s@ *</\?.*>@@g;p}' > profrc
 Source1: profrc
-URL: http://www.profanity.im
+Url: http://www.profanity.im
 
 BuildRequires: libcmocka-devel
 
@@ -66,6 +66,9 @@ install %name.app %buildroot%_bindir/%name.app
 %_bindir/%name.app
 
 %changelog
+* Tue Dec 02 2014 Fr. Br. George <george@altlinux.ru> 0.4.5-alt1
+- Autobuild version bump to 0.4.5
+
 * Wed Nov 05 2014 Fr. Br. George <george@altlinux.ru> 0.4.4-alt2
 - Separate X11-required package
 - Provide check session
