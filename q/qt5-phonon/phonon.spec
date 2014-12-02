@@ -1,7 +1,7 @@
 %def_disable zeitgeist
 
 Name: qt5-phonon
-Version: 4.8.1
+Version: 4.8.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -91,6 +91,9 @@ mkdir -p %buildroot/%_qt5_plugindir/phonon_backend
 %_datadir/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
 
 %changelog
+* Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt1
+- new version
+
 * Tue Oct 21 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.1-alt1
 - new version
 
