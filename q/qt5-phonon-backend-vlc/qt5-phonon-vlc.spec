@@ -1,6 +1,6 @@
 
 Name: qt5-phonon-backend-vlc
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Group: Sound
@@ -70,6 +70,9 @@ Phonon-VLC is a backend for KDE4 Multimedia Framework
 #%_K5srv/phononbackends/vlc.desktop
 
 %changelog
+* Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1
+- new version
+
 * Fri Sep 12 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1
 - new version
 
