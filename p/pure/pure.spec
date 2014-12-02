@@ -1,6 +1,6 @@
 Name: pure
 Version: 0.62
-Release: alt1
+Release: alt2
 
 Summary: A term-rewriting functional programming language
 License: GPLv3+
@@ -109,6 +109,9 @@ make check
 %doc examples
 
 %changelog
+* Tue Dec 02 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.62-alt2
+- Rebuilt with llvm 3.5.0.
+
 * Tue Sep 30 2014 Fr. Br. George <george@altlinux.ru> 0.62-alt1
 - Autobuild version bump to 0.62
 - Patch for gcc 4.9

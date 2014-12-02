@@ -1,29 +1,29 @@
 %def_disable doxygen
 %def_with ocaml
 
-%def_with gccbootstrap
+%def_without gccbootstrap
 
-%define llvm_version 3.4.2
-%define clang_version 3.4.2
-%define compilerrt_version 3.4
-%define clangtools_version 3.4
+%define llvm_version 3.5.0
+%define clang_version 3.5.0
+%define compilerrt_version 3.5.0
+%define clangtools_version 3.5.0
 
 %define clang_name cfe
 
 Name: llvm
-Version: 3.4.2
+Version: 3.5.0
 Release: alt1
 Summary: The Low Level Virtual Machine
 Group: Development/C
 License: NCSA
 Url: http://llvm.org/
 
-Source0: http://llvm.org/releases/%version/llvm-%llvm_version.src.tar.gz
-Source1: http://llvm.org/releases/%version/%clang_name-%clang_version.src.tar.gz
-Source2: http://llvm.org/releases/%version/compiler-rt-%clangtools_version.src.tar.gz
-Source3: http://llvm.org/releases/%version/clang-tools-extra-%clangtools_version.src.tar.gz
+Source0: http://llvm.org/releases/%version/llvm-%llvm_version.src.tar.xz
+Source1: http://llvm.org/releases/%version/%clang_name-%clang_version.src.tar.xz
+Source2: http://llvm.org/releases/%version/compiler-rt-%clangtools_version.src.tar.xz
+Source3: http://llvm.org/releases/%version/clang-tools-extra-%clangtools_version.src.tar.xz
 
-Patch1: llvm+clang-3.4.2-alt-add-alt-triple.patch
+Patch1: llvm+clang-3.5.0-alt-add-alt-triple.patch
 Patch2: llvm+clang-3.3-alt-arm-default-to-hardfloat.patch
 
 BuildPreReq: /proc
@@ -189,8 +189,8 @@ HTML documentation for LLVM's OCaml binding.
 %prep
 %setup -n llvm-%{llvm_version}.src -a1 -a2 -a3
 mv %clang_name-%{clang_version}.src tools/clang
-mv clang-tools-extra-%{clangtools_version} tools/clang/tools/extra
-mv compiler-rt-%{compilerrt_version} projects/compiler-rt
+mv clang-tools-extra-%{clangtools_version}.src tools/clang/tools/extra
+mv compiler-rt-%{compilerrt_version}.src projects/compiler-rt
 
 %patch1 -p1
 %ifarch armh
@@ -393,6 +393,10 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %endif
 
 %changelog
+* Thu Nov 27 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.0-alt1
+- Updated to 3.5.0 (ALT: #30435).
+- Rebuilt with clang.
+
 * Wed Oct 08 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.4.2-alt1
 - New version (bootstrap with gcc).
 

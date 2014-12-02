@@ -3,7 +3,7 @@
 
 Name:		gambas3
 Version:	3.6.2
-Release:	alt1
+Release:	alt2
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -1366,6 +1366,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Mon Dec 01 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.6.2-alt2
+- Rebuilt with llvm 3.5.0.
+
 * Fri Nov 14 2014 Andrey Cherepanov <cas@altlinux.org> 3.6.2-alt1
 - New version
 
