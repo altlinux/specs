@@ -3,7 +3,7 @@
 %define rname OpenEXR
 Name: openexr21
 Version: 2.1.0
-Release: alt2
+Release: alt3
 
 %define common %name-common
 %define libilmimf libilmimf%libsover
@@ -13,11 +13,8 @@ Summary: A high-dynamic-range image file library
 License: BSD
 URL: http://www.openexr.org/
 
-Requires: %libilmimf = %version-%release
 Provides: %rname = %version-%release
 Obsoletes: %rname < %version-%release
-Provides: %name-utils = %version-%release
-Obsoletes: %name-utils < %version-%release
 
 Source: openexr-%version.tar
 # FC
@@ -95,9 +92,6 @@ install -m 0644 README %buildroot/%_docdir/%name-%version/
 
 %files -n %common
 
-%files
-%_bindir/*
-
 %files -n %libilmimf
 %_libdir/libIlmImf-*.so.%libsover
 %_libdir/libIlmImf-*.so.%libsover.*
@@ -111,6 +105,9 @@ install -m 0644 README %buildroot/%_docdir/%name-%version/
 
 
 %changelog
+* Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt3
+- don't package utils
+
 * Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
 - create compatibility package
 
