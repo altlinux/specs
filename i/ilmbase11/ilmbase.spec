@@ -3,7 +3,7 @@
 
 Name: ilmbase11
 Version: 2.1.0
-Release: alt3
+Release: alt4
 
 %define common %name-common
 %define libhalf libhalf%libsover
@@ -135,8 +135,6 @@ for f in %buildroot/%_libdir/lib*.so ; do
 done
 
 %files -n %common
-
-%files
 %doc AUTHORS ChangeLog COPYING LICENSE NEWS README
 
 %files -n %libhalf
@@ -167,6 +165,9 @@ done
 
 
 %changelog
+* Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt4
+- clean package
+
 * Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt3
 - create compatibility package
 
