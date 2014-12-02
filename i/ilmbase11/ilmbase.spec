@@ -1,11 +1,11 @@
-%define libsover 12
+%define libsover 11
 %define rname IlmBase
 
-Name: ilmbase
-Version: 2.2.0
-Release: alt1
+Name: ilmbase11
+Version: 2.1.0
+Release: alt3
 
-%define common %name%libsover-common
+%define common %name-common
 %define libhalf libhalf%libsover
 %define libiex libiex%libsover
 %define libilmthread libilmthread%libsover
@@ -25,7 +25,9 @@ Requires: %libiexmath
 Provides: %rname = %version-%release
 Obsoletes: %rname < %version-%release
 
-Source: %name-%version.tar
+Source: ilmbase-%version.tar
+# FC
+Patch1: ilmbase-2.0-1-arm.patch
 # ALT
 Patch10: ilmbase-2.1.0-alt-linking.patch
 Patch11: ilmbase-2.1.0-alt-cmakefiles.patch
@@ -103,13 +105,15 @@ Summary: Headers for developing programs that will use %name
 Group: Development/Other
 Requires: %common = %version-%release
 Conflicts: openexr-devel < 1.6
+Conflicts: ilmbase-devel
 %description devel
 This package contains the static libraries and header files needed for
 developing applications with %name
 
 
 %prep
-%setup -q -n %name-%version
+%setup -q -n ilmbase-%version
+%patch1 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -163,8 +167,8 @@ done
 
 
 %changelog
-* Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt1
-- new version
+* Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt3
+- create compatibility package
 
 * Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
 - fix pkgconfig file
