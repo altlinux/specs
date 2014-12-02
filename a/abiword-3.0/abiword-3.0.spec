@@ -12,7 +12,7 @@
 
 Name: %_name-%abi_ver
 Version: %ver_major.0
-Release: alt6
+Release: alt7
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -37,6 +37,7 @@ Patch15: abiword-3.0.0-gnutls-no-libgcrypt.patch
 Patch16: abiword-3.0.0-librevenge.patch
 Patch17: abiword-3.0.0-libebook.patch
 Patch18: abiword-3.0.0-link-grammar-5.patch
+Patch19: abiword-3.0.0-link-grammar-5-second.patch
 
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
 Conflicts: %_name %_name-light
@@ -133,6 +134,7 @@ Python bindings for developing with AbiWord library
 %patch16 -p0 -b .librevenge
 %patch17 -p1 -b .libebook
 %patch18 -p1 -b .link-grammar-5
+%patch19 -p1 -b .link-grammar-5-second
 
 %build
 find plugins -name Makefile.am | sed  's|.am$||g' > plugin-makefiles.m4
@@ -202,6 +204,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Tue Dec 02 2014 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt7
+- updated fedora patches for link-grammar-5 support
+
 * Sun Jun 29 2014 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt6
 - new python-module-abiword subpackage (ALT #30134)
 - e-d-s support enabled
