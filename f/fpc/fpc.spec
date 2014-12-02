@@ -3,11 +3,13 @@
 %def_with    doc
 %def_without win32
 %def_with    tests
+# Help index is generated too long, package ready index
+%def_without help_index
 
 Name: 	  fpc
 Epoch:    2
 Version:  2.6.4
-Release:  alt2
+Release:  alt3
 
 Summary:  Free Pascal Compiler -- Meta Package
 License:  GPL
@@ -24,6 +26,7 @@ Source5: fp48x48.xpm
 Source6: ppc386_bootstrap
 Source7: ppcx64_bootstrap
 Source8: fpc.watch
+Source9: fpctoc.htx
 
 # Support gdb 7.5.0
 Patch0:  fpc-gdb.patch
@@ -48,6 +51,14 @@ Patch11: fpc-change-path-of-localization-files.patch
 Patch12: fpc-fix-FPCDIR-in-fpcmake.patch
 Patch13: fpc-fix-encoding-of-localization-files-to-be-utf8.patch
 Patch14: fpc-fix-spell-errors.patch
+
+# Other patches
+# Set path to ide without version and text/ subdirectory. Use ~/fpc/ide instead of ~/.fp for personal stuff for IDE.
+Patch20: fpc-fix-path-to-ide.patch
+# Add note about install fpc-docs in helpsystem message about missing documentation
+Patch21: fpc-docs-message.patch
+# Automatically add help index from /usr/share/doc/fpc/fpctoc.htx if it exists
+Patch22: fpc-auto-add-help-index.patch
 
 ExclusiveArch: %ix86 amd64 x86_64
 
@@ -118,6 +129,9 @@ popd
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch20 -p2
+%patch21 -p2
+%patch22 -p2
 
 %if_with sources
 cp -a fpcsrc{,.orig}
@@ -186,21 +200,34 @@ cp -pv compiler/ppc386 ppc386
 %if_with tests
 make TEST_FPC=$PWD/%ppcname FPCDIR=$PWD QUICKTEST=YES -C tests digest
 %endif
+
+# Make help index generator
+%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C installer writeidx
+
 popd
 
 # Make documentation
 # TODO PDF generation does not work
 %if_with doc
 make -C fpcdocs html #pdf
+
+# Generate help index to file fpctoc.htx
+%if_with help_index
+pushd fpcdocs
+../fpcsrc/installer/writeidx fpctoc.html
+popd
+%endif
+
 %endif
 
 %install
 pushd fpcsrc
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version -C compiler
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version -C rtl
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version INSTALL_PREFIX=%buildroot%_usr -C packages
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version -C ide
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version INSTALL_PREFIX=%buildroot%_usr -C utils
+%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name -C compiler
+%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name -C rtl
+%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name INSTALL_PREFIX=%buildroot%_usr -C packages
+%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name -C ide
+%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name INSTALL_PREFIX=%buildroot%_usr -C utils
+%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name INSTALL_PREFIX=%buildroot%_usr -C installer
 
 # this symbolic link must be absolute (so that fpcmake can detect FPCDIR)
 ln -s %fpc_dir/%ppcname %buildroot%_bindir/%ppcname
@@ -259,15 +286,25 @@ cp -fR fpcsrc.orig/* %buildroot%_datadir/fpcsrc
 make INSTALL_PREFIX=%buildroot%_datadir -C install/man installman
 
 #Instal docs
-mkdir -p %buildroot%_defaultdocdir/%name-%version
-install -p -m 644 install/doc/copying* install/doc/whatsnew.txt install/doc/readme.txt install/doc/faq.txt %buildroot%_defaultdocdir/%name-%version
+mkdir -p %buildroot%_defaultdocdir/%name
+install -p -m 644 install/doc/copying* install/doc/whatsnew.txt install/doc/readme.txt install/doc/faq.txt %buildroot%_defaultdocdir/%name
 
 %if_with doc
-make INSTALL_DOCDIR=%buildroot%_docdir/%name-%version DESTDIR=%buildroot -C fpcdocs htmlinstall #pdfinstall
+make INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name DESTDIR=%buildroot -C fpcdocs htmlinstall #pdfinstall
+%if_with help_index
+install -p -m 644 fpcdocs/fpctoc.htx %buildroot%_defaultdocdir/%name
+%else
+install -p -m 644 %SOURCE9 %buildroot%_defaultdocdir/%name
+%endif
 %endif
 
 # TODO: where is package unit libvlc?
 rm -rf %buildroot%fpc_dir/units/%ppctarget/libvlc
+
+# Remove hacker ASCII art picture as IDE background by renaming fp.ans to fp.ans.original
+mv %buildroot%fpc_dir/ide/fp.ans{,.original}
+# Remove installer executable
+rm -f %buildroot%_bindir/installer
 
 %files
 
@@ -285,7 +322,7 @@ ansistrings). This package contains the common files and dirs.
 
 %files common
 %dir %fpc_dir
-%dir %_defaultdocdir/%name-%version
+%dir %_defaultdocdir/%name
 
 %package compiler
 Summary: Free Pascal -- Compiler
@@ -311,10 +348,10 @@ This package contains the command line compiler.
 
 %files compiler
 %config(noreplace) %_sysconfdir/%name.cfg
-%_defaultdocdir/%name-%version/copying*
-%_defaultdocdir/%name-%version/whatsnew.txt
-%_defaultdocdir/%name-%version/readme.txt
-%_defaultdocdir/%name-%version/faq.txt
+%doc %_defaultdocdir/%name/copying*
+%doc %_defaultdocdir/%name/whatsnew.txt
+%doc %_defaultdocdir/%name/readme.txt
+%doc %_defaultdocdir/%name/faq.txt
 %_bindir/fpc
 %_bindir/ppc*
 %_bindir/fpcsubst
@@ -324,7 +361,6 @@ This package contains the command line compiler.
 %fpc_dir/samplecfg
 %fpc_dir/ppc*
 %fpc_dir/msg
-
 %_man1dir/fpc.*
 %_man1dir/fpcmkcfg.*
 %_man1dir/fpcsubst.*
@@ -382,6 +418,7 @@ Compiler:
 %_bindir/mkarmins
 %_bindir/mkx86ins
 %_bindir/instantfpc
+%_bindir/writeidx
 %doc fpcsrc/utils/fpcm/fpcmake.ini
 %fpc_dir/units/%ppctarget/lexyacc
 %fpc_dir/lexyacc
@@ -726,14 +763,14 @@ Free Pascal. The IDE has an internal compiler.
 %config(noreplace) %_sysconfdir/fp.cfg
 %_bindir/fp
 %_bindir/fp-bin
-%fpc_dir/ide
+%fpc_dir/ide/*
 %_man1dir/fp.1*
-%_datadir/doc/%name-%version/readme.ide
-%_datadir/pixmaps/*
+%doc %_defaultdocdir/%name/readme.ide
+%_pixmapsdir/*
 %_miconsdir/*
 %_liconsdir/*
 %_niconsdir/*
-%_datadir/applications/*
+%_desktopdir/*.desktop
 
 # src
 %if_with sources
@@ -761,12 +798,12 @@ This package provides documentation for the Free Pascal Compiler in HTML
 and PDF format.
 
 %files docs
-%_datadir/doc/%name-%version/*
-%exclude %_datadir/doc/%name-%version/readme.ide
-%exclude %_defaultdocdir/%name-%version/copying*
-%exclude %_defaultdocdir/%name-%version/whatsnew.txt
-%exclude %_defaultdocdir/%name-%version/readme.txt
-%exclude %_defaultdocdir/%name-%version/faq.txt
+%doc %_defaultdocdir/%name/*
+%exclude %_defaultdocdir/%name/readme.ide
+%exclude %_defaultdocdir/%name/copying*
+%exclude %_defaultdocdir/%name/whatsnew.txt
+%exclude %_defaultdocdir/%name/readme.txt
+%exclude %_defaultdocdir/%name/faq.txt
 %endif
 
 %if_with win32
@@ -789,6 +826,17 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Tue Dec 02 2014 Andrey Cherepanov <cas@altlinux.org> 2:2.6.4-alt3
+- Set path to ide without version and text/ subdirectory. Use ~/fpc/ide
+  instead of ~/.fp for personal stuff for IDE. (ALT #29549)
+- Add note about install fpc-docs in helpsystem message about missing
+  documentation
+- Build help index generator -- writeidx
+- Generate or use generated help index
+- Package documentation to /usr/share/doc/fpc without version
+- Automatically add help index from /usr/share/doc/fpc/fpctoc.htx if it
+  exists
+
 * Mon Oct 06 2014 Andrey Cherepanov <cas@altlinux.org> 2:2.6.4-alt2
 - Fix pathes in configuration on x86_64
 
@@ -945,7 +993,7 @@ Free Pascal runtime library units cross-compiled for win32.
 
 * Fri Oct 21 2005 Alexey Tourbin <at@altlinux.ru> 2.0.0-alt1
 - 1.0.10 -> 2.0.0
-- fpcdir:='%_libdir/fpc2'; fpcdocdir:='%_docdir/fpc2'
+- fpcdir:='%_libdir/fpc2'; fpcdocdir:='%_defaultdocdir/fpc2'
 - forward release for Daedalus
 
 * Tue Feb 11 2004 Sergey P. Kondratyev <seirge@altlinux.ru> 1.0.10-alt1
