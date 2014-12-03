@@ -5,7 +5,7 @@
 %define rname OpenEXR 
 Name: openexr1.6
 Version: 1.6.1
-Release: alt8
+Release: alt9
 
 %define common openexr%libsover-common
 
@@ -41,6 +41,7 @@ compatible with the half data type in the Cg programming language.
 %package -n %common
 Group: System/Configuration/Other
 Summary: Common empty package for %name
+BuildArch: noarch
 %description -n %common
 Common empty package for %name
 
@@ -92,16 +93,16 @@ ln -sf %buildroot/%_docdir/%rname-%version ./installed-docs
 
 
 %files -n %common
-
-%files
 %doc AUTHORS ChangeLog COPYING NEWS README
-%_bindir/*
 
 %files -n libilmimf%libsover
 %_libdir/libIlmImf.so.*
 
 
 %changelog
+* Wed Dec 03 2014 Sergey V Turchin <zerg@altlinux.org> 1.6.1-alt9
+- don't package utils
+
 * Mon Dec 16 2013 Sergey V Turchin <zerg@altlinux.org> 1.6.1-alt8
 - create compatibility package
 
