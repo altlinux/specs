@@ -1,8 +1,9 @@
+%def_with bootstrap
 %define _unpackaged_files_terminate_build 1
 %define dist DateTime
 Name: perl-%dist
 Version: 1.10
-Release: alt1
+Release: alt2
 
 Summary: DateTime base objects
 License: GPL or Artistic
@@ -14,7 +15,14 @@ Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
 # break dependency loop
 Requires: perl-DateTime-TimeZone
 
-BuildRequires: perl-DateTime-Locale perl-DateTime-TimeZone perl-Math-Round perl-Module-Build perl-Test-Exception perl-Test-Warn perl-Test-Fatal perl(Test/Warnings.pm)
+BuildRequires: perl-DateTime-Locale perl-Math-Round perl-Module-Build perl-Test-Exception perl-Test-Warn perl-Test-Fatal perl(Test/Warnings.pm)
+
+%if_with bootstrap
+%define _without_test 1
+%add_findreq_skiplist %perl_vendor_archlib/DateTime*
+%else
+BuildRequires: perl-DateTime-TimeZone
+%endif
 
 %description
 DateTime is a class for the representation of date/time combinations,
@@ -38,6 +46,10 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Wed Dec 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2
+- added bootstrap support
+- bootstrap build for perl-5.20.1 update
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
 - automated CPAN update
 
