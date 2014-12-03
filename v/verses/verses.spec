@@ -1,6 +1,6 @@
 Name: verses
 Version: 1
-Release: alt2
+Release: alt3
 Summary: screensaver using wise verses
 Summary(ru_RU.UTF-8): хранитель экрана, показывающий мудрые фразы
 License: GPL
@@ -31,7 +31,7 @@ BuildRequires: fortune
 This screensaver shows verses found in fortunes-%name package.
 Choose "Verses" in screensaver list.
 Be sure to have cp1251 X fonts installed.
-Compatible with XScreenSaver and Gnome-Screensaver. More to come!
+Compatible with XScreenSaver and Gnome2/Mate-Screensaver. More to come!
 Enjoy!
 
 %description -l ru_RU.UTF-8
@@ -39,7 +39,7 @@ Enjoy!
 В списка заставок выберите "Verses".
 Убедитесь, что у Вас установлены X-шрифты с кириллическими глифами в
 кодировке cp1251.
-Данная заставка совместима с XScreenSaver и Gnome-Screensaver. More to come!
+Данная заставка совместима с XScreenSaver и Gnome2/Mate-Screensaver. More to come!
 Наслаждайтесь!
 
 %package -n fortunes-%name
@@ -97,38 +97,29 @@ ln -s ../verses_en %buildroot%_gamesdatadir/fortune/en/verses
 ln -s ../verses_en.dat %buildroot%_gamesdatadir/fortune/en/verses.dat
 
 # docs
-mkdir -p %buildroot%_docdir/%name-%version %buildroot%_docdir/fortunes-%name-%version
-install -m 444 %SOURCE7 %buildroot%_docdir/%name-%version
-tar xf %SOURCE3 -C %buildroot%_docdir/fortunes-%name-%version
-install -m 444 %SOURCE4 %buildroot%_docdir/fortunes-%name-%version
-
-# from the xscreensaver.spec
-%define _update_xscreensaver_bin %_bindir/update-xscreensaver
-%define update_xscreensaver [ "$1" = 1 -a -x %_update_xscreensaver_bin ] && %_update_xscreensaver_bin ||:
-%define clean_xscreensaver [ -x %_update_xscreensaver_bin ] && %_update_xscreensaver_bin ||:
-
-%post
-%update_xscreensaver
-
-%postun
-%clean_xscreensaver
+mkdir docs fortunes-docs
+install -m 444 %SOURCE7 docs/
+tar xf %SOURCE3 -C fortunes-docs
+install -m 444 %SOURCE4 fortunes-docs/
 
 %files
 %_prefix/libexec/xscreensaver/%name
 %_sysconfdir/X11/xscreensaver/hack.d/%name.*
 %_datadir/xscreensaver/config/%name.*
 %_desktopdir/screensavers/%name.*
-%doc %_docdir/%name-%version
+%doc docs/*
 
 %files -n fortunes-%name
 %_datadir/games/fortune/%{name}_*
 %_datadir/games/fortune/*/%{name}*
-# might be wrong
 %dir %_datadir/games/fortune/ru
 %dir %_datadir/games/fortune/en
-%doc %_docdir/fortunes-%name-%version
+%doc fortunes-docs/*
 
 %changelog
+* Thu Dec 04 2014 Ildar Mulyukov <ildar@altlinux.ru> 1-alt3
+- add Mate screensaver support
+
 * Tue Jul 22 2008 Ildar Mulyukov <ildar@altlinux.ru> 1-alt2
 - fixed %name.xss
 
