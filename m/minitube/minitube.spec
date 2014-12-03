@@ -1,6 +1,6 @@
 Name: minitube
-Version: 2.2
-Release: alt2
+Version: 2.3
+Release: alt3
 Summary: YouTube desktop client
 License: LGPL
 Group: Video
@@ -69,6 +69,9 @@ rm -f %buildroot%_iconsdir/hicolor/minitube.svg
 %_datadir/%name
 
 %changelog
+* Wed Dec 03 2014 Konstantin Artyushkin <akv@altlinux.org> 2.3-alt3
+-  2.3 
+
 * Wed Aug 13 2014 Konstantin Artyushkin <akv@altlinux.org> 2.2-alt2
 - - fix icons
 
