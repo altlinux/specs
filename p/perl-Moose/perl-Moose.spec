@@ -1,8 +1,9 @@
+%def_without bootstrap
 %define _unpackaged_files_terminate_build 1
 %define dist Moose
 Name: perl-%dist
 Version: 2.1213
-Release: alt1
+Release: alt2
 
 Summary: A postmodern object system for Perl 5
 License: GPL or Artistic
@@ -28,7 +29,13 @@ Provides: perl-Class-MOP = %version
 Obsoletes: perl-Class-MOP < %version
 
 # Automatically added by buildreq on Wed Nov 16 2011 (-bi)
-BuildRequires: perl-Algorithm-C3 perl-DateTime perl-Devel-GlobalDestruction perl-Eval-Closure perl-Filter-Simple perl-HTTP-Message perl-IO-String perl-Locale-US perl-MRO-Compat perl-Module-Refresh perl-Params-Coerce perl-Regexp-Common perl-Sub-Name perl-Task-Weaken perl-Test-Deep perl-Test-Fatal perl-Test-Output perl-Test-Requires perl-namespace-clean perl-Test-CheckDeps perl-Package-DeprecationManager perl-Class-Load-XS perl-Specio perl-Throwable perl(Devel/StackTrace.pm) perl(ExtUtils/CBuilder.pm) perl(Test/CleanNamespaces.pm)
+BuildRequires: perl-Algorithm-C3 perl-DateTime perl-Devel-GlobalDestruction perl-Eval-Closure perl-Filter-Simple perl-HTTP-Message perl-IO-String perl-Locale-US perl-MRO-Compat perl-Module-Refresh perl-Params-Coerce perl-Regexp-Common perl-Sub-Name perl-Task-Weaken perl-Test-Deep perl-Test-Fatal perl-Test-Output perl-Test-Requires perl-namespace-clean perl-Test-CheckDeps perl-Package-DeprecationManager perl-Class-Load-XS perl-Throwable perl(Devel/StackTrace.pm) perl(ExtUtils/CBuilder.pm) perl(Test/CleanNamespaces.pm)
+
+%if_without bootstrap
+BuildRequires: perl-Specio
+%else
+%define _without_test 1
+%endif
 
 %description
 Moose is an extension of the Perl 5 object system.
@@ -57,6 +64,9 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Wed Dec 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.1213-alt2
+- support for bootstrap
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.1213-alt1
 - automated CPAN update
 
