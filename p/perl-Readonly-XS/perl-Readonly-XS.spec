@@ -1,9 +1,10 @@
+%def_without bootstrap
 %add_findreq_skiplist %perl_vendor_archlib/Readonly/XS.pm
 %define dist Readonly-XS
 
 Name: perl-%dist
 Version: 1.05
-Release: alt4
+Release: alt5
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -14,7 +15,11 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: http://www.cpan.org/modules/by-module/Readonly/%dist-%version.tar.gz
 
-BuildRequires: perl-Readonly perl-devel
+BuildRequires: perl-devel
+%if_without bootstrap
+BuildRequires: perl-Readonly
+Requires: perl-Readonly
+%endif
 
 %description
 Readonly::XS is a companion module for Readonly, to speed up read-only
@@ -35,6 +40,9 @@ scalar variables.
 %perl_vendor_autolib/Readonly
 
 %changelog
+* Wed Dec 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt5
+- added %if_with bootstrap
+
 * Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt4
 - fixed build
 
