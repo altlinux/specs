@@ -1,7 +1,8 @@
+%def_without bootstrap
 %define dist Math-BigInt-FastCalc
 Name: perl-%dist
 Version: 0.31
-Release: alt1
+Release: alt2
 
 Summary: XS implementation of arbitrary size integer math
 License: GPL or Artistic
@@ -11,7 +12,15 @@ URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/P/PJ/PJACKLAM/Math-BigInt-FastCalc-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-Math-BigInt perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
+
+%if_with bootstrap
+%define _without_test 1
+%add_findreq_skiplist %perl_vendor_archlib/Math/BigInt*
+%else
+BuildRequires: perl-Math-BigInt
+%endif
+
 
 %description
 This is a replacement library for Math::BigInt::Calc that reimplements
@@ -32,6 +41,9 @@ some of the Calc functions in XS.
 %perl_vendor_autolib/Math
 
 %changelog
+* Wed Dec 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.31-alt2
+- support for bootstrap
+
 * Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 
