@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.20
+Version: 1.21
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -44,6 +44,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Wed Dec 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
+- new version
+
 * Wed Nov 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
 - bugfix release
 
