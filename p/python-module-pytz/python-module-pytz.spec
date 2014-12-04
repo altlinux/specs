@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 2014.10
-Release: alt1
+Release: alt2
 
 %setup_python_module %oname
 
@@ -69,6 +69,13 @@ Library Reference (datetime.tzinfo).
 
 This package contains tests for pytz.
 
+%package -n %oname-zoneinfo
+Summary: Archive with zoneinfo
+Group: Development/Python
+
+%description -n %oname-zoneinfo
+Archive with zoneinfo.
+
 %prep
 %setup -n %modulename-%version
 %if_with python3
@@ -101,6 +108,11 @@ touch %buildroot%python3_sitelibdir/%oname/tests/__init__.py
 popd
 %endif
 
+install -d %buildroot%_datadir/%modulename
+pushd %buildroot%python_sitelibdir/%modulename/zoneinfo
+tar -czf %buildroot%_datadir/%modulename/zoneinfo.tar.gz *
+popd
+
 %files -f INSTALLED_FILES
 %python_sitelibdir/%modulename
 %exclude %python_sitelibdir/%modulename/tests
@@ -108,6 +120,9 @@ popd
 
 %files tests
 %python_sitelibdir/%modulename/tests
+
+%files -n %oname-zoneinfo
+%_datadir/%modulename
 
 %if_with python3
 %files -n python3-module-%oname
@@ -120,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2014.10-alt2
+- Added %oname-zoneinfo
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2014.10-alt1
 - Version 2014.10
 
