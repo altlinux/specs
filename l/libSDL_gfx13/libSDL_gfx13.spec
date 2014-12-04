@@ -1,9 +1,10 @@
 %define _name SDL_gfx
 %define ver_major 2.0
+%define soname 13
 
-Name: lib%_name
-Version: %ver_major.25
-Release: alt1
+Name: lib%_name%soname
+Version: %ver_major.23
+Release: alt2
 
 Summary: SDL graphics drawing primitives and other support functions
 License: zlib
@@ -23,15 +24,6 @@ drawing onto any SDL Surface. Full alpha blending, hardware surface locking, and
 all surface depths are supported. The Rotozoomer can use interpolation for high
 quality output.
 
-%package devel
-Summary: Development tools for programs which will use the %name library
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel
-The %name-devel package includes the header files necessary for developing
-programs which will use the %name library.
-
 %prep
 %setup -n %_name-%version
 
@@ -50,14 +42,15 @@ programs which will use the %name library.
 %files
 %_libdir/*.so.*
 
-%files devel
-%_libdir/*.so
-%_includedir/SDL/*
-%_pkgconfigdir/*
+#%%files devel
+%exclude %_libdir/*.so
+%exclude %_includedir/SDL/*
+%exclude %_pkgconfigdir/*
+
 
 %changelog
-* Thu Dec 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.25-alt1
-- 2.0.25
+* Sun Dec 07 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.23-alt2
+- compat library without -devel subpackage
 
 * Sat Dec 10 2011 Victor Forsiuk <force@altlinux.org> 2.0.23-alt1
 - 2.0.23

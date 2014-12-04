@@ -1,16 +1,20 @@
-Name: lincity-ng
-Version: 2.0
-Release: alt1.1.qa2
+%define prerel beta
 
-Summary: LinCity-NG is a city simulation game. It is a polished and improved version of the classic LinCity game.
+Name: lincity-ng
+Version: 2.9
+Release: alt0.1
+
+Summary: LinCity-NG is a city simulation game. It is a polished and improved version of the classic LinCity game
 Summary(ru_RU.UTF-8): LinCity-NG - это игра-симулятор города. Она представляет собой улучшенную версию классической игры LinCity.
 
 License: GPLv2
 Group: Games/Strategy
-Url: http://lincity-ng.berlios.de
+Url: http://code.google.com/p/%name
 
-Packager: Anton Chernyshov <ach@altlinux.org>
-Source0: %name-%version.tar.bz2
+# use makerelease.sh in git tree to build tarball
+Source: %name-%version.%prerel.tar.bz2
+
+Requires: %name-data = %version-%release
 
 BuildPreReq: gcc-c++
 BuildPreReq: jam
@@ -29,65 +33,76 @@ BuildPreReq: zlib-devel
 %description
 LinCity-NG is a city simulation game. It is a polished and improved
 version of the classic LinCity game. In the game, you are required
-to build and maintain a city. You can win the game either by building 
-a sustainable economy or by evacuating all citizens with spaceships. 
+to build and maintain a city. You can win the game either by building
+a sustainable economy or by evacuating all citizens with spaceships.
 
 %description -l ru_RU.UTF-8
 LinCity-NG - игра-симулятор города. Это улучшенная и доработанная
-версия, ставшей классикой LinCity. В этой игре вам надо будет 
-построить и развивать город. Выиграть в игре можно двумя способами. 
-Первый - это построить устройчивую экономику. Второй способ - 
+версия, ставшей классикой LinCity. В этой игре вам надо будет
+построить и развивать город. Выиграть в игре можно двумя способами.
+Первый - это построить устройчивую экономику. Второй способ -
 построить космический корабль и отправить на нем всех жителей в
 космос.
-На официальной вики игры, находящейся по адресу: http://lincity-ng.berlios.de 
-можно получить более подробную информацию об игровом процессе, 
+На официальной вики игры, находящейся по адресу: %url
+можно получить более подробную информацию об игровом процессе,
 разработчиках игры, посмотреть скриншоты.
 
+%package data
+Summary: Data files needed to run lincity-ng
+# data bits are dual licensed GPLv2+ or CC-BY-SA
+License: GPLv2+ or CC-BY-SA
+Group: Games/Strategy
+Requires: %name = %version-%release
+Requires: fonts-ttf-dejavu
+BuildArch: noarch
+
+%description data
+This package contains the data files (graphics, models, audio) necessary to
+play Lincity-NG.
+
+%define _pkgdocdir %_docdir/%name-%version
+
 %prep
-%setup
+%setup -n %name-%version.%prerel
+
+sed -i "s/CFLAGS += -O3 -g -Wall/CFLAGS += $RPM_OPT_FLAGS/" Jamrules
+sed -i "s/CXXFLAGS += -O3 -g -Wall/CXXFLAGS += $RPM_OPT_FLAGS/" Jamrules
+sed -i 's|lincity-ng.png|lincity-ng|g' lincity-ng.desktop
 
 %build
-%configure --datadir=%_gamesdatadir 
-   
+%configure
 jam
 
 %install
+DESTDIR=%buildroot jam -sappdocdir=%_pkgdocdir install
 
-# game wants to install to /usr, but we don't want it
-# thanks SUSE for idea how to do it
-sed -i -e s+^prefix.*+prefix\ ?=\ \"%buildroot/usr\"\ \;+g \
-	-e s+^bindir.*+bindir\ ?=\ \"%buildroot/%_bindir\"\ \;+g \
-        -e s+^exec_prefix.*+exec_prefix\ ?=\ \"%buildroot/usr\"\ \;+g \
-        -e s+^datadir.*+datadir\ ?=\ \"%buildroot/%_gamesdatadir\"\ \;+g \
-        -e s+^oldincludedir.*+oldincludedir\ ?=\ \"%buildroot/usr/include\"\ \;+g \
-    Jamconfig
-jam install
+# Make a symlink to system font, rather than include a copy of DejaVu Sans
+ln -fs %_datadir/fonts/ttf/dejavu/DejaVuSans.ttf %buildroot%_datadir/%name/fonts/sans.ttf
 
 # compress wav files to ogg
-for i in %buildroot/%_gamesdatadir/%name/sounds/*.wav; do
+for i in %buildroot/%_datadir/%name/sounds/*.wav; do
   oggenc --quiet $i && rm $i
 done
-
-# move some game files to appropriate location
-mkdir -p %buildroot/{%_defaultdocdir,%_desktopdir,%_pixmapsdir}
-mv %buildroot/%_gamesdatadir/doc 		%buildroot/%_datadir/
-mv %buildroot/%_gamesdatadir/applications 	%buildroot/%_datadir/
-mv %buildroot/%_gamesdatadir/pixmaps		%buildroot/%_datadir/
 
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/*
+
+%files data
 %_desktopdir/*
-%doc %_defaultdocdir/%name-%version/*
 %_pixmapsdir/*
-%_gamesdatadir/%name/*
-# The package does not own its own docdir subdirectory.
-# The line below is added by repocop to fix this bug in a straightforward way. 
-# Another way is to rewrite the spec to use relative doc paths.
-%dir %_docdir/lincity-ng-%version 
+%_datadir/%name/*
+%doc %_pkgdocdir/
 
 %changelog
+* Thu Dec 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.9-alt0.1
+- 2.9 beta snapshot (4900c2e5519a)
+- moved arch independent files to separate -data subpackage
+- do not bundle DejaVu Sans font in -data subpackage and
+  use symlink to system fonts-ttf-dejavu
+- do not use rare %%_gamesdatadir as %_datadir any more
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0-alt1.1.qa2
 - NMU: rebuilt for updated dependencies.
 

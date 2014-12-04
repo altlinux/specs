@@ -10,7 +10,7 @@ BuildRequires: gcc-c++ python-devel
 
 Name:           widelands
 Version:        0
-Release:        alt5_0.39.%{buildid}
+Release:        alt6_0.39.%{buildid}
 Summary:        Open source realtime-strategy game
 
 Group:          Games/Strategy
@@ -147,6 +147,9 @@ EOF
 
 
 %changelog
+* Thu Dec 04 2014 Igor Vlasenko <viy@altlinux.ru> 1:0-alt6_0.39.build17
+- rebuild with new SDL
+
 * Tue Nov 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:0-alt5_0.39.build17
 - update to new release by fcimport
 
