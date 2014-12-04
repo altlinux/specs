@@ -3,7 +3,7 @@
 
 %define oname astroid
 Name: python-module-%oname
-Version: 1.0.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
@@ -13,6 +13,7 @@ Group: Development/Python
 BuildArch: noarch
 
 Url: http://www.logilab.org/project/logilab-astng
+# hg clone https://bitbucket.org/logilab/astroid
 Source: %name-%version.tar
 
 Provides: python-module-logilab-astng = %version-%release
@@ -124,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt1
+- Version 1.3.2 (ALT #30535)
+
 * Wed Mar 19 2014 Timur Aitov <timonbl4@altlinux.org> 1.0.1-alt1
 - Version 1.0.1
 
