@@ -4,14 +4,14 @@
 Summary: Imports map data from www.OpenStreetMap.org to a PostgresSQL database
 Name: osm2pgsql
 Group: Databases
-Version: 0.80.0
-Release: alt1.svn%svn.3
+Version: 0.86.0
+Release: alt1
 
 License: GPLv2+
 Url: http://svn.openstreetmap.org/applications/utils/export/osm2pgsql
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libgeos-devel
@@ -30,7 +30,7 @@ geospatial analysis.
 
 %prep
 %setup -n %name-%version
-%patch -p1
+#%patch -p1
 
 %build
 %autoreconf
@@ -56,12 +56,18 @@ geospatial analysis.
 %make_install install DESTDIR=%buildroot
 
 %files
-%doc README ChangeLog AUTHORS COPYING NEWS TODO install-postgis-osm-db.sh install-postgis-osm-user.sh mapnik-osm-updater.sh
+%doc docs README.md ChangeLog AUTHORS COPYING NEWS TODO install-postgis-osm-db.sh install-postgis-osm-user.sh mapnik-osm-updater.sh
 %_bindir/%name
 %_datadir/%name
 %_man1dir/%name.*
 
 %changelog
+* Thu Dec 04 2014 Dmitry Derjavin <dd@altlinux.org> 0.86.0-alt1
+- 0.86.0;
+- gazetteer patch does not seem to be needed any more;
+- diff removed from gear rules;
+- documentation files updated.
+
 * Thu Jul 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.80.0-alt1.svn28333.3
 - Rebuilt with updated geos
 
