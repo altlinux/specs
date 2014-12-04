@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.3
-Release: alt1.git20141203
+Release: alt2.git20141203
 
 Summary: Extensions to the standard datetime module (Python 3)
 
@@ -26,8 +26,6 @@ BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: pytz-zoneinfo python3-module-six
 # texlive-base-bin
 
-Requires: pytz-zoneinfo
-
 %description
 The dateutil module provides powerful extensions to the standard
 datetime module, available in Python 2.3+. Allows:
@@ -46,11 +44,6 @@ datetime module, available in Python 2.3+. Allows:
 
 %install
 %python3_install
-#NOTE: Not sure, but seems zoneinfo is needed under windows only
-rm -rf %buildroot%python3_sitelibdir/%oname/zoneinfo/*.tar.gz
-
-ln -s %_datadir/pytz/zoneinfo.tar.gz \
-	%buildroot%python3_sitelibdir/dateutil/zoneinfo/
 
 %check
 python3 setup.py test
@@ -63,6 +56,9 @@ python3 dateutil/test/test.py
 
 
 %changelog
+* Thu Dec 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt2.git20141203
+- Don't delete dateutil-zoneinfo.tar.gz
+
 * Thu Dec 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1.git20141203
 - Version 2.3
 
