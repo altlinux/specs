@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.21
+Version: 1.22
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -11,8 +11,9 @@ Url: http://www.altlinux.org/Git.alt/girar-nmu
 
 Source: %name-%version.tar
 
-BuildPreReq: gear, help2man
-BuildRequires: perl-RPM perl-RPM-Source-Editor perl-RPM-Source-Convert perl(Pod/Usage.pm) /usr/bin/pod2man perl-Gear-Rules
+#BuildRequires: help2man
+BuildRequires: perl-devel perl-podlators perl-RPM perl-RPM-Source-Editor perl-RPM-Source-Convert perl(Pod/Usage.pm) /usr/bin/pod2man perl-Gear-Rules
+Requires: gear
 Requires: perl-RPM-Source-Editor >= 0.840
 
 %description
@@ -28,6 +29,10 @@ gcc -O2 %optflags -o girar-nmu-helper-pos-sort pos-sort.c
 
 %install
 #make_install install DESTDIR=%buildroot
+
+mkdir -p %buildroot%perl_vendor_privlib/RPM/Source/Tools
+install -m 644 GirarWriterPrototype.pm %buildroot%perl_vendor_privlib/RPM/Source/Tools/
+
 mkdir -p %buildroot%_bindir
 install -m 755 girar-* rpm-sign-* srpmlschangelog %buildroot%_bindir/
 
@@ -42,8 +47,12 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %doc README
 %_bindir/*
 %_man1dir/*
+%perl_vendor_privlib/RPM*
 
 %changelog
+* Thu Dec 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- new version
+
 * Wed Dec 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
 - new version
 
