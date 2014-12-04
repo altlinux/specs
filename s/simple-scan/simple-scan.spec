@@ -1,22 +1,20 @@
-%define ver_major 3.2
+%define ver_major 3.15
 
 Name: simple-scan
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Simple scanning utility
 License: GPLv3+
 Group: Graphics
 
-Url: http://launchpad.net/simple-scan
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%version/+download/simple-scan-%version.tar.xz
+Url: http://launchpad.net/%name
+Source: %url/%name/%ver_major/%version/+download/simple-scan-%version.tar.xz
 
-BuildRequires: gnome-doc-utils intltool
+BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: libgtk+3-devel libgudev-devel libcolord-devel
 BuildRequires: libjpeg-devel libsane-devel zlib-devel
-
-# For gconf_schemasdir and gnome_helpdir definitions:
-BuildRequires: rpm-build-gnome
+BuildRequires: vala-tools
 
 %description
 Simple Scan is an easy-to-use application, designed to let users connect their
@@ -32,17 +30,20 @@ scanner and quickly have the image/document in an appropriate format.
 %install
 %makeinstall_std
 
-%find_lang %name
+%find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/*
 %_datadir/%name/
-%gnome_helpdir/%name
 %_desktopdir/*
 %_datadir/glib-2.0/schemas/org.gnome.SimpleScan.gschema.xml
+%_datadir/appdata/%name.appdata.xml
 %_man1dir/*
 
 %changelog
+* Thu Dec 04 2014 Yuri N. Sedunov <aris@altlinux.org> 3.15.2-alt1
+- 3.15.2
+
 * Wed Nov 09 2011 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 
