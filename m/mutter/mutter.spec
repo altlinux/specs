@@ -5,7 +5,7 @@
 
 Name: mutter
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -163,6 +163,9 @@ DATADIRNAME=share %configure \
 %endif
 
 %changelog
+* Thu Dec 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1:3.14.2-alt3
+- updated to 3.14.2_56e74b1e (fixed BGO #738686)
+
 * Sun Nov 30 2014 Yuri N. Sedunov <aris@altlinux.org> 1:3.14.2-alt2
 - updated to 3.14.2_d7ff632c (fixed weird tray icon behavior
   in gnome-shell, fixed BGO #740377, 740133)
