@@ -1,14 +1,15 @@
 Summary:  Library for kicad (creation of electronic schematic diagrams)
 Name:     kicad-library
-Version:  1.0
-Release:  alt2.20101208
-Source0:  %name-%version.tar.bz2
-License:  GPL
+Version:  r240
+Release:  alt1
+Source0:  ~kicad-product-committers-%name-%version.tgz
+License:  GPLv2+
 Group:    Sciences/Computer science
-Url: 	  https://code.launchpad.net/~kicad-lib-committers/kicad/library
+Url: 	  https://code.launchpad.net/kicad
+#Url: 	  http://bazaar.launchpad.net/~kicad-product-committers/kicad/library
 
 # Automatically added by buildreq on Fri Feb 13 2009
-BuildRequires: ccmake gcc-c++ cmake >= 2.4.6 cmake-modules glibc-pthread libstdc++-devel
+BuildRequires: ccmake gcc-c++ cmake >= 2.6.1 cmake-modules glibc-pthread libstdc++-devel
 BuildArch: noarch
 
 %description
@@ -18,7 +19,7 @@ schematic diagrams and printed circuit board artwork.
 Kicad-library is a set of library needed by kicad.
 
 %prep
-%setup -n %name 
+%setup -n ~kicad-product-committers/kicad/library/ 
 
 %build
 export LC_ALL=C
@@ -29,11 +30,14 @@ cmake -DBUILD_SHARED_LIBS:BOOL=OFF -DCMAKE_INSTALL_PREFIX=/usr
 %make DESTDIR=%buildroot install
 
 %files
-%defattr(-,root,root)
-%_datadir/kicad/library
-%_datadir/kicad/modules
+%_datadir/kicad/library/*
+%_datadir/kicad/modules/*
+#%_datadir/kicad/template/*
 
 %changelog
+* Sat Nov 29 2014 barssc <barssc@altlinux.ru> r240-alt1
+- new version
+
 * Tue Jun 07 2011 Denis Klimov <zver@altlinux.org> 1.0-alt2.20101208
 - add BuildArch
 
