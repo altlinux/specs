@@ -2,7 +2,7 @@
 %def_without bootstrap
 Name: perl-%dist
 Version: 2.0117
-Release: alt1
+Release: alt2
 
 Summary: Perl binding for libxml2
 License: GPL or Artistic
@@ -20,6 +20,7 @@ BuildRequires: libxml2-devel perl-Devel-CheckLib perl-Test-Differences perl-Test
 
 %if_with bootstrap
 BuildRequires: perl-XML-SAX-Base
+%define _without_test 1
 %else
 BuildRequires: perl-XML-SAX
 %endif
@@ -37,6 +38,7 @@ rm -r inc
 %if_with bootstrap
 # bootstrap: disable build dependency on XML::SAX
 mv t/14sax.t t/14sax.t.orig
+mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 %endif
 
 %build
@@ -59,6 +61,9 @@ mv t/14sax.t t/14sax.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Thu Dec 04 2014 Igor Vlasenko <viy@altlinux.ru> 2.0117-alt2
+- build fixes for bootstrap mode
+
 * Wed Nov 12 2014 Dmitry V. Levin <ldv@altlinux.org> 2.0117-alt1
 - 2.0116 -> 2.0117.
 
