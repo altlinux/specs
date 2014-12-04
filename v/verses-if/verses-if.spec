@@ -1,6 +1,6 @@
 Name: verses-if
 Version: 1
-Release: alt1
+Release: alt2
 Summary: screensaver showing verses from Amy Carmichael's "If" book
 Summary(ru_RU.UTF-8): хранитель экрана, показывающий фразы из книги Эми Кармайкл "Если"
 License: GPL
@@ -27,7 +27,7 @@ BuildRequires: elinks fortune
 This screensaver shows verses found in fortunes-%name package.
 Choose "Verses-If" in screensaver list.
 Be sure to have cp1251 X fonts installed.
-Compatible with XScreenSaver and Gnome-Screensaver. More to come!
+Compatible with XScreenSaver and Gnome2/Mate-Screensaver. More to come!
 Enjoy!
 
 %description -l ru_RU.UTF-8
@@ -35,7 +35,7 @@ Enjoy!
 В списка заставок выберите "Verses-If".
 Убедитесь, что у Вас установлены X-шрифты с кириллическими глифами в
 кодировке cp1251.
-Данная заставка совместима с XScreenSaver и Gnome-Screensaver. More to come!
+Данная заставка совместима с XScreenSaver и Gnome2/Mate-Screensaver. More to come!
 Наслаждайтесь!
 
 %package -n fortunes-%name
@@ -85,8 +85,8 @@ tail -n +2 xx01 | \
 		s|^ *Если|Если|' \
 	> %buildroot%_gamesdatadir/fortune/if_ru
 mkdir -p %buildroot%_docdir/%name-%version %buildroot%_docdir/fortunes-%name-%version
-install -m 444 xx00 %buildroot%_docdir/fortunes-%name-%version/If-foreword.txt
-install -m 444 xx02 %buildroot%_docdir/fortunes-%name-%version/If-part-2.txt
+install -m 444 xx00 If-foreword.txt
+install -m 444 xx02 If-part-2.txt
 
 sed 's|^$|%%|' %SOURCE2 \
 	> %buildroot%_gamesdatadir/fortune/if_en
@@ -106,12 +106,6 @@ ln -s ../if_en.dat %buildroot%_gamesdatadir/fortune/en/if.dat
 %define update_xscreensaver [ "$1" = 1 -a -x %_update_xscreensaver_bin ] && %_update_xscreensaver_bin ||:
 %define clean_xscreensaver [ -x %_update_xscreensaver_bin ] && %_update_xscreensaver_bin ||:
 
-%post
-%update_xscreensaver
-
-%postun
-%clean_xscreensaver
-
 %files
 %_prefix/libexec/xscreensaver/%name
 %_sysconfdir/X11/xscreensaver/hack.d/%name.*
@@ -121,11 +115,14 @@ ln -s ../if_en.dat %buildroot%_gamesdatadir/fortune/en/if.dat
 %files -n fortunes-%name
 %_datadir/games/fortune/if_*
 %_datadir/games/fortune/*/if*
-%doc %_docdir/fortunes-%name-%version
+%doc If-foreword.txt If-part-2.txt
 # might be wrong
 %dir %_datadir/games/fortune/ru
 %dir %_datadir/games/fortune/en
 
 %changelog
+* Wed Dec 03 2014 Ildar Mulyukov <ildar@altlinux.ru> 1-alt2
+- add Mate screensaver support
+
 * Fri Sep 19 2008 Ildar Mulyukov <ildar@altlinux.ru> 1-alt1
 - 1st build for ALTLinux
