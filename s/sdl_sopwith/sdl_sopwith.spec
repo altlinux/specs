@@ -1,8 +1,6 @@
 Name: sdl_sopwith
-Version: 1.7.4
-Release: alt2.qa1
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Version: 1.8.4
+Release: alt1
 
 Summary: Classic scrolling shoot'em
 License: GPLv2+
@@ -13,10 +11,7 @@ Source: http://download.sourceforge.net/sdl-sopwith/sopwith-%version.tar.gz
 Source1: sopwith.png
 Source2: sopwith.desktop
 
-# Automatically added by buildreq on Wed Sep 08 2010
 BuildRequires: libSDL-devel
-# Not detected by buildreq:
-BuildRequires: libgtk+2-devel
 
 %description
 This is a port of the classic computer game "Sopwith".
@@ -45,6 +40,9 @@ rm -rf %buildroot/%_docdir/sopwith
 %doc NEWS doc/keys.txt
 
 %changelog
+* Thu Dec 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
+- 1.8.4
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7.4-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
