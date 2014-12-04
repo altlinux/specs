@@ -1,5 +1,5 @@
 Name: python-module-dateutil
-Version: 2.2
+Version: 2.3
 Release: alt1
 
 Summary: Extensions to the standard datetime module
@@ -19,9 +19,10 @@ BuildArch: noarch
 
 BuildRequires: python-devel python-modules-encodings
 BuildPreReq: python-module-setuptools-tests python-module-six
-BuildPreReq: python-module-pytz
+BuildPreReq: pytz-zoneinfo
 # texlive-base-bin
 
+Requires: pytz-zoneinfo
 
 %description
 The dateutil module provides powerful extensions to the standard
@@ -44,17 +45,14 @@ datetime module, available in Python 2.3+. Allows:
 #NOTE: Not sure, but seems zoneinfo is needed under windows only
 rm -f %buildroot%python_sitelibdir/dateutil/zoneinfo/*.tar.gz
 
-cp -fR %python_sitelibdir/pytz/zoneinfo ./
-cd zoneinfo
-tar -czf \
-	%buildroot%python_sitelibdir/dateutil/zoneinfo/zoneinfo.tar.gz *
+ln -s %_datadir/pytz/zoneinfo.tar.gz \
+	%buildroot%python_sitelibdir/dateutil/zoneinfo/
 
 %check
 python setup.py test
-python test.py
 
 %files
-%doc LICENSE NEWS README
+%doc LICENSE NEWS README*
 %dir %python_sitelibdir/dateutil/
 %python_sitelibdir/*egg-info/
 %python_sitelibdir/dateutil
@@ -63,6 +61,9 @@ python test.py
 
 
 %changelog
+* Thu Dec 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1
+- Version 2.3
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1
 - Version 2.2
 
