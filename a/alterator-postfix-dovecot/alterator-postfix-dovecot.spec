@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-postfix-dovecot
-Version: 0.8.2
+Version: 0.8.5
 Release: alt1
 
 Summary: Alterator module for Postfix/Dovecot setup
@@ -60,6 +60,15 @@ fi
 %_sysconfdir/control.d/facilities/*
 
 %changelog
+* Thu Dec 04 2014 Andriy Stepanov <stanv@altlinux.ru> 0.8.5-alt1
+- Fixes to work DrWeb
+
+* Thu Dec 04 2014 Andriy Stepanov <stanv@altlinux.ru> 0.8.4-alt1
+- Add DrWeb
+
+* Mon Dec 01 2014 Andriy Stepanov <stanv@altlinux.ru> 0.8.3-alt1
+- Remove "REJECT" rule for SASL case
+
 * Wed Nov 26 2014 Andriy Stepanov <stanv@altlinux.ru> 0.8.2-alt1
 - Fix: SpamAssassin checkbox
 
