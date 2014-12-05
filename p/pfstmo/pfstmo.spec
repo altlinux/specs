@@ -1,6 +1,6 @@
 Name: pfstmo
-Version: 1.4
-Release: alt1.qa1
+Version: 1.5
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -10,22 +10,28 @@ Group: Graphics
 
 Url: http://www.mpi-inf.mpg.de/resources/tmo/
 Source: http://downloads.sourceforge.net/pfstools/pfstmo-%version.tar.gz
-Patch1: pfstmo-1.4-missinginclude.patch
+# fc patches
+Patch10: pfstmo-1.5-zd.patch
+Patch11: pfstmo-CXXFLAGS.patch
+Patch12: pfstmo-1.5-auto_ptr.patch
 
 # Automatically added by buildreq on Thu Nov 26 2009
 BuildRequires: gcc-c++ libfftw3-devel libgomp-devel libgsl-devel libpfs-devel
 
 %description
-pfstmo package contains the implementation of state-of-the-art tone mapping
-operators. The motivation here is to provide an implementation of tone mapping
-operators suitable for convenient processing of both static images and
-animations.
+PFStmo package contains the implementation of state-of-the-art tone
+mapping operators. The motivation here is to provide an implementation of
+tone mapping operators suitable for convenient processing of both static
+images and animations.
 
 %prep
 %setup
-%patch1 -p1
+%patch10 -p1 -b .zd
+%patch11 -p1 -b .cxxflags
+%patch12 -p1 -b .auto_ptr
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -33,10 +39,21 @@ animations.
 %makeinstall_std
 
 %files
-%_bindir/*
+%_bindir/pfstmo_drago03
+%_bindir/pfstmo_durand02
+%_bindir/pfstmo_fattal02
+%_bindir/pfstmo_mantiuk06
+%_bindir/pfstmo_mantiuk08
+%_bindir/pfstmo_pattanaik00
+%_bindir/pfstmo_reinhard02
+%_bindir/pfstmo_reinhard05
 %_man1dir/*
 
 %changelog
+* Fri Dec 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
+- 1.5
+- applied fc patchset
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
