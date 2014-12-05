@@ -2,7 +2,7 @@
 
 Name: gssntlmssp
 Version: 0.5.0
-Release: alt1
+Release: alt2
 Summary: GSSAPI NTLMSSP Mechanism
 
 Group: System/Libraries
@@ -10,12 +10,12 @@ License: LGPLv3+
 Url: https://fedorahosted.org/gss-ntlmssp
 Source: https://fedorahosted.org/released/gss-ntlmssp/%name-%version.tar
 
-Requires: libkrb5 >= 1.11.5
+Requires: libkrb5 >= 1.13
 
 BuildRequires: xsltproc xml-utils
 BuildRequires: docbook-style-xsl docbook-dtds
 BuildRequires: doxygen
-BuildRequires: libkrb5-devel >= 1.11.5
+BuildRequires: libkrb5-devel >= 1.13
 BuildRequires: libunistring-devel
 BuildRequires: zlib-devel
 BuildRequires: libssl-devel
@@ -28,6 +28,7 @@ A GSSAPI Mechanism that implements NTLMSSP
 Summary: Development header for GSSAPI NTLMSSP
 Group: Development/C
 License: LGPLv3+
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %description devel
@@ -37,11 +38,9 @@ Adds a header file with definition for custom GSSAPI extensions for NTLMSSP
 %setup
 
 %build
-%add_optflags -I%_includedir/krb5
 mkdir -p m4
 %autoreconf
 %configure \
-    --includedir=%_includedir/krb5 \
     %{subst_with wbclient} \
     --disable-static
 
@@ -64,9 +63,12 @@ make test_gssntlmssp
 %doc COPYING
 
 %files devel
-%_includedir/krb5/gssapi/*
+%_includedir/gssapi/*
 
 %changelog
+* Thu Nov 13 2014 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt2
+- build with krb5-1.13
+
 * Thu Aug 28 2014 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt1
 - 0.5.0
 - build with wbclient support
