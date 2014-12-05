@@ -1,5 +1,5 @@
 Name: eepm
-Version: 1.5.4
+Version: 1.5.7
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -39,7 +39,8 @@ See detailed description here: http://wiki.etersoft.ru/EPM
 
 %install
 # install to datadir and so on
-%makeinstall_std datadir=%_datadir bindir=%_bindir mandir=%_mandir version=%version-%release
+# do not use uncommon makeinstall_std here
+%make_install install DESTDIR=%buildroot datadir=%_datadir bindir=%_bindir mandir=%_mandir version=%version-%release
 install -m 0755 packed/epm.sh %buildroot/%_datadir/%name/epm-packed.sh
 install -m 0755 packed/serv.sh %buildroot/%_datadir/%name/serv-packed.sh
 
@@ -64,6 +65,27 @@ chmod a+x %buildroot%_datadir/%name/{serv-,epm-}*
 %_sysconfdir/bash_completion.d/cerv
 
 %changelog
+* Fri Dec 05 2014 Vitaly Lipatov <lav@altlinux.ru> 1.5.7-alt1
+- checkpkg: add msi checking
+- epm-packages: fix --sort
+- serv-enable: assure chkconfig add
+- autoremove: do not remove libnss-*, *debuginfo
+- fatal exit if assure_exists is failed
+- epm: fix search file in ALT Linux repo
+- epm: add 'epm s' like epms
+- initial eget commit
+
+* Thu Jul 17 2014 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt1
+- assure we have a command rpm/dpkg when work with a package file
+- fix for use package name list in quotes
+- fix build without rpm-build-altlinux-compat
+
+* Sat Jun 07 2014 Vitaly Lipatov <lav@altlinux.ru> 1.5.5-alt1
+- fix epmqp, epm clean for FreeBSD
+- epm programs: use /usr/local/share/applications on BSD systems
+- epm reinstall: add pkgng support
+- fix timeout using on FreeBSD
+
 * Wed Jun 04 2014 Vitaly Lipatov <lav@altlinux.ru> 1.5.4-alt1
 - add initial support for FreeBSD's pkgng
 - add audit command for check installed packages against known vulnerabilities
