@@ -1,8 +1,8 @@
-%def_disable gssapi
+%def_enable gssapi
 %def_disable mmcount
 
 Name: rsyslog
-Version: 8.4.2
+Version: 8.6.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -114,8 +114,8 @@ Group: System/Kernel and hardware
 Requires: %name = %version-%release
 
 %description mongo
-The rsyslog-mysql package contains a dynamic shared object that will add
-MySQL database support to rsyslog.
+The rsyslog-mongo package contains a dynamic shared object that will add
+mongo database support to rsyslog.
 
  o ommongodb.so - This is the implementation of the build-in output module for
                 MongoDB.
@@ -280,7 +280,6 @@ The rsyslog-extra package contains a dynamic shared object that will add
 all other functions:
 
  o imptcp.so             - This is a native implementation of plain tcp input module with epool.
- o imttcp.so             - This is a native implementation of plain tcp input module with multiple thread.
  o omprog.so             - This output plugin enables rsyslog to execute a program and
                            feed it the message stream as standard input.
  o omuxsock.so           - This is the implementation of datgram unix domain socket forwarding.
@@ -323,7 +322,6 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-imjournal \
 	--enable-impstats \
 	--enable-imptcp \
-	--enable-imttcp \
 	--enable-inet \
 	--enable-klog \
 	--enable-kmsg \
@@ -349,12 +347,10 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-pmcisconames \
 	--enable-pmciscoios \
 	--enable-pmlastmsg \
-	--enable-pmrfc3164sd \
 	--enable-pmsnare \
 	--enable-regexp \
 	--enable-relp \
 	--enable-snmp \
-	--enable-zlib \
 	--enable-unlimited-select \
 	--enable-usertools \
 	--with-systemdsystemunitdir=%systemd_unitdir
@@ -433,7 +429,7 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %mod_dir/omjournal.so
 
 %files mysql
-%doc plugins/ommysql/createDB.sql plugins/ommysql/contrib/delete_mysql
+%doc plugins/ommysql/createDB.sql
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_mysql.conf
 %mod_dir/ommysql.so
 
@@ -501,7 +497,6 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %files extra
 %mod_dir/imdiag.so
 %mod_dir/imptcp.so
-%mod_dir/imttcp.so
 %mod_dir/impstats.so
 %mod_dir/omprog.so
 %mod_dir/omtesting.so
@@ -511,12 +506,14 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %mod_dir/pmcisconames.so
 %mod_dir/pmciscoios.so
 %mod_dir/pmlastmsg.so
-%mod_dir/pmrfc3164sd.so
 %mod_dir/pmsnare.so
 %mod_dir/mmexternal.so
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Fri Dec 05 2014 Alexey Shabalin <shaba@altlinux.ru> 8.6.0-alt1
+- 8.6.0
+
 * Thu Oct 09 2014 Alexey Shabalin <shaba@altlinux.ru> 8.4.2-alt1
 - 8.4.2 (v8-stable)
 - fixed CVE-2014-3634, CVE-2014-3683
