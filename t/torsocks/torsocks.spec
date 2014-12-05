@@ -1,6 +1,6 @@
 Name: torsocks
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Use SOCKS-friendly applications with Tor
 Group: Security/Networking
@@ -41,7 +41,7 @@ install -p -m644 %SOURCE1 %buildroot%_sysconfdir/bash_completion.d/%name
 %{_mandir}/man5/%name.conf.5.*
 %{_mandir}/man8/%name.8.*
 %dir %{_libdir}/%name
-# %torsocks requires this file so it has not been placed in -devel subpackage
+# torsocks requires this file so it has not been placed in -devel subpackage
 %{_libdir}/%name/lib%name.so
 %{_libdir}/%name/lib%name.so.0*
 %exclude %{_libdir}/%name/lib%name.a
@@ -52,5 +52,8 @@ install -p -m644 %SOURCE1 %buildroot%_sysconfdir/bash_completion.d/%name
 %exclude %_datadir/doc/%name
 
 %changelog
+* Thu Dec 5 2014 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt2
+- Fix bash completion file
+
 * Thu Dec 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus
