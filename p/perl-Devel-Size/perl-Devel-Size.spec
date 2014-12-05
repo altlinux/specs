@@ -1,7 +1,7 @@
 %define dist Devel-Size
 Name: perl-%dist
 Version: 0.79
-Release: alt2
+Release: alt3
 
 Summary: Perl extension for finding the memory usage of Perl variables
 License: GPL or Artistic
@@ -9,6 +9,9 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/N/NW/NWCLARK/Devel-Size-%{version}.tar.gz
+Patch0:         Devel-Size-0.79-RT-88182-magic_read_shrink.patch
+Patch1:         Devel-Size-0.79-RT-88180-sv_magical.patch
+Patch2:         Devel-Size-0.79-RT-95496-perl5.20-ook.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -23,6 +26,9 @@ If the variable is a hash or an array, use a reference when calling.
 
 %prep
 %setup -q -n %dist-%version
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %perl_vendor_build
@@ -36,6 +42,10 @@ If the variable is a hash or an array, use a reference when calling.
 %perl_vendor_autolib/Devel
 
 %changelog
+* Fri Dec 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.79-alt3
+- added RT patches
+- perl 5.20 ready
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.79-alt2
 - built for perl 5.18
 
