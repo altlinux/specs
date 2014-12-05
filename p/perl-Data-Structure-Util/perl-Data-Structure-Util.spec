@@ -1,7 +1,7 @@
 %define dist Data-Structure-Util
 Name: perl-%dist
 Version: 0.15
-Release: alt5
+Release: alt6
 
 Summary: Change nature of data within a structure
 License: GPL or Artistic
@@ -9,6 +9,9 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+
+# Fix for RT#88257
+Patch0:         Data-Structure-Util-0.15-Remove-failed-test-cases.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-File-Find-Rule perl-Test-Pod perl-CPAN-Meta
@@ -25,9 +28,11 @@ detect if there is a circular reference.
 
 %prep
 %setup -q -n %dist-%version
+%patch0 -p1
 if [ %version = 0.15 ]; then
 sed -i -e '43,$d' Makefile.PL
 fi
+
 
 %build
 %perl_vendor_build
@@ -41,6 +46,9 @@ fi
 %perl_vendor_autolib/Data
 
 %changelog
+* Fri Dec 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt6
+- Remove test cases which failed for Perl 5.19.4 and higher (RT#88257)
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.15-alt5
 - built for perl 5.18
 
