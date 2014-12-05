@@ -1,4 +1,4 @@
-# hey Emacs, its -*- mode: rpm-spec; coding: cyrillic-cp1251; -*-
+# hey Emacs, its -*- mode: rpm-spec; coding: cp1251; -*-
 
 ## Things users may want to change
 #
@@ -10,7 +10,7 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.2.3.25
+Version: 0.2.5.10
 Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
@@ -21,6 +21,7 @@ Packager: Sviatoslav Sviridov <svd@altlinux.ru>
 
 Source0: http://tor.eff.org/dist/%name-%version.tar
 Source1: %name.init
+Source2: %name.systemd.service
 
 # Automatically added by buildreq on Fri Jun 24 2011
 # optimized out: fontconfig fonts-type1-urw ghostscript-classic libcom_err-devel libkrb5-devel tex-common texlive-base texlive-base-bin texlive-common texlive-latex-base texlive-latex-recommended
@@ -48,14 +49,13 @@ for high-stakes anonymity.
 
 %prep
 %setup
-ln doc/spec/README doc/spec/README-spec
 
 # Set default configuration values
 sed -i 's:^#Log notice file.*:Log notice file %_var/log/%name/%name.log:' src/config/torrc.sample.in
 sed -i 's:^#DataDirectory.*:DataDirectory %_var/cache/%name:' src/config/torrc.sample.in
 
 %build
-%configure
+%configure --with-tor-user=%{toruser} --with-tor-group=%{toruser}
 %make_build
 
 # Perform unit test
@@ -68,6 +68,8 @@ install -pD -m755 %SOURCE1 %buildroot/%_initdir/%name
 mv %buildroot/%_sysconfdir/%name/torrc.sample %buildroot/%_sysconfdir/%name/torrc
 mkdir -p %buildroot%_tor_root
 mkdir -p %buildroot%_var/{cache/%name,log/%name,run/%name}
+
+install -D -p -m 0644 %SOURCE2 %buildroot/%_unitdir/%{name}.service
 
 mkdir -p %buildroot%_sysconfdir/logrotate.d
 cat >%buildroot%_sysconfdir/logrotate.d/%name <<__EOF__
@@ -106,11 +108,13 @@ fi
 #	rm -f %_tor_root/lib/* %_tor_root/var/yp/binding/*
 #fi
 
+%define docdir %_docdir/%name
+
 %files
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/torrc
-%config(noreplace) %_sysconfdir/%name/tor-tsocks.conf
 %config %_sysconfdir/logrotate.d/%name
+%{_unitdir}/%{name}.service
 %_bindir/tor
 %_bindir/torify
 %_bindir/tor-resolve
@@ -119,7 +123,11 @@ fi
 %_initdir/%name
 %dir %_datadir/%name
 %_datadir/%name/geoip
-%doc README LICENSE ChangeLog INSTALL doc/{HACKING,TODO} doc/spec/README-spec contrib/torify contrib/tor-tsocks.conf
+%_datadir/%name/geoip6
+%doc README LICENSE ChangeLog INSTALL doc/HACKING
+%dir %docdir
+%docdir/*.html
+
 
 %defattr(640,root,%toruser,2710)
 %_tor_root
@@ -131,6 +139,10 @@ fi
 %_var/cache/%name
 
 %changelog
+* Fri Dec 05 2014 Vladimir Didenko <cow@altlinux.ru> 0.2.5.10-alt1
+- new version
+- systemd support
+
 * Mon Oct 07 2013 Anton Farygin <rider@altlinux.ru> 0.2.3.25-alt1
 - new version
 
