@@ -10,7 +10,7 @@
 %def_enable	mongodb
 
 Name: syslog-ng
-Version: 3.4.7
+Version: 3.6.1
 Release: alt1
 
 Summary: syslog-ng daemon
@@ -121,6 +121,13 @@ Requires: %name = %version-%release libeventlog-devel libivykis-devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%package devel-test
+Summary: Test helper package for %name modules
+Group: Development/C
+Requires: %name = %version-%release
+
+%description devel-test
+The %name-devel-test package contains library for testing modules
 
 %prep
 %setup -q -n %{name}_%{version}
@@ -131,6 +138,14 @@ tar -xf ../../../altlinux/rabbitmq-c-v0.3.0-80-gc9f6312.tar.gz
 autoreconf -i
 popd
 %endif
+
+# copied from "syslog-ng-3.6.1/autogen.sh"
+libtoolize --force --copy
+aclocal -I m4 --install
+#sed -i -e 's/PKG_PROG_PKG_CONFIG(\[0\.16\])/PKG_PROG_PKG_CONFIG([0.14])/g' aclocal.m4
+autoheader
+automake --foreign --add-missing --copy
+autoconf
 
 # fix perl path
 %{__sed} -i 's|^#!/usr/local/bin/perl|#!%{__perl}|' contrib/relogger.pl
@@ -160,9 +175,12 @@ skip_submodules=1 ./autogen.sh
  --with-libmongo-client=system
 %endif
 
-# fixed libraries path in RPATH
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+##
+# disabled while auto* from autogen.sh is used
+## fixed libraries path in RPATH
+#sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+#sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+##
 
 %make_build XSL_STYLESHEET=/usr/share/xml/docbook/xsl-stylesheets/manpages/docbook.xsl
 
@@ -186,6 +204,7 @@ find %buildroot -name "*.la" -exec rm -f {} +
 %post_service %name
 if [ $1 = 1 ]; then
     [ -x /sbin/syslogd ] && /sbin/chkconfig --level 2345 syslogd off ||:
+    [ -x /sbin/klogd ] && /sbin/chkconfig --level 2345 klogd off ||:
 fi
 
 %triggerpostun -- %name <= 3.0.10-alt1
@@ -198,10 +217,11 @@ fi
 %preun_service %name
 if [ $1 = 0 ]; then
     [ -x /sbin/syslogd ] && /sbin/chkconfig --level 2345 syslogd on ||:
+    [ -x /sbin/klogd ] && /sbin/chkconfig --level 2345 klogd on ||:
 fi
 
 %files
-%doc AUTHORS NEWS COPYING
+%doc AUTHORS COPYING NEWS.md README.md
 %doc doc/security/*.txt
 %doc contrib/{syslog2ng,syslog-ng.vim,relogger.pl,syslog-ng.conf.doc}
 
@@ -226,15 +246,19 @@ fi
 %_libdir/%name/libafsocket-notls.so
 %_libdir/%name/libafsocket-tls.so
 %_libdir/%name/libafsocket.so
+%_libdir/%name/libafstomp.so
 %_libdir/%name/libafuser.so
 %_libdir/%name/libbasicfuncs.so
 %_libdir/%name/libconfgen.so
 %_libdir/%name/libcryptofuncs.so
 %_libdir/%name/libcsvparser.so
 %_libdir/%name/libdbparser.so
+%_libdir/%name/libgraphite.so
+%_libdir/%name/liblinux-kmsg-format.so
+%_libdir/%name/libpseudofile.so
 %_libdir/%name/libsyslogformat.so
 %_libdir/%name/libsystem-source.so
-%_libdir/lib%name-%version.so
+%_libdir/lib%name-*.so.*
 
 %dir %_datadir/%name
 %dir %_datadir/%name/include
@@ -279,13 +303,26 @@ fi
 %files devel
 %dir %_includedir/%name
 %_includedir/%name/*.h
+%dir %_includedir/%name/*
+%_includedir/%name/*/*.h
+
 %dir %_datadir/%name/tools
 %_datadir/%name/tools/*
 
 %_libdir/lib%name.so
 %_libdir/pkgconfig/%name.pc
 
+%files devel-test
+%dir %_libdir/%name/libtest
+%_libdir/%name/libtest/libsyslog-ng-test.a
+%_libdir/pkgconfig/%name-test.pc
+
 %changelog
+* Sat Dec 06 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.6.1-alt1
+- 3.6.1 (ALT #30325)
+- new subpackage devel-test
+- added disabling/enabling klogd in post/preun (ALT #28895#c12)
+
 * Thu Dec 26 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.4.7-alt1
 - 3.4.7 (git20131225)
 
