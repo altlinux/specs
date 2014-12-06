@@ -1,7 +1,7 @@
 %define _kde_alternate_placement 1
 
 Name: bluedevil
-Version: 1.3.2
+Version: 2.0.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -14,11 +14,11 @@ Obsoletes: kde4-kbluetooth
 Provides: kdebluetooth4
 Obsoletes: kdebluetooth4
 Provides: bluez-pin
-Requires: bluez >= 4.28 obex-data-server obexd
-#Requires: kde4base-runtime-core
+Requires: bluez >= 5.0 obexd
 
 Source: %name-%version.tar
-Source10: bluedevil_ru.po
+# SuSE
+Patch1: typo2.diff
 
 # Automatically added by buildreq on Thu Sep 02 2010 (-bi)
 #BuildRequires: gcc-c++ glib2-devel glibc-devel-static kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libbluedevil-devel libqt3-devel libxkbfile-devel qt4-designer rpm-build-ruby
@@ -38,9 +38,9 @@ based on %name .
 
 %prep
 %setup -q
+%patch1 -p1
 
 mv altlinux/po ./
-#cat %SOURCE10 > po/ru/bluedevil.po
 cat >> CMakeLists.txt <<__EOF__
 find_package(Msgfmt REQUIRED)
 find_package(Gettext REQUIRED)
@@ -68,15 +68,15 @@ done
 %files -f %name.lang
 %_kde4_bindir/bluedevil-*
 %_K4exec/bluedevil-*
-%_K4lib/bluedevil*plugin.so
-%_K4lib/bluetoothfiletiemaction.so
+#%_K4libdir/libbluedevilaction.so
+#%_K4lib/bluedevil*plugin.so
+%_K4lib/bluetoothfileitemaction.so
 %_K4lib/kcm_bluedevil*.so
 %_K4lib/kded_bluedevil.so
 %_K4lib/kded_obexftpdaemon.so
 %_K4lib/kio_bluetooth.so
 %_K4lib/kio_obexftp.so
-%_K4libdir/libbluedevilaction.so
-%_K4dbus_services/org.kde.BlueDevil.Service.service
+#%_K4dbus_services/org.kde.BlueDevil.Service.service
 %_kde4_xdg_apps/bluedevil-*.desktop
 %_K4apps/bluedevil
 %_K4apps/bluedevilwizard
@@ -84,16 +84,24 @@ done
 %_K4srv/kded/bluedevil.desktop
 %_K4srv/kded/obexftpdaemon.desktop
 %_K4srv/obexftp.protocol
-%_K4srv/sendfile.desktop
 %_K4srv/bluetooth.protocol
-%_K4srvtyp/actionplugin.desktop
+#%_K4srvtyp/actionplugin.desktop
 %_K4xdg_mime/bluedevil-mime.xml
 
 
-%files devel
-%_K4includedir/bluedevil/
+#%files devel
+#%_K4includedir/bluedevil/
 
 %changelog
+* Fri Dec 05 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1
+- 2.0 release
+
+* Mon Dec 02 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt0.1
+- bluez5 version
+
+* Tue Oct 08 2013 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt0.M70P.1
+- built for M70P
+
 * Mon Oct 07 2013 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt1
 - new version
 

@@ -1,22 +1,25 @@
-%define systemdsystemunitdir /lib/systemd/system
+%define _libexecdir %_prefix/libexec
 
 Name: bluez
-Version: 4.101
+Version: 5.25
 Release: alt1
+
 Summary: Bluetooth utilities
 License: GPLv2+
 Group: Networking/Other
 URL: http://www.bluez.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires: lib%name = %version-%release
 Conflicts: udev-extras < 169
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: flex glib2-devel gtk-doc libalsa-devel libcheck-devel libdbus-devel
-BuildRequires: libreadline-devel libsndfile-devel libusb-compat-devel libudev-devel
+Obsoletes: bluez-alsa < 5.0
+Obsoletes: obex-data-server < 0.4.6-alt3
+
+BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
+BuildRequires: libical-devel systemd-devel gtk-doc
 
 %description
 Bluetooth protocol stack for Linux
@@ -46,48 +49,27 @@ Requires: %name = %version-%release
 %description cups
 This package contains the CUPS backend
 
-%package alsa
-Summary: ALSA support for Bluetooth audio devices
-Group: Networking/Other
-Requires: %name = %version-%release
-
-%description alsa
-This package contains ALSA support for Bluetooth audio devices
-
 %prep
 %setup -q
 %patch -p1
 
 %build
 %autoreconf
+export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"
 %configure \
+	--enable-library \
+	--enable-threads \
+	--disable-obex \
 	--enable-cups \
-	--enable-dfutool \
 	--enable-tools \
-	--enable-bccmd \
-	--disable-gstreamer \
-	--enable-hidd \
-	--enable-pand \
-	--enable-dund \
-	--enable-hid2hci \
-	--with-systemdunitdir=%systemdsystemunitdir \
 	--localstatedir=%_var
-%make
+%make_build
 
 %install
 %make DESTDIR=%buildroot install
-
 install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
-install -m644 audio/audio.conf \
-	input/input.conf \
-	network/network.conf \
-	serial/serial.conf \
-	%buildroot%_sysconfdir/bluetooth/
-
+ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
 mkdir -p %buildroot%_libdir/bluetooth/plugins %buildroot%_localstatedir/bluetooth
-
-# symlink for systemd
-ln -s bluetooth.service %buildroot%systemdsystemunitdir/bluetoothd.service
 
 mkdir %buildroot%_sysconfdir/modprobe.d
 cat <<__EOF__ > %buildroot%_sysconfdir/modprobe.d/bluetooth.conf
@@ -99,6 +81,9 @@ install bluetooth /sbin/modprobe --first-time --ignore-install bluetooth && { /s
 __EOF__
 
 find %buildroot%_libdir -name \*.la -delete
+
+%check
+%make check
 
 %post
 %post_service bluetoothd
@@ -115,17 +100,19 @@ chkconfig bluetoothd on
 %files
 %doc AUTHORS ChangeLog README
 %_initdir/bluetoothd
-%dir %_sysconfdir/bluetooth/
-%config(noreplace) %_sysconfdir/bluetooth/*.conf
+#%dir %_sysconfdir/bluetooth/
+#%config(noreplace) %_sysconfdir/bluetooth/*.conf
 %config %_sysconfdir/dbus-1/system.d/bluetooth.conf
 %_sysconfdir/modprobe.d/bluetooth.conf
-%systemdsystemunitdir/*.service
-/lib/udev/rules.d/*-bluetooth-hid2hci.rules
+%_unitdir/*.service
+%_prefix/lib/systemd/user/obex.service
+/lib/udev/rules.d/*-hid2hci.rules
 /lib/udev/hid2hci
-%_sbindir/*
+%_libexecdir/bluetooth
 %_bindir/*
 %_libdir/bluetooth
 %_datadir/dbus-1/system-services/org.bluez.service
+%_datadir/dbus-1/services/org.bluez.obex.service
 %_localstatedir/bluetooth
 %_man1dir/*.1*
 %_man8dir/*.8*
@@ -141,11 +128,22 @@ chkconfig bluetoothd on
 %files cups
 %_prefix/lib/cups/backend/bluetooth
 
-%files alsa
-%_datadir/alsa/bluetooth.conf
-%_libdir/alsa-lib/*.so*
-
 %changelog
+* Fri Dec 05 2014 Yuri N. Sedunov <aris@altlinux.org> 5.25-alt1
+- 5.25
+
+* Tue Jan 21 2014 Yuri N. Sedunov <aris@altlinux.org> 5.14-alt1
+- 5.14
+
+* Tue Nov 26 2013 Valery Inozemtsev <shrek@altlinux.ru> 5.11-alt1
+- 5.11
+
+* Thu Feb 14 2013 Valery Inozemtsev <shrek@altlinux.ru> 5.2-alt1
+- 5.2
+
+* Tue Dec 25 2012 Valery Inozemtsev <shrek@altlinux.ru> 5.0-alt1
+- 5.0
+
 * Wed Jun 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 4.101-alt1
 - 4.101
 
