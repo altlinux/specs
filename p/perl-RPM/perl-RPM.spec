@@ -1,7 +1,7 @@
 %define dist Perl-RPM
 Name: perl-RPM
-Version: 1.49
-Release: alt3
+Version: 1.51
+Release: alt1
 
 Summary: Native bindings to the RPM Package Manager API
 License: Artistic
@@ -40,6 +40,10 @@ been done in C or C++.
 %perl_vendor_autolib/RPM*
 
 %changelog
+* Fri Dec 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
+- updated from cpan
+- c code cleanup in preparation for perl 5.20.1
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1.49-alt3
 - built for perl 5.18
 
