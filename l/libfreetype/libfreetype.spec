@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libfreetype
-Version: 2.5.3
-Release: alt2
+Version: 2.5.4
+Release: alt1
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
 Group: System/Libraries
@@ -19,13 +19,12 @@ Source1: http://download.savannah.gnu.org/releases/freetype/ft2demos-%version.ta
 Source3: ftconfig.h
 
 Patch5: freetype-2.4.10-osh.patch
-Patch2: freetype-2.5.3-alt-freetype-config.patch
+Patch2: freetype-2.5.4-alt-freetype-config.patch
 Patch3: freetype-2.4.10-alt-fttrigon.patch
-Patch6: ft2demos-2.5.1-alt-snprintf.patch
+Patch6: ft2demos-2.5.4-alt-snprintf.patch
 Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
 Patch12: freetype-2.4.10-rh-enable-valid.patch
 Patch13: ft2demos-2.4.10-rh-more-demos.patch
-Patch14: freetype-2.5.1-rh-pkgconfig.patch
 Patch21: ft2demos-2.4.10-deb-fixes.patch
 
 BuildRequires: bzlib-devel libX11-devel libharfbuzz-devel libpng-devel zlib-devel
@@ -90,7 +89,6 @@ ln -s ft2demos-%version ft2demos
 %patch11 -p1
 %patch12 -p1
 %patch13 -p0
-%patch14 -p1
 
 %patch21 -p0
 
@@ -157,6 +155,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Sun Dec 07 2014 Valery Inozemtsev <shrek@altlinux.ru> 2.5.4-alt1
+- 2.5.4
+
 * Wed Mar 12 2014 Valery Inozemtsev <shrek@altlinux.ru> 2.5.3-alt2
 - prereq libharfbuzz
 
