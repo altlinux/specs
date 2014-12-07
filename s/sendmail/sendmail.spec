@@ -1,6 +1,6 @@
 Name: sendmail
 
-%define tarbolversion 8.14.9
+%define tarbolversion 8.15.1
 
 Version: %tarbolversion
 Release: alt1
@@ -501,6 +501,10 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Sun Dec 07 2014 Sergey Y. Afonin <asy@altlinux.ru> 8.15.1-alt1
+- New version (incompatible change in IPv6 configuration,
+  please check RELEASE_NOTES before update)
+
 * Wed May 28 2014 Sergey Y. Afonin <asy@altlinux.ru> 8.14.9-alt1
 - New version (security update)
 - some cleanups in *.mc
