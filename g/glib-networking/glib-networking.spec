@@ -3,7 +3,7 @@
 %def_enable installed_tests
 
 Name: glib-networking
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Networking support for GIO
@@ -80,6 +80,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Sun Dec 07 2014 Yuri N. Sedunov <aris@altlinux.org> 2.42.1-alt1
+- 2.42.1
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
 - 2.42.0
 
