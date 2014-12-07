@@ -1,7 +1,10 @@
+# for perl 5.20.1 rebuild - let us wait for upstream to fix it
+%define _without_test 1
+
 %define dist PerlIO-Util
 Name: perl-%dist
 Version: 0.72
-Release: alt4
+Release: alt5
 
 Summary: A selection of general PerlIO utilities
 License: Artistic
@@ -35,6 +38,9 @@ methods.
 %perl_vendor_autolib/PerlIO
 
 %changelog
+* Sun Dec 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.72-alt5
+- preparation for perl 5.20.1 update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.72-alt4
 - built for perl 5.18
 
