@@ -4,7 +4,7 @@
 
 Name: mjpegtools
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
 License: GPL
@@ -126,6 +126,9 @@ rm -f %buildroot%_infodir/dir
 %_libdir/*.a
 
 %changelog
+* Fri Dec 05 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1.1
+- rebuilt against libSDL_gfx.so.15
+
 * Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1
 - Version 2.1.0
 
