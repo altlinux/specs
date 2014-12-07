@@ -1,4 +1,4 @@
-%def_enable perl
+%def_disable perl
 %def_enable python
 %def_enable ruby
 %def_enable tcl
@@ -21,7 +21,7 @@
 Summary: ObexFTP implements the Object Exchange (OBEX) protocols file transfer.
 Name: obexftp
 Version: 0.23
-Release: alt5.git76127.1
+Release: alt6.git76127.1
 
 License: GPL
 Group: Communications
@@ -177,7 +177,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %tea_makeindex -C %buildroot%_tcldatadir/obex
 mv %buildroot%python_sitelibdir/obexftp/_*.so* %buildroot%python_sitelibdir
 %endif
 
+%if_enabled perl
 chrpath -d %buildroot%perl_vendor_autolib/OBEXFTP/OBEXFTP.so
+%endif
 
 %files
 %doc AUTHORS ChangeLog NEWS README* THANKS TODO
@@ -226,6 +228,9 @@ chrpath -d %buildroot%perl_vendor_autolib/OBEXFTP/OBEXFTP.so
 %endif
 
 %changelog
+* Sun Dec 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt6.git76127.1
+- disable perl subpackage not to hinder perl 5.20.1 update
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 0.23-alt5.git76127.1
 - Rebuilt with ruby-2.0.0-alt1
 
