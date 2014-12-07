@@ -1,13 +1,18 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 1.7.2
+Version: 1.8.2
 Release: alt1
 
 Group: System/Libraries
 License: GPLv3
-Source0: http://ansibleworks.com/releases/%name-%version.tar
+Source0: %name-%version.tar
+Source1: %name-modules-core-%version.tar
+Source2: %name-modules-extras-%version.tar
+
 Patch0:%name-%version-alt.patch
-Url: http://ansibleworks.com
+Patch1: %name-modules-core-%version-alt.patch
+
+Url: http://www.ansible.com
 
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
@@ -24,6 +29,11 @@ are transferred to managed machines automatically.
 %prep
 %setup
 %patch0 -p1
+tar -xvf %SOURCE1               # creates ./library/...
+tar -xvf %SOURCE2
+pushd library
+%patch1 -p1
+popd
 
 %build
 %python_build
@@ -48,6 +58,12 @@ cp -va library/* %buildroot/%_datadir/%name/
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md
 
 %changelog
+* Sun Dec  7 2014 Terechkov Evgenii <evg@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
+* Sat Nov 29 2014 Terechkov Evgenii <evg@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Tue Oct 21 2014 Terechkov Evgenii <evg@altlinux.org> 1.7.2-alt1
 - 1.7.2
 
