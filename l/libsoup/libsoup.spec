@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define api_ver 2.4
 %define ver_major 2.48
@@ -8,8 +8,8 @@
 %def_enable introspection
 
 Name: libsoup
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
@@ -219,6 +219,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Sun Dec 07 2014 Yuri N. Sedunov <aris@altlinux.org> 2.48.1-alt1
+- 2.48.1
+
 * Wed Dec 03 2014 Yuri N. Sedunov <aris@altlinux.org> 2.48.0-alt2
 - updated to 2.48.0_c8ff05b7 (fixed BGO ##738003, 727138, 729987...)
 
