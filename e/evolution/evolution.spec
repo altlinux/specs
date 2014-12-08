@@ -14,7 +14,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -40,7 +40,7 @@ Provides: camel
 %define glib_ver 2.36.0
 %define gtk_ver 3.4
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.12.8
+%define eds_ver 3.12.9
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.8.5
@@ -292,6 +292,9 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/appdata/%name-spamassassin.metainfo.xml
 
 %changelog
+* Mon Dec 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.9-alt1
+- 3.12.9
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.8-alt1
 - 3.12.8
 
