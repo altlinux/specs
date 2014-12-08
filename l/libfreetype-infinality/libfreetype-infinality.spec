@@ -1,7 +1,7 @@
 %define freetypemajorversion 6
 
 Name: libfreetype-infinality
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
@@ -16,9 +16,11 @@ Source91: infinality-settings.sh
 Source92: README.infinality
 
 Patch1: freetype-2.4.10-rh-enable-valid.patch
+Patch2: freetype-2.5.4-upstream-20141207.patch
 # Infinality patches. Now we use bohoomil upstream:
-# https://github.com/bohoomil/fontconfig-ultimate/ 
-Patch91: freetype-2.5.3-bohoomil-infinality-20140707.patch
+# https://github.com/bohoomil/fontconfig-ultimate/
+Patch90:freetype-2.5.4-bohoomil-ftsmooth-20141207.patch
+Patch91: freetype-2.5.4-bohoomil-infinality-20141207.patch
 
 Provides: freetype2-infinality = %version
 Obsoletes: freetype2-infinality < %version
@@ -39,10 +41,12 @@ This version is compiled with the Infinality patches. It transparently
 overrides the system library using ld.so.conf.d mechanism.
 
 %prep
-%setup -n %name-%version 
+%setup -n %name-%version
 
 %patch1 -p1
-%patch91 -p2
+%patch2 -p1
+%patch90 -p1
+%patch91 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -96,6 +100,9 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %config %ld_so_conf
 
 %changelog
+* Mon Dec 8 2014 Vladimir Didenko <cow@altlinux.ru> 2.5.4-alt1
+- 2.5.4
+
 * Thu Jul 10 2014 Vladimir Didenko <cow@altlinux.ru> 2.5.3-alt1
 - 2.5.3
 
@@ -135,4 +142,4 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 - Removed dependency on official freetype package
 
 * Mon Dec 10 2012 Vladimir Didenko <cow@altlinux.ru> 2.4.10-alt1
-- Initial build 
+- Initial build
