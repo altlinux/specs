@@ -3,7 +3,7 @@
 
 Name: pecl-%pecl_name
 Version: 1.0.1
-Release: alt2.%php5_version.%php5_release
+Release: alt3
 # see commit a3d7db22eb7964ea9cb39ea2f866d10df26655d4
 # of git://github.com/do-aki/php-ext-perl.git
 Patch0: %name-1.0.1-alt-fix_php5.4.patch
@@ -55,8 +55,8 @@ phpize
 %pecl_files
 
 %changelog
-* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
-- Rebuild with php5-%php5_version-%php5_release
+* Mon Dec 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3
+- spec fixes for new perl 5.20.1 (dropped prev. changelog -- was always new)
 
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 1.0.1-alt2.5.3.25.20130509.alt1
 - built for perl 5.18
