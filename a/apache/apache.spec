@@ -29,7 +29,7 @@
 
 Name: apache
 Version: %apache_version
-Release: %branch_release alt6
+Release: %branch_release alt7
 
 Summary: The most widely used Web server on the Internet
 License: %asl
@@ -111,6 +111,7 @@ Patch97: mod_perl-1.29-CVE-2007-1349.patch
 # https://rt.cpan.org/Public/Bug/Display.html?id=64999
 Patch98: mp1+perl5.14.diff
 Patch99: mod_perl-perl-5.16.patch
+Patch100: mod_perl-perl-5.20.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache
@@ -831,6 +832,7 @@ pushd ../mod_perl-%mod_perl_version
 %patch97 -p1
 %patch98 -p1
 %patch99 -p1
+%patch100 -p1
 popd
 
 chmod -x $(find htdocs -type f)
@@ -1456,6 +1458,9 @@ fi
 # - macro for %_cachedir/httpd/
 
 %changelog
+* Mon Dec 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.42rusPL30.24-alt7
+- added mod_perl-perl-5.20.patch
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.3.42rusPL30.24-alt6
 - built for perl 5.18
 
