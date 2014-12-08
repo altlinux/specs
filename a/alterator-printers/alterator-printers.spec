@@ -3,7 +3,7 @@
 
 Name: alterator-printers
 Version: 6.0
-Release: alt8
+Release: alt12
 
 Source:%name-%version.tar
 
@@ -29,7 +29,7 @@ simple alterator module for printer administration
 Summary: alterator backend for printer drivers maintainance
 Group: Publishing
 
-Requires: foomatic-db-engine
+Requires: foomatic-db-engine, gzip-utils
 
 %description -n alterator-backend-%backend
 alterator backend for printer drivers maintainance
@@ -53,6 +53,27 @@ alterator backend for printer drivers maintainance
 %_libexecdir/%name
 
 %changelog
+* Mon Dec 08 2014 Lenar Shakirov <snejok@altlinux.ru> 6.0-alt12
+- Raw printer support added
+- mdl.scm: Vendors sorted in backend
+- printer_drivers backed merged to cupsd
+- cupsd: allow empty printer description
+- index.scm: remove Quit button
+- CUPS-ipp connection added
+- smb: crash fixed and optimizations
+
+* Tue Oct 08 2013 Lenar Shakirov <snejok@altlinux.ru> 6.0-alt11
+- Allow comma and dot in printer name
+
+* Wed Dec 12 2012 Lenar Shakirov <snejok@altlinux.ru> 6.0-alt10
+- Backend printer_driver: Fix driver searching
+
+* Tue Dec 11 2012 Lenar Shakirov <snejok@altlinux.ru> 6.0-alt9
+- New search paths and file extensions for update-printers-db:
+  * Search in /usr/share/ppd/ too
+  * Follow symlinks
+  * Search for *.ppd.gz extension too
+
 * Mon Apr 04 2011 Lenar Shakirov <snejok@altlinux.ru> 6.0-alt8
 - l10n removed: merged to alterator-l10n (ALT #25380)
 
