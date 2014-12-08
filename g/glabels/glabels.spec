@@ -1,6 +1,6 @@
 %define major 3.2
 Name: glabels
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: glabels is a GNOME program to create labels and business cards
@@ -103,6 +103,9 @@ ln -s %name-3 %buildroot%_bindir/%name
 %_datadir/gtk-doc/html/lib*/
 
 %changelog
+* Mon Dec 08 2014 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- new version 3.2.1 (with rpmrb script)
+
 * Tue Apr 01 2014 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
 - new version (3.2.0) with rpmgs script
 
