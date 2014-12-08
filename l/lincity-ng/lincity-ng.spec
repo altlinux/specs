@@ -2,7 +2,7 @@
 
 Name: lincity-ng
 Version: 2.9
-Release: alt0.1
+Release: alt0.2
 
 Summary: LinCity-NG is a city simulation game. It is a polished and improved version of the classic LinCity game
 Summary(ru_RU.UTF-8): LinCity-NG - это игра-симулятор города. Она представляет собой улучшенную версию классической игры LinCity.
@@ -83,6 +83,8 @@ ln -fs %_datadir/fonts/ttf/dejavu/DejaVuSans.ttf %buildroot%_datadir/%name/fonts
 for i in %buildroot/%_datadir/%name/sounds/*.wav; do
   oggenc --quiet $i && rm $i
 done
+# and fix sounds.xml
+subst 's/\.wav/.ogg/' %buildroot/%_datadir/%name/sounds/sounds.xml
 
 %find_lang %name
 
@@ -96,6 +98,9 @@ done
 %doc %_pkgdocdir/
 
 %changelog
+* Mon Dec 08 2014 Yuri N. Sedunov <aris@altlinux.org> 2.9-alt0.2
+- fixed sounds.xml
+
 * Thu Dec 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.9-alt0.1
 - 2.9 beta snapshot (4900c2e5519a)
 - moved arch independent files to separate -data subpackage
