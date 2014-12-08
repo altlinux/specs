@@ -1,5 +1,5 @@
 Name: openssl098
-Version: 0.9.8s
+Version: 0.9.8zc
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -35,7 +35,6 @@ Patch36: openssl-0.9.8g-rh-alt-soversion.patch
 Patch37: openssl-0.9.8h-kssl-keytab-available.patch
 Patch38: openssl-0.9.8-pkcs12-fix.patch
 Patch39: openssl-0.9.8l-up-x86_64-crypto-sha1.patch
-Patch40: openssl-0.9.8j-rh-bad-mime.patch
 Patch41: openssl-0.9.8n-alt-ssl-dtls1.patch
 
 %if "%_lib" == "lib64"
@@ -249,7 +248,6 @@ on the command line.
 %patch37 -p1
 %patch38 -p1
 %patch39 -p1
-%patch40 -p1
 %patch41 -p1
 
 find -type f -name \*.orig -delete
@@ -296,6 +294,7 @@ ADD_ARGS=linux-generic32
 %if_with krb
 	--with-krb5-flavor=MIT \
 	--with-krb5-dir=%prefix \
+	--with-krb5-include=-I%_includedir/krb5 \
 %endif
 	$ADD_ARGS
 
@@ -468,6 +467,11 @@ fi
 %endif
 
 %changelog
+* Mon Dec 08 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.8zc-alt1
+- Updated to 0.9.8zc (fixes multiple CVEs).
+- Fixed build with krb5 >= 1.13-alt1.
+- Dropped patch: openssl-0.9.8j-rh-bad-mime.patch
+
 * Fri Jan 13 2012 Dmitry V. Levin <ldv@altlinux.org> 0.9.8s-alt1
 - Updated to 0.9.8s (fixes multiple CVEs).
 
