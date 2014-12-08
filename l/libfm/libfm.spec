@@ -2,7 +2,7 @@
 
 Name: libfm
 Version: 1.2.3
-Release: alt1
+Release: alt2
 
 Summary: Core library of PCManFM file manager
 License: GPL
@@ -23,6 +23,7 @@ BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: libqt4-devel
 BuildRequires: libqtxdg-devel
 
+Requires: gvfs
 Conflicts: libfm2
 
 %description
@@ -106,6 +107,9 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_man1dir/lxshortcut.1*
 
 %changelog
+* Mon Dec 08 2014 Michael Shigorin <mike@altlinux.org> 1.2.3-alt2
+- added Requires: gvfs (closes: #30514)
+
 * Tue Oct 14 2014 Michael Shigorin <mike@altlinux.org> 1.2.3-alt1
 - 1.2.3
 
