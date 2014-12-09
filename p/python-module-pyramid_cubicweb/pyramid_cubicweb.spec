@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 Summary: Integrate CubicWeb with a Pyramid application
 License: Public domain
@@ -113,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1
+- Version 0.1.3
+
 * Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1
 - Version 0.1.2
 
