@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-postfix-dovecot
-Version: 0.8.5
+Version: 0.8.6
 Release: alt1
 
 Summary: Alterator module for Postfix/Dovecot setup
@@ -60,6 +60,9 @@ fi
 %_sysconfdir/control.d/facilities/*
 
 %changelog
+* Tue Dec 09 2014 Andriy Stepanov <stanv@altlinux.ru> 0.8.6-alt1
+- DrWeb: start maild, config's rights
+
 * Thu Dec 04 2014 Andriy Stepanov <stanv@altlinux.ru> 0.8.5-alt1
 - Fixes to work DrWeb
 
