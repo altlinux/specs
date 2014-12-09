@@ -1,7 +1,7 @@
 %define oname cubicweb
 Name: python-module-%oname
-Version: 3.19.5
-Release: alt3.hg20141124
+Version: 3.19.6
+Release: alt1
 Summary: A repository of entities / relations for knowledge management
 License: LGPL
 Group: Development/Python
@@ -102,6 +102,9 @@ python setup.py test
 %doc doc/*
 
 %changelog
+* Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.19.6-alt1
+- Version 3.19.6
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.19.5-alt3.hg20141124
 - Provides cubes
 
