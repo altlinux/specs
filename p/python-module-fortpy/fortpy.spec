@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.9
-Release: alt1.git20141125
+Version: 1.3.4
+Release: alt1.git20141208
 Summary: Fortran Parsing, Unit Testing and Intellisense
 License: MIT
 Group: Development/Python
@@ -20,14 +20,20 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-epc python-module-argparse
 BuildPreReq: python-module-pyparsing python-module-dateutil
 BuildPreReq: python-module-paramiko python-module-termcolor
-BuildPreReq: python-module-pypandoc
+BuildPreReq: python-module-pypandoc python-module-numpy
+BuildPreReq: python-module-scipy python-module-matplotlib
+BuildPreReq: python-module-mock python-module-nose
+BuildPreReq: python-module-pytz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-epc python3-module-argparse
 BuildPreReq: python3-module-pyparsing python3-module-dateutil
 BuildPreReq: python3-module-paramiko python3-module-termcolor
-BuildPreReq: python3-module-pypandoc
+BuildPreReq: python3-module-pypandoc python3-module-numpy
+BuildPreReq: python3-module-scipy python3-module-matplotlib
+BuildPreReq: python3-module-mock python3-module-nose
+BuildPreReq: python3-module-pytz
 %endif
 
 %py_provides %oname
@@ -157,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt1.git20141208
+- Version 1.3.4
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.9-alt1.git20141125
 - Version 1.2.9
 
