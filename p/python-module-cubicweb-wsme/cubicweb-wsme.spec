@@ -1,6 +1,6 @@
 %define oname cubicweb-wsme
 Name: python-module-%oname
-Version: 0.1.1
+Version: 0.1.3
 Release: alt1
 Summary: Easily build a webservice API on top of a cubic web database
 License: LGPL
@@ -38,6 +38,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1
+- Version 0.1.3
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1
 - Initial build for Sisyphus
 
