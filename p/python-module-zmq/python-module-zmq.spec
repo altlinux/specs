@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 14.4.1
-Release: alt1
+Release: alt2
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -164,6 +164,7 @@ popd
 %python3_sitelibdir/zmq
 %exclude %python3_sitelibdir/zmq/tests
 %exclude %python3_sitelibdir/zmq/*/*.h
+%exclude %python3_sitelibdir/zmq/backend/cffi/__pycache__
 
 %files -n python3-module-%oname-devel
 %python3_sitelibdir/zmq/*/*.h
@@ -173,6 +174,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 09 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 14.4.1-alt2
+- Fixed repocop fail buildroot (__pycache__)
+
 * Fri Nov 21 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 14.4.1-alt1
 - New version
 
