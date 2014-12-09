@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        33.1.1
+Version:        34.0.5
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -296,6 +296,19 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Dec 02 2014 Alexey Gladkov <legion@altlinux.ru> 34.0.5-alt1
+- New release (34.0.5).
+- Fixed:
+  + 2014-91 Privileged access to security wrapped protected objects
+  + 2014-90 Apple CoreGraphics framework on OS X 10.10 logging input data to /tmp directory
+  + 2014-89 Bad casting from the BasicThebesLayer to BasicContainerLayer
+  + 2014-88 Buffer overflow while parsing media content
+  + 2014-87 Use-after-free during HTML5 parsing
+  + 2014-86 CSP leaks redirect data via violation reports
+  + 2014-85 XMLHttpRequest crashes with some input streams
+  + 2014-84 XBL bindings accessible via improper CSS declarations
+  + 2014-83 Miscellaneous memory safety hazards (rv:34.0 / rv:31.3)
+
 * Mon Nov 17 2014 Alexey Gladkov <legion@altlinux.ru> 33.1.1-alt1
 - New release (33.1.1).
 
