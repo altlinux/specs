@@ -1,5 +1,5 @@
 Name: alterator-net-iptables
-Version: 4.19.3
+Version: 4.19.4
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -58,6 +58,9 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Tue Dec 09 2014 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
+- Only show IP version selector if more then one is available.
+
 * Thu Oct 23 2014 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
 - Fix disabling firewall.
 
