@@ -15,8 +15,8 @@
 %define nv_version 304
 %define nv_release 123
 %define nv_minor %nil
-%define pkg_rel alt120
-%def_enable kernelsource
+%define pkg_rel alt121
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -320,6 +320,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 09 2014 Sergey V Turchin <zerg@altlinux.org> 304.123-alt121
+- don't package kernel module sources
+
 * Thu Jul 17 2014 Sergey V Turchin <zerg@altlinux.org> 304.123-alt120
 - new version
 
