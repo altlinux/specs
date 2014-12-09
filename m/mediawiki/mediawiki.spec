@@ -2,7 +2,7 @@
 %define major 1.23
 
 Name: mediawiki
-Version: %major.6
+Version: %major.7
 Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
@@ -25,6 +25,7 @@ Source6: AdminSettings.sample
 Source7: 99-read-user-configs.php
 
 Patch: %name-%major-alt.patch
+Patch1: 0001-disable-skin-using-autodiscovery-mechanism-warning.patch
 
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-licenses
@@ -147,6 +148,7 @@ Requires: %name-common = %version-%release
 %prep
 %setup
 %patch -p2
+%patch1 -p2
 
 %install
 mkdir -p %buildroot%_mediawikidir
@@ -286,6 +288,10 @@ exit 0
 
 
 %changelog
+* Tue Dec 09 2014 Vitaly Lipatov <lav@altlinux.ru> 1.23.7-alt1
+- just import mediawiki-1.23.7.tar with rpmgs script
+- disable skin using autodiscovery mechanism warning
+
 * Thu Nov 13 2014 Vitaly Lipatov <lav@altlinux.ru> 1.23.6-alt1
 - new version 1.23.6 (with rpmrb script)
 
