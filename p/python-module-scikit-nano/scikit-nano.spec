@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.3.4
-Release: alt1.git20141129
+Version: 0.3.6
+Release: alt1.git20141208
 Summary: Python toolkit for nanoscience
 License: BSD
 Group: Development/Python
@@ -114,11 +114,11 @@ popd
 pushd ../python3
 %python3_install
 popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
+#pushd %buildroot%_bindir
+#for i in $(ls); do
+#	mv $i $i.py3
+#done
+#popd
 %endif
 
 %python_install
@@ -140,10 +140,10 @@ popd
 
 %files
 %doc *.rst
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
+#_bindir/*
+#if_with python3
+#exclude %_bindir/*.py3
+#endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/testing
 %exclude %python_sitelibdir/*/*/tests
@@ -164,7 +164,7 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst
-%_bindir/*.py3
+#_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/testing
 %exclude %python3_sitelibdir/*/*/tests
@@ -177,6 +177,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1.git20141208
+- Version 0.3.6
+
 * Sun Nov 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt1.git20141129
 - Version 0.3.4
 
