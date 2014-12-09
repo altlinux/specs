@@ -2,12 +2,13 @@
 
 %def_with python3
 
-Version: 0.6.7
-Release: alt1
+Version: 0.6.8
+Release: alt1.hg20141208
 %setup_python_module %oname
 
 Name: python-module-%oname
 Summary: A toolkit for simple interactive command-line applications
+# hg clone https://bitbucket.org/catherinedevlin/cmd2
 Source: %name-%version.tar
 License: MIT
 Group: Development/Python
@@ -120,6 +121,9 @@ done
 %endif
 
 %changelog
+* Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.8-alt1.hg20141208
+- Version 0.6.8
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.7-alt1
 - Version 0.6.7
 
