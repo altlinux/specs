@@ -4,7 +4,7 @@ BuildRequires: perl(DynaLoader.pm) perl(Exporter.pm) perl(Test.pm) perl-devel pe
 # END SourceDeps(oneline)
 Name:       perl-Time-Warp 
 Version:    0.51
-Release:    alt1
+Release:    alt1.1
 # Warp.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
@@ -54,6 +54,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
 - automated CPAN update
 

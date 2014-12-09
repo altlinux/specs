@@ -1,5 +1,5 @@
 Name: perl
-Version: 5.18.2
+Version: 5.20.1
 Release: alt1
 Epoch: 1
 
@@ -7,10 +7,30 @@ Summary: Practical Extraction and Report Language
 License: GPL or Artistic
 Group: Development/Perl
 URL: http://www.perl.org
-Packager: Alexey Tourbin <at@altlinux.ru>
+Packager: Perl Maintainers Team <cpan@altlinux.ru>
 
 Source: perl-%version.tar
-Patch: perl-%version-%release.patch
+
+Patch01: perl-5.20.1-alt-644-at-ExtUtils-Install.patch
+Patch02: perl-5.20.1-alt-644-at-installperl.patch
+Patch03: perl-5.20.1-alt-644-viy-ExtUtils-Install-fix-test.patch
+Patch04: perl-5.20.1-alt-at-MM_Unix-link-xs-with-libperl.patch
+Patch05: perl-5.20.1-alt-at-MM_Unix-shabang.patch
+Patch06: perl-5.20.1-alt-at-Storable-no-early-dep-on-Log-Agent.patch
+Patch07: perl-5.20.1-alt-at-debian-Errno_pm.patch
+Patch08: perl-5.20.1-alt-at-disable-Cpan-Meta-under-rpm.patch
+Patch09: perl-5.20.1-alt-at-libperl-soname.patch
+Patch10: perl-5.20.1-alt-at-no-rpath-for-std-libs.patch
+Patch11: perl-5.20.1-alt-at-perl5db-findreq-cleanup.patch
+Patch12: perl-5.20.1-alt-at-perlbug-findreq-cleanup.patch
+Patch13: perl-5.20.1-alt-at-skip-deprecation-warning.patch
+Patch14: perl-5.20.1-alt-crux-Cwd-use-realpath.patch
+# or hsh with --mountpoints=/proc
+Patch15: perl-5.20.1-alt-crux-fix-test-without-proc.patch
+Patch16: perl-5.20.1-alt-ldv-support-for-alt-gcc-wrapper.patch
+
+# or just drop the tests from the test suite, as we exclude IO-Socket-IP anyway
+Patch30: perl-IO-Socket-IP-0.31-alt1.patch
 
 # there's a problem with strict.pm
 %add_findreq_skiplist */strict.pm
@@ -132,7 +152,27 @@ equivalent text will have identical binary representations.
 
 %prep
 %setup -q
-%patch -p1
+%patch01 -p1
+%patch02 -p1
+%patch03 -p1
+%patch04 -p1
+%patch05 -p1
+%patch06 -p1
+%patch07 -p1
+%patch08 -p1
+%patch09 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+
+pushd cpan/IO-Socket-IP
+%patch30 -p1
+popd
+
 
 %build
 %define ver %(v=%version IFS=.; set $v; echo $1.$2)
@@ -153,7 +193,7 @@ sh Configure -ders \
 	-Dotherlibdirs=/etc/perl5:/usr/lib/perl5/vendor_perl \
 	-Dinc_version_list=none \
 	-Dpager='%_bindir/less -isR' \
-	-Dman1dir=none -Dman3dir=none \
+	-Dman1dir=%_man1dir -Dman3dir=none \
 	-Dcf_by='%vendor' -Dcf_email='%packager' \
 	-Dmyhostname=localhost -Dperladmin=root@localhost
 
@@ -198,12 +238,10 @@ mv %buildroot{%archlib,%privlib}/Config.pod
 mv %buildroot{%archlib,%privlib}/POSIX.pod
 
 # cleanup modules which we package separately
-rm %buildroot%privlib/Archive/Extract.pm
 rm -r %buildroot%privlib/Archive/Tar* %buildroot%_bindir/ptar*
 rm -r %buildroot%privlib/autodie* %buildroot%privlib/Fatal.pm
 rm -r %buildroot%privlib/Attribute/Handlers*
 rm %buildroot%privlib/B/Debug.pm
-rm -r %buildroot%privlib/B/Lint*
 rm -r %buildroot%privlib/CGI*
 rm -r %buildroot%privlib/CPAN* %buildroot%privlib/App/Cpan.pm %buildroot%_bindir/cpan*
 rm -r %buildroot{%privlib,%archlib,%autolib}/Compress
@@ -212,9 +250,9 @@ rm -r %buildroot{%archlib,%autolib}/Digest/SHA* %buildroot%_bindir/shasum
 rm -r %buildroot{%privlib,%archlib,%autolib}/Encode*
 rm %buildroot%archlib/encoding.pm %buildroot%_bindir/{enc2xs,piconv}
 rm %buildroot%privlib/encoding/warnings.pm
+rm %buildroot%privlib/experimental.pm
 rm -r %buildroot%privlib/ExtUtils/CBuilder*
 rm -r %buildroot%privlib/Filter*
-rm %buildroot%privlib/File/CheckTree.pm
 rm %buildroot%privlib/File/Fetch.pm
 rm -r %buildroot{%archlib,%autolib}/Filter*
 rm %buildroot%privlib/HTTP/Tiny.pm
@@ -222,30 +260,26 @@ rm -r %buildroot%privlib/JSON* %buildroot%_bindir/json*
 rm -r %buildroot%privlib/I18N/LangTags*
 rm %buildroot%privlib/I18N/Collate.pm
 rm -r %buildroot%privlib/IO/{Compress,Uncompress} %buildroot%privlib/File/GlobMapper.pm
+rm %buildroot%privlib/IO/Socket/IP.pm
 rm -r %buildroot%privlib/IO/Zlib.pm
 rm %buildroot%privlib/IPC/Cmd.pm
 rm -r %buildroot{%archlib,%autolib}/IPC/SysV* %buildroot%archlib/IPC/{Msg,Semaphore,SharedMem}.pm
 find %buildroot%privlib/Net/* -not -name '*ent.*' -print -delete
 rm %buildroot%_bindir/libnetcfg
 rm -r %buildroot%privlib/Locale
-rm -r %buildroot%privlib/Log/Message*
 rm -r %buildroot{%privlib,%archlib,%autolib}/Math/Big* %buildroot%privlib/big*.pm
 rm -r %buildroot%privlib/Math/{Complex,Trig}.pm
 rm -r %buildroot%privlib/Memoize*
 rm -r %buildroot%privlib/Module/Build* %buildroot%privlib/inc %buildroot%_bindir/config_data
 rm -r %buildroot%privlib/Module/Load*
-rm -r %buildroot%privlib/Module/Pluggable* %buildroot%privlib/Devel/InnerPackage.pm
 rm -r %buildroot%privlib/Module/CoreList* %buildroot%_bindir/corelist
 rm %buildroot%privlib/Module/Metadata.pm
 rm %buildroot%privlib/NEXT.pm
-rm %buildroot%privlib/Object/Accessor.pm
 rm %buildroot%privlib/Package/Constants.pm
 rm %buildroot%privlib/Params/Check.pm
-rm %buildroot%privlib/parent.pm
 rm %buildroot%privlib/Parse/CPAN/Meta.pm
 rm %buildroot%privlib/Perl/OSType.pm
 rm %buildroot%privlib/Pod/Escapes.pm
-rm %buildroot%privlib/Pod/LaTeX.pm %buildroot%_bindir/pod2latex
 rm %buildroot%privlib/Pod/{Checker,Find,InputObjects,ParseUtils,Parser,PlainText,Select,Usage}.pm
 rm %buildroot%_bindir/{pod2usage,podchecker,podselect}
 rm -r %buildroot%privlib/Pod/{Man,ParseLink,Text}*
@@ -255,9 +289,7 @@ rm -r %buildroot%privlib/Pod/Simple*
 rm %buildroot%privlib/Term/ANSIColor.pm
 rm %buildroot%privlib/Term/Cap.pm
 rm %buildroot%privlib/Term/ReadLine.pm
-rm -r %buildroot%privlib/Term/UI*
 rm -r %buildroot%privlib/Text/Balanced*
-rm -r %buildroot{%archlib,%autolib}/Text/Soundex*
 rm %buildroot%privlib/Tie/File.pm
 rm %buildroot%privlib/Tie/RefHash.pm
 rm -r %buildroot{%archlib,%autolib}/Time/Piece* %buildroot%archlib/Time/Seconds.pm
@@ -331,6 +363,8 @@ EOF
 	%privlib/version.pm
 %doc	%privlib/version.pod
 %dir	%privlib/version
+	%privlib/version/regex.pm
+	%privlib/version/vpp.pm
 %doc	%privlib/version/Internals.pod
 	%privlib/vmsish.pm
 	%privlib/warnings*
@@ -366,12 +400,9 @@ EOF
 %dir	%privlib/unicore/lib
 %dir	%privlib/unicore/lib/Alpha
 	%privlib/unicore/lib/Alpha/Y.pl
-%dir	%privlib/unicore/lib/Blk
-	%privlib/unicore/lib/Blk/ASCII.pl
 %dir	%privlib/unicore/lib/Cased
 	%privlib/unicore/lib/Cased/Y.pl
 %dir	%privlib/unicore/lib/Gc
-	%privlib/unicore/lib/Gc/Cc.pl
 	%privlib/unicore/lib/Gc/Nd.pl
 	%privlib/unicore/lib/Gc/P.pl
 %dir	%privlib/unicore/lib/Hex
@@ -387,7 +418,6 @@ EOF
 	%privlib/unicore/lib/Perl/Blank.pl
 	%privlib/unicore/lib/Perl/Graph.pl
 	%privlib/unicore/lib/Perl/Print.pl
-	%privlib/unicore/lib/Perl/SpacePer.pl
 	%privlib/unicore/lib/Perl/Word.pl
 %dir	%privlib/unicore/lib/Upper
 	%privlib/unicore/lib/Upper/Y.pl
@@ -533,6 +563,8 @@ EOF
 	%privlib/Term/Complete.pm
 %dir	%privlib/User
 	%privlib/User/*ent.pm
+# in separate package perl-parent; required in buildroot for tests
+%exclude %privlib/parent.pm
 
 %files	devel
 	%_bindir/a2p
@@ -648,9 +680,7 @@ EOF
 	%privlib/unicore/lib/
 
 %exclude %privlib/unicore/lib/Alpha/Y.pl
-%exclude %privlib/unicore/lib/Blk/ASCII.pl
 %exclude %privlib/unicore/lib/Cased/Y.pl
-%exclude %privlib/unicore/lib/Gc/Cc.pl
 %exclude %privlib/unicore/lib/Gc/Nd.pl
 %exclude %privlib/unicore/lib/Gc/P.pl
 %exclude %privlib/unicore/lib/Hex/Y.pl
@@ -662,7 +692,6 @@ EOF
 %exclude %privlib/unicore/lib/Perl/Blank.pl
 %exclude %privlib/unicore/lib/Perl/Graph.pl
 %exclude %privlib/unicore/lib/Perl/Print.pl
-%exclude %privlib/unicore/lib/Perl/SpacePer.pl
 %exclude %privlib/unicore/lib/Perl/Word.pl
 %exclude %privlib/unicore/lib/Upper/Y.pl
 	%privlib/unicore/To/
@@ -706,6 +735,9 @@ EOF
 	%autolib/Unicode/Normalize
 
 %changelog
+* Fri Nov 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.20.1-alt1
+- 5.18.2 -> 5.20.1
+
 * Wed Jan 08 2014 Vladimir Lettiev <crux@altlinux.ru> 1:5.18.2-alt1
 - 5.18.1 -> 5.18.2
 

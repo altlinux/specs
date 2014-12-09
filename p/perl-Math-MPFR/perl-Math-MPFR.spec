@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 3.23
-Release: alt1
+Release: alt1.1
 Summary: perl interface to the MPFR (floating point) library..
 Group: Development/Perl
 License: perl
@@ -41,6 +41,9 @@ A bigfloat module utilising the MPFR library. Basically.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 3.23-alt1.1
+- rebuild with new perl 5.20.1
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 3.23-alt1
 - automated CPAN update
 

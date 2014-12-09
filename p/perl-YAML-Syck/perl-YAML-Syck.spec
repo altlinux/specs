@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.27
-Release: alt2
+Release: alt2.1
 
 Summary: Fast, lightweight YAML loader and dumper
 License: MIT
@@ -35,6 +35,9 @@ structures to YAML strings, and the other way around.
 %perl_vendor_autolib/YAML
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.27-alt2.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.27-alt2
 - built for perl 5.18
 

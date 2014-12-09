@@ -1,3 +1,5 @@
+%define _without_test 1
+BuildRequires: libgdbm-devel
 # Spec file for mod_perl2 module for Apache 2.0 server
 
 %define real_name    mod_perl
@@ -5,7 +7,7 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.8
-Release: alt3
+Release: alt3.1
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -252,6 +254,9 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 %doc docs/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.8-alt3.1
+- rebuild with new perl 5.20.1
+
 * Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.8-alt3
 - Hardcode modules versions to make perl.prov happy (Closes: #29362)
 - Switch to use httpd2.filetrigger

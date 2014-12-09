@@ -1,7 +1,7 @@
 %define dist Sane
 Name: perl-%dist
 Version: 0.05
-Release: alt3
+Release: alt3.1
 
 Summary: Perl extension for the SANE (Scanner Access Now Easy) Project
 
@@ -35,6 +35,9 @@ yet remaining very close in spirit to original API.
 %perl_vendor_autolib/Sane
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt3.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.05-alt3
 - built for perl 5.18
 

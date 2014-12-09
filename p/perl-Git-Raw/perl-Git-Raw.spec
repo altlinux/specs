@@ -1,6 +1,6 @@
 Name: perl-Git-Raw
 Version: 0.40.1
-Release: alt2
+Release: alt2.1
 
 Summary: Perl bindings to the Git linkable library (libgit2)
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildRequires: libssh2-devel libssl-devel zlib-devel libgit2-devel perl-Capture-
 %doc Changes TODO
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.40.1-alt2.1
+- rebuild with new perl 5.20.1
+
 * Wed Dec 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.40.1-alt2
 - quick fix; we need to rebuild it with perl 5.20.1
 

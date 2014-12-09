@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.14
-Release: alt2
+Release: alt2.1
 Summary: Lightweight field hash for inside-out objects
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ Source0: http://cpan.org.ua/authors/id/G/GF/GFUJI/%module_name-%module_version.t
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2.1
+- rebuild with new perl 5.20.1
+
 * Wed Dec 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2
 - uploaded to Sisyphus as Scalar-Does deep dependency
 

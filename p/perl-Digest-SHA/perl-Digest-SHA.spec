@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 5.93
-Release: alt1
+Release: alt1.1
 
 Summary: Perl extension for SHA-1/224/256/384/512
 License: Perl
@@ -38,6 +38,9 @@ module can handle all types of input, including partial-byte data.
 %_man1dir/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 5.93-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 5.93-alt1
 - automated CPAN update
 

@@ -1,6 +1,6 @@
 Name: perl-Devel-CallChecker
 Version: 0.006
-Release: alt1
+Release: alt1.1
 
 Summary: custom op checking attached to subroutines
 Group: Development/Perl
@@ -29,6 +29,9 @@ BuildRequires: perl(parent.pm) perl-devel perl(DynaLoader/Functions.pm) perl(Mod
 %doc Changes README
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1.1
+- rebuild with new perl 5.20.1
+
 * Fri Dec 06 2013 Vladimir Lettiev <crux@altlinux.ru> 0.006-alt1
 - initial build for ALTLinux
 

@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.0603
-Release: alt1
+Release: alt1.1
 Summary: subroutine definitions with parameter lists
 Group: Development/Perl
 License: perl
@@ -41,6 +41,9 @@ rm t/unicode*.t
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.0603-alt1.1
+- rebuild with new perl 5.20.1
+
 * Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0603-alt1
 - automated CPAN update
 

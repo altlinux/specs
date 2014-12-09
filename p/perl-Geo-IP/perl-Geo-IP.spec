@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.43
-Release: alt1
+Release: alt1.1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -42,6 +42,9 @@ find lib/ example/ -type f -print0 | xargs -r0 %__subst -p 's./usr/local/share/G
 %perl_vendor_autolib/Geo
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.43-alt1.1
+- rebuild with new perl 5.20.1
+
 * Tue Jun 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.43-alt1
 - automated CPAN update
 

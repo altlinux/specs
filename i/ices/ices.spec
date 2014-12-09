@@ -1,6 +1,6 @@
 Name: ices
 Version: 0.4
-Release: alt6
+Release: alt6.1
 
 Summary: Ices - sourcer for use with Icecast daemon.
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
@@ -60,6 +60,9 @@ find %buildroot{%_sysconfdir,%_libdir}/%name -type f -name '*.dist' |\
 %_man1dir/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt6.1
+- rebuild with new perl 5.20.1
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 0.4-alt6
 - built for perl 5.18
 

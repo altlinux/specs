@@ -2,7 +2,7 @@
 %define dist Gtk-Perl
 Name: perl-GTK
 Version: 0.7010
-Release: alt1
+Release: alt1.1
 
 Summary: Perl module for the GTK+ 1.2 library
 License: GPL or Artistic
@@ -77,6 +77,9 @@ rm -r %buildroot%perl_vendor_archlib/Gtk/Install
 	%perl_vendor_autolib/Gtk
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.7010-alt1.1
+- rebuild with new perl 5.20.1
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.7010-alt1
 - automated CPAN update
 

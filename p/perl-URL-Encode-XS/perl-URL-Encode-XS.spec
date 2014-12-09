@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.03
-Release: alt1
+Release: alt1.1
 Summary: XS implementation of URL::Encode
 Group: Development/Perl
 License: perl
@@ -36,6 +36,9 @@ can find it. Do not use this package directly, use the URL::Encode manpage inste
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Feb 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - automated CPAN update
 

@@ -1,7 +1,7 @@
 %define dist Devel-Mallinfo
 Name: perl-%dist
 Version: 13
-Release: alt1
+Release: alt1.1
 
 Summary: Get mallinfo() malloc memory stats
 License: GPLv3
@@ -34,6 +34,9 @@ any libraries are using from malloc().
 %perl_vendor_autolib/Devel
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 13-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 13-alt1
 - automated CPAN update
 

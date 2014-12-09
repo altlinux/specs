@@ -3,7 +3,7 @@
 %define dist DateTime
 Name: perl-%dist
 Version: 1.10
-Release: alt2
+Release: alt2.1
 
 Summary: DateTime base objects
 License: GPL or Artistic
@@ -46,6 +46,9 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2.1
+- rebuild with new perl 5.20.1
+
 * Wed Dec 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2
 - added bootstrap support
 - bootstrap build for perl-5.20.1 update

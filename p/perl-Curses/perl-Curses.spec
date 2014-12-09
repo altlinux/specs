@@ -2,7 +2,7 @@
 %define dist Curses
 Name: perl-%dist
 Version: 1.32
-Release: alt1
+Release: alt1.1
 
 Summary: Terminal screen handling and optimization
 License: GPL or Artistic
@@ -41,6 +41,9 @@ perl -Mblib -MCurses -e1
 %perl_vendor_autolib/Curses*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1.1
+- rebuild with new perl 5.20.1
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
 - automated CPAN update
 

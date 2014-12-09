@@ -1,7 +1,7 @@
 %define dist IO-Interface
 Name: perl-%dist
 Version: 1.07
-Release: alt1
+Release: alt1.1
 
 Summary: extention for IO::Socket
 License: GPL or Artistic
@@ -36,6 +36,9 @@ as the ability to multicast.
 %perl_vendor_autolib/IO
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1.1
+- rebuild with new perl 5.20.1
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
 - automated CPAN update
 

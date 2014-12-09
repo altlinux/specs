@@ -1,7 +1,7 @@
 %define dist Text-CHM
 Name: perl-%dist
 Version: 0.01
-Release: alt4
+Release: alt4.1
 
 Summary: Perl module for handling Compiled HtmlHelp Files (.chm)
 License: GPL or Artistic
@@ -39,6 +39,9 @@ support is available.
 %perl_vendor_archlib/Text
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.01-alt4.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.01-alt4
 - built for perl 5.18
 

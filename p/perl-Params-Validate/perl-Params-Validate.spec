@@ -2,7 +2,7 @@
 %define dist Params-Validate
 Name: perl-%dist
 Version: 1.13
-Release: alt1
+Release: alt1.1
 
 Summary: Validate method/function parameters
 License: GPL or Artistic
@@ -38,6 +38,9 @@ and that no unspecified additional parameters were passed in.
 %perl_vendor_archlib/Attribute
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1.1
+- rebuild with new perl 5.20.1
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
 - automated CPAN update
 

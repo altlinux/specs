@@ -1,7 +1,7 @@
 %define dist qa-cache
 Name: perl-%dist
 Version: 0.11
-Release: alt4
+Release: alt4.1
 
 Summary: Simple and efficient cache for memoization
 License: GPL or Artistic
@@ -31,6 +31,9 @@ qa::memoize implements caching for file processing routines.
 %perl_vendor_autolib/qa
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt4.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.11-alt4
 - built for perl 5.18
 

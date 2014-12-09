@@ -4,7 +4,7 @@ BuildRequires: perl(DynaLoader.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-Libm
 Version:        1.00
-Release:        alt3_12
+Release:        alt3_12.1
 Summary:        Perl extension for the C math library, libm
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_12.1
+- rebuild with new perl 5.20.1
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_12
 - update to new release by fcimport
 

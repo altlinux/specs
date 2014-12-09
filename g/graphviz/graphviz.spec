@@ -8,7 +8,7 @@
 
 Name: graphviz
 Version: 2.38.0
-Release: alt1
+Release: alt1.1
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -314,6 +314,9 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 # - enable/fix/test language bindings
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.38.0-alt1.1
+- rebuild with new perl 5.20.1
+
 * Wed Apr 23 2014 Michael Shigorin <mike@altlinux.org> 2.38.0-alt1
 - 2.38.0
 - moved tcl bindings into arch-independent prefix (closes: #21967)

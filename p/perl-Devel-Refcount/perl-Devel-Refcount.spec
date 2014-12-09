@@ -4,7 +4,7 @@ BuildRequires: perl(B.pm) perl(Exporter.pm) perl(Module/Build/Compat.pm) perl(Sc
 # END SourceDeps(oneline)
 Name:           perl-Devel-Refcount
 Version:        0.10
-Release:        alt3_6
+Release:        alt3_6.1
 Summary:        Obtain the REFCNT value of a referent
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -46,6 +46,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Devel*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_6.1
+- rebuild with new perl 5.20.1
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_6
 - update to new release by fcimport
 

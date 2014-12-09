@@ -1,7 +1,7 @@
 %define dist Encode-JIS2K
 Name: perl-%dist
 Version: 0.02
-Release: alt4
+Release: alt4.1
 
 Summary: JIS X 0212 (aka JIS 2000) encodings
 License: GPL or Artistic
@@ -33,6 +33,9 @@ jis0213-1-raw, jis0213-2-raw.
 %perl_vendor_autolib/Encode
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.02-alt4.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.02-alt4
 - built for perl 5.18
 

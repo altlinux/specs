@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.023
-Release: alt1
+Release: alt1.1
 
 Summary: Safe cleanup blocks for Perl
 License: Perl
@@ -33,6 +33,9 @@ object) that "guards" a resource, ensuring that it is cleaned up when expected.
 %perl_vendor_autolib/Guard
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.023-alt1.1
+- rebuild with new perl 5.20.1
+
 * Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.023-alt1
 - automated CPAN update
 

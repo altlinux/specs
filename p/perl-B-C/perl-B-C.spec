@@ -1,6 +1,6 @@
 Name: perl-B-C
 Version: 1.47
-Release: alt1
+Release: alt1.1
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -38,6 +38,9 @@ done
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.47-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 1.47-alt1
 - automated CPAN update
 

@@ -1,7 +1,7 @@
 %define dist Params-Util
 Name: perl-%dist
 Version: 1.07
-Release: alt2
+Release: alt2.1
 
 Summary: Simple standalone param-checking functions
 License: GPL or Artistic
@@ -32,6 +32,9 @@ checking parameters a hell of a lot easier.
 %perl_vendor_autolib/Params
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt2.1
+- rebuild with new perl 5.20.1
+
 * Sun Aug 25 2013 Vladimir Lettiev <crux@altlinux.ru> 1.07-alt2
 - built for perl 5.18
 

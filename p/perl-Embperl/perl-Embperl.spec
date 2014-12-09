@@ -2,7 +2,7 @@
 %define dist Embperl
 Name: perl-%dist
 Version: 2.5.0
-Release: alt2
+Release: alt2.1
 
 Summary: Building dynamic Websites with Perl
 License: GPL
@@ -59,6 +59,9 @@ rm -f %buildroot%perl_vendor_autolib/Embperl/Embperl.bs
 %perl_vendor_autolib/Embperl
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt2.1
+- rebuild with new perl 5.20.1
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt2
 - preparation for perl 5.20.1
 

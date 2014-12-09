@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.39
-Release: alt4
+Release: alt4.1
 
 Summary: Perl extension for explode MIME messages
 License: Perl
@@ -35,6 +35,9 @@ the attached files out of a MIME encoded email messages or mailboxes.
 %perl_vendor_autolib/MIME
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.39-alt4.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.39-alt4
 - built for perl 5.18
 

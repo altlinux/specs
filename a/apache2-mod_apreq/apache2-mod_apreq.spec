@@ -2,7 +2,7 @@
 
 Name:    apache2-mod_apreq
 Version: 2.13
-Release: alt5
+Release: alt5.1
 
 Summary: Apache2 HTTP request library
 License: %asl 2.0
@@ -173,6 +173,9 @@ rm -f %buildroot%_man3dir/todo*
 %perl_vendor_archlib/Apache2*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.13-alt5.1
+- rebuild with new perl 5.20.1
+
 * Thu Oct 02 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.13-alt5
 - Removing paths to buildroot from perl module
 

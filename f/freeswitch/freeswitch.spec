@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.5.13
-Release: alt2
+Release: alt2.1
 
 Summary: FreeSWITCH open source telephony platform
 License: MPL
@@ -680,6 +680,9 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.13-alt2.1
+- rebuild with new perl 5.20.1
+
 * Tue Nov 18 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.13-alt2
 - rebuilt with recent libsoundtouch
 

@@ -1,7 +1,7 @@
 %define dist Newt
 Name: perl-%dist
 Version: 1.08
-Release: alt4
+Release: alt4.1
 
 Summary: Perl bindings for the Newt library
 License: GPL or Artistic
@@ -49,6 +49,9 @@ rm -rf newtlib
 %perl_vendor_autolib/Newt
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.08-alt4.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.08-alt4
 - built for perl 5.18
 

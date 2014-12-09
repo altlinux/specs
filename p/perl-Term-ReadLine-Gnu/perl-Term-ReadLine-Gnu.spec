@@ -1,7 +1,7 @@
 %define dist Term-ReadLine-Gnu
 Name: perl-%dist
 Version: 1.20
-Release: alt3
+Release: alt3.1
 
 Summary: Perl interface to the GNU Readline library
 License: GPL or Artistic
@@ -36,6 +36,9 @@ input history management facility, word completion facility, etc.
 %perl_vendor_autolib/Term
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.20-alt3.1
+- rebuild with new perl 5.20.1
+
 * Thu Aug 22 2013 Vladimir Lettiev <crux@altlinux.ru> 1.20-alt3
 - built for perl 5.18
 

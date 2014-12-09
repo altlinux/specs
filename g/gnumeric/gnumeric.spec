@@ -12,7 +12,7 @@
 
 Name: gnumeric
 Version: %ver_major.18
-Release: alt1
+Release: alt1.1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -180,6 +180,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.12.18-alt1.1
+- rebuild with new perl 5.20.1
+
 * Fri Sep 26 2014 Yuri N. Sedunov <aris@altlinux.org> 1.12.18-alt1
 - 1.12.18
 - added strict dependency to latest libgnomeoffice (ALT #30170)

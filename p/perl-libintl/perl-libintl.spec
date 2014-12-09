@@ -1,7 +1,7 @@
 %define dist libintl-perl
 Name: perl-libintl
 Version: 1.23
-Release: alt1
+Release: alt1.1
 
 Summary: High-Level Interface to Uniforum Message Translation
 License: LGPL or Artistic
@@ -44,6 +44,9 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 	%perl_vendor_autolib/Locale
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.23-alt1
 - 1.20 -> 1.23
 - search path patch merged upstream

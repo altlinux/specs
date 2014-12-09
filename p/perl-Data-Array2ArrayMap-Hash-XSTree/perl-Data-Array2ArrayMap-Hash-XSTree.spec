@@ -7,7 +7,7 @@
 
 Name: perl-%module
 Version: 0.13
-Release: alt4
+Release: alt4.1
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -38,6 +38,9 @@ mv t/test_Hash.t t/test_Hash.t.failed
 %perl_vendor_autolib/Data
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.13-alt4.1
+- rebuild with new perl 5.20.1
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.13-alt4
 - built for perl 5.18
 - temporary disabled failed test

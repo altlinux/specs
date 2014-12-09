@@ -2,7 +2,7 @@
 
 Name: irssi
 Version: 0.8.15
-Release: alt5
+Release: alt5.1
 
 Summary: Irssi is an IRC client
 License: GPL
@@ -127,6 +127,9 @@ mv AUTHORS ChangeLog.bz2 README TODO NEWS %buildroot%_docdir/%name-%version
 %_includedir/irssi
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.15-alt5.1
+- rebuild with new perl 5.20.1
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 0.8.15-alt5
 - built for perl 5.18
 

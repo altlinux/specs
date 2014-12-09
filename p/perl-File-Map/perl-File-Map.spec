@@ -6,7 +6,7 @@ BuildRequires: perl(Config.pm) perl(IPC/Open3.pm) perl(open.pm) perl(subs.pm) pe
 # END SourceDeps(oneline)
 Name:           perl-File-Map
 Version:        0.63
-Release:        alt1
+Release:        alt1.1
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
@@ -71,6 +71,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Sep 15 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1
 - automated CPAN update
 

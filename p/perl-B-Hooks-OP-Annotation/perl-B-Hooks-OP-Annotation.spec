@@ -1,7 +1,7 @@
 %define dist B-Hooks-OP-Annotation
 Name: perl-%dist
 Version: 0.44
-Release: alt4
+Release: alt4.1
 
 Summary: Annotate and delegate hooked OPs
 License: Perl
@@ -33,6 +33,9 @@ whether assigned by perl or by another module.
 %perl_vendor_autolib/B
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.44-alt4.1
+- rebuild with new perl 5.20.1
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.44-alt4
 - built for perl 5.18
 
