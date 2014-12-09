@@ -2,7 +2,7 @@
 %define dist Embperl
 Name: perl-%dist
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: Building dynamic Websites with Perl
 License: GPL
@@ -41,8 +41,9 @@ make test TESTARGS='-o'
 %install
 %perl_vendor_install 
 
+# TODO: killme: this file is not created with perl >= 5.20.1
 # XXX brp-cleanup fails on this file
-rm %buildroot%perl_vendor_autolib/Embperl/Embperl.bs
+rm -f %buildroot%perl_vendor_autolib/Embperl/Embperl.bs
 
 # used only with apache
 %add_findreq_skiplist */Embperl/Session.pm
@@ -58,6 +59,9 @@ rm %buildroot%perl_vendor_autolib/Embperl/Embperl.bs
 %perl_vendor_autolib/Embperl
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt2
+- preparation for perl 5.20.1
+
 * Tue Apr 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1
 - automated CPAN update
 
