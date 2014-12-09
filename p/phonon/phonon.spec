@@ -1,7 +1,7 @@
 %def_disable zeitgeist
 
 Name: phonon
-Version: 4.8.2
+Version: 4.8.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -18,8 +18,8 @@ Patch101: alt-fix-install.patch
 #BuildRequires: glib2-devel gstreamer-devel gst-plugins-devel
 #BuildRequires: libbfd-devel libxml2-devel
 BuildRequires(pre): libqt4-devel
-BuildRequires: ImageMagick-tools automoc cmake gcc-c++
-BuildRequires: libalsa-devel libpulseaudio-devel gst-plugins-devel
+BuildRequires: automoc cmake gcc-c++
+BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: kde-common-devel
 %if_enabled zeitgeist
 BuildRequires: libqzeitgeist-devel
@@ -99,6 +99,9 @@ mkdir -p %buildroot/%_qt4dir/plugins/phonon_backend
 %_K4dbus_interfaces/org.kde.Phonon.AudioOutput.xml
 
 %changelog
+* Tue Dec 09 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt1
+- new version
+
 * Wed Nov 26 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt1
 - new version
 
