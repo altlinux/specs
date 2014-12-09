@@ -1,29 +1,33 @@
+%define ver_major 1.6
+
 Name: darktable
-Version: 1.4.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPLv3
 Group: Graphics
 
 Url: http://%name.sourceforge.net/
+#VCS: https://github.com/darktable-org/darktable.git
+#Source: %name-%version.tar
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.xz
-Patch: %name-1.4-alt-lfs.patch
 
-# For gconf_schemasdir definition:
 BuildPreReq: rpm-build-gnome
-
 BuildRequires: libgio-devel >= 2.30 libgtk+2-devel >= 2.24
 BuildRequires: cmake gcc-c++ intltool libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel
 BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
-BuildRequires: libdbus-glib-devel libexiv2-devel libflickcurl-devel libgnome-keyring-devel
+BuildRequires: libdbus-glib-devel libexiv2-devel libflickcurl-devel libsecret-devel
 BuildRequires: libgomp-devel libgphoto2-devel libjpeg-devel liblcms2-devel liblensfun-devel
 BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel libxkbfile-devel lsb-release
 BuildRequires: openexr-devel perl-Pod-Parser
 BuildRequires: libjson-glib-devel libsoup-devel xsltproc libpixman-devel libexpat-devel
 BuildRequires: libcolord-gtk-devel libudev-devel
 BuildRequires: libGraphicsMagick-c++-devel libopenjpeg-devel
+BuildRequires: libharfbuzz-devel libwebp-devel libxshmfence-devel
+# for build from git tree
+#BuildRequires: gnome-doc-utils fop saxon ...
 
 %description
 darktable is a virtual light table and darkroom for photographers. It manages
@@ -32,16 +36,16 @@ light table. It also enables you to develop raw images and enhance them.
 
 %prep
 %setup
-%patch -p1
 
 %build
-%cmake -DCMAKE_SKIP_RPATH:BOOL=OFF
+%cmake -DCMAKE_SKIP_RPATH:BOOL=OFF \
+-DCMAKE_BUILD_TYPE=Release
 %cmake_build VERBOSE=1
 
 %install
 %cmakeinstall_std
 
-ln -s %name/libdarktable.so %buildroot%_libdir/libdarktable.so
+ln -s %name/lib%name.so %buildroot%_libdir/lib%name.so
 
 install -pD -m644 data/pixmaps/16x16/darktable.png %buildroot%_miconsdir/darktable.png
 install -pD -m644 data/pixmaps/32x32/darktable.png %buildroot%_niconsdir/darktable.png
@@ -51,16 +55,19 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 
 %files -f %name.lang
 %_bindir/*
-%_datadir/darktable
-%_libdir/libdarktable.so
-%_libdir/darktable/
+%_datadir/%name/
+%_libdir/lib%name.so
+%_libdir/%name/
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*
 %_datadir/appdata/%name.appdata.xml
-%exclude /usr/share/doc/darktable/
+%exclude /usr/share/doc/%name/
 
 %changelog
+* Tue Dec 09 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sun Jun 08 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt2
 - rebuilt against libcolord.so.2
 
