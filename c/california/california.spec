@@ -1,5 +1,5 @@
 %define _name org.yorba.california
-%define ver_major 0.2
+%define ver_major 0.3
 %define api_ver 1.0
 
 Name: california
@@ -11,8 +11,8 @@ License: %lgpl2plus
 Group: Office
 Url: https://wiki.gnome.org/Apps/California
 
-Source: %name-%version.tar
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 
@@ -39,7 +39,7 @@ BuildPreReq: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgnome-online-accounts-gir-devel
 BuildRequires: libical-devel gsettings-desktop-schemas-devel
 BuildRequires: rpm-build-gnome rpm-build-licenses
-BuildRequires: gnome-common intltool yelp-tools
+BuildRequires: gnome-common intltool yelp-tools xdg-utils
 
 %description
 California is a calendar built for GNOME 3. It allows you to view and
@@ -69,6 +69,9 @@ manage your online calendars with a simple and modern interface.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Tue Dec 09 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Wed Oct 01 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - first build for Sisyphus
 
