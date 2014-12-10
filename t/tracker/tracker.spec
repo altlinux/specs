@@ -2,7 +2,7 @@
 %define ver_api 1.0
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
-%set_verify_elf_method relaxed
+%set_verify_elf_method unresolved=relaxed
 
 %def_enable introspection
 %def_disable hal
@@ -49,7 +49,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -384,6 +384,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Wed Dec 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
+- 1.2.5
+
 * Thu Nov 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
