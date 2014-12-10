@@ -1,6 +1,6 @@
 Name: lxqt-common
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: Default configuration files for LXQt desktop session
 License: LGPL
@@ -29,6 +29,7 @@ Obsoletes: razorqt-desktop < 0.7.0
 
 %prep
 %setup
+sed -i 's,^Exec=.*$,Exec=LXQt,' xsession/lxqt.desktop.in
 
 %build
 %cmake_insource
@@ -45,6 +46,9 @@ Obsoletes: razorqt-desktop < 0.7.0
 %_datadir/lxqt/
 
 %changelog
+* Wed Dec 10 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt2
+- tweaked xsession file for runwm compatibility (see runwm --list)
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
