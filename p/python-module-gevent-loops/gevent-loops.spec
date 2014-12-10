@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt1.git20141114
+Version: 0.0.2
+Release: alt1
 Summary: A collection of improved loop classes to use with gevent
 License: MIT
 Group: Development/Python
@@ -76,16 +76,21 @@ popd
 %endif
 
 %files
-%doc *.md
+#doc *.md
+%doc PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md
+#doc *.md
+%doc PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1
+- Version 0.0.2
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20141114
 - Initial build for Sisyphus
 
