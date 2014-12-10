@@ -1,6 +1,6 @@
 Name: accel-ppp
-Version: 1.8.0
-Release: alt6
+Version: 1.9.0
+Release: alt1
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Dec 10 2014 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Tue Dec 09 2014 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt6
 - ipoe: support for kernels 3.16-3.18
 
