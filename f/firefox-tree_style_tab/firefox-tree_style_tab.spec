@@ -3,7 +3,7 @@
 %define ciddir  %firefox_noarch_extensionsdir/%cid
 
 Name: firefox-%rname
-Version: 0.14.2014051101
+Version: 0.15.2014120101
 Release: alt1
 
 Summary: Tree Style Tab extension for Firefox
@@ -11,7 +11,10 @@ License: MPL 1.1/GPL 2.0/LGPL 2.1
 Group: Networking/WWW
 
 Url: https://addons.mozilla.org/en-us/firefox/addon/tree-style-tab/
-Source: https://addons.mozilla.org/firefox/downloads/file/258152/%rname-%version-fx.xpi
+# reviewed
+#Source: https://addons.mozilla.org/firefox/downloads/file/258152/%rname-%version-fx.xpi
+# current
+Source: http://piro.sakura.ne.jp/xul/xpi/treestyletab.xpi
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
@@ -62,5 +65,8 @@ if [ "$1" = 0 ]; then [ ! -d "%ciddir" ] || rm -rf "%ciddir"; fi
 %ciddir
 
 %changelog
+* Wed Dec 10 2014 Michael Shigorin <mike@altlinux.org> 0.15.2014120101-alt1
+- updated for better compatibility with Firefox 34
+
 * Mon May 12 2014 Michael Shigorin <mike@altlinux.org> 0.14.2014051101-alt1
 - built for ALT Linux
