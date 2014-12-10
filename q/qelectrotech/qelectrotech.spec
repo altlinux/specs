@@ -1,5 +1,5 @@
-%global rdate  20130928
-%global upver  0.3
+%global rdate  20141110
+%global upver  0.4rc1
 
 Name:        qelectrotech
 
@@ -17,8 +17,9 @@ Summary(pl): Edytor schematów elektrycznych
 Summary(pt): Um editor de esquemas eléctricos
 Summary(ru): Редактор электрических схем
 
-Version:     0.30
-Release:     alt1
+Version:     0.4
+Release:     alt0.rc1
+Epoch:	     1
 
 Group:       Engineering
 
@@ -178,5 +179,8 @@ cat qet.lang >>qelectrotech.lang
 %_datadir/%name/titleblocks
 
 %changelog
+* Tue Dec 09 2014 Andrey Cherepanov <cas@altlinux.org> 1:0.4-alt0.rc1
+- New version
+
 * Tue Jan 14 2014 Andrey Cherepanov <cas@altlinux.org> 0.30-alt1
 - Import in Sisyphus from Fedora
