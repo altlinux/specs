@@ -1,57 +1,45 @@
-Name: libass
-Version: 0.12.0
-Release: alt1
+Name: libass4
+Version: 0.10.1
+Release: alt2
 Summary: Portable library for SSA/ASS subtitles rendering
 
-Group: System/Libraries
+Group: System/Legacy libraries
 License: BSD
 Url: http://code.google.com/p/libass/
 Source: %name-%version-%release.tar
 
+BuildRequires: gcc-c++
 BuildRequires: libpng-devel libenca-devel fontconfig-devel libfreetype-devel
 BuildRequires: libfribidi-devel libharfbuzz-devel
 
 %description
 libass is portable library for SSA/ASS subtitles rendering.
 
-%package -n libass5
+%package -n libass
 Summary: Portable library for SSA/ASS subtitles rendering
-Group: System/Libraries
+Group: System/Legacy libraries
 
-%package devel
-Summary: Development files for %name
-Group: Development/C++
-Requires: libass5 = %version-%release
-
-%description -n libass5
+%description -n libass
 libass is portable library for SSA/ASS subtitles rendering.
-
-%description devel
-This package contains the headers and libraries for libass development.
 
 %prep
 %setup
 
 %build
 %autoreconf
-%configure --disable-static
+%configure
 %make_build
 
 %install
 %makeinstall
 
-%files -n libass5
+%files -n libass
 %doc COPYING Changelog
 %_libdir/*.so.*
 
-%files devel
-%_includedir/*
-%_libdir/*.so
-%_libdir/pkgconfig/*
-
 %changelog
-* Wed Dec 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.0-alt1
-- 0.12.0 release
+* Wed Dec 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.1-alt2
+- rebuilt as shared library only
 
 * Fri Sep 20 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.1-alt1
 - 0.10.1 release
