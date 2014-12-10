@@ -1,6 +1,7 @@
 Name: libopenobex
-Version: 1.6
+Version: 1.7.1
 Release: alt1
+
 Summary: OpenOBEX - Free implementation of the Object Exchange protocol
 License: LGPL
 Group: System/Libraries
@@ -10,7 +11,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: doxygen libbluez-devel libusb-devel xmlto
+BuildRequires: gcc-c++ cmake libbluez-devel libusb-devel libudev-devel
+BuildRequires: doxygen xmlto
 
 %description
 OpenOBEX - Free implementation of the Object Exchange protocol
@@ -21,35 +23,44 @@ Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
-This package containns development files of Open OBEX library
+This package contains development files of Open OBEX library
+
+%define _pkgdocdir %_docdir/%name-%version
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
-%autoreconf
-%configure \
-	--disable-static
-%make_build
-
-%make html -C doc
+%cmake -DCMAKE_INSTALL_DOCDIR=%_pkgdocdir
+%cmake_build
 
 %install
-%make DESTDIR=%buildroot install
+%cmakeinstall_std
+cp AUTHORS ChangeLog README %buildroot%_pkgdocdir
 
 %files
-%doc AUTHORS ChangeLog
 %_sbindir/obex-check-device
 %_libdir/*.so.*
+%_udevrulesdir/60-openobex.rules
+%doc %_pkgdocdir/AUTHORS
+%doc %_pkgdocdir/ChangeLog
+%doc %_pkgdocdir/README
 
 %files devel
-%doc doc/html/*
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_libdir/cmake/OpenObex-1.7.1/openobex-config-version.cmake
+%_libdir/cmake/OpenObex-1.7.1/openobex-config.cmake
+%_libdir/cmake/OpenObex-1.7.1/openobex-target-release.cmake
+%_libdir/cmake/OpenObex-1.7.1/openobex-target.cmake
+%doc %_pkgdocdir/html/
 
 %changelog
+* Sat Dec 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Thu Aug 09 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.6-alt1
 - 1.6
 

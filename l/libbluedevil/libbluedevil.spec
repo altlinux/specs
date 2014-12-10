@@ -1,8 +1,8 @@
-%define bluedevil_major 1
+%define bluedevil_major 2
 %define libbluedevil libbluedevil%bluedevil_major
 
 Name: libbluedevil
-Version: 1.9.4
+Version: 2.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -12,8 +12,6 @@ License: GPL
 Url: http://www.kde.org
 
 Source: %name-%version.tar
-# ALT
-Patch100: libbluedevil-1.7-alt-fix-install-libdir.patch
 
 # Automatically added by buildreq on Thu Sep 02 2010 (-bi)
 #BuildRequires: cmake gcc-c++ glib2-devel glibc-devel-static libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libqt3-devel libxkbfile-devel qt4-designer
@@ -39,7 +37,6 @@ based on %name .
 
 %prep
 %setup -q
-#%patch100 -p1
 
 %build
 %Kbuild
@@ -56,6 +53,15 @@ based on %name .
 %_pkgconfigdir/bluedevil.pc
 
 %changelog
+* Fri Dec 05 2014 Sergey V Turchin <zerg@altlinux.org> 2.0-alt1
+- 2.0 release
+
+* Mon Dec 02 2013 Sergey V Turchin <zerg@altlinux.org> 2.0-alt0.1
+- blues5 version
+
+* Tue Oct 08 2013 Sergey V Turchin <zerg@altlinux.org> 1.9.4-alt0.M70P.1
+- built for M70P
+
 * Mon Oct 07 2013 Sergey V Turchin <zerg@altlinux.org> 1.9.4-alt1
 - new version
 
