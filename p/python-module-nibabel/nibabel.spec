@@ -6,24 +6,28 @@
 Name: python-module-%oname
 URL:http://niftilib.sf.net/pynifti/
 Summary: Easy access to NIfTI images from within Python
-Version: 1.3.0
-Release: alt4.git20120903
+Version: 2.1.0
+Release: alt1.dev.git20141209
 License: MIT
 Group: Development/Python
 
-# http://anonscm.debian.org/git/pkg-exppsy/pynifti.git
+# https://github.com/nipy/nibabel.git
 Source: %oname-%version.tar.gz
+# https://github.com/yarikoptic/nitest-balls1
+Source1: nitest-balls1.tar
+# git://github.com/matthew-brett/nitest-minc2.git
+Source2: nitest-minc2.tar
 BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: libnumpy-devel liblapack-devel python-module-nose
 BuildRequires: python-devel swig libniftilib-devel zlib-devel
 BuildRequires: gcc-c++ python-module-sphinx-devel python-module-Pygments
-BuildPreReq: python-module-pydicom
+BuildPreReq: python-module-pydicom python-modules-sqlite3
 %setup_python_module %oname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libnumpy-py3-devel
+BuildPreReq: python3-devel libnumpy-py3-devel python3-modules-sqlite3
 %endif
 
 %description
@@ -107,6 +111,11 @@ This package contains pickles for NiBabel.
 
 %prep
 %setup
+
+pushd nibabel-data
+tar -xf %SOURCE1
+tar -xf %SOURCE2
+popd
 
 %if_with python3
 cp -R . ../python3
@@ -206,6 +215,9 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %endif
 
 %changelog
+* Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1.dev.git20141209
+- Version 2.1.0.dev
+
 * Wed Aug 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt4.git20120903
 - Added module for Python 3
 
