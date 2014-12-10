@@ -1,8 +1,8 @@
 %define mname pyannote
 %define oname %mname.parser
 Name: python-module-%oname
-Version: 0.2.4
-Release: alt1.git20141117
+Version: 0.3
+Release: alt1.git20141209
 Summary: PyAnnote parsers
 License: MIT
 Group: Development/Python
@@ -54,6 +54,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20141209
+- Version 0.3
+
 * Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1.git20141117
 - Version 0.2.4
 
