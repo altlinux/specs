@@ -4,7 +4,7 @@
 Name: plplot
 %define fmoddir %_libdir/fortran/modules/%name
 Version: 5.10.0
-Release: alt2.svn20140707
+Release: alt2.svn20140807
 Summary: Scientific graphics plotting library, supporting multiple languages
 License: LGPL v2 or later
 Group: Graphics
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar.gz
 Source1: CMakeCache.txt
 
-BuildPreReq: graphviz cmake swig gcc-fortran python-devel
+BuildPreReq: graphviz cmake swig gcc-fortran python-devel libgtk+3-devel
 BuildPreReq: gcc-c++ libltdl7-devel libfreetype-devel libqhull-devel
 BuildPreReq: libncurses-devel libgd2-devel tcl-devel tk-devel
 BuildPreReq: python-module-pygtk-devel libnumpy-devel libgnomeui-devel
@@ -317,6 +317,9 @@ sed -i 's|@INCDIR@|%buildroot%_includedir/plplot|' \
 	examples/tk/Makefile.examples.in
 sed -i 's|@LIBDIR@|%buildroot%_libdir|' \
 	examples/tk/Makefile.examples.in
+%ifarch x86_64
+sed -i 's|lib/|%_lib/|g' CMakeCache.txt
+%endif
 
 %if_with python3
 rm -rf ../python3
@@ -337,6 +340,7 @@ xvfb-run --server-args="-screen 0 1024x768x24" \
 	-DPYTHON_LIBRARY:FILEPATH=%_libdir/libpython%{_python3_version}mu.so \
 	.
 
+exit 1
 %make_build VERBOSE=1
 popd
 %endif
@@ -593,6 +597,9 @@ cp -fR doc/doxygen/html doxygen
 %_pkgconfigdir/plplotd-wxwidgets.pc
 
 %changelog
+* Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.0-alt2.svn20140807
+- New snapshot
+
 * Tue Oct 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.0-alt2.svn20140707
 - plplot-lua: added requirement on lua5.1-alt-compat (ALT #30379)
 
