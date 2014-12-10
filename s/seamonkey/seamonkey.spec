@@ -14,7 +14,7 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.30
+Version: 2.31
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -25,7 +25,7 @@ Packager:   Andrey Cherepanov <cas@altlinux.org>
 
 Url: http://www.mozilla.org/projects/seamonkey/
 
-Source0:	%name-source.tar
+Source0:	%name-%version.source.tar.bz2
 Source2:	mozilla-searchplugins.tar
 Source3:	seamonkey-alt-browser.desktop
 Source4:	seamonkey-alt-mail.desktop
@@ -143,7 +143,7 @@ seamonkey packages by some Alt Linux Team Policy compatible way.
 
 %prep
 %setup -q -n %name-%version -c
-cd mozilla
+cd comm-release
 
 ### Moved enigmail to mailnews
 %if_with enigmail
@@ -177,7 +177,7 @@ echo 'ac_add_options --enable-calendar' >> .mozconfig
 %endif
 
 %build
-cd mozilla
+cd comm-release
 
 %add_optflags %optflags_shared
 %add_findprov_lib_path %sm_prefix
@@ -235,7 +235,7 @@ cd -
 %endif
 
 %install
-cd mozilla
+cd comm-release
 
 dir="$PWD/objdir"
 
@@ -303,7 +303,7 @@ unzip -q -u -d %buildroot/%enigmail_ciddir -- \
 %if_with lightning
 mkdir -p %buildroot/%lightning_ciddir
 unzip -q -u -d %buildroot/%lightning_ciddir -- \
-    $dir/mozilla/dist/xpi-stage/lightning*.xpi
+    $dir/dist/xpi-stage/lightning*.xpi
 
 rm -f -- %buildroot/%lightning_ciddir/application.ini
 %endif
@@ -398,6 +398,10 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Wed Dec 10 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.31-alt1
+- New version
+- Build from src.rpm contains upstream tarball
+
 * Mon Oct 20 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.30-alt1
 - New version
 
