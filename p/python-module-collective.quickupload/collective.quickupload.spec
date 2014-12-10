@@ -1,8 +1,8 @@
 %define mname collective
 %define oname %mname.quickupload
 Name: python-module-%oname
-Version: 1.6.6
-Release: alt1.dev0.git20140806
+Version: 1.6.7
+Release: alt1.dev0.git20141209
 Summary: Pure javascript files upload tool for Plone
 License: AGPLv3
 Group: Development/Python
@@ -74,6 +74,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.7-alt1.dev0.git20141209
+- Version 1.6.7.dev0
+
 * Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.6-alt1.dev0.git20140806
 - Initial build for Sisyphus
 
