@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 2014.7
-Release: alt2
+Release: alt3
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
@@ -52,6 +52,17 @@ Requires: python-module-salt = %version-%release
 %description minion
 Salt minion is queried and controlled from the master.
 
+%package api
+Summary: API for salt
+Group: System/Configuration/Other
+Requires: python-module-salt = %version-%release
+
+%description api
+salt-api is a modular interface on top of Salt that can provide
+a variety of entry points into a running Salt system. It can start
+and manage multiple interfaces allowing a REST API to coexist
+with XMLRPC or even a Websocket API.
+
 %prep
 %setup
 
@@ -64,11 +75,13 @@ Salt minion is queried and controlled from the master.
 install -D -m 755 pkg/altlinux/salt-master.init %buildroot%_initdir/salt-master
 install -D -m 755 pkg/altlinux/salt-syndic.init %buildroot%_initdir/salt-syndic
 install -D -m 755 pkg/altlinux/salt-minion.init %buildroot%_initdir/salt-minion
+install -D -m 755 pkg/altlinux/salt-api.init %buildroot%_initdir/salt-api
 
 mkdir -p %buildroot%_unitdir
 install -p -m 0644 pkg/salt-master.service %buildroot%_unitdir/
 install -p -m 0644 pkg/salt-syndic.service %buildroot%_unitdir/
 install -p -m 0644 pkg/salt-minion.service %buildroot%_unitdir/
+install -p -m 0644 pkg/salt-api.service %buildroot%_unitdir/
 
 mkdir -p %buildroot%_sysconfdir/salt/
 install -p -m 0640 conf/minion %buildroot%_sysconfdir/salt/minion
@@ -138,7 +151,6 @@ ln -s ../../opennode/cli/actions onode
 %_bindir/salt-key
 %_bindir/salt-run
 %_bindir/salt-ssh
-%_bindir/salt-api
 %_bindir/salt-cloud
 %_bindir/salt-unity
 
@@ -149,9 +161,14 @@ ln -s ../../opennode/cli/actions onode
 %_man1dir/salt-run.1.*
 %_man1dir/salt-syndic.1.*
 %_man1dir/salt-ssh.1.*
-%_man1dir/salt-api.1.*
 %_man1dir/salt-cloud.1.*
 %_man1dir/salt-unity.1.*
+
+%files api
+%_bindir/salt-api
+%_initdir/salt-api
+%_unitdir/salt-api.service
+%_man1dir/salt-api.1.*
 
 %files minion
 %config(noreplace) %dir %_sysconfdir/salt
@@ -170,6 +187,9 @@ ln -s ../../opennode/cli/actions onode
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Wed Dec 10 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2014.7-alt3
+- Add subpackage salt-api
+
 * Mon Nov 03 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2014.7-alt2
 - Fix repocop info symlink-extra-slash
 
