@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.9
+Version: 2.9.10
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,10 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Dec 10 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.10-alt1
+- Update translation for:
+  + alterator-postfix-dovecot
+
 * Wed Nov 26 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.9-alt1
 - Update translation for:
   + alterator-zabbix-server
