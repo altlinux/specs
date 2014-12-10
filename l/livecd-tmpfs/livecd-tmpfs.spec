@@ -1,5 +1,5 @@
 Name: livecd-tmpfs
-Version: 0.1
+Version: 0.1.1
 Release: alt1
 
 Summary: Provide enough tmpfs for hasher/mkimage to work efficiently
@@ -40,6 +40,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/%name
 %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu Dec 11 2014 Michael Shigorin <mike@altlinux.org> 0.1.1-alt1
+- don't override manually specified DIFF
+
 * Tue Nov 01 2011 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - initial release
 
