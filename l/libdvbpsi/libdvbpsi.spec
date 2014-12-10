@@ -1,13 +1,17 @@
-Name: libdvbpsi7
-Version: 0.2.2
-Release: alt2
+Name: libdvbpsi
+Version: 1.2.0
+Release: alt1
 
 Summary: A library for decoding and generating MPEG 2 and DVB PSI sections
 License: LGPL
-Group: System/Legacy libraries
+Group: System/Libraries
 Url: http://www.videolan.org/
 
 Source: %name-%version.tar
+
+BuildRequires: doxygen graphviz fonts-type1-urw
+
+%define soname 9
 
 %description
 %name is a simple library designed for MPEG 2 TS and DVB PSI tables
@@ -15,24 +19,53 @@ decoding and generating. The important features are:
  * PAT decoder and genarator.
  * PMT decoder and generator.
 
+%package -n %name%soname
+Summary: A library for decoding and generating MPEG 2 and DVB PSI sections
+Group: System/Libraries
+
+%package devel
+Summary: Development files for libdvbpsi
+Group: Development/C
+Requires: %name%soname = %version-%release
+
+%description -n %name%soname
+libdvbpsi is a simple library designed for MPEG 2 TS and DVB PSI tables
+decoding and generating. The important features are:
+ * PAT decoder and genarator.
+ * PMT decoder and generator.
+
+%description devel
+The libdvbpsi-devel package includes the header files and libraries
+necessary for developing programs which will manipulate MPEG 2 and DVB PSI
+information using the libdvbpsi
+
 %prep
 %setup
 
 %build
 %autoreconf
 %configure --disable-static --enable-release
-%make_build
+%make_build all doc
 
 %install
 %makeinstall
 
-%files
+%files -n %name%soname
 %doc AUTHORS NEWS README
 %_libdir/*.so.*
 
+%files devel
+%doc ChangeLog doc/doxygen/html
+%_includedir/*
+%_libdir/*.so
+%_pkgconfigdir/*.pc
+
 %changelog
-* Wed Dec 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.2-alt2
-- rebuilt as shared library only
+* Wed Dec 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
+- 1.2.0 released
+
+* Thu Oct 03 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.1-alt1
+- 1.1.1 released
 
 * Thu Nov 03 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.2-alt1
 - 0.2.2 released
