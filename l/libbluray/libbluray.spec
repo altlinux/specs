@@ -1,5 +1,5 @@
 Name: libbluray
-Version: 0.6.0
+Version: 0.6.2
 Release: alt1
 Summary: BD library
 
@@ -38,7 +38,7 @@ sed -i s,noinst_PROGRAMS,bin_PROGRAMS, src/Makefile.am
 %build
 export JDK_HOME=/usr/lib/jdk
 %autoreconf
-%configure --enable-bdjava
+%configure --enable-bdjava --disable-static
 %make_build
 
 %install
@@ -57,6 +57,9 @@ export JDK_HOME=/usr/lib/jdk
 %_bindir/*
 
 %changelog
+* Wed Dec 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.2-alt1
+- 0.6.2 released
+
 * Tue May 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt1
 - 0.6.0 released
 
