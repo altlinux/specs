@@ -3,8 +3,8 @@
 %def_enable python
 
 Name: gitg
-Version: %ver_major.0
-Release: alt3
+Version: %ver_major.1
+Release: alt1
 
 Summary: git repository viewer targeting gtk+/GNOME
 Group: Development/Other
@@ -155,6 +155,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Wed Dec 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Sun Nov 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt3
 - fixed buildreqs
 - %%check section
