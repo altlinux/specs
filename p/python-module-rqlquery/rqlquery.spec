@@ -1,6 +1,6 @@
 %define oname rqlquery
 Name: python-module-%oname
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 Summary: Experimental ORM Query object
 License: LGPL
@@ -42,6 +42,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1
+- Version 0.2.1
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus
 
