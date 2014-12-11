@@ -1,8 +1,8 @@
 %define mname collective
 %define oname %mname.monkeypatcher
 Name: python-module-%oname
-Version: 1.0.2
-Release: alt1.git20140826
+Version: 1.1.1
+Release: alt1.git20141210
 Summary: Support for applying monkey patches late in the startup cycle
 License: BSD
 Group: Development/Python
@@ -16,6 +16,8 @@ BuildPreReq: python-module-setuptools-tests
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
+%py_requires zope.component zope.schema zope.interface zope.event
+%py_requires zope.configuration
 
 %description
 Sometimes, a monkey patch is a necessary evil.
@@ -32,6 +34,7 @@ persistent Control_Panel entry.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
+%py_requires zope.component.testing
 
 %description tests
 Sometimes, a monkey patch is a necessary evil.
@@ -73,7 +76,7 @@ install -p -m644 %mname/__init__.py \
 python setup.py test
 
 %files
-%doc *.txt docs/*
+%doc *.rst docs/*
 %python_sitelibdir/%mname/*
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/%mname/*/tests
@@ -87,6 +90,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20141210
+- Version 1.1.1
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.git20140826
 - Initial build for Sisyphus
 
