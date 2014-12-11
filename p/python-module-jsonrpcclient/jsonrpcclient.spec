@@ -4,7 +4,7 @@
 %def_without python2
 
 Name: python-module-%oname
-Version: 1.0.7
+Version: 1.0.10
 Release: alt1
 Summary: JSON-RPC 2.0 client library for Python 3
 License: LGPL
@@ -126,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.10-alt1
+- Version 1.0.10
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.7-alt1
 - Version 1.0.7
 
