@@ -1,6 +1,6 @@
 Name: 		kartofel
 Version:	1.2
-Release:	alt5
+Release:	alt6
 License:	GPL
 Source:		http://kartofel.jfedor.org/downloads/%name-%version.tar.gz
 URL:		http://kartofel.jfedor.org
@@ -57,6 +57,9 @@ ln -s %_ttffontsdir/freefont/FreeMono.ttf %buildroot%_gamesdatadir/%name/fonts/F
 %attr(2711,root,games) %_gamesbindir/%name
 
 %changelog
+* Thu Dec 11 2014 Fr. Br. George <george@altlinux.ru> 1.2-alt6
+- Rebuild with new SDL
+
 * Thu Jun 30 2011 Fr. Br. George <george@altlinux.ru> 1.2-alt5
 - Replace shipped font with system one
 
