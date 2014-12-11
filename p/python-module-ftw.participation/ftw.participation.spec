@@ -1,8 +1,8 @@
 %define mname ftw
 %define oname %mname.participation
 Name: python-module-%oname
-Version: 1.3.7
-Release: alt1.dev0.git20141208
+Version: 1.3.8
+Release: alt1.dev0.git20141211
 Summary: Invite other users (registered or unregistered) to a context in plone
 License: GPLv2+
 Group: Development/Python
@@ -96,6 +96,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.8-alt1.dev0.git20141211
+- Version 1.3.8.dev0
+
 * Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7-alt1.dev0.git20141208
 - Initial build for Sisyphus
 
