@@ -2,7 +2,7 @@
 %define oname %mname.personaldata
 Name: python-module-%oname
 Version: 2.0.2
-Release: alt1.dev.svn20091125
+Release: alt2.dev.svn20091125
 Summary: Personal data for Plone HRM
 License: GPLv2
 Group: Development/Python
@@ -18,12 +18,12 @@ BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-Products.Archetypes
 BuildPreReq: python-module-zope.interface
 BuildPreReq: python-module-zope.i18nmessageid
-#BuildPreReq: python-module-Products.plonehrm
+BuildPreReq: python-module-Products.plonehrm
 
 %py_provides %oname
 %py_requires %mname collective.autopermission Products.CMFCore
 %py_requires Products.Archetypes zope.interface zope.i18nmessageid
-#py_requires Products.plonehrm
+%py_requires Products.plonehrm
 
 %description
 This package adds extended personal data for Employees in Plone HRM. For
@@ -56,6 +56,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt2.dev.svn20091125
+- Added necessary requirements
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1.dev.svn20091125
 - Initial build for Sisyphus
 
