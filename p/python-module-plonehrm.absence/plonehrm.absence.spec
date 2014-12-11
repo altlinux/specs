@@ -1,11 +1,9 @@
 %define mname plonehrm
 %define oname %mname.absence
 
-%def_disable check
-
 Name: python-module-%oname
-Version: 1.5
-Release: alt1
+Version: 1.6
+Release: alt1.dev.svn20100129
 Summary: Register employee absence
 License: GPLv2+
 Group: Development/Python
@@ -26,7 +24,7 @@ BuildPreReq: python-module-zope.event
 BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-Products.PloneTestCase
 BuildPreReq: python-module-zope.testing
-#BuildPreReq: python-module-Products.plonehrm
+BuildPreReq: python-module-Products.plonehrm
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -34,7 +32,7 @@ Requires: python-module-Zope2
 %py_requires Products.ATContentTypes Products.Archetypes zope.component
 %py_requires plonehrm.notifications zope.interface zope.annotation
 %py_requires zope.event zope.i18nmessageid
-#py_requires Products.plonehrm
+%py_requires Products.plonehrm
 
 %description
 Register employee absence.
@@ -76,6 +74,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1.dev.svn20100129
+- Version 1.6dev
+
 * Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1
 - Initial build for Sisyphus
 
