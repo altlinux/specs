@@ -1,6 +1,6 @@
 Name: bind
 Version: 9.9.6
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: BSD-style
@@ -450,6 +450,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Thu Dec 11 2014 Fr. Br. George <george@altlinux.ru> 9.9.6-alt2
+- Update to ftp://ftp.isc.org/isc/bind9/9.9.6-P1/bind-9.9.6-P1.tar.gz
+
 * Tue Nov 18 2014 Fr. Br. George <george@altlinux.ru> 9.9.6-alt1
 - Update to ftp://ftp.isc.org/isc/bind9/9.9.6/bind-9.9.6.tar.gz
 - Fix old style autoheader AC_DEFINE
