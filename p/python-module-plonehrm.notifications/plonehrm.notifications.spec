@@ -1,8 +1,8 @@
 %define mname plonehrm
 %define oname %mname.notifications
 Name: python-module-%oname
-Version: 1.2
-Release: alt1
+Version: 1.3
+Release: alt1.dev.svn20100115
 Summary: Notifications for Plone HRM
 License: GPLv2+
 Group: Development/Python
@@ -18,14 +18,14 @@ BuildPreReq: python-module-zope.annotation
 BuildPreReq: python-module-zope.i18n
 BuildPreReq: python-module-zope.event
 BuildPreReq: python-module-zope.testing
-#BuildPreReq: python-module-Products.plonehrm
+BuildPreReq: python-module-Products.plonehrm
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
 Requires: python-module-Zope2
 %py_requires Products.CMFPlone Products.CMFCore zope.component zope.i18n
 %py_requires zope.interface zope.annotation zope.event
-#py_requires Products.plonehrm
+%py_requires Products.plonehrm
 
 %description
 Base package for adding notifications in Plone HRM. For example you can
@@ -73,11 +73,9 @@ install -p -m644 %mname/__init__.py \
 
 %check
 python setup.py test
-rm -fR build
-py.test
 
 %files
-%doc PKG-INFO docs/*
+%doc docs/*
 %python_sitelibdir/%mname/*
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/%mname/*/tests
@@ -91,6 +89,9 @@ py.test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.dev.svn20100115
+- Version 1.3dev
+
 * Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1
 - Initial build for Sisyphus
 
