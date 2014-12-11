@@ -1,6 +1,6 @@
 Name: freedink
 Version: 108.4
-Release: alt1
+Release: alt2
 Summary: Adventure and role-playing game
 Group: Games/Adventure
 #BuildRequires: fontconfig-devel libffi-devel gcc-c++
@@ -69,6 +69,9 @@ cat %name-gnulib.lang >> %name.lang
 %_mandir/man6/*
 
 %changelog
+* Thu Dec 11 2014 Fr. Br. George <george@altlinux.ru> 108.4-alt2
+- Rebuild with new SDL
+
 * Thu Oct 23 2014 Fr. Br. George <george@altlinux.ru> 108.4-alt1
 - Autobuild version bump to 108.4
 - Fix buildreq
