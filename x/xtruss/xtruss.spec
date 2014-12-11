@@ -1,5 +1,5 @@
 Name: xtruss
-Version: 10272
+Version: 20141026
 Release: alt1
 Summary: Trace X protocol exchanges, in the manner of strace
 License: MIT/X11
@@ -34,6 +34,9 @@ halibut --man=%name.1 %name.but
 %_man1dir/*
 
 %changelog
+* Thu Dec 11 2014 Fr. Br. George <george@altlinux.ru> 20141026-alt1
+- Autobuild version bump to 20141026
+
 * Mon Sep 29 2014 Fr. Br. George <george@altlinux.ru> 10272-alt1
 - Autobuild version bump to 10272
 - Fix upstream versioning
