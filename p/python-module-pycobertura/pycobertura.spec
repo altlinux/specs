@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.2
-Release: alt1.git20141127
+Version: 0.2.1
+Release: alt1.git20141210
 Summary: A Cobertura coverage report parser written in Python
 License: MIT
 Group: Development/Python
@@ -18,13 +18,15 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-click-tests python-module-colorama
 BuildPreReq: python-module-tabulate python-module-mock
-BuildPreReq: python-module-pytest-cov
+BuildPreReq: python-module-pytest-cov python-module-jinja2
+BuildPreReq: python-module-lxml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-click-tests python3-module-colorama
 BuildPreReq: python3-module-tabulate python3-module-mock
-BuildPreReq: python3-module-pytest-cov
+BuildPreReq: python3-module-pytest-cov python3-module-jinja2
+BuildPreReq: python3-module-lxml
 %endif
 
 %py_provides %oname
@@ -96,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20141210
+- Version 0.2.1
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20141127
 - Initial build for Sisyphus
 
