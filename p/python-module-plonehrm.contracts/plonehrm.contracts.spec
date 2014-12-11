@@ -2,7 +2,7 @@
 %define oname %mname.contracts
 Name: python-module-%oname
 Version: 3.10
-Release: alt1
+Release: alt2
 Summary: Contracts for Plone HRM
 License: GPLv2
 Group: Development/Python
@@ -24,7 +24,7 @@ BuildPreReq: python-module-zope.event
 BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-Products.PloneTestCase
 BuildPreReq: python-module-zope.testing
-#BuildPreReq: python-module-Products.plonehrm
+BuildPreReq: python-module-Products.plonehrm
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -32,7 +32,7 @@ Requires: python-module-Zope2
 %py_requires Products.Archetypes Products.validation zope.annotation
 %py_requires plonehrm.notifications zope.app.annotation zope.interface
 %py_requires zope.component zope.event zope.i18nmessageid
-#py_requires Products.plonehrm
+%py_requires Products.plonehrm
 
 %description
 Add contracts to Employees. See the Products.plonehrm package.
@@ -74,6 +74,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10-alt2
+- Added necessary requirements
+
 * Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10-alt1
 - Initial build for Sisyphus
 
