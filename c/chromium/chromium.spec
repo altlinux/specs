@@ -3,6 +3,7 @@
 %def_disable debug
 %def_disable nacl
 %def_disable verbose
+%def_disable clang
 
 %if_enabled debug
 %define buildtype Debug
@@ -11,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        39.0.2171.71
+Version:        39.0.2171.95
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -92,7 +93,12 @@ BuildRequires: /proc
 BuildRequires:  bison
 BuildRequires:  bzlib-devel
 BuildRequires:  flex
+%if_enabled clang
+BuildRequires:  clang
 BuildRequires:  gcc-c++
+%else
+BuildRequires:  gcc-c++ >= 4.8.0
+%endif
 BuildRequires:  gperf
 BuildRequires:	gst-plugins-devel
 BuildRequires:  libalsa-devel
@@ -279,7 +285,11 @@ pushd src
 %endif
 	-Ddisable_sse2=1 \
 	-Denable_plugin_installation=0 \
+%if_enabled clang
+	-Dclang=1 \
+%else
 	-Dclang=0 \
+%endif
 	-Dgoogle_api_key="$_google_api_key" \
 	-Dgoogle_default_client_id="$_google_default_client_id" \
 	-Dgoogle_default_client_secret="$_google_default_client_secret" \
@@ -481,6 +491,9 @@ strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver,libffmp
 %_altdir/%name-gnome
 
 %changelog
+* Wed Dec 10 2014 Andrey Cherepanov <cas@altlinux.org> 39.0.2171.95-alt1
+- New version
+
 * Tue Dec 09 2014 Andrey Cherepanov <cas@altlinux.org> 39.0.2171.71-alt1
 - New version
 
