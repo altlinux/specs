@@ -1,6 +1,6 @@
 Name: hyperrogue
 Version: 44
-Release: alt1
+Release: alt2
 Source: %name-%version.zip
 Url: http://www.roguetemple.com/z/hyper.php
 License: GPLv2
@@ -73,6 +73,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Dec 11 2014 Fr. Br. George <george@altlinux.ru> 44-alt2
+- Rebuild with new SDL
+
 * Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 44-alt1
 - Autobuild version bump to 44
 
