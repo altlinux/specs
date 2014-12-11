@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	31.2.0
+Version:	31.3.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -227,6 +227,7 @@ export INCLUDEDIR='%_includedir'
 export LIBIDL_CONFIG='/usr/bin/libIDL-config-2'
 export srcdir="$PWD"
 export SHELL=/bin/sh
+export MOZILLA_OBJDIR="$PWD"
 
 %__autoconf
 
@@ -380,10 +381,6 @@ mkdir -p %buildroot/%google_calendar_ciddir
 unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 	$dir/mozilla/dist/xpi-stage/gdata-provider*.xpi
 
-#mkdir -p %buildroot/%calendar_timezones_ciddir
-#unzip -q -u -d %buildroot/%calendar_timezones_ciddir -- \
-#	$dir/mozilla/dist/xpi-stage/calendar-timezones*.xpi
-
 #rm -rf -- %buildroot/%tbird_prefix/extensions/calendar-timezones@mozilla.org
 #rm -f -- %buildroot/%lightning_ciddir/application.ini
 %endif
@@ -453,6 +450,16 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Dec 11 2014 Alexey Gladkov <legion@altlinux.ru> 31.3.0-alt1
+- New version (31.3.0).
+- Fixed:
+  + MFSA 2014-90 Apple CoreGraphics framework on OS X 10.10 logging input data to /tmp directory
+  + MFSA 2014-89 Bad casting from the BasicThebesLayer to BasicContainerLayer
+  + MFSA 2014-88 Buffer overflow while parsing media content
+  + MFSA 2014-87 Use-after-free during HTML5 parsing
+  + MFSA 2014-85 XMLHttpRequest crashes with some input streams
+  + MFSA 2014-83 Miscellaneous memory safety hazards (rv:34.0 / rv:31.3)
+
 * Thu Oct 23 2014 Alexey Gladkov <legion@altlinux.ru> 31.2.0-alt1
 - New version (31.2.0).
 - Fixed:
