@@ -1,10 +1,11 @@
 %define oname scikit-xray
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.0.3
-Release: alt1.git20141114
+Release: alt1.git20141209
 Summary: Data analysis tools for X-ray science
 License: BSD
 Group: Development/Python
@@ -107,10 +108,14 @@ popd
 
 %install
 %python_install
+cp -fR skxray/constants/data \
+	%buildroot%python_sitelibdir/skxray/constants/
 
 %if_with python3
 pushd ../python3
 %python3_install
+cp -fR skxray/constants/data \
+	%buildroot%python3_sitelibdir/skxray/constants/
 popd
 rm -f %buildroot%python3_sitelibdir/ctrans.*.so
 %endif
@@ -160,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20141209
+- New snapshot
+
 * Sun Nov 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20141114
 - Initial build for Sisyphus
 
