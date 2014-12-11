@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.3.5
-Release: alt2
+Version: 0.3.6
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
 Summary: Alterator module for snort administration
@@ -52,6 +52,9 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Thu Dec 11 2014 Andriy Stepanov <stanv@altlinux.ru> 0.3.6-alt1
+- Update test manual. Added 'complete reset' capability.
+
 * Wed Dec 10 2014 Andriy Stepanov <stanv@altlinux.ru> 0.3.5-alt2
 - Add test manual.
 
