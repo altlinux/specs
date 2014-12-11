@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.5
-Release: alt1.git20131010
+Version: 0.3
+Release: alt1.git20141209
 Summary: Jmbo calendar app
 License: BSD
 Group: Development/Python
@@ -79,24 +79,25 @@ popd
 %files
 %doc *.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests.*
+%exclude %python_sitelibdir/*/tests
 
 %files tests
-%python_sitelibdir/*/tests.*
+%python_sitelibdir/*/tests
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests.*
-%exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests.*
-%python3_sitelibdir/*/*/tests.*
+%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20141209
+- Version 0.3
+
 * Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.git20131010
 - Initial build for Sisyphus
 
