@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.4.4
-Release: alt1.git20140928
+Version: 0.5
+Release: alt1.git20141210
 Summary: Show coverage stats online via coveralls.io
 License: MIT
 Group: Development/Python
@@ -103,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20141210
+- Version 0.5
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4-alt1.git20140928
 - Initial build for Sisyphus
 
