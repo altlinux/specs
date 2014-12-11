@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.13
-Release: alt2
+Version: 0.14
+Release: alt1
 Summary: Sendmail package for Pyramid
 License: BSD
 Group: Development/Python
@@ -85,7 +85,7 @@ popd
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst docs/*.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test*
 
@@ -94,7 +94,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst docs/*.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14-alt1
+- Version 0.14
+
 * Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt2
 - Added module for Python 3
 
