@@ -1,8 +1,8 @@
 %define mname plonehrm
 %define oname %mname.checklist
 Name: python-module-%oname
-Version: 1.3
-Release: alt1
+Version: 1.4
+Release: alt1.dev.svn20100129
 Summary: Checklists for Plone HRM
 License: GPLv2
 Group: Development/Python
@@ -22,7 +22,7 @@ BuildPreReq: python-module-zope.viewlet
 BuildPreReq: python-module-zope.annotation
 BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-Products.plonehrm-tests
+BuildPreReq: python-module-Products.plonehrm-tests
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -30,7 +30,7 @@ Requires: python-module-Zope2
 %py_requires Products.CMFCore Products.Archetypes plonehrm.notifications
 %py_requires zope.interface zope.i18n zope.viewlet zope.annotation
 %py_requires zope.i18nmessageid
-#py_requires Products.plonehrm
+%py_requires Products.plonehrm
 
 %description
 With this package you can add checklists to an Employee. There you can
@@ -45,7 +45,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires Products.PloneTestCase
-#py_requires Products.plonehrm.tests
+%py_requires Products.plonehrm.tests
 
 %description tests
 With this package you can add checklists to an Employee. There you can
@@ -74,7 +74,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 python setup.py test
 
 %files
-%doc PKG-INFO docs/*
+%doc docs/*
 %python_sitelibdir/%mname/*
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/%mname/*/tests
@@ -83,6 +83,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1.dev.svn20100129
+- Version 1.4dev
+
 * Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1
 - Initial build for Sisyphus
 
