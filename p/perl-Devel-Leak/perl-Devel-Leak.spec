@@ -1,7 +1,7 @@
 %define dist Devel-Leak
 Name: perl-%dist
 Version: 0.03
-Release: alt4
+Release: alt4.1
 
 Summary: Utility for looking for perl objects that are not reclaimed
 License: GPL or Artistic
@@ -34,6 +34,9 @@ reclaimed.
 %perl_vendor_autolib/Devel*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt4.1
+- rebuild with new perl 5.20.1
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.03-alt4
 - built for perl 5.18
 

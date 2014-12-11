@@ -1,6 +1,6 @@
 Name: perl-GD
 Version: 2.53
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Perl interface to the GD graphics library
@@ -47,6 +47,9 @@ sed -i- 's/compare(test6(),6);/print "ok 6 # Skip, we change fonts so byte-compa
 %perl_vendor_archlib/qd.pl
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.53-alt1.1
+- rebuild with new perl 5.20.1
+
 * Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.53-alt1
 - automated CPAN update
 

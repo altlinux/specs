@@ -1,7 +1,7 @@
 %define dist Net-Z3950-ZOOM
 Name: perl-%dist
 Version: 1.28
-Release: alt4
+Release: alt4.1
 
 Summary: Perl extension implementing the ZOOM API for Information Retrieval
 License: GPL or Artistic
@@ -41,6 +41,9 @@ grep -lZ connect t/*.t |xargs -r0 rm -v
 %perl_vendor_archlib/ZOOM*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.28-alt4.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.28-alt4
 - built for perl 5.18
 

@@ -4,7 +4,7 @@ BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-PerlIO-Layers
 Version:        0.011
-Release:        alt1_4
+Release:        alt1_4.1
 Summary:        Querying your file handle capabilities
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -57,6 +57,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/PerlIO*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_4.1
+- rebuild with new perl 5.20.1
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_4
 - update to new release by fcimport
 

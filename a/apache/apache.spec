@@ -29,7 +29,7 @@
 
 Name: apache
 Version: %apache_version
-Release: %branch_release alt7
+Release: %branch_release alt7.1
 
 Summary: The most widely used Web server on the Internet
 License: %asl
@@ -1458,6 +1458,9 @@ fi
 # - macro for %_cachedir/httpd/
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.42rusPL30.24-alt7.1
+- rebuild with new perl 5.20.1
+
 * Mon Dec 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.42rusPL30.24-alt7
 - added mod_perl-perl-5.20.patch
 

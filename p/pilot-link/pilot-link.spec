@@ -3,7 +3,7 @@
 
 Name: pilot-link
 Version: 0.12.5
-Release: alt3
+Release: alt3.1
 
 Summary: File transfer utilities between Linux and PalmPilots
 License: GPL
@@ -169,6 +169,9 @@ install -p -m644 doc/60-libpisock.rules %buildroot%_sysconfdir/udev/rules.d/75-l
 %endif
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.12.5-alt3.1
+- rebuild with new perl 5.20.1
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.12.5-alt3
 - built for perl 5.18
 

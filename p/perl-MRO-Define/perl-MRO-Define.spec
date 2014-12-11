@@ -2,7 +2,7 @@
 %define dist MRO-Define
 Name: perl-%dist
 Version: 0.02
-Release: alt1
+Release: alt1.1
 
 Summary: Define your own method resolution order
 License: GPL or Artistic
@@ -40,6 +40,9 @@ addition to those perl already has.
 %perl_vendor_autolib/MRO
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.1
+- rebuild with new perl 5.20.1
+
 * Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - automated CPAN update
 

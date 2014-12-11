@@ -63,7 +63,7 @@
 
 Name: subversion
 Version: 1.7.8
-Release: alt2
+Release: alt2.1
 
 Summary: A version control system
 Group: Development/Other
@@ -736,6 +736,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.8-alt2.1
+- rebuild with new perl 5.20.1
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.7.8-alt2
 - built for perl 5.18
 

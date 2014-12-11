@@ -2,7 +2,7 @@
 %define dist Class-XSAccessor
 Name: perl-%dist
 Version: 1.19
-Release: alt1
+Release: alt1.1
 
 Summary: Generate fast XS accessors without runtime compilation
 License: GPL or Artistic
@@ -37,6 +37,9 @@ that use arrays for their internal representation.
 %perl_vendor_autolib/Class/XSAccessor
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Nov 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
 - automated CPAN update
 

@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 3.003
-Release: alt1
+Release: alt1.1
 Summary: Fast, compact, powerful binary serialization
 Group: Development/Perl
 License: perl
@@ -49,6 +49,9 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 3.003-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 3.003-alt1
 - automated CPAN update
 

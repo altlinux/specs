@@ -1,7 +1,7 @@
 %define dist Gtk2-TrayIcon
 Name: perl-Gtk2-TrayIcon
 Version: 0.06
-Release: alt4
+Release: alt4.1
 
 Summary: %dist Perl module
 License: LGPL
@@ -41,6 +41,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gtk2/TrayIcon/Install
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt4.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.06-alt4
 - built for perl 5.18
 

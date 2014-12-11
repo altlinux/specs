@@ -1,7 +1,7 @@
 %define dist Encode-HanExtra
 Name: perl-%dist
 Version: 0.23
-Release: alt5
+Release: alt5.1
 
 Summary: Extra sets of Chinese encodings
 License: MIT
@@ -34,6 +34,9 @@ gb18030, unisys, unisys-sosi1, unisys-sosi2.
 %perl_vendor_autolib/Encode
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt5.1
+- rebuild with new perl 5.20.1
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.23-alt5
 - built for perl 5.18
 - removed manual test for implicit load of Encode::HanExtra by Encode

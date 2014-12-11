@@ -1,6 +1,6 @@
 Name: perl-KyotoCabinet
 Version: 1.20
-Release: alt3
+Release: alt3.1
 Summary: a straightforward implementation of DBM
 
 Group: Development/Perl
@@ -34,6 +34,9 @@ rm %buildroot%perl_vendor_archlib/*.pl
 %perl_vendor_autolib/KyotoCabinet
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.20-alt3.1
+- rebuild with new perl 5.20.1
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.20-alt3
 - built for perl 5.18
 - temporary disabled tests

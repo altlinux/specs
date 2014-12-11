@@ -8,7 +8,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.2
-Release: alt5
+Release: alt5.1
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -585,6 +585,9 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 5.7.2-alt5.1
+- rebuild with new perl 5.20.1
+
 * Thu Oct 24 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.7.2-alt5
 - Update patches from V5-7-patches branch
 - Fix (ALT#29516) - move snmp.conf(5) to net-snmp-clients

@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.09
-Release: alt2
+Release: alt2.1
 Summary: Extremely fast HTML escape
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ From summary: %summary
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.09-alt2.1
+- rebuild with new perl 5.20.1
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.09-alt2
 - moved to Sisyphus as dependency
 

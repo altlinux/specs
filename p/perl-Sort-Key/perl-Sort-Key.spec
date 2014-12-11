@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl(XSLoader.pm) perl(locale.pm) perl-devel pe
 # END SourceDeps(oneline)
 Name:           perl-Sort-Key
 Version:        1.33
-Release:        alt1
+Release:        alt1.1
 Summary:        Fastest way to sort anything in Perl
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -44,6 +44,9 @@ make test
 %{perl_vendor_archlib}/Sort*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1.1
+- rebuild with new perl 5.20.1
+
 * Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
 - automated CPAN update
 

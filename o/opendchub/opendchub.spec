@@ -1,6 +1,6 @@
 Name: opendchub
 Version: 0.8.3
-Release: alt1
+Release: alt1.1
 
 Summary: Direct Connect Hub
 
@@ -49,6 +49,9 @@ Opendchub is a hub of direct connect file sharing network.
 #%dir %attr(750,opendchub,opendchub) %_sysconfdir/opendchub
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1.1
+- rebuild with new perl 5.20.1
+
 * Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.8.3-alt1
 - new version 0.8.3 (with rpmrb script)
 

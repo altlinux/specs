@@ -2,7 +2,7 @@
 
 Name: owfs
 Version: 2.9p5
-Release: alt1
+Release: alt1.1
 
 Summary: 1-Wire Virtual File System
 License: GPL
@@ -311,6 +311,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %python_sitelibdir/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.9p5-alt1.1
+- rebuild with new perl 5.20.1
+
 * Thu Aug 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9p5-alt1
 - Version 2.9p5
 

@@ -1,7 +1,7 @@
 %define dist Pango
 Name: perl-%dist
 Version: 1.226
-Release: alt1
+Release: alt1.1
 
 Summary: Layout and render international text
 License: LGPL
@@ -66,6 +66,9 @@ rm `grep -l need_gtk t/*.t`
 	%perl_vendor_archlib/Pango/Install/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.226-alt1.1
+- rebuild with new perl 5.20.1
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.226-alt1
 - automated CPAN update
 

@@ -1,7 +1,7 @@
 %define dist CDB_File
 Name: perl-%dist
 Version: 0.97
-Release: alt5
+Release: alt5.1
 
 Summary: Perl extension for access to cdb databases
 License: GPL or Artistic
@@ -33,6 +33,9 @@ package for creating and reading constant databases.
 %perl_vendor_autolib/CDB_File*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.97-alt5.1
+- rebuild with new perl 5.20.1
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.97-alt5
 - built for perl 5.18
 

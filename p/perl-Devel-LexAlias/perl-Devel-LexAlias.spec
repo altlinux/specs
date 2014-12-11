@@ -4,7 +4,7 @@ BuildRequires: perl(DynaLoader.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-LexAlias
 Version:        0.05
-Release:        alt2_6
+Release:        alt2_6.1
 Summary:        Alias lexical variables
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_archlib}/Devel*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_6.1
+- rebuild with new perl 5.20.1
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_6
 - update to new release by fcimport
 

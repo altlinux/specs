@@ -1,7 +1,7 @@
 %define dist Event-Lib
 Name: perl-%dist
 Version: 1.03
-Release: alt5
+Release: alt5.1
 
 Summary: Perl extentions for event-based programming
 License: GPL or Artistic
@@ -28,7 +28,7 @@ is received.
 %setup -q -n %dist-%version
 %patch1 -p1
 %patch2 -p2
-if [ %version = 1.03]; then
+if [ %version = 1.03 ]; then
 #Known to fail - Upstream emailed
 rm t/20_signal.t
 rm t/51_cleanup_persistent.t
@@ -47,6 +47,9 @@ fi
 %perl_vendor_autolib/Event
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt5.1
+- rebuild with new perl 5.20.1
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt5
 - fixed build before perl 5.20.1
 

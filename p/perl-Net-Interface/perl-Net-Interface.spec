@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 1.012
-Release: alt4
+Release: alt4.1
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: Perl extension to access network interfaces
@@ -40,6 +40,9 @@ network interfaces in a manner similar to ifconfig(8).
 %perl_vendor_autolib/Net*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.012-alt4.1
+- rebuild with new perl 5.20.1
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.012-alt4
 - built for perl 5.18
 

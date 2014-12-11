@@ -1,7 +1,7 @@
 %define dist Digest-Haval256
 Name: perl-%dist
 Version: 1.0.5
-Release: alt3
+Release: alt3.1
 
 Summary: A 5-round, 256-bit one-way hash function
 License: GPL
@@ -40,6 +40,9 @@ implements the 5-round, 256-bit output.
 %perl_vendor_autolib/Digest
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt3.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.0.5-alt3
 - built for perl 5.18
 

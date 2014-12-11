@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.300
-Release: alt2
+Release: alt2.1
 Summary: unknown
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ Source0: http://cpan.org.ua/authors/id/F/FR/FRACTAL/%module_name-%module_version
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.300-alt2.1
+- rebuild with new perl 5.20.1
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.300-alt2
 - build for Sisyphus (required for perl update)
 

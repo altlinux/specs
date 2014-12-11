@@ -2,7 +2,7 @@
 %define dist Text-Ngram
 Name: perl-%dist
 Version: 0.15
-Release: alt1
+Release: alt1.1
 
 Summary: Ngram analysis of text
 License: GPL or Artistic
@@ -36,6 +36,9 @@ prediction networks, and perform spelling correction.
 %perl_vendor_autolib/Text
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 

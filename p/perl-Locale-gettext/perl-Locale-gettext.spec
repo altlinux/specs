@@ -1,7 +1,7 @@
 %define dist gettext
 Name: perl-Locale-gettext
 Version: 1.05
-Release: alt7
+Release: alt7.1
 
 Summary: Gettext routines for Perl
 License: GPL or Artistic
@@ -35,6 +35,9 @@ export LC_ALL=en_US
 %perl_vendor_archlib/Locale
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt7.1
+- rebuild with new perl 5.20.1
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.05-alt7
 - built for perl 5.18
 

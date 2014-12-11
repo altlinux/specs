@@ -1,7 +1,7 @@
 %define dist Text-Aspell
 Name: perl-%dist
 Version: 0.09
-Release: alt3
+Release: alt3.1
 
 Summary: Perl interface to the GNU Aspell library
 License: GPL or Artistic
@@ -33,6 +33,9 @@ including a spell checker.
 %perl_vendor_autolib/Text
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.09-alt3
 - built for perl 5.18
 

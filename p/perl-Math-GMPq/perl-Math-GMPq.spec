@@ -10,7 +10,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.37
-Release: alt1
+Release: alt1.1
 Summary: perl interface to the GMP library's rational (mpq) functions..
 Group: Development/Perl
 License: perl
@@ -48,6 +48,9 @@ A bigrational module utilising the Gnu MP (GMP) library..
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1.1
+- rebuild with new perl 5.20.1
+
 * Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
 - automated CPAN update
 

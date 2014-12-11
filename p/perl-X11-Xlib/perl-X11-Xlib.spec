@@ -1,6 +1,6 @@
 Name: perl-X11-Xlib
 Version: 0.02
-Release: alt1
+Release: alt1.1
 
 Summary: Low-level access to the X11 library
 Group: Development/Perl
@@ -32,6 +32,9 @@ xvfb-run -a make test
 %doc Changes README
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Oct 07 2013 Vladimir Lettiev <crux@altlinux.ru> 0.02-alt1
 - initial build for ALTLinux
 

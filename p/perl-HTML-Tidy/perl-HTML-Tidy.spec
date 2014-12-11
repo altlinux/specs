@@ -1,7 +1,7 @@
 %define dist HTML-Tidy
 Name: perl-%dist
 Version: 1.56
-Release: alt1
+Release: alt1.1
 
 Summary: HTML validation in a Perl object
 License: GPL or Artistic
@@ -33,6 +33,9 @@ as a replacement for HTML::Lint.
 %perl_vendor_archlib/HTML
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1.1
+- rebuild with new perl 5.20.1
+
 * Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1
 - automated CPAN update
 

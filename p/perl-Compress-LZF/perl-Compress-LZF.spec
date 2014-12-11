@@ -1,7 +1,7 @@
 %define dist Compress-LZF
 Name: perl-%dist
 Version: 3.7
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Extremely light-weight Lempel-Ziv-Free compression
@@ -41,6 +41,9 @@ patents.
 %perl_vendor_autolib/Compress
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.7-alt1.1
+- rebuild with new perl 5.20.1
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1:3.7-alt1
 - 3.43 -> 3.7
 

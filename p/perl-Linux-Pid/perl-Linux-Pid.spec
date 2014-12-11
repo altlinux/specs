@@ -1,7 +1,7 @@
 %define dist Linux-Pid
 Name: perl-%dist
 Version: 0.04
-Release: alt4
+Release: alt4.1
 
 Summary: Get the native PID and the PPID on Linux
 License: GPL or Artistic
@@ -40,6 +40,9 @@ underlying C functions `getpid()' and `getppid()'.
 %perl_vendor_autolib/Linux
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt4.1
+- rebuild with new perl 5.20.1
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt4
 - built for perl 5.18
 

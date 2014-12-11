@@ -2,7 +2,7 @@
 %define dist JSON-XS
 Name: perl-%dist
 Version: 3.01
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: JSON serialising/deserialising, done correctly and fast
@@ -36,6 +36,9 @@ primary goal is to be *correct* and its secondary goal is to be
 %perl_vendor_autolib/JSON
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.01-alt1.1
+- rebuild with new perl 5.20.1
+
 * Fri Nov 01 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.01-alt1
 - automated CPAN update
 

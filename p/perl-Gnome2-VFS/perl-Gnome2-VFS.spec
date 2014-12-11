@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 1.082
-Release: alt1
+Release: alt1.1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -65,6 +65,9 @@ for developers (overview of internals and internal API reference).
 %doc	%perl_vendor_archlib/Gnome2/VFS/Resolve
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.082-alt1.1
+- rebuild with new perl 5.20.1
+
 * Wed Oct 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.082-alt1
 - automated CPAN update
 

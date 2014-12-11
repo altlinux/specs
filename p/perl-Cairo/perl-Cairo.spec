@@ -1,7 +1,7 @@
 %define dist Cairo
 Name: perl-%dist
 Version: 1.104
-Release: alt1
+Release: alt1.1
 
 Summary: Perl interface to the cairo vector graphics library
 License: LGPL
@@ -48,6 +48,9 @@ Cairo produces identical output on all those targets.
 %perl_vendor_archlib/Cairo/Install
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.104-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.104-alt1
 - automated CPAN update
 

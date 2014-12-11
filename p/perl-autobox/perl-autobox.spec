@@ -2,7 +2,7 @@
 
 Name: perl-autobox
 Version: 2.82
-Release: alt1
+Release: alt1.1
 
 Summary: Perl interface to call methods on native types
 
@@ -53,6 +53,9 @@ can be overridden or countermanded in a nested scope.
 %perl_vendor_autolib/autobox*
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.82-alt1.1
+- rebuild with new perl 5.20.1
+
 * Wed Sep 10 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.82-alt1
 - New version
 

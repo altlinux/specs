@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.2
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -37,6 +37,9 @@ without using a single syscall.
 %perl_vendor_autolib/Async
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1
 - automated CPAN update
 

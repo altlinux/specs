@@ -1,7 +1,7 @@
 %define dist Text-Bidi
 Name: perl-%dist
 Version: 2.09
-Release: alt1
+Release: alt1.1
 
 Summary: Unicode bidi algorithm for Perl using libfribidi
 License: GPL or Artistic
@@ -35,6 +35,9 @@ written languages.
 %perl_vendor_autolib/Text
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1.1
+- rebuild with new perl 5.20.1
+
 * Thu Jun 19 2014 Anton Farygin <rider@altlinux.ru> 2.09-alt1
 - new version 2.09
 

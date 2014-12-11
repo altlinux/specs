@@ -1,7 +1,7 @@
 %define dist GStreamer
 Name: perl-%dist
 Version: 0.19
-Release: alt1
+Release: alt1.1
 
 Summary: Perl interface to the GStreamer library
 License: GPL or Artistic
@@ -31,6 +31,9 @@ This module allows you to use the GStreamer library from Perl.
 %perl_vendor_autolib/GStreamer
 
 %changelog
+* Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.1
+- rebuild with new perl 5.20.1
+
 * Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
