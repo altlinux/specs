@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.11.1
-Release: alt1.git20131231
+Version: 0.11.2
+Release: alt1.git20141210
 Summary: Specification-style output for nose
 License: MIT
 Group: Development/Python
@@ -90,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.2-alt1.git20141210
+- Version 0.11.2
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.1-alt1.git20131231
 - Initial build for Sisyphus
 
