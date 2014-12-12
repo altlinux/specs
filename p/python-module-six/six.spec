@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.8.0
-Release: alt1.hg20141030
+Release: alt1.hg20141209
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -75,6 +75,10 @@ popd
 %endif
 
 %changelog
+* Fri Dec 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.hg20141209
+- New snapshot
+- Added chr (ALT #30557)
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.hg20141030
 - Version 1.8.0
 
