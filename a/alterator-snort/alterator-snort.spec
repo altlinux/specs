@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -52,6 +52,10 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Fri Dec 12 2014 Mikhail Efremov <sem@altlinux.org> 0.3.7-alt1
+- Only use UTC if it configured in the barnyard2.conf.
+- Install snort-email-notification.sh script.
+
 * Thu Dec 11 2014 Andriy Stepanov <stanv@altlinux.ru> 0.3.6-alt1
 - Update test manual. Added 'complete reset' capability.
 
