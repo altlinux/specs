@@ -8,7 +8,7 @@
 %def_disable RDF
 
 Name: calligra
-Version: 2.8.6
+Version: 2.8.7
 Release: alt1
 Epoch: 0
 %define libname lib%name
@@ -316,7 +316,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/kopabackgroundtool.*
 %_K4lib/kolcmsengine.*
 %_K4lib/koreport_barcodeplugin.so
-#%_K4lib/koreport_chartplugin.so
+%_K4lib/koreport_chartplugin.so
 %_K4lib/koreport_webplugin.so
 %_K4srv/calligra/koreport_webplugin.desktop
 %_K4lib/calligra_filter_eps2svgai.so
@@ -356,7 +356,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/kolcmsengine.desktop
 %_K4srv/kopabackgroundtool.desktop
 %_K4srv/calligra/koreport_barcodeplugin.desktop
-#%_K4srv/koreport_chartplugin.desktop
+%_K4srv/calligra/koreport_chartplugin.desktop
 %_K4srv/calligra_filter_eps2svgai.desktop
 %_K4srv/calligra_filter_pdf2svg.desktop
 %_K4srv/calligra_filter_kpr2odp.desktop
@@ -671,6 +671,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libkritasketchlib.so
 
 %changelog
+* Tue Dec 09 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.7-alt1
+- new version
+
 * Thu Nov 27 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.6-alt1
 - new version
 
