@@ -3,7 +3,7 @@ Name: sendmail
 %define tarbolversion 8.15.1
 
 Version: %tarbolversion
-Release: alt1
+Release: alt2
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -20,12 +20,12 @@ Source4: %name.sysconfig
 Source5: %name-etc-mail-Makefile
 Source6: %name-alt.mc
 
-Source7: %name-sasl.conf
-Source8: %name.pam
+Source7:  %name-sasl.conf
+Source8:  %name.pam
+Source9:  %name-altlinux-site.config.m4
 Source10: %name-README.alt
 Source11: %name-submit.mc
 Source12: %name-rhsbl.m4
-Source13: %name-cf-8.13-0.4.1.corvax.tar.bz2
 Source14: %name-virtuserdomains
 Source15: %name-certs.sh
 Source16: %name-milters_watchdog
@@ -45,12 +45,8 @@ Source33: %name-cyrusv2.m4
 Source34: %name-cyrus-imap-mailertable.mc
 Source36: %name-cyrus-imap-localrelay.mc
 
-Source9: %name-real-time.mc
-Source106: %name-alt.old.mc
-Source134: %name-cyrus-imap-mailertable.old.mc
-Source136: %name-cyrus-imap-localrelay.old.mc
-
-Patch0: %name-8.14.0-alt.patch
+# Patches section
+Patch0: %name-8.15.1-alt.patch
 Patch1: %name-8.10.0-makemapman.patch
 Patch2: %name-8.14.3-smrsh.patch
 Patch3: %name-8.8.7-rmail.patch
@@ -209,15 +205,13 @@ them that you are currently not reading your mail.
 %__cp %{SOURCE32} cf/feature/mrs_cyrus.m4
 %__cp -f %{SOURCE33} cf/mailer/cyrusv2.m4
 
-#__tar xjf %{SOURCE13} -C cf
+%__cp %{SOURCE9} devtools/Site/site.config.m4
 
 %build
 %make_build
-#CFLAGS="$RPM_OPT_FLAGS %optflags_shared"
 
 pushd cf/cf
 m4 altlinux.mc > altlinux.cf
-#m4 real-time.mc > real-time.cf
 m4 cyrus-imap-mailertable.mc > cyrus-imap-mailertable.cf
 m4 cyrus-imap-localrelay.mc > cyrus-imap-localrelay.cf
 popd
@@ -251,18 +245,16 @@ rm -f $RPM_BUILD_ROOT%_bindir/{mailq,newaliases}
 %make_build DESTDIR=$RPM_BUILD_ROOT $ID force-install -C $OBJDIR/mail.local
 
 # generate shared libmilter
-pushd $OBJDIR
-rm -f libmilter/*.a
-cd libmilter
+pushd $OBJDIR/libmilter
+rm -f *.a
 gcc -shared -o libmilter.so.3 -Wl,-soname,libmilter.so.3 *.o -lpthread
-cd ..
 popd
 
 # install include & libs
 #find $OBJDIR/lib* -name "*.a" -exec %__cp {} $RPM_BUILD_ROOT%_libdir \;
 find $OBJDIR/lib* -name "*.so*" -exec %__cp {} $RPM_BUILD_ROOT%_libdir \;
 
-# genegate symlink for *.so (only libmilter.so.2 now)
+# genegate symlink for *.so (only libmilter.so.3 now)
 pushd $RPM_BUILD_ROOT%_libdir
 find *.so.* -type f|\
  while read f; do \
@@ -296,9 +288,9 @@ popd
 find contrib -type f |xargs fgrep -l /usr/local/bin/perl |
 	xargs -r %__subst -p 's|/usr/local/bin/perl|%_bindir/perl|g'
 
-#	perl -pi -e 's|/usr/local/bin/perl|%_bindir/perl|g'
+#	xargs -r perl -pi -e 's|/usr/local/bin/perl|%_bindir/perl|g'
 find contrib -type f |xargs fgrep -l '!/bin/perl' |
-	xargs -r %__subst -p 's|#!/bin/perl|%_bindir/perl|g'
+	xargs -r %__subst -p 's|#!/bin/perl|#!%_bindir/perl|g'
 
 #	xargs -r perl -pi -e 's|#!/bin/perl|#!%_bindir/perl|g'
 
@@ -501,6 +493,13 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Fri Dec 12 2014 Sergey Y. Afonin <asy@altlinux.ru> 8.15.1-alt2
+- added FEATURE(`nocanonify') to *.mc
+- removed old examples of *.mc
+- removed sendmail-cf-8.13-0.4.1.corvax.tar.bz2
+- refactored sendmail-X.Y.Z-alt.patch (site.config.m4 the
+  separate file now)
+
 * Sun Dec 07 2014 Sergey Y. Afonin <asy@altlinux.ru> 8.15.1-alt1
 - New version (incompatible change in IPv6 configuration,
   please check RELEASE_NOTES before update)
