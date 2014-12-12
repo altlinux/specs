@@ -1,4 +1,4 @@
-%define svn_revision 417586
+%define svn_revision 417586.1
 #============================================================================
 # Please do not edit!
 # Created by specgen utility from files in specs/ subdir
@@ -70,7 +70,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 417586
+%define svn_revision 417586.1
 %add_verify_elf_skiplist %_libdir/libasteriskssl13.so.1
 %def_with debug
 %def_enable debug
@@ -121,7 +121,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 %package -n aelparse13
 Summary: Asterisk AEL2 parser
 Group: %group
-Requires: asterisk12-common
+Requires: asterisk13-common
 
 %description -n aelparse13
 aelparse utility needed for converting from AEL2 config file to
@@ -597,7 +597,7 @@ Asterisk sqlite3 support
 %package -n conf2ael13
 Summary: extensions.conf -> ael2 converter
 Group: %group
-Requires: asterisk12-common
+Requires: asterisk13-common
 
 %description -n conf2ael13
 extensions.conf -> ael2 converter
@@ -1283,6 +1283,9 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %_libdir/libasteriskssl13.so.1
 
 %changelog
+* Fri Dec 12 2014 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.417586.1
+- change requires from asterisk12-common to asterisk13-common
+
 * Mon Jun 30 2014 Cronbuild Service <cronbuild@altlinux.org> 13-alt0.417586
 - update from svn revision 417586
 
