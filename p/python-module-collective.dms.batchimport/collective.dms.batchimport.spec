@@ -2,8 +2,8 @@
 %define oname %mname.batchimport
 Name: python-module-%oname
 Epoch: 1
-Version: 1.2.2
-Release: alt1.dev0.git20141127
+Version: 1.2.3
+Release: alt1.dev0.git20141128
 Summary: Batch import of files into the Documents Management System
 License: GPL
 Group: Development/Python
@@ -65,6 +65,9 @@ python setup.py test
 %python_sitelibdir/collective/dms/*/test*
 
 %changelog
+* Fri Dec 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.3-alt1.dev0.git20141128
+- Version 1.2.3.dev0
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.2-alt1.dev0.git20141127
 - Version 1.2.2.dev0
 
