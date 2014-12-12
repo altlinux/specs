@@ -2,7 +2,7 @@
 %define oname %mname.mtrsetup
 Name: python-module-%oname
 Version: 1.5.3
-Release: alt1.dev0.git20141107
+Release: alt2.dev0.git20141107
 Summary: Extension for GenericSetup, adding support for import / export of mimetypes_registry
 License: GPL
 Group: Development/Python
@@ -66,11 +66,16 @@ py.test
 %python_sitelibdir/%mname/*
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/%mname/*/tests
+%exclude %python_sitelibdir/%mname/mtrsetup/profiles/example
 
 %files tests
 %python_sitelibdir/%mname/*/tests
+%python_sitelibdir/%mname/mtrsetup/profiles/example
 
 %changelog
+* Fri Dec 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.3-alt2.dev0.git20141107
+- Moved example into tests subpackage
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.3-alt1.dev0.git20141107
 - Initial build for Sisyphus
 
