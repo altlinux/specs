@@ -2,10 +2,10 @@
 # big tarball. This requires a new fedora package review and obsoleting the old.
 # geda-* packages fedora was providing, which explains the use of Epoch
 
-%define major 1.6
+%define major 1.9
 
 Name: geda-gaf
-Version: %major.2
+Version: %major.1
 Release: alt1
 Epoch: 2
 
@@ -17,7 +17,7 @@ Url: http://www.geda.seul.org
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://geda.seul.org/release/v%major/%version/%name-%version.tar
+Source: http://ftp.geda-project.org/geda-gaf/unstable/v%major/%version/geda-gaf-%version.tar
 
 #Patch: %name-%version.patch
 
@@ -129,6 +129,7 @@ Several utilities for the gEDA project.
 %setup
 
 %build
+%autoreconf
 %configure
 # fix rpath
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
@@ -138,9 +139,12 @@ find -name *.c | xargs %__subst "s|#include <glib/g[mt].*||g"
 
 %install
 %makeinstall_std
-%find_lang libgeda38
+%find_lang libgeda44
+%find_lang geda-gaf
 %find_lang geda-gschem
 %find_lang geda-gattrib
+%find_lang geda-gnetlist
+%find_lang geda-gsymcheck
 
 # Fixing rpaths
 %__subst 's|"/lib /usr/lib|"/%_lib %_libdir|' configure
@@ -149,6 +153,7 @@ find -name *.c | xargs %__subst "s|#include <glib/g[mt].*||g"
 #rm -f %buildroot%_infodir/dir
 rm -f %buildroot%_desktopdir/mimeinfo.cache
 rm -rf %buildroot%_docdir/%name/readmes/
+rm -rf %buildroot%_docdir/%name/man/
 rm -f %buildroot/%_datadir/mime/{XMLnamespaces,aliases,generic-icons,globs}
 rm -f %buildroot/%_datadir/mime/{globs2,icons,magic,mime.cache,subclasses,treemagic,types}
 rm -f %buildroot/%_datadir/mime/version
@@ -156,20 +161,24 @@ rm -f %buildroot/%_datadir/mime/version
 %files
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING README NEWS
 
-%files -n libgeda -f libgeda38.lang
+%files -n libgeda -f libgeda44.lang
 %doc libgeda/{HACKING,ChangeLog*,BUGS,TODO}
 %dir %_datadir/gEDA/
 %dir %_datadir/gEDA/scheme
 %_libdir/libgeda.so.*
-%_datadir/gEDA/prolog.ps
+%_libdir/libgedacairo.so.*
+#_datadir/gEDA/prolog.ps
 %_datadir/gEDA/scheme/geda.scm
 %_datadir/gEDA/system-gafrc
 %_datadir/mime/packages/libgeda.xml
 
 %files -n libgeda-devel
 %_includedir/libgeda/
+%_includedir/libgedacairo/
 %_libdir/libgeda.so
+%_libdir/libgedacairo.so
 %_pkgconfigdir/libgeda.pc
+%_pkgconfigdir/libgedacairo.pc
 
 %files -n geda-symbols
 %doc symbols/{AUTHORS,ChangeLog*,README,TODO}
@@ -193,26 +202,33 @@ rm -f %buildroot/%_datadir/mime/version
 %_bindir/gattrib
 %_datadir/gEDA/system-gattribrc
 %_datadir/gEDA/gattrib-menus.xml
+%_datadir/gEDA/scheme/auto-place-attribs.scm
 %_desktopdir/geda-gattrib.desktop
 %_iconsdir/hicolor/*/apps/geda-gattrib.*
+%_man1dir/gattrib.1.*
 
-%files -n geda-gnetlist
+%files -n geda-gnetlist -f geda-gnetlist.lang
 %doc gnetlist/{BUGS,ChangeLog*,TODO}
 #%doc %_docdir/%name/gnetlist
 %_bindir/gnetlist
-%_bindir/mk_verilog_syms
-%_bindir/sch2eaglepos.sh
+#%_bindir/mk_verilog_syms
+#%_bindir/sch2eaglepos.sh
 %_bindir/sw2asc
 %_datadir/gEDA/scheme/gnet*.scm
+%_datadir/gEDA/scheme/auto-place-netname.scm
+%_datadir/gEDA/scheme/gnetlist/
 %_datadir/gEDA/system-gnetlistrc
 %_man1dir/gnetlist.*
 
 %files -n geda-gschem -f geda-gschem.lang
 %doc gschem/{BUGS,ChangeLog*,TODO}
 %_bindir/gschem
-%_bindir/gschemdoc
-%_datadir/gEDA/scheme/auto-place-attribs.scm
+#%_bindir/gschemdoc
+%_datadir/gEDA/gschem-colormap-bw
+%_datadir/gEDA/icons/
 %_datadir/gEDA/scheme/default-attrib-positions.scm
+%_datadir/gEDA/scheme/geda-deprecated-config.scm
+%_datadir/gEDA/scheme/partslist-common.scm
 %_datadir/gEDA/scheme/image.scm
 %_datadir/gEDA/scheme/pcb.scm
 %_datadir/gEDA/scheme/print.scm
@@ -221,6 +237,8 @@ rm -f %buildroot/%_datadir/mime/version
 %_datadir/gEDA/scheme/gschem.scm
 %_datadir/gEDA/scheme/list-keys.scm
 %_datadir/gEDA/scheme/print-NB-attribs.scm
+%_datadir/gEDA/scheme/gschem/
+%_datadir/gEDA/scheme/geda/
 %_datadir/gEDA/bitmap/gschem-*
 %_datadir/gEDA/system-gschemrc
 %_datadir/gEDA/gschem-gtkrc
@@ -232,29 +250,32 @@ rm -f %buildroot/%_datadir/mime/version
 %_datadir/mime/application/x-geda-schematic.xml
 %_desktopdir/geda-gschem.desktop
 %_man1dir/gschem.*
+%_infodir/geda-scheme.*
 %_iconsdir/hicolor/*/apps/geda-gschem.*
 %_iconsdir/hicolor/*/mimetypes/application-x-geda-schematic.*
 
-%files -n geda-gsymcheck
+%files -n geda-gsymcheck -f geda-gsymcheck.lang
 %doc gsymcheck/{BUGS,ChangeLog*,TODO}
 #%doc %_docdir/%name/gsymcheck
 %_bindir/gsymcheck
 %_datadir/gEDA/system-gsymcheckrc
 %_man1dir/gsymcheck.*
 
-%files -n geda-utils
+%files -n geda-utils -f geda-gaf.lang
 %doc utils/{ChangeLog*,README,AUTHORS}
 #%doc %_docdir/%name/utils
 #%doc %_docdir/%name/readmes/
+%_bindir/gaf
 %_bindir/garchive
+%_bindir/schdiff
 %_bindir/grenum
 %_bindir/gmk_sym
 %_bindir/smash_megafile
 %_bindir/convert_sym
 %_bindir/sarlacc_schem
 %_bindir/sarlacc_sym
-%_bindir/gschupdate
-%_bindir/gsymfix.pl
+#%_bindir/gschupdate
+%_bindir/gsymfix
 %_bindir/pcb_backannotate
 %_bindir/gschlas
 %_bindir/olib
@@ -262,16 +283,37 @@ rm -f %buildroot/%_datadir/mime/version
 %_bindir/gsch2pcb
 %_bindir/pads_backannotate
 %_bindir/tragesym
-%_bindir/gsymupdate
+#%_bindir/gsymupdate
 %_bindir/gxyrs
-%_bindir/gnet_hier_verilog.sh
+#%_bindir/gnet_hier_verilog.sh
 %_datadir/gEDA/system-gschlasrc
 %_datadir/gEDA/perl/lib/gxyrs.pm
 %_datadir/mime/application/x-geda-gsch2pcb-project.xml
 %_iconsdir/hicolor/*/mimetypes/application-x-geda-gsch2pcb-project.*
+%_man1dir/gaf.1.*
 %_man1dir/grenum.1.*
+%_man1dir/gsymfix.1.*
+%_man1dir/garchive.1.*
+%_man1dir/convert_sym.1.*
+%_man1dir/gmk_sym.1.*
+%_man1dir/gsch2pcb.1.*
+%_man1dir/gschlas.1.*
+%_man1dir/gxyrs.1.*
+%_man1dir/olib.1.*
+%_man1dir/pads_backannotate.1.*
+%_man1dir/pcb_backannotate.1.*
+%_man1dir/refdes_renum.1.*
+%_man1dir/sarlacc_schem.1.*
+%_man1dir/sarlacc_sym.1.*
+%_man1dir/schdiff.1.*
+%_man1dir/smash_megafile.1.*
+%_man1dir/sw2asc.1.*
+%_man1dir/tragesym.1.*
 
 %changelog
+* Thu Dec 11 2014 Vitaly Lipatov <lav@altlinux.ru> 2:1.9.1-alt1
+- new version 1.9.1 (with rpmrb script) (ALT bug #30536)
+
 * Thu Sep 05 2013 Vitaly Lipatov <lav@altlinux.ru> 2:1.6.2-alt1
 - new version 1.6.2 (with rpmrb script)
 
