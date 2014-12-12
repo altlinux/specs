@@ -1,8 +1,8 @@
 %define mname collective
 %define oname %mname.plonetruegallery
 Name: python-module-%oname
-Version: 3.4.5
-Release: alt2.dev.git20140605
+Version: 3.4.6
+Release: alt1.dev0.git20141128
 Summary: Implements a very customizable and sophisticated gallery
 License: GPL
 Group: Development/Python
@@ -98,6 +98,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Fri Dec 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.6-alt1.dev0.git20141128
+- Version 3.4.6.dev0
+
 * Mon Oct 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.5-alt2.dev.git20140605
 - Applied python-module-collective.plonetruegallery-3.4.5-alt1.dev.git20140605.diff
 
