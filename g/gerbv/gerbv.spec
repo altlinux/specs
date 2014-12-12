@@ -1,5 +1,5 @@
 Name: gerbv
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: Gerber file viewer
@@ -10,9 +10,8 @@ Url: http://gerbv.sourceforge.net
 License: GPL
 Group: Graphics
 
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
-#Patch: %name-gcc4.patch
-#Patch1: %name-%version-gcc43.patch
+# Source-git: http://git.geda-project.org/gerbv/
+Source: %name-%version.tar
 Patch2: %name-2.1.0-alt-DSO.patch
 
 # Automatically added by buildreq on Wed Nov 12 2008
@@ -49,12 +48,11 @@ Requires: lib%name = %version-%release
 Header files for lib%name library.
 
 %prep
-%setup -q
-#patch
-#patch1
-%patch2 -p2
+%setup
+#patch2 -p2
 
 %build
+%autoreconf
 %configure --enable-exportpng --enable-gtk2 --disable-static
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
@@ -67,7 +65,9 @@ cp -r doc %buildroot%_datadir/gerbv
 
 rm -f %buildroot%_desktopdir/*.cache
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %dir %_datadir/gerbv
 %dir %_datadir/gerbv/doc
 %dir %_datadir/gerbv/scheme
@@ -76,6 +76,7 @@ rm -f %buildroot%_desktopdir/*.cache
 %_man1dir/gerbv.*
 %_datadir/gerbv/doc/*
 %_datadir/gerbv/scheme/*.scm
+%_datadir/gerbv/gerbv_icon.ico
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
 
@@ -84,7 +85,7 @@ rm -f %buildroot%_desktopdir/*.cache
 
 %files -n lib%name-devel
 %_pkgconfigdir/*.pc
-%_includedir/%name-%version/
+%_includedir/%name-*/
 %_libdir/*.so
 
 %files examples
@@ -92,6 +93,9 @@ rm -f %buildroot%_desktopdir/*.cache
 %_datadir/gerbv/example/*
 
 %changelog
+* Fri Dec 12 2014 Vitaly Lipatov <lav@altlinux.ru> 2.6.1-alt1
+- new version 2.6.1 (ALT bug #30537)
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
 - new version 2.6.0 (with rpmrb script)
 
