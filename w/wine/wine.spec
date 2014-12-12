@@ -12,8 +12,8 @@
 %define debug %nil
 
 Name: wine
-Version: 1.7.4
-Release: alt2
+Version: 1.7.33
+Release: alt1
 Epoch: 1
 
 Summary: Environment for running Windows applications (Etersoft edition)
@@ -79,6 +79,9 @@ Requires: libXrender libXi libXext libX11 libICE
 #BuildConflicts: valgrind-devel valgrind
 
 %if %_vendor == "alt"
+# fix it for ALT Linux
+%define _localstatedir /var
+
 #ExclusiveArch:  %{ix86}
 Requires: webclient
 BuildRequires: desktop-file-utils
@@ -93,7 +96,7 @@ Requires: fonts-ttf-core
 %endif
 
 # We need predownloaded Gecko engine
-Requires: wine-gecko = 2.24
+Requires: wine-gecko = 2.34
 
 Requires: lib%name = %epoch:%version-%release
 Provides: %name-utils
@@ -296,8 +299,7 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %_initdir/wine
 %_initdir/wine.outformat
 # _localstatedir is broken on some systems as ALT Linux
-#attr(0775 root wineadmin) %dir %_localstatedir/wine/
-%attr(0775 root wineadmin) %dir /var/lib/wine/
+%attr(0775 root wineadmin) %dir %_localstatedir/lib/wine/
 # rules for fix permissions on protection keys
 %_sysconfdir/udev/rules.d/99-winekeys.rules
 #%_sysconfdir/sysctl.d/wine.conf
@@ -422,6 +424,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Sat Dec 13 2014 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.33-alt1
+- release 1.7.33 (use wine-gecko 2.34)
+
 * Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.4-alt2
 - fix install /etc/udev files
 - fix libfontconfig requires
