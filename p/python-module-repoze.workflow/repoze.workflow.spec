@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7
-Release: alt2.git20130926
+Version: 1.0
+Release: alt1.b1.git20141211
 Summary: Declarative state machine for content-lifecycle workflows
 License: BSD
 Group: Development/Python
@@ -99,7 +99,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt docs/*.rst
+%doc *.txt docs/*.rst *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/test*
@@ -109,7 +109,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt docs/*.rst
+%doc *.txt docs/*.rst *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/test*
@@ -121,6 +121,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Dec 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.b1.git20141211
+- Version 1.0b1
+
 * Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt2.git20130926
 - Added module for Python 3
 
