@@ -1,6 +1,6 @@
 Name: rfkill
-Version: 0.4
-Release: alt1.qa1
+Version: 0.5
+Release: alt1
 
 Summary: A tool to use /dev/rfkill
 License: BSD-style
@@ -21,7 +21,7 @@ buttons and subsystem interfaces.
 %setup
 
 %build
-%make_build
+%make_build CFLAGS="$RPM_OPT_FLAGS"
 
 %install
 %makeinstall_std
@@ -32,6 +32,9 @@ buttons and subsystem interfaces.
 %_man8dir/*
 
 %changelog
+* Sat Dec 13 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
+- 0.5
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
