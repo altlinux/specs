@@ -18,7 +18,7 @@ Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
 Version: 14.501.1003
-Release: alt1
+Release: alt2
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -36,6 +36,7 @@ Patch0: %bname-13.20.16-printk-loglevel.patch
 Patch1: %bname-14.10-remove-unused.patch
 Patch2: %bname-14.10-linux-3.14.patch
 Patch3: %bname-14.10-alt.patch
+Patch4: %bname-linux3.17.patch
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
 %{?epoch:Provides: %bname = %version-%release}
@@ -114,6 +115,7 @@ cd common/lib/modules/%bname/build_mod
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 cd -
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
 for d in {common,%archdir}/lib/modules/%bname/build_mod; do
@@ -263,6 +265,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Sat Dec 13 2014 barssc <barssc@altlinux.ru> 2:14.501.1003-alt2
+- Kernel module: fixed build for kernel 3.17
+
 * Sat Dec 13 2014 barssc <barssc@altlinux.ru> 2:14.501.1003-alt1
 - Catalyst 14.12
 - Closed bug 30324
