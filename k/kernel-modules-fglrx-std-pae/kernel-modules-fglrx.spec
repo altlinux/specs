@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	14.501.1003
-%define module_release alt1
+%define module_release alt2
 
 %define flavour std-pae
 BuildRequires(pre): kernel-headers-modules-std-pae
@@ -65,6 +65,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Dec  13 2014 barssc <barssc@altlinux.org> 2:14.501.1003-alt2
+- 14.501.1003
 
 * Tue Nov  4 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 2:14.301.1001-alt3
 - don't build depend on source release
