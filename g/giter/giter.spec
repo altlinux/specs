@@ -1,5 +1,5 @@
 Name: giter
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -39,6 +39,11 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Sat Dec 13 2014 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- fix remote detecting
+- rewrite to support various length commands
+- add check girar access
+
 * Mon Dec 08 2014 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - ginit: add support for direct set project name or path to the project dir
 - ginit: create alias only if use current repo info
