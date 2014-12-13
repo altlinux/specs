@@ -1,4 +1,4 @@
-%define cat_ver 14.301.1001
+%define cat_ver 14.501.1003
 
 %ifarch %ix86
 %define archdir arch/x86
@@ -17,14 +17,15 @@
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
-Version: 14.301.1001
-Release: alt2.1
+Version: 14.501.1003
+Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
 URL: http://www.amd.com
 License: Proprietary
 Source0: http://www2.ati.com/drivers/beta/amd-driver-installer-%version-x86.x86_64.run
+Source1: atieventsd.service
 Source2: %bname-switch.c
 Source7: a-ac-aticonfig
 Source8: a-lid-aticonfig
@@ -182,6 +183,7 @@ done > %bname-tools.lang
 install -p -m 0755 {%archdir,common}/usr/X11R6/bin/* %buildroot%_bindir/
 
 install -p -m 0755 {%archdir,common}%_sbindir/* %buildroot%_sbindir/
+install -pD -m644 %SOURCE1 %buildroot%systemd_unitdir/atieventsd.service
 install -p -m 0644 %SOURCE7 %SOURCE8 %buildroot%_sysconfdir/acpi/events/
 install -p -m 0755 %SOURCE9 %buildroot%_sysconfdir/acpi/
 install -pD -m 0755 %SOURCE11 %buildroot%_initrddir/atieventsd
@@ -244,6 +246,7 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 %dir %_datadir/ati
 %dir %_datadir/ati/amdcccle
 %_sysconfdir/acpi/*
+%systemd_unitdir/atieventsd.service
 %_initrddir/*
 %_man8dir/*
 %_man1dir/*
@@ -260,6 +263,10 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Sat Dec 13 2014 barssc <barssc@altlinux.ru> 2:14.501.1003-alt1
+- Catalyst 14.12
+- Closed bug 30324
+
 * Wed Oct 22 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:14.301.1001-alt2.1
 - removed requires XORG_ABI_VIDEODRV
 
