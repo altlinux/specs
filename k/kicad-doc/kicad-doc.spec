@@ -1,38 +1,42 @@
 Summary: 	Documentation and tutorials for kicad
 Name: 		kicad-doc
-Version:	1.1
-Release:	alt0.2
+Version:	r647
+Release:	alt1
 Group: 		Documentation
-License: 	GPL
-Url: 		http://kicad.sourceforge.net/
-Packager: Alexey Shentzev <ashen@altlinux.ru>
-Source:		%name-%version.tar.bz2
+License: 	Free Documentation Licence
+Url:		https://code.launchpad.net/kicad
+#Url: 		http://bazaar.launchpad.net/~kicad-developers/kicad/doc
+Source:		~kicad-developers-%name-%version.tgz
 BuildArch:      noarch
 # Automatically added by buildreq on Fri Feb 13 2009
-BuildRequires: ccmake gcc-c++ cmake >= 2.4.6 cmake-modules glibc-pthread libstdc++-devel
+BuildRequires: ccmake gcc-c++ cmake >= 2.8.4 cmake-modules glibc-pthread libstdc++-devel
 
 %description 
-Kicad is an open source (GPL) software for the creation of electronic
-schematic diagrams and printed circuit board artwork up to 16 layers.
-This is the documentation package for kicad. It contains documentation
-and tutorials.
+KiCad is a open source (GPL) integrated package for schematic circuit capture and PCB layout.
+This is the documentation package for kicad. It contains documentation, tutorials and files localization.
 
 
 %prep
-%setup -q -n kicad
-cmake -DCMAKE_INSTALL_PREFIX=/usr
+%setup -q -n ~kicad-developers/kicad/doc
+
 
 %build
+cmake -DCMAKE_INSTALL_PREFIX=/usr
+
+%install
 %make DESTDIR=%buildroot install
 
 %clean
 %__rm -rf %buildroot
 
 %files
-%defattr(-,root,root,-)
 %_datadir/doc/*
+%_datadir/kicad/*
 
 %changelog
+* Sat Nov 29 2014 barssc <barssc@altlinux.ru> r647-alt1
+- new version
+
 * Fri Feb 13 2009 Alexey Shentzev <ashen@altlinux.ru> 1.1-alt0.2
 - fix Group
 
