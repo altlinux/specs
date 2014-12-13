@@ -1,6 +1,6 @@
 %define module_name	fglrx
-%define module_version	14.301.1001
-%define module_release alt3
+%define module_version	14.501.1003
+%define module_release alt1
 
 %define flavour std-pae
 BuildRequires(pre): kernel-headers-modules-std-pae
