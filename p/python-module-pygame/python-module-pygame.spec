@@ -7,7 +7,7 @@ find -type f -print0 | xargs -0 chmod 0664
 
 Name: python-module-%oname
 Version: 1.9.1
-Release: alt4.1
+Release: alt5
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
@@ -193,6 +193,9 @@ popd
 %endif
 
 %changelog
+* Sat Dec 13 2014 Dmitry Derjavin <dd@altlinux.org> 1.9.1-alt5
+- Revision up for p7 rebuild.
+
 * Thu Mar 13 2014 Dmitry Derjavin <dd@altlinux.org> 1.9.1-alt4.1
 - NMU: rebuild with libopencv-2.4.8.1;
 
