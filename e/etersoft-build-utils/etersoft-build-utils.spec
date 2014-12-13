@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -22,7 +22,7 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: giter >= 0.4
+Requires: giter >= 0.5
 Requires: eepm >= 1.5.0
 Requires: erc >= 0.5
 
@@ -70,6 +70,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Dec 13 2014 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
+- fix BINARYREPO using
+- improve usearg
+- rpmgp: use giter, drop girar functions
+- rpmpub: fix publication when sources is not exists
+
 * Mon Dec 08 2014 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
 - realize get_repo_name via giter print name
 
