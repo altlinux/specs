@@ -1,6 +1,6 @@
 
 Name: libmongo-client
-Version: 0.1.7.1
+Version: 0.1.8
 Release: alt1
 
 Summary: Alternative C driver for MongoDB
@@ -62,6 +62,9 @@ Subpackage contains documentation for libmongo-client
 %doc docs/html
 
 %changelog
+* Wed Dec 10 2014 Sergey Y. Afonin <asy@altlinux.ru> 0.1.8-alt1
+- 0.1.8 (ALT #30544)
+
 * Tue May 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.7.1-alt1
 - 0.1.7.1
 
