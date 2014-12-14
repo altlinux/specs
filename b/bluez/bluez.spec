@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: bluez
-Version: 5.25
+Version: 5.26
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -100,17 +100,15 @@ chkconfig bluetoothd on
 %files
 %doc AUTHORS ChangeLog README
 %_initdir/bluetoothd
-#%dir %_sysconfdir/bluetooth/
-#%config(noreplace) %_sysconfdir/bluetooth/*.conf
 %config %_sysconfdir/dbus-1/system.d/bluetooth.conf
 %_sysconfdir/modprobe.d/bluetooth.conf
 %_unitdir/*.service
 %_prefix/lib/systemd/user/obex.service
 /lib/udev/rules.d/*-hid2hci.rules
 /lib/udev/hid2hci
-%_libexecdir/bluetooth
 %_bindir/*
-%_libdir/bluetooth
+%_libdir/bluetooth/
+%_libexecdir/bluetooth/
 %_datadir/dbus-1/system-services/org.bluez.service
 %_datadir/dbus-1/services/org.bluez.obex.service
 %_localstatedir/bluetooth
@@ -129,6 +127,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Sun Dec 14 2014 Yuri N. Sedunov <aris@altlinux.org> 5.26-alt1
+- 5.26
+
 * Fri Dec 05 2014 Yuri N. Sedunov <aris@altlinux.org> 5.25-alt1
 - 5.25
 
