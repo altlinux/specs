@@ -2,8 +2,8 @@
 %define ldir %_libdir/%oname
 
 Name: free-cad
-Version: 0.13.0
-Release: alt1.git20140701
+Version: 0.14.0
+Release: alt1.git20141214
 Epoch: 1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -17,7 +17,7 @@ Source1: CMakeCache.txt
 
 Requires: lib%name = %EVR
 
-BuildPreReq: libGConf-devel
+BuildPreReq: libGConf-devel pyside-tools
 BuildPreReq: python-devel cmake swig gcc-fortran libf2c-ng-devel chrpath
 BuildPreReq: boost-devel libqt4-devel libcoin3d-devel libSoQt-devel zlib-devel
 BuildPreReq: libopencv2-devel libxerces-c-devel gcc-c++ boost-filesystem-devel
@@ -144,7 +144,7 @@ ln -s FindOpenCasCade.cmake cMake/FindOCE.cmake
 
 %build
 export PATH=$PATH:%_qt4dir/bin
-./autogen.sh
+#./autogen.sh
 cmake .
 %make
 
@@ -212,7 +212,7 @@ popd
 
 install -d %buildroot%python_sitelibdir
 install $(find ./ -name _coin.so) -m644 %buildroot%python_sitelibdir
-install $(find ./ -name _soqt.so) -m644 %buildroot%python_sitelibdir
+#install $(find ./ -name _soqt.so) -m644 %buildroot%python_sitelibdir
 
 install -d %buildroot%_bindir
 install -d %buildroot%ldir/bin
@@ -234,7 +234,7 @@ for i in %python_sitelibdir/_coin.so
 do
 	chrpath -r %ldir/lib %buildroot$i
 done
-chrpath -d %buildroot%python_sitelibdir/_soqt.so
+#chrpath -d %buildroot%python_sitelibdir/_soqt.so
 
 %find_lang --with-kde %name
 
@@ -290,6 +290,9 @@ fi
 %_libexecdir/qt4/plugins/designer/*
 
 %changelog
+* Sun Dec 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.14.0-alt1.git20141214
+- Version 0.14.0 (ALT #30563)
+
 * Wed Jul 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.13.0-alt1.git20140701
 - New snapshot
 
