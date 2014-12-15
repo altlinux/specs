@@ -1,5 +1,5 @@
 %define version 1.7.5
-%define release alt2.hg20120208
+%define release alt3.hg20120208
 %define oname PasteScript
 
 %def_with python3
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.7.5-alt3.hg20120208
+- Avoid check version of Paste when build another packages
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.7.5-alt2.hg20120208
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
