@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -52,6 +52,9 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Mon Dec 15 2014 Mikhail Efremov <sem@altlinux.org> 0.3.8-alt1
+- Use https for BASE.
+
 * Fri Dec 12 2014 Mikhail Efremov <sem@altlinux.org> 0.3.7-alt1
 - Only use UTC if it configured in the barnyard2.conf.
 - Install snort-email-notification.sh script.
