@@ -1,4 +1,4 @@
-%define svn_revision 417586.1
+%define svn_revision 417586.2
 #============================================================================
 # Please do not edit!
 # Created by specgen utility from files in specs/ subdir
@@ -70,7 +70,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 417586.1
+%define svn_revision 417586.2
 %add_verify_elf_skiplist %_libdir/libasteriskssl13.so.1
 %def_with debug
 %def_enable debug
@@ -1283,6 +1283,9 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %_libdir/libasteriskssl13.so.1
 
 %changelog
+* Mon Dec 15 2014 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.417586.2
+- exclude music/sounds from src.rpm
+
 * Fri Dec 12 2014 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.417586.1
 - change requires from asterisk12-common to asterisk13-common
 
