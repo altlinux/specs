@@ -3,8 +3,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-zabbix-server
-Version: 0.0.3
-Release: alt2
+Version: 0.0.4
+Release: alt1
 
 Summary: Alterator module for Zabbix server setup
 License: GPL
@@ -21,7 +21,7 @@ Requires: php5-fpm-fcgi
 Requires: nginx
 Requires: alterator-service-functions >= 2.0.0
 Requires: php5-sockets php5-gd2 php5-mysqli php5-mbstring
-Requires: nginx-webapps
+Requires: nginx-webapps-ssl
 Conflicts: alterator-lookout < 1.6-alt3
 BuildArch: noarch
 BuildRequires: alterator
@@ -47,6 +47,9 @@ Alterator module for Zabbix server setup
 %_sysconfdir/nginx/webapps-available.d/alterator-zabbix-server.conf
 
 %changelog
+* Mon Dec 15 2014 Mikhail Efremov <sem@altlinux.org> 0.0.4-alt1
+- Use https for Zabbix.
+
 * Wed Nov 26 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt2
 - fix typo
 
