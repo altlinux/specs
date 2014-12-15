@@ -1,6 +1,6 @@
-%define rev 311a783b
+%define rev 7bf6fe75
 Name: megaglest
-Version: 3.9.0
+Version: 3.9.2
 Release: alt1.%rev
 Summary: Glest is a project for making a free 3d real-time customizable strategy game
 License: GPLv3
@@ -31,6 +31,7 @@ with their corresponding tech trees, units, buildings and some maps.
 %setup  -n %name-source-%version
 %patch2 -p2
 sed -in '/^#include <curl\/types\.h>/d' source/shared_lib/sources/platform/posix/miniftpclient.cpp
+sed -i 's#DataPath=$APPLICATIONDATAPATH#DataPath=/usr/share/games/megaglest/#g' %_builddir/%name-source-%version/mk/linux/glest.ini
 
 %build
 %add_optflags -fpermissive
@@ -40,7 +41,7 @@ cmake --debug-output -D CMAKE_CXX_FLAGS="%optflags" -D CMAKE_C_FLAGS="%optflags"
 
 %install
 # let's create directory structure...
-mkdir -p %buildroot{%_bindir,%_niconsdir,%_desktopdir}
+mkdir -p %buildroot{%_bindir,%_niconsdir,%_desktopdir,%_datadir/%name}
 
 # and install what we need where we need it to be...
 install -pm755 source/glest_game/%name %buildroot%_bindir/%name-bin
@@ -49,13 +50,21 @@ install -pm755 %SOURCE2 %buildroot%_bindir/%name
 install -pm 644 %SOURCE3 %buildroot%_niconsdir/%name.png
 install -pm 644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
+install -pm 644 %_builddir/%name-source-%version/mk/linux/glest.ini %buildroot%_datadir/%name
+install -pm 644 %_builddir/%name-source-%version/mk/linux/glestkeys.ini %buildroot%_datadir/%name
+
+
 %files
 %doc docs/
 %_bindir/*
 %_niconsdir/%name.png
 %_desktopdir/%name.desktop
+%_datadir/%name/*.ini
 
 %changelog
+* Tue Nov 25 2014 Andrew Clark <andyc@altlinux.org> 3.9.2-alt1.7bf6fe75
+- version update to 3.9.2-alt1.7bf6fe75
+
 * Sun Jan 12 2014 Andrew Clark <andyc@altlinux.org> 3.9.0-alt1.311a783b
 - version update to 3.9.0-alt1.311a783b
 

@@ -1,8 +1,8 @@
-%define rev 81693aec
+%define rev 19119ebb
 %define packname megaglest
 Name: megaglest-data
-Version: 3.9.0
-Release: alt1.%rev
+Version: 3.9.2
+Release: alt2.%rev
 Summary: Glest is a project for making a free 3d real-time customizable strategy game
 License: GPL
 Group: Games/Strategy
@@ -21,9 +21,9 @@ with their corresponding tech trees, units, buildings and some maps.
 %prep
 %setup -q -n %name
 
-sed -i 's#DataPath=$APPLICATIONDATAPATH#DataPath=/usr/share/games/megaglest/#g' glest.ini
-sed -i 's#LogPath=$APPDATA\\megaglest\\#LogPath=$HOME#g' glest.ini
-sed -i 's#UserData_Root=$APPDATA\\megaglest\\#UserData_Root=$HOME\/megaglest/#g' glest.ini
+#sed -i 's#DataPath=$APPLICATIONDATAPATH#DataPath=/usr/share/games/megaglest/#g' glest.ini
+#sed -i 's#LogPath=$APPDATA\\megaglest\\#LogPath=$HOME#g' glest.ini
+#sed -i 's#UserData_Root=$APPDATA\\megaglest\\#UserData_Root=$HOME\/megaglest/#g' glest.ini
 
 
 %install
@@ -34,6 +34,12 @@ mv * %buildroot%_gamesdatadir/%packname/
 %_gamesdatadir/%packname
 
 %changelog
+* Sat Dec 13 2014 Andrew Clark <andyc@altlinux.org> 3.9.2-alt2.19119ebb
+- version update to 3.9.2-alt2.19119ebb
+
+* Tue Nov 25 2014 Andrew Clark <andyc@altlinux.org> 3.9.2-alt1.c61c99a9
+- version update to 3.9.2-alt1.c61c99a9
+
 * Sat Jan 11 2014 Andrew Clark <andyc@altlinux.org> 3.9.0-alt1.81693aec
 - version update to 3.9.0-alt1.81693aec
 
