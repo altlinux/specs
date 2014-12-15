@@ -2,7 +2,7 @@
 %define oname %mname.zope
 Name: python-module-%oname
 Version: 2.2
-Release: alt1.dev0.git20140917
+Release: alt2.dev0.git20140917
 Summary: Munin plugins for Zope/Plone
 License: GPL
 Group: Development/Python
@@ -70,6 +70,7 @@ install -p -m644 src/%mname/__init__.py \
 	%buildroot%python_sitelibdir/%mname/
 install -p -m644 src/%mname/zope/*.txt \
 	%buildroot%python_sitelibdir/%mname/zope/
+mv %buildroot%_bindir/%mname %buildroot%_bindir/%mname.zope
 
 %check
 python setup.py test
@@ -91,6 +92,9 @@ py.test src/munin/zope/tests.py
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt2.dev0.git20140917
+- Renamed %_bindir/%mname -> %_bindir/%mname.zope
+
 * Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.dev0.git20140917
 - Initial build for Sisyphus
 
