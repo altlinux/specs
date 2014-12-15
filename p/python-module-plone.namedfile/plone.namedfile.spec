@@ -1,7 +1,7 @@
 %define oname plone.namedfile
 Name: python-module-%oname
-Version: 3.0.1
-Release: alt2.dev0.git20141007
+Version: 3.0.2
+Release: alt1.dev0.git20141023
 Summary: File types and fields for images, files and blob files with filenames
 License: BSD
 Group: Development/Python
@@ -71,6 +71,9 @@ python setup.py test
 %python_sitelibdir/plone/*/tests
 
 %changelog
+* Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt1.dev0.git20141023
+- Version 3.0.2.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt2.dev0.git20141007
 - Added necessary requirements
 
