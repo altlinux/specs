@@ -1,10 +1,8 @@
 %define oname plone.app.registry
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.2.4
-Release: alt3.dev0.git20140823
+Release: alt4.dev0.git20140823
 Summary: Zope 2 and Plone integration for plone.registry
 License: GPL
 Group: Development/Python
@@ -80,6 +78,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.4-alt4.dev0.git20140823
+- Enabled testing
+
 * Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.4-alt3.dev0.git20140823
 - Avoid version check for plone.registry
 
