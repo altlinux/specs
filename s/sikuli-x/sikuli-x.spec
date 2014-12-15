@@ -1,6 +1,6 @@
 Name: sikuli-x
 Version: 1.0
-Release: alt3.rc3.1
+Release: alt5.rc3
 
 Summary: GUI control scripting tool
 License: MIT
@@ -21,7 +21,7 @@ Patch6: update-to-tesseract3.patch
 BuildPreReq: rpm-build-java
 
 BuildRequires: cmake gcc-c++ java-devel-default swig tesseract tesseract-devel tesseract-eng libopencv-devel libtiff-devel python-module-sphinx
-BuildRequires: jython apache-commons-cli junit swing-layout json_simple swingx mockito jxgrabkey jgoodies-forms jgoodies-common macwidgets
+BuildRequires: jython apache-commons-cli junit3 swing-layout json_simple swingx mockito jxgrabkey jgoodies-forms jgoodies-common macwidgets
 
 Requires: sikuli-ide = %version-%release
 
@@ -36,7 +36,7 @@ Summary: GUI control scripting tool
 License: MIT
 Group: Development/Other
 
-Requires: apache-commons-cli swing-layout json_simple junit macwidgets
+Requires: apache-commons-cli swing-layout json_simple junit3 macwidgets
 Requires: jgoodies-forms >= 1.4 jgoodies-common >= 1.4
 Requires: swingx >= 1.6.1
 
@@ -81,6 +81,8 @@ popd
 
 pushd sikuli-ide/build
 cmake ../
+subst 's/junit\.jar/junit3\.jar/' ../CMakeLists.txt
+cmake ../
 %make_build
 popd
 
@@ -116,6 +118,12 @@ chmod 0755 %buildroot%_bindir/sikuli
 %_datadir/java/sikuli-script.jar
 
 %changelog
+* Sat Dec 13 2014 Dmitry Derjavin <dd@altlinux.org> 1.0-alt5.rc3
+- Specified required junit version.
+
+* Sat Dec 13 2014 Dmitry Derjavin <dd@altlinux.org> 1.0-alt4.rc3
+- Revision up for p7 rebuild.
+
 * Thu Mar 13 2014 Dmitry Derjavin <dd@altlinux.org> 1.0-alt3.rc3.1
 - NMU: rebuild with libopencv-2.4.8.1;
 
