@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Epoch: 1
-Version: 5.4.1
+Version: 8.0.2
 Release: alt1
 
 Summary: Python Distutils Enhancements
@@ -138,14 +138,19 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %_bindir/easy_install-%_python3_version
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%modulename/command/test.py*
+%exclude %python3_sitelibdir/%modulename/command/*/test.*
 %exclude %python3_sitelibdir/%modulename/tests
 
 %files -n python3-module-%modulename-tests
 %python3_sitelibdir/%modulename/command/test.py*
+%python3_sitelibdir/%modulename/command/*/test.*
 %python3_sitelibdir/%modulename/tests
 %endif
 
 %changelog
+* Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:8.0.2-alt1
+- Version 8.0.2
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.4.1-alt1
 - Version 5.4.1
 
