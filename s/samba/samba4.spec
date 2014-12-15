@@ -30,7 +30,7 @@
 %def_enable avahi
 
 Name: samba
-Version: 4.1.13
+Version: 4.1.14
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -60,6 +60,10 @@ Provides: samba-swat = %version-%release
 Obsoletes: samba-swat < %version-%release
 Provides: samba4-swat = %version-%release
 Obsoletes: samba4-swat < %version-%release
+Provides: samba-doc = %version-%release
+Obsoletes: samba-doc < %version-%release
+Provides: samba4-doc = %version-%release
+Obsoletes: samba4-doc < %version-%release
 
 Requires: %name-winbind-clients = %version-%release
 Requires(pre): %name-common = %version-%release
@@ -360,17 +364,17 @@ Obsoletes: samba4-winbind-devel < %version-%release
 %description winbind-devel
 The samba-winbind package provides developer tools for the wbclient library.
 
-%package doc
-Summary: Documentation for the Samba suite
-Group: Documentation
-Requires: %name-common = %version-%release
-BuildArch: noarch
-Provides: samba4-doc = %version-%release
-Obsoletes: samba4-doc < %version-%release
+#%package doc
+#Summary: Documentation for the Samba suite
+#Group: Documentation
+#Requires: %name-common = %version-%release
+#BuildArch: noarch
+#Provides: samba4-doc = %version-%release
+#Obsoletes: samba4-doc < %version-%release
 
-%description doc
-The samba-doc package includes all the non-manpage documentation for the
-Samba suite.
+#%description doc
+#The samba-doc package includes all the non-manpage documentation for the
+#Samba suite.
 
 %prep
 %setup -q
@@ -430,7 +434,6 @@ Samba suite.
 
 
 %undefine _configure_gettext
-%add_optflags -I/usr/include/krb5
 LDFLAGS="-Wl,-z,relro,-z,now" \
 %configure \
 	--enable-fhs \
@@ -477,20 +480,8 @@ LDFLAGS="-Wl,-z,relro,-z,now" \
 
 %make_build
 
-# Build PIDL for installation into vendor directories before
-# 'make proto' gets to it.
-(cd pidl && perl Makefile.PL INSTALLDIRS=vendor )
-
-pushd docs-xml
-export XML_CATALOG_FILES="file:///etc/xml/catalog file://$(pwd)/build/catalog.xml"
-%autoreconf
-%configure
-%make_build smbdotconf/parameters.all.xml
-%make_build release
-popd
-
 %install
-%make install DESTDIR=%buildroot PERL_INSTALL_ROOT=%buildroot
+make install DESTDIR=%buildroot
 
 mkdir -p %buildroot/sbin
 mkdir -p %buildroot/usr/{sbin,bin}
@@ -1017,8 +1008,8 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n python-module-%name
 %python_sitelibdir/*
 
-%files doc
-%doc docs-xml/output/htmldocs
+#%files doc
+#%doc docs-xml/output/htmldocs
 
 %files test
 %_bindir/gentest
@@ -1083,6 +1074,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/winbind_krb5_locator.7*
 
 %changelog
+* Mon Dec 15 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.14-alt1
+- 4.1.14
+
 * Fri Nov 07 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.13-alt1
 - 4.1.13
 
