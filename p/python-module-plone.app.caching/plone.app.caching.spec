@@ -1,7 +1,7 @@
 %define oname plone.app.caching
 Name: python-module-%oname
-Version: 1.2.2
-Release: alt1.dev0.git20141009
+Version: 1.2.3
+Release: alt1.dev0.git20141023
 Summary: HTTP caching framework for the Plone CMS
 License: GPLv2
 Group: Development/Python
@@ -128,6 +128,9 @@ python setup.py test
 %doc docs/build/html/*
 
 %changelog
+* Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.3-alt1.dev0.git20141023
+- Version 1.2.3.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
