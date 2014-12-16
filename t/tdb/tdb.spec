@@ -1,5 +1,5 @@
 Name: tdb
-Version: 1.3.1
+Version: 1.3.3
 Release: alt1
 
 Summary: A trivial database system
@@ -8,7 +8,6 @@ Group: Databases
 Url: http://tdb.samba.org/
 
 Source: http://samba.org/ftp/tdb/%name-%version.tar.gz
-Patch1: 0001-tdb-include-include-stdbool.h-in-tdb.h.patch
 
 BuildRequires: docbook-dtds docbook-style-xsl xsltproc python-devel
 
@@ -94,7 +93,6 @@ Python bindings for libtdb
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %undefine _configure_gettext
@@ -126,6 +124,9 @@ rm -f %buildroot%_libdir/libtdb.a
 %python_sitelibdir/tdb.so
 
 %changelog
+* Mon Dec 15 2014 Alexey Shabalin <shaba@altlinux.ru> 1.3.3-alt1
+- 1.3.3
+
 * Mon Sep 22 2014 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt1
 - 1.3.1
 

@@ -1,7 +1,7 @@
 
 Name: sssd
 Version: 1.12.2
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 
 # Determine the location of the LDB modules directory
 %define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
-%define ldb_version 1.1.17
+%define ldb_version 1.1.18
 
 %define _localstatedir /var
 %define _libexecdir /usr/libexec
@@ -573,6 +573,9 @@ unset CK_TIMEOUT_MULTIPLIER
 %_pkgconfigdir/wbclient_sssd.pc
 
 %changelog
+* Tue Dec 16 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.2-alt2
+- rebuild with libldb-1.1.18
+
 * Thu Nov 13 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.2-alt1
 - 1.12.2
 
