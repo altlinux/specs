@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist SQL-Abstract
 Name: perl-%dist
-Version: 1.80
+Version: 1.81
 Release: alt1
 
 Summary: Generate SQL from Perl data structures
@@ -37,6 +38,9 @@ create an abstract SQL generation module.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.81-alt1
+- automated CPAN update
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.80-alt1
 - automated CPAN update
 
