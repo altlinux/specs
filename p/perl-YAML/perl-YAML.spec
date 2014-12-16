@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist YAML
 Name: perl-%dist
-Version: 1.08
+Version: 1.13
 Release: alt1
 
 Summary: YAML Ain't Markup Language
@@ -41,6 +41,9 @@ data structures of most modern programming languages (including Perl).
 %perl_vendor_privlib/YAML*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
 - automated CPAN update
 
