@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Catalyst-Manual
 Name: perl-%dist
-Version: 5.9008
+Version: 5.9009
 Release: alt1
 Epoch: 1
 
@@ -37,6 +37,9 @@ Task::Catalyst::Tutorial.
 %perl_vendor_privlib/Catalyst*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.9009-alt1
+- automated CPAN update
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.9008-alt1
 - automated CPAN update
 
