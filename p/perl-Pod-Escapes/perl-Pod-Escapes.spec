@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Pod-Escapes
 Name: perl-%dist
-Version: 1.06
+Version: 1.07
 Release: alt1
 
 Summary: Perl module for resolving Pod escape sequences
@@ -34,6 +34,9 @@ sequences.  It is used by Pod parsers and formatters.
 %perl_vendor_privlib/Pod
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
 - automated CPAN update
 
