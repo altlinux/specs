@@ -1,5 +1,5 @@
 Name: perl-DBIx-Class
-Version: 0.08270
+Version: 0.082810
 Release: alt1
 
 Summary: Extensible and flexible object <-> relational mapper
@@ -7,7 +7,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/DBIx-Class/
-Source: http://www.cpan.org/authors/id/F/FR/FREW/DBIx-Class-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/R/RI/RIBASUSHI/DBIx-Class-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ HAVING support.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.082810-alt1
+- automated CPAN update
+
 * Tue Feb 25 2014 Vladimir Lettiev <crux@altlinux.ru> 0.08270-alt1
 - 0.08270
 
