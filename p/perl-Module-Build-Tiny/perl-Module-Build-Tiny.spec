@@ -5,7 +5,7 @@ BuildRequires: perl(Config.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
-Version:	0.036
+Version:	0.039
 Release:	alt1
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -52,8 +52,6 @@ Requires:	perl(Pod/Man.pm)
 #Requires:	perl(TAP/Harness/Env.pm)
 Requires:	perl(TAP/Harness.pm)
 Source44: import.info
-# TMP: drop
-Patch: perl-Module-Build-Tiny-alt-old-Test-Harness.patch
 
 %description
 Many Perl distributions use a Build.PL file instead of a Makefile.PL file to
@@ -66,11 +64,10 @@ Whereas Module::Build has over 6,700 lines of code; this module has less than
 
 %prep
 %setup -q -n Module-Build-Tiny-%{version}
-%patch -p1
 rm t/simple.t
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
+perl Build.PL --installdirs=vendor
 ./Build
 
 %install
@@ -84,6 +81,9 @@ AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1
+- automated CPAN update
+
 * Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.036-alt1
 - automated CPAN update
 
