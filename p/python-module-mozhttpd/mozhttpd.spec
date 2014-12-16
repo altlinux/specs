@@ -1,10 +1,8 @@
 %define oname mozhttpd
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 0.7
-Release: alt1
+Release: alt2
 Summary: Python webserver intended for use with Mozilla testing
 License: MPL
 Group: Development/Python
@@ -40,6 +38,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt2
+- Enabled testing
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1
 - Initial build for Sisyphus
 
