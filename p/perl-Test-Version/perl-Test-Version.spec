@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
@@ -6,14 +7,13 @@ BuildRequires: perl-devel perl-podlators
 %global debug_package %{nil}
 
 Name:		perl-Test-Version
-Version:	1.002004
-Release:	alt1_4
+Version:	1.004001
+Release:	alt1
 Summary:	Check to see that versions in modules are sane
 License:	Artistic 2.0
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-Version/
-Source0:	http://search.cpan.org/CPAN/authors/id/X/XE/XENO/Test-Version-%{version}.tar.gz
-Patch1:		Test-Version-1.002003-pod-spell.patch
+Source:	http://www.cpan.org/authors/id/X/XE/XENO/Test-Version-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Module build requirements
@@ -81,8 +81,6 @@ versions across your dist are sane.
 %prep
 %setup -q -n Test-Version-%{version}
 
-# Some spell checkers check "doesn" rather than "doesn't"
-%patch1
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -101,6 +99,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1}
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.004001-alt1
+- automated CPAN update
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.002004-alt1_4
 - update to new release by fcimport
 
