@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Business-ISMN
-Version: 1.11
+Version: 1.13
 Release: alt1
 
 Summary: Work with International Standard Music Numbers
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/B/BD/BDFOY/%m_distro-%version.tar
+Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Business-ISMN-%{version}.tar.gz
 
 BuildRequires: perl-Module-Build perl-Tie-Cycle
 
@@ -45,6 +45,9 @@ None.
 %perl_vendor_privlib/Business/*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Thu Jan 24 2013 Kirill Maslinsky <kirill@altlinux.org> 1.11-alt1
 - initial build for ALT Linux Sisyphus
 
