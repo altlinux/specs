@@ -2,7 +2,7 @@
 %global qt_module qtconnectivity
 
 Name: qt5-connectivity
-Version: 5.3.2
+Version: 5.4.0
 Release: alt1
 
 Group: System/Libraries
@@ -84,6 +84,11 @@ syncqt.pl-qt5 \
 %make INSTALL_ROOT=%buildroot install_docs ||:
 
 %files common
+
+%files
+%_bindir/sdpscanner*
+%_qt5_bindir/sdpscanner
+
 %files -n libqt5-bluetooth
 %_qt5_libdir/libQt?Bluetooth.so.*
 %_qt5_archdatadir/qml/QtBluetooth/
@@ -104,6 +109,9 @@ syncqt.pl-qt5 \
 %_qt5_docdir/*
 
 %changelog
+* Tue Dec 16 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
 * Wed Sep 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
 - new version
 

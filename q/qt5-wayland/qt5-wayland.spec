@@ -2,7 +2,7 @@
 %global qt_module qtwayland
 
 Name: qt5-wayland
-Version: 5.3.0
+Version: 5.4.0
 Release: alt1
 
 Group: System/Libraries
@@ -11,8 +11,6 @@ Url: http://qt-project.org/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
-
-Patch1: 0001-Disable-stuff-that-does-not-build-with-desktop-gl.patch
 
 # Automatically added by buildreq on Thu Jul 17 2014 (-bi)
 # optimized out: elfutils fontconfig glibc-devel-static libGL-devel libX11-devel libXfixes-devel libcloog-isl4 libfreetype-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-script-devel ruby ruby-stdlibs wayland-devel xorg-compositeproto-devel xorg-fixesproto-devel xorg-xproto-devel
@@ -73,7 +71,6 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-%patch1 -p1
 #syncqt.pl-qt5 \
 #	-version %version \
 #	-private \
@@ -101,6 +98,7 @@ git init
 
 %files
 %_qt5_plugindir/platforms/*
+%_qt5_plugindir/wayland-decoration-client/
 %_qt5_plugindir/wayland-graphics-integration-server/
 %_qt5_plugindir/wayland-graphics-integration-client/
 
@@ -124,5 +122,8 @@ git init
 #%_qt5_docdir/*
 
 %changelog
+* Tue Dec 16 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
 * Thu Jul 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - initial build

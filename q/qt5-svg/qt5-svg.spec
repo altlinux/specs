@@ -2,7 +2,7 @@
 %global qt_module qtsvg
 
 Name: qt5-svg
-Version: 5.3.1
+Version: 5.4.0
 Release: alt1
 
 Group: System/Libraries
@@ -95,6 +95,12 @@ syncqt.pl-qt5 \
 %_qt5_docdir/qtsvg/
 
 %changelog
+* Tue Dec 16 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
+* Fri Jun 27 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt0.M70P.1
+- build for M70P
+
 * Thu Jun 26 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
 - new version
 

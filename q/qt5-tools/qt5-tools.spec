@@ -4,7 +4,7 @@
 %def_disable bootstrap
 
 Name: qt5-tools
-Version: 5.3.2
+Version: 5.4.0
 Release: alt1
 
 Group: System/Libraries
@@ -29,7 +29,8 @@ Patch1: alt-build-qtconfig.patch
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute qt5-webkit-devel rpm-build-python3 rpm-build-ruby
 BuildRequires: desktop-file-utils gcc-c++ glibc-devel libicu-devel /usr/bin/convert
 BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-webkit-devel
-BuildRequires: gstreamer-devel gst-plugins-devel libXext-devel libX11-devel
+BuildRequires: libXext-devel libX11-devel
+#BuildRequires: gstreamer-devel gst-plugins-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
@@ -280,6 +281,9 @@ done
 
 
 %changelog
+* Tue Dec 16 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
 * Wed Sep 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
 - new version
 

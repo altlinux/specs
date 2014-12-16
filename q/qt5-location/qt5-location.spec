@@ -2,7 +2,7 @@
 %global qt_module qtlocation
 
 Name: qt5-location
-Version: 5.3.2
+Version: 5.4.0
 Release: alt1
 
 Group: System/Libraries
@@ -63,6 +63,13 @@ Requires: %name-common = %EVR
 %description -n libqt5-positioning
 %summary
 
+%package -n libqt5-location
+Summary: Qt5 library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n libqt5-location
+%summary
+
 %prep
 %setup -n %qt_module-opensource-src-%version
 syncqt.pl-qt5 \
@@ -87,8 +94,14 @@ syncqt.pl-qt5 \
 %_qt5_plugindir/position/
 %_qt5_archdatadir/qml/QtPositioning/
 
+%files -n libqt5-location
+%_qt5_libdir/libQt?Location.so.*
+%_qt5_plugindir/geoservices/
+%_qt5_archdatadir/qml/QtLocation/
+
 %files devel
 %_qt5_headerdir/QtPositioning/
+%_qt5_headerdir/QtLocation/
 %_qt5_libdir/libQt*.so
 %_qt5_libdir/libQt*.prl
 %_qt5_libdir/cmake/Qt*/
@@ -99,6 +112,9 @@ syncqt.pl-qt5 \
 %_qt5_docdir/*
 
 %changelog
+* Tue Dec 16 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
 * Wed Sep 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
 - new version
 
