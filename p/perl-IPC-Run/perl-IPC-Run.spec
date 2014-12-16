@@ -2,7 +2,7 @@
 %def_disable test
 
 Name: perl-%module
-Version: 0.92
+Version: 0.94
 Release: alt1
 
 Summary: IPC-Run - system() and background procs w/ piping, redirs, ptys (Unix, Win32)
@@ -37,6 +37,9 @@ mixed.
 %exclude %perl_vendor_privlib/IPC/Run/Win*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1
 - automated CPAN update
 
