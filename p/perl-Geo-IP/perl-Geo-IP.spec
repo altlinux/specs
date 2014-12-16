@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module Geo-IP
 
 Name: perl-%module
-Version: 1.43
-Release: alt1.1
+Version: 1.45
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,10 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/B/BO/BORISZ/Geo-IP-%{version}.tar.gz
-
-# from Fedora
-Patch: Geo-IP-1.28-yahoo-namelookuptest.diff
+Source: http://www.cpan.org/authors/id/M/MA/MAXMIND/Geo-IP-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libGeoIP-devel perl-devel
@@ -26,7 +24,6 @@ accurate than reverse DNS lookups.
 
 %prep
 %setup -n %module-%version
-%patch
 
 find lib/ example/ -type f -print0 | xargs -r0 %__subst -p 's./usr/local/share/GeoIP./usr/share/GeoIP.'
 
@@ -42,6 +39,9 @@ find lib/ example/ -type f -print0 | xargs -r0 %__subst -p 's./usr/local/share/G
 %perl_vendor_autolib/Geo
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.45-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.43-alt1.1
 - rebuild with new perl 5.20.1
 
