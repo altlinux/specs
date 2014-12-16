@@ -1,14 +1,14 @@
 %define dist File-Tail
 Name: perl-%dist
-Version: 0.99.3
-Release: alt2
+Version: 1.0
+Release: alt1
 
 Summary: Perl extension for reading from continously updated files
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MG/MGRABNAR/File-Tail-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ chmod -x logwatch select_demo
 %perl_vendor_privlib/File
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1
+- automated CPAN update
+
 * Wed Apr 27 2011 Alexey Tourbin <at@altlinux.ru> 0.99.3-alt2
 - fixed unpackaged directory
 
