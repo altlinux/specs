@@ -4,13 +4,13 @@ BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(IO/Socket/INET.pm) perl(L
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/Gearman/Task.pm
 Name:           perl-Gearman
-Version:        1.11
-Release:        alt2_12
+Version:        1.12
+Release:        alt1
 Summary:        Distributed job system
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://danga.com/gearman/
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/Gearman-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DO/DORMANDO/Gearman-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  perl(Test/More.pm)
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_12
 - update to new release by fcimport
 
