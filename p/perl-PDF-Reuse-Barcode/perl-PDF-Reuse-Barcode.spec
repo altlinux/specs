@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module PDF-Reuse-Barcode
 
 Name: perl-%module
-Version: 0.06
-Release: alt1.1
+Version: 0.07
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/L/LA/LARSLUND/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CN/CNIGHS/PDF-Reuse-Barcode-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +38,9 @@ Barcode::Code128.
 %perl_vendor_privlib/PDF/
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
