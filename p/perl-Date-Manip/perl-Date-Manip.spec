@@ -1,8 +1,8 @@
-BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl-podlators
 %define dist Date-Manip
 Name: perl-Date-Manip
-Version: 6.43
+Version: 6.48
 Release: alt1
 
 Summary: Date manipulation routines
@@ -62,9 +62,12 @@ scripts for %name
 
 %files scripts
 %_bindir/*
-
+%_man1dir/*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 6.48-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 6.43-alt1
 - automated CPAN update
 
