@@ -1,5 +1,5 @@
 Name: unrtf
-Version: 0.21.5
+Version: 0.21.7
 Release: alt1
 
 Summary: UnRTF is a moderately complicated converter from RTF to other formats
@@ -43,6 +43,9 @@ sed -i 's,/usr/local/lib/unrtf/,%_libdir/unrtf/,g' src/path.h
 %_datadir/%name/*
 
 %changelog
+* Tue Dec 16 2014 Ilya Mashkin <oddity@altlinux.ru> 0.21.7-alt1
+- 0.21.7
+
 * Sat Sep 14 2013 Ilya Mashkin <oddity@altlinux.ru> 0.21.5-alt1
 - 0.21.5
 
