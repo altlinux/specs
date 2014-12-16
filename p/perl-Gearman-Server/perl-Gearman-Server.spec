@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Danga/Socket.pm) perl(Errno.pm) perl(FindBin.pm) perl(Gearman/Util.pm) perl(IO/Handle.pm) perl(IO/Socket/INET.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Sys/Hostname.pm) perl(base.pm) perl(fields.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Gearman-Server
-Version:        1.11
-Release:        alt2_12
+Version:        1.12
+Release:        alt1
 Summary:        Function call "router" and load balancer
 License:        GPL+ or Artistic
 Group:          System/Servers
 URL:            http://search.cpan.org/dist/Gearman-Server/
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/Gearman-Server-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DO/DORMANDO/Gearman-Server-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -48,6 +48,9 @@ make test
 %{_mandir}/man1/gearmand.*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_12
 - update to new release by fcimport
 
