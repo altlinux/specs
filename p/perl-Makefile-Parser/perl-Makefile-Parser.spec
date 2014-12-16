@@ -1,7 +1,7 @@
 %define dist Makefile-Parser
 Name: perl-%dist
-Version: 0.215
-Release: alt2
+Version: 0.216
+Release: alt1
 
 Summary: Simple parser for Makefiles
 License: %perl_license
@@ -10,7 +10,7 @@ Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
 URL: %CPAN %dist
 # http://search.cpan.org/CPAN/authors/id/A/AG/AGENT/Makefile-Parser-0.215.tar.gz
-Source: %dist-%version.tar
+Source: http://www.cpan.org/authors/id/A/AG/AGENT/Makefile-Parser-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -50,6 +50,9 @@ of my own.
 %_man1dir/*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.216-alt1
+- automated CPAN update
+
 * Sun Apr 14 2013 Artem Zolochevskiy <azol@altlinux.ru> 0.215-alt2
 - disable build test
 - add spelling errors patch taken from Debian
