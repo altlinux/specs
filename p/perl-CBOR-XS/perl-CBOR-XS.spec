@@ -2,13 +2,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Types/Serialiser.pm) perl(XSLoader.pm) perl(common/sense.pm) perl(Math/BigFloat.pm) perl(Time/Piece.pm)
 # END SourceDeps(oneline)
-%define module_version 1.12
+%define module_version 1.26
 %define module_name CBOR-XS
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.12
-Release: alt1.1
+Version: 1.26
+Release: alt1
 Summary: unknown
 Group: Development/Perl
 License: perl
@@ -67,6 +67,9 @@ vice versa.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1.1
 - rebuild with new perl 5.20.1
 
