@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Test-Number-Delta
 Name: perl-%dist
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: Compare the difference between numbers against a given tolerance
@@ -38,6 +38,9 @@ Usage is similar to other test functions described in Test::More.
 %perl_vendor_privlib/Test
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
+- automated CPAN update
+
 * Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
