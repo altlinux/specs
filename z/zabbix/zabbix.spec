@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev 48951
+%define svnrev 51175
 
 %def_with pgsql
 
@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -461,6 +461,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Tue Dec 16 2014 Alexei Takaseev <taf@altlinux.org> 1:2.4.3-alt1
+- 2.4.3
+
 * Thu Nov 06 2014 Alexei Takaseev <taf@altlinux.org> 1:2.4.2-alt1
 - 2.4.2
 
