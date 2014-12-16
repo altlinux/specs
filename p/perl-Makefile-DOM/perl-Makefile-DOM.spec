@@ -1,6 +1,6 @@
 %define dist Makefile-DOM
 Name: perl-%dist
-Version: 0.006
+Version: 0.008
 Release: alt1
 
 Summary: Simple DOM parser for Makefiles
@@ -10,7 +10,7 @@ Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
 URL: %CPAN %dist
 # http://search.cpan.org/CPAN/authors/id/A/AG/AGENT/Makefile-DOM-0.004.tar.gz
-Source: %dist-%version.tar
+Source: http://www.cpan.org/authors/id/A/AG/AGENT/Makefile-DOM-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -45,6 +45,9 @@ HTML::TreeBuilder module used for parsing HTML source.
 %perl_vendor_privlib/Makefile/
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
 - automated CPAN update
 
