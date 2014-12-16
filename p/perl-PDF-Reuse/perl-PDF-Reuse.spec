@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-PDF-Reuse
-Version: 0.35
-Release: alt2.1
+Version: 0.36
+Release: alt1
 
 Summary: Reuse and mass produce PDF documents   
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CN/CNIGHS/PDF-Reuse-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Jul 04 2008
 BuildRequires: perl-Compress-Zlib perl-devel
@@ -95,6 +95,9 @@ who write the scripts have to know Acrobat JavaScript well.)
 %perl_vendor_privlib/PDF*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.35-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
