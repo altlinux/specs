@@ -22,8 +22,8 @@
 %define CVS_BUILD	0
 
 Name: maxima
-Version: 5.34.1
-%define maxima_version 5.34.1
+Version: 5.35.1
+%define maxima_version 5.35.1
 Release: alt1
 Summary: Maxima Computer Algebra System
 License: GPL
@@ -109,8 +109,8 @@ Maxima binaries compiled with CMUCL (CMU Common Lisp).
 Summary: Maxima Symbolic Computation Program. SBCL binaries
 Group: Sciences/Mathematics
 Provides: maxima-bin = %version-%release
-Requires: maxima-common = %version-%release sbcl = 1.1.12
-BuildRequires: sbcl = 1.1.12
+Requires: maxima-common = %version-%release sbcl >= 1.1.12
+BuildRequires: sbcl >= 1.1.12
 BuildRequires: /proc
 
 %description bin-sbcl
@@ -538,6 +538,9 @@ cd %maxima_dir
 
 
 %changelog
+* Tue Dec 16 2014 Ilya Mashkin <oddity@altlinux.ru> 5.35.1-alt1
+- 5.35.1
+
 * Fri Sep 19 2014 Ilya Mashkin <oddity@altlinux.ru> 5.34.1-alt1
 - 5.34.1
 
