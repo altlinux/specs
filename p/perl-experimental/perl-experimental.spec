@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-experimental
-Version:        0.008
+Version:        0.013
 Release:        alt1
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
@@ -49,6 +49,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
+- automated CPAN update
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
 - automated CPAN update
 
