@@ -1,7 +1,7 @@
 %define dist PadWalker
 Name: perl-%dist
-Version: 1.99
-Release: alt1.1
+Version: 2.0
+Release: alt1
 
 Summary: Inspect lexical variables in any subroutine which called you
 License: GPL or Artistic
@@ -42,6 +42,9 @@ in production.
 %perl_vendor_autolib/PadWalker*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.99-alt1.1
 - rebuild with new perl 5.20.1
 
