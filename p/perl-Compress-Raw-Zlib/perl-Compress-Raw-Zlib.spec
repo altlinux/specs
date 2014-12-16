@@ -1,7 +1,7 @@
 %define dist Compress-Raw-Zlib
 Name: perl-%dist
-Version: 2.066
-Release: alt1.1
+Version: 2.067
+Release: alt1
 
 Summary: Low-level interface to the zlib compression library
 License: GPL or Artistic
@@ -45,6 +45,9 @@ EOF
 %perl_vendor_autolib/Compress
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.067-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.066-alt1.1
 - rebuild with new perl 5.20.1
 
