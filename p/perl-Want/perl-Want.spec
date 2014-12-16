@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Want
 Name: perl-%dist
-Version: 0.23
-Release: alt1.1
+Version: 0.25
+Release: alt1
 
 Summary: A generalisation of "wantarray"
 License: GPL or Artistic
@@ -33,6 +33,9 @@ is going to be immediately used.
 %perl_vendor_autolib/Want
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1.1
 - rebuild with new perl 5.20.1
 
