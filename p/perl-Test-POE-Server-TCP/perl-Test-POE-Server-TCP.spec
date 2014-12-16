@@ -1,7 +1,7 @@
 %define module Test-POE-Server-TCP
 
 Name: perl-%module
-Version: 1.16
+Version: 1.18
 Release: alt1
 
 Summary: A POE Component providing TCP server services for test cases
@@ -11,7 +11,7 @@ Group: Development/Perl
 Url: http://www.cpan.org
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Test-POE-Server-TCP-1.16.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Test-POE-Server-TCP-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Dec 03 2008
 BuildRequires: perl-POE perl-Test-Pod perl-Test-Pod-Coverage
@@ -34,6 +34,9 @@ Once registered with the component, a session will receive events related to cli
 %perl_vendor_privlib/Test/POE/Server/*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
 - automated CPAN update
 
