@@ -2,7 +2,7 @@
 %define m_distro Template-Toolkit-Simple
 
 Name: perl-%m_distro
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: Parameterizable packages
@@ -41,6 +41,9 @@ not care about what kind of package it builds.
 %perl_vendor_privlib/Template*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - automated CPAN update
 
