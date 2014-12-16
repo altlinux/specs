@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Test-Class
 Name: perl-%dist
-Version: 0.47
+Version: 0.48
 Release: alt1
 
 Summary: Easily create test classes in an xUnit/JUnit style
@@ -14,7 +14,7 @@ Source: http://www.cpan.org/authors/id/E/ET/ETHER/Test-Class-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Apr 23 2011
-BuildRequires: perl-Attribute-Handlers perl-MRO-Compat perl-Module-Build perl-Test-Exception
+BuildRequires: perl-Attribute-Handlers perl-MRO-Compat perl-Module-Build perl-Test-Exception perl(Try/Tiny.pm) perl(Module/Runtime.pm)
 
 %description
 Test::Class provides a simple way of creating classes and objects
@@ -33,6 +33,9 @@ to test your code in an xUnit style.
 %perl_vendor_privlib/Test*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
+- automated CPAN update
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1
 - automated CPAN update
 
