@@ -1,8 +1,8 @@
 %define ver_major 4.6
 
 Name: gnuplot
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
@@ -31,6 +31,7 @@ BuildRequires: gcc-c++ ghostscript-module-X groff-base libXt-devel libncurses-de
 BuildRequires: /usr/bin/tex
 BuildRequires: /usr/bin/dvips
 BuildRequires: /usr/bin/pdflatex
+BuildRequires: /usr/bin/htlatex
 BuildRequires: PDFlib-Lite-utils libpdflib-lite-devel
 
 # for wxt terminal
@@ -170,7 +171,7 @@ plotting tool
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fno-fast-math"
 
-%define configure_opts --with-readline=gnu --without-linux-vga --without-row-help --enable-thin-splines --with-texdir=%buildroot%_texmfmain/%name --with-lua --with-gihdir=%name/%ver_major
+%define configure_opts --with-readline=gnu --with-png --enable-history-file --without-linux-vga --without-row-help --enable-thin-splines --with-texdir=%_texmfmain/%name --with-lua --with-gihdir=%name/%ver_major
 
 # at first create minimal version of gnuplot for server SIG purposes
 mkdir minimal
@@ -181,6 +182,13 @@ ln -s ../configure .
 cd -
 
 # create full version of gnuplot
+mkdir wx
+cd wx
+ln -s ../configure .
+%configure %configure_opts --without-qt
+%make_build
+cd -
+
 mkdir qt
 cd qt
 ln -s ../configure .
@@ -188,40 +196,41 @@ ln -s ../configure .
 %make_build
 cd -
 
-%configure %configure_opts --without-qt
-%make_build
-
 pushd lisp
 	#./configure --prefix=%{_prefix} --datadir=%{_datadir} --with-emacs=emacs --infodir=%{_infodir} \
-	./configure --prefix=%{_prefix} --with-emacs=emacs --infodir=%{_infodir} \
+	./configure --prefix=%{_prefix} --with-emacs=emacs --infodir=%{_infodir}
 	%make_build
 popd
+
 
 install -p -m644 %SOURCE2 .
 bunzip *.html.bz2
 
-pushd tutorial
-    make pdf
-#    pdflatex tutorial
-popd
-
-pushd docs
-    make pdf
-    pdftex gpcard
-popd
-
+# Docs don't build properly out of tree
+%configure  %configure_opts --with-tutorial
+ln -s ../minimal/src/gnuplot src/
+make -C docs html info
+export GNUPLOT_PS_DIR=../../term/PostScript
+make -C docs/psdoc ps_symbols.ps ps_fontfile_doc.pdf
+rm -rf docs/htmldocs/images.idx
+make -C tutorial
 
 %install
 # install wx
-%makeinstall
+make -C wx install DESTDIR=%buildroot INSTALL='install -p'
 # rename binary
 mv %buildroot%_bindir/%name %buildroot%_bindir/%name-wx
 
 # install qt
-install -p -m 755 qt/src/%name %buildroot%_bindir/%name-qt
+make -C qt install DESTDIR=%buildroot INSTALL='install -p'
+# rename binary
+mv %buildroot%_bindir/%name %buildroot%_bindir/%name-qt
 
 # install minimal binary
 install -p -m 755 minimal/src/%name %buildroot%_bindir/%name-minimal
+
+# install docs
+make -C docs install DESTDIR=%buildroot INSTALL='install -p'
 
 # Add alternatives for gnuplot
 mkdir -p %buildroot%_altdir
@@ -262,26 +271,31 @@ rm -f demo/html/Makefile*
 %files common
 %_mandir/man?/*
 %_datadir/%name
+%exclude %_datadir/%name/%ver_major/qt
 %_desktopdir/*
 %_niconsdir/*.png
 %_miconsdir/*.png
 %_liconsdir/*.png
 %_texmfmain/%name
+%dir %_libexecdir/%name
+%dir %_libexecdir/%name/%ver_major
 
 %files common-x11
-%_libexecdir/%name
+%_libexecdir/%name/%ver_major/%{name}_x11
 
 %files minimal
 %_bindir/gnuplot-minimal
 %_altdir/%name-minimal
 
 %files qt
-%_bindir/gnuplot-qt
+%_bindir/%name-qt
 %_altdir/%name-qt
+%_libexecdir/%name/%ver_major/%{name}_qt
+%_datadir/%name/%ver_major/qt
 
 %files -n emacs-mode-%name
-%dir %_defaultdocdir/emacs-%{name}-%{version}/
-%_defaultdocdir/emacs-%{name}-%{version}/*
+%dir %_defaultdocdir/emacs-%name-%version/
+%_defaultdocdir/emacs-%name-%version/*
 %dir %_emacslispdir/*.elc
 %_emacslispdir/%name/*.elc
 %config(noreplace) /etc/emacs/site-start.d/gnuplot.el
@@ -291,14 +305,18 @@ rm -f demo/html/Makefile*
 %_emacslispdir/%name/*.el
 
 %files doc
-%doc ChangeLog Copyright BUGS  README NEWS
-%doc tutorial/tutorial.pdf gnuplot-faq.html
-%doc docs/psdoc/ps_* docs/gpcard.pdf docs/gnuplot.pdf
+%doc ChangeLog Copyright BUGS  README NEWS RELEASE_NOTES
+%doc tutorial/tutorial.dvi gnuplot-faq.html
+%doc docs/psdoc/ps_* docs/gnuplot.pdf docs/htmldocs
 
 %files demo
 %doc demo
 
 %changelog
+* Tue Dec 16 2014 Alexey Shabalin <shaba@altlinux.ru> 1:4.6.6-alt1
+- 4.6.6
+- fixed gnuplot_qt (ALT#30519)
+
 * Wed Jan 22 2014 Alexey Shabalin <shaba@altlinux.ru> 1:4.6.4-alt2
 - add common, common-x11, minimal, qt, doc, demo packages and alternatives
 - build with texlive
