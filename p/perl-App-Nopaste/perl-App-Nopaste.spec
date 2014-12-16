@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.98
+%define module_version 1.001
 %define module_name App-Nopaste
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(HTTP/Request/Common.pm) perl(LWP/Protocol.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Manifest/Skip.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(URI/Escape.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-devel perl(JSON/MaybeXS.pm)
+BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(HTTP/Request/Common.pm) perl(LWP/Protocol.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Manifest/Skip.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(URI/Escape.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-devel perl(JSON/MaybeXS.pm) perl(Test/Deep.pm)
 # END SourceDeps(oneline)
 Name:           perl-App-Nopaste
-Version:        0.98
+Version:        1.001
 Release:        alt1
 Summary:        Easy access to any pastebin
 License:        perl
@@ -98,6 +98,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1
+- automated CPAN update
+
 * Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
 - automated CPAN update
 
