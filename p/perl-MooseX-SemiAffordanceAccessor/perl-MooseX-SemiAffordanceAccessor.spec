@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist MooseX-SemiAffordanceAccessor
 Name: perl-%dist
-Version: 0.09
+Version: 0.10
 Release: alt1
 
 Summary: Name your accessors foo() and set_foo()
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/MooseX-SemiAffordanceAccessor-0.09.tar.gz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/MooseX-SemiAffordanceAccessor-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -31,10 +32,13 @@ as the accessor, while set methods are prefixed with "set_".
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
