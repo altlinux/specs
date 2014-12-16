@@ -1,5 +1,5 @@
 Name: atanks
-Version: 6.0
+Version: 6.1
 Release: alt1
 
 Summary: Atomic Tanks - multi-player game similar to worms
@@ -74,6 +74,9 @@ desktop-file-install \
 %_datadir/applications/*
 
 %changelog
+* Wed Dec 17 2014 Ilya Mashkin <oddity@altlinux.ru> 6.1-alt1
+- 6.1
+
 * Thu Jun 05 2014 Ilya Mashkin <oddity@altlinux.ru> 6.0-alt1
 - 6.0
 
