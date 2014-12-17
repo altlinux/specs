@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Net-ARP
 Name: perl-%dist
-Version: 1.0.8
-Release: alt2.1
+Version: 1.0.9
+Release: alt1
 
 Summary: Perl extension for creating ARP packets
 License: GPL or Artistic
@@ -21,7 +22,8 @@ This module is a Perl extension to create and send ARP packets and lookup
 local or remote mac addresses.
 
 %prep
-%setup -n %dist-%version
+#setup -n %dist-%version
+%setup -n %dist
 %patch -p1
 
 # need root
@@ -39,6 +41,9 @@ mv t/send_packet.t t/send_packet.t.orig
 %perl_vendor_autolib/Net
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2.1
 - rebuild with new perl 5.20.1
 
