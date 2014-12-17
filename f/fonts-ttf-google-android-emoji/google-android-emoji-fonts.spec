@@ -10,13 +10,14 @@ Group: System/Fonts/True type
 Name:    fonts-ttf-google-android-emoji
 # No sane versionning upstream, use git clone timestamp
 Version: 1.01
-Release: alt1_0.2.%{checkout}
+Release: alt1_0.3.%{checkout}
 Summary: Android Emoji font released by Google
 
 License:   ASL 2.0
 URL:       https://android.googlesource.com/platform/frameworks/base.git/+/jb-release/data/fonts/
 Source0:   %{archivename}.tar.xz
 Source1:   get-source-from-git.sh
+Source2:   AndroidEmoji.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
@@ -40,6 +41,8 @@ mobile phone operating system.
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p AndroidEmoji.ttf %{buildroot}%{_fontdir}
+install -m 0755 -d %{buildroot}%{_datadir}/appdata
+install -m 0644 -p %{SOURCE2} %{buildroot}%{_datadir}/appdata
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -79,9 +82,13 @@ fi
 %files
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc README.txt NOTICE
+%{_datadir}/appdata/AndroidEmoji.metainfo.xml
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_0.3.20120228git
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_0.2.20120228git
 - converted for ALT Linux by srpmconvert tools
 
