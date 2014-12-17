@@ -1,11 +1,11 @@
 %add_optflags %optflags_shared
-%global snapshot 20130509
+%global snapshot 20141029
 Name:       libecb
 Version:    0.%{snapshot}
-Release:    alt1_3
+Release:    alt1_1
 Summary:    Compiler built-ins
 Group:      Development/C
-License:    BSD
+License:    BSD or GPLv2+
 URL:        http://software.schmorp.de/pkg/libecb
 # Snapshot from CVS :pserver:anonymous@cvs.schmorp.de/schmorpforge libecb 
 Source0:    %{name}-%{snapshot}.tar.xz
@@ -32,6 +32,9 @@ install -m 0644 -t %{buildroot}%{_includedir} *.h
 %{_includedir}/*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.20141029-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20130509-alt1_3
 - update to new release by fcimport
 
