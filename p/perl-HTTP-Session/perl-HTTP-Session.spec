@@ -1,5 +1,5 @@
 Name: perl-HTTP-Session
-Version: 0.48
+Version: 0.49
 Release: alt1
 Summary: HTTP::Session - simple session
 
@@ -9,7 +9,7 @@ Url: %CPAN HTTP-Session
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-HTTP-Message perl-CGI-Simple perl-Module-Runtime perl-URI perl-Test-Requires perl-Class-Accessor perl-Digest-SHA1 perl-Module-Install perl-Module-Install-AuthorTests perl-Module-Install-Repository perl-CGI perl-DBM perl-HTML-StickyQuery perl-CHI
+BuildRequires: perl-devel perl-HTTP-Message perl-CGI-Simple perl-Module-Runtime perl-URI perl-Test-Requires perl-Class-Accessor perl-Digest-SHA1 perl-CGI perl-DBM perl-HTML-StickyQuery perl-CHI perl(Module/Build/Tiny.pm) perl(HTML/Parser.pm)
 
 %description
 %summary
@@ -25,9 +25,12 @@ BuildRequires: perl-devel perl-HTTP-Message perl-CGI-Simple perl-Module-Runtime 
 
 %files
 %perl_vendor_privlib/HTTP/Session*
-%doc Changes README 
+%doc Changes README*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
+- automated CPAN update
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
 - automated CPAN update
 
