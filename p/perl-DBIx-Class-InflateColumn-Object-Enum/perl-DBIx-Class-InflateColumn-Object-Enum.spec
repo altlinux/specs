@@ -7,7 +7,7 @@ BuildRequires: perl(DBIx/Class.pm) perl(base.pm) perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_3
 
 Summary:    Allows a DBIx::Class user to define a Object::Enum column
 License:    GPL+ or Artistic
@@ -35,8 +35,7 @@ no description found
 %make
 
 %check
-# in 0.06 tests pass, but test output format is not correct
-[ 0.06 = %version ] || %make test
+%make test
 
 %install
 %makeinstall_std
@@ -46,6 +45,9 @@ no description found
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_3
+- update by mgaimport
+
 * Wed Jun 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_1
 - update by mgaimport
 
