@@ -1,5 +1,5 @@
 Name: perl-JavaScript-Minifier
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: JavaScript::Minifier - Perl extension for minifying JavaScript code
@@ -29,6 +29,9 @@ BuildRequires: perl-devel
 %doc Changes README
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
 - automated CPAN update
 
