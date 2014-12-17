@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(IPC/Run.pm) perl(JSON.pm) perl(Scalar/Util.pm) perl(Test.pm) perl(Test/More.pm) perl(YAML.pm) perl(YAML/Syck.pm) perl(base.pm) perl(blib.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Kwalify
 %define upstream_version 1.22
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_4
 
 Summary:    Kwalify schema for data structures
 License:    GPL+ or Artistic
@@ -52,6 +52,9 @@ validate($schema_data, $data)
 /usr/share/man/man1/pkwalify.1*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1_4
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1_3
 - update by mgaimport
 
