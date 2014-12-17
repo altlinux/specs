@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-devel perl-podlators
+BuildRequires: perl(Archive/Zip.pm) perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Signature.pm) perl(Net/FTP.pm) perl(Socket.pm) perl(YAML.pm) perl(inc/Module/Install.pm) perl(subs.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Alien-SeleniumRC
 %define upstream_version 2.93
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_4
 
 Summary:    Packaging up SeleniumRC java server
 License:    GPL+ or Artistic
@@ -51,6 +51,9 @@ a pure-HTML+JS library that performs automated tasks in JavaScript.
 /usr/bin/selenium-rc
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.93-alt1_4
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.93-alt1_3
 - update by mgaimport
 
