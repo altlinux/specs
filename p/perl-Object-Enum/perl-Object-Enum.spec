@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Scalar/Util.pm) perl(base.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Object-Enum
 %define upstream_version 0.074
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Perl Enum Replacement
 License:    GPL+ or Artistic
@@ -50,6 +50,9 @@ rm -f %{buildroot}%{perl_vendor_privlib}/.DS_Store
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.074-alt1_3
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.074-alt1_2
 - update by mgaimport
 
