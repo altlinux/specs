@@ -1,6 +1,6 @@
 Name: BASE
 Version: 1.4.5
-Release: alt7
+Release: alt8
 
 Summary: BASE - Basic Analysis and Security Engine
 License: GPLv2
@@ -17,6 +17,7 @@ Patch2: base-1.4.5-alt-urlpath.patch
 BuildArch: noarch
 
 Requires: php5-adodb fonts-ttf-dejavu pear-Image_Graph php5-mysql
+Requires: pear-Mail_Mime pear-Mail pear-Image_Canvas pear-Image_Color
 
 Obsoletes: base <= 1.4.5
 
@@ -105,6 +106,9 @@ install -Dpm 644 %SOURCE1 %buildroot/%_sysconfdir/nginx/webapps-available.d/%nam
 %_sysconfdir/nginx/webapps-available.d/%name.conf
 
 %changelog
+* Wed Dec 17 2014 Mikhail Efremov <sem@altlinux.org> 1.4.5-alt8
+- Require more pear-* packages.
+
 * Tue Aug 19 2014 Mikhail Efremov <sem@altlinux.org> 1.4.5-alt7
 - Move content to /var/www/webapps/BASE/base.
 - Use nginx-webapps.
