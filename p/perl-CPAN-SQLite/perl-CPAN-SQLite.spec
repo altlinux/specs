@@ -3,11 +3,11 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(CPAN/HandleConfig.pm) perl(CPAN/Version.pm) perl(Config.pm) perl(DBI.pm) perl(English.pm) perl(Exporter.pm) perl(File/Spec/Functions.pm) perl(FindBin.pm) perl(Module/Build.pm) perl(Safe.pm) perl(Test/More.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    CPAN-SQLite
-%define upstream_version 0.203
+%define upstream_version 0.204
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Maintain and search a minimal CPAN database
 License:    GPL+ or Artistic
@@ -55,12 +55,15 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes INSTALL META.json META.yml  README
+%doc Changes INSTALL META.yml  README
 %{_bindir}/*
 %{_mandir}/man1/*
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.204-alt1_3
+- update by mgaimport
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.203-alt1_2
 - moved to Sisyphus
 
