@@ -1,6 +1,6 @@
 Name: perl-Class-Load-XS
-Version: 0.08
-Release: alt1.1
+Version: 0.09
+Release: alt1
 
 Summary: XS implementation of parts of Class::Load
 Group: Development/Perl
@@ -29,6 +29,9 @@ BuildRequires: perl(Test/Requires.pm) perl(Class/Load.pm) perl(Test/Fatal.pm) pe
 %doc Changes LICENSE README
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1.1
 - rebuild with new perl 5.20.1
 
