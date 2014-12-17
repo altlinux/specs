@@ -1,5 +1,5 @@
 Name: perl-Class-Accessor-Lite
-Version: 0.05
+Version: 0.06
 Release: alt1
 Summary: Class::Accessor::Lite - a minimalistic variant of Class::Accessor
 
@@ -28,5 +28,8 @@ BuildRequires: perl-Module-Install perl-Module-Install-ReadmeFromPod
 %doc Changes README 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Sat Jul 30 2011 Vladimir Lettiev <crux@altlinux.ru> 0.05-alt1
 - initial build
