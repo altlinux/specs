@@ -1,7 +1,7 @@
 %define m_distro Parse-ErrorString-Perl
 Name: perl-Parse-ErrorString-Perl
-Version: 0.20
-Release: alt2
+Version: 0.21
+Release: alt1
 Summary: parse error messages from the perl interpreter
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -33,6 +33,9 @@ BuildRequires: perl-devel perl-Class-XSAccessor perl-Test-Differences perl-Modul
 %doc Changes
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Tue Feb 25 2014 Vladimir Lettiev <crux@altlinux.ru> 0.20-alt2
 - added missing dependency on Pod::Find
 
