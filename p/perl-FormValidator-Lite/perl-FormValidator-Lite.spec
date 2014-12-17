@@ -1,5 +1,5 @@
 Name: perl-FormValidator-Lite
-Version: 0.37
+Version: 0.38
 Release: alt1
 
 Summary: FormValidator::Lite perl module
@@ -30,6 +30,9 @@ BuildRequires: perl-devel perl-Class-Load perl-Test-Requires perl-CGI perl-Class
 %doc TODO Changes
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
+- automated CPAN update
+
 * Tue Dec 17 2013 Vladimir Lettiev <crux@altlinux.ru> 0.37-alt1
 - New version 0.37
 
