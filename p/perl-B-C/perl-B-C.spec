@@ -1,6 +1,6 @@
 Name: perl-B-C
-Version: 1.47
-Release: alt1.1
+Version: 1.52
+Release: alt1
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -10,16 +10,16 @@ URL: %CPAN B-C
 # Cloned from git https://code.google.com/p/perl-compiler
 Source: %name-%version.tar
 
-BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel libdb4-devel perl-B-Flags perldoc perl-threads
+BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel libdb4-devel perl-B-Flags perldoc perl-threads perl(Attribute/Handlers.pm) perl(AnyDBM_File.pm) perl(Encode/JP.pm)
 
 %description
 %summary
 
 %prep
 %setup -q
-for t in asmdata bytecode c c_argv c_o3 cc e_perlcc issue105 issue24 issue54 issue68 issue81 issue90 issue93 issue96 issue97 issue98 
+for t in issue305
 do
-    mv t/$t.t t/$t.t.failed
+ mv t/$t.t t/$t.t.failed
 done
 
 %build
@@ -31,6 +31,7 @@ done
 %files
 %doc Changes README
 %_bindir/*
+%_man1dir/*
 %perl_vendor_archlib/B
 %perl_vendor_autolib/B
 %perl_vendor_archlib/ByteLoader.pm
@@ -38,6 +39,10 @@ done
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1
+- automated CPAN update
+- locally tests pass, but disabled issue305 for incoming
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.47-alt1.1
 - rebuild with new perl 5.20.1
 
