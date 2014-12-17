@@ -8,7 +8,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_4
 
 Summary:    Accessors for TAP::DOM summary part
 License:    GPL+ or Artistic
@@ -60,6 +60,9 @@ change, so your data tools can, well, rely on it.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_4
+- update by mgaimport
+
 * Tue Apr 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_1
 - update by mgaimport
 
