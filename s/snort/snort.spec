@@ -1,11 +1,10 @@
 Summary:   An intrusion detection system
 Name:      snort
-Version:   2.9.6.1
-Release:   alt4
+Version:   2.9.7.0
+Release:   alt1
 License: %gpl2only
 Group:     Security/Networking
 Url:       http://www.snort.org
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # You can omit building some target packages via 'rpmbuild --without xxx'
 %def_without prelude
@@ -14,11 +13,9 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 %def_enable flexresp
 
 Source0:   %name-%version.tar
-Source5:   snortdb-extra.bz2
 
 Source10:  snort.sysconfig.m4
 Source20:  README-ALT.ru.m4
-Source21:  README-ALT.uk.m4
 Source30:  snort.logrotate.m4
 Source99:  snortd
 
@@ -47,7 +44,7 @@ BuildRequires: libprelude-devel
 BuildRequires: iptables-devel
 %endif
 
-Summary(ru_RU.KOI8-R): á×ÔÏÍÁÔÉÞÅÓËÉÊ ÁÎÁÌÉÚÁÔÏÒ/ÂÌÏËÉÒÏ×ÝÉË ÓÅÔÅ×ÙÈ ÐÁËÅÔÏ×
+Summary(ru_RU.UTF-8): ÐÐ²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸Ð¹ Ð°Ð½Ð°Ð»Ð¸Ð·Ð°Ñ‚Ð¾Ñ€/Ð±Ð»Ð¾ÐºÐ¸Ñ€Ð¾Ð²Ñ‰Ð¸Ðº ÑÐµÑ‚ÐµÐ²Ñ‹Ñ… Ð¿Ð°ÐºÐµÑ‚Ð¾Ð²
 
 %description
 Snort is a libpcap-based packet sniffer/logger which can be used as a
@@ -61,49 +58,49 @@ seperate "alert" file, or as a WinPopup message via Samba's smbclient.
 
 Please see the documentation in %_docdir/%name-%version
 
-%description -l ru_RU.KOI8-R
-Snort -- ÜÔÏ ÍÏÝÎÙÊ ÐÒÏÓÌÕÛÉ×ÁÔÅÌØ É ÐÅÒÅÈ×ÁÔÞÉË ÓÅÔÅ×ÙÈ ÐÁËÅÔÏ×,
-ÏÓÎÏ×ÁÎÎÙÊ ÎÁ ÂÉÂÌÉÏÔÅËÅ libpcap. ðÒÉ ÒÁÂÏÔÅ Snort ÉÓÐÏÌØÚÕÅÔ ÎÁÂÏÒ
-ÐÒÅÄ×ÁÒÉÔÅÌØÎÏ ÐÏÄÇÏÔÏ×ÌÅÎÎÙÈ ÐÒÁ×ÉÌ, ËÏÔÏÒÙÅ ÓÏÄÅÒÖÁÔ ÕÓÌÏ×ÉÑ ÓÒÁÂÁÔÙ×ÁÎÉÑ
-ÐÏ ÚÎÁÞÅÎÉÑÍ ÓÌÕÖÅÂÎÙÈ É ÐÒÉËÌÁÄÎÙÈ ÄÁÎÎÙÈ.
+%description -l ru_RU.UTF-8
+Snort -- ÑÑ‚Ð¾ Ð¼Ð¾Ñ‰Ð½Ñ‹Ð¹ Ð¿Ñ€Ð¾ÑÐ»ÑƒÑˆÐ¸Ð²Ð°Ñ‚ÐµÐ»ÑŒ Ð¸ Ð¿ÐµÑ€ÐµÑ…Ð²Ð°Ñ‚Ñ‡Ð¸Ðº ÑÐµÑ‚ÐµÐ²Ñ‹Ñ… Ð¿Ð°ÐºÐµÑ‚Ð¾Ð²,
+Ð¾ÑÐ½Ð¾Ð²Ð°Ð½Ð½Ñ‹Ð¹ Ð½Ð° Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÐµ libpcap. ÐŸÑ€Ð¸ Ñ€Ð°Ð±Ð¾Ñ‚Ðµ Snort Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚ Ð½Ð°Ð±Ð¾Ñ€
+Ð¿Ñ€ÐµÐ´Ð²Ð°Ñ€Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾ Ð¿Ð¾Ð´Ð³Ð¾Ñ‚Ð¾Ð²Ð»ÐµÐ½Ð½Ñ‹Ñ… Ð¿Ñ€Ð°Ð²Ð¸Ð», ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ ÑÐ¾Ð´ÐµÑ€Ð¶Ð°Ñ‚ ÑƒÑÐ»Ð¾Ð²Ð¸Ñ ÑÑ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°Ð½Ð¸Ñ
+Ð¿Ð¾ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸ÑÐ¼ ÑÐ»ÑƒÐ¶ÐµÐ±Ð½Ñ‹Ñ… Ð¸ Ð¿Ñ€Ð¸ÐºÐ»Ð°Ð´Ð½Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ….
 
-Snort ÍÏÖÅÔ ÉÓÐÏÌØÚÏ×ÁÔØÓÑ × ËÁÞÅÓÔ×Å ÓÉÓÔÅÍÙ ÏÂÎÁÒÕÖÅÎÉÑ ×ÔÏÒÖÅÎÉÑ × ÓÅÔØ,
-Á ÔÁËÖÅ ÒÁÚÎÏÏÂÒÁÚÎÙÈ ÁÔÁË É ÐÏÐÙÔÏË ÐÒÅÄÐÒÉÎÑÔÉÑ ÔÁËÏ×ÙÈ (ÐÅÒÅÐÏÌÎÅÎÉÅ ÂÕÆÅÒÁ,
-ÓËÁÎÉÒÏ×ÁÎÉÅ ÐÏÒÔÏ× É SMB, ÓÔÅÌÓ-ÓËÁÎÉÒÏ×ÁÎÉÅ, ÁÔÁËÉ CGI, ÏÐÒÅÄÅÌÅÎÉÅ
-ÏÐÅÒÁÃÉÏÎÎÙÈ ÓÉÓÔÅÍ É ÍÎÏÇÏÅ ÄÒÕÇÏÅ).
+Snort Ð¼Ð¾Ð¶ÐµÑ‚ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÑŒÑÑ Ð² ÐºÐ°Ñ‡ÐµÑÑ‚Ð²Ðµ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹ Ð¾Ð±Ð½Ð°Ñ€ÑƒÐ¶ÐµÐ½Ð¸Ñ Ð²Ñ‚Ð¾Ñ€Ð¶ÐµÐ½Ð¸Ñ Ð² ÑÐµÑ‚ÑŒ,
+Ð° Ñ‚Ð°ÐºÐ¶Ðµ Ñ€Ð°Ð·Ð½Ð¾Ð¾Ð±Ñ€Ð°Ð·Ð½Ñ‹Ñ… Ð°Ñ‚Ð°Ðº Ð¸ Ð¿Ð¾Ð¿Ñ‹Ñ‚Ð¾Ðº Ð¿Ñ€ÐµÐ´Ð¿Ñ€Ð¸Ð½ÑÑ‚Ð¸Ñ Ñ‚Ð°ÐºÐ¾Ð²Ñ‹Ñ… (Ð¿ÐµÑ€ÐµÐ¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ðµ Ð±ÑƒÑ„ÐµÑ€Ð°,
+ÑÐºÐ°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð¿Ð¾Ñ€Ñ‚Ð¾Ð² Ð¸ SMB, ÑÑ‚ÐµÐ»Ñ-ÑÐºÐ°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ, Ð°Ñ‚Ð°ÐºÐ¸ CGI, Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð¸Ðµ
+Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ð¾Ð½Ð½Ñ‹Ñ… ÑÐ¸ÑÑ‚ÐµÐ¼ Ð¸ Ð¼Ð½Ð¾Ð³Ð¾Ðµ Ð´Ñ€ÑƒÐ³Ð¾Ðµ).
 
-Snort ÉÍÅÅÔ ×ÏÚÍÏÖÎÏÓÔØ ÏÐÏ×ÅÝÅÎÉÑ × ÒÅÁÌØÎÏÍ ÍÁÓÛÔÁÂÅ ×ÒÅÍÅÎÉ ÞÅÒÅÚ ÓÏÏÂÝÅÎÉÑ,
-ÏÔÐÒÁ×ÌÅÎÎÙÅ × ÓÉÓÔÅÍÎÙÊ ÌÏÇ-ÆÁÊÌ, ÁÌØÔÅÒÎÁÔÉ×ÎÙÊ ÆÁÊÌ "ÔÒÅ×ÏÇÉ"
-ÉÌÉ ËÁË WinPopup-ÓÏÏÂÝÅÎÉÅ, ÏÔÐÒÁ×ÌÅÎÎÏÅ Ó ÐÏÍÏÝØÀ smbclient.
+Snort Ð¸Ð¼ÐµÐµÑ‚ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ÑÑ‚ÑŒ Ð¾Ð¿Ð¾Ð²ÐµÑ‰ÐµÐ½Ð¸Ñ Ð² Ñ€ÐµÐ°Ð»ÑŒÐ½Ð¾Ð¼ Ð¼Ð°ÑÑˆÑ‚Ð°Ð±Ðµ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸ Ñ‡ÐµÑ€ÐµÐ· ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ñ,
+Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð½Ñ‹Ðµ Ð² ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ñ‹Ð¹ Ð»Ð¾Ð³-Ñ„Ð°Ð¹Ð», Ð°Ð»ÑŒÑ‚ÐµÑ€Ð½Ð°Ñ‚Ð¸Ð²Ð½Ñ‹Ð¹ Ñ„Ð°Ð¹Ð» "Ñ‚Ñ€ÐµÐ²Ð¾Ð³Ð¸"
+Ð¸Ð»Ð¸ ÐºÐ°Ðº WinPopup-ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ, Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð½Ð¾Ðµ Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰ÑŒÑŽ smbclient.
 
-âÁÚÏ×ÁÑ ×ÅÒÓÉÑ ÎÅ ÂÌÏËÉÒÕÅÔ ÏÐÁÓÎÙÅ ÓÏÅÄÉÎÅÎÉÑ. åÓÌÉ ×ÁÍ ÔÒÅÂÕÅÔÓÑ ÜÔÁ ÆÕÎËÃÉÑ,
-ÉÎÓÔÁÌÌÉÒÕÊÔÅ ÏÄÉÎ ÉÚ ÐÁËÅÔÏ× snort Ó ÓÕÆÆÉËÓÏÍ flexresp ÉÌÉ bloat × ÎÁÚ×ÁÎÉÉ.
+Ð‘Ð°Ð·Ð¾Ð²Ð°Ñ Ð²ÐµÑ€ÑÐ¸Ñ Ð½Ðµ Ð±Ð»Ð¾ÐºÐ¸Ñ€ÑƒÐµÑ‚ Ð¾Ð¿Ð°ÑÐ½Ñ‹Ðµ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ. Ð•ÑÐ»Ð¸ Ð²Ð°Ð¼ Ñ‚Ñ€ÐµÐ±ÑƒÐµÑ‚ÑÑ ÑÑ‚Ð° Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ,
+Ð¸Ð½ÑÑ‚Ð°Ð»Ð»Ð¸Ñ€ÑƒÐ¹Ñ‚Ðµ Ð¾Ð´Ð¸Ð½ Ð¸Ð· Ð¿Ð°ÐºÐµÑ‚Ð¾Ð² snort Ñ ÑÑƒÑ„Ñ„Ð¸ÐºÑÐ¾Ð¼ flexresp Ð¸Ð»Ð¸ bloat Ð² Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ð¸.
 
-ðÏÖÁÌÕÊÓÔÁ, ÏÂÑÚÁÔÅÌØÎÏ ÏÚÎÁËÏÍØÔÅÓØ Ó ÄÏËÕÍÅÎÔÁÃÉÅÊ,
-ËÏÔÏÒÁÑ ÒÁÚÍÅÝÅÎÁ × %_docdir/%name-%version
+ÐŸÐ¾Ð¶Ð°Ð»ÑƒÐ¹ÑÑ‚Ð°, Ð¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾ Ð¾Ð·Ð½Ð°ÐºÐ¾Ð¼ÑŒÑ‚ÐµÑÑŒ Ñ Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ð°Ñ†Ð¸ÐµÐ¹,
+ÐºÐ¾Ñ‚Ð¾Ñ€Ð°Ñ Ñ€Ð°Ð·Ð¼ÐµÑ‰ÐµÐ½Ð° Ð² %_docdir/%name-%version
 
-%description -l uk_UA.KOI8-U
-Snort -- ÃÅ ÐÏÔÕÖÎÉÊ ÚÁÓ¦Â ÐÒÏÓÌÕÈÏ×Õ×ÁÎÎÑ ÔÁ ÐÅÒÅÈ×ÁÔÕ ÍÅÒÅÖÅ×ÉÈ
-ÐÁËÅÔ¦×, ÏÓÎÏ×ÁÎÉÊ ÎÁ Â¦ÂÌ¦ÏÔÅÃ¦ libpcap. ÷¦Î ÂÁÚÕ¤ÔØÓÑ ÎÁ ÐÏÐÅÒÅÄÎØÏ
-ÓÆÏÒÍÏ×ÁÎÉÈ ÐÒÁ×ÉÌÁÈ ÔÁ ×Í¦¤ ×ÉËÏÎÕ×ÁÔÉ ÁÎÁÌ¦Ú ÚÍ¦ÓÔÕ ÐÒÏÔÏËÏÌÕ.
+%description -l uk_UA.UTF-8
+Snort -- Ñ†Ðµ Ð¿Ð¾Ñ‚ÑƒÐ¶Ð½Ð¸Ð¹ Ð·Ð°Ñâ••Ð± Ð¿Ñ€Ð¾ÑÐ»ÑƒÑ…Ð¾Ð²ÑƒÐ²Ð°Ð½Ð½Ñ Ñ‚Ð° Ð¿ÐµÑ€ÐµÑ…Ð²Ð°Ñ‚Ñƒ Ð¼ÐµÑ€ÐµÐ¶ÐµÐ²Ð¸Ñ…
+Ð¿Ð°ÐºÐµÑ‚â••Ð², Ð¾ÑÐ½Ð¾Ð²Ð°Ð½Ð¸Ð¹ Ð½Ð° Ð±â••Ð±Ð»â••Ð¾Ñ‚ÐµÑ†â•• libpcap. Ð’â••Ð½ Ð±Ð°Ð·Ñƒâ•“Ñ‚ÑŒÑÑ Ð½Ð° Ð¿Ð¾Ð¿ÐµÑ€ÐµÐ´Ð½ÑŒÐ¾
+ÑÑ„Ð¾Ñ€Ð¼Ð¾Ð²Ð°Ð½Ð¸Ñ… Ð¿Ñ€Ð°Ð²Ð¸Ð»Ð°Ñ… Ñ‚Ð° Ð²Ð¼â••â•“ Ð²Ð¸ÐºÐ¾Ð½ÑƒÐ²Ð°Ñ‚Ð¸ Ð°Ð½Ð°Ð»â••Ð· Ð·Ð¼â••ÑÑ‚Ñƒ Ð¿Ñ€Ð¾Ñ‚Ð¾ÐºÐ¾Ð»Ñƒ.
 
-äÁÎÉÊ ÐÁËÅÔ ÍÏÖÅ ×ÉËÏÒÉÓÔÏ×Õ×ÁÔÉÓÑ × ÑËÏÓÔ¦ ÓÉÓÔÅÍÉ ×ÉÑ×ÌÅÎÎÑ
-×ÔÏÒÇÎÅÎØ × ÍÅÒÅÖ¦, Á ÔÁËÏÖ ÄÏÐÏÍÁÇÁ¤ ×ÉÑ×ÌÑÔÉ Ò¦ÚÎÏÍÁÎ¦ÔÎ¦ ÁÔÁËÉ ÔÁ
-§È ÓÐÒÏÂÉ (ÐÅÒÅÐÏ×ÎÅÎÎÑ ÂÕÆÅÒÁ, ÓËÁÎÕ×ÁÎÎÑ ÐÏÒÔ¦×, ÎÅ×ÉÄÉÍ¦
-ÓËÁÎÕ×ÁÎÎÑ, ÁÔÁËÉ CGI, SMB, ÓÐÒÏÂÉ ×ÉÚÎÁÞÅÎÎÑ ÔÉÐÕ ÏÐÅÒÁÃ¦ÊÎÏ§ ÓÉÓÔÅÍÉ
-ÔÁ ÂÁÇÁÔÏ ¦ÎÛÉÈ).
+Ð”Ð°Ð½Ð¸Ð¹ Ð¿Ð°ÐºÐµÑ‚ Ð¼Ð¾Ð¶Ðµ Ð²Ð¸ÐºÐ¾Ñ€Ð¸ÑÑ‚Ð¾Ð²ÑƒÐ²Ð°Ñ‚Ð¸ÑÑ Ð² ÑÐºÐ¾ÑÑ‚â•• ÑÐ¸ÑÑ‚ÐµÐ¼Ð¸ Ð²Ð¸ÑÐ²Ð»ÐµÐ½Ð½Ñ
+Ð²Ñ‚Ð¾Ñ€Ð³Ð½ÐµÐ½ÑŒ Ð² Ð¼ÐµÑ€ÐµÐ¶â••, Ð° Ñ‚Ð°ÐºÐ¾Ð¶ Ð´Ð¾Ð¿Ð¾Ð¼Ð°Ð³Ð°â•“ Ð²Ð¸ÑÐ²Ð»ÑÑ‚Ð¸ Ñ€â••Ð·Ð½Ð¾Ð¼Ð°Ð½â••Ñ‚Ð½â•• Ð°Ñ‚Ð°ÐºÐ¸ Ñ‚Ð°
+â•–Ñ… ÑÐ¿Ñ€Ð¾Ð±Ð¸ (Ð¿ÐµÑ€ÐµÐ¿Ð¾Ð²Ð½ÐµÐ½Ð½Ñ Ð±ÑƒÑ„ÐµÑ€Ð°, ÑÐºÐ°Ð½ÑƒÐ²Ð°Ð½Ð½Ñ Ð¿Ð¾Ñ€Ñ‚â••Ð², Ð½ÐµÐ²Ð¸Ð´Ð¸Ð¼â••
+ÑÐºÐ°Ð½ÑƒÐ²Ð°Ð½Ð½Ñ, Ð°Ñ‚Ð°ÐºÐ¸ CGI, SMB, ÑÐ¿Ñ€Ð¾Ð±Ð¸ Ð²Ð¸Ð·Ð½Ð°Ñ‡ÐµÐ½Ð½Ñ Ñ‚Ð¸Ð¿Ñƒ Ð¾Ð¿ÐµÑ€Ð°Ñ†â••Ð¹Ð½Ð¾â•– ÑÐ¸ÑÑ‚ÐµÐ¼Ð¸
+Ñ‚Ð° Ð±Ð°Ð³Ð°Ñ‚Ð¾ â••Ð½ÑˆÐ¸Ñ…).
 
-Snort ÍÁ¤ ÍÏÖÌÉ×¦ÓÔØ ÏÐÏ×¦ÝÅÎÎÑ × ÒÅÁÌØÎÏÍÕ ÍÁÓÛÔÁÂ¦ ÞÁÓÕ ÞÅÒÅÚ
-ÐÏ×¦ÄÏÍÌÅÎÎÑ, ×¦ÄÐÒÁ×ÌÅÎ¦ × ÓÉÓÔÅÍÎÉÊ ÌÏÇ-ÆÁÊÌ, ÁÌØÔÅÒÎÁÔÉ×ÎÉÊ ÆÁÊÌ
-"ÔÒÉ×ÏÇÉ" ÁÂÏ ÑË WinPopup-ÐÏ×¦ÄÏÍÌÅÎÎÑ, ×¦ÄÐÒÁ×ÌÅÎÅ ÚÁ ÄÏÐÏÍÏÇÏÀ
-ÐÒÏÇÒÁÍÉ smbclient.
+Snort Ð¼Ð°â•“ Ð¼Ð¾Ð¶Ð»Ð¸Ð²â••ÑÑ‚ÑŒ Ð¾Ð¿Ð¾Ð²â••Ñ‰ÐµÐ½Ð½Ñ Ð² Ñ€ÐµÐ°Ð»ÑŒÐ½Ð¾Ð¼Ñƒ Ð¼Ð°ÑÑˆÑ‚Ð°Ð±â•• Ñ‡Ð°ÑÑƒ Ñ‡ÐµÑ€ÐµÐ·
+Ð¿Ð¾Ð²â••Ð´Ð¾Ð¼Ð»ÐµÐ½Ð½Ñ, Ð²â••Ð´Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½â•• Ð² ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ð¸Ð¹ Ð»Ð¾Ð³-Ñ„Ð°Ð¹Ð», Ð°Ð»ÑŒÑ‚ÐµÑ€Ð½Ð°Ñ‚Ð¸Ð²Ð½Ð¸Ð¹ Ñ„Ð°Ð¹Ð»
+"Ñ‚Ñ€Ð¸Ð²Ð¾Ð³Ð¸" Ð°Ð±Ð¾ ÑÐº WinPopup-Ð¿Ð¾Ð²â••Ð´Ð¾Ð¼Ð»ÐµÐ½Ð½Ñ, Ð²â••Ð´Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ðµ Ð·Ð° Ð´Ð¾Ð¿Ð¾Ð¼Ð¾Ð³Ð¾ÑŽ
+Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¸ smbclient.
 
-âÕÄØ-ÌÁÓËÁ, ÏÂÏ×'ÑÚËÏ×Ï ÏÚÎÁÊÏÍÔÅÓÑ Ú ÄÏËÕÍÅÎÔÁÃ¦¤À, ÝÏ ÒÏÚÍ¦ÝÅÎÁ ×
+Ð‘ÑƒÐ´ÑŒ-Ð»Ð°ÑÐºÐ°, Ð¾Ð±Ð¾Ð²'ÑÐ·ÐºÐ¾Ð²Ð¾ Ð¾Ð·Ð½Ð°Ð¹Ð¾Ð¼Ñ‚ÐµÑÑ Ð· Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ð°Ñ†â••â•“ÑŽ, Ñ‰Ð¾ Ñ€Ð¾Ð·Ð¼â••Ñ‰ÐµÐ½Ð° Ð²
 %_docdir/%name-%version
 
 %package plain+flexresp
 Summary: Snort (plain) with Flexible Response
-Summary(ru_RU.KOI8-R): Snort Ó ÐÏÄÄÅÒÖËÏÊ Á×ÔÏÍÁÔÉÞÅÓËÏÇÏ ÂÌÏËÉÒÏ×ÁÎÉÑ ÓÏÅÄÉÎÅÎÉÊ
+Summary(ru_RU.UTF-8): Snort Ñ Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶ÐºÐ¾Ð¹ Ð°Ð²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾ Ð±Ð»Ð¾ÐºÐ¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ð¹
 Group: Security/Networking
 Requires: %name = %version
 Requires: libnet1
@@ -111,17 +108,17 @@ Requires: libnet1
 Snort compiled with flexresp support.
 Flexible Response allows snort to actively close offending connections.
 Requires snort libnet rpm.
-%description -l ru_RU.KOI8-R plain+flexresp
-Snort, ÓËÏÍÐÉÌÉÒÏ×ÁÎÎÙÊ Ó ÐÏÄÄÅÒÖËÏÊ flexresp. Flexible Responses ÏÚÎÁÞÁÅÔ
-×ÏÚÍÏÖÎÏÓÔØ Á×ÔÏÍÁÔÉÞÅÓËÉ ÂÌÏËÉÒÏ×ÁÔØ ÓÏÅÄÉÎÅÎÉÑ, ÐÒÉÚÎÁÎÎÙÅ ÚÌÏÎÁÍÅÒÅÎÎÙÍÉ
-ÎÁ ÏÓÎÏ×ÁÎÉÉ ÓÏÏÔ×ÅÔÓÔ×ÕÀÝÉÈ ÐÒÁ×ÉÌ. ôÒÅÂÕÅÔ ÂÉÂÌÉÏÔÅËÕ libnet.
-%description -l uk_UA.KOI8-U plain+flexresp
-Snort, ÓËÏÍÐ¦ÌØÏ×ÁÎÉÊ Ú Ð¦ÄÔÒÉÍËÏÀ flexresp.
-÷ÉÍÁÇÁ¤ Â¦ÂÌ¦ÏÔÅËÕ libnet.
+%description -l ru_RU.UTF-8 plain+flexresp
+Snort, ÑÐºÐ¾Ð¼Ð¿Ð¸Ð»Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ñ‹Ð¹ Ñ Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶ÐºÐ¾Ð¹ flexresp. Flexible Responses Ð¾Ð·Ð½Ð°Ñ‡Ð°ÐµÑ‚
+Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ÑÑ‚ÑŒ Ð°Ð²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸ Ð±Ð»Ð¾ÐºÐ¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ, Ð¿Ñ€Ð¸Ð·Ð½Ð°Ð½Ð½Ñ‹Ðµ Ð·Ð»Ð¾Ð½Ð°Ð¼ÐµÑ€ÐµÐ½Ð½Ñ‹Ð¼Ð¸
+Ð½Ð° Ð¾ÑÐ½Ð¾Ð²Ð°Ð½Ð¸Ð¸ ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ñ… Ð¿Ñ€Ð°Ð²Ð¸Ð». Ð¢Ñ€ÐµÐ±ÑƒÐµÑ‚ Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÑƒ libnet.
+%description -l uk_UA.UTF-8 plain+flexresp
+Snort, ÑÐºÐ¾Ð¼Ð¿â••Ð»ÑŒÐ¾Ð²Ð°Ð½Ð¸Ð¹ Ð· Ð¿â••Ð´Ñ‚Ñ€Ð¸Ð¼ÐºÐ¾ÑŽ flexresp.
+Ð’Ð¸Ð¼Ð°Ð³Ð°â•“ Ð±â••Ð±Ð»â••Ð¾Ñ‚ÐµÐºÑƒ libnet.
 
 %package inline
 Summary: Snort with IPTables support
-Summary(ru_RU.KOI8-R): Snort Ó ÞÔÅÎÉÅÍ ÔÒÁÆÉËÁ ÞÅÒÅÚ IPTables ×ÍÅÓÔÏ PCAP
+Summary(ru_RU.UTF-8): Snort Ñ Ñ‡Ñ‚ÐµÐ½Ð¸ÐµÐ¼ Ñ‚Ñ€Ð°Ñ„Ð¸ÐºÐ° Ñ‡ÐµÑ€ÐµÐ· IPTables Ð²Ð¼ÐµÑÑ‚Ð¾ PCAP
 Group: Security/Networking
 Requires: %name = %version
 Requires: iptables
@@ -129,16 +126,16 @@ Requires: iptables
 Snort-Inline takes packets from iptables instead of libpcap.
 It then uses new rule types to help iptables make pass or drop decisions
 based on snort rules.
-%description -l ru_RU.KOI8-R inline
-Snort, ÉÓÐÏÌØÚÕÀÝÉÊ ÄÌÑ ÐÒÏÓÍÏÔÒÁ ÔÒÁÆÉËÁ ÆÕÎËÃÉÉ ÐÁËÅÔÎÏÇÏ ÆÉÌØÔÒÁ IPTables
-×ÍÅÓÔÏ ÂÉÂÌÉÏÔÅËÉ PCAP. äÏÐÏÌÎÉÔÅÌØÎÙÅ ÔÉÐÙ ÐÒÁ×ÉÌ ÓÌÕÖÁÔ ÄÌÑ ÐÅÒÅÄÁÞÉ ÕËÁÚÁÎÉÊ
-ÏÔ Snort'Á ÐÁËÅÔÎÏÍÕ ÆÉÌØÔÒÕ.
-%description -l uk_UA.KOI8-U inline
-Snort, ÓËÏÍÐ¦ÌØÏ×ÁÎÉÊ Ú Ð¦ÄÔÒÉÍËÏÀ IPTables
+%description -l ru_RU.UTF-8 inline
+Snort, Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÑŽÑ‰Ð¸Ð¹ Ð´Ð»Ñ Ð¿Ñ€Ð¾ÑÐ¼Ð¾Ñ‚Ñ€Ð° Ñ‚Ñ€Ð°Ñ„Ð¸ÐºÐ° Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ Ð¿Ð°ÐºÐµÑ‚Ð½Ð¾Ð³Ð¾ Ñ„Ð¸Ð»ÑŒÑ‚Ñ€Ð° IPTables
+Ð²Ð¼ÐµÑÑ‚Ð¾ Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÐ¸ PCAP. Ð”Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ðµ Ñ‚Ð¸Ð¿Ñ‹ Ð¿Ñ€Ð°Ð²Ð¸Ð» ÑÐ»ÑƒÐ¶Ð°Ñ‚ Ð´Ð»Ñ Ð¿ÐµÑ€ÐµÐ´Ð°Ñ‡Ð¸ ÑƒÐºÐ°Ð·Ð°Ð½Ð¸Ð¹
+Ð¾Ñ‚ Snort'Ð° Ð¿Ð°ÐºÐµÑ‚Ð½Ð¾Ð¼Ñƒ Ñ„Ð¸Ð»ÑŒÑ‚Ñ€Ñƒ.
+%description -l uk_UA.UTF-8 inline
+Snort, ÑÐºÐ¾Ð¼Ð¿â••Ð»ÑŒÐ¾Ð²Ð°Ð½Ð¸Ð¹ Ð· Ð¿â••Ð´Ñ‚Ñ€Ð¸Ð¼ÐºÐ¾ÑŽ IPTables
 
 %package inline+flexresp
 Summary: Snort with IPTables and FlexibleResponse support
-Summary(ru_RU.KOI8-R): Snort Ó ÞÔÅÎÉÅÍ ÔÒÁÆÉËÁ ÞÅÒÅÚ IPTables É Á×ÔÏÂÌÏËÉÒÏ×ËÏÊ
+Summary(ru_RU.UTF-8): Snort Ñ Ñ‡Ñ‚ÐµÐ½Ð¸ÐµÐ¼ Ñ‚Ñ€Ð°Ñ„Ð¸ÐºÐ° Ñ‡ÐµÑ€ÐµÐ· IPTables Ð¸ Ð°Ð²Ñ‚Ð¾Ð±Ð»Ð¾ÐºÐ¸Ñ€Ð¾Ð²ÐºÐ¾Ð¹
 Group: Security/Networking
 Requires: %name = %version
 Requires: iptables
@@ -146,25 +143,25 @@ Requires: iptables
 Snort-Inline takes packets from iptables instead of libpcap.
 It then uses new rule types to help iptables make pass or drop decisions
 based on snort rules.
-%description -l ru_RU.KOI8-R inline+flexresp
-Snort, ÉÓÐÏÌØÚÕÀÝÉÊ ÄÌÑ ÐÒÏÓÍÏÔÒÁ ÔÒÁÆÉËÁ ÆÕÎËÃÉÉ ÐÁËÅÔÎÏÇÏ ÆÉÌØÔÒÁ IPTables
-×ÍÅÓÔÏ ÂÉÂÌÉÏÔÅËÉ PCAP. äÏÐÏÌÎÉÔÅÌØÎÙÅ ÔÉÐÙ ÐÒÁ×ÉÌ ÓÌÕÖÁÔ ÄÌÑ ÐÅÒÅÄÁÞÉ ÕËÁÚÁÎÉÊ
-ÏÔ Snort'Á ÐÁËÅÔÎÏÍÕ ÆÉÌØÔÒÕ. Flexresp ÏÚÎÁÞÁÅÔ ×ÏÚÍÏÖÎÏÓÔØ Á×ÔÏÍÁÔÉÞÅÓËÉ
-ÂÌÏËÉÒÏ×ÁÔØ ÓÏÅÄÉÎÅÎÉÑ ÎÁ ÏÓÎÏ×ÁÎÉÉ ÓÏÏÔ×ÅÔÓÔ×ÕÀÝÉÈ ÐÒÁ×ÉÌ.
-%description -l uk_UA.KOI8-U inline+flexresp
-Snort, ÓËÏÍÐ¦ÌØÏ×ÁÎÉÊ Ú Ð¦ÄÔÒÉÍËÏÀ IPTables ÔÁ flexresp.
+%description -l ru_RU.UTF-8 inline+flexresp
+Snort, Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÑŽÑ‰Ð¸Ð¹ Ð´Ð»Ñ Ð¿Ñ€Ð¾ÑÐ¼Ð¾Ñ‚Ñ€Ð° Ñ‚Ñ€Ð°Ñ„Ð¸ÐºÐ° Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ Ð¿Ð°ÐºÐµÑ‚Ð½Ð¾Ð³Ð¾ Ñ„Ð¸Ð»ÑŒÑ‚Ñ€Ð° IPTables
+Ð²Ð¼ÐµÑÑ‚Ð¾ Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÐ¸ PCAP. Ð”Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ðµ Ñ‚Ð¸Ð¿Ñ‹ Ð¿Ñ€Ð°Ð²Ð¸Ð» ÑÐ»ÑƒÐ¶Ð°Ñ‚ Ð´Ð»Ñ Ð¿ÐµÑ€ÐµÐ´Ð°Ñ‡Ð¸ ÑƒÐºÐ°Ð·Ð°Ð½Ð¸Ð¹
+Ð¾Ñ‚ Snort'Ð° Ð¿Ð°ÐºÐµÑ‚Ð½Ð¾Ð¼Ñƒ Ñ„Ð¸Ð»ÑŒÑ‚Ñ€Ñƒ. Flexresp Ð¾Ð·Ð½Ð°Ñ‡Ð°ÐµÑ‚ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ÑÑ‚ÑŒ Ð°Ð²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸
+Ð±Ð»Ð¾ÐºÐ¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ Ð½Ð° Ð¾ÑÐ½Ð¾Ð²Ð°Ð½Ð¸Ð¸ ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ñ… Ð¿Ñ€Ð°Ð²Ð¸Ð».
+%description -l uk_UA.UTF-8 inline+flexresp
+Snort, ÑÐºÐ¾Ð¼Ð¿â••Ð»ÑŒÐ¾Ð²Ð°Ð½Ð¸Ð¹ Ð· Ð¿â••Ð´Ñ‚Ñ€Ð¸Ð¼ÐºÐ¾ÑŽ IPTables Ñ‚Ð° flexresp.
 
 %package doc
 Summary: Various documentation from Snort IDS distribution.
-Summary(ru_RU.KOI8-R): äÏËÕÍÅÎÔÁÃÉÑ ÐÏ ÁÎÁÌÉÚÁÔÏÒÕ ÓÅÔÅ×ÏÇÏ ÔÒÁÆÉËÁ Snort
+Summary(ru_RU.UTF-8): Ð”Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ð°Ñ†Ð¸Ñ Ð¿Ð¾ Ð°Ð½Ð°Ð»Ð¸Ð·Ð°Ñ‚Ð¾Ñ€Ñƒ ÑÐµÑ‚ÐµÐ²Ð¾Ð³Ð¾ Ñ‚Ñ€Ð°Ñ„Ð¸ÐºÐ° Snort
 Group: Security/Networking
 BuildArch: noarch
 %description doc
 Snort manual, FAQ and tons of detailed textual listings
 describing all network intrusions known by Snort.
-%description doc -l ru_RU.KOI8-R
-òÕËÏ×ÏÄÓÔ×Ï ÐÏÌØÚÏ×ÁÔÅÌÑ, FAQ, Á ÔÁËÖÅ ÄÅÔÁÌØÎÁÑ ÄÏËÕÍÅÎÔÁÃÉÑ
-ÐÏ ÓÉÇÎÁÔÕÒÁÍ ×ÓÅÈ ÓÅÔÅ×ÙÈ ÁÔÁË, ËÏÔÏÒÙÅ ÒÁÓÐÏÚÎÁ£Ô Snort.
+%description doc -l ru_RU.UTF-8
+Ð ÑƒÐºÐ¾Ð²Ð¾Ð´ÑÑ‚Ð²Ð¾ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ, FAQ, Ð° Ñ‚Ð°ÐºÐ¶Ðµ Ð´ÐµÑ‚Ð°Ð»ÑŒÐ½Ð°Ñ Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ð°Ñ†Ð¸Ñ
+Ð¿Ð¾ ÑÐ¸Ð³Ð½Ð°Ñ‚ÑƒÑ€Ð°Ð¼ Ð²ÑÐµÑ… ÑÐµÑ‚ÐµÐ²Ñ‹Ñ… Ð°Ñ‚Ð°Ðº, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ñ‘Ñ‚ Snort.
 
 %prep
 %setup -q
@@ -199,7 +196,7 @@ function prepconf() {
 	--sysconfdir=%_sysconfdir/%name \
 	--enable-linux-smp-stats \
 	--disable-static-daq \
-    --enable-dynamicplugin \
+	--enable-dynamicplugin \
 	%{subst_with prelude} \
 	"$@"
     %make    
@@ -207,7 +204,7 @@ function prepconf() {
     case "$d" in
         plain)
         mv src/dynamic-plugins/sf_engine/.libs/libsf_engine.so* ../building/
-        mv src/dynamic-preprocessors/build/usr/lib/snort_dynamicpreprocessor ../building/
+        mv src/dynamic-preprocessors/build/usr/lib*/snort_dynamicpreprocessor ../building/
         ;;
         *);;
     esac
@@ -222,15 +219,15 @@ prepconf %{subst_with inline}     inline+flexresp     --enable-inline=yes --enab
 %endif
 
 %install
-mkdir -p %buildroot/{%_sbindir,%_initdir,%_man8dir,%_logdir/%name,%_altdir}
-mkdir -p %buildroot/%_sysconfdir/{%name,logrotate.d,sysconfig}
+mkdir -p %buildroot{%_sbindir,%_initdir,%_man8dir,%_logdir/%name,%_altdir}
+mkdir -p %buildroot%_sysconfdir/{%name,logrotate.d,sysconfig}
 
 weight=0
 
 function myinstall() {
     weight=$[10+$weight]
     test -r "$1" || return 0
-    install -m 755 "$1" "%buildroot/%_sbindir/$1"
+    install -m 755 "$1" "%buildroot%_sbindir/$1"
 
     # Create record file for alterantives
     printf "%_sbindir/%name\t%_sbindir/$1\t$weight\n" > %buildroot%_altdir/$1
@@ -252,31 +249,30 @@ chmod 0644 %buildroot%_libdir/%name/dynamicpreprocessor/libsf_*_preproc.so*
 popd
 
 # Create symlink for %%ghost, actually not packaged
-pushd %buildroot/%_sbindir
+pushd %buildroot%_sbindir
 ln -s %name-plain %name
 popd
 
 install -m 644 %name.8    %buildroot%_man8dir/
-install -m 644 etc/*.{conf,config,map} %buildroot/%_sysconfdir/%name
-install -m 744 %SOURCE99  %buildroot/%_initdir/
-mkdir -p %buildroot/%_sysconfdir/%name/preproc_rules/
-install -m 644 preproc_rules/*.rules %buildroot/%_sysconfdir/%name/preproc_rules/
-sed -i 's;^var RULE_PATH \.\./rules;var RULE_PATH \%_sysconfdir/%name/rules;i' %buildroot/%_sysconfdir/%name/%name.conf
+install -m 644 etc/*.{conf,config,map} %buildroot%_sysconfdir/%name
+install -m 744 %SOURCE99  %buildroot%_initdir/
+mkdir -p %buildroot%_sysconfdir/%name/preproc_rules/
+install -m 644 preproc_rules/*.rules %buildroot%_sysconfdir/%name/preproc_rules/
+sed -i 's;^var RULE_PATH \.\./rules;var RULE_PATH \%_sysconfdir/%name/rules;i' %buildroot%_sysconfdir/%name/%name.conf
 sed -i 's;^var PREPROC_RULE_PATH \.\./preproc_rules;var PREPROC_RULE_PATH \%_sysconfdir/%name/preproc_rules;i' \
-        %buildroot/%_sysconfdir/%name/%name.conf
-sed -i 's;/usr/local/lib/snort_;%_libdir/%name/;' %buildroot/%_sysconfdir/%name/%name.conf
-sed -i 's;^# config daq_dir: <dir>;config daq_dir: %_libdir/daq/;' %buildroot/%_sysconfdir/%name/%name.conf
-sed -i 's;^var WHITE_LIST_PATH \.\./rules;var WHITE_LIST_PATH \%_sysconfdir/%name/rules;i' %buildroot/%_sysconfdir/%name/%name.conf
-sed -i 's;^var BLACK_LIST_PATH \.\./rules;var BLACK_LIST_PATH \%_sysconfdir/%name/rules;i' %buildroot/%_sysconfdir/%name/%name.conf
+        %buildroot%_sysconfdir/%name/%name.conf
+sed -i 's;/usr/local/lib/snort_;%_libdir/%name/;' %buildroot%_sysconfdir/%name/%name.conf
+sed -i 's;^# config daq_dir: <dir>;config daq_dir: %_libdir/daq/;' %buildroot%_sysconfdir/%name/%name.conf
+sed -i 's;^var WHITE_LIST_PATH \.\./rules;var WHITE_LIST_PATH \%_sysconfdir/%name/rules;i' %buildroot%_sysconfdir/%name/%name.conf
+sed -i 's;^var BLACK_LIST_PATH \.\./rules;var BLACK_LIST_PATH \%_sysconfdir/%name/rules;i' %buildroot%_sysconfdir/%name/%name.conf
 
-m4 -DSNORT_CONFDIRPATH=%_sysconfdir/%name %SOURCE10 > %buildroot/%_sysconfdir/sysconfig/%name
-m4 -DSNORT_LOGPATH=%_logdir/%name %SOURCE30 > %buildroot/%_sysconfdir/logrotate.d/%name
+m4 -DSNORT_CONFDIRPATH=%_sysconfdir/%name %SOURCE10 > %buildroot%_sysconfdir/sysconfig/%name
+m4 -DSNORT_LOGPATH=%_logdir/%name %SOURCE30 > %buildroot%_sysconfdir/logrotate.d/%name
 m4 -DSNORT_CONFPATH=%_sysconfdir/%name/%name.conf -DSNORT_BINPATH=%_sbindir/%name %SOURCE20 > README-ALT.ru
-m4 -DSNORT_CONFPATH=%_sysconfdir/%name/%name.conf -DSNORT_BINPATH=%_sbindir/%name %SOURCE21 > README-ALT.uk
 
-mkdir -p %buildroot/%_sysconfdir/%name/rules/
-touch %buildroot/%_sysconfdir/%name/rules/white_list.rules
-touch %buildroot/%_sysconfdir/%name/rules/black_list.rules
+mkdir -p %buildroot%_sysconfdir/%name/rules/
+touch %buildroot%_sysconfdir/%name/rules/white_list.rules
+touch %buildroot%_sysconfdir/%name/rules/black_list.rules
 
 %pre
 %_sbindir/groupadd -rf %name
@@ -289,16 +285,9 @@ touch %buildroot/%_sysconfdir/%name/rules/black_list.rules
 %preun
 %preun_service snortd
 
-%postun
-echo
-echo You can delete fakeuser \"%name\" using command:
-echo -e "\t%_sbindir/userdel %name"
-echo if needed
-echo
-
 %files
 %doc doc/AUTHORS doc/BUGS doc/CREDITS doc/NEWS doc/PROBLEMS doc/README* doc/TODO doc/USAGE doc/WISHLIST
-%doc README-ALT.ru README-ALT.uk
+%doc README-ALT.ru
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_initdir/snortd
 %config(noreplace) %_sysconfdir/logrotate.d/%name
@@ -334,6 +323,9 @@ echo
 %doc doc/snort_manual.*
 
 %changelog
+* Fri Dec 12 2014 Anton Farygin <rider@altlinux.ru> 2.9.7.0-alt1
+- new version
+
 * Mon Jun 23 2014 Timur Aitov <timonbl4@altlinux.org> 2.9.6.1-alt4
 - disable all rules by default
 
