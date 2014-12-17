@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Exporter.pm) perl(Scalar/Util.pm) perl(base.pm) perl(ok.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    HTML-FromANSI
 %define upstream_version 2.03
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_6
 
 Summary:    Mark up ANSI sequences as HTML
 License:    GPL+ or Artistic
@@ -57,6 +57,9 @@ that you no longer import any functions by doing:
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_6
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_4
 - update by mgaimport
 
