@@ -1,5 +1,5 @@
 Name: perl-CGI-Emulate-PSGI
-Version: 0.15
+Version: 0.20
 Release: alt1
 
 Summary: CGI::Emulate::PSGI - PSGI adapter for CGI
@@ -10,7 +10,7 @@ Url: %CPAN CGI-Emulate-PSGI
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-libwww perl-CGI
+BuildRequires: perl-devel perl-libwww perl-CGI perl(Test/Requires.pm)
 
 %description
 This module allows an application designed for the CGI environment to
@@ -37,6 +37,9 @@ CGI::Parse::PSGI module
 %doc Changes README
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Mon Sep 30 2013 Vladimir Lettiev <crux@altlinux.ru> 0.15-alt1
 - New version 0.15
 
