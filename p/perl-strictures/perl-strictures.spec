@@ -1,5 +1,5 @@
 Name: perl-strictures
-Version: 1.005004
+Version: 1.005005
 Release: alt1
 
 Summary: strictures - turn on strict and make all warnings fatal
@@ -32,6 +32,9 @@ BuildArch: noarch
 %doc Changes
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.005005-alt1
+- automated CPAN update
+
 * Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 1.005004-alt1
 - automated CPAN update
 
