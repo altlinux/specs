@@ -1,5 +1,5 @@
 Name: perl-Test-Trap
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 
 Summary: Test::Trap perl module
@@ -29,6 +29,9 @@ BuildArch: noarch
 %doc Changes README
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.5-alt1
+- automated CPAN update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1
 - automated CPAN update
 
