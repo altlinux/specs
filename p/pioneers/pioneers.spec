@@ -1,17 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/convert /usr/bin/glib-gettextize /usr/bin/pngtopnm /usr/bin/rsvg-convert /usr/bin/scrollkeeper-config pkgconfig(avahi-client) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libnotify)
+BuildRequires: /usr/bin/convert /usr/bin/glib-gettextize /usr/bin/rsvg-convert /usr/bin/scrollkeeper-config pkgconfig(avahi-client) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) pkgconfig(libnotify)
 # END SourceDeps(oneline)
 %define fedora 21
 Name:           pioneers
-Version:        14.1
-Release:        alt1_7
+Version:        15.3
+Release:        alt1_1
 Summary:        Turnbased board strategy game (colonize an island)
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://pio.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/pio/%{name}-%{version}.tar.gz
-Patch0:         pioneers-14.1-sanitize.patch
-Patch1:		pioneers-0.12.3-dso.patch
+Patch0:         pioneers-15.3-sanitize.patch
 BuildRequires:  libgnome-devel gtk2-devel gettext scrollkeeper intltool
 BuildRequires:  perl(XML/Parser.pm) desktop-file-utils
 Requires:       icon-theme-hicolor
@@ -44,8 +43,7 @@ edited graphically.
 
 %prep
 %setup -q
-#%patch0 -p1 -z .sanitize
-%patch1 -p1 -z .dso
+%patch0 -p1 -z .sanitize
 	
 
 %build
@@ -84,7 +82,7 @@ fi
 %doc AUTHORS COPYING ChangeLog README NEWS
 %{_bindir}/%{name}
 %{_bindir}/%{name}ai
-%{_bindir}/%{name}-meta-server
+%{_bindir}/%{name}-metaserver
 %{_bindir}/%{name}-server-console
 %{_bindir}/%{name}-server-gtk
 %{_datadir}/games/%{name}
@@ -108,16 +106,15 @@ fi
 
 %files editor
 %{_bindir}/%{name}-editor
-%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/%{name}-editor.desktop
-%else
-%{_datadir}/applications/%{name}-editor.desktop
-%endif
 %{_datadir}/pixmaps/%{name}-editor.png
 %{_datadir}/icons/hicolor/48x48/apps/%{name}-editor.png
 %{_datadir}/icons/hicolor/scalable/apps/%{name}-editor.svg
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 15.3-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 14.1-alt1_7
 - update to new release by fcimport
 
