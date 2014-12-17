@@ -1,7 +1,7 @@
 Summary: 	Desktop for the Matchbox Desktop
 Name: 		matchbox-desktop
 Version: 	2.0
-Release: 	alt1_9
+Release: 	alt1_10
 Url: 		http://matchbox-project.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
@@ -56,6 +56,9 @@ EOF
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_10
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_9
 - update by mgaimport
 
