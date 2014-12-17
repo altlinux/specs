@@ -4,13 +4,12 @@
 
 Name: gnome-shell-extensions
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: https://live.gnome.org/GnomeShell
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -39,7 +38,7 @@ See %_docdir/%name-%version/README for more information.
 %make check
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 cat <<__START_GNOME__ >startgnome
 #!/bin/sh
@@ -67,7 +66,7 @@ __EOF__
 %files -f %name.lang
 ## Classic mode
 %_bindir/startgnome-classic
-%_sysconfdir/X11/wmsession.d/03Gnome-classic
+#%_sysconfdir/X11/wmsession.d/03Gnome-classic
 %_datadir/applications/gnome-shell-classic.desktop
 %_datadir/gnome-session/sessions/gnome-classic.session
 %_datadir/gnome-shell/modes/classic.json
@@ -78,7 +77,7 @@ __EOF__
 %_datadir/gnome-shell/theme/classic-process-working.svg
 %_datadir/gnome-shell/theme/gnome-classic.css
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.classic-overrides.gschema.xml
-%exclude %_datadir/xsessions/gnome-classic.desktop
+%_datadir/xsessions/gnome-classic.desktop
 
 ## Extensions
 %dir %_datadir/gnome-shell/extensions
@@ -202,6 +201,10 @@ __EOF__
 %endif
 
 %changelog
+* Wed Dec 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt2
+- disabled alt-specific mechanism for run gnome-classic session,
+  packaged standard xsessions/gnome-classic.desktop instead
+
 * Wed Nov 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

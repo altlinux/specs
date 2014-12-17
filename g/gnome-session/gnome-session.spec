@@ -5,13 +5,12 @@
 
 Name: gnome-session
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
 Group: Graphical desktop/GNOME
 URL: ftp://ftp.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
@@ -24,7 +23,7 @@ Patch1: %name-3.8.2-alt-lfs.patch
 # Blacklist NV30: https://bugzilla.redhat.com/show_bug.cgi?id=745202
 Patch11: gnome-session-3.3.92-nv30.patch
 
-# From configure.in
+# From configure.ac
 %define glib_ver 2.35.0
 %define gtk_ver 3.0.0
 %define dbus_glib_ver 0.76
@@ -45,14 +44,14 @@ Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
 BuildPreReq: rpm-build-gnome >= 0.5
 BuildPreReq: gnome-common
 
-# From configure.in
+# From configure.ac
 BuildPreReq: intltool >= 0.35.0 libGConf-devel
 BuildPreReq: libgio-devel glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libdbus-glib-devel >= %dbus_glib_ver
 # https://bugzilla.gnome.org/show_bug.cgi?id=710383
 # BuildPreReq: libupower-devel >= %upower_ver
-BuildRequires: libpangox-compat-devel libgnome-desktop3-devel librsvg-devel libjson-glib-devel
+BuildRequires: libgnome-desktop3-devel librsvg-devel libjson-glib-devel
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
 BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel libGL-devel
 BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
@@ -113,7 +112,8 @@ cat <<__START_GNOME_COMMON__ >startgnome-common
 export GDK_USE_XFT=1
 
 # set default browser to whatever GNOME user likes
-export BROWSER=gnome-open
+# obsolete since gnome3
+# export BROWSER=gnome-open
 
 # tell restored browsers where plugins are
 export MOZ_PLUGIN_PATH="\${MOZ_PLUGIN_PATH:+"\$MOZ_PLUGIN_PATH:"}\${HOME:+"\$HOME/.mozilla/plugins:"}%_libdir/mozilla/plugins:%_libdir/netscape/plugins:%browser_plugins_path"
@@ -138,7 +138,7 @@ export XDG_DATA_DIRS="%_datadir/gnome:%_datadir:/usr/local/share"
 desktop="\$HOME"/.config/gnome-session/saved-session/gnome-shell-classic.desktop
 string="--mode=classic"
 if [ -a "\$desktop" ]; then
-grep -qs "\'\$string'" "\$desktop" || subst 's/\(Exec=gnome-shell\)/\1 '\$string'/' "\$desktop"
+grep -qs "'\$string'" "\$desktop" || subst 's/\(Exec=gnome-shell\)/\1 '\$string'/' "\$desktop"
 fi
 __START_GNOME_COMMON__
 
@@ -206,9 +206,10 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %dir %_datadir/%name/sessions
 %_datadir/%name/sessions/gnome.session
 %_datadir/%name/sessions/gnome-dummy.session
+%_datadir/xsessions/gnome.desktop
 %_iconsdir/gnome.svg
 %_iconsdir/hicolor/*/apps/session-properties.*
-%config %_sysconfdir/X11/wmsession.d/02Gnome
+#%config %_sysconfdir/X11/wmsession.d/02Gnome
 %config %_datadir/glib-2.0/schemas/org.gnome.SessionManager.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
 %_man1dir/gnome-session-inhibit.*
@@ -216,17 +217,15 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_man1dir/gnome-session.*
 %doc AUTHORS NEWS README
 
-%exclude %_datadir/xsessions/gnome.desktop
-
 %if_enabled session_selector
 %files selector
-%config %_sysconfdir/X11/wmsession.d/04Gnome-custom
+#%config %_sysconfdir/X11/wmsession.d/04Gnome-custom
 %_bindir/startgnome-custom
 %_bindir/gnome-session-custom-session
 %_bindir/gnome-session-selector
 %_datadir/%name/session-selector.ui
 %_man1dir/gnome-session-selector.*
-%exclude %_datadir/xsessions/gnome-custom-session.desktop
+%_datadir/xsessions/gnome-custom-session.desktop
 %endif
 
 %files wayland
@@ -234,6 +233,10 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_datadir/%name/sessions/gnome-wayland.session
 
 %changelog
+* Wed Dec 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
+- disabled alt-specific mechanism for run gnome sessions, packaged
+  standard *sessions/*.desktops instead
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
