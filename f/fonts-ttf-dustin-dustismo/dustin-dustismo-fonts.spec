@@ -1,19 +1,19 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname dustin-dustismo-fonts
-%define fontname dustin-dustismo
-%define fontconf 63-%{fontname}
+%global fontname dustin-dustismo
+%global fontconf 63-%{fontname}
 
-%define common_desc General purpose fonts by Dustin Norlander available in \
+%global common_desc General purpose fonts by Dustin Norlander available in \
 serif and sans-serif versions. The fonts cover all European Latin characters.
 
 Name:          fonts-ttf-dustin-dustismo
 Version:       20030318
-Release:       alt3_11
+Release:       alt3_12
 Summary:       General purpose sans-serif font with bold, italic and bold-italic variations
 
-Group:         System/Fonts/True type
 License:       GPLv2+
 URL:           http://www.dustismo.com
 # Actual download URL
@@ -21,6 +21,9 @@ URL:           http://www.dustismo.com
 Source0:       Dustismo.zip
 Source1:       %{oldname}-sans-fontconfig.conf
 Source2:       %{oldname}-roman-fontconfig.conf
+Source3:       %{fontname}.metainfo.xml
+Source4:       %{fontname}-sans.metainfo.xml
+Source5:       %{fontname}-roman.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
@@ -29,18 +32,18 @@ Source44: import.info
 %description
 %common_desc
 
-%package common
+%package -n fonts-ttf-dustin-dustismo-common
+Group: System/Fonts/True type
 Summary:       Common files for %{oldname}
-Group:         System/Fonts/True type
 
-%description common
+%description -n fonts-ttf-dustin-dustismo-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
 
 %package -n fonts-ttf-dustin-dustismo-sans
+Group: System/Fonts/True type
 Summary:       General purpos sans-serif fonts
-Group:         System/Fonts/True type
 Requires:      %{name}-common = %{version}-%{release}
 Provides:      %{oldname} = 20030318-3
 Obsoletes:     %{oldname} < 20030318-3
@@ -57,10 +60,11 @@ General purpose sans-serif font with bold, italic and bold-italic variations
 %{_fontbasedir}/*/%{_fontstem}/dustismo_bold.ttf
 %{_fontbasedir}/*/%{_fontstem}/dustismo_italic.ttf
 %{_fontbasedir}/*/%{_fontstem}/Dustismo.ttf
+%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
 
 %package -n fonts-ttf-dustin-dustismo-roman
+Group: System/Fonts/True type
 Summary:       General purpose serif font
-Group:         System/Fonts/True type
 Requires:      %{name}-common = %{version}-%{release}
 Provides:      %{oldname}-roman = 20030318-3
 Obsoletes:     %{oldname}-roman < 20030318-3
@@ -77,6 +81,7 @@ General purpose serif font with bold, italic and bold-italic variations
 %{_fontbasedir}/*/%{_fontstem}/Dustismo_Roman.ttf
 %{_fontbasedir}/*/%{_fontstem}/Dustismo_Roman_Italic_Bold.ttf
 %{_fontbasedir}/*/%{_fontstem}/Dustismo_Roman_Italic.ttf
+%{_datadir}/appdata/%{fontname}-roman.metainfo.xml
 
 %prep
 %setup -n %{oldname}-%{version} -q -c %{oldname}
@@ -85,7 +90,6 @@ sed -i 's/\r//' license.txt
 %build
 
 %install
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -97,6 +101,14 @@ install -m 0644 -p %{SOURCE2} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 for fontconf in %{fontconf}-sans.conf %{fontconf}-roman.conf ; do
   ln -s %{_fontconfig_templatedir}/$fontconf %{buildroot}%{_fontconfig_confdir}/$fontconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE1} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-roman.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -132,12 +144,15 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-%files common
+%files -n fonts-ttf-dustin-dustismo-common
 %doc license.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
-%dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 20030318-alt3_12
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20030318-alt3_11
 - update to new release by fcimport
 
