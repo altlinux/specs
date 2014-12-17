@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Devel/AssertOS.pm) perl(Devel/CheckOS.pm) perl(Exporter.pm) perl(File/Find/Rule.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist /usr/bin/tapper-installer-*.pl
 %define upstream_name    Tapper-Installer
@@ -8,7 +8,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_6
 
 Summary:    Tapper - Install everything needed for a test
 License:    GPL+ or Artistic
@@ -89,6 +89,9 @@ popd
 /usr/share/man/man1/tapper-installer-simnow.pl.1*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_6
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_4
 - update by mgaimport
 
