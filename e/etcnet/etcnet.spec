@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.10
-Release:	alt15
+Release:	alt16
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -139,6 +139,12 @@ fi
 %files full
 
 %changelog
+* Wed Dec 17 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt16
+- config-qos: use last qdisc as filter parent (closes: #30523)
+- do not turn dhcpcd's debug unconditionally (closes: #30023)
+- create-ppp: use kernel acceleration for pppoe ifaces
+- l2tp: added ppp profile
+
 * Fri Nov 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt15
 - l2tp support added
 
