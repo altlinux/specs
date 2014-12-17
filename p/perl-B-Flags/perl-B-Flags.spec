@@ -1,6 +1,6 @@
 Name: perl-B-Flags
-Version: 0.10
-Release: alt1.1
+Version: 0.11
+Release: alt1
 
 Summary: B::Flags - Friendlier flags for B
 License: Perl
@@ -30,6 +30,9 @@ BuildRequires: perl-devel
 %perl_vendor_autolib/B/Flags
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1.1
 - rebuild with new perl 5.20.1
 
