@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-grc
 Summary: Ancient Greek hunspell dictionaries
 Version: 2.1.5
-Release: alt2_8
+Release: alt2_9
 Group: Text tools
 Source: http://extensions.services.openoffice.org/e-files/2313/1/grc.oxt
 URL: http://www.himeros.eu/
@@ -25,7 +25,7 @@ Ancient Greek hunspell dictionaries.
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p dictionaries/grc_GR.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/grc.aff
-cp -p dictionaries/grc_GR.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/grf.dic
+cp -p dictionaries/grc_GR.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/grc.dic
 
 %files
 %doc LICENSES-en.txt         
@@ -33,6 +33,9 @@ cp -p dictionaries/grc_GR.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/grf.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt2_9
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt2_8
 - update to new release by fcimport
 
