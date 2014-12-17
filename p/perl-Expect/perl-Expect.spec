@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Expect
 Name: perl-%dist
-Version: 1.21
+Version: 1.32
 Release: alt1
 
 Summary: Perl Expect interface
@@ -8,11 +9,11 @@ License: GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Expect-%{version}.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: /dev/pts
+BuildRequires: /dev/pts perl(Test/Exception.pm)
 
 # Automatically added by buildreq on Tue Apr 27 2010
 BuildRequires: perl-IO-Tty perl-devel
@@ -36,12 +37,15 @@ cp -p examples/kibitz/kibitz %buildroot%_bindir/kibitz.pl
 cp -p examples/kibitz/kibitz.man %buildroot%_man1dir/kibitz.pl.1
 
 %files
-%doc Changes README test.pl
+%doc Changes README.md
 %perl_vendor_privlib/Expect*
 %_bindir/kibitz.pl
 %_man1dir/kibitz.pl.1*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
+- automated CPAN update
+
 * Tue Apr 27 2010 Alexey Tourbin <at@altlinux.ru> 1.21-alt1
 - 1.15 -> 1.21
 
