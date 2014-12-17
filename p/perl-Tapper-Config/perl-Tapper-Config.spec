@@ -9,7 +9,7 @@ BuildRequires: perl-Tapper
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_5
 
 Summary:    Tapper - Context sensitive configuration hub for all Tapper libs
 License:    GPL+ or Artistic
@@ -51,6 +51,9 @@ libraries.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1_5
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1_4
 - update by mgaimport
 
