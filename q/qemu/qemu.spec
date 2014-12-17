@@ -20,6 +20,7 @@
 %def_with unicore32
 %def_without xtensa
 %def_with moxie
+%def_with tricore
 
 %def_disable werror
 %def_enable sdl
@@ -151,10 +152,14 @@
 %global target_list_system %target_list_system moxie-softmmu
 %endif
 
+%if_with tricore
+%global target_list_system %target_list_system tricore-softmmu 
+%endif
+
 # }}}
 
 Name: qemu
-Version: 2.1.2
+Version: 2.2.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -181,7 +186,7 @@ BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d seavgabios seabios >= 1.7.4-alt2 libfdt-devel
-BuildRequires: libpixman-devel >= 0.18.4
+BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: iasl
 %{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel}
 %{?_enable_sdl2:BuildRequires: libSDL2-devel}
@@ -201,10 +206,10 @@ BuildRequires: iasl
 %{?_enable_smartcard_nss:BuildRequires: libnss-devel >= 3.12.8}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
 %{?_enable_glx:BuildRequires: libGL-devel libX11-devel}
-%{?_enable_guest_agent:BuildRequires: glib2-devel python-base}
+%{?_enable_guest_agent:BuildRequires: glib2-devel >= 2.38 python-base}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
 %{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
-%{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.1.0}
+%{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.1.1}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel}
 %{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 pkgconfig(vte-2.90) >= 0.32.0}
 %{?_enable_libssh2:BuildRequires: libssh2-devel >= 1.2.8}
@@ -653,6 +658,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Tue Dec 16 2014 Alexey Shabalin <shaba@altlinux.ru> 2.2.0-alt1
+- 2.2.0
+
 * Tue Sep 30 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.2-alt1
 - 2.1.2
 
