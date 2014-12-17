@@ -1,16 +1,14 @@
 Name:           xa
-Version:        2.3.5
-Release:        alt2_12
+Version:        2.3.6
+Release:        alt1_1
 Summary:        6502/65816 cross-assembler
 
 Group:          Development/Tools
 License:        GPLv2+
 URL:            http://www.floodgap.com/retrotech/xa/
 Source0:        http://www.floodgap.com/retrotech/%{name}/dists/%{name}-%{version}.tar.gz
-# fix conflict with recent glibc, reported in private email
-Patch0:         %{name}-2.3.5-getline.patch
 # update the build system, reported in private email
-Patch1:         %{name}-2.3.5-make.patch
+Patch0:         %{name}-2.3.5-make.patch
 Source44: import.info
 
 
@@ -33,11 +31,10 @@ Key amongst its features:
 
 %prep
 %setup -q
-%patch0 -p1 -b .getline
-%patch1 -p1 -b .make
+%patch0 -p1 -b .make
 
 # fix encoding
-for f in ChangeLog
+for f in ChangeLog doc/fileformat.txt
 do
     iconv -f ISO-8859-1 -t UTF-8 < $f > $f.new
     touch -r $f $f.new
@@ -54,12 +51,15 @@ make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} INSTALL="install -p"
 
 
 %files
-%doc COPYING ChangeLog README.1st doc/xa.txt
+%doc COPYING ChangeLog README.1st doc/fileformat.txt
 %{_bindir}/*
 %{_mandir}/man1/*
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.6-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt2_12
 - update to new release by fcimport
 
