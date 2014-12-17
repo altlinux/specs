@@ -1,5 +1,5 @@
 Name: perl-Module-Implementation
-Version: 0.07
+Version: 0.09
 Release: alt1
 
 Summary: Module::Implementation loads one of several alternate underlying implementations for a module 
@@ -27,9 +27,12 @@ BuildRequires: perl-devel perl-Module-Runtime perl-Try-Tiny perl-Test-Fatal perl
 
 %files
 %perl_vendor_privlib/Module/Implementation*
-%doc LICENSE Changes README 
+%doc LICENSE Changes README*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Sun Aug 25 2013 Vladimir Lettiev <crux@altlinux.ru> 0.07-alt1
 - 0.06 -> 0.07
 
