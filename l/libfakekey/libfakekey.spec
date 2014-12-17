@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++ libICE-devel libSM-devel
 
 Name:           libfakekey
 Version:        0.1
-Release:        alt6_7
+Release:        alt6_8
 Summary:        Converting characters to X key-presses
 
 Group:          System/Libraries
@@ -67,6 +67,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt6_8
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt6_7
 - update by mgaimport
 
