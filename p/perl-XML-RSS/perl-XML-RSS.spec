@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-RSS
 Name: perl-%dist
-Version: 1.55
+Version: 1.56
 Release: alt1
 
 Summary: Creates and updates RSS files
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/XML-RSS-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-DateTime-Format-Mail perl-DateTime-Format-W3CDTF perl-HTML-Parser perl-Module-Build perl-Test-Differences perl-Test-Manifest perl-Test-Pod perl-Test-Pod-Coverage perl-XML-Parser
+BuildRequires: perl-DateTime-Format-Mail perl-DateTime-Format-W3CDTF perl-HTML-Parser perl-Module-Build perl-Test-Differences perl-Test-Manifest perl-Test-Pod perl-Test-Pod-Coverage perl-XML-Parser perl(DateTime/Locale.pm)
 
 %description
 This module was created to help those who need to manage
@@ -34,6 +35,9 @@ creating, updating, and saving RSS files.
 %perl_vendor_privlib/XML
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1
+- automated CPAN update
+
 * Tue Apr 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.55-alt1
 - automated CPAN update
 
