@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20140815
+Version: 20141217
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Wed Dec 17 2014 Michael Shigorin <mike@altlinux.org> 20141217-alt1
+- ldv@'s workaround for media detection race condition (closes: #30315)
+
 * Fri Aug 15 2014 Michael Shigorin <mike@altlinux.org> 20140815-alt1
 - drop /proc/sys/kernel/hotplug check (OBSOLETE)
 
