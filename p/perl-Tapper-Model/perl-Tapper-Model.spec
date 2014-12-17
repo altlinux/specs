@@ -8,7 +8,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_5
 
 Summary:    Tapper - Context sensitive connected DBIC schema
 License:    GPL+ or Artistic
@@ -57,6 +57,9 @@ Context sensitive and connected DBIC schema for Tapper.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_5
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_3
 - update by mgaimport
 
