@@ -1,14 +1,14 @@
 BuildRequires: python-modules-encodings python-modules-xml
 Name:           malaga-suomi-voikko
-Version:        1.15
-Release:        alt1_3
+Version:        1.17
+Release:        alt1_1
 Summary:        A description of Finnish morphology written in Malaga (Voikko edition)
 
 Group:          Text tools
 License:        GPLv2+
-URL:            http://voikko.sourceforge.net/
+URL:            http://voikko.puimula.org
 # The usual format of stable release source URLs
-Source0:        http://downloads.sourceforge.net/voikko/suomi-malaga-%{version}.tar.gz
+Source0:        http://www.puimula.org/voikko-sources/suomi-malaga/suomi-malaga-%{version}.tar.gz
 # The usual format of testing release source URLs
 #Source0:        http://www.puimula.org/htp/testing/suomi-malaga-%{version}rc3.tar.gz
 
@@ -45,6 +45,9 @@ make voikko-install DESTDIR=$RPM_BUILD_ROOT%{_libdir}/voikko
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1_3
 - update to new release by fcimport
 
