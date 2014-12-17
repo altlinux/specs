@@ -1,7 +1,7 @@
 %define oname functest
 Name: python-module-%oname
 Version: 0.8.8
-Release: alt1
+Release: alt2
 Summary: Functional test framework
 License: ASLv2.0
 Group: Development/Python
@@ -30,6 +30,15 @@ hierarchies, and distributed result reporting.
 %install
 %python_install
 
+# There is a file in the package with a name starting with <tt>._</tt>, 
+# the file name pattern used by Mac OS X to store resource forks in non-native 
+# file systems. Such files are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+# for ones installed as %%doc
+find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+
+
 %check
 python setup.py test
 
@@ -40,6 +49,9 @@ python setup.py test
 %exclude %python_sitelibdir/tests
 
 %changelog
+* Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.8-alt2
+- Applied python-module-functest-0.8.8-alt1.diff
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.8-alt1
 - Initial build for Sisyphus
 
