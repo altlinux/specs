@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -13,16 +14,17 @@ bold weight.
 
 Name:		fonts-otf-adf-gillius
 Version:	1.008
-Release:	alt3_9
+Release:	alt3_10
 Summary:	Gillius ADF sans-serif typeface family
 
-Group:		System/Fonts/True type
 License:	GPLv2+ with exceptions
 URL:		http://arkandis.tuxfamily.org/adffonts.html
 Source0:	http://arkandis.tuxfamily.org/fonts/Gillius-Collection.zip
 Source1:	%{fontname}-fontconfig.conf
 Source2:	%{fontname}-2-fontconfig.conf
-
+Source3:        %{fontname}.metainfo.xml
+Source4:        %{fontname}-sans.metainfo.xml
+Source5:        %{fontname}-sans-2.metainfo.xml
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 
@@ -37,13 +39,13 @@ This is the base variant.
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/GilliusADF-*.otf
+%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
 
-
-%package common
+%package -n fonts-otf-adf-gillius-common
 Group: System/Fonts/True type
 Summary:	Common files of %{fontname}
 
-%description common
+%description -n fonts-otf-adf-gillius-common
 %common_desc
 
 This package consists of files used by other %{fontname} packages
@@ -64,6 +66,7 @@ widths, and slopes.
 %{_fontconfig_templatedir}/%{fontconf}-2.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-2.conf
 %{_fontbasedir}/*/%{_fontstem}/GilliusADFNo2-*.otf
+%{_datadir}/appdata/%{fontname}-sans-2.metainfo.xml
 
 %prep
 %setup -q -n Gillius-Collection
@@ -92,6 +95,14 @@ install -m 0644 -p %{SOURCE2} \
 	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}-2.conf
 ln -s %{_fontconfig_templatedir}/%{fontconf}-2.conf \
 	%{buildroot}%{_fontconfig_confdir}/%{fontconf}-2.conf
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
+install -Dm 0644 -p %{SOURCE5} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-sans-2.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -127,11 +138,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
-%files common
+%files -n fonts-otf-adf-gillius-common
 %doc NOTICE OTF/COPYING
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.008-alt3_10
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.008-alt3_9
 - update to new release by fcimport
 
