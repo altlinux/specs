@@ -13,7 +13,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_4
 
 Summary:    Tapper - Backend functions for CLI and Web
 License:    GPL+ or Artistic
@@ -74,6 +74,9 @@ Tapper backend functions for the command line and the Web.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.8-alt1_4
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.8-alt1_2
 - update by mgaimport
 
