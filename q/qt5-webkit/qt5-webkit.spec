@@ -5,8 +5,8 @@
 %def_disable bootstrap
 
 Name: qt5-webkit
-Version: 5.3.2
-Release: alt2
+Version: 5.4.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -144,6 +144,9 @@ mv Source/ThirdParty/{gtest/,qunit/} \
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Fri Dec 12 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
 * Wed Oct 01 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt2
 - build with gstreamer-1.0
 

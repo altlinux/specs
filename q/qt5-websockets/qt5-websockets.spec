@@ -2,7 +2,7 @@
 %global qt_module qtwebsockets
 
 Name: qt5-websockets
-Version: 5.3.2
+Version: 5.4.0
 Release: alt1
 
 Group: System/Libraries
@@ -93,6 +93,9 @@ syncqt.pl-qt5 \
 %_qt5_docdir/*
 
 %changelog
+* Tue Dec 16 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
 * Wed Sep 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %def_disable bootstrap
 
 Name: qt5-declarative
-Version: 5.3.2
+Version: 5.4.0
 Release: alt1
 
 Group: System/Libraries
@@ -135,12 +135,13 @@ syncqt.pl-qt5 \
 %_qt5_archdatadir/qml/Qt/labs/folderlistmodel/
 %_qt5_archdatadir/qml/Qt/labs/settings/
 %_qt5_archdatadir/qml/QtQml/Models.2/
+%_qt5_archdatadir/qml/QtQml/StateMachine/
 %_qt5_archdatadir/qml/QtQuick/LocalStorage/
 %_qt5_archdatadir/qml/QtQuick/XmlListModel/
 
 %files -n libqt5-quick
 %_qt5_libdir/libQt5Quick.so.*
-%_qt5_plugindir/accessible/libqtaccessiblequick.so
+#%_qt5_plugindir/accessible/libqtaccessiblequick.so
 %_qt5_plugindir/qmltooling/
 %_qt5_archdatadir/qml/QtQuick.2/
 #%_qt5_archdatadir/qml/QtQuick/Dialogs/
@@ -174,6 +175,9 @@ syncqt.pl-qt5 \
 %_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Fri Dec 12 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
 * Tue Sep 16 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
 - new version
 

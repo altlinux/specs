@@ -1,6 +1,6 @@
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -19,11 +19,11 @@
 %define gname  qt5
 %define libname  lib%gname
 %define major  5
-%define minor  3
-%define bugfix 2
+%define minor  4
+%define bugfix 0
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -34,7 +34,8 @@ Source: %rname-opensource-src-%version.tar
 Source1: rpm-macros-addon
 # FC
 Patch1: qt-everywhere-opensource-src-5.3.2-QTBUG-35459.patch
-Patch2: qtbase-opensource-src-5.3.0-old-xcb.patch
+Patch2: 0009-Do-not-apply-subpixel-gamma-correction-on-XCB.patch
+Patch3: 0173-qimage_conversions.cpp-Fix-build-on-big-endian-syste.patch
 # upstream
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
@@ -66,10 +67,10 @@ Patch1002: alt-dont-require-plugin-file.patch
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel libharfbuzz-devel
 BuildRequires: libpcre-devel libudev-devel libdrm-devel libgbm-devel zlib-devel libgtk+2-devel
-BuildRequires: pkgconfig(gl) pkgconfig(glesv2)
-BuildRequires: libX11-devel libXi-devel libxkbcommon-devel
+BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl)
+BuildRequires: libX11-devel libXi-devel libxkbcommon-devel libxkbcommon-x11-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
-BuildRequires: gst-plugins-devel libalsa-devel libpulseaudio-devel
+BuildRequires: libalsa-devel libpulseaudio-devel
 %{?_enable_sql_tds:BuildRequires: libfreetds-devel}
 %{?_enable_sql_ibase:BuildRequires: firebird-devel}
 %{?_enable_sql_odbc:BuildRequires: libunixODBC-devel}
@@ -193,13 +194,13 @@ Provides: %gname-plugin-sql = %EVR
 %description -n %gname-sql-interbase
 InterBase driver for Qt's SQL classes (QIBASE)
 
-%package -n %gname-sql-sqlite
-Summary: SQLite driver for Qt%major SQL classes
-Group: System/Libraries
-Requires: %name-common = %EVR
-Provides: %gname-plugin-sql = %EVR
-%description -n %gname-sql-sqlite
-SQLite driver for Qt's SQL classes (QSQLITE2)
+#%package -n %gname-sql-sqlite
+#Summary: SQLite driver for Qt%major SQL classes
+#Group: System/Libraries
+#Requires: %name-common = %EVR
+#Provides: %gname-plugin-sql = %EVR
+#%description -n %gname-sql-sqlite
+#SQLite driver for Qt's SQL classes (QSQLITE)
 
 %package -n %gname-sql-sqlite2
 Summary: SQLite2 driver for Qt%major SQL classes
@@ -293,7 +294,8 @@ Widgets library for the Qt%major toolkit
 %prep
 %setup -n %rname-opensource-src-%version
 %patch1 -p1 -b .QTBUG-35459
-%patch2 -p1 -b .xkbcommon
+%patch2 -p1
+%patch3 -p1
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
@@ -307,6 +309,7 @@ bin/syncqt.pl -private \
     -module QtDBus \
     -module QtConcurrent \
     -module QtPlatformSupport \
+    -module QtPlatformHeaders \
     -module QtWidgets \
     -module QtOpenGL \
     -module QtOpenGLExtensions \
@@ -375,10 +378,11 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -no-rpath \
     -no-separate-debug-info \
     -no-strip \
+    -no-use-gold-linker \
 %ifarch %ix86 x86_64
     -reduce-relocations \
 %endif
-    -opengl %opengl_type \
+    -opengl %opengl_type -egl -eglfs -kms \
     -system-sqlite \
     %{?_enable_sql_tds:-plugin-sql-tds}%{!?_enable_sql_tds:-no-sql-tds} \
     %{?_enable_sql_ibase:-plugin-sql-ibase}%{!?_enable_sql_ibase:-no-sql-ibase} \
@@ -409,6 +413,8 @@ make install INSTALL_ROOT=%buildroot
 [ -d doc/qtcore ] && %make INSTALL_ROOT=%buildroot install_docs ||:
 rm -rf %buildroot/%_qt5_docdir/qtwidgets/*tutorials-addressbook*
 %endif
+
+mkdir -p %buildroot/%_qt5_plugindir/accessible/
 
 # remove .la files
 rm -rf %buildroot/%_qt5_libdir/*.la
@@ -595,7 +601,6 @@ done
 %dir %_qt5_libdir/cmake/
 %_qt5_libdir/cmake/Qt%{major}*/
 %_pkgconfigdir/Qt%{major}.pc
-%_pkgconfigdir/Qt%{major}.pc
 %_pkgconfigdir/Qt%{major}Concurrent.pc
 %_pkgconfigdir/Qt%{major}Core.pc
 %_pkgconfigdir/Qt%{major}DBus.pc
@@ -698,7 +703,7 @@ done
 %files -n lib%{gname}-widgets
 %_qt5_libdir/libQt%{major}Widgets.so.*
 %_qt5_libdatadir/libQt%{major}Widgets.so.*
-%_qt5_plugindir/accessible/*
+#%_qt5_plugindir/accessible/*
 
 %files -n lib%{gname}-xml
 %_qt5_libdir/libQt%{major}Xml.so.*
@@ -706,6 +711,9 @@ done
 
 
 %changelog
+* Thu Dec 11 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
 * Wed Sep 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt2
 - build docs
 
