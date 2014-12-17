@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.6
-Release: alt1.git20140617
+Release: alt2.git20140617
 Summary: Python library for working with RDF data in an Object-Oriented way
 License: BSD
 Group: Development/Python
@@ -57,6 +57,7 @@ This package contains tests for %oname.
 Summary: Plugins for %oname
 Group: Development/Python
 Requires: %name = %EVR
+%py_requires rdfextras
 
 %description plugins
 SuRF is a Python library for working with RDF data in an Object-Oriented
@@ -110,6 +111,7 @@ SQLAlchemy. SuRF was inspired by ActiveRDF for Ruby.
 Summary: Plugins for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
+%py3_requires rdfextras
 
 %description -n python3-module-%oname-plugins
 SuRF is a Python library for working with RDF data in an Object-Oriented
@@ -263,6 +265,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.6-alt2.git20140617
+- Added requirement on rdfextras for plugins
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.6-alt1.git20140617
 - Initial build for Sisyphus
 
