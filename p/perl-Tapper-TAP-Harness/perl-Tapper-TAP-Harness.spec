@@ -8,7 +8,7 @@ BuildRequires: perl(YAML/Syck.pm) perl(parent.pm)
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_5
 
 Summary:    Tapper - Tapper specific TAP handling
 License:    GPL+ or Artistic
@@ -61,6 +61,9 @@ This package provides a Tapper-specific TAP handling.
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_5
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_3
 - update by mgaimport
 
