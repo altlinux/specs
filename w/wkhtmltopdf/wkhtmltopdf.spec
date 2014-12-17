@@ -1,19 +1,21 @@
 Name: wkhtmltopdf
-Version: 0.9.9
-Release: alt1.qa1
+Version: 0.12.2
+Release: alt1.dev.git20141216
 
 Summary: Command line utility to convert html to pdf using WebKit
 License: %gpl3plus
 Group: Publishing
-URL: http://code.google.com/p/wkhtmltopdf/
+URL: http://wkhtmltopdf.org/
 Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
-# git://github.com/antialize/wkhtmltopdf.git
+# https://github.com/wkhtmltopdf/wkhtmltopdf.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Fri Mar 26 2010
 BuildRequires: gcc-c++ libqt4-devel
+
+Requires: libwkhtmltox = %EVR
 
 %description
 wkhtmltopdf is a command line program which permits to create a pdf from
@@ -22,24 +24,60 @@ the WebKit engine.
 
 This program requires an X11 server to run.
 
+%package -n libwkhtmltox
+Summary: Shared libraries of libwkhtmltox
+Group: System/Libraries
+
+%description -n libwkhtmltox
+wkhtmltopdf is a command line program which permits to create a pdf from
+an url, a local html file or stdin. It produces a pdf like rendred with
+the WebKit engine.
+
+This package contains development files of libwkhtmltox.
+
+%package -n libwkhtmltox-devel
+Summary: Development files of libwkhtmltox
+Group: Development/C++
+Requires: %name = %EVR
+Requires: libwkhtmltox = %EVR
+
+%description -n libwkhtmltox-devel
+wkhtmltopdf is a command line program which permits to create a pdf from
+an url, a local html file or stdin. It produces a pdf like rendred with
+the WebKit engine.
+
+This package contains development files of libwkhtmltox.
+
 %prep
 %setup
 
 %build
 PATH=$PATH:%_qt4dir/bin qmake
 %make_build
-%make wkhtmltopdf.1.gz
 
 %install
 %make_install INSTALL_ROOT=%buildroot%prefix install
-install -D -m 644 wkhtmltopdf.1.gz %buildroot%_man1dir/wkhtmltopdf.1.gz
+
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
 
 %files
-%doc README
+%doc *.md AUTHORS
 %_bindir/*
 %_man1dir/*
 
+%files -n libwkhtmltox
+%_libdir/*.so.*
+
+%files -n libwkhtmltox-devel
+%_includedir/*
+%_libdir/*.so
+
 %changelog
+* Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.2-alt1.dev.git20141216
+- Version 0.12.2-dev
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.9-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
