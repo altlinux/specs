@@ -3,26 +3,27 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.0
-Release: alt2.svn20140221
+Version: 0.7.3
+Release: alt1.git20141217
 Summary: Solves automatic numerical differentiation problems in one or more variables
 License: BSD
 Group: Development/Python
 Url: http://code.google.com/p/numdifftools/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/pbrod/numdifftools.git
 Source: Numdifftools-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-scipy
 BuildPreReq: python-module-numpy-addons python-module-matplotlib
-BuildPreReq: python-module-coverage python-module-setuptools
+BuildPreReq: python-module-coverage python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-scipy
 BuildPreReq: python3-module-numpy-addons python3-module-matplotlib
-BuildPreReq: python3-module-coverage python3-module-setuptools
+BuildPreReq: python3-module-coverage python3-module-setuptools-tests
 %endif
 
 %description
@@ -77,6 +78,8 @@ This package contains documentation for Numdifftools.
 %prep
 %setup
 
+sed -i 's|@VERSION@|%version|' %oname/_version.py
+
 %if_with python3
 cp -fR . ../python3
 %endif
@@ -111,28 +114,31 @@ popd
 
 %files
 %python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/test
+#exclude %python_sitelibdir/%oname/test
 %exclude %python_sitelibdir/%oname/*.pyo
 
-%files test
-%python_sitelibdir/%oname/test
-%exclude %python_sitelibdir/%oname/test/*.pyo
+#files test
+#python_sitelibdir/%oname/test
+#exclude %python_sitelibdir/%oname/test/*.pyo
 
 %files doc
-%doc %oname/doc/*
+%doc docs/*
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/test
+#exclude %python3_sitelibdir/%oname/test
 %exclude %python3_sitelibdir/%oname/__pycache__/*.pyo
 
-%files -n python3-module-%oname-test
-%python3_sitelibdir/%oname/test
-%exclude %python3_sitelibdir/%oname/test/__pycache__/*.pyo
+#files -n python3-module-%oname-test
+#python3_sitelibdir/%oname/test
+#exclude %python3_sitelibdir/%oname/test/__pycache__/*.pyo
 %endif
 
 %changelog
+* Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1.git20141217
+- Version 0.7.3
+
 * Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt2.svn20140221
 - Added module for Python 3
 
