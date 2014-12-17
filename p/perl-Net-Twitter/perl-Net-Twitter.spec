@@ -1,5 +1,5 @@
 Name: perl-Net-Twitter
-Version: 4.01004
+Version: 4.01006
 Release: alt1
 
 Summary: A perl interface to the Twitter API
@@ -30,6 +30,9 @@ BuildRequires: perl(DateTime.pm) perl(DateTime/Format/Strptime.pm) perl(Encode.p
 %doc Changes LICENSE README
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.01006-alt1
+- automated CPAN update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 4.01004-alt1
 - automated CPAN update
 
