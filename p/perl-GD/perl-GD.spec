@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-GD
-Version: 2.53
-Release: alt1.1
+Version: 2.56
+Release: alt1
 Epoch: 1
 
 Summary: Perl interface to the GD graphics library
@@ -9,14 +10,14 @@ Group: Development/Perl
 
 URL: %CPAN GD
 Source: http://www.cpan.org/authors/id/L/LD/LDS/GD-%{version}.tar.gz
-Patch: GD-2.41-Group.pm.patch
+Patch: GD-2.56-GD.t-fonts.patch
 
 Conflicts: perl-GD1
 Provides: perl-GD2 = %version
 Obsoletes: perl-GD2 < %version
 
 # Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: libgd2-devel perl-Math-Complex perl-devel perl-podlators
+BuildRequires: libgd2-devel perl-Math-Complex perl-devel perl-podlators perl(Module/Build.pm)
 
 %description
 This is a autoloadable interface module for GD, a popular library for creating
@@ -30,23 +31,30 @@ fly or modify existing files.
 # do not override default CCFLAGS
 sed -i- '/CCFLAGS/d' Makefile.PL
 
-sed -i- 's/compare(test6(),6);/print "ok 6 # Skip, we change fonts so byte-comparing images becomes useless\n";/' t/GD.t
-
 %build
-%perl_vendor_build INSTALLMAN1DIR=%_man1dir
+%perl_vendor_build
 
 %install
 %perl_vendor_install
 
+rm %buildroot%_bindir/README
+rm %buildroot%_bindir/bdf2gdfont.PLS
+rm %buildroot%_man1dir/bdf2gdfont.PLS.*
+
 %files
 %doc README* demos bdf_scripts
 %_bindir/bdf2gdfont.pl
-%_man1dir/bdf2gdfont.pl.1*
+%_bindir/bdftogd
+%_bindir/cvtbdf.pl
+%_man1dir/bdf2gdfont.*
 %perl_vendor_archlib/GD*
 %perl_vendor_autolib/GD
-%perl_vendor_archlib/qd.pl
+#%perl_vendor_archlib/qd.pl
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.56-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.53-alt1.1
 - rebuild with new perl 5.20.1
 
