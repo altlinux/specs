@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-theokritos
 Version: 20070415
-Release: alt3_21
+Release: alt3_22
 Summary: GFS Theokritos decorative font
 
 License: OFL
@@ -119,6 +119,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_22
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_21
 - update to new release by fcimport
 
