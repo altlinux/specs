@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-fontawesome
 Version:	4.1.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Iconic font set
 License:	OFL
 URL:		http://fontawesome.io/
@@ -44,7 +44,7 @@ ttembed fonts/*.ttf fonts/*.otf
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p fonts/*.ttf fonts/*.otf %{buildroot}%{_fontdir}
+install -m 0644 -p fonts/*.ttf fonts/*.otf fonts/*.woff fonts/*.svg %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 		%{buildroot}%{_fontconfig_confdir}
@@ -92,18 +92,26 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+# files:
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %{_fontbasedir}/*/%{_fontstem}/*.otf
+%exclude %{_datadir}/fonts/fontawesome/fontawesome-webfont.svg
+%exclude %{_datadir}/fonts/fontawesome/fontawesome-webfont.woff
 
 %doc README-Trademarks.txt
 
 %files web
 %{_datadir}/font-awesome-web/
+%{_datadir}/fonts/fontawesome/fontawesome-webfont.svg
+%{_datadir}/fonts/fontawesome/fontawesome-webfont.woff
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_1
 - update to new release by fcimport
 
