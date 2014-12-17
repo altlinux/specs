@@ -1,10 +1,11 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname allgeyer-fonts
-%define fontname allgeyer
+%global fontname allgeyer
 
-%define common_desc \
+%global common_desc \
 Robert Allgeyer's MusiQwik and MusiSync are a set of original True Type fonts \
 that depict musical notation. Each music font may be used within a word \
 processing document without the need for special music publishing software, or\
@@ -13,13 +14,16 @@ embedded in PDF files.
 Name:		fonts-ttf-allgeyer
 Summary: 	Musical Notation True Type Fonts
 Version:	5.002
-Release:	alt3_10
+Release:	alt3_11
 License:	OFL
-Group:		System/Fonts/True type
 # The source was originally downloaded from:
 # http://www.icogitate.com/~ergosum/fonts/musiqwik_musisync_y6.zip
 # But the website is gone now.
 Source0:	musiqwik_musisync_y6.zip
+Source1:       %{fontname}.metainfo.xml
+Source2:       %{fontname}-musisync.metainfo.xml
+Source3:       %{fontname}-musiqwik.metainfo.xml
+
 # This website is gone. :(
 URL:		http://www.icogitate.com/~ergosum/fonts/musicfonts.htm
 BuildArch:	noarch
@@ -30,18 +34,18 @@ Source44: import.info
 %description
 %common_desc
 
-%package common
+%package -n fonts-ttf-allgeyer-common
+Group: System/Fonts/True type
 Summary:	Common files for MusiSync and MusiQwik fonts (documentation...)
-Group:		System/Fonts/True type
 
-%description common
+%description -n fonts-ttf-allgeyer-common
 %common_desc
 
 This package consists of files used by other Allgeyer font packages.
 
 %package -n fonts-ttf-allgeyer-musisync
+Group: System/Fonts/True type
 Summary:	A musical notation font family that provides general musical decorations
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-allgeyer-musisync
@@ -51,10 +55,11 @@ This font family provides a collection of general musical decorations.
 
 %files -n fonts-ttf-allgeyer-musisync
 %{_fontbasedir}/*/%{_fontstem}/MusiSync*.ttf
+%{_datadir}/appdata/%{fontname}-musisync.metainfo.xml
 
 %package -n fonts-ttf-allgeyer-musiqwik
+Group: System/Fonts/True type
 Summary:	A musical notation font family intended for writing lines of actual music
-Group:		System/Fonts/True type
 Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-allgeyer-musiqwik
@@ -64,6 +69,7 @@ This font family is intended for writing lines of actual music.
 
 %files -n fonts-ttf-allgeyer-musiqwik
 %{_fontbasedir}/*/%{_fontstem}/MusiQwik*.ttf
+%{_datadir}/appdata/%{fontname}-musiqwik.metainfo.xml
 
 %prep
 %setup -q -c -n %{oldname}
@@ -82,6 +88,14 @@ mv README_MusiQwik_MusiSync.txt{.utf8,}
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE1} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-musisync.metainfo.xml
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-musiqwik.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -117,13 +131,16 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-%files common
+%files -n fonts-ttf-allgeyer-common
 %doc FONTLOG.txt LICENSE_OFL.txt MusiQwik_character_map.htm musiqwik_demo.png 
 %doc MusiSync_character_map.htm musisync_demo.png MusiSync-README.htm OFL-FAQ.txt 
 %doc README_MusiQwik_MusiSync.txt SOURCE.txt
-%dir %{_fontbasedir}/*/%{_fontstem}
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 5.002-alt3_11
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 5.002-alt3_10
 - update to new release by fcimport
 
