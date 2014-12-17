@@ -7,7 +7,7 @@ BuildRequires: perl(Benchmark.pm) perl(Clone.pm) perl(Config.pm) perl(Exporter.p
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_7
 
 Summary:    Benchmark Suite for Perl
 License:    GPL+ or Artistic
@@ -54,6 +54,9 @@ of Perl, modified compile parameter, or another set of dependent libraries.
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1_7
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1_4
 - update by mgaimport
 
