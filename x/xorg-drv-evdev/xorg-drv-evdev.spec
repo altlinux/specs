@@ -1,8 +1,8 @@
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-evdev
-Version: 2.9.0
-Release: alt2
+Version: 2.9.1
+Release: alt1
 Epoch: 2
 Summary: Generic Linux input driver
 License: MIT/X11
@@ -61,6 +61,9 @@ install -m644 *.conf %buildroot%_xconfdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 17 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:2.9.1-alt1
+- 2.9.1
+
 * Fri Oct 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:2.9.0-alt2
 - requires XORG_ABI_XINPUT = 21.0
 
