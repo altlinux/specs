@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.3.8
+Version: 0.4.0
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -42,6 +42,7 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 
 %files
 %_altdata_dir/applications/*
+%_altdata_dir/desktop-directories/*
 %_altdata_dir/ui/*/
 %_alterator_backend3dir/*
 %_libexecdir/%name/
@@ -52,6 +53,12 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Wed Dec 17 2014 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- Move /snort module to /snort/statistics.
+- snort-email-notification.sh: Dont't try to ctreate table.
+- Drop upper menu from module.
+- Use separate desktop files for module components.
+
 * Mon Dec 15 2014 Mikhail Efremov <sem@altlinux.org> 0.3.8-alt1
 - Use https for BASE.
 
