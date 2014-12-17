@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_5
 
 Summary:    Easy YAML serialisation
 License:    GPL+ or Artistic
@@ -50,6 +50,9 @@ tripping of YAML serialized Perl data structures.
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt1_5
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt1_4
 - update by mgaimport
 
