@@ -9,13 +9,14 @@
 
 Name: fonts-otf-abattis-cantarell
 Version: 0.0.16
-Release: alt1_1
+Release: alt1_2
 Summary: Cantarell, a Humanist sans-serif font family
 
 Group: System/Fonts/True type
 License: OFL
 URL: http://abattis.org/cantarell/
 Source0: http://download.gnome.org/sources/%{actualname}-fonts/0.0/%{actualname}-fonts-%{version}.tar.xz
+Source1: %{fontname}.metainfo.xml
 
 BuildArch: noarch
 BuildRequires: fontpackages-devel
@@ -45,6 +46,10 @@ install -m 0644 -p fontconfig/%{fontconf} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE1} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -85,8 +90,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
 %doc COPYING NEWS README
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.16-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.16-alt1_1
 - update to new release by fcimport
 
