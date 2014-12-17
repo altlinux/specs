@@ -5,7 +5,7 @@
 
 Name: autosshd
 Version: 0.0.3
-Release: alt5
+Release: alt7
 
 Summary: System administration - AutoSSH system level service
 
@@ -20,10 +20,9 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-PreReq: shadow-utils openssh-common
-
 BuildPreReq: rpm-build-intro
 
+Requires: shadow-utils openssh-common
 Requires: autossh
 
 %description
@@ -90,6 +89,12 @@ cp share/autosshd.setup* %buildroot%_datadir/%name/
 %_bindir/autosshd-ssh
 
 %changelog
+* Wed Dec 17 2014 Vitaly Lipatov <lav@altlinux.ru> 0.0.3-alt7
+- small fixes
+
+* Thu Nov 27 2014 Danil Mikhailov <danil@altlinux.org> 0.0.3-alt6
+- Cleanup git log
+
 * Thu Sep 18 2014 Danil Mikhailov <danil@altlinux.org> 0.0.3-alt5
 - Correct manual in config files
 
