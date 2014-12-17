@@ -2,7 +2,7 @@ Requires: xorg-xnest
 Summary: 	X nesting for the Matchbox Desktop
 Name: 		matchbox-nest
 Version: 	0.3
-Release: 	alt2_8
+Release: 	alt2_9
 Url: 		http://matchbox-project.org
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
@@ -37,6 +37,9 @@ X nesting for the panel from Matchbox.
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_9
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_8
 - update by mgaimport
 
