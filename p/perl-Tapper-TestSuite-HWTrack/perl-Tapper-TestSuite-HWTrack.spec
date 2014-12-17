@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_5
 
 Summary:    Report hardware meta information
 License:    GPL+ or Artistic
@@ -56,6 +56,9 @@ framework.
 /usr/share/man/man1/tapper-testsuite-hwtrack.1*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_5
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_3
 - update by mgaimport
 
