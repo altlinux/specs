@@ -1,5 +1,5 @@
 Name: perl-Amon2
-Version: 6.02
+Version: 6.11
 Release: alt1
 Summary: Amon2 - lightweight web application framework
 
@@ -25,11 +25,15 @@ BuildRequires: perl-Module-Build perl-Module-CPANfile perl-Router-Boom perl-Test
 
 %files
 %_bindir/amon2-setup.pl
+%_man1dir/amon2-setup.*
 %perl_vendor_privlib/Amon2*
 %perl_vendor_privlib/auto/share/dist/Amon2
 %doc TODO Changes
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 6.11-alt1
+- automated CPAN update
+
 * Wed Apr 23 2014 Vladimir Lettiev <crux@altlinux.ru> 6.02-alt1
 - 6.00 -> 6.02
 
