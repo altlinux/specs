@@ -8,7 +8,7 @@ BuildRequires: perl(File/Slurp.pm)
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_6
 
 Summary:    Control running test programs
 License:    GPL+ or Artistic
@@ -73,6 +73,9 @@ Tapper - Program run control for test program automation.
 /usr/share/man/man1/tapper-client.1*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_6
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_4
 - update by mgaimport
 
