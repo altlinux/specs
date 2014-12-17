@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname baekmuk-ttf-fonts
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name baekmuk-ttf-fonts
@@ -13,10 +14,9 @@ This package provides the free Korean TrueType fonts.
 
 Name:           fonts-ttf-baekmuk
 Version:        2.2
-Release:        alt2_37
+Release:        alt2_38
 Summary:        Free Korean TrueType fonts
 
-Group:          System/Fonts/True type
 License:        Baekmuk
 URL:            http://kldp.net/projects/baekmuk/
 Source0:        http://kldp.net/frs/download.php/1429/%{archivename}.tar.gz
@@ -26,6 +26,11 @@ Source3:        baekmuk-ttf-batang.conf
 Source4:        baekmuk-ttf-dotum.conf
 Source5:        baekmuk-ttf-gulim.conf
 Source6:        baekmuk-ttf-hline.conf
+Source7:        %{fontname}-batang.metainfo.xml
+Source8:        %{fontname}-dotum.metainfo.xml
+Source9:        %{fontname}-gulim.metainfo.xml
+Source10:       %{fontname}-hline.metainfo.xml
+Source11:       %{fontname}.metainfo.xml
 
 Provides:       fonts-ttf-korean = %{version}-%{release}
 
@@ -38,8 +43,8 @@ Source44: import.info
 %common_desc
 
 %package -n fonts-ttf-baekmuk-batang
+Group: System/Fonts/True type
 Summary:        Korean Baekmuk TrueType Batang typeface
-Group:          System/Fonts/True type
 Provides:       %{oldname}-batang = %{version}-%{release}
 Requires:       fonts-ttf-baekmuk-common = %{version}-%{release}
 
@@ -52,10 +57,11 @@ Batang is Korean TrueType font in Serif typeface.
 %{_fontconfig_templatedir}/*-%{fontname}-batang*.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-batang*.conf
 %{_fontbasedir}/*/%{_fontstem}/batang.ttf
+%{_datadir}/appdata/%{fontname}-batang.metainfo.xml
 
 %package -n fonts-ttf-baekmuk-dotum
+Group: System/Fonts/True type
 Summary:        Korean Baekmuk TrueType Dotum typeface
-Group:          System/Fonts/True type
 Provides:       %{oldname}-dotum = %{version}-%{release}
 Requires:       fonts-ttf-baekmuk-common = %{version}-%{release}
 
@@ -68,10 +74,11 @@ Dotum is Korean TrueType font in San-serif typeface.
 %{_fontconfig_templatedir}/*-%{fontname}-dotum*.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-dotum*.conf
 %{_fontbasedir}/*/%{_fontstem}/dotum.ttf
+%{_datadir}/appdata/%{fontname}-dotum.metainfo.xml
 
 %package -n fonts-ttf-baekmuk-gulim
+Group: System/Fonts/True type
 Summary:        Korean Baekmuk TrueType Gulim typeface
-Group:          System/Fonts/True type
 Provides:       %{oldname}-gulim = %{version}-%{release}
 Requires:       fonts-ttf-baekmuk-common = %{version}-%{release}
 
@@ -84,10 +91,11 @@ Gulim is Korean TrueType font in Monospace typeface.
 %{_fontconfig_templatedir}/*-%{fontname}-gulim*.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-gulim*.conf
 %{_fontbasedir}/*/%{_fontstem}/gulim.ttf
+%{_datadir}/appdata/%{fontname}-gulim.metainfo.xml
 
 %package -n fonts-ttf-baekmuk-hline
+Group: System/Fonts/True type
 Summary:        Korean Baekmuk TrueType Headline typeface
-Group:          System/Fonts/True type
 Provides:       %{oldname}-hline = %{version}-%{release}
 Requires:       fonts-ttf-baekmuk-common = %{version}-%{release}
 
@@ -100,10 +108,11 @@ Headline is Korean TrueType font in Black face.
 %{_fontconfig_templatedir}/*-%{fontname}-hline*.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-hline*.conf
 %{_fontbasedir}/*/%{_fontstem}/hline.ttf
+%{_datadir}/appdata/%{fontname}-hline.metainfo.xml
 
 %package -n fonts-ttf-baekmuk-ghostscript
+Group: System/Fonts/True type
 Summary:        Ghostscript files for Korean Baekmuk TrueType fonts
-Group:          System/Fonts/True type
 Requires: ghostscript-utils ghostscript
 Requires:       fonts-ttf-baekmuk-batang = %{version}-%{release}
 Requires:       fonts-ttf-baekmuk-dotum = %{version}-%{release}
@@ -120,8 +129,8 @@ This is ghostscript files for Baekmuk Korean TrueType fonts.
 %{gsdir}/FAPIcidfmap.ko
 
 %package -n fonts-ttf-baekmuk-common
+Group: System/Fonts/True type
 Summary:        Common files for Korean Baekmuk TrueType fonts
-Group:          System/Fonts/True type
 Provides:       baekmuk-ttf-common-fonts = %{version}-%{release}
 Provides:       fonts-korean = %{version}-%{release}
 Provides:       ttfonts-ko = %{version}-%{release}
@@ -137,6 +146,7 @@ This is common files for Baekmuk Korean TrueType fonts.
 %verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/fonts.dir
 %verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/fonts.scale
 %verify(not md5 size mtime) %{catalogue}/%{fontname}*
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %prep
 %setup -q -n %{archivename}
@@ -179,6 +189,18 @@ cd -
 
 # convert Korean copyright file to utf8
 %{_bindir}/iconv -f EUC-KR -t UTF-8 COPYRIGHT.ks > COPYRIGHT.ko
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE7} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-batang.metainfo.xml
+install -Dm 0644 -p %{SOURCE8} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-dotum.metainfo.xml
+install -Dm 0644 -p %{SOURCE9} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-gulim.metainfo.xml
+install -Dm 0644 -p %{SOURCE10} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-hline.metainfo.xml
+install -Dm 0644 -p %{SOURCE11} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 sed -i -e s,%{_datadir}/fonts/%{fontname},%{_datadir}/fonts/ttf/%{fontname},g %buildroot/usr/share/ghostscript/conf.d/*
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -216,6 +238,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_38
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_37
 - update to new release by fcimport
 
