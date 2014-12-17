@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Test/More.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Text-CSV-Slurp
 %define upstream_version 1.01
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_4
 
 Summary:    Convert CSV into an array of hashes, or an array of hashes into CSV
 License:    GPL+ or Artistic
@@ -43,6 +43,9 @@ Convert CSV into an array of hashes, or an array of hashes into CSV.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_4
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_3
 - update by mgaimport
 
