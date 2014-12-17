@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname google-droid-fonts
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name google-droid-fonts
@@ -17,10 +18,9 @@ Pascal Zoghbi of 29ArabicLetters.
 Name:    fonts-ttf-google-droid
 # No sane versionning upstream, use git clone timestamp
 Version: 20120715
-Release: alt3_7
+Release: alt3_8
 Summary: General-purpose fonts released by Google as part of Android
 
-Group:     System/Fonts/True type
 License:   ASL 2.0
 URL:       https://android.googlesource.com/
 Source0:   %{archivename}.tar.xz
@@ -30,7 +30,10 @@ Source10:  %{oldname}-sans-fontconfig.conf
 Source11:  %{oldname}-sans-mono-fontconfig.conf
 Source12:  %{oldname}-serif-fontconfig.conf
 Source13:  %{oldname}-kufi-fontconfig.conf
-
+Source14:  %{fontname}-sans.metainfo.xml
+Source15:  %{fontname}-sans-mono.metainfo.xml
+Source16:  %{fontname}-serif.metainfo.xml
+Source17:  %{fontname}-kufi.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
@@ -62,6 +65,7 @@ electronic communication.
 %{_fontbasedir}/*/%{_fontstem}/DroidSans*ttf
 %exclude %{_fontbasedir}/*/%{_fontstem}/DroidSansMono*ttf
 %doc README.txt NOTICE
+%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
 
 %package -n fonts-ttf-google-droid-sans-mono
 Group: System/Fonts/True type
@@ -83,6 +87,7 @@ interfaces and electronic communication.
 %config(noreplace) %{_fontconfig_confdir}/??-%{fontname}-sans-mono.conf
 %{_fontbasedir}/*/%{_fontstem}/DroidSansMono.ttf
 %doc README.txt NOTICE
+%{_datadir}/appdata/%{fontname}-sans-mono.metainfo.xml
 
 %package -n fonts-ttf-google-droid-serif
 Group: System/Fonts/True type
@@ -111,6 +116,7 @@ Droid Naskh name.
 %{_fontbasedir}/*/%{_fontstem}/DroidSerif*ttf
 %{_fontbasedir}/*/%{_fontstem}/DroidNaskh*ttf
 %doc README.txt NOTICE
+%{_datadir}/appdata/%{fontname}-serif.metainfo.xml
 
 %package -n fonts-ttf-google-droid-kufi
 Group: System/Fonts/True type
@@ -129,6 +135,7 @@ to finalize the font family.
 %{_fontconfig_templatedir}/??-%{fontname}-kufi.conf
 %config(noreplace) %{_fontconfig_confdir}/??-%{fontname}-kufi.conf
 %{_fontbasedir}/*/%{_fontstem}/DroidKufi*ttf
+%{_datadir}/appdata/%{fontname}-kufi.metainfo.xml
 
 %prep
 %setup -q -n %{archivename}
@@ -138,8 +145,6 @@ to finalize the font family.
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 
 install -m 0644 -p $(ls *ttf | grep -v DroidSansFallbackFull\
@@ -166,6 +171,16 @@ for fontconf in 65-%{fontname}-sans.conf \
   ln -s %{_fontconfig_templatedir}/$fontconf \
         %{buildroot}%{_fontconfig_confdir}/$fontconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE14} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
+install -Dm 0644 -p %{SOURCE15} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-sans-mono.metainfo.xml
+install -Dm 0644 -p %{SOURCE16} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-serif.metainfo.xml
+install -Dm 0644 -p %{SOURCE17} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-kufi.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -201,8 +216,10 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 20120715-alt3_8
+- update to new release by fcimport
+
 * Thu Sep 04 2014 Igor Vlasenko <viy@altlinux.ru> 20120715-alt3_7
 - added conflict to fonts-ttf-droid
 
