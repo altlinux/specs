@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist MooseX-Types-JSON
 Name: perl-%dist
-Version: 0.03
+Version: 1.00
 Release: alt1
 
 Summary: JSON datatype for Moose
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/M/MI/MILA/MooseX-Types-JSON-%{version}.ta
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Apr 13 2010
-BuildRequires: perl-Class-C3-XS perl-JSON-XS perl-MooseX-Types perl-Test-Pod
+BuildRequires: perl-Class-C3-XS perl-JSON-XS perl-MooseX-Types perl-Test-Pod perl-JSON
 
 %description
 %summary.
@@ -32,6 +33,9 @@ BuildRequires: perl-Class-C3-XS perl-JSON-XS perl-MooseX-Types perl-Test-Pod
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
+- automated CPAN update
+
 * Mon Jan 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - automated CPAN update
 
