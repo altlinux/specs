@@ -1,7 +1,7 @@
 Summary: 	Themes for the Matchbox Desktop
 Name: 		matchbox-themes-extra
 Version: 	0.3
-Release: 	alt1_8
+Release: 	alt1_9
 Url: 		http://matchbox-project.org
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
@@ -31,6 +31,9 @@ Extra themes for the Matchbox Desktop
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_9
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_8
 - update by mgaimport
 
