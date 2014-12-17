@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.10
+Version: 2.9.11
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,10 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Dec 17 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.11-alt1
+- Update translation for:
+  + alterator-snort
+
 * Wed Dec 10 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.10-alt1
 - Update translation for:
   + alterator-postfix-dovecot
