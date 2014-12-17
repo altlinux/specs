@@ -1,5 +1,6 @@
+BuildRequires: perl(Module/Build.pm)
 Name: perl-Dancer-Session-Cookie
-Version: 0.22
+Version: 0.25
 Release: alt1
 
 Summary: Encrypted cookie-based session backend for Dancer
@@ -29,6 +30,9 @@ BuildRequires: perl-Crypt-CBC perl-devel perl-Test-Exception perl-Dancer perl-St
 %doc Changes README
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated CPAN update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
