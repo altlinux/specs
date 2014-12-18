@@ -1,7 +1,7 @@
 %def_without python
 
 Name: libvirt-glib
-Version: 0.1.9
+Version: 0.2.0
 Release: alt1
 Summary: libvirt glib integration for events
 Group: System/Libraries
@@ -160,7 +160,9 @@ intltoolize --force
 %install
 %make_install DESTDIR=%buildroot install
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %doc README COPYING NEWS
 %_libdir/libvirt-glib-*.so.*
 
@@ -220,6 +222,9 @@ intltoolize --force
 %endif
 
 %changelog
+* Thu Dec 18 2014 Alexey Shabalin <shaba@altlinux.ru> 0.2.0-alt1
+- 0.2.0
+
 * Wed Aug 27 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.9-alt1
 - 0.1.9
 
