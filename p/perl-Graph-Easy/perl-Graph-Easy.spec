@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Devel/Size.pm) perl(Encode.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(Getopt/Long.pm) perl(HTML/TokeParser.pm) perl(IO/All.pm) perl(JSON.pm) perl(LWP.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Usage.pm) perl(Socket.pm) perl(Time/HiRes.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(Benchmark.pm) perl(Devel/Size.pm) perl(File/Find/Object.pm) perl(Getopt/Long.pm) perl(HTML/TokeParser.pm) perl(IO/All.pm) perl(LWP.pm) perl(Pod/Usage.pm) perl(Test/Run/CmdLine/Iface.pm) perl(Time/HiRes.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %filter_from_requires /^perl.Graph.Easy.As_svg/d
 # fedora bcond_with macro
@@ -11,19 +11,26 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) pe
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 Name:           perl-Graph-Easy
 Version:        0.75
-Release:        alt1
+Release:        alt1_1
 Summary:        Convert or render graphs as ASCII, HTML, SVG or via Graphviz
 License:        GPLv2+ and ASL 1.1
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Graph-Easy/
-Source:        http://www.cpan.org/authors/id/S/SH/SHLOMIF/Graph-Easy-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/S/SH/SHLOMIF/Graph-Easy-%{version}.tar.gz
 Patch0:         graph-easy-undefined-lc.patch
 BuildArch:      noarch
 BuildRequires:  perl
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(Encode.pm)
+BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Pod/Coverage.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(strict.pm)
@@ -32,6 +39,10 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 BuildRequires:  perl(utf8.pm)
+BuildRequires:  perl(vars.pm)
+BuildRequires:  perl(warnings.pm)
+Requires:       perl(Carp.pm)
+Requires:       perl(Data/Dumper.pm)
 
 # avoid circular dependencies
 %bcond_without bootstrap
@@ -41,13 +52,11 @@ Requires:       perl(Graph/Easy/As_svg.pm) >= 0.23
 %endif
 
 # filter unversioned provides
-%{echo 
-%filter_from_provides /^perl.Graph.Easy\(\|.Edge\|.Edge.Cell\|.Group\|.Node\.pm.)\s*$/d
-
-}
 
 
 Source44: import.info
+%filter_from_provides /perl\\(Graph.Easy.pm\\)$/d
+%filter_from_provides /perl\\(Graph.Easy.(Edge|Edge.Cell|Group|Node).pm\\)$/d
 
 %description
 Graph::Easy lets you generate graphs consisting of various shaped nodes
@@ -63,15 +72,12 @@ useful for flow charts, network diagrams, or hierarchy trees.
 chmod 0644 examples/*
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -84,6 +90,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1_1
+- update to new release by fcimport
+
 * Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1
 - automated CPAN update
 
