@@ -1,18 +1,17 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(File/Find/Object.pm)
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 #TODO: BR:/R: perl(WorePAN) a.. 0.09 when available
 
 Name:           perl-Module-CPANTS-Analyse
 Version:        0.96
-Release:        alt1
+Release:        alt1_1
 Summary:        Generate Kwalitee ratings for a distribution
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Module-CPANTS-Analyse/
-Source:        http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Module-CPANTS-Analyse-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/I/IS/ISHIGAKI/Module-CPANTS-Analyse-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  perl
@@ -33,6 +32,7 @@ BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(File/Basename.pm)
 BuildRequires:  perl(File/Copy.pm)
 BuildRequires:  perl(File/Find.pm)
+BuildRequires:  perl(File/Find/Object.pm)
 BuildRequires:  perl(File/Spec/Functions.pm)
 BuildRequires:  perl(File/stat.pm)
 BuildRequires:  perl(File/Temp.pm)
@@ -72,6 +72,7 @@ Requires:       perl(CPAN/DistnameInfo.pm) >= 0.06
 Requires:       perl(CPAN/Meta/Validator.pm) >= 2.133.380
 Requires:       perl(CPAN/Meta/YAML.pm) >= 0.008
 Requires:       perl(Exporter.pm)
+Requires:       perl(File/Find/Object.pm) >= 0.2.1
 Requires:       perl(IO/Capture.pm) >= 0.05
 Requires:       perl(Module/CPANfile.pm)
 Requires:       perl(Module/Pluggable.pm) >= 2.96
@@ -88,6 +89,7 @@ Requires:       perl(version.pm) >= 0.73
 
 
 
+
 Source44: import.info
 %filter_from_requires /:__requires_exclude|}^perl\\(Archive.Any.Lite.pm\\)$/d
 %filter_from_requires /^perl\\(Array.Diff.pm\\)$/d
@@ -95,6 +97,7 @@ Source44: import.info
 %filter_from_requires /^perl\\(CPAN.DistnameInfo.pm\\)$/d
 %filter_from_requires /^perl\\(CPAN.Meta.Validator.pm\\)$/d
 %filter_from_requires /^perl\\(CPAN.Meta.YAML.pm\\)$/d
+%filter_from_requires /^perl\\(File.Find.Object.pm\\)$/d
 %filter_from_requires /^perl\\(Module.Pluggable.pm\\)$/d
 %filter_from_requires /^perl\\(version.pm\\)$/d
 
@@ -125,6 +128,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Module/CPANTS/Kwalitee/*.pm
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1_1
+- update to new release by fcimport
+
 * Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1
 - automated CPAN update
 
