@@ -5,18 +5,14 @@ BuildRequires: gcc-c++ python-devel
 %add_optflags %optflags_shared
 %define oldname ompl
 Name:           libompl
-Version:        0.14.2
-Release:        alt1_3
+Version:        1.0.0
+Release:        alt1_1
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
 License:        BSD
 URL:            http://ompl.kavrakilab.org/
 Source0:        https://bitbucket.org/%{oldname}/%{oldname}/downloads/%{oldname}-%{version}-Source.tar.gz
-# This patch adds LIB_SUFFIX to the library installation directory, so that
-# libraries get installed to /usr/lib64 on 64 bit systems.  
-# Not yet submitted upstream
-Patch0:         ompl-0.14.2-fedora.patch
 BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 BuildRequires: ctest cmake
 BuildRequires:  doxygen
@@ -48,7 +44,6 @@ developing applications that use %{oldname}.
 
 %prep
 %setup -q -n %{oldname}-%{version}-Source
-%patch0 -p0 -b .fedora
 # Get rid of bundled odeint
 rm -rf src/external/omplext_odeint/
 
@@ -62,7 +57,8 @@ cd build
   -DBOOST_LIBRARYDIR=%{_libdir} \
   -DODE_LIB_PATH=%{_libdir} \
   -DBUILD_OMPL_TESTS=ON  \
-  -DOMPL_ODESOLVER=ON ..
+  -DOMPL_ODESOLVER=ON \
+  -DOMPL_REGISTRATION=OFF ..
 
 make %{?_smp_mflags}
 make doc
@@ -79,7 +75,7 @@ rm -rf %{buildroot}%{_bindir}
 
 %check
 export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
-#make -C build test || exit 0
+make -C build test || exit 0
 
 %files
 %doc LICENSE README.md
@@ -95,6 +91,9 @@ export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 %{_datadir}/cmake/Modules/FindOMPL.cmake
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.14.2-alt1_3
 - update to new release by fcimport
 
