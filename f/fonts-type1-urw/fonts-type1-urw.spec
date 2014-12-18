@@ -1,19 +1,19 @@
 %define _fontsdir %_datadir/fonts/type1
 
 Name: fonts-type1-urw
-Version: 1.0.7pre44
+Version: 1.10
 Release: alt1
-Serial: 2
+Epoch: 2
 
 Summary: Free versions of the 35 standard PostScript fonts
-License: GPLv2
+License: AGPLv3
 Group: System/Fonts/Type1
-Url: ftp://ftp.gnome.ru/fonts/urw/release/
+Url: http://git.ghostscript.com/urw-core35-fonts.git
 
-Source0: ftp://ftp.gnome.ru/fonts/urw/release/urw-fonts-%version.tar.bz2
+Source0: urw-core35-fonts-%version.tar
 
-Provides: urw-fonts = %serial:2.0
-Obsoletes: urw-fonts < %serial:2.0
+Provides: urw-fonts = %epoch:2.0
+Obsoletes: urw-fonts < %epoch:2.0
 
 PreReq: fontconfig >= 2.4.2
 
@@ -33,7 +33,7 @@ Install the %name package if you need free versions of standard
 PostScript fonts.
 
 %prep
-%setup -q -c -n fonts
+%setup -q -n urw-core35-fonts-%version
 
 %install
 mkdir -p %buildroot%_fontsdir/urw
@@ -53,11 +53,13 @@ fi
 %_bindir/fc-cache %_fontsdir/urw ||:
 
 %files
-%doc ChangeLog README*
 %_sysconfdir/X11/fontpath.d/*
 %_fontsdir/urw
 
 %changelog
+* Thu Dec 18 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.10-alt1
+- 1.10
+
 * Thu Jan 03 2008 Valery Inozemtsev <shrek@altlinux.ru> 2:1.0.7pre44-alt1
 - 1.0.7pre44
 
