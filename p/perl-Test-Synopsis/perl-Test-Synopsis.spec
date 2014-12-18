@@ -1,23 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(Test/Kwalitee.pm)
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
-# TODO: BR: perl(Test::Kwalitee::Extra) when available
-
 # noarch, but to avoid debug* files interfering with manifest test:
 %global debug_package %{nil}
 
 Name:		perl-Test-Synopsis
 Version:	0.11
-Release:	alt1
+Release:	alt1_1
 Summary:	Test your SYNOPSIS code
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Synopsis/
-Source:	http://www.cpan.org/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
+BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:	perl(base.pm)
@@ -42,6 +40,7 @@ BuildRequires:	perl(Test/CPAN/Changes.pm)
 BuildRequires:	perl(Test/CPAN/Meta.pm)
 BuildRequires:	perl(Test/DistManifest.pm)
 BuildRequires:	perl(Test/EOL.pm)
+BuildRequires:	perl(Test/Kwalitee.pm)
 BuildRequires:	perl(Test/MinimumVersion.pm)
 BuildRequires:	perl(Test/Mojibake.pm)
 BuildRequires:	perl(Test/More.pm)
@@ -85,10 +84,18 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %endif
 
 %files
-%doc Changes LICENSE README README.md
+%if 0%{?_licensedir:1}
+%doc LICENSE
+%else
+%doc LICENSE
+%endif
+%doc Changes README README.md
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_1
+- update to new release by fcimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
