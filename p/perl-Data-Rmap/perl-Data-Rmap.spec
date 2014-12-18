@@ -4,12 +4,12 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-pod
 # END SourceDeps(oneline)
 Name:           perl-Data-Rmap
 Version:        0.64
-Release:        alt1
+Release:        alt1_1
 Summary:        Recursive map, apply a block to a data structure
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Data-Rmap/
-Source:        http://www.cpan.org/authors/id/B/BO/BOWMANBS/Data-Rmap-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/B/BO/BOWMANBS/Data-Rmap-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Data/Dumper.pm)
@@ -47,6 +47,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1_1
+- update to new release by fcimport
+
 * Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1
 - automated CPAN update
 
