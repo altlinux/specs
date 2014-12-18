@@ -2,7 +2,7 @@
 %define oldname lwp
 Name:           liblwp
 Version:        2.6
-Release:        alt1_10
+Release:        alt1_11
 Summary:        C library for user-mode threading
 Group:          System/Libraries
 License:        LGPLv2
@@ -10,6 +10,8 @@ URL:            http://www.coda.cs.cmu.edu/
 Source0:        ftp://ftp.coda.cs.cmu.edu/pub/lwp/src/%{oldname}-%{version}.tar.gz
 Source1:        ftp://ftp.coda.cs.cmu.edu/pub/lwp/src/%{oldname}-%{version}.tar.gz.asc
 Patch0:         lwp-2.6-no-longjmp_chk.patch
+Patch1:		lwp-2.6-system-valgrind.h
+BuildRequires:	valgrind-devel
 Source44: import.info
 Provides: lwp = %{version}-%{release}
 
@@ -31,6 +33,10 @@ developing applications that use %{oldname}.
 %prep
 %setup -n %{oldname}-%{version} -q
 %patch0 -p1 -b .nolongjmpchk
+%patch1 -p1 -b .system-valgrind
+
+# using system header
+rm -rf src/valgrind.h
 
 %build
 %configure --disable-static
@@ -53,6 +59,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_11
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_10
 - update to new release by fcimport
 
