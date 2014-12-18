@@ -1,8 +1,8 @@
 %define pear_name Image_Canvas
 
 Name: pear-Image_Canvas
-Version: 0.3.1
-Release: alt2
+Version: 0.3.5
+Release: alt1
 
 Summary: A package providing a common interface to image drawing, making image source code independent on the library used
 
@@ -12,7 +12,7 @@ Url: http://pear.php.net/package/%pear_name
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/%pear_name-%version.tar.bz2
+Source: http://pear.php.net/get/%pear_name-%version.tgz
 
 BuildArchitectures: noarch
 
@@ -47,6 +47,9 @@ source code independent on the library used.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Dec 18 2014 Anton Farygin <rider@altlinux.ru> 0.3.5-alt1
+- new version
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt2
 - autorebuild for correct requires(pre) (see bug #16086)
 
