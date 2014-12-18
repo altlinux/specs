@@ -1,11 +1,9 @@
 %define mname eea
 %define oname %mname.design
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 10.8
-Release: alt1
+Release: alt2
 Summary: Plone4 theme for EEA
 License: GPLv2+
 Group: Development/Python
@@ -15,6 +13,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-uuid python-module-mock
+BuildPreReq: python-module-openid
 BuildPreReq: python-module-Products.EEAContentTypes
 BuildPreReq: python-module-Products.EEAPloneAdmin
 BuildPreReq: python-module-Products.LinguaPlone
@@ -45,7 +45,8 @@ BuildPreReq: python-module-zope.viewlet
 BuildPreReq: python-module-zope.app.annotation
 BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-eea.themecentre
+BuildPreReq: python-module-eea.themecentre
+BuildPreReq: python-module-eea.soer
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -59,8 +60,8 @@ Requires: python-module-Zope2
 %py_requires plone.theme plonetheme.sunburst plone.app.blob zope.viewlet
 %py_requires plone.app.layout plone.app.discussion zope.component
 %py_requires zope.interface zope.publisher zope.app.annotation
-%py_requires zope.i18nmessageid
-#py_requires eea.themecentre
+%py_requires zope.i18nmessageid eea.soer
+%py_requires eea.themecentre
 
 %description
 Plone4 theme for EEA.
@@ -102,6 +103,10 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Thu Dec 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.8-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.8-alt1
 - Initial build for Sisyphus
 
