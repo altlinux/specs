@@ -1,31 +1,32 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Pod-Coverage-TrustPod
 Version:        0.100003
-Release:        alt1
+Release:        alt1_1
 Summary:        Allow a module's pod to contain Pod::Coverage hints
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Pod-Coverage-TrustPod/
-Source:        http://www.cpan.org/authors/id/R/RJ/RJBS/Pod-Coverage-TrustPod-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/R/RJ/RJBS/Pod-Coverage-TrustPod-%{version}.tar.gz
 BuildArch:      noarch
+# Build:
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Pod/Coverage/CountParents.pm)
 BuildRequires:  perl(Pod/Eventual/Simple.pm)
 BuildRequires:  perl(Pod/Find.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Tests:
 BuildRequires:  perl(Carp/Heavy.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Test/More.pm)
-# Optional tests:
-BuildRequires:  perl(Test/Pod.pm)
-
-
 Source44: import.info
+# Explicit dependencies:
 
 %description
 This is a Pod::Coverage subclass (actually, a subclass of
@@ -36,24 +37,26 @@ symbol names trusted.
 %setup -q -n Pod-Coverage-TrustPod-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+# %{_fixperms} %{buildroot}
 
 %check
-RELEASE_TESTING=1 make test
+make test
 
 %files
-%doc Changes LICENSE README
-%{perl_vendor_privlib}/*
+%doc LICENSE
+%doc Changes README
+%{perl_vendor_privlib}/Pod/
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.100003-alt1_1
+- update to new release by fcimport
+
 * Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.100003-alt1
 - automated CPAN update
 
