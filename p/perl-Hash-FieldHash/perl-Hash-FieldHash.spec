@@ -1,39 +1,76 @@
-%define module_version 0.14
-%define module_name Hash-FieldHash
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Config.pm) perl(Data/Dumper.pm) perl(Devel/PPPort.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/ParseXS.pm) perl(Hash/Util/FieldHash/Compat.pm) perl(Module/Build.pm) perl(Mouse.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(Test/LeakTrace.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(base.pm) perl(if.pm) perl(overload.pm) perl(parent.pm) perl(threads.pm)
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(Benchmark.pm) perl(Config.pm) perl(Data/Dumper.pm) perl(Hash/Util/FieldHash/Compat.pm) perl(Mouse.pm) perl(base.pm) perl(if.pm) perl(overload.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
-BuildRequires: rpm-build-perl perl-devel perl-podlators
+Name:           perl-Hash-FieldHash
+Version:        0.14
+Release:        alt2.1_1
+Summary:        Lightweight field hash implementation
+License:        GPL+ or Artistic
+Group:          Development/Perl
+URL:            http://search.cpan.org/dist/Hash-FieldHash/
+Source0:        http://www.cpan.org/modules/by-module/Hash/Hash-FieldHash-%{version}.tar.gz
+BuildRequires:  perl
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(CPAN/Meta.pm)
+BuildRequires:  perl(CPAN/Meta/Prereqs.pm)
+BuildRequires:  perl(Devel/PPPort.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(ExtUtils/ParseXS.pm)
+BuildRequires:  perl(File/Basename.pm)
+BuildRequires:  perl(File/Spec.pm)
+BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(parent.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(Symbol.pm)
+BuildRequires:  perl(Test/LeakTrace.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/Pod.pm)
+BuildRequires:  perl(Test/Pod/Coverage.pm)
+BuildRequires:  perl(Test/Synopsis.pm)
+BuildRequires:  perl(threads.pm)
+BuildRequires:  perl(utf8.pm)
+BuildRequires:  perl(warnings.pm)
+BuildRequires:  perl(XSLoader.pm)
 
-Name: perl-%module_name
-Version: 0.14
-Release: alt2.1
-Summary: Lightweight field hash for inside-out objects
-Group: Development/Perl
-License: perl
-URL: https://github.com/gfx/p5-Hash-FieldHash
+# Avoid provides from private shared objects
 
-Source0: http://cpan.org.ua/authors/id/G/GF/GFUJI/%module_name-%module_version.tar.gz
+Source44: import.info
 
 %description
-%summary
+Hash::FieldHash provides the field hash mechanism, which supports the inside-
+out technique.
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n Hash-FieldHash-%{version}
 
 %build
-%perl_vendor_build
+RELEASE_TESTING=1 perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor --optimize="%{optflags}"
+./Build
 
 %install
-%perl_vendor_install
+./Build install --destdir=%{buildroot} --create_packlist=0
+find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
+# %{_fixperms} %{buildroot}
+
+%check
+./Build test
 
 %files
-%doc LICENSE README.md Changes example
-%perl_vendor_archlib/H*
-%perl_vendor_autolib/*
+%if 0%{?_licensedir:1}
+%doc LICENSE
+%else
+%doc LICENSE
+%endif
+%doc Changes README.md benchmark/ example/
+%{perl_vendor_archlib}/auto/Hash/
+%{perl_vendor_archlib}/Hash/
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2.1_1
+- update to new release by fcimport
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2.1
 - rebuild with new perl 5.20.1
 
