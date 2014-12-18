@@ -1,11 +1,9 @@
 %define mname eea
 %define oname %mname.promotion
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 5.1
-Release: alt1
+Release: alt2
 Summary: EEA Promotion
 License: GPL
 Group: Development/Python
@@ -15,6 +13,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-uuid python-module-mock
+BuildPreReq: python-module-openid
 BuildPreReq: python-module-Products.NavigationManager
 BuildPreReq: python-module-Products.LinguaPlone
 BuildPreReq: python-module-eea.mediacentre
@@ -29,7 +29,7 @@ BuildPreReq: python-module-zope.publisher
 BuildPreReq: python-module-zope.schema
 BuildPreReq: python-module-zope.annotation
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-eea.themecentre
+BuildPreReq: python-module-eea.themecentre
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -38,7 +38,7 @@ Requires: python-module-Zope2
 %py_requires Products.CMFPlone zope.app.form zope.formlib zope.component
 %py_requires zope.interface zope.event zope.lifecycleevent zope.schema
 %py_requires zope.publisher zope.annotation
-#py_requires eea.themecentre
+%py_requires eea.themecentre
 
 %description
 Product for making promotions visible on the EEA frontpage and
@@ -84,6 +84,10 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Thu Dec 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Thu Dec 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt1
 - Initial build for Sisyphus
 
