@@ -2,7 +2,7 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname npth
 Name:           libnpth
-Version:        1.0
+Version:        1.1
 Release:        alt1_1
 Summary:        The New GNU Portable Threads library
 # software uses dual licensing (or both in parallel)
@@ -63,6 +63,9 @@ make check
 %{_datadir}/aclocal/*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_1
 - update to new release by fcimport
 
