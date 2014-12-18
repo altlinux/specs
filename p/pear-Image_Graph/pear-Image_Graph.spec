@@ -1,8 +1,8 @@
 %define pear_name Image_Graph
 
 Name: pear-Image_Graph
-Version: 0.7.2
-Release: alt3
+Version: 0.8.0
+Release: alt1
 
 Summary: Interface to AT&T's GraphViz tools
 
@@ -14,8 +14,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://pear.php.net/get/Image_Graph-%version.tgz
 
-Patch1: Graph_Plot_Pie.patch
-Patch2: checksum_correct.patch
 
 BuildArchitectures: noarch
 
@@ -36,8 +34,6 @@ Image_Graph is compatible with both PHP4 and PHP5.
 
 %prep
 %setup -c -n %pear_name-%version
-%patch1 -p1
-%patch2 -p1
 
 %build
 %pear_build
@@ -59,6 +55,9 @@ Image_Graph is compatible with both PHP4 and PHP5.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Dec 18 2014 Anton Farygin <rider@altlinux.ru> 0.8.0-alt1
+- new version
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 0.7.2-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
