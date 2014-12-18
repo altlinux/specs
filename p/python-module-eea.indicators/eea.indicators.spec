@@ -1,11 +1,9 @@
 %define mname eea
 %define oname %mname.indicators
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 9.2
-Release: alt1
+Release: alt2
 Summary: EEA Indicators
 License: GPL
 Group: Development/Python
@@ -15,6 +13,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-uuid python-module-mock
+BuildPreReq: python-module-openid
 BuildPreReq: python-module-Products.ATVocabularyManager
 BuildPreReq: python-module-Products.DataGridField
 BuildPreReq: python-module-Products.UserAndGroupSelectionWidget
@@ -50,7 +50,8 @@ BuildPreReq: python-module-zope.schema
 BuildPreReq: python-module-zope.annotation
 BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-eea.dataservice
+BuildPreReq: python-module-eea.dataservice
+BuildPreReq: python-module-eea.soer
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -66,7 +67,7 @@ Requires: python-module-Zope2
 %py_requires Products.validation plone.app.portlets zope.publisher
 %py_requires zope.interface zope.component zope.lifecycleevent
 %py_requires zope.schema zope.annotation zope.i18nmessageid
-#py_requires eea.dataservice
+%py_requires eea.dataservice
 
 %description
 EEA Indicators.
@@ -108,6 +109,10 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Thu Dec 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 9.2-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 9.2-alt1
 - Initial build for Sisyphus
 
