@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name:           sudoku-savant
 Version:        1.3
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Solve and generate sudoku puzzles through logical means
 Summary(de):    Lösen und Erstellen von Sudoku-Puzzles mit logischen Mitteln
 
@@ -14,6 +14,8 @@ License:        GPL+
 URL:            http://sourceforge.net/projects/%{name}/
 
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+Source1:        sudoku-savant-icons.txz
+
 # Patch is taken from the Opensuse package.
 # Without it, "make" cannot install the icons and the *.desktop file
 # into buildroot and tries to use the real system folders instead.
@@ -42,6 +44,7 @@ Standard-Sudoku aus Zeitungen oder Zeitschriften zu lösen.
 %patch0 -p0
 %patch1 -p1
 
+cp -a %{SOURCE1} .
 
 %build
 %configure
@@ -51,20 +54,26 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=%{buildroot}
 
+install -dm 755 %{buildroot}%{_datadir}/icons/hicolor
+tar xJ --directory=%{buildroot}%{_datadir}/icons/hicolor < %{name}-icons.txz
 
 %find_lang %{name}
 
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 
 %files -f %{name}.lang
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING README
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/pixmaps/%{name}.png
+%_iconsdir/hicolor/*/*/*
+%exclude %{_datadir}/pixmaps/%{name}.png
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_13
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_12
 - update to new release by fcimport
 
