@@ -4,15 +4,15 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-UseAllModules
 Version:        0.17
-Release:        alt1
+Release:        alt1_1
 Summary:        Do use_ok() for all the MANIFESTed modules
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-UseAllModules/
-Source:        http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Test-UseAllModules-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Test-UseAllModules-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
-BuildRequires:  perl(ExtUtils/MakeMaker/CPANfile.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 # Run-time:
@@ -25,6 +25,9 @@ BuildRequires:  perl(Test/More.pm)
 # Tests only:
 BuildRequires:  perl(FindBin.pm)
 BuildRequires:  perl(lib.pm)
+# Optional tests:
+BuildRequires:  perl(Test/Pod.pm)
+BuildRequires:  perl(Test/Pod/Coverage.pm)
 Requires:       perl(Test/Builder.pm) >= 0.30
 Requires:       perl(Test/More.pm) >= 0.60
 
@@ -58,13 +61,16 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
-make test
+TEST_POD=1 make test
 
 %files
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_1
+- update to new release by fcimport
+
 * Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
