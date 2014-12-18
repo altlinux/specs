@@ -1,44 +1,78 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Catalyst.pm) perl(Catalyst/Action.pm) perl(Config.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(HTML/FormFu/Deploy.pm) perl(HTML/FormFu/MultiForm.pm) perl(HTML/FormFu/Util.pm) perl(MRO/Compat.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl-devel perl-podlators perl(Test/Aggregate/Nested.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Locale/Maketext.pm)
 Name:           perl-Catalyst-Controller-HTML-FormFu
 Version:        1.00
-Release:        alt1
+Release:        alt1_1
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
-Group:          Development/Perl
+
 URL:            http://search.cpan.org/dist/Catalyst-Controller-HTML-FormFu/
-Source:        http://www.cpan.org/authors/id/C/CF/CFRANKS/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(Catalyst/Action/RenderView.pm)
+BuildRequires:  perl
+BuildRequires:  perl(inc/Module/Install.pm)
+BuildRequires:  perl(Module/Install/Metadata.pm)
+# Run-time:
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Catalyst/Action.pm)
 BuildRequires:  perl(Catalyst/Component/InstancePerContext.pm)
-BuildRequires:  perl(Catalyst/Plugin/ConfigLoader.pm)
-BuildRequires:  perl(Catalyst/Plugin/Session/State/Cookie.pm)
-BuildRequires:  perl(Catalyst/Plugin/Session/Store/File.pm)
+BuildRequires:  perl(Catalyst/Controller.pm)
+# This is a plug-in for Catalyst::Runtime
 BuildRequires:  perl(Catalyst/Runtime.pm)
-BuildRequires:  perl(Catalyst/View/TT.pm)
 BuildRequires:  perl(Config/Any.pm)
-BuildRequires:  perl(Config/General.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(HTML/FormFu.pm)
+BuildRequires:  perl(HTML/FormFu/Deploy.pm)
+BuildRequires:  perl(HTML/FormFu/MultiForm.pm)
+BuildRequires:  perl(HTML/FormFu/Util.pm)
 BuildRequires:  perl(Moose.pm)
 BuildRequires:  perl(MooseX/Attribute/Chained.pm)
+BuildRequires:  perl(MRO/Compat.pm)
 BuildRequires:  perl(namespace/autoclean.pm)
 BuildRequires:  perl(Regexp/Assemble.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(strict.pm)
+# Task::Weaken for Scalar::Util, see Makefile.PL
 BuildRequires:  perl(Task/Weaken.pm)
-BuildRequires:  perl(Template.pm)
-BuildRequires:  perl(Test/WWW/Mechanize.pm)
+BuildRequires:  perl(warnings.pm)
+# Tests:
+BuildRequires:  perl(Catalyst.pm)
+BuildRequires:  perl(Catalyst/Action/RenderView.pm)
+BuildRequires:  perl(Catalyst/Plugin/ConfigLoader.pm)
+BuildRequires:  perl(Catalyst/Plugin/Session.pm)
+BuildRequires:  perl(Catalyst/Plugin/Session/State/Cookie.pm)
+BuildRequires:  perl(Catalyst/Plugin/Session/Store/File.pm)
+BuildRequires:  perl(Catalyst/View/TT.pm)
+BuildRequires:  perl(Test/Aggregate/Nested.pm)
+# Config::General not used
+BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(FindBin.pm)
+BuildRequires:  perl(lib.pm)
+# Template not used
+BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/WWW/Mechanize/Catalyst.pm)
+# Test::WWW::Mechanize 1.16 for post_ok()
+BuildRequires:  perl(Test/WWW/Mechanize.pm)
 Requires:       perl(Catalyst/Component/InstancePerContext.pm)
-Requires:       perl(Catalyst/Runtime.pm) >= 5.70
-Requires:       perl(HTML/FormFu.pm) >= 0.090.070
+Requires:       perl(Catalyst/Controller.pm)
+Requires:       perl(Catalyst/Runtime.pm) >= 5.710.010
+Requires:       perl(HTML/FormFu.pm) >= 1.00
+Requires:       perl(MooseX/Attribute/Chained.pm) >= 1.0.1
+# Task::Weaken for Scalar::Util, see Makefile.PL
+Requires:       perl(Task/Weaken.pm)
 Source44: import.info
+%filter_from_requires /^perl\\((HTML.FormFu|MooseX.Attribute.Chained).pm\\)$/d
 
 %description
 This base controller merges the functionality of HTML::FormFu with Catalyst.
+
+# Filter unde-specified dependencies
+
 
 %prep
 %setup -q -n Catalyst-Controller-HTML-FormFu-%{version}
@@ -60,9 +94,13 @@ make test
 
 %files
 %doc Changes README
+%doc LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_1
+- update to new release by fcimport
+
 * Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
