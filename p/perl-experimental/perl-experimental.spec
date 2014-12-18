@@ -1,23 +1,26 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Module/Build/Tiny.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-experimental
 Version:        0.013
-Release:        alt1
+Release:        alt1_2
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/experimental/
-Source:        http://www.cpan.org/authors/id/L/LE/LEONT/experimental-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/experimental-%{version}.tar.gz
+# Replace Build.PL to not require Module::Build::Tiny because experimental is
+# a core dual-lived module and Module::Build::Tiny is not.
+Source1:        Makefile.PL
 BuildArch:      noarch
 BuildRequires:  perl
-BuildRequires:  perl(Module/Build/Tiny.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(feature.pm)
 BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(version.pm)
 BuildRequires:  perl(warnings.pm)
 # Tests:
 BuildRequires:  perl(File/Spec.pm)
@@ -32,23 +35,28 @@ experimental features.
 
 %prep
 %setup -q -n experimental-%{version}
+cp %{SOURCE1} .
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
-./Build
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+make %{?_smp_mflags}
 
 %install
-./Build install --destdir=$RPM_BUILD_ROOT --create_packlist=0
+make pure_install DESTDIR=$RPM_BUILD_ROOT
+find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
-./Build test
+make test
 
 %files
 %doc Changes LICENSE README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1_2
+- update to new release by fcimport
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
 - automated CPAN update
 
