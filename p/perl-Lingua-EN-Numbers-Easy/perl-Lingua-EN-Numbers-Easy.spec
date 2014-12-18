@@ -1,22 +1,27 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/Kwalitee.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Lingua-EN-Numbers-Easy
 Version:        2014120401
-Release:        alt1
+Release:        alt1_1
 Summary:        Hash access to Lingua::EN::Numbers objects
 License:        MIT
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Lingua-EN-Numbers-Easy/
-Source:        http://www.cpan.org/authors/id/A/AB/ABIGAIL/Lingua-EN-Numbers-Easy-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/A/AB/ABIGAIL/Lingua-EN-Numbers-Easy-%{version}.tar.gz
 BuildArch:      noarch
+# Build
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Runtime
 BuildRequires:  perl(Lingua/EN/Numbers.pm)
-
- # Filters (not)shared c libs
+# Tests only
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/Pod.pm)
+BuildRequires:  perl(Test/Pod/Coverage.pm)
 Source44: import.info
 
 %description
@@ -29,24 +34,24 @@ to words using a tied hash, which can be interpolated.
 %setup -q -n Lingua-EN-Numbers-Easy-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-
 # %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
-%doc Changes
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1_1
+- update to new release by fcimport
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1
 - automated CPAN update
 
