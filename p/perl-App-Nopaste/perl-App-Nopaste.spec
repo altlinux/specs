@@ -1,40 +1,50 @@
-%define _unpackaged_files_terminate_build 1
-%define module_version 1.001
-%define module_name App-Nopaste
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(HTTP/Request/Common.pm) perl(LWP/Protocol.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Manifest/Skip.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(URI/Escape.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-devel perl(JSON/MaybeXS.pm) perl(Test/Deep.pm)
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-App-Nopaste
 Version:        1.001
-Release:        alt1
+Release:        alt1_1
 Summary:        Easy access to any pastebin
-License:        perl
-Group:          Development/Perl
-URL:            https://github.com/sartak/app-nopaste/tree
-Source:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
+License:        GPL+ or Artistic
+URL:            http://search.cpan.org/dist/App-Nopaste/
+Source0:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(inc/Module/Install.pm)
-BuildRequires:  perl(Browser/Open.pm)
+# Build
+BuildRequires:  perl
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Runtime
+BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Class/Load.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(File/Basename.pm)
 BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(Getopt/Long/Descriptive.pm)
 BuildRequires:  perl(JSON.pm)
+BuildRequires:  perl(JSON/MaybeXS.pm)
 BuildRequires:  perl(Module/Pluggable.pm)
-BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Module/Runtime.pm)
+BuildRequires:  perl(POSIX.pm)
+BuildRequires:  perl(URI/Escape.pm)
 BuildRequires:  perl(WWW/Mechanize.pm)
-# necessary for optional modules
-BuildRequires:  perl(Clipboard.pm)
-BuildRequires:  perl(Config/GitLike.pm)
-BuildRequires:  perl(WWW/Pastebin/PastebinCom/Create.pm)
-# autoreq doesn't catch this
-Requires:       perl(Browser/Open.pm)
-# necessary for optional modules
-Requires:       perl(Clipboard.pm)
-Requires:       perl(Config/GitLike.pm)
-Requires:       perl(WWW/Pastebin/PastebinCom/Create.pm)
+BuildRequires:  perl(namespace/clean.pm)
+# Tests only
+BuildRequires:  perl(File/Spec/Functions.pm)
+BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(LWP/Protocol.pm)
+BuildRequires:  perl(Test/Deep.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(version.pm)
 # for ssh plugin
 Requires:       /usr/bin/scp
+Requires:       perl(Clipboard.pm)
+Requires:       perl(Browser/Open.pm)
+Requires:       perl(WWW/Pastebin/PastebinCom/Create.pm)
+Requires:       perl(HTTP/Request/Common.pm)
 Source44: import.info
 
 %description
@@ -42,14 +52,6 @@ Pastebins (also known as nopaste sites) let you post text, usually code,
 for public viewing. They're used a lot in IRC channels to show code that
 would normally be too long to give directly in the channel (hence the
 name nopaste).
-
-%package scripts
-Summary: %module_name scripts
-Group: Development/Perl
-Requires: %name = %{?epoch:%epoch:}%version-%release
-
-%description scripts
-scripts for %module_name
 
 %package -n nopaste
 # needs to beat old nopaste-2835-3
@@ -68,36 +70,34 @@ normally be too long to give directly in the channel (hence the name nopaste).
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n App-Nopaste-%{version}
 find lib -type f | xargs chmod -x
 
 %build
-PERL5_CPANPLUS_IS_RUNNING=1 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -exec rm -f {} +
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
-%doc Changes
-%{perl_vendor_privlib}/*
-
-%files scripts
-%_bindir/*
+%doc Changes CONTRIBUTING README
+%doc LICENSE
+%{perl_vendor_privlib}/App*
 
 %files -n nopaste
 %{_bindir}/*
 %{_mandir}/man1/*
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1_1
+- update to new release by fcimport
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1
 - automated CPAN update
 
