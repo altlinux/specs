@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.10
+Version: 1.2.11
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -152,7 +152,7 @@ BuildRequires: libgcrypt-devel libgnutls-devel libp11-kit-devel
 BuildRequires: libreadline-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libattr-devel attr
-BuildRequires: perl-Pod-Parser
+BuildRequires: perl-Pod-Parser perl-XML-XPath
 BuildRequires: libxml2-devel xml-utils xsltproc w3c-markup-validator-libs xhtml1-dtds
 BuildRequires: python python-devel
 BuildRequires: zlib-devel
@@ -925,6 +925,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Dec 18 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.11-alt1
+- 1.2.11
+- fixed CVE-2014-7823,CVE-2014-8135,CVE-2014-8136,CVE-2014-8131
+
 * Fri Nov 07 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.10-alt1
 - 1.2.10
 
