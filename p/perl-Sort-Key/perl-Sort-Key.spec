@@ -1,16 +1,28 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(XSLoader.pm) perl(locale.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Sort-Key
 Version:        1.33
-Release:        alt1.1
+Release:        alt1.1_1
 Summary:        Fastest way to sort anything in Perl
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Sort-Key/
-Source:        http://www.cpan.org/authors/id/S/SA/SALVA/Sort-Key-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/S/SA/SALVA/Sort-Key-%{version}.tar.gz
+# Build
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Runtime
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(locale.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+BuildRequires:  perl(XSLoader.pm)
+# Tests only
+BuildRequires:  perl(integer.pm)
 BuildRequires:  perl(Test/More.pm)
 
 
@@ -24,16 +36,12 @@ calculated key value.
 %setup -q -n Sort-Key-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
@@ -44,6 +52,9 @@ make test
 %{perl_vendor_archlib}/Sort*
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1.1_1
+- update to new release by fcimport
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1.1
 - rebuild with new perl 5.20.1
 
