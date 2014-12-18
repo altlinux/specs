@@ -1,11 +1,9 @@
 %define mname eea
 %define oname %mname.themecentre
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 6.2
-Release: alt1
+Release: alt2
 Summary: EEA Theme centre
 License: GPL
 Group: Development/Python
@@ -15,6 +13,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-uuid python-module-mock
+BuildPreReq: python-module-openid
 BuildPreReq: python-module-Products.FiveSite
 BuildPreReq: python-module-Products.PloneHelpCenter
 BuildPreReq: python-module-Products.ATVocabularyManager
@@ -50,7 +50,7 @@ BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-zope.site
 BuildPreReq: python-module-plone.app.form
 BuildPreReq: python-module-eea.soer
-#BuildPreReq: python-module-eea.indicators
+BuildPreReq: python-module-eea.indicators
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -65,7 +65,7 @@ Requires: python-module-Zope2
 %py_requires zope.lifecycleevent zope.annotation zope.interface
 %py_requires zope.component zope.formlib zope.schema zope.publisher
 %py_requires zope.app.form zope.i18nmessageid plone.app.form
-#py_requires eea.indicators
+%py_requires eea.indicators
 
 %description
 Theme Centre is a folder that contains content on a certain theme.
@@ -107,6 +107,10 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Thu Dec 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.2-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Thu Dec 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.2-alt1
 - Initial build for Sisyphus
 
