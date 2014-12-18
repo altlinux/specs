@@ -1,19 +1,20 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Event-ICal
 Version:        0.12
-Release:        alt1
+Release:        alt1_1
 Summary:        Perl DateTime extension for computing rfc2445 recurrences
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Event-ICal/
-Source:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-ICal-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-ICal-%{version}.tar.gz
 BuildArch:      noarch
 # Build
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
 # Runtime
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(constant.pm)
@@ -23,10 +24,10 @@ BuildRequires:  perl(DateTime/Set.pm)
 BuildRequires:  perl(DateTime/Span.pm)
 BuildRequires:  perl(DateTime/SpanSet.pm)
 BuildRequires:  perl(Params/Validate.pm)
-BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(vars.pm)
 # Test suite
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(warnings.pm)
 Source44: import.info
 # Runtime
 
@@ -42,9 +43,9 @@ perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-# %{_fixperms} $RPM_BUILD_ROOT
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -exec rm -f {} +
+# %{_fixperms} %{buildroot}
 
 %check
 make test
@@ -54,6 +55,9 @@ make test
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
