@@ -1,55 +1,53 @@
-%define beta %nil
+%set_automake_version 1.11
 
 Name: knetload
-Version: 2.3
-Release: alt3
+Version: 2.9.92
+Release: alt1
 Serial: 1
 
 Group: Monitoring
-Summary: Network traffic monitor
-URL: http://flameeyes.web.ctonet.it
-#URL: http://www.flameeyes.eu/oldstuff
+Summary: Network traffic monitor for KDE3/TDE Kicker
+URL: http://www.flameeyes.eu/oldstuff
 License: %gpl2only
 
-Source: %name-%version%beta.tar.bz2
+Source: %name-%version.tar.bz2
 Source1: %name-Makefile.am
-Source10: %name-ru.po
-Patch1: %name-automake.patch
+
+Patch1: %name-2.9.92-automake.patch
+
+Patch10: %name-2.9.92-kcfg.diff
+Patch11: %name-2.9.92-if-name.diff
+
+# Automatically added by buildreq on Mon Dec 22 2014 (-bi)
+# optimized out: elfutils fontconfig gnu-config imake kdebase-common kdelibs kdelibs-devel kdepim-libs libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel libpng-devel libqt3-devel libqt3-settings libstdc++-devel libtqt-devel pkg-config python-base xml-utils xorg-cf-files xorg-xproto-devel zlib-devel
+BuildRequires: doxygen gcc-c++ graphviz kde-i18n-ru kdepim-devel libjpeg-devel xdg-user-dirs
 
 BuildRequires: rpm-build-licenses rpm-macros-kde-common-devel rpm-macros-qt3
 
-# Automatically added by buildreq on Wed Dec 17 2014 (-bi)
-# optimized out: elfutils fontconfig gnu-config imake kdebase-common kdelibs kdelibs-devel kdepim-libs libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel libarts-devel libpng-devel libqt3-devel libqt3-settings libstdc++-devel libtqt-devel python-base xml-utils xorg-cf-files xorg-xproto-devel zlib-devel
-BuildRequires: doxygen gcc-c++ graphviz kdepim-devel libjpeg-devel
-
 %description
-A small network usage meter for Kicker (KDE3/TDE).
+This is a network throughput meter for Kicker (the KDE3/TDE Panel).
+It will show the traffic on a network device with two diagrams, one
+for outgoing and one for incoming data.
+
+Since version 3, KNetLoad is now a true full-integrated Kicker applet,
+no more the old standalone application which resides on the system
+tray. This change allow you to have bigger, more readable graphs, and
+also allow you to add more than one interface monitored at a time.
 
 %prep
 %setup -q
 %patch1 -p1
 
-grep -q " ru " po/Makefile.am || \
-subst "s/^\(SUBDIRS.\+\)$/\1 ru/g" po/Makefile.am
-mkdir -p po/ru
-install -m 0644 %SOURCE10 po/ru/%name.po
-cat >po/ru/Makefile.am <<__EOF__
-KDE_LANG = ru
-SUBDIRS = \$(AUTODIRS)
-POFILES = AUTO
-__EOF__
+%patch10 -p1
+%patch11 -p1
 
-subst "s/\(Wl,--no-undefined\)/-Wl,--warn-unresolved-symbols \1/g" admin/acinclude.m4.in
-subst "s/\-lkdeui/-lkdeui -lpthread/g" admin/acinclude.m4.in
-subst "s/\.la/.so/g" admin/acinclude.m4.in
 make -f admin/Makefile.common cvs ||:
 
 %build
 
-export CXXFLAGS="$CXXFLAGS -I/usr/include/tqtinterface"
-export LDFLAGS="$LDFLAGS -lkdeui -lkdecore -L%_qt3dir/lib -lqt-mt"
+%add_optflags -I%_includedir/tqtinterface -lkdeui -lkdecore -L%_qt3dir/lib -lqt-mt -fPIC -DPIC
 
-%configure \
+%K3configure \
     --enable-final \
     --enable-shared \
     --disable-static \
@@ -57,34 +55,53 @@ export LDFLAGS="$LDFLAGS -lkdeui -lkdecore -L%_qt3dir/lib -lqt-mt"
     --program-transform-name=""
 
 %make_build
-#%make -C po
+
+pushd knetload/.libs
+g++ -shared -L%_qt3dir/lib -o libknetloadapplet.so *.o -lkdeui -lkdecore -lqt-mt -lpthread
+popd
 
 %install
-%make DESTDIR=%buildroot install
-#%make DESTDIR=%buildroot install -C po
+%K3install PACKAGE=%name
 
-mkdir -p %buildroot/%_menudir
+pushd %buildroot/%_K3doc
+for DIR in `ls -d *`; do
+    pushd $DIR
+    NAME=`ls -d *`
+    if [ "$NAME" = "doc" ]; then
+        mv $NAME %name
+    fi
+    popd
+done
+popd
 
-%find_lang %name
+mkdir %_bKlibdir
+mv %buildroot/%_libdir/libknetloadapplet.so %_bKlibdir
 
-%post
-%_update_menus_bin
-%postun
-%_update_menus_bin
+%K3find_lang %name
+echo '%lang(sr) /usr/share/kde/locale/sr@Latn/LC_MESSAGES/knetload.mo' >> %name.lang
 
 %files -f %name.lang
-#%doc %_docdir/HTML/en/%name
+%_Klibdir/libknetloadapplet.so
+
+%_datadir/icons/crystalsvg/*/apps/%name.*
+
+%_K3cfg/knetload.kcfg
+%_kde3_iconsdir/hicolor/*/apps/*.png
+
+%_K3apps/kicker/applets/%{name}applet.desktop
+
+%dir %_K3apps/knetloadapplet
+%dir %_K3apps/knetloadapplet/pics
+%_K3apps/knetloadapplet/pics/*.png
+
+%dir %_K3doc/*/%name
+%_K3doc/*/%name/*
 %doc COPYING README AUTHORS
-#
-%_bindir/%name
-#
-%_datadir/apps/%name
-#%dir %_datadir/apps/kicker/applets
-#%_datadir/apps/kicker/applets/%name.desktop
-%_datadir/icons/*/*/apps/%name.*
-%_Kmenudir/%name.desktop
 
 %changelog
+* Thu Dec 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 1:2.9.92-alt1
+- new wersion (formally 3.0 alpha2)
+
 * Thu Dec 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 1:2.3-alt3
 - returned to Sisyphus
 
