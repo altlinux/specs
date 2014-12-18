@@ -3,27 +3,28 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           slashem
 Version:        0.0.8
-Release:        alt2_0.16.E0F1
+Release:        alt2_0.17.E0F1
 Summary:        Super Lotsa Added Stuff Hack - Extended Magic
 
 Group:          Games/Other
 License:        NGPL
 URL:            http://slashem.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/slashem/se008e0f1.tar.gz
+Source0:        http://downloads.sourceforge.net/%{name}/se008e0f1.tar.gz
 Source1:        %{name}.desktop
+Source2:        %{name}.appdata.xml
 Patch0:         slashem-config.patch
 # fix building with libpng 1.5
 Patch1:         slashem-libpng-1.5.patch
-# update config.guess and config.sub to recognize aarch64
-Patch2:         slashem-aarch64.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1037330
-Patch3:         slashem-format-security.patch
+Patch2:         slashem-format-security.patch
 
+BuildRequires:  /usr/bin/appstream-util
 BuildRequires:  ncurses-devel
 BuildRequires:  bison flex desktop-file-utils
-BuildRequires:  bdftopcf libX11-devel libXaw-devel libXext-devel
+BuildRequires:  bdftopcf libX11-devel libXext-devel
 BuildRequires:  libXmu-devel libXpm-devel libXt-devel
 BuildRequires:  libSDL-devel libGL-devel libpng-devel zlib-devel
+BuildRequires:  pkgconfig(xaw7)
 # to compress save files
 Requires:       bzip2
 # for X11 core fonts
@@ -59,10 +60,9 @@ SLASH'EM is the (continuing) saga of one such variant...
 
 %prep
 %setup -q -n %{name}-%{version}E0F1
-%patch0 -p 1 -b .config
-%patch1 -p 1 -b .libpng
-%patch2 -p 1 -b .aarch64
-%patch3 -p 1 -b .format-security
+%patch0 -p1 -b .config
+%patch1 -p1 -b .libpng
+%patch2 -p1 -b .format-security
 
 sed -i \
     -e 's:^\(#define FILE_AREA_VAR\).*:\1 "%{fa_var}/":' \
@@ -71,7 +71,6 @@ sed -i \
     -e 's:^\(#define FILE_AREA_UNSHARE\).*:\1 "%{fa_unshare}/":' \
     -e 's:^\(#define FILE_AREA_DOC\).*:\1 "%{fa_doc}/":' \
     include/unixconf.h
-
 
 for f in *.txt ; do
   iconv -f iso8859-1 -t utf-8 $f >$f.conv
@@ -103,6 +102,7 @@ make \
     FILE_AREA_DOC=%{fa_doc} \
     SHELLDIR=%{_bindir}
 
+
 %install
 make install DESTDIR=%{buildroot} \
     FILE_AREA_VAR=%{buildroot}%{fa_var} \
@@ -110,6 +110,7 @@ make install DESTDIR=%{buildroot} \
     FILE_AREA_SHARE=%{buildroot}%{fa_share} \
     FILE_AREA_UNSHARE=%{buildroot}%{fa_unshare} \
     FILE_AREA_DOC=%{buildroot}%{fa_doc} \
+    INSTALL="install -p" \
     SHELLDIR=%{buildroot}%{_bindir} \
     CHOWN=/bin/true \
     CHGRP=/bin/true
@@ -128,12 +129,14 @@ rm %{buildroot}%{_mandir}/man6/[^s]*
 
 sed -i -e 's:^!\(SlashEM.tile_file.*\):\1:' %{buildroot}%{fa_share}/SlashEM.ad
 
-install -D -p -m 0644 win/X11/nh_icon.xpm %{buildroot}%{_datadir}/pixmaps/slashem.xpm
-desktop-file-install \
-    --dir %{buildroot}%{_datadir}/applications \
-    --add-category Application \
-    --add-category Game \
-    %{SOURCE1}
+install -Dpm 0644 win/X11/nh_icon.xpm %{buildroot}%{_datadir}/pixmaps/slashem.xpm
+desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
+install -Dpm 0644 %{SOURCE2} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
+
+
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
@@ -144,6 +147,7 @@ desktop-file-install \
 %dir %{fa_unshare}
 %{fa_unshare}/nhushare
 %{_mandir}/man6/*
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/slashem.desktop
 %{_datadir}/pixmaps/slashem.xpm
 %defattr(0664,root,games)
@@ -156,6 +160,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.17.E0F1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.16.E0F1
 - update to new release by fcimport
 
