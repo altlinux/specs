@@ -1,24 +1,28 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DynaLoader.pm) perl(Exporter.pm) perl(Test.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Time-Warp 
 Version:    0.51
-Release:    alt1.1
+Release:    alt1.1_1
 # Warp.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
-Summary:    Change the start and speed of Event time 
-Source:     http://www.cpan.org/authors/id/S/SZ/SZABGAB/Time-Warp-%{version}.tar.gz
+Summary:    Control over the flow of time
+Source:     http://search.cpan.org/CPAN/authors/id/S/SZ/SZABGAB/Time-Warp-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/Time-Warp
-
-BuildRequires: perl(ExtUtils/MakeMaker.pm)
-
-# don't "provide" private Perl libs
-#global _use_internal_dependency_generator 0
-#global __deploop() while read FILE; do /usr/lib/rpm/rpmdeps -%{1} ${FILE}; done | /bin/sort -u
-#global __find_provides /bin/sh -c "%{__grep} -v '%_docdir' | %{__grep} -v '%{perl_vendor_archlib}/.*\\.so$' | %{__deploop P}"
-#global __find_requires /bin/sh -c "%{__grep} -v '%_docdir' | %{__deploop R}"
+BuildRequires:  perl
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Run-time:
+BuildRequires:  perl(DynaLoader.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Optional run-time:
+BuildRequires:  perl(Time/HiRes.pm)
+# Tests:
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(warnings.pm)
 Source44: import.info
 
 %description
@@ -26,34 +30,30 @@ Our external experience unfolds in 3 1/2 dimensions (time has a
 dimensionality of 1/2). The Time::Warp module offers developers control
 over the measurement of time.
 
-This module is redundant if you're from Gallifrey, and not recommended
-for use at high speeds near very massive objects.
-
 %prep
 %setup -q -n Time-Warp-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 make %{?_smp_mflags}
 
 %install
-
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
-
 # %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
-%doc README 
+%doc Changes README
 %{perl_vendor_archlib}/*
-%exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1.1_1
+- update to new release by fcimport
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1.1
 - rebuild with new perl 5.20.1
 
