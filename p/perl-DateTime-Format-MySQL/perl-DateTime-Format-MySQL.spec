@@ -1,41 +1,29 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
-# Note:  Some tests for this package are disabled by default, as they
-# require network access and would thus fail in the buildsys' mock
-# environments.  To build locally while enabling tests, either:
-#
-#   rpmbuild ... --define '_with_network_tests 1' ...
-#   rpmbuild ... --with network_tests ...
-#   define _with_network_tests 1 in your ~/.rpmmacros
-#
-# Note that right now, the only way to run tests locally from a cvs sandbox
-# "make noarch" type scenario is the third one.
-
-
 Name:           perl-DateTime-Format-MySQL
 Version:        0.05
-Release:        alt1
-Summary:        Parse and format MySQL dates and times 
-
+Release:        alt1_1
+Summary:        Parse and format MySQL dates and times
 Group:          Development/Perl
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DateTime-Format-MySQL
-Source: http://www.cpan.org/authors/id/X/XM/XMIKEW/DateTime-Format-MySQL-%{version}.tar.gz
-
-BuildArch:      noarch 
-BuildRequires:  perl(Module/Build.pm) perl(DateTime.pm)
+Source0:        http://search.cpan.org/CPAN/authors/id/X/XM/XMIKEW/DateTime-Format-MySQL-%{version}.tar.gz
+BuildArch:      noarch
+# Module Build
+BuildRequires:  perl
+BuildRequires:  perl(Module/Build.pm)
+# Module Runtime
+BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/Format/Builder.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Test Suite
 BuildRequires:  perl(Test/More.pm)
-
-# not picked up explicitly, for whatever reason...
-Requires:  perl(DateTime/Format/Builder.pm)
-
-# for signature checking
-%{?_with_network_tests:BuildRequires: perl(Module/Signature.pm)}
+# Runtime
+Requires:       perl(DateTime/Format/Builder.pm)
 Source44: import.info
-
 
 %description
 This module understands the formats used by MySQL for its DATE, DATETIME,
@@ -43,38 +31,33 @@ TIME, and TIMESTAMP data types. It can be used to parse these formats in order
 to create DateTime objects, and it can take a DateTime object and produce a
 string representing it in the MySQL format.
 
-
 %prep
 %setup -q -n DateTime-Format-MySQL-%{version}
 
-# digital signature checking.  Not essential, but nice
-%{?_with_network_tests: cpansign -v }
-
-
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
-
+perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
+./Build
 
 %install
-
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -type d -depth -exec rmdir {} 2>/dev/null ';'
-
-# %{_fixperms} %{buildroot}/*
-
+./Build install --destdir=%{buildroot} --create_packlist=0
+# %{_fixperms} %{buildroot}
 
 %check
-make test
-
+./Build test
 
 %files
-%doc Changes LICENSE README
-%{perl_vendor_privlib}/*
-
+%if 0%{?_licensedir:1}
+%doc LICENSE
+%else
+%doc LICENSE
+%endif
+%doc Changes README
+%{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_1
+- update to new release by fcimport
+
 * Thu Nov 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - automated CPAN update
 
