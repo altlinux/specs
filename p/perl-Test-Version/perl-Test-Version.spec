@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
@@ -8,16 +7,17 @@ BuildRequires: perl-devel perl-podlators
 
 Name:		perl-Test-Version
 Version:	1.004001
-Release:	alt1
+Release:	alt1_1
 Summary:	Check to see that versions in modules are sane
 License:	Artistic 2.0
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-Version/
-Source:	http://www.cpan.org/authors/id/X/XE/XENO/Test-Version-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/X/XE/XENO/Test-Version-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Module build requirements
 # ===================================================================
+BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # ===================================================================
 # Module requirements
@@ -35,10 +35,10 @@ BuildRequires:	perl(warnings.pm)
 # ===================================================================
 # Regular test suite requirements
 # ===================================================================
+BuildRequires:	perl(CPAN/Meta.pm)
 BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(IO/Handle.pm)
 BuildRequires:	perl(IPC/Open3.pm)
-BuildRequires:	perl(Scalar/Util.pm)
 BuildRequires:	perl(Test/Exception.pm)
 BuildRequires:	perl(Test/Tester.pm)
 # ===================================================================
@@ -51,22 +51,16 @@ BuildRequires:	perl(Test/Tester.pm)
 %if 0%{!?perl_bootstrap:1}
 BuildRequires:	perl(English.pm)
 BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
-BuildRequires:	perl(Pod/Wordlist.pm)
 BuildRequires:	perl(Test/CPAN/Changes.pm)
-BuildRequires:	perl(Test/CPAN/Meta.pm)
 BuildRequires:	perl(Test/CPAN/Meta/JSON.pm)
 BuildRequires:	perl(Test/DistManifest.pm)
 BuildRequires:	perl(Test/EOL.pm)
 BuildRequires:	perl(Test/MinimumVersion.pm)
-BuildRequires:	perl(Test/Mojibake.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Perl/Critic.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
-BuildRequires:	perl(Test/Pod/LinkCheck.pm)
 BuildRequires:	perl(Test/Portability/Files.pm)
-BuildRequires:	perl(Test/Spelling.pm) hunspell-en
-BuildRequires:	perl(Test/Synopsis.pm)
 BuildRequires:	perl(Test/Vars.pm)
 %endif
 Source44: import.info
@@ -81,7 +75,6 @@ versions across your dist are sane.
 %prep
 %setup -q -n Test-Version-%{version}
 
-
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
@@ -92,13 +85,20 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 # %{_fixperms} %{buildroot}
 
 %check
-make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1}
+make test
+%if 0%{!?perl_bootstrap:1}
+make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
+%endif
 
 %files
-%doc Changes CONTRIBUTING LICENSE README
+%doc LICENSE
+%doc Changes CONTRIBUTING README
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.004001-alt1_1
+- update to new release by fcimport
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.004001-alt1
 - automated CPAN update
 
