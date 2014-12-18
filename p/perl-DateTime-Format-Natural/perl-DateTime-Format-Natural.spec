@@ -1,36 +1,41 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DateTime/TimeZone.pm) perl(File/Spec/Functions.pm) perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Term/ReadLine.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Natural
 Version:        1.02
-Release:        alt1
+Release:        alt1_1
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Format-Natural/
-Source:        http://www.cpan.org/authors/id/S/SC/SCHUBIGER/DateTime-Format-Natural-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/S/SC/SCHUBIGER/DateTime-Format-Natural-%{version}.tar.gz
 BuildArch:      noarch
+# Build
+BuildRequires:  perl
+BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Runtime
+BuildRequires:  perl(base.pm)
 BuildRequires:  perl(boolean.pm)
 BuildRequires:  perl(Carp.pm)
-BuildRequires:  perl(Class/ISA.pm)
 BuildRequires:  perl(Clone.pm)
-BuildRequires:  perl(Cwd.pm)
+BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(DateTime.pm)
-BuildRequires:  perl(Date/Calc.pm)
-BuildRequires:  perl(DateTime.pm)
+BuildRequires:  perl(DateTime/TimeZone.pm)
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(File/Find.pm)
-BuildRequires:  perl(File/Spec.pm)
-BuildRequires:  perl(FindBin.pm)
-BuildRequires:  perl(Getopt/Long.pm)
+BuildRequires:  perl(File/Spec/Functions.pm)
 BuildRequires:  perl(List/MoreUtils.pm)
-BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Module/Util.pm)
 BuildRequires:  perl(Params/Validate.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Storable.pm)
-BuildRequires:  perl(Term/ReadLine.pm)
+# Tests only
+BuildRequires:  perl(Cwd.pm)
+BuildRequires:  perl(Date/Calc.pm)
+BuildRequires:  perl(FindBin.pm)
 BuildRequires:  perl(Test/MockTime.pm)
 BuildRequires:  perl(Test/More.pm)
 
@@ -56,12 +61,12 @@ for f in Changes README; do
 done
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 ./Build
 
 %install
-./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
-
+./Build install destdir=%{buildroot} create_packlist=0
+# %{_fixperms} %{buildroot}/*
 
 %check
 ./Build test
@@ -78,6 +83,9 @@ done
 
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1_1
+- update to new release by fcimport
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
 - automated CPAN update
 
