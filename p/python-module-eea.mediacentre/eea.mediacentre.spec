@@ -1,11 +1,9 @@
 %define mname eea
 %define oname %mname.mediacentre
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 6.3
-Release: alt1
+Release: alt2
 Summary: EEA Media Centre
 License: GPL
 Group: Development/Python
@@ -15,6 +13,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-uuid python-module-mock
+BuildPreReq: python-module-openid
 BuildPreReq: python-module-eea.vocab
 BuildPreReq: python-module-eea.geotags
 BuildPreReq: python-module-Products.EEAContentTypes
@@ -33,9 +33,9 @@ BuildPreReq: python-module-zope.annotation
 BuildPreReq: python-module-zope.formlib
 BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-eea.themecentre
-#BuildPreReq: python-module-eea.dataservice
-#BuildPreReq: python-module-eea.design
+BuildPreReq: python-module-eea.themecentre
+BuildPreReq: python-module-eea.dataservice
+BuildPreReq: python-module-eea.design
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -46,7 +46,7 @@ Requires: python-module-Zope2
 %py_requires Products.ATContentTypes plone.app.blob zope.component
 %py_requires zope.interface zope.schema zope.annotation zope.formlib
 %py_requires zope.i18nmessageid
-#py_requires eea.themecentre eea.dataservice eea.design
+%py_requires eea.themecentre eea.dataservice eea.design
 
 %description
 Media Centre offers an API to search for media content on the website.
@@ -94,6 +94,10 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Thu Dec 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.3-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.3-alt1
 - Initial build for Sisyphus
 
