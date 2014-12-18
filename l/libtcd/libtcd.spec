@@ -1,15 +1,15 @@
 %add_optflags %optflags_shared
-%undefine		postver
+%global		postver	-r2
 %global		postrpmver	%(echo "%postver" | sed -e 's|-|.|g' | sed -e 's|^\.||')
 
 %global		mainver		2.2.6
 
-%global		fedorarel	1
+%global		fedorarel	2
 %global		rpmrel		%{fedorarel}%{?postver:.%postrpmver}
 
 Name:		libtcd
 Version:	%{mainver}
-Release:	alt1_%{rpmrel}.2
+Release:	alt1_%{rpmrel}
 Summary:	Tide Constituent Database Library
 
 Group:		System/Libraries
@@ -60,6 +60,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.{a,la}
 %{_libdir}/*.so
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt1_2.r2
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt1_1.2
 - update to new release by fcimport
 
