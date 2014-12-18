@@ -1,11 +1,9 @@
 %define mname eea
 %define oname %mname.soer
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 6.1
-Release: alt1
+Release: alt2
 Summary: Provides the SOER report content types
 License: GPL
 Group: Development/Python
@@ -17,6 +15,8 @@ Source: %name-%version.tar
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-lxml python-module-surf
 BuildPreReq: python-module-rdflib python-module-BeautifulSoup4
+BuildPreReq: python-module-uuid python-module-mock
+BuildPreReq: python-module-openid
 BuildPreReq: python-module-eea.vocab
 BuildPreReq: python-module-eea.rdfmarshaller
 BuildPreReq: python-module-eea.facetednavigation
@@ -34,7 +34,7 @@ BuildPreReq: python-module-zope.schema
 BuildPreReq: python-module-zope.lifecycleevent
 BuildPreReq: python-module-zope.event
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-eea.themecentre
+BuildPreReq: python-module-eea.themecentre
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -44,7 +44,7 @@ Requires: python-module-Zope2
 %py_requires Products.CMFCore Products.CMFPlone Products.Marshall
 %py_requires Products.Archetypes Products.ATContentTypes zope.interface
 %py_requires zope.schema zope.lifecycleevent zope.event zope.component
-#py_requires eea.themecentre
+%py_requires eea.themecentre
 
 %description
 The eea.soer package provides the SOER report content types.
@@ -88,6 +88,10 @@ python setup.py test
 %python_sitelibdir/%mname/*/*/*/test*
 
 %changelog
+* Thu Dec 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.1-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Thu Dec 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.1-alt1
 - Initial build for Sisyphus
 
