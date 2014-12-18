@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Config.pm) perl-Module-Build perl-devel perl-podlators
@@ -6,12 +5,14 @@ BuildRequires: perl(Config.pm) perl-Module-Build perl-devel perl-podlators
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
 Version:	0.039
-Release:	alt1
+Release:	alt1_1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		https://github.com/Leont/module-build-tiny
-Source:	http://www.cpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
 BuildArch:	noarch
+# Module Build
+BuildRequires:	perl
 # Module
 BuildRequires:	perl(CPAN/Meta.pm)
 BuildRequires:	perl(DynaLoader.pm)
@@ -27,8 +28,7 @@ BuildRequires:	perl(File/Spec/Functions.pm)
 BuildRequires:	perl(Getopt/Long.pm)
 BuildRequires:	perl(JSON/PP.pm)
 BuildRequires:	perl(Pod/Man.pm)
-#BuildRequires:	perl(TAP/Harness/Env.pm)
-BuildRequires:	perl(TAP/Harness.pm)
+BuildRequires:	perl(TAP/Harness/Env.pm)
 # Test
 BuildRequires:	perl(blib.pm)
 BuildRequires:	perl(Carp.pm)
@@ -49,8 +49,7 @@ Requires:	perl(DynaLoader.pm)
 Requires:	perl(ExtUtils/CBuilder.pm)
 Requires:	perl(ExtUtils/ParseXS.pm)
 Requires:	perl(Pod/Man.pm)
-#Requires:	perl(TAP/Harness/Env.pm)
-Requires:	perl(TAP/Harness.pm)
+Requires:	perl(TAP/Harness/Env.pm)
 Source44: import.info
 
 %description
@@ -67,7 +66,7 @@ Whereas Module::Build has over 6,700 lines of code; this module has less than
 rm t/simple.t
 
 %build
-perl Build.PL --installdirs=vendor
+perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build
 
 %install
@@ -77,10 +76,14 @@ perl Build.PL --installdirs=vendor
 AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 
 %files
-%doc Changes LICENSE README Todo
+%doc LICENSE
+%doc Changes README Todo
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_1
+- update to new release by fcimport
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1
 - automated CPAN update
 
