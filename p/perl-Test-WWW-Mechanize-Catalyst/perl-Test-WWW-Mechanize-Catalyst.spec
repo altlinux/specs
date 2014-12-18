@@ -1,14 +1,15 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Catalyst/Controller.pm) perl(Catalyst/ScriptRunner.pm) perl(Config.pm) perl(Encode.pm) perl(Fcntl.pm) perl(HTML/Entities.pm) perl(HTTP/Request/Common.pm) perl(IO/Socket/INET.pm) perl(MIME/Base64.pm) perl(URI.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Catalyst/Controller.pm) perl(Catalyst/Plugin/Session.pm) perl(Catalyst/ScriptRunner.pm) perl(Catalyst/Test.pm) perl(Class/Load.pm) perl(Compress/Zlib.pm) perl(Config.pm) perl(Cwd.pm) perl(Encode.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(HTML/Entities.pm) perl(HTTP/Request/Common.pm) perl(IO/Socket/INET.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(POSIX.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(URI.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-WWW-Mechanize-Catalyst
 Summary:        Test::WWW::Mechanize for Catalyst
 Version:        0.59
-Release:        alt1
+Release:        alt1_1
 License:        GPL+ or Artistic
-Group:          Development/Perl
-Source:        http://www.cpan.org/authors/id/I/IL/ILMARI/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
+
+Source0:        http://search.cpan.org/CPAN/authors/id/I/IL/ILMARI/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/Test-WWW-Mechanize-Catalyst/
 BuildArch:      noarch
 
@@ -78,6 +79,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1_1
+- update to new release by fcimport
+
 * Tue Jan 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1
 - automated CPAN update
 
