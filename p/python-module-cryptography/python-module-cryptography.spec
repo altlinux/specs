@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.1
+Version: 0.7.0
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
@@ -16,13 +16,17 @@ Url: https://pypi.python.org/pypi/cryptography/
 Source: %oname-%version.tar
 
 BuildPreReq: rpm-build-python rpm-build-licenses
-BuildRequires: python-devel python-module-distribute python-module-setuptools-tests 
+BuildRequires: python-devel python-module-distribute python-module-setuptools-tests
 BuildRequires: python-module-six python-module-cffi python-module-pycparser
 BuildRequires: libssl-devel
+BuildRequires: python-module-pyasn1
+BuildRequires: python-module-enum34
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute python3-module-setuptools-tests 
+BuildRequires: python3-devel python3-module-distribute python3-module-setuptools-tests
 BuildRequires: python3-module-six python3-module-cffi python3-module-pycparser
+BuildRequires: python3-module-pyasn1
+BuildRequires: python3-module-enum34
 %endif
 
 %setup_python_module %oname
@@ -36,7 +40,7 @@ digests and key derivation functions.
 
 %if_with python3
 %package -n python3-module-%oname
-Summary: Cryptographic recipes and primitives to Python developers (Python 3). 
+Summary: Cryptographic recipes and primitives to Python developers (Python 3).
 Group: Development/Python3
 
 %description -n python3-module-%oname
@@ -85,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 18 2014 Vladimir Didenko <cow@altlinux.ru> 0.7.0-alt1
+- 0.7.0
+
 * Thu Oct 16 2014 Vladimir Didenko <cow@altlinux.ru> 0.6.1-alt1
 - 0.6.1
 
