@@ -1,41 +1,42 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(if.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN/Meta/Requirements.pm) perl(Module/Build.pm) perl(if.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Kwalitee
 Version:	1.22
-Release:	alt1
+Release:	alt1_2
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://metacpan.org/module/Test::Kwalitee
-Source:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
 BuildArch:	noarch
 # Build
+BuildRequires:	perl
 BuildRequires:	perl(Module/Build/Tiny.pm)
 # Module
 BuildRequires:	perl(Cwd.pm)
-BuildRequires:	perl(Dist/CheckConflicts.pm)
+BuildRequires:	perl(Exporter.pm)
 BuildRequires:	perl(Module/CPANTS/Analyse.pm)
-BuildRequires:	perl(namespace/clean.pm) perl(CPAN/Meta/Check.pm)
+BuildRequires:	perl(namespace/clean.pm)
+BuildRequires:	perl(parent.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test/Builder.pm)
 BuildRequires:	perl(warnings.pm)
 # Test Suite
 BuildRequires:	perl(CPAN/Meta.pm)
-BuildRequires:	perl(CPAN/Meta/Requirements.pm)
+BuildRequires:	perl(CPAN/Meta/Check.pm)
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
-BuildRequires:	perl(File/Spec/Functions.pm)
+BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(File/Temp.pm)
 BuildRequires:	perl(lib.pm)
-BuildRequires:	perl(List/Util.pm)
+BuildRequires:	perl(Scalar/Util.pm)
 BuildRequires:	perl(Test/Deep.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Tester.pm)
 BuildRequires:	perl(Test/Warnings.pm)
-# Runtime
-Requires:	perl(Dist/CheckConflicts.pm) >= 0.02
 Source44: import.info
+# Runtime
 
 %description
 Kwalitee is an automatically-measurable gauge of how good your software
@@ -57,13 +58,20 @@ chmod -c 755 %{buildroot}%{_bindir}/kwalitee-metrics
 %check
 ./Build test
 
+# Support use of %%license for old distributions
+%{!?_licensedir:%global license %%doc}
+
 %files
-%doc Changes CONTRIBUTING LICENSE README
+%doc LICENSE
+%doc Changes CONTRIBUTING README
 %{_bindir}/kwalitee-metrics
 %{perl_vendor_privlib}/Test/
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
 - automated CPAN update
 
