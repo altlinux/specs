@@ -1,5 +1,5 @@
 Name: perl-IO-Async
-Version: 0.63
+Version: 0.64
 Release: alt1
 
 Summary: Asynchronous event-driven programming
@@ -10,7 +10,7 @@ Url: %CPAN IO-Async
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Future.pm) perl(Test/Fatal.pm) perl(Future/Utils.pm) perl-devel perl(Test/Identity.pm)
+BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Future.pm) perl(Test/Fatal.pm) perl(Future/Utils.pm) perl-devel perl(Test/Identity.pm) perl(Struct/Dumb.pm)
 
 %add_findreq_skiplist */IO/Async/MergePoint.pm
 
@@ -31,6 +31,9 @@ BuildRequires: perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refcount.pm
 %doc Changes LICENSE README
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1
 - automated CPAN update
 
