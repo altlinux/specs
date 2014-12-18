@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -30,6 +30,7 @@ BuildPreReq: rpm-build-licenses
 %define gdu_ver 3.12
 %define evo_ver 3.12
 %define emp_ver 3.12
+%define brasero_ver 3.12.0
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
@@ -145,6 +146,7 @@ Requires: gnome-contacts >= %ver_major
 #Requires: liferea
 ## Default document reader (currently pdf, ps, tiff, dvi)
 Requires: evince >= %evince_ver
+Requires: mozilla-plugin-evince
 ## and E-Book Reader
 #Requires: fbreader
 ## and videos from a webcam
@@ -168,8 +170,12 @@ Requires: gnome-sound-recorder >= %ver_major
 Requires: gnome-music >= %ver_major
 ## Extneded music player
 Requires: rhythmbox
+## All Rhythmbox plugins
+Requires: rhythmbox-plugins
 ## Default media player
 Requires: totem
+# and plugins
+Requires: totem-plugins
 ## Stock GNOME games
 #Requires: gnome-games >= 3.4.0
 Requires: gnome-games >= %ver_major
@@ -179,9 +185,9 @@ Requires: gnome-photos >= %ver_major
 Requires: eog >= %ver_major
 Requires: eog-plugins >= %ver_major
 ## Default CD/DVD burning interface
-Requires: brasero >= 3.11.3
+Requires: brasero >= %brasero_ver
 ## Clipboard manager
-Requires: parcellite
+Requires: gnome-shell-extension-gpaste
 # Documents manager
 Requires: gnome-documents
 # A quick previewer for Nautilus
@@ -205,7 +211,7 @@ Requires: gnome-maps >= %ver_major
 # power consumption statistic
 Requires: gnome-power-manager >= %ver_major
 Requires: NetworkManager-gnome >= %network_manager_ver
-## Bluetooth pairing and control applet
+## Bluetooth pairing and control program
 Requires: gnome-bluetooth
 ## frontend for various networking tools
 Requires: gnome-nettool >= %gnome_nettool_ver
@@ -213,6 +219,9 @@ Requires: gnome-nettool >= %gnome_nettool_ver
 Requires: vino
 ## VNC client for the GNOME Desktop
 Requires: vinagre
+Requires: gnome-user-share
+Requires: rygel
+Requires: rygel-tracker
 
 %description default
 This virtual package installs GNOME Desktop for an average user's
@@ -238,8 +247,7 @@ Group: Graphical desktop/GNOME
 Requires: %name-default = %version-%release
 
 # Sound & graphics & video
-## All Rhythmbox plugins
-Requires: rhythmbox-plugins
+
 ## CD-ripper
 Requires: goobox
 ## Image viewer, browser and simple editor
@@ -258,7 +266,7 @@ Requires: aMule
 Requires:  transmission-gtk
 # Windows (TM) communications
 ## RDP
-Requires: rdesktop
+Requires: freerdp
 ## NX
 Requires: freenx
 # Requires: nxlaunch
@@ -338,11 +346,8 @@ Obsoletes: %name-sisyphus-accessibility
 Provides: %name-sisyphus-accessibility = %version-%release
 Requires: gnome-minimal = %version-%release
 
-Requires: gok >= %ver_major
-Requires: gnome-mag
-Requires: dasher
-Requires: gnome-themes-accessibility
 Requires: orca >= %orca_ver
+Requires: accerciser >= %ver_major
 
 %description a11y
 This virtual package installs GNOME Desktop accessibility applications.
@@ -360,6 +365,10 @@ itself).
 #%files a11y
 
 %changelog
+* Thu Dec 18 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
+- added gnome-user-share, rygel{,-tracker} {rhythmbox,totem}-plugins to -default
+- replaced parcellite by gnome-shell-extension-gpaste
+
 * Tue Sep 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - added vino, vinagre, gnome-terminal-nautilus, gnome-initial-setup to -default
 - removed gnome-search-tool, gconf-editor
