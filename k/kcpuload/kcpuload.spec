@@ -1,10 +1,10 @@
 Name: kcpuload
 Version: 1.99
-Release: alt5
+Release: alt6
 Serial: 1
 
 Group: Monitoring
-Summary: Small applet which displays cpu time for KDE kicker (KDE3/TDE)
+Summary: Small applet which displays cpu time for KDE3/TDE kicker
 License: %gpl2only
 
 Source0: %name-%version.tar.bz2
@@ -60,12 +60,7 @@ export PATH="%_K3bindir:$PATH"
 
 mkdir -p %buildroot/%_Kmenudir
 mv %buildroot/%_datadir/applnk/System/*.desktop %buildroot/%_Kmenudir/
-
-%post
-%_update_menus_bin
-
-%postun
-%_update_menus_bin
+rm -rf %buildroot/%_datadir/applnk
 
 %files
 %_bindir/*
@@ -75,6 +70,9 @@ mv %buildroot/%_datadir/applnk/System/*.desktop %buildroot/%_Kmenudir/
 %doc %_K3doc/en/%name
 
 %changelog
+* Thu Dec 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 1:1.99-alt6
+- fixed "Categories" in kcpuload.desktop
+
 * Thu Dec 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 1:1.99-alt5
 - returned to Sisyphus
 
