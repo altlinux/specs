@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(base.pm) perl(sigtrap.pm)
 %add_optflags %optflags_shared
 Name: libhugetlbfs
 Version: 2.18
-Release: alt1_3
+Release: alt1_4
 Summary: A library which provides easy access to huge pages of memory
 
 Group: System/Libraries
@@ -104,6 +104,9 @@ rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 %exclude %{_libdir}/perl5/TLBC
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.18-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.18-alt1_3
 - update to new release by fcimport
 
