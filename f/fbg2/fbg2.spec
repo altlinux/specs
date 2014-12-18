@@ -1,7 +1,7 @@
 %define fedora 21
 Name:		fbg2
 Version:	0.4
-Release:	alt3_11
+Release:	alt3_12
 Summary:	A falling block stacking game
 Group:		Games/Other
 # Code is GPLv2+, music and graphics are CC-BY-SA
@@ -17,6 +17,8 @@ Source0:	%{name}-%{version}-clean.tar.gz
 # http://www.jamendo.com/en/track/165311/russian
 Source1:	RudySeb_-_russian.ogg
 Source2:	README.music
+# 64 x 64 public domain image for logo
+Source3:	fbg2.png
 Patch0:		fbg2-0.4-desktop-fix.patch
 BuildRequires:	radius-engine-devel >= 0.7 desktop-file-utils zip
 # rhbz#949506, also see rhbz#949167
@@ -36,6 +38,9 @@ more rows you clear at once, the more points you score!
 %patch0 -p1 -b .fix
 cp %{SOURCE1} Data/Music/FallingBlockGameSndTrk.ogg
 cp %{SOURCE2} .
+mv fbg2.png fbg2-small.png
+cp %{SOURCE3} .
+
 chmod -x License.txt ChangeLog *.c
 
 %build
@@ -54,6 +59,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/fbg2.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_12
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_11
 - update to new release by fcimport
 
