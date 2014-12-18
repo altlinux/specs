@@ -1,17 +1,16 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Config.pm) perl(IPC/Open3.pm) perl(open.pm) perl(subs.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Config.pm) perl(IPC/Open3.pm) perl(POSIX.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(open.pm) perl(subs.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Map
 Version:        0.63
-Release:        alt1.1
+Release:        alt1.1_1
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/File-Map/
-Source:        http://www.cpan.org/authors/id/L/LE/LEONT/File-Map-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/File-Map-%{version}.tar.gz
 BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
 # Run-time
@@ -65,12 +64,16 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %files
-%doc Changes examples LICENSE README
+%doc LICENSE
+%doc Changes examples README
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/File*
 
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1.1_1
+- update to new release by fcimport
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1.1
 - rebuild with new perl 5.20.1
 
