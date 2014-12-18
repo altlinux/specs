@@ -1,61 +1,80 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DBD/DBM.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(DBD/mysql.pm) perl(Pod/Coverage/TrustPod.pm) perl(SQL/Statement.pm) perl(Test/CPAN/Meta.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Database
 Version:        1.113
-Release:        alt1
+Release:        alt1_1
 Summary:        Database handles ready for testing
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-Database/
-Source:        http://www.cpan.org/authors/id/B/BO/BOOK/Test-Database-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/B/BO/BOOK/Test-Database-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
-BuildRequires:  perl(DBD/SQLite.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Run-time:
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Cwd.pm)
+BuildRequires:  perl(DBD/DBM.pm)
 BuildRequires:  perl(DBI.pm)
-BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/HomeDir.pm)
 BuildRequires:  perl(File/Path.pm)
 BuildRequires:  perl(File/Spec.pm)
+BuildRequires:  perl(version.pm)
+BuildRequires:  perl(YAML/Tiny.pm)
+# Recommended run-time:
+# DBD::CSV 0.30 not used at tests
+BuildRequires:  perl(DBD/SQLite.pm)
+# Tests:
+BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(List/Util.pm)
-BuildRequires:  perl(Module/Build.pm)
-BuildRequires:  perl(Pod/Coverage.pm)
-BuildRequires:  perl(SQL/Statement.pm)
-BuildRequires:  perl(strict.pm)
+# Pod::Coverage::TrustPod not used
+# SQL::Statement not needed
+# Test::CPAN::Meta not used
 BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(Test/Pod.pm)
-BuildRequires:  perl(Test/Pod/Coverage.pm)
-BuildRequires:  perl(version.pm)
-BuildRequires:  perl(warnings.pm)
-BuildRequires:  perl(YAML/Tiny.pm)
+# Test::Pod 1.41 not used
+# Test::Pod::Coverage 1.08 not used
+Requires:       perl(YAML/Tiny.pm) >= 1.62
 
 
+# Remove under-specified dependencies
 
 Source44: import.info
+%filter_from_requires /^perl\\(YAML.Tiny.pm\\)$/d
 
 %description
-Test::Database provides a simple way for test authors to request a test
-database, without worrying about environment variables or the test host
+Test::Database Perl module provides a simple way for test authors to request
+a test database, without worrying about environment variables or the test host
 configuration.
 
 %prep
 %setup -q -n Test-Database-%{version}
-#rm -f t/pod.t
+rm -f t/pod.t
 
 %build
-%perl_vendor_build INSTALLMAN1DIR=%_man1dir
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+make %{?_smp_mflags}
 
 %install
-%perl_vendor_install
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+# %{_fixperms} %{buildroot}/*
+
+%check
+make test
 
 %files
-%doc Changes eg README
+%doc Changes eg LICENSE README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_1
+- update to new release by fcimport
+
 * Mon May 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1
 - automated CPAN update
 
