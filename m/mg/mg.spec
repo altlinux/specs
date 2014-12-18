@@ -1,6 +1,6 @@
 Name:		mg
-Version:	20140414
-Release:	alt1_2
+Version:	20141127
+Release:	alt1_1
 Summary:	Tiny Emacs-like editor
 
 Group:		Editors
@@ -33,6 +33,9 @@ make install DESTDIR=%{buildroot} prefix=%{_prefix} mandir=%{_mandir} \
 %{_mandir}/man1/mg.1.*
 
 %changelog
+* Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 20141127-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 20140414-alt1_2
 - update to new release by fcimport
 
