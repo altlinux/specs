@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.1.2
-Release: alt1.git20141116
+Version: 1.1.3
+Release: alt1.git20141218
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
 Group: Development/Python
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20141218
+- Version 1.1.3
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.git20141116
 - Initial build for Sisyphus
 
