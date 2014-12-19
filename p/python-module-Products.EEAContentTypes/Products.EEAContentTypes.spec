@@ -1,10 +1,8 @@
 %define oname Products.EEAContentTypes
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 9.7
-Release: alt1
+Release: alt2
 Summary: EEA logic and content types
 License: GPL
 Group: Development/Python
@@ -14,6 +12,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-uuid python-module-mock
+BuildPreReq: python-module-openid python-module-windmill
 BuildPreReq: python-module-Products.LinguaPlone python-module-rdflib
 BuildPreReq: python-module-Products.ATVocabularyManager
 BuildPreReq: python-module-Products.OrderableReferenceField
@@ -58,23 +58,23 @@ BuildPreReq: python-module-collective.deletepermission
 BuildPreReq: python-module-Products.PloneTestCase
 BuildPreReq: python-module-Products.MailHost
 BuildPreReq: python-module-surf
-#BuildPreReq: python-module-eea.forms
-#BuildPreReq: python-module-eea.mediacentre
-#BuildPreReq: python-module-eea.themecentre
-#BuildPreReq: python-module-eea.rdfmarshaller
-#BuildPreReq: python-module-eea.facetednavigation
-#BuildPreReq: python-module-eea.translations
-#BuildPreReq: python-module-eea.promotion
-#BuildPreReq: python-module-eea.vocab
-#BuildPreReq: python-module-eea.depiction
-#BuildPreReq: python-module-eea.reports
-#BuildPreReq: python-module-eea.relations
-#BuildPreReq: python-module-eea.cache
-#BuildPreReq: python-module-eea.dataservice
-#BuildPreReq: python-module-eea.design
-#BuildPreReq: python-module-eea.geotags
-#BuildPreReq: python-module-eea.indicators
-#BuildPreReq: python-module-eea.soer
+BuildPreReq: python-module-eea.forms
+BuildPreReq: python-module-eea.mediacentre
+BuildPreReq: python-module-eea.themecentre
+BuildPreReq: python-module-eea.rdfmarshaller
+BuildPreReq: python-module-eea.facetednavigation
+BuildPreReq: python-module-eea.translations
+BuildPreReq: python-module-eea.promotion
+BuildPreReq: python-module-eea.vocab
+BuildPreReq: python-module-eea.depiction
+BuildPreReq: python-module-eea.reports
+BuildPreReq: python-module-eea.relations
+BuildPreReq: python-module-eea.cache
+BuildPreReq: python-module-eea.dataservice
+BuildPreReq: python-module-eea.design
+BuildPreReq: python-module-eea.geotags
+BuildPreReq: python-module-eea.indicators
+BuildPreReq: python-module-eea.soer
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -93,9 +93,9 @@ Requires: python-module-Zope2
 %py_requires Products.OrderableReferenceField Products.RedirectionTool
 %py_requires Products.EEAPloneAdmin Products.NavigationManager
 %py_requires collective.monkeypatcher
-#py_requires eea.rdfmarshaller eea.facetednavigation eea.forms eea.vocab
-#py_requires eea.mediacentre eea.themecentre eea.translations eea.cache
-#py_requires eea.promotion eea.depiction eea.reports eea.relations
+%py_requires eea.rdfmarshaller eea.facetednavigation eea.forms eea.vocab
+%py_requires eea.mediacentre eea.themecentre eea.translations eea.cache
+%py_requires eea.promotion eea.depiction eea.reports eea.relations
 
 %description
 EEA logic and content types.
@@ -106,8 +106,8 @@ Group: Development/Python
 Requires: %name = %EVR
 %py_requires valentine.linguaflow collective.deletepermission
 %py_requires Products.PloneTestCase Products.MailHost
-#py_requires eea.dataservice eea.design eea.geotags eea.indicators
-#py_requires eea.soer
+%py_requires eea.dataservice eea.design eea.geotags eea.indicators
+%py_requires eea.soer
 
 %description tests
 EEA logic and content types.
@@ -142,6 +142,10 @@ python setup.py test
 %python_sitelibdir/Products/*/*tests*
 
 %changelog
+* Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 9.7-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 9.7-alt1
 - Initial build for Sisyphus
 
