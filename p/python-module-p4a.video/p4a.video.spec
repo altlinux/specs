@@ -2,7 +2,7 @@
 %define oname %mname.video
 Name: python-module-%oname
 Version: 1.4
-Release: alt1.dev.git20130827
+Release: alt2.dev.git20130827
 Summary: Plone4Artists video abstraction library
 License: GPLv2+
 Group: Development/Python
@@ -86,6 +86,12 @@ install -d %buildroot%python_sitelibdir/%mname
 cp -fR %mname/video %buildroot%python_sitelibdir/%mname/
 cp -fR *.egg-info %buildroot%python_sitelibdir/
 
+# It is the file in the package named Thumbs.db or Thumbs.db.gz, 
+# which is normally a Windows image thumbnail database. 
+# Such databases are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
+
 %check
 python setup.py test
 
@@ -99,6 +105,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2.dev.git20130827
+- Applied python-module-p4a.video-1.4-alt1.dev.git20130827.diff
+
 * Thu Dec 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1.dev.git20130827
 - Initial build for Sisyphus
 
