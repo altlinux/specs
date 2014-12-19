@@ -1,7 +1,7 @@
 %def_disable zeitgeist
 
 Name: qt5-phonon
-Version: 4.8.2
+Version: 4.8.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -18,8 +18,8 @@ Patch101: alt-fix-install.patch
 BuildRequires(pre): qt5-base-devel
 BuildRequires: qt5-tools-devel qt5-quick1-devel
 BuildRequires: libEGL-devel libGL-devel
-BuildRequires: ImageMagick-tools automoc cmake gcc-c++
-BuildRequires: libalsa-devel libpulseaudio-devel gst-plugins-devel
+BuildRequires: automoc cmake gcc-c++
+BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: kde-common-devel
 %if_enabled zeitgeist
 BuildRequires: libqzeitgeist-devel
@@ -91,6 +91,9 @@ mkdir -p %buildroot/%_qt5_plugindir/phonon_backend
 %_datadir/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
 
 %changelog
+* Fri Dec 19 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt1
+- new version
+
 * Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt1
 - new version
 
