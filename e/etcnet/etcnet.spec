@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.10
-Release:	alt16
+Release:	alt17
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -139,6 +139,9 @@ fi
 %files full
 
 %changelog
+* Fri Dec 19 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt17
+- Increase release number to fix update in p7 branch
+
 * Wed Dec 17 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt16
 - config-qos: use last qdisc as filter parent (closes: #30523)
 - do not turn dhcpcd's debug unconditionally (closes: #30023)
