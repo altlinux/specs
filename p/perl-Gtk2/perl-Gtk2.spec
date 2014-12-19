@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Gtk2
 Name: perl-%dist
-Version: 1.2492
-Release: alt1.1
+Version: 1.2493
+Release: alt1
 
 Summary: Perl bindings to the gtk+-2.x library
 License: LGPL
@@ -117,6 +117,9 @@ cp -av AUTHORS NEWS README gtk-demo examples %buildroot%pkgdocdir/
 %doc	%perl_vendor_archlib/Gtk2/Pango/Cairo/*.pod
 
 %changelog
+* Fri Dec 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.2493-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.2492-alt1.1
 - rebuild with new perl 5.20.1
 
