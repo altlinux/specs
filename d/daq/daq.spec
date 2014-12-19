@@ -1,5 +1,5 @@
 Name: daq
-Version: 2.0.2
+Version: 2.0.4
 Release: alt1
 Summary: Data Acquisition Library
 License: GPLv2
@@ -60,6 +60,9 @@ utilize lib%name.
 %_libdir/*.so
 
 %changelog
+* Fri Dec 19 2014 Anton Farygin <rider@altlinux.ru> 2.0.4-alt1
+- new version
+
 * Tue May 27 2014 Timur Aitov <timonbl4@altlinux.org> 2.0.2-alt1
 - new version
 
