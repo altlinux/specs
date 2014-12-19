@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Epoch: 1
-Version: 8.0.4
+Version: 8.2.1
 Release: alt1
 
 Summary: Python Distutils Enhancements
@@ -148,6 +148,9 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:8.2.1-alt1
+- Version 8.2.1
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:8.0.4-alt1
 - Version 8.0.4
 
