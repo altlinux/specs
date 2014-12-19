@@ -1,7 +1,7 @@
 %define oname node
 Name: python-module-%oname
-Version: 0.9.15
-Release: alt1.dev0.git20140821
+Version: 0.9.16
+Release: alt1.dev0.git20141217
 Summary: Building data structures as node trees
 License: BSD
 Group: Development/Python
@@ -84,6 +84,9 @@ nosetests
 %python_sitelibdir/*/test*
 
 %changelog
+* Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.16-alt1.dev0.git20141217
+- Version 0.9.16.dev0
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.15-alt1.dev0.git20140821
 - Initial build for Sisyphus
 
