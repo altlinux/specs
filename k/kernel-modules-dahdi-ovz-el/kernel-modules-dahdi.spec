@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build	1
 
 %define module_name	dahdi
-%define module_version	2.7.0.2
+%define module_version	2.10.0.1
 %define module_release alt1
 
 %define flavour	ovz-el
@@ -127,38 +127,42 @@ popd
 %files
 %defattr(644,root,root,755)
 %dir %module_dir
-%dir %module_dir/xpp
-%dir %module_dir/wcte12xp
-%dir %module_dir/wctdm24xxp
-%dir %module_dir/wctc4xxp
-%dir %module_dir/wct4xxp
-%dir %module_dir/wcb4xxp
+%dir %module_dir/oct612x
 %dir %module_dir/voicebus
+%dir %module_dir/wcb4xxp
+%dir %module_dir/wct4xxp
+%dir %module_dir/wctc4xxp
+%dir %module_dir/wctdm24xxp
+%dir %module_dir/wcte12xp
+%dir %module_dir/xpp
 
-%module_dir/xpp/xpd_echo.ko
-%module_dir/xpp/xpp_usb.ko
-%module_dir/xpp/xpp.ko
-%module_dir/xpp/xpd_pri.ko
-%module_dir/xpp/xpd_fxs.ko
-%module_dir/xpp/xpd_fxo.ko
+%module_dir/dahdi.ko
+%module_dir/dahdi_*.ko
+%module_dir/dahdi_dynamic_ethmf.ko
+%module_dir/oct612x/oct612x.ko
+%module_dir/pciradio.ko
+%module_dir/tor2.ko
+%module_dir/voicebus/dahdi_voicebus.ko
+%module_dir/wcaxx.ko
+%module_dir/wcb4xxp/wcb4xxp.ko
+%module_dir/wcfxo.ko
+%module_dir/wct1xxp.ko
+%module_dir/wct4xxp/wct4xxp.ko
+%module_dir/wctc4xxp/wctc4xxp.ko
+%module_dir/wctdm.ko
+%module_dir/wctdm24xxp/wctdm24xxp.ko
+%module_dir/wcte11xp.ko
+%module_dir/wcte12xp/wcte12xp.ko
+%module_dir/wcte13xp.ko
+%module_dir/wcte43x.ko
 %module_dir/xpp/xpd_bri.ko
 %module_dir/xpp/xpd_echo.ko
-%module_dir/wcte13xp.ko
-%module_dir/wcte12xp/wcte12xp.ko
-%module_dir/wcte11xp.ko
-%module_dir/wctdm24xxp/wctdm24xxp.ko
-%module_dir/wctdm.ko
-%module_dir/wctc4xxp/wctc4xxp.ko
-%module_dir/wct4xxp/wct4xxp.ko
-%module_dir/wct1xxp.ko
-%module_dir/wcfxo.ko
-%module_dir/wcb4xxp/wcb4xxp.ko
-%module_dir/voicebus/dahdi_voicebus.ko
-%module_dir/tor2.ko
-%module_dir/pciradio.ko
-%module_dir/dahdi_*.ko
-%module_dir/dahdi.ko
-%module_dir/dahdi_dynamic_ethmf.ko
+%module_dir/xpp/xpd_echo.ko
+%module_dir/xpp/xpd_fxo.ko
+%module_dir/xpp/xpd_fxs.ko
+%module_dir/xpp/xpd_pri.ko
+%module_dir/xpp/xpp.ko
+%module_dir/xpp/xpp_usb.ko
 
 %files -n kernel-headers-%module_name-%flavour
 %module_headers_dir
@@ -168,6 +172,9 @@ popd
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Dec 19 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.10.0.1-alt1
+- Updated template for 2.10.0.1.
 
 * Wed Jan 08 2014 Led <led@altlinux.ru> 2.7.0.2-alt1
 - 2.7.0.2
