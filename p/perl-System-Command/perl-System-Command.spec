@@ -1,5 +1,5 @@
 Name: perl-System-Command
-Version: 1.103
+Version: 1.110
 Release: alt1
 
 Summary: System::Command - Object for running system commands
@@ -8,7 +8,7 @@ Group: Development/Perl
 
 Url: %CPAN System-Command
 # Cloned from git://github.com/book/System-Command.git
-Source: %name-%version.tar
+Source: http://www.cpan.org/authors/id/B/BO/BOOK/System-Command-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-Module-Build
 BuildArch: noarch
@@ -17,7 +17,7 @@ BuildArch: noarch
 %summary
 
 %prep
-%setup -q
+%setup -q -n System-Command-%version
 
 %build
 %perl_vendor_build
@@ -30,6 +30,9 @@ BuildArch: noarch
 %doc Changes README
 
 %changelog
+* Fri Dec 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.110-alt1
+- automated CPAN update
+
 * Tue Aug 06 2013 Vladimir Lettiev <crux@altlinux.ru> 1.103-alt1
 - 1.103
 
