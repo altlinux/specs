@@ -4,8 +4,8 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	340.24
-%define module_release	alt1
+%define module_version 340.65
+%define module_release alt1
 %define flavour		ovz-el
 
 %setup_kernel_module %flavour
@@ -32,8 +32,8 @@
 %define legacy3 %nil
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
-%nvIF_ver_lt %xorg_ver 1.16
-%define legacy4 304.123
+%nvIF_ver_lt %xorg_ver 1.18
+%define legacy4 304.125
 %else
 %define legacy4 %nil
 %endif
@@ -189,6 +189,12 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Dec 19 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 340.65-alt1
+- Updated template for 340.65.
+
+* Thu Aug 21 2014 Led <led@altlinux.ru> 340.32-alt1
+- new release (340.32)
 
 * Thu Jul 24 2014 Led <led@altlinux.ru> 340.24-alt1
 - new releases (330.24, 304.123)

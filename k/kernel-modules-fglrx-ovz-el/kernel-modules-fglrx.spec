@@ -1,6 +1,6 @@
 %define module_name	fglrx
-%define module_version	14.10.1006.1001
-%define module_release alt1
+%define module_version	14.501.1003
+%define module_release alt2
 
 %define flavour ovz-el
 BuildRequires(pre): kernel-headers-modules-ovz-el
@@ -25,7 +25,7 @@ ExclusiveOS: Linux
 Url: http://ati.amd.com/support/drivers/linux/linux-radeonhdd.html
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
-BuildRequires: kernel-source-%module_name = %module_version-%module_release
+BuildRequires: kernel-source-%module_name = %module_version
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %EVR
 %{?epoch:Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release}
@@ -66,14 +66,20 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Fri Jun 06 2014 Led <led@altlinux.ru> 2:14.10.1006.1001-alt1
-- 14.10.1006.1001 (Catalyst 14.4 rev2)
+* Sat Dec  13 2014 barssc <barssc@altlinux.org> 2:14.501.1003-alt2
+- 14.501.1003
 
-* Fri May 09 2014 Led <led@altlinux.ru> 2:14.10.1006-alt2
-- fixed build module for kernel 3.14
+* Tue Nov  4 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 2:14.301.1001-alt3
+- don't build depend on source release
 
-* Mon May 05 2014 Led <led@altlinux.ru> 2:14.10.1006-alt1
-- 14.10.1006 (Catalyst 14.4)
+* Fri Oct 10 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 2:14.301.1001-alt1
+- 14.301.1001
+
+* Tue Sep  2 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 2:14.20-alt1
+- 14.20
+
+* Wed Apr 30 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 2:14.10.1006-alt1
+- 14.10.1006
 
 * Fri Apr 25 2014 Led <led@altlinux.ru> 2:14.10-alt1
 - 14.10 (Catalyst 14.4 RC)
