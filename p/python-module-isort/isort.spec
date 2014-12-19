@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.9.0
-Release: alt1.git20140804
+Version: 3.9.1
+Release: alt1.git20141218
 Summary: A Python utility / library to sort Python imports
 License: MIT
 Group: Development/Python
@@ -102,6 +102,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.9.1-alt1.git20141218
+- Version 3.9.1
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.9.0-alt1.git20140804
 - Initial build for Sisyphus
 
