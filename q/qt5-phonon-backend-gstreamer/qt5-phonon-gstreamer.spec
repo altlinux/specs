@@ -1,6 +1,6 @@
 
 Name: qt5-phonon-backend-gstreamer
-Version: 4.8.0
+Version: 4.8.1
 Release: alt1
 
 Group: System/Libraries
@@ -35,7 +35,7 @@ Gstreamer phonon backend
     -DINCLUDE_INSTALL_DIR=%_includedir/kde5 \
     -DICON_INSTALL_DIR=%_datadir/kde5/share/icons \
     -DPLUGIN_INSTALL_DIR:PATH=%_qt5_plugindir
-%K4make
+%K4make VERBOSE=1
 
 %install
 %K4install
@@ -46,6 +46,9 @@ Gstreamer phonon backend
 %_datadir/kde5/share/icons/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Fri Dec 19 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.1-alt1
+- new version
+
 * Fri Sep 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt1
 - new version
 
