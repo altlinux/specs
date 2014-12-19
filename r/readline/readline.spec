@@ -1,11 +1,11 @@
 %define sover 6
 
 Name: readline
-%define rl_version 6.2
-%define rl_patch .4
+%define rl_version 6.3
+%define rl_patch .8
 %define srcname readline-%rl_version
 Version: %rl_version%rl_patch
-Release: alt2
+Release: alt1
 
 Summary: A library for editing typed in command lines
 License: GPLv2+
@@ -137,6 +137,9 @@ popd
 %_libdir/*.a
 
 %changelog
+* Wed Dec 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.8-alt1
+- Updated to 6.3 patchlevel 8.
+
 * Tue Dec 17 2013 Dmitry V. Levin <ldv@altlinux.org> 6.2.4-alt2
 - Converted internal sh_* functions into weak aliases,
   to fix the problem described by Sergey Vlasov in
