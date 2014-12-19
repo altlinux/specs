@@ -1,7 +1,7 @@
 %define oname Products.NavigationManager
 Name: python-module-%oname
 Version: 5.2
-Release: alt1
+Release: alt2
 Summary: EEA Navigation Manager skin for EEA
 License: GPL
 Group: Development/Python
@@ -25,7 +25,7 @@ BuildPreReq: python-module-zope.annotation
 BuildPreReq: python-module-zope.event
 BuildPreReq: python-module-zope.browsermenu
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-Products.EEAPloneAdmin
+BuildPreReq: python-module-Products.EEAPloneAdmin
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -34,7 +34,7 @@ Requires: python-module-Zope2
 %py_requires plone.app.portlets plone.indexer zope.interface zope.schema
 %py_requires zope.lifecycleevent zope.annotation zope.event
 %py_requires zope.browsermenu zope.component
-#py_requires Products.EEAPloneAdmin
+%py_requires Products.EEAPloneAdmin
 
 %description
 This is a package that generates the portlet navigation for EEA Site.
@@ -76,6 +76,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2-alt2
+- Added necessary requirements
+
 * Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2-alt1
 - Initial build for Sisyphus
 
