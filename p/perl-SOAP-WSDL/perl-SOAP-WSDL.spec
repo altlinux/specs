@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module SOAP-WSDL
 
 Name: perl-%module
-Version: 2.00.10
-Release: alt3
+Version: 3.002
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,21 +12,17 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/SOAP/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SW/SWALTERS/SOAP-WSDL-v%{version}.tar.gz
 Patch1: SOAP-WSDL-2.00.05-fixmodulepath.patch
 
 # Patches from debian
-# https://rt.cpan.org/Public/Bug/Display.html?id=74257
-Patch2: SOAP-WSDL-2.00.10-debian-load_with_class_load.patch
-Patch3: SOAP-WSDL-2.00.10-debian-lvalue_modification_5.18.patch
-Patch4: SOAP-WSDL-2.00.10-debian-prefix_from_namespace.patch
 Patch5: SOAP-WSDL-2.00.10-debian-use_test_xml.patch
 
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Fri Aug 01 2008 (-bi)
-BuildRequires: apache2-mod_perl libnss-mdns perl-Class-Std-Fast perl-IO-stringy perl-Log-Agent perl-Module-Build perl-SOAP-Lite perl-Template perl-Term-ReadKey perl-Test-Pod perl-TimeDate perl-Class-Load
+BuildRequires: apache2-mod_perl libnss-mdns perl-Class-Std-Fast perl-IO-stringy perl-Log-Agent perl-Module-Build perl-SOAP-Lite perl-Template perl-Term-ReadKey perl-Test-Pod perl-TimeDate perl-Class-Load perl(TAP/Formatter/HTML.pm) perl(File/Find/Rule.pm)
 
 # automatically added during perl 5.8 -> 5.12 upgrade.
 # perl-podlators is required for pod2man conversion.
@@ -35,11 +32,8 @@ BuildRequires: perl-podlators
 SOAP-WSDL provides a SOAP client with WSDL support.
 
 %prep
-%setup -n %module-%version
+%setup -n %module-v%version
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 %patch5 -p1
 
 %build
@@ -49,11 +43,14 @@ SOAP-WSDL provides a SOAP client with WSDL support.
 %perl_vendor_install
 
 %files
-%_bindir/*
-%_man1dir/*
+#%_bindir/*
+#%_man1dir/*
 %perl_vendor_privlib/SOAP/*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 3.002-alt1
+- automated CPAN update
+
 * Tue Feb 11 2014 Vladimir Lettiev <crux@altlinux.ru> 2.00.10-alt3
 - fixed build with perl-5.18 (patches from Debian)
 
