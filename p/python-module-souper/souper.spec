@@ -1,7 +1,7 @@
 %define oname souper
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.git20140306
+Release: alt2.git20140306
 Summary: Souper - Generic Indexed Storage based on ZODB
 License: BSD
 Group: Development/Python
@@ -53,6 +53,9 @@ This package contains tests for %oname.
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+install -p -m644 src/%oname/__init__.py \
+	%buildroot%python_sitelibdir/%oname/
+
 %check
 python setup.py test
 
@@ -66,6 +69,9 @@ python setup.py test
 %python_sitelibdir/%oname/tests.*
 
 %changelog
+* Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2.git20140306
+- Added __init__.py
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.git20140306
 - Initial build for Sisyphus
 
