@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -53,6 +53,11 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Thu Dec 18 2014 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
+- Drop "Reset" button.
+- reset-snort-db.sh: Use sysplog_alert barnyard2 plugin.
+- base_conf.php: Fix font path.
+
 * Wed Dec 17 2014 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
 - Move /snort module to /snort/statistics.
 - snort-email-notification.sh: Dont't try to ctreate table.
