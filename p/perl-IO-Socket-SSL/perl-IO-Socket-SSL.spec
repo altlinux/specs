@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Socket-SSL
 Name: perl-%dist
-Version: 1.998
+Version: 2.007
 Release: alt1
 
 Summary: SSL socket interface class
@@ -10,7 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/S/SU/SULLR/IO-Socket-SSL-%{version}.tar.gz
-Patch: IO-Socket-SSL-1.954-alt-deps.patch
+Patch: IO-Socket-SSL-2.007-alt-deps.patch
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ rm t/external/*.t
 %perl_vendor_privlib/IO
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.007-alt1
+- automated CPAN update
+
 * Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.998-alt1
 - automated CPAN update
 
