@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.5.2
+Version: 2.5.4
 Release: alt1
 Summary: A simple and efficient access to R from Python, version 2
 License: MPL/GPL/LGPL
@@ -20,16 +20,20 @@ BuildPreReq: libpcre-devel liblzma-devel bzlib-devel zlib-devel
 BuildPreReq: libicu-devel
 BuildPreReq: python-devel R-devel liblapack-devel libreadline-devel
 BuildPreReq: python-module-setuptools-tests python-module-singledispatch
+BuildPreReq: python-module-six
 #BuildPreReq: python-module-sphinx-devel python-module-Pygments
 #BuildPreReq: graphviz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-singledispatch
+BuildPreReq: python3-module-six
 %endif
 %setup_python_module %oname
 
 #add_python_req_skip pandas
 Requires: %oname-common = %EVR
+%py_requires singledispatch
 
 %description
 RPy is a very simple, yet robust, Python interface to the R Programming
@@ -46,6 +50,7 @@ graphical libraries, as well as R-like structures and functions.
 Summary: A simple and efficient access to R from Python, version 2
 Group: Development/Python3
 Requires: %oname-common = %EVR
+%py3_requires singledispatch
 
 %description -n python3-module-%oname
 RPy is a very simple, yet robust, Python interface to the R Programming
@@ -234,16 +239,19 @@ popd
 %doc AUTHORS NEWS *.md
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests*
-%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/*/tests*
 %exclude %python3_sitelibdir/*/*/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests*
-%python3_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/tests*
 %python3_sitelibdir/*/*/*/tests
 %endif
 
 %changelog
+* Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.4-alt1
+- Version 2.5.4
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.2-alt1
 - Version 2.5.2
 
