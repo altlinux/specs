@@ -1,10 +1,8 @@
 %define oname Products.EEAPloneAdmin
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 10.0
-Release: alt1
+Release: alt2
 Summary: EEA Plone Admin
 License: GPL
 Group: Development/Python
@@ -14,6 +12,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-uuid python-module-mock
+BuildPreReq: python-module-openid
 BuildPreReq: python-module-Products.LinguaPlone
 BuildPreReq: python-module-Products.PloneHelpCenter
 BuildPreReq: python-module-eea.translations
@@ -60,10 +60,10 @@ BuildPreReq: python-module-zope.annotation
 BuildPreReq: python-module-z3c.form
 BuildPreReq: python-module-z3c.caching
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-eea.themecentre
-#BuildPreReq: python-module-eea.mediacentre
-#BuildPreReq: python-module-eea.reports
-#BuildPreReq: python-module-Products.EEAContentTypes
+BuildPreReq: python-module-eea.themecentre
+BuildPreReq: python-module-eea.mediacentre
+BuildPreReq: python-module-eea.reports
+BuildPreReq: python-module-Products.EEAContentTypes
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -83,7 +83,7 @@ Requires: python-module-Zope2
 %py_requires plone.cachepurging zope.i18nmessageid zope.publisher
 %py_requires zope.interface zope.lifecycleevent zope.event z3c.caching
 %py_requires zope.annotation
-#py_requires Products.EEAContentTypes
+%py_requires Products.EEAContentTypes
 
 %description
 EEAPloneAdmin is a product that adds a customization policy to a Plone
@@ -97,7 +97,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires Products.PloneTestCase
-#py_requires eea.themecentre eea.mediacentre eea.reports
+%py_requires eea.themecentre eea.mediacentre eea.reports
 
 %description tests
 EEAPloneAdmin is a product that adds a customization policy to a Plone
@@ -134,6 +134,10 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.0-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.0-alt1
 - Initial build for Sisyphus
 
