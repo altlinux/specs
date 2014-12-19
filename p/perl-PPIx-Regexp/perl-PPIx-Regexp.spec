@@ -1,6 +1,6 @@
 %define dist PPIx-Regexp
 Name: perl-PPIx-Regexp
-Version: 0.036
+Version: 0.037
 Release: alt1
 
 Summary: Represent a regular expression of some sort
@@ -32,6 +32,9 @@ parses a Perl script, and navigable in much the same way.
 %doc Changes README 
 
 %changelog
+* Fri Dec 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.037-alt1
+- automated CPAN update
+
 * Sat Mar 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.036-alt1
 - automated CPAN update
 
