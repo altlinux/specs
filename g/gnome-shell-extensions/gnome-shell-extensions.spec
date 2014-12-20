@@ -3,8 +3,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -15,7 +15,7 @@ BuildArch: noarch
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gnome-shell >= 3.14.0
+Requires: gnome-shell >= 3.14.3
 
 BuildRequires: gnome-common intltool libgnome-desktop3-devel libgtop-devel
 
@@ -201,6 +201,9 @@ __EOF__
 %endif
 
 %changelog
+* Sat Dec 20 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt1
+- 3.14.3
+
 * Wed Dec 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt2
 - disabled alt-specific mechanism for run gnome-classic session,
   packaged standard xsessions/gnome-classic.desktop instead
