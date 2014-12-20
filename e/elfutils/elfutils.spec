@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.158
+Version: 0.161
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle compiled objects
@@ -161,6 +161,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Dec 20 2014 Dmitry V. Levin <ldv@altlinux.org> 0.161-alt1
+- Updated to 0.161.
+
 * Sun Jan 12 2014 Dmitry V. Levin <ldv@altlinux.org> 0.158-alt1
 - Updated to 0.158.
 
