@@ -2,7 +2,7 @@
 %def_disable contractor
 
 Name: geary
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Email client
@@ -53,10 +53,13 @@ Geary's development.
 %setup
 
 %build
+#%%configure --disable-schemas-compile \
+#	--disable-desktop-update \
+#	--disable-icon-update \
+#	%{subst_enable contractor}
 %cmake -DGSETTINGS_COMPILE:BOOL=OFF \
 	-DICON_UPDATE:BOOL=OFF \
 	-DDESKTOP_UPDATE:BOOL=OFF \
-	
 %cmake_build VERBOSE=1
 
 %install
@@ -78,6 +81,9 @@ Geary's development.
 %{?_enable_contractor:%_datadir/contractor/geary-attach.contract}
 
 %changelog
+* Sat Dec 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Wed Nov 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
