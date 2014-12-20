@@ -1,14 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(CPAN/Common/Index/MetaDB.pm) perl(ExtUtils/MakeMaker.pm) perl(HTTP/Tiny.pm) perl(LWP/UserAgent.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
-# Remove once Test::Apocalypse gets into buildroot.
-# Keep conditional dependencies to allow perl bootstrap.
-%define perl_bootstrap 1
-
 Name:           perl-Test-Pod-LinkCheck
-Version:        0.007
-Release:        alt2_8
+Version:        0.008
+Release:        alt1_1
 Summary:        Tests POD for invalid links
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -16,7 +12,8 @@ URL:            http://search.cpan.org/dist/Test-Pod-LinkCheck/
 Source0:        http://www.cpan.org/authors/id/A/AP/APOCAL/Test-Pod-LinkCheck-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
-BuildRequires:  perl(Module/Build.pm)
+# ExtUtils::MakeMaker not used
+BuildRequires:  perl(Module/Build/Tiny.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 # Run-time:
@@ -33,18 +30,16 @@ BuildRequires:  perl(Pod/Find.pm)
 BuildRequires:  perl(Test/Builder.pm)
 BuildRequires:  perl(Test/Pod.pm)
 # Tests:
-BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/Temp.pm)
+BuildRequires:  perl(IO/Handle.pm)
+BuildRequires:  perl(IPC/Open3.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Tester.pm)
 # Optional tests:
 %if %{undefined perl_bootstrap}
 # Break build-time cycle with perl-Test-Apocalypse
-BuildRequires:  perl(Test/Apocalypse.pm)
-BuildRequires:  perl(Test/NoWarnings.pm)
-BuildRequires:  perl(Test/Pod/Coverage.pm)
+#BuildRequires:  perl(Test/Apocalypse.pm)
 %endif
-BuildRequires:  perl(Test/Script.pm)
 Requires:       perl(App/PodLinkCheck/ParseSections.pm)
 Requires:       perl(Capture/Tiny.pm)
 Requires:       perl(Config.pm)
@@ -63,22 +58,24 @@ example. Also, manual pages are resolved and checked.
 %setup -q -n Test-Pod-LinkCheck-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build
 
 %install
-./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
+./Build install "--destdir=$RPM_BUILD_ROOT" --create_packlist=0
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 ./Build test
 
 %files
-%doc Changes CommitLog examples LICENSE README
+%doc AUTHOR_PLEDGE Changes CommitLog examples LICENSE README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Dec 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_1
+- new release
+
 * Sat Jun 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.007-alt2_8
 - converted for ALT Linux by srpmconvert tools
 
