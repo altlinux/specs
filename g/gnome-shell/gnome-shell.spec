@@ -4,16 +4,16 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: https://live.gnome.org/GnomeShell
 
-Source: %name-%version.tar
-#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: gnome-shell-3.11.90-alt-gir.patch
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 Patch4: gnome-shell-3.9.92-alt-makefile.patch
@@ -21,7 +21,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define clutter_ver 1.15.90
 %define gjs_ver 1.39.0
-%define mutter_ver 3.14.2
+%define mutter_ver 3.14.3
 %define gtk_ver 3.7.9
 %define gio_ver 2.37.0
 %define gstreamer_ver 0.11.92
@@ -228,6 +228,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Sat Dec 20 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt1
+- 3.14.3
+
 * Fri Nov 28 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt2
 - updated to 3.14.2_2ceaa05a (fixed BGO #740141, 740227)
 - requires: added libgnomekbd (gkbd-keyboard-display) to show keyboard layouts
