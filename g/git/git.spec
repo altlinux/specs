@@ -1,5 +1,5 @@
 Name: git
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: Git core and tools
@@ -272,7 +272,7 @@ rm Makefile
 ln -s perl.mak Makefile
 %perl_vendor_build
 popd
-%{!?_without_emacs:%make_build -C contrib/emacs EMACS=%__emacs}
+%{!?_without_emacs:%make_build -C contrib/emacs EMACS="%__emacs --eval \"(provide 'message)\""}
 
 %check
 %make_build -k test
@@ -487,6 +487,9 @@ popd
 %endif #emacs
 
 %changelog
+* Wed Dec 17 2014 Dmitry V. Levin <ldv@altlinux.org> 2.1.4-alt1
+- Updated to maint 2.1.4.
+
 * Wed Nov 05 2014 Dmitry V. Levin <ldv@altlinux.org> 2.1.3-alt1
 - Updated to maint 2.1.3.
 
