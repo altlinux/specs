@@ -1,11 +1,14 @@
 Name:    fldigi
-Version: 3.22.01
+Version: 3.22.02
 Release: alt1
 Summary: Fldigi is a software modem for Amateur Radio use
 
 License: GPLv3+
 Group:   Communications
+URL:	 http://www.w1hkj.com/Fldigi.html
+
 Source0: %name-%version.tar
+Source1: %name.watch
 
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
 BuildPreReq: libXfixes-devel
@@ -66,6 +69,11 @@ Reporter.
 %doc %_man1dir/*
 
 %changelog
+* Sun Dec 21 2014 Andrey Cherepanov <cas@altlinux.org> 3.22.02-alt1
+- New version
+- Fix project URL
+- Add watch file
+
 * Thu Nov 06 2014 Andrey Cherepanov <cas@altlinux.org> 3.22.01-alt1
 - New version
 - Add support additional libraries
