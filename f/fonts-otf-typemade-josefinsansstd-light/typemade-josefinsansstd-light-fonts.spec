@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -7,15 +8,15 @@ BuildRequires: unzip
 
 Name:           fonts-otf-typemade-josefinsansstd-light
 Version:        1.000 
-Release:        alt3_9
+Release:        alt3_11
 Summary:        A latin font that is geometric, elegant, and kind of vintage
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://typemade.mx/
 Source0:        http://typemade.mx/fonts/free/typemade-JosefinSansStdLight.zip
 Source1:        %{oldname}-fontconfig.conf
 Source2:        josefinsansstd-light-license-confirmation-email.txt
+Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -28,18 +29,13 @@ The idea for creating this typeface was to make it geometric, elegant and
 kind of vintage, especially for titling. It is based on Rudolf Koch's 
 Kabel (1927), Rudolf Wolf's Memphis (1930),Paul Renner's Futura (1927?).
 
-
-
 %prep
 %setup -n %{oldname}-%{version} -q -c 
-
 
 %build
 cp -p %{SOURCE2} .
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p typemade-JosefinSansStdLight/*.otf %{buildroot}%{_fontdir}
 
@@ -50,6 +46,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -85,16 +85,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
-
 %doc typemade-JosefinSansStdLight/Typemade-EULA.pdf josefinsansstd-light-license-confirmation-email.txt
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_11
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_9
 - update to new release by fcimport
 
