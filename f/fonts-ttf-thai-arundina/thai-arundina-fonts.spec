@@ -17,7 +17,7 @@ compatibility and OpenType conformance.
 
 Name:		fonts-ttf-thai-arundina
 Version:	0.2.0
-Release:	alt2_5
+Release:	alt2_6
 Summary:	Thai Arundina fonts
 
 Group:		System/Fonts/True type
@@ -27,6 +27,10 @@ Source0:	http://linux.thai.net/pub/thailinux/software/fonts-sipa-arundina/%{arch
 Source1:	%{oldname}-sans-fontconfig.conf
 Source2:	%{oldname}-serif-fontconfig.conf
 Source3:	%{oldname}-sans-mono-fontconfig.conf
+Source4:	%{fontname}.metainfo.xml
+Source5:	%{fontname}-sans.metainfo.xml
+Source6:	%{fontname}-sans-mono.metainfo.xml
+Source7:	%{fontname}-serif.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontforge
@@ -37,11 +41,11 @@ Source44: import.info
 %common_desc
 
 
-%package common
+%package -n fonts-ttf-thai-arundina-common
 Group: System/Fonts/True type
 Summary:	Common files of the Thai Arundina font set
 
-%description common
+%description -n fonts-ttf-thai-arundina-common
 %common_desc
 
 
@@ -63,6 +67,7 @@ font faces.
 %{_fontbasedir}/*/%{_fontstem}/ArundinaSans-Bold.ttf
 %{_fontbasedir}/*/%{_fontstem}/ArundinaSans-Oblique.ttf
 %{_fontbasedir}/*/%{_fontstem}/ArundinaSans-BoldOblique.ttf
+%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
 
 
 %package -n fonts-ttf-thai-arundina-serif
@@ -81,6 +86,7 @@ font faces.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-serif.conf
 %{_fontbasedir}/*/%{_fontstem}/ArundinaSerif.ttf
 %{_fontbasedir}/*/%{_fontstem}/ArundinaSerif-Bold.ttf
+%{_datadir}/appdata/%{fontname}-serif.metainfo.xml
 
 
 %package -n fonts-ttf-thai-arundina-sans-mono
@@ -101,6 +107,7 @@ faces.
 %{_fontbasedir}/*/%{_fontstem}/ArundinaSansMono-Bold.ttf
 %{_fontbasedir}/*/%{_fontstem}/ArundinaSansMono-Oblique.ttf
 %{_fontbasedir}/*/%{_fontstem}/ArundinaSansMono-BoldOblique.ttf
+%{_datadir}/appdata/%{fontname}-sans-mono.metainfo.xml
 
 
 %prep
@@ -132,6 +139,16 @@ for fconf in %{fontconf}-sans.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
      %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE5} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
+install -Dm 0644 -p %{SOURCE6} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-sans-mono.metainfo.xml
+install -Dm 0644 -p %{SOURCE7} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-serif.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -167,12 +184,15 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
-%files common
+%files -n fonts-ttf-thai-arundina-common
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 %doc README AUTHORS COPYING NEWS
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_6
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_5
 - update to new release by fcimport
 
