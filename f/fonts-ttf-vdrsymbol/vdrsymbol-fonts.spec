@@ -1,13 +1,13 @@
+Group: System/Fonts/True type
 %define oldname vdrsymbol-fonts
 %global fontname vdrsymbol
 %global fontconf 69-%{fontname}.conf
 
 Name:           fonts-ttf-vdrsymbol
 Version:        20100612
-Release:        alt3_6
+Release:        alt3_8
 Summary:        VDR symbol fonts
 
-Group:          System/Fonts/True type
 License:        Bitstream Vera and Public Domain
 URL:            http://andreas.vdr-developer.org/fonts/
 Source0:        http://andreas.vdr-developer.org/fonts/download/vdrsymbols-ttf-%{version}.tgz
@@ -30,8 +30,6 @@ chmod -x insert_vdr_symbols.pe
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -77,16 +75,16 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc COPYRIGHT.txt HISTORY README insert_vdr_symbols.pe
 
-
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20100612-alt3_8
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20100612-alt3_6
 - update to new release by fcimport
 
