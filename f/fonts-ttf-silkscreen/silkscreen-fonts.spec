@@ -13,7 +13,7 @@ multiples (8pt., 16pt., 24pt., etc.) with anti-aliasing turned off. \
 Name:		fonts-ttf-silkscreen
 Summary: 	Silkscreen four member type family
 Version:	1.0
-Release:	alt3_10
+Release:	alt3_11
 # License attribution confirmed by author and Open Font Library
 # http://openfontlibrary.org/media/files/jkottke/218
 License:	OFL
@@ -21,6 +21,8 @@ Group:		System/Fonts/True type
 Source0:	http://www.kottke.org/plus/type/silkscreen/download/silkscreen.tar.gz
 Source1:	%{oldname}-fontconfig.conf
 Source2:	%{oldname}-expanded-fontconfig.conf
+Source3:	%{fontname}.metainfo.xml
+Source4:	%{fontname}-expanded.metainfo.xml
 URL:		http://www.kottke.org/plus/type/silkscreen/
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -30,11 +32,11 @@ Source44: import.info
 %description
 %common_desc
 
-%package common
+%package -n fonts-ttf-silkscreen-common
 Summary:	Common files for Silkscreen fonts (documentation...)
 Group:		System/Fonts/True type
 
-%description common
+%description -n fonts-ttf-silkscreen-common
 %common_desc
 
 This package consists of files used by other Silkscreen packages.
@@ -54,6 +56,7 @@ comparison to the normal Silkscreen font family.
 %{_fontconfig_templatedir}/%{fontconf}-expanded.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-expanded.conf
 %{_fontbasedir}/*/%{_fontstem}/slkscre*.ttf
+%{_datadir}/appdata/%{fontname}-expanded.metainfo.xml
 
 %prep
 %setup -q -c -n %{oldname}
@@ -70,6 +73,12 @@ install -m 0644 -p %{SOURCE2} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 for fontconf in %{fontconf}.conf %{fontconf}-expanded.conf ; do
 	ln -s %{_fontconfig_templatedir}/$fontconf %{buildroot}%{_fontconfig_confdir}/$fontconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-expanded.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -110,12 +119,16 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/slkscr.ttf
 %{_fontbasedir}/*/%{_fontstem}/slkscrb.ttf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
-%files common
+%files -n fonts-ttf-silkscreen-common
 %doc readme.txt
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_11
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_10
 - update to new release by fcimport
 
