@@ -10,7 +10,7 @@ from the King Abdulaziz City for Science & Technology(kacst).
 
 Name: fonts-ttf-kacst
 Version: 2.0
-Release: alt3_13
+Release: alt3_14
 License: GPLv2
 Source: http://downloads.sourceforge.net/sourceforge/arabeyes/%{fontname}_fonts_%{version}.tar.bz2
 Source1: %{fontconf}-art.conf
@@ -28,6 +28,21 @@ Source12: %{fontconf}-qurn.conf
 Source13: %{fontconf}-screen.conf
 Source14: %{fontconf}-title.conf
 Source15: %{fontconf}-titlel.conf
+Source16: %{fontname}-art.metainfo.xml
+Source17: %{fontname}-book.metainfo.xml
+Source18: %{fontname}-decorative.metainfo.xml
+Source19: %{fontname}-digital.metainfo.xml
+Source20: %{fontname}-farsi.metainfo.xml
+Source21: %{fontname}-letter.metainfo.xml
+Source22: %{fontname}-naskh.metainfo.xml
+Source23: %{fontname}-office.metainfo.xml
+Source24: %{fontname}-one.metainfo.xml
+Source25: %{fontname}-pen.metainfo.xml
+Source26: %{fontname}-poster.metainfo.xml
+Source27: %{fontname}-qurn.metainfo.xml
+Source28: %{fontname}-screen.metainfo.xml
+Source29: %{fontname}-title.metainfo.xml
+Source30: %{fontname}-titlel.metainfo.xml
 
 BuildArch: noarch
 BuildRequires:	dos2unix
@@ -41,11 +56,11 @@ Source44: import.info
 %description
 %common_desc
 
-%package common
+%package -n fonts-ttf-kacst-common
 Summary:  Common files for kacst-fonts
 Group:	System/Fonts/True type
 
-%description common
+%description -n fonts-ttf-kacst-common
 %common_desc
 
 %package -n fonts-ttf-kacst-book
@@ -62,6 +77,8 @@ This package contains book type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-book*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-book*
 %{_fontbasedir}/*/%{_fontstem}/KacstBook.ttf
+%{_datadir}/appdata/%{fontname}-book.metainfo.xml
+
 
 %package -n fonts-ttf-kacst-digital
 Summary: Fonts for arabic from arabeyes project 
@@ -77,6 +94,8 @@ This package contains digital type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-digital*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-digital*
 %{_fontbasedir}/*/%{_fontstem}/KacstDigital.ttf
+%{_datadir}/appdata/%{fontname}-digital.metainfo.xml
+
 
 %package -n fonts-ttf-kacst-letter
 Summary: Fonts for arabic from arabeyes project 
@@ -92,6 +111,7 @@ This package contains book kacst fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-letter*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-letter*
 %{_fontbasedir}/*/%{_fontstem}/KacstLetter.ttf
+%{_datadir}/appdata/%{fontname}-letter.metainfo.xml
 
 %package -n fonts-ttf-kacst-office
 Summary: Fonts for arabic from arabeyes project 
@@ -107,6 +127,8 @@ This package contains office type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-office*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-office*
 %{_fontbasedir}/*/%{_fontstem}/KacstOffice.ttf
+%{_datadir}/appdata/%{fontname}-office.metainfo.xml
+
 
 %package -n fonts-ttf-kacst-pen
 Summary: Fonts for arabic from arabeyes project 
@@ -122,6 +144,8 @@ This package contains pen type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-pen*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-pen*
 %{_fontbasedir}/*/%{_fontstem}/kacstPen.ttf
+%{_datadir}/appdata/%{fontname}-pen.metainfo.xml
+
 
 %package -n fonts-ttf-kacst-qurn
 Summary: Fonts for arabic from arabeyes project 
@@ -137,6 +161,7 @@ This package contains qurn type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-qurn*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-qurn*
 %{_fontbasedir}/*/%{_fontstem}/KacstQurn.ttf
+%{_datadir}/appdata/%{fontname}-qurn.metainfo.xml
 
 %package -n fonts-ttf-kacst-titlel
 Summary: Fonts for arabic from arabeyes project 
@@ -152,6 +177,7 @@ This package contains title large type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-titlel.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-titlel.conf
 %{_fontbasedir}/*/%{_fontstem}/KacstTitleL.ttf
+%{_datadir}/appdata/%{fontname}-titlel.metainfo.xml
 
 %package -n fonts-ttf-kacst-art
 Summary: Fonts for arabic from arabeyes project 
@@ -167,6 +193,7 @@ This package contains art type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-art*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-art*
 %{_fontbasedir}/*/%{_fontstem}/KacstArt.ttf
+%{_datadir}/appdata/%{fontname}-art.metainfo.xml
 
 %package -n fonts-ttf-kacst-decorative
 Summary: Fonts for arabic from arabeyes project 
@@ -182,6 +209,7 @@ This package contains decorative type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-decorative*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-decorative*
 %{_fontbasedir}/*/%{_fontstem}/KacstDecorative.ttf
+%{_datadir}/appdata/%{fontname}-decorative.metainfo.xml
 
 %package -n fonts-ttf-kacst-farsi
 Summary: Fonts for arabic from arabeyes project 
@@ -197,6 +225,7 @@ This package contains farsi type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-farsi*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-farsi*
 %{_fontbasedir}/*/%{_fontstem}/KacstFarsi.ttf
+%{_datadir}/appdata/%{fontname}-farsi.metainfo.xml
 
 %package -n fonts-ttf-kacst-naskh
 Summary: Fonts for arabic from arabeyes project 
@@ -212,6 +241,7 @@ This package contains naskh type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-naskh*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-naskh*
 %{_fontbasedir}/*/%{_fontstem}/KacstNaskh.ttf
+%{_datadir}/appdata/%{fontname}-naskh.metainfo.xml
 
 %package -n fonts-ttf-kacst-one
 Summary: Fonts for arabic from arabeyes project 
@@ -227,6 +257,7 @@ This package contains one type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-one*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-one*
 %{_fontbasedir}/*/%{_fontstem}/KacstOne.ttf
+%{_datadir}/appdata/%{fontname}-one.metainfo.xml
 
 %package -n fonts-ttf-kacst-poster
 Summary: Fonts for arabic from arabeyes project 
@@ -242,6 +273,7 @@ This package contains poster type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-poster*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-poster*
 %{_fontbasedir}/*/%{_fontstem}/KacstPoster.ttf
+%{_datadir}/appdata/%{fontname}-poster.metainfo.xml
 
 %package -n fonts-ttf-kacst-screen
 Summary: Fonts for arabic from arabeyes project 
@@ -257,6 +289,7 @@ This package contains screen type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-screen*
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-screen*
 %{_fontbasedir}/*/%{_fontstem}/KacstScreen.ttf
+%{_datadir}/appdata/%{fontname}-screen.metainfo.xml
 
 %package -n fonts-ttf-kacst-title
 Summary: Fonts for arabic from arabeyes project 
@@ -272,6 +305,7 @@ This package contains title type fonts for the display of Arabic
 %{_fontconfig_templatedir}/%{fontconf}-title.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-title.conf
 %{_fontbasedir}/*/%{_fontstem}/KacstTitle.ttf
+%{_datadir}/appdata/%{fontname}-title.metainfo.xml
 
 
 %prep
@@ -338,6 +372,38 @@ for fconf in %{fontconf}-art.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
 	%{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE16} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-art.metainfo.xml
+install -Dm 0644 -p %{SOURCE17} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-book.metainfo.xml
+install -Dm 0644 -p %{SOURCE18} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-decorative.metainfo.xml
+install -Dm 0644 -p %{SOURCE19} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-digital.metainfo.xml
+install -Dm 0644 -p %{SOURCE20} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-farsi.metainfo.xml
+install -Dm 0644 -p %{SOURCE21} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-letter.metainfo.xml
+install -Dm 0644 -p %{SOURCE22} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-naskh.metainfo.xml
+install -Dm 0644 -p %{SOURCE23} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-office.metainfo.xml
+install -Dm 0644 -p %{SOURCE24} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-one.metainfo.xml
+install -Dm 0644 -p %{SOURCE25} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-pen.metainfo.xml
+install -Dm 0644 -p %{SOURCE26} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-poster.metainfo.xml
+install -Dm 0644 -p %{SOURCE27} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-qurn.metainfo.xml
+install -Dm 0644 -p %{SOURCE28} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-screen.metainfo.xml
+install -Dm 0644 -p %{SOURCE29} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-title.metainfo.xml
+install -Dm 0644 -p %{SOURCE30} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-titlel.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -374,10 +440,13 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
-%files common
+%files -n fonts-ttf-kacst-common
 %doc Copyright LICENSE README
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_14
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_13
 - update to new release by fcimport
 
