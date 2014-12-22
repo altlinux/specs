@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 3.7.1
+Version: 4.0.1
 Release: alt1
 Summary: Zope Dublin Core implementation
 License: ZPLv2.1
@@ -45,6 +45,7 @@ Summary: Tests for zope.dublincore
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
 %py3_requires zope.testing zope.annotation zope.configuration
+%py3_requires zope.testrunner
 
 %description -n python3-module-%oname-tests
 zope.dublincore provides a Dublin Core support for Zope-based web
@@ -57,6 +58,7 @@ Summary: Tests for zope.dublincore
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires zope.testing zope.annotation zope.configuration
+%py_requires zope.testrunner
 
 %description tests
 zope.dublincore provides a Dublin Core support for Zope-based web
@@ -101,7 +103,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/test*
@@ -111,7 +113,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/test*
@@ -123,6 +125,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Dec 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.0.1-alt1
+- Version 4.0.1
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.7.1-alt1
 - Version 3.7.1
 - Added module for Python 3
