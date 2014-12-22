@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.4.1
+Version: 0.5.0
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -53,6 +53,11 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Mon Dec 22 2014 Andriy Stepanov <stanv@altlinux.ru> 0.5.0-alt1
+- Fix actions on rules lists.
+- Add status for snort & barnyard2 on each page
+- Do correct start/reload and notify
+
 * Thu Dec 18 2014 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
 - Drop "Reset" button.
 - reset-snort-db.sh: Use sysplog_alert barnyard2 plugin.
