@@ -7,7 +7,7 @@ Group: System/Fonts/True type
 
 Name:		fonts-otf-opendyslexic
 Version:	0.600
-Release:	alt1_4
+Release:	alt1_5
 Summary:	Font designed for dyslexics and high readability
 License:	Bitstream Vera and CC-BY
 URL:		http://dyslexicfonts.com/
@@ -17,6 +17,7 @@ URL:		http://dyslexicfonts.com/
 # tar cfj opendyslexic-20121008git0c6748ab6b.tar.bz2 opendyslexic
 Source0:	%{fontname}-%{gitdate}git%{gitrev}.tar.bz2
 Source1:	%{oldname}-fontconfig.conf
+Source2:	%{fontname}.metainfo.xml
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 Source44: import.info
@@ -42,6 +43,10 @@ install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 
 install -m 0644 -p %{SOURCE1} \
 		%{buildroot}%{_fontconfig_templatedir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
 		%{buildroot}%{_fontconfig_confdir}/%{fontconf}
@@ -84,9 +89,13 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 %doc README.md
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.600-alt1_5
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.600-alt1_4
 - update to new release by fcimport
 
