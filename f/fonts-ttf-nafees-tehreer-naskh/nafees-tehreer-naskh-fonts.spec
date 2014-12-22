@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-nafees-tehreer-naskh
 Version:        1.0
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Nafees tehreer naskh font for writing Urdu in the Naskh script
 
 Group:          System/Fonts/True type
@@ -19,6 +19,7 @@ Source0:        http://www.crulp.org/Downloads/localization/fonts/NafeesTahreerN
 
 Source1:        %{fontname}-update-preferred-family.pe
 Source2:        %{fontconf}
+Source3:       %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -54,6 +55,10 @@ install -m 0644 -p %{SOURCE2} \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
         %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -96,9 +101,13 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc  Nafees_Tahree_Naskh_v1.0.pdf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_8
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_7
 - update to new release by fcimport
 
