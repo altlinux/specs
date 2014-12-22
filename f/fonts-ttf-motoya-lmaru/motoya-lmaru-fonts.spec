@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname motoya-lmaru-fonts
 %global	priority	65-4
 %global	fontname	motoya-lmaru
@@ -7,16 +8,16 @@
 
 Name:		fonts-ttf-motoya-lmaru
 Version:	1.00
-Release:	alt3_0.9.%{archivedate}git
+Release:	alt3_0.10.%{archivedate}git
 Summary:	Japanese Round Gothic-typeface TrueType fonts by MOTOYA Co,LTD
 
 License:	ASL 2.0
-Group:		System/Fonts/True type
 URL:		http://android.git.kernel.org/?p=platform/frameworks/base.git;a=tree;f=data/fonts
 Source0:	%{download_root}MTLmr3m.ttf
 Source1:	%{download_root}NOTICE
 Source2:	%{download_root}README.txt
 Source10:	%{fontname}-fontconfig.conf
+Source11:       %{fontname}.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -45,6 +46,10 @@ install -m 0755 -d	$RPM_BUILD_ROOT%{_fontconfig_templatedir}	\
 install -m 0644 -p %{SOURCE10} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf}
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} $RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE11} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -80,15 +85,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc *.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.10.20110406git
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.9.20110406git
 - update to new release by fcimport
 
