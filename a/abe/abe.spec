@@ -3,14 +3,14 @@ BuildRequires: gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           abe
 Version:        1.1
-Release:        alt5_22
+Release:        alt5_25
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 Group:          Games/Other
 License:        GPL+
 URL:            http://abe.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/abe/%{name}-%{version}.tar.gz
-Source1:        %{name}.png
+Source1:        %{name}-icons.tar.xz
 Source2:        %{name}.appdata.xml
 # Enable changing the video settings.  Sent upstream 2 Apr 2006:
 # https://sourceforge.net/tracker/?func=detail&aid=1463202&group_id=70141&atid=526743
@@ -18,7 +18,7 @@ Patch0:         %{name}-1.1-settings.patch
 # Fix a double free() bug.  Sent upstream 15 Mar 2011:
 # https://sourceforge.net/tracker/?func=detail&aid=3214269&group_id=70141&atid=526745
 Patch1:         %{name}-1.1-doublefree.patch
-# Fix an incorrect printf format specifier.  Sent upstram 15 Mar 2011:
+# Fix an incorrect printf format specifier.  Sent upstream 15 Mar 2011:
 # https://sourceforge.net/tracker/?func=detail&aid=3214270&group_id=70141&atid=526745
 Patch2:         %{name}-1.1-format.patch
 # Add support for aarch64.  Sent upstream 25 Mar 2013:
@@ -30,6 +30,10 @@ Patch4:         %{name}-1.1-format-security.patch
 BuildRequires:  libSDL-devel >= 1.2.3 libSDL_mixer-devel >= 1.2.3
 BuildRequires:  libXmu-devel libXi-devel
 BuildRequires:  desktop-file-utils
+
+Requires:       icon-theme-hicolor
+
+%global icondir %{_datadir}/icons/hicolor
 Source44: import.info
 
 %description
@@ -61,9 +65,9 @@ make DESTDIR=$RPM_BUILD_ROOT install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{name}
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/appdata/
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/applications/
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/pixmaps/
+mkdir -p $RPM_BUILD_ROOT/%{icondir}
 cp -p -r images maps sounds $RPM_BUILD_ROOT/%{_datadir}/%{name}
-install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT/%{_datadir}/pixmaps/
+tar xJf %{SOURCE1} -C $RPM_BUILD_ROOT%{icondir}
 install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_datadir}/appdata/
 
 cat << EOF > %{name}.desktop
@@ -79,15 +83,27 @@ EOF
 
 desktop-file-install --dir $RPM_BUILD_ROOT/%{_datadir}/applications/ %{name}.desktop
 
+%post
+touch --no-create %{icondir} >&/dev/null ||:
+
+
+%postun
+touch --no-create %{icondir} >&/dev/null ||:
+
+
 %files
-%doc COPYING README
+%doc README
+%doc COPYING
 %{_bindir}/*
 %{_datadir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/pixmaps/%{name}.png
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_25
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_22
 - update to new release by fcimport
 
