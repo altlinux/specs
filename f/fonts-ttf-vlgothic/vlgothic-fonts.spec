@@ -1,7 +1,7 @@
 %define oldname vlgothic-fonts
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name vlgothic-fonts
-%define version 20140530
+%define version 20141206
 %global	priority	65-1
 %global	ppriority	65-0
 %global	fontname	vlgothic
@@ -14,16 +14,19 @@ Most of the glyphs are taken from the M+ and Sazanami Gothic fonts,\
 but some have also been improved by the project.
 
 Name:		fonts-ttf-vlgothic
-Version:	20140530
+Version:	20141206
 Release:	alt1_1
 Summary:	Japanese TrueType font
 
 License:	mplus and BSD
 Group:		System/Fonts/True type
 URL:		http://dicey.org/vlgothic
-Source0:	http://osdn.dl.sourceforge.jp/vlgothic/61261/%{archivename}.tar.bz2
+Source0:	http://osdn.dl.sourceforge.jp/vlgothic/62375/%{archivename}.tar.bz2
 Source1:	%{oldname}-fontconfig-pgothic.conf
 Source2:	%{oldname}-fontconfig-gothic.conf
+Source3:        %{fontname}.metainfo.xml
+Source4:        %{fontname}-proportional.metainfo.xml
+
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 
@@ -69,6 +72,12 @@ install -m 0644 -p %{SOURCE2} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontco
 for fconf in %{pfontconf}.conf %{fontconf}.conf; do
 	ln -s %{_fontconfig_templatedir}/$fconf $RPM_BUILD_ROOT%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-proportional.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -104,21 +113,24 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/VL-Gothic-Regular.ttf
 %doc README* LICENSE*
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %files -n fonts-ttf-vlgothic-p
 %{_fontconfig_templatedir}/%{pfontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{pfontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/VL-PGothic-Regular.ttf
 %doc README* LICENSE*
-
+%{_datadir}/appdata/%{fontname}-proportional.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20141206-alt1_1
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20140530-alt1_1
 - update to new release by fcimport
 
