@@ -1,16 +1,17 @@
+Group: System/Fonts/True type
 %define oldname mgopen-fonts
-%define fontname 	mgopen
-%define fontconf        61-%{fontname}
-%define archivename     MgOpen
-%define upstream_date   20050515
+%global fontname 	mgopen
+%global fontconf        61-%{fontname}
+%global archivename     MgOpen
+%global upstream_date   20050515
 
 # Common description
-%define common_desc The MgOpen fonts are a font family that includes Latin and Greek glyphs.\
+%global common_desc The MgOpen fonts are a font family that includes Latin and Greek glyphs.\
 The fonts have been released under a liberal license, similar to the\
 license covering the Bitstream Vera fonts.
 
 # Compat description
-%define compat_desc \
+%global compat_desc \
 This package only exists to help transition pre Fedora 11 MgOpen font users to\
 the new package split. It will be removed after one distribution release cycle,\
 please do not reference it or depend on it in any way.\
@@ -20,9 +21,9 @@ It can be safely uninstalled.
 
 Name:      fonts-ttf-mgopen
 Version:   0.%{upstream_date}
-Release:   alt3_22
+Release:   alt3_23
 Summary:   Truetype greek fonts
-Group:     System/Fonts/True type
+
 License:   MgOpen
 URL:       http://www.ellak.gr/fonts/mgopen/
 Source0:   %{archivename}-%{upstream_date}.tar.gz
@@ -32,6 +33,12 @@ Source1:   %{archivename}-%{upstream_date}-doc.tar.gz
 # The LICENCE file is an excerpt from the html page
 Source2:   %{fontname}-fontconfig.tar.gz
 # Tarball of fontconfig files for each font
+Source3:   %{fontname}.metainfo.xml
+Source4:   %{fontname}-canonica.metainfo.xml
+Source5:   %{fontname}-cosmetica.metainfo.xml
+Source6:   %{fontname}-modata.metainfo.xml
+Source7:   %{fontname}-moderna.metainfo.xml
+
 BuildArch: noarch
 BuildRequires: fontpackages-devel
 Source44: import.info
@@ -39,18 +46,18 @@ Source44: import.info
 %common_desc
 
 
-%package common
+%package -n fonts-ttf-mgopen-common
+Group: System/Fonts/True type
 Summary:  Truetype greek fonts, common files (documentationa..)
-Group:    System/Fonts/True type
-%description common
+%description -n fonts-ttf-mgopen-common
 %common_desc
 This package consists of files used by other MgOpen packages.
 
 
 
 %package compat
+Group: System/Fonts/True type
 Summary:   Truetype greek fonts, compatibility package
-Group:     System/Fonts/True type
 Obsoletes: mgopen-fonts < 0.20050515-8
 Requires:  fonts-ttf-mgopen-canonica fonts-ttf-mgopen-cosmetica
 Requires:  fonts-ttf-mgopen-modata fonts-ttf-mgopen-moderna
@@ -61,8 +68,8 @@ Requires:  fonts-ttf-mgopen-modata fonts-ttf-mgopen-moderna
 
 
 %package -n fonts-ttf-mgopen-canonica
+Group: System/Fonts/True type
 Summary:   Truetype variable-stroke-width serif font faces
-Group:     System/Fonts/True type
 Requires:  %{name}-common = %{version}-%{release}
 %description -n fonts-ttf-mgopen-canonica
 %common_desc
@@ -73,7 +80,7 @@ which is based on the design of Times Roman.
 %{_fontconfig_templatedir}/%{fontconf}-canonica.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-canonica.conf
 %{_fontbasedir}/*/%{_fontstem}/MgOpenCanonica*.ttf
-
+%{_datadir}/appdata/%{fontname}-canonica.metainfo.xml
 
 
 %package -n fonts-ttf-mgopen-cosmetica
@@ -89,7 +96,7 @@ typeface, which is  based on the design of Optima.
 %{_fontconfig_templatedir}/%{fontconf}-cosmetica.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-cosmetica.conf
 %{_fontbasedir}/*/%{_fontstem}/MgOpenCosmetica*.ttf
-
+%{_datadir}/appdata/%{fontname}-cosmetica.metainfo.xml
 
 
 %package -n fonts-ttf-mgopen-modata
@@ -105,7 +112,7 @@ which is based on the design of VAG rounded.
 %{_fontconfig_templatedir}/%{fontconf}-modata.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-modata.conf
 %{_fontbasedir}/*/%{_fontstem}/MgOpenModata*.ttf
-
+%{_datadir}/appdata/%{fontname}-modata.metainfo.xml
 
 
 %package -n fonts-ttf-mgopen-moderna
@@ -121,7 +128,7 @@ typeface which is based on the design of Helvetica.
 %{_fontconfig_templatedir}/%{fontconf}-moderna.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-moderna.conf
 %{_fontbasedir}/*/%{_fontstem}/MgOpenModerna*.ttf
-
+%{_datadir}/appdata/%{fontname}-moderna.metainfo.xml
 
 
 %prep
@@ -153,6 +160,18 @@ for fconf in %{fontconf}-canonica.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fontconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-canonica.metainfo.xml
+install -Dm 0644 -p %{SOURCE5} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-cosmetica.metainfo.xml
+install -Dm 0644 -p %{SOURCE6} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-modata.metainfo.xml
+install -Dm 0644 -p %{SOURCE6} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-moderna.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -188,15 +207,16 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
-%files common
+%files -n fonts-ttf-mgopen-common
 %doc LICENCE mgopen.html _files/
-%dir %{_fontbasedir}/*/%{_fontstem}
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %files compat
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.20050515-alt3_23
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.20050515-alt3_22
 - update to new release by fcimport
 
