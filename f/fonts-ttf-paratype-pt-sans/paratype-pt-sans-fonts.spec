@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -32,17 +33,21 @@ A. A a.'titlea.' language is named after an ethnic group.
 
 
 Name:           fonts-ttf-paratype-pt-sans
-Version:        20101909
-Release:        alt1_4
+Version:        20141121
+Release:        alt1_1
 Summary:        A pan-Cyrillic typeface
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://www.paratype.com/public/
-Source0:        http://www.fontstock.com/public/PTSans_OFL.zip
+# We now got new updated source archive to use
+Source0:        http://www.fontstock.com/public/PTSansOFL.zip
+# Below is original and old source archive
+# Source0:        http://www.fontstock.com/public/PTSans_OFL.zip
 Source10:       %{oldname}-fontconfig.conf
 Source11:       %{oldname}-caption-fontconfig.conf
-
+Source12:       %{fontname}.metainfo.xml
+Source13:       %{fontname}-narrow.metainfo.xml
+Source14:       %{fontname}-caption.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -60,6 +65,8 @@ economic setting.
 %{_fontbasedir}/*/%{_fontstem}/PTS*.ttf
 %{_fontbasedir}/*/%{_fontstem}/PTN*.ttf
 %doc *.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_datadir}/appdata/%{fontname}-narrow.metainfo.xml
 
 
 %package -n fonts-ttf-paratype-pt-sans-caption
@@ -77,6 +84,7 @@ This package includes 2 captions styles for small text sizes.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-caption.conf
 %{_fontbasedir}/*/%{_fontstem}/PTC*.ttf
 %doc *.txt
+%{_datadir}/appdata/%{fontname}-caption.metainfo.xml
 
 
 %prep
@@ -114,6 +122,14 @@ for fconf in %{fontconf}.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE12} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE13} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-narrow.metainfo.xml
+install -Dm 0644 -p %{SOURCE14} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-caption.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -150,8 +166,10 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
-
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20141121-alt1_1
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20101909-alt1_4
 - update to new release by fcimport
 
