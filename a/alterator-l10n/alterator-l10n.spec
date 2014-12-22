@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.11
+Version: 2.9.12
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,12 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Dec 22 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.12-alt1
+- Update translation for:
+  + alterator-net-l2tp
+  + alterator-zabbix-server
+  + alterator-snort
+
 * Wed Dec 17 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.11-alt1
 - Update translation for:
   + alterator-snort
