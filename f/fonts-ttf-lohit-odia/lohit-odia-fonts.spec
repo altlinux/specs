@@ -6,13 +6,14 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-lohit-odia
 Version:        2.5.5
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Free truetype font for Odia language
 
 License:        OFL
 URL:            https://fedorahosted.org/lohit/
 Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
 Source1:        %{oldname}.conf
+Source2:       %{fontname}.metainfo.xml
 BuildArch:      noarch
 BuildRequires:  fontforge >= 20080429
 BuildRequires:  fontpackages-devel
@@ -20,11 +21,8 @@ Provides:       lohit-oriya-fonts = %{version}-%{release}
 Obsoletes:      lohit-oriya-fonts < 2.5.4.1-4
 Source44: import.info
 
-
-
 %description
 This package provides a free truetype font for Odia language.
-
 
 %prep
 %setup -q -n %{fontname}-%{version} 
@@ -52,6 +50,11 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf1}
 ln -s %{_fontconfig_templatedir}/%{fontconf1} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf1}
+
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -93,9 +96,13 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_4
 - update to new release by fcimport
 
