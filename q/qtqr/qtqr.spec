@@ -1,6 +1,6 @@
 Name:		qtqr
 Version:	1.2
-Release:	alt1
+Release:	alt2
 Summary:	GUI that makes easy creating and decoding the QR Codes
 Summary(ru_RU.UTF8): Графическая оболочка для создания и распознавания QR-кодов
 LIcense:	GPLv3
@@ -45,6 +45,11 @@ Python-qrtools - модуль на языке программирования P
 
 %prep
 %setup -n qr-tools
+
+for N in `grep -rl '^import Image' *`; do
+	sed -i 's/^import Image/from PIL import Image/g' "$N"
+done
+
 for N in 16 24 32 48 128; do convert logo_a_la_faenza.svg $N.png; done
 
 cat > %name.desktop <<@@@
@@ -97,6 +102,10 @@ install -D %name.sh %buildroot%_bindir/%name
 
 
 %changelog
+* Mon Dec 22 2014 Fr. Br. George <george@altlinux.ru> 1.2-alt2
+- Fix translation
+- Fix new PIL import syntax
+
 * Fri May 18 2012 Fr. Br. George <george@altlinux.ru> 1.2-alt1
 - Initial build from scratch
 - Russian translation added
