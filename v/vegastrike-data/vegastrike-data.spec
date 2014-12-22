@@ -6,7 +6,7 @@
 %define fedora 19
 Name:           vegastrike-data
 Version:        0.5.1
-Release:        alt2_6.r1
+Release:        alt2_7.r1
 Summary:        Data files for Vega Strike
 Group:          Games/Other
 License:        GPLv2+
@@ -118,6 +118,9 @@ cat data.dirs >> data.files
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_7.r1
+- update to new release by fcimport
+
 * Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_6.r1
 - update to new release by fcimport
 
