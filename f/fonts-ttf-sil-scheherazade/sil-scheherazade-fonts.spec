@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -7,16 +8,16 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-sil-scheherazade
 Version:        2.020
-Release:        alt1_2
+Release:        alt1_3
 Summary:        An Arabic script unicode font
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://scripts.sil.org/ArabicFonts
 # The file complete URL is as follows:
 # http://scripts.sil.org/cms/scripts/render_download.php?format=file&media_id=Scheherazade-2.000&filename=Scheherazade-2.000.zip
 Source0:        Scheherazade-%{version}.zip
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -50,6 +51,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -85,15 +90,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc *.txt documentation/*
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.020-alt1_3
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.020-alt1_2
 - update to new release by fcimport
 
