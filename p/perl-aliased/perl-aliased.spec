@@ -1,6 +1,6 @@
 %define dist aliased
 Name: perl-%dist
-Version: 0.31
+Version: 0.33
 Release: alt1
 
 Summary: Use shorter versions of class names
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/O/OV/OVID/aliased-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/aliased-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ name or, if you prefer, you can do so implicitly.
 %perl_vendor_privlib/aliased*
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 
