@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -16,15 +17,17 @@ characters, with miscellaneous diacritical marks, symbols and punctuation.
 
 Name: fonts-ttf-sil-gentium-basic
 Version: 1.1
-Release: alt3_11
+Release: alt3_12
 Summary: SIL Gentium Basic font family
 
-Group:     System/Fonts/True type
 License:   OFL
 URL:       http://scripts.sil.org/Gentium_Basic
 Source0:   GentiumBasic_110.zip
 Source1:   %{fontname}-fontconfig.conf
 Source2:   %{fontname}-book-fontconfig.conf
+Source3:   %{fontname}.metainfo.xml
+Source4:   %{fontname}-book.metainfo.xml
+
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
 
@@ -40,12 +43,13 @@ This is the base variant.
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/GenBas*.ttf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
-%package common
+%package -n fonts-ttf-sil-gentium-basic-common
 Group: System/Fonts/True type
 Summary:  Common files of %{fontname}
 
-%description common
+%description -n fonts-ttf-sil-gentium-basic-common
 %common_desc
 
 This package consists of files used by other %{fontname} packages.
@@ -64,6 +68,7 @@ The "Book" family is slightly heavier.
 %{_fontconfig_templatedir}/%{fontconf}-book.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-book.conf
 %{_fontbasedir}/*/%{_fontstem}/GenBkBas*.ttf
+%{_datadir}/appdata/%{fontname}-book.metainfo.xml
 
 
 %prep
@@ -102,6 +107,12 @@ for fconf in %{fontconf}.conf\
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-book.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -138,12 +149,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
-%files common
+%files -n fonts-ttf-sil-gentium-basic-common
 %doc FONTLOG.txt GENTIUM-FAQ.txt OFL-FAQ.txt OFL.txt
 
 
-
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_12
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_11
 - update to new release by fcimport
 
