@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-oflb-brett
 Version:        20080506
-Release:        alt3_13
+Release:        alt3_14
 Summary:        A handwriting font
 
 Group:          System/Fonts/True type
@@ -16,6 +16,7 @@ Source0:        BrettFont1.1.ttf
 Source1:        %{oldname}-fontconfig.conf
 #license text extracted from font file
 Source2:        License.txt
+Source3:        %{fontname}.metainfo.xml
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 Obsoletes:      brettfont-fonts < 20080506-7
@@ -43,6 +44,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -78,14 +83,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 %doc License.txt
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20080506-alt3_14
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20080506-alt3_13
 - update to new release by fcimport
 
