@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -6,15 +7,15 @@ BuildRequires: unzip
 %global fontconf 64-%{fontname}.conf
 
 Name:           fonts-otf-vollkorn
-Version:        2.1
-Release:        alt1_4
+Version:        3.005
+Release:        alt1_1
 Summary:        A serif Latin font with good readability
 
-Group:          System/Fonts/True type
 License:        OFL
-URL:            http://friedrichalthausen.de/?page_id=411
-Source0:        http://friedrichalthausen.de/Vollkorn-%{version}.zip
+URL:            http://vollkorn-typeface.com/
+Source0:        http://vollkorn-typeface.com/download/vollkorn-3-005.zip
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -28,7 +29,7 @@ smooth overall picture.
 
 %prep
 %setup -n %{oldname}-%{version} -q -c -T
-unzip -j -L -q %{SOURCE0}
+unzip -j -n -q %{SOURCE0}
 for file in *.txt ; do
  sed 's|\r||g' "$file" | fold -s > "$file.new" && \
  touch -r "$file" "$file.new" && \
@@ -40,8 +41,6 @@ done
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -52,6 +51,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -87,16 +90,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc *.txt
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1_1
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_4
 - update to new release by fcimport
 
