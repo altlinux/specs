@@ -1,17 +1,18 @@
+Group: System/Fonts/True type
 %define oldname ubuntu-title-fonts
 %global fontname ubuntu-title
 %global fontconf 64-%{fontname}.conf
 
 Name:           fonts-ttf-ubuntu-title
 Version:        002.000
-Release:        alt3_8
+Release:        alt3_9
 Summary:        A titling decorative font to create the lettering of the Ubuntu logo
 
-Group:          System/Fonts/True type
 License:        OFL or GPLv2 with exceptions
 URL:            https://launchpad.net/ubuntutitle
 Source0:        http://launchpad.net/ubuntutitle/trunk/%{version}/+download/ubuntu-title-%{version}.tar.gz
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -34,8 +35,6 @@ done
 fontforge -lang=ff -c 'Open($1); Generate($1:r+".ttf")' Ubuntu-Title.sfd
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -46,6 +45,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -81,16 +84,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc *.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 002.000-alt3_9
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 002.000-alt3_8
 - update to new release by fcimport
 
