@@ -8,12 +8,14 @@ BuildRequires: unzip
 Name:		fonts-otf-woodardworks-laconic
 Summary:	An artistic and minimal sans-serif font family
 Version:	001.001
-Release:	alt3_10
+Release:	alt3_11
 License:	OFL
 Group:		System/Fonts/True type
 Source0:	http://www.woodardworks.com/laconic.zip
 Source1:	%{oldname}-fontconfig.conf
 Source2:	%{fontname}-shadow-fonts-fontconfig.conf
+Source3:        %{fontname}.metainfo.xml
+Source4:        %{fontname}-shadow.metainfo.xml
 URL:		http://www.woodardworks.com/type13.html
 BuildRequires:	fontpackages-devel
 BuildArch:	noarch
@@ -56,6 +58,13 @@ install -m 0644 -p %{SOURCE1} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 install -m 0644 -p %{SOURCE2} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-shadow.conf
 ln -s %{_fontconfig_templatedir}/%{fontconf}.conf %{buildroot}%{_fontconfig_confdir}/%{fontconf}.conf
 ln -s %{_fontconfig_templatedir}/%{fontconf}-shadow.conf %{buildroot}%{_fontconfig_confdir}/%{fontconf}-shadow.conf
+
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-shadow.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -97,15 +106,20 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/Laconic_Bold.otf
 %{_fontbasedir}/*/%{_fontstem}/Laconic_Light.otf
 %{_fontbasedir}/*/%{_fontstem}/Laconic_Regular.otf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 %doc laconic_eula.pdf
 
 %files -n fonts-otf-woodardworks-laconic-shadow
 %{_fontconfig_templatedir}/%{fontconf}-shadow.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-shadow.conf
 %{_fontbasedir}/*/%{_fontstem}/Laconic_Shadow.otf
+%{_datadir}/appdata/%{fontname}-shadow.metainfo.xml
 %doc laconic_eula.pdf
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 001.001-alt3_11
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 001.001-alt3_10
 - update to new release by fcimport
 
