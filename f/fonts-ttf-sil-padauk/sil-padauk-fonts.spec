@@ -14,7 +14,7 @@ The font is a smart font using a Graphite description.
 
 Name:    fonts-ttf-sil-padauk
 Version: 2.8
-Release: alt2_6
+Release: alt2_7
 Summary: A font for Burmese and the Myanmar script
 
 Group:   System/Fonts/True type
@@ -24,6 +24,8 @@ URL:     http://scripts.sil.org/Padauk
 Source0: %{archivename}.zip
 Source1: %{oldname}-fontconfig.conf
 Source2: %{oldname}-book-fontconfig.conf
+Source3: %{fontname}.metainfo.xml
+Source4: %{fontname}-book.metainfo.xml
 
 BuildArch: noarch
 BuildRequires: fontpackages-devel
@@ -39,6 +41,7 @@ Source44: import.info
 %{_fontbasedir}/*/%{_fontstem}/Padauk.ttf
 %{_fontbasedir}/*/%{_fontstem}/Padauk-bold.ttf
 %doc *.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %package -n fonts-ttf-sil-padauk-book
 Group: System/Fonts/True type
@@ -53,6 +56,7 @@ Padauk Book family font.
 %{_fontconfig_templatedir}/%{fontconf}-book.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-book.conf
 %{_fontbasedir}/*/%{_fontstem}/Padauk-book*.ttf
+%{_datadir}/appdata/%{fontname}-book.metainfo.xml
 %doc *.txt
 
 %prep
@@ -90,6 +94,12 @@ ln -s %{_fontconfig_templatedir}/%{fontconf}.conf \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf}-book.conf \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}-book.conf
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-book.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -125,8 +135,10 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt2_7
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt2_6
 - bugfix: fixed subpackage name
 
