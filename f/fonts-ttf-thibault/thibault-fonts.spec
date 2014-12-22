@@ -22,7 +22,7 @@ and Rockets.
 
 Name:           fonts-ttf-thibault
 Version:        0.1
-Release:        alt3_22
+Release:        alt3_23
 
 Summary:        Thibault.org font collection
 Group:          System/Fonts/True type
@@ -38,6 +38,11 @@ Source5:        %{oldname}-isabella-fontconfig.conf
 Source6:        %{oldname}-rockets-fontconfig.conf
 Source7:        %{oldname}-staypuft-fontconfig.conf
 
+Source10:       %{fontname}-essays1743.metainfo.xml
+Source11:       %{fontname}-isabella.metainfo.xml
+Source12:       %{fontname}-rockets.metainfo.xml
+Source13:       %{fontname}-staypuft.metainfo.xml
+
 #Not included due to legal concerns
 #Engadget: A sort of modernistic font done to match the logo of http://www.engadget.com
 
@@ -50,11 +55,11 @@ Source44: import.info
 %description
 %common_desc
 
-%package common
+%package -n fonts-ttf-thibault-common
 Summary:        Common files for thibault (documentationa..)
 Group:          System/Fonts/True type
 
-%description common
+%description -n fonts-ttf-thibault-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
@@ -78,6 +83,7 @@ translation of Montaigne's Essays.
 %{_fontconfig_templatedir}/%{conf1}
 %config(noreplace) %{_fontconfig_confdir}/%{conf1}
 %{_fontbasedir}/*/%{_fontstem}/Essays1743*.ttf
+%{_datadir}/appdata/%{fontname}-essays1743.metainfo.xml
 
 %package -n fonts-ttf-thibault-isabella
 Group: System/Fonts/True type
@@ -98,6 +104,7 @@ Holland, for Isabella of Castille, the first queen of united Spain.
 %{_fontconfig_templatedir}/%{conf2}
 %config(noreplace) %{_fontconfig_confdir}/%{conf2}
 %{_fontbasedir}/*/%{_fontstem}/Isabella*.ttf
+%{_datadir}/appdata/%{fontname}-isabella.metainfo.xml
 
 %package -n fonts-ttf-thibault-rockets
 Group: System/Fonts/True type
@@ -119,6 +126,7 @@ curves from either A or O, to keep the theme consistent.
 %{_fontconfig_templatedir}/%{conf3}
 %config(noreplace) %{_fontconfig_confdir}/%{conf3}
 %{_fontbasedir}/*/%{_fontstem}/Rockets*.ttf
+%{_datadir}/appdata/%{fontname}-rockets.metainfo.xml
 
 %package -n fonts-ttf-thibault-staypuft
 Group: System/Fonts/True type
@@ -138,6 +146,7 @@ like banners, and birthday cards.
 %{_fontconfig_templatedir}/%{conf4}
 %config(noreplace) %{_fontconfig_confdir}/%{conf4}
 %{_fontbasedir}/*/%{_fontstem}/StayPuft*.ttf
+%{_datadir}/appdata/%{fontname}-staypuft.metainfo.xml
 
 %prep
 mkdir -p staypuft
@@ -197,6 +206,16 @@ for fconf in %{conf1} \
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE10} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-essays1743.metainfo.xml
+install -Dm 0644 -p %{SOURCE11} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-isabella.metainfo.xml
+install -Dm 0644 -p %{SOURCE12} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-rockets.metainfo.xml
+install -Dm 0644 -p %{SOURCE13} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-staypuft.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -232,13 +251,16 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-%files common
+%files -n fonts-ttf-thibault-common
 %doc essays1743/COPYING essays1743/README
 %doc Isabella/COPYING.LIB Isabella/README.txt
 %doc rockets/COPYING.LIB rockets/README.txt
 %doc staypuft/COPYING.LIB staypuft/README.txt
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_23
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_22
 - update to new release by fcimport
 
