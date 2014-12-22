@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -9,14 +10,14 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-tabish-eeyek
 Version:        1.0
-Release:        alt3_6
+Release:        alt3_7
 Summary:        Font for Meetei Mayek script
 
-Group:          System/Fonts/True type
 License:        GPLv2+
 URL:            http://tabish.freeshell.org/eeyek/
 Source0:        http://tabish.freeshell.org/eeyek/%{archivename}
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -33,10 +34,7 @@ for file in Eeyek_Unicode/copying.txt; do
  mv $file.new $file
 done
 
-
-
 %build
-
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
@@ -49,6 +47,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -89,11 +91,14 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc Eeyek_Unicode/copying.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_7
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_6
 - update to new release by fcimport
 
