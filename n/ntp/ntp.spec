@@ -1,7 +1,7 @@
 Name: ntp
-Version: 4.2.6
-%define vers_rc p5
-Release: alt2
+Version: 4.2.8
+#define vers_rc p5
+Release: alt1
 %define srcname %name-%version%{?vers_rc:%vers_rc}
 
 Summary: The Network Time Protocol (NTP)
@@ -35,6 +35,9 @@ BuildPreReq: libreadline-devel >= 4.3-alt5
 # due to ntp_drop_priv.
 BuildRequires: libcap-devel
 
+# ntp_crypto_rnd.c:93: undefined reference to `arc4random_buf'
+BuildRequires: libssl-devel
+
 # Root directory for chrooted environment, must not be same as real system root.
 %define ROOT /var/lib/ntpd
 
@@ -48,6 +51,11 @@ BuildArch: noarch
 Summary: The Network Time Protocol (NTP) documentation
 Group: Development/Other
 Requires: ntp-aux = %version-%release
+BuildArch: noarch
+
+%package -n perl-NTP-Util
+Summary: Perl NTP module
+Group: Development/Perl
 BuildArch: noarch
 
 %package utils
@@ -97,6 +105,9 @@ accuracies typically within a millisecond on LANs and up to a few tens of
 milliseconds on WANs.
 
 This package contains NTP documentation.
+
+%description -n perl-NTP-Util
+Perl NTP module
 
 %description utils
 The Network Time Protocol (NTP) is used to synchronize the time
@@ -152,15 +163,18 @@ find -type f -print0 |
 %add_optflags -D_GNU_SOURCE
 %define _bindir %_sbindir
 #autoreconf --force --verbose
-%configure --without-openssl-libdir --without-openssl-incdir --without-crypto --without-readline \
-		--enable-linuxcaps
+
+%configure \
+	--enable-linuxcaps \
+	--without-readline
 echo '#define HAVE_LIBREADLINE 1' >>config.h
 
 %make_build
 
 %install
-%makeinstall transform=
-%__install -p -m755 scripts/ntpsweep $RPM_BUILD_ROOT%_sbindir/
+make DESTDIR=$RPM_BUILD_ROOT perllibdir=%perl_vendor_privlib install
+
+%__install -p -m755 scripts/ntpsweep/ntpsweep $RPM_BUILD_ROOT%_sbindir/
 
 # Manpages.
 %__mkdir_p $RPM_BUILD_ROOT{%_man1dir,%_man8dir}
@@ -174,8 +188,11 @@ done
 # Docs.
 %define docdir %_docdir/%name-%version
 %__mkdir_p $RPM_BUILD_ROOT%docdir
-%__cp -a COPYRIGHT NEWS TODO WHERE-TO-START README.bk README.hackers README.refclocks README.versions html \
+mv $RPM_BUILD_ROOT%_docdir/ntp4 $RPM_BUILD_ROOT%docdir
+mv $RPM_BUILD_ROOT%_docdir/sntp $RPM_BUILD_ROOT%docdir
+%__cp -a COPYRIGHT NEWS TODO WHERE-TO-START README.bk README.hackers README.refclocks README.versions \
 	$RPM_BUILD_ROOT%docdir/
+
 
 %__install -pD -m755 %SOURCE1 $RPM_BUILD_ROOT%_initdir/ntpd
 %__install -pD -m644 ntpd.sysconfig $RPM_BUILD_ROOT%_sysconfdir/sysconfig/ntpd
@@ -231,22 +248,26 @@ fi
 
 %files doc
 %dir %docdir
-%docdir/html
+%docdir/ntp4
+%docdir/sntp
+%docdir/[A-Z]*
+
+%files -n perl-NTP-Util
+%dir %perl_vendor_privlib/NTP
+%perl_vendor_privlib/NTP/Util.pm
 
 %files utils
 %_sbindir/*
 %_mandir/man?/*
 %exclude %_sbindir/ntpd
 %exclude %_sbindir/ntpdate
-%exclude %_man1dir/ntpd.1.gz
+%exclude %_man1dir/ntpd.1
 %exclude %_man8dir/ntpd.*
 %exclude %_man8dir/ntpdate.*
 
 %files -n ntpdate
 %_sbindir/ntpdate
 %_man8dir/ntpdate.*
-%dir %docdir
-%docdir/[A-Z]*
 
 %files -n ntpd
 %config %_initdir/ntpd
@@ -255,7 +276,7 @@ fi
 %_sysconfdir/%name
 %_sbindir/ntpd
 %_man8dir/ntpd.*
-%_man1dir/ntpd.1.gz
+%_man1dir/ntpd.1
 
 %defattr(640,root,ntpd,710)
 %dir %ROOT
@@ -267,6 +288,10 @@ fi
 %attr(640,ntpd,ntpd) %ghost %ROOT%_sysconfdir/%name/drift
 
 %changelog
+* Mon Dec 22 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt1
+- 4.2.8 (ALT #30591, CVEs 2014 9293-9296)
+- refactored ntp.conf (ALT #19494#c7)
+
 * Tue Feb 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.2.6-alt2
 - refactored ntp.conf (temporary solution for ALT #19494)
 
