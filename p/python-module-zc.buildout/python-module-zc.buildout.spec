@@ -1,4 +1,4 @@
-%define version 2.3.0
+%define version 2.3.1
 #define subver b20
 %define release alt1
 %define oname zc.buildout
@@ -150,6 +150,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Dec 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.1-alt1
+- Version 2.3.1
+
 * Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1
 - Version 2.3.0
 
