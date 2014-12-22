@@ -1,5 +1,5 @@
 
-Version: 3.1.2
+Version: 3.2.3
 Release: alt1
 Name: mercurial
 %setup_python_module %name
@@ -99,7 +99,6 @@ install -D doc/hgrc.5 %buildroot/%_man5dir/hgrc.5
 install -D doc/hgignore.5 %buildroot/%_man5dir/hgignore.5
 install -D contrib/bash_completion %buildroot/%_sysconfdir/bash_completion.d/%name
 install -D contrib/hgk  %buildroot/%_bindir/hgk
-install -D contrib/convert-repo %buildroot/%_bindir/%name-convert-repo
 install contrib/hg-ssh %buildroot/%_bindir/
 
 mkdir -p %buildroot/%_sysconfdir/%name/hgrc.d
@@ -125,12 +124,14 @@ install -m 644 contrib/mergetools.hgrc %buildroot/%_sysconfdir/%name/hgrc.d/merg
 %_sysconfdir/bash_completion.d/%name
 
 %files -n %name-hgext
-%_bindir/mercurial-convert-repo
 %_bindir/hgk
 %dir %python_sitelibdir/hgext
 %python_sitelibdir/hgext/*
 
 %changelog
+* Mon Dec 22 2014 Alexey Shabalin <shaba@altlinux.ru> 3.2.3-alt1
+- 3.2.3
+
 * Fri Oct 03 2014 Alexey Shabalin <shaba@altlinux.ru> 3.1.2-alt1
 - 3.1.2
 
