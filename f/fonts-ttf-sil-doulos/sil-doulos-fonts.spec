@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -8,13 +9,13 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-sil-doulos
 Version:        4.104
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Doulos SIL fonts
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://scripts.sil.org/DoulosSILFont
 Source0:        %{archivename}%{version}.zip
+Source1:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -40,10 +41,12 @@ sed -i 's/\r$//' *.txt
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE1} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -79,17 +82,16 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc FONTLOG.txt OFL.txt OFL-FAQ.txt README.txt
 %doc DoulosSIL%{docversion}FontDocumentation.pdf
-
-%dir %{_fontbasedir}/*/%{_fontstem}
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 4.104-alt3_12
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 4.104-alt3_11
 - update to new release by fcimport
 
