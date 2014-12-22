@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -12,14 +13,14 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-hanazono
 Version:	20141012
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Japanese Mincho-typeface TrueType font
 
-Group:		System/Fonts/True type
 License:	Copyright only or OFL
 URL:		http://fonts.jp/hanazono/
 Source0:	http://sourceforge.jp/projects/hanazono-font/downloads/58164/%{archivename}.zip
 Source1:	%{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -53,7 +54,6 @@ also supports character sets:
 
 
 %install
-
 install -dm 0755 $RPM_BUILD_ROOT%{_fontdir}
 install -pm 0644 *.ttf $RPM_BUILD_ROOT%{_fontdir}
 install -dm 0755 $RPM_BUILD_ROOT%{_fontconfig_templatedir} \
@@ -61,6 +61,10 @@ install -dm 0755 $RPM_BUILD_ROOT%{_fontconfig_templatedir} \
 install -pm 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf}
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} $RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -100,11 +104,13 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc LICENSE.txt README.txt THANKS.txt
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20141012-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20141012-alt1_1
 - update to new release by fcimport
 
