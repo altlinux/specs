@@ -6,13 +6,14 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-lohit-gurmukhi
 Version:        2.91.0
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Free Gurmukhi truetype font for Punjabi language
 
 License:        OFL
 URL:            https://fedorahosted.org/lohit/
 Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
 Source1:        %{oldname}.conf
+Source2:       %{fontname}.metainfo.xml
 BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
@@ -50,6 +51,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf1}
 ln -s %{_fontconfig_templatedir}/%{fontconf1} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf1}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -92,9 +97,13 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-gurmukhi.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.91.0-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.91.0-alt1_4
 - update to new release by fcimport
 
