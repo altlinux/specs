@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-nafees-naskh
 Version:        2.01
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Nafees naskh font for writing Urdu in the Naskh script with full aerab support
 
 Group:          System/Fonts/True type
@@ -19,6 +19,7 @@ Source0:        http://www.crulp.org/Downloads/localization/fonts/NafeesNaskh/%{
 
 Source1:        %{fontname}-update-preferred-family.pe
 Source2:        %{fontconf}
+Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -53,6 +54,10 @@ install -m 0644 -p %{SOURCE2} \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
         %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -89,15 +94,20 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc  *.pdf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_9
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_8
 - update to new release by fcimport
 
