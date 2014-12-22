@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname sil-gentium-fonts
 %define fontname sil-gentium
 %define archivename ttf-sil-gentium
@@ -10,14 +11,15 @@ a wide range of Latin-based alphabets.
 
 Name:           fonts-ttf-sil-gentium
 Version:        1.02
-Release:        alt5_16
+Release:        alt5_17
 Summary:        SIL Gentium fonts
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://scripts.sil.org/Gentium_linux
 # Source0 can be downloaded from the above URL, search for "tar.gz"
 Source0:        %{archivename}_1.0.2.tar.gz
+Source1:        %{fontname}.metainfo.xml
+Source2:        %{fontname}-alt.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -39,21 +41,21 @@ This package consists of the main SIL Gentium family.
 
 %files
 %{_fontbasedir}/*/%{_fontstem}/Gen[RI]*.ttf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
-
-%package common
+%package -n fonts-ttf-sil-gentium-common
+Group: System/Fonts/True type
 Summary:        Common files of SIL Gentium fonts
-Group:          System/Fonts/True type
 
-%description common
+%description -n fonts-ttf-sil-gentium-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
 
 
 %package -n fonts-ttf-sil-gentium-alt
+Group: System/Fonts/True type
 Summary:        SIL GentiumAlt fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-sil-gentium-alt
@@ -68,6 +70,7 @@ time.
 
 %files -n fonts-ttf-sil-gentium-alt
 %{_fontbasedir}/*/%{_fontstem}/GenA*.ttf
+%{_datadir}/appdata/%{fontname}-alt.metainfo.xml
 
 
 %prep
@@ -83,13 +86,17 @@ mv GENTIUM-FAQ.new GENTIUM-FAQ
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE1} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-alt.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -125,14 +132,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
-%files common
+%files -n fonts-ttf-sil-gentium-common
 %doc FONTLOG GENTIUM-FAQ OFL OFL-FAQ QUOTES README
-
-%dir %{_fontbasedir}/*/%{_fontstem}
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.02-alt5_17
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.02-alt5_16
 - update to new release by fcimport
 
