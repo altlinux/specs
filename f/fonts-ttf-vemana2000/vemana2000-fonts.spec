@@ -1,17 +1,18 @@
+Group: System/Fonts/True type
 %define oldname vemana2000-fonts
 %global fontname vemana2000
 %global fontconf 69-%{fontname}.conf
 
 Name: fonts-ttf-vemana2000
 Version: 1.1.3
-Release: alt3_7
+Release: alt3_8
 Summary: Unicode compliant OpenType font for Telugu
 
-Group: System/Fonts/True type
 License: GPLv2+ with exceptions
 URL: https://fedorahosted.org/pothana_vemana/
 
 Source0: https://fedorahosted.org/releases/p/o/pothana_vemana/%{oldname}-%{version}.tar.gz
+Source1: %{fontname}.metainfo.xml
 
 BuildArch: noarch
 BuildRequires: fontforge
@@ -37,6 +38,10 @@ install -m 0644 -p %{fontconf} \
  %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
  %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE1} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -76,10 +81,13 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc ChangeLog COPYRIGHT COPYING AUTHORS README
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt3_8
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt3_7
 - update to new release by fcimport
 
