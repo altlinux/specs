@@ -9,7 +9,7 @@ BuildRequires: python
 
 Name:          fonts-ttf-sj
 Version:       2.0.2
-Release:       alt3_11
+Release:       alt3_12
 Summary:       Two fonts by Steve Jordi released under the GPL
 
 Group:         System/Fonts/True type
@@ -18,6 +18,8 @@ URL:           http://sjfonts.sourceforge.net
 Source0:       sjfonts-source-2.0.2.tar.bz2
 Source1:       %{oldname}-delphine-fontconfig.conf
 Source2:       %{oldname}-stevehand-fontconfig.conf
+Source3:       %{fontname}-stevehand.metainfo.xml
+Source4:       %{fontname}-delphine.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
@@ -27,11 +29,11 @@ Source44: import.info
 %description
 %common_desc
 
-%package common
+%package -n fonts-ttf-sj-common
 Summary:       Common files for %{oldname}
 Group:         System/Fonts/True type
 
-%description common
+%description -n fonts-ttf-sj-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
@@ -50,6 +52,7 @@ Handwriting font by Steve Jordi covering latin glyphs.
 %{_fontconfig_templatedir}/%{fontconf}-delphine.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-delphine.conf
 %{_fontbasedir}/*/%{_fontstem}/Delphine.ttf
+%{_datadir}/appdata/%{fontname}-delphine.metainfo.xml
 
 %package -n fonts-ttf-sj-stevehand
 Summary:       Handwriting font
@@ -65,6 +68,7 @@ Handwriting font by Steve Jordi covering latin glyphs.
 %{_fontconfig_templatedir}/%{fontconf}-stevehand.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-stevehand.conf
 %{_fontbasedir}/*/%{_fontstem}/SteveHand.ttf
+%{_datadir}/appdata/%{fontname}-stevehand.metainfo.xml
 
 %prep
 %setup -n %{oldname}-%{version} -q -c %{oldname}-%{version}
@@ -95,6 +99,12 @@ install -m 0644 -p %{SOURCE2} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 for fontconf in %{fontconf}-delphine.conf %{fontconf}-stevehand.conf ; do
   ln -s %{_fontconfig_templatedir}/$fontconf %{buildroot}%{_fontconfig_confdir}/$fontconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-stevehand.metainfo.xml
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-delphine.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -130,13 +140,16 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-%files common
+%files -n fonts-ttf-sj-common
 %doc COPYING
 %doc README
 
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3_12
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3_11
 - update to new release by fcimport
 
