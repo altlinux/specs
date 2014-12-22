@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname un-core-fonts
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name un-core-fonts
@@ -36,11 +37,10 @@ Core e..i'.: \
 
 Name:           fonts-ttf-un-core
 Version:        1.0.2
-Release:        alt3_0.23.%{alphatag}
+Release:        alt3_0.24.%{alphatag}
 Summary:        Un Core family of Korean TrueType fonts
 Summary(ko):    한글 은글꼴 Core 모음
 
-Group:          System/Fonts/True type
 License:        GPLv2
 URL:            http://kldp.net/projects/unfonts/
 Source0:        http://kldp.net/frs/download.php/4695/%{archivename}.tar.gz
@@ -50,16 +50,23 @@ Source3:        %{oldname}-dotum-fontconfig.conf
 Source4:        %{oldname}-graphic-fontconfig.conf
 Source5:        %{oldname}-gungseo-fontconfig.conf
 Source6:        %{oldname}-pilgi-fontconfig.conf
+Source7:        %{fontname}-batang.metainfo.xml
+Source8:        %{fontname}-dinaru.metainfo.xml
+Source9:        %{fontname}-dotum.metainfo.xml
+Source10:       %{fontname}-graphic.metainfo.xml
+Source11:       %{fontname}.metainfo.xml
+Source12:       %{fontname}-gungseo.metainfo.xml
+Source13:       %{fontname}-pilgi.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 Source44: import.info
 
-%package common
+%package -n fonts-ttf-un-core-common
 Group: System/Fonts/True type
 Summary:        Common files of Un Core fonts
 
-%description common
+%description -n fonts-ttf-un-core-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
@@ -154,32 +161,37 @@ This package includes UnPilgi, a script font.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-batang.conf
 %{_fontbasedir}/*/%{_fontstem}/UnBatang.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnBatangBold.ttf
+%{_datadir}/appdata/%{fontname}-batang.metainfo.xml
 %files -n fonts-ttf-un-core-dinaru
 %{_fontconfig_templatedir}/%{fontconf}-dinaru.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-dinaru.conf
 %{_fontbasedir}/*/%{_fontstem}/UnDinaru.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnDinaruLight.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnDinaruBold.ttf
+%{_datadir}/appdata/%{fontname}-dinaru.metainfo.xml
 %files -n fonts-ttf-un-core-dotum
 %{_fontconfig_templatedir}/%{fontconf}-dotum.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-dotum.conf
 %{_fontbasedir}/*/%{_fontstem}/UnDotum.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnDotumBold.ttf
+%{_datadir}/appdata/%{fontname}-dotum.metainfo.xml
 %files -n fonts-ttf-un-core-graphic
 %{_fontconfig_templatedir}/%{fontconf}-graphic.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-graphic.conf
 %{_fontbasedir}/*/%{_fontstem}/UnGraphic.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnGraphicBold.ttf
+%{_datadir}/appdata/%{fontname}-graphic.metainfo.xml
 %files -n fonts-ttf-un-core-gungseo
 %{_fontconfig_templatedir}/%{fontconf}-gungseo.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-gungseo.conf
 %{_fontbasedir}/*/%{_fontstem}/UnGungseo.ttf
+%{_datadir}/appdata/%{fontname}-gungseo.metainfo.xml
 %files -n fonts-ttf-un-core-pilgi
 %{_fontconfig_templatedir}/%{fontconf}-pilgi.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-pilgi.conf
 %{_fontbasedir}/*/%{_fontstem}/UnPilgi.ttf
 %{_fontbasedir}/*/%{_fontstem}/UnPilgiBold.ttf
-
+%{_datadir}/appdata/%{fontname}-pilgi.metainfo.xml
 
 %prep
 %setup -q -n un-fonts
@@ -217,6 +229,22 @@ for fconf in %{fontconf}-batang.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-batang.metainfo.xml
+install -Dm 0644 -p %{SOURCE5} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-dinaru.metainfo.xml
+install -Dm 0644 -p %{SOURCE6} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-dotum.metainfo.xml
+install -Dm 0644 -p %{SOURCE7} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-graphic.metainfo.xml
+install -Dm 0644 -p %{SOURCE8} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE9} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-gungseo.metainfo.xml
+install -Dm 0644 -p %{SOURCE10} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-pilgi.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -252,12 +280,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
-%files common
+%files -n fonts-ttf-un-core-common
 %doc COPYING README
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.24.080608
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.23.080608
 - update to new release by fcimport
 
