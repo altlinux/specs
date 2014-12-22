@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-nafees-nastaleeq
 Version:        1.02
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Nafees nastaleeq font for writing Urdu in the Nastaleeq script
 
 Group:          System/Fonts/True type
@@ -19,6 +19,8 @@ Source0:        http://www.crulp.org/Downloads/localization/fonts/NafeesNastalee
 
 Source1:        %{fontname}-update-preferred-family.pe
 Source2:        %{fontconf}
+Source3:        %{fontname}.metainfo.xml
+
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -54,6 +56,10 @@ install -m 0644 -p %{SOURCE2} \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
         %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -96,9 +102,13 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc  Nafees_Nastaleeq_v1.02.pdf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.02-alt2_8
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.02-alt2_7
 - update to new release by fcimport
 
