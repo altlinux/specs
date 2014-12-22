@@ -3,8 +3,8 @@
 %global fontconf 65-0-%{fontname}.conf
 
 Name:        fonts-ttf-lohit-bengali
-Version:        2.91.0
-Release:        alt1_2
+Version:        2.91.1
+Release:        alt1_1
 Summary:        Free Bengali script font
 Group:          System/Fonts/True type
 License:        OFL
@@ -93,6 +93,9 @@ fi
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.91.1-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.91.0-alt1_2
 - update to new release by fcimport
 
