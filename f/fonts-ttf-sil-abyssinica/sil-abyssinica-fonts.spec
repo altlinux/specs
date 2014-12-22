@@ -7,10 +7,9 @@ BuildRequires: unzip
 %global archive_name AbyssinicaSIL
 %global fontconf     66-%{fontname}.conf
 
-
 Name:           fonts-ttf-sil-abyssinica
 Version:        1.200
-Release:        alt2_7
+Release:        alt2_8
 Summary:        SIL Abyssinica fonts
 
 License:        OFL
@@ -18,9 +17,9 @@ URL:            http://scripts.sil.org/AbyssinicaSIL
 # download from http://scripts.sil.org/cms/scripts/render_download.php?site_id=nrsi&format=file&media_id=AbyssinicaSIL1.200.zip&filename=AbyssinicaSIL1.200.zip
 Source0:        %{archive_name}%{version}.zip
 Source1:        %{fontconf}
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
-
 BuildRequires:  fontpackages-devel
 BuildRequires:  dos2unix
 Source44: import.info
@@ -60,6 +59,10 @@ install -d -m 0755 %{buildroot}%{_fontconfig_templatedir} \
 install -m 0644 -p %{SOURCE1} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -95,17 +98,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc FONTLOG.txt OFL.txt OFL-FAQ.txt README.txt
 %doc documentation/*
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.200-alt2_8
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.200-alt2_7
 - update to new release by fcimport
 
