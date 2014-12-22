@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name: fonts-ttf-madan
 Version: 2.000
-Release: alt3_12
+Release: alt3_14
 Summary: Font for Nepali language
 Group: System/Fonts/True type
 License: GPL+
@@ -17,11 +17,13 @@ Source0: http://download.com.np/uploads/nepali_unicode/madan.zip
 Source1: %{oldname}-fontconfig.conf
 Source2: ttf2sfd.pe
 Source3: sfd2ttf.pe
+Source4: %{fontname}.metainfo.xml
 BuildArch: noarch
 BuildRequires: fontforge
 BuildRequires: fontpackages-devel
 # This patch will make sure "fc-scan madan.ttf |grep lang:" will show ne
-Patch0: madan-fonts-2.000-bug842965-u0970.patch
+# This is now newly created against fontforge2 build
+Patch0: madan-fonts-2.000-bug842965-u0970-ff2.patch
 Source44: import.info
 
 %description
@@ -41,7 +43,7 @@ cp -p %{SOURCE2} %{SOURCE3} .
 chmod 755 ttf2sfd.pe sfd2ttf.pe
 ./ttf2sfd.pe madan/*.ttf
 rm -rf madan/*ttf
-%patch0 -p1 -b .added-u0970-character
+%patch0 -p0 -b .added-u0970-character
 ./sfd2ttf.pe madan/*.sfd
 
 
@@ -59,6 +61,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -99,9 +105,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc %{fontname}/license.txt
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_14
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_12
 - update to new release by fcimport
 
