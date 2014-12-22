@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-kalapi
 Version:        0.1
-Release:        alt1_5
+Release:        alt1_6
 Summary:        OpenType sanserif font for Gujarati script
 Group:          System/Fonts/True type
 License:        OFL
@@ -15,6 +15,7 @@ BuildRequires: fontforge
 BuildRequires:  fontpackages-devel
 Source1: 67-kalapi.conf
 Source2: Makefile
+Source3:       %{fontname}.metainfo.xml
 Patch1: font-name.patch
 Source44: import.info
 
@@ -45,6 +46,10 @@ install -m 0644 -p %{fontconf} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -87,9 +92,12 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc COPYRIGHT OFL.txt README.md
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_6
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_5
 - update to new release by fcimport
 
