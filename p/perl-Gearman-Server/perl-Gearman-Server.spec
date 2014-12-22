@@ -4,16 +4,19 @@ BuildRequires: perl(Danga/Socket.pm) perl(Errno.pm) perl(FindBin.pm) perl(Gearma
 # END SourceDeps(oneline)
 Name:           perl-Gearman-Server
 Version:        1.12
-Release:        alt1
+Release:        alt1_1
 Summary:        Function call "router" and load balancer
 License:        GPL+ or Artistic
 Group:          System/Servers
 URL:            http://search.cpan.org/dist/Gearman-Server/
-Source:        http://www.cpan.org/authors/id/D/DO/DORMANDO/Gearman-Server-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/Gearman-Server-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+
+
 Source44: import.info
+%filter_from_requires /^perl\\(Danga.Socket.pm\\)\s*$/d
 
 %description
 You run a Gearman server (or more likely, many of them for both high-
@@ -27,15 +30,12 @@ one of the Gearman servers.
 %setup -q -n Gearman-Server-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
-
+make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
-
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -48,6 +48,9 @@ make test
 %{_mandir}/man1/gearmand.*
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_1
+- update to new release by fcimport
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
