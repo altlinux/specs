@@ -1,16 +1,16 @@
-BuildRequires: libfontforge-devel
 %define oldname lohit-malayalam-fonts
 %global fontname lohit-malayalam
 %global fontconf 67-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-malayalam
 Version:        2.92.0
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Free Malayalam font
 Group:          System/Fonts/True type
 License:        OFL
 URL:            https://fedorahosted.org/lohit/
 Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
+Source1:       %{fontname}.metainfo.xml
 BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
@@ -38,6 +38,10 @@ install -m 0644 -p %{fontconf} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE1} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -74,14 +78,20 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README std-test-out.txt test-malayalam.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
+
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.92.0-alt1_3
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.92.0-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
