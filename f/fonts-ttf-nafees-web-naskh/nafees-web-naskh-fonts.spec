@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-nafees-web-naskh
 Version:        1.2
-Release:        alt3_12
+Release:        alt3_13
 Summary:        Nafees Web font for writing Urdu in the Naskh script 
 
 Group:          System/Fonts/True type
@@ -25,6 +25,7 @@ Source0:        %{fontname}-%{archivedate}.zip
 ## Fix RHBZ# while not fixed upstream
 Source1:        %{fontname}-update-preferred-family.pe
 Source2:        %{fontconf}
+Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -60,6 +61,10 @@ install -m 0644 -p %{SOURCE2} \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
         %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -95,15 +100,21 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_13
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_12
 - update to new release by fcimport
 
