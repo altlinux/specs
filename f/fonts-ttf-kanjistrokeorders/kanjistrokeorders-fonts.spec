@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -11,13 +12,13 @@ BuildRequires: unzip
 
 Name:    fonts-ttf-kanjistrokeorders
 Version: 3.001
-Release: alt1_1
+Release: alt1_2
 Summary: Font to view stroke order diagrams for Kanji, Kana and etc
 License: BSD
-Group:   System/Fonts/True type
 URL:     http://sites.google.com/site/nihilistorguk/
 Source0: https://dl.dropboxusercontent.com/u/39004158/%{archivename}.zip
 Source1: %{oldname}-fontconfig.conf
+Source2: %{fontname}.metainfo.xml
 BuildArch: noarch
 BuildRequires: fontpackages-devel
 Source44: import.info
@@ -40,7 +41,6 @@ sed -i 's#\r##g' readme_en_v%{version}.utf
 
 
 %install
-
 install -m 0755 -d $RPM_BUILD_ROOT%{_fontdir}
 install -m 0644 -p *.ttf $RPM_BUILD_ROOT%{_fontdir}
 
@@ -52,6 +52,10 @@ install -m 0644 -p %{SOURCE1} \
 
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -87,14 +91,19 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc *.pdf *.txt *.utf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 3.001-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.001-alt1_1
 - update to new release by fcimport
 
