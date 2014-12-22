@@ -1,20 +1,20 @@
-%define module_version 2.12
+%define _unpackaged_files_terminate_build 1
+%define module_version 2.13
 %define module_name Test-Kit
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Import/Into.pm) perl(Module/Runtime.pm) perl(Scalar/Util.pm) perl(Sub/Delete.pm) perl(Test/Aggregate.pm) perl(Test/Aggregate/Nested.pm) perl(Test/Builder.pm) perl(Test/CPAN/Changes.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warn.pm) perl(parent.pm)
+BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Import/Into.pm) perl(Module/Runtime.pm) perl(Scalar/Util.pm) perl(Sub/Delete.pm) perl(Test/Aggregate.pm) perl(Test/Aggregate/Nested.pm) perl(Test/Builder.pm) perl(Test/CPAN/Changes.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warn.pm) perl(parent.pm) perl(Hook/LexWrap.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.12
-Release: alt2
+Version: 2.13
+Release: alt1
 Summary: Build custom test packages with only the features you want.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/K/KA/KAORU/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/K/KA/KAORU/Test-Kit-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/T*
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1
+- automated CPAN update
+
 * Sat Dec 20 2014 Igor Vlasenko <viy@altlinux.ru> 2.12-alt2
 - moved to Sisyphus as dependency
 
