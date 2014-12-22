@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(FileHandle.pm) perl(Font/TTF/Font.pm) perl(IO/File.pm) perl(Parse/RecDescent.pm) perl(Pod/Usage.pm)
 # END SourceDeps(oneline)
@@ -9,14 +10,14 @@ BuildRequires: perl(FileHandle.pm) perl(Font/TTF/Font.pm) perl(IO/File.pm) perl(
 
 Name:           fonts-ttf-sil-nuosu
 Version:        2.1.1
-Release:        alt3_8
+Release:        alt3_9
 Summary:        The Nuosu SIL Font
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://scripts.sil.org/SILYi_home
 Source0:        %{archivename}
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -45,6 +46,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -80,16 +85,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc OFL.txt doc/FONTLOG.txt
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt3_9
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt3_8
 - update to new release by fcimport
 
