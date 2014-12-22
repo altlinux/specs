@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(overload.pm) perl(Math/Trig.pm)
 # END SourceDeps(oneline)
-%define module_version 0.11
+%define module_version 0.12
 %define module_name Math-LongDouble
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.11
+Version: 0.12
 Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
@@ -34,6 +34,9 @@ Source: http://www.cpan.org/authors/id/S/SI/SISYPHUS/Math-LongDouble-%{version}.
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
