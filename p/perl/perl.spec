@@ -1,6 +1,6 @@
 Name: perl
 Version: 5.20.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -29,8 +29,12 @@ Patch14: perl-5.20.1-alt-crux-Cwd-use-realpath.patch
 Patch15: perl-5.20.1-alt-crux-fix-test-without-proc.patch
 Patch16: perl-5.20.1-alt-ldv-support-for-alt-gcc-wrapper.patch
 
+# patches from excluded Sisyphus modules
 # or just drop the tests from the test suite, as we exclude IO-Socket-IP anyway
 Patch30: perl-IO-Socket-IP-0.31-alt1.patch
+
+# cpan update
+Patch50: cpan-update-Socket-2.013-to-Socket-2.016.diff
 
 # there's a problem with strict.pm
 %add_findreq_skiplist */strict.pm
@@ -173,6 +177,7 @@ pushd cpan/IO-Socket-IP
 %patch30 -p1
 popd
 
+%patch50 -p1
 
 %build
 %define ver %(v=%version IFS=.; set $v; echo $1.$2)
@@ -735,6 +740,9 @@ EOF
 	%autolib/Unicode/Normalize
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.20.1-alt2
+- cpan update: Socket-2.013 to Socket-2.016
+
 * Fri Nov 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.20.1-alt1
 - 5.18.2 -> 5.20.1
 
