@@ -9,7 +9,7 @@ Scripts Devanagari, Gujarati, Malayalam, Odia and Tamil
 
 Name:	 fonts-ttf-samyak
 Version:	1.2.2
-Release:	alt4_13
+Release:	alt4_14
 Summary:	Free Indian truetype/opentype fonts
 Group:	System/Fonts/True type
 License:	GPLv3+ with exceptions
@@ -21,6 +21,12 @@ Source2: 67-samyak-tamil.conf
 Source3: 68-samyak-malayalam.conf
 Source4: 67-samyak-gujarati.conf
 Source5: 67-samyak-odia.conf
+Source7: %{fontname}-devanagari.metainfo.xml
+Source8: %{fontname}-tamil.metainfo.xml
+Source9: %{fontname}-malayalam.metainfo.xml
+Source10: %{fontname}-gujarati.metainfo.xml
+Source11: %{fontname}-odia.metainfo.xml
+
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 BuildRequires: fontforge >= 20080429
@@ -49,6 +55,7 @@ Scripts Devanagari.
 %{_fontconfig_templatedir}/66-samyak-devanagari.conf
 %config(noreplace) %{_fontconfig_confdir}/66-samyak-devanagari.conf
 %{_fontbasedir}/*/%{_fontstem}/Samyak-Devanagari.ttf
+%{_datadir}/appdata/%{fontname}-devanagari.metainfo.xml
 
 %package -n fonts-ttf-samyak-tamil
 Summary: Open Type Fonts for Tamil script
@@ -63,6 +70,7 @@ Scripts Tamil.
 %{_fontconfig_templatedir}/%{fontconf}-tamil.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-tamil.conf
 %{_fontbasedir}/*/%{_fontstem}/Samyak-Tamil.ttf
+%{_datadir}/appdata/%{fontname}-tamil.metainfo.xml
 
 %package -n fonts-ttf-samyak-malayalam
 Summary: Open Type Fonts for Malayalam script
@@ -77,6 +85,7 @@ Scripts Malayalam.
 %{_fontconfig_templatedir}/68-samyak-malayalam.conf
 %config(noreplace) %{_fontconfig_confdir}/68-samyak-malayalam.conf
 %{_fontbasedir}/*/%{_fontstem}/Samyak-Malayalam.ttf
+%{_datadir}/appdata/%{fontname}-malayalam.metainfo.xml
 
 %package -n fonts-ttf-samyak-gujarati
 Summary: Open Type Fonts for Gujarati script
@@ -91,6 +100,7 @@ Scripts Gujarati.
 %{_fontconfig_templatedir}/%{fontconf}-gujarati.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-gujarati.conf
 %{_fontbasedir}/*/%{_fontstem}/Samyak-Gujarati.ttf
+%{_datadir}/appdata/%{fontname}-gujarati.metainfo.xml
 
 %package -n fonts-ttf-samyak-odia
 Summary: Open Type Fonts for Odia script
@@ -107,7 +117,7 @@ Scripts Odia.
 %{_fontconfig_templatedir}/%{fontconf}-odia.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-odia.conf
 %{_fontbasedir}/*/%{_fontstem}/Samyak-Odia.ttf
-
+%{_datadir}/appdata/%{fontname}-odia.metainfo.xml
 
 %prep
 %setup -q -n samyak-fonts-%{version}
@@ -150,6 +160,18 @@ for fconf in 66-samyak-devanagari.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
 	%{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE7} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-devanagari.metainfo.xml
+install -Dm 0644 -p %{SOURCE8} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-tamil.metainfo.xml
+install -Dm 0644 -p %{SOURCE9} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-malayalam.metainfo.xml
+install -Dm 0644 -p %{SOURCE10} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-gujarati.metainfo.xml
+install -Dm 0644 -p %{SOURCE11} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-odia.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -186,12 +208,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
-
 %files -n fonts-ttf-samyak-common
 %doc COPYING README AUTHORS
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt4_14
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt4_13
 - bugfix: fixed subpackage name
 
