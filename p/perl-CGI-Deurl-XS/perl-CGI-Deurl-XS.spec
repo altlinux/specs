@@ -1,17 +1,17 @@
-%define module_version 0.07
+%define module_version 0.08
 %define module_name CGI-Deurl-XS
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.07
-Release: alt2.1
+Version: 0.08
+Release: alt1
 Summary: Fast decoder for URL parameter strings
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/A/AT/ATHOMASON/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AT/ATHOMASON/CGI-Deurl-XS-%{version}.tar.gz
 
 %description
 %summary
@@ -31,6 +31,9 @@ Source0: http://cpan.org.ua/authors/id/A/AT/ATHOMASON/%module_name-%module_versi
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2.1
 - rebuild with new perl 5.20.1
 
