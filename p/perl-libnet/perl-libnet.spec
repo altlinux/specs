@@ -1,6 +1,6 @@
 %define dist libnet
 Name: perl-%dist
-Version: 1.27
+Version: 3.04
 Release: alt1
 Epoch: 1
 
@@ -9,8 +9,8 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar
-Patch: %name-%version-%release.patch
+Source: http://www.cpan.org/authors/id/S/SH/SHAY/libnet-%{version}.tar.gz
+Patch: %name-3.04-alt.patch
 
 BuildArch: noarch
 Requires: /etc/perl5
@@ -57,6 +57,9 @@ mv %buildroot{%perl_vendor_privlib,/etc/perl5}/Net/libnet.cfg
 	%perl_vendor_privlib/Net/FTP/*.pm
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.04-alt1
+- automated CPAN update
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.27-alt1
 - new version 1.27
 
