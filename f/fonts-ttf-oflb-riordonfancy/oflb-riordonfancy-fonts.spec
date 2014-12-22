@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -7,14 +8,14 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-oflb-riordonfancy
 Version:        4
-Release:        alt3_9
+Release:        alt3_10
 Summary:        A stylized font
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://openfontlibrary.org/media/files/tthurman/354
 Source0:        http://openfontlibrary.org/people/tthurman/tthurman_-_Riordon_Fancy.zip
 Source1:        %{fontname}-fontconfig.conf
+Source2:        oflb-%{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel fontforge
@@ -50,7 +51,6 @@ endloop
 EOF
 
 %install
-
 install -dm 755 $RPM_BUILD_ROOT%{_fontdir}
 install -pm 644 RiordonFancy.ttf $RPM_BUILD_ROOT%{_fontdir}/
 
@@ -59,6 +59,10 @@ install -dm 755 $RPM_BUILD_ROOT%{_fontconfig_confdir}
 install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
   $RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/oflb-%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -99,9 +103,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc readme.txt fontlog.txt
-%dir %{_fontbasedir}/*/%{_fontstem}
+%{_datadir}/appdata/oflb-%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 4-alt3_10
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 4-alt3_9
 - update to new release by fcimport
 
