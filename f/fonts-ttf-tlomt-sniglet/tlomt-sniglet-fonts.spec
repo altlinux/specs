@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -8,14 +9,15 @@ BuildRequires: unzip
 Name:		fonts-ttf-tlomt-sniglet
 Summary:	A rounded, sans-serif font useful for headlines
 Version:	1.000
-Release:	alt3_8
+Release:	alt3_9
 # License attribution confirmed by author
 # See: sniglet-license-confirmation-email.txt
 License:	OFL
-Group:		System/Fonts/True type
 Source0:	https://s3.amazonaws.com/theleague-production/fonts/sniglet.zip
 Source1:	%{oldname}-fontconfig.conf
 Source2:	sniglet-license-confirmation-email.txt
+Source3:        %{fontname}.metainfo.xml
+
 URL:		http://www.theleagueofmoveabletype.com/fonts/2-sniglet
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -40,6 +42,10 @@ install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} %{buildroot}%{_fontcon
 install -m 0644 -p %{SOURCE1} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}.conf
 
 ln -s %{_fontconfig_templatedir}/%{fontconf}.conf %{buildroot}%{_fontconfig_confdir}/%{fontconf}.conf
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -80,8 +86,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/Sniglet.ttf
 %doc sniglet-license-confirmation-email.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_9
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_8
 - update to new release by fcimport
 
