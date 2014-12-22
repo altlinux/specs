@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -8,9 +9,8 @@ BuildRequires: unzip
 Name:		fonts-otf-oflb-goudy-bookletter-1911
 Summary:	Clean serif font based on Kennerly Old Style
 Version:	20080206
-Release:	alt3_9
+Release:	alt3_10
 License:	Public Domain
-Group:		System/Fonts/True type
 # Source was originally downloaded from here:
 # http://openfontlibrary.org/people/chemoelectric/chemoelectric_-_Goudy_Bookletter_1.zip
 # It is no longer available. The main website has this zip for download:
@@ -19,6 +19,8 @@ Group:		System/Fonts/True type
 Source0:	chemoelectric_-_Goudy_Bookletter_1.zip
 Source1:	%{oldname}-fontconfig.conf
 Source2:	GoudyBookletter1911.otf
+Source3:        %{fontname}.metainfo.xml
+
 URL:		http://home.comcast.net/~crudfactory/cf3/gb1911.html
 BuildRequires:	fontpackages-devel fontforge
 BuildArch:	noarch
@@ -47,6 +49,10 @@ install -m 0644 -p *.otf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} %{buildroot}%{_fontconfig_confdir}
 install -m 0644 -p %{SOURCE1} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -86,8 +92,12 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20080206-alt3_10
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20080206-alt3_9
 - update to new release by fcimport
 
