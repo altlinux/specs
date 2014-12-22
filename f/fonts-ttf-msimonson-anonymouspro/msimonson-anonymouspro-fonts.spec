@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-msimonson-anonymouspro
 Version:        1.002.001
-Release:        alt4_7
+Release:        alt4_8
 Summary:        A coding-friendly monospace font
 
 Group:          System/Fonts/True type
@@ -16,6 +16,7 @@ License:        OFL
 URL:            http://www.ms-studio.com/FontSales/anonymouspro.html
 Source0:        http://www.ms-studio.com/FontSales/AnonymousPro-1.002.zip
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -64,6 +65,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -103,10 +108,14 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %doc *.txt
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.002.001-alt4_8
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.002.001-alt4_7
 - update to new release by fcimport
 
