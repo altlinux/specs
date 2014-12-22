@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-App-Nopaste
-Version:        1.001
+Version:        1.002
 Release:        alt1_1
 Summary:        Easy access to any pastebin
 License:        GPL+ or Artistic
@@ -95,6 +95,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1_1
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1_1
 - update to new release by fcimport
 
