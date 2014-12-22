@@ -5,7 +5,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-tharlon
 Version:        1.002
-Release:        alt1_3
+Release:        alt1_4
 Summary:        The Myanmar font which is designed by Ngwe Tun
 
 License:        OFL
@@ -13,6 +13,7 @@ URL:            http://code.google.com/p/tharlon-font/
 Source0:        http://tharlon-font.googlecode.com/files/Tharlon-Regular.ttf
 Source1:        %{oldname}-fontconfig.conf
 Source2:        http://tharlon-font.googlecode.com/files/OFL.txt
+Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel dos2unix
@@ -47,6 +48,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -82,16 +87,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc OFL.txt
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1_4
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1_3
 - converted for ALT Linux by srpmconvert tools
 
