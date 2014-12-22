@@ -15,7 +15,7 @@ signs.
 Name:		fonts-ttf-tiresias
 Summary: 	Low vision fonts
 Version:	1.0
-Release:	alt3_14
+Release:	alt3_15
 # Font exception
 License:	GPLv3+ with exceptions
 Group:		System/Fonts/True type
@@ -32,6 +32,15 @@ Source9:	%{oldname}-pc-fontconfig.conf
 Source10:	%{oldname}-pc-z-fontconfig.conf
 Source11:	%{oldname}-sign-fontconfig.conf
 Source12:	%{oldname}-sign-z-fontconfig.conf
+Source19:	%{fontname}.metainfo.xml
+Source20:	%{fontname}-info.metainfo.xml
+Source21:	%{fontname}-info-z.metainfo.xml
+Source22:	%{fontname}-key-v2.metainfo.xml
+Source23:	%{fontname}-lp.metainfo.xml
+Source24:	%{fontname}-pc.metainfo.xml
+Source25:	%{fontname}-pc-z.metainfo.xml
+Source26:	%{fontname}-sign.metainfo.xml
+Source27:	%{fontname}-sign-z.metainfo.xml
 URL:		http://www.tiresias.org/fonts/
 BuildRequires:	fontpackages-devel
 BuildArch:	noarch
@@ -40,11 +49,11 @@ Source44: import.info
 %description
 %common_desc
 
-%package common
+%package -n fonts-ttf-tiresias-common
 Summary:	Common files for Tiresias fonts (documentation...)
 Group:		System/Fonts/True type
 
-%description common
+%description -n fonts-ttf-tiresias-common
 %common_desc
 
 This package consists of files used by other Tiresias packages.
@@ -67,6 +76,7 @@ confusion.
 %{_fontconfig_templatedir}/%{fontconf}-infofont.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-infofont.conf
 %{_fontbasedir}/*/%{_fontstem}/"Tiresias*Infofont*.ttf"
+%{_datadir}/appdata/%{fontname}-info.metainfo.xml
 
 %package -n fonts-ttf-tiresias-info-z
 Summary:	Specialized fonts for info terminals for the visually impaired
@@ -85,6 +95,7 @@ In the Infofont	Z family, the zero is crossed out.
 %{_fontconfig_templatedir}/%{fontconf}-infofont-z.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-infofont-z.conf
 %{_fontbasedir}/*/%{_fontstem}/"TIRESIAS*INFOFONTZ*.ttf"
+%{_datadir}/appdata/%{fontname}-info-z.metainfo.xml
 
 %package -n fonts-ttf-tiresias-key-v2
 Summary:	Specialized fonts for labeling keycaps for the visually impaired
@@ -100,6 +111,7 @@ The Keyfont V2 family is specialized for use in labeling keycaps.
 %{_fontconfig_templatedir}/%{fontconf}-keyfont-v2.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-keyfont-v2.conf
 %{_fontbasedir}/*/%{_fontstem}/TIREKV__.ttf
+%{_datadir}/appdata/%{fontname}-key-v2.metainfo.xml
 
 %package -n fonts-ttf-tiresias-lp
 Summary:	Specialized font for large print publications
@@ -115,6 +127,7 @@ The LPfont family is specialized for use in large print publications.
 %{_fontconfig_templatedir}/%{fontconf}-lpfont.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-lpfont.conf
 %{_fontbasedir}/*/%{_fontstem}/"Tiresias*LPfont*.ttf"
+%{_datadir}/appdata/%{fontname}-lp.metainfo.xml
 
 %package -n fonts-ttf-tiresias-pc
 Summary:	Specialized fonts for use on PCs for the visually impaired
@@ -134,6 +147,7 @@ confusion.
 %{_fontconfig_templatedir}/%{fontconf}-pcfont.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-pcfont.conf
 %{_fontbasedir}/*/%{_fontstem}/"Tiresias*PCfont*.ttf"
+%{_datadir}/appdata/%{fontname}-pc.metainfo.xml
 
 %package -n fonts-ttf-tiresias-pc-z
 Summary:	Specialized fonts for use on PCs for the visually impaired
@@ -152,6 +166,7 @@ PCfont Z family, the zero is crossed out.
 %{_fontconfig_templatedir}/%{fontconf}-pcfont-z.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-pcfont-z.conf
 %{_fontbasedir}/*/%{_fontstem}/"TIRESIAS*PCFONTZ*.ttf"
+%{_datadir}/appdata/%{fontname}-pc-z.metainfo.xml
 
 %package -n fonts-ttf-tiresias-sign
 Summary:	Specialized fonts for preparing signs for the visually impaired
@@ -171,6 +186,7 @@ confusion.
 %{_fontconfig_templatedir}/%{fontconf}-signfont.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-signfont.conf
 %{_fontbasedir}/*/%{_fontstem}/"Tiresias*Signfont*.ttf"
+%{_datadir}/appdata/%{fontname}-sign.metainfo.xml
 
 %package -n fonts-ttf-tiresias-sign-z
 Summary:	Specialized fonts for preparing signs for the visually impaired
@@ -189,6 +205,7 @@ Signfont Z family, the zero is crossed out.
 %{_fontconfig_templatedir}/%{fontconf}-signfont-z.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-signfont-z.conf
 %{_fontbasedir}/*/%{_fontstem}/"TIRESIAS*SIGNFONTZ*.ttf"
+%{_datadir}/appdata/%{fontname}-sign-z.metainfo.xml
 
 %prep
 %setup -q -c -n %{oldname}
@@ -222,6 +239,26 @@ for fontconf in %{fontconf}-infofont.conf %{fontconf}-infofont-z.conf %{fontconf
 		%{fontconf}-pcfont.conf %{fontconf}-pcfont-z.conf %{fontconf}-signfont.conf %{fontconf}-signfont-z.conf; do
 	ln -s %{_fontconfig_templatedir}/$fontconf %{buildroot}%{_fontconfig_confdir}/$fontconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE19} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE20} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-info.metainfo.xml
+install -Dm 0644 -p %{SOURCE21} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-info-z.metainfo.xml
+install -Dm 0644 -p %{SOURCE22} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-key-v2.metainfo.xml
+install -Dm 0644 -p %{SOURCE23} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-lp.metainfo.xml
+install -Dm 0644 -p %{SOURCE24} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-pc.metainfo.xml
+install -Dm 0644 -p %{SOURCE25} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-pc-z.metainfo.xml
+install -Dm 0644 -p %{SOURCE26} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-sign.metainfo.xml
+install -Dm 0644 -p %{SOURCE27} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-sign-z.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -257,11 +294,15 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-%files common
+%files -n fonts-ttf-tiresias-common
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 %doc COPYING/copying.doc COPYING/gpl.txt
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_15
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_14
 - update to new release by fcimport
 
