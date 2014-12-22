@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname serafettin-cartoon-fonts
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name serafettin-cartoon-fonts
@@ -8,12 +9,14 @@
 
 Name:          fonts-ttf-serafettin-cartoon
 Version:       0.6
-Release:       alt3_7
+Release:       alt3_8
 Summary:       Sans-serif Cartoon Fonts
-Group:         System/Fonts/True type
 License:       GPLv2+
 URL:           http://serafettin.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/serafettin/%{archivename}.tar.xz
+Source1:       %{fontname}.metainfo.xml
+Source2:       %{fontname}-condensed.metainfo.xml
+
 BuildArch:     noarch
 
 BuildRequires: fontforge
@@ -36,8 +39,6 @@ make %{?_smp_flags}
 
 
 %install
-rm -fr %{buildroot}
-
 DESTDIR=%{buildroot} make install
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
@@ -47,6 +48,13 @@ install -m 0644 -p %{fontname}.conf \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE1} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-condensed.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -82,17 +90,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc ChangeLog.txt COPYING.txt FONTLOG.txt README.txt
-%dir %{_fontbasedir}/*/%{_fontstem}
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_datadir}/appdata/%{fontname}-condensed.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_8
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_7
 - update to new release by fcimport
 
