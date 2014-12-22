@@ -1,18 +1,19 @@
+Group: System/Fonts/True type
 %define oldname tangerine-fonts
 %global fontname tangerine
 %global fontconf 62-%{fontname}.conf
 
 Name:           fonts-ttf-tangerine
 Version:        1.3
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Tangerine is a calligraphy font inspired by many italic chancery hands 
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://www.google.com/fonts/specimen/Tangerine
 Source0:        http://googlefontdirectory.googlecode.com/hg/ofl/tangerine/Tangerine_Regular.ttf
 Source1:        http://googlefontdirectory.googlecode.com/hg/ofl/tangerine/Tangerine_Bold.ttf
 Source2:        %{oldname}-fontconfig.conf
+Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -46,6 +47,10 @@ install -m 0644 -p %{SOURCE2} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -81,16 +86,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_2
 - update to new release by fcimport
 
