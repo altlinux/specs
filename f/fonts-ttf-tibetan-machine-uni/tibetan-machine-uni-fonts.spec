@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -7,14 +8,14 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-tibetan-machine-uni
 Version:	1.901
-Release:	alt3_13
+Release:	alt3_14
 Summary:	Tibetan Machine Uni font for Tibetan, Dzongkha and Ladakhi
 
-Group:		System/Fonts/True type
 # .ttf file now states GPLv3+ with fonts exceptions
 License:	GPLv3+ with exceptions
 URL:		http://www.thlib.org/tools/#wiki=/access/wiki/site/26a34146-33a6-48ce-001e-f16ce7908a6a/tibetan%%20machine%%20uni.html
 Source0:	https://collab.itc.virginia.edu/access/content/group/26a34146-33a6-48ce-001e-f16ce7908a6a/Tibetan%%20fonts/Tibetan%%20Unicode%%20Fonts/%{zipname}.zip
+Source1:        %{fontname}.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -38,6 +39,10 @@ install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
 dos2unix -o ReadMe.txt
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE1} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -76,8 +81,12 @@ fi
 %files
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc gpl.txt ReadMe.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.901-alt3_14
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.901-alt3_13
 - update to new release by fcimport
 
