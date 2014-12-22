@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -18,10 +19,9 @@ Eritrean languages (Amharic, Blin, GeE.ez, Harari, MeE.en, Tigre, Tigrinyaa..).
 
 Name:    fonts-ttf-senamirmir-washra
 Version: 4.1
-Release: alt3_11
+Release: alt3_12
 Summary: Fonts for the GeE.ez (Ethiopic) script
 
-Group:   System/Fonts/True type
 License: OFL
 URL:     http://www.senamirmir.org/projects/typography/typeface.html
 Source0: http://www.senamirmir.org/downloads/%{archivename}.zip
@@ -33,8 +33,18 @@ Source1: %{oldname}-fontconfig.conf
 # font families classified
 Source2: %{oldname}-yigezu-bisrat-goffer-fontconfig.conf
 Source3: %{oldname}-yigezu-bisrat-gothic-fontconfig.conf
-
-
+Source4: %{fontname}-bold.metainfo.xml
+Source5: %{fontname}-fantuwua.metainfo.xml
+Source6: %{fontname}-hiwua.metainfo.xml
+Source7: %{fontname}-jiret.metainfo.xml
+Source8: %{fontname}.metainfo.xml
+Source9: %{fontname}-semibold.metainfo.xml
+Source10: %{fontname}-tint.metainfo.xml
+Source11: %{fontname}-wookianos.metainfo.xml
+Source12: %{fontname}-yebse.metainfo.xml
+Source13: %{fontname}-yigezu-bisrat-goffer.metainfo.xml
+Source14: %{fontname}-yigezu-bisrat-gothic.metainfo.xml
+Source15: %{fontname}-zelan.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
@@ -48,12 +58,14 @@ Source44: import.info
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/washrab.ttf
 %{_fontbasedir}/*/%{_fontstem}/washrasb.ttf
+%{_datadir}/appdata/%{fontname}-semibold.metainfo.xml
+%{_datadir}/appdata/%{fontname}-bold.metainfo.xml
 
-%package common
+%package -n fonts-ttf-senamirmir-washra-common
 Group: System/Fonts/True type
 Summary:  Common files of %{oldname}
 
-%description common
+%description -n fonts-ttf-senamirmir-washra-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
@@ -70,7 +82,7 @@ This package consists of the a.'Ethiopic Fantuwuaa.' font.
 
 %files -n fonts-ttf-senamirmir-washra-fantuwua
 %{_fontbasedir}/*/%{_fontstem}/fantuwua.ttf
-
+%{_datadir}/appdata/%{fontname}-fantuwua.metainfo.xml
 
 %package -n fonts-ttf-senamirmir-washra-hiwua
 Group: System/Fonts/True type
@@ -84,7 +96,7 @@ This package consists of the a.'Ethiopic Hiwuaa.' font.
 
 %files -n fonts-ttf-senamirmir-washra-hiwua
 %{_fontbasedir}/*/%{_fontstem}/hiwua.ttf
-
+%{_datadir}/appdata/%{fontname}-hiwua.metainfo.xml
 
 %package -n fonts-ttf-senamirmir-washra-jiret
 Group: System/Fonts/True type
@@ -98,7 +110,7 @@ This package consists of the a.'Ethiopia Jireta.' font.
 
 %files -n fonts-ttf-senamirmir-washra-jiret
 %{_fontbasedir}/*/%{_fontstem}/jiret.ttf
-
+%{_datadir}/appdata/%{fontname}-jiret.metainfo.xml
 
 %package -n fonts-ttf-senamirmir-washra-tint
 Group: System/Fonts/True type
@@ -112,7 +124,7 @@ This package consists of the a.'Ethiopic Tinta.' font.
 
 %files -n fonts-ttf-senamirmir-washra-tint
 %{_fontbasedir}/*/%{_fontstem}/tint.ttf
-
+%{_datadir}/appdata/%{fontname}-tint.metainfo.xml
 
 %package -n fonts-ttf-senamirmir-washra-wookianos
 Group: System/Fonts/True type
@@ -126,7 +138,7 @@ This package consists of the a.'Ethiopic Wookianosa.' font.
 
 %files -n fonts-ttf-senamirmir-washra-wookianos
 %{_fontbasedir}/*/%{_fontstem}/wookianos.ttf
-
+%{_datadir}/appdata/%{fontname}-wookianos.metainfo.xml
 
 %package -n fonts-ttf-senamirmir-washra-yebse
 Group: System/Fonts/True type
@@ -140,7 +152,7 @@ This package consists of the a.'Ethiopic Yebsea.' font.
 
 %files -n fonts-ttf-senamirmir-washra-yebse
 %{_fontbasedir}/*/%{_fontstem}/yebse.ttf
-
+%{_datadir}/appdata/%{fontname}-yebse.metainfo.xml
 
 %package -n fonts-ttf-senamirmir-washra-yigezu-bisrat-goffer
 Group: System/Fonts/True type
@@ -159,7 +171,7 @@ design that served as inspiration for this work.
 %{_fontconfig_templatedir}/%{fontconf}-yigezu-bisrat-goffer.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-yigezu-bisrat-goffer.conf
 %{_fontbasedir}/*/%{_fontstem}/goffer.ttf
-
+%{_datadir}/appdata/%{fontname}-yigezu-bisrat-goffer.metainfo.xml
 
 %package -n fonts-ttf-senamirmir-washra-yigezu-bisrat-gothic
 Group: System/Fonts/True type
@@ -178,7 +190,7 @@ this work.
 %{_fontconfig_templatedir}/%{fontconf}-yigezu-bisrat-gothic.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-yigezu-bisrat-gothic.conf
 %{_fontbasedir}/*/%{_fontstem}/yigezubisratgothic.ttf
-
+%{_datadir}/appdata/%{fontname}-yigezu-bisrat-gothic.metainfo.xml
 
 %package -n fonts-ttf-senamirmir-washra-zelan
 Group: System/Fonts/True type
@@ -192,7 +204,7 @@ This package consists of the a.'Ethiopic Zelana.' font.
 
 %files -n fonts-ttf-senamirmir-washra-zelan
 %{_fontbasedir}/*/%{_fontstem}/zelan.ttf
-
+%{_datadir}/appdata/%{fontname}-zelan.metainfo.xml
 
 %prep
 %setup -n %{oldname}-%{version} -c -q
@@ -205,11 +217,9 @@ done
 
 
 %build
-
+#nothing to build
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -230,6 +240,33 @@ for fconf in %{fontconf}.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-bold.metainfo.xml
+install -Dm 0644 -p %{SOURCE5} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-fantuwua.metainfo.xml
+install -Dm 0644 -p %{SOURCE6} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-hiwua.metainfo.xml
+install -Dm 0644 -p %{SOURCE7} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-jiret.metainfo.xml
+install -Dm 0644 -p %{SOURCE8} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE9} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-semibold.metainfo.xml
+install -Dm 0644 -p %{SOURCE10} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-tint.metainfo.xml
+install -Dm 0644 -p %{SOURCE11} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-wookianos.metainfo.xml
+install -Dm 0644 -p %{SOURCE12} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-yebse.metainfo.xml
+install -Dm 0644 -p %{SOURCE13} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-yigezu-bisrat-goffer.metainfo.xml
+install -Dm 0644 -p %{SOURCE14} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-yigezu-bisrat-gothic.metainfo.xml
+install -Dm 0644 -p %{SOURCE15} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-zelan.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -265,12 +302,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
-%files common
+%files -n fonts-ttf-senamirmir-washra-common
 %doc *.txt *.pdf *.doc
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 4.1-alt3_12
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 4.1-alt3_11
 - update to new release by fcimport
 
