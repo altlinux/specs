@@ -1,26 +1,30 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(Test/Perl/Critic.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Statistics-Basic
-Version:        1.6607
-Release:        alt2_8
+Version:        1.6611
+Release:        alt1_1
 Summary:        A collection of very basic statistics modules
 License:        LGPLv2+
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Statistics-Basic/
 Source0:        http://www.cpan.org/authors/id/J/JE/JETTERO/Statistics-Basic-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Run-time
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(Number/Format.pm)
+BuildRequires:  perl(overload.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 # Tests
-BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(Test.pm)
+BuildRequires:  perl(Test/More.pm)
 Requires:       perl(Number/Format.pm) >= 1.42
 
 # Remove underspecified dependecies
@@ -44,13 +48,11 @@ my $correlation = correlation( [1 .. 3], [1 .. 3] );
 %setup -q -n Statistics-Basic-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=perl
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=perl NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -61,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.6607-alt2_8
 - update to new release by fcimport
 
