@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define dist List-MoreUtils
 Name: perl-%dist
-Version: 0.33
-Release: alt4.1
+Version: 0.401
+Release: alt1
 
 Summary: Provide the stuff missing in List::Util
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RE/REHSACK/List-MoreUtils-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-ExtUtils-CBuilder
+BuildRequires: perl-ExtUtils-CBuilder perl(Exporter/Tiny.pm)
 
 %description
 List::MoreUtils provides some trivial but commonly needed functionality
@@ -32,6 +33,9 @@ on lists which is not going to go into List::Util.
 %perl_vendor_autolib/List
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.401-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.33-alt4.1
 - rebuild with new perl 5.20.1
 
