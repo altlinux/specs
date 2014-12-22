@@ -1,54 +1,65 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(IO/Socket/INET.pm) perl(List/Util.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Storable.pm) perl(Time/HiRes.pm) perl(base.pm) perl(fields.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/Gearman/Task.pm
 Name:           perl-Gearman
 Version:        1.12
-Release:        alt1
+Release:        alt1_1
 Summary:        Distributed job system
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://danga.com/gearman/
-Source:        http://www.cpan.org/authors/id/D/DO/DORMANDO/Gearman-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/Gearman-%{version}.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(String/CRC32.pm)
-Source44: import.info
 
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(Errno.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(fields.pm)
+BuildRequires:  perl(File/Basename.pm)
+BuildRequires:  perl(FindBin.pm)
+BuildRequires:  perl(Getopt/Long.pm)
+BuildRequires:  perl(IO/Handle.pm)
+BuildRequires:  perl(IO/Socket/INET.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(POSIX.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(Socket.pm)
+BuildRequires:  perl(Storable.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(String/CRC32.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Time/HiRes.pm)
+BuildRequires:  perl(vars.pm)
+BuildRequires:  perl(warnings.pm)
+
+
+
+Source44: import.info
+%filter_from_provides /^perl\\(Gearman.Client.pm\\)$/d
 
 %description
-Gearman is a system to farm out work to other machines,
-dispatching function calls to machines that are better suited to do work,
-to do work in parallel, to load balance lots of function calls,
-or to call functions between languages.
+Gearman provides a generic application framework to farm out work to other
+machines or processes that are better suited to do the work. It allows you
+to do work in parallel, to load balance processing, and to call functions
+between languages. 
 
 %prep
 %setup -q -n Gearman-%{version}
 
-# Filter double proved for Gearman::Client:
-cat << \EOF > %{name}-prov
-#!/bin/sh
-%{__perl_provides} $* |\
-  sed -e '/^perl(Gearman::Client)$/d'
-EOF
-
-%define __perl_provides %{_builddir}/Gearman-%{version}/%{name}-prov
-chmod +x %{__perl_provides}
-
-
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -59,6 +70,9 @@ make test
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_1
+- update to new release by fcimport
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
