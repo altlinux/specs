@@ -8,8 +8,8 @@ The SMC Fonts package contains fonts for the display of\
 traditional and new Malayalam Script.
 
 Name:		fonts-ttf-smc
-Version:	6.0
-Release:	alt1_8
+Version:	6.1
+Release:	alt1_4
 Summary:	Open Type Fonts for Malayalam script
 License:	GPLv3+ with exceptions and GPLv2+ with exceptions and GPLv2+ and  GPLv2 and GPL+
 URL:		http://savannah.nongnu.org/projects/smc
@@ -21,22 +21,19 @@ Source4: 67-smc-kalyani.conf
 Source5: 65-0-smc-rachana.conf
 Source6: 67-smc-raghumalayalam.conf
 Source7: 67-smc-suruma.conf
-Source8: AnjaliOldLipi-license-confirmation-email.txt
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel > 1.13
 BuildRequires:	fontforge >= 20080429
-# https://bugzilla.redhat.com/show_bug.cgi?id=803234
-Patch1: bug-803234.patch
 Source44: import.info
 
 %description
 %common_desc
 
-%package common
+%package -n fonts-ttf-smc-common
 Group: System/Fonts/True type
 Summary:  Common files for smc-fonts
 
-%description common
+%description -n fonts-ttf-smc-common
 %common_desc
 
 %package -n fonts-ttf-smc-dyuthi
@@ -52,6 +49,7 @@ traditional Malayalam Scripts.
 %{_fontconfig_templatedir}/67-smc-dyuthi.conf
 %config(noreplace) %{_fontconfig_confdir}/67-smc-dyuthi.conf
 %{_fontbasedir}/*/%{_fontstem}/Dyuthi*.ttf
+%{_datadir}/appdata/smc-dyuthi.metainfo.xml
 %doc Dyuthi/COPYING
 
 %package -n fonts-ttf-smc-meera
@@ -67,6 +65,7 @@ traditional Malayalam Scripts.
 %{_fontconfig_templatedir}/65-0-smc-meera.conf
 %config(noreplace) %{_fontconfig_confdir}/65-0-smc-meera.conf
 %{_fontbasedir}/*/%{_fontstem}/Meera.ttf
+%{_datadir}/appdata/smc-meera.metainfo.xml
 %doc Meera/COPYING Meera/README
 
 
@@ -83,6 +82,7 @@ traditional Malayalam Scripts.
 %{_fontconfig_templatedir}/65-0-smc-rachana.conf
 %config(noreplace) %{_fontconfig_confdir}/65-0-smc-rachana.conf
 %{_fontbasedir}/*/%{_fontstem}/Rachana.ttf
+%{_datadir}/appdata/smc-rachana.metainfo.xml
 %doc Rachana/COPYING Rachana/LICENSE Rachana/README
 
 
@@ -99,6 +99,7 @@ new Malayalam Scripts.
 %{_fontconfig_templatedir}/67-smc-raghumalayalam.conf
 %config(noreplace) %{_fontconfig_confdir}/67-smc-raghumalayalam.conf
 %{_fontbasedir}/*/%{_fontstem}/RaghuMalayalamSans.ttf
+%{_datadir}/appdata/smc-raghumalayalam.metainfo.xml
 %doc RaghuMalayalamSans/COPYING
 
 %package -n fonts-ttf-smc-suruma
@@ -114,6 +115,7 @@ traditional Malayalam Scripts.
 %{_fontconfig_templatedir}/67-smc-suruma.conf
 %config(noreplace) %{_fontconfig_confdir}/67-smc-suruma.conf
 %{_fontbasedir}/*/%{_fontstem}/Suruma.ttf
+%{_datadir}/appdata/smc-suruma.metainfo.xml
 %doc Suruma/COPYING Suruma/README
 
 %package -n fonts-ttf-smc-kalyani
@@ -129,13 +131,14 @@ new Malayalam Scripts.
 %{_fontconfig_templatedir}/67-smc-kalyani.conf
 %config(noreplace) %{_fontconfig_confdir}/67-smc-kalyani.conf
 %{_fontbasedir}/*/%{_fontstem}/Kalyani.ttf
+%{_datadir}/appdata/smc-kalyani.metainfo.xml
 %doc Kalyani/COPYING
 
 %package -n fonts-ttf-smc-anjalioldlipi
 Group: System/Fonts/True type
 Summary: Open Type Fonts for Malayalam script
 Requires: %{name}-common = %{version}-%{release}
-License: GPL+
+License: OFL
 %description -n fonts-ttf-smc-anjalioldlipi
 The Anjali OldLipi package contains fonts for the display of
 traditional Malayalam Scripts.
@@ -144,12 +147,12 @@ traditional Malayalam Scripts.
 %{_fontconfig_templatedir}/67-smc-anjalioldlipi.conf
 %config(noreplace) %{_fontconfig_confdir}/67-smc-anjalioldlipi.conf
 %{_fontbasedir}/*/%{_fontstem}/AnjaliOldLipi.ttf
+%{_datadir}/appdata/smc-anjalioldlipi.metainfo.xml
 %doc AnjaliOldLipi/COPYING
 
 
 %prep
 %setup -q -n fonts
-%patch1 -p1 -b .1-panose-setting
 sed -i 's/\r//' */COPYING
 sed -i 's/\r//' Rachana/LICENSE
 
@@ -194,6 +197,24 @@ for fconf in 65-0-smc-meera.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
 	%{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream data
+install -Dm 0644 -p smc.metainfo.xml \
+		%{buildroot}%{_datadir}/appdata/smc.metainfo.xml
+install -Dm 0644 -p AnjaliOldLipi/smc-anjalioldlipi.metainfo.xml \
+		%{buildroot}%{_datadir}/appdata/smc-anjalioldlipi.metainfo.xml
+install -Dm 0644 -p Dyuthi/smc-dyuthi.metainfo.xml \
+		%{buildroot}%{_datadir}/appdata/smc-dyuthi.metainfo.xml
+install -Dm 0644 -p Kalyani/smc-kalyani.metainfo.xml \
+		%{buildroot}%{_datadir}/appdata/smc-kalyani.metainfo.xml
+install -Dm 0644 -p Meera/smc-meera.metainfo.xml \
+		%{buildroot}%{_datadir}/appdata/smc-meera.metainfo.xml
+install -Dm 0644 -p Rachana/smc-rachana.metainfo.xml \
+		%{buildroot}%{_datadir}/appdata/smc-rachana.metainfo.xml
+install -Dm 0644 -p RaghuMalayalamSans/smc-raghumalayalam.metainfo.xml \
+		%{buildroot}%{_datadir}/appdata/smc-raghumalayalam.metainfo.xml
+install -Dm 0644 -p Suruma/smc-suruma.metainfo.xml \
+		%{buildroot}%{_datadir}/appdata/smc-suruma.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -230,11 +251,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
-
-%files common
-%doc ChangeLog 
+%files -n fonts-ttf-smc-common
+%{_datadir}/appdata/%{fontname}.metainfo.xml
+%doc ChangeLog
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 6.1-alt1_4
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_8
 - update to new release by fcimport
 
