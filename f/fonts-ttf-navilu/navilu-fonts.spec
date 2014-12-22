@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-navilu
 Version:        1.2
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Free Kannada opentype sans-serif font
 
 Group:          System/Fonts/True type
@@ -15,6 +15,7 @@ BuildArch:      noarch
 BuildRequires: fontforge
 BuildRequires:  fontpackages-devel
 Source1: 67-navilu.conf
+Source2:       %{fontname}.metainfo.xml
 Source44: import.info
 
 
@@ -40,6 +41,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -82,9 +87,12 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYING README
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_5
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_4
 - update to new release by fcimport
 
