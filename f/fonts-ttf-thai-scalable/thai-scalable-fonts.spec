@@ -1,26 +1,42 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/ttmkfdir /usr/bin/vptovf
 # END SourceDeps(oneline)
 %define oldname thai-scalable-fonts
-%define fontname thai-scalable
-%define fontconf 90-%{fontname}-synthetic
+%global fontname thai-scalable
+%global fontconf 90-%{fontname}-synthetic
 
-%define archivename fonts-tlwg
+%global archivename fonts-tlwg
 
-%define common_desc \
+%global common_desc \
 %{archivename} provides a collection of free scalable Thai fonts.
 
 Name:      fonts-ttf-thai-scalable
 Version:   0.5.0
-Release:   alt2_8
+Release:   alt2_9
 Summary:   Thai TrueType fonts
-Group:     System/Fonts/True type
 License:   GPLv2+ and Bitstream Vera
 URL:       http://linux.thai.net/projects/thaifonts-scalable
 Source0:   http://linux.thai.net/pub/ThaiLinux/software/%{archivename}/%{archivename}-%{version}.tar.gz
 Source1:   %{fontconf}-garuda.conf
 Source2:   %{fontconf}-kinnari.conf
 Source3:   %{fontconf}-umpush.conf
+
+#Appdata Metainfo
+Source11:  %{fontname}-garuda.metainfo.xml
+Source12:  %{fontname}-kinnari.metainfo.xml
+Source13:  %{fontname}-loma.metainfo.xml
+Source14:  %{fontname}-norasi.metainfo.xml
+Source15:  %{fontname}-purisa.metainfo.xml
+Source16:  %{fontname}-sawasdee.metainfo.xml
+Source17:  %{fontname}-tlwgmono.metainfo.xml
+Source18:  %{fontname}-tlwgtypewriter.metainfo.xml
+Source19:  %{fontname}-tlwgtpist.metainfo.xml
+Source20:  %{fontname}-tlwgtypo.metainfo.xml
+Source21:  %{fontname}-umpush.metainfo.xml
+Source22:  %{fontname}-waree.metainfo.xml
+
+
 BuildArch: noarch
 BuildRequires: fontforge >= 20071110
 BuildRequires: fontpackages-devel
@@ -37,19 +53,19 @@ Thai scalable fonts included here are:
 - TlwgMono, PseudoMono, Purisa by TLWG
 
 
-%package common
+%package -n fonts-ttf-thai-scalable-common
 Summary:   Common files of %{oldname}
 Group:     System/Fonts/True type
 
-%description common
+%description -n fonts-ttf-thai-scalable-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
 
 
 %package -n fonts-ttf-thai-scalable-garuda
+Group: System/Fonts/True type
 Summary:        Thai Garuda fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-garuda
@@ -61,11 +77,12 @@ This package provides the Garuda family of Thai fonts.
 %{_fontconfig_templatedir}/%{fontconf}-garuda.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-garuda.conf
 %{_fontbasedir}/*/%{_fontstem}/Garuda*.ttf
+%{_datadir}/appdata/%{fontname}-garuda.metainfo.xml
 
 
 %package -n fonts-ttf-thai-scalable-kinnari
+Group: System/Fonts/True type
 Summary:        Thai Kinnari fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-kinnari
@@ -77,11 +94,12 @@ This package provides the Kinnari family of Thai fonts.
 %{_fontconfig_templatedir}/%{fontconf}-kinnari.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-kinnari.conf
 %{_fontbasedir}/*/%{_fontstem}/Kinnari*.ttf
+%{_datadir}/appdata/%{fontname}-kinnari.metainfo.xml
 
 
 %package -n fonts-ttf-thai-scalable-loma
+Group: System/Fonts/True type
 Summary:        Thai Loma fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-loma
@@ -91,11 +109,12 @@ This package provides the Loma family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-loma
 %{_fontbasedir}/*/%{_fontstem}/Loma*.ttf
+%{_datadir}/appdata/%{fontname}-loma.metainfo.xml
 
 
 %package -n fonts-ttf-thai-scalable-norasi
+Group: System/Fonts/True type
 Summary:        Thai Norasi fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-norasi
@@ -105,11 +124,12 @@ This package provides the Norasi family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-norasi
 %{_fontbasedir}/*/%{_fontstem}/Norasi*.ttf
+%{_datadir}/appdata/%{fontname}-norasi.metainfo.xml
 
 
 %package -n fonts-ttf-thai-scalable-purisa
+Group: System/Fonts/True type
 Summary:        Thai Purisa fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-purisa
@@ -119,11 +139,12 @@ This package provides the Purisa family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-purisa
 %{_fontbasedir}/*/%{_fontstem}/Purisa*.ttf
+%{_datadir}/appdata/%{fontname}-purisa.metainfo.xml
 
 
 %package -n fonts-ttf-thai-scalable-sawasdee
+Group: System/Fonts/True type
 Summary:        Thai Sawasdee fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-sawasdee
@@ -133,11 +154,12 @@ This package provides the Sawasdee family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-sawasdee
 %{_fontbasedir}/*/%{_fontstem}/Sawasdee*.ttf
+%{_datadir}/appdata/%{fontname}-sawasdee.metainfo.xml
 
 
 %package -n fonts-ttf-thai-scalable-tlwgmono
+Group: System/Fonts/True type
 Summary:        Thai TlwgMono fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-tlwgmono
@@ -147,11 +169,12 @@ This package provides the TlwgMono family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgmono
 %{_fontbasedir}/*/%{_fontstem}/TlwgMono*.ttf
+%{_datadir}/appdata/%{fontname}-tlwgmono.metainfo.xml
 
 
 %package -n fonts-ttf-thai-scalable-tlwgtypewriter
+Group: System/Fonts/True type
 Summary:        Thai TlwgTypewriter fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-tlwgtypewriter
@@ -161,11 +184,12 @@ This package provides the TlwgTypewriter family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgtypewriter
 %{_fontbasedir}/*/%{_fontstem}/TlwgTypewriter*.ttf
+%{_datadir}/appdata/%{fontname}-tlwgtypewriter.metainfo.xml
 
 
 %package -n fonts-ttf-thai-scalable-tlwgtypist
+Group: System/Fonts/True type
 Summary:        Thai TlwgTypist fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-tlwgtypist
@@ -175,11 +199,12 @@ This package provides the TlwgTypist family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgtypist
 %{_fontbasedir}/*/%{_fontstem}/TlwgTypist*.ttf
+%{_datadir}/appdata/%{fontname}-tlwgtpist.metainfo.xml
 
 
 %package -n fonts-ttf-thai-scalable-tlwgtypo
+Group: System/Fonts/True type
 Summary:        Thai TlwgTypo fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-tlwgtypo
@@ -189,11 +214,12 @@ This package provides the TlwgTypo family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgtypo
 %{_fontbasedir}/*/%{_fontstem}/TlwgTypo*.ttf
+%{_datadir}/appdata/%{fontname}-tlwgtypo.metainfo.xml
 
 
 %package -n fonts-ttf-thai-scalable-umpush
+Group: System/Fonts/True type
 Summary:        Thai Umpush fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-umpush
@@ -205,11 +231,12 @@ This package provides the Umpush family of Thai fonts.
 %{_fontconfig_templatedir}/%{fontconf}-umpush.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-umpush.conf
 %{_fontbasedir}/*/%{_fontstem}/Umpush*.ttf
+%{_datadir}/appdata/%{fontname}-umpush.metainfo.xml
 
 
 %package -n fonts-ttf-thai-scalable-waree
+Group: System/Fonts/True type
 Summary:        Thai Waree fonts
-Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-thai-scalable-waree
@@ -219,6 +246,7 @@ This package provides the Waree family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-waree
 %{_fontbasedir}/*/%{_fontstem}/Waree*.ttf
+%{_datadir}/appdata/%{fontname}-waree.metainfo.xml
 
 
 %prep
@@ -254,6 +282,32 @@ for fconf in %{fontconf}-garuda.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE11} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-garuda.metainfo.xml
+install -Dm 0644 -p %{SOURCE12} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-kinnari.metainfo.xml
+install -Dm 0644 -p %{SOURCE13} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-loma.metainfo.xml
+install -Dm 0644 -p %{SOURCE14} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-norasi.metainfo.xml
+install -Dm 0644 -p %{SOURCE15} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-purisa.metainfo.xml
+install -Dm 0644 -p %{SOURCE16} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-sawasdee.metainfo.xml
+install -Dm 0644 -p %{SOURCE17} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-tlwgmono.metainfo.xml
+install -Dm 0644 -p %{SOURCE18} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-tlwgtypewriter.metainfo.xml
+install -Dm 0644 -p %{SOURCE19} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-tlwgtpist.metainfo.xml
+install -Dm 0644 -p %{SOURCE20} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-tlwgtypo.metainfo.xml
+install -Dm 0644 -p %{SOURCE21} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-umpush.metainfo.xml
+install -Dm 0644 -p %{SOURCE22} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-waree.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -289,12 +343,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
-%files common
+%files -n fonts-ttf-thai-scalable-common
 %doc AUTHORS README COPYING NEWS
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_9
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_8
 - update to new release by fcimport
 
