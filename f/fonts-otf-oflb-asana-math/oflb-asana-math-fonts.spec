@@ -1,22 +1,23 @@
+Group: System/Fonts/True type
 %define oldname oflb-asana-math-fonts
 %global fontname oflb-asana-math
 %global fontconf 63-%{fontname}.conf
 
 Name:           fonts-otf-oflb-asana-math
-Version:        0.930
-Release:        alt2_6
+Version:        0.952
+Release:        alt1_2
 Summary:        An OpenType font with a MATH table
 
-Group:          System/Fonts/True type
 License:        OFL
 ## Note that upstream is dead and there is no download link available at this minute
 ## so please don't report FTBFS bugs for this package.
 URL:            http://www.ctan.org/tex-archive/fonts/Asana-Math/
-Source0:        http://ekalavya.imsc.res.in/tex-archive/fonts/Asana-Math/Asana-Math.otf
+Source0:        http://mirrors.ctan.org/fonts/Asana-Math/Asana-Math.otf
 Source1:        %{oldname}-fontconfig.conf
 Source2:        README.license
 #license text extracted from font file
 Source3:        License.txt
+Source4:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -46,6 +47,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -81,15 +86,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
 %doc README.license License.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.952-alt1_2
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.930-alt2_6
 - update to new release by fcimport
 
