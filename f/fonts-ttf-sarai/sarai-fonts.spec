@@ -1,18 +1,20 @@
+Group: System/Fonts/True type
 %define oldname sarai-fonts
 %global fontname sarai
 %global fontconf 68-%{fontname}.conf
 
 Name:        fonts-ttf-sarai
 Version:     1.0
-Release:     alt3_15
+Release:     alt3_16
 Summary:     Free Sarai Hindi Truetype Font
 
-Group:       System/Fonts/True type
 License:     GPLv2
 URL:         http://www.sarai.net/practices/indic-localization
 Source0:     http://www.sarai.net/practices/indic-localization/downloads-1/Sarai_07.ttf
 Source1:     COPYING
 Source2:     %{fontconf}
+Source3:     %{fontname}.metainfo.xml
+
 BuildArch:   noarch
 BuildRequires: fontpackages-devel
 Source44: import.info
@@ -29,7 +31,6 @@ cp -p %{SOURCE1} .
 echo "Nothing to do in Build."
 
 %install
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p %{SOURCE0} %{buildroot}%{_fontdir}
 
@@ -40,6 +41,10 @@ install -m 0644 -p %{SOURCE2} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -80,10 +85,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc COPYING
-
-
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_16
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_15
 - update to new release by fcimport
 
