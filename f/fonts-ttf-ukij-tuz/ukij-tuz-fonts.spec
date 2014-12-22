@@ -1,17 +1,18 @@
+Group: System/Fonts/True type
 %define oldname ukij-tuz-fonts
 %global fontname ukij-tuz
 %global fontconf 66-%{fontname}.conf
 
 Name:		fonts-ttf-ukij-tuz
 Version:	3.10
-Release:	alt2_6
+Release:	alt2_7
 Summary:	Uyghur Computer Science Association (UKIJ) Unicode fonts
 
-Group:		System/Fonts/True type
 License:	OFL
 URL:		http://www.ukij.org/fonts/
 Source0:	http://www.ukij.org/fonts/fonts/UKIJTuz.ttf
-Source1:    %{oldname}-fontconfig.conf
+Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -35,6 +36,10 @@ install -m 0644 -p %{SOURCE1} \
 	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -74,10 +79,13 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
 %doc
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 3.10-alt2_7
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 3.10-alt2_6
 - update to new release by fcimport
 
