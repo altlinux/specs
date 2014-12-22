@@ -1,6 +1,6 @@
 Name: krb5user
 Version: 0.1.2
-Release: alt2.6
+Release: alt3
 
 Summary: User helper library for MIT Kerberos
 
@@ -67,6 +67,9 @@ scons install --install-sandbox=%buildroot --libdir=%_libdir
 %python_sitelibdir/*
 
 %changelog
+* Mon Dec 22 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.2-alt3
+- fix build
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2.6
 - Rebuilt with Boost 1.53.0
 
@@ -105,7 +108,7 @@ scons install --install-sandbox=%buildroot --libdir=%_libdir
 
 * Tue Mar 03 2009 Evgeny Sinelnikov <sin@altlinux.ru> 0.1.1-alt1
 - Fixed long delay due backward resolving with hostname like FQDN
-- Removed obsolete macroses %post*_ldconfig
+- Removed obsolete macroses %%post*_ldconfig
 
 * Tue Nov 11 2008 Evgeny Sinelnikov <sin@altlinux.ru> 0.1.0-alt4
 - Fixed install for x86_64
