@@ -3,8 +3,8 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Warnings
-Version:	0.016
-Release:	alt1_2
+Version:	0.019
+Release:	alt1_1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -15,6 +15,7 @@ BuildArch:	noarch
 BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
+BuildRequires:	perl(Carp.pm)
 BuildRequires:	perl(Exporter.pm)
 BuildRequires:	perl(Test/Builder.pm)
 BuildRequires:	perl(parent.pm)
@@ -22,16 +23,15 @@ BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(warnings.pm)
 # Test Suite
 BuildRequires:	perl(CPAN/Meta.pm)
-BuildRequires:	perl(CPAN/Meta/Requirements.pm)
+BuildRequires:	perl(CPAN/Meta/Prereqs.pm)
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
-BuildRequires:	perl(File/Spec/Functions.pm)
+BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(if.pm)
-BuildRequires:	perl(List/Util.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Tester.pm)
-BuildRequires:	perl(version.pm)
-Source44: import.info
 # Runtime
+Requires:	perl(Carp.pm)
+Source44: import.info
 
 %description
 If you've ever tried to use Test::NoWarnings to confirm there are no warnings
@@ -71,10 +71,14 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 make test
 
 %files
-%doc Changes CONTRIBUTING LICENSE README README.md examples/
+%doc LICENSE
+%doc Changes CONTRIBUTING README examples/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.019-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_2
 - update to new release by fcimport
 
