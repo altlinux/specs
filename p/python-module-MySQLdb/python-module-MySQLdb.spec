@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
-Version: 1.2.3
-Release: alt4
+%define oname MySQLdb
+%def_with python3
+%def_disable check
+
+Version: 1.2.5
+Release: alt1
 Epoch: 1
-%setup_python_module MySQLdb
+%setup_python_module %oname
 Name: %packagename
 
 Summary: Python interface to MySQL-3.23+
@@ -13,12 +17,20 @@ License: GPLv2
 Group: Development/Python
 Url: http://sourceforge.net/projects/mysql-python
 
-Packager: Python Development Team <python@packages.altlinux.org>
-
 Source: MySQL-python.tar
 
 # Automatically added by buildreq on Fri Jul 13 2007
 BuildRequires: libmysqlclient-devel python-module-setuptools zlib-devel
+
+BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-nose
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose
+BuildPreReq: python-tools-2to3
+%endif
 
 Obsoletes: MySQL-python <= 0.9.2-alt6
 Obsoletes: %name <= %epoch:%version-%release
@@ -31,8 +43,43 @@ Python. The design goals are:
 - Thread-safety
 - Thread-friendliness (threads will not block each other)
 
-
 %description -l ru_RU.UTF-8
+MySQLdb - это интерфейс к популярной СУБД MySQL для Python.
+При его создании преследовались следующие цели:
+
+- Соответствие API баз данных для Python версии 2.0
+- Совместимость с многопоточными средами
+- "Дружелюбие к потокам" (потоки не блокируют друг друга)
+
+%package pickles
+Summary: Pickles for %oname
+Group: Development/Python
+
+%description pickles
+MySQLdb is an interface to the popular MySQL database server for
+Python. The design goals are:
+
+- Compliance with Python database API version 2.0
+- Thread-safety
+- Thread-friendliness (threads will not block each other)
+
+This package contains pickles for %oname.
+
+%package -n python3-module-%oname
+Summary: Python interface to MySQL-3.23+
+Summary(ru_RU.UTF-8): Интерфейс к MySQL-3.23+ для Python
+Group: Development/Python3
+%py3_provides %oname
+
+%description -n python3-module-%oname
+MySQLdb is an interface to the popular MySQL database server for
+Python. The design goals are:
+
+- Compliance with Python database API version 2.0
+- Thread-safety
+- Thread-friendliness (threads will not block each other)
+
+%description -n python3-module-%oname -l ru_RU.UTF-8
 MySQLdb - это интерфейс к популярной СУБД MySQL для Python.
 При его создании преследовались следующие цели:
 
@@ -43,20 +90,70 @@ MySQLdb - это интерфейс к популярной СУБД MySQL дл�
 %prep
 %setup -n MySQL-python
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
+%prepare_sphinx .
+ln -s ../objects.inv doc/
+
 %build
 %add_optflags -fno-strict-aliasing
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+export PYTHONPATH=%buildroot%python_sitelibidr
+pushd doc
+sphinx-build -b pickle -d _build/doctrees . _build/pickle
+sphinx-build -b html -d _build/doctrees . _build/html
+popd
+
+cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
-%doc README HISTORY doc/*
+%doc HISTORY *.md doc/_build/html
 %python_sitelibdir/%modulename
 %python_sitelibdir/*egg-info*
 %python_sitelibdir/_mysql*
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%if_with python3
+%files -n python3-module-%oname
+%doc HISTORY *.md doc/_build/html
+%python3_sitelibdir/*
+%endif
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.5-alt1
+- Version 1.2.5
+- Added module for Python 3
+
 * Fri Mar 22 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.2.3-alt4
 - cleanup spec
 - rebuild with libmysqlclient18
