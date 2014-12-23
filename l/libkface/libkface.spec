@@ -1,6 +1,6 @@
 Name: libkface
 Version: 3.5.0
-Release: alt1
+Release: alt2
 
 Summary: Libkface is a Qt/C++ wrapper around LibFace
 License: GPL2
@@ -43,6 +43,12 @@ Devel files for %name
 %_libdir/cmake/Kface-*/
 
 %changelog
+* Tue Dec 23 2014 Sergey V Turchin <zerg@altlinux.org> 3.5.0-alt2
+- digikam 4.6.0
+
+* Thu Dec 18 2014 Sergey V Turchin <zerg@altlinux.org> 3.5.0-alt0.M70P.1
+- built for M70P
+
 * Thu Nov 20 2014 Sergey V Turchin <zerg@altlinux.org> 3.5.0-alt1
 - new version
 
