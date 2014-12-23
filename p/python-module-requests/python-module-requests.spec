@@ -2,13 +2,14 @@
 %def_with python3
 
 Name:           python-module-requests
-Version:        2.4.3
-Release:        alt2.git20141107
+Version:        2.5.0
+Release:        alt1.git20141216
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
 License:        ASL 2.0
 URL:            http://pypi.python.org/pypi/requests
+# https://github.com/kennethreitz/requests.git
 Source0:        %{name}-%{version}.tar
 # Explicitly use the system certificates in ca-certificates.
 # https://bugzilla.redhat.com/show_bug.cgi?id=904614
@@ -24,12 +25,10 @@ BuildArch:      noarch
 BuildRequires:  python-devel python-modules-json
 BuildRequires:  python-module-chardet
 BuildRequires:  python-module-urllib3 >= 1.8.2
-BuildRequires:  python-module-ordereddict
 
 Requires:       ca-certificates
 Requires:       python-module-chardet
 Requires:       python-module-urllib3 >= 1.8.2
-Requires:       python-module-ordereddict
 
 %description
 Most existing Python modules for sending HTTP requests are extremely verbose and 
@@ -45,6 +44,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel python3-base
 BuildRequires:  python3-module-chardet
 BuildRequires:  python3-module-urllib3 >= 1.8.2
+Requires:       ca-certificates
 Requires:       python3-module-chardet
 Requires:       python3-module-urllib3 >= 1.8.2
 
@@ -121,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt1.git20141216
+- Version 2.5.0
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.3-alt2.git20141107
 - New snapshot
 
