@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.18
-Release: alt1.git20141210
+Version: 0.2.1
+Release: alt1.git20141222
 Summary: Omni API
 License: GPLv3
 Group: Development/Python
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20141222
+- Version 0.2.1
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.18-alt1.git20141210
 - Initial build for Sisyphus
 
