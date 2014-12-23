@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Text-MultiMarkdown
-Version: 1.000034
+Version: 1.000035
 Release: alt1
 
 Summary: Convert MultiMarkdown syntax to (X)HTML
@@ -28,7 +28,7 @@ Source: %m_distro-%version.tar
 
 BuildRequires: perl-devel perl-Encode perl-Text-Markdown perl-Test-Exception perl-List-MoreUtils
 BuildRequires: perl-Text-Diff perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Spelling
-BuildRequires: perl-HTML-Tidy
+BuildRequires: perl-HTML-Tidy perl(HTML/Entities.pm)
 
 %description
 Markdown is a text-to-HTML filter; it translates an easy-to-read /
@@ -61,9 +61,13 @@ export TEST_POD=1
 
 %files
 %_bindir/MultiMarkdown.pl
+%_man1dir/*
 %perl_vendor_privlib/Text/*
 
 %changelog
+* Tue Dec 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.000035-alt1
+- automated CPAN update
+
 * Thu Dec 15 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 1.000034-alt1
 - Initial build for ALT Linux Sisyphus.
 
