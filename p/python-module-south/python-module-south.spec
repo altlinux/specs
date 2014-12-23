@@ -1,4 +1,4 @@
-%define version 1.0.1
+%define version 1.0.2
 %define release alt1
 %define oname south
 %setup_python_module %oname
@@ -133,7 +133,7 @@ popd
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/test*
-%exclude %python_sitelibdir/*/*/*/test.*
+%exclude %python_sitelibdir/*/*/*/test*
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -143,7 +143,7 @@ popd
 
 %files tests
 %python_sitelibdir/*/test*
-%python_sitelibdir/*/*/*/test.*
+%python_sitelibdir/*/*/*/test*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -151,17 +151,20 @@ popd
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test.*
-%exclude %python3_sitelibdir/*/*/*/*/test.*
+%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/*/test*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/test*
 %python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/*/test.*
-%python3_sitelibdir/*/*/*/*/test.*
+%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/*/*/*/test*
 %endif
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
+- Version 1.0.2
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1
 - Version 1.0.1
 
