@@ -7,8 +7,8 @@
 %def_with openssl
 
 Name: pgadmin3
-Version: 1.18.1
-Release: alt1.1
+Version: 1.20.0
+Release: alt1
 
 Summary: Powerful administration and development platform for PostgreSQL.
 License: BSD
@@ -18,7 +18,7 @@ Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 Url: http://www.pgadmin.org/
 
 Source: %name-%version.tar
-# Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 Requires: %name-docs-en_US
 
@@ -57,6 +57,7 @@ All docs for %name.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 /bin/sh bootstrap
@@ -135,6 +136,9 @@ mv -f %buildroot%_datadir/%name/i18n/??_?? %buildroot%_datadir/locale
 %doc %_datadir/%name/docs/sl_SI
 
 %changelog
+* Tue Dec 23 2014 Alexey Shabalin <shaba@altlinux.ru> 1.20.0-alt1
+- git REL-1_20_0_PATCHES branch
+
 * Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.18.1-alt1.1
 - Rebuilt with wxGTK 2.8.12
 
