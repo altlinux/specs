@@ -1,0 +1,146 @@
+%define mname coveralls
+%define oname z4r-%mname
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 2.4.4
+Release: alt1.git20141111
+Summary: Python interface to coveralls.io API
+License: ASLv2.0
+Group: Development/Python
+Url: https://pypi.python.org/pypi/python-coveralls/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/z4r/python-coveralls.git
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-yaml python-module-requests
+BuildPreReq: python-module-coverage python-module-six
+BuildPreReq: python-module-sh python-module-pytest-pep8
+BuildPreReq: python-module-pytest-cov python-module-httpretty
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-yaml python3-module-requests
+BuildPreReq: python3-module-coverage python3-module-six
+BuildPreReq: python3-module-sh python3-module-pytest-pep8
+BuildPreReq: python3-module-pytest-cov python3-module-httpretty
+%endif
+
+%py_provides %mname z4r_%mname
+Conflicts: python-module-%mname < %EVR
+Conflicts: python-module-%mname > %EVR
+Provides: python-module-%mname = %EVR
+%py_requires yaml requests coverage six sh
+
+%description
+This package provides a module to interface with the https://coveralls.io
+API.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+%py_requires pytest_pep8 pytest_cov httpretty
+
+%description tests
+This package provides a module to interface with the https://coveralls.io
+API.
+
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
+Summary: Python interface to coveralls.io API
+Group: Development/Python3
+%py3_provides %mname z4r_%mname
+Conflicts: python3-module-%mname < %EVR
+Conflicts: python3-module-%mname > %EVR
+Provides: python3-module-%mname = %EVR
+%py3_requires yaml requests coverage six sh
+
+%description -n python3-module-%oname
+This package provides a module to interface with the https://coveralls.io
+API.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+%py3_requires pytest_pep8 pytest_cov httpretty
+
+%description -n python3-module-%oname-tests
+This package provides a module to interface with the https://coveralls.io
+API.
+
+This package contains tests for %oname.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%build
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
+%python_install
+
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
+%files
+%doc *.rst
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests.*
+
+%files tests
+%python_sitelibdir/*/tests.*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst
+%_bindir/*.py3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests.*
+%exclude %python3_sitelibdir/*/*/tests.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests.*
+%python3_sitelibdir/*/*/tests.*
+%endif
+
+%changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.4-alt1.git20141111
+- Initial build for Sisyphus
+
