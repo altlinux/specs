@@ -23,7 +23,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -65,7 +65,7 @@ Patch1002: alt-dont-require-plugin-file.patch
 # Automatically added by buildreq on Fri Sep 20 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcom_err-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libssl-devel libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxml2-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
-BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel libharfbuzz-devel
+BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel libharfbuzz-devel
 BuildRequires: libpcre-devel libudev-devel libdrm-devel libgbm-devel zlib-devel libgtk+2-devel
 BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl)
 BuildRequires: libX11-devel libXi-devel libxkbcommon-devel libxkbcommon-x11-devel
@@ -711,6 +711,9 @@ done
 
 
 %changelog
+* Tue Dec 23 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt3
+- fix build requires
+
 * Mon Dec 22 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt2
 - build docs
 
