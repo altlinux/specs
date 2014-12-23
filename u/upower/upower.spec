@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec/upower
 
 Name: upower
-Version: 0.99.1
+Version: 0.99.2
 Release: alt1
 
 Summary: Power Management Service
@@ -120,6 +120,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Dec 23 2014 Yuri N. Sedunov <aris@altlinux.org> 0.99.2-alt1
+- 0.99.2
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.99.1-alt1
 - 0.99.1
 - built against libimobiledevice.so.5/libplist.so.3
