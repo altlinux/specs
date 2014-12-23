@@ -1,6 +1,6 @@
 %define oname yams
 Name: python-module-%oname
-Version: 0.40.0
+Version: 0.40.2
 Release: alt1
 Summary: Entity / relation schema
 License: LGPL
@@ -55,6 +55,9 @@ python setup.py test
 %python_sitelibdir/*/test
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.40.2-alt1
+- Version 0.40.2
+
 * Wed Nov 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.40.0-alt1
 - Version 0.40.0
 
