@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.1
-Release: alt1.git20141210
+Version: 0.3.0
+Release: alt1.git20141223
 Summary: A Cobertura coverage report parser written in Python
 License: MIT
 Group: Development/Python
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20141223
+- Version 0.3.0
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20141210
 - Version 0.2.1
 
