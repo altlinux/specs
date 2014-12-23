@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.2
-Release: alt1.git20141021
+Release: alt1.git20141209
 Summary: Python tools for handling intervals (ranges of comparable objects)
 License: BSD
 Group: Development/Python
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.git20141209
+- New snapshot
+
 * Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.git20141021
 - Initial build for Sisyphus
 
