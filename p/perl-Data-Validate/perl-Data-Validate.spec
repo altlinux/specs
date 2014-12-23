@@ -1,6 +1,6 @@
 %define bname Data-Validate
 Name: perl-%bname
-Version: 0.08
+Version: 0.09
 Release: alt1
 Summary: Common data validation methods
 Group: Development/Perl
@@ -37,5 +37,8 @@ names make it clear what you're trying to test for.
 
 
 %changelog
+* Tue Dec 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Sun Jan 26 2014 Led <led@altlinux.ru> 0.08-alt1
 - initial build
