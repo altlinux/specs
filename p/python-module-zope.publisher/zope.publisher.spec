@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 4.0.0
-Release: alt1.a4
+Release: alt2
 Summary: The Zope publisher publishes Python objects on the web
 License: Boost Software License, Version 1.0
 Group: Development/Python
@@ -139,6 +139,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.0.0-alt2
+- Version 4.0.0
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.0.0-alt1.a4
 - Version 4.0.0a4 again
 
