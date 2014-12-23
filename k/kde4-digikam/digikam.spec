@@ -1,10 +1,11 @@
 %add_findpackage_path %_kde4_bindir
 %def_disable marble
+%def_enable baloo
 %define rname digikam
 %define label digiKam
 Name: kde4-%rname
 %define lname lib%name
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -24,8 +25,9 @@ BuildRequires: doxygen gcc-c++ graphviz kde4graphics-devel kde4pimlibs-devel lib
 BuildRequires: libpgf-devel libclapack-devel libusb-compat-devel liblcms2-devel
 BuildRequires: kde4libs-devel libkface-devel libkgeomap-devel boost-devel
 BuildRequires: libopencv-devel libsqlite-devel eigen3
+%if_enabled baloo
 BuildRequires: kde4-baloo-devel
-
+%endif
 %if_enabled marble
 BuildRequires: kde4edu-devel
 %endif
@@ -169,7 +171,10 @@ __EOF__
 %build
 %K4build \
     -DENABLE_INTERNALMYSQL=OFF \
-    -DENABLE_LCMS2=ON
+    -DENABLE_MYSQLSUPPORT=OFF \
+    -DENABLE_BALOOSUPPORT=%{?_enable_baloo:ON}%{!?_enable_baloo:OFF} \
+    -DENABLE_LCMS2=ON \
+    #
 
 %install
 %K4install
@@ -223,6 +228,9 @@ rm -f %buildroot/%_K4i18n/*/*/libkgeomap*
 %_K4link/*.so
 
 %changelog
+* Tue Dec 23 2014 Sergey V Turchin <zerg@altlinux.org> 4.6.0-alt1
+- new version
+
 * Thu Nov 20 2014 Sergey V Turchin <zerg@altlinux.org> 4.5.0-alt1
 - new version
 

@@ -1,5 +1,5 @@
 Name: libkgeomap
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 
 Group: System/Libraries
@@ -74,6 +74,12 @@ rm -rf %buildroot/%_K4i18n/*/*/digikam*
 
 
 %changelog
+* Tue Dec 23 2014 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1
+- new version
+
+* Thu Dec 18 2014 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.M70P.1
+- built for M70P
+
 * Thu Nov 20 2014 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt1
 - new version
 

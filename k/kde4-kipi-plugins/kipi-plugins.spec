@@ -4,7 +4,7 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1
 
 Group: Graphics
@@ -21,6 +21,7 @@ Source11: FindKSane.cmake
 Source12: FindKipi.cmake
 Patch1: alt-arm-cast-to-qreal.patch
 Patch2: alt-lib-version.patch
+Patch3: alt-find-qtsoap.patch
 
 Requires: %name-core = %version-%release
 Requires: %name-expoblending = %version-%release
@@ -74,6 +75,7 @@ KDE 4 library.
 %setup -q -n %rname-%version -a1 -a2
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 mv %rname-po-%version po
 mv %rname-doc-%version doc
 #install -m 0644 %SOURCE10 cmake/modules
@@ -160,6 +162,12 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Tue Dec 23 2014 Sergey V Turchin <zerg@altlinux.org> 4.6.0-alt1
+- new version
+
+* Thu Dec 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.5.0-alt0.M70P.1
+- built for M70P
+
 * Thu Nov 20 2014 Sergey V Turchin <zerg@altlinux.org> 4.5.0-alt1
 - new version
 
