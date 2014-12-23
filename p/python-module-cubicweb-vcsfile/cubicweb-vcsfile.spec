@@ -1,6 +1,6 @@
 %define oname cubicweb-vcsfile
 Name: python-module-%oname
-Version: 1.17.0
+Version: 2.0.0
 Release: alt1
 Summary: Component to integrate version control systems data into the CubicWeb framework
 License: LGPL
@@ -17,11 +17,12 @@ BuildPreReq: python-module-cubicweb-tag
 BuildPreReq: python-module-cubicweb-folder
 BuildPreReq: python-module-logilab-mtconverter
 BuildPreReq: python-module-logilab-common
+BuildPreReq: python-module-hglib
 
 Requires: cubicweb python-module-cubicweb-localperms
 Requires: python-module-cubicweb-tag
 Requires: python-module-cubicweb-folder
-%py_requires logilab.mtconverter logilab.common svn mercurial
+%py_requires logilab.mtconverter logilab.common svn mercurial hglib
 
 %description
 This cube stores the data found in a version content manager repository.
@@ -52,6 +53,9 @@ python setup.py test
 %_docdir/%oname
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1
+- Version 2.0.0
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.17.0-alt1
 - Initial build for Sisyphus
 
