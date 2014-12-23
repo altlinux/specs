@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 20140810
-Release: alt2
+Version: 20141214
+Release: alt1
 
 Summary: Library with thread-safe connection pooling, file post support, sanity friendly etc
 License: MIT
@@ -20,7 +20,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildRequires:  python-module-six python-module-backports.ssl_match_hostname python-module-ordereddict
+BuildRequires:  python-module-six python-module-backports.ssl_match_hostname
+BuildRequires: python-module-ndg-httpsclient
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -30,7 +31,8 @@ BuildPreReq: python3-devel
 %setup_python_module %oname
 
 Requires: python-module-ndg-httpsclient
-Requires: python-module-six python-module-backports.ssl_match_hostname python-module-ordereddict ca-certificates
+Requires: python-module-six python-module-backports.ssl_match_hostname ca-certificates
+%py_requires ndg.httpsclient
 
 %description
 Python HTTP library with thread-safe connection pooling, file post
@@ -40,6 +42,7 @@ support, sanity friendly, and more.
 Summary: Library with thread-safe connection pooling, file post support, sanity friendly etc
 Group: Development/Python3
 Requires: python3-module-ndg-httpsclient
+Requires: python3-module-six ca-certificates
 
 %description -n python3-module-%oname
 Python HTTP library with thread-safe connection pooling, file post
@@ -90,7 +93,7 @@ This package contains documentation for urllib3.
 %prep
 %setup
 
-rm -rf urllib3/packages/
+#rm -rf urllib3/packages/
 
 #patch0 -p1
 
@@ -153,6 +156,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20141214-alt1
+- New snapshot
+
 * Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140810-alt2
 - New snapshot
 
