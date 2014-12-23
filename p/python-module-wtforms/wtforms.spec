@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.2
-Release: alt1.dev.git20140718
+Release: alt1.dev.git20141210
 Summary: A flexible forms validation and rendering library for python web development
 License: BSD
 Group: Development/Python
@@ -114,6 +114,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1.dev.git20141210
+- New snapshot
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1.dev.git20140718
 - Initial build for Sisyphus
 
