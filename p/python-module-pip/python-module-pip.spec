@@ -1,4 +1,4 @@
-%define version 1.5.6
+%define version 6.0.1
 %define release alt1
 %setup_python_module pip
 
@@ -57,9 +57,11 @@ Group: Development/Python3
 
 %if_with python3
 cp -fR . ../python3
+%if 0
 pushd ../python3
 %patch -p2
 popd
+%endif
 %endif
 
 %prepare_sphinx .
@@ -112,6 +114,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
 %endif
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.1-alt1
+- Version 6.0.1
+
 * Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.6-alt1
 - Version 1.5.6
 - Added module for Python 3
