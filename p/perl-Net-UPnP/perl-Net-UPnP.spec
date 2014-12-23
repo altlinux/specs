@@ -4,8 +4,8 @@
 %define _enable_test 1
 
 Name: perl-Net-UPnP
-Version: 1.4.2
-Release: alt1.1
+Version: 1.4.3
+Release: alt1
 
 Summary: Perl extension for UPnP
 
@@ -19,7 +19,7 @@ BuildArch: noarch
 Source: http://search.cpan.org//CPAN/authors/id/S/SK/SKONNO/%m_distro-%version.tar.gz
 
 # Automatically added by buildreq on Wed Feb 06 2008
-BuildRequires: perl-devel perl-version
+BuildRequires: perl-devel perl-version perl(Module/Build.pm)
 
 %description
 This package provides some functions to control UPnP devices.
@@ -46,6 +46,9 @@ outputs the RSS file for Vodcasting.
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Tue Dec 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
