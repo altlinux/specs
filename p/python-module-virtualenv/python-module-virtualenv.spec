@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%modulename
-Version: 1.11.6
+Version: 12.0.1
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -101,10 +101,10 @@ mv %buildroot%_bindir/virtualenv %buildroot%_bindir/virtualenv3
 
 %if_with check
 %check
-%__python setup.py test
+py.test
 %if_with python3
 pushd ../python3
-%__python3 setup.py test
+py.test-%_python3_version
 popd
 %endif
 %endif
@@ -124,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 12.0.1-alt1
+- Version 12.0.1
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.6-alt1
 - Version 1.11.6
 
