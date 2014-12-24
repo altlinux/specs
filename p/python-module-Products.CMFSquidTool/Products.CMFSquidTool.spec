@@ -1,7 +1,7 @@
 %define oname Products.CMFSquidTool
 Name: python-module-%oname
 Version: 1.5.2
-Release: alt1.svn20100304
+Release: alt2.svn20100304
 Summary: HTTP cache management for CMF sites
 License: ZPL
 Group: Development/Python
@@ -45,11 +45,9 @@ This package contains tests for %oname.
 %python_build_debug
 
 %install
-%python_install
-
-%ifarch x86_64
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
+install -d %buildroot%python_sitelibdir/Products
+cp -fR Products/CMFSquidTool %buildroot%python_sitelibdir/Products/
+cp -fR *.egg-info %buildroot%python_sitelibdir/
 
 %check
 python setup.py test
@@ -64,6 +62,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt2.svn20100304
+- Added missing files
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt1.svn20100304
 - Initial build for Sisyphus
 
