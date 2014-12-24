@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.9.5
-Release: alt2
+Version: 3.9.6
+Release: alt1
 Summary: Make standalone ZEO database server instances
 License: ZPLv2.1
 Group: Development/Python
@@ -99,7 +99,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.rst
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -113,7 +113,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
@@ -124,6 +124,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.9.6-alt1
+- Version 3.9.6
+
 * Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.9.5-alt2
 - Added module for Python 3
 
