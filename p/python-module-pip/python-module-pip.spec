@@ -1,4 +1,4 @@
-%define version 6.0.1
+%define version 6.0.3
 %define release alt1
 %setup_python_module pip
 
@@ -114,6 +114,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
 %endif
 
 %changelog
+* Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.3-alt1
+- Version 6.0.3
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.1-alt1
 - Version 6.0.1
 
