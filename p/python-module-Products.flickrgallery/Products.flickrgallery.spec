@@ -1,7 +1,7 @@
 %define oname Products.flickrgallery
 Name: python-module-%oname
 Version: 1.1.1
-Release: alt1.git20141205
+Release: alt2.git20141205
 Summary: A Gallery product for Plone, powered by Flickr
 License: GPL
 Group: Development/Python
@@ -58,6 +58,12 @@ This package contains tests for %oname.
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+# It is the file in the package whose name matches the format emacs or vim uses 
+# for backup and autosave files. It may have been installed by  accident.
+find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+# failsafe cleanup if the file is declared as %%doc
+find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+
 %check
 python setup.py test
 
@@ -71,6 +77,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/*/*test*.py*
 
 %changelog
+* Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt2.git20141205
+- Applied python-module-Products.flickrgallery-1.1.1-alt1.git20141205.diff
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20141205
 - Initial build for Sisyphus
 
