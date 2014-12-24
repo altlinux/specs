@@ -1,8 +1,8 @@
 %define mname eea
 %define oname %mname.cache
 Name: python-module-%oname
-Version: 7.3
-Release: alt1.dev.git20141120
+Version: 7.4
+Release: alt1.dev.git20141223
 Summary: Easy use memcached cache with Zope and Plone
 License: GPLv2+
 Group: Development/Python
@@ -89,6 +89,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.4-alt1.dev.git20141223
+- Version 7.4-dev
+
 * Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt1.dev.git20141120
 - Initial build for Sisyphus
 
