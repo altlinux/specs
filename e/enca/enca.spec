@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: enca
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: A program that guesses encoding of text files
@@ -124,6 +124,9 @@ linked programs using the Extremely Naive Charset Analyser library.
 # - fix devel-docs/html/ build
 
 %changelog
+* Wed Dec 24 2014 Michael Shigorin <mike@altlinux.org> 1.16-alt1
+- 1.16
+
 * Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1.15-alt1
 - 1.15
 
