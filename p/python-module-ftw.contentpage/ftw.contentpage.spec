@@ -1,8 +1,8 @@
 %define mname ftw
 %define oname %mname.contentpage
 Name: python-module-%oname
-Version: 1.8.4
-Release: alt1.dev0.git20141120
+Version: 1.8.7
+Release: alt1.dev0.git20141216
 Summary: Contentpage based on Simplelayout for for web/intranet
 License: GPLv2+
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
-BuildPreReq: python-module-pyquery
+BuildPreReq: python-module-pyquery python-module-openid
 BuildPreReq: python-module-archetypes.schemaextender
 BuildPreReq: python-module-collective.quickupload
 BuildPreReq: python-module-ftw.calendarwidget
@@ -63,10 +63,14 @@ BuildPreReq: python-module-zope.event
 BuildPreReq: python-module-zope.configuration
 BuildPreReq: python-module-zope.viewlet
 BuildPreReq: python-module-zope.container
+BuildPreReq: python-module-plone.api
+BuildPreReq: python-module-plone.formwidget.recaptcha
+BuildPreReq: python-module-plone.dexterity
+BuildPreReq: python-module-plone.directives.form
 
 %py_provides %oname
 Requires: python-module-Zope2
-%py_requires zope.publisher zope.dottedname zope.i18nmessageid
+%py_requires zope.publisher zope.dottedname zope.i18nmessageid plone.api
 %py_requires zope.component zope.browserpage zope.interface
 %py_requires plone.indexer plone.app.portlets plone.app.blob zope.schema
 %py_requires plone.app.imaging plone.portlets plone.z3cform zope.i18n
@@ -80,6 +84,8 @@ Requires: python-module-Zope2
 %py_requires collective.geo.settings collective.geo.kml Products.CMFCore
 %py_requires collective.geo.contentlocations collective.geo.geographer
 %py_requires collective.geo.openlayers collective.geo.mapwidget
+%py_requires plone.formwidget.recaptcha plone.dexterity
+%py_requires plone.directives.form
 
 %description
 ftw.contentpage provides some content types optimized for organisations,
@@ -130,6 +136,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.7-alt1.dev0.git20141216
+- Version 1.8.7.dev0
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.4-alt1.dev0.git20141120
 - Initial build for Sisyphus
 
