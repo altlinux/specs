@@ -16,7 +16,7 @@
 
 Name: nginx
 Version: 1.6.2
-Release: alt1.1
+Release: alt2
 
 Summary: Fast HTTP server
 License: BSD
@@ -271,6 +271,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Wed Dec 24 2014 Denis Smirnov <mithraen@altlinux.ru> 1.6.2-alt2
+- update rtmp module to 1.1.6
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1.1
 - rebuild with new perl 5.20.1
 
