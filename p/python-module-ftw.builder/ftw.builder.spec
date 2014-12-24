@@ -1,8 +1,8 @@
 %define mname ftw
 %define oname %mname.builder
 Name: python-module-%oname
-Version: 1.5.0
-Release: alt1.dev0.git20141127
+Version: 1.5.3
+Release: alt1.dev0.git20141206
 Summary: Builder pattern for creating Plone objects in tests
 License: GPLv2+
 Group: Development/Python
@@ -109,6 +109,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.3-alt1.dev0.git20141206
+- Version 1.5.3.dev0
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.dev0.git20141127
 - Initial build for Sisyphus
 
