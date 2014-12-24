@@ -1,5 +1,5 @@
 Name: altlinux-repos
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: A set of ALT repos desktop files
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/mirrors
 
 %changelog
+* Wed Dec 24 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4-alt1
+- Dropped ftp.linux.kiev.ua mirror (ALT#30104, #30598).
+
 * Wed Feb 19 2014 Andrey Cherepanov <cas@altlinux.org> 0.3-alt1
 - Informika mirror is dead, remove it
 
