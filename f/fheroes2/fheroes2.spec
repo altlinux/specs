@@ -1,4 +1,4 @@
-%define rev svn3225
+%define rev svn3269
 Name: fheroes2
 Version: 20131009
 Release: alt1.%rev
@@ -55,6 +55,9 @@ install -pm 644 {AUTHORS,changelog.txt,COPYING,LICENSE,README} %buildroot%_docdi
 
 
 %changelog
+* Wed Dec 24 2014 Andrew Clark <andyc@altlinux.org> 20131009-alt1.svn3269
+- version update to 20131009-alt1.svn3269
+
 * Sun Aug 31 2014 Andrew Clark <andyc@altlinux.org> 20131009-alt1.svn3225
 - version update 20131009-alt1.svn3225
 
