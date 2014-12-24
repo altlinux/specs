@@ -2,7 +2,7 @@
 %define oname %mname.wizard
 Name: python-module-%oname
 Version: 1.4.9
-Release: alt1.dev.git20140207
+Release: alt2.dev.git20140207
 Summary: This is a library for creating multi-page wizards using z3c.form
 License: GPLv2+
 Group: Development/Python
@@ -67,6 +67,11 @@ This package contains tests for %oname.
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+pushd collective/z3cform/wizard
+cp -fR *.zcml *.css *.pt *.txt locales \
+	%buildroot%python_sitelibdir/collective/z3cform/wizard/
+popd
+
 %check
 python setup.py test
 
@@ -80,6 +85,9 @@ python setup.py test
 %python_sitelibdir/collective/z3cform/*/tests.*
 
 %changelog
+* Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.9-alt2.dev.git20140207
+- Added missing files
+
 * Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.9-alt1.dev.git20140207
 - Initial build for Sisyphus
 
