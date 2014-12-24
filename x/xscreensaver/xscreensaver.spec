@@ -9,11 +9,13 @@
 #
 
 Name: xscreensaver
-Version: 5.29
-Release: alt1
+Version: 5.32
+Release: alt2
+
 Summary: A screen saver and locker for the X window system
 License: BSD
 Group: Graphical desktop/Other
+
 Url: http://www.jwz.org/%name
 
 # gear repos: http://packages.altlinux.org/en/Sisyphus/srpms/xscreensaver/gear
@@ -310,6 +312,12 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 %files -n mate-screensaver-modules-xscreensaver-gl -f xscreensaver-mate-gl
 
 %changelog
+* Wed Dec 24 2014 Michael Shigorin <mike@altlinux.org> 5.32-alt2
+- updated hack lists
+
+* Wed Dec 24 2014 Michael Shigorin <mike@altlinux.org> 5.32-alt1
+- new version 5.32
+
 * Tue Aug 05 2014 Michael Shigorin <mike@altlinux.org> 5.29-alt1
 - new version 5.29
 
