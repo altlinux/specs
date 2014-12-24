@@ -2,8 +2,8 @@
 %def_with python3
 
 Name:           python-module-requests
-Version:        2.5.0
-Release:        alt1.git20141216
+Version:        2.5.1
+Release:        alt1.git20141223
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
@@ -121,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt1.git20141223
+- Version 2.5.1
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt1.git20141216
 - Version 2.5.0
 
