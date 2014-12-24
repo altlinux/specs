@@ -47,9 +47,12 @@
 %define src_3_14_version 2.02
 %define src_3_15_version 2.02
 %define src_3_16_version 2.03
+%define src_3_17_version 2.05
+%define src_3_18_version 2.05
+%define src_3_19_version 2.06
 
 Name: etercifs
-Version: 5.4.10
+Version: 5.4.11
 Release: alt1
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
@@ -105,6 +108,9 @@ Source53: %src_package_name-3.13-%src_3_13_version.tar.bz2
 Source54: %src_package_name-3.14-%src_3_14_version.tar.bz2
 Source55: %src_package_name-3.15-%src_3_15_version.tar.bz2
 Source56: %src_package_name-3.16-%src_3_16_version.tar.bz2
+Source57: %src_package_name-3.17-%src_3_17_version.tar.bz2
+Source58: %src_package_name-3.18-%src_3_18_version.tar.bz2
+Source59: %src_package_name-3.19-%src_3_19_version.tar.bz2
 Source60: %src_package_name-centos60-%src_centos60_version.tar.bz2
 Source70: %src_package_name-centos70-%src_centos70_version.tar.bz2
 
@@ -143,6 +149,9 @@ Provides: %src_package_name-3.13 = %version-%release
 Provides: %src_package_name-3.14 = %version-%release
 Provides: %src_package_name-3.15 = %version-%release
 Provides: %src_package_name-3.16 = %version-%release
+Provides: %src_package_name-3.17 = %version-%release
+Provides: %src_package_name-3.18 = %version-%release
+Provides: %src_package_name-3.19 = %version-%release
 
 Obsoletes: %src_package_name-2.6.24
 Obsoletes: %src_package_name-2.6.25
@@ -195,7 +204,7 @@ cat <<EOF >%buildroot%_sysconfdir/sysconfig/%name.conf
 # this options useful only for wine share using and security=share setting in smb.conf
 #MOUNT_OPTIONS=user=guest,pass=,rw,iocharset=utf8,noperm,forcemand,direct,nounix
 # wine options since etercifs 4.4.5 enable full wine support
-MOUNT_OPTIONS=user=guest,pass=,rw,iocharset=utf8,noperm,wine
+MOUNT_OPTIONS=user=guest,pass=,rw,iocharset=utf8,noperm,wine,sec=ntlmv2
 
 # default path for share mounting
 DEFAULT_MOUNTPOINT=/net/sharebase
@@ -284,6 +293,9 @@ cp %SOURCE53 %buildroot/%etercifs_src/
 cp %SOURCE54 %buildroot/%etercifs_src/
 cp %SOURCE55 %buildroot/%etercifs_src/
 cp %SOURCE56 %buildroot/%etercifs_src/
+cp %SOURCE57 %buildroot/%etercifs_src/
+cp %SOURCE58 %buildroot/%etercifs_src/
+cp %SOURCE59 %buildroot/%etercifs_src/
 
 # CentOS 6.x
 cp %SOURCE60 %buildroot/%etercifs_src/
@@ -367,6 +379,12 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.15-%src_3_15_version.tar.bz2
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.15-%version.tar.bz2
 ln -s ../../../../%etercifs_src/%src_package_name-3.16-%src_3_16_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.16-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.17-%src_3_17_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.17-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.18-%src_3_18_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.18-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.19-%src_3_19_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.19-%version.tar.bz2
 
 # Special case for Fedora 15 v2.6.4x.* kernels
 ln -s ../../../../%etercifs_src/%src_package_name-3.0-%src_3_0_version.tar.bz2 \
@@ -396,6 +414,18 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
 %_sbindir/%name-build
 
 %changelog
+* Wed Dec 24 2014 Pavel Shilovsky <piastry@altlinux.org> 5.4.11-alt1
+- Add sec=ntlmv2 to MOUNT_OPTIONS
+- Add sources for 3.19 (v3.19-rc1)
+- Add sources for 3.18 (v3.18.1)
+- Add sources for 3.17 (v3.17.7)
+- Update 3.16 sources from stable (v3.16.7)
+- Update 3.14 sources from stable (v3.14.27)
+- Update 3.12 sources from stable (v3.12.35)
+- Update 3.10 sources from stable (v3.10.63)
+- Update 3.4 sources from stable (v3.4.105)
+- Update 3.2 sources from stable (v3.2.65)
+
 * Fri Aug 08 2014 Pavel Shilovsky <piastry@altlinux.org> 5.4.10-alt1
 - Detect CentOS 7.0 during build
 - Add sources for CentOS 7.0
