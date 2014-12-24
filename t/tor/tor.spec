@@ -11,7 +11,7 @@
 
 Name: tor
 Version: 0.2.5.10
-Release: alt1
+Release: alt2
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -116,7 +116,8 @@ fi
 %config %_sysconfdir/logrotate.d/%name
 %{_unitdir}/%{name}.service
 %_bindir/tor
-%_bindir/torify
+# torify is moved to torsocks package to avoid automatic dependency on it
+%exclude %_bindir/torify
 %_bindir/tor-resolve
 %_bindir/tor-gencert
 %_man1dir/*.1.*
@@ -139,6 +140,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Wed Dec 24 2014 Vladimir Didenko <cow@altlinux.ru> 0.2.5.10-alt2
+- don't pack torify (moved to torsocks package)
+
 * Fri Dec 05 2014 Vladimir Didenko <cow@altlinux.ru> 0.2.5.10-alt1
 - new version
 - systemd support

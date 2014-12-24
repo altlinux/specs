@@ -1,6 +1,6 @@
 Name: torsocks
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
 Summary: Use SOCKS-friendly applications with Tor
 Group: Security/Networking
@@ -10,6 +10,7 @@ Packager: Vladimir Didenko <cow@altlinux.ru>
 
 Source: %name-%version.tar
 Source1: %name.bash_completion
+Source2: torify
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: autoconf-archive
@@ -33,10 +34,12 @@ rejects UDP traffic from the application you are using.
 
 mkdir -p %buildroot/etc/bash_completion.d
 install -p -m644 %SOURCE1 %buildroot%_sysconfdir/bash_completion.d/%name
+install -p -m755 %SOURCE2 %buildroot%_bindir/torify
 
 %files
 %doc ChangeLog gpl-2.0.txt LICENSE README.md
 %{_bindir}/%name
+%{_bindir}/torify
 %{_mandir}/man1/%name.1.*
 %{_mandir}/man5/%name.conf.5.*
 %{_mandir}/man8/%name.8.*
@@ -52,6 +55,9 @@ install -p -m644 %SOURCE1 %buildroot%_sysconfdir/bash_completion.d/%name
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed Dec 24 2014 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt3
+- move torify from tor to this package
+
 * Thu Dec 5 2014 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt2
 - Fix bash completion file
 
