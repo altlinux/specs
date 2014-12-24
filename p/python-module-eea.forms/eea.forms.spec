@@ -1,8 +1,8 @@
 %define mname eea
 %define oname %mname.forms
 Name: python-module-%oname
-Version: 6.3
-Release: alt1.dev.git20141120
+Version: 6.4
+Release: alt1.dev.git20141223
 Summary: A collection of custom AT Widgets and Fields
 License: GPLv2+
 Group: Development/Python
@@ -107,6 +107,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.4-alt1.dev.git20141223
+- Version 6.4-dev
+
 * Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.3-alt1.dev.git20141120
 - Initial build for Sisyphus
 
