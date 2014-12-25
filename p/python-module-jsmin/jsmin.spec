@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.11
+Version: 2.1.0
 Release: alt1
 Summary: JavaScript minifier
 License: MIT
@@ -87,7 +87,7 @@ popd
 %endif
 
 %files
-%doc *.rst
+%doc *.rst *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test.*
 
@@ -96,7 +96,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst
+%doc *.rst *.txt
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test.*
 %exclude %python3_sitelibdir/*/*/test.*
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1
+- Version 2.1.0
+
 * Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.11-alt1
 - Initial build for Sisyphus
 
