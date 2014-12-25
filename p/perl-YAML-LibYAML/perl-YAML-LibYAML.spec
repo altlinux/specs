@@ -5,7 +5,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(blib.pm) perl(o
 # END SourceDeps(oneline)
 BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
-Version:        0.54
+Version:        0.55
 Release: alt1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
@@ -77,6 +77,9 @@ make test
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Thu Dec 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
 - automated CPAN update
 
