@@ -1,7 +1,7 @@
 %define mname eea
 %define oname %mname.exhibit
 Name: python-module-%oname
-Version: 7.7
+Version: 7.8
 Release: alt1
 Summary: EEA Exhibit provides Simile Widgets Exhibit JS libraries as Zope 3 resources
 License: GPLv2+
@@ -69,6 +69,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.8-alt1
+- Version 7.8
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.7-alt1
 - Initial build for Sisyphus
 
