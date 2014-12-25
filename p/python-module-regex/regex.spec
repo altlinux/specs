@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2014.11.14
+Version: 2014.12.24
 Release: alt1
 Summary: Alternate regular expression module, to replace re
 License: PSFL
@@ -83,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.12.24-alt1
+- Version 2014.12.24
+
 * Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.11.14-alt1
 - Version 2014.11.14
 
