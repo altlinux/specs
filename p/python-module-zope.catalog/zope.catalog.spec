@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt2.a1
+Release: alt3
 Summary: Cataloging and Indexing Framework for the Zope Toolkit
 License: ZPLv2.1
 Group: Development/Python
@@ -20,7 +20,7 @@ BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_requires zope ZODB3 zope.annotation zope.intid zope.component
-%py_requires zope.container zope.index zope.interface
+%py_requires zope.container zope.index zope.interface persistent
 %py_requires zope.lifecycleevent zope.location zope.schema
 
 %description
@@ -31,7 +31,7 @@ basic search algorithm.
 Summary: Cataloging and Indexing Framework for the Zope Toolkit
 Group: Development/Python3
 %py3_requires zope ZODB3 zope.annotation zope.intid zope.component
-%py3_requires zope.container zope.index zope.interface
+%py3_requires zope.container zope.index zope.interface persistent
 %py3_requires zope.lifecycleevent zope.location zope.schema
 
 %description -n python3-module-%oname
@@ -98,7 +98,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests.*
@@ -108,7 +108,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
@@ -120,6 +120,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3
+- Version 4.0.0
+
 * Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2.a1
 - Added module for Python 3
 
