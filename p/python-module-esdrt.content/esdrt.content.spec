@@ -2,7 +2,7 @@
 %define oname %mname.content
 Name: python-module-%oname
 Version: 1.27
-Release: alt1.dev0.git20141222
+Release: alt1.dev0.git20141223
 Summary: Content-types for ESD Review Tool
 License: GPLv2
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
-BuildPreReq: python-module-openid
+BuildPreReq: python-module-openid python-module-argparse
 BuildPreReq: python-module-five.grok
 BuildPreReq: python-module-plone.app.dexterity
 BuildPreReq: python-module-plone.namedfile
@@ -133,6 +133,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.27-alt1.dev0.git20141223
+- New snapshot
+
 * Mon Dec 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.27-alt1.dev0.git20141222
 - Initial build for Sisyphus
 
