@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.0
-Release: alt2.a1
+Release: alt3
 Summary: Browser menu implementation for Zope
 License: ZPL
 Group: Development/Python
@@ -42,7 +42,7 @@ directives for configuring them.
 Summary: Tests for zope.browsermenu
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing
+%py3_requires zope.testing zope.testrunner
 
 %description -n python3-module-%oname-tests
 This package provides an implementation of browser menus and ZCML
@@ -54,7 +54,7 @@ This package contains tests for zope.browsermenu.
 Summary: Tests for zope.browsermenu
 Group: Development/Python
 Requires: %name = %version-%release
-%py_requires zope.testing
+%py_requires zope.testing zope.testrunner
 
 %description tests
 This package provides an implementation of browser menus and ZCML
@@ -98,7 +98,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests
@@ -108,7 +108,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
@@ -118,6 +118,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt3
+- Version 4.1.0
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt2.a1
 - Added module for Python 3
 
