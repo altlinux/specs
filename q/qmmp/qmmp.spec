@@ -1,5 +1,5 @@
 %define branch 0.9
-%define svn svn4592
+%define svn svn4636
 
 Version: %branch.0
 Epoch: 1
@@ -18,14 +18,15 @@ Requires: unzip winamplike-skins lib%name = %version-%release
 
 BuildPreReq: rpm-build-wlskins doxygen
 
-BuildRequires: cmake >= 2.4.8 gcc-c++ libavformat-devel libcdio-devel
+BuildRequires: cmake >= 2.4.8
+BuildRequires: gcc-c++ libavformat-devel libcdio-devel
 BuildRequires: libcurl-devel libfaad-devel libmad-devel libmodplug-devel
 BuildRequires: libmpcdec-devel libpulseaudio-devel >= 0.9.15 libqt4-devel
 BuildRequires: libsamplerate-devel libtag-devel >= 1.6 libvorbis-devel
 BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
 BuildRequires: libprojectM-devel >= 2.0.1 jackit-devel xorg-xf86miscproto-devel
 BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4 libwildmidi-devel >= 0.2.3.4
-BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel >= 1.0.3
+BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel >= 1.0.3 libudisks2-devel
 
 # disable for 5.1
 BuildRequires: libopusfile-devel
@@ -823,6 +824,17 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Thu Dec 25 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn4636
+- 0.9.0 svn4636 version
+- build with cmake
+
+* Tue Dec 23 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn4634
+- 0.9.0 svn4634 version
+- build with qmake
+
+* Wed Dec 10 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn4630
+- 0.9.0 svn4630 version
+
 * Tue Oct 21 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn4592
 - 0.9.0 svn4592 version
 
