@@ -1,10 +1,11 @@
 %define oname tornadopush
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.5.8
-Release: alt1.git20141128
+Version: 0.6
+Release: alt1.git20141225
 Summary: Push and presence server built with Tornado and Redis
 License: MIT
 Group: Development/Python
@@ -20,7 +21,7 @@ BuildPreReq: python-module-tornado python-module-redis-py
 BuildPreReq: python-module-itsdangerous python-module-yaml
 BuildPreReq: python-module-jsmin python-module-tornado-redis
 BuildPreReq: python-module-backports.ssl_match_hostname
-BuildPreReq: python-module-certifi
+BuildPreReq: python-module-certifi python-module-toredis
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -28,7 +29,7 @@ BuildPreReq: python3-module-tornado python3-module-redis-py
 BuildPreReq: python3-module-itsdangerous python3-module-yaml
 BuildPreReq: python3-module-jsmin python3-module-tornado-redis
 BuildPreReq: python3-module-backports.ssl_match_hostname
-BuildPreReq: python3-module-certifi
+BuildPreReq: python3-module-certifi python3-module-toredis
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -100,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.git20141225
+- Version 0.6
+
 * Sun Nov 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.8-alt1.git20141128
 - Initial build for Sisyphus
 
