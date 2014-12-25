@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.5.0
-Release: alt1.git20141105
+Version: 1.6.0
+Release: alt1.git20141212
 Summary: RabbitMQ Focused AMQP low-level library
 License: BSD
 Group: Development/Python
@@ -128,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.git20141212
+- Version 1.6.0
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.git20141105
 - Version 1.5.0
 
