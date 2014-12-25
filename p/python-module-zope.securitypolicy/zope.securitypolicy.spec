@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt2.a1
+Release: alt3
 Summary: Default security policy for Zope3
 License: ZPL
 Group: Development/Python
@@ -22,7 +22,7 @@ BuildPreReq: python3-devel python3-module-setuptools
 Requires: python-module-zope.i18nmessageid
 %py_requires ZODB3 zope.annotation zope.authentication zope.component
 %py_requires zope.configuration zope.interface zope.location
-%py_requires zope.schema zope.security
+%py_requires zope.schema zope.security zope.dublincore
 
 %description
 This package provides an useful security policy for Zope3. It's the
@@ -35,7 +35,7 @@ Group: Development/Python3
 Requires: python3-module-zope.i18nmessageid
 %py3_requires ZODB3 zope.annotation zope.authentication zope.component
 %py3_requires zope.configuration zope.interface zope.location
-%py3_requires zope.schema zope.security
+%py3_requires zope.schema zope.security zope.dublincore
 
 %description -n python3-module-%oname
 This package provides an useful security policy for Zope3. It's the
@@ -46,6 +46,7 @@ zope-based projects.
 Summary: Tests for Default security policy for Zope3
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
+%py3_requires zope.testrunner
 
 %description -n python3-module-%oname-tests
 This package provides an useful security policy for Zope3. It's the
@@ -58,6 +59,7 @@ This package contains tests for Default security policy for Zope3.
 Summary: Tests for Default security policy for Zope3
 Group: Development/Python
 Requires: %name = %version-%release
+%py_requires zope.testrunner
 
 %description tests
 This package provides an useful security policy for Zope3. It's the
@@ -102,7 +104,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests
@@ -112,7 +114,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
@@ -122,6 +124,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3
+- Version 4.0.0
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2.a1
 - Added module for Python 3
 
