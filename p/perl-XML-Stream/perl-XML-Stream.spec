@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-Stream
 Name: perl-%dist
-Version: 1.23
+Version: 1.24
 Release: alt1
 
 Summary: XML Stream connection and data parser Perl modules
@@ -8,12 +9,12 @@ License: LGPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAPATRICK/XML-Stream-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Apr 20 2010
-BuildRequires: perl-Authen-SASL perl-Encode perl-IO-Socket-SSL perl-Net-DNS perl-devel
+BuildRequires: perl-Authen-SASL perl-Encode perl-IO-Socket-SSL perl-Net-DNS perl-devel perl(Module/Build.pm)
 
 %description
 This module provides the user with methods to connect to a remote
@@ -40,6 +41,9 @@ about this project visit http://etherx.jabber.org/stream/.
 	%perl_vendor_privlib/XML/Stream/*
 
 %changelog
+* Thu Dec 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
+- automated CPAN update
+
 * Tue Apr 20 2010 Alexey Tourbin <at@altlinux.ru> 1.23-alt1
 - 1.22 -> 1.23
 
