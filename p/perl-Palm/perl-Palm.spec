@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Palm
-Version: 1.013
+Version: 1.014
 Release: alt1
 
 Summary: A set of modules for manupulating PalmOS databases
@@ -8,7 +9,7 @@ Group: Development/Perl
 License: Artistic
 
 URL: http://search.cpan.org/dist/Palm/
-Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Palm-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CJ/CJM/Palm-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -16,7 +17,7 @@ Provides: perl-p5-Palm = %version
 Obsoletes: perl-p5-Palm < 1.013
 
 # Automatically added by buildreq on Wed May 14 2003
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Palm/PDB.pm) perl(Palm/Raw.pm)
 
 # automatically added during perl 5.8 -> 5.12 upgrade.
 # perl-podlators is required for pod2man conversion.
@@ -43,13 +44,15 @@ the PalmPilot and its successors.
 #rm -f util/*.bak
 
 %files
-/usr/bin/pdbdump
 %doc Changes FAQ README TODO examples
 %perl_vendor_privlib/Palm*
-%_man1dir/*
-/usr/bin/*
+#%_man1dir/*
+#%_bindir/*
 
 %changelog
+* Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.014-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.013-alt1
 - renamed to perl-Palm: following upstream
 - new version
