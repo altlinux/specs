@@ -1,11 +1,11 @@
 Summary: Recording tool for Skype Calls
 Name: skype-call-recorder
-Version: 0.8
-Release: alt2.qa2
-Source: %name-%version.tar.gz
+Version: 0.10
+Release: alt1.1
+Source: %name-%version.tar.xz
 Patch: %name-desktop.patch
 Patch1: %name-0.8-alt-DSO.patch
-License: GPL
+License: GPLv2
 URL: http://atdot.ch/scr/
 Packager: Stanislav Yadykin <tosick@altlinux.ru>
 Group: Networking/Instant messaging
@@ -46,9 +46,15 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_miconsdir/%name.png
 %_miconsdir/%name.png
 %_miconsdir/%name.png
-%doc INSTALL COPYING 
+%doc INSTALL COPYING
 
 %changelog
+* Thu Dec 25 2014 Motsyo Gennadi <drool@altlinux.ru> 0.10-alt1.1
+- fix build for Sisyphus
+
+* Thu Dec 11 2014 Motsyo Gennadi <drool@altlinux.ru> 0.10-alt1
+- 0.10
+
 * Tue Jun 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt2.qa2
 - Fixed build
 
