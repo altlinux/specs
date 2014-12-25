@@ -3,7 +3,7 @@
 
 Name:      perl-%pkgname
 Summary:   %pkgname - Tokenize RTF
-Version:   1.18
+Version:   1.19
 Release:   alt1
 License:   GPL or Artistic
 Group:     Development/Perl
@@ -46,6 +46,9 @@ find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' 
 %perl_vendor_privlib/RTF*
 
 %changelog
+* Thu Dec 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
+- automated CPAN update
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
