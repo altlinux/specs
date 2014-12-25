@@ -9,7 +9,7 @@
 
 Name: calligra
 Version: 2.8.7
-Release: alt1
+Release: alt2
 Epoch: 0
 %define libname lib%name
 
@@ -89,6 +89,13 @@ Requires: %libname = %EVR
 Conflicts: libflake-devel
 %description devel
 Header files and libraries needed for %name development
+
+%package active
+Group: Office
+Summary: Mobile version of Calligra
+Requires: %name-core = %EVR
+%description active
+%summary.
 
 %package braindump
 Group: Office
@@ -302,7 +309,6 @@ cp -ar %SOURCE1 cmake/modules/
 %dir %_K4libdir/calligra/imports
 %dir %_K4libdir/calligra/imports/org/
 %_K4bindir/calligra
-%_K4bindir/calligraactive
 %_K4doc/en/calligra/
 %_K4bindir/calligraconverter
 %_K4lib/calligra_textediting_autocorrect.so
@@ -343,8 +349,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4xdg_mime/calligra_svm.xml
 %_K4iconsdir/hicolor/*/*/*
 %_K4iconsdir/oxygen/*/*/*
-%_K4xdg_apps/calligra.desktop
-%_desktopdir/calligraactive.desktop
+#%_K4xdg_apps/calligra.desktop
 %_K4srv/calligra_textediting_autocorrect.desktop
 %_K4srv/calligra_tool_basicflakes.desktop
 %_K4srv/calligra_docker_defaults.desktop
@@ -401,7 +406,6 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/calligra_shape_paths.so
 %_K4srv/calligra_shape_paths.desktop
 #%_K4srvtyp/kofilter*.desktop
-%_datadir/calligraactive/qml/
 %if_enabled RDF
 %_K4lib/calligra_semanticitem_contact.so
 %_K4lib/calligra_semanticitem_event.so
@@ -411,6 +415,11 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/calligra_semanticitem_location.desktop
 %_K4srvtyp/calligra_semanticitem.desktop
 %endif
+
+%files active
+%_K4bindir/calligraactive
+%_desktopdir/calligraactive.desktop
+%_datadir/calligraactive/qml/
 
 %files braindump
 %_K4bindir/braindump
@@ -671,6 +680,10 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libkritasketchlib.so
 
 %changelog
+* Thu Dec 25 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.7-alt2
+- split Calligra Active to separate package
+- rebuilt with new poppler
+
 * Tue Dec 09 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.7-alt1
 - new version
 
