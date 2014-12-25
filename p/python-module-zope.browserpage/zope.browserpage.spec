@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.0
-Release: alt2.a1
+Release: alt3
 Summary: ZCML directives for configuring browser views for Zope
 License: ZPL
 Group: Development/Python
@@ -42,7 +42,7 @@ chunk of the Zope Toolkit and its assumptions.
 Summary: Tests for zope.browserpage
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing zope.browsermenu
+%py3_requires zope.testing zope.browsermenu zope.testrunner
 
 %description -n python3-module-%oname-tests
 This package is at present not reusable without depending on a large
@@ -54,7 +54,7 @@ This package contains tests for zope.browserpage.
 Summary: Tests for zope.browserpage
 Group: Development/Python
 Requires: %name = %version-%release
-%py_requires zope.testing zope.browsermenu
+%py_requires zope.testing zope.browsermenu zope.testrunner
 
 %description tests
 This package is at present not reusable without depending on a large
@@ -98,7 +98,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests
@@ -108,7 +108,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
@@ -118,6 +118,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt3
+- Version 4.1.0
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt2.a1
 - Added module for Python 3
 
