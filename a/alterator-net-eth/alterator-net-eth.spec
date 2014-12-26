@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-eth
-Version: 4.19.3
+Version: 4.20.0
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -15,8 +15,7 @@ Requires: alterator >= 4.24 libshell >= 0.0.1-alt4
 Requires: alterator-l10n >= 2.1-alt9
 Requires: alterator-sh-functions >= 0.12-alt1
 Requires: alterator-hw-functions >= 0.7-alt2
-Requires: alterator-net-functions >= 1.3.1
-Requires: alterator-net-wifi >= 0.5-alt1
+Requires: alterator-net-functions >= 1.3.3
 Requires: etcnet openresolv avahi-autoipd startup >= 0.9.8.21-alt1
 Requires: bridge-utils
 # For use in netdev_is_wireless() from alterator-hw-functions.
@@ -83,6 +82,21 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Fri Dec 26 2014 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
+- Fix list_bond_cached().
+- Fix read_iface_slaves_cached().
+- Fix is_bond().
+- Check that bond has slaves before commit.
+- Make alterator-net-wifi optional.
+- Slightly improve html UI.
+- Check VLAN interface name.
+- Check default gateway.
+- Fix ifaces_have_host regexp.
+- Fix DNS addresses check.
+- Fix avail_controlled list getting.
+- Allow create bridge for eth interfaces only.
+- Add alterator-net-bond support.
+
 * Wed Nov 26 2014 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
 - Fix another button name.
 
