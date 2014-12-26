@@ -1,5 +1,5 @@
 Name: jpegoptim
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: Utility to optimize jpeg files
@@ -9,7 +9,6 @@ Group: Graphics
 Url: http://www.kokkonen.net/tjko/projects.html
 Source: http://www.kokkonen.net/tjko/src/jpegoptim-%version.tar.gz
 
-# Automatically added by buildreq on Thu Oct 01 2009
 BuildRequires: libjpeg-devel
 
 %description
@@ -33,6 +32,9 @@ libtoolize -i
 %_man1dir/*
 
 %changelog
+* Fri Dec 26 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Fri Jul 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
