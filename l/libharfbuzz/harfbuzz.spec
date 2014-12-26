@@ -3,7 +3,7 @@
 %def_disable introspection
 
 Name: lib%_name
-Version: 0.9.36
+Version: 0.9.37
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -130,6 +130,9 @@ GObject introspection devel data for the HarfBuzz library
 
 
 %changelog
+* Fri Dec 26 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.37-alt1
+- 0.9.37
+
 * Fri Nov 28 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.36-alt1
 - 0.9.36
 
