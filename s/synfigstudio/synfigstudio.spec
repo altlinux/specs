@@ -1,5 +1,5 @@
 Name: synfigstudio
-Version: 0.64.2
+Version: 0.64.3
 Release: alt1
 
 Summary: Synfig studio - animation program
@@ -72,6 +72,9 @@ Header files for Synfig studio.
 %_includedir/synfigapp*/
 
 %changelog
+* Fri Dec 26 2014 Andrey Cherepanov <cas@altlinux.org> 0.64.3-alt1
+- New version
+
 * Mon Nov 17 2014 Andrey Cherepanov <cas@altlinux.org> 0.64.2-alt1
 - New version
 - Fix project URL
