@@ -1,17 +1,17 @@
 %define ver_major 1.6
 
 Name: darktable
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPLv3
 Group: Graphics
 
-Url: http://%name.sourceforge.net/
+Url: http://%name.org/
 #VCS: https://github.com/darktable-org/darktable.git
 #Source: %name-%version.tar
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar.xz
+Source: https://github.com/darktable-org/darktable/releases/download/release-%version/%name-%version.tar.xz
 
 BuildPreReq: rpm-build-gnome
 BuildRequires: libgio-devel >= 2.30 libgtk+2-devel >= 2.24
@@ -65,6 +65,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Sat Dec 27 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Tue Dec 09 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
