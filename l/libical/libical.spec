@@ -1,15 +1,13 @@
 Name: libical
-Version: 1.0
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
 License: LGPL2.1+/MPL
-Url: http://sourceforge.net/projects/freeassociation/
+Url: https://github.com/%name
 
-Source: http://ovh.dl.sourceforge.net/sourceforge/freeassociation/%name-%version.tar.gz
-# http://sourceforge.net/p/freeassociation/code/1150/
-Patch: libical-1.0-r1150.patch
+Source: %url/%name/releases/download/v%version/%name-%version.tar.gz
 
 BuildRequires: cmake gcc-c++ ctest
 
@@ -30,7 +28,6 @@ use libical.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %cmake
@@ -51,10 +48,14 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_libdir/cmake/LibIcal/
 
 %exclude %_libdir/*.a
 
 %changelog
+* Fri Dec 26 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt2
 - soname bump
 - %%check section
