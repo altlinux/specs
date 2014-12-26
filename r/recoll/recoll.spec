@@ -3,7 +3,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.20.0p2
+Version: 1.20.1
 Release: alt1
 
 Summary: A personal full text search package
@@ -92,6 +92,7 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 %_bindir/*
 %_libdir/%name
 %_datadir/%name
+%_datadir/appdata/*
 %exclude %_datadir/%name/filters/rcllyx
 %exclude %_datadir/%name/filters/*.py
 %exclude %_datadir/%name/filters/*.zip
@@ -114,6 +115,10 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Fri Dec 26 2014 Michael Shigorin <mike@altlinux.org> 1.20.1-alt1
+- new version (watch file uupdate)
+- added appdata file
+
 * Tue Jul 29 2014 Michael Shigorin <mike@altlinux.org> 1.20.0p2-alt1
 - new version (watch file uupdate)
 
