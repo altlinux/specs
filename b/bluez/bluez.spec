@@ -1,7 +1,8 @@
 %define _libexecdir %_prefix/libexec
+%def_enable obex
 
 Name: bluez
-Version: 5.26
+Version: 5.27
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -14,12 +15,15 @@ Conflicts: udev-extras < 169
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+# fc
+Patch10: 0001-Allow-using-obexd-without-systemd-in-the-user-session.patch
 
 Obsoletes: bluez-alsa < 5.0
 Obsoletes: obex-data-server < 0.4.6-alt3
 
 BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
-BuildRequires: libical-devel systemd-devel gtk-doc
+BuildRequires: systemd-devel gtk-doc
+%{?_enable_obex:BuildRequires: libical-devel}
 
 %description
 Bluetooth protocol stack for Linux
@@ -50,8 +54,9 @@ Requires: %name = %version-%release
 This package contains the CUPS backend
 
 %prep
-%setup -q
+%setup
 %patch -p1
+%patch10 -p1
 
 %build
 %autoreconf
@@ -59,14 +64,14 @@ export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"
 %configure \
 	--enable-library \
 	--enable-threads \
-	--disable-obex \
+	%{subst_enable obex} \
 	--enable-cups \
 	--enable-tools \
 	--localstatedir=%_var
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
 ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
 mkdir -p %buildroot%_libdir/bluetooth/plugins %buildroot%_localstatedir/bluetooth
@@ -127,6 +132,12 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Sat Dec 27 2014 Yuri N. Sedunov <aris@altlinux.org> 5.27-alt1
+- 5.27
+- enabled OBEX profile support
+- applied fc patch to allow using obexd without systemd in the user session,
+  probably fixed and ALT #30565
+
 * Sun Dec 14 2014 Yuri N. Sedunov <aris@altlinux.org> 5.26-alt1
 - 5.26
 
