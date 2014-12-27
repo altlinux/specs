@@ -2,7 +2,7 @@
 
 Name: darktable
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPLv3
@@ -13,7 +13,8 @@ Url: http://%name.org/
 #Source: %name-%version.tar
 Source: https://github.com/darktable-org/darktable/releases/download/release-%version/%name-%version.tar.xz
 
-BuildPreReq: rpm-build-gnome
+BuildPreReq:  rpm-build-gnome
+BuildRequires: /proc
 BuildRequires: libgio-devel >= 2.30 libgtk+2-devel >= 2.24
 BuildRequires: cmake gcc-c++ intltool libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel
@@ -39,7 +40,8 @@ light table. It also enables you to develop raw images and enhance them.
 
 %build
 %cmake -DCMAKE_SKIP_RPATH:BOOL=OFF \
--DCMAKE_BUILD_TYPE=Release
+-DCMAKE_BUILD_TYPE=Release \
+-DBINARY_PACKAGE_BUILD:BOOL=ON
 %cmake_build VERBOSE=1
 
 %install
@@ -65,6 +67,11 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Sat Dec 27 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt2
+- added -DBINARY_PACKAGE_BUILD:BOOL=ON  directive to cmake
+  (suggested by upstream) to allow the program to run on
+  various processors with sse3 and above
+
 * Sat Dec 27 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
