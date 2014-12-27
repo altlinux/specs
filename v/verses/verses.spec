@@ -1,6 +1,6 @@
 Name: verses
 Version: 1
-Release: alt3
+Release: alt4
 Summary: screensaver using wise verses
 Summary(ru_RU.UTF-8): хранитель экрана, показывающий мудрые фразы
 License: GPL
@@ -10,14 +10,15 @@ BuildArch: noarch
 Provides: xscreensaver-%name
 Provides: gnome-screensaver-%name
 
-Requires:fortunes-%name
+Requires: fortunes-%name
+Requires: fonts-bitmap-terminus
 
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
 
 Source1: verses_def.txt
 Source2: html_demo.txt
 Source3: Verses-win.tar
-Source4: LICENCE
+Source4: LICENSE
 Source5: %name.xss
 Source6: %name.xml
 Source7: README.OLD
@@ -117,6 +118,9 @@ install -m 444 %SOURCE4 fortunes-docs/
 %doc fortunes-docs/*
 
 %changelog
+* Sun Dec 28 2014 Ildar Mulyukov <ildar@altlinux.ru> 1-alt4
+- use fonts-bitmap-terminus
+
 * Thu Dec 04 2014 Ildar Mulyukov <ildar@altlinux.ru> 1-alt3
 - add Mate screensaver support
 
