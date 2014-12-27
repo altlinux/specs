@@ -1,6 +1,6 @@
 Name: libx264
 Version: 142
-Release: alt1
+Release: alt2
 
 Summary: H.264 codec shared library
 License: GPL
@@ -66,22 +66,17 @@ software.
 %setup
 
 %build
-%ifarch %ix86 x86_64
+%define _optlevel 3
+%ifarch %ix86
 # prevent use of -mfoo part of CFLAGS on x86 with YASM
 export ASFLAGS=' '
 %endif
-%define _optlevel 3
+
 %configure \
 	--disable-cli \
     	--enable-debug \
-%ifarch x86_64
 	--enable-pic \
-%endif
-%ifarch arm
-	--disable-asm \
-%endif
 	--enable-shared \
-	--enable-visualize \
 	--bit-depth=8
 
 %make_build 
@@ -104,6 +99,9 @@ export ASFLAGS=' '
 %_libdir/libx264.so
 
 %changelog
+* Sat Dec 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 142-alt2
+- updated up to 6a301b6
+
 * Sun May 11 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 142-alt1
 - API 142
 

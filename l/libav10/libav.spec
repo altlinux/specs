@@ -11,7 +11,6 @@
 %def_enable version3
 %def_enable libxvid
 %def_enable libx264
-%def_enable libx265
 %def_enable libmp3lame
 %def_enable libvorbis
 %def_enable libcdio
@@ -22,7 +21,7 @@
 %def_enable libgsm
 %def_enable libdc1394
 %def_enable shared
-%def_enable static
+%def_disable static
 %def_enable pthreads
 %def_enable zlib
 %ifarch %ix86 x86_64
@@ -31,6 +30,7 @@
 %def_disable mmx
 %endif
 %def_disable memalign_hack
+%def_disable avserver
 %def_enable avplay
 %def_enable avprobe
 %def_enable libschroedinger
@@ -51,7 +51,6 @@
 %if_disabled gpl
 %set_disable libxvid
 %set_disable libx264
-%set_disable libx265
 %endif
 
 %if_disabled version3
@@ -71,9 +70,9 @@
 %endif
 # }}}
 
-Name: libav
-Version: 11.1
-Release: alt1
+Name: libav10
+Version: 10.5
+Release: alt2
 Epoch: 1
 
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
@@ -99,7 +98,6 @@ BuildRequires: perl-podlators
 %{?_enable_libpulse:BuildRequires: libpulseaudio-devel}
 %{?_enable_libxvid:BuildRequires: libxvid-devel}
 %{?_enable_libx264:BuildRequires: libx264-devel >= 118}
-%{?_enable_libx265:BuildRequires: libx265-devel}
 %{?_enable_libdc1394:BuildRequires: libdc1394-devel libraw1394-devel}
 %{?_enable_libschroedinger:BuildRequires: libschroedinger-devel}
 %{?_enable_libtheora:BuildRequires: libtheora-devel}
@@ -123,34 +121,42 @@ BuildArch: noarch
 Provides: ffmpeg-doc = %epoch:%version-%release
 Obsoletes: ffmpeg-doc
 
+%package -n avserver
+Summary: A streaming server for both audio and video
+Group: Video
+Requires: libavcodec55 = %epoch:%version-%release
+Requires: libavformat55 = %epoch:%version-%release
+Provides: ffserver = %epoch:%version-%release
+Obsoletes: ffserver
+
 %package -n avplay
 Summary: A very simple media player using the libav and SDL libraries
 Group: Video
-Requires: libavcodec56 = %epoch:%version-%release
-Requires: libavformat56 = %epoch:%version-%release
+Requires: libavcodec55 = %epoch:%version-%release
+Requires: libavformat55 = %epoch:%version-%release
 Provides: ffplay = %epoch:%version-%release
 Obsoletes: ffplay
 
 %package -n avprobe
 Summary:  Multimedia streams analyzer
 Group: Video
-Requires: libavcodec56 = %epoch:%version-%release
-Requires: libavformat56 = %epoch:%version-%release
+Requires: libavcodec55 = %epoch:%version-%release
+Requires: libavformat55 = %epoch:%version-%release
 Provides: ffprobe = %epoch:%version-%release
 Obsoletes: ffprobe
 
 %package -n avconv
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
 Group: Video
-Requires: libavcodec56 = %epoch:%version-%release
-Requires: libavformat56 = %epoch:%version-%release
-Requires: libavutil54 = %epoch:%version-%release
-Requires: libavdevice55 = %epoch:%version-%release
-Requires: libavfilter5 = %epoch:%version-%release
+Requires: libavcodec55 = %epoch:%version-%release
+Requires: libavformat55 = %epoch:%version-%release
+Requires: libavutil53 = %epoch:%version-%release
+Requires: libavdevice54 = %epoch:%version-%release
+Requires: libavfilter4 = %epoch:%version-%release
 Provides: ffmpeg = %epoch:%version-%release
 Obsoletes: ffmpeg
 
-%package -n libavcodec56
+%package -n libavcodec55
 Summary: libav codec library
 Group: System/Libraries
 Provides: libavcodec = %epoch:%version-%release
@@ -159,7 +165,7 @@ Obsoletes: libavcodec < %epoch:%version-%release
 %package -n libavcodec-devel
 Summary: Development files for libavcodec
 Group: Development/C
-Requires: libavcodec56 = %epoch:%version-%release
+Requires: libavcodec55 = %epoch:%version-%release
 Requires: libavutil-devel = %epoch:%version-%release
 
 %package -n libavcodec-devel-static
@@ -167,17 +173,17 @@ Summary: Static development files for libavcodec
 Group: Development/C
 Requires: libavcodec-devel = %epoch:%version-%release
 
-%package -n libavformat56
+%package -n libavformat55
 Summary: libav file format library
 Group: System/Libraries
-Requires: libavcodec56 = %epoch:%version-%release
+Requires: libavcodec55 = %epoch:%version-%release
 Provides: libavformat = %epoch:%version-%release
 Obsoletes: libavformat < %epoch:%version-%release
 
 %package -n libavformat-devel
 Summary: Development files for libavcodec
 Group: Development/C
-Requires: libavformat56 = %epoch:%version-%release
+Requires: libavformat55 = %epoch:%version-%release
 Requires: libavcodec-devel = %epoch:%version-%release
 
 %package -n libavformat-devel-static
@@ -185,7 +191,7 @@ Summary: Static development files for libavformat
 Group: Development/C
 Requires: libavformat-devel = %epoch:%version-%release
 
-%package -n libavutil54
+%package -n libavutil53
 Summary: libav utility library
 Group: System/Libraries
 Provides: libavutil = %epoch:%version-%release
@@ -193,21 +199,21 @@ Provides: libavutil = %epoch:%version-%release
 %package -n libavutil-devel
 Summary: Development files for libavutil
 Group: Development/C
-Requires: libavutil54 = %epoch:%version-%release
+Requires: libavutil53 = %epoch:%version-%release
 
 %package -n libavutil-devel-static
 Summary: Static development files for libavutil
 Group: Development/C
 Requires: libavutil-devel = %epoch:%version-%release
 
-%package -n libavresample2
+%package -n libavresample
 Summary: libav video postprocessing library
 Group: System/Libraries
 
 %package -n libavresample-devel
 Summary: Development files for libavresample
 Group: Development/C
-Requires: libavresample2 = %epoch:%version-%release
+Requires: libavresample = %epoch:%version-%release
 Requires: libavutil-devel = %epoch:%version-%release
 
 %package -n libavresample-devel-static
@@ -215,14 +221,14 @@ Summary: Static development files for libavresample
 Group: Development/C
 Requires: libavresample-devel = %epoch:%version-%release
 
-%package -n libswscale3
+%package -n libswscale
 Summary: libav image rescaling library
 Group: System/Libraries
 
 %package -n libswscale-devel
 Summary: Development files for libswscale
 Group: Development/C
-Requires: libswscale3 = %epoch:%version-%release
+Requires: libswscale = %epoch:%version-%release
 Requires: libavutil-devel = %epoch:%version-%release
 
 %package -n libswscale-devel-static
@@ -230,28 +236,28 @@ Summary: Static development files for libswscale
 Group: Development/C
 Requires: libswscale-devel = %epoch:%version-%release
 
-%package -n libavdevice55
+%package -n libavdevice54
 Summary: libav device handling library
 Group: System/Libraries
 
 %package -n libavdevice-devel
 Summary: Development files for libavdevice
 Group: Development/C
-Requires: libavdevice55 = %epoch:%version-%release
+Requires: libavdevice54 = %epoch:%version-%release
 
 %package -n libavdevice-devel-static
 Summary: Static development files for libavdevice
 Group: Development/C
 Requires: libavdevice-devel = %epoch:%version-%release
 
-%package -n libavfilter5
+%package -n libavfilter4
 Summary: libav filter handling library
 Group: System/Libraries
 
 %package -n libavfilter-devel
 Summary: Development files for libavfilter
 Group: Development/C
-Requires: libavfilter5 = %epoch:%version-%release
+Requires: libavfilter4 = %epoch:%version-%release
 
 %package -n libavfilter-devel-static
 Summary: Static development files for libavfilter
@@ -274,6 +280,11 @@ stream.
 %description doc
 This package contains documentation for libav project.
 
+%description -n avserver
+avserver is a streaming server for both audio and video. It supports
+several live feeds, streaming from files and time shifting on live
+feeds.
+
 %description -n avplay
 avplay is a very simple and portable media player using the libav
 libraries and the SDL library. It is mostly used as a testbed for the
@@ -292,43 +303,43 @@ into several file formats based on DCT/motion compensation encoding.
 Sound is compressed in MPEG audio layer 2 or using an AC3 compatible
 stream.
 
-%description -n libavcodec56
+%description -n libavcodec55
 This package contains libavcodec, the libav project codec library.
 
 %description -n libavcodec-devel
 This package contains development files for libavcodec.
 
-%description -n libavformat56
+%description -n libavformat55
 This package contains libavformat, the libav project file format library.
 
 %description -n libavformat-devel
 This package contains development files for libavformat.
 
-%description -n libavutil54
+%description -n libavutil53
 This package contains libavutil, the libav project utility library.
 
 %description -n libavutil-devel
 This package contains development files for libavutil.
 
-%description -n libavresample2
+%description -n libavresample
 This package contains libavresample, the libav project video postprocessing library.
 
 %description -n libavresample-devel
 This package contains development files for libpostproc
 
-%description -n libswscale3
+%description -n libswscale
 This package contains libswscale, the libav project image rescaling library.
 
 %description -n libswscale-devel
 This package contains development files for libswscale.
 
-%description -n libavdevice55
+%description -n libavdevice54
 This package contains libavdevice, the libav project device handling library.
 
 %description -n libavdevice-devel
 This package contains development files for libavdevice.
 
-%description -n libavfilter5
+%description -n libavfilter4
 This package contains libavfilter, the libav project filter handling library.
 
 %description -n libavfilter-devel
@@ -388,7 +399,6 @@ sed -i 's/UNKNOWN/%version/' version.sh
     %{subst_enable libpulse} \
     %{subst_enable libxvid} \
     %{subst_enable libx264} \
-    %{subst_enable libx265} \
     %{subst_enable libmp3lame} \
     %{subst_enable libcdio} \
     %{subst_enable libgsm} \
@@ -396,6 +406,7 @@ sed -i 's/UNKNOWN/%version/' version.sh
     %{subst_enable zlib} \
     %{subst_enable mmx} \
     %{subst_enable_with memalign_hack memalign-hack} \
+    %{subst_enable avserver} \
     %{subst_enable avplay} \
     %{subst_enable avprobe} \
     %{subst_enable libschroedinger} \
@@ -427,7 +438,7 @@ sed -i 's/UNKNOWN/%version/' version.sh
     --extra-cflags="%optflags" \
     --extra-version='%release'
 
-%make_build
+%make
 
 # }}}
 
@@ -438,80 +449,91 @@ sed -i 's/UNKNOWN/%version/' version.sh
 		DESTDIR="%buildroot" \
 		MANDIR="%buildroot%_mandir" install
 
+%{?_enable_avserver:install -pD -m640 doc/avserver.conf %buildroot%_sysconfdir/avserver.conf}
+
 bzip2 --best --force --keep -- Changelog
 
 # }}}
 
 # {{{ Files
 
+%if 0
 %files doc
-%doc doc/developer.html
-%doc doc/faq.html
-%doc doc/fate.html
-%doc doc/general.html
-%doc doc/git-howto.html
-%doc doc/libavfilter.html
-%doc doc/nut.html
-%doc doc/platform.html
+%doc doc/faq.html doc/avconv.html
 %doc doc/optimization.txt
 %doc CREDITS
 %doc Changelog.*
+%endif
 
-%files -n libavcodec56
+%files -n libavcodec55
 %_libdir/libavcodec.so.*
 
+%if 0
 %files -n libavcodec-devel
 %_includedir/libavcodec
 %_libdir/libavcodec.so
 %_pkgconfigdir/libavcodec.pc
+%endif
 
-%files -n libavformat56
+%files -n libavformat55
 %_libdir/libavformat.so.*
 
+%if 0
 %files -n libavformat-devel
 %_includedir/libavformat
 %_pkgconfigdir/libavformat.pc
 %_libdir/libavformat.so
+%endif
 
-%files -n libavutil54
+%files -n libavutil53
 %_libdir/libavutil.so.*
 
+%if 0
 %files -n libavutil-devel
 %_includedir/libavutil
 %_libdir/libavutil.so
 %_pkgconfigdir/libavutil.pc
+%endif
 
-%files -n libavdevice55
+%files -n libavdevice54
 %_libdir/libavdevice.so.*
 
+%if 0
 %files -n libavdevice-devel
 %_includedir/libavdevice
 %_libdir/libavdevice.so
 %_pkgconfigdir/libavdevice.pc
+%endif
 
-%files -n libavfilter5
+%files -n libavfilter4
 %_libdir/libavfilter.so.*
 
+%if 0
 %files -n libavfilter-devel
 %_includedir/libavfilter
 %_libdir/libavfilter.so
 %_pkgconfigdir/libavfilter.pc
+%endif
 
-%files -n libavresample2
+%files -n libavresample
 %_libdir/libavresample.so.*
 
+%if 0
 %files -n libavresample-devel
 %_pkgconfigdir/libavresample.pc
 %_includedir/libavresample
 %_libdir/libavresample.so
+%endif
 
-%files -n libswscale3
+%files -n libswscale
 %_libdir/libswscale.so.*
 
+%if 0
 %files -n libswscale-devel
 %_includedir/libswscale
 %_pkgconfigdir/libswscale.pc
 %_libdir/libswscale.so
+%endif
 
 %if_enabled static
 %files -n libavformat-devel-static
@@ -536,11 +558,17 @@ bzip2 --best --force --keep -- Changelog
 %_libdir/libavfilter.a
 %endif
 
+%if 0
 %files -n avconv
-%doc doc/avconv.html
 %_bindir/avconv
 %_man1dir/avconv.*
 %_datadir/avconv
+
+%if_enabled avserver
+%files -n avserver
+%config(noreplace) %_sysconfdir/*
+%_bindir/avserver
+%endif
 
 %if_enabled avplay
 %files -n avplay
@@ -555,13 +583,14 @@ bzip2 --best --force --keep -- Changelog
 %_bindir/avprobe
 %_man1dir/avprobe.*
 %endif
+%endif
 
 # }}}
 
 # {{{ Changelog
 %changelog
-* Tue Dec 09 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:11.1-alt1
-- 11.1 released
+* Tue Dec 09 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:10.5-alt2
+- rebuilt with shared libraries only
 
 * Fri Sep 12 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:10.5-alt1
 - 10.5 released
