@@ -1,5 +1,7 @@
+%define ver_major 0.4
+
 Name: orc
-Version: 0.4.19
+Version: %ver_major.23
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -7,6 +9,7 @@ Group: Development/Other
 License: BSD
 URL: http://code.entropywave.com/projects/orc/
 
+# VCS: git://anongit.freedesktop.org/gstreamer/orc
 Source: %name-%version.tar
 
 BuildRequires: gtk-doc valgrind-devel
@@ -89,7 +92,7 @@ addition and subtraction, and many arithmetic operations.
 This package contains documentation for Orc.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -99,33 +102,39 @@ This package contains documentation for Orc.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
+
+%check
+#%make check
 
 %files
 %_bindir/orc-bugreport
 %_bindir/orcc
 
 %files -n lib%name
-%_libdir/liborc-0.4.so.*
+%_libdir/liborc-%ver_major.so.*
 
 %files -n lib%name-test
-%_libdir/liborc-test-0.4.so.*
+%_libdir/liborc-test-%ver_major.so.*
 
 %files -n lib%name-devel
-%dir %_includedir/orc-0.4
-%_includedir/orc-0.4/orc
-%_libdir/liborc-0.4.so
-%_pkgconfigdir/orc-0.4.pc
+%dir %_includedir/orc-%ver_major
+%_includedir/orc-%ver_major/orc
+%_libdir/liborc-%ver_major.so
+%_pkgconfigdir/orc-%ver_major.pc
 %_datadir/aclocal/orc.m4
 
 %files -n lib%name-test-devel
-%_includedir/orc-0.4/orc-test
-%_libdir/liborc-test-0.4.so
+%_includedir/orc-%ver_major/orc-test
+%_libdir/liborc-test-%ver_major.so
 
 %files doc
 %_datadir/gtk-doc/html/orc
 
 %changelog
+* Sun Dec 28 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.23-alt1
+- 0.4.23
+
 * Sun Apr 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.19-alt1
 - 0.4.19
 

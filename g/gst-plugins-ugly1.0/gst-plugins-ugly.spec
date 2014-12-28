@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -40,7 +40,7 @@ The code might be widely known to present patent problems.
 
 %package devel-doc
 Summary: Development documentation for GStreamer Ugly plugins
-Group: Development/C
+Group: Development/Documentation
 BuildArch: noarch
 
 %description devel-doc
@@ -77,6 +77,9 @@ collection.
 %_gtk_docdir/%_name-ugly-plugins-%api_ver/*
 
 %changelog
+* Sun Dec 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
+- 1.4.5
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
 - 1.4.4
 
