@@ -1,6 +1,6 @@
 Name: verses-if
 Version: 1
-Release: alt2
+Release: alt3
 Summary: screensaver showing verses from Amy Carmichael's "If" book
 Summary(ru_RU.UTF-8): хранитель экрана, показывающий фразы из книги Эми Кармайкл "Если"
 License: GPL
@@ -9,7 +9,8 @@ BuildArch: noarch
 Provides: xscreensaver-%name
 Provides: gnome-screensaver-%name
 
-Requires:fortunes-%name
+Requires: fortunes-%name
+Requires: fonts-bitmap-terminus
 
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
 
@@ -121,6 +122,9 @@ ln -s ../if_en.dat %buildroot%_gamesdatadir/fortune/en/if.dat
 %dir %_datadir/games/fortune/en
 
 %changelog
+* Sun Dec 28 2014 Ildar Mulyukov <ildar@altlinux.ru> 1-alt3
+- use fonts-bitmap-terminus
+
 * Wed Dec 03 2014 Ildar Mulyukov <ildar@altlinux.ru> 1-alt2
 - add Mate screensaver support
 
