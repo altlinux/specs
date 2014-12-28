@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -72,6 +72,14 @@ Requires: gstreamer%api_ver-devel
 This package contains the libraries, headers and other files necessary
 to develop GStreamer plugins.
 
+%package -n %_name%api_ver-devel-doc
+Summary: Development documentation for GStreamer Base plugins
+Group: Development/Documentation
+BuildArch: noarch
+
+%description -n %_name%api_ver-devel-doc
+This package contains development documentation for GStreamer Base Plugins
+
 %package -n %_name%api_ver-gir-devel
 Summary: GObject introspection devel data for the GStreamer library
 Group: System/Libraries
@@ -105,7 +113,7 @@ GObject introspection devel data for the GStreamer library
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %_name-base-%api_ver
 
@@ -140,7 +148,9 @@ GObject introspection devel data for the GStreamer library
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_gtk_docdir/%_name-base-*-%api_ver
+
+%files -n %_name%api_ver-devel-doc
+%_gtk_docdir/%_name-base-*-%api_ver/
 
 %files -n %_name%api_ver-gir-devel
 %_girdir/GstAllocators-1.0.gir
@@ -157,6 +167,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Sun Dec 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
+- 1.4.5
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
 - 1.4.4
 

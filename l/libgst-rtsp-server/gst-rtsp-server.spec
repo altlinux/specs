@@ -6,10 +6,10 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
-Summary: GStreamer RTSP server library
+Summary: GStreamer-%api_ver RTSP server library
 Group: System/Libraries
 License: LGPLv2+
 Url: http://gstreamer.freedesktop.org/modules/%_name-server.html
@@ -99,6 +99,9 @@ GObject introspection devel data for the GStreamer RTSP server library.
 
 
 %changelog
+* Sun Dec 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
+- 1.4.5
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
 - first build for Sisyphus
 
