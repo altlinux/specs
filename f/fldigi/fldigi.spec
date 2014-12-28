@@ -1,5 +1,5 @@
 Name:    fldigi
-Version: 3.22.02
+Version: 3.22.04
 Release: alt1
 Summary: Fldigi is a software modem for Amateur Radio use
 
@@ -15,7 +15,7 @@ BuildPreReq: libXfixes-devel
 
 BuildRequires: gcc-c++ libX11-devel libXext-devel libXft-devel libfltk-devel libjpeg-devel libpng-devel libsamplerate-devel libXcursor-devel
 BuildRequires: asciidoc-a2x
-# TODO BuildRequires: hamlib-devel
+BuildRequires: hamlib-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libsndfile-devel
@@ -69,6 +69,10 @@ Reporter.
 %doc %_man1dir/*
 
 %changelog
+* Sun Dec 28 2014 Andrey Cherepanov <cas@altlinux.org> 3.22.04-alt1
+- New version
+- Build with hamlib
+
 * Sun Dec 21 2014 Andrey Cherepanov <cas@altlinux.org> 3.22.02-alt1
 - New version
 - Fix project URL
