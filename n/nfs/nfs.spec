@@ -1,6 +1,6 @@
 Name: nfs
-Version: 1.2.9
-Release: alt1
+Version: 1.3.2
+Release: alt0.4
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -13,6 +13,7 @@ Source0: %name-%version-%release.tar
 BuildRequires: libblkid-devel libevent-devel libnfsidmap-devel >= 0.23 libwrap-devel
 BuildRequires: libdevmapper-devel libkrb5-devel libsqlite3-devel
 BuildRequires: libcap-devel libtirpc-devel libkeyutils-devel libmount-devel
+BuildRequires: libkeyutils-devel
 
 %package clients
 Summary: The Linux NFS client
@@ -73,6 +74,7 @@ This package provides the Linux NFS stats utilities.
     --enable-mount \
     --enable-libmount-mount \
     --enable-gss \
+    --enable-svcgss \
     --enable-tirpc \
     --enable-ipv6 \
     --with-statduser=rpcuser \
@@ -146,9 +148,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/svcgssd.service
 %systemd_unitdir/proc-fs-nfsd.mount
 
+/sbin/nfsdcltrack
 %_sbindir/exportfs
 %_sbindir/nfsstat
-%_sbindir/nfsdcltrack
 %_sbindir/rpc.mountd
 %_sbindir/rpc.nfsd
 %_sbindir/rpc.svcgssd
@@ -234,6 +236,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Mon Dec 29 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.3.2-alt0.4
+- 1.3.2 rc4
+
 * Thu Mar 20 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.2.9-alt1
 - 1.2.9 released
 
