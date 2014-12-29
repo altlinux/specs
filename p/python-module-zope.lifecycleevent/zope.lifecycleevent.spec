@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.3
+Version: 4.1.0
 Release: alt1
 Summary: Object life-cycle events
 License: ZPL
@@ -121,12 +121,17 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/tests.*
 
 #files -n python3-module-%oname-tests
 #python3_sitelibdir/*/*/tests.*
+#python3_sitelibdir/*/*/*/tests.*
 %endif
 
 %changelog
+* Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
+- Version 4.1.0
+
 * Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt1
 - Version 4.0.3
 
