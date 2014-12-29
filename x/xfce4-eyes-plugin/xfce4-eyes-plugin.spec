@@ -1,12 +1,12 @@
 Name: xfce4-eyes-plugin
-Version: 4.4.2
+Version: 4.4.3
 Release: alt1
 
-Summary: Eyes plugin for XFce Desktop
+Summary: Eyes plugin for Xfce Desktop
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # git://git.xfce.org/panel-plugins/xfce4-eyes-plugin
 Source: %name-%version.tar
@@ -27,6 +27,7 @@ Scary!
 %prep
 %setup
 %patch -p1
+mkdir m4/
 
 # Don't use git tag in version.
 %xfce4_drop_gitvtag eyes_version_tag configure.ac.in
@@ -51,6 +52,11 @@ Scary!
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Dec 29 2014 Mikhail Efremov <sem@altlinux.org> 4.4.3-alt1
+- Fix build: create m4/ directory.
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated to 4.4.3.
+
 * Mon Mar 04 2013 Mikhail Efremov <sem@altlinux.org> 4.4.2-alt1
 - Fix build: use LT_PREREQ.
 - Updated translations from upstream git.
