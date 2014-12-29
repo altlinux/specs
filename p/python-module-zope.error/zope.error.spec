@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.1
+Version: 4.2.0
 Release: alt1
 Summary: An error reporting utility for Zope3
 License: ZPLv2.1
@@ -116,6 +116,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt1
+- Version 4.2.0
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1
 - Version 4.1.1
 
