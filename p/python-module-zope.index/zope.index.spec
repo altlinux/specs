@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
-Release: alt2
+Version: 4.1.0
+Release: alt1
 Summary: Indices for using with catalog like text, field, etc.
 License: ZPLv2.1
 Group: Development/Python
@@ -83,6 +83,8 @@ This package contains tests for zope.index.
 
 %if_with python3
 cp -fR . ../python3
+sed -i 's|PyInt_AsLong|PyLong_AsLong|g' \
+	../python3/src/zope/index/text/okascore.c
 %endif
 
 %build
@@ -104,7 +106,7 @@ popd
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests*
@@ -116,7 +118,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests*
@@ -130,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
+- Version 4.1.0
+
 * Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt2
 - Added module for Python 3
 
