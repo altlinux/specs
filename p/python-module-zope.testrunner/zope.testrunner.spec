@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.4.3
+Version: 4.4.4
 Release: alt1
 Summary: Zope testrunner script
 License: ZPL
@@ -114,6 +114,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.4-alt1
+- Version 4.4.4
+
 * Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.3-alt1
 - Version 4.4.3
 
