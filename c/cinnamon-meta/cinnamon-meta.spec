@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -51,6 +51,8 @@ Requires: gnome-terminal
 Requires: cinnamon-screensaver  
 #Gvfs
 Requires: gvfs gvfs-backends
+# Char map - required by cinnamon keyboard applet
+Requires: gucharmap
 
 # Look and Feel
 Requires: gnome-icon-theme >= %ver_major
@@ -123,6 +125,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Mon Dec 29 2014 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt2
+- add gucharmap as dependency
+
 * Wed Nov 5 2014 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
