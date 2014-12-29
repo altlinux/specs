@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.2
-Release: alt2
+Version: 4.1.0
+Release: alt1
 Summary: Password encoding and checking utilities
 License: ZPL
 Group: Development/Python
@@ -99,7 +99,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -113,6 +113,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
+%doc *.txt *.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
@@ -125,6 +126,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
+- Version 4.1.0
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt2
 - Added module for Python 3
 
