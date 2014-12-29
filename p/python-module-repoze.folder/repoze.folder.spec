@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7
-Release: alt2.git20120330
+Version: 1.0
+Release: alt1.git20141228
 Summary: Stripped-down ZODBcontainer implementation with object event support
 License: BSD
 Group: Development/Python
@@ -43,7 +43,7 @@ certain methods of this interface are exercised.
 Summary: Tests for repoze.folder
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
-%py3_requires sphinx repoze.sphinx.autointerface zope.testing
+%py3_requires sphinx zope.testing nose coverage
 
 %description -n python3-module-%oname-tests
 ``repoze.folder`` provides a barebones ZODB folder implementation with
@@ -57,7 +57,7 @@ This package contains tests for repoze.folder.
 Summary: Tests for repoze.folder
 Group: Development/Python
 Requires: %name = %version-%release
-%py_requires sphinx repoze.sphinx.autointerface zope.testing
+%py_requires sphinx zope.testing nose coverage
 
 %description tests
 ``repoze.folder`` provides a barebones ZODB folder implementation with
@@ -103,7 +103,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt docs/*.rst
+%doc *.txt *.rst docs/*.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests.*
@@ -113,7 +113,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt docs/*.rst
+%doc *.txt *.rst docs/*.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
@@ -125,6 +125,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.git20141228
+- Version 1.0
+
 * Mon Jul 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt2.git20120330
 - Added module for Python 3
 
