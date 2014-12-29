@@ -1,7 +1,7 @@
 Summary: Vargus - the video surveillance program
 Name: vargus
-Version: 0.9.6
-Release: alt2
+Version: 0.9.7
+Release: alt1
 License: %gpl2plus
 Group: Video
 
@@ -60,6 +60,7 @@ mkdir -p %buildroot%vargus_cache
 mkdir -p %buildroot%webappdir
 mkdir -p %buildroot%webappdir/modules-enabled
 mkdir -p %buildroot%perl_vendor_privlib
+mkdir -p %buildroot/lib/tmpfiles.d
 
 
 install -m 0755 vargus.pl %buildroot%_bindir/vargus
@@ -71,8 +72,9 @@ install -m 0755 vargus-simple-setup.pl %buildroot%_sbindir/vargus-simple-setup
 install -m 0755 vargus-early-recovery %buildroot%_sbindir/
 install -m 0755 vargus-systemd-starter %buildroot%_sbindir/
 install -m 0644 vargus*.service %buildroot%_unitdir/
-install -m 0644 docs/events-collector.cfg %buildroot%_sysconfdir/vargus/
+install -m 0644 docs/events.cfg %buildroot%_sysconfdir/vargus/
 install -m 0644 docs/get-archive.cfg %buildroot%_sysconfdir/vargus/
+install -m 0644 vargus.conf.tmpfiles %buildroot/lib/tmpfiles.d/vargus.conf
 
 cp -r web/* %buildroot%webappdir/
 cp -r Vargus %buildroot%perl_vendor_privlib/
@@ -91,6 +93,7 @@ popd
 	-s /dev/null -d %vargus_cache %vargus_user 2>/dev/null ||:
 
 %post
+systemd-tmpfiles --create /lib/tmpfiles.d/vargus.conf
 %post_service vargus
 %post_service vargus-informer
 %post_service vargus-events
@@ -107,6 +110,8 @@ exit 0
 %preun_service vargus-informer
 %preun_service vargus-events
 %preun_service vargus-early-recovery
+systemd-tmpfiles --clean /lib/tmpfiles.d/vargus.conf
+systemd-tmpfiles --remove /lib/tmpfiles.d/vargus.conf
 
 %postun web
 %_sbindir/a2chkconfig >/dev/null
@@ -127,6 +132,7 @@ exit 0
 %perl_vendor_privlib/Vargus
 %perl_vendor_privlib/Vargus/Events
 %doc docs/*
+/lib/tmpfiles.d/vargus.conf
 
 %files web
 %dir %webappdir
@@ -137,6 +143,14 @@ exit 0
 
 
 %changelog
+* Fri Dec 05 2014 Michael A. Kangin <prividen@altlinux.org> 0.9.7-alt1
+- Online activity control for camera objects and groups of cameras
+- Online write control for camera objects and groups of cameras
+- Additional inputs (for sound streams)
+- Support for sound tracks
+- Group operations for archive
+- FLV type output
+
 * Sun Mar 02 2014 Michael A. Kangin <prividen@altlinux.org> 0.9.6-alt2
 - fix mysql depends (Closes: #29753)
 - change control port to avoid conflict with X11
