@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.2
-Release: alt2
+Version: 4.1.0
+Release: alt1
 Summary: File-system Representation Interfaces
 License: ZPLv2.1
 Group: Development/Python
@@ -126,6 +126,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
+- Version 4.1.0
+
 * Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt2
 - Added module for Python 3
 
