@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 4.0.1
+Version: 4.1.0
 Release: alt1
 Summary: Zope Dublin Core implementation
 License: ZPLv2.1
@@ -125,6 +125,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.1.0-alt1
+- Version 4.1.0
+
 * Mon Dec 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.0.1-alt1
 - Version 4.0.1
 
