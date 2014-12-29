@@ -2,13 +2,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/ParseXS.pm) perl(File/Find.pm) perl(File/Path.pm) perl(File/Spec.pm) perl(Scalar/Util.pm) perl(Test/LongString.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(Test/Warn.pm)
 # END SourceDeps(oneline)
-%define module_version 3.003
+%define module_version 3.004
 %define module_name Sereal-Decoder
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.003
-Release: alt1.1
+Version: 3.004
+Release: alt1
 Summary: Fast, compact, powerful binary deserialization
 Group: Development/Perl
 License: perl
@@ -52,6 +52,9 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Dec 29 2014 Igor Vlasenko <viy@altlinux.ru> 3.004-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 3.003-alt1.1
 - rebuild with new perl 5.20.1
 
