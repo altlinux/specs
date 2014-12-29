@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-eth
-Version: 4.20.0
+Version: 4.20.1
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -82,6 +82,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Mon Dec 29 2014 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt1
+- Fix bond checking.
+
 * Fri Dec 26 2014 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Fix list_bond_cached().
 - Fix read_iface_slaves_cached().
