@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Config-AutoConf
-Version: 0.307
+Version: 0.308
 Release: alt1
 
 Summary: A module to implement some of AutoConf macros in pure perl
@@ -63,6 +63,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Config/*
 
 %changelog
+* Mon Dec 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.308-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.307-alt1
 - automated CPAN update
 
