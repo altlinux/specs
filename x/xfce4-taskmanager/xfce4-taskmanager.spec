@@ -1,6 +1,6 @@
 Name: xfce4-taskmanager
-Version: 1.0.1
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: Taskmanager for Xfce Desktop
 Summary(ru_RU.UTF-8): Системный монитор для Xfce
@@ -29,6 +29,7 @@ BuildRequires: libexo-devel
 %prep
 %setup
 %patch -p1
+mkdir m4/
 
 %build
 %xfce4reconf
@@ -49,6 +50,10 @@ BuildRequires: libexo-devel
 %_desktopdir/xfce4-taskmanager.desktop
 
 %changelog
+* Mon Dec 29 2014 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
+- Fix build: create m4/ directory.
+- Updated to 1.1.0.
+
 * Tue Oct 14 2014 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt2
 - Fix UTF-8 strings in the pretty_cmdline().
 - Fix fgetc() return type.
