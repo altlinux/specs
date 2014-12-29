@@ -1,7 +1,7 @@
 %define oname Products.feedfeeder
 Name: python-module-%oname
-Version: 2.7
-Release: alt1.dev0.git20141127
+Version: 2.8
+Release: alt1.dev0.git20141226
 Summary: Turn external feed entries into content items
 License: GPL
 Group: Development/Python
@@ -89,6 +89,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt1.dev0.git20141226
+- Version 2.8.dev0
+
 * Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1.dev0.git20141127
 - Initial build for Sisyphus
 
