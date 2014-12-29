@@ -4,7 +4,7 @@ Summary(ru_RU.UTF8): Открытая SCADA система.
 Summary(uk_UA.UTF8): Відкрита SCADA система.
 Summary(de_DE.UTF8): Open SCADA-System.
 Name: openscada
-Version: 0.8.11
+Version: 0.8.12
 Release: alt1
 Source: openscada-%version.tar
 License: GPLv2
@@ -1466,6 +1466,9 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 
 
 %changelog
+* Mon Dec 29 2014 Roman Savochenko <rom_as@altlinux.ru> 0.8.12-alt1
+- 0.8.12 update to production release.
+
 * Mon Jul 21 2014 Roman Savochenko <rom_as@altlinux.ru> 0.8.11-alt1
 - 0.8.11 update to production release.
 
