@@ -5,7 +5,7 @@
 
 Name: autosshd
 Version: 0.0.3
-Release: alt7
+Release: alt10
 
 Summary: System administration - AutoSSH system level service
 
@@ -89,6 +89,9 @@ cp share/autosshd.setup* %buildroot%_datadir/%name/
 %_bindir/autosshd-ssh
 
 %changelog
+* Mon Dec 29 2014 Danil Mikhailov <danil@altlinux.org> 0.0.3-alt10
+- fixed test sudo autosshd-ssh anyssh.ru
+
 * Wed Dec 17 2014 Vitaly Lipatov <lav@altlinux.ru> 0.0.3-alt7
 - small fixes
 
