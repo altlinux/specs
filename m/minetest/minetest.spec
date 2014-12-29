@@ -3,13 +3,17 @@
 %global gitname celeron55
 
 Name:		minetest
-Version:	0.4.10
+Version:	0.4.11
 Release:	alt1
 Summary:	Multiplayer infinite-world block sandbox with survival mode
 
 Group:		Games/Other
 License:	LGPLv2+ and CC-BY-SA
 URL:		http://minetest.net/index.php
+
+# VCS (executable): https://github.com/minetest/minetest.git
+# VCS (data files): https://github.com/minetest/minetest_game.git
+
 
 # curl -L -O http://github.com/celeron55/minetest/tarball/0.4.3/minetest-0.4.3.tar.gz
 # wget https://raw.github.com/RussianFedora/minetest/fedora/minetest.desktop
@@ -99,11 +103,6 @@ cp -p minetest.conf.example %buildroot%{_sysconfdir}/%{name}.conf
 
 cp -p %SOURCE5 README
 
-# Move doc directory back to the sources
-#mkdir __doc
-#mv  %buildroot%{_datadir}/doc/%{name}/* __doc
-#rm -rf %buildroot%{_datadir}/doc/%{name}
-
 %if_with l10n
 %find_lang %name
 %else
@@ -159,6 +158,9 @@ fi
 
 
 %changelog
+* Mon Dec 29 2014 Andrey Cherepanov <cas@altlinux.org> 0.4.11-alt1
+- New version
+
 * Tue Jul 08 2014 Andrey Cherepanov <cas@altlinux.org> 0.4.10-alt1
 - New version
 - Add appdata to package
