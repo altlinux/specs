@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.3
-Release: alt1.dev0.git20141104
+Version: 4.1.1
+Release: alt1.dev0.git20141226
 Summary: Browser resources implementation for Zope
 License: ZPL
 Group: Development/Python
@@ -153,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git20141226
+- Version 4.1.1.dev0
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt1.dev0.git20141104
 - Version 4.0.3.dev0
 - Enabled testing
