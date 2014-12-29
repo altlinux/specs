@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
+Version: 4.1.0
 Release: alt1
 Summary: Resolver for Python dotted names
 License: ZPLv2.1
@@ -110,7 +110,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests.*
@@ -120,16 +120,21 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/tests.*
 
 #files -n python3-module-%oname-tests
 #python3_sitelibdir/*/*/tests.*
+#python3_sitelibdir/*/*/*/tests.*
 %endif
 
 %changelog
+* Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
+- Version 4.1.0
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
 - Version 4.0.1
 
