@@ -5,11 +5,11 @@ BuildRequires: perl(CPAN.pm) perl(Catalyst/Controller.pm) perl(Catalyst/Plugin/S
 # END SourceDeps(oneline)
 Name:           perl-Test-WWW-Mechanize-Catalyst
 Summary:        Test::WWW::Mechanize for Catalyst
-Version:        0.59
-Release:        alt1_1
+Version:        0.60
+Release:        alt1
 License:        GPL+ or Artistic
 
-Source0:        http://search.cpan.org/CPAN/authors/id/I/IL/ILMARI/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/J/JJ/JJNAPIORK/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/Test-WWW-Mechanize-Catalyst/
 BuildArch:      noarch
 
@@ -79,6 +79,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
+- automated CPAN update
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1_1
 - update to new release by fcimport
 
