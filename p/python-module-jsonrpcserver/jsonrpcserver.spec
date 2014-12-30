@@ -4,7 +4,7 @@
 %def_without python2
 
 Name: python-module-%oname
-Version: 1.0.6
+Version: 1.0.8
 Release: alt1
 Summary: JSON-RPC 2.0 server library
 License: LGPL
@@ -103,6 +103,7 @@ popd
 
 %if_with python2
 %files
+%doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/*_test.*
 
@@ -112,6 +113,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
+%doc *.rst
 %python3_sitelibdir/*
 #exclude %python3_sitelibdir/*/*_test.*
 #exclude %python3_sitelibdir/*/*/*_test.*
@@ -122,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt1
+- Version 1.0.8
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt1
 - Version 1.0.6
 
