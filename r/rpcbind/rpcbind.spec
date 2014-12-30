@@ -1,6 +1,6 @@
 Name: rpcbind
-Version: 0.2.1
-Release: alt0.6
+Version: 0.2.3
+Release: alt0.1
 
 Summary: RPC port mapper
 License: BSD
@@ -8,7 +8,7 @@ Group: Networking/Other
 
 Source: %name-%version-%release.tar
 
-BuildRequires: libtirpc-devel libwrap-devel
+BuildRequires: libtirpc-devel libwrap-devel libsystemd-devel
 
 Provides: portmap = 2:%version-%release
 Obsoletes: portmap
@@ -28,6 +28,7 @@ to make RPC calls.
     --enable-libwrap \
     --enable-warmstarts \
     --with-statedir=%_localstatedir/rpcbind \
+    --with-systemdsystemunitdir=%systemd_unitdir \
     --with-rpcuser=rpc \
     #
 make
@@ -39,6 +40,7 @@ install -pm0755 -D rpcbind.init %buildroot%_initdir/rpcbind
 install -pm0755 -D rpcbind.control %buildroot%_controldir/rpcbind
 install -pm0600 -D rpcbind.sysconfig %buildroot%_sysconfdir/sysconfig/rpcbind
 install -pm0644 -D rpcbind.service %buildroot%systemd_unitdir/rpcbind.service
+install -pm0644 rpcbind.socket %buildroot%systemd_unitdir/rpcbind.socket
 
 %pre
 %pre_control rpcbind
@@ -76,6 +78,7 @@ fo=/var/run/control/portmap
 
 %_initdir/%name
 %systemd_unitdir/rpcbind.service
+%systemd_unitdir/rpcbind.socket
 
 /sbin/rpcbind
 %_bindir/rpcinfo
@@ -86,6 +89,9 @@ fo=/var/run/control/portmap
 %dir %attr(770,root,rpc) %_localstatedir/rpcbind
 
 %changelog
+* Mon Dec 29 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.3-alt0.1
+- 0.2.3-rc1 released
+
 * Tue Apr 16 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.1-alt0.6
 - 0.2.1-rc4 released
 
