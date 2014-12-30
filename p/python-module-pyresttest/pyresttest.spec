@@ -1,10 +1,11 @@
 %define oname pyresttest
 
 %def_without python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 1.0.2
-Release: alt1.git20141125
+Version: 1.1.1
+Release: alt1.git20141228
 Summary: Python RESTful API Testing & Microbenchmarking Tool
 License: ASLv2.0
 Group: Development/Python
@@ -18,10 +19,12 @@ BuildArch: noarch
 BuildPreReq: python-modules-json
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-yaml python-module-pycurl
+BuildPreReq: python-module-django-tests python-module-jsonschema
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-yaml python3-module-pycurl
+BuildPreReq: python3-module-django-tests python3-module-jsonschema
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -84,6 +87,7 @@ popd
 %if_with python3
 pushd ../python3
 sed -i 's|^python|python3|' run_tests.sh
+export PYTHONPATH=$PWD
 ./run_tests.sh
 popd
 %endif
@@ -104,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20141228
+- Version 1.1.1
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.git20141125
 - Initial build for Sisyphus
 
