@@ -3,14 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
-Release: alt1.dev.git10140113
+Version: 4.1.1
+Release: alt1.dev0.git10141229
 Summary: Zope 3 Template Application Languate (TAL)
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.tal/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/zope.tal.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -27,8 +28,6 @@ BuildPreReq: python-tools-2to3
 %endif
 
 %py_requires zope zope.i18nmessageid zope.interface
-# for tests:
-%py_requires zope.testing
 
 %description
 The Zope3 Template Attribute Languate (TAL) specifies the custom
@@ -164,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git10141229
+- Version 4.1.1.dev0
+
 * Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev.git10140113
 - Version 4.0.1dev
 
