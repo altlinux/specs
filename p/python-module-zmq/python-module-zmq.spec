@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 14.4.1
-Release: alt2
+Release: alt3
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -135,45 +135,52 @@ popd
 %endif
 
 %check
-rm zmq/__*
+rm %oname/__*
 PYTHONPATH=%buildroot%python_sitelibdir python setup.py test
+rm -rf %python_sitelibdir/%oname/backend/cffi/__*
+rm -rf %buildroot%python_sitelibdir/%oname/backend/cffi/__*
+
 %if_with python3
 pushd ../python3
-rm zmq/__*
+rm %oname/__*
 PYTHONPATH=%buildroot%python3_sitelibdir python3 setup.py test
+rm -rf %python3_sitelibdir/%oname/backend/cffi/__*
+rm -rf %buildroot%python3_sitelibdir/%oname/backend/cffi/__*
 popd
 %endif
 
 %files
 %doc README.md COPYING.LESSER COPYING.BSD CONTRIBUTING.md AUTHORS.md examples/
 %python_sitelibdir/*.egg-info
-%python_sitelibdir/zmq
-%exclude %python_sitelibdir/zmq/tests
-%exclude %python_sitelibdir/zmq/*/*.h
+%python_sitelibdir/%oname
+%exclude %python_sitelibdir/%oname/tests
+%exclude %python_sitelibdir/%oname/*/*.h
 
 %files devel
-%python_sitelibdir/zmq/*/*.h
+%python_sitelibdir/%oname/*/*.h
 
 %files tests
-%python_sitelibdir/zmq/tests
+%python_sitelibdir/%oname/tests
 
 %if_with python3
 %files -n python3-module-%oname
 %doc README.md COPYING.LESSER COPYING.BSD CONTRIBUTING.md AUTHORS.md examples/
 %python3_sitelibdir/*.egg-info
-%python3_sitelibdir/zmq
-%exclude %python3_sitelibdir/zmq/tests
-%exclude %python3_sitelibdir/zmq/*/*.h
-%exclude %python3_sitelibdir/zmq/backend/cffi/__pycache__
+%python3_sitelibdir/%oname
+%exclude %python3_sitelibdir/%oname/tests
+%exclude %python3_sitelibdir/%oname/*/*.h
 
 %files -n python3-module-%oname-devel
-%python3_sitelibdir/zmq/*/*.h
+%python3_sitelibdir/%oname/*/*.h
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/zmq/tests
+%python3_sitelibdir/%oname/tests
 %endif
 
 %changelog
+* Tue Dec 30 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 14.4.1-alt3
+- Another try to fix repocop fail buildroot (__pycache__)
+
 * Tue Dec 09 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 14.4.1-alt2
 - Fixed repocop fail buildroot (__pycache__)
 
