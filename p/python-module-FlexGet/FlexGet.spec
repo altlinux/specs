@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.2.243
-Release: alt1.git20141229
+Version: 1.2.244
+Release: alt1.git20141230
 Summary: Downloading/processing content (torrents, podcasts...) from different sources
 License: MIT
 Group: Development/Python
@@ -114,6 +114,9 @@ py.test
 %doc docs/build/html/*
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.244-alt1.git20141230
+- Version 1.2.244
+
 * Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.243-alt1.git20141229
 - Version 1.2.243
 
