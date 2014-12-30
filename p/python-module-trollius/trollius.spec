@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 Summary: Port of the Tulip project (asyncio module, PEP 3156) on Python 2
 License: ASLv2.0
@@ -166,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt1
+- Version 1.0.4
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1
 - Version 1.0.3
 
