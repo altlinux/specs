@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.6.1
-Release: alt1.git20140224
+Version: 2.6.3
+Release: alt1.git20141225
 Summary: The simplest way to write one program that runs on both Python 2 and Python 3
 License: MIT
 Group: Development/Python
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.3-alt1.git20141225
+- Version 2.6.3
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.1-alt1.git20140224
 - Initial build for Sisyphus
 
