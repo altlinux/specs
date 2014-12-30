@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.0
-Release: alt3
+Version: 4.0.1
+Release: alt1
 Summary: Zope sendmail
 License: ZPLv2.1
 Group: Development/Python
@@ -122,6 +122,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
+- Version 4.0.1
+
 * Mon Dec 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3
 - Version 4.0.0
 
