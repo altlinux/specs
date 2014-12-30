@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.5.1
-Release: alt1.git20141119
+Version: 2.5.3
+Release: alt1.git20141229
 Summary: BDD library for the py.test runner
 License: MIT
 Group: Development/Python
@@ -127,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.3-alt1.git20141229
+- Version 2.5.3
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt1.git20141119
 - Version 2.5.1
 
