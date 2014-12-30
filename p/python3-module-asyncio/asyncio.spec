@@ -1,6 +1,6 @@
 %define oname asyncio
 Name: python3-module-%oname
-Version: 3.4.1
+Version: 3.4.2
 Release: alt1
 Summary: Reference implementation of PEP 3156
 License: Free
@@ -12,8 +12,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose python3-module-coverage
+BuildPreReq: python3-devel python3-module-setuptools-tests /dev/pts
+BuildPreReq: python3-module-nose python3-module-coverage python3-test
 
 %py3_provides %oname
 %add_python3_req_skip _winapi msvcrt
@@ -43,7 +43,7 @@ This package contains tests for %oname.
 %check
 python3 setup.py test
 %make check
-nosetests3
+#nosetests3
 
 %files
 %doc README
@@ -56,6 +56,9 @@ nosetests3
 %python3_sitelibdir/*/*/test*
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt1
+- Version 3.4.2
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.1-alt1
 - Initial build for Sisyphus
 
