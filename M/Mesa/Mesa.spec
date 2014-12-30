@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 10.4.0
+Version: 10.4.1
 Release: alt1
 Epoch: 4
 License: MIT
@@ -274,7 +274,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libEGL.so.1 %_libdir/
 ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 
 %files -n libGL
-%doc docs/relnotes/10.4.html
+%doc docs/relnotes/%version.html
 %dir %_sysconfdir/X11/%_lib
 %ghost %_sysconfdir/X11/%_lib/libGL.so.1
 %_libdir/libGL.so.*
@@ -384,6 +384,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Tue Dec 30 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.4.1-alt1
+- 10.4.1
+
 * Mon Dec 15 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.4.0-alt1
 - 10.4.0
 
