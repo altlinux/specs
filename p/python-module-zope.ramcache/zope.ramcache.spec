@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Summary: Zope RAM Cache
 License: ZPLv2.1
 Group: Development/Python
@@ -108,6 +108,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1
+- Version 2.1.0
+
 * Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt2
 - Added module for Python 3
 
