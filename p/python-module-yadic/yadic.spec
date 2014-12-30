@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.9
+Version: 0.1.11
 Release: alt1
 Summary: Yet Another DI Container
 License: MIT
@@ -109,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.11-alt1
+- Version 0.1.11
+
 * Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.9-alt1
 - Version 0.1.9
 
