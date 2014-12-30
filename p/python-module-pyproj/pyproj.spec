@@ -4,22 +4,25 @@
 
 Name: python-module-%oname
 Version: 1.9.4
-Release: alt2.svn20131105
+Release: alt3.git20141229
 Summary: Pyrex generated python interface to PROJ.4 library
 License: MIT
 Group: Development/Python
-Url: http://code.google.com/p/pyproj/
+Url: https://pypi.python.org/pypi/pyproj/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://pyproj.googlecode.com/svn/trunk
+# https://github.com/jswhit/pyproj.git
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: libproj-devel python-devel
+BuildPreReq: libproj-devel python-devel python-module-setuptools-tests
+BuildPreReq: python-module-numpy
 %setup_python_module %oname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python-tools-2to3
+BuildPreReq: python3-module-setuptools-tests
+BuildPreReq: python3-module-numpy
 %endif
 
 %description
@@ -128,7 +131,7 @@ popd
 %endif
 
 %files
-%doc Changelog LICENSE_proj4 README
+%doc Changelog LICENSE* *.md docs
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test
 %exclude %python_sitelibdir/%oname/data/test*
@@ -139,7 +142,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc Changelog LICENSE_proj4 README
+%doc Changelog LICENSE* *.md docs
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test
 %exclude %python3_sitelibdir/%oname/data/test*
@@ -150,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt3.git20141229
+- New snapshot
+
 * Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt2.svn20131105
 - Added module for Python 3
 
