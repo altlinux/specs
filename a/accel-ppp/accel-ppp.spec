@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.9.0
-Release: alt1
+Release: alt2
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,10 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Dec 30 2014 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt2
+- ipoe: fixed incorrect timer deletion
+- ipoe: fixed mask calculation from ipaddr radius attribute
+
 * Wed Dec 10 2014 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
