@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Epoch: 1
-Version: 9.0
+Version: 9.1
 Release: alt1
 
 Summary: Python Distutils Enhancements
@@ -148,6 +148,9 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:9.1-alt1
+- Version 9.1
+
 * Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:9.0-alt1
 - Version 9.0
 
