@@ -1,5 +1,5 @@
 Name: livecd-webkiosk
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: start the browser for a suitable webkiosk environment
@@ -72,7 +72,10 @@ cat > %buildroot%xsfile << _EOF_
 #!/bin/sh
 ratpoison &
 [ -f /image/index.html ] && url=/image/index.html
-while :; do webkiosk-browser \$url; done
+while :; do
+	xset s off; xset -dpms
+	webkiosk-browser \$url
+done
 _EOF_
 chmod +x %buildroot%xsfile
 
@@ -131,6 +134,9 @@ chmod +x %wrapper
 %files qupzilla
 
 %changelog
+* Wed Dec 31 2014 Michael Shigorin <mike@altlinux.org> 0.4.2-alt1
+- disable DPMS (thanks valintinr@)
+
 * Mon Sep 29 2014 Michael Shigorin <mike@altlinux.org> 0.4.1-alt1
 - require qupzilla 1.8.0 or later for --fullscreen
 
