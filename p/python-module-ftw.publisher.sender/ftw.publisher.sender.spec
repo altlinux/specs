@@ -1,8 +1,8 @@
 %define mname ftw.publisher
 %define oname %mname.sender
 Name: python-module-%oname
-Version: 2.2.1
-Release: alt1.dev0.git20141107
+Version: 2.2.2
+Release: alt1.dev0.git20141231
 Summary: Staging and publishing addon for Plone contents
 License: GPLv2+
 Group: Development/Python
@@ -97,6 +97,9 @@ python setup.py test
 %python_sitelibdir/ftw/publisher/*/*/example*
 
 %changelog
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt1.dev0.git20141231
+- Version 2.2.2.dev0
+
 * Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt1.dev0.git20141107
 - Initial build for Sisyphus
 
