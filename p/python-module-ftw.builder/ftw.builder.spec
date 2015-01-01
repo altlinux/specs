@@ -1,8 +1,8 @@
 %define mname ftw
 %define oname %mname.builder
 Name: python-module-%oname
-Version: 1.5.3
-Release: alt1.dev0.git20141206
+Version: 1.6.1
+Release: alt1.dev0.git20141231
 Summary: Builder pattern for creating Plone objects in tests
 License: GPLv2+
 Group: Development/Python
@@ -13,6 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-lxml python-module-path
 BuildPreReq: python-module-unittest2 python-module-openid
 BuildPreReq: python-module-Products.CMFPlone
 BuildPreReq: python-module-zope.component
@@ -109,6 +110,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.dev0.git20141231
+- Version 1.6.1.dev0
+
 * Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.3-alt1.dev0.git20141206
 - Version 1.5.3.dev0
 
