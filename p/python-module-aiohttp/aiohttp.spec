@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.13.1
-Release: alt1.a0.git20141229
+Release: alt2.git20141231
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -21,6 +21,7 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-trollius python-module-nose
 BuildPreReq: python-module-gunicorn python-module-chardet
 BuildPreReq: python-module-flake8 python-module-coverage
+BuildPreReq: python-module-path
 %endif
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
@@ -29,6 +30,7 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-asyncio python3-module-nose
 BuildPreReq: python3-module-gunicorn python3-module-chardet
 BuildPreReq: python3-module-flake8 python3-module-coverage
+BuildPreReq: python3-module-path
 %endif
 
 %py_provides %oname
@@ -178,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.1-alt2.git20141231
+- Version 0.13.1
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.1-alt1.a0.git20141229
 - Version 0.13.1a0
 
