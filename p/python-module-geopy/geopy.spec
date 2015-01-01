@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6.0
-Release: alt1.git20141208
+Version: 1.7.0
+Release: alt1.git20141230
 Summary: Python Geocoding Toolbox
 License: MIT
 Group: Development/Python
@@ -98,6 +98,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.git20141230
+- Version 1.7.0
+
 * Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.git20141208
 - Version 1.6.0
 
