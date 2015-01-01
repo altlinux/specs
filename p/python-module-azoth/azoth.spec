@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt1.git20141205
+Release: alt2.git20141205
 Summary: Sqlalchemy utilities
 License: BSD
 Group: Development/Python
@@ -115,6 +115,7 @@ popd
 %files
 %doc *.rst
 %python_sitelibdir/*
+%exclude %python_sitelibdir/tests
 %exclude %python_sitelibdir/*/testutils.*
 
 %files tests
@@ -124,6 +125,7 @@ popd
 %files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/tests
 %exclude %python3_sitelibdir/*/testutils.*
 %exclude %python3_sitelibdir/*/*/testutils.*
 
@@ -133,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt2.git20141205
+- Excluded tests
+
 * Wed Dec 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20141205
 - Initial build for Sisyphus
 
