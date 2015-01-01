@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.09
-Release: alt1.git20130908
+Version: 1.10
+Release: alt2.git20141230
 Summary: Python subprocess interface
 License: MIT
 Group: Development/Python
@@ -15,42 +15,48 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
+buildprereq: python-module-coverage python-module-py
+buildprereq: python-module-tox python-module-virtualenv
+buildprereq: python-module-nose
 %if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+buildrequires(pre): rpm-build-python3
+buildprereq: python3-devel python3-module-setuptools-tests
+buildprereq: python3-module-coverage python3-module-py
+buildprereq: python3-module-tox python3-module-virtualenv
+buildprereq: python3-module-nose
 %endif
 
 %py_provides %oname
 
 %description
-sh (previously pbs) is a full-fledged subprocess replacement for Python
+sh (previously pbs) is a full-fledged subprocess replacement for python
 2.6 - 3.2 that allows you to call any program as if it were a function:
 
   from sh import ifconfig
   print ifconfig("eth0")
 
-sh is not a collection of system commands implemented in Python.
+sh is not a collection of system commands implemented in python.
 
 %package -n python3-module-%oname
-Summary: Python subprocess interface
+summary: python subprocess interface
 Group: Development/Python3
 %py_provides %oname
 
 %description -n python3-module-%oname
-sh (previously pbs) is a full-fledged subprocess replacement for Python
+sh (previously pbs) is a full-fledged subprocess replacement for python
 2.6 - 3.2 that allows you to call any program as if it were a function:
 
   from sh import ifconfig
   print ifconfig("eth0")
 
-sh is not a collection of system commands implemented in Python.
+sh is not a collection of system commands implemented in python.
 
 %prep
 %setup
 
 %if_with python3
-cp -fR . ../python3
+cp -fr . ../python3
 %endif
 
 %build
@@ -71,6 +77,16 @@ pushd ../python3
 popd
 %endif
 
+%check
+#py.test
+nosetests -v
+%if_with python3
+pushd ../python3
+py.test-%_python3_version
+nosetests3 -v
+popd
+%endif
+
 %files
 %doc *.md
 %python_sitelibdir/*
@@ -82,6 +98,12 @@ popd
 %endif
 
 %changelog
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10-alt2.git20141230
+- Fixed Group
+
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10-alt1.git20141230
+- Version 1.10
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.09-alt1.git20130908
 - Initial build for Sisyphus
 
