@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.23
-Release: alt1.git20140815
+Version: 1.24
+Release: alt1.git20141231
 Summary: A utility to read and write PDFs with Python
 License: BSD
 Group: Development/Python
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.24-alt1.git20141231
+- Version 1.24
+
 * Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.23-alt1.git20140815
 - Initial build for Sisyphus
 
