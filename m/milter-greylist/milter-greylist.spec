@@ -2,7 +2,7 @@
 
 Name: milter-greylist
 Version: 4.5.9
-Release: alt1
+Release: alt2
 Group: System/Servers
 License: 3-clause BSD license
 Summary: GreyList milter for milter-capable MTA
@@ -18,7 +18,6 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 %def_enable postfix
 %def_enable dnsrbl
 %def_disable p0f
-%def_disable libbind
 %def_with libspf2
 %def_with libGeoIP
 %def_with libcurl
@@ -32,7 +31,6 @@ Requires: sendmail-cf >= 8.11
 BuildRequires: sendmail-devel >= 8.11
 BuildRequires: flex
 BuildRequires: bison
-%{?_with_libbind:BuildPreReq: libbind-devel}
 %{?_with_libspf2:BuildPreReq: libspf2-devel}
 %{?_with_libcurl:BuildPreReq: libcurl-devel}
 %{?_with_libGeoIP:BuildPreReq: libGeoIP-devel}
@@ -63,8 +61,7 @@ before the second attempt.
 	%{subst_enable postfix} \
 	%{subst_enable dnsrbl} \
 	%{subst_enable p0f} \
-	%{?_with_libbind:--with-libbbind=%_libdir} \
-	%{?_with_libspf2:--with-spf2=%_libdir} \
+	%{?_with_libspf2:--with-libspf2=%_libdir} \
 	%{?_with_libcurl:--with-libcurl=%_libdir} \
 	%{?_with_libGeoIP:--with-libGeoIP=%_libdir}
 
@@ -83,7 +80,7 @@ install -m 644 milter-greylist.m4 %buildroot%_datadir/sendmail-cf/feature/milter
 %endif
 touch %buildroot%_localstatedir/milter-greylist/greylist.db
 touch %buildroot%_sysconfdir/sysconfig/%name
-# use root user, as the %files section define the correct install user
+
 make DESTDIR=%buildroot install
 
 %pre
@@ -143,6 +140,9 @@ fi
 %attr(0600,%user,root) %ghost %_localstatedir/milter-greylist/greylist.db
 
 %changelog
+* Thu Jan 01 2015 L.A. Kostis <lakostis@altlinux.ru> 4.5.9-alt2
+- .spec cleanup.
+
 * Tue Dec 30 2014 L.A. Kostis <lakostis@altlinux.ru> 4.5.9-alt1
 - Add conftest action to init.d script.
 
