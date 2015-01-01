@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 1.8.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 License: GPLv3
@@ -41,23 +41,26 @@ popd
 %install
 %python_install
 mkdir -p %buildroot%_sysconfdir/%name/
-cp examples/hosts %buildroot%_sysconfdir/%name/
 cp examples/ansible.cfg %buildroot%_sysconfdir/%name/
+touch %buildroot%_sysconfdir/%name/hosts
 mkdir -p %buildroot/%_man1dir
 cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
-mkdir -p %buildroot/%_datadir/%name
-cp -va library/* %buildroot/%_datadir/%name/
+rm -f library/{VERSION,README.md,COPYING,CONTRIBUTING.md}
+cp -va library/* %buildroot%python_sitelibdir/%name/modules
 
 %files
 %_bindir/%{name}*
 %config(noreplace) %_sysconfdir/%name
-%_datadir/%name
 %_man1dir/%{name}*
 %python_sitelibdir/%{name}*
-%doc examples/playbooks examples/scripts
+%doc examples/playbooks examples/scripts examples/hosts
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md
 
 %changelog
+* Fri Jan  2 2015 Terechkov Evgenii <evg@altlinux.org> 1.8.2-alt2
+- Fix modules location (ALT#30619)
+- Drop default hosts file (see examples/hosts, ALT#30620)
+
 * Sun Dec  7 2014 Terechkov Evgenii <evg@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
