@@ -4,7 +4,7 @@
 %def_without python2
 
 Name: python-module-%oname
-Version: 1.0.12
+Version: 1.1.0
 Release: alt1
 Summary: JSON-RPC 2.0 client library for Python 3
 License: LGPL
@@ -18,13 +18,17 @@ BuildArch: noarch
 %if_with python2
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-requests python-module-jsonschema
-BuildPreReq: python-module-nose
+BuildPreReq: python-module-nose python-module-rednose
+BuildPreReq: python-module-nose-cov python-module-responses
+BuildPreReq: python-module-cov-core python-module-coverage
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-requests python3-module-jsonschema
-BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-nose python3-module-rednose
+BuildPreReq: python3-module-nose-cov python3-module-responses
+BuildPreReq: python3-module-cov-core python3-module-coverage
 %endif
 
 %py_provides %oname
@@ -126,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
+- Version 1.1.0
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.12-alt1
 - Version 1.0.12
 
