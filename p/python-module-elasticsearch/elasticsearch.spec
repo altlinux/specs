@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.2.0
-Release: alt2.git20141022
+Version: 1.3.0
+Release: alt1.git20141231
 Summary: Python client for Elasticsearch
 License: ASL
 Group: Development/Python
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20141231
+- Version 1.3.0
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2.git20141022
 - Tuned requirements
 
