@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.1.1
-Release: alt1.git20141228
+Version: 1.2.1
+Release: alt1.git20141231
 Summary: Python RESTful API Testing & Microbenchmarking Tool
 License: ASLv2.0
 Group: Development/Python
@@ -108,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.git20141231
+- Version 1.2.1
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20141228
 - Version 1.1.1
 
