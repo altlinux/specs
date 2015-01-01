@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 4.0.9
-Release: alt1.dev.git20141008
+Version: 4.1.2
+Release: alt1.dev0.git201411227
 Summary: Scalable persistent object containers
 License: ZPL
 Group: Development/Python
@@ -175,6 +175,9 @@ python setup.py test
 %endif
 
 %changelog
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt1.dev0.git201411227
+- Version 4.1.2.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.9-alt1.dev.git20141008
 - Version 4.0.9dev
 
