@@ -5,7 +5,7 @@
 Summary: A strictly RFC 4511 conforming LDAP V3 pure Python 3 client - Python 2 compatible
 Name: python-module-%oname
 Version: 0.9.7.1
-Release: alt1.git20141229
+Release: alt1.git20150102
 # https://github.com/cannatag/ldap3.git
 Source0: %name-%version.tar
 BuildArch: noarch
@@ -117,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7.1-alt1.git20150102
+- New snapshot
+
 * Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7.1-alt1.git20141229
 - Version 0.9.7.1
 
