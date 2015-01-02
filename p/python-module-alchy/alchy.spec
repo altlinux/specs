@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.2
-Release: alt1.git20141118
+Version: 1.5.0
+Release: alt1.git20141216
 Summary: The declarative companion to SQLAlchemy
 License: MIT
 Group: Development/Python
@@ -129,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.git20141216
+- Version 1.5.0
+
 * Sun Nov 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1.git20141118
 - Initial build for Sisyphus
 
