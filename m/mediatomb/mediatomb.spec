@@ -1,6 +1,6 @@
 Name: mediatomb
 Version: 0.12.1
-Release: alt13
+Release: alt14
 
 Summary: UPnP AV Mediaserver for Linux
 Group: System/Servers
@@ -70,6 +70,9 @@ install -pD -m0644 %SOURCE3 %buildroot%systemd_unitdir/mediatomb.service
 %attr(3770,root,_mediatomb) %dir %_localstatedir/%name
 
 %changelog
+* Fri Jan 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt14
+- rebuilt with libav11
+
 * Mon Jul 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt13
 - built with libmp4v2
 - more systemd tweaks
