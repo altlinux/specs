@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1
+Version: 0.3
 Release: alt1.git20150101
 Summary: Implementation of the v-statistic
 License: MIT
@@ -66,6 +66,7 @@ pushd ../python3
 %python3_install
 popd
 %endif
+
 %check
 python setup.py test
 %if_with python3
@@ -85,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20150101
+- Version 0.3
+
 * Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20150101
 - Initial build for Sisyphus
 
