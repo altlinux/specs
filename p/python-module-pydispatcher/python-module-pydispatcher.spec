@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 2.0.3
-Release: alt1.bzr20130112
+Version: 2.0.4
+Release: alt1.bzr20150101
 
 Summary: Multi-producer-multi-consumer signal dispatching mechanism
 
@@ -15,6 +15,7 @@ Url: http://pydispatcher.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# bzr branch lp:pydispatcher
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -99,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt1.bzr20150101
+- Version 2.0.4
+
 * Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1.bzr20130112
 - Version 2.0.3
 - Added module for Python 3
