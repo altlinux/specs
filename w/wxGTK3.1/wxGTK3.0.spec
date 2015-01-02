@@ -2,7 +2,7 @@
 
 Name: wxGTK3.1
 Version: %wxbranch.0
-Release: alt2.svn20140708
+Release: alt3.git20141228
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -341,6 +341,9 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt3.git20141228
+- New snapshot
+
 * Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt2.svn20140708
 - Enabled compatibility with 2.8 (ALT #30419)
 
