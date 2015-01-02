@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.1.2
-Release: alt1.git20141231
+Version: 1.1.3
+Release: alt1.git20150101
 Summary: Simple symmetric GPG file encryption and decryption
 License: MIT
 Group: Development/Python
@@ -112,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20150101
+- Version 1.1.3
+
 * Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.git20141231
 - Version 1.1.2
 
