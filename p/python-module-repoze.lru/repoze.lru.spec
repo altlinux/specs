@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt1.git20140202
+Release: alt2.git20140202
 Summary: Tiny LRU cache
 License: BSD
 Group: Development/Python
@@ -120,6 +120,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2.git20140202
+- Fixed version
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.git20140202
 - New snapshot
 
