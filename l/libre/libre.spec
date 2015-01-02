@@ -1,6 +1,6 @@
 %define oname re
 Name: libre
-Version: 0.4.7
+Version: 0.4.11
 Release: alt1
 
 Summary: Library for real-time communications with async IO support and a complete SIP stack
@@ -10,12 +10,8 @@ Group: System/Libraries
 Url: http://www.creytiv.com/re.html
 
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: http://www.creytiv.com/pub/%oname-%version.tar
 
-# manually removed: libre-devel 
-# Automatically added by buildreq on Mon Sep 17 2012
 BuildRequires: libssl-devel zlib-devel
 
 %description
@@ -54,6 +50,9 @@ rm -f %buildroot%_libdir/lib%oname.a
 #%_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.11-alt1
+- 0.4.11
+
 * Mon May 26 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.7-alt1
 - 0.4.8
 
