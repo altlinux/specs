@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.0.6
-Release: alt2
+Release: alt3
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -58,6 +58,11 @@ Requires: vdr = %version-%release
 
 %package plugin-live
 Summary: VDR LIVE plugin
+Group: Video
+Requires: vdr = %version-%release
+
+%package plugin-manager
+Summary: VDR manager plugin
 Group: Video
 Requires: vdr = %version-%release
 
@@ -154,6 +159,9 @@ IPTV plugin for the Video Disk Recorder (VDR).
 
 %description plugin-live
 Live Interactive VDR Environment -- web inteface for the Video Disk Recorder (VDR).
+
+%description plugin-manager
+Manager plugin for the Video Disk Recorder (VDR).
 
 %description plugin-pvrinput
 Analog PVR-like cards (ivtv, cx18 etc) support for the Video Disk Recorder (VDR).
@@ -266,6 +274,10 @@ mkdir -p %buildroot%docdir/live %buildroot%confdir/plugins/live
 cp -p PLUGINS/src/live/README %buildroot%docdir/live
 cp -a PLUGINS/src/live/live %buildroot%resdir/plugins
 
+mkdir -p %buildroot%docdir/manager %buildroot%confdir/plugins/manager
+cp -p PLUGINS/src/manager/README %buildroot%docdir/manager
+touch %buildroot%confdir/plugins/manager/vdrmanager.conf
+
 mkdir -p %buildroot%docdir/pvrinput
 cp -p PLUGINS/src/pvrinput/{FAQ,HISTORY,README} %buildroot%docdir/pvrinput
 
@@ -336,6 +348,7 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=femon.lang vdr-femon
 %find_lang --output=iptv.lang vdr-iptv
 %find_lang --output=live.lang vdr-live
+%find_lang --output=manager.lang vdr-manager
 %find_lang --output=pvrinput.lang vdr-pvrinput
 %find_lang --output=softhddevice.lang vdr-softhddevice
 %find_lang --output=streamdev.lang --append vdr-streamdev-server vdr-streamdev-client
@@ -478,6 +491,12 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %plugindir/libvdr-live.so.%version
 %resdir/plugins/live
 
+%files plugin-manager -f manager.lang
+%docdir/manager
+%dir %attr(0770,root,_vdr) %confdir/plugins/manager
+%config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/manager/*
+%plugindir/libvdr-manager.so.%version
+
 %files plugin-pvrinput -f pvrinput.lang
 %docdir/pvrinput
 %plugindir/libvdr-pvrinput.so.%version
@@ -572,6 +591,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Fri Jan 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.6-alt3
+- manager plugin added
+
 * Sat May 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.6-alt2
 - live plugin added
 - plugins updated:
