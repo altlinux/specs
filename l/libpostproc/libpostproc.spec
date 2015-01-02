@@ -1,6 +1,6 @@
 Name: libpostproc
 Version: 0.9.0
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Video postprocessing library
@@ -74,6 +74,9 @@ This package contains static development files for %name
 %_libdir/pkgconfig/*
 
 %changelog
+* Fri Jan 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.9.0-alt3
+- rebuilt with liibav11
+
 * Sun May 18 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.9.0-alt2
 - rebuilt with libav10
 
