@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.5.15cnc6
-Release: alt6.1
+Release: alt7
 
 Summary: Python module for APT
 Group: Development/Python
@@ -15,6 +15,8 @@ Source0: %oname-%version.tar
 Source1: http://apt-rpm.org/python/apt-get.py
 
 BuildPreReq: python-devel swig libapt-devel gcc-c++ liblua5-devel
+
+Provides: python-apt = %EVR
 
 %description
 This package contains Python module for APT.
@@ -38,6 +40,9 @@ install -m644 python/*.so python/*.py %buildroot%python_sitelibdir
 %python_sitelibdir/*
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.15cnc6-alt7
+- Provides: python-apt = %EVR (ALT #30621)
+
 * Wed Sep 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15cnc6-alt6.1
 - Rebuilt with libapt-pkg-libc6.9-6.so.4.
 
