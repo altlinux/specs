@@ -1,6 +1,6 @@
 Name: ffmpeg2theora
 Version: 0.29
-Release: alt2
+Release: alt3
 
 Summary: Theora video encoder using ffmpeg
 License: GPLv2+
@@ -45,6 +45,9 @@ install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 %doc AUTHORS ChangeLog
 
 %changelog
+* Fri Jan 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.29-alt3
+- rebuilt with libav11
+
 * Sat May 31 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.29-alt2
 - rebuilt with libav10
 
