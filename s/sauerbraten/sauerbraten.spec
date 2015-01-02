@@ -1,7 +1,7 @@
-%define rev svn4781
-%define origname sauerbraten_2010_07_21_justice_edition_linux
+%define rev svn5065
+%define origname sauerbraten_2013_02_03_collect_edition_linux
 Name: sauerbraten
-Version: 20130126
+Version: 20130203
 Release: alt1.%rev
 Summary: Sauerbraten is a free multiplayer/singleplayer FPS
 
@@ -57,6 +57,9 @@ mv %_builddir/%name/server-init.cfg %buildroot/%_gamesdatadir/%name/
 %_gamesdatadir/%name/server-init.cfg
 
 %changelog
+* Fri Jan 2 2015 Andrew Clark <andyc@altlinux.org> 20130203-alt1.svn5065
+- version update to 20130203-alt1.svn5065
+
 * Sun Feb 3 2013 Andrew Clark <andyc@altlinux.org> 20130126-alt1.svn4781
 - version update to 20130126-alt1.svn4781
 
