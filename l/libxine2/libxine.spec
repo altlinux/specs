@@ -1,7 +1,7 @@
-%define plugin_version 2.4
+%define plugin_version 2.5
 
 Name: libxine2
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: Free libraries for play video and audio
@@ -103,6 +103,9 @@ mv %buildroot%_man5dir/xine.5 %buildroot%_man5dir/xine2.5
 %_libdir/xine/plugins/%plugin_version/xineplug_inp_smb.so
 
 %changelog
+* Fri Jan 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.6-alt1
+- 1.2.6
+
 * Wed May 28 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.5-alt1
 - 1.2.5
 
