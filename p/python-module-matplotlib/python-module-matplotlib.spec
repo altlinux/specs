@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt1.git20141101
+Release: alt2.git20141101
 
 Summary: Matlab(TM) style python plotting package
 
@@ -666,6 +666,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.git20141101
+- Tuned requirements
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.git20141101
 - Version 1.5.x
 
