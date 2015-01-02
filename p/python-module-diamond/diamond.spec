@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.14
-Release: alt1.git20150101
+Release: alt2.git20150101
 Summary: Smart data producer for graphite graphing package
 License: MIT
 Group: Development/Python
@@ -76,7 +76,7 @@ python test.py
 %files
 %doc CHANGELOG *.md
 %_bindir/*
-%_sysconfdir/*
+%config %_sysconfdir/*
 #_initdir/*
 %python_sitelibdir/*
 %_datadir/%oname
@@ -86,6 +86,9 @@ python test.py
 %doc doc/*
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.14-alt2.git20150101
+- Set %_sysconfigdir/%oname as config file
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.14-alt1.git20150101
 - Initial build for Sisyphus
 
