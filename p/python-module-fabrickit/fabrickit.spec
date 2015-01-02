@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.1.6
+Version: 0.1.8
 Release: alt1
 Summary: Fabric API wrapper
 License: Free
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.8-alt1
+- Version 0.1.8
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.6-alt1
 - Initial build for Sisyphus
 
