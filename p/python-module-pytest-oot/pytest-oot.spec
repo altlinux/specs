@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.1
+Version: 0.2.6
 Release: alt1
 Summary: Run object-oriented tests in a simple format
 License: Free
@@ -79,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.6-alt1
+- Version 0.2.6
+
 * Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1
 - Initial build for Sisyphus
 
