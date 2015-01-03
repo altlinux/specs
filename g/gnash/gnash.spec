@@ -1,6 +1,6 @@
 Name: gnash
 Version: 0.8.10
-Release: alt6
+Release: alt7
 
 Summary: GNU Flash player
 License: GPLv3
@@ -9,14 +9,13 @@ Url: http://www.gnashdev.org/
 
 Requires: libgnash = %version-%release
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version-%release.tar
 
 BuildRequires(Pre): browser-plugins-npapi-devel
 BuildRequires: boost-program_options-devel doxygen gcc-c++ kde4libs-devel libSDL-devel libXi-devel
 BuildRequires: libXinerama-devel libXt-devel libXv-devel libcurl-devel libexpat-devel libgtk+2-devel libjpeg-devel
-BuildRequires: libavformat-devel libavcodec-devel libswscale-devel
-BuildRequires: libltdl-devel libspeex-devel libcairo-devel xulrunner-devel
+BuildRequires: libavformat-devel libavcodec-devel libavresample-devel libswscale-devel
+BuildRequires: libjemalloc-devel libltdl-devel libspeex-devel libcairo-devel xulrunner-devel
 
 %description
 Standalone GNU Flash Player
@@ -59,12 +58,10 @@ GNU Flash Player plugin for Firefox and Mozilla
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
 %configure \
-	--enable-hwaccel=none \
 	--enable-renderer=cairo \
 	--enable-media=ffmpeg \
 	--with-npapi-plugindir=%browser_plugins_path \
@@ -117,6 +114,9 @@ cp -r gui/icons/hicolor %buildroot%_iconsdir/
 %browser_plugins_path/libgnashplugin.so
 
 %changelog
+* Sat Jan 03 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.10-alt7
+- updated to git.c4247039
+
 * Mon Sep 23 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.10-alt6
 - rebuilt with libav9
 
