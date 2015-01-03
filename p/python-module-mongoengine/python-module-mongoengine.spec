@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 0.8.4
-Release: alt1.1
+Version: 0.8.7
+Release: alt1
 Summary: A Python Document-Object Mapper for working with MongoDB
 
 License: MIT
@@ -69,6 +69,9 @@ popd
 %endif
 
 %changelog
+* Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.7-alt1
+- Version 0.8.7
+
 * Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1.1
 - Added module for Python 3
 
