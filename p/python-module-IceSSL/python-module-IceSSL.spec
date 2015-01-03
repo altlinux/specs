@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 0.0.5
-Release: alt4.4
+Release: alt4.4.1
 
 Summary: Some usfull functions for better integrating IceSSL and Python.
 
@@ -44,6 +44,9 @@ scons install DESTDIR=%buildroot
 %python_sitelibdir/*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.0.5-alt4.4.1
+- rebuild with boost 1.57.0
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt4.4
 - Rebuilt with Boost 1.53.0
 
