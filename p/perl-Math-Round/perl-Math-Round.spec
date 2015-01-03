@@ -1,14 +1,14 @@
 %define dist Math-Round
 Name: perl-%dist
-Version: 0.06
-Release: alt2
+Version: 0.07
+Release: alt1
 
 Summary: Perl extension for rounding numbers
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GR/GROMMEL/Math-Round-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ exports all functions.
 %perl_vendor_privlib/auto/Math
 
 %changelog
+* Sat Jan 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Sun Nov 13 2011 Alexey Tourbin <at@altlinux.ru> 0.06-alt2
 - rebuilt
 
