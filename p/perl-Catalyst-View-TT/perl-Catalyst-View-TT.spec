@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-Catalyst-View-TT
-Version: 0.41
+Version: 0.42
 Release: alt1
 
 Summary: %m_name - Template View Class
@@ -47,6 +47,9 @@ this module.
 %doc Changes README
 
 %changelog
+* Sat Jan 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
 - automated CPAN update
 
