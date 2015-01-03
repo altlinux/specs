@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Sub-Identify
 Name: perl-%dist
-Version: 0.08
-Release: alt1.1
+Version: 0.10
+Release: alt1
 
 Summary: Retrieve names of code references
 License: GPL or Artistic
@@ -33,6 +33,9 @@ For this, it uses perl's introspection mechanism, provided by the B module.
 %perl_vendor_autolib/Sub
 
 %changelog
+* Sat Jan 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1.1
 - rebuild with new perl 5.20.1
 
