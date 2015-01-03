@@ -1,5 +1,5 @@
 Name: perl-Server-Starter
-Version: 0.17
+Version: 0.19
 Release: alt1
 
 Summary: Server::Starter - a superdaemon for hot-deploying server programs
@@ -27,10 +27,14 @@ BuildRequires: perl-Test-TCP perl-Proc-Wait3 perl-Scope-Guard perl-List-MoreUtil
 
 %files
 %_bindir/start_server
+%_man1dir/start_server*
 %perl_vendor_privlib/Server/Starter*
 %doc Changes README 
 
 %changelog
+* Sat Jan 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
