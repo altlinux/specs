@@ -2,7 +2,7 @@
 
 Name: fastcgi++
 Version: 3.0
-Release: alt1.alpha.git20130704
+Release: alt1.alpha.git20130704.1
 Summary: A C++ FastCGI Library
 
 Group: System/Libraries
@@ -90,6 +90,9 @@ mv %buildroot%_datadir/%name/doc/html %buildroot%_docdir/%name
 %_libdir/*.so.*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 3.0-alt1.alpha.git20130704.1
+- rebuild with boost 1.57.0
+
 * Sat Sep 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1.alpha.git20130704
 - Version 3.0alpha
 

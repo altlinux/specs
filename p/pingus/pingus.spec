@@ -3,7 +3,7 @@
 
 Name: pingus
 Version: 0.7.6
-Release: alt1.6
+Release: alt1.6.1
 
 
 Summary: A free Lemmings clone
@@ -145,6 +145,9 @@ EOF
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.7.6-alt1.6.1
+- rebuild with boost 1.57.0
+
 * Mon Feb 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt1.6
 - Rebuilt with Boost 1.53.0
 

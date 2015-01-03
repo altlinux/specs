@@ -9,7 +9,7 @@
 %define oname oofem
 Name: oofem-%scalar_type
 Version: 2.4.0
-Release: alt1.git20140703
+Release: alt1.git20140703.1
 Summary: Object Oriented Finite Element Code
 License: %gpl2plus
 Group: Sciences/Mathematics
@@ -402,6 +402,9 @@ done
 %endif
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 2.4.0-alt1.git20140703.1
+- rebuild with boost 1.57.0
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.git20140703
 - New snapshot
 

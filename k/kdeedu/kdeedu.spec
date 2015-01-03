@@ -19,7 +19,7 @@
 
 Name: kdeedu
 Version: 3.5.13.2
-Release: alt2.1
+Release: alt2.1.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - kdeedu
@@ -657,6 +657,9 @@ chmod a-s %buildroot/%_bindir/*
 %_includedir/libkdeedu/
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 3.5.13.2-alt2.1.1
+- rebuild with boost 1.57.0
+
 * Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2.1
 - Build for Automake 1.13 and 1.14 is added.
 

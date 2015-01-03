@@ -1,6 +1,6 @@
 Name: e4rat
 Version: 0.2.3
-Release: alt3.2
+Release: alt3.2.1
 
 Summary: e4rat is a toolset to accelerate the boot process as well as application startups
 
@@ -62,6 +62,9 @@ rm -f %buildroot%_libdir/libe4rat-core.a
 %dir %_localstatedir/%name
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.2.3-alt3.2.1
+- rebuild with boost 1.57.0
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt3.2
 - Rebuilt with Boost 1.53.0
 

@@ -1,7 +1,7 @@
 Name: qbittorrent
 Version: 3.1.11
 Epoch: 1
-Release: alt1
+Release: alt1.1
 
 Summary: qBittorrent is a bittorrent client written in C++ / Qt4 using the good libtorrent library.
 Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написанный на C++ / Qt4, использующий библиотеку libtorrent.
@@ -105,6 +105,9 @@ make clean
 %_datadir/icons/hicolor/*/*/*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1:3.1.11-alt1.1
+- rebuild with boost 1.57.0
+
 * Sat Nov 15 2014 Motsyo Gennadi <drool@altlinux.ru> 1:3.1.11-alt1
 - 3.1.11
 

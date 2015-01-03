@@ -6,7 +6,7 @@
 
 Name: avogadro
 Version: 1.1.1
-Release: alt1
+Release: alt1.1
 
 Group: Sciences/Chemistry
 Summary: An advanced molecular editor for chemical purposes
@@ -124,6 +124,9 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.1.1-alt1.1
+- rebuild with boost 1.57.0
+
 * Fri Mar 21 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1
 - new version
 

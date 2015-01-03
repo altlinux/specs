@@ -1,6 +1,6 @@
 Name: gnash
 Version: 0.8.10
-Release: alt7
+Release: alt7.1
 
 Summary: GNU Flash player
 License: GPLv3
@@ -114,6 +114,10 @@ cp -r gui/icons/hicolor %buildroot%_iconsdir/
 %browser_plugins_path/libgnashplugin.so
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.8.10-alt7.1
+- rebuild with boost 1.57.0;
+- fix build with recent boost.
+
 * Sat Jan 03 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.10-alt7
 - updated to git.c4247039
 

@@ -1,6 +1,6 @@
 Name: gpsynth
 Version: 0.0
-Release: alt1.hg20110825
+Release: alt1.hg20110825.1
 Summary: Emulates a target sound file
 License: GPLv3
 Group: Sound
@@ -48,6 +48,10 @@ cmake \
 %_bindir/*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.0-alt1.hg20110825.1
+- rebuild with boost 1.57.0
+- fix build with recent gcc
+
 * Fri Sep 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0-alt1.hg20110825
 - Initial build for Sisyphus
 

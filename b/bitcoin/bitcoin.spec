@@ -1,6 +1,6 @@
 Name: bitcoin
 Version: 0.9.3
-Release: alt1.rc1
+Release: alt1.rc1.1
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -55,6 +55,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.9.3-alt1.rc1.1
+- rebuild with boost 1.57.0
+
 * Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1.rc1
 - Version 0.9.3rc1
 

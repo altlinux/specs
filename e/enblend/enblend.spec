@@ -1,7 +1,7 @@
 Summary: A tool for combine images (make a panoramas) using a multiresolution spline
 Name: enblend
 Version: 4.1.2
-Release: alt1
+Release: alt1.1
 License: GPLv2+ 
 Group: Graphics
 URL: http://enblend.sourceforge.net/
@@ -49,6 +49,9 @@ autoreconf -fisv
 
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 4.1.2-alt1.1
+- rebuild with boost 1.57.0
+
 * Wed Jan 29 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.2-alt1
 - New version
 - compat patches removed

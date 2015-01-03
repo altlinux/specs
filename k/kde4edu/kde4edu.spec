@@ -11,7 +11,7 @@ Name: kde4edu
 %define minor 14
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt1.1
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -1097,6 +1097,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 4.14.3-alt1.1
+- rebuild with boost 1.57.0
+
 * Mon Nov 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 

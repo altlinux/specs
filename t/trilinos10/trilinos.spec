@@ -29,7 +29,7 @@ Name: %truename-docs
 Name: %truename
 %endif
 Version: 11.8.1
-Release: alt1
+Release: alt1.1
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL, BSD-style
 Group: Sciences/Mathematics
@@ -2597,6 +2597,9 @@ popd
 %endif
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 11.8.1-alt1.1
+- rebuild with boost 1.57.0 and SWIG 3.0.2
+
 * Fri May 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.8.1-alt1
 - Version 11.8.1
 

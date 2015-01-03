@@ -1,7 +1,7 @@
 %define oname hedge
 Name: python-module-%oname
 Version: 0.91
-Release: alt1.git20140528
+Release: alt1.git20140528.1
 Summary: Hybrid and Easy Discontinuous Galerkin Environment
 License: MIT
 Group: Development/Python
@@ -105,6 +105,9 @@ cp -fR doc/manual/build/pickle %buildroot%python_sitelibdir/%oname/
 %doc doc/manual/build/html
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.91-alt1.git20140528.1
+- rebuild with boost 1.57.0
+
 * Thu Jun 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.91-alt1.git20140528
 - Initial build for Sisyphus
 

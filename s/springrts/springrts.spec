@@ -3,7 +3,7 @@
 
 Name: springrts
 Version: 91.0
-Release: alt1.git20120830.qa1
+Release: alt1.git20120830.qa1.1
 
 Summary: Real time strategy game engine with many mods
 License: GPL2+ or Artistic
@@ -117,6 +117,10 @@ mkdir %buildroot%_gamesdatadir/spring/{mods,maps}
   echo " ===================================================================="
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 91.0-alt1.git20120830.qa1.1
+- rebuild with boost 1.57.0
+- fix build
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 91.0-alt1.git20120830.qa1
 - NMU: rebuilt with libboost_*.so.1.53.0.
 

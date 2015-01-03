@@ -1,6 +1,6 @@
 Name: libeo
 Version: 1.3.1
-Release: alt1.qa1
+Release: alt1.qa1.1
 Summary: EO, the Evolving Objects library
 License: LGPLv2.1
 Url: http://eodev.sourceforge.net
@@ -90,6 +90,9 @@ mv %buildroot%prefix/lib/* %buildroot%_libdir/
 #_libexecdir/eo/test
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.3.1-alt1.qa1.1
+- rebuild with boost 1.57.0
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.1-alt1.qa1
 - NMU: rebuilt with libboost_*.so.1.53.0.
 

@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/xmllint cppunit-devel gcc-c++ pkgconfig(atlascpp-0.6) pk
 # END SourceDeps(oneline)
 Name:           ember
 Version:        0.7.2
-Release:        alt1
+Release:        alt1.1
 Summary:        3D client for WorldForge
 
 Group:          Games/Other
@@ -99,6 +99,9 @@ chrpath -d %buildroot%_bindir/%name.bin
 %config %{_sysconfdir}/%{name}/*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.7.2-alt1.1
+- rebuild with boost 1.57.0
+
 * Thu Sep 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1
 - Version 0.7.2
 
