@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.8.7
-Release: alt1
+Release: alt2
 Summary: A Python Document-Object Mapper for working with MongoDB
 
 License: MIT
@@ -60,15 +60,18 @@ popd
 
 %files
 %python_sitelibdir/%module_name
-%exclude %python_sitelibdir/*.egg-*
+%python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%module_name
 %python3_sitelibdir/%module_name
-%exclude %python3_sitelibdir/*.egg-*
+%python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.7-alt2
+- Added .egg-info
+
 * Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.7-alt1
 - Version 0.8.7
 
