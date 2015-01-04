@@ -1,0 +1,141 @@
+%define mname yieldfrom
+%define oname %mname.http.client
+
+%def_without python2
+%def_with python3
+
+Name: python-module-%oname
+Version: 0.1.1
+Release: alt1.git20141018
+Summary: asyncio version of http.client
+License: PSFL
+Group: Development/Python
+Url: https://pypi.python.org/pypi/yieldfrom.http.client/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/rdbhost/yieldfromHttplib.git
+Source: %name-%version.tar
+
+%if_with python2
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-asyncio
+%endif
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-asyncio
+%endif
+
+%py_provides %oname
+Requires: python-module-%mname.http = %EVR
+%py_requires asyncio
+
+%description
+Asyncio conversion of http.client.
+
+The classes are named the same as in http.client.
+
+%package -n python3-module-%oname
+Summary: asyncio version of http.client
+Group: Development/Python3
+%py3_provides %oname
+Requires: python3-module-%mname.http = %EVR
+%py3_requires asyncio
+
+%description -n python3-module-%oname
+Asyncio conversion of http.client.
+
+The classes are named the same as in http.client.
+
+%package -n python-module-%mname.http
+Summary: Core files of %mname.http
+Group: Development/Python
+%py_provides %mname.http
+%py_requires %mname
+
+%description -n python-module-%mname.http
+Core files of %mname.http.
+
+%package -n python3-module-%mname.http
+Summary: Core files of %mname.http
+Group: Development/Python3
+%py3_provides %mname.http
+%py3_requires %mname
+
+%description -n python3-module-%mname.http
+Core files of %mname.http.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%build
+%if_with python2
+%python_build_debug
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%if_with python2
+%python_install
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
+%check
+%if_with python2
+python setup.py test
+%endif
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
+%if_with python2
+%files
+%doc *.md
+%python_sitelibdir/%mname/http/*
+%python_sitelibdir/*.egg-info
+%exclude %python_sitelibdir/%mname/http/__init__.py*
+
+%files -n python-module-%mname.http
+%dir %python_sitelibdir/%mname/http
+%python_sitelibdir/%mname/http/__init__.py*
+%endif
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.md
+%python3_sitelibdir/%mname/http/*
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/%mname/http/__init__.*
+#exclude %python3_sitelibdir/%mname/http/__pycache__/__init__.*
+
+%files -n python3-module-%mname.http
+%dir %python3_sitelibdir/%mname/http
+%dir %python3_sitelibdir/%mname/http/__pycache__
+%python3_sitelibdir/%mname/http/__init__.*
+#python3_sitelibdir/%mname/http/__pycache__/__init__.*
+%endif
+
+%changelog
+* Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20141018
+- Initial build for Sisyphus
+
