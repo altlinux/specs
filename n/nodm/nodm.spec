@@ -1,15 +1,14 @@
 Name: nodm
 Version: 0.7
-Release: alt2
+Release: alt3
 
 Summary: minimal display manager
 License: GPL
 Group: Graphical desktop/Other
 
-Packager: Andriy Stepanov <stanv@altlinux.ru>
 Source: %name-%version-%release.tar
 
-BuildRequires: libpam-devel libConsoleKit-devel help2man
+BuildRequires: libpam-devel help2man
 
 %description
 nodm is a minimal display manager that simply logs in as a given user
@@ -20,20 +19,25 @@ and starts an X session, without asking for username or password.
 
 %build
 %autoreconf
-%configure
+%configure --without-consolekit
 make
 
 %install
 %makeinstall
+install -pm0644 -D nodm.service %buildroot%systemd_unitdir/nodm.service
 install -pm0644 -D nodm.pamd %buildroot%_sysconfdir/pam.d/nodm
 
 %files
 %doc AUTHORS README
+%systemd_unitdir/nodm.service
 %_sysconfdir/pam.d/nodm
 %_sbindir/nodm
 %_man8dir/nodm.8*
 
 %changelog
+* Sun Jan 04 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7-alt3
+- modiified for use with systemd
+
 * Wed Mar 28 2012 Andriy Stepanov <stanv@altlinux.ru> 0.7-alt2
 - Rebuild for Sisyphus.
 
