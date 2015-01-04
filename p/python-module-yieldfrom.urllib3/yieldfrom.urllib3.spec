@@ -3,11 +3,10 @@
 
 %def_without python2
 %def_with python3
-%def_disable check
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.git20141229
+Release: alt2.git20141229
 Summary: Asyncio HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
 Group: Development/Python
@@ -19,20 +18,22 @@ Source: %name-%version.tar
 
 %if_with python2
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio
-#BuildPreReq: python-module-yieldfrom.http.client
+BuildPreReq: python-module-asyncio python-module-nose
+BuildPreReq: python-module-yieldfrom.http.client
+BuildPreReq: python-module-tornado
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
-#BuildPreReq: python3-module-yieldfrom.http.client
+BuildPreReq: python3-module-asyncio python3-module-nose
+BuildPreReq: python3-module-yieldfrom.http.client
+BuildPreReq: python3-module-tornado
 %endif
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
 %py_requires asyncio
-#py_requires yieldfrom.http.client
+%py_requires yieldfrom.http.client
 
 %description
 Yieldfrom is a project to port various useful Python 3 libraries, both
@@ -49,7 +50,7 @@ Group: Development/Python3
 %py3_provides %oname
 Requires: python3-module-%mname = %EVR
 %py3_requires asyncio
-#py3_requires yieldfrom.http.client
+%py3_requires yieldfrom.http.client
 
 %description -n python3-module-%oname
 Yieldfrom is a project to port various useful Python 3 libraries, both
@@ -128,7 +129,6 @@ pushd ../python3
 python3 setup.py test
 popd
 %endif
-exit 1
 
 %if_with python2
 %files
@@ -158,6 +158,10 @@ exit 1
 %endif
 
 %changelog
+* Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2.git20141229
+- Added necessary requirements
+- Enabled testing
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20141229
 - Initial build for Sisyphus
 
