@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.2
-Release: alt1.1
+Version: 0.4.2
+Release: alt1.git20140326
 
 Summary: A Python MessagePack (de)serializer
 
@@ -12,9 +12,11 @@ Group: Development/Python
 License: ASL 2.0
 URL: http://pypi.python.org/pypi/msgpack-python/
 
+# https://github.com/msgpack/msgpack-python.git
 Source: %name-%version.tar
 
 BuildRequires: python-module-distribute python-module-Cython python-module-nose
+BuildPreReq: gcc-c++
 
 %description
 MessagePack is a binary-based efficient data interchange format that is
@@ -43,6 +45,7 @@ cp -a . ../python3
 %endif
 
 %build
+%add_optflags -fno-strict-aliasing
 %python_build
 %if_with python3
 pushd ../python3
@@ -76,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20140326
+- Version 0.4.2
+
 * Tue Mar 26 2013 Aleksey Avdeev <solo@altlinux.ru> 0.2.2-alt1.1
 - Rebuild with Python-3.3
 
