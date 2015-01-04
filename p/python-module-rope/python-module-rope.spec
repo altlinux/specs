@@ -1,21 +1,47 @@
 %define real_name rope
 
+%def_without python3
+
 Summary: python refactoring library
 Name: python-module-%real_name
 Version: 0.10.2
-Release: alt1
-License: GPL
+Release: alt1.git20141228
+License: GPLv2
 Group: Development/Python
 Url: http://rope.sf.net
 BuildArch: noarch
 
-Source: %real_name-%version.tar.gz
+Source: %real_name-%version.tar
 
-# Automatically added by buildreq on Sat May 10 2008
-BuildRequires: python-devel
+BuildPreReq: python-devel python-module-setuptools-tests
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python-tools-2to3
+%endif
+
+%py_provides %real_name
 
 %description
 %summary
+
+%package -n python3-module-%real_name
+Summary: python refactoring library
+Group: Development/Python3
+%py3_provides %real_name
+
+%description -n python3-module-%real_name
+%summary
+
+%package -n python3-module-%real_name-tests
+Summary: Tests for rope
+Group: Development/Python3
+Requires: python3-module-%real_name = %version-%release
+
+%description -n python3-module-%real_name-tests
+%summary
+
+This package contains tests for rope.
 
 %package tests
 Summary: Tests for rope
@@ -30,13 +56,39 @@ This package contains tests for rope.
 %prep
 %setup -n %real_name-%version
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
-%python_install -O1 --prefix="%prefix"
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+cp -fR ropetest %buildroot%python3_sitelibdir/
+popd
+%endif
 
 cp -fR ropetest %buildroot%python_sitelibdir/
+
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
 
 %files
 %doc CONTRIBUTORS COPYING README* docs
@@ -46,7 +98,20 @@ cp -fR ropetest %buildroot%python_sitelibdir/
 %files tests
 %python_sitelibdir/ropetest
 
+%if_with python3
+%files -n python3-module-%real_name
+%doc CONTRIBUTORS COPYING README* docs
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/ropetest
+
+%files -n python3-module-%real_name-tests
+%python3_sitelibdir/ropetest
+%endif
+
 %changelog
+* Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt1.git20141228
+- New snapshot
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt1
 - Version 0.10.2
 
