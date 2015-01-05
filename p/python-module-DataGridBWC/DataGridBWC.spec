@@ -1,10 +1,8 @@
 %define oname DataGridBWC
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 0.2.2
-Release: alt1
+Release: alt2
 Summary: A BlazeWeb component for turning SQLAlchemy recordsets into HTML tables
 License: BSD
 Group: Development/Python
@@ -20,10 +18,9 @@ BuildPreReq: python-module-xlrd python-module-webtest
 BuildPreReq: python-module-BlazeUtils python-module-BlazeWeb-tests
 BuildPreReq: python-module-SQLAlchemyBWC python-module-dateutil
 BuildPreReq: python-module-PasteDeploy
-#BuildPreReq: python-module-WebGrid
+BuildPreReq: python-module-WebGrid
 
 %py_provides datagridbwc
-%add_python_req_skip webgrid
 
 %description
 A BlazeWeb component for turning SQLAlchemy recordsets into HTML tables.
@@ -61,6 +58,10 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1
 - Initial build for Sisyphus
 
