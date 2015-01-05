@@ -1,8 +1,8 @@
 %define mname collective
 %define oname %mname.multilanguagefields
 Name: python-module-%oname
-Version: 0.2
-Release: alt1.dev0.git20150102
+Version: 0.7
+Release: alt1.dev0.git20150105
 Summary: Multi language fields for Plone
 License: GPLv2+
 Group: Development/Python
@@ -77,6 +77,9 @@ py.test %mname/multilanguagefields/tests.py
 %python_sitelibdir/%mname/*/tests.*
 
 %changelog
+* Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.dev0.git20150105
+- Version 0.7.dev0
+
 * Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.dev0.git20150102
 - Initial build for Sisyphus
 
