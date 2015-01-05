@@ -1,5 +1,5 @@
 Name: zeromq
-Version: 3.2.2
+Version: 4.0.5
 Release: alt1
 Summary: a software library that lets you quickly design and implement a fast message-based application
 
@@ -65,7 +65,7 @@ make check
 
 %files -n lib%name
 %_libdir/libzmq.so.*
-%doc AUTHORS ChangeLog COPYING COPYING.LESSER NEWS README
+%doc AUTHORS ChangeLog COPYING COPYING.LESSER NEWS README*
 %_man7dir/zmq.7*
 
 %files -n lib%name-devel
@@ -76,6 +76,9 @@ make check
 %_man7dir/zmq_*7*
 
 %changelog
+* Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.5-alt1
+- Version 4.0.5
+
 * Thu Dec 06 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 3.2.2-alt1
 - New version 3.2.2
 
