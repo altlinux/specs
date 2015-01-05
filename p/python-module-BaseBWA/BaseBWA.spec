@@ -1,10 +1,8 @@
 %define oname BaseBWA
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 0.3.4
-Release: alt1
+Release: alt2
 Summary: A supporting application for BlazeWeb applications
 License: BSD
 Group: Development/Python
@@ -16,7 +14,8 @@ BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-module-webtest
 BuildPreReq: python-module-AuthBWC python-module-BlazeWeb-tests
-BuildPreReq: python-module-PasteDeploy
+BuildPreReq: python-module-PasteDeploy python-module-TemplatingBWC
+BuildPreReq: python-module-WebGrid
 
 %py_provides basebwa
 
@@ -52,7 +51,6 @@ needed for most web applications.
 
 %check
 python setup.py test
-py.test -vv
 
 %files
 %doc *.rst
@@ -72,6 +70,9 @@ py.test -vv
 %python_sitelibdir/*/*/*/*/*/*/*/tests
 
 %changelog
+* Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt2
+- Enabled testing
+
 * Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt1
 - Initial build for Sisyphus
 
