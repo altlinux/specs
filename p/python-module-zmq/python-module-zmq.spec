@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 14.4.1
-Release: alt3
+Release: alt3.1
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -178,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.4.1-alt3.1
+- Rebuilt with new zeromq
+
 * Tue Dec 30 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 14.4.1-alt3
 - Another try to fix repocop fail buildroot (__pycache__)
 
