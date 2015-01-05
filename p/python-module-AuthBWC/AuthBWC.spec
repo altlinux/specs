@@ -1,10 +1,8 @@
 %define oname AuthBWC
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 0.2.3
-Release: alt1
+Release: alt2
 Summary: A user authentication and authorization component for the BlazeWeb framework
 License: BSD
 Group: Development/Python
@@ -18,11 +16,10 @@ BuildPreReq: python-module-setuptools-tests python-module-PasteDeploy
 BuildPreReq: python-module-webtest python-module-pyquery
 BuildPreReq: python-module-CommonBWC python-module-BlazeWeb-tests
 BuildPreReq: python-module-SQLAlchemyBWC python-module-TemplatingBWC
-#BuildPreReq: python-module-WebGrid python-module-BaseBWA
+BuildPreReq: python-module-WebGrid python-module-BaseBWA
 
 %py_provides authbwc
 %py_requires blazeweb commonbwc sqlalchemybwc
-%add_python_req_skip basebwa webgrid
 
 %description
 AuthBWC is a component for BlazeWeb applications. It provides users,
@@ -63,6 +60,7 @@ cp -fR authbwc_ta %buildroot%python_sitelibdir/
 
 %check
 python setup.py test
+rm -fR build
 
 %files
 %doc *.rst
@@ -75,6 +73,10 @@ python setup.py test
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt1
 - Initial build for Sisyphus
 
