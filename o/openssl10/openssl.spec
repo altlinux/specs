@@ -1,6 +1,6 @@
 Name: openssl10
 Version: 1.0.1j
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -271,7 +271,12 @@ ADD_ARGS=%_os-%_arch
 ADD_ARGS=linux-generic32
 %endif
 
-./Configure shared -DSSL_ALLOW_ADH \
+if echo 'extern __uint128_t i;' |
+   gcc %optflags -Werror -c -o/dev/null -xc -; then
+	ADD_ARGS="enable-ec_nistp_64_gcc_128 $ADD_ARGS"
+fi
+
+./Configure shared \
 	--prefix=%prefix \
 	--libdir=%_lib \
 	--openssldir=%openssldir \
@@ -280,8 +285,9 @@ ADD_ARGS=linux-generic32
 	--with-krb5-flavor=MIT \
 	--with-krb5-dir=%prefix \
 %endif
-	enable-camellia enable-cms enable-gost enable-md2 \
-	enable-rfc3779 enable-seed enable-tlsext zlib \
+	enable-md2 \
+	enable-rfc3779 \
+	zlib \
 	$ADD_ARGS
 
 # SMP-incompatible build.
@@ -439,6 +445,10 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Mon Jan 05 2015 Dmitry V. Levin <ldv@altlinux.org> 1.0.1j-alt2
+- Build with enable-ec_nistp_64_gcc_128 on architectures where
+  gcc supports __uint128_t (closes: #30625).
+
 * Thu Oct 30 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1j-alt1
 - Updated to 1.0.1j (fixes CVE-2014-3512, CVE-2014-3511, CVE-2014-3510,
   CVE-2014-3507, CVE-2014-3506, CVE-2014-3505, CVE-2014-3509,
