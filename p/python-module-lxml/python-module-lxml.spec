@@ -4,7 +4,7 @@
 
 Name: python-module-lxml
 Version: 3.4.1
-Release: alt1.git20141120
+Release: alt1.git20141226
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 
@@ -22,6 +22,7 @@ BuildPreReq: python-module-Cython >= 0.18
 BuildPreReq: python-modules-wsgiref python-module-cssselect
 
 %setup_python_module lxml
+%py_requires cssselect
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -45,6 +46,7 @@ RelaxNG, XML Schema, XSLT, C14N and much more.
 %package -n python3-module-%modulename
 Summary: XML processing library combining libxml2/libxslt with the ElementTree API (Python 3)
 Group: Development/Python3
+%py3_requires cssselect
 
 %description -n python3-module-%modulename
 lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries.  It
@@ -132,6 +134,9 @@ popd
 %doc doc samples
 
 %changelog
+* Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.1-alt1.git20141226
+- New snapshot
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.1-alt1.git20141120
 - Version 3.4.1
 
