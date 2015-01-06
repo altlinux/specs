@@ -1,8 +1,8 @@
 %define mname collective
 %define oname %mname.singing
 Name: python-module-%oname
-Version: 0.7.2
-Release: alt1.git20141114
+Version: 0.7.3
+Release: alt1.dev0.git20150105
 Summary: A Zope 3 library for sending notifications and newsletters
 License: GPLv2+
 Group: Development/Python
@@ -10,7 +10,6 @@ Url: https://pypi.python.org/pypi/collective.singing/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/collective/collective.singing.git
-# branch: pretagovc
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-initgroups
@@ -95,7 +94,7 @@ py.test collective/singing/tests.py
 py.test collective/singing/browser/tests.py
 
 %files
-%doc *.md docs/*
+%doc *.rst docs/*
 %python_sitelibdir/%mname/*
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/%mname/*/tests.*
@@ -106,6 +105,9 @@ py.test collective/singing/browser/tests.py
 %python_sitelibdir/%mname/*/*/tests.*
 
 %changelog
+* Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1.dev0.git20150105
+- 0.7.3.dev0
+
 * Fri Dec 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1.git20141114
 - Initial build for Sisyphus
 
