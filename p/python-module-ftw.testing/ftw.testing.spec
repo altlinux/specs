@@ -1,8 +1,8 @@
 %define mname ftw
 %define oname %mname.testing
 Name: python-module-%oname
-Version: 1.7.1
-Release: alt1.dev0.git20141107
+Version: 1.8.2
+Release: alt1.dev0.git20150105
 Summary: Provides helpers for writing tests
 License: GPLv2+
 Group: Development/Python
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 BuildPreReq: python-module-setuptools-tests python-module-splinter
 BuildPreReq: python-module-unittest2 python-module-lxml
 BuildPreReq: python-module-cssselect python-module-Plone
-BuildPreReq: python-module-openid
+BuildPreReq: python-module-openid python-module-path
 BuildPreReq: python-module-plone.mocktestcase python-module-mocker
 BuildPreReq: python-module-plone.testing
 BuildPreReq: python-module-zope.component
@@ -62,6 +62,12 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.2-alt1.dev0.git20150105
+- Version 1.8.2.dev0
+
+* Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt1.dev0.git20141231
+- Version 1.8.1.dev0
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt1.dev0.git20141107
 - Initial build for Sisyphus
 
