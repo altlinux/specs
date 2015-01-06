@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1
+Version: 0.2
 Release: alt1
 Summary: asyncio API (PEP 3156) implemented on top of gevent
 License: ASLv2.0
@@ -17,11 +17,12 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-gevent python-module-trollius
 BuildPreReq: python-module-mock python-module-futures
+BuildPreReq: python-module-aiotest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-gevent python3-module-asyncio
-BuildPreReq: python3-module-mock
+BuildPreReq: python3-module-mock python3-module-aiotest
 %endif
 
 %py_provides %oname
@@ -79,10 +80,12 @@ popd
 %check
 python setup.py test
 python runtests.py
+python run_aiotest.py
 %if_with python3
 pushd ../python3
 python3 setup.py test
 python3 runtests.py
+python3 run_aiotest.py
 popd
 %endif
 
@@ -97,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1
+- Version 0.2
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1
 - Initial build for Sisyphus
 
