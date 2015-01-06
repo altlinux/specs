@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.1.0
-Release: alt1.dev0.git20141216
+Release: alt1.git20150106
 Summary: ZEO provides a client-server storage implementation for ZODB
 License: ZPL
 Group: Development/Python
@@ -148,6 +148,9 @@ python setup.py test
 %endif
 
 %changelog
+* Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1.git20150106
+- Version 4.1.0
+
 * Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1.dev0.git20141216
 - Version 4.1.0.dev0
 
