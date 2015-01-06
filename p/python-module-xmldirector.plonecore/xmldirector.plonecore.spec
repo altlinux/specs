@@ -1,8 +1,8 @@
 %define mname xmldirector
 %define oname %mname.plonecore
 Name: python-module-%oname
-Version: 0.3.2
-Release: alt1.git20141230
+Version: 0.3.3.1
+Release: alt1.git20150105
 Summary: Technical foundation of the XML-Director project
 License: GPL
 Group: Development/Python
@@ -126,6 +126,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3.1-alt1.git20150105
+- Version 0.3.3.1
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.git20141230
 - Initial build for Sisyphus
 
