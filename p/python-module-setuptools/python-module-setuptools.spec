@@ -5,7 +5,7 @@
 Name: python-module-%modulename
 Epoch: 1
 Version: 11.3
-Release: alt1
+Release: alt2
 
 Summary: Python Distutils Enhancements
 License: PSF/ZPL
@@ -123,11 +123,11 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %_bindir/easy_install-%_python_version
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%modulename/command/test.py*
-%exclude %python_sitelibdir/%modulename/tests
+%exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/%modulename/command/test.py*
-%python_sitelibdir/%modulename/tests
+%python_sitelibdir/*/tests
 
 %files docs
 %doc docs/*.txt
@@ -139,15 +139,18 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%modulename/command/test.py*
 %exclude %python3_sitelibdir/%modulename/command/*/test.*
-%exclude %python3_sitelibdir/%modulename/tests
+%exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%modulename-tests
 %python3_sitelibdir/%modulename/command/test.py*
 %python3_sitelibdir/%modulename/command/*/test.*
-%python3_sitelibdir/%modulename/tests
+%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Wed Jan 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:11.3-alt2
+- Moved all tests into tests subpackages
+
 * Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:11.3-alt1
 - Version 11.3
 
