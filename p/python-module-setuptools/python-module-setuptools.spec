@@ -4,8 +4,8 @@
 
 Name: python-module-%modulename
 Epoch: 1
-Version: 11.3
-Release: alt2
+Version: 11.3.1
+Release: alt1
 
 Summary: Python Distutils Enhancements
 License: PSF/ZPL
@@ -148,6 +148,9 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Wed Jan 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:11.3.1-alt1
+- Version 11.3.1
+
 * Wed Jan 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:11.3-alt2
 - Moved all tests into tests subpackages
 
