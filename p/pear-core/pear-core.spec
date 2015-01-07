@@ -1,6 +1,6 @@
 Name: pear-core
 Version: 1.9.4
-Release: alt1
+Release: alt2
 
 Summary: PHP Extension and Application Repository
 Summary(ru_RU.UTF-8): Пакет с рaсширениями для PHP
@@ -28,7 +28,7 @@ Provides: pear
 Provides: pear-PEAR = %version
 Provides: pear-Console_Getopt = 1.3.1
 Provides: pear-Structures_Graph = 1.0.4
-Provides: pear-Archive_Tar = 1.3.10
+Provides: pear-Archive_Tar = 1.3.13
 
 %description
 PEAR is a code repository for PHP extensions and PHP library code
@@ -63,6 +63,9 @@ php -C -q $INCARG -d output_buffering=1 -d variables_order=EGPCS -d open_basedir
 %_bindir/peardev
 
 %changelog
+* Wed Jan 07 2015 Pavel Isopenko <pauli@altlinux.org> 1.9.4-alt2
+- New version Archive_Tar 1.3.13
+
 * Thu May 31 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.9.4-alt1
 - New version pear 1.9.4 and other modules (closes:#27387)
 
