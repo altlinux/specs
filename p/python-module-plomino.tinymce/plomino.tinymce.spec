@@ -2,7 +2,7 @@
 %define oname %mname.tinymce
 Name: python-module-%oname
 Version: 0.7.3
-Release: alt1.git20140509
+Release: alt2.git20140509
 Summary: TinyMCE Plomino Embedded Plugin
 License: GPLv2+
 Group: Development/Python
@@ -15,13 +15,13 @@ Source: %name-%version.tar
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-Products.TinyMCE
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-Products.CMFPlomino
+BuildPreReq: python-module-Products.CMFPlomino
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
 Requires: python-module-Zope2
 %py_requires Products.TinyMCE zope.component zope.interface
-#py_requires Products.CMFPlomino
+%py_requires Products.CMFPlomino
 
 %description
 Plomino TinyMCE Integration is a plugin for Plomino which allows to
@@ -69,7 +69,6 @@ install -p -m644 %mname/__init__.py \
 
 %check
 python setup.py test
-py.test %mname/tinymce/tests.py
 
 %files
 %doc *.rst docs/*
@@ -86,6 +85,9 @@ py.test %mname/tinymce/tests.py
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Wed Jan 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt2.git20140509
+- Added necessary requirements
+
 * Wed Jan 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1.git20140509
 - Initial build for Sisyphus
 
