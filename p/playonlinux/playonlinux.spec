@@ -2,7 +2,7 @@
 
 Summary: Play your Windows games on Linux
 Name: playonlinux
-Version: 4.2.1
+Version: 4.2.5
 Release: alt1
 License: GPLv3
 Group: Games/Other
@@ -56,7 +56,7 @@ cp etc/PlayOnLinux.directory %buildroot%_datadir/desktop-directories/%oname.dire
 rm -f %buildroot%_datadir/%name/bin/smile
 
 %files
-%doc LICENCE CHANGELOG
+%doc LICENCE CHANGELOG.md README.md TRANSLATORS
 %_bindir/%name
 %_datadir/%name
 %_desktopdir/%oname.desktop
@@ -64,6 +64,11 @@ rm -f %buildroot%_datadir/%name/bin/smile
 %_datadir/desktop-directories/%oname.directory
 
 %changelog
+* Wed Jan 07 2015 Andrey Cherepanov <cas@altlinux.org> 4.2.5-alt1
+- New version
+- Remove obsolete encoding and add localization to desktop file
+- Package documentation in md format and translatiors credits
+
 * Tue May 21 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
