@@ -1,6 +1,6 @@
 
 Name:           bleachbit
-Version:        1.4
+Version:        1.6
 Release:        alt1
 
 Summary:        Remove unnecessary files, free space, and maintain privacy
@@ -48,6 +48,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_pixmapsdir/%name.png
 
 %changelog
+* Wed Jan 07 2015 Andrey Cherepanov <cas@altlinux.org> 1.6-alt1
+- New version
+
 * Tue Sep 23 2014 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1
 - New version
 
