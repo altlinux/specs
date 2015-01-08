@@ -1,5 +1,5 @@
 Name: cryptmount
-Version: 4.3
+Version: 5.0
 Release: alt1
 Group: File tools
 Packager: Pavel Isopenko <pauli@altlinux.org>
@@ -9,10 +9,6 @@ Summary(ru_RU.UTF-8): Монтирование зашифрованной фай
 Url: http://cryptmount.sourceforge.net
 Source: %name-%version.tar
 
-# Patch1: Makefile.in.patch
-
-# Automatically added by buildreq on Tue Jan 03 2012
-# optimized out: libgpg-error libgpg-error-devel pkg-config
 BuildRequires: libdevmapper-devel libgcrypt-devel libuuid-devel
 
 Requires(post): %post_service
@@ -24,6 +20,7 @@ an ordinary user to mount an encrypted filing system without requiring
 superuser privileges. Filesystems can reside on raw disk partitions or
 ordinary files, with cryptmount automatically configuring
 device-mapper and loopback devices before mounting.
+
 %description -l ru_RU.UTF-8
 cryptmount - утилита для операционной системы GNU/Linux, позволяющая
 обычному пользователю монтировать зашифрованные файловые системы без
@@ -36,7 +33,6 @@ cryptmount - утилита для операционной системы GNU/L
 perl -pi.orig -e 's|^(\s*)chown(\s*root)|\1#chown\2|g;
 s|%_sysconfdir/init.d|%_initdir|g;
 ' Makefile.am Makefile.in
-# %patch1 -p1
 
 %build
 %configure --enable-delegation --enable-fsck
@@ -60,15 +56,18 @@ install -d -m0755 %buildroot%_sysconfdir/default/
 
 
 %config(noreplace) %_sysconfdir/cryptmount/
-%config %_initdir/cryptmount
-%config %_initdir/cryptmount-early
-%config %_sysconfdir/default/cryptmount
+# %config %_initdir/cryptmount
+# %config %_initdir/cryptmount-early
+# %config %_sysconfdir/default/cryptmount
 %_sbindir/cryptmount-setup
 %_libdir/cryptmount/
 
 %attr(4711, root, root) %_bindir/cryptmount
 
 %changelog
+* Wed Jan 07 2015 Pavel Isopenko <pauli@altlinux.org> 5.0-alt1
+ - new version cryptmount 5.0
+
 * Tue Jun 05 2012 Pavel Isopenko <pauli@altlinux.org> 4.3-alt1
 - update to 4.3
 
