@@ -22,7 +22,7 @@
 %def_enable installed_tests
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -470,6 +470,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Thu Jan 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.3-alt1
+- 1.22.3
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt1
 - 1.22.2
 - new -tests subpackage
