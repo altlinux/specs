@@ -1,4 +1,4 @@
-%define ver_major 0.9
+%define ver_major 1.0
 %def_with recording
 
 Name: girl
@@ -17,6 +17,7 @@ Requires: totem
 
 %define gtk_ver 3.6.0
 
+BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gnome-common intltool libgnomeui-devel libxml2-devel
 
 %description
@@ -52,6 +53,9 @@ export ac_cv_path_GIRL_HELPER_RECORD=%_bindir/streamripper
 
 
 %changelog
+* Thu Jan 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Mon Dec 29 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - first build for Sisyphus
 
