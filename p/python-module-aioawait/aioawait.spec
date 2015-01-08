@@ -1,0 +1,108 @@
+%define oname aioawait
+
+%def_without python2
+%def_with python3
+
+Name: python-module-%oname
+Version: 7
+Release: alt1.git20140918
+Summary: Call asynchronous functions of asyncio infrastructure from synchronous code
+License: MIT
+Group: Development/Python
+Url: https://pypi.python.org/pypi/aioawait/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://bitbucket.org/carlopires/aioawait.git
+Source: %name-%version.tar
+BuildArch: noarch
+Patch: aioawait-alt-py3.3.patch
+
+%if_with python2
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-asyncio
+%endif
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-asyncio
+%endif
+
+%py_provides %oname
+%py_requires asyncio
+
+%description
+This package implements two primitives (await and spawn) on top of
+asyncio infrastructure of Python 3. This two functions allow us to call
+asynchronous functions from synchronous code.
+
+%package -n python3-module-%oname
+Summary: Call asynchronous functions of asyncio infrastructure from synchronous code
+Group: Development/Python3
+%py3_provides %oname
+%py3_requires asyncio
+
+%description -n python3-module-%oname
+This package implements two primitives (await and spawn) on top of
+asyncio infrastructure of Python 3. This two functions allow us to call
+asynchronous functions from synchronous code.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+pushd ../python3
+%patch -p1
+popd
+%endif
+
+%build
+%if_with python2
+%python_build_debug
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%if_with python2
+%python_install
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+%check
+%if_with python2
+python setup.py test
+python -m unittest %oname
+%endif
+%if_with python3
+pushd ../python3
+python3 setup.py test
+python3 -m unittest %oname
+popd
+%endif
+
+%if_with python2
+%files
+%doc *.rst
+%python_sitelibdir/*
+%endif
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst
+%python3_sitelibdir/*
+%endif
+
+%changelog
+* Thu Jan 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7-alt1.git20140918
+- Initial build for Sisyphus
+
