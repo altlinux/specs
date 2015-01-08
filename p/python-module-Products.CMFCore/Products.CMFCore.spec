@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.2.8
-Release: alt1
+Release: alt2
 Summary: Zope Content Management Framework core components
 License: ZPLv2.1
 Group: Development/Python
@@ -28,6 +28,7 @@ BuildPReReq: python-module-eggtestinfo
 Requires: python-module-Zope2
 %py_requires five.localsitemanager Products.GenericSetup
 %py_requires Products.ZSQLMethods zope.app.publication
+%py_requires Products.BTreeFolder2
 
 %description
 This product declares the key framework services for the Zope Content
@@ -74,6 +75,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/tests
 
 %changelog
+* Thu Jan 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.8-alt2
+- Added necessary requirements
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.8-alt1
 - Initial build for Sisyphus
 
