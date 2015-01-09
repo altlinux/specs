@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: %{_name}2
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -175,6 +175,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 09 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1.4-alt1
+- 2.1.4
+
 * Tue Mar 11 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt1
 - 2.1.3 release
 
