@@ -1,12 +1,12 @@
 Name: bitlbee
 Version: 3.2.2
-Release: alt1
+Release: alt1.1
 Group: Networking/IRC
 License: GPLv2
 Url: http://www.bitlbee.org
 Summary: IRC gateway to IM chat networks
 Source: %name-%version.tar.gz
-Source1: %name.xinetd
+Source1: %name.alt.init
 
 # Automatically added by buildreq on Tue Mar 04 2014
 # optimized out: asciidoc docbook-dtds docbook-style-xsl libcom_err-devel libgcrypt-devel libgpg-error libgpg-error-devel libkrb5-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml xml-common xml-utils xsltproc
@@ -72,7 +72,7 @@ sed -i '/^[# ]*DaemonInterface *=/aDaemonInterface = 127.0.0.1
 %install
 %makeinstall DESTDIR=%buildroot ETCDIR=%_sysconfdir/%name install-dev install-etc install-systemd
 mkdir -p %buildroot%_localstatedir/%name
-install -D %SOURCE1  %buildroot%_initdir/%name
+install -m 755 -D %SOURCE1  %buildroot%_initdir/%name
 
 %pre
 /usr/sbin/useradd -r -d %_localstatedir/%name -s /dev/null %name || :
@@ -112,6 +112,11 @@ install -D %SOURCE1  %buildroot%_initdir/%name
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Fri Jan 09 2015 L.A. Kostis <lakostis@altlinux.ru> 3.2.2-alt1.1
+- Packaging fixes:
+  + rename .xinetd to .alt.init as it init.d file in fact.
+  + typo fixes and improvements of init.d file.
+
 * Wed Aug 20 2014 Fr. Br. George <george@altlinux.ru> 3.2.2-alt1
 - Autobuild version bump to 3.2.2
 - Build with libotr 4.0+
