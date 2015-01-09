@@ -1,5 +1,5 @@
 Name: libcec
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: CEC Adaptor communication shared library
@@ -55,6 +55,9 @@ This package contains commandline utilities of libcec.
 %_bindir/cec-client
 
 %changelog
+* Fri Jan 09 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt1
+- 2.2.0
+
 * Tue Mar 12 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.0-alt1
 - 2.1.0 released
 
