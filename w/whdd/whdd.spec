@@ -1,5 +1,5 @@
 Name: whdd
-Version: 2.1
+Version: 2.2
 Release: alt1
 
 Summary: Diagnostic and recovery tool for block devices
@@ -35,6 +35,9 @@ WHDD - инструмент для диагностики и восстанов�
 %attr(4711, root, root) %_sbindir/whdd*
 
 %changelog
+* Fri Jan 09 2015 Pavel Isopenko <pauli@altlinux.org> 2.2-alt1
+- new version whdd 2.2
+
 * Thu Sep 19 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.1-alt1
 - New version
 
