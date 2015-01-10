@@ -1,10 +1,10 @@
 %define oname peewee
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 2.4.5
-Release: alt1.git20141231
+Release: alt1.git20150108
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
 License: MIT
 Group: Development/Python
@@ -54,6 +54,7 @@ Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
 Group: Development/Python3
 %py3_provides %oname
 %py3_requires sqlite3
+%add_python3_req_skip pysqlcipher
 
 %description -n python3-module-%oname
 Peewee is a simple and small ORM. It has few (but expressive) concepts,
@@ -103,6 +104,8 @@ This package contains documentation for %oname.
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec \
+	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
 %endif
 
 %prepare_sphinx .
@@ -168,9 +171,10 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md *.rst examples
+%doc *.md *.rst ../python3/examples
 %_bindir/*.py3
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/berkeley_build.sh
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
 
@@ -180,6 +184,10 @@ popd
 %endif
 
 %changelog
+* Sat Jan 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.5-alt1.git20150108
+- New snapshot
+- Added module for Python 3
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.5-alt1.git20141231
 - Initial build for Sisyphus
 
