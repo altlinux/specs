@@ -2,7 +2,7 @@
 
 
 Name: glpi
-Version: 0.84.8
+Version: 0.85.1
 Release: alt1
 
 
@@ -16,10 +16,9 @@ Packager: Pavel Zilke <zidex at altlinux dot org>
 BuildArch: noarch
 
 Source0: http://www.glpi-project.org/IMG/gz/%name-%version.tar.gz
-Source1: fonts.tar.gz
-Source2: apache.conf
-Source3: apache2.conf
-Source4: README.ALT
+Source1: apache.conf
+Source2: apache2.conf
+Source3: README.ALT
 Patch: patch0.patch
 
 Requires: webserver-common php-engine curl lynx
@@ -54,14 +53,15 @@ Apache 2.x web-server configuration for %name
 %package php5
 Summary: PHP5 dependencies for %name
 Group: Networking/Other
-Requires: %name = %version-%release, php5-mysql, php5-ldap, php5-imap, php5-curl
+Requires: %name = %version-%release, php5-mysql, php5-ldap, php5-imap, php5-curl, php5-gd2
 %description php5
 PHP5 dependencies for %name
 
 
 %prep
 %setup
-%setup -T -D -a 1
+
+%patch -p0
 
 
 %build
@@ -74,10 +74,6 @@ install -pD -m0644 %_sourcedir/apache2.conf %buildroot%_sysconfdir/httpd2/conf/a
 # install glpi
 mkdir -p %buildroot%installdir
 cp -rp * %buildroot%installdir/
-
-# install fonts
-cp -rf %buildroot%installdir/fonts/ %buildroot%installdir/lib/ezpdf/
-rm -rf %buildroot%installdir/fonts/
 
 #install README.ALT
 install -pD -m0644 %_sourcedir/README.ALT README.ALT
@@ -128,6 +124,7 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %installdir/*.php
 %installdir/*.js
 %installdir/COPYING.txt
+%doc AUTHORS.txt
 %doc CHANGELOG.txt
 %doc README.txt
 %doc README.ALT
@@ -145,6 +142,12 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %changelog
+* Wed Jan 07 2015 Pavel Zilke <zidex at altlinux dot org> 0.85.1-alt1
+- This version fix several minor bugs and a security bug
+
+* Wed Jan 07 2015 Pavel Zilke <zidex at altlinux dot org> 0.85-alt1
+- New version 0.85
+
 * Mon Oct 20 2014 Pavel Zilke <zidex at altlinux dot org> 0.84.8-alt1
 - This version fix several minor bugs and a security bug.
 
