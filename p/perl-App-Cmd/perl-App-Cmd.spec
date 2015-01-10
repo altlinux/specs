@@ -1,7 +1,7 @@
 ## SPEC file for Perl module App::Cmd
 
 Name: perl-App-Cmd
-Version: 0.324
+Version: 0.326
 Release: alt1
 
 Summary: Perl module to write CLI apps with less suffering
@@ -44,6 +44,9 @@ the annoying things usually involved.
 %perl_vendor_privlib/App/Cmd*
 
 %changelog
+* Sat Jan 10 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.326-alt1
+- New version
+
 * Wed Oct 29 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.324-alt1
 - New version
 
