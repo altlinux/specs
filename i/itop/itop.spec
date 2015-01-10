@@ -2,7 +2,7 @@
 
 
 Name: itop
-Version: 2.0.2
+Version: 2.1.0
 Release: alt1
 
 
@@ -139,6 +139,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %changelog
+* Sat Jan 10 2015 Pavel Zilke <zidex at altlinux dot org> 2.1.0-alt1
+- New version 2.1.0
+
 * Wed Dec 18 2013 Pavel Zilke <zidex at altlinux dot org> 2.0.2-alt1
 - New version 2.0.2
 
