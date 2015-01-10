@@ -1,8 +1,8 @@
 ## SPEC file for Perl module Cache::Memcached::Fast
 
 Name: perl-Cache-Memcached-Fast
-Version: 0.22
-Release: alt1.1
+Version: 0.23
+Release: alt1
 
 Summary: Perl client for memcached
 
@@ -51,6 +51,9 @@ documentation for full details).
 %perl_vendor_archlib/Cache
 
 %changelog
+* Sat Jan 10 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.23-alt1
+- New version 0.23
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1.1
 - rebuild with new perl 5.20.1
 
