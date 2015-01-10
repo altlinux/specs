@@ -1,8 +1,8 @@
 %define pear_name XML_Util
 
 Name: pear-XML_Util
-Version: 1.1.4
-Release: alt3
+Version: 1.2.3
+Release: alt1
 
 Summary: XML utility class
 
@@ -12,15 +12,12 @@ Url: http://pear.php.net/package/XML_Util
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/XML_Util-%version.tar.bz2
+Source: http://pear.php.net/get/XML_Util-%version.tar
 
 BuildArchitectures: noarch
 
-Requires: pear-core
+Requires: pear-core php5
 BuildRequires: pear-core rpm-build-pear
-
-#Requires: php5-pcre
-Requires: php5
 
 %description
 Selection of methods that are often needed when working with XML documents.
@@ -46,9 +43,13 @@ tags, validation of XML names and more.
 %doc LICENSE CHANGELOG
 %pear_dir/XML
 %pear_docdir/%pear_name/
+%pear_testdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Fri Jan 09 2015 Pavel Isopenko <pauli@altlinux.org> 1.2.3-alt1
+- new version XML_Util 1.2.3 (ALT #30632)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
