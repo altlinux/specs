@@ -1,6 +1,6 @@
 Name: ledger
 Version: 3.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Ledger is a highly flexible, double-entry accounting system
 
@@ -129,6 +129,9 @@ touch AUTHORS
 #%_emacslispdir/*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 3.0.2-alt1.1
+- rebuild with boost 1.57.0
+
 * Wed Sep 24 2014 Vitaly Lipatov <lav@altlinux.ru> 3.0.2-alt1
 - new version 3.0.2 (with rpmrb script)
 

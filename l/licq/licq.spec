@@ -55,7 +55,7 @@ This version of Licq has SSL support for those plugins that support it.
 
 Name: %rname
 Version: %ver
-Release: %rlz
+Release: %rlz.1
 
 BuildRequires(pre): kde4libs-devel
 BuildRequires(pre): graphviz
@@ -641,6 +641,9 @@ popd
 
 ########################################################
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.8.2-alt1.1
+- rebuild with boost 1.57.0
+
 * Wed Oct 01 2014 Sergey Y. Afonin <asy@altlinux.ru> 1.8.2-alt1
 - new version
 

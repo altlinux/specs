@@ -1,6 +1,6 @@
 Name: liborcus
 Version: 0.7.0
-Release: alt2
+Release: alt2.1
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
@@ -82,6 +82,9 @@ rm -f %buildroot/%_libdir/*.la
 %_bindir/orcus-*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.7.0-alt2.1
+- rebuild with boost 1.57.0
+
 * Sat Jun 07 2014 Alexey Shabalin <shaba@altlinux.ru> 0.7.0-alt2
 - build to sisyphus
 

@@ -35,7 +35,7 @@ BuildRequires: libvorbis-devel
 
 Name: wesnoth%wessuffix
 Version: 1.11.15
-Release: alt1
+Release: alt1.1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -626,6 +626,10 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.11.15-alt1.1
+- rebuild with boost 1.57.0;
+- fix includes for Boost.Optional.
+
 * Tue May 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.11.15-alt1
 - 1.12 beta 5
 

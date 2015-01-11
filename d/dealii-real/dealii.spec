@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 8.2
-Release: alt1.pre.svn20140707
+Release: alt1.pre.svn20140707.1
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -222,6 +222,9 @@ popd
 %endif
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 8.2-alt1.pre.svn20140707.1
+- rebuild with boost 1.57.0
+
 * Wed Jul 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.2-alt1.pre.svn20140707
 - New snapshot
 

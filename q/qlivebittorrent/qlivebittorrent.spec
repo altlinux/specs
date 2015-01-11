@@ -1,7 +1,7 @@
 %define oname QLiveBittorrent
 Name: qlivebittorrent
 Version: 0.0
-Release: alt0.2.1
+Release: alt0.2.1.1
 
 Summary: Bittorrent client with function reading files before they would be downloaded
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -51,6 +51,9 @@ install -m 755 -D qlivebittorrent-driver %buildroot%_bindir/qlivebittorrent-driv
 %_bindir/qlivebittorrent-driver
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.0-alt0.2.1.1
+- rebuild with boost 1.57.0
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0-alt0.2.1
 - Rebuilt with new libtorrent-rasterbar8
 

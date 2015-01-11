@@ -1,6 +1,6 @@
 Name: cegui
 Version: 0.8.4
-Release: alt2
+Release: alt2.1
 Summary: Free library providing windowing and widgets for graphics APIs / engines
 Group: System/Libraries
 License: MIT
@@ -98,6 +98,9 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 %doc doc/doxygen/html
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.8.4-alt2.1
+- rebuild with boost 1.57.0
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt2
 - Built without freeimage
 

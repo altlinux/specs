@@ -1,6 +1,6 @@
 Name: gource
 Version: 0.38
-Release: alt1.1.qa1
+Release: alt1.2
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
 License: %gpl3only
@@ -55,6 +55,10 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.38-alt1.2
+- rebuild with boost 1.57.0
+- fix build with recent gcc
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.38-alt1.1.qa1
 - NMU: rebuilt with libboost_*.so.1.53.0.
 

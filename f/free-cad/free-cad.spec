@@ -3,7 +3,7 @@
 
 Name: free-cad
 Version: 0.14.0
-Release: alt1.git20141214
+Release: alt1.git20141214.1
 Epoch: 1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -290,6 +290,9 @@ fi
 %_libexecdir/qt4/plugins/designer/*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1:0.14.0-alt1.git20141214.1
+- rebuild with boost 1.57.0
+
 * Sun Dec 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.14.0-alt1.git20141214
 - Version 0.14.0 (ALT #30563)
 

@@ -7,7 +7,7 @@
 
 Name: libsynfig
 Version: 0.64.3
-Release: alt1
+Release: alt1.1
 
 Summary: Vector-based 2D animation software package
 
@@ -72,6 +72,9 @@ autoreconf --install --force
 %_libdir/lib*.so
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.64.3-alt1.1
+- rebuild with boost 1.57.0
+
 * Fri Dec 26 2014 Andrey Cherepanov <cas@altlinux.org> 0.64.3-alt1
 - New version
 

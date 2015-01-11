@@ -1,6 +1,6 @@
 Name: mongo
 Version: 2.4.9
-Release: alt1
+Release: alt1.1
 Summary: mongo client shell and tools
 License: AGPL 3.0
 Url: http://www.mongodb.org
@@ -28,6 +28,8 @@ Patch10:        mongodb-2.4.5-atomics.patch
 ##  Use a signed char to store BSONType enumerations
 ##Patch 11 https://jira.mongodb.org/browse/SERVER-9680
 Patch11:        mongodb-2.4.5-signed-char-for-BSONType-enumerations.patch
+##Patch 12: add includes to make it build under gcc 4.9
+Patch12:        mongodb-2.4.9-alt-fix-includes.patch
 
 
 BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons boost-devel boost-filesystem-devel boost-program_options-devel libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel libpcap-devel libsnappy-devel libv8-3.15-devel systemd-devel libgperftools-devel libsasl2-devel
@@ -104,6 +106,7 @@ This package provides the static library for the MongoDB client.
 %patch8 -p1
 %patch10 -p1 -b .atomics
 %patch11 -p1 -b .type
+%patch12 -p1
 
 
 # spurious permissions
@@ -248,6 +251,10 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %_libdir/libmongoclient.a
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 2.4.9-alt1.1
+- Rebuild with boost 1.57.0;
+- Add patch that add necessary includes to fix build.
+
 * Wed Jan 29 2014 Dmitry Derjavin <dd@altlinux.org> 2.4.9-alt1
 - 2.4.9
 

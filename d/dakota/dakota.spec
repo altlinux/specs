@@ -9,7 +9,7 @@ Name: dakota
 Version: 6.1
 %define somver 0
 %define sover %somver.0.0
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Summary: Design Analysis Kit for Optimization and Terascale Applications
 License: LGPL v2.1
@@ -365,6 +365,9 @@ install -m644 \
 %_libdir/*.a
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1:6.1-alt1.1
+- rebuild with boost 1.57.0
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:6.1-alt1
 - Version 6.1
 

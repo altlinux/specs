@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ python-devel swig
 # END SourceDeps(oneline)
 Name:		aqsis
 Version:	1.8.2
-Release:	alt2_13
+Release:	alt2_13.1
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -235,6 +235,9 @@ fi
 
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.8.2-alt2_13.1
+- rebuild with boost 1.57.0
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_13
 - update to new release by fcimport
 

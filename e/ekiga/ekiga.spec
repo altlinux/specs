@@ -2,7 +2,7 @@
 
 Name: ekiga
 Version: 4.0.2
-Release: alt0.git.ebfdaa06
+Release: alt0.git.ebfdaa06.1
 
 Summary: IP phone client with full SIP and H.323 support
 
@@ -224,6 +224,10 @@ fi
 %files plugins
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 4.0.2-alt0.git.ebfdaa06.1
+- rebuild with boost 1.57.0;
+- fix header inclusion for new gcc.
+
 * Fri Oct 04 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.2-alt0.git.ebfdaa06
 - upstream snapshot of branch v4_0 ebfdaa0690c2f65dfe90714b02ff4f9bc9a3fa6d
 - rebuild with new libedataserver

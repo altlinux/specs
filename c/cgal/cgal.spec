@@ -2,7 +2,7 @@
 %define sover %somver.0.4
 Name: cgal
 Version: 4.5.1
-Release: alt1
+Release: alt1.1
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -181,6 +181,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc %_docdir/%{name}*
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 4.5.1-alt1.1
+- rebuild with boost 1.57.0
+
 * Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.1-alt1
 - Version 4.5.1
 

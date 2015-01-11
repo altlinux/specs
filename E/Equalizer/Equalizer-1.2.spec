@@ -7,7 +7,7 @@ BuildRequires: gcc4.6-c++
 %define fedora 16
 Name:		Equalizer
 Version:	1.2.1
-Release:	alt2.1.1
+Release:	alt2.1.1.1
 Summary:	Middleware to create and deploy parallel OpenGL-based applications
 
 Group:		Development/C
@@ -166,6 +166,9 @@ fi
 %{_includedir}/vmmlib
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.2.1-alt2.1.1.1
+- rebuild with boost 1.57.0
+
 * Tue Jul 29 2014 Michael Shigorin <mike@altlinux.org> 1.2.1-alt2.1.1
 - rebuilt with OpenSceneGraph 3.2.1
 

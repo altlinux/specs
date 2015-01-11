@@ -1,6 +1,6 @@
 Name: swift
 Version: 2.0
-Release: alt1
+Release: alt1.1
 Summary: Swift, new friendly chat client.
 License: GPLv3, BSD-simplified
 Group: Networking/Instant messaging
@@ -48,6 +48,10 @@ scons allow_warnings=1 optimize=1 qt=%_qt4dir SWIFT_INSTALLDIR=%buildroot%_prefi
 %_niconsdir/swift.xpm
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 2.0-alt1.1
+- build with boost 1.57.0
+  + fix includes to accomodate to changes in Boost.Optional
+
 * Wed Apr 17 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0-alt1
 - New version
 

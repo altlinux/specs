@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.2.8
-Release: alt1
+Release: alt1.1
 Summary: EiskaltDC++ - Direct Connect client
 License: GPLv3
 Group: Networking/File transfer
@@ -176,6 +176,9 @@ popd
 %_datadir/%name/cli
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 2.2.8-alt1.1
+- rebuild with boost 1.57.0
+
 * Tue Jun 25 2013 Aeliya Grevnyov <gray_graff@altlinux.org> 2.2.8-alt1
 - 2.2.8 release (ALT#29105)
 

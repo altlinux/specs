@@ -1,7 +1,7 @@
 %define oname pyvisfile
 Name: python-module-%oname
 Version: 2014.1
-Release: alt1
+Release: alt1.1
 Summary: Large-scale Visualization Data Storage
 License: MIT
 Group: Development/Python
@@ -91,6 +91,9 @@ install -m644 ~/.aksetup-defaults.py \
 %doc examples
 
 %changelog
+* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 2014.1-alt1.1
+- rebuild with boost 1.57.0
+
 * Thu Jun 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.1-alt1
 - Initial build for Sisyphus
 
