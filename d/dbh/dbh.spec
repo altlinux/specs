@@ -1,5 +1,5 @@
 Name: dbh
-Version: 5.0.15
+Version: 5.0.16
 Release: alt1
 
 Summary: Disk based hash library
@@ -72,6 +72,9 @@ rm -rf $RPM_BUILD_ROOT/usr/share/dbh
 %_man3dir/dbh*
 
 %changelog
+* Sun Jan 11 2015 Ilya Mashkin <oddity@altlinux.ru> 5.0.16-alt1
+- 5.0.16
+
 * Mon Apr 14 2014 Ilya Mashkin <oddity@altlinux.ru> 5.0.15-alt1
 - 5.0.15
 
