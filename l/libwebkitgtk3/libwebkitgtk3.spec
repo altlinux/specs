@@ -17,7 +17,7 @@
 %def_disable webkit2
 
 Name: libwebkitgtk3
-Version: 2.4.7
+Version: 2.4.8
 Release: alt1
 
 Summary: Web browser engine
@@ -31,8 +31,8 @@ Source: %_name-%version.tar.xz
 # https://bugs.webkit.org/show_bug.cgi?id=70610
 Patch: webkitgtk-2.4.0-up-textrel.patch
 Patch1: webkitgtk-2.4.0-alt-link.patch
-
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+# https://bugs.webkit.org/show_bug.cgi?id=140241
+Patch2: webkitgtk-2.4.8-build.patch
 
 Obsoletes: %name-webinspector
 Provides: %name-webinspector = %EVR
@@ -219,6 +219,7 @@ GObject introspection data for the Webkit2 library
 #cp %SOURCE1 Source/autotools/symbols.filter
 %patch -p1
 %patch1
+%patch2 -p1
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -340,6 +341,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Sat Jan 10 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.8-alt1
+- 2.4.8
+
 * Sat Oct 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.7-alt1
 - 2.4.7
 
