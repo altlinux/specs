@@ -1,13 +1,13 @@
 %define ver_maj 1
-%define ver_min 57
+%define ver_min 53
 %define ver_rel 0
 
 %define namesuff %{ver_maj}_%{ver_min}_%ver_rel
 
 %define boost_include %_includedir/%name
-%define boost_doc %_docdir/%name
+%define boost_doc %_docdir/%name-%version
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -32,9 +32,9 @@
 %define mpidir %_libdir/%mpiimpl
 %endif
 
-Name: boost
+Name: boost%namesuff
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt4
+Release: alt3.1
 Epoch: 1
 
 Summary: Boost libraries
@@ -45,19 +45,12 @@ Url: http://www.boost.org
 Packager: Ivan Melnikov <iv@altlinux.org>
 
 Source: boost_%namesuff.tar
-Patch4: boost-1.57.0-alt-explicit-st.patch
-Patch5: boost-1.57.0-alt-bjam-locate-target.patch
+Patch4: boost-1.51.0-alt-explicit-st.patch
+Patch5: boost-1.50.0-alt-bjam-locate-target.patch
 Patch15: boost-1.36.0-alt-test-include-fix.patch
 Patch23: boost-1.45.0-alt-mpi-mt-only.patch
 Patch28: boost-1.50.0-fedora-polygon-fix-gcc47.patch
 Patch29: boost-1.53.0-alt-qt4-moc-fix.patch
-
-
-Patch30: boost-1.54.0-fedora-locale-unused_typedef.patch
-Patch31: boost-1.54.0-fedora-python-unused_typedef.patch
-Patch32: boost-1.54.0-fedora-spirit-unused_typedef-2.patch
-Patch33: boost-1.54.0-fedora-spirit-unused_typedef.patch
-Patch34: boost-1.57.0-python-cast-unused-typedef.patch
 
 # we use %%_python_version
 BuildRequires(pre): rpm-build-python >= 0.34.4-alt4
@@ -92,7 +85,7 @@ Library Working Group, membership has expanded to include nearly two
 thousand members of the C++ community at large.
 %else
 %description
-This is legacy package build to ease transition to new version of
+This is legacy package build to ease transition to new verision of
 Boost.
 %endif
 
@@ -127,7 +120,6 @@ Group: Development/C++
 PreReq: %name-devel-headers = %epoch:%version-%release
 Requires: libboost_atomic%version = %epoch:%version-%release
 Requires: libboost_chrono%version = %epoch:%version-%release
-Requires: libboost_container%version = %epoch:%version-%release
 Requires: libboost_date_time%version = %epoch:%version-%release
 Requires: libboost_graph%version = %epoch:%version-%release
 Requires: libboost_iostreams%version = %epoch:%version-%release
@@ -167,8 +159,6 @@ Obsoletes: boost-timer-devel < %epoch:%version-%release
 Provides: boost-thread-devel = %epoch:%version-%release
 Obsoletes: boost-thread-devel < %epoch:%version-%release
 
-Provides: %name-intrusive-devel = %epoch:%version-%release
-Obsoletes: %name-intrusive-devel < %epoch:%version-%release
 Provides: %name-units-devel = %epoch:%version-%release
 Obsoletes: %name-units-devel < %epoch:%version-%release
 
@@ -204,7 +194,6 @@ Requires: %name-interprocess-devel = %epoch:%version-%release
 Requires: %name-intrusive-devel = %epoch:%version-%release
 Requires: %name-locale-devel = %epoch:%version-%release
 Requires: %name-lockfree-devel = %epoch:%version-%release
-Requires: %name-log-devel = %epoch:%version-%release
 Requires: %name-math-devel = %epoch:%version-%release
 %if_with mpi
 Requires: %name-mpi-devel = %epoch:%version-%release
@@ -238,7 +227,7 @@ your system.
 
 
 %package asio-devel
-Summary: The Boost Asio Library development files
+Summary: The Boost Asio Lirary development files
 Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
@@ -252,7 +241,7 @@ modern C++ approach.
 
 
 %package context-devel
-Summary: The Boost Context Library development files
+Summary: The Boost Context Lirary development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
@@ -267,17 +256,17 @@ stack (with local variables) and stack pointer, all registers and CPU
 flags, and the instruction pointer, a fcontext_t instance represents a
 specific point in the application's execution path. This is useful for
 building higher-level abstractions, like coroutines, cooperative threads
-(userland threads) or an equivalent to C# keyword yield in C++.
+(userland threads) or an aquivalent to C# keyword yield in C++.
 
 
 %package coroutine-devel
-Summary: The Boost Coroutine Library development files
+Summary: The Boost Coroutine Lirary development files
 Group: Development/C++
+BuildArch: noarch
 AutoReq: yes, nocpp
 
 PreReq: %name-devel = %epoch:%version-%release
 Requires: %name-context-devel = %epoch:%version-%release
-Requires: libboost_coroutine%version = %epoch:%version-%release
 
 %description coroutine-devel
 Boost.Coroutine provides templates for generalized subroutines which
@@ -294,7 +283,7 @@ The implementation uses Boost.Context for context switching.
 
 
 %package filesystem-devel
-Summary: The Boost Filesystem Library development files
+Summary: The Boost Filesystem Lirary development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
@@ -307,7 +296,7 @@ manipulate paths, files, and directories.
 
 
 %package flyweight-devel
-Summary: The Boost Flyweight Library development files
+Summary: The Boost Flyweight Lirary development files
 Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
@@ -326,7 +315,7 @@ It is header-only library. This package contains the headers.
 
 
 %package geometry-devel
-Summary: The Boost Geometry Library development files
+Summary: The Boost Geometry Lirary development files
 Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
@@ -371,7 +360,7 @@ BGL.
 
 
 %package locale-devel
-Summary: The Boost Locale Library development files
+Summary: The Boost Locale Lirary development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
@@ -384,9 +373,8 @@ facilities in a C++ way. It gives powerful tools for development
 of cross platform localized software - the software that talks
 to user in its language.
 
-
 %package lockfree-devel
-Summary: The Boost Lockfree Library development files
+Summary: The Boost Lockfree Lirary development files
 Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
@@ -398,23 +386,8 @@ Boost.Lockfree library provides lockfree data structures, like
 lockfree queue and stack.
 
 
-%package log-devel
-Summary: The Boost Locale Library development files
-Group: Development/C++
-AutoReq: yes, nocpp
-
-PreReq: %name-devel = %epoch:%version-%release
-Requires: libboost_log%version = %epoch:%version-%release
-
-%description log-devel
-Boost.Log v2 is a library that aims to make logging significantly easier
-for the application developer. It provides a wide range of
-out-of-the-box tools along with public interfaces for extending the
-library.
-
-
 %package interprocess-devel
-Summary: The Boost Interprocess Library development files
+Summary: The Boost Interprocess Lirary development files
 Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
@@ -430,25 +403,22 @@ and allocators.
 It is header-only library. This package contains the headers.
 
 
-# Now boost-intrusive-devel is part of boost-devel-headers,
-# as it is required by boost/thread.hpp
-#
-# %package intrusive-devel
-# Summary: The Boost Intrusive Library development files
-# Group: Development/C++
-# BuildArch: noarch
-# AutoReq: yes, nocpp
-#
-# PreReq: %name-devel = %epoch:%version-%release
-#
-# %description intrusive-devel
-# Boost.Intrusive library provides intrusive containers and algorithms.
-#
-# It is header-only library. This package contains the headers.
+%package intrusive-devel
+Summary: The Boost Intrusive Lirary development files
+Group: Development/C++
+BuildArch: noarch
+AutoReq: yes, nocpp
+
+PreReq: %name-devel = %epoch:%version-%release
+
+%description intrusive-devel
+Boost.Intrusive library provides intrusive containers and algorithms.
+
+It is header-only library. This package contains the headers.
 
 
 %package math-devel
-Summary: The Boost Math Library development files.
+Summary: The Boost Math Lirary development files.
 Group: Development/C++
 
 PreReq: %name-devel = %epoch:%version-%release
@@ -464,13 +434,13 @@ Requires: libboost_math_tr1l%version = %epoch:%version-%release
 %endif
 
 %description math-devel
-The Boost Math Library development files. You'll need to install this
+The Boost Math Lirary development files. You'll need to install this
 package if you want to link with Boost.Math shared libraries.
 
 
 %if_with mpi
 %package mpi-devel
-Summary: The Boost MPI Library development files
+Summary: The Boost MPI Lirary development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
@@ -487,7 +457,7 @@ applications.
 
 
 %package msm-devel
-Summary: The Boost MSM Library development files
+Summary: The Boost MSM Lirary development files
 Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
@@ -502,7 +472,7 @@ It is header-only library. This package contains the headers.
 
 
 %package multiprecision-devel
-Summary: The Boost Multiprecision Library development files
+Summary: The Boost Multiprecision Lirary development files
 Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
@@ -520,7 +490,7 @@ integers, rationals and floats.
 
 
 %package polygon-devel
-Summary: The Boost Polygon Library development files
+Summary: The Boost Polygon Lirary development files
 Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
@@ -538,7 +508,7 @@ It is header-only library. This package contains the headers.
 
 
 %package program_options-devel
-Summary: The Boost Filesystem Library development files
+Summary: The Boost Filesystem Lirary development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
@@ -615,7 +585,7 @@ Python 3.
 %endif
 
 %package signals-devel
-Summary: The Boost Signals Library development files
+Summary: The Boost Signals Lirary development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
@@ -635,7 +605,7 @@ is "emitted."
 # See https://svn.boost.org/trac/boost/ticket/4876
 #
 # %%package units-devel
-# Summary: The Boost Units Library development files
+# Summary: The Boost Units Lirary development files
 # Group: Development/C++
 # BuildArch: noarch
 # AutoReq: yes, nocpp
@@ -657,7 +627,7 @@ PreReq: %name-devel = %epoch:%version-%release
 Requires: %name-filesystem-devel = %epoch:%version-%release
 
 %description wave-devel
-The Boost Wave Library development files.
+The Boost Wave Library develompment files.
 
 
 %package doc
@@ -709,7 +679,6 @@ Requires: %name-graph-parallel-devel = %epoch:%version-%release
 Requires: %name-mpi-devel = %epoch:%version-%release
 %endif
 Requires: %name-locale-devel = %epoch:%version-%release
-Requires: %name-log-devel = %epoch:%version-%release
 Requires: %name-program_options-devel = %epoch:%version-%release
 Requires: %name-python-devel = %epoch:%version-%release
 %if_with python3
@@ -789,48 +758,13 @@ time API, thereby allowing the extraction of wall clock time,
 user CPU time, and system CPU time of the process.
 
 
-%package -n libboost_container%version
-Summary: Boost.Container Library
-Group: Development/C++
-
-%description -n libboost_container%version
-Boost.Container library implements several well-known containers,
-including STL containers. The aim of the library is to offers advanced
-features not present in standard containers or to offer the latest
-standard draft features for compilers that comply with C++03.
-
-
 %package -n libboost_context%version
-Summary: Boost.Context Library
+Summary: Boost.Locale Library
 Group: Development/C++
 
 %description -n libboost_context%version
 Boost.Context is a foundational library that provides a sort of
 cooperative multitasking on a single thread.
-
-
-%package -n libboost_coroutine%version
-Summary: Boost.Coroutine Library
-Group: Development/C++
-
-%if_with strict_deps
-Requires: libboost_context%version = %epoch:%version-%release
-Requires: libboost_thread%version = %epoch:%version-%release
-Requires: libboost_system%version = %epoch:%version-%release
-%endif
-
-%description -n libboost_coroutine%version
-Boost.Coroutine provides templates for generalized subroutines which
-allow suspending and resuming execution at certain locations. It
-preserves the local state of execution and allows re-entering
-subroutines more than once.
-
-Coroutines can be viewed as a language-level construct providing a
-special kind of control flow. In contrast to threads, which are
-pre-emptive, coroutine switches are cooperative (programmer controls
-when a switch will happen). The kernel is not involved in the coroutine
-switches. The implementation uses Boost.Context for context switching.
-
 
 %package -n libboost_date_time%version
 Summary: Boost Date-Time Library.
@@ -910,24 +844,6 @@ Boost.Locale is a library that provides high quality localization
 facilities in a C++ way. It gives powerful tools for development
 of cross platform localized software - the software that talks
 to user in its language.
-
-
-%package -n libboost_log%version
-Summary: Boost.Log Library
-Group: Development/C++
-
-%if_with strict_deps
-Requires: libboost_filesystem%version = %epoch:%version-%release
-Requires: libboost_regex%version = %epoch:%version-%release
-Requires: libboost_thread%version = %epoch:%version-%release
-Requires: libboost_system%version = %epoch:%version-%release
-%endif
-
-%description -n libboost_log%version
-Boost.Log v2 is a library that aims to make logging significantly easier
-for the application developer. It provides a wide range of
-out-of-the-box tools along with public interfaces for extending the
-library.
 
 
 %package -n libboost_iostreams%version
@@ -1231,27 +1147,17 @@ applications. This package contains python module.
 %patch28 -p3
 %patch29 -p2
 
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p2
-
 find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
 
-
-cat >> ./tools/build/src/user-config.jam << EOF
-# There are many strict aliasing warnings, and it's not feasible to go
-# through them all at this time.
-using gcc : : : <compileflags>"%optflags -fno-strict-aliasing" ;
 %if_with mpi
-using mpi ;
+echo "using mpi ; " >> tools/build/v2/user-config.jam
 %endif
-using python : %_python_version ;
+
+echo "using python : %_python_version ; " >> tools/build/v2/user-config.jam
+
 %if_with python3
-using python : %_python3_version : %_prefix :  %_includedir/python%{_python3_version}%{_python3_abiflags} ;
+echo "using python : %_python3_version : %_prefix :  %_includedir/python%{_python3_version}%{_python3_abiflags} ; " >> tools/build/v2/user-config.jam
 %endif
-EOF
 
 %build
 
@@ -1267,7 +1173,7 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 %endif
 
-BJAM_DIR="`pwd`/tools/build/src/engine"
+BJAM_DIR="`pwd`/tools/build/v2/engine"
 
 pushd "$BJAM_DIR"
 chmod +x ./build.sh
@@ -1278,9 +1184,10 @@ BJAM="${BJAM_DIR}/bjam"
 
 [ -n "$NPROCS" ] || NPROCS=%__nprocs
 $BJAM -q -j$NPROCS -d2 --layout=system --toolset=gcc    \
-   variant=release threading=multi              \
+   variant=release threading=single,multi              \
    link=$LINK_BOOST optimization=off               \
    debug-symbols=off -sHAVE_ICU=1  \
+   'cflags=%optflags' 'cxxflags=%optflags' \
     --prefix=%{_prefix} --libdir=%{_libdir}
 
 
@@ -1299,14 +1206,15 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 %endif
 
-BJAM="`pwd`/tools/build/src/engine/bjam"
+BJAM="`pwd`/tools/build/v2/engine/bjam"
 
 #libraries and headers are installed by bjam
 [ -n "$NPROCS" ] || NPROCS=%__nprocs
 $BJAM -q -j$NPROCS -d2 --layout=system --toolset=gcc    \
-   variant=release threading=multi              \
+   variant=release threading=single,multi              \
    link=$LINK_BOOST optimization=off               \
    debug-symbols=off -sHAVE_ICU=1  \
+   'cflags=%optflags' 'cxxflags=%optflags' \
    --prefix=%{buildroot}%{_prefix} --libdir=%{buildroot}%{_libdir} install
 
 
@@ -1423,9 +1331,8 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 %exclude %_includedir/%name/flyweight*
 %exclude %_includedir/%name/geometry*
 %exclude %_includedir/%name/interprocess*
-# %%exclude %_includedir/%name/intrusive
+%exclude %_includedir/%name/intrusive
 %exclude %_includedir/%name/locale*
-%exclude %_includedir/%name/log/
 %exclude %_includedir/%name/lockfree
 %if_with mpi
 %exclude %_includedir/%name/mpi
@@ -1444,10 +1351,8 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 %files devel
 %_libdir/*.so
 %exclude %_libdir/*_context*.so
-%exclude %_libdir/*_coroutine*.so
 %exclude %_libdir/*_filesystem*.so
 %exclude %_libdir/*_locale*.so
-%exclude %_libdir/*_log*.so
 %exclude %_libdir/*_math*.so
 %if_with mpi
 %exclude %_libdir/*_mpi*.so
@@ -1472,7 +1377,6 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 
 %files coroutine-devel
 %_includedir/%name/coroutine
-%_libdir/*_coroutine*.so
 
 %files filesystem-devel
 %_includedir/%name/filesystem*
@@ -1494,9 +1398,8 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 %files interprocess-devel
 %_includedir/%name/interprocess*
 
-# goes to boost-devel-headers
-# %%files intrusive-devel
-# %_includedir/%name/intrusive
+%files intrusive-devel
+%_includedir/%name/intrusive
 
 %files locale-devel
 %_includedir/%name/locale*
@@ -1504,10 +1407,6 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 
 %files lockfree-devel
 %_includedir/%name/lockfree
-
-%files log-devel
-%_includedir/%name/log/
-%_libdir/*_log*.so
 
 %files math-devel
 #includes go to boost-devel package
@@ -1579,14 +1478,8 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 %files -n libboost_chrono%version
 %_libdir/*_chrono*.so.*
 
-%files -n libboost_container%version
-%_libdir/*_container*.so.*
-
 %files -n libboost_context%version
 %_libdir/*_context*.so.*
-
-%files -n libboost_coroutine%version
-%_libdir/*_coroutine*.so.*
 
 %files -n libboost_date_time%version
 %_libdir/*_date_time*.so.*
@@ -1607,9 +1500,6 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 
 %files -n libboost_locale%version
 %_libdir/*_locale*.so.*
-
-%files -n libboost_log%version
-%_libdir/*_log*.so.*
 
 %files -n libboost_math_c99%version
 %_libdir/*_math_c99[^lf]*so.*
@@ -1692,7 +1582,7 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 
 %if_with devel
 # Since 1.31.0 and until 1.34.1 /usr/include/boost was a symbolic link
-# We have to add this triggers to avoid upgrade problems
+# We have to add this triggers to aviod upgrade problems
 
 %pre devel
 if [ -L "%_includedir/%name" ]; then
@@ -1723,28 +1613,8 @@ done
 
 
 %changelog
-* Sun Jan 04 2015 Ivan A. Melnikov <iv@altlinux.org> 1:1.57.0-alt4
-- improve Qt4 moc workaround
-
-* Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1:1.57.0-alt3
-- move Boost.Intrusive to boost-devel-headers, as it is now
-  required by Boost.Thread;
-- fix boost/logic/ packaging (it went to boost-log-devel by mistake).
-
-* Mon Dec 29 2014 Ivan A. Melnikov <iv@altlinux.org> 1:1.57.0-alt2
-- correctly mark coroutine-devel subpackage as
-  architecture-dependant;
-- fix few spelling errors in package summaries and descriptions.
-
-* Sun Dec 28 2014 Ivan A. Melnikov <iv@altlinux.org> 1:1.57.0-alt1
-- new version;
-- subpackages for new libraries:
-  - now Boost.Context and Boost.Coroutine have binaries;
-  - Boost.Log was put into separate subpackages;
-- import bunch of patches for unused typedefs from Fedora;
-- add patch 34 to fix unused typedef in boost/python/cast.hpp;
-- drop single-threaded (-st) binaries;
-- get rid of version suffix in documentation directory.
+* Sun Jan 11 2015 Ivan A. Melnikov <iv@altlinux.org> 1:1.53.0-alt3.1
+- rebuild as compat package without development files
 
 * Sat Feb 16 2013 Ivan A. Melnikov <iv@altlinux.org> 1:1.53.0-alt3
 - build with python3-3.3.0.
