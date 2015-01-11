@@ -1,5 +1,5 @@
 Name:           task
-Version:        2.3.0
+Version:        2.4.0
 Release:        alt1
 Summary:        A command-line todo list manager
 
@@ -74,6 +74,9 @@ make test
 %_datadir/zsh/Completion/Unix/_task
 
 %changelog
+* Sun Jan 11 2015 Kirill Maslinsky <kirill@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Sun Jun 08 2014 Kirill Maslinsky <kirill@altlinux.org> 2.3.0-alt1
 - 2.1.2 -> 2.3.0
 
