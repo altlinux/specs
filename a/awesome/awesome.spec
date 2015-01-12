@@ -1,5 +1,5 @@
 Name: awesome
-Version: 3.5.5
+Version: 3.5.6
 Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
@@ -90,6 +90,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Mon Jan 12 2015 Terechkov Evgenii <evg@altlinux.org> 3.5.6-alt1
+- 3.5.6 (For Those About To Rock)
+
 * Tue Apr 22 2014 Terechkov Evgenii <evg@altlinux.org> 3.5.5-alt1
 - 3.5.5 (Kansas City Shuffle)
 
