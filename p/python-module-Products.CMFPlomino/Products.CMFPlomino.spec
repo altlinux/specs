@@ -1,6 +1,6 @@
 %define oname Products.CMFPlomino
 Name: python-module-%oname
-Version: 1.19.1
+Version: 1.19.2
 Release: alt1
 Summary: Create specific applications in Plone without developing
 License: GPLv2+
@@ -110,6 +110,9 @@ python setup.py test
 %python_sitelibdir/Products/*/test*
 
 %changelog
+* Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.19.2-alt1
+- Version 1.19.2
+
 * Wed Jan 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.19.1-alt1
 - Initial build for Sisyphus
 
