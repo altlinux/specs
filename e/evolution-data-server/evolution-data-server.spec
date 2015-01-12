@@ -17,7 +17,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Evolution Data Server
@@ -40,7 +40,7 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 %define ical_ver 0.43
 %define gdata_ver 0.15.1
 %define goa_ver 3.8.0
-%define vala_ver 0.13.1
+%define vala_ver 0.22
 
 Requires: dconf
 
@@ -138,7 +138,7 @@ the functionality of the installed EDS libraries.
 %add_findprov_lib_path %_libdir/%name-%ver_lib/extensions
 
 %prep
-%setup -q
+%setup
 %if_enabled debug
 %patch1 -p1
 %endif
@@ -266,6 +266,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %endif
 
 %changelog
+* Mon Jan 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.10-alt1
+- 3.12.10
+
 * Mon Dec 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.9-alt1
 - 3.12.9
 
