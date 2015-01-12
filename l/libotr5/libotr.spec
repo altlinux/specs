@@ -1,9 +1,9 @@
 %define sover 5
 Name: libotr%sover
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
-Group: Networking/Instant messaging
+Group: System/Libraries
 Summary: Off-The-Record Messaging library and toolkit
 License: LGPL/GPL
 Url: http://www.cypherpunks.ca/otr/
@@ -31,24 +31,27 @@ OTR allows you to have private conversations over IM by providing:
    - If you lose control of your private keys, no previous conversation
      is compromised.
 
-%package devel
+%package -n libotr-devel
 Summary: Development related files of %name
 Group: Development/C
 License: LGPL
 Requires: %name = %version-%release
 Requires: libgcrypt-devel
+Provides: libotr5-devel = %EVR
+Conflicts: libotr2-devel
 
-%description devel
+%description -n libotr-devel
 %name is a library and toolkit which implements Off-the-Record (OTR)
 Messaging. This package contains development related files of %name.
 
-%package utils
+%package -n libotr-utils
 Summary: Helper utilities of %name
 Group: Networking/Instant messaging
 License: GPL
 Requires: %name = %version-%release
+Provides: libotr5-utils = %EVR
 
-%description utils
+%description -n libotr-utils
 %name is a library and toolkit which implements Off-the-Record (OTR)
 Messaging. This package contains various helper utilities from %name.
 
@@ -71,19 +74,22 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %doc AUTHORS
 %_libdir/lib*.so.*
 
-%files devel
+%files -n libotr-devel
 %doc ChangeLog INSTALL Protocol-v3.html NEWS README
 %_datadir/aclocal/*.m4
 %_includedir/*
 %_libdir/lib*.so
 %_libdir/pkgconfig/*.pc
 
-%files utils
+%files -n libotr-utils
 %doc AUTHORS
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Mon Jan 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.0-alt2
+- Renamed {devel,utils} subpackages to libotr-{devel,utils}.
+
 * Tue Oct 21 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.0-alt1
 - New version.
 
