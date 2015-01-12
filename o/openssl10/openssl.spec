@@ -1,6 +1,6 @@
 Name: openssl10
-Version: 1.0.1j
-Release: alt2
+Version: 1.0.1k
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -445,6 +445,11 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Mon Jan 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1k-alt1
+- Updated to 1.0.1k (fixes CVE-2014-3571, CVE-2015-0206, CVE-2014-3569,
+  CVE-2014-3572, CVE-2015-0204, CVE-2015-0205, CVE-2014-8275,
+  CVE-2014-3570) (closes: 30644).
+
 * Mon Jan 05 2015 Dmitry V. Levin <ldv@altlinux.org> 1.0.1j-alt2
 - Build with enable-ec_nistp_64_gcc_128 on architectures where
   gcc supports __uint128_t (closes: #30625).
