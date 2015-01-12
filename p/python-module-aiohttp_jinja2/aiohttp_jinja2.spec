@@ -4,8 +4,9 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.0
-Release: alt1.a.git20141227
+Epoch: 1
+Version: 0.0.1
+Release: alt1.git20150108
 Summary: jinja2 template renderer for aiohttp.web
 License: ASLv2.0
 Group: Development/Python
@@ -99,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.0.1-alt1.git20150108
+- Version 0.0.1
+
 * Thu Jan 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.a.git20141227
 - Initial build for Sisyphus
 
