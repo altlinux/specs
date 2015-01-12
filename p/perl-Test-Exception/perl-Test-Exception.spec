@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Test-Exception
 Name: perl-%dist
-Version: 0.35
+Version: 0.36
 Release: alt1
 
 Summary: Test exception based code
@@ -35,6 +36,9 @@ Test::More and friends.
 %perl_vendor_privlib/Test/Exception.pm
 
 %changelog
+* Mon Jan 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - automated CPAN update
 
