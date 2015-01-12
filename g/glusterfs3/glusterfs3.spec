@@ -1,5 +1,5 @@
 %define oname glusterfs
-%define major 3.5
+%define major 3.6
 # if you wish to compile an rpm without rdma support, compile like this...
 # rpmbuild -ta @PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz --without rdma
 %{?_without_rdma:%global _without_rdma --disable-ibverbs}
@@ -18,13 +18,11 @@
 
 Summary: Cluster File System
 Name: glusterfs3
-Version: %major.3
+Version: %major.1
 Release: alt1
 License: GPLv2/LGPLv3
 Group: System/Base
 Url: http://www.gluster.org/
-
-Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Source0: %name-%version.tar
 Source1: glusterd.sysconfig
@@ -272,18 +270,16 @@ install -D -p -m 644 extras/glusterfs.vim \
 %_sbindir/glusterfs*
 %_sbindir/gluster
 %_sbindir/glusterd
-%_sbindir/glfsheal
 %dir %_libdir/glusterfs/
-%dir %_libdir/glusterfs/%version/
-%_libdir/glusterfs/%version/rpc-transport/
-%_libdir/glusterfs/%version/auth/
-%_libdir/glusterfs/%version/xlator/
-%exclude %_libdir/glusterfs/%version/xlator/mount/fuse*
+%_libdir/glusterfs/rpc-transport/
+%_libdir/glusterfs/auth/
+%_libdir/glusterfs/xlator/
+%exclude %_libdir/glusterfs/xlator/mount/fuse*
 %_logdir/glusterfs
 %_man8dir/*gluster*.8*
 %exclude %_man8dir/mount.glusterfs.8*
 %if 0%{!?_without_rdma:1}
-%exclude %_libdir/glusterfs/%version/rpc-transport/rdma*
+%exclude %_libdir/glusterfs/rpc-transport/rdma*
 %endif
 %_datadir/glusterfs/scripts/post-upgrade-script-for-quota.sh
 %_datadir/glusterfs/scripts/pre-upgrade-script-for-quota.sh
@@ -291,7 +287,7 @@ install -D -p -m 644 extras/glusterfs.vim \
 
 %if 0%{!?_without_rdma:1}
 %files rdma
-%_libdir/glusterfs/%version/rpc-transport/rdma*
+%_libdir/glusterfs/rpc-transport/rdma*
 %endif
 
 %if 0%{!?_without_georeplication:1}
@@ -303,6 +299,7 @@ install -D -p -m 644 extras/glusterfs.vim \
 %_libexecdir/glusterfs/peer_add_secret_pub
 %_libexecdir/glusterfs/peer_gsec_create
 %_libexecdir/glusterfs/python/syncdaemon/
+%_libexecdir/glusterfs/set_geo_rep_pem_keys.sh
 %_datadir/glusterfs/scripts/get-gfid.sh
 %_datadir/glusterfs/scripts/slave-upgrade.sh
 %_datadir/glusterfs/scripts/gsync-upgrade.sh
@@ -313,7 +310,7 @@ install -D -p -m 644 extras/glusterfs.vim \
 
 %files client
 %config(noreplace) %_sysconfdir/logrotate.d/glusterfs-fuse
-%_libdir/glusterfs/%version/xlator/mount/fuse*
+%_libdir/glusterfs/xlator/mount/fuse*
 %_man8dir/mount.glusterfs.8*
 /sbin/mount.glusterfs
 /sbin/umount.glusterfs
@@ -351,6 +348,9 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Mon Jan 12 2015 Anton Farygin <rider@altlinux.ru> 3.6.1-alt1
+- new version
+
 * Thu Nov 13 2014 Anton Farygin <rider@altlinux.ru> 3.5.3-alt1
 - new version
 
