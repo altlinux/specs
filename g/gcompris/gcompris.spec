@@ -1,6 +1,6 @@
 
 Name: gcompris
-Version: 14.07
+Version: 14.12
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
@@ -22,14 +22,14 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Obsoletes: %name-devel %name-gst-plugin
 
 #BuildPreReq: /proc
-# Automatically added by buildreq on Thu Jan 07 2010
-BuildRequires: chess gnome-common gstreamer-devel intltool libgnet-devel libgnomecanvas-devel librsvg-devel libsqlite3-devel python-module-pycairo-devel python-module-pygtk-devel python-module-pysqlite2 python-modules-encodings tetex-core
+BuildRequires: chess gnome-common gstreamer-devel intltool libgnet-devel
+BuildRequires: libgnomecanvas-devel librsvg-devel libsqlite3-devel
+BuildRequires: python-module-pycairo-devel python-module-pygtk-devel
+BuildRequires: python-module-pysqlite2 python-modules-encodings tetex-core
 
 Requires: chess sqlite3
 # needed for sound support
 Requires: gst-plugins-base >= 0.10.14-alt3 gst-plugins-base-audio-filters gst-plugins-vorbis gst-plugins-ogg gst-plugins-alsa
-# needed for python support
-#Requires: python%__python_version(gnomecanvas) python%__python_version(pygtk) python%__python_version(cairo) python%__python_version(gnome) python%__python_version(pysqlite2)
 
 Provides: python%__python_version(_gcompris) python%__python_version(_gcompris_anim) python%__python_version(_gcompris_bonus)
 Provides: python%__python_version(_gcompris_score) python%__python_version(_gcompris_skin) python%__python_version(_gcompris_sound)
@@ -403,7 +403,6 @@ mkdir -p %buildroot%_miconsdir
 mkdir -p %buildroot%_liconsdir
 mkdir -p %buildroot%_niconsdir
 
-#install -p -m 644 docs/C/*.info %buildroot%_infodir
 install -p -m 644 %SOURCE2 %buildroot%_datadir/applications
 install -p -m 644 %SOURCE3 %buildroot%_datadir/applications
 install -p -m 644 %SOURCE4 %buildroot%_miconsdir/%name.png
@@ -427,7 +426,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/%name
 
 # menu
-##%_menudir/*
 %_datadir/applications/*
 
 # data 
@@ -438,8 +436,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_miconsdir/*
 %_liconsdir/*
 %_niconsdir/*
-##%dir %_datadir/assetml
-##%_datadir/assetml/gcompris_flags.assetml
 
 # exclude sounds
 %exclude %_datadir/gcompris/boards/voices/ar
@@ -598,6 +594,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/sk
 
 %changelog
+* Mon Jan 12 2015 Andrey Cherepanov <cas@altlinux.org> 14.12-alt1
+- New version
+- Fix duplicate in Russian translation
+
 * Sun Aug 10 2014 Andrey Cherepanov <cas@altlinux.org> 14.07-alt1
 - New version
 
