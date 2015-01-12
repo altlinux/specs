@@ -1,6 +1,6 @@
 %define dist aliased
 Name: perl-%dist
-Version: 0.33
+Version: 0.34
 Release: alt1
 
 Summary: Use shorter versions of class names
@@ -35,6 +35,9 @@ name or, if you prefer, you can do so implicitly.
 %perl_vendor_privlib/aliased*
 
 %changelog
+* Mon Jan 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
+- automated CPAN update
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
 - automated CPAN update
 
