@@ -2,7 +2,7 @@
 %define oname %mname.content
 Name: python-module-%oname
 Version: 1.27
-Release: alt1.dev0.git20141223
+Release: alt1.dev0.git20150112
 Summary: Content-types for ESD Review Tool
 License: GPLv2
 Group: Development/Python
@@ -133,6 +133,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.27-alt1.dev0.git20150112
+- New snapshot
+
 * Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.27-alt1.dev0.git20141223
 - New snapshot
 
