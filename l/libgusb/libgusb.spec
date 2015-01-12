@@ -1,7 +1,7 @@
 %define api_ver 1.0
 
 Name: libgusb
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: GLib wrapper around libusb1
@@ -10,8 +10,8 @@ License: LGPLv2+
 Url: https://gitorious.org/gusb/
 Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
 
-BuildRequires: libgio-devel >= 2.32 libusb-devel >= 1.0.19
-BuildRequires: gobject-introspection-devel vala-tools
+BuildRequires: libgio-devel >= 2.38 libusb-devel >= 1.0.19
+BuildRequires: gobject-introspection-devel vala-tools gtk-doc
 
 %description
 GUsb is a GObject wrapper for libusb that makes it easy to do
@@ -93,6 +93,9 @@ applications that use GUsb library.
 %_datadir/gtk-doc/html/gusb/
 
 %changelog
+* Mon Jan 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
+- 0.2.4
+
 * Thu Dec 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - 0.2.3
 
