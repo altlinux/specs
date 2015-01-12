@@ -2,14 +2,14 @@
 
 Name: lib%_name
 Version: 0.10.2
-Release: alt2
+Release: alt3.git20150112
 
-Summary: Extension library to XFce
+Summary: Extension library to Xfce
 Summary (ru_RU.UTF-8): Библиотека расширений Xfce
 License: %lgpl2plus, %gpl2plus
 Group: System/Libraries
 Url: http://www.xfce.org
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/exo
 Source: %_name-%version.tar
@@ -28,8 +28,8 @@ Requires: libgtk+2-common
 Conflicts: python-module-exo < 0.7.0
 
 %description
-Libexo is an extension library to XFce, developed by os-cillation.
-While XFce comes with a quite few libraries that are targeted at desktop
+Libexo is an extension library to Xfce, developed by os-cillation.
+While Xfce comes with a quite few libraries that are targeted at desktop
 development, libexo is targeted at application development.
 
 %description -l ru_RU.UTF-8
@@ -58,6 +58,9 @@ This package contains documentation files required for packaging
 %prep
 %setup -n %_name-%version
 %patch -p1
+
+# Don't use git tag in version.
+%xfce4_drop_gitvtag libexo_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -103,6 +106,10 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Mon Jan 12 2015 Mikhail Efremov <sem@altlinux.org> 0.10.2-alt3.git20150112
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Upstream git snapshot.
+
 * Fri Dec 28 2012 Mikhail Efremov <sem@altlinux.org> 0.10.2-alt2
 - Bring back changes for xfce4-terminal.
 
