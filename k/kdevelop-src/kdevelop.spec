@@ -1,5 +1,5 @@
-Version: 4.5.2
-Release: alt1.git
+Version: 4.7.0
+Release: alt1
 Serial: 3
 
 %define _unpackaged_files_terminate_build 1
@@ -9,17 +9,17 @@ Serial: 3
 %def_enable okteta
 # from the Project's CMakeLists.txt
 %define build_req_kde_ver_min 4.6.0
-%define build_req_kdeplatform_min 1.5.0
-%define req_kdev_php_min 1.5.0
+%define build_req_kdeplatform_min 1.7.0
+%define req_kdev_php_min 1.7.0
 
 %if %unstable
-%define pkg_sfx -pre4.5
+%define pkg_sfx -pre4.7
 %define pkg_sfx_other %nil
 %define if_unstable() %{expand:%*}
 %define if_stable() %nil
 %else
 %define pkg_sfx %nil
-%define pkg_sfx_other -pre4.5
+%define pkg_sfx_other -pre4.7
 %define if_unstable()  %nil
 %define if_stable() %{expand:%*}
 %endif
@@ -47,17 +47,19 @@ Also it has modules (packaged separately) for PHP, Python, Valgrind\
 and other programming languages and development tools.
 
 # this should be oneliner :/
-%define req_normal %kdevelop-mini = %serial:%version-%release %kdevelop-for-debug = %serial:%version-%release %kdevplatform-subversion >= %build_req_kdeplatform_min %kdevplatform-git >= %build_req_kdeplatform_min %kdevelop-kde-integration = %serial:%version-%release
+%define req_normal %kdevelop-mini = %serial:%version-%release %kdevelop-for-debug = %serial:%version-%release %kdevplatform-subversion >= %build_req_kdeplatform_min %kdevplatform-git >= %build_req_kdeplatform_min %kdevelop-for-github = %serial:%version-%release %kdevelop-kde-integration = %serial:%version-%release
 %define req_normal_features \
   * KDE Plasma integration \
   * debug module \
   * module for Subversion support \
-  * module for Git support
+  * module for Git support \
+  * module for accessing GitHub
 
-%define req_big %kdevelop = %serial:%version-%release %kdevelop-for-kde = %serial:%version-%release %kdevelop-for-qt = %serial:%version-%release
+%define req_big %kdevelop = %serial:%version-%release %kdevelop-for-kde = %serial:%version-%release %kdevelop-for-qt = %serial:%version-%release %kdevelop-ninja = %serial:%version-%release
 %define req_big_features %req_normal_features \
   * module for QT apps development \
-  * module for KDE apps development
+  * module for KDE apps development \
+  * module for Ninja build system support
 
 %if_enabled okteta
 %global req_big %req_big %kdevelop-okteta = %serial:%version-%release
@@ -66,9 +68,10 @@ and other programming languages and development tools.
 %endif
 
 # this one too :/
-%define req_maxi %req_big %kdevplatform-cvs >= %build_req_kdeplatform_min %kdevelop-for-php >= %req_kdev_php_min
+%define req_maxi %req_big %kdevplatform-cvs >= %build_req_kdeplatform_min %kdevplatform-bazaar >= %build_req_kdeplatform_min %kdevelop-for-php >= %req_kdev_php_min
 %define req_maxi_features %req_big_features \
   * module for CVS support \
+  * module for Bazaar support \
   * module for PHP programming language support
 
 Name: %kdevelop-src
@@ -88,7 +91,7 @@ Patch2: kdevelop-alt-translations.patch
 # Automatically added by buildreq on Tue Mar 30 2010 (-bi)
 #BuildRequires: cvs gcc-c++ git-core glib2-devel glibc-devel-static kde4base-workspace-devel kdevplatform-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libqt3-devel libxkbfile-devel mercurial openssh qt4-assistant qt4-designer rpm-build-ruby subversion valgrind-devel xorg-xf86vidmodeproto-devel
 BuildRequires(pre): kde4libs-devel
-BuildRequires: cvs gcc-c++ glib2-devel glibc-devel kde4base-workspace-devel valgrind-devel cppunit-devel libcheck-devel
+BuildRequires: cvs gcc-c++ glib2-devel glibc-devel kde4base-workspace-devel valgrind-devel cppunit-devel libcheck-devel qjson-devel
 BuildRequires: kde4libs-devel >= %build_req_kde_ver_min
 BuildRequires: %kdevplatform-devel >= %build_req_kdeplatform_min
 
@@ -245,6 +248,23 @@ Conflicts: %{kdevelop_other}-kde-integration
 This package provides modules to integrate KDevelop
 into KDE Plasma.
 
+%package -n %kdevelop-for-github
+Group: Development/Tools
+Summary: KDevelop module for accessing projects on GitHub
+Requires: %kdevelop-mini = %serial:%version-%release
+Requires: %kdevplatform-git >= %build_req_kdeplatform_min
+
+Conflicts: %{kdevelop_other}-for-github
+# Only stable package replaces unstable counterpart
+%if_stable Obsoletes: %{kdevelop_other}-for-github < %serial:%version-%release
+
+# Drop previous -unstable
+Conflicts: kdevelop-unstable-for-github
+
+%description -n %kdevelop-for-github
+This KDevelop module allows to access projects on GitHub from within
+KDevelop.
+
 %package -n %kdevelop-for-debug
 Group: Development/Debug
 Summary: KDevelop module for debugging
@@ -261,6 +281,22 @@ Conflicts: kdevelop-unstable-for-debug
 %description -n %kdevelop-for-debug
 This KDevelop module provides KDevelop with debugging capabilities
 using GDB and Valgrind as backends.
+
+%package -n %kdevelop-ninja
+Group: Development/Tools
+Summary: KDevelop module for Ninja build system support
+Requires: %kdevelop-mini = %serial:%version-%release
+Requires: ninja-build
+
+Conflicts: %{kdevelop_other}-ninja
+# Only stable package replaces unstable counterpart
+%if_stable Obsoletes: %{kdevelop_other}-ninja < %serial:%version-%release
+
+# Drop previous -unstable
+Conflicts: kdevelop-unstable-ninja
+
+%description -n %kdevelop-ninja
+This KDevelop module provides support for Ninja build system
 
 %package -n %kdevelop-for-qt
 Group: Development/KDE and QT
@@ -395,6 +431,10 @@ done
 
 %K4find_lang --output=kdevlibs.lang --with-kde kdevkdeprovider
 
+%K4find_lang --output=kdevninja.lang --with-kde kdevninja
+
+%K4find_lang --output=kdevghprovider.lang --with-kde kdevghprovider
+
 %files -n %kdevelop
 %files -n %kdevelop-maxi
 %files -n %kdevelop-big
@@ -407,12 +447,20 @@ done
 %_K4lib/plasma_engine_kdevelopsessions.so
 %_K4srv/plasma-*.desktop
 
+%files -n %kdevelop-for-github -f kdevghprovider.lang
+%_K4lib/kdevghprovider.so
+%_K4srv/kdevghprovider.desktop
+
 %files -n %kdevelop-for-debug -f kdevgdb.lang
 %_K4lib/kdevgdb.so
 %_K4apps/kdevgdb
 %_K4srv/kdevgdb.desktop
 
 %files -n %kdevelop-for-kde
+
+%files -n %kdevelop-ninja -f kdevninja.lang
+%_K4lib/kcm_kdev_ninjabuilder.so
+%_K4lib/kdevninja.so
 
 %files -n %kdevelop-for-qt -f kdevqthelp.lang
 %_K4lib/kdevqthelp.so
@@ -427,27 +475,41 @@ done
 %_K4conf/kdevelop-qthelp.knsrc
 
 %files -n %kdevelop-mini -f %name-mini.lang
-%doc AUTHORS NEWS README HACKING TODO
+%doc AUTHORS README HACKING
 %_K4bindir/kdevelop
 %_K4bindir/kdevelop!
-%_K4lib/kcm_kdev_makebuilder.so
 %_K4lib/kcm_kdevcmake_settings.so
 %_K4lib/kcm_kdev_cmakebuilder.so
 %_K4lib/kdevcmakebuilder.so
 %_K4lib/kdevcmakemanager.so
+%_K4lib/kdevcmakedocumentation.so
 
+%_K4apps/kdevcustommakemanager
 %_K4lib/kcm_kdevcustombuildsystem.so
 %_K4lib/kdevcustombuildsystem.so
-
-%_K4lib/kdevcpplanguagesupport.so
 %_K4lib/kdevcustommakemanager.so
+
+%_K4lib/kcm_kdev_makebuilder.so
 %_K4lib/kdevmakebuilder.so
+
+%_K4lib/kdevcompilerprovider.so
+
+%_K4lib/kdevdefinesandincludesmanager.so
+%_K4lib/kcm_kdevcustomdefinesandincludes.so
+%_K4libdir/libkdev4includesdefinessettings.so
+
+%_K4apps/kdevcppsupport
+%_K4lib/kdevcpplanguagesupport.so
+
 %_K4lib/kdevastyle.so
 %_K4lib/kdevcustomscript.so
+
 %_K4lib/kdevmanpage.so
-%_K4lib/kdevcmakedocumentation.so
+%_K4apps/kdevmanpage/manpagedocumentation.css
+
 %_K4srv/*.desktop
 %exclude %_K4srv/kdevqthelp*.desktop
+%exclude %_K4srv/kdevghprovider.desktop
 %if_enabled okteta
 %exclude %_K4srv/kdevokteta*.desktop
 %endif
@@ -455,11 +517,7 @@ done
 %exclude %_K4srv/kdevexecuteplasmoid.desktop
 %exclude %_K4srv/plasma-*.desktop
 
-%_K4apps/kdevcmakebuilder
-%_K4apps/kdevcmakemanager
-%_K4apps/kdevcustommakemanager
 %_K4apps/kdevelop
-%_K4apps/kdevcppsupport
 %dir %_K4apps/kdevappwizard
 %dir %_K4apps/kdevappwizard/templates
 %_K4apps/kdevappwizard/templates/cmake_plaincpp.tar.bz2
@@ -482,7 +540,9 @@ done
 
 %files -n %kdevelop-libs -f kdevlibs.lang
 %_K4lib/kdevkdeprovider.so
+
 %_K4libdir/libkdev4cmakecommon.so
+
 %_K4libdir/libkdev4cppduchain.so
 %_K4libdir/libkdev4cppparser.so
 %_K4libdir/libkdev4cpprpp.so
@@ -506,6 +566,11 @@ done
 %_K4apps/kdevfiletemplates/templates/python_*.tar.bz2
 
 %changelog
+* Mon Jan 12 2015 Alexey Morozov <morozov@altlinux.org> 3:4.7.0-alt1
+- v4.7.0 release
+- translations are taken from the upstream release, w/o local fixes
+  or enhancements
+
 * Fri Nov 15 2013 Alexey Morozov <morozov@altlinux.org> 3:4.5.2-alt1.git
 - v4.5.2 release plus 39618b4daa45b9feed88a54789c301ae75f7bb63 commit
 - Translations merged and siglhtly modified

@@ -2,13 +2,13 @@
 %define unstable 0
 
 %if %unstable
-%define pkg_sfx -pre4.5
+%define pkg_sfx -pre4.7
 %define pkg_sfx_other %nil
 %define if_unstable() %{expand:%*}
 %define if_stable() %nil
 %else
 %define pkg_sfx %nil
-%define pkg_sfx_other -pre4.5
+%define pkg_sfx_other -pre4.7
 %define if_unstable()  %nil
 %define if_stable() %{expand:%*}
 %endif
@@ -29,8 +29,8 @@
 %define build_kdelibs_ver 4.6.0
 
 Name: %kdevelop_qmake
-Version: 1.4.60
-Release: alt0.1.git
+Version: 1.6.60
+Release: alt1.git
 
 Group: Development/Other
 Summary: QMake plugin for KDevelop
@@ -84,6 +84,10 @@ rm -f %buildroot%_K4includedir/kdevelop/qmake/iqmakebuilder.h
 %_K4srv/kcm_kdev_qmake*.desktop
 
 %changelog
+* Tue Jan 13 2015 Alexey Morozov <morozov@altlinux.org> 1.6.60-alt1.git
+- build a pre-release git snapshot (ed465bdc41d2abe7cd581b082bce2ebbdb215254)
+  for KDevelop-4.7
+
 * Tue Apr 30 2013 Alexey Morozov <morozov@altlinux.org> 1.4.60-alt0.1.git
 - Build a pre-release git snapshot (eba41ae94f3b69595c83dc889b79e44a9e2bd23a)
   for KDevelop-4.5
