@@ -5,7 +5,7 @@
 %endif
 
 Name: perl-%dist
-Version: 1.4209
+Version: 1.4210
 Release: alt1
 
 Summary: Net::Pcap is awesome, but it's difficult to bootstrap
@@ -35,6 +35,9 @@ This module is little more than a collection of macros and convenience functions
 %doc README
 
 %changelog
+* Mon Jan 12 2015 Igor Vlasenko <viy@altlinux.ru> 1.4210-alt1
+- automated CPAN update
+
 * Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.4209-alt1
 - automated CPAN update
 
