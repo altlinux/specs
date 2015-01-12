@@ -1,6 +1,6 @@
 %define dist HTML-FormatText-WithLinks
 Name: perl-%dist
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: HTML to text conversion with links as footnotes
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/ST/STRUAN/HTML-FormatText-WithLinks-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ to mimic the format of the lynx text based web browser's --dump option.
 %perl_vendor_privlib/HTML
 
 %changelog
+* Mon Jan 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 0.14-alt1
 - 0.07 -> 0.14
 
