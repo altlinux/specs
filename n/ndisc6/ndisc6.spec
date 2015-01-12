@@ -1,6 +1,6 @@
 Name: ndisc6
 Version: 1.0.3
-Release: alt1.git20140907
+Release: alt2
 
 Summary: IPv6 diagnostic tools
 License: %gpl2plus
@@ -40,6 +40,10 @@ autoconfiguration (RFC5006).
 %build
 #Hack for gettext_noop mainly
 find /usr/share/gettext -name gettext.h -exec ln -s '{}' include/gettext.h ';' -quit
+
+# gettext-0.18.3 should be enough
+sed -i 's/^AM_GNU_GETTEXT_VERSION(\[0.19.3\])/AM_GNU_GETTEXT_VERSION([0.18.3])/' configure.ac
+
 %autoreconf
 CFLAGS="%optflags -fno-strict-aliasing" \
 %configure \
@@ -86,6 +90,10 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Mon Jan 12 2015 Mikhail Efremov <sem@altlinux.org> 1.0.3-alt2
+- Allow build with gettext-0.18.3.
+- Updated to 1.0.3 release.
+
 * Fri Sep 12 2014 Mikhail Efremov <sem@altlinux.org> 1.0.3-alt1.git20140907
 - Updated from upstream git.
 
