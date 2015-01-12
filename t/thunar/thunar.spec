@@ -1,13 +1,13 @@
 Name: thunar
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 
-Summary: Thunar File Manager for the XFce Desktop Environment
+Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
 Group: Graphical desktop/XFce
 License: %gpl2plus
 Url: http://thunar.xfce.org
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/thunar
 Source: %name-%version.tar
@@ -29,7 +29,7 @@ Obsoletes: Thunar < 1.3.1
 Provides: Thunar = %version-%release
 
 %description
-Thunar File Manager for the XFce desktop environment.
+Thunar File Manager for the Xfce desktop environment.
 
 %description -l ru_RU.UTF-8
 Файловый менеджер Thunar используемый в окружении рабочего стола Xfce.
@@ -97,6 +97,8 @@ make check
 %_man1dir/*
 %_pixmapsdir/*
 %_datadir/dbus-1/services/*
+%_datadir/polkit-1/actions/org.xfce.thunar.policy
+%_datadir/appdata/thunar.appdata.xml
 %_datadir/Thunar
 %_datadir/xfce4/panel/plugins/*.desktop
 %_libdir/xfce4/panel/plugins/*.so
@@ -118,6 +120,11 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Mon Jan 12 2015 Mikhail Efremov <sem@altlinux.org> 1.6.4-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Drop obsoleted patch.
+- Updated to 1.6.4.
+
 * Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 1.6.3-alt1
 - Updated to 1.6.3.
 
