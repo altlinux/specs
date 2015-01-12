@@ -1,7 +1,7 @@
 BuildRequires: perl(Module/Build.pm)
 %define dist HTML-TableExtract
 Name: perl-%dist
-Version: 2.11
+Version: 2.12
 Release: alt1
 
 Summary: %dist module for perl
@@ -37,6 +37,9 @@ of information contained in tables within HTML documents.
 %perl_vendor_privlib/HTML/TableExtract.pm
 
 %changelog
+* Mon Jan 12 2015 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1
+- automated CPAN update
+
 * Sun Sep 25 2011 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
 - automated CPAN update
 
