@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 4.1.0
+Version: 4.1.1
 Release: alt1
 Summary: Zope Dublin Core implementation
 License: ZPLv2.1
@@ -23,6 +23,7 @@ BuildPreReq: python-tools-2to3
 
 %py_requires zope pytz zope.component zope.datetime zope.interface
 %py_requires zope.lifecycleevent zope.location zope.schema zope.security
+%py_requires zope.annotation
 %add_python_req_skip annotatableadapter
 
 %description
@@ -34,6 +35,7 @@ Summary: Zope Dublin Core implementation
 Group: Development/Python3
 %py3_requires zope pytz zope.component zope.datetime zope.interface
 %py3_requires zope.lifecycleevent zope.location zope.schema zope.security
+%py3_requires zope.annotation
 %add_python3_req_skip annotatableadapter
 
 %description -n python3-module-%oname
@@ -125,6 +127,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.1.1-alt1
+- Version 4.1.1
+
 * Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.1.0-alt1
 - Version 4.1.0
 
