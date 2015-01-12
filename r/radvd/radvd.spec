@@ -3,7 +3,7 @@
 %define _pseudouser_home     %_localstatedir/radvd
 
 Name: radvd
-Version: 2.8
+Version: 2.9
 Release: alt1
 
 Summary: A Router Advertisement daemon
@@ -83,6 +83,9 @@ install -Dm0644 %SOURCE4 %buildroot%systemd_unitdir/%name.service
 %_sbindir/radvdump
 
 %changelog
+* Mon Jan 12 2015 Mikhail Efremov <sem@altlinux.org> 2.9-alt1
+- Updated to 2.9.
+
 * Mon Oct 06 2014 Mikhail Efremov <sem@altlinux.org> 2.8-alt1
 - Add -fno-strict-overflow to %%optflags.
 - Add -fno-strict-aliasing to %%optflags.
