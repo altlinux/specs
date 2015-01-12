@@ -9,12 +9,13 @@
 %def_with krb5
 %def_enable map
 %def_disable image_inline
+%def_enable tnef
 
 # %define plugins experimental
 %define plugins all
 
 Name: evolution
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -40,7 +41,7 @@ Provides: camel
 %define glib_ver 2.36.0
 %define gtk_ver 3.4
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.12.9
+%define eds_ver 3.12.10
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.8.5
@@ -80,6 +81,7 @@ BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
 %{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_image_inline:BuildRequires: libgtkimageview-devel}
+%{?_enable_tnef:BuildRequires: libytnef-devel}
 
 BuildRequires: docbook-utils intltool yelp-tools itstool gtk-doc
 BuildRequires: gcc-c++ flex libSM-devel libcom_err-devel gstreamer%gst_api_ver-devel
@@ -170,7 +172,7 @@ This package contains documentation needed to develop Evolution plugins.
 %define _libexecdir %_prefix/libexec
 
 %prep
-%setup -q
+%setup
 %patch10 -b .ldaphack
 %patch27 -p1 -b .im-context-reset
 
@@ -292,6 +294,10 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/appdata/%name-spamassassin.metainfo.xml
 
 %changelog
+* Mon Jan 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.10-alt1
+- 3.12.10
+- enabled TNEF attachments support via libytnef library
+
 * Mon Dec 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.9-alt1
 - 3.12.9
 
