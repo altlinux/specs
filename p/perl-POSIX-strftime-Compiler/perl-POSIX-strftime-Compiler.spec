@@ -1,13 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Carp.pm) perl(Exporter.pm) perl(Module/Build.pm) perl(POSIX.pm) perl(Test/More.pm) perl(Time/Local.pm) perl(Time/TZOffset.pm) perl(base.pm)
 # END SourceDeps(oneline)
-%define module_version 0.40
+%define module_version 0.41
 %define module_name POSIX-strftime-Compiler
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.40
+Version: 0.41
 Release: alt1
 Summary: GNU C library compatible strftime for loggers and servers
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/P*
 
 %changelog
+* Mon Jan 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
+- automated CPAN update
+
 * Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
