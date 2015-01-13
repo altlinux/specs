@@ -1,5 +1,5 @@
 Name: cgmanager
-Version: 0.33
+Version: 0.35
 Release: alt1
 
 Summary: Linux cgroup manager
@@ -94,6 +94,9 @@ fi
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Jan 12 2015 Mikhail Efremov <sem@altlinux.org> 0.35-alt1
+- Updated to 0.35.
+
 * Wed Oct 15 2014 Mikhail Efremov <sem@altlinux.org> 0.33-alt1
 - Patches from upstream git:
   + check "enabled" column when parsing /proc/cgroups.
