@@ -3,8 +3,8 @@ Group: Engineering
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           CuraEngine
-Version:        14.03
-Release:        alt1_3
+Version:        14.12.1
+Release:        alt1_1
 Summary:        Engine for processing 3D models into G-code instructions for 3D printers
 License:        AGPLv3
 URL:            https://github.com/Ultimaker/%{name}
@@ -25,19 +25,19 @@ application look at cura with is the graphical frontend for %{name}.
 
 # bundled clipper
 rm -rf clipper
-sed -i 's|#include "../clipper/clipper.hpp"|#include <polyclipping/clipper.hpp>|' utils/*.h
-sed -i 's|\($(CXX).*\)|\1 $(LIBS)|g' Makefile
-sed -i 's| clipper/clipper.cpp||g' Makefile
+sed -i 's|#include <clipper/clipper.hpp>|#include <polyclipping/clipper.hpp>|' src/utils/*.h 
+sed -i 's|-lclipper|-lpolyclipping|g' Makefile
+sed -i 's| $(BUILD_DIR)/libclipper.a||g' Makefile
 
 # allow redefinition of CFLAGS and do not build it static
 sed -i 's|CFLAGS +=|CFLAGS?=|' Makefile
 sed -i 's|--static||g' Makefile
 
 %build
-LIBS="-lpolyclipping" CFLAGS="-I. -c %{optflags} -fomit-frame-pointer" make %{?_smp_mflags}
+CFLAGS="-I. -Ilibs -c %{optflags} -std=c++11 -fomit-frame-pointer" make %{?_smp_mflags}
 
 %install
-install -Dpm0755 %{name} %{buildroot}/%{_bindir}/%{name}
+install -Dpm0755 build/%{name} %{buildroot}/%{_bindir}/%{name}
 
 %check
 make test
@@ -47,6 +47,9 @@ make test
 %{_bindir}/%{name}
 
 %changelog
+* Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 14.12.1-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 14.03-alt1_3
 - update to new release by fcimport
 
