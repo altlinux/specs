@@ -2,14 +2,14 @@
 %def_disable libwrap
 
 Name: tac_plus
-Version: 4.0.4.27a
+Version: 4.0.4.28
 Release: alt1
 Epoch: 1
 License: BSD
 Group: System/Servers
 Summary: TACACS+ server based on Cisco engineering release
 Url: http://www.shrubbery.net/tac_plus/
-Source:  tacacs+-F%version.tar
+Source:  tacacs-F%version.tar
 Source1: tac_plus.conf
 Source2: tac_plus.pamd
 Source3: tac_plus.init
@@ -17,7 +17,8 @@ Source4: tac_plus.sysconfig
 Source5: README
 Source6: tac_plus.logrotate
 Source7: tac_plus.service
-Patch0: tacacs+-F4.0.4.27a-k1.diff
+Patch0: tacacs+-F4.0.4.28-k1.diff
+Patch1: tacacs+-F4.0.4.28.diff
 
 BuildRequires: flex gcc-c++ libpam-devel chrpath
 %if_enabled libwrap
@@ -64,8 +65,9 @@ Group: Development/C
 This package contains TACACS+ library
 
 %prep
-%setup -n tacacs+-F%version
+%setup -n tacacs-F%version
 %patch0 -p1 -b .k1
+%patch1 -p1
 
 %build
 %configure --disable-static --enable-acls --enable-uenable --enable-maxsess --enable-debug --enable-mschap --enable-mschapdes \
@@ -89,7 +91,7 @@ install -pD -m644 %SOURCE7 %buildroot%_unitdir/%name.service
 mkdir -p %buildroot%_logdir
 touch %buildroot%_logdir/{tacwho.log,tac_plus.log,tac_plus.acct}
 
-for i in %buildroot%_bindir/* %buildroot%_libdir/*.so.*
+for i in %buildroot%_sbindir/* %buildroot%_libdir/*.so.*
 do
 	chrpath -d $i ||:
 done
@@ -109,12 +111,13 @@ done
 
 %files
 %_bindir/tac_*
+%_sbindir/tac_*
 %config(noreplace) %_sysconfdir/%name.conf
 %config(noreplace) %_sysconfdir/pam.d/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %_initdir/%name
-%config %_unitdir/%name.service
+%_unitdir/%name.service
 %_man5dir/tac_plus.conf.5.*
 %_man8dir/tac_plus.8.*
 %_man8dir/tac_pwd.8.*
@@ -124,6 +127,9 @@ done
 %doc users_guide COPYING FAQ INSTALL CHANGES README do_auth.py tac_convert
 
 %changelog
+* Tue Jan 13 2015 Terechkov Evgenii <evg@altlinux.org> 1:4.0.4.28-alt1
+- 4.0.4.28
+
 * Tue Aug 12 2014 Terechkov Evgenii <evg@altlinux.org> 1:4.0.4.27a-alt1
 - Oops, seems like F5 branch is dead, rollback to F4
 - Epoch tag added
