@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
-Release: alt1.git20150111
+Version: 1.0.1
+Release: alt1.git20150112
 Summary: Import data from CSV, TSV, etc. files into SQLite3 database
 License: BSD
 Group: Development/Python
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.git20150112
+- Version 1.0.1
+
 * Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20150111
 - Initial build for Sisyphus
 
