@@ -3,13 +3,13 @@
 %define  git_rev 79bdcf1
 
 Name: 	 gnucash
-Version: 2.6.4
+Version: 2.6.5
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
 
-License: GPL
+License: GPLv2+
 Group:   Office
 Url: 	 http://www.gnucash.org
 
@@ -178,6 +178,10 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Mon Jan 12 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.5-alt1
+- New version
+- Fix License
+
 * Sat Oct 04 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.4-alt1
 - New version
 
