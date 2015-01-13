@@ -1,6 +1,6 @@
 Name: SDL_sound
 Version: 1.0.3
-Release: alt3.hg20120815
+Release: alt3.hg20120815.1
 %define lib_name lib%name
 
 Summary: An abstract soundfile decoder
@@ -10,7 +10,7 @@ URL: http://icculus.org/SDL_sound/
 # hg clone http://hg.icculus.org/icculus/SDL_sound/
 Source: %name-%version.tar
 
-BuildRequires: doxygen libSDL2-devel libflac-devel libmikmod-devel libmodplug-devel libspeex-devel libvorbis-devel libphysfs-devel
+BuildRequires: doxygen libSDL-devel libflac-devel libmikmod-devel libmodplug-devel libspeex-devel libvorbis-devel libphysfs-devel
 %ifnarch %arm
 BuildRequires: libsmpeg-devel
 %endif
@@ -117,6 +117,9 @@ cp -a *.txt docs/html %buildroot%docdir/
 %docdir/html
 
 %changelog
+* Tue Jan 13 2015 Fr. Br. George <george@altlinux.ru> 1.0.3-alt3.hg20120815.1
+- Rebuild with libSDL instead of incorrrectly selected libSDL2
+
 * Mon Sep 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt3.hg20120815
 - Snapshot from mercurial
 
