@@ -5,8 +5,8 @@
 
 %define rname smb4k
 Name: kde4-%rname
-Version: 1.1.2
-Release: alt1.1
+Version: 1.1.4
+Release: alt1
 
 Group: Networking/Other
 Summary: A KDE SMB/CIFS share browser
@@ -88,6 +88,9 @@ ln -s \
 
 
 %changelog
+* Tue Jan 13 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.4-alt1
+- new version
+
 * Wed Aug 06 2014 Alexey Shabalin <shaba@altlinux.ru> 1.1.2-alt1.1
 - NMU: rebuild with new samba
 
