@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.2.1
-Release: alt1.dev0.git20140903
+Version: 3.4
+Release: alt1.dev0.git20150113
 Summary: fanstatic twitter bootstrap
 License: BSD
 Group: Development/Python
@@ -77,6 +77,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %changelog
+* Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.dev0.git20150113
+- Version 3.4.dev0
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1.dev0.git20140903
 - Initial build for Sisyphus
 
