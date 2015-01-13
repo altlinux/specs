@@ -3,8 +3,8 @@ BuildRequires: /usr/bin/doxygen /usr/bin/valgrind gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:      libgta
-Version:   1.0.4
-Release:   alt1_5
+Version:   1.0.7
+Release:   alt1_1
 Summary:   Library that implements the Generic Tagged Arrays file format
 Group:     System/Libraries
 License:   LGPLv2+
@@ -70,6 +70,7 @@ make check V=1
 %{_libdir}/%{name}.so.*
 
 %files devel
+%{_datadir}/%{name}/cmake/FindGTA.cmake
 %{_libdir}/pkgconfig/gta.pc
 %{_includedir}/gta
 %{_libdir}/%{name}.so
@@ -80,6 +81,9 @@ make check V=1
 
 
 %changelog
+* Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_5
 - update to new release by fcimport
 
