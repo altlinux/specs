@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: python-devel
 # END SourceDeps(oneline)
@@ -7,9 +8,9 @@ BuildRequires: python-devel
 
 Name:      fonts-ttf-gnu-freefont
 Version:   20120503
-Release:   alt1_9
+Release:   alt1_10
 Summary:   Free UCS Outline Fonts
-Group:     System/Fonts/True type
+
 # Standard font exception
 License:   GPLv3+ with exceptions
 URL:       http://www.gnu.org/software/freefont/
@@ -17,7 +18,13 @@ Source0:   http://ftp.gnu.org/gnu/freefont/freefont-src-%{version}.tar.gz
 Source2:   %{fontconf}-mono.conf
 Source3:   %{fontconf}-sans.conf
 Source4:   %{fontconf}-serif.conf
+Source5:   %{fontname}.metainfo.xml
+Source6:   %{fontname}-mono.metainfo.xml
+Source7:   %{fontname}-sans.metainfo.xml
+Source8:   %{fontname}-serif.metainfo.xml
+
 Patch0:    gnu-free-fonts-devanagari-rendering.patch
+
 BuildArch: noarch
 BuildRequires: fontpackages-devel fontforge
 
@@ -39,12 +46,12 @@ Source44: import.info
 %common_desc
 
 
-%package common
+%package -n fonts-ttf-gnu-freefont-common
 Group: System/Fonts/True type
 Summary:  Common files for freefont (documentationa..)
 Obsoletes: gnu-free-fonts-compat < 20120503
 
-%description common
+%description -n fonts-ttf-gnu-freefont-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
@@ -53,7 +60,7 @@ This package consists of files used by other %{oldname} packages.
 %package -n fonts-ttf-gnu-freefont-mono
 Group: System/Fonts/True type
 Summary:  GNU FreeFont Monospaced Font
-Requires: %{name}-common = %{version}-%{release}
+Requires: fonts-ttf-gnu-freefont-common = %{version}-%{release}
 
 %description -n fonts-ttf-gnu-freefont-mono
 %common_desc
@@ -64,7 +71,7 @@ This package contains the GNU FreeFont monospaced font.
 %package -n fonts-ttf-gnu-freefont-sans
 Group: System/Fonts/True type
 Summary:  GNU FreeFont Sans-Serif Font
-Requires: %{name}-common = %{version}-%{release}
+Requires: fonts-ttf-gnu-freefont-common = %{version}-%{release}
 
 %description -n fonts-ttf-gnu-freefont-sans
 %common_desc
@@ -75,7 +82,7 @@ This package contains the GNU FreeFont sans-serif font.
 %package -n fonts-ttf-gnu-freefont-serif
 Group: System/Fonts/True type
 Summary:  GNU FreeFont Serif Font
-Requires: %{name}-common = %{version}-%{release}
+Requires: fonts-ttf-gnu-freefont-common = %{version}-%{release}
 
 %description -n fonts-ttf-gnu-freefont-serif
 %common_desc
@@ -92,7 +99,6 @@ This package contains the GNU FreeFont serif font.
 make
 
 %install
-
 pushd sfd
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -p -m 644 *.ttf  %{buildroot}%{_fontdir}
@@ -116,6 +122,16 @@ for fconf in %{fontconf}-mono.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE5} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE6} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-mono.metainfo.xml
+install -Dm 0644 -p %{SOURCE7} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
+install -Dm 0644 -p %{SOURCE8} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-serif.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -155,19 +171,26 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}-mono.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mono.conf
 %{_fontbasedir}/*/%{_fontstem}/FreeMono*.ttf
+%{_datadir}/appdata/%{fontname}-mono.metainfo.xml
 %files -n fonts-ttf-gnu-freefont-sans
 %{_fontconfig_templatedir}/%{fontconf}-sans.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans.conf
 %{_fontbasedir}/*/%{_fontstem}/FreeSans*.ttf
+%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
 %files -n fonts-ttf-gnu-freefont-serif
 %{_fontconfig_templatedir}/%{fontconf}-serif.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-serif.conf
 %{_fontbasedir}/*/%{_fontstem}/FreeSerif*.ttf
+%{_datadir}/appdata/%{fontname}-serif.metainfo.xml
 
-%files common
+%files -n fonts-ttf-gnu-freefont-common
 %doc AUTHORS ChangeLog CREDITS COPYING README
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_10
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_9
 - update to new release by fcimport
 
