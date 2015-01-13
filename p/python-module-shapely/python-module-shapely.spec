@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 1.4.4
-Release: alt1.git20141102
+Version: 1.5.2
+Release: alt1.git20150104
 
 Summary: Planar geometries, predicates, and operations
 
@@ -12,6 +12,7 @@ License: BSD
 Group: Development/Python
 Url: http://pypi.python.org/pypi/Shapely
 
+# https://github.com/Toblerity/Shapely.git
 Source: %name-%version.tar
 
 BuildPreReq: libgeos-devel
@@ -34,6 +35,16 @@ BuildPreReq: python3-module-descartes python3-module-geos
 %description
 Planar geometries, predicates, and operations.
 
+%package examples
+Summary: Examples for %module_name
+Group: Development/Python
+Requires: %name = %EVR
+
+%description examples
+Planar geometries, predicates, and operations.
+
+This package contains examples for %module_name.
+
 %package -n python3-module-%module_name
 Summary: Planar geometries, predicates, and operations
 Group: Development/Python3
@@ -42,6 +53,16 @@ Group: Development/Python3
 
 %description -n python3-module-%module_name
 Planar geometries, predicates, and operations.
+
+%package -n python3-module-%module_name-examples
+Summary: Examples for %module_name
+Group: Development/Python3
+Requires: python3-module-%module_name = %EVR
+
+%description -n python3-module-%module_name-examples
+Planar geometries, predicates, and operations.
+
+This package contains examples for %module_name.
 
 %package pickles
 Summary: Pickles for %module_name
@@ -85,11 +106,15 @@ popd
 
 %install
 %python_install
+install -m644 %buildroot%prefix/%module_name/*.pxi \
+	%buildroot%python_sitelibdir/%module_name/
 
 %if_with python3
 pushd ../python3
 %python3_install
 popd
+install -m644 %buildroot%prefix/%module_name/*.pxi \
+	%buildroot%python3_sitelibdir/%module_name/
 %endif
 
 %make -C docs pickle
@@ -99,15 +124,23 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%module_name/
 
 %check
 python setup.py test
+#python setup.py build_ext -i
+#py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
+#python3 setup.py build_ext -i
+#py.test-%_python3_version -vv
 popd
 %endif
 
 %files
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
+%exclude %python_sitelibdir/*/examples
+
+%files examples
+%python_sitelibdir/*/examples
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -118,9 +151,16 @@ popd
 %if_with python3
 %files -n python3-module-%module_name
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/examples
+
+%files -n python3-module-%module_name-examples
+%python3_sitelibdir/*/examples
 %endif
 
 %changelog
+* Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt1.git20150104
+- Version 1.5.2
+
 * Wed Nov 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.4-alt1.git20141102
 - Version 1.4.4
 
