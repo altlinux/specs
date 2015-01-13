@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.3
+Version: 2.0.5
 Release: alt1
 Summary: GMP/MPIR, MPFR, and MPC interface
 License: LGPL
@@ -100,10 +100,13 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %check
 export PYTHONPATH=%buildroot%python_sitelibdir
 python test/gmpy_test.py
+python test/runtests.py
 rm -f test/*.pyc
 %if_with python3
 pushd ../python3
+export PYTHONPATH=%buildroot%python3_sitelibdir
 python3 test/gmpy_test.py
+python3 test/runtests.py
 popd
 %endif
 
@@ -125,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.5-alt1
+- Version 2.0.5
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1
 - Version 2.0.3
 
