@@ -4,12 +4,12 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-pod
 # END SourceDeps(oneline)
 Name:           perl-Math-MatrixReal
 Version:        2.12
-Release:        alt1
+Release:        alt1_1
 Summary:        Manipulate matrix of reals
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Math-MatrixReal/
-Source:        http://www.cpan.org/authors/id/L/LE/LETO/Math-MatrixReal-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/L/LE/LETO/Math-MatrixReal-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
@@ -32,7 +32,6 @@ BuildRequires:  perl(Math/Complex.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Most.pm)
 BuildRequires:  perl(Test/Simple.pm)
-Requires:       perl(overload.pm)
 Source44: import.info
 
 %description
@@ -68,6 +67,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 29 2014 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1
 - automated CPAN update
 
