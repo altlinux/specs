@@ -1,7 +1,7 @@
 %define ver_major 3.15
 
 Name: simple-scan
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Simple scanning utility
@@ -9,7 +9,7 @@ License: GPLv3+
 Group: Graphics
 
 Url: http://launchpad.net/%name
-Source: %url/%name/%ver_major/%version/+download/simple-scan-%version.tar.xz
+Source: %url/%ver_major/%version/+download/simple-scan-%version.tar.xz
 
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: libgtk+3-devel libgudev-devel libcolord-devel
@@ -41,6 +41,9 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Tue Jan 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.3-alt1
+- 3.15.3
+
 * Thu Dec 04 2014 Yuri N. Sedunov <aris@altlinux.org> 3.15.2-alt1
 - 3.15.2
 
