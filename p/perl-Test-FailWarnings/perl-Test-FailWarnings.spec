@@ -1,11 +1,11 @@
 Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(IO/Handle.pm) perl(IPC/Open3.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-FailWarnings
 Version:        0.008
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Add test failures if warnings are caught
 License:        ASL 2.0 
 
@@ -14,21 +14,23 @@ Source0:        http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Test-FailWarnings-%
 
 BuildArch:      noarch
 BuildRequires:  perl
-BuildRequires:  perl(Capture/Tiny.pm)
-BuildRequires:  perl(Carp.pm)
-BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(File/Find.pm)
-BuildRequires:  perl(File/Spec/Functions.pm)
-BuildRequires:  perl(List/Util.pm)
 BuildRequires:  perl(strict.pm)
-BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(warnings.pm)
-
-# tests
+# Run-time:
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Cwd.pm)
+BuildRequires:  perl(File/Spec.pm)
+BuildRequires:  perl(Test/More.pm)
+# Tests:
+BuildRequires:  perl(Capture/Tiny.pm)
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(File/Spec/Functions.pm)
 BuildRequires:  perl(File/Temp.pm)
-BuildRequires:  perl(Test/Script.pm)
-
+BuildRequires:  perl(IO/Handle.pm)
+BuildRequires:  perl(IPC/Open3.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(List/Util.pm)
 
 
 Source44: import.info
@@ -60,6 +62,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_4
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_3
 - update to new release by fcimport
 
