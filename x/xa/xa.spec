@@ -1,5 +1,5 @@
 Name:           xa
-Version:        2.3.6
+Version:        2.3.7
 Release:        alt1_1
 Summary:        6502/65816 cross-assembler
 
@@ -8,7 +8,7 @@ License:        GPLv2+
 URL:            http://www.floodgap.com/retrotech/xa/
 Source0:        http://www.floodgap.com/retrotech/%{name}/dists/%{name}-%{version}.tar.gz
 # update the build system, reported in private email
-Patch0:         %{name}-2.3.5-make.patch
+Patch0:         %{name}-2.3.7-make.patch
 Source44: import.info
 
 
@@ -46,6 +46,10 @@ done
 make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS"
 
 
+%check
+make test
+
+
 %install
 make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} INSTALL="install -p"
 
@@ -57,6 +61,9 @@ make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} INSTALL="install -p"
 
 
 %changelog
+* Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_1
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.6-alt1_1
 - update to new release by fcimport
 
