@@ -1,7 +1,7 @@
 %define ver_major 3.12
 
 Name: evolution-ews
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Group: Networking/Mail
@@ -72,6 +72,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/appdata/evolution-ews.metainfo.xml
 
 %changelog
+* Tue Jan 13 2015 Alexey Shabalin <shaba@altlinux.ru> 3.12.10-alt1
+- 3.12.10
+
 * Wed Dec 17 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.9-alt1
 - 3.12.9
 
