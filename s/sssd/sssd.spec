@@ -1,7 +1,7 @@
 
 Name: sssd
-Version: 1.12.2
-Release: alt2
+Version: 1.12.3
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 
 # Determine the location of the LDB modules directory
 %define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
-%define ldb_version 1.1.18
+%define ldb_version 1.1.19
 
 %define _localstatedir /var
 %define _libexecdir /usr/libexec
@@ -271,6 +271,7 @@ Utility library for SID based lookups
 Summary: The SSSD D-Bus responder helper library
 Group: System/Libraries
 License: GPLv3+
+Requires: %name-dbus = %version-%release
 
 %description -n libsss_simpleifp
 Provides library that simplifies D-Bus API for the SSSD InfoPipe responder.
@@ -356,7 +357,7 @@ Development libraries for the SSSD libwbclient implementation.
 %find_lang sssd
 
 # Prepare empty config file
-install -D -m600 src/examples/sssd-example.conf %buildroot%_sysconfdir/%name/%name.conf
+install -D -m640 src/examples/sssd-example.conf %buildroot%_sysconfdir/%name/%name.conf
 
 # Copy default logrotate file
 install -D -m644 src/examples/logrotate %buildroot%_sysconfdir/logrotate.d/%name
@@ -376,7 +377,7 @@ rm -Rf %buildroot%_docdir/%name
 
 %check
 export CK_TIMEOUT_MULTIPLIER=10
-%make check
+%make check VERBOSE=yes
 unset CK_TIMEOUT_MULTIPLIER
 
 %post
@@ -409,6 +410,7 @@ unset CK_TIMEOUT_MULTIPLIER
 %_libdir/%name/libsss_debug.so
 %_libdir/%name/libsss_ldap_common.so
 %_libdir/%name/libsss_util.so
+%_libdir/%name/libsss_semanage.so
 
 # 3rd party application libraries
 %dir %_libdir/%name/modules
@@ -430,12 +432,11 @@ unset CK_TIMEOUT_MULTIPLIER
 %ghost %attr(0644,root,root) %verify(not md5 size mtime) %mcpath/group
 %dir %pipepath
 %dir %pubconfpath
-%dir %pubconfpath/krb5.include.d
 %dir %gpocachepath
 %attr(700,root,root) %dir %pipepath/private
 %attr(750,root,root) %dir %_var/log/%name
 %attr(700,root,root) %dir %_sysconfdir/sssd
-%attr(0600,root,root) %config(noreplace) %_sysconfdir/sssd/sssd.conf
+%attr(0640,root,root) %config(noreplace) %_sysconfdir/sssd/sssd.conf
 %dir %_sysconfdir/systemd/system/sssd.service.d
 %config(noreplace) %_sysconfdir/systemd/system/sssd.service.d/journal.conf
 %config(noreplace) %_sysconfdir/logrotate.d/sssd
@@ -475,7 +476,9 @@ unset CK_TIMEOUT_MULTIPLIER
 %_libexecdir/%name/sssd_pac
 
 %files ipa
+%dir %pubconfpath/krb5.include.d
 %_libdir/%name/libsss_ipa.so
+%_libexecdir/%name/selinux_child
 %_man5dir/sssd-ipa*
 %_datadir/%name/sssd.api.d/sssd-ipa.conf
 
@@ -573,6 +576,9 @@ unset CK_TIMEOUT_MULTIPLIER
 %_pkgconfigdir/wbclient_sssd.pc
 
 %changelog
+* Mon Jan 12 2015 Alexey Shabalin <shaba@altlinux.ru> 1.12.3-alt1
+- 1.12.3
+
 * Tue Dec 16 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.2-alt2
 - rebuild with libldb-1.1.18
 
