@@ -1,10 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libfap
-Version:        1.3
-Release:        alt1_6
+Version:        1.4
+Release:        alt1_1
 Summary:        An APRS parser written in C
 
 Group:          Communications
@@ -54,6 +51,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_6
 - update to new release by fcimport
 
