@@ -1,7 +1,7 @@
 Summary: A clock for the X Window System
 Name: xdaliclock
 Version: 2.25
-Release: alt3_9
+Release: alt3_12
 Group: Graphics
 License: BSD
 URL: http://www.jwz.org/xdaliclock/
@@ -23,6 +23,9 @@ for window transparency.
 %setup
 
 %build
+# easier than patching configure to read those files from own directory
+#cp /usr/lib/rpm/redhat/config.{guess,sub} .
+
 cd X11
 %configure
 make %{?_smp_mflags}
@@ -54,6 +57,9 @@ desktop-file-install  \
 %{_datadir}/applications/*
 
 %changelog
+* Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 2.25-alt3_12
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.25-alt3_9
 - update to new release by fcimport
 
