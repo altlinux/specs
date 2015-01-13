@@ -1,6 +1,7 @@
+%define sover 1
 Name: lz4
-Version: r119
-Release: alt1.svn20140702
+Version: r127
+Release: alt1.svn20141224
 Summary: Extremely Fast Compression algorithm
 License: BSD
 Group: Archiving/Compression
@@ -64,7 +65,16 @@ This package contains development files of LZ4.
 %ifarch x86_64
 LIB_SUFFIX=64
 %endif
-%makeinstall_std LIB_SUFFIX=$LIB_SUFFIX
+%makeinstall_std LIBDIR=%_libdir
+
+install -d %buildroot/%_lib
+pushd %buildroot%_libdir
+for i in $(ls *.so.*); do
+	mv $i %buildroot/%_lib/
+done
+rm -f lib%name.so
+ln -s /%_lib/lib%name.so.%sover lib%name.so
+popd
 
 %files
 %doc NEWS README.md
@@ -72,13 +82,18 @@ LIB_SUFFIX=64
 %_man1dir/*
 
 %files -n lib%name
-%_libdir/*.so.*
+/%_lib/*.so.*
 
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
+%_pkgconfigdir/*
 
 %changelog
+* Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r127-alt1.svn20141224
+- New snapshot
+- Moved libraries from %_libdir into /%_lib (ALT #30628)
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r119-alt1.svn20140702
 - New snapshot
 
