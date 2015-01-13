@@ -2,29 +2,44 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: python-modules-xml python-devel
-#define gitrev f8467404
+%global commit 1e9524ffd759841789dadb4ca19fb5d4ac5820e7
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%ifarch x86_64
+%global niarch x64
+%endif
+%ifarch %{ix86}
+%global niarch x86
+%endif
+%ifarch %arm
+%global niarch Arm
+%endif
+
 
 Name:           openni
-Version:        1.3.2.1
-Release:        alt1_9%{?gitrev}
+Version:        1.5.7.10
+Release:        alt1_4
 Summary:        Library for human-machine Natural Interaction
 
 Group:          System/Libraries
-License:        LGPLv3+ and BSD
+License:        ASL 2.0 and BSD
 URL:            http://www.openni.org
-# No official releases, yet. To reproduce tarball (adapt version and gitrev):
-# git clone git://github.com/OpenNI/OpenNI.git
-# cd OpenNI.git
-# rm -rf Platform/Win32 Platform/Android
-# git archive --format tar --prefix=openni-1.3.2.1/ HEAD | gzip > ../openni-1.3.2.1.tar.gz
-Source0:        openni-%{version}.tar.gz
+# To reproduce tarball (adapt version and shortcommit):
+# wget https://github.com/OpenNI/OpenNI/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+# tar xvf openni-%{version}-%{shortcommit}.tar.gz
+# cd OpenNI-%{commit}
+# rm -rf Platform/Win32 Platform/Android Platform/ARC
+# cd ..
+# tar czf openni-%{version}-%{shortcommit}-fedora.tar.gz OpenNI-%{commit}
+Source0:        openni-%{version}-%{shortcommit}-fedora.tar.gz
 Source1:        libopenni.pc
-Patch0:         openni-1.3.2.1-willow.patch
-Patch1:         openni-1.3.2.1-fedora.patch
-Patch2:         openni-1.3.2.1-disable-sse.patch
+Patch0:         openni-1.5.7.10-willow.patch
+Patch1:         openni-1.5.7.10-fedora.patch
+Patch2:         openni-1.5.2.23-disable-sse.patch
 Patch3:         openni-1.3.2.1-silence-assert.patch
 Patch4:         openni-1.3.2.1-fedora-java.patch
-Patch5:         openni-1.3.2.1-arm.patch
+Patch5:         openni-1.5.2.23-disable-softfloat.patch
+Patch6:         openni-1.5.2.23-armsamples.patch
+
 ExclusiveArch:  %{ix86} x86_64 %{arm}
 
 BuildRequires:  libfreeglut-devel tinyxml-devel libjpeg-devel dos2unix libusb-devel
@@ -84,16 +99,16 @@ Requires:       %{name} = %{version}-%{release}
 The %{name}-examples package contains example programs for OpenNI.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n OpenNI-%{commit}
 %patch0 -p1 -b .willow
 %patch1 -p1 -b .fedora
 %patch2 -p1 -b .disable-sse
 %patch3 -p1 -b .silence-assert
 %patch4 -p1 -b .fedora-java
-%patch5 -p1 -b .arm
-
+%patch5 -p1 -b .disable-softfloat
+%patch6 -p1 -b .armsamples
 rm -rf Source/External
-rm -rf Platform/Linux-x86/Build/Prerequisites/*
+rm -rf Platform/Linux/Build/Prerequisites/*
 find Samples -name GL -prune -exec rm -rf {} \;
 find Samples -name Libs -prune -exec rm -rf {} \;
 
@@ -102,27 +117,27 @@ for ext in c cpp; do
     sed -i -e 's|#define SAMPLE_XML_PATH "../../../../Data/SamplesConfig.xml"|#define SAMPLE_XML_PATH "%{_sysconfdir}/%{name}/SamplesConfig.xml"|' {} \;
 done
 
+sed -i 's|if (os.path.exists("/usr/bin/gmcs"))|if (0)|' Platform/Linux/CreateRedist/Redist_OpenNi.py
+
 dos2unix README
-dos2unix GPL.txt
-dos2unix LGPL.txt
+dos2unix LICENSE
 
 %build
-cd Platform/Linux-x86/CreateRedist
-%ifarch %{arm}
-chmod +x RedistMaker.Arm
+cd Platform/Linux/CreateRedist
 # {?_smp_mflags} omitted, not supported by OpenNI Makefiles
+chmod +x RedistMaker RedistMaker.Arm
+
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS" DEBUG=1 \
-./RedistMaker.Arm
+%ifarch %arm
+./RedistMaker.Arm || cat Output/BuildOpenNI.txt
 %else
-# {?_smp_mflags} omitted, not supported by OpenNI Makefiles
-CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS" DEBUG=1 \
 ./RedistMaker
 %endif
-#cat Output/BuildOpenNI.txt
+cat Output/BuildOpenNI.txt
 
 
 %install
-pushd Platform/Linux-x86/Redist
+pushd Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-%{niarch}-v%{version}
 INSTALL_LIB=$RPM_BUILD_ROOT%{_libdir} \
 INSTALL_BIN=$RPM_BUILD_ROOT%{_bindir} \
 INSTALL_INC=$RPM_BUILD_ROOT%{_includedir}/ni \
@@ -130,40 +145,33 @@ INSTALL_VAR=$RPM_BUILD_ROOT%{_var}/lib/ni \
 INSTALL_JAR=$RPM_BUILD_ROOT%{_libdir}/%{name} \
 ./install.sh -n
 
-install -m 0755 Samples/Bin/Release/libSample-NiSampleModule.so $RPM_BUILD_ROOT%{_libdir}/libNiSampleModule.so
-%ifnarch %{arm}
-install -m 0755 Samples/Bin/Release/NiViewer $RPM_BUILD_ROOT%{_bindir}
-%endif
-install -m 0755 Samples/Bin/Release/Sample-NiAudioSample $RPM_BUILD_ROOT%{_bindir}/NiAudioSample
-install -m 0755 Samples/Bin/Release/Sample-NiBackRecorder $RPM_BUILD_ROOT%{_bindir}/NiBackRecorder
-install -m 0755 Samples/Bin/Release/Sample-NiConvertXToONI $RPM_BUILD_ROOT%{_bindir}/NiConvertXToONI
-install -m 0755 Samples/Bin/Release/Sample-NiCRead $RPM_BUILD_ROOT%{_bindir}/NiCRead
-install -m 0755 Samples/Bin/Release/Sample-NiRecordSynthetic $RPM_BUILD_ROOT%{_bindir}/NiRecordSynthetic
-install -m 0755 Samples/Bin/Release/Sample-NiSimpleCreate $RPM_BUILD_ROOT%{_bindir}/NiSimpleCreate
-install -m 0755 Samples/Bin/Release/Sample-NiSimpleRead $RPM_BUILD_ROOT%{_bindir}/NiSimpleRead
-%ifnarch %{arm}
-install -m 0755 Samples/Bin/Release/Sample-NiSimpleViewer $RPM_BUILD_ROOT%{_bindir}/NiSimpleViewer
-install -m 0755 Samples/Bin/Release/Sample-NiUserTracker $RPM_BUILD_ROOT%{_bindir}/NiUserTracker
-%endif
+install -m 0755 Samples/Bin/%{niarch}-Release/libSample-NiSampleModule.so $RPM_BUILD_ROOT%{_libdir}/libNiSampleModule.so
+install -m 0755 Samples/Bin/%{niarch}-Release/NiViewer $RPM_BUILD_ROOT%{_bindir}
+install -m 0755 Samples/Bin/%{niarch}-Release/Sample-NiAudioSample $RPM_BUILD_ROOT%{_bindir}/NiAudioSample
+install -m 0755 Samples/Bin/%{niarch}-Release/Sample-NiBackRecorder $RPM_BUILD_ROOT%{_bindir}/NiBackRecorder
+install -m 0755 Samples/Bin/%{niarch}-Release/Sample-NiConvertXToONI $RPM_BUILD_ROOT%{_bindir}/NiConvertXToONI
+install -m 0755 Samples/Bin/%{niarch}-Release/Sample-NiCRead $RPM_BUILD_ROOT%{_bindir}/NiCRead
+install -m 0755 Samples/Bin/%{niarch}-Release/Sample-NiRecordSynthetic $RPM_BUILD_ROOT%{_bindir}/NiRecordSynthetic
+install -m 0755 Samples/Bin/%{niarch}-Release/Sample-NiSimpleCreate $RPM_BUILD_ROOT%{_bindir}/NiSimpleCreate
+install -m 0755 Samples/Bin/%{niarch}-Release/Sample-NiSimpleRead $RPM_BUILD_ROOT%{_bindir}/NiSimpleRead
+install -m 0755 Samples/Bin/%{niarch}-Release/Sample-NiSimpleViewer $RPM_BUILD_ROOT%{_bindir}/NiSimpleViewer
+install -m 0755 Samples/Bin/%{niarch}-Release/Sample-NiUserTracker $RPM_BUILD_ROOT%{_bindir}/NiUserTracker
 
 popd
-
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}-doc
-cp -a Source/DoxyGen/html/* $RPM_BUILD_ROOT%{_datadir}/%{name}-doc
 
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
 install -p -m 0644 Data/SamplesConfig.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_var}/lib/ni
-echo "<Modules/>" > $RPM_BUILD_ROOT%{_var}/lib/ni/modules.xml
+touch $RPM_BUILD_ROOT%{_var}/lib/ni/modules.xml
 
-mkdir -p %{buildroot}%{_datadir}/pkgconfig
+mkdir -p %{buildroot}%{_libdir}/pkgconfig
 sed -e 's![@]prefix[@]!%{_prefix}!g' \
     -e 's![@]exec_prefix[@]!%{_exec_prefix}!g' \
     -e 's![@]libdir[@]!%{_libdir}!g' \
     -e 's![@]includedir[@]!%{_includedir}!g' \
     -e 's![@]version[@]!%{version}!g' \
-    %{SOURCE1} > %{buildroot}%{_datadir}/pkgconfig/libopenni.pc
+    %{SOURCE1} > %{buildroot}%{_libdir}/pkgconfig/libopenni.pc
 
 
 %post
@@ -183,18 +191,17 @@ fi
 
 
 %files
-%doc LGPL.txt README
+%doc LICENSE README NOTICE CHANGES
 %dir %{_sysconfdir}/%{name}
-%config(noreplace) %{_var}/lib/ni/modules.xml
+%dir %{_var}/lib/ni
+%ghost %{_var}/lib/ni/modules.xml
 %{_libdir}/*.so
 %{_bindir}/ni*
-%{_var}/lib/ni
 
 %files devel
 %doc Documentation/OpenNI_UserGuide.pdf
 %{_includedir}/*
-#{_libdir}/*.so
-%{_datadir}/pkgconfig/libopenni.pc
+%{_libdir}/pkgconfig/libopenni.pc
 
 %files java
 %{_libdir}/%{name}
@@ -207,10 +214,13 @@ fi
 # intended to be run on the console, not from the menu
 
 %files doc
-%{_datadir}/%{name}-doc
+%doc Source/DoxyGen/html
 
 
 %changelog
+* Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt1_4
+- update to new release by fcimport
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.2.1-alt1_9
 - update to new release by fcimport
 
