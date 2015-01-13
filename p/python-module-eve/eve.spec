@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.git20140620
+Version: 0.5
+Release: alt1.git20150112
 Summary: REST API framework powered by Flask, MongoDB and good intentions
 License: BSD
 Group: Development/Python
@@ -23,7 +23,8 @@ BuildPreReq: python-module-markupsafe python-module-jinja2
 BuildPreReq: python-module-itsdangerous python-module-flask
 BuildPreReq: python-module-pymongo python-module-flask-pymongo
 BuildPreReq: python-module-redis-py
-BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-sphinx-devel python-module-alabaster
+BuildPreReq: python-module-sphinxcontrib-embedly
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -168,6 +169,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20150112
+- Version 0.5
+
 * Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20140620
 - Initial build for Sisyphus
 
