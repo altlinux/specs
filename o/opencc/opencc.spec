@@ -1,20 +1,23 @@
 
 Name:       opencc
-Version:    0.4.3
-Release:    alt2
+Version:    1.0.2
+Release:    alt1
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
 License:    ASL 2.0
 Group:      System/Libraries
 URL:        http://code.google.com/p/opencc/
-Source0:    http://opencc.googlecode.com/files/%{name}-%{version}.tar.gz
-Patch1:     opencc-0.3.0-fixes-cmake.patch
+Source0:    %{name}-%{version}.tar
+# VCS:      https://github.com/BYVoid/OpenCC.git
+
+Patch1:     opencc-fixes-cmake.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 BuildRequires: gettext
 BuildRequires: ctest
 BuildRequires: doxygen
+BuildRequires: python-modules-encodings
 
 %description
 OpenCC is a library for converting characters and phrases between
@@ -53,7 +56,8 @@ developing applications that use %{name}.
 %build
 %cmake -DENABLE_GETTEXT:BOOL=ON \
        -DBUILD_DOCUMENTATION:BOOL=ON
-%cmake_build
+export LD_LIBRARY_PATH=%_builddir/%name-%version/BUILD/src
+%cmake_build #VERBOSE=1
 
 %install
 %cmakeinstall_std
@@ -75,7 +79,7 @@ ctest
 
 %files tools
 %_bindir/*
-%_man1dir/*
+#%%_man1dir/*
 
 %files devel
 %_includedir/*
@@ -83,6 +87,10 @@ ctest
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Jan 12 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
+- New version
+- Build from upstream Git repository https://github.com/BYVoid/OpenCC.git
+
 * Mon May 19 2014 Andrey Cherepanov <cas@altlinux.org> 0.4.3-alt2
 - Move from Autoimports to Sisyphus
 
