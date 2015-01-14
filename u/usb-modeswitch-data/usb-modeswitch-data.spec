@@ -1,7 +1,7 @@
 Summary: Data and udev-rules for usb-modeswitch
 Name: usb-modeswitch-data
 Version: 20140529
-Release: alt1
+Release: alt2
 License: GPL
 
 Group: System/Configuration/Hardware
@@ -29,6 +29,9 @@ DESTDIR=%buildroot make install
 /lib/udev/rules.d/*
 
 %changelog
+* Wed Jan 14 2015 Andrey Cherepanov <cas@altlinux.org> 20140529-alt2
+- Add support of Huawei 3272
+
 * Wed Nov 05 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20140529-alt1
 - 20140529
 
