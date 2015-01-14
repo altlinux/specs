@@ -1,5 +1,5 @@
 Name: libgit2
-Version: 0.21.2
+Version: 0.21.4
 Release: alt1
 
 Summary: linkable library for Git
@@ -57,6 +57,9 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Jan 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.21.4-alt1
+- 0.21.4
+
 * Wed Nov 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.21.2-alt1
 - 0.21.2
 
