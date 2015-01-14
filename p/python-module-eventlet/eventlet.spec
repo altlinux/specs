@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.16.0
-Release: alt1.git20141230
+Version: 0.16.1
+Release: alt1.git20150114
 Summary: Highly concurrent networking library
 License: MIT
 Group: Development/Python
@@ -153,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16.1-alt1.git20150114
+- Version 0.16.1
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16.0-alt1.git20141230
 - Version 0.16.0
 - Added module for Python 3
