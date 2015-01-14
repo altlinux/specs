@@ -1,5 +1,5 @@
 Name: liblogging
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 Summary: LibLogging stdlog library
 License: 2-clause BSD
@@ -53,5 +53,8 @@ developing programs which use liblogging library.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 14 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.5-alt1
+- 1.0.5
+
 * Thu Apr 24 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.4-alt1
 - initial build
