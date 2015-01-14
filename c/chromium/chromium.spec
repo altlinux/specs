@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        39.0.2171.95
+Version:        39.0.2171.99
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -491,6 +491,9 @@ strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver,libffmp
 %_altdir/%name-gnome
 
 %changelog
+* Wed Jan 14 2015 Andrey Cherepanov <cas@altlinux.org> 39.0.2171.99-alt1
+- New version
+
 * Wed Dec 10 2014 Andrey Cherepanov <cas@altlinux.org> 39.0.2171.95-alt1
 - New version
 
