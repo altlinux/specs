@@ -1,5 +1,5 @@
 Name: keepalived
-Version: 1.2.13
+Version: 1.2.15
 Release: alt1
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
@@ -87,6 +87,9 @@ install -pD -m755 %SOURCE1 %buildroot/etc/rc.d/init.d/%name
 %doc doc/samples/keepalived.conf.track_interface
 
 %changelog
+* Wed Jan 14 2015 Anton Farygin <rider@altlinux.ru> 1.2.15-alt1
+- new version
+
 * Tue May 20 2014 Anton Farygin <rider@altlinux.ru> 1.2.13-alt1
 - new version
 
