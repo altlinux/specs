@@ -1,7 +1,9 @@
 %def_disable static
+%def_disable docs
+%def_enable regexp
 
 Name: liblognorm
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: liblognorm is a tool to normalize log data.
@@ -11,7 +13,9 @@ Url: http://www.liblognorm.com/
 
 Source: %name-%version.tar
 BuildRequires: pkgconfig(libestr)
-BuildRequires: pkgconfig(json)
+BuildRequires: pkgconfig(json-c)
+%{?_enable_regexp:BuildRequires: pkgconfig(libpcre)}
+%{?_enable_docs:BuildRequires: /usr/bin/sphinx-build}
 
 %description
 Liblognorm shall help to make sense out of syslog data, or, actually, any event data that is present in text form.
@@ -37,8 +41,12 @@ Static libs for building statically linked software that uses %name
 
 %build
 %autoreconf
-%configure %{subst_enable static}
-%make
+%configure \
+	%{subst_enable static} \
+	%{subst_enable docs} \
+	%{subst_enable regexp}
+
+%make_build
 
 %install
 %makeinstall
@@ -59,6 +67,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Wed Jan 14 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+
 * Thu Apr 24 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
 - 1.0.0
 
