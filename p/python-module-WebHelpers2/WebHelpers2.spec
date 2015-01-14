@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt1.rc2.git20141111
+Release: alt1.rc3.git20150113
 Summary: Functions for web apps: generating HTML tags, showing results a pageful at a time, etc.
 License: BSD
 Group: Development/Python
@@ -166,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.rc3.git20150113
+- Version 2.0rc3
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.rc2.git20141111
 - Version 2.0rc2
 
