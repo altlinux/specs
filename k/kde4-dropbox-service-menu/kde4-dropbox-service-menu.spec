@@ -3,8 +3,8 @@
 
 %define rname DropboxServiceMenu
 Name: kde4-dropbox-service-menu
-Version: 0.5.13
-Release: alt3.1
+Version: 0.16.1
+Release: alt1
 
 %add_findpackage_path %_kde4_bindir
 #add_findreq_skiplist %_K4apps/%rname/*.py
@@ -15,7 +15,8 @@ License:   GPL
 URL:       http://kde-apps.org/content/show.php/Dropbox+ServiceMenu?content=124416
 
 BuildArch: noarch
-Requires: kde4-kfilebox
+
+Requires: dropbox recode
 
 Source:  %rname-%version.tar.bz2
 
@@ -36,7 +37,9 @@ Dropbox service menu for KDE desktops
 mkdir -p %buildroot/%_K4apps/%rname
 
 install -m 755 dropbox-scripts/* %buildroot/%_K4apps/%rname/
-sed -i 's|#SCRIPTS_PATH.*|SCRIPTS_PATH=%_K4apps/%rname/|g' %buildroot/%_K4apps/%rname/dropbox_menu.sh
+sed -i 's|^SCRIPTS_PATH=.*|SCRIPTS_PATH=%_K4apps/%rname/|g' %buildroot/%_K4apps/%rname/dropbox_menu.sh
+sed -i 's|/.dropbox/config.db|/.dropbox/instance1/config.db|g' %buildroot/%_K4apps/%rname/get_dropbox_folder.sh
+
 
 mkdir -p %buildroot/%_K4srv/ServiceMenus/
 
@@ -45,9 +48,9 @@ install -m 644 dropbox_files.desktop %buildroot/%_K4srv/ServiceMenus/
 install -m 644 dropbox_directories.desktop %buildroot/%_K4srv/ServiceMenus/
 
 pushd %buildroot/%_K4srv/ServiceMenus/
-sed -i 's|=dropbox_menu.sh|=%_K4apps/%rname/dropbox_menu.sh|g' dropbox_all.desktop
-sed -i 's|=dropbox_menu.sh|=%_K4apps/%rname/dropbox_menu.sh|g' dropbox_files.desktop
-sed -i 's|=dropbox_menu.sh|=%_K4apps/%rname/dropbox_menu.sh|g' dropbox_directories.desktop
+sed -i 's|\(Exec.*=\).*dropbox_menu.sh|\1%_K4apps/%rname/dropbox_menu.sh|g' dropbox_all.desktop
+sed -i 's|\(Exec.*=\).*dropbox_menu.sh|\1%_K4apps/%rname/dropbox_menu.sh|g' dropbox_files.desktop
+sed -i 's|\(Exec.*=\).*dropbox_menu.sh|\1%_K4apps/%rname/dropbox_menu.sh|g' dropbox_directories.desktop
 popd
 
 %files
@@ -55,6 +58,9 @@ popd
 %_K4srv/ServiceMenus/*.desktop
 
 %changelog
+* Wed Jan 14 2015 Sergey V Turchin <zerg@altlinux.org> 0.16.1-alt1
+- new version
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.13-alt3.1
 - Rebuild with Python-2.7
 
