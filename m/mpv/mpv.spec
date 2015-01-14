@@ -1,5 +1,5 @@
 Name: mpv
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
@@ -16,6 +16,8 @@ Packager: %packager
 # Внимание: пакет libva-devel добавлен вручную!
 BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libquvi0.9-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
 
+BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel liblua5-devel
+
 %description
 mpv is a movie player based on MPlayer and mplayer2.
 It supports a wide variety of video file formats,
@@ -30,7 +32,17 @@ MPlayer и mplayer2. Он поддерживает большое количес
 %setup -n %name-%version
 
 ls
-./waf configure --bindir=%buildroot%_bindir --mandir=%buildroot/usr/share/man --datadir=%buildroot%_datadir --prefix=%buildroot
+./waf configure --bindir=%buildroot%_bindir --mandir=%buildroot/usr/share/man --datadir=%buildroot%_datadir --prefix=%buildroot \
+--enable-pulse \
+--enable-enca \
+--enable-xss \
+--enable-xv \
+--enable-xinerama \
+--enable-xrandr \
+--enable-vaapi \
+--enable-alsa \
+--enable-gl-x11 \
+--enable-lua \
 
 %build
 
@@ -65,6 +77,9 @@ rm -rf %buildroot/usr/share/doc/mpv/
 %_desktopdir/*
 
 %changelog
+* Sun Jan 11 2015 Terechkov Evgenii <evg@altlinux.org> 0.7.2-alt1
+- Version update
+
 * Sat Dec 20 2014 Andrey Bergman <vkni@altlinux.org> 0.7.1-alt1
 - Version update. Added VAAPI support.
 
