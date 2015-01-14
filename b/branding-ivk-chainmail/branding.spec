@@ -10,7 +10,7 @@
 
 Name: branding-%brand-%theme
 Version: 2.99
-Release: alt5
+Release: alt6
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
@@ -341,6 +341,11 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Wed Jan 14 2015 Andrey Cherepanov <cas@altlinux.org> 2.99-alt6
+- plymouth: Fix background scaling
+- Fix colors of tree widgets in alterator-browser-qt
+- Fix link color of help messages in Alterator web interface
+
 * Tue Sep 09 2014 Andrey Cherepanov <cas@altlinux.org> 2.99-alt5
 - [alterator] Make links in error messages more visible
 
