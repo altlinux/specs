@@ -6,10 +6,10 @@
 
 %define major 7
 %define minor 0
-%define bugfix 3
+%define bugfix 5
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt1
 BuildArch: noarch
 
 %define theme %name
@@ -21,7 +21,7 @@ BuildArch: noarch
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
 %ifnarch %arm
-BuildRequires: cpio gfxboot >= 4 
+BuildRequires: cpio gfxboot >= 4
 %endif
 
 BuildRequires(pre): libqt4-core
@@ -473,6 +473,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Jan 14 2015 Sergey V Turchin <zerg at altlinux dot org> 7.0.5-alt1
+- bump version
+
 * Thu Mar 13 2014 Sergey V Turchin <zerg at altlinux dot org> 7.0.3-alt5
 - package static os-release
 
