@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.13
+Version: 2.9.14
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,13 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Jan 14 2015 Andrey Cherepanov <cas@altlinux.org> 2.9.14-alt1
+- Update translation for:
+  + alterator-net-bond.po
+  + alterator-net-eth.po
+  + alterator-net-l2tp.po
+  + alterator-shapercontrol.po (thanks mike@)
+
 * Wed Dec 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.13-alt1
 - Fix translation of alterator-net-l2tp
 
