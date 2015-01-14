@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-bond
-Version: 0.1.0
+Version: 0.1.2
 Release: alt1
 
 Source:%name-%version.tar
@@ -41,6 +41,12 @@ alterator module for bonding network interfaces
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Jan 14 2015 Mikhail Efremov <sem@altlinux.org> 0.1.2-alt1
+- Prepend arp_ip_target value with '+' in the etcnet's config.
+
+* Tue Jan 13 2015 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1
+- build: Fix module name.
+
 * Thu Dec 25 2014 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1
 - Initial build.
 
