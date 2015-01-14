@@ -5,13 +5,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %if %unstable
-%define pkg_sfx -pre4.5
+%define pkg_sfx -pre4.7
 %define pkg_sfx_other %nil
 %define if_unstable() %{expand:%*}
 %define if_stable() %nil
 %else
 %define pkg_sfx %nil
-%define pkg_sfx_other -pre4.5
+%define pkg_sfx_other -pre4.7
 %define if_unstable()  %nil
 %define if_stable() %{expand:%*}
 %endif
@@ -22,7 +22,7 @@
 %define kdevelop_other kdevelop%{pkg_sfx_other}
 
 Name: %kdevplatform
-Version: 1.5.2
+Version: 1.7.0
 Release: alt1
 Serial: 1
 
@@ -150,6 +150,20 @@ Conflicts: %{kdevplatform_other}-cvs
 %description cvs
 This package contains KDevelop platform module for CVS support
 
+%package bazaar
+Summary: KDevelop Platform module for Bazaar support
+Group: Development/Tools
+Requires: kde4libs >= %{get_version kde4libs}
+Requires: %name-libs = %serial:%version-%release
+Requires: bzr
+
+Conflicts: %{kdevplatform_other}-bazaar
+# Only stable package replaces unstable counterpart
+%if_stable Obsoletes: %{kdevplatform_other}-bazaar < %serial:%version-%release
+
+%description bazaar
+This package contains KDevelop platform module for Bazaar support
+
 %package -n libkdevplatformtests4%pkg_sfx
 Summary: KDevelop Platform tests framework
 Group: Development/Tools
@@ -217,7 +231,7 @@ kdevexecute kdevexecutescript kdevfilemanager kdevgenericprojectmanager \
 kdevprojectdashboard kdevvcsprojectintegration kdevgrepview kdevkonsole \
 kdevpatchreview kdevplatform kdevproblemreporter kdevprojectmanagerview \
 kdevquickopen kdevsnippet kdevstandardoutputview kdevexternalscript \
-kdevcodeutils kdevopenwith kdevpastebin kdevreviewboard \
+kdevcodeutils kdevopenwith kdevpastebin kdevreviewboard kdevprojectfilter \
 kdevfiletemplates kdevswitchtobuddy kdevtemplates_config kdevtestview
 do
     %K4find_lang --output=%name.lang --with-kde --append $m
@@ -233,8 +247,10 @@ done
 %exclude %_K4lib/kdevsubversion.so
 %exclude %_K4lib/kdevgit.so
 %exclude %_K4lib/kdevcvs.so
+%exclude %_K4lib/kdevbazaar.so
 %_K4plug/grantlee/*/*.so
 %_K4lib/imports/org/kde/kdevplatform
+%_K4apps/kdevelop
 %_K4apps/kdevcodeutils
 %_K4apps/kdevexternalscript
 %_K4apps/kdevprojectmanagerview
@@ -271,7 +287,8 @@ done
 %_K4srv/kcm_kdev_projectsettings.desktop
 %_K4srv/kdevproblemreporter.desktop
 %_K4srv/kdevexecute.desktop
-%_K4srv/kcm_kdev_genericprojectmanagersettings.desktop
+%_K4srv/kcm_kdevprojectfilter.desktop
+%_K4srv/kdevprojectfilter.desktop
 %_K4srv/kcm_kdevsourceformattersettings.desktop
 %_K4srv/kdevcontextbrowser.desktop
 %_K4srv/kcm_kdev_pluginsettings.desktop
@@ -333,6 +350,11 @@ done
 %_K4lib/kdevcvs.so
 %_K4apps/kdevcvs
 
+%files bazaar
+%_K4srv/kdevbazaar.desktop
+%_K4lib/kdevbazaar.so
+%_K4iconsdir/hicolor/*/apps/bazaar.*
+
 %files devel
 #%_K4apps/cmake/modules/FindKDevPlatform.cmake
 %_K4libdir/cmake/kdevplatform/
@@ -340,6 +362,11 @@ done
 %_K4link/lib*.so
 
 %changelog
+* Mon Jan 12 2015 Alexey Morozov <morozov@altlinux.org> 1:1.7.0-alt1
+- v1.7.0 release
+- translations are taken from the upstream release, w/o local fixes
+  or enhancements
+
 * Thu Nov 14 2013 Alexey Morozov <morozov@altlinux.org> 1:1.5.2-alt1
 - v1.5.2
 - Translations merged with upstream (A.Lakhin's translations)
