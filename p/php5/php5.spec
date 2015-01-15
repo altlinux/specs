@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.5.19
+Version: 5.5.20
 Release: alt1
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.5
-%define _php5_snapshot 20141112
+%define _php5_snapshot 20141217
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -33,9 +33,6 @@ Patch9: php-5.3.3-sapi-scandir.patch
 
 Patch12: php-devel-scripts-alternatives.patch
 Patch13: php-4.3.11-dlopen.patch
-
-# http://www.zend.com/zend/spotlight/error.php#Heading19
-Patch14: php-5.3-alt-division-by-zero.patch
 
 Patch17: php-fix-headers-order.patch
 
@@ -164,7 +161,6 @@ in use by other PHP5-related packages.
 %patch9 -p1 -b .scandir
 %patch12 -p2 -b .alternatives
 %patch13 -p1
-%patch14 -p1
 %patch17 -p1
 %patch30 -p0
 %patch32 -p1
@@ -406,6 +402,10 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Wed Jan 14 2015 Anton Farygin <rider@altlinux.ru> 5.5.20-alt1
+- new version
+- behavior when divided by zero is synchronized with the upstream (closes: #30650)
+
 * Wed Nov 19 2014 Anton Farygin <rider@altlinux.ru> 5.5.19-alt1
 - new version
 
