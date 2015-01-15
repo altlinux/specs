@@ -10,8 +10,8 @@
 %def_disable gtkdoc
 
 Name: libwebkitgtk4
-Version: 2.6.4
-Release: alt2
+Version: 2.6.5
+Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -249,6 +249,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Thu Jan 15 2015 Yuri N. Sedunov <aris@altlinux.org> 2.6.5-alt1
+- 2.6.5
+
 * Wed Nov 26 2014 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt2
 - enabled touch (slider/icon loading) support
 
