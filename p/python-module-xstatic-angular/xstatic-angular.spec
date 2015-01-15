@@ -4,9 +4,9 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.16.0
+Version: 1.3.7.0
 Release: alt1
-Summary: Angular 1.2.16 (XStatic packaging standard)
+Summary: Angular 1.3.7 (XStatic packaging standard)
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/XStatic-Angular/
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7.0-alt1
+- Version 1.3.7.0
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.16.0-alt1
 - Version 1.2.16.0
 
