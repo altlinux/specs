@@ -3,14 +3,17 @@
 %define rname kfilebox
 Name: kde4-kfilebox
 Version: 0.4.9
-Release: alt1
+Release: alt2
 
 Group: Networking/File transfer
 Summary: KDE front end for Dropbox
 Url: http://sourceforge.net/projects/kdropbox/
 License: GPLv2
 
+Requires: libqt4-sql-sqlite
+
 Source0: %rname-%version.tar
+Patch1: alt-config-db-path.patch
 
 # Automatically added by buildreq on Mon Jun 27 2011 (-bi)
 # optimized out: elfutils fontconfig kde4libs kdelibs libdbusmenu-qt2 libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-sql libqt4-svg libqt4-xml libstdc++-devel phonon-devel
@@ -22,8 +25,9 @@ KDE front end for Dropbox
 
 %prep
 %setup -qn %rname-%version
-echo "QMAKE_CXXFLAGS += \$(RPM_OPT_FLAGS) -I%_K4includedir" >> %rname.pro
-qmake-qt4
+%patch1 -p1
+%add_optflags -I%_K4includedir
+%qmake_qt4
 
 %build
 SUBLIBS="-L%_K4link" %make
@@ -98,6 +102,12 @@ EOF
 %_kde4_iconsdir/hicolor/*/apps/%rname.*
 
 %changelog
+* Thu Jan 15 2015 Sergey V Turchin <zerg@altlinux.org> 0.4.9-alt2
+- fix locate config database (ALT#30607)
+
+* Tue Apr 10 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.9-alt0.M60P.1
+- built for M60P
+
 * Thu Mar 29 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.9-alt1
 - new version
 
