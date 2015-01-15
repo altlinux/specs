@@ -4,9 +4,9 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0.0
+Version: 4.2.0.0
 Release: alt1
-Summary: Font-Awesome 4.1.0 (XStatic packaging standard)
+Summary: Font-Awesome 4.2.0 (XStatic packaging standard)
 License: GPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/XStatic-Font-Awesome/
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0.0-alt1
+- Version 4.2.0.0
+
 * Mon Nov 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0.0-alt1
 - Initial build for Sisyphus
 
