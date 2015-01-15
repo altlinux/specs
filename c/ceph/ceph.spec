@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.89
+Version: 0.91
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -128,6 +128,7 @@ ln -s rocksdb_sub src/rocksdb
 %build
 ./autogen.sh
 export LIBS="$LIBS -lboost_system"
+%add_optflags -DHAVE_GPERFTOOLS_PROFILER_H -DHAVE_GPERFTOOLS_HEAP_PROFILER_H -DHAVE_GPERFTOOLS_MALLOC_EXTENSION_H
 %configure	--without-hadoop \
 		--without-libatomic-ops \
 		--with-radosgw \
@@ -176,7 +177,6 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/ceph-authtool
 %_bindir/ceph-brag
 %_bindir/ceph-crush-location
-%_bindir/ceph_objectstore_tool
 %_bindir/ceph-syn
 %_bindir/ceph-run
 %_bindir/ceph-mon
@@ -195,6 +195,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/rbd-replay-many
 %_bindir/ceph-debugpack
 %_bindir/ceph-coverage
+%_bindir/ceph-objectstore-tool
 %_sbindir/ceph-create-keys
 %_sbindir/ceph-disk
 %_sbindir/ceph-disk-activate
@@ -238,6 +239,8 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_mandir/man8/librados-config.8.gz
 %_mandir/man8/ceph-post-file.8*
 %_mandir/man8/ceph-rest-api.8*
+%_mandir/man8/ceph-disk.8.gz
+%_mandir/man8/ceph-deploy.8.bz2
 %_localstatedir/ceph/
 /var/log/ceph/
 %_runtimedir/ceph/
@@ -288,6 +291,12 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Jan 15 2015 Alexei Takaseev <taf@altlinux.org> 0.91-alt1
+- 0.91
+
+* Thu Dec 25 2014 Alexei Takaseev <taf@altlinux.org> 0.90-alt1
+- 0.90
+
 * Sat Dec 06 2014 Alexei Takaseev <taf@altlinux.org> 0.89-alt1
 - 0.89
 
