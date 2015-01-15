@@ -4,18 +4,22 @@
 %define _localstatedir %_var
 
 %def_enable introspection
+# since 2.1.5 it is possible to configure udisks to mount devices
+# in /media instead of /run/media but we use own control-based mechanism,
+# so this option should never be enabled
+%def_disable fhs_media
 
 Name: %{_name}2
-Version: 2.1.4
-Release: alt1
+Version: 2.1.5
+Release: alt0.1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/%_name
 
-#Source: %_name-%version.tar
-Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
+Source: %_name-%version.tar
+#Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
 Source1: %name.control
 Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
@@ -101,10 +105,10 @@ This package contains development documentation for lib%name.
 %build
 %autoreconf
 # needed for O_CLOEXEC from bits/fcntl.h
-%add_optflags -D_GNU_SOURCE
+#%%add_optflags -D_GNU_SOURCE
 %configure --disable-static \
-	--enable-gtk-doc
-
+	--enable-gtk-doc \
+	%{?_enable_fhs_media:--enable-fhs-media}
 %make
 
 %install
@@ -175,6 +179,9 @@ fi
 %endif
 
 %changelog
+* Thu Jan 15 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt0.1
+- 2.1.5 snapshot (fixed FDO #77134)
+
 * Fri Jan 09 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1.4-alt1
 - 2.1.4
 
