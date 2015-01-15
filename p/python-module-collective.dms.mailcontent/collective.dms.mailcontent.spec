@@ -1,8 +1,8 @@
 %define mname collective.dms
 %define oname %mname.mailcontent
 Name: python-module-%oname
-Version: 0.1.8
-Release: alt1.dev0.git20141126
+Version: 0.1.9
+Release: alt1.dev0.git20150114
 Summary: Mail content type for document management system
 License: GPL
 Group: Development/Python
@@ -23,11 +23,13 @@ BuildPreReq: python-module-five.grok
 BuildPreReq: python-module-plone.app.testing
 BuildPreReq: python-module-ecreall.helpers.testing
 BuildPreReq: python-module-openid
+BuildPreReq: python-module-collective.dexteritytextindexer
 
 %py_provides %oname
 %py_requires %mname plone.api plone.app.dexterity plone.directives.form
 %py_requires collective.contact.core collective.dms.basecontent
 %py_requires plone.formwidget.datetime five.grok
+%py_requires collective.dexteritytextindexer
 
 %description
 Mail content type for document management system.
@@ -71,6 +73,9 @@ python setup.py test
 %python_sitelibdir/collective/dms/*/*/test*
 
 %changelog
+* Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.9-alt1.dev0.git20150114
+- Version 0.1.9.dev0
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.8-alt1.dev0.git20141126
 - Version 0.1.8.dev0
 
