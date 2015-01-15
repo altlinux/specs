@@ -14,7 +14,7 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.31
+Version: 2.32
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -34,7 +34,7 @@ Source6:	enigmail.tar
 Source7:	seamonkey-mozconfig
 Source8:	rpm-build.tar
 
-Patch:		seamonkey-2.26-installdir.patch
+Patch: 		seamonkey-fix-installdirs.patch
 Patch1:		seamonkey-2.2-alt-machOS-fix.patch
 Patch2:		seamonkey-2.0.14-alt-fix-plugin-path.patch
 Patch3:		xulrunner-noarch-extensions.patch
@@ -150,10 +150,10 @@ cd comm-release
 tar -xf %SOURCE6 -C mailnews/extensions/
 %endif
 
-%patch -p2
+%patch -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p2
+%patch3 -p0
 %if_with system_mozldap
 %patch5 -p1 -b .mozldap
 %endif
@@ -398,6 +398,18 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Jan 15 2015 Andrey Cherepanov <cas@altlinux.org> 1:2.32-alt1
+- New version
+- Security fixes:
+  + MFSA 2015-09 XrayWrapper bypass through DOM objects
+  + MFSA 2015-08 Delegated OCSP responder certificates failure with
+    id-pkix-ocsp-nocheck extension
+  + MFSA 2015-06 Read-after-free in WebRTC
+  + MFSA 2015-05 Read of uninitialized memory in Web Audio
+  + MFSA 2015-04 Cookie injection through Proxy Authenticate responses
+  + MFSA 2015-03 sendBeacon requests lack an Origin header
+  + MFSA 2015-02 Uninitialized memory use during bitmap rendering
+
 * Wed Dec 10 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.31-alt1
 - New version
 - Build from src.rpm contains upstream tarball
