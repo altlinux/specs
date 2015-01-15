@@ -4,8 +4,8 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 4.1.1
-Release: alt1
+Version: 4.1.3
+Release: alt1.dev0.git20150113
 Summary: Zope 3 Deprecation Infrastructure
 License: ZPLv2.1
 Group: Development/Python
@@ -137,6 +137,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.1.3-alt1.dev0.git20150113
+- Version 4.1.3.dev0
+
 * Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.1.1-alt1
 - Version 4.1.1
 
