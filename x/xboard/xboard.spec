@@ -1,6 +1,6 @@
 Name: xboard
 Version: 4.5.2
-Release: alt1
+Release: alt2
 
 Summary: An X Window System graphical chessboard
 License: GPL
@@ -20,6 +20,9 @@ Requires: %name-theme
 # xboard 4.4 uses fairymax as default engine,
 # special runtime configuration needed for GNU Chess
 Requires: fairymax
+
+# needs helvetica: #30634
+Requires: fonts-bitmap-100dpi
 
 # Automatically added by buildreq on Sun Oct 11 2009
 BuildRequires: flex groff-base imake libXaw-devel libXpm-devel xorg-cf-files
@@ -83,6 +86,9 @@ cp -a pixmaps/*.xpm %buildroot%_datadir/%name/theme
 %_datadir/%name/theme
 
 %changelog
+* Thu Jan 15 2015 Michael Shigorin <mike@altlinux.org> 4.5.2-alt2
+- added R: fonts-bitmap-100dpi (closes: #30634)
+
 * Mon Jul 11 2011 Michael Shigorin <mike@altlinux.org> 4.5.2-alt1
 - 4.5.2
 
