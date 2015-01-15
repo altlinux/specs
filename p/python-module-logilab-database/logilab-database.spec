@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.12.2
-Release: alt1.hg20140513
+Version: 1.13.1
+Release: alt1.hg20150105
 Summary: Provides some classes to make unified access to different RDBMS possible
 
 Group: Development/Python
@@ -136,6 +136,9 @@ rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
 %endif
 
 %changelog
+* Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13.1-alt1.hg20150105
+- Version 1.13.1
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.2-alt1.hg20140513
 - Version 1.12.2
 
