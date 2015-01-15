@@ -11,7 +11,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 
 Summary: Color daemon
@@ -25,6 +25,7 @@ Source: http://www.freedesktop.org/software/%name/releases/colord-%version.tar.x
 %define colord_user %name
 %define glib_ver 2.36
 %define lcms_ver 2.6
+%define gusb_ver 0.2.2
 %define bash_completion_ver 2.0
 
 Requires: lib%name = %version-%release
@@ -32,7 +33,7 @@ Requires: lib%name = %version-%release
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: docbook-utils gtk-doc intltool libdbus-devel libgudev-devel libudev-devel
 BuildRequires: liblcms2-devel >= %lcms_ver libpolkit-devel >= 0.103
-BuildRequires: libsqlite3-devel libusb-devel libgusb-devel systemd-devel libsystemd-devel
+BuildRequires: libsqlite3-devel libusb-devel libgusb-devel >= %gusb_ver systemd-devel libsystemd-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgusb-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_print_profiles:BuildRequires: argyllcms}
@@ -280,6 +281,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Thu Jan 15 2015 Yuri N. Sedunov <aris@altlinux.org> 1.2.8-alt1
+- 1.2.8
+
 * Fri Dec 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.7-alt1
 - 1.2.7
 
