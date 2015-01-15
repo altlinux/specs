@@ -3,8 +3,8 @@
 
 %define oname logilab-common
 Name: python-module-%oname
-Version: 0.63.0
-Release: alt1.hg20141105
+Version: 0.63.2
+Release: alt1.hg20141130
 
 Summary: Useful miscellaneous modules used by Logilab projects
 License: LGPLv2.1+
@@ -13,6 +13,7 @@ Group: Development/Python
 BuildArch: noarch
 
 Url: http://www.logilab.org/project/logilab-common
+# hg clone http://hg.logilab.org/review/logilab/common/
 Source: %name-%version.tar
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -23,12 +24,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 %setup_python_module %oname
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc %py_dependencies mx.DateTime unittest2}}
-BuildPreReq: python-module-six
+BuildPreReq: python-module-six python-module-pytz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python-tools-2to3
-BuildPreReq: python3-module-six
+BuildPreReq: python3-module-six python3-module-pytz
 %endif
 
 %description
@@ -124,6 +125,9 @@ rm -f build/lib/logilab/__init__.py
 %endif
 
 %changelog
+* Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.63.2-alt1.hg20141130
+- Version 0.63.2
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.63.0-alt1.hg20141105
 - Version 0.63.0
 
