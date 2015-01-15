@@ -2,7 +2,7 @@
 %define oname %mname.geo.leaflet
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.b6.dev0.git20150106
+Release: alt1.b8.dev0.git20150114
 Summary: Add geo views for dexterity content with leaflet js library
 License: GPLv2+
 Group: Development/Python
@@ -90,6 +90,9 @@ python setup.py test
 %python_sitelibdir/%mname/geo/*/*/test*
 
 %changelog
+* Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.b8.dev0.git20150114
+- Version 0.1b8.dev0
+
 * Wed Jan 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.b6.dev0.git20150106
 - Initial build for Sisyphus
 
