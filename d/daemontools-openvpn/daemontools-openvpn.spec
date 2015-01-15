@@ -1,6 +1,6 @@
 Name: daemontools-openvpn
 Summary: Daemontools script for OpenVPN
-Version: 0.1
+Version: 0.2
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -31,7 +31,8 @@ BuildPreReq: daemontools-common
 %files
 %_sysconfdir/daemontools.d/openvpn
 %changelog
+* Thu Jan 15 2015 Denis Smirnov <mithraen@altlinux.ru> 0.2-alt1
+- now it really works
+
 * Fri Nov 27 2009 Denis Smirnov <mithraen@altlinux.ru> 0.1-alt1
 - first build for Sisyphus
-
-
