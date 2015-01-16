@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 16 2015 Vladimir Didenko <cow@altlinux.ru> 0.7.2-alt1
+- 0.7.2
+
 * Mon Dec 29 2014 Vladimir Didenko <cow@altlinux.ru> 0.7.1-alt1
 - 0.7.1
 
