@@ -4,8 +4,8 @@
 
 Summary: A strictly RFC 4511 conforming LDAP V3 pure Python 3 client - Python 2 compatible
 Name: python-module-%oname
-Version: 0.9.7.1
-Release: alt1.git20150102
+Version: 0.9.7.2
+Release: alt1.git20150116
 # https://github.com/cannatag/ldap3.git
 Source0: %name-%version.tar
 BuildArch: noarch
@@ -69,8 +69,8 @@ This package contains documentation for %oname.
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx %oname/docs/manual
-ln -s ../objects.inv %oname/docs/manual/source/
+%prepare_sphinx docs/manual
+ln -s ../objects.inv docs/manual/source/
 
 %build
 %python_build_debug
@@ -91,9 +91,9 @@ popd
 %endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C %oname/docs/manual html
+%make -C docs/manual html
 
-mv %oname/docs/manual/build/html manual
+mv docs/manual/build/html manual
 
 %check
 python setup.py test
@@ -108,7 +108,7 @@ popd
 %python_sitelibdir/*
 
 %files docs
-%doc %oname/docs/rfc manual
+%doc docs/rfc manual
 
 %if_with python3
 %files -n python3-module-%oname
@@ -117,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7.2-alt1.git20150116
+- Version 0.9.7.2
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7.1-alt1.git20150102
 - New snapshot
 
