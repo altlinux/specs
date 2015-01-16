@@ -1,6 +1,6 @@
 Name: SDL_mixer
-Version: 1.2.11
-Release: alt5
+Version: 1.2.12
+Release: alt1
 Summary: Simple DirectMedia Layer - mixer
 Group: System/Libraries
 License: LGPLv2+
@@ -9,7 +9,7 @@ Url: http://www.libsdl.org/projects/SDL_mixer/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-1.2.11-alt5.patch
 
 BuildRequires: gcc-c++ libSDL-devel libvorbis-devel libflac-devel libmikmod-devel
 BuildRequires: libmad-devel
@@ -85,6 +85,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1
+- update to 1.2.12 (closes: #30656)
+
 * Wed Feb 29 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.2.11-alt5
 - replaced by smpeg to mad
 
