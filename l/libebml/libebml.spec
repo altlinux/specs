@@ -1,5 +1,5 @@
 Name: libebml
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Extensible Binary Meta Language access library
@@ -27,11 +27,12 @@ Files needed to build programs using libebml
 %setup
 
 %build
-CXXFLAGS="%optflags" make -C make/linux sharedlib
+%autoreconf
+%configure --disable-static
+%make_build
 
 %install
-make libdir=%buildroot%_libdir includedir=%buildroot%_includedir/ebml \
-	-C make/linux install_sharedlib install_headers
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -39,8 +40,12 @@ make libdir=%buildroot%_libdir includedir=%buildroot%_includedir/ebml \
 %files devel
 %_includedir/ebml
 %_libdir/*.so
+%_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Jan 16 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.1-alt1
+- 1.3.1 released
+
 * Sun Sep 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt1
 - 1.3.0 released
 
