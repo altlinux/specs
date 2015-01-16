@@ -3,7 +3,7 @@
 %def_enable introspection
 
 Name: cinnamon-menus
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Cinnamon desktop menu
@@ -111,6 +111,9 @@ GObject introspection devel data for the Cinnamon Desktop Menu Library
 
 
 %changelog
+* Fri Jan 16 2015 Vladimir Didenko <cow@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Fri Oct 31 2014 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
