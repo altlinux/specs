@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.16
-Release: alt1.git20141113
+Release: alt1.git20150115
 Summary: A set of python modules for machine learning and data mining
 License: BSD
 Group: Development/Python
@@ -163,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16-alt1.git20150115
+- New snapshot
+
 * Sat Nov 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16-alt1.git20141113
 - Initial build for Sisyphus
 
