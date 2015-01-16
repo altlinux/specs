@@ -1,5 +1,5 @@
 Name: libmatroska
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: an extensible open standard Audio/Video container format
@@ -9,7 +9,7 @@ Url: http://www.matroska.org
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++ libebml-devel
+BuildRequires: gcc-c++ libebml-devel >= 1.3.1
 
 %description
 Matroska is aiming to become the standard of Multimedia Container
@@ -51,26 +51,25 @@ HTML)
 %setup
 
 %build
-CXXFLAGS="%optflags" make -C make/linux sharedlib
+%autoreconf
+%configure --disable-static
+%make_build
 
 %install
-make libdir=%buildroot%_libdir includedir=%buildroot%_includedir/matroska \
-        -C make/linux install_sharedlib install_headers
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
 
 %files devel
-#%dir %_includedir/matroska
 %_includedir/matroska
 %_libdir/*.so
-
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif
+%_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Jan 16 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt1
+- 1.4.2 released
+
 * Sun Sep 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.1-alt1
 - 1.4.1 released
 
