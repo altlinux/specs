@@ -1,6 +1,6 @@
 Name: qutim
 Version: 0.3.2
-Release: alt3.1
+Release: alt3.2
 Epoch: 7
 
 Summary: qutIM Instant Messenger
@@ -40,7 +40,8 @@ BuildRequires: libdbusmenu-qt-devel
 BuildRequires: libhunspell-devel
 BuildRequires: libicu50
 BuildRequires: libjreen-devel
-BuildRequires: libotr-devel
+# libotr5 is not supported yet
+BuildRequires: libotr2-devel
 BuildRequires: libpurple-devel
 BuildRequires: libqca2-devel
 BuildRequires: libqt4-sql-mysql
@@ -51,10 +52,14 @@ BuildRequires: qt4-mobility-devel
 BuildRequires: libvreen-devel
 
 %description
-qutIM - free open-source multiprotocol (ICQ, Jabber, Mail.Ru, IRC, VKontakte) instant messenger for Windows, Linux, MacOS X, OS/2, Symbian, Haiku, Solaris, Maemo/MeeGo and *BSD systems
+qutIM - free open-source multiprotocol (ICQ, Jabber, Mail.Ru, IRC,
+VKontakte) instant messenger for Windows, Linux, MacOS X, OS/2, Symbian,
+Haiku, Solaris, Maemo/MeeGo and *BSD systems.
 
 %description -l ru_RU.UTF-8
-qutIM — это свободный многопротокольный (ICQ, Jabber, Mail.Ru, IRC, VKontakte) клиент обмена мгновенными сообщениями для Windows, Linux, MacOS X, OS/2, Symbian, Haiku, Solaris, Maemo/MeeGo и *BSD
+qutIM — это свободный многопротокольный (ICQ, Jabber, Mail.Ru, IRC,
+VKontakte) клиент обмена мгновенными сообщениями для Windows, Linux,
+MacOS X, OS/2, Symbian, Haiku, Solaris, Maemo/MeeGo и *BSD.
 
 # qutIM library
 %package -n lib%name
@@ -700,14 +705,14 @@ Uzbek language for qutIM
 Summary: Documentation for %name
 Group: Documentation
 BuildArch: noarch
- 
+
 %description -n %name-docs
 Documentation for qutIM
 
 %prep
 %setup
 %patch0 -p1
-%__sed -i 's|TelepathyQt4/|TelepathyQt/|' protocols/astral/src/*.{cpp,h}
+sed -i 's|TelepathyQt4/|TelepathyQt/|' protocols/astral/src/*.{cpp,h}
 
 %build
 %define lib_suffix %nil
@@ -717,8 +722,6 @@ Documentation for qutIM
 
 mkdir -p %_target_platform
 pushd %_target_platform
-
-export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 
 cmake .. \
 	-DCMAKE_BUILD_TYPE:STRING='Release' \
@@ -736,7 +739,7 @@ popd
 %install
 %makeinstall_std -C %_target_platform
 
-for i in %buildroot%_bindir/%name %buildroot%_libdir/lib*.so.* %buildroot%_libdir/qt4/plugins/docktile/lib*.so %buildroot%_libdir/qt4/imports/org/docktile/lib*.so %buildroot%_libdir/%name/plugins/lib*.so 
+for i in %buildroot%_bindir/%name %buildroot%_libdir/lib*.so.* %buildroot%_libdir/qt4/plugins/docktile/lib*.so %buildroot%_libdir/qt4/imports/org/docktile/lib*.so %buildroot%_libdir/%name/plugins/lib*.so
 do
 	chrpath -d $i
 done
@@ -1099,6 +1102,9 @@ done
 %doc AUTHORS COPYING README.* ChangeLog
 
 %changelog
+* Tue Jan 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 7:0.3.2-alt3.2
+- Fixed build (libotr2-devel).
+
 * Wed Jul 9 2014 Vladimir Didenko <cow@altlinux.org> 7:0.3.2-alt3.1
 - fix build
 
