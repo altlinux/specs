@@ -1,6 +1,6 @@
 %define oname cubicweb-vcsfile
 Name: python-module-%oname
-Version: 2.0.0
+Version: 2.0.2
 Release: alt1
 Summary: Component to integrate version control systems data into the CubicWeb framework
 License: LGPL
@@ -53,6 +53,9 @@ python setup.py test
 %_docdir/%oname
 
 %changelog
+* Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1
+- Version 2.0.2
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1
 - Version 2.0.0
 
