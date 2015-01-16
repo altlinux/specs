@@ -30,7 +30,7 @@
 
 Name: wesnoth%wessuffix
 Version: 1.10.7
-Release: alt2
+Release: alt3
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -618,6 +618,9 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Fri Jan 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.7-alt3
+- rebuild with new Boost 
+
 * Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.10.7-alt2
 - old stable version of wesnoth
 
