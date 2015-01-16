@@ -34,20 +34,21 @@ BuildRequires: libvorbis-devel
 #define wessuffix -%wesdesktopsuffix
 
 Name: wesnoth%wessuffix
-Version: 1.11.15
-Release: alt1.1
+Version: 1.12.0
+Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
 License: %gpl2plus
 Url: http://www.%name.org
 Source0: wesnoth-%version.tar
+Patch: wesnoth-1.12-boost-1.57-fix.patch
 
 Requires: %name-data = %version-%release
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: ImageMagick-tools asciidoc boost-devel desktop-file-utils fribidi gcc-c++ hd2u imake libICE-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libfreetype-devel libfribidi-devel libpango-devel libpng-devel po4a subversion xorg-cf-files xsltproc liblua5-devel libpng-devel cmake boost-program_options-devel libdbus-devel boost-asio-devel libpixman-devel libXdmcp-devel
+BuildRequires: ImageMagick-tools asciidoc boost-devel desktop-file-utils fribidi gcc-c++ hd2u imake libICE-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libfreetype-devel libfribidi-devel libpango-devel libpng-devel po4a subversion xorg-cf-files xsltproc liblua5-devel libpng-devel cmake boost-program_options-devel boost-filesystem-devel boost-locale-devel libdbus-devel boost-asio-devel libpixman-devel libXdmcp-devel
 %if_with build_using_scons
 BuildRequires: scons
 %endif
@@ -186,6 +187,7 @@ This package contains python interface to Battle for Wesnoth.
 
 %prep
 %setup -n wesnoth-%version
+%patch -p2
 
 %build
 %define _optlevel 3
@@ -626,6 +628,9 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Fri Jan 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1
+- 1.20 release
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.11.15-alt1.1
 - rebuild with boost 1.57.0;
 - fix includes for Boost.Optional.
