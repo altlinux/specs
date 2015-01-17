@@ -1,10 +1,11 @@
 %define oname argparse
 
 %def_with python3
+%def_disable check
 
 Name:           python-module-%oname
-Version:        1.2.2
-Release:        alt1.hg20141115
+Version:        1.3.0
+Release:        alt1.hg20141215
 Summary:        Python command line parser
 
 Group:          Development/Python
@@ -119,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.hg20141215
+- Version 1.3.0
+
 * Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.hg20141115
 - Version 1.2.2
 
