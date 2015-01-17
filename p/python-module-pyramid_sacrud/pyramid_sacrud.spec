@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.2
-Release: alt1.git20141107
+Version: 0.0.5
+Release: alt1.git20150115
 Summary: Pyramid CRUD interface based on sacrud and SQLAlchemy
 License: MIT
 Group: Development/Python
@@ -25,7 +25,7 @@ BuildPreReq: python-module-deform python-module-sacrud_deform
 BuildPreReq: python-module-pyramid_beaker python-module-transaction
 BuildPreReq: python-module-paginate_sqlalchemy python-module-webtest
 BuildPreReq: python-module-nose python-module-coverage
-BuildPreReq: python-module-webhelpers
+BuildPreReq: python-module-webhelpers python-module-ColanderAlchemy
 BuildPreReq: python-module-sphinx-devel itcase_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -37,7 +37,7 @@ BuildPreReq: python3-module-deform python3-module-sacrud_deform
 BuildPreReq: python3-module-pyramid_beaker python3-module-transaction
 BuildPreReq: python3-module-paginate_sqlalchemy python3-module-webtest
 BuildPreReq: python3-module-nose python3-module-coverage
-BuildPreReq: python3-module-webhelpers
+BuildPreReq: python3-module-webhelpers python3-module-ColanderAlchemy
 %endif
 
 %py_provides %oname
@@ -182,6 +182,9 @@ popd
 %endif
 
 %changelog
+* Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1.git20150115
+- Version 0.0.5
+
 * Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20141107
 - Version 0.0.2
 
