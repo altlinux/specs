@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.0
-Release: alt1.git20141117
+Version: 0.8.0
+Release: alt1.git20150106
 Summary: Provides fulltext search capabilities for declarative SQLAlchemy models
 License: BSD
 Group: Development/Python
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.git20150106
+- Version 0.8.0
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1.git20141117
 - Initial build for Sisyphus
 
