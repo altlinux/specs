@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.3
-Release: alt1
+Release: alt2
 Summary: Replace real objects with fakes (mocks, stubs, etc) while testing
 License: MIT
 Group: Development/Python
@@ -166,6 +166,15 @@ popd
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
+# There is a file in the package with a name starting with <tt>._</tt>, 
+# the file name pattern used by Mac OS X to store resource forks in non-native 
+# file systems. Such files are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+# for ones installed as %%doc
+find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+
+
 %check
 python setup.py test
 rm -fR build
@@ -204,6 +213,9 @@ popd
 %endif
 
 %changelog
+* Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt2
+- Applied repocop's python-module-fudge-1.0.3-alt1.diff
+
 * Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1
 - Initial build for Sisyphus
 
