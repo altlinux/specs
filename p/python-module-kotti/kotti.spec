@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.10
-Release: alt1.b2dev.git20140930
+Version: 1.1
+Release: alt1.dev.git20150113
 Summary: A user-friendly, light-weight and extensible web content management system
 License: BSD
 Group: Development/Python
@@ -44,6 +44,8 @@ BuildPreReq: python-module-wsgi_intercept python-module-pytest-xdist
 BuildPreReq: python-module-pytest-pep8 python-module-pytest-cov
 BuildPreReq: python-module-pyquery python-module-mock
 BuildPreReq: python-module-webtest python-module-mechanize
+BuildPreReq: python-module-usersettings python-module-virtualenv
+BuildPreReq: python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -56,7 +58,7 @@ BuildPreReq: python-tools-2to3
 %py_requires js.jquery_tablednd js.jqueryui js.jqueryui_tagit
 %py_requires paste.deploy repoze.workflow pyramid_deform html2text
 %py_requires pyramid_mailer formencode PIL plone.scale
-%py_requires js.jquery_timepicker_addon js.deform
+%py_requires js.jquery_timepicker_addon js.deform usersettings
 
 %description
 A user-friendly, light-weight and extensible web content management
@@ -211,6 +213,7 @@ python setup.py test
 %endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test*
+%exclude %python_sitelibdir/*/*/*/*/tests
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
@@ -221,6 +224,7 @@ python setup.py test
 
 %files tests
 %python_sitelibdir/*/test*
+%python_sitelibdir/*/*/*/*/tests
 
 %if_with python3
 %files -n python3-module-%oname
@@ -229,13 +233,18 @@ python setup.py test
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/test*
 %python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/*/tests
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.dev.git20150113
+- Version 1.1-dev
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1.b2dev.git20140930
 - Initial build for Sisyphus
 
