@@ -1,8 +1,19 @@
-# spec file for package openvpn (Version 2.1)
+# spec file for package openvpn (Version 2.3)
 #
 
+%def_with systemd
+%def_with plugins
+
+%def_with management
+%def_with pkcs11
+%def_with http_proxy
+%def_with socks
+%def_with multihome
+%def_with port_share
+%def_with x509_alt_username
+
 Name: openvpn
-Version: 2.2.2
+Version: 2.3.6
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -27,14 +38,17 @@ Source7: %name-README.ALT.utf-8
 Source8: %name-server.conf
 Source9: %name-client.conf
 
-Patch1: %name-2.1_rc18-alt-make_COPYRIGHT.patch
-
 # Because of /etc/syslog.d/ feature
 Conflicts: syslogd < 1.4.1-alt11
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Tue Nov 30 2010
-BuildRequires: liblzo2-devel libpam-devel libssl-devel net-tools
+# Automatically added by buildreq on Thu Jan 15 2015
+# optimized out: libcloog-isl4 libcom_err-devel libgnutls-devel libkrb5-devel libp11-kit libssl-devel pkcs11-helper pkg-config
+BuildRequires: git-core glibc-devel-static iproute2 liblzo2-devel man net-tools
+
+%{?_with_systemd:BuildRequires: libsystemd-devel}
+%{?_with_pkcs11:BuildRequires: pkcs11-helper-devel}
+%{?_with_plugins:BuildRequires: libpam-devel}
 
 
 %description
@@ -53,6 +67,7 @@ SSL, с помощью которого можно решить широкий �
 доступа масштаба предприятий с поддержкой балансировки нагрузки,
 отказоустойчивости и четко разграниченным контролем доступа.
 
+%if_with plugins
 %package plugins
 Summary: external plugins for OpenVPN
 Summary(ru_RU.UTF-8): внешние расширения для OpenVPN
@@ -69,6 +84,7 @@ OpenVPN - полнофункциональное решение для VPN на 
 Данный пакет содержит расширения (plugins) для авторизации
 пользователей через  PAM и  запуска при разрыве соединений
 скрипта с привилегиями root.
+%endif
 
 %package docs
 Summary: OpenVPN documentation
@@ -95,14 +111,9 @@ OpenVPN - полнофункциональное решение для VPN на 
 %setup -n %name-%version
 %patch0 -p1
 
-%patch1
-
 cp -- %SOURCE7 README.ALT.utf-8
 cp -- %SOURCE8 server.conf
 cp -- %SOURCE9 client.conf
-
-mv -f -- COPYRIGHT.GPL COPYRIGHT.GPL.orig
-ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYRIGHT.GPL) COPYRIGHT.GPL
 
 %build
 %autoreconf
@@ -110,26 +121,40 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYRIGHT.GPL) COPYRIGHT.G
     --enable-iproute2 \
     --with-iproute-path=/sbin/ip \
     --enable-password-save \
-    --enable-x509-alt-username \
+    --enable-lzo \
+    %{?_with_plugins:--enable-plugins --enable-plugin-auth-pam --enable-plugin-down-root} \
+    %{?_with_management:--enable-management} \
+    %{?_with_pkcs11:--enable-pkcs11} \
+    %{?_with_socks:--enable-socks} \
+    %{?_with_http_proxy:--enable-http-proxy} \
+    %{?_with_multihome:--enable-multihome} \
+    %{?_with_port_share:--enable-port-share} \
+    %{?_with_x509_alt_username:--enable-x509-alt-username} \
+    %{?with_systemd:--enable-systemd} \
     %nil
 
 %make_build
-subst 's|nobody|%ovpn_user|' sample-config-files/*
+subst 's|nobody|%ovpn_user|' sample/sample-config-files/*
 
-make -C plugin/down-root/
-make -C plugin/auth-pam/
-
+%if_with plugins
 # Building 'simple' plugin
-pushd plugin/examples
-./build simple
-mv -- simple.so %name-examples.so
+pushd sample/sample-plugins/simple
+CPPFLAGS="${CPPFLAGS:--I../../../include}" ./build simple
+mv -- simple.so %name-plugin-simple.so
 popd
 
 # Building 'defer' plugin
-pushd plugin/defer
-./build simple
-mv -- simple.so %name-defer.so
+pushd sample/sample-plugins/defer
+CPPFLAGS="${CPPFLAGS:--I../../../include}" ./build simple
+mv -- simple.so %name-plugin-defer.so
 popd
+
+# Building 'log_v3' plugin
+pushd sample/sample-plugins/log
+CPPFLAGS='-I../../../include' ./build log_v3
+mv -- log_v3.so %name-plugin-log.so
+popd
+%endif
 
 %ifndef __BTE
    # make check hangs inside hasher
@@ -139,35 +164,56 @@ popd
 %install
 %make_install DESTDIR=%buildroot install
 
-mkdir -p -- %buildroot/%_initdir
-mkdir -p -- %buildroot/%_sysconfdir/sysconfig
+# Removing automatically installed docs
+rm -rf -- %buildroot%_datadir/doc/%name
+
+# Configuration
 install -m 0750 -d -- %buildroot%_sysconfdir/%name
 install -m 0750 -d -- %buildroot%_sysconfdir/%name/keys
+ln -s -- ../..%openvpn_root%_sysconfdir/%name/ccd  %buildroot%_sysconfdir/%name/ccd
+
+# Chroot environment
 install -m 0755 -d -- %buildroot%openvpn_root
-install -m 0755 -d -- %buildroot%openvpn_root/etc
+install -m 0755 -d -- %buildroot%openvpn_root%_sysconfdir
 install -m 0755 -d -- %buildroot%openvpn_root/%_lib
-install -m 0755 -d -- %buildroot%openvpn_root/etc/openvpn
+install -m 0755 -d -- %buildroot%openvpn_root%_sysconfdir/%name
+install -m 0755 -d -- %buildroot%openvpn_root%_sysconfdir/%name/ccd
+install -m 0755 -d -- %buildroot%openvpn_root/tmp
 install -m 0755 -d -- %buildroot%openvpn_cache
+
+# SysInit and systemd startup scripts
+mkdir -p -- %buildroot/%_initdir
+mkdir -p -- %buildroot/%_sysconfdir/sysconfig
 install -m 0755 -- %SOURCE1 %buildroot%_initdir/%name
 install -m 0750 -- %SOURCE2 %buildroot%_sysconfdir/%name
 install -m 0640 -- %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
+%if_with systemd
+mkdir -p -- %buildroot%_unitdir
+install -m 0644 -- distro/systemd/%name-client\@.service %buildroot%_unitdir/%name-client\@.service
+install -m 0644 -- distro/systemd/%name-server\@.service %buildroot%_unitdir/%name-server\@.service
+%endif
+
+# update_chrooted files
 install -p -m 0750 -D -- %SOURCE4 %buildroot%_sysconfdir/chroot.d/%name.lib
 install -p -m 0750 -D -- %SOURCE5 %buildroot%_sysconfdir/chroot.d/%name.conf
 install -p -m 0750 -D -- %SOURCE6 %buildroot%_sysconfdir/chroot.d/%name.all
 
-# Install plugins
-install -m 0750 -d -- %buildroot%_libdir/%name/plugin
+mv -f -- COPYRIGHT.GPL COPYRIGHT.GPL.orig
+ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYRIGHT.GPL) COPYRIGHT.GPL
 
-for pi in auth-pam down-root defer examples; do
-    mv -f -- plugin/$pi/README plugin/README.$pi
-    if [ -x plugin/$pi/%name-$pi.so ]; then
-	install -c -m 0755 -- plugin/$pi/%name-$pi.so %buildroot%_libdir/%name/plugin/%name-$pi.so
-    fi
+%if_with plugins
+# Install plugins
+for pi in defer log simple; do
+    [ -f sample/sample-plugins/$pi/README ] && \
+        mv -f -- sample/sample-plugins/$pi/README sample/sample-plugins/README.$pi
+    [ -x sample/sample-plugins/$pi/%name-plugin-$pi.so ] && \
+        install -c -m 0755 -- sample/sample-plugins/$pi/%name-plugin-$pi.so %buildroot%_libdir/%name/plugins/%name-plugin-$pi.so
 done
 
 mkdir -- plugins
-mv -f -- plugin/README plugin/README.plugins
-mv -f -- plugin/README* plugins/
+mv -f -- doc/README.plugins  plugins/README.plugins
+mv -f -- sample/sample-plugins/README* plugins/
+%endif
 
 # Make use of syslogd-1.4.1-alt11 /etc/syslog.d/ feature.
 mkdir -p -- %buildroot%openvpn_root/dev
@@ -175,8 +221,6 @@ mkdir -p -- %buildroot%openvpn_root/dev
 mkdir -p -m700 -- %buildroot%_sysconfdir/syslog.d
 ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
-# Moving management-notes.txt from %%buildroot/usr/share/doc/openvpn/
-mv -f -- %buildroot/%_docdir/%name/management-notes.txt .
 
 %pre
 # Add the "openvpn" user
@@ -191,46 +235,69 @@ mv -f -- %buildroot/%_docdir/%name/management-notes.txt .
 %preun
 %preun_service %name
 
+
 %files
 %doc AUTHORS ChangeLog NEWS PORTS README COPYING
+%doc README.IPv6 TODO.IPv6
 %doc --no-dereference COPYRIGHT.GPL
 %doc README.ALT.utf-8 server.conf client.conf
+%if_with management
+%doc doc/management-notes.txt
+%endif
+
+%exclude %_includedir/openvpn-plugin.h
 
 %_sbindir/%name
 %_mandir/man?/*
 
 %attr(0750,root,%ovpn_group) %dir %_sysconfdir/%name
 %attr(0750,root,%ovpn_group) %dir %_sysconfdir/%name/keys
+                                  %_sysconfdir/%name/ccd
 %attr(0750,root,%ovpn_group) %dir %openvpn_root
-				%dir %openvpn_root/etc
-%attr(0710,root,%ovpn_group)	%dir %openvpn_root/dev
-%ghost %attr(0666,root,root)     %openvpn_root/dev/log
-			    %dir %openvpn_root/etc/openvpn
-			    %dir %openvpn_root/%_lib
+                             %dir %openvpn_root/etc
+%attr(0710,root,%ovpn_group) %dir %openvpn_root/dev
+%ghost %attr(0666,root,root)      %openvpn_root/dev/log
+                             %dir %openvpn_root/etc/openvpn
+                             %dir %openvpn_root/etc/openvpn/ccd
+%attr(0770,root,%ovpn_group) %dir %openvpn_root/tmp
+                             %dir %openvpn_root/%_lib
 %attr(0750,%ovpn_user,%ovpn_group) %dir %openvpn_cache
 
-%config(noreplace)	    %_sysconfdir/%name/%name-startup
-%config(noreplace)	    %_sysconfdir/sysconfig/%name
-%config 		    %_sysconfdir/chroot.d/%name.*
-%config			    %_initdir/%name
+%config(noreplace)  %_sysconfdir/%name/%name-startup
+%config(noreplace)  %_sysconfdir/sysconfig/%name
+%config             %_sysconfdir/chroot.d/%name.*
+%config             %_initdir/%name
+
+%if_with systemd
+%_unitdir/%name-*.service
+%endif
 
 %_sysconfdir/syslog.d/%name
 
+
+%if_with plugins
 %files plugins
-%doc plugins*
+%doc plugins/*
+%doc src/plugins/*/README.*
 %dir %_libdir/%name
-%dir %_libdir/%name/plugin
-     %_libdir/%name/plugin/%name-*.so
+%dir %_libdir/%name/plugins
+     %_libdir/%name/plugins/%name-*.so
+%exclude %_libdir/%name/plugins/%name-*.la
+%endif
 
 %files docs
 %doc INSTALL-win32.txt INSTALL
-%doc management-notes.txt
-%doc easy-rsa*
-%doc sample-config-files*
-%doc sample-keys*
-%doc sample-scripts*
+%doc sample/sample-config-files*
+%doc sample/sample-keys*
+%doc sample/sample-scripts*
 
 %changelog
+* Thu Jan 15 2015 Nikolay A. Fetisov <naf@altlinux.ru> 2.3.6-alt1
+- New version 2.3.6
+- CVE-2014-8104 (Closes: 30529)
+- Adding pkcs11 support (Closes: 30614)
+- Adding systemd service files (Closes: 28071)
+
 * Thu Jan 05 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.2.2-alt1
 - New version 2.2.2
 
