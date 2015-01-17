@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.3
-Release: alt1.git20141106
+Version: 0.0.5
+Release: alt1.git20150114
 Summary: Form generator for SQLAlchemy models
 License: MIT
 Group: Development/Python
@@ -22,6 +22,7 @@ BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-module-webtest python-module-webhelpers
 BuildPreReq: python-module-BeautifulSoup4 python-module-waitress
 BuildPreReq: python-module-webob python-module-markupsafe
+BuildPreReq: python-module-ColanderAlchemy
 BuildPreReq: python-module-sphinx-devel itcase_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -32,6 +33,7 @@ BuildPreReq: python3-module-nose python3-module-coverage
 BuildPreReq: python3-module-webtest python3-module-webhelpers
 BuildPreReq: python3-module-BeautifulSoup4 python3-module-waitress
 BuildPreReq: python3-module-webob python3-module-markupsafe
+BuildPreReq: python3-module-ColanderAlchemy
 %endif
 
 %py_provides %oname
@@ -130,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1.git20150114
+- Version 0.0.5
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20141106
 - Initial build for Sisyphus
 
