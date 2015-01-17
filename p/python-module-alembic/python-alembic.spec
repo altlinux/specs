@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-alembic
-Version: 0.6.7
+Version: 0.7.4
 Release: alt1
 
 Summary: Database migration tool for SQLAlchemy
@@ -127,6 +127,9 @@ install -m 0644 alembic.1 %buildroot%_man1dir/alembic.1
 %endif
 
 %changelog
+* Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.4-alt1
+- Version 0.7.4
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.7-alt1
 - Version 0.6.7
 - Added module for Python 3
