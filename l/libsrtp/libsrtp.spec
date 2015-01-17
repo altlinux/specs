@@ -1,14 +1,14 @@
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: libsrtp
-Version: 1.4.4
-Release: alt2
+Version: 1.5.0
+Release: alt1
 
 Summary: Secure Real-time Transport Protocol implementation
 License: BSD-like
 Group: System/Libraries
 
-Url: http://srtp.sourceforge.net/srtp.html
+Url: https://github.com/cisco/libsrtp
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Jun 19 2005
@@ -44,8 +44,12 @@ CFLAGS="$CFLAGS -fPIC -Wall -O2 -fexpensive-optimizations -funroll-loops"
 %dir %_includedir/srtp
 %_includedir/srtp/*.h
 %_libdir/libsrtp.a
+%_pkgconfigdir/libsrtp.pc
 
 %changelog
+* Sat Jan 17 2015 Denis Smirnov <mithraen@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+
 * Thu Oct 18 2012 Denis Smirnov <mithraen@altlinux.ru> 1.4.4-alt2
 - build with -fPIC
 
