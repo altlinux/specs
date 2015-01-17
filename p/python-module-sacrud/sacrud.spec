@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.9
-Release: alt1.git20141106
+Version: 0.2.0
+Release: alt1.git20150114
 Summary: sacrud - CRUD interface for SQLAlchemy
 License: MIT
 Group: Development/Python
@@ -22,6 +22,7 @@ BuildPreReq: python-module-SQLAlchemy python-module-transaction
 BuildPreReq: python-module-zope.sqlalchemy python-module-webhelpers
 BuildPreReq: python-module-webtest python-module-nose
 BuildPreReq: python-module-pyramid-tests python-modules-sqlite3
+BuildPreReq: python-module-six
 BuildPreReq: python-module-sphinx-devel itcase_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -30,6 +31,7 @@ BuildPreReq: python3-module-SQLAlchemy python3-module-transaction
 BuildPreReq: python3-module-zope.sqlalchemy python3-module-webhelpers
 BuildPreReq: python3-module-webtest python3-module-nose
 BuildPreReq: python3-module-pyramid-tests python3-modules-sqlite3
+BuildPreReq: python3-module-six
 %endif
 
 %py_provides %oname
@@ -45,7 +47,7 @@ customize interface. (that is closer to django.contrib.admin).
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires pyramid.testing
+%py_requires pyramid.testing six
 
 %description tests
 SACRUD will solve your problem of CRUD interface for SQLAlchemy, by
@@ -59,7 +61,7 @@ This package contains tests for %oname.
 Summary: sacrud - CRUD interface for SQLAlchemy
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires zope.sqlalchemy sqlite3
+%py3_requires zope.sqlalchemy sqlite3 six
 
 %description -n python3-module-%oname
 SACRUD will solve your problem of CRUD interface for SQLAlchemy, by
@@ -178,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20150114
+- Version 0.2.0
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.9-alt1.git20141106
 - Initial build for Sisyphus
 
