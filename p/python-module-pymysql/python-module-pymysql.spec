@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 0.6.2
-Release: alt1.git20140901
+Version: 0.6.3
+Release: alt1.git20150114
 
 %setup_python_module %modulename
 
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3-alt1.git20150114
+- Version 0.6.3
+
 * Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20140901
 - Version 0.6.2
 - Added module for Python 3
