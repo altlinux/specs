@@ -11,8 +11,8 @@
 %def_with python
 
 Name: %_name-%abi_ver
-Version: %ver_major.0
-Release: alt7
+Version: %ver_major.1
+Release: alt1
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -20,9 +20,6 @@ License: GPL
 Url: http://www.abisource.com/
 
 Source: http://www.abisource.com/downloads/abiword/%version/source/%_name-%version.tar.gz
-# http://bugzilla.abisource.com/show_bug.cgi?id=13564
-Patch: abiword-3.0-up-13564.patch
-Patch2: abiword-boost54.patch
 
 #fedora patches
 Source11: abiword.mime
@@ -31,11 +28,7 @@ Source13: abiword.xml
 
 Patch11: abiword-2.8.3-desktop.patch
 Patch12: abiword-2.6.0-boolean.patch
-Patch13: abiword-3.0.0-fixintrospection.patch
-Patch14: abiword-3.0.0-fix-redraw.patch
-Patch15: abiword-3.0.0-gnutls-no-libgcrypt.patch
 Patch16: abiword-3.0.0-librevenge.patch
-Patch17: abiword-3.0.0-libebook.patch
 Patch18: abiword-3.0.0-link-grammar-5.patch
 Patch19: abiword-3.0.0-link-grammar-5-second.patch
 
@@ -49,6 +42,7 @@ BuildRequires: libgtk+3-devel librsvg-devel libfribidi-devel libredland-devel li
 BuildRequires: liblink-grammar-devel libgsf-devel bzlib-devel zlib-devel libjpeg-devel libpng-devel libxslt-devel
 BuildRequires: libwv-devel libwpd10-devel libwpg-devel libwmf-devel libexpat-devel
 BuildRequires: telepathy-glib-devel libdbus-glib-devel libgnutls-devel libsoup-devel libgcrypt-devel
+#BuildRequires: libaiksaurus-devel
 %{?_enable_spell:BuildRequires: libenchant-devel}
 %{?_with_goffice:BuildRequires: libgnomeoffice0.10-devel}
 %{?_with_champlain:BuildRequires: libchamplain-gtk3-devel}
@@ -122,32 +116,15 @@ Python bindings for developing with AbiWord library
 
 %prep
 %setup -n %_name-%version
-%patch -p1
-%patch2 -p1
 
 # fedora patches
 %patch11 -p1 -b .desktop
 %patch12 -p1 -b .boolean
-%patch13 -p1 -b .introspection
-%patch14 -p1 -b .redraw
-%patch15 -p1 -b .nogcrypt
 %patch16 -p0 -b .librevenge
-%patch17 -p1 -b .libebook
 %patch18 -p1 -b .link-grammar-5
 %patch19 -p1 -b .link-grammar-5-second
 
 %build
-find plugins -name Makefile.am | sed  's|.am$||g' > plugin-makefiles.m4
-(cd ./plugins && find . -maxdepth 1 -type d | grep -v '^\.$' | grep -v '\./\.' | sed 's|\./||g' | xargs echo) > plugin-list.m4
-(for plugin in `cat plugin-list.m4`; do
-  u=`echo $plugin | tr '[:lower:]' '[:upper:]'`
-  echo 'AM_CONDITIONAL(['$u'_BUILTIN], test "$enable_'$plugin'_builtin" = "yes")'
-done) > plugin-builtin.m4
-find plugins -name plugin.m4 | xargs cat > plugin-configure.m4
-for f in ` find ./plugins -name '*.m4' | grep -v 'plugin\.m4'`; do
-    ln -sf $f
-done
-
 %autoreconf
 %configure \
 	--enable-print \
@@ -204,6 +181,10 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Sat Jan 17 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+- removed some upstreamed fedora patches
+
 * Tue Dec 02 2014 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt7
 - updated fedora patches for link-grammar-5 support
 
