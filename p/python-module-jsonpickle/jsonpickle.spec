@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.0
-Release: alt1.git20141022
+Version: 0.9.0
+Release: alt1.git20150116
 Summary: Python library for serializing any arbitrary object graph into JSON
 License: BSD
 Group: Development/Python
@@ -127,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.git20150116
+- Version 0.9.0
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.git20141022
 - Initial build for Sisyphus
 
