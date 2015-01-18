@@ -1,10 +1,10 @@
 %define oname mixer
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 4.10.2
-Release: alt1.git20141224
+Release: alt2.git20141224
 Summary: Mixer -- Is a fixtures replacement
 License: BSD
 Group: Development/Python
@@ -83,6 +83,7 @@ cp -fR . ../python3
 ln -s ../objects.inv docs/
 
 %build
+export LC_ALL=en_US.UTF-8
 %python_build_debug
 
 %if_with python3
@@ -92,6 +93,7 @@ popd
 %endif
 
 %install
+export LC_ALL=en_US.UTF-8
 %python_install
 
 %if_with python3
@@ -109,6 +111,7 @@ popd
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
+export LC_ALL=en_US.UTF-8
 python setup.py test
 %if_with python3
 pushd ../python3
@@ -134,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.10.2-alt2.git20141224
+- Added module for Python 3
+
 * Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.10.2-alt1.git20141224
 - Initial build for Sisyphus
 
