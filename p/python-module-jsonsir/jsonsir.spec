@@ -3,12 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt1.git20141121
+Version: 0.0.2
+Release: alt1.git20150116
 Summary: A serializer for JSON-like data in Python
 License: MIT
 Group: Development/Python
-Url: https://github.com/RussellLuo/jsonsir
+Url: https://pypi.python.org/pypi/JsonSir/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/RussellLuo/jsonsir.git
@@ -63,11 +63,11 @@ popd
 
 %check
 python setup.py test
-nosetests
+nosetests -v
 %if_with python3
 pushd ../python3
 python3 setup.py test
-nosetests3
+nosetests3 -v
 popd
 %endif
 
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20150116
+- Version 0.0.2
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20141121
 - Initial build for Sisyphus
 
