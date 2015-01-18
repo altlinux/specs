@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.12
-Release: alt1.git20141223
+Version: 0.13
+Release: alt1.git20150116
 Summary: Python library for converting object into dictionary/list structures and json
 License: GPLv3
 Group: Development/Python
@@ -21,6 +21,7 @@ BuildPreReq: python-module-jsonpickle python-module-pytest-cov
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-jsonpickle python3-module-pytest-cov
+BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
@@ -43,6 +44,7 @@ json.
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -85,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1.git20150116
+- Version 0.13
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12-alt1.git20141223
 - Initial build for Sisyphus
 
