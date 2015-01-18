@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.8.0
-Release: alt1.hg20141209
+Version: 1.9.0
+Release: alt1.hg20150105
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -15,10 +15,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel
+BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %description
@@ -64,6 +64,16 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test
+py.test -vv
+%if_with python3
+pushd ../python3
+python3 setup.py test
+py.test-%_python3_version -vv
+popd
+%endif
+
 %files
 %doc README documentation/*.rst
 %python_sitelibdir/*
@@ -75,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt1.hg20150105
+- Version 1.9.0
+
 * Fri Dec 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.hg20141209
 - New snapshot
 - Added chr (ALT #30557)
