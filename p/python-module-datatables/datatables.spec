@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.6
-Release: alt1.git20141222
+Version: 0.4.9
+Release: alt1.git20150106
 Summary: Integrates SQLAlchemy with DataTables (framework agnostic)
 License: MIT
 Group: Development/Python
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.9-alt1.git20150106
+- Version 0.4.9
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.6-alt1.git20141222
 - Initial build for Sisyphus
 
