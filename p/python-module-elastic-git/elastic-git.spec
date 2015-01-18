@@ -1,7 +1,7 @@
 %define oname elastic-git
 Name: python-module-%oname
-Version: 0.3.1
-Release: alt1.git20141127
+Version: 0.3.3
+Release: alt1.git20150116
 Summary: JSON Object storage backed by Git & Elastic Search
 License: BSD
 Group: Development/Python
@@ -9,6 +9,7 @@ Url: https://pypi.python.org/pypi/elastic-git/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/universalcore/elastic-git.git
+# branch: develop
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -100,6 +101,9 @@ python setup.py test
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1.git20150116
+- Version 0.3.3
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20141127
 - Version 0.3.1
 
