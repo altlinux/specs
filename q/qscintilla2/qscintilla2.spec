@@ -7,7 +7,7 @@
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 Name: qscintilla2
 Version: 2.8.4
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/KDE and QT
 Source: qscintilla-gpl-%version.tar.gz
@@ -606,6 +606,9 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.4-alt2
+- Rebuilt with new SIP
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.4-alt1
 - Version 2.8.4
 

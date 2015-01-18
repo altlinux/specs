@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.11.3
-Release: alt1
+Release: alt2
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -220,6 +220,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.3-alt2
+- Rebuilt with new SIP
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.3-alt1
 - Version 4.11.3
 
