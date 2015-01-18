@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.3.0
-Release: alt1.git20141127
+Version: 1.4.2
+Release: alt1.git20150115
 Summary: JSON based CMS for Universal Core
 License: BSD
 Group: Development/Python
@@ -28,6 +28,8 @@ BuildPreReq: python-module-arrow python-module-markdown
 BuildPreReq: python-module-raven python-module-elastic-git
 BuildPreReq: python-module-slugify python-module-pyramid_mako
 BuildPreReq: python-module-GitDB python-module-mako
+BuildPreReq: python-module-universal-analytics-python
+BuildPreReq: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -39,7 +41,8 @@ BuildPreReq: python3-module-praekelt_pyramid_celery python3-module-babel
 BuildPreReq: python3-module-pyramid_redis python3-module-lingua
 BuildPreReq: python3-module-arrow python3-module-markdown
 BuildPreReq: python3-module-raven python3-module-elastic-git
-BuildPreReq: python3-module-slugify
+BuildPreReq: python3-module-slugify python3-module-mock
+BuildPreReq: python3-module-universal-analytics-python
 %endif
 
 %py_provides cms
@@ -47,6 +50,7 @@ BuildPreReq: python3-module-slugify
 Conflicts: python-module-django-cms3.0
 Conflicts: python-module-django-cms2.3
 Conflicts: python-module-django-cms
+%py_requires UniversalAnalytics
 
 %description
 JSON based CMS for Universal Core.
@@ -69,6 +73,7 @@ Group: Development/Python3
 Conflicts: python3-module-django-cms3.0
 Conflicts: python3-module-django-cms2.3
 Conflicts: python3-module-django-cms
+%py3_requires UniversalAnalytics
 
 %description -n python3-module-%oname
 JSON based CMS for Universal Core.
@@ -145,6 +150,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1.git20150115
+- Version 1.4.2
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20141127
 - Version 1.3.0
 
