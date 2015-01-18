@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt1.git20140831
+Version: 0.0.2
+Release: alt1.git20150116
 Summary: Form validation for JSON-like data (i.e. document) in Python
 License: MIT
 Group: Development/Python
@@ -134,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20150116
+- Version 0.0.2
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20140831
 - Initial build for Sisyphus
 
