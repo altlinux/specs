@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.b1.git20141211
+Release: alt2.b1.git20141211
 Summary: Declarative state machine for content-lifecycle workflows
 License: BSD
 Group: Development/Python
@@ -86,6 +86,12 @@ install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
+pushd repoze/workflow
+install -p -m644 *.zcml \
+	%buildroot%python_sitelibdir/repoze/workflow/
+install -p -m644 tests/fixtures/*.zcml \
+	%buildroot%python_sitelibdir/repoze/workflow/tests/fixtures/
+popd
 
 %if_with python3
 pushd ../python3
@@ -96,6 +102,12 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
+pushd ../python3/repoze/workflow
+install -p -m644 *.zcml \
+	%buildroot%python3_sitelibdir/repoze/workflow/
+install -p -m644 tests/fixtures/*.zcml \
+	%buildroot%python3_sitelibdir/repoze/workflow/tests/fixtures/
+popd
 %endif
 
 %files
@@ -121,6 +133,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.b1.git20141211
+- Added missing files
+
 * Fri Dec 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.b1.git20141211
 - Version 1.0b1
 
