@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.3.2
+Version: 5.4
 Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
@@ -195,6 +195,9 @@ rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 %endif
 
 %changelog
+* Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4-alt1
+- Version 5.4
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.2-alt1
 - Version 5.3.2
 
