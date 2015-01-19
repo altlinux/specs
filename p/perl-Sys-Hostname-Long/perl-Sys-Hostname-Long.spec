@@ -1,15 +1,15 @@
 %define module Sys-Hostname-Long
 
 Name: perl-%module
-Version: 1.4
-Release: alt1.1
+Version: 1.5
+Release: alt1
 
 Summary: Sys-Hostname-Long perl module
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Sys/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SC/SCOTT/Sys-Hostname-Long-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ rm -f %buildroot%perl_vendor_privlib/Sys/Hostname/testall.pl
 %perl_vendor_privlib/*
 
 %changelog
+* Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
