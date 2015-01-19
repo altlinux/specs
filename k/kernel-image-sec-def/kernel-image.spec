@@ -2,7 +2,7 @@ Name: kernel-image-sec-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	3.14
-%define kernel_sublevel	.28
+%define kernel_sublevel	.29
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -542,6 +542,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Mon Jan 19 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.29-alt1
+- 3.14.29
+
 * Fri Jan 09 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.28-alt1
 - 3.14.28
 
