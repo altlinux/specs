@@ -3,14 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: r187
-Release: alt1.svn20140706
+Version: r243
+Release: alt1.svn20150119
 Summary: A collection of Python equations
 License: BSD
 Group: Development/Python
 Url: http://code.google.com/p/pyeq2/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# http://pyeq2.googlecode.com/svn/trunk/
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -152,6 +153,9 @@ cp -fR * %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r243-alt1.svn20150119
+- New snapshot
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r187-alt1.svn20140706
 - Initial build for Sisyphus
 
