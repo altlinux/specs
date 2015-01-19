@@ -1,25 +1,27 @@
+%define ppp_ver %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
+
+%def_enable bcrelay
+%def_with libwrap
+
+
 Name: pptpd
-Version: 1.3.4
-Release: alt7.qa1
+Version: 1.4.0
+Release: alt1
 
 Summary: A PPTP server daemon
-Summary(ru_RU.KOI8-R): Сервер сетевых соединений PPTP
-License: GPL
+License: GPLv2+ and LGPLv2+
 Group: System/Servers
 
 Url: http://www.poptop.org
 
 #http://heanet.dl.sourceforge.net/sourceforge/poptop/%name-%version.tar.gz
-Source0: %name-%version.tar
-Source1: pptpd.init
-Source2: pptpd.sysconfig
-Patch0: %name-%version-%release.patch
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-Requires: ppp = 2.4.5
+Requires: ppp = %ppp_ver
 
-#BuildPreReq: rpm-build >= 4.0.4-alt10, autoconf_2.5, automake_1.9
-BuildRequires: libwrap-devel
-BuildRequires: ppp-devel = 2.4.5
+%{?_with_libwrap:BuildRequires: libwrap-devel}
+BuildRequires: ppp-devel
 
 #%%def_with libwrap
 
@@ -32,30 +34,20 @@ between the PPTP server and client, and packets from the subnet are
 wrapped and passed between server and client similar to other C/S
 protocols.
 
-%description -l ru_RU.KOI8-R
-PPTPd, Point-to-Point Tunnelling Protocol Daemon, позволяет клиентским
-PPTP-соедининениям получать адреса из IP-пула, управляемого сервером PPTP.
-В результате эти клиенты могут стать виртуальными членами локальной подсети
-независимо от их настоящего IP-адреса. Для этого формируется туннель между
-клиентом и сервером, по которому транспортируются пакеты между локальной
-подсетью и клиентом.
-
 %prep
-%setup
-%patch0 -p1
+%setup -q
+%patch -p1
 
 %build
-#%%set_autoconf_version 2.5
-#%%set_automake_version 1.9
-#%%configure %{subst_with libwrap}
 
 # dirty hack for fix wtmp work on x86_64
-sed -i -e "s,/usr/lib/pptpd/pptpd-logwtmp.so,%_libdir/pptpd/pptpd-logwtmp.so,g" pptpctrl.c
+sed -i -e "s,/usr/lib/pptpd,%_libdir/pptpd,g" pptpctrl.c
 
-autoreconf -fisv
+%autoreconf
 %configure \
-	--with-libwrap \
-	--enable-bcrelay
+	%{subst_with libwrap} \
+	%{subst_enable bcrelay}
+
 %make_build
 
 %install
@@ -63,18 +55,8 @@ autoreconf -fisv
 
 install -pD -m644 samples/%name.conf %buildroot%_sysconfdir/%name.conf
 install -pD -m644 samples/options.%name %buildroot%_sysconfdir/ppp/options.%name
-install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
-install -pD -m600 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
-
-%post
-%post_service %name
-
-%preun
-%preun_service %name
 
 %files
-%config %_initdir/%name
-%config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/%name.conf
 %config(noreplace) %_sysconfdir/ppp/options.%name
 %_sbindir/*
@@ -83,6 +65,10 @@ install -pD -m600 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %doc AUTHORS NEWS README* TODO samples tools ChangeLog* html
 
 %changelog
+* Fri Jan 16 2015 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+- drop SysV init script
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.4-alt7.qa1
 - NMU: rebuilt for debuginfo.
 
