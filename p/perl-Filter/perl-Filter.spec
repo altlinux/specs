@@ -1,6 +1,6 @@
 %define dist Filter
 Name: perl-%dist
-Version: 1.53
+Version: 1.54
 Release: alt1
 
 Summary: Source Filters
@@ -37,6 +37,9 @@ mv t/pod.t t/pod.t.orig
 %perl_vendor_autolib/Filter
 
 %changelog
+* Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1
+- automated CPAN update
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.53-alt1
 - automated CPAN update
 
