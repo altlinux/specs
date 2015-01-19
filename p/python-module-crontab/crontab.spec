@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.9.0
-Release: alt1.bzr20150102
+Version: 1.9.2
+Release: alt1.bzr20150119
 Summary: Python Crontab API
 License: GPLv3+
 Group: Development/Python
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.2-alt1.bzr20150119
+- Version 1.9.2
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt1.bzr20150102
 - Initial build for Sisyphus
 
