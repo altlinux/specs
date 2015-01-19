@@ -1,18 +1,18 @@
 %set_automake_version 1.11
-
+%define ver_major 3.14
 %define _libexecdir /usr/libexec
 %def_without x11_support
 
 Name: gnote
-Version: 3.14.0
+Version: %ver_major.2
 Release: alt1
+
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
 License: GPLv3+
-Url: http://live.gnome.org/Gnote
-Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
+Url: https://wiki.gnome.org/Apps/Gnote
 
-Source0: http://ftp.gnome.org/pub/GNOME/sources/gnote/%version/%name-%version.tar
+Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define gtk_ver 3.10
 %define gtkmm_ver 3.10
@@ -40,7 +40,7 @@ ideas together with Wiki style interconnects. It is a port of Tomboy to C++
 and consumes fewer resources.
 
 %prep
-%setup -q
+%setup
 
 %build
 # NOCONFIGURE=1 ./autogen.sh
@@ -53,7 +53,7 @@ and consumes fewer resources.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 desktop-file-install \
  --dir=%buildroot%_datadir/applications \
@@ -65,21 +65,24 @@ desktop-file-install \
 %make check
 
 %files -f %name.lang
-%doc COPYING README TODO NEWS AUTHORS
 %_bindir/%name
 %_libdir/libgnote-*.so.*
 %_man1dir/%name.*
 %_desktopdir/%name.desktop
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/%name.??g
-%_libdir/gnote
+%_libdir/gnote/
 %exclude %_libdir/gnote/addins/*/*.la
 %_datadir/dbus-1/services/org.gnome.Gnote.service
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/appdata/gnote.appdata.xml
 %_datadir/gnome-shell/search-providers/gnote-search-provider.ini
+%doc README TODO NEWS AUTHORS
 
 %changelog
+* Mon Jan 19 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
+- 3.14.2
+
 * Tue Sep 30 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt1
 - 3.14.0
 
