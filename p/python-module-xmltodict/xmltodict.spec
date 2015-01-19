@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.0
-Release: alt1.git20140727
+Version: 0.9.1
+Release: alt1.git20150118
 Summary: Makes working with XML feel like you are working with JSON
 License: MIT
 Group: Development/Python
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.git20150118
+- Version 0.9.1
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.git20140727
 - Initial build for Sisyphus
 
