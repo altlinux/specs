@@ -1,7 +1,7 @@
 
 Name:           bleachbit
 Version:        1.6
-Release:        alt1
+Release:        alt2
 
 Summary:        Remove unnecessary files, free space, and maintain privacy
 License:        GPLv3+
@@ -11,6 +11,8 @@ URL:            http://bleachbit.sourceforge.net/
 Packager:       Andrey Cherepanov <cas@altlinux.org>
 
 Source0:        http://downloads.sourceforge.net/%name/%name-%version.tar.lzma
+Source1:	%name.watch
+
 BuildArch:      noarch
 
 BuildRequires(pre): rpm-build-gnome python-devel
@@ -48,6 +50,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Jan 19 2015 Andrey Cherepanov <cas@altlinux.org> 1.6-alt2
+- Package watch file to check for new version
+
 * Wed Jan 07 2015 Andrey Cherepanov <cas@altlinux.org> 1.6-alt1
 - New version
 
