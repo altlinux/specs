@@ -2,10 +2,11 @@
 
 %def_without python2
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.4.1
-Release: alt1.git20150109
+Version: 0.5.1
+Release: alt1.git20150118
 Summary: Implementation of the PEP 3156 event-loop (tulip) api using the Qt Event-Loop
 License: BSD
 Group: Development/Python
@@ -102,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1.git20150118
+- Version 0.5.1
+
 * Sun Jan 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20150109
 - Initial build for Sisyphus
 
