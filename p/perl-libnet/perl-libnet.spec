@@ -1,6 +1,6 @@
 %define dist libnet
 Name: perl-%dist
-Version: 3.04
+Version: 3.05
 Release: alt1
 Epoch: 1
 
@@ -57,6 +57,9 @@ mv %buildroot{%perl_vendor_privlib,/etc/perl5}/Net/libnet.cfg
 	%perl_vendor_privlib/Net/FTP/*.pm
 
 %changelog
+* Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 1:3.05-alt1
+- automated CPAN update
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.04-alt1
 - automated CPAN update
 
