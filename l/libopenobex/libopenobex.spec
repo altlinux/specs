@@ -1,6 +1,6 @@
 Name: libopenobex
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: OpenOBEX - Free implementation of the Object Exchange protocol
 License: LGPL
@@ -30,6 +30,9 @@ This package contains development files of Open OBEX library
 %prep
 %setup
 %patch -p1
+# fix udev rule
+#subst 's|GROUP=\"plugdev\"|ENV{ID_MEDIA_PLAYER}="1"|' udev/openobex.rules.in
+sed -i 's|MODE="660", GROUP="plugdev"|TAG+="uaccess"|' udev/openobex.rules.in
 
 %build
 %cmake -DCMAKE_INSTALL_DOCDIR=%_pkgdocdir
@@ -58,6 +61,9 @@ cp AUTHORS ChangeLog README %buildroot%_pkgdocdir
 %doc %_pkgdocdir/html/
 
 %changelog
+* Mon Jan 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt2
+- fixed incorrect udev.rules
+
 * Sat Dec 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
 - 1.7.1
 
