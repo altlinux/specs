@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-CHI
-Version: 0.58
+Version: 0.59
 Release: alt1
 Summary: CHI - Unified cache handling interface
 
@@ -8,7 +8,7 @@ Group: Development/Perl
 License: Perl
 Url: %CPAN CHI
 
-Source: http://www.cpan.org/authors/id/H/HA/HAARG/CHI-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/J/JS/JSWARTZ/CHI-%{version}.tar.gz
 
 BuildArch: noarch
 BuildRequires: perl-Log-Any perl-Time-Duration perl-Data-UUID perl-Try-Tiny perl-Moose perl-JSON perl-List-MoreUtils perl-Task-Weaken perl-Hash-MoreUtils perl-Digest-JHash perl-Time-Duration perl-Time-Duration-Parse perl-Carp-Assert perl-Test-Deep perl-Test-Exception perl-TimeDate perl-Test-Warn perl-Test-Class perl-IO-Compress perl-Cache-Cache perl-Cache-FastMmap perl-String-RewritePrefix perl-Moo perl-MooX-Types-MooseLike perl-MooX-Types-MooseLike-Numeric
@@ -31,6 +31,9 @@ BuildRequires: perl-Log-Any perl-Time-Duration perl-Data-UUID perl-Try-Tiny perl
 %doc Changes LICENSE
 
 %changelog
+* Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1
+- automated CPAN update
+
 * Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1
 - automated CPAN update
 
