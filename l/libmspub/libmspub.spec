@@ -1,6 +1,6 @@
 
 Name: libmspub
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 Summary: A library providing ability to interpret and import Microsoft Publisher files
 Group: System/Libraries
@@ -78,6 +78,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Mon Jan 19 2015 Alexey Shabalin <shaba@altlinux.ru> 0.1.2-alt1
+- 0.1.2
+
 * Wed Jul 30 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.1-alt1
 - 0.1.1
 
