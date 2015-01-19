@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.4.8
-Release: alt1.git20141219
+Version: 0.4.9
+Release: alt1.git20150117
 Summary: Persistent cache for requests library
 License: BSD
 Group: Development/Python
@@ -127,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.9-alt1.git20150117
+- Version 0.4.9
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt1.git20141219
 - Initial build for Sisyphus
 
