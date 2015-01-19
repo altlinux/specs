@@ -1,6 +1,6 @@
 
 Name: libvisio
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 Summary: A library providing ability to interpret and import visio diagrams
 
@@ -15,6 +15,7 @@ BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(icu-i18n)
 BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(cppunit)
 
 BuildRequires: doxygen
 BuildRequires: gperf
@@ -80,6 +81,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Mon Jan 19 2015 Alexey Shabalin <shaba@altlinux.ru> 0.1.1-alt1
+- 0.1.1
+
 * Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.0-alt1
 - 0.1.0
 

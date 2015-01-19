@@ -1,6 +1,6 @@
 
 Name: librevenge
-Version: 0.0.1
+Version: 0.0.2
 Release: alt1
 Summary: A base library for writing document import filters
 Group: System/Libraries
@@ -52,7 +52,8 @@ mkdir -p m4
 
 %install
 %makeinstall_std
-
+# we install API docs directly from build
+rm -rf %{buildroot}/%{_docdir}/%{name}
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
@@ -72,5 +73,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 %doc docs/doxygen/html
 
 %changelog
+* Mon Jan 19 2015 Alexey Shabalin <shaba@altlinux.ru> 0.0.2-alt1
+- 0.0.2
+
 * Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.0.1-alt1
 - initial build
