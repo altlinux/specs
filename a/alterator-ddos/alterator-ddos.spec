@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ddos
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -35,6 +35,9 @@ Alterator module for ddos-deflate administration.
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Jan 19 2015 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
+- Add IP whitelist.
+
 * Wed Sep 17 2014 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1
 - Add Russian name for module.
 
