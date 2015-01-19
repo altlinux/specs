@@ -1,6 +1,6 @@
 
 Name: libodfgen
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 Summary: An ODF generator library
 Group: System/Libraries
@@ -19,14 +19,13 @@ only). It is directly pluggable into input filters based on
 libwpd/libwpg. It is used in libreoffice, for example.
 
 %package devel
-Summary: Development files for %{name}
+Summary: Development files for %name
 Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
-
 
 %prep
 %setup -q
@@ -36,7 +35,6 @@ mkdir -p m4
 %autoreconf
 %configure --disable-silent-rules --disable-static --disable-werror
 %make_build
-
 
 %install
 %makeinstall_std
@@ -53,6 +51,9 @@ mkdir -p m4
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jan 19 2015 Alexey Shabalin <shaba@altlinux.ru> 0.1.3-alt1
+- 0.1.3
+
 * Wed Dec 17 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.2-alt1
 - 0.1.2
 
