@@ -1,5 +1,5 @@
 Name: zpaq
-Version: 655
+Version: 660
 Release: alt1
 
 Summary: A journaling archiver optimized for backup
@@ -46,10 +46,9 @@ development environment.
 %set_verify_elf_method unresolved=relaxed
 
 %add_optflags -Wall
-g++ %optflags -Dunix -shared -fPIC libzpaq.cpp -Wl,-soname,%name.so.0 -o lib%name.so.0 -lm
+g++ %optflags -Dunix -shared -fPIC libzpaq.cpp -Wl,-soname,%name.so.0 -o lib%name.so.0 -lm -lpthread
 ln -s lib%name.so.0 lib%name.so
-gcc %optflags -c -DNDEBUG divsufsort.c
-g++ %optflags -Dunix -DNDEBUG -fopenmp zpaq.cpp divsufsort.o -L.  -o zpaq -l%name -lm
+g++ %optflags -Dunix -DNDEBUG zpaq.cpp -L.  -o zpaq -l%name -lm -lpthread
 #g++ %optflags -Dunix zpaqd.cpp -L. -l%name -o zpaqd -L. -lzpaq -lm
 
 %install
@@ -71,6 +70,9 @@ ln -s lib%name.so.0 %buildroot%_libdir/lib%name.so
 %_includedir/*.h
 
 %changelog
+* Mon Jan 19 2015 Vitaly Lipatov <lav@altlinux.ru> 660-alt1
+- new version 660 (with rpmrb script)
+
 * Thu Nov 20 2014 Vitaly Lipatov <lav@altlinux.ru> 655-alt1
 - new version 655 (with rpmrb script) (ALT bug #30313)
 
