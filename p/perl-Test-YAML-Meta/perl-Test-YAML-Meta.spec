@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(IO/File.pm) perl(Test/More.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-YAML-Meta
-Version:        0.20
+Version:        0.21
 Release:        alt1
 Summary:        Validation of the META.yml file in a distribution
 License:        GPL+ or Artistic
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/Test/YAML/Meta.pm
 
 %changelog
+* Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Mon Feb 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
