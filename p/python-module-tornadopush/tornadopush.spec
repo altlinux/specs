@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.6.1
-Release: alt1.git20150101
+Version: 0.6.2
+Release: alt1.git20150119
 Summary: Push and presence server built with Tornado and Redis
 License: MIT
 Group: Development/Python
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20150119
+- Version 0.6.2
+
 * Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20150101
 - Version 0.6.1
 
