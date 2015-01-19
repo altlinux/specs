@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-TAP-Harness-Archive
-Version: 0.15
+Version: 0.16
 Release: alt1
 
 Summary: Create an archive of TAP test results
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/TAP-Harness-Archive/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SC/SCHWIGON/TAP-Harness-Archive-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Jul 08 2009 (-bi)
 BuildRequires: perl-Archive-Tar perl-Module-Build perl-YAML-Tiny
@@ -52,6 +52,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %doc README TODO Changes
 
 %changelog
+* Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
