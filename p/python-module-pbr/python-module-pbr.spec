@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:		python-module-%{pypi_name}
-Version:	0.10.0
+Version:	0.10.7
 Release:	alt1
 Summary:	Python Build Reasonableness
 Group:		Development/Python
@@ -76,31 +76,44 @@ sphinx-build doc/source html
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-%python_install
-
-# do not include tests due to unmet dependencies
-rm -rf %{buildroot}%{python_sitelibdir}/%{pypi_name}/test*
-
 %if_with python3
 pushd ../python3
 %python3_install
 popd
 rm -rf %{buildroot}%{python3_sitelibdir}/%{pypi_name}/test*
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
 %endif
+
+%python_install
+
+# do not include tests due to unmet dependencies
+rm -rf %{buildroot}%{python_sitelibdir}/%{pypi_name}/test*
 
 %files
 %doc html README.rst LICENSE
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %{python_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
 %{python_sitelibdir}/%{pypi_name}
 
 %if_with python3
 %files -n python3-module-%pypi_name
 %doc README.rst LICENSE
+%_bindir/*.py3
 %{python3_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
 %{python3_sitelibdir}/%{pypi_name}
 %endif
 
 %changelog
+* Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.7-alt1
+- Version 0.10.7
+
 * Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt1
 - Version 0.10.0 (ALT #30192)
 
