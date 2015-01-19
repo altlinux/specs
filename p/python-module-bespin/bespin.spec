@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.9
-Release: alt1.git20150116
+Version: 0.4.1
+Release: alt1.git20150119
 Summary: Opinionated wrapper around boto that reads yaml
 License: MIT
 Group: Development/Python
@@ -23,6 +23,7 @@ BuildPreReq: python-module-boto python-module-yaml
 BuildPreReq: python-module-rainbow_logging_handler
 BuildPreReq: python-module-filechunkio python-module-noseOfYeti
 BuildPreReq: python-module-nose python-module-mock
+BuildPreReq: python-module-requests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -33,11 +34,13 @@ BuildPreReq: python3-module-boto python3-module-yaml
 BuildPreReq: python3-module-rainbow_logging_handler
 BuildPreReq: python3-module-filechunkio python3-module-noseOfYeti
 BuildPreReq: python3-module-nose python3-module-mock
+BuildPreReq: python3-module-requests
 %endif
 
 %py_provides %oname
 %py_requires delfick_error option_merge input_algorithms argparse
 %py_requires six humanize boto yaml rainbow_logging_handler filechunkio
+%py_requires requests
 
 %description
 An opinionated wrapper around the boto API that knows how to read yaml
@@ -49,6 +52,7 @@ Group: Development/Python3
 %py3_provides %oname
 %py3_requires delfick_error option_merge input_algorithms argparse
 %py3_requires six humanize boto yaml rainbow_logging_handler filechunkio
+%py3_requires requests
 
 %description -n python3-module-%oname
 An opinionated wrapper around the boto API that knows how to read yaml
@@ -111,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20150119
+- Version 0.4.1
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.9-alt1.git20150116
 - Initial build for Sisyphus
 
