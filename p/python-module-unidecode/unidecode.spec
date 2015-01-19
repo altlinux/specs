@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.04.16
-Release: alt1.git20140511
+Version: 0.04.17
+Release: alt1.git20141218
 Summary: ASCII transliterations of Unicode text
 License: GPLv2
 Group: Development/Python
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.04.17-alt1.git20141218
+- Version 0.04.17
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.04.16-alt1.git20140511
 - Initial build for Sisyphus
 
