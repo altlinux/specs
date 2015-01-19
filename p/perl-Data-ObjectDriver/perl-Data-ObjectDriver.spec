@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Data-ObjectDriver
-Version: 0.09
+Version: 0.10
 Release: alt1
 
 Summary: Simple, transparent data interface, with caching
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Denis Baranov <baraka@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SI/SIXAPART/Data-ObjectDriver-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Mar 10 2011
 BuildRequires: libnss-role perl-Class-Accessor perl-Class-Data-Inheritable perl-Class-Trigger perl-DBI perl-Module-Install
@@ -56,6 +56,9 @@ rm -f %buildroot/%perl_vendor_privlib/Data/ObjectDriver/Driver/DBD/SQLite.pm
 %perl_vendor_privlib/Data/ObjectDriver.pm
 
 %changelog
+* Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
