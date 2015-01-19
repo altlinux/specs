@@ -1,6 +1,6 @@
 %define dist Encode-Locale
 Name: perl-%dist
-Version: 1.03
+Version: 1.04
 Release: alt1
 
 Summary: Determine the locale encoding
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GA/GAAS/Encode-Locale-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ should be used when interfacing to various external interfaces.
 %perl_vendor_privlib/Encode
 
 %changelog
+* Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 1.03-alt1
 - 1.02 -> 1.03
 
