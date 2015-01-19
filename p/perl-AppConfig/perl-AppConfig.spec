@@ -1,14 +1,14 @@
 %define dist AppConfig
 Name: perl-%dist
-Version: 1.66
-Release: alt2
+Version: 1.67
+Release: alt1
 
 Summary: Perl module for reading configuration files
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/AppConfig-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ arguments and CGI script parameters.
 %perl_vendor_privlib/AppConfig*
 
 %changelog
+* Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.67-alt1
+- automated CPAN update
+
 * Mon Sep 26 2011 Alexey Tourbin <at@altlinux.ru> 1.66-alt2
 - rebuilt as plain src.rpm
 
