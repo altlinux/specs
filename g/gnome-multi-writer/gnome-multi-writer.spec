@@ -2,16 +2,16 @@
 %define _name org.gnome.MultiWriter
 
 Name: gnome-multi-writer
-Version: %ver_major.3
-Release: alt0.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: Write an ISO file to multiple USB devices at once
 Group: Archiving/Backup
 License: GPLv2+
 Url: https://wiki.gnome.org/Apps/MultiWriter
 
-#Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Requires: gnome-icon-theme-extras
 
@@ -51,6 +51,9 @@ USB devices simultaneously.
 %doc README.md AUTHORS NEWS
 
 %changelog
+* Mon Jan 19 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.4-alt1
+- 3.15.4 release
+
 * Mon Jan 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.3-alt0.1
 - 3.15.3 snapshot
 
