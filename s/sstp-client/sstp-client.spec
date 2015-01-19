@@ -1,8 +1,8 @@
-%define ppp_version 2.4.5
+%define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
 Name: sstp-client
 Version: 1.0.9
-Release: alt2
+Release: alt3
 Summary: Secure Socket Tunneling Protocol (SSTP) Client
 Group: System/Servers
 License: GPLv2+
@@ -11,7 +11,7 @@ Url: http://sstp-client.sourceforge.net/
 Source: %name-%version.tar
 Source2: %name.tmpfiles
 
-Requires: ppp >= %ppp_version
+Requires: ppp = %ppp_version
 Requires: libsstp = %version-%release
 BuildRequires: libevent-devel >= 2.0.10
 BuildRequires: libssl-devel glibc-devel ppp-devel
@@ -86,6 +86,9 @@ install -Dpm 644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jan 19 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.9-alt3
+- rebuild with ppp-2.4.7
+
 * Fri Sep 12 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.9-alt2
 - move tmpfiles conf from /etc to /lib
 

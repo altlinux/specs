@@ -9,8 +9,8 @@
 %def_with inet6
 
 Name: ppp
-Version: 2.4.5
-Release: alt13
+Version: 2.4.7
+Release: alt1
 
 Summary: The PPP daemon and documentation
 License: distributable
@@ -23,21 +23,22 @@ Source2: ppp.pamd
 Source4: ppp.control
 Source5: ppp.logrotate
 Source6: ppp.tmpfiles
+Source7: 95-ppp.rules
 
 # eaptls and openssl need manual conflict resolution
 # TODO: %%def_with'ize those?
-Patch1: ppp-%version-%release.patch
+Patch1: %name-%version-%release.patch
 
 PreReq: %_lockdir/serial
 Obsoletes: ppp-cbcp, ppp-mppe
 Obsoletes: ppp-extra
 
-BuildRequires: glibc-devel libatm-devel libpam-devel libpcap-devel libssl-devel perl-IPC-Signal perl-Proc-Daemon perl-Proc-WaitStat
+BuildRequires: glibc-devel libatm-devel libpam-devel libpcap-devel libssl-devel perl-IPC-Signal perl-Proc-Daemon perl-Proc-WaitStat libudev-devel
 Requires: ppp-common libssl
 Requires: kmod >= 14
 Requires: udev >= 204-alt2
 
-%set_verify_elf_method relaxed
+
 %add_findprov_lib_path %_libdir/pppd/%version
 
 
@@ -163,7 +164,8 @@ touch %buildroot%_var/run/%name/resolv.conf
 ln -s ../..%_logdir/%name/connect-errors %buildroot%_sysconfdir/%name/connect-errors
 ln -s ../..%_var/run/%name/resolv.conf %buildroot%_sysconfdir/%name/resolv.conf
 
-install -Dpm 644 %SOURCE6 %buildroot/lib/tmpfiles.d/%name.conf
+install -Dpm 644 %SOURCE6 %buildroot/%_tmpfilesdir/%name.conf
+install -Dpm 644 %SOURCE7 %buildroot/%_udevrulesdir/95-%name.rules
 
 # Logrotate script
 install -pDm644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/%name
@@ -192,7 +194,8 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %attr(644,root,root) %_sysconfdir/%name/resolv.conf
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/pam.d/%name
-/lib/tmpfiles.d/%name.conf
+%_tmpfilesdir/%name.conf
+%_udevrulesdir/95-%name.rules
 %config %_controldir/%name
 %_libdir/pppd
 %_var/run/%name
@@ -229,6 +232,10 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %_libdir/pppd/%version/dhcpc.so
 
 %changelog
+* Thu Jan 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2.4.7-alt1
+- 2.4.7
+- add udev rules for set GROUP=uucp (ALT #29457)
+
 * Wed Oct 09 2013 Alexey Shabalin <shaba@altlinux.ru> 2.4.5-alt13
 - drop /lib/udev/devices/ppp
 

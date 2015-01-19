@@ -1,12 +1,12 @@
 %define nm_version 0.9.9.98
 %define nm_applet_version 0.9.8.0
 %define nm_applet_name NetworkManager-applet-gtk
-%define ppp_version 2.4.5
+%define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 %define gtkver 3
 
 Name: NetworkManager-sstp
 Version: 0.9.8.0
-Release: alt3
+Release: alt4
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for SSTP
@@ -86,6 +86,9 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Mon Jan 19 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.8.0-alt4
+- rebuild with ppp-2.4.7
+
 * Tue Jun 24 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt3
 - Update requires: NetworkManager -> NetworkManager-daemon.
 - Update BR: Use libnm-glib-vpn-devel.

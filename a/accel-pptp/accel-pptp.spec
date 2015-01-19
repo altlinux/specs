@@ -1,8 +1,8 @@
-%define ppp_ver 2.4.5
+%define ppp_ver 2.4.7
 
 Name: accel-pptp
 Version: 0.8.5
-Release: alt1
+Release: alt2
 Summary: PPTP VPN plugin for pppd
 License: GPLv2
 Group: System/Servers
@@ -46,6 +46,9 @@ cd pppd_plugin
 %_man8dir/*.8*
 
 %changelog
+* Mon Jan 19 2015 Valery Inozemtsev <shrek@altlinux.ru> 0.8.5-alt2
+- rebuild with ppp 2.4.7
+
 * Thu Jan 13 2011 Valery Inozemtsev <shrek@altlinux.ru> 0.8.5-alt1
 - initial release
 

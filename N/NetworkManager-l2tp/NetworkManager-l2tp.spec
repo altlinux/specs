@@ -3,11 +3,11 @@
 %define nm_applet_name NetworkManager-applet-gtk
 #define git_date .git20120624
 %define git_date %nil
-%define ppp_version 2.4.5
+%define ppp_version 2.4.7
 
 Name: NetworkManager-l2tp
 Version: 0.9.8.7
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
@@ -18,7 +18,10 @@ Patch: %name-%version-%release.patch
 Requires: NetworkManager-daemon   >= %nm_version
 Requires: xl2tpd
 Requires: ppp = %ppp_version
-Requires: strongswan
+# No openswan in the Sisyphus
+# Uncomment this if it will be added
+# See ALT bug #30613 for details
+#Requires: openswan
 
 # Automatically added by buildreq on Thu Aug 14 2008
 BuildRequires: libgnome-keyring-devel
@@ -88,6 +91,10 @@ sed -i '/m4/ d' Makefile.am
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Jan 16 2015 Mikhail Efremov <sem@altlinux.org> 0.9.8.7-alt2
+- Rebuild with ppp-2.4.7.
+- Drop strongswan requires (see ALT bug #30613).
+
 * Tue Jul 29 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.7-alt1
 - Updated to 0.9.8.7.
 

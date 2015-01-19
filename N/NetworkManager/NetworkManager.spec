@@ -1,5 +1,5 @@
-#define git_date .git20140422
-%define git_date %nil
+%define git_date .git20141029
+#define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -11,7 +11,7 @@
 %define nm_util_sover 2
 %define libnm_util libnm-util%nm_util_sover
 
-%define ppp_version 2.4.5
+%define ppp_version 2.4.7
 %define wpa_supplicant_version 0.7.3-alt3
 %define dhcpcd_version 4.0.0
 %define openresolv_version 3.5.4-alt3
@@ -21,13 +21,14 @@
 %def_enable introspection
 %def_disable teamdctl
 %def_enable nmtui
+%def_enable bluez5dun
 
 %define _name %name-daemon
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 
 Name: NetworkManager
-Version: 0.9.10.0
-Release: alt1%git_date
+Version: 0.9.10.1
+Release: alt3%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -64,6 +65,7 @@ BuildRequires: libreadline-devel
 %{?_enable_wimax:BuildRequires: libiWmxSdk-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
+%{?_enable_bluez5dun:BuildRequires: libbluez-devel}
 
 
 Requires: %name-adsl = %version-%release
@@ -188,7 +190,7 @@ License: %gpl2plus
 Summary: Library for adding NetworkManager support to applications that use glib
 Group: System/Libraries
 Requires: dbus >= %dbus_version
-Obsoletes: NetworkManager-glib < 0.9.8.8-alt3
+Obsoletes: NetworkManager-glib < 0.9.10.0
 
 %description -n %libnm_glib
 This package contains the library that applications can use to query
@@ -199,7 +201,7 @@ License: %gpl2plus
 Summary: Library for creating VPN connections via NetworkManager
 Group: System/Libraries
 Requires: dbus >= %dbus_version
-Obsoletes: NetworkManager-glib < 0.9.8.8-alt3
+Obsoletes: NetworkManager-glib < 0.9.10.0
 
 %description -n %libnm_glib_vpn
 This package contains the library that applications can use for creating
@@ -210,7 +212,7 @@ License: %gpl2plus
 Summary: A convenience library to ease the access to NetworkManager.
 Group: System/Libraries
 Requires: dbus >= %dbus_version
-Obsoletes: NetworkManager-glib < 0.9.8.8-alt3
+Obsoletes: NetworkManager-glib < 0.9.10.0
 
 %description -n %libnm_util
 This package contains a convenience library to ease the access to
@@ -269,7 +271,7 @@ for %libnm_util.
 %package devel-doc
 Summary: Development documentation for %name
 Group: Development/Documentation
-Obsoletes: NetworkManager-glib-devel-doc < 0.9.8.8-alt3
+Obsoletes: NetworkManager-glib-devel-doc < 0.9.10.0
 Provides: NetworkManager-glib-devel-doc = %version-%release
 BuildArch: noarch
 
@@ -347,6 +349,11 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--with-nmtui=yes \
 %else
 	--with-nmtui=no \
+%endif
+%if_enabled bluez5dun
+	--enable-bluez5-dun \
+%else
+	--disable-bluez5-dun \
 %endif
 	--enable-introspection=auto \
 	--enable-more-warnings=error
@@ -548,6 +555,16 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Jan 19 2015 Mikhail Efremov <sem@altlinux.org> 0.9.10.1-alt3.git20141029
+- Build with bluez5.
+
+* Fri Jan 16 2015 Mikhail Efremov <sem@altlinux.org> 0.9.10.1-alt2.git20141029
+- Rebuild with ppp-2.4.7.
+- Fix 'Obsoletes' tags again (closes: #30542).
+
+* Wed Oct 29 2014 Mikhail Efremov <sem@altlinux.org> 0.9.10.1-alt1.git20141029
+- Upstream git snapshot (nm-0-9-10 branch).
+
 * Fri Jul 25 2014 Mikhail Efremov <sem@altlinux.org> 0.9.10.0-alt1
 - Package pre-down.d/pre-up.d directories.
 - Replace 80-etcnet-post with 80-etcnet-iface-scripts.
