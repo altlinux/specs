@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -53,6 +53,9 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Tue Jan 20 2015 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
+- Rename button: "Reload fail2ban" -> "Reload".
+
 * Fri Jan 16 2015 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
 - Drop BASE roles.
 
