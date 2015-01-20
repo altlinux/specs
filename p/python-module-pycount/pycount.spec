@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.1
-Release: alt1.git20150119
+Version: 0.6.2
+Release: alt1.git20150120
 Summary: A simple python LOC count tool
 License: Free
 Group: Development/Python
@@ -16,15 +16,15 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-binaryornot
+BuildPreReq: python-module-binaryornot python-module-pygal
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-binaryornot
+BuildPreReq: python3-module-binaryornot python3-module-pygal
 %endif
 
 %py_provides %oname
-%py_requires binaryornot
+%py_requires binaryornot pygal
 
 %description
 * experimental LOC tool (lines of code, a.k.a. SLOC)
@@ -38,7 +38,7 @@ BuildPreReq: python3-module-binaryornot
 Summary: A simple python LOC count tool
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires binaryornot
+%py3_requires binaryornot pygal
 
 %description -n python3-module-%oname
 * experimental LOC tool (lines of code, a.k.a. SLOC)
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20150120
+- Version 0.6.2
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20150119
 - Version 0.6.1
 
