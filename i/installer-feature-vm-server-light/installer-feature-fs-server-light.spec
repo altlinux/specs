@@ -1,5 +1,5 @@
 Name: installer-feature-vm-server-light
-Version: 0.2
+Version: 0.4
 Release: alt1
 
 Summary: Installer alterator-vm profile tuning and filesystem layout hooks
@@ -37,6 +37,9 @@ install -pm755 05-* %buildroot%hookdir/initinstall.d/
 %hookdir/initinstall.d/*
 
 %changelog
+* Mon Jan 19 2015 Anton Farygin <rider@altlinux.ru> 0.4-alt1
+- create only root partition sized to the entire disk
+
 * Mon Nov 08 2010 Anton Farygin <rider@altlinux.ru> 0.2-alt1
 - 2Gb for root
 
