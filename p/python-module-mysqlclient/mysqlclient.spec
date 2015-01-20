@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.4
-Release: alt1.git20141102
+Release: alt1.git20150105
 Summary: Python interface to MySQL
 License: GPL
 Group: Development/Python
@@ -27,6 +27,7 @@ BuildPreReq: python3-module-nose
 
 Conflicts: python-module-MySQLdb
 Conflicts: python-module-MySQLdb2
+%py_provides MySQLdb
 
 %description
 mysqlclient is a fork of MySQL-python. It add Python 3.3 support and
@@ -37,6 +38,7 @@ Summary: Python interface to MySQL
 Group: Development/Python3
 Conflicts: python3-module-MySQLdb
 Conflicts: python3-module-MySQLdb2
+%py3_provides MySQLdb
 
 %description -n python3-module-%oname
 mysqlclient is a fork of MySQL-python. It add Python 3.3 support and
@@ -124,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt1.git20150105
+- New snapshot
+
 * Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt1.git20141102
 - Initial build for Sisyphus
 
