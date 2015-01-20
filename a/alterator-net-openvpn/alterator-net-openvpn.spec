@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-openvpn
-Version: 0.8.9
+Version: 0.8.10
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -42,6 +42,10 @@ Alterator module for openvpn connections configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Jan 20 2015 Mikhail Efremov <sem@altlinux.org> 0.8.10-alt1
+- Add tmp-dir option to ovpnoptions.
+- backend: Rename IFACEDIR to IFACESDIR.
+
 * Fri Dec 21 2012 Mikhail Efremov <sem@altlinux.org> 0.8.9-alt1
 - Added initial GOST support.
 - Disable LZO by default.
