@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.26
-Release: alt1.git20150118
+Release: alt1.git20150119
 Summary: A build system for python
 License: MIT
 Group: Development/Python
@@ -179,6 +179,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.26-alt1.git20150119
+- New snapshot
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.26-alt1.git20150118
 - Initial build for Sisyphus
 
