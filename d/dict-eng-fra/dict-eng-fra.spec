@@ -8,10 +8,10 @@
 %define stardict_name	dictd_www.freedict.de_%dict_name
 %define dict_sum_en English-Franch
 #define dict_sum_en French-English
-%define dict_sum_ru Англо-французский
-%define dict_des_ru англо-французского
-#define dict_sum_ru Французско-английский
-#define dict_des_ru французского-английского
+%define dict_sum_ru РђРЅРіР»Рѕ-С„СЂР°РЅС†СѓР·СЃРєРёР№
+%define dict_des_ru Р°РЅРіР»Рѕ-С„СЂР°РЅС†СѓР·СЃРєРѕРіРѕ
+#define dict_sum_ru Р¤СЂР°РЅС†СѓР·СЃРєРѕ-Р°РЅРіР»РёР№СЃРєРёР№
+#define dict_des_ru С„СЂР°РЅС†СѓР·СЃРєРѕРіРѕ-Р°РЅРіР»РёР№СЃРєРѕРіРѕ
 
 BuildRequires: dict-tools
 %def_without stardict
@@ -20,32 +20,32 @@ BuildRequires: stardict-tools >= 2.4.2
 %endif
 
 Name: dict-%dict_name
-Version: 0.1
+Version: 0.1.4
 Release: alt1
 
 Summary: %dict_sum_en Dictionary: dictd format
-Summary(ru_RU.CP1251): %dict_sum_ru словарь: формат dictd
+Summary(ru_RU.UTF-8): %dict_sum_ru СЃР»РѕРІР°СЂСЊ: С„РѕСЂРјР°С‚ dictd
 License: GPL
 Group: Text tools
 PreReq: dictd
-Url: http://www.freedict.de
+Url: http://www.freedict.org
 
-Source: %dict_name.tar.gz
+Source: freedict-%dict_name-%version.tar.bz2
 
-BuildArchitectures: noarch
+BuildArch: noarch
 
 %description
 Electronic version of %dict_sum_en Dictionary, in dictd format. 
 You can use it with your favourite dict client.
 
-%description -l ru_RU.CP1251
-Электронная версия %dict_des_ru словаря в формате dictd.
-Вы можете использовать его со своим любимым dict клиентом.
+%description -l ru_RU.UTF-8
+Р­Р»РµРєС‚СЂРѕРЅРЅР°СЏ РІРµСЂСЃРёСЏ %dict_des_ru СЃР»РѕРІР°СЂСЏ РІ С„РѕСЂРјР°С‚Рµ dictd.
+Р’С‹ РјРѕР¶РµС‚Рµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РµРіРѕ СЃРѕ СЃРІРѕРёРј Р»СЋР±РёРјС‹Рј dict РєР»РёРµРЅС‚РѕРј.
 
 %if_with stardict
 %package -n stardict-%stardict_name
 Summary: %dict_sum_en Dictionary: stardict format
-Summary(ru_RU.CP1251): %dict_sum_ru словарь: формат stardict
+Summary(ru_RU.UTF-8): %dict_sum_ru СЃР»РѕРІР°СЂСЊ: С„РѕСЂРјР°С‚ stardict
 License: GPL
 Group: Text tools
 PreReq: stardict
@@ -54,13 +54,13 @@ PreReq: stardict
 Electronic version of %dict_sum_en Dictionary, in stardict format. 
 You can use it with your favourite stardict client.
 
-%description -n stardict-%stardict_name -l ru_RU.CP1251
-Электронная версия %dict_des_ru словаря в формате stardict.
-Вы можете использовать его со своим любимым stardict клиентом.
+%description -n stardict-%stardict_name -l ru_RU.UTF-8
+Р­Р»РµРєС‚СЂРѕРЅРЅР°СЏ РІРµСЂСЃРёСЏ %dict_des_ru СЃР»РѕРІР°СЂСЏ РІ С„РѕСЂРјР°С‚Рµ stardict.
+Р’С‹ РјРѕР¶РµС‚Рµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РµРіРѕ СЃРѕ СЃРІРѕРёРј Р»СЋР±РёРјС‹Рј stardict РєР»РёРµРЅС‚РѕРј.
 %endif
 
 %prep
-%setup -q -c
+%setup -q -n %dict_name
 
 %install
 install -p -m644 -D %dict_name.dict.dz $RPM_BUILD_ROOT%_datadir/dictd/%dict_name.dict.dz
@@ -90,11 +90,11 @@ install -p -m644 -D %stardict_name.ifo $RPM_BUILD_ROOT%_datadir/stardict/dic/%st
 
 %post -n dict-%dict_name
 /usr/sbin/dictdconfig -w
-%_initdir/dictd condreload
+service dictd condrestart
 
 %postun -n dict-%dict_name
 /usr/sbin/dictdconfig -w
-%_initdir/dictd condreload
+service dictd condrestart
 
 %files
 %_datadir/dictd/%{dict_name}*
@@ -105,6 +105,9 @@ install -p -m644 -D %stardict_name.ifo $RPM_BUILD_ROOT%_datadir/stardict/dic/%st
 %endif
 
 %changelog
+* Tue Jan 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.1.4-alt1
+- new version
+
 * Sat Jun 03 2006 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1
 - temporarily disabled building of stardict dictionaries
 - initial build for Alt Linux
