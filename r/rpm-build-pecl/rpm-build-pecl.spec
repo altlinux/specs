@@ -1,6 +1,6 @@
 Name: rpm-build-pecl
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: RPM helper scripts for build PECL packages
 License: GPL
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 BuildRequires: rpm-build-php5 rpm-build-intro
-Requires: rpm-build-php5 php5-devel php5-simplexml
+Requires: rpm-build-php5 php5-simplexml
 
 %description
 RPM helper scripts for build PECL packages.
@@ -30,6 +30,9 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/pecl
 %_rpmmacrosdir/pecl
 
 %changelog
+* Tue Jan 20 2015 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt2
+- remove php5-devel require (ALT Bug #3065)
+
 * Mon Mar 11 2013 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - small fixes
 
