@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.14
+Version: 2.9.15
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,11 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Jan 20 2015 Andrey Cherepanov <cas@altlinux.org> 2.9.15-alt1
+- Update translation for:
+  + alterator-ddos
+  + alterator-snort
+
 * Wed Jan 14 2015 Andrey Cherepanov <cas@altlinux.org> 2.9.14-alt1
 - Update translation for:
   + alterator-net-bond.po
