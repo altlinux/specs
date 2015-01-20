@@ -9,7 +9,7 @@
 %define bugfix 5
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 %define theme %name
@@ -18,7 +18,7 @@ BuildArch: noarch
 %define design_graphics_abi_minor 0
 %define design_graphics_abi_bugfix 0
 
-BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
+BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-google-droid-sans
 BuildRequires: design-bootloader-source >= 5.0-alt2
 %ifnarch %arm
 BuildRequires: cpio gfxboot >= 4
@@ -247,6 +247,11 @@ ALT Linux index.html welcome page.
 %define x86 %nil
 %endif
 
+mkdir design-bootloader-source-copy
+cp -ar /usr/src/design-bootloader-source ./design-bootloader-source-copy/
+sed -i 's|/usr/share/fonts/ttf/droid/|/usr/share/fonts/ttf/google-droid/|' design-bootloader-source-copy/design-bootloader-source/fonts/Makefile
+sed -i 's|/usr/src/design-bootloader-source|design-bootloader-source-copy/design-bootloader-source|' components.mk
+
 %build
 autoconf
 THEME=%theme \
@@ -473,6 +478,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Jan 20 2015 Sergey V Turchin <zerg at altlinux dot org> 7.0.5-alt2
+- fix build with new fonts
+
 * Wed Jan 14 2015 Sergey V Turchin <zerg at altlinux dot org> 7.0.5-alt1
 - bump version
 
