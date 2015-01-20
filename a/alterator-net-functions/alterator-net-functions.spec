@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -40,6 +40,9 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Tue Jan 20 2015 Mikhail Efremov <sem@altlinux.org> 1.3.4-alt1
+- Fix valid_ipv4addr().
+
 * Thu Dec 25 2014 Mikhail Efremov <sem@altlinux.org> 1.3.3-alt1
 - Add read_iface_slaves() and iface_has_host() functions.
 - Add list_bond() function.
