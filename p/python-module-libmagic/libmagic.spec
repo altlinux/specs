@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4.6
-Release: alt1.git20141111
+Release: alt1.git20150107
 Summary: File type identification using libmagic
 License: MIT
 Group: Development/Python
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.6-alt1.git20150107
+- New snapshot
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.6-alt1.git20141111
 - Initial build for Sisyphus
 
