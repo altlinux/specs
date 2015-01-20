@@ -1,8 +1,8 @@
 %define docdir %_docdir/%name
 
 Name: libvdpau
-Version: 0.8
-Release: alt2
+Version: 0.9
+Release: alt1
 Epoch: 1
 Group: System/Libraries
 Summary: VDPAU library
@@ -78,6 +78,12 @@ Documentation for VDPAU library
 %docdir/html
 
 %changelog
+* Tue Jan 20 2015 Sergey V Turchin <zerg@altlinux.org> 1:0.9-alt1
+- new version
+
+* Wed Nov 19 2014 Sergey V Turchin <zerg@altlinux.org> 1:0.8-alt1.M70P.1
+- built for M70P
+
 * Wed Nov 19 2014 Sergey V Turchin <zerg@altlinux.org> 1:0.8-alt2
 - allow to force flash workaround in vdpau_wrapper.cfg
 
