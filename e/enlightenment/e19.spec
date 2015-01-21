@@ -14,7 +14,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.2
+Version: %ver_major.3
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -45,7 +45,7 @@ Patch1: add-systray-mobile.patch
 Patch2: add-systray-standard.patch
 Patch3: illume-keyboard-bigfont.patch
 Patch4: e17-0.17.0-alt-g-s-d_path.patch
-Patch5: enlightenment-0.19.0-alt-e_sys_nosuid.patch
+Patch5: enlightenment-0.19.3-alt-e_sys_nosuid.patch
 Patch6: auto-ptrace-disable.patch
 Patch11: enlightenment-0.19.0-alt-pam-helper.patch
 Patch12: fix-connman-module-detection.patch
@@ -196,6 +196,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Jan 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.3-alt1
+- 0.19.3
+
 * Thu Dec 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.2-alt1
 - 0.19.2
 
