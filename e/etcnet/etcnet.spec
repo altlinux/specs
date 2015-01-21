@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.10
-Release:	alt17
+Release:	alt18
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -139,6 +139,9 @@ fi
 %files full
 
 %changelog
+* Wed Jan 21 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt18
+- openvpn: do not rely on TMPDIR environment variable
+
 * Fri Dec 19 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt17
 - Increase release number to fix update in p7 branch
 
