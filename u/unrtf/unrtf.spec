@@ -1,5 +1,5 @@
 Name: unrtf
-Version: 0.21.7
+Version: 0.21.9
 Release: alt1
 
 Summary: UnRTF is a moderately complicated converter from RTF to other formats
@@ -8,6 +8,7 @@ Group: Text tools
 Url: http://www.gnu.org/software/unrtf/unrtf.html
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
+BuildRequires:	automake
 
 Source0: %name-%version.tar.gz
 
@@ -29,6 +30,11 @@ to separate files in the current directory, or they can be ignored.
 sed -i 's,/usr/local/lib/unrtf/,%_libdir/unrtf/,g' src/path.h
 
 %build
+# The ./configure command (specifically the symlinks in the ./config/
+# directory) assume that automake is present in an "automake-1.13" directory.
+# That is the case on EL7, but it's not the case in Fedora. That is why we
+# regenerate the automake/autoconf bits by running the ./bootstrap script here.
+./bootstrap
 %configure
 %make_build
 
@@ -43,6 +49,9 @@ sed -i 's,/usr/local/lib/unrtf/,%_libdir/unrtf/,g' src/path.h
 %_datadir/%name/*
 
 %changelog
+* Wed Jan 21 2015 Ilya Mashkin <oddity@altlinux.ru> 0.21.9-alt1
+- 0.21.9
+
 * Tue Dec 16 2014 Ilya Mashkin <oddity@altlinux.ru> 0.21.7-alt1
 - 0.21.7
 
