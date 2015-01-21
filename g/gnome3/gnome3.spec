@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -142,8 +142,7 @@ Requires: evolution >= %evo_ver
 ## Default messenger
 Requires: empathy >= %emp_ver
 Requires: gnome-contacts >= %ver_major
-## Default RSS-reader
-#Requires: liferea
+
 ## Default document reader (currently pdf, ps, tiff, dvi)
 Requires: evince >= %evince_ver
 Requires: mozilla-plugin-evince
@@ -316,18 +315,20 @@ Summary: GNOME 3 Desktop applications for real office users (light version)
 Group: Graphical desktop/GNOME
 
 ## Word processor
-Requires: abiword
+Requires: abiword-3.0
 ## Spreadsheet program
 Requires: gnumeric
 ## Vector Drawing Application
 Requires: inkscape
 ## Diagram creation program
 Requires: dia
+## GIMP
+Requires: gimp
 ## International dictionary (synchronize this section in -office package)
 # GUI
-Requires: stardict-gnome
+#Requires: stardict-gnome
 # Some StarDict dictionaries
-Requires: stardict-engcom
+#Requires: stardict-engcom
 
 ## Presentation tool ???
 
@@ -342,18 +343,47 @@ Summary: GNOME 3 Desktop accessibility applications
 Group: Graphical desktop/GNOME
 # A synonym
 Provides: sisyphus-accessibility
-Obsoletes: %name-sisyphus-accessibility 
+Obsoletes: %name-sisyphus-accessibility
 Provides: %name-sisyphus-accessibility = %version-%release
-Requires: gnome-minimal = %version-%release
+Requires: gnome-default = %version-%release
 
 Requires: orca >= %orca_ver
 Requires: accerciser >= %ver_major
 
 %description a11y
 This virtual package installs GNOME Desktop accessibility applications.
-These include an on-screen keyboard, a screen reader, Dasher - an
-innovative graphical input tool, and Magnifier (the name says for
-itself).
+These include orca screen reader and accerciser - interactive tool for
+querying accessibility information.
+
+##==========================================================================
+%package regular
+Summary: Virtual package for use with regular(TM) GNOME 3 distro
+Group: Graphical desktop/GNOME
+Requires: %name-default = %version-%release
+Requires: %name-office-light = %version-%release
+Requires: %name-a11y = %version-%release
+# And
+## CD-ripper
+Requires: goobox
+## Image viewer, browser and simple editor
+Requires: gthumb
+## scanner apps
+Requires: sane
+Requires: simple-scan
+## Utilities
+## BitTorrent client
+Requires:  transmission-gtk
+# Disks management
+Requires: gparted
+## Default RSS-reader
+Requires: liferea
+# Other
+Requires: gnome-battery-bench
+Requires: gnome-multi-writer
+
+%description regular
+This virtual package includes default GNOME 3 Desktop components and
+some other useful GNOME and GTK applications.
 
 %files minimal
 %files default
@@ -361,10 +391,14 @@ itself).
 #%files full
 #%files office
 #%files office-ru
-#%files office-light
-#%files a11y
+%files office-light
+%files a11y
+%files regular
 
 %changelog
+* Wed Jan 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt3
+- new -regular subpackage (-default+-office-light+-a11y+some other)
+
 * Thu Dec 18 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
 - added gnome-user-share, rygel{,-tracker} {rhythmbox,totem}-plugins to -default
 - replaced parcellite by gnome-shell-extension-gpaste
