@@ -1,6 +1,6 @@
 Name: decibel-audio-player
-Version: 1.05
-Release: alt1.1
+Version: 1.08
+Release: alt1
 
 Summary: a simple audio player for GNOME
 License: GPLv2+
@@ -34,7 +34,7 @@ a try to other players (e.g., Amarok, Exaile).
 
 %prep
 %setup -q
-%patch0 -p1
+#patch0 -p1
 
 %build
 
@@ -63,6 +63,9 @@ install -m644 pix/decibel-audio-player-16.png %buildroot%_miconsdir/decibel-audi
 %_miconsdir/decibel-audio-player.png
 
 %changelog
+* Wed Jan 21 2015 Ilya Mashkin <oddity@altlinux.ru> 1.08-alt1
+- 1.08
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.05-alt1.1
 - Rebuild with Python-2.7
 
