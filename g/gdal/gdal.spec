@@ -7,8 +7,8 @@
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
-Version: 1.10.1
-Release: alt3.1.1
+Version: 1.11.1
+Release: alt1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -26,7 +26,7 @@ Patch5: %name-1.8.0-alt-libproj.so_name.patch
 %define libname lib%name
 
 # Automatically added by buildreq on Thu Aug 12 2010
-BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-BeautifulSoup python-module-genshi python-module-xlwt python-modules-ctypes
+BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-BeautifulSoup python-module-genshi python-module-xlwt python-modules-ctypes swig
 
 BuildPreReq: chrpath
 
@@ -141,6 +141,12 @@ Perl modules for GDAL/OGR.
 	--with-threads
 #	--with-grass=%_libdir/grass62 \
 
+# Hack around the issue: https://trac.osgeo.org/gdal/ticket/3084
+pushd swig/perl
+%make_build veryclean
+%make_build generate
+popd
+
 %make_build LD_RUN_PATH= lib-target
 %make_build LD_RUN_PATH=
 make docs
@@ -198,6 +204,10 @@ done
 # %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Wed Jan 21 2015 Dmitry Derjavin <dd@altlinux.org> 1.11.1-alt1
+- 1.11.1;
+- Perl module build Error 255 workaround.
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt3.1.1
 - rebuild with new perl 5.20.1
 
