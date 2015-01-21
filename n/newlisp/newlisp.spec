@@ -5,7 +5,7 @@
 
 %define Name newLISP
 Name: newlisp
-Version: 10.6.0
+Version: 10.6.2
 Release: alt1
 Summary: Lisp-like, general purpose scripting language
 License: %gpl3only
@@ -209,6 +209,9 @@ ln -s %name-%version %name
 
 
 %changelog
+* Wed Jan 21 2015 Ilya Mashkin <oddity@altlinux.ru> 10.6.2-alt1
+- 10.6.2
+
 * Tue Apr 22 2014 Ilya Mashkin <oddity@altlinux.ru> 10.6.0-alt1
 - 10.6.0
 - drop old patches
