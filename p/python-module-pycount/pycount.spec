@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.2
-Release: alt1.git20150120
+Version: 0.6.4
+Release: alt1.git20150121
 Summary: A simple python LOC count tool
 License: Free
 Group: Development/Python
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.4-alt1.git20150121
+- Version 0.6.4
+
 * Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20150120
 - Version 0.6.2
 
