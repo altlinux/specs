@@ -1,6 +1,6 @@
 Name: strace
 Version: 4.9
-Release: alt7
+Release: alt8
 
 Summary: Tracks and displays system calls associated with a running process
 License: BSD-style
@@ -66,6 +66,9 @@ export SLEEP_A_BIT='sleep 0.1'
 %_bindir/strace-graph
 
 %changelog
+* Thu Jan 22 2015 Dmitry V. Levin <ldv@altlinux.org> 4.9-alt8
+- Updated to v4.9-222-gdf7aa2b.
+
 * Tue Jan 13 2015 Dmitry V. Levin <ldv@altlinux.org> 4.9-alt7
 - Updated to v4.9-196-ged7ada2.
 
