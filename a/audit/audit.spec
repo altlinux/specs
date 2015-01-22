@@ -1,6 +1,6 @@
 Name: audit
-Version: 2.4
-Release: alt1.1
+Version: 2.4.1
+Release: alt1
 
 Packager: Anton Farygin <rider@altlinux.com>
 
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 Requires: lib%{name}1 = %version-%release
+Requires: service >= 0.5.26-alt1
 
 # Automatically added by buildreq on Wed Mar 04 2009
 BuildRequires: glibc-devel-static libkrb5-devel libldap-devel perl-XML-Parser python-devel swig libprelude-devel intltool
@@ -98,6 +99,10 @@ install -Dpm755 %name.init %buildroot/%_initdir/%{name}d
 install -Dpm755 %name.cron %buildroot/%_sysconfdir/cron.weekly/%{name}d
 
 install -pD -m644 init.d/%{name}d.service %buildroot%_unitdir/%{name}d.service
+install -pD -m755 init.d/%{name}d.condrestart %buildroot/usr/libexec/service/legacy-actions/%{name}d/condrestart
+install -pD -m755 init.d/%{name}d.rotate %buildroot/usr/libexec/service/legacy-actions/%{name}d/rotate
+install -pD -m755 init.d/%{name}d.stop %buildroot/usr/libexec/service/legacy-actions/%{name}d/stop
+install -pD -m755 init.d/%{name}d.restart %buildroot/usr/libexec/service/legacy-actions/%{name}d/restart
 
 %post
 %post_service %{name}d
@@ -144,7 +149,7 @@ install -pD -m644 init.d/%{name}d.service %buildroot%_unitdir/%{name}d.service
 %config(noreplace) %attr(640,root,root) /etc/audisp/plugins.d/*.conf
 
 %attr(700,root,root) %dir %_libdir/audit
-
+/usr/libexec/service/legacy-actions/%{name}d
 
 
 %files -n lib%{name}1
@@ -163,6 +168,10 @@ install -pD -m644 init.d/%{name}d.service %buildroot%_unitdir/%{name}d.service
 %python_sitelibdir/*
 
 %changelog
+* Thu Jan 22 2015 Anton Farygin <rider@altlinux.ru> 2.4.1-alt1
+- new version
+- added legacy actions scripts (closes: #28931, #27843)
+
 * Wed Sep 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt1.1
 - Rebuilt with new libprelude
 
