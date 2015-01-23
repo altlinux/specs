@@ -1,8 +1,10 @@
 %define module_name GitPython
 
+%def_with python3
+
 Name: python-module-GitPython
-Version: 0.3.2
-Release: alt1rc1.2
+Version: 0.3.6
+Release: alt1
 
 Summary: GitPython is a python library used to interact with Git repositories
 
@@ -10,6 +12,7 @@ License: BSD
 Group: Development/Python
 Url: http://pypi.python.org/pypi/GitPython/
 
+# https://github.com/gitpython-developers/GitPython.git
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -17,28 +20,72 @@ BuildArch: noarch
 %setup_python_module %module_name
 
 BuildRequires: python-module-setuptools-tests python-module-GitDB
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+BuildRequires: python3-module-setuptools-tests python3-module-gitdb
+%endif
 
 %description
+A simple, flexible, easy-to-use configfile and command-line parsing library
+built on top of the standard library optparse module.
+
+%package -n python3-module-%module_name
+Summary: GitPython is a python library used to interact with Git repositories
+Group: Development/Python3
+
+%description -n python3-module-%module_name
 A simple, flexible, easy-to-use configfile and command-line parsing library
 built on top of the standard library optparse module.
 
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %check
 python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
 
 %files
 %python_sitelibdir/*
 %exclude %python_sitelibdir/git/test
 
+%if_with python3
+%files -n python3-module-%module_name
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/git/test
+%endif
+
 %changelog
+* Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1
+- Version 0.3.6
+- Added module for Python 3
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1rc1.2
 - Fixed build
 
