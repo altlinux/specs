@@ -4,8 +4,8 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	340.65
-%define module_release	alt3
+%define module_version	346.35
+%define module_release	alt1
 %define flavour		std-def
 
 %setup_kernel_module %flavour
@@ -38,7 +38,13 @@
 %define legacy4 %nil
 %endif
 %define legacy4_src %(echo %legacy4 | tr -d .)
-%define mod_ver_list %version %legacy1 %legacy2 %legacy3 %legacy4
+%nvIF_ver_lt %xorg_ver 1.18
+%define legacy5 340.65
+%else
+%define legacy5 %nil
+%endif
+%define legacy5_src %(echo %legacy5 | tr -d .)
+%define mod_ver_list %version %legacy1 %legacy2 %legacy3 %legacy4 %legacy5
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/nVidia
 %define module_local_dir /lib/modules/nvidia
@@ -78,6 +84,9 @@ BuildRequires: kernel-source-%module_name-%legacy3_src
 %if "%legacy4" != "%nil"
 BuildRequires: kernel-source-%module_name-%legacy4_src
 %endif
+%if "%legacy5" != "%nil"
+BuildRequires: kernel-source-%module_name-%legacy5_src
+%endif
 
 Provides:  	kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -99,6 +108,9 @@ Requires:       nvidia_glx_%legacy3
 %endif
 %if "%legacy4" != "%nil"
 Requires:       nvidia_glx_%legacy4
+%endif
+%if "%legacy5" != "%nil"
+Requires:       nvidia_glx_%legacy5
 %endif
 
 %description
@@ -189,6 +201,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Jan 22 2015 Sergey V Turchin <zerg at altlinux dot org> 346.35-alt1..
+- new release (346.35)
 
 * Tue Dec 09 2014 Sergey V Turchin <zerg at altlinux dot org> 340.65-alt3..
 - new release (340.65)
