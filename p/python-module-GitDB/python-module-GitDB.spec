@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-GitDB
-Version: 0.6.0
-Release: alt1.git20141114
+Version: 0.6.4
+Release: alt1.git20150112
 
 Summary: IO of git-style object databases
 
@@ -71,6 +71,7 @@ cp -fR . ../python3
 ln -s ../objects.inv doc/source/
 
 %build
+%add_optflags -fno-strict-aliasing
 %python_build
 
 %if_with python3
@@ -122,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.4-alt1.git20150112
+- Version 0.6.4
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20141114
 - Version 0.6.0
 - Added module for Python 3
