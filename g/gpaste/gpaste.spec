@@ -4,8 +4,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gpaste
-Version: %ver_major
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: GPaste is a clipboard management system
 Group: Text tools
@@ -139,6 +139,9 @@ subst 's/APPDATA_XML/APPSTREAM_XML/
 
 
 %changelog
+* Fri Jan 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Tue Nov 18 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14-alt2
 - APPSTREAM_XML used instead of APPDATA_XML
 
