@@ -40,7 +40,7 @@
 %define minor	8
 %define bugfix	6
 %define beta	%nil
-%define rlz alt3
+%define rlz alt4
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -113,7 +113,7 @@ Patch502: qt-4.7.2-alt-ca-certificates-path.patch
 Patch503: qt-4.7.3-alt-qt-config-add-webkit.patch
 Patch504: qt-4.7.0-alt-fix-gl-loading.patch
 Patch505: qt-4.0.1-alt-iso_c_extension.patch
-Patch506: qt-4.8.5-alt-disable-mnemonic-menu-shortcuts.patch
+#
 Patch507: qt-4.8.6-alt-disable-gstreamer.patch
 Patch508: qt-4.7.4-alt-buildkey.patch
 Patch509: qt-4.7.0-alt-qtconfig_add_translator.patch
@@ -774,7 +774,7 @@ Install this package if you want to create RPM packages that use %name
 %patch503 -p1
 %patch504 -p1
 %patch505 -p1
-%patch506 -p1
+#
 %patch507 -p1
 %patch508 -p1
 ###%patch509 -p1
@@ -1559,6 +1559,12 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Fri Jan 23 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt4
+- fix mnemonic menu shortcuts
+
+* Thu Oct 02 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt2.M70P.1
+- built for M70P
+
 * Fri Sep 26 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt3
 - build without gstreamer
 
