@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 5.3
-Release: alt1.git20140823
+Version: 7.2
+Release: alt1.git20150122
 
 Summary: A module wrapper for os.path
 License: MIT
@@ -16,10 +16,12 @@ Source: python-module-%module_name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-module-pytest-runner
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-pytest-runner
 %endif
 
 %description
@@ -79,6 +81,9 @@ mkdir docs/_static
 %endif
 
 %changelog
+* Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.2-alt1.git20150122
+- Version 7.2
+
 * Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt1.git20140823
 - Version 5.3
 - Added module for Python 3
