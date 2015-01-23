@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 1.1.4
-Release: alt1.git20141208
+Version: 1.1.7
+Release: alt1.git20150122
 Summary: Lets you use the page object pattern with Robot Framework and plain python
 License: Free
 Group: Development/Python
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.7-alt1.git20150122
+- Version 1.1.7
+
 * Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.4-alt1.git20141208
 - Version 1.1.4
 
