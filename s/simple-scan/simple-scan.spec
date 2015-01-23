@@ -1,7 +1,7 @@
 %define ver_major 3.15
 
 Name: simple-scan
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Simple scanning utility
@@ -41,6 +41,9 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Fri Jan 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.4-alt1
+- 3.15.4
+
 * Tue Jan 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.3-alt1
 - 3.15.3
 
