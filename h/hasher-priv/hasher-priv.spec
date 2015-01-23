@@ -1,5 +1,5 @@
 Name: hasher-priv
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: A privileged helper for the hasher project
@@ -59,11 +59,16 @@ groupadd -r -f hashman
 %doc DESIGN
 
 %changelog
+* Fri Jan 23 2015 Dmitry V. Levin <ldv@altlinux.org> 1.5.1-alt1
+- Allowed group writable sticky directories to be used as
+  mount points when mount namespace isolation is in effect.
+- Added /dev/shm to the list of built-in mount points.
+
 * Mon Dec 02 2013 Dmitry V. Levin <ldv@altlinux.org> 1.5.0-alt1
 - Made X11 forwarding work with network isolation enabled.
 - Allowed mount points to be owned by the first pseudouser
   when mount namespace isolation is enabled.
-- Hardened default mount options for builtin mount points.
+- Hardened default mount options for built-in mount points.
 - Fixed purging IPC objects created by the first pseudouser.
 
 * Tue Oct 16 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.0-alt1
