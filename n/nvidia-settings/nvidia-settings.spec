@@ -1,5 +1,5 @@
 Name: nvidia-settings
-Version: 340.46
+Version: 346.35
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -16,6 +16,7 @@ Source5: nvidia-settings.desktop
 
 Patch1: xlibs.patch
 Patch2: cflags.patch
+Patch3: alt-ui-modules-dir.patch
 
 # Automatically added by buildreq on Mon May 13 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config python-base xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
@@ -49,22 +50,31 @@ Development files for %name
 %setup -q
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p1
+sed -i 's|@GUI_LIB_PREFIX@|%_libdir/nvidia-settings|' src/nvidia-settings.c
 
+sed -i -E 's|LIBDIR[[:space:]]+=[[:space:]].*|LIBDIR = $(DESTDIR)$(PREFIX)/%_lib|' utils.mk
 
 %build
-pushd src/libXNVCtrl
-rm -f libXNVCtrl.a
-gcc %optflags -I/usr/include/X11/extensions -c NVCtrl.c
-ar rcs libXNVCtrl.a NVCtrl.o
-popd
+#pushd src/libXNVCtrl
+#rm -f libXNVCtrl.a
+#gcc %optflags -I/usr/include/X11/extensions -c NVCtrl.c
+#ar rcs libXNVCtrl.a NVCtrl.o
+#popd
 %make_build PREFIX=%prefix LOCAL_CFLAGS="%optflags"
 
 
 %install
-make install PREFIX=%buildroot/%prefix bindir=%buildroot/%_bindir mandir=%buildroot/%_man1dir
+make install DESTDIR=%buildroot PREFIX=%prefix bindir=%buildroot/%_bindir mandir=%buildroot/%_man1dir
 
 #mkdir -p %buildroot/%_bindir
 #install -m 0755 nvidia-settings %buildroot/%_bindir
+
+for p in %buildroot/%_libdir/%name/* ; do
+    new_path=`echo "$p" | sed 's|\.so\..*|.so|'`
+    [ "$p" == "$new_path" ] \
+	|| ln -s `basename $p` $new_path
+done
 
 mkdir -p %buildroot/%_sysconfdir/X11/xinit.d/
 install -m 0755 %SOURCE4 %buildroot/%_sysconfdir/X11/xinit.d/%name.sh
@@ -88,6 +98,7 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %doc doc/*.txt samples
 %_man1dir/%name.*
 %_bindir/%name
+%_libdir/%name/
 %_sysconfdir/X11/xinit.d/%name.sh
 %_desktopdir/%name.desktop
 %_iconsdir/*/*/apps/%name.png
@@ -98,6 +109,12 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Fri Jan 23 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt1
+- new version
+
+* Tue Oct 07 2014 Sergey V Turchin <zerg@altlinux.org> 340.46-alt0.M70P.1
+- built for M70P
+
 * Mon Oct 06 2014 Sergey V Turchin <zerg@altlinux.org> 340.46-alt1
 - new version
 
