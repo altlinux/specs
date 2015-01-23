@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.3
-Release: alt1.git20141113
+Version: 0.9.0
+Release: alt1.git20150107
 
 Summary:  Sliding window memory map manager
 
@@ -119,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.git20150107
+- Version 0.9.0
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20141113
 - Version 0.8.3
 
