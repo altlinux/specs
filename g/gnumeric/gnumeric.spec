@@ -11,8 +11,8 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.18
-Release: alt1.1
+Version: %ver_major.19
+Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -30,7 +30,7 @@ Provides: %name-light = %version-%release
 %define gsf_ver 1.14.27
 %define gda_ver 4.0
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.18
+%define goffice_ver 0.10.19
 
 %if_with python
 # Provided by python_loader.so
@@ -119,6 +119,8 @@ GObject introspection devel data for the Gnumeric.
 %patch -p1
 %patch1
 
+subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
+
 %build
 gnome-doc-prepare --copy --force
 %autoreconf
@@ -180,6 +182,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jan 23 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.19-alt1
+- 1.12.19
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.12.18-alt1.1
 - rebuild with new perl 5.20.1
 
