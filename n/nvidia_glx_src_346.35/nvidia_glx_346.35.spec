@@ -15,7 +15,7 @@
 %define nv_version 346
 %define nv_release 35
 %define nv_minor %nil
-%define pkg_rel alt137
+%define pkg_rel alt138
 %ifarch x86_64
 %def_enable egl
 %else
@@ -87,6 +87,7 @@ Source2: nvidia.xinf
 Source100: nvidia_create_xinf
 
 Patch1: buildfix_kernel_3.14.patch
+Patch2: alt-fix-build-kernel.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel
@@ -195,6 +196,7 @@ cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
 %patch1 -p1
+%patch2 -p1
 rm -rf precompiled
 popd
 
@@ -345,6 +347,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 23 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt138
+- fix build kernel module
+
 * Wed Jan 21 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt137
 - new version
 
