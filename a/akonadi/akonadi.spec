@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.13.0
-Release: alt1
+Release: alt2
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -199,6 +199,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Fri Jan 23 2015 Sergey V Turchin <zerg@altlinux.org> 1.13.0-alt2
+- rebuild with new boost
+
 * Tue Aug 19 2014 Sergey V Turchin <zerg@altlinux.org> 1.13.0-alt1
 - new version
 
