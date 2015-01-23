@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.3.26
+Version: 1.3.27
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -56,6 +56,12 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Fri Jan 23 2015 Dmitry V. Levin <ldv@altlinux.org> 1.3.27-alt1
+- hsh-mkchroot: changed chroot/dev/shm group ownership
+  to make it a valid mountpoint for hasher-priv >= 1.5.1.
+- hsh-fakedev.1: fixed a thinko (by Michael Shigorin).
+- hsh-mkchroot: added busybox-hasher support (by led@).
+
 * Thu Oct 18 2012 Dmitry V. Levin <ldv@altlinux.org> 1.3.26-alt1
 - hsh-initroot: reverted the change related to
   /sys/devices/system/cpu/online because java cannot cope with it.
