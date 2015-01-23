@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.5.2
-Release: alt1.git20150119
+Version: 0.6.0
+Release: alt1.git20150122
 Summary: Scalable web scraper framework for finding documents on websites
 License: GPLv3
 Group: Development/Python
@@ -19,7 +19,7 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-BeautifulSoup4 python-module-libmagic
 BuildPreReq: python-module-pika python-module-six
 BuildPreReq: python-module-tldextract python-modules-wsgiref
-BuildPreReq: python-module-requests
+BuildPreReq: python-module-requests python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -31,7 +31,7 @@ BuildPreReq: python-tools-2to3
 
 %py_provides barking_owl
 Requires: python-module-libmagic
-%py_requires bs4 magic pika six wsgiref tldextract requests
+%py_requires bs4 magic pika six wsgiref tldextract requests json
 
 %description
 BarkingOwl is a scalable web crawler intended to be used to find
@@ -127,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20150122
+- Version 0.6.0
+
 * Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1.git20150119
 - Initial build for Sisyphus
 
