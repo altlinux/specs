@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5.0
+Version: 1.6.4
 Release: alt1
 Summary: Python plotting library for collaborative, interactive, publication-quality graphs
 License: MIT
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.4-alt1
+- Version 1.6.4
+
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus
 
