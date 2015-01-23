@@ -3,10 +3,10 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.15
+Version: 0.8.19
 Release: alt1
 Summary: Appier Framework
-License: GPLv3
+License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/appier/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.19-alt1
+- Version 0.8.19
+
 * Mon Sep 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.15-alt1
 - Initial build for Sisyphus
 
