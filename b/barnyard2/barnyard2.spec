@@ -1,6 +1,6 @@
 Name: barnyard2
 Version: 2.1.13
-Release: alt3
+Release: alt4
 
 Summary: Snort Log Backend
 License: GPLv2
@@ -13,8 +13,11 @@ Source1: barnyard2.init
 
 Patch1: barnyard2-1.11-alt-confpath.patch
 Patch2: barnyard2-1.11-alt-default_output.patch
+# in upstream, remove on next version
+Patch3: barnyard2-1.13-alt-sguild-padding.patch
 
 BuildRequires: libpcap-devel
+BuildRequires: tcl-devel
 
 %description
 Barnyard2 has 3 modes of operation:
@@ -42,6 +45,7 @@ barnyard2 binary compiled with mysql support.
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -49,6 +53,7 @@ barnyard2 binary compiled with mysql support.
 %configure 					\
 	--with-mysql				\
 	--with-mysql-libraries=%_libdir 	\
+    --with-tcl=%_libdir \
 	--with-mysql-includes=%_includedir/mysql
 %make_build
 
@@ -78,6 +83,10 @@ install -Dpm 644 schemas/create_mysql %buildroot%_datadir/%name/schemas/create_m
 %_datadir/%name/schemas/create_mysql
 
 %changelog
+* Fri Jan 23 2015 Andriy Stepanov <stanv@altlinux.ru> 2.1.13-alt4
+- Upstream commit ce3c0228, fixed: incorrect padding in sguild for
+events without packets
+
 * Wed Sep 03 2014 Mikhail Efremov <sem@altlinux.org> 2.1.13-alt3
 - init script: Simplify print_all_ifaces() function.
 - init script: Create log directories if needed.
