@@ -19,7 +19,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Summary: A UPnP v2 Media Server
 
@@ -27,8 +27,8 @@ Group: System/Servers
 License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Rygel
 
-Source: %name-%version.tar
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define libxml_ver 2.7
 %define vala_ver 0.22.0
@@ -176,6 +176,9 @@ echo %version > .tarball-version
 %_girdir/*.gir
 
 %changelog
+* Sat Jan 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.24.3-alt1
+- 0.24.3
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.24.2-alt1
 - 0.24.2
 
