@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.7.33
+Version: 1.7.35
 Release: alt1
 Epoch: 1
 
@@ -424,6 +424,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Sat Jan 24 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.35-alt1
+- release 1.7.35
+
 * Sat Dec 13 2014 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.33-alt1
 - release 1.7.33 (use wine-gecko 2.34)
 
