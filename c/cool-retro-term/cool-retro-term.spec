@@ -1,13 +1,14 @@
 Name: cool-retro-term
-Version: 0.9
-Release: alt4
+Version: 1.0.0
+Release: alt1
 
 Summary: Cool Retro Terminal
 License: GPLv3
 Group: Terminals
 
 Url: https://github.com/Swordifish90/cool-retro-term
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: qmltermwidget.tar
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt5Core)
@@ -25,7 +26,7 @@ of the old cathode tube screens. It has been designed to be eye-candy,
 customizable, and reasonably lightweight.
 
 %prep
-%setup
+%setup -a 1
 
 %build
 qmake-qt5
@@ -37,7 +38,7 @@ qmake-qt5
 make INSTALL_ROOT=%buildroot install
 
 desktop-file-install \
-	--dir=$RPM_BUILD_ROOT%_datadir/applications \
+	--dir=%buildroot%_datadir/applications \
 	%name.desktop
 
 %files
@@ -45,8 +46,13 @@ desktop-file-install \
 %_bindir/%name
 %_libdir/qt5/qml/
 %_datadir/applications/%name.desktop
+%_iconsdir/*/*/*/*.png
 
 %changelog
+* Sun Jan 25 2015 Michael Shigorin <mike@altlinux.org> 1.0.0-alt1
+- v1.0.0
+- added qmltermwidget (upstream pulls it in as submodule)
+
 * Mon Oct 13 2014 Michael Shigorin <mike@altlinux.org> 0.9-alt4
 - ge4f89f0 (incl. --fullscreen)
 
