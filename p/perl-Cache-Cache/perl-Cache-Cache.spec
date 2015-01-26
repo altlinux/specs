@@ -14,7 +14,7 @@
 %define _disable_test 1
 
 Name: perl-Cache-Cache
-Version: 1.07
+Version: 1.08
 Release: alt1
 
 Summary: Cache-Cache - - the Cache interface
@@ -59,6 +59,9 @@ corresponding static methods for persisting data across method calls.
 %perl_vendor_privlib/Cache/
 
 %changelog
+* Mon Jan 26 2015 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
 - automated CPAN update
 
