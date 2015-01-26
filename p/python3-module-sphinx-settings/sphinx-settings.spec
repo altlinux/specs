@@ -1,0 +1,45 @@
+%define oname sphinx-settings
+Name: python3-module-%oname
+Version: 0.1.1
+Release: alt1.git20141130
+Summary: Class-based settings for Sphinx
+License: MIT
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/sphinx-settings/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/respect31/sphinx-settings.git
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-sphinx python3-module-sugarbowl
+BuildPreReq: python3-module-nose python3-module-coverage
+
+%py3_provides sphinx_settings
+%py3_requires sphinx sugarbowl
+
+%description
+Class-based settings for Sphinx.
+
+%prep
+%setup
+
+%build
+%python3_build_debug
+
+%install
+%python3_install
+
+%check
+python3 setup.py test
+
+%files
+%doc *.rst docs/*.rst
+%python3_sitelibdir/*
+
+%changelog
+* Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20141130
+- Initial build for Sisyphus
+
