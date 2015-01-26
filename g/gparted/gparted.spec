@@ -2,7 +2,7 @@
 %define Name GParted
 
 Name: gparted
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -88,6 +88,9 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Jan 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.21.0-alt1
+- 0.21.0
+
 * Tue Oct 21 2014 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
 - 0.20.0
 
