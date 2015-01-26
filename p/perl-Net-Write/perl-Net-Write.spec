@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Write
-Version: 1.07
+Version: 1.08
 Release: alt1
 
 Summary: a portable interface to open and send raw data to network
@@ -51,6 +51,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Mon Jan 26 2015 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
 - automated CPAN update
 
