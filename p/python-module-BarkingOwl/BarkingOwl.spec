@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.6.0
-Release: alt1.git20150122
+Version: 0.6.4.1
+Release: alt1.git20150125
 Summary: Scalable web scraper framework for finding documents on websites
 License: GPLv3
 Group: Development/Python
@@ -107,26 +107,29 @@ popd
 %endif
 
 %files
-%doc *.rst *.md plugins
+%doc *.md plugins
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/*/tests.*
+#exclude %python_sitelibdir/*/*/tests.*
 
-%files tests
-%python_sitelibdir/*/*/tests.*
+#files tests
+#python_sitelibdir/*/*/tests.*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst *.md plugins
+%doc *.md plugins
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*/tests.*
-%exclude %python3_sitelibdir/*/*/*/tests.*
+#exclude %python3_sitelibdir/*/*/tests.*
+#exclude %python3_sitelibdir/*/*/*/tests.*
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*/tests.*
-%python3_sitelibdir/*/*/*/tests.*
+#files -n python3-module-%oname-tests
+#python3_sitelibdir/*/*/tests.*
+#python3_sitelibdir/*/*/*/tests.*
 %endif
 
 %changelog
+* Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.4.1-alt1.git20150125
+- Version 0.6.4.1
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20150122
 - Version 0.6.0
 
