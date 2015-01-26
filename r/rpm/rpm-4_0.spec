@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.79
+Release: alt100.80
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -530,6 +530,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Tue Jan 27 2015 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.80
+- verify-elf: resurrected verify_stack.
+
 * Wed Nov 19 2014 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.79
 - rpmbuild: implemented finer control for %%_deps_optimization
   (by viy@; closes: #30476).
