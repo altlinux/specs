@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.6
-Release: alt1.git20141224
+Version: 1.1.7
+Release: alt1.git20150126
 Summary: Thread-safe Python AMQP Client Library based on pamqp
 License: MIT
 Group: Development/Python
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.7-alt1.git20150126
+- Version 1.1.7
+
 * Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.6-alt1.git20141224
 - Initial build for Sisyphus
 
