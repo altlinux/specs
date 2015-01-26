@@ -13,7 +13,7 @@
 
 %define major 4
 %define minor 14
-%define bugfix 3
+%define bugfix 4
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
@@ -128,7 +128,7 @@ BuildRequires: bzlib-devel cmake libalsa-devel libselinux-devel
 %if_enabled hupnp
 BuildRequires: herqq-devel
 %endif
-BuildRequires: libXScrnSaver-devel grantlee-devel
+BuildRequires: libXrender-devel libXext-devel libXScrnSaver-devel grantlee-devel
 #BuildRequires: libaspell-devel aspell
 BuildRequires: libenchant-devel
 BuildRequires: libavahi-devel libjasper-devel libjpeg-devel
@@ -150,7 +150,7 @@ Group: Development/KDE and QT
 Summary: Header files for compiling KDE 4 applications
 Requires: %name = %version-%release
 Requires: cmake libqt4-devel kde-common-devel >= %major.%minor
-Requires: libXdmcp-devel libXcomposite-devel libXdamage-devel libxkbfile-devel libXtst-devel libXScrnSaver-devel
+Requires: libXrender-devel libXext-devel libXdmcp-devel libXcomposite-devel libXdamage-devel libxkbfile-devel libXtst-devel libXScrnSaver-devel
 Requires: libXpm-devel libXxf86vm-devel libXt-devel libXft-devel
 Requires: libstrigi-devel libsoprano-devel libpcre-devel libgif-devel xml-utils
 Requires: libutempter-devel bzlib-devel phonon-devel automoc shared-desktop-ontologies-devel
@@ -346,6 +346,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Mon Jan 26 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.4-alt1
+- new version
+
 * Thu Nov 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 
