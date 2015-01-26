@@ -1,6 +1,7 @@
 Name: powertop
-Version: 2.7
-Release: alt1
+Version: 2.6.1
+Release: alt2
+Serial: 1
 
 Summary: Tool that helps you find what software is using the most power
 License: GPLv2 only
@@ -8,11 +9,14 @@ Group: System/Kernel and hardware
 
 Url: https://01.org/powertop/
 Source0: https://01.org/powertop/sites/default/files/downloads/%name-%version.tar.gz
+Source1: %name.service
 Source100: %name.watch
 
 # Automatically added by buildreq on Tue May 15 2012
 # optimized out: libncurses-devel libstdc++-devel libtinfo-devel pkg-config xz
 BuildRequires: gcc-c++ libncursesw-devel libnl-devel libpci-devel zlib-devel
+
+%define cachedir %_cachedir/%name
 
 %description
 PowerTOP is a Linux tool that finds the software component(s) that make
@@ -37,15 +41,29 @@ find -name '*.o' -delete
 %install
 %makeinstall_std
 %find_lang %name
-install -d %buildroot%_cachedir/%name
+install -d %buildroot%cachedir
+touch %buildroot%cachedir/saved_{parameters,results}.powertop
+install -pDm644 %SOURCE1 %buildroot%_unitdir/%name.service
+
+%post
+# Hack for powertop not to show warnings on first start
+touch %cachedir/saved_{parameters,results}.powertop
 
 %files -f %name.lang
 %_sbindir/*
 %_man8dir/*
 %doc README
-%dir %_cachedir/%name
+%dir %cachedir
+%ghost %cachedir/saved_*.powertop
+%_unitdir/powertop.service
 
 %changelog
+* Mon Jan 26 2015 Michael Shigorin <mike@altlinux.org> 1:2.6.1-alt2
+- rolled back to version that actually works
+
+* Mon Jan 26 2015 Michael Shigorin <mike@altlinux.org> 2.7-alt2
+- applied Fedora patches to fix --auto-tune overflow
+
 * Wed Nov 26 2014 Michael Shigorin <mike@altlinux.org> 2.7-alt1
 - new version (watch file uupdate)
 
