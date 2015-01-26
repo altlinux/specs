@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.1
+Version: 0.7.6
 Release: alt1
 Summary: Mustache templating language renderer
 License: MIT
@@ -23,7 +23,7 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 %py_provides %oname
 
 %description
-Mustache templating language renderer.
+A python implementation of the mustache templating language.
 
 %package -n python3-module-%oname
 Summary: Mustache templating language renderer
@@ -31,7 +31,7 @@ Group: Development/Python3
 %py3_provides %oname
 
 %description -n python3-module-%oname
-Mustache templating language renderer.
+A python implementation of the mustache templating language.
 
 %prep
 %setup
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt1
+- Version 0.7.6
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1
 - Initial build for Sisyphus
 
