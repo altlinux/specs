@@ -1,7 +1,7 @@
 %define module_name Term-ProgressBar
 
 Name: perl-%module_name
-Version: 2.16
+Version: 2.17
 Release: alt1
 
 Summary: Provides a progress meter on a standard terminal
@@ -39,6 +39,9 @@ has been done, and maybe an estimate at how long remains.
 %perl_vendorlib/Term/ProgressBar.pm
 
 %changelog
+* Mon Jan 26 2015 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1
+- automated CPAN update
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1
 - automated CPAN update
 
