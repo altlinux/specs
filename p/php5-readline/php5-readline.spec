@@ -23,7 +23,7 @@ The readline functions implement an interface to the GNU Readline library.
 %prep
 %setup -T -c
 cp -pr %php5_extsrcdir/%php5_extension/* .
-
+sed -i '/php.h/i#include \"config\.h\"' readline_cli.c
 %build
 phpize
 

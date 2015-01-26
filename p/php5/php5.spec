@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.5.20
+Version: 5.5.21
 Release: alt1
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.5
-%define _php5_snapshot 20141217
+%define _php5_snapshot 20150121
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -402,6 +402,9 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Fri Jan 23 2015 Anton Farygin <rider@altlinux.ru> 5.5.21-alt1
+- new version
+
 * Wed Jan 14 2015 Anton Farygin <rider@altlinux.ru> 5.5.20-alt1
 - new version
 - behavior when divided by zero is synchronized with the upstream (closes: #30650)
