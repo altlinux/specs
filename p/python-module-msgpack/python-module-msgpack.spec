@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.2
-Release: alt1.git20140326
+Version: 0.4.5
+Release: alt1.git20150126
 
 Summary: A Python MessagePack (de)serializer
 
@@ -79,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt1.git20150126
+- Version 0.4.5
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20140326
 - Version 0.4.2
 
