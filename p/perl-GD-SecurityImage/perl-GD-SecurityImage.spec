@@ -1,7 +1,7 @@
 %define module GD-SecurityImage
 
 Name: perl-%module
-Version: 1.72
+Version: 1.73
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -37,6 +37,9 @@ gives you a basic interface to create such an image.
 %perl_vendor_privlib/GD
 
 %changelog
+* Mon Jan 26 2015 Igor Vlasenko <viy@altlinux.ru> 1.73-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.72-alt1
 - automated CPAN update
 
