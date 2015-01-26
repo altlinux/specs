@@ -1,3 +1,5 @@
+%set_automake_version 1.11
+
 %def_disable poll
 %def_enable epoll
 %def_enable ecap
@@ -5,7 +7,7 @@
 %def_with nettle
 
 Name: squid
-Version: 3.4.6
+Version: 3.4.11
 Release: alt1
 %define langpack_ver 20140220
 Summary: The Squid proxy caching server
@@ -20,6 +22,8 @@ Source4: wbinfo_group.sh
 Source5: %name.sysconfig
 Source6: %name.pam
 Source7: %name.service
+Source8: %name.tmpfiles
+
 Patch: %name-%version-%release.patch
 Obsoletes: %name-novm %name-pinger
 PreReq: net-snmp-mibs
@@ -43,7 +47,9 @@ BuildRequires: doxygen  graphviz fonts-ttf-freefont
 BuildRequires: gcc-c++ libcap-devel libdb4-devel libldap-devel libltdl-devel
 BuildRequires: libpam-devel libsasl2-devel libssl-devel perl-Pod-Parser
 BuildRequires: w3c-libwww-devel cppunit-devel
+BuildRequires: samba-client samba-winbind-clients
 BuildRequires: libkrb5-devel
+BuildRequires: libnetfilter_conntrack-devel
 %{?_enable_ecap:BuildRequires: libecap-devel >= 0.2.0-alt3}
 %{?_enable_esi:BuildRequires: libxml2-devel libexpat-devel}
 %{?_with_nettle:BuildRequires: libnettle-devel}
@@ -94,9 +100,15 @@ This package contains Squid helpers for different kinds of authentication.
 
 sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 
+RELEASE_TIME=`date +%s`
+%define RELEASE_TIME %(date +%s)
+
+sed -i -e "s|%version-BZR|%version|" configure.ac
+sed -i -e "s|squid_curtime|%RELEASE_TIME|" include/version.h
 
 %build
 %define _localstatedir %_var
+%add_optflags %optflags_shared
 ./bootstrap.sh
 %configure \
 	CPPFLAGS="$(pkg-config --cflags-only-I libxml-2.0)" \
@@ -109,6 +121,8 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 	--with-swapdir=%_localstatedir/spool/%name \
 	--enable-strict-error-checking \
 	--with-dl \
+	--with-pthreads \
+	--with-aio \
 	--with-openssl \
 	--with-libcap \
 	--enable-forw-via-db \
@@ -139,10 +153,11 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 	--enable-wccpv2 \
 	--enable-arp-acl \
 	--enable-ssl \
+	--enable-ssl-crtd \
 	--enable-forw-via-db \
 	--enable-useragent-log \
 	--enable-referer-log \
-	--enable-ident-lookups \
+	--disable-ident-lookups \
 	--enable-carp \
 	--enable-cache-digests \
 	--enable-x-accelerator-vary \
@@ -151,13 +166,14 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 	--enable-ntlm-auth-helpers="fake smb_lm" \
 	--enable-digest-auth-helpers="LDAP eDirectory file" \
 	--enable-negotiate-auth-helpers="kerberos wrapper" \
-	--enable-external-acl-helpers="AD_group LDAP_group LM_group eDirectory_userip file_userip kerberos_ldap_group session unix_group wbinfo_group" \
+	--enable-external-acl-helpers="LDAP_group eDirectory_userip file_userip kerberos_ldap_group session unix_group wbinfo_group time_quota" \
 	--enable-storeio="aufs diskd rock ufs" \
 	--enable-disk-io \
 	--enable-default-err-language="English" \
 	--enable-icap-client \
 	--disable-ipfw-transparent --disable-ipf-transparent --disable-pf-transparent \
 	--enable-linux-netfilter \
+	--with-netfilter-conntrack \
 	--enable-linux-tproxy \
 	--with-large-files \
 	--with-filedescriptors=65536 \
@@ -173,7 +189,7 @@ sed -r 's/dyn/html/g;s/CALL(|ER_GRAPH)/#/' squid3.dox | doxygen -
 install -pD -m 0755 %SOURCE2 %buildroot%_initddir/%name
 install -pD -m 0644 %SOURCE3 %buildroot%_sysconfdir/logrotate.d/%name
 
-install -d -m 0755 %buildroot{%_logdir,%_spooldir}/%name
+install -d -m 0755 %buildroot{%_logdir,%_spooldir,%_runtimedir}/%name
 
 install -p -m 0644 helpers/{external_acl/{AD,LM,kerberos_ldap}_group,negotiate_auth/kerberos}/*.8 %buildroot%_man8dir/
 
@@ -184,9 +200,11 @@ mv %buildroot%_datadir/%name/mib.txt %buildroot%_datadir/snmp/mibs/SQUID-MIB.txt
 install -pD -m 0644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
 install -pD -m 0644 %SOURCE6 %buildroot%_sysconfdir/pam.d/%name
 install -pD -m 0644 %SOURCE7 %buildroot%_unitdir/%name.service
+install -pD -m 0644 %SOURCE8 %buildroot%_tmpfilesdir/%name.conf
 
-install -d -m 0755 %buildroot%_docdir/%name-%version/{helpers,html/Programming-Guide,scripts}
-install -p -m 0644 doc/Programming-Guide/html/*{css,html,png} %buildroot%_docdir/%name-%version/html/Programming-Guide/
+install -d -m 0755 %buildroot%_docdir/%name-%version/{helpers,html,scripts}
+#install -d -m 0755 %buildroot%_docdir/%name-%version/html/Programming-Guide
+#install -p -m 0644 doc/Programming-Guide/html/*{css,html,png} %buildroot%_docdir/%name-%version/html/Programming-Guide/
 install -p -m 0644 doc/release-notes/*.html %buildroot%_docdir/%name-%version/html/
 install -p -m 0644 COPYRIGHT README ChangeLog QUICKSTART SPONSORS doc/debug-sections.txt %buildroot%_docdir/%name-%version/
 install -p -m 0644 scripts/*.pl %buildroot%_docdir/%name-%version/scripts/
@@ -242,7 +260,8 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %config(noreplace) %_sysconfdir/%name/*
 %config(noreplace) %_sysconfdir/sysconfig/*
 %_initddir/*
-%systemd_unitdir/%name.service
+%_unitdir/%name.service
+%_tmpfilesdir/%name.conf
 %config %_sysconfdir/logrotate.d/%name
 %dir %_datadir/%name
 %_datadir/%name/*
@@ -256,6 +275,7 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %_libexecdir/%name/diskd
 %attr(3770,root,%name) %dir %_logdir/%name
 %attr(2770,root,%name) %dir %_spooldir/%name
+%attr(2770,root,%name) %dir %_runtimedir/%name
 %exclude %_sysconfdir/%name/msntauth.conf*
 
 
@@ -290,6 +310,11 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Wed Jan 21 2015 Alexey Shabalin <shaba@altlinux.ru> 3.4.11-alt1
+- 3.4.11
+- update configure options
+- added /var/run/squid dir to host sockets in SMP configuration
+
 * Thu Jun 26 2014 Led <led@altlinux.ru> 3.4.6-alt1
 - 3.4.6
 
