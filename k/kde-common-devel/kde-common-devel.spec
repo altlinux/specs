@@ -6,7 +6,7 @@
 %define rpm_ver %{get_SVR rpm}
 
 Name: kde-common-devel
-Version: 4.14.3
+Version: 14.12.1
 Release: alt1
 
 Group: Development/KDE and QT
@@ -48,6 +48,9 @@ install -D -m 0644 %SOURCE11 %buildroot/%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Jan 26 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
 * Fri Dec 26 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - add mt language to list
 
