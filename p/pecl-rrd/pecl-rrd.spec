@@ -9,13 +9,13 @@ License: %bsd
 Group: Development/Other
 
 Url: http://pecl.php.net/package/%php5_extension
-Packager: Aleksey Avdeev <solo@altlinux.ru>
 
 Source: %php5_extension-%version.tar
 
 Requires: pear-core
 
 BuildRequires(pre): rpm-build-pecl
+BuildRequires: php5-devel
 BuildPreReq: pear-core
 BuildPreReq: rpm-build-licenses
 BuildPreReq: librrd-devel

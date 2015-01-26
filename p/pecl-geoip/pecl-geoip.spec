@@ -18,6 +18,7 @@ Patch: %name-%version-alt-timezone-GeoIP1.4.5.patch
 Requires: pear-core
 
 BuildRequires(pre): rpm-build-pecl
+BuildRequires: php5-devel
 BuildPreReq: pear-core
 BuildPreReq: libGeoIP-devel
 

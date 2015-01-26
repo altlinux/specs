@@ -14,6 +14,7 @@ Prereq: php5 = %php5_version
 Prereq: php5 >= %php5_version-%php5_release
 Prereq: apache2-httpd-prefork-like
 Requires(post): apache2-httpd-prefork-like
+Requires(post): apache2-base
 
 Conflicts: apache2-mod_php
 Provides: php-engine = %php5_version-%php5_release

@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Requires: pear-core
 
 BuildRequires(pre): rpm-build-pecl
+BuildRequires: php5-devel
 BuildPreReq: pear-core
 BuildPreReq: libpam0-devel
 

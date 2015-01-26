@@ -1,8 +1,8 @@
-%define php5_sapi fpm
+%define php5_sapi fpm-fcgi
 
 Name: php5-fpm-fcgi
 Version: %php5_version
-Release: %php5_release.1
+Release: %php5_release
 Summary: The PHP5 HTML-embedded scripting language as a fpm-fcgi binary.
 Group: System/Servers
 Url: http://www.php.net/
@@ -11,12 +11,14 @@ License: PHP
 Requires: php5 = %php5_version
 Requires: php5 >= %php5_version-%php5_release
 Provides: php-engine = %php5_version-%php5_release
+Requires: service >= 0.5.26-alt1
 
 Source1: php.ini
 Source2: %name-browscap.ini
 Source3: php5-fpm.init
 Source4: php5-fpm.logrotate
 Source5: php5-fpm.service
+Source6: php5-fpm.rotate
 
 Patch0: php5-fpm-fcgi-5.3.3.20100722-config.m4.patch
 Patch2: php5-fpm-fcgi-5.4.15.20130509-build.patch
@@ -44,7 +46,7 @@ against placing any interpreters into cgi-bin.
 
 %prep
 %setup -T -c
-%php5_sapi_prepare %php5_sapi
+%php5_sapi_prepare fpm
 ln -s %php5_extsrcdir ext
 
 
@@ -59,13 +61,13 @@ ln -s %php5_extsrcdir ext
 
 # some hackaround
 mkdir -p sapi modules
-ln -s ../ sapi/%php5_sapi
+ln -s ../ sapi/fpm
 touch modules/z
 
 FPM_BUILD_VARS=" \
     PHP_SAPI=default \
-    PHP_MODULES=sapi/%php5_sapi/php-fpm \
-    SAPI_FPM_PATH=sapi/%php5_sapi/php5-fpm \
+    PHP_MODULES=sapi/fpm/php-fpm \
+    SAPI_FPM_PATH=sapi/fpm/php5-fpm \
     BUILD_DIR=. \
 "
 
@@ -90,7 +92,7 @@ mkdir -p \
 	
 %php5_make_install install-fpm program_suffix=-%_php5_version
 
-ln -s php-%php5_sapi-%_php5_version %buildroot%_sbindir/php5-%php5_sapi
+ln -s php-fpm-%_php5_version %buildroot%_sbindir/php5-fpm
 
 install -m 644 %SOURCE1 %buildroot/%php5_sysconfdir/%php5_sapi/php.ini
 install -m 644 %SOURCE2 %buildroot/%php5_sysconfdir/%php5_sapi/browscap.ini
@@ -112,8 +114,8 @@ install -pD -m755 %SOURCE3 %buildroot%_initdir/php5-fpm
 install -d %buildroot/%_altdir
 php_weight="$(echo "%_php5_version" | sed 's,[^[:digit:]],,g')"
 
-cat << EOF > %buildroot/%_altdir/php5-%php5_sapi
-%_sbindir/php-%php5_sapi	%_sbindir/php-%php5_sapi-%_php5_version	$php_weight
+cat << EOF > %buildroot/%_altdir/php5-fpm
+%_sbindir/php-fpm	%_sbindir/php-fpm-%_php5_version	$php_weight
 EOF
 
 mkdir -p %buildroot%_logdir/php5-fpm
@@ -127,6 +129,17 @@ echo 'd /var/run/php5-fpm 0775 root root' >> %buildroot%_sysconfdir/tmpfiles.d/p
 
 mkdir -p  %buildroot%_unitdir
 install -m 0644 %SOURCE5 %buildroot%_unitdir/php5-fpm.service
+install -pD -m755 %SOURCE6 %buildroot/usr/libexec/service/legacy-actions/php5-fpm/rotate
+
+%triggerun -- %name < 5.5.21
+if [ $2 -gt 0 ] && [ $1 -gt 0 ] && [ -d %php5_sysconfdir/fpm ]; then
+# This is upgrade.
+	echo "Warning: configuration files from %php5_sysconfdir/fpm moved to %php5_sysconfdir/%php5_sapi/"
+	mkdir -p %php5_sysconfdir/%php5_sapi >dev/null 2>&1 ||:
+	cp -af %php5_sysconfdir/fpm/* %php5_sysconfdir/%php5_sapi/ ||:
+	rm -rf %php5_sysconfdir/fpm ||:
+	%post_service php5-fpm
+fi
 
 
 %pre
@@ -146,9 +159,9 @@ install -m 0644 %SOURCE5 %buildroot%_unitdir/php5-fpm.service
 %files
 %doc CREDITS
 %config %_initdir/php5-fpm
-%_sbindir/php-%php5_sapi-%_php5_version
-%_sbindir/php5-%php5_sapi
-%_altdir/php5-%php5_sapi 
+%_sbindir/php-fpm-%_php5_version
+%_sbindir/php5-fpm
+%_altdir/php5-fpm 
 %dir %php5_sysconfdir/%php5_sapi
 %dir %php5_sysconfdir/%php5_sapi/php.d
 %dir %_sysconfdir/fpm/
@@ -163,10 +176,17 @@ install -m 0644 %SOURCE5 %buildroot%_unitdir/php5-fpm.service
 %php5_servicedir/%php5_sapi
 %config %_unitdir/php5-fpm.service
 %_man8dir/*
+/usr/libexec/service/legacy-actions/php5-fpm
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+
+* Mon Jan 26 2015 Anton Farygin <rider@altlinux.ru> 5.5.20.20141217-alt2
+- SAPI name revert to upstream fpm-fcgi (closes: #30496)
+- configuration files moved from /etc/php/5.5/fpm to /etc/php/5.5/fpm-fcgi
+- add legacy script for logs rotate under systemd
+- php.ini now is version-free 
 
 * Wed Jun 18 2014 Anton Farygin <rider@altlinux.ru> 5.5.13.20140626-alt1.1
 - fixed unix socket permissions in default php5-fpm.conf 
