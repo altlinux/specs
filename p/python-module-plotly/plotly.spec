@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6.4
+Version: 1.6.6
 Release: alt1
 Summary: Python plotting library for collaborative, interactive, publication-quality graphs
 License: MIT
@@ -17,18 +17,18 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-requests python-module-six
 BuildPreReq: python-module-pytz python-module-numpy
-BuildPreReq: python-module-matplotlib
+BuildPreReq: python-module-matplotlib python-module-zmq ipython
 BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-requests python3-module-six
 BuildPreReq: python3-module-pytz python3-module-numpy
-BuildPreReq: python3-module-matplotlib
+BuildPreReq: python3-module-matplotlib python3-module-zmq ipython3
 %endif
 
 %py_provides %oname
-%py_requires requests six pytz json numpy matplotlib
+%py_requires requests six pytz json numpy matplotlib zmq IPython.html
 
 %description
 Use this package to make collaborative, interactive, publication-quality
@@ -38,7 +38,7 @@ graphs from Python.
 Summary: Python plotting library for collaborative, interactive, publication-quality graphs
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires requests six pytz numpy matplotlib
+%py3_requires requests six pytz numpy matplotlib zmq IPython.html
 
 %description -n python3-module-%oname
 Use this package to make collaborative, interactive, publication-quality
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.6-alt1
+- Version 1.6.6
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.4-alt1
 - Version 1.6.4
 
