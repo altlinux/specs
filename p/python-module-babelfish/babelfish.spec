@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.4
-Release: alt1.dev.git20140622
+Version: 0.5.5
+Release: alt1.dev.git20150124
 Summary: A module to work with countries and languages
 License: BSD
 Group: Development/Python
@@ -147,6 +147,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.5-alt1.dev.git20150124
+- Version 0.5.5-dev
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.4-alt1.dev.git20140622
 - Initial build for Sisyphus
 
