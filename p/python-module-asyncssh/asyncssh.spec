@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.9.1
-Release: alt1.git20141204
+Version: 0.9.2
+Release: alt1.git20150126
 Summary: AsyncSSH: Asynchronous SSHv2 client and server library
 License: Eclipse Public License v1.0
 Group: Development/Python
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1.git20150126
+- Version 0.9.2
+
 * Sun Jan 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.git20141204
 - Initial build for Sisyphus
 
