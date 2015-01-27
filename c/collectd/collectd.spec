@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.4.1
-Release: alt2.1
+Release: alt3
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -563,6 +563,8 @@ libdir: "%_localstatedir/%name"
 EOF
 %endif
 
+install -pDm644 contrib/collectd.service %buildroot%_unitdir/collectd.service
+
 %post
 %post_service %name
 
@@ -635,6 +637,7 @@ service %name condrestart ||:
 %{?_enable_snmp:%exclude %_libdir/%name/snmp.so}
 %{?_enable_tokyotyrant:%exclude %_libdir/%name/tokyotyrant.so}
 %{?_enable_xmms:%exclude %_libdir/%name/xmms.so}
+%_unitdir/collectd.service
 
 %files -n %libname
 %_libdir/%libname.so.*
@@ -810,6 +813,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Mon Jan 26 2015 Anton Farygin <rider@altlinux.ru> 5.4.1-alt3
+- add unit file for systemd (closes: #28038)
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 5.4.1-alt2.1
 - rebuild with new perl 5.20.1
 
