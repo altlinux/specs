@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        39.0.2171.99
+Version:        40.0.2214.93
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -491,6 +491,39 @@ strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver,libffmp
 %_altdir/%name-gnome
 
 %changelog
+* Tue Jan 27 2015 Andrey Cherepanov <cas@altlinux.org> 40.0.2214.93-alt1
+- New version
+
+* Fri Jan 23 2015 Andrey Cherepanov <cas@altlinux.org> 40.0.2214.91-alt1
+- New version
+- Security fixes:
+  - High CVE-2014-7923: Memory corruption in ICU.
+  - High CVE-2014-7924: Use-after-free in IndexedDB.
+  - High CVE-2014-7925: Use-after-free in WebAudio.
+  - High CVE-2014-7926: Memory corruption in ICU.
+  - High CVE-2014-7927: Memory corruption in V8.
+  - High CVE-2014-7928: Memory corruption in V8.
+  - High CVE-2014-7930: Use-after-free in DOM.
+  - High CVE-2014-7931: Memory corruption in V8.
+  - High CVE-2014-7929: Use-after-free in DOM.
+  - High CVE-2014-7932: Use-after-free in DOM.
+  - High CVE-2014-7933: Use-after-free in FFmpeg.
+  - High CVE-2014-7934: Use-after-free in DOM.
+  - High CVE-2014-7935: Use-after-free in Speech.
+  - High CVE-2014-7936: Use-after-free in Views.
+  - High CVE-2014-7937: Use-after-free in FFmpeg.
+  - High CVE-2014-7938: Memory corruption in Fonts.
+  - High CVE-2014-7939: Same-origin-bypass in V8.
+  - Medium CVE-2014-7940: Uninitialized-value in ICU.
+  - Medium CVE-2014-7941: Out-of-bounds read in UI.
+  - Medium CVE-2014-7942: Uninitialized-value in Fonts.
+  - Medium CVE-2014-7943: Out-of-bounds read in Skia.
+  - Medium CVE-2014-7944: Out-of-bounds read in PDFium.
+  - Medium CVE-2014-7945: Out-of-bounds read in PDFium.
+  - Medium CVE-2014-7946: Out-of-bounds read in Fonts.
+  - Medium CVE-2014-7947: Out-of-bounds read in PDFium.
+  - Medium CVE-2014-7948: Caching error in AppCache.
+
 * Wed Jan 14 2015 Andrey Cherepanov <cas@altlinux.org> 39.0.2171.99-alt1
 - New version
 
