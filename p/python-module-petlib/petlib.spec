@@ -1,9 +1,10 @@
 %define oname petlib
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.0.8
+Version: 0.0.23
 Release: alt1
 Summary: A library implementing a number of Privacy Enhancing Technologies (PETs)
 License: BSD
@@ -14,16 +15,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests libssl-devel
-BuildPreReq: python-module-cffi
+BuildPreReq: python-module-cffi python-module-future
+BuildPreReq: python-module-Paver python-module-pytest-cov
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-cffi
+BuildPreReq: python3-module-cffi python3-module-future
+BuildPreReq: python3-module-Paver python3-module-pytest-cov
 BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
-%py_requires cffi
+%py_requires cffi future pytest paver pytest_cov
 
 %description
 A library wrapping Open SSL low-level cryptographic libraries to build
@@ -33,7 +36,7 @@ Privacy Enhancing Technoloies (PETs).
 Summary: A library implementing a number of Privacy Enhancing Technologies (PETs)
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires cffi
+%py3_requires cffi future pytest paver pytest_cov
 
 %description -n python3-module-%oname
 A library wrapping Open SSL low-level cryptographic libraries to build
@@ -65,10 +68,6 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
-
 %check
 py.test petlib/*.py
 install -d %buildroot%python_sitelibdir/%oname/__pycache__
@@ -94,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.23-alt1
+- Version 0.0.23
+
 * Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.8-alt1
 - Initial build for Sisyphus
 
