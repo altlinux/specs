@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.6
+Version: 0.8.4
 Release: alt1
 Summary: Mustache templating language renderer
 License: MIT
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1
+- Version 0.8.4
+
 * Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt1
 - Version 0.7.6
 
