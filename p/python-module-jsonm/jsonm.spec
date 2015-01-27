@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.2
-Release: alt1.git20150122
+Version: 1.0.11
+Release: alt1.git20150126
 Summary: Python object to (json + redis)
 License: MIT
 Group: Development/Python
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.11-alt1.git20150126
+- Version 1.0.11
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.git20150122
 - Initial build for Sisyphus
 
