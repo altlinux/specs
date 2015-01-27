@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.1.2
-Release: alt1.git20141103
+Version: 1.2.0
+Release: alt1.git20150108
 Summary: Automatically mock your HTTP interactions to simplify and speed up testing
 License: MIT
 Group: Development/Python
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.git20150108
+- Version 1.2.0
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.git20141103
 - Initial build for Sisyphus
 
