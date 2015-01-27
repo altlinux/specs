@@ -2,12 +2,11 @@
 
 %def_disable celt051
 %def_enable opus
-%def_disable client
-%def_disable gui
+%def_enable lz4
 
 Name: SPICE
 Version: 0.12.5
-Release: alt2
+Release: alt4
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -28,8 +27,7 @@ BuildRequires: libcacard-devel >= 0.1.2
 BuildRequires: glib2-devel >= 2.22
 %{?_enable_celt051:BuildRequires: libcelt051-devel >= 0.5.1.1}
 %{?_enable_opus:BuildRequires: libopus-devel >= 0.9.14}
-%{?_enable_client:BuildRequires: libalsa-devel libXfixes-devel libXrandr-devel libXext-devel libX11-devel libXinerama-devel}
-%{?_enable_gui:BuildRequires: cegui06-devel}
+%{?_enable_lz4:BuildRequires: liblz4-devel}
 
 %description
 The Simple Protocol for Independent Computing Environments (SPICE) is
@@ -37,19 +35,6 @@ a remote display system built for virtual environments which allows
 you to view a computing 'desktop' environment not only on the machine
 where it is running, but from anywhere on the Internet and from a wide
 variety of machine architectures.
-
-%package -n spice-client
-Summary: Implements the client side of the SPICE protocol
-Group: Graphical desktop/Other
-
-%description -n spice-client
-The Simple Protocol for Independent Computing Environments (SPICE) is
-a remote display system built for virtual environments which allows
-you to view a computing 'desktop' environment not only on the machine
-where it is running, but from anywhere on the Internet and from a wide
-variety of machine architectures.
-
-This package contains the SPICE client application.
 
 %package -n libspice-server
 Summary: Implements the server side of the SPICE protocol
@@ -88,8 +73,7 @@ rm -f GITVERSION
 %autoreconf
 %configure			\
 	%{subst_enable celt051}	\
-	%{subst_enable client}	\
-	%{subst_enable gui}	\
+	%{subst_enable lz4}	\
 	--enable-smartcard	\
 	--enable-static=no	\
 	--with-sasl
@@ -101,12 +85,6 @@ rm -f GITVERSION
 rm -f %buildroot%_libdir/libspice-server.a
 rm -f %buildroot%_libdir/libspice-server.la
 
-%if_enabled client
-%files -n spice-client
-%doc COPYING README NEWS
-%_bindir/spicec
-%endif
-
 %files -n libspice-server
 %doc COPYING README NEWS
 %_libdir/libspice-server.so.*
@@ -117,6 +95,12 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Tue Jan 27 2015 Alexey Shabalin <shaba@altlinux.ru> 0.12.5-alt4
+- upstream git snapshot 3c6b4e415fa1e2ce212d09ba15c90cd58b4ec4b4
+
+* Thu Dec 18 2014 Alexey Shabalin <shaba@altlinux.ru> 0.12.5-alt3
+- upstream git snapshot 69f3f86ff79360d208f6f31e4914fbe3f0a14f61
+
 * Thu Sep 11 2014 Alexey Shabalin <shaba@altlinux.ru> 0.12.5-alt2
 - upstream git snapshot 5eb9967dbc508d99a4b2bec49a51f3510c91e022
 

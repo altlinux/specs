@@ -8,13 +8,14 @@
 %def_enable smartcard
 %def_enable usbredir
 %def_enable webdav
+%def_enable lz4
 %def_disable gtk_doc
 # gstreamer/pulse/no
 %define audio pulse
 %def_with gtk3
 
 Name: libspice-gtk
-Version: 0.26
+Version: 0.27
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -39,13 +40,14 @@ BuildRequires: hwdatabase >= 0.3.31-alt1
 BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
 BuildRequires: spice-protocol >= 0.10.1
-BuildRequires: libgio-devel libcairo-devel
+BuildRequires: glib2-devel >= 2.28 libgio-devel >= 2.10.0 libcairo-devel >= 1.2.0
 BuildRequires: libopus-devel >= 0.9.14
 %{?_enable_webdav:BuildRequires: libphodav-devel}
 %{?_with_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vala:BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver vala-tools}
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 0.1.2}
 %{?_enable_usbredir:BuildRequires: libgudev-devel libusb-devel >= 1.0.16 libusbredir-devel >= 0.4.2}
+%{?_enable_lz4:BuildRequires: liblz4-devel}
 BuildRequires: libgtk+2-devel
 BuildRequires: libpolkit-devel >= 0.96 libacl-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+2-gir-devel}
@@ -55,7 +57,7 @@ BuildRequires: libgtk+3-devel
 %endif
 BuildRequires: libXrandr-devel libX11-devel
 %if %audio == gstreamer
-BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 %endif
 %if %audio == pulse
 BuildRequires: libpulseaudio-devel
@@ -222,6 +224,7 @@ cd %_name-%version
 	%{subst_enable vala} \
 	%{subst_enable smartcard} \
 	%{subst_enable webdav} \
+	%{subst_enable lz4} \
 %if_disabled usbredir
 	--enable-usbredir=no \
 %endif
@@ -247,6 +250,7 @@ cd spice-gtk3-%version
 	%{subst_enable vala} \
 	%{subst_enable smartcard} \
 	%{subst_enable webdav} \
+	%{subst_enable lz4} \
 %if_disabled usbredir
 	--enable-usbredir=no \
 %endif
@@ -346,6 +350,10 @@ cd ..
 %endif
 
 %changelog
+* Tue Jan 27 2015 Alexey Shabalin <shaba@altlinux.ru> 0.27-alt1
+- git snapshot 4c4d7b20822a8ae916df902dd8218cadfe6f0a17
+- build with lz4 support
+
 * Mon Nov 10 2014 Alexey Shabalin <shaba@altlinux.ru> 0.26-alt1
 - 0.26
 
