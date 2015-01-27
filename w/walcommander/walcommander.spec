@@ -1,5 +1,5 @@
 Name: walcommander
-Version: 0.16.1
+Version: 0.18.1
 Release: alt1
 
 Summary: Wal Commander GitHub Edition
@@ -11,39 +11,32 @@ Url: https://github.com/corporateshark/WalCommander
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
-
-# manually removed: python3 ruby ruby-stdlibs 
-# Automatically added by buildreq on Sat Aug 23 2014
-# optimized out: libcloog-isl4 libsasl2-3 libstdc++-devel python3-base samba-libs xorg-xproto-devel
+BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libX11-devel libfreetype-devel libsmbclient-devel libssh2-devel samba-common
 
 %description
 Wal Commander is a Far commander clone on Linux.
 
 %prep
-%setup
+%setup -q
 
 %build
-cd wcm
-# fix for start build (like in a original makefile)
-rm -f libconf_ux.h
-make libconf_ux.h
-%make_build -f makefile.int
+%cmake
+%cmake_build
 
 %install
-cd wcm
-#makeinstall_std
-mkdir -p %buildroot%_bindir
-cp -f wcm %buildroot%_bindir
-cp -f -R install-files/* %buildroot%prefix
+ln -s ../install-files src/install-files
+%cmakeinstall_std
 
 %files
 %doc LICENSE CHANGELOG CHANGELOG.GitHub readme_eng.txt README.md
 %_bindir/*
-%_desktopdir/*
-%_datadir/wcm/
-#_man1dir/*
+%_desktopdir/*.desktop
+%_pixmapsdir/*.png
 
 %changelog
+* Mon Jan 26 2015 Andrey Cherepanov <cas@altlinux.org> 0.18.1-alt1
+- New version (ALT #30593)
+
 * Sat Aug 23 2014 Vitaly Lipatov <lav@altlinux.ru> 0.16.1-alt1
 - initial build for Sisyphus
