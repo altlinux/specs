@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3
-Release: alt1.git20150120
+Version: 0.4.2
+Release: alt1.git20150126
 Summary: Provides an "include" function, similar to that found in LaTeX
 License: GPLv3
 Group: Development/Python
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20150126
+- Version 0.4.2
+
 * Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20150120
 - Initial build for Sisyphus
 
