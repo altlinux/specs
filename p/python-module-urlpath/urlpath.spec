@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
-Release: alt1.git20150123
+Version: 1.0.4
+Release: alt1.git20150127
 Summary: Object-oriented URL from `urllib.parse` and `pathlib`
 License: PSFL
 Group: Development/Python
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt1.git20150127
+- Version 1.0.4
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20150123
 - Initial build for Sisyphus
 
