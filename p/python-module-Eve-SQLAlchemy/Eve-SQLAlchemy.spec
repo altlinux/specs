@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.2
-Release: alt1.dev0.git20150113
+Version: 0.3
+Release: alt1.dev0.git20150127
 Summary: REST API framework powered by Flask, SQLAlchemy and good intentions
 License: GPL / BSD
 Group: Development/Python
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.dev0.git20150127
+- Version 0.3.dev0
+
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.dev0.git20150113
 - Initial build for Sisyphus
 
