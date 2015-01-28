@@ -1,6 +1,6 @@
 Name: xlockmore
-Version: 5.43
-Release: alt2
+Version: 5.45
+Release: alt1
 
 Summary: An X terminal locking program
 License: MIT
@@ -22,7 +22,6 @@ Patch5: xlockmore-5.43-droidfonts.patch
 PreReq: /etc/tcb
 Requires: fortune-mod
 Requires: fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono fonts-ttf-google-droid-serif
-
 
 BuildPreReq: gcc-c++
 # Automatically added by buildreq on Sun Jun 29 2014
@@ -106,6 +105,9 @@ rm -rf %_datadir/xlock/fonts/
 %exclude %_mandir/xlock.1*
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 5.45-alt1
+- Autobuild version bump to 5.45
+
 * Sun Jun 29 2014 Fr. Br. George <george@altlinux.ru> 5.43-alt2
 - Add ftgl support
 - Provide -nologout option for user switching
