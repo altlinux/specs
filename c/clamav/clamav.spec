@@ -12,7 +12,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.98.5
+Version: 0.98.6
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -130,12 +130,8 @@ database automatically. It uses the freshclam(1) utility for this task.
 %patch20 -p1
 
 %build
-%{?snap: aclocal}
-
-# See http://www.gossamer-threads.com/lists/clamav/users/41630
-#rm -f configure.in
-
 # fixed RPATH issue (0.97.3 tarball built with wrong libtool)
+%{!?snap: aclocal --force -I m4}
 %{!?snap: %autoreconf}
 
 # --disable-clamav: Disable test for clamav user/group
@@ -306,6 +302,9 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Wed Jan 28 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.98.6-alt1
+- 0.98.6 (CVE-2014-9328)
+
 * Fri Nov 28 2014 Sergey Y. Afonin <asy@altlinux.ru> 0.98.5-alt1
 - 0.98.5 (ALT #30501)
 - removed clamav-0.98-alt-arm.patch
