@@ -2,7 +2,7 @@
 
 Name: powertop1
 Version: 1.13
-Release: alt3.1
+Release: alt4
 
 Summary: Tool that helps you find what software is using the most power
 License: GPLv2 only
@@ -36,14 +36,19 @@ Please note that it also runs just fine with e.g. AMD CPUs. :)
 
 %install
 %makeinstall_std
-#find_lang %origname
+mv %buildroot%_bindir/{%origname,%name}
+mv %buildroot%_man8dir/{%origname,%name}.8.gz
 
 %files
 %doc Changelog README
 %_bindir/*
-#_man8dir/*
+%_man8dir/*
 
 %changelog
+* Wed Jan 28 2015 Michael Shigorin <mike@altlinux.org> 1.13-alt4
+- renamed binary to avoid file conflict with %origname (closes: #30682)
+- returned manpage (renamed similarly)
+
 * Wed May 16 2012 Michael Shigorin <mike@altlinux.org> 1.13-alt3.1
 - dropped Conflicts: powertop (along with colliding translations
   and a manpage which becomes ambiguous and plain wrong for 2.x)
