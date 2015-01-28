@@ -1,6 +1,6 @@
 Name: qfsm
-Version: 0.53.0
-Release: alt1.1
+Version: 0.54.0
+Release: alt1
 
 Summary: Graphical tool for designing finite state machine
 License: GPL
@@ -64,6 +64,9 @@ ln -s %name-%version/user %buildroot%_defaultdocdir/%name
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 0.54.0-alt1
+- Autobuild version bump to 0.54.0
+
 * Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 0.53.0-alt1.1
 - NMU: rebuilt without graphviz (cgraph support missing)
 
