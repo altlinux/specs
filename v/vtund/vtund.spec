@@ -1,6 +1,6 @@
 %define item vtun
 
-%define release_pre alt1
+%define release_pre alt2
 
 # for distr selected
 %def_without M40
@@ -43,6 +43,7 @@ Release: %package_release
 Summary: Virtual tunnel over TCP/IP networks.
 License: GPL
 Group: System/Servers
+
 URL: http://vtun.sourceforge.net/
 Packager: Yura Kalinichenko <yuk@altlinux.org>
 
@@ -52,9 +53,6 @@ Source2: %name.sysconfig
 Source3: %name.client.sysconfig
 Source4: %name.bug4231.sh
 Source5: README.compat-2.6
-
-Patch1: vtun-3.0.2-legacy_encrypt.patch
-Patch2: vtun-3.0.2-free_host.patch
 
 Provides: vtund
 
@@ -75,8 +73,6 @@ not require modification to any kernel parts.
 %prep
 
 %setup -n %item-%version
-#%%patch1 -p1
-#%%patch2 -p1
 aclocal
 autoconf
 %configure
@@ -96,11 +92,7 @@ install -pm755 vtund        %buildroot%_sbindir
 install -pm644 vtund.conf.5 %buildroot%_man5dir
 install -pm644 vtund.8      %buildroot%_man8dir
 
-#post
-#post_service %name
-
-#preun
-#preun_service %name
+sed -i 's,/usr/lib,%_libdir,g' %buildroot%_initdir/vtund
 
 %files
 %doc ChangeLog Credits FAQ README README.Setup README.Shaper TODO README*
@@ -114,8 +106,11 @@ install -pm644 vtund.8      %buildroot%_man8dir
 %_man8dir/*
 %_man5dir/*
 
-
 %changelog
+* Wed Jan 28 2015 Michael Shigorin <mike@altlinux.org> 3.0.3-alt2
+- NMU: fixed initscript on x86_64 (closes: #30676)
+- minor spec cleanup
+
 * Thu Aug 15 2013 Michael Shigorin <mike@altlinux.org> 3.0.3-alt1
 - NMU:
   + Release 3.0.3
