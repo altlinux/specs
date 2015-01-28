@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-shapercontrol
-Version: 0.4
-Release: alt3
+Version: 0.4.1
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
 Summary: Alterator module for shapercontrol administration
@@ -37,6 +37,10 @@ Alterator module for shapercontrol administration.
 %_libexecdir/%name/
 
 %changelog
+* Wed Jan 28 2015 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
+- Add 'kibit' word for translation.
+- Fix bypass_int/bypass_ext.
+
 * Mon Nov 10 2014 Andriy Stepanov <stanv@altlinux.ru> 0.4-alt3
 - Service stop before each action. Add many comments. Add testing howto.
 
