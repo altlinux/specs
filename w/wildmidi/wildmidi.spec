@@ -1,5 +1,5 @@
 Name: wildmidi
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 Summary: WildMidi Open Source Midi Sequencer
 Group: Sound
@@ -64,6 +64,9 @@ This package contains development files for wildmidi
 %_man3dir/*.3*
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 0.3.8-alt1
+- Autobuild version bump to 0.3.8
+
 * Mon Jun 09 2014 Fr. Br. George <george@altlinux.ru> 0.3.7-alt1
 - Autobuild version bump to 0.3.7
 
