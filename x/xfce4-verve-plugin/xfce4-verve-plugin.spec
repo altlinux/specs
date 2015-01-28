@@ -1,15 +1,15 @@
 Name: xfce4-verve-plugin
-Version: 1.0.0
-Release: alt3
+Version: 1.0.1
+Release: alt1
 
-Summary: Command line plugin for XFce Desktop
+Summary: Command line plugin for Xfce Desktop
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
-Patch1: xfce4-verve-plugin-1.0.0-alt-drop-old-macros.patch
+Patch: %name-%version-%release.patch
 
 Obsoletes: verve-plugin < 0.3.6
 Provides: verve-plugin
@@ -17,7 +17,7 @@ Provides: verve-plugin
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfcegui4-devel libexo-devel
+BuildPreReq: libxfce4panel-devel libxfce4ui-devel libexo-devel
 BuildRequires: intltool libdbus-glib-devel libpcre-devel libxml2-devel perl-XML-Parser
 
 Requires: xfce4-panel >= 4.8
@@ -33,13 +33,9 @@ panel. It supports several nice features, such as:
 
 %prep
 %setup
-%patch1 -p2
+#patch -p1
 
 %build
-# Fix desktop file path for xfce4-panel >= 4.8
-sed -i 's|^desktopdir = \$(datadir)/xfce4/panel-plugins|desktopdir = \$(datadir)/xfce4/panel/plugins|' \
-   panel-plugin/Makefile.am
-
 %xfce4reconf
 %configure
 %make_build
@@ -49,12 +45,17 @@ sed -i 's|^desktopdir = \$(datadir)/xfce4/panel-plugins|desktopdir = \$(datadir)
 %find_lang %name
 
 %files -f %name.lang
-%doc README ChangeLog AUTHORS
+%doc README AUTHORS
 %_bindir/*
-%_libexecdir/xfce4/panel-plugins/*
+%_libdir/xfce4/panel/plugins/*
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Wed Jan 28 2015 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Drop obsoleted patch.
+- Updated to 1.0.1.
+
 * Mon Apr 16 2012 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt3
 - Fix build: Replace BM_DEBUG_SUPPOR with XDT_FEATURE_DEBUG.
 - Rebuild against libxfce4util.so.6 (libxfce4util-4.9).
