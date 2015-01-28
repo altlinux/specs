@@ -3,7 +3,7 @@
 
 %define rname libkdcraw
 Name: libkdcraw4
-Version: 4.13.0
+Version: 14.12.1
 Release: alt1
 
 Group: System/Libraries
@@ -66,6 +66,9 @@ Development files for %name
 
 
 %changelog
+* Wed Jan 28 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
 * Tue Apr 22 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 

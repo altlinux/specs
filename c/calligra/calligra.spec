@@ -9,7 +9,7 @@
 
 Name: calligra
 Version: 2.8.7
-Release: alt2
+Release: alt3
 Epoch: 0
 %define libname lib%name
 
@@ -680,6 +680,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libkritasketchlib.so
 
 %changelog
+* Wed Jan 28 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.8.7-alt3
+- rebuild with new okular
+
 * Thu Dec 25 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.7-alt2
 - split Calligra Active to separate package
 - rebuilt with new poppler

@@ -20,7 +20,7 @@
 
 %define rname kopete
 Name: kde4-kopete
-Version: 4.14.3
+Version: 14.12.1
 Release: alt1
 
 Group: Networking/Instant messaging
@@ -314,6 +314,12 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Jan 28 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
+* Mon Nov 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt0.M70P.1
+- built for M70P
+
 * Mon Nov 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 

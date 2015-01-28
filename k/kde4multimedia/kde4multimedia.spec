@@ -3,9 +3,9 @@
 
 %define rname kdemultimedia
 Name: kde4multimedia
-%define major 4
-%define minor 14
-%define bugfix 2
+%define major 14
+%define minor 12
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -28,6 +28,7 @@ Source02: ffmpegthumbs-%version.tar
 Source03: kmix-%version.tar
 Source04: kscd-%version.tar
 Source05: audiocd-kio-%version.tar
+Patch1: alt-kmix-plasma.patch
 
 # ALT
 #
@@ -164,6 +165,7 @@ do
     [ -d "$d" ] || continue
     echo "add_subdirectory($d)" >> CMakeLists.txt
 done
+%patch1 -p1
 
 
 %build
@@ -172,7 +174,9 @@ while read d ; do
 [ -d "$d" ] || continue
 pushd $d
 %K4build \
-    -DKDE4_ENABLE_FPIE:BOOL=ON
+    -DKDE4_ENABLE_FPIE:BOOL=ON \
+    -DKMIX_KF5_BUILD=0 \
+    #
 popd
 done
 
@@ -276,6 +280,9 @@ done
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Wed Jan 28 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
 * Wed Oct 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.2-alt1
 - new version
 

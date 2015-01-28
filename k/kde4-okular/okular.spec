@@ -4,9 +4,9 @@
 
 %define rname okular
 Name: kde4-okular
-%define major 4
-%define minor 14
-%define bugfix 3
+%define major 14
+%define minor 12
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -27,8 +27,10 @@ Patch1: okular-4.11.5-alt-print-truncate-title.patch
 # Automatically added by buildreq on Mon Sep 12 2011 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libpoppler3-qt4 libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-test libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libtiff-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: ebook-tools-devel gcc-c++ glib2-devel kde4libs-devel libchm-devel libdjvu-devel libpoppler-qt4-devel libqca2-devel libqimageblitz-devel libqt3-devel libspectre-devel rpm-build-ruby zlib-devel-static
-BuildRequires: ebook-tools-devel gcc-c++ glib2-devel kde4libs-devel libdjvu-devel libpoppler-qt4-devel libqca2-devel libqimageblitz-devel libspectre-devel zlib-devel kde-common-devel
-BuildRequires: kde4-plasma-mobile-devel kde4-kactivities-devel libkexiv24-devel
+BuildRequires: ebook-tools-devel gcc-c++ glib2-devel kde4libs-devel libdjvu-devel
+BuildRequires: libpoppler-qt4-devel libqca2-devel libqimageblitz-devel libspectre-devel zlib-devel
+BuildRequires: libkscreen-devel qjson-devel
+BuildRequires: kde-common-devel kde4-plasma-mobile-devel kde4-kactivities-devel libkexiv24-devel
 %if_enabled msits
 BuildRequires: libchm-devel
 %endif
@@ -129,6 +131,9 @@ Development files for %name
 
 
 %changelog
+* Wed Jan 28 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
 * Mon Nov 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 
