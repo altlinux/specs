@@ -1,5 +1,5 @@
 Name: xcalc
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 Summary: Scientific calculator for X
 Group: System/X11
@@ -36,6 +36,9 @@ or an HP-10C.
 %_mandir/man1/xcalc.*
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
