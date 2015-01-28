@@ -1,6 +1,6 @@
 Name: s3cmd
-Version: 1.1.0
-Release: alt2.beta3
+Version: 1.5.0
+Release: alt1
 License: GPL
 
 Group: Networking/Other
@@ -28,13 +28,16 @@ directory tree synchronization.
 %python_install
 
 %files
-%doc INSTALL NEWS README
+%doc INSTALL NEWS README.md
 %_bindir/*
 %_man1dir/*.1*
 %python_sitelibdir/*
 %exclude %_docdir/packages/
 
 %changelog
+* Wed Jan 28 2015 Yuriy Kashirin <uka@altlinux.ru> 1.5.0-alt1
+- New version
+
 * Mon Dec 24 2012 Yuriy Kashirin <uka@altlinux.ru> 1.1.0-alt2.beta3
 - Updated from upstream git (9c57a3ba2163915deb2cc63cefa885a66ac377ab)
   + Compute speed and elapsed time for Multipart uploads
