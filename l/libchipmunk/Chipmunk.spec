@@ -1,6 +1,6 @@
 Name: libchipmunk
-Version: 6.2.1
-Release: alt2
+Version: 6.2.2
+Release: alt1
 Summary: Physics engine for 2D games
 
 Group: System/Libraries
@@ -71,6 +71,9 @@ target_link_libraries(chipmunk -lm)
 %_bindir/*
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 6.2.2-alt1
+- Autobuild version bump to 6.2.2
+
 * Thu Oct 17 2013 Fr. Br. George <george@altlinux.ru> 6.2.1-alt2
 - Resurrect lost index.html
 
