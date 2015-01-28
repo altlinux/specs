@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.5
-Release: alt1.git20141222
+Version: 0.3.6
+Release: alt1.git20150127
 Summary: Profiling and introspection for applications using sqlalchemy
 License: ASLv2.0
 Group: Development/Python
@@ -18,15 +18,17 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-SQLAlchemy python-module-mako
 BuildPreReq: python-module-nose python-modules-sqlite3
+BuildPreReq: python-module-werkzeug
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-SQLAlchemy python3-module-mako
 BuildPreReq: python3-module-nose python3-modules-sqlite3
+BuildPreReq: python3-module-werkzeug
 %endif
 
 %py_provides %oname
-%py_requires sqlalchemy mako
+%py_requires sqlalchemy mako werkzeug
 
 %description
 sqltap is a library that allows you to profile and introspect the
@@ -42,7 +44,7 @@ sqltap helps you quickly understand:
 Summary: Profiling and introspection for applications using sqlalchemy
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires sqlalchemy mako
+%py3_requires sqlalchemy mako werkzeug
 
 %description -n python3-module-%oname
 sqltap is a library that allows you to profile and introspect the
@@ -98,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1.git20150127
+- Version 0.3.6
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt1.git20141222
 - Initial build for Sisyphus
 
