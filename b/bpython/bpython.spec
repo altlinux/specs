@@ -10,8 +10,8 @@
 %def_without python3_curtsies
 
 Name: bpython
-Version: 0.13.1
-Release: alt2
+Version: 0.13.2
+Release: alt1
 
 Summary: Fancy curses interface to the Python 2 interactive interpreter
 License: MIT
@@ -24,7 +24,7 @@ Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Mon Sep 08 2014 (-bb)
 # optimized out: python-base python-devel python-module-BeautifulSoup python-module-PyStemmer python-module-Pygments python-module-docutils python-module-genshi python-module-jinja2 python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-setuptools
-BuildRequires: python-module-babel python-module-html5lib python-module-jinja2-tests python-module-mock python-module-setuptools-tests python-module-sphinx
+BuildRequires: python-module-babel python-module-html5lib python-module-jinja2-tests python-module-mock python-module-setuptools-tests python-module-sphinx python-module-requests
 
 %if_with doc
 BuildPreReq: python-module-objects.inv time
@@ -261,6 +261,9 @@ python setup.py test
 %endif
 
 %changelog
+* Wed Jan 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.13.2-alt1
+- Updated to 0.13.2.
+
 * Mon Sep 08 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.13.1-alt2
 - Fix bpython-urwid.
 - Introduced bpython3 subpackage.
