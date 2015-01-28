@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.0.0
-Release: alt1.git20141108
+Version: 3.0.4
+Release: alt1.git20150128
 Summary: Web APIs for Django, made easy
 License: BSD
 Group: Development/Python
@@ -22,7 +22,8 @@ BuildPreReq: python-module-markdown python-module-yaml
 BuildPreReq: python-module-defusedxml python-module-django-guardian
 BuildPreReq: python-module-django-filter python-module-django-oauth-plus
 BuildPreReq: python-module-oauth2 python-module-django-oauth2-provider
-BuildPreReq: python-module-django-dbbackend-sqlite3
+BuildPreReq: python-module-django-dbbackend-sqlite3 python-module-mkdocs
+BuildPreReq: python-module-argh
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -100,7 +101,7 @@ pushd ../python3
 popd
 %endif
 
-./mkdocs.py
+mkdocs build
 
 %install
 %python_install
@@ -129,7 +130,7 @@ popd
 %python_sitelibdir/*/test.*
 
 %files docs
-%doc html/*
+%doc site/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -144,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.4-alt1.git20150128
+- Version 3.0.4
+
 * Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.git20141108
 - Initial build for Sisyphus
 
