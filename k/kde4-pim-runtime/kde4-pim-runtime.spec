@@ -4,7 +4,7 @@
 %define rname kdepim-runtime
 %define major 4
 %define minor 14
-%define bugfix 3
+%define bugfix 4
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -44,8 +44,7 @@ BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-
 #BuildRequires: dblatex
 BuildRequires: libkgapi-devel qjson-devel libkfbapi-devel
 
-BuildRequires: kde4libs-devel >= %version
-BuildRequires: kde4pimlibs-devel >= %version
+BuildRequires: kde4libs-devel kde4pimlibs-devel
 BuildRequires: kde4base-workspace-devel
 
 %description
@@ -233,6 +232,9 @@ based on kdepim.
 
 
 %changelog
+* Mon Jan 26 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.4-alt1
+- new version
+
 * Fri Nov 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 

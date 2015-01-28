@@ -6,9 +6,9 @@
 %add_findpackage_path %_kde4_bindir
 
 %define rname kdebase
-%define major 4
-%define minor 14
-%define bugfix 3
+%define major 14
+%define minor 12
+%define bugfix 1
 Name: kde4base
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -50,7 +50,7 @@ BuildRequires: libalternatives-devel
 BuildRequires: bzlib-devel gcc-c++ libjpeg-devel libpcre-devel libtidy-devel
 BuildRequires: libqimageblitz-devel soprano soprano-backend-redland libsoprano-devel libstrigi-devel
 BuildRequires: libungif-devel xml-utils glib2-devel
-BuildRequires: kde4libs-devel >= %version
+BuildRequires: kde4libs-devel
 BuildRequires: kde4pimlibs-devel
 BuildRequires: kde4-kfilemetadata-devel kde4-baloo-devel kde4-baloo-widgets-devel
 BuildRequires: kde4base-workspace-devel
@@ -606,6 +606,9 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Mon Jan 26 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
 * Fri Nov 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 

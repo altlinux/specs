@@ -16,7 +16,7 @@
 %define rname kdepim
 %define major 4
 %define minor 14
-%define bugfix 3
+%define bugfix 4
 Name: kde4pim
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -185,6 +185,12 @@ intervals.
 Summary: %name library
 Group: System/Libraries
 %description -n libkdepim4-copy
+%name library
+
+%package -n libcalendarsupportcollectionpage4
+Summary: %name library
+Group: System/Libraries
+%description -n libcalendarsupportcollectionpage4
 %name library
 
 %package -n libkorganizer4_core
@@ -1713,6 +1719,8 @@ based on kdepim.
 %_K4libdir/libnoteshared.so.*
 %files -n libfollowupreminder4
 %_K4libdir/libfollowupreminder.so.*
+%files -n libcalendarsupportcollectionpage4
+%_K4libdir/libcalendarsupportcollectionpage.so.*
 
 %files devel
 %_K4link/*.so
@@ -1723,6 +1731,9 @@ based on kdepim.
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Jan 26 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.4-alt1
+- new version
+
 * Fri Nov 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 

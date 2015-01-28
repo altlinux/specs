@@ -5,9 +5,9 @@
 %def_disable ntrack
 
 %define rname kdebase-runtime
-%define major 4
-%define minor 14
-%define bugfix 3
+%define major 14
+%define minor 12
+%define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -46,7 +46,7 @@ BuildRequires: libopenslp-devel libqca2-devel libgpgme-devel
 #BuildRequires: libqzeitgeist-devel
 %{?_enable_ntrack:BuildRequires: libntrack-qt4-devel}
 BuildRequires: libexiv2-devel exiv2 libssh-devel phonon-devel
-BuildRequires: kde4libs-devel >= %version kde4pimlibs-devel
+BuildRequires: kde4libs-devel kde4pimlibs-devel
 
 %description
 Core runtime for the K Desktop Environment 4.
@@ -229,6 +229,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Jan 26 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
 * Thu Nov 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 
