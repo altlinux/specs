@@ -1,5 +1,5 @@
 Name: showfont
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 Summary: Font dumper for X font server
 Group: System/X11
@@ -35,6 +35,9 @@ metrics, and character bitmaps.
 %_man1dir/*
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 
