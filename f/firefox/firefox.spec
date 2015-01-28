@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        34.0.5
+Version:        35.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -35,7 +35,7 @@ BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildRequires: rpm-macros-alternatives
-BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
+BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend glibc-kernheaders
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
@@ -296,6 +296,25 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Jan 28 2015 Alexey Gladkov <legion@altlinux.ru> 35.0.1-alt1
+- New release (35.0.1).
+
+* Mon Jan 19 2015 Alexey Gladkov <legion@altlinux.ru> 35.0-alt1
+- New release (35.0).
+- Fixed:
+  + 2015-09 XrayWrapper bypass through DOM objects
+  + 2015-08 Delegated OCSP responder certificates failure with id-pkix-ocsp-nocheck extension
+  + 2015-07 Gecko Media Plugin sandbox escape
+  + 2015-06 Read-after-free in WebRTC
+  + 2015-05 Read of uninitialized memory in Web Audio
+  + 2015-04 Cookie injection through Proxy Authenticate responses
+  + 2015-03 sendBeacon requests lack an Origin header
+  + 2015-02 Uninitialized memory use during bitmap rendering
+  + 2015-01 Miscellaneous memory safety hazards (rv:35.0 / rv:31.4)
+
+* Thu Dec 18 2014 Alexey Gladkov <legion@altlinux.ru> 34.0.5-alt2
+- Enable WebRTC.
+
 * Tue Dec 02 2014 Alexey Gladkov <legion@altlinux.ru> 34.0.5-alt1
 - New release (34.0.5).
 - Fixed:
