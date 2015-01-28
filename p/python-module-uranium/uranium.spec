@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.37
-Release: alt1.git20150125
+Version: 0.0.39
+Release: alt1.git20150126
 Summary: A build system for python
 License: MIT
 Group: Development/Python
@@ -179,6 +179,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.39-alt1.git20150126
+- Version 0.0.39
+
 * Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.37-alt1.git20150125
 - Version 0.0.37
 
