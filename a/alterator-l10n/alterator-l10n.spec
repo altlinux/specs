@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.16
+Version: 2.9.17
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,9 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Jan 28 2015 Mikhail Efremov <sem@altlinux.org> 2.9.17-alt1
+- Update Russian translation for alterator-shapercontrol.
+
 * Tue Jan 20 2015 Mikhail Efremov <sem@altlinux.org> 2.9.16-alt1
 - Update Russian translation for alterator-snort.
 
