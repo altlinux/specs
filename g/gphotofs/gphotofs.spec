@@ -17,7 +17,7 @@
 
 Name: gphotofs
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Summary: User Level File System for gphoto-Based Cameras
 License: GPL-2.0+
@@ -53,6 +53,9 @@ make
 %_bindir/gphotofs
 
 %changelog
+* Fri Jan 30 2015 Michael Shigorin <mike@altlinux.org> 0.5-alt2
+- rebuilt against current libgphoto2
+
 * Sun Jun 08 2014 Michael Shigorin <mike@altlinux.org> 0.5-alt1
 - initial build for ALT Linux Sisyphus (based on openSUSE package)
 

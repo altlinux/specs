@@ -3,7 +3,7 @@
 
 Name: sane
 Version: 1.0.24
-Release: alt2.2
+Release: alt2.3
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -250,6 +250,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Thu Feb 05 2015 Michael Shigorin <mike@altlinux.org> 1.0.24-alt2.3
+- rebuilt against recent libgphoto2
+
 * Sun Jan 05 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.24-alt2.2
 - Add all provides for sane-backends-* for Red Hat compatibility
 

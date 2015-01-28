@@ -13,7 +13,7 @@
 
 Name: wine
 Version: 1.7.35
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Environment for running Windows applications (Etersoft edition)
@@ -424,6 +424,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Fri Feb 06 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.35-alt2
+- rebuild with new libgphoto2
+
 * Sat Jan 24 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.35-alt1
 - release 1.7.35
 

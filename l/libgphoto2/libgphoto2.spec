@@ -1,12 +1,12 @@
 %define sover 6
-%define sover_port 10
+%define sover_port 12
 %def_disable static
 %def_enable hal
 %def_disable libhal
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.5.1
+Version: 2.5.7
 Release: alt1
 
 Group: System/Libraries
@@ -177,6 +177,9 @@ do /bin/cp -pr $f ${f}.port ; done
 %endif
 
 %changelog
+* Tue Jan 27 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.7-alt1
+- 2.5.7
+
 * Mon Oct 06 2014 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.5.1-alt1
 - 2.5.5.1 - regression fix release of 2.5.5
 

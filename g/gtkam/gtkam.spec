@@ -1,7 +1,7 @@
 Summary: A GTK front-end for gPhoto2
 Name: gtkam
 Version: 0.2.0
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: File tools
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
@@ -53,6 +53,9 @@ mv %buildroot%_pixmapsdir/gtkam-camera.png %buildroot%_liconsdir/
 %doc AUTHORS README CHANGES NEWS TODO
 
 %changelog
+* Thu Jan 29 2015 Dmitriy Khanzhin <jinn@altlinux.org> 0.2.0-alt2
+- Rebuild (libgphoto2)
+
 * Sun Mar 24 2013 Dmitriy Khanzhin <jinn@altlinux.org> 0.2.0-alt1
 - 0.2.0
 - Updated .desktop

@@ -2,7 +2,7 @@
 
 Name: gnustep-CameraTransfer
 Version: 0.3
-Release: alt6
+Release: alt7
 Summary: Get pictures from a digital camera
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -53,6 +53,9 @@ install -p -D -m644 %SOURCE2 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Fri Jan 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt7
+- Rebuilt with new libgphoto2
+
 * Thu Mar 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt6
 - Fixed segfault
 
