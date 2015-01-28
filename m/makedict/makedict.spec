@@ -1,43 +1,56 @@
 Name: makedict
-Version: 0.4
-Release: alt4svn.1.1
+Version: 0.4.1_beta1
+Release: alt2.git.ga70119
 
 Summary: XDXF based converter from any dictionary format to any
 
 Group: System/Libraries
-License: GPL
+License: GPL2
 Url: http://xdxf.sf.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://dl.sf.net/xdxf/%name-%version.tar.bz2
-Patch: %name-0.4.patch
+# from git://github.com/soshial/xdxf_makedict.git
+Source: %name.tar
 
-# Automatically added by buildreq on Fri Dec 14 2007
-BuildRequires: cmake gcc-c++ glib2-devel libexpat-devel zlib-devel
+# Automatically added by buildreq on Fri May 31 2013
+# optimized out: cmake-modules libstdc++-devel pkg-config
+BuildRequires: cmake ctest discount gcc-c++ glib2-devel libexpat-devel zlib-devel
 
 %description
 XDXF based converter from any dictionary format to any.
 
 %prep
-%setup -q
-%patch
+%setup -n %name
 %__subst "s|lib/makedict-codecs|share/makedict-codecs|g" CMakeLists.txt
 
 %build
-cmake -DCMAKE_INSTALL_PREFIX:=%prefix
+cmake -DCMAKE_INSTALL_PREFIX:=%prefix \
+	-DBUILD_TESTS:=true \
+
 %make_build
+markdown -o  format_standard/xdxf_description.html \
+			format_standard/xdxf_description.md
 
 %install
 %makeinstall_std
 
+%check
+make test
+
 %files
-%doc AUTHORS README TODO ChangeLog
+%doc AUTHORS CHANGELOG README* TODO format_standard/
 %_bindir/%name
 %_datadir/makedict-codecs/
 %_man1dir/*
 
 %changelog
+* Thu Jan 29 2015 Ildar Mulyukov <ildar@altlinux.ru> 0.4.1_beta1-alt2.git.ga70119
+- new upstream source
+
+* Fri May 31 2013 Ildar Mulyukov <ildar@altlinux.ru> 0.4.1_beta1-alt1.git.146f2f
+- new upstream source
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4-alt4svn.1.1
 - Rebuild with Python-2.7
 
