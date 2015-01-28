@@ -1,5 +1,5 @@
 Name: unrar
-Version: 5.2.1
+Version: 5.2.4
 Release: alt1
 
 Summary: RAR unarchiver
@@ -60,6 +60,9 @@ install -D dll.hpp %buildroot%_includedir/libunrar/dll.hpp
 %_includedir/libunrar/dll.hpp
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 5.2.4-alt1
+- Autobuild version bump to 5.2.4
+
 * Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 5.2.1-alt1
 - Autobuild version bump to 5.2.1
 
