@@ -2,15 +2,15 @@
 %define git_date %nil
 
 Name: xfce4-screenshooter
-Version: 1.8.1
-Release: alt2%git_date
+Version: 1.8.2
+Release: alt1%git_date
 
-Summary: Screenshot XFce4 panel plugin
-Summary (ru_RU.UTF-8): Дополнение для панели XFCE позволяющее делать снимки экрана
+Summary: Screenshot Xfce4 panel plugin
+Summary (ru_RU.UTF-8): Дополнение для панели Xfce позволяющее делать снимки экрана
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/applications/xfce4-screenshooter
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/apps/xfce4-screenshooter
 Source: %name-%version.tar
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel libexo-devel
-BuildPreReq: gnome-doc-utils xml-utils xsltproc
+BuildPreReq: libxml2-devel
 BuildRequires: intltool libsoup-devel libXext-devel libICE-devel libXfixes-devel libSM-devel
 
 Provides:  xfce4-screenshooter-plugin = %version-%release
@@ -36,23 +36,22 @@ file, copy it to the clipboard, or open it using another application.
 A plugin for the Xfce panel is also available.
 
 %description -l ru_RU.UTF-8
-Стандартное приложение XFCE позволяющее делать снимки экрана. Программа
+Стандартное приложение Xfce позволяющее делать снимки экрана. Программа
 основана на gnome-screenshot и имеет схожие функции. Имеется возможность
 управления как мышкой так и с помощью "горячих" клавишь.
 
-Дополнение для панели XFCE так же включено.
+Дополнение для панели Xfce так же включено.
 
 %prep
 %setup
 %patch -p1
 # Don't use git tag in version.
 #sed -i 's/m4_define(\[xfce4_screenshooter_version_tag\], \[git\])/m4_define(\[xfce4_screenshooter_version_tag\], \[\])/' configure.ac.in
+mkdir m4/
 
 %build
 %xfce4reconf
 %configure \
-    --enable-xsltproc \
-    --enable-xml2po \
     --enable-debug=no
 %make_build
 
@@ -64,17 +63,21 @@ A plugin for the Xfce panel is also available.
 %doc README AUTHORS
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
-%_datadir/xfce4/doc/*
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/applications/*.desktop
+%_datadir/appdata/*.appdata.xml
 %_bindir/xfce4-screenshoot*
 %_mandir/man1/xfce4-screenshooter*
-%_defaultdocdir/%name
 
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Jan 26 2015 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
+- Revert "Don't use xfhelp4.".
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated to 1.8.2.
+
 * Tue May 22 2012 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt2
 - Updated translations from upstream git.
 - Fix BR.
