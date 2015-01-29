@@ -1,5 +1,5 @@
 Name: bibletime
-Version: 2.9.2
+Version: 2.10.1
 Release: alt1
 
 Summary: BibleTime is a Bible study application based on Qt
@@ -16,7 +16,9 @@ Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Tue Aug 03 2010
-BuildRequires: boost-devel cmake gcc-c++ libclucene-devel libqt4-devel libsword-devel
+BuildRequires: boost-devel cmake gcc-c++ libclucene-devel libqt4-devel
+
+BuildRequires: libsword-devel >= 1.7
 
 BuildRequires: librsvg-utils
 
@@ -55,6 +57,9 @@ rm -f %buildroot%_iconsdir/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Jan 30 2015 Vitaly Lipatov <lav@altlinux.ru> 2.10.1-alt1
+- new version 2.10.1 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.9.2-alt1
 - new version 2.9.2 (with rpmrb script)
 - rebuild with sword-1.6.2

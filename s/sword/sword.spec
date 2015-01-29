@@ -1,6 +1,6 @@
-%define major 1.6
+%define major 1.7
 Name: sword
-Version: %major.2
+Version: %major.4
 Release: alt1
 
 Summary: The SWORD Project framework for manipulating Bible texts
@@ -53,7 +53,7 @@ will need to develop applications which will use the SWORD Bible Framework.
 %prep
 %setup
 #patch -p0
-%patch1 -p2
+#patch1 -p2
 
 unzip -d sapphire %SOURCE1
 cp sapphire/SAPPHIRE.H include/sapphire.h
@@ -81,7 +81,7 @@ popd
 
 %files -n lib%name
 %_libdir/lib%name-%version.so
-%_libdir/%name/
+#_libdir/%name/
 
 %files -n lib%name-devel
 %_includedir/%name/
@@ -89,6 +89,9 @@ popd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 29 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt1
+- new version 1.7.4 (with rpmrb script) (ALT bug #30670)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
 - new version 1.6.2 (with rpmrb script)
 
