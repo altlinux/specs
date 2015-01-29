@@ -2,7 +2,7 @@
 
 %define rname libkdeedu
 Name: libkdeedu4
-Version: 4.14.3
+Version: 14.12.1
 Release: alt1
 
 Group: System/Libraries
@@ -48,6 +48,7 @@ Development files for %name
 %files
 %doc README AUTHORS
 %_K4libdir/libkeduvocdocument.so.*
+%if 0
 %_K4apps/kvtml/
 %_K4iconsdir/hicolor/*/actions/coords.*
 %_K4iconsdir/hicolor/*/actions/deriv_func.*
@@ -66,6 +67,7 @@ Development files for %name
 %_K4iconsdir/hicolor/*/actions/newparametric.*
 %_K4iconsdir/hicolor/*/actions/newpolar.*
 %_K4iconsdir/hicolor/*/actions/resetview.*
+%endif
 
 %files devel
 %_K4libdir/libqtmmlwidget.a
@@ -77,6 +79,9 @@ Development files for %name
 
 
 %changelog
+* Thu Jan 29 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
 * Mon Nov 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 
