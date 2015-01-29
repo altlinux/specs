@@ -3,7 +3,7 @@
 %define _name org.gnome.BatteryBench
 
 Name: gnome-battery-bench
-Version: %ver_major.0
+Version: %ver_major.4
 Release: alt1
 
 Summary: Measure power usage in defined scenarios
@@ -56,6 +56,9 @@ battery lifetime.
 %doc README
 
 %changelog
+* Thu Jan 29 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.4-alt1
+- 3.15.4
+
 * Tue Jan 20 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.0-alt1
 - first preview for Sisyphus
 
