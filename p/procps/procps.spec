@@ -1,6 +1,6 @@
 Name: procps
 Version: 3.3.7
-Release: alt1
+Release: alt2
 
 Summary: System and process monitoring utilities
 License: GPLv2+, LGPLv2+
@@ -104,6 +104,11 @@ make check
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 29 2015 Mikhail Efremov <sem@altlinux.org> 3.3.7-alt2
+- Fix ps_sched_batch test.
+- Disable 'pmap with unreachable process' tests.
+- Disable faulty tests.
+
 * Thu Apr 25 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3.7-alt1
 - Updated to v3.3.7-15-g53fd7dd.
 
