@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Jan 29 2015 Vitaly Lipatov <lav@altlinux.ru> 2.2.2-alt1
+- update srpms repos
+
 * Sat Dec 13 2014 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
 - fix BINARYREPO using
 - improve usearg
