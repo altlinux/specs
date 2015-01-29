@@ -6,7 +6,7 @@
 
 Name: pptpd
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: A PPTP server daemon
 License: GPLv2+ and LGPLv2+
@@ -16,6 +16,10 @@ Url: http://www.poptop.org
 
 #http://heanet.dl.sourceforge.net/sourceforge/poptop/%name-%version.tar.gz
 Source: %name-%version.tar
+Source1: pptpd.init
+Source2: pptpd.sysconfig
+Source3: pptpd.service
+
 Patch: %name-%version-%release.patch
 
 Requires: ppp = %ppp_ver
@@ -55,8 +59,20 @@ sed -i -e "s,/usr/lib/pptpd,%_libdir/pptpd,g" pptpctrl.c
 
 install -pD -m644 samples/%name.conf %buildroot%_sysconfdir/%name.conf
 install -pD -m644 samples/options.%name %buildroot%_sysconfdir/ppp/options.%name
+install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
+install -pD -m600 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
+install -pD -m644 %SOURCE3 %buildroot%_unitdir/%name.service
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
 
 %files
+%_initdir/%name
+%_unitdir/%name.service
+%config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/%name.conf
 %config(noreplace) %_sysconfdir/ppp/options.%name
 %_sbindir/*
@@ -65,6 +81,10 @@ install -pD -m644 samples/options.%name %buildroot%_sysconfdir/ppp/options.%name
 %doc AUTHORS NEWS README* TODO samples tools ChangeLog* html
 
 %changelog
+* Thu Jan 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt2
+- revert "drop SysV init script"
+- add systemd unit
+
 * Fri Jan 16 2015 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 - drop SysV init script
