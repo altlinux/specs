@@ -1,13 +1,13 @@
 # release timestamp of gradm
-%define timestamp 200904141815
+%define timestamp 201408301734
 
 # don't want a debubinfo package
 %define debug_package %nil
 
 Summary: grsecurity RBAC Administration Toolset
 Name: gradm
-Version: 2.1.12
-Release: alt1.qa1
+Version: 3.0
+Release: alt1
 License: GPL
 Group: System/Kernel and hardware
 Url: http://www.grsecurity.net
@@ -21,7 +21,7 @@ The gradm packages provides userspace administration tools for
 the RBAC portion of a grsecurity patched kernel.
 
 %prep
-%setup -q -n gradm2
+%setup -q -n gradm
 tar xf $RPM_SOURCE_DIR/regression.tar
 
 %build
@@ -47,7 +47,6 @@ ln -s login %buildroot%_sysconfdir/pam.d/grsec
 
 install -m 0755 regression/grtest %buildroot/sbin/
 
-
 %files
 /sbin/gradm
 /sbin/gradm_pam
@@ -59,9 +58,12 @@ install -m 0755 regression/grtest %buildroot/sbin/
 %_sysconfdir/grsec
 
 %changelog
+* Thu Jan 29 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0-alt1
+- Updated to 3.0-201408301734.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.12-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
 * Thu Jun 04 2009 Michail Yakushin <silicium@altlinux.ru> 2.1.12-alt1
-- initial build for ALT 
+- initial build for ALT
 
