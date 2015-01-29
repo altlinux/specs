@@ -9,9 +9,9 @@
 %def_disable knewsticker
 
 %define rname kdenetwork
-%define major 4
-%define minor 14
-%define bugfix 2
+%define major 14
+%define minor 12
+%define bugfix 1
 Name: kde4network
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -60,16 +60,17 @@ BuildRequires: libspeex-devel libalsa-devel libssl-devel
 BuildRequires: libmediastreamer-devel
 BuildRequires: libmediastreamer-ilbc
 BuildRequires: libsrtp
-BuildRequires: libfreerdp-devel xfreerdp
+BuildRequires: libfreerdp-devel
 BuildRequires: libsqlite3-devel libidn-devel boost-devel libopenslp-devel libjasper-devel
 BuildRequires: libqimageblitz-devel libxml2-devel libxslt-devel libmms-devel
 BuildRequires: libjpeg-devel libavahi-qt4-devel bzlib-devel libldap-devel
 BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel
 BuildRequires: rpm-macros-browser-plugins
-BuildRequires: libktorrent-devel libtelepathy-qt4-devel
-BuildRequires: kde4libs-devel >= %version kde4pimlibs-devel >= %version
+BuildRequires: libktorrent-devel
+BuildRequires: kde4libs-devel kde4pimlibs-devel
 BuildRequires: kde4base-workspace-devel kde4base-devel
 BuildRequires: shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso soprano
+BuildRequires: libtelepathy-qt4-devel kde4-ktp-common-internals-devel
 
 %description
 Networking applications for the K Desktop Environment.
@@ -376,6 +377,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jan 29 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
 * Wed Oct 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.2-alt1
 - new version
 
