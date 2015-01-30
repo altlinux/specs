@@ -10,7 +10,7 @@
 
 Name: ppp
 Version: 2.4.7
-Release: alt1
+Release: alt2
 
 Summary: The PPP daemon and documentation
 License: distributable
@@ -232,6 +232,9 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %_libdir/pppd/%version/dhcpc.so
 
 %changelog
+* Fri Jan 30 2015 Andriy Stepanov <stanv@altlinux.ru> 2.4.7-alt2
+- Fix openl2tp socket path
+
 * Thu Jan 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2.4.7-alt1
 - 2.4.7
 - add udev rules for set GROUP=uucp (ALT #29457)
