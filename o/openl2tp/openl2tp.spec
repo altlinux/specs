@@ -1,6 +1,6 @@
 Name: openl2tp
 Version: 1.8
-Release: alt3
+Release: alt4
 
 Summary: L2TP (RFC2661) server/client
 License: GPL
@@ -42,8 +42,8 @@ or applications that use the OpenL2TP APIs.
 %install
 %makeinstall_std
 
-install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
-install -pD -m644 %SOURCE2 %buildroot%_unitdir/%name.service
+install -pD -m755 %SOURCE2 %buildroot%_initdir/%name
+install -pD -m644 %SOURCE1 %buildroot%_unitdir/%name.service
 mkdir -p %buildroot%_sysconfdir/sysconfig
 cp -f etc/sysconfig/openl2tpd %buildroot%_sysconfdir/sysconfig/openl2tpd
 
@@ -79,6 +79,9 @@ cp -f etc/sysconfig/openl2tpd %buildroot%_sysconfdir/sysconfig/openl2tpd
 %{_libdir}/openl2tp/event_sock.h
 
 %changelog
+* Fri Jan 30 2015 Andriy Stepanov <stanv@altlinux.ru> 1.8-alt4
+- Initd systemd typo fixed
+
 * Wed Oct 29 2014 Andriy Stepanov <stanv@altlinux.ru> 1.8-alt3
 - add dir to package list
 
