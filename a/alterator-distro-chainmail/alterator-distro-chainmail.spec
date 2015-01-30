@@ -1,5 +1,5 @@
 Name: alterator-distro-chainmail
-Version: 2.99.0
+Version: 3.0.0
 Release: alt1
 
 Source: %name-%version.tar
@@ -56,7 +56,6 @@ during installation.
 %config(noreplace) %_sysconfdir/alterator/logs/.order
 %dir %_datadir/alterator/ui/chainmail/
 %_datadir/alterator/ui/chainmail/framework/
-%_datadir/alterator/ui/chainmail/login/
 %_libexecdir/alterator/hooks/*.d/*
 %_datadir/alterator/interfaces/guile/workflow/*
 
@@ -65,6 +64,11 @@ during installation.
 %_datadir/install2/steps/*.desktop
 
 %changelog
+* Fri Jan 30 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt1
+- Update Chainmail's workflow.
+- Drop /chainmail/login interface.
+- Always use 'testdomain.ru' as default domain name.
+
 * Tue Oct 14 2014 Mikhail Efremov <sem@altlinux.org> 2.99.0-alt1
 - Add 'Domain' installer step.
 

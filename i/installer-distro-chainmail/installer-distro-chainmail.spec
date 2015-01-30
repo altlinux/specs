@@ -1,5 +1,5 @@
 Name: installer-distro-chainmail
-Version: 2.99.1
+Version: 3.0.0
 Release: alt1
 
 Summary: Installer files for IVK chainmail
@@ -24,8 +24,6 @@ Requires: alterator-datetime
 Requires: alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes
-Requires: installer-feature-vm-ofs-stage2
-Requires: installer-feature-net-br-stage2
 Requires: installer-feature-quota-stage2 >= 0.4
 Requires: installer-feature-server-raid-fixup-stage2
 Requires: x-cursor-theme-jimmac
@@ -65,13 +63,40 @@ cp -a * %buildroot%install2dir/
 %install2dir/installer-steps
 %install2dir/services-*
 %install2dir/postinstall.d/01-remove-installer-office-server-pkgs.sh
+%install2dir/initinstall.d/*.sh
 
 %files stage3
 %install2dir/preinstall.d/*.sh
 %install2dir/postinstall.d/*.sh
 %exclude %install2dir/postinstall.d/01-remove-installer-office-server-pkgs.sh
+%install2dir/webapps-css/
+%install2dir/alterator-hotstandby/
+%install2dir/osec-onboot.init
 
 %changelog
+* Fri Jan 30 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt1
+- Add osec-onboot service.
+- Use 'chainmail' workflow again.
+- Add 70-fail2ban-log.sh postinstall script.
+- Enable indexhtml for HTTPS server.
+- Rename 80-BASE-enable.sh to 80-nginx-webapps.sh.
+- Drop ahttpd.sh hook.
+- BASE-enable.sh: Don't replace nginx-webapps certificate.
+- BASE-enable.sh: Enable HTTPS server for BASE (and Zabbix).
+- Update default.css (Zabbix css).
+- Update base_style.css.
+- Add services.list for alterator-hotstandby.
+- Replace css files from BASE and zabbix-phpfrontend-engine packages.
+- Don't enable Samba during ALT domain creation.
+- Enable alterator-osec by default.
+- Setup local exclude-user file with additional /var.
+- Add bacula hook: Only backup /etc directory by default.
+- Disable arpwatch.
+- Disable vsftpd service by default.
+- Disable smb and nmb services by default.
+- Drop installer-feature-net-br-stage2 from requires.
+- Use our own vm-profile.
+
 * Tue Oct 14 2014 Mikhail Efremov <sem@altlinux.org> 2.99.1-alt1
 - Disable some services.
 - Add net-iptables-off preinstall hook.
