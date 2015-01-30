@@ -5,9 +5,9 @@
 
 %define rname kdeutils
 Name: kde4utils
-%define major 4
-%define minor 14
-%define bugfix 3
+%define major 14
+%define minor 12
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -62,7 +62,7 @@ BuildRequires: liblirc-devel libqca2-devel liblzma-devel qjson-devel
 %ifarch %ix86
 #BuildRequires: libtpctl-devel
 %endif
-BuildRequires: kde4base-workspace-devel kde4pimlibs-devel >= %version
+BuildRequires: kde4base-workspace-devel kde4pimlibs-devel
 BuildRequires: kde4base-devel
 
 %description
@@ -269,7 +269,7 @@ done
 %patch6 -p1
 #%patch7 -p1
 pushd ark
-%patch100 -p1
+#%patch100 -p1
 popd
 
 cat <<__EOF__ >CMakeLists.txt
@@ -498,6 +498,9 @@ done
 
 
 %changelog
+* Fri Jan 30 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
 * Tue Nov 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 
