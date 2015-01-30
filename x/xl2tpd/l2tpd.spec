@@ -1,6 +1,6 @@
 Name: xl2tpd
-Version: 1.3.0
-Release: alt1.qa1
+Version: 1.3.6
+Release: alt1
 
 Summary: Layer 2 Tunnelling Protocol Daemon (RFC 2661)
 License: GPL
@@ -76,6 +76,9 @@ fi
 %config(noreplace) %attr(0640,root,root) %_sysconfdir/%name/l2tp-secrets
 
 %changelog
+* Fri Jan 30 2015 Anton Farygin <rider@altlinux.ru> 1.3.6-alt1
+- new version
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0-alt1.qa1
 - NMU: rebuilt for updated dependencies.
 
