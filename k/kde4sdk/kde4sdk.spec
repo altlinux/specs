@@ -6,9 +6,9 @@
 
 %define rname kdesdk
 Name: kde4sdk
-%define major 4
-%define minor 14
-%define bugfix 2
+%define major 14
+%define minor 12
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -44,8 +44,8 @@ BuildRequires: libsubversion-devel perl-XML-DOM perl-Switch libldap-devel libltd
 BuildRequires: libiberty-devel libjpeg-devel libxslt-devel bzlib-devel
 BuildRequires: gettext-tools
 BuildRequires: boost-devel libhunspell-devel desktop-file-utils perl-Pod-Parser
-BuildRequires: kde4libs-devel >= %version kde4base-devel
-BuildRequires: kde4pimlibs-devel >= %version
+BuildRequires: kde4libs-devel kde4base-devel
+BuildRequires: kde4pimlibs-devel
 BuildRequires: kde4base-workspace-devel libkomparediff2-devel
 
 %description
@@ -494,6 +494,8 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 %files umbrello
 %_K4bindir/umbrello
+%_K4bindir/po2xmi
+%_K4bindir/xmi2pot
 %_K4xdg_apps/umbrello.desktop
 %_K4apps/umbrello/
 %_K4iconsdir/hicolor/*/apps/umbrello*
@@ -577,6 +579,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Fri Jan 30 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
 * Wed Oct 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.2-alt1
 - new version
 
