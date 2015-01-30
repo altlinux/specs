@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: %_name%api_ver
-Version: 0.2.4
+Version: 0.2.7
 Release: alt1
 
 Summary: A audio/video conferencing framework (0.2)
@@ -17,9 +17,9 @@ URL: http://www.freedesktop.org/wiki/Software/Farstream
 
 Source: http://freedesktop.org/software/%_name/releases/%_name/%_name-%version.tar.gz
 
-%define nice_ver 0.1.3
-%define gst_ver 0.11.94
-%define glib_ver 2.30
+%define nice_ver 0.1.8
+%define gst_ver 1.4
+%define glib_ver 2.32
 
 #Obsoletes: farsight2
 Conflicts: farsight2
@@ -108,7 +108,7 @@ This package provides development documentation for the Farstream library.
 %files
 %_libdir/gstreamer-%gst_api_ver/libfsmsnconference.so
 %_libdir/gstreamer-%gst_api_ver/libfsrawconference.so
-%_libdir/gstreamer-%gst_api_ver/libfsrtcpfilter.so
+%_libdir/gstreamer-%gst_api_ver/libfsrtpxdata.so
 %_libdir/gstreamer-%gst_api_ver/libfsrtpconference.so
 %_libdir/gstreamer-%gst_api_ver/libfsvideoanyrate.so
 %_datadir/%_name/%api_ver/
@@ -141,6 +141,9 @@ This package provides development documentation for the Farstream library.
 
 
 %changelog
+* Fri Jan 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.7-alt1
+- 0.2.7
+
 * Mon Jun 16 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
 - 0.2.4
 
