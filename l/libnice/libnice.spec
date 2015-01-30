@@ -8,7 +8,7 @@
 %define old_gst_api_ver 0.10
 
 Name: libnice
-Version: %ver_major.8
+Version: %ver_major.10
 Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
@@ -154,6 +154,9 @@ for Gstreamer (1.0 API version)
 
 
 %changelog
+* Fri Jan 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1.10-alt1
+- 0.1.10
+
 * Thu Nov 13 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt1
 - 0.1.8
 - new gir{,-devel} subpackages
