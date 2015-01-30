@@ -2,7 +2,7 @@
 
 %define rname print-manager
 Name: kde4-print-manager
-Version: 4.11.4
+Version: 14.12.1
 Release: alt1
 
 Group: System/Configuration/Printing
@@ -98,6 +98,12 @@ sed -i 's|^X-KDE-Library=.*||' %buildroot/%_K4xdg_apps/kcm_printer_manager.deskt
 
 
 %changelog
+* Fri Jan 30 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
+- new version
+
+* Wed Dec 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Wed Dec 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 
