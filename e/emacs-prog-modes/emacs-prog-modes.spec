@@ -4,7 +4,7 @@
 %define pkg_name prog-modes
 
 Version: 0.2
-Release: alt5
+Release: alt6
 Name: emacs-%pkg_name
 License: GPL
 Group: Editors
@@ -66,6 +66,12 @@ install -pD -m0644 %SOURCE9 %buildroot%_emacs_sitestart_dir/xbase.el
 
 
 %changelog
+* Fri Jan 30 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt6
+- rpm-spec-mode: use variables `user-mail-address` and
+  `user-full-name` instead of functions (because no function
+  `user-mail-address` seems to be defined in modern Emacs);
+  (ALT #30642)
+
 * Tue Apr 09 2013 Andrey Cherepanov <cas@altlinux.org> 0.2-alt5
 - Fix build with new xorg
 
