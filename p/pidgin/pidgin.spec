@@ -33,7 +33,7 @@
 
 Name: pidgin
 Version: 2.10.11
-Release: alt1
+Release: alt2
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -447,6 +447,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 30 2015 Alexey Shabalin <shaba@altlinux.ru> 2.10.11-alt2
+- rebuilt against libfarstream-0.2.so.5
+
 * Wed Nov 26 2014 Alexey Shabalin <shaba@altlinux.ru> 2.10.11-alt1
 - 2.10.11
 
