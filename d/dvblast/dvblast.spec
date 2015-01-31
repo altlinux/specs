@@ -1,6 +1,6 @@
 Name: dvblast
 Version: 2.2
-Release: alt8
+Release: alt9
 
 Summary: Video/Audio streaming application based on the linux-dvb API
 License: GPLv2+
@@ -47,6 +47,9 @@ install -pm0644 -D dvblast.1 %buildroot%_man1dir/dvblast.1
 %_man1dir/dvblast.1*
 
 %changelog
+* Sat Jan 31 2015 Alexei Takaseev <taf@altlinux.org> 2.2-alt9
+- Rebuild with new bitstream
+
 * Thu Oct 30 2014 Alexei Takaseev <taf@altlinux.org> 2.2-alt8
 - udp: fix /ifaddr= argument parsing
 
