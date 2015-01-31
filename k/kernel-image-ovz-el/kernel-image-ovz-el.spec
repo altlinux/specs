@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt127
+Release: alt128
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -46,7 +46,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab094.8-combined
+Patch0: patch-042stab103.6-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -570,6 +570,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Thu Jan 29 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt128
+- Updated to 042stab103.6.
+
 * Wed Dec 24 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt127
 - Updated to 042stab102.9 (ALT#30599).
 
