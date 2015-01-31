@@ -3,7 +3,7 @@
 Name: asterisk11-devel-doc
 Summary: Asterisk API documentation
 Version: 11
-Release: alt20
+Release: alt21
 License: GPL
 Group: System/Servers
 Url: http://www.asterisk.org/
@@ -34,6 +34,9 @@ tar xfj %_usrsrc/asterisk11.tar.bz2
 %doc doc
 
 %changelog
+* Sat Jan 31 2015 Denis Smirnov <mithraen@altlinux.ru> 11-alt21
+- Asterisk update
+
 * Tue Dec 16 2014 Denis Smirnov <mithraen@altlinux.ru> 11-alt20
 - Asterisk update
 
