@@ -4,7 +4,7 @@
 #============================================================================
 Name: asterisk11cert
 Summary: Open source PBX
-Version: 11.6.cert9
+Version: 11.6.cert10
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -1360,6 +1360,9 @@ ln -sf libasteriskssl%version.so.1 %buildroot%_libdir/libasteriskssl%version.so
 %_libdir/libasteriskssl%version.so.1
 
 %changelog
+* Sat Jan 31 2015 Denis Smirnov <mithraen@altlinux.ru> 11.6.cert10-alt1
+- new version 11.6-cert10
+
 * Wed Jan 21 2015 Denis Smirnov <mithraen@altlinux.ru> 11.6.cert9-alt1
 - first build for Sisyphus
 
