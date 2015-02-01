@@ -8,7 +8,7 @@
 
 Name: ocaml4
 Version: 4.02.1
-Release: alt0.1
+Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -24,7 +24,9 @@ Source2: ocaml-reqprov.ml
 Patch1: ocaml-3.12.1-alt-stdlib-pdf.patch
 Patch2: ocaml-4.01-alt-mk-reqprov.patch
 
-#BuildPreReq: rpm-build-ocaml >= 1.1
+Requires: rpm-build-ocaml4 >= 1.1
+BuildPreReq: rpm-build-ocaml4 >= 1.1
+
 
 # Automatically added by buildreq on Mon Sep 23 2013
 BuildRequires: texlive-latex-base texlive-latex-recommended
@@ -243,6 +245,9 @@ install -p -m644 ocamlbuild/man/ocamlbuild.1.bz2 %buildroot%_man1dir/
 %doc ocamldoc/stdlib.pdf 
 
 %changelog
+* Sat Jan 31 2015 Andrey Bergman <vkni@altlinux.org> 4.02.1-alt1
+- Added rpm-build-ocaml4 to build pre requires.
+
 * Sat Oct 18 2014 Andrey Bergman <vkni@altlinux.org> 4.02.1-alt0.1
 - Update to version 4.02.1
 
