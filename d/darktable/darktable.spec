@@ -1,8 +1,8 @@
 %define ver_major 1.6
 
 Name: darktable
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPLv3
@@ -67,6 +67,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Sun Feb 01 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
+- 1.6.2
+
 * Sat Dec 27 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt2
 - added -DBINARY_PACKAGE_BUILD:BOOL=ON  directive to cmake
   (suggested by upstream) to allow the program to run on
