@@ -1,6 +1,6 @@
 %define dist Sub-Uplevel
 Name: perl-%dist
-Version: 0.24
+Version: 0.25
 Release: alt1
 Epoch: 1
 
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://www.cpan.org
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Sub-Uplevel-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ are avoided.
 	%perl_vendor_privlib/Sub/Uplevel.pm
 
 %changelog
+* Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 1:0.25-alt1
+- automated CPAN update
+
 * Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 1:0.24-alt1
 - 0.22 -> 0.24
 - fixed build with Carp >= 1.25
