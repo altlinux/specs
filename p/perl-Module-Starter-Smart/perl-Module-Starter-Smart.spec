@@ -15,7 +15,7 @@
 
 Name: perl-Module-Starter-Smart
 Serial: 1
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 
 Summary: Add new modules into an existing distribution with this plugin
@@ -54,6 +54,9 @@ recreate the manifest file accordingly.
 %doc Changes README
 
 %changelog
+* Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 1:0.0.6-alt1
+- automated CPAN update
+
 * Wed Jan 22 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.0.5-alt1
 - automated CPAN update
 
