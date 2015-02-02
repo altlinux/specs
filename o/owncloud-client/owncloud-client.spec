@@ -1,7 +1,7 @@
 %define rname mirall
 Name: owncloud-client
-Version: 1.6.3
-Release: alt2
+Version: 1.7.1
+Release: alt1
 
 Group: Networking/File transfer
 Summary: Applet for owncloud files syncronization
@@ -12,9 +12,9 @@ Obsoletes: mirall <= %version-%release
 
 Source: %rname-%version.tar
 Source1: owncloud-client.desktop
-Patch1: mirall-1.6.3-alt-dont-check-updates.patch
-Patch2: mirall-1.0.2-alt-confdir.patch
-Patch3: mirall-1.6.3-alt-static-libs.patch
+Patch1: alt-dont-check-updates.patch
+Patch2: alt-confdir.patch
+Patch3: alt-static-libs.patch
 
 # Automatically added by buildreq on Fri Sep 19 2014 (-bi)
 # optimized out: cmake-modules elfutils fontconfig libcloog-isl4 libgst-plugins libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-webkit libqt4-xml libqt4-xmlpatterns libstdc++-devel pkg-config python-base texlive-latex-base
@@ -54,8 +54,15 @@ desktop-file-install \
 %_desktopdir/%name.desktop
 #%_datadir/owncloud-client
 %_iconsdir/hicolor/*/apps/owncloud.*
+%_iconsdir/hicolor/*/apps/ownCloud_*.*
 
 %changelog
+* Mon Feb 02 2015 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt1
+- new version
+
+* Thu Sep 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.6.3-alt1.M70P.1
+- built for M70P
+
 * Thu Sep 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.6.3-alt2
 - obsolete mirall
 
