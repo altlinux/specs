@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Archive-Any
-Version: 0.0941
+Version: 0.0942
 Release: alt1
 
 Summary: Single interface to deal with file archives.
@@ -53,6 +53,9 @@ Tarballs, zip files, etc.
 %perl_vendor_privlib/Archive*
 
 %changelog
+* Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 0.0942-alt1
+- automated CPAN update
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.0941-alt1
 - automated CPAN update
 
