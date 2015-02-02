@@ -5,7 +5,7 @@
 Name: asterisk-full
 Summary: Asterisk -- last stable version
 Version: 4.0.3
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 BuildArch: noarch
@@ -18,7 +18,6 @@ BuildArch: noarch
 Conflicts: asterisk-full < %version-%release
 Provides: asterisk-full = %version-%release
 Requires: asterisk1.8-complete
-Requires: asterisk1.8-devel-doc
 Requires: asterisk1.8-sources
 Requires: asterisk1.8-chan_dongle
 Requires: asterisk1.8-chan_ss7
@@ -47,6 +46,9 @@ Asterisk -- last stable version
 %files -n asterisk11-full
 
 %changelog
+* Mon Feb 02 2015 Denis Smirnov <mithraen@altlinux.ru> 4.0.3-alt2
+- remove requires to asterisk*-devel-doc
+
 * Fri Jul 18 2014 Denis Smirnov <mithraen@altlinux.ru> 4.0.3-alt1
 - remove requires to appliance-asterisk-office
 
