@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-boolean
-Version: 0.43
+Version: 0.44
 Release: alt1
 
 Summary: Boolean support for Perl
@@ -62,6 +62,9 @@ objects: `true' and `false'.
 %perl_vendor_privlib/boolean.pod
 
 %changelog
+* Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Sat Jan 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.43-alt1
 - automated CPAN update
 
