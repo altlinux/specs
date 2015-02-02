@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(List/Util.pm) perl(Test/FailWarnings.pm) perl(Test/More.pm) perl(base.pm) perl(subs.pm)
 # END SourceDeps(oneline)
-%define module_version 1.000
+%define module_version 1.001
 %define module_name Class-Tiny
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.000
+Version: 1.001
 Release: alt1
 Summary: Minimalist class construction
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/C*
 
 %changelog
+* Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1
 - automated CPAN update
 
