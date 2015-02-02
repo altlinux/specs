@@ -1,6 +1,6 @@
 Name: openl2tp
 Version: 1.8
-Release: alt4
+Release: alt5
 
 Summary: L2TP (RFC2661) server/client
 License: GPL
@@ -11,6 +11,7 @@ Source: %name-%version.tar
 Source1: %name.service
 Source2: %name.init
 Patch0: openl2tp-1.8-socket.patch
+Patch1: openl2tp-1.8-cleanup-alt.patch
 BuildRequires: flex libreadline-devel
 
 %description
@@ -79,6 +80,9 @@ cp -f etc/sysconfig/openl2tpd %buildroot%_sysconfdir/sysconfig/openl2tpd
 %{_libdir}/openl2tp/event_sock.h
 
 %changelog
+* Mon Feb 02 2015 Andriy Stepanov <stanv@altlinux.ru> 1.8-alt5
+- fix segfault at cleanup stage
+
 * Fri Jan 30 2015 Andriy Stepanov <stanv@altlinux.ru> 1.8-alt4
 - Initd systemd typo fixed
 
