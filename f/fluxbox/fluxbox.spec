@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fluxbox
-Version: 1.3.5
+Version: 1.3.6
 Release: alt1
 
 Summary: Fast and lightweight window manager
@@ -70,16 +70,15 @@ session.screen0.windowScrollAction:\tNextTab
 
 %build
 # Regenerate:
-# - configure after applying use_pkgconfig patch
 # - Makefiles after applying no_generate_menu patch
 %autoreconf
 
 %configure --with-init=%_sysconfdir/X11/%name/init \
-			--with-keys=%_sysconfdir/X11/%name/keys \
-			--with-menu=%_sysconfdir/X11/%name/menu \
-			--enable-nls \
-			--enable-shape \
-			%{?_enable_debug:--enable-debug}
+           --with-keys=%_sysconfdir/X11/%name/keys \
+	   --with-menu=%_sysconfdir/X11/%name/menu \
+	   --enable-nls \
+	   --enable-shape \
+	   %{?_enable_debug:--enable-debug}
 
 %make_build %{?!_enable_debug: --no-print-directory --silent}
 
@@ -88,9 +87,9 @@ bzip2 ChangeLog
 %install
 %makeinstall_std %{?!_enable_debug: --no-print-directory --silent}
 
-install -m644 -D 3rd/vim/syntax/fluxapps.vim %buildroot%vim_syntax_dir/fluxapps.vim
-install -m644 -D 3rd/vim/syntax/fluxkeys.vim %buildroot%vim_syntax_dir/fluxkeys.vim
-install -m644 -D 3rd/vim/syntax/fluxmenu.vim %buildroot%vim_syntax_dir/fluxmenu.vim
+install -m644 -D 3rd/vim/vim/syntax/fluxapps.vim %buildroot%vim_syntax_dir/fluxapps.vim
+install -m644 -D 3rd/vim/vim/syntax/fluxkeys.vim %buildroot%vim_syntax_dir/fluxkeys.vim
+install -m644 -D 3rd/vim/vim/syntax/fluxmenu.vim %buildroot%vim_syntax_dir/fluxmenu.vim
 install -m644 -D %SOURCE7 %buildroot%vim_ftdetect_dir/fluxbox.vim
 
 %find_lang --custom-dir-script="
@@ -137,8 +136,11 @@ install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/styles/Cthulhain
 %vim_ftdetect_dir/%name.vim
 
 %changelog
+* Mon Feb 02 2015 Mikhail Kolchin <mvk@altlinux.org> 1.3.6-alt1
+- Updated to 1.3.6
+
 * Tue Sep 30 2014 Mikhail Kolchin <mvk@altlinux.org> 1.3.5-alt1
-- new version
+- Updated to 1.3.5
 
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt2.1
 - Fixed build
