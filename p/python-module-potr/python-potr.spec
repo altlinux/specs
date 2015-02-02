@@ -1,14 +1,14 @@
 Name: python-module-potr
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Summary: Python Off-The-Record encryption
 Group: Development/Python
 License: LGPLv3+
 Url: http://python-otr.pentabarf.de
 BuildArch: noarch
-Source: python-potr-%version.tar.gz
+Source: python-potr-%version.zip
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 unzip
 
 BuildRequires: python-module-distribute  python-devel
 BuildRequires: python3-module-distribute python3-devel
@@ -43,6 +43,9 @@ cd ../python3 && %python3_install
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Feb 02 2015 Fr. Br. George <george@altlinux.ru> 1.0.1-alt1
+- Autobuild version bump to 1.0.1
+
 * Thu Mar 27 2014 Fr. Br. George <george@altlinux.ru> 1.0.0-alt1
 - Autobuild version bump to 1.0.0
 
