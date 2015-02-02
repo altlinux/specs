@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist ExtUtils-Depends
 Name: perl-%dist
-Version: 0.403
+Version: 0.404
 Release: alt1
 
 Summary: Perl module for building XS extensions easily
@@ -36,6 +36,9 @@ also a C and an XS interface besides the perl one.
 %perl_vendor_privlib/ExtUtils
 
 %changelog
+* Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 0.404-alt1
+- automated CPAN update
+
 * Mon Dec 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.403-alt1
 - automated CPAN update
 
