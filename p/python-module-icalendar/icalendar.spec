@@ -1,13 +1,15 @@
 Name: python-module-icalendar
-Version: 3.8.3
+Version: 3.8.4
 Release: alt1
 Summary: iCalendar parser/generator
 License: GPLv2.1
 Group: Development/Python
 BuildArch: noarch
 %setup_python_module icalendar
-Source: icalendar-%version.tar.gz
+Source: icalendar-%version.zip
 Url: http://pypi.python.org/pypi/icalendar
+
+BuildPreReq: unzip
 
 # Automatically added by buildreq on Tue Nov 08 2011
 # optimized out: python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-docutils python-module-genshi python-module-jinja2 python-module-setuptools python-module-simplejson python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging
@@ -33,6 +35,9 @@ iCalendar is a parser/generator of iCalendar files
 %python_sitelibdir_noarch/%modulename-*
 
 %changelog
+* Mon Feb 02 2015 Fr. Br. George <george@altlinux.ru> 3.8.4-alt1
+- Autobuild version bump to 3.8.4
+
 * Sat Sep 27 2014 Fr. Br. George <george@altlinux.ru> 3.8.3-alt1
 - Autobuild version bump to 3.8.3
 
