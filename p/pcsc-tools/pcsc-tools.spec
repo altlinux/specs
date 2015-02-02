@@ -1,6 +1,6 @@
 
 Name:           pcsc-tools
-Version:        1.4.22
+Version:        1.4.23
 Release:        alt1
 Summary:        Tools to be used with smart cards and PC/SC
 
@@ -57,6 +57,9 @@ desktop-file-install --mode=644 \
 %doc %_man1dir/gscriptor.*
 
 %changelog
+* Mon Feb 02 2015 Andrey Cherepanov <cas@altlinux.org> 1.4.23-alt1
+- New version
+
 * Wed Feb 12 2014 Andrey Cherepanov <cas@altlinux.org> 1.4.22-alt1
 - Initial build for ALT Linux (thanks Fedora for spec)
 
