@@ -1,5 +1,5 @@
 Name: kodi
-Version: 14.0
+Version: 14.1
 Release: alt1
 
 Summary: Kodi Media Center
@@ -145,6 +145,9 @@ E_O_F
 %_datadir/kodi/userdata
 
 %changelog
+* Mon Feb 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 14.1-alt1
+- 14.1 Helix released
+
 * Sun Dec 28 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 14.0-alt1
 - 14.0 Helix released
 
