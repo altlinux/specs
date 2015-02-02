@@ -1,8 +1,8 @@
 # Spec file for Dillo
 
 Name: dillo
-Version: 0.8.6
-Release: alt7.1
+Version: 3.0.4.1
+Release: alt1
 
 Summary: a small GTK+ web browser
 Summary(ru_RU.UTF-8): компактный веб-браузер, написанный на GTK+
@@ -31,6 +31,9 @@ BuildPreReq: rpm-build-licenses
 BuildPreReq: gcc-c++ gtk+-devel libfltk-devel libjpeg-devel libpng-devel
 BuildPreReq: libssl-devel libXft-devel linux-libc-headers
 BuildPreReq: glib-devel zlib-devel
+BuildPreReq: libcairo-devel libpixman-devel
+BuildPreReq: libXinerama-devel libXfixes-devel libXcursor-devel
+BuildPreReq: perl-libnet
 
 %description
 Dillo  is a small GTK+ based  (GNOME is NOT required!) web browser.
@@ -58,21 +61,19 @@ Dillo.
 
 %prep
 %setup -q
-%patch4
-%patch0 -p1
-%patch1
-%patch2
-%patch3
-%patch5
+#%%patch4
+#%%patch0 -p1
+#%%patch1
+#%%patch2
+#%%patch3
+#%%patch5
 
 %build
 %autoreconf
 %configure --sysconfdir=%_sysconfdir/%name \
 	    --enable-meta-refresh \
-	    --disable-dlgui \
-	    --enable-ipv6
-#	    --disable-anti-alias
-#	    --enable-rtfl
+	    --enable-ipv6 \
+	    --enable-ssl
 %make_build
 
 %install
@@ -98,24 +99,30 @@ rm -f -- doc/Makefile*
 
 %files -f %name.lang
 %_bindir/dillo
-%_bindir/dillocfg
+%_bindir/dillo-install-hyphenation
 %_bindir/dpid
 %_bindir/dpidc
 %_libdir/dillo*
-%exclude %_bindir/bm-update
 
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README doc/
+%doc %_defaultdocdir/%name/user_help.html
 
 %dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/dillorc
+%config(noreplace) %_sysconfdir/domainrc
+%config(noreplace) %_sysconfdir/keysrc
 %config(noreplace) %_sysconfdir/%name/dpidrc
+%config(noreplace) %_sysconfdir/%name/dillorc
 
 %_miconsdir/%{name}*
 %_niconsdir/%{name}*
 %_liconsdir/%{name}*
 %_desktopdir/%name.desktop
+%_man1dir/dillo.1*
 
 %changelog
+* Thu Jan 29 2015 Andrey Cherepanov <cas@altlinux.org> 3.0.4.1-alt1
+- New version
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.6-alt7.1
 - Rebuilt with libpng15
 
