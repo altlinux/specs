@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-NoTabs
-Version:	1.3
-Release:	alt2_10
+Version:	1.4
+Release:	alt1
 Summary:	Check the presence of tabs in your project
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-NoTabs/
-Source0:	http://search.cpan.org/CPAN/authors/id/B/BO/BOBTFISH/Test-NoTabs-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/B/BO/BOBTFISH/Test-NoTabs-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl(Cwd.pm)
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1
+- automated CPAN update
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_10
 - update to new release by fcimport
 
