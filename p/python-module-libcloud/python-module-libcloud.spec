@@ -1,11 +1,11 @@
 %define oname libcloud
 
-%def_with python3
+%def_without python3
 
 Summary: A Python library to address multiple cloud provider APIs
 Name: python-module-%oname
-Version: 0.15.1
-Release: alt2
+Version: 0.16.0
+Release: alt1
 Url: http://libcloud.apache.org/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -101,6 +101,10 @@ popd
 
 
 %changelog
+* Mon Nov 17 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.16.0-alt1
+- New version
+- Dropped py3 module caused dependiences issues
+
 * Wed Oct 29 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.15.1-alt2
 - Added module for Python 3
 
