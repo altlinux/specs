@@ -5,7 +5,7 @@
 
 Name: lxde-%upstreamname
 Version: 0.3.0
-Release: alt2.2
+Release: alt3
 
 Summary: Lightweight X11 Display Manager
 License: GPL
@@ -19,6 +19,7 @@ Patch3: lxdm-alt-session-name.patch
 Patch4: lxdm-nonolisten.patch
 Patch5: lxdm-buildfix_syswait.patch
 Patch6: lxdm-0.4.1-old-plymouth.patch
+Patch7: lxdm-alt-cpuhog.patch
 
 Source1: alt.lxdm.pam
 Source2: alt.lxdm.conf
@@ -40,6 +41,7 @@ KDM in LXDE distros. It's still in very early stage of development.
 %patch4 -p2
 %patch5 -p2
 %patch6 -p1
+%patch7 -p2
 
 %build
 autoreconf -fisv
@@ -76,6 +78,9 @@ install -m755 %SOURCE3 %{buildroot}%{_sysconfdir}/%{upstreamname}/Xsession
 %_datadir/%upstreamname
 
 %changelog
+* Mon Feb 02 2015 Michael Shigorin <mike@altlinux.org> 0.3.0-alt3
+- added patch by Alex Moskalenko to fix CPU hogging (closes: #28778)
+
 * Fri Apr 11 2014 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt2.2
 - fix plymouth support
 
