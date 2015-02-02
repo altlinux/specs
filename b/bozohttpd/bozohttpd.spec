@@ -1,12 +1,13 @@
 Name: bozohttpd
-Version: 20140708
+Version: 20141225
 Release: alt1
 Group: System/Servers
 Summary: Tiny http 1.1 server
 License: BSD
 Source: %name-%version.tar.bz2
 Patch: bozohttpd-20140102-bozoname.patch
-Patch1: bozohttpd-20140102-small.patch
+Patch1: bozohttpd-20141225-small.patch
+Patch2: bozohttpd-20141225-namelen.patch
 Url: http://www.eterna.com.au/bozohttpd/
 
 %define sum tiny http 1.1 server
@@ -63,6 +64,8 @@ Requires: lib%name-devel
 find . -name .\#\* -exec rm {} \;
 %patch -p1
 %patch1 -p1
+%patch2
+
 # XXX
 sed -i 's/-lssl /-lssl -lc /' libbozohttpd/Makefile
 sed 's@#include "netbsd_queue.h"@#include <bozohttpd/netbsd_queue.h>@' < bozohttpd.h > libbozohttpd/bozohttpd.h
@@ -110,6 +113,10 @@ cd testsuite
 %_libdir/*.a
 
 %changelog
+* Mon Feb 02 2015 Fr. Br. George <george@altlinux.ru> 20141225-alt1
+- Autobuild version bump to 20141225
+- Fix patches
+
 * Tue Aug 19 2014 Fr. Br. George <george@altlinux.ru> 20140708-alt1
 - Autobuild version bump to 20140708
 
