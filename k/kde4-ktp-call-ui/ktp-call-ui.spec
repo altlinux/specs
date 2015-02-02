@@ -4,7 +4,7 @@
 %define rname ktp-call-ui
 Name: kde4-ktp-call-ui
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Telepathy VoIP client GUI
@@ -62,6 +62,12 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Mon Feb 02 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt2
+- rebuild
+
+* Fri Oct 31 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt0.M70P.1
+- built for M70P
+
 * Tue Oct 21 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
 - new version
 
