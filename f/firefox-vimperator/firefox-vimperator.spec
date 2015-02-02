@@ -4,9 +4,9 @@
 %define mcid muttator@mozdev.org
 %define vciddir 	%firefox_noarch_extensionsdir/%vcid
 %define mciddir 	%tbird_noarch_extensionsdir/%mcid
-%define ver 3.8.3
+%define ver 3.8.4
 %define mver 1.3
-%define ft_release alt1.hg20140527
+%define ft_release alt2.git20150201
 %define workdir %firefox_name-%vname-%ver
 %define mworkdir %tbird_name-%mname-%mver
 
@@ -17,7 +17,7 @@ Summary: Browser add-on for Firefox, which makes it like the Vim text editor
 Group: Networking/WWW
 License: MPL 1.1/GPL 2.0/LGPL 2.1
 URL: http://%vname.org/
-# hg clone https://vimperator-labs.googlecode.com/hg/vimperator-labs
+# https://github.com/vimperator/vimperator-labs/
 Source: %firefox_name-%vname-%version.tar.bz2
 Source1: asciidoc.tar.bz2
 Requires: %firefox_name >= 3.0
@@ -113,6 +113,9 @@ install -m644 %mname/contrib/vim/ftdetect/%mname.vim\
 %vim_ftdetect_dir/%mname.vim
 
 %changelog
+* Mon Feb 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.4-alt2.git20150201
+- Vimperator 3.8.4
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.3-alt1.hg20140527
 - Vimperator 3.8.3, Muttator 1.3
 
