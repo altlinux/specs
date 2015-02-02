@@ -1,13 +1,13 @@
 %define rel 1
 Summary: 2D Platform Game
 Name: edgar
-Version: 1.18
+Version: 1.19
 Release: alt1
 Source: %name-%version-1.tar.gz
 Url: http://www.parallelrealities.co.uk/p/legend-of-edgar.html
 Group: Games/Arcade
 License: GPL
-Patch: %name-1.04-icons.patch
+Patch: %name-1.19-icons.patch
 Packager: Fr. Br. George <george@altlinux.ru>
 Requires: %name-data = %version
 
@@ -43,13 +43,12 @@ sed -i 's/Categories=Game$/Categories=Game;/' icons/edgar.desktop
 %make_build VERSION=%version RELEASE=%rel DATA_DIR=%_gamesdatadir/%name/ BIN_DIR=%_gamesbindir/ DOC_DIR=%_defaultdocdir/%name-%version ICON_DIR=%_iconsdir/hicolor/ DESKTOP_DIR=%_desktopdir LOCALE_DIR=%_datadir/locale/
 
 %install
-%makeinstall VERSION=%version RELEASE=%rel DATA_DIR=%buildroot%_gamesdatadir/%name/ BIN_DIR=%buildroot%_gamesbindir/ DOC_DIR=`pwd`/localdoc ICON_DIR=%buildroot%_iconsdir/hicolor/ DESKTOP_DIR=%buildroot%_desktopdir/ LOCALE_DIR=%buildroot%_datadir/locale/
+%makeinstall VERSION=%version RELEASE=%rel DATA_DIR=%buildroot%_gamesdatadir/%name/ BIN_DIR=%buildroot%_gamesbindir/ DOC_DIR=`pwd`/localdoc ICON_DIR=%buildroot%_iconsdir/hicolor/ DESKTOP_DIR=%buildroot%_desktopdir/ LOCALE_DIR=%buildroot%_datadir/locale/ PREFIX=%buildroot%_prefix
 
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Application \
 	--add-category=RolePlaying \
 	%buildroot%_desktopdir/edgar.desktop
-
 
 %find_lang %name
 
@@ -59,11 +58,16 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %dir %_gamesdatadir/%name
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*
+%_man6dir/*
 
 %files data
 %_gamesdatadir/%name/*
 
 %changelog
+* Mon Feb 02 2015 Fr. Br. George <george@altlinux.ru> 1.19-alt1
+- Autobuild version bump to 1.19
+- Fix patch
+
 * Thu Oct 23 2014 Fr. Br. George <george@altlinux.ru> 1.18-alt1
 - Autobuild version bump to 1.18
 - Desktop modification fixed
