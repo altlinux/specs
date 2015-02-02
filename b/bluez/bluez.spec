@@ -2,7 +2,7 @@
 %def_enable obex
 
 Name: bluez
-Version: 5.27
+Version: 5.28
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -132,6 +132,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Mon Feb 02 2015 Yuri N. Sedunov <aris@altlinux.org> 5.28-alt1
+- 5.28
+
 * Sat Dec 27 2014 Yuri N. Sedunov <aris@altlinux.org> 5.27-alt1
 - 5.27
 - enabled OBEX profile support
