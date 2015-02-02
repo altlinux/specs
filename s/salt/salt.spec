@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 2014.7
-Release: alt3
+Version: 2015.2
+Release: alt1
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
@@ -155,7 +155,6 @@ ln -s ../../opennode/cli/actions onode
 %_bindir/salt-unity
 
 %_man1dir/salt-master.1.*
-%_man1dir/salt.1.*
 %_man1dir/salt-cp.1.*
 %_man1dir/salt-key.1.*
 %_man1dir/salt-run.1.*
@@ -187,6 +186,9 @@ ln -s ../../opennode/cli/actions onode
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Mon Feb 02 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 2015.2-alt1
+- New version
+
 * Wed Dec 10 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2014.7-alt3
 - Add subpackage salt-api
 
