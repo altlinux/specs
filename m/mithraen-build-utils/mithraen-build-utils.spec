@@ -1,6 +1,6 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.24
+Version: 0.1.25
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -35,6 +35,9 @@ install -m644 share/* %buildroot%_datadir/%name
 %_bindir/*
 %_datadir/%name
 %changelog
+* Mon Feb 02 2015 Denis Smirnov <mithraen@altlinux.ru> 0.1.25-alt1
+- disable build asterisk*-devel-doc
+
 * Sun Sep 07 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.24-alt1
 - gear-clone: add git.alt:/srpms support
 
