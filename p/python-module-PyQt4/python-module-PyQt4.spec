@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.11.3
-Release: alt2
+Release: alt3
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -22,7 +22,7 @@ BuildPreReq: %py_package_dependencies dbus-devel
 BuildRequires: gcc-c++ libqt4-devel lout
 BuildPreReq: python-module-qscintilla2-qt4-devel libqscintilla2-qt4-devel
 BuildRequires: python-module-sip-devel python-devel
-BuildPreReq: python-module-dbus-devel
+BuildPreReq: python-module-dbus-devel phonon-devel
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -107,6 +107,7 @@ cp -a . ../python3
 
 %build
 export QT4DIR=%_qt4dir
+%add_optflags -I%_includedir/kde4 -I%_includedir/kde4/phonon
 %add_optflags -I$PWD/qpy/QtGui
 
 #cp -fR ../PyQt-x11-gpl ../_tmp_
@@ -220,6 +221,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.3-alt3
+- Added PyQt4.phonon module (ALT #30697)
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.3-alt2
 - Rebuilt with new SIP
 
