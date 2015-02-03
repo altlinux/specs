@@ -34,7 +34,7 @@ BuildRequires: libvorbis-devel
 #define wessuffix -%wesdesktopsuffix
 
 Name: wesnoth%wessuffix
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
@@ -628,6 +628,9 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Tue Feb 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1
+- 1.20.1 stable release
+
 * Fri Jan 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1
 - 1.20 release
 
