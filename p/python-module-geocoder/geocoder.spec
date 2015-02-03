@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.0.6
-Release: alt1.git20150120
+Version: 1.1.1
+Release: alt1.git20150202
 Summary: A complete Python Geocoding module made easy
 License: MIT
 Group: Development/Python
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20150202
+- Version 1.1.1
+
 * Wed Jan 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt1.git20150120
 - Initial build for Sisyphus
 
