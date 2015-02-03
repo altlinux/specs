@@ -1,6 +1,6 @@
 Name: dictd
 Version: 1.12.1
-Release: alt1
+Release: alt2
 Serial: 1
 
 Url: http://www.dict.org/
@@ -14,6 +14,7 @@ Source5: dict.conf
 Source6: dictd-control
 Source7: dictd-README.ALT
 Source8: dictd.service
+Source9: dictd.filetrigger
 
 Patch: %name-1.9.15-natspec.patch
 
@@ -152,6 +153,7 @@ EOF
 
 install -D -m 755 %SOURCE6 %buildroot%_controldir/dictd
 install -D %SOURCE8 %buildroot%_unitdir/dictd.service
+install -D -m 755 %SOURCE9 %buildroot%_rpmlibdir/dictd.filetrigger
 
 %pre
 %_sbindir/groupadd -r dictd &>/dev/null ||:
@@ -179,6 +181,7 @@ fi
 %_datadir/%name
 %_localstatedir/%name
 %_unitdir/dictd.service
+%_rpmlibdir/dictd.filetrigger
 
 %files -n dict-tools
 %_bindir/dictfmt
@@ -209,6 +212,9 @@ fi
 %_man1dir/colorit.1*
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt2
+- add dictd.filetrigger
+
 * Thu Apr 18 2013 Fr. Br. George <george@altlinux.ru> 1:1.12.1-alt1
 - Autobuild version bump to 1.12.1
 - Add systemd service file
