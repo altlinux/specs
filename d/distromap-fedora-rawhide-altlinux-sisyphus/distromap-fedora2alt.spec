@@ -1,7 +1,7 @@
 %define module fedora-rawhide-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.35
+Version: 0.36
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -40,6 +40,9 @@ done
 /usr/share/distromap/*
 
 %changelog
+* Thu Jan 29 2015 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- db updates
+
 * Wed Oct 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - db updates
 
@@ -68,58 +71,4 @@ done
 - db updates
 
 * Thu Jan 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
-- db updates
-
-* Mon Dec 31 2012 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
-- db updates
-
-* Tue Dec 18 2012 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
-- db updates
-
-* Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
-- db updates
-
-* Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
-- db updates
-
-* Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
-- db updates
-
-* Thu Nov 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
-- db updates
-
-* Mon Oct 15 2012 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
-- db updates
-
-* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
-- db updates
-
-* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
-- db updates
-
-* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
-- db updates
-
-* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
-- db updates
-
-* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
-- db updates
-
-* Tue Aug 14 2012 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
-- db updates
-
-* Wed Aug 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
-- db updates
-
-* Thu Jun 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
-- db updates
-
-* Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
-- db updates
-
-* Mon May 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
-- db updates
-
-* Wed May 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - db updates
