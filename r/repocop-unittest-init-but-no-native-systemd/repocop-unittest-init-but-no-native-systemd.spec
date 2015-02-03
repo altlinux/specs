@@ -2,7 +2,7 @@
 
 Name: repocop-unittest-%testname
 Version: 0.01
-Release: alt2
+Release: alt3
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Requires: repocop > 0.55
@@ -13,8 +13,8 @@ Group: Development/Other
 License: GPLv2+
 
 %description
-The test warns packages that place files into 
-/usr/share/doc/%%name-%%version directory but do not own it.
+The test warns packages that have support for Sys-V init
+but not for systemd
 
 %prep
 
@@ -46,6 +46,9 @@ done
 #%_datadir/repocop/fixscripts/*.pl
 
 %changelog
+* Tue Feb 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.01-alt3
+- fixed description
+
 * Sat Jan 11 2014 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2
 - added exception for systemd-*
 
