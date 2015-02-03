@@ -1,5 +1,5 @@
 Name: python-module-mpd
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 Summary: A client interface for the Music Player Daemon
 Group: Development/Python
@@ -87,6 +87,9 @@ cd ../python3 && %python3_install
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 0.5.4-alt1
+- Autobuild version bump to 0.5.4
+
 * Thu Mar 27 2014 Fr. Br. George <george@altlinux.ru> 0.5.3-alt1
 - Autobuild version bump to 0.5.3
 
