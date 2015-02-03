@@ -1,5 +1,5 @@
 Name: pam-config
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Systemwide PAM config files
@@ -148,6 +148,7 @@ fi
 %config(noreplace) %_pamdir/*-krb5_ccreds
 %config(noreplace) %_pamdir/*-multi
 %config(noreplace) %_pamdir/*-pkcs11
+%config(noreplace) %_pamdir/*-winbind
 %config(noreplace) %_pamdir/common-login*
 %_pamdir/system-auth
 %_pamdir/system-auth-use_first_pass
@@ -159,6 +160,9 @@ fi
 %files -n pam0-config
 
 %changelog
+* Tue Feb 03 2015 Dmitry V. Levin <ldv@altlinux.org> 1.7.0-alt1
+- Added winbind authentication support (by cas@).
+
 * Thu Nov 08 2012 Dmitry V. Levin <ldv@altlinux.org> 1.6.0-alt1
 - Added krb5+ccreds authentication support (by boyarsh@).
 - system-auth*-pkcs11: changed to use system-auth*-local
