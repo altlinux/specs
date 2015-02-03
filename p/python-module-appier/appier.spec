@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.19
+Version: 0.8.25
 Release: alt1
 Summary: Appier Framework
 License: ASLv2.0
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.25-alt1
+- Version 0.8.25
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.19-alt1
 - Version 0.8.19
 
