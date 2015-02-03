@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.67
+Version: 1.68
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -109,6 +109,9 @@ install -D gui/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 1.68-alt1
+- Autobuild version bump to 1.68
+
 * Tue Nov 25 2014 Fr. Br. George <george@altlinux.ru> 1.67-alt1
 - Autobuild version bump to 1.67
 - Package config file
