@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.git20141218
+Version: 0.2.2
+Release: alt1.git20150129
 Summary: Lightweight wrapper around basic LLVM functionality
 License: BSD
 Group: Development/Python
@@ -143,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1.git20150129
+- Version 0.2.2
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20141218
 - Version 0.2.0
 
