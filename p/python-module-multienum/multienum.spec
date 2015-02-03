@@ -1,0 +1,87 @@
+%define oname multienum
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 0.1
+Release: alt1.b.git20150202
+Summary: Enumerator type supporting multiple equivalent names
+License: ASLv2.0
+Group: Development/Python
+Url: https://pypi.python.org/pypi/multienum/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/sorreltree/multienum.git
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-nose
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose
+%endif
+
+%py_provides %oname
+
+%description
+An enumeration type supporting multiple equivalent names.
+
+%package -n python3-module-%oname
+Summary: Enumerator type supporting multiple equivalent names
+Group: Development/Python3
+%py3_provides %oname
+
+%description -n python3-module-%oname
+An enumeration type supporting multiple equivalent names.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%build
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%python_install
+install -p -m644 %oname.py %buildroot%python_sitelibdir/
+
+%if_with python3
+pushd ../python3
+%python3_install
+install -p -m644 %oname.py %buildroot%python3_sitelibdir/
+popd
+%endif
+
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
+%files
+%doc *.rst
+%python_sitelibdir/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst
+%python3_sitelibdir/*
+%endif
+
+%changelog
+* Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.b.git20150202
+- Initial build for Sisyphus
+
