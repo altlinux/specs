@@ -1,5 +1,5 @@
 Name: pentobi
-Version: 8.2
+Version: 9.0
 Release: alt1
 License: GPLv3
 Summary: A computer program that plays the board game Blokus
@@ -43,6 +43,9 @@ mkdir -p %buildroot%_sysconfdir
 %_man6dir/*
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 9.0-alt1
+- Autobuild version bump to 9.0
+
 * Sat Sep 27 2014 Fr. Br. George <george@altlinux.ru> 8.2-alt1
 - Autobuild version bump to 8.2
 
