@@ -1,5 +1,5 @@
 Name: MySQL
-Version: 5.5.32
+Version: 5.5.42
 Release: alt1
 
 %def_without debug
@@ -413,9 +413,6 @@ grep -lZ "$r\$" %buildroot%_datadir/sql-bench/innotest* |
 grep -EZl '^[[:space:]]*use the ' %buildroot%_bindir/* |
 	xargs -r0 subst -p 's/\([[:space:]]*\)\(use the \)/\1then \2/g'
 
-# Install texinfo documentation.
-install -m644 Docs/*.info* %buildroot%_infodir/
-
 subst -p 's/\(BUGmysql="\)\([^"]*\)"/\1\2,mysql@packages.altlinux.org"/g' %buildroot%_bindir/mysqlbug
 
 mkdir -p %buildroot%_docdir/MySQL-%version
@@ -433,6 +430,9 @@ touch %buildroot%_logdir/mysql/info
 rm -rf %buildroot%_datadir/mysql-test
 rm -f %buildroot%_libdir/mysql/plugin/*.la
 rmdir %buildroot%_libdir/mysql/plugin/debug
+
+# broken manpages referencing missing paths
+rm -f %buildroot%_man1dir/mysql{_client_,}test_embedded.1
 
 %define get_datadir \
 DATADIR=`/usr/bin/my_print_defaults mysqld |sed -ne 's/^--datadir=\\(.*\\)/\\1/pg' |tail -1` \
@@ -581,7 +581,6 @@ fi
 %_bindir/resolve*
 %_mandir/man?/*
 %exclude %_man1dir/mysql_config.1*
-%_infodir/*.info*
 
 %files server-perl
 %_bindir/mysql_convert_table_format
@@ -648,6 +647,10 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Tue Feb 03 2015 Michael Shigorin <mike@altlinux.org> 5.5.42-alt1
+- 5.5.42
+  + dropped texinfo pages (missing now)
+
 * Sat Jun 08 2013 Michael Shigorin <mike@altlinux.org> 5.5.32-alt1
 - 5.5.32
 
