@@ -1,12 +1,11 @@
-
 Name: libcmis
-Version: 0.4.1
-Release: alt2.1
+Version: 0.5.0
+Release: alt1
 Summary: A C++ client library for the CMIS interface
 Group: System/Libraries
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 Url: http://sourceforge.net/projects/libcmis/
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libcurl)
@@ -16,7 +15,7 @@ BuildRequires: boost-devel boost-program_options-devel
 BuildRequires: doxygen
 BuildRequires: xmlto
 
-Patch: %name-%version-%release.patch
+Patch: %name-0.4.1-alt2.1.patch
 
 %description
 LibCMIS is a C++ client library for the CMIS interface. This allows C++
@@ -59,7 +58,6 @@ mkdir -p m4
 %doc AUTHORS COPYING.* NEWS README
 %_libdir/*.so.*
 
-
 %files devel
 %_includedir/*
 %_libdir/*.so
@@ -70,6 +68,10 @@ mkdir -p m4
 %_man1dir/*.1*
 
 %changelog
+* Tue Feb 03 2015 Fr. Br. George <george@altlinux.ru> 0.5.0-alt1
+- Autobuild version bump to 0.5.0
+- Change packaging scheme
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.4.1-alt2.1
 - rebuild with boost 1.57.0
 
