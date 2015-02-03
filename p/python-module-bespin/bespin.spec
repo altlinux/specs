@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.3
-Release: alt1.git20150119
+Version: 0.4.6.8
+Release: alt1.git20150203
 Summary: Opinionated wrapper around boto that reads yaml
 License: MIT
 Group: Development/Python
@@ -23,7 +23,7 @@ BuildPreReq: python-module-boto python-module-yaml
 BuildPreReq: python-module-rainbow_logging_handler
 BuildPreReq: python-module-filechunkio python-module-noseOfYeti
 BuildPreReq: python-module-nose python-module-mock
-BuildPreReq: python-module-requests
+BuildPreReq: python-module-requests python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -38,7 +38,7 @@ BuildPreReq: python3-module-requests
 %endif
 
 %py_provides %oname
-%py_requires delfick_error option_merge input_algorithms argparse
+%py_requires delfick_error option_merge input_algorithms argparse json
 %py_requires six humanize boto yaml rainbow_logging_handler filechunkio
 %py_requires requests
 
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.6.8-alt1.git20150203
+- Version 0.4.6.8
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt1.git20150119
 - Version 0.4.3
 
