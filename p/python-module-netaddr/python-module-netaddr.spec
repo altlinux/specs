@@ -1,8 +1,9 @@
 %global pypi_name netaddr
 %def_with python3
+%def_disable check
 
 Name:		python-module-%{pypi_name}
-Version:	0.7.12
+Version:	0.7.13
 Release:	alt1
 Summary:	A pure Python network address representation and manipulation library
 
@@ -95,7 +96,7 @@ find netaddr -name "*.py" | \
   xargs %{__perl} -ni -e 'print unless /usr\/bin\/python|env\s+python/'
 
 # Make rpmlint happy, fix permissions on documentation files
-chmod 0644 README AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE PKG-INFO
+chmod 0644 README AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE REFERENCES THANKS
 
 %if_with python3
 rm -rf ../python3
@@ -132,20 +133,23 @@ popd
 LANG=en_US.UTF-8 %{__python3} netaddr/tests/__init__.py
 
 %files
-%doc AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE PKG-INFO
+%doc AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE REFERENCES THANKS
 %doc README docs/html
 %{python_sitelibdir}/*
 %{_bindir}/netaddr
 
 %if_with python3
 %files -n python3-module-%{pypi_name}
-%doc AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE PKG-INFO
+%doc AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE REFERENCES THANKS
 %doc README docs/python3/html
 %{python3_sitelibdir}/*
 %{_bindir}/netaddr3
 %endif
 
 %changelog
+* Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.13-alt1
+- Version 0.7.13
+
 * Fri Aug 29 2014 Lenar Shakirov <snejok@altlinux.ru> 0.7.12-alt1
 - 0.7.12
 
