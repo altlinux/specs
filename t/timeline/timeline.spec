@@ -1,5 +1,5 @@
 Name: timeline
-Version: 1.3.0
+Version: 1.4.1
 Release: alt1
 Group: Office
 Summary: Displaying and navigating events on a timeline
@@ -104,6 +104,9 @@ done
 %python_sitelibdir_noarch/%modulename
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 1.4.1-alt1
+- Autobuild version bump to 1.4.1
+
 * Tue Aug 19 2014 Fr. Br. George <george@altlinux.ru> 1.3.0-alt1
 - Autobuild version bump to 1.3.0
 
