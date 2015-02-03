@@ -25,7 +25,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 312
+Version: 314
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -50,7 +50,6 @@ Patch0010: 0010-xterm-alt-back_old_behavior_for_modifyFunctionKeys.patch
 Patch0011: 0011-xterm-alt-appdef.patch
 Patch0012: 0012-xterm-alt-enable_utf8title.patch
 Patch0013: 0013-xterm-alt-man_suffix.patch
-Patch0014: 0014-xterm-alt-Shorten-passedPty-to-fit-PTYCHARLEN.patch
 
 Provides: xvt, %_bindir/xvt
 PreReq: libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
@@ -97,7 +96,6 @@ install -pm755 %_sourcedir/uxterm .
 %patch0011 -p2
 %patch0012 -p2
 %patch0013 -p2
-%patch0014 -p2
 
 sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
 sed -i 's|_48x48||' *.desktop
@@ -168,6 +166,10 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Tue Feb 03 2015 Fr. Br. George <george@altlinux.ru> 314-alt1
+- Autobuild version bump to 314
+- Drop obsoleted patch
+
 * Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 312-alt1
 - Autobuild version bump to 312
 
