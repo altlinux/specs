@@ -1,5 +1,5 @@
 Name: abcm2ps
-Version: 7.8.8
+Version: 7.8.13
 Release: alt1
 Summary: a program to typeset abc tunes into Postscript
 License: GPL
@@ -34,6 +34,9 @@ rm -rf %buildroot%_docdir/%name/
 %_datadir/abcm2ps/
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 7.8.13-alt1
+- Autobuild version bump to 7.8.13
+
 * Sat Oct 04 2014 Fr. Br. George <george@altlinux.ru> 7.8.8-alt1
 - Autobuild version bump to 7.8.8
 
