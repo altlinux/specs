@@ -1,8 +1,8 @@
-%define ver_major 0.8
+%define ver_major 0.9
 %def_disable contractor
 
 Name: geary
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: Email client
@@ -68,19 +68,22 @@ Geary's development.
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%doc AUTHORS MAINTAINERS NEWS README THANKS
 %_bindir/%name
 %{?_enable_contractor:%_bindir/%name-attach}
-%dir %_datadir/%name
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_desktopdir/%name-autostart.desktop
 %_datadir/glib-2.0/schemas/org.yorba.%name.gschema.xml
 %_iconsdir/*/*/apps/*
+%_iconsdir/hicolor/scalable/actions/*.svg
 %_datadir/appdata/%name.appdata.xml
 %{?_enable_contractor:%_datadir/contractor/geary-attach.contract}
+%doc AUTHORS MAINTAINERS NEWS README THANKS
 
 %changelog
+* Tue Feb 03 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Sat Dec 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
