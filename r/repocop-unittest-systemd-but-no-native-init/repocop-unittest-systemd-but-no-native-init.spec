@@ -2,7 +2,7 @@
 
 Name: repocop-unittest-%testname
 Version: 0.01
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Requires: repocop > 0.55
@@ -29,7 +29,7 @@ select distinct a.pkgid from rpm_files as a where (a.filename glob '/lib/systemd
 EOSQL
 sed -i -e '/^service-/d' $REPOCOP_TEST_TMPDIR/msg
 sed -i -e '/^systemd-/d' $REPOCOP_TEST_TMPDIR/msg
-for i in `cat $REPOCOP_TEST_TMPDIR/msg`; do repocop-test-info -k $i "The package have SysV init script(s) but no native systemd files."; done
+for i in `cat $REPOCOP_TEST_TMPDIR/msg`; do repocop-test-info -k $i "The package have native systemd file(s) but no  SysV init scripts."; done
 rm $REPOCOP_TEST_TMPDIR/*
 EOF
 
@@ -47,5 +47,8 @@ done
 #%_datadir/repocop/fixscripts/*.pl
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2
+- fixed misprints
+
 * Tue Feb 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1
 - initial version
