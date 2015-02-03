@@ -21,13 +21,13 @@
 %endif
 
 %define somver 3
-%define sover %somver.5.2
+%define sover %somver.5.3
 
 %define topsomver 0
 %define topsover %topsomver.0.0
 
 Name: %oname-%scalar_type
-Version: 3.5.2
+Version: 3.5.3
 Release: alt1
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
@@ -350,7 +350,8 @@ export OMPI_LDFLAGS="$OMPI_LDFLAGS -lmpi_f90 -lmpi_f77"
 
 export PETSC_DIR=$PWD
 export PETSC_ARCH=linux-gnu
-OPTFLAGS="%optflags %optflags_shared -DPETSC_HAVE_MPE -I$PETSC_DIR/include/sieve"
+#OPTFLAGS="%optflags %optflags_shared -DPETSC_HAVE_MPE -I$PETSC_DIR/include/sieve"
+OPTFLAGS="%optflags %optflags_shared -DPETSC_HAVE_MPE"
 %if_with netcdf
 OPTFLAGS="$OPTFLAGS -DPETSC_HAVE_NETCDF"
 %endif
@@ -550,7 +551,7 @@ install -d %buildroot%ldir/examples
 install -d %buildroot%_docdir/%oname/include/finclude
 install -d %buildroot%_docdir/%oname/include/mpiuni
 install -d %buildroot%_docdir/%oname/include/petsc-private
-install -d %buildroot%_docdir/%oname/include/sieve
+#install -d %buildroot%_docdir/%oname/include/sieve
 install -d %buildroot%_datadir/%name
 install -d %buildroot%_datadir/%oname
 install -d %buildroot%python_sitelibdir/%{oname}_config
@@ -608,6 +609,7 @@ popd
 
 mv %buildroot%prefix/conf %buildroot%_datadir/%name/
 ln -s %_datadir/%name/conf %buildroot%ldir
+ln -s %_datadir/%name/conf %buildroot%ldir/lib/petsc-conf
 ln -s %ldir/lib %buildroot%_datadir/%name
 ln -s %ldir/include %buildroot%_datadir/%name
 
@@ -744,6 +746,7 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/lib/*.so
 %_datadir/%name
 %ldir/conf
+%ldir/lib/petsc-conf
 %_pkgconfigdir/*
 
 #files -n lib%name-devel-static
@@ -796,6 +799,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.3-alt1
+- Version 3.5.3
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.2-alt1
 - Version 3.5.2
 
