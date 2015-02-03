@@ -1,5 +1,5 @@
 Name: pbzip2
-Version: 1.1.9
+Version: 1.1.12
 Release: alt1
 
 Summary: Parallel implementation of bzip2
@@ -35,6 +35,9 @@ install -pD -m644 pbzip2.1 %buildroot%_man1dir/pbzip2.1
 %_man1dir/pbzip2.*
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 1.1.12-alt1
+- Autobuild version bump to 1.1.12
+
 * Tue Apr 15 2014 Fr. Br. George <george@altlinux.ru> 1.1.9-alt1
 - Autobuild version bump to 1.1.9
 
