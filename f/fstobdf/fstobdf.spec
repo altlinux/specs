@@ -1,5 +1,5 @@
 Name: fstobdf
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 Summary: Generate BDF font from X font server
 Group: System/X11
@@ -33,6 +33,9 @@ The fstobdf program reads a font from a font server and generate BDF font.
 %_man1dir/%name.*
 
 %changelog
+* Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Thu May 03 2012 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
