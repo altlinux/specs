@@ -2,7 +2,7 @@
 
 Name: dict-web1913
 Version: 1.4_0.47pd
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Webster dictionary in dict format
@@ -54,19 +54,15 @@ mkdir -p %buildroot%_datadir/dictd
 export LANG=C
 %make dictdir=%buildroot%_datadir/dictd install
 
-%post
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
-
-%postun
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
 
 %files
 %_datadir/dictd/*
 %doc rpmdoc/*
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.4_0.47pd-alt2
+- removed post/un in favor of filetrigger
+
 * Wed Feb 20 2008 Michael Shigorin <mike@altlinux.org> 1:1.4_0.47pd-alt1
 - alt1
 - spec macro abuse cleanup
