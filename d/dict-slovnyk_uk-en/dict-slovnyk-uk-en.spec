@@ -2,7 +2,7 @@
 
 Name: dict-%dict_name
 Version: 0.1
-Release: alt2
+Release: alt3
 
 Summary: Dictionary: Slovnyk Ukrainian-English
 License: GPL
@@ -28,18 +28,14 @@ Dictionary: Slovnyk English-Ukrainian
 install -pD -m644 %SOURCE0 %buildroot%_datadir/dictd/%dict_name.dict.dz
 install -pD -m644 %SOURCE1 %buildroot%_datadir/dictd/%dict_name.index
 
-%post -n dict-%dict_name
-/usr/sbin/dictdconfig -w
-%_initdir/dictd condreload
-
-%postun -n dict-%dict_name
-/usr/sbin/dictdconfig -w
-%_initdir/dictd condreload
 
 %files
 %_datadir/dictd/%{dict_name}*
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3
+- removed post/un in favor of filetrigger
+
 * Sat Dec 16 2006 Michael Shigorin <mike@altlinux.org> 0.1-alt2
 - rebuild/takeover/cleanup/fix (see also #2612)
 - fix PreReq with targeted Requires()
