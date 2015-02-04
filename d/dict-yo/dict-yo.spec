@@ -1,6 +1,6 @@
 Name: dict-yo
 Version: 20031216
-Release: alt2.2.1
+Release: alt3
 
 Summary: The list of russian words with yo letter
 Summary(ru_RU.KOI8-R): Список русских слов, содержащих букву 'ё'
@@ -42,6 +42,9 @@ The list of russian words with yo letter
 %_datadir/%name
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 20031216-alt3
+- removed post/un in favor of filetrigger
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 20031216-alt2.2.1
 - Rebuild with Python-2.7
 
