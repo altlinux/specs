@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.1
-Release: alt1.git20141117
+Version: 0.4
+Release: alt1.git20150203
 Summary: Terminals served by tornado websockets
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
 BuildPreReq: python-module-tornado_xstatic python-module-ptyprocess
 BuildPreReq: python-module-xstatic-term.js
 BuildPreReq: python-module-sphinx-devel
@@ -45,6 +45,17 @@ JS:
 
 * terminado/_static/terminado.js: A lightweight wrapper to set up a
   term.js terminal with a websocket.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This is a Tornado websocket backend for the term.js Javascript terminal
+emulator library.
+
+This package contains tests for %oname.
 
 %package pickles
 Summary: Pickles for %oname
@@ -90,6 +101,17 @@ JS:
 * terminado/_static/terminado.js: A lightweight wrapper to set up a
   term.js terminal with a websocket.
 
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This is a Tornado websocket backend for the term.js Javascript terminal
+emulator library.
+
+This package contains tests for %oname.
+
 %prep
 %setup
 
@@ -125,10 +147,12 @@ export PYTHONPATH=$PWD
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-py.test
+rm -fR build
+py.test -vv
 %if_with python3
 pushd ../python3
-py.test-%_python3_version
+rm -fR build
+py.test-%_python3_version -vv
 popd
 %endif
 
@@ -136,6 +160,10 @@ popd
 %doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -147,9 +175,16 @@ popd
 %files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20150203
+- Version 0.4
+
 * Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20141117
 - Initial build for Sisyphus
 
