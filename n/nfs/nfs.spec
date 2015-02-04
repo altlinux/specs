@@ -1,6 +1,6 @@
 Name: nfs
 Version: 1.3.2
-Release: alt0.4
+Release: alt1
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -79,6 +79,7 @@ This package provides the Linux NFS stats utilities.
     --enable-ipv6 \
     --with-statduser=rpcuser \
     --with-statdpath=%_localstatedir/nfs/statd \
+    --with-systemd=%systemd_unitdir \
     #
 sed -i 's/#define[[:blank:]]\+START_STATD.\+$/#undef START_STATD/' support/include/config.h
 %make_build
@@ -86,10 +87,17 @@ sed -i 's/#define[[:blank:]]\+START_STATD.\+$/#undef START_STATD/' support/inclu
 %install
 %make_install DESTDIR=%buildroot install
 
-cp -a altlinux/* %buildroot
+cp -a altlinux/etc %buildroot
+
+ln -s nfs-blkmap.service %buildroot%systemd_unitdir/blkmapd.service
+ln -s nfs-idmapd.service %buildroot%systemd_unitdir/idmapd.service
+ln -s nfs-server.service %buildroot%systemd_unitdir/nfs.service
+ln -s rpc-gssd.service %buildroot%systemd_unitdir/gssd.service
+ln -s rpc-statd.service %buildroot%systemd_unitdir/nfslock.service
+ln -s rpc-svcgssd.service %buildroot%systemd_unitdir/svcgssd.service
 
 mkdir -p %buildroot/sbin
-mv  %buildroot%_sbindir/rpc.{idmapd,statd,gssd} \
+mv  %buildroot%_sbindir/rpc.{statd,gssd} \
     %buildroot%_sbindir/blkmapd \
     %buildroot%_sbindir/nfsidmap \
     %buildroot%_sbindir/sm-notify %buildroot/sbin/
@@ -109,7 +117,6 @@ mkdir -p %buildroot%_localstatedir/nfs/{rpc_pipefs,v4recovery}
 %post clients
 %post_service nfslock
 %post_service blkmapd
-%post_service idmapd
 %post_service gssd
 
 %post utils
@@ -118,15 +125,16 @@ mkdir -p %buildroot%_localstatedir/nfs/{rpc_pipefs,v4recovery}
 %preun clients
 %preun_service nfslock
 %preun_service blkmapd
-%preun_service idmapd
 %preun_service gssd
 
 %post server
 %post_service nfs
+%post_service idmapd
 %post_service svcgssd
 
 %preun server
 %preun_service nfs
+%preun_service idmapd
 %preun_service svcgssd
 
 %triggerpostun -- nfs-server <= 1.2.5-alt1
@@ -140,17 +148,25 @@ touch /var/lock/subsys/rpc.svcgssd
 #-------------------------------------------------------------------------------
 %files server
 %_initdir/nfs
+%_initdir/idmapd
 %_initdir/svcgssd
-%systemd_unitdir/nfs.target
+
 %systemd_unitdir/nfs.service
-%systemd_unitdir/rquotad.service
-%systemd_unitdir/mountd.service
+%systemd_unitdir/idmapd.service
 %systemd_unitdir/svcgssd.service
+
+%systemd_unitdir/nfs-config.service
+%systemd_unitdir/nfs-server.service
+%systemd_unitdir/nfs-mountd.service
+%systemd_unitdir/nfs-idmapd.service
+%systemd_unitdir/nfs-utils.service
+%systemd_unitdir/rpc-svcgssd.service
 %systemd_unitdir/proc-fs-nfsd.mount
 
 /sbin/nfsdcltrack
 %_sbindir/exportfs
 %_sbindir/nfsstat
+%_sbindir/rpc.idmapd
 %_sbindir/rpc.mountd
 %_sbindir/rpc.nfsd
 %_sbindir/rpc.svcgssd
@@ -158,6 +174,8 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man5dir/exports.*
 %_man7dir/nfsd.*
 %_man8dir/exportfs.*
+%_man8dir/idmapd.*
+%_man8dir/rpc.idmapd.*
 %_man8dir/nfsstat.*
 %_man8dir/nfsdcltrack.*
 %_man8dir/mountd.*
@@ -185,18 +203,23 @@ touch /var/lock/subsys/rpc.svcgssd
 %config(noreplace) %_sysconfdir/sysconfig/nfs
 
 %_initdir/blkmapd
-%_initdir/idmapd
 %_initdir/nfslock
 %_initdir/gssd
-%systemd_unitdir/blkmap.service
+
 %systemd_unitdir/blkmapd.service
-%systemd_unitdir/idmapd.service
-%systemd_unitdir/nfslock.service
 %systemd_unitdir/gssd.service
+%systemd_unitdir/nfslock.service
+
+%systemd_unitdir/nfs-client.target
+%systemd_unitdir/auth-rpcgss-module.service
 %systemd_unitdir/var-lib-nfs-rpc_pipefs.mount
+%systemd_unitdir/nfs-blkmap.target
+%systemd_unitdir/nfs-blkmap.service
+%systemd_unitdir/rpc-statd.service
+%systemd_unitdir/rpc-statd-notify.service
+%systemd_unitdir/rpc-gssd.service
 
 /sbin/rpc.gssd
-/sbin/rpc.idmapd
 /sbin/rpc.statd
 /sbin/sm-notify
 /sbin/blkmapd
@@ -205,8 +228,6 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/gssd.*
 %_man8dir/rpc.gssd*
 %_man8dir/blkmapd.*
-%_man8dir/idmapd.*
-%_man8dir/rpc.idmapd.*
 %_man8dir/statd.*
 %_man8dir/rpc.statd.*
 %_man8dir/sm-notify.*
@@ -224,6 +245,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %_sbindir/rpcdebug
 
 %_man5dir/nfs.*
+%_man5dir/nfsmount.conf.*
 %_man8dir/rpcdebug.*
 %_man8dir/showmount.*
 %_man8dir/mount.nfs.*
@@ -236,6 +258,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Wed Feb 04 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.3.2-alt1
+- 1.3.2 released
+
 * Mon Dec 29 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.3.2-alt0.4
 - 1.3.2 rc4
 
