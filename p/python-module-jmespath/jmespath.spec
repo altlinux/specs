@@ -3,15 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.0
-Release: alt1.git20141105
+Version: 0.6.1
+Release: alt1.git20150203
 Summary: JSON Matching Expressions
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/jmespath/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/boto/jmespath.gi
+# https://github.com/boto/jmespath.git
 # branch: develop
 Source: %name-%version.tar
 BuildArch: noarch
@@ -134,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20150203
+- Version 0.6.1
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.git20141105
 - Initial build for Sisyphus
 
