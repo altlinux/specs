@@ -4,7 +4,7 @@
 
 Name: dict-wn
 Version: 2.0
-Release: alt3
+Release: alt4
 
 Summary: %dictdesc
 
@@ -108,14 +108,6 @@ install -m 644 dict*%dictname.dict.dz %buildroot%_datadir/stardict/dic/%dictname
 install -m 644 dict*%dictname.idx.gz %buildroot%_datadir/stardict/dic/%dictname.idx.gz
 install -m 644 %dictname.ifo %buildroot%_datadir/stardict/dic/%dictname.ifo
 
-%post
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
-
-%postun
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
-
 %files
 #%_sysconfdir/dictd/%dictname.dictconf
 %dictdir/%dictname.*
@@ -124,6 +116,9 @@ install -m 644 %dictname.ifo %buildroot%_datadir/stardict/dic/%dictname.ifo
 %_datadir/stardict/dic/*
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 2.0-alt4
+- removed post/un in favor of filetrigger
+
 * Mon Apr 08 2013 Andrey Cherepanov <cas@altlinux.org> 2.0-alt3
 - Fix build with new xorg
 
