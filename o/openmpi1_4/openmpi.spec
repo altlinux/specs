@@ -39,7 +39,7 @@
 Name: %{pkgname}1_4
 
 Version: 1.4.5
-Release: alt3
+Release: alt4
 
 %define mpi_prefix %_libexecdir/%{pkgname}
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -324,6 +324,9 @@ EOF
 %endif
 
 %changelog
+* Wed Feb 04 2015 Anton Farygin <rider@altlinux.ru> 1.4.5-alt4
+- rebuild with new libibverbs
+
 * Mon Jun 25 2012 Denis Pynkin <dans@altlinux.org> 1.4.5-alt3
 - libs moved to separate package
 

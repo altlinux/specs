@@ -31,7 +31,7 @@
 Name: %pkgname
 
 Version: 1.4.1
-Release: alt2.qa1
+Release: alt3
 
 %define mpi_prefix %_libexecdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -290,6 +290,9 @@ EOF
 %mpi_prefix/lib/libvt*
 
 %changelog
+* Wed Feb 04 2015 Anton Farygin <rider@altlinux.ru> 1.4.1-alt3
+- rebuild with new libibverbs
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.1-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
