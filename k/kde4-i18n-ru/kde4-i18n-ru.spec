@@ -3,7 +3,7 @@
 %define lngg Russian
 
 Name: kde4-i18n-%lng
-Version: 4.14.3
+Version: 14.12.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -16,6 +16,7 @@ Requires: kde-common >= 4.1
 BuildArch: noarch
 
 Source: kde-l10n-%lng-%version.tar
+Source1: kde-l10n-%lng-old.tar
 
 BuildRequires: gcc-c++ kde4libs-devel
 
@@ -24,9 +25,12 @@ BuildRequires: gcc-c++ kde4libs-devel
 
 
 %prep
-%setup -q -n kde-l10n-%lng-%version
-#find -type f -name *.gmo | while read f; do rm -f $f; done
-#find -type f -name index.cache.bz2 | while read f; do rm -f $f; done
+%setup -q -n kde-l10n-%lng-%version -a1
+cp -anrv kde-l10n-%lng-old/* 4/ru/
+rm -rf kde-l10n-%lng-old 5 CMakeLists.txt
+mv 4/ru/* ./
+rm -rf 4
+
 find -type f -name CMakeLists.txt | \
 while read cm; do
     dirs=`grep add_subdirectory "$cm" | sed 's|.*[(]\(.*\)[)].*|\1|'`
@@ -80,7 +84,7 @@ fi
 %dir %_K4i18n/%lng/LC_SCRIPTS/
 %lang(%lng) %_K4i18n/%lng/LC_SCRIPTS/*
 #
-%lang(%lng) %_K4apps/kvtml/%lng/
+#%lang(%lng) %_K4apps/kvtml/%lng/
 #
 %lang(%lng) %_K4apps/ktuberling/sounds/%lng
 %lang(%lng) %_K4apps/ktuberling/sounds/%lng.soundtheme
@@ -92,6 +96,9 @@ fi
 %lang(%lng) %_K4apps/autocorrect/%{lng}_*.xml
 
 %changelog
+* Wed Feb 04 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.2-alt1
+- new version
+
 * Tue Nov 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 
