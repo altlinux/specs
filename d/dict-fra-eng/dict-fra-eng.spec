@@ -21,7 +21,7 @@ BuildRequires: stardict-tools >= 2.4.2
 
 Name: dict-%dict_name
 Version: 0.3.4
-Release: alt1
+Release: alt2
 
 Summary: %dict_sum_en Dictionary: dictd format
 Summary(ru_RU.UTF-8): %dict_sum_ru словарь: формат dictd
@@ -87,15 +87,6 @@ install -p -m644 -D %stardict_name.idx    $RPM_BUILD_ROOT%_datadir/stardict/dic/
 install -p -m644 -D %stardict_name.ifo $RPM_BUILD_ROOT%_datadir/stardict/dic/%stardict_name.ifo
 %endif
 
-
-%post -n dict-%dict_name
-/usr/sbin/dictdconfig -w
-service dictd condrestart
-
-%postun -n dict-%dict_name
-/usr/sbin/dictdconfig -w
-service dictd condrestart
-
 %files
 %_datadir/dictd/%{dict_name}*
 
@@ -105,13 +96,12 @@ service dictd condrestart
 %endif
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt2
+- dropped post/un scripts
+
 * Tue Jan 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt1
 - new version
 
 * Sat Jun 03 2006 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1
 - temporarily disabled building of stardict dictionaries
 - initial build for Alt Linux
-
-# Local Variables:
-# coding: cp1251
-# End:
