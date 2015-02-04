@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.2
-Release: alt1.git20140529
+Version: 0.9.1
+Release: alt1.git20150204
 Summary: Thin wrapper for pandoc
 License: MIT
 Group: Development/Python
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.git20150204
+- Version 0.9.1
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.git20140529
 - Initial build for Sisyphus
 
