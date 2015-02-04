@@ -2,7 +2,7 @@
 %define installdir %webserver_webappsdir/owncloud/apps/%appname
 
 Name: owncloud-apps-%appname
-Version: 7.0.2
+Version: 7.0.4
 Release: alt1
 
 Summary: Documents editing for owncloud
@@ -37,6 +37,9 @@ rm -rf %buildroot%installdir/src
 %installdir/*
 
 %changelog
+* Wed Feb 04 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.4-alt1
+- 7.0.4
+
 * Wed Sep 03 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.2-alt1
 - 7.0.2
 
