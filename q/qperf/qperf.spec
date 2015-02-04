@@ -1,7 +1,7 @@
 Name: qperf
 Summary: Measure socket and RDMA performance
-Version: 0.4.6
-Release: alt1.qa1
+Version: 0.4.9
+Release: alt1
 Group: Networking/Other
 License: %gpl2only
 Url: http://www.openfabrics.org
@@ -36,6 +36,9 @@ install -D -m 0644 {src,%buildroot%_man1dir}/%name.1
 
 
 %changelog
+* Wed Feb 04 2015 Anton Farygin <rider@altlinux.ru> 0.4.9-alt1
+- new version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.6-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

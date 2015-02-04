@@ -1,6 +1,6 @@
 Name: librdmacm
-Version: 1.0.13
-Release: alt2.1
+Version: 1.0.19.1
+Release: alt2
 
 Summary: Userspace RDMA Connection Manager
 Group: System/Libraries
@@ -12,8 +12,8 @@ Patch: librdmacm-1.0.13-alt-DSO.patch
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
 BuildRequires(pre): rpm-build-compat
-BuildPreReq: libibverbs-devel-static >= 1.1.4-alt1
-Requires: libibverbs >= 1.1.4-alt1
+BuildPreReq: libibverbs-devel-static >= 1.1.8-alt1
+Requires: libibverbs >= 1.1.8-alt1
 
 # Automatically added by buildreq on Fri Aug 24 2007
 BuildRequires: gcc-c++ gcc-fortran libibverbs-devel libstdc++-devel-static
@@ -47,10 +47,9 @@ Example test programs for the librdmacm library.
 
 %prep
 %setup -n %name-%version
-%patch -p2
+#patch -p2
 
 %build
-./autogen.sh
 %configure
 %make_build
 
@@ -60,15 +59,18 @@ Example test programs for the librdmacm library.
 %files
 %doc AUTHORS COPYING ChangeLog README
 %_libdir/*.so.*
+%_libdir/rsocket/*.so.*
 
 %files devel
 %_libdir/*.so
+%_libdir/rsocket/*.so
 %_includedir/*
 %_man3dir/*
 %_man7dir/*
 
 %files devel-static
 %_libdir/*.a
+%_libdir/rsocket/*.a
 
 %files utils
 %defattr(-,root,root,-)
@@ -76,6 +78,12 @@ Example test programs for the librdmacm library.
 %_man1dir/*
 
 %changelog
+* Wed Feb 04 2015 Anton Farygin <rider@altlinux.ru> 1.0.19.1-alt2
+- updated buildrequires
+
+* Wed Feb 04 2015 Anton Farygin <rider@altlinux.ru> 1.0.19.1-alt1
+- new version
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.13-alt2.1
 - Fixed build
 

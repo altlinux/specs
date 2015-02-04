@@ -40,7 +40,7 @@ Name: openmpi
 #pkgname
 
 Version: 1.6.4
-Release: alt1
+Release: alt2
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -328,6 +328,9 @@ EOF
 %endif
 
 %changelog
+* Wed Feb 04 2015 Anton Farygin <rider@altlinux.ru> 1.6.4-alt2
+- rebuild witch new libibverbs
+
 * Sun Mar 10 2013 Denis Pynkin <dans@altlinux.ru> 1.6.4-alt1
 - Version updated
 
