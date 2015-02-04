@@ -3,7 +3,7 @@
 
 Name: dict-%dict_name_en
 Version: 0.2
-Release: alt2.1.1
+Release: alt3
 
 Summary: English-German Dictionary: dictd format
 Summary(ru_RU.KOI8-R): Англо-немецкий словарь: формат dictd
@@ -50,21 +50,6 @@ install -pD -m 644 %dict_name_en.index %buildroot%_datadir/dictd/%dict_name_en.i
 install -pD -m 644 %dict_name_de.dict.dz %buildroot%_datadir/dictd/%dict_name_de.dict.dz
 install -pD -m 644 %dict_name_de.index %buildroot%_datadir/dictd/%dict_name_de.index
 
-%post -n dict-%dict_name_en
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
-
-%postun -n dict-%dict_name_en
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
-
-%post -n dict-%dict_name_de
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
-
-%postun -n dict-%dict_name_de
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
 
 %files
 %_datadir/dictd/%{dict_name_en}*
@@ -73,6 +58,9 @@ install -pD -m 644 %dict_name_de.index %buildroot%_datadir/dictd/%dict_name_de.i
 %_datadir/dictd/%{dict_name_de}*
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 0.2-alt3
+- removed post/un in favor of filetrigger
+
 * Thu Sep 27 2007 Slava Semushin <php-coder@altlinux.ru> 0.2-alt2.1.1
 - NMU
 - Fixed incomplete locale specification in Summary tag for
