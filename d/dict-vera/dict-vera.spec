@@ -4,7 +4,7 @@
 
 Name: dict-%dictname
 Version: 1.17
-Release: alt1
+Release: alt2
 
 Summary: %dictdesc
 
@@ -125,13 +125,6 @@ EOF
 %__install -m 644 dict*%dictname.idx.gz %buildroot%_datadir/stardict/dic/%dictname.idx.gz
 %__install -m 644 %dictname.ifo %buildroot%_datadir/stardict/dic/%dictname.ifo
 
-%post
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
-
-%postun
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
 
 %files
 %dictdir/%dictname.*
@@ -140,6 +133,9 @@ EOF
 %_datadir/stardict/dic/*
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 1.17-alt2
+- removed post/un in favor of filetrigger
+
 * Thu Jan 03 2008 Vitaly Lipatov <lav@altlinux.ru> 1.17-alt1
 - new version 1.17 (with rpmrb script)
 - update buildreqs
