@@ -1,6 +1,6 @@
 Name: dict-jargon
 Version: 4.3.1
-Release: alt2.1
+Release: alt3
 Group: Text tools
 License: GPL
 Url: www.jargon.org
@@ -33,18 +33,14 @@ slang and other unuseful information.
 mkdir -p %buildroot%_datadir/dictd
 cp jargon.dict.dz jargon.index %buildroot%_datadir/dictd
 
-%post
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
-
-%postun
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
 
 %files
 %_datadir/dictd/*
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 4.3.1-alt3
+- removed post/un in favor of filetrigger
+
 * Sun Jun 03 2007 Slava Semushin <php-coder@altlinux.ru> 4.3.1-alt2.1
 - NMU
 - Fixed incomplete locale specification in Summary tag (#11841)
