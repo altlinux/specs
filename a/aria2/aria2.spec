@@ -1,5 +1,5 @@
 Name: aria2
-Version: 1.18.8
+Version: 1.18.9
 Release: alt1
 
 Summary: aria2 - a simple utility for downloading files faster
@@ -104,6 +104,9 @@ mv %buildroot%_docdir/aria2/README.* %buildroot%_docdir/%name-%version
 
 
 %changelog
+* Wed Feb 04 2015 Ilya Mashkin <oddity@altlinux.ru> 1.18.9-alt1
+- 1.18.9
+
 * Wed Sep 17 2014 Ilya Mashkin <oddity@altlinux.ru> 1.18.8-alt1
 - 1.18.8
 
