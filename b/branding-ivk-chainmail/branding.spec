@@ -5,12 +5,12 @@
 %define codename none
 %define brand ivk
 %define Brand IVK
-%define status альфа
-%define status_en alpha
+%define status %nil
+%define status_en %nil
 
 Name: branding-%brand-%theme
-Version: 2.99
-Release: alt6
+Version: 3.0
+Release: alt1
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
@@ -341,6 +341,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Wed Feb 04 2015 Andrey Cherepanov <cas@altlinux.org> 3.0-alt1
+- 3.0 release
+- Fix text colors in QTreeView in Alterator
+
 * Wed Jan 14 2015 Andrey Cherepanov <cas@altlinux.org> 2.99-alt6
 - plymouth: Fix background scaling
 - Fix colors of tree widgets in alterator-browser-qt
