@@ -3,7 +3,7 @@
 %define api_ver 1.0
 
 Name: california
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME 3 Calendar
@@ -69,6 +69,9 @@ manage your online calendars with a simple and modern interface.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Wed Feb 04 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Tue Dec 09 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
