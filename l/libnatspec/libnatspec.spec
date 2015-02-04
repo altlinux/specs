@@ -1,6 +1,6 @@
 Name: libnatspec
-Version: 0.2.6
-Release: alt2.qa3
+Version: 0.2.7
+Release: alt1
 
 Summary: Library for national and language-specific issues
 
@@ -92,6 +92,10 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Wed Feb 04 2015 Vitaly Lipatov <lav@altlinux.ru> 0.2.7-alt1
+- remove example sources, fix authors in patches, add patch for unzip-6.0
+- natspec command: small rewrite output
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.2.6-alt2.qa3
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
