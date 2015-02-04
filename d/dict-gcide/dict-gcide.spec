@@ -4,7 +4,7 @@
 
 Name: dict-gcide
 Version: 0.48
-Release: alt5
+Release: alt6
 
 Summary: GCIDE - The Collaborative International Dictionary of English
 
@@ -111,13 +111,6 @@ install -m 644 dict*%dictname.dict.dz %buildroot%_datadir/stardict/dic/%dictname
 install -m 644 dict*%dictname.idx.gz %buildroot%_datadir/stardict/dic/%dictname.idx.gz
 install -m 644 %dictname.ifo %buildroot%_datadir/stardict/dic/%dictname.ifo
 
-%post
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
-
-%postun
-%_sbindir/dictdconfig -w
-%_initdir/dictd condreload
 
 %files
 #%_sysconfdir/dictd/%dictname.dictconf
@@ -127,6 +120,9 @@ install -m 644 %dictname.ifo %buildroot%_datadir/stardict/dic/%dictname.ifo
 %_datadir/stardict/dic/*
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 0.48-alt6
+- removed post/un in favor of filetrigger
+
 * Sun Jan 18 2009 Vitaly Lipatov <lav@altlinux.ru> 0.48-alt5
 - cleanup spec
 
