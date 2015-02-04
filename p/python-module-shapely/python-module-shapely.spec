@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.5.2
-Release: alt1.git20150104
+Release: alt1.git20150202
 
 Summary: Planar geometries, predicates, and operations
 
@@ -95,6 +95,7 @@ cp -fR . ../python3
 ln -s ../objects.inv docs/
 
 %build
+export LC_ALL=en_US.UTF-8
 %add_optflags -fno-strict-aliasing
 %python_build_debug
 
@@ -105,6 +106,7 @@ popd
 %endif
 
 %install
+export LC_ALL=en_US.UTF-8
 %python_install
 install -m644 %buildroot%prefix/%module_name/*.pxi \
 	%buildroot%python_sitelibdir/%module_name/
@@ -123,6 +125,7 @@ install -m644 %buildroot%prefix/%module_name/*.pxi \
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%module_name/
 
 %check
+export LC_ALL=en_US.UTF-8
 python setup.py test
 #python setup.py build_ext -i
 #py.test -vv
@@ -158,6 +161,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt1.git20150202
+- New snapshot
+
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt1.git20150104
 - Version 1.5.2
 
