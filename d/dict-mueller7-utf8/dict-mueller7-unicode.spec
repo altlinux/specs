@@ -3,7 +3,7 @@
 
 Name: dict-%dict_name-utf8
 Version: 1.2
-Release: alt4
+Release: alt5
 
 Summary: V.K. Mueller English-Russian Dictionary, 7 Edition: dict format
 Summary(ru_RU.KOI8-R): Англо-русский словарь Мюллера, редакция 7: формат dict
@@ -59,18 +59,14 @@ cd ../../../..
 install -p -m644 -D usr/local/share/dict/%dict_name.dict.dz $RPM_BUILD_ROOT%_datadir/dictd/%dict_name.dict.dz
 install -p -m644 -D usr/local/share/dict/%dict_name.index.exp $RPM_BUILD_ROOT%_datadir/dictd/%dict_name.index
 
-%post
-/usr/sbin/dictdconfig -w
-%_initdir/dictd condreload
-
-%postun
-/usr/sbin/dictdconfig -w
-%_initdir/dictd condreload
 
 %files 
 %_datadir/dictd/*
 
 %changelog
+* Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt5
+- removed post/un in favor of filetrigger
+
 * Thu Jan 29 2004 Alexey Dyachenko <alexd@altlinux.ru> 1.2-alt4
 - fix error in spec file
 - syntax fixes in dict file
