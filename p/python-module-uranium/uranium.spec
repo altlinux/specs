@@ -1,10 +1,11 @@
 %define oname uranium
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.0.39
-Release: alt1.git20150126
+Version: 0.0.49
+Release: alt1.git20150203
 Summary: A build system for python
 License: MIT
 Group: Development/Python
@@ -21,7 +22,7 @@ BuildPreReq: python-module-pip python-module-yaml
 BuildPreReq: python-module-requests python-module-six
 BuildPreReq: python-module-virtualenv python-module-zc.buildout
 BuildPreReq: python-module-httpretty python-module-nose
-BuildPreReq: python-module-mock
+BuildPreReq: python-module-mock python-module-tornado
 BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -31,7 +32,7 @@ BuildPreReq: python3-module-pip python3-module-yaml
 BuildPreReq: python3-module-requests python3-module-six
 BuildPreReq: python3-module-virtualenv python3-module-zc.buildout
 BuildPreReq: python3-module-httpretty python3-module-nose
-BuildPreReq: python3-module-mock
+BuildPreReq: python3-module-mock python3-module-tornado
 %endif
 
 %py_provides %oname
@@ -179,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.49-alt1.git20150203
+- Version 0.0.49
+
 * Wed Jan 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.39-alt1.git20150126
 - Version 0.0.39
 
