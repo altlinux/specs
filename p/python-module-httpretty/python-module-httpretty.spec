@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:           python-module-%{pypi_name}
-Version:        0.8.0
+Version:        0.8.4
 Release:        alt1
 Summary:        HTTP client mock for Python
 License:        MIT
@@ -47,6 +47,7 @@ cp -a . ../python3
 %endif
 
 %build
+export LC_ALL=en_US.UTF-8
 %python_build
 
 %if_with python3
@@ -56,6 +57,7 @@ popd
 %endif
 
 %install
+export LC_ALL=en_US.UTF-8
 %python_install
 
 %if_with python3
@@ -73,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1
+- Version 0.8.4
+
 * Mon Jul 21 2014 Lenar Shakirov <snejok@altlinux.ru> 0.8.0-alt1
 - First build for ALT (based on Suse 0.8.0-1.1.src)
 
