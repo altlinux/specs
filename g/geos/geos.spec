@@ -2,7 +2,7 @@
 
 Name: geos
 Version: 3.5.0
-Release: alt1.dev.svn20140925
+Release: alt2.dev.git20150203
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -11,7 +11,8 @@ Url: http://geos.refractions.net/
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://svn.osgeo.org/geos/trunk
+# https://github.com/libgeos/libgeos.git
+# branch: svn-trunk
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Nov 09 2008 (-bi)
@@ -195,6 +196,9 @@ bzip2 ChangeLog
 %doc doc/doxygen_docs/html/*
 
 %changelog
+* Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt2.dev.git20150203
+- New snapshot
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt1.dev.svn20140925
 - New snapshot
 - Added module for Python 3
