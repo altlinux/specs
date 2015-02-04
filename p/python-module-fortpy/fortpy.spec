@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.4
-Release: alt1.git20141208
+Version: 1.4.4
+Release: alt1.git20150203
 Summary: Fortran Parsing, Unit Testing and Intellisense
 License: MIT
 Group: Development/Python
@@ -101,6 +101,7 @@ This package contains documentation for %oname.
 cp -fR . ../python3
 find ../python3 -type f -name '*.py' -exec \
 	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
+2to3 -w -n ../python3/%oname/scripts/parse.py
 %endif
 
 %build
@@ -119,6 +120,7 @@ pushd ../python3
 popd
 pushd %buildroot%_bindir
 for i in $(ls); do
+	2to3 -w -n $i
 	mv $i ${i}3
 done
 popd
@@ -163,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.4-alt1.git20150203
+- Version 1.4.4
+
 * Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt1.git20141208
 - Version 1.3.4
 
