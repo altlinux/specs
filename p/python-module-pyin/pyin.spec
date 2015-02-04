@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.git20150202
+Version: 0.2.1
+Release: alt1.git20150203
 Summary: Perform Python operations on every line streamed from stdin
 License: BSD
 Group: Development/Python
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20150203
+- Version 0.2.1
+
 * Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20150202
 - Initial build for Sisyphus
 
