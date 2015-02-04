@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/owncloud/3rdparty
 
 Name: owncloud-3rdparty
-Version: 7.0.2 
+Version: 7.0.4
 Release: alt1
 
 Summary: 3rdparty libs for owncloud
@@ -35,6 +35,9 @@ find %buildroot%installdir -name '*.sh' | xargs rm
 %installdir/*
 
 %changelog
+* Wed Feb 04 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.4-alt1
+- 7.0.4
+
 * Wed Sep 03 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.2-alt1
 - 7.0.2
 
