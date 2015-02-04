@@ -13,7 +13,7 @@
 %define nv_version 346
 %define nv_release 35
 %define nv_minor %nil
-%define pkg_rel alt143
+%define pkg_rel alt144
 %define set_gl_nvidia_ver 0.10.3
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -248,6 +248,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Wed Feb 04 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt144
+- execute x11presetdrv on finish nvidia-install-driver
+
 * Thu Jan 22 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt143
 - bump version
 
