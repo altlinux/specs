@@ -1,4 +1,4 @@
-%define version 0.9.6
+%define version 0.10.1
 %define release alt1
 %setup_python_module werkzeug
 
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.1-alt1
+- Version 0.10.1
+
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.6-alt1
 - Version 0.9.6
 - Added module for Python 3
