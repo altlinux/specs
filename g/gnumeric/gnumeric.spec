@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.19
+Version: %ver_major.20
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -27,10 +27,10 @@ Obsoletes: %name-light
 Provides: %name-light = %version-%release
 
 %define scrollkeeper_ver 0.3.14
-%define gsf_ver 1.14.27
+%define gsf_ver 1.14.31
 %define gda_ver 4.0
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.19
+%define goffice_ver 0.10.20
 
 %if_with python
 # Provided by python_loader.so
@@ -147,6 +147,7 @@ gnome-doc-prepare --copy --force
 %_libdir/%name/
 %_libdir/goffice/%goffice_api_ver/plugins/gnumeric/gnumeric.so
 %_libdir/goffice/%goffice_api_ver/plugins/gnumeric/plugin.xml
+%doc AUTHORS ChangeLog NEWS BUGS README COPYING HACKING
 
 %exclude %_libdir/%name/%version/plugins/*/*.la
 %exclude %_libdir/goffice/%goffice_api_ver/plugins/gnumeric/gnumeric.la
@@ -160,7 +161,6 @@ gnome-doc-prepare --copy --force
 %_datadir/pixmaps/*
 %_iconsdir/hicolor/*/apps/gnumeric.*
 %_man1dir/*
-%doc AUTHORS ChangeLog NEWS BUGS README COPYING HACKING
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.dialogs.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.plugin.gschema.xml
@@ -182,6 +182,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Thu Feb 05 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.20-alt1
+- 1.12.20
+
 * Fri Jan 23 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.19-alt1
 - 1.12.19
 
