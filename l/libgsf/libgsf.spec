@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: libgsf
-Version: %ver_major.30
+Version: %ver_major.31
 Release: alt1
 
 Summary: GNOME Structured file library
@@ -17,14 +17,15 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 
-# From configure.in
+# From configure.ac
 BuildPreReq: intltool gtk-doc >= 1.0
-BuildPreReq: glib2-devel >= 2.8.0
-BuildPreReq: libgio-devel bzlib-devel zlib-devel
-BuildPreReq: libgtk+2-devel
+BuildPreReq: libgio-devel >= 2.26.0
 BuildPreReq: libxml2-devel >= 2.4.16
+BuildRequires: libgdk-pixbuf-devel bzlib-devel zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_static:BuildRequires: glibc-devel-static}
+# for check
+BuildRequires: unzip
 
 %description
 GNOME Structured file library
@@ -145,6 +146,9 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 
 
 %changelog
+* Thu Feb 05 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.31-alt1
+- 1.14.31
+
 * Thu Mar 20 2014 Yuri N. Sedunov <aris@altlinux.org> 1.14.30-alt1
 - 1.14.30
 
