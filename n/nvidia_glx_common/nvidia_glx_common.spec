@@ -13,7 +13,7 @@
 %define nv_version 346
 %define nv_release 35
 %define nv_minor %nil
-%define pkg_rel alt146
+%define pkg_rel alt147
 %define set_gl_nvidia_ver 0.11.1
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -248,6 +248,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Thu Feb 05 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt147
+- apt-get update when nvidia-install-driver
+
 * Wed Feb 04 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt146
 - small optimization
 
