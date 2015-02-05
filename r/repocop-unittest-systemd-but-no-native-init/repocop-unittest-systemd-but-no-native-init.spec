@@ -1,7 +1,7 @@
 %define testname systemd-but-no-native-init
 
 Name: repocop-unittest-%testname
-Version: 0.02
+Version: 0.03
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -24,26 +24,38 @@ cat > %testname.posttest <<'EOF'
 #!/bin/sh
 sqlite3 "$REPOCOP_TEST_DBDIR/rpm.db" <<EOSQL
 .mode tabs
-.output $REPOCOP_TEST_TMPDIR/msg-pre
-select a.pkgid,a.filename from rpm_files as a where (a.filename glob '/lib/systemd/system/*' or a.filename glob '/usr/lib/systemd/system/*') and a.pkgid not in (select c.pkgid from rpm_files as c where c.filename glob '/etc/rc.d/init.d/*');
+.output $REPOCOP_TEST_TMPDIR/pre
+select a.pkgid,a.filename from rpm_files as a where (a.filename glob '/lib/systemd/system/*.service' or a.filename glob '/usr/lib/systemd/system/*.service') and a.pkgid not in (select c.pkgid from rpm_files as c where c.filename glob '/etc/rc.d/init.d/*' or c.filename glob '/etc/xinetd.d/*');
 EOSQL
-sed -i -e '/^service-/d;/^systemd-/d' $REPOCOP_TEST_TMPDIR/msg-pre
-cat $REPOCOP_TEST_TMPDIR/msg-pre | while read -r pkgid service; do
+
+touch $REPOCOP_TEST_TMPDIR/msg-warn
+
+sed -i -e '/^service-/d;/^systemd-/d' $REPOCOP_TEST_TMPDIR/pre
+cat $REPOCOP_TEST_TMPDIR/pre | while read -r pkgid service; do
     servicename=${service##/usr}
     servicename=${servicename##/lib/systemd/system/}
     case $pkgid in
-    	 vsftpd-*|daemontools-* ) : nothing
+    	 daemontools-*|ADDME ) : nothing
 	 ;;
 	 *)
 	 servicepath=$REPOCOP_STATEDIR/systemd/$pkgid/system/$servicename
-	 if ! [ -e $servicepath ] || ! (grep -q '^Type=dbus' $servicepath || grep -q '^Alias=display-manager.service' $servicename); then
-	     echo $pkgid >> $REPOCOP_TEST_TMPDIR/msg
+
+	 if [ -e $servicepath ] ; then
+	     :
+	     #echo $pkgid >> $REPOCOP_TEST_TMPDIR/msg-fail
+	     	 if grep -q '^Type=dbus' $servicepath || grep -q '^Alias=display-manager.service' $servicepath; then
+	     	  :
+	     	  #echo $pkgid >> $REPOCOP_TEST_TMPDIR/msg-info
+		 else
+		 	 echo $pkgid >> $REPOCOP_TEST_TMPDIR/msg-warn
+		 fi
 	 fi
 	 ;;
     esac
 done
 
-for i in `cat $REPOCOP_TEST_TMPDIR/msg`; do repocop-test-info -k $i "The package have native systemd file(s) but no  SysV init scripts."; done
+#for i in `sort -u $REPOCOP_TEST_TMPDIR/msg-info`; do repocop-test-info -k $i "The package have native systemd file(s) but no  SysV init scripts."; done
+for i in `sort -u $REPOCOP_TEST_TMPDIR/msg-warn`; do repocop-test-warn -k $i "The package have native systemd file(s) but no  SysV init scripts."; done
 rm $REPOCOP_TEST_TMPDIR/*
 EOF
 
@@ -61,6 +73,9 @@ done
 #%_datadir/repocop/fixscripts/*.pl
 
 %changelog
+* Thu Feb 05 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- ignore xinet.d services
+
 * Thu Feb 05 2015 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - ignore Type=dbus services
 - Alias=display-manager.service
