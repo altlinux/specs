@@ -1,4 +1,4 @@
-%define	version	1.15.1
+%define	version	1.15.2
 %define release alt1
 %define source_version %version
 %define source_name  paramiko
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15.2-alt1
+- Version 1.15.2
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15.1-alt1
 - Version 1.15.1
 
