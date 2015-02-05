@@ -1,6 +1,6 @@
 Name: unique-sam
-Version: 0.1.0
-Release: alt1.git20150204
+Version: 0.1.3
+Release: alt1.git20150205
 Summary: Analyse sam file and keep the unique aligment record
 License: BSD
 Group: Development/Python
@@ -42,6 +42,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Thu Feb 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20150205
+- Version 0.1.3
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20150204
 - Initial build for Sisyphus
 
