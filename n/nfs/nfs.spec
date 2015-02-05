@@ -1,6 +1,6 @@
 Name: nfs
 Version: 1.3.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -258,6 +258,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Thu Feb 05 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.3.2-alt2
+- use 4.0 as default nfs version for a while
+
 * Wed Feb 04 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.3.2-alt1
 - 1.3.2 released
 
