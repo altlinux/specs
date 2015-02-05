@@ -1,8 +1,8 @@
-%define kernel_base_version 3.12
+%define kernel_base_version 3.18
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
-Version: %kernel_base_version.16
+Version: %kernel_base_version.5
 Release: alt1
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
@@ -62,6 +62,10 @@ for f in {linux,asm}/*.h; do
 		%__cc %optflags -S -I"$PWD" -o/dev/null -xc - ||
 			echo "$f"
 done > "$d"/fail.list
+if [ -s "$d"/fail.list ]; then
+	echo "Compilation check failed for $(grep -Fc .h -- "$d"/fail.list) files:"
+	cat -- "$d"/fail.list
+fi
 cd - > /dev/null
 
 %pre
@@ -74,6 +78,9 @@ done
 %hdr_dir
 
 %changelog
+* Fri Jan 30 2015 Dmitry V. Levin <ldv@altlinux.org> 3.18.5-alt1
+- Updated to v3.18.5.
+
 * Mon Mar 31 2014 Dmitry V. Levin <ldv@altlinux.org> 3.12.16-alt1
 - Updated to v3.12.16.
 
