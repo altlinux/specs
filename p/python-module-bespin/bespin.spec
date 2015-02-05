@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.6.8
-Release: alt1.git20150203
+Version: 0.4.8.1
+Release: alt1.git20150205
 Summary: Opinionated wrapper around boto that reads yaml
 License: MIT
 Group: Development/Python
@@ -24,6 +24,7 @@ BuildPreReq: python-module-rainbow_logging_handler
 BuildPreReq: python-module-filechunkio python-module-noseOfYeti
 BuildPreReq: python-module-nose python-module-mock
 BuildPreReq: python-module-requests python-modules-json
+BuildPreReq: python-module-pytz python-module-radssh
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -35,12 +36,13 @@ BuildPreReq: python3-module-rainbow_logging_handler
 BuildPreReq: python3-module-filechunkio python3-module-noseOfYeti
 BuildPreReq: python3-module-nose python3-module-mock
 BuildPreReq: python3-module-requests
+BuildPreReq: python3-module-pytz python3-module-radssh
 %endif
 
 %py_provides %oname
 %py_requires delfick_error option_merge input_algorithms argparse json
 %py_requires six humanize boto yaml rainbow_logging_handler filechunkio
-%py_requires requests
+%py_requires requests pytz radssh
 
 %description
 An opinionated wrapper around the boto API that knows how to read yaml
@@ -52,7 +54,7 @@ Group: Development/Python3
 %py3_provides %oname
 %py3_requires delfick_error option_merge input_algorithms argparse
 %py3_requires six humanize boto yaml rainbow_logging_handler filechunkio
-%py3_requires requests
+%py3_requires requests pytz radssh
 
 %description -n python3-module-%oname
 An opinionated wrapper around the boto API that knows how to read yaml
@@ -94,8 +96,8 @@ python setup.py test
 %if_with python3
 pushd ../python3
 python3 setup.py test
-sed -i 's|nosetests|nosetests3|' test.sh
-./test.sh -v
+#sed -i 's|nosetests|nosetests3|' test.sh
+#./test.sh -v
 popd
 %endif
 
@@ -115,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8.1-alt1.git20150205
+- Version 0.4.8.1
+
 * Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.6.8-alt1.git20150203
 - Version 0.4.6.8
 
