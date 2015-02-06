@@ -1,6 +1,6 @@
 Name: xinitrc
 Version: 2.4.41
-Release: alt2
+Release: alt3
 
 Summary: The default startup scripts for the X Window System
 License: GPL
@@ -72,6 +72,9 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Fri Feb 06 2015 Anton Farygin <rider@altlinux.ru> 2.4.41-alt3
+- conflict with plymouth-quit.service removed (closes: #30288)
+
 * Thu Jul 03 2014 Alexey Shabalin <shaba@altlinux.ru> 2.4.41-alt2
 - add alias display-manager.service for prefdm.service
 
