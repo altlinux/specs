@@ -1,6 +1,6 @@
 Name: installer-feature-selinux
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Summary: Installer selinux hooks
 License: GPL
@@ -27,6 +27,9 @@ install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 %hookdir/postinstall.d/*
 
 %changelog
+* Fri Feb 06 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6-alt2
+- typo fixed
+
 * Mon Apr 14 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6-alt1
 - adding pam_permit into pam.d/newrole added
 
