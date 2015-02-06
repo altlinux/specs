@@ -1,8 +1,8 @@
 %def_with python
 
 Name: libselinux
-Version: 2.2.2
-Release: alt2
+Version: 2.3
+Release: alt1
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -116,6 +116,9 @@ fi
 
 
 %changelog
+* Thu Feb 05 2015 Anton Farygin <rider@altlinux.ru> 2.3-alt1
+- new version
+
 * Wed Apr 09 2014 Andriy Stepanov <stanv@altlinux.ru> 2.2.2-alt2
 - rpm_execcon helper for rpm acts as it doesn't exist at all
 

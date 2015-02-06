@@ -1,7 +1,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
-Version: 2.2.5
-Release: alt4
+Version: 2.3
+Release: alt1
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -387,6 +387,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Thu Feb 05 2015 Anton Farygin <rider@altlinux.ru> 2.3-alt1
+- new version
+
 * Thu Apr 24 2014 Andriy Stepanov <stanv@altlinux.ru> 2.2.5-alt4
 - Add devel package, adjust spec according to Fedora spec
 
