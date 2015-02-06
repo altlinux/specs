@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.0
-Release: alt1.git20150111
+Version: 1.0.0
+Release: alt1.git20150206
 Summary: Local continuous test runner with pytest and watchdog
 License: MIT
 Group: Development/Python
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20150206
+- Version 1.0.0
+
 * Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20150111
 - Initial build for Sisyphus
 
