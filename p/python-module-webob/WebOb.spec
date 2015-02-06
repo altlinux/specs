@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4
-Release: alt1
+Version: 1.4.1
+Release: alt1.dev.git20150127
 Summary: WSGI request and response object
 License: MIT
 Group: Development/Python
@@ -24,7 +24,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 %endif
 
-%py_requires tempita simplejson wsgiref
+%py_requires tempita json wsgiref
 
 %description
 WebOb provides wrappers around the WSGI request environment, and an
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1.dev.git20150127
+- Version 1.4.1dev
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1
 - Version 1.4
 
