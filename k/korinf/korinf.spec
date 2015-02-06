@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.0.9
+Version: 2.0.10
 Release: alt1
 
 Summary: Korinf multidistro build system
@@ -47,6 +47,10 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Fri Feb 06 2015 Vitaly Lipatov <lav@altlinux.ru> 2.0.10-alt1
+- get_target_list: fix TARGETPATH assert
+- set_rebuildlist: remove TARGETPATH assert
+
 * Sat Oct 04 2014 Vitaly Lipatov <lav@altlinux.ru> 2.0.9-alt1
 - korlogin: comment out local checking
 - install: use quotes for epm install (due parenteses in a packages names)
