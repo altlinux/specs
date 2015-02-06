@@ -1,7 +1,5 @@
-%def_disable static
-
 Name: libnfsidmap
-Version: 0.25
+Version: 0.26
 Release: alt1
 
 Summary: Name to user id mapping library
@@ -25,13 +23,6 @@ Summary: Name to user id mapping library and headers
 Group: Development/C
 Requires: %name = %version-%release
 
-%if_enabled static
-%package devel-static
-Summary: Name to user id mapping static library
-Group: Development/C
-Requires: %name-devel = %version-%release
-%endif
-
 %description
 %name is a library holding mulitiple methods of mapping names to id's
 and visa versa, mainly for NFSv4.
@@ -45,19 +36,12 @@ and visa versa, mainly for NFSv4.
 and visa versa, mainly for NFSv4.
 This package holds development part of %name library
 
-%if_enabled static
-%description devel-static
-%name is a library holding mulitiple methods of mapping names to id's
-and visa versa, mainly for NFSv4.
-This package contains static %name library
-%endif
-
 %prep
 %setup
 
 %build
 [ ! -f autogen.sh ] || sh autogen.sh
-%configure %{subst_enable static} --libdir=/%_lib --with-pluginpath=/%_lib/libnfsidmap
+%configure --disable-static --libdir=/%_lib --with-pluginpath=/%_lib/libnfsidmap
 %make_build
 
 %install
@@ -90,12 +74,10 @@ sed -i 's,/%_lib,%_libdir,' %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 %_man3dir/*
 
-%if_enabled static
-%files devel-static
-%_libdir/%name.a
-%endif
-
 %changelog
+* Fri Feb 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.26-alt1
+- 0.26 released
+
 * Tue Dec 06 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.25-alt1
 - 0.25 released
 
