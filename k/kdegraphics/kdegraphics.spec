@@ -12,7 +12,7 @@
 
 Name: kdegraphics
 Version: 3.5.13.2
-Release: alt5
+Release: alt5.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -57,6 +57,7 @@ Patch5: kdegraphics-3.5.2-kpdf-xft.patch
 # ALT
 Patch101: 3.5.12-fix-linking.patch
 Patch102: kdegraphics-3.5.10-alt-fix-compile.patch
+Patch103: kdegraphics-3.5.13.2-fix_FTBFS.patch
 # Security
 Patch302: security_01_CVE-2009-0945.diff
 Patch303: security_02_CVE-2009-1709.diff
@@ -354,6 +355,7 @@ based on kdegraphic.
 #
 %patch101 -p1
 ###%patch102 -p1
+%patch103 -p1
 #
 %patch302 -p1
 %patch303 -p1
@@ -692,6 +694,11 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 
 %changelog
+* Thu Feb 05 2015 Dmitriy Khanzhin <jinn@altlinux.org> 3.5.13.2-alt5.1
+- NMU:
+  + fix FTBFS on kviewshell/kviewpart (ALT#30696)
+  + rebuilt with new libgphoto2
+
 * Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.13.2-alt5
 - don't require poppler version
 

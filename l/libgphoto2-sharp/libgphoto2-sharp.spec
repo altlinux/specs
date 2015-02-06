@@ -3,7 +3,7 @@
 Summary: C# Bindings for libgphoto2
 Name: libgphoto2-sharp
 Version: 2.3.99.0
-Release: alt4.svn10888
+Release: alt5.svn10888
 License: %lgpl2plus
 Group: Development/Other
 Packager: Mono Maintainers Team <mono@packages.altlinux.org>
@@ -76,6 +76,9 @@ gacutil -i src/%name.dll -f -package %name -root %buildroot/usr/lib
 %endif
 
 %changelog
+* Fri Jan 30 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.99.0-alt5.svn10888
+- rebuild with new libgphoto2
+
 * Fri Oct 16 2009 Alexey Shabalin <shaba@altlinux.ru> 2.3.99.0-alt4.svn10888
 - update dll map patch
 

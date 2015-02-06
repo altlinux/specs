@@ -23,7 +23,7 @@
 
 Name: gvfs
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -470,6 +470,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Wed Jan 28 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.3-alt2
+- rebuilt against libgphoto2_port.so.12
+
 * Thu Jan 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.3-alt1
 - 1.22.3
 

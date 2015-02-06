@@ -1,14 +1,14 @@
 %define beta %nil
 
-Name: kipi-plugins
-Version: 0.1.6
-Release: alt6.4
-Serial: 3
+Name:    kipi-plugins
+Version: 0.1.7
+Release: alt1
+Serial:  3
 
-Group: Graphics
+Group:   Graphics
 Summary: KDE image Interface Plugins
 License: GPL
-Url: http://www.kipi-plugins.org/
+Url:     http://sourceforge.net/projects/kipi
 
 Source0: %name-%version.tar.bz2
 
@@ -21,10 +21,8 @@ Patch5: kipi-plugins-0.1.6-alt-fix-compile.patch
 Patch6: kipi-plugins-0.1.6-alt-fix-redeclaration.patch
 Patch7: kipi-plugins-0.1.6-alt-use-new-gphoto2.patch
 
-
 Requires: icc-profiles
 
-# Automatically added by buildreq on Sun Jan 07 2007
 BuildRequires: doxygen gcc-c++ graphviz kdelibs-devel kdepim-devel libXext-devel libXrender-devel libXt-devel
 BuildRequires: libXrandr-devel libexiv2-devel libgphoto2-devel libjpeg-devel libqt3-devel
 BuildRequires: libtiff-devel xml-utils libxslt-devel libkipi-devel libgpod-devel libkexiv2-devel libkdcraw-devel
@@ -80,6 +78,10 @@ done
 %lang(pt_BR) %_K3doc/pt_BR/%name
 
 %changelog
+* Thu Feb 05 2015 Andrey Cherepanov <cas@altlinux.org> 3:0.1.7-alt1
+- New version
+- Fix project url
+
 * Thu Apr 04 2013 Andrey Cherepanov <cas@altlinux.org> 3:0.1.6-alt6.4
 - Fix redeclaration in flickrexport plugin
 - Adapt kameraklient plugin to new gphoto2 API
