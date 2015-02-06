@@ -1,22 +1,21 @@
+%def_without docs
+
 Name: dtc
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Device Tree Compiler for Flat Device Trees
 License: %gpl2plus
 Group: Development/Tools
-Url: http://git.jdl.com/gitweb/?p=dtc.git;a=summary
+Url: https://git.kernel.org/cgit/utils/dtc/dtc.git
 
-# git://git.jdl.com/software/dtc.git
 Source: %name-%version.tar
 
-Packager: Ivan Ovcherenko <asdus@altlinux.org>
-
 BuildPreReq: rpm-build-licenses
-BuildPreReq: flex
-BuildPreReq: bison
-BuildPreReq: texlive-base
-BuildPreReq: texlive-latex-extra
+BuildRequires: flex bison
+%if_with docs
+BuildRequires: texlive-base texlive-latex-extra
+%endif
 
 %package -n libfdt
 Summary: Flat Device Trees manipulation library
@@ -58,19 +57,22 @@ his package contains documentation for development against libfdt.
 
 %build
 %make_build
+%if_with docs
 pushd Documentation
-cp manual.txt dtc-manual.txt
 latex dtc-paper.tex
 dvips dtc-paper.dvi
 pdflatex dtc-paper.tex
-bzip2 -9 dtc-paper.dvi dtc-paper.ps dtc-paper.pdf dtc-manual.txt dts-format.txt
+bzip2 -9 dtc-paper.dvi dtc-paper.ps dtc-paper.pdf
 popd
+%endif
 
 %install
 %makeinstall_std PREFIX=%_usr LIBDIR=%_libdir
 
 %files
 %doc README.license
+%doc Documentation/manual.txt
+%doc Documentation/dts-format.txt
 %_bindir/*
 
 %files -n libfdt
@@ -83,10 +85,18 @@ popd
 %_libdir/libfdt.so
 %_includedir/*
 
+%if_with docs
 %files -n libfdt-doc
-%doc README.license Documentation/dtc-paper.dvi.bz2 Documentation/dtc-paper.ps.bz2 Documentation/dtc-paper.pdf.bz2 Documentation/dtc-manual.txt.bz2 Documentation/dts-format.txt.bz2
+%doc README.license
+%doc Documentation/dtc-paper.dvi.bz2
+%doc Documentation/dtc-paper.ps.bz2
+%doc Documentation/dtc-paper.pdf.bz2
+%endif
 
 %changelog
+* Fri Feb 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.1-alt1
+- 1.4.1 released
+
 * Wed Dec 25 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.0-alt1
 - 1.4.0 released
 
@@ -96,4 +106,3 @@ popd
 
 * Mon Dec 24 2012 Ivan Ovcherenko <asdus@altlinux.org> 1.3.0-alt1
 - Initial build for ALT Linux Sisyphus, v1.3.0-e4b497f
-
