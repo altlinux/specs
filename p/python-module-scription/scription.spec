@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.73.01
+Version: 0.73.02
 Release: alt1
 Summary: Simple script parameter parser
 License: BSD
@@ -127,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.73.02-alt1
+- Version 0.73.02
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.73.01-alt1
 - Initial build for Sisyphus
 
