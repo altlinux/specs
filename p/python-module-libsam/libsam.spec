@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.3
-Release: alt1.git20150204
+Version: 0.1.4
+Release: alt1.git20150206
 Summary: Bio-Informatics sam file libraries
 License: BSD
 Group: Development/Python
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.git20150206
+- Version 0.1.4
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20150204
 - Initial build for Sisyphus
 
