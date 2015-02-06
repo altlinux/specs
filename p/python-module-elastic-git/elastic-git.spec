@@ -1,7 +1,7 @@
 %define oname elastic-git
 Name: python-module-%oname
-Version: 0.3.3
-Release: alt1.git20150116
+Version: 0.3.4
+Release: alt1.git20150206
 Summary: JSON Object storage backed by Git & Elastic Search
 License: BSD
 Group: Development/Python
@@ -101,6 +101,9 @@ python setup.py test
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt1.git20150206
+- Version 0.3.4
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1.git20150116
 - Version 0.3.3
 
