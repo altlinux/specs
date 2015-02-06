@@ -1,6 +1,6 @@
 Name: minidlna
-Version: 1.1.2
-Release: alt2
+Version: 1.1.4
+Release: alt1
 
 Summary: DLNA AV Media Server
 License: GPLv2
@@ -66,6 +66,9 @@ mkdir -p %buildroot%_cachedir/%name %buildroot%_runtimedir/%name
 %dir %attr(0770,root,_minidlna) %_runtimedir/%name
 
 %changelog
+* Fri Feb 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.4-alt1
+- 1.1.4 released
+
 * Sun May 18 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.2-alt2
 - rebuilt with libav10
 
