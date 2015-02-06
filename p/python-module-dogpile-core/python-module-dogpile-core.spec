@@ -3,16 +3,13 @@
 
 Name:               python-module-dogpile-core
 Version:            0.4.1
-Release:            alt1
+Release:            alt1.1
 Summary:            A 'dogpile' lock, typically used as a component of a larger caching solution
 
 Group:              Development/Python
 License:            BSD
 URL:                http://pypi.python.org/pypi/dogpile.core
 Source0:            %{name}-%{version}.tar
-
-BuildArch:          noarch
-
 
 BuildRequires:      python-devel
 BuildRequires:      python-module-setuptools
@@ -30,7 +27,6 @@ for simple and generic usage.
 %package -n python3-module-dogpile-core
 Summary:        A 'dogpile' lock, typically used as a component of a larger caching solution
 Group:		Development/Python
-BuildArch:      noarch
 BuildRequires:  rpm-build-python3
 BuildRequires:  python3-module-setuptools
 BuildRequires:  python3-module-nose
@@ -76,6 +72,10 @@ pushd ../python3
 popd
 %endif
 
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
 %check
 # Tests are not run since they take quite a while and appear to be sensitive to
 # koji's environment.
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.1
+- Set as archdep
+
 * Mon Jul 21 2014 Lenar Shakirov <snejok@altlinux.ru> 0.4.1-alt1
 - First build for ALT (based on Fedora 0.4.1-5.fc21.src)
 
