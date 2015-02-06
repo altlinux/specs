@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 0.8.8
-Release: alt2
+Release: alt3
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -168,6 +168,9 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Fri Feb 06 2015 Anton Farygin <rider@altlinux.ru> 0.8.8-alt3
+- fixed plymouth rules requires (closes: #30704)
+
 * Fri Feb 06 2015 Anton Farygin <rider@altlinux.ru> 0.8.8-alt2
 - removed `--quiet' option for `udevadm settle' (closes: #30156)
 
