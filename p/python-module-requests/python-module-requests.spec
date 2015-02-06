@@ -3,7 +3,7 @@
 
 Name:           python-module-requests
 Version:        2.5.1
-Release:        alt1.git20150109
+Release:        alt1.git20150204
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
@@ -29,6 +29,7 @@ BuildRequires:  python-module-urllib3 >= 1.8.2
 Requires:       ca-certificates
 Requires:       python-module-chardet
 Requires:       python-module-urllib3 >= 1.8.2
+%py_requires json
 
 %description
 Most existing Python modules for sending HTTP requests are extremely verbose and 
@@ -121,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt1.git20150204
+- New snapshot
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt1.git20150109
 - New snapshot
 
