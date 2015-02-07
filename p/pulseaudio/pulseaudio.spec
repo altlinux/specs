@@ -1,6 +1,6 @@
 Name: pulseaudio
 Version: 5.0
-Release: alt1
+Release: alt2
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -383,6 +383,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Sat Feb 07 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0-alt2
+- workarount regression in orc (closes: #30710)
+
 * Thu Mar 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0-alt1
 - 5.0 released
 
