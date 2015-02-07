@@ -1,7 +1,7 @@
 %def_without qt5
 
 Name:    appstream
-Version: 0.7.6
+Version: 0.8.0
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -122,7 +122,7 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %config(noreplace) %_sysconfdir/appstream.conf
 %_bindir/appstream-index
 %_bindir/appstream-validate
-%_libdir/girepository-1.0/AppStream-0.7.typelib
+%_libdir/girepository-1.0/AppStream-0.8.typelib
 %_libdir/libappstream.so.*
 %dir %_datadir/app-info/
 %dir %_datadir/app-info/icons
@@ -140,7 +140,7 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_includedir/AppStream/
 %_libdir/libappstream.so
 %_libdir/pkgconfig/appstream.pc
-%_datadir/gir-1.0/AppStream-0.7.gir
+%_datadir/gir-1.0/AppStream-0.8.gir
 
 %files qt
 %_libdir/libAppstreamQt.so.0*
@@ -155,6 +155,9 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %endif
 
 %changelog
+* Sat Feb 07 2015 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt1
+- New version
+
 * Sun Jan 25 2015 Andrey Cherepanov <cas@altlinux.org> 0.7.6-alt1
 - New version
 
