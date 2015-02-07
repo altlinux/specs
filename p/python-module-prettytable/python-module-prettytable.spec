@@ -4,7 +4,7 @@
 
 Name:		python-module-%oname
 Version:	0.7.2
-Release:	alt1
+Release:	alt2
 Summary:	Python library to display tabular data in tables
 
 Group:		Development/Python
@@ -21,6 +21,8 @@ BuildRequires:	python3-devel
 BuildRequires:	python3-module-setuptools
 %endif
 
+%py_provides %oname
+
 %description
 PrettyTable is a simple Python library designed to make it quick and
 easy to represent tabular data in visually appealing ASCII tables. It
@@ -32,6 +34,7 @@ and printing of "sub-tables" by specifying a row range.
 %package -n python3-module-%oname
 Summary:	Python library to display tabular data in tables
 Group:		Development/Python3
+%py3_provides %oname
 
 %description -n python3-module-%oname
 PrettyTable is a simple Python library designed to make it quick and
@@ -87,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt2
+- Added provides: %oname
+
 * Sat Feb 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1
 - Version 0.7.2
 - Added module for Python 3
