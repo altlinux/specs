@@ -1,5 +1,5 @@
 Name: etcskel
-Version: 2.0.14
+Version: 2.0.15
 Release: alt1
 
 %def_enable langify
@@ -55,6 +55,9 @@ done
 %config(noreplace) %_sysconfdir/skel
 
 %changelog
+* Sat Feb 07 2015 Anton Farygin <rider@altlinux.ru> 2.0.15-alt1
+- .rpmmacros: dropped default tmpdir.
+
 * Tue Apr 08 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.14-alt1
 - .mutt/set: dropped default tmpdir.
 
