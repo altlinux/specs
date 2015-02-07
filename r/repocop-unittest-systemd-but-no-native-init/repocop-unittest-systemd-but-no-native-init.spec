@@ -2,7 +2,7 @@
 
 Name: repocop-unittest-%testname
 Version: 0.03
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Requires: repocop > 0.55
@@ -35,7 +35,7 @@ cat $REPOCOP_TEST_TMPDIR/pre | while read -r pkgid service; do
     servicename=${service##/usr}
     servicename=${servicename##/lib/systemd/system/}
     case $pkgid in
-    	 daemontools-*|ADDME ) : nothing
+    	 daemontools-*|wpa_supplicant-* ) : nothing
 	 ;;
 	 *)
 	 servicepath=$REPOCOP_STATEDIR/systemd/$pkgid/system/$servicename
@@ -73,6 +73,9 @@ done
 #%_datadir/repocop/fixscripts/*.pl
 
 %changelog
+* Sat Feb 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2
+- ignore wpa_supplicant
+
 * Thu Feb 05 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - ignore xinet.d services
 
