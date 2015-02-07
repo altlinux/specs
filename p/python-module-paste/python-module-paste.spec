@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 1.7.5.1
-Release: alt2.hg20140319
+Release: alt3.hg20140319
 
 Summary: Tools for using a Web Server Gateway Interface stack
 License: MIT
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.5.1-alt3.hg20140319
+- Deteled bad suffix from version
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.5.1-alt2.hg20140319
 - New snapshot
 
