@@ -1,5 +1,9 @@
-Name:		python-module-prettytable
-Version:	0.6.1
+%define oname prettytable
+
+%def_with python3
+
+Name:		python-module-%oname
+Version:	0.7.2
 Release:	alt1
 Summary:	Python library to display tabular data in tables
 
@@ -10,7 +14,12 @@ URL:		http://pypi.python.org/pypi/PrettyTable
 
 BuildArch:	noarch
 BuildRequires:	python-devel
-BuildRequires:	python-module-distribute
+BuildRequires:	python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires:	python3-devel
+BuildRequires:	python3-module-setuptools
+%endif
 
 %description
 PrettyTable is a simple Python library designed to make it quick and
@@ -20,23 +29,67 @@ PrettyTable allows for selection of which columns are to be printed,
 independent alignment of columns (left or right justified or centred)
 and printing of "sub-tables" by specifying a row range.
 
+%package -n python3-module-%oname
+Summary:	Python library to display tabular data in tables
+Group:		Development/Python3
+
+%description -n python3-module-%oname
+PrettyTable is a simple Python library designed to make it quick and
+easy to represent tabular data in visually appealing ASCII tables. It
+was inspired by the ASCII tables used in the PostgreSQL shell psql.
+PrettyTable allows for selection of which columns are to be printed,
+independent alignment of columns (left or right justified or centred)
+and printing of "sub-tables" by specifying a row range.
+
 %prep
-%setup -q
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
-%{__python} setup.py build
+%python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %check
-%{__python} prettytable_test.py
+export LC_ALL=en_US.UTF-8
+python prettytable_test.py
+%if_with python3
+pushd ../python3
+python3 prettytable_test.py
+popd
+%endif
 
 %install
-%{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %doc README COPYING CHANGELOG
 %{python_sitelibdir}/prettytable.py*
 %{python_sitelibdir}/prettytable-%{version}*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc README COPYING CHANGELOG
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Sat Feb 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1
+- Version 0.7.2
+- Added module for Python 3
+
 * Mon Sep 17 2012 Pavel Shilovsky <piastry@altlinux.org> 0.6.1-alt1
 - Initial release for Sisyphus (based on Fedora)
