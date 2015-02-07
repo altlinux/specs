@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.1.0
-Release:        alt1
+Release:        alt2
 Summary:        Manage dynamic plugins for Python applications
 
 Group:		Development/Python
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2
+- Avoid requirement on pbr in egg-info
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
 - Version 1.1.0
 - Added module for Python 3
