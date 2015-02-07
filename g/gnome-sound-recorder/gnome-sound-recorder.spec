@@ -5,7 +5,7 @@
 
 Name: gnome-sound-recorder
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Sound Recorder for GNOME
 Group: Sound
@@ -26,7 +26,7 @@ Provides:  gnome-media-grecord = %version-%release
 
 Requires: libgjs >= 1.41
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
-# find ./ -name *.js |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+# find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(Gio)
@@ -37,6 +37,8 @@ Requires: typelib(GstAudio)
 Requires: typelib(GstPbutils)
 Requires: typelib(Gtk)
 Requires: typelib(Pango)
+# explicitly required to avoid installation old version
+Requires: libgst-plugins%gst_api_ver-gir
 
 BuildRequires: gnome-common libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgjs-devel libgtk+3-gir-devel intltool yelp-tools
@@ -71,6 +73,9 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Sat Feb 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt2
+- explicitly required libgst-plugins1.0-gir to avoid 0.10 version
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 
