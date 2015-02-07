@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.3.5
-Release: alt1.git20150115
+Version: 0.3.6
+Release: alt1.git20150205
 Summary: A framework for managing and maintaining multi-language pre-commit hooks
 License: MIT
 Group: Development/Python
@@ -18,7 +18,7 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-argparse python-module-aspy.yaml
 BuildPreReq: python-module-cached-property python-module-jsonschema
-BuildPreReq: python-module-yaml
+BuildPreReq: python-module-yaml python-module-astroid
 BuildPreReq: python-module-simplejson python-module-virtualenv
 BuildPreReq: python-module-coverage python-module-flake8
 BuildPreReq: python-module-mock pylint
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-argparse python3-module-aspy.yaml
 BuildPreReq: python3-module-cached-property python3-module-jsonschema
-BuildPreReq: python3-module-yaml
+BuildPreReq: python3-module-yaml python3-module-astroid
 BuildPreReq: python3-module-simplejson python3-module-virtualenv
 BuildPreReq: python3-module-coverage python3-module-flake8
 BuildPreReq: python3-module-mock pylint-py3
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1.git20150205
+- Version 0.3.6
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt1.git20150115
 - Initial build for Sisyphus
 
