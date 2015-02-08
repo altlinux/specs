@@ -1,7 +1,7 @@
 %def_enable updatedb
 
 Name: shared-mime-info
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: Shared MIME-Info Specification
@@ -22,6 +22,8 @@ BuildPreReq: libgio-devel
 
 # Automatically added by buildreq on Sun Jun 08 2008
 BuildRequires: glib2-devel libxml2-devel perl-XML-Parser xml-utils
+
+# subst 's/<mime-type type=\"application\/vnd.adobe.flash.movie\">/<mime-type type=\"application\/x-shockwave-flash\">/g' /usr/share/mime/packages/freedesktop.org.xml
 
 %description
 This is the freedesktop.org shared MIME info database.
@@ -47,7 +49,7 @@ created by converting the existing KDE and GNOME databases to the new
 format and merging them together.
 
 %prep
-%setup -q
+%setup
 %patch
 
 rm -f freedesktop.org.xml
@@ -58,7 +60,7 @@ rm -f freedesktop.org.xml
 %make
 
 %install
-%makeinstall
+%makeinstall_std
 
 cat <<__SH__ >%name.sh
 export XDG_DATA_DIRS="\${XDG_DATA_DIRS-%_datadir}"
@@ -99,6 +101,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Sun Feb 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
+- 1.4
+
 * Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
 - 1.3
 
