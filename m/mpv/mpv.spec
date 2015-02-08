@@ -1,5 +1,5 @@
 Name: mpv
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
@@ -9,12 +9,12 @@ Group: Video
 
 URL: http://mpv.io/
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 Packager: %packager
 
 # Automatically added by buildreq on Fri Feb 14 2014
-# Внимание: пакет libva-devel добавлен вручную!
-BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libquvi0.9-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
+BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
 
 BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel liblua5-devel
 
@@ -30,8 +30,10 @@ MPlayer и mplayer2. Он поддерживает большое количес
 
 %prep
 %setup -n %name-%version
+%patch0 -p1
 
 ls
+chmod ugo+rx waf
 ./waf configure --bindir=%buildroot%_bindir --mandir=%buildroot/usr/share/man --datadir=%buildroot%_datadir --prefix=%buildroot \
 --enable-pulse \
 --enable-enca \
@@ -51,32 +53,23 @@ ls
 %install
 ./waf install
 
-# Добавляем нехитрую документацию.
-%define docdir %_docdir/%name-%version
-
-mkdir -p %buildroot/%docdir
-install -pm644 LICENSE %buildroot%docdir/
-install -pm644 Copyright %buildroot%docdir/
-install -pm644 README.md %buildroot%docdir/
-install -pm644 RELEASE_NOTES %buildroot%docdir/
-
-# Бравые mpv'шники залили документацию не в тот каталог. Исправляем.
-install -pm644 %buildroot/usr/share/doc/mpv/* %buildroot%docdir/
-rm -rf %buildroot/usr/share/doc/mpv/
-
 %files
-
-%dir %docdir
-%doc %docdir/*
-%config /etc/mpv/encoding-profiles.conf
-%_bindir/*
-%_man1dir/*
-%_iconsdir/hicolor/16x16/apps/mpv.png
-%_iconsdir/hicolor/32x32/apps/mpv.png
-%_iconsdir/hicolor/64x64/apps/mpv.png
-%_desktopdir/*
+%dir %_sysconfdir/%name
+%config %_sysconfdir/%name/encoding-profiles.conf
+%_bindir/%name
+%_man1dir/%name.1.*
+%_miconsdir/%name.png
+%_niconsdir/%name.png
+%_iconsdir/hicolor/64x64/apps/%name.png
+%_desktopdir/%name.desktop
+%doc LICENSE Copyright README.md RELEASE_NOTES etc/input.conf etc/mplayer-input.conf etc/example.conf etc/restore-old-bindings.conf
 
 %changelog
+* Sun Feb  8 2015 Terechkov Evgenii <evg@altlinux.org> 0.7.3-alt1
+- 0.7.3
+- Build from upstream git
+- Spec cleanup
+
 * Sun Jan 11 2015 Terechkov Evgenii <evg@altlinux.org> 0.7.2-alt1
 - Version update
 
