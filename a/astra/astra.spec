@@ -1,6 +1,6 @@
 Name: astra
 Version: 4.4
-Release: alt2
+Release: alt3
 Summary: Astra is a highly-customizable software for processing IPTV streams
 Group: Networking/Other
 
@@ -28,9 +28,9 @@ Astra consists of the following components:
 %patch0 -p1
 
 %build
-pushd contrib
-./ffmpeg.sh
-popd
+#pushd contrib
+#./ffmpeg.sh
+#popd
 ./configure.sh --bin=%_bindir/astra --with-libdvbcsa
 %make_build
 
@@ -52,6 +52,10 @@ install -m 0755 -D scripts/stream.lua %buildroot%_sysconfdir/%name/scripts/strea
 %_bindir/*
 
 %changelog
+* Sun Feb 08 2015 Alexei Takaseev <taf@altlinux.org> 4.4-alt3
+- update to 4.4.111
+- disable build ffmpeg libs
+
 * Mon Feb 02 2015 Alexei Takaseev <taf@altlinux.org> 4.4-alt2
 - update to 4.4.106
 
