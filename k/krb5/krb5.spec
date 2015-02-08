@@ -1,7 +1,7 @@
 
 Name: krb5
 Version: 1.13
-Release: alt2
+Release: alt3
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -31,6 +31,7 @@ Patch134: krb5-1.11-fedora-kpasswdtest.patch
 # upstrem patches:
 Patch137: krb5-CVE_2014_5353_fix_LDAP_misused_policy_name_crash.patch
 Patch138: krb5-CVE_2014_5354_support_keyless_principals_in_LDAP.patch
+Patch139: krb5-1.13-MITKRB5-SA-2015-001-fix-gss.patch
 
 BuildRequires: /dev/pts /proc
 BuildRequires: flex libcom_err-devel libkeyutils-devel
@@ -169,6 +170,7 @@ MIT Kerberos.
 # upstream patches:
 %patch137 -p1
 %patch138 -p1
+%patch139 -p1
 
 %build
 # Go ahead and supply tcl info, because configure doesn't know how to find it.
@@ -418,6 +420,10 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Sun Feb 08 2015 Ivan A. Melnikov <iv@altlinux.org> 1.13-alt3
+- fix for MITKRB5-SA-2015-001 (CVE-2014-5352, CVE-2014-9421,
+  CVE-2014-9422, CVE-2014-9423)
+
 * Tue Dec 23 2014 Alexey Shabalin <shaba@altlinux.ru> 1.13-alt2
 - fixed CVE-2014-5353, CVE-2014-5354
 
