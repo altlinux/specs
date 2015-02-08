@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.gi20130826
+Release: alt2.gi20130826
 Summary: toscawidgets2 wrapper for the stanford protovis toolkit
 License: Free
 Group: Development/Python
@@ -91,6 +91,12 @@ popd
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %check
 python setup.py test
 nosetests -v
@@ -124,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Sun Feb 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2.gi20130826
+- Applied repocop's python-module-tw2.protovis.core-0.2.0-alt1.gi20130826.diff
+
 * Sat Feb 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.gi20130826
 - Initial build for Sisyphus
 
