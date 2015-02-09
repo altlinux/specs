@@ -1,18 +1,17 @@
 %define oname networkx
 
-%def_disable docs
+%def_enable docs
 %def_with python3
 
 Name:           python-module-%oname
 Version:        2.0
-Release:        alt1.git20140713
+Release:        alt1.git20150205
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
 License:        LGPLv2+
 URL:            https://networkx.lanl.gov/trac
 # https://github.com/networkx/networkx.git
 Source:         %oname-%version.tar.gz
-BuildArch:      noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: python-devel
@@ -21,6 +20,7 @@ BuildPreReq: python-module-pydot python-module-matplotlib
 BuildPreReq: python-module-yaml python-module-scipy python-module-pyparsing
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: graphviz python-module-setuptools python-module-decorator
+BuildPreReq: python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python-tools-2to3 python3-module-setuptools
@@ -64,7 +64,6 @@ This package contains tests for NetworkX.
 %package docs
 Summary: Documentation for NetworkX
 Group: Development/Documentation
-BuildArch: noarch
 
 %description docs
 NetworkX is a Python package for the creation, manipulation, and
@@ -138,6 +137,10 @@ pushd ../python3
 popd
 %endif
 
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
 %if_enabled docs
 export PYTHONPATH=$PYTHONPATH:%buildroot%python_sitelibdir
 #make -C doc latex ||:
@@ -151,9 +154,15 @@ mv %buildroot%_docdir/%oname-%{version}* ./installed-docs
 cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
+mv %buildroot%python_sitelibdir/%oname-%{version}.*-py%_python_version.egg-info \
+	%buildroot%python_sitelibdir/%oname-%{version}-py%_python_version.egg-info
+%if_with python3
+mv %buildroot%python3_sitelibdir/%oname-%{version}.*-py%_python3_version.egg-info \
+	%buildroot%python3_sitelibdir/%oname-%{version}-py%_python3_version.egg-info
+%endif
+
 %files
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*.egg-info
 #exclude %python_sitelibdir/networkxdoctest.py*
 %if_enabled docs
 %exclude %python_sitelibdir/%oname/pickle
@@ -184,7 +193,6 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/testing
 %exclude %python3_sitelibdir/*/*/tests
@@ -198,6 +206,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.git20150205
+- New snapshot
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.git20140713
 - Version 2.0
 
