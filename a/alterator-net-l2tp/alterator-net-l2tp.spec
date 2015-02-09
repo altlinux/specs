@@ -2,7 +2,7 @@
 
 Name: alterator-net-l2tp
 Version: 0.0.3
-Release: alt1
+Release: alt2
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildArch: noarch
 Source: %name-%version.tar
@@ -37,6 +37,9 @@ Alterator module to configure L2TP connections
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Feb 09 2015 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt2
+- add file for previous build
+
 * Mon Feb 09 2015 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt1
 - Fix bool_default_route
 
