@@ -1,16 +1,18 @@
 %define oname pydot
+
+%def_with python3
+
 Name: python-module-%oname
-Version: 1.0.28
-Release: alt1
+Version: 1.0.29
+Release: alt1.git20140730
 
 Summary: Python interface to Graphiz's Dot
 
-License: GPL
+License: MIT
 Group: Development/Python
 Url: http://pydot.googlecode.com
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-Source: http://pydot.googlecode.com/files/%oname-%version.tar.bz2
+Source: %oname-%version.tar.bz2
 
 BuildArch: noarch
 
@@ -18,6 +20,15 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Sun Sep 16 2007
 BuildRequires: python-devel python-module-pyparsing python-modules-compiler
+
+BuildPreReq: python-module-setuptools-tests
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-pyparsing
+BuildPreReq: python3-module-setuptools-tests
+%endif
+
+Requires: %_bindir/dot
 
 %description
 An interface for creating both directed and non directed graphs from
@@ -28,20 +39,59 @@ Output can be inlined in Postscript into interactive scientific
 environments like TeXmacs, or output in any of the format's supported
 by the Graphviz tools dot, neato, twopi.
 
+%package -n python3-module-%oname
+Summary: Python interface to Graphiz's Dot
+Group: Development/Python3
+Requires: %_bindir/dot
+
+%description -n python3-module-%oname
+An interface for creating both directed and non directed graphs from
+Python. Currently all attributes implemented in the Dot language are
+supported (up to Graphviz 1.16).
+
+Output can be inlined in Postscript into interactive scientific
+environments like TeXmacs, or output in any of the format's supported
+by the Graphviz tools dot, neato, twopi.
+
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %files
-%doc README
+%doc ChangeLog README
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc ChangeLog README
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.29-alt1.git20140730
+- Version 1.0.29
+
 * Thu May 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.28-alt1
 - Version 1.0.28
 
