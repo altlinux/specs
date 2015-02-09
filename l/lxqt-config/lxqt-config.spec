@@ -1,5 +1,5 @@
 Name: lxqt-config
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
@@ -11,8 +11,11 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel libqtxdg-devel libqt4-devel
+BuildRequires: libXau-devel libXcursor-devel libXdmcp-devel libXfixes-devel
+BuildRequires: liblxqt-devel libqtxdg-devel qt5-base-devel qt5-tools-devel
+BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: rpm-build-xdg
+BuildRequires: zlib-devel
 
 Provides: razorqt-config = %version
 Obsoletes: razorqt-config < 0.7.0
@@ -42,6 +45,9 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %doc AUTHORS
 
 %changelog
+* Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
 - 0.8.0
 - lxqt-config-monitor replaces lxqt-config-randr

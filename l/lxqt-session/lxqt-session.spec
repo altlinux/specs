@@ -1,5 +1,5 @@
 Name: lxqt-session
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: Session manager
@@ -12,7 +12,8 @@ Source1: 08lxqt
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel libqt4-devel
+BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
+BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: libqtxdg-devel xdg-utils
 
 Requires: lxqt-common
@@ -43,6 +44,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS
 
 %changelog
+* Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
 - 0.8.0
 

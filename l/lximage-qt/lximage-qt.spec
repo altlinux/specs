@@ -1,6 +1,6 @@
 Name: lximage-qt
 Version: 0.3.0
-Release: alt1
+Release: alt2.git62ce73d
 
 Summary: Image viewer and screenshot tool
 License: LGPL
@@ -11,9 +11,9 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel libqt4-devel
+BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
 BuildRequires: libfm-devel libfm-qt-devel
-BuildRequires: libXdmcp-devel libexif-devel glib2-devel
+BuildRequires: libXdmcp-devel libXfixes-devel libexif-devel glib2-devel
 
 %description
 %summary
@@ -36,6 +36,9 @@ BuildRequires: libXdmcp-devel libexif-devel glib2-devel
 %doc AUTHORS
 
 %changelog
+* Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 0.3.0-alt2.git62ce73d
+- rebuilt against qt5 using git commit 62ce73d
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.3.0-alt1
 - so it was 0.3.0 actually
 
