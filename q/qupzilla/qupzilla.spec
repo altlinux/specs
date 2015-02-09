@@ -9,7 +9,7 @@
 
 Name: qupzilla
 Version: 1.8.6
-Release: alt1
+Release: alt2
 
 Summary: A very fast open source browser based on WebKit core
 License: GPLv3+
@@ -20,14 +20,23 @@ Url: http://qupzilla.com
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Tue Mar 13 2012
-# optimized out: fontconfig libgst-plugins libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-script libqt4-sql libqt4-webkit libqt4-xml libstdc++-devel
-BuildRequires: gcc-c++ phonon-devel
+# Automatically added by buildreq on Mon Feb 09 2015
+# optimized out: libGL-devel libX11-devel libcloog-isl4 libgst-plugins1.0 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config qt5-base-devel qt5-declarative-devel qt5-tools xorg-xproto-devel
+BuildRequires: gcc-c++ libssl-devel qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel
 
-BuildRequires: libqt4-devel >= 4.7
+BuildRequires: pkgconfig(Qt5Concurrent)
+BuildRequires: pkgconfig(Qt5Core)
+BuildRequires: pkgconfig(Qt5DBus)
+BuildRequires: pkgconfig(Qt5Gui)
+BuildRequires: pkgconfig(Qt5Network)
+BuildRequires: pkgconfig(Qt5PrintSupport)
+BuildRequires: pkgconfig(Qt5Script)
+BuildRequires: pkgconfig(Qt5Sql)
+BuildRequires: pkgconfig(Qt5WebKitWidgets)
+BuildRequires: pkgconfig(Qt5Widgets)
+
+BuildRequires: fontconfig
 BuildRequires: gdb
-
-Requires: libqt4-sql-sqlite
 
 %description
 QupZilla is a new and very fast World Wide Web Browser
@@ -45,7 +54,7 @@ export NONBLOCK_JS_DIALOGS="true"
 export KDE="false"
 export USE_LIBPATH="%_libdir"
 echo "CONFIG += debug" >> src/defines.pri
-qmake-qt4
+qmake-qt5
 %make_build
 
 %install
@@ -70,6 +79,9 @@ make INSTALL_ROOT=%buildroot install
 # - move shared libraries to a subpackage?
 
 %changelog
+* Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 1.8.6-alt2
+- rebuilt against qt5
+
 * Mon Jan 26 2015 Michael Shigorin <mike@altlinux.org> 1.8.6-alt1
 - 1.8.6
 
