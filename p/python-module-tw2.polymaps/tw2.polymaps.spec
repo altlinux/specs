@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt1.git20131130
+Release: alt2.git20131130
 Summary: Python encapsulation of the polymaps javascript library
 License: MIT
 Group: Development/Python
@@ -74,6 +74,12 @@ popd
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %check
 python setup.py test
 nosetests -v
@@ -97,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt2.git20131130
+- Applied repocop's python-module-tw2.polymaps-0.4-alt1.git20131130.diff
+
 * Sun Feb 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20131130
 - Initial build for Sisyphus
 
