@@ -1,6 +1,6 @@
 Name: lxqt-lightdm-greeter
 Version: 0.7.0
-Release: alt3
+Release: alt4.gitc1aaae4
 
 Summary: LightDM greeter for LXQt
 License: LGPL
@@ -11,7 +11,8 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: libqt4-devel lightdm-devel
+BuildRequires: qt5-base-devel qt5-tools-devel lightdm-devel
+BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: liblxqt-devel libqtxdg-devel
 
 Requires: lightdm
@@ -27,6 +28,7 @@ It was written for LXQt but can be used standalone as well.
 
 %prep
 %setup
+sed -i 's,lxqt-qt5,lxqt,' CMakeLists.txt
 
 %build
 %cmake_insource
@@ -48,6 +50,11 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %doc AUTHORS
 
 %changelog
+* Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 0.7.0-alt4.gitc1aaae4
+- git commit c1aaae4
+- rebuilt against lxqt-0.9.0 and qt5
+- officially deprecated
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt3
 - rebuilt against current libraries
 

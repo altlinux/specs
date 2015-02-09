@@ -1,6 +1,6 @@
 Name: lxqt-panel
-Version: 0.8.0
-Release: alt3
+Version: 0.9.0
+Release: alt1
 
 Summary: Desktop panel
 License: LGPL
@@ -12,21 +12,21 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel liblxqt-mount-devel
-BuildRequires: libqtxdg-devel libqt4-devel
+BuildRequires: libqtxdg-devel qt5-base-devel qt5-tools-devel
+BuildRequires: kf5-kwindowsystem-devel kf5-kguiaddons-devel
 BuildRequires: lxqt-globalkeys-devel
 BuildRequires: libalsa-devel
 BuildRequires: libXdmcp-devel libXdamage-devel
-BuildRequires: libXcomposite-devel libXrender-devel
+BuildRequires: libXcomposite-devel libXrender-devel libxcbutil-devel
 BuildRequires: libmenu-cache-devel libstatgrab-devel libsensors3-devel
 
-# there's an untagged mess there
-BuildRequires: libsysstat-devel >= 0.1.0-alt2
+BuildRequires: libsysstat-devel >= 0.3.0
 
 Provides: razorqt-panel = %version
 Obsoletes: razorqt-panel < 0.7.0
 
 Requires: menu-cache
-Requires: udisks2 gvfs qt4-dbus
+Requires: udisks2 gvfs qt5-dbus
 
 %description
 %summary
@@ -67,6 +67,9 @@ rm -f %buildroot%_libdir/%name/libpanelkbindicator.so
 %_includedir/*/*.h
 
 %changelog
+* Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Thu Nov 27 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt3
 - require media related packages (closes: #30516)
 

@@ -1,6 +1,6 @@
 Name: lxqt-qtplugin
-Version: 0.8.0
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: LxQt platform integration plugin for Qt
 License: LGPL
@@ -11,7 +11,8 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel libqt4-devel libqtxdg-devel
+BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel libqtxdg-devel
+BuildRequires: kf5-kwindowsystem-devel
 
 %description
 %summary
@@ -27,10 +28,13 @@ BuildRequires: liblxqt-devel libqt4-devel libqtxdg-devel
 %makeinstall_std
 
 %files
-%_libdir/qt4/plugins/gui_platform/libqtlxqt.so
+%_libdir/qt5/plugins/*/libqtlxqt.so
 %doc AUTHORS
 
 %changelog
+* Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
+- 0.9.0 built against qt5
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt2
 - whoops, missed qtxdg somehow
 

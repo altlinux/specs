@@ -1,5 +1,5 @@
 Name: lxqt-globalkeys
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: Service used to register global keyboard shortcuts
@@ -11,7 +11,8 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel libqt4-devel libqtxdg-devel
+BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel libqtxdg-devel
+BuildRequires: kf5-kwindowsystem-devel
 
 Provides: razorqt-globalkeyshortcuts = %version
 Obsoletes: razorqt-globalkeyshortcuts < 0.7.0
@@ -48,9 +49,12 @@ This package provides the development files for %name.
 %_libdir/*.so
 %_includedir/*/
 %_pkgconfigdir/*.pc
-%_datadir/cmake/*/
+%_libdir/cmake/*/
 
 %changelog
+* Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
 - 0.8.0
 

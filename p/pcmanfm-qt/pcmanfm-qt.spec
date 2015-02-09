@@ -1,6 +1,6 @@
 Name:    pcmanfm-qt
-Version: 0.8.0
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
 License: GPLv2+
@@ -11,7 +11,8 @@ Source0: %name-%version.tar
 Source1: %name.desktop
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: qt4-devel libXdmcp-devel
+BuildRequires: qt5-base-devel qt5-tools-devel qt5-x11extras-devel
+BuildRequires: libXdmcp-devel
 BuildRequires: libfm-devel >= 1.2.0
 BuildRequires: libmenu-cache-devel
 
@@ -47,22 +48,28 @@ This package provides the development files for libfm-qt.
 
 %install
 %makeinstall_std
-%find_lang --with-qt --all-name %name
+%find_lang --with-qt %name
+%find_lang --with-qt libfm-qt
 install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 %files -f %name.lang
 %_bindir/*
 %_desktopdir/*.desktop
+%_man1dir/*
 
-%files -n libfm-qt
-%_libdir/libfm-qt.so.*
+%files -n libfm-qt -f libfm-qt.lang
+%_libdir/libfm-qt5.so.*
 
 %files -n libfm-qt-devel
 %_includedir/libfm-qt
-%_libdir/libfm-qt.so
-%_pkgconfigdir/libfm-qt.pc
+%_libdir/libfm-qt5.so
+%_pkgconfigdir/libfm-qt5.pc
+%_datadir/libfm-qt/translations/libfm-qt_template.qm
 
 %changelog
+* Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
+- 0.9.0 built against qt5
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt2
 - rebuilt against 0.8.0 release libraries
 

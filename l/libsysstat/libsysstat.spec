@@ -1,6 +1,6 @@
 Name: libsysstat
-Version: 0.1.0
-Release: alt2
+Version: 0.3.0
+Release: alt1
 
 Summary: Library used to query system info and statistics
 License: LGPL
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: libqt4-devel
+BuildRequires: qt5-base-devel qt5-tools-devel
 
 %description
 %summary
@@ -27,8 +27,6 @@ which is used to query system info and statistics.
 
 %prep
 %setup
-# https://github.com/lxde/lxde-qt/issues/75
-sed -i 's,RAZOR_VERSION,SYSSTAT_VERSION,' cmake/create_pkgconfig_file.cmake
 
 %build
 %cmake_insource
@@ -36,8 +34,6 @@ sed -i 's,RAZOR_VERSION,SYSSTAT_VERSION,' cmake/create_pkgconfig_file.cmake
 
 %install
 %makeinstall_std
-# FIXME
-sed -i 's,^Version:.*$,Version: %version,' %buildroot%_pkgconfigdir/*.pc
 
 %files
 %_libdir/*.so.*
@@ -49,6 +45,9 @@ sed -i 's,^Version:.*$,Version: %version,' %buildroot%_pkgconfigdir/*.pc
 %_datadir/cmake/*/
 
 %changelog
+* Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 0.3.0-alt1
+- 0.3.0 built against qt5
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.1.0-alt2
 - use untagged upstream commit g151ef16 (NB: API change)
 
