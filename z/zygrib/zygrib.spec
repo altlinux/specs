@@ -2,7 +2,7 @@
 %def_with system_qwt
 
 Name: zygrib
-Version: 6.2.3
+Version: 7.0.0
 Release: alt1
 
 Summary: Visualisation of meteo data from files in GRIB Format 1
@@ -108,6 +108,9 @@ fi
 %_datadir/%binname
 
 %changelog
+* Mon Feb 09 2015 Sergey Y. Afonin <asy@altlinux.ru> 7.0.0-alt1
+- New version
+
 * Tue Jan 28 2014 Sergey Y. Afonin <asy@altlinux.ru> 6.2.3-alt1
 - New version
 
