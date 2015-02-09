@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-l2tp
-Version: 0.0.2
+Version: 0.0.3
 Release: alt1
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildArch: noarch
@@ -37,6 +37,9 @@ Alterator module to configure L2TP connections
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Feb 09 2015 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt1
+- Fix bool_default_route
+
 * Thu Dec 25 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.2-alt1
 - Add type check for hostname and interface name
 
