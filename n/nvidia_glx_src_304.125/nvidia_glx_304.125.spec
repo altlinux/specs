@@ -15,7 +15,7 @@
 %define nv_version 304
 %define nv_release 125
 %define nv_minor %nil
-%define pkg_rel alt121
+%define pkg_rel alt122
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -320,6 +320,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 09 2015 Sergey V Turchin <zerg@altlinux.org> 304.125-alt122
+- fix xinf-file
+
 * Mon Dec 08 2014 Sergey V Turchin <zerg@altlinux.org> 304.125-alt121
 - new version
 
