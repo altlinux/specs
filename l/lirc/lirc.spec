@@ -1,11 +1,11 @@
 Name: lirc
-Version: 0.9.0
-Release: alt3
+Version: 0.9.2a
+Release: alt1
 
 Summary: The Linux Infrared Remote Control package
 License: GPL
 Group: System/Base
-URL: http://www.lirc.org
+Url: http://www.lirc.org
 
 Source: %name-%version.tar
 Source1: lircd
@@ -14,12 +14,12 @@ Source3: lircd.service
 Source4: liblircclient0.pc
 
 Patch1: %name-0.8.1-alt-configure.patch
-Patch2: %name-0.8.0pre4-hiddev_fix.patch
-Patch3: %name-alt-font-fix.patch
-Patch4: %name-0.8.6-devpath.patch
-Patch5: %name-0.8.6-fdiformat.patch
+Patch2: lirc-0.9.2a-mode2-fix-sigsegv.patch
+Patch3: lirc-0.9.2a-linking.patch
 
-BuildRequires: libX11-devel libalsa-devel libftdi-devel
+Obsoletes: %name-remotes
+
+BuildRequires: libX11-devel libalsa-devel libftdi-devel python3 rpm-build-python3
 
 Requires: liblirc = %version-%release
 
@@ -42,30 +42,23 @@ Requires: lib%name = %version-%release
 %description -n liblirc-devel
 Development library for LIRC
 
-%package remotes
-Summary: LIRC remote definitions
-Group: System/Base
+%package config
+Summary: LIRC Configuration Tools and Data
+Requires: lirc = %version-%release
 BuildArch: noarch
+Group: System/Base
 
-%description remotes
-LIRC is a package that allows you to decode and send infra-red and
-other signals of many (but not all) commonly used remote controls.
-Included applications include daemons which decode the received
-signals as well as user space applications which allow controlling a
-computer with a remote control.  This package contains a collection
-of remote control configuration files.
+%description config
+The LIRC config package contains tools and data  to ease the
+LIRC configuration process.
 
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p2
-%patch5 -p2
+%patch2 -p2
+%patch3 -p2
 
-for f in remotes/chronos/lircd.conf.chronos \
-    remotes/creative/lircd.conf.livedrive remotes/atiusb/lircd.conf.atiusb \
-    NEWS ChangeLog AUTHORS contrib/lircrc ; do
+for f in NEWS ChangeLog AUTHORS contrib/lircrc ; do
     iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 ; mv $f.utf8 $f
 done
 
@@ -78,19 +71,30 @@ done
 make
 
 %install
-%makeinstall varrundir=%buildroot/%_runtimedir
-%makeinstall -C doc/man
+%makeinstall varrundir=%buildroot/%_runtimedir docdir=%buildroot%_defaultdocdir/%name-%version
 install -pm755 -D %SOURCE1 %buildroot%_initdir/lircd
 install -pm644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/lircd
 install -pm644 -D %SOURCE3 %buildroot%systemd_unitdir/lircd.service
 install -pm644 -D %SOURCE4 %buildroot%_datadir/pkgconfig/liblircclient0.pc
-install -pm600 contrib/lircd.conf contrib/lircmd.conf %buildroot%_sysconfdir
 mkdir -p %buildroot/%_runtimedir/lirc %buildroot%_tmpfilesdir
 echo 'd /var/run/lirc 0755 root root' > %buildroot%_tmpfilesdir/lirc.conf
 # relocate to docdir to avoid python deps
 rm -f %buildroot%_bindir/pronto2lirc
-# Put remote definitions in place
-cp -ar remotes %buildroot%_datadir/lirc-remotes
+rm -rf %buildroot%_datadir/lirc/contrib
+mv %buildroot/%_libdir/pkgconfig/* %buildroot%_datadir/pkgconfig/
+sed -i -e '/^plugindir/s|%buildroot||' %buildroot%_sysconfdir/lirc/lirc_options.conf
+
+
+
+%triggerun -- lirc < 0.9.2
+if [ $2 -gt 0 ] && [ $1 -gt 0 ] && [ -f /etc/lircd.conf ]; then
+# This is upgrade.
+	echo "Warning: configuration files from /etc/lirc.conf moved to /etc/lirc/lircd.conf.d/lircd-saved.conf"
+	mkdir -p %_sysconfdir/lirc/lirc.conf.d >dev/null 2>&1 ||:
+	mv /etc/lircd.conf /etc/lirc/lircd.conf.d/lircd-saved.conf ||:
+	%post_service lircd
+fi
+
 
 %pre
 /usr/sbin/groupadd -r -f %name &> /dev/null ||:
@@ -100,36 +104,58 @@ cp -ar remotes %buildroot%_datadir/lirc-remotes
 
 %preun
 %preun_service lircd
-
 %files
-%doc NEWS TODO doc/lirc.css doc/irxevent.keys doc/html doc/images
-%doc tools/pronto2lirc.py
+%doc NEWS TODO doc/lirc.css doc/irxevent.keys doc/html doc/images configs contrib
 %config(noreplace) %_sysconfdir/sysconfig/lircd
-%config(noreplace) %_sysconfdir/lircd.conf
-%config(noreplace) %_sysconfdir/lircmd.conf
+%config(noreplace) %_sysconfdir/lirc/*
+%dir %_sysconfdir/lirc
 %systemd_unitdir/lircd.service
 %_initdir/*
 %_bindir/*
+%exclude %_bindir/irdb-get
+%exclude %_bindir/lirc-config-tool
+%exclude %_bindir/lirc-setup
 %attr(2711,root,%name) %_sbindir/lircd
 %_sbindir/lircmd
+%_sbindir/lirc-lsplugins
 %_man1dir/*.1*
+%exclude %_mandir/man1/irdb-get*
+%exclude %_mandir/man1/lirc-config-tool*
+%exclude %_mandir/man1/lirc-setup*
+%_man5dir/*.5*
 %_man8dir/*.8*
 %_tmpfilesdir/lirc.conf
 %_runtimedir/lirc
 
 %files -n liblirc
 %_libdir/liblirc_client.so.*
+%_libdir/liblirc.so.*
+%_libdir/liblirc_driver.so.*
+%_libdir/lirc
 
 %files -n liblirc-devel
-%_libdir/liblirc_client.so
+%_libdir/*.so
 %_includedir/*
 %_datadir/pkgconfig/*
 
-%files remotes
-%dir %_datadir/lirc-remotes
-%_datadir/lirc-remotes/*
+%files config
+%_bindir/irdb-get
+%_bindir/lirc-config-tool
+%_bindir/lirc-setup
+%_mandir/man1/irdb-get*
+%_mandir/man1/lirc-config-tool*
+%_mandir/man1/lirc-setup*
+%_datadir/lirc/configs/*
+%python3_sitelibdir_noarch/lirc
+%exclude %_datadir/lirc/configs/iguanaIR.conf
+%exclude %_datadir/lirc/configs/irman.conf
+%exclude %_datadir/lirc/configs/ftdi.conf
+%exclude %_datadir/lirc/configs/audio.conf
 
 %changelog
+* Mon Feb 09 2015 Anton Farygin <rider@altlinux.ru> 0.9.2a-alt1
+- new version
+
 * Sun Mar 24 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt3
 - systemd service file added for lircd
 
@@ -155,7 +181,7 @@ cp -ar remotes %buildroot%_datadir/lirc-remotes
 - Fixed checking of ftdi.h
 
 * Wed Dec 08 2010 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt1.qa1
-- rebuild using girar-nmu to require/provide setversion 
+- rebuild using girar-nmu to require/provide setversion
   by request of mithraen@
 
 * Wed Sep 08 2010 Anton Farygin <rider@altlinux.ru> 0.8.7-alt1
@@ -175,7 +201,7 @@ cp -ar remotes %buildroot%_datadir/lirc-remotes
 - fixed hal fdi (altbug #21732)
 
 * Wed Sep 16 2009 Anton Farygin <rider@altlinux.ru> 0.8.6-alt3
-- fixed location of lirc daemon 
+- fixed location of lirc daemon
 - use /dev/lirc0 as default lirc device
 
 * Wed Sep 16 2009 Anton Farygin <rider@altlinux.ru> 0.8.6-alt2
@@ -224,15 +250,15 @@ cp -ar remotes %buildroot%_datadir/lirc-remotes
   + commandir-1.4.1 - CommandIR Mini hardware driver.
 - Added patches:
   + lirc-0.8.0-2-cmdir.patch - update cmdir patch from vendor.
-  + commandir-1.4.1-cleanup.patch - update commandir kernel driver 
+  + commandir-1.4.1-cleanup.patch - update commandir kernel driver
     for 2.6.16+ kernel.
 - Add post/preun service.
 
 * Mon Apr 03 2006 LAKostis <lakostis at altlinux.ru> 0.8.0-alt2
 - Added patches:
-  + lirc-drivers-cvs-update.patch - sync drivers changes 
+  + lirc-drivers-cvs-update.patch - sync drivers changes
     for 2.6.16+ kernels.
-  
+
 * Tue Feb 14 2006 LAKostis <lakostis at altlinux.ru> 0.8.0-alt1
 - new version 0.8.0.
 - update Makefile for kernel modules.
