@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 2.0.4
-Release: alt1.bzr20150101
+Version: 2.0.5
+Release: alt1.bzr20150114
 
 Summary: Multi-producer-multi-consumer signal dispatching mechanism
 
@@ -28,6 +28,8 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
+%py_provides %sname
+
 %description
 The dispatcher provides loosely-coupled message passing between
 Python objects (signal senders and receivers). It began as one of the
@@ -48,6 +50,7 @@ This package contains documentation for %oname.
 %package -n python3-module-%sname
 Summary: Multi-producer-multi-consumer signal dispatching mechanism
 Group: Development/Python3
+%py3_provides %sname
 
 %description -n python3-module-%sname
 The dispatcher provides loosely-coupled message passing between
@@ -100,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.5-alt1.bzr20150114
+- Version 2.0.5
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt1.bzr20150101
 - Version 2.0.4
 
