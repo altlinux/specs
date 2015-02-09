@@ -1,14 +1,14 @@
 %define oname pyparsing
 
 Name: python-module-%oname
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Python parsing module
 
 License: MIT License
 Group: Development/Python
-URL: http://pyparsing.sourceforge.net/
+URL: http://pyparsing.wikispaces.com/
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ that client code uses to construct the grammar directly in Python code.
 %python_sitelibdir/*
 
 %changelog
+* Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1
+- Version 2.0.3
+
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1
 - Version 2.0.2
 
