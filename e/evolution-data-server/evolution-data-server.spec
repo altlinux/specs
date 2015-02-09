@@ -17,7 +17,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: Evolution Data Server
@@ -266,6 +266,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %endif
 
 %changelog
+* Mon Feb 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.11-alt1
+- 3.12.11
+
 * Mon Jan 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.10-alt1
 - 3.12.10
 

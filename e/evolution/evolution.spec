@@ -15,7 +15,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -41,7 +41,7 @@ Provides: camel
 %define glib_ver 2.36.0
 %define gtk_ver 3.4
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.12.10
+%define eds_ver 3.12.11
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.8.5
@@ -294,6 +294,9 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/appdata/%name-spamassassin.metainfo.xml
 
 %changelog
+* Mon Feb 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.11-alt1
+- 3.12.11
+
 * Mon Jan 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.10-alt1
 - 3.12.10
 - enabled TNEF attachments support via libytnef library
