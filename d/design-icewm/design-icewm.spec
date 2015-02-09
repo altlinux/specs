@@ -1,24 +1,24 @@
-%define theme gertplastik
+%define theme AltClearlooks
 Name: design-icewm
 Version: 1.0
-Release: alt7
+Release: alt9
 Summary: Default theme for IceWM
 Group: Graphical desktop/Icewm
 License: GPL
 Url: http://www.whatis.mynetcologne.de/icewm/index.html
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
-Source0: http://www.whatis.mynetcologne.de/icewm/20051225_gertplastik.tar.gz
+Source0: AltClearlooks.tar
+Source1: http://www.whatis.mynetcologne.de/icewm/20051225_gertplastik.tar
 BuildArch: noarch
 %description
 Default theme for IceWM
 
 %prep
-%setup -n %theme
-
 %build
 %install
 mkdir -p %buildroot%_x11x11dir/icewm/themes
-tar xzvf %SOURCE0 -C %buildroot%_x11x11dir/icewm/themes/
+tar xf %SOURCE0 -C %buildroot%_x11x11dir/icewm/themes/
+tar xf %SOURCE1 -C %buildroot%_x11x11dir/icewm/themes/
 find %buildroot%_x11x11dir/icewm/themes -type f -print0 |
 	xargs -r0 chmod 0444
 find %buildroot%_x11x11dir/icewm/themes -type d -print0 |
@@ -33,6 +33,12 @@ popd
 %_x11x11dir/icewm/themes/*
 
 %changelog
+* Mon Feb 09 2015 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt9
+- added AltClearlooks theme and set as default
+
+* Wed Jun 05 2013 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt8
+- don't gzip content
+
 * Sat Jan 05 2013 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt7
 - updated some .xpm's for fix breaks themes with xorg 1.12.3.902 and later
   (bfo#54168)

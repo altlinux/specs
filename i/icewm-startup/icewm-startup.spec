@@ -2,7 +2,7 @@
 %def_without desklaunch
 Name: icewm-startup
 Version: 0.14
-Release: alt2
+Release: alt3
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -350,8 +350,8 @@ EOF
 
 cat <<EOF > %buildroot/%icewmconfdir/startup.d/networkmanager
 #!/bin/sh
-/usr/bin/nm-applet --sm-disable&
 /usr/libexec/polkit-1/polkit-gnome-authentication-agent-1&
+/usr/bin/nm-applet&
 EOF
 
 echo "tray_mixer_plus&" > %buildroot/%icewmconfdir/startup.d/tray_mixer_plus
@@ -436,6 +436,9 @@ fi
 %files grun
 
 %changelog
+* Mon Feb 09 2015 Dmitriy Khanzhin <jinn@altlinux.org> 0.14-alt3
+- fixed typo in networkmanager subpackage
+
 * Tue May 14 2013 Dmitriy Khanzhin <jinn@altlinux.org> 0.14-alt2
 - delay before starting programs made customizable
 
