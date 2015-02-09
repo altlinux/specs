@@ -15,13 +15,13 @@
 %define nv_version 340
 %define nv_release 65
 %define nv_minor %nil
-%define pkg_rel alt136
+%define pkg_rel alt137
 %ifarch x86_64
 %def_enable egl
 %else
 %def_enable egl
 %endif
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -345,6 +345,10 @@ fi
 %endif
 
 %changelog
+* Mon Feb 09 2015 Sergey V Turchin <zerg@altlinux.org> 340.65-alt137
+- fix xinf-file
+- don't package kernel module sources
+
 * Tue Dec 09 2014 Sergey V Turchin <zerg@altlinux.org> 340.65-alt136
 - new version
 
