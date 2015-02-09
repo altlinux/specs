@@ -1,5 +1,5 @@
 Name: nip2
-Version: 7.40.4
+Version: 7.42.1
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -18,7 +18,7 @@ Provides: nip = %version
 Obsoletes: nip <= 7.8.11
 
 # Automatically added by buildreq on Fri Aug 13 2010
-BuildRequires: desktop-file-utils flex libgsl-devel libgtk+2-devel libvips-devel xdg-utils
+BuildRequires: desktop-file-utils flex libgsl-devel libgtk+2-devel libvips-devel libxml2-devel xdg-utils
 BuildRequires: gcc-c++
 
 %description
@@ -69,6 +69,9 @@ cp -a doc/html doc/pdf %buildroot%_docdir/%name/
 # - look into uninstalled /usr/share/mime/*
 
 %changelog
+* Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 7.42.1-alt1
+- new version (watch file uupdate)
+
 * Thu Aug 28 2014 Michael Shigorin <mike@altlinux.org> 7.40.4-alt1
 - new version (watch file uupdate)
 
