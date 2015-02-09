@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.56
+Version: 1.1.57
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 1.1.57-alt1
+- fix the lists copying fix
+
 * Mon Feb 02 2015 Michael Shigorin <mike@altlinux.org> 1.1.56-alt1
 - fix lilo check for vm images
 
