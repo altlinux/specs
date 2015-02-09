@@ -3,14 +3,15 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 4.0.2
-Release: alt2
+Version: 4.1.0
+Release: alt1
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache
 Group: Development/Python
 Url: http://www.tornadoweb.org
 
+# https://github.com/tornadoweb/tornado.git
 Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-distribute
@@ -87,15 +88,18 @@ popd
 
 %files
 %python_sitelibdir/%module_name
-%exclude %python_sitelibdir/*.egg-*
+%python_sitelibdir/*.egg-*
 
 %if_with python3
 %files -n python3-module-%module_name
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*.egg-*
+%python3_sitelibdir/*.egg-*
 %endif
 
 %changelog
+* Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
+- Version 4.1.0
+
 * Mon Dec 1 2014 Vladimir Didenko (REAL) <cow@altlinux.org> 4.0.2-alt2
 - Add dependency to python-module-backports.ssl_match_hostname
 
