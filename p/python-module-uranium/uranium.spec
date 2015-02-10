@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.0.49
-Release: alt1.git20150203
+Version: 0.0.52
+Release: alt1.git20150209
 Summary: A build system for python
 License: MIT
 Group: Development/Python
@@ -180,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.52-alt1.git20150209
+- Version 0.0.52
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.49-alt1.git20150203
 - Version 0.0.49
 
