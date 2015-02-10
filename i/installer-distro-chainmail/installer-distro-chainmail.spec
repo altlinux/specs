@@ -1,6 +1,6 @@
 Name: installer-distro-chainmail
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: Installer files for IVK chainmail
 License: GPL
@@ -72,8 +72,18 @@ cp -a * %buildroot%install2dir/
 %install2dir/webapps-css/
 %install2dir/alterator-hotstandby/
 %install2dir/osec-onboot.init
+%install2dir/ivk-scripts/
 
 %changelog
+* Tue Feb 10 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt2
+- menu: Hide 'pkg-sources' and 'updates' modules.
+- Use our own footer for BASE.
+- Update ivk-scripts.
+- Add and install ivk-scripts.
+- Update module-order-list.
+- menu: Move 'firewall' and 'snort' sections to the top.
+- Enable rpcbind by default.
+
 * Fri Jan 30 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt1
 - Add osec-onboot service.
 - Use 'chainmail' workflow again.
