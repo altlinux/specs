@@ -3,10 +3,10 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.3
-Release: alt1.git20150208
+Version: 0.2.1
+Release: alt1.git20150210
 Summary: Install and access data files (conf, json, sqlite3, ...) in an easy way
-License: LGPLv3
+License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/datafolder/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -79,6 +79,7 @@ popd
 %python_install
 
 %check
+export LC_ALL=en_US.UTF-8
 python setup.py test
 nosetests -v
 %if_with python3
@@ -104,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20150210
+- Version 0.2.1
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20150208
 - Initial build for Sisyphus
 
