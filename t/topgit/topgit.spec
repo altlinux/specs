@@ -2,7 +2,7 @@
 
 Name: topgit
 Version: 0.9
-Release: alt1.git20130407
+Release: alt2.git20130407
 
 Summary: A different patch queue manager for Git
 License: GPLv2
@@ -10,9 +10,8 @@ Group: Development/Tools
 Url: https://github.com/greenrd/topgit
 BuildArch: noarch
 
-Packager: Maxim Ivanov <redbaron@altlinux.org>
-
 Source0: topgit-%version.tar
+Patch0: topgit-tg_rename.patch
 
 BuildRequires(check): git-core
 
@@ -43,7 +42,8 @@ and smoothly keep them all up-to-date and transfer your changes between
 them.
 
 %prep
-%setup 
+%setup
+%patch0 -p1
 
 %build
 touch --date=tomorrow precheck
@@ -65,6 +65,9 @@ make precheck
 %doc README COPYING
 
 %changelog
+* Fri Jan 30 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt2.git20130407
+- tg rename: a simple shortcut, implemented for leaves only
+
 * Mon Jan 26 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt1.git20130407
 - new upstream release+Git changes from a new upstream maintainer: 
   https://github.com/greenrd/topgit/tags
