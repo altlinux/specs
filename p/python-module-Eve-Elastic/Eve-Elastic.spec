@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.git20141124
+Version: 0.2.5
+Release: alt1.git20150209
 Summary: Elasticsearch data layer for eve rest framework
 License: GPLv3
 Group: Development/Python
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.git20150209
+- Version 0.2.5
+
 * Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20141124
 - Initial build for Sisyphus
 
