@@ -1,3 +1,5 @@
+%define ver_major 0.5
+
 %def_disable static
 %def_with python
 %def_with gtk
@@ -7,25 +9,25 @@
 %def_disable vapi
 
 Name: gtk-vnc
-Version: 0.5.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: VNC viewer widget
 Group: System/Libraries
 License: LGPL
 Url: http://gtk-vnc.sourceforge.net/
 
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
-Source: http://download.sourceforge.net/%name/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: libgtkvnc = %version-%release
 
 %{?_with_gtk:BuildRequires: libgtk+2-devel}
 %{?_with_gtk3:BuildRequires: libgtk+3-devel}
+BuildRequires: intltool gnome-common
 # pod2man
 BuildRequires: perl-podlators
 BuildRequires: libgnutls-devel libgcrypt-devel libcairo-gobject-devel libsasl2-devel
-BuildRequires: libpulseaudio-devel zlib-devel perl-Text-CSV intltool
+BuildRequires: libpulseaudio-devel zlib-devel perl-Text-CSV
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_with_python:BuildRequires: python-module-pygobject-devel}
 %{?_with_gtk:%{?_with_python:BuildRequires: python-module-pygtk-devel}}
@@ -321,6 +323,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
+- 0.5.4
+
 * Tue Oct 22 2013 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt2
 - rebuilt with libsasl2.so.3
 
