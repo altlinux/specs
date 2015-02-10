@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	3.14
 %define kernel_sublevel .32
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Feb 10 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.32-alt2
+- closes: #30712
+
 * Sat Feb 07 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.32-alt1
 - 3.14.32
 
