@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_base 3.3
 %define ver_major 3.3
@@ -11,7 +11,7 @@
 %def_enable libraw
 
 Name: gthumb
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
-# From configure.in
+# From configure.ac
 %define glib_ver 2.38.0
 %define gtk_ver 3.10.0
 %define clutter_gtk_ver 1.0.0
@@ -169,6 +169,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Feb 10 2015 Yuri N. Sedunov <aris@altlinux.org> 3.3.3-alt1
+- 3.3.3
+
 * Mon Oct 06 2014 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt1
 - 3.3.2
 
