@@ -1,7 +1,7 @@
 
 Name: kf5-rpm-build
 Version: 5.0.0
-Release: alt0.1
+Release: alt0.2
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
@@ -33,5 +33,8 @@ install -D -m 0644 %SOURCE1 %buildroot/%_rpmmacrosdir/kf5
 %_rpmmacrosdir/kf5
 
 %changelog
+* Tue Feb 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt0.2
+- update paths
+
 * Wed Dec 24 2014 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt0.1
 - initial build
