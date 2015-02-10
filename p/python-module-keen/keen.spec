@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.5
-Release: alt1.git20141125
+Version: 0.3.9
+Release: alt1.git20150209
 Summary: Python Client for Keen IO
 License: MIT
 Group: Development/Python
@@ -19,13 +19,14 @@ BuildPreReq: python-modules-json
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-requests python-module-pycrypto
 BuildPreReq: python-module-Padding python-module-nose
-BuildPreReq: python-module-urllib3
+BuildPreReq: python-module-urllib3 python-module-mock
+BuildPreReq: python-modules-multiprocessing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-requests python3-module-pycrypto
 BuildPreReq: python3-module-Padding python3-module-nose
-BuildPreReq: python3-module-urllib3
+BuildPreReq: python3-module-urllib3 python3-module-mock
 %endif
 
 %py_provides %oname
@@ -87,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.9-alt1.git20150209
+- Version 0.3.9
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt1.git20141125
 - Initial build for Sisyphus
 
