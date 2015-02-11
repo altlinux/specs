@@ -1,15 +1,13 @@
 Name: youtube-dl
-Version: 2015.02.02
+Version: 2015.02.10.5
 Release: alt1
 
 Summary: Download videos from YouTube
 License: Public domain
 Group: Networking/File transfer
-Url: http://bitbucket.org/rg3/youtube-dl/wiki/Home
+Url: http://youtube-dl.org
 
 Source0: %name-%version.tar
-
-Packager: Igor Zubkov <icesik@altlinux.org>
 
 BuildArch: noarch
 
@@ -31,6 +29,9 @@ cp -r youtube_dl %buildroot%python_sitelibdir/
 %python_sitelibdir/youtube_dl
 
 %changelog
+* Wed Feb 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2015.02.10.5-alt1
+- Updated to 2015.02.10.5.
+
 * Mon Feb 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2015.02.02-alt1
 - Updated to 2015.02.02.
 
