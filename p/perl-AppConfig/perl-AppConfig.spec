@@ -1,6 +1,6 @@
 %define dist AppConfig
 Name: perl-%dist
-Version: 1.67
+Version: 1.68
 Release: alt1
 
 Summary: Perl module for reading configuration files
@@ -35,6 +35,9 @@ arguments and CGI script parameters.
 %perl_vendor_privlib/AppConfig*
 
 %changelog
+* Wed Feb 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.68-alt1
+- automated CPAN update
+
 * Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.67-alt1
 - automated CPAN update
 
