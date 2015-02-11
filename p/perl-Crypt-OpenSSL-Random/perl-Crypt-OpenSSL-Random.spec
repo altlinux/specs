@@ -1,15 +1,15 @@
 %define module Crypt-OpenSSL-Random
 
 Name: perl-%module
-Version: 0.04
-Release: alt4.1
+Version: 0.10
+Release: alt1
 
 Summary: Routines for accessing the OpenSSL pseudo-random number generator
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Crypt/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RU/RURBAN/Crypt-OpenSSL-Random-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libssl-devel perl-devel
@@ -32,6 +32,9 @@ OpenSSL library's pseudo-random number generator.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Feb 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt4.1
 - rebuild with new perl 5.20.1
 
