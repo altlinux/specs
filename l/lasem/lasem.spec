@@ -1,8 +1,8 @@
 %define ver_major 0.4
-%define api_ver 0.4
+%define api_ver %ver_major
 
 Name: lasem
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: C/Gobject based SVG/Mathml renderer and editor - tools
@@ -11,6 +11,7 @@ Group: Graphics
 
 Url: https://live.gnome.org/Lasem
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 BuildRequires: libgio-devel libxml2-devel libcairo-devel libcairo-gobject-devel libgdk-pixbuf-devel libpango-devel
 BuildRequires: libgdk-pixbuf-gir-devel libpango-gir-devel
@@ -88,7 +89,8 @@ applications.
 %make check
 
 %files
-%_bindir/lasem-render-%api_ver
+%_bindir/%name-render-%api_ver
+%_man1dir/%name-render-*
 %doc README ChangeLog AUTHORS NEWS
 
 %files -n lib%name -f %name-%api_ver.lang
@@ -109,6 +111,9 @@ applications.
 %_datadir/gtk-doc/html/%name-%api_ver/
 
 %changelog
+* Thu Feb 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 - updated buildreqs
