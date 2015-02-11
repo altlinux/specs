@@ -1,6 +1,6 @@
 Name: sgml-common
 Version: 0.6.3
-Release: alt14
+Release: alt15
 
 %define xmlcharent_version 0.3
 
@@ -94,64 +94,17 @@ install -d -m755 $RPM_BUILD_ROOT%sgmlconfdir/docbook
 
 # Create an XML catalog for ISO XML character entities
 CATALOG=$RPM_BUILD_ROOT%xmlentitiesdir/xmlcatalog
+for f in %buildroot/%xmlentitiesdir/*.ent ; do
+    fname=`basename $f`
+    lname=`echo $fname | sed 's|^iso|iso-|'`
+    ln -s $fname %buildroot/%xmlentitiesdir/$lname
+done
 %_bindir/xmlcatalog --noout --create $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Added Latin 1//EN//XML" \
-	iso-lat1.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Added Latin 2//EN//XML" \
-	iso-lat2.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Diacritical Marks//EN//XML" \
-	iso-dia.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Box and Line Drawing//EN//XML" \
-	iso-box.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Numeric and Special Graphic//EN//XML" \
-	iso-num.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Publishing//EN//XML" \
-	iso-pub.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES General Technical//EN//XML" \
-	iso-tech.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Added Math Symbols: Arrow Relations//EN//XML" \
-	iso-amsa.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Added Math Symbols: Binary Operators//EN//XML" \
-	iso-amsb.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Added Math Symbols: Delimiters//EN//XML" \
-	iso-amsc.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Added Math Symbols: Negated Relations//EN//XML" \
-	iso-amsn.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Added Math Symbols: Ordinary//EN//XML" \
-	iso-amso.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Added Math Symbols: Relations//EN//XML" \
-	iso-amsr.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Greek Letters//EN//XML" \
-	iso-grk1.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Monotoniko Greek//EN//XML" \
-	iso-grk2.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Greek Symbols//EN//XML" \
-	iso-grk3.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Alternative Greek Symbols//EN//XML" \
-	iso-grk4.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Russian Cyrillic//EN//XML" \
-	iso-cyr1.ent $CATALOG
-%_bindir/xmlcatalog --noout --add "public" \
-	"ISO 8879:1986//ENTITIES Non-Russian Cyrillic//EN//XML" \
-	iso-cyr2.ent $CATALOG
+for f in %buildroot/%xmlentitiesdir/*.ent ; do
+    %_bindir/xmlcatalog --noout --add "public" \
+	"ISO 8879:1986//ENTITIES `basename $f` //EN//XML" \
+	`basename $f` $CATALOG
+done
 
 # Create an empty XML catalog.
 CATALOG=$RPM_BUILD_ROOT%xmlconfdir/catalog
@@ -236,6 +189,9 @@ fi
 %xmlentitiesdir
 
 %changelog
+* Wed Feb 11 2015 Sergey V Turchin <zerg@altlinux.org> 0.6.3-alt15
+- fix character entities for docbook-xml-4.5 (ALT#30725)
+
 * Tue Jun 16 2009 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt14
 - swapped back /usr/share/xml/docbook/catalog and /etc/sgml/docbook/xmlcatalog
   (fixes: #20463)
