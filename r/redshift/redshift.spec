@@ -1,5 +1,5 @@
 Name: 	 redshift
-Version: 1.9.1
+Version: 1.10
 Release: alt1
 
 Summary: Redshift adjusts the color temperature of your screen
@@ -26,6 +26,7 @@ BuildRequires: libdrm-devel
 BuildRequires: python3-module-pygobject
 BuildRequires: python3-module-pyxdg
 BuildRequires: systemd-devel
+BuildRequires: intltool
 
 # libaptindicator is not package in ALT Linux
 %add_typelib_req_skiplist typelib(AppIndicator3)
@@ -87,6 +88,9 @@ fi
 rm -f %_sysconfdir/xdg/autostart/gtk-redshift.desktop
 
 %changelog
+* Tue Feb 10 2015 Andrey Cherepanov <cas@altlinux.org> 1.10-alt1
+- New version
+
 * Tue Apr 29 2014 Andrey Cherepanov <cas@altlinux.org> 1.9.1-alt1
 - New version
 
