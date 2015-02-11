@@ -2,7 +2,7 @@
 
 Name: topgit
 Version: 0.9
-Release: alt2.git20130407
+Release: alt3.git20130407
 
 Summary: A different patch queue manager for Git
 License: GPLv2
@@ -65,6 +65,9 @@ make precheck
 %doc README COPYING
 
 %changelog
+* Wed Feb 11 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt3.git20130407
+- tg_rename: Clean up the old ref (with "tg delete -f").
+
 * Fri Jan 30 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt2.git20130407
 - tg rename: a simple shortcut, implemented for leaves only
 
