@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fluxbox
-Version: 1.3.6
+Version: 1.3.7
 Release: alt1
 
 Summary: Fast and lightweight window manager
@@ -69,16 +69,13 @@ session.screen0.windowScrollAction:\tNextTab
 ' data/init.in
 
 %build
-# Regenerate:
-# - Makefiles after applying no_generate_menu patch
 %autoreconf
-
-%configure --with-init=%_sysconfdir/X11/%name/init \
-           --with-keys=%_sysconfdir/X11/%name/keys \
-	   --with-menu=%_sysconfdir/X11/%name/menu \
-	   --enable-nls \
-	   --enable-shape \
-	   %{?_enable_debug:--enable-debug}
+%configure \
+        --with-init=%_sysconfdir/X11/%name/init \
+        --with-keys=%_sysconfdir/X11/%name/keys \
+        --with-menu=%_sysconfdir/X11/%name/menu \
+        --enable-nls \
+        %{?_enable_debug:--enable-debug}
 
 %make_build %{?!_enable_debug: --no-print-directory --silent}
 
@@ -136,6 +133,9 @@ install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/styles/Cthulhain
 %vim_ftdetect_dir/%name.vim
 
 %changelog
+* Wed Feb 11 2015 Mikhail Kolchin <mvk@altlinux.org> 1.3.7-alt1
+- Updated to 1.3.7
+
 * Mon Feb 02 2015 Mikhail Kolchin <mvk@altlinux.org> 1.3.6-alt1
 - Updated to 1.3.6
 
