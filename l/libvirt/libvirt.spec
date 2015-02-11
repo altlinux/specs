@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.11
+Version: 1.2.12
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -116,6 +116,7 @@ Patch1: %name-%version-%release.patch
 Requires: libvirt-client = %version-%release
 
 %{?_with_xen:BuildRequires: xen-devel xen-runtime}
+%{?_with_libxl:BuildRequires: xen-devel}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_udev:BuildRequires: libudev-devel libpciaccess-devel}
 %{?_with_yajl:BuildRequires: libyajl-devel}
@@ -925,6 +926,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Feb 11 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.12-alt1
+- 1.2.12
+- fixed CVE-2015-0236
+
 * Thu Dec 18 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.11-alt1
 - 1.2.11
 - fixed CVE-2014-7823,CVE-2014-8135,CVE-2014-8136,CVE-2014-8131
