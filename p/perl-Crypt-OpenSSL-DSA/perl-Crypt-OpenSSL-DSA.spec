@@ -1,15 +1,15 @@
 %define module Crypt-OpenSSL-DSA
 
 Name: perl-%module
-Version: 0.14
-Release: alt2.1
+Version: 0.15
+Release: alt1
 
 Summary: Digital Signature Algorithm using OpenSSL 
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/authors/id/T/TJ/TJMATHER/Crypt-OpenSSL-DSA-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/K/KM/KMX/Crypt-OpenSSL-DSA-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libssl-devel openssl perl-Digest-SHA1 perl-devel
@@ -35,6 +35,9 @@ library, located at http://www.openssl.org
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Feb 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2.1
 - rebuild with new perl 5.20.1
 
