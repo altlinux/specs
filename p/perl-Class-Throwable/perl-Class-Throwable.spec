@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Class-Throwable
-Version: 0.11
-Release: alt1.1
+Version: 0.13
+Release: alt1
 
 Summary: A minimal lightweight exception class
 
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Class-Throwable/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/K/KM/KMX/Class-Throwable-0.11.tar.gz
+Source: http://www.cpan.org/authors/id/K/KM/KMX/Class-Throwable-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon May 26 2008
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -47,6 +47,9 @@ This module implements a minimal lightweight exception object. It is meant to be
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Feb 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
