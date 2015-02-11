@@ -1,17 +1,18 @@
-# 4.3.0.0.beta2-buildfix1
+# 4.4.0.3
 %def_with forky
 %def_with parallelism
 %def_without fetch
+%def_without lto
 
 Name: LibreOffice4
-Version: 4.3
-%define urelease 0.0.beta2-buildfix1
+Version: 4.4
+%define urelease 0.3
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt0.beta2.buildfix1
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -24,9 +25,10 @@ Requires: %name-extensions = %version-%release
 
 Provides: %name-full = %version-%release
 Provides: libreoffice = %version-%release
+Obsoletes: libreoffice < 3.99
 Obsoletes: %name-full < %version-%release
 
-%define with_lang ru de fr uk pt-BR es kk
+%define with_lang ru be de fr uk pt-BR es kk tt
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
 #Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
 Requires: gst-libav
@@ -39,128 +41,54 @@ Source3:	libreoffice-translations-%uversion.tar.xz
 
 Source10:	libreoffice-ext_sources.%uversion.tar
 Source100:	forky.c
-Source200:	update_from_fc
-
-Patch401:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
-Patch402: libreoffice-4-alt-drop-gnome-open.patch
-Patch403: alt-002-tmpdir.patch
+Source200:	oasis-master-document-template.icns
+Source300:	update_from_fc
 
 # FC patches files
-
+Patch3: 0001-disable-failing-test-on-rhel.patch
+Patch8: 0001-disable-failing-test-on-rhel-6.patch
+Patch9: 0001-disable-swui-test-on-RHEL-7.patch
+Patch10: 0001-disable-libe-book-support.patch
+Patch11: 0001-disable-failing-while-libmwaw-fix-pending.patch
 Patch12: 0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
 Patch13: 0001-disable-firebird-unit-test.patch
 Patch14: 0001-never-run-autogen.sh.patch
 Patch15: 0001-add-X-TryExec-entries-to-desktop-files.patch
 Patch16: 0001-disable-PSD-import-test-which-deadlocks-on-ARM.patch
-Patch44: 0001-deb-749592-mysql-connector-doesn-t-work-with-remote-.patch
+Patch17: 0001-Resolves-fdo-37559-revert-adding-extra-dummy-polygon.patch
+Patch18: 0001-radio-check-top-center-bottom-alignment-for-table-ce.patch
+Patch19: 0001-allow-comparing-documents-which-only-differ-by-frame.patch
+Patch20: 0001-Use-the-same-advanced-Ellipse-and-Rectangle-shapes-i.patch
+Patch21: 0001-if-we-change-the-keys-we-have-to-resort-based-on-the.patch
+Patch22: 0001-rhbz-1175027-sw-fix-life-cycle-of-SwConnectionDispos.patch
+Patch23: 0001-rhbz-1184582-At-least-catch-and-log-UNO-exceptions-i.patch
+Patch24: 0001-Related-rhbz-1185307-One-more-location-to-look-for-H.patch
+Patch25: 0001-Resolves-rhbz-1179642-crash-in-GetFocus-with-empty-m.patch
+Patch26: 0001-rhbz-1177022-vcl-fix-PDF-embedding-of-Type-1-fonts.patch
+Patch27: 0001-don-t-strip-font-names-of-apparent-script-suffixes-a.patch
+Patch28: 0001-fix-assert-call.patch
+
+
 
 # Long-term FC patches
 Patch300: openoffice.org-2.0.2.rh188467.printingdefaults.patch
 Patch301: openoffice.org-3.0.0.ooo88341.sc.verticalboxes.patch
 Patch302: openoffice.org-3.1.0.ooo101274.opening-a-directory.patch
 
-BuildRequires: ant-testutil imake junit4 xorg-cf-files zenity
-BuildRequires: sac pentaho-libxml flute pentaho-reporting-flow-engine liblayout libloader libformula librepository libserializer libbase apache-commons-codec apache-commons-lang apache-commons-httpclient apache-commons-logging bsh rhino
-
-BuildRequires: bc
-BuildRequires: binutils
-BuildRequires: desktop-file-utils
-BuildRequires: doxygen
-BuildRequires: findutils
-BuildRequires: libicu-devel
-BuildRequires: flex
-BuildRequires: gcc-c++
-BuildRequires: git
-BuildRequires: gperf
-BuildRequires: perl-Archive-Zip
-BuildRequires: zip unzip
-
-# libs / headers - common
-BuildRequires: libcups-devel
-BuildRequires: libexpat-devel
-BuildRequires: fonts-ttf-liberation
-BuildRequires: libhyphen-devel
-BuildRequires: libicu-devel
-BuildRequires: liblpsolve-devel
-BuildRequires: pkgconfig(cppunit) >= 1.12.0
-BuildRequires: pkgconfig(dbus-glib-1)
-BuildRequires: pkgconfig(evolution-data-server-1.2)
-BuildRequires: pkgconfig(fontconfig) >= 2.4.1
-BuildRequires: pkgconfig(freetype2) >= 9.9.3
-BuildRequires: pkgconfig(gconf-2.0)
-BuildRequires: pkgconfig(glu)
-BuildRequires: pkgconfig(gtk+-2.0) >= 2.10.0 pkgconfig(gdk-pixbuf-xlib-2.0) >= 2.2 pkgconfig(gtk+-unix-print-2.0) >= 2.10.0 pkgconfig(gio-2.0) >= 2.26
-BuildRequires: pkgconfig(telepathy-glib) >= 0.18.0
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.2 pkgconfig(gtk+-unix-print-3.0) pkgconfig(gmodule-no-export-2.0) pkgconfig(cairo)
-BuildRequires: pkgconfig(hunspell)
-BuildRequires: pkgconfig(ice)
-BuildRequires: pkgconfig(libcurl) >= 7.19.4
-BuildRequires: pkgconfig(libidn)
-BuildRequires: pkgconfig(libxml-2.0)
-BuildRequires: pkgconfig(libxslt)
-BuildRequires: pkgconfig(neon)
-BuildRequires: pkgconfig(nss) >= 3.9.3 pkgconfig(nspr) >= 4.8
-BuildRequires: pkgconfig(poppler)
-BuildRequires: pkgconfig(redland) >= 1.0.8 pkgconfig(raptor2) >= 2.0.7
-BuildRequires: pkgconfig(sane-backends)
-BuildRequires: pkgconfig(xext)
-BuildRequires: pkgconfig(xinerama)
-BuildRequires: pkgconfig(xt)
-BuildRequires: pkgconfig(zlib)
-BuildRequires: libvigra-devel
-
-# libs / headers - conditional
-#BuildRequires: firebird-devel
-#BuildRequires: firebird-libfbembed
-BuildRequires: libglm-devel
-BuildRequires: kde4libs-devel
-BuildRequires: pkgconfig(glew) >= 1.10.0
-BuildRequires: pkgconfig(libabw-0.1)
-BuildRequires: pkgconfig(libcdr-0.1)
-BuildRequires: pkgconfig(libcmis-0.4) >= 0.4.0
-BuildRequires: pkgconfig(libe-book-0.1) >= 0.1.1
-BuildRequires: pkgconfig(libeot) >= 0.01
-BuildRequires: pkgconfig(libetonyek-0.1) >= 0.1.1
-BuildRequires: pkgconfig(libfreehand-0.1)
-BuildRequires: pkgconfig(libmspub-0.1)
-BuildRequires: pkgconfig(libmwaw-0.3) >= 0.3.1
-BuildRequires: pkgconfig(libodfgen-0.1)
-BuildRequires: pkgconfig(liborcus-0.8) >= 0.7.0
-BuildRequires: pkgconfig(librevenge-0.0) >= 0.0.1
-BuildRequires: pkgconfig(libvisio-0.1)
-BuildRequires: pkgconfig(libwpd-0.10)
-BuildRequires: pkgconfig(libwpg-0.3)
-BuildRequires: pkgconfig(libwps-0.3)
-BuildRequires: pkgconfig(mdds) >= 0.10.3
-
-BuildRequires: boost-devel
-BuildRequires: pkgconfig(graphite2) >= 0.9.3
-BuildRequires: pkgconfig(harfbuzz)
-BuildRequires: pkgconfig(lcms2)
-BuildRequires: pkgconfig(libclucene-core)
-BuildRequires: pkgconfig(libexttextcat)
-BuildRequires: pkgconfig(liblangtag)
-BuildRequires: pkgconfig(mythes)
-BuildRequires: pkgconfig(poppler-cpp)
-
-BuildRequires: libldap-devel
-BuildRequires: libunixODBC-devel
-BuildRequires: postgresql-devel
-BuildRequires: libmysqlclient-devel
-BuildRequires: libbluez-devel
-BuildRequires: python3-devel
-BuildRequires: xulrunner-devel
-
-# libs / headers - special cases
-BuildRequires: pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-plugins-base-1.0) pkgconfig(gstreamer-video-1.0)
-BuildRequires: libjpeg-devel
-
-
-# to remove in 4.2
-BuildRequires: tomcat-servlet-3.0-api
+# ALT patches
+Patch401:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
+Patch402: libreoffice-4-alt-drop-gnome-open.patch
+Patch403: alt-002-tmpdir.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
+
+# Automatically added by buildreq on Mon Nov 10 2014
+# optimized out: ant-testutil apache-commons-codec apache-commons-logging boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel cppunit flute fontconfig fontconfig-devel fonts-type1-xorg glib2-devel gstreamer1.0-devel icu-utils java java-devel jpackage-utils junit4 kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libclucene-contribs-lib libclucene-core libclucene-shared libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgpg-error libgraphite2-devel libgst-plugins1.0 libharfbuzz-icu libicu-devel libnspr-devel libpango-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libqt4-network librasqal-devel librevenge-devel libsasl2-3 libssl-devel libstdc++-devel libunixODBC-devel libwayland-client libwayland-server libxml2-devel pentaho-libxml perl-Compress-Raw-Zlib pkg-config poppler-data python-base python-devel python-modules python3 python3-base raptor2-devel sac tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.4-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
+BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake kde4libs-devel libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd9-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
+
+# 4.4
+BuildRequires: libavahi-devel libpagemaker-devel boost-signals-devel
 
 %description
 LibreOffice is a productivity suite that is compatible with other major
@@ -229,6 +157,7 @@ BuildArch: noarch
 %name is distributed along with some mimetype settings and files.
 This package installs them.
 
+# TODO redefine %%lang adding corr langpack
 # define macro for quick langpack description
 %define langpack(l:n:) \
 %define lang %{-l:%{-l*}}%{!-l:%{error:Language code not defined}} \
@@ -253,28 +182,58 @@ echo Direct build
 %endif
 %setup -q -n libreoffice-%uversion -a10 -b1 -b2 -b3
 %patch401 -p0
-%patch402 -p1
+##patch402 -p1
 %patch403 -p2
+#patch404 -p1
 
 # FC patches applying (## -- unsuccsessful but seems meaningful)
+%patch3 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+##patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch44 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
+%patch27 -p1
+%patch28 -p1
+
+
 
 # Long-term FC patches applying
-#%patch300 -p1
-#%patch301 -p1
-#%patch302 -p1
+#patch300 -p1
+##patch301 -p1
+##patch302 -p1
+
+# Hacked git binary patch
+cp %SOURCE300 sysui/desktop/icons/
 
 # Hack GCC_VERSION usage
-sed -i '
+sed -i.GCC_VERSION '
 s/\(GCC_VERSION=`echo $_gcc_version\)[^`]*`/\1|cut -d. -f1-2`/
-/if test "\${*GCC_VERSION}*" -lt 0401/,/fi/d
-/elif test "\${GCC_VERSION\?}" -ge 0403; then/d
 ' configure.ac
+
+%ifarch %ix86
+# TODO: check when this became obsolete
+sed -i.DLLPUB 's/DECL_LISTENERMULTIPLEXER_START(/DECL_LISTENERMULTIPLEXER_START_DLLPUB(/g' include/toolkit/helper/listenermultiplexer.hxx
+sed -i.gccvisbroken 's/gccvisbroken=no/gccvisbroken=yes/g' configure.ac
+#sed -i.VISIBILITY 's/HAVE_GCC_VISIBILITY_BROKEN=$/HAVE_GCC_VISIBILITY_BROKEN="YES"/g' configure.ac
+%endif
+
+# TODO: check if this still needed after 4.4.0.3-alt1
+sed -i.gridprinter '/gridprinter.hxx/i#include <algorithm>' svl/source/misc/gridprinter.cxx
 
 rm -fr %name-tnslations/git-hooks
 
@@ -318,15 +277,13 @@ test -r %conffile && . %conffile ||:
         --with-alloc=system \
         --without-fonts \
         --without-myspell-dicts \
-        --without-ppds \
+	--without-system-npapi-headers \
 	\
         --with-external-dict-dir=%_datadir/myspell \
         --with-external-hyph-dir=%_datadir/hyphen \
         --with-external-thes-dir=%_datadir/mythes \
         --with-lang="en-US %with_lang" \
         --with-external-tar=`pwd`/ext_sources \
-	\
-	--enable-kde4 \
 	\
 	--enable-hardlink-deliver \
 	\
@@ -344,9 +301,14 @@ test -r %conffile && . %conffile ||:
 	--enable-release-build \
 	--with-help \
   \
+	--enable-kde4 \
 	--enable-gtk3 \
-	--enable-gstreamer \
 	--disable-gstreamer-0-10 \
+  \
+  	--enable-avahi \
+%if_with lto
+  	--enable-lto \
+%endif
 %if_with parallelism
 	--with-parallelism \
 %endif
@@ -416,6 +378,7 @@ unset RPM_PYTHON
 for n in l*4*.sh; do install -m755 -D $n %buildroot%_bindir/${n%%.sh}; done
 # Install wrappers
 for n in lo4*.sh; do m="lo${n##lo4}"; install -m755 -D $n %buildroot%_bindir/${m%%.sh}; done
+install -m755 -D libreoffice%version.sh %buildroot%_bindir/loffice
 
 # Install renamed icons
 for n in `( cd sysui/desktop/icons; find hicolor -type f )`; do
@@ -488,14 +451,31 @@ install -D libreoffice.config %buildroot%conffile
 %_datadir/application-registry/*
 
 %langpack -l ru -n Russian
+%langpack -l be -n Belorussian
 %langpack -l de -n German
 %langpack -l fr -n French
 %langpack -l uk -n Ukrainian
 %langpack -l pt-BR -n Brazilian Portuguese
 %langpack -l es -n Espanian
 %langpack -l kk -n Kazakh
+%langpack -l tt -n Tatar
 
 %changelog
+* Thu Feb 05 2015 Fr. Br. George <george@altlinux.ru> 4.4-alt1
+- Update to 4.4.0.3
+- Turn tt and be langpacks on
+
+* Mon Dec 01 2014 Fr. Br. George <george@altlinux.ru> 4.3-alt3
+- Update to 4.3.5.1
+
+* Wed Nov 19 2014 Fr. Br. George <george@altlinux.ru> 4.3-alt2
+- Update to 4.3.4.1
+
+* Wed Nov 12 2014 Fr. Br. George <george@altlinux.ru> 4.3-alt1
+- Update to 4.3.3.2
+- Provide loffice binary (Closes: #30044)
+- Reqiure gst-libav (Closes: #30015)
+
 * Fri Jun 06 2014 Alexey Shabalin <shaba@altlinux.ru> 4.3-alt0.beta2.buildfix1
 - 4.3.0.0.beta2-buildfix1
 - update BR:
