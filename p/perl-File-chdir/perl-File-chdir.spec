@@ -15,7 +15,7 @@ BuildRequires: perl(Module/Build.pm)
 %define _enable_test 1
 
 Name: perl-File-chdir
-Version: 0.1009
+Version: 0.1010
 Release: alt1
 
 Summary: a more sensible way to change directories
@@ -55,6 +55,9 @@ variables combine all the power of "chdir()", File::Spec and Cwd.
 %perl_vendor_privlib/File*
 
 %changelog
+* Wed Feb 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.1010-alt1
+- automated CPAN update
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.1009-alt1
 - automated CPAN update
 
