@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.0.13
-Release: alt1.git20150202
+Version: 0.0.16
+Release: alt1.git20150210
 Summary: Yet another interface for iproute2
 License: MIT
 Group: Development/Python
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.16-alt1.git20150210
+- Version 0.0.16
+
 * Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.13-alt1.git20150202
 - Initial build for Sisyphus
 
