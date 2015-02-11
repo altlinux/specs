@@ -1,5 +1,5 @@
 Name: mpg123
-Version: 1.20.1
+Version: 1.21.0
 Release: alt1
 
 Summary: MPEG audio player
@@ -90,6 +90,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Wed Feb 11 2015 Yuri N. Sedunov <aris@altlinux.org> 1.21.0-alt1
+- 1.21.0
+
 * Sun Jul 27 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20.1-alt1
 - 1.20.1
 
