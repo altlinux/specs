@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.7.7.0.0
-Release: alt1.git20150209
+Version: 0.7.7.0.2
+Release: alt1.git20150211
 Summary: A python library for accurate and scaleable data deduplication and entity-resolution
 License: MIT
 Group: Development/Python
@@ -154,6 +154,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.7.0.2-alt1.git20150211
+- Version 0.7.7.0.2
+
 * Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.7.0.0-alt1.git20150209
 - Initial build for Sisyphus
 
