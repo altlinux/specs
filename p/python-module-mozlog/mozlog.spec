@@ -1,6 +1,6 @@
 %define oname mozlog
 Name: python-module-%oname
-Version: 2.9
+Version: 2.10
 Release: alt1
 Summary: Robust log handling specialized for logging in the Mozilla universe
 License: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -38,6 +38,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10-alt1
+- Version 2.10
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9-alt1
 - Version 2.9
 
