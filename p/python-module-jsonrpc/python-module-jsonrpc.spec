@@ -1,7 +1,7 @@
 %define module_name jsonrpc
 Name: python-module-%module_name
-Version: 0.6.1
-Release: alt1.git20141026
+Version: 0.6.2
+Release: alt1.git20150204
 
 Summary: json-rpc package which implements JSON-RPC over HTTP
 
@@ -36,6 +36,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20150204
+- Version 0.6.2
+
 * Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20141026
 - Version 0.6.1
 
