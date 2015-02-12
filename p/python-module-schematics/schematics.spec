@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
-Release: alt1.git20141219
+Version: 1.0.2
+Release: alt1.git20150212
 Summary: Structured Data for Humans
 License: BSD
 Group: Development/Python
@@ -151,6 +151,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.git20150212
+- Version 1.0.2
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20141219
 - Initial build for Sisyphus
 
