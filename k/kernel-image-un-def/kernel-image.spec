@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	3.18
-%define kernel_sublevel	.6
+%define kernel_sublevel	.7
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -493,6 +493,7 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/gpu/drm
 %exclude %modules_dir/kernel/drivers/ide/
 %exclude %modules_dir/kernel/arch/x86/kvm
+%exclude %modules_dir/kernel/net/netfilter/ipset
 /lib/firmware/*
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
@@ -542,6 +543,12 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Feb 11 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.7-alt1
+- 3.18.7
+- adjtimex on 32-bit fixed
+- in-kernel ipset excluded
+- netlabel patch updated
+
 * Sat Feb 07 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.6-alt1
 - 3.18.6
 
