@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 2015.2
-Release: alt1
+Release: alt2
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
@@ -29,6 +29,19 @@ Group: Development/Python
 Requires: python-module-yaml python-module-msgpack python-module-json
 
 %description  -n python-module-salt
+Salt is a distributed remote execution system used to execute commands and
+query data. It was developed in order to bring the best solutions found in the
+world of remote execution together and make them better, faster and more
+malleable. Salt accomplishes this via its ability to handle larger loads of
+information, and not just dozens, but hundreds, or even thousands of individual
+servers. It handles them quickly and through a simple yet manageable interface.
+
+%package -n python-module-salt-tests
+Summary: Test files for management component for salt, a parallel remote execution system
+Group: Development/Python
+Requires: python-module-yaml python-module-msgpack python-module-json
+
+%description  -n python-module-salt-tests
 Salt is a distributed remote execution system used to execute commands and
 query data. It was developed in order to bring the best solutions found in the
 world of remote execution together and make them better, faster and more
@@ -125,8 +138,14 @@ ln -s ../../opennode/cli/actions onode
 
 %files -n python-module-salt
 %doc AUTHORS README* LICENSE HACKING.rst
+%exclude %python_sitelibdir/salt/daemons/test
 %python_sitelibdir/*
 %_man7dir/salt.7.*
+
+%files -n python-module-salt-tests
+%dir %python_sitelibdir/salt/daemons/test
+%python_sitelibdir/salt/daemons/test/*
+
 
 %files master
 %config(noreplace) %dir %_sysconfdir/salt
@@ -186,6 +205,9 @@ ln -s ../../opennode/cli/actions onode
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Thu Feb 12 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 2015.2-alt2
+- Add subpackage python-module-salt-tests
+
 * Mon Feb 02 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 2015.2-alt1
 - New version
 
