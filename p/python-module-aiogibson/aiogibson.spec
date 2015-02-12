@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.1.2
-Release: alt1.git20150101
+Version: 0.1.3
+Release: alt1.git20150210
 Summary: asyncio (PEP 3156) Gibson cache support
 License: MIT
 Group: Development/Python
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20150210
+- Version 0.1.3
+
 * Fri Jan 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20150101
 - Initial build for Sisyphus
 
