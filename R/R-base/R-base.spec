@@ -1,5 +1,5 @@
 Name: R-base
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: A language for data analysis and graphics
@@ -322,6 +322,9 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Wed Feb 11 2015 Kirill Maslinsky <kirill@altlinux.org> 3.1.2-alt1
+- Version 3.1.2
+
 * Mon Sep 08 2014 Kirill Maslinsky <kirill@altlinux.org> 3.1.1-alt1
 - Version 3.1.1
 
