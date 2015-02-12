@@ -1,5 +1,5 @@
 %define module_name	ipset
-%define module_version	6.23
+%define module_version	6.24
 %define module_release	alt1
 
 %define flavour		std-pae
@@ -59,6 +59,9 @@ install -p -m644 kernel/net/netfilter/*.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Feb 11 2015 Anton Farygin <rider@altlinux.ru> 6.24-alt1
+- new version
 
 * Wed Sep 24 2014 Anton Farygin <rider@altlinux.ru> 6.23-alt1
 - new version
