@@ -5,7 +5,7 @@
 
 Name: fluxbox
 Version: 1.3.7
-Release: alt1
+Release: alt2
 
 Summary: Fast and lightweight window manager
 Summary(ru_RU.UTF-8): Легкий и быстрый оконный менеджер
@@ -75,6 +75,7 @@ session.screen0.windowScrollAction:\tNextTab
         --with-keys=%_sysconfdir/X11/%name/keys \
         --with-menu=%_sysconfdir/X11/%name/menu \
         --enable-nls \
+        --enable-shape \
         %{?_enable_debug:--enable-debug}
 
 %make_build %{?!_enable_debug: --no-print-directory --silent}
@@ -133,6 +134,9 @@ install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/styles/Cthulhain
 %vim_ftdetect_dir/%name.vim
 
 %changelog
+* Thu Feb 12 2015 Mikhail Kolchin <mvk@altlinux.org> 1.3.7-alt2
+- Enabled XSHAPE extension
+
 * Wed Feb 11 2015 Mikhail Kolchin <mvk@altlinux.org> 1.3.7-alt1
 - Updated to 1.3.7
 
