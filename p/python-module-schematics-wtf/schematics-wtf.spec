@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.5
-Release: alt1.alpha.git20141211
+Version: 0.1.5.3
+Release: alt1.git20141231
 Summary: Schematics Model to WTForm converter
 License: BSD
 Group: Development/Python
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5.3-alt1.git20141231
+- Version 0.1.5.3
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt1.alpha.git20141211
 - Initial build for Sisyphus
 
