@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.3.0
-Release: alt1.git20141231
+Version: 1.5.0
+Release: alt1.dev.git20150211
 Summary: Python client for Elasticsearch
 License: ASL
 Group: Development/Python
@@ -21,7 +21,7 @@ BuildPreReq: python-module-urllib3 python-module-requests
 BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-module-mock python-module-pyaml
 BuildPreReq: python-module-nosexcover python-module-pylibmc
-BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.dev.git20150211
+- Version 1.5.0-dev
+
 * Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20141231
 - Version 1.3.0
 
