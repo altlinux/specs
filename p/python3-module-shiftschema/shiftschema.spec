@@ -1,7 +1,7 @@
 %define oname shiftschema
 Name: python3-module-%oname
-Version: 0.0.6
-Release: alt1.git20150205
+Version: 0.0.7
+Release: alt1.git20150211
 Summary: Python3 filtering and validation library
 License: MIT
 Group: Development/Python3
@@ -46,6 +46,9 @@ nosetests3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.7-alt1.git20150211
+- Version 0.0.7
+
 * Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1.git20150205
 - Initial build for Sisyphus
 
