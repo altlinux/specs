@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 20141214
+Version: 20150210
 Release: alt1
 
 Summary: Library with thread-safe connection pooling, file post support, sanity friendly etc
@@ -156,6 +156,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20150210-alt1
+- New snapshot
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20141214-alt1
 - New snapshot
 
