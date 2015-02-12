@@ -1,6 +1,6 @@
 Name: nagios-plugins-check_monit
-Version: 1.0
-Release: alt2
+Version: 1.3
+Release: alt1
 
 Summary: Nagios(R) plug-in for checking monit status
 License: GPL
@@ -33,6 +33,9 @@ install -m755 check_monit.py %buildroot%pluginsdir/
 %doc README check_monit.cfg
 
 %changelog
+* Thu Feb 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
+- the plugin updated to fit to new monit versions (5.8.1+)
+
 * Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt2
 - cleanup spec
 
