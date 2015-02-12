@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.0
-Release: alt1.git20141117
+Version: 3.1.0
+Release: alt1.git20150211
 Summary: Swagger Schema validation
 License: BSD
 Group: Development/Python
@@ -126,7 +126,7 @@ popd
 %exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/*
-%exclude %python_sitelibdir/tests
+#exclude %python_sitelibdir/tests
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
@@ -140,10 +140,13 @@ popd
 %doc CHANGELOG *.md
 %_bindir/*.py3
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/tests
+#exclude %python3_sitelibdir/tests
 %endif
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt1.git20150211
+- Version 3.1.0
+
 * Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1.git20141117
 - Version 2.1.0
 
