@@ -3,7 +3,7 @@
 %define ciddir	%tbird_noarch_extensionsdir/%cid
 
 Name:		thunderbird-%rname
-Version:	3.3
+Version:	3.3.3
 Release:	alt1
 Serial: 	1
 Summary:	Russian (RU) Language Pack for Lightning
@@ -35,6 +35,9 @@ patch -p2 < %PATCH0
 %ciddir
 
 %changelog
+* Tue Feb 10 2015 Andrey Cherepanov <cas@altlinux.org> 1:3.3.3-alt1
+- New version
+
 * Fri Sep 05 2014 Andrey Cherepanov <cas@altlinux.org> 1:3.3-alt1
 - New version (ALT #30255)
 - Change maintainer
