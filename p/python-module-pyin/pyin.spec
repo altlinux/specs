@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.1
-Release: alt1.git20150203
+Version: 0.3.3
+Release: alt1.git20150211
 Summary: Perform Python operations on every line streamed from stdin
 License: BSD
 Group: Development/Python
@@ -17,16 +17,18 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-click-tests python-module-coverage
-BuildPreReq: python-module-nose
+BuildPreReq: python-module-nose python-module-str2type
+BuildPreReq: python-module-derive python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-click-tests python3-module-coverage
-BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-nose python3-module-str2type
+BuildPreReq: python3-module-derive
 %endif
 
 %py_provides %oname
-%py_requires click
+%py_requires click str2type derive
 
 %description
 Perform Python operations on every line read from `stdin`. Every line is
@@ -36,7 +38,7 @@ evaluated individually and available via a variable called `line`.
 Summary: Perform Python operations on every line streamed from stdin
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires click
+%py3_requires click str2type derive
 
 %description -n python3-module-%oname
 Perform Python operations on every line read from `stdin`. Every line is
@@ -98,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1.git20150211
+- Version 0.3.3
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20150203
 - Version 0.2.1
 
