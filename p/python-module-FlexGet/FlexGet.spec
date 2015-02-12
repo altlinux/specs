@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.2.269
-Release: alt1.git20150126
+Version: 1.2.276
+Release: alt1.git20150210
 Summary: Downloading/processing content (torrents, podcasts...) from different sources
 License: MIT
 Group: Development/Python
@@ -13,6 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Flexget/Flexget.git
 Source: %name-%version.tar
+Source1: flexget
 BuildArch: noarch
 
 BuildPreReq: python-module-setuptools-tests python-module-feedparser
@@ -22,7 +23,7 @@ BuildPreReq: python-module-PyRSS2Gen python-module-pynzb
 BuildPreReq: python-module-progressbar python-module-rpyc
 BuildPreReq: python-module-jinja2 python-module-requests
 BuildPreReq: python-module-dateutil python-module-jsonschema
-BuildPreReq: python-module-tvrage python-module-tmdb3
+BuildPreReq: python-module-pytvrage python-module-tmdb3
 BuildPreReq: python-module-path python-module-guessit
 BuildPreReq: python-module-apscheduler python-module-nose
 BuildPreReq: python-module-guppy python-module-flask
@@ -35,6 +36,8 @@ BuildPreReq: python-module-pip
 BuildPreReq: python-module-sphinx-devel
 
 %py_provides flexget
+%py_requires tmdb3 progressbar pynzb PyRSS2Gen pytvrage
+Requires: python-module-progressbar
 
 %description
 FlexGet is a multipurpose automation tool for content like torrents,
@@ -89,6 +92,9 @@ ln -s ../objects.inv docs/
 %install
 %python_install
 
+rm -f %buildroot%_bindir/flexget
+install -p -m755 %SOURCE1 flexget_vanilla.py %buildroot%_bindir/
+
 export PYTHONPATH=$PWD
 pushd docs
 sphinx-build -b pickle -d build/doctrees . build/pickle
@@ -114,6 +120,9 @@ py.test
 %doc docs/build/html/*
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.276-alt1.git20150210
+- Version 1.2.276
+
 * Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.269-alt1.git20150126
 - Version 1.2.269
 
