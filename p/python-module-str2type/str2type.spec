@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.2
-Release: alt1.git20150126
+Version: 0.3.1
+Release: alt1.git20150210
 Summary: Convert a Python string representation of int, float, etc. to its native type
 License: BSD
 Group: Development/Python
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20150210
+- Version 0.3.1
+
 * Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20150126
 - Version 0.1.2
 
