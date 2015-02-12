@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.9
-Release: alt1.git20150114
+Version: 0.6.5
+Release: alt1.git20150211
 Summary: JSON API realisation
 License: MIT
 Group: Development/Python
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.5-alt1.git20150211
+- Version 0.6.5
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.9-alt1.git20150114
 - Initial build for Sisyphus
 
