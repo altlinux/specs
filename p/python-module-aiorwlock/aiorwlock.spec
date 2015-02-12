@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt1.git20141223
+Version: 0.3.0
+Release: alt1.git20150211
 Summary: Synchronization primitive RWLock for asyncio (PEP 3156) 
 License: ASLv2.0
 Group: Development/Python
@@ -127,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20150211
+- Version 0.3.0
+
 * Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20141223
 - Initial build for Sisyphus
 
