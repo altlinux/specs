@@ -1,8 +1,8 @@
 Name: kernel-image-std-pae
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	3.14
-%define kernel_sublevel .32
+%define kernel_sublevel .33
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -498,6 +498,7 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/gpu/drm
 %exclude %modules_dir/kernel/drivers/ide/
 %exclude %modules_dir/kernel/arch/x86/kvm
+%exclude %modules_dir/kernel/net/netfilter/ipset
 /lib/firmware/*
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
@@ -547,6 +548,11 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Feb 11 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.33-alt1
+- 3.14.33
+- in-kernel ipset excluded
+- updated netlabel patch
+
 * Tue Feb 10 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.32-alt2
 - closes: #30712
 
