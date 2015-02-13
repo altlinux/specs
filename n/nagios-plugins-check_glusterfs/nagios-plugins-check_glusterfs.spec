@@ -1,6 +1,6 @@
 Name: nagios-plugins-check_glusterfs
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Nagios(R) plug-in for checking glusterfs volume status
 
@@ -41,5 +41,8 @@ install -m400 nagios_glusterfs %buildroot/etc/sudoers.d/
 %doc README
 
 %changelog
+* Fri Feb 13 2015 Danil Mikhailov <danil@altlinux.org> 1.0-alt2
+- Remove glusterfsd check
+
 * Thu Feb 12 2015 Danil Mikhailov <danil@altlinux.org> 1.0-alt1
 - The initial plugin build 
