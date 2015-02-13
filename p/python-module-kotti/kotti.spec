@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt1.dev.git20150113
+Release: alt1.dev.git20150211
 Summary: A user-friendly, light-weight and extensible web content management system
 License: BSD
 Group: Development/Python
@@ -45,6 +45,7 @@ BuildPreReq: python-module-pytest-pep8 python-module-pytest-cov
 BuildPreReq: python-module-pyquery python-module-mock
 BuildPreReq: python-module-webtest python-module-mechanize
 BuildPreReq: python-module-usersettings python-module-virtualenv
+BuildPreReq: python-module-filedepot
 BuildPreReq: python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -53,7 +54,7 @@ BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
-%py_requires shutilwhich repoze.lru pyramid_beaker js.angular
+%py_requires shutilwhich repoze.lru pyramid_beaker js.angular filedepot
 %py_requires js.bootstrap js.html5shiv js.fineuploader js.jquery_form
 %py_requires js.jquery_tablednd js.jqueryui js.jqueryui_tagit
 %py_requires paste.deploy repoze.workflow pyramid_deform html2text
@@ -242,6 +243,9 @@ python setup.py test
 %endif
 
 %changelog
+* Fri Feb 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.dev.git20150211
+- New snapshot
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.dev.git20150113
 - Version 1.1-dev
 
