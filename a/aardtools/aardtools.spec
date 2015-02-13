@@ -1,6 +1,6 @@
 Name: aardtools
-Version: 0.8.3
-Release: alt3.git.73.g5d4b4c4
+Version: 0.9.0
+Release: alt1.git.4.g831482e
 Summary: Tools to create dictionaries in aarddict format
 
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
@@ -53,6 +53,9 @@ subst '/^mwlib/d' %buildroot%python_sitelibdir/%{name}*egg-info/requires.txt
 %doc doc/*
 
 %changelog
+* Sun Dec 07 2014 Ildar Mulyukov <ildar@altlinux.ru> 0.9.0-alt1.git.4.g831482e
+- new version
+
 * Sun Apr 07 2013 Ildar Mulyukov <ildar@altlinux.ru> 0.8.3-alt3.git.73.g5d4b4c4
 - new snapshot
 
