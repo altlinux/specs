@@ -1,6 +1,6 @@
 Name: pulseaudio
-Version: 5.0
-Release: alt2
+Version: 6.0
+Release: alt1
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -13,10 +13,10 @@ BuildRequires: gcc-c++
 BuildRequires: doxygen intltool jackit-devel libalsa-devel libasyncns-devel
 BuildRequires: libavahi-devel libbluez-devel libwebrtc-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
-BuildRequires: liblirc-devel libltdl7-devel libsamplerate-devel
+BuildRequires: liblirc-devel libltdl7-devel
 BuildRequires: libsndfile-devel libspeex-devel libssl-devel libwrap-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
-BuildRequires: libjson-devel libgtk+2-devel libGConf-devel
+BuildRequires: libjson-c-devel libgtk+2-devel libGConf-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
 BuildRequires: libsystemd-devel xen-devel
 
@@ -74,6 +74,7 @@ Conflicts: %name-daemon < 0.9.16-alt0.2
 Summary: PulseAudio equalizer interface
 Group: Sound
 Requires: lib%name = %version-%release
+%py_requires dbus PyQt4
 
 %package daemon
 Summary: PulseAudio daemon
@@ -227,13 +228,11 @@ install -pm0644 -D pulseaudio.sysconfig %buildroot%_sysconfdir/sysconfig/pulseau
 install -pm0755 -D pulseaudio.init %buildroot%_initdir/pulseaudio
 ln -s esdcompat %buildroot%_bindir/esd
 mkdir -p %buildroot%_localstatedir/pulse %buildroot%_runtimedir/pulse
-mv %buildroot%_sysconfdir/bash_completion.d/pulseaudio-bash-completion.sh \
-   %buildroot%_sysconfdir/bash_completion.d/pulse
 find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-5.0
+%define pulselibdir %_libdir/pulse-6.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -244,9 +243,8 @@ find %buildroot%_libdir -name \*.la -delete
 %files
 
 %files daemon
-%_sysconfdir/bash_completion.d/pulse
+%_sysconfdir/bash_completion.d/*
 %_sysconfdir/xdg/autostart/pulseaudio.desktop
-%_sysconfdir/xdg/autostart/pulseaudio-kde.desktop
 
 %dir %_sysconfdir/pulse
 %config(noreplace) %_sysconfdir/pulse/daemon.conf
@@ -254,7 +252,6 @@ find %buildroot%_libdir -name \*.la -delete
 
 /lib/udev/rules.d/90-pulseaudio.rules
 
-%_bindir/start-pulseaudio-kde
 %_bindir/start-pulseaudio-x11
 %_bindir/pulseaudio
 %_bindir/esdcompat
@@ -262,8 +259,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_bindir/pactl
 
 %_datadir/pulseaudio
+%_datadir/zsh/site-functions/_pulseaudio
 
-%_libdir/libpulsecore-5.0.so
+%_libdir/libpulsecore-6.0.so
 
 %dir %pulselibdir
 %dir %pulsemoduledir
@@ -289,7 +287,6 @@ find %buildroot%_libdir -name \*.la -delete
 %_man1dir/pactl.1*
 %_man1dir/esdcompat.1*
 %_man1dir/pulseaudio.1*
-%_man1dir/start-pulseaudio-kde.1*
 %_man1dir/start-pulseaudio-x11.1*
 %_man5dir/default.pa.5*
 %_man5dir/pulse-cli-syntax.5*
@@ -368,7 +365,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-5.0.so
+%_libdir/pulseaudio/libpulsecommon-6.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -377,12 +374,15 @@ find %buildroot%_libdir -name \*.la -delete
 %_includedir/pulse
 %_pkgconfigdir/*.pc
 %_datadir/vala/vapi/*
-%exclude %_libdir/libpulsecore-5.0.so
+%exclude %_libdir/libpulsecore-6.0.so
 
 %files -n lib%name-devel-doc
 %doc doxygen/html
 
 %changelog
+* Fri Feb 13 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0-alt1
+- 6.0 released
+
 * Sat Feb 07 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0-alt2
 - workarount regression in orc (closes: #30710)
 
