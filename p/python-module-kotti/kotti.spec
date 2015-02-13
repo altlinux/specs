@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt1.dev.git20150211
+Release: alt2.dev.git20150211
 Summary: A user-friendly, light-weight and extensible web content management system
 License: BSD
 Group: Development/Python
@@ -56,10 +56,12 @@ BuildPreReq: python-tools-2to3
 %py_provides %oname
 %py_requires shutilwhich repoze.lru pyramid_beaker js.angular filedepot
 %py_requires js.bootstrap js.html5shiv js.fineuploader js.jquery_form
-%py_requires js.jquery_tablednd js.jqueryui js.jqueryui_tagit
+%py_requires js.jquery_tablednd js.jqueryui js.jqueryui_tagit waitress
 %py_requires paste.deploy repoze.workflow pyramid_deform html2text
-%py_requires pyramid_mailer formencode PIL plone.scale
+%py_requires pyramid_mailer formencode PIL plone.scale zope.sqlalchemy
 %py_requires js.jquery_timepicker_addon js.deform usersettings
+%py_requires pyramid_zcml pyramid_tm pyramid_debugtoolbar kotti_tinymce
+%py_requires pyramid_chameleon pyramid_mako wsgi_intercept
 
 %description
 A user-friendly, light-weight and extensible web content management
@@ -76,7 +78,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires zope.testbrowser pytest_pep8 pytest_cov pyquery mock
-%py_requires webtest mechanize xdist
+%py_requires webtest mechanize xdist pyramid.tests
 
 %description tests
 A user-friendly, light-weight and extensible web content management
@@ -243,6 +245,9 @@ python setup.py test
 %endif
 
 %changelog
+* Fri Feb 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt2.dev.git20150211
+- Added necessary requirements
+
 * Fri Feb 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.dev.git20150211
 - New snapshot
 
