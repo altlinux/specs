@@ -1,5 +1,5 @@
-%define git_date .git20141029
-#define git_date %nil
+#define git_date .git20141029
+%define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -27,8 +27,8 @@
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 
 Name: NetworkManager
-Version: 0.9.10.1
-Release: alt3%git_date
+Version: 1.0.0
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -42,18 +42,18 @@ Source6: NetworkManager.sysconfig
 Source7: 30-efw
 Source8: 80-etcnet-iface-scripts
 Source9: NetworkManager-prestart
-Source10: libgsystem.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
 # For tests
 BuildPreReq: dbus dhcpcd dhcp-client
+BuildRequires: python3-module-pygobject3 python-module-dbus
 
 BuildPreReq: intltool libgcrypt-devel libtool
 BuildRequires: glibc-devel-static iproute2 libnl-devel libwireless-devel ppp-devel
 BuildRequires: libdbus-glib-devel >= %libdbus_glib_version
-BuildRequires: libpolkit1-devel libnss-devel libgio-devel libuuid-devel gtk-doc
+BuildRequires: libpolkit1-devel libnss-devel libgio-devel libuuid-devel gtk-doc perl-YAML
 BuildRequires: libgudev-devel
 BuildRequires: libgnome-bluetooth-devel
 BuildRequires: iptables libsoup-devel
@@ -67,6 +67,8 @@ BuildRequires: libreadline-devel
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
 %{?_enable_bluez5dun:BuildRequires: libbluez-devel}
 
+Requires: nm-dhcp-client
+Requires: dnsmasq
 
 Requires: %name-adsl = %version-%release
 Requires: %name-bluetooth = %version-%release
@@ -92,11 +94,9 @@ Requires: dbus >= %dbus_version
 Requires: iproute2 openssl
 Requires: ppp = %ppp_version
 Requires: nss >= 3.11.7
-Requires: dnsmasq
 Requires: openresolv >= %openresolv_version
 Requires: openresolv-dnsmasq >= %openresolv_version
 Requires: libshell
-Requires: nm-dhcp-client
 
 Conflicts: NetworkManager-vpnc < 0.9.2
 Conflicts: NetworkManager-openvpn < 0.9.2
@@ -185,6 +185,15 @@ Requires: pkgconfig
 This package contains various headers accessing some NetworkManager
 functionality from applications.
 
+%package -n libnm
+License: %gpl2plus
+Summary: Library for adding NetworkManager support to applications
+Group: System/Libraries
+
+%description -n libnm
+This package contains the libraries that make it easier to use some
+NetworkManager functionality from applications.
+
 %package -n %libnm_glib
 License: %gpl2plus
 Summary: Library for adding NetworkManager support to applications that use glib
@@ -227,6 +236,18 @@ Requires: libnm-glib-devel libnm-glib-vpn-devel libnm-util-devel
 Virtual package for backward compatibility.
 Deprecated and will be removed soon.
 
+%package -n libnm-devel
+Summary: Header files for adding NetworkManager support to applications.
+Group: Development/C
+Requires: glib2-devel
+Requires: pkgconfig
+Requires: libdbus-glib-devel >= %libdbus_glib_version
+Requires: libnm = %version-%release
+
+%description -n libnm-devel
+This package contains the header and pkg-config files for development
+applications using NetworkManager functionality.
+
 %package -n libnm-glib-devel
 Summary: Header files for adding NetworkManager support to applications that use glib.
 Group: Development/C
@@ -268,12 +289,21 @@ Requires: libdbus-glib-devel >= %libdbus_glib_version
 This package contains the header and pkg-config files
 for %libnm_util.
 
+%package -n libnm-devel-doc
+Summary: Development documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description -n libnm-devel-doc
+This package contains development documentation for %name.
+
 %package devel-doc
 Summary: Development documentation for %name
 Group: Development/Documentation
 Obsoletes: NetworkManager-glib-devel-doc < 0.9.10.0
 Provides: NetworkManager-glib-devel-doc = %version-%release
 BuildArch: noarch
+Requires: libnm-devel-doc = %version-%release
 
 # No comments
 Obsoletes: %name-%name-devel-doc < %version-%release
@@ -281,6 +311,26 @@ Obsoletes: %name-%name-devel-doc < %version-%release
 %description devel-doc
 This package contains development documentation for %name.
 Includes libnm-util and libnm-glib development documentation.
+
+%package -n libnm-gir
+Summary: GObject introspection data for the NetworkManager (libnm)
+Group: System/Libraries
+Requires: %libnm_glib %libnm_glib_vpn %libnm_util
+
+%description -n libnm-gir
+GObject introspection data for the NetworkManager (libnm).
+
+%package -n libnm-gir-devel
+Summary: GObject introspection devel data for the NetworkManager (libnm)
+Group: System/Libraries
+BuildArch: noarch
+Requires: %name-glib-gir = %version-%release
+Requires: libnm-glib-devel = %version-%release
+Requires: libnm-glib-vpn-devel = %version-%release
+Requires: libnm-util-devel = %version-%release
+
+%description -n libnm-gir-devel
+GObject introspection devel data for the NetworkManager (libnm).
 
 %package glib-gir
 Summary: GObject introspection data for the NetworkManager
@@ -304,8 +354,7 @@ GObject introspection devel data for the NetworkManager.
 
 
 %prep
-%setup -a10
-#tar -xf %SOURCE10
+%setup
 %patch -p1
 
 %build
@@ -366,7 +415,6 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_sysconfdir/NetworkManager/VPN
 mkdir -p %buildroot%_sysconfdir/NetworkManager/system-connections
-./libtool --mode=install install -m 755 test/nm-online %buildroot%_bindir/
 mkdir -p %buildroot/%_var/log/
 touch %buildroot/%_var/log/NetworkManager
 mkdir -p %buildroot/%_var/lib/NetworkManager
@@ -504,6 +552,10 @@ fi
 %_includedir/%name/nm-version.h
 %_pkgconfigdir/%name.pc
 
+%files -n libnm
+%_libdir/libnm.so.*
+%_libdir/libnm.so.*.*
+
 %files -n %libnm_glib
 %_libdir/libnm-glib.so.%nm_glib_sover
 %_libdir/libnm-glib.so.%nm_glib_sover.*
@@ -517,6 +569,11 @@ fi
 %_libdir/libnm-util.so.%nm_util_sover.*
 
 %files glib-devel
+
+%files -n libnm-devel
+%_includedir/libnm
+%_pkgconfigdir/libnm.pc
+%_libdir/libnm.so
 
 %files -n libnm-glib-devel
 %_includedir/libnm-glib
@@ -536,12 +593,21 @@ fi
 %_pkgconfigdir/libnm-util.pc
 %_libdir/libnm-util.so
 
+%files -n libnm-devel-doc
+%doc %_datadir/gtk-doc/html/libnm
+
 %files devel-doc
 %doc %_datadir/gtk-doc/html/%name
 %doc %_datadir/gtk-doc/html/libnm-glib
 %doc %_datadir/gtk-doc/html/libnm-util
 
 %if_enabled introspection
+%files -n libnm-gir
+%_libdir/girepository-1.0/NM-1.0.typelib
+
+%files -n libnm-gir-devel
+%_datadir/gir-1.0/NM-1.0.gir
+
 %files glib-gir
 %_libdir/girepository-1.0/NMClient-1.0.typelib
 %_libdir/girepository-1.0/NetworkManager-1.0.typelib
@@ -555,6 +621,13 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Feb 02 2015 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
+- Move dnsmasq and nm-dhcp-client requires to NetworkManager subpackage.
+- Drop libgsystem.
+- etcnet-alt: Update and port to libnm.
+- Updated ALT-specific patches.
+- Updated to 1.0.0.
+
 * Mon Jan 19 2015 Mikhail Efremov <sem@altlinux.org> 0.9.10.1-alt3.git20141029
 - Build with bluez5.
 

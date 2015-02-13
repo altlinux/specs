@@ -1,12 +1,12 @@
-%define nm_version 0.9.9.98
-%define nm_applet_version 0.9.9.98
+%define nm_version 1.0.0
+%define nm_applet_version 1.0.0
 %define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20110510
 %define gtkver 3
 
 Name: NetworkManager-vpnc
-Version: 0.9.10.0
+Version: 1.0.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -91,6 +91,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Fri Feb 13 2015 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
+- Updated to 1.0.0.
+
 * Wed Jul 09 2014 Mikhail Efremov <sem@altlinux.org> 0.9.10.0-alt1
 - Spec updated for new version.
 - Updated to 0.9.10.0.

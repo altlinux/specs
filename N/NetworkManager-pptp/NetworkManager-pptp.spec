@@ -1,5 +1,5 @@
-%define nm_version 0.9.9.98
-%define nm_applet_version 0.9.9.98
+%define nm_version 1.0.0
+%define nm_applet_version 1.0.0
 %define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20110314
@@ -7,8 +7,8 @@
 %define gtkver 3
 
 Name: NetworkManager-pptp
-Version: 0.9.10.0
-Release: alt2%git_date
+Version: 1.0.0
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for pptp
@@ -64,7 +64,7 @@ NetworkManager panel applet.
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
-	--enable-more-warnings=yes
+	--enable-more-warnings=error
 %make_build
 
 %install
@@ -89,6 +89,10 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Feb 13 2015 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
+- Treat warrnings as errors again.
+- Updated to 1.0.0.
+
 * Fri Jan 16 2015 Mikhail Efremov <sem@altlinux.org> 0.9.10.0-alt2
 - Rebuild with ppp-2.4.7.
 
