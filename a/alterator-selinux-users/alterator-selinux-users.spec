@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-selinux-users
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Packager: Andrey Kolotov <qwest@altlinux.org>
@@ -34,6 +34,9 @@ alterator module for administration users in SE Linux
 %_bindir/*
 
 %changelog
+* Fri Feb 13 2015 Andriy Stepanov <stanv@altlinux.ru> 0.2.4-alt1
+- LC_MESSAGES=C for backends
+
 * Wed Oct 09 2013 Andrey Kolotov <qwest@altlinux.org> 0.2.3-alt1
 - Fixed saving of the last category SE User.
 
