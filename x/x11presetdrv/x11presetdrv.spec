@@ -1,8 +1,7 @@
-
 %define drvpre_dir /usr/libexec/X11/drvpre.d
 
 Name: x11presetdrv
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -39,6 +38,9 @@ mkdir -p -m 0755 %buildroot/%_sysconfdir/rc.d/init.d
 mkdir -p -m 0755 %buildroot/%_unitdir
 install -m 0644 %name.service %buildroot/%_unitdir/
 
+mkdir -p -m 0755 %buildroot/%_unitdir/graphical.target.wants
+ln -s `relative %_unitdir/%name.service %_unitdir/graphical.target.wants/%name.service` %buildroot/%_unitdir/graphical.target.wants/%name.service
+
 %post
 %post_service %name
 %preun
@@ -51,8 +53,12 @@ install -m 0644 %name.service %buildroot/%_unitdir/
 %_sbindir/%name
 %_sysconfdir/rc.d/init.d/%name
 %_unitdir/%name.service
+%_unitdir/graphical.target.wants/%name.service
 
 %changelog
+* Fri Feb 13 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
+- turn on systemd service by default
+
 * Tue Sep 16 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
 - update systemd service conflicts
 
