@@ -1,5 +1,5 @@
 Name: fossil
-Version: 1.29
+Version: 1.30
 Release: alt1
 
 Summary: A distributed SCM with bug tracking and wiki
@@ -51,6 +51,9 @@ Documentation in HTML format for Fossil.
 #doc www
 
 %changelog
+* Wed Feb 11 2015 Mikhail Efremov <sem@altlinux.org> 1.30-alt1
+- Updated to 1.30.
+
 * Tue Aug 05 2014 Mikhail Efremov <sem@altlinux.org> 1.29-alt1
 - Updated to 1.29.
 
