@@ -1,12 +1,12 @@
 %define policy_name altlinux
-%define date 20140418
+%define date 20150213
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.19
-Release: alt2
+Version: 0.0.20
+Release: alt1
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -262,6 +262,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Fri Feb 13 2015 Andriy Stepanov <stanv@altlinux.ru> 0.0.20-alt1
+- Add alterator-selinux-users backend to trusted_exec_t
+
 * Wed Apr 23 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.19-alt2
 - Remove policycoreutils-gui build requirements
 
