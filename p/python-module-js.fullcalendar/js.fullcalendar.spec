@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.2
-Release: alt1.dev.git20141112
+Version: 2.2.6
+Release: alt1.dev.git20150107
 Summary: Fanstatic packaging of FullCalendar
 License: BSD
 Group: Development/Python
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.6-alt1.dev.git20150107
+- Version 2.2.6-dev
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2-alt1.dev.git20141112
 - Initial build for Sisyphus
 
