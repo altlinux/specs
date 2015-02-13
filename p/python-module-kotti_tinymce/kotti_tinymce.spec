@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.5
-Release: alt1.a1.git20140513
+Version: 0.6.0
+Release: alt1.dev.git20141130
 Summary: TinyMCE plugins for Kotti
 License: BSD
 Group: Development/Python
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.dev.git20141130
+- Version 0.6.0-dev
+
 * Fri Oct 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.a1.git20140513
 - Initial build for Sisyphus
 
