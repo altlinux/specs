@@ -1,8 +1,8 @@
 %define mname ftw
 %define oname %mname.testbrowser
 Name: python-module-%oname
-Version: 1.14.5
-Release: alt1.dev0.git20141107
+Version: 1.14.6
+Release: alt1.dev0.git20150130
 Summary: A test browser for Zope and Plone
 License: GPLv2+
 Group: Development/Python
@@ -132,6 +132,9 @@ python setup.py test
 %doc docs/html/*
 
 %changelog
+* Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14.6-alt1.dev0.git20150130
+- Version 1.14.6.dev0
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14.5-alt1.dev0.git20141107
 - Initial build for Sisyphus
 
