@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 4.0
-Release: alt3.a1.dev.git20141102
+Release: alt3.a1.dev.git20150211
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -163,12 +163,12 @@ This package contains documentation for Zope2.
 %setup
 
 %prepare_sphinx .
-ln -s ../objects.inv doc/
+ln -s ../objects.inv docs/
 
 %build
 %python_build
 
-pushd doc
+pushd docs
 export PYTHONPATH=$PWD/../build/lib
 %make pickle
 %make html
@@ -189,7 +189,7 @@ done
 
 install -p -m644 %SOURCE1 %buildroot%python_sitelibdir
 
-cp -fR doc/.build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 
 # There is a file in the package named .DS_Store or .DS_Store.gz, 
 # the file name used by Mac OS X to store folder attributes.  
@@ -228,9 +228,12 @@ python setup.py test
 %python_sitelibdir/%oname/pickle
 
 %files docs
-%doc doc/.build/html/*
+%doc docs/.build/html/*
 
 %changelog
+* Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt3.a1.dev.git20150211
+- New snapshot
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt3.a1.dev.git20141102
 - Added necessary requirements
 - Enabled testing
