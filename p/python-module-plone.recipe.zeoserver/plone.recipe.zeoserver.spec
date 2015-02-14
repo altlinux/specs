@@ -1,8 +1,8 @@
 %define mname plone.recipe
 %define oname %mname.zeoserver
 Name: python-module-%oname
-Version: 1.2.7
-Release: alt1.dev.git20141012
+Version: 1.2.8.dev0
+Release: alt1.dev0.git20150105
 Summary: zc.buildout recipe creating and configuring a ZODB zeo server
 License: ZPLv2.1
 Group: Development/Python
@@ -69,6 +69,9 @@ py.test
 %python_sitelibdir/plone/recipe/*/tests
 
 %changelog
+* Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.8.dev0-alt1.dev0.git20150105
+- Version 1.2.8.dev0
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.7-alt1.dev.git20141012
 - Initial build for Sisyphus
 
