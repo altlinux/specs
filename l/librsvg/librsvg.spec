@@ -5,14 +5,14 @@
 %define gtk3_api_ver 3.0
 
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk-doc
 %def_enable pixbuf_loader
 %def_enable gtk_theme
 %def_enable introspection
 %def_enable vala
 
 Name: %bname
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 Epoch: 1
 
@@ -42,8 +42,8 @@ BuildPreReq: libxml2-devel >= %libxml2_ver
 BuildPreReq: libcairo-devel >= %cairo_ver
 BuildPreReq: libcroco-devel >= %croco_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
-BuildPreReq: libX11-devel libXt-devel
-BuildRequires: gcc-c++ gtk-doc sgml-common zlib-devel
+BuildRequires: libX11-devel libXt-devel
+BuildRequires: gcc-c++ gtk-doc intltool sgml-common zlib-devel
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver rpm-build-vala}
 
 %description
@@ -128,6 +128,7 @@ GObject introspection devel data for the %name library
 %setup -n %bname-%version
 
 %build
+%autoreconf
 %configure \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
@@ -183,6 +184,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sat Feb 14 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.7-alt1
+- 2.40.7
+
 * Wed Dec 03 2014 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.6-alt1
 - 2.40.6
 
