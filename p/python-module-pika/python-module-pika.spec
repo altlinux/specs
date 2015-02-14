@@ -4,12 +4,12 @@
 
 Name: python-module-%modulename
 Version: 0.9.14
-Release: alt1.git20140711
+Release: alt1.git20141201
 
 %setup_python_module %modulename
 
 Summary: Pika is a pure-Python implementation of the AMQP 0-9-1 protocol.
-License: GPL
+License: MPLv2.0
 Group: Development/Python
 
 Url: http://github.com/pika/pika
@@ -100,6 +100,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.14-alt1.git20141201
+- New snapshot
+
 * Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.14-alt1.git20140711
 - Version 0.9.14
 - Added module for Python 3
