@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.7.3
-Release: alt1.dev0.git20141028
+Version: 2.8.1
+Release: alt1.dev0.git20150202
 Summary: An alternative implementation of RML
 License: ZPLv2.1
 Group: Development/Python
@@ -172,6 +172,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.1-alt1.dev0.git20150202
+- Version 2.8.1.dev0
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.3-alt1.dev0.git20141028
 - Version 2.7.3.dev0
 
