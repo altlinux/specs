@@ -1,6 +1,6 @@
 Name: iptables
 Version: 1.4.21
-Release: alt1
+Release: alt2
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
 License: GPLv2+
@@ -223,6 +223,10 @@ fi
 %endif
 
 %changelog
+* Sat Feb 14 2015 Anton Farygin <rider@altlinux.ru> 1.4.21-alt2
+- xtables: SET target: Add mapping of meta informations 
+  (skbinfo ipset extension) (closes: #30729)
+
 * Mon Nov 25 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.21-alt1
 - Updated to v1.4.21-2-g73dcee3.
 
