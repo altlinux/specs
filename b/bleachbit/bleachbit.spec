@@ -1,7 +1,7 @@
 
 Name:           bleachbit
 Version:        1.6
-Release:        alt2
+Release:        alt3
 
 Summary:        Remove unnecessary files, free space, and maintain privacy
 License:        GPLv3+
@@ -12,6 +12,8 @@ Packager:       Andrey Cherepanov <cas@altlinux.org>
 
 Source0:        http://downloads.sourceforge.net/%name/%name-%version.tar.lzma
 Source1:	%name.watch
+
+Patch1:		%name-apt-rpm-specific.patch
 
 BuildArch:      noarch
 
@@ -28,6 +30,7 @@ and history list of many common programs.
 
 %prep
 %setup -q
+%patch1 -p2
 
 %build
 make -C po local 
@@ -50,6 +53,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_pixmapsdir/%name.png
 
 %changelog
+* Sat Feb 14 2015 Andrey Cherepanov <cas@altlinux.org> 1.6-alt3
+- Fix apt cleaner for apt-rpm support (ALT #30736)
+
 * Mon Jan 19 2015 Andrey Cherepanov <cas@altlinux.org> 1.6-alt2
 - Package watch file to check for new version
 
