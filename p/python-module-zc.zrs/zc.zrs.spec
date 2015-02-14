@@ -4,23 +4,24 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.4.4
-Release: alt1.dev.git20130815
+Version: 2.5.2
+Release: alt1.git20150207
 Summary: ZODB Replicated Storage
 License: ZPLv2.1
 Group: Development/Python
 Url: https://pypi.python.org/pypi/zc.zrs/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://bitbucket.org/zc/zc.zrs.git
+# https://github.com/zc/zrs.git
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-mock
 BuildPreReq: python-module-zope.testing python-module-zodbpickle
-BuildPreReq: python-module-zc.zk-tests
+BuildPreReq: python-module-zc.zk-tests python-modules-json
 BuildPreReq: python-module-ZODB3
 BuildPreReq: python-module-twisted-core
 BuildPreReq: python-module-ZEO-tests
+BuildPreReq: python-module-zc.zkzeo
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools-tests python3-module-mock
@@ -30,10 +31,11 @@ BuildPreReq: python3-module-ZODB3
 BuildPreReq: python3-module-twisted-core
 BuildPreReq: python3-module-ZEO-tests
 BuildPreReq: python-tools-2to3
+BuildPreReq: python3-module-zc.zkzeo
 %endif
 
 %py_provides %oname
-%py_requires zc ZODB3 twisted.python zope.interface
+%py_requires zc ZODB3 twisted.python zope.interface zc.zkzeo json
 
 %description
 ZODB replicated storage (ZRS) provides database replication for ZODB.
@@ -45,7 +47,7 @@ from the primary storage.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires zope.testing zc.zk ZEO.tests zc.zk.testing
+%py_requires zope.testing zc.zk ZEO.tests zc.zk.testing mock
 
 %description tests
 ZODB replicated storage (ZRS) provides database replication for ZODB.
@@ -59,7 +61,7 @@ This package contains tests for %oname.
 Summary: ZODB Replicated Storage
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires zc ZODB3 twisted.python zope.interface
+%py3_requires zc ZODB3 twisted.python zope.interface zc.zkzeo
 
 %description -n python3-module-%oname
 ZODB replicated storage (ZRS) provides database replication for ZODB.
@@ -71,7 +73,7 @@ from the primary storage.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
-%py3_requires zope.testing zc.zk ZEO.tests zc.zk.testing
+%py3_requires zope.testing zc.zk ZEO.tests zc.zk.testing mock
 
 %description -n python3-module-%oname-tests
 ZODB replicated storage (ZRS) provides database replication for ZODB.
@@ -161,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.2-alt1.git20150207
+- Version 2.5.2
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.4-alt1.dev.git20130815
 - Initial build for Sisyphus
 
