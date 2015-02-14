@@ -1,7 +1,7 @@
 %define oname Products.Marshall
 Name: python-module-%oname
-Version: 2.1.4
-Release: alt1.dev0.git20140416
+Version: 2.1.5
+Release: alt1.dev0.git20150211
 Summary: Configurable Marshallers for Archetypes
 License: GPL
 Group: Development/Python
@@ -24,6 +24,7 @@ BuildPreReq: python-module-zope.component-tests
 BuildPreReq: python-module-zope.security-tests
 BuildPreReq: python-module-Products.ATContentTypes-tests
 BuildPreReq: python-module-WebDAV
+BuildPreReq: python-module-plone.app.testing
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -48,7 +49,7 @@ Group: Development/Python
 Requires: %name = %EVR
 %py_requires zope.component.testing zope.security.testing
 %py_requires Products.ATContentTypes.tests Products.Archetypes.tests
-%py_requires Products.CMFCore.testing
+%py_requires Products.CMFCore.testing plone.app.testing
 
 %description tests
 People coming to Plone from other CMS or from no CMS at all often want
@@ -90,6 +91,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.5-alt1.dev0.git20150211
+- Version 2.1.5.dev0
+
 * Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.4-alt1.dev0.git20140416
 - Initial build for Sisyphus
 
