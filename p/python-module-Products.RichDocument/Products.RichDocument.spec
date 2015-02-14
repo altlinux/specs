@@ -1,10 +1,8 @@
 %define oname Products.RichDocument
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.6
-Release: alt1.dev0.git20140821
+Release: alt2.dev0.git20140821
 Summary: Allows users to upload images directly into the document during editing
 License: GPLv2+
 Group: Development/Python
@@ -26,11 +24,11 @@ BuildPreReq: python-module-Products.LinguaPlone
 BuildPreReq: python-module-plone.outputfilters
 BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-Products.SimpleAttachment
+BuildPreReq: python-module-Products.SimpleAttachment
 
 %py_provides %oname
 Requires: python-module-Zope2
-#py_requires Products.SimpleAttachment
+%py_requires Products.SimpleAttachment
 %py_requires Products.Archetypes Products.CMFCore Products.TinyMCE
 %py_requires Products.ATContentTypes Products.CMFPlone zope.component
 %py_requires Products.CMFDynamicViewFTI Products.LinguaPlone
@@ -69,7 +67,6 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 %check
 python setup.py test
-nosetests -v
 
 %files
 %doc *.md docs/*
@@ -81,6 +78,10 @@ nosetests -v
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6-alt2.dev0.git20140821
+- Added necessary requirements
+- Enabled testing
+
 * Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6-alt1.dev0.git20140821
 - Initial build for Sisyphus
 
