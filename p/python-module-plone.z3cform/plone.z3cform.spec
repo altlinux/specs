@@ -1,7 +1,7 @@
 %define oname plone.z3cform
 Name: python-module-%oname
 Version: 0.8.1
-Release: alt1.dev0.git20130313
+Release: alt2.git20150122
 Summary: plone.z3cform is a library that allows use of z3c.form with Zope 2 and the CMF
 License: ZPLv2.1
 Group: Development/Python
@@ -66,6 +66,9 @@ python setup.py test
 %python_sitelibdir/plone/*/test*
 
 %changelog
+* Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt2.git20150122
+- Version 0.8.1
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1.dev0.git20130313
 - Initial build for Sisyphus
 
