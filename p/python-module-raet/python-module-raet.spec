@@ -4,7 +4,7 @@
 Summary: RAET (Reliable Asynchronous Event Transport) Protocol
 Name: python-module-%oname
 Version: 0.5.3
-Release: alt1
+Release: alt2
 Url: https://github.com/saltstack/raet
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -43,6 +43,12 @@ form of messaging queue service such as AMQP or ZeroMQ. The message
 bus supports what is commonly referred to as a publish/subscribe
 methodology for information exchange.
 
+%package tests
+Summary: Flow Based Programming Automated Reasoning Engine and Automation Operation System
+Group: Development/Python
+
+%description tests
+Test files for %oname
 
 %prep
 %setup
@@ -76,18 +82,41 @@ popd
 
 %files
 %doc README.md LICENSE ChangeLog.md
+%exclude %python_sitelibdir/%oname/flo/test
+%exclude %python_sitelibdir/%oname/lane/test
+%exclude %python_sitelibdir/%oname/road/test
+%exclude %python_sitelibdir/%oname/test
 %python_sitelibdir/*
 %_bindir/raetflo
+
+
+%files tests
+%dir %python_sitelibdir/%oname/flo/test
+%dir %python_sitelibdir/%oname/lane/test
+%dir %python_sitelibdir/%oname/road/test
+%dir %python_sitelibdir/%oname/test
+%python_sitelibdir/%oname/flo/test/*
+%python_sitelibdir/%oname/lane/test/*
+%python_sitelibdir/%oname/road/test/*
+%python_sitelibdir/%oname/test/*
+
 
 %if_with python3
 %files -n python3-module-%oname
 %doc README.md LICENSE ChangeLog.md
+%exclude %python_sitelibdir/%oname/flo/test
+%exclude %python_sitelibdir/%oname/lane/test
+%exclude %python_sitelibdir/%oname/road/test
+%exclude %python_sitelibdir/%oname/test
 %python3_sitelibdir/*
 %_bindir/raetflo
 %endif
 
 
 %changelog
+* Sat Feb 14 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5.3-alt2
+- Add subpackage tests
+
 * Thu Feb 12 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5.3-alt1
 - Initial build for ALT
 
