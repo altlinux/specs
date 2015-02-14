@@ -2,8 +2,8 @@
 %def_with menu
 
 Name: icewm
-Version: 1.3.7
-Release: alt12
+Version: 1.3.8
+Release: alt1
 Epoch: 2
 
 Summary: X11 Window Manager
@@ -33,11 +33,9 @@ Patch3:  %name-alt-icons.patch
 Patch4:  %name-alt-findicon.patch
 Patch5:  %name-deb-alt-i18n_update.patch
 Patch6:  %name-alt-cpustatus.patch
-Patch7:  %name-deb-tray_hotfixes.patch
-Patch8:  %name-alt-taskbar.patch
-Patch9:  %name-alt-ubuntu-fix-deprecated.patch
-Patch10: %name-gcc47.patch
-Patch11: %name-sf.net-tracker.patch
+Patch7:  %name-alt-taskbar.patch
+Patch8:  %name-1.3.7-trayicons.patch
+Patch9:  %name-build_fixes.patch
 
 PreReq: %name-light = %epoch:%version-%release
 
@@ -82,8 +80,6 @@ Recommends: iftop, mutt
 %patch7  -p2
 %patch8  -p2
 %patch9  -p2
-%patch10 -p2
-%patch11 -p2
 
 %add_optflags %optflags_nocpp
 
@@ -212,6 +208,9 @@ rm -rf %buildroot/%_x11x11dir/%name/themes/*
 %_pixmapsdir/*
 
 %changelog
+* Sat Feb 14 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.8-alt1
+- 1.3.8
+
 * Mon Jun 09 2014 Michael Shigorin <mike@altlinux.org> 2:1.3.7-alt12
 - NMU: updated altconf.patch:
   + added seamonkey to toolbar
