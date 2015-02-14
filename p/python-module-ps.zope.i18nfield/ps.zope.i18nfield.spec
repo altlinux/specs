@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt1.dev.git20141114
+Release: alt1.dev.git20150213
 Summary: A zope.schema field for inline translations
 License: GPL
 Group: Development/Python
@@ -242,6 +242,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.dev.git20150213
+- New snapshot
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.dev.git20141114
 - Initial build for Sisyphus
 
