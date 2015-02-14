@@ -1,8 +1,10 @@
 %define srcname ToscaWidgets
 
+%def_without python3
+
 Name: python-module-ToscaWidgets
-Version: 0.9.10
-Release: alt1.1
+Version: 0.9.12
+Release: alt1
 
 Summary: Toolkit to help create widgets for WSGI web apps
 
@@ -17,6 +19,11 @@ Source: http://pypi.python.org/packages/source/T/%srcname/%srcname-%version.tar
 BuildArch: noarch
 
 BuildRequires: python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python-tools-2to3
+%endif
 
 %setup_python_module tw
 
@@ -31,15 +38,49 @@ philosophy which is to partition it's services into independent WSGI
 components for easier mainteinance and reuse in other Python web applications
 or frameworks.
 
+%package -n python3-module-%srcname
+Summary: Toolkit to help create widgets for WSGI web apps
+Group: Development/Python3
+%py3_provides tw
+
+%description -n python3-module-%srcname
+ToscaWidgets is a web widget toolkit for Python to aid in the creation,
+packaging and distribution of common view elements normally used in the web.
+
+ToscaWidgets is an almost complete rewrite of the widgets package bundled with
+TurboGears-1.0. The rewrite's goal was to decouple the widgets package from
+CherryPy and TurboGears itself to fit better with TurboGears 2.0
+philosophy which is to partition it's services into independent WSGI
+components for easier mainteinance and reuse in other Python web applications
+or frameworks.
+
 %prep
 %setup -n %srcname-%version
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
 install -m644 tw/__init__.py %buildroot/%python_sitelibdir/%modulename/
+
+%if_with python3
+pushd ../python3
+%python3_install
+install -m644 tw/__init__.py %buildroot/%python3_sitelibdir/%modulename/
+popd
+%endif
 
 %files
 %doc README.txt PKG-INFO
@@ -47,7 +88,19 @@ install -m644 tw/__init__.py %buildroot/%python_sitelibdir/%modulename/
 %python_sitelibdir/%srcname-*.egg-info
 %python_sitelibdir/%srcname-*-nspkg.pth
 
+%if_with python3
+%files -n python3-module-%srcname
+%doc README.txt PKG-INFO
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/%srcname-*.egg-info
+%python3_sitelibdir/%srcname-*-nspkg.pth
+%endif
+
 %changelog
+* Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.12-alt1
+- Version 0.9.12
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.10-alt1.1
 - Rebuild with Python-2.7
 
