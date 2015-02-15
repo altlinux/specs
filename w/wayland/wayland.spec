@@ -3,7 +3,7 @@
 %def_disable doc
 
 Name: wayland
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -15,7 +15,7 @@ Url: http://%name.freedesktop.org/
 Source: wayland-%version.tar
 
 BuildRequires: /proc doxygen libexpat-devel libffi-devel xsltproc docbook-style-xsl
-#%{?_enable_doc:BuildRequires: /proc publican >= 2.8 bc}
+%{?_enable_doc:BuildRequires: /proc graphviz xmlto}
 
 %description
 Wayland is a project to define a protocol for a compositor to talk to
@@ -116,7 +116,7 @@ This package provides development files for Wayland cursor helper library.
 %_datadir/%name/%name-scanner.mk
 %_datadir/%name/%name.xml
 %_datadir/%name/wayland.dtd
-# too many broken symlinks
+# too many broken links
 %{?_enable_doc:%_man3dir/*}
 
 %files -n lib%name-client
@@ -145,6 +145,9 @@ This package provides development files for Wayland cursor helper library.
 %_pkgconfigdir/%name-cursor.pc
 
 %changelog
+* Sun Feb 15 2015 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Fri Sep 19 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
