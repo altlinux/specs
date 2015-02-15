@@ -1,8 +1,8 @@
 %define mname collective
 %define oname %mname.js.datatables
 Name: python-module-%oname
-Version: 3.1.10.4
-Release: alt1.dev0.git20141215
+Version: 3.1.10.5
+Release: alt1.dev0.git20150129
 Summary: Plone Integration of jquery.dataTables plugin
 License: GPLv2+
 Group: Development/Python
@@ -73,6 +73,9 @@ python setup.py test
 %python_sitelibdir/%mname/js/*/*/*/*/*/examples
 
 %changelog
+* Sun Feb 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.10.5-alt1.dev0.git20150129
+- Version 3.1.10.5.dev0
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.10.4-alt1.dev0.git20141215
 - Initial build for Sisyphus
 
