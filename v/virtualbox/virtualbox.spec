@@ -56,8 +56,8 @@
 %define gcc_version 4.5
 
 Name: virtualbox
-Version: 4.3.14
-Release: alt2
+Version: 4.3.20
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -86,7 +86,7 @@ Source16:	os_altlinux_64.png
 Source17:	http://download.virtualbox.org/%name/%version/%distname.chm
 Source20:	http://download.virtualbox.org/%name/%version/SDKRef.pdf
 Source21:	%distname-HTML-%{version}_OSE.tar
-Source22:	virtualbox.service
+Source22:	%name.service
 
 %if_enabled debug
 Source99:	%vboxdbg.in
@@ -350,8 +350,8 @@ echo -e "\nVirtualBox not installable due debug build enabled\nRun: %vboxdbg_fil
 false
 %endif
 
-source env.sh
-kmk -j$NPROCS VBOXDIR=%vboxdir
+#source env.sh
+#kmk -j$NPROCS VBOXDIR=%vboxdir
 #kmk VBOXDIR=%vboxdir
 
 mkdir -p %buildroot{%_bindir,%_sbindir,%vboxdir/ExtensionPacks,%vboxdatadir,%kernel_src,%_initrddir,%_udevrulesdir}
@@ -702,6 +702,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Jan 19 2015 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.20-alt1
+- Update to new release
+
 * Thu Oct 16 2014 Michael Shigorin <mike@altlinux.org> 4.3.14-alt2
 - Added systemd unit file (see also #30260)
 - Rebuild with xorg-1.16.1

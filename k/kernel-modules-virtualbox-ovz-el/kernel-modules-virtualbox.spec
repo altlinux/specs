@@ -1,5 +1,5 @@
 %define module_name	virtualbox
-%define module_version	4.3.14
+%define module_version	4.3.20
 
 %define module_release	alt1
 
@@ -95,6 +95,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jan 28 2015 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.20-alt1
+- Update template for virtualbox 4.3.20.
 
 * Wed Sep 03 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.3.14-alt1
 - Update template for virtualbox 4.3.14.
