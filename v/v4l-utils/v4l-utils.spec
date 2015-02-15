@@ -1,5 +1,5 @@
 Name: v4l-utils
-Version: 1.0.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
@@ -8,7 +8,8 @@ Group: Video
 Url: http://linuxtv.org
 
 Source: %name-%version-%release.tar
-BuildRequires: gcc-c++ libjpeg-devel
+BuildRequires: gcc-c++ libalsa-devel libjpeg-devel libudev-devel
+BuildRequires: libqt4-devel
 
 %package -n ir-keytable
 Summary: IR keytable management tool
@@ -25,6 +26,10 @@ Summary: Development files for libv4l
 Group: Development/C
 Requires: libv4l = %version-%release
 License: LGPLv2+
+
+%package -n qv4l2
+Summary: A test bench application for video4linux devices
+Group: Video
 
 %description
 Linux V4L2 and DVB API utilities.
@@ -55,16 +60,22 @@ application transparent libv4lconvert conversion where necessary.
 The libv4l-devel package contains libraries and header files for
 developing applications that use libv4l.
 
+%description -n qv4l2
+The  qv4l2  tool  is  used  to test video4linux capture devices, either
+video, vbi or radio.  This application can  also  serve  as  a  generic
+video/TV viewer application.
+
 %prep
 %setup
 
 %build
 %autoreconf
-%configure --enable-libdvbv5 --disable-static
+%configure --with-libudev --disable-static
 %make_build
 
 %install
 %makeinstall_std
+find %buildroot%_libdir -type f -name \*.la -delete
 
 %files
 %doc ChangeLog COPYING README
@@ -72,6 +83,11 @@ developing applications that use libv4l.
 %_sbindir/*
 %_bindir/*
 %exclude %_bindir/ir-keytable
+%exclude %_bindir/qv4l2
+%_man1dir/dvb-fe-tool.1*
+%_man1dir/dvb-format-convert.1*
+%_man1dir/dvbv5-scan.1*
+%_man1dir/dvbv5-zap.1*
 
 %files -n ir-keytable
 %config(noreplace) %_sysconfdir/rc_maps.cfg
@@ -89,12 +105,21 @@ developing applications that use libv4l.
 %files -n libv4l-devel
 %doc README.lib-multi-threading
 %_includedir/libv4l*.h
-%_includedir/dvb-*.h
+%_includedir/libdvbv5
 %_libdir/libv4l*.so
 %_libdir/libdvbv5.so
 %_pkgconfigdir/*.pc
 
+%files -n qv4l2
+%_bindir/qv4l2
+%_desktopdir/qv4l2.desktop
+%_iconsdir/hicolor/*/*/*.png
+%_man1dir/qv4l2.1*
+
 %changelog
+* Sun Feb 15 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.0-alt1
+- 1.6.0 released
+
 * Mon Sep 16 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt1
 - 1.0.0 released
 
