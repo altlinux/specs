@@ -1,8 +1,8 @@
 %define mname collective
 %define oname %mname.wfeffectiverange
 Name: python-module-%oname
-Version: 1.6
-Release: alt1.dev0.git20141218
+Version: 1.7
+Release: alt1.dev0.git20150204
 Summary: Workflowed effective range (Plone/Dexterity)
 License: GPL
 Group: Development/Python
@@ -88,6 +88,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/profiles/testing
 
 %changelog
+* Sun Feb 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.dev0.git20150204
+- Version 1.7.dev0
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1.dev0.git20141218
 - Initial build for Sisyphus
 
