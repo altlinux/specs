@@ -1,24 +1,25 @@
 %define subversion alt
+%define subver 10
 
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt4-fsarchiver
-Version: 0.6.12
-Release: alt1.1
+Version: 0.6.19
+Release: alt1
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-Source: %name.tar
+Source: %name-%version-%subver.tar
 Source1: %name-pam
 Source2: %name-security
 Patch: qt4-fsarchiver-0.6.12-alt-glibc-2.16.patch
-
+Patch1: qt4-fsarchiver_qmake_pro.patch
 License: GPLv2+
 Group: Archiving/Backup
 
 
-# Automatically added by buildreq on Wed Jun 29 2011
-# optimized out: fontconfig libX11-devel libXext-devel libcom_err-devel libgpg-error libgpg-error-devel libqt4-core libqt4-devel libqt4-gui libstdc++-devel zlib-devel
-BuildRequires: bzlib-devel gcc-c++ libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel liblzma-devel liblzo2-devel libqt4-network libuuid-devel phonon-devel
+# Automatically added by buildreq on Mon Feb 16 2015
+# optimized out: fontconfig libcloog-isl4 libcom_err-devel libgpg-error libgpg-error-devel libqt4-core libqt4-gui libstdc++-devel phonon-devel zlib-devel
+BuildRequires: bzlib-devel gcc-c++ glibc-devel-static libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel liblzma-devel liblzo2-devel libqt4-devel libuuid-devel
 
 %description
 QT4-FSArchiver is GUI for fsarhiver.
@@ -73,6 +74,7 @@ FSArchiver  - системный инструментарий, позволяя�
 %prep
 %setup -n %name
 %patch -p2
+%patch1 -p1
 
 echo QMAKE_CXXFLAGS_RELEASE = %optflags >>  qt4-fsarchiver.pro
 echo QMAKE_CFLAGS_RELEASE = %optflags >>  qt4-fsarchiver.pro
@@ -113,20 +115,32 @@ install -pD -m640 %SOURCE2 %buildroot%_sysconfdir/security/console.apps/%name
 
 
 %files
-%_sbindir/%name
+%doc doc/Aenderungen doc/Change doc/Leerme doc/Liesmich doc/Readme doc/copyright
+
+%_sbindir/*
 %_bindir/%name
 %_desktopdir/qt4-fsarchiver.desktop
 %_iconsdir/hicolor/*/apps/*
 %_sysconfdir/pam.d/*
 %_sysconfdir/security/console.apps/*
 %_datadir/qt4/translations/*%{name}*.qm
+%exclude %_datadir/qt4/translations/*%{name}*.ts
+%_datadir/polkit-1/actions/org.project.pkexec.run-%name.policy
+ 
 
 %changelog
+* Mon Feb 16 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1
+- New version
+
 * Mon Dec 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.12-alt1.1
 - Fixed build with glibc 2.16
 
 * Wed Jun 29 2011 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.12-alt1
 - Initial build for ALT Linux
+
+
+
+
 
 
 
