@@ -1,4 +1,4 @@
-%define ver_major 0.7
+%define ver_major 0.8
 
 Name: terminology
 Version: %ver_major.0
@@ -10,7 +10,7 @@ Group: Terminals
 Url: http://www.enlightenment.org/p.php?p=about/terminology
 
 #Source: %name-%version.tar
-Source: http://download.enlightenment.org/rel/apps/%name-%version.tar.xz
+Source: http://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
 Patch: %name-0.2-alt-default_font.patch
 
 Requires: fonts-bitmap-terminus
@@ -60,6 +60,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README
 
 %changelog
+* Mon Feb 16 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
