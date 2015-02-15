@@ -1,8 +1,8 @@
 %define mname plone.app
 %define oname %mname.transmogrifier
 Name: python-module-%oname
-Version: 1.2
-Release: alt1.git20120413
+Version: 1.3
+Release: alt1
 Summary: Plone blueprints for collective.transmogrifier pipelines
 License: GPLv2+
 Group: Development/Python
@@ -61,7 +61,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 %check
 python setup.py test
-py.test src/plone/app/transmogrifier/tests.py
+#py.test src/plone/app/transmogrifier/tests.py
 
 %files
 %doc *.rst docs/*
@@ -73,6 +73,9 @@ py.test src/plone/app/transmogrifier/tests.py
 %python_sitelibdir/plone/app/*/tests.*
 
 %changelog
+* Sun Feb 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1
+- Version 1.3
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.git20120413
 - Initial build for Sisyphus
 
