@@ -1,16 +1,16 @@
 Name: pflogsumm
-Version: 1.1.0
-Release: alt4
+Version: 1.1.3
+Release: alt1
 
 Summary: Postfix Log Entry Summarizer
 License: GPL
 Group: Monitoring
 
 Url: http://jimsun.linxnet.com/postfix_contrib.html
-Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 BuildArch: noarch
 
-Source0: %name-%version.tar
+Source0: %name-%version.tar.gz
 Source1: pflogsumm-daily
 # http://www.nmedia.net/~chris/mail/mail-cgi.txt
 Source2: pflogsumm.mail-cgi.txt
@@ -42,7 +42,7 @@ CGI script that interfaces to %name
 %setup
 cp -a %SOURCE2 .
 %patch0 -p1
-%patch1 -p0
+#patch1 -p0
 
 %install
 install -pD -m0755 pflogsumm.pl %buildroot/%_sbindir/%name
@@ -56,13 +56,16 @@ install -pD -m0644 %SOURCE3 %buildroot%_var/www/cgi-bin/%name/.htaccess
 %_sbindir/%name
 %_man1dir/%name.*
 %config(noreplace) %_sysconfdir/cron.daily/010%name
-%doc ChangeLog pflogsumm-faq.txt README ToDo rem_smtpd_stats_supp.pl
+%doc ChangeLog pflogsumm-faq.txt README ToDo
 
 %files cgi
 %_var/www/cgi-bin/%name/index.cgi
 %_var/www/cgi-bin/%name/.htaccess
 
 %changelog
+* Mon Feb 16 2015 Ilya Mashkin <oddity@altlinux.ru> 1.1.3-alt1
+- 1.1.3
+
 * Sun Apr 27 2008 Vladimir V Kamarzin <vvk@altlinux.ru> 1.1.0-alt4
 - Rename default cron job (Closes: #15444)
 
