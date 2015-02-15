@@ -2,7 +2,7 @@
 %define api_ver %ver_major
 
 Name: lasem
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: C/Gobject based SVG/Mathml renderer and editor - tools
@@ -111,6 +111,9 @@ applications.
 %_datadir/gtk-doc/html/%name-%api_ver/
 
 %changelog
+* Sun Feb 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Thu Feb 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
