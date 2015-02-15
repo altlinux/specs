@@ -1,7 +1,7 @@
 %define module_name	virtualbox
-%define module_version	4.3.14
+%define module_version	4.3.20
 
-%define module_release	alt2
+%define module_release	alt1
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -15,9 +15,6 @@ BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
-
-Patch0: virtualbox-netadp-3.17.patch
-Patch1: virtualbox-drv-3.17.patch
 
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
@@ -62,12 +59,6 @@ tar jxvf %kernel_src/kernel-source-%drv_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%pci_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%net_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%net_module_adaptor_name-%module_version.tar.bz2
-pushd kernel-source-%net_module_adaptor_name-%module_version
-%patch0 -p5
-popd
-pushd kernel-source-%drv_module_name-%module_version
-%patch1 -p4
-popd
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -105,8 +96,8 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Thu Oct 23 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.3.14-alt2 
-- build with kernel 3.17 fixed
+* Wed Jan 28 2015 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.20-alt1
+- Update template for virtualbox 4.3.20.
 
 * Wed Sep 03 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.3.14-alt1
 - Update template for virtualbox 4.3.14.
