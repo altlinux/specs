@@ -1,8 +1,8 @@
 %define mname collective
 %define oname %mname.taskqueue
 Name: python-module-%oname
-Version: 0.7.1
-Release: alt1.dev0.git20141229
+Version: 0.7.2
+Release: alt1.dev0.git20150126
 Summary: Yet another way to queue and execute asynchronous tasks in Plone
 License: GPL
 Group: Development/Python
@@ -93,6 +93,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Sun Feb 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1.dev0.git20150126
+- Version 0.7.2.dev0
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.dev0.git20141229
 - Version 0.7.1.dev0
 
