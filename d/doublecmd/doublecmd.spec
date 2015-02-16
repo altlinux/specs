@@ -1,7 +1,7 @@
 Name:		doublecmd
 Summary:	Twin-panel (commander-style) file manager (GTK2)
-Version:	0.5.8
-Release:	alt0.rev.5390
+Version:	0.6.0
+Release:	alt1
 Url:		http://doublecmd.sourceforge.net
 
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
@@ -46,6 +46,9 @@ install/linux/install.sh --install-prefix=%buildroot
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Feb 16 2015 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1
+- New version
+
 * Mon Dec 30 2013 Motsyo Gennadi <drool@altlinux.ru> 0.5.8-alt0.rev.5390
 - build for Sisyphus (thank for src.rpm to Anatoly Chernov)
 
