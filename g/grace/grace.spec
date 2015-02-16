@@ -3,7 +3,7 @@
 %def_with lpr
 
 Name: grace
-Version: 5.1.24
+Version: 5.1.25
 Release: alt1
 
 Summary: WYSIWYG tool to make two-dimensional plots of scientific data
@@ -144,6 +144,9 @@ GRACE_HOME=%_datadir/grace %_datadir/grace/auxiliary/set_default_enc
 # - look into printing support
 
 %changelog
+* Mon Feb 16 2015 Michael Shigorin <mike@altlinux.org> 5.1.25-alt1
+- new version 5.1.25
+
 * Sun Aug 31 2014 Michael Shigorin <mike@altlinux.org> 5.1.24-alt1
 - new version 5.1.24
 - disabled patch3
