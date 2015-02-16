@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20150213
+%define date 20150216
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.20
+Version: 0.0.21
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -262,6 +262,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Mon Feb 16 2015 Andriy Stepanov <stanv@altlinux.ru> 0.0.21-alt1
+- Introduce officer_exec_t, utempter screen hard link
+
 * Fri Feb 13 2015 Andriy Stepanov <stanv@altlinux.ru> 0.0.20-alt1
 - Add alterator-selinux-users backend to trusted_exec_t
 
