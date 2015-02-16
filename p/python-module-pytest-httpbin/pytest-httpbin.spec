@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.0.3
-Release: alt1.git20140914
+Version: 0.0.6
+Release: alt1.git20150215
 Summary: Easily test your HTTP library against a local copy of httpbin
 License: MIT
 Group: Development/Python
@@ -108,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1.git20150215
+- Version 0.0.6
+
 * Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20140914
 - Initial build for Sisyphus
 
