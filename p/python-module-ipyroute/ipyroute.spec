@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.0.18
-Release: alt1.git20150211
+Version: 0.0.23
+Release: alt1.git20150214
 Summary: Yet another interface for iproute2
 License: MIT
 Group: Development/Python
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.23-alt1.git20150214
+- Version 0.0.23
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.18-alt1.git20150211
 - Version 0.0.18
 
