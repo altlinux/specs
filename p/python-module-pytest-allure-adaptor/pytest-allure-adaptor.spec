@@ -1,10 +1,10 @@
 %define oname pytest-allure-adaptor
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 1.5.2
-Release: alt1.git20141112
+Version: 1.5.4
+Release: alt1.git20150206
 Summary: Plugin for py.test to generate allure xml reports
 License: ASLv2.0
 Group: Development/Python
@@ -18,15 +18,18 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-lxml python-module-recordtype
 BuildPreReq: python-module-enum34 python-module-hamcrest
+BuildPreReq: python-module-six python-module-namedlist
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-lxml python3-module-recordtype
 BuildPreReq: python3-module-enum34 python3-module-hamcrest
-BuildPreReq: python-tools-2to3
+BuildPreReq: python3-module-six python3-module-namedlist
 %endif
 
 %py_provides allure
+Requires: python-module-enum34
+%py_requires six namedlist
 
 %description
 This repository contains a plugin for py.test which automatically
@@ -37,6 +40,8 @@ currently supports only Allure 1.4.x series.
 Summary: Plugin for py.test to generate allure xml reports
 Group: Development/Python3
 %py3_provides allure
+Requires: python3-module-enum34
+%py3_requires six namedlist
 
 %description -n python3-module-%oname
 This repository contains a plugin for py.test which automatically
@@ -48,7 +53,6 @@ currently supports only Allure 1.4.x series.
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -93,6 +97,10 @@ popd
 %endif
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.4-alt1.git20150206
+- Version 1.5.4
+- Added module for Python 3
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt1.git20141112
 - Initial build for Sisyphus
 
