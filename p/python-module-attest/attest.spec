@@ -1,0 +1,158 @@
+%define oname attest
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 0.6
+Release: alt1.git20130330
+Summary: Modern, Pythonic unit testing
+License: BSD
+Group: Development/Python
+Url: https://pypi.python.org/pypi/Attest/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/dag/attest.git
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-progressbar python-module-Pygments
+BuildPreReq: python-module-six
+BuildPreReq: python-module-sphinx-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-progressbar python3-module-Pygments
+BuildPreReq: python3-module-six
+BuildPreReq: python-tools-2to3
+%endif
+
+%py_provides %oname
+Requires: python-module-progressbar
+%py_requires pygments six
+
+%description
+Attest is a unit testing framework built from the ground up with
+idiomatic Python in mind. Unlike others, it is not built on top of
+unittest though it provides compatibility by creating TestSuites from
+Attest collections.
+
+%package -n python3-module-%oname
+Summary: Modern, Pythonic unit testing
+Group: Development/Python3
+%py3_provides %oname
+Requires: python3-module-progressbar
+%py3_requires pygments six
+
+%description -n python3-module-%oname
+Attest is a unit testing framework built from the ground up with
+idiomatic Python in mind. Unlike others, it is not built on top of
+unittest though it provides compatibility by creating TestSuites from
+Attest collections.
+
+%package pickles
+Summary: Pickles for %oname
+Group: Development/Python
+
+%description pickles
+Attest is a unit testing framework built from the ground up with
+idiomatic Python in mind. Unlike others, it is not built on top of
+unittest though it provides compatibility by creating TestSuites from
+Attest collections.
+
+This package contains pickles for %oname.
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+Attest is a unit testing framework built from the ground up with
+idiomatic Python in mind. Unlike others, it is not built on top of
+unittest though it provides compatibility by creating TestSuites from
+Attest collections.
+
+This package contains documentation for %oname.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+
+%build
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
+%python_install
+
+export PYTHONPATH=$PWD
+pushd docs
+sphinx-build -b pickle -d _build/doctrees . _build/pickle
+sphinx-build -b html -d _build/doctrees . _build/html
+popd
+
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+export LC_ALL=en_US.UTF-8
+export PATH=$PATH:%buildroot%_bindir
+export PYTHONPATH=$PWD
+%make test
+%if_with python3
+pushd ../python3
+sed -i 's|attest|attest.py3|' Makefile
+export PYTHONPATH=$PWD
+%make test
+popd
+%endif
+
+%files
+%doc *.rst
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%files docs
+%doc docs/_build/html/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst
+%_bindir/*.py3
+%python3_sitelibdir/*
+%endif
+
+%changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.git20130330
+- Initial build for Sisyphus
+
