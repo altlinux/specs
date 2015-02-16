@@ -3,7 +3,7 @@
 %global modname flake8
 
 Name:             python-module-%{modname}
-Version:          2.2.5
+Version:          2.3.0
 Release:          alt1
 Summary:          Code checking using pep8 and pyflakes
 
@@ -13,7 +13,7 @@ URL:              http://pypi.python.org/pypi/%{modname}
 Source0:          %{name}-%{version}.tar
 
 BuildArch:        noarch
-BuildRequires:    python-devel
+BuildRequires:    python-devel python-modules-multiprocessing
 BuildRequires:    python-module-nose
 BuildRequires:    python-module-setuptools
 BuildRequires:    python-module-mccabe >= 0.2
@@ -25,7 +25,7 @@ Requires:    python-tools-pep8 >= 1.4.3
 Requires:    pyflakes >= 0.6.1
 Requires:    python-module-setuptools
 %if_with python3
-BuildRequires:    rpm-build-python3
+BuildRequires(pre):    rpm-build-python3
 BuildRequires:    python3-module-setuptools
 BuildRequires:    python3-module-nose
 BuildRequires:    python3-module-mccabe >= 0.2
@@ -33,6 +33,8 @@ BuildRequires:    python3-tools-pep8 >= 1.4.3
 BuildRequires:    python3-pyflakes >= 0.6.1
 BuildRequires:    python3-module-mock
 %endif
+
+%py_requires multiprocessing
 
 %description
 Flake8 is a wrapper around these tools:
@@ -150,6 +152,9 @@ popd
 
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1
+- Version 2.3.0
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.5-alt1
 - Version 2.2.5
 
