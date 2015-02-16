@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.2.8
+Version: 0.2.11
 Release: alt1
 Summary: Sphinx "napoleon" extension
 License: BSD
@@ -29,6 +29,8 @@ Sphinx "napoleon" extension.
 %prep
 %setup
 
+rm -fR *.egg-info
+
 %build
 %python_build_debug
 
@@ -44,6 +46,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.11-alt1
+- Version 0.2.11
+
 * Sun Nov 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8-alt1
 - Initial build for Sisyphus
 
