@@ -1,7 +1,7 @@
 %define oname amqpy
 Name: python3-module-%oname
-Version: 0.9.3
-Release: alt1.git20150113
+Version: 0.9.4
+Release: alt1.git20150215
 Summary: Pure-Python 3 AMQP client library
 License: MIT
 Group: Development/Python3
@@ -70,6 +70,9 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4-alt1.git20150215
+- Version 0.9.4
+
 * Wed Jan 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1.git20150113
 - Initial build for Sisyphus
 
