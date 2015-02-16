@@ -5,8 +5,8 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 0.0.1
-Release: alt1.git20150108
+Version: 0.2.1
+Release: alt1.git20150215
 Summary: jinja2 template renderer for aiohttp.web
 License: ASLv2.0
 Group: Development/Python
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2.1-alt1.git20150215
+- Version 0.2.1
+
 * Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.0.1-alt1.git20150108
 - Version 0.0.1
 
