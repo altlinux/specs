@@ -1,5 +1,5 @@
 Name: xfwm4
-Version: 4.11.2
+Version: 4.11.3
 Release: alt1
 
 Summary: Window manager for Xfce
@@ -70,6 +70,9 @@ Xfce. Совместим с окружениями рабочего стола G
 %_libdir/xfce4/*
 
 %changelog
+* Mon Feb 16 2015 Mikhail Efremov <sem@altlinux.org> 4.11.3-alt1
+- Updated to 4.11.3.
+
 * Tue Jul 29 2014 Mikhail Efremov <sem@altlinux.org> 4.11.2-alt1
 - Add missing include.
 - Require xfce4-common.
