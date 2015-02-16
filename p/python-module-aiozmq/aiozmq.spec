@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.3
-Release: alt1.git20150102
+Version: 0.6.0
+Release: alt1.git20150215
 Summary: ZeroMQ integration with asyncio
 License: BSD
 Group: Development/Python
@@ -23,6 +23,7 @@ BuildPreReq: python-tools-pep8 pyflakes python-module-zmq
 BuildPreReq: python-module-wheel python-module-coverage
 BuildPreReq: python-module-elpy python-module-jedi ipython
 BuildPreReq: python-module-rope_py3k python-module-ipdb
+BuildPreReq: python-module-docutils
 %endif
 BuildPreReq: python-module-sphinx-devel /dev/pts
 BuildPreReq: python-module-sphinxcontrib-spelling
@@ -35,6 +36,7 @@ BuildPreReq: python3-tools-pep8 python3-pyflakes python3-module-zmq
 BuildPreReq: python3-module-wheel python3-module-coverage
 BuildPreReq: python3-module-elpy python3-module-jedi
 BuildPreReq: python3-module-rope_py3k python3-module-ipdb
+BuildPreReq: python3-module-docutils
 %endif
 
 %py_provides %oname
@@ -137,10 +139,14 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc ACKS.txt CHANGES.txt *.rst examples
+%_bindir/*
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20150215
+- Version 0.6.0
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt1.git20150102
 - Initial build for Sisyphus
 
