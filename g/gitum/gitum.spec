@@ -1,6 +1,6 @@
 Name: gitum
 Version: 0.8.3
-Release: alt2
+Release: alt3
 
 Summary: Git Upstream Manager
 License: GPLv2
@@ -8,7 +8,7 @@ Group: Development/Other
 
 # git clone git://git.altlinux.org/people/piastry/packages/gitum.git
 
-Url: http://http://wiki.etersoft.ru/GitUM
+Url: http://wiki.etersoft.ru/GitUM
 Packager: Pavel Shilovsky <piastry@altlinux.org>
 
 Source: %name-%version.tar
@@ -49,6 +49,9 @@ and ready for a submission in the same time.
 %_bindir/%name
 
 %changelog
+* Mon Feb 16 2015 Pavel Shilovsky <piastry@altlinux.org> 0.8.3-alt3
+- Fix url
+
 * Fri Jan 23 2015 Pavel Shilovsky <piastry@altlinux.org> 0.8.3-alt2
 - Fix packager and urls in spec
 - Fix setuptools buildrequires
