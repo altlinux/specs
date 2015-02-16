@@ -3,16 +3,15 @@
 %define pkgname ffi
 
 Name: ruby-%pkgname
-Version: 0.6.3
-Release: alt1.2
+Version: 1.9.6
+Release: alt1
 
 Summary: Ruby foreign function interface
 Group: Development/Ruby
 License: BSD
-Url: http://rubyforge.org/projects/ffi/
+Url: https://github.com/ffi/ffi
 
 Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
 
 # Automatically added by buildreq on Sun Jun 28 2009 (-bi)
 BuildRequires: libffi-devel libruby-devel ruby-tool-setup
@@ -30,7 +29,6 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 sed -i -r '/^[[:blank:]]*Data_Get_Struct\(/s/^(([[:blank:]]*).*)((field) = layout->fields\[i\])(\).*)$/\2\3;\n\1\4\5/' \
@@ -43,16 +41,25 @@ sed -i -r '/^[[:blank:]]*Data_Get_Struct\(/s/^(([[:blank:]]*).*)((field) = layou
 %install
 %ruby_install
 %rdoc lib/
+# Remove unnecessary files
+rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
+
+%check
+%ruby_test_unit -Ilib:test test
 
 %files
-%doc README.rdoc
+%doc README.md LICENSE
 %ruby_sitelibdir/*
 %ruby_sitearchdir/*
 
 %files doc
-%ruby_ri_sitedir/FFI*
+%ruby_ri_sitedir/*
 
 %changelog
+* Mon Feb 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.9.6-alt1
+- New version
+- Fix project URL
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 0.6.3-alt1.2
 - Rebuilt with ruby-2.0.0-alt1
 
