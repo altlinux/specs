@@ -1,5 +1,5 @@
 Name: PsychoPy
-Version: 1.82.00
+Version: 1.82.01
 Release: alt1
 Summary: Psychophysics toolkit for Python
 Url: http://www.psychopy.org
@@ -18,12 +18,9 @@ BuildArch: noarch
 %add_python_req_skip pylabjack pylink textgrid
 
 # optimized out: dvipng fontconfig libgdk-pixbuf libwayland-client libwayland-server python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-beaker python-module-dateutil python-module-distribute python-module-docutils python-module-genshi python-module-html5lib python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-mako python-module-matplotlib python-module-mpmath python-module-nose python-module-nss python-module-numpy python-module-numpy-testing python-module-protobuf python-module-py python-module-pyExcelerator python-module-pyglet python-module-pytz python-module-simplejson python-module-sympy python-module-whoosh python-module-xlwt python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-tkinter python-modules-unittest t1lib tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended
-BuildRequires: ImageMagick-tools ctags openssl python-module-OpenGL python-module-imaging python-module-pygame python-module-scipy python-module-sphinx python-module-wx python-modules-json time unzip xvfb-run
+BuildRequires: ImageMagick-tools ctags openssl python-module-OpenGL python-module-imaging python-module-pygame python-module-scipy python-module-sphinx python-module-wx2.9 python-modules-json time unzip xvfb-run
 
 BuildRequires: python2.7(setuptools) texlive-latex-recommended
-
-# This cannot be found
-Requires: python-module-imaging python-module-pygame
 
 %description
 PsychoPy uses OpenGL and Python to create a toolkit for running
@@ -32,6 +29,9 @@ psychology/neuroscience/psychophysics experiments
 %package -n %packagename
 Group: Development/Python
 Summary: Supplemental python module for %name, psychophysics toolkit
+
+# This cannot be found or properly selected
+Requires: python-module-imaging python-module-pygame python-module-wx2.9
 
 %description -n %packagename
 Supplemental python module for %name.
@@ -51,7 +51,7 @@ Type=Application
 Version=1.0
 Name=%name
 GenericName=Psychophysics toolkit
-Comment=%Psychophysics toolkit for Python
+Comment=Psychophysics toolkit for Python
 Exec=psychopyApp.py
 Icon=%name
 Terminal=false
@@ -83,6 +83,10 @@ done
 %python_sitelibdir_noarch/%name-*
 
 %changelog
+* Mon Feb 16 2015 Fr. Br. George <george@altlinux.ru> 1.82.01-alt1
+- Autobuild version bump to 1.82.01
+- Eliminate wxpython2.8
+
 * Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 1.82.00-alt1
 - Autobuild version bump to 1.82.00
 
