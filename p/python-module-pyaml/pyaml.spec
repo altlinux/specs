@@ -1,7 +1,7 @@
 %define oname pyaml
 Name: python-module-%oname
-Version: 14.12.10
-Release: alt1.git20141204
+Version: 15.02.1
+Release: alt1.git20150216
 Summary: pretty-yaml: Pretty YAML serialization
 License: WTFPL
 Group: Development/Python
@@ -53,6 +53,9 @@ python pyaml/tests/dump.py
 %python_sitelibdir/*/tests
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 15.02.1-alt1.git20150216
+- Version 15.02.1
+
 * Thu Dec 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.12.10-alt1.git20141204
 - Version 14.12.10
 
