@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.1.0
-Release: alt1.git20150211
+Version: 3.2.0
+Release: alt1.git20150214
 Summary: Swagger Schema validation
 License: BSD
 Group: Development/Python
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1.git20150214
+- Version 3.2.0
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt1.git20150211
 - Version 3.1.0
 
