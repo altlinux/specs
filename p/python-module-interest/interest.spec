@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.git20150125
+Version: 0.4.1
+Release: alt1.git20150216
 Summary: Interest is a web framework on top of asyncio and aiohttp
 License: MIT
 Group: Development/Python
@@ -21,6 +21,7 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-asyncio python-module-aiohttp
 BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-module-mario python-module-runfile
+BuildPreReq: python-module-pathlib
 %endif
 BuildPreReq: python-module-sphinx-devel python3-module-sphinx
 BuildPreReq: python3-module-sphinx_rtd_theme
@@ -31,6 +32,7 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-asyncio python3-module-aiohttp
 BuildPreReq: python3-module-nose python3-module-coverage
 BuildPreReq: python3-module-mario python3-module-runfile
+BuildPreReq: python3-module-pathlib
 %endif
 
 %py_provides %oname
@@ -108,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20150216
+- Version 0.4.1
+
 * Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20150125
 - Initial build for Sisyphus
 
