@@ -1,10 +1,11 @@
 %define oname pyamg
 
 %def_without python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 2.1.0
-Release: alt2
+Version: 2.2.1
+Release: alt1
 Summary: PyAMG: Algebraic Multigrid Solvers in Python
 License: BSD
 Group: Development/Python
@@ -15,11 +16,14 @@ Source: %name-%version.tar
 
 BuildPreReq: python-devel libnumpy-devel gcc-c++
 BuildPreReq: python-module-sphinx-devel python-module-scipy
+BuildPreReq: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libnumpy-py3-devel
+BuildPreReq: python3-devel libnumpy-py3-devel python3-module-scipy
+BuildPreReq: python3-module-nose
 %endif
 
+%py_requires numpy scipy
 %add_python_req_skip example
 
 %description
@@ -29,6 +33,7 @@ convenient Python interface.
 %package -n python3-module-%oname
 Summary: PyAMG: Algebraic Multigrid Solvers in Python
 Group: Development/Python3
+%py3_requires numpy scipy
 %add_python3_req_skip example
 
 %description -n python3-module-%oname
@@ -112,6 +117,16 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 
 cp -fR Docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
+%check
+python setup.py build_ext -i
+nosetests -v
+%if_with python3
+pushd ../python3
+python3 setup.py build_ext -i
+nosetests3 -v
+popd
+%endif
+
 %files
 %doc *.txt *.md
 %python_sitelibdir/*
@@ -122,7 +137,7 @@ cp -fR Docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/*/pickle
 
 %files docs
-%doc Docs/build/html/*
+%doc Docs/build/html Docs/diagrams Docs/dev
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -152,6 +167,9 @@ cp -fR Docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt1
+- Version 2.2.1
+
 * Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt2
 - Avoid requirement on pythonX.Y(example)
 
