@@ -1,10 +1,11 @@
 %define oname autopep8
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 1.1
-Release: alt1.a0.git20141118
+Version: 1.1.1
+Release: alt1.a0.git20150215
 Summary: Automatically formats Python code to conform to the PEP 8 style guide
 License: MIT
 Group: Development/Python
@@ -16,11 +17,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-coverage python-tools-pep8
+BuildPreReq: python-module-coverage python-tools-pep8 pylint
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-coverage python3-tools-pep8
+BuildPreReq: python3-module-coverage python3-tools-pep8 pylint-py3
 %endif
 
 %py_provides %oname
@@ -79,7 +80,7 @@ python setup.py test
 %if_with python3
 pushd ../python3
 python3 setup.py test
-%make test PYTHON=python3 PEP8=python3-pep8
+%make test PYTHON=python3 PEP8=python3-pep8 PYLINT=pylint.py3
 popd
 %endif
 
@@ -99,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.a0.git20150215
+- Version 1.1.1a0
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.a0.git20141118
 - Initial build for Sisyphus
 
