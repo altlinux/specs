@@ -5,7 +5,7 @@
 %def_enable gtk3_module
 
 Name: caribou
-Version: %ver_major.16
+Version: %ver_major.17
 Release: alt1
 
 Summary: A simplified in-place on-screen keyboard
@@ -60,7 +60,7 @@ Group: System/Libraries
 Requires: lib%name = %version-%release
 
 %description -n lib%name-gir
-GObject introspection data for the Cheese library.
+GObject introspection data for the Caribou library.
 
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the Caribou
@@ -124,12 +124,15 @@ make clean
 %_vapidir/%name-%api_ver.vapi
 
 %files -n lib%name-gir
-%_typelibdir/Caribou-1.0.typelib
+%_typelibdir/Caribou-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/Caribou-1.0.gir
+%_girdir/Caribou-%api_ver.gir
 
 %changelog
+* Mon Feb 16 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.17-alt1
+- 0.4.17
+
 * Mon Nov 24 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.16-alt1
 - 0.4.16
 
