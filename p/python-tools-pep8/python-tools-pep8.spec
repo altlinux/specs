@@ -3,7 +3,7 @@
 %global module_name pep8
 
 Name:           python-tools-%{module_name}
-Version:        1.6.1
+Version:        1.6.2
 Release:        alt1
 Summary:        Python style guide checker
 
@@ -103,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt1
+- Version 1.6.2
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1
 - Version 1.6.1
 
