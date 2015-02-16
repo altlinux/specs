@@ -3,8 +3,8 @@
 %def_enable libcoverart
 
 Name: goobox
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: CD player and ripper for GNOME
 License: LGPLv2+
@@ -55,6 +55,9 @@ subst 's|1\.0\.0beta1|1.0.0|' configure*
 
 
 %changelog
+* Mon Feb 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.3.3-alt1
+- 3.3.3
+
 * Mon Dec 01 2014 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt2
 - rebuilt against libmusicbrainz5.so.1
 
