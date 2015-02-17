@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.4.5
-Release: alt1.git20150108
+Version: 2.4.7
+Release: alt1.git20150212
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
 License: MIT
 Group: Development/Python
@@ -184,6 +184,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.7-alt1.git20150212
+- Version 2.4.7
+
 * Sat Jan 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.5-alt1.git20150108
 - New snapshot
 - Added module for Python 3
