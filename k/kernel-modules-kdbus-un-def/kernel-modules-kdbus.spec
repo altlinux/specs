@@ -1,5 +1,5 @@
 %define module_name	kdbus
-%define module_version	20140919
+%define module_version	20150210
 %define module_release	alt1
 
 %define flavour		un-def
@@ -54,3 +54,6 @@ install kdbus.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Feb  9 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 20150129-alt1
+- updated
