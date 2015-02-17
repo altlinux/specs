@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.14.2
-Release: alt1.git20150123
+Version: 0.14.4
+Release: alt1.git20150217
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -181,6 +181,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.4-alt1.git20150217
+- Version 0.14.4
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.2-alt1.git20150123
 - Version 0.14.2
 
