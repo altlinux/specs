@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0
-Release: alt2.git20140108
+Version: 2.1
+Release: alt1.git20150117
 Summary: Routing Recognition and Generation Tools
 License: BSD
 Group: Development/Python
@@ -132,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1.git20150117
+- Version 2.1
+
 * Wed Jul 30 2014 Lenar Shakirov <snejok@altlinux.ru> 2.0-alt2.git20140108
 - python-module-repoze.lru added to Requires
 
