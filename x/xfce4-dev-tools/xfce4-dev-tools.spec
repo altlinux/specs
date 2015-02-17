@@ -1,5 +1,5 @@
 Name: xfce4-dev-tools
-Version: 4.11.0
+Version: 4.11.1
 Release: alt1
 
 Summary: Development tools for Xfce
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: glib2-devel
 
 Requires: intltool >= 0.50.0
+Requires: xfce4-common
 
 %description
 Development tools for Xfce
@@ -47,6 +48,9 @@ sed  -e "s/@REVISION@//g" \
 %_datadir/xfce4/dev-tools
 
 %changelog
+* Wed Feb 18 2015 Mikhail Efremov <sem@altlinux.org> 4.11.1-alt1
+- Updated to 4.11.1.
+
 * Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
 - Updated to 4.11.0.
 
