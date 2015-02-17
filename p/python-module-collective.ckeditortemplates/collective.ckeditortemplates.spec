@@ -1,8 +1,8 @@
 %define mname collective
 %define oname %mname.ckeditortemplates
 Name: python-module-%oname
-Version: 0.3.1
-Release: alt1.dev0.git20150115
+Version: 0.3.2
+Release: alt1.dev0.git20150209
 Summary: Plone templates for ckeditor
 License: GPL
 Group: Development/Python
@@ -87,6 +87,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/*/tests
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.dev0.git20150209
+- Version 0.3.2.dev0
+
 * Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.dev0.git20150115
 - Version 0.3.1.dev0
 
