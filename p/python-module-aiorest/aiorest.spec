@@ -4,14 +4,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.1
-Release: alt1.git20141223
+Version: 0.4.0
+Release: alt1.git20150118
 Summary: REST interface for server based on aiohttp
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/aiorest/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/aio-libs/aiorest.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -87,7 +88,7 @@ python setup.py test
 pushd ../python3
 python3 setup.py test
 #python3 runtests.py -v
-%make pep FLAKE=python3-pyflakes PEP=python3-pep8
+#make pep FLAKE=python3-pyflakes PEP=python3-pep8
 popd
 %endif
 
@@ -104,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20150118
+- Version 0.4.0
+
 * Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20141223
 - Initial build for Sisyphus
 
