@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 0.5.0
+Version: 0.6.3
 Release: alt1
 
 Summary: Python interface for c-ares
@@ -68,6 +68,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 13 2015 Vladimir Didenko <cow@altlinux.ru> 0.6.3-alt1
+- new version
+
 * Tue Sep 10 2013 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt1
 - first build for Sisyphus
 
