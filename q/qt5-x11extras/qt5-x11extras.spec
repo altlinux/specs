@@ -3,7 +3,7 @@
 
 Name: qt5-x11extras
 Version: 5.4.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - X11 support library
@@ -32,6 +32,11 @@ Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common = %EVR
 Requires: qt5-base-devel
+Requires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel
+Requires: libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel
+Requires: libXmu-devel libXpm-devel libXrandr-devel libXtst-devel
+Requires: libXv-devel libXxf86misc-devel libXxf86vm-devel
+Requires: libxkbfile-devel libxcbutil-keysyms-devel
 %description devel
 %summary.
 
@@ -92,6 +97,9 @@ syncqt.pl-qt5 \
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Tue Feb 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt2
+- fix requires
+
 * Tue Dec 16 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
 - new version
 
