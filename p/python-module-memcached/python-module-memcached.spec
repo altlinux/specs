@@ -4,7 +4,7 @@
 
 Name: python-module-memcached
 Version: 1.53
-Release: alt2
+Release: alt3
 
 Summary: A Python module for memcached daemon
 Group: Development/Python
@@ -27,6 +27,8 @@ BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 %endif
 
+%py_provides memcache
+
 %description
 %modulename is a Python module that interfaces to the memcached -
 distributed memory object caching system.
@@ -34,6 +36,7 @@ distributed memory object caching system.
 %package -n python3-module-memcached
 Summary: A Python module for memcached daemon
 Group: Development/Python3
+%py3_provides memcache
 
 %description -n python3-module-memcached
 %modulename is a Python module that interfaces to the memcached -
@@ -76,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.53-alt3
+- Added provides: memcache
+
 * Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.53-alt2
 - Added module for Python 3
 
