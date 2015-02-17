@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt1.git20150209
+Version: 0.0.2
+Release: alt1.git20150216
 Summary: A web framework based on Asyncio stack
 License: MIT
 Group: Development/Python
@@ -22,6 +22,7 @@ BuildPreReq: python-module-aiohttp python-module-cached-property
 BuildPreReq: python-module-peewee python-module-pyjade
 BuildPreReq: python-module-werkzeug python-module-pytest-pythonpath
 BuildPreReq: python-module-webtest python-module-mixer
+BuildPreReq: python-module-ujson
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -30,10 +31,12 @@ BuildPreReq: python3-module-aiohttp python3-module-cached-property
 BuildPreReq: python3-module-peewee python3-module-pyjade
 BuildPreReq: python3-module-werkzeug python3-module-pytest-pythonpath
 BuildPreReq: python3-module-webtest python3-module-mixer
+BuildPreReq: python3-module-ujson python3-module-gunicorn
 %endif
 
 %py_provides %oname
-%py_requires aiohttp cached_property peewee pyjade werkzeug mixer
+%py_requires aiohttp cached_property peewee pyjade werkzeug mixer ujson
+%py_requires gunicorn
 %add_python_req_skip pytest
 
 %description
@@ -43,7 +46,8 @@ The Muffin - A web framework based on Asyncio stack.
 Summary: A web framework based on Asyncio stack
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires aiohttp cached_property peewee pyjade werkzeug mixer
+%py3_requires aiohttp cached_property peewee pyjade werkzeug mixer ujson
+%py3_requires gunicorn
 %add_python3_req_skip pytest
 
 %description -n python3-module-%oname
@@ -105,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20150216
+- Version 0.0.2
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20150209
 - Initial build for Sisyphus
 
