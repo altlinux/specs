@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.0
-Release: alt1.git20141211
+Version: 0.3.1
+Release: alt1.git20150131
 Summary: Tools for running pyramid using asyncio
 License: BSD-derived
 Group: Development/Python
@@ -167,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20150131
+- Version 0.3.1
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20141211
 - Initial build for Sisyphus
 
