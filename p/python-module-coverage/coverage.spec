@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0
-Release: alt1.a0.hg20140719
+Release: alt1.a6.git20150216
 Summary: A tool for measuring code coverage of Python programs
 License: BSD
 Group: Development/Python
@@ -16,6 +16,9 @@ Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-sphinx python-module-Pygments
+BuildPreReq: python-module-enchant libenchant
+BuildPreReq: python-module-sphinxcontrib-napoleon
+BuildPreReq: python-module-sphinxcontrib-spelling
 
 %description
 Coverage.py is a tool for measuring code coverage of Python programs. It
@@ -78,6 +81,7 @@ cp -a . ../python3
 %endif
 
 %build
+%add_optflags -fno-strict-aliasing
 %python_build_debug
 
 export PYTHONPATH=$PWD
@@ -130,6 +134,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1.a6.git20150216
+- Version 4.0a6
+
 * Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1.a0.hg20140719
 - New snapshot
 
