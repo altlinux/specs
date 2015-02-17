@@ -1,5 +1,5 @@
 Name: hiawatha
-Version: 9.0
+Version: 9.12
 Release: alt1
 
 Summary: A secure and advanced webserver
@@ -7,43 +7,61 @@ License: GPLv2+
 Group: System/Servers
 
 Url: http://www.hiawatha-webserver.org/
-Source: http://www.hiawatha-webserver.org/files/hiawatha-%version.tar.gz
+Source0: http://www.hiawatha-webserver.org/files/hiawatha-%version.tar.gz
 Source1: hiawatha.init
 Source2: hiawatha.logrotate
-Patch1: hiawatha-6.12-nobody99.patch
-Patch2: hiawatha-9.0-libs-in-system-place.patch
+Patch0: hiawatha-9.12-nobody99.patch
+Patch1: hiawatha-9.12-libs-in-system-place.patch
 
 BuildRequires(pre): cmake
-# Automatically added by buildreq on Mon Mar 28 2011
-BuildRequires: libssl-devel libxslt-devel zlib-devel 
+# Automatically added by buildreq on Tue Feb 17 2015
+# optimized out: cmake-modules libcloog-isl4 libxml2-devel pkg-config
+BuildRequires: cmake libxslt-devel zlib-devel
 
 %description
-Hiawatha is an advanced and secure Web server for Unix. It has been written with
-security as its main goal. It's very secure and fast and is really easy to
-configure. It features a rootjail, the ability to run CGIs under any UID/GID you
-want, prevention of SQL injection and cross-site scripting, banning of clients
-who try such exploits, and many other features. These features make Hiawatha an
-interesting Web server for those who need more security than what the other
-available Web servers are offering.
+Hiawatha is an advanced and secure Web server for Unix.
+
+It has been written with security as its main goal. It's very
+secure and fast and is really easy to configure. It features
+a rootjail, the ability to run CGIs under any UID/GID you want,
+prevention of SQL injection and cross-site scripting, banning of
+clients who try such exploits, and many other features. These
+features make Hiawatha an interesting Web server for those who
+need more security than what the other available Web servers
+are offering.
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
-%patch2 -p2
 
 %build
-%cmake \
+%cmake_insource \
     -DCMAKE_INSTALL_NAME_DIR=%_libdir \
     -DLIB_INSTALL_DIR=%_libdir \
-    -DCONFIG_DIR=%_sysconfdir/hiawatha \
-    -DWEBROOT_DIR=/var/www/hiawatha
-%make_build -C BUILD
+    -DCONFIG_DIR=%_sysconfdir/%name \
+    -DWEBROOT_DIR=%_var/www/%name \
+    -DWORK_DIR=%_localstatedir/%name \
+    -DLOG_DIR=%_logdir/%name \
+    -DPID_DIR=%_runtimedir \
+    -DENABLE_CACHE=On \
+    -DENABLE_IPV6=On \
+    -DENABLE_MONITOR=On \
+    -DENABLE_RPROXY=On \
+    -DENABLE_SSL=On \
+    -DENABLE_TOMAHAWK=On \
+    -DENABLE_TOOLKIT=On \
+    -DENABLE_XSLT=On \
+    -DENABLE_ZLIB_SUPPORT=On \
+    #
+%make_build
 
 %install
-%makeinstall_std -C BUILD
+%makeinstall_std
 install -d %buildroot%_logdir/hiawatha
-install -pDm 755 %_sourcedir/hiawatha.init %buildroot%_initrddir/hiawatha
-install -pDm 644 %_sourcedir/hiawatha.logrotate %buildroot/etc/logrotate.d/hiawatha
+install -pDm755 %_sourcedir/hiawatha.init %buildroot%_initdir/hiawatha
+install -pDm644 %_sourcedir/hiawatha.logrotate \
+	%buildroot%_logrotatedir/hiawatha
 
 %post
 %post_service hiawatha
@@ -53,20 +71,26 @@ install -pDm 644 %_sourcedir/hiawatha.logrotate %buildroot/etc/logrotate.d/hiawa
 
 %files
 %dir %_sysconfdir/hiawatha
-%config(noreplace) %_sysconfdir/hiawatha/*
-%config(noreplace) %_initrddir/hiawatha
-%config(noreplace) /etc/logrotate.d/hiawatha
-%dir /var/www/hiawatha
-%config(noreplace) /var/www/hiawatha/*
+%config(noreplace) %_sysconfdir/%name/*
+%config(noreplace) %_initrddir/%name
+%config(noreplace) %_logrotatedir/%name
+%dir %_var/www/%name
+%config(noreplace) %_var/www/%name/*
 %_bindir/ssi-cgi
 %_sbindir/cgi-wrapper
-%_sbindir/hiawatha
+%_sbindir/%name
 %_sbindir/wigwam
-%_libdir/libpolarssl.so*
+%_libdir/*.so.*
 %_man1dir/*
-%_logdir/hiawatha
+%_logdir/%name
 
 %changelog
+* Tue Feb 17 2015 Michael Shigorin <mike@altlinux.org> 9.12-alt1
+- 9.12 (closes: #30743, #30748)
+- built with mbedtls instead of polarssl, see
+  https://www.hiawatha-webserver.org/weblog/86
+- minor spec cleanup
+
 * Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 9.0-alt1
 - New version (ALT #28848)
 
