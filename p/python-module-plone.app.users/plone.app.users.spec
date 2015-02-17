@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 2.2
-Release: alt1.dev0.git20141214
+Release: alt1.dev0.git20150216
 Summary: A package for all things users and groups related (specific to plone)
 License: GPLv2
 Group: Development/Python
@@ -33,6 +33,7 @@ BuildPreReq: python-module-Products.PloneTestCase
 BuildPreReq: python-module-plone.keyring
 BuildPreReq: python-module-Products.CMFPlone
 BuildPreReq: python-module-unittest2
+BuildPreReq: python-module-plone.app.testing
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -54,6 +55,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires Products.MailHost Products.PloneTestCase plone.keyring
+%py_requires plone.app.testing
 
 %description tests
 This package provide the registration form for new users using z3c.form
@@ -82,12 +84,15 @@ python setup.py test
 %doc *.rst docs/*
 %python_sitelibdir/plone/app/*
 %python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/plone/app/*/tests
+%exclude %python_sitelibdir/plone/app/*/test*
 
 %files tests
-%python_sitelibdir/plone/app/*/tests
+%python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.dev0.git20150216
+- New snapshot
+
 * Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.dev0.git20141214
 - Version 2.2.dev0
 
