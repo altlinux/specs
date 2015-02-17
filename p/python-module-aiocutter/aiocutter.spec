@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.2
+Version: 0.0.3
 Release: alt1.git20150120
 Summary: Scraping tool for asyncio
 License: MIT
@@ -83,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20150120
+- Version 0.0.3
+
 * Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20150120
 - Initial build for Sisyphus
 
