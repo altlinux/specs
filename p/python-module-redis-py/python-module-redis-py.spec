@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.10.3
-Release: alt1
+Release: alt2
 Group: Development/Python
 License: MIT License
 Summary: The Python interface to the Redis key-value store
@@ -63,15 +63,18 @@ popd
 %files
 %doc CHANGES LICENSE README.rst
 %python_sitelibdir/%module_name/
-%exclude %python_sitelibdir/*.egg-info
+%python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/%module_name/
-%exclude %python3_sitelibdir/*.egg-*
+%python3_sitelibdir/*.egg-*
 %endif
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10.3-alt2
+- Don't exclude .egg-info
+
 * Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10.3-alt1
 - Version 2.10.3
 
