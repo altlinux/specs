@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 19.2.0
-Release: alt1.git20141222
+Version: 19.2.1
+Release: alt1.git20150206
 Summary: WSGI HTTP Server for UNIX
 License: Mit
 Group: Development/Python
@@ -18,14 +18,18 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel python-module-jinja2
 BuildPreReq: python-module-docutils python-module-pytest-cov
+BuildPreReq: python-module-mock
+BuildPreReq: python-modules-logging python-modules-multiprocessing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-jinja2 python3-module-asyncio
 BuildPreReq: python3-module-docutils python3-module-pytest-cov
+BuildPreReq: python3-module-mock
 %endif
 
 %py_provides %oname
+%py_requires logging
 
 %description
 Gunicorn 'Green Unicorn' is a Python WSGI HTTP Server for UNIX. It's a
@@ -141,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 19.2.1-alt1.git20150206
+- Version 19.2.1
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 19.2.0-alt1.git20141222
 - Version 19.2.0
 
