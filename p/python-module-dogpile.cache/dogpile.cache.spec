@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.5.6
-Release: alt1.git20150202
+Release: alt2.git20150202
 Summary: A caching front-end based on the Dogpile lock
 License: BSD
 Group: Development/Python
@@ -30,6 +30,8 @@ BuildPreReq: python3-module-nose python3-module-mock
 BuildPreReq: python3-module-mako
 %endif
 
+Provides: python-module-dogpile-cache = %EVR
+Obsoletes: python-module-dogpile-cache < %EVR
 %py_provides %oname
 %py_requires %mname.core
 
@@ -50,6 +52,8 @@ heap.
 %package -n python3-module-%oname
 Summary: A caching front-end based on the Dogpile lock
 Group: Development/Python3
+Provides: python3-module-dogpile-cache = %EVR
+Obsoletes: python3-module-dogpile-cache < %EVR
 %py3_provides %oname
 %py3_requires %mname.core
 
@@ -157,6 +161,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.6-alt2.git20150202
+- Provides: python-module-dogpile-cache
+
 * Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.6-alt1.git20150202
 - Initial build for Sisyphus
 
