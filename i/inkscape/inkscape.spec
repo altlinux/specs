@@ -3,8 +3,8 @@
 
 %define pre %nil
 Name: inkscape
-Version: 0.48.5
-Release: alt2
+Version: 0.91
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -14,7 +14,9 @@ Url: http://inkscape.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%name/%name-%version%pre.tar
+#Source: http://prdownloads.sf.net/%name/%name-%version%pre.tar
+# Source-url: https://inkscape.org/en/gallery/item/3860/download/
+Source: %name-%version.tar
 
 #Source1: %name-%version.ru.po
 Source2: tutorial-%version.tar
@@ -75,7 +77,7 @@ inkview is standalone viewer for Inkscape files (SVG)
 
 # fedora patches
 %patch10 -p1 -b .types
-%patch114 -p1 -b .libwpg
+#patch114 -p1 -b .libwpg
 
 #cat %%SOURCE1 >po/ru.po
 
@@ -126,6 +128,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Wed Feb 18 2015 Vitaly Lipatov <lav@altlinux.ru> 0.91-alt1
+- new version 0.91 (with rpmrb script)
+
 * Thu Oct 23 2014 Anton Farygin <rider@altlinux.ru> 0.48.5-alt2
 - Rebuild with new libImageMagick
 
