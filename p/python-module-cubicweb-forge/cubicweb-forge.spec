@@ -1,6 +1,6 @@
 %define oname cubicweb-forge
 Name: python-module-%oname
-Version: 1.10.2
+Version: 1.11.0
 Release: alt1
 Summary: Software forge component for the CubicWeb framework
 License: LGPL
@@ -79,6 +79,9 @@ python setup.py test
 %python_sitelibdir/*/test*
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1
+- Version 1.11.0
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.2-alt1
 - Initial build for Sisyphus
 
