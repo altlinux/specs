@@ -1,6 +1,6 @@
 %define oname cubicweb-forgotpwd
 Name: python-module-%oname
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 Summary: Password recovery component for the CubicWeb framework
 License: LGPL
@@ -41,6 +41,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1
+- Version 0.6.2
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1
 - Initial build for Sisyphus
 
