@@ -1,12 +1,13 @@
 Name:           xdotool
 Version:        20110530.1
-Release:        alt1
+Release:        alt2
 Summary:        Fake keyboard/mouse input for X
 
 Group:          System/X11
 License:        BSD
 URL:            http://www.semicomplete.com/projects/xdotool/
 Source0:        %{name}.tar
+Patch:		xdotool-recursion-continue.patch
 
 BuildRequires:  libXtst-devel       
 BuildRequires:	libXinerama-devel
@@ -33,6 +34,7 @@ Development files.
 
 %prep
 %setup -q -n %name
+%patch
 
 %build
 %make_build
@@ -46,7 +48,6 @@ Development files.
 	install
 
 %files
-%defattr(-,root,root,-)
 %doc CHANGELIST COPYRIGHT README
 %doc examples
 %_bindir/*
@@ -58,6 +59,9 @@ Development files.
 %_includedir/xdo.h
 
 %changelog
+* Wed Feb 18 2015 Fr. Br. George <george@altlinux.ru> 20110530.1-alt2
+- Fix invalid early recursion return
+
 * Sat Nov 02 2013 Afanasov Dmitry <ender@altlinux.org> 20110530.1-alt1
 - 2.20110530.1
 
