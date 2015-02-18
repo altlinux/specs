@@ -3,8 +3,9 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.10.0
-Release: alt2
+Epoch: 1
+Version: 3.9.1
+Release: alt1.dev.git20141223
 Summary: Zope Application Testing Support
 License: ZPL
 Group: Development/Python
@@ -145,6 +146,9 @@ touch %buildroot%python3_sitelibdir/zope/app/__init__.py
 %endif
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.9.1-alt1.dev.git20141223
+- Updated from github
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.0-alt2
 - Added module for Python 3
 
