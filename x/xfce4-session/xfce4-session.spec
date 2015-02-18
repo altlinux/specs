@@ -1,5 +1,5 @@
 Name: xfce4-session
-Version: 4.11.0
+Version: 4.11.1
 Release: alt1
 
 Summary: Session manager for Xfce desktop environment
@@ -19,19 +19,16 @@ Source2: polkit-gnome-authentication-agent-1-xfce.desktop
 
 Patch: %name-%version-%release.patch
 
-%def_enable systemd
-
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfconf-devel libxfce4ui-devel
 # For gdk-pixbuf-csource and exo-csource (needed in maintainer mode)
 BuildRequires: libgdk-pixbuf-devel libexo-devel
-%{?_enable_systemd:BuildRequires: libpolkit-devel}
+BuildRequires: libpolkit-devel
 BuildRequires: iceauth intltool libSM-devel libglade-devel libwnck-devel xorg-cf-files
 
 Requires: wm-common-freedesktop
-%{?_disable_systemd: Requires: upower}
 
 Obsoletes: xfce-utils < %version
 
@@ -79,7 +76,7 @@ Additional splash screen engines for Xfce session manager.
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
-	%{subst_enable systemd} \
+	--with-backend=linux \
 	--enable-debug=no
 %make_build
 
@@ -106,6 +103,7 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/polkit-gnome-authe
 %_iconsdir/hicolor/*/*/*
 %_mandir/man?/*
 %_datadir/xsessions/*.desktop
+%_datadir/polkit-1/actions/*.policy
 
 %files -n libxfsm
 %_libdir/lib*.so.*
@@ -122,6 +120,10 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/polkit-gnome-authe
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Wed Feb 18 2015 Mikhail Efremov <sem@altlinux.org> 4.11.1-alt1
+- Drop obsoleted patches.
+- Updated to 4.11.1.
+
 * Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - xflock4: Add mate-screensaver support.
