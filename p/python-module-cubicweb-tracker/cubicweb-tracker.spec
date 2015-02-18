@@ -1,6 +1,6 @@
 %define oname cubicweb-tracker
 Name: python-module-%oname
-Version: 1.16.1
+Version: 1.16.3
 Release: alt1
 Summary: Basic tracker with project, version, ticket for the CubicWeb framework
 License: LGPL
@@ -47,6 +47,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16.3-alt1
+- Version 1.16.3
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16.1-alt1
 - Initial build for Sisyphus
 
