@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.2
-Release: alt1.git20150216
+Version: 0.0.4
+Release: alt1.git20150217
 Summary: A web framework based on Asyncio stack
 License: MIT
 Group: Development/Python
@@ -109,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.4-alt1.git20150217
+- Version 0.0.4
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20150216
 - Version 0.0.2
 
