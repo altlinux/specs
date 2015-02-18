@@ -1,6 +1,6 @@
 %define oname cubicweb-nosylist
 Name: python-module-%oname
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 Summary: Roundup like nosylist component for the CubicWeb framework
 License: LGPL
@@ -61,6 +61,9 @@ python setup.py test
 %python_sitelibdir/*/test
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1
+- Version 0.6.0
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus
 
