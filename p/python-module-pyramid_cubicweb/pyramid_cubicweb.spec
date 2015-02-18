@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.3
+Version: 0.2.1
 Release: alt1
 Summary: Integrate CubicWeb with a Pyramid application
 License: Public domain
@@ -19,6 +19,7 @@ BuildPreReq: python-module-pyramid-tests python-module-waitress
 BuildPreReq: python-module-cubicweb-tests python-module-wsgicors
 BuildPreReq: python-module-markdown python-module-logilab-constraint
 BuildPreReq: python-module-webtest
+BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -29,6 +30,7 @@ BuildPreReq: python3-module-webtest
 %endif
 
 %py_provides %oname
+%py_requires logging
 
 %description
 Integrate CubicWeb with a Pyramid application.
@@ -113,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1
+- Version 0.2.1
+
 * Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1
 - Version 0.1.3
 
