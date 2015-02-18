@@ -1,6 +1,6 @@
 %define oname cubicweb-trackervcs
 Name: python-module-%oname
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 Summary: vcsfile / tracker integration
 License: LGPL
@@ -43,6 +43,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1
+- Version 1.3.0
+
 * Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus
 
