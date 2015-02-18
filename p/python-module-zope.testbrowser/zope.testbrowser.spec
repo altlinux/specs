@@ -5,13 +5,14 @@
 
 Name: python-module-%oname
 Version: 5.0.0
-Release: alt1.dev0.git20140125
+Release: alt2.dev0.git20140125
 Summary: Programmable browser for functional black-box tests
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.testbrowser/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/zope.testbrowser.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -114,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.0-alt2.dev0.git20140125
+- Restored zope.testbrowser.connection
+
 * Wed Oct 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.0-alt1.dev0.git20140125
 - Version 5.0.0.dev0
 
