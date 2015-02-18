@@ -1,7 +1,7 @@
 %define oname plone.testing
 Name: python-module-%oname
 Version: 4.0.13
-Release: alt2.dev0.git20140907
+Release: alt2.dev0.git20141222
 Summary: Testing infrastructure for Zope and Plone projects
 License: BSD
 Group: Development/Python
@@ -29,6 +29,7 @@ BuildPreReq: python-module-nose
 %py_requires zope.security zope.app.publisher zope.site zope.testbrowser
 %py_requires plone ZODB3 zope.component zope.event zope.configuration
 %py_requires zope.testing zope.component.testing zope.password.testing
+%py_requires zope.app.testing
 
 %description
 plone.testing provides tools for writing unit and integration tests in a
@@ -58,6 +59,9 @@ nosetests
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.13-alt2.dev0.git20141222
+- New snapshot
+
 * Wed Oct 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.13-alt2.dev0.git20140907
 - Fixed build with new zope.testbrowser
 
