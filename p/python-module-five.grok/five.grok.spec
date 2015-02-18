@@ -1,7 +1,7 @@
 %define oname five.grok
 Name: python-module-%oname
 Version: 1.4
-Release: alt2.dev.git20130411
+Release: alt2.dev.git20141215
 Summary: Grok-like layer for Zope 2
 License: ZPL
 Group: Development/Python
@@ -13,17 +13,17 @@ Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-martian python-module-docutils
-BuildPreReq: python-module-grokcore.formlib
+BuildPreReq: python-module-grokcore.formlib-tests
 BuildPreReq: python-module-five.formlib
 BuildPreReq: python-module-zope.formlib
 BuildPreReq: python-module-grokcore.layout
 BuildPreReq: python-module-five.localsitemanager
-BuildPreReq: python-module-grokcore.annotation
-BuildPreReq: python-module-grokcore.component
-BuildPreReq: python-module-grokcore.security
-BuildPreReq: python-module-grokcore.site
-BuildPreReq: python-module-grokcore.view
-BuildPreReq: python-module-grokcore.viewlet
+BuildPreReq: python-module-grokcore.annotation-tests
+BuildPreReq: python-module-grokcore.component-tests
+BuildPreReq: python-module-grokcore.security-tests
+BuildPreReq: python-module-grokcore.site-tests
+BuildPreReq: python-module-grokcore.view-tests
+BuildPreReq: python-module-grokcore.viewlet-tests
 BuildPreReq: python-module-zope.annotation
 BuildPreReq: python-module-zope.container
 BuildPreReq: python-module-zope.contentprovider
@@ -59,6 +59,7 @@ Requires: %name = %EVR
 %py_requires grokcore.component.testing grokcore.annotation.testing
 %py_requires grokcore.security.testing grokcore.site.testing
 %py_requires grokcore.view.testing grokcore.viewlet.testing
+%py_requires grokcore.formlib.testing
 
 %description tests
 five.grok is a development layer for Zope 2, based on Grok framework
@@ -98,6 +99,9 @@ python setup.py test
 %python_sitelibdir/five/*/*test*
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2.dev.git20141215
+- New snapshot
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2.dev.git20130411
 - Added necessary requirements for tests
 
