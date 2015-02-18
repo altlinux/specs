@@ -1,7 +1,7 @@
 %define oname Products.CMFPlone
 Name: python-module-%oname
 Version: 5.0
-Release: alt2.b1.dev0.git20141114
+Release: alt2.b1.dev0.git20150216
 Summary: The Plone Content Management System (core)
 License: GPLv2
 Group: Development/Python
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-Products.ATContentTypes python-module-lxml
+BuildPreReq: python-module-mockup
 BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-Products.CMFDefault
 BuildPreReq: python-module-Products.CMFDiffTool
@@ -191,6 +192,7 @@ python setup.py test
 
 %files
 %doc *.rst docs
+%_bindir/*
 %python_sitelibdir/Products/*
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/Products/*/test*
@@ -203,6 +205,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/*/*/test*
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt2.b1.dev0.git20150216
+- New snapshot
+
 * Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt2.b1.dev0.git20141114
 - New snapshot
 
