@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt1.git20150205
+Version: 0.0.9
+Release: alt1.git20150218
 Summary: Natural Language Processing on Python
 License: LGPL
 Group: Development/Python
@@ -18,16 +18,18 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: libnumpy-devel python-module-gensim
 BuildPreReq: python-module-nltk python-module-theano
+BuildPreReq: python-module-flask python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: libnumpy-py3-devel python3-module-gensim
 BuildPreReq: python3-module-nltk python-tools-2to3
-BuildPreReq: python3-module-theano
+BuildPreReq: python3-module-theano python3-module-Cython
+BuildPreReq: python3-module-flask
 %endif
 
 %py_provides nlpy
-%py_requires theano gensim numpy
+%py_requires theano gensim numpy nltk flask
 %add_python_req_skip logistic_sgd
 
 %description
@@ -49,7 +51,7 @@ This package contains tests for %oname.
 Summary: Natural Language Processing on Python
 Group: Development/Python3
 %py3_provides nlpy
-%py3_requires theano gensim numpy
+%py3_requires theano gensim numpy nltk flask
 %add_python3_req_skip logistic_sgd
 
 %description -n python3-module-%oname
@@ -72,7 +74,7 @@ This package contains tests for %oname.
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+find ../python3/nlpy -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -128,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.9-alt1.git20150218
+- Version 0.0.9
+
 * Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20150205
 - New snapshot
 
