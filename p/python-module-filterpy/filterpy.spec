@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.7
-Release: alt1.git20141130
+Version: 0.0.16
+Release: alt1.git20150217
 Summary: Kalman filtering and optimal estimation library
 License: MIT
 Group: Development/Python
@@ -153,7 +153,7 @@ popd
 %endif
 
 %files
-%doc *.txt *.rst
+%doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/*/test*
@@ -171,7 +171,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst
+%doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
@@ -184,6 +184,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.16-alt1.git20150217
+- Version 0.0.16
+
 * Mon Dec 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.7-alt1.git20141130
 - Version 0.0.7
 
