@@ -1,6 +1,6 @@
 %define oname apycot
 Name: python-module-%oname
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 Summary: Continuous testing / integration tool for the CubicWeb framework
 License: GPL
@@ -54,6 +54,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
+- Version 3.2.1
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1
 - Initial build for Sisyphus
 
