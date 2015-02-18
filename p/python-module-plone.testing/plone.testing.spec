@@ -1,7 +1,7 @@
 %define oname plone.testing
 Name: python-module-%oname
 Version: 4.0.13
-Release: alt2.dev0.git20141222
+Release: alt3.dev0.git20141222
 Summary: Testing infrastructure for Zope and Plone projects
 License: BSD
 Group: Development/Python
@@ -59,6 +59,9 @@ nosetests
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.13-alt3.dev0.git20141222
+- Fixed IntegrationTesting
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.13-alt2.dev0.git20141222
 - New snapshot
 
