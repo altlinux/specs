@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.10.2
-Release: alt2.git20140918
+Version: 0.10.3
+Release: alt1.git20141117
 Summary: Python framework for fast Vector Space Modelling
 License: LGPL
 Group: Development/Python
@@ -160,6 +160,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.3-alt1.git20141117
+- Version 0.10.3
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt2.git20140918
 - Added necessary requirements
 
