@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt2
+Release: alt3
 Summary: Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs
 License: BSD
 Group: Development/Python
@@ -187,6 +187,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt3
+- Disabled version check for numpy & scipy
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt2
 - Version 0.6.0
 - Added module for Python 3
