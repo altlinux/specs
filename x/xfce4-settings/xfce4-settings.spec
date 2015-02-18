@@ -1,6 +1,6 @@
 Name: xfce4-settings
-Version: 4.11.3
-Release: alt3.git20141027
+Version: 4.11.4
+Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -65,6 +65,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Wed Feb 18 2015 Mikhail Efremov <sem@altlinux.org> 4.11.4-alt1
+- Updated to 4.11.4.
+
 * Fri Oct 31 2014 Mikhail Efremov <sem@altlinux.org> 4.11.3-alt3.git20141027
 - Upstream git snapshot, including:
   + Fix for --display being fatal (closes: #30348).
