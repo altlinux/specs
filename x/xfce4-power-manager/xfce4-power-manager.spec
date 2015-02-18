@@ -1,6 +1,6 @@
 Name: xfce4-power-manager
-Version: 1.2.0
-Release: alt7.git20140319
+Version: 1.4.2
+Release: alt1
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
@@ -21,6 +21,7 @@ BuildRequires: libXext-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libnotify-devel >= 0.4.1
 BuildRequires: libglade-devel > 2.0.0
+BuildRequires: libupower-devel
 BuildRequires: gettext intltool desktop-file-utils
 # For exo-csource (needed in maintainer mode)
 BuildPreReq: libexo-devel
@@ -48,7 +49,7 @@ scaling.
 	--enable-polkit \
 	--enable-dpms \
 	--enable-network-manager \
-	--with-sleep-manager=systemd \
+	--with-backend=linux \
 	--enable-debug=no
 %make_build
 
@@ -61,14 +62,25 @@ scaling.
 %config %_sysconfdir/xdg/autostart/%name.desktop
 %_bindir/*
 %_sbindir/xfpm-power-backlight-helper
-%_libdir/xfce4/panel-plugins/xfce4-*
+%_sbindir/xfce4-pm-helper
+%_libdir/xfce4/panel/plugins/*.so
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/xfce4/panel/plugins/*.desktop
 %_datadir/polkit-1/actions/*.policy
 %_mandir/man?/*
+%_datadir/appdata/*
+
+%exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Tue Feb 17 2015 Mikhail Efremov <sem@altlinux.org> 1.4.2-alt1
+- Updated to 1.4.2.
+- Drop obsoleted patches.
+
+* Mon Jun 02 2014 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
+- Updated to 1.3.0.
+
 * Fri Mar 28 2014 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt7.git20140319
 - logind support: treat "challenge" responses as true.
 - Port to upower-0.99 D-Bus interface.
