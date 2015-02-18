@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 5.0b2
-Release: alt1.dev0.git20141023
+Release: alt1.dev0.git20141216
 Summary: Testing tools for Plone-the-application, based on plone.testing
 License: GPLv2
 Group: Development/Python
@@ -13,6 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-mockup
 BuildPreReq: python-module-zope.configuration
 BuildPreReq: python-module-zope.dottedname
 BuildPreReq: python-module-zope.site
@@ -72,6 +73,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0b2-alt1.dev0.git20141216
+- New snapshot
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0b2-alt1.dev0.git20141023
 - Version 5.0b2.dev0
 
