@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt1.git20150204
+Version: 0.0.2
+Release: alt1.git20150218
 Summary: Library for accessing a MySQL database from the asyncio
 License: MIT
 Group: Development/Python
@@ -146,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20150218
+- Version 0.0.2
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20150204
 - Initial build for Sisyphus
 
