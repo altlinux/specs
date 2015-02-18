@@ -1,6 +1,6 @@
 Name: luajit
 Version: 2.0.3
-Release: alt4
+Release: alt5
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -9,11 +9,12 @@ Url: http://luajit.org
 Packager: Vladimir Didenko <cow@altlinux.org>
 # git://git.altlinux.org/gears/l/luajit.git
 Source: %name-%version.tar
+Patch: %name-2.0.3-alt-luadir-path.patch
 Requires: lib%name = %EVR
 
 %description
-LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language. 
-Lua is a powerful, dynamic and light-weight programming language. 
+LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
+Lua is a powerful, dynamic and light-weight programming language.
 It may be embedded or used as a general-purpose, stand-alone language.
 
 %package -n lib%name
@@ -21,8 +22,8 @@ Summary: library for luajit
 Group: Development/Other
 
 %description -n lib%name
-LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language. 
-Lua is a powerful, dynamic and light-weight programming language. 
+LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
+Lua is a powerful, dynamic and light-weight programming language.
 It may be embedded or used as a general-purpose, stand-alone language.
 
 %package -n lib%name-devel
@@ -31,29 +32,45 @@ Group: Development/Other
 Requires: lib%name = %EVR
 
 %description -n lib%name-devel
-LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language. 
-Lua is a powerful, dynamic and light-weight programming language. 
+LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
+Lua is a powerful, dynamic and light-weight programming language.
 It may be embedded or used as a general-purpose, stand-alone language.
 
 %package -n lib%name-devel-static
 Summary: static library for luajit
 Group: System/Libraries
 Requires: lib%name-devel = %EVR
-        
+
 %description -n lib%name-devel-static
-LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language. 
-Lua is a powerful, dynamic and light-weight programming language. 
+LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
+Lua is a powerful, dynamic and light-weight programming language.
 It may be embedded or used as a general-purpose, stand-alone language.
 
 %prep
 %setup
+%patch -p1
+
+%ifarch x86_64
+%define multilib_flag lib64
+%else
+%define multilib_flag lib
+%endif
 
 %build
-%make_build amalg PREFIX=%_prefix TARGET_STRIP='@:' Q=
+%make_build amalg \
+	    PREFIX=%_prefix \
+	    MULTILIB=%multilib_flag \
+	    TARGET_STRIP='@:' \
+	    Q=
 
 %install
-%makeinstall_std PREFIX=%_prefix LDCONFIG=true INSTALL_LIB=%buildroot%_libdir Q=
-
+%makeinstall_std PREFIX=%_prefix \
+		 MULTILIB=%multilib_flag \
+		 INSTALL_LMOD=%buildroot%_datadir/lua5 \
+		 INSTALL_CMOD=%buildroot%_libdir/lua5 \
+		 LDCONFIG=true \
+		 INSTALL_LIB=%buildroot%_libdir \
+		 Q=
 
 %files
 %_bindir/*
@@ -73,6 +90,9 @@ It may be embedded or used as a general-purpose, stand-alone language.
 %_libdir/*.a
 
 %changelog
+* Wed Feb 18 2015 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt5
+- use the same path and cpath as plain lua (closes: #30739)
+
 * Mon Jan 12 2015 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt4
 - git20150105
 
