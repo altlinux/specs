@@ -1,6 +1,6 @@
 %define oname cubicweb-squareui
 Name: python-module-%oname
-Version: 0.3.7
+Version: 1.0.0
 Release: alt1
 Summary: Data-centric user interface for cubicweb based on bootstrap
 License: LGPL
@@ -37,6 +37,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
+- Version 1.0.0
+
 * Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.7-alt1
 - Initial build for Sisyphus
 
