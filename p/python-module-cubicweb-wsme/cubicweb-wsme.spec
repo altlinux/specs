@@ -1,6 +1,6 @@
 %define oname cubicweb-wsme
 Name: python-module-%oname
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 Summary: Easily build a webservice API on top of a cubic web database
 License: LGPL
@@ -15,7 +15,7 @@ BuildPreReq: python-module-setuptools-tests cubicweb
 BuildPreReq: python-module-wsme python-module-rqlquery
 
 Requires: cubicweb
-%py_requires wsme
+%py_requires wsme rqlquery
 
 %description
 Easily build a webservice API on top of a cubic web database.
@@ -38,6 +38,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.6-alt1
+- Version 0.1.6
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt1
 - Version 0.1.5
 
