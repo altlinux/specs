@@ -1,6 +1,6 @@
 Name: projectlibre
 Version: 1.5.9
-Release: alt3
+Release: alt4
 
 Summary: ProjectLibre - The open source replacement of Microsoft Project
 
@@ -71,6 +71,9 @@ cp -a openproj_build/dist/* %buildroot/%projectlibredir/
 %attr(755,root,root) %_bindir/projectlibre
 
 %changelog
+* Thu Feb 19 2015 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt4
+- Fix path to jar file in startup script
+
 * Fri Nov 07 2014 Danil Mikhailov <danil@altlinux.org> 1.5.9-alt3
 - set BuildArch: noarch
 
