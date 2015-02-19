@@ -1,5 +1,5 @@
 Name: libxfce4ui
-Version: 4.11.1
+Version: 4.11.2
 Release: alt1
 
 Summary: Various Gtk+2 widgets for Xfce
@@ -39,6 +39,7 @@ Header files for the %name library.
 %prep
 %setup
 %patch -p1
+mkdir -p m4/
 
 %build
 %xfce4reconf
@@ -76,6 +77,9 @@ Header files for the %name library.
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Feb 19 2015 Mikhail Efremov <sem@altlinux.org> 4.11.2-alt1
+- Updated to 4.11.2.
+
 * Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 4.11.1-alt1
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Updated to 4.11.1.
