@@ -5,7 +5,7 @@ BuildRequires: pkgconfig(gdk-pixbuf-2.0) pkgconfig(gtk+-2.0)
 Summary: 	Extra gtk-2/3 themes for gtk based desktops
 Name: 		mate-themes-extras
 Version: 	1.7.11
-Release: 	alt1_2
+Release: 	alt2_2
 
 # upstream is located at github, but links from tag releases doesn't match copied link in
 # web-browser, in result fedora-rewiew-tool will fail.
@@ -18,7 +18,6 @@ License: 	LGPLv2 and GPLv2
 Group: 		Graphical desktop/MATE
 BuildArch: 	noarch
 
-Requires: gtk2-themes-xfce4 gtk3-themes-xfce4
 Requires: 	libgtk-engine-murrine
 Requires: 	libgtk3-engine-unico
 Requires: 	icon-theme-faience
@@ -133,6 +132,9 @@ hardlink -c -v $RPM_BUILD_ROOT%{_datadir}/themes/Zukitwo-Wise
 
 
 %changelog
+* Thu Feb 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.7.11-alt2_2
+- dropped gtk3-themes-xfce4 dependency (closes: #30764)
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.11-alt1_2
 - new fc release
 
