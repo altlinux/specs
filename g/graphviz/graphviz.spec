@@ -3,12 +3,12 @@
 %def_disable lua
 %def_disable ocaml
 %def_disable php
-%def_disable python
+%def_enable python
 %def_disable ruby
 
 Name: graphviz
 Version: 2.38.0
-Release: alt1.1
+Release: alt2
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -121,6 +121,7 @@ This package makes %name functionality accessible from Perl
 Summary: Python bindings to %name
 Group: Development/Python
 Requires: %name = %version-%release
+BuildRequires: rpm-build-python
 
 %description python
 This package makes %name functionality accessible from Python
@@ -277,8 +278,9 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 
 %if_enabled python
 %files python
-%dir %gvlibdir/python*/
-%gvlibdir/python*/_gv.so
+%gvlibdir/python/
+%python_sitelibdir/*
+#gvdatadir/demo/modgraph.py
 %endif
 
 %if_enabled ruby
@@ -314,6 +316,9 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 # - enable/fix/test language bindings
 
 %changelog
+* Wed Feb 18 2015 Michael Shigorin <mike@altlinux.org> 2.38.0-alt2
+- reenabled python bindings (closes: #30756)
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.38.0-alt1.1
 - rebuild with new perl 5.20.1
 
