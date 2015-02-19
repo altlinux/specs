@@ -5,8 +5,8 @@
 %define rname soundKonverter
 %define tname soundkonverter
 Name: kde4-soundkonverter
-Version: 2.1.0
-Release: alt2
+Version: 2.1.2
+Release: alt1
 
 Summary: A frontend to various audio converters
 License: GPLv2
@@ -73,6 +73,12 @@ done
 %_K4srvtyp/%{tname}_*.desktop
 
 %changelog
+* Thu Feb 19 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt1
+- new version
+
+* Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1.M70P.1
+- built for M70P
+
 * Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
 - don't use new mp3gain options
 
