@@ -4,7 +4,7 @@
 %define libtwitterapihelper libtwitterapihelper%libtwitterapihelper_major
 
 Name: choqok
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Group: Office
@@ -100,6 +100,9 @@ based on %name.
 
 
 %changelog
+* Thu Feb 19 2015 Sergey V Turchin <zerg@altlinux.org> 1.5-alt1
+- new version
+
 * Mon Sep 02 2013 Sergey V Turchin <zerg@altlinux.org> 1.4-alt1
 - new version
 
