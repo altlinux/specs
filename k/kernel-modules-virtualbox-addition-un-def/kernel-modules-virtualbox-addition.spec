@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
-%define module_version	4.3.20
-%define module_release	alt2
+%define module_version	4.3.22
+%define module_release	alt1
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
@@ -51,7 +51,9 @@ Obsoletes: kernel-modules-%vfs_module_name-%flavour
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
-Patch1: virtualbox-addition-3.19.patch 
+# %%if "%flavour" == "ovz-el"
+# #Patch1: ovz-el-fix-build.patch
+# %%endif
 
 %description
 This package contains VirtualBox addition modules (vboxguest, vboxsf, vboxvideo)
@@ -61,11 +63,11 @@ that are needed for additonal guests support for VirtualBox.
 %setup -T -c -n kernel-source-%module_name-%module_version
 tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
-pushd kernel-source-%vfs_module_name-%module_version
-%patch1 -p5
-popd
 tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 
+# %%if "%flavour" == "ovz-el"
+# %%patch1 -p1
+# %%endif
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -95,14 +97,8 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Tue Feb 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.3.20-alt2
-- build with kernel 3.19 fixed
-
 * Thu Jan 29 2015 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.20-alt1
 - Update template for virtualbox 4.3.20
-
-* Mon Dec 15 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.3.14-alt2
-- build with kernel 3.18 fixed
 
 * Wed Sep 03 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.3.14-alt1
 - Update template for virtualbox 4.3.14.
