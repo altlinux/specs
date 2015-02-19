@@ -3,15 +3,15 @@
 %def_with perl
 
 Name: lib%_name
-Version: 4.10.0
-Release: alt4.git20130919.1
+Version: 4.11.0
+Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
 Summary (ru_RU.UTF-8): Система конфигурации Xfce
 License: %gpl2only
 Group: Graphical desktop/XFce
 Url: http://www.xfce.org/
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/xfconf
 Source: %_name-%version.tar
@@ -111,6 +111,10 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %endif
 
 %changelog
+* Thu Feb 19 2015 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
+- Fix Xfce name (XFCE -> Xfce).
+- Updated to 4.11.0.
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 4.10.0-alt4.git20130919.1
 - rebuild with new perl 5.20.1
 
