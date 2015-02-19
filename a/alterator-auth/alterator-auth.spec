@@ -2,10 +2,12 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.25
-Release: alt3
+Version: 0.26
+Release: alt1
 
 BuildArch: noarch
+
+%filter_from_requires /^samba-common$/d
 
 Source:%name-%version.tar
 
@@ -14,7 +16,7 @@ License: GPL
 Group: System/Configuration/Other
 Requires: alterator >= 4.7-alt4
 Requires: alterator-l10n >= 2.0-alt1
-Requires: pam-config >= 1.4.0-alt1.1
+Requires: pam-config >= 1.7.0-alt1
 Requires: pam_krb5
 Requires: nss-ldap
 Requires: avahi-daemon
@@ -25,6 +27,7 @@ Provides: alterator-nsswitch = %version
 Obsoletes: alterator-nsswitch
 
 BuildPreReq: alterator >= 4.7-alt4
+BuildRequires: perl-Config-IniFiles
 
 %description
 Alterator module for system wide auth settings
@@ -37,17 +40,26 @@ Alterator module for system wide auth settings
 
 %install
 %makeinstall
+install -Dpm755 bin/ini-config %buildroot/%_bindir/ini-config
 install -Dpm755 sbin/system-auth %buildroot/%_sbindir/system-auth
 install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 
 %files
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*/
+%_bindir/ini-config
 %_sbindir/system-auth
 %_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Feb 19 2015 Andrey Cherepanov <cas@altlinux.org> 0.26-alt1
+- Add support of Active Directory auth in system-auth
+- Do not require ldap-user-tools for list local configured LDAP DNs (ALT #24180)
+- Fix fatal exit in backend if avahi-daemon is not running
+- Fix typo (ALT #25930)
+- Package ini-config helper for set parameters in ini files
+
 * Thu Jan 24 2013 Andrey Cherepanov <cas@altlinux.org> 0.25-alt3
 - Fix system-auth write with nss-ldapd
 
