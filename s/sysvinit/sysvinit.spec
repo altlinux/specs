@@ -1,8 +1,9 @@
 Name: sysvinit
 Version: 2.88
-Release: alt4
+Release: alt5
 
 %def_enable selinux
+%def_enable initramfs
 
 Summary: Programs which control basic system processes
 License: GPLv2+
@@ -63,6 +64,15 @@ Conflicts: SysVinit < 2.86-alt2
 The package contains commonly used non-boot-specific utilities from sysvinit:
 bootlogd, killall5, last, lastb, mesg, mountpoint, pidof, pidof, wall.
 
+%if_enabled initramfs
+%package initramfs
+Summary: Init for initramfs
+Group: System/Base
+
+%description initramfs
+Simplified version of init (used in initfamfs).
+%endif
+
 %prep
 %setup
 
@@ -101,6 +111,19 @@ popd
 find -type f -name \*.orig -delete
 
 %build
+%if_enabled initramfs
+%make_build -C src init \
+	DISTRO=ALT \
+	CFLAGS='%optflags -fomit-frame-pointer' \
+	LDFLAGS= \
+	LCRYPT= \
+	WITH_SELINUX= \
+	#
+mv -f src/init{,.initrd}
+
+%make_build -C src clean
+%endif
+
 %make_build -C src \
 	DISTRO=ALT \
 	CFLAGS='%optflags -fomit-frame-pointer' \
@@ -115,7 +138,7 @@ mkdir -p %buildroot{/{s,}bin,/dev,%_bindir,%_includedir,%_mandir/man{1,3,5,8}}
 	DISTRO=ALT \
 	#
 
-install -pm755 src/bootlogd %buildroot/sbin/
+install -pm755 src/bootlogd src/init.initrd %buildroot/sbin/
 
 mkfifo -m600 %buildroot/dev/initctl
 
@@ -166,6 +189,11 @@ fi
 %_includedir/*
 %ghost /dev/initctl
 
+%if_enabled initramfs
+%files initramfs
+%attr(700,root,root) /sbin/init.initrd
+%endif
+
 %files utils
 %attr(700,root,root) /sbin/bootlogd
 /sbin/killall5
@@ -186,6 +214,9 @@ fi
 %_man8dir/pidof.*
 
 %changelog
+* Thu Feb 19 2015 Alexey Gladkov <legion@altlinux.ru> 2.88-alt5
+- Add subpackage for initramfs (closes: #30738).
+
 * Wed Jun 13 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.88-alt4
 - halt: do kexec instead of reboot if another kernel is loaded
 
