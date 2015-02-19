@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.18
-Release: alt1.git20150210
+Release: alt1.git20150214
 Summary: Fast and direct raster I/O for use with Numpy and SciPy
 License: BSD
 Group: Development/Python
@@ -20,19 +20,19 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Cython libnumpy-devel
 BuildPreReq: python-module-affine python-module-cligj
 BuildPreReq: python-module-enum34 python-module-coveralls
-BuildPreReq: python-module-wheel
+BuildPreReq: python-module-wheel python-module-click-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-Cython libnumpy-py3-devel
 BuildPreReq: python3-module-affine python3-module-cligj
 BuildPreReq: python3-module-enum34 python3-module-coveralls
-BuildPreReq: python3-module-wheel
+BuildPreReq: python3-module-wheel python3-module-click-tests
 %endif
 
 %py_provides %oname
 Requires: python-module-enum34
-%py_requires affine numpy cligj
+%py_requires affine numpy cligj click
 
 %description
 Rasterio reads and writes geospatial raster datasets.
@@ -47,7 +47,7 @@ Summary: Fast and direct raster I/O for use with Numpy and SciPy
 Group: Development/Python3
 %py3_provides %oname
 Requires: python3-module-enum34
-%py3_requires affine numpy cligj
+%py3_requires affine numpy cligj click
 
 %description -n python3-module-%oname
 Rasterio reads and writes geospatial raster datasets.
@@ -114,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt1.git20150214
+- New snapshot
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt1.git20150210
 - Version 0.18
 
