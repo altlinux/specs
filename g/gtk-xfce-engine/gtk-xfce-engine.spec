@@ -1,19 +1,16 @@
 %define gtk2_ver 2.14.0
-%define gtk2_binary_ver 2.10.0
-
-%define gtk3_binary_ver 3.0.0
 
 Name: gtk-xfce-engine
 Summary: Xfce gtk theme engine with various different themes
-Version: 3.0.0
-Release: alt2
+Version: 3.1.0
+Release: alt1
 License: %gpl2plus
 Url: http://www.xfce.org/
 # Upstream: git://git.xfce.org/xfce/gtk-xfce-engine
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Group: Graphical desktop/XFce
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -38,20 +35,12 @@ Provides: libgtk-engines-xfce4 = %version-%release
 This package provides the Xfce Gtk+-2.0 engine, which allows for
 homogeneity in applications for both business and personal desktops.
 
-%package -n gtk3-themes-xfce4
-Summary: Xfce Gtk+-3.0 engine and themes
-Group: Graphical desktop/XFce
-
-%description -n gtk3-themes-xfce4
-This package provides the Xfce Gtk+-3.0 engine, which allows for
-homogeneity in applications for both business and personal desktops.
-
 %prep
 %setup
 %patch -p1
 
 # Don't use git tag in version.
-%xfce4_drop_gitvtag gtk_xfce_engine_version_tag configure.in.in
+%xfce4_drop_gitvtag gtk_xfce_engine_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -59,7 +48,7 @@ touch ChangeLog
 %configure \
 	--disable-static \
 	--enable-gtk2 \
-	--enable-gtk3 \
+	--disable-gtk3 \
 	--enable-debug=no
 %make_build
 
@@ -67,20 +56,18 @@ touch ChangeLog
 %makeinstall_std
 
 %files -n gtk2-themes-xfce4
-%exclude %_libdir/gtk-2.0/%gtk2_binary_ver/engines/*.la
-%_libdir/gtk-2.0/%gtk2_binary_ver/engines/*.so
+%exclude %_libdir/gtk-2.0/*/engines/*.la
+%_libdir/gtk-2.0/*/engines/*.so
 %dir %_datadir/themes/*
 %_datadir/themes/*/gtk-2.0
 %doc AUTHORS
 
-%files -n gtk3-themes-xfce4
-%exclude %_libdir/gtk-3.0/%gtk3_binary_ver/theming-engines/*.la
-%_libdir/gtk-3.0/%gtk3_binary_ver/theming-engines/*.so
-%dir %_datadir/themes/*
-%_datadir/themes/*/gtk-3.0
-%doc AUTHORS
-
 %changelog
+* Thu Feb 19 2015 Mikhail Efremov <sem@altlinux.org> 3.1.0-alt1
+- Drop gtk3 theme engine.
+- Fix Xfce name (XFCE -> Xfce).
+- Updated to 3.1.0.
+
 * Tue Aug 28 2012 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt2
 - Patch from upstream:
   + Don't leak a graduent pattern at each draw (bug #8521).
