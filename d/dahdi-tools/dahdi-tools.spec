@@ -4,7 +4,7 @@
 #============================================================================
 Name: dahdi-tools
 Summary: DAHDI tools for Digium hardware and Asterisk
-Version: 2.10.0.1
+Version: 2.10.1
 Release: alt1
 License: GPL
 Group: System/Kernel and hardware
@@ -279,6 +279,9 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %_libdir/pppd/*/*.so
 
 %changelog
+* Thu Feb 19 2015 Denis Smirnov <mithraen@altlinux.ru> 2.10.1-alt1
+- new version 2.10.1
+
 * Wed Sep 24 2014 Denis Smirnov <mithraen@altlinux.ru> 2.10.0.1-alt1
 - new version 2.10.0.1
 
