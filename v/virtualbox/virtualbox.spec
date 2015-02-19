@@ -56,7 +56,7 @@
 %define gcc_version 4.5
 
 Name: virtualbox
-Version: 4.3.20
+Version: 4.3.22
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -349,10 +349,6 @@ chmod u+x %vboxdbg_file
 echo -e "\nVirtualBox not installable due debug build enabled\nRun: %vboxdbg_file\n  or %vboxdbg_file ./VirtualBox\n"
 false
 %endif
-
-#source env.sh
-#kmk -j$NPROCS VBOXDIR=%vboxdir
-#kmk VBOXDIR=%vboxdir
 
 mkdir -p %buildroot{%_bindir,%_sbindir,%vboxdir/ExtensionPacks,%vboxdatadir,%kernel_src,%_initrddir,%_udevrulesdir}
 
@@ -702,6 +698,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Sat Feb 14 2015 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.22-alt1
+- Update to last stable release
+
 * Mon Jan 19 2015 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.20-alt1
 - Update to new release
 
