@@ -1,6 +1,6 @@
 Name: xprop
-Version: 1.2.0
-Release: alt1.qa1
+Version: 1.2.2
+Release: alt1
 Summary: property displayer for X
 License: MIT/X11
 Group: System/X11
@@ -20,7 +20,7 @@ window.   A  list of properties is then given, possibly with formatting
 information.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -37,6 +37,9 @@ information.
 %_man1dir/*
 
 %changelog
+* Thu Feb 19 2015 Fr. Br. George <george@altlinux.ru> 1.2.2-alt1
+- Autobuild version bump to 1.2.2
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
