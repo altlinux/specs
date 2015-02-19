@@ -1,5 +1,5 @@
 Name: SimGear
-Version: 3.2.0
+Version: 3.4.0
 Release: alt1
 
 Summary: Simulator Construction Tools
@@ -44,17 +44,23 @@ This package contains header files for SimGear.
 
 %build
 %add_optflags %optflags_shared
-%cmake
-%make_build -C BUILD VERBOSE=1
+%cmake_insource
+%make_build
 
 %install
-%makeinstall_std -C BUILD VERBOSE=1
+%makeinstall_std
 
 %files -n libsimgear-devel-static
 %_libdir/*.a
 %_includedir/simgear
 
 %changelog
+* Thu Feb 19 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
+* Tue Feb 10 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt0.2
+- 3.4.0-RC2
+
 * Wed Oct 22 2014 Michael Shigorin <mike@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
