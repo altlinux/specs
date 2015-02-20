@@ -1,11 +1,9 @@
 %define mname collective.pfg
 %define oname %mname.norobots
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.1
-Release: alt1.dev0.git20121108
+Release: alt2.dev0.git20121108
 Summary: PloneFormGen field using collective.z3cform.norobots
 License: GPLv2+
 Group: Development/Python
@@ -32,13 +30,13 @@ BuildPreReq: python-module-plone.app.dexterity
 BuildPreReq: python-module-plone.app.collection
 BuildPreReq: python-module-plone.app.caching
 BuildPreReq: python-module-z3c.form-tests
-#BuildPreReq: python-module-collective.z3cform.norobots
+BuildPreReq: python-module-collective.z3cform.norobots
 
 %py_provides %oname
 %py_requires %mname Products.PloneFormGen Products.Archetypes zope.event
 %py_requires Products.CMFCore Products.ATContentTypes zope.i18nmessageid
 %py_requires zope.component zope.lifecycleevent
-#py_requires collective.z3cform.norobots
+%py_requires collective.z3cform.norobots
 
 %description
 collective.pfg.norobots allows to add a collective.z3cform.norobots
@@ -84,6 +82,10 @@ python setup.py test
 %python_sitelibdir/collective/pfg/norobots/test*
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt2.dev0.git20121108
+- Added necessary requirements
+- Enabled testing
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.dev0.git20121108
 - Initial build for Sisyphus
 
