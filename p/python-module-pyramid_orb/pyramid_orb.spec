@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.5
-Release: alt1.git20141121
+Version: 1.1.11
+Release: alt1.git20150219
 Summary: Bindings for the pyramid webframework and the ORB database ORM library
 License: LGPLv3
 Group: Development/Python
@@ -17,16 +17,18 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-pyramid python-module-webhelpers
-BuildPreReq: python-module-projex
+BuildPreReq: python-module-projex python-module-requests
+BuildPreReq: python-module-projex_orb python-modules-compiler
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-pyramid python3-module-webhelpers
-BuildPreReq: python3-module-projex
+BuildPreReq: python3-module-projex python3-module-requests
+BuildPreReq: python3-module-projex_orb
 %endif
 
 %py_provides %oname
-%py_requires webhelpers projex
+%py_requires webhelpers projex requests pyramid orb inspect
 
 %description
 The pyramid_orb project is aimed at providing an integration layer
@@ -36,8 +38,7 @@ between the ORB database mapping system and the pyramid web framework.
 Summary: Bindings for the pyramid webframework and the ORB database ORM library
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires webhelpers projex
-%add_python3_req_skip orb
+%py3_requires webhelpers projex requests pyramid orb
 
 %description -n python3-module-%oname
 The pyramid_orb project is aimed at providing an integration layer
@@ -72,9 +73,11 @@ popd
 
 %check
 python setup.py test
+py.test -vv $(find src/ -name '*.py')
 %if_with python3
 pushd ../python3
 python3 setup.py test
+py.test-%_python3_version -vv $(find src/ -name '*.py')
 popd
 %endif
 
@@ -89,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.11-alt1.git20150219
+- Version 1.1.11
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.5-alt1.git20141121
 - Version 1.1.5
 
