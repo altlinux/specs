@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.7
-Release: alt1.git20140713
+Version: 1.8
+Release: alt1.git20150108
 Summary: Serializer for literal Python expressions
 License: MIT
 Group: Development/Python
@@ -71,12 +71,12 @@ popd
 
 %check
 python setup.py test
-%make test check
+%make test
 %if_with python3
 pushd ../python3
 python3 setup.py test
 sed -i 's|python|python3|g' Makefile
-%make test check
+%make test
 popd
 %endif
 
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt1.git20150108
+- Version 1.8
+
 * Wed Oct 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.git20140713
 - Initial build for Sisyphus
 
