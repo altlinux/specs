@@ -1,7 +1,7 @@
 %define oname plone.openid
 Name: python-module-%oname
-Version: 2.0.3
-Release: alt2.dev0.git20140826
+Version: 2.0.4
+Release: alt1.dev0.git20150211
 Summary: OpenID authentication support for PAS
 License: BSD
 Group: Development/Python
@@ -19,7 +19,8 @@ BuildPreReq: python-module-Products.PluggableAuthService
 
 %py_provides %oname
 Requires: python-module-Zope2
-%py_requires plone ZODB3 Products.PluggableAuthService
+%py_requires plone ZODB3 Products.PluggableAuthService openid
+%py_requires transaction docutils
 
 %description
 This product implements OpenID authentication support for Zope via a
@@ -74,6 +75,9 @@ python setup.py test
 %python_sitelibdir/plone/*/tests
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt1.dev0.git20150211
+- Version 2.0.4.dev0
+
 * Wed Oct 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt2.dev0.git20140826
 - Fixed requirements
 
