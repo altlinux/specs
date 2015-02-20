@@ -1,6 +1,6 @@
 Name: appliance-mithraen-recoll
 Summary: Virtual package that requires some recoll filters
-Version: 0.0.1
+Version: 0.0.2
 Release: alt1
 License: GPL
 Group: System/Base
@@ -16,6 +16,7 @@ Requires: perl-Image-ExifTool
 Requires: antiword
 Requires: python-module-pychm
 Requires: aspell aspell-ru-rk
+Requires: python-module-mutagen
 
 %description
 %summary
@@ -27,5 +28,8 @@ mkdir -p %buildroot
 
 %files
 %changelog
+* Fri Feb 20 2015 Denis Smirnov <mithraen@altlinux.ru> 0.0.2-alt1
+- add requires to python-module-mutagen
+
 * Sat Oct 16 2010 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt1
 - first build for Sisyphus
