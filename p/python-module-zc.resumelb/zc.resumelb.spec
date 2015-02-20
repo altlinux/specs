@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.7.5
-Release: alt1.git20141118
+Version: 1.0.0
+Release: alt1.git20150219
 Summary: Resume-based WSGI load balancer
 License: ZPLv2.1
 Group: Development/Python
@@ -25,6 +25,7 @@ BuildPreReq: python-module-zc.parse_addr python-module-BeautifulSoup4
 BuildPreReq: python-module-zc.mappingobject python-module-waitress
 BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-zc.zk-tests
+BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -40,7 +41,8 @@ BuildPreReq: python3-module-zc.zk-tests
 %endif
 
 %py_provides %oname
-%py_requires zc zc.thread zc.parse_addr zc.mappingobject zc.zk
+%py_requires zc zc.thread zc.parse_addr zc.mappingobject zc.zk gevent
+%py_requires llist zope.interface json
 
 %description
 This package provides a load balancer for WSGI applications that sorts
@@ -64,7 +66,8 @@ This package contains tests for %oname.
 Summary: Resume-based WSGI load balancer
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires zc zc.thread zc.parse_addr zc.mappingobject zc.zk
+%py3_requires zc zc.thread zc.parse_addr zc.mappingobject zc.zk gevent
+%py3_requires llist zope.interface
 
 %description -n python3-module-%oname
 This package provides a load balancer for WSGI applications that sorts
@@ -159,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20150219
+- Version 1.0.0
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.5-alt1.git20141118
 - Version 0.7.5
 
