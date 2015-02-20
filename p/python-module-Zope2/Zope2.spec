@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 4.0
-Release: alt3.a1.dev.git20150211
+Release: alt4.a1.dev.git20150217
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -92,7 +92,7 @@ BuildPreReq: python-modules-tkinter
 %py_requires ZODB3 Products.OFSP Products.ZCatalog Products.ZCTextIndex
 %py_requires docutils pytz zope.browser zope.browsermenu zope.browserpage
 %py_requires zope.browserresource zope.component zope.configuration
-%py_requires Products.PythonScripts zLOG Products.MIMETools
+%py_requires Products.PythonScripts zLOG Products.MIMETools initgroups
 %py_requires Products.SiteErrorLog
 
 %description
@@ -231,6 +231,9 @@ python setup.py test
 %doc docs/.build/html/*
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt4.a1.dev.git20150217
+- New snapshot
+
 * Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt3.a1.dev.git20150211
 - New snapshot
 
