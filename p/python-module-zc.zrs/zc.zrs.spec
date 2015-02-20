@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.5.2
-Release: alt1.git20150207
+Version: 2.5.3
+Release: alt1.git20150216
 Summary: ZODB Replicated Storage
 License: ZPLv2.1
 Group: Development/Python
@@ -163,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.3-alt1.git20150216
+- Version 2.5.3
+
 * Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.2-alt1.git20150207
 - Version 2.5.2
 
