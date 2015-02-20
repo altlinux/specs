@@ -1,6 +1,6 @@
 Name: scim
-Version: 1.4.14
-Release: alt3
+Version: 1.4.15
+Release: alt1
 Summary: Smart Common Input Method platform
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License: LGPLv2+
@@ -158,19 +158,19 @@ install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_xinputconf
 %find_lang %name
 
 %post gtk
-%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
+%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules ||:
 
 %postun gtk
-[ "$1" = 0 ] && \
-%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
+[ "$1" = 0 ] || \
+%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules ||:
 
 
 %post libs
-%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
+%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules ||:
 
 %postun libs
-[ "$1" = 0 ] && \
-%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
+[ "$1" = 0 ] || \
+%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules ||:
 
 
 
@@ -220,6 +220,10 @@ install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_xinputconf
 %_libdir/qt4/plugins/
 
 %changelog
+* Fri Feb 20 2015 Ilya Mashkin <oddity@altlinux.ru> 1.4.15-alt1
+- 1.4.15
+- fix postun sections
+
 * Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 1.4.14-alt3
 - add post/postun sections
 
