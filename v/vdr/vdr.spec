@@ -1,6 +1,6 @@
 Name: vdr
-Version: 2.0.6
-Release: alt3
+Version: 2.0.7
+Release: alt1
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -11,7 +11,7 @@ Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ 
 BuildRequires: fontconfig-devel libalsa-devel libcap-devel libfreetype-devel libjpeg-devel
-BuildRequires: libncursesw-devel libssl-devel libbluray-devel libalsa-devel libcec-devel
+BuildRequires: libncursesw-devel libssl-devel libbluray-devel libalsa-devel libudev-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libpostproc-devel
 BuildRequires: libGraphicsMagick-c++-devel libvdpau-devel libxine2-devel libzvbi-devel
 BuildRequires: libGL-devel libGLU-devel libglut-devel libX11-devel libXext-devel
@@ -591,6 +591,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Fri Feb 20 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.7-alt1
+- 2.0.7 released
+
 * Fri Jan 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.6-alt3
 - manager plugin added
 
