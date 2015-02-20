@@ -1,8 +1,8 @@
 %define mname ftw
 %define oname %mname.contentpage
 Name: python-module-%oname
-Version: 1.8.7
-Release: alt1.dev0.git20141216
+Version: 1.9.1
+Release: alt1.dev0.git20150211
 Summary: Contentpage based on Simplelayout for for web/intranet
 License: GPLv2+
 Group: Development/Python
@@ -136,6 +136,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Sat Feb 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt1.dev0.git20150211
+- Version 1.9.1.dev0
+
 * Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.7-alt1.dev0.git20141216
 - Version 1.8.7.dev0
 
