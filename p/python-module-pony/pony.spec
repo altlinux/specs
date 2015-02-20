@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1.dev.git20141229
+Release: alt2.git20150220
 Summary: Pony Object-Relational Mapper
 License: AGPLv3
 Group: Development/Python
@@ -185,6 +185,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2.git20150220
+- Version 0.6.1
+
 * Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.dev.git20141229
 - Initial build for Sisyphus
 
