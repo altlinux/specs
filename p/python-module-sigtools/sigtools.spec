@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.b1.git20150111
+Release: alt1.b2.git20150217
 Summary: Python module to manipulate function signatures
 License: MIT
 Group: Development/Python
@@ -17,14 +17,16 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-six python-module-funcsigs
+BuildPreReq: python-module-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-six python3-module-funcsigs
+BuildPreReq: python3-module-sphinx
 %endif
 
 %py_provides %oname
-%py_requires six funcsigs
+%py_requires six funcsigs sphinx
 
 %description
 Utilities for working with 3.3's inspect.Signature objects.
@@ -42,7 +44,7 @@ The sigtools python library provides:
 Summary: Python module to manipulate function signatures
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires six funcsigs
+%py3_requires six funcsigs sphinx
 
 %description -n python3-module-%oname
 Utilities for working with 3.3's inspect.Signature objects.
@@ -100,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.b2.git20150217
+- Version 0.1b2
+
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.b1.git20150111
 - Initial build for Sisyphus
 
