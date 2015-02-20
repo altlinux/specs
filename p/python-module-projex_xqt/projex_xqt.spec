@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.0
-Release: alt1.git20141013
+Version: 2.0.2
+Release: alt1.git20150111
 Summary: Wrapper system for Qt to bridge the gap between PySide and PyQt4 syntaxes
 License: LGPLv3
 Group: Development/Python
@@ -112,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1.git20150111
+- Version 2.0.2
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.git20141013
 - Initial build for Sisyphus
 
