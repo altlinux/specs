@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:           python-module-%{pypi_name}
-Version:        0.8.4
+Version:        0.8.5
 Release:        alt1
 Summary:        HTTP client mock for Python
 License:        MIT
@@ -75,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.5-alt1
+- Version 0.8.5
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1
 - Version 0.8.4
 
