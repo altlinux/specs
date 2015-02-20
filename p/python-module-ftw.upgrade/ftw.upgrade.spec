@@ -1,8 +1,8 @@
 %define mname ftw
 %define oname %mname.upgrade
 Name: python-module-%oname
-Version: 1.11.0
-Release: alt1.dev0.git20141209
+Version: 1.13.1
+Release: alt1.dev0.git20150220
 Summary: An upgrade control panel and upgrade helpers for plone upgrades
 License: GPLv2+
 Group: Development/Python
@@ -17,6 +17,10 @@ BuildPreReq: python-module-tarjan python-module-transaction
 BuildPreReq: python-module-unittest2 python-module-mocker
 BuildPreReq: python-module-argcomplete python-module-argparse
 BuildPreReq: python-module-inflection python-module-path
+BuildPreReq: python-module-requests python-module-blessed
+BuildPreReq: python-module-persistent
+BuildPreReq: python-modules-compiler python-modules-json
+BuildPreReq: python-modules-logging
 BuildPreReq: python-module-Products.BTreeFolder2
 BuildPreReq: python-module-Products.ZCatalog
 BuildPreReq: python-module-zope.publisher
@@ -33,12 +37,17 @@ BuildPreReq: python-module-zope.configuration
 BuildPreReq: python-module-Products.ATContentTypes
 BuildPreReq: python-module-Products.CMFPlacefulWorkflow
 BuildPreReq: python-module-zc.recipe.egg
+BuildPreReq: python-module-zope.deprecation
+BuildPreReq: python-module-zope.security
+BuildPreReq: python-module-plone.app.jquery
 
 %py_provides %oname
 Requires: python-module-Zope2
 %py_requires Products.BTreeFolder2 Products.ZCatalog zope.component
-%py_requires zope.interface zope.publisher Products.GenericSetup
-%py_requires plone.browserlayer Products.CMFCore Products.CMFPlone
+%py_requires zope.interface zope.publisher Products.GenericSetup json
+%py_requires plone.browserlayer Products.CMFCore Products.CMFPlone path
+%py_requires requests blessed zope.deprecation zope.security inspect
+%py_requires transaction inflection logging
 
 %description
 This product aims to simplify running and writing third-party Generic
@@ -57,6 +66,7 @@ Requires: %name = %EVR
 %py_requires ftw.testing ftw.testbrowser plone.testing zc.recipe.egg
 %py_requires plone.app.testing zope.configuration ftw.builder.testing
 %py_requires Products.ATContentTypes Products.CMFPlacefulWorkflow
+%py_requires plone.app.jquery persistent unittest2
 
 %description tests
 This product aims to simplify running and writing third-party Generic
@@ -97,6 +107,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13.1-alt1.dev0.git20150220
+- Version 1.13.1.dev0
+
 * Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1.dev0.git20141209
 - Version 1.11.0.dev0
 
