@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.08
+Version: 0.3.05
 Release: alt1
 Summary: XML Abstract Markup Language
 License: BSD
@@ -99,7 +99,7 @@ popd
 %endif
 
 %files
-%doc README
+%doc README CHANGES
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test.*
 
@@ -108,7 +108,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README
+%doc README CHANGES
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test.*
 %exclude %python3_sitelibdir/*/*/test.*
@@ -119,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.05-alt1
+- Version 0.3.05
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.08-alt1
 - Initial build for Sisyphus
 
