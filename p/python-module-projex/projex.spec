@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.1.2
-Release: alt1.git20141107
+Version: 3.1.4
+Release: alt1.git20150205
 Summary: Library of useful utilities for Python used across various applications
 License: LGPLv3
 Group: Development/Python
@@ -16,13 +16,17 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-pycrypto
+BuildPreReq: python-modules-logging python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-pycrypto
 BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
+%py_requires logging json Crypto
 
 %description
 The projex Python package is a base set of useful methods and utilities
@@ -36,6 +40,7 @@ environment management and document generation.
 Summary: Library of useful utilities for Python used across various applications
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires logging json Crypto
 
 %description -n python3-module-%oname
 The projex Python package is a base set of useful methods and utilities
@@ -83,10 +88,13 @@ popd
 %python_install
 
 %check
+export LC_ALL=en_US.UTF-8
 python setup.py test
+py.test -vv $(find projex -name '*.py')
 %if_with python3
 pushd ../python3
 python3 setup.py test
+py.test-%_python3_version -vv $(find projex -name '*.py')
 popd
 %endif
 
@@ -106,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.4-alt1.git20150205
+- Version 3.1.4
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.2-alt1.git20141107
 - Initial build for Sisyphus
 
