@@ -1,7 +1,7 @@
 %define _optlevel s
 
 Name: stellarium
-Version: 0.13.1
+Version: 0.13.2
 Release: alt1
 
 Group: Education
@@ -11,8 +11,6 @@ License: GPL
 Packager: Mikhail E. Rudachenko (ali) <ali@altlinux.org>
 
 Source0: %name-%version.tar.gz
-
-Patch1: %name-0.13.0-desktop.patch
 
 BuildPreReq: cmake rpm-macros-cmake
 
@@ -30,7 +28,6 @@ telescope.
 
 %prep
 %setup -q
-%patch1  -p1 -b .dsk
 
 %build
 %cmake -DQT5_LIBS=%_libdir/qt5 -DCMAKE_INSTALL_PREFIX=/usr
@@ -41,17 +38,8 @@ pushd BUILD
 %makeinstall_std 
 popd
 
-# Remove unwanted files
-rm -f $RPM_BUILD_ROOT%_datadir/pixmaps/stellarium.xpm
-
-
 %find_lang %name
 %find_lang %name-skycultures
-
-%post
-
-%postun
-
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog README
@@ -59,10 +47,16 @@ rm -f $RPM_BUILD_ROOT%_datadir/pixmaps/stellarium.xpm
 %_datadir/%name
 %_mandir/man1/%name.1.gz
 %_datadir/applications/%name.desktop
-%_datadir/appdata/stellarium.appdata.xml
-%_datadir/icons/hicolor/*/apps/stellarium.png
+%_datadir/appdata/%name.appdata.xml
+%_datadir/icons/hicolor/*/apps/%name.png
+%_datadir/pixmaps/%name.xpm
 
 %changelog
+* Fri Feb 20 2015 Mikhail E. Rudachenko (ali) <ali@altlinux.org> 0.13.2-alt1
+- new version
+- specfile cleanup
+- removed patch for desktop file fix
+
 * Fri Jan 09 2015 Mikhail E. Rudachenko (ali) <ali@altlinux.org> 0.13.1-alt1
 - new version
 - specfile cleanup
