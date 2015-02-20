@@ -1,7 +1,7 @@
 %define oname Products.CMFPlone
 Name: python-module-%oname
 Version: 5.0
-Release: alt2.b1.dev0.git20150216
+Release: alt2.b1.dev0.git20150219
 Summary: The Plone Content Management System (core)
 License: GPLv2
 Group: Development/Python
@@ -121,7 +121,7 @@ Requires: python-module-Zope2
 %py_requires zope.location zope.pagetemplate zope.publisher zope.site
 %py_requires zope.event zope.i18n zope.i18nmessageid zope.interface
 %py_requires zope.deferredimport zope.deprecation zope.dottedname
-%py_requires zope.app.locales zope.component zope.container
+%py_requires zope.app.locales zope.component zope.container mockup
 %py_requires plonetheme.barceloneta z3c.autoinclude
 %py_requires plone.schema plone.session plone.theme
 %py_requires plone.portlets plone.protect plone.registry
@@ -205,6 +205,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/*/*/test*
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt2.b1.dev0.git20150219
+- New snapshot
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt2.b1.dev0.git20150216
 - New snapshot
 
