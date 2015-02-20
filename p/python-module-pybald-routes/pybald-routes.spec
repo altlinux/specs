@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0
-Release: alt1.git20140307
+Version: 2.11
+Release: alt1.git20140308
 Summary: Routing Recognition and Generation Tools
 License: MIT
 Group: Development/Python
@@ -147,6 +147,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.11-alt1.git20140308
+- Version 2.11
+
 * Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.git20140307
 - Initial build for Sisyphus
 
