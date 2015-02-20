@@ -1,5 +1,5 @@
 Name: thunar
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -61,6 +61,8 @@ This package contains libraries for Thunar.
 # Don't use git tag in version.
 %xfce4_drop_gitvtag thunar_version_tag configure.ac.in
 
+mkdir -p m4/
+
 %build
 %xfce4reconf
 %configure \
@@ -120,6 +122,9 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Fri Feb 20 2015 Mikhail Efremov <sem@altlinux.org> 1.6.5-alt1
+- Updated to 1.6.5.
+
 * Mon Jan 12 2015 Mikhail Efremov <sem@altlinux.org> 1.6.4-alt1
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Drop obsoleted patch.
