@@ -1,8 +1,8 @@
-%define git_rev .git58c9ac8e
+%define git_rev git858370b3
 
 Name: devede
 Version: 3.23.0
-Release: alt1%git_rev
+Release: alt2.%git_rev
 Summary: A program to create video DVDs and CDs (VCD, sVCD or CVD)
 
 License: GPLv3+
@@ -91,6 +91,9 @@ ln -sf %_datadir/fonts/ttf/dejavu/DejaVuSans.ttf %_datadir/%name/devedesans.ttf
 %doc %_docdir/%name
 
 %changelog
+* Fri Feb 20 2015 Dmitriy Khanzhin <jinn@altlinux.org> 3.23.0-alt2.git858370b3
+- 3.23.0 git snapshot 858370b3
+
 * Thu Dec 05 2013 Dmitriy Khanzhin <jinn@altlinux.org> 3.23.0-alt1.git58c9ac8e
 - 3.23.0 git snapshot 58c9ac8e
 - program modules moved to %%python_sitelibdir
