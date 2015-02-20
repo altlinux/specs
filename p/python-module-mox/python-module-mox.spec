@@ -6,7 +6,7 @@
 Summary: mock object framework for Python
 Name: %packagename
 Version: 0.5.3
-Release: alt2.git20140721
+Release: alt3.git20140721
 # https://github.com/freyes/pymox.git
 Source0: %origname-%version.tar
 License: Apache License 2.0
@@ -23,6 +23,7 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python-tools-2to3
 %endif
 
+%py_provides mox
 %py_requires six
 
 %description
@@ -37,6 +38,7 @@ language (DSL), which makes it easy to use, understand, and refactor!
 %package -n python3-module-%origname
 Summary: mock object framework for Python
 Group: Development/Python3
+%py3_provides mox
 %py3_requires six
 
 %description -n python3-module-%origname
@@ -85,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt3.git20140721
+- Added provides: mox
+
 * Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt2.git20140721
 - New snapshot
 
