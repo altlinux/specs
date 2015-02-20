@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        4.30
+Version:        4.34
 Release:        alt1
 Summary:        Python Remote Objects
 Group:          Development/Python
@@ -24,6 +24,7 @@ BuildPreReq: python3-module-serpent
 
 Provides: python-module-Pyro = %version-%release
 Obsoletes: python-module-Pyro < %version-%release
+%py_requires json wsgiref
 
 %description
 Pyro is an acronym for PYthon Remote Objects. It is an advanced and
@@ -38,6 +39,7 @@ free!
 %package -n python3-module-%oname
 Summary: Python 3 Remote Objects
 Group: Development/Python3
+%py3_requires json wsgiref
 
 %description -n python3-module-%oname
 Pyro is an acronym for PYthon Remote Objects. It is an advanced and
@@ -212,6 +214,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.34-alt1
+- Version 4.34
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.30-alt1
 - Version 4.30
 
