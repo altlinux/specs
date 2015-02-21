@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 2.2.3
-Release: alt1.dev0.git20141023
+Release: alt1.dev0.git20150126
 Summary: Core content types for Plone 2.1 - 4.3
 License: GPL
 Group: Development/Python
@@ -13,6 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-transaction
 BuildPreReq: python-module-plone.i18n
 BuildPreReq: python-module-plone.memoize
 BuildPreReq: python-module-plone.app.blob
@@ -40,17 +41,21 @@ BuildPreReq: python-module-Products.Archetypes
 BuildPreReq: python-module-Products.CMFFormController
 BuildPreReq: python-module-Products.PloneTestCase
 BuildPreReq: python-module-unittest2
+BuildPreReq: python-module-zope.container
+BuildPreReq: python-module-zope.lifecycleevent
+BuildPreReq: python-module-zope.event
+BuildPreReq: python-module-plone.app.testing
 
 %py_provides %oname
 Requires: python-module-Zope2
 %py_requires Products.PortalTransforms Products.validation ZODB3
 %py_requires Products.GenericSetup Products.MimetypesRegistry
-%py_requires Products.CMFDefault
+%py_requires Products.CMFDefault transaction zope.container zope.event
 %py_requires zope.publisher Products.CMFCore Products.CMFDynamicViewFTI
 %py_requires zope.component zope.i18n zope.i18nmessageid zope.interface
 %py_requires plone.app.collection plone.app.folder plone.app.widgets
 %py_requires plone.i18n plone.memoize plone.app.blob plone.app.layout
-%py_requires Products.CMFPlone Products.Archetypes
+%py_requires Products.CMFPlone Products.Archetypes zope.lifecycleevent
 %py_requires Products.CMFFormController
 
 %description
@@ -60,7 +65,7 @@ Default Content Types for Plone.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires zope.annotation zope.testing
+%py_requires zope.annotation zope.testing plone.app.testing
 %py_requires Products.PloneTestCase
 %add_python_req_skip exif
 
@@ -97,6 +102,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/tests
 
 %changelog
+* Sat Feb 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.3-alt1.dev0.git20150126
+- New snapshot
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.3-alt1.dev0.git20141023
 - Version 2.2.3.dev0
 
