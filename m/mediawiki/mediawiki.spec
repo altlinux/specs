@@ -2,8 +2,8 @@
 %define major 1.23
 
 Name: mediawiki
-Version: %major.7
-Release: alt1
+Version: %major.8
+Release: alt2
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -81,9 +81,6 @@ Obsoletes: mediawiki-extensions-ImageMap
 
 Provides: mediawiki-extensions-Poem
 Obsoletes: mediawiki-extensions-Poem
-
-Provides: mediawiki-extensions-PdfHandler
-Obsoletes: mediawiki-extensions-PdfHandler
 
 Conflicts: mediawiki-extensions-FCKEditor
 
@@ -219,6 +216,8 @@ cat > %buildroot%_mediawiki_settings_dir/50-ParserFunctions.php << EOF
 
 require_once("\$IP/extensions/ParserFunctions/ParserFunctions.php");
 
+# enable StringFunctions (like {{#pos, {{#len) by default
+$wgPFEnableStringFunctions = true;
 ?>
 EOF
 
@@ -288,6 +287,14 @@ exit 0
 
 
 %changelog
+* Sat Feb 21 2015 Vitaly Lipatov <lav@altlinux.ru> 1.23.8-alt2
+- it seems PdfHandler was bundled by mistake. drop provides/obsoletes for it
+- enable StringFunctions by default
+
+* Sat Feb 21 2015 Vitaly Lipatov <lav@altlinux.ru> 1.23.8-alt1
+- new version 1.23.8 (with rpmrb script)
+- disable skin using autodiscovery mechanism warning
+
 * Tue Dec 09 2014 Vitaly Lipatov <lav@altlinux.ru> 1.23.7-alt1
 - just import mediawiki-1.23.7.tar with rpmgs script
 - disable skin using autodiscovery mechanism warning
