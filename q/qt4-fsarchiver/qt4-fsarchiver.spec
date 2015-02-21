@@ -1,17 +1,18 @@
 %define subversion alt
-%define subver 10
+%define subver 11
 
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt4-fsarchiver
 Version: 0.6.19
-Release: alt1.1
+Release: alt1.2
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-Source: %name-%version-%subver.tar
+Source:  http://softlayer-ams.dl.sourceforge.net/project/qt4-fsarchiver/source/%name-%version-%subver.tar
 Source1: %name-pam
 Source2: %name-security
-Source3: qt4-fsarchiver.desktop
+Source3: %name.desktop
+Source4: %{name}_ru-%version-%subver.ts
 Patch: qt4-fsarchiver-0.6.12-alt-glibc-2.16.patch
 Patch1: qt4-fsarchiver_qmake_pro.patch
 License: GPLv2+
@@ -77,6 +78,8 @@ FSArchiver  - системный инструментарий, позволяя�
 %patch -p2
 %patch1 -p1
 
+cp %SOURCE4 ./translations/%{name}_ru.ts
+
 echo QMAKE_CXXFLAGS_RELEASE = %optflags >>  qt4-fsarchiver.pro
 echo QMAKE_CFLAGS_RELEASE = %optflags >>  qt4-fsarchiver.pro
 
@@ -131,6 +134,10 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%name.desktop
  
 
 %changelog
+* Sat Feb 21 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.2
+- new subversion
+- new russian translation
+
 * Wed Feb 18 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.1
 - Fix qt4-fsarchiver.desktop
 
@@ -142,12 +149,3 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%name.desktop
 
 * Wed Jun 29 2011 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.12-alt1
 - Initial build for ALT Linux
-
-
-
-
-
-
-
-
-
