@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.0
-Release: alt1
+Release: alt2
 Summary: Zope Page Templates
 License: ZPL
 Group: Development/Python
@@ -21,6 +21,7 @@ BuildPreReq: python3-devel python3-module-setuptools
 
 %py_requires zope zope.interface zope.component zope.security zope.tales
 %py_requires zope.tal zope.i18n zope.i18nmessageid zope.traversing
+%py_requires zope.untrustedpython
 
 %description
 Page Templates provide an elegant templating mechanism that achieves a
@@ -124,6 +125,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sat Feb 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt2
+- Added necessary requirements
+
 * Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
 - Version 4.1.0
 
