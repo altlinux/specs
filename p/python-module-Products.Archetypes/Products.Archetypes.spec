@@ -1,8 +1,8 @@
 %define oname Products.Archetypes
 
 Name: python-module-%oname
-Version: 1.10.3
-Release: alt1.dev0.git20141023
+Version: 1.10.4
+Release: alt1.dev0.git20150126
 Summary: Default Content Type Framework for Plone 2.1-4.x
 License: GPL
 Group: Development/Python
@@ -13,6 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-mock python-modules-json
 BuildPreReq: python-module-Products.CMFFormController
 BuildPreReq: python-module-Products.CMFQuickInstallerTool
 BuildPreReq: python-module-Products.DCWorkflow
@@ -30,6 +31,11 @@ BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-Products.CMFTestCase
 BuildPreReq: python-module-Products.CMFPlone
 BuildPreReq: python-module-unittest2
+BuildPreReq: python-module-plone.app.widgets
+BuildPreReq: python-module-plone.registry
+BuildPreReq: python-module-plone.app.testing
+BuildPreReq: python-module-zope.configuration
+BuildPreReq: python-module-zope.globalrequest
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -39,11 +45,11 @@ Requires: python-module-Zope2
 %py_requires zope.tal zope.viewlet Products.CMFCore Products.CMFDefault
 %py_requires Products.CMFFormController Products.CMFQuickInstallerTool
 %py_requires Products.DCWorkflow Products.GenericSetup plone.folder
-%py_requires Products.MimetypesRegistry Products.PortalTransforms
+%py_requires Products.MimetypesRegistry Products.PortalTransforms json
 %py_requires Products.PlacelessTranslationService Products.ZSQLMethods
 %py_requires Products.statusmessages Products.validation plone.uuid
 %py_requires plone.app.folder ZODB3 zope.annotation zope.publisher
-%py_requires Products.CMFPlone
+%py_requires Products.CMFPlone plone.app.widgets plone.registry
 %add_python_req_skip apelib
 
 %description
@@ -62,7 +68,8 @@ among the rich existing set of features.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires zope.testing Products.CMFTestCase
+%py_requires zope.testing Products.CMFTestCase mock plone.app.testing
+%py_requires zope.configuration zope.globalrequest
 
 %description tests
 Archetypes is a developers framework for rapidly developing and
@@ -100,12 +107,17 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/Products/*/tests
 %exclude %python_sitelibdir/Products/*/*/*/*/tests
+%exclude %python_sitelibdir/Products/*/examples
 
 %files tests
 %python_sitelibdir/Products/*/tests
 %python_sitelibdir/Products/*/*/*/*/tests
+%python_sitelibdir/Products/*/examples
 
 %changelog
+* Sat Feb 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.4-alt1.dev0.git20150126
+- Version 1.10.4.dev0
+
 * Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.3-alt1.dev0.git20141023
 - Version 1.10.3.dev0
 
