@@ -2,7 +2,7 @@
 %define oname %mname.testing
 Name: python-module-%oname
 Version: 1.8.2
-Release: alt1.dev0.git20150105
+Release: alt1.dev0.git20150108
 Summary: Provides helpers for writing tests
 License: GPLv2+
 Group: Development/Python
@@ -29,13 +29,19 @@ BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-Products.CMFPlone
 BuildPreReq: python-module-Products.CMFQuickInstallerTool
 BuildPreReq: python-module-plone.app.dexterity
+BuildPreReq: python-module-zc.buildout-tests
+BuildPreReq: python-module-Products.kupu-tests
+BuildPreReq: python-module-ftw.contentpage-tests
 
 %py_provides %oname
+Requires: python-module-Products.kupu-tests
 %py_requires %mname plone.mocktestcase plone.testing zope.component
 %py_requires zope.configuration zope.interface zope.publisher Plone
 %py_requires plone.app.testing Products.PloneHotfix20121106
 %py_requires Products.MailHost Products.CMFCore Products.CMFPlone
 %py_requires Products.CMFQuickInstallerTool plone.app.dexterity
+%py_requires zc.buildout.testing
+%py_requires ftw.contentpage.tests
 
 %description
 This package provides some testing helpers and an advanced MockTestCase.
@@ -62,6 +68,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sat Feb 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.2-alt1.dev0.git20150108
+- New snapshot
+
 * Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.2-alt1.dev0.git20150105
 - Version 1.8.2.dev0
 
