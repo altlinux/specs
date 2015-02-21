@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.0.4
-Release: alt1.dev0.git20141107
+Version: 2.0.6
+Release: alt1.dev0.git20150219
 Summary: A web shop solution for Plone
 License: GPLv2+
 Group: Development/Python
@@ -36,13 +36,15 @@ BuildPreReq: python-module-Products.statusmessages
 BuildPreReq: python-module-Products.Archetypes
 BuildPreReq: python-module-Products.LinguaPlone
 BuildPreReq: python-module-Products.ATContentTypes
+BuildPreReq: python-module-zope.i18n
+BuildPreReq: python-module-zope.globalrequest
 
 %py_provides %oname
 %py_requires %mname collective.js.jqueryui collective.z3cform.wizard
 %py_requires ftw.upgrade plone.api plone.app.registry plone.app.z3cform
 %py_requires Products.CMFPlone Products.CMFCore Products.statusmessages
-%py_requires Products.Archetypes Products.LinguaPlone
-%py_requires Products.ATContentTypes
+%py_requires Products.Archetypes Products.LinguaPlone zope.i18n
+%py_requires Products.ATContentTypes zope.globalrequest
 
 %description
 ftw.shop is a general purpose web shop product for Plone. It features
@@ -90,6 +92,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Sat Feb 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.6-alt1.dev0.git20150219
+- Version 2.0.6.dev0
+
 * Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt1.dev0.git20141107
 - Initial build for Sisyphus
 
