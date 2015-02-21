@@ -2,7 +2,7 @@
 %def_disable cgi
 
 Name: apcupsd
-Version: 3.14.12
+Version: 3.14.13
 Release: alt1
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -26,11 +26,11 @@ Patch3: %name-3.14.8-apctest.date.patch
 Patch10: apcupsd-3.14.4-hal_policy-Makefile.patch
 
 #Errata/FR
-#Patch100:
+Patch100: apcupsd-3.14.13-invalid-socket.patch
 
 BuildRequires: rpm-build-licenses
 
-BuildRequires: gcc-c++ imake makedepend gzip-utils hostinfo libncurses-devel libtinfo-devel libX11-devel
+BuildRequires: gcc-c++ imake makedepend gzip-utils hostinfo libncurses-devel libtinfo-devel libX11-devel libusb-compat-devel
 
 %description -n %name
 UPS power management under Linux for APCC Products. It allows your
@@ -75,12 +75,12 @@ Web status for UPS.
 %setup -q
 
 %patch1 -p0
-%patch2 -p1
+#patch2 -p1
 %patch3 -p2
 
 %patch10 -p0
 
-#patch100 -p1
+%patch100 -p0
 
 tar xzf %{SOURCE1}
 
@@ -103,16 +103,12 @@ export ac_cv_path_SHUTDOWN=/sbin/shutdown
 	--sysconfdir=%_sysconfdir/%name \
 	--with-log-dir=%_localstatedir/%name \
 	--with-lock-dir=%_lockdir/serial \
-	--enable-powerflute \
-	--enable-pthreads \
-	--enable-nls \
 	%{subst_enable cgi} \
 	--enable-usb \
+	--enable-modbus-usb \
 	--enable-net \
-	--enable-master-slave \
 	--enable-snmp \
 	--with-cgi-bin=%_cgibin \
-	--with-css-dir=./ \
 	--with-nisip=127.0.0.1 \
 	--with-distname=altlinux
 
@@ -187,6 +183,13 @@ gzip ChangeLog
 %endif
 
 %changelog
+* Fri Feb 20 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.14.13-alt1
+- New version (added MODBUS USB support)
+- added TIMELEFT to some short messages
+- removed old (unrecognized) configure's options:
+  enable-powerflute, enable-pthreads, enable-nls,
+  enable-master-slave, with-css-dir
+
 * Sun Mar 30 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.14.12-alt1
 - New version
 - converted README.ALT to UTF8
