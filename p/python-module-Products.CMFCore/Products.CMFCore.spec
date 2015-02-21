@@ -1,10 +1,8 @@
 %define oname Products.CMFCore
 
-%def_disable check
-
 Name: python-module-%oname
-Version: 2.2.8
-Release: alt2
+Version: 2.2.9
+Release: alt1
 Summary: Zope Content Management Framework core components
 License: ZPLv2.1
 Group: Development/Python
@@ -22,11 +20,11 @@ BuildPreReq: python-module-zope.testing python-module-zope.testrunner
 BuildPreReq: python-module-zope.component-tests
 BuildPreReq: python-module-zope.traversing-tests
 BuildPreReq: python-module-zope.security-tests
-BuildPReReq: python-module-eggtestinfo
+BuildPReReq: python-module-eggtestinfo python-module-zExceptions
 
 %py_provides %oname
 Requires: python-module-Zope2
-%py_requires five.localsitemanager Products.GenericSetup
+%py_requires five.localsitemanager Products.GenericSetup zExceptions
 %py_requires Products.ZSQLMethods zope.app.publication
 %py_requires Products.BTreeFolder2
 
@@ -75,6 +73,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/tests
 
 %changelog
+* Sat Feb 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.9-alt1
+- Version 2.2.9
+
 * Thu Jan 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.8-alt2
 - Added necessary requirements
 
