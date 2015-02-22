@@ -1,6 +1,6 @@
 Name: usbmuxd
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Daemon for communicating with Apple's iPod Touch and iPhone
 Group: System/Servers
@@ -43,6 +43,9 @@ the device to be accessed simultaneously.
 %doc AUTHORS README
 
 %changelog
+* Mon Feb 23 2015 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt2
+- rebuilt against libimobiledevice.so.6
+
 * Thu Nov 13 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 

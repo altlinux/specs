@@ -1,15 +1,15 @@
 %def_disable python
 
 Name: libimobiledevice
-Version: 1.1.7
+Version: 1.2.0
 Release: alt1
 
 Summary: Library for connecting to Apple iPhone and iPod touch
 Group: System/Libraries
 License: LGPLv2+
-Url: http://www.libimobiledevice.org/
+Url: http://www.libimobiledevice.org
 
-Source: %url/downloads/l/%name-%version.tar.bz2
+Source: %url/downloads/%name-%version.tar.bz2
 
 %define plist_ver 1.11
 %define usbmuxd_ver 1.0.9
@@ -48,11 +48,9 @@ Python bindings for libimobiledevice.
 %autoreconf
 %configure --disable-static \
 	%{?_disable_python:--without-cython}
-
 %make_build
 
 %install
-
 %makeinstall_std
 
 %files
@@ -73,6 +71,9 @@ Python bindings for libimobiledevice.
 %endif
 
 %changelog
+* Sat Feb 14 2015 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.7-alt1
 - 1.1.7
 
