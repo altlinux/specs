@@ -1,11 +1,9 @@
 %define mname ztfy
 %define oname %mname.extfile
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 0.2.14
-Release: alt1
+Release: alt2
 Summary: ZTFY package used to handle external files storage in Zope3
 License: ZPLv2.1
 Group: Development/Python
@@ -39,7 +37,7 @@ BuildPreReq: python-module-zope.location
 BuildPreReq: python-module-zope.processlifetime
 BuildPreReq: python-module-zope.schema
 BuildPreReq: python-module-zope.testing
-#BuildPreReq: python-module-ztfy.file
+BuildPreReq: python-module-ztfy.file
 
 %py_provides %oname
 Requires: python-module-libmagic
@@ -65,7 +63,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires zope.testing
-#py_requires ztfy.file
+%py_requires ztfy.file
 
 %description tests
 ztfy.extfile is a package which allows storing File and Image objects
@@ -105,6 +103,10 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.14-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.14-alt1
 - Initial build for Sisyphus
 
