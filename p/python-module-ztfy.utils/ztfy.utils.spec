@@ -1,11 +1,9 @@
 %define mname ztfy
 %define oname %mname.utils
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 0.4.12
-Release: alt1
+Release: alt2
 Summary: ZTFY utility functions and classes for Zope3
 License: ZPLv2.1
 Group: Development/Python
@@ -45,8 +43,8 @@ BuildPreReq: python-module-zope.tales
 BuildPreReq: python-module-zope.traversing
 BuildPreReq: python-module-zopyx.txng3.core
 BuildPreReq: python-module-zope.testing
-#BuildPreReq: python-module-ztfy.jqueryui
-#BuildPreReq: python-module-ztfy.skin
+BuildPreReq: python-module-ztfy.jqueryui
+BuildPreReq: python-module-ztfy.skin
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
@@ -58,7 +56,7 @@ Requires: python-module-%mname = %EVR
 %py_requires zope.interface zope.location zope.pluggableauth zope.tales
 %py_requires zope.publisher zope.schema zope.security zope.session
 %py_requires zope.traversing zopyx.txng3.core
-#py_requires ztfy.jqueryui ztfy.skin
+%py_requires ztfy.jqueryui ztfy.skin
 
 %description
 ztfy.utils is a set of classes and functions which can be used to handle
@@ -102,7 +100,6 @@ install -p -m644 src/%mname/__init__.py \
 
 %check
 python setup.py test
-py.test -vv
 
 %files
 %doc docs/*
@@ -119,6 +116,10 @@ py.test -vv
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.12-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.12-alt1
 - Initial build for Sisyphus
 
