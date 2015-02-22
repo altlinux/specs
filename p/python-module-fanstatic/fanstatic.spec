@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.a5
+Release: alt2.a5
 Summary: Flexible static resources for web applications
 License: BSD
 Group: Development/Python
@@ -22,6 +22,8 @@ BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python-tools-2to3
 %endif
 
+%py_requires shutilwhich
+
 %description
 Fanstatic is a smart static resource publisher for Python. For more
 information on what it's about and how to use it, see:
@@ -31,6 +33,7 @@ http://fanstatic.org
 %package -n python3-module-%oname
 Summary: Flexible static resources for web applications (Python 3)
 Group: Development/Python3
+%py3_requires shutilwhich
 
 %description -n python3-module-%oname
 Fanstatic is a smart static resource publisher for Python. For more
@@ -152,6 +155,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/fanstatic/
 %endif
 
 %changelog
+* Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.a5
+- Added necessary requirements
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.a5
 - Version 1.0a5
 
