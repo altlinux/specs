@@ -1,11 +1,9 @@
 %define mname ztfy
 %define oname %mname.baseskin
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1
+Release: alt2
 Summary: ZTFY base skin package
 License: ZPLv2.1
 Group: Development/Python
@@ -24,12 +22,12 @@ BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-zope.interface
 BuildPreReq: python-module-ztfy.utils
 BuildPreReq: python-module-zope.testing
-#BuildPreReq: python-module-ztfy.base
+BuildPreReq: python-module-ztfy.base
 
 %py_provides %oname
 %py_requires %mname z3c.form z3c.formui z3c.jsonrpc z3c.layer.pagelet
 %py_requires zope.component zope.i18nmessageid zope.interface ztfy.utils
-#py_requires ztfy.base
+%py_requires ztfy.base
 
 %description
 ZTFY.baseskin is a base package for all ZTFY's skin-related packages.
@@ -67,8 +65,6 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 %check
 python setup.py test
-rm -fR build
-py.test -vv
 
 %files
 %doc docs/*
@@ -80,6 +76,10 @@ py.test -vv
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2
+- Added necessary requirements
+- Enabled testing
+
 * Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus
 
