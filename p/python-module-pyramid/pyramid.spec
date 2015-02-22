@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.6
-Release: alt3.dev.git20141110
+Release: alt4.dev0.git20150219
 Summary: Small, fast, down-to-earth Python web application development framework
 License: Repoze Public License
 Group: Development/Python
@@ -26,6 +26,7 @@ BuildPreReq: python-module-chameleon.core python-module-markupsafe
 BuildPreReq: python-module-zope.component python-module-virtualenv
 BuildPreReq: python-module-repoze.sphinx.autointerface
 BuildPreReq: python-module-webtest python-module-zope.event
+BuildPreReq: python-module-nose
 BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -38,9 +39,11 @@ BuildPreReq: python3-module-chameleon.core python3-module-markupsafe
 BuildPreReq: python3-module-zope.component python3-module-virtualenv
 BuildPreReq: python3-module-repoze.sphinx.autointerface
 BuildPreReq: python3-module-webtest python3-module-zope.event
+BuildPreReq: python3-module-nose
 %endif
 
 %py_requires paste.deploy repoze.lru zope.deprecation zope.component
+%py_requires zope.interface termios
 
 %description
 Pyramid is a small, fast, down-to-earth, open source Python web
@@ -53,6 +56,7 @@ productive.
 Summary: Small, fast, down-to-earth Python 3 web application development framework
 Group: Development/Python3
 %py3_requires paste.deploy repoze.lru zope.deprecation zope.component
+%py3_requires zope.interface termios
 
 %description -n python3-module-%oname
 Pyramid is a small, fast, down-to-earth, open source Python web
@@ -64,6 +68,7 @@ productive.
 Summary: Tests for Pyramid (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
+%py3_requires nose
 
 %description -n python3-module-%oname-tests
 Pyramid is a small, fast, down-to-earth, open source Python web
@@ -78,6 +83,7 @@ This package contains tests for Pyramid.
 Summary: Tests for Pyramid
 Group: Development/Python
 Requires: %name = %version-%release
+%py_requires nose
 
 %description tests
 Pyramid is a small, fast, down-to-earth, open source Python web
@@ -197,6 +203,9 @@ popd
 %endif
 
 %changelog
+* Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt4.dev0.git20150219
+- Version 1.6.dev0
+
 * Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt3.dev.git20141110
 - Tuned requirements
 
