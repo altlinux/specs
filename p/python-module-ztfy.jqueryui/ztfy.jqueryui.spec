@@ -2,7 +2,7 @@
 %define oname %mname.jqueryui
 Name: python-module-%oname
 Version: 0.7.12
-Release: alt1
+Release: alt2
 Summary: JQuery, JQuery UI, JQuery Tools and a small set of JQuery plugins
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +10,7 @@ Url: https://pypi.python.org/pypi/ztfy.jqueryui/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-Source1: repocop-test-hint.binary.ztfy.jqueryui.resources
+Source1: repocop-test-hint:binary:%name:altlinux-python-test-is-packaged
 
 BuildPreReq: python-module-setuptools-tests
 BuildPreReq: python-module-fanstatic
@@ -71,6 +71,9 @@ py.test -vv
 %python_sitelibdir/%mname/*/tests
 
 %changelog
+* Mon Feb 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.12-alt2
+- Renamed source for repocop (inspired by viy@)
+
 * Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.12-alt1
 - Initial build for Sisyphus
 
