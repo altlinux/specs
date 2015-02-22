@@ -1,5 +1,5 @@
 Name: strace
-Version: 4.9.0.241.73e9
+Version: 4.9.0.314.5b081
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -45,8 +45,7 @@ mkdir build
 cd build
 %define _configure_script ../configure
 %configure --enable-gcc-Werror #--enable-maintainer-mode
-# Assume that adjust_kernel_headers --first has been run.
-%make_build IOCTLDIR=/usr/include/linux/../../include
+%make_build
 
 %install
 %makeinstall_std -C build
@@ -66,6 +65,9 @@ export SLEEP_A_BIT='sleep 0.1'
 %_bindir/strace-graph
 
 %changelog
+* Sun Feb 22 2015 Dmitry V. Levin <ldv@altlinux.org> 4.9.0.314.5b081-alt1
+- Updated to v4.9-314-g5b0819e.
+
 * Mon Jan 26 2015 Dmitry V. Levin <ldv@altlinux.org> 4.9.0.241.73e9-alt1
 - Updated to v4.9-241-g73e9880.
 
