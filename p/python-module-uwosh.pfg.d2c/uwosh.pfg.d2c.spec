@@ -1,8 +1,8 @@
 %define mname uwosh.pfg
 %define oname %mname.d2c
 Name: python-module-%oname
-Version: 2.4.6
-Release: alt1.dev.git20140918
+Version: 2.4.7
+Release: alt1.git20141112
 Summary: Content adapter for ploneformgen
 License: GPL
 Group: Development/Python
@@ -117,6 +117,9 @@ nosetests
 %python_sitelibdir/uwosh/__init__.py*
 
 %changelog
+* Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.7-alt1.git20141112
+- Version 2.4.7
+
 * Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.6-alt1.dev.git20140918
 - Initial build for Sisyphus
 
