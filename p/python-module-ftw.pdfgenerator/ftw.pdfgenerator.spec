@@ -1,8 +1,8 @@
 %define mname ftw
 %define oname %mname.pdfgenerator
 Name: python-module-%oname
-Version: 1.3.5
-Release: alt1.dev0.git20141107
+Version: 1.3.6
+Release: alt1.dev0.git20150219
 Summary: A library for generating PDF representations of Plone objects with LaTeX
 License: GPLv2+
 Group: Development/Python
@@ -78,6 +78,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.6-alt1.dev0.git20150219
+- Version 1.3.6.dev0
+
 * Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.5-alt1.dev0.git20141107
 - Initial build for Sisyphus
 
