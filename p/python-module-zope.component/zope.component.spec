@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.2.1
-Release: alt1
+Version: 4.2.2
+Release: alt1.dev0.git20150128
 Summary: Zope Component Architecture
 License: ZPLv2.1
 Group: Development/Python
@@ -21,7 +21,7 @@ BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python3-module-zope python-tools-2to3
 %endif
 
-%py_requires zope.interface zope.event
+%py_requires zope.interface zope.event zope.hookable
 
 %description
 This package is intended to be independently reusable in any Python
@@ -137,6 +137,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.2-alt1.dev0.git20150128
+- Version 4.2.2.dev0
+
 * Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1
 - Version 4.2.1
 
