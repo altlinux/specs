@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt2
+Release: alt3
 Summary: Zope Container
 License: ZPL
 Group: Development/Python
@@ -20,9 +20,9 @@ BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 Requires: python-module-zope.i18nmessageid
-%py_requires zope.interface zope.dottedname zope.schema 
+%py_requires zope.interface zope.dottedname zope.schema zope.traversing
 %py_requires zope.component zope.event zope.location zope.security
-%py_requires zope.lifecycleevent
+%py_requires zope.lifecycleevent zope.size zope.filerepresentation
 
 %description
 This package define interfaces of container components, and provides
@@ -75,6 +75,8 @@ This package contains tests for Zope Container.
 %prep
 %setup
 
+rm -fR src/*.egg-info
+
 %if_with python3
 cp -fR . ../python3
 %endif
@@ -119,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3
+- Added necessary requirements
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2
 - Version 4.0.0
 - Added module for Python 3
