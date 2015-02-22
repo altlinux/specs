@@ -1,0 +1,109 @@
+%define oname zodbbrowser
+Name: python-module-%oname
+Version: 0.12.0
+Release: alt1.dev0.git20150213
+Summary: ZODB browser
+License: ZPLv2.1
+Group: Development/Python
+Url: https://pypi.python.org/pypi/zodbbrowser/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/mgedmin/zodbbrowser.git
+Source: %name-%version.tar
+
+BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-ZODB3 python-module-simplejson
+BuildPreReq: python-module-lxml python-module-cssselect
+BuildPreReq: python-module-unittest2 python-module-persistent
+BuildPreReq: python-module-coverage
+BuildPreReq: python-module-zope.app.pagetemplate
+BuildPreReq: python-module-zope.app.publication
+BuildPreReq: python-module-zope.component-tests
+BuildPreReq: python-module-zope.interface
+BuildPreReq: python-module-zope.location
+BuildPreReq: python-module-zope.publisher
+BuildPreReq: python-module-zope.security-tests
+BuildPreReq: python-module-zope.traversing-tests
+BuildPreReq: python-module-zope.cachedescriptors
+BuildPreReq: python-module-zope.app.container
+BuildPreReq: python-module-zope.app.testing
+BuildPreReq: python-module-zope.testbrowser
+BuildPreReq: python-module-zope.app.authentication
+BuildPreReq: python-module-zope.app.component
+BuildPreReq: python-module-zope.securitypolicy
+BuildPreReq: python-module-zope.app.server
+BuildPreReq: python-module-zope.app.session
+BuildPreReq: python-module-zope.app.zcmlfiles
+BuildPreReq: python-module-zope.server
+BuildPreReq: python-module-zope.error
+BuildPreReq: python-module-zope.exceptions
+BuildPreReq: python-module-zope.session
+BuildPreReq: python-module-zope.hookable
+BuildPreReq: python-module-RestrictedPython
+BuildPreReq: python-module-zope.testrunner
+BuildPreReq: python-module-zope.password-tests
+
+%py_provides %oname
+%py_requires ZODB3 zope.app.pagetemplate zope.app.publication simplejson
+%py_requires zope.component zope.interface zope.location zope.publisher
+%py_requires zope.security zope.traversing zope.cachedescriptors
+%py_requires zope.app.container zope.app.authentication zope.app.server
+%py_requires zope.app.component zope.securitypolicy zope.app.session
+%py_requires zope.app.zcmlfiles zope.server zope.error zope.exceptions
+%py_requires zope.session zope.hookable RestrictedPython persistent
+
+%description
+The ZODB browser allows you to inspect persistent objects stored in the
+ZODB, view their attributes and historical changes made to them.
+
+WARNING:
+ZODB is based on Python pickles, which are not secure - they allow
+arbitrary command execution. Do not use zodbbrowser on databases from
+untrusted sources.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+%py_requires zope.app.testing zope.testbrowser lxml cssselect unittest2
+%py_requires zope.testrunner zope.component.testing
+%py_requires zope.password.testing zope.traversing.testing
+%py_requires zope.security.testing
+
+%description tests
+The ZODB browser allows you to inspect persistent objects stored in the
+ZODB, view their attributes and historical changes made to them.
+
+This package contains tests for %oname.
+
+%prep
+%setup
+
+%build
+%python_build_debug
+
+%install
+%python_install
+
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
+%check
+python setup.py test
+rm -fR build
+py.test -vv
+
+%files
+%doc *.txt *.rst
+%_bindir/*
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/*test*
+
+%files tests
+%python_sitelibdir/*/*test*
+
+%changelog
+* Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt1.dev0.git20150213
+- Initial build for Sisyphus
+
