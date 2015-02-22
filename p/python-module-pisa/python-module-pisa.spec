@@ -1,15 +1,13 @@
 %define tarname pisa
 Name: python-module-pisa
 Version: 3.0.33
-Release: alt1.1
+Release: alt2
 
 Summary: PDF generator using HTML and CSS
 
 Group: Development/Python
 License: GPLv2
 Url: http://www.xhtml2pdf.com/
-
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 Source: http://pypi.python.org/packages/source/p/pisa/%tarname-%version.tar
 
@@ -47,6 +45,9 @@ Features
 %python_sitelibdir/*
 
 %changelog
+* Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.33-alt2
+- Fixed requirements
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.0.33-alt1.1
 - Rebuild with Python-2.7
 
