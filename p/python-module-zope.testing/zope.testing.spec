@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.4
-Release: alt1.dev.git20140319
+Release: alt2.dev0.git20150128
 Summary: Zope testing helpers
 License: ZPL
 Group: Development/Python
@@ -16,15 +16,17 @@ Source: %name-%version.tar
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-zope.exceptions
 BuildPreReq: python-module-zope.interface
+BuildPreReq: python-module-zope.testrunner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-zope.exceptions
 BuildPreReq: python3-module-zope.interface
+BuildPreReq: python3-module-zope.testrunner
 BuildPreReq: python-tools-2to3
 %endif
 
-%py_requires zope.exceptions zope.interface
+%py_requires zope.exceptions zope.interface zope.testrunner
 
 %description
 This package provides a number of testing frameworks. It includes a
@@ -34,7 +36,7 @@ flexible test runner, and supports both doctest and unittest.
 %package -n python3-module-%oname
 Summary: Zope testing helpers (Python 3)
 Group: Development/Python3
-%py3_requires zope.exceptions zope.interface
+%py3_requires zope.exceptions zope.interface zope.testrunner
 
 %description -n python3-module-%oname
 This package provides a number of testing frameworks. It includes a
@@ -96,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.4-alt2.dev0.git20150128
+- Version 4.1.4.dev0
+
 * Wed Oct 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.4-alt1.dev.git20140319
 - Version 4.1.4dev
 
