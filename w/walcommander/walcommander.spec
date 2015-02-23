@@ -1,14 +1,14 @@
-Name: walcommander
-Version: 0.18.1
+Name:    walcommander
+Version: 0.19.0.1
 Release: alt1
 
 Summary: Wal Commander GitHub Edition
 License: %mit
-Group: File tools
-Url: https://github.com/corporateshark/WalCommander
+Group:   File tools
+Url:     https://github.com/corporateshark/WalCommander
 
 # Source-url: https://github.com/corporateshark/WalCommander/archive/release-0.16.1.tar.gz
-Source: %name-%version.tar
+Source:  %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): cmake
@@ -29,12 +29,15 @@ ln -s ../install-files src/install-files
 %cmakeinstall_std
 
 %files
-%doc LICENSE CHANGELOG CHANGELOG.GitHub readme_eng.txt README.md
+%doc LICENSE CHANGELOG.GitHub readme_eng.txt README.md
 %_bindir/*
 %_desktopdir/*.desktop
 %_pixmapsdir/*.png
 
 %changelog
+* Mon Feb 23 2015 Andrey Cherepanov <cas@altlinux.org> 0.19.0.1-alt1
+- New version
+
 * Mon Jan 26 2015 Andrey Cherepanov <cas@altlinux.org> 0.18.1-alt1
 - New version (ALT #30593)
 
