@@ -1,9 +1,9 @@
-%define		svn 6465
+%define		svn 6748
 
 Name:		smplayer
-Summary:	A great MPlayer front-end (QT4)
-Summary(ru_RU.UTF8): Мощный интерфейс для MPlayer (QT4)
-Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer (QT4)
+Summary:	A great MPlayer/MPV front-end (QT4)
+Summary(ru_RU.UTF8): Мощный интерфейс для MPlayer/MPV (QT4)
+Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT4)
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
@@ -19,18 +19,18 @@ BuildRequires:	gcc-c++ libqt4-devel >= 4.2
 Provides: %name
 
 %description
-smplayer intends to be a complete front-end for MPlayer, from basic features
+smplayer intends to be a complete front-end for MPlayer/MPV, from basic features
 like playing videos, DVDs, and VCDs to more advanced features like support
-for MPlayer filters and more. One of the main features is the ability to
+for MPlayer/MPV filters and more. One of the main features is the ability to
 remember the state of a played file, so when you play it later it will resume
 at the same point and with the same settings. smplayer is developed with
 the Qt toolkit, so it's multi-platform.
 Compiled with Qt4
 
 %description -l ru_RU.UTF8
-SMPlayer стремится быть как можно более полным интерфейсом для MPlayer,
+SMPlayer стремится быть как можно более полным интерфейсом для MPlayer/MPV,
 от базовых функций проигрывания видео, DVD, VCDs до самого продвинутого
-функционала MPlayer-а по поддержке фильтров и т.п. Одна из главных
+функционала MPlayer/MPV по поддержке фильтров и т.п. Одна из главных
 особенностей - способность запоминать положение проигрываемого файла для
 того, чтобы при следующем его открытии Вы могли смотреть его дальше с
 того же места и с теми же параметрами настроек. SMPlayer разработан на
@@ -39,8 +39,8 @@ SMPlayer стремится быть как можно более полным �
 
 %description -l uk_UA.UTF8
 SMPlayer направлений на те, щоб стати як можна більш повним інтерфейсом
-для MPlayer, від базових функцій відтворення відео, DVD, VCD до самого
-продвинутого функціонала MPlayer-а по підтримці фільтрів і т.і. Одна з
+для MPlayer/MPV, від базових функцій відтворення відео, DVD, VCD до самого
+продвинутого функціонала MPlayer/MPV по підтримці фільтрів і т.і. Одна з
 головних особливостей - здатність запам'ятовувати положення файлу, що
 відтворюється, для того, щоб при наступному його відкритті Ви мали змогу
 переглядати його далі з того ж місця і з тими ж параметрами налаштувань.
@@ -75,6 +75,9 @@ export OPTFLAGS="%optflags"
 %_man1dir/*
 
 %changelog
+* Mon Feb 23 2015 Motsyo Gennadi <drool@altlinux.ru> 14.9.0-alt1.6748
+- svn6748
+
 * Mon Nov 24 2014 Motsyo Gennadi <drool@altlinux.ru> 14.9.0-alt1.6465
 - svn6465
 
