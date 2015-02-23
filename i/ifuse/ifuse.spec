@@ -1,6 +1,6 @@
 Name: ifuse
 Version: 1.1.3
-Release: alt3
+Release: alt4
 
 Summary: Filesystem access for the iPhone and iPod Touch
 Group: Communications
@@ -34,6 +34,9 @@ to access the iPhone's or iPod Touch's media files under Linux.
 %doc AUTHORS README
 
 %changelog
+* Mon Feb 23 2015 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt4
+- rebuilt against libimobiledevice.so.6
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt3
 - rebuilt against libimobiledevice.so.5/libplist.so.3
 
