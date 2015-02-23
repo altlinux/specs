@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 10.4.4
+Version: 10.4.5
 Release: alt1
 Epoch: 4
 License: MIT
@@ -384,6 +384,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sun Feb 22 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.4.5-alt1
+- 10.4.5
+
 * Tue Feb 10 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.4.4-alt1
 - 10.4.4
 
