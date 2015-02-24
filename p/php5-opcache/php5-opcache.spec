@@ -77,6 +77,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php5-%version-%release
+
 * Sun Feb 01 2015 Anton Farygin <rider@altlinux.ru> 5.5.21.20150121-alt1.1
 - fixed work with apache2-mod_php5, apache-mod_php5 and php5-cgi sapi (closes: #30496)
 
