@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: homebank
-Version: 4.6.3
+Version: 5.0.0
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -19,8 +19,8 @@ BuildRequires(pre): rpm-build-licenses
 
 # From configure.ac
 BuildPreReq: intltool
-BuildPreReq: glib2-devel >= 2.28
-BuildPreReq: libgtk+2-devel >= 2.24
+BuildPreReq: glib2-devel >= 2.34
+BuildPreReq: libgtk+3-devel >= 3.6.4
 BuildPreReq: libofx-devel
 
 BuildPreReq: perl-XML-Parser shared-mime-info desktop-file-utils
@@ -92,6 +92,9 @@ read and rather useful for a first time user.
 %exclude %_datadir/application-registry/%name.applications
 
 %changelog
+* Tue Feb 24 2015 Yuri N. Sedunov <aris@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Sat Aug 23 2014 Yuri N. Sedunov <aris@altlinux.org> 4.6.3-alt1
 - 4.6.3
 
