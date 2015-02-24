@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.12.2
-Release: alt1.git20140304
+Version: 0.13.0
+Release: alt1.git20150223
 Summary: ReST document generation tools for botocore
 License: ASLv2.0
 Group: Development/Python
@@ -12,6 +12,7 @@ Url: https://pypi.python.org/pypi/bcdoc/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/boto/bcdoc.git
+# branch: develop
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -82,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.0-alt1.git20150223
+- Version 0.13.0
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.2-alt1.git20140304
 - Initial build for Sisyphus
 
