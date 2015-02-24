@@ -1,16 +1,16 @@
-Name:    libofx
-Version: 0.9.9
+Name: libofx
+Version: 0.9.10
 Release: alt1
 
 Summary: The OFX parser library
-Group:   System/Libraries
+Group: System/Libraries
 License: GPLv2
+Url: http://libofx.sourceforge.net
 
-Packager: Andrey Cherepanov <cas@altlinux.ru> 
-URL:      http://libofx.sourceforge.net
-Source:   http://download.sourceforge.net/libofx/%name-%version.tar.gz
+Source: http://download.sourceforge.net/%name/%name-%version.tar.gz
 
-BuildRequires: libOpenSP-devel gcc-c++ libcurl-devel libxml++2-devel
+BuildRequires: libOpenSP-devel gcc-c++ libcurl-devel
+BuildRequires: libxml++2-devel gengetopt help2man
 
 %description
 This is the LibOFX library. It is a API designed to allow applications
@@ -44,11 +44,12 @@ Headers, documentation and other files for development with libofx.
 
 %prep
 %setup
+rm -f ofxdump/ofxdump.1
 
 %build
 %autoreconf
 %configure --disable-static
-%make_build
+%make
 
 %install
 %makeinstall_std
@@ -73,6 +74,9 @@ Headers, documentation and other files for development with libofx.
 %_docdir/%name/
 
 %changelog
+* Tue Feb 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.10-alt1
+- 0.9.10
+
 * Sat Nov 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.9-alt1
 - 0.9.9
 - %%check section
@@ -90,7 +94,7 @@ Headers, documentation and other files for development with libofx.
 - rebuld
 
 * Tue Nov 25 2008 Andrey Cherepanov <cas@altlinux.ru> 0.9.0-alt2
-- fixed build for gcc4.3 
+- fixed build for gcc4.3
 
 * Thu Sep 25 2008 Lebedev Sergey <barabashka@altlinux.org> 0.9.0-alt1
 - new version 0.9.0
