@@ -1,10 +1,10 @@
 %define oname projexui
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 3.0.2
-Release: alt1.git20141103
+Version: 3.0.3
+Release: alt1.git20150217
 Summary: Library of additional Qt widgets and plugins for PyQt4 and PySide
 License: LGPLv3
 Group: Development/Python
@@ -18,14 +18,17 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-projex python-module-projex_xqt
 BuildPreReq: python-module-PyQt4 python-module-PySide
+BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-projex python3-module-projex_xqt
 BuildPreReq: python3-module-PyQt4 python3-module-PySide
+BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
+%py_requires logging
 
 %description
 Library of additional Qt widgets and plugins for PyQt4 and PySide.
@@ -47,6 +50,7 @@ http://www.projexsoftware.com/
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -94,6 +98,10 @@ popd
 %endif
 
 %changelog
+* Tue Feb 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt1.git20150217
+- Version 3.0.3
+- Added module for Python 3
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt1.git20141103
 - Initial build for Sisyphus
 
