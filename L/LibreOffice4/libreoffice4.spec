@@ -1,4 +1,4 @@
-# 4.4.0.3
+# 4.4.1.2
 %def_with forky
 %def_with parallelism
 %def_without fetch
@@ -6,13 +6,13 @@
 
 Name: LibreOffice4
 Version: 4.4
-%define urelease 0.3
+%define urelease 1.2
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -59,14 +59,9 @@ Patch17: 0001-Resolves-fdo-37559-revert-adding-extra-dummy-polygon.patch
 Patch18: 0001-radio-check-top-center-bottom-alignment-for-table-ce.patch
 Patch19: 0001-allow-comparing-documents-which-only-differ-by-frame.patch
 Patch20: 0001-Use-the-same-advanced-Ellipse-and-Rectangle-shapes-i.patch
-Patch21: 0001-if-we-change-the-keys-we-have-to-resort-based-on-the.patch
-Patch22: 0001-rhbz-1175027-sw-fix-life-cycle-of-SwConnectionDispos.patch
-Patch23: 0001-rhbz-1184582-At-least-catch-and-log-UNO-exceptions-i.patch
-Patch24: 0001-Related-rhbz-1185307-One-more-location-to-look-for-H.patch
-Patch25: 0001-Resolves-rhbz-1179642-crash-in-GetFocus-with-empty-m.patch
-Patch26: 0001-rhbz-1177022-vcl-fix-PDF-embedding-of-Type-1-fonts.patch
-Patch27: 0001-don-t-strip-font-names-of-apparent-script-suffixes-a.patch
-Patch28: 0001-fix-assert-call.patch
+Patch21: 0001-fix-linker-error.patch
+Patch22: 0001-Resolves-rhbz-1193971-clear-hard-coded-char-props-in.patch
+
 
 
 
@@ -79,6 +74,7 @@ Patch302: openoffice.org-3.1.0.ooo101274.opening-a-directory.patch
 Patch401:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: libreoffice-4-alt-drop-gnome-open.patch
 Patch403: alt-002-tmpdir.patch
+Patch404: alt-003-SAL_DLLPUBLIC_EXPORT.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -89,6 +85,7 @@ BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-dev
 
 # 4.4
 BuildRequires: libavahi-devel libpagemaker-devel boost-signals-devel
+BuildRequires: libe-book-devel
 
 %description
 LibreOffice is a productivity suite that is compatible with other major
@@ -184,31 +181,26 @@ echo Direct build
 %patch401 -p0
 ##patch402 -p1
 %patch403 -p2
-#patch404 -p1
+%patch404 -p0
 
 # FC patches applying (## -- unsuccsessful but seems meaningful)
-%patch3 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-##patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
+#patch3 -p1
+#patch8 -p1
+#patch9 -p1
+#patch10 -p1
+#patch11 -p1
+#patch12 -p1
+#patch13 -p1
+#patch14 -p1
+#patch15 -p1
+#patch16 -p1
+#patch17 -p1
+#patch18 -p1
+#patch19 -p1
+#patch20 -p1
+#patch21 -p1
+#patch22 -p1
+
 
 
 
@@ -228,7 +220,7 @@ s/\(GCC_VERSION=`echo $_gcc_version\)[^`]*`/\1|cut -d. -f1-2`/
 %ifarch %ix86
 # TODO: check when this became obsolete
 sed -i.DLLPUB 's/DECL_LISTENERMULTIPLEXER_START(/DECL_LISTENERMULTIPLEXER_START_DLLPUB(/g' include/toolkit/helper/listenermultiplexer.hxx
-sed -i.gccvisbroken 's/gccvisbroken=no/gccvisbroken=yes/g' configure.ac
+#sed -i.gccvisbroken 's/gccvisbroken=no/gccvisbroken=yes/g' configure.ac
 #sed -i.VISIBILITY 's/HAVE_GCC_VISIBILITY_BROKEN=$/HAVE_GCC_VISIBILITY_BROKEN="YES"/g' configure.ac
 %endif
 
@@ -461,6 +453,9 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l tt -n Tatar
 
 %changelog
+* Tue Feb 24 2015 Fr. Br. George <george@altlinux.ru> 4.4-alt2
+- Update to 4.4.1.2
+
 * Thu Feb 05 2015 Fr. Br. George <george@altlinux.ru> 4.4-alt1
 - Update to 4.4.0.3
 - Turn tt and be langpacks on
