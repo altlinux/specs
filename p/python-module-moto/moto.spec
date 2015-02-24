@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.4.0
-Release: alt1.git201500203
+Version: 0.4.1
+Release: alt1.git20150222
 Summary: A library that allows your python tests to easily mock out the boto library
 License: ASLv2.0
 Group: Development/Python
@@ -25,6 +25,7 @@ BuildPreReq: python-module-xmltodict python-module-six
 BuildPreReq: python-module-werkzeug python-module-nose
 BuildPreReq: python-module-mock python-module-sure
 BuildPreReq: python-module-coverage python-module-freezegun
+BuildPreReq: python-modules-xml python-modules-email
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -39,7 +40,7 @@ BuildPreReq: python3-module-coverage python3-module-freezegun
 
 %py_provides %oname
 %py_requires jinja2 boto dicttoxml flask httpretty requests xmltodict
-%py_requires six werkzeug
+%py_requires six werkzeug xml bisect
 
 %description
 Moto is a library that allows your python tests to easily mock out the
@@ -113,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20150222
+- Version 0.4.1
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git201500203
 - Version 0.4.0
 
