@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt1.git20150211
+Release: alt1.git20150222
 Summary: Filesystem events monitoring
 License: ASLv2.0
 Group: Development/Python
@@ -25,8 +25,8 @@ BuildPreReq: python3-module-pathtools
 %endif
 
 %py_provides %oname
-%py_requires pathtools
-%add_python_req_skip AppKit FSEvents _watchdog_fsevents argh
+%py_requires pathtools argh yaml
+%add_python_req_skip AppKit FSEvents _watchdog_fsevents
 
 %description
 Python API and shell utilities to monitor file system events.
@@ -35,8 +35,8 @@ Python API and shell utilities to monitor file system events.
 Summary: Filesystem events monitoring
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires pathtools
-%add_python3_req_skip AppKit FSEvents _watchdog_fsevents argh
+%py3_requires pathtools argh yaml
+%add_python3_req_skip AppKit FSEvents _watchdog_fsevents
 
 %description -n python3-module-%oname
 Python API and shell utilities to monitor file system events.
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20150222
+- New snapshot
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20150211
 - Version 0.8.3
 
