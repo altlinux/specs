@@ -1,5 +1,5 @@
 Name: libshell
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: A library of shell functions
@@ -7,6 +7,8 @@ License: GPL
 Group: Development/Other
 BuildArch: noarch
 Packager: Alexey Gladkov <legion@altlinux.ru>
+
+Url: https://github.com/legionus/libshell.git
 
 Source: %name-%version.tar
 
@@ -41,6 +43,16 @@ as single file.
 /bin/shell-lib
 
 %changelog
+* Tue Feb 24 2015 Alexey Gladkov <legion@altlinux.ru> 0.3.0-alt1
+- New version (0.3.0).
+- Fix bootstrap (ALT#29584).
+- shell-ini-config changes:
+  + Add ini_config_is_set() function.
+  + Take care about lines without values (ALT#30713).
+- shell-unittest changes:
+  + Add TESTCASES variable to list individual testcases (ALT#27059).
+  + Add TESTTRACE variable to run testcase in debug mode (ALT#27059).
+
 * Fri Nov 08 2013 Alexey Gladkov <legion@altlinux.ru> 0.2.0-alt1
 - shell_var_trim: Check for empty string (ALT#29562).
 - Add missing sources.
