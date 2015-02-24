@@ -1,5 +1,5 @@
 Name: alterator-net-iptables
-Version: 4.19.5
+Version: 4.19.6
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -58,6 +58,10 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Tue Feb 24 2015 Mikhail Efremov <sem@altlinux.org> 4.19.6-alt1
+- Set restart_network to 'on' by default.
+- net-iptables.conf: Add restart_network option.
+
 * Mon Feb 16 2015 Mikhail Efremov <sem@altlinux.org> 4.19.5-alt1
 - Fix ULOG counters (closes: #25489).
 
