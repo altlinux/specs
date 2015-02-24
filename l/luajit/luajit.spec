@@ -1,6 +1,6 @@
 Name: luajit
 Version: 2.0.3
-Release: alt5
+Release: alt6
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -90,6 +90,9 @@ It may be embedded or used as a general-purpose, stand-alone language.
 %_libdir/*.a
 
 %changelog
+* Tue Feb 24 2015 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt6
+- git20150222
+
 * Wed Feb 18 2015 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt5
 - use the same path and cpath as plain lua (closes: #30739)
 
