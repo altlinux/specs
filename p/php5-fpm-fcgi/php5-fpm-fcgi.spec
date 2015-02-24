@@ -131,7 +131,7 @@ mkdir -p  %buildroot%_unitdir
 install -m 0644 %SOURCE5 %buildroot%_unitdir/php5-fpm.service
 install -pD -m755 %SOURCE6 %buildroot/usr/libexec/service/legacy-actions/php5-fpm/rotate
 
-%triggerun -- %name < 5.5.21
+%triggerun -- php5-fpm-fcgi < 5.5.21
 if [ $2 -gt 0 ] && [ $1 -gt 0 ] && [ -d %php5_sysconfdir/fpm ]; then
 # This is upgrade.
 	echo "Warning: configuration files from %php5_sysconfdir/fpm moved to %php5_sysconfdir/%php5_sapi/"

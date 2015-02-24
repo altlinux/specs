@@ -2,8 +2,8 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.62
-Release: alt2
+Version: 1.0.65
+Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -21,6 +21,7 @@ Source1: %name.watch
 Source2: cups-browsed.init
 Patch0: %name-alt.patch
 Patch1: %name-alt-php-5.4.14-fix.patch
+Patch2: cups-filters-puppler-31.patch
 Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_standard_print_job_format
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
@@ -45,12 +46,12 @@ BuildRequires: gcc-c++
 BuildRequires: zlib-devel
 BuildRequires: libijs-devel
 BuildRequires: glib2-devel
-# libijs
 BuildRequires: libgs-devel
 BuildRequires: libfreetype-devel
 BuildRequires: fontconfig-devel
 BuildRequires: liblcms2-devel
 BuildRequires: php5-devel
+BuildRequires: libgio-devel
 
 # Make sure we get postscriptdriver tags.
 BuildRequires: python-module-cups
@@ -108,6 +109,7 @@ serial backend for cups
 %setup
 %patch0 -p2
 %patch1 -p2
+%patch2 -p0
 
 %build
 # work-around Rpath
@@ -142,7 +144,7 @@ install -D -m 644 scripting/php/php-cups-params.sh %buildroot/%php5_extconf/%php
 install -D -m 755 %SOURCE2 %buildroot/%_initdir/cups-browsed
 mkdir -p %buildroot/%_unitdir/
 install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
-ln -s ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
+ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 
 %post -n php5-cups
 %php5_extension_postin
@@ -194,6 +196,9 @@ ln -s ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Tue Feb 24 2015 Anton Farygin <rider@altlinux.ru> 1.0.65-alt1
+- new version 1.0.65
+
 * Fri Jan 23 2015 Anton Farygin <rider@altlinux.ru> 1.0.62-alt2
 - rebuild with php-5.5.21
 

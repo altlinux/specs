@@ -3,7 +3,7 @@
 
 Name: xaira
 Version: 1.26
-Release: alt22
+Release: alt23
 
 Summary: XML Aware Indexing and Retrieval Application 
 License: GPLv2+
@@ -122,6 +122,9 @@ popd
 
 
 %changelog
+* Tue Feb 24 2015 Anton Farygin <rider@altlinux.ru> 1.26-alt23
+- rebuild with php-5.5.22
+
 * Fri Jan 23 2015 Anton Farygin <rider@altlinux.ru> 1.26-alt22
 - rebuild with php-5.5.21
 
