@@ -14,6 +14,7 @@
 %def_enable gnutls
 %def_enable libcurl
 %def_enable libidn
+%def_enable libiptc
 %def_enable bootchart
 %def_enable polkit
 %def_enable efi
@@ -26,6 +27,8 @@
 %def_with python
 %def_enable gtk_doc
 %def_enable xz
+%def_enable zlib
+%def_enable bzip2
 %def_enable lz4
 
 %def_disable smack
@@ -56,8 +59,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 217
-Release: alt3
+Version: 219
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -141,14 +144,18 @@ BuildRequires: libdbus-devel >= %dbus_ver
 BuildRequires: libaudit-devel
 BuildRequires: glib2-devel >= 2.26 libgio-devel
 BuildRequires: gobject-introspection-devel
-%{?_enable_xz:BuildRequires: liblzma-devel}
+%{?_enable_xz:BuildRequires: pkgconfig(liblzma)}
+%{?_enable_zlib:BuildRequires: pkgconfig(zlib)}
+%{?_enable_bzip2:BuildRequires: bzlib-devel}
 %{?_enable_lz4:BuildRequires: liblz4-devel}
 BuildRequires: libkmod-devel >= 15 kmod
 BuildRequires: kexec-tools
 %{?_with_python:BuildRequires: python-devel python-module-sphinx}
 BuildRequires: quota
 BuildRequires: gtk-doc
-BuildRequires: libblkid-devel >= 2.20
+BuildRequires: pkgconfig(blkid) >= 2.24
+BuildRequires: pkgconfig(mount) >= 2.20
+BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 1.6.0}
 BuildRequires: libgcrypt-devel
@@ -157,7 +164,8 @@ BuildRequires: libgcrypt-devel
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
 %{?_enable_libcurl:BuildRequires: pkgconfig(libcurl)}
 %{?_enable_libidn:BuildRequires: pkgconfig(libidn)}
-%{?_enable_terminal:BuildRequires: pkgconfig(libevdev) >= 1.2 pkgconfig(xkbcommon) >= 0.4  pkgconfig(libdrm) >= 2.4}
+%{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
+%{?_enable_terminal:BuildRequires: pkgconfig(libevdev) >= 1.2 pkgconfig(xkbcommon) >= 0.5  pkgconfig(libdrm) >= 2.4 /usr/share/unifont/unifont.hex}
 
 Requires: dbus >= %dbus_ver
 Requires: udev = %epoch:%version-%release
@@ -226,11 +234,13 @@ Provides: libsystemd-daemon-devel = %epoch:%version-%release
 Provides: libsystemd-journal-devel = %epoch:%version-%release
 Provides: libsystemd-login-devel = %epoch:%version-%release
 Provides: libsystemd-id128-devel = %epoch:%version-%release
+Provides: systemd-devel = %epoch:%version-%release
 
 Obsoletes: libsystemd-daemon-devel < %epoch:%version-%release
 Obsoletes: libsystemd-journal-devel < %epoch:%version-%release
 Obsoletes: libsystemd-login-devel < %epoch:%version-%release
 Obsoletes: libsystemd-id128-devel < %epoch:%version-%release
+Obsoletes: systemd-devel < %epoch:%version-%release
 
 %description -n libsystemd-devel
 The libsystemd library provides a reference implementation of various
@@ -304,15 +314,6 @@ Conflicts: %name < 1:216-alt1
 %description -n pam_%name
 pam_systemd registers user sessions with the systemd login manager
 systemd-logind.service, and hence the systemd control group hierarchy.
-
-%package devel
-Group: Development/C
-Summary: Development headers for systemd
-License: LGPLv2.1+ MIT
-BuildArch: noarch
-
-%description devel
-Development headers and library files for developing applications for systemd.
 
 %package sysvinit
 Group: System/Configuration/Boot and Init
@@ -679,6 +680,8 @@ export KILL="/bin/kill"
 export KMOD="/bin/kmod"
 export KEXEC="/sbin/kexec"
 export CHKCONFIG="/sbin/chkconfig"
+export SETCAP="/sbin/setcap"
+export SULOGIN="/sbin/sulogin"
 
 gtkdocize --docdir docs/
 intltoolize --force --automake
@@ -703,6 +706,8 @@ intltoolize --force --automake
 	--with-tty-gid=5 \
 	%{subst_enable elfutils} \
 	%{subst_enable xz} \
+	%{subst_enable zlib} \
+	%{subst_enable bzip2} \
 	%{subst_enable lz4} \
 	%{subst_enable libcryptsetup} \
 	%{subst_enable logind} \
@@ -717,6 +722,7 @@ intltoolize --force --automake
 	%{subst_enable gnutls} \
 	%{subst_enable libcurl} \
 	%{subst_enable libidn} \
+	%{subst_enable libiptc} \
 	%{subst_enable bootchart} \
 	%{subst_enable polkit} \
 	%{subst_enable efi} \
@@ -1256,6 +1262,7 @@ update_chrooted all
 %exclude %_unitdir/*networkd*
 %exclude %_unitdir/*resolv*
 %exclude %_unitdir/*/*resolv*
+%exclude %_unitdir/dbus-org.freedesktop.network1.service
 %endif
 %if_enabled timesyncd
 %exclude %_unitdir/*timesyncd*
@@ -1291,9 +1298,9 @@ update_chrooted all
 %_mandir/*/*journald*
 %_man5dir/localtime*
 %_man5dir/os-release*
-%_man5dir/systemd-sleep.conf*
-%_man5dir/systemd-system.conf*
-%_man5dir/systemd-user.conf*
+%_man5dir/*sleep.conf*
+%_man5dir/*system.conf*
+%_man5dir/*user.conf*
 %_man5dir/systemd.automount*
 %_man5dir/systemd.exec*
 %_man5dir/systemd.kill*
@@ -1319,8 +1326,9 @@ update_chrooted all
 %_man8dir/systemd-fstab-generator*
 %_man8dir/systemd-getty-generator*
 %_man8dir/systemd-gpt-auto-generator*
+%_man8dir/systemd-sysv-generator*
 %_man8dir/systemd-hibernate*
-%_man8dir/systemd*sleep*
+%_man8dir/*sleep*
 %_man8dir/systemd-initctl*
 %_man8dir/systemd-kexec*
 %_man8dir/systemd-quota*
@@ -1338,7 +1346,6 @@ update_chrooted all
 %_man8dir/systemd-shutdown*
 %_man8dir/systemd-poweroff*
 
-%exclude %_mandir/*/systemd-firstboot*
 %exclude %_mandir/*/*sysusers*
 %exclude %_datadir/factory
 %exclude /lib/tmpfiles.d/etc.conf
@@ -1358,10 +1365,12 @@ update_chrooted all
 /lib/udev/rules.d/73-seat-late.rules
 /lib/udev/rules.d/99-systemd.rules
 %_man7dir/*
+%exclude %_man7dir/hwdb*
 %exclude %_man7dir/udev*
 
 %dir %_datadir/systemd
 %_datadir/systemd/kbd-model-map
+%_datadir/systemd/language-fallback-map
 %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
 %_datadir/dbus-1/services/org.freedesktop.systemd1.service
 
@@ -1369,7 +1378,7 @@ update_chrooted all
 %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
 %endif
 
-%dir %_localstatedir/log/journal
+%dir %attr(2755,root,systemd-journal) %_localstatedir/log/journal
 %dir %_localstatedir/lib/systemd
 %dir %_localstatedir/lib/systemd/catalog
 %ghost %_localstatedir/lib/systemd/catalog/database
@@ -1395,13 +1404,17 @@ update_chrooted all
 %_pkgconfigdir/*.pc
 %exclude %_pkgconfigdir/*udev*.pc
 %_includedir/systemd
+%doc LICENSE.LGPL2.1 LICENSE.MIT
+%_man3dir/*
 
 %files -n libnss-myhostname
 /%_lib/libnss_myhostname.so.*
-%_man8dir/nss-myhostname.*
+%_man8dir/*myhostname.*
+
 
 %files -n libnss-mymachines
 /%_lib/libnss_mymachines.so.*
+%_man8dir/*mymachines.*
 
 %files -n libnss-resolve
 /%_lib/libnss_resolve.so.*
@@ -1410,11 +1423,6 @@ update_chrooted all
 %config %_sysconfdir/pam.d/systemd-user
 /%_lib/security/pam_systemd.so
 %_man8dir/pam_systemd*
-
-%files devel
-%doc LICENSE.LGPL2.1 LICENSE.MIT
-%_datadir/pkgconfig/systemd.pc
-%_man3dir/*
 
 %files sysvinit
 /sbin/init
@@ -1468,7 +1476,10 @@ update_chrooted all
 %_mandir/*/*backlight*
 %ghost %dir %_localstatedir/lib/systemd/backlight
 
+/lib/systemd/systemd-machine-id-commit
 /sbin/systemd-machine-id-setup
+%_man1dir/systemd-machine-id-*
+
 %ghost %config(noreplace) %_sysconfdir/machine-info
 %ghost %config(noreplace) %_sysconfdir/hostname
 %ghost %config(noreplace) %_sysconfdir/vconsole.conf
@@ -1479,9 +1490,12 @@ update_chrooted all
 %config(noreplace) %_sysconfdir/systemd/logind.conf
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.*.conf
 %exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.systemd1.conf
+%exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.resolve1.conf
+%exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.network1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.*.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.network1.service
 %if_enabled polkit
 %_datadir/polkit-1/actions/*.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
@@ -1504,7 +1518,9 @@ update_chrooted all
 %exclude %_man3dir/*
 %_mandir/*/*machine*
 %_mandir/*/*hostname*
-%exclude %_mandir/*/nss-myhostname*
+%exclude %_man8dir/*myhostname*
+%exclude %_man8dir/*mymachines*
+%exclude %_man1dir/systemd-machine-id-*
 %_mandir/*/*locale*
 %_mandir/*/*timedate*
 
@@ -1512,6 +1528,11 @@ update_chrooted all
 %files networkd
 /sbin/networkctl
 %config(noreplace) %_sysconfdir/systemd/resolved.conf
+%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.resolve1.conf
+%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.network1.conf
+%_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
+%_datadir/dbus-1/system-services/org.freedesktop.network1.service
+/lib/systemd/system/dbus-org.freedesktop.network1.service
 /lib/systemd/system-preset/85-networkd.preset
 /lib/systemd/systemd-networkd
 /lib/systemd/systemd-networkd-wait-online
@@ -1520,6 +1541,7 @@ update_chrooted all
 /lib/tmpfiles.d/systemd-network.conf
 %_unitdir/systemd-networkd.service
 %_unitdir/systemd-networkd-wait-online.service
+%_unitdir/dbus-org.freedesktop.network1.service
 %_unitdir/*resolv*
 %_unitdir/*/*resolv*
 /lib/systemd/network/*.network
@@ -1683,9 +1705,11 @@ update_chrooted all
 /lib/udev/scsi_id
 /sbin/udevadm
 /sbin/udevd
+/sbin/systemd-hwdb
 /lib/systemd/systemd-udevd
 %_rpmlibdir/udev.filetrigger
 %_mandir/*/*udev*
+%_mandir/*/*hwdb*
 %_mandir/*/*link*
 %_man5dir/systemd.device*
 
@@ -1732,6 +1756,10 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Feb 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1:219-alt1
+- 219
+- drop systemd-devel package
+
 * Wed Nov 19 2014 Alexey Shabalin <shaba@altlinux.ru> 1:217-alt3
 - sync with v217-stable branch
 
