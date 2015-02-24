@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.9.7
-Release: alt1.git20150218
+Version: 0.5.1.6
+Release: alt1.git20150224
 Summary: Opinionated wrapper around boto that reads yaml
 License: MIT
 Group: Development/Python
@@ -117,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1.6-alt1.git20150224
+- Version 0.5.1.6
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.9.7-alt1.git20150218
 - Version 0.4.9.7
 
