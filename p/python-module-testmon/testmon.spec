@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1.a5.git20150224
+Release: alt1.a6.git20150224
 Summary: Test Runner for Python
 License: MIT
 Group: Development/Python
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.a6.git20150224
+- Version 0.1.1a6
+
 * Tue Feb 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.a5.git20150224
 - Initial build for Sisyphus
 
