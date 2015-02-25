@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.8.1
+Version: 1.9.0
 Release: alt1
 Summary: virtualenv-based automation of test activities
 License: MIT
@@ -18,7 +18,7 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-virtualenv python-module-py
 BuildPreReq: python-module-pytest python-module-py
-BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-sphinx-devel python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -159,6 +159,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt1
+- Version 1.9.0
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt1
 - Version 1.8.1
 
