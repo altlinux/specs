@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt2.git20141101
+Release: alt3.git20141101
 
 Summary: Matlab(TM) style python plotting package
 
@@ -522,8 +522,9 @@ done
 %python_sitelibdir/matplotlib/backends/_tkagg*
 
 %files qt4
-%python_sitelibdir/matplotlib/backends/backend_qt4*
-%python_sitelibdir/matplotlib/backends/qt4_compat.*
+%python_sitelibdir/matplotlib/backends/backend_qt?*
+%python_sitelibdir/matplotlib/backends/qt?_compat.*
+%python_sitelibdir/matplotlib/backends/qt_compat.*
 %python_sitelibdir/matplotlib/backends/qt_editor
 
 %files examples
@@ -608,8 +609,9 @@ rm -fR %_docdir/%name/pdf
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_wx*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tk*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/tk*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt4*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/qt4_compat.*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt?*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/qt?_compat.*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/qt_compat.*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_macosx.*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/windowing.*
 %python3_sitelibdir/matplotlib/tri
@@ -644,10 +646,12 @@ rm -fR %_docdir/%name/pdf
 #python3_sitelibdir/matplotlib/backends/_tkagg*
 
 %files -n python3-module-%oname-qt4
-%python3_sitelibdir/matplotlib/backends/backend_qt4*
-%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt4*
-%python3_sitelibdir/matplotlib/backends/qt4_compat.*
-%python3_sitelibdir/matplotlib/backends/__pycache__/qt4_compat.*
+%python3_sitelibdir/matplotlib/backends/backend_qt?*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt?*
+%python3_sitelibdir/matplotlib/backends/qt?_compat.*
+%python3_sitelibdir/matplotlib/backends/qt_compat.*
+%python3_sitelibdir/matplotlib/backends/__pycache__/qt?_compat.*
+%python3_sitelibdir/matplotlib/backends/__pycache__/qt_compat.*
 %python3_sitelibdir/matplotlib/backends/qt_editor
 
 %files -n python3-module-%oname-tests
@@ -666,6 +670,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.git20141101
+- Added necessary files into qt4 subpackage
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.git20141101
 - Tuned requirements
 
