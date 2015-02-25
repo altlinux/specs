@@ -4,7 +4,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		%r_name-esr
-Version:	31.4.0
+Version:	31.5.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -457,5 +457,16 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Wed Feb 25 2015 Andrey Cherepanov <cas@altlinux.org> 31.5.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2015-24 Reading of local files through manipulation of form
+    autocomplete
+  + MFSA 2015-19 Out-of-bounds read and write while rendering SVG
+    content
+  + MFSA 2015-16 Use-after-free in IndexedDB
+  + MFSA 2015-12 Invoking Mozilla updater will load locally stored DLL
+    files
+
 * Sun Feb 08 2015 Andrey Cherepanov <cas@altlinux.org> 31.4.0-alt1
 - Package ESR version as thunderbird-esr
