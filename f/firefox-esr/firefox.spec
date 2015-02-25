@@ -9,7 +9,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        31.4.0
+Version:        31.5.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -284,6 +284,15 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Wed Feb 25 2015 Andrey Cherepanov <cas@altlinux.org> 31.5.0-alt1
+- New ESR version
+- Fixed:
+  + 2015-24 Reading of local files through manipulation of form
+    autocomplete
+  + 2015-19 Out-of-bounds read and write while rendering SVG content
+  + 2015-16 Use-after-free in IndexedDB
+  + 2015-12 Invoking Mozilla updater will load locally stored DLL files
+
 * Sun Feb 08 2015 Andrey Cherepanov <cas@altlinux.org> 31.4.0-alt1
 - Package ESR version as firefox-esr
 - Fixed:
