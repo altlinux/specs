@@ -1,7 +1,7 @@
 %define oname zodbbrowser
 Name: python-module-%oname
-Version: 0.12.0
-Release: alt1.dev0.git20150213
+Version: 0.12.1
+Release: alt1.dev0.git20150225
 Summary: ZODB browser
 License: ZPLv2.1
 Group: Development/Python
@@ -104,6 +104,9 @@ py.test -vv
 %python_sitelibdir/*/*test*
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.1-alt1.dev0.git20150225
+- Version 0.12.1.dev0
+
 * Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt1.dev0.git20150213
 - Initial build for Sisyphus
 
