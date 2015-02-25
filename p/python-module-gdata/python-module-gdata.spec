@@ -4,12 +4,12 @@
 
 Name:           python-module-%oname
 Version:        2.0.18
-Release:        alt1.hg20140113
+Release:        alt2.git20150214
 Summary:        A Python module for accessing online Google services
 Group:          Development/Python
 License:        Apache-2.0
 URL:            http://code.google.com/p/gdata-python-client/
-# hg clone https://code.google.com/p/gdata-python-client/
+# https://github.com/google/gdata-python-client.git
 Source0:	%name-%version-%release.tar
 Packager:	Mikhail A Pokidko <pma@altlinux.org>
 
@@ -109,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.18-alt2.git20150214
+- New snapshot
+
 * Thu Aug 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.18-alt1.hg20140113
 - Version 2.0.18
 
