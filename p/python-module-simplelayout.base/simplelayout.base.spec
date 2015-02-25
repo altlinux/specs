@@ -2,8 +2,8 @@
 %define oname %mname.base
 
 Name: python-module-%oname
-Version: 4.0.4
-Release: alt2.dev0.git20141107
+Version: 4.0.5
+Release: alt1.dev0.git20150223
 Summary: SimpleLayout is an easy to use plone package for creating content pages
 License: GPLv2+
 Group: Development/Python
@@ -131,6 +131,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.5-alt1.dev0.git20150223
+- Version 4.0.5.dev0
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt2.dev0.git20141107
 - Added necessary requirements
 
