@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.5
-Release: alt1.git20150211
+Version: 0.6.9
+Release: alt1.git20150225
 Summary: JSON API realisation
 License: MIT
 Group: Development/Python
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.9-alt1.git20150225
+- Version 0.6.9
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.5-alt1.git20150211
 - Version 0.6.5
 
