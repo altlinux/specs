@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.6.15
-Release: alt1.git20150212
+Version: 3.7.2
+Release: alt1.git20150224
 Summary: Twilio API client and TwiML generator
 License: MIT
 Group: Development/Python
@@ -19,6 +19,7 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-httplib2 python-module-six
 BuildPreReq: python-module-pysocks python-module-nose
 BuildPreReq: python-module-coverage python-module-mock
+BuildPreReq: python-module-pytz
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -26,10 +27,11 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-httplib2 python3-module-six
 BuildPreReq: python3-module-pysocks python3-module-nose
 BuildPreReq: python3-module-coverage python3-module-mock
+BuildPreReq: python3-module-pytz
 %endif
 
 %py_provides %oname
-%py_requires httplib2 six socks
+%py_requires httplib2 six socks pytz
 
 %description
 The Twilio REST SDK simplifies the process of making calls using the
@@ -41,7 +43,7 @@ calls, and much more.
 Summary: Twilio API client and TwiML generator
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires httplib2 six socks
+%py3_requires httplib2 six socks pytz
 
 %description -n python3-module-%oname
 The Twilio REST SDK simplifies the process of making calls using the
@@ -122,6 +124,7 @@ popd
 %doc *.md
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
+%exclude %python_sitelibdir/tests
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -133,9 +136,13 @@ popd
 %files -n python3-module-%oname
 %doc *.md
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/tests
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.2-alt1.git20150224
+- Version 3.7.2
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.15-alt1.git20150212
 - Initial build for Sisyphus
 
