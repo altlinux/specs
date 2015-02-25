@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.8
-Release: alt2
+Version: 5.2.1
+Release: alt1
 
 Summary: Store and access your passwords safely
 License: PSF
@@ -16,12 +16,22 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-fs python-module-pycrypto
+BuildPreReq: python-module-mock python-module-nose
+BuildPreReq: python-module-keyczar python-module-gdata
+BuildPreReq: python-modules-logging python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-fs python3-module-pycrypto
+BuildPreReq: python3-module-mock python3-module-nose
+BuildPreReq: python3-module-keyczar
 %endif
 
 %setup_python_module %oname
+
+%py_requires fs Crypto logging json keyczar gdata
 
 %description
 Store and access your passwords safely.
@@ -29,6 +39,7 @@ Store and access your passwords safely.
 %package -n python3-module-%oname
 Summary: Store and access your passwords safely
 Group: Development/Python3
+%py3_requires fs Crypto logging json keyczar
 
 %description -n python3-module-%oname
 Store and access your passwords safely.
@@ -70,16 +81,35 @@ popd
 %endif
 
 %install
-%python_install
-
 %if_with python3
 pushd ../python3
 %python3_install
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
+%python_install
+
+%check
+python setup.py test
+py.test -vv
+%if_with python3
+pushd ../python3
+python3 setup.py test
+py.test-%_python3_version -vv
 popd
 %endif
 
 %files
 %doc *.rst *.txt
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -89,6 +119,7 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst *.txt
+%_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -97,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2.1-alt1
+- Version 5.2.1
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8-alt2
 - Added module for Python 3
 
