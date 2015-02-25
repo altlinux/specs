@@ -2,13 +2,13 @@
 
 %define ver1 0
 %define ver2 2
-%define ver3 5
+%define ver3 11
 
 %def_with python3
 
 Name: python-module-%oname
 Version: %ver1.%ver2.%ver3
-Release: alt1.git20141124
+Release: alt1.git20150224
 Summary: Methods and tools that assist logging
 License: GPLv3+
 Group: Development/Python
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.11-alt1.git20150224
+- Version 0.2.11
+
 * Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.git20141124
 - Initial build for Sisyphus
 
