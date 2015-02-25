@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3
-Release: alt1.git20141108
+Version: 0.3.2
+Release: alt1.dev.git20150224
 Summary: Form handling for Pyramid
 License: MIT
 Group: Development/Python
@@ -19,7 +19,7 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-pyramid-tests python-module-FormEncode
 BuildPreReq: python-module-webhelpers2 python-module-six
 BuildPreReq: python-module-coverage python-module-nose
-BuildPreReq: python-module-nose-cover3
+BuildPreReq: python-module-nose-cover3 python-module-FormEncode
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -27,7 +27,7 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-pyramid-tests python3-module-FormEncode
 BuildPreReq: python3-module-webhelpers2 python3-module-six
 BuildPreReq: python3-module-coverage python3-module-nose
-BuildPreReq: python3-module-nose-cover3
+BuildPreReq: python3-module-nose-cover3 python3-module-FormEncode
 %endif
 
 %py_provides %oname
@@ -175,6 +175,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.dev.git20150224
+- Version 0.3.2.dev
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20141108
 - Initial build for Sisyphus
 
