@@ -1,6 +1,6 @@
 Name: monotone
 Version: 1.2
-Release: alt1.dev.mtn20140605
+Release: alt2.dev.mtn20140605
 
 Summary: Distributed version control system
 License: GPL
@@ -45,12 +45,15 @@ functions to client-side RSA certificates.
 %_bindir/*
 %_infodir/*
 %_man1dir/*
-%_sysconfdir/bash_completion.d/*
+#_sysconfdir/bash_completion.d/*
 %_datadir/%name
 %doc %_docdir/%name
 %doc AUTHORS NEWS README UPGRADE HACKING INSTALL ChangeLog notes/*
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.dev.mtn20140605
+- Deleted bash completion file (ALT #30775)
+
 * Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.dev.mtn20140605
 - Version 1.2dev
 
