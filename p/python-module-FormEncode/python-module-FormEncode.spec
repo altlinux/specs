@@ -9,7 +9,7 @@
 
 Name: python-module-%modulename
 Version: 1.3.0
-Release: alt1.git20130312
+Release: alt1.git20150207
 Epoch: 1
 
 %setup_python_module %modulename
@@ -83,10 +83,6 @@ for filling and generating forms.
 %if_with python3
 rm -rf ../%py3dir
 cp -a . ../%py3dir
-pushd ../%py3dir
-2to3 -w formencode/i18n/msgfmt.py
-sed -ri '1s@^(#![[:space:]]*(.*/)?)python([[:space:]]*.*)?$@\1python3\3@' formencode/i18n/msgfmt.py
-popd
 %endif
 
 %prepare_sphinx .
@@ -134,6 +130,9 @@ popd
 %python_sitelibdir/*/pickle
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.0-alt1.git20150207
+- 1.3.0 released
+
 * Thu Mar 21 2013 Aleksey Avdeev <solo@altlinux.ru> 1:1.3.0-alt1.git20130312
 - New snapshot
 - Added module for Python 3
