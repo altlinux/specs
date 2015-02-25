@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.81.03
+Version: 0.81.04
 Release: alt1
 Summary: oo view of file paths and names, subclassed from bytes/str/unicode
 License: BSD
@@ -88,7 +88,7 @@ popd
 %endif
 
 %files
-%doc PKG-INFO
+%doc CHANGES README
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test.*
 
@@ -97,7 +97,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc PKG-INFO
+%doc CHANGES README
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test.*
 %exclude %python3_sitelibdir/*/*/test.*
@@ -108,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.81.04-alt1
+- Version 0.81.04
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.81.03-alt1
 - Initial build for Sisyphus
 
