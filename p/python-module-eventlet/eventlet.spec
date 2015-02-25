@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.16.1
-Release: alt1.git20150114
+Version: 0.17.1
+Release: alt1.git20150225
 Summary: Highly concurrent networking library
 License: MIT
 Group: Development/Python
@@ -18,14 +18,18 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-greenlet python-module-nose
-BuildPreReq: python-module-OpenSSL
+BuildPreReq: python-module-OpenSSL python-module-six
+BuildPreReq: python-module-mysqlclient
+BuildPreReq: python-modules-json
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-greenlet python3-module-nose
-BuildPreReq: python3-module-OpenSSL
+BuildPreReq: python3-module-OpenSSL python3-module-six
+BuildPreReq: python3-module-mysqlclient
 %endif
+%py_requires greenlet six json OpenSSL MySQLdb
 %add_python_req_skip stackless
 
 %description
@@ -42,6 +46,7 @@ larger application.
 %package -n python3-module-%oname
 Summary: Highly concurrent networking library
 Group: Development/Python3
+%py3_requires greenlet six json OpenSSL MySQLdb
 %add_python3_req_skip stackless
 
 %description -n python3-module-%oname
@@ -153,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17.1-alt1.git20150225
+- Version 0.17.1
+
 * Wed Jan 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16.1-alt1.git20150114
 - Version 0.16.1
 
