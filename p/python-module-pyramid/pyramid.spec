@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.6
-Release: alt4.dev0.git20150219
+Release: alt4.dev0.git20150224
 Summary: Small, fast, down-to-earth Python web application development framework
 License: Repoze Public License
 Group: Development/Python
@@ -203,6 +203,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt4.dev0.git20150224
+- New snapshot
+
 * Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt4.dev0.git20150219
 - Version 1.6.dev0
 
