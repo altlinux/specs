@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.8
+Version: 0.3.10
 Release: alt1
 Summary: This is a python class to create gantt chart using SVG
 License: GPLv3+
@@ -123,9 +123,11 @@ popd
 %endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test*
+%exclude %python_sitelibdir/*/example.org
 
 %files tests
 %python_sitelibdir/*/test*
+%python_sitelibdir/*/example.org
 
 %if_with python3
 %files -n python3-module-%oname
@@ -134,13 +136,18 @@ popd
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/example.org
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/test*
 %python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/example.org
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.10-alt1
+- Version 0.3.10
+
 * Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.8-alt1
 - Version 0.3.8
 
