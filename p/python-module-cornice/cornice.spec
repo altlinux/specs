@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.18
-Release: alt1.git20141013
+Version: 0.19
+Release: alt1.dev0.git20150224
 Summary: Define Web Services in Pyramid
 License: MPLv2.0
 Group: Development/Python
@@ -20,8 +20,10 @@ BuildPreReq: python-module-mozilla-sphinx-theme python-module-demoapp
 BuildPreReq: python-module-pyramid-tests python-module-simplejson
 BuildPreReq: python-module-colander python-module-coverage
 BuildPreReq: python-module-mock python-module-webtest
-BuildPreReq: python-module-rxjson
-BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-rxjson python-module-nose
+BuildPreReq: python-module-zope.interface
+BuildPreReq: python-module-sphinx-devel python-modules-json
+BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -32,9 +34,12 @@ BuildPreReq: python3-module-rxjson python3-module-PasteDeploy
 BuildPreReq: python3-module-zope.deprecation python3-module-repoze.lru
 BuildPreReq: python3-module-sphinx python3-module-babel
 BuildPreReq: python3-module-snowballstemmer python3-module-docutils
+BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-zope.interface
 %endif
 
 %py_provides %oname
+%py_requires json colander logging
 
 %description
 Cornice provides helpers to build & document Web Services with Pyramid.
@@ -53,6 +58,7 @@ This package contains tests for %oname.
 Summary: Define Web Services in Pyramid
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires json colander logging
 
 %description -n python3-module-%oname
 Cornice provides helpers to build & document Web Services with Pyramid.
@@ -154,6 +160,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.19-alt1.dev0.git20150224
+- Version 0.19.dev0
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt1.git20141013
 - Initial build for Sisyphus
 
