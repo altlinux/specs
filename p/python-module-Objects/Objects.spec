@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.git20150123
+Version: 0.4.2
+Release: alt1.git20150225
 Summary: Python catalogs of objects providers
 License: BSD
 Group: Development/Python
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20150225
+- Version 0.4.2
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20150123
 - Initial build for Sisyphus
 
