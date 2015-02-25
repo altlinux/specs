@@ -3,10 +3,10 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.3
-Release: alt2
+Version: 0.9.4
+Release: alt1
 Summary: Distributing activities of the tox tool
-License: AGPLv3
+License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/detox/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -101,8 +101,11 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4-alt1
+- Version 0.9.4
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt2
-- Enabled tesing for Python 3 module
+- Enabled testing for Python 3 module
 
 * Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1
 - Initial build for Sisyphus
