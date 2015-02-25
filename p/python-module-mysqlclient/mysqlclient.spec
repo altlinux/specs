@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.3.4
-Release: alt1.git20150105
+Version: 1.3.6
+Release: alt1.git20150225
 Summary: Python interface to MySQL
 License: GPL
 Group: Development/Python
@@ -126,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.6-alt1.git20150225
+- Version 1.3.6
+
 * Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt1.git20150105
 - New snapshot
 
