@@ -1,13 +1,13 @@
 Name:    admesh
 Summary: Diagnose and/or repair problems with STereo Lithography files
-Version: 0.97.3
+Version: 0.98.1
 Release: alt1
 
 Group:   Engineering
 License: GPLv2+
 URL:     https://github.com/admesh/admesh/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
+# https://github.com/admesh/admesh.git
 Source: %name-%version.tar.gz
 
 Requires: lib%name = %version-%release
@@ -68,6 +68,9 @@ rm -rf %buildroot%_datadir/doc
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.98.1-alt1
+- Version 0.98.1
+
 * Wed Feb 19 2014 Andrey Cherepanov <cas@altlinux.org> 0.97.3-alt1
 - New version from upstream Git
 - Add libadmesh and devel packages
