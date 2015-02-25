@@ -2,8 +2,8 @@
 %global qt_module qtx11extras
 
 Name: qt5-x11extras
-Version: 5.4.0
-Release: alt2
+Version: 5.4.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - X11 support library
@@ -97,6 +97,9 @@ syncqt.pl-qt5 \
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Feb 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
+- new version
+
 * Tue Feb 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt2
 - fix requires
 
