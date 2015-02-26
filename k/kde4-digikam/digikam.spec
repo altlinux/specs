@@ -5,7 +5,7 @@
 %define label digiKam
 Name: kde4-%rname
 %define lname lib%name
-Version: 4.7.0
+Version: 4.8.0
 Release: alt1
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -228,6 +228,9 @@ rm -f %buildroot/%_K4i18n/*/*/libkgeomap*
 %_K4link/*.so
 
 %changelog
+* Thu Feb 26 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt1
+- new version
+
 * Tue Feb 10 2015 Sergey V Turchin <zerg@altlinux.org> 4.7.0-alt1
 - new version
 
