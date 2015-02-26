@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.23
+Version: 0.24
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -37,6 +37,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Thu Feb 26 2015 Michael Shigorin <mike@altlinux.org> 0.24-alt1
+- call udevadm trigger (see also #30315)
+
 * Thu Jan 23 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.23-alt1
 - partition size calculation fixed again
 
