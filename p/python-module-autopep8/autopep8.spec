@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.1.1
-Release: alt1.a0.git20150215
+Version: 1.1.2
+Release: alt1.a0.git20150226
 Summary: Automatically formats Python code to conform to the PEP 8 style guide
 License: MIT
 Group: Development/Python
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.a0.git20150226
+- Version 1.1.2a0
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.a0.git20150215
 - Version 1.1.1a0
 
