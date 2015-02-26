@@ -1,6 +1,6 @@
 Name: installer-distro-server-light
-Version: 6.0
-Release: alt3
+Version: 8.0
+Release: alt1
 
 Summary: Installer files for server
 License: GPL
@@ -65,6 +65,10 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Thu Feb 26 2015 Anton Farygin <rider@altlinux.ru> 8.0-alt1
+- removed a lot of unused packages, like libX11 and etc 
+- off installer stage with a choise of license
+
 * Fri Apr 01 2011 Anton Farygin <rider@altlinux.ru> 6.0-alt3
 - add guile18 to cleanup list
 - updated services list for current packages base
