@@ -1,5 +1,5 @@
 Name: livecd-evms
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: Tune EVMS config to run from LiveCD
@@ -37,6 +37,9 @@ install -pDm644 %SOURCE1 %buildroot%_unitdir/livecd-evms.service
 %_unitdir/%name.service
 
 %changelog
+* Thu Feb 26 2015 Michael Shigorin <mike@altlinux.org> 0.2.3-alt1
+- ignore MMC RPMB
+
 * Wed Jul 02 2014 Michael Shigorin <mike@altlinux.org> 0.2.2-alt1
 - updated systemd unit file (thx shaba@)
 
