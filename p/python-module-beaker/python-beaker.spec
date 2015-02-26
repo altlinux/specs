@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6.4
-Release: alt1.1
+Version: 1.7.0
+Release: alt1.dev
 Summary: WSGI middleware layer to provide sessions
 
 Group:  Development/Python
@@ -19,6 +19,7 @@ BuildRequires: python3-devel python3-module-distribute
 
 BuildArch: noarch
 
+%py_requires Crypto pycryptopp sqlalchemy
 %add_python_req_skip jarray javax
 
 %description
@@ -30,6 +31,7 @@ manage Session objects and signed cookies.
 %package -n python3-module-%oname
 Summary: WSGI middleware layer to provide sessions (Python 3)
 Group: Development/Python3
+%py3_requires Crypto sqlalchemy
 %add_python3_req_skip jarray javax builtins nss
 
 %description -n python3-module-%oname
@@ -66,19 +68,22 @@ popd
 %endif
 
 %files
-%doc LICENSE CHANGELOG
+%doc *.rst
 %python_sitelibdir/beaker/
 %python_sitelibdir/Beaker*
 
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE CHANGELOG
+%doc *.rst
 %python3_sitelibdir/beaker/
 %python3_sitelibdir/Beaker*
 %endif
 
 %changelog
+* Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.dev
+- Version 1.7.0dev
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.6.4-alt1.1
 - Rebuild with Python-3.3
 
