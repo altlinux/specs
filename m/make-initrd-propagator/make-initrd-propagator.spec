@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.24
+Version: 0.25
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -37,6 +37,11 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 0.25-alt1
+- init-bottom:
+  + ensure compatibility with newer fdisk
+  + make the output more concise
+
 * Thu Feb 26 2015 Michael Shigorin <mike@altlinux.org> 0.24-alt1
 - call udevadm trigger (see also #30315)
 

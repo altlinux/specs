@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20141217
+Version: 20150227
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,11 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 20150227-alt1
+- cdrom.c: minor fixup for "1, 2, 1 seconds" visual effect
+- disk.c: slightly better "help me find my media" message
+- probing.c: ensure sd_mod along with usb_storage
+
 * Wed Dec 17 2014 Michael Shigorin <mike@altlinux.org> 20141217-alt1
 - ldv@'s workaround for media detection race condition (closes: #30315)
 
