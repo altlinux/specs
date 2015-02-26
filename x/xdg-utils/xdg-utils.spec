@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.0
-Release: alt10
+Release: alt11
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 License: MIT
@@ -88,6 +88,9 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Thu Feb 26 2015 Michael Shigorin <mike@altlinux.org> 1.1.0-alt11
+- xdg-su: added MATE support (closes: #30458)
+
 * Sat May 24 2014 Michael Shigorin <mike@altlinux.org> 1.1.0-alt10
 - xdg-open: fix totally broken IFS use (closes: #28728)
   + thanks Maxim Suhanov for analysis
