@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.1
-Release: alt1.git20150210
+Version: 0.3.5
+Release: alt1.git20150225
 Summary: Install and access data files (conf, json, sqlite3, ...) in an easy way
 License: MIT
 Group: Development/Python
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt1.git20150225
+- Version 0.3.5
+
 * Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20150210
 - Version 0.2.1
 
