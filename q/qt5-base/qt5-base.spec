@@ -1,6 +1,6 @@
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -20,10 +20,10 @@
 %define libname  lib%gname
 %define major  5
 %define minor  4
-%define bugfix 0
+%define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -34,8 +34,6 @@ Source: %rname-opensource-src-%version.tar
 Source1: rpm-macros-addon
 # FC
 Patch1: qt-everywhere-opensource-src-5.3.2-QTBUG-35459.patch
-Patch2: 0009-Do-not-apply-subpixel-gamma-correction-on-XCB.patch
-Patch3: 0173-qimage_conversions.cpp-Fix-build-on-big-endian-syste.patch
 # upstream
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
@@ -294,8 +292,6 @@ Widgets library for the Qt%major toolkit
 %prep
 %setup -n %rname-opensource-src-%version
 %patch1 -p1 -b .QTBUG-35459
-%patch2 -p1
-%patch3 -p1
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
@@ -711,6 +707,9 @@ done
 
 
 %changelog
+* Tue Feb 24 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
+- new version
+
 * Tue Dec 23 2014 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt3
 - fix build requires
 
