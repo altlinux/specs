@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.85.0.3
-Release: alt1.git20150130
+Version: 0.93.0
+Release: alt1.git20150225
 Summary: AsyncHTTPClient based subclass of botocore
 License: MIT
 Group: Development/Python
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.93.0-alt1.git20150225
+- Version 0.93.0
+
 * Tue Feb 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.85.0.3-alt1.git20150130
 - Initial build for Sisyphus
 
