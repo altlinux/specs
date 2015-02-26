@@ -1,6 +1,6 @@
-%define branch 1.7
+%define branch 1.8
 %define version %branch
-%define release alt1
+%define release alt1.b1
 %define origname Django
 %define oname django
 %define py3_name python3-module-%oname
@@ -32,6 +32,7 @@ Conflicts: python-module-django1.0 python-module-django1.1
 Conflicts: python-module-django1.2
 
 BuildPreReq: %py_dependencies setuptools
+BuildPreReq: python-module-memcached python-module-mock
 
 # Automatically added by buildreq on Tue Jul 29 2008 (-ba)
 BuildRequires: python-module-setuptools python-modules-email
@@ -42,6 +43,7 @@ BuildRequires: python-modules-ctypes
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-distribute
+BuildPreReq: python3-module-memcached python3-module-mock
 BuildPreReq: python-tools-2to3
 
 %add_python3_req_skip hotshot StringIO
@@ -267,13 +269,20 @@ export LC_ALL=en_US.UTF-8
 pushd ../python3
 %python3_install
 mv %buildroot%_bindir/django-admin.py %buildroot%_bindir/django-admin.py3
+for i in $(find %buildroot%python3_sitelibdir -name '*test*'); do
+	echo $i |sed 's|%buildroot\(.*\)|%%exclude \1\*|' >>%oname.notests
+	echo $i |sed 's|%buildroot\(.*\)|\1\*|' >>%oname.tests
+done
 popd
 %endif
 
 mkdir -p %buildroot/%_sysconfdir/bash_completion.d
 
-%python_install --record=INSTALLED_FILES
-#sed -i -e '/\/test/d' INSTALLED_FILES
+%python_install
+for i in $(find %buildroot%python_sitelibdir -name '*test*'); do
+	echo $i |sed 's|%buildroot\(.*\)|%%exclude \1\*|' >>%oname.notests
+	echo $i |sed 's|%buildroot\(.*\)|\1\*|' >>%oname.tests
+done
 
 install -m 0755 extras/django_bash_completion %buildroot/%_sysconfdir/bash_completion.d/django.sh
 
@@ -292,8 +301,7 @@ popd
 %endif
 
 
-#files -f INSTALLED_FILES
-%files
+%files -f %oname.notests
 #%%exclude %python_sitelibdir/%modulename/core/handlers/modpython.py*
 #%%exclude %python_sitelibdir/%modulename/contrib/auth/handlers/modpython.py*
 
@@ -304,23 +312,20 @@ popd
 %exclude %python_sitelibdir/%modulename/db/backends/mysql/
 #exclude %python_sitelibdir/%modulename/db/backends/postgresql/
 %exclude %python_sitelibdir/%modulename/db/backends/postgresql_psycopg2/
-%exclude %python_sitelibdir/%modulename/db/backends/sqlite3/
 
-%exclude %python_sitelibdir/%modulename/test
-%exclude %python_sitelibdir/%modulename/*/*/test*.py*
-%exclude %python_sitelibdir/%modulename/*/*/tests
-%exclude %python_sitelibdir/%modulename/*/*/*/tests
+%exclude %python_sitelibdir/%modulename/__pycache__
+%exclude %python_sitelibdir/%modulename/*/__pycache__
+%exclude %python_sitelibdir/%modulename/*/*/__pycache__
+%exclude %python_sitelibdir/%modulename/*/*/*/__pycache__
+%exclude %python_sitelibdir/%modulename/*/*/*/*/__pycache__
+%exclude %python_sitelibdir/%modulename/*/*/*/*/*/__pycache__
 
 %config %_sysconfdir/bash_completion.d/django.sh
 
-%files tests
-%python_sitelibdir/%modulename/test
-%python_sitelibdir/%modulename/*/*/test*.py*
-%python_sitelibdir/%modulename/*/*/tests
-%python_sitelibdir/%modulename/*/*/*/tests
+%files tests -f %oname.tests
 
 %if_with python3
-%files -n %py3_name
+%files -n %py3_name -f ../python3/%oname.notests
 %_bindir/django-admin.py3
 %python3_sitelibdir/*
 #exclude %python3_sitelibdir/%oname/core/handlers/modpython.py*
@@ -331,16 +336,12 @@ popd
 %exclude %python3_sitelibdir/%oname/db/backends/postgresql_psycopg2/
 %exclude %python3_sitelibdir/%oname/db/backends/sqlite3/
 
-%exclude %python3_sitelibdir/%oname/test
-%exclude %python3_sitelibdir/%oname/*/*/test*.py*
-%exclude %python3_sitelibdir/%oname/*/*/tests
-%exclude %python3_sitelibdir/%oname/*/*/*/tests
+%exclude %python3_sitelibdir/%oname/*/*/*/test*
+%exclude %python3_sitelibdir/%oname/*/*/*/*/test*
 
-%files -n %py3_name-tests
-%python3_sitelibdir/%oname/test
-%python3_sitelibdir/%oname/*/*/test*.py*
-%python3_sitelibdir/%oname/*/*/tests
-%python3_sitelibdir/%oname/*/*/*/tests
+%files -n %py3_name-tests -f ../python3/%oname.tests
+%python3_sitelibdir/%oname/*/*/*/test*
+%python3_sitelibdir/%oname/*/*/*/*/test*
 %endif
 
 %files doc
@@ -381,6 +382,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt1.b1
+- Version 1.8b1
+
 * Wed Oct 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1
 - Version 1.7
 
