@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.2
-Release: alt1.dev.git20150224
+Version: 0.3.3
+Release: alt1.dev.git20150225
 Summary: Form handling for Pyramid
 License: MIT
 Group: Development/Python
@@ -175,6 +175,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1.dev.git20150225
+- Version 0.3.3.dev
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.dev.git20150224
 - Version 0.3.2.dev
 
