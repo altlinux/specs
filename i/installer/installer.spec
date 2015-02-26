@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.26
+Version: 1.8.27
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,11 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Feb 26 2015 Michael Shigorin <mike@altlinux.org> 1.8.27-alt1
+- ignore MMC RPMB
+- silence efivars
+- 45-setup-dhcp.sh: check whether ifacedir is there
+
 * Thu Sep 11 2014 Michael Shigorin <mike@altlinux.org> 1.8.26-alt1
 - 20-systemd.sh: update systemd check
   a la sd_booted from service-0.5.26-alt1
