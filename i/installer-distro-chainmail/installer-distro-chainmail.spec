@@ -1,6 +1,6 @@
 Name: installer-distro-chainmail
 Version: 3.0.0
-Release: alt3
+Release: alt4
 
 Summary: Installer files for IVK chainmail
 License: GPL
@@ -75,6 +75,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/ivk-scripts/
 
 %changelog
+* Fri Feb 27 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt4
+- Enable nslcd service.
+
 * Mon Feb 16 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt3
 - Disable ulogd service by default.
 
