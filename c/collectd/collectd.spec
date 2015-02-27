@@ -29,8 +29,8 @@
 %def_disable static
 
 Name: collectd
-Version: 5.4.1
-Release: alt3
+Version: 5.4.2
+Release: alt1
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -813,6 +813,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Thu Feb 26 2015 Anton Farygin <rider@altlinux.ru> 5.4.2-alt1
+- new version (closes: #30668, #30344)
+
 * Mon Jan 26 2015 Anton Farygin <rider@altlinux.ru> 5.4.1-alt3
 - add unit file for systemd (closes: #28038)
 
