@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build	1
 
 %define module_name	dahdi
-%define module_version	2.10.0.1
+%define module_version	2.10.1
 %define module_release alt1
 
 %define flavour	std-pae
@@ -145,6 +145,9 @@ popd
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Feb 27 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.10.1-alt1
+- new version
 
 * Thu Oct 23 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.10.0.1-alt1
 - new version
