@@ -4,7 +4,7 @@
 Summary: AES encryption for SQLite databases
 Name: sqlcipher
 Version: 3.2.0
-Release: alt1
+Release: alt2
 License: BSD
 Group: Databases
 Url: http://sqlcipher.net/
@@ -62,6 +62,15 @@ This package contains the header files and development documentation
 for %name. If you like to develop programs using %name, you will need
 to install lib%name-devel.
 
+%package tcl
+Summary: Tcl module for the sqlite3 embeddable SQL database engine
+Group: Development/Tcl
+Requires: %name = %EVR
+Conflicts: sqlite3-tcl
+
+%description tcl
+This package contains the tcl modules for %name.
+
 %prep
 %setup
 
@@ -78,6 +87,7 @@ to install lib%name-devel.
 	--enable-load-extension \
 	--enable-cross-thread-connections \
 	--enable-tempstore=yes \
+	TCLLIBDIR=%_tcllibdir
 
 # rpath removal
 subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -88,13 +98,15 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %install
 %makeinstall_std
 
+install -d %buildroot%_tcllibdir/sqlite3
+mv %buildroot%_tcllibdir/pkgIndex.tcl \
+	%buildroot%_tcllibdir/sqlite3/
+
 install -D -m0644 sqlcipher.1 %buildroot%_man1dir/sqlcipher.1
 
 %if ! %{with static}
 rm -f %buildroot%_libdir/*.{la,a}
 %endif
-
-rm -fR %buildroot%_tcldatadir
 
 %check
 make testfixture
@@ -117,7 +129,13 @@ make testfixture
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%files tcl
+%_tcllibdir/*
+
 %changelog
+* Fri Feb 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt2
+- Added tcl subpackage
+
 * Fri Feb 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1
 - Version 3.2.0
 
