@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt128
+Release: alt129
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -570,6 +570,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Tue Feb 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt129
+- Updated to 042stab104.1.
+
 * Thu Jan 29 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt128
 - Updated to 042stab103.6.
 
