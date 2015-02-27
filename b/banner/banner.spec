@@ -1,6 +1,6 @@
 Name: banner
 Release: alt1
-Version: 1.3.3
+Version: 1.3.4
 
 Summary: Prints a short string to the console in very large letters
 License: GPLv2
@@ -32,6 +32,9 @@ letters.
 %_bindir/%name
 
 %changelog
+* Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 1.3.4-alt1
+- new version (watch file uupdate)
+
 * Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1.3.3-alt1
 - new version (watch file uupdate)
 - added manpage and watch file

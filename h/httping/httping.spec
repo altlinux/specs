@@ -1,5 +1,5 @@
 Name: httping
-Version: 2.3.4
+Version: 2.4
 Release: alt1
 
 Summary: Ping alike tool for http requests
@@ -8,6 +8,7 @@ Group: Monitoring
 
 Url: http://www.vanheusden.com/httping/
 Source: %url/httping-%version.tgz
+Source100: %name.watch
 
 # Automatically added by buildreq on Fri Feb 20 2009
 BuildRequires: libssl-devel
@@ -35,6 +36,12 @@ install -d %buildroot{%_bindir/,%_man1dir/}
 %_man1dir/*
 
 %changelog
+* Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 2.4-alt1
+- new version (watch file uupdate)
+
+* Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 2.3.4-alt2
+- added watch file
+
 * Tue Feb 04 2014 Michael Shigorin <mike@altlinux.org> 2.3.4-alt1
 - 2.3.4
 
