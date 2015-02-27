@@ -1,26 +1,26 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: sox
 Summary: A general purpose sound file conversion tool
-Version: 14.4.1
-Release: alt2
+Version: 14.4.2
+Release: alt1
 License: LGPL
 Group: Sound
-BuildRequires: glibc-devel-static libalsa-devel libao-devel libavformat-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libpng-devel libpulseaudio-devel libsndfile-devel libvorbis-devel libwavpack-devel
-BuildRequires: ladspa_sdk libalsa-devel libao-devel libavformat-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl-devel libmad-devel libmagic-devel libpng-devel libpulseaudio-devel libsndfile-devel libvorbis-devel libwavpack-devel
-BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel
-%def_without ffmpeg
+BuildRequires: glibc-devel-static libalsa-devel libao-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libopusfile-devel libpng-devel libpulseaudio-devel libsndfile-devel libvorbis-devel libwavpack-devel
+%set_automake_version 1.14
 Packager: Denis Smirnov <mithraen@altlinux.org>
 Url: http://%name.sourceforge.net/
 Source: %name-%version.tar
 Source1: soxeffect
+Patch: %name.dyn.patch
 Requires: sox-play = %version-%release
 Requires: sox-base = %version-%release
 Requires: libsox-fmt-alsa = %version-%release
 Requires: libsox-fmt-ao = %version-%release
 Requires: libsox-fmt-caf = %version-%release
 Requires: libsox-fmt-fap = %version-%release
-%if_with ffmpeg
-Requires: libsox-fmt-ffmpeg = %version-%release
-%endif
 Requires: libsox-fmt-flac = %version-%release
 Requires: libsox-fmt-gsm = %version-%release
 Requires: libsox-fmt-lpc10 = %version-%release
@@ -28,6 +28,7 @@ Requires: libsox-fmt-mat4 = %version-%release
 Requires: libsox-fmt-mat5 = %version-%release
 Requires: libsox-fmt-mp3 = %version-%release
 Requires: libsox-fmt-oss = %version-%release
+Requires: libsox-fmt-opus = %version-%release
 Requires: libsox-fmt-paf = %version-%release
 Requires: libsox-fmt-pulseaudio = %version-%release
 Requires: libsox-fmt-pvf = %version-%release
@@ -40,22 +41,12 @@ Requires: libsox-fmt-xi = %version-%release
 Requires: libsox-fmt-caf = %version-%release
 Requires: libsox-fmt-fap = %version-%release
 
-%package -n libsox
-Summary: The SoX sound file format converter libraries
-Group: Development/C
-Provides: libsox-fmt-sndfile = %version-%release
-
-%description -n libsox
-This package contains libraries for SoX
-
-
 %package -n libsox-devel
 Summary: The SoX sound file format converter headers files and libraries
 Group: Sound
 Requires: %name = %version-%release
 Obsoletes: sox-devel < %version-%release
 Provides:  sox-devel = %version-%release
-Requires: libsox = %version-%release
 
 %description -n libsox-devel
 This package contains the headers and library needed for compiling
@@ -77,7 +68,6 @@ Install %name-devel if you want to develop applications which will use SoX.
 %package -n libsox-fmt-alsa
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-alsa
 %summary
@@ -85,7 +75,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-ao
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-ao
 %summary
@@ -93,7 +82,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-caf
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-caf
 %summary
@@ -101,25 +89,13 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-fap
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-fap
 %summary
 
-%if_with ffmpeg
-%package -n libsox-fmt-ffmpeg
-Summary: %summary
-Group: Sound
-Requires: libsox = %version-%release
-
-%description -n libsox-fmt-ffmpeg
-%summary
-%endif
-
 %package -n libsox-fmt-flac
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-flac
 %summary
@@ -127,7 +103,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-gsm
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-gsm
 %summary
@@ -135,7 +110,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-lpc10
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-lpc10
 %summary
@@ -143,7 +117,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-mat4
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-mat4
 %summary
@@ -151,7 +124,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-mat5
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-mat5
 %summary
@@ -159,15 +131,20 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-mp3
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-mp3
+%summary
+
+%package -n libsox-fmt-opus
+Summary: %summary
+Group: Sound
+
+%description -n libsox-fmt-opus
 %summary
 
 %package -n libsox-fmt-oss
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-oss
 %summary
@@ -175,7 +152,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-paf
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-paf
 %summary
@@ -183,7 +159,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-pulseaudio
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-pulseaudio
 %summary
@@ -191,7 +166,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-pvf
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-pvf
 %summary
@@ -199,7 +173,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-sd2
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-sd2
 %summary
@@ -207,7 +180,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-sndfile
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-sndfile
 %summary
@@ -215,7 +187,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-vorbis
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-vorbis
 %summary
@@ -223,7 +194,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-w64
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-w64
 %summary
@@ -231,7 +201,6 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-wavpack
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-wavpack
 %summary
@@ -239,16 +208,23 @@ Requires: libsox = %version-%release
 %package -n libsox-fmt-xi
 Summary: %summary
 Group: Sound
-Requires: libsox = %version-%release
 
 %description -n libsox-fmt-xi
 %summary
+
+%package -n libsox3
+Summary: The SoX sound file format converter libraries
+Group: Development/C
+Provides: libsox-fmt-sndfile = %version-%release
+
+%description -n libsox3
+This package contains libraries for SoX
+
 
 %package base
 Summary: A general purpose sound file conversion tool
 Group: Sound
 Conflicts: sox < %version-%release
-Requires: libsox = %version-%release
 
 %description base
 SoX (Sound eXchange) is a sound file format converter for Linux,
@@ -290,13 +266,17 @@ or manipulate some sounds.
 
 
 %prep
-%setup -q
+%setup
+%patch -p2
 sed -i 's,\-I/lib/modules/`uname -r`/build/include,,' configure*
-sed -i 's,CODEC_TYPE_AUDIO,AVMEDIA_TYPE_AUDIO,' src/ffmpeg.c
-sed -i 's,av_alloc_format_context,avformat_alloc_context,' src/ffmpeg.c
 
 %build
-%configure --with-dyn-default --enable-dl-amrnb --enable-dl-amrwb --enable-dl-sndfile
+%autoreconf
+%configure \
+           --with-dyn-default \
+           --enable-dl-amrnb \
+           --enable-dl-amrwb \
+           --enable-dl-sndfile
 %make_build
 
 %install
@@ -312,10 +292,6 @@ chmod 755 %buildroot%_bindir/%{name}play
 
 %files
 %doc ChangeLog README
-
-%files -n libsox
-%_libdir/libsox.so.*
-%dir %_libdir/sox
 
 %files -n libsox-devel
 %_includedir/*
@@ -340,11 +316,6 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files -n libsox-fmt-fap
 %_libdir/sox/libsox_fmt_fap.so
 
-%if_with ffmpeg
-%files -n libsox-fmt-ffmpeg
-%_libdir/sox/libsox_fmt_ffmpeg.so
-%endif
-
 %files -n libsox-fmt-flac
 %_libdir/sox/libsox_fmt_flac.so
 
@@ -362,6 +333,9 @@ chmod 755 %buildroot%_bindir/%{name}play
 
 %files -n libsox-fmt-mp3
 %_libdir/sox/libsox_fmt_mp3.so
+
+%files -n libsox-fmt-opus
+%_libdir/sox/libsox_fmt_opus.so
 
 %files -n libsox-fmt-oss
 %_libdir/sox/libsox_fmt_oss.so
@@ -393,6 +367,11 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files -n libsox-fmt-xi
 %_libdir/sox/libsox_fmt_xi.so
 
+%files -n libsox3
+%_libdir/libsox.so.3*
+%_libdir/libsox.so.3.*
+%dir %_libdir/sox
+
 %files base
 %_bindir/*
 %_man1dir/sox.*
@@ -404,6 +383,9 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files play
 
 %changelog
+* Thu Feb 26 2015 Denis Smirnov <mithraen@altlinux.ru> 14.4.2-alt1
+- 14.4.2
+
 * Tue Jan 21 2014 Denis Smirnov <mithraen@altlinux.ru> 14.4.1-alt2
 - disable build ffmpeg module by default
 

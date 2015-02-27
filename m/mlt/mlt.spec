@@ -9,7 +9,7 @@
 
 Name: mlt
 Version: 0.9.2
-Release: alt1
+Release: alt2
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -160,6 +160,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 27 2015 Denis Smirnov <mithraen@altlinux.ru> 0.9.2-alt2
+- rebuild with new sox
+
 * Fri Oct 17 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt1
 - new version
 
