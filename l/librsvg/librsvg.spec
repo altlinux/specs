@@ -12,14 +12,13 @@
 %def_enable vala
 
 Name: %bname
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 Epoch: 1
 
 Summary: An SVG library based on libart
 License: LGPLv2+
 Group: System/Libraries
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
 
@@ -184,6 +183,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Fri Feb 27 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.8-alt1
+- 2.40.8
+
 * Sat Feb 14 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.7-alt1
 - 2.40.7
 
