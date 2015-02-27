@@ -1,7 +1,7 @@
 %define basever 1.0.26
 
 Name: alsa-tools
-Version: 1.0.28
+Version: 1.0.29
 Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) tools
@@ -167,6 +167,9 @@ install -pm644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/
 # - consider http://cvs.fedoraproject.org/viewvc/rpms/alsa-tools/devel/
 
 %changelog
+* Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 1.0.29-alt1
+- 1.0.29
+
 * Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1.0.28-alt1
 - 1.0.28
 

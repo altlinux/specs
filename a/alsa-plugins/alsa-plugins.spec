@@ -1,6 +1,6 @@
 Name: alsa-plugins
-Version: 1.0.28
-Release: alt1
+Version: 1.0.29
+Release: alt2
 Serial: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) plugins
@@ -15,17 +15,17 @@ Patch: %name-%version-%release.patch
 BuildRequires: gcc-c++ libalsa-devel libavcodec-devel libdbus-devel
 BuildRequires: libpulseaudio-devel libsamplerate-devel libspeex-devel
 
-Summary(ru_RU.UTF-8): Плагины ALSA
-Summary(uk_UA.UTF-8): Плаг╕ни ALSA
+Summary(ru_RU.UTF-8): п÷п╩п╟пЁп╦п╫я▀ ALSA
+Summary(uk_UA.UTF-8): п÷п╩п╟пЁя√п╫п╦ ALSA
 
 %description
 Advanced Linux Sound Architecture (ALSA) plugins.
 
 %description -l ru_RU.UTF-8
-Этот пакет содержит плагины ALSA.
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п©п╩п╟пЁп╦п╫я▀ ALSA.
 
 %description -l uk_UA.UTF-8
-Цей пакунок м╕стить плаг╕ни ALSA.
+п╕п╣п╧ п©п╟п╨я┐п╫п╬п╨ п╪я√я│я┌п╦я┌я▄ п©п╩п╟пЁя√п╫п╦ ALSA.
 
 %package pulse
 Summary: ALSA pulseaudio plugin
@@ -63,8 +63,16 @@ __EOF__
 %files pulse
 %_libdir/alsa-lib/*pulse*.so
 %_datadir/alsa/alsa.conf.d/pulse.conf
+%_datadir/alsa/alsa.conf.d/50-pulseaudio.conf
 
 %changelog
+* Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 1:1.0.29-alt2
+- added 50-pulseaudio.conf
+- converted spec to UTF-8
+
+* Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 1:1.0.29-alt1
+- 1.0.29
+
 * Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1:1.0.28-alt1
 - 1.0.28
 
