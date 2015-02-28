@@ -1,12 +1,10 @@
-%def_disable static
-
 Name: polarssl
 Version: 1.3.9
-Release: alt1
+Release: alt2
 
 Summary: Light-weight cryptographic and SSL/TLS library
 License: GPLv2
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: https://%name.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
@@ -24,42 +22,13 @@ applications with as little hassle as possible.
 
 %package -n lib%name
 Summary: Light-weight cryptographic and SSL/TLS library
-Group: System/Libraries
+Group: System/Legacy libraries
 
 %description -n lib%name
 PolarSSL is a light-weight open source cryptographic and SSL/TLS
 library written in C. PolarSSL makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
-applications with as little hassle as possible.
-
-%package -n lib%name-devel
-Summary: Development files for PolarSSL
-Group: Development/C
-Requires: lib%name = %version-%release
-Conflicts: hiawatha
-
-%description -n lib%name-devel
-Contains libraries and header files for
-developing applications that use PolarSSL.
-
-%if_enabled static
-%package -n lib%name-devel-static
-Summary: Static libraries for PolarSSL
-Group: Development/C
-Requires: lib%name-devel = %version-%release
-
-%description -n lib%name-devel-static
-Static libraries for developing applications
-that use PolarSSL.
-%endif
-
-%package utils
-Summary: Utilities for PolarSSL
-Group: Development/Tools
-Requires: lib%name = %version-%release
-
-%description utils
-Cryptographic utilities based on PolarSSL. 
+applications with as little hassle as possible. 
 
 %prep
 %setup
@@ -83,29 +52,19 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
-%__mkdir_p %buildroot%_libexecdir/%name
-%__mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
 %__rm -rf %buildroot%_bindir
+%__rm -rf %buildroot%_includedir
+%__rm -rf %buildroot%_libdir/lib%name.a
+%__rm -rf %buildroot%_libdir/lib%name.so
 
 %files -n lib%name
 %doc ChangeLog LICENSE README.rst
 %_libdir/lib%name.so.*
 
-%files -n lib%name-devel
-%dir %_includedir/%name
-%_includedir/%name/*.h
-%_libdir/lib%name.so
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/lib%name.a
-%endif
-
-%files utils
-%dir %_libexecdir/%name
-%_libexecdir/%name/*
-
 %changelog
+* Sat Feb 28 2015 Nazarov Denis <nenderus@altlinux.org> 1.3.9-alt2
+- Built as legacy library
+
 * Sat Nov 29 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.9-alt1
 - Version 1.3.9
 
