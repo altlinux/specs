@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 1.8.2
-Release: alt2
+Version: 1.8.4
+Release: alt1
 
 Group: System/Libraries
 License: GPLv3
@@ -57,6 +57,9 @@ cp -va library/* %buildroot%python_sitelibdir/%name/modules
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md
 
 %changelog
+* Sat Feb 28 2015 Terechkov Evgenii <evg@altlinux.org> 1.8.4-alt1
+- 1.8.4
+
 * Fri Jan  2 2015 Terechkov Evgenii <evg@altlinux.org> 1.8.2-alt2
 - Fix modules location (ALT#30619)
 - Drop default hosts file (see examples/hosts, ALT#30620)
