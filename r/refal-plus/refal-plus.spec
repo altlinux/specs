@@ -1,8 +1,8 @@
 Name:		refal-plus
 Version:	2412
-Release:	alt1.1
+Release:	alt1.2
 Summary:	A modern dialect of Refal programming language
-Summary(ru_RU.KOI8-R): Современный диалект языка программирования Рефал
+Summary(ru_RU.UTF8): Современный диалект языка программирования Рефал
 Source:		refal-r%{version}-src.zip
 Source1:	http://wiki.botik.ru/twiki/pub/Refaldevel/Download/RefalPlusReferenceManual.pdf
 Patch:		refal-r2412.patch
@@ -51,7 +51,7 @@ following features:
     * Operations on boxes, vectors, and tables
     * "Vector" representation of ground expressions
 
-%description -l ru_RU.KOI8-R
+%description -l ru_RU.UTF8
 Рефал Плюс представляет собой один из диалектов языка программирования
 Рефал.
 
@@ -140,6 +140,9 @@ mv %buildroot%_prefix/lib/lib* %buildroot%_libdir/
 %doc compiler rfp rfpfilt samples trefal
 
 %changelog
+* Sat Feb 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 2412-alt1.2
+- (ALT bug #30780)
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2412-alt1.1
 - Rebuilt with gmp 5.0.5
 

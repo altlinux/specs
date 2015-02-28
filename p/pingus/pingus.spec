@@ -3,11 +3,11 @@
 
 Name: pingus
 Version: 0.7.6
-Release: alt1.6.1
+Release: alt1.6.2
 
 
 Summary: A free Lemmings clone
-Summary(ru_RU.KOI8-R): Свободный клон Lemmings
+Summary(ru_RU.UTF8): Свободный клон Lemmings
 License: GPL
 Group: Games/Arcade
 Url: http://pingus.seul.org
@@ -52,7 +52,7 @@ which should make it portable over a lot of operating systems in the future. At
 the moment the main target is Linux. It is possible to play Pingus in a X
 window or in fullscreen.
 
-%description -l ru_RU.KOI8-R
+%description -l ru_RU.UTF8
 Pingus - свободный клон Lemmings, выпускаемый под GPL. Pingus использует
 SDL, что должно сделать его портируемым на множество других операционных
 систем в будущем. На данный момент главная цель - Linux. В Pingus возможно
@@ -145,6 +145,9 @@ EOF
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Sat Feb 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.7.6-alt1.6.2
+- (ALT bug #29733)
+ 
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.7.6-alt1.6.1
 - rebuild with boost 1.57.0
 
