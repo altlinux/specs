@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.92
+Version: 0.93
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -184,10 +184,10 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/ceph-osd
 %_bindir/ceph-post-file
 %_bindir/ceph-rest-api
-%_bindir/ceph_mon_store_converter
 %_bindir/ceph-rbdnamer
 %_bindir/ceph-dencoder
 %_bindir/cephfs-journal-tool
+%_bindir/cephfs-table-tool
 %_bindir/librados-config
 %_bindir/rados
 %_bindir/rbd
@@ -291,6 +291,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Sat Feb 28 2015 Alexei Takaseev <taf@altlinux.org> 0.93-alt1
+- 0.93
+
 * Wed Feb 04 2015 Alexei Takaseev <taf@altlinux.org> 0.92-alt1
 - 0.92
 
