@@ -15,7 +15,7 @@
 
 Name: neard
 Version: 0.15
-Release: alt1
+Release: alt2
 
 Summary: NFC for Linux
 License: GPLv2
@@ -26,6 +26,7 @@ Url: http://01.org/linux-nfc/
 Source0: https://www.kernel.org/pub/linux/network/nfc/neard-%version.tar
 Source1: neard.service
 Source2: 99-neard.rules
+Source3: neard.init
 Patch: neard-0.13-fix-dbus_send_destination_config.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -67,6 +68,7 @@ Files needed to test applications for the NFC stack.
 %makeinstall_std
 install -pDm644 %SOURCE1 %buildroot%_unitdir/neard.service
 install -pDm644 %SOURCE2 %buildroot%_libdir/udev/rules.d/99-neard.rules
+install -pDm755 %SOURCE3 %buildroot%_initdir/neard
 
 %files
 %doc AUTHORS COPYING ChangeLog README
@@ -75,6 +77,7 @@ install -pDm644 %SOURCE2 %buildroot%_libdir/udev/rules.d/99-neard.rules
 %_libexecdir/nfc/neard
 %_libdir/udev/rules.d/99-neard.rules
 %_unitdir/neard.service
+%_initdir/neard
 %_bindir/nfctool
 %doc %_man1dir/*.1.gz
 %doc %_man5dir/*.5.gz
@@ -89,6 +92,9 @@ install -pDm644 %SOURCE2 %buildroot%_libdir/udev/rules.d/99-neard.rules
 %_libdir/%name/test/
 
 %changelog
+* Sat Feb 28 2015 Michael Shigorin <mike@altlinux.org> 0.15-alt2
+- added initscript (adapted from yoctoproject's poky recipe)
+
 * Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 0.15-alt1
 - built for ALT Linux (package based on openSUSE 0.13-21.6 one)
 
