@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.4.2
-Release: alt1
+Release: alt2
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -39,7 +39,6 @@ Group: Monitoring
 Url: http://collectd.org
 Source0: %url/files/%name-%version.tar
 Patch0: %name-%version-%release.patch
-Packager: Michael Shigorin <mike@altlinux.org>
 
 ### NB: part of BRs is conditional (see subpackages below)
 # Automatically added by buildreq on Thu May 14 2009 (-bi)
@@ -813,6 +812,10 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Sat Feb 28 2015 Anton Farygin <rider@altlinux.ru> 5.4.2-alt2
+- cherry-pick from upstream 'snmp plugin: add hostname to "csnmp_instance_list_add" error message'
+  close #30344 again.
+
 * Thu Feb 26 2015 Anton Farygin <rider@altlinux.ru> 5.4.2-alt1
 - new version (closes: #30668, #30344)
 
