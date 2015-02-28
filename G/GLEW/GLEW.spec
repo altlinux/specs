@@ -1,7 +1,7 @@
 %define soversion 1.11
 
 Name: GLEW
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 
 Summary: The OpenGL Extension Wrangler library
@@ -10,7 +10,7 @@ Group: System/Libraries
 
 Url: http://glew.sourceforge.net/
 Packager: Nazarov Denis <nenderus@altlinux.org>
-Source: http://optimate.dl.sourceforge.net/project/glew/glew/%version/glew-%version.tgz
+Source: glew-%version.tgz
 
 BuildRequires: gcc-c++
 BuildRequires: libGLU-devel
@@ -151,6 +151,9 @@ The package contains the utilites on %name.
 %_libexecdir/%name/*
 
 %changelog
+* Sat Feb 28 2015 Nazarov Denis <nenderus@altlinux.org> 1.12.0-alt1
+- Version 1.12.0
+
 * Fri Sep 12 2014 Nazarov Denis <nenderus@altlinux.org> 1.11.0-alt1
 - Version 1.11.0
 
