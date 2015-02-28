@@ -14,14 +14,13 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A password and encryption key manager
 License: %gpllgpl2plus
 Group: Graphical desktop/GNOME
-Url: https://live.gnome.org/Seahorse
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Url: https://wiki.gnome.org/Apps/Seahorse
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
@@ -31,7 +30,7 @@ Requires: gnupg2-gpg gcr
 
 BuildPreReq: rpm-build-gnome
 
-# From configure.in
+# From configure.ac
 BuildPreReq: intltool >= 0.35
 BuildPreReq: libgio-devel
 BuildPreReq: yelp-tools itstool
@@ -74,7 +73,7 @@ export GNUPG=/usr/bin/gpg2
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %find_lang %name --with-gnome
 
@@ -99,6 +98,9 @@ export GNUPG=/usr/bin/gpg2
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Sat Feb 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
