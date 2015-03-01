@@ -1,12 +1,12 @@
 Summary: DVD authoring program with nice and clean GUI
 Name: bombono-dvd
 Version: 1.2.2
-Release: alt1
+Release: alt2
 License: GPL
 Group: Video
 Url: http://www.bombono.org
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Source0: %name-%version.tar
+Patch: bombono-dvd-1.2.2-alt-libavcodec.patch
 
 %py_provides ASettings
 
@@ -29,6 +29,8 @@ The main features of Bombono DVD are:
 
 %prep
 %setup
+
+%patch -p0
 
 sed -i "s|^\(release_flags\).*|\1 = ['-O2', '-g']|" SConstruct
 
@@ -57,6 +59,9 @@ ln -s %_datadir/fonts/ttf/freefont/FreeSans.ttf %buildroot%_datadir/bombono/reso
 %_datadir/mime/packages/*
 
 %changelog
+* Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt2
+- Fixed build
+
 * Sat Mar 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2.2-alt1
 - 1.2.2
 
