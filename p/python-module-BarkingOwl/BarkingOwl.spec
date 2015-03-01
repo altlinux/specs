@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.6.4.1
-Release: alt1.git20150125
+Version: 0.6.5
+Release: alt1.git20150209
 Summary: Scalable web scraper framework for finding documents on websites
 License: GPLv3
 Group: Development/Python
@@ -49,6 +49,7 @@ specific document types on websites, such as PDFs, XLS, TXT, HTML, etc.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Scalable web scraper framework for finding documents on websites
 Group: Development/Python3
@@ -71,6 +72,7 @@ BarkingOwl is a scalable web crawler intended to be used to find
 specific document types on websites, such as PDFs, XLS, TXT, HTML, etc.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -127,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.5-alt1.git20150209
+- Version 0.6.5
+
 * Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.4.1-alt1.git20150125
 - Version 0.6.4.1
 
