@@ -1,5 +1,5 @@
 Name: cabextract
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: Utility for extracting Microsoft Cabinet files
@@ -20,9 +20,6 @@ A program for extracting Microsoft Cabinet (.CAB) files.
 %setup
 %patch -p1
 
-# autoconf AC_FUNC_MKTIME breaks with gcc 4.3. This is fix:
-subst 's/AC_PREREQ(2.57)/AC_PREREQ(2.62)/' configure.ac
-
 %build
 %autoreconf
 %configure
@@ -33,10 +30,14 @@ subst 's/AC_PREREQ(2.57)/AC_PREREQ(2.62)/' configure.ac
 %makeinstall_std
 
 %files
-%_bindir/*
-%_man1dir/*
+%_bindir/%name
+%_man1dir/%name.1.*
+%doc NEWS README
 
 %changelog
+* Sun Mar 01 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
+- 1.5
+
 * Sat Jun 11 2011 Victor Forsiuk <force@altlinux.org> 1.4-alt1
 - 1.4
 
