@@ -1,4 +1,7 @@
-Name: polarssl
+%define pname polarssl
+%define sover 7
+
+Name: %pname%sover
 Version: 1.3.9
 Release: alt2
 
@@ -6,9 +9,9 @@ Summary: Light-weight cryptographic and SSL/TLS library
 License: GPLv2
 Group: System/Legacy libraries
 
-Url: https://%name.org/
+Url: https://%pname.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
-Source: https://%name.org/download/%name-%version-gpl.tgz
+Source: https://%pname.org/download/%pname-%version-gpl.tgz
 
 BuildRequires: cmake
 BuildRequires: pkcs11-helper-devel
@@ -23,6 +26,8 @@ applications with as little hassle as possible.
 %package -n lib%name
 Summary: Light-weight cryptographic and SSL/TLS library
 Group: System/Legacy libraries
+Provides: lib%pname = %version
+Obsoletes: lib%pname
 
 %description -n lib%name
 PolarSSL is a light-weight open source cryptographic and SSL/TLS
@@ -31,7 +36,7 @@ cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible. 
 
 %prep
-%setup
+%setup -n %pname-%version
 
 %build
 %__mkdir_p %_target_platform
@@ -54,15 +59,15 @@ popd
 %makeinstall_std -C %_target_platform
 %__rm -rf %buildroot%_bindir
 %__rm -rf %buildroot%_includedir
-%__rm -rf %buildroot%_libdir/lib%name.a
-%__rm -rf %buildroot%_libdir/lib%name.so
+%__rm -rf %buildroot%_libdir/lib%pname.a
+%__rm -rf %buildroot%_libdir/lib%pname.so
 
 %files -n lib%name
 %doc ChangeLog LICENSE README.rst
-%_libdir/lib%name.so.*
+%_libdir/lib%pname.so.*
 
 %changelog
-* Sat Feb 28 2015 Nazarov Denis <nenderus@altlinux.org> 1.3.9-alt2
+* Sun Mar 01 2015 Nazarov Denis <nenderus@altlinux.org> 1.3.9-alt2
 - Built as legacy library
 
 * Sat Nov 29 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.9-alt1
