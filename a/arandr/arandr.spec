@@ -1,6 +1,6 @@
 Name: arandr
 Version: 0.1.7.1
-Release: alt1
+Release: alt1.1
 
 Summary: Screen layout editor for xrandr 1.4 (Another XRandR gui)
 
@@ -17,6 +17,8 @@ BuildArch: noarch
 # Automatically added by buildreq on Sun Mar 10 2013
 # optimized out: python-base python-devel python-module-BeautifulSoup python-module-OpenSSL python-module-Pygments python-module-distribute python-module-docutils python-module-flup python-module-genshi python-module-gevent python-module-geventutil python-module-greenlet python-module-html5lib python-module-imaging python-module-lxml python-module-odfpy python-module-py python-module-pygobject3 python-module-pyparsing python-module-qserve python-module-serial python-module-simplejson python-module-tempita python-module-timelib python-module-twisted-core python-module-webob python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-tkinter python-modules-wsgiref
 BuildRequires: python-module-mwlib python-module-paste
+
+BuildPreReq: python-module-docutils
 
 %description
 Provide a simple visual front end for XRandR 1.4, client
@@ -65,6 +67,9 @@ Features
 %_man1dir/*
 
 %changelog
+* Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.7.1-alt1.1
+- Fixed build
+
 * Sun Mar 10 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.7.1-alt1
 - New version 0.1.7.1
 
