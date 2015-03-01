@@ -7,7 +7,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.7.0
-Release: alt1.git20150216
+Release: alt2.git20150216
 Summary: Statistical computations and models for use with SciPy
 License: BSD
 Group: Development/Python
@@ -37,6 +37,7 @@ BuildPreReq: python3-module-coverage
 
 %py_provides %oname
 %py_requires numpy scipy pandas patsy matplotlib cvxopt
+%py_requires statsmodels.stats.multitest
 %add_python_req_skip models
 
 %description
@@ -62,6 +63,7 @@ Summary: Statistical computations and models for use with SciPy
 Group: Development/Python3
 %py3_provides %oname
 %py3_requires numpy scipy pandas patsy matplotlib cvxopt
+%py3_requires statsmodels.stats.multitest
 %add_python3_req_skip models
 
 %description -n python3-module-%oname
@@ -191,6 +193,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.0-alt2.git20150216
+- Added requires statsmodels.stats.multitest
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.0-alt1.git20150216
 - Initial build for Sisyphus
 
