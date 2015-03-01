@@ -5,7 +5,7 @@
 %define sover %somver.0.0
 
 Name: berkeley_upc
-Version: 2.18.2
+Version: 2.20.0
 Release: alt1
 Summary: Berkeley Unified Parallel C (UPC)
 License: BSD
@@ -135,6 +135,9 @@ rm -fR %buildroot%prefix/man
 %_docdir/*
 
 %changelog
+* Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.20.0-alt1
+- Version 2.20.0
+
 * Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.18.2-alt1
 - Version 2.18.2
 
