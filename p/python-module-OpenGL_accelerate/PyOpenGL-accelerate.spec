@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.0
-Release: alt1
+Release: alt2
 Summary: Acceleration code for PyOpenGL
 License: BSD
 Group: Development/Python
@@ -13,10 +13,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-Cython
+BuildPreReq: python-devel python-module-Cython libnumpy-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-Cython
+BuildPreReq: python3-devel python3-module-Cython libnumpy-py3-devel
 %endif
 
 %description
@@ -69,6 +69,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt2
+- Fixed build
+
 * Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt1
 - Initial build for Sisyphus
 
