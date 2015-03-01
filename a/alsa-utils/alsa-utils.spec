@@ -1,6 +1,6 @@
 Name: alsa-utils
-Version: 1.0.28
-Release: alt1
+Version: 1.0.29
+Release: alt2
 Serial: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
@@ -20,6 +20,8 @@ Conflicts: alsa-utils < 1.0.9a-alt1
 
 BuildRequires: intltool libalsa-devel libncursesw-devel xmlto
 Requires: libncursesw >= 5.7
+
+%add_findreq_skiplist %_sbindir/alsa-info.sh
 
 %description
 Advanced Linux Sound Architecture (ALSA) utils. Modularized
@@ -88,6 +90,12 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 1:1.0.29-alt2
+- disabled autoreq for alsa-info.sh (R: lsb-core for no good reason)
+
+* Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 1:1.0.29-alt1
+- 1.0.29
+
 * Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1:1.0.28-alt1
 - 1.0.28
 
