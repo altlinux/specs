@@ -1,14 +1,14 @@
 
-Name: gcompris
-Version: 14.12
+Name:    gcompris
+Version: 15.02
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
 License: GPLv3
-Group: Games/Educational
-URL: http://www.gcompris.net
-Source: ftp://gcompris.sourceforge.net/%name-%version.tar
+Group:   Games/Educational
+URL:     http://www.gcompris.net
+Source:  ftp://gcompris.sourceforge.net/%name-%version.tar
 Source2: %name.desktop
 Source3: %name-edit.desktop
 Source4: %name-16x16.png
@@ -594,6 +594,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/sk
 
 %changelog
+* Sun Mar 01 2015 Andrey Cherepanov <cas@altlinux.org> 15.02-alt1
+- New version
+
 * Mon Jan 12 2015 Andrey Cherepanov <cas@altlinux.org> 14.12-alt1
 - New version
 - Fix duplicate in Russian translation
