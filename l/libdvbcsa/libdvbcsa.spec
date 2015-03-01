@@ -1,6 +1,6 @@
 Name: libdvbcsa
 Version: 1.1.0
-Release: alt3
+Release: alt4
 
 Summary: DVB Common Scrambling Algorithm with encryption and decryption capabilities
 License: GPLv2
@@ -65,6 +65,9 @@ developing applications that use %name.
 %_libdir/libdvbcsa.so
 
 %changelog
+* Sun Mar 01 2015 Alexei Takaseev <taf@altlinux.org> 1.1.0-alt4
+- Fix C++ compilation using the library
+
 * Thu Oct 16 2014 Alexei Takaseev <taf@altlinux.org> 1.1.0-alt3
 - Enable SSE2
 
