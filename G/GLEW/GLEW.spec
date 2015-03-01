@@ -1,8 +1,8 @@
-%define soversion 1.11
+%define soversion 1.12
 
 Name: GLEW
 Version: 1.12.0
-Release: alt1
+Release: alt2
 
 Summary: The OpenGL Extension Wrangler library
 License: BSD, MIT
@@ -151,6 +151,9 @@ The package contains the utilites on %name.
 %_libexecdir/%name/*
 
 %changelog
+* Sun Mar 01 2015 Nazarov Denis <nenderus@altlinux.org> 1.12.0-alt2
+- Fix symlink name (ALT #30783, #30784)
+
 * Sat Feb 28 2015 Nazarov Denis <nenderus@altlinux.org> 1.12.0-alt1
 - Version 1.12.0
 
