@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: etckeeper
-Version: 1.15
+Version: 1.17
 Release: alt1
 
 Summary: Etckeeper help to keep your /etc directory in VCS repository
 License: GPL2+
 Group: Development/Other
-Url: http://kitenet.net/~joey/code/etckeeper/
+Url: http://etckeeper.branchable.com
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 BuildArch: noarch
@@ -57,9 +57,12 @@ fi
 %_sysconfdir/bash_completion.d/%name
 %_cachedir/%name
 %_sysconfdir/cron.daily/%name
-%doc README.md TODO
+%doc README.md
 
 %changelog
+* Sun Mar  1 2015 Terechkov Evgenii <evg@altlinux.org> 1.17-alt1
+- 1.17
+
 * Tue Oct 28 2014 Terechkov Evgenii <evg@altlinux.org> 1.15-alt1
 - 1.15
 
