@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt1.git20141006
+Release: alt1.git20150202
 Summary: User session management for Flask
 License: MIT
 Group: Development/Python
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20150202
+- New snapshot
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20141006
 - Initial build for Sisyphus
 
