@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.5
-Release: alt1
+Release: alt2
 Summary: BitMap for python
 License: Free
 Group: Development/Python
@@ -26,6 +26,7 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 This package provides a `BitMap` class which is an array of bits stored
 in compact format.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: BitMap for python
 Group: Development/Python3
@@ -34,6 +35,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 This package provides a `BitMap` class which is an array of bits stored
 in compact format.
+%endif
 
 %prep
 %setup
@@ -83,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt2
+- Fixed build
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1
 - Initial build for Sisyphus
 
