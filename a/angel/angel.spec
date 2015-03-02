@@ -1,5 +1,5 @@
 Name: angel
-Version: 2011.06.30
+Version: 2014.03.13
 Release: alt1
 Summary: ANGEL stands for Automatic differentiation Nested Graph Elimination Library
 License: BSD
@@ -88,7 +88,7 @@ This package contains development files of ANGEL.
 %package -n lib%name-devel-doc
 Summary: Documentation for ANGEL
 Group: Development/Documentation
-BuildArch: noarch
+#BuildArch: noarch
 
 %description -n lib%name-devel-doc
 ANGEL stands for Automatic differentiation Nested Graph Elimination
@@ -137,6 +137,10 @@ rm -fR doc/html doc/latex
 %_docdir/%name
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.03.13-alt1
+- New snapshot
+- Fixed build with new boost (thnx iv@)
+
 * Tue Apr 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.06.30-alt1
 - Initial build for Sisyphus
 
