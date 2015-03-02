@@ -2,7 +2,7 @@
 
 Name: libfm
 Version: 1.2.3
-Release: alt2
+Release: alt3
 
 Summary: Core library of PCManFM file manager
 License: GPL
@@ -23,15 +23,14 @@ BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: libqt4-devel
 BuildRequires: libqtxdg-devel
 
-Requires: gvfs
-Conflicts: libfm2
-
 %description
 LibFM is a core library of PCManFM file manager.
 
 %package -n %name%soname
 Summary: %summary
 Group: System/Libraries
+Requires: gvfs wm-common-freedesktop
+Conflicts: libfm2
 
 %description -n %name%soname
 LibFM is a core library of PCManFM file manager.
@@ -70,7 +69,7 @@ sed -ri '/AM_INIT_AUTOMAKE/s,-Werror,\0 -Wno-portability,' configure.ac
     --enable-gtk-doc \
     --enable-largefile \
     --enable-udisks \
-    --sysconfdir=/etc
+    --sysconfdir=%_sysconfdir
 
 %make_build
 
@@ -107,6 +106,11 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_man1dir/lxshortcut.1*
 
 %changelog
+* Mon Mar 02 2015 Michael Shigorin <mike@altlinux.org> 1.2.3-alt3
+- added missing Requires: wm-common-freedesktop to %name%soname
+  as per http://www.altlinux.org/Window_Manager_Policy
+  (MIME type handling should work now)
+
 * Mon Dec 08 2014 Michael Shigorin <mike@altlinux.org> 1.2.3-alt2
 - added Requires: gvfs (closes: #30514)
 
