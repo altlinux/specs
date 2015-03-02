@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt1.git20141205
+Release: alt2.git20141205
 Summary: Compare categorical variables
 License: MIT
 Group: Development/Python
@@ -30,6 +30,7 @@ BuildPreReq: python-tools-2to3
 %description
 Compare two categorical variables.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Compare categorical variables
 Group: Development/Python3
@@ -38,6 +39,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 Compare two categorical variables.
+%endif
 
 %prep
 %setup
@@ -86,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.git20141205
+- Fixed build
+
 * Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.git20141205
 - Initial build for Sisyphus
 
