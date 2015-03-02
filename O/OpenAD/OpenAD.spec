@@ -2,7 +2,7 @@
 
 Name: OpenAD
 Version: 20140315
-Release: alt1
+Release: alt2
 Summary: A tool for automatic differentiation (AD) of numerical computer programs
 License: BSD
 Group: Sciences/Mathematics
@@ -276,6 +276,9 @@ install -m755 openad %buildroot%_bindir
 %doc xaifBooster/doc/*.ps
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140315-alt2
+- Fixed build with new boost (thnx iv@)
+
 * Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140315-alt1
 - Version 20140315
 
