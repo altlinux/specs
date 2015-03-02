@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt2
+Release: alt3
 Summary: Use geometric objects as matplotlib paths and patches
 License: BSD
 Group: Development/Python
@@ -16,11 +16,12 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: libnumpy-devel python-module-shapely python-module-nose
+BuildPreReq: python-module-matplotlib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: libnumpy-py3-devel python3-module-shapely
-BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-nose python3-module-matplotlib
 %endif
 
 %py_provides %oname
@@ -116,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt3
+- Fixed build
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2
 - Added requirement on shapely for Python 3 (for tests)
 - Enabled testing with nose
