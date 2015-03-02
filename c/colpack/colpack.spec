@@ -1,13 +1,14 @@
 Name: colpack
 Version: 1.0.9
-Release: alt1
+Release: alt1.git20150217
 Summary: Graph Coloring for Computing Derivatives
 License: LGPL v3
 Group: Sciences/Mathematics
-Url: http://www.cscapes.org/coloringpage/index.htm
+Url: http://cscapes.cs.purdue.edu/coloringpage/software.htm
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.cscapes.org/download/ColPack/ColPack-%version.tar.gz
+# https://github.com/CSCsw/ColPack.git
+Source: ColPack-%version.tar.gz
 
 BuildPreReq: gcc-c++ libgomp-devel
 
@@ -52,8 +53,8 @@ This package contains examples for ColPack.
 %autoreconf
 %configure \
 	--enable-static=no \
-	--enable-openmp \
 	--enable-examples
+#	--enable-openmp \
 %make_build
 
 %install
@@ -88,6 +89,9 @@ rm -fR %_includedir/%name
 %exclude %_bindir/ColPack
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9-alt1.git20150217
+- Snapshot from git
+
 * Tue Jun 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9-alt1
 - Version 1.0.9
 
