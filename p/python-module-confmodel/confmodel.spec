@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0.1
-Release: alt1.git20140605
+Release: alt2.git20140605
 Summary: Declarative configuration access and validation system
 License: BSD
 Group: Development/Python
@@ -43,6 +43,7 @@ Declarative configuration access and validation system.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Declarative configuration access and validation system
 Group: Development/Python3
@@ -61,6 +62,7 @@ Requires: python3-module-%oname = %EVR
 Declarative configuration access and validation system.
 
 This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -153,6 +155,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0.1-alt2.git20140605
+- Fixed build
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0.1-alt1.git20140605
 - Initial build for Sisyphus
 
