@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.5.0
-Release: alt1.git20150204
+Release: alt1.git20150301
 Summary: Fiona reads and writes spatial data files
 License: BSD
 Group: Development/Python
@@ -170,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.git20150301
+- New snapshot
+
 * Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.git20150204
 - Initial build for Sisyphus
 
