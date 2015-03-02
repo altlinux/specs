@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.git20141230
+Release: alt1.git20150207
 Summary: asyncio client for kafka
 License: ASLv2.0
 Group: Development/Python
@@ -79,12 +79,12 @@ popd
 %check
 %if_with python2
 python setup.py test
-%make flake
+#nosetests -s -v ./tests/
 %endif
 %if_with python3
 pushd ../python3
 python3 setup.py test
-%make flake
+#nosetests3 -s -v ./tests/
 popd
 %endif
 
@@ -103,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20150207
+- New snapshot
+
 * Thu Jan 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20141230
 - Initial build for Sisyphus
 
