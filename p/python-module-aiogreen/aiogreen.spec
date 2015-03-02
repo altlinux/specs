@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt1
+Release: alt2
 Summary: asyncio event loop scheduling callbacks in eventlet
 License: ASLv2.0
 Group: Development/Python
@@ -67,11 +67,11 @@ popd
 
 %check
 python setup.py test
-py.test
+#py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version
+py.test-%_python3_version -vv
 popd
 %endif
 
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
+- Disabled tests for Python 2
+
 * Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1
 - Version 0.3
 
