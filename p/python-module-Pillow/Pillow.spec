@@ -1,28 +1,32 @@
 %define oname Pillow
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 2.7.0
-Release: alt1
+Release: alt1.git20150225
 Summary: Python Imaging Library (Fork)
 License: Standard PIL License
 Group: Development/Python
 Url: https://pypi.python.org/pypi/Pillow/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/python-pillow/Pillow.git
 Source: %name-%version.tar
 Source1: PIL.pth
 
-BuildPreReq: python-devel python-module-setuptools liblcms2-devel
+BuildPreReq: python-devel python-module-setuptools-tests liblcms2-devel
+BuildPreReq: python-module-nose
 BuildPreReq: zlib-devel libjpeg-devel libtiff-devel libfreetype-devel
 BuildPreReq: tcl-devel tk-devel libwebp-devel libwebp-tools
 BuildPreReq: python-modules-tkinter
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-sphinx-better-theme
+BuildPreReq: python-module-sphinx-devel python3-module-sphinx
+BuildPreReq: python3-module-sphinx-better-theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose
 BuildPreReq: python3-modules-tkinter
 %endif
 
@@ -99,13 +103,24 @@ popd
 %python_install
 install -m 644 %SOURCE1 %buildroot%python_sitelibdir/
 
-%if 0
-export PYTHONPATH=%buildroot%python_sitelibdir
+export LC_ALL=en_US.UTF-8
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
 %make -C docs html
 
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+export PYTHONPATH=%buildroot%python_sitelibdir
+python test-installed.py
+nosetests -v Tests/test_*.py
+%if_with python3
+pushd ../python3
+export PYTHONPATH=%buildroot%python3_sitelibdir
+python3 test-installed.py
+nosetests3 -v Tests/test_*.py
+popd
 %endif
 
 %files
@@ -115,13 +130,13 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/*
-#exclude %python_sitelibdir/*/pickle
+%exclude %python_sitelibdir/*/pickle
 
-#files pickles
-#python_sitelibdir/*/pickle
+%files pickles
+%python_sitelibdir/*/pickle
 
-#files docs
-#doc docs/_build/html/*
+%files docs
+%doc docs/_build/html/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -131,6 +146,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1.git20150225
+- Snapshot from git
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1
 - Version 2.7.0
 
