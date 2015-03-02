@@ -1,7 +1,7 @@
 %define oname PyX
 Name: python-module-%oname
 Version: 0.12.1
-Release: alt1
+Release: alt2
 Summary: Python graphics package
 License: GPLv2+
 Group: Development/Python
@@ -10,7 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %oname-%version.tar
 
-BuildPreReq: python-devel texlive-latex-recommended
+BuildPreReq: python-devel texlive-latex-recommended %_bindir/convert
 BuildPreReq: libkpathsea-devel python-module-imaging
 BuildPreReq: python-module-sphinx-devel
 
@@ -77,6 +77,9 @@ ln -s ../objects.inv manual
 %doc examples
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.1-alt2
+- Fixed build docs
+
 * Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.1-alt1
 - Version 0.12.1
 
