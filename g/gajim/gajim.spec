@@ -1,5 +1,5 @@
 Name: gajim
-Version: 0.16
+Version: 0.16.1
 Release: alt1
 
 Summary: a Jabber client written in PyGTK
@@ -67,6 +67,9 @@ rm %buildroot%_datadir/%name/scripts/dev -rf
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Mon Mar 02 2015 Ilya Mashkin <oddity@altlinux.ru> 0.16.1-alt1
+- 0.16.1
+
 * Wed Oct 22 2014 Ilya Mashkin <oddity@altlinux.ru> 0.16-alt1
 - 0.16 release
 
