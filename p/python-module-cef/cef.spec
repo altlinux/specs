@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5
-Release: alt1.git20121017
+Release: alt2.git20121017
 Summary: Module that emits CEF logs
 License: MPL
 Group: Development/Python
@@ -32,6 +32,7 @@ used by the infrasec team to manage application security.
 The cef module provide a log_cef function that can be used to emit CEF
 logs.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Module that emits CEF logs
 Group: Development/Python3
@@ -44,6 +45,7 @@ used by the infrasec team to manage application security.
 
 The cef module provide a log_cef function that can be used to emit CEF
 logs.
+%endif
 
 %prep
 %setup
@@ -90,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2.git20121017
+- Fixed build
+
 * Wed Oct 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20121017
 - Initial build for Sisyphus
 
