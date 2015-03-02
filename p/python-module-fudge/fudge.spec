@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.3
-Release: alt2
+Release: alt3
 Summary: Replace real objects with fakes (mocks, stubs, etc) while testing
 License: MIT
 Group: Development/Python
@@ -58,6 +58,7 @@ to the culprit.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Replace real objects with fakes (mocks, stubs, etc) while testing
 Group: Development/Python3
@@ -94,6 +95,7 @@ you'll see an informative exception message with a traceback that points
 to the culprit.
 
 This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -213,6 +215,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt3
+- Fixed build
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt2
 - Applied repocop's python-module-fudge-1.0.3-alt1.diff
 
