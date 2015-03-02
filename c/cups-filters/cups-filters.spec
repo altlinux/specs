@@ -2,7 +2,7 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.65
+Version: 1.0.66
 Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
@@ -21,7 +21,6 @@ Source1: %name.watch
 Source2: cups-browsed.init
 Patch0: %name-alt.patch
 Patch1: %name-alt-php-5.4.14-fix.patch
-Patch2: cups-filters-puppler-31.patch
 Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_standard_print_job_format
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
@@ -109,7 +108,6 @@ serial backend for cups
 %setup
 %patch0 -p2
 %patch1 -p2
-%patch2 -p0
 
 %build
 # work-around Rpath
@@ -196,6 +194,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Mon Mar 02 2015 Anton Farygin <rider@altlinux.ru> 1.0.66-alt1
+- new version 1.0.66
+
 * Tue Feb 24 2015 Anton Farygin <rider@altlinux.ru> 1.0.65-alt1
 - new version 1.0.65
 
