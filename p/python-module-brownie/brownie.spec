@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.1
-Release: alt1.git20110725
+Release: alt2.git20110725
 Summary: Common utilities and datastructures for Python applications
 License: BSD
 Group: Development/Python
@@ -43,6 +43,7 @@ Common utilities and datastructures for Python applications.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Common utilities and datastructures for Python applications
 Group: Development/Python3
@@ -60,6 +61,7 @@ Requires: python3-module-%oname = %EVR
 Common utilities and datastructures for Python applications.
 
 This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -150,6 +152,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt2.git20110725
+- Fixed build
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1.git20110725
 - Initial build for Sisyphus
 
