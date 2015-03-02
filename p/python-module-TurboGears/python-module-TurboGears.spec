@@ -1,12 +1,12 @@
 %define version 1.5.1
-%define release alt1
+%define release alt2
 %setup_python_module TurboGears
 
 %def_without python3
 
 Name: %packagename
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: Back-to-front web development in Python
 
@@ -66,6 +66,7 @@ TurboGears is easy to use for a wide range of web applications.
 
 This package contains tests for TurboGears.
 
+%if_with python3
 %package -n python3-module-%modulename
 Summary: Back-to-front web development in Python
 Group: Development/Python3
@@ -108,6 +109,7 @@ with the communities that already exist around those tools.
 TurboGears is easy to use for a wide range of web applications.
 
 This package contains tests for TurboGears.
+%endif
 
 %prep
 %setup -n %modulename-%version
@@ -179,6 +181,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt2
+- Fixed build
+
 * Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1
 - Version 1.5.1
 
