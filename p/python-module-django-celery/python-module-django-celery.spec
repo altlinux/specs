@@ -1,10 +1,11 @@
 %define module_name django-celery
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%module_name
 Version: 3.2.0
-Release: alt1.a1.git20140924
+Release: alt1.a1.git20150124
 Group: Development/Python
 License: BSD License
 Summary: django-celery provides Celery integration for Django
@@ -84,6 +85,9 @@ python setup.py test
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1.a1.git20150124
+- New snapshot
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1.a1.git20140924
 - Version 3.2.0a1
 - Enabled testing
