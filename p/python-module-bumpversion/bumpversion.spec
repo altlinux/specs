@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.1
-Release: alt1.dev.git20141228
+Version: 0.5.2
+Release: alt1.dev.git20150218
 Summary: Version-bump your software with a single command!
 License: MIT
 Group: Development/Python
@@ -15,10 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests git
+BuildPreReq: python-module-mock %_bindir/hg
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-mock
 %endif
 
 %py_provides %oname
@@ -52,6 +54,9 @@ creates commits and tags:
 
 %prep
 %setup
+
+git config --global user.email "real at altlinux.org"
+git config --global user.name "REAL"
 
 %if_with python3
 cp -fR . ../python3
@@ -113,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1.dev.git20150218
+- Version 0.5.2-dev
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1.dev.git20141228
 - Initial build for Sisyphus
 
