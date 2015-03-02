@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:           python-module-django-nose
-Version:        1.2
+Version:        1.3
 Release:        alt1
 Summary:        Django test runner that uses nose
 Group:          Development/Python
@@ -75,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1
+- Version 1.3
+
 * Fri Aug 01 2014 Lenar Shakirov <snejok@altlinux.ru> 1.2-alt1
 - First build for ALT (based on Fedora 1.2-2.fc21.src)
 
