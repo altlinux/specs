@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1.git20140820
+Release: alt1.git20141213
 
 Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
 
@@ -21,7 +21,7 @@ Url: http://pypi.python.org/pypi/%oname
 Source: %oname-%version.tar
 
 # Automatically added by buildreq on Wed Feb 03 2010
-BuildRequires: libevent1.4-devel python-devel python-modules-ctypes
+BuildRequires: libev-devel python-devel python-modules-ctypes
 
 BuildPreReq: python-module-sphinx-devel python-module-greenlet
 BuildPreReq: python-module-OpenSSL python-module-Cython unifdef
@@ -46,6 +46,17 @@ Features include:
 * DNS requests done through libevent-dns
 * monkey patching utility to get pure Python modules to cooperate
 
+%package -n python-module-greentest
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python-module-greentest
+gevent is a coroutine-based Python networking library that uses greenlet
+to provide a high-level synchronous API on top of libevent event loop.
+
+This package contains tests for %oname.
+
 %if_with python3
 %package -n python3-module-%oname
 Summary: Python 3 network library that uses greenlet and libevent for easy and scalable concurrency
@@ -63,6 +74,17 @@ Features include:
 * WSGI server on top of libevent-http
 * DNS requests done through libevent-dns
 * monkey patching utility to get pure Python modules to cooperate
+
+%package -n python3-module-greentest
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-greentest
+gevent is a coroutine-based Python networking library that uses greenlet
+to provide a high-level synchronous API on top of libevent event loop.
+
+This package contains tests for %oname.
 %endif
 
 %package doc
@@ -88,6 +110,9 @@ This package contains pickles for gevent.
 
 %prep
 %setup
+
+rm -fR libev
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -137,6 +162,10 @@ popd
 %doc AUTHORS LICENSE* TODO *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
+%exclude %python_sitelibdir/greentest
+
+%files -n python-module-greentest
+%python_sitelibdir/greentest
 
 %files doc
 %doc doc/_build/html
@@ -149,9 +178,17 @@ popd
 %files -n python3-module-%oname
 %doc AUTHORS LICENSE* TODO *.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/greentest
+
+%files -n python3-module-greentest
+%python3_sitelibdir/greentest
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20141213
+- New snapshot
+- Extracted greentest into separate package
+
 * Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20140820
 - New snapshot
 
