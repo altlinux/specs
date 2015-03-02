@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt2.git20141017
+Release: alt3.git20141017
 Summary: An empty app for the next-gen Services app
 License: CC0 Public Domain
 Group: Development/Python
@@ -63,6 +63,7 @@ An empty app for the next-gen Services app.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: An empty app for the next-gen Services app
 Group: Development/Python3
@@ -82,6 +83,7 @@ Requires: python3-module-%oname = %EVR
 An empty app for the next-gen Services app.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -137,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt3.git20141017
+- Fixed build
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2.git20141017
 - Added necessary requirements
 - Enabled testing
