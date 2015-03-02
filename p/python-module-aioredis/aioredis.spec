@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.5
-Release: alt1.git20141217
+Release: alt1.git20150225
 Summary: asyncio (PEP 3156) Redis support
 License: MIT
 Group: Development/Python
@@ -118,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt1.git20150225
+- New snapshot
+
 * Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt1.git20141217
 - Initial build for Sisyphus
 
