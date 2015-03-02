@@ -3,7 +3,7 @@
 
 Name:           python-module-django-nose
 Version:        1.3
-Release:        alt1
+Release:        alt2
 Summary:        Django test runner that uses nose
 Group:          Development/Python
 
@@ -75,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt2
+- Fixed for Django 18+
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1
 - Version 1.3
 
