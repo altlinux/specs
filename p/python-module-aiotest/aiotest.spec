@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt1
+Release: alt2
 Summary: Test suite to validate an implementation of the asyncio API, the PEP 3156
 License: ASLv2.0
 Group: Development/Python
@@ -15,11 +15,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-trollius
+BuildPreReq: python-module-trollius python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
+BuildPreReq: python3-module-asyncio python3-module-mock
 %endif
 
 %py_provides %oname
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2
+- Fixed build
+
 * Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1
 - Initial build for Sisyphus
 
