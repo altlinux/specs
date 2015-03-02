@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.2.2
-Release: alt1.git20150216
+Version: 0.2.10
+Release: alt1.git20150224
 Summary: A library to bump / pin your dependency requirements
 License: MIT
 Group: Development/Python
@@ -33,6 +33,7 @@ BuildPreReq: python3-module-simplejson
 A library to bump / pin your dependency requirements. This is used by
 the bumper and workspace-tools package.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A library to bump / pin your dependency requirements
 Group: Development/Python3
@@ -42,6 +43,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 A library to bump / pin your dependency requirements. This is used by
 the bumper and workspace-tools package.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -124,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.10-alt1.git20150224
+- Version 0.2.10
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1.git20150216
 - Initial build for Sisyphus
 
