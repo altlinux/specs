@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt1.dev.git20121018
+Release: alt2.dev.git20121018
 Summary: LDAP connection library
 License: ZPLv2.1
 Group: Development/Python
@@ -68,6 +68,7 @@ populate a real directory server.
 
 This package contains documentation for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: LDAP connection library
 Group: Development/Python3
@@ -90,6 +91,7 @@ testing code relying on python-ldap without having to configure and
 populate a real directory server.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -165,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.dev.git20121018
+- Fixed build
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.dev.git20121018
 - Initial build for Sisyphus
 
