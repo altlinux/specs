@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5.0
-Release: alt1.git20141104
+Release: alt2.git20141104
 Summary: Print statement checker plugin for flake8
 License: MIT
 Group: Development/Python
@@ -31,6 +31,7 @@ Check for Print statements in python files.
 
 This module provides a plugin for ``flake8``, the Python code checker.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Print statement checker plugin for flake8
 Group: Development/Python3
@@ -40,6 +41,7 @@ Group: Development/Python3
 Check for Print statements in python files.
 
 This module provides a plugin for ``flake8``, the Python code checker.
+%endif
 
 %prep
 %setup
@@ -86,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.git20141104
+- Fixed build
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.git20141104
 - Initial build for Sisyphus
 
