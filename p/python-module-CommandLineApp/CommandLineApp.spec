@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.0.7
-Release: alt1.hg20120720
+Release: alt2.hg20120720
 Summary: Base class for command line applications
 License: BSD
 Group: Development/Python
@@ -33,6 +33,7 @@ The CommandLineApp class makes creating command line applications as
 simple as defining callbacks to handle options when they appear in
 sys.argv.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Base class for command line applications
 Group: Development/Python3
@@ -44,6 +45,7 @@ Base class for building command line applications.
 The CommandLineApp class makes creating command line applications as
 simple as defining callbacks to handle options when they appear in
 sys.argv.
+%endif
 
 %prep
 %setup
@@ -96,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.7-alt2.hg20120720
+- Fixed build
+
 * Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.7-alt1.hg20120720
 - Initial build for Sisyphus
 
