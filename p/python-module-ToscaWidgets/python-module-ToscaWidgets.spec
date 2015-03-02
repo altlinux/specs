@@ -4,7 +4,7 @@
 
 Name: python-module-ToscaWidgets
 Version: 0.9.12
-Release: alt1
+Release: alt2
 
 Summary: Toolkit to help create widgets for WSGI web apps
 
@@ -38,6 +38,7 @@ philosophy which is to partition it's services into independent WSGI
 components for easier mainteinance and reuse in other Python web applications
 or frameworks.
 
+%if_with python3
 %package -n python3-module-%srcname
 Summary: Toolkit to help create widgets for WSGI web apps
 Group: Development/Python3
@@ -53,6 +54,7 @@ CherryPy and TurboGears itself to fit better with TurboGears 2.0
 philosophy which is to partition it's services into independent WSGI
 components for easier mainteinance and reuse in other Python web applications
 or frameworks.
+%endif
 
 %prep
 %setup -n %srcname-%version
@@ -97,9 +99,11 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.12-alt2
+- Fixed build
+
 * Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.12-alt1
 - Version 0.9.12
-- Added module for Python 3
 
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.10-alt1.1
 - Rebuild with Python-2.7
