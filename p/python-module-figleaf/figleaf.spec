@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1
+Release: alt2
 Summary: figleaf code coverage tool
 License: BSD
 Group: Development/Python
@@ -32,6 +32,7 @@ model of Ned Batchelder's fantastic coverage module. The goals of
 figleaf are to be a minimal replacement of 'coverage.py' that supports
 more configurable coverage gathering and reporting.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: figleaf code coverage tool
 Group: Development/Python3
@@ -43,6 +44,7 @@ figleaf is a Python code coverage analysis tool, built somewhat on the
 model of Ned Batchelder's fantastic coverage module. The goals of
 figleaf are to be a minimal replacement of 'coverage.py' that supports
 more configurable coverage gathering and reporting.
+%endif
 
 %prep
 %setup
@@ -101,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2
+- Fixed build
+
 * Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1
 - Initial build for Sisyphus
 
