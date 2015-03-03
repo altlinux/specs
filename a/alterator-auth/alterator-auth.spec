@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.26
+Version: 0.26.1
 Release: alt1
 
 BuildArch: noarch
@@ -53,6 +53,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Mar 03 2015 Andrey Cherepanov <cas@altlinux.org> 0.26.1-alt1
+- [system-auth] Disable old scheme services only on scheme change
+
 * Thu Feb 19 2015 Andrey Cherepanov <cas@altlinux.org> 0.26-alt1
 - Add support of Active Directory auth in system-auth
 - Do not require ldap-user-tools for list local configured LDAP DNs (ALT #24180)
