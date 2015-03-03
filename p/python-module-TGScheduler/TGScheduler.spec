@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6.3
-Release: alt2
+Release: alt3
 Summary: Turbogears Scheduler
 License: MIT
 Group: Development/Python
@@ -21,6 +21,8 @@ BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 %endif
 
+%py_requires dateutil
+
 %description
 This scheduler package is based on the TurboGears 1 built-in scheduler
 which is based on Kronos by Irmen de Jong. The scheduler makes it easy
@@ -29,6 +31,7 @@ to have one-time or recurring tasks run as needed.
 %package -n python3-module-%oname
 Summary: Turbogears Scheduler
 Group: Development/Python3
+%py3_requires dateutil
 
 %description -n python3-module-%oname
 This scheduler package is based on the TurboGears 1 built-in scheduler
@@ -104,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.3-alt3
+- Added necessary requirements
+
 * Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.3-alt2
 - Added module for Python 3
 
