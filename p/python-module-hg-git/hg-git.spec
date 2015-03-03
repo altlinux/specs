@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.6.1
-Release: alt1.git20141029
+Version: 0.8.0
+Release: alt1.git20150226
 Summary: Push to and pull from a Git repository using Mercurial
 License: GPLv2
 Group: Development/Python
@@ -31,6 +31,7 @@ This extension lets you communicate (push and pull) with a Git server.
 This way you can use Git hosting for your project or collaborate with a
 project that is in Git. A bridger of worlds, this plugin be.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Push to and pull from a Git repository using Mercurial
 Group: Development/Python3
@@ -40,6 +41,7 @@ Group: Development/Python3
 This extension lets you communicate (push and pull) with a Git server.
 This way you can use Git hosting for your project or collaborate with a
 project that is in Git. A bridger of worlds, this plugin be.
+%endif
 
 %prep
 %setup
@@ -86,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.git20150226
+- Version 0.8.0
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20141029
 - Initial build for Sisyphus
 
