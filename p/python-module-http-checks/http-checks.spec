@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.6
-Release: alt1.git20141127
+Version: 0.1.7
+Release: alt1.git20150106
 Summary: Test a couple of hundred urls in seconds
 License: Free
 Group: Development/Python
@@ -33,6 +33,7 @@ BuildPreReq: python3-module-gevent python3-module-BeautifulSoup4
 http-checks is an application that can test a couple of hundred urls in
 seconds.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Test a couple of hundred urls in seconds
 Group: Development/Python3
@@ -42,6 +43,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 http-checks is an application that can test a couple of hundred urls in
 seconds.
+%endif
 
 %prep
 %setup
@@ -102,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.7-alt1.git20150106
+- Version 0.1.7
+
 * Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.6-alt1.git20141127
 - Version 0.1.6
 
