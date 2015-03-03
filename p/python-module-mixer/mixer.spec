@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.0.7
-Release: alt1.git20150123
+Release: alt2.git20150123
 Summary: Mixer -- Is a fixtures replacement
 License: BSD
 Group: Development/Python
@@ -33,6 +33,7 @@ BuildPreReq: python3-module-django-dbbackend-sqlite3
 %endif
 
 %py_provides %oname
+Requires: python-module-fake-factory
 %py_requires faker
 
 %description
@@ -141,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.7-alt2.git20150123
+- Fixed for new fake-factory & Django 1.8+
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.7-alt1.git20150123
 - Version 5.0.7
 
