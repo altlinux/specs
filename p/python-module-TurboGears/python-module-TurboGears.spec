@@ -1,12 +1,12 @@
 %define version 1.5.1
-%define release alt2
+%define release alt3
 %setup_python_module TurboGears
 
 %def_without python3
 
 Name: %packagename
 Version: 1.5.1
-Release: alt2
+Release: alt3
 
 Summary: Back-to-front web development in Python
 
@@ -26,12 +26,11 @@ BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 %endif
 
-%py_requires turbokid turbocheetah paste.script
+%py_requires turbokid turbocheetah paste.script json dateutil
 # has no pythonX.Y() provides
 Requires: python-module-decoratortools
 Requires: python-module-PasteDeploy
-# TurboGears needs old CherryPy
-Requires: python-module-cherrypy2
+Requires: python-module-cherrypy
 
 %description
 TurboGears brings together four major pieces to create an
@@ -181,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt3
+- Added necessary requirements
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt2
 - Fixed build
 
