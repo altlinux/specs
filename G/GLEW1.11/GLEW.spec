@@ -2,7 +2,7 @@
 
 Name: GLEW%soversion
 Version: %soversion.0
-Release: alt2
+Release: alt3
 
 Summary: The OpenGL Extension Wrangler library
 License: BSD, MIT
@@ -26,6 +26,7 @@ operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solari
 Summary: The OpenGL Extension Wrangler library
 Group: System/Legacy libraries
 Provides: libGLEW = %version-%release
+Obsoletes: libGLEW < 1.12
 
 %description -n lib%name
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
@@ -39,6 +40,7 @@ Summary: The OpenGL Extension Wrangler MX library
 Group: System/Legacy libraries
 Requires: lib%name = %version-%release
 Provides: libGLEWmx = %version-%release
+Obsoletes: libGLEWmx < 1.12
 
 %description -n lib%{name}mx
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
@@ -71,6 +73,9 @@ This package contains lib%name variant with multiple rendering contexts.
 %_libdir/libGLEWmx.so.*
 
 %changelog
+* Wed Mar 04 2015 Nazarov Denis <nenderus@altlinux.org> 1.11.0-alt3
+- Add obsoletes (ALT #30786)
+
 * Sat Feb 28 2015 Nazarov Denis <nenderus@altlinux.org> 1.11.0-alt2
 - Built as legacy library
 
