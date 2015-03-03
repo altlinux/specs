@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt1.git20130422
+Release: alt2.git20130422
 Summary: A connection pool for python-ldap
 License: MPL
 Group: Development/Python
@@ -42,6 +42,7 @@ reducing the time spent to initiate a ldap connection.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A connection pool for python-ldap
 Group: Development/Python3
@@ -61,6 +62,7 @@ The pool keeps LDAP connectors alive and let you reuse them, drastically
 reducing the time spent to initiate a ldap connection.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -117,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt2.git20130422
+- Fixed build
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.git20130422
 - Initial build for Sisyphus
 
