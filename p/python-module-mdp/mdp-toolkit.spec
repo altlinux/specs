@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4
-Release: alt1.git20140427
+Release: alt2.git20140427
 Summary: Modular toolkit for Data Processing
 
 Group: Development/Python
@@ -48,6 +48,7 @@ several Independent Component Analysis algorithms (CuBICA, FastICA,
 TDSEP, JADE, and XSFA), Slow Feature Analysis, Gaussian Classifiers,
 Restricted Boltzmann Machine, and Locally Linear Embedding.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Modular toolkit for Data Processing
 Group: Development/Python3
@@ -84,6 +85,7 @@ Modular toolkit for Data Processing (MDP) is a Python data processing
 framework.
 
 This package contains tests for MDP.
+%endif
 
 %package tests
 Summary: Tests for Modular toolkit for Data Processing
@@ -218,6 +220,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt2.git20140427
+- Fixed build
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20140427
 - New snapshot
 
