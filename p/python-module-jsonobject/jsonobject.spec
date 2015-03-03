@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1.git20141126
+Release: alt1.git20150130
 Summary: A library for dealing with JSON as python objects
 License: BSD
 Group: Development/Python
@@ -31,6 +31,7 @@ BuildPreReq: python3-module-argparse python3-module-six
 A python library for handling deeply nested JSON objects as
 well-schema'd python objects.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A library for dealing with JSON as python objects
 Group: Development/Python3
@@ -39,6 +40,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 A python library for handling deeply nested JSON objects as
 well-schema'd python objects.
+%endif
 
 %prep
 %setup
@@ -89,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20150130
+- New snapshot
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20141126
 - Initial build for Sisyphus
 
