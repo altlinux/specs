@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt1.dev.git20141130
+Release: alt2.dev.git20141130
 Summary: TinyMCE plugins for Kotti
 License: BSD
 Group: Development/Python
@@ -29,6 +29,7 @@ BuildPreReq: python3-devel python3-module-setuptools
 %description
 TinyMCE plugins for Kotti.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: TinyMCE plugins for Kotti
 Group: Development/Python3
@@ -37,6 +38,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 TinyMCE plugins for Kotti.
+%endif
 
 %prep
 %setup
@@ -78,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt2.dev.git20141130
+- Fixed build
+
 * Fri Feb 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.dev.git20141130
 - Version 0.6.0-dev
 
