@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt2.dev.git20150211
+Release: alt2.dev.git20150302
 Summary: A user-friendly, light-weight and extensible web content management system
 License: BSD
 Group: Development/Python
@@ -92,6 +92,7 @@ Kotti is most useful when you are developing applications that
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A user-friendly, light-weight and extensible web content management syste
 Group: Development/Python3
@@ -131,6 +132,7 @@ Kotti is most useful when you are developing applications that
 * work with hierarchical data.
 
 This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -245,6 +247,9 @@ python setup.py test
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt2.dev.git20150302
+- New snapshot
+
 * Fri Feb 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt2.dev.git20150211
 - Added necessary requirements
 
