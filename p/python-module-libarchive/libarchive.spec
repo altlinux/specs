@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.2.1
-Release: alt1
+Release: alt2
 Summary: A libarchive wrapper for Python
 License: BSD
 Group: Development/Python
@@ -29,6 +29,7 @@ A complete wrapper for the libarchive library generated using SWIG. Also
 included in the package are compatibility layers for the Python zipfile
 and tarfile modules.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A libarchive wrapper for Python
 Group: Development/Python3
@@ -39,6 +40,7 @@ Requires: zip
 A complete wrapper for the libarchive library generated using SWIG. Also
 included in the package are compatibility layers for the Python zipfile
 and tarfile modules.
+%endif
 
 %prep
 %setup
@@ -96,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.2.1-alt2
+- Fixed build
+
 * Mon Dec 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.2.1-alt1
 - Initial build for Sisyphus
 
