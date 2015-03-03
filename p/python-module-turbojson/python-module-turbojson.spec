@@ -1,7 +1,7 @@
 %define oname TurboJson
 Name: python-module-turbojson
 Version: 1.3.2
-Release: alt1
+Release: alt2
 
 Summary: a TurboGears support package which provides a template engine plugin
 
@@ -20,7 +20,7 @@ BuildRequires: python-module-setuptools
 
 %setup_python_module turbojson
 
-%py_requires peak.rules
+%py_requires peak.rules simplejson
 
 %description
 This package provides a template engine plugin, allowing you
@@ -52,6 +52,9 @@ http://docs.turbogears.org/1.0/AlternativeTemplating
 %doc README*
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt2
+- Added necessary requirements
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.3.2-alt1
 - new version 1.3.2 (with rpmrb script)
 
