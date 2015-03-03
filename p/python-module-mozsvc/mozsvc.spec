@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.9
-Release: alt2.dev.git20140915
+Release: alt2.dev.git20141212
 Summary: Various utilities for Mozilla apps
 License: MPLv2.0
 Group: Development/Python
@@ -60,6 +60,7 @@ Various utilities for Pyramid-based Mozilla applications.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Various utilities for Mozilla apps
 Group: Development/Python3
@@ -78,6 +79,7 @@ Requires: python3-module-%oname = %EVR
 Various utilities for Pyramid-based Mozilla applications.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -131,8 +133,11 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt2.dev.git20141212
+- New snapshot
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt2.dev.git20140915
-- Added necessaary requirements
+- Added necessary requirements
 
 * Wed Oct 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1.dev.git20140915
 - Initial build for Sisyphus
