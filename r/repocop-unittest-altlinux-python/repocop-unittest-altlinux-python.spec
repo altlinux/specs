@@ -2,8 +2,8 @@
 %define install_all_tests 0
 
 Name: repocop-unittest-altlinux-python
-Version: 0.10
-Release: alt3
+Version: 0.11
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 Url: http://repocop.altlinux.org
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 
 Requires: repocop > 0.40
 Requires: repocop-collector-specfile
+Requires: repocop-collector-repocop-hint
 
 %description
 set of ALTLinux-specific integration tests for repocop test platform.
@@ -39,6 +40,13 @@ install -m 644 *.pl %buildroot%_datadir/repocop/fixscripts/
     install -pD -m 755 $testname.posttest %buildroot%_datadir/repocop/pkgtests/$testname/posttest
 %endif
 
+install -pD -m 755 repocop-helper-altlinux-python-filelist-pattern-filter \
+    %buildroot%_datadir/repocop/pkgtests/altlinux-python-test-is-packaged/repocop-helper-altlinux-python-filelist-pattern-filter
+
+
+
+
+
 %files
 #doc README ChangeLog
 %_datadir/repocop/pkgtests/*
@@ -47,6 +55,9 @@ install -m 644 *.pl %buildroot%_datadir/repocop/fixscripts/
 %endif
 
 %changelog
+* Tue Mar 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- added support for repocop hints
+
 * Wed Jul 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3
 - test exception for python3-module-testscenarios (requested by REAL@)
 
