@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.2.0
-Release: alt1.git20141230
+Release: alt2.git20141230
 Summary: An I/O parallelism library making use of coroutines
 License: BSD
 Group: Development/Python
@@ -31,6 +31,7 @@ BuildPreReq: python-tools-2to3
 %description
 Non-blocking IO with coroutines to mimic blocking IO with threads.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: An I/O parallelism library making use of coroutines
 Group: Development/Python3
@@ -39,6 +40,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 Non-blocking IO with coroutines to mimic blocking IO with threads.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -121,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt2.git20141230
+- Fixed build
+
 * Wed Jan 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1.git20141230
 - Initial build for Sisyphus
 
