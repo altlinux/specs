@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.4.2
-Release: alt1.git20141015
+Version: 0.5.0
+Release: alt1.git20150222
 Summary: Faker is a Python package that generates fake data for you
 License: MIT
 Group: Development/Python
@@ -119,7 +119,7 @@ popd
 %endif
 
 %files
-%doc *.rst *.md
+%doc *.rst
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -135,12 +135,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst *.md
+%doc *.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.git20150222
+- Version 0.5.0
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20141015
 - Initial build for Sisyphus
 
