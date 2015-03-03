@@ -2,7 +2,7 @@
 
 Name: GLEW
 Version: 1.12.0
-Release: alt2
+Release: alt3
 
 Summary: The OpenGL Extension Wrangler library
 License: BSD, MIT
@@ -15,6 +15,10 @@ Source: glew-%version.tgz
 BuildRequires: gcc-c++
 BuildRequires: libGLU-devel
 
+Provides: libGLEW = %version-%release
+Obsoletes: libGLEW = 1.12.0-alt2
+Obsoletes: libGLEW = 1.12.0-alt1
+
 %description
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
 extension loading library. GLEW provides efficient run-time mechanisms for determining 
@@ -22,23 +26,23 @@ which OpenGL extensions are supported on the target platform. OpenGL core and ex
 functionality is exposed in a single header file. GLEW has been tested on a variety of 
 operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
 
-%package -n lib%name
+%package -n lib%name%soversion
 Summary: The OpenGL Extension Wrangler library
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%soversion
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
 extension loading library. GLEW provides efficient run-time mechanisms for determining 
 which OpenGL extensions are supported on the target platform. OpenGL core and extension
 functionality is exposed in a single header file. GLEW has been tested on a variety of 
 operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
 
-%package -n lib%{name}mx
+%package -n lib%{name}mx%soversion
 Summary: The OpenGL Extension Wrangler MX library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name%soversion = %version-%release
 
-%description -n lib%{name}mx
+%description -n lib%{name}mx%soversion
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
 extension loading library. GLEW provides efficient run-time mechanisms for determining 
 which OpenGL extensions are supported on the target platform. OpenGL core and extension
@@ -50,7 +54,7 @@ This package contains lib%name variant with multiple rendering contexts.
 %package -n lib%name-devel
 Summary: The OpenGL Extension Wrangler library development files
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name%soversion = %version-%release
 Conflicts: libglew-devel
 
 %description -n lib%name-devel
@@ -66,7 +70,7 @@ The package contains the C headers to compile programs based on %name.
 Summary: The OpenGL Extension Wrangler MX library development files
 Group: System/Libraries
 Requires: lib%name-devel = %version-%release
-Requires: lib%{name}mx = %version-%release
+Requires: lib%{name}mx%soversion = %version-%release
 Conflicts: libglew-devel
 
 %description -n lib%{name}mx-devel
@@ -95,8 +99,8 @@ The package contains the documentation on %name.
 %package utils
 Summary: The OpenGL Extension Wrangler library utilites
 Group: Development/Tools
-Requires: lib%name = %version-%release
-Requires: lib%{name}mx = %version-%release
+Requires: lib%name%soversion = %version-%release
+Requires: lib%{name}mx%soversion = %version-%release
 
 %description utils
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
@@ -114,23 +118,23 @@ The package contains the utilites on %name.
 %make_build
 
 %install
-%__mkdir_p %buildroot{%_libexecdir/%name,%_libdir,%_pkgconfigdir,%_includedir/GL}
+mkdir -p %buildroot{%_libexecdir/%name,%_libdir,%_pkgconfigdir,%_includedir/GL}
 
-%__install -Dp -m0755 bin/* %buildroot%_libexecdir/%name
-%__install -Dp -m0644 include/GL/*.h %buildroot%_includedir/GL
-%__install -Dp -m0644 *.pc %buildroot%_pkgconfigdir
-%__install -Dp -m0644 lib/lib%name.so.%version %buildroot%_libdir
-%__install -Dp -m0644 lib/lib%{name}mx.so.%version %buildroot%_libdir
+install -Dp -m0755 bin/* %buildroot%_libexecdir/%name
+install -Dp -m0644 include/GL/*.h %buildroot%_includedir/GL
+install -Dp -m0644 *.pc %buildroot%_pkgconfigdir
+install -Dp -m0644 lib/lib%name.so.%version %buildroot%_libdir
+install -Dp -m0644 lib/lib%{name}mx.so.%version %buildroot%_libdir
 
-%__ln_s lib%name.so.%version %buildroot%_libdir/lib%name.so.%soversion
-%__ln_s lib%name.so.%version %buildroot%_libdir/lib%name.so
-%__ln_s lib%{name}mx.so.%version %buildroot%_libdir/lib%{name}mx.so.%soversion
-%__ln_s lib%{name}mx.so.%version %buildroot%_libdir/lib%{name}mx.so
+ln -s lib%name.so.%version %buildroot%_libdir/lib%name.so.%soversion
+ln -s lib%name.so.%version %buildroot%_libdir/lib%name.so
+ln -s lib%{name}mx.so.%version %buildroot%_libdir/lib%{name}mx.so.%soversion
+ln -s lib%{name}mx.so.%version %buildroot%_libdir/lib%{name}mx.so
 
-%files -n lib%name
+%files -n lib%name%soversion
 %_libdir/lib%name.so.*
 
-%files -n lib%{name}mx
+%files -n lib%{name}mx%soversion
 %_libdir/lib%{name}mx.so.*
 
 %files -n lib%name-devel
@@ -151,6 +155,9 @@ The package contains the utilites on %name.
 %_libexecdir/%name/*
 
 %changelog
+* Tue Mar 03 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.12.0-alt3
+- libGLEW: rename according to Shared Libs Policy (ALT #30786).
+
 * Sun Mar 01 2015 Nazarov Denis <nenderus@altlinux.org> 1.12.0-alt2
 - Fix symlink name (ALT #30783, #30784)
 
