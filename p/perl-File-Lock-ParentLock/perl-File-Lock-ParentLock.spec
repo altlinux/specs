@@ -1,7 +1,7 @@
 %define module File-Lock-ParentLock
 
 Name: perl-%module
-Version: 0.02
+Version: 0.03
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -35,6 +35,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-Proc-ProcessTable perl-podlato
 %_man1dir/*
 
 %changelog
+* Tue Mar 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- perl 5.20 fixes
+
 * Wed Oct 12 2011 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - added man page
 
