@@ -1,5 +1,5 @@
 Name: live-install
-Version: 20130930
+Version: 20140303
 Release: alt1
 Summary: Copy altlinux live to fixed disk
 Group: System/Configuration/Other
@@ -28,6 +28,9 @@ mkdir -p %buildroot/%_datadir/%name/scripts.d
 %dir %_datadir/%name/scripts.d
 
 %changelog
+* Tue Mar 03 2015 Eugene Prokopiev <enp@altlinux.ru> 20140303-alt1
+- etc/mtab as symlink and no chkconfig
+
 * Mon Sep 30 2013 Eugene Prokopiev <enp@altlinux.ru> 20130930-alt1
 - fix removing live packages again
 
