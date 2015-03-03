@@ -6,7 +6,7 @@
 
 Name: quagga
 
-%define baseversion 0.99.23.1
+%define baseversion 0.99.24
 Release: alt1
 
 %if %cvs
@@ -29,7 +29,7 @@ Url: http://www.quagga.net/
 %if %cvs
 Source0:	%name-%baseversion-%cvsdate.tar.gz
 %else
-Source0:	%name-%version.tar.xz
+Source0:	%name-%version.tar.gz
 %endif
 Source1:	%name.logrotate
 Source2:	%name.pam
@@ -43,6 +43,7 @@ Source14:	%name-ospf6d.init
 Source15:	%name-bgpd.init
 Source16:	%name-isisd.init
 Source17:	%name-babeld.init
+Source18:	%name-pimd.init
 
 Source19:	%name-watchquagga.init
 
@@ -54,10 +55,11 @@ Source24:	%name-ospf6d.conf
 Source25:	%name-bgpd.conf
 Source26:	%name-isisd.conf
 Source27:	%name-babeld.conf
+Source28:	%name-pimd.conf
 
 Patch1:		quagga-libzebra_to_libospf.patch
 Patch2:		quagga-libospf_to_libospfclient.patch
-Patch3:		quagga-man.patch
+Patch3:		quagga-0.99.24-man.patch
 
 #Errata
 #Patch1001:
@@ -77,11 +79,11 @@ It takes multi-server and multi-thread approach to resolve the current
 complexity of the Internet.
 
 Quagga supports BGP4, BGP4+, OSPFv2, OSPFv3, RIPv1, RIPv2, RIPng,
-                IS-SI, Babel and MPLS-VPN.
+                IS-SI, Babel, PIM  and MPLS-VPN.
 
-Quagga is intended to be used as a Route Server and a Route Reflector. It is
-not a toolkit, it provides full routing power under a new architecture.
-Quagga by design has a process for each protocol.
+Quagga is intended to be used as a Route Server and a Route Reflector.
+It is not a toolkit, it provides full routing power under a new
+architecture. Quagga by design has a process for each protocol.
 
 Quagga is a fork of the GNU Zebra (forked after 2002-07-07).
 
@@ -142,7 +144,7 @@ Quagga documentation
 
 #patch1 -p1
 #patch2 -p1
-%patch3 -p0
+%patch3 -p1
 
 #Errata
 #patch1001 -p1
@@ -167,10 +169,8 @@ Quagga documentation
 export LIBS="-lcap"
 
 export IPFORWARD=ipforward_proc.o; export zebra_ipforward_path=proc; %configure \
-	--enable-ipv6 \
 	--enable-multipath=32 \
 	--enable-tcp-zebra \
-	--enable-nssa \
 	--enable-opaque-lsa \
 	--enable-ospf-te \
 	--enable-vtysh \
@@ -178,11 +178,12 @@ export IPFORWARD=ipforward_proc.o; export zebra_ipforward_path=proc; %configure 
 	--enable-ospfapi=yes \
 	--enable-irdp=yes \
 	--enable-isisd \
+	--enable-pimd \
 	--with-libpam \
 	--enable-user=%quagga_user \
 	--enable-group=%quagga_gid \
 	--enable-vty-group=%vty_gid \
-	--enable-netlink --enable-gcc-rdynamic \
+	--enable-gcc-rdynamic \
 	--sysconfdir=%_sysconfdir/%name \
 	--localstatedir=%_localstatedir/%name
 
@@ -215,6 +216,7 @@ install %SOURCE24 $RPM_BUILD_ROOT%_sysconfdir/%name/ospf6d.conf
 install %SOURCE25 $RPM_BUILD_ROOT%_sysconfdir/%name/bgpd.conf
 install %SOURCE26 $RPM_BUILD_ROOT%_sysconfdir/%name/isisd.conf
 install %SOURCE27 $RPM_BUILD_ROOT%_sysconfdir/%name/babeld.conf
+install %SOURCE28 $RPM_BUILD_ROOT%_sysconfdir/%name/pimd.conf
 
 install -m 755 %SOURCE10 $RPM_BUILD_ROOT%_initdir/zebra
 install -m 755 %SOURCE11 $RPM_BUILD_ROOT%_initdir/ripd
@@ -224,6 +226,7 @@ install -m 755 %SOURCE14 $RPM_BUILD_ROOT%_initdir/ospf6d
 install -m 755 %SOURCE15 $RPM_BUILD_ROOT%_initdir/bgpd
 install -m 755 %SOURCE16 $RPM_BUILD_ROOT%_initdir/isisd
 install -m 755 %SOURCE17 $RPM_BUILD_ROOT%_initdir/babeld
+install -m 755 %SOURCE18 $RPM_BUILD_ROOT%_initdir/pimd
 
 install -m 755 %SOURCE19 $RPM_BUILD_ROOT%_initdir/watchquagga
 
@@ -246,6 +249,7 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %post_service bgpd
 %post_service isisd
 %post_service babeld
+%post_service pimd
 %post_service watchquagga
 } &>/dev/null
 
@@ -258,6 +262,7 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %preun_service bgpd
 %preun_service isisd
 %preun_service babeld
+%preun_service pimd
 %preun_service zebra
 
 %files
@@ -308,6 +313,11 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Tue Mar 03 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.99.24-alt1
+- new version
+- removed old (currently unrecognized) configure's options:
+  enable-ipv6, enable-nssa, enable-netlink
+
 * Mon Sep 01 2014 Sergey Y. Afonin <asy@altlinux.ru> 0.99.23.1-alt1
 - new version
 
