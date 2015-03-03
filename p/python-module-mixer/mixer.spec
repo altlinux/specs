@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.10.2
-Release: alt2.git20141224
+Version: 5.0.7
+Release: alt1.git20150123
 Summary: Mixer -- Is a fixtures replacement
 License: BSD
 Group: Development/Python
@@ -19,7 +19,7 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-django-tests python-module-flask_sqlalchemy
 BuildPreReq: python-module-ipdb python-module-mongoengine
 BuildPreReq: python-module-peewee python-module-pony
-BuildPreReq: python-module-SQLAlchemy
+BuildPreReq: python-module-SQLAlchemy python-module-fake-factory
 BuildPreReq: python-module-django-dbbackend-sqlite3
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
@@ -28,26 +28,30 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-django-tests python3-module-flask_sqlalchemy
 BuildPreReq: python3-module-ipdb python3-module-mongoengine
 BuildPreReq: python3-module-peewee python3-module-pony
-BuildPreReq: python3-module-SQLAlchemy
+BuildPreReq: python3-module-SQLAlchemy python3-module-fake-factory
 BuildPreReq: python3-module-django-dbbackend-sqlite3
 %endif
 
 %py_provides %oname
+%py_requires faker
 
 %description
 Mixer is application to generate instances of Django or SQLAlchemy
 models. It's useful for testing and fixtures replacement. Fast and
 convenient test-data generation.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Mixer -- Is a fixtures replacement
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires faker
 
 %description -n python3-module-%oname
 Mixer is application to generate instances of Django or SQLAlchemy
 models. It's useful for testing and fixtures replacement. Fast and
 convenient test-data generation.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -137,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.7-alt1.git20150123
+- Version 5.0.7
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.10.2-alt2.git20141224
 - Added module for Python 3
 
