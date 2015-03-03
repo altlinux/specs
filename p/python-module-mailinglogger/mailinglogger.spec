@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt1.dev.git20140127
+Release: alt2.dev.git20140127
 Summary: Enhanced emailing handlers for the python logging package
 License: MIT
 Group: Development/Python
@@ -53,6 +53,7 @@ of the running process.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Enhanced emailing handlers for the python logging package
 Group: Development/Python3
@@ -79,6 +80,7 @@ This can either be as the entries are logged or as a summary at the end
 of the running process.
 
 This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -177,6 +179,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2.dev.git20140127
+- Fixed build
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.dev.git20140127
 - Initial build for Sisyphus
 
