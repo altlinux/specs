@@ -50,9 +50,10 @@
 %define src_3_17_version 2.05
 %define src_3_18_version 2.05
 %define src_3_19_version 2.06
+%define src_4_0_version 2.06
 
 Name: etercifs
-Version: 5.4.11
+Version: 5.4.12
 Release: alt1
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
@@ -113,6 +114,7 @@ Source58: %src_package_name-3.18-%src_3_18_version.tar.bz2
 Source59: %src_package_name-3.19-%src_3_19_version.tar.bz2
 Source60: %src_package_name-centos60-%src_centos60_version.tar.bz2
 Source70: %src_package_name-centos70-%src_centos70_version.tar.bz2
+Source140: %src_package_name-4.0-%src_4_0_version.tar.bz2
 
 Conflicts: linux-cifs
 
@@ -152,6 +154,7 @@ Provides: %src_package_name-3.16 = %version-%release
 Provides: %src_package_name-3.17 = %version-%release
 Provides: %src_package_name-3.18 = %version-%release
 Provides: %src_package_name-3.19 = %version-%release
+Provides: %src_package_name-4.0 = %version-%release
 
 Obsoletes: %src_package_name-2.6.24
 Obsoletes: %src_package_name-2.6.25
@@ -258,6 +261,7 @@ cp %SOURCE5 %buildroot/%etercifs_src/
 cp %SOURCE6 %buildroot/%etercifs_src/
 cp %SOURCE7 %buildroot/%etercifs_src/
 
+# v2.6.x kernels
 cp %SOURCE16 %buildroot/%etercifs_src/
 cp %SOURCE23 %buildroot/%etercifs_src/
 cp %SOURCE24 %buildroot/%etercifs_src/
@@ -276,6 +280,8 @@ cp %SOURCE36 %buildroot/%etercifs_src/
 cp %SOURCE37 %buildroot/%etercifs_src/
 cp %SOURCE38 %buildroot/%etercifs_src/
 cp %SOURCE39 %buildroot/%etercifs_src/
+
+# v3.x kernels
 cp %SOURCE40 %buildroot/%etercifs_src/
 cp %SOURCE41 %buildroot/%etercifs_src/
 cp %SOURCE42 %buildroot/%etercifs_src/
@@ -296,6 +302,9 @@ cp %SOURCE56 %buildroot/%etercifs_src/
 cp %SOURCE57 %buildroot/%etercifs_src/
 cp %SOURCE58 %buildroot/%etercifs_src/
 cp %SOURCE59 %buildroot/%etercifs_src/
+
+# v4.x kernels
+cp %SOURCE140 %buildroot/%etercifs_src/
 
 # CentOS 6.x
 cp %SOURCE60 %buildroot/%etercifs_src/
@@ -385,6 +394,8 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.18-%src_3_18_version.tar.bz2
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.18-%version.tar.bz2
 ln -s ../../../../%etercifs_src/%src_package_name-3.19-%src_3_19_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.19-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-4.0-%src_4_0_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-4.0-%version.tar.bz2
 
 # Special case for Fedora 15 v2.6.4x.* kernels
 ln -s ../../../../%etercifs_src/%src_package_name-3.0-%src_3_0_version.tar.bz2 \
@@ -414,6 +425,16 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
 %_sbindir/%name-build
 
 %changelog
+* Tue Mar 03 2015 Pavel Shilovsky <piastry@altlinux.org> 5.4.12-alt1
+- Add sources for 4.0 (v4.0-rc1)
+- Update 3.13 sources from stable (v3.13.11-ckt16)
+- Update 3.16 sources from stable (v3.16.7-ckt7)
+- Update 3.19 sources from stable (v3.19)
+- Update 3.18 sources from stable (v3.18.8)
+- Update 3.14 sources from stable (v3.14.34)
+- Update 3.12 sources from stable (v3.12.38)
+- Update 3.2 sources from stable (v3.2.67)
+
 * Wed Dec 24 2014 Pavel Shilovsky <piastry@altlinux.org> 5.4.11-alt1
 - Add sec=ntlmv2 to MOUNT_OPTIONS
 - Add sources for 3.19 (v3.19-rc1)
