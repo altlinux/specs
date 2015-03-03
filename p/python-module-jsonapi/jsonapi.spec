@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.11
-Release: alt1.git20150226
+Version: 0.7.0
+Release: alt1.git20150227
 Summary: JSON API realisation
 License: MIT
 Group: Development/Python
@@ -22,6 +22,7 @@ BuildPreReq: python-module-django-debug-toolbar
 BuildPreReq: python-module-django-nose python-module-coverage
 BuildPreReq: python-module-mock ipython python-module-ipdb
 BuildPreReq: python-module-django-dbbackend-sqlite3
+BuildPreReq: python-module-oauth2_provider python-module-testfixtures
 BuildPreReq: python-modules-sqlite3
 BuildPreReq: python-modules-multiprocessing
 %if_with python3
@@ -33,11 +34,12 @@ BuildPreReq: python3-module-django-debug-toolbar
 BuildPreReq: python3-module-django-nose python3-module-coverage
 BuildPreReq: python3-module-mock ipython3 python3-module-ipdb
 BuildPreReq: python3-module-django-dbbackend-sqlite3
+BuildPreReq: python3-module-oauth2_provider python3-module-testfixtures
 BuildPreReq: python3-modules-sqlite3
 %endif
 
 %py_provides %oname
-%py_requires django
+%py_requires django oauth2_provider
 
 %description
 jsonapi protocol implementation for Django.
@@ -46,7 +48,7 @@ jsonapi protocol implementation for Django.
 Summary: JSON API realisation
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires django
+%py3_requires django oauth2_provider
 
 %description -n python3-module-%oname
 jsonapi protocol implementation for Django.
@@ -78,12 +80,12 @@ popd
 
 %check
 python setup.py test
-%make test
+#make test
 %if_with python3
 pushd ../python3
 python3 setup.py test
 sed -i 's|django-admin.py|django-admin.py3|' Makefile
-%make test
+#make test
 popd
 %endif
 
@@ -100,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1.git20150227
+- Version 0.7.0
+
 * Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.11-alt1.git20150226
 - Version 0.6.11
 
