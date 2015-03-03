@@ -1,6 +1,8 @@
+%def_disable check
+
 Name: monotone
 Version: 1.2
-Release: alt2.dev.mtn20140605
+Release: alt2.dev.mtn20150211
 
 Summary: Distributed version control system
 License: GPL
@@ -27,15 +29,18 @@ functions to client-side RSA certificates.
 %prep
 %setup
 
+rm -fR Attic/botan
+
 %build
 %autoreconf
 %add_optflags -std=gnu++11
 %add_optflags -DBOOST_DISABLE_ASSERTS=1 -DBOOST_ENABLE_ASSERT_HANDLER
+export CPPFLAGS="%optflags"
 %configure --enable-ipv6
 %make_build
 
-#check
-#DISABLE_NETWORK_TESTS=1 %make check
+%check
+DISABLE_NETWORK_TESTS=1 make check
 
 %install
 %makeinstall
@@ -51,6 +56,9 @@ functions to client-side RSA certificates.
 %doc AUTHORS NEWS README UPGRADE HACKING INSTALL ChangeLog notes/*
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.dev.mtn20150211
+- New snapshot
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.dev.mtn20140605
 - Deleted bash completion file (ALT #30775)
 
