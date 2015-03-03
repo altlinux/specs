@@ -1,6 +1,6 @@
 Name: putty
-Version: 0.63
-Release: alt1.qa1
+Version: 0.64
+Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
 License: MIT
@@ -55,6 +55,13 @@ install -pD -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Tue Mar 03 2015 Michael Shigorin <mike@altlinux.org> 0.64-alt1
+- security fixes:
+  + failure to scrub private keys from memory after use, see
+    http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/private-key-not-wiped-2.html
+  + missing range check in Diffie-Hellman key exchange, see
+    http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/diffie-hellman-range-check.html
+
 * Mon Jun 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1.qa1
 - NMU: fixed bugs in watch file
 
