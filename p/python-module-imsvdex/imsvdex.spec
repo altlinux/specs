@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt1.dev0.svn20140527
+Release: alt2.dev0.svn20140527
 Summary: Read/write vocabularies in IMS Vocabulary Definition Exchange format
 License: D-FSL - German Free Software License
 Group: Development/Python
@@ -40,6 +40,7 @@ Exchange format.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Read/write vocabularies in IMS Vocabulary Definition Exchange format
 Group: Development/Python3
@@ -59,6 +60,7 @@ API to access and modify XML files in the IMS Vocabulary Definition
 Exchange format.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -113,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt2.dev0.svn20140527
+- Fixed build
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.dev0.svn20140527
 - Initial build for Sisyphus
 
