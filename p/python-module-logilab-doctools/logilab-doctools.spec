@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt1
+Release: alt2
 Summary: Tools used at Logilab to make documents
 License: GPL
 Group: Development/Python
@@ -44,6 +44,7 @@ Set of tools to help transforming documents in various formats.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Tools used at Logilab to make documents
 Group: Development/Python3
@@ -63,6 +64,7 @@ Requires: python3-module-%oname = %EVR
 Set of tools to help transforming documents in various formats.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -122,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2
+- Fixed build
+
 * Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1
 - Initial build for Sisyphus
 
