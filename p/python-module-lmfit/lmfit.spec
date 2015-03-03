@@ -1,10 +1,10 @@
 %define oname lmfit
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 0.8.1
-Release: alt1.git20141121
+Version: 0.8.3
+Release: alt1.git20150302
 Summary: Least-Squares Minimization with Bounds and Constraints
 License: BSD
 Group: Development/Python
@@ -17,16 +17,22 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-scipy libnumpy-devel
-BuildPreReq: python-module-nose xvfb-run
+BuildPreReq: python-module-nose xvfb-run python-module-matplotlib
+BuildPreReq: python-module-lxml python-module-pygobject3
+BuildPreReq: python-module-pycairo
+BuildPreReq: python-modules-json
 BuildPreReq: python-module-sphinx-devel ipython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-scipy libnumpy-py3-devel
 BuildPreReq: python3-module-nose python3-module-matplotlib
+BuildPreReq: python3-module-lxml python3-module-pygobject3
+BuildPreReq: python3-module-pycairo
 %endif
 
 %py_provides %oname
+%py_requires json numpy scipy matplotlib lxml gi cairo
 
 %description
 A library for least-squares minimization and data fitting in Python.
@@ -47,10 +53,13 @@ provided for exploring minmization problems where the approximation of
 estimating Parameter uncertainties from the covariance matrix is
 questionable.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Least-Squares Minimization with Bounds and Constraints
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires json numpy scipy matplotlib lxml gi cairo
+%add_python3_req_skip UserDict
 
 %description -n python3-module-%oname
 A library for least-squares minimization and data fitting in Python.
@@ -70,6 +79,7 @@ In addition, methods for explicitly calculating confidence intervals are
 provided for exploring minmization problems where the approximation of
 estimating Parameter uncertainties from the covariance matrix is
 questionable.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -143,18 +153,18 @@ popd
 %endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C doc pickle
-%make -C doc html
+xvfb-run make -C doc pickle
+xvfb-run make -C doc html
 
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
-xvfb-run nosetests
+xvfb-run nosetests -v
 %if_with python3
 pushd ../python3
 python3 setup.py test
-#xvfb-run nosetests3
+xvfb-run nosetests3 -v
 popd
 %endif
 
@@ -176,6 +186,10 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20150302
+- Version 0.8.3
+- Added module for Python 3
+
 * Sun Nov 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1.git20141121
 - Initial build for Sisyphus
 
