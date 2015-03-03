@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt1.git20141120
+Release: alt2.git20141120
 Summary: A simple Python RPC system (ZeroMQ + Threading/Tornado/Gevent/Eventlet/Greenhouse)
 License: BSD
 Group: Development/Python
@@ -44,6 +44,7 @@ added support for Python Threading and various Greenlet environments,
 refactored code, made incompatible API changes, added new features and
 examples.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A simple Python RPC system (ZeroMQ + Threading/Tornado/Gevent/Eventlet/Greenhouse)
 Group: Development/Python3
@@ -60,6 +61,7 @@ Initially the code was forked from ZPyRPC in Feb 2014. The fork has
 added support for Python Threading and various Greenlet environments,
 refactored code, made incompatible API changes, added new features and
 examples.
+%endif
 
 %prep
 %setup
@@ -112,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2.git20141120
+- Fixed build
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20141120
 - Initial build for Sisyphus
 
