@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1.git20141101
+Release: alt2.git20141101
 Summary: TCP & HTTP RPC Servers built on msgpack and gevent
 License: MIT
 Group: Development/Python
@@ -32,6 +32,7 @@ BuildPreReq: python-tools-2to3
 %description
 TCP & HTTP RPC Servers written with msgpack and gevent.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: TCP & HTTP RPC Servers built on msgpack and gevent
 Group: Development/Python3
@@ -40,6 +41,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 TCP & HTTP RPC Servers written with msgpack and gevent.
+%endif
 
 %prep
 %setup
@@ -96,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt2.git20141101
+- Fixed build
+
 * Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.git20141101
 - Initial build for Sisyphus
 
