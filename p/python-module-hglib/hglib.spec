@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5
-Release: alt1
+Release: alt2
 Summary: Mercurial Python library
 License: MIT
 Group: Development/Python
@@ -30,6 +30,7 @@ BuildPreReq: python-tools-2to3
 python-hglib is a library with a fast, convenient interface to
 Mercurial. It uses Mercurial's command server for communication with hg.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Mercurial Python library
 Group: Development/Python3
@@ -38,6 +39,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 python-hglib is a library with a fast, convenient interface to
 Mercurial. It uses Mercurial's command server for communication with hg.
+%endif
 
 %prep
 %setup
@@ -84,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt2
+- Fixed build
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1
 - Initial build for Sisyphus
 
