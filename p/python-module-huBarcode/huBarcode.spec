@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.git20140102
+Release: alt2.git20140102
 Summary: Generation of barcodes in Python
 License: BSD
 Group: Development/Python
@@ -30,6 +30,7 @@ BuildPreReq: python-tools-2to3
 %description
 huBarcode is a Python Library to generate 1D and 2D Barcodes.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Generation of barcodes in Python
 Group: Development/Python3
@@ -38,6 +39,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 huBarcode is a Python Library to generate 1D and 2D Barcodes.
+%endif
 
 %prep
 %setup
@@ -85,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2.git20140102
+- Fixed build
+
 * Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.git20140102
 - Initial build for Sisyphus
 
