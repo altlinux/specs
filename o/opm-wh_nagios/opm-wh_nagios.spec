@@ -1,6 +1,6 @@
 Name: opm-wh_nagios
 Version: 2.3
-Release: alt1
+Release: alt1.1
 
 Summary: Nagios stat warehouse for Open PostgreSQL Monitoring
 License: BSD like
@@ -16,7 +16,7 @@ BuildArchitectures: noarch
 
 Requires: opm-core = 2.3
 
-BuildPreReq: postgresql9.3-devel perl-podlators
+BuildPreReq: postgresql9.4-devel perl-podlators
 BuildPreReq: perl-Mojolicious >= 4.50
 BuildPreReq: opm-core = 2.3
 
@@ -26,7 +26,7 @@ Open PostgreSQL Monitoring Nagios stat warehouse.
 %package postgresql
 Summary: PostgreSQL extension for OPM
 Group: Development/Python
-Requires: postgresql9.3-server postgresql9.3-contrib
+Requires: postgresql9.4-server postgresql9.4-contrib
 
 %description postgresql
 PostgreSQL extension for Open PostgreSQL Monitoring Nagios stat warehouse.
@@ -67,5 +67,8 @@ install -m655 bin/nagios_dispatcher.pl %buildroot/%_sbindir/
 %_sbindir/nagios_dispatcher.pl
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1.1
+- Rebuilt with PostgreSQL 9.4
+
 * Sun Sep 14 2014 Vitaly Lipatov <lav@altlinux.ru> 2.3-alt1
 - initial build for ALT Linux Sisyphus
