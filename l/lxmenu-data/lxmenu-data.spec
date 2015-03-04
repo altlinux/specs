@@ -1,6 +1,6 @@
 Name: lxmenu-data
 Version: 0.1.4
-Release: alt1
+Release: alt3
 
 Summary: Freedesktop.org application menu definition files
 License: LGPL
@@ -17,6 +17,10 @@ BuildRequires: intltool
 BuildRequires: gettext glib2-devel rpm-build-xdg
 
 BuildArch: noarch
+
+Provides: lxde-lxmenu-data = %version-%release
+Obsoletes: lxde-lxmenu-data < 0.1.4
+Conflicts: altlinux-freedesktop-menu-lxde
 
 %description
 %summary
@@ -43,6 +47,12 @@ autoconf
 %doc AUTHORS README TODO
 
 %changelog
+* Wed Mar 04 2015 Michael Shigorin <mike@altlinux.org> 0.1.4-alt3
+- C: altlinux-freedesktop-menu-lxde (see also #30405)
+
+* Tue Oct 21 2014 Michael Shigorin <mike@altlinux.org> 0.1.4-alt2
+- P:/O: lxde-lxmenu-data (closes: #30405)
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.1.4-alt1
 - 0.1.4
 
