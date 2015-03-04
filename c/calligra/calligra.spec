@@ -5,11 +5,9 @@
 # obsileted koffice version
 %define koffice_ver 4:2.3.70
 
-%def_disable RDF
-
 Name: calligra
-Version: 2.8.7
-Release: alt3
+Version: 2.9.0
+Release: alt1
 Epoch: 0
 %define libname lib%name
 
@@ -36,13 +34,10 @@ Requires: %name-okular-odp = %EVR
 Source: http://download.kde.org/stable/calligra-%version/calligra-%version.tar
 Source1: FindOkular.cmake
 # FC
-Patch1: calligra-2.7.90-no_mpxj.patch
-Patch2: 0001-switch-to-librevenge-based-import-libs.patch
-Patch3: calligra-eigen3.patch
 # ALT
 Patch101: calligra-2.6.0-alt-build-active.patch
 Patch102: calligra-2.8.0-alt-fix-compile.patch
-Patch103: calligra-2.8.0-alt-disable-rdf.patch
+Patch103: calligra-2.9.0-alt-disable-products.patch
 
 # Automatically added by buildreq on Fri Nov 02 2012 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static ilmbase-devel kde4libs kde4libs-devel kde4pimlibs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libgst-plugins libjpeg-devel libpng-devel libpoppler-devel libpoppler4-qt4 libpq-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libtiff-devel libxkbfile-devel openssh-common phonon-devel pkg-config python-base rpm-build-gir ruby shared-desktop-ontologies-devel shared-mime-info soprano-backend-redland soprano-backend-virtuoso xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -261,14 +256,9 @@ Requires: %name-common = %EVR
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 #%patch101 -p1
 %patch102 -p1
-%if_disabled RDF
 %patch103 -p1
-%endif
 cp -ar %SOURCE1 cmake/modules/
 
 %build
@@ -284,6 +274,11 @@ cp -ar %SOURCE1 cmake/modules/
 %install
 %K4install
 
+# move files back
+#mv %buildroot/%_K4srv/calligra/* %buildroot/%_K4srv/
+mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
+mv %buildroot/%_K4xdg_apps/calligra/* %buildroot/%_K4xdg_apps/
+
 
 %files
 %files common
@@ -297,17 +292,20 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4apps/cmake/modules/FindCalligraLibs.cmake
 %_K4link/lib*.so
 %_K4includedir/calligra/
-%_K4includedir/kexi/
+#%_K4includedir/kexi/
 %_K4includedir/krita/
 %_K4includedir/stage/
 %_K4includedir/sheets/
 %_K4includedir/words/
-%_K4includedir/*.h
+#%_K4includedir/*.h
 
 %files core
 %dir %_K4libdir/calligra/
 %dir %_K4libdir/calligra/imports
 %dir %_K4libdir/calligra/imports/org/
+%dir %_K4libdir/calligra/imports/org/calligra/
+%dir %_K4libdir/calligra/imports/Calligra/
+%dir %_K4libdir/calligra/imports/Calligra/Gemini/
 %_K4bindir/calligra
 %_K4doc/en/calligra/
 %_K4bindir/calligraconverter
@@ -343,6 +341,8 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/calligra_shape_video.so
 %_K4lib/calligraimagethumbnail.so
 #%_K4lib/threedshape.so
+%_K4lib/plugins/imageformats/*.so
+%_K4libdir/calligra/imports/org/calligra/CalligraComponents/
 %_K4apps/calligra/
 %_K4apps/koproperty/
 %_K4xdg_mime/msooxml-all.xml
@@ -350,25 +350,26 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4iconsdir/hicolor/*/*/*
 %_K4iconsdir/oxygen/*/*/*
 #%_K4xdg_apps/calligra.desktop
-%_K4srv/calligra_textediting_autocorrect.desktop
-%_K4srv/calligra_tool_basicflakes.desktop
-%_K4srv/calligra_docker_defaults.desktop
-%_K4srv/calligrastageeventactions.desktop
-%_K4srv/calligrastagetoolanimation.desktop
-%_K4srv/calligra_textediting_changecase.desktop
-%_K4srv/calligra_tool_defaults.desktop
-%_K4srv/calligradocinfopropspage.desktop
-%_K4srv/kolcmsengine.desktop
-%_K4srv/kopabackgroundtool.desktop
+%_K4srv/calligra/calligra_textediting_autocorrect.desktop
+%_K4srv/calligra/calligra_tool_basicflakes.desktop
+%_K4srv/calligra/calligra_docker_defaults.desktop
+%_K4srv/calligra/calligrastageeventactions.desktop
+%_K4srv/calligra/calligrastagetoolanimation.desktop
+%_K4srv/calligra/calligra_textediting_changecase.desktop
+%_K4srv/calligra/calligra_tool_defaults.desktop
+%_K4srv/calligra/calligradocinfopropspage.desktop
+%_K4srv/calligra/kolcmsengine.desktop
+%_K4srv/calligra/kopabackgroundtool.desktop
 %_K4srv/calligra/koreport_barcodeplugin.desktop
 %_K4srv/calligra/koreport_chartplugin.desktop
-%_K4srv/calligra_filter_eps2svgai.desktop
-%_K4srv/calligra_filter_pdf2svg.desktop
-%_K4srv/calligra_filter_kpr2odp.desktop
-%_K4srv/calligra_textediting_spellcheck.desktop
-%_K4srv/calligra_textinlineobject_variables.desktop
-%_K4srv/calligra_textediting_thesaurus.desktop
+%_K4srv/calligra/calligra_filter_eps2svgai.desktop
+%_K4srv/calligra/calligra_filter_pdf2svg.desktop
+%_K4srv/calligra/calligra_filter_kpr2odp.desktop
+%_K4srv/calligra/calligra_textediting_spellcheck.desktop
+%_K4srv/calligra/calligra_textinlineobject_variables.desktop
+%_K4srv/calligra/calligra_textediting_thesaurus.desktop
 %_K4srv/calligra_odg_thumbnail.desktop
+%_K4srv/qimageioplugins/*.desktop
 #%_K4srv/threedshape.desktop
 %_K4srvtyp/calligradb_driver.desktop
 %_K4srvtyp/calligra_application.desktop
@@ -386,39 +387,30 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srvtyp/texteditingplugin.desktop
 #%_K4srvtyp/textvariableplugin.desktop
 %_K4srvtyp/widgetfactory.desktop
-%_K4srv/calligra_shape_artistictext.desktop
-%_K4srv/calligra_shape_chart.desktop
+%_K4srvtyp/kopa_tool.desktop
+%_K4srv/calligra/calligra_shape_artistictext.desktop
+%_K4srv/calligra/calligra_shape_chart.desktop
 #%_K4srv/kchartpart.desktop
-%_K4srv/kformulapart.desktop
+%_K4srv/calligra/kformulapart.desktop
 #%_K4srv/kexirelationdesignshape.desktop
-%_K4srv/calligra_shape_formular.desktop
-%_K4srv/calligra_shape_music.desktop
-%_K4srv/calligra_shape_picture.desktop
-%_K4srv/calligra_shape_plugin.desktop
-%_K4srv/calligra_shape_spreadsheet.desktop
-%_K4srv/calligra_shape_text.desktop
-%_K4srv/calligra_shape_vector.desktop
-%_K4srv/calligra_shape_video.desktop
+%_K4srv/calligra/calligra_shape_formular.desktop
+%_K4srv/calligra/calligra_shape_music.desktop
+%_K4srv/calligra/calligra_shape_picture.desktop
+%_K4srv/calligra/calligra_shape_plugin.desktop
+%_K4srv/calligra/calligra_shape_spreadsheet.desktop
+%_K4srv/calligra/calligra_shape_text.desktop
+%_K4srv/calligra/calligra_shape_vector.desktop
+%_K4srv/calligra/calligra_shape_video.desktop
 %_K4apps/formulashape/
 %_K4apps/musicshape/
-%_datadir/color/icc/pigment/
 %_K4srvtyp/pigment*.desktop
 %_K4lib/calligra_shape_paths.so
-%_K4srv/calligra_shape_paths.desktop
+%_K4srv/calligra/calligra_shape_paths.desktop
 #%_K4srvtyp/kofilter*.desktop
-%if_enabled RDF
-%_K4lib/calligra_semanticitem_contact.so
-%_K4lib/calligra_semanticitem_event.so
-%_K4lib/calligra_semanticitem_location.so
-%_K4srv/calligra_semanticitem_contact.desktop
-%_K4srv/calligra_semanticitem_event.desktop
-%_K4srv/calligra_semanticitem_location.desktop
-%_K4srvtyp/calligra_semanticitem.desktop
-%endif
 
 %files active
 %_K4bindir/calligraactive
-%_desktopdir/calligraactive.desktop
+%_K4xdg_apps/calligraactive.desktop
 %_datadir/calligraactive/qml/
 
 %files braindump
@@ -429,8 +421,8 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/braindump_shape_state.so
 %_K4lib/braindump_shape_web.so
 %_K4apps/stateshape/
-%_K4srv/braindump_shape_state.desktop
-%_K4srv/braindump_shape_web.desktop
+%_K4srv/calligra/braindump_shape_state.desktop
+%_K4srv/calligra/braindump_shape_web.desktop
 
 %files reports-map-element
 %_K4lib/koreport_mapsplugin.so
@@ -449,20 +441,20 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/kspread_plugin_tool_calendar.so
 %_K4lib/calligra_shape_spreadsheet-deferred.so
 %_K4apps/sheets/
-%_K4srv/krossmodulesheets.desktop
-%_K4srv/calligra_filter_*kspread*.desktop
-%_K4srv/calligra_filter_xls*.desktop
+%_K4srv/calligra/krossmodulesheets.desktop
+%_K4srv/calligra/calligra_filter_*kspread*.desktop
+%_K4srv/calligra/calligra_filter_xls*.desktop
 %_K4srv/sheets_*_thumbnail.desktop
 %_K4srv/ServiceMenus/sheets_print.desktop
 %_K4conf/sheetsrc
 %_K4cfg/sheets.kcfg
-%_K4srv/kspread_plugin_tool_calendar.desktop
-%_K4srv/kspread*module.desktop
-%_K4srv/calligra_filter_*sheets*.desktop
-%_K4srv/calligra_shape_spreadsheet-deferred.desktop
-%_K4srv/sheetsscripting.desktop
-%_K4srv/sheetssolver.desktop
-%_K4srv/sheetspart.desktop
+%_K4srv/calligra/kspread_plugin_tool_calendar.desktop
+%_K4srv/calligra/kspread*module.desktop
+%_K4srv/calligra/calligra_filter_*sheets*.desktop
+%_K4srv/calligra/calligra_shape_spreadsheet-deferred.desktop
+%_K4srv/calligra/sheetsscripting.desktop
+%_K4srv/calligra/sheetssolver.desktop
+%_K4srv/calligra/sheetspart.desktop
 %_K4srvtyp/sheets_plugin.desktop
 %_K4srvtyp/sheets_viewplugin.desktop
 %_K4tmpl/SpreadSheet.*
@@ -481,12 +473,14 @@ cp -ar %SOURCE1 cmake/modules/
 #%_K4lib/Filterkpr2odf.so
 %_K4lib/calligra_filter_ppt2odp.so
 %_K4lib/calligra_filter_pptx2odp.so
+%_K4lib/calligra_filter_key2odp.so
 %_K4apps/stage/
 %_K4conf/stagerc
 %_K4doc/en/stage/
-%_K4srv/kpr*.desktop
-%_K4srv/calligra_filter_ppt2odp.desktop
-%_K4srv/calligra_filter_pptx2odp.desktop
+%_K4srv/calligra/kpr*.desktop
+%_K4srv/calligra/calligra_filter_ppt2odp.desktop
+%_K4srv/calligra/calligra_filter_pptx2odp.desktop
+%_K4srv/calligra/calligra_filter_key2odp.desktop
 %_K4srvtyp/kpr*.desktop
 %_K4srvtyp/presentationeventaction.desktop
 %_K4srvtyp/scripteventaction.desktop
@@ -494,9 +488,10 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4tmpl/.source/Presentation.*
 %_K4xdg_apps/*stage.desktop
 #%_K4srv/Filterkpr2odf.desktop
-%_K4srv/stagepart.desktop
+%_K4srv/calligra/stagepart.desktop
 %_K4srv/stage_*_thumbnail.desktop
 %_K4srv/ServiceMenus/stage_print.desktop
+%_K4xdg_mime/x-iwork-keynote-sffkey.xml
 
 %files karbon
 %_K4bindir/karbon
@@ -507,9 +502,10 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/calligra_filter_xfig2odg.so
 %_K4apps/karbon/
 %_K4srv/karbon*.desktop
-%_K4srv/calligra_filter_*karbon*.desktop
-%_K4srv/calligra_filter_wmf2svg.desktop
-%_K4srv/calligra_filter_xfig2odg.desktop
+%_K4srv/calligra/karbon*.desktop
+%_K4srv/calligra/calligra_filter_*karbon*.desktop
+%_K4srv/calligra/calligra_filter_wmf2svg.desktop
+%_K4srv/calligra/calligra_filter_xfig2odg.desktop
 %_K4srvtyp/karbon_*.desktop
 %_K4tmpl/Illustration.*
 %_K4tmpl/.source/Illustration.*
@@ -521,30 +517,37 @@ cp -ar %SOURCE1 cmake/modules/
 %doc krita/AUTHORS krita/ChangeLog krita/README
 %_K4bindir/gmicparser
 %_K4bindir/krita
-%_K4bindir/kritagemini
-%_K4bindir/kritasketch
+#%_K4bindir/kritagemini
+#%_K4bindir/kritasketch
 %_K4conf/kritarc
-%_K4libdir/libkdeinit4_krita.so
+#%_K4libdir/libkdeinit4_krita.so
 %_K4lib/*krita*.*
 %_K4libdir/calligra/imports/org/krita/
 %_K4apps/krita/
 %_K4apps/kritagemini/
 %_K4apps/kritasketch/
+%_K4apps/kritaanimation/
 %_K4conf/krita*.knsrc
-%_K4conf/kritagemini*
+#%_K4conf/kritagemini*
 %_K4conf/kritasketch*
-%_K4srv/krita*.desktop
+%_K4srv/calligra/krita*.desktop
+%_K4srv/krita_kra_thumbnail.desktop
 %_K4srvtyp/krita*.desktop
+%_K4srv/ServiceMenus/krita_print.desktop
 %_K4xdg_apps/*krita*.desktop
 %_K4xdg_mime/krita_ora.xml
 %_K4apps/kritaplugins/
 %_K4apps/color-schemes/Krita*.colors
 %_datadir/color/icc/krita/
-%_K4srv/ServiceMenus/krita_print.desktop
 %_K4xdg_mime/krita.xml
 #
 %dir %_datadir/appdata
 %_datadir/appdata/krita.appdata.xml
+#
+%_K4bindir/calligragemini*
+%_K4apps/calligragemini/
+%_K4libdir/calligra/imports/Calligra/Gemini/
+%_K4xdg_apps/calligragemini.desktop
 
 %files kexi
 %doc kexi/CHANGES kexi/README
@@ -583,7 +586,8 @@ cp -ar %SOURCE1 cmake/modules/
 #_K4doc/en/flow/
 %_K4conf/flow_stencils.knsrc
 %_K4srv/flow*.desktop
-%_K4srv/calligra_filter_vsdx2odg.desktop
+%_K4srv/calligra/flow*.desktop
+%_K4srv/calligra/calligra_filter_vsdx2odg.desktop
 %_K4xdg_apps/flow.desktop
 %_K4conf/flowrc
 %_K4srv/ServiceMenus/flow_print.desktop
@@ -607,12 +611,12 @@ cp -ar %SOURCE1 cmake/modules/
 #%_K4lib/planconvert/
 %_K4srvtyp/plan_schedulerplugin.desktop
 %_K4srvtyp/plan_viewplugin.desktop
-%_K4srv/krossmoduleplan.desktop
+%_K4srv/calligra/krossmoduleplan.desktop
 %_K4apps/plan/
 %_K4apps/planwork/
 %_K4cfg/plansettings.kcfg
 %_K4cfg/planworksettings.kcfg
-%_K4srv/plan*.desktop
+%_K4srv/calligra/plan*.desktop
 #%_K4srv/calligra_filter_mpp2plan.desktop
 #%_K4srv/calligra_filter_planner2plan.desktop
 %_K4xdg_apps/plan.desktop
@@ -629,7 +633,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4tmpl/.source/TextDocument.*
 %_K4xdg_apps/words.desktop
 %_K4xdg_apps/calligrawords_ascii.desktop
-%_K4srv/wordspart.desktop
+%_K4srv/calligra/wordspart.desktop
 %_K4lib/calligra_filter_applixword2odt.so
 %_K4lib/calligra_filter_ascii2words.so
 %_K4lib/calligra_filter_doc2odt.so
@@ -644,22 +648,27 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/calligra_filter_wpg2svg.so
 %_K4lib/calligra_filter_wpg2odg.so
 %_K4lib/calligra_filter_wps2odt.so
-%_K4srv/calligra_filter_applixword2odt.desktop
-%_K4srv/calligra_filter_ascii2words.desktop
-%_K4srv/calligra_filter_doc2odt.desktop
-%_K4srv/calligra_filter_docx2odt.desktop
-%_K4srv/calligra_filter_html2ods.desktop
-%_K4srv/calligra_filter_odt2ascii.desktop
-%_K4srv/calligra_filter_odt2epub2.desktop
-%_K4srv/calligra_filter_odt2html.desktop
-%_K4srv/calligra_filter_odt2mobi.desktop
-%_K4srv/calligra_filter_rtf2odt.desktop
-%_K4srv/calligra_filter_wpd2odt.desktop
-%_K4srv/calligra_filter_wpg2svg.desktop
-%_K4srv/calligra_filter_wpg2odg.desktop
-%_K4srv/calligra_filter_wps2odt.desktop
+%_K4lib/calligra_filter_odt2docx.so
+%_K4lib/calligra_filter_odt2wiki.so
+%_K4srv/calligra/calligra_filter_applixword2odt.desktop
+%_K4srv/calligra/calligra_filter_ascii2words.desktop
+%_K4srv/calligra/calligra_filter_doc2odt.desktop
+%_K4srv/calligra/calligra_filter_docx2odt.desktop
+%_K4srv/calligra/calligra_filter_html2ods.desktop
+%_K4srv/calligra/calligra_filter_odt2ascii.desktop
+%_K4srv/calligra/calligra_filter_odt2epub2.desktop
+%_K4srv/calligra/calligra_filter_odt2html.desktop
+%_K4srv/calligra/calligra_filter_odt2mobi.desktop
+%_K4srv/calligra/calligra_filter_rtf2odt.desktop
+%_K4srv/calligra/calligra_filter_wpd2odt.desktop
+%_K4srv/calligra/calligra_filter_wpg2svg.desktop
+%_K4srv/calligra/calligra_filter_wpg2odg.desktop
+%_K4srv/calligra/calligra_filter_wps2odt.desktop
+%_K4srv/calligra/calligra_filter_odt2docx.desktop
+%_K4srv/calligra_filter_odt2wiki.desktop
 %_K4srv/words_*_thumbnail.desktop
 %_K4srv/ServiceMenus/words_print.desktop
+%_K4xdg_mime/wiki-format.xml
 # author
 %_K4bindir/calligraauthor
 %_K4libdir/libkdeinit4_calligraauthor.so
@@ -667,19 +676,25 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4xdg_apps/author.desktop
 %_K4apps/author/
 %_K4conf/authorrc
-%_K4srv/authorpart.desktop
+%_K4srv/calligra/authorpart.desktop
 
 %files okular-odp
-%_K4lib/okularGenerator_odp.so
-%_K4xdg_apps/okularApplication_odp.desktop
-%_K4srv/libokularGenerator_odp.desktop
-%_K4srv/okularOdp.desktop
+%_K4lib/okularGenerator_*.so
+%_K4xdg_apps/okularApplication_*.desktop
+%_K4srv/libokularGenerator_*.desktop
+%_K4srv/calligra/libokularGenerator_*.desktop
+%_K4srv/okular*.desktop
+%_K4srv/calligra/okular*.desktop
 
 %files -n %libname
 %_K4libdir/lib*.so.*
-%_K4libdir/libkritasketchlib.so
+#%_K4libdir/libkritasketchlib.so
+%_K4libdir/libkritacolord.so
 
 %changelog
+* Wed Mar 04 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.9.0-alt1
+- new version
+
 * Wed Jan 28 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.8.7-alt3
 - rebuild with new okular
 
