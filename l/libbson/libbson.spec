@@ -1,6 +1,6 @@
 Name: libbson
-Version: 1.0.0
-Release: alt1.git20140826
+Version: 1.1.1
+Release: alt1.git20150226
 Summary: A BSON utility library
 License: ASLv2.0
 Group: System/Libraries
@@ -10,7 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/mongodb/libbson.git
 Source: %name-%version.tar
 
-BuildPreReq: yelp-tools gcc-c++
+BuildPreReq: yelp-tools gcc-c++ python-module-markdown
 
 %description
 libbson is a library providing useful routines related to building,
@@ -62,8 +62,13 @@ ln -s README.md README
 %install
 %makeinstall_std V=1 ENABLE_HTML_DOCS=1
 
+for i in *.md; do
+	fname=$(echo $i |sed 's|\.md||')
+	markdown $i >$fname.html
+done
+
 %files
-%doc NEWS *.md
+%doc NEWS *.html
 %_libdir/*.so.*
 
 %files devel
@@ -75,6 +80,9 @@ ln -s README.md README
 %doc doc/doc/html examples
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20150226
+- Version 1.1.1
+
 * Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20140826
 - Initial build for Sisyphus
 
