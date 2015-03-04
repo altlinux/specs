@@ -2,21 +2,20 @@
 %define bname iscsi
 Name: open-%bname
 %define module_name %name
-Version: 2.0.871
+Version: 2.0.873
 License: %gpl2plus
-Release: alt7
+Release: alt1.git006270
 Summary: Utils to operate with %Name
 Group: System/Kernel and hardware
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 URL: http://%name.org
-Source: http://www.%name.org/bits/%name-%version.tar
+Source: %name-%version.tar
 Source1: iscsi-gen-initiatorname.sh
 Patch: %name-%version-%release.patch
-Patch1: %name-2.0.871-alt-glibc-2.16.patch
 Conflicts: linux-iscsi
+Provides: iscsi-initiator-utils = 6.%version-%release
 
-# Automatically added by buildreq on Fri Jun 08 2007 (-bi)
-BuildRequires: glibc-devel-static
+BuildRequires: libmount-devel
 BuildRequires: rpm-build-licenses
 
 %description
@@ -25,6 +24,15 @@ systems.
 This is a Linux implementation of user-space utils to access %bname
 storages.
 
+%package iscsiuio
+Summary: Userspace configuration daemon required for some iSCSI hardware
+Group: System/Kernel and hardware
+License: BSD
+Requires: %name = %version-%release
+
+%description iscsiuio
+The iscsiuio configuration daemon provides network configuration help
+for some iSCSI offload hardware.
 
 %package -n kernel-source-%module_name
 Summary: Linux %module_name modules sources
@@ -34,18 +42,22 @@ Group: Development/Kernel
 This package contains sources for %module_name kernel modules.
 
 %prep
-%setup -n %name-%version
+%setup
 %patch -p1
-%patch1 -p0
 
 %build
-for d in utils/fwparam_ibft utils usr; do
-    %make_build -C $d
-done
+# configure sub-packages from here
+# letting the top level Makefile do it will lose setting from rpm
+cd iscsiuio
+%autoreconf
+%configure --disable-static
+cd ..
+cd utils/open-isns
+%autoreconf
+%configure --with-security=no --with-slp=no --disable-static
+cd ../..
 
-install -d -m 0755 kernel-source-%module_name-%version/include
-install -m 0644 include/* kernel-source-%module_name-%version/include/
-install -m 0644 kernel/* kernel-source-%module_name-%version/
+%make_build
 
 %install
 %make_install DESTDIR=%buildroot initddir=%_initdir \
@@ -53,9 +65,32 @@ install -m 0644 kernel/* kernel-source-%module_name-%version/
 
 install -m 0755 %SOURCE1 %buildroot/sbin/iscsi-gen-initiatorname
 
+install -d -m 0755 kernel-source-%module_name-%version/include
+install -m 0644 include/* kernel-source-%module_name-%version/include/
+install -m 0644 kernel/* kernel-source-%module_name-%version/
+
 install -d -m 0755 %buildroot%_usrsrc/kernel/sources
 tar -c kernel-source-%module_name-%version | bzip2 --best --stdout > \
     %buildroot%_usrsrc/kernel/sources/kernel-source-%module_name-%version.tar.bz2
+
+install -d %buildroot%_lockdir/iscsi
+touch %buildroot%_lockdir/iscsi/lock
+
+install -pm 755 usr/iscsistart %buildroot/sbin/
+install -pm 644 doc/iscsistart.8 %buildroot%_man8dir/
+install -pm 644 doc/iscsi-iname.8 %buildroot%_man8dir/
+install -d %buildroot%_logrotatedir
+install -pm 644 iscsiuio/iscsiuiolog %buildroot%_logrotatedir/
+
+install -d %buildroot%_unitdir
+install -pm 644 etc/systemd/iscsid.service %buildroot%_unitdir/
+install -pm 644 etc/systemd/iscsid.socket %buildroot%_unitdir/
+install -pm 644 etc/systemd/iscsiuio.service %buildroot%_unitdir/
+install -pm 644 etc/systemd/iscsiuio.socket %buildroot%_unitdir/
+install -d %buildroot%_tmpfilesdir
+install -pm 644 etc/systemd/iscsi.tmpfiles %buildroot%_tmpfilesdir/%bname.conf
+
+ln -s iscsid.service %buildroot%_unitdir/open-iscsi.service
 
 %post
 if [ ! -f /etc/iscsi/initiatorname.iscsi ] ; then
@@ -66,19 +101,42 @@ fi
 %preun
 %preun_service %name
 
+%post iscsiuio
+%post_service iscsiuio
+
+%preun iscsiuio
+%preun_service iscsiuio
 
 %files
 %doc README THANKS etc/iface.example
 %dir %_sysconfdir/%bname
 %config(noreplace) %_sysconfdir/%bname/%{bname}d.conf
 %_initdir/*
+%_tmpfilesdir/*
+%_unitdir/*
+%exclude %_unitdir/iscsiuio.*
 /sbin/*
+%exclude /sbin/iscsiuio
 %_man8dir/*
+%exclude %_man8dir/iscsiuio.8.*
+%dir %_lockdir/iscsi
+%ghost %_lockdir/iscsi/lock
+
+%files iscsiuio
+/sbin/iscsiuio
+%_unitdir/iscsiuio.*
+%config(noreplace) %_logrotatedir/iscsiuiolog
+%_man8dir/iscsiuio.8.*
 
 %files -n kernel-source-%module_name
 %_usrsrc/kernel/sources/*.tar.bz2
 
 %changelog
+* Mon Mar 02 2015 Alexey Shabalin <shaba@altlinux.ru> 2.0.873-alt1.git006270
+- master snapshot 006270c0f9a1fa1e78574a7eaa04bb9ae1ef62b6 (ALT#28583)
+- add systemd units
+- add iscsiuio package
+
 * Fri Aug 08 2014 Lenar Shakirov <snejok@altlinux.ru> 2.0.871-alt7
 - iscsi-gen-initiatorname.sh fixed: http://en.wikipedia.org/wiki/ISCSI
 
