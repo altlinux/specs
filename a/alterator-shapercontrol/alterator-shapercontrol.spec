@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-shapercontrol
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -37,6 +37,9 @@ Alterator module for shapercontrol administration.
 %_libexecdir/%name/
 
 %changelog
+* Wed Mar 04 2015 Mikhail Efremov <sem@altlinux.org> 0.4.4-alt1
+- Fix translation.
+
 * Tue Feb 10 2015 Mikhail Efremov <sem@altlinux.org> 0.4.3-alt1
 - Fix out_if in case of 'disable' value.
 
