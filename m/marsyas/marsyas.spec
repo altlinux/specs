@@ -1,6 +1,6 @@
 Name: marsyas
 Version: 0.6.0
-Release: alt1.alpha.git20140911
+Release: alt1.alpha.git20150301
 Summary: Music Analysis, Retrieval and Synthesis for Audio Signals
 License: GPLv2
 Group: Sound
@@ -165,6 +165,9 @@ rm -f doc/CMakeLists.txt
 %doc MIREX doc/*.txt doc/examples doc/out-www
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.alpha.git20150301
+- New snapshot
+
 * Sat Sep 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.alpha.git20140911
 - Initial build for Sisyphus
 
