@@ -1,5 +1,5 @@
-%define version 2.5.2
-%define release alt1.git20141119
+%define version 2.6.0
+%define release alt1.git20150219
 %define modulename markdown
 
 %def_with python3
@@ -22,14 +22,22 @@ Source: %name-%version.tar
 BuildArch: noarch
 BuildPreReq: rpm-build-licenses
 
-# Automatically added by buildreq on Sun Feb 17 2008
-BuildRequires: python-devel
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-yaml python-modules-logging
+BuildPreReq: python-module-nose python-module-coverage
+BuildPreReq: python-module-tidylib
+BuildPreReq: python-modules-xml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-yaml
+BuildPreReq: python3-module-nose python3-module-coverage
+BuildPreReq: python3-module-tidylib
 %endif
 
 Conflicts: discount
+%py_provides %modulename
+%py_requires yaml logging xml
 
 %description
 Markdown is a plain text formatting syntax designed to be as readable as
@@ -82,27 +90,43 @@ mv %buildroot%_bindir/%{modulename}_py \
 	%buildroot%_bindir/%{modulename}_py3
 %endif
 
-%python_install --optimize=2
+%python_install
 
 ln -s %{modulename}_py %buildroot%_bindir/%modulename
 
+%check
+nosetests -v
+%if_with python3
+pushd ../python3
+nosetests3 -v
+popd
+%endif
+
+export PYTHONPATH=%buildroot%python_sitelibdir
+%buildroot%_bindir/%modulename README.md >README.html
+
 %files
+%doc *.html
 %_bindir/*
+%if_with python3
 %exclude %_bindir/%{modulename}_py3
+%endif
 %python_sitelibdir/*
-# disable broken extension
-#exclude %python_sitelibdir/%modulename/extensions/imagelinks.py*
 
 %files docs
-%doc docs
+%doc docs/*
 
 %if_with python3
 %files -n python3-module-%modulename
+%doc *.html
 %_bindir/%{modulename}_py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt1.git20150219
+- Version 2.6.0
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.2-alt1.git20141119
 - Version 2.5.2
 
