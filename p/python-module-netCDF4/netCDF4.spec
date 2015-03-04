@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.1.3
-Release: alt1.git20141218
+Version: 1.1.5
+Release: alt1.git20150303
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
 Group: Development/Python
@@ -92,7 +92,7 @@ containing compound types) are not supported.
 %setup
 
 install -m644 %SOURCE1 ./
-rm -f *.c
+rm -f *.c netCDF4.c netcdftime/.c
 
 %ifarch x86_64
 sed -i "s|'lib'|'lib64'|g" setup.py
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.5-alt1.git20150303
+- Version 1.1.5
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20141218
 - Version 1.1.3
 
