@@ -1,8 +1,8 @@
 %define beta %nil
 
 Name: wget
-Version: 1.15
-Release: alt2
+Version: 1.16.2
+Release: alt1
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPLv3
@@ -14,7 +14,6 @@ Patch1: %name-1.14-alt-texinfo.patch
 Patch2: %name-1.6-mdk-passive_ftp.patch
 Patch3: %name-1.7-alt-locale.patch
 Patch10: wget-1.10.1-alt-ntlm-buffer.patch
-Patch11: 0001-CVE-2014-4877-Arbitrary-Symlink-Access.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Sep 25 2011
@@ -114,7 +113,6 @@ find doc -type f -print0 |
 
 %patch1 -p2
 %patch10 -p1
-%patch11 -p1
 
 %build
 %configure --with-ssl=openssl
@@ -135,6 +133,12 @@ find doc -type f -print0 |
 %doc AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Wed Mar 04 2015 Michael Shigorin <mike@altlinux.org> 1.16.2-alt1
+- 1.16.2
+
+* Fri Dec 26 2014 Michael Shigorin <mike@altlinux.org> 1.16-alt1
+- 1.16
+
 * Tue Oct 28 2014 Michael Shigorin <mike@altlinux.org> 1.15-alt2
 - added upstream patch for CVE-2014-4877 (arbitrary symlink access)
   + not packaging 1.16 yet due to progresbar regressions in UTF-8 locales
