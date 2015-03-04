@@ -1,6 +1,6 @@
 %define oname mathgl
 Name: lib%oname
-Version: 2.2.2.1
+Version: 2.3.2
 Release: alt1
 
 Summary: Library of fast C++ routines for the plotting of the data
@@ -10,7 +10,7 @@ Group: System/Libraries
 Url: http://www.sf.net/projects/mathgl/
 
 Source: http://prdownloads.sf.net/%oname/%oname-%version.tar
-Source1: %oname-2.2.2.eng.pdf
+Source1: %oname-%version.eng.pdf
 
 # Automatically added by buildreq on Fri Jan 08 2010
 BuildRequires: gcc-c++ glibc-devel libGL-devel libGLUT-devel libgif-devel libgsl-devel libhdf5-devel libjpeg-devel libpng-devel python-devel libnumpy-devel swig
@@ -98,7 +98,7 @@ cmake \
 	-Denable-fltk:BOOL=ON \
 	-Denable-gif:BOOL=ON \
 	-Denable-glut:BOOL=ON \
-	-Denable-gsl:BOOL=ON \
+	-Denable-gsl:BOOL=OFF \
 	-Denable-hdf5_18:BOOL=ON \
 	-Denable-jpeg:BOOL=ON \
 	-Denable-ltdl:BOOL=ON \
@@ -153,6 +153,10 @@ install -m755 examples/mgl*example %buildroot%_bindir/
 %_datadir/udav
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.2-alt1
+- Version 2.3.2
+- Built without GSL (%name not support new API)
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2.1-alt1
 - Version 2.2.2.1
 
