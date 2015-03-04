@@ -1,10 +1,13 @@
-%define lvm2version 2.02.111
-%define dmversion 1.02.90
+%define lvm2version 2.02.116
+%define dmversion 1.02.93
 
 %def_disable cluster
 %def_enable selinux
 %def_enable lvmetad
 %def_disable blkid_wiping
+
+%define cache_type internal
+%define thin_type internal
 
 Summary: Userland logical volume management tools
 Name: lvm2
@@ -33,7 +36,9 @@ Requires: liblvm2  = %{lvm2version}-%{release}
 %def_enable static
 
 BuildRequires: libreadline-devel, libtinfo-devel libudev-devel CUnit-devel
+BuildRequires: libudev-devel >= 205
 BuildRequires: systemd-devel
+BuildRequires: python-devel python-module-setuptools
 %{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static}
 %{?_enable_cluster:BuildRequires: libcman-devel libdlm-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
@@ -125,7 +130,7 @@ Summary: Device-mapper event daemon shared library
 Version: %dmversion
 License: LGPLv2
 Group: System/Libraries
-Requires: liblvm2  = %{lvm2version}-%{release}
+Requires: liblvm2  = %lvm2version-%release
 Requires: libdevmapper = %dmversion-%release
 
 %package -n libdevmapper-event-devel
@@ -135,6 +140,12 @@ License: LGPLv2
 Group: System/Libraries
 Requires: libdevmapper-event = %dmversion-%release
 Requires: libdevmapper-devel = %dmversion-%release
+
+%package -n python-module-lvm
+Summary: Python module to access LVM
+License: LGPLv2
+Group: Development/Python
+Requires: liblvm2 = %lvm2version-%release
 
 %description
 This package contains the library and set of utilites for creating and
@@ -163,6 +174,11 @@ libdevmapper-event.
 %description -n libdevmapper-event-devel
 This package contains files needed to develop applications that use
 the device-mapper event library.
+
+%description -n python-module-lvm
+Python module to allow the creation and use of LVM
+logical volumes, physical volumes, and volume groups.
+
 
 %prep
 %setup
@@ -220,7 +236,7 @@ mv libdm/ioctl/libdevmapper.a .
 	--enable-cmdlib \
 	--with-usrlibdir=%_libdir \
 	--enable-dmeventd \
-	--with-udevdir=/lib/udev/rules.d \
+	--with-udevdir=%_udevrulesdir \
 %if_enabled lvmetad
 	--enable-lvmetad \
 	--enable-udev-systemd-background-jobs \
@@ -229,25 +245,30 @@ mv libdm/ioctl/libdevmapper.a .
 	%{subst_enable blkid_wiping} \
 	--with-dmeventd-path="/sbin/dmeventd" \
 	--with-systemdsystemunitdir=%_unitdir \
-	--with-tmpfilesdir=/lib/tmpfiles.d
-	#
+	--with-tmpfilesdir=%_tmpfilesdir \
+	--with-cache=%cache_type \
+	--with-thin=%thin_type \
+	--enable-python-bindings
+
 %__make
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
+%makeinstall_std install_system_dirs
+%makeinstall_std install_systemd_units
+%makeinstall_std install_systemd_generators
+%makeinstall_std install_tmpfiles_configuration
+
 chmod -R u+rwX %buildroot
 %{?_enable_static:install -pm755 lvm.static %buildroot/sbin/}
-
-mkdir -p %buildroot/%_lib
-mkdir -p %buildroot%_sysconfdir/lvm/{archive,backup}
-mkdir -p %buildroot/var/lock/lvm
-install -m700 /dev/null %buildroot%_sysconfdir/lvm/.cache
 
 ### device-mapper part
 
 install -pm755 %_sourcedir/dmcontrol_update %buildroot%_sbindir/
 
 %{?_enable_static:install -pm755 libdevmapper.a %buildroot%_libdir/}
+
+mkdir -p %buildroot/%_lib
 
 # Relocate shared library from %_libdir/ to /%_lib/.
 for f in `ls %buildroot%_libdir/libdevmapper.so`; do
@@ -283,10 +304,6 @@ mkdir -p %buildroot%_initdir
 install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
 install -m 0755 %SOURCE4 %buildroot%_initdir/lvm2-lvmetad
 install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
-
-%make install_systemd_generators DESTDIR=%buildroot
-%make install_systemd_units DESTDIR=%buildroot
-%make install_tmpfiles_configuration DESTDIR=%buildroot
 
 %post
 %post_service lvm2-monitor
@@ -328,17 +345,18 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %_unitdir/lvm2-lvmetad.service
 %_unitdir/lvm2-lvmetad.socket
 %_unitdir/lvm2-pvscan@.service
-/lib/udev/rules.d/69-dm-lvm-metad.rules
+%_udevrulesdir/69-dm-lvm-metad.rules
 %endif
 /lib/systemd/system-generators/lvm2-activation-generator
-/lib/tmpfiles.d/%name.conf
+%_tmpfilesdir/%name.conf
 %dir %_sysconfdir/lvm
 %dir %_sysconfdir/lvm/profile
 %defattr(600,root,root,700)
-%dir %_sysconfdir/lvm/backup/
-%dir %_sysconfdir/lvm/archive/
-/var/lock/lvm
-%ghost %verify(not md5 size mtime) %config(missingok,noreplace) %_sysconfdir/lvm/.cache
+%dir %_sysconfdir/lvm/backup
+%dir %_sysconfdir/lvm/archive
+%dir %_sysconfdir/lvm/cache
+%_lockdir/lvm
+%ghost %_sysconfdir/lvm/cache/.cache
 
 %if_enabled static
 %files static
@@ -381,9 +399,9 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %_man8dir/dmsetup*
 %_sbindir/dmsetup
 %_sbindir/dmcontrol_update
-/lib/udev/rules.d/*
+%_udevrulesdir/*
 %if_enabled lvmetad
-%exclude /lib/udev/rules.d/69-dm-lvm-metad.rules
+%exclude %_udevrulesdir/69-dm-lvm-metad.rules
 %endif
 
 %files -n dmeventd
@@ -401,7 +419,14 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %_includedir/libdevmapper-event.h
 %_pkgconfigdir/devmapper-event.pc
 
+%files -n python-module-lvm
+%python_sitelibdir/*
+
 %changelog
+* Wed Mar 04 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.116-alt1
+- 2.02.116
+- add package python-module-lvm
+
 * Fri Oct 03 2014 Alexey Shabalin <shaba@altlinux.ru> 2.02.111-alt1
 - 2.02.111
 - enable lvmetad by default
