@@ -1,10 +1,11 @@
 %define modulename markdown2
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%modulename
-Version: 2.2.1
-Release: alt1.git20140306
+Version: 2.3.1
+Release: alt1.git20141222
 
 Summary: Another implementation of Markdown in Python
 Group: Development/Python
@@ -18,12 +19,17 @@ Source: %modulename-%version.zip
 BuildArch: noarch
 BuildPreReq: rpm-build-licenses unzip
 
-# Automatically added by buildreq on Sun Feb 17 2008
-BuildRequires: python-devel
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-Pygments
+BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-Pygments
 %endif
+
+%py_provides %modulename
+%py_requires logging pygments
 
 %description
 This project provides a converter written in Python that closely matches
@@ -74,7 +80,6 @@ popd
 %endif
 
 %install
-
 %if_with python3
 pushd ../python3
 %python3_install
@@ -83,11 +88,28 @@ popd
 mv %buildroot%_bindir/markdown2 %buildroot%_bindir/py3_markdown2
 rm -f %buildroot%python3_sitelibdir/*.pyo
 
-%python_install --optimize=2
+%python_install
 rm -f %buildroot%python_sitelibdir/*.pyo
 
+export PYTHONPATH=$PWD/lib
+for i in *.md; do
+	fname=$(echo $i |sed 's|\.md||')
+	%buildroot%_bindir/markdown2 $i >$fname.html
+done
+
+%check
+export PYTHONPATH=$PWD/lib
+py.test -vv
+%if_with python3
+pushd ../python3
+python3 setup.py test
+export PYTHONPATH=$PWD/lib
+py.test-%_python3_version -vv
+popd
+%endif
+
 %files
-%doc *.txt
+%doc *.txt *.html
 %_bindir/markdown2
 %python_sitelibdir/*
 
@@ -96,12 +118,15 @@ rm -f %buildroot%python_sitelibdir/*.pyo
 
 %if_with python3
 %files -n python3-module-%modulename
-%doc *.txt
+%doc *.txt *.html
 %_bindir/py3_markdown2
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.1-alt1.git20141222
+- Version 2.3.1
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt1.git20140306
 - Version 2.2.1
 
