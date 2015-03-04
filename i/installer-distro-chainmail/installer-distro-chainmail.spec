@@ -1,6 +1,6 @@
 Name: installer-distro-chainmail
 Version: 3.0.0
-Release: alt4
+Release: alt5
 
 Summary: Installer files for IVK chainmail
 License: GPL
@@ -75,6 +75,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/ivk-scripts/
 
 %changelog
+* Wed Mar 04 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt5
+- Remove /etc/cron.d/osec.
+
 * Fri Feb 27 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt4
 - Enable nslcd service.
 
