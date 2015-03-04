@@ -1,10 +1,10 @@
 %define oname odict
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 1.5.1
-Release: alt1.git20140501
+Version: 1.6.0
+Release: alt1.dev0.git20150103
 Summary: Ordered dictionary
 License: Python
 Group: Development/Python
@@ -41,6 +41,7 @@ existing item keeps it at its original position.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Ordered dictionary
 Group: Development/Python3
@@ -62,6 +63,7 @@ internal double linked list). In this implementation replacing an
 existing item keeps it at its original position.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -91,7 +93,8 @@ popd
 
 %check
 python setup.py test
-%if_with python3
+#if_with python3
+%if 0
 pushd ../python3
 python3 setup.py test
 popd
@@ -118,6 +121,10 @@ popd
 %endif
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.dev0.git20150103
+- Version 1.6.0.dev0
+- Added module for Python 3
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1.git20140501
 - Initial build for Sisyphus
 
