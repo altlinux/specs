@@ -1,5 +1,5 @@
 Name:		boinc
-Version: 7.3.15
+Version: 7.4.41
 Release: alt1
 Packager:	Paul Wolneykien <manowar@altlinux.ru>
 License:	GPLv3+/LGPLv3+
@@ -29,6 +29,9 @@ Patch21:	make_clientgui_resources.patch
 #Patch22:	refactor_sched_vda.patch
 Patch23:	install_appmgr.patch
 
+# Use def_with server to enable it
+%def_without server
+
 BuildRequires: docbook-dtds docbook2X gcc-c++ gcc-fortran libGL-devel libMySQL-devel libSM-devel libXi-devel libXmu-devel libcurl-devel libfreeglut-devel libjpeg-devel libsqlite3-devel libstdc++-devel-static python-devel xsltproc libssl-devel zlib-devel libgtk+2-devel libnotify-devel
 BuildRequires: libwxGTK3.0-devel
 
@@ -44,10 +47,11 @@ computing projects.
 Install the %name-client package to participate in a number of scientific
 projects.
 
+%if_with server
 Install the %name-server package to host a computational project.
 
 Install the %name-demo package to view sample projects.
-
+%endif
 Use the %name-devel package files in development of a new computational
 project.
 
@@ -251,10 +255,14 @@ esac
 
 # Build script
 %autoreconf
-./_autosetup
-%configure $TYPE_FLAGS \
+#./_autosetup
+%configure $TYPE_FLAGS CXXFLAGS=-std=gnu++11 \
     --enable-client \
+%if_with server
     --enable-server  \
+%else
+    --disable-server \
+%endif
     --enable-unicode \
     --with-ssl
 %make
@@ -327,7 +335,8 @@ install -m0644 -D clientgui/res/boincmgr.48x48.png %buildroot%{_datadir}/icons/h
 
 # Create boinc user home directory
     mkdir -p -m 0750 %buildroot%{_localstatedir}/boinc
-    
+
+%if_with server
 # Install the PHP part of the server.
     mkdir -p -m 0755 %buildroot%{_datadir}/%name-server/html
     cp -Rp html/* %buildroot%{_datadir}/%name-server/html/
@@ -336,6 +345,7 @@ install -m0644 -D clientgui/res/boincmgr.48x48.png %buildroot%{_datadir}/icons/h
     install -d -m 0755 %buildroot%{_datadir}/%name-server/db
     install -m 0644 db/*.sql %buildroot%{_datadir}/%name-server/db/
     install -m 0644 db/init_db %buildroot%{_datadir}/%name-server/db/init-db
+%endif
 
 # Install the documentation
 	install -D -m 0644 COPYING %buildroot%{_docdir}/%name-%version/COPYING
@@ -389,8 +399,10 @@ if [ $1 -eq 0 ]; then #if uninstalling, not only updating
 	/sbin/chkconfig --del boinc-client
 fi
 
+%if_with server
 %post server
 getent group boincadm >/dev/null || groupadd -r boincadm
+%endif
 
 %files
 %dir %{_datadir}/boinc
@@ -406,6 +418,8 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 %files -n libboinc
 %{_libdir}/libboinc*.so.*
 %exclude %_libdir/libboinc_opencl.so.*
+
+%if_with server
 
 %files -n libboinc-server
 %{_libdir}/libsched.so.*
@@ -433,6 +447,12 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 %{python_sitelibdir}/Boinc-%version-py*.egg-info
 %_mandir/man8/appmgr.8.gz
 %_datadir/boinc-server-maker
+
+%files server-devel
+%exclude %{_libdir}/libsched.a
+%{_libdir}/libsched.so
+
+%endif
 
 %files client -f BOINC-Client.lang
 %{_sysconfdir}/bash_completion.d/boinc
@@ -476,11 +496,13 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 %dir %{_includedir}/boinc
 %{_includedir}/boinc/*.h
 
-%files server-devel
-%exclude %{_libdir}/libsched.a
-%{_libdir}/libsched.so
 
 %changelog
+* Tue Mar 03 2015 Paul Wolneykien <manowar@altlinux.org> 7.4.41-alt1
+- Fresh up to v7.4.41 with the help of cronbuild and update-source-functions.
+- Disable building the server packages.
+- Build with -std=gnu++11.
+
 * Tue Apr 01 2014 Cronbuild Service <cronbuild@altlinux.org> 7.3.15-alt1
 - Fresh up to v7.3.15 with the help of cronbuild and update-source-functions.
 
