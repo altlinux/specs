@@ -1,6 +1,6 @@
 Name: gsl
 Version: 1.16
-Release: alt1.git20140602
+Release: alt1.git20150121
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -150,6 +150,9 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 %doc %_docdir/lib%name-%version/examples
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16-alt1.git20150121
+- New snapshot
+
 * Sat Jul 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16-alt1.git20140602
 - New snapshot
 
