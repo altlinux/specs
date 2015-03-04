@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5
-Release: alt1.git20141114
+Version: 0.6
+Release: alt1.git20150224
 Summary: Plugin for the nose testing framework for running tests in a subprocess
 License: BSD
 Group: Development/Python
@@ -16,11 +16,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose
+BuildPreReq: python-module-nose python-module-django-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-nose python3-module-django-nose
 %endif
 
 %py_provides %oname
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.git20150224
+- Version 0.6
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20141114
 - Initial build for Sisyphus
 
