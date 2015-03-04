@@ -1,6 +1,6 @@
 Name: monica
 Version: 3.7
-Release: alt2.4
+Release: alt2.5
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -18,7 +18,7 @@ Requires: xgamma
 BuildRequires: gcc-c++ libX11-devel libXext-devel libXft-devel libfltk-devel
 
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
-BuildPreReq: libXfixes-devel
+BuildPreReq: libXfixes-devel libXcursor-devel
 
 %description
 Monica is a monitor calibration tool. It works as frontend to xgamma to alter
@@ -41,6 +41,9 @@ install -pD -m755 monica %buildroot%_bindir/monica
 %doc authors licence news readme
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7-alt2.5
+- Fixed build
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7-alt2.4
 - Rebuilt with updated libfltk
 
