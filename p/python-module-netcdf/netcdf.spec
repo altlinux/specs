@@ -5,8 +5,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.29
-Release: alt1.git20141113
+Version: 0.0.30
+Release: alt1.git20150111
 Summary: Allows use one or multiple NetCDF files in a transparent way through polimorphic methods
 License: MIT
 Group: Development/Python
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.30-alt1.git20150111
+- Version 0.0.30
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.29-alt1.git20141113
 - Initial build for Sisyphus
 
