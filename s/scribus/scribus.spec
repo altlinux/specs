@@ -1,5 +1,5 @@
 Name: scribus
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 Epoch: 1
 
@@ -168,6 +168,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Mon Mar 02 2015 Paul Wolneykien <manowar@altlinux.org> 1:1.4.5-alt1
+- Freshed up to v1.4.5 with the help of cronbuild and update-source-functions.
+
 * Wed May 28 2014 Cronbuild Service <cronbuild@altlinux.org> 1:1.4.4-alt1
 - Fresh up to v1.4.4 with the help of cronbuild and update-source-functions.
 
