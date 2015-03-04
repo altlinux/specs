@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: h5py
-Version: 2.4.0
-Release: alt1.b1.git20141107
+Version: 2.5.0
+Release: alt1.a0.git20150227
 Summary: Python interface to the Hierarchical Data Format library, version 5
 License: MIT
 Group: Development/Python
@@ -18,13 +18,15 @@ BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel libnumpy-devel libhdf5-devel
 BuildPreReq: libsz2-devel python-module-Cython python-module-Pyrex
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools-tests python-module-six
+BuildPreReq: python-module-pkgconfig
 #BuildPreReq: texlive-latex-recommended
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel libnumpy-py3-devel
 BuildPreReq: python3-module-setuptools-tests
-BuildPreReq: python3-module-Cython
+BuildPreReq: python3-module-Cython python3-module-six
+BuildPreReq: python3-module-pkgconfig
 %endif
 
 %description
@@ -294,6 +296,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt1.a0.git20150227
+- Version 2.5.0a0
+
 * Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.b1.git20141107
 - New snapshot
 
