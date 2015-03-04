@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.0.3
-Release: alt1.git20141127
+Version: 0.0.4
+Release: alt1.git20141202
 Summary: nose extension for supporting parametrized testing
 License: ASLv2.0
 Group: Development/Python
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose
+BuildPreReq: python-module-nose python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -35,6 +35,7 @@ Main Features:
 * Saves a lot of boilerplate code, and code replication
 * Work with all nose plugins (including multiprocessing)
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: nose extension for supporting parametrized testing
 Group: Development/Python3
@@ -49,12 +50,14 @@ Main Features:
 * Very easy to integrate with existing tests
 * Saves a lot of boilerplate code, and code replication
 * Work with all nose plugins (including multiprocessing)
+%endif
 
 %prep
 %setup
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -96,6 +99,9 @@ popd
 # TODO: enable test_ittr_params_to_setup
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.4-alt1.git20141202
+- Version 0.0.4
+
 * Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20141127
 - Version 0.0.3
 
