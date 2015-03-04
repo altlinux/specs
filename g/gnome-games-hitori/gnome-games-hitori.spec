@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: GTK+ application to generate and let you play games of Hitori
@@ -63,6 +63,9 @@ multiple solutions to a Hitori puzzle board.
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Wed Mar 04 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt1
+- 3.14.3
+
 * Tue Dec 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2.1-alt1
 - 3.14.2.1
 
