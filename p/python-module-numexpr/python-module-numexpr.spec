@@ -3,26 +3,27 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        2.3
-Release:        alt2.hg20140104
+Version:        2.4.1
+Release:        alt1.git20141130
 Epoch: 1
 Summary:        Fast numerical array expression evaluator for Python and NumPy
 Group:          Development/Python
 License:        MIT
-URL:            http://code.google.com/p/numexpr/
-# hg clone https://code.google.com/p/numexpr/
+URL:            https://github.com/pydata/numexpr
+# https://github.com/pydata/numexpr.git
 Source:         %oname-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildPreReq: python-devel gcc-c++
-BuildPreReq: libnumpy-devel python-module-setuptools
+BuildPreReq: libnumpy-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
-BuildPreReq: libnumpy-py3-devel python3-module-setuptools
+BuildPreReq: libnumpy-py3-devel python3-module-setuptools-tests
 %endif
 
 Requires: %name-tests = %epoch:%version-%release
+%py_requires numpy
 
 %description
 The numexpr package evaluates multiple-operator array expressions many
@@ -42,6 +43,7 @@ allows to use multiple cores in your computations.
 Summary: Fast numerical array expression evaluator for Python and NumPy
 Group: Development/Python3
 Requires: python3-module-%oname-tests = %epoch:%version-%release
+%py3_requires numpy
 
 %description -n python3-module-%oname
 The numexpr package evaluates multiple-operator array expressions many
@@ -125,8 +127,16 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
-%doc *.txt LICENSES
+%doc *.txt *.rst LICENSES
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/tests
 
@@ -135,7 +145,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt LICENSES
+%doc *.txt *.rst LICENSES
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 
@@ -144,6 +154,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.4.1-alt1.git20141130
+- Version 2.4.1
+
 * Sat Aug 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.3-alt2.hg20140104
 - Added module for Python 3
 
