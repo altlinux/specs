@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.0.0
-Release: alt1.git20150116
+Release: alt1.git20150225
 Summary: Jade syntax template adapter for Django, Jinja2, Mako and Tornado templates
 License: MIT
 Group: Development/Python
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.git20150225
+- New snapshot
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.git20150116
 - Initial build for Sisyphus
 
