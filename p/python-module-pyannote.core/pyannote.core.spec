@@ -1,8 +1,8 @@
 %define mname pyannote
 %define oname %mname.core
 Name: python-module-%oname
-Version: 0.2.5
-Release: alt1.git20141121
+Version: 0.3.4
+Release: alt1.git20150304
 Summary: PyAnnote core
 License: MIT
 Group: Development/Python
@@ -16,12 +16,13 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-banyan python-module-numpy
 BuildPreReq: python-module-pandas-tests python-module-networkx
 BuildPreReq: python-module-simplejson python-module-matplotlib
-BuildPreReq: python-module-pygraphviz ipython git
-BuildPreReq: python-module-pytz
+BuildPreReq: python-module-pygraphviz ipython git python-module-numexpr
+BuildPreReq: python-module-pytz python-module-bottleneck
+BuildPreReq: python-module-networkx
 
 %py_provides %mname
 %py_provides %mname.core
-%py_requires pandas.util.testing
+%py_requires pandas.util.testing numexpr numpy bottleneck networkx
 
 %description
 PyAnnote is a Python module for collaborative annotation of multimodal
@@ -60,6 +61,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt1.git20150304
+- Version 0.3.4
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.git20141121
 - Version 0.2.5
 
