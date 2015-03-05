@@ -1,8 +1,8 @@
 %define mname pyannote
 %define oname %mname.algorithms
 Name: python-module-%oname
-Version: 0.1
-Release: alt1.git20141031
+Version: 0.4.1
+Release: alt1.git20150226
 Summary: PyAnnote algorithms
 License: MIT
 Group: Development/Python
@@ -30,7 +30,7 @@ This package provides algorithms for multimedia document processing.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%add_python_req_skip viterbi
+%add_python_req_skip viterbi gmm
 
 %description tests
 PyAnnote is a Python module for collaborative annotation of multimodal
@@ -69,6 +69,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/*/test*
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20150226
+- Version 0.4.1
+
 * Sat Nov 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20141031
 - Initial build for Sisyphus
 
