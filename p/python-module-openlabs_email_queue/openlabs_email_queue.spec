@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 3.2.0.1
-Release: alt1.git20140902
+Version: 3.4.0.1
+Release: alt1.git20141230
 Summary: Trytond Email Queue Module
 License: GPLv3
 Group: Development/Python
@@ -36,6 +36,7 @@ BuildPreReq: python-tools-2to3 python3-module-trytond-tests
 This module implements an email queue which acts as a transaction safe
 buffer for tryton modules to send emails.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Trytond Email Queue Module
 Group: Development/Python3
@@ -44,6 +45,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 This module implements an email queue which acts as a transaction safe
 buffer for tryton modules to send emails.
+%endif
 
 %prep
 %setup
@@ -90,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0.1-alt1.git20141230
+- Version 3.4.0.1
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0.1-alt1.git20140902
 - Initial build for Sisyphus
 
