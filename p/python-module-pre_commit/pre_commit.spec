@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.3.6
-Release: alt1.git20150205
+Version: 0.4.2
+Release: alt1.git20150227
 Summary: A framework for managing and maintaining multi-language pre-commit hooks
 License: MIT
 Group: Development/Python
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20150227
+- Version 0.4.2
+
 * Sat Feb 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1.git20150205
 - Version 0.3.6
 
