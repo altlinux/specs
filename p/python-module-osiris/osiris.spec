@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt1.dev0.git20140723
+Release: alt2.dev0.git20140723
 Summary: Pyramid based oAuth server
 License: GPLv2
 Group: Development/Python
@@ -68,6 +68,7 @@ includes the MongoDB one.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Pyramid based oAuth server
 Group: Development/Python3
@@ -98,6 +99,7 @@ factory to store the issued token information. The current version
 includes the MongoDB one.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -157,6 +159,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2.dev0.git20140723
+- Fixed build
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1.dev0.git20140723
 - Initial build for Sisyphus
 
