@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.4.1
-Release: alt1
+Release: alt2
 
 Summary: Python package to handle CHM files
 
@@ -19,14 +19,12 @@ Source: http://dl.sf.net/gnochm/%oname-%version.tar.bz2
 Provides: %oname
 %setup_python_module chm
 
-# manually removed: eric
-# Automatically added by buildreq on Mon Nov 29 2004
-BuildRequires: libchm-devel python-devel python-modules-encodings
+BuildPreReq: libchm-devel python-devel python-modules-encodings swig
 
-BuildPreReq: python-module-setuptools
+BuildPreReq: python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %description
@@ -36,6 +34,7 @@ chmlib and some additional classes and functions.
 They are used to access MS-ITSS encoded files -
 Compressed Html Help files (.chm).
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python package to handle CHM files
 Group: Development/Python3
@@ -48,19 +47,24 @@ which provide access to the API implemented by the C library
 chmlib and some additional classes and functions.
 They are used to access MS-ITSS encoded files -
 Compressed Html Help files (.chm).
+%endif
 
 %prep
 %setup -n %oname-%version
+
+rm -f chm/swig_chm.c
 
 %if_with python3
 cp -fR . ../python3
 %endif
 
 %build
+swig -python -o chm/swig_chm.c chm/swig_chm.i
 %python_build_debug
 
 %if_with python3
 pushd ../python3
+swig -python -py3 -o chm/swig_chm.c chm/swig_chm.i
 %python3_build_debug
 popd
 %endif
@@ -87,9 +91,11 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4.1-alt2
+- Fixed build
+
 * Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4.1-alt1
 - Version 0.8.4.1
-- Added module for Python 3
 
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.4-alt1.1.2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
