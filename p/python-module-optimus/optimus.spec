@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.git20141126
+Release: alt2.git20141126
 Summary: Python web framework project constructor
 License: Free
 Group: Development/Python
@@ -33,6 +33,7 @@ Optimus is a Python web framework project constructor.
 
 Now optimus support create Tornado project structure.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python web framework project constructor
 Group: Development/Python3
@@ -44,6 +45,7 @@ Group: Development/Python3
 Optimus is a Python web framework project constructor.
 
 Now optimus support create Tornado project structure.
+%endif
 
 %prep
 %setup
@@ -100,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt2.git20141126
+- Fixed build
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20141126
 - Initial build for Sisyphus
 
