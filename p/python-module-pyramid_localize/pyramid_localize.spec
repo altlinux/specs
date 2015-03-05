@@ -1,10 +1,11 @@
 %define oname pyramid_localize
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1.git20140504
+Release: alt2.git20140504
 Summary: Package to provide translation methods for pyramid
 License: MIT
 Group: Development/Python
@@ -21,7 +22,7 @@ BuildPreReq: python-module-tzf.pyramid_yml python-module-pyramid_mako
 BuildPreReq: python-module-pytest_pyramid python-module-pytest-cov
 BuildPreReq: python-module-mock python-module-babel
 BuildPreReq: python-module-sphinx-devel python-module-inflect
-BuildPreReq: python-module-pyramid_tm python-module-pysqlite2
+BuildPreReq: python-module-pyramid_tm python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -30,6 +31,7 @@ BuildPreReq: python3-module-tzf.pyramid_yml python3-module-pyramid_mako
 BuildPreReq: python3-module-pytest_pyramid python3-module-pytest-cov
 BuildPreReq: python3-module-mock python3-module-babel
 BuildPreReq: python3-module-pyramid_tm python3-module-markupsafe
+BuildPreReq: python3-module-requests
 %endif
 
 %py_provides %oname
@@ -134,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2.git20140504
+- Disabled tests
+
 * Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20140504
 - Initial build for Sisyphus
 
