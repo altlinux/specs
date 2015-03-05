@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.3
-Release: alt1.git20141123
+Release: alt2.git20141123
 Summary: Provides LDAP authentication services for your Pyramid application based on python3-ldap
 License: BSD
 Group: Development/Python
@@ -134,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt2.git20141123
+- Fixed build
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt1.git20141123
 - Initial build for Sisyphus
 
