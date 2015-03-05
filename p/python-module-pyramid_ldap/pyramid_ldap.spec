@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20130717
+Release: alt2.git20130717
 Summary: LDAP authentication policy for Pyramid
 License: BSD
 Group: Development/Python
@@ -49,6 +49,7 @@ application.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: LDAP authentication policy for Pyramid
 Group: Development/Python3
@@ -68,6 +69,7 @@ pyramid_ldap provides LDAP authentication services for your Pyramid
 application.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -127,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.git20130717
+- Fixed build
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20130717
 - Initial build for Sisyphus
 
