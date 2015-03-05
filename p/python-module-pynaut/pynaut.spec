@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.2.11
+Version: 0.2.13
 Release: alt1.git20150121
 Summary: A tool for recursively exploring arbitrary python objects
 License: MIT
@@ -19,6 +19,7 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-urwid python-module-UniCurses
 BuildPreReq: python-module-nose ipython
+BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -28,12 +29,13 @@ BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
-%py_requires urwid unicurses IPython
+%py_requires urwid unicurses IPython logging
 
 %description
 pynaunt allows you to deeply explore and introspect arbitrary python
 objects.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A tool for recursively exploring arbitrary python objects
 Group: Development/Python3
@@ -43,6 +45,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 pynaunt allows you to deeply explore and introspect arbitrary python
 objects.
+%endif
 
 %prep
 %setup
@@ -99,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.13-alt1.git20150121
+- Version 0.2.13
+
 * Wed Jan 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.11-alt1.git20150121
 - Initial build for Sisyphus
 
