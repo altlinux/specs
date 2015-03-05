@@ -2,7 +2,7 @@
 %define oname %mname.metrics
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt1.git20141120
+Release: alt2.git20141120
 Summary: PyAnnote metrics
 License: MIT
 Group: Development/Python
@@ -50,6 +50,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt2.git20141120
+- Fixed build
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20141120
 - Version 0.4.1
 
