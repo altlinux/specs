@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.0
-Release: alt1.git20141102
+Version: 0.4.1
+Release: alt1.git20150219
 Summary: Provide full authentication / authorisation implementation for pyramid apps
 License: MIT
 Group: Development/Python
@@ -24,6 +24,7 @@ BuildPreReq: python-module-pytest_pyramid python-module-pytest-cov
 BuildPreReq: python-module-velruse python-module-mysql
 BuildPreReq: python-module-pytest-dbfixtures python-module-psycopg2
 BuildPreReq: python-module-openid python-module-pyramid_tm
+BuildPreReq: python-module-requests
 BuildPreReq: python-module-sphinx-devel python-module-inflect
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -34,6 +35,7 @@ BuildPreReq: python3-module-pyramid_basemodel python3-module-mock
 BuildPreReq: python3-module-pytest_pyramid python3-module-pytest-cov
 BuildPreReq: python3-module-openid python3-module-pyramid_tm
 BuildPreReq: python3-module-markupsafe
+BuildPreReq: python3-module-requests
 %endif
 
 %py_provides %oname
@@ -136,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20150219
+- Version 0.4.1
+
 * Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20141102
 - Initial build for Sisyphus
 
