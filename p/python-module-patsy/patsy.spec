@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: A Python package for describing statistical models and for building design matrices
@@ -128,7 +128,7 @@ popd
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
-%doc README TODO
+%doc *.rst TODO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/test_*
@@ -144,7 +144,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README TODO
+%doc *.rst TODO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test_*
 %exclude %python3_sitelibdir/*/__pycache__/test_*
@@ -155,6 +155,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1
+- Version 0.3.0
+
 * Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1
 - Initial build for Sisyphus
 
