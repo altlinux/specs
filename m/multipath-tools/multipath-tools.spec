@@ -3,8 +3,8 @@
 %define _libmpathdir %_libdir/multipath
 
 Name: multipath-tools
-Version: 0.4.9
-Release: alt5
+Version: 0.5.0
+Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -12,6 +12,12 @@ Group: System/Configuration/Hardware
 
 Url: http://christophe.varoqui.free.fr
 Source: %name-%version.tar
+Source2: multipath.rules
+Source3: multipathd.init
+Source4: multipath.modules
+Patch1: %name-snapshot.patch
+Patch2: %name-alt-patches.patch
+
 # http://git.opensvc.com/multipath-tools/.git
 Packager: Konstantin Pavlov <thresh@altlinux.org>
 
@@ -19,7 +25,7 @@ Requires: libmultipath = %version-%release
 Requires: kpartx = %version-%release
 Requires: dmsetup
 
-BuildRequires: libaio-devel libdevmapper-devel libreadline-devel libudev-devel
+BuildRequires: libaio-devel libdevmapper-devel libreadline-devel libudev-devel libsystemd-devel
 
 %description
 This package provides the tools to manage multipath devices by
@@ -49,23 +55,29 @@ Conflicts: multipath-tools <= 0.4.9-alt3
 kpartx manages partition creation and removal for device-mapper devices.
 
 %prep
-%setup
+%setup -q
+%patch1 -p1
+%patch2 -p1
 
 %build
 # non-SMP build
-make LIB=%_lib
+%make_build LIB=%_lib
 
 %install
-mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir}
-make install \
+mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
+%makeinstall_std \
 	DESTDIR=%buildroot \
 	bindir=%_sbindir \
 	syslibdir=%_libdir \
 	libdir=%_libmpathdir \
 	rcdir=%_initrddir \
+	udevrulesdir=%_udevrulesdir \
 	unitdir=%_unitdir
 
-install -pm755 multipathd/multipathd.init.alt %buildroot%_initdir/multipathd
+install -pm644 %SOURCE2 %buildroot%_udevrulesdir/62-multipath.rules
+install -pm755 %SOURCE3 %buildroot%_initdir/multipathd
+install -pm644 %SOURCE4 %buildroot%_modulesloaddir/multipath.conf
+mv -f %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 cp -a multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
 
 %post
@@ -78,12 +90,15 @@ cp -a multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
 %doc AUTHOR README FAQ TODO ChangeLog multipath.conf.annotated multipath.conf.synthetic
 %_sbindir/multipath
 %_sbindir/multipathd
-%_sbindir/mpathconf
+#%_sbindir/mpathconf
 %_sbindir/mpathpersist
-/lib/udev/rules.d/62-multipath.rules
+%_udevrulesdir/*
+%exclude %_udevrulesdir/kpartx.rules
+%_modulesloaddir/*
+%dir %_sysconfdir/multipath
 %config(noreplace) %attr(644,root,root) %_sysconfdir/multipath.conf
-%_initdir/multipathd
-%_unitdir/multipathd.service
+%_initdir/*
+%_unitdir/*
 %_man5dir/*
 %_man8dir/*
 %exclude %_man8dir/kpartx.8.*
@@ -92,14 +107,18 @@ cp -a multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
 %_libdir/libmultipath.so.*
 %_libdir/libmpathpersist.so.*
 %dir %_libdir/multipath
-%_libdir/multipath/*
+%_libmpathdir/*
 
 %files -n kpartx
+%_udevrulesdir/kpartx.rules
 /sbin/kpartx
 /lib/udev/kpartx_id
 %_man8dir/kpartx.8.*
 
 %changelog
+* Thu Mar 05 2015 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt1
+- 0.5.0
+
 * Tue May 27 2014 Michael Shigorin <mike@altlinux.org> 0.4.9-alt5
 - added missing Conflicts: to facilitate upgrade (closes: #30092)
 
