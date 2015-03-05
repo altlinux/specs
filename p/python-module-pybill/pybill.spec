@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: PDF formatting tool for bills
 License: GPL
 Group: Development/Python
@@ -54,6 +54,7 @@ describing bills, debits, downpayments, claim forms or pro-formas.
 
 This package contains documentation for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: PDF formatting tool for bills
 Group: Development/Python3
@@ -74,6 +75,7 @@ PyBill is Logilab tool used to produce PDF documents from XML files
 describing bills, debits, downpayments, claim forms or pro-formas.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -147,6 +149,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2
+- Fixed build
+
 * Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus
 
