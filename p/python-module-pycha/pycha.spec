@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: A library for making charts with Python
 License: LGPLv3
 Group: Development/Python
@@ -33,6 +33,7 @@ Cairo library. Its goals are:
 * Nice looking with default values
 * Customization
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A library for making charts with Python
 Group: Development/Python3
@@ -46,6 +47,7 @@ Cairo library. Its goals are:
 * Simple to use
 * Nice looking with default values
 * Customization
+%endif
 
 %prep
 %setup
@@ -102,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt2
+- Fixed build
+
 * Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus
 
