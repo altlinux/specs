@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.13
-Release: alt1.git20141028
+Version: 0.13.2
+Release: alt1.git20150104
 Summary: Common / reusable utilities for a Pyramid web application
 License: Public domain
 Group: Development/Python
@@ -35,6 +35,7 @@ BuildPreReq: python3-module-zope.interface python3-module-coverage
 BuildPreReq: python3-module-nose python3-module-mock
 BuildPreReq: python3-module-webtest python3-module-inflect
 BuildPreReq: python3-module-pyramid_tm python-tools-2to3
+BuildPreReq: python3-module-requests
 %endif
 
 %py_provides %oname
@@ -129,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.2-alt1.git20150104
+- Version 0.13.2
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1.git20141028
 - Initial build for Sisyphus
 
