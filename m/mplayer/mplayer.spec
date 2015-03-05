@@ -46,7 +46,7 @@
 %def_enable network
 %def_disable winsock2
 %def_enable smb
-%def_enable live
+%def_disable live
 %def_enable vcd
 %def_enable bluray
 %def_enable dvdnav
@@ -306,7 +306,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt12
+Release: alt13
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1108,6 +1108,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Sat Dec 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.1-alt13
+- rebuilt without live555
+
 * Mon May 12 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.1-alt12
 - rebuilt with recent libx264
 
