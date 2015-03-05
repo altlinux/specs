@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt1
+Release: alt2
 Summary: libmagic bindings
 License: GPLv3
 Group: Development/Python
@@ -32,6 +32,7 @@ Requires: libmagic.so.%sover
 %description
 libmagic bindings using FFL (ctypes).
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: libmagic bindings
 Group: Development/Python3
@@ -44,6 +45,7 @@ Requires: libmagic.so.%sover
 
 %description -n python3-module-%oname
 libmagic bindings using FFL (ctypes).
+%endif
 
 %prep
 %setup
@@ -96,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2
+- Fixed build
+
 * Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
 - Initial build for Sisyphus
 
