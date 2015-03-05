@@ -1,8 +1,8 @@
 %define mname pyannote
 %define oname %mname.features
 Name: python-module-%oname
-Version: 0.1
-Release: alt1.git20141031
+Version: 0.2.1
+Release: alt1.git20150107
 Summary: PyAnnote feature extraction
 License: MIT
 Group: Development/Python
@@ -52,6 +52,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20150107
+- Version 0.2.1
+
 * Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20141031
 - Initial build for Sisyphus
 
