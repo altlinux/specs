@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 1.0.0
+Version: 1.0.3
 Release: alt1
 Summary: Google Login for Pyramid
 License: BSD
@@ -19,6 +19,8 @@ BuildPreReq: python-module-pyramid-tests python-module-d2to1
 BuildPreReq: python-module-requests python-module-pyramid_mako
 BuildPreReq: python-module-mako python-module-markupsafe
 BuildPreReq: python-module-mock python-module-webtest
+BuildPreReq: python-module-zope.interface
+BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -26,10 +28,12 @@ BuildPreReq: python3-module-pyramid-tests python3-module-d2to1
 BuildPreReq: python3-module-requests python3-module-pyramid_mako
 BuildPreReq: python3-module-mako python3-module-markupsafe
 BuildPreReq: python3-module-mock python3-module-webtest
+BuildPreReq: python3-module-zope.interface
 BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
+%py_requires zope.interface
 
 %description
 Google Login extension for Pyramid. Implement the OAuth2 Server-side
@@ -59,10 +63,12 @@ will remember the user identity.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Google Login for Pyramid
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires zope.interface
 
 %description -n python3-module-%oname
 Google Login extension for Pyramid. Implement the OAuth2 Server-side
@@ -91,6 +97,7 @@ method pyramid.security.remember and assume the authentication policy
 will remember the user identity.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -149,6 +156,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1
+- Version 1.0.3
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Version 1.0.0
 
