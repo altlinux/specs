@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt1
+Release: alt2
 Summary: Integrate CubicWeb with a Pyramid application
 License: Public domain
 Group: Development/Python
@@ -45,6 +45,7 @@ Integrate CubicWeb with a Pyramid application.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Integrate CubicWeb with a Pyramid application
 Group: Development/Python3
@@ -62,6 +63,7 @@ Requires: python3-module-%oname = %EVR
 Integrate CubicWeb with a Pyramid application.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -115,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt2
+- Fixed build
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1
 - Version 0.2.1
 
