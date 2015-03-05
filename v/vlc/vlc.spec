@@ -1,5 +1,5 @@
 Name: vlc
-Version: 2.1.5
+Version: 2.2.0
 Release: alt1
 
 Summary: VLC media player
@@ -29,7 +29,7 @@ BuildRequires: libtag-devel libfluidsynth-devel libnotify-devel libdbus-devel
 BuildRequires: libzvbi-devel libraw1394-devel libavc1394-devel libfribidi-devel
 BuildRequires: libass-devel libbluray-devel libpcre-devel libopus-devel
 BuildRequires: libkate-devel libv4l-devel libmtp-devel libshout2-devel
-BuildRequires: libtar-devel libva-devel
+BuildRequires: libtar-devel libva-devel libvpx-devel libx265-devel
 BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel
 BuildRequires: libEGL-devel libGL-devel libGLES-devel
 BuildRequires: libdc1394-devel libschroedinger-devel libsmbclient-devel
@@ -40,7 +40,7 @@ BuildRequires: libchromaprint-devel libvncserver-devel libfreerdp-devel
 BuildRequires: fortune-mod >= 1.0-ipl33mdk
 BuildRequires: libdca-devel >= 0.0.5-alt1
 
-%define allplugins a52 aa ass audiocd bluray bonjour caca chromaprint dbus dv dca dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls goom h264 jack linsys live555 mad matroska modplug mpeg2 mtp musepack notify ogg opus png podcast projectm pulseaudio rdp realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd xcb xml
+%define allplugins a52 aa ass audiocd bluray bonjour caca chromaprint dbus dv dca dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls goom h264 h265 jack linsys live555 mad matroska modplug mpeg2 mtp musepack notify ogg opus png podcast projectm pulseaudio rdp realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml
 %define baseplugins ass bluray dbus dvdnav dvdread ffmpeg freetype globalhotkeys live555 matroska mpeg2 ogg pulseaudio taglib v4l xcb xml
 %define restplugins %(echo %allplugins %baseplugins |tr '[[:space:]]' '\\n'|sort |uniq -u|tr '\\n' ' ')
 %define mergedplugins alsa dvb ts
@@ -229,6 +229,11 @@ Summary: h264 output plugin for VLC media player
 Group: Video
 Requires: lib%name = %version-%release
 
+%package plugin-h265
+Summary: h265 output plugin for VLC media player
+Group: Video
+Requires: lib%name = %version-%release
+
 %package plugin-jack
 Summary: Jack audio output plugin for VLC media player
 Group: Video
@@ -382,6 +387,11 @@ Summary: VideoCD input plugin for VLC media player
 Group: Video
 Requires: lib%name = %version-%release
 
+%package plugin-vpx
+Summary: VP8 output plugin for VLC media player
+Group: Video
+Requires: lib%name = %version-%release
+
 %package plugin-xcb
 Summary: X11 output / Service Discovery plugin for VLC media player
 Group: Video
@@ -527,6 +537,9 @@ This package contains GOOM visualization plugin for VLC media player.
 %description plugin-h264
 This package contains h264 coder/packetizer plugin for VLC media player.
 
+%description plugin-h265
+This package contains h265 coder/packetizer plugin for VLC media player.
+
 %description plugin-jack
 This package contains Jack audio output plugin for VLC media player.
 
@@ -619,6 +632,9 @@ This package adds support for Video4Linux and Video4Linux2 to VLC media player.
 
 %description plugin-videocd
 This package contains VideoCD access plugin for VLC media player.
+
+%description plugin-vpx
+This package contains VP8 coder/packetizer plugin for VLC media player.
 
 %description plugin-xcb
 This package adds support for XCB video output and Service Discovery to VLC
@@ -780,26 +796,25 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 
 %dir %vlc_plugindir/access
 %vlc_plugindir/access/libaccess_alsa_plugin.so
-%vlc_plugindir/access/libaccess_attachment_plugin.so
 %vlc_plugindir/access/libaccess_bd_plugin.so
-%vlc_plugindir/access/libaccess_ftp_plugin.so
-%vlc_plugindir/access/libaccess_http_plugin.so
-%vlc_plugindir/access/libaccess_imem_plugin.so
 %vlc_plugindir/access/libaccess_mms_plugin.so
-%vlc_plugindir/access/libaccess_rar_plugin.so
-%vlc_plugindir/access/libaccess_sftp_plugin.so
-%vlc_plugindir/access/libaccess_tcp_plugin.so
-%vlc_plugindir/access/libaccess_udp_plugin.so
-%vlc_plugindir/access/libaccess_vdr_plugin.so
+%vlc_plugindir/access/libattachment_plugin.so
 %vlc_plugindir/access/libdtv_plugin.so
 %vlc_plugindir/access/libdvb_plugin.so
 %vlc_plugindir/access/libfilesystem_plugin.so
+%vlc_plugindir/access/libftp_plugin.so
+%vlc_plugindir/access/libhttp_plugin.so
 %vlc_plugindir/access/libidummy_plugin.so
+%vlc_plugindir/access/libimem_plugin.so
+%vlc_plugindir/access/librar_plugin.so
 %vlc_plugindir/access/librtp_plugin.so
 %vlc_plugindir/access/libsdp_plugin.so
+%vlc_plugindir/access/libsftp_plugin.so
 %vlc_plugindir/access/libshm_plugin.so
-%vlc_plugindir/access/libstream_filter_rar_plugin.so
+%vlc_plugindir/access/libtcp_plugin.so
 %vlc_plugindir/access/libtimecode_plugin.so
+%vlc_plugindir/access/libudp_plugin.so
+%vlc_plugindir/access/libvdr_plugin.so
 %vlc_plugindir/access/libzip_plugin.so
 
 %dir %vlc_plugindir/access_output
@@ -855,6 +870,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/libdvbsub_plugin.so
 %vlc_plugindir/codec/libedummy_plugin.so
 %vlc_plugindir/codec/libg711_plugin.so
+%vlc_plugindir/codec/libjpeg_plugin.so
 %vlc_plugindir/codec/liblpcm_plugin.so
 %vlc_plugindir/codec/libmpeg_audio_plugin.so
 %vlc_plugindir/codec/libomxil_plugin.so
@@ -864,6 +880,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/libspudec_plugin.so
 %vlc_plugindir/codec/libstl_plugin.so
 %vlc_plugindir/codec/libsubsdec_plugin.so
+%vlc_plugindir/codec/libsubstx3g_plugin.so
 %vlc_plugindir/codec/libsubsusf_plugin.so
 %vlc_plugindir/codec/libt140_plugin.so
 %vlc_plugindir/codec/libtelx_plugin.so
@@ -883,12 +900,14 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/demux/libasf_plugin.so
 %vlc_plugindir/demux/libau_plugin.so
 %vlc_plugindir/demux/libavi_plugin.so
+%vlc_plugindir/demux/libcaf_plugin.so
 %vlc_plugindir/demux/libdemux_cdg_plugin.so
 %vlc_plugindir/demux/libdemux_stl_plugin.so
 %vlc_plugindir/demux/libdemuxdump_plugin.so
-%vlc_plugindir/demux/libdirac_plugin.so
+%vlc_plugindir/demux/libdiracsys_plugin.so
 %vlc_plugindir/demux/libes_plugin.so
 %vlc_plugindir/demux/libh264_plugin.so
+%vlc_plugindir/demux/libhevc_plugin.so
 %vlc_plugindir/demux/libimage_plugin.so
 %vlc_plugindir/demux/libmjpeg_plugin.so
 %vlc_plugindir/demux/libmp4_plugin.so
@@ -924,24 +943,18 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/misc/libstats_plugin.so
 %vlc_plugindir/misc/libfingerprinter_plugin.so
 %vlc_plugindir/misc/libxdg_screensaver_plugin.so
-
-%ifarch %ix86 x86_64
-%dir %vlc_plugindir/mmx
-%vlc_plugindir/mmx/libi420_rgb_mmx_plugin.so
-%vlc_plugindir/mmx/libi420_yuy2_mmx_plugin.so
-%vlc_plugindir/mmx/libi422_yuy2_mmx_plugin.so
-
-%dir %vlc_plugindir/sse2
-%vlc_plugindir/sse2/libi420_rgb_sse2_plugin.so
-%vlc_plugindir/sse2/libi420_yuy2_sse2_plugin.so
-%vlc_plugindir/sse2/libi422_yuy2_sse2_plugin.so
-%endif
+%vlc_plugindir/misc/libaddonsfsstorage_plugin.so
+%vlc_plugindir/misc/libaddonsvorepository_plugin.so
 
 %ifarch ppc ppc64
 %dir %vlc_plugindir/altivec
 %vlc_plugindir/altivec/libmemcpyaltivec_plugin.so
 %vlc_plugindir/altivec/libi420_yuy2_altivec_plugin.so
 %endif
+
+%dir %vlc_plugindir/video_splitter
+%vlc_plugindir/video_splitter/libclone_plugin.so
+%vlc_plugindir/video_splitter/libwall_plugin.so
 
 %dir %vlc_plugindir/services_discovery
 %vlc_plugindir/services_discovery/libmediadirs_plugin.so
@@ -960,6 +973,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 
 %dir %vlc_plugindir/packetizer
 %vlc_plugindir/packetizer/libpacketizer_copy_plugin.so
+%vlc_plugindir/packetizer/libpacketizer_hevc_plugin.so
 %vlc_plugindir/packetizer/libpacketizer_mpeg4audio_plugin.so
 %vlc_plugindir/packetizer/libpacketizer_mpeg4video_plugin.so
 %vlc_plugindir/packetizer/libpacketizer_mpegvideo_plugin.so
@@ -979,6 +993,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/stream_out/libstream_out_gather_plugin.so
 %vlc_plugindir/stream_out/libstream_out_mosaic_bridge_plugin.so
 %vlc_plugindir/stream_out/libstream_out_rtp_plugin.so
+%vlc_plugindir/stream_out/libstream_out_stats_plugin.so
 %vlc_plugindir/stream_out/libstream_out_transcode_plugin.so
 %vlc_plugindir/stream_out/libstream_out_autodel_plugin.so
 %vlc_plugindir/stream_out/libstream_out_raop_plugin.so
@@ -999,6 +1014,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/text_renderer/libtdummy_plugin.so
 
 %dir %vlc_plugindir/video_chroma
+%vlc_plugindir/video_chroma/libchain_plugin.so
 %vlc_plugindir/video_chroma/libi420_rgb_plugin.so
 %vlc_plugindir/video_chroma/libi420_yuy2_plugin.so
 %vlc_plugindir/video_chroma/libi422_yuy2_plugin.so
@@ -1007,6 +1023,14 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/video_chroma/libyuy2_i420_plugin.so
 %vlc_plugindir/video_chroma/libyuy2_i422_plugin.so
 %vlc_plugindir/video_chroma/librv32_plugin.so
+%ifarch %ix86 x86_64
+%vlc_plugindir/video_chroma/libi420_rgb_mmx_plugin.so
+%vlc_plugindir/video_chroma/libi420_yuy2_mmx_plugin.so
+%vlc_plugindir/video_chroma/libi422_yuy2_mmx_plugin.so
+%vlc_plugindir/video_chroma/libi420_rgb_sse2_plugin.so
+%vlc_plugindir/video_chroma/libi420_yuy2_sse2_plugin.so
+%vlc_plugindir/video_chroma/libi422_yuy2_sse2_plugin.so
+%endif
 
 %dir %vlc_plugindir/video_filter
 %vlc_plugindir/video_filter/libadjust_plugin.so
@@ -1019,14 +1043,13 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/video_filter/libblendbench_plugin.so
 %vlc_plugindir/video_filter/libbluescreen_plugin.so
 %vlc_plugindir/video_filter/libcanvas_plugin.so
-%vlc_plugindir/video_filter/libchain_plugin.so
-%vlc_plugindir/video_filter/libclone_plugin.so
 %vlc_plugindir/video_filter/libcolorthres_plugin.so
 %vlc_plugindir/video_filter/libcroppadd_plugin.so
 %vlc_plugindir/video_filter/libdeinterlace_plugin.so
 %vlc_plugindir/video_filter/libdynamicoverlay_plugin.so
 %vlc_plugindir/video_filter/liberase_plugin.so
 %vlc_plugindir/video_filter/libextract_plugin.so
+%vlc_plugindir/video_filter/libfreeze_plugin.so
 %vlc_plugindir/video_filter/libgaussianblur_plugin.so
 %vlc_plugindir/video_filter/libgradfun_plugin.so
 %vlc_plugindir/video_filter/libgradient_plugin.so
@@ -1040,6 +1063,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/video_filter/libmosaic_plugin.so
 %vlc_plugindir/video_filter/libmotionblur_plugin.so
 %vlc_plugindir/video_filter/libmotiondetect_plugin.so
+%vlc_plugindir/video_filter/liboldmovie_plugin.so
 %vlc_plugindir/video_filter/libposterize_plugin.so
 %vlc_plugindir/video_filter/libpsychedelic_plugin.so
 %vlc_plugindir/video_filter/libpuzzle_plugin.so
@@ -1053,9 +1077,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/video_filter/libsharpen_plugin.so
 %vlc_plugindir/video_filter/libsubsdelay_plugin.so
 %vlc_plugindir/video_filter/libtransform_plugin.so
-%vlc_plugindir/video_filter/libwall_plugin.so
 %vlc_plugindir/video_filter/libwave_plugin.so
 %vlc_plugindir/video_filter/libyuvp_plugin.so
+%vlc_plugindir/video_filter/libvhs_plugin.so
 
 %dir %vlc_plugindir/video_output
 %vlc_plugindir/video_output/libvdummy_plugin.so
@@ -1164,6 +1188,12 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/libx264_plugin.so
 %vlc_plugindir/packetizer/libpacketizer_h264_plugin.so
 
+%files plugin-h265
+%vlc_plugindir/codec/libx265_plugin.so
+
+%files plugin-vpx
+%vlc_plugindir/codec/libvpx_plugin.so
+
 %files plugin-bonjour
 %vlc_plugindir/services_discovery/libbonjour_plugin.so
 
@@ -1183,14 +1213,16 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/libtheora_plugin.so
 
 %files plugin-globalhotkeys
-%vlc_plugindir/control/libglobalhotkeys_plugin.so
+#vlc_plugindir/control/libglobalhotkeys_plugin.so
 
 %files plugin-ffmpeg
-%vlc_plugindir/access/libaccess_avio_plugin.so
+%vlc_plugindir/access/libavio_plugin.so
 %vlc_plugindir/codec/libavcodec_plugin.so
+%vlc_plugindir/codec/libhwdummy_plugin.so
 %vlc_plugindir/demux/libavformat_plugin.so
-%vlc_plugindir/video_filter/libswscale_plugin.so
+%vlc_plugindir/video_chroma/libswscale_plugin.so
 %vlc_plugindir/video_filter/libpostproc_plugin.so
+%vlc_plugindir/packetizer/libpacketizer_avparser_plugin.so
 
 %files plugin-framebuffer
 %vlc_plugindir/video_output/libfb_plugin.so
@@ -1199,24 +1231,34 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/access_output/libaccess_output_shout_plugin.so
 
 %files plugin-rdp
-%vlc_plugindir/access/liblibvnc_plugin.so
+%vlc_plugindir/access/libvnc_plugin.so
 %vlc_plugindir/access/librdp_plugin.so
 
 %files plugin-xcb
-%vlc_plugindir/services_discovery/libxcb_apps_plugin.so
+%dir %vlc_plugindir/vdpau
+%_libdir/vlc/libvlc_vdpau.so*
 %vlc_plugindir/access/libxcb_screen_plugin.so
-%vlc_plugindir/codec/libvaapi_plugin.so
-%vlc_plugindir/codec/libvdpau_plugin.so
+%vlc_plugindir/codec/libvaapi_drm_plugin.so
+%vlc_plugindir/codec/libvaapi_x11_plugin.so
+%vlc_plugindir/control/libxcb_hotkeys_plugin.so
+%vlc_plugindir/services_discovery/libxcb_apps_plugin.so
+%vlc_plugindir/vdpau/libvdpau_sharpen_plugin.so
+%vlc_plugindir/vdpau/libvdpau_display_plugin.so
+%vlc_plugindir/vdpau/libvdpau_deinterlace_plugin.so
+%vlc_plugindir/vdpau/libvdpau_avcodec_plugin.so
+%vlc_plugindir/vdpau/libvdpau_adjust_plugin.so
+%vlc_plugindir/vdpau/libvdpau_chroma_plugin.so
 %vlc_plugindir/video_output/libxcb_window_plugin.so
 %vlc_plugindir/video_output/libxcb_glx_plugin.so
 %vlc_plugindir/video_output/libxcb_x11_plugin.so
 %vlc_plugindir/video_output/libxcb_xv_plugin.so
-%vlc_plugindir/video_output/libegl_plugin.so
+%vlc_plugindir/video_output/libegl_x11_plugin.so
 %vlc_plugindir/video_output/libgl_plugin.so
 %vlc_plugindir/video_output/libgles2_plugin.so
 %vlc_plugindir/video_output/libglx_plugin.so
 %vlc_plugindir/video_filter/libanaglyph_plugin.so
-%vlc_plugindir/video_filter/libpanoramix_plugin.so
+%vlc_plugindir/video_splitter/libpanoramix_plugin.so
+%vlc_plugindir/visualization/libglspectrum_plugin.so
 
 %files plugin-xml
 %vlc_plugindir/misc/libxml_plugin.so
@@ -1268,9 +1310,10 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/misc/libgnutls_plugin.so
 
 %files plugin-smb
-%vlc_plugindir/access/libaccess_smb_plugin.so
+%vlc_plugindir/access/libsmb_plugin.so
 
 %files plugin-svg
+%vlc_plugindir/codec/libsvgdec_plugin.so
 %vlc_plugindir/text_renderer/libsvg_plugin.so
 
 %files plugin-videocd
@@ -1309,6 +1352,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Wed Mar 04 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt1
+- 2.2.0 released
+
 * Tue Aug 05 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.5-alt1
 - 2.1.5 released
 

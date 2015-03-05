@@ -1,5 +1,5 @@
 Name: live555
-Version: 20120913
+Version: 20140527
 Release: alt1
 
 Summary: Live555.com Streaming Media Library Utilities
@@ -61,25 +61,15 @@ This package contains all needed files to build programs based on live555.com.
 
 %build
 ./genMakefiles linux
-make CFLAGS="%optflags %optflags_shared"
+%make_build CFLAGS='%optflags %optflags_shared'
 
 %install
-install -pm0644 -D liveMedia/libliveMedia.so %buildroot%_libdir/libliveMedia.so.%version
-ln -sf libliveMedia.so.%version %buildroot%_libdir/libliveMedia.so
-
-for i in BasicUsageEnvironment groupsock liveMedia UsageEnvironment ; do
-  install -dm0755 %buildroot%_includedir/$i
-  install -pm0644 $i/include/*.h* %buildroot%_includedir/$i/
-done
+%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir
 
 for f in BasicUsageEnvironment UsageEnvironment groupsock; do
-echo 'INPUT(AS_NEEDED(%_libdir/libliveMedia.so.0))' >%buildroot%_libdir/lib$f.so
+echo 'INPUT(AS_NEEDED(%_libdir/libliveMedia.so))' >%buildroot%_libdir/lib$f.so
 done
 
-mkdir -p %buildroot%_bindir
-for testprog in `find testProgs -type f -perm 755`; do
-  install -p $testprog %buildroot%_bindir
-done
 %files
 %doc COPYING README
 %_bindir/*
@@ -95,6 +85,9 @@ done
 %_includedir/liveMedia
 
 %changelog
+* Wed Dec 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 20140527-alt1
+- 20140527 snapshot
+
 * Tue Oct 16 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 20120913-alt1
 - 20120913 snapshot
 
