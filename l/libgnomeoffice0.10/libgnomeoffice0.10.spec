@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.20
+Version: %ver_major.21
 Release: alt1
 
 Summary: Library for writing gnome office programs
@@ -17,7 +17,7 @@ Url: http://projects.gnome.org/gnumeric/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 %define glib_ver 2.28.0
-%define gsf_ver 1.14.31
+%define gsf_ver 1.14.32
 %define gtk_ver 3.0.0
 %define cairo_ver 1.10.0
 %define lasem_ver 0.4.1
@@ -26,6 +26,7 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgsf-devel >= %gsf_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libcairo-devel >= %cairo_ver
+BuildRequires: libgs-devel
 BuildRequires: libXext-devel libXrender-devel libxml2-devel libxslt-devel librsvg-devel
 BuildRequires: intltool gtk-doc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgsf-gir-devel libgtk+3-gir-devel}
@@ -136,6 +137,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Thu Mar 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.21-alt1
+- 0.10.21
+
 * Thu Feb 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.20-alt1
 - 0.10.20
 

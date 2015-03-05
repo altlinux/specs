@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.20
+Version: %ver_major.21
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -27,10 +27,10 @@ Obsoletes: %name-light
 Provides: %name-light = %version-%release
 
 %define scrollkeeper_ver 0.3.14
-%define gsf_ver 1.14.31
+%define gsf_ver 1.14.32
 %define gda_ver 4.0
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.20
+%define goffice_ver 0.10.21
 
 %if_with python
 # Provided by python_loader.so
@@ -43,7 +43,7 @@ Requires: libgnomeoffice%goffice_api_ver >= %goffice_ver
 Requires: libspreadsheet%{api_ver} = %version-%release
 Requires: %name-data = %version-%release
 
-BuildRequires: rpm-build-gnome
+BuildRequires: rpm-build-gnome bison flex help2man
 BuildRequires: libgnomeoffice%goffice_api_ver-devel >= %goffice_ver
 BuildRequires: libgsf-devel >= %gsf_ver
 BuildRequires: libgtk+3-devel
@@ -182,6 +182,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Thu Mar 05 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.21-alt1
+- 1.12.21
+
 * Thu Feb 05 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.20-alt1
 - 1.12.20
 
