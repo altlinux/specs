@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.2
-Release: alt1.git20141116
+Version: 0.0.3
+Release: alt1.git20150112
 Summary: Tree pages for pyramid CRUD interface sacrud
 License: MIT
 Group: Development/Python
@@ -22,6 +22,7 @@ BuildPreReq: python-module-sqlalchemy_mptt python-module-webtest
 BuildPreReq: python-module-pyramid_beaker python-module-pyramid_jinja2
 BuildPreReq: python-module-BeautifulSoup4 python-module-waitress
 BuildPreReq: python-module-beaker python-module-webhelpers
+BuildPreReq: python-module-deform
 BuildPreReq: python-module-sphinx-devel itcase_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -177,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20150112
+- Version 0.0.3
+
 * Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20141116
 - Version 0.0.2
 
