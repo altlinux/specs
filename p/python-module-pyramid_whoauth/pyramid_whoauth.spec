@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.git20120528
+Release: alt2.git20120528
 Summary: A pyramid authentication policy using repoze.who
 License: MPLv2.0
 Group: Development/Python
@@ -49,6 +49,7 @@ turns it into an pyramid IAuthenticationPolicy.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A pyramid authentication policy using repoze.who
 Group: Development/Python3
@@ -71,6 +72,7 @@ a pyramid authentication policy. It takes a repoze.who API factory and
 turns it into an pyramid IAuthenticationPolicy.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -124,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2.git20120528
+- Fixed build
+
 * Wed Oct 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20120528
 - Initial build for Sisyphus
 
