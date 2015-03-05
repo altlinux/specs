@@ -1,7 +1,7 @@
 %define api_ver 1.0
 
 Name: libevdev
-Version: 1.3.2
+Version: 1.4
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -45,6 +45,7 @@ that are needed to write applications that use %name.
 %files
 %_bindir/mouse-dpi-tool
 %_bindir/touchpad-edge-detector
+%_bindir/libevdev-tweak-device
 %_libdir/libevdev.so.*
 %doc COPYING
 
@@ -55,6 +56,9 @@ that are needed to write applications that use %name.
 %_man3dir/%name.3.*
 
 %changelog
+* Thu Mar 05 2015 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
+- 1.4
+
 * Sun Dec 07 2014 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - 1.3.2
 
