@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.2.1
-Release: alt1
+Release: alt2
 Summary: PyAMG: Algebraic Multigrid Solvers in Python
 License: BSD
 Group: Development/Python
@@ -30,6 +30,7 @@ BuildPreReq: python3-module-nose
 PyAMG is a library of Algebraic Multigrid (AMG) solvers with a
 convenient Python interface.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: PyAMG: Algebraic Multigrid Solvers in Python
 Group: Development/Python3
@@ -50,6 +51,7 @@ PyAMG is a library of Algebraic Multigrid (AMG) solvers with a
 convenient Python interface.
 
 This package contains tests for PyAMG.
+%endif
 
 %package docs
 Summary: Documentation for PyAMG
@@ -167,6 +169,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt2
+- Fixed build
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt1
 - Version 2.2.1
 
