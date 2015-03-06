@@ -1,6 +1,6 @@
 Name: python-module-sane
 Version: 2.0.1
-Release: alt1.2
+Release: alt1.3
 %setup_python_module sane
 
 Summary: Pyhon interface for Sane
@@ -10,8 +10,8 @@ Group: Development/Python
 Source: pysane-%version.tar
 
 BuildPreReq: python-devel rpm-build-python python-module-setuptools
-BuildRequires: libsane-devel python-module-imaging-devel
-Requires: python-module-imaging
+BuildRequires: libsane-devel python-module-Pillow-devel
+Requires: python-module-Pillow
 
 %description
 Pyhon interface for Sane
@@ -32,6 +32,9 @@ Pyhon interface for Sane
 
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1.3
+- Fixed build
+
 * Fri Jul 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1.2
 - Rebuilt
 
