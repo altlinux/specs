@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.7.0
-Release: alt1.git20150225
+Release: alt1.git20150302
 Summary: Python Imaging Library (Fork)
 License: Standard PIL License
 Group: Development/Python
@@ -38,6 +38,18 @@ Provides: python-module-imaging = %EVR
 Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
 the Python Imaging Library by Fredrik Lundh and Contributors.
 
+%package devel
+Summary: Development files for %oname
+Group: Development/Python
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description devel
+Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
+the Python Imaging Library by Fredrik Lundh and Contributors.
+
+This package contains development files for %oname.
+
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python
@@ -67,6 +79,18 @@ Group: Development/Python3
 Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
 the Python Imaging Library by Fredrik Lundh and Contributors.
 
+%package -n python3-module-%oname-devel
+Summary: Development files for %oname
+Group: Development/Python3
+BuildArch: noarch
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-devel
+Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
+the Python Imaging Library by Fredrik Lundh and Contributors.
+
+This package contains development files for %oname.
+
 %prep
 %setup
 
@@ -91,6 +115,9 @@ export LC_ALL=en_US.UTF-8
 %if_with python3
 pushd ../python3
 %python3_install
+install -d %buildroot%python3_includedir%_python3_abiflags
+install -p -m644 libImaging/*.h \
+	%buildroot%python3_includedir%_python3_abiflags/
 popd
 install -m 644 %SOURCE1 %buildroot%python3_sitelibdir/
 pushd %buildroot%_bindir
@@ -101,6 +128,8 @@ popd
 %endif
 
 %python_install
+install -d %buildroot%python_includedir
+install -p -m644 libImaging/*.h %buildroot%python_includedir/
 install -m 644 %SOURCE1 %buildroot%python_sitelibdir/
 
 export LC_ALL=en_US.UTF-8
@@ -132,6 +161,9 @@ popd
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
+%files devel
+%python_includedir/*
+
 %files pickles
 %python_sitelibdir/*/pickle
 
@@ -143,9 +175,16 @@ popd
 %doc *.rst docs/COPYING docs/LICENSE *.md
 %_bindir/*.py3
 %python3_sitelibdir/*
+
+%files -n python3-module-%oname-devel
+%python3_includedir%_python3_abiflags/*
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1.git20150302
+- New snapshot
+- Added devel package
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1.git20150225
 - Snapshot from git
 
