@@ -1,10 +1,10 @@
 %define oname robotframework-pageobjects
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 1.1.7
-Release: alt1.git20150122
+Version: 1.1.9
+Release: alt1.git20150226
 Summary: Lets you use the page object pattern with Robot Framework and plain python
 License: Free
 Group: Development/Python
@@ -27,6 +27,7 @@ BuildPreReq: python3-module-decorator python3-module-mock
 BuildPreReq: python3-module-requests python3-module-uritemplate
 BuildPreReq: python3-module-robotframework-selenium2library
 BuildPreReq: python3-module-docutils
+BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides robotpageobjects
@@ -81,6 +82,7 @@ echo '%version' >RELEASE-VERSION
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -120,6 +122,10 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.9-alt1.git20150226
+- Version 1.1.9
+- Added module for Python 3
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.7-alt1.git20150122
 - Version 1.1.7
 
