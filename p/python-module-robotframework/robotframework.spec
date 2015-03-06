@@ -1,10 +1,10 @@
 %define oname robotframework
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 2.8.7
-Release: alt1.dev20141007
+Version: 2.9
+Release: alt1.dev20150202
 Summary: A generic test automation framework
 License: ASLv2.0
 Group: Development/Python
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -24,7 +25,7 @@ BuildPreReq: python-tools-2to3
 
 %py_provides %oname
 %py_provides robot
-%add_python_req_skip java javax org
+%add_python_req_skip java javax org System
 
 %description
 Robot Framework is a generic test automation framework for acceptance
@@ -40,7 +41,7 @@ Summary: A generic test automation framework
 Group: Development/Python3
 %py3_provides %oname
 %py3_provides robot
-%add_python3_req_skip java javax org
+%add_python3_req_skip java javax org System UserDict
 
 %description -n python3-module-%oname
 Robot Framework is a generic test automation framework for acceptance
@@ -102,7 +103,7 @@ popd
 %doc *.txt *.rst
 %_bindir/*
 %if_with python3
-%exclude%_bindir/*.py3
+%exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/*
 
@@ -117,6 +118,10 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9-alt1.dev20150202
+- Version 2.9.dev20150202
+- Added module for Python 3
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.7-alt1.dev20141007
 - Initial build for Sisyphus
 
