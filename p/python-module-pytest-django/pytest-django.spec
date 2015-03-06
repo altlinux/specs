@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.7.0
-Release: alt1.git20141012
+Version: 2.8.0
+Release: alt1.git20150303
 Summary: A Django plugin for py.test
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests sqlite3
 BuildPreReq: python-module-pytest python-module-django-tests
 BuildPreReq: python-module-django-configurations python-module-wheel
 BuildPreReq: python-module-pytest-xdist python-module-twine
@@ -129,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0-alt1.git20150303
+- Version 2.8.0
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1.git20141012
 - Initial build for Sisyphus
 
