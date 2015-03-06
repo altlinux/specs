@@ -1,5 +1,5 @@
 Name: strace
-Version: 4.9.0.377.6a63
+Version: 4.10
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -65,6 +65,9 @@ export SLEEP_A_BIT='sleep 0.1'
 %_bindir/strace-graph
 
 %changelog
+* Fri Mar 06 2015 Dmitry V. Levin <ldv@altlinux.org> 4.10-alt1
+- Updated to v4.10.
+
 * Wed Mar 04 2015 Dmitry V. Levin <ldv@altlinux.org> 4.9.0.377.6a63-alt1
 - Updated to v4.9-377-g6a63bfa.
 
