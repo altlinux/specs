@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt1.svn20110403
+Release: alt2.svn20110403
 Summary: Convert SVG to Reportlab drawing
 License: BSD
 Group: Development/Python
@@ -31,6 +31,7 @@ svg2rlg is a python tool to convert SVG files to reportlab graphics.
 The tool can be used as a console application to convert SVG to PDF
 files.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Convert SVG to Reportlab drawing
 Group: Development/Python3
@@ -41,6 +42,7 @@ svg2rlg is a python tool to convert SVG files to reportlab graphics.
 
 The tool can be used as a console application to convert SVG to PDF
 files.
+%endif
 
 %prep
 %setup
@@ -89,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2.svn20110403
+- Fixed build
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.svn20110403
 - Initial build for Sisyphus
 
