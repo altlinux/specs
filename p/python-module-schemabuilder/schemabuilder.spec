@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt1.git20150105
+Release: alt2.git20150105
 Summary: Helper to build json schema definitions
 License: MIT
 Group: Development/Python
@@ -41,6 +41,7 @@ publication.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Helper to build json schema definitions
 Group: Development/Python3
@@ -61,6 +62,7 @@ Helpers to build you define JSON schema for either validation or
 publication.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -116,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt2.git20150105
+- Fixed build
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20150105
 - Initial build for Sisyphus
 
