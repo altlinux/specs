@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.7
-Release: alt1.git20140217
+Release: alt2.git20140217
 Summary: Python interface to Solr
 License: MIT
 Group: Development/Python
@@ -46,6 +46,7 @@ search engine.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python interface to Solr
 Group: Development/Python3
@@ -65,6 +66,7 @@ Sunburnt is a Python-based interface for working with the Apache Solr
 search engine.
 
 This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -157,6 +159,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt2.git20140217
+- Fixed build
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.git20140217
 - Initial build for Sisyphus
 
