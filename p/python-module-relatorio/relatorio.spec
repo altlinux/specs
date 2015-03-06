@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt2
+Release: alt3
 Summary: A templating library able to output odt and pdf files
 License: GPL
 Group: Development/Python
@@ -16,16 +16,15 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-genshi python-module-lxml
-BuildPreReq: python-module-nose
+BuildPreReq: python-module-nose python-module-pycha
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-genshi python3-module-lxml
-BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-nose python3-module-pycha
 %endif
 
 %py_provides %oname
-%add_python_req_skip pycha
 
 %description
 A templating library which provides a way to easily output all kind of
@@ -40,7 +39,6 @@ objects.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%add_python_req_skip pycha
 
 %description tests
 A templating library which provides a way to easily output all kind of
@@ -53,6 +51,7 @@ objects.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A templating library able to output odt and pdf files
 Group: Development/Python3
@@ -82,6 +81,7 @@ objects and report together, find reports by mimetypes/name/python
 objects.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt3
+- Fixed build
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2
 - Moved tests into separate package
 
