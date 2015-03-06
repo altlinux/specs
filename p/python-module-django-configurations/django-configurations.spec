@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8
-Release: alt1.git20140812
+Release: alt1.git20150213
 Summary: A helper for organizing Django settings
 License: BSD
 Group: Development/Python
@@ -125,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.git20150213
+- New snapshot
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.git20140812
 - Initial build for Sisyphus
 
