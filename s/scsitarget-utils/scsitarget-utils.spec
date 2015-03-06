@@ -5,7 +5,7 @@
 
 Name: scsitarget-utils
 Version: 1.0.55
-Release: alt1
+Release: alt2
 
 Summary: The SCSI target daemon and utility programs
 
@@ -82,7 +82,7 @@ Adds support for the Gluster glfs backstore to scsi-target-utils.
 mkdir -p %buildroot{%_sbindir,%_initdir,%_unitdir,%_sysconfdir/tgt/conf.d,%_sysconfdir/sysconfig,%_man5dir,%_man8dir}
 
 install -p -m 0755 scripts/tgt-setup-lun %buildroot%_sbindir
-install -p -m 0755 %SOURCE1 %buildroot%_unitdir
+install -p -m 0644 %SOURCE1 %buildroot%_unitdir
 install -p -m 0755 scripts/tgt-admin %buildroot/%_sbindir/tgt-admin
 install -p -m 0644 doc/manpages/targets.conf.5 %buildroot/%_man5dir
 install -p -m 0644 doc/manpages/tgtadm.8 %buildroot/%_man8dir
@@ -140,6 +140,9 @@ pushd usr
 %endif
 
 %changelog
+* Fri Mar 06 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.55-alt2
+- fix unit perm
+
 * Fri Mar 06 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.55-alt1
 - 1.0.55
 
