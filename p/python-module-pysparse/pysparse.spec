@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt1.git20030305
+Release: alt1.git20130305
 Summary: Fast sparse matrix library for Python
 License: MIT
 Group: Development/Python
@@ -126,6 +126,9 @@ install -p -m644 %oname/include/* \
 %python_sitelibdir/%oname/test
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.git20130305
+- Fixed build
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.git20030305
 - Version 1.3
 
