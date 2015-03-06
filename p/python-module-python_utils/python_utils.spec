@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 1.6.1
-Release: alt1.git20141015
+Version: 1.6.2
+Release: alt1.git20150209
 Summary: A module with some convenient utilities not included with the standard Python install
 License: BSD
 Group: Development/Python
@@ -32,6 +32,7 @@ make common patterns shorter and easier. It is by no means a complete
 collection but it has served me quite a bit in the past and I will keep
 extending it.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A module with some convenient utilities not included with the standard Python install
 Group: Development/Python3
@@ -42,6 +43,7 @@ Python Utils is a collection of small Python functions and classes which
 make common patterns shorter and easier. It is by no means a complete
 collection but it has served me quite a bit in the past and I will keep
 extending it.
+%endif
 
 %prep
 %setup
@@ -93,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt1.git20150209
+- Version 1.6.2
+
 * Mon Oct 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.git20141015
 - Initial build for Sisyphus
 
