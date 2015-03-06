@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.68
-Release: alt1.git20141218
+Release: alt2.git20141218
 Summary: Basic database connectivity for Autobahn web sockets
 License: ASLv2.0
 Group: Development/Python
@@ -57,6 +57,7 @@ distribution, sqlrouter, sqlbridge and sqlcmd.
 
 This package contains common config files for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Basic database connectivity for Autobahn web sockets
 Group: Development/Python3
@@ -72,6 +73,7 @@ Autobahn deployments, or, the convenience scripts that haver been
 included can be used to connect an sqlbridge to an already operating
 Autobahn router. There are three test scripts included in this
 distribution, sqlrouter, sqlbridge and sqlcmd.
+%endif
 
 %prep
 %setup
@@ -134,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.68-alt2.git20141218
+- Fixed build
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.68-alt1.git20141218
 - Version 0.1.68
 
