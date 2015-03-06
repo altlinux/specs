@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt1.git20120917
+Release: alt2.git20120917
 Summary: Python client for the tvrage.com XML API
 License: BSD
 Group: Development/Python
@@ -31,6 +31,7 @@ Conflicts: python-module-tvrage
 python-tvrage is a python based object oriented client interface for
 tvrage.com's XML based api feeds.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python client for the tvrage.com XML API
 Group: Development/Python3
@@ -41,6 +42,7 @@ Conflicts: python3-module-tvrage
 %description -n python3-module-%oname
 python-tvrage is a python based object oriented client interface for
 tvrage.com's XML based api feeds.
+%endif
 
 %prep
 %setup
@@ -78,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt2.git20120917
+- Fixed build
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20120917
 - Initial build for Sisyphus
 
