@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.1.0
-Release: alt1.git20141015
+Version: 5.2.0
+Release: alt1.git20150303
 Summary: Raven is a client for Sentry
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests git
 BuildPreReq: python-module-billiard python-module-pytest
 BuildPreReq: python-module-flake8 python-module-unittest2
 BuildPreReq: python-module-flask python-module-blinker
@@ -31,6 +31,7 @@ BuildPreReq: python-module-webob python-module-webtest
 BuildPreReq: python-module-anyjson python-module-kombu
 BuildPreReq: python-modules-multiprocessing python-module-sphinx-devel
 BuildPreReq: python-module-django-dbbackend-sqlite3
+BuildPreReq: python-module-requests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -49,6 +50,7 @@ BuildPreReq: python3-module-webob python3-module-webtest
 BuildPreReq: python3-module-anyjson python3-module-certifi
 BuildPreReq: python3-module-django-dbbackend-sqlite3
 BuildPreReq: python3-module-kombu
+BuildPreReq: python3-module-requests
 %endif
 
 %py_provides %oname
@@ -124,6 +126,13 @@ This package contains docs for %oname.
 
 %prep
 %setup
+
+git config --global user.email "real at altlinux.org"
+git config --global user.name "REAL"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag %version -m "%version"
 
 %if_with python3
 cp -fR . ../python3
@@ -205,6 +214,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2.0-alt1.git20150303
+- Version 5.2.0
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.0-alt1.git20141015
 - Initial build for Sisyphus
 
