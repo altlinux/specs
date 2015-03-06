@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20150227
+Version: 20150306
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Fri Mar 06 2015 Michael Shigorin <mike@altlinux.org> 20150306-alt1
+- cdrom.c: fix pointer arithmetics (ldv@)
+
 * Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 20150227-alt1
 - cdrom.c: minor fixup for "1, 2, 1 seconds" visual effect
 - disk.c: slightly better "help me find my media" message
