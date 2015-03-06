@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.7
-Release: alt1.dev.git20140915
+Release: alt2.dev.git20140915
 Summary: Python API to query a SPARQL endpoint
 License: MPLv1.1
 Group: Development/Python
@@ -33,6 +33,7 @@ BuildPreReq: python3-module-mock
 sparql-client is a library to query a SPARQL endpoint. It will
 automatically convert literals to the coresponding Python types.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python API to query a SPARQL endpoint
 Group: Development/Python3
@@ -42,6 +43,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 sparql-client is a library to query a SPARQL endpoint. It will
 automatically convert literals to the coresponding Python types.
+%endif
 
 %prep
 %setup
@@ -99,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt2.dev.git20140915
+- Fixed build
+
 * Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.dev.git20140915
 - Initial build for Sisyphus
 
