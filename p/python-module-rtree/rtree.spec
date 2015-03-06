@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.8.2
-Release: alt1.git20150107
+Release: alt2.git20150107
 Summary: R-Tree spatial index for Python GIS
 License: LGPLv2.1
 Group: Development/Python
@@ -48,6 +48,7 @@ Python user. These features include:
 * Custom storage implementation (to implement spatial indexing in ZODB,
   for example)
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: R-Tree spatial index for Python GIS
 Group: Development/Python3
@@ -67,6 +68,7 @@ Python user. These features include:
 * Disk serialization
 * Custom storage implementation (to implement spatial indexing in ZODB,
   for example)
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -156,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt2.git20150107
+- Fixed build
+
 * Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.git20150107
 - Initial build for Sisyphus
 
