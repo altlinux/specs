@@ -5,7 +5,7 @@
 Summary: python refactoring library
 Name: python-module-%real_name
 Version: 0.10.2
-Release: alt1.git20141228
+Release: alt1.git20150111
 License: GPLv2
 Group: Development/Python
 Url: http://rope.sf.net
@@ -25,6 +25,7 @@ BuildPreReq: python-tools-2to3
 %description
 %summary
 
+%if_with python3
 %package -n python3-module-%real_name
 Summary: python refactoring library
 Group: Development/Python3
@@ -42,6 +43,7 @@ Requires: python3-module-%real_name = %version-%release
 %summary
 
 This package contains tests for rope.
+%endif
 
 %package tests
 Summary: Tests for rope
@@ -109,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt1.git20150111
+- New snapshot
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt1.git20141228
 - New snapshot
 
