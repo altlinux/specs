@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 3.4.0
+Version: 3.4.2
 Release: alt1
 Summary: Tryton server
 License: GPL
@@ -81,6 +81,7 @@ Source ERP. It provides modularity, scalability and security.
 
 This package contains documentation for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Tryton server
 Group: Development/Python3
@@ -104,6 +105,7 @@ Postgresql as main database engine. It is the core base of an Open
 Source ERP. It provides modularity, scalability and security.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -176,6 +178,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt1
+- Version 3.4.2
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1
 - Version 3.4.0
 
