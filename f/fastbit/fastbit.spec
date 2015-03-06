@@ -1,7 +1,7 @@
 Name: fastbit
 Epoch: 1
-Version: 1.4.0
-Release: alt1.pre3.svn20140630
+Version: 2.0.1.9
+Release: alt1.svn20150305
 Summary: An Efficient Compressed Bitmap Index Technology
 License: LGPLv2.1+, GPLv2+
 Group: Development/Databases
@@ -54,6 +54,39 @@ user data is NOT required to be under the control of FastBit software.
 
 This package contains development files of FastBit.
 
+%package -n libfastbitjni
+Summary: Shared libraries of FastBit (JNI)
+Group: System/Libraries
+Requires: lib%name = %EVR
+
+%description -n libfastbitjni
+FastBit is an open-source data processing library following the spirit
+of NoSQL movement. It offers a set of searching functions supported by
+compressed bitmap indexes. It treats user data in the column-oriented
+fashion similar to well-known database management systems such as Sybase
+IQ, MonetDB, and Vertica. It is designed to accelerate user's data
+selection tasks without imposing undue requirements. In particular, the
+user data is NOT required to be under the control of FastBit software.
+
+This package contains shared libraries of FastBit (JNI).
+
+%package -n libfastbitjni-devel
+Summary: Development files of FastBit (JNI)
+Group: Development/C++
+Requires: libfastbitjni = %EVR
+Requires: lib%name-devel = %EVR
+
+%description -n libfastbitjni-devel
+FastBit is an open-source data processing library following the spirit
+of NoSQL movement. It offers a set of searching functions supported by
+compressed bitmap indexes. It treats user data in the column-oriented
+fashion similar to well-known database management systems such as Sybase
+IQ, MonetDB, and Vertica. It is designed to accelerate user's data
+selection tasks without imposing undue requirements. In particular, the
+user data is NOT required to be under the control of FastBit software.
+
+This package contains development files of FastBit (JNI).
+
 %package -n lib%name-devel-doc
 Summary: Documentation for FastBit
 Group: Development/Documentation
@@ -92,6 +125,7 @@ Summary: FastBit Java interface
 Group: Development/Databases
 BuildArch: noarch
 Requires: lib%name = %EVR
+Requires: libfastbitjni = %EVR
 Requires: jakarta-commons-logging junit log4j
 
 %description j
@@ -126,12 +160,17 @@ This package contains Javadoc for FastBit Java interface.
 
 %build
 %autoreconf
-%add_optflags -fno-strict-aliasing -std=gnu99
-%configure \
-	--enable-static=no \
-	--disable-debug \
-	--with-java=%_libexecdir/jvm/java \
-	--enable-contrib=yes
+%add_optflags -fno-strict-aliasing -std=gnu99 -I$PWD/src
+function conf() {
+	%configure \
+		--enable-static=no \
+		--disable-debug \
+		--with-java=%_libexecdir/jvm/java \
+		--enable-contrib=yes
+}
+# need 2 pass for awaiting generation of src/fastbit-config.h 
+conf
+conf
 %make_build
 
 pushd java
@@ -153,11 +192,9 @@ popd
 %install
 %makeinstall_std
 
-install -d %buildroot%_includedir/%name
-mv %buildroot%_includedir/*.h* %buildroot%_includedir/%name/
-
 install -d %buildroot%_javadir
 install -m644 java/distr/* %buildroot%_javadir
+mv %buildroot%_libdir/*.jar %buildroot%_javadir/
 
 install -d %buildroot%_javadocdir/%name
 cp -fR java/tmp/* %buildroot%_javadocdir/%name/
@@ -171,10 +208,18 @@ gzip ChangeLog
 %files -n lib%name
 %doc AUTHORS COPYING ChangeLog* NEWS README
 %_libdir/*.so.*
+%exclude %_libdir/libfastbitjni.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
+%exclude %_libdir/libfastbitjni.so
 %_includedir/*
+
+%files -n libfastbitjni
+%_libdir/libfastbitjni.so.*
+
+%files -n libfastbitjni-devel
+%_libdir/libfastbitjni.so
 
 %files -n lib%name-devel-doc
 %_docdir/%name
@@ -186,6 +231,9 @@ gzip ChangeLog
 %_javadocdir/%name
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.0.1.9-alt1.svn20150305
+- Version 2.0.1.9
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4.0-alt1.pre3.svn20140630
 - Version 1.4.0pre3
 
