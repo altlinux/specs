@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.2.1
-Release: alt1.git20141231
+Version: 1.3.1
+Release: alt1.git20150213
 Summary: Python RESTful API Testing & Microbenchmarking Tool
 License: ASLv2.0
 Group: Development/Python
@@ -14,6 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/svanoort/pyresttest.git
 Source: %name-%version.tar
+Source1: repocop-test-hint:binary:python-module-pyresttest:altlinux-python-test-is-packaged
 BuildArch: noarch
 
 BuildPreReq: python-modules-json
@@ -37,6 +38,7 @@ BuildPreReq: python-tools-2to3
 * Tests are defined in basic YAML or JSON config files, no code needed
 * Logic is written and extensible in Python
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python RESTful API Testing & Microbenchmarking Tool
 Group: Development/Python3
@@ -48,6 +50,7 @@ Group: Development/Python3
   management/orchestration tools
 * Tests are defined in basic YAML or JSON config files, no code needed
 * Logic is written and extensible in Python
+%endif
 
 %prep
 %setup
@@ -108,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1.git20150213
+- Version 1.3.1
+
 * Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.git20141231
 - Version 1.2.1
 
