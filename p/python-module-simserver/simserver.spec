@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1.git20121102
+Release: alt2.git20121102
 Summary: Document similarity server, using gensim
 License: LGPL
 Group: Development/Python
@@ -53,6 +53,7 @@ similarity server.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Document similarity server, using gensim
 Group: Development/Python3
@@ -79,6 +80,7 @@ Simserver uses transactions internally to provide a robust and scalable
 similarity server.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -133,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt2.git20121102
+- Fixed build
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.git20121102
 - Initial build for Sisyphus
 
