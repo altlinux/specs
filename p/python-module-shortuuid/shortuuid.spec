@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt1.git20140426
+Release: alt2.git20140426
 Summary: A generator library for concise, unambiguous and URL-safe UUIDs
 License: BSD
 Group: Development/Python
@@ -118,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2.git20140426
+- Disabled test_pep8 (broken with new pep8)
+
 * Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20140426
 - Initial build for Sisyphus
 
