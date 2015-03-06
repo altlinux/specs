@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.14.1
-Release: alt1.git20141001
+Release: alt2.git20141001
 Summary: A module for editing JPEG EXIF data
 License: MIT
 Group: Development/Python
@@ -30,6 +30,7 @@ BuildPreReq: python-tools-2to3
 This module allows you to parse and edit the EXIF data tags in a JPEG
 image.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A module for editing JPEG EXIF data
 Group: Development/Python3
@@ -38,6 +39,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 This module allows you to parse and edit the EXIF data tags in a JPEG
 image.
+%endif
 
 %prep
 %setup
@@ -94,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.1-alt2.git20141001
+- Fixed build
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.1-alt1.git20141001
 - Initial build for Sisyphus
 
