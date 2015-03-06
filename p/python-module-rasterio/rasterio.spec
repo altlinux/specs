@@ -1,11 +1,11 @@
 %define oname rasterio
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 0.18
-Release: alt1.git20150214
+Release: alt2.git20150214
 Summary: Fast and direct raster I/O for use with Numpy and SciPy
 License: BSD
 Group: Development/Python
@@ -114,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt2.git20150214
+- Fixed build
+
 * Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt1.git20150214
 - New snapshot
 
