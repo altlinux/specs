@@ -1,66 +1,85 @@
-%ifnarch s390 s390x
-%global with_rdma 1
-%endif
 
-Name:		scsitarget-utils
-Version:	1.0.30
-Release:	alt6
+%def_with rdma
+%def_with rbd
+%def_with glfs
 
-Summary:	The SCSI target daemon and utility programs
+Name: scsitarget-utils
+Version: 1.0.55
+Release: alt1
 
-Group:		System/Configuration/Hardware
-License:	GPLv2
-URL:		http://stgt.sourceforge.net/
+Summary: The SCSI target daemon and utility programs
 
-Source0:	%name-%version.tar
-Source1:	tgt.service
-Source2:	sysconfig.tgtd
-Source3:	targets.conf
-Source4:	sample.conf
-Source5:	tgtd.conf
-Source6:	tgt.init
-Patch0:		%name-redhatify-docs.patch
-Patch1:		%name-remove-xsltproc-check.patch
-Patch2:		%name-include-dirs.patch
+Group: System/Configuration/Hardware
+License: GPLv2
+URL: http://stgt.sourceforge.net/
 
-BuildRequires:	pkgconfig
-BuildRequires:	libxslt
-BuildRequires:	docbook-style-xsl
-BuildRequires:	xsltproc
-BuildRequires:	perl-Config-General
-%if 0%{?with_rdma}
-BuildRequires:	libibverbs-devel
-BuildRequires:	librdmacm-devel
-Requires:	libibverbs
-Requires:	librdmacm
-%endif
-Requires:	lsof
-Requires:	sg3_utils
+Source0: %name-%version.tar
+Source1: tgt.service
+Source2: sysconfig.tgtd
+Source3: targets.conf
+Source4: sample.conf
+Source5: tgtd.conf
+Source6: tgt.init
 
+Patch10: %name-snapshot.patch
+# Patch2: %name-alt-patches.patch
+
+# fedora patches
+Patch0: 0001-redhatify-docs.patch
+Patch1: 0002-remove-check-for-xsltproc.patch
+Patch2: 0003-default-config.patch
+
+BuildRequires: libxslt docbook-style-xsl xsltproc
+BuildRequires: libaio-devel systemd-devel
+BuildRequires: ceph-devel
+BuildRequires: perl-Config-General
+%{?_with_rdma:BuildRequires: libibverbs-devel librdmacm-devel}
+%{?_with_rbd:BuildRequires: ceph-devel}
+%{?_with_glfs:BuildRequires: glusterfs3-devel}
+
+Requires: lsof
+Requires: sg3_utils
+
+Provides: scsi-target-utils = %version-%release
 
 %description
 The SCSI target package contains the daemon and tools to setup a SCSI
 targets. Currently, software iSCSI targets are supported.
 
+%package rbd
+Summary: Support for the Ceph rbd backstore to scsi-target-utils
+Group: System/Configuration/Hardware
+Requires: %name = %version-%release
+
+%description rbd
+Adds support for the Ceph rbd backstore to scsi-target-utils.
+
+%package gluster
+Summary:        Support for the Gluster backstore to scsi-target-utils
+Group: System/Configuration/Hardware
+Requires: %name = %version-%release
+
+%description gluster
+Adds support for the Gluster glfs backstore to scsi-target-utils.
+
 %prep
 %setup
+%patch10 -p1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
 %build
 %__subst 's|-g -O2 -Wall|%optflags|' Makefile
-%make_build %{?with_rdma:ISCSI_RDMA=1} libdir=%_libdir/tgt
+%make_build \
+	%{?_with_rdma:ISCSI_RDMA=1} \
+	%{?_with_rbd:CEPH_RBD=1} \
+	%{?_with_glfs:GLFS_BD=1} \
+	SD_NOTIFY=1 \
+	libdir=%_libdir/tgt
 
 %install
-install -d %buildroot%_sbindir
-install -d %buildroot%_man5dir
-install -d %buildroot%_man8dir
-install -d %buildroot%_unitdir
-install -d %buildroot%_initdir
-install -d %buildroot%_sysconfdir/tgt
-install -d %buildroot%_sysconfdir/tgt/conf.d
-install -d %buildroot%_sysconfdir/sysconfig
+mkdir -p %buildroot{%_sbindir,%_initdir,%_unitdir,%_sysconfdir/tgt/conf.d,%_sysconfdir/sysconfig,%_man5dir,%_man8dir}
 
 install -p -m 0755 scripts/tgt-setup-lun %buildroot%_sbindir
 install -p -m 0755 %SOURCE1 %buildroot%_unitdir
@@ -76,7 +95,13 @@ install -p -m 0600 %SOURCE5 %buildroot%_sysconfdir/tgt
 install -p -m 0755 %SOURCE6 %buildroot%_initdir/tgt
 
 pushd usr
-%makeinstall_std %{?with_rdma:ISCSI_RDMA=1} sbindir=%_sbindir libdir=%_libdir/tgt
+%makeinstall_std \
+	%{?_with_rdma:ISCSI_RDMA=1} \
+	%{?_with_rbd:CEPH_RBD=1} \
+	%{?_with_glfs:GLFS_BD=1} \
+	SD_NOTIFY=1 \
+	sbindir=%_sbindir \
+	libdir=%_libdir/tgt
 
 %post
 %post_service tgt
@@ -102,7 +127,22 @@ pushd usr
 %attr(0600,root,root) %config(noreplace) %_sysconfdir/tgt/tgtd.conf
 %attr(0600,root,root) %config(noreplace) %_sysconfdir/tgt/conf.d/sample.conf
 
+%if_with rbd
+%files rbd
+%_libdir/tgt/backing-store/bs_rbd.so
+%doc doc/README.rbd
+%endif
+
+%if glfs
+%files gluster
+%_libdir/tgt/backing-store/bs_glfs.so
+%doc doc/README.glfs
+%endif
+
 %changelog
+* Fri Mar 06 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.55-alt1
+- 1.0.55
+
 * Tue Sep 03 2013 Pavel Shilovsky <piastry@altlinux.org> 1.0.30-alt6
 - Rename tgtd.{init,service} files to tgt.{init,service}
 
