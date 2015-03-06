@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.2.0
-Release: alt1.git20150114
+Release: alt2.git20150114
 Summary: Database versioning and migration tool inspired on Rails Migrations
 License: ASLv2.0
 Group: Development/Python
@@ -39,6 +39,7 @@ Ruby, PHP, whatever). This is possible because simple-db-migrate uses
 database's DDL (Data Definition Language) to do the database operations,
 while Rails Migrations are written in a Ruby internal DSL.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Database versioning and migration tool inspired on Rails Migrations
 Group: Development/Python3
@@ -53,6 +54,7 @@ makes it possible to have migrations in any language (Java, Python,
 Ruby, PHP, whatever). This is possible because simple-db-migrate uses
 database's DDL (Data Definition Language) to do the database operations,
 while Rails Migrations are written in a Ruby internal DSL.
+%endif
 
 %prep
 %setup
@@ -114,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt2.git20150114
+- Fixed build
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1.git20150114
 - Initial build for Sisyphus
 
