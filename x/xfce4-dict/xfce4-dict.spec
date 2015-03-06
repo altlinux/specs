@@ -1,11 +1,11 @@
 Name: xfce4-dict
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: Xfce4 Dictionary - A client program to query different dictionaries
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 # git://git.xfce.org/apps/xfce4-dict
 Source: %name-%version.tar
@@ -56,6 +56,10 @@ panel plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt2
+- Rebuild with libxfce4util-4.12.
+- Fix Xfce name (XFCE -> Xfce).
+
 * Mon May 20 2013 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
 - Updated to 0.7.0.
 

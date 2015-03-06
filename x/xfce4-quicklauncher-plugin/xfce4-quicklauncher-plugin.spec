@@ -1,12 +1,12 @@
 Name: xfce4-quicklauncher-plugin
 Version: 1.9.4
-Release: alt4
+Release: alt5
 
-Summary: Quicklauncher plugin for XFce Desktop
+Summary: Quicklauncher plugin for Xfce Desktop
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 
@@ -65,6 +65,10 @@ displaying them on several lines.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt5
+- Rebuild with libxfce4util-4.12.
+- Fix Xfce name (XFCE,XFce -> Xfce).
+
 * Mon Apr 16 2012 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt4
 - Rebuild against libxfce4util.so.6 (libxfce4util-4.9).
 

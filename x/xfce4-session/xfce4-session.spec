@@ -1,5 +1,5 @@
 Name: xfce4-session
-Version: 4.11.1
+Version: 4.12.0
 Release: alt1
 
 Summary: Session manager for Xfce desktop environment
@@ -120,6 +120,9 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/polkit-gnome-authe
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt1
+- Updated to 4.12.0.
+
 * Wed Feb 18 2015 Mikhail Efremov <sem@altlinux.org> 4.11.1-alt1
 - Drop obsoleted patches.
 - Updated to 4.11.1.

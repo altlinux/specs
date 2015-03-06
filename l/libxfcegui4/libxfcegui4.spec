@@ -1,13 +1,13 @@
 Name: libxfcegui4
 Version: 4.10.0
-Release: alt3
+Release: alt4
 
-Summary: Various Gtk+2 widgets for XFce
+Summary: Various Gtk+2 widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK 2 для Xfce
 License: %lgpl2plus
 Group: Graphical desktop/XFce
 Url: http://www.xfce.org/
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/libxfcegui4
 Source: %name-%version.tar
@@ -20,7 +20,7 @@ BuildPreReq: libxfce4util-devel libxfconf-devel
 BuildRequires: gtk-doc intltool libSM-devel libglade-devel libgladeui-devel libstartup-notification-devel xorg-cf-files
 
 %description
-Various Gtk+2 widgets for XFce.
+Various Gtk+2 widgets for Xfce.
 It has been superseded by the libxfce4ui library.
 
 %description -l ru_RU.UTF-8
@@ -73,6 +73,10 @@ Header files for the %name library.
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt4
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Rebuild with libxfce4util-4.12.
+
 * Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt3
 - Replace xfce_setenv() with g_setenv().
 

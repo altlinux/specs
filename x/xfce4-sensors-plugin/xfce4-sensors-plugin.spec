@@ -1,12 +1,12 @@
 Name: xfce4-sensors-plugin
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
-Summary: Sensors plugin for XFce Desktop
+Summary: Sensors plugin for Xfce Desktop
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -56,6 +56,10 @@ Requires: xfce4-panel >= 4.8 hddtemp lm_sensors3
 %exclude %_libdir/xfce4/modules/libxfce4sensors.la
 
 %changelog
+* Fri Feb 27 2015 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated to 1.2.6.
+
 * Thu May 31 2012 Mikhail Efremov <sem@altlinux.org> 1.2.5-alt1
 - Updated to 1.2.5.
 

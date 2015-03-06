@@ -1,6 +1,6 @@
 Name:           xfce4-notifyd
 Version:        0.2.4
-Release:        alt1
+Release:        alt2
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
 
@@ -9,7 +9,7 @@ License:        %gpl2only
 URL:            http://spuriousinterrupt.org/projects/xfce4-notifyd
 Source0:        %name-%version.tar
 Patch:          %name-%version-%release.patch
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -27,6 +27,8 @@ Requires:       xfce4-common
 Requires:       dbus icon-theme-hicolor
 Requires:       notify-send
 Obsoletes:      notification-daemon-xfce <= 0.3.7
+
+Provides: desktop-notification-daemon
 
 %description
 Xfce4-notifyd is a simple, visually-appealing notification daemon for
@@ -75,6 +77,11 @@ freedesktop.org.
 %_man1dir/*
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt2
+- Rebuild with libxfce4util-4.12.
+- Fix Xfce name (XFCE -> Xfce).
+- Provide desktop-notification-daemon.
+
 * Wed May 08 2013 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
 - Add xfce4-common requires.
 - Updated to 0.2.4.

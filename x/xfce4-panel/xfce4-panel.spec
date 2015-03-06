@@ -1,7 +1,7 @@
-%define xfce_ver 4.10
+%define xfce_ver 4.12
 
 Name: xfce4-panel
-Version: 4.11.2
+Version: 4.12.0
 Release: alt1
 
 Summary: Panel for Xfce
@@ -113,6 +113,9 @@ mkdir -p %buildroot/%_datadir/xfce4/panel-plugins
 %doc %_datadir/gtk-doc/html/libxfce4panel-*/
 
 %changelog
+* Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt1
+- Updated to 4.12.0.
+
 * Mon Jan 12 2015 Mikhail Efremov <sem@altlinux.org> 4.11.2-alt1
 - Updated to 4.11.2.
 

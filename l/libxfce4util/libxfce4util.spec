@@ -1,5 +1,5 @@
 Name: libxfce4util
-Version: 4.11.0
+Version: 4.12.1
 Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
@@ -64,6 +64,9 @@ Header files for the %name library.
 %_libdir/*.so
 
 %changelog
+* Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt1
+- Updated to 4.12.1.
+
 * Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Own %_includedir/xfce4.

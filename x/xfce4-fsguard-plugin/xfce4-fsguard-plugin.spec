@@ -1,11 +1,11 @@
 Name: xfce4-fsguard-plugin
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 
 Summary: Plugin checks the chosen mountpoint for free disk space
 License: %bsdstyle
 Group: Graphical desktop/XFce
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 # git://git.xfce.org/panel-plugins/xfce4-fsguard-plugin
@@ -50,6 +50,10 @@ directory in the file manager.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1
+- Fix Xfce name (XFCE -> Xfce).
+- Updated to 1.0.2.
+
 * Wed Jun 05 2013 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt2
 - Updated translations from upstream git.
 - Don't package *.la files.

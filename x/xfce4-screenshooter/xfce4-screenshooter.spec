@@ -3,7 +3,7 @@
 
 Name: xfce4-screenshooter
 Version: 1.8.2
-Release: alt1%git_date
+Release: alt2%git_date
 
 Summary: Screenshot Xfce4 panel plugin
 Summary (ru_RU.UTF-8): Дополнение для панели Xfce позволяющее делать снимки экрана
@@ -73,6 +73,9 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt2
+- Rebuild with libxfce4util-4.12.
+
 * Mon Jan 26 2015 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
 - Revert "Don't use xfhelp4.".
 - Fix Xfce name (XFce,XFCE -> Xfce).

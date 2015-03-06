@@ -1,6 +1,6 @@
 Name: xfce4-eyes-plugin
 Version: 4.4.3
-Release: alt1
+Release: alt2
 
 Summary: Eyes plugin for Xfce Desktop
 License: %gpl2plus
@@ -52,6 +52,9 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 4.4.3-alt2
+- Rebuild with libxfce4util-4.12.
+
 * Mon Dec 29 2014 Mikhail Efremov <sem@altlinux.org> 4.4.3-alt1
 - Fix build: create m4/ directory.
 - Fix Xfce name (XFce,XFCE -> Xfce).

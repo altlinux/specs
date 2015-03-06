@@ -1,4 +1,4 @@
-%define git_date .git20130426
+%define git_date .git20150306
 
 %def_enable git
 %def_enable subversion
@@ -56,6 +56,10 @@ menu. It also shows the svn file status in the file properties window.
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt2.git20150306
+- Rebuild with libxfce4util-4.12.
+- Upstream git snapshot.
+
 * Tue Apr 30 2013 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt2.git20130426
 - Fix build with current libaprutil1.
 - Enable subversion 1.7 support.

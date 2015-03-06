@@ -1,12 +1,12 @@
 Name: xfce4-timer-plugin
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
-Summary: Timer plugin for XFCE 4.4
+Summary: Timer plugin for Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # git.alt:packages/xfce4-timer-plugin.git
 Source: %name-%version.tar
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4util-devel libxfce4ui-devel libxfce4panel-devel
 BuildRequires: perl-XML-Parser intltool
+
+Requires: xfce4-panel
 
 %description
 Nothing to describe really. Use the options menu to add timers. You can
@@ -42,6 +44,12 @@ of them can be run at a time.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt2
+- Rebuild with libxfce4util-4.12.
+- Fix Summary.
+- Fix Xfce name (XFCE -> Xfce).
+- Require xfce4-panel.
+
 * Wed Jun 05 2013 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt1
 - Updated translations from upstream git.
 - Updated to 1.5.0.

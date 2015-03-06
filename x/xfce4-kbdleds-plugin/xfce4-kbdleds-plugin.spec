@@ -2,13 +2,13 @@
 
 Name: xfce4-kbdleds-plugin
 Version: 0.0.6
-Release: alt3%git_date
+Release: alt4%git_date
 
 Summary: This plugin shows the state of your keyboard LEDs
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -45,6 +45,10 @@ Num Lock in Xfce panel.
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.0.6-alt4.git20111014
+- Rebuild with libxfce4util-4.12.
+- Fix Xfce name (XFCE -> Xfce).
+
 * Mon Apr 16 2012 Mikhail Efremov <sem@altlinux.org> 0.0.6-alt3.git20111014
 - Rebuild against libxfce4util.so.6 (libxfce4util-4.9).
 

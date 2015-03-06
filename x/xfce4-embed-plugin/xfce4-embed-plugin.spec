@@ -1,12 +1,12 @@
 Name: xfce4-embed-plugin
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: Embed arbitrary application windows into the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -46,6 +46,10 @@ open.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt2
+- Rebuild with libxfce4util-4.12.
+- Fix Xfce name (XFCE -> Xfce).
+
 * Tue May 28 2013 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
 - Updated to 1.4.0.
 

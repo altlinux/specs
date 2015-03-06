@@ -2,7 +2,7 @@
 
 Name: gtk-xfce-engine
 Summary: Xfce gtk theme engine with various different themes
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 License: %gpl2plus
 Url: http://www.xfce.org/
@@ -63,6 +63,9 @@ touch ChangeLog
 %doc AUTHORS
 
 %changelog
+* Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 3.2.0-alt1
+- Updated to 3.2.0.
+
 * Thu Feb 19 2015 Mikhail Efremov <sem@altlinux.org> 3.1.0-alt1
 - Drop gtk3 theme engine.
 - Fix Xfce name (XFCE -> Xfce).

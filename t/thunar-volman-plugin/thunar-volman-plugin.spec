@@ -1,7 +1,7 @@
 %define base thunar-volman
 Name: %base-plugin
-Version: 0.8.0
-Release: alt2
+Version: 0.8.1
+Release: alt1
 
 Summary: Thunar volume manager plugin
 Summary (ru): Дополнение Thunar для управления подключенными устройствами
@@ -67,6 +67,10 @@ gnome-volume-manager - менеджер управления томами для
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+= Drop obsoleted patch.
+- Updated to 0.8.1.
+
 * Tue May 21 2013 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt2
 - Use xfce_dialog_show_help ().
 
