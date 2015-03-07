@@ -2,26 +2,22 @@
 %def_disable mod_ffmpeg
 
 Name: freerdp
-Version: 1.0.2
-Release: alt4
+Version: 1.1.0
+Release: alt1.beta1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
 License: Apache License 2.0
-Url: http://freerdp.sourceforge.net/
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+URL: http://www.freerdp.com
+Packager: Mikhail Kolchin <mvk@altlinux.org>
+
+Source: FreeRDP-stable-1.1.tar
 
 Requires: xfreerdp = %version-%release %name-plugins-standard = %version-%release
 
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar
-# SuSE
-Patch1: freerdp_branch-1.0.x_fix-kpdivide-issue831.patch
-Patch2: freerdp-fix-FindPCSC-macro.patch
-Patch3: freerdp-handle-null-device-name.patch
-# ALT
-Patch100: freerdp-1.0.2-alt-fix-compile.patch
-
-BuildRequires: cmake ctest xmlto openssl-devel libX11-devel libXcursor-devel libXdamage-devel libXext-devel libXv-devel libXinerama-devel libxkbfile-devel cups-devel zlib-devel libalsa-devel libdirectfb-devel libICE-devel libao-devel libsamplerate-devel libpcsclite-devel libpulseaudio-devel CUnit-devel
+# Automatically added by buildreq on Sun Mar 22 2015
+# optimized out: cmake cmake-modules glib2-devel gstreamer-devel libX11-devel libXext-devel libXrender-devel libcom_err-devel libgst-plugins libkrb5-devel libxml2-devel pkg-config xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: ctest docbook-style-xsl git-core gst-plugins-devel libXcursor-devel libXinerama-devel libXrandr-devel libXv-devel libalsa-devel libcups-devel libdirectfb-devel libjpeg-devel libpcsclite-devel libpulseaudio-devel libssl-devel libxkbfile-devel
 %if_enabled mod_ffmpeg
 libavcodec-devel libavutil-devel
 %endif
@@ -37,11 +33,13 @@ This is metapackage.
 Summary: Remote Desktop Protocol client
 Group: Networking/Remote access
 #Requires: %name-plugins-standard
+
 %description -n xfreerdp
 xfreerdp is a client for Remote Desktop Protocol (RDP), used in a number of
 Microsoft products.
 
 This package contains X11 UI.
+
 
 %package -n dfreerdp
 Summary: Remote Desktop Protocol client
@@ -52,7 +50,8 @@ Provides: dfbfreerdp
 dfbfreerdp is a client for Remote Desktop Protocol (RDP), used in a number of
 Microsoft products.
 
-This package contains  DirectFB UI.
+This package contains DirectFB UI.
+
 
 %package -n lib%name
 Summary: Core libraries implementing the RDP protocol
@@ -60,6 +59,17 @@ Group: Networking/Remote access
 
 %description -n lib%name
 libfreerdp can be embedded in applications.
+
+
+%package plugins-standard
+Summary: Plugins for handling the standard RDP channels
+Group: Networking/Remote access
+Requires: lib%name = %version-%release
+
+%description plugins-standard
+A set of plugins to the channel manager implementing the standard virtual
+channels extending RDP core functionality.  For example, sounds, clipboard
+sync, disk/printer redirection, etc.
 
 
 %package -n lib%name-devel
@@ -72,84 +82,85 @@ Obsoletes: freerdp-devel
 %description -n lib%name-devel
 Header files and unversioned libraries for libfreerdp.
 
-%package plugins-standard
-Summary: Plugins for handling the standard RDP channels
-Group: Networking/Remote access
-Requires: lib%name = %version-%release
-
-%description plugins-standard
-A set of plugins to the channel manager implementing the standard virtual
-channels extending RDP core functionality.  For example, sounds, clipboard
-sync, disk/printer redirection, etc.
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch100 -p1
+%setup -n FreeRDP-stable-1.1
 
 %build
-%cmake	-DWITH_ALSA=ON \
-	-DWITH_PULSEAUDIO=ON \
-	-DWITH_PCSC=ON \
-	-DWITH_CUNIT=ON \
-	-DWITH_CUPS=ON \
+%cmake \
+    -DMONOLITHIC_BUILD=OFF \
+    -DWITH_ALSA=ON \
+    -DWITH_CUPS=ON \
+    -DWITH_CHANNELS=ON -DSTATIC_CHANNELS=OFF \
+    -DWITH_DIRECTFB=ON \
 %if_enabled mod_ffmpeg
-	-DWITH_FFMPEG=ON \
+    -DWITH_FFMPEG=ON \
 %else
-	-DWITH_FFMPEG=OFF \
+    -DWITH_FFMPEG=OFF \
 %endif
-	-DWITH_X11=ON \
-	-DWITH_XKBFILE=ON \
-	-DWITH_XINERAMA=ON \
-	-DWITH_XEXT=ON \
-	-DWITH_XCURSOR=ON \
-	-DWITH_XV=ON \
-	-DWITH_DIRECTFB=ON \
-	-DWITH_XDAMAGE=ON \
+    -DWITH_GSM=OFF \
+    -DWITH_GSTREAMER_1_0=OFF \
+    -DWITH_IPP=OFF \
+    -DWITH_JPEG=ON \
+    -DWITH_MANPAGES=OFF \
+    -DWITH_OPENSSL=ON \
+    -DWITH_PCSC=ON \
+    -DWITH_PULSE=ON \
+    -DWITH_X11=ON \
+    -DWITH_XCURSOR=ON \
+    -DWITH_XEXT=ON \
+    -DWITH_XKBFILE=ON \
+    -DWITH_XI=OFF \
+    -DWITH_XINERAMA=ON \
+    -DWITH_XRENDER=ON \
+    -DWITH_XV=ON \
+    -DWITH_ZLIB=ON \
 %ifarch x86_64
-	-DWITH_SSE2=ON \
+    -DWITH_SSE2=ON \
 %else
-	-DWITH_SSE2=OFF \
+    -DWITH_SSE2=OFF \
 %endif
-	-DWITH_SERVER=OFF \
 %ifarch armh
-	-DARM_FP_ABI=hard \
-	-DWITH_NEON=OFF \
+    -DARM_FP_ABI=hard \
+    -DWITH_NEON=OFF \
 %endif
-	#
+    #
 
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
+
+rm -f %buildroot%_libdir/*.a \
+      %buildroot%_libdir/freerdp/*.a
 
 %files
 
 %files -n xfreerdp
 %_bindir/xfreerdp
-%_datadir/freerdp/keymaps
-%_mandir/*/*
+#%_mandir/*/*
 
 %files -n dfreerdp
 %_bindir/dfreerdp
 
 %files -n lib%name
-%doc LICENSE README
+%doc LICENSE README ChangeLog
 %_libdir/lib*.so.*
 %dir %_libdir/freerdp
-#_datadir/freerdp/
 
 %files plugins-standard
 %_libdir/freerdp/*.so
 
 %files -n lib%name-devel
 %_includedir/freerdp
+%_includedir/winpr
 %_libdir/lib*.so
 %_libdir/pkgconfig/*
 
 %changelog
+* Sun Mar 22 2015 Mikhail Kolchin <mvk@altlinux.org> 1.1.0-alt1.beta1
+- stable-1.1 snapshot 770c67d340d5f0a7b48d53a1ae0fc23aff748fc4
+
 * Wed Oct 02 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt4
 - fix typo for compile on arm
 
