@@ -6,7 +6,7 @@
 
 Name: quagga
 
-%define baseversion 0.99.24
+%define baseversion 0.99.24.1
 Release: alt1
 
 %if %cvs
@@ -29,7 +29,7 @@ Url: http://www.quagga.net/
 %if %cvs
 Source0:	%name-%baseversion-%cvsdate.tar.gz
 %else
-Source0:	%name-%version.tar.gz
+Source0:	%name-%version.tar.xz
 %endif
 Source1:	%name.logrotate
 Source2:	%name.pam
@@ -79,7 +79,7 @@ It takes multi-server and multi-thread approach to resolve the current
 complexity of the Internet.
 
 Quagga supports BGP4, BGP4+, OSPFv2, OSPFv3, RIPv1, RIPv2, RIPng,
-                IS-SI, Babel, PIM  and MPLS-VPN.
+                IS-SI, Babel, PIM-SSM and MPLS-VPN.
 
 Quagga is intended to be used as a Route Server and a Route Reflector.
 It is not a toolkit, it provides full routing power under a new
@@ -313,6 +313,9 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Sat Mar 07 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.99.24.1-alt1
+- new version
+
 * Tue Mar 03 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.99.24-alt1
 - new version
 - removed old (currently unrecognized) configure's options:
