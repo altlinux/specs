@@ -1,10 +1,9 @@
-%def_disable static
-
 %define oldname polarssl
+%define soversion 8
 
 Name: mbedtls
 Version: 1.3.10
-Release: alt1
+Release: alt2
 
 Summary: Light-weight cryptographic and SSL/TLS library
 License: GPLv2
@@ -24,13 +23,14 @@ library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible.
 
-%package -n lib%name
+%package -n lib%name%soversion
 Summary: Light-weight cryptographic and SSL/TLS library
 Group: System/Libraries
-Provides: lib%oldname = %version
-Obsoletes: lib%oldname
+Conflicts: hiawatha
+Provides: lib%name = %version-%release
 
-%description -n lib%name
+
+%description -n lib%name%soversion
 mbed TLS is a light-weight open source cryptographic and SSL/TLS
 library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
@@ -39,10 +39,8 @@ applications with as little hassle as possible.
 %package -n lib%name-devel
 Summary: Development files for mbed TLS
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name%soversion = %version-%release
 Conflicts: hiawatha
-Provides: lib%oldname-devel = %version
-Obsoletes: lib%oldname-devel
 
 %description -n lib%name-devel
 Contains libraries and header files for
@@ -53,8 +51,6 @@ developing applications that use mbed TLS
 Summary: Static libraries for mbed TLS
 Group: Development/C
 Requires: lib%name-devel = %version-%release
-Provides: lib%oldname-devel-static = %version
-Obsoletes: lib%oldname
 
 %description -n lib%name-devel-static
 Static libraries for developing applications
@@ -65,8 +61,6 @@ that use mbed TLS
 Summary: Utilities for PolarSSL
 Group: Development/Tools
 Requires: lib%name = %version-%release
-Provides: %oldname-utils = %version
-Obsoletes: %oldname
 
 %description utils
 Cryptographic utilities based on mbed TLS 
@@ -97,7 +91,7 @@ popd
 %__mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
 %__rm -rf %buildroot%_bindir
 
-%files -n lib%name
+%files -n lib%name%soversion
 %doc ChangeLog LICENSE README.rst
 %_libdir/lib%name.so.*
 
@@ -116,6 +110,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Sat Mar 07 2015 Nazarov Denis <nenderus@altlinux.org> 1.3.10-alt2
+- Package libmbedtls renamed according to Shared Libs Policy
+
 * Sat Feb 28 2015 Nazarov Denis <nenderus@altlinux.org> 1.3.10-alt1
 - Renamed package to mbed TLS
 - Version 1.3.10
