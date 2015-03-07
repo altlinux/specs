@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 10.4.5
+Version: 10.5.0
 Release: alt1
 Epoch: 4
 License: MIT
@@ -21,7 +21,8 @@ BuildRequires: llvm-devel >= 3.4.2 llvm-devel-static >= 3.4.2
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
-BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel
+BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libssl-devel
+BuildRequires: python-module-mako
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -220,7 +221,6 @@ framerate information to stdout
 %endif
 	--enable-texture-float \
 	--enable-shared-glapi \
-	--disable-gallium-egl \
 	%{subst_enable egl} \
 	%{subst_enable gles2} \
 	--enable-texture-float \
@@ -384,6 +384,15 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sat Mar 07 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.5.0-alt1
+- 10.5.0
+
+* Mon Mar 02 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.5.0-alt0.rc3
+- 10.5.0 RC3
+
+* Fri Feb 27 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.5.0-alt0.rc2
+- 10.5.0 RC2
+
 * Sun Feb 22 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.4.5-alt1
 - 10.4.5
 
