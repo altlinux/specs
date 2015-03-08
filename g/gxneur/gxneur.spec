@@ -3,7 +3,7 @@ BuildRequires: desktop-file-utils
 
 Name: gxneur
 Version: 0.17.0
-Release: alt1
+Release: alt2
 
 Summary: GTK frontend for X Neural Switcher
 
@@ -48,15 +48,12 @@ GenericName[ru]=Переключатель раскладки клавиатур
 Type=Application
 Exec=gxneur
 Icon=gxneur
-Categories=GTK;Utility
+Categories=Utility;GTK;GNOME;Accessibility
 Comment=Automatic keyboard layout switcher
 Comment[ru]=Автоматический переключатель раскладки клавиатуры
 StartupNotify=false
 Terminal=false
 EOF
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Accessibility \
-	%buildroot%_desktopdir/gxneur.desktop
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README TODO
@@ -69,6 +66,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/%name.png
 
 %changelog
+* Sun Mar 08 2015 Michael Shigorin <mike@altlinux.org> 0.17.0-alt2
+- NMU: fix desktop file
+
 * Mon Oct 28 2013 Fr. Br. George <george@altlinux.ru> 0.17.0-alt1
 - Autobuild version bump to 0.17.0
 
