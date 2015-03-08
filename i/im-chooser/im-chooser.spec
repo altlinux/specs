@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/glib-gettextize glib2-devel pkgconfig(gtk+-3.0)
 
 Name:		im-chooser
 Version:	1.6.4
-Release:	alt2
+Release:	alt3
 License:	GPLv2+ and LGPLv2+
 URL:		http://fedorahosted.org/im-chooser/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -123,6 +123,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/applications/im-chooser-panel.desktop
 %endif
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.6.4-alt3
+- Rebuild with libxfce4util-4.12.
+
 * Tue Aug 26 2014 Ilya Mashkin <oddity@altlinux.ru> 1.6.4-alt2
 - build for Sisyphus
 

@@ -3,8 +3,8 @@
 %def_without builtin_menu
 
 Name: lib%_name
-Version: 0.3.0
-Release: alt2
+Version: 0.4.0
+Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
 License: %lgpl2plus
@@ -152,6 +152,9 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %_libdir/pkgconfig/%_name-gtk2-1.pc
 
 %changelog
+* Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- Updated to 0.4.0.
+
 * Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt2
 - Updated to 0.3.0.
 

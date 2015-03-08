@@ -1,6 +1,6 @@
 Name: parole
 Version: 0.5.4
-Release: alt1
+Release: alt2
 
 # '1' for gstreamer-1.0
 # '0' or undefined for gstreamer-0.10
@@ -95,6 +95,9 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt2
+- Rebuild with libxfce4util-4.12.
+
 * Thu Dec 05 2013 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
 - Fix Xfce name (XFCE -> Xfce).
 - Updated to 0.5.4.

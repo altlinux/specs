@@ -3,7 +3,7 @@
 %def_with perl
 
 Name: lib%_name
-Version: 4.11.0
+Version: 4.12.0
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -111,6 +111,9 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %endif
 
 %changelog
+* Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt1
+- Updated to 4.12.0.
+
 * Thu Feb 19 2015 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
 - Fix Xfce name (XFCE -> Xfce).
 - Updated to 4.11.0.

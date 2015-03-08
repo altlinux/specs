@@ -1,6 +1,6 @@
 Name: xfce4-mount-plugin
 Version: 0.6.7
-Release: alt1
+Release: alt2
 
 Summary: Mount plugin for Xfce Desktop
 License: %gpl2plus
@@ -50,6 +50,9 @@ information on each device.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.6.7-alt2
+- Rebuild with libxfce4util-4.12.
+
 * Mon May 26 2014 Mikhail Efremov <sem@altlinux.org> 0.6.7-alt1
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Updated to 0.6.7.

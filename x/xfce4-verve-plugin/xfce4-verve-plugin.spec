@@ -1,6 +1,6 @@
 Name: xfce4-verve-plugin
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Command line plugin for Xfce Desktop
 License: %gpl2plus
@@ -51,6 +51,9 @@ panel. It supports several nice features, such as:
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt2
+- Rebuild with libxfce4util-4.12.
+
 * Wed Jan 28 2015 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Drop obsoleted patch.

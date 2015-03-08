@@ -1,7 +1,7 @@
 Name: xfbib
 Summary: A BibTeX editor for Xfce
 Version: 0.1.0
-Release: alt1
+Release: alt2
 License: %gpl2plus
 Url: http://goodies.xfce.org/projects/applications/%name
 Source: %name-%version.tar
@@ -48,6 +48,9 @@ rm po/LINGUAS
 %_pixmapsdir/%name/
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt2
+- Rebuild with libxfce4util-4.12.
+
 * Thu Feb 27 2014 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1
 - Use all translations.
 - Fix Xfce name (XFCE -> Xfce).

@@ -1,11 +1,11 @@
 Name: xfce4-wmdock-plugin
 Version: 0.3.4
-Release: alt3
+Release: alt4
 
-Summary: Support WindowMaker dockapps for the XFce panel
+Summary: Support WindowMaker dockapps for the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 Source: %name-%version.tar
@@ -21,7 +21,7 @@ Requires: xfce4-panel >= 4.8
 
 %description
 The WMdock plugin is a compatibility layer for running WindowMaker
-dockapps on the XFCE desktop. It integrates the dockapps into a panel,
+dockapps on the Xfce desktop. It integrates the dockapps into a panel,
 closely resembling the look and feel of the WindowMaker dock or clip,
 respectively.
 
@@ -46,6 +46,10 @@ respectively.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.3.4-alt4
+- Rebuild with libxfce4util-4.12.
+- Fix Xfce name (XFce,XFCE -> Xfce).
+
 * Mon Apr 16 2012 Mikhail Efremov <sem@altlinux.org> 0.3.4-alt3
 - Rebuild against libxfce4util.so.6 (libxfce4util-4.9).
 - Updated translations from upstream git.

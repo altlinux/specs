@@ -1,6 +1,6 @@
 Name: xfce4-terminal
 Version: 0.6.3
-Release: alt1
+Release: alt2
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -65,6 +65,9 @@ sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' %buildroot%_mandir/*/man1/%na
 %_desktopdir/*
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.6.3-alt2
+- Rebuild with libxfce4util-4.12.
+
 * Fri Dec 27 2013 Mikhail Efremov <sem@altlinux.org> 0.6.3-alt1
 - Drop obsoleted patches.
 - Updated to 0.6.3.

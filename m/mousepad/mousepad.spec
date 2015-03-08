@@ -1,5 +1,5 @@
 Name: mousepad
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Mousepad - A simple text editor for Xfce
@@ -7,7 +7,7 @@ Summary (ru_RU.UTF-8): Простой текстовый редактор для
 License: %gpl2plus
 Group: Editors
 Url: http://www.xfce.org
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -54,9 +54,14 @@ Mousepad - простой текстовый редактор для Xfce осн
 %files -f mousepad.lang
 %doc NEWS README
 %_bindir/*
+%_datadir/glib-2.0/schemas/org.xfce.mousepad.gschema.xml
 %_desktopdir/*
 
 %changelog
+* Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- Fix Xfce name (XFCE -> Xfce).
+- Updated to 0.4.0.
+
 * Sat Jan 05 2013 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
 - From upstream git:
     + Set textdomain codeset to utf-8.

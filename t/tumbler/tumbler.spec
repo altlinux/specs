@@ -2,7 +2,7 @@
 %def_disable gstreamer
 
 Name: tumbler
-Version: 0.1.30
+Version: 0.1.31
 Release: alt1
 Summary: A thumbnail D-Bus service
 License: %gpl2plus, %lgpl2plus
@@ -83,6 +83,9 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 0.1.31-alt1
+- Updated to 0.1.31.
+
 * Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 0.1.30-alt1
 - Fix Xfce name (XFCE -> Xfce).
 - Updated to 0.1.30.

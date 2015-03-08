@@ -1,8 +1,8 @@
 %define _name exo
 
 Name: lib%_name
-Version: 0.10.2
-Release: alt3.git20150112
+Version: 0.10.3
+Release: alt1
 
 Summary: Extension library to Xfce
 Summary (ru_RU.UTF-8): Библиотека расширений Xfce
@@ -93,6 +93,10 @@ make check
 %_iconsdir/hicolor/*/*/*
 %_pixmapsdir/%_name-*/
 
+# Due to conflict with altlinux-freedesktop-menu-icon-theme-default
+%exclude %_iconsdir/hicolor/48x48/categories/applications-internet.png
+%exclude %_iconsdir/hicolor/48x48/categories/applications-other.png
+
 %exclude %_datadir/xfce4/helpers/debian-*.desktop
 
 %files devel
@@ -106,6 +110,10 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 0.10.3-alt1
+- Don't package menu categories icons.
+- Updated to 0.10.3.
+
 * Mon Jan 12 2015 Mikhail Efremov <sem@altlinux.org> 0.10.2-alt3.git20150112
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Upstream git snapshot.

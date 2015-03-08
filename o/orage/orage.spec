@@ -1,6 +1,6 @@
 Name: orage
 Version: 4.10.0
-Release: alt2
+Release: alt3
 
 Summary: Time-managing application for the Xfce desktop environment
 Summary (ru_RU.UTF-8): Календарь для окружения рабочего стола Xfce
@@ -65,6 +65,9 @@ sed -i 's;^m4_define(\[orage_version\], \[4\.11\.0-git\]);m4_define([orage_versi
 %_datadir/dbus-1/services/*.service
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt3
+- Rebuild with libxfce4util-4.12.
+
 * Mon Dec 16 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt2
 - Update translations from upstream git.
 - Require xfce4-common.

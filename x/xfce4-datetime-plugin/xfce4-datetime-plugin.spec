@@ -1,13 +1,14 @@
 Name: xfce4-datetime-plugin
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
-Summary: Datetime plugin for the XFce panel
+Summary: Datetime plugin for the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
+#git://git.xfce.org/panel-plugins/xfce4-datetime-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -21,7 +22,7 @@ BuildRequires: perl-XML-Parser intltool
 Requires: xfce4-panel >= 4.8
 
 %description
-%name is the datetime plugin for the XFce panel.
+%name is the datetime plugin for the Xfce panel.
 
 %prep
 %setup
@@ -45,6 +46,10 @@ Requires: xfce4-panel >= 4.8
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.6.2-alt2
+- Rebuild with libxfce4util-4.12.
+- Fix Xfce name (XFCE,XFce -> Xfce).
+
 * Fri Feb 15 2013 Mikhail Efremov <sem@altlinux.org> 0.6.2-alt1
 - Drop remained USE_GTK_TOOLTIP_API.
 - Drop obsoleted patches.

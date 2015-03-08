@@ -1,12 +1,12 @@
 Name: rpm-build-xfce4
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Macros for comfort build xfce4 and plugins
 Summary(ru_RU.UTF-8): Макросы для удобной сборки Xfce
 Group: Graphical desktop/XFce
 License: Public Domain
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: xfce4.macros
 
@@ -28,6 +28,11 @@ install -m644 %SOURCE0 %buildroot/etc/rpm/macros.d/xfce4
 /etc/rpm/macros.d/xfce4
 
 %changelog
+* Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 0.1.2-alt1
+- xfce4reconf: Create m4/ directory.
+- Drop commented _xfce4htmldoc macro.
+- Fix Xfce name (XFCE -> Xfce).
+
 * Tue Aug 28 2012 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1
 - Add comment for xfce4reconf macros.
 - Add xfce4_drop_gitvtag macros.

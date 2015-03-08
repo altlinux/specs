@@ -1,11 +1,11 @@
 Name: xfce4-diskperf-plugin
-Version: 2.5.4
+Version: 2.5.5
 Release: alt1
 
-Summary: Disk performance plugin for the XFce panel
+Summary: Disk performance plugin for the Xfce panel
 License: %bsdstyle
 Group: Graphical desktop/XFce
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 
 # Upstream: git://git.xfce.org/panel-plugins/xfce4-diskperf-plugin
@@ -21,7 +21,7 @@ BuildRequires: intltool perl-XML-Parser
 Requires: xfce4-panel >= 4.9
 
 %description
-%name is the disk performance plugin for the XFce panel.
+%name is the disk performance plugin for the Xfce panel.
 
 %prep
 %setup
@@ -45,6 +45,10 @@ Requires: xfce4-panel >= 4.9
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 2.5.5-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated for 2.5.5.
+
 * Mon Jul 02 2012 Mikhail Efremov <sem@altlinux.org> 2.5.4-alt1
 - Updated for 2.5.4.
 

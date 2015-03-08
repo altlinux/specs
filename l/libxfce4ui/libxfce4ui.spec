@@ -1,5 +1,5 @@
 Name: libxfce4ui
-Version: 4.11.2
+Version: 4.12.0
 Release: alt1
 
 Summary: Various Gtk+2 widgets for Xfce
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: gtk-doc intltool libSM-devel libgladeui-devel libstartup-notification-devel libxfce4util-devel libxfconf-devel xorg-cf-files
 
-# Due xfce4-about
+# Due to xfce4-about
 Conflicts: xfce-utils < 4.8.3-alt3
 
 %description
@@ -39,7 +39,6 @@ Header files for the %name library.
 %prep
 %setup
 %patch -p1
-mkdir -p m4/
 
 %build
 %xfce4reconf
@@ -77,6 +76,9 @@ mkdir -p m4/
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt1
+- Updated to 4.12.0.
+
 * Thu Feb 19 2015 Mikhail Efremov <sem@altlinux.org> 4.11.2-alt1
 - Updated to 4.11.2.
 

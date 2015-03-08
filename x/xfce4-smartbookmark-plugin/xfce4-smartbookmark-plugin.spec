@@ -1,12 +1,12 @@
 Name: xfce4-smartbookmark-plugin
 Version: 0.4.5
-Release: alt1
+Release: alt2
 
 Summary: Smart bookmarks for the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -47,6 +47,10 @@ directly to your browser and perform custom searches.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.4.5-alt2
+- Rebuild with libxfce4util-4.12.
+- Fix Xfce name (XFCE -> Xfce).
+
 * Mon Jan 21 2013 Mikhail Efremov <sem@altlinux.org> 0.4.5-alt1
 - Updated to 0.4.5.
 

@@ -1,12 +1,12 @@
 Name: xfce4-cpugraph-plugin
 Version: 1.0.5
-Release: alt1
+Release: alt2
 
 Summary: CPU monitor for the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/panel-plugins/xfce4-cpugraph-plugin
 Source: %name-%version.tar
@@ -46,6 +46,10 @@ the system. The colors and the size of the plugin are customizable.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.0.5-alt2
+- Rebuild with libxfce4util-4.12.
+- Fix Xfce name (XFCE -> Xfce).
+
 * Wed Jul 04 2012 Mikhail Efremov <sem@altlinux.org> 1.0.5-alt1
 - Updated to 1.0.5.
 

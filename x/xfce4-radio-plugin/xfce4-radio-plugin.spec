@@ -1,6 +1,6 @@
 Name: xfce4-radio-plugin
 Version: 0.5.1
-Release: alt4
+Release: alt5
 
 Summary: V4l radio plugin for Xfce Desktop
 License: %gpl2plus
@@ -46,6 +46,9 @@ touch ChangeLog
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt5
+- Rebuild with libxfce4util-4.12.
+
 * Tue Feb 11 2014 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt4
 - Fix DSO linking.
 - Fix Xfce name (XFce,XFCE -> Xfce).

@@ -1,6 +1,6 @@
 Name: xfce4-cpufreq-plugin
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Show CPU freqency and governours plugin for the Xfce panel
 License: %gpl2plus
@@ -54,6 +54,9 @@ mkdir m4
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt2
+- Rebuild with libxfce4util-4.12.
+
 * Mon Dec 29 2014 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt1
 - Fix Xfce name (XFCE -> Xfce).
 - Updated to 1.1.1.

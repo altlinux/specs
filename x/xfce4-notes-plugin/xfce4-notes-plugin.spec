@@ -1,12 +1,12 @@
 Name: xfce4-notes-plugin
 Version: 1.7.7
-Release: alt4
+Release: alt5
 
-Summary: Sticky notes plugin for the XFce panel
+Summary: Sticky notes plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Липкие записки для Xfce.
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 Source: %name-%version.tar
@@ -20,7 +20,7 @@ BuildPreReq: libThunar-devel libxfce4panel-devel libxfcegui4-devel libxfconf-dev
 BuildRequires: libThunar-devel intltool libSM-devel xorg-cf-files libunique-devel
 
 %description
-%name is the sticky notes plugin for the XFce panel.
+%name is the sticky notes plugin for the Xfce panel.
 
 %description -l ru_RU.UTF-8
 Липкие записки для окружения рабочего стола Xfce.
@@ -53,6 +53,10 @@ BuildRequires: libThunar-devel intltool libSM-devel xorg-cf-files libunique-deve
 %_desktopdir/xfce4-notes.desktop
 
 %changelog
+* Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.7.7-alt5
+- Rebuild with libxfce4util-4.12.
+- Fix Xfce name (XFce,XFCE -> Xfce).
+
 * Sat May 05 2012 Mikhail Efremov <sem@altlinux.org> 1.7.7-alt4
 - Fix plugin linking.
 
