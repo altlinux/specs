@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20150306
+Version: 20150310
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,10 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Tue Mar 10 2015 Michael Shigorin <mike@altlinux.org> 20150310-alt1
+- cdrom.c, disk.c: poke lazy udev to do its job while waiting for disk
+  (#30315 again)
+
 * Fri Mar 06 2015 Michael Shigorin <mike@altlinux.org> 20150306-alt1
 - cdrom.c: fix pointer arithmetics (ldv@)
 
