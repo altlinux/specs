@@ -1,5 +1,5 @@
 Name: wine-vanilla
-Version: 1.7.37
+Version: 1.7.38
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -68,7 +68,7 @@ Requires: glibc-pthread glibc-nss
 #ExclusiveArch:  %{ix86}
 Requires: webclient
 
-Requires: wine-gecko = 2.34
+Requires: wine-gecko = 2.36
 
 BuildRequires: desktop-file-utils
 # Use it instead proprietary MS Core Fonts
@@ -243,7 +243,6 @@ rm -rf %buildroot%_mandir/*.UTF-8
 #%_initdir/wine
 #%_initdir/wine.outformat
 %_desktopdir/*
-%dir %_datadir/wine/
 
 %_man1dir/wine.*
 %_man1dir/msiexec.*
@@ -281,6 +280,8 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %_libdir/wine/*.ocx.so
 %_libdir/wine/*.tlb.so
 %_libdir/wine/*.sys.so
+
+%dir %_datadir/wine/
 %_datadir/wine/wine.inf
 %_datadir/wine/l_intl.nls
 %_datadir/wine/fonts/
@@ -345,6 +346,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Mon Mar 09 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.38-alt1
+- new version 1.7.38, requires wine-gecko = 2.36
+
 * Fri Feb 20 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.37-alt1
 - new version 1.7.37
 
