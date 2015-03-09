@@ -1,5 +1,5 @@
 Name: installer-feature-vm-altlinux-generic
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: alterator-vm profile tuning and filesystem layout hooks
@@ -40,6 +40,9 @@ install -pDm755 05-vm-profile-altlinux-generic \
 %hookdir/initinstall.d/*
 
 %changelog
+* Mon Mar 09 2015 Michael Shigorin <mike@altlinux.org> 0.2-alt1
+- reduce swap sizes somewhat
+
 * Tue Jul 19 2011 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - initial revision based on installer-feature-vm-server-light
   by Anton Farygin
