@@ -1,6 +1,6 @@
 Name: powertop
 Version: 2.6.1
-Release: alt2
+Release: alt3
 Serial: 1
 
 Summary: Tool that helps you find what software is using the most power
@@ -10,6 +10,7 @@ Group: System/Kernel and hardware
 Url: https://01.org/powertop/
 Source0: https://01.org/powertop/sites/default/files/downloads/%name-%version.tar.gz
 Source1: %name.service
+Source2: %name.init
 Source100: %name.watch
 
 # Automatically added by buildreq on Tue May 15 2012
@@ -44,6 +45,7 @@ find -name '*.o' -delete
 install -d %buildroot%cachedir
 touch %buildroot%cachedir/saved_{parameters,results}.powertop
 install -pDm644 %SOURCE1 %buildroot%_unitdir/%name.service
+install -pDm755 %SOURCE2 %buildroot%_initdir/%name
 
 %post
 # Hack for powertop not to show warnings on first start
@@ -55,9 +57,13 @@ touch %cachedir/saved_{parameters,results}.powertop
 %doc README
 %dir %cachedir
 %ghost %cachedir/saved_*.powertop
-%_unitdir/powertop.service
+%_unitdir/%name.service
+%_initdir/%name
 
 %changelog
+* Mon Mar 09 2015 Michael Shigorin <mike@altlinux.org> 1:2.6.1-alt3
+- added proper sysv initscript
+
 * Mon Jan 26 2015 Michael Shigorin <mike@altlinux.org> 1:2.6.1-alt2
 - rolled back to version that actually works
 
