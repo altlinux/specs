@@ -1,14 +1,15 @@
 Name: mbrowse
-Version: 0.3.1
-Release: alt6.qa4
+Version: 0.4.3
+Release: alt1
 
 Summary: SNMP MIB browser
 License: GPL
 Group: Networking/Other
-
-URL: http://goldplated.atlcartel.com/mbrowse.html
-Source0: http://goldplated.atlcartel.com/%name-%version.tar.bz2
+Packager: Ilya Mashkin <oddity@altlinux.ru>
+Url: http://goldplated.atlcartel.com/mbrowse.html
+Source0: http://goldplated.atlcartel.com/%name-%version.tar.gz
 Source1: %name.xpm
+Source2: %name.1
 
 Patch0: %name-0.3.1-alt-snmpdetect.patch
 Patch1: %name-0.3.1-alt-snmpconf.patch
@@ -17,34 +18,34 @@ Patch3: %name-0.3.1-alt-x86-64-build.patch
 Patch4: %name-0.3.1-alt-DSO.patch
 
 # Automatically added by buildreq on Sun Apr 22 2007
-BuildRequires: gtk+-devel libnet-snmp-devel
+BuildRequires: libgtk+2-devel libnet-snmp-devel
 
 %description
 Mbrowse is an SNMP MIB browser based on GTK and net-snmp.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
+#patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p2
+#patch2 -p1
+#patch3 -p1
+#patch4 -p2
 
 %build
-%configure
+%configure  --with-snmp-lib=%_libdir
 %make_build
 
 %install
 %make_build install DESTDIR=%buildroot
 
 mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
+cat > %buildroot%_desktopdir/%name.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
 Name=%name
 Comment=SNMP MIB browser
-Icon=%{name}
+Icon=%name
 Exec=%name
 Terminal=false
 Categories=Network;FileTransfer;
@@ -53,14 +54,21 @@ EOF
 mkdir -p %buildroot/%_niconsdir/
 install -m644 %SOURCE1 %buildroot/%_niconsdir/
 
+# Install Debian manpage
+mkdir -p %buildroot%_man1dir
+install -pm 0644 %SOURCE2 %buildroot%_man1dir
 
 %files
 %doc AUTHORS ChangeLog INSTALL NEWS README TODO
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_niconsdir/%name.xpm
+%_man1dir/%name.1.*
 
 %changelog
+* Mon Mar 09 2015 Ilya Mashkin <oddity@altlinux.ru> 0.4.3-alt1
+- 0.4.3
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt6.qa4
 - Fixed build
 
@@ -105,7 +113,7 @@ install -m644 %SOURCE1 %buildroot/%_niconsdir/
 - rebuild with net-snmp
 
 * Wed Mar 26 2003 Dmitry Lebkov <dlebkov@altlinux.ru> 0.3.1-alt1
-- new version -- 0.3.1 
+- new version -- 0.3.1
 
 * Sat Jan 25 2003 Dmitry Lebkov <dlebkov@altlinux.ru> 0.2.3-alt2
 - rebuild with gcc3.2
