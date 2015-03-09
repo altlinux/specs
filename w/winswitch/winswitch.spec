@@ -1,6 +1,6 @@
 Name: winswitch
 Version: 0.12.20
-Release: alt1
+Release: alt2
 
 Summary: Front end for controlling remote desktop sessions
 License: GPLv3
@@ -28,7 +28,7 @@ and send supported sessions to other clients.
 %prep
 %setup
 # don't skip icewm!
-sed 's,^OnlyShowIn=,#&,' skel/share/applications/winswitch.desktop
+sed -i 's,^OnlyShowIn=,#&,' skel/share/applications/winswitch.desktop
 
 %build
 %python_build
@@ -61,6 +61,9 @@ rmdir %buildroot/usr/lib/{nautilus,python*{/site-packages,}}
 %_xdgmimedir/*
 
 %changelog
+* Mon Mar 09 2015 Michael Shigorin <mike@altlinux.org> 0.12.20-alt2
+- don't filter out WMs for the applet, people can run trayer et al
+
 * Thu Mar 05 2015 Michael Shigorin <mike@altlinux.org> 0.12.20-alt1
 - built for ALT Linux as proposed at
   http://krlmlr.github.io/integrating-xpra-with-screen/
