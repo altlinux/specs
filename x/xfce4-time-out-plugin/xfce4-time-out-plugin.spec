@@ -1,6 +1,6 @@
 Name: xfce4-time-out-plugin
-Version: 1.0.1
-Release: alt3
+Version: 1.0.2
+Release: alt1
 
 Summary: Timeout plugin for Xfce panel
 License: %gpl2plus
@@ -51,6 +51,9 @@ exercising, cleaning up or whatever.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Tue Mar 10 2015 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1
+- Updated to 1.0.2.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt3
 - Rebuild with libxfce4util-4.12.
 - Fix Summary.
