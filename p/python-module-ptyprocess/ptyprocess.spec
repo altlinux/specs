@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.1
-Release: alt2.git20141013
+Version: 0.4
+Release: alt1.git20150222
 Summary: Run a subprocess in a pseudo terminal
 License: ISCL
 Group: Development/Python
@@ -88,7 +88,8 @@ This package contains tests for %oname.
 %if_with python3
 cp -fR . ../python3
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-	../python3/tests/test_invalid_binary.py
+	../python3/tests/test_invalid_binary.py \
+	../python3/tests/test_preexec_fn.py
 %endif
 
 %build
@@ -138,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20150222
+- Version 0.4
+
 * Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt2.git20141013
 - Enabled testing
 
