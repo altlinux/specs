@@ -13,7 +13,7 @@
 %define nv_version 346
 %define nv_release 47
 %define nv_minor %nil
-%define pkg_rel alt148
+%define pkg_rel alt149
 %define set_gl_nvidia_ver 0.11.1
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -81,6 +81,9 @@ Summary: %mySummary
 Summary(ru_RU.UTF-8): %mySummaryRu
 Url: http://altlinux.ru/
 License: GPLv2
+#
+Provides: %virtual_pkg_name = %version-%release
+Obsoletes: %virtual_pkg_name < %version-%release
 #
 Conflicts: xorg-x11-mesagl <= 6.8.2-alt7
 Requires(post): x11presetdrv
@@ -248,6 +251,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Tue Mar 10 2015 Sergey V Turchin <zerg@altlinux.org> 346.47-alt149
+- provide NVIDIA_GLX for compatibility
+
 * Tue Mar 10 2015 Sergey V Turchin <zerg@altlinux.org> 346.47-alt148
 - bump version
 
