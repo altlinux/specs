@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt1.git20150227
+Release: alt1.git20150308
 Summary: A framework for managing and maintaining multi-language pre-commit hooks
 License: MIT
 Group: Development/Python
@@ -41,6 +41,7 @@ BuildPreReq: python3-module-mock pylint-py3
 A framework for managing and maintaining multi-language pre-commit
 hooks.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A framework for managing and maintaining multi-language pre-commit hooks
 Group: Development/Python3
@@ -51,6 +52,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 A framework for managing and maintaining multi-language pre-commit
 hooks.
+%endif
 
 %prep
 %setup
@@ -106,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20150308
+- New snapshot
+
 * Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20150227
 - Version 0.4.2
 
