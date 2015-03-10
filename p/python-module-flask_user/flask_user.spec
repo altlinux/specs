@@ -1,10 +1,11 @@
 %define oname flask_user
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1.git20141119
+Release: alt1.git20141229
 Summary: Customizable User Account Management for Flask
 License: BSD
 Group: Development/Python
@@ -171,6 +172,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20141229
+- New snapshot
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20141119
 - New snapshot
 
