@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.25
+Version: 0.27
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -37,6 +37,12 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Tue Mar 10 2015 Michael Shigorin <mike@altlinux.org> 0.27-alt1
+- init-bottom: explicitly handle rescue for rw overlays
+
+* Mon Mar 09 2015 Michael Shigorin <mike@altlinux.org> 0.26-alt1
+- trigger -c add (see also #30315)
+
 * Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 0.25-alt1
 - init-bottom:
   + ensure compatibility with newer fdisk
