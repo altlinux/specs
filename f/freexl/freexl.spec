@@ -2,7 +2,7 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name: freexl
-Version: 1.0.0g
+Version: 1.0.0i
 Release: alt1
 Summary: Library to extract data from within an Excel spreadsheet
 Group: System/Libraries
@@ -75,6 +75,9 @@ rm -f %buildroot%_libdir/lib%name.la
 %_libdir/pkgconfig/freexl.pc
 
 %changelog
+* Tue Mar 10 2015 Ilya Mashkin <oddity@altlinux.ru> 1.0.0i-alt1
+- 1.0.0i
+
 * Thu Feb 27 2014 Ilya Mashkin <oddity@altlinux.ru> 1.0.0g-alt1
 - 1.0.0g
 
