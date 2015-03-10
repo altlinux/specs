@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: genius
-Version: %ver_major.19
+Version: %ver_major.20
 Release: alt1
 
 Summary: Genius Calculator
@@ -78,6 +78,7 @@ popd
 %_datadir/application-registry/genius.applications
 %_desktopdir/gnome-genius.desktop
 %_iconsdir/hicolor/*x*/apps/*.png
+%_iconsdir/hicolor/scalable/apps/gnome-%name.svg
 %_datadir/mime/packages/genius.xml
 %_datadir/%name
 %doc AUTHORS NEWS README TODO
@@ -90,6 +91,9 @@ popd
 %exclude %_datadir/mime-info/genius.mime
 
 %changelog
+* Tue Mar 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.20-alt1
+- 1.0.20
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.19-alt1
 - 1.0.19
 
