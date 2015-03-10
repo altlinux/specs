@@ -1,10 +1,10 @@
 %define oname confmodel
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 0.2.0.1
-Release: alt2.git20140605
+Release: alt3.git20140605
 Summary: Declarative configuration access and validation system
 License: BSD
 Group: Development/Python
@@ -17,14 +17,14 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-zope.interface python-module-pytest-cov
-BuildPreReq: python-module-flake8
+BuildPreReq: python-module-flake8 python-module-six
 BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 BuildPreReq: python-module-repoze.sphinx.autointerface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-zope.interface python3-module-pytest-cov
-BuildPreReq: python3-module-flake8
+BuildPreReq: python3-module-flake8 python3-module-six
 %endif
 
 %py_provides %oname
@@ -88,6 +88,7 @@ This package contains documentation for %oname.
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %prepare_sphinx .
@@ -120,12 +121,12 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %check
 python setup.py test
 rm -fR build
-py.test
+py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
 rm -fR build
-py.test-%_python3_version
+py.test-%_python3_version -vv
 popd
 %endif
 
@@ -155,6 +156,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0.1-alt3.git20140605
+- Added module for Python 3
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0.1-alt2.git20140605
 - Fixed build
 
