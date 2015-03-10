@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.0.1
-Release: alt1.git20140624
+Release: alt2.git20140624
 Summary: Twisted wrapper for asynchronous PostgreSQL connections
 License: MIT
 Group: Development/Python
@@ -26,8 +26,6 @@ BuildPreReq: python3-module-twisted-core-test python3-module-psycopg2
 
 %py_provides %oname
 %py_requires twisted.python
-# for tests:
-Requires: python-module-twisted-core-test
 
 %description
 A Twisted wrapper for asynchronous PostgreSQL connections.
@@ -40,13 +38,12 @@ working with PostgreSQL. The only part that does not provide 100%%
 compatibility is connection pooling, although pooling provided by
 txpostgres is very similar to the one Twisted adbapi offers.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Twisted wrapper for asynchronous PostgreSQL connections
 Group: Development/Python3
 %py3_provides %oname
 %py3_requires twisted.python
-# for tests:
-Requires: python3-module-twisted-core-test
 
 %description -n python3-module-%oname
 A Twisted wrapper for asynchronous PostgreSQL connections.
@@ -58,6 +55,7 @@ Can be used as a drop-in replacement for Twisted's adbapi module when
 working with PostgreSQL. The only part that does not provide 100%%
 compatibility is connection pooling, although pooling provided by
 txpostgres is very similar to the one Twisted adbapi offers.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -143,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0.1-alt2.git20140624
+- Fixed build
+
 * Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0.1-alt1.git20140624
 - Initial build for Sisyphus
 
