@@ -1,7 +1,10 @@
 %define oname elastic-git
+
+%def_with python3
+
 Name: python-module-%oname
-Version: 0.3.7
-Release: alt1.git20150212
+Version: 1.0.1
+Release: alt1.git20150220
 Summary: JSON Object storage backed by Git & Elastic Search
 License: BSD
 Group: Development/Python
@@ -18,10 +21,23 @@ BuildPreReq: python-module-confmodel python-module-elasticutils
 BuildPreReq: python-module-GitPython python-module-jinja2
 BuildPreReq: python-module-pytest python-module-pytest-cov
 BuildPreReq: python-module-pytest-xdist python-module-sphinx-devel
-BuildPreReq: python-module-sphinx_rtd_theme python-module-GitDB
-BuildPreReq: python-module-sphinx-argparse python-module-unidecode
+BuildPreReq: python-module-GitDB python-module-unidecode
+BuildPreReq: python-module-avro
+BuildPreReq: python-module-sphinx-argparse
+BuildPreReq: python-module-sphinx_rtd_theme
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-confmodel python3-module-elasticutils
+BuildPreReq: python3-module-GitPython python3-module-jinja2
+BuildPreReq: python3-module-pytest python3-module-pytest-cov
+BuildPreReq: python3-module-pytest-xdist
+BuildPreReq: python3-module-GitDB python3-module-unidecode
+BuildPreReq: python3-module-avro
+%endif
 
 %py_provides elasticgit
+%py_requires avro
 
 %description
 Adventures in an declarative object-y thing backed by Git and using
@@ -37,6 +53,29 @@ Adventures in an declarative object-y thing backed by Git and using
 Elastic Search as a query backend.
 
 This package contains tests for %oname.
+
+%if_with python3
+%package -n python3-module-%oname
+Summary: JSON Object storage backed by Git & Elastic Search
+Group: Development/Python3
+%py3_provides elasticgit
+%py3_requires avro
+
+%description -n python3-module-%oname
+Adventures in an declarative object-y thing backed by Git and using
+Elastic Search as a query backend.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+Adventures in an declarative object-y thing backed by Git and using
+Elastic Search as a query backend.
+
+This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -62,13 +101,35 @@ This package contains documentation for %oname.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 
 %build
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
 %python_install
 
 export PYTHONPATH=$PWD
@@ -80,10 +141,18 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
 
 %files
 %doc *.rst examples
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/examples
 %exclude %python_sitelibdir/*/tests
@@ -100,7 +169,25 @@ python setup.py test
 %python_sitelibdir/*/tests
 %python_sitelibdir/*/*/tests
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst examples
+%_bindir/*.py3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/examples
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/tests
+%endif
+
 %changelog
+* Tue Mar 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.git20150220
+- Version 1.0.1
+- Added module for Python 3
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.7-alt1.git20150212
 - Version 0.3.7
 
