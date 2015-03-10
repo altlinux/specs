@@ -1,8 +1,8 @@
-Name: 	  chromium-pepperflash
-Version:  1.5.2
-Release:  alt3
+Name: 	  update-pepperflash
+Version:  1.5.3
+Release:  alt1
 
-Summary:  Pepper Flash Player - browser plugin for Chromium
+Summary:  Pepper Flash Player downloader
 License:  GPLv3+
 Group:    Networking/WWW
 Url: 	  http://altlinux.org/PepperFlash
@@ -12,7 +12,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source1:  update-pepperflash
 
 BuildRequires: curl wget gzip xml-utils
-Requires: chromium
 Requires: curl wget gzip xml-utils
 
 %description
@@ -20,11 +19,31 @@ This package will download Chrome from Google, and unpack it to make the
 included Pepper Flash Player available for use with Chromium.  The end
 user license agreement is available at Google.
 
+%package -n chromium-pepperflash
+Summary:  Pepper Flash Player - browser plugin for Chromium
+Group: Networking/WWW
+BuildArch: noarch
+Requires: %name = %version-%release
+Requires: chromium
+
+%description -n chromium-pepperflash
+Pepper Flash Player - browser plugin for Chromium (virtual package)
+
+%package -n firefox-pepperflash
+Summary:  Pepper Flash Player - browser plugin for Firefox
+Group: Networking/WWW
+BuildArch: noarch
+Requires: %name = %version-%release
+Requires: /usr/bin/firefox
+Requires: freshplayerplugin
+
+%description -n firefox-pepperflash
+Pepper Flash Player - browser plugin for Firefox (virtual package)
+
 %prep
 
 %install
 install -D -m 0755 %SOURCE1 %buildroot%_sbindir/update-pepperflash
-mkdir -p %buildroot%_libdir/browser-plugins
 mkdir -p %buildroot%_libdir/pepper-plugins
 touch %buildroot%_libdir/pepper-plugins/libpepflashplayer.so
 mkdir -p %buildroot%_cachedir/pepperflash
@@ -42,7 +61,17 @@ exit 0
 %ghost %_libdir/pepper-plugins/libpepflashplayer.so
 %dir %_cachedir/pepperflash
 
+%files -n chromium-pepperflash
+%files -n firefox-pepperflash
+
 %changelog
+* Tue Mar 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.3-alt1
+- update-pepperflash:
+ + Cleanup cache dir after successful installation.
+ + Change dl.google.com URLs to https.
+- Rename main package to to update-pepperflash.
+- Add {chromium,firefox}-pepperflash virtual packages.
+
 * Tue Oct 14 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt3
 - Force update from alt2 to prevent wrong %%preun trigger
 
