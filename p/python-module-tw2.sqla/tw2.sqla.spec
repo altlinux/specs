@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.1.0
-Release: alt1.git20131108
+Release: alt2.git20131108
 Summary: SQLAlchemy database layer for ToscaWidgets 2, a web widget toolkit
 License: MIT
 Group: Development/Python
@@ -50,6 +50,7 @@ BuildPreReq: python3-module-tw2.core-tests python3-modules-sqlite3
 tw2.sqla is a database layer for ToscaWidgets 2 and SQLAlchemy. It
 allows common database tasks to be achieved with minimal code.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: SQLAlchemy database layer for ToscaWidgets 2, a web widget toolkit
 Group: Development/Python3
@@ -60,6 +61,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 tw2.sqla is a database layer for ToscaWidgets 2 and SQLAlchemy. It
 allows common database tasks to be achieved with minimal code.
+%endif
 
 %prep
 %setup
@@ -111,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt2.git20131108
+- Fixed build
+
 * Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1.git20131108
 - Initial build for Sisyphus
 
