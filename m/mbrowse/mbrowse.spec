@@ -1,13 +1,13 @@
 Name: mbrowse
 Version: 0.4.3
-Release: alt1
+Release: alt2
 
 Summary: SNMP MIB browser
 License: GPL
 Group: Networking/Other
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-Url: http://goldplated.atlcartel.com/mbrowse.html
-Source0: http://goldplated.atlcartel.com/%name-%version.tar.gz
+Url: http://sourceforge.net/projects/mbrowse/
+Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 Source1: %name.xpm
 Source2: %name.1
 
@@ -66,6 +66,9 @@ install -pm 0644 %SOURCE2 %buildroot%_man1dir
 %_man1dir/%name.1.*
 
 %changelog
+* Tue Mar 10 2015 Ilya Mashkin <oddity@altlinux.ru> 0.4.3-alt2
+- fix url
+
 * Mon Mar 09 2015 Ilya Mashkin <oddity@altlinux.ru> 0.4.3-alt1
 - 0.4.3
 
