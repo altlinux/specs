@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt1.a5.git20101004
+Release: alt2.a5.git20101004
 Summary: tw2 huBarcode widget
 License: AGPLv3+
 Group: Development/Python
@@ -32,6 +32,7 @@ BuildPreReq: python3-module-Pillow python3-module-nose
 %description
 toscawidgets2 wrapper for huBarcode.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: tw2 huBarcode widget
 Group: Development/Python3
@@ -40,6 +41,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 toscawidgets2 wrapper for huBarcode.
+%endif
 
 %prep
 %setup
@@ -91,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt2.a5.git20101004
+- Fixed build
+
 * Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.a5.git20101004
 - Initial build for Sisyphus
 
