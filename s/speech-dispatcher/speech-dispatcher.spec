@@ -1,7 +1,7 @@
 
 Name: speech-dispatcher
 Version: 0.8.1
-Release: alt1
+Release: alt2
 License: %gpl2plus
 Group: Sound
 Summary: A speech output processing service
@@ -22,6 +22,7 @@ BuildRequires: libpulseaudio-devel
 %add_python3_req_skip xdg
 
 Source0: %name-%version.tar
+Patch0: pkgconfig.patch
 Patch1: speech-dispatcher-0.8-alt-flite.patch
 
 %description
@@ -103,6 +104,7 @@ This python module allows programmsaccess speech-dispatcher service.
 
 %prep
 %setup -q 
+%patch0 -p2
 %patch1 -p1
 %build
 %autoreconf
@@ -171,6 +173,10 @@ This python module allows programmsaccess speech-dispatcher service.
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Mar 10 2015 Paul Wolneykien <manowar@altlinux.org> 0.8.1-alt2
+- speech-dispatcher.pc: Set Cflags to -I${includedir}/speech-dispatcher
+  (patch).
+
 * Tue Nov 18 2014 Paul Wolneykien <manowar@altlinux.org> 0.8.1-alt1
 - Freshed up to v0.8.1 with the help of cronbuild and update-source-functions.
 
