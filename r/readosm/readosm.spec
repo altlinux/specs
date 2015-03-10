@@ -1,5 +1,5 @@
 Name: readosm
-Version: 1.0.0b
+Version: 1.0.0d
 Release: alt1
 Summary: Library to extract data from Open Streetmap input files
 
@@ -54,6 +54,9 @@ make check
 %_includedir/%name.h
 
 %changelog
+* Tue Mar 10 2015 Ilya Mashkin <oddity@altlinux.ru> 1.0.0d-alt1
+- 1.0.0d
+
 * Thu Jan 31 2013 Ilya Mashkin <oddity@altlinux.ru> 1.0.0b-alt1
 - Build for Sisyphus
 
