@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt1.git20150206
+Release: alt1.git20150304
 Summary: High level python library to manage XML files
 License: MIT
 Group: Development/Python
@@ -13,6 +13,7 @@ Url: https://pypi.python.org/pypi/xmltool/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/LeResKP/xmltool.git
+# branch: develop
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -54,6 +55,7 @@ update some XML files with the python syntax without using the DOM.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: High level python library to manage XML files
 Group: Development/Python3
@@ -74,6 +76,7 @@ xmltool is a python package to manipulate XML files. It's very useful to
 update some XML files with the python syntax without using the DOM.
 
 This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -167,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20150304
+- New snapshot
+
 * Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20150206
 - Initial build for Sisyphus
 
