@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.7
-Release: alt1.git20130531
+Release: alt2.git20130531
 Summary: Portable Local Settings Storage
 License: BSD
 Group: Development/Python
@@ -32,6 +32,7 @@ BuildPreReq: python-tools-2to3
 settings using an editable format and stored in an OS-appropriate
 location (windows/os x/linux are supported).
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Portable Local Settings Storage
 Group: Development/Python3
@@ -42,6 +43,7 @@ Group: Development/Python3
 "usersettings" is a python module for easily managing persistent
 settings using an editable format and stored in an OS-appropriate
 location (windows/os x/linux are supported).
+%endif
 
 %prep
 %setup
@@ -92,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.7-alt2.git20130531
+- Fixed build
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.7-alt1.git20130531
 - Initial build for Sisyphus
 
