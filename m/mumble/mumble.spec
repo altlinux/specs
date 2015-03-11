@@ -4,7 +4,7 @@
 
 Name: mumble
 Version: 1.2.8
-Release: alt1
+Release: alt2
 
 Summary: Voice chat software primarily intended for use while gaming
 License: BSD
@@ -14,16 +14,30 @@ Url: http://%name.sourceforge.net/
 
 Source0: %name-%version.tar
 Source1: altlinux.tar
-Patch0: libspeechd.patch
+Source2: celt-0.7.0-src.tar
+
+Patch0: configure-libs.patch
 Patch1: overlay_gl.patch
 Patch2: mumble-overlay.patch
 
-# Automatically added by buildreq on Sat Dec 05 2009
-BuildRequires: boost-python-devel gcc-c++ libGL-devel libX11-devel libXi-devel libalsa-devel libavahi-devel libcap-devel libice-devel libogg-devel libprotobuf-devel libpulseaudio-devel libqt4-devel libsndfile-devel libspeechd-devel libspeex-devel protobuf-compiler
+%def_without sys_celt
+
+%if_with sys_celt
+%define celtopts celt no-bundled-celt
+%else
+%define celtopts celt bundled-celt
+%endif
+
+BuildRequires: boost-python-devel gcc-c++ libGL-devel libX11-devel libXi-devel libalsa-devel libavahi-devel libcap-devel libice-devel libogg-devel libprotobuf-devel libpulseaudio-devel libqt4-devel libsndfile-devel libspeechd-devel protobuf-compiler
+BuildRequires: libspeex-devel
+BuildRequires: libopus-devel
+
+%if_with sys_celt
 BuildRequires: libcelt-devel
+Requires: libcelt >= 0:0.7.0-alt1
+%endif
 
 Requires: libqt4-sql-sqlite
-Requires: libcelt >= 0:0.7.0-alt1
 
 %description
 Low-latency, high-quality voice communication for gamers.
@@ -75,16 +89,14 @@ cancellation so the sound from your loudspeakers
 won't be audible to other players.
 
 %prep
-%setup -a1
+%setup -a1 -a2
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
 
 %build
 %add_optflags -fpermissive
-qmake-qt4 "CONFIG+=no-oss no-bundled-speex \
-no-bundled-celt -recursive no-g15 \
-no-embed-qt-translations no-update" \
+qmake-qt4 -recursive "CONFIG+=no-oss speex no-bundled-speex %celtopts opus no-bundled-opus no-g15 no-embed-qt-translation no-update" \
 QMAKE_CFLAGS+='%optflags' \
 QMAKE_CXXFLAGS+='%optflags' \
 DEFINES+=PLUGIN_PATH=%_libdir/%name \
@@ -98,7 +110,10 @@ install -pD -m0755 release/%name %buildroot%_bindir/%name
 install -pD -m0755 release/murmurd %buildroot%_sbindir/murmurd
 
 install -d %buildroot%_libdir/%name/
-cp -rp release/libmumble.so* %buildroot%_libdir/
+cp -a release/libmumble.so* %buildroot%_libdir/
+%if_without sys_celt
+cp -a release/libcelt*.so* %buildroot%_libdir/%name/
+%endif
 install -p release/plugins/*.so %buildroot%_libdir/%name/
 
 # murmur config
@@ -158,6 +173,9 @@ mkdir -p %buildroot%_var/run/mumble-server/
 %doc scripts/*.pl
 #%doc scripts/*php scripts/qt.conf
 %_libdir/libmumble.so*
+%if_without sys_celt
+%_libdir/%name/libcelt*.so*
+%endif
 %_bindir/%name
 #%_bindir/%{name}11x
 #%%attr(664,root,root) %_datadir/%name/*
@@ -181,6 +199,9 @@ mkdir -p %buildroot%_var/run/mumble-server/
 
 %files plugins
 %_libdir/%name
+%if_without sys_celt
+%exclude %_libdir/%name/libcelt*.so*
+%endif
 
 %files overlay
 %_bindir/%name-overlay
@@ -189,6 +210,10 @@ mkdir -p %buildroot%_var/run/mumble-server/
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Wed Mar 11 2015 Paul Wolneykien <manowar@altlinux.org> 1.2.8-alt2
+- Configure speex, celt and opus libraries properly (patch).
+- Build with bundled CELT codec (v0.7.0 and v0.11.0).
+
 * Mon Mar 09 2015 Paul Wolneykien <manowar@altlinux.org> 1.2.8-alt1
 - Freshed-up to the v1.2.8.
 - Add libspeechd.patch.
