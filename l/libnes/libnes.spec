@@ -1,15 +1,15 @@
 %def_enable static
 
 Name: libnes
-Version: 1.1.0
-Release: alt1.qa1
+Version: 1.1.4
+Release: alt1.git20140218
 Summary: NetEffect RNIC Userspace Library
 Group: System/Libraries
 License: %gpl2only
 Url: http://www.openfabrics.org
+# git://flatbed.openfabrics.org/~tnikolova/libnes/.git
 Source: %name-%version.tar
 Requires: libibverbs
-Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libibverbs-devel
@@ -41,7 +41,7 @@ which may be useful for debugging.
 
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 
 %files
@@ -57,6 +57,9 @@ which may be useful for debugging.
 
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.4-alt1.git20140218
+- Version 1.1.4
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
