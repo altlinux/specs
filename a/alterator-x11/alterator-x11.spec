@@ -1,5 +1,5 @@
 Name: alterator-x11
-Version: 1.98.7
+Version: 1.98.8
 Release: alt1
 
 Url: http://www.altlinux.com
@@ -85,6 +85,11 @@ Scripts which creates simple configuration files in
 %_bindir/xsetup*
 
 %changelog
+* Wed Mar 11 2015 Mikhail Efremov <sem@altlinux.org> 1.98.8-alt1
+- Use driver name if description is not found (closes: #26581).
+- Blacklist other drivers in case of vesa (closes: #29435).
+- Replace shell-regexp with shell-quote (closes: #30811).
+
 * Mon Jun 17 2013 Sergey V Turchin <zerg at altlinux dot org> 1.98.7-alt1
 - polish DisplaySize UI
 
