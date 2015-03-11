@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.4.2
-Release: alt1.git20150115
+Version: 1.6.5
+Release: alt1.git20150226
 Summary: JSON based CMS for Universal Core
 License: BSD
 Group: Development/Python
@@ -17,19 +17,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests git
 BuildPreReq: python-module-pyramid-tests python-module-pyramid_chameleon
 BuildPreReq: python-module-pyramid_debugtoolbar python-module-memcached
 BuildPreReq: python-module-pyramid_beaker python-module-waitress
 BuildPreReq: python-module-webtest python-module-cornice
-BuildPreReq: python-module-praekelt_pyramid_celery python-module-babel
+BuildPreReq: python-module-pyramid_celery python-module-babel
 BuildPreReq: python-module-pyramid_redis python-module-lingua
 BuildPreReq: python-module-arrow python-module-markdown
 BuildPreReq: python-module-raven python-module-elastic-git
 BuildPreReq: python-module-slugify python-module-pyramid_mako
 BuildPreReq: python-module-GitDB python-module-mako
 BuildPreReq: python-module-universal-analytics-python
-BuildPreReq: python-module-mock
+BuildPreReq: python-module-mock python-module-unicore.content
+BuildPreReq: python-module-unicore.google python-module-pycountry
+BuildPreReq: python-module-unicore.distribute python-module-libthumbor
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -37,20 +39,23 @@ BuildPreReq: python3-module-pyramid python3-module-pyramid_chameleon
 BuildPreReq: python3-module-pyramid_debugtoolbar python3-module-memcached
 BuildPreReq: python3-module-pyramid_beaker python3-module-waitress
 BuildPreReq: python3-module-webtest python3-module-cornice
-BuildPreReq: python3-module-praekelt_pyramid_celery python3-module-babel
+BuildPreReq: python3-module-pyramid_celery python3-module-babel
 BuildPreReq: python3-module-pyramid_redis python3-module-lingua
 BuildPreReq: python3-module-arrow python3-module-markdown
 BuildPreReq: python3-module-raven python3-module-elastic-git
 BuildPreReq: python3-module-slugify python3-module-mock
 BuildPreReq: python3-module-universal-analytics-python
+BuildPreReq: python3-module-unicore.content python3-module-pycountry
+BuildPreReq: python3-module-unicore.google python3-module-libthumbor
+BuildPreReq: python3-module-unicore.distribute
 %endif
 
 %py_provides cms
-%py_provides unicore
 Conflicts: python-module-django-cms3.0
 Conflicts: python-module-django-cms2.3
 Conflicts: python-module-django-cms
-%py_requires UniversalAnalytics
+%py_requires UniversalAnalytics pyramid_celery unicore.content
+%py_requires unicore.google unicore.distribute pycountry
 
 %description
 JSON based CMS for Universal Core.
@@ -65,15 +70,16 @@ JSON based CMS for Universal Core.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: JSON based CMS for Universal Core
 Group: Development/Python3
 %py3_provides cms
-%py3_provides unicore
 Conflicts: python3-module-django-cms3.0
 Conflicts: python3-module-django-cms2.3
 Conflicts: python3-module-django-cms
-%py3_requires UniversalAnalytics
+%py3_requires UniversalAnalytics pyramid_celery unicore.content
+%py3_requires unicore.google unicore.distribute pycountry
 
 %description -n python3-module-%oname
 JSON based CMS for Universal Core.
@@ -87,6 +93,7 @@ Requires: python3-module-%oname = %EVR
 JSON based CMS for Universal Core.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -126,6 +133,7 @@ pushd ../python3
 python3 setup.py test
 popd
 %endif
+exit 1
 
 %files
 %doc *.rst
@@ -150,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.5-alt1.git20150226
+- Version 1.6.5
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1.git20150115
 - Version 1.4.2
 
