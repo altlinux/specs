@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.5.0
-Release: alt1.dev.git20150211
+Release: alt1.dev.git20150226
 Summary: Python client for Elasticsearch
 License: ASL
 Group: Development/Python
@@ -21,6 +21,7 @@ BuildPreReq: python-module-urllib3 python-module-requests
 BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-module-mock python-module-pyaml
 BuildPreReq: python-module-nosexcover python-module-pylibmc
+BuildPreReq: python-modules-logging python-modules-json
 BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -32,6 +33,7 @@ BuildPreReq: python3-module-nosexcover
 %endif
 
 %py_provides %oname
+%py_requires json
 
 %description
 Official low-level client for Elasticsearch. Its goal is to provide
@@ -165,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.dev.git20150226
+- New snapshot
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.dev.git20150211
 - Version 1.5.0-dev
 
