@@ -7,8 +7,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: %major.1.0
-Release: alt1.svn20140708
+Version: %major.2.0
+Release: alt1.svn20141127
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -200,7 +200,7 @@ cp -a . ../python3
 %build
 INCS="-I%_includedir/wx-%major"
 INCS="$INCS -I%_libdir/wx/include/gtk2-unicode-%major"
-%add_optflags -fno-strict-aliasing -fpermissive $INCS
+%add_optflags -fno-strict-aliasing -fpermissive -std=gnu++11 $INCS
 
 %python_build_debug \
 	NO_SCRIPTS=1 \
@@ -376,6 +376,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2.0-alt1.svn20141127
+- Version 3.0.2.0
+
 * Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1.0-alt1.svn20140708
 - New snapshot
 
