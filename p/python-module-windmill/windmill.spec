@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.7
-Release: alt1.pre.git20130327
+Release: alt2.pre.git20130327
 Summary: Web testing tool designed to let you painlessly automate and debug your web application
 License: ASLv2.0
 Group: Development/Python
@@ -33,6 +33,7 @@ Windmill implements cross browser testing, in-browser recording and
 playback, and functionality for fast accurate debugging and test
 environment integration.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Web testing tool designed to let you painlessly automate and debug your web application
 Group: Development/Python3
@@ -44,6 +45,7 @@ Windmill is an Open Source AJAX Web UI Testing framework.
 Windmill implements cross browser testing, in-browser recording and
 playback, and functionality for fast accurate debugging and test
 environment integration.
+%endif
 
 %prep
 %setup
@@ -121,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt2.pre.git20130327
+- Fixed build
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.pre.git20130327
 - Initial build for Sisyphus
 
