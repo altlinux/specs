@@ -1,5 +1,5 @@
 Name:		boinc
-Version: 7.4.41
+Version: 7.4.42
 Release: alt1
 Packager:	Paul Wolneykien <manowar@altlinux.ru>
 License:	GPLv3+/LGPLv3+
@@ -498,6 +498,9 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 
 
 %changelog
+* Wed Mar 11 2015 Cronbuild Service <cronbuild@altlinux.org> 7.4.42-alt1
+- Fresh up to v7.4.42 with the help of cronbuild and update-source-functions.
+
 * Tue Mar 03 2015 Paul Wolneykien <manowar@altlinux.org> 7.4.41-alt1
 - Fresh up to v7.4.41 with the help of cronbuild and update-source-functions.
 - Disable building the server packages.
