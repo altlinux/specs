@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        35.0.1
+Version:        36.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -296,6 +296,27 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun Mar 08 2015 Alexey Gladkov <legion@altlinux.ru> 36.0.1-alt1
+- New release (36.0.1).
+- Fixed:
+  + 2015-27 Caja Compiler JavaScript sandbox bypass
+  + 2015-26 UI Tour whitelisted sites in background tab can spoof foreground tabs
+  + 2015-25 Local files or privileged URLs in pages can be opened into new tabs
+  + 2015-24 Reading of local files through manipulation of form autocomplete
+  + 2015-23 Use-after-free in Developer Console date with OpenType Sanitiser
+  + 2015-22 Crash using DrawTarget in Cairo graphics library
+  + 2015-21 Buffer underflow during MP3 playback
+  + 2015-20 Buffer overflow during CSS restyling
+  + 2015-19 Out-of-bounds read and write while rendering SVG content
+  + 2015-18 Double-free when using non-default memory allocators with a zero-length XHR
+  + 2015-17 Buffer overflow in libstagefright during MP4 video playback
+  + 2015-16 Use-after-free in IndexedDB
+  + 2015-15 TLS TURN and STUN connections silently fail to simple TCP connections
+  + 2015-14 Malicious WebGL content crash when writing strings
+  + 2015-13 Appended period to hostnames can bypass HPKP and HSTS protections
+  + 2015-12 Invoking Mozilla updater will load locally stored DLL files
+  + 2015-11 Miscellaneous memory safety hazards (rv:36.0 / rv:31.5)
+
 * Wed Jan 28 2015 Alexey Gladkov <legion@altlinux.ru> 35.0.1-alt1
 - New release (35.0.1).
 

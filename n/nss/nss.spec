@@ -1,6 +1,6 @@
 Summary:        Netscape Network Security Services(NSS)
 Name:           nss
-Version:        3.17.2
+Version:        3.17.4
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          System/Libraries
@@ -244,6 +244,9 @@ f="%_libdir/libnssckbi.so.alternatives_save"
 %_libdir/*.a
 
 %changelog
+* Sun Mar 08 2015 Alexey Gladkov <legion@altlinux.ru> 3.17.4-alt1
+- New version (3.17.4).
+
 * Mon Nov 17 2014 Alexey Gladkov <legion@altlinux.ru> 3.17.2-alt1
 - New version (3.17.2).
 
