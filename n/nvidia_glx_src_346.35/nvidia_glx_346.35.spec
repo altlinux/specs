@@ -15,13 +15,13 @@
 %define nv_version 346
 %define nv_release 35
 %define nv_minor %nil
-%define pkg_rel alt138
+%define pkg_rel alt139
 %ifarch x86_64
 %def_enable egl
 %else
 %def_enable egl
 %endif
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -347,6 +347,9 @@ fi
 %endif
 
 %changelog
+* Wed Mar 11 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt139
+- don't package kernel module sources
+
 * Fri Jan 23 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt138
 - fix build kernel module
 
