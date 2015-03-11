@@ -1,6 +1,6 @@
 Name: gnutls26
 Version: 2.12.23
-Release: alt3
+Release: alt4
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -12,6 +12,9 @@ Source: gnutls-%version.tar
 Patch1: gnutls-2.12.14-rh-tests.patch
 Patch2: gnutls-2.12.21-alt-linkage.patch
 Patch3: gnutls-2.12.23-up-fixes.patch
+Patch4: gnutls-2.12.23-prevent-memory-corruption.patch
+Patch5: gnutls-2.12.23-certificate-algorithm-consistency-check.patch
+Patch6: gnutls-2.12.23-GNUTLS-SA-2015-1.patch
 
 %def_disable guile
 %def_with lzo
@@ -67,6 +70,9 @@ This package contains Guile bindings for the library.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 touch doc/*.texi
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
@@ -132,6 +138,12 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Wed Mar 11 2015 Mikhail Efremov <sem@altlinux.org> 2.12.23-alt4
+- Patches fom upstream:
+  + Fix for GNUTLS-SA-2015-1.
+  + Fix for certificate algorithm consistency check.
+  + Prevent memory corruption due to server hello parsing.
+
 * Thu Aug 21 2014 Mikhail Efremov <sem@altlinux.org> 2.12.23-alt3
 - Drop libgnutls26-extra and libgnutlsxx27 subpackages.
 - Drop libgnutls27-openssl subpackage.
