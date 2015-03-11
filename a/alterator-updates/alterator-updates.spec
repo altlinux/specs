@@ -1,6 +1,6 @@
 Name: alterator-updates
-Version: 0.2
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -40,6 +40,9 @@ dialog based interface for alterator
 %_datadir/alterator/applications/*
 
 %changelog
+* Wed Mar 11 2015 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
+- Replace shell-regexp with shell-quote.
+
 * Mon Jun 03 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2-alt2
 - add R: altlinux-repos
 
