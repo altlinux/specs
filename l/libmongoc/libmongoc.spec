@@ -1,6 +1,6 @@
 Name: libmongoc
-Version: 1.0.0
-Release: alt1.git20140826
+Version: 1.1.2
+Release: alt1.git20150310
 Summary: C Driver for MongoDB
 Group: System/Libraries
 License: ASL 2.0
@@ -43,11 +43,14 @@ mind that the API will be in flux until then.
 	--enable-optimizations \
 	--enable-debug-symbols=yes \
 	--enable-html-docs=yes \
+	--enable-man-pages=yes \
 	--enable-yelp=yes \
 	--enable-examples=no \
 	--enable-tests=yes \
 	--enable-sasl=yes \
-	--enable-ssl=yes
+	--enable-ssl=yes \
+	--enable-rdtscp=yes \
+	--with-libbson=system
 %make_build V=1
 %make -C doc html
 
@@ -59,6 +62,7 @@ mind that the API will be in flux until then.
 
 %files
 %doc COPYING NEWS *.md *.rst
+%_bindir/*
 %_libdir/*.so.*
 
 %files devel
@@ -66,8 +70,12 @@ mind that the API will be in flux until then.
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
+%_man3dir/*
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.git20150310
+- Version 1.1.2
+
 * Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20140826
 - Version 1.0.0
 
