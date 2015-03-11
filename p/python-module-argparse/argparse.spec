@@ -5,7 +5,7 @@
 
 Name:           python-module-%oname
 Version:        1.3.0
-Release:        alt1.hg20141215
+Release:        alt2.hg20141215
 Summary:        Python command line parser
 
 Group:          Development/Python
@@ -24,6 +24,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
+%py_requires %oname
+
 %description
 The argparse module provides an easy, declarative interface for
 creating command line tools.
@@ -32,6 +34,7 @@ creating command line tools.
 %package -n python3-module-%oname
 Summary: Python 3 command line parser
 Group: Development/Python3
+%py3_requires %oname
 
 %description -n python3-module-%oname
 The argparse module provides an easy, declarative interface for
@@ -59,67 +62,70 @@ creating command line tools.
 
 This package contains pickles for argparse.
 
-%prep
-%setup
+#prep
+#setup
 
-touch test/__init__.py
+#touch test/__init__.py
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
-%prepare_sphinx .
-
-%build
-%python_build
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
-
-%install
-%python_install -O1
-%if_with python3
-pushd ../python3
-%python3_install
-popd
-%endif
-
-%generate_pickles doc/source doc/source %oname
-cp -fR pickle %buildroot%python_sitelibdir/%oname
-
-%check
-python setup.py test
-py.test
 #if_with python3
-%if 0
-pushd ../python3
-python3 setup.py test
-py.test-%_python3_version
-popd
-%endif
+#rm -rf ../python3
+#cp -a . ../python3
+#endif
+
+#prepare_sphinx .
+
+#build
+#python_build
+#if_with python3
+#pushd ../python3
+#python3_build
+#popd
+#endif
+
+#install
+#python_install -O1
+#if_with python3
+#pushd ../python3
+#python3_install
+#popd
+#endif
+
+#generate_pickles doc/source doc/source %oname
+#cp -fR pickle %buildroot%python_sitelibdir/%oname
+
+#check
+#python setup.py test
+#py.test
+#if_with python3
+#if 0
+#pushd ../python3
+#python3 setup.py test
+#py.test-%_python3_version
+#popd
+#endif
 
 %files
-%doc NEWS.txt README.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/pickle
+#doc NEWS.txt README.txt
+#python_sitelibdir/*
+#exclude %python_sitelibdir/%oname/pickle
 
-%files docs
-%doc doc/* test
+#files docs
+#doc doc/* test
 
-%files pickles
-%dir %python_sitelibdir/%oname
-%python_sitelibdir/%oname/pickle
+#files pickles
+#dir %python_sitelibdir/%oname
+#python_sitelibdir/%oname/pickle
 
 %if_with python3
 %files -n python3-module-%oname
-%doc NEWS.txt README.txt
-%python3_sitelibdir/*
+#doc NEWS.txt README.txt
+#python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2.hg20141215
+- Removed content
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.hg20141215
 - Version 1.3.0
 
