@@ -3,7 +3,7 @@
 
 Name: ksocrat
 Version: 3.2.1
-Release: alt15
+Release: alt16
 
 Group: System/Internationalization
 Summary: English/Russian and Russian/English dictionary for KDE
@@ -20,14 +20,12 @@ Source1: ksocrat-enru-dic-1.0.1.tar.bz2
 Source2: ksocrat-ruen-dic-1.0.1.tar.bz2
 Source3: admin.tar.bz2
 
-%set_gcc_version 4.5
+%define gver 4.9
+%set_gcc_version %gver
 BuildPreReq: iconv
-BuildRequires: libX11-devel gcc4.5-c++
+BuildRequires: libX11-devel gcc%gver-c++
 BuildRequires: glibc-devel kdelibs-devel libjpeg-devel
-BuildRequires: libpng-devel libqt3-devel libstdc++4.5-devel zlib-devel
-#BuildRequires: automake_1.4 autoconf_2.13
-#BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
-#BuildRequires: kdelibs > 1 kdelibs-devel > 1
+BuildRequires: libpng-devel libqt3-devel libstdc++%gver-devel zlib-devel
 
 %description
 Simple frontend for Socrat English/Russian
@@ -43,7 +41,7 @@ English/Russian and Russian/English dictionaries
 for %name package
 
 %prep
-%setup -q -a3
+%setup -a3
 
 tar xvfj %SOURCE1
 tar xvfj %SOURCE2
@@ -84,7 +82,7 @@ export CXXFLAGS="%optflags -I%_includedir/tqtinterface"
 %make_build LIBDIR=%_libdir
 
 %install
-make DESTDIR=%buildroot LIBDIR=%_libdir install
+%makeinstall_std LIBDIR=%_libdir
 
 mkdir -p %buildroot/%_Kmenudir/
 mv %buildroot/%_datadir/applnk/Applications/*.desktop %buildroot/%_Kmenudir/
@@ -110,6 +108,9 @@ popd
 %_datadir/apps/%name/*.dic
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt16
+- Rebuilt with gcc4.9
+
 * Thu Jun 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt15
 - Fixed build
 
