@@ -26,24 +26,33 @@
 %define init_script systemd
 
 Name: lxc
-Version: 1.0.5
-Release: alt2
+Version: 1.1.0
+Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
 Source: %name-%version.tar
+Source1: lxc-net.sysconfig
 Patch: %name-%version-%release.patch
 
 Summary: %name : Linux Container
 Group: System/Configuration/Other
 License: LGPL
 Requires: libcap gzip-utils
+%ifarch x86_64 %arm
+Requires: criu
+%endif
+Requires: iproute2 bridge-utils dnsmasq
 BuildRequires: libcap-devel docbook-utils glibc-kernheaders
 BuildRequires: docbook2X xsltproc
 BuildRequires: rpm-macros-alternatives
 
 # Needed to disable auto requirements from distro templates
 %add_findreq_skiplist %_datadir/%name/*
+
+# Do not need to check
+%add_findreq_skiplist %_libexecdir/%name/lxc-apparmor-load
+%add_findreq_skiplist %_libexecdir/%name/lxc-net
 
 Requires: openssl rsync
 BuildRequires: libcap libcap-devel docbook2X graphviz
@@ -95,6 +104,7 @@ CFLAGS+=-I%_includedir/linux-default/include/
     --with-config-path=%_var/lib/lxc \
     --enable-python \
     --disable-lua \
+    --with-distro=altlinux \
     --with-init-script=%{init_script}
 
 %make_build
@@ -111,7 +121,7 @@ mkdir -p %buildroot%_cachedir/%name
 %__install -m 0755 src/lxc/legacy/lxc-ls %buildroot%{_bindir}/lxc-ls.sh
 
 # add alternatives
-install -d %buildroot//etc/alternatives/packages.d
+%__install -d %buildroot/etc/alternatives/packages.d
 cat >%buildroot%_altdir/%name-legacy <<__EOF__
 %{_bindir}/lxc-ls	%{_bindir}/lxc-ls.sh	100
 __EOF__
@@ -120,12 +130,25 @@ cat >%buildroot%_altdir/%name <<__EOF__
 %{_bindir}/lxc-ls	%{_bindir}/lxc-ls.py	1000
 __EOF__
 
-#post
+%__install -m 0644 %SOURCE1 %buildroot/%_sysconfdir/sysconfig/lxc-net
+
+%pre
+# Ensure that lxc-dnsmasq uid & gid gets correctly allocated
+if getent passwd lxc-dnsmasq >/dev/null 2>&1 ; then : ; else \
+ /usr/sbin/useradd -M -r -s /sbin/nologin \
+ -c "LXC Networking Service" -d %_localstatedir/%name lxc-dnsmasq 2> /dev/null \
+ || exit 1
+fi
+
+%postun
+/usr/sbin/userdel lxc-dnsmasq > /dev/null 2>&1 || :
 
 %files
 %defattr(-,root,root)
 %exclude %{_bindir}/lxc-ls.py
 %exclude %{_bindir}/lxc-start-ephemeral
+%exclude %{_mandir}/man1/lxc-start-ephemeral*
+%exclude %{_mandir}/ja/man1/lxc-start-ephemeral*
 %exclude %{_bindir}/lxc-device
 %{_bindir}/*
 %{_mandir}/man1/lxc*
@@ -138,7 +161,9 @@ __EOF__
 %{_datadir}/lxc/*
 %{_sysconfdir}/bash_completion.d/*
 %config(noreplace) %{_sysconfdir}/lxc/*
+%config(noreplace) %{_sysconfdir}/sysconfig/lxc*
 %{_unitdir}/lxc.service
+%{_unitdir}/lxc-net.service
 %config %_altdir/%name-legacy
 
 %files libs
@@ -147,13 +172,12 @@ __EOF__
 %{_libdir}/*.so.*
 %{_libdir}/%{name}
 %{_localstatedir}/*
-%{_libexecdir}/%{name}
-%attr(4111,root,root) %{_libexecdir}/%{name}/lxc-user-nic
-
-%if %{with_systemd}
+%{_libexecdir}/%{name}/lxc-apparmor-load
+%{_libexecdir}/%{name}/lxc-monitord
+%attr(555,root,root) %{_libexecdir}/%{name}/lxc-containers
 %attr(555,root,root) %{_libexecdir}/%{name}/lxc-devsetup
-%attr(555,root,root) %{_libexecdir}/%{name}/lxc-autostart-helper
-%endif
+%attr(555,root,root) %{_libexecdir}/%{name}/lxc-net
+%attr(4111,root,root) %{_libexecdir}/%{name}/lxc-user-nic
 
 %files python3
 %defattr(-,root,root)
@@ -163,6 +187,8 @@ __EOF__
 %{python3_sitelibdir}/_lxc*
 %{python3_sitelibdir}/lxc/*
 %config %_altdir/%name
+%{_mandir}/man1/lxc-start-ephemeral*
+%{_mandir}/ja/man1/lxc-start-ephemeral*
 
 %files devel
 %defattr(-,root,root)
@@ -172,6 +198,12 @@ __EOF__
 
 
 %changelog
+* Wed Mar 11 2015 Denis Pynkin <dans@altlinux.org> 1.1.0-alt1
+- Version 1.1.0
+  Added criu (crtools) to dependencies for container dump/restore.
+  Added network service and configuration.
+  Fixed #30232
+
 * Tue Aug 19 2014 Denis Pynkin <dans@altlinux.org> 1.0.5-alt2
 - Fixed reopened #30158
   Added check of services in container before start or stop.
