@@ -1,5 +1,5 @@
 Name: alterator-bacula
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Source:%name-%version.tar
@@ -81,6 +81,9 @@ done
 %altdir/desktop-directories/*
 
 %changelog
+* Wed Mar 11 2015 Mikhail Efremov <sem@altlinux.org> 1.3.3-alt1
+- Don't use shell-regexp.
+
 * Tue Oct 28 2014 Mikhail Efremov <sem@altlinux.org> 1.3.2-alt1
 - If bacula-fd is running returns mode "on".
 - Don't overwrite exclude-user filelist if exists.
