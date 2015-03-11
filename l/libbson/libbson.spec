@@ -1,6 +1,6 @@
 Name: libbson
-Version: 1.1.1
-Release: alt1.git20150226
+Version: 1.1.2
+Release: alt1.git20150310
 Summary: A BSON utility library
 License: ASLv2.0
 Group: System/Libraries
@@ -80,6 +80,9 @@ done
 %doc doc/doc/html examples
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.git20150310
+- Version 1.1.2
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20150226
 - Version 1.1.1
 
