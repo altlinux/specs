@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.3
-Release: alt1
+Release: alt2
 Summary: Simple and powerful url parsing tool
 License: BSD
 Group: Development/Python
@@ -37,6 +37,7 @@ Urlparse3 is simple and powerful url parsing tool.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Simple and powerful url parsing tool
 Group: Development/Python3
@@ -54,6 +55,7 @@ Requires: python3-module-%oname = %EVR
 Urlparse3 is simple and powerful url parsing tool.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -112,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt2
+- Fixed build
+
 * Tue Nov 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1
 - Initial build for Sisyphus
 
