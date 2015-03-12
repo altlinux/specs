@@ -1,6 +1,6 @@
 Name: skytools
-Version: 2.1.12
-Release: alt1.1.1
+Version: 2.1.13
+Release: alt1
 
 Summary:Skytools are database management tools to WAL shipping, queueing and replication
 Group: Databases
@@ -8,8 +8,13 @@ License: BSD
 URL: http://pgfoundry.org/projects/skytools/
 Packager: Sergey Alembekov <rt@altlinux.ru>
 Source: %name.tar.gz
+Patch: skytools-2.1.13-alt-pg9.4.diff
+# patches from debian:
+Patch90: https://sources.debian.net/data/main/s/skytools/2.1.13-2/debian/patches/regression-fixes
+Patch91: https://sources.debian.net/data/main/s/skytools/2.1.13-2/debian/patches/missing_includes.diff
 Requires: python
-BuildRequires: postgresql-devel postgresql-server postgresql9.1-contrib python-devel
+BuildRequires: postgresql-devel postgresql-server postgresql9.4-contrib python-devel
+BuildPreReq: asciidoc
 
 %description
 This is a package of tools in use in Skype for replication and
@@ -24,6 +29,10 @@ walmgr - Tools for managing WAL-based replication for PostgreSQL.
 
 %prep
 %setup -n %name
+
+%patch -p2
+%patch90 -p1
+%patch91 -p1
 
 %build
 %configure
@@ -69,6 +78,9 @@ walmgr - Tools for managing WAL-based replication for PostgreSQL.
 
 
 %changelog
+* Thu Mar 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.13-alt1
+- Version 2.1.13
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.1.12-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
