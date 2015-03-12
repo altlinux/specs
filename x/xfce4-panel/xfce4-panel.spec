@@ -2,7 +2,7 @@
 
 Name: xfce4-panel
 Version: 4.12.0
-Release: alt1
+Release: alt2
 
 Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -20,11 +20,16 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildPreReq: libxfce4ui-devel >= %xfce_ver libexo-devel >= 0.6.0 libgarcon-gtk2-devel
 BuildRequires: gtk-doc libwnck-devel libICE-devel libXext-devel libSM-devel
+BuildRequires: libgtk+3-devel
 
 Requires: libxfce4panel = %version-%release
 Requires: xfce4-common
 
 Obsoletes: xfce4-showdesktop-plugin, xfce4-windowlist-plugin
+
+%define libxfce4panel_name_gtk2 libxfce4panel-1.0
+%define libxfce4panel_name_gtk3 libxfce4panel-2.0
+%define wrapper_name_gtk3 wrapper-2.0
 
 %description
 %name is the panel for the Xfce desktop environment.
@@ -33,15 +38,16 @@ Obsoletes: xfce4-showdesktop-plugin, xfce4-windowlist-plugin
 Данный пакет содержит в себе панель для окружения рабочего стола Xfce.
 
 %package -n libxfce4panel
-Summary: Library for Xfce panel
+Summary: Library for Xfce panel (GTK+2)
 License: %lgpl2plus
 Group: Development/C
 
 %description -n libxfce4panel
-This package contains library for Xfce panel plugins.
+This package contains library for Xfce panel plugins
+(GTK+2 variant).
 
 %package -n libxfce4panel-devel
-Summary: Development files to build Xfce panel plugins
+Summary: Development files to build Xfce panel plugins (GTK+2)
 License: %lgpl2plus
 Group: Development/C
 PreReq: libxfce4panel = %version-%release
@@ -49,7 +55,8 @@ Provides: %name-devel = %version-%release
 Obsoletes: %name-devel < 4.8.0
 
 %description -n libxfce4panel-devel
-This package contains files to develop plugins for Xfce panel.
+This package contains files to develop plugins for Xfce panel
+(GTK+2 variant).
 
 %package -n libxfce4panel-devel-doc
 Summary: Documentation files to build Xfce panel plugins
@@ -61,6 +68,25 @@ BuildArch: noarch
 
 %description -n libxfce4panel-devel-doc
 This package contains files to develop plugins for Xfce panel.
+
+%package -n libxfce4panel-gtk3
+Summary: Library for Xfce panel (GTK+3)
+License: %lgpl2plus
+Group: Development/C
+
+%description -n libxfce4panel-gtk3
+This package contains library for Xfce panel plugins
+(GTK+3 variant).
+
+%package -n libxfce4panel-gtk3-devel
+Summary: Development files to build Xfce panel plugins (GTK+3)
+License: %lgpl2plus
+Group: Development/C
+PreReq: libxfce4panel-gtk3 = %version-%release
+
+%description -n libxfce4panel-gtk3-devel
+This package contains files to develop plugins for Xfce panel
+(GTK+3 variant).
 
 %prep
 %setup
@@ -74,7 +100,7 @@ This package contains files to develop plugins for Xfce panel.
 	--disable-static \
 	--enable-maintainer-mode \
 	--enable-gtk-doc \
-	--enable-gen-doc \
+	--enable-gtk3 \
 	--enable-debug=no
 %make_build
 
@@ -92,6 +118,7 @@ mkdir -p %buildroot/%_datadir/xfce4/panel-plugins
 %config(noreplace) %_sysconfdir/xdg/xfce4/*
 %_bindir/*
 %_libdir/xfce4/panel/
+%exclude %_libdir/xfce4/panel/%wrapper_name_gtk3
 %_iconsdir/hicolor/*/*/*
 %_datadir/xfce4/panel/
 %_desktopdir/*.desktop
@@ -102,17 +129,29 @@ mkdir -p %buildroot/%_datadir/xfce4/panel-plugins
 %dir %_libdir/xfce4/panel-plugins
 
 %files -n libxfce4panel
-%_libdir/libxfce4panel-*.so.*
+%_libdir/%libxfce4panel_name_gtk2.so.*
 
 %files -n libxfce4panel-devel
-%_libdir/pkgconfig/*
-%_libdir/libxfce4panel-*.so
-%_includedir/xfce4/libxfce4panel-*/
+%_libdir/pkgconfig/%libxfce4panel_name_gtk2.pc
+%_libdir/%libxfce4panel_name_gtk2.so
+%_includedir/xfce4/%libxfce4panel_name_gtk2/
 
 %files -n libxfce4panel-devel-doc
 %doc %_datadir/gtk-doc/html/libxfce4panel-*/
 
+%files -n libxfce4panel-gtk3
+%_libdir/%libxfce4panel_name_gtk3.so.*
+%_libdir/xfce4/panel/%wrapper_name_gtk3
+
+%files -n libxfce4panel-gtk3-devel
+%_libdir/pkgconfig/%libxfce4panel_name_gtk3.pc
+%_libdir/%libxfce4panel_name_gtk3.so
+%_includedir/xfce4/%libxfce4panel_name_gtk3/
+
 %changelog
+* Thu Mar 12 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt2
+- Package GTK+3 variant of the library.
+
 * Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt1
 - Updated to 4.12.0.
 
