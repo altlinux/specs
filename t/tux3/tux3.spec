@@ -1,6 +1,6 @@
 Name: tux3
 Version: 0.0
-Release: alt1
+Release: alt1.1
 Summary: Tux3 versioning filesystem
 License: GPLv3
 Group: System/Kernel and hardware
@@ -48,6 +48,7 @@ Tux3 versioning filesystem documentation.
 
 %build
 export CFLAGS="%optflags"
+sed -i 's|\-Werror$||' user/Makefile
 %make_build -C user TEST_LIB_OBJS= tux3{,fuse}
 cat > tux3.sh <<__EOF__
 #!/bin/sh
@@ -78,5 +79,8 @@ done
 
 
 %changelog
+* Thu Mar 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0-alt1.1
+- Disabled -Werror flag
+
 * Sun Apr 13 2014 Led <led@altlinux.ru> 0.0-alt1
 - initial build
