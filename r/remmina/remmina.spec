@@ -1,6 +1,6 @@
 Name: remmina
 Version: 1.0.0
-Release: alt3
+Release: alt3.1
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -10,7 +10,7 @@ Source: %name-%version.tar
 
 Requires: icon-theme-hicolor
 
-BuildRequires: cmake desktop-file-utils intltool libavahi-ui-devel libgcrypt-devel libssh-devel libunique-devel libvte3-devel libavahi-ui-gtk3-devel libpng-devel libpixman-devel xorg-glproto-devel xorg-dri2proto-devel libXau-devel libXdmcp-devel libXext-devel libXdamage-devel libXxf86vm-devel libxkbfile-devel libtelepathy-glib-devel
+BuildRequires: cmake desktop-file-utils intltool libavahi-ui-devel libgcrypt-devel libssh-devel libunique-devel libvte3_2.90-devel libavahi-ui-gtk3-devel libpng-devel libpixman-devel xorg-glproto-devel xorg-dri2proto-devel libXau-devel libXdmcp-devel libXext-devel libXdamage-devel libXxf86vm-devel libxkbfile-devel libtelepathy-glib-devel
 BuildRequires: libfreerdp-devel gettext libgnome-keyring-devel libgnutls-devel libXxf86misc-devel libXv-devel libXrandr-devel libXpm-devel libXinerama-devel
 BuildRequires: libjpeg-devel libtasn1-devel libp11-kit-devel libvncserver-devel
 
@@ -90,6 +90,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Thu Mar 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt3.1
+- Fixed build
+
 * Wed Sep 18 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt3
 - Revert "FreeRDP moved from kbd to locale" (see https://github.com/FreeRDP/Remmina/pull/31)
 
