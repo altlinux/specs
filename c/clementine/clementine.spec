@@ -2,7 +2,7 @@
 
 Name: clementine
 Version: 1.2.3
-Release: alt2
+Release: alt3
 Summary: A music player and library organiser
 
 Group: Sound
@@ -37,6 +37,10 @@ BuildRequires: libvreen-devel
 %endif
 BuildPreReq: libfftw3-devel libavcodec-devel libavformat-devel libpcre-devel
 BuildPreReq: libprotobuf-devel qjson-devel gst-plugins-devel libcdio-devel
+
+# Clementine crashes without it
+Requires: gst-plugins-base
+
 %description
 Clementine is a modern music player and library organiser.
 It is largely a port of Amarok 1.4, with some features rewritten to take
@@ -74,6 +78,9 @@ tar -xf %{SOURCE2}
 %_datadir/clementine
 
 %changelog
+* Thu Feb 12 2015 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt3
+- add gst-plugins-base to requires - clementine crashes without it
+
 * Mon Jul 7 2014 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt2
 - add vkontakte support (closes: #29522)
 
