@@ -1,6 +1,6 @@
 Name: sdcc
 Version: 8378
-Release: alt1
+Release: alt1.1
 Group: Development/C
 URL: http://sdcc.sourceforge.net
 License: GPL
@@ -55,7 +55,8 @@ microprocessors.
 #%patch1 -p2
 #%patch2 -p2
 %build
-%configure --docdir=%_docdir/%name-%version
+%configure --docdir=%_docdir/%name-%version \
+	--enable-werror=no
 %make_build
 %install
 %make_install DESTDIR=%buildroot install
@@ -77,6 +78,9 @@ microprocessors.
 
 
 %changelog
+* Thu Mar 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8378-alt1.1
+- Removed -Werror flag
+
 * Sat Jan 12 2013 Yury A. Romanov <damned@altlinux.ru> 8378-alt1
 - Switched to 8378
 
