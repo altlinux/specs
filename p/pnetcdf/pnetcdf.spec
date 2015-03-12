@@ -1,13 +1,13 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
-%define gver 4.7
+%define gver 4.9
 %set_gcc_version %gver
 
 %define sover 0
 
 Name: pnetcdf
-Version: 1.5.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
 License: Open source
 Group: File tools
@@ -133,6 +133,9 @@ rm -f %buildroot%_libdir/*.so.
 %doc doc/*.pdf doc/*.txt examples
 
 %changelog
+* Thu Mar 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1
+- Version 1.6.0
+
 * Wed Jul 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2
 - Version 1.5.0
 
