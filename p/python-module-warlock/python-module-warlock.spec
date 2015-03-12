@@ -1,44 +1,85 @@
-Name:		python-module-warlock
-Version:	0.4.0
-Release:	alt2
-Summary:	Python object model built on top of JSON schema
+%def_with python3
 
-Group:		Development/Python
-License:	ASL 2.0
-URL:		http://pypi.python.org/pypi/warlock/0.4.0
-Source0:	%{name}-%{version}.tar.gz
-BuildArch:	noarch
+Name: python-module-warlock
+Version: 1.1.0
+Release: alt1
+Summary: Python object model built on top of JSON schema
 
-BuildRequires:	python-devel
-BuildRequires:	python-module-distribute
-BuildRequires:	python-module-nose
-BuildRequires:	python-module-jsonschema
+Group: Development/Python
+License: ASL 2.0
+Url: http://pypi.python.org/pypi/warlock
+Source: %name-%version.tar
+BuildArch: noarch
 
-Requires:	python-module-jsonschema
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-jsonschema >= 0.7
+BuildRequires: python-module-jsonpatch >= 0.10
+BuildRequires: python-module-six
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-jsonschema >= 0.7
+BuildRequires: python3-module-jsonpatch >= 0.10
+BuildRequires: python3-module-six
+%endif
+
+%if_with python3
+%package -n python3-module-warlock
+Summary: Python object model built on top of JSON schema
+Group: Development/Python3
+
+%description -n python3-module-warlock
+Build self-validating python objects using JSON schemas
+%endif
 
 %description
 Build self-validating python objects using JSON schemas
 
 %prep
-%setup -q
+%setup
 # Remove bundled egg-info
 rm -rf warlock.egg-info
+# let RPM handle deps
+sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
+rm -f requirements.txt
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
 
 %build
 %python_build
-
-%check
-nosetests
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
-%doc README.md LICENSE
-%{python_sitelibdir}/warlock
-%{python_sitelibdir}/warlock-%{version}-py?.?.egg-info
+%doc README.md LICENSE.txt
+%python_sitelibdir/*
+
+%if_with python3
+%files -n python3-module-warlock
+%python3_sitelibdir/*
+%endif
 
 %changelog
+* Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+- add python3 package
+
 * Mon Sep 30 2013 Pavel Shilovsky <piastry@altlinux.org> 0.4.0-alt2
 - Fix check section in spec
 

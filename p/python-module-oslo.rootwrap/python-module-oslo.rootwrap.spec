@@ -1,0 +1,131 @@
+%define pypi_name oslo.rootwrap
+
+%def_with python3
+
+Name: python-module-%pypi_name
+Version: 1.6.0
+Release: alt1
+Summary: Oslo Rootwrap
+
+Group: Development/Python
+License: ASL 2.0
+URL: https://launchpad.net/oslo
+Source: %name-%version.tar
+BuildArch:      noarch
+
+Provides: python-module-oslo-rootwrap = %EVR
+Obsoletes: python-module-oslo-rootwrap < %EVR
+
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-six >= 1.9.0
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pbr >= 0.6
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-oslosphinx
+BuildRequires: python3-module-six >= 1.9.0
+%endif
+
+%description
+
+The Oslo Rootwrap allows fine filtering of shell commands to run as `root`
+from OpenStack services.
+
+* License: Apache License, Version 2.0
+* Documentation: http://docs.openstack.org/developer/oslo.rootwrap
+* Source: http://git.openstack.org/cgit/openstack/oslo.rootwrap
+* Bugs: http://bugs.launchpad.net/oslo.rootwrap
+
+
+%if_with python3
+%package -n python3-module-oslo.rootwrap
+Summary: OpenStack oslo.rootwrap library
+Group: Development/Python3
+Provides: python3-module-oslo-rootwrap = %EVR
+
+%description -n python3-module-oslo.rootwrap
+
+The Oslo Rootwrap allows fine filtering of shell commands to run as `root`
+from OpenStack services.
+
+* License: Apache License, Version 2.0
+* Documentation: http://docs.openstack.org/developer/oslo.rootwrap
+* Source: http://git.openstack.org/cgit/openstack/oslo.rootwrap
+* Bugs: http://bugs.launchpad.net/oslo.rootwrap
+%endif
+
+%package doc
+Summary: Documentation for the Oslo rootwrap handling library
+Group: Development/Documentation
+Provides: python-module-oslo-rootwrap-doc = %EVR
+
+%description doc
+Documentation for the Oslo rootwrap handling library.
+
+
+%prep
+%setup
+
+# Remove bundled egg-info
+rm -rf %pypi_name.egg-info
+
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
+
+%build
+%python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
+# generate html docs
+sphinx-build doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
+%install
+%python_install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+# Delete tests
+rm -fr %buildroot%python_sitelibdir/tests
+rm -fr %buildroot%python_sitelibdir/*/tests
+rm -fr %buildroot%python3_sitelibdir/tests
+rm -fr %buildroot%python3_sitelibdir/*/tests
+
+%files
+%doc README.rst LICENSE
+%python_sitelibdir/*
+
+%if_with python3
+%files -n python3-module-oslo.rootwrap
+%python3_sitelibdir/*
+%endif
+
+%files doc
+%doc html
+
+%changelog
+* Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+- rename package from python-module-oslo-rootwrap to python-module-oslo.rootwrap
+- add python3 package
+
+* Mon Jul 14 2014 Lenar Shakirov <snejok@altlinux.ru> 1.0.0-alt1
+- First build for ALT

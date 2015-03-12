@@ -1,52 +1,89 @@
-Name:             python-module-novaclient
-Version:          2.17.0
-Release:          alt1
-Summary:          Python API and CLI for OpenStack Nova
+%def_with python3
 
-Group:            Development/Python
-License:          ASL 2.0
-URL:              http://pypi.python.org/pypi/python-novaclient
-Source0:          %{name}-%{version}.tar
+Name: python-module-novaclient
+Version: 2.22.0
+Release: alt1
+Summary: Python API and CLI for OpenStack Nova
 
+Group: Development/Python
+License: ASL 2.0
+Url: http://pypi.python.org/pypi/python-novaclient
+Source: %name-%version.tar
 
 #
 # patches_base=2.17.0
 #
 Patch0001: 0001-Remove-runtime-dependency-on-python-pbr.patch
-Patch0002: 0002-Fix-session-handling-in-novaclient.patch
-Patch0003: 0003-Fix-authentication-bug-when-booting-an-server-in-V3.patch
-Patch0004: 0004-Nova-CLI-for-server-groups.patch
-Patch0005: 0005-Avoid-AttributeError-in-servers.Server.__repr__.patch
-Patch0006: 0006-Enable-delete-multiple-server-groups-in-one-request.patch
 
-BuildArch:        noarch
-BuildRequires:    python-module-setuptools
-BuildRequires:    python-devel
-BuildRequires:    python-module-d2to1
-BuildRequires:    python-module-pbr
+BuildArch: noarch
 
-Requires:         python-module-argparse
-Requires:         python-module-iso8601
-Requires:         python-module-prettytable
-Requires:         python-module-requests
-Requires:         python-module-simplejson
-Requires:         python-module-six
-Requires:         python-module-babel
-Requires:         python-module-keyring
-Requires:         python-module-setuptools
+Requires: python-module-simplejson
+Requires: python-module-keystoneclient
+Requires: python-module-keyring
+
+BuildRequires: python-devel
+BuildRequires: python-module-d2to1
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-babel >= 1.3
+BuildRequires: python-module-six >= 1.7.0
+BuildRequires: python-module-argparse
+BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-prettytable >= 0.7
+BuildRequires: python-module-keystoneclient >= 1.1.0
+BuildRequires: python-module-requests >= 2.2.0
+BuildRequires: python-module-oslo.i18n >= 1.3.0
+BuildRequires: python-module-oslo.utils >= 1.2.0
+BuildRequires: python-module-oslo.serialization >= 1.2.0
+BuildRequires: python-module-simplejson >= 2.2.0
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pbr >= 0.6
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-oslosphinx
+BuildRequires: python3-module-babel >= 1.3
+BuildRequires: python3-module-six >= 1.7.0
+BuildRequires: python3-module-argparse
+BuildRequires: python3-module-iso8601 >= 0.1.9
+BuildRequires: python3-module-prettytable >= 0.7
+BuildRequires: python3-module-keystoneclient >= 1.1.0
+BuildRequires: python3-module-requests >= 2.2.0
+BuildRequires: python3-module-oslo.i18n >= 1.3.0
+BuildRequires: python3-module-oslo.utils >= 1.2.0
+BuildRequires: python3-module-oslo.serialization >= 1.2.0
+BuildRequires: python3-module-simplejson >= 2.2.0
+%endif
 
 %description
 This is a client for the OpenStack Nova API. There's a Python API (the
 novaclient module), and a command-line script (nova). Each implements 100 percent of
 the OpenStack Nova API.
 
+%if_with python3
+%package -n python3-module-novaclient
+Summary: Python API and CLI for OpenStack Nova
+Group: Development/Python3
+Requires: python3-module-simplejson
+Requires: python3-module-keystoneclient
+Requires: python3-module-keyring
+
+%description -n python3-module-novaclient
+This is a client for the OpenStack Nova API. There's a Python API (the
+novaclient module), and a command-line script (nova). Each implements 100 percent of
+the OpenStack Nova API.
+%endif
+
+
 %package doc
-Summary:          Documentation for OpenStack Nova API Client
-Group:            Documentation
+Summary: Documentation for OpenStack Nova API Client
+Group: Development/Documentation
 
-BuildRequires:    python-module-sphinx
-
-%description      doc
+%description doc
 This is a client for the OpenStack Nova API. There's a Python API (the
 novaclient module), and a command-line script (nova). Each implements 100 percent of
 the OpenStack Nova API.
@@ -54,17 +91,12 @@ the OpenStack Nova API.
 This package contains auto-generated documentation.
 
 %prep
-%setup -q
+%setup
 
 %patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
-%patch0005 -p1
-%patch0006 -p1
 
 # We provide version like this in order to remove runtime dep on pbr.
-sed -i s/REDHATNOVACLIENTVERSION/%{version}/ novaclient/__init__.py
+sed -i s/REDHATNOVACLIENTVERSION/%version/ novaclient/__init__.py
 
 # Remove bundled egg-info
 rm -rf python_novaclient.egg-info
@@ -72,23 +104,44 @@ rm -rf python_novaclient.egg-info
 # Let RPM handle the requirements
 rm -f {,test-}requirements.txt
 
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
+
 %build
-%{__python} setup.py build
+%python_build
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+mv %buildroot%_bindir/nova %buildroot%_bindir/python3-nova
+%endif
 
-mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d
+%python_install
+
+mkdir -p %buildroot%_sysconfdir/bash_completion.d
 install -pm 644 tools/nova.bash_completion \
-    %{buildroot}%{_sysconfdir}/bash_completion.d/nova
+    %buildroot%_sysconfdir/bash_completion.d/nova
 
 # Delete tests
-rm -fr %{buildroot}%{python_sitelibdir}/novaclient/tests
+rm -fr %buildroot%python_sitelibdir/tests
+rm -fr %buildroot%python_sitelibdir/*/tests
+rm -fr %buildroot%python3_sitelibdir/tests
+rm -fr %buildroot%python3_sitelibdir/*/tests
+
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build -b html doc/source html
 sphinx-build -b man doc/source man
 
-install -p -D -m 644 man/nova.1 %{buildroot}%{_mandir}/man1/nova.1
+install -p -D -m 644 man/nova.1 %buildroot%_mandir/man1/nova.1
 
 # Fix hidden-file-or-dir warnings
 rm -fr html/.doctrees html/.buildinfo
@@ -96,16 +149,25 @@ rm -fr html/.doctrees html/.buildinfo
 %files
 %doc README.rst
 %doc LICENSE
-%{_bindir}/nova
-%{python_sitelibdir}/novaclient
-%{python_sitelibdir}/*.egg-info
-%{_sysconfdir}/bash_completion.d
-%{_mandir}/man1/nova.1.gz
+%_bindir/nova
+%python_sitelibdir/*
+%_sysconfdir/bash_completion.d
+%_mandir/man1/nova.1.gz
+
+%if_with python3
+%files -n python3-module-novaclient
+%_bindir/python3-nova
+%python3_sitelibdir/*
+%endif
 
 %files doc
 %doc html
 
 %changelog
+* Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.22.0-alt1
+- 2.22.0
+- add python3 package
+
 * Thu Jul 24 2014 Lenar Shakirov <snejok@altlinux.ru> 2.17.0-alt1
 - New version (based on Fedora 2.17.0-2.fc21.src)
 

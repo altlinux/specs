@@ -1,49 +1,40 @@
-#%{!?python_version: %global python_version %(%{__python} -c "from distutils.sysconfig import get_python_version; print get_python_version()")}
 
-Name:		python-module-qpid
-Version:	0.18
-Release:	alt1
-Summary:	Python client library for AMQP
+Name: python-module-qpid
+Version: 0.30
+Release: alt1
+Summary: Python client library for AMQP
 
-License:	ASL 2.0
-Group:		Development/Python
-URL:		http://qpid.apache.org
-Source0:	%{name}-%{version}.tar.gz
+License: ASL 2.0
+Group: Development/Python
+Url: http://qpid.apache.org
+Source: %name-%version.tar
 
-BuildArch:	noarch
+BuildArch: noarch
 
-BuildRequires:	python-devel
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
 
 %description
 The Apache Qpid Python client library for AMQP.
 
 %prep
-%setup -q -n %{name}-%{version}/python
-cd ..
+%setup
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
+%python_build
 
 %install
-%{__python} setup.py install --skip-build --root %buildroot
-
-chmod +x %{buildroot}/%{python_sitelibdir}/qpid/codec.py
-chmod +x %{buildroot}/%{python_sitelibdir}/qpid/tests/codec.py
-chmod +x %{buildroot}/%{python_sitelibdir}/qpid/reference.py
-chmod +x %{buildroot}/%{python_sitelibdir}/qpid/managementdata.py
-chmod +x %{buildroot}/%{python_sitelibdir}/qpid/disp.py
+%python_install
 
 %files
-%defattr(-,root,root,-)
 %doc LICENSE.txt NOTICE.txt README.txt examples
-%{python_sitelibdir}/mllib
-%{python_sitelibdir}/qpid
-%{_bindir}/qpid-python-test
-
-%if "%{python_version}" >= "2.6"
-%{python_sitelibdir}/qpid_python-*.egg-info
-%endif
+%python_sitelibdir/*
+%_bindir/qpid-python-test
+%exclude %python_sitelibdir/qpid/test*
 
 %changelog
+* Mon Mar 16 2015 Alexey Shabalin <shaba@altlinux.ru> 0.30-alt1
+- 0.30
+
 * Thu Sep 13 2012 Pavel Shilovsky <piastry@altlinux.org> 0.18-alt1
 - Initial release for Sisyphus (based on Fedora)
