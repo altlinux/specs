@@ -1,15 +1,15 @@
-%def_without python3
+%def_with python3
 
 Name: sfepy
-Version: 2014.3
-Release: alt1.git20141030
+Version: 2015.1
+Release: alt1.git20150311
 Summary: Simple finite elements in Python (SfePy)
 License: New BSD License
 Group: Sciences/Mathematics
-Url: http://sfepy.kme.zcu.cz/
+Url: http://sfepy.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# git://git.sympy.org/sfepy.git
+# https://github.com/sfepy/sfepy.git
 Source: %name-%version.tar.gz
 Source1: README.1st
 
@@ -32,6 +32,7 @@ BuildPreReq: python3-module-tables-tests python3-module-Cython
 %description
 A finite element analysis software based primarily on NumPy and SciPy.
 
+%if_with python3
 %package py3
 Summary: Simple finite elements in Python (SfePy)
 Group: Sciences/Mathematics
@@ -44,13 +45,14 @@ A finite element analysis software based primarily on NumPy and SciPy.
 Summary: Python module of Simple finite elements (SfePy)
 Group: Development/Python3
 Requires: tetgen gmsh netgen
-%py3_requires matplotlib.backends.backend_wxagg
 %py3_requires pyparsing scikits.umfpack tables IPython
+%add_python3_req_skip vtk
 
 %description -n python3-module-%name
 A finite element analysis software based primarily on NumPy and SciPy.
 
 This package contains python module of SfePy.
+%endif
 
 %package -n python-module-%name
 Summary: Python module of Simple finite elements (SfePy)
@@ -98,6 +100,7 @@ A finite element analysis software based primarily on NumPy and SciPy.
 
 This package contains pickles for SfePy.
 
+%if_with python3
 %package -n python3-module-%name-tests
 Summary: Tests for Simple finite elements in Python (SfePy)
 Group: Development/Python3
@@ -107,6 +110,7 @@ Requires: python3-module-%name = %version-%release
 A finite element analysis software based primarily on NumPy and SciPy.
 
 This package contains tests for SfePy.
+%endif
 
 %package -n python-module-%name-tests
 Summary: Tests for Simple finite elements in Python (SfePy)
@@ -118,6 +122,7 @@ A finite element analysis software based primarily on NumPy and SciPy.
 
 This package contains tests for SfePy.
 
+%if_with python3
 %package -n python3-module-%name-examples
 Summary: Examples for Simple finite elements in Python (SfePy)
 Group: Development/Python3
@@ -127,6 +132,7 @@ Requires: python3-module-%name = %version-%release
 A finite element analysis software based primarily on NumPy and SciPy.
 
 This package contains examples for SfePy.
+%endif
 
 %package -n python-module-%name-examples
 Summary: Examples for Simple finite elements in Python (SfePy)
@@ -159,6 +165,7 @@ sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 
 %build
 export PYTHONPATH=$PWD:$PWD/script
+%add_optflags -fno-strict-aliasing
 export CFLAGS="%optflags"
 xvfb-run --server-args="-screen 0 1024x768x24" \
 	python setup.py build
@@ -270,6 +277,10 @@ cp -fR doc/doc/html %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Thu Mar 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2015.1-alt1.git20150311
+- Version 2015.1
+- Added module for Python 3
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.3-alt1.git20141030
 - Version 2014.3
 
