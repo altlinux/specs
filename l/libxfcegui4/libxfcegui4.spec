@@ -1,6 +1,6 @@
 Name: libxfcegui4
 Version: 4.10.0
-Release: alt4
+Release: alt5
 
 Summary: Various Gtk+2 widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK 2 для Xfce
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4util-devel libxfconf-devel
-BuildRequires: gtk-doc intltool libSM-devel libglade-devel libgladeui-devel libstartup-notification-devel xorg-cf-files
+BuildRequires: gtk-doc intltool libSM-devel libglade-devel libgtk+2-devel libstartup-notification-devel xorg-cf-files
 
 %description
 Various Gtk+2 widgets for Xfce.
@@ -43,9 +43,9 @@ Header files for the %name library.
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
-	--enable-gtk-doc \
+	--disable-gtk-doc \
 	--enable-startup-notification \
-	--enable-gladeui \
+	--disable-gladeui \
 	--enable-debug=no
 %make_build
 
@@ -60,19 +60,17 @@ Header files for the %name library.
 %exclude %_libdir/libglade/2.0/libxfce4.*a
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_liconsdir/*.png
-%_datadir/glade3/catalogs/*.xml
-%exclude %_datadir/glade3/catalogs/*.xml.in
-%_datadir/glade3/pixmaps/*/*/*/*
-%_libdir/glade3/modules/*.so
-%exclude %_libdir/glade3/modules/*.*a
 
 %files devel
 %_includedir/xfce4/*
 %_pkgconfigdir/*.pc
 %_libdir/*.so
-%doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Mar 12 2015 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt5
+- Disable development documentation build.
+- Disable libgladeui support.
+
 * Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt4
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Rebuild with libxfce4util-4.12.
