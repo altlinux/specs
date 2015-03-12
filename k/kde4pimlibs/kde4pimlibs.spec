@@ -6,7 +6,7 @@
 
 %define rname kdepimlibs
 Name: kde4pimlibs
-Version: 4.14.5
+Version: 4.14.6
 Release: alt1
 
 Group: System/Libraries
@@ -416,6 +416,9 @@ mkdir -p %buildroot/%_datadir/akonadi/agents/
 %_K4libdir/libsyndication.so.*
 
 %changelog
+* Wed Mar 11 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.6-alt1
+- new version
+
 * Thu Feb 05 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.5-alt1
 - new version
 
