@@ -20,7 +20,7 @@
 
 %define rname kopete
 Name: kde4-kopete
-Version: 14.12.1
+Version: 14.12.3
 Release: alt1
 
 Group: Networking/Instant messaging
@@ -314,6 +314,12 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Mar 13 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
+- new version
+
+* Fri Mar 13 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt2
+- rebuild with new libmediastreamer
+
 * Wed Jan 28 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
 - new version
 
