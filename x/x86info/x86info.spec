@@ -1,6 +1,6 @@
 Name: x86info
 Version: 1.30
-Release: alt1
+Release: alt1.1
 
 Summary: Displays extended CPU information
 License: GPLv2
@@ -24,6 +24,7 @@ of model-specific registers, discover CPU silicon revisions, and lots more.
 
 %build
 subst 's/-O./%optflags/' Makefile
+sed -i 's|\-Werror||' Makefile
 %make_build x86info
 
 %install
@@ -35,6 +36,9 @@ install -pDm644 x86info.1 %buildroot%_man1dir/x86info.1
 %_man1dir/*
 
 %changelog
+* Fri Mar 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.30-alt1.1
+- Disabled -Werror flag
+
 * Sat Dec 10 2011 Victor Forsiuk <force@altlinux.org> 1.30-alt1
 - 1.30
 
