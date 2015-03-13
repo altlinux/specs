@@ -1,6 +1,6 @@
 Name: xbt
 Version: 0.2.9
-Release: alt1.2.qa1
+Release: alt1.svn20150312
 
 Summary: A BitTorrent tracker written in C++
 
@@ -10,6 +10,7 @@ Url: http://xbtt.sourceforge.net/tracker/
 
 Packager: Ilya Shpigor <elly@altlinux.org>
 
+# http://xbt.googlecode.com/svn/trunk/xbt/
 Source: %name-%version.tar.bz2
 Patch: xbt_tracker_etc_config.patch
 Patch1: xbt_tracker_default_config.patch
@@ -31,11 +32,11 @@ Authors:
 
 %prep
 %setup
-%patch
-%patch1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p2
+#patch
+#patch1
+#patch2 -p1
+#patch3 -p1
+#patch4 -p2
 
 %build
 export CFLAGS="%optflags   -Wall"
@@ -56,6 +57,9 @@ install -D -m 644 Tracker/xbt_tracker.conf.default %buildroot%_sysconfdir/xbt_tr
 #%config %_initrddir/xbt_tracker
 
 %changelog
+* Fri Mar 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.9-alt1.svn20150312
+- Snapshot from svn
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.9-alt1.2.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 
