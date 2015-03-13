@@ -1,6 +1,6 @@
 Name: xbase
 Version: 2.1.1
-Release: alt2
+Release: alt2.1
 
 Summary: Xbase dBase database file library
 
@@ -14,6 +14,7 @@ Source: http://dl.sf.net/xdb/%name-%version.tar
 Patch: %name-2.0.0-gcc4.patch
 Patch1: %name-2.1.1-fix-pld.patch
 Patch2: %name-2.1.1-gcc47.patch
+Patch3: %name-2.1.1-gcc49.patch
 
 # Automatically added by buildreq on Sat Jun 18 2005
 BuildRequires: gcc-c++ libstdc++-devel
@@ -42,6 +43,7 @@ Headers and such for compiling programs that use the Xbase library.
 %patch
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
 
 
 %build
@@ -67,6 +69,9 @@ Headers and such for compiling programs that use the Xbase library.
 %_libdir/libxbase.so
 
 %changelog
+* Fri Mar 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt2.1
+- Fixed build
+
 * Fri Oct 05 2012 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt2
 - fix build with gcc 4.7
 
