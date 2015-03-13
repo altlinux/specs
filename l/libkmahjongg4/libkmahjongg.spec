@@ -2,9 +2,9 @@
 
 %define rname libkmahjongg
 Name: libkmahjongg4
-%define major 4
-%define minor 11
-%define bugfix 1
+%define major 14
+%define minor 12
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -82,6 +82,12 @@ Development files for %name
 
 
 %changelog
+* Fri Mar 13 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt0.M70P.1
+- built for M70P
+
 * Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
