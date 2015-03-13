@@ -1,4 +1,4 @@
-%define ver_major 0.11
+%define ver_major 0.12
 %def_disable static
 
 Name: libwacom
@@ -9,11 +9,12 @@ Summary: A Wacom tablets library
 Group: System/Libraries
 License: BSD-like
 Url: http://linuxwacom.sf.net
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.bz2
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.bz2
+Source: http://downloads.sourceforge.net/linuxwacom/%name/%name-%version.tar.bz2
 
 Requires: %name-data = %version-%release
 
-BuildRequires: glib2-devel libgudev-devel doxygen
+BuildRequires: glib2-devel libgudev-devel libxml2-devel doxygen
 # for check
 BuildRequires: /proc
 
@@ -87,6 +88,9 @@ developing applications that use %name.
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Mar 13 2015 Yuri N. Sedunov <aris@altlinux.org> 0.12-alt1
+- 0.12
+
 * Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
 - 0.11
 
