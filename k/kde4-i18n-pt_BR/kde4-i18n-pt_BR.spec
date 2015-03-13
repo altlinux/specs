@@ -4,7 +4,7 @@
 %define lngg Brazil Portuguese
 
 Name: kde4-i18n-%lng
-Version: 14.12.2
+Version: 14.12.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -95,6 +95,9 @@ fi
 %lang(%lng) %_K4apps/autocorrect/%lng.xml
 
 %changelog
+* Fri Mar 13 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
+- new version
+
 * Thu Feb 05 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.2-alt1
 - new version
 
