@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.26.1
+Version: 0.27
 Release: alt1
 
 BuildArch: noarch
@@ -53,6 +53,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Mar 13 2015 Andrey Cherepanov <cas@altlinux.org> 0.27-alt1
+- Support Active Directory authentication in GUI (ALT #30021)
+
 * Tue Mar 03 2015 Andrey Cherepanov <cas@altlinux.org> 0.26.1-alt1
 - [system-auth] Disable old scheme services only on scheme change
 
