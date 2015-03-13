@@ -3,7 +3,7 @@
 %define oversion 15_0
 
 Name:    iceb
-Version: 15.7
+Version: 15.8
 Release: alt1
 
 Summary: Free financial accounting system (console)
@@ -40,7 +40,7 @@ Free financial accounting system.
 	--disable-static \
 	--with-lang-path=%_datadir/locale \
 	--with-lock-dir=/var/lock/serial \
-	--with-config-path=%_datadir/%name \
+	--with-config-path=%_datadir/%oname \
 	--with-maxfkeys=10 \
 	--with-gnu-ld
 
@@ -59,8 +59,8 @@ mkdir -p $FAKEDIR
 
 rm -rf $FAKEDIR
 
-%makeinstall CONFDIR=%buildroot/%_datadir/%name/iceb -C buhg/bx
-%makeinstall CONFDIR=%buildroot/%_datadir/%name/doc -C buhg/doc
+%makeinstall CONFDIR=%buildroot/%_datadir/%oname/iceb -C buhg/bx
+%makeinstall CONFDIR=%buildroot/%_datadir/%oname/doc -C buhg/doc
 
 mkdir -p %buildroot%_bindir
 install -m 755 %SOURCE1 %buildroot/%_bindir
@@ -71,9 +71,13 @@ rm -rf %buildroot%_libdir/%name/*.{a,la}
 %doc CHANGES TODO
 %_bindir/%name
 %_libdir/%name/bin
-%_datadir/%name
+%_datadir/%oname
 
 %changelog
+* Fri Mar 13 2015 Andrey Cherepanov <cas@altlinux.org> 15.8-alt1
+- new version 15.8
+- move data files to /usr/share/iceB (as hardcoded)
+
 * Wed Mar 04 2015 Andrey Cherepanov <cas@altlinux.org> 15.7-alt1
 - new version 15.7
 
