@@ -1,6 +1,6 @@
 Name: xmds
-Version: 1.6
-Release: alt4
+Version: 1.6.6
+Release: alt1
 
 Summary: xmds - an extensible multi-dimensional simulator for PDEs (Partial Differential Equations) and ODEs
 
@@ -30,30 +30,42 @@ BuildPreReq: libfftw-devel,libfftw3-devel,lam,lam-devel,gcc4.1-c++
  XMDS is a code generator that integrates equations. You write them down in human readable form in an XML file, and it goes away and writes and compiles a C++ program that integrates those equations as fast as it can possibly be done in your architecture.
 
 %prep
-%setup -q
+%setup
+
 %build
-%configure --enable-fftw3 --disable-mpi   
-make
+%remove_optflags -Wtrampolines
+%add_optflags %optflags_shared
+%configure --enable-fftw3 --disable-mpi --enable-threads
+%make_build
+
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 mkdir -p %buildroot/%_docdir/xmds-%version-%release
-cp *.pdf %buildroot/%_docdir/xmds-%version-%release/
+cp AUTHORS ChangeLog NEWS README TODO \
+	%buildroot/%_docdir/xmds-%version-%release/
 mkdir -p %buildroot/%_docdir/xmds-%version-%release/examples
 cp examples/* %buildroot/%_docdir/xmds-%version-%release/examples
+install -p -m755 source/loadxsil.m %buildroot%_bindir/
+
+SRCDIR=$PWD
+pushd %buildroot%_libdir
+g++ -shared -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive \
+	$SRCDIR/source/xsil2graphics.o -o lib%name.so
+popd
 
 %files
-%_docdir/xmds-%version-%release/*
-%_docdir/xmds-%version-%release/examples/*
+%_docdir/xmds-%version-%release
 %_bindir/xmds
 %_bindir/xsil2graphics
 %_bindir/loadxsil.m
-/usr/include/getopt_xmds.h
-/usr/include/xmdscomplex.h
-/usr/include/xmdsconfig.h
+/usr/include/*
 /usr/share/man/man1/*
 %_libdir/lib*.*
 
 %changelog
+* Fri Mar 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.6-alt1
+- Version 1.6.6
+
 * Tue May 03 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.6-alt4
 - fix build
 
