@@ -4,7 +4,7 @@
 %define rname kdepim-runtime
 %define major 4
 %define minor 14
-%define bugfix 5
+%define bugfix 6
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -43,9 +43,9 @@ BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-deve
 BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel
 #BuildRequires: dblatex
 BuildRequires: libkgapi-devel qjson-devel libkfbapi-devel
-
 BuildRequires: kde4libs-devel kde4pimlibs-devel
 BuildRequires: kde4base-workspace-devel
+BuildRequires: libcurl-devel libxerces-c-devel libkolab-devel libkolabxml-devel
 
 %description
 This package contains the Akonadi resources from kdepim which can be used without the applications in kdepim.
@@ -232,6 +232,9 @@ based on kdepim.
 
 
 %changelog
+* Thu Mar 12 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.6-alt1
+- new version
+
 * Fri Feb 06 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.5-alt1
 - new version
 
