@@ -3,7 +3,7 @@
 %define lngg Russian
 
 Name: kde4-i18n-%lng
-Version: 14.12.2
+Version: 14.12.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -26,9 +26,9 @@ BuildRequires: gcc-c++ kde4libs-devel
 
 %prep
 %setup -q -n kde-l10n-%lng-%version -a1
-cp -anrv kde-l10n-%lng-old/* 4/ru/
+cp -anr kde-l10n-%lng-old/* 4/%lng/
 rm -rf kde-l10n-%lng-old 5 CMakeLists.txt
-mv 4/ru/* ./
+mv 4/%lng/* ./
 rm -rf 4
 
 find -type f -name CMakeLists.txt | \
@@ -96,6 +96,9 @@ fi
 %lang(%lng) %_K4apps/autocorrect/%{lng}_*.xml
 
 %changelog
+* Fri Mar 13 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
+- new version
+
 * Wed Feb 04 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.2-alt1
 - new version
 
