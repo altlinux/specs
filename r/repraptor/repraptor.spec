@@ -1,5 +1,5 @@
 Name:		repraptor
-Version:	0.2
+Version:	0.3.5
 Release:	alt1
 Summary:	A Qt RepRap gcode sender/host controller
 
@@ -35,6 +35,9 @@ install -Dm 0755 RepRaptor %buildroot%_bindir/RepRaptor
 %_bindir/RepRaptor
 
 %changelog
+* Fri Mar 13 2015 Andrey Cherepanov <cas@altlinux.org> 0.3.5-alt1
+- New version
+
 * Thu Mar 05 2015 Andrey Cherepanov <cas@altlinux.org> 0.2-alt1
 - Initail build in Sisyphus
 
