@@ -8,7 +8,7 @@
 %define oversion 10_0
 
 Name:    icebw
-Version: 10.7
+Version: 10.8
 Release: alt1
 Summary: Free financial accounting system with GTK interface
 
@@ -20,6 +20,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:  %url/download/%name-%oversion.tar.bz2
 Source1: %name.watch
+Patch1:	 %name-fix-pathes.patch
 
 BuildRequires: gcc-c++ libMySQL-devel libgtk+3-devel
 
@@ -28,6 +29,7 @@ Free financial accounting system.
 
 %prep
 %setup -q -c
+%patch1 -p2
 subst "s|/usr/share/locale/ru/|%buildroot%_datadir/locale/uk/|g" locale/Makefile
 
 %build
@@ -44,6 +46,10 @@ make install install \
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Fri Mar 13 2015 Andrey Cherepanov <cas@altlinux.org> 10.8-alt1
+- new version 10.8
+- fix path to database template in i_admin
+
 * Wed Mar 04 2015 Andrey Cherepanov <cas@altlinux.org> 10.7-alt1
 - new version 10.7
 
