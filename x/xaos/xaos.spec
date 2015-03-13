@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gsl-config /usr/bin/msgmerge /usr/bin/nasm libICE-devel 
 
 Name: xaos
 Version: 3.6
-Release: alt1
+Release: alt1.1
 Summary: A real-time fractal zoomer
 Serial: 1
 
@@ -25,7 +25,7 @@ Provides : XaoS = %version, %name-aalib = %version
 Obsoletes: XaoS, %name-aalib
 
 BuildRequires: aalib-devel imake libICE-devel libXxf86dga-devel zlib-devel  gettext
-BuildRequires: libXxf86vm-devel libgpm-devel libXext-devel libX11-devel libXt-devel libgsl-devel
+BuildRequires: libXxf86vm-devel libgpm-devel libXext-devel libX11-devel libXt-devel libgsl90-devel
 BuildRequires: libncurses-devel libpng12-devel libslang-devel nasm xorg-cf-files libgtk+2-devel libXext-devel
 BuildRequires:	texlive-base-bin
 
@@ -123,6 +123,9 @@ cp %SOURCE1 %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri Mar 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.6-alt1.1
+- Built with libgsl90 instead of libgsl
+
 * Sat Mar 01 2014 Ilya Mashkin <oddity@altlinux.ru> 1:3.6-alt1
 - 3.6
 
