@@ -1,9 +1,9 @@
 Name: libxfce4ui
 Version: 4.12.0
-Release: alt1
+Release: alt2
 
-Summary: Various Gtk+2 widgets for Xfce
-Summary (ru_RU.UTF-8): Набор виджетов GTK 2 для Xfce
+Summary: Various GTK+2 widgets for Xfce
+Summary (ru_RU.UTF-8): Набор виджетов GTK+2 для Xfce
 License: %lgpl2plus
 Group: Graphical desktop/XFce
 Url: http://www.xfce.org/
@@ -18,23 +18,69 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: gtk-doc intltool libSM-devel libgladeui-devel libstartup-notification-devel libxfce4util-devel libxfconf-devel xorg-cf-files
+BuildRequires: libgtk+3-devel
 
-# Due to xfce4-about
-Conflicts: xfce-utils < 4.8.3-alt3
+Requires: %name-common = %version-%release
+
+%define libxfce4kbd_name_gtk2 libxfce4kbd-private-2
+%define libxfce4ui_name_gtk2 %name-1
+%define libxfce4kbd_name_gtk3 libxfce4kbd-private-3
+%define libxfce4ui_name_gtk3 %name-2
 
 %description
-Various Gtk+2 widgets for Xfce.
+Various GTK+2 widgets for Xfce.
 
 %description -l ru_RU.UTF-8
-Набор виджетов GTK 2 для Xfce.
+Набор виджетов GTK+2 для Xfce.
 
 %package devel
-Summary: Development files for %name
+Summary: Development files for %name (GTK+2)
 Group: Development/C
 PreReq: %name = %version-%release
 
 %description devel
-Header files for the %name library.
+Development files for the %name library (GTK+2 variant).
+
+%package devel-doc
+Summary: Development documentation for %name
+Group: Development/Documentation
+Conflicts: %name-devel < %version-%release
+
+%description devel-doc
+This package contains development documentation for %name.
+
+%package common
+Summary: Common files for both variants of %name
+Group: Graphical desktop/XFce
+BuildArch: noarch
+
+%description common
+This package contains the common files for both variants of %name.
+
+%package gtk3
+Summary: Various GTK+3 widgets for Xfce
+Group: Graphical desktop/XFce
+Requires: %name-common = %version-%release
+
+%description gtk3
+Various GTK+3 widgets for Xfce.
+
+%package gtk3-devel
+Summary: Development files for %name (GTK+3)
+Group: Development/C
+PreReq: %name-gtk3 = %version-%release
+
+%description gtk3-devel
+Development files for the %name library (GTK+3 variant).
+
+%package -n xfce4-about
+Summary: Xfce4 'About' dialog
+Group: Graphical desktop/XFce
+# Due to xfce4-about
+Conflicts: xfce-utils < 4.8.3-alt3
+
+%description -n xfce4-about
+This package contains the 'About Xfce' dialog.
 
 %prep
 %setup
@@ -55,27 +101,53 @@ Header files for the %name library.
 %makeinstall_std
 %find_lang %name
 
-%files -f %name.lang
-%doc README NEWS AUTHORS
-%_bindir/*
-%_desktopdir/*.desktop
-%_liconsdir/*
-%_libdir/*.so.*
+%files
+%_libdir/%libxfce4kbd_name_gtk2.so.*
+%_libdir/%libxfce4ui_name_gtk2.so.*
+
+%files devel
+%_includedir/xfce4/%libxfce4kbd_name_gtk2
+%_includedir/xfce4/%libxfce4ui_name_gtk2
+%_pkgconfigdir/%libxfce4kbd_name_gtk2.pc
+%_pkgconfigdir/%libxfce4ui_name_gtk2.pc
+%_libdir/%libxfce4kbd_name_gtk2.so
+%_libdir/%libxfce4ui_name_gtk2.so
 %_datadir/glade3/catalogs/*.xml
 %exclude %_datadir/glade3/catalogs/*.xml.in
 %_datadir/glade3/pixmaps/*/*/*/*
 %_libdir/glade3/modules/*.so
-%config(noreplace) %_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml/*.xml
 %exclude %_libdir/glade3/modules/*.la
 
-%files devel
-%_includedir/xfce4/libxfce4kbd-private-2
-%_includedir/xfce4/libxfce4ui-1
-%_pkgconfigdir/*.pc
-%_libdir/*.so
+%files devel-doc
 %doc %_datadir/gtk-doc/html/%name
 
+%files common -f %name.lang
+%doc README NEWS AUTHORS
+%_liconsdir/*
+%config(noreplace) %_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml/*.xml
+
+%files gtk3
+%_libdir/%libxfce4kbd_name_gtk3.so.*
+%_libdir/%libxfce4ui_name_gtk3.so.*
+
+%files gtk3-devel
+%_includedir/xfce4/%libxfce4kbd_name_gtk3
+%_includedir/xfce4/%libxfce4ui_name_gtk3
+%_pkgconfigdir/%libxfce4kbd_name_gtk3.pc
+%_pkgconfigdir/%libxfce4ui_name_gtk3.pc
+%_libdir/%libxfce4kbd_name_gtk3.so
+%_libdir/%libxfce4ui_name_gtk3.so
+
+%files -n xfce4-about
+%_bindir/xfce4-about
+%_desktopdir/xfce4-about.desktop
+
 %changelog
+* Thu Mar 12 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt2
+- Package GTK+3 variant of the libraries.
+- Move libgladeui stuff to the libxfce4ui-devel subpackage.
+- Move xfce4-about to the separate subpackage.
+
 * Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt1
 - Updated to 4.12.0.
 
