@@ -1,8 +1,8 @@
 %define wxbranch 3.0
 
 Name: wxGTK3.0
-Version: %wxbranch.0
-Release: alt2.svn20131118
+Version: %wxbranch.3
+Release: alt1.git20150312
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -11,19 +11,22 @@ Url: http://wxwidgets.org
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/wxWidgets/wxWidgets.git
+# branch: WX_3_0_BRANCH
 Source: %name-%version.tar
 Source2: ld_shared_wrapper.pl
 
 # Automatically added by buildreq on Wed Dec 10 2008
 BuildRequires: gcc-c++ libGL-devel libSDL-devel libSM-devel
 BuildRequires: libXinerama-devel libesd-devel libexpat-devel
-BuildRequires: libjpeg-devel libtiff-devel libgtk+2-devel
+BuildRequires: libjpeg-devel libtiff-devel libgtk+3-devel
 
 BuildPreReq: xorg-xextproto-devel xorg-inputproto-devel libXtst-devel
 BuildPreReq: rpm-build-java libXxf86vm-devel libbfd-devel
-BuildPreReq: libstdc++-devel gstreamer-devel gst-plugins-devel
+BuildPreReq: libstdc++-devel gstreamer-devel
 BuildPreReq: libGConf-devel gst-plugins-devel libpng-devel
-BuildPreReq: libnotify-devel libwebkitgtk2-devel
+BuildPreReq: libnotify-devel libwebkitgtk3-devel
+BuildPreReq: libmspack-devel
 
 %description
 wxWidgets is a free C++ library for cross-platform GUI development.
@@ -72,7 +75,7 @@ CONF_FLAG="--enable-shared --without-debug_flag --without-debug_info"
 GST_CFLAGS="$(pkg-config --cflags gstreamer-0.10)"
 export LIBS="-lX11"
 DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
-%add_optflags -fno-strict-aliasing $GST_CFLAGS $DEFS
+%add_optflags -fno-strict-aliasing -std=gnu++11 $GST_CFLAGS $DEFS
 %configure $CONF_FLAG \
 	--with-sdl \
 	--enable-unicode \
@@ -86,7 +89,8 @@ DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
 	--enable-plugins \
 	--enable-precomp-headers=yes \
 	--enable-compat26 \
-	--enable-gtk2=yes \
+	--enable-compat28 \
+	--with-gtk=3 \
 	--enable-sound \
 	--enable-soname \
 	--enable-mediactrl \
@@ -96,7 +100,12 @@ DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
 	--without-gnomeprint \
 	--enable-graphics_ctx \
 	--enable-utf8=yes \
-	--enable-utf8only=no
+	--enable-utf8only=no \
+	--with-libmspack \
+	--enable-stl \
+	--enable-std_containers \
+	--enable-std_string_conv_in_wxstring \
+	--enable-ipv6
 
 %make_build SHARED_LD_CXX='perl %SOURCE2 $(CXX) -shared -fPIC -g -o'
 
@@ -115,9 +124,9 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_libdir/*.so.*
 
 %files -n lib%name-devel
-%_libdir/wx/config/gtk2-unicode-%wxbranch
-%dir %_libdir/wx/include/gtk2-unicode-%wxbranch
-%_libdir/wx/include/gtk2-unicode-%wxbranch/wx
+%_libdir/wx/config/gtk3-unicode-%wxbranch
+%dir %_libdir/wx/include/gtk3-unicode-%wxbranch
+%_libdir/wx/include/gtk3-unicode-%wxbranch/wx
 %doc docs/*
 %dir %_datadir/bakefile
 %_datadir/bakefile/*
@@ -131,6 +140,10 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sat Mar 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt1.git20150312
+- Version 3.0.3
+- Built with gtk3 instead of gtk2
+
 * Wed Dec 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt2.svn20131118
 - Added missing headers
 
