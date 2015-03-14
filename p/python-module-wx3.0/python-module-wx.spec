@@ -1,5 +1,6 @@
 %define origname wxPython-src
 %define major 3.0
+%define libmajor 3.0
 %define wxdir wx-%major-gtk2
 %define oname wx%major
 
@@ -7,8 +8,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: %major.2.0
-Release: alt1.svn20141127
+Version: %major.3.0
+Release: alt1.git20150311
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -21,7 +22,7 @@ Url: http://www.wxpython.org/
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://svn.wxwidgets.org/svn/wx/wxPython/trunk/
+# https://github.com/wxWidgets/wxPython.git
 Source: %origname-%version.tar.bz2
 
 # http://svn.wxwidgets.org/svn/wx/wxPython/3rdParty/
@@ -46,7 +47,7 @@ BuildRequires(pre): rpm-build-python
 
 # Automatically added by buildreq on Tue Sep 15 2009
 BuildRequires: gcc-c++ libgtk+2-devel python-devel python-module-libxml2
-BuildPreReq: libwxGTK3.0-devel
+BuildPreReq: libwxGTK%libmajor-devel
 BuildPreReq: libGL-devel libGLU-devel
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: libGConf-devel gst-plugins-devel swig
@@ -58,7 +59,7 @@ BuildPreReq: python3-module-distribute python-tools-2to3
 %endif
 
 AutoReq: yes, noperl
-Requires: libwxGTK3.0
+Requires: libwxGTK%libmajor
 Provides: python-module-wx = %version-%release
 
 %add_python_req_skip comtypes floatcanvas lib_setup clip_dndc cmndlgsc controls2c controlsc eventsc filesysc fontsc framesc gdic htmlhelpc imagec mdic misc2c miscc oglbasicc oglcanvasc oglshapes2c oglshapesc printfwc sizersc stattoolc streamsc utilsc windows2c windows3c windowsc xmlrpcserver __version__ _controls _gdi _misc _windows numpy
@@ -81,7 +82,7 @@ AutoReq: yes, noperl
 %py3_provides wx
 %py3_provides wxPython
 Provides: python3-module-wx = %version-%release
-Requires: libwxGTK3.0
+Requires: libwxGTK3.3
 %add_python3_req_skip comtypes floatcanvas lib_setup clip_dndc cmndlgsc controls2c controlsc eventsc filesysc fontsc framesc gdic htmlhelpc imagec mdic misc2c miscc oglbasicc oglcanvasc oglshapes2c oglshapesc printfwc sizersc stattoolc streamsc utilsc windows2c windows3c windowsc xmlrpcserver __version__ _controls _gdi _misc _windows numpy
 
 %description -n python3-module-%oname
@@ -163,7 +164,9 @@ This package contains demo programs files for wxPythonGTK
 %prep
 %setup -n %origname-%version
 
-rm -f src/gtk/richtext_wrap.cpp
+rm -fR src/gtk/*.cpp src/{msw,osx_carbon,osx_cocoa}
+mkdir tmp
+mv src/gtk/*.py tmp/
 
 # We do not need to refresh these files
 subst "s|'preamble.txt', 'licence.txt', 'licendoc.txt', 'lgpl.txt'||" \
@@ -190,7 +193,7 @@ do
 	touch wx/$i/__init__.py
 done
 
-sed -i 's|@VER@|%major|' config.py
+sed -i 's|@VER@|%libmajor|' config.py
 
 %if_with python3
 rm -rf ../python3
@@ -198,8 +201,7 @@ cp -a . ../python3
 %endif
 
 %build
-INCS="-I%_includedir/wx-%major"
-INCS="$INCS -I%_libdir/wx/include/gtk2-unicode-%major"
+INCS="$(wx-config --cflags)"
 %add_optflags -fno-strict-aliasing -fpermissive -std=gnu++11 $INCS
 
 %python_build_debug \
@@ -219,8 +221,13 @@ INCS="$INCS -I%_libdir/wx/include/gtk2-unicode-%major"
 %if_with python3
 pushd ../python3
 for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
 	sed -i 's|os\.path\.walk|os.walk|g' $i
+done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+for i in src/*.i src/*.cpp $(find ./ -name '*.h')
+do
+	sed -i 's|PyInt_AsLong|PyLong_AsLong|g' $i
+	sed -i 's|PyInt_FromLong|PyLong_FromLong|g' $i
 done
 
 %define optflags %optflags_default
@@ -275,12 +282,12 @@ done
 popd
 # has error
 rm -f \
-	%buildroot%python3_sitelibdir/%wxdir/wx/tools/Editra/tests/syntax/python.python
+	%buildroot%python3_sitelibdir/wx/tools/Editra/tests/syntax/python.python
 
-cp -fR tests %buildroot%python3_sitelibdir/%wxdir/wx/
-touch %buildroot%python3_sitelibdir/%wxdir/wx/tests/__init__.py
+cp -fR tests %buildroot%python3_sitelibdir/wx/
+touch %buildroot%python3_sitelibdir/wx/tests/__init__.py
 rm -f \
-	%buildroot%python3_sitelibdir/%wxdir/wx/tools/Editra/tests/syntax/perl.pl
+	%buildroot%python3_sitelibdir/wx/tools/Editra/tests/syntax/perl.pl
 popd
 
 for i in $(find %buildroot%_includedir -type f); do
@@ -294,17 +301,21 @@ mv %buildroot%_includedir/wx-%major/wx/wxPython \
 %python_build_install
 
 %define pythonsite %buildroot%python_sitelibdir_noarch
-%ifarch x86_64
-mv %pythonsite/wx.pth %pythonsite/*.egg-info %pythonsite/wxversion.py* \
-	%buildroot%python_sitelibdir
+#ifarch x86_64
+#mv %pythonsite/wx.pth %pythonsite/*.egg-info %pythonsite/wxversion.py* \
+#	%buildroot%python_sitelibdir
 #mv %pythonsite/wxaddons/ %buildroot%python_sitelibdir
-%endif
+#endif
+
+#sed -i 's|.*\(if self.Rows == 0 and self.Cols == 0:\)|        \1|' \
+#	%buildroot%python_sitelibdir/wx/_core.py
+cp -f tmp/*.py %buildroot%python_sitelibdir/wx/
 
 mkdir -p %buildroot%_bindir
 cp -a scripts/{img2png,img2py,img2xpm,pycrust,pyshell,xrced} %buildroot%_bindir
 # has error
 rm -f \
-	%buildroot%python_sitelibdir/%wxdir/wx/tools/Editra/tests/syntax/python.python
+	%buildroot%python_sitelibdir/wx/tools/Editra/tests/syntax/python.python
 
 %if_enabled docs
 # docs
@@ -318,10 +329,10 @@ cp -fR pickle %buildroot%python_sitelibdir/wx%major/
 
 # tests
 
-cp -fR tests %buildroot%python_sitelibdir/%wxdir/wx/
-touch %buildroot%python_sitelibdir/%wxdir/wx/tests/__init__.py
+cp -fR tests %buildroot%python_sitelibdir/wx/
+touch %buildroot%python_sitelibdir/wx/tests/__init__.py
 rm -f \
-	%buildroot%python_sitelibdir/%wxdir/wx/tools/Editra/tests/syntax/perl.pl
+	%buildroot%python_sitelibdir/wx/tools/Editra/tests/syntax/perl.pl
 
 %postun
 # remove old entries
@@ -334,8 +345,8 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %exclude %_bindir/py3_*
 %endif
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/*/tests
-%exclude %python_sitelibdir/*/*/*/*/tests
+%exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/*/*/tests
 %if_enabled docs
 %exclude %python_sitelibdir/wx%major/pickle
 %doc docs/{README.txt,CHANGES.txt}
@@ -345,15 +356,15 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %files -n python3-module-%oname
 %_bindir/py3_*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*/tests
-%exclude %python3_sitelibdir/*/*/*/*/tests
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/*/tests
 
 %files -n python3-module-%oname-devel
 %_includedir/wx-*/wx/wxPython3
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*/tests
-%python3_sitelibdir/*/*/*/*/tests
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/*/tests
 %endif
 
 %files devel
@@ -363,8 +374,8 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %doc demo
 
 %files tests
-%python_sitelibdir/*/*/tests
-%python_sitelibdir/*/*/*/*/tests
+%python_sitelibdir/*/tests
+%python_sitelibdir/*/*/*/tests
 
 %if_enabled docs
 %files docs
@@ -376,6 +387,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Sat Mar 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3.0-alt1.git20150311
+- Version 3.0.3.0
+
 * Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2.0-alt1.svn20141127
 - Version 3.0.2.0
 
