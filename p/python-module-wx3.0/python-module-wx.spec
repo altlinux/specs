@@ -1,7 +1,7 @@
 %define origname wxPython-src
 %define major 3.0
 %define libmajor 3.0
-%define wxdir wx-%major-gtk2
+%define wxdir wx-%major-gtk3
 %define oname wx%major
 
 %def_enable docs
@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.3.0
-Release: alt1.git20150311
+Release: alt2.git20150311
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -46,7 +46,7 @@ Conflicts: python-module-wx < %version-%release
 BuildRequires(pre): rpm-build-python
 
 # Automatically added by buildreq on Tue Sep 15 2009
-BuildRequires: gcc-c++ libgtk+2-devel python-devel python-module-libxml2
+BuildRequires: gcc-c++ libgtk+3-devel python-devel python-module-libxml2
 BuildPreReq: libwxGTK%libmajor-devel
 BuildPreReq: libGL-devel libGLU-devel
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
@@ -206,7 +206,7 @@ INCS="$(wx-config --cflags)"
 
 %python_build_debug \
 	NO_SCRIPTS=1 \
-	WXPORT=gtk2 \
+	WXPORT=gtk3 \
 	UNICODE=1 \
 %if_enabled glcanvas
 	BUILD_GLCANVAS=1 \
@@ -238,7 +238,7 @@ unset FFLAGS
 
 %python3_build_debug \
 	NO_SCRIPTS=1 \
-	WXPORT=gtk2 \
+	WXPORT=gtk3 \
 	UNICODE=1 \
 %if_enabled glcanvas
 	BUILD_GLCANVAS=1 \
@@ -263,7 +263,8 @@ pushd ../python3
 %add_optflags -fno-strict-aliasing
 %python3_build_install
 
-mv %buildroot%_includedir/wx-%major/wx/wxPython \
+install -d %buildroot%_includedir/wx-%major/wx
+mv %buildroot/include/wx-%major/wx/wxPython \
 	%buildroot%_includedir/wx-%major/wx/wxPython3
 
 %define pythonsite %buildroot%python3_sitelibdir_noarch
@@ -299,6 +300,8 @@ mv %buildroot%_includedir/wx-%major/wx/wxPython \
 
 %add_optflags -fno-strict-aliasing
 %python_build_install
+
+mv %buildroot/include %buildroot%prefix/
 
 %define pythonsite %buildroot%python_sitelibdir_noarch
 #ifarch x86_64
@@ -387,6 +390,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Sat Mar 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3.0-alt2.git20150311
+- Rebuilt with new wxGTK3.0
+
 * Sat Mar 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3.0-alt1.git20150311
 - Version 3.0.3.0
 
