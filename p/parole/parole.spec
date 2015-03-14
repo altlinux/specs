@@ -1,6 +1,6 @@
 Name: parole
-Version: 0.5.4
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 # '1' for gstreamer-1.0
 # '0' or undefined for gstreamer-0.10
@@ -9,6 +9,8 @@ Release: alt2
 %else
 %define gstreamer1 0
 %endif
+
+%def_enable clutter
 
 Summary: Media player for the Xfce desktop
 License: %gpl2plus
@@ -23,14 +25,15 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4ui-devel libxfce4util-devel libexo-devel libxfconf-devel
-BuildRequires: libgtk+2-devel libnotify-devel libtag-devel
+BuildPreReq: libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
+BuildRequires: libgtk+3-devel libnotify-devel libtag-devel
 %if %{?gstreamer1}%{!?gstreamer1:0}
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 %else
 BuildRequires: gstreamer-devel gst-plugins-devel
 %endif
 BuildRequires: libdbus-glib-devel libdbus-devel
+%{?_enable_clutter:BuildRequires: libclutter-devel libclutter-gtk3-devel}
 BuildRequires: intltool gtk-doc
 
 %if %{?gstreamer1}%{!?gstreamer1:0}
@@ -73,6 +76,7 @@ mkdir m4
 %else
     --with-gstreamer=0.10 \
 %endif
+	%{subst_enable clutter} \
     --enable-gtk-doc \
     --enable-debug=no
 %make_build
@@ -87,6 +91,7 @@ mkdir m4
 %_libdir/%name-*/
 %exclude %_libdir/%name-*/*.la
 %_desktopdir/*.desktop
+%_datadir/appdata/%name.appdata.xml
 %_iconsdir/hicolor/*/apps/*
 %_datadir/%name/
 
@@ -95,6 +100,10 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Mar 13 2015 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
+- Enable clutter support.
+- Updated to 0.8.0.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt2
 - Rebuild with libxfce4util-4.12.
 
