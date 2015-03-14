@@ -1,20 +1,21 @@
-%define ver_major 0.4
+%define ver_major 0.6
 %define api_ver 1.0
 
 Name: gcab
 Version: %ver_major
-Release: alt1
+Release: alt0.1
 
 Summary: M$ Cabinet archive tool
 Group: File tools
 License: LGPLv2+
-Url: http://ftp.gnome.org/pub/GNOME/sources/gcab
+Url: http://ftp.gnome.org/pub/gnome/sources/gcab
 
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 
-BuildRequires: intltool vala-tools glib2-devel
+BuildRequires: intltool gtk-doc vala-tools glib2-devel
 BuildRequires: gobject-introspection-devel zlib-devel
 
 %description
@@ -71,9 +72,12 @@ GObject introspection devel data for the gcab library
 %setup
 
 %build
+%autoreconf
 %configure \
-	--disable-static
-%make_build
+	--disable-static \
+	--enable-gtk-doc \
+	--enable-fast-install
+%make_build VERSION=%version
 
 %install
 %makeinstall_std
@@ -91,7 +95,7 @@ GObject introspection devel data for the gcab library
 %files -n lib%name-devel
 %_includedir/lib%name-%api_ver/
 %_libdir/lib%name-%api_ver.so
-%_libdir/pkgconfig/lib%name-%api_ver.pc
+%_pkgconfigdir/lib%name-%api_ver.pc
 %_vapidir/lib%name-%api_ver.vapi
 
 %files -n lib%name-devel-doc
@@ -104,6 +108,12 @@ GObject introspection devel data for the gcab library
 %_girdir/GCab-%api_ver.gir
 
 %changelog
+* Sat Mar 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt0.1
+- 0.6 snapshot
+
+* Mon Mar 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
+- 0.5
+
 * Sun Feb 24 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1
 - first build for Sisyphus
 

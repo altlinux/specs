@@ -4,7 +4,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -22,7 +22,7 @@ BuildRequires: libarchive-devel libsoup-devel libgdk-pixbuf-devel
 BuildRequires: libpango-devel libsqlite3-devel
 BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel
 BuildRequires: gtk-doc docbook-utils docbook-dtds
-BuildRequires: libyaml-devel gperf
+BuildRequires: libyaml-devel gcab gperf
 %{?_enable_rpm:BuildRequires: librpm-devel}
 
 %description
@@ -186,6 +186,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Sat Mar 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
+- 0.3.5
+
 * Tue Jan 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
