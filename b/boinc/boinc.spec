@@ -1,6 +1,6 @@
 Name:		boinc
 Version: 7.4.42
-Release: alt1
+Release: alt1.1
 Packager:	Paul Wolneykien <manowar@altlinux.ru>
 License:	GPLv3+/LGPLv3+
 Group:		Sciences/Other
@@ -28,12 +28,16 @@ Patch19:	install-py.patch
 Patch21:	make_clientgui_resources.patch
 #Patch22:	refactor_sched_vda.patch
 Patch23:	install_appmgr.patch
+Patch24:  boinc-7.0.31-alt-glibc-2.16.patch
+
+Patch25: boinc-7.4.42-alt-wxGTK3.1.patch
+Patch26: boinc-7.4.42-alt-gtk3.patch
 
 # Use def_with server to enable it
 %def_without server
 
-BuildRequires: docbook-dtds docbook2X gcc-c++ gcc-fortran libGL-devel libMySQL-devel libSM-devel libXi-devel libXmu-devel libcurl-devel libfreeglut-devel libjpeg-devel libsqlite3-devel libstdc++-devel-static python-devel xsltproc libssl-devel zlib-devel libgtk+2-devel libnotify-devel
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: docbook-dtds docbook2X gcc-c++ gcc-fortran libGL-devel libMySQL-devel libSM-devel libXi-devel libXmu-devel libcurl-devel libfreeglut-devel libjpeg-devel libsqlite3-devel libstdc++-devel-static python-devel xsltproc libssl-devel zlib-devel libgtk+3-devel libnotify-devel
+BuildRequires: libwxGTK3.1-devel
 
 %description
 The Berkeley Open Infrastructure for Network Computing (BOINC) is an open-
@@ -222,6 +226,9 @@ This package contains a set of server libraires of the BOINC software.
 %patch21 -p2
 #%patch22 -p2
 %patch23 -p2
+%patch24 -p2
+%patch25 -p0
+%patch26 -p0
 
 # Do not use /usr/bin/env in PHP scripts.
 grep -rHsl -m 1 -e 'bin/env' html/* |
@@ -265,7 +272,7 @@ esac
 %endif
     --enable-unicode \
     --with-ssl
-%make
+%make V=1
 
 # Generate binary message catalogs of the BOINC Manager.
 #	for i in `ls locale/client`; do \
@@ -498,6 +505,9 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 
 
 %changelog
+* Sat Mar 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.4.42-alt1.1
+- Rebuilt with wxGTK3.1 (instead of wxGTK3.0) & gtk+3 (instead of gtk+2)
+
 * Wed Mar 11 2015 Cronbuild Service <cronbuild@altlinux.org> 7.4.42-alt1
 - Fresh up to v7.4.42 with the help of cronbuild and update-source-functions.
 
