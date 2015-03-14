@@ -2,8 +2,8 @@
 %define svn _rev730
 
 Name: sK1
-Version: 0.9.1
-Release: alt2.2
+Version: 0.9.3
+Release: alt1
 
 Summary: Vector graphics editor
 
@@ -15,7 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # svn co https://sk1.svn.sourceforge.net/svnroot/sk1/trunk/sK1 sK1
 #Source: %name-%version.tar.bz2
-Source: http://sk1project.org/downloads/sk1/0.9.0/sk1-%version%pre%svn.tar.gz
+Source: http://sk1project.org/downloads/sk1/0.9.0/sk1-%version.tar.gz
 Source1: %name.desktop
 #Patch: %name.patch
 
@@ -23,11 +23,13 @@ Source1: %name.desktop
 %add_python_req_skip Sketch _sketch pax
 
 # Automatically added by buildreq on Sun May 17 2009
-BuildRequires: libcairo-devel liblcms-devel python-devel tk-devel zlib-devel
+BuildRequires: libcairo-devel python-devel tk-devel zlib-devel
 
-BuildPreReq: libXext-devel
+BuildPreReq: libXext-devel python-module-Pillow-devel libXcursor-devel
+BuildPreReq: python-module-pycairo-devel liblcms2-devel
 
-Requires: zenity python-module-lcms python-module-imaging
+Requires: zenity
+%py_requires lcms PIL cairo
 
 %description
 sK1 is an open source vector graphics editor similar to CorelDRAW,
@@ -35,8 +37,13 @@ Adobe Illustrator, or Freehand.
 First of all sK1 is oriented for PostScript processing.
 
 %prep
-%setup -n %name-%version%pre
+%setup -n %name-%version
 #%patch
+
+%ifarch x86_64
+LIBSUFF=64
+%endif
+sed -i "s|@64@|$LIBSUFF|" src/script/sk1 setup.py
 
 %build
 %python_build
@@ -60,9 +67,13 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %files
 %_bindir/sk1
 %_desktopdir/%name.desktop
-%python_sitelibdir/sk1/
+%_libdir/sk1*
+%_pixmapsdir/*
 
 %changelog
+* Sat Mar 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1
+- Version 0.9.3 (ALT #15513)
+
 * Fri Jul 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt2.2
 - Rebuilt
 
