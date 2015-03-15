@@ -1,6 +1,6 @@
 Name: gperiodic
-Version: 2.0.10
-Release: alt4.qa1
+Version: 3.0.0
+Release: alt1
 
 Summary: Program for browsing the periodic table
 License: GPL
@@ -9,12 +9,11 @@ Group: Sciences/Chemistry
 Url: http://www.frantz.fi/software/gperiodic.php
 Source0: http://www.frantz.fi/software/%name-%version.tar.gz
 Source1: gperiodic.1
-Patch0: 11_remove_DEPRECATED_flags_for_GTK_2_4.dpatch
-Patch1: 12_fix_desktop_file.dpatch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Sat Jun 30 2007
-BuildRequires: libgtk+2-devel
+# Automatically added by buildreq on Sat Mar 14 2015
+# optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server perl-Encode pkg-config
+BuildRequires: intltool libgtk+2-devel
 
 %description
 Gperiodic displays a periodic table of the elements, allowing you to
@@ -22,29 +21,30 @@ browse through the elements, and view detailed information about each
 element.
 
 %prep
-%setup -q -n gperiodic-%version
-%patch0 -p1
-%patch1 -p1
+%setup
 
 %build
 %make
 
 %install
-mkdir -p %buildroot{%_bindir,%_desktopdir,%_pixmapsdir}
-%makeinstall
-mkdir -p %buildroot%_man1dir/
-install -p -m644 %SOURCE1 %buildroot%_man1dir/
+#mkdir -p %buildroot{%_bindir,%_desktopdir,%_pixmapsdir,%_man1dir}
+%makeinstall_std
+install -pDm644 %SOURCE1 %buildroot%_man1dir/
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
 %_man1dir/*
-%_desktopdir/%name.desktop
-%_pixmapsdir/%name.png
-%_pixmapsdir/gperiodic-crystal.png
-%doc README NEWS AUTHORS ChangeLog gpl.txt
+%_desktopdir/*
+%_pixmapsdir/*
+%_iconsdir/*/*/*/*
+%doc README AUTHORS ChangeLog gpl.txt
 
 %changelog
+* Sun Mar 15 2015 Michael Shigorin <mike@altlinux.org> 3.0.0-alt1
+- 3.0.0
+- dropped patches, hooray!
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.10-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
