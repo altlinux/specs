@@ -39,7 +39,7 @@
 
 %def_with docs
 %def_with examples
-%def_enable pdf
+%def_disable pdf
 %def_enable testing
 
 %define icons_sizes 16 22 24 32 48 64 128
@@ -56,7 +56,7 @@ Name: alsaplayer
 %define lname lib%name
 Version: 0.99.80
 %define prerel %nil
-Release: alt11.2
+Release: alt11.3
 Summary: Advanced Linux Sound Architecture (ALSA) player
 Summary(ru_RU.CP1251): Проигрыватель для ALSA
 Group: Sound
@@ -848,6 +848,9 @@ subst '/^[^%%]/s|^.*/\([[:lower:]][[:lower:]]_[[:upper:]][[:upper:]]\)/.*$|%%lan
 
 
 %changelog
+* Sun Mar 08 2015 Michael Shigorin <mike@altlinux.org> 0.99.80-alt11.3
+- fixed FTBFS (by disabling PDF build)
+
 * Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.99.80-alt11.2
 - Rebuilt with new audiofile
 
