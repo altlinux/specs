@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.9.0
-Release: alt2
+Version: 1.10.1
+Release: alt1
 Summary: A simple, Pythonic tool for remote execution and deployment
 License: BSD
 Group: Development/Python
@@ -25,6 +25,7 @@ BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
+%py_requires paramiko
 
 %description
 Fabric is a Python (2.5-2.7) library and command-line tool for
@@ -39,6 +40,7 @@ for input, or aborting execution.
 %package -n python3-module-%oname
 Summary: A simple, Pythonic tool for remote execution and deployment
 Group: Development/Python3
+%py3_requires paramiko
 
 %description -n python3-module-%oname
 Fabric is a Python (2.5-2.7) library and command-line tool for
@@ -121,6 +123,9 @@ mv %buildroot%_bindir/fab %buildroot%_bindir/fab.py3
 %endif
 
 %changelog
+* Sun Mar 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.1-alt1
+- Version 1.10.1
+
 * Sun Jul 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt2
 - Added module for Python 3
 
