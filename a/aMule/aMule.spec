@@ -2,7 +2,7 @@
 %define		_rc	rc8
 Name:		aMule
 Version:	2.3.1
-Release:	alt2
+Release:	alt2.1
 
 Summary:	aMule - eMule client.
 License:	GPL
@@ -16,9 +16,10 @@ Source:		%name-%version.tar.bz2
 Conflicts:	xmule
 
 Patch2:		%name-2.0.0%_rc-alt-up-down-ratio.patch
+Patch3:		%name-2.3.1-alt-wxGTK3.1-gcc4.9.patch
 
 # Automatically added by buildreq on Mon Jun 16 2008
-BuildRequires: flex gcc4.5 gcc4.5-c++ imake libcryptopp-devel libpng-devel libreadline-devel libwxGTK2.9-devel xorg-cf-files
+BuildRequires: flex gcc gcc-c++ imake libcryptopp-devel libpng-devel libreadline-devel libwxGTK3.1-devel xorg-cf-files
 BuildRequires: libupnp-devel
 
 #BuildRequires: rpm-build-compat >= 0.95
@@ -38,10 +39,11 @@ for multiplatform support.
 %__subst "s,#include <wx/strconv\.h>,#include <wx/strconv\.h>\n#include <wx/intl\.h>," src/utils/aLinkCreator/src/alcc.h
 %__subst "s,#include <wx/strconv\.h>,#include <wx/strconv\.h>\n#include <wx/intl\.h>," src/utils/aLinkCreator/src/ed2khash.cpp
 #patch2 -p1
+%patch3 -p0
 
 
 %build
-export CC=gcc-4.5 CXX=g++-4.5
+#export CC=gcc-4.5 CXX=g++-4.5
 
 %configure 	--enable-amulecmd \
 		--enable-amulecmdgui \
@@ -76,6 +78,9 @@ export CC=gcc-4.5 CXX=g++-4.5
 %dir %_docdir/amule
 
 %changelog
+* Sun Mar 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.1-alt2.1
+- Rebuilt with wxGTK3.1
+
 * Tue Oct 30 2012 Ilya Mashkin <oddity@altlinux.ru> 2.3.1-alt2
 - fix build
 
