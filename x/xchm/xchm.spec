@@ -1,6 +1,6 @@
 Name: xchm
-Version: 1.20
-Release: alt1.3
+Version: 1.23
+Release: alt1
 
 Summary: xCHM - the CHM viewer for UNIX
 License: GPLv2+
@@ -13,7 +13,8 @@ Packager: Victor Forsiuk <force@altlinux.org>
 
 # Automatically added by buildreq on Wed Apr 27 2011
 # optimized out: fontconfig libgdk-pixbuf libstdc++-devel xz
-BuildRequires: gcc-c++ libchm-devel libwxGTK2.9-devel
+BuildRequires: gcc-c++ libchm-devel libwxGTK3.1-devel
+BuildPreReq: libxmlrpcxx-devel libssl-devel
 
 %description
 xCHM - the CHM files viewer for UNIX.
@@ -23,7 +24,10 @@ xCHM - the CHM files viewer for UNIX.
 
 %build
 %autoreconf
-%configure
+%configure \
+	--enable-debug \
+	--enable-optimize \
+	--enable-xmlrpc
 %make_build
 
 %install
@@ -44,8 +48,12 @@ install -pD -m644 art/xchm-48.xpm %buildroot%_liconsdir/xchm.xpm
 %_liconsdir/*
 
 %changelog
+* Sun Mar 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.23-alt1
+- Version 1.23
+- Built with wxGTK3.1 instead of wxGTK2.9
+
 * Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.20-alt1.3
-- Rebuilt with wxGKT2.9 2.9.5
+- Rebuilt with wxGTK2.9 2.9.5
 
 * Fri May 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.20-alt1.2
 - Rebuilt with new wxGTK 2.9
