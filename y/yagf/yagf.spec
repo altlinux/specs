@@ -1,7 +1,7 @@
 %define  snapshot %nil
 
 Name:    yagf
-Version: 0.9.4.3
+Version: 0.9.5
 Release: alt1
 
 Summary: YAGF is a graphical front-end for cuneiform and tesseract OCR tools
@@ -9,10 +9,9 @@ Summary(ru_RU.UTF-8): Оболочка YAGF предоставляет граф�
 License: GPLv3+
 Group:   Office
 URL:     http://symmetrica.net/cuneiform-linux/yagf-ru.html
-# VCS URL: https://code.google.com/p/yagf/
+# VCS URL: git://git.code.sf.net/p/yagf-ocr/code
 
 Source:  %{name}-%{version}.tar
-Patch:	 %{name}-%{version}.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libqt4-devel
@@ -46,8 +45,9 @@ the online help for more details).
 
 %prep
 %setup -q
-%patch -p1
 subst "s,/usr/local,%buildroot/usr/,g" ./CMakeLists.txt
+# Substitute missing align.png resource
+cp -a src/images/{A,a}lign.png
 
 %build
 %cmake
@@ -66,9 +66,11 @@ subst "s,/usr/local,%buildroot/usr/,g" ./CMakeLists.txt
 %_desktopdir/YAGF.desktop
 
 %changelog
+* Sun Mar 15 2015 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt1
+- New version
+
 * Tue Sep 02 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.4.3-alt1
 - New version
-- Do not clean data to prevent program crash (ALT #30403)
 
 * Thu Aug 07 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1.gitbbe6842
 - New version
