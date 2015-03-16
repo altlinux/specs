@@ -1,6 +1,6 @@
 Name: xfce4-eyes-plugin
-Version: 4.4.3
-Release: alt2
+Version: 4.4.4
+Release: alt1
 
 Summary: Eyes plugin for Xfce Desktop
 License: %gpl2plus
@@ -27,7 +27,6 @@ Scary!
 %prep
 %setup
 %patch -p1
-mkdir m4/
 
 # Don't use git tag in version.
 %xfce4_drop_gitvtag eyes_version_tag configure.ac.in
@@ -52,6 +51,9 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Mar 16 2015 Mikhail Efremov <sem@altlinux.org> 4.4.4-alt1
+- Updated to 4.4.4.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 4.4.3-alt2
 - Rebuild with libxfce4util-4.12.
 
