@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.12
+Version: 1.2.13
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -853,8 +853,6 @@ fi
 %if_with vbox
 %files daemon-driver-vbox
 %_libdir/%name/connection-driver/libvirt_driver_vbox.so
-%_libdir/%name/connection-driver/libvirt_driver_vbox_network.so
-%_libdir/%name/connection-driver/libvirt_driver_vbox_storage.so
 %endif
 %endif #driver_modules
 
@@ -926,6 +924,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Mar 16 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.13-alt1
+- 1.2.13
+
 * Wed Feb 11 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.12-alt1
 - 1.2.12
 - fixed CVE-2015-0236
