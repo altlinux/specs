@@ -1,6 +1,6 @@
 Name: xfce4-session
-Version: 4.12.0
-Release: alt2
+Version: 4.12.1
+Release: alt1
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -121,6 +121,9 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/polkit-gnome-authe
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Mon Mar 16 2015 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt1
+- Updated to 4.12.1.
+
 * Fri Mar 13 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt2
 - Fix shutdown action in the fallback mode.
 - Require xfce4-about.
