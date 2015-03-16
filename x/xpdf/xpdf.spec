@@ -4,7 +4,7 @@
 
 Name: xpdf
 Version: 3.03
-Release: alt1
+Release: alt1.1
 
 Summary: Portable Document Format (PDF) suite
 License: GPLv2 or GPLv3
@@ -186,6 +186,7 @@ Korean PDF files.
 # Now they are enabled (as in PLD), but this is subject to reevaluation.
 # --enable-a4-paper removed. Why? See xpdf-3.00-papersize.patch.
 
+%remove_optflags -Wtrampolines
 export CXXFLAGS="%optflags %optflags_nocpp"
 export CXX="g++-4.3"
 %configure \
@@ -267,6 +268,9 @@ install -pD -m644 %_sourcedir/xpdf-48x48.png %buildroot%_liconsdir/xpdf.png
 %_datadir/xpdf/korean
 
 %changelog
+* Mon Mar 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.03-alt1.1
+- Disabled -Wtrampolines flag
+
 * Sun Aug 28 2011 Victor Forsiuk <force@altlinux.org> 3.03-alt1
 - 3.03
 
