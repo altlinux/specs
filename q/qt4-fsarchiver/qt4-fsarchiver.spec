@@ -1,14 +1,14 @@
 %define subversion alt
-%define subver 11
+%define subver 12
 
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt4-fsarchiver
 Version: 0.6.19
-Release: alt1.2
+Release: alt1.%subver
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-Source:  http://softlayer-ams.dl.sourceforge.net/project/qt4-fsarchiver/source/%name-%version-%subver.tar
+Source: http://softlayer-ams.dl.sourceforge.net/project/qt4-fsarchiver/source/%name-%version-%subver.tar
 Source1: %name-pam
 Source2: %name-security
 Source3: %name.desktop
@@ -18,10 +18,9 @@ Patch1: qt4-fsarchiver_qmake_pro.patch
 License: GPLv2+
 Group: Archiving/Backup
 
-
 # Automatically added by buildreq on Mon Feb 16 2015
 # optimized out: fontconfig libcloog-isl4 libcom_err-devel libgpg-error libgpg-error-devel libqt4-core libqt4-gui libstdc++-devel phonon-devel zlib-devel
-BuildRequires: bzlib-devel gcc-c++ glibc-devel-static libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel liblzma-devel liblzo2-devel libqt4-devel libuuid-devel
+BuildRequires: bzlib-devel gcc-c++ glibc-devel libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel liblzma-devel liblzo2-devel libqt4-devel libuuid-devel
 
 %description
 QT4-FSArchiver is GUI for fsarhiver.
@@ -96,8 +95,6 @@ INSTALL_ROOT=%buildroot qmake qt4-fsarchiver.pro
 #--datadir=/usr/share \
 #--qtdir=%_qt4dir
 
-
-
 lrelease qt4-fsarchiver.pro
 
 %make_build
@@ -109,7 +106,6 @@ cp translations/%{name}*.qm %buildroot%_datadir/qt4/translations
 install -D -m644 %buildroot/%_pixmapsdir/harddrive.png %buildroot%_liconsdir/%name.png
 rm %buildroot/%_pixmapsdir/harddrive.png
 
-
 install -d -m 755 %buildroot%_bindir/
 
 ln -s %_bindir/consolehelper %buildroot%_bindir/%name
@@ -117,7 +113,6 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 install -pD -m640 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
 install -pD -m640 %SOURCE2 %buildroot%_sysconfdir/security/console.apps/%name
 install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%name.desktop
-
 
 %files
 %doc doc/Aenderungen doc/Change doc/Leerme doc/Liesmich doc/Readme doc/copyright
@@ -131,9 +126,11 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%name.desktop
 %_datadir/qt4/translations/*%{name}*.qm
 %exclude %_datadir/qt4/translations/*%{name}*.ts
 %_datadir/polkit-1/actions/org.project.pkexec.run-%name.policy
- 
 
 %changelog
+* Mon Mar 16 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.12
+- new version
+
 * Sat Feb 21 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.2
 - new subversion
 - new russian translation
