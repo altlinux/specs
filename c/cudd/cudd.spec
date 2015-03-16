@@ -1,6 +1,6 @@
 Name: cudd
 Version: 2.5.1
-Release: alt1
+Release: alt2
 Summary: CUDD: Colorado University Decision Diagram Package
 License: BSD
 Group: Sciences/Mathematics
@@ -143,6 +143,9 @@ ln -s st/doc st.doc
 %doc *.doc
 
 %changelog
+* Mon Mar 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt2
+- Added all symbols from libutil.a into libmtr.so
+
 * Mon Mar 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt1
 - Initial build for Sisyphus
 
