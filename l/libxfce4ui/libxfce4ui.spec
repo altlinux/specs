@@ -1,6 +1,6 @@
 Name: libxfce4ui
-Version: 4.12.0
-Release: alt2
+Version: 4.12.1
+Release: alt1
 
 Summary: Various GTK+2 widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK+2 для Xfce
@@ -143,6 +143,9 @@ This package contains the 'About Xfce' dialog.
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Mon Mar 16 2015 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt1
+- Updated to 4.12.1.
+
 * Thu Mar 12 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt2
 - Package GTK+3 variant of the libraries.
 - Move libgladeui stuff to the libxfce4ui-devel subpackage.
