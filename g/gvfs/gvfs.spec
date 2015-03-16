@@ -22,8 +22,8 @@
 %def_enable installed_tests
 
 Name: gvfs
-Version: %ver_major.3
-Release: alt3
+Version: %ver_major.4
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -459,7 +459,7 @@ killall -USR1 gvfsd >&/dev/null || :
 %_man7dir/gvfs.7.*
 
 %files -n bash-completion-gvfs
-%_datadir/bash-completion/completions/%name
+%_datadir/bash-completion/completions/%name-*
 
 %if_enabled installed_tests
 %files tests
@@ -470,6 +470,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Mar 16 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.4-alt1
+- 1.22.4
+
 * Mon Feb 23 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.3-alt3
 - rebuilt against libimobiledevice.so.6
 
