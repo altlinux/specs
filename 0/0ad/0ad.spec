@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.17.alpha
-Release: alt1.1
+Version: 0.0.18.alpha
+Release: alt1
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -14,7 +14,7 @@ BuildRequires: gcc-c++ python zip cmake
 BuildRequires: boost-devel boost-filesystem-devel boost-flyweight-devel boost-signals-devel 
 BuildRequires: libgamin-devel libgamin-fam libcurl-devel libjpeg-devel libpng-devel libvorbis-devel
 BuildRequires: libxml2-devel libopenal-devel libSDL-devel wxGTK-devel libXcursor-devel libgloox-devel
-BuildRequires: libnspr-devel python-dev python-modules-json libicu-devel libenet-devel
+BuildRequires: libnspr-devel python-dev python-modules-json libicu-devel libenet-devel libminiupnpc-devel
 
 %description
 0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
@@ -48,12 +48,11 @@ popd
 install -Dm 0755 binaries/system/pyrogenesis %buildroot%_bindir/pyrogenesis
 install -Dm 0755 binaries/system/libCollada.so %buildroot%_libdir/%name/libCollada.so
 install -Dm 0755 binaries/system/libAtlasUI.so %buildroot%_libdir/%name/libAtlasUI.so
-install -Dm 0755 binaries/system/libmozjs24-ps-release.so %buildroot%_libdir/%name/libmozjs24-ps-release.so
+install -Dm 0755 binaries/system/libmozjs*-ps-release.so %buildroot%_libdir/%name/
 install -Dm 0755 binaries/system/libnvcore.so %buildroot%_libdir/%name/libnvcore.so
 install -Dm 0755 binaries/system/libnvimage.so %buildroot%_libdir/%name/libnvimage.so
 install -Dm 0755 binaries/system/libnvmath.so %buildroot%_libdir/%name/libnvmath.so
 install -Dm 0755 binaries/system/libnvtt.so %buildroot%_libdir/%name/libnvtt.so
-install -Dm 0755 binaries/system/libminiupnpc.so.9 %buildroot%_libdir/%name/libminiupnpc.so.9
 
 install -Dm 0644 build/resources/0ad.desktop %buildroot%_desktopdir/%name.desktop
 install -Dm 0644 build/resources/0ad.png %buildroot%_pixmapsdir/%name.png
@@ -65,20 +64,16 @@ cp -a binaries/data/* %buildroot/%_datadir/0ad/
 %doc README.txt
 %_bindir/0ad
 %_bindir/pyrogenesis
-%_libdir/%name/libCollada.so
-%_libdir/%name/libAtlasUI.so
-%_libdir/%name/libmozjs24-ps-release.so
-%_libdir/%name/libnvcore.so
-%_libdir/%name/libnvimage.so
-%_libdir/%name/libnvmath.so
-%_libdir/%name/libnvtt.so
-%_libdir/%name/libminiupnpc.so.9
+%_libdir/%name/*.so
 %_pixmapsdir/%name.png
 %_desktopdir/%name.desktop
 %dir %_libdir/%name
 %_datadir/0ad/*
 
 %changelog
+* Sat Mar 14 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.18.alpha-alt1
+- 0.0.18
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1:0.0.17.alpha-alt1.1
 - rebuild with boost 1.57.0
 
