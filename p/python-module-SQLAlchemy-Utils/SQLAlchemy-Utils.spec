@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.29.2
-Release: alt1.git20150117
+Version: 0.29.8
+Release: alt1.git20150317
 Summary: Various utility functions for SQLAlchemy
 License: BSD
 Group: Development/Python
@@ -17,7 +17,7 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-six python-module-SQLAlchemy
-BuildPreReq: python-module-anyjson
+BuildPreReq: python-module-anyjson python-module-enum34
 BuildPreReq: python-module-babel python-module-arrow
 BuildPreReq: python-module-intervals python-module-phonenumbers
 BuildPreReq: python-module-passlib python-module-colour
@@ -32,7 +32,7 @@ BuildPreReq: python-module-sphinx-devel
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-six python3-module-SQLAlchemy
-BuildPreReq: python3-module-anyjson
+BuildPreReq: python3-module-anyjson python3-module-enum34
 BuildPreReq: python3-module-babel python3-module-arrow
 BuildPreReq: python3-module-intervals python3-module-phonenumbers
 BuildPreReq: python3-module-passlib python3-module-colour
@@ -45,6 +45,7 @@ BuildPreReq: python3-module-pymysql
 %endif
 
 %py_provides sqlalchemy_utils
+Requires: python-module-enum34
 
 %description
 Various utility functions and custom data types for SQLAlchemy.
@@ -53,6 +54,7 @@ Various utility functions and custom data types for SQLAlchemy.
 Summary: Various utility functions for SQLAlchemy
 Group: Development/Python3
 %py3_provides sqlalchemy_utils
+Requires: python3-module-enum34
 
 %description -n python3-module-%oname
 Various utility functions and custom data types for SQLAlchemy.
@@ -136,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.29.8-alt1.git20150317
+- Version 0.29.8
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.29.2-alt1.git20150117
 - Version 0.29.2
 
