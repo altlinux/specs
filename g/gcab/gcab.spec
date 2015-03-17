@@ -3,15 +3,15 @@
 
 Name: gcab
 Version: %ver_major
-Release: alt0.1
+Release: alt1
 
 Summary: M$ Cabinet archive tool
 Group: File tools
 License: LGPLv2+
 Url: http://ftp.gnome.org/pub/gnome/sources/gcab
 
-#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 
@@ -108,6 +108,9 @@ GObject introspection devel data for the gcab library
 %_girdir/GCab-%api_ver.gir
 
 %changelog
+* Tue Mar 17 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt1
+- 0.6
+
 * Sat Mar 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt0.1
 - 0.6 snapshot
 
