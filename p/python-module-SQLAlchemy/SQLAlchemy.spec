@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.8
-Release: alt1
+Version: 1.0.0
+Release: alt1.b1
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -12,7 +12,6 @@ Group: Development/Python
 Url: http://www.sqlalchemy.org/
 
 Source: SQLAlchemy-%version.tar
-Patch0: SQLAlchemy-%version-alt-allinone.patch
 %py_provides SQLAlchemy
 
 #BuildArch: noarch
@@ -85,6 +84,7 @@ cp -a . ../python3
 %endif
 
 %build
+%add_optflags -fno-strict-aliasing
 CFLAGS="%optflags" python setup.py install --optimize=2 --root=buildroot \
 	--record INSTALLED_FILES
 
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.b1
+- Version 1.0.0b1
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt1
 - Version 0.9.8
 
