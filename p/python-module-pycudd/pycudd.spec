@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.2
-Release: alt1
+Release: alt2
 Summary: Enhanced Python interface to the Colorado University BDD package, CUDD
 License: Free
 Group: Development/Python
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt2
+- Applied patch from https://github.com/pysmt/pysmt/tree/master/patches
+
 * Mon Mar 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1
 - Initial build for Sisyphus
 
