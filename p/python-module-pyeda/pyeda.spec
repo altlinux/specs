@@ -5,7 +5,7 @@
 #def_disable check
 
 Name: python-module-%oname
-Version: 0.27.1
+Version: 0.27.2
 Release: alt1.git20150315
 Summary: Python Electronic Design Automation
 License: BSD
@@ -164,6 +164,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.27.2-alt1.git20150315
+- Version 0.27.2
+
 * Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.27.1-alt1.git20150315
 - Initial build for Sisyphus
 
