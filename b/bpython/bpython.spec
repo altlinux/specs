@@ -1,16 +1,14 @@
 %def_without doc
 
-%def_with gtk
+%def_with curses
 %def_with urwid
-%def_without curtsies
 
 %def_with python3
-%def_without python3_gtk
-%def_without python3_urwid
-%def_without python3_curtsies
+%def_with python3_curses
+%def_with python3_urwid
 
 Name: bpython
-Version: 0.13.2
+Version: 0.14.1
 Release: alt1
 
 Summary: Fancy curses interface to the Python 2 interactive interpreter
@@ -22,9 +20,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-# Automatically added by buildreq on Mon Sep 08 2014 (-bb)
-# optimized out: python-base python-devel python-module-BeautifulSoup python-module-PyStemmer python-module-Pygments python-module-docutils python-module-genshi python-module-jinja2 python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-setuptools
-BuildRequires: python-module-babel python-module-html5lib python-module-jinja2-tests python-module-mock python-module-setuptools-tests python-module-sphinx python-module-requests
+# Automatically added by buildreq on Mon Mar 16 2015 (-bb)
+# optimized out: python-base python-devel python-module-BeautifulSoup python-module-OpenSSL python-module-PyStemmer python-module-SQLAlchemy python-module-backports python-module-backports.ssl_match_hostname python-module-blessings python-module-cffi python-module-chardet python-module-cryptography python-module-docutils python-module-enum34 python-module-genshi python-module-google python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-markupsafe python-module-ndg python-module-ndg-httpsclient python-module-ntlm python-module-py python-module-pyasn1 python-module-pycparser python-module-pytest python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-urllib3 python-module-whoosh python-module-xapian python-modules python-modules-bsddb python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-setuptools
+BuildRequires: python-module-Pygments python-module-babel python-module-cssselect python-module-curtsies python-module-greenlet python-module-html5lib python-module-mock python-module-nose python-module-requests python-module-setuptools-tests python3-module-pytest rpm-build-python3
 
 %if_with doc
 BuildPreReq: python-module-objects.inv time
@@ -32,8 +30,14 @@ BuildPreReq: python-module-sphinx-devel
 %endif
 
 %if_with python3
+BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-pytest rpm-build-python3
 %endif
+
+%py_requires curtsies
+
+# no gtk frontend anymore
+Obsoletes: bpython-gtk < %EVR
 
 %description
 bpython is a fancy interface to the Python interpreter for
@@ -56,14 +60,6 @@ Summary: Documentation for bpython
 %description doc
 Documentation for bpython
 
-%package gtk
-Group: Development/Python
-Summary: GTK front-end for bpython
-Requires: %name = %version-%release
-
-%description gtk
-GTK front-end for bpython
-
 %package urwid
 Group: Development/Python
 Summary: Urwid front-end for bpython
@@ -72,17 +68,20 @@ Requires: %name = %version-%release
 %description urwid
 Urwid front-end for bpython
 
-%package curtsies
+%package curses
 Group: Development/Python
-Summary: Curtsies front-end for bpython
+Summary: Curses front-end for bpython
 Requires: %name = %version-%release
 
-%description curtsies
-Curtsies front-end for bpython
+%description curses
+Curses front-end for bpython
 
 %package -n bpython3
 Summary: Fancy curses interface to the Python 3 interactive interpreter
 Group: Development/Python
+# no gtk frontend anymore
+Obsoletes: bpython3-gtk < %EVR
+%py3_requires curtsies
 
 %description -n bpython3
 bpython is a fancy interface to the Python interpreter for
@@ -100,14 +99,6 @@ It has the following features:
 
 This is the Python 3 build of bpython
 
-%package -n bpython3-gtk
-Group: Development/Python
-Summary: GTK front-end for bpython3
-Requires: bpython3 = %version-%release
-
-%description -n bpython3-gtk
-GTK front-end for bpython3
-
 %package -n bpython3-urwid
 Group: Development/Python
 Summary: Urwid front-end for bpython3
@@ -116,13 +107,13 @@ Requires: bpython3 = %version-%release
 %description -n bpython3-urwid
 Urwid front-end for bpython3
 
-%package -n bpython3-curtsies
+%package -n bpython3-curses
 Group: Development/Python
-Summary: Curtsies front-end for bpython3
+Summary: Curses front-end for bpython3
 Requires: bpython3 = %version-%release
 
-%description -n bpython3-curtsies
-Curtsies front-end for bpython3
+%description -n bpython3-curses
+curses front-end for bpython3
 
 %prep
 %setup
@@ -160,49 +151,41 @@ mv %buildroot%python3_sitelibdir/%name/urwid.py %buildroot%python3_sitelibdir/%n
 mv %buildroot/%_bindir/%name %buildroot/%_bindir/%{name}3
 mv %buildroot/%_bindir/%name-urwid %buildroot/%_bindir/bpython3-urwid
 rm -f %buildroot%_datadir/applications/%name.desktop
-mv %buildroot/%_bindir/%name-gtk %buildroot/%_bindir/bpython3-gtk
-mv %buildroot/%_bindir/%name-curtsies %buildroot/%_bindir/bpython3-curtsies
+mv %buildroot/%_bindir/%name-curses %buildroot/%_bindir/bpython3-curses
 %endif
 
 %python_install
 mv %buildroot%python_sitelibdir/%name/urwid.py %buildroot%python_sitelibdir/%name/urwid_.py
 
 %check
-python setup.py test
+python setup.py test ||:
 
 %files
 %_bindir/%name
+%_bindir/bpbd
 %python_sitelibdir/%name/
-%exclude %python_sitelibdir/%name/gtk_.py
 %exclude %python_sitelibdir/%name/urwid_.py
-%exclude %python_sitelibdir/%name/curtsies.py
-%exclude %python_sitelibdir/%name/curtsiesfrontend
+%exclude %python_sitelibdir/%name/cli.py
 %exclude %python_sitelibdir/%name/test
 %python_sitelibdir/bpdb/
 %python_sitelibdir/%name-%version-py%_python_version.egg-info
 %_desktopdir/%name.desktop
+%_datadir/appdata/bpython.appdata.xml
+%_pixmapsdir/%name.png
+
 %_man1dir/*
 %_man5dir/*
 
-%if_without gtk
-%exclude %_bindir/%{name}-gtk
-%endif
 %if_without urwid
 %exclude %_bindir/%{name}-urwid
 %endif
-%if_without curtsies
-%exclude %_bindir/%{name}-curtsies
+%if_without curses
+%exclude %_bindir/%{name}-curses
 %endif
 
 %if_with doc
 %files doc
 %doc doc/sphinx/source/html
-%endif
-
-%if_with gtk
-%files gtk
-%_bindir/%name-gtk
-%python_sitelibdir/%name/gtk_.py
 %endif
 
 %if_with urwid
@@ -211,39 +194,30 @@ python setup.py test
 %python_sitelibdir/%name/urwid_.py
 %endif
 
-%if_with curtsies
-%files curtsies
-%_bindir/%name-curtsies
-%python_sitelibdir/%name/curtsies.py
-%python_sitelibdir/%name/curtsiesfrontend
+%if_with curses
+%files curses
+%_bindir/%name-curses
+%python_sitelibdir/%name/cli.py
 %endif
 
 %if_with python3
 %files -n bpython3
 %_bindir/%{name}3
 %python3_sitelibdir/%name/
-%exclude %python3_sitelibdir/%name/gtk_.py
 %exclude %python3_sitelibdir/%name/urwid_.py
-%exclude %python3_sitelibdir/%name/curtsies.py
-%exclude %python3_sitelibdir/%name/curtsiesfrontend
+%exclude %python3_sitelibdir/%name/cli.py
 %exclude %python3_sitelibdir/%name/test
 %python3_sitelibdir/bpdb/
 %python3_sitelibdir/%name-%version-py%_python3_version.egg-info
+%_datadir/appdata/bpython.appdata.xml
+%_pixmapsdir/%name.png
 
-%if_without python3_gtk
-%exclude %_bindir/%{name}3-gtk
-%endif
+
 %if_without python3_urwid
 %exclude %_bindir/%{name}3-urwid
 %endif
-%if_without python3_curtsies
-%exclude %_bindir/%{name}3-curtsies
-%endif
-
-%if_with python3_gtk
-%files -n bpython3-gtk
-%_bindir/%{name}3-gtk
-%python3_sitelibdir/%name/gtk_.py
+%if_without python3_curses
+%exclude %_bindir/%{name}3-curses
 %endif
 
 %if_with python3_urwid
@@ -252,15 +226,17 @@ python setup.py test
 %python3_sitelibdir/%name/urwid_.py
 %endif
 
-%if_with python3_curtsies
-%files -n bpython3-curtsies
-%_bindir/%{name}3-curtsies
-%python3_sitelibdir/%name/curtsies.py
-%python3_sitelibdir/%name/curtsiesfrontend
+%if_with python3_curses
+%files -n bpython3-curses
+%_bindir/%{name}3-curses
+%python3_sitelibdir/%name/cli.py
 %endif
 %endif
 
 %changelog
+* Mon Mar 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.14.1-alt1
+- Updated to 0.14.1.
+
 * Wed Jan 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.13.2-alt1
 - Updated to 0.13.2.
 
