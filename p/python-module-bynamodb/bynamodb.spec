@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.0
-Release: alt1.git20141215
+Version: 0.1.2
+Release: alt1.git20150312
 Summary: High-Level DynamoDB Interface for Pythonwrapping Low-Level Interface of boto
 License: MIT
 Group: Development/Python
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20150312
+- Version 0.1.2
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20141215
 - Initial build for Sisyphus
 
