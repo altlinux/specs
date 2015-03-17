@@ -1,7 +1,7 @@
 %define _name exo
 
 Name: lib%_name
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 
 Summary: Extension library to Xfce
@@ -68,7 +68,6 @@ This package contains documentation files required for packaging
 	--disable-static \
 	--enable-maintainer-mode \
 	--enable-gtk-doc \
-	--enable-gen-doc \
 	--enable-debug=no
 %make_build
 
@@ -110,6 +109,9 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Tue Mar 17 2015 Mikhail Efremov <sem@altlinux.org> 0.10.4-alt1
+- Updated to 0.10.4.
+
 * Thu Mar 05 2015 Mikhail Efremov <sem@altlinux.org> 0.10.3-alt1
 - Don't package menu categories icons.
 - Updated to 0.10.3.
