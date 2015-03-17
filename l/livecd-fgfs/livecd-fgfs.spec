@@ -1,6 +1,6 @@
 Name: livecd-fgfs
-Version: 0.1
-Release: alt2
+Version: 0.2
+Release: alt1
 
 Summary: start FlightGear
 License: Public domain
@@ -10,11 +10,10 @@ Url: http://altlinux.org/m-p
 Packager: Michael Shigorin <mike@altlinux.org>
 BuildArch: noarch
 
-Requires: xinit
-Conflicts: livecd-webkiosk
+Requires: livecd-runapp SysVinit-usermode
 
-%define skeldir %_sysconfdir/skel
-%define xsfile %skeldir/.xsession
+%define confdir %_sysconfdir/sysconfig
+%define conffile %confdir/livecd-runapp
 
 %description
 %summary
@@ -24,27 +23,28 @@ Conflicts: livecd-webkiosk
 %build
 
 %install
-mkdir -p %buildroot%skeldir
+mkdir -p %buildroot%confdir
 
-cat > %buildroot%xsfile << _EOF_
-#!/bin/sh
+cat > %buildroot%conffile << _EOF_
+BINARY=fgfs
+COMMON_ARGS="--enable-fullscreen"
 
-FGFS="fgfs --enable-fullscreen"
-[ -d /usr/share/flightgear/Aircraft/tu154b ] && FGFS="\$FGFS --aircraft=tu154b"
+[ -d /usr/share/flightgear/Aircraft/tu154b ] &&
+	COMMON_ARGS="\$COMMON_ARGS --aircraft=tu154b --airport=UNKM" ||:
 
-EXPENSIVE="--enable-enhanced-lighting --enable-clouds3d"
-EXPENSIVE="\$EXPENSIVE --enable-horizon-effect --enable-specular-highlight"
-EXPENSIVE="\$EXPENSIVE --enable-distance-attenuation --fog-nicest"
-
-PRIMUSRUN=/usr/bin/primusrun
-\$PRIMUSRUN \$FGFS \$EXPENSIVE || \$FGFS
+EXPENSIVE_ARGS="--enable-enhanced-lighting --enable-clouds3d --enable-horizon-effect --enable-specular-highlight --enable-distance-attenuation --fog-nicest"
 _EOF_
-chmod +x %buildroot%xsfile
 
 %files
-%xsfile
+%conffile
 
 %changelog
+* Tue Mar 17 2015 Michael Shigorin <mike@altlinux.org> 0.2-alt1
+- rewrote using livecd-runapp
+
+* Wed Oct 22 2014 Michael Shigorin <mike@altlinux.org> 0.1-alt3
+- set UNKM for tu154
+
 * Sun Mar 23 2014 Michael Shigorin <mike@altlinux.org> 0.1-alt2
 - added Conflicts: indeed
 
