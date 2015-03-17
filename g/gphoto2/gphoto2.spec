@@ -1,6 +1,6 @@
 Name: gphoto2
 Version: 2.5.6
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: Command line utilities to access digital cameras
@@ -8,8 +8,6 @@ Summary (ru_RU.UTF-8): Консольные программы для обмен
 Url: http://www.gphoto.org/
 License: GPLv2+
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
-
-Requires: lib%name >= %version
 
 # Automatically added by buildreq on Mon Oct 11 2010
 BuildRequires: aalib-devel libX11-devel libgphoto2-devel libgpm-devel libjpeg-devel libpopt-devel libreadline-devel libslang-devel
@@ -58,6 +56,9 @@ gPhoto - универсальный комплект программ и биб�
 %doc %_docdir/%name/test-hook.sh
 
 %changelog
+* Tue Mar 17 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.6-alt2
+- removed hard require on libgphoto2
+
 * Tue Jan 27 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.6-alt1
 - 2.5.6
 

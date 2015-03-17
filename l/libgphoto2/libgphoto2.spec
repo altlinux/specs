@@ -7,7 +7,7 @@
 
 Name: libgphoto2
 Version: 2.5.7
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Library to access to digital cameras
@@ -33,17 +33,53 @@ Patch0:  %name-2.5.2-alt-fix-underlinked_libraries.patch
 This library contains all the functionality to access to modern digital
 cameras via USB or the serial port.
 
+%package -n %name-%sover
+Group: System/Libraries
+Summary: Library to access to digital cameras
+Summary (ru_RU.UTF-8): Библиотека функций для работы с цифровыми фотокамерами
+License: LGPLv2+
+Provides: %name = %version-%release
+Obsoletes: %name < %version-%release
+
+%description -n %name-%sover
+The %name library can be used by applications to access various digital
+camera models, via standard protocols such as USB Mass Storage and PTP,
+or vendor-specific protocols.
+This package contains the library.
+
+%package -n %{name}_port-%sover_port
+Group: System/Libraries
+Summary: Library to access to digital camera ports
+Summary (ru_RU.UTF-8): Библиотека функций для работы с цифровыми фотокамерами
+License: LGPLv2+
+
+%description  -n %{name}_port-%sover_port
+The %name library can be used by applications to access various digital
+camera models, via standard protocols such as USB Mass Storage and PTP,
+or vendor-specific protocols.
+This package contains the runtime code for port access. 
+
 %package -n %name-devel
 Group: Development/C
 Summary: Headers and links to compile against the %name library
 Summary (ru_RU.UTF-8): Заголовочные и другие файлы для компиляции приложений с библиотекой libgphoto2
 License: LGPLv2+
-Requires: %name = %version-%release
-Conflicts: %{name}_2.4-devel
+Requires: %name-%sover = %version-%release
 
 %description -n %name-devel
 This package contains all files which one needs to compile programs using
 the %name library.
+
+%package -n %name-devel-doc
+Group: Development/Other
+Summary: Development documentation of the %name library
+Summary (ru_RU.UTF-8): Докумнтация для разработчиков библиотеки libgphoto2
+License: LGPLv2+
+BuildArch: noarch
+Requires: %name-%sover = %version-%release
+
+%description -n %name-devel-doc
+This package contains development documentation of the %name library.
 
 %if_enabled static
 %package -n %name-devel-static
@@ -52,7 +88,6 @@ Summary: Static versions of %name
 Summary (ru_RU.UTF-8): Статические версии библиотек libgphoto2
 License: LGPLv2+
 Requires: %name-devel = %version-%release
-Conflicts: %{name}_2.4-devel-static
 
 %description -n %name-devel-static
 This package contains libraries which one needs to compile programs statically linked
@@ -65,9 +100,24 @@ against %name library.
 Библиотека предоставляет все необходимые функции для обмена данными
 с современными цифровыми фотокамерами посредством USB или последовательного порта.
 
+%description -n %name-%sover -l ru_RU.UTF-8
+Библиотека libgphoto2 используется приложениями для доступа к различным моделям
+цифровых камер, посредством стандартных протоколов, таких как USB-накопитель
+и PTP, или специфических протоколов производителей.
+Этот пакет ссодержит собственно библиотеку.
+
+%description -n %{name}_port-%sover_port -l ru_RU.UTF-8
+Библиотека libgphoto2 используется приложениями для доступа к различным моделям
+цифровых камер, посредством стандартных протоколов, таких как USB-накопитель
+и PTP, или специфических протоколов производителей.
+Этот пакет ссодержит исполнимый код для доступа к портам.
+
 %description -n %name-devel -l ru_RU.UTF-8
 Пакет содержит все необходимые файлы для компиляции программ, использующих
 библиотеку libgphoto2.
+
+%description -n %name-devel-doc -l ru_RU.UTF-8
+Пакет содержит докумнтацию для разработчиков библиотеки libgphoto2.
 
 %if_enabled static
 %description -n %name-devel-static  -l ru_RU.UTF-8
@@ -107,8 +157,7 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 # correct content of doc. directory
-for f in %{name}_port/{AUTHORS,NEWS,README}
-do /bin/cp -pr $f ${f}.port ; done
+/bin/rm -rf %buildroot/%_datadir/doc/%name/{linux-hotplug,ABOUT-NLS,COPYING,ChangeLog}
 
 # remove circular symlink in /usr/include/gphoto2
 /bin/rm -f %buildroot%_includedir/gphoto2/gphoto2
@@ -141,23 +190,32 @@ do /bin/cp -pr $f ${f}.port ; done
 
 ##### FILE LISTS FOR ALL BINARY PACKAGES #####
 
-%files -f %name.lang
-%_libdir/*.so.*
+%files -n %name-%sover -f %name.lang
+%_libdir/%name.so.*
 %dir %_libdir/%name
 %dir %_libdir/%name/*
 %_libdir/%name/*/*.so
-%dir %_libdir/%{name}_port
-%dir %_libdir/%{name}_port/*
 %dir %_libexecdir/%name
 %_libexecdir/%name/print-camera-list
-%_libdir/%{name}_port/*/*.so
 %_datadir/%name
 %ghost /lib/udev/rules.d/*
-%doc {AUTHORS,NEWS,README}
-%doc %{name}_port/{AUTHORS,NEWS,README}.port
+%dir %_datadir/doc/%name
+%_datadir/doc/%name/AUTHORS
+%_datadir/doc/%name/NEWS
+%_datadir/doc/%name/README
+%exclude %_datadir/locale/*/LC_MESSAGES/%{name}_port*
 %if_enabled hal
 %_datadir/hal/fdi/information/20thirdparty/*
 %endif
+
+%files -n %{name}_port-%sover_port -f %name.lang
+%_libdir/%{name}_port.so.*
+%dir %_libdir/%{name}_port
+%dir %_libdir/%{name}_port/*
+%_libdir/%{name}_port/*/*.so
+%dir %_datadir/doc/%{name}_port
+%_datadir/doc/%{name}_port/*
+%exclude %_datadir/locale/*/LC_MESSAGES/%{name}*
 
 %files -n %name-devel
 %_bindir/*-config
@@ -165,9 +223,12 @@ do /bin/cp -pr $f ${f}.port ; done
 %_libdir/*.so
 %_libdir/pkgconfig/*
 %_man3dir/%{name}*
-%doc %_docdir/%name/README.apidocs
-%doc %_docdir/%name/libgphoto2-api.html
-%doc %_docdir/%name/camlibs
+
+%files -n %name-devel-doc
+%_datadir/doc/%name/*
+%exclude %_datadir/doc/%name/AUTHORS
+%exclude %_datadir/doc/%name/NEWS
+%exclude %_datadir/doc/%name/README
 
 %if_enabled static
 %files -n %name-devel-static
@@ -177,6 +238,10 @@ do /bin/cp -pr $f ${f}.port ; done
 %endif
 
 %changelog
+* Tue Mar 17 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.7-alt2
+- cut out more smaller subpackages to comply with the Shared libs policy
+- added Provides/Obsoletes
+
 * Tue Jan 27 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.7-alt1
 - 2.5.7
 
