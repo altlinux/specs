@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1.git20140610
+Release: alt2.git20140610
 Summary: Bindings to picosat (a SAT solver)
 License: MIT
 Group: Development/Python
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/ContinuumIO/pycosat.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests libpicosat-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -46,12 +46,14 @@ files have been extracted from the picosat source (picosat-954.tar.gz).
 %prep
 %setup
 
+rm -f picosat.*
+
 %if_with python3
 cp -fR . ../python3
 %endif
 
 %build
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing -DDONT_INCLUDE_PICOSAT
 %python_build_debug
 
 %if_with python3
@@ -95,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2.git20140610
+- Built with external PicoSAT
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20140610
 - Initial build for Sisyphus
 
