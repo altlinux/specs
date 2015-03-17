@@ -1,52 +1,81 @@
-Name:           python-module-troveclient
-Version:        1.0.5
-Release:        alt1
-Summary:        Client library for OpenStack DBaaS API
-Group:          Development/Python
+%def_with python3
 
-License:        ASL 2.0
-URL:            http://www.openstack.org/
-Source0:        %{name}-%{version}.tar
+Name: python-module-troveclient
+Version: 1.0.8
+Release: alt1
+Summary: Client library for OpenStack DBaaS API
+Group: Development/Python
+
+License: ASL 2.0
+Url: http://www.openstack.org/
+Source0: %name-%version.tar
 
 #
 # patches_base=1.0.5
 #
 Patch0001: 0001-Remove-runtime-dependency-on-python-pbr.patch
 
-BuildArch:      noarch
- 
-BuildRequires:  python-devel
-BuildRequires:  python-module-setuptools
-BuildRequires:  python-module-sphinx
-BuildRequires:  python-module-requests
-BuildRequires:  python-module-pbr
+BuildArch: noarch
 
-Requires:       python-module-argparse
-Requires:       python-module-prettytable
-Requires:       python-module-requests
-Requires:       python-module-setuptools
-Requires:       python-module-simplejson
-Requires:       python-module-six
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-pbr
+BuildRequires: python-module-d2to1
+BuildRequires: python-module-argparse
+BuildRequires: python-module-prettytable >= 0.7
+BuildRequires: python-module-requests >= 2.2.0
+BuildRequires: python-module-six >= 1.7.0
+BuildRequires: python-module-keystoneclient >= 0.11.1
+BuildRequires: python-module-simplejson >= 2.2.0
+BuildRequires: python-module-babel >= 1.3
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-oslosphinx
 
-# required for tests
-# tests currently disabled due missing deps
-#BuildRequires:  python-pep8
-#BuildRequires:  pyflakes
-# currently under review
-# https://bugzilla.redhat.com/show_bug.cgi?id=839056
-# BuildRequires:  python-flake8
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pbr
+BuildRequires: python3-module-d2to1
+BuildRequires: python3-module-argparse
+BuildRequires: python3-module-prettytable >= 0.7
+BuildRequires: python3-module-requests >= 2.2.0
+BuildRequires: python3-module-six >= 1.7.0
+BuildRequires: python3-module-keystoneclient >= 0.11.1
+BuildRequires: python3-module-simplejson >= 2.2.0
+BuildRequires: python3-module-babel >= 1.3
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-oslosphinx
+%endif
 
-# Currently under review
-# https://bugzilla.redhat.com/show_bug.cgi?id=958007
-# BuildRequires:  python-hacking
-#BuildRequires: python-mock
-#BuildRequires: python-testtools
-#BuildRequires: python-testrepository
 
 %description
 This is a client for the Trove API. There's a Python API (the
 troveclient module), and a command-line script (trove). Each
 implements 100 percent (or less ;) ) of the Trove API.
+
+%if_with python3
+%package -n python3-module-troveclient
+Summary:   Client library for OpenStack DBaaS API
+Group: Development/Python3
+
+%description -n python3-module-troveclient
+This is a client for the Trove API. There's a Python API (the
+troveclient module), and a command-line script (trove). Each
+implements 100 percent (or less ;) ) of the Trove API.
+%endif
+
+%package doc
+Summary: Documentation for OpenStack DBaaS API
+Group: Development/Documentation
+
+%description doc
+This is a client for the Trove API. There's a Python API (the
+troveclient module), and a command-line script (trove). Each
+implements 100 percent (or less ;) ) of the Trove API.
+
+This package contains auto-generated documentation.
+
 
 %prep
 %setup
@@ -54,41 +83,66 @@ implements 100 percent (or less ;) ) of the Trove API.
 %patch0001 -p1
 
 # We provide version like this in order to remove runtime dep on pbr
-sed -i s/REDHATTROVECLIENTVERSION/%{version}/ troveclient/__init__.py
+sed -i s/REDHATTROVECLIENTVERSION/%version/ troveclient/__init__.py
 
 # Remove bundled egg-info
-rm -rf %{name}.egg-info
+rm -rf %name.egg-info
 
 # Let RPM handle the requirements
 rm -f {test-,}requirements.txt
 
-# Generate html docs
-#export PYTHONPATH="$( pwd ):$PYTHONPATH"
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
+
+%build
+%python_build
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
+%install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+mv %buildroot%_bindir/trove %buildroot%_bindir/python3-trove
+%endif
+
+%python_install
+# Delete tests
+rm -fr %buildroot%python_sitelibdir/*/tests
+rm -fr %buildroot%python_sitelibdir/*/*/tests
+rm -fr %buildroot%python3_sitelibdir/*/tests
+rm -fr %buildroot%python3_sitelibdir/*/*/tests
+
 sphinx-build -b html doc/source html
 
 # Remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
-
-%build
-%python_build
-
-%install
-%python_install
-
-# currently disabling tests
-# see buildrequires
-#%check
-#%%{__python2} setup.py test
-
-
 %files
-%doc html README.rst LICENSE
-%{python_sitelibdir}/python_troveclient-%{version}-py?.?.egg-info
-%{python_sitelibdir}/troveclient
-%{_bindir}/trove
+%doc README.rst LICENSE
+%python_sitelibdir/*
+%_bindir/trove
+
+%if_with python3
+%files -n python3-module-troveclient
+%_bindir/python3-trove
+%python3_sitelibdir/*
+%endif
+
+%files doc
+%doc html
 
 %changelog
+* Wed Mar 11 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.8-alt1
+- 1.0.8
+- add python3 package
+
 * Fri Aug 01 2014 Lenar Shakirov <snejok@altlinux.ru> 1.0.5-alt1
 - First build for ALT (based on Fedora 1.0.5-1.fc21.src)
 

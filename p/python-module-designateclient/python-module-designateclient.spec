@@ -1,68 +1,129 @@
 %define component designateclient
-Name:           python-module-%{component}
-Version:        1.0.2
-Release:        alt2
-Summary:        Openstack DNS (Designate) API Client
-License:        Apache-2.0
-Group:          Development/Python
-Url:            http://launchpad.net/python-designateclient
-Source:         %{name}-%{version}.tar
-BuildRequires:  fdupes
-BuildRequires:  python-devel
-BuildRequires:  python-module-pbr >= 0.5.21
-# Documentation requirements:
-BuildRequires:  python-module-sphinx >= 1.1.2
-# Test requirements:
-BuildRequires:  python-module-discover
+%def_without python3
 
-BuildRequires:  python-module-mox >= 0.5.3
-BuildRequires:  python-module-python-subunit
-BuildRequires:  python-module-testrepository >= 0.0.17
-Requires:       python-module-cliff >= 1.4.3
-Requires:       python-module-jsonschema
-Requires:       python-module-keystoneclient >= 0.6.0
-Requires:       python-module-pbr
-Requires:       python-module-requests >= 1.1
-Requires:       python-module-stevedore >= 0.14
+Name: python-module-%component
+Version: 1.1.1
+Release: alt1
+Summary: Openstack DNS (Designate) API Client
+License: Apache-2.0
+Group: Development/Python
+Url: http://launchpad.net/python-designateclient
+Source: %name-%version.tar
 
-BuildArch:      noarch
+BuildArch:  noarch
+
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-pbr
+BuildRequires: python-module-d2to1
+BuildRequires: python-module-keystoneclient >= 0.11.1
+BuildRequires: python-module-requests >= 2.2.0
+BuildRequires: python-module-six >= 1.7.0
+BuildRequires: python-module-stevedore >= 1.1.0
+BuildRequires: python-module-cliff >= 1.7.0
+BuildRequires: python-module-jsonschema >= 2.0.0
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-oslosphinx
+BuildRequires: fdupes
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pbr
+BuildRequires: python3-module-d2to1
+BuildRequires: python3-module-keystoneclient >= 0.11.1
+BuildRequires: python3-module-requests >= 2.2.0
+BuildRequires: python3-module-six >= 1.7.0
+BuildRequires: python3-module-stevedore >= 1.1.0
+BuildRequires: python3-module-cliff >= 1.7.0
+BuildRequires: python3-module-jsonschema >= 2.0.0
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-oslosphinx
+%endif
 
 %description
 This is a client for the OpenStack Designate API. There's a Python API
 (the designateclient module), and a command-line tool (designate).
 
+%if_with python3
+%package -n python3-module-%component
+Summary:   Openstack DNS (Designate) API Client
+Group: Development/Python3
+
+%description -n python3-module-%component
+This is a client for the OpenStack Designate API. There's a Python API
+(the designateclient module), and a command-line tool (designate).
+%endif
+
 %package doc
-Summary:        Openstack DNS (Designate) API Client - Documentation
-Group:          Documentation
-Requires:       %{name} = %{version}
+Summary: Openstack DNS (Designate) API Client - Documentation
+Group: Development/Documentation
 
 %description doc
-This package contains documentation files for %{name}.
+This package contains documentation files for %name.
 
 %prep
 %setup
+# Let RPM handle the dependencies
+rm -f test-requirements.txt requirements.txt
+
+# Remove bundled egg-info
+rm -rf python_designateclient.egg-info
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
 
 %build
 %python_build
-python setup.py build_sphinx && rm doc/build/html/.buildinfo
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 
 %install
-%python_install
-fdupes doc
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+mv %buildroot%_bindir/designate %buildroot%_bindir/python3-designate
+%endif
 
-%check
-testr init && testr run --parallel
+%python_install
+
+# Delete tests
+rm -fr %buildroot%python_sitelibdir/keystoneclient/tests
+rm -fr %buildroot%python3_sitelibdir/keystoneclient/tests
+
+# Build HTML docs and man page
+export PYTHONPATH="$( pwd ):$PYTHONPATH"
+sphinx-build -b html doc/source html
+
+# Fix hidden-file-or-dir warnings
+rm -fr html/.doctrees html/.buildinfo
+
 
 %files
 %doc README.rst
-%{_bindir}/designate
-%{python_sitelibdir}/%{component}/
-%{python_sitelibdir}/python_%{component}-*.egg-info
+%_bindir/designate
+%python_sitelibdir/*
+
+%if_with python3
+%files -n python3-module-%component
+%_bindir/python3-designate
+%python3_sitelibdir/*
+%endif
 
 %files doc
-%doc doc/build/html
+%doc html
 
 %changelog
+* Wed Mar 11 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt1
+- 1.1.1
+
 * Mon Aug 18 2014 Lenar Shakirov <snejok@altlinux.ru> 1.0.2-alt2
 - BuildReq: python-module-subunit -> python-module-python-subunit
 

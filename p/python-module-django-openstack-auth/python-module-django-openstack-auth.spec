@@ -1,26 +1,24 @@
-%global pypi_name django_openstack_auth
 
 Name:           python-module-django-openstack-auth
-Version:        1.1.5
+Version:        1.1.9
 Release:        alt1
 Summary:        Django authentication backend for OpenStack Keystone
 Group:          Development/Python
 
 License:        BSD
 URL:            http://pypi.python.org/pypi/django_openstack_auth/
-Source0:        %{name}-%{version}.tar
+Source0:        %name-%version.tar
 Patch0:         0001-remove-runtime-dep-to-python-pbr.patch
 BuildArch:      noarch
  
 BuildRequires:  python-devel
 BuildRequires:  python-module-setuptools
 BuildRequires:  python-module-sphinx
-BuildRequires:  python-module-mox
-BuildRequires:  python-module-keystoneclient
-BuildRequires:  python-module-iso8601
-BuildRequires:  python-module-pbr
-BuildRequires:  python-module-netaddr
-BuildRequires:  python-module-oslo-sphinx
+BuildRequires:  python-module-oslosphinx
+BuildRequires:  python-module-six >= 1.7.0
+BuildRequires:  python-module-keystoneclient >= 0.11.1
+BuildRequires:  python-module-pbr >= 0.6
+BuildRequires:  python-module-oslo.config >= 1.6.0
 
 Requires:   python-module-django
 BuildRequires:   python-module-django
@@ -38,8 +36,6 @@ Keystone V2 API.
 %prep
 %setup
 %patch0 -p1
-# Remove bundled egg-info
-# rm -rf %{pypi_name}.egg-info
 
 # remove unnecessary .po files
 find . -name "django.po" -exec rm -f '{}' \;
@@ -49,9 +45,6 @@ sed -i s/RPMVERSION/%{version}/ openstack_auth/__init__.py
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requires_dist config
 rm -f {test-,}requirements.txt
-
-# make doc build compatible with python-oslo-sphinx RPM
-sed -i 's/oslosphinx/oslo.sphinx/' doc/source/conf.py
 
 %build
 %python_build
@@ -65,19 +58,19 @@ PYTHONPATH=.:$PYTHONPATH sphinx-build doc/source html
 %find_lang django
 
 # don't include tests in the RPM
-rm -rf %{buildroot}/%{python_sitelibdir}/openstack_auth/tests
+rm -rf %buildroot/%python_sitelibdir/openstack_auth/tests
 # 
 # %check
 # %{__python} setup.py test
 
 %files -f django.lang
 %doc LICENSE
-%dir %{python_sitelibdir}/openstack_auth
-%{python_sitelibdir}/openstack_auth/
-%{python_sitelibdir}/openstack_auth/locale/openstack_auth.pot
-%{python_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
+%python_sitelibdir/*
 
 %changelog
+* Tue Mar 17 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.9-alt1
+- 1.1.9
+
 * Fri Aug 01 2014 Lenar Shakirov <snejok@altlinux.ru> 1.1.5-alt1
 - New version (based on Fedora 1.1.5-3.fc21.src)
 
