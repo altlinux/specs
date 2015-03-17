@@ -57,8 +57,8 @@
 
 %define  Name MPD
 Name: 	 mpd
-Version: 0.18.14
-Release: alt2
+Version: 0.19.9
+Release: alt1
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 
 License: %gpl2plus
@@ -290,6 +290,9 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 
 
 %changelog
+* Tue Mar 17 2015 Denis Smirnov <mithraen@altlinux.ru> 0.19.9-alt1
+- update to 0.19.9
+
 * Tue Nov 18 2014 Denis Smirnov <mithraen@altlinux.ru> 0.18.14-alt2
 - add mpg123 decoder
 
