@@ -3,7 +3,7 @@
 
 Name: cvc4
 Version: 1.4
-Release: alt1
+Release: alt2
 Summary: Automatic theorem prover for satisfiability modulo theories (SMT) problems
 License: BSD
 Group: Development/Python
@@ -193,6 +193,9 @@ python3 -c "from %pyname import *"
 %endif
 
 %changelog
+* Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2
+- Applied patch from https://github.com/pysmt/pysmt/tree/master/patches
+
 * Mon Mar 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1
 - Initial build for Sisyphus
 
