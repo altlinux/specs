@@ -5,7 +5,7 @@
 
 Name: kde4-i18n-%lng
 Version: 14.12.3
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE
@@ -62,6 +62,9 @@ done
 %install
 %K4install
 
+# clean
+rm -f %buildroot/%_K4i18n/*/LC_MESSAGES/*.ktp-*.mo
+
 if ! [ -e %buildroot/%_K4doc/%lng/common ]; then
     mkdir -p %buildroot/%_K4doc/%lng/common/
     pushd %_K4doc/en/common/
@@ -95,6 +98,9 @@ fi
 %lang(%lng) %_K4apps/autocorrect/%{lng}*.xml
 
 %changelog
+* Wed Mar 18 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt2
+- fix %files (ALT#30832)
+
 * Fri Mar 13 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
 - new version
 
