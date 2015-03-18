@@ -36,7 +36,7 @@
 %define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt7.1
+Release: alt7.1.1
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -236,6 +236,7 @@ Patch1085: kdebase-3.5.13.2-kicker-systemtray-gtk3-size.patch
 Patch1086: kdebase-3.5.13.2-desktop-fixes.patch
 Patch1087: tdebase-3.5.13-KJobViewer-crash.patch
 Patch1088: tdebase-3.5.13-desktop-icoTextShadow.patch
+Patch1089: kdebase-3.5.13.2-alt-fix_typo_in_desktop_files.patch
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 Patch2000: kdebase-3.5.0-man_recode.patch
@@ -250,14 +251,14 @@ Patch2101: kdebase-3.5.10-alt-nonhal_backend_options_fix.patch
 
 # Automatically added by buildreq on Mon Apr 12 2004 (-bi)
 #BuildRequires: XFree86-devel XFree86-libs XFree86-utils arts bzlib-devel doxygen eject fontconfig-devel freetype2-devel gcc-c++ gcc-g77 glib2 kde-settings kdelibs-apidocs kdelibs-devel lesstif-devel libart_lgpl-devel libarts-devel libjpeg-devel libldap-devel libncurses-devel libpam-devel libpng-devel libqt3-devel libraw1394-devel libssl-devel libstdc++-devel libtiff-devel libtinfo-devel libutempter-devel pkgconfig qt3-designer qt3-doc samba-client-devel xinitrc xml-utils zlib-devel
-BuildRequires(pre): kdelibs kdelibs-devel cmake libqt3-devel libcups
+BuildRequires(pre): kdelibs kdelibs-devel cmake libqt3-devel libcups rpm-build-xdg
 BuildRequires: libgtk+2-devel
 #BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
 BuildRequires: binutils-devel bzlib-devel doxygen eject fontconfig-devel freetype2-devel
 #BuildRequires: gcc-c++ kdelibs-apidocs kdelibs-devel
 BuildRequires: gcc-c++ kdelibs-devel bdftopcf
 BuildRequires: libart_lgpl-devel libjpeg-devel openexr-devel
-BuildRequires: openmotif-devel libusb-compat-devel libattr-devel
+BuildRequires: openmotif-devel libusb-devel libusb-compat-devel libattr-devel
 BuildRequires: libldap-devel libncurses-devel libpam-devel libpng-devel
 BuildRequires: libraw1394-devel libssl-devel libstdc++-devel libdbus-tqt-devel
 BuildRequires: libtiff-devel libtinfo-devel libutempter-devel
@@ -659,6 +660,7 @@ Menu resources for the original KDE menu.
 %patch1086 -p1
 %patch1087 -p1
 %patch1088 -p1
+%patch1089 -p1
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 ###%patch2000 -p1
@@ -2003,6 +2005,11 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Sun Mar 15 2015 Dmitriy Khanzhin <jinn@altlinux.org> 3.5.13.2-alt7.1.1
+- NMU:
+  + fix typo in some .desktop files
+  + add BR(pre): rpm-build-xdg and BR: libusb-devel
+
 * Fri Apr 11 2014 Sergey V Turchin <zerg@altlinux.org> 3.5.13.2-alt7.1
 - fix plymouth support
 
