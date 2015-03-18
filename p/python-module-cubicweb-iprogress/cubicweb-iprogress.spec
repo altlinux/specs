@@ -1,6 +1,6 @@
 %define oname cubicweb-iprogress
 Name: python-module-%oname
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 Summary: Some adapters and view for stuff progressing to reach a milestone
 License: LGPL
@@ -37,6 +37,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Mar 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1
+- Version 0.2.0
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1
 - Initial build for Sisyphus
 
