@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.9.2
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -24,7 +24,7 @@ Url: http://gcc.gnu.org/
 %endif
 
 %define priority 492
-%define snapshot 20141101
+%define snapshot 20150212
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -161,10 +161,11 @@ Patch108: gcc49-cloog-dl.patch
 Patch109: gcc49-cloog-dl2.patch
 Patch110: gcc49-pr38757.patch
 Patch112: gcc49-no-add-needed.patch
-Patch114: gcc49-pr56493.patch
-Patch115: gcc49-color-auto.patch
-Patch117: gcc49-aarch64-async-unw-tables.patch
-Patch119: gcc49-pr63659.patch
+Patch113: gcc49-color-auto.patch
+# Patch114: gcc49-libgo-p224.patch #FIPS
+Patch115: gcc49-aarch64-async-unw-tables.patch
+Patch116: gcc49-aarch64-unwind-opt.patch
+Patch117: gcc49-pr64336.patch
 
 
 # Debian patches.
@@ -187,12 +188,9 @@ Patch221: ada-gcc-name.diff
 Patch222: ada-symbolic-tracebacks.diff
 Patch223: libjava-armel-unwind.diff
 Patch224: testsuite-glibc-warnings.diff
-Patch225: gccgo-arm64-relocations.diff
-Patch226: gccgo-arm64.diff
-Patch227: pr61294.diff
-Patch228: pr61294-doc.diff
-Patch229: linaro331.diff
-
+Patch225: gccgo-arm64.diff
+Patch226: pr61294.diff
+Patch227: pr61294-doc.diff
 
 # ALT patches.
 Patch700: alt-_GCC_AUTOCONF_VERSION.patch
@@ -215,7 +213,6 @@ Patch716: alt-defaults-ssp.patch
 Patch717: alt-escalate-always-overflow.patch
 Patch718: alt-libgo-weak.patch
 Patch719: alt-libitm-fix-build-with-_FORTIFY_SOURCE.patch
-Patch720: alt-linaro.patch
 Patch721: alt-alt-gcc-base-version.patch
 Patch800: alt-libtool.m4-gcj.patch
 
@@ -1081,10 +1078,11 @@ version %version.
 %patch107 -p0
 %patch110 -p0
 %patch112 -p0
-%patch114 -p0
+%patch113 -p0
+# %%patch114 -p0 # FIPS
 %patch115 -p0
+%patch116 -p0
 %patch117 -p0
-%patch119 -p0
 
 # Debian patches.
 %patch200 -p2
@@ -1108,10 +1106,9 @@ version %version.
 %patch223 -p2
 %endif
 %patch224 -p2
-# 225: Upstream as of redhat/gcc-4_9-branch@216625
+%patch225 -p2
 %patch226 -p2
 %patch227 -p2
-%patch228 -p2
 
 # ALT patches.
 %patch700 -p1
@@ -1134,7 +1131,6 @@ version %version.
 %patch717 -p1
 %patch718 -p1
 %patch719 -p1
-%patch720 -p1
 %patch721 -p1
 
 # Set proper version info.
@@ -1358,7 +1354,6 @@ export CC=%__cc \
 	--with-arch=armv5te --with-float=soft --with-abi=aapcs-linux \
 	--disable-sjlj-exceptions \
 %endif
-	--with-pkgversion=GCC \
 	#
 
 %make_build MAKEINFOFLAGS=--no-split \
@@ -2329,6 +2324,11 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Tue Mar 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt2
+- Updated to redhat/gcc-4_9-branch r220644.
+- Synced with Fedora gcc-4.9.2-6 and Debian 4.9.2-10.
+- Dropped Linaro patch.
+
 * Thu Nov 13 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt1
 - Updated to redhat/gcc-4_9-branch r216995.
 - Synced with Fedora gcc-4.9.2-1.
