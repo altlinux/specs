@@ -21,7 +21,7 @@
 %define rname kopete
 Name: kde4-kopete
 Version: 14.12.3
-Release: alt1
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -34,6 +34,9 @@ Requires: qca2-ossl
 Requires: libmediastreamer-ilbc
 
 Source: %rname-%version.tar
+# upstream
+Patch0: mediastreamer_2_11.patch
+# ALT
 Patch1: alt-mobile.patch
 Patch2: alt-xmpp-service-reg-form-layout.patch
 
@@ -205,6 +208,7 @@ based on %name.
 
 %prep
 %setup -q -n %rname-%version
+%patch0 -p1
 %if_disabled desktop
 %patch1 -p1
 %endif
@@ -314,6 +318,9 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Mar 18 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt2
+- add patch for new libmediastreamer (ALT#29079)
+
 * Fri Mar 13 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
 - new version
 
