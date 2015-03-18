@@ -2,8 +2,8 @@
 %def_enable    opengl
 
 Name:		gambas3
-Version:	3.6.2
-Release:	alt2
+Version:	3.7.0
+Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -225,10 +225,14 @@ Requires:	%name-gb-qt4-ext = %version-%release
 Requires:	%name-gb-qt4-webkit = %version-%release
 Requires:	%name-gb-qt4-opengl = %version-%release
 Requires:	%name-gb-report = %version-%release
+Requires:	%name-gb-report2 = %version-%release
+Requires:	%name-gb-scanner = %version-%release
 Requires:	%name-gb-sdl = %version-%release
 Requires:	%name-gb-sdl-sound = %version-%release
 Requires:	%name-gb-settings = %version-%release
 Requires:	%name-gb-signal = %version-%release
+Requires:	%name-gb-util = %version-%release
+Requires:	%name-gb-util-web = %version-%release
 Requires:	%name-gb-v4l = %version-%release
 Requires:	%name-gb-vb = %version-%release
 Requires:	%name-gb-xml = %version-%release
@@ -743,6 +747,25 @@ Requires:	%name-runtime = %version-%release
 %description gb-report
 This package contains the Gambas3 Report components.
 
+%package gb-report2
+Summary:	Gambas3 new component package for report
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-report2
+This package contains the new and better implementation of the Gambas3
+reporting component.
+
+%package gb-scanner
+Summary:	Gambas3 component package for work with scanners
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+Requires:	sane
+
+%description gb-scanner
+This package contains the component based on SANE to help dealing with
+scanners.
+
 %package gb-sdl
 Summary:	Gambas3 component package for sdl
 Group:		Development/Tools
@@ -781,6 +804,24 @@ Requires:	%name-runtime = %version-%release
 
 %description gb-signal
 This package contains the Gambas3 Signal components.
+
+%package gb-util
+Summary:	Component written in Gambas3 that provides utility functions to the interpreter
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-util
+Component written in Gambas3 that provides utility functions to the
+interpreter.
+
+%package gb-util-web
+Summary:	Component written in Gambas3 that provides utility functions to web applications
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-util-web
+Component written in Gambas3 that provides utility functions to the
+web applications.
 
 %package gb-v4l 
 Summary:	Gambas3 component package for v4l 
@@ -937,6 +978,8 @@ make LIBTOOL=%_bindir/libtool %?_smp_mflags
 %install
 export PATH=%buildroot%_bindir:$PATH
 make LIBTOOL=%_bindir/libtool DESTDIR=%buildroot INSTALL="install -p" install
+# Manually copy all examples
+cp -a app/examples %buildroot%appdir/
 # Yes, I know. Normally we'd nuke the .la files, but Gambas is retar^Wspecial.
 # rm -rf %%buildroot%%_libdir/%%name/*.la
 install -m644 -pD ./app/src/%name/.icon.png %buildroot%_pixmapsdir/%name.png
@@ -1303,11 +1346,21 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %files gb-qt4-webkit
 %_libdir/%name/gb.qt4.webkit.*
 %appdir/info/gb.qt4.webkit.*
+%appdir/control/gb.qt4.webkit/webview.png
 
 %files gb-report
 %_libdir/%name/gb.report.*
 %appdir/control/gb.report/
 %appdir/info/gb.report.*
+
+%files gb-report2
+%_libdir/%name/gb.report2.*
+%appdir/control/gb.report2/
+%appdir/info/gb.report2.*
+
+%files gb-scanner
+%_libdir/%name/gb.scanner.*
+%appdir/info/gb.scanner.*
 
 %files gb-sdl
 %_libdir/%name/gb.sdl.component
@@ -1328,6 +1381,17 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %files gb-signal
 %_libdir/%name/gb.signal.*
 %appdir/info/gb.signal.*
+
+%files gb-util
+%_libdir/%name/gb.util.component
+%_libdir/%name/gb.util.gambas
+%appdir/info/gb.util.info
+%appdir/info/gb.util.list
+
+%files gb-util-web
+%_libdir/%name/gb.util.web.*
+%appdir/info/gb.util.web.*
+%appdir/control/gb.util.web/
 
 %files gb-v4l
 %_libdir/%name/gb.v4l.*
@@ -1366,6 +1430,18 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Tue Mar 17 2015 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
+- New version (http://gambaswiki.org/wiki/doc/release/3.7.0)
+- New components:
+  + gb.report2 is a new and better implementation of the reporting
+    component.
+  + gb.scanner is a new component based on SANE to help dealing with
+    scanners.
+  + gb.util is a new component written in Gambas that provides utility
+    functions to the interpreter.
+  + gb.util.web is a new component written in Gambas that provides
+    utility functions to web applications.
+
 * Mon Dec 01 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.6.2-alt2
 - Rebuilt with llvm 3.5.0.
 
