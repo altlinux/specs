@@ -1,6 +1,6 @@
 Name: linphone
-Version: 3.7.0
-Release: alt2
+Version: 3.8.0
+Release: alt1
 License: GPLv2+
 Url: http://www.linphone.org/
 
@@ -98,10 +98,13 @@ This package contains development files for %name.
 %files gui -f %name.lang
 %_bindir/linphone
 %_desktopdir/%name.desktop
+%_desktopdir/audio-assistant.desktop
 %_pixmapsdir/%name
 %_man1dir/linphone.1.gz
 %_datadir/sounds/%name
 %_datadir/%name
+%_datadir/appdata/%name.appdata.xml
+
 
 %files cli
 %_bindir/linphonec
@@ -118,6 +121,9 @@ This package contains development files for %name.
 %_libdir/*.so
 
 %changelog
+* Fri Mar 13 2015 Alexei Takaseev <taf@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Mon Mar 03 2014 Alexei Takaseev <taf@altlinux.org> 3.7.0-alt2
 - update from git:2c0e4947ccfc1ffa98eb88f21ee295cd13f0e5ec
 

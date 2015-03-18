@@ -1,6 +1,6 @@
 Name: libmediastreamer
-Version: 2.10.0
-Release: alt4
+Version: 2.11.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Audio/Video real-time streaming
@@ -86,6 +86,9 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_includedir/*
 
 %changelog
+* Thu Mar 12 2015 Alexei Takaseev <taf@altlinux.org> 2.11.0-alt1
+- 2.11.0
+
 * Mon Dec 29 2014 Alexei Takaseev <taf@altlinux.org> 2.10.0-alt4
 - Fix build with libav-11
 
@@ -93,7 +96,7 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 - Fix build with libav-10
 
 * Mon Mar 03 2014 Alexei Takaseev <taf@altlinux.org> 2.10.0-alt2
-- update fron git:0e6be4c7cad7ce3d3cb4feed9a6ad52439ba365e
+- update from git:0e6be4c7cad7ce3d3cb4feed9a6ad52439ba365e
 
 * Fri Feb 21 2014 Alexei Takaseev <taf@altlinux.org> 2.10.0-alt1
 - 2.10.0

@@ -1,6 +1,6 @@
 Name: libmediastreamer-x264
-Version: 1.4.2
-Release: alt1.3
+Version: 1.4.3
+Release: alt1
 
 Group: System/Libraries
 Summary: A H264 codec mediastreamer plugin
@@ -36,6 +36,12 @@ This package contains a H264 codec mediastreamer plugin.
 %_libdir/mediastreamer/plugins/*
 
 %changelog
+* Fri Mar 13 2015 Alexei Takaseev <taf@altlinux.org> 1.4.3-alt1
+- 1.4.3
+
+* Fri Mar 13 2015 Alexei Takaseev <taf@altlinux.org> 1.4.2-alt2
+- rebuild with new libmediastreamer
+
 * Tue May 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt1.3
 - rebuilt with recent x264, again
 
