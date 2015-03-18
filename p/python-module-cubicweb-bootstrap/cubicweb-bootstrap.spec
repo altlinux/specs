@@ -1,6 +1,6 @@
 %define oname cubicweb-bootstrap
 Name: python-module-%oname
-Version: 1.0.0
+Version: 1.0.2
 Release: alt1
 Summary: Base cube for bootstrap-based user interfaces
 License: LGPL
@@ -36,6 +36,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Wed Mar 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
+- Version 1.0.2
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Version 1.0.0
 
