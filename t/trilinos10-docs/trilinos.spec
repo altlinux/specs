@@ -1,9 +1,8 @@
 %def_with docs
-%define gver 4.8
+%define gver 4.9
 %set_gcc_version %gver
 
 #ExclusiveArch: %ix86
-%def_with dakota
 %def_without dakota
 %def_without petsc
 %define mpiimpl openmpi
@@ -18,7 +17,7 @@ interchanging, and provides a full-featured set of concrete classes that \
 implement all abstract interfaces.
 
 %define somver 10
-%define sover %somver.11.8
+%define sover %somver.12.1
 %define scalar_type real
 %define ldir %_libdir/petsc-%scalar_type
 
@@ -29,7 +28,7 @@ Name: %truename-docs
 %else
 Name: %truename
 %endif
-Version: 11.8.1
+Version: 11.12.1
 Release: alt1
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL, BSD-style
@@ -51,15 +50,15 @@ Requires: lib%name = %version-%release
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: gcc%gver-fortran libgfortran-devel gcc%gver-c++ libnumpy-devel
-BuildPreReq: liblapack-devel doxygen getfemxx binutils-devel
-BuildPreReq: openmpi-devel expat libexpat-devel swig graphviz
+BuildPreReq: liblapack-devel getfemxx binutils-devel libglm-devel
+BuildPreReq: openmpi-devel expat libexpat-devel swig graphviz eigen3
 BuildPreReq: libgmp_cxx-devel libgmp-devel libxml2-devel libmatio-devel
-BuildPreReq: boost-devel libarprec-devel libqd-devel
-BuildPreReq: liby12m-devel libsuitesparse-devel libhdf5-mpi-devel
-BuildPreReq: libmtl4-devel libsundials-devel python-devel
+BuildPreReq: boost-devel libarprec-devel libqd-devel libpnetcdf-devel
+BuildPreReq: liby12m-devel libsuitesparse-devel libhdf5-mpi-devel flex
+BuildPreReq: libmtl4-devel libsundials-devel python-devel libhwloc-devel
 BuildPreReq: libscotch-devel libcheck-devel libblacs-devel
 BuildPreReq: libsuperlu_dist-devel libscalapack-devel libmumps-devel
-BuildPreReq: libparmetis0-devel libparpack-mpi-devel libarpack-devel
+BuildPreReq: libparmetis-devel libparpack-mpi-devel libarpack-devel
 BuildPreReq: libadolc-devel libtvmet-devel libchaco-devel libfiatxx-devel
 BuildPreReq: liboski-%scalar_type-devel python-module-docutils dblatex
 BuildPreReq: libblitz-devel libtaucs-devel cmake ctest zlib-devel
@@ -68,13 +67,17 @@ BuildPreReq: ghostscript-utils chrpath python-module-pyMPI
 BuildPreReq: libtbb-devel libqt4-devel boost-program_options-devel
 BuildPreReq: chaco libnetcdf-mpi-devel libexodusii-devel libnewmat-devel
 BuildPreReq: libsparskit-devel boost-signals-devel tinyxml-devel Xdmf-devel
-BuildPreReq: python-module-mpi4py-devel
+BuildPreReq: python-module-mpi4py-devel boost-geometry-devel
 BuildPreReq: libnetcdff-mpi-devel libnetcdf_c++4-mpi-devel
+BuildPreReq: libmetis0-devel
 %if_with dakota
 BuildPreReq: libdakota-devel
 %endif
 %if_with petsc
 BuildPreReq: libpetsc-%scalar_type-devel petsc-%scalar_type-sources
+%endif
+%if_with docs
+BuildPreReq: doxygen
 %endif
 
 %description
@@ -1876,6 +1879,166 @@ algebra library.
 
 This package contains development files of Xpetra.
 
+%package -n libtrios%somver
+Summary: Trilinos I/O Support
+Group: System/Libraries
+Provides: libtrios = %version-%release
+
+%description -n libtrios%somver
+%longdesc
+
+The Trios (Trilinos I/O Support) package provides libraries to support
+the development of distributed data services on HPC platforms. Simply
+put, a data service is a separate (possibly parallel) application that
+performs data-processingoperations on behalf of an actively running
+scientific application. A data service allows the application to
+"offload" operations that could potentially hinder the scalability of
+the main parallel application. Use cases include, for example, include
+data staging for bursty I/O operations, real-time debugging support,
+statistics gathering, uncertaintly quantification, data analysis, and
+visualization.
+
+%package -n libtrios%somver-devel
+Summary: Development files of Trios
+Group: Development/C++
+Requires: %name-headers = %version-%release
+Requires: libtrios%somver = %version-%release
+Provides: libtrios-devel = %version-%release
+
+%description -n libtrios%somver-devel
+%longdesc
+
+The Trios (Trilinos I/O Support) package provides libraries to support
+the development of distributed data services on HPC platforms. Simply
+put, a data service is a separate (possibly parallel) application that
+performs data-processingoperations on behalf of an actively running
+scientific application. A data service allows the application to
+"offload" operations that could potentially hinder the scalability of
+the main parallel application. Use cases include, for example, include
+data staging for bursty I/O operations, real-time debugging support,
+statistics gathering, uncertaintly quantification, data analysis, and
+visualization.
+
+This package contains development files of Trios.
+
+%package -n libshylu%somver
+Summary: Package for solving sparse linear systems
+Group: System/Libraries
+Provides: libshylu = %version-%release
+
+%description -n libshylu%somver
+%longdesc
+
+ShyLU is a package for solving sparse linear systems. It can be used
+either as a preconditioner, or as a solver. Currently, we recommend
+using it as an Ifpack preconditioner.
+
+ShyLU uses a hybrid direct/iterative approach based on Schur
+complements. The goal is to provide robustness similar to sparse direct
+solvers, but memory usage more similar to preconditioned iterative
+solvers.
+
+%package -n libshylu%somver-devel
+Summary: Development files of Trios
+Group: Development/C++
+Requires: %name-headers = %version-%release
+Requires: libshylu%somver = %version-%release
+Provides: libshylu-devel = %version-%release
+
+%description -n libshylu%somver-devel
+%longdesc
+
+ShyLU is a package for solving sparse linear systems. It can be used
+either as a preconditioner, or as a solver. Currently, we recommend
+using it as an Ifpack preconditioner.
+
+ShyLU uses a hybrid direct/iterative approach based on Schur
+complements. The goal is to provide robustness similar to sparse direct
+solvers, but memory usage more similar to preconditioned iterative
+solvers.
+
+This package contains development files of ShyLU.
+
+%package -n libmuelu%somver
+Summary: Flexible, high-performance multigrid solver library
+Group: System/Libraries
+Provides: libmuelu = %version-%release
+
+%description -n libmuelu%somver
+%longdesc
+
+MueLu is a flexible, high-performance multigrid solver library. It
+provides a variety of multigrid algorithms for these problem classes:
+
+* Poisson
+* Elasticity
+* convection-diffusion
+* Maxwell's equations (eddy current formulation)
+
+%package -n libmuelu%somver-devel
+Summary: Development files of MueLu
+Group: Development/C++
+Requires: %name-headers = %version-%release
+Requires: libmuelu%somver = %version-%release
+Provides: libmuelu-devel = %version-%release
+
+%description -n libmuelu%somver-devel
+%longdesc
+
+MueLu is a flexible, high-performance multigrid solver library. It
+provides a variety of multigrid algorithms for these problem classes:
+
+* Poisson
+* Elasticity
+* convection-diffusion
+* Maxwell's equations (eddy current formulation)
+
+This package contains development files of MueLu.
+
+%package -n libfortrilinos%somver
+Summary: Provides object-oriented Fortran interfaces to Trilinos C++ packages
+Group: System/Libraries
+Provides: libfortrilinos = %version-%release
+
+%description -n libfortrilinos%somver
+%longdesc
+
+The ForTrilinos project emphasizes portability, robustness, and scalable
+development. Portability results from standards conformance. In
+particular, ForTrilinos exploits the C interoperability features of the
+Fortran 2003 standard to interact with other Trilinos packages through
+the CTrilinos package. This approach provides platform-independent type
+safety and procedure name resolution using language constructs supported
+by the recent releases of all ten Fortran compilers surveyed. Robustness
+results in part from a Fortran implementation of runtime assertions and
+in part by embedding an automated memory management architecture into
+each ForTrilinos object. Scalable development results from automating
+the most labor-intensive portions of the interface development effort.
+
+%package -n libfortrilinos%somver-devel
+Summary: Development files of ForTrilinos
+Group: Development/C++
+Requires: %name-headers = %version-%release
+Requires: libfortrilinos%somver = %version-%release
+Provides: libfortrilinos-devel = %version-%release
+
+%description -n libfortrilinos%somver-devel
+%longdesc
+
+The ForTrilinos project emphasizes portability, robustness, and scalable
+development. Portability results from standards conformance. In
+particular, ForTrilinos exploits the C interoperability features of the
+Fortran 2003 standard to interact with other Trilinos packages through
+the CTrilinos package. This approach provides platform-independent type
+safety and procedure name resolution using language constructs supported
+by the recent releases of all ten Fortran compilers surveyed. Robustness
+results in part from a Fortran implementation of runtime assertions and
+in part by embedding an automated memory management architecture into
+each ForTrilinos object. Scalable development results from automating
+the most labor-intensive portions of the interface development effort.
+
+This package contains development files of ForTrilinos.
+
 %package -n libseacas%somver-apps
 Summary: Libraries for SEACAS applications
 Group: System/Libraries
@@ -1922,6 +2085,15 @@ This package contains SEACAS applications.
 %prep
 %setup -n %oname-%version
 rm -fR packages/seacas/libraries/nemesis
+
+mv packages/stk/stk_util/stk_util/parallel/ParallelInputStream.cpp \
+	packages/stk/stk_util/stk_util/parallel/ParallelReduce.cpp \
+	packages/stk/stk_util/stk_util/parallel/Parallel.cpp \
+	packages/stk/stk_util/stk_util/environment/
+cp packages/stk/stk_util/stk_util/parallel/ParallelInputStream.hpp \
+	packages/stk/stk_util/stk_util/parallel/ParallelReduce.hpp \
+	packages/stk/stk_util/stk_util/parallel/Parallel.hpp \
+	packages/stk/stk_util/stk_util/environment/
 
 #sed -i 's|@LIBDIR@|%_libdir|g' \
 #	cmake/python/data/TrilinosPackageDependencies.xml
@@ -1971,6 +2143,8 @@ install -d packages/TriKota/Dakota/install/include
 install -p -m644 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE7 %SOURCE8 \
 	packages/stokhos/src
 
+ln -s gmres.h packages/shylu/src/epetra/egmres.h
+
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
@@ -1986,24 +2160,51 @@ pushd BUILD
 #ln -s %_includedir/dakota packages/TriKota/Dakota
 cmake \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
+	-DTrilinos_INSTALL_LIB_DIR:PATH=%_lib \
 	-DMPI4PY_INCLUDE_DIR:PATH=%python_sitelibdir/mpi4py/include \
+%if_with docs
+	-DBUILD_DOCS=ON \
+%else
+	-DBUILD_DOCS=OFF \
+%endif
 	..
 sed -i 's|.*HAVE_STOKHOS_DAKOTA.*||' \
 	packages/stokhos/src/Stokhos_config.h
 %if_without docs
+if [ "%__nprocs" == "1" ]; then
 %make -j2 VERBOSE=1
-#make VERBOSE=1
+else
+	%make_build VERBOSE=1
+fi
 %endif
 popd
 
 # docs
 
 %if_with docs
+for i in $(find -name GNUmakefile); do
+	sed -i 's|lualatex|latex|' $i
+done
 pushd doc
 ./build_docs.pl
 popd
 
 pushd packages/PyTrilinos/doc
+for i in organization distributed_object sparsity PyTrilinos
+do
+	pdftops -eps UsersGuide/figures/$i.pdf \
+		UsersGuide/figures/$i.eps
+done
+for i in snllineblk DOEbwlogo
+do
+	pdftops -eps UsersGuide/$i.pdf \
+		UsersGuide/$i.eps
+done
+for i in organization distributed_object scalability-1k
+do
+	pdftops -eps PyTrilinos-ACM-TOMS/$i.pdf \
+		PyTrilinos-ACM-TOMS/$i.eps
+done
 %make_build -C OverviewOfPyTrilinos
 %make_build -C PyTrilinos-ACM-TOMS
 %make_build -C UsersGuide
@@ -2028,6 +2229,8 @@ mkdir -p packages/TriKota/Dakota/install/include
 %if_without docs
 %makeinstall_std
 
+ln -s gmres.h %buildroot%_includedir/egmres.h
+
 install -d %buildroot%_pkgconfigdir
 install -m644 ../%oname.pc %buildroot%_pkgconfigdir
 #install -p -m644 %SOURCE3 %SOURCE4 %SOURCE5 \
@@ -2046,13 +2249,13 @@ cp -fR src/PyTrilinos \
 	%buildroot%python_sitelibdir/
 %else
 %make -C example
-%make -C test
-install -m644 example/*.py \
-	%buildroot%python_sitelibdir/PyTrilinos/example
-install -m644 test/*.py \
-	%buildroot%python_sitelibdir/PyTrilinos/test
-touch %buildroot%python_sitelibdir/PyTrilinos/example/__init__.py
-touch %buildroot%python_sitelibdir/PyTrilinos/test/__init__.py
+#make -C test
+#install -m644 example/*.py \
+#	%buildroot%python_sitelibdir/PyTrilinos/example
+#install -m644 test/*.py \
+#	%buildroot%python_sitelibdir/PyTrilinos/test
+#touch %buildroot%python_sitelibdir/PyTrilinos/example/__init__.py
+#touch %buildroot%python_sitelibdir/PyTrilinos/test/__init__.py
 %endif
 
 %if_without docs
@@ -2066,7 +2269,7 @@ popd
 pushd ../packages/PyTrilinos/doc
 install -d %buildroot%_libdir/%truename/doc/PyTrilinos
 cp -fR DevelopersGuide OverviewOfPyTrilinos/*.ps \
-	SciPy05 UsersGuide/*.ps UsersGuide/*.pdf \
+	SciPy05 UsersGuide/*.pdf \
 	PyTrilinos-ACM-TOMS/*.pdf  PyTrilinos-ACM-TOMS/*test* \
 	%buildroot%_libdir/%truename/doc/PyTrilinos/
 popd
@@ -2187,9 +2390,9 @@ done
 # fix for x86_64
 
 %if_without docs
-%ifarch x86_64
-mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
-%endif
+#ifarch x86_64
+#mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
+#endif
 for i in %buildroot%_libdir/*.so; do
 	chrpath -r %mpidir/lib:%_libdir/oski $i || \
 		chrpath -r %mpidir/lib $i ||:
@@ -2289,13 +2492,13 @@ popd
 
 %files -n libsundance%somver
 %_libdir/libsundance*.so.*
-%_libdir/libplaya.so.*
-%_libdir/libpdeopt.so.*
+#_libdir/libplaya.so.*
+#_libdir/libpdeopt.so.*
 
 %files -n libsundance%somver-devel
 %_libdir/libsundance*.so
-%_libdir/libplaya.so
-%_libdir/libpdeopt.so
+#_libdir/libplaya.so
+#_libdir/libpdeopt.so
 
 %files -n libml%somver
 %_libdir/libml.so.*
@@ -2425,7 +2628,7 @@ popd
 %files -n python-module-PyTrilinos%somver
 %python_sitelibdir/PyTrilinos*
 %exclude %python_sitelibdir/PyTrilinos/example
-%exclude %python_sitelibdir/PyTrilinos/test
+#exclude %python_sitelibdir/PyTrilinos/test
 # antirepocop
 %ifarch x86_64
 %exclude %python_sitelibdir_noarch/PyTrilinos*
@@ -2455,11 +2658,11 @@ popd
 
 %files -n libmesquite%somver
 %_libdir/libmesquite.so.*
-#_libdir/libmsq*.so.*
+%_libdir/libmsq*.so.*
 
 %files -n libmesquite%somver-devel
 %_libdir/libmesquite.so
-#_libdir/libmsq*.so
+%_libdir/libmsq*.so
 
 %files -n liboptika%somver
 %_libdir/liboptika.so.*
@@ -2518,12 +2721,19 @@ popd
 %_libdir/libIoss.so.*
 %_libdir/libIotr.so.*
 %_libdir/libIoxf.so.*
-#_libdir/libaprepro_lib.so.*
-#_libdir/libexodus*.so.*
-#_libdir/libsupes.so.*
-#_libdir/libsuplib.so.*
-#_libdir/libchaco.so.*
-#_libdir/libmapvarlib.so.*
+%_libdir/libIo?x.so.*
+%_libdir/libaprepro_lib.so.*
+%_libdir/libblotlib.so.*
+%_libdir/libchaco.so.*
+%_libdir/libexodus*.so.*
+%_libdir/libfastqlib*.so.*
+%_libdir/libmapvarlib*.so.*
+%_libdir/libplt*.so.*
+%_libdir/libsupes*.so.*
+%_libdir/libsuplib*.so.*
+%_libdir/libsvdi*.so.*
+%_libdir/libvdicps_dual*.so.*
+%_libdir/libvdx11cps*.so.*
 
 %files -n libseacas%somver-devel
 #_libdir/libIoex.so
@@ -2534,18 +2744,55 @@ popd
 %_libdir/libIoss.so
 %_libdir/libIotr.so
 %_libdir/libIoxf.so
-#_libdir/libaprepro_lib.so
-#_libdir/libexodus*.so
-#_libdir/libsupes.so
-#_libdir/libsuplib.so
-#_libdir/libchaco.so
-#_libdir/libmapvarlib.so
+%_libdir/libIo?x.so
+%_libdir/libaprepro_lib.so
+%_libdir/libblotlib.so
+%_libdir/libchaco.so
+%_libdir/libexodus*.so
+%_libdir/libfastqlib*.so
+%_libdir/libmapvarlib*.so
+%_libdir/libplt*.so
+%_libdir/libsupes*.so
+%_libdir/libsuplib*.so
+%_libdir/libsvdi*.so
+%_libdir/libvdicps_dual*.so
+%_libdir/libvdx11cps*.so
 
 %files -n libxpetra%somver
 %_libdir/libxpetra*.so.*
 
 %files -n libxpetra%somver-devel
 %_libdir/libxpetra*.so
+
+%files -n libtrios%somver
+%doc packages/trios/ReleaseNotes.txt
+%_libdir/libcommsplitter*.so.*
+%_libdir/libtrios*.so.*
+
+%files -n libtrios%somver-devel
+%_libdir/libcommsplitter*.so
+%_libdir/libtrios*.so
+
+%files -n libshylu%somver
+%doc packages/shylu/README.txt packages/shylu/ReleaseNotes.txt
+%_libdir/libshylu*.so.*
+
+%files -n libshylu%somver-devel
+%_libdir/libshylu*.so
+
+%files -n libmuelu%somver
+%doc packages/muelu/ReleaseNotes.txt
+%_libdir/libmuelu*.so.*
+
+%files -n libmuelu%somver-devel
+%_libdir/libmuelu*.so
+
+%files -n libfortrilinos%somver
+%doc packages/ForTrilinos/ReleaseNotes.txt
+%_libdir/libfortrilinos*.so.*
+
+%files -n libfortrilinos%somver-devel
+%_libdir/libfortrilinos*.so
 
 #files -n libseacas%somver-apps
 #_libdir/libepu_lib.so.*
@@ -2582,7 +2829,7 @@ popd
 
 %files -n python-module-PyTrilinos%somver-examples
 %python_sitelibdir/PyTrilinos/example
-%python_sitelibdir/PyTrilinos/test
+#python_sitelibdir/PyTrilinos/test
 
 %files -n python-module-PyTrilinos%somver-doc
 %dir %_libdir/%truename/doc
@@ -2598,6 +2845,10 @@ popd
 %endif
 
 %changelog
+* Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.12.1-alt1
+- Version 11.12.1
+- New packages: Trios, ShyLU, MueLu, ForTrilinos
+
 * Fri May 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.8.1-alt1
 - Version 11.8.1
 
@@ -2640,4 +2891,3 @@ popd
 
 * Mon Aug 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt1
 - Version 10.12.2
-
