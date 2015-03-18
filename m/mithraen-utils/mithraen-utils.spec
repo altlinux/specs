@@ -2,7 +2,7 @@ BuildArch: noarch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: mithraen-utils
-Version: 0.0.10
+Version: 0.0.11
 Release: alt1
 
 Summary: Utilites for SVN
@@ -35,6 +35,9 @@ install -m 755 * %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Wed Mar 18 2015 Denis Smirnov <mithraen@altlinux.ru> 0.0.11-alt1
+- log-if-die: add -i (ignore return code)
+
 * Sun Nov 11 2012 Denis Smirnov <mithraen@altlinux.ru> 0.0.10-alt1
 - add 'vfast' utility
 
