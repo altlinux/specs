@@ -1,6 +1,6 @@
 Name: xmedcon
-Version: 0.10.5
-Release: alt5.2
+Version: 0.13.0
+Release: alt1
 
 Summary: A medical image conversion utility and library
 License: (L)GPL
@@ -13,7 +13,6 @@ Packager: Andrey Yurkovsky <anyr@altlinux.org>
 Source0: %name-%version.tar.bz2
 Source1: %name.desktop
 Source2: %name.png
-Patch: xmedcon-0.10.5-alt-libpng15.patch
 
 BuildRequires: gcc-c++ libgtk+2-devel libpng-devel
 
@@ -41,7 +40,6 @@ necessary for developing programs that make use of the (X)MedCon library
 
 %prep
 %setup -q
-%patch -p2
 
 %build
 %configure
@@ -50,16 +48,17 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 %install
 %makeinstall
-%__install -pD -m744 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
-%__install -pD -m644 %SOURCE2 %buildroot%_liconsdir/%name.png
+install -pD -m744 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
+install -pD -m644 %SOURCE2 %buildroot%_liconsdir/%name.png
+
 %files
+%doc ChangeLog COPYING COPYING.LIB README REMARKS AUTHORS
 %_bindir/*
 %_libdir/*so.*
 %_sysconfdir/*
 %_man1dir/*
 %_liconsdir/%name.png
 %_datadir/applications/%name.desktop
-%doc ChangeLog COPYING COPYING.LIB README REMARKS AUTHORS
 
 %files devel
 %doc README COPYING COPYING.LIB
@@ -71,6 +70,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_datadir/aclocal/*
 
 %changelog
+* Wed Mar 18 2015 Andrey Cherepanov <cas@altlinux.org> 0.13.0-alt1
+- New version
+- Small spec cleanup
+
 * Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.5-alt5.2
 - Rebuilt with libpng15
 
@@ -88,7 +91,7 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 * Wed Nov 25 2009 Andrey Yurkovsky <anyr@altlinux.org> 0.10.5-alt3
 - added semicolon (';') as trailing character in desktop file
-- %_sysconfdir/* in spec changed to %config %_sysconfdir/*
+- %%_sysconfdir/* in spec changed to %%config %%_sysconfdir/*
 
 * Thu Nov 19 2009 Andrey Yurkovsky <anyr@altlinux.org> 0.10.5-alt2
 - added desktop and icon files
