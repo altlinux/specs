@@ -3,9 +3,9 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.11
+Version: 0.1.12.6
 Release: alt1
-Summary: Yet Another DI Container
+Summary: Yet Another Dependency Injection Container
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/yadic/
@@ -23,7 +23,7 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 %py_provides %oname
 
 %description
-Take a look to the tests for usage examples.
+Yet Another Dependency Injection Container.
 
 %package tests
 Summary: Tests for %oname
@@ -31,7 +31,7 @@ Group: Development/Python
 Requires: %name = %EVR
 
 %description tests
-Take a look to the tests for usage examples.
+Yet Another Dependency Injection Container.
 
 This package contains tests for %oname.
 
@@ -41,7 +41,7 @@ Group: Development/Python3
 %py3_provides %oname
 
 %description -n python3-module-%oname
-Take a look to the tests for usage examples.
+Yet Another Dependency Injection Container.
 
 %package -n python3-module-%oname-tests
 Summary: Tests for %oname
@@ -49,7 +49,7 @@ Group: Development/Python3
 Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
-Take a look to the tests for usage examples.
+Yet Another Dependency Injection Container.
 
 This package contains tests for %oname.
 
@@ -109,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.12.6-alt1
+- Version 0.1.12.6
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.11-alt1
 - Version 0.1.11
 
