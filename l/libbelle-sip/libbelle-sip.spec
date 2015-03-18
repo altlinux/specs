@@ -1,5 +1,5 @@
 Name: libbelle-sip
-Version: 1.3.3
+Version: 1.4.0
 Release: alt1
 Summary: Linphone sip stack
 
@@ -14,7 +14,7 @@ Patch0: %name-%version-%release.patch
 # Automatically added by buildreq on Tue Feb 25 2014
 # optimized out: antlr3-C antlr3-java gnu-config java jpackage-utils libcloog-isl4 libstdc++-devel pkg-config stringtemplate4
 BuildRequires: antlr3-C-devel antlr3-tool gcc-c++ java-devel
-BuildRequires: /proc rpm-build-java libpolarssl-devel
+BuildRequires: /proc rpm-build-java libmbedtls-devel
 
 %description
 Belle-sip is an object oriented c written SIP stack used by Linphone.
@@ -56,6 +56,9 @@ make
 %_libdir/pkgconfig/belle-sip.pc
 
 %changelog
+* Thu Mar 12 2015 Alexei Takaseev <taf@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Fri Sep 19 2014 Alexei Takaseev <taf@altlinux.org> 1.3.3-alt1
 - 1.3.3
 

@@ -1,6 +1,6 @@
 Name: libortp
-Version: 0.22.0
-Release: alt3
+Version: 0.24.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Real-time Transport Protocol Stack
@@ -11,7 +11,7 @@ Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-BuildRequires: doxygen glibc-devel libssl-devel
+BuildRequires: doxygen glibc-devel
 
 %description
 oRTP is a LGPL licensed C library implementing the RTP protocol
@@ -63,6 +63,9 @@ develop programs using the oRTP library.
 %_includedir/*
 
 %changelog
+* Thu Mar 12 2015 Alexei Takaseev <taf@altlinux.org> 0.24.0-alt1
+- 0.24.0
+
 * Mon Mar 03 2014 Alexei Takaseev <taf@altlinux.org> 0.22.0-alt3
 - fix very stupid bugs in various place of oRTP
 

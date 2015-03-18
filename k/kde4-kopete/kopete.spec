@@ -21,7 +21,7 @@
 %define rname kopete
 Name: kde4-kopete
 Version: 14.12.3
-Release: alt2
+Release: alt3
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -318,6 +318,9 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Mar 18 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt3
+- rebuild with new libmediastreamer
+
 * Wed Mar 18 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt2
 - add patch for new libmediastreamer (ALT#29079)
 
