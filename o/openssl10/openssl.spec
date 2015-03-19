@@ -1,6 +1,6 @@
 Name: openssl10
 Version: 1.0.1k
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -40,6 +40,12 @@ Patch26: openssl-rh-dh-1024.patch
 Patch27: openssl-rh-padlock64.patch
 Patch28: openssl-rh-SSL_DEFAULT_CIPHER_LIST.patch
 Patch30: openssl-rh-disable-sslv2v3.patch
+Patch101: openssl-rh-cve-2015-0209.patch
+Patch102: openssl-rh-cve-2015-0286.patch
+Patch103: openssl-rh-cve-2015-0287.patch
+Patch104: openssl-rh-cve-2015-0288.patch
+Patch105: openssl-rh-cve-2015-0289.patch
+Patch106: openssl-rh-cve-2015-0293.patch
 
 %define shlib_soversion 10
 %define openssldir /var/lib/ssl
@@ -243,6 +249,13 @@ on the command line.
 %patch28 -p1
 %patch30 -p1
 
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+
 find -type f -name \*.orig -delete
 
 # Correct shared library name.
@@ -445,6 +458,10 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Thu Mar 19 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1k-alt2
+- Fixed CVE-2015-0209, CVE-2015-0286, CVE-2015-0287, CVE-2015-0288,
+  CVE-2015-0289, CVE-2015-0293.
+
 * Mon Jan 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1k-alt1
 - Updated to 1.0.1k (fixes CVE-2014-3571, CVE-2015-0206, CVE-2014-3569,
   CVE-2014-3572, CVE-2015-0204, CVE-2015-0205, CVE-2014-8275,
