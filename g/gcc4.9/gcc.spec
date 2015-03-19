@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.9.2
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -214,6 +214,7 @@ Patch717: alt-escalate-always-overflow.patch
 Patch718: alt-libgo-weak.patch
 Patch719: alt-libitm-fix-build-with-_FORTIFY_SOURCE.patch
 Patch721: alt-alt-gcc-base-version.patch
+Patch722: alt-defaults-trampolines.patch
 Patch800: alt-libtool.m4-gcj.patch
 
 Provides: gcc = %version, %_bindir/%gcc_target_platform-gcc, %_bindir/gcc
@@ -1132,6 +1133,7 @@ version %version.
 %patch718 -p1
 %patch719 -p1
 %patch721 -p1
+%patch722 -p1
 
 # Set proper version info.
 echo %gcc_branch > gcc/BASE-VER
@@ -2324,6 +2326,9 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Wed Mar 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt3
+- Turned on -Wtrampolines by default.
+
 * Tue Mar 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt2
 - Updated to redhat/gcc-4_9-branch r220644.
 - Synced with Fedora gcc-4.9.2-6 and Debian 4.9.2-10.
