@@ -1,5 +1,7 @@
+%def_without python3
+
 Name: dpkt
-Version: 1.8
+Version: 1.8.6
 Release: alt1
 Url: http://monkey.org/~dugsong/dpkt/
 License: BSD
@@ -11,6 +13,14 @@ Buildarch: noarch
 Requires: %packagename = %version
 
 BuildRequires: python-modules-xml python-module-epydoc >= 3.0.1
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-pytest-cov
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-pytest-cov
+BuildPreReq: python-tools-2to3
+%endif
 
 %description
 %summary
@@ -26,24 +36,75 @@ Authors:
 --------
     Dug Song <dugsong+dpkt@monkey.org>
 
+%if_with python3
+%package -n python3-module-dpkt
+Summary: Fast, simple packet creation and parsing
+Group: Development/Python3
+
+%description -n python3-module-dpkt
+Fast, simple packet creation / parsing, with definitions for the basic TCP/IP
+protocols.
+
+Authors:
+--------
+    Dug Song <dugsong+dpkt@monkey.org>
+%endif
+
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 epydoc -o doc -n dpkt -u %url --docformat=plaintext ./dpkt/
 
 %install
 %python_install
 
-%files
-%doc examples tests
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+%check
+python setup.py test
+py.test -vv %name
+%if_with python3
+pushd ../python3
+python3 setup.py test
+py.test-%_python3_version -vv %name
+popd
+%endif
+
+#files
+#doc examples tests
 
 %files -n %packagename
-%doc doc AUTHORS CHANGES HACKING LICENSE README
-%python_sitelibdir/%modulename
+%doc doc AUTHORS CHANGES LICENSE README*
+%python_sitelibdir/*
+
+%if_with python3
+%files -n python3-module-dpkt
+%doc doc AUTHORS CHANGES LICENSE README*
+%python3_sitelibdir/*
+%endif
 
 %changelog
+* Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.6-alt1
+- Version 1.8.6
+
 * Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 1.8-alt1
 - Autobuild version bump to 1.8
 - Fix docs build
