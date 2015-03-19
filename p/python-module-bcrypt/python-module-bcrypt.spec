@@ -1,5 +1,7 @@
+%def_with python3
+
 Summary: An implementation the OpenBSD Blowfish password hashing algorithm
-Version: 0.4
+Version: 1.1.1
 Release: alt1
 %setup_python_module bcrypt
 Name: python-module-bcrypt
@@ -9,6 +11,14 @@ Source2: bfhash.1
 License: BSD
 Group: Development/Python
 Url: http://code.google.com/p/py-bcrypt/
+
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-six python-module-cffi
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-six python3-module-cffi
+%endif
 
 %description
 py-bcrypt is an implementation the OpenBSD Blowfish password hashing
@@ -20,24 +30,73 @@ Blowfish block cipher with modifications designed to raise the cost of
 off-line password cracking. The computation cost of the algorithm is
 parametised, so it can be increased as computers get faster.
 
+%if_with python3
+%package -n python3-module-bcrypt
+Summary: An implementation the OpenBSD Blowfish password hashing algorithm
+Group: Development/Python3
+
+%description -n python3-module-bcrypt
+py-bcrypt is an implementation the OpenBSD Blowfish password hashing
+algorithm, as described in "A Future-Adaptable Password Scheme" by Niels
+Provos and David Mazieres: http://www.openbsd.org/papers/bcrypt-paper.ps
+
+This system hashes passwords using a version of Bruce Schneier's
+Blowfish block cipher with modifications designed to raise the cost of
+off-line password cracking. The computation cost of the algorithm is
+parametised, so it can be increased as computers get faster.
+%endif
+
 %prep
 %setup -n py-%modulename-%version
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
 
 %install
 %python_install
 install -D -m755 %SOURCE1 %buildroot%_bindir/bfhash
 install -D %SOURCE2  %buildroot%_man1dir/bfhash.1
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+install -D -m755 %SOURCE1 %buildroot%_bindir/bfhash.py3
+sed -i 's|python|python3|' %buildroot%_bindir/bfhash.py3
+%endif
+
 %files
-%doc ChangeLog  LICENSE  MANIFEST  PKG-INFO  README  TODO  test/*
-%python_sitelibdir/%modulename
+%doc *.rst
+%python_sitelibdir/*
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %_man1dir/*
 
+%if_with python3
+%files -n python3-module-bcrypt
+%doc *.rst
+%python3_sitelibdir/*
+%_bindir/*.py3
+%_man1dir/*
+%endif
+
 %changelog
+* Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1
+- Version 1.1.1
+- Added module for Python 3
+
 * Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 0.4-alt1
 - Autobuild version bump to 0.4
 
