@@ -5,8 +5,8 @@
 #def_disable check
 
 Name: python-module-%oname
-Version: 0.27.2
-Release: alt1.git20150315
+Version: 0.27.3
+Release: alt1.git20150318
 Summary: Python Electronic Design Automation
 License: BSD
 Group: Development/Python
@@ -164,6 +164,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.27.3-alt1.git20150318
+- Version 0.27.3
+
 * Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.27.2-alt1.git20150315
 - Version 0.27.2
 
