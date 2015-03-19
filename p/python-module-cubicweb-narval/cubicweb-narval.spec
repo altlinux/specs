@@ -1,6 +1,6 @@
 %define oname cubicweb-narval
 Name: python-module-%oname
-Version: 4.1.1
+Version: 4.1.2
 Release: alt1
 Summary: CubicWeb based framework to run automated tests
 License: LGPL
@@ -72,6 +72,9 @@ python setup.py test
 %dir %attr(0775,narval,narval) /var/log/narval
 
 %changelog
+* Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt1
+- Version 4.1.2
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1
 - Initial build for Sisyphus
 
