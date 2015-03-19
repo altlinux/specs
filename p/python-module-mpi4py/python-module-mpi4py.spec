@@ -6,14 +6,14 @@
 
 Name: python-module-%oname
 Version: 1.3.1
-Release: alt1.hg20130904
+Release: alt2.git20150317
 Summary: MPI bindings for Python
 License: Public
 Group: Development/Python
 Url: http://www.cimec.org.ar/python/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# hg clone https://code.google.com/p/mpi4py/
+# https://bitbucket.org/mpi4py/mpi4py.git
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python rpm-macros-make
@@ -100,6 +100,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 sed -i 's|(MPIDIR)|%mpidir|' setup.cfg
 %add_optflags -I%mpidir/include -I%_includedir/python%_python_version
+%add_optflags -fno-strict-aliasing
 %make_ext config
 %make_build_ext
 
@@ -137,7 +138,7 @@ install -d %buildroot%_docdir/%name
 cp -fR docs/source %buildroot%_docdir/%name/
 
 %files
-%doc LICENSE.txt HISTORY.txt README.txt THANKS.txt
+%doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/include
 
@@ -149,7 +150,7 @@ cp -fR docs/source %buildroot%_docdir/%name/
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE.txt HISTORY.txt README.txt THANKS.txt
+%doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/include
 
@@ -158,6 +159,9 @@ cp -fR docs/source %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt2.git20150317
+- New snapshot
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1.hg20130904
 - Version 1.3.1
 
