@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.2.4
-Release: alt1.git20141019
+Version: 1.2.11
+Release: alt1.git20150319
 Summary: Splinter plugin for pytest testing framework
 License: MIT
 Group: Development/Python
@@ -21,7 +21,7 @@ BuildPreReq: python-module-tox python-module-splinter
 BuildPreReq: python-module-detox python-module-mock
 BuildPreReq: python-module-pytest-localserver
 BuildPreReq: python-module-pytest-pep8 python-module-pytest-cov
-BuildPreReq: python-module-virtualenv
+BuildPreReq: python-module-virtualenv python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.11-alt1.git20150319
+- Version 1.2.11
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.4-alt1.git20141019
 - Initial build for Sisyphus
 
