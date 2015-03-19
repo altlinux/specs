@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 1.1
-Release: alt2.dev.git20150302
+Version: 1.1.0
+Release: alt1.alpha.1.git20150319
 Summary: A user-friendly, light-weight and extensible web content management system
 License: BSD
 Group: Development/Python
@@ -247,6 +247,9 @@ python setup.py test
 %endif
 
 %changelog
+* Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.alpha.1.git20150319
+- Version 1.1.0-alpha.1
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt2.dev.git20150302
 - New snapshot
 
