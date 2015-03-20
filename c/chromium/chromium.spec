@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        40.0.2214.115
+Version:        41.0.2272.101
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -66,8 +66,6 @@ Patch71:	chromium-set-desktop-file-name.patch
 
 # Patches from Debian
 Patch80:	chromium-nspr.patch
-Patch81:	chromium-nss.patch
-Patch82:	chromium-expat.patch
 Patch85:	chromium-fix-manpage.patch
 Patch86:	chromium-icon.patch
 # Old, but specific
@@ -232,8 +230,6 @@ tar xf %SOURCE10 -C src
 %patch71 -p2
 
 %patch80 -p2
-#%%patch81 -p1
-%patch82 -p1
 %patch85 -p1
 %patch86 -p0
 %patch87 -p1
@@ -395,7 +391,7 @@ mkdir -p %buildroot%_mandir/man1/
 pushd src/out/%buildtype
 
 cp -a chrome_sandbox %buildroot%_libdir/chromium/chrome-sandbox
-cp -a *.pak locales xdg-mime %buildroot%_libdir/chromium/
+cp -a *.pak *.bin locales xdg-mime %buildroot%_libdir/chromium/
 cp -a chromedriver %buildroot%_libdir/chromium/
 cp -a icudtl.dat %buildroot%_libdir/chromium/
 
@@ -475,6 +471,7 @@ strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver,libffmp
 %attr(755,root,root) %_libdir/chromium/xdg-settings
 %attr(755,root,root) %_libdir/chromium/xdg-mime
 %_libdir/chromium/*.pak
+%_libdir/chromium/*.bin
 %_man1dir/chrom*
 %_desktopdir/%name.desktop
 %_datadir/gnome-control-center/default-apps/chromium.xml
@@ -491,6 +488,36 @@ strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver,libffmp
 %_altdir/%name-gnome
 
 %changelog
+* Fri Mar 20 2015 Andrey Cherepanov <cas@altlinux.org> 41.0.2272.101-alt1
+- New version
+- Package all *.bin files
+
+* Tue Mar 17 2015 Andrey Cherepanov <cas@altlinux.org> 41.0.2272.89-alt1
+- New version
+
+* Wed Mar 04 2015 Andrey Cherepanov <cas@altlinux.org> 41.0.2272.76-alt1
+- New version
+- Security fixes:
+  - High CVE-2015-1212: Out-of-bounds write in media.
+  - High CVE-2015-1213: Out-of-bounds write in skia filters.
+  - High CVE-2015-1214: Out-of-bounds write in skia filters.
+  - High CVE-2015-1215: Out-of-bounds write in skia filters.
+  - High CVE-2015-1216: Use-after-free in v8 bindings.
+  - High CVE-2015-1217: Type confusion in v8 bindings.
+  - High CVE-2015-1218: Use-after-free in dom.
+  - High CVE-2015-1219: Integer overflow in webgl.
+  - High CVE-2015-1220: Use-after-free in gif decoder.
+  - High CVE-2015-1221: Use-after-free in web databases.
+  - High CVE-2015-1222: Use-after-free in service workers.
+  - High CVE-2015-1223: Use-after-free in dom.
+  - High CVE-2015-1230: Type confusion in v8.
+  - Medium CVE-2015-1224: Out-of-bounds read in vpxdecoder.
+  - Medium CVE-2015-1225: Out-of-bounds read in pdfium.
+  - Medium CVE-2015-1226: Validation issue in debugger.
+  - Medium CVE-2015-1227: Uninitialized value in blink.
+  - Medium CVE-2015-1228: Uninitialized value in rendering.
+  - Medium CVE-2015-1229: Cookie injection via proxies.
+
 * Fri Feb 20 2015 Andrey Cherepanov <cas@altlinux.org> 40.0.2214.115-alt1
 - New version
 
