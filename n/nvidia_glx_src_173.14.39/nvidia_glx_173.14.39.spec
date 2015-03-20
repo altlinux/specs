@@ -4,7 +4,6 @@
 %ifarch x86_64
 %define tbname         NVIDIA-Linux-x86_64
 %endif
-%define virtual_pkg_name NVIDIA_GLX
 %define bin_pkg_name     nvidia_glx
 %define module_name    nvidia
 %define tbsuffix pkg0
@@ -13,7 +12,7 @@
 %define nv_version 173
 %define nv_release 14
 %define nv_minor 39
-%define pkg_rel alt72
+%define pkg_rel alt73
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -78,6 +77,7 @@ Source100: nvidia_create_xinf
 Patch1: buildfix_kernel_3.13.patch
 Patch2: buildfix_kernel_3.14.patch
 Patch3: buildfix_kernel_3.17.patch
+Patch4: buildfix_kernel_3.19.patch
 
 BuildRequires: kernel-build-tools libsysfs-devel
 ExclusiveArch: %ix86 x86_64
@@ -130,8 +130,6 @@ This is common package for NVIDIA drivers.
 %package -n %{bin_pkg_name}_%{version}
 PreReq: %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
-Provides: %virtual_pkg_name = %version-%release
-Obsoletes: %virtual_pkg_name < %version-%release
 #
 Group: %myGroup
 Summary: %mySummary
@@ -191,6 +189,7 @@ rm -rf precompiled
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 popd
 
 
@@ -410,6 +409,9 @@ fi
 %endif
 
 %changelog
+* Fri Mar 20 2015 Sergey V Turchin <zerg@altlinux.org> 173.14.39-alt73
+- add patch against 3.19 kernel
+
 * Thu Oct 23 2014 Sergey V Turchin <zerg@altlinux.org> 173.14.39-alt72
 - add patch against 3.17 kernel
 
