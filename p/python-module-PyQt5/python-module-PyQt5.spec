@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.4.1
-Release: alt1
+Release: alt2
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -158,6 +158,12 @@ popd
 %makeinstall_std INSTALL_ROOT=%buildroot
 rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 ##wait ##
 #install -d %buildroot/usr/share/sip/PyQt5/Qsci \
 #	PyQt-x11-gpl/sip/QtGui
@@ -195,6 +201,9 @@ rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 %endif
 
 %changelog
+* Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.1-alt2
+- Applied repocop's python-module-PyQt5-5.4.1-alt1.diff
+
 * Wed Mar 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.1-alt1
 - Version 5.4.1
 
