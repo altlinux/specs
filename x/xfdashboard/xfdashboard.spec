@@ -1,5 +1,5 @@
 Name: xfdashboard
-Version: 0.3.9
+Version: 0.3.90
 Release: alt1
 
 Summary: A Gnome shell like dashboard for Xfce
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildPreReq: libxfconf-devel libgarcon-devel libxfce4util-devel
-BuildRequires: libgtk+3-devel libwnck-devel libclutter-devel libdbus-glib-devel
+BuildRequires: libgtk+3-devel libwnck3-devel libclutter-devel libdbus-glib-devel
 
 %description
 xfdashboard provides a GNOME shell dashboard like interface for use with
@@ -54,6 +54,9 @@ for and start applications.
 %_datadir/%name/
 
 %changelog
+* Fri Mar 20 2015 Mikhail Efremov <sem@altlinux.org> 0.3.90-alt1
+- Updated to 0.3.90.
+
 * Mon Mar 16 2015 Mikhail Efremov <sem@altlinux.org> 0.3.9-alt1
 - Updated to 0.3.9.
 
