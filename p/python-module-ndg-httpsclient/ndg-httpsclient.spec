@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.2
-Release: alt2
+Version: 0.3.3
+Release: alt1
 
 Summary: Provides enhanced HTTPS support for httplib and urllib2 using PyOpenSSL
 License: BSD
@@ -13,7 +13,6 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/ndg-httpsclient/
 
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-module-setuptools python-module-epydoc
@@ -124,7 +123,6 @@ popd
 %if_with python3
 pushd ../python3
 %python3_install
-touch %buildroot%python3_sitelibdir/ndg/__init__.py
 popd
 pushd %buildroot%_bindir
 for i in $(ls); do
@@ -134,12 +132,22 @@ popd
 %endif
 
 %python_install
-touch %buildroot%python_sitelibdir/ndg/__init__.py
+
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
+install -p -m644 ndg/__init__.py %buildroot%python_sitelibdir/ndg/
+%if_with python3
+pushd ../python3
+install -p -m644 ndg/__init__.py %buildroot%python3_sitelibdir/ndg/
+popd
+%endif
 
 rm -f documentation/Makefile
 
 %files
-%doc LICENSE
+%doc PKG-INFO
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -160,7 +168,7 @@ rm -f documentation/Makefile
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE
+%doc PKG-INFO
 %_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/*/test
@@ -177,6 +185,9 @@ rm -f documentation/Makefile
 %endif
 
 %changelog
+* Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1
+- Version 0.3.3
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt2
 - Added module for Python 3
 
