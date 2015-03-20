@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.4.0
-Release: alt1.git20150208
+Version: 0.4.2
+Release: alt1.git20150317
 Summary: A db package that doesn't suck
 License: BSD
 Group: Development/Python
@@ -138,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20150317
+- Version 0.4.2
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20150208
 - Initial build for Sisyphus
 
