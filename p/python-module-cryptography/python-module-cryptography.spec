@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -80,15 +80,18 @@ popd
 %files
 %doc AUTHORS.rst  CHANGELOG.rst  CONTRIBUTING.rst  README.rst
 %python_sitelibdir/%oname/
-%exclude %python_sitelibdir/*.egg-info
+%python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/%oname/
-%exclude %python3_sitelibdir/*.egg-*
+%python3_sitelibdir/*.egg-*
 %endif
 
 %changelog
+* Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt2
+- Added *.egg-info
+
 * Tue Mar 10 2015 Vladimir Didenko <cow@altlinux.ru> 0.8.0-alt1
 - 0.8.0
 
