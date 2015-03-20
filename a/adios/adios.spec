@@ -4,8 +4,10 @@
 %define somver 0
 %define sover %somver.0.0
 
+%def_with python3
+
 Name: adios
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 Summary: The Adaptable IO System (ADIOS)
 License: BSD
@@ -13,8 +15,8 @@ Group: Sciences/Mathematics
 Url: http://www.olcf.ornl.gov/center-projects/adios/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://users.nccs.gov/~pnorbert/adios-1.7.0.tar.gz
-Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.7.0.pdf
+Source: http://users.nccs.gov/~pnorbert/adios-1.8.0.tar.gz
+Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.8.0.pdf
 Source2: https://users.nccs.gov/~lot/skel/skel-doc-1.6.0.pdf
 Source3: http://users.nccs.gov/~pnorbert/ADIOS-DevManual-1.6.0.pdf
 Source4: https://users.nccs.gov/~pnorbert/ADIOS-VisualizationSchema-1.1.pdf
@@ -26,6 +28,17 @@ BuildPreReq: libmxml-devel %mpiimpl-devel libhdf5-mpi-devel
 BuildPreReq: libnetcdf-mpi-devel libmpe2-devel libmxml-devel
 BuildPreReq: python-modules-xml cmake bzlib-devel zlib-devel
 BuildPreReq: libsz2-devel liblustre-devel glib2-devel libnumpy-devel
+BuildPreReq: python-module-setuptools libevpath-devel libffs-devel
+BuildPreReq: libatl-devel libdill-devel libcercs_env-devel
+BuildPreReq: libfastbit-devel libpnetcdf-devel libbpio-devel
+BuildPreReq: libdataspaces-devel python-module-Cython
+BuildPreReq: python-module-mpi4py-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools libnumpy-py3-devel
+BuildPreReq: python3-module-Cython python-tools-2to3
+BuildPreReq: python3-module-mpi4py-devel
+%endif
 
 Requires: python-module-%name = %version-%release
 
@@ -43,6 +56,22 @@ Summary: Python module of the Adaptable IO System (ADIOS)
 Group: Development/Python
 
 %description -n python-module-%name
+The Adaptable IO System (ADIOS) provides a simple, flexible way for
+scientists to desribe the data in their code that may need to be
+written, read, or processed outside of the running simulation. By
+providing an external to the code XML file describing the various
+elements, their types, and how you wish to process them this run, the
+routines in the host code (either Fortran or C) can transparently change
+how they process the data.
+
+This package contains python module of ADIOS.
+
+%package -n python3-module-%name
+Summary: Python module of the Adaptable IO System (ADIOS)
+Group: Development/Python3
+%add_python3_req_skip skel_settings
+
+%description -n python3-module-%name
 The Adaptable IO System (ADIOS) provides a simple, flexible way for
 scientists to desribe the data in their code that may need to be
 written, read, or processed outside of the running simulation. By
@@ -117,6 +146,9 @@ This package contains documentation for ADIOS.
 
 %prep
 %setup
+
+rm wrappers/numpy/*.cpp
+
 install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 .
 
 sed -i 's|@BUILDROOT@|%buildroot|' wrappers/numpy/setup*
@@ -124,6 +156,7 @@ sed -i 's|@BUILDROOT@|%buildroot|' wrappers/numpy/setup*
 LIBSUFF=64
 %endif
 sed -i "s|@64@|$LIBSUFF|" wrappers/numpy/setup*
+sed -i 's|@mpi_dir@|%mpidir|' wrappers/numpy/mpi.cfg
 
 %build
 mpi-selector --set %mpiimpl
@@ -133,13 +166,15 @@ export MPIDIR=%mpidir
 TOPDIR=$PWD
 
 %add_optflags -I%mpidir/include -I%mpidir/include/netcdf %optflags_shared
-%add_optflags -I$TOPDIR/src/public
+%add_optflags -I$TOPDIR/src/public -fno-strict-aliasing
 
 export CFLAGS="%optflags"
 . ./%name.conf
 
 mkdir BUILD
 pushd BUILD
+MPILIBS="-L%mpidir/lib -lmpi_f90 -lmpi_f77 -lmpi_cxx -lmpi -levpath"
+MPILIBS="$MPILIBS -ldspaces -lfastbit -lfgr"
 cmake \
 %if %_lib == lib64
 	-DLIB_SUFFIX=64 \
@@ -150,17 +185,21 @@ cmake \
 	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
 	-DCXXFLAGS:STRING="%optflags" \
 	-DFCFLAGS:STRING="%optflags" \
+	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DNC4PAR:BOOL=ON \
 	-DPHDF5:BOOL=ON \
+	-DBGQ:BOOL=OFF \
 	-DMPIDIR:PATH=%mpidir \
-	-DMPILIBS:STRING="-L%mpidir/lib -lmpi_f90 -lmpi_f77 -lmpi_cxx -lmpi" \
+	-DMPILIBS:STRING="$MPILIBS" \
 	-DCMAKE_INSTALL_RPATH:STRING=%mpidir/lib \
 	-DCMAKE_SKIP_RPATH:BOOL=ON \
 	-DSOMVER:STRING=%somver \
 	-DSOVER:STRING=%sover \
 	..
 
-%make VERBOSE=1
+cp tests/C/query/query-xmls/DS-1D/query0.xml \
+	tests/C/query/fastbit/
+%make_build VERBOSE=1
 popd
 
 %install
@@ -174,18 +213,39 @@ pushd BUILD
 popd
 
 install -d %buildroot%_datadir/%name
-mv %buildroot%_bindir/adios_config.flags %buildroot%_datadir/%name/
+mv %buildroot%prefix/etc//adios_config.flags %buildroot%_sysconfdir/
+
+export PATH=$PATH:%buildroot%_bindir
+%add_optflags -fno-strict-aliasing
+
+%if_with python3
+cp -fR wrappers/numpy wrappers/numpy3
+pushd wrappers/numpy3
+export CFLAGS="%optflags -I%buildroot%_includedir -I%python3_sitelibdir/mpi4py/include"
+sed -i 's|python|python3|g' Makefile
+sed -i 's|cython|cython3|g' Makefile
+%make MPI=y CYTHON=y python3
+%python3_install
+popd
+install -m644 utils/skel/lib/skel_suite.py \
+	utils/skel/lib/skel_template.py \
+	utils/skel/lib/skel_test_plan.py \
+	%buildroot%python3_sitelibdir/
+cp %buildroot%_libdir/python/* %buildroot%python3_sitelibdir/
+find %buildroot%python3_sitelibdir -type f -name '*.py' \
+	-exec 2to3 -w -n '{}' +
+%endif
 
 pushd wrappers/numpy
-export PATH=$PATH:%buildroot%_bindir
-export CFLAGS=-I%buildroot%_includedir
-%make MPI=y python
+export CFLAGS="%optflags -I%buildroot%_includedir -I%python_sitelibdir/mpi4py/include"
+%make MPI=y CYTHON=y python
 %python_install
 popd
 install -m644 utils/skel/lib/skel_suite.py \
 	utils/skel/lib/skel_template.py \
 	utils/skel/lib/skel_test_plan.py \
 	%buildroot%python_sitelibdir/
+cp %buildroot%_libdir/python/* %buildroot%python_sitelibdir/
 
 rm -f $(find examples -name '*.o') \
 	examples/staging/stage_write/writer_adios
@@ -193,8 +253,7 @@ rm -f $(find examples -name '*.o') \
 install -d %buildroot%_libdir/%name
 cp -fR examples %buildroot%_libdir/%name/
 
-install -d %buildroot%python_sitelibdir
-mv %buildroot%_libdir/python/*.py %buildroot%python_sitelibdir/
+mv %buildroot%prefix/etc/*.cmake %buildroot%_libdir/
 
 %files
 %doc AUTHORS COPYING ChangeLog KNOWN_BUGS NEWS README TODO
@@ -207,7 +266,11 @@ mv %buildroot%_libdir/python/*.py %buildroot%python_sitelibdir/
 
 %files -n python-module-%name
 %python_sitelibdir/*
-%exclude %python_sitelibdir/argparse.py*
+
+%if_with python3
+%files -n python3-module-%name
+%python3_sitelibdir/*
+%endif
 
 %files -n lib%name-devel
 %_bindir/adios_config
@@ -223,6 +286,10 @@ mv %buildroot%_libdir/python/*.py %buildroot%python_sitelibdir/
 %doc *.pdf
 
 %changelog
+* Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1
+- Version 1.8.0
+- Added module for Python 3
+
 * Tue Jun 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1
 - Version 1.7.0
 
