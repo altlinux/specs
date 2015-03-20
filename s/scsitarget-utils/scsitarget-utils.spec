@@ -5,7 +5,7 @@
 
 Name: scsitarget-utils
 Version: 1.0.55
-Release: alt2
+Release: alt3
 
 Summary: The SCSI target daemon and utility programs
 
@@ -30,8 +30,10 @@ Patch1: 0002-remove-check-for-xsltproc.patch
 Patch2: 0003-default-config.patch
 
 BuildRequires: libxslt docbook-style-xsl xsltproc
-BuildRequires: libaio-devel systemd-devel
-BuildRequires: ceph-devel
+BuildRequires: glibc-devel
+BuildRequires: libaio-devel
+BuildRequires: glibc-kernheaders
+BuildRequires: systemd-devel
 BuildRequires: perl-Config-General
 %{?_with_rdma:BuildRequires: libibverbs-devel librdmacm-devel}
 %{?_with_rbd:BuildRequires: ceph-devel}
@@ -41,6 +43,8 @@ Requires: lsof
 Requires: sg3_utils
 
 Provides: scsi-target-utils = %version-%release
+Provides: tgt = %version-%release
+Obsoletes: tgt < %version-%release
 
 %description
 The SCSI target package contains the daemon and tools to setup a SCSI
@@ -120,6 +124,7 @@ pushd usr
 %_man8dir/*
 %_unitdir/tgt.service
 %_initdir/tgt
+%dir %_libdir/tgt/backing-store
 %dir %_sysconfdir/tgt
 %dir %_sysconfdir/tgt/conf.d
 %attr(0600,root,root) %config(noreplace) %_sysconfdir/sysconfig/tgtd
@@ -140,6 +145,9 @@ pushd usr
 %endif
 
 %changelog
+* Fri Mar 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.55-alt3
+- Obsoletes tgt
+
 * Fri Mar 06 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.55-alt2
 - fix unit perm
 
