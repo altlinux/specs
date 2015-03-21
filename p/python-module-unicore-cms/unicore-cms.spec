@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.7.0
-Release: alt1.git20150319
+Release: alt2.git20150319
 Summary: JSON based CMS for Universal Core
 License: BSD
 Group: Development/Python
@@ -57,7 +57,7 @@ Conflicts: python-module-django-cms3.0
 Conflicts: python-module-django-cms2.3
 Conflicts: python-module-django-cms
 %py_requires UniversalAnalytics pyramid_celery unicore.content slugify
-%py_requires unicore.google unicore.distribute pycountry
+%py_requires unicore.google unicore.distribute pycountry raven
 %py_requires unicore.hub.client
 
 %description
@@ -82,7 +82,7 @@ Conflicts: python3-module-django-cms3.0
 Conflicts: python3-module-django-cms2.3
 Conflicts: python3-module-django-cms
 %py3_requires UniversalAnalytics pyramid_celery unicore.content slugify
-%py3_requires unicore.google unicore.distribute pycountry
+%py3_requires unicore.google unicore.distribute pycountry raven
 %py3_requires unicore.hub.client
 
 %description -n python3-module-%oname
@@ -162,6 +162,9 @@ exit 1
 %endif
 
 %changelog
+* Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt2.git20150319
+- Added necessary requirements
+
 * Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.git20150319
 - Version 1.7.0
 
