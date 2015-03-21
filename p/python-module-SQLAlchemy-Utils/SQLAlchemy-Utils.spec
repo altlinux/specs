@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.29.8
-Release: alt1.git20150317
+Release: alt2.git20150317
 Summary: Various utility functions for SQLAlchemy
 License: BSD
 Group: Development/Python
@@ -26,7 +26,7 @@ BuildPreReq: python-module-furl python-module-cryptography
 BuildPreReq: python-module-Pygments python-module-jinja2
 BuildPreReq: python-module-docutils python-module-flexmock
 BuildPreReq: python-module-psycopg2 python-module-pytz
-BuildPreReq: python-module-pymysql
+BuildPreReq: python-module-pymysql python-module-isort
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -41,11 +41,12 @@ BuildPreReq: python3-module-cryptography
 BuildPreReq: python3-module-Pygments python3-module-jinja2
 BuildPreReq: python3-module-docutils python3-module-flexmock
 BuildPreReq: python3-module-psycopg2 python3-module-pytz
-BuildPreReq: python3-module-pymysql
+BuildPreReq: python3-module-pymysql python3-module-isort
 %endif
 
 %py_provides sqlalchemy_utils
 Requires: python-module-enum34
+%py_requires arrow isort
 
 %description
 Various utility functions and custom data types for SQLAlchemy.
@@ -55,6 +56,7 @@ Summary: Various utility functions for SQLAlchemy
 Group: Development/Python3
 %py3_provides sqlalchemy_utils
 Requires: python3-module-enum34
+%py3_requires arrow isort
 
 %description -n python3-module-%oname
 Various utility functions and custom data types for SQLAlchemy.
@@ -138,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.29.8-alt2.git20150317
+- New snapshot
+
 * Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.29.8-alt1.git20150317
 - Version 0.29.8
 
