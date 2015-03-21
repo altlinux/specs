@@ -4,10 +4,11 @@
 %def_with mysql
 %def_with pg
 %def_with sqlite
+%def_with python3
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
-Version: 1.11.1
+Version: 1.11.2
 Release: alt1
 Group: Sciences/Geosciences
 
@@ -22,6 +23,7 @@ Patch2: %name-1.7.1-alt-apps_install.patch
 Patch3: %name-1.7.1-alt-inst_docs.patch
 # Patch4: %name-1.8.0-alt-libpng15.patch
 Patch5: %name-1.8.0-alt-libproj.so_name.patch
+Patch6: %name-1.11.2-alt-python3.patch
 
 %define libname lib%name
 
@@ -29,6 +31,11 @@ Patch5: %name-1.8.0-alt-libproj.so_name.patch
 BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-BeautifulSoup python-module-genshi python-module-xlwt python-modules-ctypes swig
 
 BuildPreReq: chrpath
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel libnumpy-py3-devel python3-module-genshi
+BuildPreReq: python3-module-BeautifulSoup python3-module-xlwt-future
+%endif
 
 Requires: libproj
 
@@ -79,8 +86,20 @@ Requires: %libname = %version
 Requires: %name
 Provides: python-module-osgeo = %version
 
-%description -n python-module-gdal
+%description -n python-module-%name
 Python module for %name.
+
+%if_with python3
+%package -n python3-module-%name
+Summary: The Python bindings for the GDAL library
+Group: Development/Python3
+Requires: %libname = %version
+Requires: %name
+Provides: python3-module-osgeo = %version
+
+%description -n python3-module-%name
+Python module for %name.
+%endif
 
 %package -n perl-Geo-GDAL
 Summary: Perl bindings for the GDAL library
@@ -99,8 +118,15 @@ Perl modules for GDAL/OGR.
 %patch3 -p2
 # %patch4 -p2
 %patch5 -p2
+%patch6 -p2
+
+%if_with python3
+cp -fR swig/python swig/python3
+find swig/python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
 
 %build
+%add_optflags -fno-strict-aliasing
 %configure \
         --enable-static=no \
         --disable-rpath \
@@ -152,6 +178,12 @@ popd
 make docs
 make -B man
 
+%if_with python3
+pushd swig/python3
+%python3_build_debug
+popd
+%endif
+
 %install
 mkdir -p %buildroot%python_sitelibdir
 %makeinstall_std PYTHONPATH=$PYTHONPATH:%buildroot%python_sitelibdir INSTALLDIRS=vendor
@@ -167,6 +199,12 @@ for i in %buildroot%_bindir/*
 do
 	chrpath -d $i ||:
 done
+
+%if_with python3
+pushd swig/python3
+%python3_install
+popd
+%endif
 
 %files
 %_datadir/%name
@@ -189,13 +227,19 @@ done
 %_bindir/gdal-config
 %_libdir/*.so
 %_includedir/%name
+%_pkgconfigdir/*
 
 %files -n %libname
 %_libdir/*.so.*
 
 %files -n python-module-%name
-%python_sitelibdir/osgeo
-%exclude %python_sitelibdir/[^o]*
+%python_sitelibdir/*
+#exclude %python_sitelibdir/[^o]*
+
+%if_with python3
+%files -n python3-module-%name
+%python3_sitelibdir/*
+%endif
 
 %files -n perl-Geo-GDAL
 %perl_vendor_archlib/Geo
@@ -204,6 +248,10 @@ done
 # %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.2-alt1
+- Version 1.11.2
+- Added module for Python 3
+
 * Wed Jan 21 2015 Dmitry Derjavin <dd@altlinux.org> 1.11.1-alt1
 - 1.11.1;
 - Perl module build Error 255 workaround.
