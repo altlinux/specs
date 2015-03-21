@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.7.0
-Release: alt2.git20150319
+Release: alt3.git20150319
 Summary: JSON based CMS for Universal Core
 License: BSD
 Group: Development/Python
@@ -32,7 +32,7 @@ BuildPreReq: python-module-universal-analytics-python
 BuildPreReq: python-module-mock python-module-unicore.content
 BuildPreReq: python-module-unicore.google python-module-pycountry
 BuildPreReq: python-module-unicore.distribute python-module-libthumbor
-BuildPreReq: python-module-unicore.hub.client
+BuildPreReq: python-module-unicore.hub.client python-module-webtest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -49,7 +49,7 @@ BuildPreReq: python3-module-universal-analytics-python
 BuildPreReq: python3-module-unicore.content python3-module-pycountry
 BuildPreReq: python3-module-unicore.google python3-module-libthumbor
 BuildPreReq: python3-module-unicore.distribute
-BuildPreReq: python3-module-unicore.hub.client
+BuildPreReq: python3-module-unicore.hub.client python3-module-webtest
 %endif
 
 %py_provides cms
@@ -57,8 +57,9 @@ Conflicts: python-module-django-cms3.0
 Conflicts: python-module-django-cms2.3
 Conflicts: python-module-django-cms
 %py_requires UniversalAnalytics pyramid_celery unicore.content slugify
-%py_requires unicore.google unicore.distribute pycountry raven
-%py_requires unicore.hub.client
+%py_requires unicore.google unicore.distribute pycountry raven memcache
+%py_requires unicore.hub.client pyramid_redis pyramid_debugtoolbar
+%py_requires pyramid_chameleon
 
 %description
 JSON based CMS for Universal Core.
@@ -83,7 +84,8 @@ Conflicts: python3-module-django-cms2.3
 Conflicts: python3-module-django-cms
 %py3_requires UniversalAnalytics pyramid_celery unicore.content slugify
 %py3_requires unicore.google unicore.distribute pycountry raven
-%py3_requires unicore.hub.client
+%py3_requires unicore.hub.client pyramid_redis memcache
+%py3_requires pyramid_debugtoolbar pyramid_chameleon
 
 %description -n python3-module-%oname
 JSON based CMS for Universal Core.
@@ -162,6 +164,9 @@ exit 1
 %endif
 
 %changelog
+* Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt3.git20150319
+- More requirements
+
 * Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt2.git20150319
 - Added necessary requirements
 
