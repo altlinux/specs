@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.2.1
-Release: alt1.git20141109
+Version: 2.3
+Release: alt1.git20150311
 Summary: A package which provides an interactive HTML debugger for Pyramid application development
 License: RPL
 Group: Development/Python
@@ -23,6 +23,8 @@ BuildPreReq: python-module-zope.component python-module-repoze.lru
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+%py_requires pyramid_mako
 
 %description
 pyramid_debugtoolbar provides a debug toolbar useful while you're
@@ -52,6 +54,7 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: A package which provides an interactive HTML debugger for Pyramid application development
 Group: Development/Python3
+%py3_requires pyramid_mako
 
 %description -n python3-module-%oname
 pyramid_debugtoolbar provides a debug toolbar useful while you're
@@ -170,6 +173,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1.git20150311
+- Version 2.3
+
 * Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt1.git20141109
 - Version 2.2.1
 
