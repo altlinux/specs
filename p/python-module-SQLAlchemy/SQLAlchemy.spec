@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.b1
+Release: alt1.b3
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.b3
+- Version 1.0.0b3
+
 * Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.b1
 - Version 1.0.0b1
 
