@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.6.5
-Release: alt1.git20150226
+Version: 1.7.0
+Release: alt1.git20150319
 Summary: JSON based CMS for Universal Core
 License: BSD
 Group: Development/Python
@@ -32,6 +32,7 @@ BuildPreReq: python-module-universal-analytics-python
 BuildPreReq: python-module-mock python-module-unicore.content
 BuildPreReq: python-module-unicore.google python-module-pycountry
 BuildPreReq: python-module-unicore.distribute python-module-libthumbor
+BuildPreReq: python-module-unicore.hub.client
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -48,14 +49,16 @@ BuildPreReq: python3-module-universal-analytics-python
 BuildPreReq: python3-module-unicore.content python3-module-pycountry
 BuildPreReq: python3-module-unicore.google python3-module-libthumbor
 BuildPreReq: python3-module-unicore.distribute
+BuildPreReq: python3-module-unicore.hub.client
 %endif
 
 %py_provides cms
 Conflicts: python-module-django-cms3.0
 Conflicts: python-module-django-cms2.3
 Conflicts: python-module-django-cms
-%py_requires UniversalAnalytics pyramid_celery unicore.content
+%py_requires UniversalAnalytics pyramid_celery unicore.content slugify
 %py_requires unicore.google unicore.distribute pycountry
+%py_requires unicore.hub.client
 
 %description
 JSON based CMS for Universal Core.
@@ -78,8 +81,9 @@ Group: Development/Python3
 Conflicts: python3-module-django-cms3.0
 Conflicts: python3-module-django-cms2.3
 Conflicts: python3-module-django-cms
-%py3_requires UniversalAnalytics pyramid_celery unicore.content
+%py3_requires UniversalAnalytics pyramid_celery unicore.content slugify
 %py3_requires unicore.google unicore.distribute pycountry
+%py3_requires unicore.hub.client
 
 %description -n python3-module-%oname
 JSON based CMS for Universal Core.
@@ -158,6 +162,9 @@ exit 1
 %endif
 
 %changelog
+* Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.git20150319
+- Version 1.7.0
+
 * Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.5-alt1.git20150226
 - Version 1.6.5
 
