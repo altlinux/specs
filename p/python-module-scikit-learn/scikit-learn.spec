@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.16
-Release: alt1.git20150115
+Version: 0.17
+Release: alt1.dev0.git20150321
 Summary: A set of python modules for machine learning and data mining
 License: BSD
 Group: Development/Python
@@ -163,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17-alt1.dev0.git20150321
+- Version 0.17.dev0
+
 * Fri Jan 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16-alt1.git20150115
 - New snapshot
 
