@@ -1,5 +1,5 @@
 Name: i3
-Version: 4.9
+Version: 4.9.1
 Release: alt1
 
 Summary: I3 window manager
@@ -122,6 +122,9 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Sun Mar 22 2015 Andrey Bergman <vkni@altlinux.org> 4.9.1-alt1
+- Version update
+
 * Tue Mar 03 2015 Andrey Bergman <vkni@altlinux.org> 4.9-alt1
 - Version update
 
