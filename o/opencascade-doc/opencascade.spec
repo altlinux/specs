@@ -1,5 +1,5 @@
 Name: opencascade-doc
-Version: 6.7.1
+Version: 6.8.0
 Release: alt1
 Summary: Documentation for Open CASCADE
 License: BSD-like
@@ -29,6 +29,9 @@ cp -fR * %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.8.0-alt1
+- Version 6.8.0
+
 * Wed May 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.7.1-alt1
 - Version 6.7.1
 
