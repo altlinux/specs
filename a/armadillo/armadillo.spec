@@ -1,6 +1,6 @@
 Name:           armadillo
-Version:        4.349.0
-Release:        alt2.svn20140624
+Version:        4.695.0
+Release:        alt1.svn20150320
 Summary:        Fast C++ matrix library with interfaces to LAPACK and ATLAS
 Group:          Sciences/Mathematics
 License:        LGPLv3+
@@ -18,7 +18,7 @@ Requires: lib%name = %version-%release
 
 BuildRequires:  cmake gcc-c++ liblapack-devel libhdf5-devel
 BuildRequires:  boost-devel libarpack-ng-devel libclapack-devel
-BuildPreReq: hdf5-8-tools
+BuildPreReq: hdf5-8-tools libsuperlu-devel
 
 %description
 Armadillo is a C++ linear algebra library (matrix maths)
@@ -171,6 +171,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc examples *.pdf *.html *.png
 
 %changelog
+* Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.695.0-alt1.svn20150320
+- Version 4.695.0
+
 * Thu Jun 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.349.0-alt2.svn20140624
 - Rebuilt with libarpack-ng-devel instead of libarpack-devel
 
