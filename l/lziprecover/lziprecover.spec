@@ -1,5 +1,5 @@
 Name: lziprecover
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: LZMA compressed file recovery
@@ -7,12 +7,12 @@ License: GPL v3+
 Group: Archiving/Compression
 
 Url: http://savannah.nongnu.org/projects/lzip/
-Source: http://download.savannah.gnu.org/releases/lzip/%name-%version.tar.gz
+Source0: http://download.savannah.gnu.org/releases/lzip/%{name}-%{version}.tar.lz
 Source100: lziprecover.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Sep 20 2009
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ lzip
 
 %description
 Lzip is a lossless file compressor based on the LZMA
@@ -37,6 +37,9 @@ make all info
 %_infodir/%name.info*
 
 %changelog
+* Sun Mar 22 2015 Michael Shigorin <mike@altlinux.org> 1.16-alt1
+- new version (watch file uupdate)
+
 * Sun Oct 13 2013 Michael Shigorin <mike@altlinux.org> 1.15-alt1
 - new version (watch file uupdate)
 
