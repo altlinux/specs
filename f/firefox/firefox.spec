@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        36.0.1
+Version:        36.0.4
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -296,6 +296,12 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun Mar 22 2015 Alexey Gladkov <legion@altlinux.ru> 36.0.4-alt1
+- New release (36.0.4).
+- Fixed:
+  + 2015-28 Privilege escalation through SVG navigation
+  + 2015-29 Code execution through incorrect JavaScript bounds checking elimination
+
 * Sun Mar 08 2015 Alexey Gladkov <legion@altlinux.ru> 36.0.1-alt1
 - New release (36.0.1).
 - Fixed:
