@@ -1,6 +1,6 @@
 Name: sxiv
 Version: 1.31
-Release: alt1
+Release: alt1.1
 
 Summary: Simple X Image Viewer
 License: GPLv2
@@ -49,6 +49,8 @@ install -pm644 {README.md,LICENSE} %buildroot%docdir/
 
 %files
 %_bindir/sxiv
+%dir %_datadir/%name/
+%dir %_datadir/%name/exec
 %_datadir/%name/exec/image-info
 %_datadir/%name/exec/key-handler
 %_man1dir/*
@@ -56,6 +58,9 @@ install -pm644 {README.md,LICENSE} %buildroot%docdir/
 %doc %docdir/*
 
 %changelog
+* Sun Mar 22 2015 Andrey Bergman <vkni@altlinux.org> 1.31-alt1.1
+- Added missed directories ownership.
+
 * Sun Mar 22 2015 Andrey Bergman <vkni@altlinux.org> 1.31-alt1
 - Initial version for Sisyphus.
 
