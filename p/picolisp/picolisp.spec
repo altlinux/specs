@@ -1,5 +1,5 @@
 Name: picolisp
-Version: 3.1.8
+Version: 3.1.9
 Release: alt1
 
 Summary: Interpreted Lisp
@@ -53,6 +53,9 @@ ln -s ../lib/%name %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Sun Mar 22 2015 Michael Shigorin <mike@altlinux.org> 3.1.9-alt1
+- new version (watch file uupdate)
+
 * Wed Oct 01 2014 Michael Shigorin <mike@altlinux.org> 3.1.8-alt1
 - new version (watch file uupdate)
 

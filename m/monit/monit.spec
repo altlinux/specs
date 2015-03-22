@@ -4,7 +4,7 @@
 %def_with pam
 
 Name: monit
-Version: 5.11
+Version: 5.12.1
 Release: alt1
 
 Summary: Process monitor and restart utility
@@ -129,6 +129,10 @@ if [ ! -f %name.pem ]; then
 		-keyout %name.pem -out %name.pem &>/dev/null
 fi
 
+grep -qs '^	allow localhost$' /etc/monitrc && {
+  echo "** WARNING: replace 'allow localhost' with 'use address 127.0.0.1'"
+  echo "            in /etc/monitrc"; } >&2 ||:
+
 grep -qs '^set pidfile ' /etc/monitrc /etc/monitrc.d/* ||
   echo "** WARNING: add 'set pidfile /var/run/monit.pid' to /etc/monitrc" >&2
 
@@ -162,6 +166,14 @@ grep -qs '^set pidfile ' /etc/monitrc /etc/monitrc.d/* ||
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Sun Mar 22 2015 Michael Shigorin <mike@altlinux.org> 5.12.1-alt1
+- new version (watch file uupdate)
+
+* Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 5.12-alt1
+- new version (watch file uupdate)
+- NB: replace 'allow localhost' with 'use address 127.0.0.1',
+      see also https://bitbucket.org/tildeslash/monit/issue/133/
+
 * Thu Dec 25 2014 Michael Shigorin <mike@altlinux.org> 5.11-alt1
 - new version (watch file uupdate)
 
