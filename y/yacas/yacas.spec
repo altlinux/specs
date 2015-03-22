@@ -1,5 +1,5 @@
 Name: yacas
-Version: 1.3.4
+Version: 1.3.6
 Release: alt1
 
 Summary: Yet Another Computer Algebra System
@@ -11,8 +11,10 @@ Source0: http://yacas.sourceforge.net/backups/%name-%version.tar.gz
 Source100: yacas.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Sun Dec 13 2009
+# Automatically added by buildreq on Sun Mar 22 2015
+# optimized out: libcloog-isl4 libstdc++-devel texlive-base-bin texlive-latex-base
 BuildRequires: gcc-c++
+
 BuildRequires: /usr/bin/latex /usr/bin/dvips
 
 %description
@@ -22,6 +24,20 @@ an infix-operator grammar parser.  The distribution contains
 a small library of mathematical functions, but its real strength
 is in the language in which you can easily write your own symbolic
 manipulation algorithms. It supports arbitrary precision arithmetic.
+
+%package -n lib%name
+Summary: Shared library for YACAS
+Group: System/Libraries
+
+%description -n lib%name
+This package contains shared library for YACAS.
+
+%package -n lib%name-devel
+Summary: Development headers for YACAS
+Group: Development/C
+
+%description -n lib%name-devel
+This package contains files needed to link against YACAS library.
 
 %package docs
 BuildArch: noarch
@@ -36,7 +52,7 @@ YACAS intro, algos, coding, essays and reference manuals
 
 %build
 %autoreconf
-CXXFLAGS="%optflags" %configure --enable-gmp
+CXXFLAGS="%optflags" %configure --enable-gmp --disable-static
 %make_build
 
 %install
@@ -51,16 +67,27 @@ rm -rf %buildroot%_datadir/%name/include
 %_datadir/%name/
 %exclude %_datadir/%name/documentation/
 
+%files -n lib%name
+%_libdir/*.so.*
+
+%files -n lib%name-devel
+%_libdir/*.so
+%_includedir/%name/
+
 %files docs
 %dir %_datadir/%name/
 %_datadir/%name/documentation/
 
 # TODO:
-# - create devel subpackage if headers are actually useful
 # - figure out if/how to install ytxt2tex, see manmake/README
 # - JavaYacas?
 
 %changelog
+* Sun Mar 22 2015 Michael Shigorin <mike@altlinux.org> 1.3.6-alt1
+- new version (watch file uupdate)
+- added shared library subpackage
+- buildreq
+
 * Tue Apr 15 2014 Michael Shigorin <mike@altlinux.org> 1.3.4-alt1
 - new version (watch file uupdate)
 
