@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt129
+Release: alt130
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -46,7 +46,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab103.6-combined
+Patch0: patch-042stab105.14-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -570,6 +570,11 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Sat Mar 21 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt130
+- Updated to 042stab105.14.
+- nfs: backported options support: 'v4.0', 'v4.1', 'vers=4.0',
+  'vers=4.1' (ALT#30845).
+
 * Tue Feb 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt129
 - Updated to 042stab104.1.
 
