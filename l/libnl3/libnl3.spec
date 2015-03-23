@@ -1,6 +1,6 @@
 Name: libnl3
-Version: 3.2.21
-Release: alt2
+Version: 3.2.25
+Release: alt1
 
 Summary: library for applications dealing with netlink sockets
 License: LGPL
@@ -10,7 +10,6 @@ Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildRequires: glibc-kernheaders flex
 
 Source: %name-%version.tar
-Patch1: Declare-nl_object-in-the-netlink.h.patch
 
 %description
 The libnl suite is a collection of libraries providing APIs to netlink protocol
@@ -42,7 +41,6 @@ libraries on which they depend
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %autoreconf
@@ -71,6 +69,10 @@ libraries on which they depend
 %exclude %_libdir/libnl/cli/qdisc/*.la
 
 %changelog
+* Mon Mar 23 2015 Mikhail Efremov <sem@altlinux.org> 3.2.25-alt1
+- Drop obsoleted patch.
+- Updated to 3.2.25.
+
 * Fri Feb 15 2013 Mikhail Efremov <sem@altlinux.org> 3.2.21-alt2
 - Fix netlink.h.
 
