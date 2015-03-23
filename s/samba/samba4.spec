@@ -28,9 +28,11 @@
 
 %def_with systemd
 %def_enable avahi
+%def_enable glusterfs
+%def_with libcephfs
 
 Name: samba
-Version: 4.1.17
+Version: 4.2.0
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -47,6 +49,7 @@ Source8: winbind.init
 Source9: smb.conf.default
 Source10: nmb.init
 Source11: pam_winbind.conf
+Source12: ctdb.init
 
 Source200: README.dc
 Source201: README.downgrade
@@ -65,8 +68,11 @@ Obsoletes: samba-doc < %version-%release
 Provides: samba4-doc = %version-%release
 Obsoletes: samba4-doc < %version-%release
 
-Requires: %name-winbind-clients = %version-%release
 Requires(pre): %name-common = %version-%release
+Requires: %name-libs = %version-%release
+%if_with libwbclient
+Requires: libwbclient = %version-%release
+%endif
 
 BuildRequires: libe2fs-devel
 BuildRequires: libacl-devel
@@ -98,6 +104,8 @@ BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-
 %{?_with_testsuite:BuildRequires: ldb-tools}
 %{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_enable_avahi:BuildRequires: libavahi-devel}
+%{?_enable_glusterfs:BuildRequires: glusterfs3-devel >= 3.4.0.16}
+%{?_with_libcephfs:BuildRequires: ceph-devel}
 BuildRequires: perl-Perl4-CoreLibs
 
 %description
@@ -107,9 +115,9 @@ Samba is the standard Windows interoperability suite of programs for Linux and U
 Summary: Samba client programs
 Group: Networking/Other
 Requires: %name-common = %version-%release
-Requires: %name-libs = %version-%release
+Requires: %name-client-libs = %version-%release
 %if_with libsmbclient
-Requires: libsmbclient4 = %version-%release
+Requires: libsmbclient = %version-%release
 %endif
 Provides: samba4-client = %version-%release
 Obsoletes: samba4-client < %version-%release
@@ -121,13 +129,19 @@ The %name-client package provides some SMB/CIFS clients to complement
 the built-in SMB/CIFS filesystem in Linux. These clients allow access
 of SMB/CIFS shares and printing to SMB/CIFS printers.
 
+%package client-libs
+Summary: Samba client libraries
+Group: Networking/Other
+Conflicts: samba-common < %version-%release
+
+%description client-libs
+The samba-client-libs package contains internal libraries needed by the
+SMB/CIFS clients.
+
 %package common
 Summary: Files used by both Samba servers and clients
 Group: System/Servers
-Requires: %name-libs = %version-%release
-%if_with libnetapi
-Requires: libnetapi = %version-%release
-%endif
+BuildArch: noarch
 Provides: samba-utils = %version-%release
 Provides: samba4-common = %version-%release
 Obsoletes: samba4-common < %version-%release
@@ -136,10 +150,34 @@ Obsoletes: samba4-common < %version-%release
 %name-common provides files necessary for both the server and client
 packages of Samba.
 
+%package common-libs
+Summary: Libraries used by both Samba servers and clients
+Group: System/Libraries
+Requires: %name-common = %version-%release
+Requires: %name-client-libs = %version-%release
+%if_with libwbclient
+Requires: libwbclient = %version-%release
+%endif
+
+%description common-libs
+The samba-common-libs package contains internal libraries needed by the
+SMB/CIFS clients.
+
+%package common-tools
+Summary: Tools for Samba servers and clients
+Group: System/Servers
+Requires: %name-libs = %version-%release
+
+%description common-tools
+The samba-common-tools package contains tools for Samba servers and
+SMB/CIFS clients.
+
 %package dc
 Summary: Samba AD Domain Controller
 Group: System/Servers
+Requires: %name-libs = %version-%release
 Requires: %name-dc-libs = %version-%release
+
 Provides: samba4-dc = %version-%release
 Obsoletes: samba4-dc < %version-%release
 
@@ -149,7 +187,7 @@ The %name-dc package provides AD Domain Controller functionality
 %package dc-libs
 Summary: Samba AD Domain Controller Libraries
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common-libs = %version-%release
 Requires: %name-libs = %version-%release
 Provides: samba4-dc-libs = %version-%release
 Obsoletes: samba4-dc-libs < %version-%release
@@ -158,11 +196,31 @@ Obsoletes: samba4-dc-libs < %version-%release
 The %name-dc-libs package contains the libraries needed by the DC to
 link against the SMB, RPC and other protocols.
 
+%package vfs-cephfs
+Summary: Samba VFS module for Ceph distributed storage system
+Group: System/Libraries
+Requires: %name = %version-%release
+Requires: %name-libs = %version-%release
+
+%description vfs-cephfs
+Samba VFS module for Ceph distributed storage system integration.
+
+%package vfs-glusterfs
+Summary: Samba VFS module for GlusterFS
+Group: System/Libraries
+Requires: %name = %version-%release
+Requires: %name-libs = %version-%release
+
+%description vfs-glusterfs
+Samba VFS module for GlusterFS integration.
+
 %package libs
 Summary: Samba libraries
 Group: System/Libraries
 Provides: samba4-libs = %version-%release
 Obsoletes: samba4-libs < %version-%release
+
+Requires: %name-client-libs = %version-%release
 
 %if_with libnetapi
 Requires: libnetapi = %version-%release
@@ -189,6 +247,8 @@ Summary: The SMB client library
 Group: System/Libraries
 Provides: libsmbclient4 = %version-%release
 Obsoletes: libsmbclient4 < %version-%release
+Requires: %name-common = %version-%release
+Requires: %name-client-libs = %version-%release
 
 %description -n libsmbclient
 The libsmbclient contains the SMB client library from the Samba suite.
@@ -212,6 +272,7 @@ Provides: libwbclient4 = %version-%release
 Obsoletes: libwbclient4 < %version-%release
 Conflicts: samba-winbind-clients <= 3.6.12-alt1
 Conflicts: samba4-libs < %version-%release
+Requires: %name-client-libs = %version-%release
 
 %description -n libwbclient
 The libwbclient package contains the winbind client library from the Samba suite.
@@ -235,16 +296,6 @@ Obsoletes: libnetapi4 < %version-%release
 %description -n libnetapi
 Samba netapi library
 
-%package -n libnetapi-devel
-Summary: Samba netapi development files
-Group: Development/Other
-Requires: libnetapi = %version-%release
-Provides: libnetapi4-devel = %version-%release
-Obsoletes: libnetapi4-devel < %version-%release
-
-%description -n libnetapi-devel
-Samba netapi development files
-
 %package -n python-module-%name
 Summary: Samba Python libraries
 Group: Networking/Other
@@ -264,6 +315,8 @@ Group: Development/C
 Requires: %name-libs = %version-%release
 Provides: samba4-devel = %version-%release
 Obsoletes: samba4-devel < %version-%release
+Provides: libnetapi-devel = %version-%release
+Obsoletes: libnetapi-devel < %version-%release
 
 %description devel
 The %name-devel package contains the header files for the libraries
@@ -289,6 +342,7 @@ Requires: %name = %version-%release
 Requires: %name-common = %version-%release
 Requires: %name-dc = %version-%release
 Requires: %name-libs = %version-%release
+Requires: %name-test-libs = %version-%release
 Requires: %name-winbind = %version-%release
 %if_with libsmbclient
 Requires: libsmbclient = %version-%release
@@ -300,10 +354,20 @@ Obsoletes: samba4-test < %version-%release
 samba4-test provides testing tools for both the server and client
 packages of Samba.
 
+%package test-libs
+Summary: Libraries need by teh testing tools for Samba servers and clients
+Group: System/Libraries
+Requires: %name-libs = %version-%release
+
+%description test-libs
+%name-test-libs provides libraries required by the testing tools.
+
 %package test-devel
 Summary: Testing devel files for Samba servers and clients
 Group: Development/C
 Requires: %name-test = %version-%release
+Requires: %name-libs = %version-%release
+Requires: %name-test-libs = %version-%release
 Provides: samba4-test-devel = %version-%release
 Obsoletes: samba4-test-devel < %version-%release
 
@@ -356,13 +420,62 @@ the local kerberos library to use the same KDC as samba and winbind use
 
 %package winbind-devel
 Summary: Developer tools for the winbind library
-Group: Development/Other
+Group: Development/C
 Requires: %name-winbind = %version-%release
 Provides: samba4-winbind-devel = %version-%release
 Obsoletes: samba4-winbind-devel < %version-%release
 
 %description winbind-devel
 The samba-winbind package provides developer tools for the wbclient library.
+
+%package -n ctdb
+Summary: A Clustered Database based on Samba's Trivial Database (TDB)
+Group: System/Servers
+
+# for ps and killall
+Requires: psmisc
+Requires: tdb-utils
+# for pkill and pidof:
+Requires: procps
+# for netstat:
+Requires: net-tools
+Requires: ethtool
+# for ip:
+Requires: iproute
+Requires: iptables
+# for flock, getopt, kill:
+Requires: util-linux
+
+%description -n ctdb
+CTDB is a cluster implementation of the TDB database used by Samba and other
+projects to store temporary data. If an application is already using TDB for
+temporary data it is very easy to convert that application to be cluster aware
+and use CTDB instead.
+
+%package -n ctdb-devel
+Summary: CTDB clustered database development package
+Group: Development/C
+Requires: ctdb = %version-%release
+
+%description -n ctdb-devel
+Libraries, include files, etc you can use to develop CTDB applications.
+CTDB is a cluster implementation of the TDB database used by Samba and other
+projects to store temporary data. If an application is already using TDB for
+temporary data it is very easy to convert that application to be cluster aware
+and use CTDB instead.
+
+%package -n ctdb-tests
+Summary: CTDB clustered database test suite
+Group: Development/Other
+Requires: ctdb = %version-%release
+Requires: nc
+
+%description -n ctdb-tests
+Test suite for CTDB.
+CTDB is a cluster implementation of the TDB database used by Samba and other
+projects to store temporary data. If an application is already using TDB for
+temporary data it is very easy to convert that application to be cluster aware
+and use CTDB instead.
 
 #%package doc
 #Summary: Documentation for the Samba suite
@@ -434,7 +547,6 @@ The samba-winbind package provides developer tools for the wbclient library.
 
 
 %undefine _configure_gettext
-LDFLAGS="-Wl,-z,relro,-z,now" \
 %configure \
 	--enable-fhs \
 	--with-piddir=/var/run \
@@ -448,6 +560,8 @@ LDFLAGS="-Wl,-z,relro,-z,now" \
 	--bundled-libraries=%_samba4_libraries \
 	--with-pam \
 	--with-ads \
+	--with-pie \
+	--with-relro \
 	--without-fam \
 	--private-libraries=%_samba4_private_libraries \
 %if_with mitkrb5
@@ -463,7 +577,6 @@ LDFLAGS="-Wl,-z,relro,-z,now" \
 %endif
 %if_with clustering_support
 	--with-cluster-support \
-	--enable-old-ctdb \
 %endif
 %if_without pam_smbpass
 	--without-pam_smbpass \
@@ -487,6 +600,7 @@ mkdir -p %buildroot/sbin
 mkdir -p %buildroot/usr/{sbin,bin}
 mkdir -p %buildroot/%_lib/security
 mkdir -p %buildroot/var/lib/samba
+mkdir -p %buildroot/var/lib/ctdb
 mkdir -p %buildroot%_localstatedir/cache/samba
 mkdir -p %buildroot/var/lib/samba/{private,winbindd_privileged,scripts,sysvol}
 mkdir -p %buildroot/var/log/samba/old
@@ -525,10 +639,18 @@ install -m 644 %SOURCE200 %buildroot%_defaultdocdir/%name/README.dc
 install -m 644 %SOURCE200 %buildroot%_defaultdocdir/%name/README.dc-libs
 %endif
 
-install -m644 packaging/systemd/nmb.service %buildroot%_unitdir/nmb.service
-install -m644 packaging/systemd/smb.service %buildroot%_unitdir/smb.service
-install -m644 packaging/systemd/winbind.service %buildroot%_unitdir/winbind.service
-install -m644 packaging/systemd/samba.conf.tmp %buildroot/lib/tmpfiles.d/samba.conf
+for i in nmb smb winbind ; do
+    cat packaging/systemd/$i.service | sed -e 's@\[Service\]@[Service]\nEnvironment=KRB5CCNAME=FILE:/run/samba/krb5cc_samba@g' >tmp$i.service
+    install -m 0644 tmp$i.service %buildroot%_unitdir/$i.service
+done
+%if_with clustering_support
+install -m755 %SOURCE12 %buildroot%_initrddir/ctdb
+install -m 0644 ctdb/config/ctdb.service %buildroot%_unitdir
+install -m 0644 ctdb/config/ctdb.sysconfig %buildroot%_sysconfdir/sysconfig/ctdb
+echo "d /var/run/ctdb 755 root root" >> %buildroot%_tmpfilesdir/ctdb.conf
+%endif
+
+install -m644 packaging/systemd/samba.conf.tmp %buildroot%_tmpfilesdir/%name.conf
 
 # NetworkManager online/offline script
 install -d -m 0755 %buildroot%_sysconfdir/NetworkManager/dispatcher.d/
@@ -583,8 +705,16 @@ TDB_NO_FSYNC=1 %make_build test
 %preun winbind
 %preun_service winbind
 
+%post -n ctdb
+%post_service ctdb
+
+%preun -n ctdb
+%preun_service ctdb
+
 %files
-%doc COPYING
+%doc COPYING README WHATSNEW.txt
+%doc examples/autofs examples/LDAP examples/misc
+%doc examples/printer-accounting examples/printing
 %doc %_defaultdocdir/%name/README.downgrade
 %_bindir/smbstatus
 %_bindir/eventlogadm
@@ -598,34 +728,40 @@ TDB_NO_FSYNC=1 %make_build test
 %_unitdir/nmb.service
 %_unitdir/smb.service
 %attr(1777,root,root) %dir /var/spool/samba
-%dir %_sysconfdir/openldap/schema
 %_sysconfdir/openldap/schema/samba.schema
+%_sysconfdir/pam.d/samba
 %_man1dir/smbstatus.1*
 %_man8dir/eventlogadm.8*
 %_man8dir/smbd.8*
 %_man8dir/nmbd.8*
 %_man8dir/vfs_*.8*
 
+%if_with libcephfs
+%exclude %_libdir/samba/vfs/ceph.so
+%exclude %_man8dir/vfs_ceph.8*
+%endif
+%if_enabled glusterfs
+%exclude %_libdir/samba/vfs/glusterfs.so
+%exclude %_man8dir/vfs_glusterfs.8*
+%endif
+
 %files client
 %_bindir/cifsdd
 %_bindir/dbwrap_tool
 %_bindir/nmblookup
-%_bindir/nmblookup4
 %_bindir/oLschema2ldif
 %_bindir/regdiff
-%_bindir/samba-regedit
 %_bindir/regpatch
 %_bindir/regshell
 %_bindir/regtree
 %_bindir/rpcclient
+%_bindir/samba-regedit
 %_bindir/sharesec
 %_bindir/smbcacls
 %_bindir/smbclient
-%_bindir/smbclient4
 %_bindir/smbcquotas
 %_bindir/smbget
 #%_bindir/smbiconv
-%_bindir/smbpasswd
 %_bindir/smbprint
 %_bindir/smbspool
 %_bindir/smbta-util
@@ -642,7 +778,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_man1dir/regtree.1*
 %exclude %_man1dir/findsmb.1*
 %_man1dir/log2pcap.1*
-%_man1dir/nmblookup4.1*
 %_man1dir/rpcclient.1*
 %_man1dir/sharesec.1*
 %_man1dir/smbcacls.1*
@@ -652,7 +787,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_man5dir/smbgetrc.5*
 %exclude %_man1dir/smbtar.1*
 %_man1dir/smbtree.1*
-%_man8dir/smbpasswd.8*
 %_man8dir/smbspool.8*
 %_man8dir/smbta-util.8*
 %if_with ntdb
@@ -693,13 +827,123 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libldb-cmdline.so
 %endif
 
-%files common -f net.lang
-/lib/tmpfiles.d/samba.conf
-%_bindir/net
-%_bindir/pdbedit
-%_bindir/profiles
-%_bindir/smbcontrol
-%_bindir/testparm
+%files client-libs
+%_libdir/libdcerpc-binding.so.*
+%_libdir/libgensec.so.*
+%_libdir/libndr.so.*
+%_libdir/libndr-krb5pac.so.*
+%_libdir/libndr-nbt.so.*
+%_libdir/libndr-standard.so.*
+%_libdir/libsamba-credentials.so.*
+%_libdir/libsamba-passdb.so.*
+%_libdir/libsamba-util.so.*
+%_libdir/libsamba-hostconfig.so.*
+%_libdir/libsamdb.so.*
+%_libdir/libsmbconf.so.*
+%_libdir/libsmbclient-raw.so.*
+%_libdir/libsmbldap.so.*
+%_libdir/libtevent-util.so.*
+%_libdir/libregistry.so.*
+%_libdir/libdcerpc.so.*
+
+%dir %_libdir/samba
+%_libdir/samba/libCHARSET3-samba4.so
+%_libdir/samba/libaddns-samba4.so
+%_libdir/samba/libads-samba4.so
+%_libdir/samba/libasn1util-samba4.so
+%_libdir/samba/libauth-sam-reply-samba4.so
+%_libdir/samba/libauth-samba4.so
+%_libdir/samba/libauthkrb5-samba4.so
+%_libdir/samba/libccan-samba4.so
+%_libdir/samba/libcli-cldap-samba4.so
+%_libdir/samba/libcli-ldap-common-samba4.so
+%_libdir/samba/libcli-ldap-samba4.so
+%_libdir/samba/libcli-nbt-samba4.so
+%_libdir/samba/libcli-smb-common-samba4.so
+%_libdir/samba/libcli-spoolss-samba4.so
+%_libdir/samba/libcliauth-samba4.so
+%_libdir/samba/libcmdline-credentials-samba4.so
+%_libdir/samba/libdbwrap-samba4.so
+%_libdir/samba/libdcerpc-samba-samba4.so
+%_libdir/samba/liberrors-samba4.so
+%_libdir/samba/libevents-samba4.so
+%_libdir/samba/libflag-mapping-samba4.so
+%_libdir/samba/libgpo-samba4.so
+%_libdir/samba/libgse-samba4.so
+%_libdir/samba/libhttp-samba4.so
+%_libdir/samba/libinterfaces-samba4.so
+%_libdir/samba/libkrb5samba-samba4.so
+%_libdir/samba/libldbsamba-samba4.so
+%_libdir/samba/liblibcli-lsa3-samba4.so
+%_libdir/samba/liblibcli-netlogon3-samba4.so
+%_libdir/samba/liblibsmb-samba4.so
+%_libdir/samba/libmsrpc3-samba4.so
+%_libdir/samba/libndr-samba-samba4.so
+%_libdir/samba/libndr-samba4.so
+%_libdir/samba/libnet-keytab-samba4.so
+%_libdir/samba/libnetif-samba4.so
+%_libdir/samba/libnpa-tstream-samba4.so
+%_libdir/samba/libprinting-migrate-samba4.so
+%_libdir/samba/libreplace-samba4.so
+%_libdir/samba/libsamba-cluster-support-samba4.so
+%_libdir/samba/libsamba-debug-samba4.so
+%_libdir/samba/libsamba-modules-samba4.so
+%_libdir/samba/libsamba-security-samba4.so
+%_libdir/samba/libsamba-sockets-samba4.so
+%_libdir/samba/libsamba3-util-samba4.so
+%_libdir/samba/libsamdb-common-samba4.so
+%_libdir/samba/libsecrets3-samba4.so
+%_libdir/samba/libserver-role-samba4.so
+%_libdir/samba/libsmb-transport-samba4.so
+%_libdir/samba/libsmbd-base-samba4.so
+%_libdir/samba/libsmbd-conn-samba4.so
+%_libdir/samba/libsmbd-shim-samba4.so
+%_libdir/samba/libsmbldaphelper-samba4.so
+%_libdir/samba/libsmbregistry-samba4.so
+%_libdir/samba/libsocket-blocking-samba4.so
+%_libdir/samba/libtdb-wrap-samba4.so
+%_libdir/samba/libtrusts-util-samba4.so
+%_libdir/samba/libutil-cmdline-samba4.so
+%_libdir/samba/libutil-ntdb-samba4.so
+%_libdir/samba/libutil-reg-samba4.so
+%_libdir/samba/libutil-setid-samba4.so
+%_libdir/samba/libutil-tdb-samba4.so
+
+%if_without libwbclient
+%_libdir/samba/libwbclient.so.*
+%_libdir/samba/libwinbind-client-samba4.so
+%endif # ! with_libwbclient
+
+%if_without libsmbclient
+%_libdir/samba/libsmbclient.so.*
+%_mandir/man7/libsmbclient.7*
+%endif # ! with_libsmbclient
+
+%if_with ntdb
+%_libdir/samba/libntdb.so.*
+%endif
+
+%if_with talloc
+%_libdir/samba/libtalloc.so.*
+%_libdir/samba/libpytalloc-util.so.*
+%_man3dir/talloc.3.*
+%endif
+
+%if_with tevent
+%_libdir/samba/libtevent.so.*
+%endif
+
+%if_with tdb
+%_libdir/samba/libtdb.so.*
+%endif
+
+%if_with ldb
+%_libdir/samba/libldb.so.*
+%_man3dir/ldb.3.*
+%endif
+
+%files common
+%_tmpfilesdir/%name.conf
 %_datadir/samba/codepages
 %config(noreplace) %_sysconfdir/logrotate.d/samba
 %attr(0700,root,root) %dir /var/log/samba
@@ -712,6 +956,23 @@ TDB_NO_FSYNC=1 %make_build test
 %config(noreplace) %_sysconfdir/samba/smb.conf
 %config(noreplace) %_sysconfdir/samba/lmhosts
 %config(noreplace) %_sysconfdir/sysconfig/samba
+
+%files common-libs
+%_libdir/samba/libpopt-samba3-samba4.so
+
+%_libdir/samba/pdb
+
+%if_with pam_smbpass
+%_libdir/security/pam_smbpass.so
+%endif
+
+%files common-tools  -f net.lang
+%_bindir/net
+%_bindir/pdbedit
+%_bindir/profiles
+%_bindir/smbcontrol
+%_bindir/smbpasswd
+%_bindir/testparm
 %_man1dir/profiles.1*
 %_man1dir/smbcontrol.1*
 %_man1dir/testparm.1*
@@ -721,16 +982,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/samba.7*
 %_man8dir/net.8*
 %_man8dir/pdbedit.8*
-
-# common libraries
-%_libdir/samba/libpopt_samba3.so
-%_libdir/samba/pdb
+%_man8dir/smbpasswd.8*
 
 %files dc
-%_libdir/samba/ldb
-%_libdir/samba/libdfs_server_ad.so
-%_libdir/samba/libdsdb-module.so
-
 %if_with dc
 %_bindir/samba-tool
 %_sbindir/samba
@@ -755,18 +1009,45 @@ TDB_NO_FSYNC=1 %make_build test
 %doc %_defaultdocdir/%name/README.dc
 %exclude %_man8dir/samba.8*
 %exclude %_man8dir/samba-tool.8*
+%exclude %_libdir/samba/ldb/ildap.so
+%exclude %_libdir/samba/ldb/ldbsamba_extensions.so
 %endif
 
 %files dc-libs
 %if_with dc
-%_libdir/samba/libprocess_model.so
-%_libdir/samba/libservice.so
-%_libdir/samba/process_model
-%_libdir/samba/service
+%_libdir/samba/libprocess-model-samba4.so
+%_libdir/samba/libservice-samba4.so
+%dir %_libdir/samba/process_model
+%_libdir/samba/process_model/onefork.so
+%_libdir/samba/process_model/prefork.so
+%_libdir/samba/process_model/standard.so
+%dir %_libdir/samba/service
+%_libdir/samba/service/cldap.so
+%_libdir/samba/service/dcerpc.so
+%_libdir/samba/service/dns.so
+%_libdir/samba/service/dns_update.so
+%_libdir/samba/service/drepl.so
+%_libdir/samba/service/kcc.so
+%_libdir/samba/service/kdc.so
+%_libdir/samba/service/ldap.so
+%_libdir/samba/service/nbtd.so
+%_libdir/samba/service/ntp_signd.so
+%_libdir/samba/service/s3fs.so
+%_libdir/samba/service/smb.so
+%_libdir/samba/service/web.so
+%_libdir/samba/service/winbind.so
+%_libdir/samba/service/winbindd.so
+%_libdir/samba/service/wrepl.so
 %_libdir/libdcerpc-server.so.*
-%_libdir/samba/libntvfs.so
-%_libdir/samba/libposix_eadb.so
+%_libdir/samba/libdfs-server-ad-samba4.so
+%_libdir/samba/libdnsserver-common-samba4.so
+%_libdir/samba/libdsdb-module-samba4.so
+%_libdir/samba/libntvfs-samba4.so
+%_libdir/samba/libposix-eadb-samba4.so
+%_libdir/samba/bind9/dlz_bind9_9.so
 %else
+%exclude %_libdir/samba/libdfs-server-ad-samba4.so
+%exclude %_libdir/samba/libdnsserver-common-samba4.so
 %doc %_defaultdocdir/%name/README.dc-libs
 %endif
 
@@ -777,10 +1058,12 @@ TDB_NO_FSYNC=1 %make_build test
 %exclude %_includedir/samba-4.0/torture.h
 %if_with libsmbclient
 %exclude %_includedir/samba-4.0/libsmbclient.h
-%exclude %_includedir/samba-4.0/smb_share_modes.h
 %endif
 %if_with libwbclient
 %exclude %_includedir/samba-4.0/wbclient.h
+%endif
+%if_with clustering_support
+%exclude %_includedir/samba-4.0/ctdb*
 %endif
 
 %_libdir/libdcerpc-atsvc.so
@@ -792,6 +1075,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/libndr-nbt.so
 %_libdir/libndr-standard.so
 %_libdir/libndr.so
+%_libdir/libnetapi.so
 %_libdir/libregistry.so
 %_libdir/libsamba-credentials.so
 %_libdir/libsamba-hostconfig.so
@@ -801,7 +1085,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/libsmbclient-raw.so
 %_libdir/libsmbconf.so
 %_libdir/libtevent-util.so
-%_libdir/libpdb.so
+%_libdir/libsamba-passdb.so
 %_libdir/libsmbldap.so
 
 %_pkgconfigdir/dcerpc.pc
@@ -812,6 +1096,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_pkgconfigdir/ndr_krb5pac.pc
 %_pkgconfigdir/ndr_nbt.pc
 %_pkgconfigdir/ndr_standard.pc
+%_pkgconfigdir/netapi.pc
 %_pkgconfigdir/registry.pc
 %_pkgconfigdir/samba-credentials.pc
 %_pkgconfigdir/samba-hostconfig.pc
@@ -825,106 +1110,41 @@ TDB_NO_FSYNC=1 %make_build test
 %_pkgconfigdir/dcerpc_server.pc
 %endif
 
+%if_with libcephfs
+%files vfs-cephfs
+%_libdir/samba/vfs/ceph.so
+%_man8dir/vfs_ceph.8*
+%endif
+
+%if_enabled glusterfs
+%files vfs-glusterfs
+%_libdir/samba/vfs/glusterfs.so
+%_man8dir/vfs_glusterfs.8*
+%endif
+
 %files libs
 %_libdir/libdcerpc-atsvc.so.*
-%_libdir/libdcerpc-binding.so.*
 %_libdir/libdcerpc-samr.so.*
-%_libdir/libdcerpc.so.*
-%_libdir/libgensec.so.*
-%_libdir/libndr-krb5pac.so.*
-%_libdir/libndr-nbt.so.*
-%_libdir/libndr-standard.so.*
-%_libdir/libndr.so.*
-%_libdir/libregistry.so.*
-%_libdir/libsamba-credentials.so.*
-%_libdir/libsamba-hostconfig.so.*
 %_libdir/libsamba-policy.so.*
-%_libdir/libsamba-util.so.*
-%_libdir/libsamdb.so.*
-%_libdir/libsmbclient-raw.so.*
-%_libdir/libsmbconf.so.*
-%_libdir/libtevent-util.so.*
-%_libdir/libpdb.so.*
-%_libdir/libsmbldap.so.*
 
 # libraries needed by the public libraries
-%_libdir/samba/libCHARSET3.so
-%_libdir/samba/libMESSAGING.so
-%_libdir/samba/libLIBWBCLIENT_OLD.so
-%_libdir/samba/libaddns.so
-%_libdir/samba/libads.so
-%_libdir/samba/libasn1util.so
-%_libdir/samba/libauth.so
-%_libdir/samba/libauth4.so
-%_libdir/samba/libauth_sam_reply.so
-%_libdir/samba/libauth_unix_token.so
-%_libdir/samba/libauthkrb5.so
-%_libdir/samba/libccan.so
-%_libdir/samba/libcli-ldap-common.so
-%_libdir/samba/libcli-ldap.so
-%_libdir/samba/libcli-nbt.so
-%_libdir/samba/libcli_cldap.so
-%_libdir/samba/libcli_smb_common.so
-%_libdir/samba/libcli_spoolss.so
-%_libdir/samba/libcliauth.so
-#%{_libdir}/samba/libclidns.so
-%_libdir/samba/libcluster.so
-%_libdir/samba/libcmdline-credentials.so
-%_libdir/samba/libdbwrap.so
-%_libdir/samba/libdcerpc-samba.so
+%_libdir/samba/libMESSAGING-samba4.so
+%_libdir/samba/libLIBWBCLIENT-OLD-samba4.so
+%_libdir/samba/libauth4-samba4.so
+%_libdir/samba/libauth-unix-token-samba4.so
+%_libdir/samba/libcluster-samba4.so
 %_libdir/samba/libdcerpc-samba4.so
-%_libdir/samba/libdnsserver_common.so
-%_libdir/samba/liberrors.so
-%_libdir/samba/libevents.so
-%_libdir/samba/libflag_mapping.so
-%_libdir/samba/libgpo.so
-%_libdir/samba/libgse.so
-%_libdir/samba/libinterfaces.so
-%_libdir/samba/libkrb5samba.so
-%_libdir/samba/libldbsamba.so
-%_libdir/samba/liblibcli_lsa3.so
-%_libdir/samba/liblibcli_netlogon3.so
-%_libdir/samba/liblibsmb.so
-%_libdir/samba/libsmb_transport.so
-%_libdir/samba/libmsrpc3.so
-%_libdir/samba/libndr-samba.so
-%_libdir/samba/libndr-samba4.so
-%_libdir/samba/libnet_keytab.so
-%_libdir/samba/libnetif.so
-%_libdir/samba/libnon_posix_acls.so
-%_libdir/samba/libnpa_tstream.so
-%_libdir/samba/libprinting_migrate.so
-%_libdir/samba/libreplace.so
-%_libdir/samba/libsamba-modules.so
-%_libdir/samba/libsamba-net.so
-%_libdir/samba/libsamba-security.so
-%_libdir/samba/libsamba-sockets.so
-%_libdir/samba/libsamba_python.so
-%_libdir/samba/libsamdb-common.so
-%_libdir/samba/libsecrets3.so
-%_libdir/samba/libserver-role.so
-%_libdir/samba/libshares.so
-%_libdir/samba/libsamba3-util.so
-%_libdir/samba/libsmbd_base.so
-%_libdir/samba/libsmbd_conn.so
-%_libdir/samba/libsmbd_shim.so
-%_libdir/samba/libsmbldaphelper.so
-%_libdir/samba/libsmbpasswdparser.so
-%_libdir/samba/libsmbregistry.so
-%_libdir/samba/libtdb-wrap.so
-%_libdir/samba/libtdb_compat.so
-%_libdir/samba/libtrusts_util.so
-%_libdir/samba/libutil_cmdline.so
-%_libdir/samba/libutil_ntdb.so
-%_libdir/samba/libutil_reg.so
-%_libdir/samba/libutil_setid.so
-%_libdir/samba/libutil_tdb.so
-%_libdir/samba/libxattr_tdb.so
-
+%_libdir/samba/libnon-posix-acls-samba4.so
+%_libdir/samba/libsamba-net-samba4.so
+%_libdir/samba/libsamba-python-samba4.so
+%_libdir/samba/libshares-samba4.so
+%_libdir/samba/libsmbpasswdparser-samba4.so
+%_libdir/samba/libtdb-compat-samba4.so
+%_libdir/samba/libxattr-tdb-samba4.so
 
 %if_with dc
-%_libdir/samba/libdb-glue.so
-%_libdir/samba/libHDB_SAMBA4.so
+%_libdir/samba/libdb-glue-samba4.so
+%_libdir/samba/libHDB-SAMBA4-samba4.so
 %_libdir/samba/libasn1-samba4.so.*
 %_libdir/samba/libgssapi-samba4.so.*
 %_libdir/samba/libhcrypto-samba4.so.*
@@ -936,54 +1156,21 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libwind-samba4.so.*
 %endif
 
-%if_with ldb
-%_libdir/samba/libldb.so.*
-%_libdir/samba/libpyldb-util.so.*
-%endif
-%if_with talloc
-%_libdir/samba/libtalloc.so.*
-%_libdir/samba/libpytalloc-util.so.*
-%endif
-%if_with tevent
-%_libdir/samba/libtevent.so.*
-%endif
-%if_with tdb
-%_libdir/samba/libtdb.so.*
-%endif
-%if_with ntdb
-%_libdir/samba/libntdb.so.*
-%endif
-%if_without libsmbclient
-%_libdir/samba/libsmbclient.so.*
-%_libdir/samba/libsmbsharemodes.so.*
-%endif
-%if_without libwbclient
-%_libdir/samba/libwbclient.so.*
-%_libdir/samba/libwinbind-client.so
-%endif
-%if_without libnetapi
-%_libdir/samba/libnetapi.so.*
-%endif
-
 %if_with libsmbclient
 %files -n libsmbclient
 %_libdir/libsmbclient.so.*
-%_libdir/libsmbsharemodes.so.*
 
 %files -n libsmbclient-devel
 %_includedir/samba-4.0/libsmbclient.h
-%_includedir/samba-4.0/smb_share_modes.h
 %_libdir/libsmbclient.so
-%_libdir/libsmbsharemodes.so
 %_pkgconfigdir/smbclient.pc
-%_pkgconfigdir/smbsharemodes.pc
 %_man7dir/libsmbclient.7*
 %endif
 
 %if_with libwbclient
 %files -n libwbclient
 %_libdir/libwbclient.so.*
-%_libdir/samba/libwinbind-client.so
+%_libdir/samba/libwinbind-client-samba4.so
 
 %files -n libwbclient-devel
 %_includedir/samba-4.0/wbclient.h
@@ -994,11 +1181,6 @@ TDB_NO_FSYNC=1 %make_build test
 %if_with libnetapi
 %files -n libnetapi
 %_libdir/libnetapi.so.*
-
-%files -n libnetapi-devel
-%_libdir/libnetapi.so
-%_includedir/samba-4.0/netapi.h
-%_pkgconfigdir/netapi.pc
 %endif
 
 %files pidl
@@ -1017,11 +1199,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/masktest
 %_bindir/ndrdump
 %_bindir/smbtorture
-%_libdir/libtorture.so.*
-%_libdir/samba/libsubunit.so
-%if_with dc
-%_libdir/samba/libdlz_bind9_for_torture.so
-%endif
 %_man1dir/gentest.1*
 %_man1dir/locktest.1*
 %_man1dir/masktest.1*
@@ -1036,6 +1213,15 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libuid_wrapper.so
 %endif
 
+%files test-libs
+%_libdir/libtorture.so.*
+%_libdir/samba/libsubunit-samba4.so
+%if_with dc
+%_libdir/samba/libdlz-bind9-for-torture-samba4.so
+%else
+%_libdir/samba/libdsdb-module-samba4.so
+%endif
+
 %files test-devel
 %_includedir/samba-4.0/torture.h
 %_libdir/libtorture.so
@@ -1044,8 +1230,8 @@ TDB_NO_FSYNC=1 %make_build test
 %files winbind -f pam_winbind.lang
 %_libdir/samba/idmap
 %_libdir/samba/nss_info
-%_libdir/samba/libnss_info.so
-%_libdir/samba/libidmap.so
+%_libdir/samba/libnss-info-samba4.so
+%_libdir/samba/libidmap-samba4.so
 %_sbindir/winbindd
 %attr(750,root,wbpriv) %dir /var/lib/samba/winbindd_privileged
 %_unitdir/winbind.service
@@ -1073,7 +1259,71 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
 %_man7dir/winbind_krb5_locator.7*
 
+%if_with clustering_support
+%files -n ctdb
+%doc ctdb/README
+%config(noreplace) %_sysconfdir/sysconfig/ctdb
+%dir %_sysconfdir/ctdb
+%config(noreplace) %_sysconfdir/ctdb/notify.sh
+%config(noreplace) %_sysconfdir/ctdb/debug-hung-script.sh
+%config(noreplace) %_sysconfdir/ctdb/ctdb-crash-cleanup.sh
+%config(noreplace) %_sysconfdir/ctdb/gcore_trace.sh
+%config(noreplace) %_sysconfdir/ctdb/functions
+%config(noreplace) %_sysconfdir/ctdb/debug_locks.sh
+%_sysconfdir/ctdb/statd-callout
+%dir /var/lib/ctdb
+%_unitdir/ctdb.service
+%_initdir/ctdb
+%_tmpfilesdir/ctdb.conf
+
+%dir %_sysconfdir/ctdb/nfs-rpc-checks.d
+%_sysconfdir/ctdb/nfs-rpc-checks.d/10.statd.check
+%_sysconfdir/ctdb/nfs-rpc-checks.d/20.nfsd.check
+%_sysconfdir/ctdb/nfs-rpc-checks.d/30.lockd.check
+%_sysconfdir/ctdb/nfs-rpc-checks.d/40.mountd.check
+%_sysconfdir/ctdb/nfs-rpc-checks.d/50.rquotad.check
+%_sysconfdir/sudoers.d/ctdb
+%_sysconfdir/ctdb/events.d/
+%dir %_sysconfdir/ctdb/notify.d
+%_sysconfdir/ctdb/notify.d/README
+%_sbindir/ctdbd
+%_sbindir/ctdbd_wrapper
+%_bindir/ctdb
+%_bindir/smnotify
+%_bindir/ping_pong
+%_bindir/ltdbtool
+%_bindir/ctdb_diagnostics
+%_bindir/onnode
+%_bindir/ctdb_lock_helper
+%_bindir/ctdb_event_helper
+
+%_man1dir/ctdb.1*
+%_man1dir/ctdbd.1*
+%_man1dir/onnode.1*
+%_man1dir/ltdbtool.1*
+%_man1dir/ping_pong.1*
+%_man1dir/ctdbd_wrapper.1*
+%_man5dir/ctdbd.conf.5*
+%_man7dir/ctdb.7*
+%_man7dir/ctdb-tunables.7*
+%_man7dir/ctdb-statistics.7*
+
+%files -n ctdb-devel
+%_includedir/samba-4.0/ctdb*
+%_libdir/pkgconfig/ctdb.pc
+
+%files -n ctdb-tests
+%_libdir/ctdb-tests
+%_bindir/ctdb_run_tests
+%_bindir/ctdb_run_cluster_tests
+%_datadir/ctdb-tests
+%doc ctdb/tests/README
+%endif
+
 %changelog
+* Mon Mar 23 2015 Alexey Shabalin <shaba@altlinux.ru> 4.2.0-alt1
+- 4.2.0
+
 * Mon Feb 23 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.17-alt1
 - 4.1.17
 - CVE-2015-0240 fixed
