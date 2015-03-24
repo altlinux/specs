@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.6
-Release: alt1.git20150223
+Version: 0.7.1
+Release: alt1.git20150324
 Summary: A Python module for creating Excel XLSX files
 License: BSD
 Group: Development/Python
@@ -137,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.git20150324
+- Version 0.7.1
+
 * Fri Feb 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.6-alt1.git20150223
 - Initial build for Sisyphus
 
