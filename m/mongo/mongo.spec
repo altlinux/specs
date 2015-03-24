@@ -1,6 +1,6 @@
 Name: mongo
-Version: 2.4.9
-Release: alt1.1
+Version: 2.6.9
+Release: alt1
 Summary: mongo client shell and tools
 License: AGPL 3.0
 Url: http://www.mongodb.org
@@ -13,26 +13,13 @@ Source: %name-%version.tar
 Patch1:         mongodb-2.4.5-no-term.patch
 ##Patch 2 - make it possible to use system libraries
 Patch2:         mongodb-2.4.5-use-system-version.patch
-##Patch 5 - https://jira.mongodb.org/browse/SERVER-9210
-Patch5:         mongodb-2.4.5-boost-fix.patch
-##Patch 6 - https://github.com/mongodb/mongo/commit/1d42a534e0eb1e9ac868c0234495c0333d57d7c1
-Patch6:         mongodb-2.4.5-boost-size-fix.patch
-##Patch 7 - https://bugzilla.redhat.com/show_bug.cgi?id=958014
-## Need to work on getting this properly patched upstream
-Patch7:         mongodb-2.4.5-pass-flags.patch
 ##Patch 8 - Compile with GCC 4.8
 Patch8:         mongodb-2.4.5-gcc48.patch
-##Patch 10 - Support atomics on ARM
-Patch10:        mongodb-2.4.5-atomics.patch
-##From: Robie Basak <robie.basak@canonical.com>
-##  Use a signed char to store BSONType enumerations
-##Patch 11 https://jira.mongodb.org/browse/SERVER-9680
-Patch11:        mongodb-2.4.5-signed-char-for-BSONType-enumerations.patch
 ##Patch 12: add includes to make it build under gcc 4.9
 Patch12:        mongodb-2.4.9-alt-fix-includes.patch
 
 
-BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons boost-devel boost-filesystem-devel boost-program_options-devel libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel libpcap-devel libsnappy-devel libv8-3.15-devel systemd-devel libgperftools-devel libsasl2-devel
+BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons boost-devel boost-filesystem-devel boost-program_options-devel libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel libpcap-devel libsnappy-devel libv8-3.15-devel systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel libyaml-cpp-devel
 
 %description
 Mongo (from "huMONGOus") is a schema-free document-oriented database.
@@ -70,47 +57,20 @@ in order to complete these operations. From the perspective of the
 application, a mongos instance behaves identically to any other
 MongoDB instance.
 
-%package -n lib%{name}client
-Summary: MongoDB shared libraries
-Group: System/Libraries
-
-%description -n lib%{name}client
-This package provides the shared library for the MongoDB client.
-
-%package -n lib%{name}client-devel
-Summary: MongoDB header files
-Group: Development/Databases
-Provides: %name-devel
-Requires: lib%{name}client = %version-%release
-Requires: boost-devel
-
-%description -n lib%{name}client-devel
-This package provides the header files and C++ driver for MongoDB. MongoDB is
-a high-performance, open source, schema-free document-oriented database.
-
-%package -n lib%{name}client-devel-static
-Summary: MongoDB static libraries
-Group: Development/Databases
-Requires: lib%{name}client-devel = %version-%release
-
-%description -n lib%{name}client-devel-static
-This package provides the static library for the MongoDB client.
 
 %prep
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
 %patch8 -p1
-%patch10 -p1 -b .atomics
-%patch11 -p1 -b .type
 %patch12 -p1
 
 
 # spurious permissions
 chmod -x README
+
+# Fixed in upstream - version 2.7.3
+sed -i -r "s|(conf.FindSysLibDep\(\"yaml\", \[\"yaml)(\"\]\))|\1-cpp\2|" SConstruct
 
 # wrong end-of-file encoding
 sed -i 's/\r//' README
@@ -125,7 +85,6 @@ sed -i -e "s@\$INSTALL_DIR/lib@\$INSTALL_DIR/%_lib@g" src/SConscript.client
 # If you fail to do this, mongodb will be built twice...
 %define common_opts \\\
 	-j %__nprocs \\\
-	--sharedclient \\\
 	--use-system-all \\\
 	--prefix=%buildroot%_prefix \\\
 	--extrapath=%_prefix \\\
@@ -133,7 +92,7 @@ sed -i -e "s@\$INSTALL_DIR/lib@\$INSTALL_DIR/%_lib@g" src/SConscript.client
 %ifarch x86_64 \
 	--use-sasl-client \\\
 %endif \
-	--full
+	--ssl
 
 scons %common_opts
 
@@ -195,7 +154,6 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %_bindir/mongostat
 %_bindir/mongotop
 %_bindir/bsondump
-%_bindir/mongotop
 %_bindir/mongooplog
 %_bindir/mongoperf
 %_bindir/mongosniff
@@ -240,17 +198,11 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_logdir/%name
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
-%files -n lib%{name}client
-%doc README GNU-AGPL-3.0.txt APACHE-2.0.txt
-%_libdir/libmongoclient.so
-
-%files -n lib%{name}client-devel
-%_includedir/mongo
-
-%files -n lib%{name}client-devel-static
-%_libdir/libmongoclient.a
-
 %changelog
+* Wed Mar 25 2015 Vladimir Didenko <cow@altlinux.org> 2.6.9-alt1
+- 2.6.9
+- enable ssl support
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 2.4.9-alt1.1
 - Rebuild with boost 1.57.0;
 - Add patch that add necessary includes to fix build.
