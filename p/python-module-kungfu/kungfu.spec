@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5.4
+Version: 1.6.0
 Release: alt1
 Summary: A Pandas Enhancement
 License: MIT
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1
+- Version 1.6.0
+
 * Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.4-alt1
 - Version 1.5.4
 
