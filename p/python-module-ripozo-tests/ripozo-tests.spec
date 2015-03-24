@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.13
-Release: alt1.dev0.git20150323
+Release: alt2.dev0.git20150323
 Summary: A helper package for creating tests for ripozo and its extensions
 License: UNKNOWN
 Group: Development/Python
@@ -17,19 +17,18 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-six
-#BuildPreReq: python-module-ripozo
+BuildPreReq: python-module-ripozo
 BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-six
-#BuildPreReq: python3-module-ripozo
+BuildPreReq: python3-module-ripozo
 %endif
 
 %py_provides ripozo_tests
 %py_requires six logging
-#py_requires ripozo
-%add_python_req_skip ripozo
+%py_requires ripozo
 
 %description
 These are the common tests that can be used for various common
@@ -41,8 +40,7 @@ Summary: A helper package for creating tests for ripozo and its extensions
 Group: Development/Python3
 %py3_provides ripozo_tests
 %py3_requires six logging
-#py3_requires ripozo
-%add_python3_req_skip ripozo
+%py3_requires ripozo
 
 %description -n python3-module-%oname
 These are the common tests that can be used for various common
@@ -93,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.13-alt2.dev0.git20150323
+- Added necessary requirements
+
 * Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.13-alt1.dev0.git20150323
 - Initial build for Sisyphus
 
