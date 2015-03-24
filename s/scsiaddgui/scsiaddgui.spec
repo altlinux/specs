@@ -1,6 +1,6 @@
 Summary: A graphical front end for scsiadd
 Name: scsiaddgui
-Version: 1.5
+Version: 1.6
 Release: alt1
 License: GPL
 Url: http://scsiaddgui.sourceforge.net
@@ -17,7 +17,7 @@ BuildArch: noarch
 scsiaddgui provides a GUI for the scsiadd - utility
 
 %description -l UTF-8
-scsiaddgui GUI для утилиты scsiadd
+scsiaddgui - графический клиент для утилиты scsiadd
 
 %prep
 %setup
@@ -67,6 +67,9 @@ ln -s %_datadir/scsiaddgui-%version/scsiaddgui.py ./%_bindir/scsiaddgui
 %_datadir/scsiaddgui-%version/help_ru
 
 %changelog
+* Tue Mar 24 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.6-alt1
+- New version
+
 * Mon Mar 23 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.5-alt1
 - initial build for ALT Linux Sisyphus
 
