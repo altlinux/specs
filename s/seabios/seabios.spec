@@ -1,7 +1,7 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.7.5.1
+Version: 1.8.1
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -98,7 +98,7 @@ install -m 0644 binaries/vgabios*.bin %buildroot%_datadir/seavgabios
 ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/seavgabios/vgabios.bin
 
 %files
-%doc COPYING COPYING.LESSER README TODO
+%doc COPYING COPYING.LESSER README
 %dir %_datadir/%name
 %_datadir/%name/bios*.bin
 %_datadir/%name/*.aml
@@ -108,6 +108,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Tue Mar 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+
 * Tue Nov 18 2014 Alexey Shabalin <shaba@altlinux.ru> 1.7.5.1-alt1
 - 1.7.5.1
 
