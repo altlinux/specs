@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.2.278
-Release: alt1.git20150215
+Version: 1.2.294
+Release: alt1.git20150324
 Summary: Downloading/processing content (torrents, podcasts...) from different sources
 License: MIT
 Group: Development/Python
@@ -32,11 +32,12 @@ BuildPreReq: pylint python-module-coverage python-module-nosexcover
 BuildPreReq: python-module-mock python-tools-pep8
 BuildPreReq: python-module-httmock python-module-vcrpy
 BuildPreReq: python-module-argparse python-module-pbr
-BuildPreReq: python-module-pip
+BuildPreReq: python-module-pip python-modules-logging
 BuildPreReq: python-module-sphinx-devel
 
 %py_provides flexget
-%py_requires tmdb3 progressbar pynzb PyRSS2Gen pytvrage
+%py_requires tmdb3 progressbar pynzb PyRSS2Gen pytvrage logging
+%py_requires feedparser requests
 Requires: python-module-progressbar
 
 %description
@@ -120,6 +121,9 @@ py.test
 %doc docs/build/html/*
 
 %changelog
+* Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.294-alt1.git20150324
+- Version 1.2.294
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.278-alt1.git20150215
 - Version 1.2.278
 
