@@ -1,6 +1,8 @@
+%def_with geogclue2
+
 Name: 	 redshift
 Version: 1.10
-Release: alt1
+Release: alt2
 
 Summary: Redshift adjusts the color temperature of your screen
 Summary(ru_RU.UTF-8): Redshift изменяет температуру цвета вашего экрана для снижения утомляемости глаз
@@ -21,6 +23,10 @@ BuildPreReq: libGConf-devel
 BuildPreReq: libXrandr-devel
 BuildPreReq: libXxf86vm-devel
 BuildPreReq: libgeoclue-devel
+%if_with geoclue2
+BuildPreReq: libgio-devel
+BuildPreReq: geoclue2-devel
+%endif
 BuildPreReq: gettext-devel
 BuildRequires: libdrm-devel
 BuildRequires: python3-module-pygobject
@@ -50,17 +56,24 @@ Redshift изменяет температуру цвета экрана ваш�
 
 %prep
 %setup
+sed -i -e 's|AC_PREREQ(\[2.69\])|AC_PREREQ([2.68])|' configure.ac
 %patch1 -p1
 %autoreconf
 
 %build
 %configure \
+    --enable-drm \
     --enable-randr \
     --enable-vidmode \
     --enable-nls \
     --enable-gui \
     --enable-gnome-clock \
-    
+    --enable-geoclue \
+%if_with geoclue2
+    --enable-geoclue2 \
+%endif
+
+
 %make_build
 
 %install
@@ -76,6 +89,7 @@ test %_libdir = /usr/lib64 && mv %buildroot/%_libexecdir %buildroot/%_libdir
 %_desktopdir/*
 %_iconsdir/hicolor/*
 %doc %_man1dir/*
+%_datadir/appdata/redshift-gtk.appdata.xml
 
 %post
 # If gnome-panel installed (i.e for GNOME users) - set program to autostart
@@ -88,6 +102,11 @@ fi
 rm -f %_sysconfdir/xdg/autostart/gtk-redshift.desktop
 
 %changelog
+* Tue Mar 24 2015 Andrey Cherepanov <cas@altlinux.org> 1.10-alt2
+- Build with drm and geoclue2
+- Package redshift-gtk.appdata.xml
+- Reduce required autoconf version
+
 * Tue Feb 10 2015 Andrey Cherepanov <cas@altlinux.org> 1.10-alt1
 - New version
 
