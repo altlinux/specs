@@ -3,11 +3,11 @@
 
 %define rname gwenview
 Name: kde4-gwenview
-Version: 4.14.1
+Version: 4.14.3
 Release: alt1
 
 Group: Graphics
-Summary: KDE support for digital cameras
+Summary: Image viewer for KDE
 Url: http://projects.kde.org/projects/kdegraphics/gwenview
 License: GPLv2+
 
@@ -26,8 +26,7 @@ BuildRequires: soprano soprano-backend-redland
 BuildRequires: kde4-baloo-devel
 
 %description
-Digital camera io_slave for Konqueror. Together gPhoto this allows you
-to access your camera's picture with the URL camera:/
+Fast and easy to use image and video viewer for KDE.
 
 %package devel
 Summary: Development files for %name
@@ -77,6 +76,9 @@ KDE 4 core library.
 
 
 %changelog
+* Wed Mar 25 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
+- new version
+
 * Thu Sep 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.1-alt1
 - new version
 
