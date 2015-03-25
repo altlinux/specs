@@ -4,7 +4,7 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -21,7 +21,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define clutter_ver 1.15.90
 %define gjs_ver 1.39.0
-%define mutter_ver 3.14.3
+%define mutter_ver 3.14.4
 %define gtk_ver 3.7.9
 %define gio_ver 2.37.0
 %define gstreamer_ver 0.11.92
@@ -53,7 +53,7 @@ Requires: libgnomekbd
 # network.js requires
 Requires: gnome-control-center
 
-# find ./ -name *.js |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+# find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(AccountsService)
 Requires: typelib(Atk)
 Requires: typelib(Atspi)
@@ -228,6 +228,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.4-alt1
+- 3.14.4
+
 * Sat Dec 20 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt1
 - 3.14.3
 
