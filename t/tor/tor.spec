@@ -10,8 +10,8 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.2.5.10
-Release: alt2
+Version: 0.2.5.11
+Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -140,6 +140,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Wed Mar 25 2015 Vladimir Didenko <cow@altlinux.ru> 0.2.5.11-alt1
+- new version
+
 * Wed Dec 24 2014 Vladimir Didenko <cow@altlinux.ru> 0.2.5.10-alt2
 - don't pack torify (moved to torsocks package)
 
