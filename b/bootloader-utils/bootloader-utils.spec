@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.23.1
+Version: 0.4.24
 Release: alt1
 
 Summary: Bootloader utilities
@@ -83,6 +83,9 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Wed Mar 25 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4.24-alt1
+- support for ANY numeral kernel version added
+
 * Fri Nov 22 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.23.1-alt1
 - installkernel: use trap for temp files (tnx ldv@).
 - UBOOT_INITRD_LOAD_ADDRESS is optional.
