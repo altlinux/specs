@@ -1,8 +1,8 @@
-%define ver_major 3.14
+%define ver_major 3.16
 
 Name: gnome-themes-standard
-Version: %ver_major.2.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A set of standard themes for GNOME desktop
 License: LGPLv2.1+
@@ -66,7 +66,6 @@ done
 %files data -f %name.lang
 %dir %_datadir/themes/Adwaita
 %_datadir/themes/Adwaita/index.theme
-%_datadir/themes/Adwaita/metacity-1/
 %dir %_datadir/themes/Adwaita/gtk-2.0
 %_datadir/themes/Adwaita/gtk-2.0/gtkrc
 %_datadir/themes/Adwaita/gtk-2.0/Arrows/
@@ -91,12 +90,8 @@ done
 # Accessibility themes from ghome-temes(-default)
 %_datadir/themes/HighContrast/gtk-2.0/gtkrc
 %_datadir/themes/HighContrast/gtk-3.0/gtk.css
-%_datadir/themes/HighContrast/gtk-3.0/gtk.gresource
 %_datadir/themes/HighContrast/index.theme
-%_datadir/themes/HighContrast/gtk-3.0/settings.ini
 %_iconsdir/HighContrast/
-# metacity theme
-%_datadir/themes/HighContrast/metacity-1/metacity-theme-3.xml
 %doc NEWS README
 
 %files -n libgtk2-engine-adwaita
@@ -104,6 +99,9 @@ done
 %exclude %_libdir/gtk-2.0/2.10.0/engines/libadwaita.la
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Thu Nov 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2.1-alt2
 - fixed file conflicts with some packages with the same HC icons
 

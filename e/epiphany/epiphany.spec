@@ -1,10 +1,10 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 3.10
 %define ua_ver %ver_major
 %define _libexecdir %_prefix/libexec
 
 Name: epiphany
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -20,7 +20,7 @@ Patch: %name-3.12.1-alt-lfs.patch
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.5.2
+%define webkit_ver 2.7.3
 
 Requires: %name-data = %version-%release indexhtml iso-codes
 
@@ -101,6 +101,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/appdata/epiphany.appdata.xml
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

@@ -1,5 +1,5 @@
 %set_automake_version 1.11
-%define ver_major 3.14
+%define ver_major 3.16
 %def_enable glade
 %def_enable vala
 %def_enable gtk_doc
@@ -7,7 +7,7 @@
 %def_enable plugin_devhelp
 
 Name: anjuta
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 Summary: GNOME IDE for C and C++
 Group: Development/GNOME and GTK+
@@ -227,6 +227,9 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %anjuta_pixmapsdir/*devhelp*
 
 %changelog
+* Fri Mar 27 2015 Alexey Shabalin <shaba@altlinux.ru> 3.16.0-alt1
+- 3.16.0
+
 * Fri Jan 30 2015 Alexey Shabalin <shaba@altlinux.ru> 3.14.1-alt1
 - 3.14.1
 

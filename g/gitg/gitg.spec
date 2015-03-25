@@ -1,9 +1,9 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 1.0
 %def_enable python
 
 Name: gitg
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: git repository viewer targeting gtk+/GNOME
@@ -28,9 +28,10 @@ AutoReqProv: nopython
 %define glib_ver 2.38
 %define gtk_ver 3.12
 %define gtksourceview_ver 3.10
-%define git2_ver 0.0.20
+%define git2_ver 0.22
 %define webkit_ver 2.6.0
 %define gtkspell_ver 3.0.3
+%define peas_ver 1.5.0
 
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -38,8 +39,9 @@ BuildPreReq: libgit2-glib-devel >= %git2_ver
 BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
 BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
 BuildPreReq: libgtkspell3-devel >= %gtkspell_ver
+BuildPreReq: libpeas-devel >= %peas_ver
 BuildRequires: gnome-common intltool desktop-file-utils
-BuildRequires: libgee0.8-devel libjson-glib-devel libpeas-devel
+BuildRequires: libgee0.8-devel libjson-glib-devel libsecret-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libgit2-glib-gir-devel libwebkit2gtk-gir-devel libgee0.8-gir-devel
 BuildRequires: vala-tools
@@ -126,6 +128,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/%name/
 %_man1dir/%{name}*
 %_iconsdir/hicolor/*x*/apps/*
+%_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
 %_datadir/appdata/%name.appdata.xml
 %{?_enable_python:%python3_sitelibdir/gi/overrides/GitgExt.py}
 %doc AUTHORS NEWS README
@@ -155,6 +158,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Dec 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 

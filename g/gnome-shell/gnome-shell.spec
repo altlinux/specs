@@ -1,16 +1,16 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.14
+%define ver_major 3.16
 %define gst_api_ver 1.0
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
 License: GPLv2+
-Url: https://live.gnome.org/GnomeShell
+Url: https://wiki.gnome.org/Projects/GnomeShell
 
 #Source: %name-%version.tar
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -19,10 +19,14 @@ Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 Patch4: gnome-shell-3.9.92-alt-makefile.patch
 Obsoletes: gnome-shell-extension-per-window-input-source
 
-%define clutter_ver 1.15.90
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+
+%define clutter_ver 1.21.5
 %define gjs_ver 1.39.0
-%define mutter_ver 3.14.4
-%define gtk_ver 3.7.9
+%define mutter_ver 3.15.91
+%define gtk_ver 3.15.0
 %define gio_ver 2.37.0
 %define gstreamer_ver 0.11.92
 %define eds_ver 3.5.3
@@ -52,6 +56,8 @@ Requires: gdm-data
 Requires: libgnomekbd
 # network.js requires
 Requires: gnome-control-center
+# since 3.16
+# Requires: polari
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(AccountsService)
@@ -70,9 +76,9 @@ Requires: typelib(GLib)
 Requires: typelib(GnomeBluetooth)
 Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
-Requires: typelib(GSystem)
 Requires: typelib(Gtk)
 Requires: typelib(Gvc)
+Requires: typelib(GWeather)
 Requires: typelib(IBus)
 Requires: typelib(Meta)
 Requires: typelib(NetworkManager)
@@ -92,7 +98,7 @@ Requires: typelib(UPowerGlib)
 Requires: typelib(WebKit2)
 
 BuildRequires: gcc-c++ gnome-common intltool gtk-doc
-BuildRequires: python-devel
+BuildRequires: python3-devel rpm-build-python3
 BuildRequires: libX11-devel libXfixes-devel
 BuildRequires: libclutter-devel >= %clutter_ver libclutter-gir-devel
 BuildRequires: libdbus-glib-devel
@@ -197,7 +203,6 @@ rm -f %buildroot%_libdir/%name/*.la
 %_libdir/%name/libgnome-shell.so
 %_libdir/%name/libgnome-shell-js.so
 %_libdir/%name/libgnome-shell-menu.so
-%_libdir/%name/libgnome-shell-menu.so
 %_libdir/%name/*.typelib
 # browser plugin
 %browser_plugins_path/libgnome-shell-browser-plugin.so
@@ -228,6 +233,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.4-alt1
 - 3.14.4
 

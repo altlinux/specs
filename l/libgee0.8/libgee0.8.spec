@@ -1,10 +1,10 @@
 %define _name libgee
-%define ver_major 0.16
+%define ver_major 0.18
 %define api_ver 0.8
 %def_disable static
 
 Name: %_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: a collection library providing GObject-based interfaces
@@ -110,6 +110,9 @@ applications with %name.
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
+- 0.18.0
+
 * Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 0.16.1-alt1
 - 0.16.1
 

@@ -1,5 +1,5 @@
 %define _name org.gnome.FileRoller
-%define ver_major 3.14
+%define ver_major 3.15
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -7,7 +7,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.2
+Version: %ver_major.91
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -133,6 +133,9 @@ rm -f data/%name.desktop{,.in}
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 
 %changelog
+* Tue Mar 03 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.91-alt1
+- 3.15.91
+
 * Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

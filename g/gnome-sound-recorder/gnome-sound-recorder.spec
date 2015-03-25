@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.14
+%define ver_major 3.16
 %define _name org.gnome.SoundRecorder
 %define gst_api_ver 1.0
 
 Name: gnome-sound-recorder
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Sound Recorder for GNOME
 Group: Sound
@@ -21,7 +21,7 @@ Obsoletes: gnome-media-grecord
 Provides:  gnome-media-grecord = %version-%release
 
 %define glib_ver 2.31.10
-%define gtk_ver 3.9.4
+%define gtk_ver 3.10.8
 %define gjs_ver 1.41
 
 Requires: libgjs >= 1.41
@@ -73,6 +73,9 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Sat Feb 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt2
 - explicitly required libgst-plugins1.0-gir to avoid 0.10 version
 

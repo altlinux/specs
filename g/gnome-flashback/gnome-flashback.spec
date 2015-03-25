@@ -1,9 +1,9 @@
-%define ver_major 3.14
+%define ver_major 3.15
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-flashback
-Version: %ver_major.0
-Release: alt2.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: GNOME Flashback session
 License: GPLv3
@@ -14,13 +14,15 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.12.0
+%define gtk_ver 3.15.2
 %define desktop_ver 3.12.0
 %define dbus_glib_ver 0.76
 %define gsds_ver 3.12.0
+%define nd_ver 3.14
 
 PreReq: xinitrc
 Requires: gnome-session gnome-settings-daemon gnome-panel gnome-applets metacity3.0
+Requires: notification-daemon >= %nd_ver
 Requires: libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
@@ -126,6 +128,9 @@ _EOF_
 
 
 %changelog
+* Sun Feb 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.2-alt1
+- 3.15.2
+
 * Wed Oct 29 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2.1
 - fixed gnome-authentication-agent.desktop
 

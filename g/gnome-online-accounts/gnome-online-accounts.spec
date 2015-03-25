@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -13,12 +13,13 @@
 %def_enable telepathy
 %def_enable pocket
 %def_enable media_server
+%def_enable foursquare
 
 %def_enable gtk_doc
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
@@ -40,15 +41,15 @@ Requires: lib%name = %version-%release
 %define gtk_ver 3.11.1
 %define oauth_ver 0.9.5
 %define rest_ver 0.7.12
-%define soup_ver 2.41
-%define webkit_ver 2.1.90.1
+%define soup_ver 2.42
+%define webkit_ver 2.6.0
 
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: liboauth-devel >= %oauth_ver
 BuildPreReq: librest-devel >= %rest_ver
 BuildPreReq: libsoup-devel >= %soup_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
+BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libtelepathy-glib-devel
 BuildRequires: gnome-common intltool gtk-doc
 BuildRequires: libjson-glib-devel libgnome-keyring-devel libnotify-devel libsecret-devel
@@ -123,6 +124,7 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable pocket} \
 	%{?_enable_windows_live:--enable-windows-live} \
 	%{?_enable_media_server:--enable-media-server} \
+	%{subst_enable foursquare} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
@@ -149,27 +151,33 @@ NOCONFIGURE=1 ./autogen.sh
 %files -n lib%name
 %_libdir/libgoa-%api_ver.so.*
 %_libdir/libgoa-backend-%api_ver.so.*
+%dir %_libdir/goa-%api_ver
+%dir %_libdir/goa-%api_ver/web-extensions
+%_libdir/goa-%api_ver/web-extensions/libgoawebextension.so
+%exclude %_libdir/goa-%api_ver/web-extensions/*.la
 
 %files -n lib%name-devel
 %_includedir/goa-%api_ver/
-%dir %_libdir/goa-%api_ver
 %dir %_libdir/goa-%api_ver/include
 %_libdir/goa-%api_ver/include/goaconfig.h
 %_libdir/libgoa-%api_ver.so
 %_libdir/libgoa-backend-%api_ver.so
-%_libdir/pkgconfig/goa-%api_ver.pc
-%_libdir/pkgconfig/goa-backend-%api_ver.pc
+%_pkgconfigdir/goa-%api_ver.pc
+%_pkgconfigdir/goa-backend-%api_ver.pc
 
 %files -n lib%name-gir
-%_libdir/girepository-%api_ver/Goa-%api_ver.typelib
+%_typelibdir/Goa-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_datadir/gir-%api_ver/Goa-%api_ver.gir
+%_girdir/Goa-%api_ver.gir
 
 %files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/goa
+%_datadir/gtk-doc/html/goa/
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Fri Jan 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt1
 - 3.14.3
 

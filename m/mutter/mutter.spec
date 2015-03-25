@@ -1,10 +1,10 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
 %def_enable gtk_doc
 
 Name: mutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -26,18 +26,18 @@ BuildRequires: libgtk+3-devel >= 3.9.11
 BuildRequires: glib2-devel  libgio-devel >= 2.25.10
 BuildRequires: libpango-devel >= 1.2.0
 BuildRequires: libcairo-devel >= 1.10.0
-BuildRequires: gsettings-desktop-schemas-devel >= 3.7.3
+BuildRequires: gsettings-desktop-schemas-devel >= 3.15.4
 BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-devel libXi-devel >= 1.6.0
 BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
-BuildRequires: libclutter-devel >= 1.19.5 libcogl-devel >= 1.17.1 libwayland-server-devel
+BuildRequires: libclutter-devel >= 1.21.3 libcogl-devel >= 1.17.1 libwayland-server-devel >= 1.6.90
 BuildRequires: libgdk-pixbuf-devel libgbm-devel
 BuildRequires: gtk-doc
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
 BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
 BuildRequires: libgnome-desktop3-devel libupower-devel >= 0.99.0
-BuildRequires: libxkbcommon-x11-devel libinput-devel libxkbfile-devel xkeyboard-config-devel
+BuildRequires: libxkbcommon-x11-devel libinput-devel >= 0.8 libxkbfile-devel xkeyboard-config-devel
 # for mutter native backend
-BuildRequires: libdrm-devel libsystemd-devel
+BuildRequires: libdrm-devel libsystemd-devel libgudev-devel
 
 
 %set_typelibdir %_libdir/%name
@@ -163,6 +163,9 @@ DATADIRNAME=share %configure \
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1:3.16.0-alt1
+- 3.16.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1:3.14.4-alt1
 - 3.14.4
 

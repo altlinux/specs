@@ -1,14 +1,15 @@
-%define ver_major 1.12
+%define ver_major 1.13
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
 %def_disable js
 %def_disable gjs
+%def_enable lua
 %def_enable vala
 %def_enable gtk_doc
 
 Name: libpeas
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A gobject-based plugins engine
@@ -16,8 +17,8 @@ Group: System/Libraries
 License: LGPLv2+
 Url: ftp://ftp.gnome.org/pub/gnome/sources/%name/
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 # our python3 --ldflags break build
 Patch: libpeas-1.8.0-alt-python3_build.patch
 
@@ -32,6 +33,7 @@ BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
 # for Javascript support
 %{?_enable_js:BuildRequires: libseed-devel >= 3.2.0}
 %{?_enable_gjs:BuildRequires: libgjs-devel >= 1.37.1}
+%{?_enable_lua:BuildRequires: liblua5-devel luajit libluajit-devel lgi lua5.1-alt-compat}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.14}
 
 %description
@@ -69,6 +71,14 @@ Requires: %name = %version-%release
 
 %description gjs-loader
 This package provides MozJS Javascript loader for %name
+
+%package lua-loader
+Summary: LUA loader for %name
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description lua-loader
+This package provides LUA-5.1 loader for %name
 
 %package devel
 Summary: Development files for %name
@@ -132,7 +142,7 @@ This package contains %name demonstration programs
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
@@ -159,6 +169,11 @@ This package contains %name demonstration programs
 %_libdir/%name-%api_ver/loaders/libgjsloader.so
 %endif
 
+%if_enabled lua
+%files lua-loader
+%_libdir/%name-%api_ver/loaders/liblua*loader.so
+%endif
+
 %files devel
 %_libdir/%{name}*-%api_ver.so
 %_includedir/%name-%api_ver/
@@ -181,6 +196,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Sun Feb 15 2015 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1
+- 1.13.0
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
 - 1.12.1
 

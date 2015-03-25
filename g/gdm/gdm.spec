@@ -1,4 +1,4 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -22,7 +22,7 @@
 %def_disable wayland
 
 Name: gdm
-Version: %ver_major.1
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -68,7 +68,8 @@ Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
 # since 3.11.92
 Requires: caribou
 Requires: gnome-session >= 3.7.1
-Requires: polkit-gnome >= 0.105 gnome-settings-daemon >= 3.7.1
+Requires: gnome-session-wayland
+Requires: gnome-settings-daemon >= 3.15.90
 
 BuildPreReq: desktop-file-utils gnome-common rpm-build-gnome
 BuildPreReq: intltool >= 0.40.0 yelp-tools itstool
@@ -189,7 +190,6 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 	%{subst_with plymouth} \
 	--with-default-path="/bin:/usr/bin:/usr/local/bin" \
 	--with-initial-vt=%vt_nr \
-	--with-authentication-agent-directory=%_libexecdir/polkit-1 \
 	--with-dmconfdir=%_sysconfdir/X11/sessions \
 	--disable-dependency-tracking \
 	%{?_enable_wayland:--enable-wayland-support}
@@ -235,6 +235,9 @@ xvfb-run %make check
 %_libexecdir/gdm-host-chooser
 %_libexecdir/gdm-session-worker
 %_libexecdir/gdm-simple-chooser
+%_libexecdir/gdm-wayland-session
+%_libexecdir/gdm-x-session
+
 %doc AUTHORS ChangeLog NEWS README TODO
 %_unitdir/gdm.service
 
@@ -268,11 +271,11 @@ xvfb-run %make check
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local/share
 %attr(1777, root, gdm) %dir %_localstatedir/run/gdm
 %_datadir/gdm/greeter/applications/gnome-shell.desktop
+%_datadir/gdm/greeter/applications/gnome-shell-wayland.desktop
 %_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
 %_datadir/gdm/greeter/applications/mimeapps.list
-%_datadir/gnome-session/sessions/gdm-shell.session
 %dir %_datadir/%name/greeter/autostart
-%_datadir/%name/greeter/autostart/caribou-autostart.desktop
+#%_datadir/%name/greeter/autostart/caribou-autostart.desktop
 %exclude %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %files help -f %name-help.lang
@@ -294,6 +297,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0.1-alt1
+- 3.16.0.1
+
 * Fri Oct 17 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 

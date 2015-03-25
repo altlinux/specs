@@ -1,11 +1,12 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
+%def_disable consolekit
 
 Name: gnome-session
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
@@ -24,12 +25,11 @@ Patch1: %name-3.8.2-alt-lfs.patch
 Patch11: gnome-session-3.3.92-nv30.patch
 
 # From configure.ac
-%define glib_ver 2.35.0
+%define glib_ver 2.36.0
 %define gtk_ver 3.0.0
-%define dbus_glib_ver 0.76
 %define polkit_ver 0.91
 %define upower_ver 0.9
-%define systemd_ver 40
+%define systemd_ver 209
 
 PreReq: xinitrc libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
@@ -48,7 +48,6 @@ BuildPreReq: gnome-common
 BuildPreReq: intltool >= 0.35.0 libGConf-devel
 BuildPreReq: libgio-devel glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libdbus-glib-devel >= %dbus_glib_ver
 # https://bugzilla.gnome.org/show_bug.cgi?id=710383
 # BuildPreReq: libupower-devel >= %upower_ver
 BuildRequires: libgnome-desktop3-devel librsvg-devel libjson-glib-devel
@@ -57,6 +56,8 @@ BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite
 BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
 BuildRequires: docbook-dtds docbook-style-xsl
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel libsystemd-journal-devel libpolkit-devel}
+%{?_enable_consolekit:BuildRequires: libdbus-glib-devel}
+#BuildRequires: libdbus-glib-devel
 
 %description
 GNOME (GNU Network Object Model Environment) is a user-friendly set of
@@ -79,13 +80,13 @@ Summary: A Wayland session for the GNOME
 Group: Graphical desktop/GNOME
 BuildArch: noarch
 Requires: %name = %EVR
-#Requries: gnome-shell-wayland
+Requires: xorg-xwayland
 
 %description wayland
 This package permits to log into GNOME using Wayland.
 
 %prep
-%setup -q
+%setup
 %patch
 %patch1 -p1 -b .lfs
 %patch11 -p1 -b .nv30
@@ -96,6 +97,7 @@ This package permits to log into GNOME using Wayland.
 %autoreconf
 %configure PATH=$PATH:/sbin \
     %{subst_enable systemd} \
+    %{subst_enable consolekit} \
     %{?_enable_session_selector:--enable-session-selector} \
     --enable-ipv6 \
     --disable-schemas-compile
@@ -233,6 +235,9 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_datadir/%name/sessions/gnome-wayland.session
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Dec 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
 - disabled alt-specific mechanism for run gnome sessions, packaged
   standard *sessions/*.desktops instead

@@ -1,10 +1,11 @@
 %define _name org.gnome.Documents
-%define ver_major 3.14
+%define _name1 org.gnome.Books
+%define ver_major 3.16
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -16,6 +17,27 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: %name-data = %version-%release
 Requires: gnome-online-miners
+# find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+Requires: typelib(cairo)
+Requires: typelib(EvinceDocument)
+Requires: typelib(EvinceView)
+Requires: typelib(Gd)
+Requires: typelib(GData)
+Requires: typelib(Gdk)
+Requires: typelib(GdkPixbuf)
+Requires: typelib(GdPrivate)
+Requires: typelib(Gio)
+Requires: typelib(GLib)
+Requires: typelib(GnomeDesktop)
+Requires: typelib(Goa)
+Requires: typelib(GObject)
+Requires: typelib(Gtk)
+Requires: typelib(Pango)
+Requires: typelib(Soup)
+Requires: typelib(Tracker)
+Requires: typelib(TrackerControl)
+Requires: typelib(WebKit2)
+Requires: typelib(Zpj)
 
 %define pkglibdir %_libdir/%name
 %define pkgdatadir %_datadir/%name
@@ -23,14 +45,13 @@ Requires: gnome-online-miners
 %set_girdir %pkgdatadir
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.13.3
-%define evince_ver 3.7.4
+%define gtk_ver 3.15.5
+%define evince_ver 3.13.3
 %define tracker_ver 0.17.2
 %define goa_ver 3.2.0
 %define gdata_ver 0.13.3
 %define soup_ver 2.41.3
 %define gi_ver 1.31.6
-
 
 BuildRequires: intltool yelp-tools desktop-file-utils docbook-style-xsl
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
@@ -38,10 +59,10 @@ BuildRequires: libgnome-desktop3-devel libgdata-devel >= %gdata_ver
 BuildRequires: liboauth-devel libgnome-online-accounts-devel >= %goa_ver
 BuildRequires: tracker-devel >= %tracker_ver libevince-devel >= %evince_ver
 BuildRequires: libsoup-devel >= %soup_ver
-BuildRequires: libwebkitgtk3-devel
+BuildRequires: libwebkit2gtk-devel
 BuildRequires: libzapojit-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver
-BuildRequires: libgtk+3-gir-devel libgjs-devel libevince-gir-devel
+BuildRequires: libgtk+3-gir-devel libgjs-devel libevince-gir-devel libgnome-desktop3-gir-devel
 BuildRequires: libgdata-gir-devel libgnome-online-accounts-gir-devel libtracker-gir-devel
 BuildRequires: libzapojit-gir-devel
 BuildRequires: librsvg
@@ -102,10 +123,12 @@ GObject introspection devel data for the %name library.
 
 %files
 %_bindir/%name
+%_bindir/gnome-books
 %dir %pkglibdir
 %pkglibdir/*.so
 %exclude %pkglibdir/*.la
 %_man1dir/%name.1.*
+%_man1dir/gnome-books.1.*
 %doc README AUTHORS NEWS TODO
 
 %files gir
@@ -116,16 +139,23 @@ GObject introspection devel data for the %name library.
 %files data -f %name.lang
 %pkgdatadir/
 %exclude %pkgdatadir/gir-1.0
-%_datadir/applications/%_name.desktop
+%_desktopdir/%_name.desktop
+%_desktopdir/%_name1.desktop
 %_datadir/dbus-1/services/%_name.service
+%_datadir/dbus-1/services/%_name1.service
 %_datadir/glib-2.0/schemas/%_name.enums.xml
 %_datadir/glib-2.0/schemas/org.gnome.documents.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.books.gschema.xml
 %_datadir/gnome-shell/search-providers/%_name.search-provider.ini
-%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/scalable/apps/*.svg
 %_datadir/appdata/%_name.appdata.xml
-
+%_datadir/appdata/%_name1.appdata.xml
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Fri Nov 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

@@ -1,5 +1,9 @@
-%define ver_major 3.12
-%define ver_base 3.12
+# since 3.13.6
+# see https://git.gnome.org/browse/evolution-data-server/commit/?id=a2790163af4d3f375a778055d0e2699207dfd050
+%set_verify_elf_method unresolved=relaxed
+
+%define ver_major 3.16
+%define ver_base 3.16
 %define ver_lib 1.2
 
 %def_disable debug
@@ -17,7 +21,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.11
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -29,9 +33,9 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 Patch1: %name-1.4.2.1-debug-lock.patch
 
-# from configure.in
-%define glib_ver 2.36.0
-%define gtk3_ver 3.2.0
+# from configure.ac
+%define glib_ver 2.40.0
+%define gtk3_ver 3.6.0
 %define libsoup_ver 2.42
 %define gcr_ver 3.4
 %define secret_ver 0.5
@@ -40,7 +44,7 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 %define ical_ver 0.43
 %define gdata_ver 0.15.1
 %define goa_ver 3.8.0
-%define vala_ver 0.22
+%define vala_ver 0.13.1
 
 Requires: dconf
 
@@ -135,7 +139,7 @@ the functionality of the installed EDS libraries.
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%add_findprov_lib_path %_libdir/%name-%ver_lib/extensions
+%add_findprov_lib_path %_libdir/%name
 
 %prep
 %setup
@@ -167,8 +171,8 @@ fi
 %define ldap_flags --without-openldap
 %endif
 
-export CPPFLAGS="-I%{_includedir}/et"
-export CFLAGS="$RPM_OPT_FLAGS -DLDAP_DEPRECATED -fPIC -I%{_includedir}/et"
+#export CPPFLAGS="-I%{_includedir}/et"
+#export CFLAGS="$RPM_OPT_FLAGS -DLDAP_DEPRECATED -fPIC -I%{_includedir}/et"
 
 %autoreconf
 export ac_cv_path_SENDMAIL=%_sbindir/sendmail
@@ -196,16 +200,15 @@ export CAMEL_LOCK_HELPER_GROUP=mail
     --disable-schemas-compile \
     %{?_enable_vala:--enable-vala-bindings} \
     %{?_enable_installed_tests:--enable-installed-tests}
-%make_build
+
+# SMP-incompatible build
+%make
 
 %install
 %makeinstall_std
 
 # if unstable
 ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
-
-# remove none-packaged files
-rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 
 %find_lang --with-gnome --output=%name.lang %name-%ver_base
 
@@ -218,10 +221,12 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %_libdir/%name/*/*.so
 %_libdir/%name/*/*.urls
 %_libdir/*.so.*
+%_libdir/%name/libedbus-private.so
 %_datadir/%name/
 %_datadir/dbus-1/services/*
 %_datadir/pixmaps/*
 %_datadir/GConf/gsettings/evolution-data-server.convert
+%_datadir/glib-2.0/schemas/org.gnome.evolution-data-server.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.Evolution.DefaultSources.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution-data-server.addressbook.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution-data-server.calendar.gschema.xml
@@ -232,12 +237,13 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*.pc
 
 %files devel-doc
 %_gtk_docdir/*
 
 %exclude %_libdir/%name/*/*.la
+%exclude %_libdir/%name/libedbus-private.la
 
 %if_enabled introspection
 %files gir
@@ -266,6 +272,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Feb 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.11-alt1
 - 3.12.11
 

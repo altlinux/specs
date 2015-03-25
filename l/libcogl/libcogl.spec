@@ -1,5 +1,5 @@
 %define oname cogl
-%define ver_major 1.18
+%define ver_major 1.20
 %define gst_api_ver 1.0
 
 %ifarch %arm
@@ -25,8 +25,8 @@
 %def_enable xlib_egl
 
 Name: libcogl
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
 Group: System/Libraries
@@ -175,6 +175,9 @@ Contains developer documentation for %oname.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Feb 24 2015 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Fri Aug 29 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt2
 - enabled wayland-egl-server and kms-egl-platform for next mutter/shell
 

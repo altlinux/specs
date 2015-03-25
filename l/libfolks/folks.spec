@@ -1,5 +1,5 @@
 %define _name folks
-%define ver_major 0.10
+%define ver_major 0.11
 %define api_ver 0.6
 %def_disable static
 %def_enable introspection
@@ -10,7 +10,7 @@
 %def_enable zeitgeist
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GObject contact aggregation library
@@ -21,10 +21,10 @@ Url: https://wiki.gnome.org/Projects/Folks
 Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
 #Source: %_name-%version.tar
 
-%define glib_ver 2.38.2
-%define tp_glib_ver 0.19.0
+%define glib_ver 2.40.0
+%define tp_glib_ver 0.19.9
 %define vala_ver 0.22.1
-%define eds_ver 3.10.1
+%define eds_ver 3.13.90
 %define tracker_ver 0.15.2
 %define gee_ver 0.8.4
 %define zeitgeist_ver 0.9.15
@@ -85,6 +85,16 @@ Requires: %name = %version-%release
 %description vala
 This package provides vala language bindings for %_name library
 
+%package tests
+Summary: Tests for the Folks
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the Folks library.
+
+
 %prep
 %setup -n %_name-%version
 
@@ -98,6 +108,7 @@ This package provides vala language bindings for %_name library
 	%{?_enable_tracker:--enable-tracker-backend} \
 	%{?_enable_libsocialweb:--enable-libsocialweb-backend=yes} \
 	%{?_enable_bluez:--enable-bluez-backend=yes} \
+	%{?_enable_installed_tests:--enable-installed-tests} \
 	--disable-fatal-warnings
 
 %make_build V=1
@@ -113,13 +124,13 @@ This package provides vala language bindings for %_name library
 %files -f %_name.lang
 %_libdir/*.so.*
 %_libdir/%_name/
-%_datadir/GConf/gsettings/folks.convert
-%_datadir/glib-2.0/schemas/org.freedesktop.folks.gschema.xml
+%_datadir/GConf/gsettings/%_name.convert
+%_datadir/glib-2.0/schemas/org.freedesktop.%_name.gschema.xml
 %doc AUTHORS README
 
 %files devel
-%_bindir/folks-import
-%{?_enable_vala:%_bindir/folks-inspect}
+%_bindir/%_name-import
+%{?_enable_vala:%_bindir/%_name-inspect}
 %_includedir/%_name
 %_libdir/*.so
 %_libdir/pkgconfig/%{_name}*.pc
@@ -142,22 +153,31 @@ This package provides vala language bindings for %_name library
 
 %if_enabled vala
 %files vala
-%_vapidir/folks.deps
-%_vapidir/folks-dummy.deps
-%_vapidir/folks-dummy.vapi
-%_vapidir/folks-eds.deps
-%_vapidir/folks-eds.vapi
-%{?_enable_libsocialweb:%_vapidir/folks-libsocialweb.deps}
-%{?_enable_libsocialweb:%_vapidir/folks-libsocialweb.vapi}
-%_vapidir/folks-telepathy.deps
-%_vapidir/folks-telepathy.vapi
-%{?_enable_tracker:%_vapidir/folks-tracker.deps}
-%{?_enable_tracker:%_vapidir/folks-tracker.vapi}
-%_vapidir/folks.vapi
+%_vapidir/%_name.deps
+%_vapidir/%_name-dummy.deps
+%_vapidir/%_name-dummy.vapi
+%_vapidir/%_name-eds.deps
+%_vapidir/%_name-eds.vapi
+%{?_enable_libsocialweb:%_vapidir/%_name-libsocialweb.deps}
+%{?_enable_libsocialweb:%_vapidir/%name-libsocialweb.vapi}
+%_vapidir/%_name-telepathy.deps
+%_vapidir/%_name-telepathy.vapi
+%{?_enable_tracker:%_vapidir/%_name-tracker.deps}
+%{?_enable_tracker:%_vapidir/%_name-tracker.vapi}
+%_vapidir/%_name.vapi
+%endif
+
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%_name/
+%_datadir/installed-tests/%_name/
 %endif
 
 
 %changelog
+* Fri Feb 13 2015 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Tue Jan 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
 - 0.10.1
 

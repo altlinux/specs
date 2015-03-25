@@ -1,14 +1,13 @@
-%define ver_major 3.14
+%define ver_major 3.15
 
 Name: gnome-user-docs
-Version: %ver_major.2
+Version: %ver_major.90
 Release: alt1
 
 Summary: General GNOME User Documentation
 License: %fdl
 Group: Graphical desktop/GNOME
 Url: ftp://ftp.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
@@ -44,6 +43,9 @@ directly associated with any particular GNOME application or package.
 %doc AUTHORS README NEWS
 
 %changelog
+* Wed Feb 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.90-alt1
+- 3.15.90
+
 * Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

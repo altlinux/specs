@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name five-or-more
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GNOME version of the color lines program
@@ -23,7 +23,8 @@ Provides:  gnome-games-glines = %version-%release
 %define gtk_ver 3.0.0
 
 BuildRequires: gnome-common
-BuildRequires: intltool yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
+BuildRequires: intltool yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 
 %description
 Glines, is the GNOME port of the once popular Windows game called Color
@@ -57,6 +58,9 @@ possible, and be #1 in the High Scores.
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 

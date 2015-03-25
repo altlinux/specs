@@ -3,7 +3,7 @@
 %define ver_major 0.2
 
 Name: grilo
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 Summary: Content discovery framework
 Group: Sound
@@ -18,7 +18,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libgtk+3-devel >= 3.0
 BuildRequires: libsoup-devel >= 2.41.3 libsoup-gir-devel
 BuildRequires: liboauth-devel
-BuildRequires: vala-tools
+BuildRequires: vala-tools >= 0.27
 BuildRequires: gtk-doc >= 1.10
 BuildRequires: gobject-introspection-devel >= 0.9.0
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
@@ -137,6 +137,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %_gtk_docdir/*
 
 %changelog
+* Tue Feb 17 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.12-alt1
+- 0.2.12
+
 * Wed Aug 27 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.11-alt1
 - 0.2.11
 

@@ -1,9 +1,9 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -13,9 +13,9 @@ Url: https://live.gnome.org/GnomeShell
 
 BuildArch: noarch
 
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gnome-shell >= 3.14.4
+Requires: gnome-shell >= 3.15.91
 
 BuildRequires: gnome-common intltool libgnome-desktop3-devel libgtop-devel
 
@@ -67,7 +67,6 @@ __EOF__
 ## Classic mode
 %_bindir/startgnome-classic
 #%_sysconfdir/X11/wmsession.d/03Gnome-classic
-%_datadir/applications/gnome-shell-classic.desktop
 %_datadir/gnome-session/sessions/gnome-classic.session
 %_datadir/gnome-shell/modes/classic.json
 %_datadir/gnome-shell/theme/classic-toggle-off-intl.svg
@@ -76,6 +75,7 @@ __EOF__
 %_datadir/gnome-shell/theme/classic-toggle-on-us.svg
 %_datadir/gnome-shell/theme/classic-process-working.svg
 %_datadir/gnome-shell/theme/gnome-classic.css
+%_datadir/gnome-shell/theme/gnome-classic-high-contrast.css
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.classic-overrides.gschema.xml
 %_datadir/xsessions/gnome-classic.desktop
 
@@ -145,13 +145,6 @@ __EOF__
 %_datadir/gnome-shell/extensions/places-menu@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/places-menu@gnome-shell-extensions.%domain/placeDisplay.js
 
-# system monitor
-%dir %_datadir/gnome-shell/extensions/systemMonitor@gnome-shell-extensions.%domain
-%_datadir/gnome-shell/extensions/systemMonitor@gnome-shell-extensions.%domain/extension.js
-%_datadir/gnome-shell/extensions/systemMonitor@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/systemMonitor@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/systemMonitor@gnome-shell-extensions.%domain/convenience.js
-
 # workspace indicator
 %dir %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/extension.js
@@ -201,6 +194,9 @@ __EOF__
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.4-alt1
 - 3.14.4
 

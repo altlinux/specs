@@ -1,8 +1,8 @@
-%define ver_major 3.14
+%define ver_major 3.15
 %define _libexecdir %_prefix/libexec
 
 Name: bijiben
-Version: %ver_major.2
+Version: %ver_major.91
 Release: alt1
 
 Summary: Note editor for GNOME
@@ -15,18 +15,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define glib_ver 2.28
 %define gtk_ver 3.11.4
 %define tracker_ver 0.17
+%define eds_ver 3.13.90
 
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: tracker-devel >= %tracker_ver
 BuildRequires: libxml2-devel libclutter-gtk3-devel libwebkitgtk3-devel
-BuildRequires: libgnome-online-accounts-devel libzeitgeist2.0-devel
-BuildRequires: rpm-build-xdg gnome-common intltool yelp-tools
-BuildRequires: libuuid-devel evolution-data-server-devel evolution-devel
-# following  unusual reqs needed to link against evolution-3.13.6 libraries
-BuildRequires: libchamplain-gtk3-devel libgail3-devel gcr-libs-devel libp11-kit-devel
-BuildRequires: libgnome-desktop3-devel libdbus-devel libdbus-glib-devel libgeocode-glib-devel
-BuildRequires: libgeoclue-devel libgtkspell3-devel
+BuildRequires: libgnome-online-accounts-devel libzeitgeist2.0-devel libuuid-devel
+BuildRequires: evolution-data-server-devel >= %eds_ver
+BuildRequires: rpm-build-xdg gnome-common intltool yelp-tools libappstream-glib-devel
 
 %description
 Bijiben is an attempt to design an intuitive note editor with strong
@@ -63,6 +60,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Mon Mar 02 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.91-alt1
+- 3.15.91
+
 * Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

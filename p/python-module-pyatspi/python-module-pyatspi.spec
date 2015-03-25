@@ -1,5 +1,5 @@
 %define _name pyatspi
-%define ver_major 2.14
+%define ver_major 2.16
 
 Name: python-module-%_name
 Version: %ver_major.0
@@ -10,7 +10,7 @@ Group: Development/Python
 License: LGPLv2+
 Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 
-Source: ftp://ftp.gnome.org/pub/sources/%name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildArch: noarch
 
@@ -84,6 +84,9 @@ popd
 %doc AUTHORS README NEWS
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 2.16.0-alt1
+- 2.16.0
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 2.14.0-alt1
 - 2.14.0
 

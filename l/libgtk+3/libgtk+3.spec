@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk+
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 3.0
 %define binary_ver 3.0.0
 %define _libexecdir %_prefix/libexec
@@ -20,14 +20,13 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
 License: %lgpl2plus
 Url: http://www.gtk.org
-Icon: gtk+-logo.xpm
 
 %if_enabled snapshot
 Source: %_name-%version.tar
@@ -36,18 +35,19 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
-%define glib_ver 2.41.2
+%define glib_ver 2.43.4
 %define gi_ver 1.41.0
-%define cairo_ver 1.10
-%define pango_ver 1.32.4
-%define atk_ver 2.7.5
+%define cairo_ver 1.14.0
+%define pango_ver 1.36.7
+%define atk_ver 2.15.1
 %define atspi_ver 2.8.1
-%define pixbuf_ver 2.27.1
+%define pixbuf_ver 2.30.0
 %define fontconfig_ver 2.2.1-alt2
 %define gtk_doc_ver 1.6
 %define colord_ver 0.1.9
 %define cups_ver 1.6
 %define wayland_ver 1.5.91
+%define epoxy_ver 1.0
 
 Provides: libgtk3-engine-adwaita = %version-%release
 Obsoletes: libgtk3-engine-adwaita < 3.13.0
@@ -67,16 +67,19 @@ BuildPreReq: libgdk-pixbuf-devel >= %pixbuf_ver
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: gtk-doc >= %gtk_doc_ver
 BuildPreReq: libcups-devel >= %cups_ver
+BuildPreReq: libepoxy-devel >= %epoxy_ver
 BuildRequires: gtk-update-icon-cache docbook-utils zlib-devel
 
 BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: libXrender-devel libXt-devel
+
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel}
 %{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
-
+# for examples
+BuildRequires: libcanberra-gtk3-devel
 # for check
 BuildRequires: /proc dbus-tools-gui xvfb-run icon-theme-hicolor gnome-icon-theme-symbolic
 
@@ -91,7 +94,6 @@ and programs.
 %package devel
 Summary: Development files and tools for GTK+ applications
 Group: Development/GNOME and GTK+
-Icon: gtk+-devel-logo.xpm
 Requires: %name = %version-%release
 Requires: gtk-builder-convert
 
@@ -226,7 +228,6 @@ the functionality of the installed GTK+3 packages.
     --disable-schemas-compile \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     %{?_enable_snapshot:--enable-gtk-doc} \
-    --enable-gtk2-dependency \
     %{subst_enable colord} \
     %{?_enable_wayland:--enable-wayland-backend} \
     %{?_enable_broadway:--enable-broadway-backend} \
@@ -349,11 +350,12 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %_bindir/gtk3-widget-factory
 %_bindir/gtk3-icon-browser
 %_datadir/glib-2.0/schemas/org.gtk.Demo.gschema.xml
-%_iconsdir/hicolor/*x*/apps/gtk3-demo.png
-%_iconsdir/hicolor/*x*/apps/gtk3-widget-factory.png
+%_iconsdir/hicolor/*x*/apps/gtk3-demo*.png
+%_iconsdir/hicolor/*x*/apps/gtk3-widget*.png
 %_man1dir/gtk3-demo.1.*
 %_man1dir/gtk3-widget-factory.1.*
 %_man1dir/gtk3-icon-browser.1.*
+%_man1dir/gtk3-demo-application.1.*
 %config %_datadir/glib-2.0/schemas/org.gtk.exampleapp.gschema.xml
 
 %files devel-doc
@@ -400,6 +402,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.10-alt1
 - 3.14.10
 

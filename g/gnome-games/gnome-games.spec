@@ -1,8 +1,8 @@
-%define ver_major 3.14
+%define ver_major 3.16
 
 Name: gnome-games
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: GNOME games
 License: %gpl2plus
@@ -26,7 +26,9 @@ Requires: %name-swell-foop >= %ver_major
 Requires: %name-sudoku >= %ver_major
 Requires: %name-glchess >= %ver_major
 Requires: %name-lightsoff >= %ver_major
-Requires: %name-hitori >= %ver_major
+Requires: %name-atomix >= %ver_major
+Requires: %name-taquin >= %ver_major
+#Requires: %name-hitori >= %ver_major
 
 BuildRequires: rpm-build-licenses
 
@@ -52,6 +54,11 @@ GlChess:	a chess game which supports several chess engines.
 %files
 
 %changelog
+* Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+- added atomix and taquin
+- removed unsupported hitori
+
 * Sun Oct 26 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
 - added hitori
 

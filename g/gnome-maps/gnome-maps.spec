@@ -1,9 +1,10 @@
-%define ver_major 3.14
+%define ver_major 3.16
+%define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Maps is a map application for GNOME
@@ -13,8 +14,10 @@ Url: http://live.gnome.org/Design/Apps/Maps
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+%set_typelibdir %_libdir/%name/girepository-1.0
+
 %define glib_ver 2.39.3
-%define gtk_ver 3.10.0
+%define gjs_ver 1.43.3
 %define tracker_ver 0.16
 %define geocode_ver 3.11.92
 %define geoclue_ver 2.1.0
@@ -24,36 +27,42 @@ Requires: geoclue2 >= %geoclue_ver
 Requires: libgeocode-glib-gir >= %geocode_ver
 Requires: libchamplain-gir >= %champlain_ver
 
-# find ./ -name *.js |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+# find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+Requires: typelib(cairo)
 Requires: typelib(Champlain)
 Requires: typelib(Clutter)
 Requires: typelib(Cogl)
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(GeocodeGlib)
+Requires: typelib(GFBGraph)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
+Requires: typelib(GnomeMaps)
+Requires: typelib(Goa)
 Requires: typelib(GObject)
 Requires: typelib(Gtk)
 Requires: typelib(GtkChamplain)
 Requires: typelib(GtkClutter)
+Requires: typelib(GWeather)
+Requires: typelib(Rest)
 Requires: typelib(Soup)
 
 BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildRequires: libgjs-devel libgtk+3-gir-devel
+BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: geoclue2-devel >= %geoclue_ver
+BuildRequires: libgee0.8-devel libfolks-devel libgeocode-glib-devel libchamplain-gtk3-devel
+BuildRequires: libgeocode-glib-gir-devel libchamplain-gtk3-gir-devel
 
 %description
-Maps is a map application for GNOME. It is currently in early
-development with the goal of having a preview included in GNOME 3.10 due
-in fall of 2013.
+Maps is a map application for GNOME.
 
 %prep
 %setup
 
 %build
+%autoreconf
 %configure \
 	--disable-static \
 	--disable-schemas-compile
@@ -67,16 +76,24 @@ in fall of 2013.
 
 %files -f %name.lang
 %_bindir/*
+%_libdir/%name/
 %_datadir/applications/*
 %_datadir/%name/
 %_iconsdir/hicolor/*x*/*/%name.png
 %_iconsdir/HighContrast/*x*/apps/%name.png
 %_datadir/dbus-1/services/%_name.service
-%config %_datadir/glib-2.0/schemas/org.gnome.maps.gschema.xml
+%config %_datadir/glib-2.0/schemas/%_name.gschema.xml
 %_datadir/appdata/%_name.appdata.xml
 %doc README NEWS
 
+%exclude %_libdir/%name/*.la
+%exclude %_libdir/%name/*.so
+%exclude %_girdir/GnomeMaps-%api_ver.gir
+
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

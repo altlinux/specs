@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _name org.gnome.Photos
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
+%define gegl_api_ver 0.3
 
 Name: gnome-photos
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -19,12 +20,13 @@ BuildPreReq: rpm-build-gnome rpm-build-licenses
 # From configure.ac
 BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
 BuildPreReq: libgio-devel >= 2.40.0
-BuildPreReq: libgtk+3-devel >= 3.13.2
+BuildPreReq: libgtk+3-devel >= 3.15.0
 BuildPreReq: libexif-devel >= 0.6.14
 BuildPreReq: tracker-devel >= 0.17.5
 BuildPreReq: libgdata-devel >= 0.15.2
-BuildRequires: libbabl-devel libgegl-devel libexempi-devel
-BuildRequires: liblcms2-devel librsvg-devel libgfbgraph-devel
+BuildRequires: libbabl-devel >= 0.1.12
+BuildPreReq: libgegl%gegl_api_ver-devel >= 0.3.0
+BuildRequires: libexempi-devel liblcms2-devel librsvg-devel libgfbgraph-devel
 BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel
 BuildRequires: libgrilo-devel zlib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
@@ -55,7 +57,8 @@ rm -rf %buildroot/%_datadir/doc/%name
 %_bindir/%name
 %_desktopdir/%_name.desktop
 %_iconsdir/hicolor/*/apps/%name.*
-%_iconsdir/HighContrast/*/apps/%name.*
+%_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
+#%_iconsdir/HighContrast/*/apps/%name.*
 %_datadir/appdata/%_name.appdata.xml
 %_datadir/gnome-shell/search-providers/%_name.search-provider.ini
 %_datadir/dbus-1/services/%_name.service
@@ -63,6 +66,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

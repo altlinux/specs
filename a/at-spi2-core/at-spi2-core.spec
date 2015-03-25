@@ -1,11 +1,11 @@
-%define ver_major 2.14
+%define ver_major 2.16
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
 %def_enable x11
 
 Name: at-spi2-core
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -13,7 +13,7 @@ Group: System/Libraries
 License: LGPLv2+
 Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 
-Source: ftp://ftp.gnome.org/pub/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: lib%name = %version-%release
 Requires: dbus-tools-gui
@@ -90,14 +90,14 @@ This package contains documentation for developing applications that use
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
 %files -f %name.lang
 %_libexecdir/at-spi2-registryd
 %_libexecdir/at-spi-bus-launcher
-%_datadir/dbus-1/services/org.a11y.atspi.Registry.service
+%_datadir/dbus-1/accessibility-services/org.a11y.atspi.Registry.service
 %_datadir/dbus-1/services/org.a11y.Bus.service
 %_sysconfdir/at-spi2
 %_sysconfdir/xdg/autostart/at-spi-dbus-bus.desktop
@@ -123,6 +123,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 2.16.0-alt1
+- 2.16.0
+
 * Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 2.14.1-alt1
 - 2.14.1
 

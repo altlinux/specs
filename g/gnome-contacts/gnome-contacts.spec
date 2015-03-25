@@ -1,11 +1,11 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Contacts manager for GNOME
@@ -16,16 +16,18 @@ Url: https://wiki.gnome.org/Apps/Contacts
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.37.6
-%define gtk_ver 3.9.11
+%define gtk_ver 3.12
 %define vala_ver 0.17.2
 %define tp_glib_ver 0.17.5
 %define folks_ver 0.9.5
-%define eds_ver 3.5.3
+%define eds_ver 3.13.90
 %define cheese_ver 3.5.90
+%define geocode_ver 3.15.3
 
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: libfolks-devel >= %folks_ver libvala-devel >= %vala_ver libnotify-devel libgnome-desktop3-devel
-BuildRequires: libgnome-online-accounts-devel libgee-devel evolution-data-server-devel >= %eds_ver
+BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-server-devel >= %eds_ver
+BuildRequires: libgeocode-glib-devel >= %geocode_ver libchamplain-gtk3-devel libclutter-gtk3-devel
 %{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
 BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel intltool
 
@@ -40,7 +42,7 @@ BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel intltoo
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
@@ -57,6 +59,9 @@ BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel intltoo
 %doc AUTHORS README NEWS
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.14
+%define ver_major 3.16
 %define _name org.gnome.Screenshot
 
 Name: gnome-screenshot
@@ -17,7 +17,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 BuildPreReq: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel libcanberra-gtk3-devel libX11-devel libXext-devel
-BuildRequires: rpm-build-gnome intltool
+BuildRequires: rpm-build-gnome intltool libappstream-glib-devel
 
 %description
 GNOME Screenshot Tool makes screenshots from desktop.
@@ -40,10 +40,14 @@ GNOME Screenshot Tool makes screenshots from desktop.
 %_datadir/dbus-1/services/%_name.service
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
+%_datadir/appdata/%_name.appdata.xml
 %_man1dir/%name.1.*
 %doc NEWS
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
