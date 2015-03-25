@@ -1,5 +1,5 @@
 Name: mc
-Version: 4.8.12
+Version: 4.8.14
 Release: alt1
 
 License: %gpl3plus
@@ -103,7 +103,8 @@ subst 's|@@VERSION@@|%version-%release|' version.h
 %build
 %configure \
 	--enable-extcharset \
-	--enable-vfs-undelfs
+	--enable-vfs-undelfs \
+	--enable-vfs-smb --with-smb-configdir=%_sysconfdir/samba
 
 %make_build
 
@@ -174,6 +175,10 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Mon Mar 23 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.8.14-alt1
+- 4.8.14
+- built with enable-vfs-smb (ALT #30649)
+
 * Sun Apr 06 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.8.12-alt1
 - 4.8.12
 
