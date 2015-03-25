@@ -1,9 +1,9 @@
-%define ver_major 0.21
+%define ver_major 0.22
 %define gst_api_ver 1.0
 
 Name: shotwell
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -18,7 +18,7 @@ Requires: dconf
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-libav
 
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel libGConf-devel
-BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel
+BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel >= 0.10.3
 BuildRequires: libgphoto2-devel libgudev-devel libjson-glib-devel libraw-devel
 BuildRequires: libsqlite3-devel libstdc++-devel libunique3-devel libwebkitgtk3-devel
 BuildRequires: vala librest-devel libgee0.8-devel desktop-file-utils gnome-doc-utils
@@ -57,6 +57,9 @@ mode, and export them to share with others.
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
+- 0.22.0
+
 * Tue Feb 03 2015 Yuri N. Sedunov <aris@altlinux.org> 0.21.0-alt2
 - rebuilt against libgphoto2_port.so.12
 
