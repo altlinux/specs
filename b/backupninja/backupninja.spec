@@ -1,6 +1,6 @@
 Name: backupninja
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: backup system
 License: GPL v2
@@ -65,6 +65,9 @@ mkdir -p %buildroot%_sysconfdir/backup.d/
 %_sbindir/ninjahelper
 
 %changelog
+* Wed Mar 25 2015 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt2
+- fix uncompressed dump for PostgreSQL
+
 * Wed Sep 19 2012 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
 - new version 1.0.1 (with rpmrb script)
 
