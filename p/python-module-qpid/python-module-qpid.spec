@@ -1,6 +1,6 @@
 
 Name: python-module-qpid
-Version: 0.30
+Version: 0.32
 Release: alt1
 Summary: Python client library for AMQP
 
@@ -33,6 +33,9 @@ The Apache Qpid Python client library for AMQP.
 %exclude %python_sitelibdir/qpid/test*
 
 %changelog
+* Tue Mar 24 2015 Alexey Shabalin <shaba@altlinux.ru> 0.32-alt1
+- 0.32
+
 * Mon Mar 16 2015 Alexey Shabalin <shaba@altlinux.ru> 0.30-alt1
 - 0.30
 
