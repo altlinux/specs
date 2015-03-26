@@ -1,6 +1,6 @@
 Name: jboss-as-vanilla
 Version: 7.1.1
-Release: alt10
+Release: alt14
 
 Summary: jboss-as-vanilla - Vanilla Edition Of JBoss Application Server
 
@@ -13,6 +13,7 @@ Url: http://www.jboss.org/jbossas
 #unzip jboss-as-7.1.1.Final.zip
 Source: %name-%version.tar
 Source1: jboss-as-cp
+Source2: jboss-as-vanilla.service
 
 Packager: Danil Mikhailov <danil@altlinux.org>
 
@@ -48,7 +49,10 @@ mkdir -p %buildroot/%_bindir/
 mkdir -p %buildroot/%jbossdir/
 mkdir -p %buildroot/%_initdir/
 mkdir -p %buildroot/etc/jboss-as/
+mkdir -p %buildroot/lib/systemd/system/
+
 cp %SOURCE1 %buildroot/%_bindir/
+cp %SOURCE2 %buildroot/lib/systemd/system/
 
 cp ./bin/init.d/jboss-as-standalone %buildroot/%_initdir/
 cp ./bin/init.d/jboss-as.conf %buildroot/etc/jboss-as/jboss-as.conf
@@ -65,25 +69,52 @@ cp %SOURCE1 %buildroot/%jbossdir/docs/examples/properties/standalone-web.xml
 #TODO FIX remove cp and add ln -s
 cp %buildroot/%jbossdir/bin/jboss-cli.sh %buildroot/%_bindir/jboss-cli
 
+
 #remove library
 rm -rf %buildroot/%jbossdir/modules/org/jboss/as/web/main/lib/*
 rm -rf %buildroot/%jbossdir/modules/org/hornetq/main/lib/*
 chmod 755 %buildroot/%jbossdir/bin/*\.sh
+
+#alt10 fixup
+touch %buildroot/%jbossdir/standalone/log/boot.log
+#chmod 755 %buildroot/%jbossdir/standalone/log/boot.log
+#chown jboss-as %buildroot/%jbossdir/standalone/log/boot.log
+
+#TODO remove it #why jboss need this dir?
+#mkdir /usr/src/GNUstep
+
+#TODO rewrite with user cpecified dir or add all users in jboss-as group and chmod 775
+#chmod 777 %buildroot/%jbossdir/standalone/data/content
+#chown jboss-as %buildroot/%jbossdir/standalone/data/content
+
+
 %check
 
 %pre
 useradd -d %jbossdir -r -s /bin/nologin %jbossuser >/dev/null 2>&1 || :
-#mkdir -p %jbossdir/
+#chown -R %jbossuser %jbossdir
 
 %files
 %attr(755,%jbossuser,root) %jbossdir/
-
 %attr(755,root,root) %_bindir/jboss-cli
 %attr(755,root,root) %_bindir/jboss-as-cp
 %attr(755,root,root) /etc/jboss-as/jboss-as.conf
 %attr(755,root,root) %_initdir/*
+%attr(644,root,root) /lib/systemd/system/jboss-as-vanilla.service
 
 %changelog
+* Thu Mar 26 2015 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt14
+- Fix JBOSS_BASE_DIR in jboss-as-cp
+
+* Thu Feb 26 2015 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt13
+- alt13 fix chown
+
+* Tue Feb 24 2015 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt12
+- alt12 fix chown %jbossuser
+
+* Thu Feb 19 2015 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt11
+- alt11 small fix standalone running permissions
+
 * Mon Oct 06 2014 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt10
 - added set owner to jboss dir
 - remove req mingw32
