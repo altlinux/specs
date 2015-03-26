@@ -6,7 +6,7 @@
 %define koffice_ver 4:2.3.70
 
 Name: calligra
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 Epoch: 0
 %define libname lib%name
@@ -29,7 +29,7 @@ Requires: %name-karbon = %EVR
 Requires: %name-krita = %EVR
 Requires: %name-kexi = %EVR
 Requires: %name-plan = %EVR
-Requires: %name-okular-odp = %EVR
+Requires: %name-okular-odf = %EVR
 
 Source: http://download.kde.org/stable/calligra-%version/calligra-%version.tar
 Source1: FindOkular.cmake
@@ -235,15 +235,17 @@ Requires: %libname = %EVR
 Plan is a project management application. It is intended for managing
 moderately large projects with multiple resources.
 
-%package okular-odp
+%package okular-odf
 Group: Graphics
-Summary: OpenDocument presenter support for okular
+Summary: OpenDocument formats support for okular
 Provides: koffice-okular-odp = %koffice_ver
 Obsoletes: koffice-okular-odp < %koffice_ver
+Provides: calligra-okular-odp = %EVR
+Obsoletes: calligra-okular-odp < %EVR
 Requires: %libname = %EVR
 Requires: %name-stage = %EVR
 Requires: kde4-okular
-%description okular-odp
+%description okular-odf
 %summary.
 
 %package -n %libname
@@ -277,7 +279,7 @@ cp -ar %SOURCE1 cmake/modules/
 # move files back
 #mv %buildroot/%_K4srv/calligra/* %buildroot/%_K4srv/
 mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
-mv %buildroot/%_K4xdg_apps/calligra/* %buildroot/%_K4xdg_apps/
+#mv %buildroot/%_K4xdg_apps/calligra/* %buildroot/%_K4xdg_apps/
 
 
 %files
@@ -678,7 +680,7 @@ mv %buildroot/%_K4xdg_apps/calligra/* %buildroot/%_K4xdg_apps/
 %_K4conf/authorrc
 %_K4srv/calligra/authorpart.desktop
 
-%files okular-odp
+%files okular-odf
 %_K4lib/okularGenerator_*.so
 %_K4xdg_apps/okularApplication_*.desktop
 %_K4srv/libokularGenerator_*.desktop
@@ -692,6 +694,9 @@ mv %buildroot/%_K4xdg_apps/calligra/* %buildroot/%_K4xdg_apps/
 %_K4libdir/libkritacolord.so
 
 %changelog
+* Thu Mar 26 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.9.1-alt1
+- new version
+
 * Wed Mar 04 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.9.0-alt1
 - new version
 
