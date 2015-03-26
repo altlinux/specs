@@ -1,7 +1,7 @@
 %define CVSDATE 20070731
 Name: eas
 Version: 0.2.2
-Release: alt0.6cvs%CVSDATE
+Release: alt0.7cvs%CVSDATE
 
 Summary: E/AS Automation Solutions
 Summary(ru_RU.KOI8-R): EAS - решение для автоматизации бизнеса
@@ -15,16 +15,15 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: http://eas.lrn.ru/src/%name-%version.tar.bz2
 Source2: %name-service
 Patch: %name-%version.patch
+Patch1: %name-generate-doc-in-xsltproc.patch
 
 %define FCLIPDIR %_libdir/clip
 %define VCLIPDIR /var/lib/clip
 %define EASDATADIR %VCLIPDIR/%name
 
-# manually removed:
-# Automatically added by buildreq on Tue Jan 23 2007
-BuildRequires: clip clip-prg docbook-utils libclip-gtk2 libclip-ui libgpm-devel libpam-devel w3c-markup-validator-libs libpth-devel
-
-BuildPreReq: libexpat-devel
+BuildRequires: clip clip-prg libclip-gtk2 libclip-ui libgpm-devel libpam-devel w3c-markup-validator-libs libpth-devel
+BuildPreReq:   libexpat-devel
+BuildPreReq:   xsltproc docbook-style-xsl
 
 %description
 E/AS (E/AS Automation Solutions) is open source software system for help
@@ -42,6 +41,7 @@ Server daemon of E/AS
 
 %prep
 %setup -q
+%patch1 -p2
 subst 's/\(ch[mo].*\)/\1 || :/g' server/Makefile
 subst "s,/usr/lib,%_libdir,g" libeas/Makefile
 
@@ -98,6 +98,9 @@ EOF
 %_datadir/%name
 
 %changelog
+* Thu Mar 26 2015 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt0.7cvs20070731
+- Generate documentation by xsltproc
+
 * Tue May 03 2011 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt0.6cvs20070731
 - Rebuild for set-versioning
 - Create system user account for daemon user
