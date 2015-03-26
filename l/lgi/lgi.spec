@@ -1,6 +1,6 @@
 Summary: Lua bindings to GObject libraries
 Name: lgi
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 License: MIT/X11
 Group: System/Libraries
@@ -33,6 +33,9 @@ make
 %doc README.md docs samples
 
 %changelog
+* Thu Mar 26 2015 Terechkov Evgenii <evg@altlinux.org> 0.9.0-alt1
+- 0.9.0 (ALT #30858)
+
 * Thu Sep  4 2014 Terechkov Evgenii <evg@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
