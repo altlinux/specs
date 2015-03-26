@@ -1,5 +1,5 @@
 Name:    fldigi
-Version: 3.22.05
+Version: 3.22.06
 Release: alt1
 Summary: Fldigi is a software modem for Amateur Radio use
 
@@ -69,6 +69,9 @@ Reporter.
 %doc %_man1dir/*
 
 %changelog
+* Thu Mar 26 2015 Andrey Cherepanov <cas@altlinux.org> 3.22.06-alt1
+- New version
+
 * Mon Jan 12 2015 Andrey Cherepanov <cas@altlinux.org> 3.22.05-alt1
 - New version
 
