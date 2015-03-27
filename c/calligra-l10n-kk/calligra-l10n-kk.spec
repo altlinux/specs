@@ -2,7 +2,7 @@
 %define lngg Kazakh
 
 Name: calligra-l10n-%lng
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 %define beta %nil
 
@@ -53,6 +53,9 @@ done
 #%lang(%lng) %_K4apps/calligra/autocorrect/%{lng}*.xml
 
 %changelog
+* Fri Mar 27 2015 Sergey V Turchin <zerg@altlinux.org> 2.9.1-alt1
+- new version
+
 * Tue Mar 10 2015 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt1
 - new version
 
