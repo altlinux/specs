@@ -10,7 +10,7 @@
 %def_disable fhs_media
 
 Name: %{_name}2
-Version: 2.1.5
+Version: 2.1.6
 Release: alt0.1
 
 Summary: Disk Management Service (Second Edition)
@@ -179,6 +179,9 @@ fi
 %endif
 
 %changelog
+* Fri Mar 27 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt0.1
+- 2.1.6 snaphot
+
 * Thu Jan 15 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt0.1
 - 2.1.5 snapshot (fixed FDO #77134)
 
