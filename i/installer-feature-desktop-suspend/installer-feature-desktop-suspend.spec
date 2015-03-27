@@ -1,6 +1,6 @@
 Name: installer-feature-desktop-suspend
-Version: 0.5
-Release: alt3
+Version: 0.6
+Release: alt1
 
 Summary: Suspend/resume configuration
 License: GPL
@@ -35,6 +35,9 @@ Conflicts: installer-ltsp-school-stage2 <= 0.4-alt4.13
 # - figure out whether lvm is suitable or detect/drop that too
 
 %changelog
+* Fri Mar 27 2015 Michael Shigorin <mike@altlinux.org> 0.6-alt1
+- fixed wrong swap UUID with recent blkid (closes: #30828)
+
 * Wed Sep 28 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.5-alt3
 - zram swap skipping added
 
