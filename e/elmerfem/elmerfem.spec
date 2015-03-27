@@ -4,11 +4,9 @@
 %define somver 0
 %define sover %somver.0.0
 
-%define svn svn6813
-
 Name: elmerfem
 Version: 7.0
-Release: alt2.%svn
+Release: alt3.git20150209
 
 Summary: Open Source Finite Element Software for Multiphysical Problems
 License: GPLv2+
@@ -16,7 +14,7 @@ Group: Sciences/Physics
 
 Url: http://www.csc.fi/english/pages/elmer
 Source: %name-%version.tar
-# https://elmerfem.svn.sourceforge.net/svnroot/elmerfem/trunk
+# https://github.com/ElmerCSC/elmerfem.git
 Patch7: elmer-5.5.0-debian-node-partition.patch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -251,17 +249,11 @@ pushd front
 %make_build_ext
 popd
 
+%if 0
 pushd ElmerGUI
 qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" ElmerGUI.pro
 %make
-popd
-
-pushd misc/tetgen_plugin
-export ELMER_HOME=%prefix
-qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
-	QMAKE_CXXFLAGS_RELEASE="%optflags" tetgen_plugin.pro
-%make_build
 popd
 
 pushd ElmerGUIlogger
@@ -269,6 +261,14 @@ qmake-qt4 -project -d QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags"
 qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags"
+%make_build
+popd
+%endif
+
+pushd misc/tetgen_plugin
+export ELMER_HOME=%prefix
+qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
+	QMAKE_CXXFLAGS_RELEASE="%optflags" tetgen_plugin.pro
 %make_build
 popd
 
@@ -303,18 +303,20 @@ cp -P */src/lib*.so* misc/tetgen_plugin/plugin/*.so* \
 	%buildroot%_libdir/
 export LD_LIBRARY_PATH=%buildroot%_libdir
 
-for i in %elmer_modules elmergrid fem front \
-	ElmerGUI ElmerGUIlogger
+#	ElmerGUI ElmerGUIlogger
+for i in %elmer_modules elmergrid fem front
 do
 	pushd $i
 	%makeinstall_std INSTALL_ROOT=%buildroot MPI_F90=mpif90
 	popd
 done
 
+%if 0
 install -m755 ElmerGUIlogger/ElmerGUIlogger %buildroot%_bindir
 install -d %buildroot%_niconsdir
 install -p -m644 ElmerGUIlogger/icons/*.png \
 	%buildroot%_niconsdir
+%endif
 
 %ifarch x86_64
 mv %buildroot%_libexecdir/*.so %buildroot%_libdir/
@@ -350,7 +352,7 @@ rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 %files
 %doc LICENSES
 %_bindir/*
-%exclude %_bindir/ElmerGUI*
+#exclude %_bindir/ElmerGUI*
 %_libdir/elmersolver
 %exclude %_libdir/elmersolver/include
 %_libdir/elmerfront
@@ -366,6 +368,7 @@ rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 %_libdir/elmersolver/include
 %_includedir/*
 
+%if 0
 %files -n ElmerGUI
 %doc ElmerGUI/GPL* ElmerGUI/LICENSES ElmerGUI/README
 %_bindir/ElmerGUI
@@ -379,8 +382,12 @@ rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 %_niconsdir/application-exit.png
 %_niconsdir/document-print.png
 %_niconsdir/document-save-as.png
+%endif
 
 %changelog
+* Thu Mar 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt3.git20150209
+- New snapshot
+
 * Mon Jun 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt2.svn6813
 - New snapshot
 

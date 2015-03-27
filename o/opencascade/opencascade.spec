@@ -1,5 +1,5 @@
 Name: opencascade
-Version: 6.7.1
+Version: 6.8.0
 Release: alt1
 Summary: Development platform for 3D modeling and numerical simulation
 License: BSD-like
@@ -19,7 +19,7 @@ BuildPreReq: tcl-devel tcl-tix libfltk-devel tk-devel libXmu-devel
 BuildPreReq: java-devel-default libcoin3d-devel libfreetype-devel
 BuildPreReq: python-module-gist libtbb-devel libftgl-devel
 BuildPreReq: libgl2ps-devel zlib-devel libfreeimage-devel
-BuildPreReq: libXext-devel
+BuildPreReq: libXext-devel libvtk6.2-devel libqt4-devel
 
 %description
 Open CASCADE Technology version 6.3., a minor release, which introduces quite a
@@ -64,6 +64,8 @@ modeling and numerical simulation applications.
 install -p -m644 %SOURCE1 .
 install -p -m644 %SOURCE2 src/OSD
 
+rm -fR data doc samples
+
 %build
 export DISTRIBUTIVE_DIR=$PWD
 export CASROOT=$PWD
@@ -92,7 +94,10 @@ DEFS="$DEFS -DSEMOP_NO_REFERENCE=1 -UDECOSF1"
 	--enable-wok=yes \
 	--enable-draw=yes \
 	--with-java-include=%_libexecdir/jvm/java/include \
-	--with-gl2ps=%prefix
+	--with-gl2ps=%prefix \
+	--with-vtk-include=%_includedir/vtk-6.2 \
+	--with-vtk-library=%_libdir \
+	--with-qt=%_libdir/qt4
 
 for i in $(find ./ -name Makefile) libtool; do
 	sed -i 's|\-O2|-O1|g' $i
@@ -169,6 +174,9 @@ mv %buildroot%prefix/*.sh %buildroot%_bindir/
 %_datadir/%name/src
 
 %changelog
+* Fri Mar 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.8.0-alt1
+- Version 6.8.0
+
 * Wed May 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.7.1-alt1
 - Version 6.7.1
 
