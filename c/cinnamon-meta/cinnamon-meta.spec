@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -114,6 +114,8 @@ Requires: brasero
 
 Requires: gnome-power-manager 
 Requires: NetworkManager-gnome >= 0.8.995
+#Bluetooth configuration
+Requires: blueberry
 
 %description -n cinnamon-regular
 This package provides Cinnamon desktop and set
@@ -126,6 +128,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Fri Mar 27 2015 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt4
+- add dependency on blueberry for bluetooth configuration
+
 * Wed Feb 25 2015 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt3
 - add dependency on metacity-theme-adwaita
 
