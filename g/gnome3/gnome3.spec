@@ -1,8 +1,8 @@
-%define ver_major 3.14
+%define ver_major 3.16
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -31,6 +31,7 @@ BuildPreReq: rpm-build-licenses
 %define evo_ver 3.12
 %define emp_ver 3.12
 %define brasero_ver 3.12.0
+%define accerciser_ver 3.14
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
@@ -75,6 +76,8 @@ Requires: gnome-system-monitor >= %ver_major
 Requires: gnome-logs >= %ver_major
 Requires: gucharmap >= %ver_major
 Requires: gnome-calculator >= %ver_major
+Requires: gnome-calendar >= %ver_major
+Requires: gnome-characters >= %ver_major
 
 # Applications
 ## Default file manager
@@ -141,6 +144,9 @@ Requires: mozilla-plugin-adobe-flash
 Requires: evolution >= %evo_ver
 ## Default messenger
 Requires: empathy >= %emp_ver
+## IRC client
+Requires: polari >= %ver_major
+# Und contacts manager
 Requires: gnome-contacts >= %ver_major
 
 ## Default document reader (currently pdf, ps, tiff, dvi)
@@ -348,7 +354,7 @@ Provides: %name-sisyphus-accessibility = %version-%release
 Requires: gnome-default = %version-%release
 
 Requires: orca >= %orca_ver
-Requires: accerciser >= %ver_major
+Requires: accerciser >= %accerciser_ver
 
 %description a11y
 This virtual package installs GNOME Desktop accessibility applications.
@@ -372,11 +378,13 @@ Requires: sane
 Requires: simple-scan
 ## Utilities
 ## BitTorrent client
-Requires:  transmission-gtk
+Requires: transmission-gtk
 # Disks management
 Requires: gparted
 ## Default RSS-reader
 Requires: liferea
+## Video editor
+Requires: pitivi
 # Other
 Requires: gnome-battery-bench
 Requires: gnome-multi-writer
@@ -396,6 +404,9 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- added gnome-calendar, gnome-characters to -default
+
 * Wed Jan 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt3
 - new -regular subpackage (-default+-office-light+-a11y+some other)
 
