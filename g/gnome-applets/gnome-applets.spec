@@ -1,4 +1,4 @@
-%define ver_major 3.15
+%define ver_major 3.16
 %define panel_api_ver 5.0
 %def_enable frequency_selector
 %def_disable mini_commander
@@ -7,7 +7,7 @@
 %def_with upower
 
 Name: gnome-applets
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -42,6 +42,7 @@ Requires: %name-gweather = %version-%release
 Requires: %name-multiload = %version-%release
 Requires: %name-accessx-status = %version-%release
 Requires: %name-windowpicker = %version-%release
+Requires: %name-netspeed = %version-%release
 %{?_enable_frequency_selector:Requires: %name-cpufreq = %version-%release}
 %{?_enable_mini_commander:Requires: %name-mini-commander = %version-%release}
 %{?_enable_modemlights:Requires: %name-modemlights = %version-%release}
@@ -268,6 +269,15 @@ PreReq: %name-common = %version-%release
 This package provides a GNOME Window Picker Applet to switch between open
 windows.
 
+%package netspeed
+Summary: Applet that shows traffic on a network device
+Group: Graphical desktop/GNOME
+PreReq: %name-common = %version-%release
+
+%description netspeed
+netspeed_applet is a little GNOME applet that shows the traffic on a
+specified network device.
+
 %define _libexecdir %gnome_appletsdir
 
 %prep
@@ -291,7 +301,7 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-glib-1`"
 
 install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
-%define applets accessx-status battstat char-palette cpufreq-applet command-line drivemount gweather geyes stickynotes_applet multiload trashapplet windowpicker
+%define applets accessx-status battstat char-palette cpufreq-applet command-line drivemount gweather geyes stickynotes_applet multiload trashapplet windowpicker netspeed_applet
 %find_lang --with-gnome %name %name-3.0 %applets
 
 %files
@@ -403,14 +413,14 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 
 %files stickynotes -f stickynotes_applet.lang
 %gnome_appletsdir/stickynotes*
-%_datadir/%name/ui/stickynotes-applet-menu.xml
-%_datadir/%name/builder/stickynotes.ui
+%_datadir/%name/builder/stickynotes-*.ui
+%_datadir/%name/ui/stickynotes-*.xml
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.StickyNotesApplet.panel-applet
 %_datadir/dbus-1/services/org.gnome.panel.applet.StickyNotesAppletFactory.service
-%_datadir/pixmaps/stickynotes
-%_iconsdir/hicolor/*/apps/gnome-sticky-notes-applet.png
-%_iconsdir/hicolor/scalable/apps/gnome-sticky-notes-applet.svg
 %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.stickynotes.gschema.xml
+%_iconsdir/hicolor/*/apps/gnome-sticky-notes-applet.png
+%_datadir/%name/icons/hicolor/*/apps/stickynotes-*.png
+%_iconsdir/hicolor/scalable/apps/gnome-sticky-notes-applet.svg
 
 %files trash -f trashapplet.lang
 %gnome_appletsdir/trashapplet
@@ -427,7 +437,20 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.WindowPicker.panel-applet
 %_datadir/%name/ui/menu.xml
 
+%files netspeed -f netspeed_applet.lang
+%_libdir/%name/netspeed_applet2
+%_datadir/dbus-1/services/org.gnome.panel.applet.NetspeedAppletFactory.service
+%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.netspeed.gschema.xml
+%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.panel.Netspeed.panel-applet
+%_datadir/%name/ui/netspeed-*.xml
+%_iconsdir/hicolor/*x*/*/netspeed*.png
+%_iconsdir/hicolor/scalable/*/netspeed*.svg
+
 %changelog
+* Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+- new -netspeed subpackage
+
 * Sun Feb 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.2-alt1
 - 3.15.2
 
