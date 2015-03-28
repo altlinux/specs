@@ -2,7 +2,7 @@
 %define _name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 3.0
 %def_enable introspection
 %def_enable python
@@ -10,7 +10,7 @@
 %def_enable gtk_doc
 
 Name: gedit
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -37,8 +37,8 @@ AutoReqProv: nopython
 
 # From configure.ac
 %define glib_ver 2.40.0
-%define gtk_ver 3.14.0
-%define gtksourceview_ver 3.14.0
+%define gtk_ver 3.15.7
+%define gtksourceview_ver 3.15.3
 %define peas_ver 1.7.0
 %define enchant_ver 1.2.0
 
@@ -219,6 +219,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Fri Mar 27 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Feb 04 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt1
 - 3.14.3
 
