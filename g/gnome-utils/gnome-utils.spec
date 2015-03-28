@@ -1,4 +1,4 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define _oldname gnome2-utils
 
 Name: gnome-utils
@@ -39,6 +39,9 @@ Font Viewer	  - preview fonts.
 
 
 %changelog
+* Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Sep 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14
 - removed removed gnome-search-tool and gnome-system-log
