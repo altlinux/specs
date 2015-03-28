@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.15
+%define ver_major 3.16
 %def_disable debug
 %def_disable lzma
 
 Name: yelp
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: Lightweight help browser for GNOME
@@ -119,6 +119,9 @@ Yelp.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Mar 03 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.91-alt1
 - 3.15.91
 

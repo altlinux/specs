@@ -1,4 +1,4 @@
-%define ver_major 1.13
+%define ver_major 1.14
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -33,7 +33,7 @@ BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
 # for Javascript support
 %{?_enable_js:BuildRequires: libseed-devel >= 3.2.0}
 %{?_enable_gjs:BuildRequires: libgjs-devel >= 1.37.1}
-%{?_enable_lua:BuildRequires: liblua5-devel luajit libluajit-devel lgi lua5.1-alt-compat}
+%{?_enable_lua:BuildRequires: liblua5-devel luajit libluajit-devel lgi >= 0.9.0 lua5.1-alt-compat}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.14}
 
 %description
@@ -196,6 +196,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Sun Feb 15 2015 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1
 - 1.13.0
 
