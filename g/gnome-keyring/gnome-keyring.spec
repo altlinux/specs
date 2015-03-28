@@ -1,4 +1,4 @@
-%define ver_major 3.14
+%define ver_major 3.15
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -7,8 +7,8 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.92
+Release: alt1
 
 Summary: %name is a password keeper for GNOME
 License: LGPL
@@ -16,14 +16,15 @@ Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: gnome-keyring-3.10.1-alt-lfs.patch
+#Source: %name-%version.tar
+Patch: gnome-keyring-3.14.0-alt-lfs.patch
 
 %define glib_ver 2.38.0
 %define dbus_ver 1.0
 %define gcrypt_ver 1.2.2
 %define tasn1_ver 0.3.4
 %define p11kit_ver 0.18.1
-%define gcr_ver 3.7.91
+%define gcr_ver 3.5.3
 
 PreReq: libcap-utils
 Requires: libp11-kit >= %p11kit_ver
@@ -99,22 +100,26 @@ setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 %config %_datadir/glib-2.0/schemas/org.gnome.crypto.cache.gschema.xml
 %_datadir/GConf/gsettings/org.gnome.crypto.cache.convert
 %_datadir/p11-kit/modules/gnome-keyring.module
-%_libdir/gnome-keyring
+%_libdir/gnome-keyring/
 %_libdir/pkcs11
 %_man1dir/*
-
-%if_enabled pam
-%files -n pam_%name
-/%_lib/security/*
-%endif
-
 %doc README AUTHORS NEWS
 
-%exclude %_libdir/pkcs11/gnome-keyring-pkcs11.la
+%exclude %_libdir/pkcs11/*.la
 %exclude %_libdir/gnome-keyring/*/*.la
 %exclude /%_lib/security/*.la
 
+%if_enabled pam
+%files -n pam_%name
+/%_lib/security/pam_gnome_keyring.so
+%exclude /%_lib/security/pam_gnome_keyring.la
+%endif
+
+
 %changelog
+* Wed Mar 18 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.92-alt1
+- 3.15.92
+
 * Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
 - call setcap cap_ipc_lock=ep %%_bindir/gnome-keyring-daemon in %%post
 

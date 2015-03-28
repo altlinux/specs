@@ -5,7 +5,7 @@
 
 Name: %{_name}-session
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -120,6 +120,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Feb 18 2015 Vladimir Didenko <cow@altlinux.org> 2.4.2-alt2
+- explicitly set clutter backend
+
 * Thu Nov 27 2014 Vladimir Didenko <cow@altlinux.org> 2.4.2-alt1
 - 2.4.2
 

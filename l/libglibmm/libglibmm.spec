@@ -1,5 +1,5 @@
 %define rname glibmm
-%define major 2.42
+%define major 2.44
 %def_disable snapshot
 
 Name: libglibmm
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%major/%rname-%version.tar.xz
 %endif
 
-%define glib_ver 2.42.0
+%define glib_ver 2.44.0
 
 AutoReq: yes, noperl
 BuildRequires: gcc-c++ libgio-devel >= %glib_ver libsigc++2.0-devel
@@ -94,6 +94,9 @@ mm-common-prepare --force --copy
 %_docdir/%rname-2.4
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 2.44.0-alt1
+- 2.44.0
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
 - 2.42.0
 

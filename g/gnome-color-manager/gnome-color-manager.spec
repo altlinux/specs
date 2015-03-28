@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.14
+%define ver_major 3.16
 %def_enable clutter
 # tests require colord running and g-c-m installed
 %def_disable check
 
 Name: gnome-color-manager
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Color profile manager for the GNOME desktop
@@ -23,7 +23,7 @@ Requires: common-licenses gnome-session gnome-filesystem
 BuildPreReq: gnome-common rpm-build-gnome
 BuildPreReq: rpm-build-licenses
 
-# From configure.in
+# From configure.ac
 %define gio_ver 2.31.10
 %define clutter_ver 1.12
 %define gtk_ver 3.0
@@ -32,7 +32,7 @@ BuildPreReq: rpm-build-licenses
 %define colord_ver 0.1.24
 %define lcms_ver 2.2
 
-BuildRequires: gcc-c++ intltool gtk-doc yelp-tools itstool
+BuildRequires: gcc-c++ intltool gtk-doc yelp-tools itstool libappstream-glib-devel
 BuildRequires: docbook-utils xsltproc
 BuildPreReq: libgio-devel >= %gio_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -115,6 +115,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README NEWS AUTHORS
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

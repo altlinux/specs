@@ -14,8 +14,8 @@
 %define gst_api_ver 1.0
 
 Name: empathy
-Version: %ver_major.7
-Release: alt2
+Version: %ver_major.8
+Release: alt1
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
@@ -186,6 +186,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Mon Mar 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.8-alt1
+- 3.12.8
+
 * Fri Jan 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.7-alt2
 - rebuilt against libfarstream-0.2.so.5
 

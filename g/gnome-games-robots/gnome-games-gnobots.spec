@@ -2,11 +2,11 @@
 
 %define _name robots
 %define __name gnome-%_name
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of robots game for BSD games collection
@@ -25,7 +25,8 @@ Provides:  gnome-games-gnobots = %version-%release
 %define gtk_ver 3.4.0
 
 BuildRequires: gnome-common
-BuildRequires: intltool yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
+BuildRequires: intltool yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 BuildRequires: libcanberra-gtk3-devel
 
 %description
@@ -61,6 +62,9 @@ systems.
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

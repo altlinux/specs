@@ -1,7 +1,7 @@
-%define ver_major 3.14
+%define ver_major 3.15
 
 Name: gnome-devel-docs
-Version: %ver_major.4
+Version: %ver_major.90
 Release: alt1
 
 Summary: General GNOME Developper Documentation
@@ -58,6 +58,9 @@ This package is a part of %name and provides demos for GNOME developpers
 %_datadir/help/*/gnome-devel-demos/
 
 %changelog
+* Wed Feb 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.90-alt1
+- 3.15.90
+
 * Sun Jan 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.4-alt1
 - 3.14.4
 

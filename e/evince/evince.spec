@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 3
 %define so_ver 4
 
@@ -8,7 +8,7 @@
 %def_enable browser_plugin
 
 Name: evince
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document viewer
@@ -25,7 +25,7 @@ Requires: gvfs-backend-recent-files
 Requires: dconf
 
 %define poppler_ver 0.24.0
-%define gtk_ver 3.12.0
+%define gtk_ver 3.14.0
 
 BuildPreReq: libpoppler-glib-devel >= %poppler_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -199,6 +199,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Sun Mar 08 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

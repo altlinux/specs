@@ -1,10 +1,10 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
 Name: gnome-initial-setup
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -16,11 +16,11 @@ Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define nm_ver 0.9
 %define glib_ver 2.36.0
-%define gtk_ver 3.11.3
+%define gtk_ver 3.12.0
 %define secret_ver 0.18
 %define geoclue_ver 2.1.2
 
-Requires: dconf gdm geoclue2 >= %geoclue_ver
+Requires: dconf gdm geoclue2 >= %geoclue_ver ibus
 
 BuildRequires: intltool
 BuildRequires: libgio-devel >= %glib_ver
@@ -36,6 +36,7 @@ BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libcheese-devel
 BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: geoclue2-devel >= %geoclue_ver
+BuildRequires: libwebkit2gtk-devel
 
 %description
 GNOME Initial Setup is an alternative to firstboot, providing
@@ -77,6 +78,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Feb 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt1
 - 3.14.3
 

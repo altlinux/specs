@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -55,9 +55,10 @@ Requires: gvfs gvfs-backends
 Requires: gucharmap
 
 # Look and Feel
-Requires: gnome-icon-theme >= %ver_major
-Requires: gnome-icon-theme-symbolic >= %ver_major
-Requires: gnome-themes-standard >= %ver_major
+Requires: gnome-icon-theme
+Requires: gnome-icon-theme-symbolic
+Requires: gnome-themes-standard
+Requires: metacity-theme-adwaita
 Requires: libgtk2-engine-adwaita
 # default font
 Requires: fonts-otf-abattis-cantarell
@@ -125,6 +126,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Wed Feb 25 2015 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt3
+- add dependency on metacity-theme-adwaita
+
 * Mon Dec 29 2014 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt2
 - add gucharmap as dependency
 

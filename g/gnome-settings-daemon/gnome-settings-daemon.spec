@@ -1,15 +1,16 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
 %def_enable systemd
+%def_disable wayland
 # tests require, as minimum, running colord
 %def_disable check
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -21,12 +22,12 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 
 # From configure.ac
-%define glib_ver 2.36
-%define gtk_ver 3.7.8
+%define glib_ver 2.38
+%define gtk_ver 3.15.3
 %define gnome_desktop_ver 3.11.1
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
-%define gsds_ver 3.11.90
+%define gsds_ver 3.15.4
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
 %define upower_ver 0.9.1
@@ -56,6 +57,7 @@ BuildRequires: libdbus-devel libpolkit1-devel
 BuildRequires: xkeyboard-config-devel
 %{?_enable_smartcard:BuildRequires: libnss-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel}
 BuildRequires: libxkbfile-devel
 BuildRequires: rpm-build-gnome intltool docbook-style-xsl xsltproc
 BuildRequires: gcc-c++ libcups-devel libgudev-devel libXi-devel libXext-devel libXfixes-devel
@@ -100,7 +102,8 @@ The %name-tests package provides programms for testing GSD plugins.
 %configure \
 	%{subst_enable static} \
 	%{?_disable_smartcard:--disable-smartcard-support} \
-	--disable-schemas-compile
+	--disable-schemas-compile \
+	%{subst_enable wayland}
 
 %make_build
 
@@ -117,7 +120,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/a11y-settings.gnome-settings-plugin
 %_libdir/%name-%api_ver/clipboard.gnome-settings-plugin
 %_libdir/%name-%api_ver/color.gnome-settings-plugin
-%_libdir/%name-%api_ver/cursor.gnome-settings-plugin
 %_libdir/%name-%api_ver/datetime.gnome-settings-plugin
 %_libdir/%name-%api_ver/housekeeping.gnome-settings-plugin
 %_libdir/%name-%api_ver/keyboard.gnome-settings-plugin
@@ -126,7 +128,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/liba11y-settings.so
 %_libdir/%name-%api_ver/libclipboard.so
 %_libdir/%name-%api_ver/libcolor.so
-%_libdir/%name-%api_ver/libcursor.so
 %_libdir/%name-%api_ver/libdatetime.so
 %_libdir/%name-%api_ver/libgsd.so
 %_libdir/%name-%api_ver/libgsdwacom.so
@@ -186,7 +187,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %files tests
 %_libexecdir/gsd-test-a11y-keyboard
 %_libexecdir/gsd-test-a11y-settings
-%_libexecdir/gsd-test-cursor
 %_libexecdir/gsd-test-datetime
 %_libexecdir/gsd-test-housekeeping
 %_libexecdir/gsd-test-input-helper
@@ -206,6 +206,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 3.0
 %def_enable color_management
 %def_enable introspection
@@ -8,7 +8,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -35,7 +35,7 @@ BuildPreReq: rpm-build-gnome rpm-build-licenses
 # From configure.in
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: gtk-doc
-BuildPreReq: libgtk+3-devel >= 3.10.6
+BuildPreReq: libgtk+3-devel >= 3.14.0
 BuildPreReq: libgio-devel >= 2.38.0
 BuildPreReq: libgnome-desktop3-devel >= 2.91.91
 BuildPreReq: gnome-icon-theme >= 2.19.1
@@ -164,6 +164,9 @@ the functionality of the EOG GUI.
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Thu Nov 20 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt1
 - 3.14.3
 

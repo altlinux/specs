@@ -1,24 +1,25 @@
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
+%def_enable installed_tests
 
 Name: %{_name}3
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
 Group: Graphical desktop/GNOME
 Url: ftp://ftp.gnome.org
 
-#Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
-Source: %_name-%version.tar
+Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+#Source: %_name-%version.tar
 Source1: gnome-about.png
 
 Obsoletes: %_name
@@ -26,11 +27,10 @@ Provides: %_name = %version-%release
 
 BuildPreReq: rpm-build-licenses rpm-build-gnome
 
-# From configure.in
+# From configure.ac
 BuildPreReq: intltool >= 0.35
 BuildPreReq: libgtk+3-devel >= 3.3.6
-BuildPreReq: glib2-devel >= 2.35.0
-BuildPreReq: libgio-devel >= 2.28.0
+BuildPreReq: libgio-devel >= 2.38.0
 BuildPreReq: yelp-tools itstool
 BuildPreReq: gtk-doc >= 1.4
 BuildPreReq: gnome-common >= 2.8.0
@@ -106,6 +106,15 @@ Requires: lib%name-gir = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the %_name library
 
+%package tests
+Summary: Tests for the Gnome 3 desktop library
+Group: Development/Other
+Requires: lib%name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the Gnome 3 desktop library.
+
 
 %prep
 %setup -n %_name-%version
@@ -113,11 +122,13 @@ GObject introspection devel data for the %_name library
 
 %build
 %autoreconf
+export LIBS="$LIBS `pkg-config --libs gio-2.0` `pkg-config --libs gtk+-3.0`"
 %configure \
     %{subst_enable static} \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     --with-gnome-distributor=%gnome_distributor \
-    --with-pnp-ids-path=%_datadir/misc/pnp.ids
+    --with-pnp-ids-path=%_datadir/misc/pnp.ids \
+    %{?_enable_installed_tests:--enable-installed-tests}
 
 %make_build
 
@@ -155,8 +166,17 @@ GObject introspection devel data for the %_name library
 %_girdir/*
 %endif
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%_name/
+%_datadir/installed-tests/%_name/
+%endif
+
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Nov 26 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt2
 - updated to 3.14_2b563b26 (fixed BGO #740289)
 

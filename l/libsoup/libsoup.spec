@@ -1,21 +1,21 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.48
+%define ver_major 2.50
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
 %def_enable introspection
+%def_disable vala
 
 Name: libsoup
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
 License: LGPLv2+
 Url: https://live.gnome.org/LibSoup
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -27,25 +27,26 @@ Source1: %name-compat.map
 Source2: %name-compat.lds
 Source3: %name-gnome-compat.map
 Source4: %name-gnome-compat.lds
-Patch1: %name-2.41.3-alt-compat-map.patch
+Patch1: %name-2.49.91-alt-compat-map.patch
 
-Requires: glib-networking >= 2.41.92
+Requires: glib-networking >= 2.42
 
 Provides: soup = %version libsoup%api_ver = %version
 Obsoletes: soup < %version libsoup%api_ver < %version
 
-%define glib_ver 2.36.0
+%define glib_ver 2.42.0
 %define gi_ver 1.33.3
 
 # from configure.in
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libxml2-devel libsqlite3-devel zlib-devel
+BuildRequires: libxml2-devel libsqlite3-devel zlib-devel
 
 BuildRequires: docbook-dtds docbook-style-xsl common-licenses
 BuildRequires: gtk-doc xml-common xsltproc intltool
 BuildRequires: glib-networking
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
+%{?_enable_vala:BuildRequires: vala-tools}
 # for check
 BuildRequires: /proc curl
 
@@ -155,7 +156,7 @@ This package provides GObject introspection devel data for the GNOME
 part of Soup library.
 
 %prep
-%setup -q
+%setup
 install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %patch1 -p1
 
@@ -190,6 +191,7 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %_includedir/%name-%api_ver/
 %_libdir/%name-%api_ver.so
 %_libdir/pkgconfig/%name-%api_ver.pc
+%{?_enable_vala:%_vapidir/%name-%api_ver.vapi}
 
 %files gnome-devel
 %_includedir/%name-gnome-%api_ver/
@@ -219,6 +221,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 2.50.0-alt1
+- 2.50.0
+
 * Sun Dec 07 2014 Yuri N. Sedunov <aris@altlinux.org> 2.48.1-alt1
 - 2.48.1
 

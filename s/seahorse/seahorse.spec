@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.14
+%define ver_major 3.15
 
 %def_disable debug
 %def_enable ldap
@@ -14,7 +14,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.1
+Version: %ver_major.90
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -98,6 +98,9 @@ export GNUPG=/usr/bin/gpg2
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Wed Mar 18 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.90-alt1
+- 3.15.90
+
 * Sat Feb 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 

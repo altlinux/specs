@@ -1,8 +1,8 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define _name org.gnome.Polari
 
 Name: polari
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Internet Relay Chat client for GNOME
@@ -12,12 +12,26 @@ Url: https://wiki.gnome.org/Apps/Polari
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+Requires: libgjs
 Requires: telepathy-logger
 Requires: telepathy-mission-control
 Requires: telepathy-idle
 
+# find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+Requires: typelib(Gdk)
+Requires: typelib(GdkPixbuf)
+Requires: typelib(Gio)
+Requires: typelib(GLib)
+Requires: typelib(GObject)
+Requires: typelib(Gtk)
+Requires: typelib(Pango)
+Requires: typelib(Polari)
+Requires: typelib(Soup)
+Requires: typelib(TelepathyGLib)
+Requires: typelib(TelepathyLogger)
+
 %set_typelibdir %_libdir/%name/girepository-1.0
-%define gtk_ver 3.13.4
+%define gtk_ver 3.15.6
 
 BuildRequires: gtk-doc gnome-common intltool desktop-file-utils
 BuildRequires: libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel
@@ -46,16 +60,21 @@ with GNOME 3 Desktop.
 %_libdir/%name/
 %_desktopdir/%_name.desktop
 %_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
 %_datadir/%name/
 %_datadir/dbus-1/services/%_name.service
-%_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
+%_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Polari.service
+%_datadir/telepathy/clients/Polari.client
+%_datadir/glib-2.0/schemas/%_name.gschema.xml
 %_datadir/appdata/%_name.appdata.xml
 %doc AUTHORS NEWS
 
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 

@@ -2,11 +2,11 @@
 
 %define _name mines
 %define __name gnome-%_name
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Classic find the mines in the minefield game
@@ -24,7 +24,9 @@ Provides:  gnome-games-gnomine = %version-%release
 %define gtk_ver 3.10.0
 
 BuildRequires: gnome-common
-BuildRequires: intltool yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
+BuildRequires: intltool yelp-tools
+BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 
 %description
 NOME Mines is a variation of the popular logic puzzle minesweeper.
@@ -54,6 +56,9 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 

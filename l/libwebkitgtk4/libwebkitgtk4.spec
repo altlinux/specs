@@ -10,7 +10,7 @@
 %def_disable gtkdoc
 
 Name: libwebkitgtk4
-Version: 2.6.5
+Version: 2.8.0
 Release: alt1
 
 Summary: Web browser engine
@@ -29,12 +29,12 @@ BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel
 BuildRequires: libxml2-devel >= 2.6
 BuildRequires: libXt-devel
-BuildRequires: libgtk+3-devel >= 3.4.0
+BuildRequires: libgtk+3-devel >= 3.4.0 libepoxy-devel
 BuildRequires: libgail3-devel >= 3.0
 BuildRequires: libenchant-devel >= 0.22
 BuildRequires: libsqlite3-devel >= 3.0
 BuildRequires: libxslt-devel >= 1.1.7
-BuildRequires: gstreamer1.0-devel >= 1.0.3 gst-plugins1.0-devel >= 1.0.3
+BuildRequires: gstreamer1.0-devel >= 1.0.3 gst-plugins1.0-devel >= 1.0.3 gst-plugins-bad1.0-devel
 BuildRequires: librsvg-devel >= 2.2.0
 BuildRequires: gtk-doc >= 1.10
 BuildRequires: libsoup-devel >= 2.40.0
@@ -54,7 +54,9 @@ BuildRequires: libgtk+2-devel libpixman-devel libexpat-devel
 BuildRequires: libXdmcp-devel libxshmfence-devel libXxf86vm-devel
 BuildRequires: libXinerama-devel libXi-devel libXrandr-devel
 BuildRequires: libXcursor-devel libxkbcommon-devel
-BuildRequires: libwayland-cursor-devel
+BuildRequires: libwayland-cursor-devel libwayland-egl-devel
+BuildRequires: libnotify-devel libgnutls-devel libnettle-devel
+BuildRequires: libtasn1-devel libp11-kit-devel libgcrypt-devel
 # for battery status
 BuildRequires: libupower-devel
 
@@ -184,8 +186,13 @@ rm -rf Source/ThirdParty/qunit/
 -DPORT=GTK \
 %{?_enable_gtkdoc:-DENABLE_GTKDOC:BOOL=ON} \
 -DCMAKE_BUILD_TYPE=Release \
+-DENABLE_TOUCH_EVENTS:BOOL=ON \
 -DENABLE_TOUCH_ICON_LOADING:BOOL=ON \
--DENABLE_TOUCH_SLIDER:BOOL=ON
+-DENABLE_TOUCH_SLIDER:BOOL=ON \
+-DENABLE_FTPDIR:BOOL=ON \
+-DENABLE_MEDIA_STREAM:BOOL=ON \
+-DUSE_LD_GOLD:BOOL=OFF
+#-DENABLE_TELEPHONE_NUMBER_DETECTION:BOOL=ON \
 #-DENABLE_BATTERY_STATUS:BOOL=ON \
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
 #-DENABLE_ORIENTATION_EVENTS:BOOL=ON
@@ -249,6 +256,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Tue Mar 24 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Thu Jan 15 2015 Yuri N. Sedunov <aris@altlinux.org> 2.6.5-alt1
 - 2.6.5
 

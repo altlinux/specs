@@ -1,10 +1,9 @@
-%define ver_major 1.22
+%define ver_major 1.24
 %def_enable http
 %def_enable avahi
 %def_enable cdda
 %def_enable fuse
 %def_disable hal
-%def_enable obexftp
 %def_enable gphoto2
 %def_enable keyring
 %def_enable samba
@@ -16,13 +15,16 @@
 %def_enable libmtp
 %def_enable goa
 %def_enable bluray
+%def_enable nfs
+# obexftp support removed since 3.15.91
+%def_disable obexftp
 %def_enable gtk
 %def_enable systemd_login
 %def_disable gtk_doc
 %def_enable installed_tests
 
 Name: gvfs
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -47,8 +49,8 @@ Patch6: gvfs-1.19.90-alt-1-logind-state.patch
 
 # From configure.in
 %define intltool_ver 0.35.0
-%define glib_ver 2.35.3
-%define libsoup_ver 2.41.3
+%define glib_ver 2.38
+%define libsoup_ver 2.42
 %define avahi_ver 0.6
 %define libcdio_paranoia_ver 0.82
 %define hal_ver 0.5.10
@@ -59,6 +61,7 @@ Patch6: gvfs-1.19.90-alt-1-logind-state.patch
 %define goa_ver 3.7.90
 %define libarchive_ver 3.0.22
 %define imobiledevice_ver 1.1.5
+%define nfs_ver 1.9.7
 
 Requires: dconf
 %{?_enable_hal:Requires: gnome-mount}
@@ -71,8 +74,8 @@ BuildPreReq: rpm-build-gnome rpm-build-licenses
 BuildPreReq: intltool >= %intltool_ver
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: gtk-doc
-BuildPreReq: openssh-clients
+BuildRequires: libdbus-devel gtk-doc
+BuildRequires: openssh-clients
 # hotplug backend
 BuildRequires: libgudev-devel
 # required if autoreconf used
@@ -94,7 +97,8 @@ BuildRequires: libgcrypt-devel
 %{?_enable_udisks2:BuildPreReq: libudisks2-devel >= %udisks_ver}
 %{?_enable_libmtp:BuildPreReq: libmtp-devel >= %mtp_ver}
 %{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
-%{?_enable_bluray:BuildPreReq: libbluray-devel}
+%{?_enable_bluray:BuildRequires: libbluray-devel}
+%{?_enable_nfs:BuildPreReq: libnfs-devel >= %nfs_ver}
 %{?_enable_systemd_login:BuildPreReq: libsystemd-login-devel}
 
 BuildPreReq: desktop-file-utils
@@ -164,6 +168,12 @@ Summary: MTP support for gvfs
 Group: System/Libraries
 Requires: %name = %version-%release
 
+%package backend-nfs
+Summary: NFS backend for gvfs
+Group: System/Libraries
+Requires: %name = %version-%release
+Requires: nfs-clients
+
 %package backends
 Summary: All backends for gvfs
 Group: System/Libraries
@@ -176,6 +186,7 @@ Requires: gvfs gvfs-backend-smb gvfs-backend-dnssd
 %{?_enable_gtk:Requires: gvfs-backend-recent-files}
 %{?_enable_goa:Requires: gvfs-backend-goa}
 %{?_enable_libmtp:Requires: gvfs-backend-mtp}
+%{?_enable_nfs:Requires: gvfs-backend-nfs}
 
 %package utils
 Summary: Command line applications for gvfs.
@@ -241,6 +252,9 @@ This package contains gnome-online-accounts backend for gvfs.
 This package provides support for reading and writing files on MTP based
 devices (Media Transfer Protocol) to applications using gvfs.
 
+%description backend-nfs
+This package provides support for mounting NFS shares using gvfs.
+
 %description backends
 This virtual package contains the all backends for gvfs.
 
@@ -273,6 +287,7 @@ The %name-tests package provides programms for testing GVFS.
 
 %build
 %autoreconf
+export ac_cv_path_SSH_PROGRAM=%_bindir/ssh
 %configure \
         %{subst_enable http} \
         %{subst_enable avahi} \
@@ -290,6 +305,7 @@ The %name-tests package provides programms for testing GVFS.
         %{subst_enable udisks2} \
         %{subst_enable libmtp} \
         %{subst_enable bluray} \
+        %{subst_enable nfs} \
         %{subst_enable gtk} \
         %{?_enable_systemd_login:--enable-libsystemd-login} \
         %{?_enable_gtk_doc:--enable-gtk-doc} \
@@ -377,8 +393,13 @@ killall -USR1 gvfsd >&/dev/null || :
 %endif
 
 %if_enabled gtk
-%exclude %_libexecdir/gvfsd-recent
-%exclude %_datadir/%name/mounts/recent.mount
+    %exclude %_libexecdir/gvfsd-recent
+    %exclude %_datadir/%name/mounts/recent.mount
+%endif
+
+%if_enabled nfs
+    %exclude %_libexecdir/gvfsd-nfs
+    %exclude %_datadir/%name/mounts/nfs.mount
 %endif
 
 %files devel
@@ -451,6 +472,12 @@ killall -USR1 gvfsd >&/dev/null || :
 %_datadir/dbus-1/services/org.gtk.Private.MTPVolumeMonitor.service
 %endif
 
+%if_enabled nfs
+%files backend-nfs
+%_libexecdir/gvfsd-nfs
+%_datadir/%name/mounts/nfs.mount
+%endif
+
 %files backends
 
 %files utils
@@ -470,6 +497,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Mon Mar 16 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.4-alt1
 - 1.22.4
 

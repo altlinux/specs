@@ -1,4 +1,4 @@
-%define ver_major 1.2
+%define ver_major 1.4
 %define ver_api 1.0
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
@@ -49,7 +49,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -58,7 +58,7 @@ Group: Office
 Url: http://wiki.gnome.org/Projects/Tracker
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: tracker-1.0.3-alt-build.patch
+#Patch: tracker-1.0.3-alt-build.patch
 
 Obsoletes: lib%name-client
 Requires: lib%name = %version-%release
@@ -89,14 +89,14 @@ Requires: lib%name = %version-%release
 %define gupnp_dlna_ver 0.9.4
 %define libosinfo_ver 0.2.9
 %define libpng_ver 0.89
-%define libmediaart_ver 0.1.0
+%define libmediaart_ver 1.9
 
 BuildPreReq: gcc-c++ gnome-common rpm-build-gnome gtk-doc docbook-utils
 BuildPreReq: glibc-devel
 BuildPreReq: libdbus-devel >= %dbus_ver
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
-%{?_enable_libmediaart:BuildPreReq: libmediaart-devel >= %libmediaart_ver}
+%{?_enable_libmediaart:BuildPreReq: libmediaart2.0-devel >= %libmediaart_ver}
 BuildPreReq: libicu-devel libunistring-devel
 BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -233,7 +233,7 @@ Nautilus extension for managing tags
 
 %prep
 %setup
-%patch -p1
+#%patch -p1
 
 %build
 %autoreconf
@@ -307,23 +307,30 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 %_datadir/dbus-1/services/*.service
 %_man1dir/tracker-miner-fs.*
+%_man5dir/tracker-miner-fs.cfg.*
 
 %dir %_datadir/%name
 %_datadir/%name/*.xml
-%_datadir/%name/languages
-%_datadir/%name/miners
-%_datadir/%name/ontologies
-%_datadir/%name/extract-rules
+%_datadir/%name/stop-words/
+%_datadir/%name/miners/
+%_datadir/%name/ontologies/
+%_datadir/%name/extract-rules/
 
 %_man1dir/tracker-extract.*
-%_man1dir/tracker-writeback.*
 %_man1dir/tracker-store.*
+%_man1dir/tracker-writeback.*
+%_man5dir/tracker-extract.cfg.*
+%_man5dir/tracker-store.cfg.*
+%_man5dir/tracker-writeback.cfg.*
+%_man5dir/tracker-db.cfg.*
+%_man5dir/tracker-fts.cfg.*
 
 %files -n lib%name
 %_libdir/*.so.*
 %_libdir/%name-%ver_api/*.so.*
 
 %files utils
+%_bindir/%name
 %_bindir/tracker-import
 %_bindir/tracker-info
 %_bindir/tracker-control
@@ -331,13 +338,15 @@ rm -rf %buildroot%_datadir/tracker-tests
 %_bindir/tracker-sparql
 %_bindir/tracker-stats
 %_bindir/tracker-tag
-%_man1dir/tracker-import.*
 %_man1dir/tracker-info.*
-%_man1dir/tracker-control.*
 %_man1dir/tracker-search.*
 %_man1dir/tracker-sparql.*
-%_man1dir/tracker-stats.*
 %_man1dir/tracker-tag.*
+%_man1dir/tracker-daemon.*
+%_man1dir/tracker-index.*
+%_man1dir/tracker-reset.*
+%_man1dir/tracker-sql.*
+%_man1dir/tracker-status.*
 
 %files search-tool
 %_bindir/tracker-preferences
@@ -384,6 +393,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Wed Dec 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
 - 1.2.5
 

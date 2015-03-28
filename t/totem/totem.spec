@@ -1,16 +1,16 @@
 %def_disable snapshot
 
-%define ver_major 3.14
+%define ver_major 3.16
 %define parser_ver 3.10.1
 %define gst_api_ver 1.0
 %define gst_ver 1.4.2
 %define gst_plugins_ver 1.2.4
 %define gtk_ver 3.11.5
-%define grilo_ver 0.2.10
+%define grilo_ver 0.2.12
 %define glib_ver 2.36.0
 %define clutter_ver 1.17.3
 %define clutter_gtk_ver 1.5.5
-%define clutter_gst_ver 1.5.5
+%define clutter_gst_ver 2.99.2
 %define peas_ver 1.1.0
 
 %define _libexecdir %_prefix/libexec
@@ -32,7 +32,7 @@
 %def_disable jamendo
 
 Name: totem
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -89,7 +89,7 @@ BuildPreReq: libtotem-pl-parser-devel >= %parser_ver
 BuildPreReq: libXtst-devel libXrandr-devel libXxf86vm-devel xorg-xproto-devel
 BuildPreReq: libclutter-devel >= %clutter_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
-BuildPreReq: libclutter-gst2.0-devel >= %clutter_gst_ver
+BuildPreReq: libclutter-gst3.0-devel >= %clutter_gst_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libgnome-desktop3-devel
 %{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel pylint-py3}
@@ -407,6 +407,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Jan 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

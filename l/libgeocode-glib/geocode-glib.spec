@@ -1,5 +1,5 @@
 %define _name geocode-glib
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 1.0
 %def_enable introspection
 
@@ -104,6 +104,9 @@ GObject introspection devel data for the %_name library
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 

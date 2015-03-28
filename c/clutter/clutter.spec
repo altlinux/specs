@@ -1,4 +1,4 @@
-%define ver_major 1.20
+%define ver_major 1.22
 
 %def_enable x11_backend
 %def_enable gdk_backend
@@ -12,33 +12,33 @@
 # libcogl compiled with --enable-wayland-egl-platform required
 %def_enable wayland_backend
 # libcogl compiled with --enable-wayland-egl-server required
-%def_disable wayland_compositor
+%def_enable wayland_compositor
 
 Name: clutter
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Clutter Core Library
 License: LGPLv2+
 Group: System/Libraries
 Url: http://www.clutter-project.org/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 #Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.31.19
-%define cogl_ver 1.17.5
+%define glib_ver 2.40
+%define cogl_ver 1.20.0
 %define json_glib_ver 0.12.0
 %define atk_ver 2.5.3
-%define cairo_ver 1.10
+%define cairo_ver 1.12
 %define pango_ver 1.30
-%define gi_version 0.9.5
+%define gi_version 1.40
 %define uprof_ver 0.3
 %define gtk_doc_ver 1.15
 %define xfixes_ver 3
 %define xcomposite_ver 0.4
 %define gdk_ver 3.3.18
+%define libinput_ver 0.8
 
 BuildRequires: libGL-devel
 BuildRequires: pkgconfig(cogl-1.0) >= %cogl_ver pkgconfig(cairo-gobject) >= %cairo_ver pkgconfig(atk) >= %atk_ver pkgconfig(pangocairo) >= %pango_ver pkgconfig(cogl-pango-1.0) pkgconfig(json-glib-1.0) >= %json_glib_ver
@@ -49,7 +49,7 @@ BuildRequires: gobject-introspection-devel  gir(GL) = 1.0 gir(GObject) = 2.0 gir
 %{?_enable_wayland_compositor:BuildRequires: pkgconfig(wayland-server)}
 %{?_enable_gdk_backend:BuildRequires: pkgconfig(gdk-3.0) >= %gdk_ver gir(Gdk) = 3.0}
 %{?_enable_tslib_input:BuildRequires: pkgconfig(tslib-1.0)}
-%{?_enable_evdev_input:BuildRequires: pkgconfig(gudev-1.0) pkgconfig(xkbcommon) pkgconfig(libevdev) pkgconfig(libinput)}
+%{?_enable_evdev_input:BuildRequires: pkgconfig(gudev-1.0) pkgconfig(xkbcommon) pkgconfig(libevdev) libinput-devel >= %libinput_ver}
 %{?_enable_xinput:BuildRequires: pkgconfig(xi)}
 %{?_enable_gdk_pixbuf:BuildRequires: pkgconfig(gdk-pixbuf-2.0)}
 
@@ -179,6 +179,9 @@ gtkdocize
 
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Mon Sep 29 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt2
 - rebuilt against libinput.so.5
 

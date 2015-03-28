@@ -1,7 +1,9 @@
-%define ver_major 3.14
+%define ver_major 3.16
+%define _name org.gnome.Dictionary
+%define api_ver 1.0
 
 Name: gnome-dictionary
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome client for MIT dictionary server
@@ -13,11 +15,12 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Requires: libgdict = %version-%release
 
-%define glib_ver 2.28.0
-%define gtk_ver 3.0.0
+%define glib_ver 2.40.0
+%define gtk_ver 3.14.0
 
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: rpm-build-gnome intltool gtk-doc yelp-tools
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 
 %description
 GNOME Dictionary - look up an online dictionary for definitions and
@@ -38,6 +41,24 @@ Requires: libgdict = %version-%release
 
 %description -n libgdict-devel
 Files necessary to develop applications that use GNOME Dictionary.
+
+%package -n libgdict-gir
+Summary: GObject introspection data for the GNOME Dictionary
+Group: System/Libraries
+Requires: libgdict = %version-%release
+
+%description -n libgdict-gir
+GObject introspection data for the GNOME Dictionary library.
+
+%package -n libgdict-gir-devel
+Summary: GObject introspection devel data for the GNOME Dictionary
+Group: Development/Other
+BuildArch: noarch
+Requires: libgdict-gir = %version-%release
+Requires: libgdict-devel = %version-%release
+
+%description -n libgdict-gir-devel
+GObject introspection devel data for the GNOME Dictionary library.
 
 %package -n libgdict-devel-doc
 Summary: Development documentation for GNOME Dictionary.
@@ -69,29 +90,38 @@ Dictionary Library.
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/gnome-dictionary
-%_datadir/gnome-dictionary
-%_desktopdir/gnome-dictionary.desktop
-%_man1dir/gnome-dictionary.*
-%config %_datadir/glib-2.0/schemas/org.gnome.dictionary.gschema.xml
-%_datadir/appdata/%name.appdata.xml
+%_bindir/%name
+%_desktopdir/%_name.desktop
+%_man1dir/%name.*
+%_datadir/dbus-1/services/%_name.service
+%_datadir/glib-2.0/schemas/org.gnome.dictionary.gschema.xml
+%_datadir/appdata/%_name.appdata.xml
 %doc NEWS
 
 %files -n libgdict
 %_libdir/libgdict-1.0.so.*
 %dir %_datadir/gdict-1.0
-%_datadir/gdict-1.0/sources
+%_datadir/gdict-1.0/sources/
 
 %files -n libgdict-devel
 %dir %_includedir/gdict-1.0
-%_includedir/gdict-1.0/gdict
+%_includedir/gdict-1.0/gdict/
 %_libdir/libgdict-1.0.so
 %_libdir/pkgconfig/gdict-1.0.pc
+
+%files -n libgdict-gir
+%_typelibdir/Gdict-%api_ver.typelib
+
+%files -n libgdict-gir-devel
+%_girdir/Gdict-%api_ver.gir
 
 %files -n libgdict-devel-doc
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

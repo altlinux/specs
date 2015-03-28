@@ -1,16 +1,10 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 3.0
+%define applet_api_ver 5.0
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
-
-# Whether to build clock applet with evolution-data-server.
 %def_enable eds
-# This switch controls whether to build some applets as running inside
-# gnome-panel process (as for 2.16, these are clock, fish, notification
-# area, and window list). Note that if this is on, then a crash of an applet is
-# a crash of a panel.
-%def_without in_process_applets
 
 Name: gnome-panel
 Version: %ver_major.0
@@ -19,13 +13,13 @@ Release: alt1
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPLv2+ and LGPLv2+ and GFDL+
 Group: Graphical desktop/GNOME
-Url: ftp://ftp.gnome.org
+Url: https://wiki.gnome.org/Projects/GnomePanel
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 
-# From configure.in
-%define gtk_ver 3.3.12
+# From configure.ac
+%define gtk_ver 3.15.2
 %define desktop_ver 3.3.92
 %define libpango_ver 1.15.4
 %define glib_ver 2.36.0
@@ -73,7 +67,7 @@ BuildRequires: libdconf-devel >= %dconf_ver libdbus-glib-devel libpolkit-devel l
 %description
 GNOME (GNU Network Object Model Environment) is a user-friendly
 set of applications and desktop tools to be used in conjunction with a
-window manager for the X Window System.  GNOME is similar in purpose and
+window manager for the X Window System. GNOME is similar in purpose and
 scope to CDE and KDE, but GNOME is based completely on free
 software.
 
@@ -133,6 +127,7 @@ Requires: lib%name-gir = %version-%release
 GObject introspection devel data for the GNOME Panel shared library.
 
 
+%define gnome_appletsdir %_libdir/%name/%applet_api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %gnome_appletsdir
 
@@ -144,7 +139,6 @@ GObject introspection devel data for the GNOME Panel shared library.
 %configure \
     %{subst_enable static} \
     %{subst_enable eds} \
-    %{?_with_in_process_applets:--with-in-process-applets=all} \
     --disable-schemas-compile \
     %{?_enable_gtk_doc:--enable-gtk-doc}
 %make_build
@@ -152,31 +146,27 @@ GObject introspection devel data for the GNOME Panel shared library.
 %install
 %makeinstall_std
 
-%find_lang --with-gnome --output=%name.lang %name %name-%api_ver clock fish fish-applet-2 window-list workspace-switcher
+%find_lang --with-gnome --output=%name.lang %name-%api_ver clock fish
 
 %files -f %name.lang
 %_bindir/gnome-desktop-item-edit
 %_bindir/gnome-panel
 %_bindir/panel-test-applets
 %dir %gnome_appletsdir
-%gnome_appletsdir/clock-applet
-%gnome_appletsdir/fish-applet
-%gnome_appletsdir/notification-area-applet
-%gnome_appletsdir/wnck-applet
-
+%gnome_appletsdir/libclock-applet.so
+%gnome_appletsdir/libfish-applet.so
+%gnome_appletsdir/libnotification-area-applet.so
+%gnome_appletsdir/libwnck-applet.so
 %dir %_datadir/gnome-panel
 %_datadir/gnome-panel/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*x*/apps/%{name}*.png
 %_iconsdir/hicolor/scalable/apps/%{name}*.svg
 %_man1dir/*
-%_datadir/dbus-1/services/org.gnome.panel.applet.ClockAppletFactory.service
-%_datadir/dbus-1/services/org.gnome.panel.applet.FishAppletFactory.service
-%_datadir/dbus-1/services/org.gnome.panel.applet.NotificationAreaAppletFactory.service
-%_datadir/dbus-1/services/org.gnome.panel.applet.WnckletFactory.service
 %config %_datadir/glib-2.0/schemas/*.xml
 %doc AUTHORS NEWS README
 
+%exclude %gnome_appletsdir/*.la
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -203,6 +193,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Oct 28 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 

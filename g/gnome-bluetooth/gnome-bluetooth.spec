@@ -1,4 +1,4 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -85,17 +85,13 @@ GObject introspection devel data for the GNOME Bluetooth library
 %configure \
 	--disable-schemas-compile \
 	--disable-icon-update \
+	--disable-desktop-update \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{subst_enable introspection}
 %make_build
 
 %install
 %makeinstall_std
-
-# temporarily fix for gnome-shell that requires libgnome-bluetooth-applet library
-#for f in %buildroot%_libdir/%name/lib%name-applet*; do
-#ln -s %name/`basename $f` %buildroot%_libdir/`basename $f`
-#done
 
 mv %buildroot%_bindir/bluetooth-sendto %buildroot%_bindir/%name-sendto
 mkdir -p %buildroot%_altdir
@@ -137,6 +133,9 @@ find %buildroot -name "*.la" -delete
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 

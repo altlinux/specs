@@ -1,4 +1,4 @@
-%define ver_major 3.14
+%define ver_major 3.15
 %define panel_api_ver 5.0
 %def_enable frequency_selector
 %def_disable mini_commander
@@ -7,7 +7,7 @@
 %def_with upower
 
 Name: gnome-applets
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -20,18 +20,17 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source1: 01-cpufreq.pkla
 Patch: %name-2.9.90-alt-modemlights.patch
 
-# From configure.in
-%define gtk_ver 3.2
+# From configure.ac
+%define gtk_ver 3.15.2
 %define glib_ver 2.27.5
-%define gnome_panel_ver 3.8.1
+%define gnome_panel_ver 3.15.2
 %define libgtop_ver 2.11.92
-%define libglade_ver 2.4.0
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
 %define libwnck_ver 2.9.3
 %define system_tools_backends_ver 1.1.3
 %define libnotify_ver 0.7.1
-%define icon_theme_ver 2.91.6
+%define icon_theme_ver 3.14
 %define libgweather_ver 3.5.1
 %define nm_ver 0.7
 
@@ -40,25 +39,25 @@ Requires: %name-drivemount = %version-%release
 Requires: %name-stickynotes = %version-%release
 Requires: %name-geyes = %version-%release
 Requires: %name-gweather = %version-%release
-%{?_enable_mini_commander:Requires: %name-mini-commander = %version-%release}
-%{?_enable_modemlights:Requires: %name-modemlights = %version-%release}
-%{?_enable_battstat:Requires: %name-battstat = %version-%release}
 Requires: %name-multiload = %version-%release
 Requires: %name-accessx-status = %version-%release
 Requires: %name-windowpicker = %version-%release
+%{?_enable_frequency_selector:Requires: %name-cpufreq = %version-%release}
+%{?_enable_mini_commander:Requires: %name-mini-commander = %version-%release}
+%{?_enable_modemlights:Requires: %name-modemlights = %version-%release}
+%{?_enable_battstat:Requires: %name-battstat = %version-%release}
 
-# From configure.in
+# From configure.ac
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgnome-panel-devel >= %gnome_panel_ver
 BuildPreReq: libgtop-devel >= %libgtop_ver
-BuildPreReq: libglade-devel >= %libglade_ver
 BuildPreReq: libgail3-devel >= %libgail_ver
 BuildPreReq: libxklavier-devel >= %libxklavier_ver
 BuildPreReq: libwnck3-devel >= %libwnck_ver
 BuildPreReq: libnotify-devel >= %libnotify_ver
-BuildPreReq: gnome-icon-theme >= %icon_theme_ver
+BuildPreReq: icon-theme-adwaita >= %icon_theme_ver
 BuildPreReq: intltool >= 0.35
 BuildPreReq: libX11-devel libXt-devel
 BuildPreReq: libgucharmap-devel >= 2.33.2
@@ -68,6 +67,8 @@ BuildRequires: python-devel python-modules-compiler gnome-settings-daemon-devel 
 BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: libpolkit1-devel gnome-common xorg-cf-files yelp-tools xsltproc
 %{?_with_upower:BuildRequires: libupower-devel}
+%{?_enable_frequency_selector:BuildRequires: libcpufreq-devel}
+
 # for invest applet
 BuildRequires: rpm-build-python3 python3-module-pygobject3-devel
 
@@ -299,6 +300,7 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %doc AUTHORS NEWS README
 %dir %_datadir/%name
 %dir %_datadir/%name/builder
+%dir %_datadir/%name/ui
 
 %files accessx-status -f accessx-status.lang
 %gnome_appletsdir/accessx-status*
@@ -311,6 +313,8 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %if_enabled battstat
 %files battstat -f battstat.lang
 %gnome_appletsdir/battstat-applet-2
+%_datadir/%name/builder/battstat_applet.ui
+%_datadir/%name/ui/battstat-applet-menu.xml
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.BattstatApplet.panel-applet
 %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.battstat.gschema.xml
 %_datadir/dbus-1/services/org.gnome.panel.applet.BattstatAppletFactory.service
@@ -323,7 +327,7 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %endif
 %gnome_appletsdir/cpufreq-applet
 %_datadir/%name/ui/cpufreq-applet-menu.xml
-%_datadir/gnome-applets/builder/cpufreq-preferences.ui
+%_datadir/%name/builder/cpufreq-preferences.ui
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.CPUFreqApplet.panel-applet
 %_datadir/polkit-1/actions/org.gnome.cpufreqselector.policy
 %_datadir/dbus-1/system-services/org.gnome.CPUFreqSelector.service
@@ -353,7 +357,7 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %files geyes -f geyes.lang
 %gnome_appletsdir/geyes*
 %_datadir/%name/ui/geyes-applet-menu.xml
-%_datadir/gnome-applets/geyes
+%_datadir/%name/geyes
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.GeyesApplet.panel-applet
 %_datadir/dbus-1/services/org.gnome.panel.applet.GeyesAppletFactory.service
 %_iconsdir/hicolor/*/apps/gnome-eyes-applet.png
@@ -372,7 +376,7 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %gnome_appletsdir/mini_commander*
 %gnome_appletsdir/mc-install*
 %_datadir/%name/ui/mini-commander-applet-menu.xml
-%_datadir/gnome-applets/builder/mini-commander.ui
+%_datadir/%name/builder/mini-commander.ui
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.MiniCommanderApplet.panel-applet
 %_datadir/dbus-1/services/org.gnome.panel.applet.MiniCommanderAppletFactory.service
 %_liconsdir/gnome-mini-commander.png
@@ -381,8 +385,8 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %if_enabled modemlights
 %files modemlights
 %gnome_appletsdir/modem_applet
-%_datadir/gnome-applets/builder/modemlights.ui
-%_datadir/gnome-applets/ui/modem-applet-menu.xml
+%_datadir/%name/builder/modemlights.ui
+%_datadir/%name/ui/modem-applet-menu.xml
 %_datadir/dbus-1/services/org.gnome.panel.applet.ModemAppletFactory.service
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.ModemApplet.panel-applet
 %_iconsdir/hicolor/*x*/apps/gnome-modem-monitor-applet.png
@@ -400,7 +404,7 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %files stickynotes -f stickynotes_applet.lang
 %gnome_appletsdir/stickynotes*
 %_datadir/%name/ui/stickynotes-applet-menu.xml
-%_datadir/gnome-applets/builder/stickynotes.ui
+%_datadir/%name/builder/stickynotes.ui
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.StickyNotesApplet.panel-applet
 %_datadir/dbus-1/services/org.gnome.panel.applet.StickyNotesAppletFactory.service
 %_datadir/pixmaps/stickynotes
@@ -411,7 +415,7 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %files trash -f trashapplet.lang
 %gnome_appletsdir/trashapplet
 %_datadir/%name/ui/trashapplet-menu.xml
-%_datadir/gnome-applets/builder/trashapplet-empty-progress.ui
+%_datadir/%name/builder/trashapplet-empty-progress.ui
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.TrashApplet.panel-applet
 %_datadir/dbus-1/services/org.gnome.panel.applet.TrashAppletFactory.service
 
@@ -419,11 +423,14 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %gnome_appletsdir/window-picker-applet
 %_datadir/dbus-1/services/org.gnome.panel.applet.WindowPickerFactory.service
 %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-picker-applet.gschema.xml
-%_datadir/gnome-applets/ui/window-picker-about-logo.png
+%_datadir/%name/ui/window-picker-about-logo.png
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.WindowPicker.panel-applet
-%_datadir/gnome-applets/ui/menu.xml
+%_datadir/%name/ui/menu.xml
 
 %changelog
+* Sun Feb 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.2-alt1
+- 3.15.2
+
 * Wed Oct 29 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 

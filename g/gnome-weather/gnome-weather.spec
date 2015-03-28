@@ -1,10 +1,10 @@
 %define _name org.gnome.Weather
 
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -23,12 +23,11 @@ Provides:  %name-data = %version-%release
 %define gtk_ver 3.11.4
 %define gi_ver 1.35.9
 %define gjs_ver 1.39.91
-%define gweather_ver 3.14.1
+%define gweather_ver 3.15.90
 
 Requires: libgweather-gir >= %gweather_ver
-# find ./ -name *.js |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+# find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(Gdk)
-Requires: typelib(GeocodeGlib)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GnomeDesktop)
@@ -50,6 +49,7 @@ access updated forecasts provided by various internet services.
 %prep
 %setup
 [ ! -d m4 ] && mkdir m4
+subst 's@\$(LN_S)@ln -s@' src/Makefile.am
 
 %build
 %autoreconf
@@ -77,6 +77,9 @@ access updated forecasts provided by various internet services.
 %doc NEWS
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Oct 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 

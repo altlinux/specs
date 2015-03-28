@@ -1,10 +1,10 @@
-%define ver_major 2014
+%define ver_major 2015
 %define api_ver 1.0
 %def_enable introspection
 %def_disable gtk_doc
 
 Name: libgsystem
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: GIO-based library with Unix/Linux specific API
@@ -103,6 +103,9 @@ This package contains development documentation for LibGSystem library.
 %endif
 
 %changelog
+* Wed Jan 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2015.1-alt1
+- 2015.1
+
 * Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 2014.2-alt1
 - 2014.2
 

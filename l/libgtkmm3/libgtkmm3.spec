@@ -1,6 +1,6 @@
 %define api_version 3.0
 %define rname gtkmm
-%define ver_major 3.14
+%define ver_major 3.16
 %def_disable atkmm
 %def_disable demos
 
@@ -17,8 +17,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%ver_major/%rname-%version.
 
 Provides: %rname = %version
 
-%define gtk_ver 3.13.8
-%define glib_ver 2.41.4
+%define gtk_ver 3.15.9
+%define glib_ver 2.43.4
 
 BuildRequires: gcc-c++ mm-common doxygen  xsltproc libgtk+3-devel >= %gtk_ver
 BuildRequires: libglibmm-devel >= %glib_ver libpangomm-devel >= 2.28.2
@@ -99,6 +99,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 

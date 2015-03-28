@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.42
+%define ver_major 1.44
 %def_enable doctool
 
 Name: gobject-introspection
@@ -20,7 +20,7 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
-BuildPreReq: libgio-devel >= 2.42.0
+BuildPreReq: libgio-devel >= 2.43.91
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel libgio-devel
 BuildRequires: python-devel python-modules-ctypes python-modules-compiler rpm-build-gir
 %{?_enable_doctool:BuildRequires: python-module-mako}
@@ -95,6 +95,9 @@ gobject-introspection.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.44.0-alt1
+- 1.44.0
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 1.42.0-alt1
 - 1.42.0
 

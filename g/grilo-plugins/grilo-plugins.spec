@@ -1,7 +1,7 @@
 %define ver_major 0.2
 
 Name: grilo-plugins
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -12,15 +12,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildRequires: gnome-common intltool >= 0.40.0
 BuildRequires: gtk-doc yelp-tools
-BuildRequires: glib2-devel >= 2.34 libgio-devel
-BuildRequires: libgrilo-devel >= 0.2.10
+BuildRequires: libgio-devel >= 2.36
+BuildRequires: libgrilo-devel >= 0.2.12
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp-devel >= 0.13
 BuildRequires: libgupnp-av-devel >= 0.5
 BuildRequires: libgssdp-devel
 BuildRequires: libsqlite3-devel
-BuildRequires: libgdata-devel >= 0.7.0
+BuildRequires: libgdata-devel >= 0.9.1
 BuildRequires: libquvi-devel >= 0.4.0
+BuildRequires: libgom-devel >= 0.3.0
 BuildRequires: libsoup-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libgmime-devel
@@ -82,6 +83,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Tue Feb 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.14-alt1
+- 0.2.14
+
 * Wed Aug 27 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.13-alt1
 - 0.2.13
 - libarchive support enabled

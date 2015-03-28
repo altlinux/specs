@@ -2,7 +2,7 @@
 
 %define _name tetravex
 %define __name gnome-%_name
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -24,6 +24,7 @@ Provides:  gnome-games-gnotravex = %version-%release
 %define gtk_ver 3.4.0
 
 BuildRequires: gnome-common intltool yelp-tools
+BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 
 %description
@@ -56,6 +57,9 @@ times are stored in a system-wide scoreboard.
 
 
 %changelog
+* Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Sun Sep 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 

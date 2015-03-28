@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 3.0
 %define _name org.gnome.Nautilus
 
@@ -11,7 +11,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -32,8 +32,8 @@ Patch35: %name-2.22.1-umountfstab.patch
 %define icon_theme_ver 2.10.0
 %define desktop_file_utils_ver 0.8
 
-# From configure.in
-%define glib_ver 2.35.3
+# From configure.ac
+%define glib_ver 2.43.4
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
 %define gtk_ver 3.13.2
@@ -42,7 +42,7 @@ Patch35: %name-2.22.1-umountfstab.patch
 %define exempi_ver 2.1.0
 %define gir_ver 0.10.2
 %define notify_ver 0.7.0
-%define tracker_ver 0.17
+%define tracker_ver 0.18
 
 PreReq: lib%name = %version-%release
 PreReq: gnome-icon-theme >= %icon_theme_ver
@@ -57,7 +57,7 @@ BuildPreReq: rpm-build-gnome rpm-build-licenses
 # for %%check
 BuildPreReq: xvfb-run dbus-tools-gui /proc
 
-# From configure.in
+# From configure.ac
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
@@ -131,13 +131,10 @@ GObject introspection devel data for the nautilus-extension library
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup -q
+%setup
 %patch17 -p0 -b .symlink
 
 rm -f data/*.desktop
-
-# make check using xvfb-run
-subst 's@\.\/@xvfb-run -a ./@' eel/check-eel src/check-nautilus
 
 %build
 %autoreconf
@@ -150,17 +147,8 @@ subst 's@\.\/@xvfb-run -a ./@' eel/check-eel src/check-nautilus
 
 %make_build
 
-%if 0
-%check
-for d in eel src; do
-pushd $d
-make check
-popd
-done
-%endif
-
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 mkdir -p %buildroot%_libdir/%name-%api_ver/components
 bzip2 -9fk NEWS
 
@@ -172,16 +160,13 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %files -f %name.lang
 %_bindir/*
 %_libexecdir/nautilus-convert-metadata
-#%_libexecdir/nautilus-shell-search-provider
 %dir %_libdir/%name-%api_ver
 %dir %_libdir/%name-%api_ver/components
-%_datadir/mime/packages/nautilus.xml
 %_datadir/applications/*.desktop
 %_sysconfdir/xdg/autostart/nautilus-autostart.desktop
 %_datadir/dbus-1/services/%_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
 %_datadir/gnome-shell/search-providers/nautilus-search-provider.ini
-# gsettings schemas
 %config %_datadir/glib-2.0/schemas/org.gnome.nautilus.gschema.xml
 %_datadir/GConf/gsettings/nautilus.convert
 %_datadir/appdata/%_name.appdata.xml
@@ -215,6 +200,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Nov 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

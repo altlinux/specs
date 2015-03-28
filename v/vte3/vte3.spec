@@ -1,9 +1,9 @@
 %define _name vte
-%define ver_major 0.38
+%define ver_major 0.40
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 %def_enable pty_helper
@@ -20,20 +20,22 @@ Requires: gnome-pty-helper
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-%define gtk3_ver 3.1.9
-%define glib_ver 2.31.13
+%define gtk3_ver 3.8.0
+%define glib_ver 2.40.0
 %define pango_ver 1.22
 %define gir_ver 0.10.2
+%define tls_ver 3.2.0
 
 BuildPreReq: rpm-build-python
 
 BuildRequires: gperf
-BuildRequires: libSM-devel libncurses-devel libcairo-devel
+BuildRequires: libncurses-devel libcairo-devel
 BuildRequires: intltool >= 0.35.0
 BuildRequires: gtk-doc >= 1.1.0
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk3_ver
 BuildRequires: libpango-devel >= %pango_ver
+BuildRequires: libgnutls-devel >= %tls_ver
 BuildRequires: vala-tools libvala-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 
@@ -198,6 +200,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt1
+- 0.40.0
+
 * Tue Dec 16 2014 Yuri N. Sedunov <aris@altlinux.org> 0.38.3-alt1
 - 0.38.3
 

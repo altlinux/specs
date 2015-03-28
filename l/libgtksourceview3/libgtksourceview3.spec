@@ -1,13 +1,13 @@
 %define _name gtksourceview
 %define api_ver 3.0
-%define ver_major 3.14
+%define ver_major 3.16
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 %def_enable vala
 
 Name: lib%{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -19,7 +19,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
 # From configure.ac
 %define intltool_ver 0.40
-%define gtk_ver 3.13.7
+%define gtk_ver 3.15.3
 %define libxml2_ver 2.6.0
 
 BuildPreReq: rpm-build-gnome
@@ -131,6 +131,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Thu Jan 08 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt1
 - 3.14.3
 

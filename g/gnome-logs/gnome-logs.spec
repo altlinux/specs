@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.14
+%define ver_major 3.16
 %define _name org.gnome.Logs
 
 Name: gnome-logs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME logfile viewer
@@ -18,8 +18,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Requires: gsettings-desktop-schemas
 
-%define glib_ver 2.40.0
-%define gtk_ver 3.13.4
+%define glib_ver 2.43.90
+%define gtk_ver 3.15.7
 
 BuildPreReq: rpm-build-gnome gnome-common libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: gsettings-desktop-schemas-devel libsystemd-journal-devel
@@ -51,9 +51,15 @@ GNOME Logs is a log viewer for the systemd journal.
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_man1dir/%name.1.*
 %_datadir/appdata/%_name.appdata.xml
+%_datadir/glib-2.0/schemas/%_name.enums.xml
+%_datadir/glib-2.0/schemas/%_name.gschema.xml
+%_iconsdir/HighContrast/*x*/*/gnome-logs.png
 %doc NEWS README
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

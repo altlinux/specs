@@ -1,5 +1,5 @@
-%define ver_major 3.12
-%define ver_base 3.12
+%define ver_major 3.16
+%define ver_base 3.16
 %define gst_api_ver 1.0
 
 %def_disable static
@@ -9,13 +9,14 @@
 %def_with krb5
 %def_enable map
 %def_disable image_inline
+%def_enable autoar
 %def_enable tnef
 
 # %define plugins experimental
 %define plugins all
 
 Name: evolution
-Version: %ver_major.11
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -25,6 +26,7 @@ Url: https://wiki.gnome.org/Apps/Evolution
 
 #Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Patch: %name-3.13.90-alt-link.patch
 
 ### Patches ###
 # hack to properly link against ldap libs
@@ -32,19 +34,19 @@ Patch10: evolution-3.0.3-ldap_libs.patch
 # RH bug #176400
 Patch27: evolution-2.9.1-im-context-reset.patch
 
-%define evo_plugin_dir %_libdir/evolution/%ver_base/plugins
-%define evo_module_dir %_libdir/evolution/%ver_base/modules
+%define evo_plugin_dir %_libdir/evolution/plugins
+%define evo_module_dir %_libdir/evolution/modules
 
 Provides: camel
 
-# from configure.in
-%define glib_ver 2.36.0
-%define gtk_ver 3.4
+# from configure.ac
+%define glib_ver 2.40.0
+%define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.12.11
+%define eds_ver 3.16.0
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
-%define gtkhtml_ver 4.8.5
+%define gtkhtml_ver 4.8.4
 %define libsoup_ver 2.42.0
 %define libnotify_ver 0.7.0
 %define gweather_ver 3.5.0
@@ -78,10 +80,11 @@ BuildPreReq: libgdata-devel >= %gdata_ver
 BuildPreReq: libpst-devel >= %pst_ver
 BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
-BuildPreReq: gcr-libs-devel >= %gcr_ver
-%{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeocode-glib-devel >= %geocode_ver}
+BuildPreReq: gcr-libs-devel >= %gcr_ver libcryptui-devel
+%{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_image_inline:BuildRequires: libgtkimageview-devel}
 %{?_enable_tnef:BuildRequires: libytnef-devel}
+%{?_enable_autoar:BuildRequires: libgnome-autoar-devel}
 
 BuildRequires: docbook-utils intltool yelp-tools itstool gtk-doc
 BuildRequires: gcc-c++ flex libSM-devel libcom_err-devel gstreamer%gst_api_ver-devel
@@ -173,6 +176,7 @@ This package contains documentation needed to develop Evolution plugins.
 
 %prep
 %setup
+%patch
 %patch10 -b .ldaphack
 %patch27 -p1 -b .im-context-reset
 
@@ -222,7 +226,8 @@ export KILL_PROCESS_CMD=%_bindir/killall
     --enable-smime \
     --disable-schemas-compile \
     %{?_enable_map:--enable-contact-maps} \
-    %{?_disable_image_inline:--disable-image-inline}
+    %{?_disable_image_inline:--disable-image-inline} \
+    %{subst_enable autoar}
 
 %make_build
 
@@ -242,11 +247,11 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %files
 %_bindir/*
 %_libdir/%name/
-%_libexecdir/%name/%ver_base/csv2vcard
-%_libexecdir/%name/%ver_base/evolution-addressbook-export
-%_libexecdir/%name/%ver_base/evolution-alarm-notify
-%_libexecdir/%name/%ver_base/evolution-backup
-%_libexecdir/%name/%ver_base/killev
+%_libexecdir/%name/csv2vcard
+%_libexecdir/%name/evolution-addressbook-export
+%_libexecdir/%name/evolution-alarm-notify
+%_libexecdir/%name/evolution-backup
+%_libexecdir/%name/killev
 %doc AUTHORS ChangeLog NEWS README
 
 %exclude %evo_module_dir/module-bogofilter.so
@@ -294,6 +299,9 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/appdata/%name-spamassassin.metainfo.xml
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Feb 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.11-alt1
 - 3.12.11
 

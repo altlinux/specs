@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 2.0
 
 %def_disable debug
@@ -11,7 +11,7 @@
 %def_with bluetooth
 
 Name: gnome-control-center
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Control Center
@@ -29,16 +29,15 @@ Patch: %name-3.8.3-alt-lfs.patch
 Patch1: %name-3.10.1-alt-background_build.patch
 
 # From configure.ac
-%define gtk_ver 3.13.0
-%define glib_ver 2.35.1
+%define gtk_ver 3.15.0
+%define glib_ver 2.40.0
 %define desktop_ver 3.11.3
 %define fontconfig_ver 1.0.0
-%define gsds_ver 3.14.0
-%define nm_ver 0.9.1.90
-%define gnome_menus_ver 3.7.90
+%define gsds_ver 3.15.90
+%define nm_ver 0.9.8
 %define goa_ver 3.7.91
 %define acc_ver 0.6.30
-%define sett_daemon_ver 3.14.0
+%define sett_daemon_ver 3.15.91
 %define cheese_ver 3.9.5
 %define bt_ver 3.12.0
 %define systemd_ver 40
@@ -48,6 +47,7 @@ Patch1: %name-3.10.1-alt-background_build.patch
 %define pwq_ver 1.2.2
 %define upower_ver 0.99.0
 %define grilo_ver 0.2.9
+%define polkit_ver 0.103
 
 Requires: %name-data = %version-%release
 
@@ -72,9 +72,8 @@ BuildPreReq: gnome-settings-daemon-devel >= %sett_daemon_ver
 BuildPreReq: libcolord-devel >= %colord_ver
 BuildPreReq: libcolord-gtk-devel
 BuildPreReq: libsoup-devel
-BuildPreReq: libgnome-menus-devel >= %gnome_menus_ver
 BuildPreReq: libibus-devel >= %ibus_ver libxkbfile-devel
-BuildRequires: libupower-devel >= %upower_ver libpolkit1-devel
+BuildRequires: libupower-devel >= %upower_ver libpolkit1-devel >= %polkit_ver
 BuildRequires: libgio-devel librsvg-devel libxml2-devel libcanberra-gtk3-devel
 BuildRequires: libX11-devel libXext-devel libSM-devel libXScrnSaver-devel libXt-devel
 BuildRequires: libXft-devel libXi-devel libXrandr-devel libXrender-devel libXcursor-devel libXcomposite-devel
@@ -93,6 +92,7 @@ BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel
 BuildRequires: libgrilo-devel >= %grilo_ver
 %{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
 %{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bt_ver}
+BuildRequires: libgudev-devel
 
 %description
 GNOME (the GNU Network Object Model Environment) is an attractive and
@@ -178,6 +178,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Thu Mar 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt1
 - 3.14.3
 

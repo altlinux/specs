@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.14
+%define ver_major 3.16
 %def_enable systemd
 %def_enable wnck
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple process monitor
@@ -17,8 +17,8 @@ Url: https://wiki.gnome.org/Apps/SystemMonitor
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.37.3
-%define gtk_ver 3.9.5
+%define glib_ver 2.38
+%define gtk_ver 3.12
 %define glibmm_ver 2.28.0
 %define libgtkmm3_ver 3.0.0
 %define libwnck_ver 3.0.0
@@ -76,6 +76,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 

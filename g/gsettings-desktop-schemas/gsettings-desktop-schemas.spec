@@ -1,17 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.14
+%define ver_major 3.16
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A collection of GSettings schemas
 License: %lgpl21plus
 Group: Graphical desktop/GNOME
 URL: ftp://ftp.gnome.org/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
@@ -64,7 +63,7 @@ Requires: %name-devel = %version-%release
 GObject introspection devel data for %name.
 
 %prep
-%setup -q
+%setup
 [ ! -d m4 ] && mkdir m4
 
 %build
@@ -75,7 +74,7 @@ GObject introspection devel data for %name.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
@@ -97,6 +96,7 @@ GObject introspection devel data for %name.
 %_datadir/glib-2.0/schemas/org.gnome.system.locale.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.lockdown.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.media-handling.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.desktop.peripherals.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.screensaver.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.session.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.sound.gschema.xml
@@ -127,6 +127,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 

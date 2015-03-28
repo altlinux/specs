@@ -1,21 +1,21 @@
-%define _name libchamplain
+%define _name champlain
 %define ver_major 0.12
 %define api_ver 0.12
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
-%def_enable memphis
+%def_disable memphis
 
-Name: %_name
-Version: %ver_major.9
+Name: lib%_name
+Version: %ver_major.10
 Release: alt1
 
 Summary: Map view library for Clutter
 License: LGPLv2+
 Group: System/Libraries
-Url: https://wiki.gnome.org/Projects/libchamplain
+Url: https://wiki.gnome.org/Projects/%name
 
-Source: http://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%_name-%version.tar.xz
+Source: http://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%name-%version.tar.xz
 #Source: %_name-%version.tar
 
 %define glib_ver 2.16
@@ -71,6 +71,8 @@ Summary: Development files for %name-gtk
 Group: Development/C
 Requires: %name-gtk3 = %version-%release
 Requires: %name-devel = %version-%release
+Obsoletes: %name-vala
+Provides: %name-vala = %version-%release
 
 %description gtk3-devel
 This package contains development files for %name-gtk.
@@ -121,24 +123,15 @@ Requires: %name-gir-devel = %version-%release
 %description gtk3-gir-devel
 GObject introspection devel data for the Libchamplain library
 
-%package vala
-Summary: Vala bindings for the Libchamplain library
-Group: System/Libraries
-BuildArch: noarch
-Requires: %name = %version-%release
-
-%description vala
-This package provides Vala language bindings for the Libchamplain library
-
-
 %prep
-%setup -n %_name-%version
+%setup -n %name-%version
 
 %build
 gtkdocize --copy
 %autoreconf
 %configure --disable-static \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	%{subst_enable vala} \
 	%{?_disable_vala:--disable-vala-demos} \
 	--enable-introspection=auto \
 	%{subst_enable memphis}
@@ -149,37 +142,39 @@ gtkdocize --copy
 %makeinstall_std
 
 %files
-%_libdir/%_name-%api_ver.so.*
+%_libdir/%name-%api_ver.so.*
 %doc AUTHORS ChangeLog NEWS
 
 %files devel
-%_libdir/%_name-%api_ver.so
-%dir %_includedir/%_name-%api_ver
-%_includedir/%_name-%api_ver/champlain
-%_libdir/pkgconfig/champlain-%api_ver.pc
+%_libdir/%name-%api_ver.so
+%dir %_includedir/%name-%api_ver
+%_includedir/%name-%api_ver/champlain
+%_pkgconfigdir/%_name-%api_ver.pc
+%_vapidir/%_name-%api_ver.vapi
 %doc demos/animated-marker.c
 %doc demos/launcher.c
 %doc demos/polygons.c
 
 #%if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%_name-%ver_major/
+%_datadir/gtk-doc/html/%name-%ver_major/
 #%endif
 
 %files gtk3
-%_libdir/%_name-gtk-%api_ver.so.*
+%_libdir/%name-gtk-%api_ver.so.*
 
 %files gtk3-devel
-%_libdir/%_name-gtk-%api_ver.so
-%dir %_includedir/%_name-gtk-%api_ver
-%_includedir/%_name-gtk-%api_ver/champlain-gtk
-%_libdir/pkgconfig/champlain-gtk-%api_ver.pc
+%_libdir/%name-gtk-%api_ver.so
+%dir %_includedir/%name-gtk-%api_ver
+%_includedir/%name-gtk-%api_ver/%_name-gtk
+%_pkgconfigdir/%_name-gtk-%api_ver.pc
+%_vapidir/%_name-gtk-%api_ver.vapi
 %doc demos/launcher-gtk.c
 %doc demos/markers.c
 
 #%if_enabled gtk_doc
 %files gtk3-devel-doc
-%_datadir/gtk-doc/html/%_name-gtk-%ver_major/
+%_datadir/gtk-doc/html/%name-gtk-%ver_major/
 #%endif
 
 %if_enabled introspection
@@ -196,12 +191,14 @@ gtkdocize --copy
 %_girdir/GtkChamplain-%api_ver.gir
 %endif
 
-%if_enabled vala
-%files vala
-%_datadir/vala/vapi/*
-%endif
-
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.12.10-alt1
+- 0.12.10
+
+* Wed Feb 18 2015 Yuri N. Sedunov <aris@altlinux.org> 0.12.9-alt2
+- disabled unmaintained/incomplete memphis support
+- removed separate -vala subpackage
+
 * Thu Sep 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.12.9-alt1
 - 0.12.9
 

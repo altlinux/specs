@@ -1,8 +1,8 @@
-%define ver_major 3.14
+%define ver_major 3.16
 
 Name: gnome-power-manager
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GNOME Power management tools
 License: %gpl2plus
@@ -71,6 +71,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt2
 - rebuilt against libupower-glib.so.3
 

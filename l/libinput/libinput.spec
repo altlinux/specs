@@ -1,7 +1,8 @@
+%define _libexecdir %_prefix/libexec
 %def_disable gui
 
 Name: libinput
-Version: 0.7.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Input devices library
@@ -54,7 +55,8 @@ This package contains GUI event viewer from %name.
 %build
 %autoreconf
 %configure --disable-static \
-           %{?_enable_gui:--enable-event-gui}
+           %{?_enable_gui:--enable-event-gui} \
+           --with-udev-dir=/lib/udev
 %make_build
 
 %install
@@ -65,7 +67,9 @@ This package contains GUI event viewer from %name.
 
 %files
 %_libdir/%name.so.*
-%doc COPYING README
+/lib/udev/%name-device-group
+%_udevrulesdir/80-%name-device-groups.rules
+%doc COPYING README*
 
 %files devel
 %_includedir/%name.h
@@ -79,6 +83,9 @@ This package contains GUI event viewer from %name.
 
 
 %changelog
+* Fri Mar 13 2015 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Mon Dec 08 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 

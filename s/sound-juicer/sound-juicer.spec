@@ -1,23 +1,23 @@
-%define ver_major 3.14
+%define _name org.gnome.sound-juicer
+%define ver_major 3.16
 %define gst_api_ver 1.0
 
 Name: sound-juicer
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Clean and lean CD ripper
 Group: Sound
 License: GPLv2+
 Url: http://live.gnome.org/SoundJuicer
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver
 Requires: iso-codes
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildPreReq: gnome-common
-BuildRequires: intltool yelp-tools desktop-file-utils gcc-c++
+BuildPreReq: gcc-c++ gnome-common
+BuildRequires: intltool yelp-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: libgio-devel >= 2.32
 BuildRequires: libbrasero-devel >= 3.0.0
 BuildRequires: libgtk+3-devel >= 2.90.0
@@ -25,7 +25,7 @@ BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libcanberra-devel libcanberra-gtk3-devel
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gstreamer%gst_api_ver-utils
-BuildRequires: libmusicbrainz5-devel  >= 5.0.1 libdiscid-devel iso-codes-devel
+BuildRequires: libmusicbrainz5-devel  >= 5.1.0 libdiscid-devel iso-codes-devel
 
 %description
 GStreamer-based CD ripping tool. Saves audio CDs to audio formats,
@@ -36,8 +36,8 @@ supported by GStreamer.
 subst 's/0\.10/1.0/' configure
 
 %build
+#export LIBS="$LIBS `pkg-config --libs libmusicbrainz5 libdiscid`"
 %configure \
-	--disable-static \
 	--disable-schemas-compile
 %make_build
 
@@ -52,16 +52,20 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/sound-juicer.desktop
 
 %files -f %name.lang
-%_bindir/*
-%_datadir/%name
-%_datadir/applications/*
+%_bindir/%name
+%_datadir/%name/
+%_datadir/applications/%name.desktop
 %_datadir/icons/*/*/*/*
 %_datadir/GConf/gsettings/%name.convert
-%_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
-%_man1dir/*
+%_datadir/glib-2.0/schemas/%_name.gschema.xml
+%_man1dir/%name.1.*
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS README NEWS
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Dec 01 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
 - rebuilt against libmusicbrainz5.so.1
 

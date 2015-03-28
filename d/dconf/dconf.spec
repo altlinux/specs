@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.22
+%define ver_major 0.24
 %def_disable introspection
 %def_enable gtk_doc
 
@@ -10,9 +10,8 @@ Release: alt1
 
 Summary: A simple configuration system
 Group: System/Servers
-License: LGPLv2+
-
-Url: https://live.gnome.org/dconf
+License: LGPLv2.1+
+Url: https://wiki.gnome.org/Projects/dconf
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -25,7 +24,7 @@ Provides: %_rpmlibdir/update-dconf-database.filetrigger
 
 Requires: lib%name = %version-%release dbus
 
-BuildRequires: libgio-devel >= 2.35.2 libgtk+3-devel >= 3.4 libxml2-devel vala-tools >= 0.18.0
+BuildRequires: libgio-devel >= 2.40.0 vala-tools >= 0.18.0
 BuildRequires: libdbus-devel gtk-doc intltool xsltproc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 1.33.3}
 
@@ -70,18 +69,6 @@ provide a backend to GSettings API in Glib for storing and retrieving
 application settings.
 
 This package contains development documentation for dconf library.
-
-%package -n dconf-editor
-Summary: dconf confuguration editor
-Group: Graphical desktop/GNOME
-Requires: lib%name = %version-%release
-
-%description -n dconf-editor
-dconf is a low-level configuration system. Its main purpose is to
-provide a backend to GSettings API in Glib for storing and retrieving
-application settings.
-
-This package provides dconf configuration editor
 
 %package -n lib%name-gir
 Summary: GObject introspection data for the dconf library
@@ -146,7 +133,7 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_man1dir/%name-service.1.*
 %_man1dir/%name.1.*
 %_man7dir/%name.7.*
-%doc NEWS
+%doc README NEWS
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -158,16 +145,6 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
-
-%files -n dconf-editor
-%_bindir/dconf-editor
-%_datadir/applications/ca.desrt.dconf-editor.desktop
-%_datadir/dbus-1/services/ca.desrt.dconf-editor.service
-%_iconsdir/hicolor/*/apps/*.*
-%_iconsdir/HighContrast/*/apps/dconf-editor.png
-%_man1dir/dconf-editor.1.*
-%_datadir/appdata/ca.desrt.dconf-editor.appdata.xml
-%config %_datadir/glib-2.0/schemas/ca.desrt.dconf-editor.gschema.xml
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -184,6 +161,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
+- 0.24.0
+
 * Fri Sep 19 2014 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
 - 0.22.0
 
