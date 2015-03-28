@@ -2,7 +2,7 @@
 %define Name GParted
 
 Name: gparted
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -12,8 +12,8 @@ License: %gpl2plus
 Group: System/Configuration/Hardware
 URL: http://%name.sourceforge.net/
 
-Source: %name-%version.tar
-#http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2?download
+#Source: %name-%version.tar
+Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: %name-pam
 Source2: %name-security
 
@@ -58,7 +58,7 @@ general approach is to keep the GUI as simple as possible.
 
 %build
 #%%define _optlevel s
-NOCONFIGURE=1 ./autogen.sh
+#NOCONFIGURE=1 ./autogen.sh
 %configure %{subst_with pic} --bindir=%_sbindir \
 	--enable-libparted-dmraid \
 	--enable-online-resize
@@ -88,6 +88,9 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Fri Mar 27 2015 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
+- 0.22.0
+
 * Mon Jan 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.21.0-alt1
 - 0.21.0
 
