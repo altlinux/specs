@@ -1,6 +1,6 @@
 Name: libical
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -8,6 +8,7 @@ License: LGPL2.1+/MPL
 Url: https://github.com/%name
 
 Source: %url/%name/releases/download/v%version/%name-%version.tar.gz
+Patch: %name-1.0.1-alt-libdir.patch
 
 BuildRequires: cmake gcc-c++ ctest
 
@@ -28,6 +29,7 @@ use libical.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake
@@ -53,6 +55,10 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %exclude %_libdir/*.a
 
 %changelog
+* Fri Mar 27 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt2
+- CMakeLists.txt: fixed hardcoded libdir producing broken
+  pkgconfig file under x86_64
+
 * Fri Dec 26 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
