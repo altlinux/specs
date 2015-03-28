@@ -1,7 +1,5 @@
-%define oname whatsapp-purple
-
 Name: purple-plugin-whatsapp
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: WhatsApp protocol implementation for libpurple (Pidgin)
@@ -10,11 +8,11 @@ Group: Networking/Instant messaging
 URL: https://github.com/davidgfnet/whatsapp-purple
 Packager: Mikhail Kolchin <mvk@altlinux.org>
 
-Source: %oname-%version.tar.gz
+Source: whatsapp-purple-%version.tar.gz
 
-# Automatically added by buildreq on Mon Jun 30 2014
-# optimized out: glib2-devel libstdc++-devel pkg-config
-BuildRequires: gcc-c++ libpurple-devel
+# Automatically added by buildreq on Wed Mar 25 2015
+# optimized out: glib2-devel libcloog-isl4 libstdc++-devel pkg-config
+BuildRequires: gcc-c++ libfreeimage-devel libpurple-devel
 
 %description
 This is a WhatsApp plugin for Pidgin and libpurple messengers. It connects
@@ -22,7 +20,7 @@ to the WhatsApp servers using the password (which needs to be retrieved
 separately). Only one client can connect at a time (including your phone).
 
 %prep
-%setup -n %oname-%version
+%setup -n whatsapp-purple-%version
 
 %build
 %make_build
@@ -36,6 +34,9 @@ separately). Only one client can connect at a time (including your phone).
 %_pixmapsdir/pidgin/protocols/*/whatsapp.png
 
 %changelog
+* Sat Mar 28 2015 Mikhail Kolchin <mvk@altlinux.org> 0.8-alt1
+- new version
+
 * Thu Jan 29 2015 Mikhail Kolchin <mvk@altlinux.org> 0.7-alt1
 - new version
 
