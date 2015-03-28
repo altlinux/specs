@@ -1,10 +1,10 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define api_ver 1.0
 %define _name GPaste
 %define _libexecdir %_prefix/libexec
 
 Name: gpaste
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -22,9 +22,9 @@ BuildRequires: gnome-control-center-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel vala-tools
 
 %description
-This package provides gpasted is a clipboard management daemon with DBus
+This package provides gpaste-daemon is a clipboard management daemon with DBus
 interface, simple CLI interface -- gpaste and gpaste-settings is a tool
-to edit gpasted settings.
+to edit gpaste-daemon settings.
 
 %package -n lib%name
 Summary: GPaste library
@@ -83,8 +83,6 @@ in notification area.
 
 %prep
 %setup
-subst 's/APPDATA_XML/APPSTREAM_XML/
-	s/appdata_/appstream_/g' configure.ac data/appdata.mk
 
 %build
 %autoreconf
@@ -104,8 +102,10 @@ subst 's/APPDATA_XML/APPSTREAM_XML/
 %_bindir/%name
 %_libexecdir/%name/
 %exclude %_libexecdir/%name/%name-applet
+%_desktopdir/org.gnome.GPaste.Settings.desktop
+%_desktopdir/org.gnome.GPaste.Ui.desktop
 %_datadir/appdata/org.gnome.GPaste.Settings.appdata.xml
-%_datadir/applications/org.gnome.GPaste.Settings.desktop
+%_datadir/appdata/org.gnome.GPaste.Ui.appdata.xml
 %_datadir/dbus-1/services/*.service
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/gnome-control-center/keybindings/*.xml
@@ -131,7 +131,6 @@ subst 's/APPDATA_XML/APPSTREAM_XML/
 %_libexecdir/%name/%name-applet
 %_datadir/appdata/org.gnome.GPaste.Applet.appdata.xml
 %_datadir/applications/org.gnome.GPaste.Applet.desktop
-%_man1dir/%name-applet.1.*
 %_sysconfdir/xdg/autostart/org.gnome.GPaste.Applet.desktop
 
 %files -n gnome-shell-extension-%name
@@ -139,6 +138,9 @@ subst 's/APPDATA_XML/APPSTREAM_XML/
 
 
 %changelog
+* Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16-alt1
+- 3.16
+
 * Fri Jan 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 
