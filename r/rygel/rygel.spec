@@ -1,6 +1,6 @@
 %set_automake_version 1.11
 
-%define ver_major 0.24
+%define ver_major 0.26
 %def_enable external_plugin
 %def_enable mpris_plugin
 %def_enable mediathek_plugin
@@ -19,7 +19,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 Summary: A UPnP v2 Media Server
 
@@ -41,13 +41,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gst_tag_ver 1.0
 %define gst_app_ver 1.0
 %define gst_audio_ver 1.0
-%define gio_ver 2.26
+%define gio_ver 2.34
 %define gee_ver 0.8.0
 %define uuid_ver 1.41.3
 %define libsoup_ver 2.44.0
 %define gtk_ver 3.0
 %define libsqlite3_ver 3.5
-%define mediaart_ver 0.5.0
+%define mediaart_ver 1.9
+%define tracker_ver 1.4.0
 
 BuildRequires: intltool gnome-common gtk-doc
 BuildRequires: gobject-introspection-devel >= 1.33.4
@@ -62,15 +63,16 @@ BuildRequires: pkgconfig(libsoup-2.4) >= %libsoup_ver
 BuildRequires: pkgconfig(libxml-2.0) >= %libxml_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gstreamer_ver
 BuildRequires: pkgconfig(gstreamer-base-1.0) >= %gstreamer_ver
-BuildRequires: pkgconfig(libmediaart-1.0) >= %mediaart_ver
+BuildRequires: pkgconfig(libmediaart-2.0) >= %mediaart_ver
 %if %media_engine == gstreamer
 BuildRequires: pkgconfig(gstreamer-pbutils-1.0) >= %gst_pbu_ver
 BuildRequires: pkgconfig(gstreamer-app-1.0) >= %gst_app_ver
 BuildRequires: pkgconfig(gstreamer-audio-1.0) >= %gst_audio_ver
 BuildRequires: pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver
 BuildRequires: pkgconfig(gio-2.0) >= %gio_ver
+BuildRequires: gir(Gst) = 1.0
 %endif
-BuildRequires: tracker-devel
+BuildRequires: tracker-devel >= %tracker_ver
 %{?_enable_media_export_plugin:BuildRequires: pkgconfig(sqlite3) >= %libsqlite3_ver pkgconfig(gstreamer-tag-1.0) >= %gst_tag_ver pkgconfig(gstreamer-app-1.0) >= %gst_app_ver pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver pkgconfig(gupnp-dlna-gst-2.0) >= %gupnp_dlna_ver }
 BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver
 BuildRequires: vapi(gupnp-1.0) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix)
@@ -176,6 +178,9 @@ echo %version > .tarball-version
 %_girdir/*.gir
 
 %changelog
+* Sun Mar 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0.26.0-alt1
+- 0.26.0
+
 * Sat Jan 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.24.3-alt1
 - 0.24.3
 
