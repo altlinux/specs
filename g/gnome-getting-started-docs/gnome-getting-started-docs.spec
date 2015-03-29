@@ -1,7 +1,7 @@
-%define ver_major 3.14
+%define ver_major 3.16
 
 Name: gnome-getting-started-docs
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Help for a new GNOME users
@@ -39,6 +39,9 @@ yelp. It is normally used together with gnome-initial-setup.
 %doc AUTHORS README NEWS
 
 %changelog
+* Sun Mar 29 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 
