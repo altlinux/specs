@@ -1,6 +1,6 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.25
+Version: 0.1.26
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -35,6 +35,10 @@ install -m644 share/* %buildroot%_datadir/%name
 %_bindir/*
 %_datadir/%name
 %changelog
+* Thu Mar 26 2015 Denis Smirnov <mithraen@altlinux.ru> 0.1.26-alt1
+- use git push --follow-tags
+- remove update-asterisk-1.6.2
+
 * Mon Feb 02 2015 Denis Smirnov <mithraen@altlinux.ru> 0.1.25-alt1
 - disable build asterisk*-devel-doc
 
