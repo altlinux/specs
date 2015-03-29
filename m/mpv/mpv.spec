@@ -1,5 +1,5 @@
 Name: mpv
-Version: 0.8.0
+Version: 0.8.3
 Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
@@ -16,7 +16,7 @@ Packager: %packager
 # Automatically added by buildreq on Fri Feb 14 2014
 BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
 
-BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel liblua5-devel
+BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel liblua5-devel libdvdnav-devel libbluray-devel libavfilter-devel
 
 %description
 mpv is a movie player based on MPlayer and mplayer2.
@@ -27,6 +27,15 @@ audio and video codecs, and subtitle types.
 mpv - это медиапроигрыватель, основанный на проектах
 MPlayer и mplayer2. Он поддерживает большое количество
 видеоформатов, аудио и видео кодеков и форматов субтитров.
+
+%package -n zsh-completion-%name
+Summary: Zsh completion for mpv
+Group: Shells
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description -n zsh-completion-%name
+Zsh completion for %name.
 
 %prep
 %setup -n %name-%version
@@ -45,6 +54,10 @@ chmod ugo+rx waf
 --enable-alsa \
 --enable-gl-x11 \
 --enable-lua \
+--enable-zsh-comp \
+--enable-libbluray \
+--enable-dvdnav \
+--enable-libavfilter \
 
 %build
 
@@ -64,7 +77,15 @@ chmod ugo+rx waf
 %_desktopdir/%name.desktop
 %doc LICENSE Copyright README.md RELEASE_NOTES etc/input.conf etc/mplayer-input.conf etc/example.conf etc/restore-old-bindings.conf
 
+%files -n zsh-completion-%name
+%_datadir/zsh/site-functions/_mpv
+
 %changelog
+* Sun Mar 29 2015 Terechkov Evgenii <evg@altlinux.org> 0.8.3-alt1
+- 0.8.3
+- Enable dvdnav/bluray/avfilter (ALT #30873)
+- Enable Zsh completion subpackage (ALT #30874)
+
 * Sat Feb 21 2015 Terechkov Evgenii <evg@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
