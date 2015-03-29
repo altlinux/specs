@@ -1,4 +1,4 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-disk-utility
@@ -11,9 +11,10 @@ Group: System/Libraries
 URL: http://git.gnome.org/%name
 
 Requires: udisks2 cryptsetup
+Requires: gnome-icon-theme-symbolic
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-3.8.0-alt-lfs.patch
+Patch: %name-3.16.0-alt-lfs.patch
 
 %define udisks_ver 2.1.1
 %define glib_ver 2.31.0
@@ -76,6 +77,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Sun Mar 29 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Thu Nov 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
