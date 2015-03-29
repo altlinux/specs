@@ -1,5 +1,5 @@
 Name: privoxy
-Version: 3.0.21
+Version: 3.0.23
 Release: alt1
 
 Summary: Privoxy - privacy enhancing proxy
@@ -142,6 +142,9 @@ fi
 %_unitdir/%name.service
 
 %changelog
+* Sun Mar 29 2015 Denis Smirnov <mithraen@altlinux.ru> 3.0.23-alt1
+- 3.0.23
+
 * Fri Aug 15 2014 Denis Smirnov <mithraen@altlinux.ru> 3.0.21-alt1
 - 3.0.21
 - add systemd unit
