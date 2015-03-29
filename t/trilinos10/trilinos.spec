@@ -29,7 +29,7 @@ Name: %truename-docs
 Name: %truename
 %endif
 Version: 11.12.1
-Release: alt1
+Release: alt2
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL, BSD-style
 Group: Sciences/Mathematics
@@ -2836,6 +2836,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.12.1-alt2
+- Rebuilt with new exodusii
+
 * Wed Mar 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.12.1-alt1
 - Version 11.12.1
 - New packages: Trios, ShyLU, MueLu, ForTrilinos

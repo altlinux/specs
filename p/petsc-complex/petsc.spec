@@ -1,4 +1,4 @@
-%define gver 4.7
+%define gver 4.9
 %set_gcc_version %gver
 
 %def_without mpi4py
@@ -28,7 +28,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.5.3
-Release: alt1
+Release: alt2
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -78,10 +78,6 @@ BuildPreReq: libexpat-devel
 %if_with mpi4py
 BuildPreReq: python-module-mpi4py
 %endif
-%if_with netcdf
-BuildPreReq: libnetcdf-mpi-devel libnetcdff-mpi-devel
-BuildPreReq: libnetcdf_c++-mpi-devel
-%endif
 BuildPreReq: libsundials-devel libsprng1-devel
 %endif
 %if %scalar_type == complex
@@ -89,6 +85,10 @@ BuildPreReq: libfftw3-mpi-devel
 %endif
 %if_with tops
 BuildPreReq: babel ccaffeine cca-spec-classic cca-spec-babel cca-spec-neo
+%endif
+%if_with netcdf
+BuildPreReq: libnetcdf-mpi-devel libnetcdff-mpi-devel
+BuildPreReq: libnetcdf_c++-mpi-devel
 %endif
 
 %description
@@ -339,6 +339,14 @@ for i in $(find ./ -name makefile) conf/rules; do
 	sed -i 's|@\$|$|' $i
 done
 
+%ifarch x86_64
+sed -i 's|@TRUEFALSE@|True|' \
+	config/BuildSystem/config/types.py
+%else
+sed -i 's|@TRUEFALSE@|False|' \
+	config/BuildSystem/config/types.py
+%endif
+
 %install
 install -d %buildroot%ldir/lib
 
@@ -351,7 +359,11 @@ export OMPI_LDFLAGS="$OMPI_LDFLAGS -lmpi_f90 -lmpi_f77"
 export PETSC_DIR=$PWD
 export PETSC_ARCH=linux-gnu
 #OPTFLAGS="%optflags %optflags_shared -DPETSC_HAVE_MPE -I$PETSC_DIR/include/sieve"
-OPTFLAGS="%optflags %optflags_shared -DPETSC_HAVE_MPE"
+OPTFLAGS="%optflags %optflags_shared -DPETSC_HAVE_MPE -D__USE_GNU"
+OPTFLAGS="$OPTFLAGS -fno-strict-aliasing -Drestrict"
+%ifarch x86_64
+OPTFLAGS="$OPTFLAGS -D__USE_FILE_OFFSET64=1 -D__WORDSIZE=64"
+%endif
 %if_with netcdf
 OPTFLAGS="$OPTFLAGS -DPETSC_HAVE_NETCDF"
 %endif
@@ -799,6 +811,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.3-alt2
+- Rebuilt with gcc4.9
+
 * Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.3-alt1
 - Version 3.5.3
 
@@ -1021,3 +1036,4 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
+

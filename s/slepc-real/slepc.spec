@@ -1,4 +1,4 @@
-%define gver 4.7
+%define gver 4.9
 %set_gcc_version %gver
 
 %define mpiimpl openmpi
@@ -12,7 +12,7 @@
 %define sover %somver.5.3
 Name: %oname-%scalar_type
 Version: 3.5.3
-Release: alt1.git20141219
+Release: alt2.git20141219
 Summary: Scalable Library for Eigenvalue Problem Computations (%scalar_type scalars)
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -277,6 +277,9 @@ sed -i 's|%buildroot||g' %buildroot%ldir/conf/*
 %endif
 
 %changelog
+* Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.3-alt2.git20141219
+- Rebuilt with gcc4.9
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.3-alt1.git20141219
 - Version 3.5.3
 

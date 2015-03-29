@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 1.0.0
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt1.pre.git20140703
+Release: alt1.pre.git20150320
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -28,7 +28,7 @@ BuildPreReq: libtau-devel libmpe2-devel libparpack-mpi-devel libarprec-devel
 BuildPreReq: libslepc-%scalar_type-devel zlib-devel libxml2-devel
 BuildPreReq: bzlib-devel libtetgen-devel libparmetis-devel libnetcdf-mpi-devel
 BuildPreReq: libvtk-devel libtrilinos10-devel libnox10-devel libtaucs-devel
-#BuildPreReq: doxygen graphviz texlive-latex-extra
+#BuildPreReq: texlive-latex-extra libDataTransferKit-devel
 BuildPreReq: doxygen graphviz
 BuildPreReq: libfftw3-mpi-devel libexodusii-devel libparmetis0-devel
 BuildPreReq: libgmp-devel libgmp_cxx-devel libblitz-devel getfemxx
@@ -43,8 +43,10 @@ BuildPreReq: liboptipack10-devel libpliris10-devel libpamgen10-devel
 BuildPreReq: libseacas10-devel libkomplex10-devel libdakota-devel
 BuildPreReq: libfei10-devel libteko10-devel libtrikota10-devel
 BuildPreReq: libintrepid10-devel libphalanx10-devel libmoertel10-devel
-BuildPreReq: libstokhos10-devel libnetcdf_c++4-mpi-devel
+BuildPreReq: libstokhos10-devel libnetcdf_c++4-mpi-devel libpnetcdf-devel
 BuildPreReq: libxpetra10-devel libmatio-devel cppunit-devel
+BuildPreReq: libfortrilinos-devel libmuelu-devel libshylu-devel
+BuildPreReq: libtrios-devel boost-program_options-devel
 
 %description
 The libMesh library provides a framework for the numerical simulation of
@@ -267,7 +269,7 @@ done
 
 ./bootstrap
 %add_optflags -DOMPI_IGNORE_CXX_SEEK -DHAVE_NOX -I%_includedir/exodusii
-%add_optflags -I%mpidir/include/netcdf -fpermissive
+%add_optflags -I%mpidir/include/netcdf -fpermissive -I%_includedir/eigen3
 %autoreconf
 %configure \
 	--prefix=%ldir \
@@ -318,7 +320,8 @@ done
 	--with-boost-libdir=%_libdir \
 	--disable-strict-lgpl \
 	--enable-parmesh \
-	--enable-blocked-storage
+	--enable-blocked-storage \
+	--enable-eigen=yes
 
 #pushd contrib
 #make_build
@@ -359,9 +362,9 @@ mv %buildroot%_libdir/*.so* %buildroot%ldir/lib/
 
 %if "%scalar_type" == "real"
 install -d %buildroot%_man3dir
-install -p -m644 doc/doc/man/man3/* %buildroot%_man3dir
+install -p -m644 doc/man/man3/* %buildroot%_man3dir
 install -d %buildroot%_docdir/%oname-%version
-cp doc/doc/html/doxygen/* %buildroot%_docdir/%oname-%version/
+cp doc/doxygen/* %buildroot%_docdir/%oname-%version/
 %endif
 
 install -d %buildroot%_docdir/%name-%version
@@ -460,6 +463,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.pre.git20150320
+- New snapshot
+
 * Fri Jul 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.pre.git20140703
 - New snapshot
 
@@ -613,3 +619,4 @@ popd
 
 * Thu Aug 27 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3_rc1-alt1
 - Initial build for Sisyphus
+

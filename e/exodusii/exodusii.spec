@@ -2,10 +2,10 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: exodusii
-Version: 5.14.0
+Version: 6.09.0
 %define somver 0
 %define sover %somver.%version
-Release: alt7.git20140623
+Release: alt1.git20150119
 Summary: A model developed to store and retrieve transient data for finite element analyses
 License: BSD
 Group: Sciences/Mathematics
@@ -155,6 +155,9 @@ mv nemesis/README README.Nemesis
 %python_sitelibdir/*
 
 %changelog
+* Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.09.0-alt1.git20150119
+- Version 6.09.0
+
 * Wed Jul 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.14.0-alt7.git20140623
 - New snapshot
 

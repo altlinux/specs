@@ -1,4 +1,4 @@
-%define gver 4.7
+%define gver 4.9
 %set_gcc_version %gver
 
 %define mpiimpl openmpi
@@ -11,8 +11,8 @@
 %def_enable docs
 
 Name: %oname-%scalar_type
-Version: 3.5
-Release: alt1.git20140905
+Version: 3.5.1
+Release: alt1.git20141223
 Summary: SLEPc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -107,7 +107,7 @@ mpi-selector --set %mpiimpl
 source %_bindir/petsc-%scalar_type.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-%add_optflags %optflags_shared -fpermissive
+%add_optflags %optflags_shared -fpermissive -fno-strict-aliasing
 %make_ext config
 python conf/cythonize.py
 %make_build_ext
@@ -207,6 +207,9 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %endif
 
 %changelog
+* Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.1-alt1.git20141223
+- Version 3.5.1
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5-alt1.git20140905
 - New snapshot
 
@@ -321,3 +324,4 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 
 * Sat Jul 18 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
+
