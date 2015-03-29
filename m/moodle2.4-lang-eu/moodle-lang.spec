@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename eu
 %define packagversion 2.4.0
-%define packagedate 201503181610
+%define packagedate 201503261055
 %define moodlebranch 2.4
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Basque
@@ -57,6 +57,10 @@ cp -rp * %buildroot%moodle_langdir/
 %moodle_langdir/*
 
 %changelog
+* Sun Mar 29 2015 Cronbuild Service <cronbuild@altlinux.org> 2.4.0.201503261055-alt1
+- repocop cronbuild 20150329. At your service.
+- eu.zip build 2015-03-26 10:55 UTC
+
 * Sat Mar 21 2015 Cronbuild Service <cronbuild@altlinux.org> 2.4.0.201503181610-alt1
 - repocop cronbuild 20150321. At your service.
 - eu.zip build 2015-03-18 16:10 UTC
