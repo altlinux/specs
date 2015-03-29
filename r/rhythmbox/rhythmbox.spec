@@ -1,4 +1,4 @@
-%define ver_major 3.1
+%define ver_major 3.2
 %define rev %nil
 %define gst_api_ver 1.0
 
@@ -9,7 +9,8 @@
 %def_enable visualizer
 %def_enable grilo
 %def_disable gtk_doc
-%def_disable zeitgeist
+%def_enable zeitgeist
+%def_enable soundcloud
 
 Name: rhythmbox
 Version: %ver_major
@@ -45,6 +46,7 @@ Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: libgst-plugins%gst_api_ver >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
+Requires: gst-plugins-bad%gst_api_ver
 Requires: gnome-icon-theme
 Requires: gnome-icon-theme-symbolic
 
@@ -468,6 +470,7 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %_libdir/%name/plugins/replaygain/
 %_libdir/%name/plugins/sendto/
 %{?_enable_zeitgeist:%_libdir/%name/plugins/rbzeitgeist/}
+%{?_enable_soundcloud:%_libdir/%name/plugins/soundcloud/}
 
 %exclude %_libdir/%name/plugins/*/*.la
 %exclude %browser_plugins_path/*.la
@@ -482,6 +485,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sun Mar 29 2015 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
+- 3.2
+
 * Sun Sep 28 2014 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
 - 3.1
 
