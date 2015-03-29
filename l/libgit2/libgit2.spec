@@ -1,5 +1,5 @@
 Name: libgit2
-Version: 0.22.0
+Version: 0.22.2
 Release: alt1
 
 Summary: linkable library for Git
@@ -8,7 +8,7 @@ License: GPLv2 with linking exception
 Group: System/Libraries
 URL: http://libgit2.github.com
 
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 
 BuildPreReq: rpm-macros-cmake
 BuildRequires: cmake python-modules zlib-devel libssl-devel libssh2-devel
@@ -58,6 +58,9 @@ sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sun Mar 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0.22.2-alt1
+- 0.22.2
+
 * Sun Jan 18 2015 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
 - 0.22.0
 - enabled ssh support via libssh2
