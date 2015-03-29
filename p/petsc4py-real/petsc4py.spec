@@ -1,4 +1,4 @@
-%define gver 4.7
+%define gver 4.9
 %set_gcc_version %gver
 
 %define mpiimpl openmpi
@@ -18,7 +18,7 @@
 Name: %oname-%scalar_type
 Version: 3.5
 %define exampledir %_docdir/%oname-%version/examples
-Release: alt1.git20140906
+Release: alt2.git20140906
 Summary: PETSc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -211,6 +211,9 @@ done
 %endif
 
 %changelog
+* Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5-alt2.git20140906
+- Rebuilt with gcc4.9
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5-alt1.git20140906
 - New snapshot
 

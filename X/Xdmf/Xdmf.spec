@@ -5,7 +5,7 @@
 
 Name: Xdmf
 Version: 20140607
-Release: alt1
+Release: alt2
 Summary: eXtensible Data Model and Format
 License: Free
 Group: Sciences/Other
@@ -241,6 +241,9 @@ rm -f $(find Examples -name '*.o')
 %doc Examples/*
 
 %changelog
+* Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140607-alt2
+- Rebuilt with new exodusii
+
 * Sat Jun 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140607-alt1
 - New snapshot
 
