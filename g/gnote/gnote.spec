@@ -1,10 +1,10 @@
 %set_automake_version 1.11
-%define ver_major 3.14
+%define ver_major 3.16
 %define _libexecdir /usr/libexec
 %def_without x11_support
 
 Name: gnote
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note-taking application
@@ -19,6 +19,7 @@ Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.t
 %define glibmm_ver 2.32
 %define gtkspell_ver 3.0.0
 %define libsecret_ver 0.8
+%define boost_ver 1.34
 
 BuildRequires: gcc-c++ boost-devel
 BuildRequires: yelp-tools intltool
@@ -80,6 +81,9 @@ desktop-file-install \
 %doc README TODO NEWS AUTHORS
 
 %changelog
+* Mon Mar 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Jan 19 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 
