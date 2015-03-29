@@ -1,7 +1,7 @@
 Summary: A graphical front end for scsiadd
 Name: scsiaddgui
 Version: 1.6
-Release: alt1
+Release: alt2
 License: GPL
 Url: http://scsiaddgui.sourceforge.net
 Requires: python, tkinter, scsiadd
@@ -10,6 +10,10 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 # http://www.8ung.at/klappnase/downloads/%name-%version.tar.bz2
 Source: %name-%version.tar
+Source1: %name-pam
+Source2: %name-security
+Source3: %name.desktop
+Source4: %name.png
 
 BuildArch: noarch
 
@@ -37,6 +41,7 @@ popd
 %install
 install -d %buildroot%_datadir/scsiaddgui-%version
 install -d %buildroot%_bindir
+install -d %buildroot%_sbindir
 install --mode=755 scsiaddgui.py %buildroot%_datadir/scsiaddgui-%version/scsiaddgui.py
 install --mode=644 help_de %buildroot%_datadir/scsiaddgui-%version/help_de
 install --mode=644 help_en %buildroot%_datadir/scsiaddgui-%version/help_en
@@ -50,23 +55,36 @@ install -v --mode=644 locale/fr.gmo %buildroot%_datadir/locale/fr/LC_MESSAGES/sc
 install -d %buildroot%_datadir/locale/ru/LC_MESSAGES
 install -v --mode=644 locale/ru.gmo %buildroot%_datadir/locale/ru/LC_MESSAGES/scsiaddgui.mo
 
-(cd %buildroot
-ln -s %_datadir/scsiaddgui-%version/scsiaddgui.py ./%_bindir/scsiaddgui
-)
+ln -s %_datadir/%name-%version/%name.py %buildroot%_sbindir/%name
+ln -s %_bindir/consolehelper %buildroot%_bindir/%name
+
+install -pD -m640 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
+install -pD -m640 %SOURCE2 %buildroot%_sysconfdir/security/console.apps/%name
+install -pD -m644 %SOURCE3 %buildroot/%_desktopdir/%name.desktop
+install -D -m644 %SOURCE4 %buildroot%_niconsdir/%name.png
+
 
 %find_lang %name
 
 %files -f %name.lang
 %doc doc/{ChangeLog,README}
-%_bindir/scsiaddgui
-%dir %_datadir/scsiaddgui-%version
-%_datadir/scsiaddgui-%version/scsiaddgui.py
-%_datadir/scsiaddgui-%version/help_de
-%_datadir/scsiaddgui-%version/help_en
-%_datadir/scsiaddgui-%version/help_fr
-%_datadir/scsiaddgui-%version/help_ru
+%_sbindir/%name
+%_bindir/%name
+%dir %_datadir/%name-%version
+%_desktopdir/%name.desktop
+%_niconsdir/*
+%_sysconfdir/pam.d/*
+%_sysconfdir/security/console.apps/*
+%_datadir/%name-%version/scsiaddgui.py
+%_datadir/%name-%version/help_de
+%_datadir/%name-%version/help_en
+%_datadir/%name-%version/help_fr
+%_datadir/%name-%version/help_ru
 
 %changelog
+* Sun Mar 29 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.6-alt2
+- add desktop and pam files
+
 * Tue Mar 24 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.6-alt1
 - New version
 
