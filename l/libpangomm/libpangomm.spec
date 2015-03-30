@@ -1,5 +1,6 @@
 %define rname pangomm
-%define major 2.34
+%define major 2.36
+%define api_ver 1.4
 
 Name: lib%rname
 Version: %major.0
@@ -9,14 +10,19 @@ Summary: This library provides a C++ interface to pango
 License: LGPL
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Conflicts: libgtkmm2 < 2.14.1
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.xz
 
 %define glib_ver 2.36.0
-BuildRequires: mm-common gcc-c++ libcairomm-devel libglibmm-devel >= %glib_ver libpango-devel
+%define cairo_ver 1.2.2
+%define pango_ver 1.36
+
+BuildRequires: mm-common gcc-c++
+BuildRequires: libcairomm-devel >= %cairo_ver
+BuildRequires: libglibmm-devel >= %glib_ver
+BuildRequires: libpango-devel >= %pango_ver
 
 %description
 This library provides a C++ interface to pango.
@@ -42,7 +48,7 @@ BuildArch: noarch
 %name development documentation (html)
 
 %prep
-%setup -q -n %rname-%version
+%setup -n %rname-%version
 
 %build
 %configure \
@@ -50,23 +56,26 @@ BuildArch: noarch
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc AUTHORS NEWS
 %_libdir/*.so.*
 
 %files devel
-%_includedir/%rname-1.4
+%_includedir/%rname-%api_ver
 %_libdir/*.so
-%_libdir/%rname-1.4
+%_libdir/%rname-%api_ver
 %_pkgconfigdir/*.pc
 
 %files doc
-%_datadir/devhelp/books/%rname-1.4
-%_docdir/%rname-1.4
+%_datadir/devhelp/books/%rname-%api_ver
+%_docdir/%rname-%api_ver
 
 %changelog
+* Mon Mar 30 2015 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
+- 2.36.0
+
 * Wed Apr 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1
 - 2.34.0
 
