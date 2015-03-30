@@ -1,5 +1,5 @@
 %define _name metacity
-%define ver_major 3.14
+%define ver_major 3.15
 %define api_ver 3.0
 %def_disable static
 %def_enable compositor
@@ -7,20 +7,21 @@
 %def_enable shape
 
 Name: %_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.2
 Release: alt1
 
 Summary: Metacity window manager
 License: %gpl2plus
 Group: Graphical desktop/GNOME
-Url: http://blogs.gnome.org/metacity/
+Url: https://wiki.gnome.org/Projects/Metacity
 
-Source: %gnome_ftp/%name/%ver_major/%_name-%version.tar.xz
+#Source: %gnome_ftp/%name/%ver_major/%_name-%version.tar.xz
+Source: %_name-%version.tar
 
 %define theme_prefix theme
 
-# From configure.in
-%define gtk_ver 3.8.0
+# From configure.ac
+%define gtk_ver 3.15.2
 %define glib_ver 2.32.0
 %define startup_notification_ver 0.7
 %define xcomposite_ver 0.2
@@ -205,6 +206,8 @@ theme.
 %_datadir/gnome-control-center/keybindings/50-metacity*.xml
 %_datadir/glib-2.0/schemas/org.gnome.metacity.gschema.xml
 %_datadir/GConf/gsettings/metacity-schemas.convert
+%_datadir/themes/Adwaita/metacity-1/metacity-theme-3.xml
+%_datadir/themes/HighContrast/metacity-1/metacity-theme-3.xml
 %_man1dir/*
 %doc README AUTHORS NEWS
 
@@ -246,6 +249,9 @@ theme.
 %_datadir/themes/Simple/*
 
 %changelog
+* Mon Mar 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.2-alt1
+- after 3.15.2 snapshot
+
 * Mon Nov 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt1
 - 3.14.3
 
