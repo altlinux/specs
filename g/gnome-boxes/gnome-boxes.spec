@@ -4,7 +4,7 @@
 %def_enable smartcard
 
 Name: gnome-boxes
-Version: 3.14.2
+Version: 3.16.0
 Release: alt1
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -20,11 +20,12 @@ Source2: libgd.tar
 %define glib_ver 2.38.0
 %define gtk_ver 3.13.2
 %define gtk_vnc_ver 0.4.4
-%define libvirt_glib_ver 0.1.9
+%define libvirt_glib_ver 0.2.0
 %define libxml2_ver 2.7.8
-%define spice_gtk_ver 0.15
+%define libusb_ver 1.0.9
+%define spice_gtk_ver 0.27
 %define gudev_ver 165
-%define osinfo_ver 0.2.9
+%define osinfo_ver 0.2.11
 %define tracker_ver 0.13.1
 %define uuid_ver 1.41.3
 %define libsoup_ver 2.38
@@ -41,6 +42,7 @@ BuildRequires: libgtk3vnc-devel >= %gtk_vnc_ver
 BuildRequires: libvirt-gobject-devel >= %libvirt_glib_ver
 BuildRequires: libvirt-gconfig-devel >= %libvirt_glib_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: libusb-devel >= %libusb_ver
 BuildRequires: libspice-gtk3-devel >= %spice_gtk_ver
 BuildRequires: libgudev-devel >= %gudev_ver
 BuildRequires: libosinfo-devel >= %osinfo_ver
@@ -102,6 +104,9 @@ intltoolize -f
 %_datadir/appdata/*.xml
 
 %changelog
+* Mon Mar 30 2015 Alexey Shabalin <shaba@altlinux.ru> 3.16.0-alt1
+- 3.16.0
+
 * Wed Nov 12 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.2-alt1
 - 3.14.2
 
