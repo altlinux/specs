@@ -1,19 +1,19 @@
-%define ver_major 3.14
+%define ver_major 3.16
 
 Name: devhelp
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Developer's help program
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
-License: %gpl2plus
 Group: Development/Other
+License: %gpl2plus
 Url: https://wiki.gnome.org/Apps/Devhelp
 #VCS: git://git.gnome.org/devhelp
-Source: %name-%version.tar
 
-# From configure.in
-%define gtk_ver 3.9.10
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+
+# From configure.ac
+%define gtk_ver 3.14
 
 Requires: lib%name = %version-%release
 
@@ -24,13 +24,12 @@ BuildPreReq: gtk-doc
 # From configure.ac
 BuildPreReq: intltool >= 0.40.0
 BuildRequires: pkgconfig(gthread-2.0) >= 2.10.0
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.13.4
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.14
 # build with webkit2gtk-3.0 or webkit2gtk-4.0
 # BuildRequires: pkgconfig(webkit2gtk-3.0) >= 2.0.0
 BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.0.0
 BuildRequires: pkgconfig(gio-2.0) >= 2.37.3
 BuildRequires: zlib-devel
-BuildRequires: gettext-tools
 
 %description
 A developers help program.
@@ -62,7 +61,7 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 %define  gedit_pluginsdir %_libdir/gedit/plugins
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -71,7 +70,7 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 # Create some directories in %name hierarchy
 mkdir -p %buildroot%_devhelpdir/{specs,books}
@@ -87,7 +86,7 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %_datadir/GConf/gsettings/*.convert
 %_datadir/glib-2.0/schemas/*.gschema.xml
 %_datadir/appdata/*.appdata.xml
-%doc AUTHORS COPYING NEWS README
+%doc AUTHORS NEWS README
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -101,6 +100,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Oct 07 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt2
 - rebuild
 
