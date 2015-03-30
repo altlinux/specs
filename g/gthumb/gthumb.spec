@@ -11,7 +11,7 @@
 %def_enable libraw
 
 Name: gthumb
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -115,8 +115,6 @@ This package contains headers needed to build extensions for gThumb.
     %{subst_enable libraw} \
     --disable-static \
     --disable-schemas-compile \
-    --enable-libopenraw \
-    --with-smclient=xsmp
 
 %make_build
 
@@ -169,6 +167,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Mar 31 2015 Yuri N. Sedunov <aris@altlinux.org> 3.3.4-alt1
+- 3.3.4
+
 * Tue Feb 10 2015 Yuri N. Sedunov <aris@altlinux.org> 3.3.3-alt1
 - 3.3.3
 
