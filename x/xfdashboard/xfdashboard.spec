@@ -1,13 +1,13 @@
 Name: xfdashboard
-Version: 0.3.90
+Version: 0.3.91
 Release: alt1
 
 Summary: A Gnome shell like dashboard for Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: http://xfdashboard.froevel.de/
+Url: http://goodies.xfce.org/projects/applications/xfdashboard/start
 
-# Upstream: https://github.com/gmc-holle/xfdashboard.git
+# Upstream: git://git.xfce.org/apps/xfdashboard
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
@@ -54,6 +54,10 @@ for and start applications.
 %_datadir/%name/
 
 %changelog
+* Mon Mar 30 2015 Mikhail Efremov <sem@altlinux.org> 0.3.91-alt1
+- Updated url.
+- Updated to 0.3.91.
+
 * Fri Mar 20 2015 Mikhail Efremov <sem@altlinux.org> 0.3.90-alt1
 - Updated to 0.3.90.
 
