@@ -1,6 +1,6 @@
 Name: livecd-fgfs
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: start FlightGear
 License: Public domain
@@ -27,7 +27,7 @@ mkdir -p %buildroot%confdir
 
 cat > %buildroot%conffile << _EOF_
 BINARY=fgfs
-COMMON_ARGS="--enable-fullscreen"
+COMMON_ARGS="--enable-fullscreen --time-match-local"
 
 [ -d /usr/share/flightgear/Aircraft/tu154b ] &&
 	COMMON_ARGS="\$COMMON_ARGS --aircraft=tu154b --airport=UNKM" ||:
@@ -39,6 +39,9 @@ _EOF_
 %conffile
 
 %changelog
+* Mon Mar 30 2015 Michael Shigorin <mike@altlinux.org> 0.2-alt2
+- set local time
+
 * Tue Mar 17 2015 Michael Shigorin <mike@altlinux.org> 0.2-alt1
 - rewrote using livecd-runapp
 
