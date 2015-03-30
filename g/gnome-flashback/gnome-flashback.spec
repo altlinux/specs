@@ -3,22 +3,22 @@
 
 Name: gnome-flashback
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: GNOME Flashback session
 License: GPLv3
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/GnomeFlashback
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 %define glib_ver 2.40.0
 %define gtk_ver 3.15.2
 %define desktop_ver 3.12.0
 %define dbus_glib_ver 0.76
 %define gsds_ver 3.12.0
-%define nd_ver 3.14
+%define nd_ver 3.16
 
 PreReq: xinitrc
 Requires: gnome-session gnome-settings-daemon gnome-panel gnome-applets metacity3.0
@@ -41,7 +41,9 @@ BuildRequires: libdbus-glib-devel >= %dbus_glib_ver
 BuildRequires: libgnome-desktop3-devel >= %desktop_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libcanberra-gtk3-devel libpulseaudio-devel
-BuildRequires: libXext-devel
+BuildRequires: libXext-devel libXrandr-devel
+BuildRequires: libupower-devel
+
 
 %description
 GNOME Flashback provides unofficial session and helper application.
@@ -128,6 +130,9 @@ _EOF_
 
 
 %changelog
+* Mon Mar 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.2-alt2
+- after 3.15.2 snapshot
+
 * Sun Feb 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.2-alt1
 - 3.15.2
 
