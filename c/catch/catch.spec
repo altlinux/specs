@@ -1,6 +1,6 @@
 Name: catch
-Version: 1.0
-Release: alt1.2
+Version: 1.1
+Release: alt1
 
 Summary: C++ Unit Test framework ("all in one header")
 
@@ -30,12 +30,15 @@ but is packaged up as a single header for extra convenience.
 
 %install
 mkdir -p %buildroot%_includedir
-mv -f *.hpp %buildroot%_includedir
+mv -f single_include/catch.hpp %buildroot%_includedir
 
 %files
 %_includedir/*.hpp
 
 %changelog
+* Mon Mar 30 2015 Pavel Vainerman <pv@altlinux.ru> 1.1-alt1
+- new upstream version
+
 * Mon Oct 06 2014 Pavel Vainerman <pv@altlinux.ru> 1.0-alt1.2
 - test rebuild
 
