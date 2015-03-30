@@ -1,5 +1,5 @@
 Name: livecd-runapp
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: start an (OpenGL) X11 application in kiosk mode
@@ -39,6 +39,8 @@ touch %buildroot%conffile
 cat > %buildroot%xsfile << _EOF_
 #!/bin/sh
 
+export DRI_PRIME=1
+
 [ -s %conffile ] && . %conffile || exit 1
 
 PRIMUSRUN=/usr/bin/primusrun
@@ -54,6 +56,9 @@ chmod +x %buildroot%xsfile
 %xsfile
 
 %changelog
+* Mon Mar 30 2015 Michael Shigorin <mike@altlinux.org> 0.2-alt1
+- set DRI_PRIME by default (thanks Sluggard at opennet for the hint)
+
 * Tue Mar 17 2015 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - initial release (based on livecd-fgfs 0.1-alt3)
 
