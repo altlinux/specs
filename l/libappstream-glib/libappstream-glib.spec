@@ -4,7 +4,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -186,6 +186,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Tue Mar 31 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
+- 0.3.6
+
 * Sat Mar 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
 - 0.3.5
 
