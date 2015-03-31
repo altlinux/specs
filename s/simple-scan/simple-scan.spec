@@ -1,7 +1,7 @@
 %define ver_major 3.16
 
 Name: simple-scan
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Simple scanning utility
@@ -28,7 +28,7 @@ scanner and quickly have the image/document in an appropriate format.
 %make_build
 
 %install
-%makeinstall_std DATADIRNAME=share
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -41,6 +41,9 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Tue Mar 31 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0.1-alt1
+- 3.16.0.1
+
 * Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
