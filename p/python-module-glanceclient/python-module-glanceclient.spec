@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-glanceclient
-Version: 0.16.1
+Version: 0.17.0
 Release: alt1
 Summary: Python API and CLI for OpenStack Glance
 
@@ -148,6 +148,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 0.16.1-alt1
 - 0.16.1
 - add python3 package
