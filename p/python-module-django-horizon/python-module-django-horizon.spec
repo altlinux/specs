@@ -2,7 +2,7 @@
 
 Name: python-module-django-horizon
 Version: 2015.1.0
-Release: alt0.b2.0
+Release: alt0.b3.0
 Summary: Django application for talking to Openstack
 
 Group: System/Servers
@@ -35,12 +35,12 @@ Requires: python-module-django-appconf
 Requires: python-module-django-pyscss
 
 Requires: python-module-glanceclient >= 0.15.0
-Requires: python-module-keystoneclient >= 1.0.0
+Requires: python-module-keystoneclient >= 1.1.0
 Requires: python-module-novaclient >= 2.18.0
-Requires: python-module-neutronclient >= 2.3.6
+Requires: python-module-neutronclient >= 2.3.11
 Requires: python-module-cinderclient >= 1.1.0
 Requires: python-module-swiftclient >= 2.2.0
-Requires: python-module-heatclient >= 0.2.9
+Requires: python-module-heatclient >= 0.3.0
 Requires: python-module-ceilometerclient >= 1.0.6
 Requires: python-module-troveclient >= 1.0.7
 Requires: python-module-saharaclient >= 0.7.6
@@ -50,7 +50,7 @@ Requires: python-module-kombu
 Requires: python-module-anyjson
 Requires: python-module-iso8601
 Requires: python-module-oslo.concurrency >= 1.4.1
-Requires: python-module-oslo.config >= 1.6.0
+Requires: python-module-oslo.config >= 1.9.0
 Requires: python-module-oslo.i18n >= 1.3.0
 Requires: python-module-oslo.serialization >= 1.2.0
 Requires: python-module-oslo.utils >= 1.2.0
@@ -106,7 +106,7 @@ BuildRequires: python-module-d2to1
 BuildRequires: python-module-pbr >= 0.7.0
 BuildRequires: python-module-lockfile
 BuildRequires: python-module-eventlet
-BuildRequires: python-module-six >= 1.7.0
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-django-nose
 BuildRequires: python-module-coverage
 BuildRequires: python-module-mox
@@ -120,18 +120,18 @@ BuildRequires: python-module-kombu
 BuildRequires: python-module-anyjson
 BuildRequires: python-module-iso8601
 BuildRequires: python-module-oslo.concurrency >= 1.4.1
-BuildRequires: python-module-oslo.config >= 1.6.0
+BuildRequires: python-module-oslo.config >= 1.9.0
 BuildRequires: python-module-oslo.i18n >= 1.3.0
 BuildRequires: python-module-oslo.serialization >= 1.2.0
 BuildRequires: python-module-oslo.utils >= 1.2.0
 
 BuildRequires: python-module-glanceclient >= 0.15.0
-BuildRequires: python-module-keystoneclient >= 1.0.0
+BuildRequires: python-module-keystoneclient >= 1.1.0
 BuildRequires: python-module-novaclient >= 2.18.0
-BuildRequires: python-module-neutronclient >= 2.3.6
+BuildRequires: python-module-neutronclient >= 2.3.11
 BuildRequires: python-module-cinderclient >= 1.1.0
 BuildRequires: python-module-swiftclient >= 2.2.0
-BuildRequires: python-module-heatclient >= 0.2.9
+BuildRequires: python-module-heatclient >= 0.3.0
 BuildRequires: python-module-ceilometerclient >= 1.0.6
 BuildRequires: python-module-troveclient >= 1.0.7
 BuildRequires: python-module-saharaclient >= 0.7.6
@@ -201,7 +201,7 @@ Documentation for the Django Horizon application for talking with Openstack
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+#%patch5 -p1
 
 # remove unnecessary .mo files
 find . -name "django*.mo" -exec rm -f '{}' \;
@@ -321,6 +321,9 @@ mkdir -p %buildroot%_var/log/horizon
 %doc html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b3.0
+- 2015.1.0b3
+
 * Tue Mar 17 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b2.0
 - 2015.1.0b2
 
