@@ -1,8 +1,8 @@
 %def_with wbclient
 
 Name: gssntlmssp
-Version: 0.5.0
-Release: alt2
+Version: 0.6.0
+Release: alt1
 Summary: GSSAPI NTLMSSP Mechanism
 
 Group: System/Libraries
@@ -66,6 +66,9 @@ make test_gssntlmssp
 %_includedir/gssapi/*
 
 %changelog
+* Wed Apr 01 2015 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt1
+- 0.6.0
+
 * Thu Nov 13 2014 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt2
 - build with krb5-1.13
 
