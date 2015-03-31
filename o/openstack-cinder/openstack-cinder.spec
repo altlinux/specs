@@ -3,7 +3,7 @@
 
 Name: openstack-cinder
 Version: 2015.1.0
-Release: alt0.b2.0
+Release: alt0.b3.0
 Summary: OpenStack Volume service
 
 Group: System/Servers
@@ -49,6 +49,16 @@ BuildRequires: python-module-SQLAlchemy
 BuildRequires: python-module-webob
 BuildRequires: python-module-migrate
 BuildRequires: python-module-iso8601
+BuildRequires: python-module-oslo.concurrency >= 1.4.1
+BuildRequires: python-module-oslo.context >= 0.1.0
+BuildRequires: python-module-oslo.db >= 1.4.1
+BuildRequires: python-module-oslo.log >= 0.4.0
+BuildRequires: python-module-oslo.messaging >= 1.6.0
+BuildRequires: python-module-oslo.middleware >= 0.3.0
+BuildRequires: python-module-oslo.rootwrap >= 1.5.0
+BuildRequires: python-module-oslo.serialization >= 1.2.0
+BuildRequires: python-module-oslo.utils >= 1.2.0
+BuildRequires: python-module-oslo.vmware >= 0.9.0
 
 Requires: openstack-utils
 Requires: python-module-cinder = %version-%release
@@ -56,7 +66,7 @@ Requires: python-module-cinder = %version-%release
 Requires(pre): shadow-utils
 
 Requires: lvm2
-Requires: scsitarget-utils
+# Requires: scsitarget-utils
 Requires: targetcli
 Requires: python-module-rtslib
 Requires: sysfsutils
@@ -234,6 +244,9 @@ rm -f %buildroot/usr/share/doc/cinder/README*
 %doc doc/build/html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b3.0
+- 2015.1.0b3
+
 * Wed Mar 11 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b2.0
 - 2015.1.0b2
 
