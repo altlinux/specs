@@ -10,7 +10,7 @@
 %endif
 
 Name: rawtherapee
-Version: 4.0.12
+Version: 4.2
 Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
@@ -31,7 +31,6 @@ Source: rawtherapee-%version.tar.bz2
 %else
 Source: http://rawtherapee.com/shared/source/%name-%version.tar.xz
 %endif
-Source4: rawtherapee.Ukrainian
 
 Requires: %name-data = %version-%release
 
@@ -75,10 +74,9 @@ cat > AboutThisBuild.txt << EOF
 See package informations
 EOF
 
-cp %_sourcedir/rawtherapee.Ukrainian rtdata/languages/Ukrainian
-
 %build
-%cmake -DCMAKE_BUILD_TYPE=MinSizeRel
+%cmake -DCMAKE_BUILD_TYPE=release \
+-DCACHE_NAME_SUFFIX=""
 %cmake_build VERBOSE=1
 
 %install
@@ -88,7 +86,6 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 
 %files
 %_bindir/%name
-%_bindir/camconst.json
 %doc AUTHORS.txt LICENSE.txt RELEASE_NOTES.txt
 
 %files data
@@ -96,8 +93,12 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/%name/
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/%name.1.*
+%_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Tue Mar 31 2015 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
+- 4.2
+
 * Mon Jan 13 2014 Yuri N. Sedunov <aris@altlinux.org> 4.0.12-alt1
 - 4.0.12
 
