@@ -1,4 +1,4 @@
-%define ver_major 1.4
+%define ver_major 2.0
 %def_with recording
 
 Name: girl
@@ -18,7 +18,8 @@ Requires: totem
 %define gtk_ver 3.6.0
 
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: gnome-common intltool libgnomeui-devel libxml2-devel
+BuildRequires: gnome-common intltool yelp-tools gtk-doc
+BuildRequires: libgnomeui-devel libxml2-devel
 
 %description
 GIRL is a GNOME Internet Radio Locator program that allows the user
@@ -53,6 +54,9 @@ export ac_cv_path_GIRL_HELPER_RECORD=%_bindir/streamripper
 
 
 %changelog
+* Tue Mar 31 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Sun Feb 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
