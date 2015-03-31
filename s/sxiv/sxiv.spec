@@ -1,6 +1,6 @@
 Name: sxiv
 Version: 1.31
-Release: alt1.1
+Release: alt1.2
 
 Summary: Simple X Image Viewer
 License: GPLv2
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Sun Mar 22 2015
 # optimized out: imlib2 libX11-devel libcloog-isl4 xorg-xproto-devel
 BuildRequires: imlib2-devel libexif-devel libgif-devel
+
+%add_findreq_skiplist %_datadir/%name/exec/key-handler
 
 %description
 sxiv is an alternative to feh and qiv. Its only dependencies
@@ -58,6 +60,9 @@ install -pm644 {README.md,LICENSE} %buildroot%docdir/
 %doc %docdir/*
 
 %changelog
+* Tue Mar 31 2015 Andrey Bergman <vkni@altlinux.org> 1.31-alt1.2
+- Added skiplist.
+
 * Sun Mar 22 2015 Andrey Bergman <vkni@altlinux.org> 1.31-alt1.1
 - Added missed directories ownership.
 
