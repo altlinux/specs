@@ -1,5 +1,5 @@
 Name: btrfs-progs
-Version: 3.18.2
+Version: 3.19.1
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -50,10 +50,13 @@ btrfs filesystem-specific programs.
 %setup -q -n %name-%version-%release
 
 %build
-%make_build CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
+autoreconf -fisv
+automake --add-missing ||:
+%configure
+%make_build
 
 %install
-%makeinstall bindir=%buildroot/sbin libdir=%buildroot/%_lib
+%makeinstall bindir=%buildroot/sbin libdir=%buildroot/%_lib incdir=%buildroot/%_includedir/btrfs
 mkdir -p %buildroot%_libdir
 LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libbtrfs.so.*.*\``
 ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so 
@@ -71,6 +74,12 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %_includedir/btrfs
 
 %changelog
+* Tue Mar 31 2015 Anton Farygin <rider@altlinux.ru> 3.19.1-alt1
+- new version
+
+* Sun Mar 15 2015 Anton Farygin <rider@altlinux.ru> 3.19-alt1
+- new version
+
 * Fri Jan 30 2015 Anton Farygin <rider@altlinux.ru> 3.18.2-alt1
 - new version
 
