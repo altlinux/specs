@@ -6,7 +6,7 @@
 
 Name: libgnome
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: GNOME base library
 License: LGPLv2
@@ -169,7 +169,7 @@ if [ $1 = 0 ]; then
 fi
 
 %files -f files_list
-%_bindir/*
+%exclude %_bindir/gnome-open
 %_libdir/*.so.*
 %_libdir/bonobo/monikers/*.so
 %bonobo_serversdir/*.server
@@ -198,6 +198,9 @@ fi
 %exclude %_libdir/bonobo/monikers/*.la
 
 %changelog
+* Tue Mar 31 2015 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt3
+- removed harmful gnome-open especially for shaba@ & libreoffice
+
 * Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt2
 - fixed build with glib-2.36
 
