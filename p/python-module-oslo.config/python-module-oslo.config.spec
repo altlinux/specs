@@ -2,8 +2,8 @@
 
 %def_with python3
 
-Name:       python-module-oslo.config
-Version:    1.9.2
+Name:       python-module-%sname
+Version:    1.9.3
 Release:    alt1
 Summary:    OpenStack common configuration library
 
@@ -55,13 +55,13 @@ The oslo-config library is a command line and configuration file
 parsing library from the Oslo project.
 
 %if_with python3
-%package -n python3-module-oslo.config
+%package -n python3-module-%sname
 Summary:    OpenStack common configuration library
 Group: Development/Python3
 Provides: python3-module-oslo-config = %EVR
 %py3_provides oslo
 
-%description -n python3-module-oslo.config
+%description -n python3-module-%sname
 The Oslo project intends to produce a python library containing
 infrastructure code shared by OpenStack projects. The APIs provided
 by the project should be high quality, stable, consistent and generally
@@ -86,7 +86,7 @@ Documentation for the oslo-config library.
 %patch0001 -p1
 
 # Remove bundled egg-info
-rm -rf %{sname}.egg-info
+#rm -rf %{sname}.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -135,7 +135,7 @@ rm -fr doc/build/html/.buildinfo
 %python_sitelibdir/*
 
 %if_with python3
-%files -n python3-module-oslo.config
+%files -n python3-module-%sname
 %_bindir/python3-oslo-config-generator
 %python3_sitelibdir/*
 %endif
@@ -144,6 +144,9 @@ rm -fr doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 1.9.3-alt1
+- 1.9.3
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.9.2-alt1
 - 1.9.2
 
