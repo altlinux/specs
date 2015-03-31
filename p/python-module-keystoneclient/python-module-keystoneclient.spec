@@ -1,7 +1,7 @@
 %def_with python3
 
 Name:       python-module-keystoneclient
-Version:    1.2.0
+Version:    1.3.0
 Release:    alt1
 Summary:    Client library for OpenStack Identity API
 License:    ASL 2.0
@@ -21,7 +21,7 @@ BuildRequires: python-module-argparse
 BuildRequires: python-module-iso8601 >= 0.1.9
 BuildRequires: python-module-prettytable >= 0.7
 BuildRequires: python-module-requests >= 2.2.0
-BuildRequires: python-module-oslo.config >= 1.6.0
+BuildRequires: python-module-oslo.config >= 1.9.0
 BuildRequires: python-module-oslo.i18n >= 1.3.0
 BuildRequires: python-module-oslo.serialization >= 1.2.0
 BuildRequires: python-module-oslo.utils >= 1.2.0
@@ -42,7 +42,7 @@ BuildRequires: python3-module-argparse
 BuildRequires: python3-module-iso8601 >= 0.1.9
 BuildRequires: python3-module-prettytable >= 0.7
 BuildRequires: python3-module-requests >= 2.2.0
-BuildRequires: python3-module-oslo.config >= 1.6.0
+BuildRequires: python3-module-oslo.config >= 1.9.0
 BuildRequires: python3-module-oslo.i18n >= 1.3.0
 BuildRequires: python3-module-oslo.serialization >= 1.2.0
 BuildRequires: python3-module-oslo.utils >= 1.2.0
@@ -70,7 +70,7 @@ Identity API.
 
 %package doc
 Summary:    Documentation for OpenStack Identity API Client
-Group:      Documentation
+Group:  Development/Documentation
 
 %description doc
 Documentation for the client library for interacting with Openstack
@@ -86,9 +86,9 @@ sed -i s/REDHATKEYSTONECLIENTVERSION/%version/ keystoneclient/__init__.py
 
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
-
 # Remove bundled egg-info
 rm -rf python_keystoneclient.egg-info
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -144,6 +144,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
+- 1.3.0
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 
