@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%sname
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 Summary: OpenStack Image Service Store Library
 Group: Development/Python
@@ -76,7 +76,7 @@ Documentation for OpenStack Image Service Store Library
 %setup
 
 # Remove bundled egg-info
-rm -rf %sname.egg-info
+#rm -rf %sname.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -126,5 +126,8 @@ rm -fr doc/build/html/.buildinfo
 %doc doc/build/html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 0.4.0-alt1
+- 0.4.0
+
 * Thu Mar 12 2015 Alexey Shabalin <shaba@altlinux.ru> 0.3.0-alt1
 - Initial release
