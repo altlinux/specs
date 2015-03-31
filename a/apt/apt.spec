@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt49
+Release: alt50
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -276,6 +276,11 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Tue Mar 31 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt50
+- Increased default APT::Cache-Limit:
+ + up to 96M on 64bit systems.
+ + up to 80M on 32bit systems.
+
 * Fri Nov 28 2014 Dmitry V. Levin <ldv@altlinux.org> 0.5.15lorg2-alt49
 - Reintroduced '%%set_verify_elf_method strict'.
 
@@ -990,13 +995,3 @@ unset RPM_PYTHON
 - Spec modified for new version.
 - It's a just build for Deadalus - not for actual use.
 - I just built it but not test yet.
-
-# Local Variables:
-# mode: rpm-spec
-# mode: folding
-# coding: koi8-r
-# compile-command: "rpmbuild -ba --target=i586 apt.spec"
-# End:
-
-
-

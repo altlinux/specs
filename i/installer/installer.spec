@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.27
+Version: 1.8.28
 Release: alt1
 
 Summary: Installer common parts
@@ -94,17 +94,25 @@ This package contains common installer stage3 files and dependencies.
 
 %install
 %makeinstall
+mkdir -p %buildroot%_sysconfdir/apt/apt.conf.d/
+cat > %buildroot%_sysconfdir/apt/apt.conf.d/installer-cache-limit.conf <<@@@
+APT::Cache-Limit "$((32*1024*1024))";
+@@@
 
 %files common-stage2
 %_bindir/*
 %_sbindir/*
 %_datadir/install2
+%_sysconfdir/apt/apt.conf.d/installer-cache-limit.conf
 %exclude %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %files common-stage3
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Mar 31 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.28-alt1
+- Added default APT::Cache-Limit=32M for installer.
+
 * Thu Feb 26 2015 Michael Shigorin <mike@altlinux.org> 1.8.27-alt1
 - ignore MMC RPMB
 - silence efivars
