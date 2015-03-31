@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 Summary: OpenStack oslo.concurrency library
 Group: Development/Python
@@ -135,5 +135,8 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt1
 - Initial release
