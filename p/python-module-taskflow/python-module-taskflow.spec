@@ -1,29 +1,36 @@
-%global pypi_name taskflow
-%def_with python3
+%define pypi_name taskflow
 
 Name:           python-module-%{pypi_name}
-Version:        0.1.2
+Version:        0.8.0
 Release:        alt1
 Summary:        Taskflow structured state management library
 
 Group:          Development/Python
 License:        ASL 2.0
 URL:            https://launchpad.net/taskflow
-Source0:        %{name}-%{version}.tar
+Source0:        %name-%version.tar
 Patch0:         remove-pbr.patch
 BuildArch:      noarch
 
-BuildRequires:  python-devel
-BuildRequires:  python-module-pbr
-BuildRequires:  python-module-sphinx
+BuildRequires: python-devel
+BuildRequires: python-module-pbr
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-six
+BuildRequires: python-module-jsonschema
+BuildRequires: python-module-networkx
+BuildRequires: python-module-stevedore
+BuildRequires: python-module-futures
+BuildRequires: python-module-oslo.serialization
+BuildRequires: python-module-oslo.utils
 
-Requires:       python-module-anyjson
-Requires:       python-module-iso8601
-Requires:       python-module-six
-Requires:       python-module-babel
-Requires:       python-module-stevedore
-Requires:       python-module-futures
-Requires:       python-module-networkx
+Requires: python-module-six
+Requires: python-module-jsonschema
+Requires: python-module-networkx
+Requires: python-module-stevedore
+Requires: python-module-futures
+Requires: python-module-oslo.serialization
+Requires: python-module-oslo.utils
 
 %description
 A library to do [jobs, tasks, flows] in a HA manner using
@@ -31,7 +38,7 @@ different backends to be used with OpenStack projects.
 
 %package doc
 Summary:          Documentation for Taskflow
-Group:            Documentation
+Group:            Development/Documentation
 
 %description doc
 A library to do [jobs, tasks, flows] in a HA manner using
@@ -41,9 +48,9 @@ This package contains the associated documentation.
 %prep
 %setup
 
-%patch0 -p1
+#%patch0 -p1
 
-sed -i 's/REDHATVERSION/%{version}/; s/REDHATRELEASE/%{release}/' %{pypi_name}/version.py
+#sed -i 's/REDHATVERSION/%{version}/; s/REDHATRELEASE/%{release}/' %{pypi_name}/version.py
 
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
@@ -59,20 +66,26 @@ rm -rf {test-,}requirements.txt
 %python_install
 
 # generate html docs
-sphinx-build doc html
+sphinx-build doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
+# Delete tests
+rm -fr %buildroot%python_sitelibdir/*/tests
+rm -fr %buildroot%python_sitelibdir/*/test*
+rm -fr %buildroot%python_sitelibdir/*/examples
 
 %files
-%doc README.md LICENSE
-%{python_sitelibdir}/%{pypi_name}
-%{python_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
+%doc README.rst LICENSE ChangeLog
+%python_sitelibdir/*
 
 %files doc
 %doc html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 0.8.0-alt1
+- 0.8.0
+
 * Thu Jul 31 2014 Lenar Shakirov <snejok@altlinux.ru> 0.1.2-alt1
 - First build for ALT (based on Fedora 0.1.2-7.fc21.src)
 
