@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 1.6.0
+Version: 1.7.1
 Release: alt1
 Summary: OpenStack oslo.db library
 Group: Development/Python
@@ -74,7 +74,7 @@ Requires: python3-module-stevedore
 Requires: python3-module-SQLAlchemy
 Requires: python3-module-iso8601
 
-%description -n python3-module-oslo.db
+%description -n python3-module-%sname
 The OpenStack Oslo database handling library. Provides database connectivity
 to the different backends and helper utils.
 %endif
@@ -143,6 +143,9 @@ rm -fr doc/build/html/.buildinfo
 %doc doc/build/html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 1.7.1-alt1
+- 1.7.1
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 
