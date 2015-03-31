@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-swiftclient
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 Summary: Client Library for OpenStack Object Storage API
 License: ASL 2.0
@@ -135,6 +135,9 @@ rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt1
+- 2.4.0
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.1-alt1
 - 2.3.1
 - add python3 package
