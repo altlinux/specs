@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%pypi_name
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 Summary: Middleware for OpenStack Identity
 Group: Development/Python
@@ -16,15 +16,15 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr
 BuildRequires: python-module-iso8601 >= 0.1.9
-BuildRequires: python-module-oslo.config >= 1.6.0
-BuildRequires: python-module-oslo.context >= 0.1.0
+BuildRequires: python-module-oslo.config >= 1.9.0
+BuildRequires: python-module-oslo.context >= 0.2.0
 BuildRequires: python-module-oslo.i18n >= 1.3.0
 BuildRequires: python-module-oslo.serialization >= 1.2.0
 BuildRequires: python-module-oslo.utils >= 1.2.0
-BuildRequires: python-module-keystoneclient >= 1.0.0
-BuildRequires: python-module-six >= 1.7.0
+BuildRequires: python-module-keystoneclient >= 1.1.0
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-requests >= 2.2.0
-BuildRequires: python-module-pycadf >= 0.6.0
+BuildRequires: python-module-pycadf >= 0.8.0
 BuildRequires: python-module-webob >= 1.2.3
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -36,15 +36,15 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-iso8601 >= 0.1.9
-BuildRequires: python3-module-oslo.config >= 1.6.0
-BuildRequires: python3-module-oslo.context >= 0.1.0
+BuildRequires: python3-module-oslo.config >= 1.9.0
+BuildRequires: python3-module-oslo.context >= 0.2.0
 BuildRequires: python3-module-oslo.i18n >= 1.3.0
 BuildRequires: python3-module-oslo.serialization >= 1.2.0
 BuildRequires: python3-module-oslo.utils >= 1.2.0
-BuildRequires: python3-module-keystoneclient >= 1.0.0
-BuildRequires: python3-module-six >= 1.7.0
+BuildRequires: python3-module-keystoneclient >= 1.1.0
+BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-requests >= 2.2.0
-BuildRequires: python3-module-pycadf >= 0.6.0
+BuildRequires: python3-module-pycadf >= 0.8.0
 BuildRequires: python3-module-webob >= 1.2.3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
@@ -125,6 +125,9 @@ rm -rf %buildroot%python3_sitelibdir/%pypi_name/tests
 #%doc html LICENSE
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
