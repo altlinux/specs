@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-novaclient
-Version: 2.22.0
+Version: 2.23.0
 Release: alt1
 Summary: Python API and CLI for OpenStack Nova
 
@@ -164,6 +164,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2.23.0-alt1
+- 2.23.0
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.22.0-alt1
 - 2.22.0
 - add python3 package
