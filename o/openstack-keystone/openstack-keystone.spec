@@ -2,7 +2,7 @@
 
 Name:		openstack-keystone
 Version:	2015.1.0
-Release:	alt0.b2.0
+Release:	alt0.b3.0
 Summary:	OpenStack Identity Service
 
 %add_python_req_skip xmldsig
@@ -38,21 +38,24 @@ BuildRequires: python-module-sphinx >= 1.0
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-pbr
 BuildRequires: python-module-d2to1
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-SQLAlchemy >= 0.9.7
-BuildRequires: python-module-migrate >= 0.9.1
+BuildRequires: python-module-migrate >= 0.9.5
 BuildRequires: python-module-jsonschema
-BuildRequires: python-module-oslo.config >= 1.6.0
+BuildRequires: python-module-oslo.config >= 1.9.0
 BuildRequires: python-module-oslo.messaging >= 1.6.0
-BuildRequires: python-module-oslo.db >= 1.4.1
+BuildRequires: python-module-oslo.db >= 1.5.0
 BuildRequires: python-module-oslo.i18n >= 1.3.0
+BuildRequires: python-module-oslo.log >= 0.4.0
 BuildRequires: python-module-oslo.middleware >= 0.3.0
+BuildRequires: python-module-oslo.policy >= 0.3.0
 BuildRequires: python-module-oslo.serialization >= 1.2.0
 BuildRequires: python-module-oslo.utils >= 1.2.0
 BuildRequires: python-module-oslotest >= 1.1.0
 BuildRequires: python-module-routes >= 1.12.3
 BuildRequires: python-module-paste
 BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-keystoneclient >= 1.0.0
+BuildRequires: python-module-keystoneclient >= 1.1.0
 BuildRequires: python-module-dogpile-cache >= 0.5.3
 BuildRequires: python-module-ldap
 BuildRequires: python-module-oauthlib >= 0.6
@@ -66,21 +69,24 @@ BuildRequires: python3-module-sphinx >= 1.0
 BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-d2to1
+BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-SQLAlchemy >= 0.9.7
-BuildRequires: python3-module-migrate >= 0.9.1
+BuildRequires: python3-module-migrate >= 0.9.5
 BuildRequires: python3-module-jsonschema
-BuildRequires: python3-module-oslo.config >= 1.6.0
+BuildRequires: python3-module-oslo.config >= 1.9.0
 BuildRequires: python3-module-oslo.messaging >= 1.6.0
-BuildRequires: python3-module-oslo.db >= 1.4.1
+BuildRequires: python3-module-oslo.db >= 1.5.0
 BuildRequires: python3-module-oslo.i18n >= 1.3.0
+BuildRequires: python3-module-oslo.log >= 0.4.0
 BuildRequires: python3-module-oslo.middleware >= 0.3.0
+BuildRequires: python3-module-oslo.policy >= 0.3.0
 BuildRequires: python3-module-oslo.serialization >= 1.2.0
 BuildRequires: python3-module-oslo.utils >= 1.2.0
 BuildRequires: python3-module-oslotest >= 1.1.0
 BuildRequires: python3-module-routes >= 1.12.3
 BuildRequires: python3-module-paste
 BuildRequires: python3-module-PasteDeploy >= 1.5.0
-BuildRequires: python3-module-keystoneclient >= 1.0.0
+BuildRequires: python3-module-keystoneclient >= 1.1.0
 BuildRequires: python3-module-dogpile-cache >= 0.5.3
 BuildRequires: python3-module-ldap
 BuildRequires: python3-module-oauthlib >= 0.6
@@ -186,7 +192,9 @@ mv %buildroot%_bindir/keystone-manage %buildroot%_bindir/python3-keystone-manage
 
 # Delete tests
 rm -fr %buildroot%python_sitelibdir/*/tests
+%if_with python3
 rm -fr %buildroot%python3_sitelibdir/*/tests
+%endif
 
 install -d -m 755 %buildroot%_sysconfdir/keystone
 install -p -D -m 640 etc/keystone.conf %buildroot%_sysconfdir/keystone/keystone.conf
@@ -286,6 +294,9 @@ su -l -s /bin/sh -c 'exec keystone-manage pki_setup' keystone
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b3.0
+- 2015.1.0b3
+
 * Wed Mar 11 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b2.0
 - 2015.1.0b2
 
