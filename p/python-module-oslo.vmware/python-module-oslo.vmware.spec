@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 0.11.0
+Version: 0.11.1
 Release: alt1
 Summary: Oslo VMware library for OpenStack projects
 Group: Development/Python
@@ -135,6 +135,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 0.11.1-alt1
+- 0.11.1
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 0.11.0-alt1
 - 0.11.0
 
