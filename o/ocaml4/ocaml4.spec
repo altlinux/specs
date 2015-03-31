@@ -8,7 +8,7 @@
 
 Name: ocaml4
 Version: 4.02.1
-Release: alt1
+Release: alt2
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -27,6 +27,7 @@ Patch2: ocaml-4.01-alt-mk-reqprov.patch
 Requires: rpm-build-ocaml4 >= 1.1
 BuildPreReq: rpm-build-ocaml4 >= 1.1
 
+Conflicts: ocaml
 
 # Automatically added by buildreq on Mon Sep 23 2013
 BuildRequires: texlive-latex-base texlive-latex-recommended
@@ -42,12 +43,14 @@ Group: Development/ML
 Provides: %name-runtime = %(v=%version; IFS=.; set $v; echo "$1.$2") 
 # For some reason, this is Requires, not Provides.
 Requires: %_rpmlibdir/ocaml-reqprov
+Conflicts: ocaml-runtime
 
 %package graphics
 Summary: Graphics primitives
 Group: Development/ML
 Requires: %name = %version-%release
 Requires: %name-graphics-runtime = %version-%release
+Conflicts: ocaml-graphics
 
 %package graphics-runtime
 Summary: Graphics primitives
@@ -58,11 +61,13 @@ Requires: %name-runtime = %version-%release
 Summary: The Objective Caml documentation generator
 Group: Development/ML
 Requires: %name = %version-%release
+Conflicts: ocamldoc
 
 %package ocamlbuild
 Summary: The Objective Caml project compilation tool
 Group: Development/ML
 Requires: %name = %version-%release
+Conflicts: ocamlbuild
 
 %package doc
 Summary: Documentation for OCaml
@@ -245,6 +250,9 @@ install -p -m644 ocamlbuild/man/ocamlbuild.1.bz2 %buildroot%_man1dir/
 %doc ocamldoc/stdlib.pdf 
 
 %changelog
+* Tue Mar 31 2015 Andrey Bergman <vkni@altlinux.org> 4.02.1-alt2
+- Added conflicts (with ocaml 3.x).
+
 * Sat Jan 31 2015 Andrey Bergman <vkni@altlinux.org> 4.02.1-alt1
 - Added rpm-build-ocaml4 to build pre requires.
 
