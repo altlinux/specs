@@ -2,7 +2,7 @@
 
 Name: openstack-nova
 Version: 2015.1.0
-Release: alt0.b2.0
+Release: alt0.b3.0
 Summary: OpenStack Compute (nova)
 
 Group: System/Servers
@@ -77,8 +77,8 @@ BuildRequires: python-module-eventlet
 BuildRequires: python-module-routes
 BuildRequires: python-module-SQLAlchemy
 BuildRequires: python-module-webob
-# while not strictly required, quiets the build down when building docs.
-BuildRequires: python-module-migrate, python-module-iso8601
+BuildRequires: python-module-migrate >= 0.9.5
+BuildRequires: python-module-iso8601
 
 BuildRequires: graphviz
 
@@ -779,6 +779,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b3.0
+- 2015.1.0b3.0
+
 * Fri Mar 13 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b2.0
 - 2015.1.0b2.0
 
