@@ -1,15 +1,17 @@
 %def_with python3
 
 Name:		python-module-migrate
-Version:	0.9.4
+Version:	0.9.5
 Release:	alt1
 Summary:	Schema migration tools for SQLAlchemy
 
 Group:		Development/Python
 License:	MIT
-URL:		http://code.google.com/p/sqlalchemy-migrate/
+URL:		http://github.com/stackforge/sqlalchemy-migrate
 
-Source0:	%{name}-%{version}.tar.gz
+Source0:	%name-%version.tar.gz
+
+Provides: python-module-sqlalchemy-migrate = %EVR
 
 Patch0: no-db2-tests.patch
 # Patch to fix a unittest on python-2.7
@@ -56,10 +58,8 @@ BuildRequires:	python-module-fixtures
 Requires:	python-module-SQLAlchemy >= 0.7.8
 Requires:	python-module-decorator
 Requires:	python-module-tempita >= 0.4
-Requires:	python-module-six >= 1.4.1
+Requires:	python-module-six >= 1.7.0
 Requires:	python-module-sqlparse
-
-
 
 %description
 Schema migration tools for SQLAlchemy designed to support an agile
@@ -73,8 +73,10 @@ Group:		Development/Python3
 Requires:	python3-module-SQLAlchemy >= 0.7.8
 Requires:	python3-module-decorator
 Requires:	python3-module-tempita >= 0.4
-Requires:	python3-module-six >= 1.4.1
+Requires:	python3-module-six >= 1.7.0
 Requires:	python3-module-sqlparse
+
+Provides: python3-module-sqlalchemy-migrate = %EVR
 
 %description -n python3-module-migrate
 Schema migration tools for SQLAlchemy designed to support an agile
@@ -173,6 +175,9 @@ echo 'sqlite:///__tmp__' > test_db.cfg
 %endif
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.5-alt1
+- 0.9.5
+
 * Mon Feb 16 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.4-alt1
 - 0.9.4
 
