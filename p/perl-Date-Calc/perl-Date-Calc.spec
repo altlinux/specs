@@ -1,14 +1,14 @@
 %define dist Date-Calc
 Name: perl-%dist
-Version: 6.3
-Release: alt3
+Version: 6.4
+Release: alt1
 
 Summary: %dist module for perl
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/ST/STBEY/Date-Calc-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -50,6 +50,9 @@ of use, multi-language support and special functions for business needs.
 %doc	%perl_vendor_privlib/Date/Calendar/*.pod
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 6.4-alt1
+- automated CPAN update
+
 * Wed Oct 05 2011 Alexey Tourbin <at@altlinux.ru> 6.3-alt3
 - rebuilt as plain src.rpm
 
