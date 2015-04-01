@@ -1,13 +1,13 @@
 Name: rpm-build-mediawiki
-Version: 0.3
+Version: 0.5
 Release: alt1
 
-Summary: RPM helper scripts for package mediawiki extensions
+Summary: RPM helper scripts for packaging mediawiki extensions
 License: GPL
 Group: Development/Other
 
-URL: http://www.freesource.info/wiki/Altlinux/Policy/Fonts
-Source: ftp://download.etersoft.ru/pub/Etersoft/BuildFarm/sources/tarball/%name-%version.tar
+URL: http://www.altlinux.org/MediaWiki_Policy
+Source: %name-%version.tar
 
 BuildArch: noarch
 
@@ -28,6 +28,15 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/mediawiki
 %_rpmmacrosdir/mediawiki
 
 %changelog
+* Wed Apr 01 2015 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- remove ?> in the last config line
+
+* Fri Feb 07 2014 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
+- add set_required_mediawiki macro
+
+* Fri May 21 2010 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt2
+- fix Url, Source and Summary
+
 * Sat May 15 2010 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt1
 - do not pack temp. *.files file
 
