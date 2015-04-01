@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(constant.pm) perl(vars.pm)
 # END SourceDeps(oneline)
-%define module_version 1.016
+%define module_version 1.400
 %define module_name Palm-PDB
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.016
+Version: 1.400
 Release: alt1
 Summary: Parse Palm database files
 Group: Development/Perl
@@ -34,6 +34,9 @@ From summary: %summary
 %perl_vendor_privlib/P*
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.400-alt1
+- automated CPAN update
+
 * Mon Jan 26 2015 Igor Vlasenko <viy@altlinux.ru> 1.016-alt1
 - automated CPAN update
 
