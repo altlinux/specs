@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Email-Send
-Version: 2.199
+Version: 2.201
 Release: alt1
 
 Summary: Simply Sending Email
@@ -54,6 +54,9 @@ and simple, easy to use, and easy to extend.
 %perl_vendor_privlib/Email/
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 2.201-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 2.199-alt1
 - automated CPAN update
 
