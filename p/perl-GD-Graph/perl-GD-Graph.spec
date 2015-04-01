@@ -1,6 +1,6 @@
 %define dist GDGraph
 Name: perl-GD-Graph
-Version: 1.48
+Version: 1.49
 Release: alt1
 Epoch: 1
 
@@ -9,7 +9,7 @@ Group: Development/Perl
 License: GPL or Artistic
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RU/RUZ/GDGraph-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ GD.pm. See the documentation for some history and more information.
 %perl_vendor_privlib/GD
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.49-alt1
+- automated CPAN update
+
 * Sun Mar 30 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.48-alt1
 - new version
 
