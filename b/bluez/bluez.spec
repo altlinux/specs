@@ -2,7 +2,7 @@
 %def_enable obex
 
 Name: bluez
-Version: 5.29
+Version: 5.30
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -132,6 +132,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Wed Apr 01 2015 Yuri N. Sedunov <aris@altlinux.org> 5.30-alt1
+- 5.30
+
 * Thu Mar 12 2015 Yuri N. Sedunov <aris@altlinux.org> 5.29-alt1
 - 5.29
 
