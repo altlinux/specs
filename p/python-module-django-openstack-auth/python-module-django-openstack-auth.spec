@@ -1,7 +1,7 @@
 
 Name:           python-module-django-openstack-auth
 Version:        1.1.9
-Release:        alt1
+Release:        alt2.post42
 Summary:        Django authentication backend for OpenStack Keystone
 Group:          Development/Python
 
@@ -15,10 +15,10 @@ BuildRequires:  python-devel
 BuildRequires:  python-module-setuptools
 BuildRequires:  python-module-sphinx
 BuildRequires:  python-module-oslosphinx
-BuildRequires:  python-module-six >= 1.7.0
-BuildRequires:  python-module-keystoneclient >= 0.11.1
+BuildRequires:  python-module-six >= 1.9.0
+BuildRequires:  python-module-keystoneclient >= 1.1.0
 BuildRequires:  python-module-pbr >= 0.6
-BuildRequires:  python-module-oslo.config >= 1.6.0
+BuildRequires:  python-module-oslo.config >= 1.9.3
 
 Requires:   python-module-django
 BuildRequires:   python-module-django
@@ -68,6 +68,9 @@ rm -rf %buildroot/%python_sitelibdir/openstack_auth/tests
 %python_sitelibdir/*
 
 %changelog
+* Wed Apr 01 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.9-alt2.post42
+- upstream snapshot
+
 * Tue Mar 17 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.9-alt1
 - 1.1.9
 
