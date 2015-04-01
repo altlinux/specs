@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Lingua-EN-Sentence
-Version: 0.25
-Release: alt2.1
+Version: 0.27
+Release: alt1
 
 Summary: Lingua-EN-Sentence - Module for splitting text into sentences
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/S/SH/SHLOMOY/%m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/K/KI/KIMRYAN/Lingua-EN-Sentence-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jun 07 2005
 BuildRequires: perl-devel
@@ -56,6 +56,9 @@ so it notices them.
 %perl_vendor_privlib/Lingua/
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.25-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
