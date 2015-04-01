@@ -1,8 +1,8 @@
 Epoch: 1
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.31
-Release: alt1.1
+Version: 4.32
+Release: alt1
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -43,6 +43,9 @@ concurrently.
 %perl_vendor_archlib/IO
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1:4.32-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.31-alt1.1
 - rebuild with new perl 5.20.1
 
