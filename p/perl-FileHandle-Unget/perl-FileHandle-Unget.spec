@@ -1,6 +1,6 @@
 %define dist FileHandle-Unget
 Name: perl-%dist
-Version: 0.1623
+Version: 0.1624
 Release: alt1
 
 Summary: FileHandle which supports multi-byte unget
@@ -8,7 +8,7 @@ License: GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DC/DCOPPIT/FileHandle-Unget-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ character.  It also provides ungets to unget a string.
 %perl_vendor_privlib/FileHandle/Unget.pm
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.1624-alt1
+- automated CPAN update
+
 * Mon Dec 20 2010 Alexey Tourbin <at@altlinux.ru> 0.1623-alt1
 - 0.1621 -> 0.1623
 
