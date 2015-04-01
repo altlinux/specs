@@ -2,8 +2,8 @@
 %define dist Event
 
 Name: perl-%dist
-Version: 1.23
-Release: alt1.1
+Version: 1.24
+Release: alt1
 
 Summary: Event loop processing
 License: Perl
@@ -36,6 +36,9 @@ order when it is safe for callbacks to execute.
 %perl_vendor_autolib/Event
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1.1
 - rebuild with new perl 5.20.1
 
