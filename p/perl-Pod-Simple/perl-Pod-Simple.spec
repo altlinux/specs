@@ -1,6 +1,6 @@
 %define dist Pod-Simple
 Name: perl-%dist
-Version: 3.29
+Version: 3.30
 Release: alt1
 
 Summary: Framework for parsing Pod
@@ -45,6 +45,9 @@ rm t/search50.t
 %doc	%perl_vendor_privlib/Pod/Simple/*.pod
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 3.30-alt1
+- automated CPAN update
+
 * Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 3.29-alt1
 - automated CPAN update
 
