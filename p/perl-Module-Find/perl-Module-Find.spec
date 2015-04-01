@@ -3,7 +3,7 @@ Packager: Michael Bochkaryov <misha@altlinux.ru>
 %define dist Module-Find
 
 Name: perl-Module-Find
-Version: 0.12
+Version: 0.13
 Release: alt1
 
 Summary: Module::Find - Find and use installed modules in a (sub)category
@@ -40,6 +40,9 @@ make sure you modify @INC before you call the Module::Find functions.
 %perl_vendor_privlib/Module/Find.pm
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Sat Feb 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
