@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Palm
-Version: 1.014
+Version: 1.400
 Release: alt1
 
 Summary: A set of modules for manupulating PalmOS databases
@@ -50,6 +50,9 @@ the PalmPilot and its successors.
 #%_bindir/*
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.400-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.014-alt1
 - automated CPAN update
 
