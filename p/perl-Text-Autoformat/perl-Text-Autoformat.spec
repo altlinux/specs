@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-Autoformat
 Name: perl-%dist
-Version: 1.67
+Version: 1.69
 Release: alt1
 Serial: 1
 
@@ -39,6 +39,9 @@ various capitalization schemes.
 %perl_vendor_privlib/Text
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.69-alt1
+- automated CPAN update
+
 * Mon Jan 12 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.67-alt1
 - automated CPAN update
 
