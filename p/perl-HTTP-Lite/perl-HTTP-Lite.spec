@@ -3,7 +3,7 @@
 %define m_name		HTTP::Lite
 #%define m_author_id	TJMATHER
 Name: perl-%module
-Version: 2.43
+Version: 2.44
 Release: alt1
 
 Summary: HTTP::Lite - Lightweight HTTP implementation
@@ -58,6 +58,9 @@ HTTP::Lite is a stand-alone lightweight HTTP/1.1
 %perl_vendor_privlib/HTTP/
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 2.44-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 2.43-alt1
 - automated CPAN update
 
