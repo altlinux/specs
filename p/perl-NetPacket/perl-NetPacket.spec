@@ -2,7 +2,7 @@
 %define dist NetPacket
 
 Name: perl-%dist
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: A cluster of modules related to decoding and encoding of network protocols.
@@ -72,6 +72,9 @@ EOF
 %perl_vendor_privlib/NetPacket/PFLog.pm
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1
+- automated CPAN update
+
 * Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1
 - automated CPAN update
 
