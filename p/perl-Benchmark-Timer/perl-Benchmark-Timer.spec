@@ -1,7 +1,7 @@
 %define module Benchmark-Timer
 
 Name: perl-%module
-Version: 0.7102
+Version: 0.7103
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -11,7 +11,7 @@ License: GPLv2
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/D/DC/DCOPPIT/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DC/DCOPPIT/Benchmark-Timer-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -38,5 +38,8 @@ out and profile your code.
 %perl_vendor_privlib/Benchmark
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.7103-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Victor Forsiuk <force@altlinux.org> 0.7102-alt1
 - Initial build.
