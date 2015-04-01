@@ -3,14 +3,14 @@
 %define _libexecdir %_prefix/libexec
 
 # freerdp >= 1.1 required
-%def_disable rdp
+%def_enable rdp
 %def_enable spice
 %def_enable telepathy
 %def_enable ssh
 
 Name: vinagre
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: VNC client for the GNOME Desktop
 License: GPLv2
@@ -77,6 +77,9 @@ rm -rf %buildroot%_datadir/doc
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Apr 01 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt2
+- enabled rdp support via libfreerdp-1.1
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
