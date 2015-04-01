@@ -1,6 +1,6 @@
 %define dist Image-Size
 Name: perl-%dist
-Version: 3.232
+Version: 3.300
 Release: alt1
 
 Summary: Perl library for reading the dimensions of an image
@@ -8,7 +8,7 @@ License: Artistic 2.0 or LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJRAY/Image-Size-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ to IMG tags.
 %perl_vendor_privlib/Image
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 3.300-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 3.232-alt1
 - 3.230 -> 3.232
 
