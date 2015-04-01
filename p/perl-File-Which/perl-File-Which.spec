@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-File-Which
-Version: 1.09
-Release: alt1.1
+Version: 1.16
+Release: alt1
 
 Summary: Portable implementation of the `which' utility
 
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/File-Which/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/P/PE/PEREINAR/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PL/PLICEASE/File-Which-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 13 2008 (-bi)
 BuildRequires: perl-devel perl-Test-Script
@@ -63,6 +63,9 @@ it'll try "perl.exe", "perl.bat", etc.)
 %doc Changes README
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
