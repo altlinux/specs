@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Stomp
-Version: 0.51
+Version: 0.55
 Release: alt1
 
 Summary: Net::Stomp - a Streaming Text Orientated Messaging Protocol Client
@@ -58,6 +58,9 @@ For details on the protocol see http://stomp.codehaus.org/Protocol
 %doc CHANGES README 
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
+- automated CPAN update
+
 * Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
 - automated CPAN update
 
