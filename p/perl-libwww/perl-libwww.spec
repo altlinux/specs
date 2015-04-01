@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libwww-perl
 Name: perl-libwww
-Version: 6.08
+Version: 6.13
 Release: alt1
 
 Summary: WWW client/server library for Perl (aka LWP)
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MS/MSCHILLI/libwww-perl-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/libwww-perl-%{version}.tar.gz
 Patch: libwww-perl-6.03-alt-ftp-req.patch
 
 BuildArch: noarch
@@ -72,6 +72,9 @@ ln -snf lwp-request.1 %buildroot%_man1dir/POST.1
 %doc	%perl_vendor_privlib/lwp*.pod
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 6.13-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 6.08-alt1
 - automated CPAN update
 
