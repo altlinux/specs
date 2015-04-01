@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Roman
-Version: 1.23
+Version: 1.24
 Release: alt1
 
 Summary: Perl module for conversion between Roman and Arabic numerals.
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/C/CH/CHORNY/%m_distro-%version.zip
+Source: http://www.cpan.org/authors/id/C/CH/CHORNY/Roman-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Jun 06 2012
 # optimized out: perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
@@ -48,6 +48,9 @@ notation between Roman and Arabic.
 %perl_vendor_privlib/Roman*
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
+- automated CPAN update
+
 * Wed Jun 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
 - initial build for ALT Linux Sisyphus
 
