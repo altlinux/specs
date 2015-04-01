@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.16.0
-Release: alt1
+Release: alt2
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -49,14 +49,15 @@ rm -r Source/LibPNG Source/ZLib Source/OpenEXR
 rm -fR Source/LibRawLite
 
 sh ./gensrclist.sh
-%add_optflags %optflags_shared -I$PWD/Source/LibTIFF4
+%add_optflags %optflags_shared -fvisibility=hidden
+%add_optflags -I$PWD/Source/LibTIFF4
 %add_optflags -g -fpermissive -DPNG_iTXt_SUPPORTED
 %add_optflags $(pkg-config --cflags OpenEXR)
 %add_optflags -I$PWD/Source/LibJXR/jxrgluelib
 %add_optflags -I$PWD/Source/LibJXR/image/sys
 %add_optflags -I$PWD/Source/LibJXR/common/include
 %add_optflags -fno-strict-aliasing
-gcc %optflags_shared -pthread -I. -ISource -ISource/Metadata \
+gcc %optflags_shared -fvisibility=hidden -pthread -I. -ISource -ISource/Metadata \
 	-ISource/FreeImageToolkit -ISource/LibJPEG -ISource/LibTIFF4 \
 	-IWrapper/FreeImagePlus -IWrapper/FreeImagePlus/src -c \
 	Source/LibTIFF4/tif_unix.c -o Source/LibTIFF4/tif_unix.o
@@ -81,6 +82,9 @@ LIB_SUFFIX=64
 %_libdir/libfreeimage.so
 
 %changelog
+* Wed Apr 01 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.16.0-alt2
+- Rebuilt with -fvisibility=hidden (ALT#30891).
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.16.0-alt1
 - Version 3.16.0 (ALT #26750)
 
