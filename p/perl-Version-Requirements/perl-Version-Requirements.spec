@@ -1,6 +1,6 @@
 %define dist Version-Requirements
 Name: perl-%dist
-Version: 0.101022
+Version: 0.101023
 Release: alt1
 
 Summary: A set of version requirements for a CPAN dist
@@ -35,6 +35,9 @@ them to the simplest representation.
 %perl_vendor_privlib/Version
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.101023-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.101022-alt1
 - automated CPAN update
 
