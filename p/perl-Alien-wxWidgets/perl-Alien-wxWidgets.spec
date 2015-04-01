@@ -1,7 +1,7 @@
 %define dist Alien-wxWidgets
 
 Name: perl-%dist
-Version: 0.65
+Version: 0.67
 Release: alt1
 
 Summary: Alien-wxWidgets - building, finding and using wxWidgets binaries
@@ -35,6 +35,9 @@ build and install a private copy of wxWidgets as part of the build process
 %perl_vendor_archlib/Alien/wxWidgets*
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.67-alt1
+- automated CPAN update
+
 * Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
 - automated CPAN update
 
