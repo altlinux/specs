@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Lexical-SealRequireHints
-Version:        0.007
-Release:        alt3_9.1
+Version:        0.009
+Release:        alt1
 Summary:        Prevent leakage of lexical hints
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Lexical-SealRequireHints/
-Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-SealRequireHints-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-SealRequireHints-%{version}.tar.gz
 BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
 # Tests
@@ -58,6 +58,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.007-alt3_9.1
 - rebuild with new perl 5.20.1
 
