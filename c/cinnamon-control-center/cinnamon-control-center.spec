@@ -10,7 +10,7 @@
 
 Name: cinnamon-control-center
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -178,6 +178,9 @@ you'll want to install this package.
 
 
 %changelog
+* Wed Apr 1 2015 Vladimir Didenko <cow@altlinux.org> 2.4.2-alt2
+- don't check NetworkManager version
+
 * Thu Nov 27 2014 Vladimir Didenko <cow@altlinux.org> 2.4.2-alt1
 - 2.4.2
 
