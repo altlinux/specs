@@ -1,6 +1,6 @@
 Name: remmina
-Version: 1.0.0
-Release: alt3.1
+Version: 1.1.2
+Release: alt1
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -73,7 +73,7 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %find_lang %name-plugins
 
 %files -f %name.lang
-%doc remmina/AUTHORS remmina/ChangeLog remmina/COPYING remmina/README
+%doc AUTHORS ChangeLog README
 %_bindir/%name
 %_datadir/applications/*.desktop
 %_iconsdir/*/*/*/*
@@ -90,6 +90,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Sat Mar 21 2015 Mikhail Kolchin <mvk@altlinux.org> 1.1.2-alt1
+- new version
+
 * Thu Mar 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt3.1
 - Fixed build
 
