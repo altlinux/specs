@@ -1,20 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Catalyst.pm) perl(Catalyst/Controller.pm) perl(Catalyst/View.pm) perl(Config.pm) perl(Cwd.pm) perl(Data/Dump.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Path/Class.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Template/Alloy.pm) perl(Test/More.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm)
 # END SourceDeps(oneline)
-%define module_version 0.00003
+%define module_version 0.00007
 %define module_name Catalyst-View-TT-Alloy
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.00003
-Release: alt2
+Version: 0.00007
+Release: alt1
 Summary: Template::Alloy (TT) View Class
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/P/PE/PERLER/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DJ/DJZORT/Catalyst-View-TT-Alloy-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -50,6 +50,9 @@ the Catalyst::Action::RenderView manpage to do it for you.
 %perl_vendor_privlib/C*
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.00007-alt1
+- automated CPAN update
+
 * Fri Mar 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.00003-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
