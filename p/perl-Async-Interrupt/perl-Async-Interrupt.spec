@@ -1,8 +1,8 @@
 %define module Async-Interrupt
 
 Name: perl-%module
-Version: 1.2
-Release: alt1.1
+Version: 1.21
+Release: alt1
 Epoch: 1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -37,6 +37,9 @@ without using a single syscall.
 %perl_vendor_autolib/Async
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.21-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1.1
 - rebuild with new perl 5.20.1
 
