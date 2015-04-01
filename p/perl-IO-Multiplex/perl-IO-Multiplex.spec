@@ -1,7 +1,7 @@
 %define module IO-Multiplex
 
 Name: perl-%module
-Version: 1.13
+Version: 1.15
 Release: alt1
 
 Summary: IO::Multiplex - Manage IO on many file handles
@@ -9,7 +9,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/IO-Multiplex-1.13.tar.gz
+Source: http://www.cpan.org/authors/id/B/BB/BBB/IO-Multiplex-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -38,6 +38,9 @@ install -pDm755 contrib/portfw %buildroot%_bindir/portfw
 %perl_vendor_privlib/IO
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
 - automated CPAN update
 
