@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Attribute/Handlers.pm) perl(B.pm) perl(B/Utils.pm) perl(Devel/Peek.pm) perl(FindBin.pm) perl(Glib.pm) perl(POSIX.pm) perl(Package/Constants.pm) perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl(Sub/Identify.pm) perl(base.pm) perl(constant.pm) perl(constant/lexical.pm) perl(lib/abs.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-constant-defer
-Version:        5
-Release:        alt2_8
+Version:        6
+Release:        alt1
 Summary:        Constant subs with deferred value calculation
 License:        GPLv3+
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/constant-defer/
-Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/constant-defer-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/K/KR/KRYDE/constant-defer-%{version}.tar.gz
 BuildArch:      noarch
 # The inc/my_pod2html is not called
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 6-alt1
+- automated CPAN update
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 5-alt2_8
 - update to new release by fcimport
 
