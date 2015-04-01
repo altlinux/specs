@@ -1,5 +1,5 @@
 Name: libortp
-Version: 0.24.0
+Version: 0.24.1
 Release: alt1
 
 Group: System/Libraries
@@ -63,6 +63,9 @@ develop programs using the oRTP library.
 %_includedir/*
 
 %changelog
+* Wed Apr 01 2015 Alexei Takaseev <taf@altlinux.org> 0.24.1-alt1
+- 0.24.1
+
 * Thu Mar 12 2015 Alexei Takaseev <taf@altlinux.org> 0.24.0-alt1
 - 0.24.0
 
