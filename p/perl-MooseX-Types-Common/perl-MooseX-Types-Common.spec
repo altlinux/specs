@@ -3,7 +3,7 @@
 BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist MooseX-Types-Common
 Name: perl-%dist
-Version: 0.001012
+Version: 0.001013
 Release: alt1
 
 Summary: A library of commonly used type constraints
@@ -35,6 +35,9 @@ A set of commonly-used type constraints that do not ship with Moose by default.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.001013-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.001012-alt1
 - automated CPAN update
 
