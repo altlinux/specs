@@ -1,6 +1,6 @@
 %define dist Inline
 Name: perl-%dist
-Version: 0.78
+Version: 0.80
 Release: alt1
 
 Summary: Write Perl subroutines in other programming languages
@@ -42,6 +42,9 @@ can just run your Perl script like normal.
 %doc	%perl_vendor_privlib/Inline/*.pod
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.80-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
 - automated CPAN update
 
