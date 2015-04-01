@@ -1,6 +1,6 @@
 %define branch 1.8
 %define version %branch
-%define release alt1.b1
+%define release alt1.c1
 %define origname Django
 %define oname django
 %define py3_name python3-module-%oname
@@ -382,6 +382,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 01 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8-alt1.c1
+- Version 1.8c1
+
 * Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt1.b1
 - Version 1.8b1
 
