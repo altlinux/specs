@@ -1,6 +1,6 @@
 %define dist Chart
 Name: perl-%dist
-Version: 2.4.6
+Version: 2.4.10
 Release: alt1
 
 Summary: A series of charting modules
@@ -36,6 +36,9 @@ all of its graphics primitives calls.
 %doc %perl_vendor_privlib/Chart.pod
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.10-alt1
+- automated CPAN update
+
 * Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.6-alt1
 - automated CPAN update
 
