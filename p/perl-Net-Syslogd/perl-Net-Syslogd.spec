@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Syslogd
-Version: 0.12
+Version: 0.16
 Release: alt1
 
 Summary: Perl implementation of Syslog Listener
@@ -63,6 +63,9 @@ scripts for %name
 
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
