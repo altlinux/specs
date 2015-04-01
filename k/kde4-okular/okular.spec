@@ -8,7 +8,7 @@ Name: kde4-okular
 %define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Office
 Summary: KDE document viewer
@@ -30,6 +30,7 @@ Patch1: okular-4.11.5-alt-print-truncate-title.patch
 BuildRequires: ebook-tools-devel gcc-c++ glib2-devel kde4libs-devel libdjvu-devel
 BuildRequires: libpoppler-qt4-devel libqca2-devel libqimageblitz-devel libspectre-devel zlib-devel
 BuildRequires: libkscreen-devel qjson-devel
+BuildRequires: libtiff-devel libjpeg-devel
 BuildRequires: kde-common-devel kde4-plasma-mobile-devel kde4-kactivities-devel libkexiv24-devel
 %if_enabled msits
 BuildRequires: libchm-devel
@@ -41,7 +42,7 @@ Document viewer; support different kinds of documents.
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
-Requires: kde-common >= %major.%minor
+Requires: kde-common
 BuildArch: noarch
 %description common
 %name common package
@@ -131,6 +132,12 @@ Development files for %name
 
 
 %changelog
+* Wed Apr 01 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt2
+- fix build requires
+
+* Mon Mar 30 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt0.M70P.1
+- build for M70P
+
 * Fri Mar 13 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
 - new version
 
