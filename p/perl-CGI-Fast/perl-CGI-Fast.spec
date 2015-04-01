@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CGI.pm) perl(ExtUtils/MakeMaker.pm) perl(FCGI.pm) perl(Test/More.pm) perl(if.pm) perl(Test/Deep.pm)
 # END SourceDeps(oneline)
-%define module_version 2.05
+%define module_version 2.09
 %define module_name CGI-Fast
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.05
+Version: 2.09
 Release: alt1
 Summary: unknown
 Group: Development/Perl
@@ -40,6 +40,9 @@ see large performance improvements.
 %perl_vendor_privlib/C*
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1
 - automated CPAN update
 
