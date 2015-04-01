@@ -1,8 +1,8 @@
 %define module_name Getargs-Long
 
 Name: perl-%module_name
-Version: 1.1003
-Release: alt1.1
+Version: 1.1005
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/modules/by-module/Getargs/%module_name-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DC/DCOPPIT/Getargs-Long-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ common cases of all-mandatory and all-optional parameter lists.
 %perl_vendor_privlib/Getargs/
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.1005-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.1003-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
