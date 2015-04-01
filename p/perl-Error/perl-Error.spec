@@ -2,7 +2,7 @@
 %define dist Error
 
 Name: perl-%dist
-Version: 0.17022
+Version: 0.17023
 Release: alt1
 
 Summary: Error - Error/exception handling in an OO-ish way
@@ -42,6 +42,9 @@ user should throw errors from a sub-class of "Error".
 %perl_vendor_privlib/Error*
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.17023-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.17022-alt1
 - automated CPAN update
 
