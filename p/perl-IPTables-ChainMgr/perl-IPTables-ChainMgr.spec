@@ -1,6 +1,6 @@
 %define dist IPTables-ChainMgr
 Name: perl-%dist
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Perl extension for manipulating iptables policies
@@ -40,6 +40,9 @@ an installed iptables binary instead of having to compile against a library.
 %perl_vendor_privlib/IPTables
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1
 - automated CPAN update
 
