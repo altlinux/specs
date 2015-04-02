@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.4
-Release: alt1.hg20140628
+Release: alt2.hg20140628
 Epoch: 1
 
 Summary: Core of Hachoir framework: parse and edit binary files
@@ -75,6 +75,7 @@ This package contains Qt4 interface of hachoir-metadata.
 Summary: PyGTK interface of hachoir-metadata
 Group: File tools
 Requires: python-module-%mname-metadata = %epoch:%version-%release
+Requires: %name = %epoch:%version-%release
 
 %description -n %mname-metadata-gtk
 hachoir-metadata extracts metadata from multimedia files: music,
@@ -103,6 +104,7 @@ to know each bit meaning. Some good (but not perfect ;-)) parsers:
 %package -n python-module-%mname-regex
 Summary: Manipulation of regular expressions (regex)
 Group: Development/Python
+Requires: %name = %epoch:%version-%release
 
 %description -n python-module-%mname-regex
 hachoir-regex is a Python library for regular expression (regex or
@@ -114,6 +116,7 @@ allowing to search multiple strings and regex at the same time.
 %package -n python-module-%mname-subfile
 Summary: Find subfile in any binary stream
 Group: Development/Python
+Requires: %name = %epoch:%version-%release
 
 %description -n python-module-%mname-subfile
 hachoir-subfile is a tool based on hachoir-parser to find subfiles in
@@ -122,6 +125,7 @@ any binary stream.
 %package -n python-module-%mname-urwid
 Summary: Binary file explorer using Hachoir and urwid libraries
 Group: Development/Python
+Requires: %name = %epoch:%version-%release
 
 %description -n python-module-%mname-urwid
 hachoir-urwid is a binary file explorer based on Hachoir library to
@@ -201,6 +205,7 @@ to know each bit meaning. Some good (but not perfect ;-)) parsers:
 %package -n python3-module-%mname-regex
 Summary: Manipulation of regular expressions (regex) (Python 3)
 Group: Development/Python3
+Requires: python3-module-%oname = %epoch:%version-%release
 
 %description -n python3-module-%mname-regex
 hachoir-regex is a Python library for regular expression (regex or
@@ -212,6 +217,7 @@ allowing to search multiple strings and regex at the same time.
 %package -n python3-module-%mname-subfile
 Summary: Find subfile in any binary stream (Python 3)
 Group: Development/Python3
+Requires: python3-module-%oname = %epoch:%version-%release
 
 %description -n python3-module-%mname-subfile
 hachoir-subfile is a tool based on hachoir-parser to find subfiles in
@@ -221,6 +227,7 @@ any binary stream.
 Summary: Binary file explorer using Hachoir and urwid libraries (Python 3)
 Group: Development/Python3
 %add_findreq_skiplist %python3_sitelibdir/hachoir_urwid/urwid_ui.py
+Requires: python3-module-%oname = %epoch:%version-%release
 
 %description -n python3-module-%mname-urwid
 hachoir-urwid is a binary file explorer based on Hachoir library to
@@ -234,6 +241,7 @@ hexadecimal data and Hachoir reprensentation.
 Summary: PyGTK interface of hachoir-metadata
 Group: File tools
 Requires: python3-module-%mname-metadata = %epoch:%version-%release
+Requires: python3-module-%oname = %epoch:%version-%release
 
 %description -n %mname-metadata-gtk-py3
 hachoir-metadata extracts metadata from multimedia files: music,
@@ -466,6 +474,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.4-alt2.hg20140628
+- Added requirement on %name for %mname-metadata-gtk (ALT #30895)
+
 * Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.4-alt1.hg20140628
 - Added module for Python 3
 
