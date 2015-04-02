@@ -1,6 +1,6 @@
 %define branch 1.8
 %define version %branch
-%define release alt1.c1
+%define release alt2
 %define origname Django
 %define oname django
 %define py3_name python3-module-%oname
@@ -312,6 +312,7 @@ popd
 %exclude %python_sitelibdir/%modulename/db/backends/mysql/
 #exclude %python_sitelibdir/%modulename/db/backends/postgresql/
 %exclude %python_sitelibdir/%modulename/db/backends/postgresql_psycopg2/
+%exclude %python_sitelibdir/%modulename/db/backends/sqlite3/
 
 %exclude %python_sitelibdir/%modulename/__pycache__
 %exclude %python_sitelibdir/%modulename/*/__pycache__
@@ -382,6 +383,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8-alt2
+- Version 1.8
+
 * Wed Apr 01 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8-alt1.c1
 - Version 1.8c1
 
