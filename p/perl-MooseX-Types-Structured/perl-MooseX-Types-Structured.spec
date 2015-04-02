@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Types-Structured
 Name: perl-%dist
-Version: 0.30
+Version: 0.32
 Release: alt1
 
 Summary: Structured Type Constraints for Moose
@@ -14,7 +14,7 @@ Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Types-Structured-%{vers
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Nov 20 2011
-BuildRequires: perl-Devel-PartialDump perl-MooseX-Types-DateTime perl-Test-Fatal perl(Module/Build/Tiny.pm)
+BuildRequires: perl-Devel-PartialDump perl-MooseX-Types-DateTime perl-Test-Fatal perl(Module/Build/Tiny.pm) perl(Sub/Exporter/ForMethods.pm) perl(Test/Requires.pm)
 
 %description
 A structured type constraint is a standard container L<Moose> type constraint,
@@ -35,6 +35,9 @@ explicitly name all the allowed type constraints inside the structure.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - automated CPAN update
 
