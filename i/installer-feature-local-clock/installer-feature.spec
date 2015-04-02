@@ -1,5 +1,5 @@
 Name: installer-feature-local-clock
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Sets UTC=false in sysconfig/clock
@@ -24,6 +24,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Apr 01 2015 Mikhail Efremov <sem@altlinux.org> 0.2-alt1
+- Fix UTC setup.
+
 * Sat Oct 23 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.1-alt1
 - initital build
 
