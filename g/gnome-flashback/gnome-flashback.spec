@@ -1,17 +1,17 @@
-%define ver_major 3.15
+%define ver_major 3.16
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-flashback
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GNOME Flashback session
 License: GPLv3
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/GnomeFlashback
 
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 %define glib_ver 2.40.0
 %define gtk_ver 3.15.2
@@ -130,6 +130,9 @@ _EOF_
 
 
 %changelog
+* Thu Apr 02 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Mar 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.2-alt2
 - after 3.15.2 snapshot
 
