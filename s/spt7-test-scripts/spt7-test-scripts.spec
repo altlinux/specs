@@ -1,5 +1,5 @@
 Name: spt7-test-scripts 
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Test scripts for SPT7 distro
@@ -29,6 +29,9 @@ cp -a tests/ %buildroot%_libexecdir/%name/
 %_libexecdir/%name/
 
 %changelog
+* Thu Apr 02 2015 Mikhail Efremov <sem@altlinux.org> 1.3-alt1
+- Fix p4_6_2_3 test (by azol@).
+
 * Fri Mar 20 2015 Mikhail Efremov <sem@altlinux.org> 1.2-alt1
 - Add tests.
 
