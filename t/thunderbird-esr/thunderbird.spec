@@ -4,7 +4,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		%r_name-esr
-Version:	31.5.0
+Version:	31.6.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -457,6 +457,16 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Thu Apr 02 2015 Andrey Cherepanov <cas@altlinux.org> 31.6.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2015-40 Same-origin bypass through anchor navigation
+  + MFSA 2015-37 CORS requests should not follow 30x redirections after
+    preflight
+  + MFSA 2015-33 resource:// documents can load privileged pages
+  + MFSA 2015-31 Use-after-free when using the Fluendo MP3 GStreamer
+    plugin
+
 * Wed Feb 25 2015 Andrey Cherepanov <cas@altlinux.org> 31.5.0-alt1
 - New ESR version
 - Security fixes:
