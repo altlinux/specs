@@ -1,6 +1,6 @@
 Name: mpv
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 Summary(ru_RU.UTF8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
@@ -16,7 +16,7 @@ Packager: %packager
 # Automatically added by buildreq on Fri Feb 14 2014
 BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
 
-BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel liblua5-devel libdvdnav-devel libbluray-devel libavfilter-devel
+BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel liblua5-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel
 
 %description
 mpv is a movie player based on MPlayer and mplayer2.
@@ -58,6 +58,7 @@ chmod ugo+rx waf
 --enable-libbluray \
 --enable-dvdnav \
 --enable-libavfilter \
+--enable-libsmbclient \
 
 %build
 
@@ -81,6 +82,9 @@ chmod ugo+rx waf
 %_datadir/zsh/site-functions/_mpv
 
 %changelog
+* Wed Apr  1 2015 Terechkov Evgenii <evg@altlinux.org> 0.8.3-alt2
+- Build with Samba (ALT #30889)
+
 * Sun Mar 29 2015 Terechkov Evgenii <evg@altlinux.org> 0.8.3-alt1
 - 0.8.3
 - Enable dvdnav/bluray/avfilter (ALT #30873)
