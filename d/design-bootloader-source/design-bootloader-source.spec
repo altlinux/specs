@@ -1,7 +1,7 @@
 %define base_name design-bootloader
 
 Name: %base_name-source
-Version: 7.0
+Version: 7.1
 Release: alt1
 
 Group: Graphics
@@ -15,6 +15,8 @@ BuildRequires: perl-Encode
 Source: %name-%version.tar
 
 Obsoletes: design-bootloader-installer-source  design-bootloader-livecd-source  design-bootloader-system-source
+
+Conflicts: fonts-ttf-droid <= 1.0-alt1
 
 %description
 Sources of macros for generating graphical boot logo. Needed for building packages design-bootloader-{distro}
@@ -32,6 +34,9 @@ cp -a * %buildroot/usr/src/%base_name-source
 /usr/src/%base_name-source
 
 %changelog
+* Thu Apr 02 2015 Mikhail Efremov <sem@altlinux.org> 7.1-alt1
+- Fix Droid fonts path.
+
 * Tue Feb 11 2014 Michael Shigorin <mike@altlinux.org> 7.0-alt1
 - updated Spanish, Portuguese and Tatar translations
   to fix the order broken by adding a few entries
