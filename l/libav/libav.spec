@@ -9,6 +9,7 @@
 # {{{ Enable/Disable stuff
 %def_enable gpl
 %def_enable version3
+%def_enable gnutls
 %def_enable libxvid
 %def_enable libx264
 %def_enable libx265
@@ -73,7 +74,7 @@
 
 Name: libav
 Version: 11.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
@@ -91,6 +92,7 @@ BuildRequires: libalsa-devel
 BuildRequires: perl-podlators
 
 %{?_enable_avplay:BuildRequires: libSDL-devel}
+%{?_enable_gnutls:BuildRequires: libgnutls-devel}
 %{?_enable_libmp3lame:BuildRequires: liblame-devel}
 %{?_enable_libvorbis:BuildRequires: libvorbis-devel}
 %{?_enable_libfaac:BuildRequires: libfaac-devel}
@@ -382,6 +384,7 @@ sed -i 's/UNKNOWN/%version/' version.sh
     %{subst_enable pthreads} \
     %{subst_enable shared} \
     %{subst_enable static} \
+    %{subst_enable gnutls} \
     %{subst_enable libvorbis} \
     %{subst_enable libfaac} \
     %{subst_enable libfreetype} \
@@ -560,6 +563,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Thu Apr 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:11.3-alt2
+- built with gnutls (closes: #30890)
+
 * Wed Mar 11 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:11.3-alt1
 - 11.3 released
 
