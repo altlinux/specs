@@ -4,7 +4,7 @@
 
 Name: python-module-%sname
 Version: 2015.1.26
-Release: alt1
+Release: alt2
 Summary: Big Switch Networks Plugins for OpenStack Networking
 Group: Development/Python
 License: ASL 2.0
@@ -99,9 +99,9 @@ rm -fr %buildroot%python3_sitelibdir/*/*/tests
 
 %files
 %doc README.rst
-%_bindir/*
-%config(noreplace) %_sysconfdir/neutron/plugins/ml2/*
-%config(noreplace) %_sysconfdir/neutron/plugins/bigswitch/*
+#%_bindir/*
+#%config(noreplace) %_sysconfdir/neutron/plugins/ml2/*
+#%config(noreplace) %_sysconfdir/neutron/plugins/bigswitch/*
 %python_sitelibdir/*
 
 %if_with python3
@@ -113,5 +113,8 @@ rm -fr %buildroot%python3_sitelibdir/*/*/tests
 %doc html
 
 %changelog
+* Fri Apr 03 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.26-alt2
+- don't package config
+
 * Thu Apr 02 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.26-alt1
 - Initial release
