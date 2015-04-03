@@ -1,6 +1,8 @@
+%def_without smb
+
 Name: mc
 Version: 4.8.14
-Release: alt1
+Release: alt2
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -47,7 +49,7 @@ Obsoletes: %name-doc
 
 BuildPreReq: glib2-devel libe2fs-devel libgpm-devel
 BuildPreReq: groff-base cvs libX11-devel unzip
-BuildPreReq: libslang2-devel
+BuildPreReq: libslang2-devel libmount-devel
 
 %add_findreq_skiplist %_sysconfdir/mc/edit.indent.rc
 %add_findreq_skiplist %_sysconfdir/mc/edit.spell.rc
@@ -101,10 +103,9 @@ subst 's|@@VERSION@@|%version-%release|' version.h
 ./autogen.sh
 
 %build
-%configure \
+%configure %{?_with_smb:--enable-vfs-smb --with-smb-configdir=%_sysconfdir/samba} \
 	--enable-extcharset \
-	--enable-vfs-undelfs \
-	--enable-vfs-smb --with-smb-configdir=%_sysconfdir/samba
+	--enable-vfs-undelfs
 
 %make_build
 
@@ -175,6 +176,11 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Thu Apr 02 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.8.14-alt2
+- rebuilt without smb vfs (http://bugzilla.altlinux.org/30649#c10)
+- fixed incorrect merge with tag '4.8.14'
+- added libmount-devel to BuildPreReq
+
 * Mon Mar 23 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.8.14-alt1
 - 4.8.14
 - built with enable-vfs-smb (ALT #30649)
