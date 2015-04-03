@@ -2,7 +2,7 @@
 %def_enable    opengl
 
 Name:		gambas3
-Version:	3.7.0
+Version:	3.7.1
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -141,109 +141,138 @@ Requires:	%name-gb-qt4 = %version-%release
 Requires:	%name-gb-qt4-ext = %version-%release
 Requires:	%name-gb-qt4-webkit = %version-%release
 Requires:	%name-gb-settings = %version-%release
+Requires:	%name-gb-net = %version-%release
+Requires:	%name-gb-net-curl = %version-%release
 
 %description ide
 This package includes the complete Gambas3 Development Environment
 and the database manager. Installing this package will give you all
 of the Gambas3 components.
 
-%package examples
-Summary:	Example projects provided with Gambas3
-Group:		Development/Tools
-BuildArch:	noarch
-Provides:	%name-full
-# Some of the examples are GPLv2+
-# Database/PictureDatabase
-# Games/RobotFindsKitten
-# OpenGL/GambasGears
-# Printing/Printing
-# Everything else is GPL+
-License:	GPL+ and GPLv2+
-Requires:	%name-runtime = %version-%release
-Requires:	%name-ide = %version-%release
+%package full
+Summary:       Gambas3 with all components
+Group:         Development/Tools
+BuildArch:     noarch
+Provides:      %name-examples = %version-%release
+Obsoletes:     %name-examples < %version-%release
+
+Requires:      %name-runtime = %version-%release
+Requires:      %name-ide = %version-%release
 # From http://gambasdoc.org/help/howto/package#t1
 # It depends on "All gambas components."
-Requires:	%name-gb-args = %version-%release
-Requires:	%name-gb-cairo = %version-%release
-Requires:	%name-gb-chart = %version-%release
-Requires:	%name-gb-clipper = %version-%release
-Requires:	%name-gb-complex = %version-%release
-Requires:	%name-gb-compress = %version-%release
-Requires:	%name-gb-crypt = %version-%release
-Requires:	%name-gb-data = %version-%release
-Requires:	%name-gb-db = %version-%release
-Requires:	%name-gb-db-form = %version-%release
-Requires:	%name-gb-db-mysql = %version-%release
-Requires:	%name-gb-db-odbc = %version-%release
-Requires:	%name-gb-db-postgresql = %version-%release
-Requires:	%name-gb-db-sqlite2 = %version-%release
-Requires:	%name-gb-db-sqlite3 = %version-%release
-Requires:	%name-gb-dbus = %version-%release
-Requires:	%name-gb-desktop = %version-%release
-Requires:	%name-gb-desktop-gnome = %version-%release
-Requires:	%name-gb-eval-highlight = %version-%release
-Requires:	%name-gb-form = %version-%release
-Requires:	%name-gb-form-dialog = %version-%release
-Requires:	%name-gb-form-mdi = %version-%release
-Requires:	%name-gb-form-stock = %version-%release
-Requires:	%name-gb-httpd = %version-%release
-Requires:	%name-gb-gmp = %version-%release
-Requires:	%name-gb-gsl = %version-%release
-Requires:	%name-gb-gtk = %version-%release
-Requires:	%name-gb-gtk-opengl = %version-%release
-Requires:	%name-gb-gui = %version-%release
-Requires:	%name-gb-image = %version-%release
-Requires:	%name-gb-image-effect = %version-%release
-Requires:	%name-gb-image-imlib = %version-%release
-Requires:	%name-gb-image-io = %version-%release
-Requires:	%name-gb-inotify = %version-%release
-Requires:	%name-gb-jit = %version-%release
-Requires:	%name-gb-logging = %version-%release
-Requires:	%name-gb-map = %version-%release
-Requires:	%name-gb-markdown = %version-%release
-Requires:	%name-gb-media = %version-%release
-Requires:	%name-gb-memcached = %version-%release
-Requires:	%name-gb-mime = %version-%release
-Requires:	%name-gb-ncurses = %version-%release
-Requires:	%name-gb-net = %version-%release
-Requires:	%name-gb-net-curl = %version-%release
-Requires:	%name-gb-net-pop3 = %version-%release
-Requires:	%name-gb-net-smtp = %version-%release
-Requires:	%name-gb-openal = %version-%release
+Requires:      %name-gb-args = %version-%release
+Requires:      %name-gb-cairo = %version-%release
+Requires:      %name-gb-chart = %version-%release
+Requires:      %name-gb-clipper = %version-%release
+Requires:      %name-gb-complex = %version-%release
+Requires:      %name-gb-compress = %version-%release
+Requires:      %name-gb-crypt = %version-%release
+Requires:      %name-gb-data = %version-%release
+Requires:      %name-gb-db = %version-%release
+Requires:      %name-gb-db-form = %version-%release
+Requires:      %name-gb-db-mysql = %version-%release
+Requires:      %name-gb-db-odbc = %version-%release
+Requires:      %name-gb-db-postgresql = %version-%release
+Requires:      %name-gb-db-sqlite2 = %version-%release
+Requires:      %name-gb-db-sqlite3 = %version-%release
+Requires:      %name-gb-dbus = %version-%release
+Requires:      %name-gb-desktop = %version-%release
+Requires:      %name-gb-desktop-gnome = %version-%release
+Requires:      %name-gb-eval-highlight = %version-%release
+Requires:      %name-gb-form = %version-%release
+Requires:      %name-gb-form-dialog = %version-%release
+Requires:      %name-gb-form-mdi = %version-%release
+Requires:      %name-gb-form-stock = %version-%release
+Requires:      %name-gb-httpd = %version-%release
+Requires:      %name-gb-gmp = %version-%release
+Requires:      %name-gb-gsl = %version-%release
+Requires:      %name-gb-gtk = %version-%release
+Requires:      %name-gb-gtk-opengl = %version-%release
+Requires:      %name-gb-gui = %version-%release
+Requires:      %name-gb-image = %version-%release
+Requires:      %name-gb-image-effect = %version-%release
+Requires:      %name-gb-image-imlib = %version-%release
+Requires:      %name-gb-args = %version-%release
+Requires:      %name-gb-cairo = %version-%release
+Requires:      %name-gb-chart = %version-%release
+Requires:      %name-gb-clipper = %version-%release
+Requires:      %name-gb-complex = %version-%release
+Requires:      %name-gb-compress = %version-%release
+Requires:      %name-gb-crypt = %version-%release
+Requires:      %name-gb-data = %version-%release
+Requires:      %name-gb-db = %version-%release
+Requires:      %name-gb-db-form = %version-%release
+Requires:      %name-gb-db-mysql = %version-%release
+Requires:      %name-gb-db-odbc = %version-%release
+Requires:      %name-gb-db-postgresql = %version-%release
+Requires:      %name-gb-db-sqlite2 = %version-%release
+Requires:      %name-gb-db-sqlite3 = %version-%release
+Requires:      %name-gb-dbus = %version-%release
+Requires:      %name-gb-desktop = %version-%release
+Requires:      %name-gb-desktop-gnome = %version-%release
+Requires:      %name-gb-eval-highlight = %version-%release
+Requires:      %name-gb-form = %version-%release
+Requires:      %name-gb-form-dialog = %version-%release
+Requires:      %name-gb-form-mdi = %version-%release
+Requires:      %name-gb-form-stock = %version-%release
+Requires:      %name-gb-httpd = %version-%release
+Requires:      %name-gb-gmp = %version-%release
+Requires:      %name-gb-gsl = %version-%release
+Requires:      %name-gb-gtk = %version-%release
+Requires:      %name-gb-gtk-opengl = %version-%release
+Requires:      %name-gb-gui = %version-%release
+Requires:      %name-gb-image = %version-%release
+Requires:      %name-gb-image-effect = %version-%release
+Requires:      %name-gb-image-imlib = %version-%release
+Requires:      %name-gb-image-io = %version-%release
+Requires:      %name-gb-inotify = %version-%release
+Requires:      %name-gb-jit = %version-%release
+Requires:      %name-gb-logging = %version-%release
+Requires:      %name-gb-map = %version-%release
+Requires:      %name-gb-markdown = %version-%release
+Requires:      %name-gb-media = %version-%release
+Requires:      %name-gb-memcached = %version-%release
+Requires:      %name-gb-mime = %version-%release
+Requires:      %name-gb-ncurses = %version-%release
+Requires:      %name-gb-net = %version-%release
+Requires:      %name-gb-net-curl = %version-%release
+Requires:      %name-gb-net-pop3 = %version-%release
+Requires:      %name-gb-net-smtp = %version-%release
+Requires:      %name-gb-openal = %version-%release
 %if_enabled opengl
-Requires:	%name-gb-opengl = %version-%release
-Requires:	%name-gb-opengl-glu = %version-%release
-Requires:	%name-gb-opengl-glsl = %version-%release
-Requires:	%name-gb-opengl-sge = %version-%release
+Requires:      %name-gb-opengl = %version-%release
+Requires:      %name-gb-opengl-glu = %version-%release
+Requires:      %name-gb-opengl-glsl = %version-%release
+Requires:      %name-gb-opengl-sge = %version-%release
 %endif
-Requires:	%name-gb-openssl = %version-%release
-Requires:	%name-gb-option = %version-%release
-Requires:	%name-gb-pcre = %version-%release
-Requires:	%name-gb-pdf = %version-%release
-Requires:	%name-gb-qt4 = %version-%release
-Requires:	%name-gb-qt4-ext = %version-%release
-Requires:	%name-gb-qt4-webkit = %version-%release
-Requires:	%name-gb-qt4-opengl = %version-%release
-Requires:	%name-gb-report = %version-%release
-Requires:	%name-gb-report2 = %version-%release
-Requires:	%name-gb-scanner = %version-%release
-Requires:	%name-gb-sdl = %version-%release
-Requires:	%name-gb-sdl-sound = %version-%release
-Requires:	%name-gb-settings = %version-%release
-Requires:	%name-gb-signal = %version-%release
-Requires:	%name-gb-util = %version-%release
-Requires:	%name-gb-util-web = %version-%release
-Requires:	%name-gb-v4l = %version-%release
-Requires:	%name-gb-vb = %version-%release
-Requires:	%name-gb-xml = %version-%release
-Requires:	%name-gb-xml-html = %version-%release
-Requires:	%name-gb-xml-libxml = %version-%release
-Requires:	%name-gb-xml-rpc = %version-%release
-Requires:	%name-gb-xml-xslt = %version-%release
-Requires:	%name-gb-web = %version-%release
+Requires:      %name-gb-openssl = %version-%release
+Requires:      %name-gb-option = %version-%release
+Requires:      %name-gb-pcre = %version-%release
+Requires:      %name-gb-pdf = %version-%release
+Requires:      %name-gb-qt4 = %version-%release
+Requires:      %name-gb-qt4-ext = %version-%release
+Requires:      %name-gb-qt4-webkit = %version-%release
+Requires:      %name-gb-qt4-opengl = %version-%release
+Requires:      %name-gb-report = %version-%release
+Requires:      %name-gb-report2 = %version-%release
+Requires:      %name-gb-scanner = %version-%release
+Requires:      %name-gb-sdl = %version-%release
+Requires:      %name-gb-sdl-sound = %version-%release
+Requires:      %name-gb-settings = %version-%release
+Requires:      %name-gb-signal = %version-%release
+Requires:      %name-gb-util = %version-%release
+Requires:      %name-gb-util-web = %version-%release
+Requires:      %name-gb-v4l = %version-%release
+Requires:      %name-gb-vb = %version-%release
+Requires:      %name-gb-xml = %version-%release
+Requires:      %name-gb-xml-html = %version-%release
+Requires:      %name-gb-xml-libxml = %version-%release
+Requires:      %name-gb-xml-rpc = %version-%release
+Requires:      %name-gb-xml-xslt = %version-%release
+Requires:      %name-gb-web = %version-%release
 
-%description examples
-This package includes all the example projects provided with Gambas3.
+%description full
+Gambas3 with all components.
 
 %package gb-args
 Summary:	Gambas3 component package for args
@@ -978,21 +1007,10 @@ make LIBTOOL=%_bindir/libtool %?_smp_mflags
 %install
 export PATH=%buildroot%_bindir:$PATH
 make LIBTOOL=%_bindir/libtool DESTDIR=%buildroot INSTALL="install -p" install
-# Manually copy all examples
-cp -a app/examples %buildroot%appdir/
 # Yes, I know. Normally we'd nuke the .la files, but Gambas is retar^Wspecial.
 # rm -rf %%buildroot%%_libdir/%%name/*.la
 install -m644 -pD ./app/src/%name/.icon.png %buildroot%_pixmapsdir/%name.png
 install -m644 -pD %SOURCE1 %buildroot%_desktopdir/%name.desktop
-
-# get the buildroot out of the examples
-for i in `grep -lr "%buildroot" %buildroot%appdir/examples/`; 
-do
-  sed -i "s|%buildroot||g" $i; 
-done
-
-# Get the SVN noise out of the main tree
-#find %buildroot%appdir/ -type d -name .svn -exec rm -rf { 2>/dev/null ';' || :
 
 # Upstream says we don't need those files. Not sure why they install them then. :/
 rm -rf %buildroot%_libdir/%name/gb.la %buildroot%_libdir/%name/gb.so*
@@ -1048,23 +1066,8 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %files ide
 %_bindir/%name
 %_bindir/%name.gambas
-# The IDE crashes if it can't find this directory.
-# Since -examples Requires: -ide, this is okay.
-%dir %appdir/examples/
 
-%files examples
-%appdir/examples/Basic/
-%appdir/examples/Control/
-%appdir/examples/Database/
-%appdir/examples/Drawing/
-%appdir/examples/Games/
-%appdir/examples/Image/
-%appdir/examples/Misc/
-%appdir/examples/Multimedia/
-%appdir/examples/Networking/
-%appdir/examples/OpenGL/
-%appdir/examples/Printing/
-%appdir/examples/Web/
+%files full
 
 %files gb-args
 %_libdir/%name/gb.args.*
@@ -1346,7 +1349,6 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %files gb-qt4-webkit
 %_libdir/%name/gb.qt4.webkit.*
 %appdir/info/gb.qt4.webkit.*
-%appdir/control/gb.qt4.webkit/webview.png
 
 %files gb-report
 %_libdir/%name/gb.report.*
@@ -1430,6 +1432,11 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Wed Apr 01 2015 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
+- New version (http://gambaswiki.org/wiki/doc/release/3.7.1)
+- Remove gambas3-examples package because IDE use online access for
+  examples
+
 * Tue Mar 17 2015 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
 - New version (http://gambaswiki.org/wiki/doc/release/3.7.0)
 - New components:
