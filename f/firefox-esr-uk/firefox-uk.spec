@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name: firefox-esr-uk
-Version: 31.5.0
+Version: 31.6.0
 Release: alt1
 
 Summary: Ukrainian (UA) Language Pack for Firefox
@@ -72,6 +72,9 @@ ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk.dic
 %cid_dict_dir
 
 %changelog
+* Thu Apr 02 2015 Andrey Cherepanov <cas@altlinux.org> 31.6.0-alt1
+- New version
+
 * Wed Feb 25 2015 Andrey Cherepanov <cas@altlinux.org> 31.5.0-alt1
 - New version
 
