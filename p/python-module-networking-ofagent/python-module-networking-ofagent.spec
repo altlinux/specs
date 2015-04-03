@@ -4,7 +4,7 @@
 
 Name: python-module-%sname
 Version: 2015.1.2
-Release: alt1
+Release: alt2
 Summary: OpenStack Networking ofagent
 Group: Development/Python
 License: ASL 2.0
@@ -97,9 +97,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 
 %files
 %doc README.rst
-%_bindir/neutron-ofagent-agent
-%config(noreplace) %_sysconfdir/neutron/plugins/ml2/ml2_conf_ofa.ini
-%config(noreplace) %_sysconfdir/neutron/rootwrap.d/ofagent.filters
+#%_bindir/neutron-ofagent-agent
+#%config(noreplace) %_sysconfdir/neutron/plugins/ml2/ml2_conf_ofa.ini
+#%config(noreplace) %_sysconfdir/neutron/rootwrap.d/ofagent.filters
 %python_sitelibdir/*
 
 %if_with python3
@@ -111,5 +111,8 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Fri Apr 03 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt2
+- don't package config
+
 * Wed Apr 01 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
 - Initial release
