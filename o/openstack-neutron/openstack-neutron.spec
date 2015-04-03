@@ -9,7 +9,7 @@
 
 Name: openstack-neutron
 Version: 2015.1.0
-Release: alt0.b2.0
+Release: alt0.b3.0
 Provides: openstack-quantum = %version-%release
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
 Summary: OpenStack Networking Service
@@ -63,6 +63,7 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr
 BuildRequires: python-module-d2to1
+BuildRequires: python-module-six >= 1.9.0
 
 Requires: python-module-neutron = %version-%release
 Requires: python-module-oslo.rootwrap
@@ -91,10 +92,10 @@ Group: Development/Python
 Provides: python-module-quantum = %version-%release
 Obsoletes: python-module-quantum < 2013.2-0.4.b3
 
-Requires: python-module-keystoneclient >= 1.0.0
+Requires: python-module-keystoneclient >= 1.1.0
 Requires: python-module-keystonemiddleware >= 1.0.0
-Requires: python-module-oslo.config >= 1.2.0
-Requires: python-module-neutronclient >= 2.3.6
+Requires: python-module-oslo.config >= 1.9.0
+Requires: python-module-neutronclient >= 2.3.11
 Requires: python-module-novaclient >= 2.18.0
 Requires: sudo
 
@@ -636,7 +637,6 @@ EOF
 
 %files bigswitch
 %doc LICENSE
-%doc neutron/plugins/bigswitch/README
 %_bindir/neutron-restproxy-agent
 %python_sitelibdir/neutron/plugins/bigswitch
 %dir %_sysconfdir/neutron/plugins/bigswitch
@@ -678,9 +678,9 @@ EOF
 #%%doc neutron/plugins/hyperv/README
 %_bindir/neutron-hyperv-agent
 %python_sitelibdir/neutron/plugins/hyperv
-%dir %_sysconfdir/neutron/plugins/hyperv
+#%dir %_sysconfdir/neutron/plugins/hyperv
 # %%exclude %python_sitelibdir/neutron/plugins/hyperv/agent
-%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/hyperv/*.ini
+#%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/hyperv/*.ini
 
 %files ibm
 %doc LICENSE
@@ -805,8 +805,8 @@ EOF
 
 %files vmware
 %doc LICENSE
-%_bindir/neutron-check-nsx-config
-%_bindir/neutron-nsx-manage
+#%_bindir/neutron-check-nsx-config
+#%_bindir/neutron-nsx-manage
 %python_sitelibdir/neutron/plugins/vmware
 %dir %_sysconfdir/neutron/plugins/vmware
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/vmware/*.ini
@@ -826,6 +826,9 @@ EOF
 %python_sitelibdir/neutron/plugins/sriovnicagent
 
 %changelog
+* Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b3.0
+- 2015.1.0b3
+
 * Fri Mar 13 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b2.0
 - 2015.1.0b2
 
