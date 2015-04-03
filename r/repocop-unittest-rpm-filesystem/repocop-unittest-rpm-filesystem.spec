@@ -1,5 +1,5 @@
 Name: repocop-unittest-rpm-filesystem
-Version: 0.13
+Version: 0.14
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ done
 #%_datadir/repocop/fixscripts/*
 
 %changelog
+* Fri Apr 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- added mailx exceptions (closes: #30866)
+
 * Mon Jan 28 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - dropped *-debuginfo conflicts (they mirror their main packages)
 
