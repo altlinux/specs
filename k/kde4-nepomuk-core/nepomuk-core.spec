@@ -3,8 +3,8 @@
 %define rname nepomuk-core
 Name: kde4-nepomuk-core
 %define major  4
-%define minor  12
-%define bugfix 2
+%define minor  14
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 %define sover %major
@@ -23,6 +23,7 @@ Source: %rname-%version.tar
 Patch1: kdebase-runtime-4.8.0-alt-def-nepomuk.patch
 Patch2: nepomuk-core-4.10.0-alt-nepomuk-backup-on.patch
 Patch3: nepomuk-core-4.9.1-alt-ontology-dir.patch
+Patch4: nepomuk-core-4.14.3-alt-disable-migrator.patch
 
 # Automatically added by buildreq on Wed Sep 26 2012 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-test libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libstrigi-devel libxkbfile-devel phonon-devel pkg-config python-base rpm-build-gir ruby shared-desktop-ontologies shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -31,8 +32,8 @@ BuildRequires: gcc-c++ glib2-devel kde4libs-devel
 #BuildRequires: doxygen graphviz
 BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano shared-desktop-ontologies-devel
 BuildRequires: libtag-devel libpoppler-qt4-devel libexiv2-devel ebook-tools-devel
-BuildRequires: libavcodec-devel libavformat-devel libavdevice-devel libavutil-devel
-BuildRequires: libswscale-devel libpostproc-devel
+BuildRequires: libavresample-devel libavdevice-devel libpostproc-devel libswscale-devel
+BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -84,6 +85,7 @@ Development files for %name
 %patch1 -p2
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLists.txt
 
@@ -141,6 +143,12 @@ done
 %_K4link/*.so
 
 %changelog
+* Fri Apr 03 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
+- new version
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt0.M70P.1
+- built for M70P
+
 * Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
 - new version
 
