@@ -2,7 +2,7 @@
 %define rname amarok
 Name: kde4-%rname
 Version: 2.8.0
-Release: alt3
+Release: alt4
 
 Summary: Amarok is a music player for KDE.
 License: GPLv2
@@ -26,6 +26,7 @@ Patch7: 0007-Fix-performance-issue-with-large-podcast-feeds.patch
 Patch21: flac_mimetype_bnc671581.diff
 # ALT
 Patch100: amarok-2.8.0-alt-fix-compile.patch
+Patch101: amarok-2.8.0-alt-disable-analizer.patch
 
 # Automatically added by buildreq on Thu Nov 19 2009 (-bi)
 #BuildRequires: dbus-tools-gui doxygen gcc-c++ git-core glibc-devel-static groff-ps kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel libloudmouth-devel libmtp-devel libncursesw-devel libqca2-devel libqt3-devel libtag-devel libtag-extras-devel libxkbfile-devel libxml2-devel qtscriptbindings rpm-build-ruby tetex-latex time xorg-xf86vidmodeproto-devel
@@ -38,7 +39,8 @@ BuildRequires: libloudmouth-devel libmtp-devel libncursesw-devel libssl-devel li
 BuildRequires: qtscriptbindings rpm-build-ruby libofa-devel libgdk-pixbuf-devel glib2-devel
 BuildRequires: libtunepimp-devel libusb-devel libSDL-devel
 BuildRequires: qjson-devel libmygpo-qt-devel
-BuildRequires: libavformat-devel libavcodec-devel libavutil-devel
+BuildRequires: libavresample-devel libavdevice-devel libpostproc-devel libswscale-devel
+BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
 BuildRequires: soprano soprano-backend-redland libsoprano-devel
 BuildRequires: /proc
 
@@ -112,6 +114,9 @@ with various devices that uses Media Transfer Protocol (MTP)
 %patch7 -p1
 %patch21 -p1
 %patch100 -p1
+%ifarch %arm
+%patch101 -p1
+%endif
 
 %build
 %K4cmake \
@@ -206,8 +211,14 @@ fi
 
 
 %changelog
+* Fri Apr 03 2015 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt4
+- rebuild with new libav
+
 * Mon Apr 28 2014 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt3
 - built without nepomuk support
+
+* Wed Oct 16 2013 Sergey V Turchin <zerg at altlinux dot org> 2.8.0-alt1.M70P.1
+- built for p7
 
 * Mon Sep 23 2013 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt2
 - sync patches with SuSE
