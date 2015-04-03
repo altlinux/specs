@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        41.0.2272.101
+Version:        41.0.2272.118
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -488,6 +488,14 @@ strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver,libffmp
 %_altdir/%name-gnome
 
 %changelog
+* Thu Apr 02 2015 Andrey Cherepanov <cas@altlinux.org> 41.0.2272.118-alt1
+- New version
+- Security fixes:
+  - Critical CVE-2015-1233: A special thanks to Anonymous for a
+    combination of V8, Gamepad and IPC bugs that can lead to remote
+    code execution outside of the sandbox.
+  - High CVE-2015-1234: Buffer overflow via race condition in GPU.
+
 * Fri Mar 20 2015 Andrey Cherepanov <cas@altlinux.org> 41.0.2272.101-alt1
 - New version
 - Package all *.bin files
