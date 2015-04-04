@@ -1,7 +1,7 @@
 
 Name:    kmymoney
-Version: 4.6.4
-Release: alt3
+Version: 4.7.1
+Release: alt1
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -122,6 +122,14 @@ Requires: %name = %version-%release
 %description csvimport
 CSV importing plugin for KMyMoney.
 
+%package csvexport
+Summary: CSV exporting plugin for KMyMoney
+Group:   Office
+Requires: %name = %version-%release
+
+%description csvexport
+CSV exporting plugin for KMyMoney.
+
 %package plugins
 Summary: All KMyMoney plugins
 Group:   Office
@@ -132,11 +140,12 @@ Requires: %name-icalexport
 Requires: %name-printcheck
 Requires: %name-reconciliationreport
 Requires: %name-csvimport
+Requires: %name-csvexport
 Obsoletes: kde4-kmymoney-plugins
 
 %description plugins
 All KmyMoney plugins: kbanking, ofximport, icalexport, printcheck,
-reconciliationreport.
+reconciliationreport, csvimport and csvexport.
 
 %package i18n
 Summary: Internationalization and documentation for KMyMoney
@@ -161,7 +170,6 @@ Internationalization and documentation for KMyMoney
 
 %files
 %doc AUTHORS COPYING README* TODO
-%doc %_mandir/man1/%name.*
 %_K4bindir/%name
 %_K4libdir/libkmm_widgets.so.*
 %_K4libdir/libkmm_kdchart.so.*
@@ -176,7 +184,9 @@ Internationalization and documentation for KMyMoney
 %_datadir/mime/packages/*
 %_K4iconsdir/hicolor/*/apps/%name.png
 %_K4iconsdir/locolor/*/apps/%name.png
-%_K4iconsdir/hicolor/*/mimetypes/kmy.png
+%_K4iconsdir/hicolor/*/mimetypes/application-x-kmymoney.png
+%_datadir/appdata/%name.appdata.xml
+%_K4conf_update/%name.upd
 
 %files devel
 %dir %_K4includedir/%name
@@ -222,6 +232,11 @@ Internationalization and documentation for KMyMoney
 %_K4apps/kmm_csvimport/kmm_csvimport.rc
 %_K4conf/csvimporterrc
 
+%files csvexport
+%_K4lib/kmm_csvexport.so
+%_K4srv/kmm_csvexport.desktop
+%_K4apps/kmm_csvexport/kmm_csvexport.rc
+
 %files plugins
 
 %files i18n -f %name.lang
@@ -231,6 +246,12 @@ Internationalization and documentation for KMyMoney
 
 
 %changelog
+* Sat Apr 04 2015 Andrey Cherepanov <cas@altlinux.org> 4.7.1-alt1
+- New version
+
+* Fri Apr 03 2015 Andrey Cherepanov <cas@altlinux.org> 4.6.4-alt4
+- Rebuild with new version of libgwenhywfar
+
 * Wed Aug 27 2014 Andrey Cherepanov <cas@altlinux.org> 4.6.4-alt3
 - Fix source tarball name in watch file
 

@@ -1,6 +1,6 @@
 
 Name:     aqbanking
-Version:  5.0.25
+Version:  5.5.1
 Release:  alt1
 
 Summary:  A library for online banking functions and financial data import/export
@@ -22,9 +22,11 @@ BuildRequires: ktoblzcheck-devel
 BuildRequires: libchipcard-devel
 BuildRequires: libgamin-devel
 BuildRequires: libgmp-devel
-BuildRequires: libgwenhywfar-devel
+BuildRequires: libgwenhywfar-devel >= 4.10.0.0
 BuildRequires: libofx-devel
 BuildRequires: rpm-build-compat
+BuildRequires: libxmlsec1-gnutls-devel
+BuildRequires: zlib-devel
 #BuildRequires:	libOpenSP-devel
 #BuildRequires:	libssl-devel
 #BuildRequires:	libpcsclite-devel
@@ -101,6 +103,15 @@ This is the backend for the Aqbanking library which
 implements a client for the German HBCI (Home Banking Computer
 Interface) protocol.
 
+%package -n libaqebics
+Summary:  The EBICS backend for the Aqbanking library
+Group:	  System/Libraries
+
+%description -n libaqebics
+This is the backend for the Aqbanking library which
+implements a client for the EBICS (Electronic Banking Internet
+Communication Standard) protocol.
+
 %package doc
 Summary: AqBanking4 Handbook
 Group: Development/Documentation 
@@ -129,9 +140,11 @@ cp %SOURCE1 .
 %install
 %make_install install DESTDIR=%buildroot
 
-rm -f %buildroot%_libdir/*/plugins/*/*/*.la,a
-rm -f %buildroot%_libdir/*/plugins/*/*/*/*/*.la,a
+rm -f %buildroot%_libdir/*/plugins/*/*.la
+rm -f %buildroot%_libdir/*/plugins/*/*/*.la
+rm -f %buildroot%_libdir/*/plugins/*/*/*/*/*.la
 rm -f %buildroot%_docdir/aqhbci/aqhbci-tool/README
+rm -f %buildroot%_docdir/aqebics/aqebics-tool/README
 
 install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 
@@ -142,8 +155,7 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_bindir/aqbanking-cli
 %_bindir/aqhbci-tool4
 %_bindir/hbcixml3
-%dir %_libdir/gwenhywfar
-%_libdir/gwenhywfar/*
+%_bindir/aqebics-tool
 %dir %_libdir/%name
 %dir %_datadir/%name/bankinfo
 %_datadir/%name/bankinfo/*
@@ -161,6 +173,8 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_libdir/%name/plugins/*/imexporters/xmldb.*
 %_libdir/%name/plugins/*/imexporters/ctxfile.*
 %_libdir/%name/plugins/*/imexporters/yellownet.*
+%dir %_libdir/%name/plugins/*/dbio
+%_libdir/%name/plugins/*/dbio/*
 %dir %_datadir/%name/imexporters
 %_datadir/%name/imexporters/csv
 %_datadir/%name/imexporters/dtaus
@@ -173,16 +187,13 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_datadir/%name/imexporters/xmldb
 %_datadir/%name/imexporters/ctxfile
 %_datadir/%name/imexporters/yellownet
-%_libdir/%name/plugins/*/providers
-%exclude %_libdir/%name/plugins/*/providers/aqofxconnect.*
 %_datadir/%name/dialogs
 ### The aqofxconnect files
 %_datadir/%name/backends/aqofxconnect
-### The aqhbci files
-%_libdir/%name/plugins/*/providers/aqhbci.*
-%_datadir/%name/backends/aqhbci
+%dir %_libdir/%name/plugins/*/providers
 ### The aqnone files
-%_libdir/%name/plugins/*/providers/aqnone.*
+%_libdir/%name/plugins/*/providers/aqnone.xml
+%_libdir/%name/plugins/*/providers/aqnone.so
 ### Typemaker2
 %_datadir/%name/%name/typemaker2
 %_datadir/%name/typemaker2
@@ -195,13 +206,17 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_includedir/aqbanking5/aqbanking/
 %_includedir/aqbanking5/aqbankingpp/
 %_includedir/aqbanking5/aqhbci/
+%_includedir/aqebics/*
 %_aclocaldir/aqbanking.m4
 %_pkgconfigdir/aqbanking.pc
 %_libdir/libaqbankingpp.so
 %_libdir/libaqhbci.so
+%_libdir/libaqebics.so
+%_libdir/cmake/aqbanking-5.5/aqbanking-config*.cmake
 
 %files ofx
-%_libdir/%name/plugins/*/providers/aqofxconnect.*
+%_libdir/%name/plugins/*/providers/aqofxconnect.so
+%_libdir/%name/plugins/*/providers/aqofxconnect.xml
 %_libdir/%name/plugins/*/imexporters/ofx.*
 %_datadir/%name/imexporters/ofx
 
@@ -218,13 +233,27 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_libdir/libaqnone.so.*
 
 %files -n libaqhbci
+### The aqhbci files
 %_libdir/libaqhbci.so.*
+%_libdir/%name/plugins/*/providers/aqhbci.so
+%_libdir/%name/plugins/*/providers/aqhbci.xml
+%_datadir/%name/backends/aqhbci
+
+%files -n libaqebics
+### The aqebics files
+%_libdir/libaqebics.so.*
+%_libdir/%name/plugins/*/providers/aqebics.so
+%_libdir/%name/plugins/*/providers/aqebics.xml
+%_datadir/%name/backends/aqebics/
 
 %files doc
 %_docdir/%name/*.pdf
 %_docdir/%name/
 
 %changelog
+* Thu Apr 02 2015 Andrey Cherepanov <cas@altlinux.org> 5.5.1-alt1
+- new version 5.5.1
+
 * Wed Nov 28 2012 Andrey Cherepanov <cas@altlinux.org> 5.0.25-alt1
 - new version 5.0.25
 
