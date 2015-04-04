@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: etckeeper
-Version: 1.17
+Version: 1.18.1
 Release: alt1
 
 Summary: Etckeeper help to keep your /etc directory in VCS repository
@@ -60,6 +60,9 @@ fi
 %doc README.md
 
 %changelog
+* Sat Apr  4 2015 Terechkov Evgenii <evg@altlinux.org> 1.18.1-alt1
+- 1.18.1
+
 * Sun Mar  1 2015 Terechkov Evgenii <evg@altlinux.org> 1.17-alt1
 - 1.17
 
