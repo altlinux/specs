@@ -18,7 +18,7 @@ Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
 Version: 14.501.1003
-Release: alt2
+Release: alt3
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -33,10 +33,11 @@ Source9: ati-powermode.sh
 Source11: atieventsd.init
 Source12: aticonfig.1
 Patch0: %bname-13.20.16-printk-loglevel.patch
-Patch1: %bname-14.10-remove-unused.patch
-Patch2: %bname-14.10-linux-3.14.patch
-Patch3: %bname-14.10-alt.patch
+#Patch1: %bname-14.10-remove-unused.patch
+#Patch2: %bname-14.10-linux-3.14.patch
+#Patch3: %bname-14.10-alt.patch
 Patch4: %bname-linux3.17.patch
+Patch5: %bname-14.12_kernel-3.19.x.patch
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
 %{?epoch:Provides: %bname = %version-%release}
@@ -112,10 +113,11 @@ ATI/AMD %bname (Radeon video card driver) module sources for Linux kernel.
 sh %SOURCE0 --extract .
 cd common/lib/modules/%bname/build_mod
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+#%patch1 -p1
+#%patch2 -p1
+#%patch3 -p1
 %patch4 -p1
+%patch5 -p1
 cd -
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
 for d in {common,%archdir}/lib/modules/%bname/build_mod; do
@@ -265,6 +267,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Sat Apr 4 2015 barssc <barssc@altlinux.ru> 2:14.501.1003-alt3
+- Kernel module: fixed build for kernel 3.19.x
+
 * Sat Dec 13 2014 barssc <barssc@altlinux.ru> 2:14.501.1003-alt2
 - Kernel module: fixed build for kernel 3.17
 
