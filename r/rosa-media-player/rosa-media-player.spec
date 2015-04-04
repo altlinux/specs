@@ -1,5 +1,5 @@
 Name:		rosa-media-player
-Version:	1.6.9
+Version:	1.6.11
 Release:	alt1
 Summary:	Multimedia player based on mplayer technology
 
@@ -59,6 +59,9 @@ strip %buildroot%_bindir/%name
 %_datadir/apps/solid/actions/Open-with-ROMP.desktop
 
 %changelog
+* Sat Apr 04 2015 Andrey Cherepanov <cas@altlinux.org> 1.6.11-alt1
+- New version (ALT #30908)
+
 * Thu Jan 09 2014 Andrey Cherepanov <cas@altlinux.org> 1.6.9-alt1
 - New version
 
