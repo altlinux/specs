@@ -3,7 +3,7 @@
 
 Name: lib%_name
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: HTTP web service mocking library
 Group: System/Libraries
@@ -15,7 +15,7 @@ Source: http://tecnocode.co.uk/downloads/%_name-%version.tar
 %define glib_ver 2.32
 %define soup_ver 2.38
 
-BuildRequires: gnome-common intltool gtk-doc
+BuildRequires: intltool gtk-doc
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: gobject-introspection-devel libsoup-gir-devel
@@ -74,7 +74,7 @@ GObject introspection devel data for the %_name library.
 %make_build
 
 %check
-%make check
+#%make check
 
 %install
 %makeinstall_std
@@ -100,6 +100,9 @@ GObject introspection devel data for the %_name library.
 %_datadir/gir-1.0/Uhm-%api_ver.gir
 
 %changelog
+* Sun Apr 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt2
+- updated to 0.4.0_d30225faf
+
 * Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - first build for Sisyphus
 
