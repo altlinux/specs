@@ -18,7 +18,7 @@
 
 Name: libwebkitgtk3
 Version: 2.4.8
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -33,6 +33,8 @@ Patch: webkitgtk-2.4.0-up-textrel.patch
 Patch1: webkitgtk-2.4.0-alt-link.patch
 # https://bugs.webkit.org/show_bug.cgi?id=140241
 Patch2: webkitgtk-2.4.8-build.patch
+# https://bugs.webkit.org/show_bug.cgi?id=141381
+Patch3: webkitgtk-2.4.8-fc-gmutexlocker.patch
 
 Obsoletes: %name-webinspector
 Provides: %name-webinspector = %EVR
@@ -220,6 +222,7 @@ GObject introspection data for the Webkit2 library
 %patch -p1
 %patch1
 %patch2 -p1
+%patch3 -p1
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -341,6 +344,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Sun Apr 05 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.8-alt2
+- fixed build with glib-2.44
+
 * Sat Jan 10 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.8-alt1
 - 2.4.8
 
