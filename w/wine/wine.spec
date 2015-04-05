@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.7.39
+Version: 1.7.40
 Release: alt1
 Epoch: 1
 
@@ -424,6 +424,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Sun Apr 05 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.40-alt1
+- new version 1.7.40
+
 * Fri Mar 27 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.39-alt1
 - release 1.7.39
 
