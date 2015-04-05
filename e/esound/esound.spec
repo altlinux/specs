@@ -3,10 +3,11 @@
 %def_enable oss
 %def_disable arts
 %def_disable static
+%def_disable doc
 
 Name: esound
 Version: %ver_major.41
-Release: alt8
+Release: alt9
 
 Summary: The Enlightened Sound Daemon
 License: GPL
@@ -23,7 +24,8 @@ Patch8: %name-0.2.41-link.patch
 %define audiofile_ver 0.2.3
 
 BuildPreReq: libaudiofile-devel >= %audiofile_ver
-BuildRequires: docbook-utils-print libwrap-devel
+BuildRequires: libwrap-devel
+%{?_enable_doc:BuildRequires: docbook-utils-print}
 
 %if_enabled alsa
 %define alsa_ver 1.0.0
@@ -159,7 +161,8 @@ subst 's,/etc/esound,/etc,g' docs/esd.1
 %_includedir/*
 %_datadir/aclocal/*
 %_man1dir/esd-config.1*
-%doc ChangeLog TODO TIPS docs/html
+%doc ChangeLog TODO TIPS
+%{?_enable_doc:%doc docs/html}
 
 %if_enabled static
 %files -n libesd-devel-static
@@ -167,9 +170,12 @@ subst 's,/etc/esound,/etc,g' docs/esd.1
 %endif
 
 # packaged as %doc
-%exclude %_datadir/doc/esound
+%{?_enable_doc:%exclude %_datadir/doc/esound}
 
 %changelog
+* Sun Apr 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.41-alt9
+- disabled documentation build
+
 * Thu Sep 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.41-alt8
 - rebuilt against libaudiofile.so.1 (ALT #30284)
 
