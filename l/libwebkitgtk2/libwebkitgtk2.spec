@@ -14,7 +14,7 @@
 %def_enable spellcheck
 
 Name: libwebkitgtk2
-Version: 2.2.8
+Version: 2.4.8
 Release: alt1
 
 Summary: Web browser engine
@@ -26,6 +26,7 @@ Source: webkitgtk-%version.tar.xz
 Patch: webkitgtk-2.1.92-alt-gtk2_compatibility.patch
 Patch2: webkitgtk-2.4.0-up-textrel.patch
 Patch3: webkitgtk-2.4.0-alt-link.patch
+Patch4: webkitgtk-2.4.8-fc-gmutexlocker.patch
 
 Requires: libjavascriptcoregtk2 = %version-%release
 
@@ -185,6 +186,8 @@ GObject introspection devel data for the JavaScriptCore library
 %patch
 %patch2 -p1
 %patch3
+%patch4 -p1
+
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
 rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmain.sh,missing,libtool.m4,ltoptions.m4,ltsugar.m4,ltversion.m4,lt~obsolete.m4,gsettings.m4,gtk-doc.m4}
@@ -276,6 +279,10 @@ xvfb-run make check
 %endif
 
 %changelog
+* Sun Apr 05 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.8-alt1
+- 2.4.8
+- fixed build with glib-2.44
+
 * Wed Oct 01 2014 Yuri N. Sedunov <aris@altlinux.org> 2.2.8-alt1
 - 2.2.8
 
