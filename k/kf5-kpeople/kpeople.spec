@@ -1,0 +1,103 @@
+%define rname kpeople
+
+Name: kf5-%rname
+Version: 5.8.0
+Release: alt1
+%K5init altplace
+
+Group: System/Libraries
+Summary: KDE Frameworks 5 access to all contacts and aggregates them by person
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Fri Mar 20 2015 (-bi)
+# optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-sql libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base qt5-base-devel ruby ruby-stdlibs
+#BuildRequires: extra-cmake-modules gcc-c++ kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kitemviews-devel kf5-kservice-devel kf5-kwidgetsaddons-devel python-module-google qt5-declarative-devel rpm-build-ruby
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel
+BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel
+BuildRequires: kf5-kitemviews-devel kf5-kservice-devel kf5-kwidgetsaddons-devel
+
+%description
+KPeople offers unified access to our contacts from different sources, grouping
+them by person while still exposing all the data.
+
+%package common
+Summary: %name common package
+Group: Graphical desktop/KDE
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n libkf5people
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5people
+KF5 library
+
+%package -n libkf5peoplebackend
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5peoplebackend
+KF5 library
+
+%package -n libkf5peoplewidgets
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5peoplewidgets
+KF5 library
+
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build
+
+%install
+%K5install
+%find_lang %name --with-qt --all-name
+%K5find_qtlang %name --all-name
+
+%files common -f %name.lang
+%doc COPYING* README.md
+%_K5data/kpeople/
+%_K5srvtyp/*.desktop
+
+%files devel
+#%_K5inc/kpeople_version.h
+%_K5inc/KPeople/
+%_K5link/lib*.so
+%_K5lib/cmake/KF5People/
+%_K5archdata/mkspecs/modules/qt_KPeople*.pri
+
+%files -n libkf5people
+%_K5lib/libKF5People.so.*
+%files -n libkf5peoplebackend
+%_K5lib/libKF5PeopleBackend.so.*
+%files -n libkf5peoplewidgets
+%_K5qml/org/kde/people/
+%_K5lib/libKF5PeopleWidgets.so.*
+
+%changelog
+* Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
+* Wed Mar 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt0.1
+- test
+
+* Wed Mar 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt0.1
+- initial build

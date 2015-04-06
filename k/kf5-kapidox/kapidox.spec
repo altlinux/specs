@@ -1,12 +1,10 @@
 %define rname kapidox
-#add_python_req_skip gv
 
 Name: kf5-%rname
-Version: 5.7.0
-Release: alt0.1
+Version: 5.8.0
+Release: alt1
 %K5init altplace
-# FIXME graphviz-python
-%setup_python_module rname
+%setup_python_module %rname
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 doxygen tools
@@ -58,6 +56,11 @@ developing applications that use %name.
 
 %install
 %K5install
+%K5install_move bin all
+%if "%_lib" == "lib64"
+mkdir -p %buildroot/%_libdir
+mv %buildroot/usr/lib/python* %buildroot/%_libdir/
+%endif
 
 %files
 %doc LICENSE README.md
@@ -76,5 +79,11 @@ developing applications that use %name.
 #%_K5archdata/mkspecs/modules/qt_kapidox.pri
 
 %changelog
+* Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
+* Wed Mar 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt0.1
+- test
+
 * Mon Feb 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt0.1
 - initial build
