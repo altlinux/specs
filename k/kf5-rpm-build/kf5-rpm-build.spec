@@ -1,7 +1,7 @@
 
 Name: kf5-rpm-build
 Version: 5.0.0
-Release: alt0.7
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
@@ -11,6 +11,7 @@ License: GPL
 BuildArch: noarch
 
 Source1: macrosd
+Source2: rpm-build-kf5-find-qtlang
 
 %description
 Set of KF5 RPM macroses.
@@ -28,11 +29,16 @@ Install this package if you want to create RPM packages that use KF5.
 
 %install
 install -D -m 0644 %SOURCE1 %buildroot/%_rpmmacrosdir/kf5
+install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 
 %files -n rpm-build-kf5
 %_rpmmacrosdir/kf5
+%_bindir/rpm-build-kf5-*
 
 %changelog
+* Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt1
+- update macros
+
 * Thu Mar 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt0.7
 - update macroses
 
