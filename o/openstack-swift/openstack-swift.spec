@@ -1,7 +1,7 @@
 
 Name: openstack-swift
 Version: 2.2.2
-Release: alt1
+Release: alt2
 Summary: OpenStack Object Storage (Swift)
 
 Group: System/Servers
@@ -219,12 +219,12 @@ install -p -D -m 755 %SOURCE120 %buildroot%_initdir/%name-account
 install -p -D -m 755 %SOURCE123 %buildroot%_initdir/%name-account-replicator
 install -p -D -m 755 %SOURCE125 %buildroot%_initdir/%name-account-auditor
 install -p -D -m 755 %SOURCE127 %buildroot%_initdir/%name-account-reaper
-install -p -D -m 755 %SOURCE140 %buildroot%_initdir/%name-container.service
+install -p -D -m 755 %SOURCE140 %buildroot%_initdir/%name-container
 install -p -D -m 755 %SOURCE143 %buildroot%_initdir/%name-container-replicator
 install -p -D -m 755 %SOURCE145 %buildroot%_initdir/%name-container-auditor
 install -p -D -m 755 %SOURCE147 %buildroot%_initdir/%name-container-updater
 install -p -D -m 755 %SOURCE149 %buildroot%_initdir/%name-container-reconciler
-install -p -D -m 755 %SOURCE150 %buildroot%_initdir/%name-object.service
+install -p -D -m 755 %SOURCE150 %buildroot%_initdir/%name-object
 install -p -D -m 755 %SOURCE153 %buildroot%_initdir/%name-object-replicator
 install -p -D -m 755 %SOURCE155 %buildroot%_initdir/%name-object-auditor
 install -p -D -m 755 %SOURCE157 %buildroot%_initdir/%name-object-updater
@@ -318,12 +318,12 @@ done
 %post proxy
 %post_service %name-proxy
 %post_service %name-object-expirer
-%post_service %name-container-reconciler.service
+%post_service %name-container-reconciler
 
 %preun proxy
 %preun_service %name-proxy
 %preun_service %name-object-expirer
-%preun_service %name-container-reconciler.service
+%preun_service %name-container-reconciler
 
 %files
 %doc AUTHORS LICENSE README.md
@@ -455,6 +455,9 @@ done
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Apr 06 2015 Alexey Shabalin <shaba@altlinux.ru> 2.2.2-alt2
+- fixed init scripts
+
 * Thu Mar 12 2015 Alexey Shabalin <shaba@altlinux.ru> 2.2.2-alt1
 - 2.2.2
 
