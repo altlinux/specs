@@ -1,7 +1,11 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: mithraen-pbx
 Summary: Asterisk fax support scripts
 Version: 0.2
-Release: alt3
+Release: alt4
 License: GPL
 Group: System/Servers
 BuildArch: noarch
@@ -15,7 +19,7 @@ BuildArch: noarch
 Obsoletes: seiros-pbx-fax
 Requires: tcllib
 Requires: libtiff-utils
-Requires: postfix
+Requires: MTA
 
 %description fax
 Asterisk fax support scripts
@@ -67,6 +71,9 @@ fi
 %_datadir/mithraen-pbx-systemtest/*
 
 %changelog
+* Mon Apr 06 2015 Denis Smirnov <mithraen@altlinux.ru> 0.2-alt4
+- change requires postfix -> MTA (ALT 30906)
+
 * Tue Sep 08 2009 Denis Smirnov <mithraen@altlinux.ru> 0.2-alt3
 - add obsoletes to seiros-pbx-fax
 
