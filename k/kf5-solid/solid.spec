@@ -1,0 +1,92 @@
+%define rname solid
+
+Name: kf5-%rname
+Version: 5.8.0
+Release: alt1
+%K5init altplace
+
+Group: System/Libraries
+Summary: KDE Frameworks 5 desktop hardware abstraction
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Mon Jan 19 2015 (-bi)
+# optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
+#BuildRequires: extra-cmake-modules flex gcc-c++ libudev-devel media-player-info python-module-google qt5-declarative-devel qt5-tools-devel rpm-build-ruby
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules flex gcc-c++ libudev-devel qt5-declarative-devel qt5-tools-devel
+
+%description
+Solid is a device integration framework.  It provides a way of querying and
+interacting with hardware independently of the underlying operating system.
+
+%package common
+Summary: %name common package
+Group: Graphical desktop/KDE
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n libkf5solid
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+Requires: media-player-info
+%description -n libkf5solid
+KF5 library
+
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build
+
+%install
+%K5install
+%find_lang %name --with-qt --all-name
+%K5find_qtlang %name --all-name
+
+%files
+%_K5bin/solid-hardware5
+#%_K5bin/solid-power
+
+%files common -f %name.lang
+%doc COPYING.LIB README.md
+
+%files devel
+%_K5inc/solid_version.h
+%_K5inc/Solid/
+%_K5link/lib*.so
+%_K5lib/cmake/KF5Solid
+%_K5archdata/mkspecs/modules/qt_Solid.pri
+
+%files -n libkf5solid
+%_K5lib/libKF5Solid.so.*
+%_K5qml/org/kde/solid/
+
+%changelog
+* Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
+* Wed Mar 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt0.1
+- test
+
+* Mon Feb 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt0.1
+- test
+
+* Mon Jan 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt0.1
+- test
+
+* Mon Dec 22 2014 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- initial build

@@ -1,0 +1,132 @@
+%define rname kio
+
+Name: kf5-%rname
+Version: 5.8.0
+Release: alt1
+%K5init altplace
+
+Group: System/Libraries
+Summary: KDE Frameworks 5 network transparent access to files and data
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Tue Feb 17 2015 (-bi)
+# optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libcom_err-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxml2-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
+#BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libacl-devel libattr-devel libkrb5-devel libxkbfile-devel libxslt-devel python-module-google qt5-script-devel qt5-x11extras-devel rpm-build-ruby xsltproc zlib-devel-static
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ qt5-script-devel qt5-x11extras-devel
+BuildRequires: libxslt-devel xsltproc zlib-devel
+BuildRequires: libacl-devel libattr-devel libkrb5-devel
+BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel
+BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
+BuildRequires: kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kglobalaccel-devel
+BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel
+BuildRequires: kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-ktextwidgets-devel
+BuildRequires: kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-attica-devel
+
+%description
+This framework implements almost all the file management functions you
+will ever need. In fact, the KDE file manager (Dolphin) and the KDE
+file dialog also uses this to provide its network-enabled file management.
+
+%package common
+Summary: %name common package
+Group: Graphical desktop/KDE
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n libkf5kiocore
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5kiocore
+KF5 library
+
+%package -n libkf5kiowidgets
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5kiowidgets
+KF5 library
+
+%package -n libkf5kiofilewidgets
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5kiofilewidgets
+KF5 library
+
+%package -n libkf5kiontlm
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5kiontlm
+KF5 library
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build
+
+%install
+%K5install
+%find_lang %name --with-qt --with-kde --all-name
+%K5find_qtlang %name --all-name
+
+%files common -f %name.lang
+%doc COPYING.LIB README.md
+
+%files
+%config(noreplace) %_K5xdgconf/*
+%_K5bin/*
+%_K5exec/*
+%_K5plug/kf5/*
+%_K5data/kcookiejar/
+%_K5notif/*
+%_K5plug/*.so
+%_K5xdgapp/*.desktop
+%_K5srv/*
+%_K5srvtyp/*
+%_K5dbus_srv/*.service
+
+%files devel
+%_K5inc/kio_version.h
+%_K5inc/KIO*/
+%_K5inc/kio/
+%_K5link/lib*.so
+%_K5lib/cmake/KF5KIO
+%_K5archdata/mkspecs/modules/qt_KIO*.pri
+%_K5archdata/mkspecs/modules/qt_KNTLM.pri
+%_K5dbus_iface/*.xml
+
+%files -n libkf5kiocore
+%_K5lib/libKF5KIOCore.so.*
+%files -n libkf5kiowidgets
+%_K5lib/libKF5KIOWidgets.so.*
+%files -n libkf5kiofilewidgets
+%_K5lib/libKF5KIOFileWidgets.so.*
+%files -n libkf5kiontlm
+%_K5lib/libKF5KIONTLM.so.*
+
+%changelog
+* Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
+* Wed Mar 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt0.1
+- test
+
+* Mon Feb 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt0.1
+- initial build

@@ -1,8 +1,8 @@
 %define rname kwindowsystem
 
 Name: kf5-%rname
-Version: 5.6.0
-Release: alt0.1
+Version: 5.8.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -57,6 +57,7 @@ KF5 library
 %install
 %K5install
 %find_lang %name --with-qt --all-name
+%K5find_qtlang %name --all-name
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
@@ -72,5 +73,14 @@ KF5 library
 %_K5lib/libKF5WindowSystem.so.*
 
 %changelog
+* Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
+* Wed Mar 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt0.1
+- test
+
+* Mon Feb 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt0.1
+- test
+
 * Mon Jan 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt0.1
 - initial build
