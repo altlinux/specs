@@ -1,4 +1,4 @@
-%define svn_revision 417586.2
+%define svn_revision 417586.3
 #============================================================================
 # Please do not edit!
 # Created by specgen utility from files in specs/ subdir
@@ -70,7 +70,6 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 417586.2
 %add_verify_elf_skiplist %_libdir/libasteriskssl13.so.1
 %def_with debug
 %def_enable debug
@@ -426,7 +425,6 @@ Asterisk documentation and sample files
 Summary: FAX send/receive/autodetect support for Asterisk
 Group: %group
 Requires: %name = %version-%release
-Requires: mithraen-pbx-fax
 Requires(pre): asterisk-base
 
 %description fax
@@ -646,8 +644,6 @@ make menuselect.makeopts \
     libdir=%_libdir ||:
 make menuselect/menuselect libdir=%_libdir ||:
 menuselect/menuselect  \
-    --enable DONT_OPTIMIZE \
-    --enable DEBUG_THREADS \
     --enable DETECT_DEADLOCKS \
     --enable DO_CRASH \
     --enable BETTER_BACKTRACES \
@@ -1283,6 +1279,10 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %_libdir/libasteriskssl13.so.1
 
 %changelog
+* Mon Apr 06 2015 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.417586.3
+- remove DONT_OPTIMIZE and DEBUG_THREADS compile options
+- remove requires to mithraen-pbx-fax
+
 * Mon Dec 15 2014 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.417586.2
 - exclude music/sounds from src.rpm
 
