@@ -5,7 +5,7 @@
 Name: asterisk11
 Summary: Open source PBX
 Version: 11.16.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 %if_with corosync
@@ -422,7 +422,6 @@ Asterisk documentation and sample files
 Summary: FAX send/receive/autodetect support for Asterisk
 Group: %group
 Requires: %name = %version-%release
-Requires: mithraen-pbx-fax
 Requires(pre): asterisk-base
 
 %description fax
@@ -645,8 +644,6 @@ make -C menuselect libdir=%_libdir
 make menuselect.makeopts \
     libdir=%_libdir ||:
 menuselect/menuselect  \
-    --enable DONT_OPTIMIZE \
-    --enable DEBUG_THREADS \
     --enable DETECT_DEADLOCKS \
     --enable DO_CRASH \
     --enable BETTER_BACKTRACES \
@@ -1271,6 +1268,10 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %_libdir/libasteriskssl11.so.1
 
 %changelog
+* Mon Apr 06 2015 Denis Smirnov <mithraen@altlinux.ru> 11.16.0-alt2
+- remove requires to mithraen-pbx-fax (ALT 30906)
+- remove DONT_OPTIMIZE and DEBUG_THREADS options (ALT 30898)
+
 * Sat Feb 07 2015 Denis Smirnov <mithraen@altlinux.ru> 11.16.0-alt1
 - new version 11.16.0
 
