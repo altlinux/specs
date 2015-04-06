@@ -5,7 +5,7 @@
 Name: asterisk11cert
 Summary: Open source PBX
 Version: 11.6.cert10
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 %if_with corosync
@@ -436,7 +436,6 @@ Asterisk documentation and sample files
 Summary: FAX send/receive/autodetect support for Asterisk
 Group: %group
 Requires: %name = %version-%release
-Requires: mithraen-pbx-fax
 Requires(pre): asterisk-base
 
 %description fax
@@ -669,7 +668,6 @@ make -C menuselect libdir=%_libdir
 make menuselect.makeopts \
     libdir=%_libdir ||:
 menuselect/menuselect  \
-    --enable DEBUG_THREADS \
     --enable DETECT_DEADLOCKS \
     --enable DO_CRASH \
     --enable G711_NEW_ALGORITHM \
@@ -1360,6 +1358,10 @@ ln -sf libasteriskssl%version.so.1 %buildroot%_libdir/libasteriskssl%version.so
 %_libdir/libasteriskssl%version.so.1
 
 %changelog
+* Mon Apr 06 2015 Denis Smirnov <mithraen@altlinux.ru> 11.6.cert10-alt2
+- remove DEBUG_THREADS
+- remove requires to mithraen-pbx-fax
+
 * Sat Jan 31 2015 Denis Smirnov <mithraen@altlinux.ru> 11.6.cert10-alt1
 - new version 11.6-cert10
 
