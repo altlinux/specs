@@ -5,7 +5,7 @@
 Name: asterisk-trunk
 Summary: Open source PBX
 Version: 0.417586
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir texlive-base-bin wget zlib-devel libuuid-devel
@@ -426,7 +426,6 @@ Asterisk documentation and sample files
 Summary: FAX send/receive/autodetect support for Asterisk
 Group: %group
 Requires: %name = %version-%release
-Requires: mithraen-pbx-fax
 Requires(pre): asterisk-base
 
 %description fax
@@ -650,8 +649,6 @@ make menuselect.makeopts \
     libdir=%_libdir ||:
 make menuselect/menuselect libdir=%_libdir ||:
 menuselect/menuselect  \
-    --enable DONT_OPTIMIZE \
-    --enable DEBUG_THREADS \
     --enable DETECT_DEADLOCKS \
     --enable DO_CRASH \
     --enable BETTER_BACKTRACES \
@@ -1285,6 +1282,10 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %_libdir/libasteriskssl%version.so.1
 
 %changelog
+* Mon Apr 06 2015 Denis Smirnov <mithraen@altlinux.ru> 0.417586-alt2
+- remove DONT_OPTIMIZE and DEBUG_THREADS
+- remove requires to mithraen-pbx-fax
+
 * Wed Mar 11 2015 Denis Smirnov <mithraen@altlinux.ru> 0.417586-alt1
 - first build for Sisyphus
 
