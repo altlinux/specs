@@ -1,6 +1,6 @@
 Name: libgksu
 Version: 2.0.12
-Release: alt7
+Release: alt8
 
 Summary: A 'su' and 'sudo' wrapper library for GTK+/GNOME applications
 License: %lgpl2plus
@@ -13,6 +13,7 @@ Patch2: %name-2.0.12-helperdir.patch
 Patch3: %name-only-glib.h-includes.patch
 Patch4: %name-2.0.12-alt-DSO.patch
 Patch5: %name-2.0.12-alt-make-3.82.patch
+Patch6: %name-2.0.12-alt-drop-n.patch
 
 Requires(preun,post): GConf
 
@@ -60,6 +61,7 @@ programs that use %name.
 %patch3 -p2
 %patch4 -p2
 %patch5 -p2
+%patch6 -p1
 tar xf %SOURCE1
 
 %build
@@ -109,6 +111,9 @@ fi
 %_datadir/gtk-doc/html/%name/*
 
 %changelog
+* Mon Apr 06 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0.12-alt8
+- applied %%name-2.0.12-alt-drop-n.patch (ALT #27073)
+
 * Tue Jun 10 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.12-alt7
 - rebuilt against libgtop-2.0.so.10
 
