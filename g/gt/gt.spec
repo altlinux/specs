@@ -1,10 +1,10 @@
 Name:           gt
 Version:        0.4
-Release:        alt1_19
+Release:        alt1_20
 Summary:        Modified Timidity which supportes enhanced gus format patches
 Group:          Sound
 License:        GPLv2+
-URL:            http://alsa.opensrc.org/index.php/GusSoundfont
+URL:            http://alsa.opensrc.org/GusSoundfont
 # This is ftp://ling.lll.hawaii.edu/pub/greg/gt-0.4.tar.gz
 # with the examples/patch and sfz directories removed as the license of the
 # samples in these dirs is unclear. Also the src/ac3* files have been removed
@@ -77,6 +77,9 @@ touch -r utils/midifile.c $RPM_BUILD_ROOT%{_mandir}/man1/midi-disasm.1
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_20
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_19
 - update to new release by fcimport
 
