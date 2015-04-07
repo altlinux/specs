@@ -1,7 +1,7 @@
 %define fedora 21
 Name:		fbg2
 Version:	0.4
-Release:	alt3_12
+Release:	alt3_13
 Summary:	A falling block stacking game
 Group:		Games/Other
 # Code is GPLv2+, music and graphics are CC-BY-SA
@@ -49,16 +49,55 @@ make %{?_smp_mflags}
 
 %install
 make install DESTDIR=%{buildroot}
+
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ryan Lerch <rlerch@redhat.com> -->
+<!--
+BugReportURL: https://sourceforge.net/p/fbg/feature-requests/12/
+SentUpstream: 2014-09-24
+-->
+<application>
+  <id type="desktop">fbg2.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>move the falling blocks to create lines</summary>
+  <description>
+    <p>
+      The Falling Block Game is a game where groups of blocks of certain
+      predefined shapes fall from the top of the screen, and the player
+      has to rotate and move them to create lines of blocks that then
+      disappear when a line is complete.
+    </p>
+  </description>
+  <url type="homepage">http://sourceforge.net/projects/fbg/</url>
+  <screenshots>
+    <screenshot type="default">http://fbg.sourceforge.net/releases/images/fbg2-v0.4-released/fbgscore2.jpg</screenshot>
+  </screenshots>
+</application>
+EOF
+
 desktop-file-validate %{buildroot}%{_datadir}/applications/fbg2.desktop
 
 %files
 %doc License.txt ChangeLog README.music
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
+%{_datadir}/appdata/*.appdata.xml
 %{_datadir}/applications/*.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_13
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_12
 - update to new release by fcimport
 
