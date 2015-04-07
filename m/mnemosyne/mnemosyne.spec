@@ -4,17 +4,17 @@ BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
 Name:		mnemosyne
 Summary:	Flash-card learning tool
-Version:	2.3.1
+Version:	2.3.2
 Release:	alt1_1
 URL:		http://www.mnemosyne-proj.org/
 Source0:	http://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
 Patch0:		mnemosyne-desktop.patch
 License:	AGPLv3
 
+BuildArch:	noarch
 BuildRequires:	desktop-file-utils
 BuildRequires:	python-devel
 BuildRequires:	python-module-setuptools
-BuildArch:	noarch
 Requires:	icon-theme-hicolor
 Source44: import.info
 
@@ -34,7 +34,6 @@ Optional dependencies:
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
 
 %install
-
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
 install -d %{buildroot}%{_datadir}/applications
@@ -51,6 +50,8 @@ popd
 
 %files -f %{name}.lang
 %doc ChangeLog README
+# https://bugs.launchpad.net/mnemosyne-proj/+bug/1346903
+# http://bazaar.launchpad.net/~peter-bienstman/mnemosyne-proj/trunk/view/head:/mnemosyne/mnemosyne/LICENSE
 #%%doc docmnemosyne/libmnemosyne/LICENSE
 %{_bindir}/%{name}
 %{python_sitelibdir_noarch}/mnemosyne
@@ -60,6 +61,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_1
 - update to new release by fcimport
 
