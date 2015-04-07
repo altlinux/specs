@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name:           sudoku-savant
 Version:        1.3
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Solve and generate sudoku puzzles through logical means
 Summary(de):    Lösen und Erstellen von Sudoku-Puzzles mit logischen Mitteln
 
@@ -57,6 +57,37 @@ make install DESTDIR=%{buildroot}
 install -dm 755 %{buildroot}%{_datadir}/icons/hicolor
 tar xJ --directory=%{buildroot}%{_datadir}/icons/hicolor < %{name}-icons.txz
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 William Moreno <williamjmorenor@gmail.com> -->
+<!--
+BugReportURL: https://sourceforge.net/p/sudoku-savant/bugs/3/
+SentUpstream: 2014-09-25
+-->
+<application>
+  <id type="desktop">sudoku-savant.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>Complete a numeric puzzle with the numbers from one to nine</summary>
+  <description>
+    <p>
+      Sudoku Savnt a free version of the popular logic game Sudoku for the Linux desktop .
+      The game is to fill a nine by nine grid with the numbers from one to nine
+      filling the rows, columns and three by three squares without repeating a
+      value on them.
+    </p>
+  </description>
+  <url type="homepage">http://sourceforge.net/projects/sudoku-savant/</url>
+</application>
+EOF
+
 %find_lang %{name}
 
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
@@ -65,12 +96,16 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %files -f %{name}.lang
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING README
 %{_bindir}/%{name}
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %_iconsdir/hicolor/*/*/*
 %exclude %{_datadir}/pixmaps/%{name}.png
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_14
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_13
 - update to new release by fcimport
 
