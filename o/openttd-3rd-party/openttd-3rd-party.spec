@@ -1,18 +1,18 @@
 %define msxver 0.3.1
 %define sfxver 0.2.3
 Name: openttd-3rd-party
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: 3rd Party data files for openttd
 License: GPLv2
 Group: Games/Strategy
 URL: http://www.openttd.com/
-Requires: openttd-data >= 1.2.1
+Requires: openttd-data >= 1.5.0
 Packager: Anton Farygin <rider@altlinux.com>
 Buildarch: noarch
 
-Source: opengfx-%version.tar
+Source: opengfx-%version-RC1.tar
 Source1: openmsx-%msxver-all.zip
 Source2: opensfx-%sfxver-all.zip
 
@@ -23,7 +23,7 @@ BuildRequires: unzip
 3rd Party data files for openttd
 
 %prep
-%setup -q -n opengfx-%version
+%setup -q -n opengfx-%version-RC1
 
 %build
 unzip %SOURCE1
@@ -42,6 +42,9 @@ cp openmsx-%msxver/*.{mid,obm} %buildroot%_datadir/games/openttd/gm
 
 
 %changelog
+* Tue Apr 07 2015 Anton Farygin <rider@altlinux.ru> 0.5.2-alt1
+- updated to RC1 release for new version of openttd
+
 * Tue Jun 24 2014 Anton Farygin <rider@altlinux.ru> 0.5.1-alt1
 - new version
 
