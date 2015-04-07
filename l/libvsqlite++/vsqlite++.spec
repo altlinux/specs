@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define oldname vsqlite++
 Name:        libvsqlite++
 Version:    0.3.13
-Release:    alt1_6
+Release:    alt1_7
 Summary:    Well designed C++ sqlite 3.x wrapper library
 
 Group:      Development/C
@@ -80,6 +80,9 @@ make DESTDIR=%{buildroot} install
 %{_libdir}/libvsqlitepp.so.*
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.13-alt1_7
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.13-alt1_6
 - update to new release by fcimport
 
