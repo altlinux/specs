@@ -5,7 +5,7 @@ Name:             xskat
 # Upstream License requires to alter the version number
 # for re-distribution
 Version:          %{upstream_version}.0
-Release:          alt2_12
+Release:          alt2_13
 # https://fedoraproject.org/wiki/Licensing/XSkat_License
 License:          XSkat
 Group:            Games/Other
@@ -71,16 +71,49 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 convert icon.xbm $RPM_BUILD_ROOT%{_datadir}/pixmaps/xskat.xpm
 touch -r icon.xbm $RPM_BUILD_ROOT%{_datadir}/pixmaps/xskat.xpm
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ravi Srinivasan <ravishankar.srinivasan@gmail.com> -->
+<!--
+EmailAddress: m@il.xskat.de
+SentUpstream: 2014-09-25
+-->
+<application>
+  <id type="desktop">xskat.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>A trick taking card game popular in Germany</summary>
+  <description>
+    <p>
+      XSkat is a trick taking card game that is popular in Germany.
+      It has single and multiplayer (IRC, LAN) options.
+    </p>
+  </description>
+  <url type="homepage">http://www.xskat.de/xskat.html</url>
+</application>
+EOF
+
 %files
 %doc README* CHANGES*
 %{_bindir}/xskat
 %{_mandir}/man6/xskat.6*
 %lang(de) %{_mandir}/de/man6/xskat.6*
+%{_datadir}/appdata/*.appdata.xml
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/%{name}.xpm
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_13
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_12
 - update to new release by fcimport
 
