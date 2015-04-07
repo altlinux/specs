@@ -5,11 +5,11 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-App-Nopaste
 Version:        1.004
-Release:        alt1
+Release:        alt1_1
 Summary:        Easy access to any pastebin
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/App-Nopaste/
-Source:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
@@ -71,15 +71,13 @@ normally be too long to give directly in the channel (hence the name nopaste).
 
 %prep
 %setup -q -n App-Nopaste-%{version}
-find lib -type f | xargs chmod -x
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} +
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -95,6 +93,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_1
+- update to new release by fcimport
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1
 - automated CPAN update
 
