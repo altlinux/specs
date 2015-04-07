@@ -1,10 +1,11 @@
 %define dicname stardict-english-czech
 Name: stardict-dic-cs_CZ
 Summary: Czech dictionaries for StarDict
-Version: 20110801
-Release: alt2_6
+Version: 20150213
+Release: alt1_2
 Group: Text tools
 License: GFDL
+Provides: stardict-dic-cs = %{?epoch:%{epoch}:}%{version}-%{release}
 
 URL: http://cihar.com/software/slovnik/
 Source0: http://dl.cihar.com/slovnik/stable/%{dicname}-%{version}.tar.gz
@@ -34,6 +35,9 @@ install -m 0644 -p  %{dicname}-%{version}/en* ${RPM_BUILD_ROOT}%{_datadir}/stard
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 20150213-alt1_2
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20110801-alt2_6
 - update to new release by fcimport
 
