@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           rafkill
 Version:        1.2.3
-Release:        alt4_15
+Release:        alt4_16
 Summary:        Top-down shooter with powerups
 Group:          Games/Other
 License:        GPLv2
@@ -66,17 +66,55 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 install -p -m 644 %{SOURCE3} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<!--
+EmailAddress: kazzmir@users.sf.net
+SentUpstream: 2014-09-18
+-->
+<application>
+  <id type="desktop">rafkill.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <description>
+    <p>
+      Rafkill is a vertical scrolling shoot-em up game. You can collect powerups
+      during gameplay and you can goto the store with your spaceship and buy
+      powerups or even a complete new ship with the points you've earned sofar.
+    </p>
+  </description>
+  <url type="homepage">http://raptorv2.sourceforge.net/index.php</url>
+  <screenshots>
+    <screenshot type="default">http://raptorv2.sourceforge.net/images/title.png</screenshot>
+    <screenshot>http://raptorv2.sourceforge.net/images/snapshot1.png</screenshot>
+    <screenshot>http://raptorv2.sourceforge.net/images/buy.png</screenshot>
+  </screenshots>
+  <updatecontact>kazzmir@users.sf.net</updatecontact>
+</application>
+EOF
 
 %files
 %doc README COPYING
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_mandir}/man6/%{name}.6*
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt4_16
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt4_15
 - update to new release by fcimport
 
