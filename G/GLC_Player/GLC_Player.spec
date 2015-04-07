@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libqt4-devel unzip
 # END SourceDeps(oneline)
 Name:           GLC_Player
 Version:        2.3.0
-Release:        alt2_8
+Release:        alt2_9
 Summary:        GLC_Player is an Open Source software used to view 3d models (OBJ Format)
 
 Group:          Graphics
@@ -51,15 +51,53 @@ desktop-file-install \
   --mode 644 \
   %{SOURCE1}	
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/glc_player.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ryan Lerch <rlerch@redhat.com> -->
+<!--
+EmailAddress: laumaya@users.sourceforge.net
+SentUpstream: 2014-09-17
+-->
+<application>
+  <id type="desktop">glc_player.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>View 3D models</summary>
+  <description>
+  <p>
+    GLC Player is an application for viewing 3D models.
+    It supports a wide range of formats, including:  COLLADA, 3DXML, OBJ,
+    3DS, STL, OFF and COFF.
+    It can also be used to export still images of your models, and even
+    export a library of models to a gallery HTML page.
+  </p>
+  </description>
+  <url type="homepage">http://www.glc-player.net/</url>
+  <screenshots>
+    <screenshot type="default">http://www.glc-player.net/images/Lin_corsair_full.jpg</screenshot>
+  </screenshots>
+</application>
+EOF
 
 %files
 %doc
 %{_bindir}/glc_player
 %{_datadir}/pixmaps/glc_player.png
+%{_datadir}/appdata/*.appdata.xml
 %{_datadir}/applications/*.desktop
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt2_9
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt2_8
 - update to new release by fcimport
 
