@@ -1,16 +1,15 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(CPAN/Meta/Check.pm)
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Warnings
 Version:	0.021
-Release:	alt1
+Release:	alt1_1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-Warnings
-Source:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	perl
@@ -24,7 +23,9 @@ BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(warnings.pm)
 # Test Suite
 BuildRequires:	perl(CPAN/Meta.pm)
+BuildRequires:	perl(CPAN/Meta/Check.pm)
 BuildRequires:	perl(CPAN/Meta/Prereqs.pm)
+BuildRequires:	perl(CPAN/Meta/Requirements.pm)
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(if.pm)
@@ -77,6 +78,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.021-alt1_1
+- update to new release by fcimport
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.021-alt1
 - automated CPAN update
 
