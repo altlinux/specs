@@ -52,8 +52,8 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 
 Summary: A GNU collection of cross-compilation binary utilities
 Name: %{cross}-binutils
-Version: 2.24
-Release: alt1_6
+Version: 2.25
+Release: alt1_3
 License: GPLv3+
 Group: Development/Tools
 URL: http://sources.redhat.com/binutils
@@ -61,18 +61,18 @@ URL: http://sources.redhat.com/binutils
 # Note - the Linux Kernel binutils releases are too unstable and contain too
 # many controversial patches so we stick with the official FSF version
 # instead.
-Source: http://ftp.gnu.org/gnu/binutils/binutils-2.24.tar.bz2
+Source: http://ftp.gnu.org/gnu/binutils/binutils-%{version}.tar.bz2
 
 Source2: binutils-2.19.50.0.1-output-format.sed
 
 # Bring up to date with what's in the git release branch
-Patch00: binutils-2.24-cab6c3ee9785f072a373afe31253df0451db93cf.patch
+#Patch00: binutils-2.24-cde98f8566e14f52b896abc92c357cdd14717505.patch
 
 Patch01: binutils-2.20.51.0.2-libtool-lib64.patch
 Patch02: binutils-2.20.51.0.10-ppc64-pie.patch
 Patch03: binutils-2.20.51.0.2-ia64-lib64.patch
-Patch04: binutils-2.20.51.0.2-version.patch
-Patch05: binutils-2.20.51.0.2-set-long-long.patch
+Patch04: binutils-2.25-version.patch
+Patch05: binutils-2.25-set-long-long.patch
 Patch06: binutils-2.20.51.0.10-copy-osabi.patch
 Patch07: binutils-2.20.51.0.10-sec-merge-emit.patch
 # Enable -zrelro by default: BZ #621983
@@ -83,26 +83,15 @@ Patch09: binutils-2.22.52.0.1-export-demangle.h.patch
 Patch10: binutils-2.22.52.0.4-no-config-h-check.patch
 # Fix addr2line to use the dynamic symbol table if it could not find any ordinary symbols.
 Patch11: binutils-2.23.52.0.1-addr2line-dynsymtab.patch
-Patch12: binutils-2.23.2-kernel-ld-r.patch
+
+Patch12: binutils-2.25-kernel-ld-r.patch
 # Correct bug introduced by patch 12
 Patch13: binutils-2.23.2-aarch64-em.patch
-# Fix building opcodes library with -Werror=format-security
-Patch14: binutils-2.24-s390-mkopc.patch
-# Import fixes for IFUNC and PLT handling for AArch64.
-Patch15: binutils-2.24-elfnn-aarch64.patch
-# Fix decoding of abstract instance names using DW_FORM_ref_addr.
-Patch16: binutils-2.24-DW_FORM_ref_addr.patch
-# Fix compiling using gcc 4.9
-Patch17: binutils-2.24-set-section-macros.patch
-# Fix detections of uncompressed .debug_str sections that look like they have been compressed.
-Patch18: binutils-2.24-fake-zlib-sections.patch
 # Fix detections little endian PPC shared libraries
-Patch19: binutils-2.24-ldforcele.patch
+Patch14: binutils-2.24-ldforcele.patch
 
 # Fix formatless sprintfs in Score-specific code.
-Patch100: cross-binutils-2.24-score-sprintf.patch
-Patch101: binutils-2.24-kernel-ld-r-fix.patch
-Patch102: cross-binutils-2.24-m68k-gcc-error.patch
+Patch100: cross-binutils-2.25-fixup-for-sh64.patch
 
 BuildRequires: texinfo >= 4.0 gettext flex bison zlib-devel
 # BZ 920545: We need pod2man in order to build the manual pages.
@@ -180,7 +169,7 @@ Cross-build binary image generation, manipulation and query tools. \
 %do_package mips64-linux-gnu	%{build_mips64}
 %do_package mn10300-linux-gnu	%{build_mn10300}
 %do_package nios2-linux-gnu	%{build_nios2}
-%do_package openrisc-linux-gnu	%{build_openrisc}
+%do_package openrisc-linux-gnu	%{build_openrisc}	or1k-linux-gnu
 %do_package powerpc-linux-gnu	%{build_powerpc}
 %do_package powerpc64-linux-gnu	%{build_powerpc64}
 %do_symlink ppc-linux-gnu	%{build_powerpc}	powerpc-linux-gnu
@@ -211,36 +200,31 @@ Cross-build binary image generation, manipulation and query tools. \
 %define srcdir binutils-%{version}
 %setup -q -n %{srcdir} -c
 cd %{srcdir}
-%patch00 -p1 -b .latest-git~
-%patch01 -p0 -b .libtool-lib64~
-%patch02 -p0 -b .ppc64-pie~
+%if 1
+#%patch00 -p1 -b .latest-git~
+%patch01 -p1 -b .libtool-lib64~
+%patch02 -p1 -b .ppc64-pie~
 %ifarch ia64
 %if "%{_lib}" == "lib64"
-%patch03 -p0 -b .ia64-lib64~
+%patch03 -p1 -b .ia64-lib64~
 %endif
 %endif
-%patch04 -p0 -b .version~
-%patch05 -p0 -b .set-long-long~
-%patch06 -p0 -b .copy-osabi~
-%patch07 -p0 -b .sec-merge-emit~
+%patch04 -p1 -b .version~
+%patch05 -p1 -b .set-long-long~
+%patch06 -p1 -b .copy-osabi~
+%patch07 -p1 -b .sec-merge-emit~
 %if 0%{?fedora} >= 18 || 0%{?rhel} >= 7
-%patch08 -p0 -b .relro~
+%patch08 -p1 -b .relro~
 %endif
-%patch09 -p0 -b .export-demangle-h~
-%patch10 -p0 -b .no-config-h-check~
-%patch11 -p0 -b .addr2line~
-%patch12 -p0 -b .kernel-ld-r~
-%patch13 -p0 -b .aarch64~
-%patch14 -p0 -b .mkopc~
-#%patch15 -p0 -b .elf-aarch64~
-%patch16 -p0 -b .ref-addr~
-%patch17 -p0 -b .sec-macros~
-%patch18 -p0 -b .fake-zlib~
-%patch19 -p0 -b .ldforcele~
+%patch09 -p1 -b .export-demangle-h~
+%patch10 -p1 -b .no-config-h-check~
+%patch11 -p1 -b .addr2line~
+%patch12 -p1 -b .kernel-ld-r~
+%patch13 -p1 -b .aarch64~
+%patch14 -p1 -b .ldforcele~
+%endif
 
-%patch100 -p1 -b .score~
-%patch101 -p0 -b .kernel-ld-r-fix~
-%patch102 -p1 -b .m68k-config-fix~
+%patch100 -p1 -b .sh64-fixup~
 
 # We cannot run autotools as there is an exact requirement of autoconf-2.59.
 
@@ -347,12 +331,13 @@ function config_target () {
 	bfin-*)		target=bfin-uclinux;;
 	c6x-*)		target=c6x-uclinux;;
 	h8300-*)	target=h8300-elf;;
+	m32r-*)		target=m32r-elf;;
 	mn10300-*)	target=am33_2.0-linux;;
 	m68knommu-*)	target=m68k-linux;;
-	openrisc-*)	target=openrisc-elf;;
+	openrisc-*)	target=or1k-linux-gnu;;
 	parisc-*)	target=hppa-linux;;
 	score-*)	target=score-elf;;
-	sh64-*)		target=sh64-linux;;
+	sh64-*)		target=sh64-linux-elf;;
 	tile-*)		target=tilegx-linux;;
 	v850-*)		target=v850e-linux;;
 	x86-*)		target=x86_64-linux;;
@@ -379,12 +364,7 @@ function config_target () {
     esac
 
     case $target in sh-*)
-	    CARGS="$CARGS --enable-targets=sh4-linux"
-	    ;;
-    esac
-
-    case $target in sh64*)
-	    CARGS="$CARGS --enable-targets=sh64-linux,sh-elf,sh-linux,sh4-linux"
+	    CARGS="$CARGS --enable-targets=sh4-linux,sh-elf,sh-linux"
 	    ;;
     esac
 
@@ -550,7 +530,7 @@ function build_file_list () {
 	bfin)		target_cpu=bfin;;
 	h8300)		target_cpu=h8300;;
 	mn10300)	target_cpu=am33_2.0;;
-	openrisc)	target_cpu=openrisc;;
+	openrisc)	target_cpu=or1k;;
 	score)		target_cpu=score;;
 	tile)		target_cpu=tilegx;;
 	v850)		target_cpu=v850e;;
@@ -558,7 +538,6 @@ function build_file_list () {
     esac
 
     (
-	echo '%%defattr(-,root,root,-)'
 	echo %{_bindir}/$arch-[!l]\*
 	echo %{_bindir}/$arch-ld\*
 	if [ -L %{buildroot}%{auxbin_prefix}/$target_cpu-* ]
@@ -568,7 +547,7 @@ function build_file_list () {
 	    echo %{auxbin_prefix}/$target_cpu-*/bin/\*
 	fi
 	echo %{_mandir}/man1/$arch-\*
-	echo %{auxbin_prefix}/$arch/sys-root
+	echo '%%attr(0755,root,root)' %{auxbin_prefix}/$arch/sys-root
     ) >files.$arch
 }
 
@@ -681,6 +660,9 @@ sed -i -e /sys-root/d files.ppc64-linux-gnu
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.25-alt1_3
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1_6
 - update to new release by fcimport
 
