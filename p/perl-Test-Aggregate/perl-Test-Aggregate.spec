@@ -1,38 +1,36 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/NoWarnings.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Test-Aggregate
 Version:    0.372
-Release:    alt1
+Release:    alt1_1
 # lib/Test/Aggregate.pm -> GPL+ or Artistic
 # lib/Test/Aggregate/Builder.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Aggregate *.t tests to make them run faster
-Source:     http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Test-Aggregate-%{version}.tar.gz
+Source:     http://search.cpan.org/CPAN/authors/id/R/RW/RWSTAUNER/Test-Aggregate-%{version}.tar.gz
 # Do not touch Test::Builder internals that will change in 2.0, CPAN RT#64604
 Patch0:     Test-Aggregate-0.371-Don-t-grab-at-Test-Builder-hash-keys.patch
 Url:        http://search.cpan.org/dist/Test-Aggregate
 BuildArch:  noarch
-
+# Build
 BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
-# Run-time:
+# Runtime
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(FindBin.pm)
 BuildRequires:  perl(Test/Builder.pm)
 BuildRequires:  perl(Test/Builder/Module.pm)
 BuildRequires:  perl(Test/More.pm)
-# Test::NoWarnings not used at tests
+# Unused BuildRequires:  perl(Test::NoWarnings)
 BuildRequires:  perl(vars.pm)
-# Optional run-time:
-BuildRequires:  perl(Data/Dump/Streamer.pm)
-# Tests:
+# Unused BuildRequires:  perl(Data::Dump::Streamer)
+# Tests only
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(File/Spec/Functions.pm)
 BuildRequires:  perl(lib.pm)
@@ -41,15 +39,11 @@ Requires:       perl(FindBin.pm) >= 1.47
 Requires:       perl(Test/NoWarnings.pm)
 
 
-# Filter under-specified dependencies
 
 Source44: import.info
 %filter_from_requires /^perl\\(FindBin.pm\\)$/d
 
 %description
-*WARNING*: this is ALPHA code. The interface is not guaranteed to be
-stable.
-
 A common problem with many test suites is that they can take a
 long time to run. The longer they run, the less likely you are to run
 the tests. This module borrows a trick from 'Apache::Registry' to load
@@ -78,6 +72,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.372-alt1_1
+- update to new release by fcimport
+
 * Mon Jan 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.372-alt1
 - automated CPAN update
 
