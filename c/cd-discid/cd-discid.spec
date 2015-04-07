@@ -1,7 +1,7 @@
 Group: Sound
 Name:           cd-discid
 Version:        1.4
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Utility to get CDDB discid information
 
 # Also "Larry Wall's Artistic" upstream, but that's not accepted in Fedora
@@ -29,12 +29,17 @@ CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS" make %{?_smp_mflags}
 
 
 %files
-%doc changelog COPYING README
+%{!?_licensedir:%global license %%doc}
+%doc COPYING
+%doc changelog README
 %{_bindir}/cd-discid
 %{_mandir}/man1/cd-discid.1*
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_5
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_4
 - update to new release by fcimport
 
