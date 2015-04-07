@@ -1,25 +1,40 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-CPAN-Meta
 Version:        0.24
-Release:        alt1
+Release:        alt1_2
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-CPAN-Meta/
-Source:        http://www.cpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-%{version}.tar.gz
+Patch0:         Test-CPAN-Meta-0.24-utf8.patch
 BuildArch:      noarch
+# Module Build
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(IO/File.pm)
+# Module Runtime
 BuildRequires:  perl(Parse/CPAN/Meta.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/Builder.pm)
+BuildRequires:  perl(vars.pm)
+BuildRequires:  perl(warnings.pm)
+# Test Suite
+BuildRequires:  perl(IO/File.pm)
 BuildRequires:  perl(Test/Builder/Tester.pm)
 BuildRequires:  perl(Test/More.pm)
+# Optional Tests
+%if !%{defined perl_bootstrap}
+# Break build-cycle: perl-Test-CPAN-Meta a.. perl-Test-CPAN-Meta-JSON
+# a.. perl-Test-CPAN-Meta
+BuildRequires:  perl(Test/CPAN/Meta/JSON.pm)
+%endif
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 Source44: import.info
+# Runtime
 
 %description
 This module was written to ensure that a META.yml file, provided with a
@@ -31,26 +46,30 @@ Module::Install.
 %prep
 %setup -q -n Test-CPAN-Meta-%{version}
 
-iconv -f iso-8859-1 -t utf-8 LICENSE > LICENSE.tmp
-mv -f LICENSE.tmp LICENSE
+# Re-code documentation as UTF-8
+%patch0
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-# %{_fixperms} $RPM_BUILD_ROOT
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+# %{_fixperms} %{buildroot}
 
 %check
 make test AUTOMATED_TESTING=1
 
 %files
-%doc Changes LICENSE README examples/
+%doc LICENSE
+%doc Changes README examples/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1_2
+- update to new release by fcimport
+
 * Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
