@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++
 %define fedora 21
 Name:           amoebax
 Version:        0.2.1
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Action-Puzzle Game
 Group:          Games/Other
 License:        GPLv2+ and Free Art
@@ -47,6 +47,44 @@ make %{?_smp_mflags}
 %install
 %makeinstall_std
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ryan Lerch <rlerch@redhat.com> -->
+<!--
+EmailAddress:  jordi@emma-soft.com
+SentUpstream:  2014-09-17
+-->
+<application>
+  <id type="desktop">amoebax.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>A match-4 action puzzle game</summary>
+  <description>
+    <p>
+      Amoebax is a cute action puzzle game where pairs of amoeba fall down,
+      and when you match 4 colored amoeba in a row or column they disappear.
+      There are 6 levels of difficulty, and also a split-screen mode to battle
+      the amoeba-matching fun with a friend.
+    </p>
+  </description>
+  <url type="homepage">http://www.emma-soft.com/games/amoebax/</url>
+  <screenshots>
+    <screenshot type="default">http://www.emma-soft.com/games/amoebax/screenshots/training.png</screenshot>
+    <screenshot>http://www.emma-soft.com/games/amoebax/screenshots/normal.png</screenshot>
+  </screenshots>
+  <!-- FIXME: change this to an upstream email address for spec updates
+  <updatecontact>someone_who_cares@upstream_project.org</updatecontact>
+   -->
+</application>
+EOF
+
 rm $RPM_BUILD_ROOT%{_datadir}/doc/%{name}/manual.pdf
 
 # below is the desktop file and icon stuff.
@@ -66,11 +104,15 @@ mv $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}.svg \
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_mandir}/man6/%{name}.6*
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/*%{name}.desktop
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_6
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_5
 - update to new release by fcimport
 
