@@ -6,12 +6,12 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/Command.
 BuildRequires: perl(Moose.pm)
 Name:           perl-Config-GitLike
 Version:        1.16
-Release:        alt1
+Release:        alt1_1
 Summary:        Git-compatible config file parsing
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/Config-GitLike/
-Source:        http://www.cpan.org/authors/id/A/AL/ALEXMV/Config-GitLike-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/A/AL/ALEXMV/Config-GitLike-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  perl
@@ -34,13 +34,11 @@ files, as well as create entirely new ones.
 %setup -q -n Config-GitLike-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
@@ -52,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_1
+- update to new release by fcimport
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
 - automated CPAN update
 
