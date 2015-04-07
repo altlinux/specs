@@ -4,7 +4,7 @@ BuildRequires: perl(IPC/Open2.pm)
 # END SourceDeps(oneline)
 Name:           colordiff
 Version:        1.0.13
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Color terminal highlighter for diff files
 
 License:        GPLv2+
@@ -47,7 +47,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
 
 
 %files
-%doc BUGS CHANGES colordiffrc-darkbg colordiffrc-lightbg COPYING README
+%{!?_licensedir:%global license %%doc}
+%doc COPYING
+%doc BUGS CHANGES colordiffrc-darkbg colordiffrc-lightbg README
 %config(noreplace) %{_sysconfdir}/colordiffrc
 %{_bindir}/cdiff
 %{_bindir}/colordiff
@@ -56,6 +58,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_6
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_5
 - update to new release by fcimport
 
