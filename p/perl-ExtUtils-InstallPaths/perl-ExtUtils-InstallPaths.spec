@@ -2,21 +2,25 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
+%define fedora 21
 Name:		perl-ExtUtils-InstallPaths
 Version:	0.011
-Release:	alt1
+Release:	alt1_1
 Summary:	Build.PL install path logic made easy
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/ExtUtils-InstallPaths
-Source:	http://www.cpan.org/authors/id/L/LE/LEONT/ExtUtils-InstallPaths-%{version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/ExtUtils-InstallPaths-%{version}.tar.gz
 BuildArch:	noarch
 # Build
+BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
 BuildRequires:	perl(Carp.pm)
 BuildRequires:	perl(ExtUtils/Config.pm)
 BuildRequires:	perl(File/Spec.pm)
+BuildRequires:	perl(strict.pm)
+BuildRequires:	perl(warnings.pm)
 # Test Suite
 BuildRequires:	perl(Config.pm)
 BuildRequires:	perl(File/Spec/Functions.pm)
@@ -25,9 +29,9 @@ BuildRequires:	perl(IO/Handle.pm)
 BuildRequires:	perl(IPC/Open3.pm)
 BuildRequires:	perl(Test/More.pm)
 # Release Tests
-# perl-Pod-Coverage-TrustPod -> perl-Pod-Eventual -> perl-Mixin-Linewise ->
-#   perl-YAML-Tiny -> perl-Module-Build-Tiny -> perl-ExtUtils-InstallPaths
-%if 0%{!?perl_bootstrap:1}
+# perl-Pod-Coverage-TrustPod a.. perl-Pod-Eventual a.. perl-Mixin-Linewise a..
+#   perl-YAML-Tiny a.. perl-Module-Build-Tiny a.. perl-ExtUtils-InstallPaths
+%if 0%{!?perl_bootstrap:1} && ( 0%{?rhel} > 6 || 0%{?fedora} )
 BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
@@ -60,13 +64,25 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 # %{_fixperms} %{buildroot}
 
 %check
+%if 0%{!?perl_bootstrap:1} && ( 0%{?rhel} > 6 || 0%{?fedora} )
 make test RELEASE_TESTING=1
+%else
+make test
+%endif
 
 %files
-%doc Changes LICENSE README
+%if 0%{?_licensedir:1}
+%doc LICENSE
+%else
+%doc LICENSE
+%endif
+%doc Changes README
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_1
+- update to new release by fcimport
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
 - automated CPAN update
 
