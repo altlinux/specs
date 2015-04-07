@@ -4,12 +4,12 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-IO-Capture-Extended
 Version:        0.13
-Release:        alt1
+Release:        alt1_1
 Summary:        Extend functionality of IO::Capture
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/IO-Capture-Extended/
-Source:        http://www.cpan.org/authors/id/J/JK/JKEENAN/IO-Capture-Extended-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/J/JK/JKEENAN/IO-Capture-Extended-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -51,10 +51,14 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 make test
 
 %files
-%doc Changes LICENSE README.md
+%doc LICENSE
+%doc Changes README.md
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_1
+- update to new release by fcimport
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
