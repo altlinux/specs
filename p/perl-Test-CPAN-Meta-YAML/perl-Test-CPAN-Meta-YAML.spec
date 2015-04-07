@@ -1,25 +1,36 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(IO/File.pm) perl(YAML.pm) perl-devel perl-podlators
+BuildRequires: perl(YAML.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-CPAN-Meta-YAML
-Version:	0.22
-Release:	alt2_4
+Version:	0.24
+Release:	alt1_1
 Summary:	Validate a META.yml file within a CPAN distribution
 Group:		Development/Perl
 License:	Artistic 2.0
 URL:		http://search.cpan.org/dist/Test-CPAN-Meta-YAML/
 Source0:	http://search.cpan.org/CPAN/authors/id/B/BA/BARBIE/Test-CPAN-Meta-YAML-%{version}.tar.gz
-Patch0:		Test-CPAN-Meta-YAML-0.22-utf8.patch
+Patch0:		Test-CPAN-Meta-YAML-0.23-utf8.patch
 BuildArch:	noarch
+# Module Build
+BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+# Module Runtime
+BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test/Builder.pm)
+BuildRequires:	perl(Test/YAML/Valid.pm)
+BuildRequires:	perl(vars.pm)
+BuildRequires:	perl(warnings.pm)
+BuildRequires:	perl(YAML/Syck.pm)
+# Test Suite
+BuildRequires:	perl(IO/File.pm)
 BuildRequires:	perl(Test/Builder/Tester.pm)
 BuildRequires:	perl(Test/More.pm)
+# Optional Tests
+BuildRequires:	perl(Test/CPAN/Meta/JSON.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
-BuildRequires:	perl(Test/YAML/Valid.pm)
-BuildRequires:	perl(YAML/Syck.pm)
+# Runtime
 # Explicitly requests the YAML::Syck backend for Test::YAML::Valid
 Requires:	perl(YAML/Syck.pm)
 Source44: import.info
@@ -51,10 +62,18 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 make test AUTOMATED_TESTING=1
 
 %files
-%doc Changes LICENSE README
+%if 0%{?_licensedir:1}
+%doc LICENSE
+%else
+%doc LICENSE
+%endif
+%doc Changes README
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt2_4
 - update to new release by fcimport
 
