@@ -1,7 +1,7 @@
 BuildRequires: gcc-c++
 Name:           asylum
 Version:        0.3.2
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Game involving shooting anything that moves & collecting others
 Group:          Games/Other
 # For detailed licensing, see the README
@@ -66,9 +66,47 @@ cp -a data/* %{buildroot}%{_datadir}/%{name}
 install -m0644 %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
 desktop-file-install --dir %{buildroot}%{_datadir}/applications %{name}.desktop
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ravi Srinivasan <ravishankar.srinivasan@gmail.com> -->
+<!--
+EmailAddress: https://sourceforge.net/u/blotwell/
+SentUpstream: 2014-09-24
+-->
+<application>
+  <id type="desktop">asylum.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>A retro platform style game where you enter the surreal world of a brain</summary>
+  <description>
+    <p>
+      Asylum is a Linux port of the game "Asylum" written originally for the
+      Acorn Archimedes.
+    </p>
+    <p>
+      Enter the surreal world inside a young boy's brain and help destroy
+      malfunctioning brain cells.
+    </p>
+  </description>
+  <url type="homepage">http://sdl-asylum.sourceforge.net</url>
+  <screenshots>
+    <screenshot type="default">http://sourceforge.net/p/sdl-asylum/screenshot/134775.jpg</screenshot>
+    <screenshot>http://sourceforge.net/p/sdl-asylum/screenshot/136451.jpg</screenshot>
+  </screenshots>
+</application>
+EOF
+
 %files
 # Note the game is SETGID games for the hi-scores.
 %{_datadir}/%{name}
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %attr(0775,root,games) %dir %{_var}/games/%{name}
 %attr(2711,root,games) %{_bindir}/%{name}
@@ -81,6 +119,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{name}.desktop
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_9
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_8
 - update to new release by fcimport
 
