@@ -3,14 +3,17 @@ BuildRequires: /usr/bin/gtkdocize /usr/bin/xmllint /usr/bin/xsltproc docbook-dtd
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libaccounts-glib
-Version:	1.16
-Release:	alt1_4
+Version:	1.18
+Release:	alt1_1
 Group:		System/Libraries
 Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
 URL:		https://code.google.com/p/accounts-sso/
-Source0:	https://accounts-sso.googlecode.com/files/%{name}-%{version}.tar.gz
-Patch0:		libaccounts-glib-1.16-build-with-werror.patch
+
+# Source available from https://drive.google.com/drive/#folders/0B8fX9XOwH_g4alFsYV8tZTI4VjQ
+# as per https://groups.google.com/forum/#!topic/accounts-sso-announce/8MserPgUV5M
+Source0:	%{name}-%{version}.tar.gz
+
 BuildRequires:	libdbus-glib-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libsqlite3-devel
@@ -44,8 +47,6 @@ The %{name}-docs package contains documentation for %{name}.
 %prep
 %setup -q
 
-%patch0	-p1 -b .werror
-
 %build
 gtkdocize
 autoreconf -i --force
@@ -68,7 +69,8 @@ rm -f %{buildroot}%{_bindir}/*test*
 rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 
 %files
-%doc COPYING AUTHORS INSTALL ChangeLog README NEWS
+%doc COPYING
+%doc AUTHORS INSTALL ChangeLog README NEWS
 %{_bindir}/ag-backup
 %{_bindir}/ag-tool
 %{_mandir}/man1/ag-backup.1*
@@ -99,6 +101,9 @@ rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 %doc %{_datadir}/gtk-doc/html/libaccounts-glib/
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_4
 - update to new release by fcimport
 
