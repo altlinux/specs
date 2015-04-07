@@ -1,18 +1,15 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Set-Scalar
 Version:        1.29
-Release:        alt1
+Release:        alt1_1
 Summary:        Basic set operations
-
 Group:          Development/Perl
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Set-Scalar/
-Source:        http://www.cpan.org/authors/id/D/DA/DAVIDO/Set-Scalar-%{version}.tar.gz
-
+Source0:        http://search.cpan.org/CPAN/authors/id/D/DA/DAVIDO/Set-Scalar-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 Source44: import.info
@@ -20,15 +17,12 @@ Source44: import.info
 %description
 %{summary}.
 
-
 %prep
 %setup -q -n Set-Scalar-%{version}
-
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
-
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -36,17 +30,17 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type d -depth -exec rmdir {} 2>/dev/null ';'
 chmod -R u+w $RPM_BUILD_ROOT/*
 
-
 %check
 make test
-
 
 %files
 %doc ChangeLog README
 %{perl_vendor_privlib}/Set/
 
-
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_1
+- update to new release by fcimport
+
 * Sat Mar 29 2014 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
 - automated CPAN update
 
