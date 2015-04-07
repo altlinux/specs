@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ waf
 
 Name:       libsord
 Version:    0.12.2
-Release:    alt1_1
+Release:    alt1_2
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 Group:      System/Libraries
@@ -86,6 +86,9 @@ install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_pkgdocdir}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_1
 - update to new release by fcimport
 
