@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           ballz
 Version:        1.0.2
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Platform game with some puzzle elements
 Group:          Games/Other
 License:        BSD
@@ -36,17 +36,57 @@ make %{?_smp_mflags}
 %makeinstall_std
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ravi Srinivasan <ravishankar.srinivasan@gmail.com> -->
+<!--
+BugReportURL: https://code.google.com/p/db-tins07/issues/detail?id=1
+SentUpstream: 2014-09-24
+-->
+<application>
+  <id type="desktop">ballz.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>A platform game with puzzle elements</summary>
+  <description>
+    <p>
+      Ballz is a platformer with some puzzle elements.
+      You take control of a ball which is genetically modified by the British
+      secret service.
+    </p>
+    <p>
+      Your mission is to rescue captured British soldiers from a prison in Iran.
+    </p>
+  </description>
+  <url type="homepage">http://code.google.com/p/db-tins07/</url>
+  <screenshots>
+    <screenshot type="default">https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/ballz/a.png</screenshot>
+    <screenshot type="default">https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/ballz/b.png</screenshot>
+  </screenshots>
+</application>
+EOF
 
 %files
 %doc AUTHORS README BSD-license ChangeLog
 %{_bindir}/%{name}
 %{_datadir}/%{name}
+%{_datadir}/appdata/*.appdata.xml
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/*
 %{_mandir}/man6/*
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_13
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_12
 - update to new release by fcimport
 
