@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libexpat-devel
+BuildRequires: libexpat-devel libssl-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libisds
-Version:        0.9
-Release:        alt1_2
+Version:        0.10
+Release:        alt1_1
 Summary:        Library for accessing the Czech Data Boxes
 Group:          System/Libraries
 License:        LGPLv3
@@ -40,7 +40,9 @@ developing applications that use %{name}.
 %setup -q
 
 %build
-%configure --disable-static \
+%configure \
+    --disable-openssl-backend \
+    --disable-static \
     --enable-test \
     --with-libcurl \
     --enable-curlreauthorizationbug
@@ -57,7 +59,8 @@ mv doc specification
 rm -rf client/.deps
 
 %files -f %{name}.lang
-%doc README AUTHORS NEWS TODO COPYING
+%doc COPYING
+%doc README AUTHORS NEWS TODO
 %{_libdir}/*.so.*
 
 %files devel
@@ -67,6 +70,9 @@ rm -rf client/.deps
 %doc client specification
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_2
 - update to new release by fcimport
 
