@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:		escape
 Version:	200912250
-Release:	alt3_9
+Release:	alt3_10
 Summary:	Extensible block-pushing puzzle game
 
 Group:		Games/Other
@@ -75,16 +75,56 @@ desktop-file-install \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
 	%{SOURCE1}
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ryan Lerch <rlerch@redhat.com> -->
+<!--
+EmailAddress: tom7@cs.cmu.edu
+SentUpstream: 2014-09-24
+-->
+<application>
+  <id type="desktop">escape.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>solve the puzzle to find the exit and escape</summary>
+  <description>
+    <p>
+      Escape is a puzzle game that relies less on reflexes and more on
+      solving the puzzle.
+      The player has to move blocks and detonate bombs and other devices in a
+      certain sequence to be able to solve the puzzle, and escape the maze.
+      It features many levels of varying difficulty.
+    </p>
+  </description>
+  <url type="homepage">http://escape.spacebar.org/</url>
+  <screenshots>
+    <screenshot type="default">http://escape.spacebar.org/images/california-roll-screenshot.png</screenshot>
+    <screenshot>http://escape.spacebar.org/images/buttonblocker-screenshot.png</screenshot>
+    <screenshot>http://escape.spacebar.org/images/mainmenu-screenshot.png</screenshot>
+  </screenshots>
+</application>
+EOF
 
 %files
 %doc COPYING design.txt escape.txt README
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
+%{_datadir}/appdata/*.appdata.xml
 %{_datadir}/applications/*.desktop
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 200912250-alt3_10
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 200912250-alt3_9
 - update to new release by fcimport
 
