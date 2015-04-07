@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 %define oldname fedora-gnat-project-common
 Name:           rpm-build-gnat
 Version:        3.8
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Files shared by Ada libraries
 Summary(sv):    Gemensamma filer för adabibliotek
 
@@ -65,10 +65,6 @@ exec_prefix=%{_exec_prefix} bindir=%{_bindir} libexecdir=%{_libexecdir} included
 mkdir --parents %{buildroot}%{_GNAT_project_dir} %{buildroot}%{_sysconfdir}/profile.d %{buildroot}%_rpmmacrosdir/
 cp -p directories.gpr %{buildroot}%{_GNAT_project_dir}/
 cp -p gnat-project.sh gnat-project.csh %{buildroot}%{_sysconfdir}/profile.d/
-# Write an explanation where macros.gnat used to be. Remove it in 2015.
-mkdir %{buildroot}%{_sysconfdir}/rpm
-# Overwrite the explanation with the macros rather than the opposite if the
-# directories are the same (which they are not supposed to be).
 cp -p macros.gnat %{buildroot}%_rpmmacrosdir/gnat
 
 
@@ -83,6 +79,9 @@ cp -p macros.gnat %{buildroot}%_rpmmacrosdir/gnat
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_2
 - update to new release by fcimport
 
