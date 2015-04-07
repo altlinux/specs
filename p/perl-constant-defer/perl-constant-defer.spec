@@ -1,30 +1,33 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Attribute/Handlers.pm) perl(B.pm) perl(B/Utils.pm) perl(Devel/Peek.pm) perl(FindBin.pm) perl(Glib.pm) perl(POSIX.pm) perl(Package/Constants.pm) perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl(Sub/Identify.pm) perl(base.pm) perl(constant.pm) perl(constant/lexical.pm) perl(lib/abs.pm) perl-devel perl-podlators
+BuildRequires: perl(Attribute/Handlers.pm) perl(B.pm) perl(B/Utils.pm) perl(Devel/FindRef.pm) perl(Devel/Peek.pm) perl(FindBin.pm) perl(Glib.pm) perl(POSIX.pm) perl(Package/Constants.pm) perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl(Sub/Identify.pm) perl(base.pm) perl(constant.pm) perl(constant/lexical.pm) perl(lib/abs.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-constant-defer
 Version:        6
-Release:        alt1
+Release:        alt1_1
 Summary:        Constant subs with deferred value calculation
 License:        GPLv3+
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/constant-defer/
-Source:        http://www.cpan.org/authors/id/K/KR/KRYDE/constant-defer-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/constant-defer-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  perl
 # The inc/my_pod2html is not called
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(strict.pm)
 # Run-Time:
 BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(vars.pm)
 # Tests:
-BuildRequires:  perl(Devel/FindRef.pm)
+# Devel::FindRef not used
 BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Test.pm)
-BuildRequires:  perl(Test/More.pm)
 # Optionals tests:
 BuildRequires:  perl(Data/Dumper.pm)
-BuildRequires:  perl(Devel/StackTrace.pm)
+# Devel::StackTrace not used
+# Test::More not used
 Requires:       perl(Carp.pm)
 Source44: import.info
 
@@ -39,23 +42,26 @@ allowing it to be garbage collected.
 chmod -x examples/*
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
 
 %files
-%doc Changes COPYING examples README
+%doc COPYING
+%doc Changes examples README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 6-alt1_1
+- update to new release by fcimport
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 6-alt1
 - automated CPAN update
 
