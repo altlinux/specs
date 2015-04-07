@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name:           gweled
 Version:        0.9.1
-Release:        alt2_10.20130730git819bed
+Release:        alt2_11.20130730git819bed
 
 Summary:        Swapping gem game
 
@@ -73,12 +73,47 @@ desktop-file-install --delete-original \
 # gweled.timed.scores not shipped in 0.7, but needed
 #cp -p $RPM_BUILD_ROOT%{_var}/lib/games/gweled.easy.scores $RPM_BUILD_ROOT%{_var}/lib/games/gweled.timed.scores
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 William Moreno <williamjmorenor@fedoraproject.org> -->
+<!--
+BugReportURL: https://bugs.launchpad.net/gweled/+bug/1322917
+SentUpstream: 2014-06-12
+-->
+<application>
+  <id type="desktop">gweled.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>Align three identical gems to remove them from board</summary>
+  <description>
+    <p>
+      Gweled is a version for GNU / Linux of the popular mobile game called
+      Bejeweled or Diamond Mine.
+      The game consist in to move adjacent gems to align three or more vertically
+      or horizontally to remove them from the board.
+    </p>
+  </description>
+  <url type="homepage">http://launchpad.net/gweled</url>
+  <screenshots>
+    <screenshot type="default">http://gweled.org/images/screen1.png</screenshot>
+  </screenshots>
+</application>
+EOF
+
 %find_lang %{name}
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING NEWS
 %attr(2711,root,games) %{_bindir}/%{name}
 %config(noreplace) %attr(0664,games,games) %{_var}/lib/games/*
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
 %_iconsdir/*/*/*/*
@@ -86,6 +121,9 @@ desktop-file-install --delete-original \
 %{_datadir}/sounds/%{name}/
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_11.20130730git819bed
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_10.20130730git819bed
 - update to new release by fcimport
 
