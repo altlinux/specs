@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: homebank
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -23,7 +23,7 @@ BuildPreReq: glib2-devel >= 2.34
 BuildPreReq: libgtk+3-devel >= 3.6.4
 BuildPreReq: libofx-devel
 
-BuildPreReq: perl-XML-Parser shared-mime-info desktop-file-utils
+BuildPreReq: perl-XML-Parser shared-mime-info desktop-file-utils libappstream-glib-devel
 
 %description
 HomeBank is the free software you have always wanted to manage your
@@ -84,6 +84,7 @@ read and rather useful for a first time user.
 %_datadir/mime-info/%name.mime
 %_datadir/mime/packages/%name.xml
 %_iconsdir/hicolor/*/apps/%name.*
+%_datadir/appdata/%name.appdata.xml
 
 %files help
 %dir %_datadir/%name/help
@@ -92,6 +93,9 @@ read and rather useful for a first time user.
 %exclude %_datadir/application-registry/%name.applications
 
 %changelog
+* Tue Apr 07 2015 Yuri N. Sedunov <aris@altlinux.org> 5.0.1-alt1
+- 5.0.1
+
 * Tue Feb 24 2015 Yuri N. Sedunov <aris@altlinux.org> 5.0.0-alt1
 - 5.0.0
 
