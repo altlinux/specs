@@ -1,5 +1,5 @@
 %define _name metacity
-%define ver_major 3.15
+%define ver_major 3.16
 %define api_ver 3.0
 %def_disable static
 %def_enable compositor
@@ -7,7 +7,7 @@
 %def_enable shape
 
 Name: %_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Metacity window manager
@@ -15,8 +15,8 @@ License: %gpl2plus
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/Metacity
 
-#Source: %gnome_ftp/%name/%ver_major/%_name-%version.tar.xz
-Source: %_name-%version.tar
+Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+#Source: %_name-%version.tar
 
 %define theme_prefix theme
 
@@ -249,6 +249,9 @@ theme.
 %_datadir/themes/Simple/*
 
 %changelog
+* Tue Apr 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Mar 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.2-alt1
 - after 3.15.2 snapshot
 
