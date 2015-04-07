@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/convert /usr/bin/glib-gettextize /usr/bin/rsvg-convert /
 %define fedora 21
 Name:           pioneers
 Version:        15.3
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Turnbased board strategy game (colonize an island)
 Group:          Games/Other
 License:        GPLv2+
@@ -70,6 +70,38 @@ desktop-file-install --delete-original \
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-editor.desktop \
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-server.desktop
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Eduardo Mayorga <e@mayorgalinux.com> -->
+<!--
+BugReportURL: https://sourceforge.net/p/pio/bugs/286/
+SentUpstream: 2014-09-25
+-->
+<application>
+  <id type="desktop">pioneers.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>Multiplayer board game inspired by The Settlers of Catan</summary>
+  <description>
+    <p>
+      Pioneers is a free videogame implementation of the famous German game Settlers of Catan.
+      The goal is to build towns, cities and roads on a board that is different every time, while accumulating various types of cards.
+      It can be played online.
+    </p>
+  </description>
+  <url type="homepage">http://pio.sourceforge.net/</url>
+  <screenshots>
+    <screenshot type="default">http://pio.sourceforge.net/screenshots0.11/client.png</screenshot>
+  </screenshots>
+</application>
+EOF
 
 %check
 if grep Catan `find $RPM_BUILD_ROOT ! -path "$RPM_BUILD_ROOT/usr/src/debug*"`;
@@ -94,6 +126,7 @@ fi
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/applications/%{name}-server.desktop
 %else
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/applications/%{name}-server.desktop
 %endif
@@ -112,6 +145,9 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/%{name}-editor.svg
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 15.3-alt1_2
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 15.3-alt1_1
 - update to new release by fcimport
 
