@@ -1,60 +1,72 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(IO/File.pm) perl(Test/More.pm) perl(base.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-YAML-Meta
 Version:        0.22
-Release:        alt1
+Release:        alt1_1
 Summary:        Validation of the META.yml file in a distribution
-License:        GPL+ or Artistic
+License:        Artistic 2.0
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-YAML-Meta/
-Source:        http://www.cpan.org/authors/id/B/BA/BARBIE/Test-YAML-Meta-%{version}.tar.gz
+Source0:        http://www.cpan.org/modules/by-module/Test/Test-YAML-Meta-%{version}.tar.gz
+Patch0:         Test-YAML-Meta-0.21-utf8.patch
 BuildArch:      noarch
+# Module Build
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Module Runtime
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(Test/CPAN/Meta/YAML.pm)
+BuildRequires:  perl(vars.pm)
+BuildRequires:  perl(warnings.pm)
+# Test Suite
+BuildRequires:  perl(IO/File.pm)
+BuildRequires:  perl(Test/CPAN/Meta/JSON.pm)
+BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-BuildRequires:  perl(Test/YAML/Valid.pm)
-BuildRequires:  perl(Test/CPAN/Meta/YAML.pm)
-BuildRequires:  perl(YAML.pm)
-BuildRequires:  perl(YAML/Syck.pm)
 Source44: import.info
+# Runtime
 
 %description
 This module was written to ensure that a META.yml file, provided with a
-standard distribution uploaded to CPAN, meets the specifications that
+standard distribution uploaded to CPAN, meets the specifications that are
 slowly being introduced to module uploads, via the use of
 ExtUtils::MakeMaker, Module::Build and Module::Install.
 
 %prep
 %setup -q -n Test-YAML-Meta-%{version}
 
+# Re-code LICENSE as UTF-8
+%patch0
+
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
-mv LICENSE LICENSE.in
-iconv -fiso88591 -tutf8 -oLICENSE LICENSE.in
-rm LICENSE.in
 
 %install
-
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+# %{_fixperms} %{buildroot}
 
 %check
-make test
+make test AUTOMATED_TESTING=1
 
 %files
-%doc Changes LICENSE README examples
-%dir %{perl_vendor_privlib}/Test/
-%dir %{perl_vendor_privlib}/Test/YAML/
-%{perl_vendor_privlib}/Test/YAML/Meta.pm
+%if 0%{?_licensedir:1}
+%doc LICENSE
+%else
+%doc LICENSE
+%endif
+%doc Changes README examples/
+%{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
