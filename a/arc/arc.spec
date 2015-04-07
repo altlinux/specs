@@ -1,6 +1,6 @@
 Name:      arc
 Version:   5.21p
-Release:   alt1_4
+Release:   alt1_5
 Summary:   Arc archiver
 Group:     Archiving/Other
 License:   GPL+
@@ -13,6 +13,12 @@ Patch1:    arc-5.21p-manpage-section-fix.patch
 # of its original author. But there still is some confusing license text in the
 # docs this clarifies those parts of the text (rhbz#947786)
 Patch2:    arc-5.21p-clarify-license.patch
+# Fix reading v1 headers
+Patch3:    arc-5.21p-hdrv1-read-fix.patch
+# Fix arcdie crash
+Patch4:    arc-5.21p-fix-arcdie.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1179143
+Patch5:    arc-5.21p-directory-traversel.patch
 Source44: import.info
 
 %description
@@ -25,6 +31,9 @@ but useful if you have old .arc files you need to unpack.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 sed -i -e 's,^OPT =.*$,OPT = ${RPM_OPT_FLAGS},' Makefile
 
 
@@ -45,6 +54,9 @@ install -m 0644 arc.1 marc.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 5.21p-alt1_5
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 5.21p-alt1_4
 - update to new release by fcimport
 
