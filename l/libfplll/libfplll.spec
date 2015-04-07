@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libgmp-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 Name:           libfplll
 Version:        4.0.4
-Release:        alt1_4
+Release:        alt1_5
 Summary:        LLL-reduces euclidean lattices
-Group:          System/Libraries
 License:        LGPLv2+
-URL:            http://perso.ens-lyon.fr/damien.stehle/fplll/
+URL:            https://github.com/dstehle/fplll
 Source0:        http://perso.ens-lyon.fr/damien.stehle/fplll/%{name}-%{version}.tar.gz
 
 BuildRequires:  libmpfr-devel
@@ -28,8 +28,8 @@ reduction algorithm.
 
 
 %package        devel
+Group: Development/C
 Summary:        Development files for %{name}
-Group:          Development/C
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
@@ -38,8 +38,8 @@ developing applications that use %{name}.
 
 
 %package        tools
+Group: Engineering
 Summary:        Command line tools that use %{name}
-Group:          Engineering
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    tools
@@ -74,7 +74,8 @@ make check
 
 
 %files
-%doc AUTHORS COPYING NEWS README.html
+%doc AUTHORS NEWS README.html
+%doc COPYING
 %{_libdir}/*.so.*
 
 %files devel
@@ -87,6 +88,9 @@ make check
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_5
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_4
 - update to new release by fcimport
 
