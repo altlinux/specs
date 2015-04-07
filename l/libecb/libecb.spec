@@ -1,5 +1,7 @@
 %add_optflags %optflags_shared
-%global snapshot 20141029
+%global snapshot 20150218
+# Do not create debuginfo sub-package because there is no binary executable
+%global debug_package %{nil}
 Name:       libecb
 Version:    0.%{snapshot}
 Release:    alt1_1
@@ -9,10 +11,30 @@ License:    BSD or GPLv2+
 URL:        http://software.schmorp.de/pkg/libecb
 # Snapshot from CVS :pserver:anonymous@cvs.schmorp.de/schmorpforge libecb 
 Source0:    %{name}-%{snapshot}.tar.xz
-BuildArch:  noarch
+BuildRequires:  perl-podlators
 Source44: import.info
 
 %description
+This project delivers you many GCC built-ins, attributes and a number of
+generally useful low-level functions, such as popcount, expect, prefetch,
+noinline, assume, unreachable and so on.
+
+This is a dummy package. All the usefull files are delivered by %{name}-devel
+package.
+
+
+%package devel
+Group: Development/C
+Summary:    Compiler built-ins
+# Packaging guidelines require header-only packages:
+# to be architecture-specific, to deliver headers in -devel package, to
+# provide -static symbol for reverse build-requires.
+# Replace libecb package:
+Provides:   libecb-static = %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:   libecb = %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes:  libecb < 0.20150218
+
+%description devel
 This project delivers you many GCC built-ins, attributes and a number of
 generally useful low-level functions, such as popcount, expect, prefetch,
 noinline, assume, unreachable and so on.
@@ -21,17 +43,24 @@ noinline, assume, unreachable and so on.
 %setup -q -n %{name}-%{snapshot}
 
 %build
-# Keep empty %%build section for possible RPM hooks
+pod2man ecb.pod > ecb.3
 
 %install
 install -d %{buildroot}%{_includedir}
 install -m 0644 -t %{buildroot}%{_includedir} *.h 
+install -d %{buildroot}%{_mandir}/man3
+install -m 0644 -t %{buildroot}%{_mandir}/man3 *.3
 
-%files
-%doc Changes ecb.pod LICENSE README
+%files devel
+%doc LICENSE
+%doc Changes README
 %{_includedir}/*
+%{_mandir}/man3/*
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.20150218-alt1_1
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.20141029-alt1_1
 - update to new release by fcimport
 
