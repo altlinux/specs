@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/runtest libICE-devel libSM-devel
+BuildRequires: /usr/bin/runtest libICE-devel libSM-devel libsocket
 # END SourceDeps(oneline)
+%define fedora 21
 
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_12
+Release:        alt1_14
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -31,6 +32,10 @@ Patch4:         environment-modules-format.patch
 # Support Tcl 8.6
 # https://sourceforge.net/p/modules/feature-requests/14/
 Patch5:         environment-modules-tcl86.patch
+# python 3 support
+# https://sourceforge.net/p/modules/patches/15/
+# https://bugzilla.redhat.com/show_bug.cgi?id=1184979
+Patch6:         environment-modules-py3-and-doc-fix.patch
 
 BuildRequires:  tcl-devel tclx libX11-devel
 BuildRequires:  dejagnu
@@ -75,6 +80,7 @@ have access to the module alias.
 %patch3 -p1 -b .avail
 %patch4 -p1 -b .format
 %patch5 -p1 -b .tcl86
+%patch6 -p1 -b .py3
 
 
 %build
@@ -94,6 +100,10 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
 touch %{buildroot}%{_sysconfdir}/profile.d/modules.{csh,sh}
 cp -p %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/Modules/init/modules.sh
 cp -p %SOURCE2 %SOURCE3 $RPM_BUILD_ROOT%{_datadir}/Modules/bin
+%if 0%{?fedora} >= 22
+sed -i -e 1s,/usr/bin/python,/usr/bin/python3, \
+    $RPM_BUILD_ROOT%{_datadir}/Modules/bin/createmodule.py
+%endif
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles \
          $RPM_BUILD_ROOT%{_datadir}/modulefiles
 # Install the rpm config file
@@ -126,6 +136,9 @@ EOF
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_14
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_12
 - update to new release by fcimport
 
