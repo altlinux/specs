@@ -4,12 +4,12 @@ BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Data/Show.pm) perl(ExtUtils
 # END SourceDeps(oneline)
 Name:		perl-Regexp-Grammars
 Version:	1.040
-Release:	alt1
+Release:	alt1_1
 Summary:	Add grammatical parsing features to perl regular expressions
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Regexp-Grammars/
-Source:	http://www.cpan.org/authors/id/D/DC/DCONWAY/Regexp-Grammars-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/D/DC/DCONWAY/Regexp-Grammars-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl(Module/Build.pm)
 BuildRequires:	perl(Test/More.pm)
@@ -45,9 +45,6 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
 
-# this is only needed for Build test
-rm -f %{buildroot}/%{perl_vendor_privlib}/Skip_if_Perl_5_18.pm
-
 # %{_fixperms} %{buildroot}
 
 %check
@@ -58,6 +55,9 @@ rm -f %{buildroot}/%{perl_vendor_privlib}/Skip_if_Perl_5_18.pm
 %{perl_vendor_privlib}/Regexp/
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.040-alt1_1
+- update to new release by fcimport
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.040-alt1
 - automated CPAN update
 
