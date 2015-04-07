@@ -5,12 +5,12 @@ BuildRequires: perl(Config.pm) perl(ExtUtils/MakeMaker.pm) perl(XSLoader.pm) per
 BuildRequires: gcc-c++
 Name:           perl-ExtUtils-CppGuess
 Version:        0.08
-Release:        alt1
+Release:        alt1_1
 Summary:        Guess C++ compiler and flags
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/ExtUtils-CppGuess/
-Source:        http://www.cpan.org/authors/id/E/ET/ETJ/ExtUtils-CppGuess-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/E/ET/ETJ/ExtUtils-CppGuess-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -49,6 +49,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_privlib}/ExtUtils*
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_1
+- update to new release by fcimport
+
 * Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
