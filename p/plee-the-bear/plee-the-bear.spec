@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           plee-the-bear
 Version:        0.6.0
-Release:        alt4_16.1
+Release:        alt4_18
 Summary:        2D platform game
 Group:          Games/Other
 # Code and artwork respectively
@@ -85,12 +85,44 @@ for i in %{buildroot}%{_libdir}/*.so %{buildroot}%{_bindir}/bf-* %{buildroot}%{_
 	chrpath --delete $i
 done
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ryan Lerch <rlerch@redhat.com> -->
+<!--
+BugReportURL: https://github.com/j-jorge/plee-the-bear/issues/2
+SentUpstream: 2014-09-25
+-->
+<application>
+  <id type="desktop">plee-the-bear.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>Rescue your kidnapped son in this side scrolling platform game</summary>
+  <description>
+    <p>
+      Plee the bear is a side scrolling platform game where you have to rescue your kidnapped son.
+      Progress through the levels and dodge all the obstacles to try to rescue your son.
+    </p>
+  </description>
+  <url type="homepage">http://plee-the-bear.sourceforge.net/</url>
+  <screenshots>
+    <screenshot type="default">http://www.stuff-o-matic.com/plee-the-bear/assets/screenshots/large/2.png</screenshot>
+  </screenshots>
+</application>
+EOF
 
 %files -f %{name}.lang
 %{_libdir}/*.so
 %{_bindir}/*
 %{_datadir}/plee-the-bear
 %{_datadir}/bear-factory
+%{_datadir}/appdata/*.appdata.xml
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/pixmaps/*
@@ -98,6 +130,9 @@ done
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt4_18
+- update to new release by fcimport
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.6.0-alt4_16.1
 - rebuild with boost 1.57.0
 
