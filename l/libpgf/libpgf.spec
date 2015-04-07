@@ -3,14 +3,16 @@ BuildRequires: /usr/bin/dot /usr/bin/doxygen gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libpgf
-Version:        6.13.45
-Release:        alt1_0.3.svn123
+Version:        6.14.12
+Release:        alt1_1
 Summary:        PGF (Progressive Graphics File) library
 
 Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://www.libpgf.org
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-src.tar.gz
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.tar.gz
+# Modernize automake usage
+Patch0:         libpgf-auto.patch
 
 BuildRequires:  doxygen
 BuildRequires:  libtool
@@ -34,6 +36,9 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{name}
+%patch0 -p1 -b .auto
+# Fix line endings
+sed -i -e 's/\r//' configure.ac README
 
 sed -i 's|$(DESTDIR)$(datadir)/doc/$(DOC_MODULE)|$(RPM_BUILD_DIR)/libpgf|g' doc/Makefile.am
 
@@ -66,6 +71,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 6.14.12-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 6.13.45-alt1_0.3.svn123
 - update to new release by fcimport
 
