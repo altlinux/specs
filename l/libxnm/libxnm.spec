@@ -5,7 +5,7 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 Name:           libxnm
 Version:        0.1.3
-Release:        alt3_12
+Release:        alt3_13
 Summary:        A library for parsing the XNM format
 
 License:        GPLv2+
@@ -14,15 +14,14 @@ Source0:        http://downloads.sourceforge.net/xnm/%{name}-%{version}.tar.gz
 
 BuildRequires:  glib2-devel
 Source44: import.info
-
     
 %description
 XNM is a simple recursively defined serialization syntax for storing
 and communicating of complex data structures
 
 %package        devel
+Group: Development/C
 Summary:        Development files for %{name}
-Group:          Development/C
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
@@ -52,6 +51,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt3_13
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt3_12
 - update to new release by fcimport
 
