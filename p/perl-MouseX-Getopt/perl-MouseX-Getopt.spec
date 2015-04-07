@@ -5,19 +5,16 @@ BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-MouseX-Getopt
 Summary:	Mouse role for processing command line options
-Version:	0.35
-Release:	alt1_6
+Version:	0.36
+Release:	alt1_1
 License:	GPL+ or Artistic
-# Hotfix release with different case, expected to revert to normal in subsequent releases
-#URL:		http://search.cpan.org/dist/MouseX-Getopt/
-URL:		http://search.cpan.org/dist/mousex-getopt/
-Source0:	http://search.cpan.org/CPAN/authors/id/T/TO/TOKUHIROM/mousex-getopt-%{version}.tar.gz
+URL:		http://search.cpan.org/dist/MouseX-Getopt/
+Source0:	http://search.cpan.org/CPAN/authors/id/G/GF/GFUJI/MouseX-Getopt-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	perl
-BuildRequires:	perl(CPAN/Meta.pm)
-BuildRequires:	perl(CPAN/Meta/Prereqs.pm)
 BuildRequires:	perl(File/Basename.pm)
+BuildRequires:	perl(File/Copy.pm)
 BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(Module/Build.pm)
 BuildRequires:	perl(strict.pm)
@@ -57,7 +54,7 @@ This is a Mouse role that provides an alternate constructor for creating
 objects using parameters passed in from the command line.
 
 %prep
-%setup -q -n mousex-getopt-%{version}
+%setup -q -n MouseX-Getopt-%{version}
 
 %build
 perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
@@ -70,12 +67,15 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build test
 
 %files
-# Note: malformed LICENSE file in 0.35 not shipped
+# Note: malformed LICENSE file in 0.35 .. 0.36 not shipped
 # https://github.com/gfx/mousex-getopt/issues/2
 %doc Changes README.md
 %{perl_vendor_privlib}/MouseX/
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1_6
 - update to new release by fcimport
 
