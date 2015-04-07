@@ -1,5 +1,5 @@
 Name:		mg
-Version:	20141127
+Version:	20150323
 Release:	alt1_1
 Summary:	Tiny Emacs-like editor
 
@@ -9,7 +9,7 @@ URL:		http://homepage.boetes.org/software/mg/
 Source0:	http://homepage.boetes.org/software/mg/%{name}-%{version}.tar.gz
 
 BuildRequires:	ncurses-devel
-BuildRequires:	libbsd-devel
+BuildRequires:	libbsd-devel >= 0.7.0
 Source44: import.info
 
 %description
@@ -33,6 +33,9 @@ make install DESTDIR=%{buildroot} prefix=%{_prefix} mandir=%{_mandir} \
 %{_mandir}/man1/mg.1.*
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 20150323-alt1_1
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 20141127-alt1_1
 - update to new release by fcimport
 
