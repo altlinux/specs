@@ -3,25 +3,34 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-CPAN-Meta-JSON
-Version:	0.15
-Release:	alt2_4
+Version:	0.16
+Release:	alt1_1
 Summary:	Validate a META.json file within a CPAN distribution
 Group:		Development/Perl
 License:	Artistic 2.0
 URL:		http://search.cpan.org/dist/Test-CPAN-Meta-YAML/
 Source0:	http://search.cpan.org/CPAN/authors/id/B/BA/BARBIE/Test-CPAN-Meta-JSON-%{version}.tar.gz
-Patch0:		Test-CPAN-Meta-JSON-0.15-utf8.patch
+Patch0:		Test-CPAN-Meta-JSON-0.16-utf8.patch
 BuildArch:	noarch
+# Module Build
+BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+# Module Runtime
 BuildRequires:	perl(IO/File.pm)
 BuildRequires:	perl(JSON.pm)
+BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test/Builder.pm)
+BuildRequires:	perl(vars.pm)
+BuildRequires:	perl(warnings.pm)
+# Test Suite
 BuildRequires:	perl(Test/Builder/Tester.pm)
-BuildRequires:	perl(Test/CPAN/Meta.pm)
 BuildRequires:	perl(Test/More.pm)
+# Optional Tests
+BuildRequires:	perl(Test/CPAN/Meta.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 Source44: import.info
+# Runtime
 
 %description
 This module was written to ensure that a META.json file, provided with a
@@ -50,10 +59,18 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 make test AUTOMATED_TESTING=1
 
 %files
-%doc Changes LICENSE README examples/
+%if 0%{?_licensedir:1}
+%doc LICENSE
+%else
+%doc LICENSE
+%endif
+%doc Changes README examples/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_4
 - update to new release by fcimport
 
