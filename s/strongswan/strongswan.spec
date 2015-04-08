@@ -1,52 +1,53 @@
-%def_disable static
-%def_enable curl
-%def_enable ldap
 #set capability dropping library.
 #Currently supported values are "libcap" and "native".
 %define capabilities libcap
-%def_disable mysql
-%def_disable sqlite
-%def_enable stroke
-%def_disable medsrv
-%def_enable medcli
-%def_enable smp
-%def_enable sql
-%def_enable smartcard
-%def_enable pkcs11
+%def_enable addrblock
+%def_enable agent
+%def_enable ccm
 %def_enable cisco_quirks
-%def_disable unit_tests
-%def_disable load_tests
-%def_enable eap_radius
+%def_enable ctr
+%def_enable curl
+%def_enable dhcp
+%def_enable eap_aka
+%def_enable eap_gtc
 %def_enable eap_identity
+%def_enable eap_md5
 %def_enable eap_mschapv2
-%def_enable eap_tls
-%def_enable eap_ttls
-%def_enable eap_tnc
+%def_enable eap_radius
 %def_enable eap_sim
 %def_enable eap_sim-file
-%def_enable eap_md5
-%def_enable eap_gtc
-%def_enable eap_aka
+%def_enable eap_tls
+%def_enable eap_tnc
+%def_enable eap_ttls
+%def_enable farp
+%def_enable gcm
+%def_enable ha
+%def_enable kernel_klips
 %def_enable kernel_netlink
 %def_enable kernel_pfkey
-%def_enable kernel_klips
+%def_enable ldap
+%def_enable medcli
+%def_enable mediation
 %def_enable nat_transport
 %def_enable ntru
-%def_disable dumm
-%def_disable manager
-%def_enable mediation
-%def_enable self_test
-%def_enable dhcp
-%def_enable farp
-%def_enable ha
 %def_enable openssl
-%def_enable agent
-%def_enable ctr
-%def_enable ccm
-%def_enable gcm
-%def_enable addrblock
-%def_disable uci
+%def_enable pkcs11
+%def_enable self_test
+%def_enable smartcard
+%def_enable smp
+%def_enable sql
+%def_enable stroke
+%def_enable swanctl
+%def_disable dumm
+%def_disable load_tests
+%def_disable manager
+%def_disable medsrv
+%def_disable mysql
 %def_disable nm
+%def_disable sqlite
+%def_disable static
+%def_disable uci
+%def_disable unit_tests
 # this one requires that libhydra and libcharon be
 # underlinked on purpose, contact mike@ for email
 # explanation by Tobias Brunner (11 May 2010)
@@ -62,9 +63,9 @@
 
 Name: strongswan
 Version: 5.3.0
-Release: alt1
+Release: alt2
 
-Summary: StrongSWAN IPSEC implementation
+Summary: strongSwan IPsec implementation
 License: GPLv2+
 Group: System/Servers
 
@@ -72,6 +73,7 @@ Group: System/Servers
 Url: http://www.strongswan.org
 Source0: %name-%version%beta.tar.gz
 Source1: ipsec.init
+Source2: ipsec.service
 Source100: strongswan.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -86,16 +88,16 @@ Obsoletes: libstrongswan < 4.3
 %add_verify_elf_skiplist %_libdir/%name/ipsec/plugins/*
 
 %description
-StrongSWAN is a free implementation of IPSEC & IKE for Linux.  IPSEC is
-the Internet Protocol Security and uses strong cryptography to provide
-both authentication and encryption services.  These services allow you
-to build secure tunnels through untrusted networks.  Everything passing
-through the untrusted net is encrypted by the ipsec gateway machine and
-decrypted by the gateway at the other end of the tunnel.  The resulting
-tunnel is a virtual private network or VPN.
+strongSwan is a free implementation of IPsec & IKE for Linux. IPsec is the
+Internet Protocol Security and uses strong cryptography to provide both
+authentication and encryption services. These services allow you to build
+secure tunnels through untrusted networks. Everything passing through the
+untrusted net is encrypted by the ipsec gateway machine and decrypted by the
+gateway at the other end of the tunnel. The resulting tunnel is a virtual
+private network or VPN.
 
-This package contains the service and userland tools for setting up
-StrongSWAN on a freeswan enabled kernel.
+This package contains the service and userland tools for setting up strongSwan
+on a freeswan enabled kernel.
 
 %package testing
 Summary: %name testing
@@ -105,7 +107,7 @@ BuildArch: noarch
 
 %description testing
 This package contains testing scripts and configuration snippets
-of StrongSWAN documentation
+of strongSwan documentation
 
 %prep
 %setup -n %name-%version%beta
@@ -115,17 +117,35 @@ of StrongSWAN documentation
 %configure \
 	--sysconfdir=%_sysconfdir/%name \
 	--libexecdir=%_libdir/%name \
-	%{subst_enable static} \
+	%{subst_enable addrblock} \
+	%{subst_enable agent} \
+	%{subst_enable ccm} \
+	%{subst_enable ctr} \
 	%{subst_enable curl} \
+	%{subst_enable dhcp} \
+	%{subst_enable dumm} \
+	%{subst_enable farp} \
+	%{subst_enable gcm} \
+	%{subst_enable ha} \
 	%{subst_enable ldap} \
-	%{subst_enable mysql} \
-	%{subst_enable sqlite} \
-	%{subst_enable stroke} \
-	%{subst_enable medsrv} \
+	%{subst_enable manager} \
 	%{subst_enable medcli} \
+	%{subst_enable mediation} \
+	%{subst_enable medsrv} \
+	%{subst_enable mysql} \
+	%{subst_enable ntru} \
+	%{subst_enable openssl} \
+	%{subst_enable padlock} \
+	%{subst_enable smartcard} \
 	%{subst_enable smp} \
 	%{subst_enable sql} \
-	%{subst_enable smartcard} \
+	%{subst_enable sqlite} \
+	%{subst_enable static} \
+	%{subst_enable stroke} \
+	%{subst_enable swanctl} \
+	%{subst_enable uci} \
+	%{subst_enable nm} \
+	--with-capabilities=%capabilities \
 	%{subst_enable pkcs11} \
 	--with-default-pkcs11=%_libdir/pkcs11/opensc-pkcs11.so \
 	%{?_enable_cisco_quirks: --enable-cisco-quirks} \
@@ -146,36 +166,20 @@ of StrongSWAN documentation
 	%{?_enable_kernel_pfkey: --enable-kernel-pfkey} \
 	%{?_enable_kernel_klips: --enable-kernel-klips} \
 	%{?_enable_nat_transport: --enable-nat-transport} \
-	%{subst_enable ntru} \
-	%{subst_enable dumm} \
-	%{subst_enable manager} \
-	%{subst_enable mediation} \
 	%{?_enable_integrity_test: --enable-integrity-test} \
-	%{?_enable_self_test: --enable-self-test} \
-	%{subst_enable padlock} \
-	%{subst_enable dhcp} \
-	%{subst_enable farp} \
-	%{subst_enable ha} \
-	%{subst_enable openssl} \
-	%{subst_enable agent} \
-	%{subst_enable ctr} \
-	%{subst_enable ccm} \
-	%{subst_enable gcm} \
-	%{subst_enable addrblock} \
-	%{subst_enable uci} \
-	%{subst_enable nm} \
-	--with-capabilities=%capabilities
+	%{?_enable_self_test: --enable-self-test}
 
 #
 %make_build
 
 %install
 %makeinstall_std
-install -pDm755 %SOURCE1 %buildroot%_initdir/ipsec
-rm -f %buildroot%_libdir/lib%name.{a,so}
+mkdir -p %buildroot{%pkgdocdir,%systemd_unitdir}
 
-mkdir -p %buildroot%pkgdocdir
+install -pDm755 %SOURCE1 %buildroot%_initdir/ipsec
+install -pm644 %SOURCE2 %buildroot%systemd_unitdir/
 install -pm644 ChangeLog NEWS README TODO %buildroot%pkgdocdir/
+rm -f %buildroot%_libdir/lib%name.{a,so}
 rm -f testing/do-tests* testing/Makefile.*
 cp -a testing/ %buildroot%pkgdocdir/
 
@@ -193,11 +197,14 @@ cp -a testing/ %buildroot%pkgdocdir/
 %attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/private
 %attr(700,root,root) %dir %_sysconfdir/%name/%name.d/*/
 %attr(700,root,root) %dir %_sysconfdir/%name/%name.d/
+%attr(700,root,root) %dir %_sysconfdir/%name/swanctl/
+%config(noreplace) %_sysconfdir/%name/swanctl/swanctl.conf
 %config(noreplace) %_sysconfdir/%name/%name.d/*/*.conf
 %config(noreplace) %_sysconfdir/%name/%name.d/*.conf
-%config(noreplace) %_sysconfdir/%name/ipsec.conf
 %config(noreplace) %_sysconfdir/%name/%name.conf
+%config(noreplace) %_sysconfdir/%name/ipsec.conf
 %config(noreplace) %_initdir/ipsec
+%_unitdir/ipsec.service
 %_datadir/%name/
 %_libdir/%name/
 %_libdir/ipsec/
@@ -213,6 +220,13 @@ cp -a testing/ %buildroot%pkgdocdir/
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Wed Apr 08 2015 Michael Shigorin <mike@altlinux.org> 5.3.0-alt2
+- built for Sisyphus (thx Vadim)
+
+* Wed Apr 08 2015 Vadim Illarionov <gbIMoBou@gmail.com> 5.3.0-alt1.1
+- added systemd service
+- compiled with swanctl
+
 * Mon Mar 30 2015 Michael Shigorin <mike@altlinux.org> 5.3.0-alt1
 - new version (watch file uupdate)
 
