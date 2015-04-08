@@ -4,8 +4,8 @@
 #============================================================================
 Name: asterisk11
 Summary: Open source PBX
-Version: 11.16.0
-Release: alt2
+Version: 11.17.0
+Release: alt1
 License: GPL
 Group: System/Servers
 %if_with corosync
@@ -1268,6 +1268,9 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %_libdir/libasteriskssl11.so.1
 
 %changelog
+* Wed Apr 08 2015 Denis Smirnov <mithraen@altlinux.ru> 11.17.0-alt1
+- new version 11.17.0
+
 * Mon Apr 06 2015 Denis Smirnov <mithraen@altlinux.ru> 11.16.0-alt2
 - remove requires to mithraen-pbx-fax (ALT 30906)
 - remove DONT_OPTIMIZE and DEBUG_THREADS options (ALT 30898)
