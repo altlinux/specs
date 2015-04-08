@@ -2,14 +2,13 @@
 BuildRequires: gcc-c++ libcrystalhd-devel
 # END SourceDeps(oneline)
 BuildRequires(pre): kernel-build-tools
-%add_optflags %optflags_shared
 %global majorminor 1.0
 %global date 20120405
 
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt2_8
+Release:       alt3_8
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal_hd/
@@ -35,6 +34,7 @@ BuildRequires: gstreamer1.0-devel >= %{majorminor}
 BuildRequires: gst-plugins1.0-devel >= %{majorminor}
 Requires:      firmware-crystalhd
 Source44: import.info
+Patch33: libcrystalhd-alt-from-zerg-bug30916.patch
 
 %description
 The libcrystalhd library provides userspace access to Broadcom Crystal HD
@@ -74,6 +74,7 @@ Gstreamer crystalhd decoder plugin
 %package -n kernel-source-crystalhd
 Summary: Linux crystalhd  Broadcom module sources
 Group: Development/Kernel
+BuildArch: noarch
 
 %description -n kernel-source-crystalhd
 Crystalhd module sources for Linux kernel.
@@ -87,6 +88,7 @@ cp %{SOURCE1} %{SOURCE4} .
 sed -i -e 's|-msse2||' linux_lib/libcrystalhd/Makefile
 %endif
 %patch1 -p1 -b .gst1
+%patch33 -p1
 
 %build
 pushd linux_lib/libcrystalhd/ > /dev/null 2>&1
@@ -120,9 +122,9 @@ cp -p %{SOURCE2} $RPM_BUILD_ROOT/lib/firmware/
 cp -p %{SOURCE3} $RPM_BUILD_ROOT/lib/firmware/
 
 #Install udev rule
-mkdir -p $RPM_BUILD_ROOT%{_prefix}/lib/udev/rules.d
+mkdir -p $RPM_BUILD_ROOT%{_udevrulesdir}
 install -pm 0644 driver/linux/20-crystalhd.rules \
-  $RPM_BUILD_ROOT%{_prefix}/lib/udev/rules.d
+  $RPM_BUILD_ROOT%{_udevrulesdir}
 
 mv driver kernel-source-crystalhd-%version
 %__mkdir_p %kernel_srcdir/
@@ -141,7 +143,7 @@ mv driver kernel-source-crystalhd-%version
 
 %files -n firmware-crystalhd
 %doc LICENSE
-%{_prefix}/lib/udev/rules.d/20-crystalhd.rules
+%{_udevrulesdir}/20-crystalhd.rules
 /lib/firmware/bcm70012fw.bin
 /lib/firmware/bcm70015fw.bin
 
@@ -154,6 +156,9 @@ mv driver kernel-source-crystalhd-%version
 
 
 %changelog
+* Wed Apr 08 2015 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_8
+- rules: MODE="0660", GROUP="video" (closes: #30916)
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt2_8
 - update to new release by fcimport
 
