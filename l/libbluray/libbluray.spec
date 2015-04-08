@@ -1,5 +1,5 @@
 Name: libbluray
-Version: 0.6.2
+Version: 0.7.0
 Release: alt1
 Summary: BD library
 
@@ -10,7 +10,8 @@ Url: http://www.videolan.org/developers/libbluray.html
 Source: %name-%version-%release.tar
 
 BuildRequires: /proc
-BuildRequires: ant java-1.7.0-openjdk-devel libfreetype-devel libxml2-devel
+BuildRequires: ant java-1.7.0-openjdk-devel
+BuildRequires: fontconfig-devel libfreetype-devel libxml2-devel
 
 %description
 %summary
@@ -57,6 +58,9 @@ export JDK_HOME=/usr/lib/jdk
 %_bindir/*
 
 %changelog
+* Wed Apr 08 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.0-alt1
+- 0.7.0 released
+
 * Wed Dec 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.2-alt1
 - 0.6.2 released
 
