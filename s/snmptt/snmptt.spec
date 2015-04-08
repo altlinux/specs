@@ -1,9 +1,9 @@
-%filter_from_requires /perl.DBD/d
+%filter_from_requires /perl.DB[DI]/d
 %filter_from_requires /perl.SNMP.pm/d
 
 Name: snmptt
 Version: 1.4
-Release: alt1
+Release: alt2
 Summary: An SNMP trap handler written in Perl
 
 Group: System/Servers
@@ -29,6 +29,7 @@ parameters.
 Summary: MySQL support for %name
 Group: System/Servers
 Requires: perl(DBD/mysql.pm)
+Requires: %name = %version-%release
 
 %description mysql
 MySQL support for %name
@@ -39,6 +40,7 @@ MySQL support for %name
 Summary: PostgreSQL support for %name
 Group: System/Servers
 Requires: perl(DBD/Pg.pm)
+Requires: %name = %version-%release
 
 %description postgresql
 PostgreSQL support for %name
@@ -49,6 +51,7 @@ PostgreSQL support for %name
 Summary: ODBC support for %name
 Group: System/Servers
 Requires: perl(DBD/ODBC.pm)
+Requires: %name = %version-%release
 
 %description odbc
 ODBC support for %name
@@ -59,6 +62,7 @@ ODBC support for %name
 Summary: NET-SNMP support for %name
 Group: System/Servers
 Requires: perl(SNMP.pm)
+Requires: %name = %version-%release
 
 %description net-snmp
 NET-SNMP support for %name
@@ -90,7 +94,7 @@ install -D -p -m 0644 snmptt.ini %buildroot%_sysconfdir/snmp/snmptt.ini
 install -D -p -m 0644 -p %SOURCE1 %buildroot%_unitdir/%name.service
 install -D -p -m 0755 -p %SOURCE2 %buildroot%_initdir/snmptt
 install -D -p -m 0644 snmptt.logrotate %buildroot%_logrotatedir/snmptt
-install -d -m 0755 %buildroot%_var/spool/snmptt
+install -d -m 0775 %buildroot%_var/spool/snmptt
 install -d -m 0755 %buildroot%_logdir/snmptt
 
 %pre
@@ -114,7 +118,7 @@ install -d -m 0755 %buildroot%_logdir/snmptt
 %_sbindir/snmptthandler
 %_datadir/%name
 %_unitdir/%name.service
-%attr(-,%name,%name) %dir %_var/spool/%name/
+%attr(775,%name,root) %dir %_var/spool/%name/
 %attr(-,%name,%name) %dir %_logdir/%name/
 
 %doc ChangeLog COPYING README
@@ -126,5 +130,10 @@ install -d -m 0755 %buildroot%_logdir/snmptt
 %files net-snmp
 
 %changelog
+* Wed Apr  8 2015 Evgenii Terechkov <evg@altlinux.org> 1.4-alt2
+- Change /var/spool/snmptt/ ownership to snmptt:root to work with buggy snmptrapd (ALT #30926)
+- Missed Requires: added to subpackages
+- Fix initscript's condrestart
+
 * Thu Apr  2 2015 Terechkov Evgenii <evg@altlinux.org> 1.4-alt1
 - Initial build for ALT Linux Sisyphus
