@@ -1,3 +1,4 @@
+%define lng_list af ar as ast be be@latin bg bn bn_IN br bs ca ca@valencia crh cs csb cy da de el en en_GB en_US eo es et eu fa fi fr fy ga gd gl gu ha he hi hne hr hsb hu hy ia id is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms nb nds ne nl nn oc or pa pl ps pt pt_BR ro ru se si sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta te tg th tr tt ug uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW
 
 %define major 5
 %define minor 0
@@ -5,7 +6,7 @@
 
 Name: kf5-filesystem
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt1
 %K5init altplace
 
 Summary: The basic directory layout for KF5
@@ -27,7 +28,7 @@ mkdir -p %buildroot/%_libdir
 mkdir -p %buildroot/%_kf5_bin
 mkdir -p %buildroot/%_kf5_sbin
 
-mkdir -p %buildroot/%_kf5_icon
+mkdir -p %buildroot/%_kf5_icon/hicolor/{16x16,22x22,32x32,48x48,64x64,128x128,scalable}/{actions,apps,devices,emblems,emotes,mimetypes,places,resources,status}
 mkdir -p %buildroot/%_K5mod
 mkdir -p %buildroot/%_K5exec
 mkdir -p %buildroot/%_K5start
@@ -36,36 +37,63 @@ mkdir -p %buildroot/%_K5emo
 mkdir -p %buildroot/%_K5snd
 mkdir -p %buildroot/%_K5tmpl
 mkdir -p %buildroot/%_K5wall
-mkdir -p %buildroot/%_K5srv
+mkdir -p %buildroot/%_K5srv/ServiceMenus
 mkdir -p %buildroot/%_K5srvtyp
-mkdir -p %buildroot/%_K5doc
-mkdir -p %buildroot/%_K5l10n
 mkdir -p %buildroot/%_K5conf
 mkdir -p %buildroot/%_K5cfg
+mkdir -p %buildroot/%_K5cf_upd
+mkdir -p %buildroot/%_K5xmlgui
+mkdir -p %buildroot/%_K5notif
+mkdir -p %buildroot/%_K5data/{color-schemes,solid/{actions,devices},widgets/pics,plasma/{packages,shells,updates,layout-templates}}
+mkdir -p %buildroot/%_K5data/polkit-1/actions
+mkdir -p %buildroot/%_K5data/dbus-1/{services,system-services}
 
 mkdir -p %buildroot/%_kf5_xdgapp
 mkdir -p %buildroot/%_desktopdir/kf5
 mkdir -p %buildroot/%_K5xdgdir
-mkdir -p %buildroot/%_K5xdgmime
+mkdir -p %buildroot/%_K5xdgmenu
 
 mkdir -p %buildroot/%_K5inc
 mkdir -p %buildroot/%_K5link
-mkdir -p %buildroot/%_K5plug/kf5
+mkdir -p %buildroot/%_K5plug/kf5/parts
+mkdir -p %buildroot/%_K5cf_bin
+
+mkdir -p %buildroot/%_K5xdgconf/{autostart,colors,menus,ui}
+
+mkdir -p %buildroot/%_K5i18n/
+for l in %lng_list
+do
+    mkdir -p %buildroot/%_K5i18n/$l/{LC_MESSAGES,LC_SCRIPTS}
+done
+
+mkdir -p %buildroot/%_K5doc
+for l in %lng_list
+do
+    mkdir -p %buildroot/%_K5doc/$l
+done
 
 
-ln -s `relative %_kf5_bin %_K5prefix/bin` %buildroot/%_K5prefix/bin
-ln -s `relative %_libdir %_K5prefix/lib` %buildroot/%_K5prefix/lib
+ln -s `relative %_kf5_bin %_K5data/bin` %buildroot/%_K5data/bin
+ln -s `relative %_libdir %_K5data/lib` %buildroot/%_K5data/lib
 
 %files
-%_K5prefix/
+%_K5data
+%_sysconfdir/kf5
 %dir %_kf5_bin
 %dir %_kf5_sbin
+%dir %_K5cf_bin
 %dir %_K5exec
 %dir %_K5inc
 %dir %_K5link
-%dir %_K5plug/kf5
+%_K5plug/kf5
 %dir %_desktopdir/kf5
 
 %changelog
+* Wed Apr 08 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt1
+- update dirs
+
+* Sat Mar 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt0.2
+- update dirs
+
 * Thu Feb 05 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt0.1
 - initial build
