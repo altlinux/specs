@@ -1,16 +1,16 @@
-Summary:        Netscape Network Security Services(NSS)
-Name:           nss
-Version:        3.17.4
-Release:        alt1
-License:        MPL/GPL/LGPL
-Group:          System/Libraries
+Summary:	Netscape Network Security Services(NSS)
+Name:		nss
+Version:	3.18.0
+Release:	alt1
+License:	MPL/GPL/LGPL
+Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
 Packager:	Alexey Gladkov <legion@altlinux.ru>
 
 Source0:	nss-%version.tar
 Source1:	nss.pc.in
 Source2:	nss-config.in
-Source3: 	nss-alt-ssl-addon-certs.txt
+Source3:	nss-alt-ssl-addon-certs.txt
 Source4:	nss-db-%version.tar
 Source5:	setup-nsssysinit.sh
 Source6:	system-pkcs11.txt
@@ -26,8 +26,8 @@ Patch5:		nss-fix-objdir.patch
 Patch10:	nss-enable-pem.patch
 
 BuildRequires:	chrpath zlib-devel libsqlite3-devel
-BuildRequires:	libnspr-devel >= 4.10.7-alt1
-Requires:	libnspr       >= 4.10.7-alt1
+BuildRequires:	libnspr-devel >= 4.10.8-alt1
+Requires:	libnspr       >= 4.10.8-alt1
 
 %description
 Network Security Services (NSS) is a set of libraries designed
@@ -38,10 +38,10 @@ X.509 v3 certificates, and other security standards.  See:
 http://www.mozilla.org/projects/security/pki/nss/overview.html
 
 %package -n lib%name
-Summary:        Netscape Network Security Services(NSS)
-Group:          System/Libraries
+Summary:	Netscape Network Security Services(NSS)
+Group:		System/Libraries
 
-Provides: 	%name = %version-%release
+Provides:	%name = %version-%release
 
 %description -n lib%name
 Network Security Services (NSS) is a set of libraries designed
@@ -244,6 +244,9 @@ f="%_libdir/libnssckbi.so.alternatives_save"
 %_libdir/*.a
 
 %changelog
+* Mon Apr 06 2015 Alexey Gladkov <legion@altlinux.ru> 3.18.0-alt1
+- New version (3.18.0).
+
 * Sun Mar 08 2015 Alexey Gladkov <legion@altlinux.ru> 3.17.4-alt1
 - New version (3.17.4).
 
