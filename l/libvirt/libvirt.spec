@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.13
+Version: 1.2.14
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -924,6 +924,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Apr 09 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.14-alt1
+- 1.2.14
+
 * Mon Mar 16 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.13-alt1
 - 1.2.13
 
