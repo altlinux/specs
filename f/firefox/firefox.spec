@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        36.0.4
+Version:        37.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -69,9 +69,9 @@ BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
 # Mozilla requires
-BuildRequires: libnspr-devel       >= 4.9.6-alt1
-BuildRequires: libnss-devel        >= 3.14.3-alt1
-BuildRequires: libnss-devel-static >= 3.14.3-alt1
+BuildRequires: libnspr-devel       >= 4.10.8-alt1
+BuildRequires: libnss-devel        >= 3.18.0-alt1
+BuildRequires: libnss-devel-static >= 3.18.0-alt1
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -296,6 +296,25 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Apr 06 2015 Alexey Gladkov <legion@altlinux.ru> 37.0.1-alt1
+- New release (37.0.1).
+- Fixed:
+  + 2015-44 Certificate verification bypass through the HTTP/2 Alt-Svc header
+  + 2015-43 Loading privileged content through Reader mode
+  + 2015-42 Windows can retain access to privileged content on navigation to unprivileged pages
+  + 2015-41 PRNG weakness allows for DNS poisoning on Android
+  + 2015-40 Same-origin bypass through anchor navigation
+  + 2015-39 Use-after-free due to type confusion flaws
+  + 2015-38 Memory corruption crashes in Off Main Thread Compositing
+  + 2015-37 CORS requests should not follow 30x redirections after preflight
+  + 2015-36 Incorrect memory management for simple-type arrays in WebRTC
+  + 2015-35 Cursor clickjacking with flash and images
+  + 2015-34 Out of bounds read in QCMS library
+  + 2015-33 resource:// documents can load privileged pages
+  + 2015-32 Add-on lightweight theme installation approval bypassed through MITM attack
+  + 2015-31 Use-after-free when using the Fluendo MP3 GStreamer plugin
+  + 2015-30 Miscellaneous memory safety hazards (rv:37.0 / rv:31.6)
+
 * Sun Mar 22 2015 Alexey Gladkov <legion@altlinux.ru> 36.0.4-alt1
 - New release (36.0.4).
 - Fixed:
