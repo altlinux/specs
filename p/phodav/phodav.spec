@@ -1,8 +1,8 @@
 %def_with avahi
 
 Name: phodav
-Version: 0.4
-Release: alt2
+Version: 2.0
+Release: alt1
 Summary: A WebDAV server using libsoup
 
 Group: Networking/WWW
@@ -18,7 +18,7 @@ Patch1: %name-%version-%release.patch
 BuildRequires: intltool gtk-doc
 BuildRequires: libattr-devel
 BuildRequires: pkgconfig(gio-unix-2.0)
-BuildRequires: pkgconfig(libsoup-2.4) pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(libsoup-2.4) >= 2.48.0 pkgconfig(libxml-2.0)
 %{?_with_avahi:BuildRequires: pkgconfig(avahi-gobject) pkgconfig(avahi-client)}
 BuildRequires: xmlto asciidoc
 
@@ -109,6 +109,9 @@ install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 %config(noreplace) /etc/sysconfig/spice-webdavd
 
 %changelog
+* Thu Apr 09 2015 Alexey Shabalin <shaba@altlinux.ru> 2.0-alt1
+- 2.0
+
 * Mon Oct 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0.4-alt2
 - webdavd: remove systemd target, use only service
 
