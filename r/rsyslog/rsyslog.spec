@@ -3,7 +3,7 @@
 %def_disable mmcount
 
 Name: rsyslog
-Version: 8.7.0
+Version: 8.9.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -40,6 +40,7 @@ BuildRequires: libcurl-devel
 BuildRequires: libhiredis-devel >= 0.10.1
 BuildRequires: libsystemd-journal-devel >= 197
 BuildRequires: /usr/bin/rst2man
+BuildRequires: /usr/bin/lsb_release
 
 %define mod_dir /%_lib/%name
 
@@ -513,6 +514,9 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Thu Apr 09 2015 Alexey Shabalin <shaba@altlinux.ru> 8.9.0-alt1
+- 8.9.0
+
 * Wed Jan 14 2015 Alexey Shabalin <shaba@altlinux.ru> 8.7.0-alt1
 - 8.7.0
 
