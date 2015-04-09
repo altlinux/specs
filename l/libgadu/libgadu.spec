@@ -1,6 +1,6 @@
 
 Name: libgadu
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 
 Summary: Library for Handling of Gadu-Gadu Instant Messaging
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 BuildRequires: doxygen
 BuildRequires: libgnutls-devel >= 2.10.0
 BuildRequires: libxml2-devel zlib-devel
-BuildRequires: libprotobuf-c-devel protobuf-c-compiler
+BuildRequires: libprotobuf-c-devel >= 1.0.0 protobuf-c-compiler
 
 %description
 libgadu is a library for handling of protocol of a popular Polish
@@ -57,6 +57,9 @@ instant messenger Gadu-Gadu.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Apr 09 2015 Alexey Shabalin <shaba@altlinux.ru> 1.12.1-alt1
+- 1.12.1
+
 * Wed Jul 30 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt1
 - 1.12.0
 
