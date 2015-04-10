@@ -7,7 +7,7 @@
 %def_enable wayland
 
 Name: ibus
-Version: 1.5.9
+Version: 1.5.10
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -18,7 +18,7 @@ Url: http://code.google.com/p/%name/
 Source: https://github.com/%name/%name/releases/download/%version/%name-%version.tar.gz
 Source1: ibus-xinput
 
-Patch: ibus-1.5.9-up.patch
+Patch: ibus-%version-up.patch
 
 %define gtk2_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-2.0)
 %define gtk3_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-3.0)
@@ -254,6 +254,9 @@ fi
 %python_sitelibdir/gi/overrides/IBus.py*
 
 %changelog
+* Fri Apr 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.10-alt1
+- 1.5.10
+
 * Thu Oct 09 2014 Yuri N. Sedunov <aris@altlinux.org> 1.5.9-alt1
 - 1.5.9
 - remove upstreamed patches
