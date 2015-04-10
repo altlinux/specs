@@ -1,5 +1,5 @@
-%define lvm2version 2.02.116
-%define dmversion 1.02.93
+%define lvm2version 2.02.118
+%define dmversion 1.02.95
 
 %def_disable cluster
 %def_enable selinux
@@ -35,7 +35,8 @@ Requires: liblvm2  = %{lvm2version}-%{release}
 %define _sbindir /sbin
 %def_enable static
 
-BuildRequires: libreadline-devel, libtinfo-devel libudev-devel CUnit-devel
+BuildRequires: gcc-c++
+BuildRequires: libreadline-devel libtinfo-devel libudev-devel CUnit-devel
 BuildRequires: libudev-devel >= 205
 BuildRequires: systemd-devel
 BuildRequires: python-devel python-module-setuptools
@@ -335,6 +336,7 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %exclude %_mandir/man8/clvm*
 %endif
 %config(noreplace) %_sysconfdir/lvm/lvm.conf
+%config(noreplace) %_sysconfdir/lvm/lvmlocal.conf
 %config %_sysconfdir/lvm/profile/*.profile
 %_initdir/lvm2-monitor
 %_unitdir/lvm2-monitor.service
@@ -423,6 +425,9 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %python_sitelibdir/*
 
 %changelog
+* Fri Apr 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.118-alt1
+- 2.02.118
+
 * Wed Mar 04 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.116-alt1
 - 2.02.116
 - add package python-module-lvm
