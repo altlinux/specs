@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 0.9.0.3
-Release: alt2
+Release: alt3
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -63,9 +63,13 @@ graph drawing tool. Check out
 %exclude %_bindir/*
 
 %files -n flow2dot
+%doc sample.flow README LICENSE
 %_bindir/*
 
 %changelog
+* Fri Apr 10 2015 Denis Smirnov <mithraen@altlinux.ru> 0.9.0.3-alt3
+- add sample (ALT 30930)
+
 * Mon Dec 24 2012 Denis Smirnov <mithraen@altlinux.ru> 0.9.0.3-alt2
 - rebuild
 
