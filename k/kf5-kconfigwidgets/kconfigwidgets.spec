@@ -1,7 +1,7 @@
 %define rname kconfigwidgets
 
 Name: kf5-%rname
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1
 %K5init altplace
 
@@ -58,7 +58,7 @@ KF5 library
 %install
 %K5install
 %K5install_move data locale
-%find_lang %name --with-qt --all-name --with-kde
+%find_lang %name --all-name --with-kde
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
@@ -67,6 +67,7 @@ KF5 library
 %_K5data/kconfigwidgets/
 
 %files devel
+%_bindir/preparetips5
 %_K5bin/preparetips5
 %_K5inc/kconfigwidgets_version.h
 %_K5inc/KConfigWidgets/
@@ -78,6 +79,9 @@ KF5 library
 %_K5lib/libKF5ConfigWidgets.so.*
 
 %changelog
+* Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
+- new version
+
 * Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - new version
 

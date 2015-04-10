@@ -1,7 +1,7 @@
 %define rname kdoctools
 
 Name: kf5-%rname
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1
 %K5init altplace
 
@@ -64,13 +64,14 @@ KF5 library
 
 %install
 %K5install
-%find_lang %name --with-qt --with-kde --all-name
+%find_lang %name --with-kde --all-name
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
 
 %files
+%_bindir/*5
 %_K5bin/checkXML5
 %_K5bin/meinproc5
 %_K5data/kdoctools/
@@ -83,6 +84,9 @@ KF5 library
 %_K5lib/lib*.a
 
 %changelog
+* Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
+- new version
+
 * Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - new version
 

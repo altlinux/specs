@@ -1,7 +1,7 @@
 %define rname kcmutils
 
 Name: kf5-%rname
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1
 %K5init altplace
 
@@ -16,13 +16,14 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-sonnet-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
-BuildRequires: kf5-kxmlgui-devel kf5-sonnet-devel kf5-attica-devel
+BuildRequires: kf5-kxmlgui-devel kf5-sonnet-devel kf5-attica-devel kf5-kdeclarative-devel
+BuildRequires: kf5-kpackage-devel
 
 %description
 KCMUtils provides various classes to work with KCModules. KCModules can be
@@ -59,7 +60,7 @@ KF5 library
 
 %install
 %K5install
-%find_lang %name --with-qt --all-name
+%find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
@@ -77,6 +78,9 @@ KF5 library
 %_K5srvtyp/kcm*.desktop
 
 %changelog
+* Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
+- new version
+
 * Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - new version
 

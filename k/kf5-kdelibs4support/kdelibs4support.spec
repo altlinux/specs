@@ -1,7 +1,7 @@
 %define rname kdelibs4support
 
 Name: kf5-%rname
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1
 %K5init altplace
 
@@ -67,12 +67,17 @@ KF5 library
 
 %install
 %K5install
-%find_lang %name --with-qt --with-kde --all-name
+mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
+
+%find_lang %name --with-kde --all-name
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
 %dir %_K5xdgconf/colors/
+%_K5i18n/countries/
+%_K5i18n/currency/
+%_K5i18n/kf5_all_languages
 
 %files
 %config %_K5xdgconf/colors/*
@@ -85,7 +90,6 @@ KF5 library
 %_K5plug/kf5/kded/networkstatus.so
 %_K5plug/kf5/kio/metainfo.so
 %_K5srv/qimageioplugins/
-%_K5data/locale/
 %_K5data/kdoctools/
 %_K5data/kssl/
 %_K5data/widgets/pics/*.png
@@ -93,7 +97,6 @@ KF5 library
 %_K5srv/kded/networkstatus.desktop
 %_K5srv/metainfo.protocol
 %_K5srvtyp/*.desktop
-#%_K5i18n/kf5_all_languages
 
 
 
@@ -111,6 +114,9 @@ KF5 library
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
+- new version
+
 * Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - new version
 
