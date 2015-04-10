@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gtk+
 %define ver_major 3.16
@@ -21,7 +21,7 @@
 
 Name: libgtk+3
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -402,6 +402,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Apr 10 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1.1
+- updated to 3-16_95e80ef6 (fixed BGO #747539, 747471, RHBZ #1173904, 1176339)
+
 * Tue Apr 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
