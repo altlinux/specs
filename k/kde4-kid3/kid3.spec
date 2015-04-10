@@ -2,7 +2,7 @@
 %define rname kid3
 Name: kde4-%rname
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Group: Sound
 Summary: ID3 tagger
@@ -165,6 +165,12 @@ Requires: %rname-common = %EVR
 %_libdir/libkid3-gui.so.*
 
 %changelog
+* Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 3.1.1-alt2
+- rebuild with new libav
+
+* Thu Sep 04 2014 Sergey V Turchin <zerg@altlinux.org> 3.1.1-alt0.M70P.1
+- build for M70P
+
 * Tue Aug 26 2014 Sergey V Turchin <zerg@altlinux.org> 3.1.1-alt1
 - new version
 
