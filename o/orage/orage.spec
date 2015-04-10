@@ -1,5 +1,5 @@
 Name: orage
-Version: 4.12.0
+Version: 4.12.1
 Release: alt1
 
 Summary: Time-managing application for the Xfce desktop environment
@@ -64,6 +64,9 @@ Xfce.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Apr 10 2015 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt1
+- Updated to 4.12.1.
+
 * Thu Apr 09 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt1
 - Fix plugin module name.
 - Updated to 4.12.0.
