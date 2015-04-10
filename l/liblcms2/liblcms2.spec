@@ -2,7 +2,7 @@
 %define rname lcms2
 
 Name: lib%rname
-Version: 2.6
+Version: 2.7
 Release: alt1
 
 Summary: Little cms color engine, version 2
@@ -10,8 +10,7 @@ License: %mit
 Group: System/Libraries
 Url: http://www.littlecms.com
 
-Packager: Yuriy Al. Shirokov <yushi@altlinux.org>
-
+#Source: http://downloads.sourceforge.net/lcms/%rname-%version.tar.gz
 Source: %rname-%version.tar
 Patch: %rname-2.5-alt-link.patch
 
@@ -94,6 +93,9 @@ This package contains various %name-based utilities
 %endif
 
 %changelog
+* Fri Apr 10 2015 Yuri N. Sedunov <aris@altlinux.org> 2.7-alt1
+- 2.7
+
 * Wed May 07 2014 Yuri N. Sedunov <aris@altlinux.org> 2.6-alt1
 - 2.6
 
