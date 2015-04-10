@@ -1,6 +1,7 @@
 
-%define libk3blib libk3blib6
-%define libk3bdevice libk3bdevice6
+%define sover 6
+%define libk3blib libk3blib%sover
+%define libk3bdevice libk3bdevice%sover
 
 %define req_std_burning cdrkit cdrdao dvd+rw-tools
 %define req_std_kde kde4libs >= %{get_version kde4libs}
@@ -13,7 +14,7 @@
 %define rname k3b
 Name: kde4-%rname
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -144,16 +145,21 @@ KDE 4 library.
 %_K4iconsdir/hicolor/*/apps/*.*
 
 %files -n %libk3blib
-%_K4libdir/libk3blib.so.*
+%_K4libdir/libk3blib.so.%sover
+%_K4libdir/libk3blib.so.%sover.*
 
 %files -n %libk3bdevice
-%_K4libdir/libk3bdevice.so.*
+%_K4libdir/libk3bdevice.so.%sover
+%_K4libdir/libk3bdevice.so.%sover.*
 
 %files devel
 %_K4link/*.so
 %_K4includedir/*.h
 
 %changelog
+* Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt2
+- rebuild with new libav
+
 * Wed Nov 12 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt1
 - new version
 
