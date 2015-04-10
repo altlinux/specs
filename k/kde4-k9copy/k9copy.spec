@@ -2,7 +2,7 @@
 %define rname k9copy
 Name: kde4-%rname
 Version: 2.3.8
-Release: alt4
+Release: alt5
 
 Group: Video
 Summary: Copy, split and shrink DVDs
@@ -88,6 +88,9 @@ K9Copy - маленькая программа для копирования DVD
 
 
 %changelog
+* Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt5
+- rebuild with new libav
+
 * Tue May 27 2014 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt4
 - built with libxine2
 
