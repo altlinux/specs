@@ -1,7 +1,7 @@
 %define rname ki18n
 
 Name: kf5-%rname
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1
 %K5init altplace
 
@@ -58,7 +58,7 @@ KF5 library
 %install
 %K5install
 %K5install_move data locale
-%find_lang %name --with-qt --all-name
+%find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
@@ -79,6 +79,9 @@ KF5 library
 %_K5plug/kf5/ktranscript.so
 
 %changelog
+* Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
+- new version
+
 * Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - new version
 

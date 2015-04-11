@@ -1,7 +1,7 @@
 %define rname kimageformats
 
 Name: kf5-%rname
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1
 %K5init altplace
 
@@ -43,7 +43,7 @@ Requires: kf5-filesystem
 
 %install
 %K5install
-%find_lang %name --with-qt --all-name
+%find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
 %files
@@ -53,6 +53,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
+- new version
+
 * Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - new version
 
