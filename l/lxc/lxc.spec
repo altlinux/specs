@@ -26,7 +26,7 @@
 %define init_script systemd
 
 Name: lxc
-Version: 1.1.0
+Version: 1.1.2
 Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
@@ -198,6 +198,9 @@ fi
 
 
 %changelog
+* Sat Apr 11 2015 Denis Pynkin <dans@altlinux.org> 1.1.2-alt1
+- Bugfix release
+
 * Wed Mar 11 2015 Denis Pynkin <dans@altlinux.org> 1.1.0-alt1
 - Version 1.1.0
   Added criu (crtools) to dependencies for container dump/restore.

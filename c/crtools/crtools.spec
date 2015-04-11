@@ -1,8 +1,8 @@
 Name: crtools
-Version: 1.3
-%define pre -rc2
+Version: 1.5.1
+#define pre 
 %define ver %version%{?pre:%pre}
-Release: alt0.13
+Release: alt1
 Summary: Utility to checkpoint/restore tasks
 License: GPLv2
 Group: System/Configuration/Other
@@ -12,7 +12,9 @@ Patch: %name-%version-%release.patch
 Provides: criu = %version-%release
 ExclusiveArch: x86_64 %arm
 
-BuildRequires: libprotobuf-c-devel asciidoc xmlto %_bindir/a2x
+BuildRequires: libprotobuf-c-devel %_bindir/protoc-c
+BuildRequires: libprotobuf-devel protobuf-compiler
+BuildRequires: asciidoc xmlto %_bindir/a2x
 
 %description
 An utility to checkpoint/restore tasks.
@@ -35,6 +37,19 @@ Requires: libcriu = %version-%release
 Files for development with libcriu.
 
 
+%package pycriu
+Summary: Python library of checkpoint/restore
+Group: System/Libraries
+BuildArch: noarch
+Requires: python
+BuildRequires: python-devel
+BuildRequires: rpm-build-python
+Provides: crit = %version-%release
+
+%description pycriu
+Python library library of checkpoint/restore.
+
+
 %prep
 %setup -q -n %name-%ver
 %patch -p1
@@ -42,7 +57,7 @@ Files for development with libcriu.
 
 %build
 export CFLAGS="%optflags"
-%make_build PREFIX=%prefix all docs
+%make_build PREFIX=%prefix V=1 all docs
 
 
 %install
@@ -57,6 +72,11 @@ export CFLAGS="%optflags"
 %_logrotatedir/*
 
 
+%files pycriu
+%{_bindir}/crit
+%{python_sitelibdir_noarch}/*
+
+
 %files -n libcriu
 %_libdir/*.so.*
 
@@ -64,9 +84,34 @@ export CFLAGS="%optflags"
 %files -n libcriu-devel
 %_includedir/*
 %_libdir/*.so
+%_pkgconfigdir/*
 
 
 %changelog
+* Sat Apr 11 2015 Denis Pynkin <dans@altlinux.org> 1.5.1-alt1
+- New upstream version
+- Subpackage pycriu added
+- New utility 'crit' added
+
+* Sun Aug 17 2014 Led <led@altlinux.ru> 1.3-alt0.19
+- upstream updates and fixes
+
+* Sun Aug 10 2014 Led <led@altlinux.ru> 1.3-alt0.18
+- upstream updates and fixes
+- fixed build with protobuf-c >= 1.0
+
+* Sat Jul 26 2014 Led <led@altlinux.ru> 1.3-alt0.17
+- upstream updates and fixes
+
+* Fri Jul 11 2014 Led <led@altlinux.ru> 1.3-alt0.16
+- upstream updates and fixes
+
+* Sun Jul 06 2014 Led <led@altlinux.ru> 1.3-alt0.15
+- upstream updates and fixes
+
+* Thu Jul 03 2014 Led <led@altlinux.ru> 1.3-alt0.14
+- upstream updates and fixes
+
 * Tue Jul 01 2014 Led <led@altlinux.ru> 1.3-alt0.13
 - upstream updates and fixes
 
