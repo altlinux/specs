@@ -1,5 +1,5 @@
 Name:    installer-feature-online-repo
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: Make online repositories available
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Sat Apr 11 2015 Andrey Cherepanov <cas@altlinux.org> 0.15-alt1
+- Disable message show
+
 * Tue Jun 10 2014 Andrey Cherepanov <cas@altlinux.org> 0.14-alt1
 - Enable online repositories even Internet is unavailable
 
