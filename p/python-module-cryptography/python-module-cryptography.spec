@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.0
-Release: alt2
+Version: 0.8.2
+Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Sat Apr 11 2015 Vladimir Didenko <cow@altlinux.ru> 0.8.2-alt1
+- 0.8.2
+
 * Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt2
 - Added *.egg-info
 
