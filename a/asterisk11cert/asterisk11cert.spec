@@ -4,8 +4,8 @@
 #============================================================================
 Name: asterisk11cert
 Summary: Open source PBX
-Version: 11.6.cert10
-Release: alt2
+Version: 11.6.cert11
+Release: alt1
 License: GPL
 Group: System/Servers
 %if_with corosync
@@ -1358,6 +1358,9 @@ ln -sf libasteriskssl%version.so.1 %buildroot%_libdir/libasteriskssl%version.so
 %_libdir/libasteriskssl%version.so.1
 
 %changelog
+* Sat Apr 11 2015 Denis Smirnov <mithraen@altlinux.ru> 11.6.cert11-alt1
+- new version 11.6-cert11
+
 * Mon Apr 06 2015 Denis Smirnov <mithraen@altlinux.ru> 11.6.cert10-alt2
 - remove DEBUG_THREADS
 - remove requires to mithraen-pbx-fax
