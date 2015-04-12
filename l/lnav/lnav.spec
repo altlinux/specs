@@ -1,5 +1,5 @@
 Name: lnav
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: The log file navigator
@@ -50,6 +50,9 @@ touch AUTHORS ChangeLog COPYING
 #   (putting out meaningful diags otherwise, e.g. in a chroot)
 
 %changelog
+* Sun Apr 12 2015 Michael Shigorin <mike@altlinux.org> 0.7.3-alt1
+- new version (watch file uupdate)
+
 * Wed Mar 04 2015 Michael Shigorin <mike@altlinux.org> 0.7.2-alt1
 - new version (watch file uupdate)
 
