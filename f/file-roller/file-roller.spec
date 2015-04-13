@@ -7,7 +7,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -124,6 +124,7 @@ rm -f data/%name.desktop{,.in}
 %_datadir/dbus-1/services/%_name.ArchiveManager1.service
 %_desktopdir/%_name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/appdata/%_name.appdata.xml
@@ -133,6 +134,9 @@ rm -f data/%name.desktop{,.in}
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 
 %changelog
+* Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
