@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-taquin
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Gnome tiles game
@@ -14,7 +14,7 @@ Group: Games/Boards
 License: GPLv3+
 Url: http://live.gnome.org/Apps/Taquin
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%__name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
 
 Provides:  %_name = %version-%release
 
@@ -47,7 +47,6 @@ Move tiles so that they reach their places.
 %_datadir/%__name/
 %_iconsdir/hicolor/*x*/apps/%__name.png
 %_iconsdir/hicolor/scalable/apps/%__name-symbolic.svg
-%_iconsdir/HighContrast/*x*/apps/%__name.png
 %_man6dir/%__name.*
 %_datadir/dbus-1/services/%_name.service
 %config %_datadir/glib-2.0/schemas/%_name.gschema.xml
@@ -55,6 +54,9 @@ Move tiles so that they reach their places.
 %doc AUTHORS NEWS
 
 %changelog
+* Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
