@@ -16,7 +16,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -43,7 +43,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.16.0
+%define eds_ver 3.16.1
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.8.4
@@ -235,12 +235,11 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %makeinstall_std
 
 # evolution command name
-%__mv %buildroot%_bindir/evolution %buildroot%_bindir/evolution-%ver_major
-%__ln_s evolution-%ver_major %buildroot%_bindir/evolution
+mv %buildroot%_bindir/evolution %buildroot%_bindir/evolution-%ver_major
+ln -s evolution-%ver_major %buildroot%_bindir/evolution
 
 # remove non-packaged files
-%__rm -f %buildroot%_libdir/%name/%ver_base/*.la
-%__rm -f %buildroot%_libdir/%name/%ver_base/*/*.la
+find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 %find_lang --with-gnome --output=%name.lang %name %name-%ver_base
 
@@ -299,6 +298,9 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/appdata/%name-spamassassin.metainfo.xml
 
 %changelog
+* Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
