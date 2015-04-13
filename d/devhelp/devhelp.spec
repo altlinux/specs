@@ -1,7 +1,7 @@
 %define ver_major 3.16
 
 Name: devhelp
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Developer's help program
@@ -83,6 +83,7 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %_devhelpdir/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/devhelp.*
+%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_datadir/GConf/gsettings/*.convert
 %_datadir/glib-2.0/schemas/*.gschema.xml
 %_datadir/appdata/*.appdata.xml
@@ -100,6 +101,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
