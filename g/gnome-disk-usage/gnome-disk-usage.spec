@@ -6,7 +6,7 @@
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME disk usage analyser.
@@ -50,13 +50,16 @@ popd
 %_bindir/gnome-disk-usage
 %_desktopdir/%__name.desktop
 %_iconsdir/hicolor/*/apps/%_name.*
-%_iconsdir/HighContrast/*x*/apps/baobab.png
+%_iconsdir/hicolor/scalable/apps/%_name-symbolic.svg
 %_man1dir/%_name.1.*
 %_datadir/dbus-1/services/%__name.service
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
