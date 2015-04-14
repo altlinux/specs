@@ -7,7 +7,7 @@
 %def_with upower
 
 Name: gnome-applets
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -447,6 +447,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_iconsdir/hicolor/scalable/*/netspeed*.svg
 
 %changelog
+* Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 - new -netspeed subpackage
