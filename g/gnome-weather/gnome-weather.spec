@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -77,6 +77,9 @@ subst 's@\$(LN_S)@ln -s@' src/Makefile.am
 %doc NEWS
 
 %changelog
+* Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
