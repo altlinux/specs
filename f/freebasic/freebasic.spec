@@ -1,19 +1,22 @@
 
 Name:		freebasic
-Version:	0.90.1
-Release:	alt6
+Version:	1.02.0
+Release:	alt0.1
 
 Summary:	FreeBASIC language compiler
 License:	GPL
 Group:		Education
 
-Source:		FreeBASIC-v%{version}-linux.tar.gz
+Source:		FreeBASIC-%version-source.tar.gz
 Source1:	FB-manual-%version-html.zip
+Source2:	FreeBASIC-%version-linux-x86_64.tar.gz
 URL: 		http://freebasic.net
 
 Provides:	FreeBASIC = %version-%release
 
+%ifarch %ix86
 BuildRequires:  freebasic
+%endif
 BuildRequires:  gcc-c++
 BuildRequires:  libffi-devel
 BuildRequires:  libgpm-devel
@@ -25,7 +28,6 @@ BuildRequires:  libXpm-devel
 BuildRequires:  libXrandr-devel
 BuildRequires:  zlib-devel
 BuildRequires:  unzip
-ExclusiveArch:  %ix86
 
 Requires: 	gcc
 
@@ -35,8 +37,9 @@ with syntax similar to MS-QuickBASIC, that adds new features such as
 pointers, unsigned data types, inline assembly, object orientation,
 and many others.
 
+%ifarch %ix86
 %prep
-%setup -q -n FreeBASIC
+%setup -q -n FreeBASIC-%version-source
 mkdir doc/html
 unzip -q %SOURCE1 -d doc/html
 ln -s 00index.html doc/html/index.html
@@ -56,31 +59,47 @@ mkdir -p %buildroot%_datadir/freebasic
 cp -a examples %buildroot%_datadir/freebasic
 
 # Make symlinks for set Arepo requires
-ldd bin/fbc | sed -ne 's/^[[:space:]]*\(lib[^ ]*\.so\).*$/\1/p' | xargs -ri ln -s /usr/lib/{} %buildroot/usr/lib/freebasic/
+#ldd bin/fbc | sed -ne 's/^[[:space:]]*\(lib[^ ]*\.so\).*$/\1/p' | xargs -ri ln -s /usr/lib/{} %buildroot/usr/lib/freebasic/
 # Add missing libraries links
-ln -s /usr/lib/libcurses.so %buildroot/usr/lib/freebasic/
-ln -s /usr/lib/libXpm.so %buildroot/usr/lib/freebasic/
-ln -s $(find /usr/lib/gcc/i586-alt-linux/ -name libsupc++.a|head -n1) %buildroot/usr/lib/freebasic/
-ln -s $(find /usr/lib/gcc/i586-alt-linux/ -name libgcc.a|head -n1) %buildroot/usr/lib/freebasic/
-ln -s $(find /usr/lib/gcc/i586-alt-linux/ -name libgcc_eh.a|head -n1) %buildroot/usr/lib/freebasic/
+#ln -s /usr/lib/libcurses.so %buildroot/usr/lib/freebasic/
+#ln -s /usr/lib/libXpm.so %buildroot/usr/lib/freebasic/
+#ln -s $(find /usr/lib/gcc/i586-alt-linux/ -name libsupc++.a|head -n1) %buildroot/usr/lib/freebasic/
+#ln -s $(find /usr/lib/gcc/i586-alt-linux/ -name libgcc.a|head -n1) %buildroot/usr/lib/freebasic/
+#ln -s $(find /usr/lib/gcc/i586-alt-linux/ -name libgcc_eh.a|head -n1) %buildroot/usr/lib/freebasic/
 
 # Install manual
 mkdir -p %buildroot%_docdir/freebasic
 cp -a doc/html/* %buildroot%_docdir/freebasic
 
 %check
-make -C tests log-tests FB_LANG=fb || /bin/true
+#make -C tests log-tests FB_LANG=fb || /bin/true
+%else
+%prep
+%setup -b 2 -q -n FreeBASIC-%version-linux-x86_64
+subst 's,prefix/man/,prefix/share/man/,' install.sh
+
+%install
+mkdir -p %buildroot%_prefix
+./install.sh -i %buildroot%_prefix
+%endif
 
 %files
 %doc *.txt
 %_bindir/fbc
-%_libdir/freebasic/
 %_includedir/freebasic/
+/usr/lib/freebasic/
+%ifarch %ix86
 %_datadir/freebasic/
 %doc %_docdir/freebasic
+%endif
 %doc %_man1dir/*
 
 %changelog
+* Tue Apr 14 2015 Andrey Cherepanov <cas@altlinux.org> 1.02.0-alt0.1
+- New version
+- Bootstrap for x86_64 version
+- Disable tests
+
 * Wed Nov 20 2013 Andrey Cherepanov <cas@altlinux.org> 0.90.1-alt6
 - Simplify build parameters
 - Remove deprecated linker flags
