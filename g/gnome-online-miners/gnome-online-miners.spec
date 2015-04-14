@@ -1,9 +1,15 @@
 %define ver_major 3.14
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
+%def_enable facebook
+%def_enable flickr
+%def_enable google
+%def_enable media_server
+%def_enable owncloud
+%def_enable windows_live
 
 Name: gnome-online-miners
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A set of miners for online content
@@ -11,7 +17,7 @@ Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: https://git.gnome.org/browse/gnome-online-miners
 
-Source: ftp://ftp.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.35.1
 %define goa_ver 3.11.5
@@ -21,16 +27,16 @@ Source: ftp://ftp.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 %define tracker_ver 0.17.1
 %define gfbgraph_ver 0.2.2
 
-Requires: grilo-plugins
+%{?_enable_flickr:Requires: grilo-plugins}
 
 BuildRequires: gnome-common
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgnome-online-accounts-devel >= %goa_ver
-BuildPreReq: libgrilo-devel >= %grilo_ver
-BuildPreReq: libgdata-devel >= %gdata_ver
-BuildPreReq: libzapojit-devel >= %zapojit_ver
 BuildPreReq: tracker-devel >= %tracker_ver
-BuildPreReq: libgfbgraph-devel >= %gfbgraph_ver
+%{?_enable_google:BuildPreReq: libgdata-devel >= %gdata_ver}
+%{?_enable_flickr:BuildPreReq: libgrilo-devel >= %grilo_ver}
+%{?_enable_facebook:BuildPreReq: libgfbgraph-devel >= %gfbgraph_ver}
+%{?_enable_windows_live:BuildPreReq: libzapojit-devel >= %zapojit_ver}
 
 %description
 GNOME Online Miners provides a set of crawlers that go through your
@@ -42,7 +48,13 @@ Flickr, Google, SkyDrive and ownCloud.
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+	%{subst_enable facebook} \
+	%{subst_enable flickr} \
+	%{subst_enable google} \
+	%{?_enable_media_server:--enable-media-server} \
+	%{subst_enable owncloud} \
+	%{?_enable_windows_live:--enable-windows-live}
 %make_build
 
 %install
@@ -69,6 +81,9 @@ Flickr, Google, SkyDrive and ownCloud.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
+- 3.14.2
+
 * Mon Dec 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 
