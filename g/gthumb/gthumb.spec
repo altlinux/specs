@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define ver_base 3.3
-%define ver_major 3.3
+%define ver_base 3.4
+%define ver_major 3.4
 %define gst_api_ver 1.0
 %def_enable debug
 %def_enable exiv2
@@ -11,7 +11,7 @@
 %def_enable libraw
 
 Name: gthumb
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -167,6 +167,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Tue Mar 31 2015 Yuri N. Sedunov <aris@altlinux.org> 3.3.4-alt1
 - 3.3.4
 
