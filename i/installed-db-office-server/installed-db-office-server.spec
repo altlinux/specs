@@ -1,6 +1,6 @@
 Name: installed-db-office-server
 Version: 1.4
-Release: alt11
+Release: alt12
 Summary: Databases and config files for moodle, mediawiki and rujel (common)
 License: GPL
 Group: System/Configuration/Other
@@ -54,6 +54,7 @@ Databases and config files for rujel
 
 mkdir -p %buildroot/usr/share/%name
 install -Dp -m755 %name/80-office-server %buildroot/usr/share/install2/preinstall.d/80-office-server
+install -Dp -m755 %name/95-office-server-postinstall %buildroot/usr/share/install2/postinstall.d/95-office-server-postinstall
 install -Dp -m755 %name/root.d %buildroot/usr/lib/alterator/hooks/root.d/installed-db
 install -Dp -m755 %name/httpd2-office-server %buildroot%_sysconfdir/firsttime.d/httpd2-office-server
 install -Dp -m755 %name/moodle %buildroot/etc/hooks/hostname.d/94-moodle-ldap
@@ -71,6 +72,7 @@ mkdir -p %buildroot/var/www/webapps/mediawiki
 /usr/share/%name
 /etc/firsttime.d/*-office-server
 /usr/share/install2/preinstall.d/*
+/usr/share/install2/postinstall.d/*
 /usr/lib/alterator/hooks/root.d/*
 
 %files mediawiki
@@ -87,6 +89,13 @@ mkdir -p %buildroot/var/www/webapps/mediawiki
 
 
 %changelog
+* Tue Apr 14 2015 Andrey Cherepanov <cas@altlinux.org> 1.4-alt12
+- New hook in postinstall.d/95-office-server-postinstall
+- Fix path to School Portal in DocumentRoot
+- Update MediaWiki database
+- Remove trusted domains and leave maintenance mode for Owncloud
+- Update initial database settings for Owncloud 7.0.4
+
 * Tue Dec 10 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4-alt11
 - owncloud with ldap integration fixed
 
