@@ -1,7 +1,7 @@
 %def_disable privsep
 
 Name: wpa_supplicant
-Version: 2.3
+Version: 2.4
 Release: alt1
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
@@ -64,6 +64,7 @@ install -pm0755 %name/wpa_priv %buildroot%_sbindir
 %endif
 
 mkdir -p %buildroot%systemd_unitdir
+mkdir -p %buildroot%_sysconfdir/%name
 install -pm0644 %name/systemd/*.service %buildroot%systemd_unitdir
 
 install -pm0755 -D %name/wpa_passphrase %buildroot%_bindir/wpa_passphrase
@@ -84,6 +85,7 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %doc %name/README %name/README-HS20 %name/README-P2P %name/README-WPS
 %doc %name/ChangeLog %name/examples
 
+%dir %_sysconfdir/%name
 %config(noreplace) %attr(0600,root,root) %_sysconfdir/wpa_supplicant.conf
 %config %_sysconfdir/dbus-1/system.d/dbus-%name.conf
 
@@ -120,6 +122,9 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Tue Apr 14 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4-alt1
+- 2.4 released
+
 * Sat Oct 11 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.3-alt1
 - 2.3 released
 
