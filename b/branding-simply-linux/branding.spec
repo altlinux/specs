@@ -6,11 +6,11 @@
 %define brand simply
 
 Name: branding-simply-linux
-Version: 7.0.4
+Version: 7.95.0
 Release: alt1
 BuildArch: noarch
 
-BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
+BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 BuildRequires: design-bootloader-source >= 5.0-alt2
 
 BuildRequires(pre): libqt4-core 
@@ -228,8 +228,6 @@ Menu for Simply Linux
 Summary: Some system settings for Simply Linux
 License: GPLv2+
 Group: System/Base
-# Really we need lightdm only, but it can pull another greeter.
-Requires: lightdm-gtk-greeter
 
 %description system-settings
 Some system settings for Simply Linux.
@@ -330,7 +328,6 @@ cp menu/altlinux-wine.directory %buildroot/usr/share/desktop-directories/
 # system-settings
 mkdir -p %buildroot/%_sysconfdir/polkit-1/rules.d/
 cp -a system-settings/polkit-rules/*.rules %buildroot/%_sysconfdir/polkit-1/rules.d/
-install -Dm644 system-settings/ldm_pam_environment %buildroot%_localstatedir/ldm/.pam_environment
 
 #bootloader
 %pre bootloader
@@ -357,13 +354,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 
 %post indexhtml
 %_sbindir/indexhtml-update
-
-%post system-settings
-chown _ldm:_ldm %_localstatedir/ldm/.pam_environment
-sed -i '/pam_env\.so/ {
-		/user_readenv/ b
-		s/pam_env\.so/pam_env.so user_readenv=1/ }
-' %_sysconfdir/pam.d/lightdm-greeter
 
 %files bootloader
 %_datadir/gfxboot/%theme
@@ -433,9 +423,19 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 %files system-settings
 %config %_sysconfdir/polkit-1/rules.d/*.rules
-%config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Apr 14 2015 Mikhail Efremov <sem@altlinux.org> 7.95.0-alt1
+- system-settings: Drop lightdm hack (closes: #30901).
+- index.html: Use https for facebook and twitter.
+- index.html: Update "VKontakte" URL.
+- index.html: Update company address and copyright year.
+- xfce-settings: Replace clock plugin with xfce4-orageclock-plugin.
+- Fix font for background text.
+- Update BR for Droid fonts.
+- menu: Drop celestia.desktop.
+- menu: Fix dropbox.desktop.
+
 * Wed Mar 05 2014 Mikhail Efremov <sem@altlinux.org> 7.0.4-alt1
 - Bump version to 7.0.4.
 
