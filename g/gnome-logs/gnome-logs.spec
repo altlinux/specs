@@ -3,7 +3,7 @@
 %define _name org.gnome.Logs
 
 Name: gnome-logs
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME logfile viewer
@@ -48,15 +48,18 @@ GNOME Logs is a log viewer for the systemd journal.
 %_bindir/%name
 %_desktopdir/%_name.desktop
 %_datadir/dbus-1/services/%_name.service
-%_iconsdir/hicolor/*x*/apps/%name.png
-%_man1dir/%name.1.*
-%_datadir/appdata/%_name.appdata.xml
 %_datadir/glib-2.0/schemas/%_name.enums.xml
 %_datadir/glib-2.0/schemas/%_name.gschema.xml
-%_iconsdir/HighContrast/*x*/*/gnome-logs.png
+%_iconsdir/hicolor/*x*/apps/%name.png
+%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+%_man1dir/%name.1.*
+%_datadir/appdata/%_name.appdata.xml
 %doc NEWS README
 
 %changelog
+* Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
