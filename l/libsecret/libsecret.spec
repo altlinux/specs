@@ -7,7 +7,7 @@
 %def_enable vala
 
 Name: libsecret
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
@@ -15,8 +15,8 @@ Group: System/Libraries
 License: LGPLv2
 Url: http://www.gnome.org/
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#ource: %name-%version.tar
 
 %define glib_ver 2.38.0
 %define vala_ver 0.17.2.12
@@ -128,6 +128,9 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.18.2-alt1
+- 0.18.2
+
 * Fri Oct 17 2014 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt1
 - after 0.18.1 snapshot (bfe9f3514)
 
