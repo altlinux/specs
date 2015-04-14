@@ -11,7 +11,7 @@
 %def_with bluetooth
 
 Name: gnome-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Control Center
@@ -33,11 +33,11 @@ Patch1: %name-3.10.1-alt-background_build.patch
 %define glib_ver 2.40.0
 %define desktop_ver 3.11.3
 %define fontconfig_ver 1.0.0
-%define gsds_ver 3.15.90
+%define gsds_ver 3.16.1
 %define nm_ver 0.9.8
 %define goa_ver 3.7.91
-%define acc_ver 0.6.30
-%define sett_daemon_ver 3.15.91
+%define acc_ver 0.6.33
+%define sett_daemon_ver 3.16.1
 %define cheese_ver 3.9.5
 %define bt_ver 3.12.0
 %define systemd_ver 40
@@ -62,7 +62,8 @@ Requires: gnome-online-accounts >= %goa_ver
 BuildPreReq: rpm-build-gnome >= 0.9
 
 # From configure.in
-BuildPreReq: intltool >= 0.50 gnome-common desktop-file-utils gnome-doc-utils gtk-doc xsltproc
+BuildPreReq: intltool >= 0.50 gnome-common desktop-file-utils
+BuildPreReq: gnome-doc-utils gtk-doc xsltproc libappstream-glib-devel
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
@@ -172,12 +173,16 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gnome-shell/search-providers/gnome-control-center-search-provider.ini
 %_man1dir/%name.1.*
 %_datadir/bash-completion/completions/gnome-control-center
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS NEWS README
 
 %files devel
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
