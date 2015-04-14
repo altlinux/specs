@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 0.8.7
+Version: 0.8.8
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -55,6 +55,10 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Tue Apr 14 2015 Mikhail Efremov <sem@altlinux.org> 0.8.8-alt1
+- Set Xfce4 as default session to start.
+- lightdm: Disable language selector.
+
 * Thu Feb 13 2014 Mikhail Efremov <sem@altlinux.org> 0.8.7-alt1
 - Disable cups.socket.
 

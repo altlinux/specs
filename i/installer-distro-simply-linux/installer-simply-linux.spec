@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
 Version: 7.0
-Release: alt11
+Release: alt12
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -116,6 +116,10 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Tue Apr 14 2015 Mikhail Efremov <sem@altlinux.org> 7.0-alt12
+- Set Xfce4 as default session to start.
+- lightdm: Disable language selector.
+
 * Thu Mar 06 2014 Mikhail Efremov <sem@altlinux.org> 7.0-alt11
 - Add installer-feature-repo-add.
 
