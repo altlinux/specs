@@ -1,9 +1,9 @@
 %define binname zyGrib
-%def_with system_qwt
+%def_without system_qwt
 
 Name: zygrib
 Version: 7.0.0
-Release: alt1
+Release: alt2
 
 Summary: Visualisation of meteo data from files in GRIB Format 1
 
@@ -53,7 +53,8 @@ home page: http://www.geonames.org/
 rm -rf data/fonts
 
 %if_with system_qwt
-%{__perl} -p -e 's|cd src/qwt-6.0.1/src|# cd src/qwt-6.0.1/src|g;' -i $RPM_BUILD_DIR/%binname-%version/Makefile
+#perl -p -e 's|cd src/qwt-6.0.1/src|# cd src/qwt-6.0.1/src|g;' -i $RPM_BUILD_DIR/%binname-%version/Makefile
+sed 's|cd src/qwt-6.0.1/src|# cd src/qwt-6.0.1/src|' -i $RPM_BUILD_DIR/%binname-%version/Makefile
 %endif
 
 %build
@@ -108,6 +109,9 @@ fi
 %_datadir/%binname
 
 %changelog
+* Tue Apr 14 2015 Sergey Y. Afonin <asy@altlinux.ru> 7.0.0-alt2
+- rebuilt with internal qwt (6.0.1)
+
 * Mon Feb 09 2015 Sergey Y. Afonin <asy@altlinux.ru> 7.0.0-alt1
 - New version
 
