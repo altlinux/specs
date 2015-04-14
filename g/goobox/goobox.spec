@@ -1,9 +1,9 @@
-%define ver_major 3.3
+%define ver_major 3.4
 %define gst_api_ver 1.0
 %def_enable libcoverart
 
 Name: goobox
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: CD player and ripper for GNOME
@@ -29,7 +29,7 @@ BuildRequires: libbrasero-devel libdiscid-devel
 Goobox is a CD player and ripper well integrated with the GNOME environment.
 
 %prep
-%setup -q
+%setup
 # fix libcoverart required version
 subst 's|1\.0\.0beta1|1.0.0|' configure*
 
@@ -48,6 +48,7 @@ subst 's|1\.0\.0beta1|1.0.0|' configure*
 %_bindir/%name
 %_datadir/applications/%name.desktop
 %_iconsdir/hicolor/*x*/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
 %_datadir/glib-2.0/schemas/org.gnome.Goobox.gschema.xml
 %_datadir/GConf/gsettings/goobox.convert
 %_datadir/appdata/%name.appdata.xml
@@ -55,6 +56,9 @@ subst 's|1\.0\.0beta1|1.0.0|' configure*
 
 
 %changelog
+* Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Mon Feb 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.3.3-alt1
 - 3.3.3
 
