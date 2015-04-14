@@ -7,7 +7,7 @@
 
 Name: branding-simply-linux
 Version: 7.95.0
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -425,6 +425,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %config %_sysconfdir/polkit-1/rules.d/*.rules
 
 %changelog
+* Tue Apr 14 2015 Mikhail Efremov <sem@altlinux.org> 7.95.0-alt2
+- menu: Hide gmplayer in the SL menu.
+- xfce-settings: Cleanup gconf settings.
+
 * Tue Apr 14 2015 Mikhail Efremov <sem@altlinux.org> 7.95.0-alt1
 - system-settings: Drop lightdm hack (closes: #30901).
 - index.html: Use https for facebook and twitter.
