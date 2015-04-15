@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-%define version    0.14
-%define release    alt2
+%define version    0.15.1
+%define release    alt1
 
 %define source_version %version
 %define source_name pyOpenSSL
@@ -140,7 +140,7 @@ popd
 
 
 %files
-%doc ChangeLog INSTALL README TODO
+%doc ChangeLog CONTRIBUTING.rst INSTALL.rst README.rst TODO
 %python_sitelibdir/%modulename/
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/OpenSSL/test
@@ -156,7 +156,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%modulename
-%doc ChangeLog INSTALL README TODO
+%doc ChangeLog CONTRIBUTING.rst INSTALL.rst README.rst TODO
 %python3_sitelibdir/*
 %python3_sitelibdir/*.egg-*
 %exclude %python3_sitelibdir/OpenSSL/test
@@ -166,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 15 2015 Vladimir Didenko <cow@altlinux.org> 0.15.1-alt1
+- Version 0.15.1
+
 * Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14-alt2
 - Added *.egg-info
 
