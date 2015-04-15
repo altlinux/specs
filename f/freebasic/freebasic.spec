@@ -1,7 +1,7 @@
 
 Name:		freebasic
 Version:	1.02.0
-Release:	alt1
+Release:	alt2
 
 Summary:	FreeBASIC language compiler
 License:	GPL
@@ -12,6 +12,10 @@ Source1:	FB-manual-%version-html.zip
 URL: 		http://freebasic.net
 
 Provides:	FreeBASIC = %version-%release
+%ifarch x86_64
+Provides:	i586-freebasic = %version-%release
+Obsoletes:	i586-freebasic < %version-%release
+%endif
 
 BuildRequires:  freebasic
 BuildRequires:  gcc-c++
@@ -71,6 +75,9 @@ cp -a doc/html/* %buildroot%_docdir/freebasic
 %_man1dir/*
 
 %changelog
+* Wed Apr 15 2015 Andrey Cherepanov <cas@altlinux.org> 1.02.0-alt2
+- Replace old i586-freebasic
+
 * Wed Apr 15 2015 Andrey Cherepanov <cas@altlinux.org> 1.02.0-alt1
 - Rebuild in bootstrapped arch
 
