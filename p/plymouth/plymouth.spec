@@ -9,7 +9,7 @@
 
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
-Version: 0.9.0
+Version: 0.9.2
 Release: alt1
 License: GPLv2+
 Group: System/Base
@@ -26,10 +26,14 @@ Requires: lib%name = %version-%release
 BuildRequires: libdrm-devel
 BuildRequires: systemd-devel
 BuildRequires: libudev-devel
+BuildRequires: libgtk+3-devel
 BuildRequires: xsltproc docbook-dtds docbook-style-xsl
 
 Conflicts: bootsplash
 Conflicts: systemd < 186-alt1
+
+Provides: %name-utils = %version-%release
+Obsoletes: %name-utils < %version-%release
 
 %description
 Plymouth provides an attractive graphical boot animation in
@@ -76,16 +80,6 @@ Requires: lib%name = %version-%release
 %description devel
 This package contains the libply and libplybootsplash libraries
 and headers needed to develop 3rd party splash plugins for Plymouth.
-
-%package utils
-Summary: Plymouth related utilities
-Group: System/Base
-Requires: %name = %version-%release
-BuildRequires: libgtk+2-devel
-
-%description utils
-This package contains utilities that integrate with Plymouth
-including a boot log viewing application.
 
 %package scripts
 Summary: Plymouth related scripts
@@ -285,10 +279,8 @@ export UDEVADM="/sbin/udevadm"
 	--with-background-end-color-stop=0x00457E	\
 	--with-background-color=0x3391cd		\
 	--disable-gdm-transition			\
-	--without-gdm-autostart-file			\
 	--without-rhgb-compat-link			\
 	--with-system-root-install			\
-	--with-log-viewer				\
 	--enable-systemd-integration			\
 	--with-release-file=/etc/altlinux-release
 
@@ -307,9 +299,6 @@ rm -f %buildroot%_libdir/plymouth/glow.so
 
 find %buildroot -name '*.a' -exec rm -f {} \;
 find %buildroot -name '*.la' -exec rm -f {} \;
-
-# Temporary symlink until rc.sysinit is fixed
-(cd %buildroot%_bindir; ln -s ../../bin/plymouth)
 
 mkdir -p %buildroot%_localstatedir/lib/plymouth
 cp boot-duration %buildroot%_datadir/plymouth/default-boot-duration
@@ -390,7 +379,6 @@ fi \
 %plymouthdaemon_execdir/plymouthd
 %plymouthdaemon_execdir/plymouth-update
 %plymouthclient_execdir/plymouth
-%_bindir/plymouth
 %_libdir/plymouth/details.so
 %_libdir/plymouth/text.so
 %_libdir/plymouth/tribar.so
@@ -439,9 +427,6 @@ fi \
 # %_libexecdir/plymouth/plymouth-generate-initrd
 # %_libexecdir/plymouth/plymouth-populate-initrd
 
-%files utils
-%_bindir/plymouth-log-viewer
-
 %if_enabled gdm
 %files gdm-hooks
 %_datadir/gdm/autostart/LoginWindow/plymouth-log-viewer.desktop
@@ -489,6 +474,9 @@ fi \
 %files system-theme
 
 %changelog
+* Wed Apr 15 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.2-alt1
+- 0.9.2
+
 * Thu Jun 19 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.0-alt1
 - 0.9.0
 
