@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: notification-daemon
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Desktop Notification Daemon
@@ -11,8 +11,6 @@ License: %gpl2plus
 Url: https://wiki.gnome.org/Projects/NotificationDaemon
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-# http://bugzilla-attachments.gnome.org/attachment.cgi?id=195633
-Patch: %name-0.7.2-bubble_timeout.patch
 
 Requires: dbus >= 0.36
 
@@ -33,7 +31,6 @@ Flashback. This is reason for version number change.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %configure \
@@ -53,6 +50,9 @@ Flashback. This is reason for version number change.
 %doc AUTHORS NEWS
 
 %changelog
+* Wed Apr 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
