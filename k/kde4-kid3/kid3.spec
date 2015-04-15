@@ -1,8 +1,8 @@
 
 %define rname kid3
 Name: kde4-%rname
-Version: 3.1.1
-Release: alt2
+Version: 3.2.0
+Release: alt1
 
 Group: Sound
 Summary: ID3 tagger
@@ -125,6 +125,7 @@ Requires: %rname-common = %EVR
     -DWITH_FLAC:BOOL=ON \
     -DWITH_CHROMAPRINT=ON \
     -DWITH_DBUS=ON \
+    -DWITH_QML=OFF \
     #
 #    -DWITH_MP4V2:BOOL=ON \
 %K4make
@@ -165,6 +166,9 @@ Requires: %rname-common = %EVR
 %_libdir/libkid3-gui.so.*
 
 %changelog
+* Wed Apr 15 2015 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt1
+- new version
+
 * Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 3.1.1-alt2
 - rebuild with new libav
 
