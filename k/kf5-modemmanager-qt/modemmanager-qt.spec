@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.9.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -23,7 +23,7 @@ Qt wrapper for ModemManager DBus API
 
 %package common
 Summary: %name common package
-Group: Graphical desktop/KDE
+Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
 %description common
@@ -32,8 +32,8 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Provides: libmm-qt-devel = %version-%release
-Obsoletes: libmm-qt-devel < %version-%release
+Provides: kf5-libmm-qt-devel = %version-%release
+Obsoletes: kf5-libmm-qt-devel < %version-%release
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -70,5 +70,8 @@ KF5 library
 %_K5lib/libKF5ModemManagerQt.so.*
 
 %changelog
+* Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt2
+- fix provides
+
 * Wed Apr 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
 - initial build
