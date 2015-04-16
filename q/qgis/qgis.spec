@@ -3,7 +3,7 @@
 
 Name:    qgis
 Version: 2.4.0
-Release: alt1.git4dce5ec
+Release: alt2.git4dce5ec
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPLv3+ with exceptions
@@ -298,6 +298,9 @@ mv %buildroot%_datadir/qgis/i18n/qgis_sr{_Latn,@latin}.qm
 %_libexecdir/%name
 
 %changelog
+* Thu Apr 16 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt2.git4dce5ec
+- rebuilt with qwt-6.1.2/qwtpolar-1.1.1
+
 * Tue Aug 26 2014 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1.git4dce5ec
 - New version 2.4.0 with update source to Git commit 4dce5ec
 - Merge patchset with Fedora
