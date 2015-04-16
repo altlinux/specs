@@ -2,7 +2,7 @@
 %define ver_major 3.16
 
 Name: gnome-tweak-tool
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -68,6 +68,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Apr 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
