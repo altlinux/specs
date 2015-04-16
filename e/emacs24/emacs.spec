@@ -1,21 +1,18 @@
 # -*- coding: utf-8; mode: rpm-spec -*-
-# $Id: emacs22.spec,v 1.60 2006/09/12 18:38:21 eugene Exp $
 
 %set_compress_method skip
 
-%define emacs_version 24.4
+%define emacs_version 24.5
+%define erc_version %emacs_version
+
 %define gnus_version 5.13
 %define shortname emacs
-%define tramp_version 2.2.9
+%define tramp_version 2.2.11
 %define speedbar_version 1.0
-%define erc_version 5.3
 %define nxml_version 0.2.20041004
 %define cedet_version 2.0
 
-%define cedet_release alt1
-
-%define cvsdate 20090110
-%define rel_base alt11
+%define cedet_release alt3
 
 # subpackages to build;
 %def_enable nox
@@ -25,16 +22,8 @@
 %def_enable motif
 
 Name: emacs24
-Version: %emacs_version
-%ifdef cvsbuild
-Release: %rel_base.%cvsdate
-%else
-%ifdef pretest
-Release: %rel_base.%pretest
-%else
-Release: %rel_base
-%endif
-%endif
+Version: 24.5
+Release: alt15
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -44,11 +33,7 @@ URL: http://www.gnu.org/software/emacs/
 
 Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 
-%ifdef cvsbuild
-Source0: %shortname-%cvsdate.tar
-%else
 Source0: %shortname-%emacs_version.tar
-%endif
 
 Source7: README.KOI8-U
 
@@ -211,6 +196,8 @@ Requires: %shortname-tramp
 
 Requires: %shortname-base >= 0.0.5-alt2
 
+Requires: %name-gnus = %gnus_version-%release
+
 Conflicts: etcskel < 2.0.2-alt1
 Conflicts: emacs-prog-modes < 0.1-alt7
 # ispell-uk 0.5 is broken, and can cause hang in flyspell mode
@@ -246,6 +233,7 @@ Summary(ru_RU.UTF-8): Исходный код Lisp программ, поста�
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-common = %emacs_version-%release
+Requires: %name-gnus-el = %gnus_version-%release
 Obsoletes: %shortname-el
 Provides: %shortname-el = %emacs_version-%release
 # emacs24 obsoletes emacs21, emacs22 and emacs23
@@ -798,7 +786,6 @@ You need to install %name-cedet-el only if you intend to modify any of the
 
 %prep
 %setup -n %shortname
-
 # Ukrainian docs:
 cp %SOURCE16 .
 cp %SOURCE17 .
@@ -832,7 +819,7 @@ touch lisp/faces.el lisp/gnus/mm-util.el lisp/gnus/rfc2047.el \
 [ -d build-gtk3 ] && rm -rf build-gtk3; mkdir -p build-gtk3
 
 %build
-autoconf -f
+autoreconf -i -I m4
 # Try to detect errors and break on errors:
 %define detect_elisp_errs 2>&1 | awk '/!! /{ r++; } END{ if (r) printf "There were %%d errors while recompiling Emacs Lisp modules.\\n", r; exit r; } /.*/'
 
@@ -898,39 +885,19 @@ popd
 %Substage 2 "Initial make all" 
 #no SMP
 %if_enabled nox
-%ifdef cvsbuild
-pushd build-nox; make bootstrap; popd
-%else
 pushd build-nox; make; popd
 %endif
-%endif
 %if_enabled athena
-%ifdef cvsbuild
-pushd build-athena; make bootstrap; popd
-%else
 pushd build-athena; make; popd
 %endif
-%endif
 %if_enabled motif
-%ifdef cvsbuild
-pushd build-motif; make bootstrap; popd
-%else
 pushd build-motif; make; popd
 %endif
-%endif
 %if_enabled gtk
-%ifdef cvsbuild
-pushd build-gtk; make bootstrap; popd
-%else
 pushd build-gtk; make; popd
 %endif
-%endif
 %if_enabled gtk3
-%ifdef cvsbuild
-pushd build-gtk3; make bootstrap; popd
-%else
 pushd build-gtk3; make; popd
-%endif
 %endif
 
 %Substage 3 "Make supplementary (and important) things only once (asymmetricly) 
@@ -940,7 +907,6 @@ pushd build-%stage3bin
 make -C doc/emacs
 make -C doc/misc
 # Removed recompilation lisp sources on third stage - make bootstrap do it
-%ifndef cvsbuild
 {
     # Recompile so that the patches we have applied are effective:
     # The goal `updates' should update all the generated code
@@ -952,7 +918,6 @@ make -C doc/misc
         recompile
 #       progmodes/php-mode.elc \
 } %detect_elisp_errs
-%endif
 popd # build-%stage3bin
 
 %Substage 4 "Final make all (now that we have all patched Lisp code compiled, 
@@ -1037,24 +1002,9 @@ install -p -m755 build-gtk3/src/%shortname %buildroot%_bindir/%name-gtk3
 rm -f %buildroot%_bindir/%shortname
 rm -f %buildroot%_bindir/%shortname-%emacs_version
 
-################
-# Menu support #
-################
-%if_with menu
-  install -d %buildroot%_menudir
-  cat <<'EOF' > %buildroot%_menudir/%name-X11
-?package(%name-X11): \
-	needs="X11" \
-	section="Applications/Editors" \
-	icon="%name.png" \
-	title="GNU Emacs 24" \
-	longtitle="Powerful editor from the GNU project" \
-	command="emacs-X11"
-EOF
-%else
-  install -d %buildroot%_desktopdir
-  install -p -m644  %SOURCE60 %buildroot%_desktopdir/%name.desktop
-%endif
+install -d %buildroot%_desktopdir
+install -p -m644  %SOURCE60 %buildroot%_desktopdir/%name.desktop
+
 # backwards compatibility with Master 2x/Compact 30
 %{?!_niconsdir:%define _niconsdir %_iconsdir}
 # New emacs icons (from Andrew Zhilin)
@@ -1407,11 +1357,7 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 #
 %files X11
 %config(noreplace) %_sysconfdir/X11/app-defaults/*
-%if_with menu
-  %_menudir/%name-X11
-%else
-  %_desktopdir/%name.desktop
-%endif
+%_desktopdir/%name.desktop
 # backwards compatibility with Master 2x/Compact 30
 %{?!_niconsdir:%define _niconsdir %_iconsdir}
 %_niconsdir/%name.png
@@ -1557,6 +1503,19 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Thu Apr 16 2015 Terechkov Evgenii <evg@altlinux.org> 24.5-alt15
+- Use new build scheme (from upstream git) in emacs24 source package
+
+* Wed Apr 15 2015 Terechkov Evgenii <evg@altlinux.org> 24.5-alt14
+- 24.5
+
+* Tue Mar 10 2015 Terechkov Evgenii <evg@altlinux.org> 24.4.91-alt13
+- 24.4.91 (24.5 pretest)
+
+* Sun Mar  1 2015 Evgenii Terechkov <evg@altlinux.org> 24.4.90-alt12
+- Pretest version of new build scheme
+- 24.4.90 (24.5 pretest)
+
 * Thu Oct 23 2014 Evgenii Terechkov <evg@altlinux.org> 24.4-alt11
 - 24.4
 
