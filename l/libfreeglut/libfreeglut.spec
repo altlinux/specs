@@ -1,33 +1,31 @@
-Name: libfreeglut
-Version: 2.8.1
+%define _name freeglut
+
+Name: lib%_name
+Version: 3.0.0
 Release: alt1
 
 Summary: A freely licensed alternative to the GLUT library
 License: MIT
 Group: System/Libraries
 
-Url: http://freeglut.sourceforge.net/
-Source: http://download.sourceforge.net/freeglut/freeglut-%version.tar.gz
+Url: http://%_name.sourceforge.net/
+Source: http://download.sourceforge.net/%_name/%_name-%version.tar.gz
 
-# fc
-# #1017551: Don't check whether a menu is active while manipulating it
-Patch: freeglut-2.8.1-fc-nocheck.patch
+Provides: libglut = %version %_name = %version
+Obsoletes: libglut < %version %_name < %version
 
-# Automatically added by buildreq on Mon Sep 17 2012
-# optimized out: gnu-config libGL-devel libX11-devel libXext-devel libXrender-devel xorg-inputproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
-BuildRequires: imake libGLU-devel libICE-devel libXi-devel libXrandr-devel libXxf86vm-devel xorg-cf-files
-
-Provides: libglut = %version freeglut = %version
-Obsoletes: libglut < %version freeglut < %version
+BuildRequires: ccmake ctest gcc-c++ libGLU-devel libXcomposite-devel libXcursor-devel libXdamage-devel
+BuildRequires: libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel
+BuildRequires: libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
 
 %description
-freeglut is a completely open source alternative to the OpenGL Utility Toolkit
+%_name is a completely open source alternative to the OpenGL Utility Toolkit
 (GLUT) library with an OSI approved free software license. GLUT was originally
 written by Mark Kilgard to support the sample programs in the second edition
 OpenGL 'RedBook'. Since then, GLUT has been used in a wide variety of practical
 applications because it is simple, universally available and highly portable.
 
-freeglut allows the user to create and manage windows containing OpenGL
+%_name allows the user to create and manage windows containing OpenGL
 contexts on a wide range of platforms and also read the mouse, keyboard and
 joystick functions.
 
@@ -38,8 +36,8 @@ Requires: %name = %version-%release
 # due to freeglut_std.h
 Requires: libGL-devel libGLU-devel
 
-Provides: libglut-devel = %version freeglut-devel = %version
-Obsoletes: libglut-devel < %version freeglut-devel < %version
+Provides: libglut-devel = %version %_name-devel = %version
+Obsoletes: libglut-devel < %version %_name-devel < %version
 
 %description devel
 Developmental libraries and header files required for developing or compiling
@@ -48,24 +46,27 @@ alternative to the popular GLUT library, with an OSI approved free software
 license.
 
 %prep
-%setup -n freeglut-%version
-%patch -p1
+%setup -n %_name-%version
 
 %build
-%configure --disable-static
-%make_build
+%cmake -DFREEGLUT_BUILD_STATIC_LIBS:BOOL=OFF
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
-%_libdir/*.so.*
+%_libdir/libglut.so.*
 
 %files devel
-%_includedir/*
-%_libdir/*.so
+%_includedir/GL/*.h
+%_libdir/libglut.so
+%_pkgconfigdir/%_name.pc
 
 %changelog
+* Thu Apr 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Thu Nov 13 2014 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
 - 2.8.1
 - removed obsolete patches
