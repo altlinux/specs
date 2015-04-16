@@ -1,6 +1,7 @@
 Name: qwtpolar
-Version: 1.0.0
+Version: 1.1.1
 Release: alt1
+
 Summary: A Qwt/Qt Polar Plot Library
 License: QWT
 Group: Development/KDE and QT
@@ -42,7 +43,7 @@ Group: Development/KDE and QT
 %name designer plugin.
 
 %prep
-%setup -q
+%setup
 # install to buildroot
 sed -i 's|/usr/local/%name-$$QWT_POLAR_VERSION|%prefix|g' qwtpolarconfig.pri
 # install headers to libqwt-devel directory
@@ -55,6 +56,9 @@ sed -i 's|$${QWT_POLAR_INSTALL_PREFIX}/lib$|$${QWT_POLAR_INSTALL_PREFIX}/%_lib|g
 sed -i 's|$${QWT_POLAR_INSTALL_PREFIX}/features|$${QWT_POLAR_INSTALL_PREFIX}/include/qwt|g' qwtpolarconfig.pri
 # install plugins
 sed -i 's|$$\[QWT_POLAR_INSTALL_PLUGINS\]/designer$|%_qt4dir/plugins/designer|g' designer/designer.pro
+sed -i 's|$${QWT_POLAR_INSTALL_PREFIX}/plugins/designer|%_qt4dir/plugins/designer|g' qwtpolarconfig.pri
+# remove rpath for plugins
+sed -i 's|QMAKE_RPATHDIR \*= $${QWT_POLAR_INSTALL_LIBS}||g' designer/designer.pro
 
 %build
 qmake-qt4 -set QMAKEFEATURES %_includedir/qwt
@@ -78,14 +82,18 @@ INSTALL_ROOT=%buildroot %makeinstall_std
 %_includedir/qwt/*.h
 %_includedir/qwt/%name.prf
 %_includedir/qwt/qwtpolarconfig.pri
+%_includedir/qwt/qwtpolarfunctions.pri
 %_libdir/*.so
 %_datadir/%name
-
 
 %files -n lib%name-qt4-designer
 %_qt4dir/plugins/designer/*.so
 
 %changelog
+* Thu Apr 16 2015 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1
+- built with libqwt-6.1.2
+
 * Thu Jan 12 2012 Anatoly Lyutin <vostok@altlinux.org> 1.0.0-alt1
 - new version
 

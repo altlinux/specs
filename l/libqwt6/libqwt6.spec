@@ -1,7 +1,8 @@
 %define oname libqwt
+%define ver_major 6.1
 Name: %{oname}6
-Version: 6.0.1
-Release: alt3.qa1
+Version: %ver_major.2
+Release: alt1
 
 Summary: 2D plotting widget extension to the Qt GUI
 
@@ -9,17 +10,15 @@ License: LGPL
 Group: System/Libraries
 Url: http://sourceforge.net/projects/qwt
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://qwt.svn.sourceforge.net/svnroot/qwt/trunk/qwt
-Source: qwt-%version.tar.bz2
-
-Patch1: qwt-6.0.1-qwtconfig.pri.patch
+Source: http://sourceforge.net/projects/qwt/files/qwt/%version/qwt-%version.tar.bz2
+#Source: qwt-%version.tar
+Patch: qwt-6.1.2-qwtconfig.pri.patch
 
 #Provides: %oname = %version-%release
 
-# Automatically added by buildreq on Tue Jul 21 2009
 BuildRequires: gcc-c++ libqt4-devel libXext-devel doxygen graphviz
+BuildRequires: chrpath
 
 %description
 Qwt is an extension to the Qt GUI library from Troll Tech AS.
@@ -69,9 +68,8 @@ This package contains development documentation and examples for Qwt
 Widget set.
 
 %prep
-%setup
-
-%patch1 -p0
+%setup -n qwt-%version
+%patch
 
 sed -i "s|/lib|/%_lib|g" qwtconfig.pri
 find . -type f -name '*.pro' |while read f; do
@@ -79,9 +77,9 @@ echo 'QMAKE_CXXFLAGS += %optflags' >> $f
 done
 
 %build
-export QTDIR=%_qt4dir
-export PATH=$QTDIR/bin:$PATH
-qmake qwt.pro
+#export QTDIR=%_qt4dir
+#export PATH=$QTDIR/bin:$PATH
+%qmake_qt4 QWT_CONFIG+=QwtMathML
 
 # incompatible with SMP build
 %make
@@ -108,8 +106,10 @@ popd
 #mv %buildroot%_includedir/*.h %buildroot%_includedir/qwt/
 #mv %buildroot%prefix/features/* %buildroot%_includedir/qwt/
 
+chrpath -d %buildroot%_libdir/qt4/plugins/designer/libqwt_designer_plugin.so
+
 %files
-%doc CHANGES README COPYING
+%doc README COPYING
 %_libdir/libqwt.so.*
 %_libdir/libqwtmathml.so.*
 %exclude %prefix/doc
@@ -129,6 +129,12 @@ popd
 #_man3dir/*
 
 %changelog
+* Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 6.1.2-alt1
+- 6.1.2
+
+* Tue Jan 07 2014 Yuri N. Sedunov <aris@altlinux.org> 6.1.0-alt1
+- 6.1.0
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.0.1-alt3.qa1
 - NMU: rebuilt for updated dependencies.
 
