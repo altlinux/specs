@@ -3,7 +3,7 @@ License:        GPLv2+
 Group:          Monitoring
 Summary:        `nfstrace` is an NFS tracing/monitoring/capturing/analyzing tool.
 
-Version:        0.3.1
+Version:        0.4.0
 Release:        alt1
 
 Packager:	Denis Pynkin <dans@altlinux.org>
@@ -14,6 +14,12 @@ BuildRequires: cmake
 BuildRequires: clang-devel
 BuildRequires: gcc-c++
 BuildRequires: libpcap-devel
+#BuildRequires: libgmock-devel
+BuildRequires: libjson-devel
+BuildRequires: libncurses-devel
+BuildRequires: ctest
+BuildRequires: python
+
 
 %description
 `nfstrace` performs live Ethernet 1 Gbps - 10 Gbps packets capturing and helps to
@@ -45,8 +51,8 @@ The %{name}-devel package contains development part of %{name}.
 %install
 %cmakeinstall_std
 
-#check
-#cmake_build test
+%check
+%cmake_build test
 
 %files
 %defattr(-,root,root)
@@ -66,6 +72,10 @@ The %{name}-devel package contains development part of %{name}.
 %{_includedir}/%name/api/*.h
 
 %changelog
+* Thu Mar 12 2015 Denis Pynkin <dans@altlinux.org> 0.4.0-alt1
+- New version
+- Test enabled
+
 * Tue Dec 16 2014 Denis Pynkin <dans@altlinux.org> 0.3.1-alt1
 - New version
 
