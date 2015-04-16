@@ -1,5 +1,5 @@
 Name: MySQL
-Version: 5.5.42
+Version: 5.5.43
 Release: alt1
 
 %def_without debug
@@ -647,6 +647,9 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Tue Apr 07 2015 Michael Shigorin <mike@altlinux.org> 5.5.43-alt1
+- 5.5.43
+
 * Tue Feb 03 2015 Michael Shigorin <mike@altlinux.org> 5.5.42-alt1
 - 5.5.42
   + dropped texinfo pages (missing now)
