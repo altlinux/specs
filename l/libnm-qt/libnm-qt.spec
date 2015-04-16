@@ -1,7 +1,7 @@
 
 Name: libnm-qt
-Version: 0.9.8.3
-Release: alt2
+Version: 0.9.8.4
+Release: alt1
 Epoch: 1
 
 Group: System/Libraries
@@ -12,8 +12,6 @@ License: LGPLv2+
 Requires: NetworkManager-daemon
 
 Source: %name-%version.tar
-Patch1: 0001-Do-not-remove-existing-secrets-when-loading-secrets.patch
-Patch2: 0001-Do-not-return-an-empty-map-with-secrets.patch
 
 # Automatically added by buildreq on Tue Feb 18 2014 (-bi)
 # optimized out: ModemManager-devel NetworkManager-devel cmake-modules elfutils glib2-devel libdbus-devel libdbus-glib-devel libmm-qt libnm-glib-devel libnm-util-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-xml libstdc++-devel pkg-config python-base ruby ruby-stdlibs
@@ -32,8 +30,6 @@ that use NetworkManager
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
 
 %build
 %Kbuild
@@ -50,6 +46,9 @@ that use NetworkManager
 %_includedir/NetworkManagerQt/
 
 %changelog
+* Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 1:0.9.8.4-alt1
+- new version
+
 * Wed Mar 25 2015 Sergey V Turchin <zerg@altlinux.org> 1:0.9.8.3-alt2
 - sync patches with FC
 
