@@ -1,0 +1,194 @@
+%define rname plasma-nm
+%def_disable openswan
+
+Name: kf5-%rname
+Version: 5.2.2
+Release: alt1
+%K5init altplace
+
+Group: Graphical desktop/KDE
+Summary: KDE Workspace 5 Plasma applet written in QML for managing network connections
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+Requires: NetworkManager-daemon
+Requires: NetworkManager-adsl NetworkManager-wifi
+Requires: mobile-broadband-provider-info
+
+Source: %rname-%version.tar
+Source10: 01-plasma-nm.js
+
+# Automatically added by buildreq on Tue Mar 03 2015 (-bi)
+# optimized out: cmake cmake-modules elfutils glib2-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs
+#BuildRequires: ModemManager-devel extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libmm-qt-devel kf5-networkmanager-qt-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libnm-devel libopenconnect-devel python-module-google qt5-declarative-devel rpm-build-ruby
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel
+BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
+BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
+BuildRequires: kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel
+BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel
+BuildRequires: kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
+BuildRequires: kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel
+BuildRequires: kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
+BuildRequires: kf5-kxmlgui-devel kf5-plasma-framework-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel
+BuildRequires: ModemManager-devel libopenconnect-devel
+BuildRequires: libnm-devel libnm-glib-devel libnm-util-devel libnm-glib-vpn-devel NetworkManager-devel
+BuildRequires: kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel
+
+%description
+Plasma applet and editor for managing your network connections in KDE using
+the default NetworkManager service.
+
+%package maxi
+Group: Graphical desktop/KDE
+Summary: Mobile support for %name
+BuildArch: noarch
+Requires: %name
+Requires: %name-connect-mobile
+Requires: %name-connect-openvpn
+Requires: %name-connect-vpnc
+Requires: %name-connect-openconnect
+Requires: %name-connect-openswan
+Requires: %name-connect-strongswan
+Requires: %name-connect-l2tp
+Requires: %name-connect-pptp
+%description maxi
+%summary.
+
+%package connect-mobile
+Group: Graphical desktop/KDE
+Summary: Mobile support for %name
+Requires: %name
+Requires: ModemManager NetworkManager-bluetooth NetworkManager-wwan mobile-broadband-provider-info
+%description connect-mobile
+%summary.
+
+%package connect-openvpn
+Group: Graphical desktop/KDE
+Summary: OpenVPN support for %name
+Requires: %name
+Requires: NetworkManager-openvpn
+%description connect-openvpn
+%summary.
+
+%package connect-vpnc
+Group: Graphical desktop/KDE
+Summary: Vpnc support for %name
+Requires: %name
+Requires: NetworkManager-vpnc
+%description connect-vpnc
+%summary.
+
+%package connect-openconnect
+Group: Graphical desktop/KDE
+Summary: OpenConnect support for %name
+Requires: %name
+Requires: NetworkManager-openconnect
+%description connect-openconnect
+%summary.
+
+%package connect-openswan
+Group: Graphical desktop/KDE
+Summary: Openswan support for %name
+Requires: %name
+%if_enabled openswan
+Requires: NetworkManager-openswan
+%endif
+%description connect-openswan
+%summary.
+
+%package connect-strongswan
+Group: Graphical desktop/KDE
+Summary: Strongswan support for %name
+Requires: %name
+Requires: strongswan
+%description connect-strongswan
+%summary.
+
+%package connect-l2tp
+Group: Graphical desktop/KDE
+Summary: L2TP support for %name
+Requires: %name
+Requires: NetworkManager-l2tp
+%description connect-l2tp
+%summary.
+
+%package connect-pptp
+Group: Graphical desktop/KDE
+Summary: PPTP support for %name
+Requires: %name
+Requires: NetworkManager-pptp
+%description connect-pptp
+%summary.
+
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build
+
+%install
+%K5install
+
+install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.js
+
+%find_lang %name --all-name
+
+%files -f %name.lang
+%doc COPYING*
+%_K5bin/kde5-nm-connection-editor
+%_K5lib/libplasmanm_*.so
+%_K5plug/kded_networkmanagement.so
+%_K5qml/org/kde/plasma/networkmanagement/
+%_K5xdgapp/kde5-nm-connection-editor.desktop
+%_K5data/plasma/plasmoids/org.kde.plasma.networkmanagement/
+%_K5data/plasma/updates/*
+%_K5notif/networkmanagement.notifyrc
+%_K5srv/kded/networkmanagement.desktop
+%_K5srv/plasma-applet-org.kde.plasma.networkmanagement.desktop
+%_K5srvtyp/*.desktop
+%_K5xmlgui/kde5-nm-connection-editor/
+
+%files maxi
+%files connect-mobile
+
+%files connect-openvpn
+%_K5plug/libplasmanetworkmanagement_openvpnui.so
+%_K5srv/plasmanetworkmanagement_openvpnui.desktop
+
+%files connect-vpnc
+%_K5plug/libplasmanetworkmanagement_vpncui.so
+%_K5srv/plasmanetworkmanagement_vpncui.desktop
+
+%files connect-openconnect
+%_K5plug/libplasmanetworkmanagement_openconnectui.so
+%_K5srv/plasmanetworkmanagement_openconnectui.desktop
+
+%files connect-openswan
+%_K5plug/libplasmanetworkmanagement_openswanui.so
+%_K5srv/plasmanetworkmanagement_openswanui.desktop
+
+%files connect-strongswan
+%_K5plug/libplasmanetworkmanagement_strongswanui.so
+%_K5srv/plasmanetworkmanagement_strongswanui.desktop
+
+%files connect-l2tp
+%_K5plug/libplasmanetworkmanagement_l2tpui.so
+%_K5srv/plasmanetworkmanagement_l2tpui.desktop
+
+%files connect-pptp
+%_K5plug/libplasmanetworkmanagement_pptpui.so
+%_K5srv/plasmanetworkmanagement_pptpui.desktop
+
+%changelog
+* Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
+- new version
+
+* Mon Mar 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt0.1
+- test
+
+* Wed Feb 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt0.1
+- initial build
