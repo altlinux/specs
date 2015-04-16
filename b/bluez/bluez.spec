@@ -3,7 +3,7 @@
 
 Name: bluez
 Version: 5.30
-Release: alt1
+Release: alt2
 
 Summary: Bluetooth utilities
 License: GPLv2+
@@ -72,6 +72,7 @@ export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"
 
 %install
 %makeinstall_std
+install -m755 attrib/gatttool %buildroot%_bindir/
 install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
 ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
 mkdir -p %buildroot%_libdir/bluetooth/plugins %buildroot%_localstatedir/bluetooth
@@ -132,6 +133,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Thu Apr 16 2015 Yuri N. Sedunov <aris@altlinux.org> 5.30-alt2
+- install gatttool (ALT #30942)
+
 * Wed Apr 01 2015 Yuri N. Sedunov <aris@altlinux.org> 5.30-alt1
 - 5.30
 
