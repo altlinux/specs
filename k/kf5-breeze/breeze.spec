@@ -1,0 +1,87 @@
+%define rname breeze
+
+Name: kf5-%rname
+Version: 5.2.2
+Release: alt1
+%K5init altplace
+
+Group: Graphical desktop/KDE
+Summary: KDE Workspace 5 visual style
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Sat Mar 21 2015 (-bi)
+# optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs
+#BuildRequires: extra-cmake-modules gcc-c++ kf5-frameworkintegration-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdecoration-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel python-module-google qt5-x11extras-devel rpm-build-gir rpm-build-ruby
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-x11extras-devel
+BuildRequires: kf5-frameworkintegration-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
+BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdecoration-devel kf5-kguiaddons-devel kf5-ki18n-devel
+BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
+
+%description
+Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n libkf5breeze
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5breeze
+KF5 library
+
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build
+
+%install
+%K5install
+
+%K5install_move data kstyle color-schemes kconf_update wallpapers
+mv %buildroot/%_datadir/icons/* %buildroot/%_K5data/icons/
+
+%find_lang %name --all-name
+
+%files -f %name.lang
+%doc COPYING*
+%_bindir/*5
+%_K5bin/*
+%_K5cf_bin/*
+%_K5qml/QtQuick/Controls/Styles/Breeze/
+%_K5plug/*.so
+%_K5plug/org.kde.kdecoration2/*.so
+%_K5plug/styles/*.so
+%_K5data/kstyle/themes/*
+%_K5data/color-schemes/*
+%_K5icon/?reeze*/
+%_K5cf_upd/*
+%_K5wall/*
+
+%changelog
+* Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
+- new version
+
+* Mon Mar 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt0.1
+- test
+
+* Wed Feb 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt0.1
+- initial build

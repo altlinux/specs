@@ -1,0 +1,80 @@
+%define rname kde-gtk-config
+
+Name: kf5-%rname
+Version: 5.2.2
+Release: alt1
+%K5init altplace
+
+Group: Graphical desktop/KDE
+Summary: KDE Workspace 5 GNOME/GTK Application Style
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Tue Apr 07 2015 (-bi)
+# optimized out: at-spi2-atk cmake cmake-modules elfutils fontconfig fontconfig-devel glib2-devel kf5-attica-devel libEGL-devel libGL-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcloog-isl4 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server libxcbutil-keysyms pkg-config python-base ruby ruby-stdlibs xorg-xproto-devel
+#BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libgtk+2-devel libgtk+3-devel python-module-google qt5-base-devel rpm-build-ruby
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires: libgtk+2-devel libgtk+3-devel
+BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
+BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-devel
+BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
+BuildRequires: kf5-knewstuff-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
+BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+
+%description
+Widget Style of GNOME/GTK Applications.
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n libkf5de-gtk-config
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5de-gtk-config
+KF5 library
+
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build \
+    -DLIBEXEC_INSTALL_DIR=%_K5exec \
+    #
+
+%install
+%K5install
+%K5install_move data kcm-gtk-module
+%find_lang %name --all-name
+
+%files -f %name.lang
+%doc COPYING*
+%config(noreplace) %_K5xdgconf/*.knsrc
+%_K5exec/*
+%_K5plug/*.so
+%_K5srv/*.desktop
+%_K5data/kcm-gtk-module/
+%_K5icon/*/*/apps/kde-gtk-config.*
+
+%changelog
+* Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
+- new version
+
+* Wed Feb 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt0.1
+- initial build
