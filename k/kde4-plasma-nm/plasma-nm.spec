@@ -1,7 +1,7 @@
 %def_disable openswan
 
 Name: kde4-plasma-nm
-Version: 0.9.3.5
+Version: 0.9.3.6
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -14,14 +14,6 @@ Requires: NetworkManager-adsl NetworkManager-wifi
 
 Source: plasma-nm-%version.tar
 Source10: 01-plasma-nm.js
-# FC
-Patch1: plasma-nm-add-option-for-server-certificate-verification.patch
-Patch2: plasma-nm-update-openconnect-support-for-library-version-5.patch
-Patch3: plasma-nm-update-openconnect-storage-of-manually-accepted-server-certs.patch
-Patch4: plasma-nm-return-secrets-back-otherwise-they-will-be-lost-every-time-when-we-edit-connection.patch
-Patch5: plasma-nm-workaround-make-sure-we-don-t-send-completely-empty-map-to-nm-back.patch
-Patch6: plasma-nm-make-NM-to-store-Openconnect-secrets-into-KWallet.patch
-Patch7: plasma-nm-make-storing-openconnect-secrets-optional.patch
 
 # Automatically added by buildreq on Wed Feb 19 2014 (-bi)
 # optimized out: ModemManager-devel automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libcloog-isl4 libdbus-devel libdbusmenu-qt2 libfreetype-devel libgst-plugins libmm-qt libnm-qt libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-svg libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base rpm-build-gir ruby ruby-stdlibs xdg-utils xorg-kbproto-devel xorg-xproto-devel zlib-devel
@@ -44,9 +36,7 @@ Requires: %name-connect-mobile
 Requires: %name-connect-openvpn
 Requires: %name-connect-vpnc
 Requires: %name-connect-openconnect
-%if_enabled openswan
 Requires: %name-connect-openswan
-%endif
 Requires: %name-connect-strongswan
 Requires: %name-connect-l2tp
 Requires: %name-connect-pptp
@@ -89,7 +79,9 @@ Requires: NetworkManager-openconnect
 Group: Graphical desktop/KDE
 Summary: Openswan support for %name
 Requires: %name = %EVR
+%if_enabled openswan
 Requires: NetworkManager-openswan
+%endif
 %description connect-openswan
 %summary.
 
@@ -119,13 +111,6 @@ Requires: NetworkManager-pptp
 
 %prep
 %setup -n plasma-nm-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
 
 %build
 %K4build
@@ -193,11 +178,9 @@ install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-plas
 %_K4lib/plasmanetworkmanagement_openconnectui.so
 %_K4srv/plasmanetworkmanagement_openconnectui.desktop
 
-%if_enabled openswan
 %files connect-openswan -f plasmanetworkmanagement_openswanui.lang
 %_K4lib/plasmanetworkmanagement_openswanui.so
 %_K4srv/plasmanetworkmanagement_openswanui.desktop
-%endif
 
 %files connect-strongswan -f plasmanetworkmanagement_strongswanui.lang
 %_K4lib/plasmanetworkmanagement_strongswanui.so
@@ -212,6 +195,9 @@ install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-plas
 %_K4srv/plasmanetworkmanagement_pptpui.desktop
 
 %changelog
+* Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.3.6-alt1
+- new version
+
 * Wed Mar 25 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.3.5-alt1
 - new version (ALT#30861)
 
