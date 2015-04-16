@@ -22,7 +22,7 @@
 %def_disable wayland
 
 Name: gdm
-Version: %ver_major.0.1
+Version: %ver_major.1.1
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -297,6 +297,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Thu Apr 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1.1-alt1
+- 3.16.1.1
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0.1-alt1
 - 3.16.0.1
 
