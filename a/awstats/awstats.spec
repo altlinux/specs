@@ -4,22 +4,17 @@
 %define	docdir %_docdir/%name-%version
 
 Name: awstats
-Version: 7.1.1
+Version: 7.4
 Release: alt0.1
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.KOI8-R):	Анализатор логов Web-сервера в режиме реального времени
-License: %gpl2only
+License: GPL3
 Group: Monitoring
 
-Url: http://awstats.sourceforge.net
+Url: http://www.awstats.org
 BuildArch: noarch
 
-# http://downloads.sourceforge.net/awstats/awstats-6.95.tar.gz
-# patches from Debian:
-# http://patch-tracker.debian.org/patch/series/dl/awstats/6.9.5~dfsg-3/1014_websec_robot.patch
-# http://patch-tracker.debian.org/patch/series/dl/awstats/6.9.5~dfsg-3/1009_hurd_url.patch
-# http://patch-tracker.debian.org/patch/series/dl/awstats/6.9.5~dfsg-3/0007_russian_lang.patch
 Source: %name-%version.tar
 Source1: awstats.cron
 Source2: apache.modconfdir
@@ -157,7 +152,7 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %_sysconfdir/%name
 %dir %attr(1775,root,%_pseudouser_group) %_pseudouser_home
 %config(noreplace) %_sysconfdir/cron.d/%name
-%doc README.TXT README.ALT.ru_RU.UTF8 wwwroot/cgi-bin/awstats.model.conf
+%doc README.md README.ALT.ru_RU.UTF8 wwwroot/cgi-bin/awstats.model.conf
 
 
 %files docs
@@ -173,6 +168,15 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Fri Apr 17 2015 L.A. Kostis <lakostis@altlinux.ru> 7.4-alt0.1
+- Update to 7.4.
+- Re-apply all patches:
+  + lib/{robots,search_engines}.pm: update for ru.
+  + wwwroot/cgi-bin/lib/browsers.pm: Add WebSec.
+  + lib/operating_systems.pm: add ALTLinux.
+  + tools: fix defaults paths.
+  + lang/awstats-ru.txt: fix translation.
+
 * Fri Mar 15 2013 L.A. Kostis <lakostis@altlinux.ru> 7.1.1-alt0.1
 - 7.1.1.
 - possibly fixes perl 5.16 compatibility issues (ALT #28686).
