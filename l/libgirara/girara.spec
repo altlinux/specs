@@ -1,7 +1,8 @@
 %define _name girara
+%define _soname 2
 
 Name: lib%_name
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -42,9 +43,9 @@ export CFLAGS="%optflags"
 
 %install
 %makeinstall_std PREFIX=%prefix LIBDIR=%_libdir
-%find_lang %name-gtk3-1
+%find_lang %name-gtk3-%_soname
 
-%files -f %name-gtk3-1.lang
+%files -f %name-gtk3-%_soname.lang
 %doc AUTHORS README LICENSE
 %_libdir/*.so.*
 
@@ -56,6 +57,9 @@ export CFLAGS="%optflags"
 %exclude %_libdir/*.a
 
 %changelog
+* Fri Apr 17 2015 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
+- Updated to 0.2.4.
+
 * Fri Oct 17 2014 Mikhail Efremov <sem@altlinux.org> 0.2.3-alt1
 - Updated to 0.2.3.
 

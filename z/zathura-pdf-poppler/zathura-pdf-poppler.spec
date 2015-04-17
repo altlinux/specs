@@ -1,6 +1,6 @@
 Name: zathura-pdf-poppler
 Version: 0.2.5
-Release: alt1
+Release: alt2
 
 Summary: PDF support for zathura (poppler)
 License: %bsdstyle
@@ -40,6 +40,9 @@ export CFLAGS="%optflags"
 %_libdir/zathura/*.so
 
 %changelog
+* Fri Apr 17 2015 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt2
+- Rebuild with libgirara-0.2.4.
+
 * Fri Feb 21 2014 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt1
 - Updated to 0.2.5.
 

@@ -1,6 +1,6 @@
 Name: zathura-cb
 Version: 0.1.4
-Release: alt1
+Release: alt2
 
 Summary: Comic book support for zathura
 License: %bsdstyle
@@ -40,6 +40,9 @@ export CFLAGS="%optflags"
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Apr 17 2015 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt2
+- Rebuild with libgirara-0.2.4.
+
 * Tue Nov 11 2014 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1
 - Updated to 0.1.4.
 
