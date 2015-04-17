@@ -25,7 +25,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -202,6 +202,7 @@ Requires: kde4-icon-theme-oxygen kde4-kactivities
 Requires: /usr/bin/qdbus dbus-tools-gui
 Requires: qalculate-common
 Requires: kde4-kscreen
+Requires: polkit-kde-ksysguard polkit-kde-kfontinst polkit-kde-kcmclock
 %if_enabled google
 #Requires: google-gadgets-qt
 %endif
@@ -801,7 +802,8 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %if_enabled desktop
 %exclude %_K4lib/kgreet_*.so*
 %endif
-%_datadir/polkit-1/actions/org.kde.*.policy
+#%_datadir/polkit-1/actions/org.kde.*.policy
+%_datadir/polkit-1/actions/org.kde.powerdevil.backlighthelper.policy
 %if_enabled desktop
 %exclude %_datadir/polkit-1/actions/org.kde.kcontrol.kcmkdm.policy
 %endif
@@ -953,6 +955,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.17-alt2
+- share polkit actions with KDE5
+
 * Thu Mar 12 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.17-alt1
 - new version
 

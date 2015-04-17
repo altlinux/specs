@@ -3,12 +3,14 @@
 %define rname baloo
 Name: kde4-baloo
 Version: 4.14.3
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: A framework for searching and managing metadata
 Url: https://projects.kde.org/projects/kde/kdelibs/baloo
 License: GPLv2 / LGPLv2
+
+Requires: polkit-kde-baloo
 
 Conflicts: kde4base-runtime-core < 4.12.90
 
@@ -114,7 +116,6 @@ Requires: %name-common = %EVR
 %_K4srv/tags.protocol
 %_K4srv/timeline.protocol
 %_K4srvtyp/baloosearchstore.desktop
-%_datadir/polkit-1/actions/org.kde.baloo.filewatch.policy
 %_K4lib/akonadi/akonadi_baloo_searchplugin.so
 %_K4lib/akonadi/akonadibaloosearchplugin.desktop
 %_K4lib/baloo_*searchstore.so
@@ -141,6 +142,9 @@ Requires: %name-common = %EVR
 %_K4libdir/libbalooqueryparser.so.*
 
 %changelog
+* Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt2
+- share polkit actions with KDE5
+
 * Fri Nov 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 
