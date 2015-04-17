@@ -1,7 +1,7 @@
 %define lng_list af ar as ast be be@latin bg bn bn_IN br bs ca ca@valencia crh cs csb cy da de el en en_GB en_US eo es et eu fa fi fr fy ga gd gl gu ha he hi hne hr hsb hu hy ia id is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms nb nds ne nl nn oc or pa pl ps pt pt_BR ro ru se si sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta te tg th tr tt ug uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW
 
 %define major 5
-%define minor 0
+%define minor 1
 %define bugfix 0
 
 Name: kf5-filesystem
@@ -14,6 +14,8 @@ License: Public Domain
 Group: System/Base
 
 Requires: filesystem qt5-base-common
+
+Source1: kde5
 
 BuildRequires(pre): rpm-build-kf5
 
@@ -60,6 +62,8 @@ mkdir -p %buildroot/%_K5cf_bin
 
 mkdir -p %buildroot/%_K5xdgconf/{autostart,colors,menus,ui}
 
+mkdir -p %buildroot/%_K5data/{katepart5,knotifications5,kservices5,kservicetypes5,kxmlgui5}
+
 mkdir -p %buildroot/%_K5i18n/
 for l in %lng_list
 do
@@ -76,7 +80,11 @@ done
 ln -s `relative %_kf5_bin %_K5data/bin` %buildroot/%_K5data/bin
 ln -s `relative %_libdir %_K5data/lib` %buildroot/%_K5data/lib
 
+mkdir -p %buildroot/%_bindir/
+install -m 0755 %SOURCE1 %buildroot/%_bindir/kde5
+
 %files
+%_bindir/kde5
 %_K5data
 %_sysconfdir/kf5
 %dir %_kf5_bin
@@ -89,6 +97,9 @@ ln -s `relative %_libdir %_K5data/lib` %buildroot/%_K5data/lib
 %dir %_desktopdir/kf5
 
 %changelog
+* Fri Apr 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
+- add helper script
+
 * Wed Apr 08 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt1
 - update dirs
 
