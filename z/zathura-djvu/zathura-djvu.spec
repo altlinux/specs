@@ -1,6 +1,6 @@
 Name: zathura-djvu
 Version: 0.2.4
-Release: alt1
+Release: alt2
 
 Summary: DjVU support for zathura
 License: %bsdstyle
@@ -40,6 +40,9 @@ export CFLAGS="%optflags"
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Apr 17 2015 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt2
+- Rebuild with libgirara-0.2.4.
+
 * Fri Oct 17 2014 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
 - Fix changelog entry.
 - Updated to 0.2.4.
