@@ -6,13 +6,16 @@
 
 Name: kde5-%rname
 Version: 0.0.1
-Release: alt1
+Release: alt2
 %K5init
 
 Group: File tools
 Summary: The file manager for KDE
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: kf5-kio
+#Requires: kf5-kio-extras
 
 Source: %rname-%version.tar
 
@@ -21,7 +24,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libxapian-devel python-module-google qt5-phonon-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel
-BuildRequires: libxapian-devel
+BuildRequires: libxapian-devel desktop-file-utils
 #BuildRequires: kf5-baloo-widgets-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
@@ -77,6 +80,18 @@ KF5 library
 %K5install
 %find_lang %name --with-kde --without-mo --all-name
 
+desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
+    --add-mime-type=x-scheme-handler/ftp \
+    --add-mime-type=x-scheme-handler/trash \
+    %buildroot/%_K5xdgapp/org.kde.dolphin.desktop
+# kf5-kio-extras
+#    --add-mime-type=x-scheme-handler/network \
+#    --add-mime-type=x-scheme-handler/desktop \
+# kf5-plasma-workspace
+#    --add-mime-type=x-scheme-handler/remote \
+#    --add-mime-type=x-scheme-handler/programs \
+#    --add-mime-type=x-scheme-handler/applications \
+
 %files common -f %name.lang
 %doc COPYING*
 
@@ -105,5 +120,8 @@ KF5 library
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Sat Apr 18 2015 Sergey V Turchin <zerg@altlinux.org> 0.0.1-alt2
+- fix requires
+
 * Fri Apr 17 2015 Sergey V Turchin <zerg@altlinux.org> 0.0.1-alt1
 - initial build
