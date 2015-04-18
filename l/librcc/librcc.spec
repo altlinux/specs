@@ -1,17 +1,19 @@
 Name: librcc
 Version: 0.2.12
-Release: alt1
+Release: alt2
 
 Summary: RusXMMS Charset Conversion Library
 License: GPL
 Group: System/Libraries
-
 Url: http://rusxmms.sourceforge.net
-Source: %name-%version.tar
 Packager: Nick S. Grechukh <gns@altlinux.org>
 
-BuildRequires: gcc-c++ gtk+-devel libenca-devel libgtk+2-devel librcd-devel libxml2-devel
-BuildRequires: libtranslate-devel libguess-devel
+Source: %name-%version.tar
+Patch: librcc-0.2.12-alt-gtk3_build.patch
+
+BuildRequires: gcc-c++ gtk+-devel libenca-devel libgtk+2-devel libgtk+3-devel
+BuildRequires: librcd-devel libxml2-devel libtranslate-devel libguess-devel
+BuildRequires: libaspell-devel libdb4-devel
 
 %description
 RusXMMS Charset Conversion Library.
@@ -30,6 +32,13 @@ Summary: RusXMMS Encoding Conversion Library GTK2 bindings
 %description gtk2
 This package contains %name GTK2 bindings.
 
+%package gtk3
+Group: Development/Other
+Summary: RusXMMS Encoding Conversion Library GTK3 bindings
+
+%description gtk3
+This package contains %name GTK3 bindings.
+
 %package devel
 Group: Development/Other
 Summary: RusXMMS Encoding Conversion Library header files
@@ -40,11 +49,12 @@ This package contains %name header files.
 
 %prep
 %setup
+%patch
 
 %build
 %autoreconf
 %configure \
-	--disable-bdb \
+	--enable-bdb \
 	--disable-static
 
 %make_build
@@ -74,12 +84,22 @@ find %buildroot%_libdir/rcc/engines -depth -name \*.la -delete
 %_libdir/librccgtk2.so.*
 %_bindir/rcc-gtk2-config
 
+%files gtk3
+%_libdir/librccgtk3.so.*
+%_bindir/rcc-gtk3-config
+
 %files devel
 %_includedir/*
 %_pkgconfigdir/*.pc
 %_libdir/lib*.so
 
 %changelog
+* Mon Jan 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.12-alt2
+- enabled multilanguage support with DB4
+- enabled language autodetection using aspell
+- new gtk3 subpackage
+- built with libguess.so.1
+
 * Fri Dec 06 2013 Michael Shigorin <mike@altlinux.org> 0.2.12-alt1
 - 0.2.12
 - dropped patches
