@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 2015.2
-Release: alt2
+Release: alt3
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
@@ -205,6 +205,9 @@ ln -s ../../opennode/cli/actions onode
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Sat Apr 18 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 2015.2-alt3
+- Removed code from previous tag (ALT 30929)
+
 * Thu Feb 12 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 2015.2-alt2
 - Add subpackage python-module-salt-tests
 
