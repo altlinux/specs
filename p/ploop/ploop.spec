@@ -1,5 +1,5 @@
 Name: ploop
-Version: 1.12.2
+Version: 1.13
 Release: alt1
 Group: System/Base
 License: GNU GPL
@@ -60,6 +60,9 @@ make DESTDIR=%buildroot LIBDIR=%_libdir TMPFILESDIR=%_tmpfilesdir install
 %_includedir/%name
 
 %changelog
+* Thu Apr 16 2015 Terechkov Evgenii <evg@altlinux.org> 1.13-alt1
+- New version
+
 * Sat Jan  3 2015 Terechkov Evgenii <evg@altlinux.org> 1.12.2-alt1
 - New version
 
