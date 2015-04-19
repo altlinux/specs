@@ -1,5 +1,5 @@
 Name: xfractint
-Version: 20.04p12
+Version: 20.04p13
 Release: alt1
 License: Freeware
 Group: Sciences/Mathematics
@@ -36,6 +36,9 @@ sed -n '/Copyright Information:/,/as the source of the code/p' fractsrc.txt > LI
 %_man1dir/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 20.04p13-alt1
+- Autobuild version bump to 20.04p13
+
 * Wed Feb 22 2012 Fr. Br. George <george@altlinux.ru> 20.04p12-alt1
 - Autobuild version bump to 20.04p12
 
