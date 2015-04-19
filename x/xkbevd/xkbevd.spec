@@ -1,5 +1,5 @@
 Name: xkbevd
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Summary: XKB event daemon
@@ -36,6 +36,9 @@ an interesting idea.
 %_man1dir/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.1.4-alt1
+- Autobuild version bump to 1.1.4
+
 * Tue Apr 17 2012 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
 - Autobuild version bump to 1.1.3
 
