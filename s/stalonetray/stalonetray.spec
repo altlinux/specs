@@ -1,5 +1,5 @@
 Name: stalonetray
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: STand Alone TRAY (notification area) implementation
@@ -41,6 +41,9 @@ make check
 %_mandir/man*/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 0.8.3-alt1
+- Autobuild version bump to 0.8.3
+
 * Wed Feb 11 2015 Fr. Br. George <george@altlinux.ru> 0.8.2-alt1
 - Autobuild version bump to 0.8.2
 
