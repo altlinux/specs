@@ -1,5 +1,5 @@
 Name: xfindproxy
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: locate proxy services
@@ -39,6 +39,9 @@ shared whenever possible.
 %_man1dir/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+
 * Wed Oct 16 2013 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
 - Autobuild version bump to 1.0.3
 - Drop inactual patch
