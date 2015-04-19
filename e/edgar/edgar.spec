@@ -1,7 +1,7 @@
 %define rel 1
 Summary: 2D Platform Game
 Name: edgar
-Version: 1.19
+Version: 1.20
 Release: alt1
 Source: %name-%version-1.tar.gz
 Url: http://www.parallelrealities.co.uk/p/legend-of-edgar.html
@@ -43,7 +43,7 @@ sed -i 's/Categories=Game$/Categories=Game;/' icons/edgar.desktop
 %make_build VERSION=%version RELEASE=%rel DATA_DIR=%_gamesdatadir/%name/ BIN_DIR=%_gamesbindir/ DOC_DIR=%_defaultdocdir/%name-%version ICON_DIR=%_iconsdir/hicolor/ DESKTOP_DIR=%_desktopdir LOCALE_DIR=%_datadir/locale/
 
 %install
-%makeinstall VERSION=%version RELEASE=%rel DATA_DIR=%buildroot%_gamesdatadir/%name/ BIN_DIR=%buildroot%_gamesbindir/ DOC_DIR=`pwd`/localdoc ICON_DIR=%buildroot%_iconsdir/hicolor/ DESKTOP_DIR=%buildroot%_desktopdir/ LOCALE_DIR=%buildroot%_datadir/locale/ PREFIX=%buildroot%_prefix
+%makeinstall VERSION=%version RELEASE=%rel DATA_DIR=%buildroot%_gamesdatadir/%name/ BIN_DIR=%buildroot%_gamesbindir/ DOC_DIR=`pwd`/localdoc ICON_DIR=%buildroot%_iconsdir/hicolor/ DESKTOP_DIR=%buildroot%_desktopdir/ LOCALE_DIR=%buildroot%_datadir/locale/ PREFIX=%buildroot%prefix
 
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Application \
@@ -64,6 +64,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_gamesdatadir/%name/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.20-alt1
+- Autobuild version bump to 1.20
+
 * Mon Feb 02 2015 Fr. Br. George <george@altlinux.ru> 1.19-alt1
 - Autobuild version bump to 1.19
 - Fix patch
