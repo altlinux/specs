@@ -1,5 +1,5 @@
 Name: xmag
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: magnify parts of the screen
@@ -47,6 +47,9 @@ sed -i 's/(XMAG_LIBS) -lm$/(XMAG_LIBS) -lm -lXmu/' Makefile.am
 %_sysconfdir/X11/app-defaults/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
