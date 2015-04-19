@@ -1,5 +1,5 @@
 Name: xlsatoms
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Summary: List interned atoms defined on server
 Group: System/X11
@@ -31,6 +31,9 @@ Xlsatoms lists the interned atoms.  By default, all atoms starting from 1 (the l
 %_man1dir/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
+- Autobuild version bump to 1.1.2
+
 * Tue Apr 17 2012 Fr. Br. George <george@altlinux.ru> 1.1.1-alt1
 - Autobuild version bump to 1.1.1
 
