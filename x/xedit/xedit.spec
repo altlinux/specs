@@ -1,5 +1,5 @@
 Name: xedit
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Simple text editor for X
@@ -38,6 +38,9 @@ Simple text editor for X
 %_x11x11libdir/%name/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.2.2-alt1
+- Autobuild version bump to 1.2.2
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.2.1-alt1
 - Autobuild version bump to 1.2.1
 
