@@ -1,5 +1,5 @@
 Name: xcmsdb
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: Device Color Characterization utility for X Color Management System
@@ -43,6 +43,9 @@ between  RGBi and RGB device (XcmsRGB, also referred to as device RGB).
 %_man1dir/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Wed Feb 22 2012 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 
