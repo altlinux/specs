@@ -13,7 +13,7 @@
 %def_enable soundcloud
 
 Name: rhythmbox
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1%rev
 
 Summary: Music Management Application
@@ -485,6 +485,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sun Apr 19 2015 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Sun Mar 29 2015 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
 - 3.2
 
