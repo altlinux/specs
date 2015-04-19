@@ -1,5 +1,5 @@
 Name: greed
-Version: 3.10
+Version: 3.11
 Release: alt1
 Source: %name-%version.tar.gz
 License: BSD-like
@@ -31,6 +31,9 @@ install /dev/null %buildroot%_localstatedir/games/%name.hs
 %attr(2711,root,games) %_gamesbindir/%name
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 3.11-alt1
+- Autobuild version bump to 3.11
+
 * Tue Jun 03 2014 Fr. Br. George <george@altlinux.ru> 3.10-alt1
 - Autobuild version bump to 3.10
 
