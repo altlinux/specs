@@ -6,6 +6,7 @@
 %define binutils_ver %{get_version binutils}
 %define _keep_libtool_files 1
 #define _optlevel s
+%def_enable bootstrap
 %def_disable debug
 %def_disable static_thread
 %def_enable shared_thread
@@ -20,11 +21,19 @@
 %def_enable sql_ibase
 %def_disable sql_tds
 %def_enable dbus
-%def_enable phonon
-%def_disable pkg_phonon
 %def_enable gtkstyle
 %def_enable glib
 %def_enable versioning_hack
+#
+%if_disabled bootstrap
+%def_enable phonon
+%def_disable pkg_phonon
+%else
+%def_disable phonon
+%def_disable pkg_phonon
+%endif
+#
+%def_disable webkit
 
 %define platform linux-g++
 %define graphicssystem raster
@@ -40,7 +49,7 @@
 %define minor	8
 %define bugfix	6
 %define beta	%nil
-%define rlz alt4
+%define rlz alt5
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -135,7 +144,6 @@ Patch707: rcc-stable-dirlisting.diff
 # fixes for LibreOffice-kde QTBUG 37380,34614,38585
 Patch800: glib-honor-ExcludeSocketNotifiers-flag.diff
 Patch801: l-qclipboard_delay.patch
-Patch802: l-qclipboard_fix_recursive.patch
 # Sergey A. Sukiyazov <sergey.sukiyazov NEAR gmail.com>
 Patch9100: 9100-qt-core-fix-iconvcodec.patch
 #
@@ -215,7 +223,9 @@ Requires: lib%name-svg = %version-%release
 Requires: lib%name-script = %version-%release
 Requires: lib%name-designer = %version-%release
 Requires: lib%name-uitools = %version-%release
+%if_enabled webkit
 Requires: lib%name-webkit = %version-%release
+%endif
 Requires: lib%name-xmlpatterns = %version-%release
 Requires: lib%name-multimedia = %version-%release
 Requires: lib%name-help = %version-%release
@@ -444,6 +454,11 @@ Requires: libdbus-devel
 %endif
 %if_enabled phonon
 Requires: phonon-devel
+%endif
+%if_disabled webkit
+%if_disabled bootstrap
+Requires: libqt4-webkit-devel
+%endif
 %endif
 # for qcollectiongenerator
 Requires: lib%name-sql-sqlite
@@ -796,7 +811,6 @@ Install this package if you want to create RPM packages that use %name
 
 %patch800 -p1
 %patch801 -p0
-%patch802 -p0
 
 %patch9100 -p1
 #
@@ -863,7 +877,8 @@ CNFGR="\
 	\
 	-graphicssystem %graphicssystem -opengl %opengl_type \
 	-system-zlib -cups -openssl \
-	-webkit -xmlpatterns -scripttools \
+	%{?_enable_webkit: -webkit}%{!?_enable_webkit: -no-webkit} \
+	-xmlpatterns -scripttools \
 	-multimedia -declarative \
 	-no-nas-sound -no-nis -iconv \
 	%{?_enable_phonon: -phonon}%{!?_enable_phonon: -no-phonon} \
@@ -955,7 +970,7 @@ install -d -m 0755 %buildroot/%qtdir/plugins/codecs/
 install -d -m 0755 %buildroot/%qtdir/plugins/crypto/
 install -d -m 0755 %buildroot/%qtdir/plugins/accessible/
 install -d -m 0755 %buildroot/%qtdir/plugins/styles/
-
+install -d -m 0755 %buildroot/%qtdir/imports/QtWebKit
 
 %make INSTALL_ROOT=%buildroot install
 [ -x %buildroot/%qtdir/bin/qdoc3 ] \
@@ -1316,7 +1331,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %qtdir/imports/Qt/labs/gestures
 %qtdir/imports/Qt/labs/particles
 %qtdir/imports/Qt/labs/shaders
-%qtdir/imports/QtWebKit
+%if_enabled webkit
+%qtdir/imports/QtWebKit/*
+%endif
 
 %if_enabled dbus
 %files dbus
@@ -1360,9 +1377,11 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %qtdir/lib/libQtScriptTools.so.*
 %_libdir/libQtScriptTools.so.*
 
+%if_enabled webkit
 %files -n lib%{name}-webkit
 %qtdir/lib/libQtWebKit.so.*
 %_libdir/libQtWebKit.so.*
+%endif
 
 
 %files -n lib%name-devel
@@ -1559,6 +1578,12 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Mon Apr 20 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt5
+- build qtwebkit in separate package
+
+* Fri Jan 23 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt3.M70P.1
+- build for M70P
+
 * Fri Jan 23 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt4
 - fix mnemonic menu shortcuts
 
