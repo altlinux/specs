@@ -7,7 +7,7 @@
 
 Name: sddm
 Version: 0.11.0
-Release: alt2
+Release: alt3
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -52,7 +52,7 @@ ability to create smooth, animated user interfaces.
 %patch1 -p1
 %patch100 -p1
 %patch101 -p1
-%patch102 -p1
+%patch102 -p1 -b .wmsession
 
 %build
 %K5build \
@@ -109,6 +109,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Mon Apr 20 2015 Sergey V Turchin <zerg@altlinux.org> 0.11.0-alt3
+- don't uppercase xdg session name
+
 * Fri Apr 03 2015 Sergey V Turchin <zerg@altlinux.org> 0.11.0-alt2
 - fix apply patch
 
