@@ -1,6 +1,6 @@
 Name: polkit
 Version: 0.112
-Release: alt2
+Release: alt3
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -16,7 +16,7 @@ Patch: %name-%version-%release.patch
 Patch1: %name-0.109-alt-helper_path.patch
 
 BuildRequires: gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
-BuildRequires: libmozjs17-devel libsystemd-login-devel systemd-devel
+BuildRequires: libmozjs17-devel libsystemd-devel systemd-devel
 # for check
 BuildRequires: /proc dbus-tools-gui
 
@@ -66,7 +66,7 @@ Obsoletes: lib%{name}1-gir-devel < %version
 GObject introspection devel data for the Polkit-1.0 library
 
 %prep
-%setup -q
+%setup
 %patch -p1
 %patch1 -p1
 
@@ -136,6 +136,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Mon Apr 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.112-alt3
+- updated to 2291767a0 (fixed FDO #83093, 88288 (ALT #30843))
+
 * Thu Oct 02 2014 Yuri N. Sedunov <aris@altlinux.org> 0.112-alt2
 - updated to 3497a9c3 (fixed FDO #83093, 78905, 77167, 60847...)
 
