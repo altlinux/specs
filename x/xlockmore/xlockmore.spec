@@ -1,5 +1,5 @@
 Name: xlockmore
-Version: 5.45
+Version: 5.46
 Release: alt1
 
 Summary: An X terminal locking program
@@ -7,17 +7,17 @@ License: MIT
 Group: Graphical desktop/Other
 Url: http://www.tux.org/~bagleyd/xlockmore.html
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.xz
 Source1: %name-v5.27-icons.tar.gz
 Source2: %name-v5.27-pam.d.tar
 Source3: po.tar.gz
 
-Patch: xlockmore-v5.27-imode.patch
-Patch1: xlockmore-v5.27-pam.patch
-Patch2: xlockmore-v5.27-l10n.patch
-Patch3: xlockmore-v5.42-kbdmon.patch
-Patch4: xlockmore-5.43-nologout.patch
-Patch5: xlockmore-5.43-droidfonts.patch
+Patch: xlockmore-5.46-imode.patch
+Patch1: xlockmore-5.46-pam.patch
+Patch2: xlockmore-5.46-l10n.patch
+Patch3: xlockmore-5.46-kbdmon.patch
+Patch4: xlockmore-5.46-nologout.patch
+Patch5: xlockmore-5.46-droidfonts.patch
 
 PreReq: /etc/tcb
 Requires: fortune-mod
@@ -105,6 +105,10 @@ rm -rf %_datadir/xlock/fonts/
 %exclude %_mandir/xlock.1*
 
 %changelog
+* Mon Apr 20 2015 Fr. Br. George <george@altlinux.ru> 5.46-alt1
+- Autobuild version bump to 5.46
+- Fix patches
+
 * Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 5.45-alt1
 - Autobuild version bump to 5.45
 
