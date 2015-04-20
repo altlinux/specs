@@ -1,5 +1,5 @@
 Name: quiterss
-Version: 0.17.6
+Version: 0.17.7
 Release: alt1
 
 Summary: RSS/Atom aggregator
@@ -7,7 +7,7 @@ License: GPLv3
 Group: Networking/WWW
 
 Url: http://code.google.com/p/quite-rss/
-Source: http://quite-rss.googlecode.com/files/QuiteRSS-%version-src.tar.bz2
+Source0: http://quite-rss.googlecode.com/files/QuiteRSS-%{version}-src.tar.gz
 Source44: import.info
 Source45: quiterss.watch
 BuildRequires: pkgconfig(QtGui) pkgconfig(QtNetwork) pkgconfig(QtWebKit) pkgconfig(QtXml) pkgconfig(QtSql)
@@ -29,7 +29,8 @@ Qt-based RSS/Atom aggregator.
 написанная на Qt.
 
 %prep
-%setup -n QuiteRSS-%version-src
+#setup -n QuiteRSS-%version-src
+%setup -c
 sed -i 's,qtsingleapplication.h,QtSolutions/&,' src/application/mainapplication.h
 sed -i 's,phonon/audiooutput.h,kde4/&,' src/application/mainwindow.h
 sed -i 's,phonon/mediaobject.h,kde4/&,' src/application/mainwindow.h
@@ -55,6 +56,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/%name/lang
 
 %changelog
+* Mon Apr 20 2015 Michael Shigorin <mike@altlinux.org> 0.17.7-alt1
+- new version (watch file uupdate)
+
 * Thu Feb 12 2015 Michael Shigorin <mike@altlinux.org> 0.17.6-alt1
 - new version (watch file uupdate)
 
