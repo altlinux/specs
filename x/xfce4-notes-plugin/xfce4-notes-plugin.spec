@@ -1,6 +1,6 @@
 Name: xfce4-notes-plugin
-Version: 1.7.7
-Release: alt5
+Version: 1.8.0
+Release: alt1
 
 Summary: Sticky notes plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Липкие записки для Xfce.
@@ -9,15 +9,15 @@ Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
+# git://git.xfce.org/panel-plugins/xfce4-notes-plugin
 Source: %name-%version.tar
-Patch0: xfce4-notes-plugin-1.7.7-alt-panel-4.7.patch
-Patch1: xfce4-notes-plugin-1.7.7-alt-fix-plugin-linking.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libThunar-devel libxfce4panel-devel libxfcegui4-devel libxfconf-devel
-BuildRequires: libThunar-devel intltool libSM-devel xorg-cf-files libunique-devel
+BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfconf-devel xfce4-vala
+BuildRequires: libunique-devel
 
 %description
 %name is the sticky notes plugin for the Xfce panel.
@@ -27,13 +27,14 @@ BuildRequires: libThunar-devel intltool libSM-devel xorg-cf-files libunique-deve
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%patch -p1
 
 %build
 %xfce4reconf
 %configure \
     --disable-static \
+	--disable-gtk3 \
+	--enable-maintainer-mode \
     --enable-debug=no
 %make_build
 
@@ -53,6 +54,11 @@ BuildRequires: libThunar-devel intltool libSM-devel xorg-cf-files libunique-deve
 %_desktopdir/xfce4-notes.desktop
 
 %changelog
+* Mon Apr 20 2015 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
+- Avoid an ambiguous reference for Timeout object.
+- Drop obsoleted patch.
+- Updated to 1.8.0.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.7.7-alt5
 - Rebuild with libxfce4util-4.12.
 - Fix Xfce name (XFce,XFCE -> Xfce).
