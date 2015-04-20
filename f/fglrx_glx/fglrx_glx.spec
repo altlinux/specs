@@ -18,7 +18,7 @@ Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
 Version: 14.501.1003
-Release: alt3
+Release: alt4
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -27,6 +27,7 @@ License: Proprietary
 Source0: http://www2.ati.com/drivers/beta/amd-driver-installer-%version-x86.x86_64.run
 Source1: atieventsd.service
 Source2: %bname-switch.c
+Source3: authatieventsd.sh
 Source7: a-ac-aticonfig
 Source8: a-lid-aticonfig
 Source9: ati-powermode.sh
@@ -203,9 +204,9 @@ tar -chJ \
 install -pD -m 0755 {,%buildroot%_switchdir/}%bname
 
 install -d -m 0755 %buildroot%_sysconfdir/ati
-install -p -m 0644 common/etc/ati/{*.{blb,default},control,signature} %buildroot%_sysconfdir/ati/
-install -p -m 0755 common/etc/ati/*.sh %buildroot%_sbindir/
-%{?x86:install -p -m 0755 common/etc/ati/atiapfxx %buildroot%_sbindir/}
+install -p -m 0644 common/etc/ati/{*.{blb,default,log},control,signature} %buildroot%_sysconfdir/ati/
+install -p -m 0755 %SOURCE3 %buildroot%_sysconfdir/ati/
+#%{?x86:install -p -m 0755 common/etc/ati/atiapfxx %buildroot%_sbindir/}
 install -p -m 0644 common/{etc/ati/*.example,usr/share/doc/%bname/*.{TXT,html}} %buildroot%_docdir/%name-%version/
 for d in articles user-manual; do
 	install -d -m 0755 %buildroot%_docdir/%name-%version/$d
@@ -267,6 +268,10 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Mon Apr 20 2015 barssc <barssc@altlinux.ru> 2:14.501.1003-alt4
+- add authatieventsd for kde4
+- fixed launch atieventsd
+
 * Sat Apr 4 2015 barssc <barssc@altlinux.ru> 2:14.501.1003-alt3
 - Kernel module: fixed build for kernel 3.19.x
 
