@@ -1,7 +1,7 @@
 
 Name: sssd
 Version: 1.12.4
-Release: alt1
+Release: alt2.git.bdb7e
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -72,7 +72,7 @@ BuildRequires: cifs-utils-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libnfsidmap-devel
 BuildRequires: libaugeas-devel
-BuildRequires: libcmocka-devel
+BuildRequires: libcmocka-devel >= 1.0.0
 BuildRequires: nscd
 
 %description
@@ -576,6 +576,9 @@ unset CK_TIMEOUT_MULTIPLIER
 %_pkgconfigdir/wbclient_sssd.pc
 
 %changelog
+* Mon Apr 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.12.4-alt2.git.bdb7e
+- branch upstream/sssd-1-12 bdb7e7f514629696e73902b2af3a93839be3e8a4
+
 * Mon Mar 23 2015 Alexey Shabalin <shaba@altlinux.ru> 1.12.4-alt1
 - 1.12.4
 

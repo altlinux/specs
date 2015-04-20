@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: cmocka
-Version: 0.4.1
+Version: 1.0.1
 Release: alt1
 
 License: ASL 2.0
@@ -118,6 +118,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Apr 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Wed Jun 11 2014 Alexey Shabalin <shaba@altlinux.ru> 0.4.1-alt1
 - 0.4.1
 
