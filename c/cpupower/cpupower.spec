@@ -1,4 +1,4 @@
-%define kernel_base_version 3.17
+%define kernel_base_version 3.19
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: cpupower
@@ -128,6 +128,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_includedir/*
 
 %changelog
+* Tue Apr 21 2015 Alexey Shabalin <shaba@altlinux.ru> 3.19-alt1
+- build from kernel-source-3.19
+
 * Thu Oct 09 2014 Alexey Shabalin <shaba@altlinux.ru> 3.17-alt1
 - build from kernel-source-3.17
 
