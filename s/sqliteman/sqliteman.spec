@@ -1,6 +1,6 @@
 Name: sqliteman
 Version: 1.2.2
-Release: alt1.qa5
+Release: alt1.qa6
 
 Url: http://sqliteman.com/
 License: GPL
@@ -46,6 +46,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/sqliteman/
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.qa6
+- Rebuilt with qscintilla2 2.9
+
 * Sat Nov 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.qa5
 - Rebuilt with new qscintilla2
 
