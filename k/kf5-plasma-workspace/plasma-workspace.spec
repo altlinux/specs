@@ -15,7 +15,7 @@
 
 Name: kf5-%rname
 Version: 5.2.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -23,11 +23,10 @@ Summary: KDE Workspace 5 Plasma
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: qt5-dbus qt5-tools
-Requires: qt5-phonon-backend
+Requires: qt5-dbus qt5-tools qt5-quickcontrols dbus-tools-gui
 Requires: kf5-kinit kf5-kconfig kf5-kded kf5-kglobalaccel kf5-kactivities kf5-kdeclarative
 Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-kio-extras
-Requires: kf5-polkit-kde-agent kf5-kwin kf5-powerdevil kf5-solid
+Requires: kf5-polkit-kde-agent kf5-kwin kf5-powerdevil
 
 Source: %rname-%version.tar
 Source10: pam-kf5-screensaver
@@ -147,7 +146,7 @@ ln -s startkde %buildroot/%_kf5_bin/startkde5
 # Add chksession support
 mkdir -p %buildroot/%x11confdir/wmsession.d/
 cat <<__EOF__ > %buildroot/%x11confdir/wmsession.d/01PLASMA
-NAME=PLASMA
+NAME=Plasma
 DESC=Plasma by KDE
 ICON=%_K5icon/hicolor/48x48/apps/kwin.png
 EXEC=%_bindir/startkde5
@@ -252,6 +251,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt2
+- fix requires
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
 - new version
 
