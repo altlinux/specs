@@ -1,5 +1,5 @@
 Name:    alt-test
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Summary: Test environment based on Tapper
@@ -37,6 +37,10 @@ cp -av tests/* %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Tue Apr 21 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
+- Add test_unwished_package() finction
+- Add tests for ALT Linux School 7.0.5
+
 * Mon May 12 2014 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
 - Fix environment variable name in program help
 
