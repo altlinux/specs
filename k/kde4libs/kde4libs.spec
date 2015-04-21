@@ -13,11 +13,11 @@
 
 %define major 4
 %define minor 14
-%define bugfix 6
+%define bugfix 7
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -279,7 +279,7 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 
 # disable annoing autostart
 mkdir -p %buildroot/%_K4start/
-for n in tracker-miner-fs tracker-store ; do
+for n in tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store ; do
     echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_K4start/$n.desktop
 done
 
@@ -346,6 +346,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.7-alt1
+- new version
+
 * Fri Mar 20 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.6-alt2
 - ignore /usr/share/applications/mimeapps.list
 
