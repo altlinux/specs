@@ -1,6 +1,6 @@
 Name: universalindentgui
 Version: 1.2.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: GUI for varius source code beautifiers
 License: GPL
@@ -84,6 +84,9 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.2
+- Rebuilt with qscintilla2 2.9
+
 * Sat Nov 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.1
 - Rebuilt with new qscintilla2
 
