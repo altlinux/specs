@@ -2,13 +2,15 @@
 
 Name: kf5-%rname
 Version: 5.9.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 desktop hardware abstraction
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: upower udisks2
 
 Source: %rname-%version.tar
 
@@ -24,7 +26,7 @@ interacting with hardware independently of the underlying operating system.
 
 %package common
 Summary: %name common package
-Group: Graphical desktop/KDE
+Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
 %description common
@@ -77,6 +79,9 @@ KF5 library
 %_K5qml/org/kde/solid/
 
 %changelog
+* Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt2
+- update requires
+
 * Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
 - new version
 
