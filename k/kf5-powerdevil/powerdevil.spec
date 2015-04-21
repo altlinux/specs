@@ -9,13 +9,15 @@
 
 Name: kf5-%rname
 Version: 5.2.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 advanced power management settings
 Url: http://www.kde.org
 License: GPLv2+
+
+Requires: upower
 
 Source: %rname-%version.tar
 Patch1: alt-nohal.patch
@@ -124,6 +126,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt2
+- require upower
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
 - new version
 
