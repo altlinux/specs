@@ -1,6 +1,6 @@
 Name:		juffed
 Version:	0.10
-Release:	alt1.1
+Release:	alt1.2
 License:	GPL
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 Group:		Editors
@@ -58,6 +58,9 @@ mkdir -p %buildroot/%_libdir/%name/plugins
 %_includedir/%name
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1.2
+- Rebuilt with qscintilla2 2.9
+
 * Sat Nov 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1.1
 - Rebuilt with qscintilla2 2.8
 
