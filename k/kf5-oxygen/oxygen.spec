@@ -2,13 +2,15 @@
 
 Name: kf5-%rname
 Version: 5.2.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 visual style
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: icon-theme-oxygen
 
 Source: %rname-%version.tar
 
@@ -85,6 +87,9 @@ KF5 library
 %_K5lib/liboxygenstyleconfig5.so.*
 
 %changelog
+* Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt2
+- fix requires
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
 - new version
 
