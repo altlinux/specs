@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.2
-Release: alt1.dev.git20150218
+Version: 0.5.4
+Release: alt1.dev.git20150420
 Summary: Version-bump your software with a single command!
 License: MIT
 Group: Development/Python
@@ -118,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.4-alt1.dev.git20150420
+- Version 0.5.4-dev
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1.dev.git20150218
 - Version 0.5.2-dev
 
