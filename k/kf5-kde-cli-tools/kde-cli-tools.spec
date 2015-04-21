@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.2.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -76,6 +76,9 @@ KF5 library
 %_K5srv/*.desktop
 
 %changelog
+* Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt2
+- rebuild to test add_findpackage_path macro
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
 - new version
 
