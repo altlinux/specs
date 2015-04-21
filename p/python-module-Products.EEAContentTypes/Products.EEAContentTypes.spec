@@ -1,8 +1,8 @@
 %define oname Products.EEAContentTypes
 
 Name: python-module-%oname
-Version: 9.7
-Release: alt2
+Version: 10.0
+Release: alt1
 Summary: EEA logic and content types
 License: GPL
 Group: Development/Python
@@ -142,6 +142,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*tests*
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.0-alt1
+- Version 10.0
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 9.7-alt2
 - Added necessary requirements
 - Enabled testing
