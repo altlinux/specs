@@ -1,7 +1,7 @@
 %define oname Products.CMFUid
 Name: python-module-%oname
 Version: 2.3.0
-Release: alt1.beta
+Release: alt2.beta
 Summary: Uid product for the Zope Content Management Framework
 License: ZPLv2.1
 Group: Development/Python
@@ -13,9 +13,10 @@ Source: %name-%version.tar
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-eggtestinfo
 BuildPreReq: python-module-Products.CMFCore-tests
+BuildPreReq: python-module-Products.CMFUid-tests
 BuildPreReq: python-module-Products.GenericSetup
 BuildPreReq: python-module-zope.testing
-BuildPreReq: python-module-zope.testrunner
+BuildPreReq: python-module-zope.testrunner-tests
 BuildPreReq: python-module-zope.component-tests
 BuildPreReq: python-module-zope.traversing-tests
 BuildPreReq: python-module-zope.security-tests
@@ -65,6 +66,9 @@ python setup.py test
 %python_sitelibdir/Products/*/test*
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt2.beta
+- Fixed build
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1.beta
 - Initial build for Sisyphus
 
