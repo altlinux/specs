@@ -1,11 +1,12 @@
 Name: instead-launcher
-Version: 0.6.1
+Version: 0.6.3
 Release: alt1
 Group: Games/Adventure
 Summary: Game update/launch program for INSTEAD, simple text adventures interpreter
 Summary(ru_RU.UTF-8): Загрузчик игр, написанных для интерпретатора простых текстовых приключений INSTEAD
 License: Distributable
 Source: %{name}_%version.tar.gz
+Patch: instead-launcher-dropgid.patch
 Url: http://instead-launcher.googlecode.com
 
 Requires: instead-sdl
@@ -20,6 +21,7 @@ Game update/launch program for INSTEAD, simple text adventures interpreter.
 
 %prep
 %setup
+%patch -p1
 sed -i 's@return QDir::home().absolutePath() + "/.instead/games/";@return "%_localstatedir/instead/games";@
 s@"/usr/local/bin/sdl-instead"@"%_bindir/sdl-instead"@' platform.cpp
 sed -i '/Exec=/s@.*@Exec=%_bindir/%name@' %name.desktop.in
@@ -50,6 +52,10 @@ install -m755 %name.sh %buildroot%_bindir/%name
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 0.6.3-alt1
+- Autobuild version bump to 0.6.3
+- Drop setGID before launch, restore after
+
 * Wed Sep 07 2011 Fr. Br. George <george@altlinux.ru> 0.6.1-alt1
 - Autobuild version bump to 0.6.1
 - Fix dependency
