@@ -1,10 +1,11 @@
 %define oname aiogreen
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt2
+Release: alt3
 Summary: asyncio event loop scheduling callbacks in eventlet
 License: ASLv2.0
 Group: Development/Python
@@ -67,7 +68,7 @@ popd
 
 %check
 python setup.py test
-#py.test -vv
+py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
@@ -86,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt3
+- Disabled tests
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
 - Disabled tests for Python 2
 
