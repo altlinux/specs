@@ -5,9 +5,9 @@
 %def_disable ntrack
 
 %define rname kdebase-runtime
-%define major 14
-%define minor 12
-%define bugfix 3
+%define major 15
+%define minor 4
+%define bugfix 0
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -23,8 +23,6 @@ Requires: %name-core = %EVR
 Source0: ftp://ftp.kde.org/pub/kde/stable/%version/src/kdebase-runtime-%version.tar
 Source10: search-yandex.desktop
 Source11: search-altbugzilla.desktop
-# FC
-Patch1: kdebase-runtime-4.6.0-canberra.patch
 # ALT
 Patch1001: kdebase-runtime-4.3.2-alt-compiz.patch
 Patch1002: kdebase-runtime-4.8.0-alt-def-nepomuk.patch
@@ -55,7 +53,7 @@ Core runtime for the K Desktop Environment 4.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kde-common >= %major.%minor
+Requires: kde-common
 %description common
 %name common package
 
@@ -97,7 +95,7 @@ Menu resources for the original KDE menu.
 %prep
 %setup -q -n %rname-%version
 #
-%patch1 -p1
+#%patch1 -p1
 #
 %patch1001 -p1
 %patch1002 -p1
@@ -229,6 +227,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
 * Wed Mar 11 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
 - new version
 
