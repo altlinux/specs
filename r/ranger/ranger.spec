@@ -1,17 +1,20 @@
 Name: ranger
-Version: 1.4.1
-Release: alt2.git.c8f870.1
+Version: 1.7.0
+Release: alt1
 
-Summary: Console file manager 
 Summary(ru_RU.UTF-8): Консольный файл-менеджер
+Summary: Console file manager
 License: GPLv3
 Group: File tools
 Url: http://ranger.nongnu.org
 
-Source0: %name-%version.tar
+Source0: %name-%version.tar.gz
+
+%setup_python_module %name
 
 BuildRequires: python-dev
 BuildArch: noarch
+Requires: %packagename = %version-%release
 
 %description
 ranger is a free console file manager that gives you greater
@@ -26,23 +29,37 @@ preview to the right so you know where you'll be going.
 визуализирует дерево каталогов в двух измерениях: иерархия директорий
 в одном и список файлов на другом, с возможностью предпросмотра.
 
+%package -n %packagename
+Summary: Supplemental module for %name, %summary
+Group: Development/Python
+
+%description -n %packagename
+%summary
 
 %prep
 %setup
+sed -i 's@#!/usr/bin/python -O@#!/usr/bin/python@' ranger.py
 
 %build
-
 %install
 %makeinstall_std
 
-%files 
-%_bindir/%name
-%doc CHANGELOG README COPYING
-%_man1dir/%{name}*
-%python_sitelibdir/%name
-%python_sitelibdir/*.egg-info
+%files
+%_bindir/*
+%doc %_defaultdocdir/%name
+%_man1dir/*
+
+%files -n %packagename
+%python_sitelibdir/*
 
 %changelog
+* Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 1.7.0-alt1
+- Autobuild version bump to 1.7.0
+
+* Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 1.6.1-alt1
+- Version up
+- Separate python module
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.1-alt2.git.c8f870.1
 - Rebuild with Python-2.7
 
