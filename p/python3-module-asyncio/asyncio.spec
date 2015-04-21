@@ -1,9 +1,9 @@
 %define oname asyncio
 Name: python3-module-%oname
-Version: 3.4.2
+Version: 3.4.3
 Release: alt1
 Summary: Reference implementation of PEP 3156
-License: Free
+License: ASLv2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/asyncio/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -43,10 +43,10 @@ This package contains tests for %oname.
 %check
 python3 setup.py test
 %make check
-#nosetests3
+#nosetests3 -v
 
 %files
-%doc README
+%doc README AUTHORS examples
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
@@ -56,6 +56,9 @@ python3 setup.py test
 %python3_sitelibdir/*/*/test*
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.3-alt1
+- Version 3.4.3
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt1
 - Version 3.4.2
 
