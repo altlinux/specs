@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -12,7 +12,7 @@ BuildArch: noarch
 %package -n kde5-runtime
 Summary: %summary
 Group: Graphical desktop/KDE
-Requires: kf5-kio kf5-kded qt5-phonon-backend
+Requires: kf5-kio kf5-kded qt5-phonon-backend qt5-quickcontrols
 
 %package -n kde5-mini
 Summary: %summary
@@ -25,7 +25,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-mini
 Requires: kf5-sddm-kcm kf5-polkit-kde-agent kf5-kio-extras kf5-breeze kf5-powerdevil kf5-ksysguard
-Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kf5-kio-extras
+Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kf5-kio-extras kf5-kde-cli-tools
 
 %package -n kde5
 Summary: %summary
@@ -41,7 +41,7 @@ Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5
-Requires: kf5-kde-cli-tools kf5-kwrited kf5-milou
+Requires: kf5-kwrited kf5-milou
 
 %package -n kde5-maxi
 Summary: %summary
@@ -71,5 +71,8 @@ Requires: kde5-big
 %files -n kde5-maxi
 
 %changelog
+* Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt2
+- update requires
+
 * Mon Apr 20 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt1
 - initial build
