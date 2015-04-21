@@ -5,7 +5,7 @@
 
 Name: kuzya
 Version: 2.1.10
-Release: alt2.3
+Release: alt2.4
 
 Summary: Integrated Development Environment for students
 License: GPL
@@ -84,6 +84,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.10-alt2.4
+- Rebuilt with qscintilla2 2.9
+
 * Sat Nov 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.10-alt2.3
 - Rebuilt with new qscintilla2
 
