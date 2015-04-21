@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -58,6 +58,11 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Tue Apr 21 2015 Mikhail Efremov <sem@altlinux.org> 2.6-alt1
+- installer: Always set UTC/LOCAL in the /etc/adjtime.
+- postinstall: Copy /etc/adjtime from installer too.
+- functions: Add set_adjtime_utc() and is_adjtime_utc().
+
 * Fri Mar 22 2013 Mikhail Efremov <sem@altlinux.org> 2.5-alt1
 - Use alterator-service-functions (closes: #28688).
 
