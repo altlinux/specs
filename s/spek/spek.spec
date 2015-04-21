@@ -1,12 +1,12 @@
-Name:		spek
-Version:	0.8.2
-Release:	alt1
-Summary:	Acoustic Spectrum Analyser
-Group:		Sound
-License:	GPLv3
-URL:		http://spek.cc/
-Source:		%name-%version.tar.xz
-Patch:		spek-0.8.2-stdlib.patch
+Name: spek
+Version: 0.8.3
+Release: alt1
+Summary: Acoustic Spectrum Analyser
+Group: Sound
+License: GPLv3
+Url: http://spek.cc/
+Source: %name-%version.tar.gz
+Patch: spek-0.8.2-stdlib.patch
 
 # Automatically added by buildreq on Thu Sep 18 2014
 # optimized out: fontconfig gnu-config libavcodec-devel libavutil-devel libcloog-isl4 libgdk-pixbuf libopencore-amrnb0 libopencore-amrwb0 libstdc++-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config xz
@@ -20,6 +20,7 @@ Spek helps to analyse your audio files by showing their spectrogram.
 %patch -p1
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -34,8 +35,11 @@ Spek helps to analyse your audio files by showing their spectrogram.
 %_desktopdir/*
 %_iconsdir/*/*/*/*
 
-
 %changelog
+* Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 0.8.3-alt1
+- Autobuild version bump to 0.8.3
+- Fix build
+
 * Thu Sep 18 2014 Fr. Br. George <george@altlinux.ru> 0.8.2-alt1
 - Initial build
 
