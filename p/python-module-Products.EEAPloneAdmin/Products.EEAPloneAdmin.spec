@@ -1,8 +1,8 @@
 %define oname Products.EEAPloneAdmin
 
 Name: python-module-%oname
-Version: 10.0
-Release: alt2
+Version: 10.6
+Release: alt1
 Summary: EEA Plone Admin
 License: GPL
 Group: Development/Python
@@ -134,6 +134,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.6-alt1
+- Version 10.6
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.0-alt2
 - Added necessary requirements
 - Enabled testing
