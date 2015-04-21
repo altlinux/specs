@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.10
-Release: alt1.git20150316
+Version: 0.0.16
+Release: alt1.git20150420
 Summary: The AWS SDK for Python
 License: ASLv2.0
 Group: Development/Python
@@ -20,6 +20,7 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-botocore python-module-bcdoc
 BuildPreReq: python-module-jmespath python-module-six
 BuildPreReq: python-module-nose python-module-mock
+BuildPreReq: python-module-futures
 BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -30,6 +31,7 @@ BuildPreReq: python3-module-nose python3-module-mock
 %endif
 
 %py_provides %oname
+%py_requires futures
 
 %description
 Boto is the Amazon Web Services (AWS) Software Development Kit (SDK) for
@@ -141,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.16-alt1.git20150420
+- Version 0.0.16
+
 * Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.10-alt1.git20150316
 - Version 0.0.10
 
