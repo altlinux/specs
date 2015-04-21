@@ -21,11 +21,11 @@
 
 %define major 4
 %define minor 11
-%define bugfix 17
+%define bugfix 18
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -955,6 +955,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.18-alt1
+- new version
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.17-alt2
 - share polkit actions with KDE5
 
