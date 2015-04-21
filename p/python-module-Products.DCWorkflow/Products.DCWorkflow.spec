@@ -1,7 +1,7 @@
 %define oname Products.DCWorkflow
 Name: python-module-%oname
 Version: 2.3.0
-Release: alt1.beta
+Release: alt2.beta
 Summary: DCWorkflow product for the Zope Content Management Framework
 License: ZPLv2.1
 Group: Development/Python
@@ -20,6 +20,7 @@ BuildPreReq: python-module-zope.publisher python-module-eggtestinfo
 BuildPreReq: python-module-zope.component-tests
 BuildPreReq: python-module-zope.traversing-tests
 BuildPreReq: python-module-zope.security-tests
+BuildPreReq: python-module-Products.DCWorkflow-tests
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -71,6 +72,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/test*
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt2.beta
+- Fixed build
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1.beta
 - Initial build for Sisyphus
 
