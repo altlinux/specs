@@ -3,7 +3,7 @@
 
 Summary: A simple lightweight interface to Amazon Web Services
 Name: python-module-%{pkgname}
-Version: 2.36.0
+Version: 2.38.0
 Release: alt1
 License: MIT
 Group: Development/Python
@@ -117,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.38.0-alt1
+- Version 2.38.0
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.36.0-alt1
 - Version 2.36.0
 
