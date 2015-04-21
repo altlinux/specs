@@ -5,8 +5,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.1
-Release: alt1.git20150312
+Version: 0.1.3
+Release: alt1.git20150319
 Summary: asyncio port of botocore, the low-level, data-driven core of boto 3
 License: ASLv2.0
 Group: Development/Python
@@ -23,6 +23,7 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-jmespath python-module-dateutil
 BuildPreReq: python-module-yieldfrom.http.client
 BuildPreReq: python-module-yieldfrom.urllib3
+BuildPreReq: python-module-yieldfrom.requests
 BuildPreReq: python-module-nose python-module-mock
 BuildPreReq: python-module-asyncio
 %endif
@@ -32,6 +33,7 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-jmespath python3-module-dateutil
 BuildPreReq: python3-module-yieldfrom.http.client
 BuildPreReq: python3-module-yieldfrom.urllib3
+BuildPreReq: python3-module-yieldfrom.requests
 BuildPreReq: python3-module-nose python3-module-mock
 BuildPreReq: python3-module-asyncio
 %endif
@@ -39,7 +41,7 @@ BuildPreReq: python3-module-sphinx-devel
 
 %py_provides %oname
 %py_requires %mname jmespath dateutil yieldfrom.http.client asyncio
-%py_requires yieldfrom.urllib3
+%py_requires yieldfrom.urllib3 yieldfrom.requests
 
 %description
 This is an asyncio port of botocore.
@@ -53,7 +55,7 @@ Summary: asyncio port of botocore, the low-level, data-driven core of boto 3
 Group: Development/Python3
 %py3_provides %oname
 %py3_requires %mname jmespath dateutil yieldfrom.http.client asyncio
-%py3_requires yieldfrom.urllib3
+%py3_requires yieldfrom.urllib3 yieldfrom.requests
 
 %description -n python3-module-%oname
 This is an asyncio port of botocore.
@@ -64,6 +66,8 @@ Services. The botocore package is the foundation for AWS-CLI.
 
 %prep
 %setup
+
+ln -s LICENSE.txt license.txt
 
 %if_with python3
 cp -fR . ../python3
@@ -125,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20150319
+- Version 0.1.3
+
 * Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20150312
 - Initial build for Sisyphus
 
