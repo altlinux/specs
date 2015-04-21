@@ -5,8 +5,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.1
-Release: alt1.git20141018
+Version: 0.1.2
+Release: alt1.git20150311
 Summary: asyncio version of http.client
 License: PSFL
 Group: Development/Python
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20150311
+- Version 0.1.2
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20141018
 - Initial build for Sisyphus
 
