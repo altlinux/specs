@@ -1,16 +1,17 @@
 Name: libguess
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: high-speed character set detection library
 
 License: BSD
 Group: System/Libraries
-Url: http://www.atheme.org/projects/libguess.html
+Url: http://rabbit.dereferenced.org/~nenolod
 
-Source: %name-%version.tar.gz
+Source: %url/distfiles/%name-%version.tar.bz2
 
-BuildRequires: libmowgli-devel >= 0.9.50
+Obsoletes: %{name}1
+Provides: %{name}1 = %version-%release
 
 %description
 %name is a library for autodetecting encodings.
@@ -42,6 +43,11 @@ This package contain header files for libguess.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Apr 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
+- 1.2
+- new source %url
+- obsoletes/provides libguess1
+
 * Mon Jan 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
 - 1.1
 
