@@ -9,9 +9,9 @@
 %def_disable knewsticker
 
 %define rname kdenetwork
-%define major 14
-%define minor 12
-%define bugfix 1
+%define major 15
+%define minor 4
+%define bugfix 0
 Name: kde4network
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -377,6 +377,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Apr 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
 * Thu Jan 29 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
 - new version
 
