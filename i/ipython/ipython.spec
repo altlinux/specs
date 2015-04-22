@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: ipython
-Version: 2.4.1
+Version: 3.1.0
 Release: alt1
 
 %setup_python_module IPython
@@ -19,10 +19,11 @@ Source0: %name-%version.tar
 Source1: components.tar
 Patch0: %name-0.10-alt-bindings-fix.patch
 
-BuildPreReq: python3-module-tornado python-module-setuptools
+BuildPreReq: python3-module-tornado python-module-setuptools pyjsdoc
 BuildPreReq: python-module-sphinx-devel python-module-zmq
 BuildPreReq: python-module-tornado python-modules-sqlite3
 BuildPreReq: python-module-matplotlib-sphinxext python-module-numpydoc
+BuildPreReq: python-module-jsonschema
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -30,6 +31,7 @@ BuildRequires: python3-devel python3-module-setuptools
 
 %add_python_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted msvcrt oct2py rpy2 System builtins clr
 %add_python3_req_skip __main__
+%py_requires jsonschema
 
 
 %description
@@ -59,6 +61,7 @@ Group: Development/Python3
 %add_python3_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted
 %add_python3_req_skip msvcrt wx gtk compiler OpenGL oct2py rpy2
 %add_python3_req_skip System clr
+%py3_requires jsonschema
 
 %description -n %{name}3
 IPython provides a replacement for the interactive Python interpreter with
@@ -188,6 +191,9 @@ cp -fR docs/build/html/* examples %buildroot%_docdir/%name/
 
 
 %changelog
+* Wed Apr 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt1
+- Version 3.1.0
+
 * Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt1
 - Version 2.4.1
 
