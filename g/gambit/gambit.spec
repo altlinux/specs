@@ -1,5 +1,5 @@
 Name: gambit
-Version: 4.7.4
+Version: 4.7.5
 Release: alt1
 
 Summary: Gambit-C Scheme programming system
@@ -15,7 +15,7 @@ Packager: Paul Wolneykien <manowar@altlinux.org>
 Source: %name-%version.tar
 %if_with bootstrap
 Patch0: %name-%version-bootstrap.patch
-%define bootstrap_version 4.7.3
+%define bootstrap_version 4.7.4
 BuildRequires: gambit >= %bootstrap_version
 %endif
 
@@ -166,6 +166,9 @@ cd %name-%version
 %_infodir/*.info*
 
 %changelog
+* Wed Apr 22 2015 Cronbuild Service <cronbuild@altlinux.org> 4.7.5-alt1
+- repocop cronbuild 20150422. At your service.
+
 * Mon Mar 02 2015 Cronbuild Service <cronbuild@altlinux.org> 4.7.4-alt1
 - repocop cronbuild 20150302. At your service.
 
