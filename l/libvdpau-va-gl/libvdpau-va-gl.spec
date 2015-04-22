@@ -2,7 +2,7 @@
 
 Name: libvdpau-va-gl
 Version: 0.3.4
-Release: alt1.git20150311
+Release: alt2.git20150311
 Summary: VDPAU driver with OpenGL/VAAPI backend
 License: LGPLv3
 Group: System/Libraries
@@ -40,6 +40,7 @@ accelerate video decoding.
 %setup
 
 tar -xf %SOURCE1
+sed -i '1i\#!/bin/sh\n' debian/20vdpau-va-gl
 
 %build
 cmake \
@@ -48,6 +49,7 @@ cmake \
 %endif
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
+	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	.
 %make_build VERBOSE=1
@@ -57,9 +59,9 @@ doxygen
 %install
 %makeinstall_std
 
-install -d %buildroot%_sysconfdir/X11/xsession.user.d
+install -d %buildroot%_sysconfdir/profile.d
 install -p -m755 debian/20vdpau-va-gl \
-	%buildroot%_sysconfdir/X11/xsession.user.d/
+	%buildroot%_sysconfdir/profile.d/20vdpau-va-gl.sh
 install -d %buildroot%_docdir/libvdpau-va-gl1
 
 %check
@@ -68,10 +70,13 @@ install -d %buildroot%_docdir/libvdpau-va-gl1
 
 %files
 %doc debian/README.Debian ChangeLog *.md doc/*.md html
-%config(noreplace) %_sysconfdir/X11/xsession.user.d/*
+%config(noreplace) %_sysconfdir/profile.d/*
 %_libdir/vdpau/*
 
 %changelog
+* Wed Apr 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt2.git20150311
+- Moved 20vdpau-va-gl into %_sysconfdir/profile.d
+
 * Tue Apr 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt1.git20150311
 - Initial build for Sisyphus (ALT #30921)
 
