@@ -4,11 +4,11 @@
 
 %define rname okular
 Name: kde4-okular
-%define major 14
-%define minor 12
-%define bugfix 3
+%define major 15
+%define minor 4
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Office
 Summary: KDE document viewer
@@ -132,6 +132,12 @@ Development files for %name
 
 
 %changelog
+* Wed Apr 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
+* Wed Apr 01 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1.M70P.1
+- build for M70P
+
 * Wed Apr 01 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt2
 - fix build requires
 
