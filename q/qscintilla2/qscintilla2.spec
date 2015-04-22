@@ -5,9 +5,11 @@
 %def_with python3qt5
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
-Name: qscintilla2
+%define oname qscintilla2
+%define suff 12
+Name: %oname
 Version: 2.9
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/KDE and QT
 Source: qscintilla-gpl-%version.tar.gz
@@ -15,8 +17,7 @@ Patch: qscintilla-2.4-alt-allinone.patch
 
 Url: http://www.riverbankcomputing.co.uk/software/qscintilla/
 
-%define suff 12
-%define libname lib%{name}-%{suff}
+%define libname lib%{oname}-%{suff}
 
 # Automatically added by buildreq on Sun Oct 12 2008
 BuildRequires: gcc-c++ libqt4-devel
@@ -51,10 +52,10 @@ multiple fonts.
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class.
 Group: Development/KDE and QT
 Conflicts: libqscintilla
-Provides: lib%name-qt3 = %version-%release
-Obsoletes: lib%name-qt3
-Obsoletes: lib%name-5-qt3
-Obsoletes: lib%name-qt3-compat
+Provides: lib%oname-qt3 = %version-%release
+Obsoletes: lib%oname-qt3
+Obsoletes: lib%oname-5-qt3
+Obsoletes: lib%oname-qt3-compat
 
 %description -n %libname-qt3
 Qscintilla is a free source code editing component. It comes with complete
@@ -71,10 +72,12 @@ multiple fonts.
 %package -n %libname-qt4
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class.
 Group: Development/KDE and QT
-Provides: lib%name-qt4 = %version-%release
-Obsoletes: lib%name-qt4
-Obsoletes: lib%name-5-qt4
-Obsoletes: lib%name-qt4-compat
+Provides: lib%oname-qt4 = %version-%release
+Obsoletes: lib%oname-qt4
+Obsoletes: lib%oname-5-qt4
+Obsoletes: lib%oname-qt4-compat
+Conflicts: lib%oname-11-qt4
+Obsoletes: lib%oname-11-qt4
 
 %description -n %libname-qt4
 Qscintilla is a free source code editing component. It comes with complete
@@ -91,7 +94,9 @@ multiple fonts.
 %package -n %libname-qt5
 Summary: QScintilla is a port to Qt5 of Neil Hodgson's Scintilla C++ editor class.
 Group: Development/KDE and QT
-Provides: lib%name-qt5 = %version-%release
+Provides: lib%oname-qt5 = %version-%release
+Conflicts: lib%oname-11-qt5
+Obsoletes: lib%oname-11-qt5
 
 %description -n %libname-qt5
 Qscintilla is a free source code editing component. It comes with complete
@@ -105,157 +110,157 @@ choices are more open than with many editors, allowing the use of proportional
 fonts, bold and italics, multiple foreground and background colours and
 multiple fonts.
 
-%package -n lib%name-qt3-devel
+%package -n lib%oname-qt3-devel
 Requires: %libname-qt3 = %version-%release
 Requires: libqt3-devel
-Summary: Header files for %name
+Summary: Header files for %oname
 Group: Development/KDE and QT
 
-%description -n lib%name-qt3-devel
-Header files for %name
+%description -n lib%oname-qt3-devel
+Header files for %oname
 
-%package -n lib%name-qt4-devel
+%package -n lib%oname-qt4-devel
 Requires: %libname-qt4 = %version-%release
 Requires: libqt4-devel
-Summary: Header files for %name
+Summary: Header files for %oname
 Group: Development/KDE and QT
 
-%description -n lib%name-qt4-devel
-Header files for %name
+%description -n lib%oname-qt4-devel
+Header files for %oname
 
-%package -n lib%name-qt5-devel
+%package -n lib%oname-qt5-devel
 Requires: %libname-qt5 = %version-%release
 Requires: qt5-base-devel
-Summary: Header files for %name-qt5
+Summary: Header files for %oname-qt5
 Group: Development/KDE and QT
 
-%description -n lib%name-qt5-devel
-Header files for %name-qt5
+%description -n lib%oname-qt5-devel
+Header files for %oname-qt5
 
-%package -n lib%name-qt3-designer
+%package -n lib%oname-qt3-designer
 Requires: %libname-qt3 = %version-%release
 Summary: QScintilla designer plugin
 Group: Development/KDE and QT
 
-%description -n lib%name-qt3-designer
+%description -n lib%oname-qt3-designer
 QScintillla designer plugin.
 
-%package -n lib%name-qt4-designer
+%package -n lib%oname-qt4-designer
 Requires: %libname-qt4 = %version-%release
 Summary: QScintilla designer plugin
 Group: Development/KDE and QT
 
-%description -n lib%name-qt4-designer
+%description -n lib%oname-qt4-designer
 QScintillla designer plugin.
 
 %if_with python
-%package -n python-module-%name-qt4
+%package -n python-module-%oname-qt4
 Requires: %libname-qt4 = %version-%release
-Summary: Python bindings for %name
+Summary: Python bindings for %oname
 Group: Development/KDE and QT
-Provides: lib%name-qt4-python = %version-%release
-Obsoletes: lib%name-qt4-python
+Provides: lib%oname-qt4-python = %version-%release
+Obsoletes: lib%oname-qt4-python
 
-%description -n python-module-%name-qt4
-Python bindings for %name
+%description -n python-module-%oname-qt4
+Python bindings for %oname
 
-%package -n python-module-%name-qt4-devel
-Requires: python-module-%name-qt4 = %version-%release
-Summary: Python bindings for %name
+%package -n python-module-%oname-qt4-devel
+Requires: python-module-%oname-qt4 = %version-%release
+Summary: Python bindings for %oname
 Group: Development/KDE and QT
 BuildArch: noarch
-Provides: lib%name-qt4-python-devel = %version-%release
-Obsoletes: lib%name-qt4-python-devel
+Provides: lib%oname-qt4-python-devel = %version-%release
+Obsoletes: lib%oname-qt4-python-devel
 
-%description -n python-module-%name-qt4-devel
-Devel files for Python bindings for %name
+%description -n python-module-%oname-qt4-devel
+Devel files for Python bindings for %oname
 
-%package -n python-module-%name-qt5
+%package -n python-module-%oname-qt5
 Requires: %libname-qt5 = %version-%release
-Summary: Python bindings for %name-qt5
+Summary: Python bindings for %oname-qt5
 Group: Development/KDE and QT
-Provides: lib%name-qt5-python = %version-%release
+Provides: lib%oname-qt5-python = %version-%release
 
-%description -n python-module-%name-qt5
-Python bindings for %name-qt5
+%description -n python-module-%oname-qt5
+Python bindings for %oname-qt5
 
-%package -n python-module-%name-qt5-devel
-Requires: python-module-%name-qt5 = %version-%release
-Summary: Python bindings for %name-qt5
+%package -n python-module-%oname-qt5-devel
+Requires: python-module-%oname-qt5 = %version-%release
+Summary: Python bindings for %oname-qt5
 Group: Development/KDE and QT
 BuildArch: noarch
-Provides: lib%name-qt5-python-devel = %version-%release
+Provides: lib%oname-qt5-python-devel = %version-%release
 
-%description -n python-module-%name-qt5-devel
-Devel files for Python bindings for %name
+%description -n python-module-%oname-qt5-devel
+Devel files for Python bindings for %oname
 
 %if_with python3
-%package -n python3-module-%name-qt4
+%package -n python3-module-%oname-qt4
 Requires: %libname-qt4 = %version-%release
-Summary: Python 3 bindings for %name
+Summary: Python 3 bindings for %oname
 Group: Development/KDE and QT
 
-%description -n python3-module-%name-qt4
-Python bindings for %name
+%description -n python3-module-%oname-qt4
+Python bindings for %oname
 
-%package -n python3-module-%name-qt4-devel
-Requires: python3-module-%name-qt4 = %version-%release
-Summary: Python 3 bindings for %name
+%package -n python3-module-%oname-qt4-devel
+Requires: python3-module-%oname-qt4 = %version-%release
+Summary: Python 3 bindings for %oname
 Group: Development/KDE and QT
 BuildArch: noarch
 
-%description -n python3-module-%name-qt4-devel
-Devel files for Python bindings for %name
+%description -n python3-module-%oname-qt4-devel
+Devel files for Python bindings for %oname
 
-%package -n python3-module-%name-qt5
+%package -n python3-module-%oname-qt5
 Requires: %libname-qt5 = %version-%release
-Summary: Python 3 bindings for %name (Qt5)
+Summary: Python 3 bindings for %oname (Qt5)
 Group: Development/KDE and QT
 
-%description -n python3-module-%name-qt5
-Python bindings for %name
+%description -n python3-module-%oname-qt5
+Python bindings for %oname
 
-%package -n python3-module-%name-qt5-devel
-Requires: python3-module-%name-qt5 = %version-%release
-Summary: Python 3 bindings for %name (Qt5)
+%package -n python3-module-%oname-qt5-devel
+Requires: python3-module-%oname-qt5 = %version-%release
+Summary: Python 3 bindings for %oname (Qt5)
 Group: Development/KDE and QT
 BuildArch: noarch
 
-%description -n python3-module-%name-qt5-devel
-Devel files for Python bindings for %name
+%description -n python3-module-%oname-qt5-devel
+Devel files for Python bindings for %oname
 %endif
 
 %if_with python-qt3
-%package -n python-module-%name-qt3
+%package -n python-module-%oname-qt3
 Requires: %libname-qt3 = %version-%release
-Summary: Python bindings for %name
+Summary: Python bindings for %oname
 Group: Development/KDE and QT
-Provides: lib%name-qt3-python = %version-%release
-Obsoletes: lib%name-qt3-python
+Provides: lib%oname-qt3-python = %version-%release
+Obsoletes: lib%oname-qt3-python
 
-%description -n python-module-%name-qt3
-Python bindings for %name
+%description -n python-module-%oname-qt3
+Python bindings for %oname
 
-%package -n python-module-%name-qt3-devel
-Requires: python-module-%name-qt3 = %version-%release
-Summary: Python bindings for %name
+%package -n python-module-%oname-qt3-devel
+Requires: python-module-%oname-qt3 = %version-%release
+Summary: Python bindings for %oname
 Group: Development/KDE and QT
 BuildArch: noarch
-Provides: lib%name-qt3-python-devel = %version-%release
-Obsoletes: lib%name-qt3-python-devel
+Provides: lib%oname-qt3-python-devel = %version-%release
+Obsoletes: lib%oname-qt3-python-devel
 
-%description -n python-module-%name-qt3-devel
-Devel files for Python bindings for %name
+%description -n python-module-%oname-qt3-devel
+Devel files for Python bindings for %oname
 %endif
 %endif
 
 %package -n %libname-doc
-Summary: Documentation for %name
+Summary: Documentation for %oname
 Group: Development/KDE and QT
 BuildArch: noarch
 
 %description -n %libname-doc
-Documentation for %name
+Documentation for %oname
 
 %prep
 %setup -n QScintilla-gpl-%version
@@ -336,7 +341,7 @@ popd
 pushd Python-qt3
 python configure.py -p 3 -n ../Qt3 -o ../Qt3
 STR=`cat Makefile | grep "LFLAGS ="`
-# add rpath for use qt3 %name lib
+# add rpath for use qt3 %oname lib
 sed -i "s:$STR:$STR,-rpath,%_qt3dir/lib:g" Makefile
 %make
 popd
@@ -445,39 +450,39 @@ mkdir -p %buildroot%_datadir/{qt3,qt4}/qsci3/api/python
 
 # Qt3 library
 %if_with qt3
-install Qt3/lib%name.so.*.*.* %buildroot%_qt3dir/lib
+install Qt3/lib%oname.so.*.*.* %buildroot%_qt3dir/lib
 install Qt3/*.qm %buildroot%_qt3dir/translations
 pushd %buildroot%_qt3dir/lib
-ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]$//`
-ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]\.[0-9]$//`
-ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]\.[0-9]\.[0-9]$//`
+ln -s lib%oname.so.*.*.* `ls lib%oname.so.*.*.* | sed s/\.[0-9]$//`
+ln -s lib%oname.so.*.*.* `ls lib%oname.so.*.*.* | sed s/\.[0-9]\.[0-9]$//`
+ln -s lib%oname.so.*.*.* `ls lib%oname.so.*.*.* | sed s/\.[0-9]\.[0-9]\.[0-9]$//`
 popd
 %endif
 
 # Qt4 library
-install Qt4Qt5/lib%name.so.*.*.* %buildroot%_libdir
+install Qt4Qt5/lib%oname.so.*.*.* %buildroot%_libdir
 install Qt4Qt5/*.qm %buildroot%_qt4dir/translations
 pushd %buildroot%_libdir
-ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]*$//`
-ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]*\.[0-9]*$//`
-ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]*\.[0-9]*\.[0-9]*$//`
+ln -s lib%oname.so.*.*.* `ls lib%oname.so.*.*.* | sed s/\.[0-9]*$//`
+ln -s lib%oname.so.*.*.* `ls lib%oname.so.*.*.* | sed s/\.[0-9]*\.[0-9]*$//`
+ln -s lib%oname.so.*.*.* `ls lib%oname.so.*.*.* | sed s/\.[0-9]*\.[0-9]*\.[0-9]*$//`
 popd
 pushd %buildroot%_qt4dir/lib
-for libname in ../../lib%name.*; do
+for libname in ../../lib%oname.*; do
 ln -s $libname ./
 done
 popd
 
 # Qt5 library
-install Qt5/lib%name-qt5.so.*.*.* %buildroot%_libdir
+install Qt5/lib%oname-qt5.so.*.*.* %buildroot%_libdir
 install Qt5/*.qm %buildroot%_qt5_translationdir
 pushd %buildroot%_libdir
-ln -s lib%name-qt5.so.*.*.* `ls lib%name-qt5.so.*.*.* | sed s/\.[0-9]*$//`
-ln -s lib%name-qt5.so.*.*.* `ls lib%name-qt5.so.*.*.* | sed s/\.[0-9]*\.[0-9]*$//`
-ln -s lib%name-qt5.so.*.*.* `ls lib%name-qt5.so.*.*.* | sed s/\.[0-9]*\.[0-9]*\.[0-9]*$//`
+ln -s lib%oname-qt5.so.*.*.* `ls lib%oname-qt5.so.*.*.* | sed s/\.[0-9]*$//`
+ln -s lib%oname-qt5.so.*.*.* `ls lib%oname-qt5.so.*.*.* | sed s/\.[0-9]*\.[0-9]*$//`
+ln -s lib%oname-qt5.so.*.*.* `ls lib%oname-qt5.so.*.*.* | sed s/\.[0-9]*\.[0-9]*\.[0-9]*$//`
 popd
 pushd %buildroot%_qt5_libdatadir
-for libname in ../../../%_lib/lib%name-qt5.*; do
+for libname in ../../../%_lib/lib%oname-qt5.*; do
 ln -s $libname ./
 done
 popd
@@ -532,71 +537,71 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_qt5_translationdir/*
 
 %if_with qt3
-%files -n lib%name-qt3-devel
+%files -n lib%oname-qt3-devel
 %_qt3dir/include/*.h
 %_qt3dir/include/Qsci
 %_qt3dir/lib/*.so
 %endif
 
-%files -n lib%name-qt4-devel
+%files -n lib%oname-qt4-devel
 %_includedir/qt4/*.h
 %_includedir/qt4/Qsci
 %_qt4dir/lib/*.so
 %_libdir/*.so
 %exclude %_libdir/*-qt5.so
 
-%files -n lib%name-qt5-devel
+%files -n lib%oname-qt5-devel
 %_includedir/qt5/*.h
 %_includedir/qt5/Qsci
 %_qt5_libdatadir/*.so
 %_libdir/*-qt5.so
 
 %if_with qt3
-%files -n lib%name-qt3-designer
+%files -n lib%oname-qt3-designer
 %_qt3dir/plugins/designer/*.so
 %endif
 
-%files -n lib%name-qt4-designer
+%files -n lib%oname-qt4-designer
 %_qt4dir/plugins/designer/*.so
 
 %if_with python
 %if_with python-qt3
-%files -n python-module-%name-qt3
+%files -n python-module-%oname-qt3
 %python_sitelibdir/qsci.so
 %_qt3dir/qsci
 
-%files -n python-module-%name-qt3-devel
+%files -n python-module-%oname-qt3-devel
 %_datadir/sip/qsci
 %endif
 
-%files -n python-module-%name-qt4
+%files -n python-module-%oname-qt4
 %python_sitelibdir/PyQt4/Qsci.so
 %_datadir/qt4/qsci/api/python/*.api
 
-%files -n python-module-%name-qt4-devel
+%files -n python-module-%oname-qt4-devel
 %_datadir/sip/PyQt4/Qsci
 
-%files -n python-module-%name-qt5
+%files -n python-module-%oname-qt5
 %python_sitelibdir/PyQt5/Qsci.so
 %_datadir/qt5/qsci/api/python/*.api
 
-%files -n python-module-%name-qt5-devel
+%files -n python-module-%oname-qt5-devel
 %_datadir/sip/PyQt5/Qsci
 
 %if_with python3
-%files -n python3-module-%name-qt4
+%files -n python3-module-%oname-qt4
 %python3_sitelibdir/PyQt4/Qsci.so
 %_datadir/qt4/qsci3/api/python/*.api
 
-%files -n python3-module-%name-qt4-devel
+%files -n python3-module-%oname-qt4-devel
 %_datadir/sip3/PyQt4/Qsci
 
 %if_with python3qt5
-%files -n python3-module-%name-qt5
+%files -n python3-module-%oname-qt5
 %python3_sitelibdir/PyQt5/Qsci.so
 %_datadir/qt5/qsci3/api/python/*.api
 
-%files -n python3-module-%name-qt5-devel
+%files -n python3-module-%oname-qt5-devel
 %_datadir/sip3/PyQt5/Qsci
 %endif
 %endif
@@ -607,6 +612,9 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Wed Apr 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9-alt2
+- Added conflicts+obsoletes: libqscintilla2-11*
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9-alt1
 - Version 2.9
 
