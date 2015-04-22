@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-pycparser
-Version: 2.10
+Version: 2.12
 Release: alt1
 
 Summary: C parser in Python
@@ -79,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12-alt1
+- Version 2.12
+
 * Tue Jul 29 2014 Vladimir Didenko <cow@altlinux.org> 2.10-alt1
 - 2.10
 - add python3 version
