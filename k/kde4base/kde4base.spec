@@ -6,9 +6,9 @@
 %add_findpackage_path %_kde4_bindir
 
 %define rname kdebase
-%define major 14
-%define minor 12
-%define bugfix 3
+%define major 15
+%define minor 4
+%define bugfix 0
 Name: kde4base
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -73,7 +73,7 @@ Header files for developing applications using %name.
 BuildArch: noarch
 Group: Graphical desktop/KDE
 Summary: Common files for %name package
-Requires: kde-common >= %major.%minor
+Requires: kde-common
 Conflicts: kdebase-common <= 3.5.12-alt2
 %description common
 Common files for %name package
@@ -606,6 +606,9 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Wed Apr 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
 * Thu Mar 12 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
 - new version
 
