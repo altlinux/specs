@@ -1,5 +1,5 @@
 %define module_name	virtualbox-addition
-%define module_version	4.3.22
+%define module_version	4.3.26
 %define module_release	alt1
 
 %define flavour		un-def
