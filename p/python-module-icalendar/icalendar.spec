@@ -1,19 +1,17 @@
 Name: python-module-icalendar
-Version: 3.8.4
+Version: 3.9.0
 Release: alt1
 Summary: iCalendar parser/generator
 License: GPLv2.1
 Group: Development/Python
 BuildArch: noarch
 %setup_python_module icalendar
-Source: icalendar-%version.zip
+Source: icalendar-%version.tar.gz
 Url: http://pypi.python.org/pypi/icalendar
 
-BuildPreReq: unzip
-
-# Automatically added by buildreq on Tue Nov 08 2011
-# optimized out: python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-docutils python-module-genshi python-module-jinja2 python-module-setuptools python-module-simplejson python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging
-BuildRequires: python-module-jinja2-tests python-module-sphinx time
+# Automatically added by buildreq on Wed Apr 22 2015
+# optimized out: python-base python-devel python-module-BeautifulSoup python-module-PyStemmer python-module-docutils python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest
+BuildRequires: ctags python-module-Pygments python-module-cssselect python-module-html5lib python-module-pytz python-module-sphinx_rtd_theme time
 
 %description
 iCalendar is a parser/generator of iCalendar files
@@ -24,7 +22,7 @@ iCalendar is a parser/generator of iCalendar files
 
 %build
 %python_build
-%make -C docs html
+PYTHONPATH=../src %make -C docs html
 
 %install
 %python_install
@@ -35,6 +33,10 @@ iCalendar is a parser/generator of iCalendar files
 %python_sitelibdir_noarch/%modulename-*
 
 %changelog
+* Wed Apr 22 2015 Fr. Br. George <george@altlinux.ru> 3.9.0-alt1
+- Autobuild version bump to 3.9.0
+- Fix documentation build
+
 * Mon Feb 02 2015 Fr. Br. George <george@altlinux.ru> 3.8.4-alt1
 - Autobuild version bump to 3.8.4
 
