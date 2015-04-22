@@ -1,7 +1,7 @@
 Summary: Openfire XMPP Server
 Name: openfire
-Version: 3.9.3
-Release: alt3
+Version: 3.10.0
+Release: alt1
 
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -93,6 +93,9 @@ ln -s %_bindir/embedded-db.rc %buildroot%firedir/bin/embedded-db.rc
 %exclude %firedir/lib/*.dll
 
 %changelog
+* Wed Apr 22 2015 Alexei Takaseev <taf@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Sat Jul 12 2014 Alexei Takaseev <taf@altlinux.org> 3.9.3-alt3
 - Rebuild with java-1.7.0-openjdk
 
