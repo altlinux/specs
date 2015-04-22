@@ -1,5 +1,5 @@
 Name: python-module-tgt
-Version: 1.0.2
+Version: 1.2.0
 Release: alt1
 Summary: Read, write, and manipulate Praat TextGrid files
 License: BSD
@@ -23,11 +23,13 @@ TextGridTools -- Read, write, and manipulate Praat TextGrid files with
 %python_install
 
 %files
-%doc README
 %python_sitelibdir/*tgt*
 %_bindir/*
 
 %changelog
+* Wed Apr 22 2015 Fr. Br. George <george@altlinux.ru> 1.2.0-alt1
+- Autobuild version bump to 1.2.0
+
 * Thu Apr 10 2014 Fr. Br. George <george@altlinux.ru> 1.0.2-alt1
 - Autobuild version bump to 1.0.2
 
