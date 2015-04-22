@@ -3,9 +3,9 @@
 
 %define rname kdemultimedia
 Name: kde4multimedia
-%define major 14
-%define minor 12
-%define bugfix 1
+%define major 15
+%define minor 4
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -175,7 +175,7 @@ while read d ; do
 pushd $d
 %K4build \
     -DKDE4_ENABLE_FPIE:BOOL=ON \
-    -DKMIX_KF5_BUILD=0 \
+    -DKMIX_KF5_BUILD:BOOL=OFF \
     #
 popd
 done
@@ -280,6 +280,9 @@ done
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Wed Apr 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
 * Wed Jan 28 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
 - new version
 
