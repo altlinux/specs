@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.4.7
-Release: alt1.git20150212
+Version: 2.6.0
+Release: alt1.git20150421
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
 License: MIT
 Group: Development/Python
@@ -53,7 +53,7 @@ This package contains tests for %oname.
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires sqlite3
+%py3_requires sqlite3 pysqlcipher3
 %add_python3_req_skip pysqlcipher
 
 %description -n python3-module-%oname
@@ -184,6 +184,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt1.git20150421
+- Version 2.6.0
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.7-alt1.git20150212
 - Version 2.4.7
 
