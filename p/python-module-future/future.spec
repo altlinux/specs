@@ -3,14 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.12.3
-Release: alt1
+Version: 0.14.3
+Release: alt1.git20150203
 Summary: Clean single-source support for Python 3 and 2
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/future
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/PythonCharmers/python-future.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -114,6 +115,7 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs html
 
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
+export PYTHONPATH=
 
 %files
 %doc *.txt *.rst
@@ -146,6 +148,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Apr 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.3-alt1.git20150203
+- Version 0.14.3
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.3-alt1
 - Initial build for Sisyphus
 
