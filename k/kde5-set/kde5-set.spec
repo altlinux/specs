@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -41,7 +41,7 @@ Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5
-Requires: kf5-kwrited kf5-milou
+Requires: kf5-kwrited kf5-milou kf5-plasma-nm-maxi
 
 %package -n kde5-maxi
 Summary: %summary
@@ -71,6 +71,9 @@ Requires: kde5-big
 %files -n kde5-maxi
 
 %changelog
+* Wed Apr 22 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt3
+- update requires
+
 * Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt2
 - update requires
 
