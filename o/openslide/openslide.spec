@@ -1,5 +1,5 @@
 Name: openslide
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Summary: C library for reading virtual slides
@@ -76,6 +76,9 @@ with virtual slides.
 %_man1dir/*
 
 %changelog
+* Wed Apr 22 2015 Michael Shigorin <mike@altlinux.org> 3.4.1-alt1
+- new version (watch file uupdate)
+
 * Thu Jun 19 2014 Michael Shigorin <mike@altlinux.org> 3.4.0-alt1
 - initial build for ALT Linux Sisyphus (based on fedora package)
 
