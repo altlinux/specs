@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.27
+Version: 0.28
 Release: alt1
 
 BuildArch: noarch
@@ -53,6 +53,15 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Apr 22 2015 Andrey Cherepanov <cas@altlinux.org> 0.28-alt1
+- Sync time with DC before join to Active Directory domain
+- Check available of /usr/bin/net for join to AD
+- Set idmap range to 10000-20000 and disable master role by default for
+  Active Directory auth (useful for KDM using MaxShowUID=29999)
+- Autofill Active Directory domain name from DNS information
+- Usability improvements
+- system-auth: show usage infomation and program version
+
 * Fri Mar 13 2015 Andrey Cherepanov <cas@altlinux.org> 0.27-alt1
 - Support Active Directory authentication in GUI (ALT #30021)
 
