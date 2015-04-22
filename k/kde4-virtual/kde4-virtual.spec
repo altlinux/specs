@@ -1,8 +1,8 @@
 Name:    kde4-virtual
-Version: 4.10
+Version: 15.4
 Release: alt1
 
-%define smr KDE4 (virtual package)
+%define smr KDE4 applications set
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 Summary: %smr
@@ -85,6 +85,9 @@ This package installs development tools for KDE 4.x.
 %files -n kde4-devel
 
 %changelog
+* Wed Apr 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.4-alt1
+- update requires
+
 * Fri Jan 18 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt1
 - provide kde4-default
 
