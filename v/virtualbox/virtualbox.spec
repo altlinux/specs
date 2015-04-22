@@ -56,8 +56,8 @@
 %define gcc_version 4.5
 
 Name: virtualbox
-Version: 4.3.22
-Release: alt2
+Version: 4.3.26
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -698,6 +698,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Sat Apr 11 2015 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.26-alt1
+- Update to new release with Linux 4.0 fixes
+
 * Tue Apr 07 2015 Michael Shigorin <mike@altlinux.org> 4.3.22-alt2
 - Don't raise desktop notification about absent kernel modules
   if modules are present but not loaded on e.g. real hardware
