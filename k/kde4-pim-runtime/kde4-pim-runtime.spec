@@ -4,10 +4,10 @@
 %define rname kdepim-runtime
 %define major 4
 %define minor 14
-%define bugfix 6
+%define bugfix 7
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE Akonadi resources
@@ -232,6 +232,9 @@ based on kdepim.
 
 
 %changelog
+* Wed Apr 22 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.7-alt2
+- new version
+
 * Thu Mar 12 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.6-alt1
 - new version
 
