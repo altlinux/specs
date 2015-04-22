@@ -2,7 +2,7 @@
 
 %define rname ksnapshot
 Name: kde4-ksnapshot
-Version: 4.12.2
+Version: 15.4.0
 Release: alt1
 
 Group: Graphics
@@ -67,6 +67,12 @@ KDE 4 core library.
 %_K4dbus_interfaces/org.kde.ksnapshot.xml
 
 %changelog
+* Wed Apr 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt0.M70P.1
+- built for M70P
+
 * Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
 - new version
 
