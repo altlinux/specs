@@ -1,7 +1,11 @@
-%define oname sphinxjp.themes.basicstrap
+%define sname sphinxjp
+%define mname %sname.themes
+%define oname %mname.basicstrap
+
+%def_with python3
 
 Name: python-module-%oname
-Version: 0.3.2
+Version: 0.4.2
 Release: alt1
 Summary: A sphinx theme for Basicstrap style
 License: MIT
@@ -12,11 +16,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel
+BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel python-module-sphinxjp.themecore
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-sphinx-devel python3-module-sphinxjp.themecore
+BuildPreReq: python-tools-2to3
+%endif
 
-Requires: python-module-sphinxjp
-Requires: python-module-sphinxjp.themes = %EVR
+Requires: python-module-%sname
+Requires: python-module-%mname = %EVR
+%py_provides %oname
 
 %description
 Basicstrap style theme for Sphinx. Using Twitter Bootstrap.
@@ -39,16 +50,43 @@ Basicstrap style theme for Sphinx. Using Twitter Bootstrap.
 
 This package contains documentation for %oname.
 
-%package -n python-module-sphinxjp.themes
-Summary: Core package of sphinxjp.themes
+%package -n python-module-%mname
+Summary: Core package of %mname
 Group: Development/Python
-Requires: python-module-sphinxjp
+Requires: python-module-%sname
+%py_provides %mname
 
-%description -n python-module-sphinxjp.themes
-Core package of sphinxjp.themes.
+%description -n python-module-%mname
+Core package of %mname.
+
+%if_with python3
+%package -n python3-module-%oname
+Summary: A sphinx theme for Basicstrap style
+Group: Development/Python3
+Requires: python3-module-%sname
+Requires: python3-module-%mname = %EVR
+%py3_provides %oname
+
+%description -n python3-module-%oname
+Basicstrap style theme for Sphinx. Using Twitter Bootstrap.
+
+%package -n python3-module-%mname
+Summary: Core package of %mname
+Group: Development/Python3
+Requires: python3-module-%sname
+%py3_provides %mname
+
+%description -n python3-module-%mname
+Core package of %mname.
+%endif
 
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
 
 %prepare_sphinx .
 ln -s ../objects.inv docs/
@@ -56,11 +94,28 @@ ln -s ../objects.inv docs/
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+install -p -m644 src/%sname/__init__.py \
+	%buildroot%python_sitelibdir/%sname/
+install -p -m644 src/%sname/themes/__init__.py \
+	%buildroot%python_sitelibdir/%sname/themes/
 
-touch %buildroot%python_sitelibdir/sphinxjp/__init__.py
-touch %buildroot%python_sitelibdir/sphinxjp/themes/__init__.py
+%if_with python3
+pushd ../python3
+%python3_install
+install -p -m644 src/%sname/__init__.py \
+	%buildroot%python3_sitelibdir/%sname/
+install -p -m644 src/%sname/themes/__init__.py \
+	%buildroot%python3_sitelibdir/%sname/themes/
+popd
+%endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs pickle
@@ -71,9 +126,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/sphinxjp/themes/__init__.py*
-%exclude %python_sitelibdir/sphinxjp/__init__.py*
+%python_sitelibdir/%sname/themes/*
+%python_sitelibdir/*.egg-info
+%exclude %python_sitelibdir/%sname/themes/__init__.py*
 %dir %python_sitelibdir/%oname
 %exclude %python_sitelibdir/%oname/pickle
 
@@ -83,10 +138,30 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname
 %files docs
 %doc docs/_build/html/*
 
-%files -n python-module-sphinxjp.themes
-%python_sitelibdir/sphinxjp/themes/__init__.py*
+%files -n python-module-%mname
+%dir %python_sitelibdir/%sname/themes
+%python_sitelibdir/%sname/themes/__init__.py*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst
+%python3_sitelibdir/%sname/themes/*
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/%sname/themes/__init__.py
+%exclude %python3_sitelibdir/%sname/themes/__pycache__/__init__.*
+
+%files -n python3-module-%mname
+%dir %python3_sitelibdir/%sname/themes
+%dir %python3_sitelibdir/%sname/themes/__pycache__
+%python3_sitelibdir/%sname/themes/__init__.py
+%python3_sitelibdir/%sname/themes/__pycache__/__init__.*
+%endif
 
 %changelog
+* Thu Apr 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1
+- Verson 0.4.2
+- Added module for Python 3
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1
 - Version 0.3.2
 
