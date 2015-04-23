@@ -1,5 +1,5 @@
 Name: rlwrap
-Version: 0.37
+Version: 0.42
 Release: alt1
 Serial: 1
 
@@ -41,6 +41,9 @@ install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/completions/sbcl
 %_datadir/%name
 
 %changelog
+* Thu Apr 23 2015 Fr. Br. George <george@altlinux.ru> 1:0.42-alt1
+- Autobuild version bump to 0.42
+
 * Tue Aug 20 2013 Fr. Br. George <george@altlinux.ru> 1:0.37-alt1
 - Autobuild version bump to 0.37
 - Introducing perl filters
