@@ -7,7 +7,7 @@
 
 Name: calligra
 Version: 2.9.2
-Release: alt1
+Release: alt2
 Epoch: 0
 %define libname lib%name
 
@@ -694,6 +694,9 @@ mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 %_K4libdir/libkritacolord.so
 
 %changelog
+* Thu Apr 23 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.9.2-alt2
+- rebuild with new marble
+
 * Wed Apr 15 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.9.2-alt1
 - new version
 

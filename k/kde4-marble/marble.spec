@@ -2,9 +2,9 @@
 %add_findpackage_path %_kde4_bindir
 
 %define rname marble
-%define major 4
-%define minor 14
-%define bugfix 3
+%define major 15
+%define minor 4
+%define bugfix 0
 Name: kde4-marble
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -126,6 +126,9 @@ KDE 4 library
 
 
 %changelog
+* Wed Apr 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
 * Mon Nov 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 
