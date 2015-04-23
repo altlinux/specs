@@ -1,7 +1,7 @@
 %define oname pyquickhelper
 Name: python3-module-%oname
 Version: 1.1.494
-Release: alt1.git20150422
+Release: alt1.git20150423
 Summary: Folder synchronization, a logging function, helpers to generate documentation and more
 License: BSD
 Group: Development/Python3
@@ -28,7 +28,7 @@ BuildPreReq: python3-module-matplotlib-sphinxext
 %py3_provides %oname
 Requires: git pandoc xset /proc
 %py3_requires numpy pandas six dateutils requests docutils IPython pep8
-%py3_requires matplotlib flake8 autopep8 sphinx zmq
+%py3_requires matplotlib flake8 autopep8 sphinx zmq tkinter
 %py3_requires sphinxcontrib.images matplotlib.sphinxext
 
 %description
@@ -102,6 +102,9 @@ python3 setup.py test
 %doc build/notebooks docs
 
 %changelog
+* Thu Apr 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.494-alt1.git20150423
+- New snapshot
+
 * Wed Apr 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.494-alt1.git20150422
 - Initial build for Sisyphus
 
