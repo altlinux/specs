@@ -1,8 +1,8 @@
 %define cfg %_builddir/%name-%version/
-%define rev 44302
+%define rev 48817
 
 Name:       lazarus
-Version:    1.2.6
+Version:    1.4.0
 Release:    alt1
 Epoch:      1
 
@@ -22,13 +22,11 @@ Patch0:     %name-0.9.22-alt-relax-onwine.patch
 Patch2:     %name-fix-desktop-file.patch
 Patch3:     %name-fix-install-path-in-Makefile.patch
 Patch4:     %name-1.0.8-fix-fpc-search.patch
-Patch5:     %name-1.2.0-fix-trailing-comma.patch
 Patch6:	    %name-set-user-TestBuildDirectory.patch
 
 # Patches from Debian
 Patch11: lazarus-default-config.patch
 Patch12: lazarus-lcl-with-multple-widget-sets.patch
-Patch13: lazarus-spell-errors.patch
 
 BuildRequires: fpc >= 2.6.4 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils 
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
@@ -62,15 +60,13 @@ Development tool) на FreePascal, использующая библиотеки
 %patch0 -p1
 
 tar xf %SOURCE2
-%patch2 -p1
-%patch3 -p1
+%patch2 -p2
+%patch3 -p2
 subst 's|/usr/lib/|%{_libdir}/|' %PATCH4
 %patch4 -p2
-%patch5 -p2
 %patch6 -p2
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
 
 install -D -p -m 0644 %SOURCE3 tools/install/linux/environmentoptions.xml
 #sed -i -e 's,@version@,%version,g' tools/install/linux/helpoptions.xml docs/index.ru.html
@@ -193,6 +189,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Thu Apr 23 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.4.0-alt1
+- New version (http://wiki.lazarus.freepascal.org/Lazarus_1.4.0_release_notes)
+
 * Thu Nov 06 2014 Andrey Cherepanov <cas@altlinux.org> 1:1.2.6-alt1
 - New version
 
