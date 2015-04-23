@@ -14,7 +14,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.90
+Version: %ver_major.92
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -24,18 +24,19 @@ Url: https://wiki.gnome.org/Apps/Seahorse
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gnupg2-gpg gcr
+Requires: gnupg gcr
+Requires: pinentry-x11
 %{?_enable_ssh:Requires: openssh-clients}
 %{?_enable_sharing:Requires: avahi-daemon}
 
-BuildPreReq: rpm-build-gnome
+BuildPreReq: rpm-build-gnome libappstream-glib-devel
 
 # From configure.ac
 BuildPreReq: intltool >= 0.35
 BuildPreReq: libgio-devel
 BuildPreReq: yelp-tools itstool
 BuildPreReq: libgtk+3-devel >= 3.4.0
-BuildPreReq: gnupg2-gpg
+BuildPreReq: gnupg
 BuildPreReq: libgpgme-devel >= 1.0.0
 BuildPreReq: libgpg-error-devel
 BuildRequires: vala-tools
@@ -58,7 +59,7 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 
 %build
 %autoreconf
-export GNUPG=/usr/bin/gpg2
+export GNUPG=/usr/bin/gpg
 %configure \
 	%{subst_enable ldap} \
 	%{subst_enable hkp} \
@@ -98,6 +99,10 @@ export GNUPG=/usr/bin/gpg2
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Thu Apr 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.92-alt1
+- 3.15.92
+- built with gpg, not gpg2, due to incompatible upstream changes
+
 * Wed Mar 18 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.90-alt1
 - 3.15.90
 
