@@ -1,4 +1,4 @@
-%define ver_major 3.14
+%define ver_major 3.16
 %def_enable libnotify
 %def_enable webkitgtk
 
@@ -11,9 +11,10 @@ License: LGPLv2+
 Group: Graphical desktop/GNOME
 URL: https://wiki.gnome.org/Projects/Zenity
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
-# from configure.in
+# from configure.ac
 %define intltool_ver 0.40.0
 %define gtk_ver 3.0.0
 
@@ -36,6 +37,7 @@ a cooler name.
 %setup
 
 %build
+%autoreconf
 %configure \
 	%{subst_enable libnotify} \
 	%{subst_enable webkitgtk}
@@ -55,6 +57,9 @@ a cooler name.
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Thu Apr 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
