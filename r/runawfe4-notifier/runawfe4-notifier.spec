@@ -1,6 +1,6 @@
 Name: runawfe4-notifier
-Version: 4.1.0
-Release: alt12
+Version: 4.2.0
+Release: alt3
 
 Summary: Runawfe notifier client
 
@@ -21,12 +21,14 @@ Packager: Danil Mikhailov <danil@altlinux.org>
 Requires: java libwebkitgtk2
 #runawfe4-server #remove server from deps for clients
 
-#BuildPreReq:
+BuildPreReq: rpm-build-compat
 #BuildRequires: maven
+#BuildRequires: 
 #BuildArch: noarch
 
 %define runauser _runa
 %define runadir /var/lib/runawfe4-notifier
+%define distrname ALTLinux
 
 %description
 RunaWFE is a free OpenSource business process management system. It is delivered
@@ -67,7 +69,8 @@ mkdir -p %buildroot/var/log/runawfe4-notifier/
 touch %buildroot/var/log/runawfe4-notifier/rtn.log
 ln -s /var/log/runawfe4-notifier/rtn.log %buildroot/%runadir/rtn.log
 
-%if %_vendor == "debian"
+
+%if %distrname == "Debian"
 #gpd copy path for vendor
 %define rtn_path target/deb_rtn
 %else
@@ -103,6 +106,21 @@ cp target/classes/*.wav %buildroot/%runadir/
 %attr(766,root,root) /var/log/runawfe4-notifier/rtn.log
 %attr(755,root,root) %_bindir/runawfe4-notifier
 %changelog
+* Tue Apr 21 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt3
+- Update server port to 28080
+
+* Fri Feb 20 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt2
+- patched, change swt to 4.233 for alt
+
+* Thu Feb 19 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt1
+- initial build 4.2.0
+
+* Fri Jul 18 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt16
+- Added pre build req rpm-build-compat for distr_vendor
+
+* Fri Jul 18 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt13
+- Fixed SWTError: No more handles, Ubuntu binary
+
 * Tue Jul 15 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt12
 - Fix alt x86
 
