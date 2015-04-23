@@ -1,18 +1,18 @@
 Name: stone_soup
-Version: 0.15.2
+Version: 0.16.1
 Release: alt1
 %define Sum Roguelike with tiled and ascii interfaces
 Summary: %Sum
 License: GPLv2
 Group: Games/Adventure
-Source: %name-%version-nodeps.tar.xz
+Source: %name-%version.tar.gz
 Url: http://crawl.develz.org/wordpress/
 
 Requires: %name-data = %version, %name-tiles = %version
 
-# Automatically added by buildreq on Fri Jul 29 2011
-# optimized out: fontconfig libGL-devel libGLU-devel libSDL-devel libstdc++-devel pkg-config zlib-devel
-BuildRequires: ImageMagick-tools flex gcc-c++ libSDL_image-devel libfreetype-devel liblua5-devel libpng-devel libsqlite3-devel libncursesw-devel perl-Unicode-Collate
+# Automatically added by buildreq on Wed Apr 22 2015
+# optimized out: fontconfig libGL-devel libSDL2-devel libcloog-isl4 libncurses-devel libstdc++-devel libtinfo-devel pkg-config zlib-devel
+BuildRequires: ImageMagick-tools flex fonts-ttf-dejavu gcc-c++ git-core libGLU-devel libSDL2_image-devel libfreetype-devel liblua5-devel libncursesw-devel libpng-devel libsqlite3-devel perl-Unicode-Collate
 
 BuildRequires: fonts-ttf-dejavu
 
@@ -57,22 +57,26 @@ Categories=Game;RolePlaying;
 Type=Application
 @@@
 
+echo %version > crawl-ref/source/util/release_ver
+
 for N in 16 24 32; do
-  convert source/dat/tiles/stone_soup_icon-32x32.png -resize ${N}x${N} $N.png
+  convert crawl-ref/source/dat/tiles/stone_soup_icon-32x32.png -resize ${N}x${N} $N.png
 done
 
 for N in 64 128 192 256; do
-  convert source/dat/tiles/stone_soup_icon-512x512.png -resize ${N}x${N} $N.png
+  convert crawl-ref/source/dat/tiles/stone_soup_icon-512x512.png -resize ${N}x${N} $N.png
 done
-rm -f source/.cflags
-sed -i 's/install: all/install:/' source/Makefile
+
+sed -i 's/install: all/install:/' crawl-ref/source/Makefile
 
 %build
-cd source
+cd crawl-ref/source
+find . -name .cflags -exec rm {} \;
 %make_build DATADIR=%_datadir/%name/ SAVEDIR=~/.crawl/
 mv crawl ..
+
 make clean
-rm -f .cflags
+find . -name .cflags -exec rm {} \;
 %make_build TILES=1 DATADIR=%_datadir/%name/ SAVEDIR=~/.crawl/
 
 %install
@@ -83,7 +87,7 @@ done
 
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 
-cd source
+cd crawl-ref/source
 %makeinstall TILES=1 DATADIR=share/%name/ SAVEDIR=~/.crawl/ STRIP=touch
 mv %buildroot/%_bindir/crawl %buildroot/%_bindir/crawl-tiled
 install ../crawl %buildroot/%_bindir/crawl
@@ -105,6 +109,10 @@ install ../crawl %buildroot/%_bindir/crawl
 %_bindir/crawl
 
 %changelog
+* Wed Apr 22 2015 Fr. Br. George <george@altlinux.ru> 0.16.1-alt1
+- Autobuild version bump to 0.16.1
+- Fix build and req (switch to SDL2)
+
 * Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 0.15.2-alt1
 - Autobuild version bump to 0.15.2
 
