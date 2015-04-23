@@ -1,5 +1,5 @@
 Name: alterator-net-shares
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Enable/disable mounting samba shares from "domain" server
@@ -30,10 +30,12 @@ BuildPreReq: alterator >= 3.1
 %files -f %name.lang
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*/
-#%_datadir/alterator/help/ru_RU/*
 /usr/lib/alterator/backend3/*
 
 %changelog
+* Thu Apr 23 2015 Andrey Cherepanov <cas@altlinux.org> 0.4-alt1
+- Remove empty lines in domain controller lookup regexp
+
 * Wed Aug 28 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
 - ignore ipv6 addresses determening server name
 
