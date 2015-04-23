@@ -1,6 +1,6 @@
 Summary: User monitoring and command logging
 Name: snoopy
-Version: 1.9.0
+Version: 2.2.7
 Release: alt1
 Url: https://github.com/a2o/snoopy
 Source: %name-%version.tar.gz
@@ -13,23 +13,33 @@ It is very useful to track and monitor the users.
 
 %prep
 %setup
-#patch1
-#patch2
+cat > %name <<@@@
+#!/bin/sh
+export LD_PRELOAD=%_libdir/libsnoopy.so
+exec "\$@"
+@@@
 
 %build
 %autoreconf
-%configure
+%configure --enable-config-file --enable-filter
 %make
-#DESTDIR=%buildroot
 
 %install
-%makeinstall DESTDIR=%buildroot
+%makeinstall_std DESTDIR=%buildroot
+install -D -m755 %name %buildroot%_bindir/%name
 
 %files
-%doc COPYING ChangeLog README* TODO
-%_libdir/snoopy.so
+%doc ChangeLog README* doc
+%_sysconfdir/*
+%_sbindir/*
+%_bindir/*
+%_libdir/libsnoopy.so*
 
 %changelog
+* Wed Apr 22 2015 Fr. Br. George <george@altlinux.ru> 2.2.7-alt1
+- Autobuild version bump to 2.2.7
+- Fix build
+
 * Mon Sep 29 2014 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
 - Autobuild version bump to 1.9.0
 
