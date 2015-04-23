@@ -1,5 +1,5 @@
 Name: xgamma
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: Alter a monitor's gamma correction through the X server
@@ -33,6 +33,9 @@ itor via the X video mode extension.
 %_man1dir/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Tue Apr 17 2012 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
