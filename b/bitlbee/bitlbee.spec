@@ -1,6 +1,6 @@
 Name: bitlbee
-Version: 3.2.2
-Release: alt1.1
+Version: 3.4
+Release: alt1
 Group: Networking/IRC
 License: GPLv2
 Url: http://www.bitlbee.org
@@ -112,6 +112,9 @@ install -m 755 -D %SOURCE1  %buildroot%_initdir/%name
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 3.4-alt1
+- Autobuild version bump to 3.4
+
 * Fri Jan 09 2015 L.A. Kostis <lakostis@altlinux.ru> 3.2.2-alt1.1
 - Packaging fixes:
   + rename .xinetd to .alt.init as it init.d file in fact.
