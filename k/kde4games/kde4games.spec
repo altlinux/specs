@@ -5,11 +5,11 @@
 
 %define rname kdegames
 Name: kde4games
-%define major 4
-%define minor 13
-%define bugfix 2
+%define major 15
+%define minor 4
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE - Games
@@ -107,9 +107,9 @@ BuildRequires(pre): kde4libs-devel
 BuildRequires: gcc-c++ kde4base-runtime-devel
 #BuildRequires: libggz-devel ggz-client-libs-devel
 BuildRequires: libqca2-devel libsqlite3-devel libopenal-devel libsndfile-devel
-BuildRequires: python-module-PyQt4 python-module-kde4 rpm-build-python
+BuildRequires: python-module-PyQt4-devel python-module-kde4 rpm-build-python
 BuildRequires: libkmahjongg4-devel libkdegames4-devel
-BuildRequires: kde4libs-devel >= %version
+BuildRequires: kde4libs-devel
 
 %description
 Games for the K Desktop Environment.
@@ -688,28 +688,17 @@ done
 
 %files ksnakeduel
 %ifdef _kde_alternate_placement
-%_kde4_bindir/ktron
-%_kde4_xdg_apps/ktron.desktop
-%_kde4_iconsdir/hicolor/*/*/ktron.png
+%_kde4_bindir/ksnakeduel
+%_kde4_xdg_apps/ksnakeduel.desktop
+%_kde4_iconsdir/hicolor/*/*/ksnakeduel.*
 %else
-%_K4bindir/ktron
-%_K4xdg_apps/ktron.desktop
-%_K4iconsdir/hicolor/*/*/ktron.png
+%_K4bindir/ksnakeduel
+%_K4xdg_apps/ksnakeduel.desktop
+%_K4iconsdir/hicolor/*/*/ksnakeduel.*
 %endif
+%_K4apps/ksnakeduel
 %_K4apps/ktron
-%_K4cfg/ktron.kcfg
-%_K4conf/ktron.knsrc
-%_K4doc/en/ktron
-#
-%ifdef _kde_alternate_placement
-%_kde4_bindir/kdesnake
-%_kde4_xdg_apps/kdesnake.desktop
-%_kde4_iconsdir/hicolor/*/*/kdesnake.*
-%else
-%_K4bindir/kdesnake
-%_K4xdg_apps/kdesnake.desktop
-%_K4iconsdir/hicolor/*/*/kdesnake.*
-%endif
+%_K4doc/en/ksnakeduel
 
 %files kapman
 %ifdef _kde_alternate_placement
@@ -1215,6 +1204,12 @@ done
 %_K4includedir/*
 
 %changelog
+* Thu Apr 23 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
+* Mon Aug 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Fri Jun 20 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt2
 - don't require PyQt5
 
