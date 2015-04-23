@@ -1,5 +1,5 @@
 Name: mupdf
-Version: 1.6
+Version: 1.7
 Release: alt1
 Summary: A lightweight PDF viewer and toolkit
 Group: Office
@@ -72,6 +72,9 @@ install -D mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
 %_libdir/lib*.a
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.7-alt1
+- Autobuild version bump to 1.7
+
 * Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 1.6-alt1
 - Autobuild version bump to 1.6
 
