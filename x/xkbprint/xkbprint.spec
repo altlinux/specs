@@ -1,5 +1,5 @@
 Name: xkbprint
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: print an XKB keyboard description
@@ -41,6 +41,9 @@ xkprint uses server-n where n is the number of the display.
 %_man1dir/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+
 * Tue May 03 2011 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
 - Autobuild version bump to 1.0.3
 
