@@ -1,5 +1,5 @@
 Name: tetrix
-Version: 2.3
+Version: 2.4
 Release: alt1
 License: GPL
 Group: Games/Arcade
@@ -32,6 +32,9 @@ install -D %name.6 %buildroot%_man6dir/%name.6
 %_man6dir/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 2.4-alt1
+- Autobuild version bump to 2.4
+
 * Tue Aug 23 2011 Fr. Br. George <george@altlinux.ru> 2.3-alt1
 - Autobuild version bump to 2.3
 - Initial build
