@@ -1,5 +1,5 @@
 Name: renpy
-Version: 6.18.3
+Version: 6.99.2
 Release: alt1
 Summary: A visual novel engine
 Group: Games/Adventure
@@ -9,13 +9,15 @@ Url: http://www.renpy.org/
 Patch: renpy-old-avformat.patch
 
 %setup_python_module %name
+%add_python_req_skip jnius
+%add_python_req_skip pyobjus
 
 %define gamedir %_gamesdatadir/%name
 
 Requires: %packagename = %version
-# Automatically added by buildreq on Wed Aug 27 2014
-# optimized out: fontconfig libGL-devel libGLU-devel libavcodec-devel libavutil-devel libcloog-isl4 pkg-config python-base python-devel python-module-numpy python-module-pygame python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml zlib-devel
-BuildRequires: ImageMagick-tools libSDL-devel libavformat-devel libavresample-devel libfreetype-devel libfribidi-devel libglew-devel libpng-devel libswscale-devel python-module-Cython python-module-pygame-devel time
+# Automatically added by buildreq on Thu Apr 23 2015
+# optimized out: fontconfig ipython libGL-devel libGLU-devel libavcodec-devel libavutil-devel libcloog-isl4 pkg-config python-base python-devel python-module-BeautifulSoup python-module-PyStemmer python-module-docutils python-module-enum34 python-module-matplotlib python-module-ndg-httpsclient python-module-numpy python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pyglet python-module-pygobject3 python-module-pyparsing python-module-setuptools python-module-snowballstemmer python-module-terminado python-module-tornado_xstatic python-module-xstatic python-module-xstatic-term.js python-module-zope.interface python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python-modules-wsgiref python-modules-xml zlib-devel
+BuildRequires: ImageMagick-tools libSDL2-devel libavformat-devel libavresample-devel libfreetype-devel libfribidi-devel libglew-devel libpng-devel libswscale-devel python-module-Cython python-module-cssselect python-module-html5lib python-module-pygame python-module-pygame_sdl2-devel time
 
 BuildRequires: rpm-build-fonts
 
@@ -53,7 +55,7 @@ Example game for %name, %summary
 
 %prep
 %setup
-%patch -p2
+#patch -p2
 
 touch $(find . -name \*.pyx)
 
@@ -152,6 +154,13 @@ cd module
 %_iconsdir/hicolor/*/apps/%name-the_question.*
 
 %changelog
+* Thu Apr 23 2015 Fr. Br. George <george@altlinux.ru> 6.99.2-alt1
+- Autobuild version bump to 6.99.2
+- Fix build (project switched to pygame_sld2)
+
+* Wed Apr 22 2015 Fr. Br. George <george@altlinux.ru> 6.99.1-alt1
+- Autobuild version bump to 6.99.1
+
 * Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 6.18.3-alt1
 - Autobuild version bump to 6.18.3
 
