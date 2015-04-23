@@ -1,12 +1,12 @@
 Name: lostsky
-Version: 0.9.0
+Version: 1.0.1
 Release: alt1
 %setup_python_module %name
 Summary: Turn based strategy RPG with gameplay similar to Fire Emblem
 BuildArch: noarch
 License: BSD
 Group: Games/Strategy
-Source: lost-sky-project-public-0.9.0.tar
+Source: lost-sky-project-public-1.0.1.tar
 Url: https://bitbucket.org/featheredmelody/lost-sky-project-public
 
 # Automatically added by buildreq on Tue Aug 23 2011
@@ -65,6 +65,9 @@ ln -s prerendered_spells %buildroot%_gamesdatadir/%name/images/anim/prerendered_
 %python_sitelibdir_noarch/%name
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.0.1-alt1
+- Autobuild version bump to 1.0.1
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 0.9.0-alt1
 - Autobuild version bump to 0.9.0
 - Drop ~/.lostsky usage: game use ~/.local and ~/.config now
