@@ -27,7 +27,7 @@
 
 Name: lxc
 Version: 1.1.2
-Release: alt1
+Release: alt2
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -132,17 +132,6 @@ __EOF__
 
 %__install -m 0644 %SOURCE1 %buildroot/%_sysconfdir/sysconfig/lxc-net
 
-%pre
-# Ensure that lxc-dnsmasq uid & gid gets correctly allocated
-if getent passwd lxc-dnsmasq >/dev/null 2>&1 ; then : ; else \
- /usr/sbin/useradd -M -r -s /sbin/nologin \
- -c "LXC Networking Service" -d %_localstatedir/%name lxc-dnsmasq 2> /dev/null \
- || exit 1
-fi
-
-%postun
-/usr/sbin/userdel lxc-dnsmasq > /dev/null 2>&1 || :
-
 %files
 %defattr(-,root,root)
 %exclude %{_bindir}/lxc-ls.py
@@ -198,6 +187,9 @@ fi
 
 
 %changelog
+* Thu Apr 23 2015 Denis Pynkin <dans@altlinux.org> 1.1.2-alt2
+- Removed creation/deletion of unneeded lxc-dnsmasq user.
+
 * Sat Apr 11 2015 Denis Pynkin <dans@altlinux.org> 1.1.2-alt1
 - Bugfix release
 
