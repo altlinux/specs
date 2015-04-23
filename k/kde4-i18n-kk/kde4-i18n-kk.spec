@@ -4,7 +4,7 @@
 %define lngg Kazakh
 
 Name: kde4-i18n-%lng
-Version: 14.12.3
+Version: 15.4.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -61,6 +61,9 @@ done
 %install
 %K4install
 
+# clean
+rm -f %buildroot/%_K4i18n/*/LC_MESSAGES/*.ktp-*.mo
+
 if ! [ -e %buildroot/%_K4doc/%lng/common ]; then
     mkdir -p %buildroot/%_K4doc/%lng/common/
     pushd %_K4doc/en/common/
@@ -91,6 +94,9 @@ fi
 
 
 %changelog
+* Thu Apr 23 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
 * Fri Mar 13 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
 - new version
 
