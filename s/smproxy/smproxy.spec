@@ -1,5 +1,5 @@
 Name: smproxy
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: Session Manager Proxy
@@ -34,6 +34,9 @@ to participate in an X11R6 session.
 %_man1dir/*
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Fri Jul 01 2011 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
