@@ -1,12 +1,11 @@
 Name: libgflags
 Summary: A commandline flags library that allows for distributed flags
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 Group: System/Libraries
 Url: http://code.google.com/p/gflags
 License: BSD
 Source: v%version.tar.gz
-Patch: gflags-2.1.1-cmake.patch
 
 # Automatically added by buildreq on Wed Mar 30 2011
 BuildRequires: gcc-c++ cmake
@@ -28,9 +27,6 @@ files for developing applications that use the %name package.
 
 %prep
 %setup -n gflags-%version
-%patch
-# bloody cmakers!
-sed -i 's/set (LIBRARY_INSTALL_DIR lib)/set (LIBRARY_INSTALL_DIR %_lib)/' CMakeLists.txt
 
 %build
 %cmake -DBUILD_SHARED_LIBS=True -DBUILD_gflags_nothreads_LIB=False
@@ -48,10 +44,14 @@ sed -i 's/set (LIBRARY_INSTALL_DIR lib)/set (LIBRARY_INSTALL_DIR %_lib)/' CMakeL
 %doc doc/*
 %_includedir/gflags
 %_libdir/*.so
-%_prefix/lib/cmake/*
+%_libdir/cmake/*
 ##_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 2.1.2-alt1
+- Autobuild version bump to 2.1.2
+- Upstream has provided soname, drop patch
+
 * Fri Aug 22 2014 Fr. Br. George <george@altlinux.ru> 2.1.1-alt1
 - Autobuild version bump to 2.1.1
 - Provide CMake devel instead of pkgconfig (upstream switched to cmake)
