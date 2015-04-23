@@ -1,6 +1,6 @@
 Name: runawfe4-server
-Version: 4.1.2
-Release: alt6
+Version: 4.2.0
+Release: alt14
 
 Summary: Runawfe server
 
@@ -15,26 +15,30 @@ Source: %name-%version.tar
 Source1: standalone-runa.xml
 Source2: runawfe4-server
 Source3: jboss-as-runawfe4-server.conf
+Source4: runawfe4-server.service
+Source5: runawfe4-server-start.desktop
+Source6: runawfe4-server.png
+Source7: runawfe4-server-stop.desktop
 
 Packager: Danil Mikhailov <danil@altlinux.org>
 
 #PreReq:
-Requires: jboss-as-vanilla
+Requires: jboss-as-vanilla >= 7.1.1-alt9
 #Provides:
 #Conflicts:
 
 #BuildPreReq:
 # Automatically added by buildreq on Fri Sep 06 2013
 # optimized out: apache-commons-cli atinject google-guice guava java java-devel jpackage-utils maven maven-wagon nekohtml plexus-cipher plexus-classworlds plexus-containers-component-annotations plexus-interpolation plexus-sec-dispatcher plexus-utils python3-base sisu tzdata tzdata-java xbean xerces-j2 xml-commons-jaxp-1.4-apis
-BuildRequires: aether
-
+BuildRequires: aether rpm-build-compat
 BuildRequires: maven jboss-as-vanilla
 BuildArch: noarch
 
 %define jbossuser jboss-as
 %define runauser _runa
-%define runadir /var/lib/runawfe4-server
+%define runadir /var/lib/%name
 %define jbossdir %_datadir/jboss-as/standalone
+%define distrname ALTLinux
 
 %description
 RunaWFE is a free OpenSource business process management system. It is delivered
@@ -45,35 +49,124 @@ web interface with tasklist, form player, graphical process designer, bots and m
 %setup
 
 %build
-
-cp -a .m2/ /tmp/.m2/
-export MAVEN_OPTS="-Dmaven.repo.local=/tmp/.m2"
+export MAVEN_OPTS="-Dmaven.repo.local=$(pwd)/.m2/repository/"
 
 cd wfe-app/repository/
 ./add_dependencies.sh
 cd ..
-mvn clean package -Dappserver=jboss7
-#mvn -o package -Dappserver=jboss7 #for offline build in git.alt
 
+%if %distrname == "Ubuntu" ||  %distrname == "Debian"
+mvn clean package -Dappserver=jboss7
+%else
+mvn -o package -Dappserver=jboss7 #for offline build in git.alt
+%endif
 
 %install
 #jboss-as-cp -l %buildroot/%runadir
 #rm -f %buildroot/%runadir/bin/standalone.sh
 mkdir -p %buildroot/%jbossdir/{bin,data,deployments,log,tmp,configuration}
 mkdir -p %buildroot/etc/jboss-as/
+mkdir -p %buildroot/lib/systemd/system/
+mkdir -p %buildroot%_desktopdir/
+mkdir -p %buildroot%_pixmapsdir/
+
 #FIX correct path to jboss-as/bin
 cp %SOURCE1 %buildroot%jbossdir/configuration/
 cp %SOURCE3 %buildroot/etc/jboss-as/
+#cp %SOURCE4 %buildroot/lib/systemd/system/
+cp %SOURCE5 %buildroot%_desktopdir/
+cp %SOURCE6 %buildroot%_pixmapsdir/
+cp %SOURCE7 %buildroot%_desktopdir/
+
 mkdir -p %buildroot/%_sbindir/
-#FIX JBOSS_BASE_DIR not work in jboss from zip, unused
-cat >%buildroot/%_sbindir/runawfe4-server <<EOF
-JBOSS_BASE_DIR=%jbossdir su - %jbossuser -s /bin/sh -c "%_datadir/jboss-as/bin/standalone.sh -c standalone-runa.xml" \
-&& echo \$$ > /var/run/runawfe4-server.pid;
+mkdir -p %buildroot%_initdir/
+
+%if %distrname == "Ubuntu" ||  %distrname == "Debian"
+
+# Explain of server execution on:
+# 1) deb we can runs like:
+#  -  a program from bin dir
+#  -  a very simple service - start is executing bin in a background (because we havent /etc/init.d/functions on this)
+# 2) AltLinux and Fedora runs like:
+#  -  a program (runs service start)
+#  -  full supported service (starts jboss with runa config)
+
+cat >%buildroot/%_sbindir/%name <<EOF
+#!/bin/sh
+JBOSS_BASE_DIR=%jbossdir su - jboss-as -s /bin/sh -c "/usr/share/jboss-as/bin/standalone.sh -c standalone-runa.xml"
+
 EOF
+
+cat >%buildroot%_initdir/%name <<EOF
+#!/bin/sh
+if [ "\$1" = "start" ] ; then
+    #rm -f %_runtimedir/%name.pid
+    #ln -s %_runtimedir/jboss-as/jboss-as-standalone.pid %_runtimedir/%name.pid
+    #TODO BUG not work macros %_runtimedir !
+    %_sbindir/%name > /var/log/%name 2>&1 &
+fi
+if [ "\$1" = "stop" ] ; then
+    %jbossdir/../bin/jboss-cli.sh --connect --command=:shutdown
+    #/usr/share/jboss-as/bin/
+fi
+
+EOF
+
+%else
+
+cat >%buildroot%_initdir/%name <<EOF
+
+#
+# %name - runawfe server
+#
+# chkconfig: 2345 99 1
+# processname: runawfe
+# config: /etc/runawfe
+# pidfile: %_runtimedir/%name.pid
+#
+### BEGIN INIT INFO
+# Provides: %name
+# Default-Start: 2 3 4 5
+# Short-Description: runawfe server
+# Description: runawfe server or botstation daemon
+### END INIT INFO
+
+rm -f %_runtimedir/%name.pid
+ln -s %_runtimedir/jboss-as/jboss-as-standalone.pid %_runtimedir/%name.pid
+
+JBOSS_CONF=/etc/jboss-as/jboss-as-%name.conf %_initdir/jboss-as-standalone "\$1"
+
+EOF
+
+cat >%buildroot/%_sbindir/%name <<EOF
+#!/bin/sh
+%_initdir/%name "start"
+
+EOF
+
+%endif
+
+
+cat >%buildroot/lib/systemd/system/%name.service <<EOF
+
+[Unit]
+Description=RunaWFE server daemon
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/%name
+PIDFile=%_runtimedir/%name.pid
+
+EOF
+
 
 cp -a wfe-ear/target/runawfe.ear %buildroot/%jbossdir/deployments/
 
-install -D -m754 %SOURCE2 %buildroot%_initdir/%name
+
+#TEMPORARY!!!!
+#install -D -m754 %SOURCE2 %buildroot%_initdir/%name
+
+
 #chown -R %jbossuser %buildroot/%jbossdir/
 #start jboss, copy ear to deploy dir and start deploy DONE
 #Create user _runa and run
@@ -84,41 +177,54 @@ install -D -m754 %SOURCE2 %buildroot%_initdir/%name
 #check that port listening
 
 %pre
-useradd -d %runadir -r -s %_sbindir/runawfe4-server %runauser >/dev/null 2>&1 || :
+useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 
 %files
-/etc/jboss-as/jboss-as-runawfe4-server.conf
+/etc/jboss-as/jboss-as-%name.conf
+%_pixmapsdir/*
+%_desktopdir/*
 %attr(755,%jbossuser,root) %jbossdir/configuration/*
 %attr(755,%jbossuser,root) %jbossdir/deployments/*
-%attr(755,root,root) %_sbindir/runawfe4-server
-
-%_initdir/%name
+%attr(755,root,root) %_sbindir/%name
+%attr(755,root,root) %_initdir/%name
+%attr(644,root,root) /lib/systemd/system/%name.service
 
 %changelog
-* Mon Oct 06 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt6
-- added deployments dir
-- change jbdc to keep db in file
-- change jbdc to keep db in file
+* Wed Apr 22 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt14
+- Change gksudo on gksu
 
-* Mon Sep 29 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt5
-- added new init realisatio
-- create etc dir
-- fix confict file standalone
-- added files
-- change standalone attribute
-- remove sh -x in init
-- fix permission
-- added files
-- fix files
+* Wed Apr 22 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt13
+- Fix start desktop
 
-* Fri Sep 26 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt4
-- remove depends from init
+* Tue Apr 21 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt12
+- Rewrite start service for deb 
 
-* Thu Sep 25 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt3
-- added new standalone.xml
+* Mon Apr 20 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt11
+- Added builde-req rpm-build-compat
 
-* Tue Sep 23 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt2
-- initial init.d support
+* Mon Apr 20 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt10
+- New rc version with offline maven build
 
-* Mon Aug 18 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt1
-- initial build 4.1.2
+* Thu Apr 16 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt9
+- Added Ubuntu in %if distr
+
+* Wed Apr 15 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt8
+- Fixed bug in initscript for alt
+
+* Wed Apr 15 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt7
+- Change start script for debian
+
+* Wed Mar 25 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt5
+- Enable jboss listening from all network 0.0.0.0
+
+* Tue Mar 24 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt4
+- Added creation desktop and pixmap dir
+
+* Mon Mar 23 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt3
+- Change port, added desktop file with gksudo
+
+* Thu Feb 19 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt2
+- alt2
+
+* Thu Feb 19 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt1
+- initial build 4.2.0
