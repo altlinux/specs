@@ -1,6 +1,6 @@
 Name: hyperrogue
-Version: 44
-Release: alt2
+Version: 55
+Release: alt1
 Source: %name-%version.zip
 Url: http://www.roguetemple.com/z/hyper.php
 License: GPLv2
@@ -9,7 +9,7 @@ Summary: Roguelike in non-euclidian world
 
 BuildPreReq: rpm-macros-fonts
 
-Requires: fonts-ttf-vera
+Requires: fonts-ttf-dejavu
 
 # Automatically added by buildreq on Tue Oct 15 2013
 # optimized out: fontconfig libSDL-devel libstdc++-devel
@@ -37,7 +37,7 @@ to teleport back to the Euclidean world to survive by pressing Escape
 
 %prep
 %setup
-sed -i 's@"VeraBd.ttf"@"%_ttffontsdir/TrueType-vera/VeraBd.ttf"@g' graph.cpp
+sed -i 's@"DejaVuSans-Bold.ttf"@"%_ttffontsdir/dejavu/DejaVuSans-Bold.ttf"@g' graph.cpp
 
 %define sizes 16 24 32 48 64 96
 for s in %sizes; do
@@ -73,6 +73,10 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 55-alt1
+- Autobuild version bump to 55
+- Switch font to DejaVuSansBold
+
 * Thu Dec 11 2014 Fr. Br. George <george@altlinux.ru> 44-alt2
 - Rebuild with new SDL
 
