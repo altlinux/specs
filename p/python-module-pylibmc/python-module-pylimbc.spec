@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Summary: Quick and small memcached client for Python
 License: BSD
@@ -68,6 +68,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.4.2-alt1
+- Autobuild version bump to 1.4.2
+
 * Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1
 - Version 1.4.1
 - Added module for Python 3
