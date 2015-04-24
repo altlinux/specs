@@ -1,12 +1,12 @@
 %define oname drakon_editor
 Name: drakon
 Version: 1.14
-Release: alt1
+Release: alt2
 
 Summary: DRAKON Editor is a free cross-platform editor for the DRAKON visual language
 
 License: Public domain
-Group: Office
+Group: Development/Tools
 Url: http://drakon-editor.sourceforge.net/
 
 Source: http://prdownloads.sf.net/drakon-editor/%oname%version.tar
@@ -23,6 +23,7 @@ BuildRequires: tcl
 
 Requires: sqlite3-tcl tcl-img
 
+BuildArch: noarch
 
 %description
 DRAKON Editor is a free cross-platform editor for the DRAKON visual language.
@@ -40,14 +41,14 @@ This tool is aimed at software architects, developers and quality specialists.
 
 %install
 install -d %buildroot%_bindir/
-cat <<EOF >%buildroot%_bindir/%name
+cat <<'EOF' >%buildroot%_bindir/%name
 #!/bin/sh
-exec tclsh %_datadir/%name/%oname.tcl $$@
+exec tclsh %_datadir/%name/%oname.tcl "$@"
 EOF
 
-cat <<EOF >%buildroot%_bindir/drakon_gen
+cat <<'EOF' >%buildroot%_bindir/drakon_gen
 #!/bin/sh
-exec tclsh %_datadir/%name/drakon_gen.tcl $$@
+exec tclsh %_datadir/%name/drakon_gen.tcl "$@"
 EOF
 
 chmod 755 %buildroot%_bindir/*
@@ -72,6 +73,10 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %_datadir/%name/
 
 %changelog
+* Fri Apr 24 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.14-alt2
+- bin/drakon*: fix the invocation (ALT #30965).
+- (spec) Correct RPM group (Development, not Office) (ALT #30964).
+
 * Mon Sep 17 2012 Vitaly Lipatov <lav@altlinux.ru> 1.14-alt1
 - new version 1.14 (with rpmrb script)
 
