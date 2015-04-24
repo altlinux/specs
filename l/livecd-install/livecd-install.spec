@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: Permanently install Live system
@@ -16,7 +16,8 @@ Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildArch: noarch
 Requires: alterator-wizardface
 Requires: alterator-livecd >= 0.5-alt1
-Requires: alterator-vm alterator-grub alterator-users >= 10.2-alt1 alterator-root >= 0.9-alt1 alterator-datetime
+Requires: alterator-vm alterator-grub alterator-users >= 10.2-alt1 alterator-root >= 0.9-alt1 alterator-datetime >= 2.6
+Requires: alterator-service-functions
 Requires: installer-scripts-remount-stage2 >= 0.3-alt1
 Requires: livecd-evms
 Requires: make-initrd-plymouth
@@ -60,6 +61,10 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Fri Apr 24 2015 Mikhail Efremov <sem@altlinux.org> 0.9.2-alt1
+- Use alterator-service-functions.
+- Setup and save /etc/adjtime.
+
 * Wed Jun 11 2014 Michael Shigorin <mike@altlinux.org> 0.9.1-alt1
 - Added 45-mdadm.sh from installer.
 
