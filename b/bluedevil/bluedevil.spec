@@ -1,7 +1,7 @@
 %define _kde_alternate_placement 1
 
 Name: bluedevil
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -16,6 +16,7 @@ Obsoletes: kdebluetooth4
 Provides: bluez-pin
 Requires: bluez >= 5.0 obexd
 
+# upstream/kdelibs branch
 Source: %name-%version.tar
 # SuSE
 Patch1: typo2.diff
@@ -93,6 +94,9 @@ done
 #%_K4includedir/bluedevil/
 
 %changelog
+* Fri Apr 24 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
+- new version
+
 * Mon Jan 26 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
 - new version
 
