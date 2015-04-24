@@ -4,8 +4,8 @@
 %define lngg Spanish
 
 Name: kde4-i18n-%lng
-Version: 14.12.3
-Release: alt1
+Version: 15.4.0
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE
@@ -53,6 +53,22 @@ do
     popd
 done
 
+# readd data
+pushd data
+    > CMakeLists.txt
+    find ./ -maxdepth 1 -mindepth 1 -type d | \
+    while read d ; do
+	echo "add_subdirectory(`basename $d`)" >> CMakeLists.txt
+	pushd $d
+	    > CMakeLists.txt
+	    find ./ -maxdepth 1 -mindepth 1 -type d | \
+	    while read d2 ; do
+		echo "add_subdirectory(`basename $d2`)" >> CMakeLists.txt
+	    done
+	popd
+    done
+popd
+
 
 %build
 %K4cmake
@@ -61,6 +77,9 @@ done
 
 %install
 %K4install
+
+# clean
+rm -f %buildroot/%_K4i18n/*/LC_MESSAGES/*.ktp-*.mo
 
 if ! [ -e %buildroot/%_K4doc/%lng/common ]; then
     mkdir -p %buildroot/%_K4doc/%lng/common/
@@ -83,16 +102,22 @@ fi
 %dir %_K4i18n/%lng/LC_MESSAGES/
 %lang(%lng) %_K4i18n/%lng/LC_MESSAGES/*.mo
 #
-#%lang(%lng) %_K4apps/kvtml/%lng/
+%lang(%lng) %_K4apps/kvtml/%lng/
 #
 %lang(%lng) %_K4apps/ktuberling/sounds/%lng/
 %lang(%lng) %_K4apps/ktuberling/sounds/%lng.soundtheme
-#%lang(%lng) %_K4apps/khangman/%lng.txt
+%lang(%lng) %_K4apps/khangman/%lng.txt
 %lang(%lng) %_K4apps/klettres/%lng/
 %lang(%lng) %_K4apps/autocorrect/%lng.xml
 
 
 %changelog
+* Fri Apr 24 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt2
+- fix to build
+
+* Thu Apr 23 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
 * Fri Mar 13 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
 - new version
 
