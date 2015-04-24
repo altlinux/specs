@@ -3,10 +3,10 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.20
-Release: alt1.dev0.git20150324
+Version: 0.1.27
+Release: alt1.dev0.git20150423
 Summary: An tool for easily making RESTful interfaces
-License: UNKNOWN
+License: GPLv2
 Group: Development/Python
 Url: https://pypi.python.org/pypi/ripozo/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -151,6 +151,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.27-alt1.dev0.git20150423
+- Version 0.1.27.dev0
+
 * Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.20-alt1.dev0.git20150324
 - Initial build for Sisyphus
 
