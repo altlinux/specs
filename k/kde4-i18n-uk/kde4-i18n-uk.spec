@@ -4,7 +4,7 @@
 %define lngg Ukrainian
 
 Name: kde4-i18n-%lng
-Version: 14.12.3
+Version: 15.4.0
 Release: alt2
 
 Group: Graphical desktop/KDE
@@ -53,6 +53,22 @@ do
     popd
 done
 
+# readd data
+pushd data
+    > CMakeLists.txt
+    find ./ -maxdepth 1 -mindepth 1 -type d | \
+    while read d ; do
+	echo "add_subdirectory(`basename $d`)" >> CMakeLists.txt
+	pushd $d
+	    > CMakeLists.txt
+	    find ./ -maxdepth 1 -mindepth 1 -type d | \
+	    while read d2 ; do
+		echo "add_subdirectory(`basename $d2`)" >> CMakeLists.txt
+	    done
+	popd
+    done
+popd
+
 
 %build
 %K4cmake
@@ -88,7 +104,7 @@ fi
 %dir %_K4i18n/%lng/LC_SCRIPTS/
 %lang(%lng) %_K4i18n/%lng/LC_SCRIPTS/*
 #
-#%lang(%lng) %_K4apps/kvtml/%lng/
+%lang(%lng) %_K4apps/kvtml/%lng/
 #
 %lang(%lng) %_K4apps/ktuberling/sounds/%lng/
 %lang(%lng) %_K4apps/ktuberling/sounds/%lng.soundtheme
@@ -98,6 +114,12 @@ fi
 %lang(%lng) %_K4apps/autocorrect/%{lng}*.xml
 
 %changelog
+* Fri Apr 24 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt2
+- fix to build
+
+* Thu Apr 23 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
 * Wed Mar 18 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt2
 - fix %files (ALT#30832)
 
