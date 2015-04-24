@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.13
-Release: alt2.dev0.git20150323
+Version: 0.1.16
+Release: alt1.dev0.git20150414
 Summary: A helper package for creating tests for ripozo and its extensions
 License: UNKNOWN
 Group: Development/Python
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.16-alt1.dev0.git20150414
+- Version 0.1.16.dev0
+
 * Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.13-alt2.dev0.git20150323
 - Added necessary requirements
 
