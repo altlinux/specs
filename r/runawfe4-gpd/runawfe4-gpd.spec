@@ -1,6 +1,6 @@
 Name: runawfe4-gpd
-Version: 4.1.0
-Release: alt8
+Version: 4.2.0
+Release: alt5
 
 Summary: Runawfe Graphic Process Designer
 
@@ -8,10 +8,6 @@ License: LGPL
 Group: Office
 Url: http://sourceforge.net/projects/runawfe/
 
-#how create git repo from svn
-#git svn clone --prefix=svn/ -r4036:HEAD svn://svn.code.sf.net/p/runawfe/code/ . #clone svn repo
-#export in eclipse like eclipse product, read http://wf.runa.ru/rus/doc/DesignerDeveloperGuide
-#cp -a ~/workspace/target/eclipse/ runawfe4-gpd/gpd/        #copy to git dir
 Source: %name-%version.tar
 Source1: runawfe4-gpd.desktop
 Source2: runawfe4-gpd.png
@@ -20,11 +16,26 @@ Packager: Danil Mikhailov <danil@altlinux.org>
 
 AutoReq: yes,noperl,nopython
 Requires: java >= 1.7, libwebkitgtk2
+#Requires: libsoup >= 2.48.1-alt1
+
+BuildPreReq: rpm-build-compat maven
 Provides: osgi(ru.runa.gpd.form.ftl)
 BuildRequires: chrpath
 
 %define runauser _runa
 %define runadir %_libdir/runawfe4-gpd
+%define distrname %(distr_vendor -d)
+
+#
+%define gpd_path gpd_source/plugins/ru.runa.gpd.maven/target/products/RunaWFE_DeveloperStudio/linux/gtk
+
+#gpd copy path for multi arch
+%ifarch x86_64
+%define gpd_path_arch %{gpd_path}/x86_64/
+%else
+%define gpd_path_arch %{gpd_path}/x86/
+%endif
+
 
 %description
 RunaWFE is a free OpenSource business process management system. It is delivered
@@ -34,8 +45,16 @@ web interface with tasklist, form player, graphical process designer, bots and m
 %prep
 %setup
 
+#how create git repo from svn
+#git svn clone --prefix=svn/ -r4036:HEAD svn://svn.code.sf.net/p/runawfe/code/ . #clone svn repo
+
 %build
-#take binary from http://sourceforge.net/projects/runawfe/files/SRC%20and%20BIN%20files/4.1.0/RunaWFE%20Developer%20Studio/
+#use local maven repo
+export MAVEN_OPTS="-Dmaven.repo.local=$(pwd)/.m2/repository/" 
+
+cd gpd_source/plugins/
+#mvn clean package 
+#mvn -o package #for offline build in git.alt
 
 %install
 mkdir -p %buildroot/%runadir/
@@ -47,13 +66,11 @@ cp %SOURCE1 %buildroot%_desktopdir/
 cp %SOURCE2 %buildroot%_pixmapsdir/
 #cp -a ./* %buildroot/%runadir/ #default gpd copy path for x86 arch
 
-#gpd copy path for multi arch
-%ifarch x86_64
-chrpath -d gpd_x86_64/libcairo-swt.so
-cp -a gpd_x86_64/* %buildroot/%runadir/
-%else
-cp -a gpd/* %buildroot/%runadir/
-%endif
+mv %gpd_path_arch/runa-gpd %gpd_path_arch/runawfe4-gpd
+chmod 755 %gpd_path_arch/runawfe4-gpd
+chrpath -d %gpd_path_arch/libcairo-swt.so
+cp -a %gpd_path_arch/* %buildroot/%runadir/
+cp -a workspace/ %buildroot/%runadir/
 
 mkdir -p %buildroot/%_bindir/
 cat >%buildroot/%_bindir/runawfe4-gpd <<EOF
@@ -63,6 +80,7 @@ gpdconfdir="\$HOME/runawfe4-gpd/workspace/.metadata/.plugins/org.eclipse.core.ru
 gpdconf="\$gpdconfdir/ru.runa.gpd.prefs"
 mkdir -p "\$gpddir"
 mkdir -p \$gpdconfdir
+cp -na %runadir/workspace/ "\$gpddir/"
 
 if [ ! -e \$gpdconf ] ; then
 
@@ -75,7 +93,6 @@ cd "\$gpddir"
 %runadir/runawfe4-gpd
 
 EOF
-
 
 #Enable CKEditor4 by default #TODO remove this hack than released 4.2.0
 
@@ -92,18 +109,30 @@ EOF
 #%attr(755,root,root) %runadir/workspace/
 
 %changelog
-* Tue Jul 01 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt8
-- Added comma separation to requires
+* Fri Apr 24 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt5
+- Enable binary packing for alt repo
 
-* Thu Apr 24 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt7
-- Enable CKEditor4 by default. Fixed home dir. Fix3
+* Fri Apr 24 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt4
+- Enable offline maven build
 
-* Tue Apr 22 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt3
-- Fixed desktop file categories
+* Fri Mar 13 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt3
+- rename patched swt lib from alt
 
-* Fri Apr 04 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt2
-- Clean spec with rpmcs, added categories to desktop
+* Fri Mar 13 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt2
+- fix forms, use one swt version, need libsoup >= 2.48.1-alt1
 
-* Wed Mar 26 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt1
-- GPD 4.1.0 binary
+* Thu Feb 19 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt1
+- initial 4.2 build
+
+* Wed Feb 18 2015 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt5
+- alt5 added demo workspace
+
+* Fri Feb 06 2015 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt3
+- added my original pom.xml, svn repo pom based on this
+- new 4.2rc version for deb
+- new 4.2rc version for alt
+- added ru.runa.gpd.prefs file
+
+* Wed Aug 20 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt1
+- Initial 4.1.2 build
 
