@@ -1,10 +1,9 @@
 # TODO: fix urls and install icons like
 #/usr/share/linuxmint/mintMenu/search_engines/dictionary.png
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
-%define l10n_ver 2014.11.11
 
 Name:           mintmenu
-Version:        5.6.0
+Version:        5.6.2
 Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -14,7 +13,6 @@ Group:          Graphical desktop/GNOME
 Url:            http://packages.linuxmint.com/pool/main/m/mintmenu/
 # VCS:		https://github.com/linuxmint/mintmenu.git
 Source0:        http://packages.linuxmint.com/pool/main/m/mintmenu/%{name}_%{version}.tar.gz
-Source1:        http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_%l10n_ver.tar.gz
 Source33:	mintmenu_test.sh
 Source34:	list-mintmenu.conf
 Source35:	list-mintmenu.lua
@@ -39,7 +37,7 @@ Patch36:	mintmenu-5.2.1-alt-no-mintengines.patch
 Patch37:	mintmenu-5.2.1-alt-GPL-path.patch
 Patch38:	mintmenu-5.5.1-alt-use-rpminstall.patch
 #Patch39:	mintmenu-5.2.1-alt-cyrillic.patch
-Patch40:	mintmenu-5.5.1-alt-xfce-logout.patch
+Patch40:	mintmenu-5.6.2-alt-xfce-logout.patch
 # Use Synaptic via consolehelper intead of gksu
 Patch41:	mintmenu-alt-fix-package-manager.patch
 
@@ -49,6 +47,7 @@ Requires: python-module-pygnome-desktop
 Requires: python-module-pyxdg
 Requires: python-module-configobj
 Requires: python-module-apt
+Requires: mint-translations
 
 Requires: apt
 BuildRequires: apt
@@ -70,8 +69,6 @@ added to your gnome-panel or launched in its own window.
 
 %prep
 %setup -q -n mintmenu
-tar -xf %{SOURCE1}
-
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -86,7 +83,7 @@ tar -xf %{SOURCE1}
 %patch37 -p1
 %patch38 -p1
 #%%patch39 -p1
-%patch40 -p1
+%patch40 -p0
 %patch41 -p1
 
 # drop deprecated plugins
@@ -102,7 +99,6 @@ rm -f usr/lib/linuxmint/mintMenu/plugins/easygconf.py
 find . -name '*.orig' -exec rm -f {} ';'
 find . -name '*.pyc' -exec rm -f {} ';'
 find . -name '*.pot' -exec rm -f {} ';'
-find mint-translations-%l10n_ver -not -name 'mintmenu.mo' -type f -exec rm -f {} ';'
 
 mkdir -p %buildroot%prefix
 cp -av usr/bin usr/share %buildroot%prefix
@@ -111,9 +107,6 @@ cp -av usr/lib/linuxmint %buildroot%_datadir
 
 # Make utilites executable
 chmod +x %buildroot%_datadir/linuxmint/mintMenu/*.py
-
-cp -r mint-translations-%l10n_ver/usr/share/linuxmint/* %buildroot%_datadir
-chmod -R u+rw,g-w,g+r,o+r,o-w %buildroot%_datadir/locale/*
 
 %find_lang %name --with-gnome
 
@@ -130,6 +123,7 @@ sh -v %SOURCE33
 %_datadir/mate-panel/*
 %_datadir/dbus-1/services/*.service
 %_datadir/glib-2.0/schemas/*.xml
+%_man1dir/%name.1.*
 
 # list-mintmenu
 /usr/share/apt
@@ -137,6 +131,10 @@ sh -v %SOURCE33
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Thu Mar 19 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.2-alt1
+- New version
+- Move translations to other package
+
 * Fri Nov 14 2014 Andrey Cherepanov <cas@altlinux.org> 5.6.0-alt1
 - New version
 - Update translations to 2014.11.11
