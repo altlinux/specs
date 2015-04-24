@@ -4,8 +4,8 @@
 %define rname kdetoys
 Name: kde4toys
 %define major 4
-%define minor 11
-%define bugfix 1
+%define minor 14
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -24,7 +24,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): kde4base-runtime-devel kde4base-workspace-devel
 BuildRequires: gcc-c++ libjpeg-devel
-BuildRequires: kde4base-runtime-devel >= %version kde4base-workspace-devel >= %version
+BuildRequires: kde4base-runtime-devel kde4base-workspace-devel
 
 %description
 Toys for the K Desktop Environment.
@@ -144,6 +144,12 @@ done
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Apr 23 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt0.M70P.1
+- built for M70P
+
 * Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
