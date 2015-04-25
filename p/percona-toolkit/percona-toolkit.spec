@@ -1,5 +1,5 @@
 Name: percona-toolkit
-Version: 2.2.5
+Version: 2.2.14
 Release: alt1
 
 Summary: Percona Toolkit for MySQL
@@ -43,9 +43,14 @@ cp -p blib/man1/*.1p %buildroot%_man1dir
 %doc Changelog README
 
 %changelog
+* Sat Apr 25 2015 Terechkov Evgenii <evg@altlinux.org> 2.2.14-alt1
+- 2.2.14
+
+* Mon Feb 10 2014 Evgenii Terechkov <evg@altlinux.org> 2.2.6-alt1
+- 2.2.6
+
 * Wed Nov 20 2013 Terechkov Evgenii <evg@altlinux.org> 2.2.5-alt1
 - 2.2.5
 
 * Tue Aug 20 2013 Evgenii Terechkov <evg@altlinux.org> 2.2.4-alt1
 - initial build for ALT Linux Sisyphus
-
