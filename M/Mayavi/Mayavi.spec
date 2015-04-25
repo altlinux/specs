@@ -1,11 +1,12 @@
-%define mpiimpl openmpiRebuilt with vtk6.1
+%define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
-%define vtkver 6.1
+%define vtkver 6.2
+%define wxver 2.9
 
 %define oname mayavi
 Name:           Mayavi
 Version:        4.3.2
-Release:        alt2.git20140924
+Release:        alt3.git20140924
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -36,7 +37,7 @@ Requires:       python-module-apptools
 Requires:       python-module-EnvisageCore
 Requires:       python-module-EnvisagePlugins
 Requires:       python-module-traits
-Requires:       python-module-wx
+Requires:       python-module-wx%wxver
 #Requires:       python-module-TraitsGUI
 #Requires:       python-module-TraitsBackendQt
 Requires: python-module-mayavi = %EVR
@@ -63,6 +64,7 @@ module.
 %package -n python-module-%oname
 Summary: Python files for Mayavi, scientific data 3-dimensional visualizer
 Group: Development/Python
+Requires: python-module-wx%wxver
 Conflicts: %name < %version-%release
 
 %description -n python-module-%oname
@@ -81,6 +83,7 @@ This package contains tests for Mayavi, scientific data
 %package -n python-module-tvtk
 Summary: TVTK: A Traits-based wrapper for the Visualization Toolkit
 Group: Development/Python
+Requires: python-module-wx%wxver
 Conflicts: %name < %version-%release
 
 %description -n python-module-tvtk
@@ -186,6 +189,9 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 %doc docs/*.txt docs/pdf examples docs/build/tvtk docs/build/mayavi
 
 %changelog
+* Sat Apr 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt3.git20140924
+- Rebuilt with vtk6.2
+
 * Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt2.git20140924
 - New snapshot
 
