@@ -1,7 +1,7 @@
 # vim:set ft=spec:
 Name: swig
 Epoch: 1
-Version: 3.0.2
+Version: 3.0.5
 Release: alt1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -207,6 +207,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Sat Apr 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.5-alt1
+- Version 3.0.5
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.2-alt1
 - Version 3.0.2
 
