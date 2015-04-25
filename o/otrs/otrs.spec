@@ -1,10 +1,8 @@
-%def_without doc-admin-de
-
 %define installdir %webserver_webappsdir/%name
 %define otrs_user otrs
 
 Name: otrs
-Version: 3.3.10
+Version: 4.0.7
 Release: alt1
 
 Summary: Open source Ticket Request System
@@ -18,7 +16,7 @@ BuildArch: noarch
 
 Requires(pre): %{_sbindir}/useradd
 Requires(post): perl
-Requires: webserver-common perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib perl-Unicode-Normalize perl-Term-ANSIColor perl-TimeDate perl-YAML-LibYAML perl-Time-Piece
+Requires: webserver-common perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib perl-Unicode-Normalize perl-Term-ANSIColor perl-TimeDate perl-YAML-LibYAML perl-Time-Piece perl-Archive-Zip perl-Template
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-webserver-common rpm-macros-apache2 >= 3.9
 BuildRequires: perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib
@@ -28,7 +26,7 @@ Source1: README.ALT
 Source2: otrs-hold.conf
 Source3: apache2.conf
 
-Patch: patch0.patch
+Patch: otrs-InnoDBLogFileSize.patch
 
 %add_findreq_skiplist */bin/*
 %add_findreq_skiplist */Kernel/*
@@ -48,23 +46,9 @@ Requires: %name = %version-%release, apache2, apache2-mod_perl perl-Apache-DBI
 %description apache2
 Apache 2.x web-server configuration for %name
 
-%package doc-admin-en-pdf
-Summary: %name admin manual (En)
-Group: Networking/WWW
-%description doc-admin-en-pdf
-%name admin manual (En)
-
-%if_with doc-admin-de
-%package doc-admin-de-pdf
-Summary: %name admin manual (De)
-Group: Networking/WWW
-%description doc-admin-de-pdf
-%name admin manual (De)
-%endif
-
 %prep
 %setup
-%patch -p0
+%patch -p1
 
 %install
 # install apache config
@@ -79,12 +63,6 @@ cp -rp * %buildroot%installdir/
 
 #install docs
 install -pD -m0644 %SOURCE1 README.ALT
-mv %buildroot%installdir/doc/OTRSDatabaseDiagram.mwb OTRSDatabaseDiagram.mwb
-mv %buildroot%installdir/doc/OTRSDatabaseDiagram.png OTRSDatabaseDiagram.png
-mv %buildroot%installdir/doc/manual/en/otrs_admin_book.pdf admin_en.pdf
-%if_with doc-admin-de
-mv %buildroot%installdir/doc/manual/de/otrs_admin_book.pdf admin_de.pdf
-%endif
 
 #replace '/opt/otrs' to '/var/www/webapps/otrs' in all files
 find %buildroot%installdir -type f -exec sed -i -e "s/\/opt\/otrs/\/var\/www\/webapps\/otrs/g" {} \;
@@ -101,17 +79,16 @@ cd %buildroot%installdir/var/cron/
 for foo in *.dist; do cp $foo `basename $foo .dist`; done
 
 # all needed files packaged from %%builddir
-rm -f %buildroot%installdir/AUTHORS.md
 rm -f %buildroot%installdir/ARCHIVE
+rm -f %buildroot%installdir/AUTHORS.md
 rm -f %buildroot%installdir/CHANGES.md
+rm -f %buildroot%installdir/CONTRIBUTING.md
+rm -f %buildroot%installdir/COPYING
 rm -f %buildroot%installdir/COPYING-Third-Party
-rm -f %buildroot%installdir/CREDITS
-rm -f %buildroot%installdir/Custom/README
 rm -f %buildroot%installdir/INSTALL.md
-rm -f %buildroot%installdir/INSTALL.RedHat
-rm -f %buildroot%installdir/INSTALL.SuSE
-rm -f %buildroot%installdir/README.*
+rm -f %buildroot%installdir/README.md
 rm -f %buildroot%installdir/UPGRADING.md
+rm -f %buildroot%installdir/Custom/README
 
 %pre
 if id %otrs_user >/dev/null 2>&1; then
@@ -125,11 +102,17 @@ fi
 
 %post
 cd %installdir/bin/
-./otrs.SetPermissions.pl --otrs-user=%otrs_user --web-user=root --otrs-group=%webserver_group --web-group=%webserver_group %installdir >/dev/null 2>&1
+./otrs.SetPermissions.pl \
+    --otrs-user=%otrs_user \
+    --web-user=root \
+    --otrs-group=%webserver_group \
+    --web-group=%webserver_group \
+    --skip-regex="Config.pm" \
+    %installdir >/dev/null 2>&1
 #./Cron.sh start %otrs_user >/dev/null 2>&1
 
 %postun
-rm -rf %_docdir/%name-%version/
+#rm -rf %_docdir/%name-%version/
 
 %post apache2
 %post_apache2_rpma2chkconfigfile
@@ -138,14 +121,15 @@ rm -rf %_docdir/%name-%version/
 %post_apache2_rpma2chkconfigfile
 
 %files
+%doc ARCHIVE
 %doc AUTHORS.md
-%doc COPYING
-%doc RELEASE
 %doc CHANGES.md
+%doc CONTRIBUTING.md
+%doc COPYING
 %doc COPYING-Third-Party
-%doc OTRSDatabaseDiagram.mwb
-%doc OTRSDatabaseDiagram.png
-%doc README.*
+%doc INSTALL.md
+%doc README.md
+%doc README.ALT
 %doc UPGRADING.md
 %doc Custom/README
 %defattr(0775,root, %webserver_group)
@@ -157,7 +141,7 @@ rm -rf %_docdir/%name-%version/
 %installdir/scripts
 %installdir/doc
 %installdir/var
-%installdir/COPYING
+%installdir/i18n
 %installdir/RELEASE
 
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/apt/apt.conf.d/%name-hold.conf
@@ -165,15 +149,10 @@ rm -rf %_docdir/%name-%version/
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
-%files doc-admin-en-pdf
-%doc admin_en.pdf
-
-%if_with doc-admin-de
-%files doc-admin-de-pdf
-%doc admin_de.pdf
-%endif
-
 %changelog
+* Sat Apr 25 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.0.7-alt1
+- New version
+
 * Sat Nov 08 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.3.10-alt1
 - New version (ALT #30453)
 
