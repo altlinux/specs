@@ -1,6 +1,7 @@
+%set_verify_elf_method unresolved=strict
 Name: cmake
-Version: 2.8.12.1
-Release: alt2
+Version: 3.2.2
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -11,10 +12,14 @@ Url: http://cmake.org/
 Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.macros
+Source2: CMakeCache.txt
 Patch: %name-%version-%release.patch
 
 BuildPreReq: bzlib-devel gcc-c++ libarchive-devel >= 2.8.4
 BuildPreReq: libcurl-devel libexpat-devel libncurses-devel libqt4-devel libxml2-devel
+BuildPreReq: liblzma-devel jsoncpp-devel doxygen graphviz
+BuildPreReq: python-module-sphinx-devel
 BuildRequires(pre): shared-mime-info rpm-build-vim
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc gcc-fortran java-devel cvs subversion mercurial git-core}}
 
@@ -129,14 +134,20 @@ Set of RPM macros for packaging applications that use cmake.
 %build
 mkdir build
 pushd build
+install -m644 %SOURCE2 ./
 
 CFLAGS="%optflags" CXXFLAGS="%optflags" ../bootstrap \
+	--verbose \
+	--parallel=%__nprocs \
 	--system-libs \
 	--qt-gui \
+	--sphinx-man \
+	--sphinx-html \
 	--prefix=%prefix \
 	--datadir=/share/CMake \
 	--mandir=/share/man \
 	--docdir=/share/doc/%name-%version
+
 
 export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/form
 %make_build VERBOSE=1
@@ -148,15 +159,15 @@ pushd build
 export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/form
 %makeinstall_std
 popd
-install -m644 ChangeLog.manual %buildroot%_docdir/%name-%version
+#install -m644 ChangeLog.manual %buildroot%_docdir/%name-%version
 mv %buildroot/usr/lib %buildroot%_libdir || :
 for i in 32 128; do
     install -pD -m644 Source/QtDialog/CMakeSetup$i.png %buildroot%_iconsdir/hicolor/${i}x$i/apps/CMakeSetup.png
 done
 mkdir -p %buildroot{%vim_indent_dir,%vim_syntax_dir,%_sysconfdir/bash_completion.d}
-install -m644 Docs/cmake-indent.vim %buildroot%vim_indent_dir/%name.vim
-install -m644 Docs/cmake-syntax.vim %buildroot%vim_syntax_dir/%name.vim
-install -pD -m644 %name.macros %buildroot%_rpmmacrosdir/%name
+install -m644 Auxiliary/cmake-indent.vim %buildroot%vim_indent_dir/%name.vim
+install -m644 Auxiliary/cmake-syntax.vim %buildroot%vim_syntax_dir/%name.vim
+install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 
 mv -f %buildroot%_datadir/CMake/completions %buildroot%_sysconfdir/bash_completion.d
 
@@ -186,8 +197,9 @@ popd
 %_aclocaldir/*
 %_man1dir/cmake*.*
 %_man1dir/cpack.*
+%_man7dir/*
 %dir %_docdir/%name-%version/
-%_docdir/%name-%version/ChangeLog.manual
+#_docdir/%name-%version/ChangeLog.manual
 %_docdir/%name-%version/Copyright.txt
 %_docdir/%name-%version/cmcompress/
 %_docdir/%name-%version/cmsys/
@@ -200,7 +212,7 @@ popd
 
 %files -n ccmake
 %_bindir/ccmake
-%_libdir/libcmForm.so
+#_libdir/libcmForm.so
 %_man1dir/ccmake.*
 
 
@@ -215,15 +227,16 @@ popd
 %_desktopdir/CMake.desktop
 %_xdgmimedir/packages/cmakecache.xml
 %_iconsdir/*/*/*/CMakeSetup.png
-%_pixmapsdir/*
+#_pixmapsdir/*
 
 
 %files doc
 %dir %_docdir/%name-%version
-%_docdir/%name-%version/ccmake.*
-%_docdir/%name-%version/cmake*
-%_docdir/%name-%version/cpack*
-%_docdir/%name-%version/ctest.*
+#_docdir/%name-%version/ccmake.*
+#_docdir/%name-%version/cmake*
+#_docdir/%name-%version/cpack*
+#_docdir/%name-%version/ctest.*
+%_docdir/%name-%version/html
 
 
 %files -n vim-plugin-%name
@@ -238,8 +251,11 @@ popd
 
 
 %changelog
+* Sat Apr 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.2-alt1
+- Version 3.2.2 (ALT #30677)
+
 * Tue Nov 12 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.8.12.1-alt2
-- Revert changes in cmake.macros and add new macros %_cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=ON
+- Revert changes in cmake.macros and add new macros %%_cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=ON
 
 * Thu Nov 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.8.12.1-alt1
 - 2.8.12.1
