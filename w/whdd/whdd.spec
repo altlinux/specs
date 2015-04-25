@@ -1,6 +1,6 @@
 Name: whdd
 Version: 2.2
-Release: alt1
+Release: alt2
 
 Summary: Diagnostic and recovery tool for block devices
 License: GNU GPL
@@ -8,7 +8,8 @@ Group: System/Kernel and hardware
 Url: https://github.com/krieger-od/whdd
 
 Packager: Pavel Isopenko <pauli@altlinux.org>
-Summary(ru_RU.UTF-8): Инструмент для диагностики и восстановления блочных устройств
+Summary: HDD diagnostic and data recovery tool for Linux
+Summary(ru_RU.UTF-8): Инструмент диагностики HDD и восстановления данных под Linux
 Source: %name-%version.tar
 BuildRequires(pre): cmake
 # Automatically added by buildreq on Tue Nov 27 2012
@@ -16,9 +17,22 @@ BuildRequires(pre): cmake
 BuildRequires: cmake gcc-c++ libdialog-devel libncursesw-devel
 
 %description
-WHDD is a diagnostic and recovery tool for block devices (near to replace MHDD for Linux).
+WHDD is a HDD diagnostic and data recovery tool for Linux.
+It is capable of testing a hard drive with reading and writing, providing intuitive visualization of the process.
+Visualization or these tests is very similar to MHDD. Amongst others, there is a function for copying the device.
+The copying procedure algorithms are optimized for least harm to already-defective source device.
+WHDD may work with your hard drives on low level, sending ATA commands to device, the benefits are:
+- no system freeze while accessing damaged device (device is soft-reset on timeout)
+- better timing precision
+
 %description -l ru_RU.UTF-8
-WHDD - инструмент для диагностики и восстановления блочных устройств (как бы замена MHDD для Linux).
+WHDD - инструмент диагностики HDD и восстановления данных под Linux.
+Предназначен для тестирования накопителей на чтение и запись, даёт наглядное представление процесса.
+Визуализация тестов очень похожа на MHDD. Кроме прочего есть также функция копирования данных.
+Алгоритм процедуры копирования оптимизирован на минимизацию вреда для уже имеющего дефекты устройства.
+WHDD может работать с жёстким диском на низком уровне, отправляя устройству ATA-команды, это:
+- исключает подвисания при доступе к повреждённому устройству (магкий сброс по таймауту);
+- лучшая точность по времени.
 
 %prep
 %setup
@@ -35,6 +49,9 @@ WHDD - инструмент для диагностики и восстанов�
 %attr(4711, root, root) %_sbindir/whdd*
 
 %changelog
+* Sat Apr 25 2015 Pavel Isopenko <pauli@altlinux.org> 2.2-alt2
+- Correction of the description (ALT #30854)
+
 * Fri Jan 09 2015 Pavel Isopenko <pauli@altlinux.org> 2.2-alt1
 - new version whdd 2.2
 
