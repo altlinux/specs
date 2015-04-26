@@ -1,12 +1,12 @@
 %define _name geoclue
-%define ver_major 2.1
+%define ver_major 2.2
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 
 %def_enable gtk_doc
 
 Name: %{_name}2
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -19,9 +19,10 @@ Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%v
 %define glib_ver 2.34
 %define mm_ver 1.0
 %define geoip_ver 1.5.1
+%define soup_ver 2.42
 
 BuildRequires: intltool yelp-tools gtk-doc libgio-devel >= %glib_ver
-BuildRequires: libjson-glib-devel libsoup-devel libmm-glib-devel >= %mm_ver
+BuildRequires: libjson-glib-devel libsoup-devel >= %soup_ver libmm-glib-devel >= %mm_ver
 BuildRequires: libnotify-devel systemd-devel
 # for check
 BuildRequires: /proc dbus-tools-gui
@@ -109,6 +110,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 
 %changelog
+* Sun Apr 26 2015 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Fri Jan 09 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1.10-alt1
 - 2.1.10
 
