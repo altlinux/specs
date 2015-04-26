@@ -1,10 +1,11 @@
 %define oname scikit-image
 
 %def_with python3
+%def_disable docs
 
 Name: python-module-%oname
-Version: 0.11
-Release: alt1.dev.git20141124
+Version: 0.12
+Release: alt1.dev.git20150413
 Summary: Image processing routines for SciPy
 License: BSD
 Group: Development/Python
@@ -30,6 +31,7 @@ BuildPreReq: python3-module-Pillow
 %endif
 
 %py_provides skimage
+%py_requires numpy scipy networkx matplotlib
 
 %description
 Image processing algorithms for SciPy, including IO, morphology,
@@ -50,6 +52,7 @@ This package contains tests for %oname.
 Summary: Image processing routines for SciPy
 Group: Development/Python3
 %py3_provides skimage
+%py3_requires numpy scipy networkx matplotlib
 
 %description -n python3-module-%oname
 Image processing algorithms for SciPy, including IO, morphology,
@@ -121,12 +124,14 @@ popd
 
 %python_install
 
+%if_enabled docs
 export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C doc pickle
+xvfb-run make -C doc pickle
 xvfb-run make -C doc html
 
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %if_disabled check
 rm -f requirements.txt
@@ -148,7 +153,9 @@ popd
 %exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/*
+%if_enabled docs
 %exclude %python_sitelibdir/*/pickle
+%endif
 %exclude %python_sitelibdir/*/*/test*
 %exclude %python_sitelibdir/*/*/*/test*
 
@@ -156,11 +163,16 @@ popd
 %python_sitelibdir/*/*/test*
 %python_sitelibdir/*/*/*/test*
 
+%if_enabled docs
 %files pickles
 %python_sitelibdir/*/pickle
 
 %files docs
 %doc doc/build/html doc/examples viewer_examples
+%else
+%files docs
+%doc doc/examples viewer_examples
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -178,6 +190,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12-alt1.dev.git20150413
+- Version 0.12dev
+
 * Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.dev.git20141124
 - New snapshot
 - Moved all tests into tests subpackage
