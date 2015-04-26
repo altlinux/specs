@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.61
-Release: alt1.git20140303
+Release: alt2.git20140303
 Summary: Scikits data smoothing package
 License: BSD
 Group: Development/Python
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.61-alt2.git20140303
+- Rebuilt with updated NumPy
+
 * Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.61-alt1.git20140303
 - Initial build for Sisyphus
 
