@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1
-Release: alt1.a.git20141117
+Version: 0.1.1
+Release: alt1.git20150423
 Summary: Hidden Markov Models in Python, with scikit-learn like API
 License: BSD
 Group: Development/Python
@@ -19,6 +19,7 @@ BuildPreReq: python-module-Cython python-module-scikit-learn
 BuildPreReq: libnumpy-devel python-module-nose python-module-coverage
 BuildPreReq: python-module-sphinx-devel python-module-numpydoc
 BuildPreReq: python-module-Pillow texlive-latex-recommended
+BuildPreReq: python-module-matplotlib-sphinxext
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -136,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20150423
+- Version 0.1.1
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.a.git20141117
 - Initial build for Sisyphus
 
