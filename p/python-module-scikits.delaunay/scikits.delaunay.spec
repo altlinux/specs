@@ -3,7 +3,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.5
-Release: alt1
+Release: alt2
 Summary: Delaunay triangulation and interpolation tools
 License: BSD
 Group: Development/Python
@@ -59,6 +59,9 @@ nosetests -v
 %python_sitelibdir/%mname/delaunay/test*
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.5-alt2
+- Rebuilt with updated NumPy
+
 * Sat Feb 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.5-alt1
 - Initial build for Sisyphus
 
