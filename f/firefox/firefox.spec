@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        37.0.1
+Version:        37.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -296,6 +296,11 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun Apr 26 2015 Alexey Gladkov <legion@altlinux.ru> 37.0.2-alt1
+- New release (37.0.2).
+- Fixed:
+  + 2015-45 Memory corruption during failed plugin initialization 
+
 * Mon Apr 06 2015 Alexey Gladkov <legion@altlinux.ru> 37.0.1-alt1
 - New release (37.0.1).
 - Fixed:
