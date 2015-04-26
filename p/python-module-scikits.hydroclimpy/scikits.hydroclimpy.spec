@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.67.1
-Release: alt1.git20100929
+Release: alt2.git20100929
 Summary: Environmental time series manipulation
 License: BSD
 Group: Development/Python
@@ -122,6 +122,9 @@ python setup.py test
 %files tests -f %oname.tests
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.67.1-alt2.git20100929
+- Rebuilt with updated NumPy
+
 * Sat Feb 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.67.1-alt1.git20100929
 - Initial build for Sisyphus
 
