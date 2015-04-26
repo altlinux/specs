@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.2
-Release: alt1.dev.r803
+Release: alt2.dev.r803
 Summary: Approximate Nearest Neighbor library wrapper for Numpy
 License: LGPLv3
 Group: Development/Python
@@ -129,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2-alt2.dev.r803
+- Rebuilt with updated NumPy
+
 * Fri Feb 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2-alt1.dev.r803
 - Initial build for Sisyphus
 
