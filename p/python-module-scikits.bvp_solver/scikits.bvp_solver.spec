@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt1.git20120926
+Release: alt2.git20120926
 Summary: Python package for solving two-point boundary value problems
 License: BSD
 Group: Development/Python
@@ -175,6 +175,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt2.git20120926
+- Rebuilt with updated NumPy
+
 * Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.git20120926
 - Initial build for Sisyphus
 
