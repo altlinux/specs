@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.11.0
-Release: alt1.git20130116
+Release: alt2.git20130116
 Summary: A python module to make noise from numpy arrays
 License: LGPLv2.1+
 Group: Development/Python
@@ -202,6 +202,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.11.0-alt2.git20130116
+- Rebuilt with updated NumPy
+
 * Sat Feb 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.11.0-alt1.git20130116
 - Initial build for Sisyphus
 
