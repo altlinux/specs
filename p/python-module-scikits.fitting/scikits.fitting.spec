@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.1
-Release: alt1.git20121029
+Release: alt2.git20121029
 Summary: Framework for fitting functions to data with SciPy
 License: BSD
 Group: Development/Python
@@ -133,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt2.git20121029
+- Rebuilt with updated NumPy
+
 * Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1.git20121029
 - Initial build for Sisyphus
 
