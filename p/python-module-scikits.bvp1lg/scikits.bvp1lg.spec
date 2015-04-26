@@ -4,7 +4,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.2.5
+Version: 0.2.7
 Release: alt1
 Summary: Boundary value problem (legacy) solvers for ODEs
 License: Noncommercial
@@ -13,6 +13,10 @@ Url: https://pypi.python.org/pypi/scikits.bvp1lg/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: http://netlib.org/ode/colnew.f
+Source2: http://netlib.org/ode/mus1.f
+Source3: http://netlib.org/ode/mus2.f
+Source4: http://netlib.org/ode/mus3.f
 
 BuildPreReq: gcc-fortran liblapack-devel
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -77,6 +81,11 @@ This package contains tests for %oname.
 %prep
 %setup
 
+install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 ./
+for i in *.f; do
+	cp $i lib/$i.orig
+done
+
 %if_with python3
 cp -fR . ../python3
 find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
@@ -118,26 +127,35 @@ popd
 %endif
 
 %files
-%doc LICENSE README TODO
+%doc *.rst
 %python_sitelibdir/%mname/bvp1lg
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/%mname/bvp1lg/tests
+%exclude %python_sitelibdir/%mname/bvp1lg/examples.py*
 
 %files tests
 %python_sitelibdir/%mname/bvp1lg/tests
+%python_sitelibdir/%mname/bvp1lg/examples.py*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE README TODO
+%doc *.rst
 %python3_sitelibdir/%mname/bvp1lg
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/%mname/bvp1lg/tests
+%exclude %python3_sitelibdir/%mname/bvp1lg/examples.py
+%exclude %python3_sitelibdir/%mname/bvp1lg/__pycache__/examples.*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%mname/bvp1lg/tests
+%python3_sitelibdir/%mname/bvp1lg/examples.py
+%python3_sitelibdir/%mname/bvp1lg/__pycache__/examples.*
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.7-alt1
+- Version 0.2.7
+
 * Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1
 - Initial build for Sisyphus
 
