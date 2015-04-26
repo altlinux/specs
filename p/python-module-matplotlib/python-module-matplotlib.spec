@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt3.git20141101
+Release: alt3.git20150425
 
 Summary: Matlab(TM) style python plotting package
 
@@ -25,7 +25,7 @@ Source1: setup.cfg
 
 %setup_python_module pylab
 
-BuildPreReq: python3-module-pygobject3
+BuildPreReq: python3-module-pygobject3 git
 BuildPreReq: python-module-matplotlib python-module-numpydoc ipython 
 BuildRequires: dvipng gcc-c++ libgtk+2-devel python-module-PyQt4-devel
 BuildPreReq: python-module-ctypes python-module-pygtk_git-devel
@@ -321,6 +321,13 @@ sed -i "s|@TOP@|$PWD|" doc/conf.py \
 
 install -p -m644 %SOURCE1 .
 
+git config --global user.email "real at altlinux.org"
+git config --global user.name "REAL"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag -m "%version" %version
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -493,6 +500,7 @@ done
 %python_sitelibdir/matplotlib/axes
 %python_sitelibdir/matplotlib/style
 %exclude %python_sitelibdir/mpl_toolkits
+%exclude %python_sitelibdir/*/*/test*
 
 %files fltk
 #python_sitelibdir/matplotlib/backends/backend_fltk*
@@ -555,9 +563,11 @@ rm -fR %_docdir/%name/pdf
 %files tests
 %python_sitelibdir/%oname/testing
 %python_sitelibdir/%oname/tests
+%python_sitelibdir/%oname/*/test*
 
 %files sphinxext
 %python_sitelibdir/%oname/sphinxext
+%exclude %python_sitelibdir/%oname/sphinxext/test*
 
 %files -n python-module-mpl_toolkits
 %python_sitelibdir/mpl_toolkits
@@ -619,6 +629,8 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/axes
 %python3_sitelibdir/matplotlib/style
 %exclude %python3_sitelibdir/mpl_toolkits
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
 
 #files -n python3-module-%oname-fltk
 #python3_sitelibdir/matplotlib/backends/backend_fltk*
@@ -657,9 +669,13 @@ rm -fR %_docdir/%name/pdf
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/testing
 %python3_sitelibdir/%oname/tests
+%python3_sitelibdir/%oname/*/test*
+%python3_sitelibdir/%oname/*/*/test*
 
 %files -n python3-module-%oname-sphinxext
 %python3_sitelibdir/%oname/sphinxext
+%exclude %python3_sitelibdir/%oname/sphinxext/test*
+%exclude %python3_sitelibdir/%oname/sphinxext/*/test*
 
 %files -n python3-module-mpl_toolkits
 %python3_sitelibdir/mpl_toolkits
@@ -670,6 +686,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.git20150425
+- New snapshot
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.git20141101
 - Added necessary files into qt4 subpackage
 
