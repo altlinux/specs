@@ -1,5 +1,5 @@
 Name: iso-codes
-Version: 3.49
+Version: 3.57
 Release: alt1
 
 Group: System/Internationalization
@@ -42,7 +42,7 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 
 %install
 %makeinstall_std
-%find_lang --output=%name.lang iso_639 iso_639_3 iso_3166 iso_3166_2 iso_4217 iso_15924
+%find_lang --output=%name.lang iso_639 iso_639_3 iso_639_5 iso_3166 iso_3166_2 iso_4217 iso_15924
 
 %files -f %name.lang
 %doc ChangeLog README TODO
@@ -53,6 +53,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Sun Apr 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.57-alt1
+- 3.57
+
 * Wed Dec 11 2013 Vladimir Lettiev <crux@altlinux.ru> 3.49-alt1
 - New version 3.49
 
