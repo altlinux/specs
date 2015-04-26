@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.1
-Release: alt1.git20150211
+Version: 0.2.4
+Release: alt1.git20150215
 Summary: Easy-to-use and highly modular machine learning framework
 License: ASLv2.0
 Group: Development/Python
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1.git20150215
+- Version 0.2.4
+
 * Wed Feb 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20150211
 - Initial build for Sisyphus
 
