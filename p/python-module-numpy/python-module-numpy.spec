@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt13.git20141102
+Release: alt13.git20150424
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -40,7 +40,7 @@ Conflicts: libsyfi-devel < 0.6.1-alt3.hg20090822
 Conflicts: lib%oname-devel < %version-%release
 Obsoletes: libsyfi-devel < 0.6.1-alt3.hg20090822
 
-BuildPreReq: /proc
+BuildPreReq: /proc git
 
 BuildPreReq: gcc-fortran liblapack-devel python-module-Pyrex
 BuildPreReq: python-modules-compiler python-modules-encodings
@@ -52,7 +52,7 @@ BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: dvipng doxygen ghostscript-classic ImageMagick-tools
 BuildPreReq: texlive-latex-base texlive-latex-extra
 BuildPreReq: texmf-latex-preview python-module-matplotlib-sphinxext
-BuildPreReq: python-module-Cython
+BuildPreReq: python-module-Cython boost-python-devel
 #%if_with tests
 #BuildPreReq: libnumpy-devel
 #%endif
@@ -62,7 +62,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python3-module-sphinx-devel python3-module-Pygments
 BuildPreReq: python-tools-2to3
-BuildPreReq: python3-module-Cython
+BuildPreReq: python3-module-Cython boost-python-devel
 %endif
 
 Provides: python-module-numpy-addons = %EVR
@@ -404,10 +404,16 @@ This package contains documentation for NumPy in PDF format.
 
 %prep
 %setup
+
+git config --global user.email "real at altlinux.org"
+git config --global user.name "REAL"
+git init-db
+
 install -m644 %SOURCE1 %SOURCE2 .
 tar xf %SOURCE3
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
 sed -i 's|@PYVER@|%_python_version|g' site.cfg doc/Makefile
+sed -i 's|@PYSUFF@||' site.cfg
 
 cat <<EOF >%oname/__svn_version__.py
 version='%version'
@@ -421,6 +427,8 @@ sed -i 's|^prefix.*|prefix=%python_sitelibdir/%oname/core|' \
 sed -i 's|^includedir.*|includedir=%_includedir/%oname|' \
 	%oname/core/npymath.ini.in
 
+git add . -A
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -430,6 +438,7 @@ find -type f -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 install -m644 %SOURCE1 %SOURCE2 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
 sed -i 's|@PYVER@|%_python3_version|g' site.cfg doc/Makefile
+sed -i 's|@PYSUFF@|3|' site.cfg
 sed -i 's|pyrexc|pyrexc3|' numpy/distutils/command/build_src.py
 find doc/ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
@@ -449,8 +458,13 @@ sed -i 's|^includedir.*|includedir=%_includedir/%oname-py3|' \
 
 rm -f numpy/distutils/mingw32ccompiler.py
 
+git commit -a -m "%version"
+git tag -m "%version" %version
 popd
 %endif
+
+git commit -a -m "%version"
+git tag -m "%version" %version
 
 %if_with doc
 # Sphinx
@@ -633,8 +647,8 @@ cp %oname/fft/*.c %oname/fft/*.h \
 	%buildroot%python_sitelibdir/%oname/fft/
 cp %oname/linalg/*.c \
 	%buildroot%python_sitelibdir/%oname/linalg/
-cp -fR %oname/lib/src \
-	%buildroot%python_sitelibdir/%oname/lib/
+#cp -fR %oname/lib/src \
+#	%buildroot%python_sitelibdir/%oname/lib/
 cp -fR %oname/core/src \
 	%buildroot%python_sitelibdir/%oname/core/
 cp -fR %oname/random/mtrand \
@@ -659,8 +673,8 @@ cp %oname/fft/*.c %oname/fft/*.h \
 	%buildroot%python3_sitelibdir/%oname/fft/
 cp %oname/linalg/*.c \
 	%buildroot%python3_sitelibdir/%oname/linalg/
-cp -fR %oname/lib/src \
-	%buildroot%python3_sitelibdir/%oname/lib/
+#cp -fR %oname/lib/src \
+#	%buildroot%python3_sitelibdir/%oname/lib/
 cp -fR %oname/core/src \
 	%buildroot%python3_sitelibdir/%oname/core/
 cp -fR %oname/random/mtrand \
@@ -798,8 +812,7 @@ fi
 %python_sitelibdir/%oname
 %exclude %python_sitelibdir/%oname/testing
 %exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/*/tests
-%exclude %python_sitelibdir/%oname/*/testutils.py*
+%exclude %python_sitelibdir/%oname/*/test*
 %exclude %python_sitelibdir/%oname/f2py/src/fortranobject.h
 %exclude %python_sitelibdir/%oname/random/randomkit.h
 %exclude %python_sitelibdir/%oname/core/lib/npy-pkg-config
@@ -831,7 +844,7 @@ fi
 %exclude %python_sitelibdir/%oname/core/src/umath
 %exclude %python_sitelibdir/%oname/fft/*.c
 %exclude %python_sitelibdir/%oname/fft/*.h
-%exclude %python_sitelibdir/%oname/lib/src
+#exclude %python_sitelibdir/%oname/lib/src
 %exclude %python_sitelibdir/%oname/linalg/*.c
 #exclude %python_sitelibdir/%oname/linalg/*.h
 %python_sitelibdir/%oname-*.egg-info
@@ -846,8 +859,8 @@ fi
 %python3_sitelibdir/%oname
 %exclude %python3_sitelibdir/%oname/testing
 %exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/*/tests
-%exclude %python3_sitelibdir/%oname/*/testutils.py*
+%exclude %python3_sitelibdir/%oname/*/test*
+%exclude %python3_sitelibdir/%oname/*/*/test*
 %exclude %python3_sitelibdir/%oname/f2py/src/fortranobject.h
 %exclude %python3_sitelibdir/%oname/random/randomkit.h
 %exclude %python3_sitelibdir/%oname/core/lib/npy-pkg-config
@@ -878,7 +891,7 @@ fi
 %exclude %python3_sitelibdir/%oname/core/src/umath
 %exclude %python3_sitelibdir/%oname/fft/*.c
 %exclude %python3_sitelibdir/%oname/fft/*.h
-%exclude %python3_sitelibdir/%oname/lib/src
+#exclude %python3_sitelibdir/%oname/lib/src
 %exclude %python3_sitelibdir/%oname/linalg/*.c
 #exclude %python3_sitelibdir/%oname/linalg/*.h
 #endif
@@ -912,9 +925,8 @@ fi
 
 %files tests
 %python_sitelibdir/%oname/tests
-%python_sitelibdir/%oname/*/tests
+%python_sitelibdir/%oname/*/test*
 %exclude %python_sitelibdir/%oname/testing/tests
-%python_sitelibdir/%oname/*/testutils.py*
 %python_sitelibdir/%oname/f2py/tests/src/array_from_pyobj
 %if_with tests
 %python_sitelibdir/f2py_ext*
@@ -929,9 +941,9 @@ fi
 %if_with python3
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/tests
-%python3_sitelibdir/%oname/*/tests
+%python3_sitelibdir/%oname/*/test*
+%python3_sitelibdir/%oname/*/*/test*
 %exclude %python3_sitelibdir/%oname/testing/tests
-%python3_sitelibdir/%oname/*/testutils.py*
 %python3_sitelibdir/%oname/f2py/tests/src/array_from_pyobj
 %if_with tests
 %python3_sitelibdir/f2py_ext*
@@ -977,7 +989,7 @@ fi
 %python_sitelibdir/%oname/core/src/private
 %python_sitelibdir/%oname/core/src/*.c*
 %python_sitelibdir/%oname/core/src/umath
-%python_sitelibdir/%oname/lib/src
+#python_sitelibdir/%oname/lib/src
 %python_sitelibdir/%oname/linalg/*.c
 #python_sitelibdir/%oname/linalg/*.h
 #endif
@@ -1010,7 +1022,7 @@ fi
 %python3_sitelibdir/%oname/core/src/private
 %python3_sitelibdir/%oname/core/src/*.c*
 %python3_sitelibdir/%oname/core/src/umath
-%python3_sitelibdir/%oname/lib/src
+#python3_sitelibdir/%oname/lib/src
 %python3_sitelibdir/%oname/linalg/*.c
 #python3_sitelibdir/%oname/linalg/*.h
 #endif
@@ -1068,6 +1080,9 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Sat Apr 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt13.git20150424
+- New snapshot
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt13.git20141102
 - Fixed numpy.distutils.misc_util.get_num_build_jobs for cases when
   --jobs command line argument doesn't recognized by setup.py

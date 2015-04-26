@@ -4,14 +4,14 @@ BuildRequires(pre): rpm-build-python
 %define python_noarch %python_sitelibdir_noarch
 
 %define oname scipy
-%define svnver 8cec719
+%define svnver 67dce17
 
 %def_enable docs
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.15.0
-Release: alt2.git20141102
+Version: 0.15.1
+Release: alt1.git20150425
 
 Summary: SciPy is the library of scientific codes
 
@@ -31,13 +31,14 @@ Requires: %python_noarch
 Source: %oname-%version.tar
 Source1: site.cfg
 
-BuildPreReq: python-module-sympy python-module-scipy
+BuildPreReq: python-module-sympy python-module-scipy git
 BuildPreReq: python-module-numpy python-module-matplotlib-sphinxext
 BuildPreReq: python-module-numdifftools
 BuildPreReq: libsuitesparse-devel swig /proc rpm-macros-make
 BuildPreReq: python-module-sphinx-devel
 BuildPreReq: python-module-Pygments
 BuildPreReq: python-module-matplotlib
+BuildPreReq: boost-python-devel
 %if_enabled docs
 BuildPreReq: python-module-matplotlib-sphinxext python-module-numpydoc
 #BuildPreReq: %py_dependencies scikits.statsmodels.docs.sphinxext
@@ -51,6 +52,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python3-module-Pygments libnumpy-py3-devel
 BuildPreReq: python-tools-2to3 python3-module-Cython
+BuildPreReq: boost-python3-devel
 %endif
 
 %description
@@ -195,10 +197,20 @@ version='%version'
 svn_version='%svnver'
 EOF
 
+git config --global user.email "real at altlinux.org"
+git config --global user.name "REAL"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag -m "%version" %version
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
+sed -i 's|@PYSUFF@|3|' ../python3/site.cfg
 %endif
+
+sed -i 's|@PYSUFF@||' site.cfg
 
 # Sphinx
 %if_enabled docs
@@ -283,6 +295,10 @@ sed -i \
 %python3_install install_lib install_headers \
 	install_data config_fc
 #pushd scipy/weave
+find %buildroot%python3_sitelibdir -type f -exec \
+	sed -i 's|#! %_bindir/env python|#!%_bindir/python3|' -- '{}' + ||:
+find %buildroot%python3_sitelibdir -type f -exec \
+	sed -i 's|#!%_bindir/env python|#!%_bindir/python3|' -- '{}' + ||:
 #python3_install install_lib install_headers \
 #	install_data config_fc
 #popd
@@ -458,6 +474,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.1-alt1.git20150425
+- Version 0.15.1
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.0-alt2.git20141102
 - Fixed build
 
