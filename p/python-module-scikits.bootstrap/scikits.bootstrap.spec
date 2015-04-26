@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.2
-Release: alt1.git20140521
+Release: alt1.git20150327
 Summary: Bootstrap confidence interval estimation routines for SciPy
 License: BSD
 Group: Development/Python
@@ -145,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.git20150327
+- New snapshot
+
 * Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.git20140521
 - Initial build for Sisyphus
 
