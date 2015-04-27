@@ -3,28 +3,29 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4
-Release: alt1
+Version: 0.5
+Release: alt1.hg20150304
 Summary: asyncio event loop scheduling callbacks in eventlet
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/aioeventlet/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# hg clone https://bitbucket.org/haypo/aioeventlet
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-eventlet python-module-coverage
 BuildPreReq: python-module-trollius python-module-futures
-BuildPreReq: python-module-mock
+BuildPreReq: python-module-mock python-module-aiotest
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-eventlet python3-module-coverage
 BuildPreReq: python3-module-asyncio
-BuildPreReq: python3-module-mock
+BuildPreReq: python3-module-mock python3-module-aiotest
 %endif
 
 %py_provides %oname
@@ -106,10 +107,12 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %check
 python setup.py test
 #python runtests.py
+python run_aiotest.py
 %if_with python3
 pushd ../python3
 python3 setup.py test
 python3 runtests.py
+python3 run_aiotest.py
 popd
 %endif
 
@@ -131,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.hg20150304
+- Version 0.5
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
 - Initial build for Sisyphus
 
