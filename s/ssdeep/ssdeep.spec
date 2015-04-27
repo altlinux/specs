@@ -1,5 +1,5 @@
 Name: ssdeep
-Version: 2.12
+Version: 2.13
 Release: alt1
 
 Summary: Context Triggered Piecewise Hashing values
@@ -74,6 +74,9 @@ Static library for libfuzzy, %summary
 %_libdir/*.a
 
 %changelog
+* Mon Apr 27 2015 Michael Shigorin <mike@altlinux.org> 2.13-alt1
+- new version (watch file uupdate)
+
 * Fri Oct 24 2014 Michael Shigorin <mike@altlinux.org> 2.12-alt1
 - new version (watch file uupdate)
 
