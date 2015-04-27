@@ -5,8 +5,9 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.20150211
-Release: alt1.git20150211
+Epoch: 1
+Version: 0.1.1
+Release: alt1.git20150424
 Summary: Provide sessions for aiohttp.web
 License: ASLv2.0
 Group: Development/Python
@@ -22,7 +23,7 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-aiohttp python-module-jinja2
 BuildPreReq: python-module-pycrypto python-module-aioredis
 BuildPreReq: python-module-nose python-module-flake8
-BuildPreReq: python-module-coverage
+BuildPreReq: python-module-coverage python-module-pep257
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -30,7 +31,7 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-aiohttp python3-module-jinja2
 BuildPreReq: python3-module-pycrypto python3-module-aioredis
 BuildPreReq: python3-module-nose python3-module-flake8
-BuildPreReq: python3-module-coverage
+BuildPreReq: python3-module-coverage python3-module-pep257
 %endif
 
 %py_provides %oname
@@ -91,17 +92,20 @@ popd
 
 %if_with python2
 %files
-%doc CHANGES.txt *.rst
+%doc CHANGES.txt *.rst docs/*.rst
 %python_sitelibdir/*
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGES.txt *.rst
+%doc CHANGES.txt *.rst docs/*.rst
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Apr 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.1.1-alt1.git20150424
+- Version 0.1.1
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.20150211-alt1.git20150211
 - Initial build for Sisyphus
 
