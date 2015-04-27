@@ -3,7 +3,7 @@
 
 Name: libbluedevil
 Version: 2.1
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Qt-based library written in C++ to handle all Bluetooth functionality
@@ -12,6 +12,8 @@ License: GPL
 Url: http://www.kde.org
 
 Source: %name-%version.tar
+# upstream
+Patch1: delete-adapter-crash.patch
 
 # Automatically added by buildreq on Thu Sep 02 2010 (-bi)
 #BuildRequires: cmake gcc-c++ glib2-devel glibc-devel-static libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libqt3-devel libxkbfile-devel qt4-designer
@@ -37,6 +39,7 @@ based on %name .
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %Kbuild
@@ -53,6 +56,9 @@ based on %name .
 %_pkgconfigdir/bluedevil.pc
 
 %changelog
+* Mon Apr 27 2015 Sergey V Turchin <zerg@altlinux.org> 2.1-alt2
+- fix crash (ALT#30954)
+
 * Mon Jan 26 2015 Sergey V Turchin <zerg@altlinux.org> 2.1-alt1
 - new version
 
