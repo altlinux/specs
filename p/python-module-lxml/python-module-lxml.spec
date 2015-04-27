@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-lxml
-Version: 3.4.1
-Release: alt1.git20141226
+Version: 3.5
+Release: alt1.dev.git20150417
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 
@@ -82,6 +82,7 @@ cp -a . ../python3
 %endif
 
 %build
+export LC_ALL=en_US.UTF-8
 # see Makefile
 %python_build_debug --with-cython
 %if_with python3
@@ -95,6 +96,7 @@ popd
 %endif
 
 %install
+export LC_ALL=en_US.UTF-8
 %python_install
 %if_with python3
 pushd ../python3
@@ -110,15 +112,15 @@ CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
 CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
 FFLAGS="${FFLAGS:-%optflags}" ; export FFLAGS ;
 cp -l build/lib.linux-*/lxml/*.so src/lxml/
-%__python test.py -p -v
-PYTHONPATH=src:$PYTHONPATH %__python selftest.py
-PYTHONPATH=src:$PYTHONPATH %__python selftest2.py
+python test.py -p -v
+PYTHONPATH=src python src/lxml/tests/selftest.py
+PYTHONPATH=src python src/lxml/tests/selftest2.py
 %if_with python3
 pushd ../python3
 cp -l build/lib.linux-*/lxml/*.so src/lxml/
-%__python3 test.py -p -v
-PYTHONPATH=src:$PYTHONPATH %__python3 selftest.py
-PYTHONPATH=src:$PYTHONPATH %__python3 selftest2.py
+#python3 test.py -p -v
+PYTHONPATH=src python3 src/lxml/tests/selftest.py
+PYTHONPATH=src python3 src/lxml/tests/selftest2.py
 popd
 %endif
 
@@ -134,6 +136,9 @@ popd
 %doc doc samples
 
 %changelog
+* Mon Apr 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5-alt1.dev.git20150417
+- Version 3.5.dev
+
 * Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.1-alt1.git20141226
 - New snapshot
 
