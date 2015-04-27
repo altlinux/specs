@@ -1,11 +1,12 @@
 Name: pyclewn
-Version: 1.11
+Version: 2.1
 Release: alt1
 License: GPLv2
 Summary: Using vim as a front end to a debugger (supports gdb and pdb)
 Group: Development/Debuggers
 BuildPreReq: rpm-build-vim
-Source: %name-%version.py2.tar.gz
+Source: %name-%version.tar.gz
+BuildArch: noarch
 
 # Automatically added by buildreq on Wed May 02 2012
 # optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-logging
@@ -35,28 +36,43 @@ Summary: Supplemental module for %name
 Supplemental module for %name
 
 %prep
-%setup -n %name-%version.py2
+%setup -n %name-%version
 # hack out " (ALT Linux)" from gdb version
-sed -i 's@lines.next()@lines.next().replace(" (ALT Linux)","")@' clewn/gdb.py
+sed -i 's@lines.next()@lines.next().replace(" (ALT Linux)","")@' lib/clewn/gdb.py
+cat > %name <<@@@
+#!/usr/bin/python2.7
+
+import clewn.vim as vim
+vim.main()
+@@@
 
 %build
 export EDITOR=/usr/bin/vim
 %python_build
+vim -S lib/clewn/runtime/pyclewn-2.1.vmb +:q
 
 %install
 export EDITOR=/usr/bin/vim
 %python_install
+mkdir -p %buildroot%vim_runtime_dir
+cp -a $HOME/.vim/* %buildroot%vim_runtime_dir/
+install -D %name %buildroot%_bindir/%name
 
 %files
-%doc README
+%doc README NEWS
 %vim_runtime_dir/*/*
 %vim_runtime_dir/*/.??*
+%exclude %vim_runtime_dir/doc/tags
 %_bindir/*
 
 %files -n %packagename
-%python_sitelibdir/*
+%python_sitelibdir_noarch/*
 
 %changelog
+* Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 2.1-alt1
+- Autobuild version bump to 2.1
+- fix installation
+
 * Tue Oct 15 2013 Fr. Br. George <george@altlinux.ru> 1.11-alt1
 - Autobuild version bump to 1.11
 - Adapt for ALT gdb version
