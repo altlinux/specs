@@ -1,11 +1,11 @@
 Name: libass
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 Summary: Portable library for SSA/ASS subtitles rendering
 
 Group: System/Libraries
 License: BSD
-Url: http://code.google.com/p/libass/
+Url: https://github.com/libass/libass
 Source: %name-%version-%release.tar
 
 BuildRequires: libpng-devel libenca-devel fontconfig-devel libfreetype-devel
@@ -50,6 +50,9 @@ This package contains the headers and libraries for libass development.
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Apr 27 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt1
+- 0.12.1 release
+
 * Wed Dec 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.0-alt1
 - 0.12.0 release
 
