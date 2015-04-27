@@ -1,6 +1,6 @@
 Name: mpv
-Version: 0.8.3
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 Summary(ru_RU.UTF8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
@@ -82,6 +82,9 @@ chmod ugo+rx waf
 %_datadir/zsh/site-functions/_mpv
 
 %changelog
+* Mon Apr 27 2015 Terechkov Evgenii <evg@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Wed Apr  1 2015 Terechkov Evgenii <evg@altlinux.org> 0.8.3-alt2
 - Build with Samba (ALT #30889)
 
