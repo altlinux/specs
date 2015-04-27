@@ -5,7 +5,7 @@
 
 Name: awstats
 Version: 7.4
-Release: alt0.2
+Release: alt0.3
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.KOI8-R):	Анализатор логов Web-сервера в режиме реального времени
@@ -168,6 +168,9 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Mon Apr 27 2015 L.A. Kostis <lakostis@altlinux.ru> 7.4-alt0.3
+- fix broken url for asnum query.
+
 * Sat Apr 18 2015 L.A. Kostis <lakostis@altlinux.ru> 7.4-alt0.2
 - Fix yandex detection (s/text/etext/g).
 
