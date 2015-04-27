@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.3
-Release: alt1.git20141209
+Release: alt1.git20150423
 Summary: Data analysis tools for X-ray science
 License: BSD
 Group: Development/Python
@@ -15,13 +15,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/Nikea/scikit-xray.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests xvfb-run
 BuildPreReq: python-module-mock libnumpy-devel
 BuildPreReq: python-module-six python-module-scipy
 BuildPreReq: python-module-xraylib python-module-nose
 BuildPreReq: python-module-netCDF4 python-module-lmfit
 BuildPreReq: python-module-scikit-image python-module-coverage
+BuildPreReq: python-module-pandas python-modules-logging
 BuildPreReq: python-module-sphinx-devel python-module-numpydoc
+BuildPreReq: python-module-sphinx-bootstrap-theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -33,7 +35,7 @@ BuildPreReq: python3-module-coverage
 %endif
 
 %py_provides skxray
-%py_requires netCDF4 xraylib lmfit
+%py_requires netCDF4 xraylib lmfit six logging skimage
 
 %description
 Data analysis tools for X-ray science.
@@ -52,7 +54,7 @@ This package contains tests for %oname.
 Summary: Data analysis tools for X-ray science
 Group: Development/Python3
 %py3_provides skxray
-%py3_requires netCDF4 xraylib
+%py3_requires netCDF4 xraylib six logging skimage
 %add_python3_req_skip lmfit
 
 %description -n python3-module-%oname
@@ -128,14 +130,14 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 export PYTHONPATH=%buildroot%python_sitelibdir
-py.test
-python run_tests.py
+#py.test
+xvfb-run python run_tests.py
 #if_with python3
 %if 0
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-%_python3_version
-python3 run_tests.py
+#py.test-%_python3_version
+xvfb-run python3 run_tests.py
 popd
 %endif
 
@@ -165,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20150423
+- New snapshot
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20141209
 - New snapshot
 
