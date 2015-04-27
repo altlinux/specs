@@ -1,7 +1,7 @@
 %define oname drakon_editor
 Name: drakon
-Version: 1.14
-Release: alt3
+Version: 1.22
+Release: alt1
 
 Summary: DRAKON Editor is a free cross-platform editor for the DRAKON visual language
 
@@ -20,8 +20,6 @@ Source: http://prdownloads.sf.net/drakon-editor/%oname%version.tar
 BuildRequires(pre): rpm-build-tcl tcl
 
 BuildRequires: tcl
-
-BuildRequires(check): tcl(sqlite3)
 
 Requires: sqlite3-tcl tcl-img
 
@@ -58,7 +56,8 @@ chmod 755 %buildroot%_bindir/*
 install -d %buildroot%_datadir/%name/
 cp -a . %buildroot%_datadir/%name/
 rm -f %buildroot%_datadir/%name/readme.html
-rm -rf %buildroot%_datadir/%name/docs/
+# disappeared in 1.22:
+#rm -rf %buildroot%_datadir/%name/docs/
 rm -rf %buildroot%_datadir/%name/unittest/
 
 # There is a file in the package named .DS_Store or .DS_Store.gz, 
@@ -67,32 +66,18 @@ rm -rf %buildroot%_datadir/%name/unittest/
 # included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
-%check
-pushd unittest/
-
-./unittest.tcl 2>&1 | tee check.log
-
-# if it doesn't find a required tcl pkg, it doesn't fail with a non-zero status.
-# Therefore we parse the output.
-
-# A hack: simply check that there is no output except the test names:
-if egrep -v '^[[:alnum:]_.]*$' check.log; then
-   echo 'It seems that a test printed an error message.'
-   exit 1
-else
-   :;
-fi
-
-popd
-
 %files
 %doc readme.html
-%doc docs
+# disappeared in 1.22:
+#%doc docs
 %_bindir/%name
 %_bindir/drakon_gen
 %_datadir/%name/
 
 %changelog
+* Mon Apr 27 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.22-alt1
+- new version 1.22 (with rpmrb script)
+
 * Mon Apr 27 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.14-alt3
 - (spec) Run unit tests.
 
