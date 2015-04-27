@@ -1,0 +1,113 @@
+%define rname konsole
+
+%define sover 15
+%define libkonsoleprivate libkonsoleprivate%sover
+
+Name: kde5-%rname
+Version: 15.4.0
+Release: alt1
+%K5init
+
+Group: Terminals
+Summary: Terminal emulator for KDE
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+PreReq(post,preun): alternatives >= 0.2
+Provides: xvt, %_x11bindir/xvt
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Mon Apr 27 2015 (-bi)
+# optimized out: alternatives cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
+#BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdb4-devel libxkbfile-devel python-module-google qt5-script-devel rpm-build-ruby
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: libalternatives-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-script-devel
+BuildRequires: libdb4-devel
+BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
+BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
+BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
+BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kdesignerplugin-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel
+BuildRequires: kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel
+BuildRequires: kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel
+BuildRequires: kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel
+BuildRequires: kf5-sonnet-devel
+BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel
+BuildRequires: libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
+BuildRequires: libxkbfile-devel
+
+%description
+As well as being a standalone program, it is also used by other KDE programs
+such as the Kate editor and KDevelop development environment to provide easy
+access to a terminal window. Konsole's features and usage are explained and
+illustrated in the Konsole handbook, which can be accessed by browsing to
+"help:/konsole" in Konqueror.
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n %libkonsoleprivate
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libkonsoleprivate
+KF5 library
+
+%prep
+%setup -q -n %rname-%version
+
+%build
+%K5build
+
+%install
+%K5install
+%K5install_move data konsole
+%find_lang %name --with-kde --without-mo --all-name
+
+# install alternatives
+install -d %buildroot/%_sysconfdir/alternatives/packages.d
+cat > %buildroot/%_sysconfdir/alternatives/packages.d/kde5-konsole <<__EOF__
+%_x11bindir/xvt %_K5bin/konsole        50
+__EOF__
+
+
+%files common -f %name.lang
+%doc COPYING*
+
+%files
+%config %_sysconfdir/alternatives/packages.d/kde5-konsole
+# adding to utmp don't work because dbus checking for saved guid
+#attr(2711,root,utempter) %_K4bindir/konsole
+%_K5bin/konsole
+%_K5bin/konsoleprofile
+%_K5lib/libkdeinit5_konsole.so
+%_K5plug/konsole*.so
+%_K5xdgapp/org.kde.konsole.desktop
+%_K5data/konsole/
+%_K5srv/*.desktop
+%_K5srv/ServiceMenus/konsole*.desktop
+%_K5srvtyp/*.desktop
+%_K5notif/*
+%_K5xmlgui/*
+
+%files -n %libkonsoleprivate
+%_K5lib/libkonsoleprivate.so.*
+%_K5lib/libkonsoleprivate.so.%sover
+
+%changelog
+* Mon Apr 27 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- initial build
