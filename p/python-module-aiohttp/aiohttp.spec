@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.14.4
-Release: alt1.git20150217
+Version: 0.15.3
+Release: alt1.git20150425
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -35,7 +35,7 @@ BuildPreReq: python3-module-Cython
 %endif
 
 %py_provides %oname
-%py_requires trollius
+%py_requires trollius chardet
 
 %description
 http client/server for asyncio (PEP-3156).
@@ -54,7 +54,7 @@ This package contains tests for %oname.
 Summary: http client/server for asyncio
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires asyncio
+%py3_requires asyncio chardet
 
 %description -n python3-module-%oname
 http client/server for asyncio (PEP-3156).
@@ -140,14 +140,14 @@ rm -f requirements*
 %check
 %if_with python2
 python setup.py test
-%make vtest
+nosetests -s -v ./tests/
 %endif
 %if_with python3
 pushd ../python3
 python3 setup.py test
 sed -i 's|nosetests|nosetests3|' Makefile
 sed -i 's|flake8|python3-flake8|' Makefile
-%make vtest
+nosetests3 -s -v ./tests/
 popd
 %endif
 
@@ -181,6 +181,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.3-alt1.git20150425
+- Version 0.15.3
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.4-alt1.git20150217
 - Version 0.14.4
 
