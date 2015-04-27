@@ -5,7 +5,7 @@
 
 Name: kde4-i18n-%lng
 Version: 15.4.0
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE
@@ -80,6 +80,7 @@ popd
 
 # clean
 rm -f %buildroot/%_K4i18n/*/LC_MESSAGES/*.ktp-*.mo
+rm -f %buildroot/%_K4i18n/*/LC_MESSAGES/*libkgeomap*.mo
 
 if ! [ -e %buildroot/%_K4doc/%lng/common ]; then
     mkdir -p %buildroot/%_K4doc/%lng/common/
@@ -112,6 +113,9 @@ fi
 
 
 %changelog
+* Mon Apr 27 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt3
+- fix conflicts
+
 * Fri Apr 24 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt2
 - fix to build
 
