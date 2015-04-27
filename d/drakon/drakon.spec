@@ -1,7 +1,7 @@
 %define oname drakon_editor
 Name: drakon
 Version: 1.14
-Release: alt2
+Release: alt3
 
 Summary: DRAKON Editor is a free cross-platform editor for the DRAKON visual language
 
@@ -20,6 +20,8 @@ Source: http://prdownloads.sf.net/drakon-editor/%oname%version.tar
 BuildRequires(pre): rpm-build-tcl tcl
 
 BuildRequires: tcl
+
+BuildRequires(check): tcl(sqlite3)
 
 Requires: sqlite3-tcl tcl-img
 
@@ -65,6 +67,24 @@ rm -rf %buildroot%_datadir/%name/unittest/
 # included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
+%check
+pushd unittest/
+
+./unittest.tcl 2>&1 | tee check.log
+
+# if it doesn't find a required tcl pkg, it doesn't fail with a non-zero status.
+# Therefore we parse the output.
+
+# A hack: simply check that there is no output except the test names:
+if egrep -v '^[[:alnum:]_.]*$' check.log; then
+   echo 'It seems that a test printed an error message.'
+   exit 1
+else
+   :;
+fi
+
+popd
+
 %files
 %doc readme.html
 %doc docs
@@ -73,6 +93,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %_datadir/%name/
 
 %changelog
+* Mon Apr 27 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.14-alt3
+- (spec) Run unit tests.
+
 * Fri Apr 24 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.14-alt2
 - bin/drakon*: fix the invocation (ALT #30965).
 - (spec) Correct RPM group (Development, not Office) (ALT #30964).
