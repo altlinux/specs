@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2
-Release: alt2
+Version: 0.3
+Release: alt1.hg20141227
 Summary: Test suite to validate an implementation of the asyncio API, the PEP 3156
 License: ASLv2.0
 Group: Development/Python
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.hg20141227
+- Version 0.3
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2
 - Fixed build
 
