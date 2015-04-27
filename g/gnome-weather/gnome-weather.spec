@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.2
+Version: %ver_major.2.1
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -71,12 +71,15 @@ subst 's@\$(LN_S)@ln -s@' src/Makefile.am
 %_datadir/dbus-1/services/%_name.BackgroundService.service
 %_datadir/glib-2.0/schemas/%_name.Application.gschema.xml
 %_iconsdir/hicolor/*/apps/%_name.Application.png
-%_iconsdir/HighContrast/*x*/apps/%_name.Application.png
+%_iconsdir/hicolor/symbolic/apps/%_name.Application-symbolic.svg
 %_datadir/gnome-shell/search-providers/%_name.Application.search-provider.ini
 %_datadir/appdata/%_name.Application.appdata.xml
 %doc NEWS
 
 %changelog
+* Mon Apr 27 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2.1-alt1
+- 3.16.2.1
+
 * Mon Apr 27 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 
