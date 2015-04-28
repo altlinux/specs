@@ -1,6 +1,6 @@
 Summary: 	a HTTP benchmarking tool
 Name: 		wrk
-Version:	3.1.1
+Version:	4.0.1
 Release: 	alt1
 Url: 		https://github.com/wg/wrk
 Source: 	%name-%version.tar
@@ -36,6 +36,9 @@ scripts/
 %doc LICENSE NOTICE README
 
 %changelog
+* Tue Apr 28 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 4.0.1-alt1
+- New version
+
 * Thu Oct 16 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 3.1.1-alt1
 - Initial build for ALT
 
