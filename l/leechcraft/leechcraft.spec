@@ -1,38 +1,40 @@
 %define _unpackaged_files_terminate_build 1
-# currently libleechcraft-xsd.so should be linked against ibleechcraft-util.so
-# and contrariwise
-#%%set_verify_elf_method unresolved=relaxed
+
+%def_disable torrent
 
 Name: leechcraft
 Version: 0.6.70
-Release: alt1
+Release: alt2
 
 Summary: LeechCraft DE
 License: Boost Software License
 Group: Graphical desktop/Other
 URL: http://%name.org
 
-# b0cbaa4f
+# 5621455b5
 Source: %name-%version.tar
 
-Patch: %name-0.6.60-alt-link.patch
-
 Requires: %name-data = %version-%release
+Requires: polkit udisks2
+Requires: libqt4-sql-sqlite
 # for session mode
 Requires: openbox-base dbus-tools-gui
 
 %define qxmpp_ver 0.7.6
 %define qwt_ver 6.1.0
+%define torrent_ver 1.0.4
 
 %add_findreq_skiplist %_datadir/%name/fenet/wms/*.sh
 %add_findreq_skiplist %_datadir/%name/azoth/lc_azoth_modnok_latexconvert.sh
 
 BuildRequires: gcc-c++
 BuildRequires: cmake libqt4-devel qt4-mobility-devel libqtermwidget-devel libqwt6-devel >= %qwt_ver
-BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel boost-locale-devel
+BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
+BuildRequires: boost-asio-devel boost-locale-devel
 BuildRequires: qjson-devel libxml2-devel libpcre-devel
 BuildRequires: gst-plugins-devel libtag-devel libguess-devel
-BuildRequires: libqca2-devel libkqoauth-devel libhunspell-devel libtorrent-rasterbar-devel
+BuildRequires: libqca2-devel libkqoauth-devel libhunspell-devel
+%{?_enable_torrent:BuildRequires: libtorrent-rasterbar-devel >= %torrent_ver}
 BuildRequires: libspeex-devel libqxmpp-devel >= %qxmpp_ver
 BuildRequires: libXcomposite-devel libXdamage-devel libxkbfile-devel
 BuildRequires: libmagic-devel liblastfm-devel libudev-devel libpoppler-qt4-devel libpoppler-cpp-devel libdjvu-devel
@@ -61,7 +63,6 @@ Development headers for LeechCraft.
 
 %prep
 %setup
-#%patch
 
 %build
 %cmake ../src \
@@ -72,8 +73,9 @@ Development headers for LeechCraft.
 	-DENABLE_MUSICZOMBIE:BOOL=OFF \
 	-DENABLE_SYNCER:BOOL=OFF \
 	-DENABLE_OTLOZHU_SYNC:BOOL=OFF \
-	-DENABLE_TORRENT:BOOL=OFF \
-	-DENABLE_XPROXY:BOOL=OFF
+	-DENABLE_XPROXY:BOOL=OFF \
+	%{?_disable_torrent:-DENABLE_TORRENT:BOOL=OFF}
+
 %cmake_build
 
 %install
@@ -129,6 +131,10 @@ Development headers for LeechCraft.
 %_datadir/%name/cmake/
 
 %changelog
+* Fri Apr 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.70-alt2
+- 0.6.70_5621455b
+- requires: polkit, udisks2, libqt4-sql-sqlite
+
 * Sat Apr 18 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.70-alt1
 - 0.6.70_b0cbaa4f
 
