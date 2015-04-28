@@ -7,7 +7,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.7.0
-Release: alt2.git20150216
+Release: alt2.git20150323
 Summary: Statistical computations and models for use with SciPy
 License: BSD
 Group: Development/Python
@@ -193,6 +193,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.0-alt2.git20150323
+- New snapshot
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.0-alt2.git20150216
 - Added requires statsmodels.stats.multitest
 
