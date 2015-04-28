@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=strict
 Name: cmake
 Version: 3.2.2
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, open-source make system
 
@@ -249,8 +249,12 @@ popd
 %files -n rpm-macros-%name
 %_rpmmacrosdir/*
 
+%filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.2-alt2
+- Avoid requirement on gnustep-Backbone (ALT #30978)
+
 * Sat Apr 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.2-alt1
 - Version 3.2.2 (ALT #30677)
 
