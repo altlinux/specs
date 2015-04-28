@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.1
-Release: alt1.git20150223
+Release: alt2.git20150223
 Summary: Python interface to UMFPACK sparse direct solver
 License: BSD
 Group: Development/Python
@@ -153,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.1-alt2.git20150223
+- Rebuilt with updated NumPy
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.1-alt1.git20150223
 - Initial build for Sisyphus
 
