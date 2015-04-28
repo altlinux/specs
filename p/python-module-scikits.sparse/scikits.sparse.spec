@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt1.dev.git20140718
+Release: alt2.dev.git20140718
 Summary: Scikits sparse matrix package
 License: GPL
 Group: Development/Python
@@ -176,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2.dev.git20140718
+- Rebuilt with updated NumPy
+
 * Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.dev.git20140718
 - Initial build for Sisyphus
 
