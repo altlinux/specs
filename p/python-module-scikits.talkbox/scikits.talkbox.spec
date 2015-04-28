@@ -3,7 +3,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.2.3
-Release: alt1.git20091014
+Release: alt2.git20091014
 Summary: Talkbox, a set of python modules for speech/signal processing
 License: MIT
 Group: Development/Python
@@ -116,6 +116,9 @@ python setup.py test
 %doc docs/build/html docs/src/examples
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2.3-alt2.git20091014
+- Rebuilt with updated NumPy
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2.3-alt1.git20091014
 - Initial build for Sisyphus
 
