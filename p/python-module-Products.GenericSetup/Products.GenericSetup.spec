@@ -1,24 +1,27 @@
 %define oname Products.GenericSetup
 
 Name: python-module-%oname
-Version: 1.7.4
-Release: alt1
+Version: 1.7.6
+Release: alt1.dev0.git20141023
 Summary: Read Zope configuration state from profile dirs / tarballs
 License: ZPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/Products.GenericSetup/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/Products.GenericSetup.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel python-module-Zope2-tests
+BuildPreReq: python-module-eggtestinfo
 BuildPreReq: python-module-five.localsitemanager
 BuildPreReq: python-module-zope.formlib python-module-zope.datetime
 BuildPreReq: python-module-zope.testrunner
 BuildPreReq: python-module-zope.component-tests
 BuildPreReq: python-module-zope.traversing-tests
 BuildPreReq: python-module-zope.security-tests
+BuildPreReq: python-module-Products.GenericSetup-tests
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -121,6 +124,9 @@ rm -f %buildroot%python_sitelibdir/Products/__init__.py*
 %doc docs/.build/html/*
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.6-alt1.dev0.git20141023
+- Version 1.7.6.dev0
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.4-alt1
 - Initial build for Sisyphus
 
