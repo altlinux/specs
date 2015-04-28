@@ -1,12 +1,13 @@
 Name: blosc
-Version: 1.3.6
-Release: alt1.git20140611
+Version: 1.6.1
+Release: alt1.dev.git20150428
 Summary: Blosc: A blocking, shuffling and lossless compression library
 License: MIT
 Group: System/Libraries
-Url: http://blosc.pytables.org/trac
+Url: http://www.blosc.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/Blosc/c-blosc.git
 Source: %name-%version.tar
 
 BuildPreReq: cmake gcc-c++ libhdf5-devel libsnappy-devel zlib-devel
@@ -121,6 +122,9 @@ cmake \
 %_includedir/blosc_filter.h
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.dev.git20150428
+- Version 1.6.1.dev
+
 * Wed Jun 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.6-alt1.git20140611
 - New snapshot
 
