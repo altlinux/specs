@@ -1,6 +1,6 @@
 Summary: Is an open source real-time web log analyzer
 Name: goaccess
-Version: 0.8.5
+Version: 0.9
 Release: alt1
 Url: http://goaccess.prosoftcorp.com/
 Source: %name-%version.tar
@@ -31,11 +31,14 @@ install -D -m 644 goaccess.1 %buildroot%_man1dir/goaccess.1
 
 %files
 %_sbindir/goaccess
-%_man1dir/goaccess.1.gz
+%_man1dir/goaccess.1.bz2
 
 %doc AUTHORS ChangeLog NEWS COPYING README TODO
 
 %changelog
+* Tue Apr 28 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.9-alt1
+- New version
+
 * Wed Dec 10 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.8.5-alt1
 - New version
 
