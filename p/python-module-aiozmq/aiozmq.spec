@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt1.git20150215
+Release: alt1.git20150415
 Summary: ZeroMQ integration with asyncio
 License: BSD
 Group: Development/Python
@@ -23,7 +23,7 @@ BuildPreReq: python-tools-pep8 pyflakes python-module-zmq
 BuildPreReq: python-module-wheel python-module-coverage
 BuildPreReq: python-module-elpy python-module-jedi ipython
 BuildPreReq: python-module-rope_py3k python-module-ipdb
-BuildPreReq: python-module-docutils
+BuildPreReq: python-module-docutils python-module-scipy
 %endif
 BuildPreReq: python-module-sphinx-devel /dev/pts
 BuildPreReq: python-module-sphinxcontrib-spelling
@@ -36,11 +36,11 @@ BuildPreReq: python3-tools-pep8 python3-pyflakes python3-module-zmq
 BuildPreReq: python3-module-wheel python3-module-coverage
 BuildPreReq: python3-module-elpy python3-module-jedi
 BuildPreReq: python3-module-rope_py3k python3-module-ipdb
-BuildPreReq: python3-module-docutils
+BuildPreReq: python3-module-docutils python3-module-scipy
 %endif
 
 %py_provides %oname
-%py_requires asyncio msgpack zmq
+%py_requires asyncio msgpack zmq scipy
 
 %description
 asyncio (PEP 3156) support for ZeroMQ.
@@ -49,7 +49,7 @@ asyncio (PEP 3156) support for ZeroMQ.
 Summary: ZeroMQ integration with asyncio
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires asyncio msgpack zmq
+%py3_requires asyncio msgpack zmq scipy
 
 %description -n python3-module-%oname
 asyncio (PEP 3156) support for ZeroMQ.
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20150415
+- New snapshot
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20150215
 - Version 0.6.0
 
