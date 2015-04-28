@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.4.0
-Release: alt1.git20090722
+Release: alt2.git20090722
 Summary: A python module for high quality audio resampling
 License: GPLv2
 Group: Development/Python
@@ -20,11 +20,13 @@ Source1: site.cfg
 BuildPreReq: libsamplerate-devel
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Cython libnumpy-devel
+BuildPreReq: python-module-nose
 BuildPreReq: python-module-sphinx-devel python-module-numpydoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-Cython libnumpy-py3-devel
+BuildPreReq: python3-module-nose
 %endif
 
 %py_provides %oname
@@ -175,6 +177,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.4.0-alt2.git20090722
+- Rebuilt with updated NumPy
+
 * Sat Feb 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.4.0-alt1.git20090722
 - Initial build for Sisyphus
 
