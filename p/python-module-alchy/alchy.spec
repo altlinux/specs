@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5.0
-Release: alt1.git20141216
+Version: 1.5.1
+Release: alt1.git20150213
 Summary: The declarative companion to SQLAlchemy
 License: MIT
 Group: Development/Python
@@ -20,6 +20,7 @@ BuildPreReq: python-module-SQLAlchemy python-module-tox
 BuildPreReq: python-tools-pep8 pylint python-module-pytest-cov
 BuildPreReq: python-module-coveralls python-module-twine
 BuildPreReq: python-module-wheel python-module-virtualenv
+BuildPreReq: python-module-astroid
 BuildPreReq: python-modules-sqlite3
 BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 BuildPreReq: python-module-sphinxcontrib-napoleon
@@ -30,6 +31,7 @@ BuildPreReq: python3-module-SQLAlchemy python3-module-tox
 BuildPreReq: python3-tools-pep8 pylint-py3 python3-module-pytest-cov
 BuildPreReq: python3-module-coveralls python3-module-twine
 BuildPreReq: python3-module-wheel python3-module-virtualenv
+BuildPreReq: python3-module-astroid
 BuildPreReq: python3-modules-sqlite3
 %endif
 
@@ -129,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1.git20150213
+- Version 1.5.1
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.git20141216
 - Version 1.5.0
 
