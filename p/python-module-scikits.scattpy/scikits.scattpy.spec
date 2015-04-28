@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.git20120523
+Release: alt2.git20120523
 Summary: Light Scattering methods for Python
 License: BSD
 Group: Development/Python
@@ -203,6 +203,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2.git20120523
+- Rebuilt with updated NumPy
+
 * Mon Mar 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20120523
 - Initial build for Sisyphus
 
