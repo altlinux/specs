@@ -3,7 +3,7 @@
 
 Summary: Python library for NETCONF clients
 Name: python-module-%oname
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 Url: https://github.com/leopoul/ncclient
 Source: %name-%version.tar
@@ -77,6 +77,9 @@ popd
 
 
 %changelog
+* Tue Apr 28 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.4.3-alt1
+- New version
+
 * Thu Oct 30 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.4.2-alt1
 - Initla build for ALT
 
