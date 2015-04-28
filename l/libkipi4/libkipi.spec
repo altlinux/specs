@@ -2,7 +2,7 @@
 
 %define rname libkipi
 Name: libkipi4
-Version: 14.12.1
+Version: 15.4.0
 Release: alt1
 
 Group: System/Libraries
@@ -62,6 +62,9 @@ Development files for %name
 
 
 %changelog
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
+- new version
+
 * Wed Jan 28 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
 - new version
 
