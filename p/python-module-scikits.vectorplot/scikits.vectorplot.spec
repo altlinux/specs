@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.2
-Release: alt1.git20150130
+Release: alt2.git20150130
 Summary: Vector fields plotting algorithms
 License: BSD
 Group: Development/Python
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2-alt2.git20150130
+- Rebuilt with updated NumPy
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2-alt1.git20150130
 - Initial build for Sisyphus
 
