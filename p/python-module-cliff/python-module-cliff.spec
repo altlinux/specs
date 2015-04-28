@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:             python-module-%modname
-Version:          1.10.1
+Version:          1.12.0
 Release:          alt1
 Summary:          Command Line Interface Formulation Framework
 
@@ -70,6 +70,7 @@ http://readthedocs.org/docs/cliff/en/latest/
 %setup
 
 sed -i 's|^pbr.*||' requirements.txt
+sed -i 's|^argparse.*||' requirements.txt
 
 # Remove bundled egg info
 rm -rf *.egg-info
@@ -124,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.0-alt1
+- Version 1.12.0
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 1.10.1-alt1
 - 1.10.1
 
