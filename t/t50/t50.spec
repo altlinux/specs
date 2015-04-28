@@ -1,6 +1,6 @@
 Summary:        the fatest network packet injector
 Name:           t50
-Version:        5.4.1
+Version:        5.5
 Release:        alt1
 URL:            http://t50.sourceforge.net/
 Packager: 	Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -9,7 +9,7 @@ Group: 		Security/Networking
 
 #BuildRequires:  
 Source0:        %name-%version.tar
-Patch0:		t50-5.4.1-alt1-drop_checkroot.patch
+Patch0:		t50-5.5-alt1-drop_checkroot.patch
 
 %description
 T50 (f.k.a. F22 Raptor) is a tool designed to perform "Stress Testing".
@@ -34,6 +34,9 @@ the main goal was:
 %_man8dir/*
 
 %changelog
+* Tue Apr 28 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 5.5-alt1
+- New version
+
 * Fri Jul 11 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 5.4.1-alt1
 - Initial build
 
