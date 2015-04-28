@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        1.3.0
+Version:        1.4.0
 Release:        alt1
 Summary:        Manage dynamic plugins for Python applications
 
@@ -96,6 +96,9 @@ This package contains tests for %oname.
 #%patch -p2
 #%patch1 -p2
 
+sed -i 's|^argparse.*||' requirements.txt
+sed -i 's|^pbr.*||' requirements.txt
+
 %if_with python3
 cp -fR . ../python3
 %endif
@@ -147,9 +150,11 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/%oname/pickle
 %exclude %python_sitelibdir/%oname/tests
+%exclude %python_sitelibdir/%oname/example
 
 %files tests
 %python_sitelibdir/%oname/tests
+%python_sitelibdir/%oname/example
 
 %files pickles
 %python_sitelibdir/%oname/pickle
@@ -163,12 +168,17 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/%oname/tests
+%exclude %python3_sitelibdir/%oname/example
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/tests
+%python3_sitelibdir/%oname/example
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1
+- Version 1.4.0
+
 * Thu Mar 12 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 
