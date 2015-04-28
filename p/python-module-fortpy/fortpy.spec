@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.4
-Release: alt1.git20150203
+Version: 1.5.2
+Release: alt1.git20150402
 Summary: Fortran Parsing, Unit Testing and Intellisense
 License: MIT
 Group: Development/Python
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt1.git20150402
+- Version 1.5.2
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.4-alt1.git20150203
 - Version 1.4.4
 
