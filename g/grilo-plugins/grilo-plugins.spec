@@ -2,7 +2,7 @@
 
 Name: grilo-plugins
 Version: %ver_major.14
-Release: alt1
+Release: alt2
 Summary: Plugins for the Grilo framework
 Group: Sound
 License: LGPLv2+
@@ -32,7 +32,7 @@ BuildRequires: libtotem-pl-parser-devel >= 3.4.1
 BuildRequires: libdmapsharing-devel >= 2.9.12
 BuildRequires: libjson-glib-devel
 BuildRequires: libavahi-gobject-devel libavahi-glib-devel libavahi-devel
-BuildRequires: libmediaart-devel
+BuildRequires: libmediaart2.0-devel
 BuildRequires: librest-devel
 BuildRequires: libarchive-devel
 
@@ -83,6 +83,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Tue Apr 28 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.14-alt2
+- fixed buildreqs
+
 * Tue Feb 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.14-alt1
 - 0.2.14
 
