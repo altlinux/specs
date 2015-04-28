@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt1.git20141120
+Release: alt2.git20141120
 Summary: Provides a unified API to read and write sound-files to and from numpy arrays
 License: Free
 Group: Development/Python
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2.git20141120
+- Rebuilt with updated NumPy
+
 * Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.git20141120
 - Initial build for Sisyphus
 
