@@ -3,7 +3,7 @@
 
 Summary: RAET (Reliable Asynchronous Event Transport) Protocol
 Name: python-module-%oname
-Version: 0.5.3
+Version: 0.6.1
 Release: alt2
 Url: https://github.com/saltstack/raet
 Source: %name-%version.tar
@@ -114,6 +114,9 @@ popd
 
 
 %changelog
+* Tue Apr 28 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.6.1-alt2
+- New version
+
 * Sat Feb 14 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5.3-alt2
 - Add subpackage tests
 
