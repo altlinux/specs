@@ -3,7 +3,7 @@
 
 Summary:        Improved Colored Difference Tool
 Name:           %oname
-Version:        1.7.1
+Version:        1.7.3
 Release:        alt1
 URL:            http://www.jefftk.com/icdiff
 Packager: 	Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -33,6 +33,9 @@ install -p -m755 git-%oname %buildroot%_sbindir/git-%oname
 %_sbindir/git-%oname
 
 %changelog
+* Tue Apr 28 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 1.7.3-alt1
+- New version
+
 * Tue Dec 16 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.7.1-alt1
 - Initial build for ALT
 
