@@ -1,13 +1,15 @@
+%define _name org.gnome.FontManager
 Name: font-manager
-Version: 0.7.1
-Release: alt1
+Version: 0.7.2
+Release: alt0.1
 
 Summary: A font management application for the GNOME desktop
 License: GPLv3
 Group: Graphical desktop/GNOME
 Url: http://code.google.com/p/%name
 
-Source: http://%name.googlecode.com/files/%name-%version.tar.bz2
+#Source: http://%name.googlecode.com/files/%name-%version.tar.bz2
+Source: %name-%version.tar
 
 BuildRequires: libgtk+3-devel libjson-glib-devel libgee0.8-devel
 BuildRequires: libgucharmap-devel libsqlite3-devel libxml2-devel
@@ -46,13 +48,17 @@ export ac_cv_prog_HAVE_FILE_ROLLER="yes"
 
 %files -f %name.lang
 %_bindir/%name
-%_desktopdir/%name.desktop
-%_datadir/glib-2.0/schemas/org.gnome.FontManager.gschema.xml
+%_desktopdir/%_name.desktop
+%_datadir/dbus-1/services/%_name.service
+%_datadir/glib-2.0/schemas/%_name.gschema.xml
 %_datadir/appdata/%name.appdata.xml
 %doc README
 
 
 %changelog
+* Tue Apr 28 2015 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt0.1
+- 0.7.2, rev 422
+
 * Sat Nov 29 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
