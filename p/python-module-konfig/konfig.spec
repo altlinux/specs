@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.git20140428
+Release: alt2.git20140428
 Summary: Yet Another Config Parser
 License: MPLv2.0
 Group: Development/Python
@@ -25,6 +25,7 @@ BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
+Requires: python-module-configparser
 
 %description
 Yet another configuration object. Compatible with the updated
@@ -45,6 +46,7 @@ This package contains tests for %oname.
 Summary: Yet Another Config Parser
 Group: Development/Python3
 %py3_provides %oname
+Requires: python3-module-configparser
 
 %description -n python3-module-%oname
 Yet another configuration object. Compatible with the updated
@@ -118,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.git20140428
+- Fixed requirements
+
 * Wed Oct 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.git20140428
 - Initial build for Sisyphus
 
