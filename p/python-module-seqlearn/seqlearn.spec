@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20140922
+Release: alt1.git20150324
 Summary: Sequence learning toolkit for Python
 License: MIT
 Group: Development/Python
@@ -17,12 +17,14 @@ Source: %name-%version.tar
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Cython libnumpy-devel
 BuildPreReq: python-module-scipy python-module-scikit-learn
+BuildPreReq: python-module-nose
 BuildPreReq: python-module-sphinx-devel python-module-numpydoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-Cython libnumpy-py3-devel
 BuildPreReq: python3-module-scipy python3-module-scikit-learn
+BuildPreReq: python3-module-nose
 %endif
 
 %py_provides %oname
@@ -158,6 +160,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20150324
+- New snapshot
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20140922
 - Initial build for Sisyphus
 
