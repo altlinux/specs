@@ -2,7 +2,7 @@
 %define oname %mname.pulsefit
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt1.git20141230
+Release: alt2.git20141230
 Summary: Scikits pulse-fitting package
 License: MIT
 Group: Development/Python
@@ -40,6 +40,9 @@ py.test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt2.git20141230
+- Rebuilt with updated NumPy
+
 * Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20141230
 - New snapshot
 
