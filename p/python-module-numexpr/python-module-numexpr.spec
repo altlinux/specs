@@ -3,8 +3,8 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        2.4.1
-Release:        alt1.git20141130
+Version:        2.4.4
+Release:        alt1.dev0.git20150427
 Epoch: 1
 Summary:        Fast numerical array expression evaluator for Python and NumPy
 Group:          Development/Python
@@ -12,9 +12,10 @@ License:        MIT
 URL:            https://github.com/pydata/numexpr
 # https://github.com/pydata/numexpr.git
 Source:         %oname-%version.tar.gz
+Source1: site.cfg
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: python-devel gcc-c++
+BuildPreReq: python-devel gcc-c++ /proc liblapack-devel
 BuildPreReq: libnumpy-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -22,7 +23,7 @@ BuildPreReq: python3-devel
 BuildPreReq: libnumpy-py3-devel python3-module-setuptools-tests
 %endif
 
-Requires: %name-tests = %epoch:%version-%release
+Requires: %name-tests = %epoch:%version-%release /proc
 %py_requires numpy
 
 %description
@@ -42,7 +43,7 @@ allows to use multiple cores in your computations.
 %package -n python3-module-%oname
 Summary: Fast numerical array expression evaluator for Python and NumPy
 Group: Development/Python3
-Requires: python3-module-%oname-tests = %epoch:%version-%release
+Requires: python3-module-%oname-tests = %epoch:%version-%release /proc
 %py3_requires numpy
 
 %description -n python3-module-%oname
@@ -103,10 +104,17 @@ This package contains tests for numexpr.
 
 %prep
 %setup
+install -p -m644 %SOURCE1 ./
+sed -i 's|@LIBDIR@|%_libdir|' site.cfg
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+sed -i 's|@PYVER@|%_python3_version%_python3_abiflags|' \
+	../python3/site.cfg
 %endif
+
+sed -i 's|@PYVER@|%_python_version|' site.cfg
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -129,9 +137,15 @@ popd
 
 %check
 python setup.py test
+rm -fR build
+python setup.py build_ext -i
+py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
+#rm -fR build
+#python3 setup.py build_ext -i
+#py.test-%_python3_version -vv
 popd
 %endif
 
@@ -154,6 +168,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.4.4-alt1.dev0.git20150427
+- Version 2.4.4.dev0
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.4.1-alt1.git20141130
 - Version 2.4.1
 
