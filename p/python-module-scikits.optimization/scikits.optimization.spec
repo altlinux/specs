@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.3
-Release: alt1.git20130417
+Release: alt2.git20130417
 Summary: A python module for numerical optimization
 License: BSD
 Group: Development/Python
@@ -133,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.3-alt2.git20130417
+- Rebuilt with updated NumPy
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.3-alt1.git20130417
 - Initial build for Sisyphus
 
