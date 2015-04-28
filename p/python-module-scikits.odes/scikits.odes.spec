@@ -5,8 +5,8 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 2.0.2
-Release: alt1.git20150123
+Version: 2.1.0
+Release: alt1.git20150417
 Summary: Ordinary differential equation anddifferential algebraic equation solvers
 License: BSD
 Group: Development/Python
@@ -166,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.1.0-alt1.git20150417
+- Version 2.1.0
+
 * Sat Feb 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.0.2-alt1.git20150123
 - Initial build for Sisyphus
 
