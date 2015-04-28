@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.7.0
-Release: alt1.dev0.git20141117
+Version: 0.9.0
+Release: alt1.dev0.git20150420
 Summary: CouchDB client built on top of aiohttp
 License: BSD
 Group: Development/Python
@@ -21,16 +21,18 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-oauthlib python-module-nose
 BuildPreReq: python-module-aiohttp python-module-trollius
+BuildPreReq: python-module-flake8
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-oauthlib python3-module-nose
 BuildPreReq: python3-module-aiohttp python3-module-asyncio
+BuildPreReq: python3-module-flake8
 %endif
 
 %py_provides %oname
-%py_requires trollius oauthlib
+%py_requires trollius oauthlib aiohttp
 
 %description
 CouchDB client built on top of aiohttp (asyncio).
@@ -49,7 +51,7 @@ This package contains tests for %oname.
 Summary: CouchDB client built on top of aiohttp
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires asyncio oauthlib
+%py3_requires asyncio oauthlib aiohttp
 
 %description -n python3-module-%oname
 CouchDB client built on top of aiohttp (asyncio).
@@ -96,37 +98,47 @@ popd
 %check
 %if_with python2
 python setup.py test
-%make check
+#make check
+nosetests -v --with-doctest %oname
 %endif
 %if_with python3
 pushd ../python3
 python3 setup.py test
-sed -i 's|nosetests|nosetests3|g' Makefile
-%make check
+#sed -i 's|nosetests|nosetests3|g' Makefile
+#sed -i 's|which flake8|which python3-flake8|g' Makefile
+#make check
+nosetests3 -v --with-doctest %oname
 popd
 %endif
 
 %if_with python2
 %files
-%doc *.rst docs/*.rst
+%doc *.rst docs/*.rst docs/v1
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
+%python_sitelibdir/*/*/tests
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst docs/*.rst
+%doc *.rst docs/*.rst docs/v1
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/tests
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.dev0.git20150420
+- Version 0.9.0.dev0
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1.dev0.git20141117
 - Initial build for Sisyphus
 
