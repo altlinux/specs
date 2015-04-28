@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.91.3
-Release: alt1.git20100929
+Release: alt2.git20100929
 Summary: Time series manipulation
 License: BSD
 Group: Development/Python
@@ -99,6 +99,9 @@ python setup.py test
 %doc scikits/timeseries/doc/source/plotting
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.91.3-alt2.git20100929
+- Rebuilt with updated NumPy
+
 * Sat Feb 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.91.3-alt1.git20100929
 - Initial build for Sisyphus
 
