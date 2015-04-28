@@ -2,10 +2,11 @@
 %define oname tables
 
 %def_with python3
+%def_disable check
 
 Name: py%oname
 Version: 3.1.2
-Release: alt1.dev.git20141012
+Release: alt1.dev.git20150418
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -289,6 +290,14 @@ cp -fR examples %buildroot%python_sitelibdir/%oname/
 
 cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 
+%check
+%make check
+%if_with python3
+pushd ../python3
+%make check PYTHON=python3
+popd
+%endif
+
 %files
 %_bindir/*
 %if_with python3
@@ -334,6 +343,9 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %_docdir/%name
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.1.2-alt1.dev.git20150418
+- New snapshot
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.1.2-alt1.dev.git20141012
 - Version 3.1.2dev
 
