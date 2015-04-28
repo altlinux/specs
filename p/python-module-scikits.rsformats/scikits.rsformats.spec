@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.1
-Release: alt1
+Release: alt2
 Summary: Tools for reading remote sensing formats
 License: BSD
 Group: Development/Python
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.1-alt2
+- Rebuilt with updated NumPy
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.1-alt1
 - Initial build for Sisyphus
 
