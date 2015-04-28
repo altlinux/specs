@@ -1,12 +1,12 @@
-Name:		python-module-polib
-Version:	1.0.3
-Release:	alt1
-Summary:	Manipulate, create, and modify gettext files
-Group:		Development/Python
-License:	BSD-like
-Source:		polib-%version.tar.gz
-URL:		https://bitbucket.org/izi/polib
-BuildArch:	noarch
+Name: python-module-polib
+Version: 1.0.4
+Release: alt1
+Summary: Manipulate, create, and modify gettext files
+Group: Development/Python
+License: BSD-like
+Source: polib-%version.tar.gz
+Url: https://bitbucket.org/izi/polib
+BuildArch: noarch
 
 %setup_python_module polib
 
@@ -42,6 +42,9 @@ make -C docs html
 %python_sitelibdir_noarch/%{modulename}*
 
 %changelog
+* Tue Apr 28 2015 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+
 * Wed Dec 11 2013 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
 - Initial build for ALT
 
