@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.8
-Release: alt1.git20140331
+Release: alt2.git20140331
 Summary: Plot on map projections (with coastlines and political boundaries)
 License: OSI Approved
 Group: Development/Python
@@ -20,7 +20,7 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Cython libnumpy-devel
 BuildPreReq: python-module-scipy python-module-matplotlib
 BuildPreReq: python-module-Pillow python-module-%mname
-BuildPreReq: python-module-netCDF4
+BuildPreReq: python-module-netCDF4 python-module-nose
 BuildPreReq: python-module-sphinx-devel
 BuildPreReq: python-module-matplotlib-sphinxext
 %if_with python3
@@ -30,6 +30,7 @@ BuildPreReq: python3-module-Cython libnumpy-py3-devel
 BuildPreReq: python3-module-scipy python3-module-matplotlib
 BuildPreReq: python3-module-Pillow python3-module-%mname
 BuildPreReq: python3-module-netCDF4 python3-module-pycairo
+BuildPreReq: python3-module-nose
 %endif
 
 %py_provides %oname
@@ -260,6 +261,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt2.git20140331
+- Fixed build
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt1.git20140331
 - Initial build for Sisyphus
 
