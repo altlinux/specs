@@ -1,5 +1,5 @@
 Name: mcelog
-Version: 1.0.1
+Version: 116
 Release: alt1
 
 Summary: Tool to translate x86_64 CPU Machine Check Exception data
@@ -7,7 +7,7 @@ License: GPLv2
 Group: System/Kernel and hardware
 
 Url: https://github.com/andikleen/mcelog.git
-Source0: mcelog.tar
+Source0: %name-%version.tar.gz
 Source1: mcelog.conf
 Source2: mcelog.init
 Source3: mcelog.service
@@ -33,7 +33,7 @@ for mcelog; note though that it's much preferred to run it as
 a service.
 
 %prep
-%setup -n %name
+%setup
 
 %build
 mkdir -p %buildroot{%_sysconfdir,%_sbindir,%_mandir}
@@ -67,6 +67,12 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 %_sysconfdir/logrotate.d/mcelog
 
 %changelog
+* Wed Apr 29 2015 Fr. Br. George <george@altlinux.ru> 116-alt1
+- Autobuild version bump to 116
+
+* Wed Apr 29 2015 Fr. Br. George <george@altlinux.ru> 102-alt1
+- Rebuild with new packaging scheme, version up
+
 * Thu Jul 03 2014 Fr. Br. George <george@altlinux.ru> 1.0.1-alt1
 - Update to v101
 
