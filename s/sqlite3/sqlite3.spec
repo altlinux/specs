@@ -1,5 +1,5 @@
 Name: sqlite3
-Version: 3.8.3.1
+Version: 3.8.9
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
@@ -10,7 +10,6 @@ Requires: lib%name = %version-%release
 
 Source0: sqlite-%version.tar
 
-Patch1: sqlite3-alt-fts3.patch
 Patch2: sqlite3-alt-tcl.patch
 # See https://bugzilla.redhat.com/show_bug.cgi?id=801981
 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=665363
@@ -98,7 +97,6 @@ embedded controllers.
 
 %prep
 %setup -q -n sqlite-%version
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -168,6 +166,11 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Wed Apr 29 2015 Mikhail Efremov <sem@altlinux.org> 3.8.9-alt1
+- Update sqlite3-fedora-no-malloc-usable-size.patch.
+- Drop obsoleted fts3 patch.
+- 3.8.9.
+
 * Wed Feb 19 2014 Mikhail Efremov <sem@altlinux.org> 3.8.3.1-alt1
 - Patches from Fedora:
   + Temporary workaround for failed percentile test.
