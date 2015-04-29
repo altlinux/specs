@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.5
-Release: alt1.dev0.git20141110
+Version: 0.10.4
+Release: alt1.dev0.git20150427
 Summary: GuessIt - a library for guessing information from video files
 License: LGPLv3
 Group: Development/Python
@@ -21,8 +21,9 @@ BuildPreReq: python-module-requests python-module-dateutil
 BuildPreReq: python-module-yaml python-module-guess-language
 BuildPreReq: python-module-enzyme python-module-nose
 BuildPreReq: python-module-mock python-module-argparse
-BuildPreReq: python-module-pbr python-module-pip
-BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-pbr python-module-pip pylint
+BuildPreReq: python-module-sphinx-devel python-module-Pygments
+BuildPreReq: python-modules-json python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -31,10 +32,13 @@ BuildPreReq: python3-module-requests python3-module-dateutil
 BuildPreReq: python3-module-yaml python3-module-guess-language
 BuildPreReq: python3-module-enzyme python3-module-nose
 BuildPreReq: python3-module-mock python3-module-argparse
-BuildPreReq: python3-module-pbr python3-module-pip
+BuildPreReq: python3-module-pbr python3-module-pip pylint-py3
+BuildPreReq: python3-module-Pygments
 %endif
 
 %py_provides %oname
+%py_requires babelfish stevedore requests dateutil yaml guess_language
+%py_requires enzyme json logging
 
 %description
 GuessIt is a python library that extracts as much information as
@@ -59,10 +63,13 @@ both movies and tv shows episodes.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: GuessIt - a library for guessing information from video files
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires babelfish stevedore requests dateutil yaml guess_language
+%py3_requires enzyme json logging
 
 %description -n python3-module-%oname
 GuessIt is a python library that extracts as much information as
@@ -86,6 +93,7 @@ metadata from a video using its filename only. This matcher works with
 both movies and tv shows episodes.
 
 This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -160,9 +168,11 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 export LC_ALL=en_US.UTF-8
+rm -fR build conf.py
 python setup.py test
 %if_with python3
 pushd ../python3
+rm -fR build
 python3 setup.py test
 popd
 %endif
@@ -198,6 +208,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.4-alt1.dev0.git20150427
+- Version 0.10.4.dev0
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1.dev0.git20141110
 - Version 0.9.5.dev0
 
