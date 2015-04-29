@@ -1,6 +1,6 @@
 Name: thunar-dropbox-plugin
-Version: 0.2.0
-Release: alt3
+Version: 0.2.1
+Release: alt1
 
 Summary: Dropbox context-menu items for Thunar
 License: %gpl3plus
@@ -26,10 +26,9 @@ dropbox.
 
 %prep
 %setup
-sed -i 's;/lib/;/%_lib/;' wscript
 
 %build
-./waf configure --prefix=%_prefix
+./waf configure --prefix=%_prefix --libdir=%_prefix/%_lib
 ./waf build
 
 %install
@@ -41,6 +40,9 @@ sed -i 's;/lib/;/%_lib/;' wscript
 %_miconsdir/*.png
 
 %changelog
+* Wed Apr 29 2015 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
+- Updated to 0.2.1.
+
 * Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt3
 - Build with local waf..
 
