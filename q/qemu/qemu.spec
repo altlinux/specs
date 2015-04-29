@@ -45,14 +45,15 @@
 %def_enable usb_redir
 %def_enable vhost_net
 %def_enable vhost_scsi
-%def_disable glx
+%def_disable opengl
 %def_enable guest_agent
 %def_enable tools
 %def_enable spice
 %def_enable libiscsi
-%def_disable libnfs
+%def_enable rbd
+%def_enable libnfs
 %def_disable seccomp
-%def_disable glusterfs
+%def_enable glusterfs
 %def_enable gtk
 %def_enable tpm
 %def_enable libssh2
@@ -62,6 +63,7 @@
 %def_enable rdma
 %def_enable lzo
 %def_enable snappy
+%def_enable bzip2
 %def_enable xen
 
 %define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_sdl2:sdl} %{?_enable_esound:esd} %{?_enable_pulseaudio:pa}
@@ -159,7 +161,7 @@
 # }}}
 
 Name: qemu
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -184,6 +186,7 @@ Patch0: qemu-alt.patch
 
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
+BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d seavgabios seabios >= 1.7.4-alt2 libfdt-devel
 BuildRequires: libpixman-devel >= 0.21.8
@@ -205,8 +208,9 @@ BuildRequires: iasl
 %{?_enable_uuid:BuildRequires: libuuid-devel}
 %{?_enable_smartcard_nss:BuildRequires: libnss-devel >= 3.12.8}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
-%{?_enable_glx:BuildRequires: libGL-devel libX11-devel}
+%{?_enable_opengl:BuildRequires: libGL-devel libX11-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel >= 2.38 python-base}
+%{?_enable_rbd:BuildRequires: ceph-devel}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
 %{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.1.1}
@@ -219,6 +223,7 @@ BuildRequires: iasl
 %{?_enable_numa:BuildRequires: libnuma-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_enable_snappy:BuildRequires: libsnappy-devel}
+%{?_enable_bzip2:BuildRequires: bzlib-devel}
 %{?_enable_xen:BuildRequires: xen-devel}
 
 %description
@@ -379,6 +384,7 @@ export CFLAGS="%optflags"
 	--disable-system \
 	--enable-guest-base \
 	--disable-attr \
+	--disable-xfsctl \
 	--disable-smartcard-nss \
 	--disable-usb-redir \
 	--disable-linux-aio \
@@ -386,7 +392,9 @@ export CFLAGS="%optflags"
 	--disable-libusb \
 	--disable-rdma \
 	--disable-libiscsi \
+	--disable-rbd \
 	--disable-libnfs \
+	--disable-glusterfs \
 	--disable-libssh2 \
 	--disable-quorum \
 	--disable-lzo \
@@ -449,9 +457,11 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{?_enable_smartcard_nss:--enable-smartcard-nss} \
 	%{subst_enable libusb} \
 	%{?_enable_usb_redir:--enable-usb-redir} \
-	%{subst_enable glx} \
+	%{subst_enable opengl} \
 	%{subst_enable libiscsi} \
+	%{subst_enable rbd} \
 	%{subst_enable libnfs} \
+	%{subst_enable glusterfs} \
 	%{subst_enable libssh2} \
 	%{subst_enable vhdx} \
 	%{subst_enable rdma} \
@@ -459,6 +469,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{subst_enable numa} \
 	%{subst_enable lzo} \
 	%{subst_enable snappy} \
+	%{subst_enable bzip2} \
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
 	--enable-guest-base \
@@ -498,6 +509,7 @@ install -D -p -m 0644 qemu.sasl %buildroot%_sysconfdir/sasl2/%name.conf
 
 %find_lang %name
 
+rm -f %buildroot%_datadir/%name/slof.bin
 #rm -f %buildroot%_datadir/*/openbios*
 rm -f %buildroot%_datadir/%name/pxe*rom
 rm -f %buildroot%_datadir/%name/efi*rom
@@ -506,10 +518,12 @@ rm -f %buildroot%_datadir/%name/bios.bin
 rm -f %buildroot%_datadir/%name/bios-256k.bin
 rm -f %buildroot%_datadir/%name/acpi-dsdt.aml
 rm -f %buildroot%_datadir/%name/q35-acpi-dsdt.aml
+#rm -f %buildroot%_datadir/%name/sgabios.bin
 #rm -f %buildroot%_datadir/%name/petalogix-s3adsp1800.dtb
 #rm -f %buildroot%_datadir/%name/video.x
 #rm -f %buildroot%_datadir/%name/bamboo.dtb
 #rm -f %buildroot%_datadir/%name/ppc_rom.bin
+rm -f %buildroot%_datadir/%name/s390-ccw.img
 
 # the pxe ipxe images will be symlinks to the images on
 # /usr/share/ipxe, as QEMU doesn't know how to look
@@ -658,6 +672,10 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Tue Apr 28 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt1
+- 2.3.0
+- build with ceph, xfsctl, libnfs, glusterfs support
+
 * Tue Dec 16 2014 Alexey Shabalin <shaba@altlinux.ru> 2.2.0-alt1
 - 2.2.0
 
