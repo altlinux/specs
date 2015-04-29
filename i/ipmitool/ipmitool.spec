@@ -1,13 +1,11 @@
 Name: ipmitool
 Summary: ipmitool - Utility for IPMI control
-Version: 1.8.13
-Release: alt3
+Version: 1.8.15
+Release: alt1
 License: BSD
 URL: http://ipmitool.sourceforge.net/
 Group: System/Kernel and hardware
 Source: %name-%version.tar
-Patch: ipmitool-1.8.11-debian-CVE-2011-4339.patch
-Patch1: 0001-Bug-279-Fix-for-1.8.13.patch
 
 BuildRequires: libssl-devel readline-devel ncurses-devel libfreeipmi-devel
 
@@ -28,8 +26,6 @@ setting LAN configuration, and chassis power control.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
 
 %build
 touch NEWS
@@ -54,6 +50,9 @@ install -pD -m755 contrib/bmclanconf %buildroot%_sbindir/
 %_datadir/%name
 
 %changelog
+* Wed Apr 29 2015 Anton Farygin <rider@altlinux.ru> 1.8.15-alt1
+- new version
+
 * Tue Mar 25 2014 Anton Farygin <rider@altlinux.ru> 1.8.13-alt3
 - rebuild with new freeipmi
 
