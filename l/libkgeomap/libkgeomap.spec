@@ -1,6 +1,6 @@
 Name: libkgeomap
 Version: 3.1.0
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Libkgeomap is a wrapper around different world-map components
@@ -13,11 +13,8 @@ Conflicts: libkmap
 Source: %name-%version.tar
 Source1: po.tar
 
-# Automatically added by buildreq on Mon Sep 15 2014 (-bi)
-# optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libcloog-isl4 libdbus-devel libdbusmenu-qt2 libfreetype-devel libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libstdc++-devel libxkbfile-devel openssh-common phonon-devel pkg-config python-base rpm-build-gir ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
-#BuildRequires: boost-devel-headers cvs gcc-c++ git-core glib2-devel kde4edu-devel libXxf86misc-devel libkexiv24-devel libqt3-devel python-module-google qt4-designer rpm-build-ruby subversion valgrind zlib-devel-static
 BuildRequires(pre): kde-common-devel
-BuildRequires: boost-devel gcc-c++ kde4libs-devel kde4edu-devel libkexiv24-devel
+BuildRequires: boost-devel gcc-c++ kde4libs-devel kde4-marble-devel libkexiv24-devel
 
 %description
 Libkgeomap is a wrapper around different world-map components, to browse and arrange photos over a map.
@@ -74,6 +71,9 @@ rm -rf %buildroot/%_K4i18n/*/*/digikam*
 
 
 %changelog
+* Wed Apr 29 2015 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt3
+- update build requires
+
 * Thu Apr 23 2015 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt2
 - rebuild with new marble
 
