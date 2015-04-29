@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.git20141223
+Release: alt1.git20150419
 Summary: Debugging manhole for python applications 
 License: BSD
 Group: Development/Python
@@ -29,6 +29,7 @@ BuildPreReq: python3-module-gevent python3-module-eventlet
 %endif
 
 %py_provides %oname
+%py_requires signalfd eventlet gevent ctypes
 
 %description
 Manhole is in-process service that will accept unix domain socket
@@ -44,6 +45,7 @@ id or root.
 Summary: Debugging manhole for python applications 
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires signalfd eventlet gevent ctypes
 
 %description -n python3-module-%oname
 Manhole is in-process service that will accept unix domain socket
@@ -108,13 +110,18 @@ popd
 %endif
 
 %install
-%python_install
-
 %if_with python3
 pushd ../python3
 %python3_install
 popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
 %endif
+
+%python_install
 
 export PYTHONPATH=$PWD/src
 pushd docs
@@ -139,6 +146,10 @@ popd
 
 %files
 %doc *.rst
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
@@ -151,10 +162,14 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst
+%_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Apr 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20150419
+- New snapshot
+
 * Fri Jan 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20141223
 - Initial build for Sisyphus
 
