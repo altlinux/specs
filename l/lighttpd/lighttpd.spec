@@ -14,7 +14,7 @@
 
 Name: lighttpd
 Version: 1.4.35
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -131,8 +131,8 @@ install -pDm644 lighttpd.logrotate %buildroot%_sysconfdir/logrotate.d/%name
 
 # docs
 rm -rf %buildroot%docdir
-mkdir -p %buildroot%docdir
-cp -a doc/*.txt %buildroot%docdir/
+mkdir -p %buildroot%docdir/outdated
+cp -a doc/outdated/*.txt %buildroot%docdir/outdated/
 
 %pre
 %_sbindir/groupadd -r -f %lighttpd_group ||:
@@ -201,6 +201,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Wed Apr 29 2015 Alexei Takaseev <taf@altlinux.org> 1.4.35-alt2
+- update to svn2986
+
 * Wed Apr 02 2014 Alexei Takaseev <taf@altlinux.org> 1.4.35-alt1
 - 1.4.35
 
