@@ -1,22 +1,21 @@
 %define _name gtksourceviewmm
-%define ver_major 3.2
+%define ver_major 3.12
 %define api_ver 3.0
 
 Name: lib%{_name}3
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: gtksourceviewmm is a C++ wrapper for the gtksourceview widget library
 License: LGPL
 Group: System/Libraries
 Url: http://projects.gnome.org/gtksourceviewmm/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 # From configure.in
 BuildPreReq: mm-common intltool
-BuildPreReq: libgtksourceview3-devel >= 3.2.0 libgtkmm3-devel >= 3.2.0
+BuildPreReq: libgtksourceview3-devel >= 3.12.0 libgtkmm3-devel >= 3.12.0
 BuildPreReq: gcc-c++ libstdc++-devel
 BuildPreReq: doxygen graphviz xsltproc
 
@@ -46,13 +45,14 @@ Documentation for %_name.
 %define pkgdocdir %_docdir/%_name-%api_ver/
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 %build
 #NOCONFIGURE=1 ./autogen.sh
-mm-common-prepare --copy --force
-%autoreconf
-%configure --enable-maintainer-mode
+#mm-common-prepare --copy --force
+#%autoreconf
+%configure --disable-static
+#--enable-maintainer-mode
 
 %make
 
@@ -60,7 +60,7 @@ mm-common-prepare --copy --force
 %make check
 
 %install
-%makeinstall
+%makeinstall_std
 
 %find_lang %_name-%api_ver
 
@@ -80,6 +80,9 @@ mm-common-prepare --copy --force
 %pkgdocdir
 
 %changelog
+* Wed Apr 29 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt3
 - rebuilt against libgtksourceview-3.0.so.1
 
