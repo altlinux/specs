@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1.git20150318
+Release: alt2.git20150318
 Summary: A redis sniffing & event logging utility
 License: MIT
 Group: Development/Python
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pypcap python-module-dpkt
+BuildPreReq: python-module-pcap python-module-dpkt
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -25,7 +25,7 @@ BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides redis_sniffer
-%py_requires pypcap dpkt
+%py_requires pcap dpkt
 
 %description
 This tool will monitor a specific port and interface for redis traffic
@@ -41,7 +41,7 @@ sending commands to Redis.
 Summary: A redis sniffing & event logging utility
 Group: Development/Python3
 %py3_provides redis_sniffer
-%py3_requires pypcap
+%py3_requires pcap
 
 %description -n python3-module-%oname
 This tool will monitor a specific port and interface for redis traffic
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2.git20150318
+- Fixed build
+
 * Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20150318
 - Initial build for Sisyphus
 
