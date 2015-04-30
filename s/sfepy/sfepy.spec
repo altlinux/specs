@@ -1,8 +1,9 @@
 %def_with python3
+%def_disable check
 
 Name: sfepy
 Version: 2015.1
-Release: alt1.git20150311
+Release: alt1.git20150427
 Summary: Simple finite elements in Python (SfePy)
 License: New BSD License
 Group: Sciences/Mathematics
@@ -12,6 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/sfepy/sfepy.git
 Source: %name-%version.tar.gz
 Source1: README.1st
+Source2: matplotlibrc
 
 Requires: python-module-%name = %version-%release
 
@@ -22,11 +24,17 @@ BuildPreReq: libtetgen-devel libnetgen-devel libnumpy-devel
 BuildPreReq: doxygen graphviz texlive-latex-extra dvipng
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: python-module-tables-tests python-module-Pyrex xvfb-run
+BuildPreReq: python-module-igakit Mayavi python-module-Cython
+BuildPreReq: python-module-pycairo python-module-sympy
+BuildPreReq: python-module-fipy-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python-tools-2to3 libnumpy-py3-devel
 BuildPreReq: python3-module-scipy python3-module-matplotlib
 BuildPreReq: python3-module-tables-tests python3-module-Cython
+BuildPreReq: python3-module-igakit
+BuildPreReq: python3-module-pycairo python3-module-sympy
+BuildPreReq: python3-module-fipy-tests
 %endif
 
 %description
@@ -46,6 +54,7 @@ Summary: Python module of Simple finite elements (SfePy)
 Group: Development/Python3
 Requires: tetgen gmsh netgen
 %py3_requires pyparsing scikits.umfpack tables IPython
+%py3_requires fipy
 %add_python3_req_skip vtk
 
 %description -n python3-module-%name
@@ -58,11 +67,12 @@ This package contains python module of SfePy.
 Summary: Python module of Simple finite elements (SfePy)
 Group: Development/Python
 %setup_python_module %name
-Requires: tetgen gmsh netgen
+Requires: tetgen gmsh netgen python-module-vtk6.2
 #py_requires matplotlib.backends.backend_gtkagg
 %py_requires matplotlib.backends.backend_wxagg
 %py_requires pyparsing scikits.umfpack tables IPython
-%if "%__python_version" != "2.5"
+%py_requires fipy
+%if "%_python_version" != "2.5"
 %py_requires multiprocessing
 %endif
 
@@ -156,6 +166,8 @@ find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 install -m644 %SOURCE1 .
+install -d ~/.matplotlib
+install -m644 %SOURCE2 ~/.matplotlib/
 
 cp %python_sitelibdir/matplotlib/mpl-data/matplotlibrc ~/.matplotlibrc
 sed -i 's|^\(backend\).*|\1 : Agg|' ~/.matplotlibrc
@@ -213,17 +225,29 @@ doxygen doxygen.config
 export LC_ALL=en_US.UTF-8
 xvfb-run --server-args="-screen 0 1024x768x24" \
 	make -C doc/latex
-#make_build -C doc/latex
-#make_build pickle
 popd
 install -p -m644 homogen.py %buildroot%python_sitelibdir
-
-#generate_pickles doc doc %name
 
 install -d %buildroot%_docdir/%name/pdf
 install -m644 doc/doc/latex/*.pdf %buildroot%_docdir/%name/pdf
 cp -fR doc/doc/html %buildroot%_docdir/%name/
 #cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%name/
+
+%check
+export PYTHONPATH=$PWD:$PWD/script
+xvfb-run python setup.py build_ext -i
+rm -f tests/test_mesh_smoothing.py
+xvfb-run python run_tests.py
+xvfb-run python test_install.py
+#if_with python3
+%if 0
+pushd ../python3
+export PYTHONPATH=$PWD:$PWD/script
+xvfb-run python3 setup.py build_ext -i
+xvfb-run python3 run_tests.py
+xvfb-run python3 test_install.py
+popd
+%endif
 
 %files
 %doc AUTHORS LICENSE README doc/txt/*.txt
@@ -277,6 +301,9 @@ cp -fR doc/doc/html %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2015.1-alt1.git20150427
+- New snapshot
+
 * Thu Mar 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2015.1-alt1.git20150311
 - Version 2015.1
 - Added module for Python 3
