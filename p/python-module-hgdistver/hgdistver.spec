@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.23
+Version: 0.25
 Release: alt1
 Summary: Utility to generate python package version infos from mercurial/git tags
 License: MIT
@@ -79,12 +79,12 @@ popd
 %check
 python setup.py test
 export PYTHONPATH=$PWD
-py.test
+py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
 export PYTHONPATH=$PWD
-py.test-%_python3_version
+py.test-%_python3_version -vv
 popd
 %endif
 
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.25-alt1
+- Version 0.25
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23-alt1
 - Initial build for Sisyphus
 
