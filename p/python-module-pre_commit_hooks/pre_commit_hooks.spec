@@ -1,7 +1,7 @@
 %define oname pre_commit_hooks
 Name: python-module-%oname
-Version: 0.4.0
-Release: alt1.git20150227
+Version: 0.4.1
+Release: alt1.git20150416
 Summary: Some out-of-the-box hooks for pre-commit
 License: MIT
 Group: Development/Python
@@ -61,6 +61,9 @@ py.test -vv
 %python_sitelibdir/*/tests*
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20150416
+- Version 0.4.1
+
 * Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20150227
 - Initial build for Sisyphus
 
