@@ -1,4 +1,6 @@
-%set_libtool_version 1.5
+#set_libtool_version 1.5
+
+%def_disable vaapi
 
 %define tname     LibVNCServer
 %define vncserver_sover 0
@@ -7,12 +9,12 @@
 %define libvncclient libvncclient%vncclient_sover
 Name: libvncserver
 %define libname %name
-Version: 0.9.9
-Release: alt4
+Version: 0.9.10
+Release: alt1
 
 Group: System/Libraries
 Summary: An easy API to write one's own VNC server
-Url: http://sourceforge.net/projects/libvncserver/
+Url: https://libvnc.github.io/
 License: GPLv2
 Packager: Sergey V Turchin <zerg@altlinux.org>
 
@@ -20,19 +22,23 @@ Requires: %libvncserver %libvncclient
 
 Source: http://downloads.sourceforge.net/libvncserver/%tname-%version.tar.gz
 # FC
-Patch1: LibVNCServer-0.9.9-no_x11vnc.patch
-Patch2: LibVNCServer-0.9.9-pkgconfig.patch
-Patch3: LibVNCServer-0.9.9-system_minilzo.patch
+Patch11: LibVNCServer-0.9.10-no_x11vnc.patch
+Patch12: libvncserver-0.9.1-multilib.patch
+Patch13: LibVNCServer-0.9.9-pkgconfig.patch
+Patch14: LibVNCServer-0.9.10-system_minilzo.patch
 # SuSE
-Patch10: redef-keysym.patch
-Patch11: libvncserver-byteswap.patch
-Patch12: libvncserver-ossl.patch
+Patch20: redef-keysym.patch
+Patch21: libvncserver-byteswap.patch
+Patch22: libvncserver-0.9.10-ossl.patch
 
 # Automatically added by buildreq on Thu Apr 21 2011 (-bi)
 # optimized out: elfutils libX11-devel libgfortran-devel libstdc++-devel xorg-xproto-devel
 #BuildRequires: gcc-c++ gcc-fortran glibc-devel-static imake libICE-devel libSDL-devel libjpeg-devel xorg-cf-files zlib-devel
 BuildRequires: gcc-c++ libICE-devel libSDL-devel libjpeg-devel zlib-devel
 BuildRequires: libssl-devel liblzo2-devel libgcrypt-devel libgnutls-devel libpng-devel
+%if_enabled vaapi
+BuildRequires: libva-devel
+%endif
 
 %description
 LibVNCServer makes writing a VNC server (or more correctly, a program
@@ -95,12 +101,13 @@ Conflicts: libvncserver < %EVR
 
 %prep
 %setup -q -n %tname-%version
-%patch1 -p1
-%patch2 -p1
-#%patch3 -p1
-%patch10 -p1
-%patch11 -p0
-%patch12 -p0
+#%patch11 -p1
+%patch12 -p1
+#%patch13 -p1
+#%patch14 -p1
+%patch20 -p1
+%patch21 -p0
+%patch22 -p0
 
 mkdir -p x11vnc
 %autoreconf
@@ -115,14 +122,15 @@ mkdir -p x11vnc
     --without-tightvnc-filetransfer \
     --with-gcrypt \
     --with-png \
-    --without-x11vnc
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+    --without-x11vnc \
+    %{?_enable_vaapi:--with-libva}%{!?_enable_vaapi:--without-libva} \
+    #
+#sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
 
 %install
 %make DESTDIR=%buildroot install
-ln -s linuxvnc %buildroot/%_bindir/LinuxVNC
 
 %files
 
@@ -142,13 +150,16 @@ ln -s linuxvnc %buildroot/%_bindir/LinuxVNC
 %_libdir/*.so
 %_bindir/libvncserver-config
 
-%files -n linuxvnc
-%doc AUTHORS ChangeLog INSTALL NEWS README TODO
-%_bindir/linuxvnc
-%_bindir/LinuxVNC
+#%files -n linuxvnc
+#%doc AUTHORS ChangeLog INSTALL NEWS README TODO
+#%_bindir/linuxvnc
+#%_bindir/LinuxVNC
 
 
 %changelog
+* Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.10-alt1
+- new version
+
 * Tue Sep 24 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.9-alt4
 - add compatibility symlink to linuxvnc
 
