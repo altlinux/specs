@@ -10,17 +10,16 @@
 %def_enable installed_tests
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
 Group: Graphical desktop/GNOME
-Url: ftp://ftp.gnome.org
+Url: http://www.gnome.org
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 #Source: %_name-%version.tar
-Source1: gnome-about.png
 
 Obsoletes: %_name
 Provides: %_name = %version-%release
@@ -174,6 +173,9 @@ export LIBS="$LIBS `pkg-config --libs gio-2.0` `pkg-config --libs gtk+-3.0`"
 
 
 %changelog
+* Thu Apr 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
