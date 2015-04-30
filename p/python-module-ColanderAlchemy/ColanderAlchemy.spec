@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.2
-Release: alt1.dev1.git20150115
+Version: 0.3.3
+Release: alt1.dev1.git20150423
 Summary: Autogenerate Colander schemas based on SQLAlchemy models
 License: MIT
 Group: Development/Python
@@ -120,7 +120,7 @@ popd
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/tests
+#exclude %python_sitelibdir/tests
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
@@ -133,10 +133,13 @@ popd
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/tests
+#exclude %python3_sitelibdir/tests
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1.dev1.git20150423
+- Version 0.3.3.dev1
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.dev1.git20150115
 - Initial build for Sisyphus
 
