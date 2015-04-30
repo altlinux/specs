@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.5
-Release: alt1.git20150114
+Version: 0.0.7
+Release: alt1.post1.git20150405
 Summary: Form generator for SQLAlchemy models
 License: MIT
 Group: Development/Python
@@ -132,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.7-alt1.post1.git20150405
+- Version 0.0.7.post1
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1.git20150114
 - Version 0.0.5
 
