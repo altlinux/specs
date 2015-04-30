@@ -6,7 +6,7 @@
 
 Name: %oname-%scalar_type
 Version: 0.1
-Release: alt1.hg20140708
+Release: alt1.hg20150429
 Summary: PetIGA: A framework for high performance Isogeometric Analysis (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -133,7 +133,7 @@ export PETIGA_DIR=$PWD
 %makeinstall_std -C BUILD
 
 sed -i '1a\PETIGA_DIR=${PETSC_DIR}' \
-	%buildroot%ldir/conf/petigavariables
+	%buildroot%ldir/lib/%oname/conf/variables
 
 %files -n lib%name
 %doc *.rst
@@ -141,7 +141,7 @@ sed -i '1a\PETIGA_DIR=${PETSC_DIR}' \
 
 %files -n lib%name-devel
 %ldir/include/*
-%ldir/conf/*
+%ldir/lib/%oname
 %ldir/lib/*.so
 
 %if "%scalar_type" == "real"
@@ -150,6 +150,8 @@ sed -i '1a\PETIGA_DIR=${PETSC_DIR}' \
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.hg20150429
+- New snapshot
+
 * Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.hg20140708
 - Initial build for Sisyphus
-
