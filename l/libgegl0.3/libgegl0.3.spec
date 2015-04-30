@@ -6,7 +6,7 @@
 
 Name: lib%_name%api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -72,9 +72,9 @@ GObject introspection devel data for the GEGL library.
 %makeinstall_std
 
 # quick fix for gegl-sc-0.3.pc
-subst 's|gegl|gegl-%api_ver|
-       s|-lgegl-0.3-sc-0.3|-lgegl-sc-%api_ver|
-       s|gegl-0.3-0.3\/sc|gegl-%api_ver/sc|' %buildroot%_pkgconfigdir/%_name-sc-%api_ver.pc
+#subst 's|gegl|gegl-%api_ver|
+#       s|-lgegl-0.3-sc-0.3|-lgegl-sc-%api_ver|
+#       s|gegl-0.3-0.3\/sc|gegl-%api_ver/sc|' %buildroot%_pkgconfigdir/%_name-sc-%api_ver.pc
 
 %find_lang %_name-%api_ver
 
@@ -85,6 +85,7 @@ subst 's|gegl|gegl-%api_ver|
 
 %_libdir/lib%_name-%api_ver.so.*
 %_libdir/lib%_name-sc-%api_ver.so
+%_libdir/lib%_name-npd-%api_ver.so
 %dir %_libdir/%_name-%api_ver
 %_libdir/%_name-%api_ver/*.so
 %_libdir/%_name-%api_ver/grey2.json
@@ -118,6 +119,9 @@ subst 's|gegl|gegl-%api_ver|
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Thu Apr 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt2
+- updated to 0.3.0_89579cc1
+
 * Tue Feb 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - built 0.3.0 snapshot as libgegl0.3 for people/gnome
 
