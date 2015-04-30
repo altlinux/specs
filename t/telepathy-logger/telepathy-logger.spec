@@ -4,7 +4,7 @@
 %define api_ver 0.2
 
 Name: telepathy-logger
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: Telepathy client that logs information received by the Telepathy framework
@@ -80,7 +80,7 @@ GObject introspection devel data for %name library.
 
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -96,7 +96,7 @@ GObject introspection devel data for %name library.
 #%%make check
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libexecdir/%name
@@ -126,6 +126,9 @@ GObject introspection devel data for %name library.
 
 
 %changelog
+* Thu Apr 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
+- 0.8.2
+
 * Tue Aug 26 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1
 
