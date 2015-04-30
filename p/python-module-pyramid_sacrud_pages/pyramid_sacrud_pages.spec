@@ -1,10 +1,11 @@
 %define oname pyramid_sacrud_pages
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.0.3
-Release: alt1.git20150112
+Version: 0.0.4
+Release: alt1.git20150421
 Summary: Tree pages for pyramid CRUD interface sacrud
 License: MIT
 Group: Development/Python
@@ -22,7 +23,7 @@ BuildPreReq: python-module-sqlalchemy_mptt python-module-webtest
 BuildPreReq: python-module-pyramid_beaker python-module-pyramid_jinja2
 BuildPreReq: python-module-BeautifulSoup4 python-module-waitress
 BuildPreReq: python-module-beaker python-module-webhelpers
-BuildPreReq: python-module-deform
+BuildPreReq: python-module-deform python-module-ColanderAlchemy
 BuildPreReq: python-module-sphinx-devel itcase_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -40,9 +41,10 @@ BuildPreReq: python3-module-peppercorn python3-module-sacrud
 BuildPreReq: python3-module-paginate python3-module-chameleon.core
 BuildPreReq: python3-module-markupsafe python3-module-jinja2
 BuildPreReq: python3-module-zope.sqlalchemy
+BuildPreReq: python3-module-ColanderAlchemy
 %endif
 
-%py_provides %oname
+%py_provides %oname ps_pages
 
 %description
 pyramid_sacrud_pages provides a collections of pages to your Pyramid
@@ -65,7 +67,7 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: Tree pages for pyramid CRUD interface sacrud
 Group: Development/Python3
-%py3_provides %oname
+%py3_provides %oname ps_pages
 
 %description -n python3-module-%oname
 pyramid_sacrud_pages provides a collections of pages to your Pyramid
@@ -141,12 +143,12 @@ export PYTHONPATH=$PWD
 %make -C docs pickle
 %make -C docs html
 
+install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
-#if_with python3
-%if 0
+%if_with python3
 pushd ../python3
 python3 setup.py test
 popd
@@ -178,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.4-alt1.git20150421
+- Version 0.0.4
+
 * Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20150112
 - Version 0.0.3
 
