@@ -1,7 +1,7 @@
 
 Name: kf5-rpm-build
-Version: 5.0.0
-Release: alt2
+Version: 5.1.0
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
@@ -36,6 +36,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
+- move k*5 dirs to _datadir
+
 * Wed Apr 08 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt2
 - update macros
 

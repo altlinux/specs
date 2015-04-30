@@ -1,8 +1,8 @@
 %define rname kde-cli-tools
 
 Name: kf5-%rname
-Version: 5.2.2
-Release: alt2
+Version: 5.3.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -76,6 +76,12 @@ KF5 library
 %_K5srv/*.desktop
 
 %changelog
+* Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt0.1
+- test
+
 * Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt2
 - rebuild to test add_findpackage_path macro
 

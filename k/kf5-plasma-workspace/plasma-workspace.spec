@@ -2,8 +2,6 @@
 
 %define x11confdir %_sysconfdir/X11
 
-%define kf5xmlrpcclientprivate_sover 5
-%define libkf5xmlrpcclientprivate libkf5xmlrpcclientprivate%kf5xmlrpcclientprivate_sover
 %define kworkspace5_sover 5
 %define libkworkspace5 libkworkspace5%kworkspace5_sover
 %define plasma_geolocation_interface_sover 5
@@ -14,8 +12,8 @@
 %define libweather_ion libweather_ion%weather_ion_sover
 
 Name: kf5-%rname
-Version: 5.2.2
-Release: alt2
+Version: 5.3.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -26,7 +24,7 @@ License: GPLv2+ / LGPLv2+
 Requires: qt5-dbus qt5-tools qt5-quickcontrols dbus-tools-gui
 Requires: kf5-kinit kf5-kconfig kf5-kded kf5-kglobalaccel kf5-kactivities kf5-kdeclarative
 Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-kio-extras
-Requires: kf5-polkit-kde-agent kf5-kwin kf5-powerdevil
+Requires: kf5-polkit-kde-agent kf5-kwin kf5-kdeclarative
 
 Source: %rname-%version.tar
 Source10: pam-kf5-screensaver
@@ -53,7 +51,8 @@ BuildRequires: kf5-kjobwidgets-devel kf5-kjsembed-devel kf5-knewstuff-devel kf5-
 BuildRequires: kf5-kpackage-devel kf5-kparts-devel kf5-kpty-devel kf5-krunner-devel kf5-kservice-devel kf5-ktexteditor-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-libksysguard-devel kf5-plasma-framework-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kxmlrpcclient-devel
+BuildRequires: kf5-networkmanager-qt-devel libnm-devel
 
 %description
 KDE Plasma Workspace
@@ -72,15 +71,6 @@ Summary: Development files for %name
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
-
-%package -n %libkf5xmlrpcclientprivate
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
-Provides: libkf5xmlrpcclientprivate = %version-%release
-Obsoletes: libkf5xmlrpcclientprivate < %version-%release
-%description -n %libkf5xmlrpcclientprivate
-KF5 library
 
 %package -n %libkworkspace5
 Group: System/Libraries
@@ -131,13 +121,14 @@ KF5 library
     -DKDE_COMMON_PAM_SERVICE="kf5" \
     -DKDE4_KSCREENSAVER_PAM_SERVICE="kf5-screensaver" \
     -DKDE_KSCREENSAVER_PAM_SERVICE="kf5-screensaver" \
+    -DKSCREENSAVER_PAM_SERVICE="kf5-screensaver" \
     #
 
 %install
 %K5install
 
 %K5install_move data drkonqi ksmserver ksplash kstyle solid
-%K5install_move data desktop-directories doc knotifications5 kservices5 kservicetypes5
+%K5install_move data desktop-directories doc kconf_update
 
 mkdir -p %buildroot/%_bindir
 ln -s `relative %_kf5_bin/startkde %_bindir/startkde5` %buildroot/%_bindir/startkde5
@@ -196,6 +187,7 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5plug/plasma/*/*.so
 %_K5plug/phonon_platform/*.so
 %_K5plug/*.so
+%_K5plug/kpackage/packagestructure/plasma_package*.so
 %_K5qml/org/kde/plasma/private/*
 %_K5qml/org/kde/plasma/wallpapers/*
 %_K5qml/org/kde/plasma/workspace/*
@@ -205,6 +197,7 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5data/ksplash/
 %_K5data/kstyle/
 %_K5data/ksmserver/
+%_K5data/kconf_update/*
 %_K5data/desktop-directories/*
 %_K5data/solid/actions/*.desktop
 %_K5xdgapp/*.desktop
@@ -234,9 +227,6 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 #%_K5archdata/mkspecs/modules/qt_Plasma-Workspace.pri
 %_K5dbus_iface/*.xml
 
-%files -n %libkf5xmlrpcclientprivate
-%_K5lib/libKF5XmlRpcClientPrivate.so.*
-%_K5lib/libKF5XmlRpcClientPrivate.so.%kf5xmlrpcclientprivate_sover
 %files -n %libkworkspace5
 %_K5lib/libkworkspace5.so.*
 %_K5lib/libkworkspace5.so.%kworkspace5_sover
@@ -251,6 +241,12 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt0.1
+- test
+
 * Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt2
 - fix requires
 

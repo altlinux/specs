@@ -2,7 +2,7 @@
 %def_disable openswan
 
 Name: kf5-%rname
-Version: 5.2.2
+Version: 5.3.0
 Release: alt1
 %K5init altplace
 
@@ -60,6 +60,7 @@ Requires: %name-connect-pptp
 %package connect-mobile
 Group: Graphical desktop/KDE
 Summary: Mobile support for %name
+BuildArch: noarch
 Requires: %name
 Requires: ModemManager NetworkManager-bluetooth NetworkManager-wwan mobile-broadband-provider-info
 %description connect-mobile
@@ -184,6 +185,12 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_pptpui.desktop
 
 %changelog
+* Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt0.1
+- test
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
 - new version
 

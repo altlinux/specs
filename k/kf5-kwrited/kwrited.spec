@@ -1,7 +1,7 @@
 %define rname kwrited
 
 Name: kf5-%rname
-Version: 5.2.2
+Version: 5.3.0
 Release: alt1
 %K5init altplace
 
@@ -18,7 +18,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-ki18n-devel kf5-knotifications-devel
-BuildRequires: kf5-kpty-devel kf5-kwindowsystem-devel
+BuildRequires: kf5-kpty-devel kf5-kwindowsystem-devel kf5-kdbusaddons-devel
 
 %description
 Watch for messages from local users sent with write(1) or wall(1)
@@ -58,11 +58,17 @@ KF5 library
 
 %files -f %name.lang
 %doc COPYING*
-%_K5bin/*
-%_K5start/*.desktop
-%_K5notif/kwrite*
+%_K5plug/*writed*.so
+%_K5srv/kded/*writed*.desktop
+%_K5notif/*writed*
 
 %changelog
+* Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt0.1
+- test
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
 - new version
 

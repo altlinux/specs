@@ -1,10 +1,10 @@
 %define rname kio-extras
 
 %define molletnetwork_sover 5
-%define libmolletnetwork libmolletnetwork%molletnetwork_sover
+%define libmolletnetwork libmolletnetwork5%molletnetwork_sover
 
 Name: kf5-%rname
-Version: 5.2.2
+Version: 5.3.0
 Release: alt1
 %K5init altplace
 
@@ -71,7 +71,7 @@ KF5 library
 %K5install
 
 %K5install_move data kio_bookmarks kio_desktop kio_docfilter kio_info konqsidebartng konqueror remoteview
-%K5install_move data doc kservices5 kservicetypes5 solid
+%K5install_move data doc solid
 
 # workaround against man compressor
 rm -rf %buildroot/%_K5doc/*/kioslave5/man
@@ -106,10 +106,16 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5dbus_iface/*.xml
 
 %files -n %libmolletnetwork
-%_K5lib/libmolletnetwork.so.*
-%_K5lib/libmolletnetwork.so.%molletnetwork_sover
+%_K5lib/libmolletnetwork5.so.*
+%_K5lib/libmolletnetwork5.so.%molletnetwork_sover
 
 %changelog
+* Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt0.1
+- test
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
 - new version
 
