@@ -1,33 +1,37 @@
 %define oname fipy
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 3.1
-Release: alt2
+Release: alt2.dev76.git20150409
 Summary: Partial differential equation (PDE) solver
 License: Public
 Group: Development/Python
 Url: http://www.ctcms.nist.gov/fipy
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: FiPy-%version.tar.gz
+Source: FiPy-%version.tar
 Source1: %oname-%version.pdf
 #Source2: reference-2.0.2.pdf
 BuildArch: noarch
 
 BuildPreReq: python-devel libnumpy-devel python-module-pysparse
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools-tests python-module-bitten
+BuildPreReq: python-module-scipy python-module-gist Mayavi xvfb-run
+BuildPreReq: python-module-matplotlib python-module-gnuplot
 %setup_python_module %oname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel libnumpy-py3-devel python3-module-scipy
 BuildPreReq: python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+BuildPreReq: python3-module-matplotlib python3-module-gist
+BuildPreReq: python-tools-2to3 python3-module-gnuplot
 %endif
 
 Requires: python-module-gnuplot
-%py_requires gist
+%py_requires gist numpy pysparse scipy mayavi
 
 %description
 FiPy is an object oriented, partial differential equation (PDE) solver,
@@ -46,8 +50,9 @@ array calculations, sparse matrices and data rendering.
 %package -n python3-module-%oname
 Summary: Partial differential equation (PDE) solver
 Group: Development/Python3
-%py3_requires gist
-%add_python3_req_skip pysparse
+Requires: python3-module-gnuplot
+%py3_requires gist numpy scipy
+%add_python3_req_skip mayavi pysparse
 
 %description -n python3-module-%oname
 FiPy is an object oriented, partial differential equation (PDE) solver,
@@ -145,13 +150,26 @@ popd
 install -d %buildroot%_docdir/%name
 cp -fR documentation/* %buildroot%_docdir/%name/
 
+%check
+xvfb-run python setup.py test
+#if_with python3
+%if 0
+pushd ../python3
+xvfb-run python3 setup.py test
+popd
+%endif
+
 %files
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/test*
+%exclude %python_sitelibdir/*/*/test*
+%exclude %python_sitelibdir/*/*/*/test*
 %exclude %python_sitelibdir/*/examples
 
 %files tests
-%python_sitelibdir/*/tests
+%python_sitelibdir/*/test*
+%python_sitelibdir/*/*/test*
+%python_sitelibdir/*/*/*/test*
 
 %files examples
 %python_sitelibdir/*/examples
@@ -163,13 +181,22 @@ cp -fR documentation/* %buildroot%_docdir/%name/
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/*/test*
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/*/*/*/test*
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt2.dev76.git20150409
+- Version 3.1-dev76
+
 * Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt2
 - Added module for Python 3
 
