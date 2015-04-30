@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.5
-Release: alt1.git20150115
+Version: 0.0.8
+Release: alt1.dev1.git20150424
 Summary: Pyramid CRUD interface based on sacrud and SQLAlchemy
 License: MIT
 Group: Development/Python
@@ -26,6 +26,8 @@ BuildPreReq: python-module-pyramid_beaker python-module-transaction
 BuildPreReq: python-module-paginate_sqlalchemy python-module-webtest
 BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-module-webhelpers python-module-ColanderAlchemy
+BuildPreReq: python-module-zope.sqlalchemy
+BuildPreReq: python-modules-logging
 BuildPreReq: python-module-sphinx-devel itcase_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -38,9 +40,11 @@ BuildPreReq: python3-module-pyramid_beaker python3-module-transaction
 BuildPreReq: python3-module-paginate_sqlalchemy python3-module-webtest
 BuildPreReq: python3-module-nose python3-module-coverage
 BuildPreReq: python3-module-webhelpers python3-module-ColanderAlchemy
+BuildPreReq: python3-module-zope.sqlalchemy
 %endif
 
 %py_provides %oname
+%py_requires zope.sqlalchemy
 
 %description
 pyramid_sacrud will solve your problem of CRUD interface for Pyramid.
@@ -64,6 +68,7 @@ This package contains tests for %oname.
 Summary: Pyramid CRUD interface based on sacrud and SQLAlchemy
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires zope.sqlalchemy
 
 %description -n python3-module-%oname
 pyramid_sacrud will solve your problem of CRUD interface for Pyramid.
@@ -161,6 +166,7 @@ popd
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/example
 
 %files tests
 %python_sitelibdir/*/tests
@@ -176,12 +182,16 @@ popd
 %doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/example
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.8-alt1.dev1.git20150424
+- Version 0.0.8.dev1
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1.git20150115
 - Version 0.0.5
 
