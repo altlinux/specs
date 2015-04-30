@@ -1,4 +1,4 @@
-%define gver 4.7
+%define gver 4.9
 %set_gcc_version %gver
 
 %define mpiimpl openmpi
@@ -13,7 +13,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.53.1
-Release: alt14
+Release: alt15
 Summary: A General Purpose, Parallel, Multi-Physics FEM Program (%scalar_type scalars)
 License: GPL v2+
 Group: Sciences/Mathematics
@@ -156,6 +156,9 @@ done
 #endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt15
+- Rebuilt with gcc 4.9
+
 * Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt14
 - Fixed build
 
@@ -218,4 +221,3 @@ done
 
 * Fri Dec 17 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt1.beta
 - Initial build for Sisyphus
-
