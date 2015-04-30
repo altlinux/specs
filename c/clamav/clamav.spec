@@ -12,7 +12,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.98.6
+Version: 0.98.7
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -213,12 +213,12 @@ rm -f %buildroot/%_man8dir/clamav-milter.*
 %endif
 
 %post
-# Format of database changing occasionally. So removing database.
-for FNAME in `ls --ignore=*.socket /var/lib/clamav`; do
-    [ -h /var/lib/clamav/$FNAME ] && continue
-    [ -d /var/lib/clamav/$FNAME ] && rm -rf /var/lib/clamav/$FNAME
-    [ -f /var/lib/clamav/$FNAME ] && rm -f /var/lib/clamav/$FNAME
-done
+## Format of database changing occasionally. So removing database.
+#for FNAME in `ls --ignore=*.socket /var/lib/clamav`; do
+#    [ -h /var/lib/clamav/$FNAME ] && continue
+#    [ -d /var/lib/clamav/$FNAME ] && rm -rf /var/lib/clamav/$FNAME
+#    [ -f /var/lib/clamav/$FNAME ] && rm -f /var/lib/clamav/$FNAME
+#done
 
 # randomize time of database updating (in order to distribute load on servers evenly)
 RNDM=$[$RANDOM/555]
@@ -302,6 +302,11 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Thu Apr 30 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.98.7-alt1
+- 0.98.7 (multiple CVEs)
+- viruses database is not deleted during update anymore
+  (hope to stable format)
+
 * Wed Jan 28 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.98.6-alt1
 - 0.98.6 (CVE-2014-9328)
 
