@@ -5,8 +5,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.30
-Release: alt1.git20150111
+Version: 0.0.32
+Release: alt1.git20150411
 Summary: Allows use one or multiple NetCDF files in a transparent way through polimorphic methods
 License: MIT
 Group: Development/Python
@@ -20,14 +20,14 @@ BuildPreReq: python-devel python-module-setuptools-tests git
 BuildPreReq: python-module-coveralls python-module-ipdb
 BuildPreReq: libnumpy-devel python-module-h5py
 BuildPreReq: python-module-netCDF4 python-module-mglob
-BuildPreReq: python-module-pip
+BuildPreReq: python-module-pip python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-coveralls python3-module-ipdb
 BuildPreReq: libnumpy-py3-devel python3-module-h5py
 BuildPreReq: python3-module-netCDF4 python3-module-mglob
-BuildPreReq: python3-module-pip
+BuildPreReq: python3-module-pip python3-module-Cython
 %endif
 
 %py_provides %oname
@@ -95,12 +95,12 @@ popd
 
 %check
 python setup.py test
-py.test
+py.test -vv
 #if_with python3
 %if 0
 pushd ../python3
 #python3 setup.py test
-py.test-%_python3_version
+py.test-%_python3_version -vv
 popd
 %endif
 
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.32-alt1.git20150411
+- Version 0.0.32
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.30-alt1.git20150111
 - Version 0.0.30
 
