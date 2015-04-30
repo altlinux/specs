@@ -1,5 +1,5 @@
 %define rname libksysguard
-%define sover 5
+%define sover 7
 %define libksgrd libksgrd%sover
 %define libksignalplotter libksignalplotter%sover
 %define liblsofui liblsofui%sover
@@ -7,7 +7,7 @@
 %define libprocessui libprocessui%sover
 
 Name: kf5-%rname
-Version: 5.2.2
+Version: 5.3.0
 Release: alt1
 %K5init altplace
 
@@ -119,7 +119,7 @@ KF5 library
 
 %files -n %libprocesscore
 %_K5lib/libprocesscore.so.%sover
-%_K5lib/libprocesscore.so.%sover.*
+%_K5lib/libprocesscore.so.*
 %_K5libexecdir/kauth/ksysguardprocesslist_helper
 %_K5conf_dbus_sysd/org.kde.ksysguard.processlisthelper.conf
 %_K5dbus_sys_srv/org.kde.ksysguard.processlisthelper.service
@@ -129,20 +129,26 @@ KF5 library
 
 %files -n %libprocessui
 %_K5lib/libprocessui.so.%sover
-%_K5lib/libprocessui.so.%sover.*
+%_K5lib/libprocessui.so.*
 %_K5data/ksysguard/scripts/
 
 %files -n %libksgrd
 %_K5lib/libksgrd.so.%sover
-%_K5lib/libksgrd.so.%sover.*
+%_K5lib/libksgrd.so.*
 %files -n %libksignalplotter
 %_K5lib/libksignalplotter.so.%sover
-%_K5lib/libksignalplotter.so.%sover.*
+%_K5lib/libksignalplotter.so.*
 %files -n %liblsofui
 %_K5lib/liblsofui.so.%sover
-%_K5lib/liblsofui.so.%sover.*
+%_K5lib/liblsofui.so.*
 
 %changelog
+* Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt0.1
+- test
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
 - new version
 

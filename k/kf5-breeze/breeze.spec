@@ -1,7 +1,7 @@
 %define rname breeze
 
 Name: kf5-%rname
-Version: 5.2.2
+Version: 5.3.0
 Release: alt1
 %K5init altplace
 
@@ -20,6 +20,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-x11extras-devel
 BuildRequires: kf5-frameworkintegration-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdecoration-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
+BuildRequires: kf5-kcmutils-devel
 
 %description
 Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
@@ -70,13 +71,21 @@ mv %buildroot/%_datadir/icons/* %buildroot/%_K5data/icons/
 %_K5plug/*.so
 %_K5plug/org.kde.kdecoration2/*.so
 %_K5plug/styles/*.so
+%_K5srv/*.desktop
 %_K5data/kstyle/themes/*
 %_K5data/color-schemes/*
 %_K5icon/?reeze*/
+%_K5icon/hicolor/*/apps/breeze-settings.*
 %_K5cf_upd/*
 %_K5wall/*
 
 %changelog
+* Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt0.1
+- test
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
 - new version
 

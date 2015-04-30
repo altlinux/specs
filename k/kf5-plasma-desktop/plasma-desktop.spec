@@ -4,9 +4,12 @@
 %define libkfontinst libkfontinst%kfontinst_sover
 %define kfontinstui_sover 5
 %define libkfontinstui libkfontinstui%kfontinstui_sover
+%define kf5activitiesexperimentalstats_sover 1
+%define libkf5activitiesexperimentalstats libkf5activitiesexperimentalstats%kf5activitiesexperimentalstats_sover
+
 
 Name: kf5-%rname
-Version: 5.2.2
+Version: 5.3.0
 Release: alt1
 %K5init altplace
 
@@ -28,6 +31,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: boost-devel extra-cmake-modules gcc-c++
 BuildRequires: qt5-declarative-devel qt5-phonon-devel qt5-svg-devel qt5-x11extras-devel
 BuildRequires: libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-devel libxapian-devel libxcbutil-image-devel
+BuildRequires: xorg-drv-synaptics-devel xorg-sdk
 BuildRequires: iceauth mkfontdir xset
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
@@ -39,6 +43,8 @@ BuildRequires: kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-de
 BuildRequires: kf5-krunner-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libksysguard-devel
 BuildRequires: kf5-plasma-framework-devel kf5-plasma-workspace-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-kdeclarative-devel kf5-kpeople-devel
+BuildRequires: kf5-kded kf5-kded-devel
 
 %description
 Plasma desktop view furniture.
@@ -82,21 +88,31 @@ Requires: %name-common = %version-%release
 %description -n %libkfontinstui
 KF5 library
 
+%package -n %libkf5activitiesexperimentalstats
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libkf5activitiesexperimentalstats
+KF5 library
+
 
 %prep
 %setup -n %rname-%version
 %patch1 -p1
 
 %build
-%K5build \
+%K5cmake \
     -DLIBEXEC_INSTALL_DIR=%_K5exec \
     #
+%K5make
 
 %install
 %K5install
 
-%K5install_move data color-schemes kcm_componentchooser kcminput kcmkeyboard kcmkeys kcm_phonon kcmsolidactions
-%K5install_move data kconf_update kcontrol kdisplay kdm kfontinst konqsidebartng ksmserver solid
+%K5install_move data color-schemes doc
+%K5install_move data kcm_componentchooser kcminput kcmkeyboard kcmkeys kcm_phonon kcmsolidactions
+%K5install_move data kconf_update kcontrol kdisplay kdm kfontinst konqsidebartng ksmserver solid kpackage
+%K5install_move data plasma/desktoptheme plasma/plasmoids/touchpad
 
 %find_lang %name --with-kde --all-name
 
@@ -113,7 +129,11 @@ KF5 library
 %_K5cf_bin/*
 %_K5lib/libkdeinit5_*.so
 %_K5plug/*.so
+%_K5plug/kcms/*.so
+%_K5plug/plasma/dataengine/*.so
 %_K5qml/org/kde/plasma/private/*/
+%_K5qml/org/kde/private/*/
+%_K5qml/org/kde/plasma/activityswitcher/
 %_K5xdgapp/*
 %_K5cfg/*
 %_K5srv//ServiceMenus/*.desktop
@@ -127,11 +147,13 @@ KF5 library
 %_K5data/color-schemes/*
 %_K5data/kcm*/
 %_K5cf_upd/*
+%_K5data/kpackage/kcms/*
 %_K5data/plasma/plasmoids/*
 %_K5data/plasma/packages/*
-%_K5data/plasma/kcms/*
 %_K5data/plasma/layout-templates/*
 %_K5data/plasma/shells/*/
+%_K5data/plasma/services/*
+%_K5data/plasma/desktoptheme/default/icons/*
 %_K5data/kcontrol/
 %_K5data/kdisplay/
 %_K5data/kdm/
@@ -145,12 +167,13 @@ KF5 library
 %_datadir/polkit-1/actions/*fontinst*.policy
 %_datadir/polkit-1/actions/*kcmclock*.policy
 
-#%files devel
+%files devel
 #%_K5inc/plasma-desktop_version.h
 #%_K5inc/plasma-desktop/
-#%_K5link/lib*.so
+%_K5link/lib*.so
 #%_K5lib/cmake/plasma-desktop
 #%_K5archdata/mkspecs/modules/qt_plasma-desktop.pri
+%_K5dbus_iface/*.xml
 
 %files -n %libkfontinst
 %_K5lib/libkfontinst.so.*
@@ -158,8 +181,17 @@ KF5 library
 %files -n %libkfontinstui
 %_K5lib/libkfontinstui.so.*
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
+%files -n %libkf5activitiesexperimentalstats
+%_K5lib/libKF5ActivitiesExperimentalStats.so.*
+%_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt0.1
+- test
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
 - new version
 

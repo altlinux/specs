@@ -12,8 +12,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: kf5-%rname
-Version: 5.2.2
-Release: alt2
+Version: 5.3.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -161,6 +161,12 @@ KF5 library
 
 
 %changelog
+* Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt0.1
+- test
+
 * Wed Apr 22 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt2
 - fix package on arm
 - disable compositing by default

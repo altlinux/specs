@@ -2,7 +2,7 @@
 
 %define major 5
 %define minor 1
-%define bugfix 0
+%define bugfix 1
 
 Name: kf5-filesystem
 Version: %major.%minor.%bugfix
@@ -39,16 +39,16 @@ mkdir -p %buildroot/%_K5emo
 mkdir -p %buildroot/%_K5snd
 mkdir -p %buildroot/%_K5tmpl
 mkdir -p %buildroot/%_K5wall
-mkdir -p %buildroot/%_K5srv/ServiceMenus
-mkdir -p %buildroot/%_K5srvtyp
 mkdir -p %buildroot/%_K5conf
 mkdir -p %buildroot/%_K5cfg
 mkdir -p %buildroot/%_K5cf_upd
-mkdir -p %buildroot/%_K5xmlgui
-mkdir -p %buildroot/%_K5notif
 mkdir -p %buildroot/%_K5data/{color-schemes,solid/{actions,devices},widgets/pics,plasma/{packages,shells,updates,layout-templates}}
-mkdir -p %buildroot/%_K5data/polkit-1/actions
 mkdir -p %buildroot/%_K5data/dbus-1/{services,system-services}
+#
+mkdir -p %buildroot/%_K5notif
+mkdir -p %buildroot/%_K5srv/ServiceMenus
+mkdir -p %buildroot/%_K5srvtyp
+mkdir -p %buildroot/%_K5xmlgui
 
 mkdir -p %buildroot/%_kf5_xdgapp
 mkdir -p %buildroot/%_desktopdir/kf5
@@ -62,7 +62,7 @@ mkdir -p %buildroot/%_K5cf_bin
 
 mkdir -p %buildroot/%_K5xdgconf/{autostart,colors,menus,ui}
 
-mkdir -p %buildroot/%_K5data/{katepart5,knotifications5,kservices5,kservicetypes5,kxmlgui5}
+mkdir -p %buildroot/%_K5data/{katepart5,knotifications5,kservices5/ServiceMenus,kservicetypes5,kxmlgui5}
 
 mkdir -p %buildroot/%_K5i18n/
 for l in %lng_list
@@ -85,7 +85,8 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir/kde5
 
 %files
 %_bindir/kde5
-%_K5data
+%_datadir/k*5/
+%_K5plug/kf5
 %_sysconfdir/kf5
 %dir %_kf5_bin
 %dir %_kf5_sbin
@@ -93,10 +94,12 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir/kde5
 %dir %_K5exec
 %dir %_K5inc
 %dir %_K5link
-%_K5plug/kf5
 %dir %_desktopdir/kf5
 
 %changelog
+* Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
+- update dirs
+
 * Fri Apr 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
 - add helper script
 
