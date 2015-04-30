@@ -1,8 +1,8 @@
 %define mname node.ext
 %define oname %mname.ldap
 Name: python-module-%oname
-Version: 0.9.7
-Release: alt1.git20140618
+Version: 0.9.8
+Release: alt1.dev0.git20150214
 Summary: Node based LDAP support
 License: BSD
 Group: Development/Python
@@ -79,6 +79,9 @@ nosetests
 %python_sitelibdir/node/ext/*/test*
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt1.dev0.git20150214
+- Version 0.9.8.dev0
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7-alt1.git20140618
 - Initial build for Sisyphus
 
