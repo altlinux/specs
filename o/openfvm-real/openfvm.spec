@@ -4,12 +4,12 @@
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
-%define gver 4.7
+%define gver 4.9
 %set_gcc_version %gver
 
 Name: openfvm-%scalar_type
 Version: 1.4
-Release: alt6.svn20140225
+Release: alt7.svn20140225
 Summary: General three-dimensional Computational Fluid Dynamics (CFD) solver
 
 Group: Sciences/Mathematics
@@ -142,6 +142,9 @@ done
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt7.svn20140225
+- Rebuilt with gcc 4.9
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt6.svn20140225
 - Fixed build
 
