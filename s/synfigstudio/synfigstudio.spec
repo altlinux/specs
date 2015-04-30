@@ -1,23 +1,27 @@
-Name: synfigstudio
-Version: 0.64.3
+Name:    synfigstudio
+Version: 1.0.0
 Release: alt1
 
 Summary: Synfig studio - animation program
-Group: Office
+Group:   Office
 License: GPL
-Url: http://www.synfig.org
+Url:     http://www.synfig.org
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 #Source: http://prdownloads.sf.net/synfig/%name-%version.tar.gz
-Source: %name-%version.tar
-#Patch0: synfigstudio-0.62.02-alt-gcc4.5.patch
+Source:  %name-%version.tar
+Patch1:  synfigstudio-0.62.00-cflags.patch
+Patch2:  synfigstudio-1.0-fix-splash.patch
+Patch3:  synfigstudio-1.0-release.patch
+
 
 BuildPreReq: fonts-ttf-liberation
 BuildRequires: gcc-c++ libgtkmm2-devel
 BuildRequires: libsynfig-devel >= %version
 BuildRequires: intltool
 BuildRequires: ImageMagick-tools
+BuildRequires: libgtkmm3-devel
 BuildRequires: /proc
 
 BuildPreReq: libsynfig-devel = %version
@@ -44,7 +48,9 @@ Header files for Synfig studio.
 
 %prep
 %setup -q
-#%patch0 -p0
+%patch1 -p1
+%patch2 -p2
+%patch3 -p2
 
 %build
 %autoreconf
@@ -62,8 +68,12 @@ Header files for Synfig studio.
 %_pixmapsdir/*
 %_iconsdir/*/*/*/*.png
 %_iconsdir/*/*/*/*.svg
-%_desktopdir/synfigstudio.desktop
+%_desktopdir/%name.desktop
+%_datadir/synfig/
 %_datadir/mime-info/*
+%_datadir/appdata/%name.appdata.xml
+%_xdgmimedir/application/x-sif.xml
+%_xdgmimedir/packages/%name.xml
 
 %files -n lib%name
 %_libdir/libsynfigapp.*
@@ -72,6 +82,13 @@ Header files for Synfig studio.
 %_includedir/synfigapp*/
 
 %changelog
+* Wed Apr 29 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
+- New version
+
+* Thu Mar 19 2015 Andrey Cherepanov <cas@altlinux.org> 0.64.3-alt2
+- Apply patches from Fedora
+- Drop obsoleted patches
+
 * Fri Dec 26 2014 Andrey Cherepanov <cas@altlinux.org> 0.64.3-alt1
 - New version
 
