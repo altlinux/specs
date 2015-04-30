@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.3
-Release: alt1.git20141013
+Version: 0.2.13
+Release: alt1.git20150428
 Summary: Zimmermann's Python package setup
 License: LGPL
 Group: Development/Python
@@ -17,13 +17,13 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-hgdistver python-module-conda
-BuildPreReq: python-module-path
+BuildPreReq: python-module-path ipython
 #BuildPreReq: python-module-jinjatools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-hgdistver python3-module-conda
-BuildPreReq: python3-module-path
+BuildPreReq: python3-module-path ipython3
 #BuildPreReq: python3-module-jinjatools
 %endif
 
@@ -73,10 +73,14 @@ popd
 %python_install
 
 %check
-python setup.py test
+python setup.py test ||python setup.py test
+export PYTHONPATH=$PWD
+py.test -vv
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py test ||python3 setup.py test
+export PYTHONPATH=$PWD
+py.test-%_python3_version -vv
 popd
 %endif
 
@@ -96,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.13-alt1.git20150428
+- Version 0.2.13
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt1.git20141013
 - Initial build for Sisyphus
 
