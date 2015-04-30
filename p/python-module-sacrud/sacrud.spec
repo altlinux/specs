@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.git20150114
+Version: 0.2.6
+Release: alt1.dev1.git20150406
 Summary: sacrud - CRUD interface for SQLAlchemy
 License: MIT
 Group: Development/Python
@@ -180,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.6-alt1.dev1.git20150406
+- Version 0.2.6.dev1
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20150114
 - Version 0.2.0
 
