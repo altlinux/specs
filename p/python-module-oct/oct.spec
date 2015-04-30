@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.3
-Release: alt1.git20150105
+Version: 0.3.5
+Release: alt1.git20150212
 Summary: A library based on multi-mechanize for performances testing
 License: MIT
 Group: Development/Python
@@ -23,6 +23,8 @@ BuildPreReq: python-module-celery python-module-cssselect
 BuildPreReq: python-module-scipy python-module-numpy
 BuildPreReq: python-module-pygal python-module-cairosvg
 BuildPreReq: python-module-tinycss python-module-six
+BuildPreReq: python-modules-multiprocessing python-modules-logging
+BuildPreReq: python-modules-xml
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -38,7 +40,8 @@ BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
-%py_requires cssselect pygal cairosvg tinycss six
+%py_requires cssselect pygal cairosvg tinycss six celery multiprocessing
+%py_requires logging xml
 
 %description
 OCT stand for Open Charge Tester and his goal is simple : make a library
@@ -63,7 +66,7 @@ This package contains tests for %oname.
 Summary: A library based on multi-mechanize for performances testing
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires cssselect pygal cairosvg tinycss six
+%py3_requires cssselect pygal cairosvg tinycss six celery
 
 %description -n python3-module-%oname
 OCT stand for Open Charge Tester and his goal is simple : make a library
@@ -109,11 +112,11 @@ popd
 pushd ../python3
 %python3_install
 popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
+#pushd %buildroot%_bindir
+#for i in $(ls); do
+#	mv $i $i.py3
+#done
+#popd
 %endif
 
 %python_install
@@ -132,10 +135,10 @@ popd
 
 %files
 %doc changelog.txt *.md doc/_build/html
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
+#_bindir/*
+#if_with python3
+#exclude %_bindir/*.py3
+#endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/testing
 
@@ -145,7 +148,7 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc changelog.txt *.md doc/_build/html
-%_bindir/*.py3
+#_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/testing
 
@@ -154,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt1.git20150212
+- Version 0.3.5
+
 * Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1.git20150105
 - Version 0.3.3
 
