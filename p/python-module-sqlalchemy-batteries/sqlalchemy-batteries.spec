@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.4
-Release: alt1.git20141210
+Version: 0.4.5
+Release: alt1.git20150204
 Summary: Various batteries for SQLAlchemy models
 License: BSD
 Group: Development/Python
@@ -132,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt1.git20150204
+- Version 0.4.5
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4-alt1.git20141210
 - Version 0.4.4
 - Added module for Python 3
