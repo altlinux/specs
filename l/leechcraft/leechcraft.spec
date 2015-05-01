@@ -4,7 +4,7 @@
 
 Name: leechcraft
 Version: 0.6.70
-Release: alt2
+Release: alt3
 
 Summary: LeechCraft DE
 License: Boost Software License
@@ -81,6 +81,16 @@ Development headers for LeechCraft.
 %install
 %cmakeinstall_std
 
+mkdir -p %buildroot%_sysconfdir/X11/wmsession.d/
+cat << __EOF__ > %buildroot%_sysconfdir/X11/wmsession.d/03LCDE
+NAME=LeechCraft DE
+ICON=%_iconsdir/hicolor/48x48/apps/%{name}_main.png
+EXEC=%_bindir/%name-session
+DESC=LeechCraft desktop environment
+SCRIPT:
+exec %_bindir/%name-session
+__EOF__
+
 %find_lang --all-name --with-qt %name
 
 %files
@@ -105,6 +115,7 @@ Development headers for LeechCraft.
 %doc README
 
 %files data -f %name.lang
+%_sysconfdir/X11/wmsession.d/03LCDE
 %_desktopdir/*.desktop
 %dir %_datadir/%name
 %dir %_datadir/%name/translations
@@ -131,6 +142,9 @@ Development headers for LeechCraft.
 %_datadir/%name/cmake/
 
 %changelog
+* Fri May 01 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.70-alt3
+- added /etc/X11/wmsession.d/03LCDE
+
 * Fri Apr 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.70-alt2
 - 0.6.70_5621455b
 - requires: polkit, udisks2, libqt4-sql-sqlite
