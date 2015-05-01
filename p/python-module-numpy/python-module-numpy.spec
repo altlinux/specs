@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt13.git20150424
+Release: alt14.git20150424
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -1080,6 +1080,9 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Fri May 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt14.git20150424
+- Added dgetrf into lapack_lite
+
 * Sat Apr 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt13.git20150424
 - New snapshot
 
