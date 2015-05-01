@@ -1,16 +1,17 @@
 Name:		doublecmd
-Summary:	Twin-panel (commander-style) file manager (GTK2)
-Version:	0.6.0
-Release:	alt1
+Summary:	Twin-panel (commander-style) file manager (GTK2 and QT4)
+Version:	0.6.1
+Release:	alt2
 Url:		http://doublecmd.sourceforge.net
 
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 
 Source0:	%name-%version.tar
+Source1:	%name-qt.desktop
 License:	GPLv2
 Group:		File tools
 
-BuildRequires: fpc >= 2.6.2 fpc-src glib2-devel libgtk+2-devel lazarus >= 1.0.10
+BuildRequires: fpc >= 2.6.2 fpc-src glib2-devel libgtk+2-devel lazarus >= 1.0.10 libQt4Pas5-devel >= 2.5
 BuildRequires: libncurses-devel
 BuildRequires: libdbus-devel
 BuildRequires: bzlib-devel
@@ -18,17 +19,44 @@ BuildRequires: gdk-pixbuf-devel
 BuildRequires: xorg-proto-devel
 BuildRequires: xorg-xtrans-devel
 
-Provides: doublecmd
-Conflicts: doublecmd-qt
-
 %description
-Double Commander is a cross platform open source file manager with two panels side by side.
+Double Commander (GTK2 and QT4 versions) is a cross platform open source file manager with two panels side by side.
 It is inspired by Total Commander and features some new ideas.
+
+%package -n %name-gtk
+Summary:	Twin-panel (commander-style) file manager (GTK2)
+Group:		File tools
+Requires:	%name-common
+Provides:	%name
+Obsoletes:	%name < 0.6.1
+
+%description -n %name-gtk
+Double Commander GTK is a cross platform open source file manager with two panels side by side.
+It is inspired by Total Commander and features some new ideas.
+
+%package -n %name-qt
+Summary:	Twin-panel (commander-style) file manager (Qt4)
+Group:		File tools
+Requires:	%name-common
+
+%description -n %name-qt
+Double Commander QT4 is a cross platform open source file manager with two panels side by side.
+It is inspired by Total Commander and features some new ideas.
+
+%package -n %name-common
+Summary:	Common files for Double Commander
+Group:		File tools
+
+%description -n %name-common
+Common files for Double Commander
 
 %prep
 %setup
 
 %build
+./build.sh beta qt
+mv ./%name ./%name-qt
+./clean.sh
 ./build.sh beta gtk2
 
 # To fix ... "oblom" ... when processing install ;)
@@ -36,18 +64,43 @@ It is inspired by Total Commander and features some new ideas.
 
 %install
 install/linux/install.sh --install-prefix=%buildroot
+install ./%name-qt %buildroot%_libdir/%name/%name-qt
+ln -s ../%_lib/%name/%name-qt %buildroot%_bindir/%name-qt
+install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt.desktop
 
-%files
-%_libdir/%name
+%files -n %name-gtk
 %_bindir/%name
+%_libdir/%name/%name
+%_desktopdir/%name.desktop
+
+%files -n %name-qt
+%_bindir/%name-qt
+%_libdir/%name/%name-qt
+%_desktopdir/%name-qt.desktop
+
+%files -n %name-common
+%exclude %_libdir/%name/%name
+%exclude %_libdir/%name/%name-qt
+%exclude %_bindir/%name
+%exclude %_bindir/%name-qt
+%_libdir/%name
 %_datadir/%name
 %_man1dir/%name.*
 %_pixmapsdir/%name.*
-%_desktopdir/%name.desktop
 
 %changelog
+* Fri May 08 2015 Motsyo Gennadi <drool@altlinux.ru> 0.6.1-alt2
+- fix BuildRequires
+
+* Fri May 01 2015 Motsyo Gennadi <drool@altlinux.ru> 0.6.1-alt1
+- 0.6.1
+- build Qt4 version
+
 * Mon Feb 16 2015 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1
 - New version
+
+* Tue Dec 31 2013 Motsyo Gennadi <drool@altlinux.ru> 0.5.8-alt0.0.M60T.rev.5390
+- build for t6
 
 * Mon Dec 30 2013 Motsyo Gennadi <drool@altlinux.ru> 0.5.8-alt0.rev.5390
 - build for Sisyphus (thank for src.rpm to Anatoly Chernov)
