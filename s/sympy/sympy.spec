@@ -1,9 +1,9 @@
 %def_with python3
 
 Name: sympy
-Version: 0.7.6
+Version: 0.7.7
 Epoch: 1
-Release: alt1.git20141120
+Release: alt1.dev.git20150430
 Summary: A Python library for symbolic mathematics
 License: New BSD License
 Group: Sciences/Mathematics
@@ -17,14 +17,16 @@ Source: %name-%version.tar.gz
 Requires: python-module-%name = %{?epoch:%epoch:}%version-%release
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-py python-module-distribute
+BuildPreReq: python-devel python-module-py python-module-setuptools-tests
 BuildPreReq: dvipng python-module-sphinx-devel python-module-Pygments
 BuildPreReq: python-module-docutils python-module-numpy librsvg-utils
-BuildPreReq: ImageMagick-tools
+BuildPreReq: python-module-mpmath
+BuildPreReq: ImageMagick-tools git
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-py python-tools-2to3
-BuildPreReq: python3-module-distribute git
+BuildPreReq: python3-module-setuptools-tests
+BuildPreReq: python3-module-mpmath
 %endif
 
 %description
@@ -206,6 +208,18 @@ cp -fR examples pickle \
 install -d %buildroot%_docdir/%name
 cp -fR doc/_build/html/* %buildroot%_docdir/%name/
 
+%check
+#python setup.py test
+#python bin/test -v
+python bin/doctest -v
+%if_with python3
+pushd ../python3
+#python3 setup.py test
+#python3 bin/test -v
+python3 bin/doctest -v
+popd
+%endif
+
 %files
 %doc AUTHORS LICENSE README*
 %_bindir/*
@@ -259,6 +273,9 @@ cp -fR doc/_build/html/* %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Fri May 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.7-alt1.dev.git20150430
+- Version 0.7.7.dev
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.6-alt1.git20141120
 - Version 0.7.6
 
