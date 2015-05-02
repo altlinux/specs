@@ -1,6 +1,6 @@
 Name: instant
-Version: 1.4.0
-Release: alt1.git20140929
+Version: 1.6.0
+Release: alt1.dev.git20150302
 Summary: Instant inlining of C and C++ code in Python
 Group: Development/Python
 License: GPL v2.1 / BSD
@@ -65,6 +65,9 @@ cp -fR doc/html* doc/Instant.html %buildroot%_docdir/%name/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Sat May 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.dev.git20150302
+- Version 1.6.0dev
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1.git20140929
 - Version 1.4.0
 
