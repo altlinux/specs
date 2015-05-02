@@ -1,12 +1,13 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
+%define vtkver 6.2
 
 %define oname dolfin
 %define scalar_type real
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 1.4.0
-Release: alt2.git20141028
+Version: 1.6.0
+Release: alt1.dev.git20150427
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -26,8 +27,8 @@ BuildPreReq: python-module-petsc-config libdakota-devel eigen3
 BuildPreReq: python-module-Pyro4 python-module-Scientific
 BuildPreReq: python-module-fiat %mpiimpl-devel python-devel libcgal-devel
 BuildPreReq: cmake swig libgts-devel libxml2-devel libnumpy-devel
-BuildPreReq: boost-devel libvtk6.2-python-devel vtk6.2-python ufc-devel ffc
-BuildPreReq: python-module-viper viper zlib-devel syfi libsyfi-devel
+BuildPreReq: boost-devel libvtk%vtkver-python-devel vtk%vtkver-python ufc-devel ffc
+BuildPreReq: zlib-devel syfi libsyfi-devel
 BuildPreReq: python-module-syfi python-module-ply python-module-Numeric
 BuildPreReq: boost-filesystem-devel boost-program_options-devel
 BuildPreReq: boost-math-devel boost-signals-devel boost-mpi-devel
@@ -40,8 +41,10 @@ BuildPreReq: python-module-PyTrilinos10 libmpfr-devel
 BuildPreReq: libarmadillo-devel libhypre-devel libqd-devel
 BuildPreReq: petsc-%scalar_type-sources python-module-sphinx-devel
 #BuildPreReq: texlive-latex-extra ghostscript-utils
-BuildPreReq: ghostscript-utils libhwloc-devel libqt4-devel libvtk6.2-devel
-BuildPreReq: vtk6.2-examples libarprec-devel libtbb-devel
+BuildPreReq: ghostscript-utils libhwloc-devel libqt4-devel libvtk%vtkver-devel
+BuildPreReq: vtk%vtkver-examples libarprec-devel libtbb-devel
+BuildPreReq: python-module-petsc4py-%scalar_type
+BuildPreReq: python-module-slepc4py-%scalar_type
 #BuildPreReq: libgomp-devel
 
 %description
@@ -147,10 +150,10 @@ Group: Development/Python
 Requires: libpetsc-%scalar_type >= 3.0.0_p7-alt3
 Requires: libslepc-%scalar_type >= 3.0.0_p4-alt2
 Requires: lib%name-devel = %epoch:%version-%release
-Requires: viper
+Requires: python-module-vtk%vtkver
 %setup_python_module %oname
 %py_provides %oname
-%py_requires viper multiprocessing
+%py_requires multiprocessing
 Provides: python-module-%oname = %epoch:%version-%release
 
 %description -n python-module-%name
@@ -166,6 +169,7 @@ Group: Development/Python
 Requires: libpetsc-%scalar_type >= 3.0.0_p7-alt3
 Requires: libslepc-%scalar_type >= 3.0.0_p4-alt2
 Requires: lib%name = %epoch:%version-%release
+Requires: python-module-vtk%vtkver
 %setup_python_module %{oname}_utils
 %py_provides %{oname}_utils
 Provides: python-module-%{oname}_utils = %epoch:%version-%release
@@ -362,6 +366,9 @@ export LD_LIBRARY_PATH=%buildroot%ldir/lib
 %ldir/python/%{oname}_utils
 
 %changelog
+* Sat May 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.6.0-alt1.dev.git20150427
+- Version 1.6.0dev
+
 * Sat Apr 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4.0-alt2.git20141028
 - Rebuilt with vtk6.2
 
