@@ -1,11 +1,11 @@
 Name:           ffc
-Version:        1.4.0
-Release:        alt1.git20141022
+Version:        1.6.0
+Release:        alt1.dev.git20150430
 Epoch: 1
 Summary:        Compiler for finite element variational forms
 Group:          Development/Tools
 License:        LGPL v3
-URL:            https://launchpad.net/ffc
+URL:            http://fenicsproject.org/
 # https://bitbucket.org/fenics-project/ffc.git
 Source: %name-%version.tar.gz
 Source1: http://www.fenics.org/pub/documents/ffc/ffc-user-manual/ffc-user-manual.pdf
@@ -120,6 +120,9 @@ touch %buildroot%python_sitelibdir/ffc_time_ext/__init__.py
 %_datadir/ufc
 
 %changelog
+* Sat May 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.6.0-alt1.dev.git20150430
+- Version 1.6.0dev
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4.0-alt1.git20141022
 - Version 1.4.0
 
