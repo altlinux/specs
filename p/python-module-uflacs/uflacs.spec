@@ -1,8 +1,8 @@
 %define oname uflacs
 
 Name: python-module-%oname
-Version: 1.4.0
-Release: alt1.git20140901
+Version: 1.6.0
+Release: alt1.dev.git20150421
 Summary: UFL Analyser and Compiler System
 Group: Development/Python
 License: LGPLv3
@@ -34,6 +34,9 @@ processing UFL code in various fashions.
 %python_sitelibdir/*
 
 %changelog
+* Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.dev.git20150421
+- Version 1.6.0dev
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1.git20140901
 - Version 1.4.0
 
