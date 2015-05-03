@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.0.18
-Release:        alt2.git20150214
+Release:        alt2.git20150316
 Summary:        A Python module for accessing online Google services
 Group:          Development/Python
 License:        Apache-2.0
@@ -109,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.18-alt2.git20150316
+- New snapshot
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.18-alt2.git20150214
 - New snapshot
 
