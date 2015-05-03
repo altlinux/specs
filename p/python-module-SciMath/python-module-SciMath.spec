@@ -1,7 +1,7 @@
 %define oname SciMath
 Name: python-module-%oname
 Version: 4.1.2
-Release: alt2.git20140829
+Release: alt2.git20141125
 Summary:  Scientific and Mathematical calculations
 
 Group: Development/Python
@@ -78,6 +78,7 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %doc *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/*/example*
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
@@ -88,8 +89,12 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files tests
 %python_sitelibdir/*/*/tests
+%python_sitelibdir/*/*/example*
 
 %changelog
+* Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt2.git20141125
+- New snapshot
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt2.git20140829
 - New snapshot
 - Added docs
