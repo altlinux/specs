@@ -1,7 +1,7 @@
 %define oname envisage
 Name:           python-module-%oname
 Version:        4.5.0
-Release:        alt1.git20140812
+Release:        alt1.git20150428
 Summary:        Extensible Application Framework
 
 Group:          Development/Python
@@ -76,6 +76,7 @@ This package contains tests for Envisage.
 %build
 %python_build
 
+export PYTHONPATH=$PWD
 %generate_pickles docs/source docs/source %oname
 sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 
@@ -90,12 +91,14 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/*/tests
+%exclude %python_sitelibdir/*/*/*/example*
 %exclude %python_sitelibdir/%oname/pickle
 
 %files tests
 %python_sitelibdir/*/tests
 %python_sitelibdir/*/*/tests
 %python_sitelibdir/*/*/*/*/tests
+%python_sitelibdir/*/*/*/example*
 
 %files docs
 %doc examples html
@@ -105,6 +108,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 
 %changelog
+* Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.0-alt1.git20150428
+- New snapshot
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.0-alt1.git20140812
 - New snapshot
 
