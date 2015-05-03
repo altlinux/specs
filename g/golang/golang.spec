@@ -9,8 +9,22 @@
 # contains binary-like things (ELF data for tests, etc)
 %global _unpackaged_files_terminate_build 1
 
+%global go_arches %ix86 x86_64 %arm
+
+%ifarch x86_64
+%global gohostarch  amd64
+%endif
+%ifarch %{ix86}
+%global gohostarch  386
+%endif
+%ifarch %{arm}
+%global gohostarch  arm
+%endif
+
+%def_disable check
+
 Name:		golang
-Version:	1.3
+Version:	1.4.2
 Release:	alt1
 Summary:	The Go Programming Language
 Group:		Development/Other
@@ -21,10 +35,9 @@ Packager:	Alexey Gladkov <legion@altlinux.ru>
 
 Source0:	golang-%version.tar
 Patch0:		golang-1.2-verbose-build.patch
-Patch1:		golang-1.3-disable-multicast_test.patch
-Patch2:		golang-1.2-alt-certs-path.patch
+Patch2:		golang-1.4.2-alt-certs-path.patch
 
-ExclusiveArch:	%ix86 x86_64 %arm
+ExclusiveArch:	%go_arches
 
 %set_verify_elf_method unresolved=no
 %add_debuginfo_skiplist %_libdir/golang
@@ -52,17 +65,6 @@ BuildArch: noarch
 The Go Runtime support for GDB.
 
 
-%package vim
-Summary: Vim plugins for Go
-Group:  Development/Other
-BuildArch: noarch
-
-Requires: vim-common
-
-%description vim
-Vim plugins for Go.
-
-
 %package godoc
 Summary: The Go documentation tool
 Group: Documentation
@@ -87,8 +89,7 @@ Go sources and documentation.
 
 # increase verbosity of build
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch2 -p2
 
 
 %build
@@ -99,17 +100,26 @@ export GOROOT_FINAL=%_libdir/%name
 # when https://code.google.com/p/go/issues/detail?id=5221 is solved
 #export GO_LDFLAGS="-linkmode external -extldflags $RPM_LD_FLAGS"
 
+export GOHOSTOS=linux
+export GOHOSTARCH=%gohostarch
+
+# use our gcc options for this build, but store gcc as default for compiler
+export CC="gcc $RPM_OPT_FLAGS $RPM_LD_FLAGS"
+export CC_FOR_TARGET="gcc"
+
 # build
 cd src
-./make.bash
+./make.bash --no-clean
 
 %check
+%if_enabled check
 export GOROOT=$PWD
 export PATH="$GOROOT/bin:$PATH"
+export CGO_ENABLED=0
 
 cd src
 ./run.bash --no-rebuild
-
+%endif
 
 %install
 # create the top level directories
@@ -168,14 +178,8 @@ done
 # restore the gdb debugging script, needed at runtime by gdb
 mkdir -p -- %buildroot/%_datadir/%name/gdb
 mv -fv  \
-	%buildroot/%_libdir/%name/src/pkg/runtime/runtime-gdb.py \
+	%buildroot/%_libdir/%name/src/runtime/runtime-gdb.py \
 	%buildroot/%_datadir/%name/gdb
-
-# misc/vim
-mkdir -p -- %buildroot/%_datadir/vim/vimfiles
-rm -fv -- misc/vim/readme.txt
-cp -av misc/vim/* %buildroot/%_datadir/vim/vimfiles
-
 
 %files
 # binaries
@@ -203,10 +207,6 @@ cp -av misc/vim/* %buildroot/%_datadir/vim/vimfiles
 %_datadir/%name/gdb
 
 
-%files vim
-%_datadir/vim/vimfiles/*
-
-
 %files godoc
 %_libdir/%name/doc
 %_libdir/%name/favicon.ico
@@ -226,6 +226,14 @@ cp -av misc/vim/* %buildroot/%_datadir/vim/vimfiles
 
 
 %changelog
+* Sun May 03 2015 Alexey Gladkov <legion@altlinux.ru> 1.4.2-alt1
+- New version (1.4.2).
+- Disable tests.
+
+* Fri Dec 12 2014 Alexey Gladkov <legion@altlinux.ru> 1.4-alt1
+- New version (1.4).
+- Drop vim subpackage.
+
 * Mon Jun 23 2014 Alexey Gladkov <legion@altlinux.ru> 1.3-alt1
 - New version (1.3).
 
