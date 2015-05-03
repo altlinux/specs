@@ -1,5 +1,5 @@
 Name: wine-vanilla
-Version: 1.7.40
+Version: 1.7.42
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -346,6 +346,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat May 02 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.42-alt1
+- new version 1.7.42
+
 * Sun Apr 05 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.40-alt1
 - new version 1.7.40
 
