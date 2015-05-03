@@ -1,7 +1,7 @@
 %define oname Enable
 Name: python-module-%oname
-Version: 4.5.0
-Release: alt1.git20141003
+Version: 4.6.0
+Release: alt1.git20150423
 Summary: Drawing and interaction packages
 
 Group: Development/Python
@@ -15,7 +15,7 @@ BuildRequires: python-devel, python-module-setuptools
 BuildPreReq: libnumpy-devel gcc-c++ swig python-module-Pyrex
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: libGL-devel libX11-devel python-module-Cython
-BuildPreReq: libGLU-devel
+BuildPreReq: libGLU-devel python-module-traits fonts-ttf-PT
 
 %add_python_req_skip macport mac_context
 
@@ -91,6 +91,9 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 %install
 %python_install
 
+find %buildroot%python_sitelibdir -type f -name '*.py' -exec \
+	sed -i 's|// |#|' '{}' +
+
 rm -fR %buildroot%python_sitelibdir/enthought/kiva/mac
 rm -f $(find %buildroot%python_sitelibdir -name '*mac*.py*')
 
@@ -100,7 +103,8 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/test*
+%exclude %python_sitelibdir/*/example*
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/tests
 %exclude %python_sitelibdir/enable/pickle
@@ -110,7 +114,8 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %python_sitelibdir/enable/pickle
 
 %files tests
-%python_sitelibdir/*/tests
+%python_sitelibdir/*/test*
+%python_sitelibdir/*/example*
 %python_sitelibdir/*/*/tests
 %python_sitelibdir/*/*/*/tests
 
@@ -118,6 +123,9 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %doc docs/kiva examples html
 
 %changelog
+* Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6.0-alt1.git20150423
+- Version 4.6.0
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.0-alt1.git20141003
 - New snapshot
 
