@@ -3,7 +3,7 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.25.2
+Version: 2.26.2
 Release: alt1
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
@@ -379,6 +379,36 @@ Requires: libsmartcols-devel = %version-%release
 %description -n libsmartcols-devel-static
 This is the smartcols development static library.
 
+%package -n libfdisk
+Summary: Partitioning library for fdisk-like programs.
+Group: System/Libraries
+License: LGPLv2+
+
+%description -n libfdisk
+This is library for fdisk-like programs, part of util-linux.
+
+%package -n libfdisk-devel
+Summary:  Partitioning library for fdisk-like programs.
+Group: Development/C
+License: LGPLv2+
+Requires: libfdisk = %version-%release
+Requires: pkgconfig
+
+%description -n libfdisk-devel
+This is development library and headers for fdisk-like programs,
+part of util-linux.
+
+%package -n libfdisk-devel-static
+Summary:  Partitioning library for fdisk-like programs.
+Group: Development/C
+License: LGPLv2+
+Requires: libfdisk = %version-%release
+Requires: pkgconfig
+
+%description -n libfdisk-devel-static
+This is development static library for fdisk-like programs,
+part of util-linux.
+
 %package initramfs
 Summary: Utilities for use in initramfs
 Group: System/Base
@@ -410,6 +440,7 @@ cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 %patch52 -p1
 %patch54 -p1
 %patch59 -p2
+%patch60 -p1
 
 echo %version > .tarball-version
 
@@ -499,7 +530,7 @@ klcc -Wall -Wextra -Werror nologin.c -o nologin
 # cal: broken.
 # mount, swapon: required real root and ignored in hasher.
 # ipcs/limits*: failed in hasher.
-rm -rf tests/ts/{cal,login,look,ipcs/limits*,libmount/utils,misc/ionice,more/regexp}
+rm -rf tests/ts/{cal,login,look,ipcs/limits*,libmount/{lock,utils},misc/ionice,more/regexp}
 LANG=C %make check-local-tests
 
 %install
@@ -853,6 +884,17 @@ fi
 %files -n libsmartcols-devel-static
 %_libdir/libsmartcols.a
 
+%files -n libfdisk
+/%_lib/libfdisk.so.*
+
+%files -n libfdisk-devel
+%_includedir/libfdisk
+%_libdir/libfdisk.so
+%_pkgconfigdir/fdisk.pc
+
+%files -n libfdisk-devel-static
+%_libdir/libfdisk.a
+
 %files initramfs
 /lib/mkinitrd/udev/sbin/blkid
 /lib/mkinitrd/udev/lib/udev/vol_id
@@ -865,6 +907,10 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Sun May 03 2015 Alexey Gladkov <legion@altlinux.ru> 2.26.2-alt1
+- New version (2.26.2).
+- Add libsmartcols, libfdisk.
+
 * Sun Nov 02 2014 Alexey Gladkov <legion@altlinux.ru> 2.25.2-alt1
 - New version (2.25.2).
 - Use tarballs to import upstream sources.
