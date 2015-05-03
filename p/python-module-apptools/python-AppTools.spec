@@ -3,8 +3,8 @@
 %def_without python3
 
 Name:           python-module-%oname
-Version:        4.3.0
-Release:        alt1.git20150211
+Version:        4.4.0
+Release:        alt1.git20150430
 Summary:        Enthough Tool Suite Application Tools
 
 Group:          Development/Python
@@ -18,12 +18,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch:      noarch
 BuildRequires:  python-module-setuptools, python-devel
 BuildRequires: unzip python-module-setupdocs python-module-sphinx-devel
-BuildPreReq: python-module-traits
+BuildPreReq: python-module-traits python-module-wx2.9
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setupdocs python-tools-2to3
 %endif
 #Requires:       python-module-TraitsGUI, python-module-EnthoughtBase
+Requires: python-module-wx < 3.0
+%py_requires %oname.help.help_plugin.examples_preferences
+%add_python_req_skip examples_preferences
 
 %description
 The AppTools project includes a set of packages that Enthought has
@@ -100,6 +103,7 @@ This package contains pickles for AppTools.
 Summary: Tests for AppTools
 Group: Development/Python
 Requires: %name = %EVR
+%add_python_req_skip util
 
 %description tests
 The AppTools project includes a set of packages that Enthought has
@@ -151,9 +155,15 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/%oname/pickle
 #_bindir/*
 %exclude %python_sitelibdir/%oname/*/test*
+%exclude %python_sitelibdir/%oname/*/*/*/example*
+%exclude %python_sitelibdir/%oname/*/*/example*
+%exclude %python_sitelibdir/%oname/*/*/test*
 
 %files tests
 %python_sitelibdir/%oname/*/test*
+%python_sitelibdir/%oname/*/*/*/example*
+%python_sitelibdir/%oname/*/*/example*
+%python_sitelibdir/%oname/*/*/test*
 
 %files docs
 %doc examples html
@@ -169,6 +179,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.0-alt1.git20150430
+- Version 4.4.0
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1.git20150211
 - Version 4.3.0
 
