@@ -2,7 +2,7 @@
 %define sover %somver.0.0
 Name: cgal
 Version: 4.6
-Release: alt1
+Release: alt2
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -181,6 +181,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc %_docdir/%{name}*
 
 %changelog
+* Mon May 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6-alt2
+- Applied changes from FEniCS's mshr
+
 * Mon Apr 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6-alt1
 - Version 4.6
 
