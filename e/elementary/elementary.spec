@@ -1,18 +1,20 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 1.11
+%define ver_major 1.14
 
 Name: elementary
-Version: %ver_major.5
-Release: alt1
+Version: %ver_major.0
+Release: alt0.1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
 Group: Graphical desktop/Enlightenment
 License: LGPLv2+
 Url: http://www.enlightenment.org
 
-Source: http://download.enlightenment.org/releases/%name-%version.tar.xz
+#Source: http://download.enlightenment.org/releases/%name-%version.tar.xz
+# ef4c303
+Source: %name-%version.tar
 
-BuildRequires: efl-libs-devel >= 1.11.4
+BuildRequires: efl-libs-devel >= 1.14.0
 BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
 
 %description
@@ -102,6 +104,12 @@ developing applications that use Elementary libraries.
 %_iconsdir/*.png
 
 %changelog
+* Mon May 04 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt0.1
+- 1.14.0_ef4c303
+
+* Mon May 04 2015 Yuri N. Sedunov <aris@altlinux.org> 1.13.2-alt1
+- 1.13.2_d0a22099
+
 * Thu Dec 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11.5-alt1
 - 1.11.5
 
