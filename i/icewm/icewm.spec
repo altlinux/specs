@@ -3,7 +3,7 @@
 
 Name: icewm
 Version: 1.3.8
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: X11 Window Manager
@@ -39,6 +39,8 @@ Patch9:  %name-build_fixes.patch
 
 PreReq: %name-light = %epoch:%version-%release
 
+Conflicts: icewm-githubmod
+
 # Automatically added by buildreq on Sun May 20 2012
 BuildRequires: gcc-c++ imake libSM-devel libXext-devel libXft-devel libXinerama-devel libXrandr-devel libgdk-pixbuf-devel mkfontdir xorg-cf-files
 
@@ -58,6 +60,7 @@ Recommends: iftop, mutt
 Summary: A light version of Icewm
 Group: Graphical desktop/Icewm
 Requires: design-%name >= 1.0-alt6
+Conflicts: icewm-githubmod
 
 %description light
 Window Manager for X Window System. Can emulate the look of Windows'95, OS/2
@@ -208,6 +211,9 @@ rm -rf %buildroot/%_x11x11dir/%name/themes/*
 %_pixmapsdir/*
 
 %changelog
+* Mon May 04 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.8-alt2
+- added conflicts to icewm-githubmod
+
 * Sat Feb 14 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.8-alt1
 - 1.3.8
 
