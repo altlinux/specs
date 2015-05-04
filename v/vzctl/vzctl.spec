@@ -1,12 +1,12 @@
 Name: vzctl
-Version: 4.8
+Version: 4.9.1
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
 License: GPL
 Group: System/Configuration/Other
 Url: http://openvz.org/
-Packager: Viacheslav Dubrovskyi <dubrsl@altlinux.org>
+Packager: Evgenii Terechkov <evg@altlinux.org>
 
 # http://download.openvz.org/utils/vzctl/%version/src/vzctl-%version.tar.bz2
 Source: %name-%version.tar
@@ -129,6 +129,12 @@ exit 0
 /var/lib/vz
 
 %changelog
+* Mon May  4 2015 Terechkov Evgenii <evg@altlinux.org> 4.9.1-alt1
+- Updated to vzctl-4.9.1
+
+* Sun May  3 2015 Terechkov Evgenii <evg@altlinux.org> 4.9-alt1
+- Updated to vzctl-4.9
+
 * Wed Oct  8 2014 Terechkov Evgenii <evg@altlinux.org> 4.8-alt1
 - Updated to vzctl-4.8
 
