@@ -1,5 +1,5 @@
 Name: nip2
-Version: 7.42.1
+Version: 8.0
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -61,6 +61,7 @@ cp -a doc/html doc/pdf %buildroot%_docdir/%name/
 %_niconsdir/*
 %_datadir/mime/packages/nip2.xml
 %_datadir/mime/image/x-vips.xml
+%_datadir/appdata/*.appdata.xml
 
 %files doc
 %_docdir/%name
@@ -69,6 +70,9 @@ cp -a doc/html doc/pdf %buildroot%_docdir/%name/
 # - look into uninstalled /usr/share/mime/*
 
 %changelog
+* Mon May 04 2015 Michael Shigorin <mike@altlinux.org> 8.0-alt1
+- new version (watch file uupdate)
+
 * Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 7.42.1-alt1
 - new version (watch file uupdate)
 
