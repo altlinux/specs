@@ -15,20 +15,21 @@
 
 Name: libwebkitgtk2
 Version: 2.4.8
-Release: alt1
+Release: alt3
 
 Summary: Web browser engine
 License: %bsd %lgpl2plus
 Group: System/Libraries
 Url: http://www.webkitgtk.org/
 
-Source: webkitgtk-%version.tar.xz
+Source: http://webkitgtk.org/releases/webkitgtk-%version.tar.xz
 Patch: webkitgtk-2.1.92-alt-gtk2_compatibility.patch
 Patch2: webkitgtk-2.4.0-up-textrel.patch
 Patch3: webkitgtk-2.4.0-alt-link.patch
 Patch4: webkitgtk-2.4.8-fc-gmutexlocker.patch
 
 Requires: libjavascriptcoregtk2 = %version-%release
+%{?_enable_geolocation:Requires: geoclue2}
 
 Provides: webkitgtk = %version-%release
 Provides: libwebkit-gtk = %version-%release
@@ -67,7 +68,7 @@ BuildRequires: libGL-devel libXcomposite-devel libXdamage-devel
 %endif
 
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 1.32.0 libgtk+2-gir-devel libsoup-gir-devel}
-%{?_enable_geolocation:BuildPreReq: libgeoclue-devel}
+%{?_enable_geolocation:BuildPreReq: geoclue2-devel}
 %{?_enable_spellcheck:BuildPreReq: libenchant-devel}
 %{?_enable_media_stream:BuildPreReq: farstream0.2-devel}
 
@@ -279,6 +280,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Tue May 05 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.8-alt3
+- rebuilt with geoclue2
+
 * Sun Apr 05 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.8-alt1
 - 2.4.8
 - fixed build with glib-2.44
