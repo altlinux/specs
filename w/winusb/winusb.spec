@@ -1,7 +1,7 @@
 Summary:        Creates Windows USB stick installer from a Windows DVD or image
 Name:		winusb
 Version:        1.0.10
-Release:        alt5
+Release:        alt6
 URL:            http://en.congelli.eu/prog_info_winusb.html
 Source: 	%name-%version.tar
 Packager: 	Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -55,14 +55,14 @@ done
 %doc COPYING README AUTHORS ChangeLog
 %_bindir/%name
 %_man1dir/*.1.gz
+
+%files gui
 %dir %_datadir/%name
 %dir %_datadir/%name/locale
 %dir %_datadir/%name/locale/fr
 %dir %_datadir/%name/locale/fr/LC_MESSAGES
 %_datadir/%name/locale/fr/LC_MESSAGES/wxstd.mo
 %_datadir/%name/locale/fr/LC_MESSAGES/trad.mo
-
-%files gui
 %_bindir/winusbgui
 %_datadir/applications/winusbgui.desktop
 %_datadir/pixmaps/winusbgui-icon.png
@@ -72,6 +72,9 @@ done
 
 
 %changelog
+* Tue May 05 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0.10-alt6
+- Moved most files to -gui subpackage
+
 * Thu Apr 30 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0.10-alt5
 - Added subpackage for winusb-gui
 
