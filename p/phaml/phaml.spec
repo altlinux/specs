@@ -1,4 +1,4 @@
-%define gver 4.8
+%define gver 4.9
 %set_gcc_version %gver
 
 %define mpiimpl openmpi
@@ -9,8 +9,8 @@
 %define sover %somver.0
 
 Name: phaml
-Version: 1.13.0
-Release: alt4
+Version: 1.14.0
+Release: alt1
 Summary: The Parallel Hierarchical Adaptive MultiLevel Project
 License: Public domain
 Group: Sciences/Mathematics
@@ -152,6 +152,9 @@ cp -fR examples %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Tue May 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14.0-alt1
+- Version 1.14.0
+
 * Sat Jul 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13.0-alt4
 - Rebuilt without SLEPc
 
