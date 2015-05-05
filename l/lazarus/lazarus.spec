@@ -3,7 +3,7 @@
 
 Name:       lazarus
 Version:    1.4.0
-Release:    alt1
+Release:    alt2
 Epoch:      1
 
 Summary:    Lazarus Component Library and IDE
@@ -27,6 +27,10 @@ Patch6:	    %name-set-user-TestBuildDirectory.patch
 # Patches from Debian
 Patch11: lazarus-default-config.patch
 Patch12: lazarus-lcl-with-multple-widget-sets.patch
+
+# Patches fro upstream
+# Upstream fix for http://bugs.freepascal.org/view.php?id=27991 "Cannot use lazbuild anymore"
+Patch20: lazarus-save-lpk-list.patch
 
 BuildRequires: fpc >= 2.6.4 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils 
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
@@ -67,6 +71,7 @@ subst 's|/usr/lib/|%{_libdir}/|' %PATCH4
 %patch6 -p2
 %patch11 -p1
 %patch12 -p1
+%patch20 -p0
 
 install -D -p -m 0644 %SOURCE3 tools/install/linux/environmentoptions.xml
 #sed -i -e 's,@version@,%version,g' tools/install/linux/helpoptions.xml docs/index.ru.html
@@ -189,6 +194,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Tue May 05 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.4.0-alt2
+- Upstream fix for http://bugs.freepascal.org/view.php?id=27991
+
 * Thu Apr 23 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.4.0-alt1
 - New version (http://wiki.lazarus.freepascal.org/Lazarus_1.4.0_release_notes)
 
