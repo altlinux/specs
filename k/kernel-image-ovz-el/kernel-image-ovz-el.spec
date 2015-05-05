@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt131
+Release: alt132
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -19,6 +19,7 @@ Release: alt131
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version	4.4
+%define nprocs 12
 
 # Enable/disable several parts of kernel
 %def_disable docs
@@ -46,7 +47,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab106.6-combined
+Patch0: patch-042stab108.1-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -332,6 +333,7 @@ subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+c
 find . -name "*.orig" -delete -or -name "*~" -delete
 
 %build
+export NPROCS=%nprocs
 export ARCH=%base_arch
 KernelVer=%kversion-%flavour-%krelease
 
@@ -570,6 +572,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Tue May 05 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt132
+- Updated to 042stab108.1.
+
 * Fri Apr 24 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt131
 - Updated to 042stab106.6.
 
