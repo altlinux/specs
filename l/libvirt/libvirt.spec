@@ -51,7 +51,7 @@
 %def_with storage_disk
 %def_with storage_rbd
 %def_with storage_mpath
-%def_without storage_gluster
+%def_with storage_gluster
 %def_with numactl
 %def_with selinux
 
@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.14
+Version: 1.2.15
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -133,7 +133,7 @@ Requires: libvirt-client = %version-%release
 %{?_with_storage_fs:BuildRequires: util-linux}
 %{?_with_qemu:BuildRequires: qemu-img}
 %{?_with_storage_lvm:BuildRequires: lvm2}
-%{?_with_storage_disk:BuildRequires: libparted-devel parted}
+%{?_with_storage_disk:BuildRequires: libparted-devel parted libuuid-devel dmsetup libdevmapper-devel}
 %{?_with_storage_rbd:BuildRequires: ceph-devel}
 %{?_with_storage_iscsi:BuildRequires: open-iscsi}
 %{?_with_storage_mpath:BuildRequires: libdevmapper-devel}
@@ -862,9 +862,6 @@ fi
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.qemu
 %dir %attr(0700, root, root) %_localstatedir/run/libvirt/qemu
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu
-%dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/channel
-%dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/channel/target
-%dir %attr(0711, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/nvram
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/cache/libvirt/qemu
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt/qemu
 %_datadir/augeas/lenses/libvirtd_qemu.aug
@@ -904,6 +901,9 @@ fi
 %if_with libxl
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt/libxl
 %dir %attr(0700, root, root) %_localstatedir/lib/libvirt/libxl
+%config(noreplace) %_sysconfdir/libvirt/libxl*.conf
+%_datadir/augeas/lenses/libvirtd_libxl.aug
+%_datadir/augeas/lenses/tests/test_libvirtd_libxl.aug
 %endif
 
 %if_with vbox
@@ -924,6 +924,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue May 05 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.15-alt1
+- 1.2.15
+- build with glusterfs support
+
 * Thu Apr 09 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.14-alt1
 - 1.2.14
 
