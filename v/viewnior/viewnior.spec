@@ -5,8 +5,8 @@
 %def_without gnome
 
 Name: viewnior
-Version: 1.4
-Release: alt1.1
+Version: 1.5
+Release: alt1
 
 Summary: Elegant image viewer
 License: GPLv3+
@@ -15,7 +15,6 @@ Group: Graphics
 Url: http://xsisqox.github.com/Viewnior
 Source0: %name-%version.tar.gz
 Source1: %name.watch
-Patch: viewnior-0.7-dsofix.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Apr 13 2014
@@ -40,11 +39,11 @@ space for your images. Among its features are:
 
 %prep
 %setup
-%patch -p1 -b .dsofix
 # fix spurious executable perms
-chmod 644 AUTHORS ChangeLog COPYING NEWS README TODO src/*
+chmod 644 AUTHORS COPYING NEWS README TODO src/*
 
 %build
+%autoreconf
 %configure \
 %if_with gnome
    --enable-wallpaper
@@ -57,7 +56,7 @@ chmod 644 AUTHORS ChangeLog COPYING NEWS README TODO src/*
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS NEWS README TODO
 %_bindir/%name
 %_man1dir/*
 %_desktopdir/%name.desktop
@@ -65,6 +64,10 @@ chmod 644 AUTHORS ChangeLog COPYING NEWS README TODO src/*
 %_datadir/%name/
 
 %changelog
+* Sun May 03 2015 Michael Shigorin <mike@altlinux.org> 1.5-alt1
+- new version (watch file uupdate)
+- NB: source hosted on github had to be repackaged by hand :-\
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1.1
 - NMU: fixed watch file
 
