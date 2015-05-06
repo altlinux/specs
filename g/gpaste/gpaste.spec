@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gpaste
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -90,7 +90,6 @@ in notification area.
   --disable-schemas-compile \
   --disable-unity \
   --enable-applet \
-  --enable-systemd \
   --enable-vala
 %make
 
@@ -138,6 +137,9 @@ in notification area.
 
 
 %changelog
+* Wed May 06 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16-alt1
 - 3.16
 
