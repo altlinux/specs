@@ -1,9 +1,9 @@
 %define ver_major 0.19
-%define efl_ver_major 1.11
-%define cvs_date alpha1
-%undefine cvs_date
+%define efl_ver_major 1.14
 %define snapshot 2012-10-12
-%define rel alt1
+%define cvs_date 96ba030e
+%undefine cvs_date
+%define rel alt0.1
 
 %def_disable static
 # only bluez4 supported
@@ -14,7 +14,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.4
+Version: %ver_major.99.0
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -29,7 +29,7 @@ Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
 
 %ifdef cvs_date
-Source: %name-%version-%cvs_date.tar.xz
+Source: %name-%version-%cvs_date.tar
 %else
 Source: http://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
 %endif
@@ -45,7 +45,7 @@ Patch1: add-systray-mobile.patch
 Patch2: add-systray-standard.patch
 Patch3: illume-keyboard-bigfont.patch
 Patch4: e17-0.17.0-alt-g-s-d_path.patch
-Patch5: enlightenment-0.19.3-alt-e_sys_nosuid.patch
+Patch5: enlightenment-0.19.99-alt-e_sys_nosuid.patch
 Patch6: auto-ptrace-disable.patch
 Patch11: enlightenment-0.19.0-alt-pam-helper.patch
 Patch12: fix-connman-module-detection.patch
@@ -72,7 +72,7 @@ Requires: udisks2
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
 BuildRequires: rpm-build-xdg
-BuildRequires: efl-libs-devel libelementary-devel >= 1.11.2
+BuildRequires: efl-libs-devel >= %efl_ver_major.0 libelementary-devel >= %efl_ver_major.0
 BuildRequires: libpam-devel libalsa-devel libudev-devel libxcbutil-keysyms-devel
 BuildRequires: libdbus-devel libp11-kit-devel xorg-xproto-devel libxcbutil-keysyms-devel
 BuildRequires: libuuid-devel
@@ -112,7 +112,7 @@ Development headers for Enlightenment.
 %patch5 -p1 -b .nosuid
 %patch6 -p2
 %if_with pam_helper
-%patch11 -p1
+%patch11 -p1 -b .pam_helper
 %endif
 #%patch12 -p2
 
@@ -196,6 +196,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon May 04 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.1
+- 0.19.99_96ba030e
+
 * Tue Mar 03 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.4-alt1
 - 0.19.4
 

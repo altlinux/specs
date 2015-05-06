@@ -9,20 +9,22 @@
 %def_disable egl
 %def_disable xcb
 %def_enable drm
+%def_disable gl_drm
 %def_enable ibus
 %def_enable gstreamer1
 
 Name: efl
-Version: 1.11.5
-Release: alt1
+Version: 1.14.0
+Release: alt0.1
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
 
-Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.xz
+# 9b167d9
+Source: %name-%version.tar
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
@@ -47,6 +49,8 @@ BuildRequires: libGL-devel
 %{?_enable_wayland_egl:BuildRequires: libwayland-egl-devel}
 %{?_enable_egl:BuildRequires: libEGL-devel libwayland-egl-devel}
 %{?_enable_gstreamer1:BuildRequires: gst-plugins%gst_api_ver-devel}
+%{?_enable_drm:BuildRequires: libdrm-devel libgbm-devel libinput-devel}
+#%{?_enable_gl_drm:BuildRequires:}
 
 %description
 EFL is a collection of libraries for handling many common tasks a
@@ -153,11 +157,12 @@ documentation for EFL.
 	%{subst_enable fb} \
 	%{subst_enable egl} \
 	%{subst_enable drm} \
+	%{?_enable_gl_drm:--enable-gl-drm} \
 	%{subst_enable ibus} \
 	%{subst_enable gstreamer1} \
 	%{?_enable_xcb:--with-x11=xcb}
-# SMP-incompatible build since 1.11
-%make
+
+%make_build
 #%make doc
 
 %install
@@ -167,10 +172,8 @@ find %buildroot%_libdir -name "*.la" -delete
 %find_lang %name
 
 %files -n %name-libs -f %name.lang
-%_bindir/ecore_evas_convert
-%_bindir/vieet
+%_bindir/diffeet
 %_bindir/edje_cc
-%_bindir/edje_codegen
 %_bindir/edje_decc
 %_bindir/edje_external_inspector
 %_bindir/edje_inspector
@@ -179,6 +182,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/edje_recc
 %_bindir/edje_watch
 %_bindir/eet
+%_bindir/eetpack
 %_bindir/eeze_disk_ls
 %_bindir/eeze_mount
 %_bindir/eeze_scanner
@@ -191,6 +195,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/ethumbd_client
 %_bindir/evas_cserve2_client
 %_bindir/evas_cserve2_usage
+%_bindir/vieet
 %_libdir/*.so.*
 %_libdir/ecore/
 %_libdir/ecore_evas/
@@ -226,7 +231,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %doc AUTHORS README NEWS COMPLIANCE
 
 %files -n %name-libs-devel
+%_bindir/ecore_evas_convert
 %_bindir/eldbus-codegen
+%_bindir/edje_codegen
 %_bindir/evas_cserve2_debug
 %_bindir/evas_cserve2_shm_debug
 %_bindir/embryo_cc
@@ -235,52 +242,59 @@ find %buildroot%_libdir -name "*.la" -delete
 %_includedir/*
 %_libdir/cmake/*
 %_libdir/*.so
-%_libdir/pkgconfig/ecore-audio.pc
-%_libdir/pkgconfig/ecore-avahi.pc
-%_libdir/pkgconfig/ecore-con.pc
-%_libdir/pkgconfig/ecore-evas.pc
-%_libdir/pkgconfig/ecore-fb.pc
-%_libdir/pkgconfig/ecore-file.pc
-%_libdir/pkgconfig/ecore-imf-evas.pc
-%_libdir/pkgconfig/ecore-imf.pc
-%_libdir/pkgconfig/ecore-input-evas.pc
-%_libdir/pkgconfig/ecore-input.pc
-%_libdir/pkgconfig/ecore-ipc.pc
-%_libdir/pkgconfig/ecore-wayland.pc
-%_libdir/pkgconfig/ecore-x.pc
-%_libdir/pkgconfig/ecore.pc
-%_libdir/pkgconfig/edje.pc
-%_libdir/pkgconfig/eet.pc
-%_libdir/pkgconfig/eeze.pc
-%_libdir/pkgconfig/efreet-mime.pc
-%_libdir/pkgconfig/efreet-trash.pc
-%_libdir/pkgconfig/efreet.pc
-%_libdir/pkgconfig/eina.pc
-%_libdir/pkgconfig/eio.pc
-%_libdir/pkgconfig/eldbus.pc
-%_libdir/pkgconfig/embryo.pc
-%_libdir/pkgconfig/emotion.pc
-%_libdir/pkgconfig/eo.pc
-%_libdir/pkgconfig/ephysics.pc
-%_libdir/pkgconfig/ethumb.pc
-%_libdir/pkgconfig/ethumb_client.pc
-%_libdir/pkgconfig/evas-fb.pc
-%_libdir/pkgconfig/evas-opengl-x11.pc
-%_libdir/pkgconfig/evas-software-buffer.pc
-%_libdir/pkgconfig/evas-software-x11.pc
-%_libdir/pkgconfig/evas-wayland-shm.pc
-%_libdir/pkgconfig/evas.pc
-%_libdir/pkgconfig/ecore-audio-cxx.pc
-%_libdir/pkgconfig/ecore-cxx.pc
-%_libdir/pkgconfig/ecore-drm.pc
-%_libdir/pkgconfig/edje-cxx.pc
-%_libdir/pkgconfig/eet-cxx.pc
-%_libdir/pkgconfig/eina-cxx.pc
-%_libdir/pkgconfig/eo-cxx.pc
-%_libdir/pkgconfig/eolian-cxx.pc
-%_libdir/pkgconfig/eolian.pc
-%_libdir/pkgconfig/evas-cxx.pc
-%_libdir/pkgconfig/evas-drm.pc
+%_pkgconfigdir/ecore-audio-cxx.pc
+%_pkgconfigdir/ecore-audio.pc
+%_pkgconfigdir/ecore-avahi.pc
+%_pkgconfigdir/ecore-con.pc
+%_pkgconfigdir/ecore-cxx.pc
+%_pkgconfigdir/ecore-drm.pc
+%_pkgconfigdir/ecore-evas.pc
+%_pkgconfigdir/ecore-fb.pc
+%_pkgconfigdir/ecore-file.pc
+%_pkgconfigdir/ecore-imf-evas.pc
+%_pkgconfigdir/ecore-imf.pc
+%_pkgconfigdir/ecore-input-evas.pc
+%_pkgconfigdir/ecore-input.pc
+%_pkgconfigdir/ecore-ipc.pc
+%_pkgconfigdir/ecore-wayland.pc
+%_pkgconfigdir/ecore-x.pc
+%_pkgconfigdir/ecore.pc
+%_pkgconfigdir/ector.pc
+%_pkgconfigdir/edje-cxx.pc
+%_pkgconfigdir/edje.pc
+%_pkgconfigdir/eet-cxx.pc
+%_pkgconfigdir/eet.pc
+%_pkgconfigdir/eeze.pc
+%_pkgconfigdir/efl-cxx.pc
+%_pkgconfigdir/efl.pc
+%_pkgconfigdir/efreet-mime.pc
+%_pkgconfigdir/efreet-trash.pc
+%_pkgconfigdir/efreet.pc
+%_pkgconfigdir/eina-cxx.pc
+%_pkgconfigdir/eina.pc
+%_pkgconfigdir/eio-cxx.pc
+%_pkgconfigdir/eio.pc
+%_pkgconfigdir/eldbus.pc
+%_pkgconfigdir/elocation.pc
+%_pkgconfigdir/elua.pc
+%_pkgconfigdir/embryo.pc
+%_pkgconfigdir/emile.pc
+%_pkgconfigdir/emotion.pc
+%_pkgconfigdir/eo-cxx.pc
+%_pkgconfigdir/eo.pc
+%_pkgconfigdir/eolian-cxx.pc
+%_pkgconfigdir/eolian.pc
+%_pkgconfigdir/ephysics.pc
+%_pkgconfigdir/ethumb.pc
+%_pkgconfigdir/ethumb_client.pc
+%_pkgconfigdir/evas-cxx.pc
+%_pkgconfigdir/evas-drm.pc
+%_pkgconfigdir/evas-fb.pc
+%_pkgconfigdir/evas-opengl-x11.pc
+%_pkgconfigdir/evas-software-buffer.pc
+%_pkgconfigdir/evas-software-x11.pc
+%_pkgconfigdir/evas-wayland-shm.pc
+%_pkgconfigdir/evas.pc
 %dir %_datadir/eolian/
 %dir %_datadir/eolian/include
 %_datadir/eolian/include/*
@@ -290,6 +304,12 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Mon May 04 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt0.1
+- 1.14.0_9b167d9
+
+* Mon May 04 2015 Yuri N. Sedunov <aris@altlinux.org> 1.13.2-alt1
+- 1.13.2_a1ea4a41
+
 * Thu Dec 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11.5-alt1
 - 1.11.5
 

@@ -1,15 +1,15 @@
-%define ver_major 1.11
+%define ver_major 1.14
 
 Name: evas_generic_loaders
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt0.1
 
 Summary: A set of loaders for Evas
 License: LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
 
-Source: http://download.enlightenment.org/releases/%name-%version.tar.xz
+Source: http://download.enlightenment.org/releases/%name-%version-beta3.tar.xz
 
 Obsoletes: %{name}1.8 < %version
 Provides:  %{name}1.8 = %version-%release
@@ -37,7 +37,7 @@ loader.
 
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%version-beta3
 # hardcoded path to soffice.bin
 subst 's@/usr/lib@%_libdir@' src/bin/pdf/evas_generic_pdf_loader.libreoffice
 
@@ -56,6 +56,9 @@ subst 's@/usr/lib@%_libdir@' src/bin/pdf/evas_generic_pdf_loader.libreoffice
 %doc AUTHORS COPYING README
 
 %changelog
+* Mon May 04 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt0.1
+- 1.14.0-beta3
+
 * Wed Sep 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11.2-alt1
 - 1.11.2
 
