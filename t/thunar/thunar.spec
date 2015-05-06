@@ -1,5 +1,5 @@
 Name: thunar
-Version: 1.6.7
+Version: 1.6.8
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -18,7 +18,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildPreReq: libxfce4panel-devel >= 4.8 libxfconf-devel >= 4.8 libexo-devel >= 0.6.0 libxfce4ui-devel >= 4.8
 # Automatically added by buildreq on Thu Jan 22 2009
-BuildRequires: gtk-doc intltool libSM-devel libdbus-glib-devel libexif-devel libgamin-devel libpcre-devel libstartup-notification-devel time
+BuildRequires: gtk-doc intltool libSM-devel libdbus-glib-devel libexif-devel libgamin-devel libpcre-devel time
 BuildRequires: libnotify4-devel libgudev-devel
 BuildRequires: desktop-file-utils
 
@@ -69,11 +69,8 @@ mkdir -p m4/
 	--disable-static \
 	--enable-maintainer-mode \
 	--enable-largefile \
-	--enable-startup-notification \
-	--enable-xml2po \
 	--enable-dbus \
-	--enable-gtk-doc \
-	--enable-gen-doc \
+	--disable-gtk-doc \
 	--enable-exif \
 	--enable-pcre \
 	--enable-gio-unix \
@@ -115,13 +112,18 @@ make check
 %_libdir/*.so.*
 
 %files -n lib%name-devel
-%_datadir/gtk-doc/html/*
+#%_datadir/gtk-doc/html/*
 %_pkgconfigdir/*.pc
 %_includedir/thunarx-*/
 %_libdir/*.so
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Wed May 06 2015 Mikhail Efremov <sem@altlinux.org> 1.6.8-alt1
+- Disable documentation build.
+- Drop libstartup-notification-devel from BR.
+- Updated to 1.6.8.
+
 * Mon Apr 20 2015 Mikhail Efremov <sem@altlinux.org> 1.6.7-alt1
 - Updated to 1.6.7.
 
