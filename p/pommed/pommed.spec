@@ -1,6 +1,6 @@
 Name: pommed
 Version: 1.39
-Release: alt7
+Release: alt8
 
 Summary: Apple laptops hotkeys event handler
 License: GPLv2
@@ -14,6 +14,7 @@ Source2: %name.service
 Patch0: pommed-1.39-alt-build.patch
 Patch1: pommed-1.22-alt-fix-desktop-files.patch
 Patch2: pommed-1.39-alt-rpm_opt_flags.patch
+Patch3: pommed-1.39-alt-add-kbd.patch
 
 # http://alioth.debian.org/tracker/download.php/31066/412713/313891/5185/0001-Add-support-for-LCD-back-light-on-latest-kernels.patch
 Patch10: 0001-Add-support-for-LCD-back-light-on-latest-kernels.patch
@@ -66,6 +67,7 @@ each item controlled by pommed.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %patch10 -p1
 
@@ -156,6 +158,9 @@ cp icons/gpomme_32x32.xpm %buildroot%_niconsdir/wmpomme.xpm
 %_niconsdir/wmpomme.xpm
 
 %changelog
+* Wed May 06 2015 Michael Shigorin <mike@altlinux.org> 1.39-alt8
+- NMU: patched to add yet another keyboard ID (closes: #27230, #30285)
+
 * Sun Jun 23 2013 Igor Zubkov <icesik@altlinux.org> 1.39-alt7
 - Add lsb header to init file
 
