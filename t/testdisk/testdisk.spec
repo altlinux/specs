@@ -1,6 +1,6 @@
 Name: testdisk
-Version: 6.14
-Release: alt2
+Version: 7.0
+Release: alt1
 
 Summary: Tool to check and undelete partition
 License: GPLv2+
@@ -9,9 +9,10 @@ Group: System/Configuration/Hardware
 Url: http://www.cgsecurity.org/wiki/TestDisk
 Source: http://www.cgsecurity.org/%name-%version.tar.bz2
 
-# Automatically added by buildreq on Thu May 12 2011
-# optimized out: libcom_err-devel libncurses-devel libntfs-3g libtinfo-devel pkg-config
-BuildRequires: gcc-c++ glibc-devel libe2fs-devel libewf-devel libjpeg-devel libncursesw-devel libntfs-3g-devel libprogsreiserfs-devel libssl-devel libuuid-devel zlib-devel
+# manually removed: python3 ruby ruby-stdlibs
+# Automatically added by buildreq on Wed May 06 2015
+# optimized out: fontconfig gnu-config libcloog-isl4 libcom_err-devel libncurses-devel libntfs-3g libqt4-core libqt4-gui libstdc++-devel libtinfo-devel pkg-config python3-base zlib-devel
+BuildRequires: gcc-c++ glibc-devel libdb4-devel libe2fs-devel libewf-devel libjpeg-devel libncursesw-devel libntfs-3g-devel libossp-uuid-devel libprogsreiserfs-devel libqt4-devel libuuid-devel
 
 Provides: testdisk-doc = %name-%version
 Obsoletes: testdisk-doc < 6.14
@@ -54,6 +55,18 @@ or re-formatted.
 See online documentation at:
 http://www.cgsecurity.org/wiki/PhotoRec
 
+%package -n qphotorec
+Summary: GUI for PhotoRec, a data recovery software
+Group: File tools
+
+%description -n qphotorec
+QPhotoRec is file data recovery GUI software designed to recover lost files
+including video, documents and archives from Hard Disks and CDRom and lost
+pictures (thus, its 'Photo Recovery' name) from digital camera memory.
+
+See online documentation at:
+http://www.cgsecurity.org/wiki/PhotoRec
+
 %prep
 %setup
 
@@ -63,19 +76,32 @@ http://www.cgsecurity.org/wiki/PhotoRec
 
 %install
 %makeinstall_std
+rm -rf %buildroot%_mandir/zh_CN/
 
 %files
 %_bindir/testdisk
 %_bindir/fidentify
 %_man8dir/testdisk*
 %_man8dir/fidentify*
-%exclude %_docdir/testdisk-%version
+%doc %_docdir/testdisk/
 
 %files -n photorec
 %_bindir/photorec
 %_man8dir/photorec*
 
+%files -n qphotorec
+%_bindir/qphotorec
+%_desktopdir/qphotorec.desktop
+%_iconsdir/hicolor/48x48/apps/qphotorec.png
+%_iconsdir//hicolor/scalable/apps/qphotorec.svg
+
+%_man8dir/qphotorec*
+
 %changelog
+* Wed May 06 2015 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt1
+- new version 7.0 (with rpmrb script)
+- add qphotorec subpackage
+
 * Tue Nov 05 2013 Michael Shigorin <mike@altlinux.org> 6.14-alt2
 - added missing P:/O: for testdisk-doc subpackage, sorry
 
