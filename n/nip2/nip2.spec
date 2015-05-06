@@ -1,6 +1,6 @@
 Name: nip2
 Version: 8.0
-Release: alt1
+Release: alt2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -70,6 +70,9 @@ cp -a doc/html doc/pdf %buildroot%_docdir/%name/
 # - look into uninstalled /usr/share/mime/*
 
 %changelog
+* Wed May 06 2015 Michael Shigorin <mike@altlinux.org> 8.0-alt2
+- rebuilt against libvips-8.0.2
+
 * Mon May 04 2015 Michael Shigorin <mike@altlinux.org> 8.0-alt1
 - new version (watch file uupdate)
 
