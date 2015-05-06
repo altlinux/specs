@@ -1,6 +1,6 @@
 
 Name: realmd
-Version: 0.15.2
+Version: 0.16.0
 Release: alt1
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
@@ -69,6 +69,10 @@ applications that use %name.
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Wed May 06 2015 Alexey Shabalin <shaba@altlinux.ru> 0.16.0-alt1
+- 0.16.0
+- update altlinux support
+
 * Thu Oct 30 2014 Alexey Shabalin <shaba@altlinux.ru> 0.15.2-alt1
 - 0.15.2
 
