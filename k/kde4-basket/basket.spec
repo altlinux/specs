@@ -1,11 +1,11 @@
 %define _kde4_alternate_placement 1
 %define libbasketcommon libbasketcommon4
 %define rname basket
-%define git_rev 43890d6
+%define git_rev e93519c
 
 Name: 	 kde4-%rname
 Version: 2.10
-Release: alt0_1beta.git%git_rev
+Release: alt0_2beta.git%git_rev
 
 Summary: multi-purpose note-taking application
 License: GPLv2+
@@ -69,6 +69,11 @@ KDE 4 core library.
 %_K4libdir/libbasketcommon.so.*
 
 %changelog
+* Wed May 06 2015 Andrey Cherepanov <cas@altlinux.org> 2.10-alt0_2beta.gite93519c
+- New snapshot
+- Implement user configurable plaintext pasting
+- Do not collapse empty lines when toggling a note tag
+
 * Tue Nov 18 2014 Andrey Cherepanov <cas@altlinux.org> 2.10-alt0_1beta.git43890d6
 - New beta version
 - Set Url to github page
