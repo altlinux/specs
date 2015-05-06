@@ -1,5 +1,5 @@
 Name: installer-feature-network-shares
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 %define hookdir %_datadir/install2/postinstall.d
@@ -38,6 +38,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Wed May 06 2015 Andrey Cherepanov <cas@altlinux.org> 0.6-alt1
+- Replace /var/ftp by symlink to ../srv/public and do not treat it as fatal
+
 * Mon Oct 13 2014 Mikhail Efremov <sem@altlinux.org> 0.5-alt1
 - Don't require install2-init-functions.
 - Move hook to preinstall.
