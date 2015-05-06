@@ -1,8 +1,9 @@
-%def_with geogclue2
+%def_disable geoclue
+%def_enable geoclue2
 
 Name: 	 redshift
 Version: 1.10
-Release: alt2
+Release: alt3
 
 Summary: Redshift adjusts the color temperature of your screen
 Summary(ru_RU.UTF-8): Redshift изменяет температуру цвета вашего экрана для снижения утомляемости глаз
@@ -17,15 +18,18 @@ Source0:  %name-%version.tar
 
 Patch1:   %name-geoclue-provider.patch
 
+%{?_enable_geoclue2:Requires: geoclue2}
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-gir
 BuildPreReq: libGConf-devel
 BuildPreReq: libXrandr-devel
 BuildPreReq: libXxf86vm-devel
-BuildPreReq: libgeoclue-devel
-%if_with geoclue2
+%if_enabled geoclue2
 BuildPreReq: libgio-devel
 BuildPreReq: geoclue2-devel
+%else
+BuildPreReq: libgeoclue-devel
 %endif
 BuildPreReq: gettext-devel
 BuildRequires: libdrm-devel
@@ -67,13 +71,8 @@ sed -i -e 's|AC_PREREQ(\[2.69\])|AC_PREREQ([2.68])|' configure.ac
     --enable-vidmode \
     --enable-nls \
     --enable-gui \
-    --enable-gnome-clock \
-    --enable-geoclue \
-%if_with geoclue2
-    --enable-geoclue2 \
-%endif
-
-
+    %{subst_enable geoclue} \
+    %{subst_enable geoclue2}
 %make_build
 
 %install
@@ -102,6 +101,9 @@ fi
 rm -f %_sysconfdir/xdg/autostart/gtk-redshift.desktop
 
 %changelog
+* Wed May 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt3
+- truly built with geoclue2
+
 * Tue Mar 24 2015 Andrey Cherepanov <cas@altlinux.org> 1.10-alt2
 - Build with drm and geoclue2
 - Package redshift-gtk.appdata.xml
