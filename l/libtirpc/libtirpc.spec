@@ -1,6 +1,6 @@
 Name: libtirpc
-Version: 0.2.6
-Release: alt0.3
+Version: 0.3.0
+Release: alt1
 
 Summary: transport-independent RPC library
 License: BSD
@@ -56,6 +56,9 @@ done
 %_man3dir/*
 
 %changelog
+* Thu May 07 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.0-alt1
+- 0.3.0 released
+
 * Mon Apr 27 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.6-alt0.3
 - 0.2.6 rc3
 
