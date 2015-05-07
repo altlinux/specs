@@ -15,16 +15,16 @@
 
 Name: efl
 Version: 1.14.0
-Release: alt0.1
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
 
-#Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.xz
+Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.xz
 # 9b167d9
-Source: %name-%version.tar
+#Source: %name-%version.tar
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
@@ -304,6 +304,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Thu May 07 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
+- 1.14.0 release
+
 * Mon May 04 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt0.1
 - 1.14.0_9b167d9
 
