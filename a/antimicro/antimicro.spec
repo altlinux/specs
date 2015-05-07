@@ -1,5 +1,5 @@
 Name: antimicro
-Version: 2.11.1
+Version: 2.14
 Release: alt1
 
 Summary: Graphical program used to map keyboard buttons and mouse controls to a gamepad
@@ -67,6 +67,9 @@ appstream-util validate-relax --nonet \
 # - consider qt5 build?
 
 %changelog
+* Thu May 07 2015 Michael Shigorin <mike@altlinux.org> 2.14-alt1
+- 2.14
+
 * Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 2.11.1-alt1
 - 2.11.1
 - added appdata file
