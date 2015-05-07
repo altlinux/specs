@@ -2,11 +2,11 @@
 
 Name: glew
 Version: 1.7.0
-Release: alt2
+Release: alt3
 
 Summary: The OpenGL Extension Wrangler Library.
 License: GPL
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://glew.sourceforge.net
 
 Source: %name-%version-%release.tar
@@ -109,6 +109,7 @@ ln -sf libGLEWmx.so.%version %buildroot%_libdir/libGLEWmx.so
 %files -n libglewmx%soversion
 %_libdir/libGLEWmx.so.*
 
+%if 0
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/GL/*
@@ -123,8 +124,12 @@ ln -sf libGLEWmx.so.%version %buildroot%_libdir/libGLEWmx.so
 
 %files bin
 %_bindir/*
+%endif
 
 %changelog
+* Thu May 07 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.0-alt3
+- packaged only shared libraries
+
 * Wed Feb 22 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.0-alt2
 - GLEW MX variant packaged into libglewmx (closes: 26980)
 
