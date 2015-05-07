@@ -2,7 +2,7 @@
 %define rel %nil
 %define oname audacious
 Name: audacious-plugins
-Version: 3.5.2
+Version: 3.6.1
 Release: alt1
 
 Summary: Plugins for Audacious
@@ -14,25 +14,6 @@ Url: http://audacious-media-player.org/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://distfiles.audacious-media-player.org/%name-%version%rel.tar
-
-Patch: audacious2-plugins.patch
-Patch1: audacious-plugins-1.5.1-gentoo-libmtp.patch
-
-# Sync vorbis with mercurial tip.  Impact: several bugfixes.
-# http://redmine.atheme.org/issues/show/102
-# http://bugs.debian.org/531835
-Patch2: audacious-plugins-2.0.1-vorbis-hg-tip.patch
-
-# Keep mixer open and not start at only 50 percent volume. (thanks, Fedora)
-Patch3: audacious-plugins-2.1-keep-mixer-open.patch
-
-Patch4: %name-2.1-alt-fix-build.patch
-
-# From Mandriva:
-Patch5: %name-2.1-fix-build.patch
-Patch6: audacious-plugins-2.1-beta1-format-strings.patch
-Patch7: audacious-plugins-2.1-beta1-linking.patch
-Patch8: audacious-plugins-ffmpeg-0.7.1.patch
 
 Requires: %oname = %version
 
@@ -63,7 +44,6 @@ This package contains the base I/O plugins:
 
 %prep
 %setup -n %name-%version%rel
-%patch
 
 %build
 %configure \
@@ -81,12 +61,14 @@ This package contains the base I/O plugins:
 %find_lang audacious-plugins
 
 %files -f audacious-plugins.lang
-%doc AUTHORS
 %_datadir/%oname/
 %dir %_libdir/%oname/
 %_libdir/%oname/*
 
 %changelog
+* Wed May 06 2015 Vitaly Lipatov <lav@altlinux.ru> 3.6.1-alt1
+- new version 3.6.1 (with rpmrb script)
+
 * Mon Dec 08 2014 Vitaly Lipatov <lav@altlinux.ru> 3.5.2-alt1
 - new version 3.5.2 (with rpmrb script)
 
