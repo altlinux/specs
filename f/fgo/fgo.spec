@@ -1,6 +1,6 @@
 Name: fgo
-Version: 1.5.2
-Release: alt1.1
+Version: 1.5.5
+Release: alt1
 
 Summary: A simple launcher for FlightGear flight simulator
 License: distributable
@@ -64,7 +64,7 @@ ln -s `relative %fgodir/%name %_gamesbindir/%name` \
 
 install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 install -pDm644 %SOURCE2 %buildroot%_man6dir/%name.6
-install -pDm644 data/pics/icons/48x48/fgo.png %buildroot%_liconsdir/%name.png
+install -pDm644 share/icons/48x48/fgo.png %buildroot%_liconsdir/%name.png
 
 %files
 %_gamesbindir/%name
@@ -75,6 +75,9 @@ install -pDm644 data/pics/icons/48x48/fgo.png %buildroot%_liconsdir/%name.png
 %doc docs/*
 
 %changelog
+* Fri Dec 26 2014 Michael Shigorin <mike@altlinux.org> 1.5.5-alt1
+- new version (watch file uupdate)
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1.1
 - NMU: fixed watch file
 
