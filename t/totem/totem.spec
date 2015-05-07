@@ -32,7 +32,7 @@
 %def_disable jamendo
 
 Name: totem
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -45,7 +45,6 @@ Source: %name-%version.tar
 %else
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
-Source1: totem-bin-backend-ondemand.sh
 
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
@@ -160,7 +159,6 @@ A default plugins for Totem:
 	media-player-keys
 	pythonconsole
 	opensubtitles
-	chapters
 
 %package plugins-lirc
 Summary: LIRC (Infrared remote) plugin for Totem
@@ -306,9 +304,9 @@ find %buildroot%_libdir -name \*.la -delete
 # depends on pygtk
 #%_libexecdir/%name/totem-bugreport.py
 %_desktopdir/%_name.desktop
-%_datadir/icons/hicolor/*/*/*.png
-%_datadir/icons/hicolor/*/*/*.svg
-%_datadir/%name
+%_iconsdir/hicolor/*/*/*.png
+%_iconsdir/hicolor/*/*/*.svg
+%_datadir/%name/
 %_man1dir/*
 %exclude %_man1dir/%name-video-thumbnailer.1.*
 %_datadir/dbus-1/services/%_name.service
@@ -345,7 +343,6 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/%name/plugins/pythonconsole/
 %_libdir/%name/plugins/opensubtitles/
 %_libdir/%name/plugins/screenshot/
-%_libdir/%name/plugins/chapters/
 %_libdir/%name/plugins/save-file/
 %_libdir/%name/plugins/im-status/
 %_libdir/%name/plugins/apple-trailers/
@@ -407,6 +404,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Thu May 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
