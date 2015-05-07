@@ -1,5 +1,5 @@
 Name: gtk-doc
-Version: 1.21
+Version: 1.22
 Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
@@ -25,7 +25,7 @@ Requires: docbook-style-dsssl
 Provides: perl(gtkdoc-common.pl)
 
 #Source: %name-%version.tar
-Source: ftp://ftp.gnome.org/gnome/sources/%name/%version/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar.xz
 
 BuildArch: noarch
 
@@ -137,6 +137,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Thu May 07 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22-alt1
+- 1.22
+
 * Fri Jul 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.21-alt1
 - 1.21
 
