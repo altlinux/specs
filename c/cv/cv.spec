@@ -1,5 +1,5 @@
 Name: cv
-Version: 0.3
+Version: 0.6
 Release: alt1
 
 Summary: Coreutils Viewer
@@ -9,6 +9,8 @@ Group: Text tools
 Url: https://github.com/Xfennec/cv
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
+
+BuildRequires: libncurses-devel
 
 %description
 This tool can be described as a Tiny Dirty Linux Only C command
@@ -36,6 +38,9 @@ install -pDm755 %name %buildroot%_bindir/%name
 %doc README.md
 
 %changelog
+* Thu May 07 2015 Michael Shigorin <mike@altlinux.org> 0.6-alt1
+- 0.6
+
 * Mon Jul 14 2014 Michael Shigorin <mike@altlinux.org> 0.3-alt1
 - initial release (thx Kirill Kolyshkin for a pointer)
 
