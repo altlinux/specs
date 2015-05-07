@@ -1,26 +1,29 @@
 Name: wammu
-Version: 0.36
-Release: alt1.1
+Version: 0.38
+Release: alt2
 
 Summary: Mobile phone manager
 License: GPL
 Group: Communications
 
 Url: http://wammu.eu
-Source: %name-%version.tar.bz2
+Source: http://dl.cihar.com/wammu/v0/%name-%version.tar.bz2
+Source100: wammu.watch
 Packager: L.A. Kostis <lakostis@altlinux.ru>
 
 BuildArch: noarch
 
 Requires: python-module-gammu >= 0.10
 Requires: python-module-pybluez
-%py_requires wx
 
 BuildRequires: python-devel >= %_python_version
 BuildRequires: python-module-gammu >= 0.10
 BuildRequires: python-module-pybluez
+
+# wxGTK 2.8 is _the_ officially supported version as of 0.38
+#py_requires wx	### yields python-module-wx3.0 currently => breaks
+Requires: python-module-wx
 BuildRequires: python-module-wx >= 2.8
-# as of 0.35, 2.9 is known as unsupported
 BuildConflicts: python-module-wx >= 2.9
 
 %description
@@ -39,13 +42,20 @@ SKIPWXCHECK=yes python setup.py install --root %buildroot --optimize=2 --record=
 subst '/man1/ D' INSTALLED_FILES
 
 %files -f INSTALLED_FILES
-%doc README AUTHORS COPYING FAQ PKG-INFO
+%doc COPYING PKG-INFO
 %dir %python_sitelibdir/Wammu
 #dir %python_sitelibdir/Wammu/wxcomp
 %_man1dir/*
 %_mandir/*/man1/*
 
 %changelog
+* Thu May 07 2015 Michael Shigorin <mike@altlinux.org> 0.38-alt2
+- rebuilt against current {python-module-,}gammu
+- added debian watch file
+
+* Tue Dec 30 2014 Michael Shigorin <mike@altlinux.org> 0.38-alt1
+- 0.38
+
 * Fri Oct 28 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.36-alt1.1
 - Rebuild with Python-2.7
 
