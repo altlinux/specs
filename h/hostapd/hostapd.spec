@@ -1,6 +1,6 @@
 Name: hostapd
 Version: 2.4
-Release: alt1
+Release: alt2
 
 Summary: User space daemon for extended IEEE 802.11 management
 License: BSD
@@ -69,6 +69,9 @@ mkdir -p %buildroot%_var/run/%name
 %_var/run/%name
 
 %changelog
+* Thu May 07 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4-alt2
+- updated with upstream fixes for EAP-pwd missing payload length validation
+
 * Tue Apr 14 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4-alt1
 - 2.4 released
 

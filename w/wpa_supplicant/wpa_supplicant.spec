@@ -2,7 +2,7 @@
 
 Name: wpa_supplicant
 Version: 2.4
-Release: alt2
+Release: alt3
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
 License: BSD
@@ -122,6 +122,9 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Thu May 07 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4-alt3
+- updated with upstream fixes for EAP-pwd missing payload length validation
+
 * Fri Apr 24 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4-alt2
 - CVE-2015-1863
 
