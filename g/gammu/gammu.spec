@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: gammu
-Version: 1.33.0
+Version: 1.36.0
 Release: alt1
 
 Summary: Mobile phones management utility
@@ -9,7 +9,8 @@ License: GPL
 Group: Communications
 
 Url: http://wammu.eu/gammu/
-Source: http://dl.cihar.com/gammu/releases/%name-%version.tar.bz2
+Source0: http://dl.cihar.com/gammu/releases/%name-%version.tar.xz
+Source100: gammu.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -21,7 +22,7 @@ BuildRequires: libMySQL-devel libbluez-devel pkg-config zlib-devel cmake
 BuildPreReq: libcurl-devel glib2-devel libgudev-devel doxygen
 BuildPreReq: libdbi-devel libusb-devel
 
-Summary(ru_RU.KOI8-R): Программа для работы с мобильными телефонами
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ п╪п╬п╠п╦п╩я▄п╫я▀п╪п╦ я┌п╣п╩п╣я└п╬п╫п╟п╪п╦
 
 %description
 Gammu can do such things with cellular phones as making data
@@ -35,36 +36,36 @@ It can also make full backups and restore them.
 It currently supports many Nokia phones and AT devices (such as
 Siemens, Alcatel, Falcom, WaveCom, IPAQ, and other).
 
-%description -l ru_RU.KOI8-R
-Gammu - это программа для работы с мобильными телефонами.
-В зависимости от модели телефона Gammu умеет: передавать данные,
-обновлять телефонную книжку, управлять записями календаря и
-списка дел, принимать и отправлять короткие сообщения (SMS),
-загружать в аппарат а также считывать с него мелодии и картинки
-(различные виды логотипов), синхронизировать время, включать
-NetMonitor, управлять настройками WAP, закладками и ещё много
-всего другого.  Кроме того, Gammu позволяет делать полные
-резервные копии данных телефона c возможностью их восстановления
-в случае необходимости.
+%description -l ru_RU.UTF-8
+Gammu - я█я┌п╬ п©я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ п╪п╬п╠п╦п╩я▄п╫я▀п╪п╦ я┌п╣п╩п╣я└п╬п╫п╟п╪п╦.
+п▓ п╥п╟п╡п╦я│п╦п╪п╬я│я┌п╦ п╬я┌ п╪п╬п╢п╣п╩п╦ я┌п╣п╩п╣я└п╬п╫п╟ Gammu я┐п╪п╣п╣я┌: п©п╣я─п╣п╢п╟п╡п╟я┌я▄ п╢п╟п╫п╫я▀п╣,
+п╬п╠п╫п╬п╡п╩я▐я┌я▄ я┌п╣п╩п╣я└п╬п╫п╫я┐я▌ п╨п╫п╦п╤п╨я┐, я┐п©я─п╟п╡п╩я▐я┌я▄ п╥п╟п©п╦я│я▐п╪п╦ п╨п╟п╩п╣п╫п╢п╟я─я▐ п╦
+я│п©п╦я│п╨п╟ п╢п╣п╩, п©я─п╦п╫п╦п╪п╟я┌я▄ п╦ п╬я┌п©я─п╟п╡п╩я▐я┌я▄ п╨п╬я─п╬я┌п╨п╦п╣ я│п╬п╬п╠я┴п╣п╫п╦я▐ (SMS),
+п╥п╟пЁя─я┐п╤п╟я┌я▄ п╡ п╟п©п©п╟я─п╟я┌ п╟ я┌п╟п╨п╤п╣ я│я┤п╦я┌я▀п╡п╟я┌я▄ я│ п╫п╣пЁп╬ п╪п╣п╩п╬п╢п╦п╦ п╦ п╨п╟я─я┌п╦п╫п╨п╦
+(я─п╟п╥п╩п╦я┤п╫я▀п╣ п╡п╦п╢я▀ п╩п╬пЁп╬я┌п╦п©п╬п╡), я│п╦п╫я┘я─п╬п╫п╦п╥п╦я─п╬п╡п╟я┌я▄ п╡я─п╣п╪я▐, п╡п╨п╩я▌я┤п╟я┌я▄
+NetMonitor, я┐п©я─п╟п╡п╩я▐я┌я▄ п╫п╟я│я┌я─п╬п╧п╨п╟п╪п╦ WAP, п╥п╟п╨п╩п╟п╢п╨п╟п╪п╦ п╦ п╣я┴я▒ п╪п╫п╬пЁп╬
+п╡я│п╣пЁп╬ п╢я─я┐пЁп╬пЁп╬.  п я─п╬п╪п╣ я┌п╬пЁп╬, Gammu п©п╬п╥п╡п╬п╩я▐п╣я┌ п╢п╣п╩п╟я┌я▄ п©п╬п╩п╫я▀п╣
+я─п╣п╥п╣я─п╡п╫я▀п╣ п╨п╬п©п╦п╦ п╢п╟п╫п╫я▀я┘ я┌п╣п╩п╣я└п╬п╫п╟ c п╡п╬п╥п╪п╬п╤п╫п╬я│я┌я▄я▌ п╦я┘ п╡п╬я│я│я┌п╟п╫п╬п╡п╩п╣п╫п╦я▐
+п╡ я│п╩я┐я┤п╟п╣ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬я│я┌п╦.
 
-На данный момент поддерживается множество моделей телефонов
-Nokia, а также аппаратов, понимающих AT-команды (таких как
-телефоны Siemens, Alcatel, Falcom, WaveCom, IPAQ и т.д.)
+п²п╟ п╢п╟п╫п╫я▀п╧ п╪п╬п╪п╣п╫я┌ п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌я│я▐ п╪п╫п╬п╤п╣я│я┌п╡п╬ п╪п╬п╢п╣п╩п╣п╧ я┌п╣п╩п╣я└п╬п╫п╬п╡
+Nokia, п╟ я┌п╟п╨п╤п╣ п╟п©п©п╟я─п╟я┌п╬п╡, п©п╬п╫п╦п╪п╟я▌я┴п╦я┘ AT-п╨п╬п╪п╟п╫п╢я▀ (я┌п╟п╨п╦я┘ п╨п╟п╨
+я┌п╣п╩п╣я└п╬п╫я▀ Siemens, Alcatel, Falcom, WaveCom, IPAQ п╦ я┌.п╢.)
 
 %package -n lib%name
 Summary: Libraries used by %name
-Summary(ru_RU.KOI8-R): Динамические библиотеки %name
+Summary(ru_RU.UTF-8): п■п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ %name
 Group: System/Libraries
 
 %description -n lib%name
 Libraries needed for %name.
 
-%description -n lib%name -l ru_RU.KOI8-R
-Библиотеки, необходимые для %name.
+%description -n lib%name -l ru_RU.UTF-8
+п▒п╦п╠п╩п╦п╬я┌п╣п╨п╦, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ %name.
 
 %package -n lib%name-devel
 Summary: Headers to compile against the lib%name library
-Summary(ru_RU.KOI8-R): Заголовочные файлы для сборки с библиотекой lib%name
+Summary(ru_RU.UTF-8): п≈п╟пЁп╬п╩п╬п╡п╬я┤п╫я▀п╣ я└п╟п╧п╩я▀ п╢п╩я▐ я│п╠п╬я─п╨п╦ я│ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╬п╧ lib%name
 Group: Development/C
 Requires: lib%name = %version-%release
 
@@ -72,33 +73,21 @@ Requires: lib%name = %version-%release
 This package contains all files which one needs to compile
 programs using the lib%name library.
 
-%description -n lib%name-devel -l ru_RU.KOI8-R
-Данный пакет содержит файлы, необходимые для сборки программ,
-использующих библиотеку lib%name.
+%description -n lib%name-devel -l ru_RU.UTF-8
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ я└п╟п╧п╩я▀, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ я│п╠п╬я─п╨п╦ п©я─п╬пЁя─п╟п╪п╪,
+п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦я┘ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐ lib%name.
 
 %package -n lib%name-devel-static
 Summary: Static %name library
-Summary(ru_RU.KOI8-R): Статическая библиотека %name
+Summary(ru_RU.UTF-8): п║я┌п╟я┌п╦я┤п╣я│п╨п╟я▐ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟ %name
 Group: Development/C
 Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-devel-static
 This package contains static %name library.
 
-%description -n lib%name-devel-static -l ru_RU.KOI8-R
-Данный пакет содержит статическую библиотеку %name.
-
-%package -n python-module-gammu
-Summary: Python module to communicate with mobile phones
-Group: Development/Python
-Obsoletes: python-gammu
-Requires: libgammu = %version-%release
-
-%setup_python_module python-gammu
-
-%description -n python-module-gammu
-This provides Python gammu module that can work with any phone
-that Gammu supports - many Nokias, Siemens, Alcatel, ...
+%description -n lib%name-devel-static -l ru_RU.UTF-8
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ я│я┌п╟я┌п╦я┤п╣я│п╨я┐я▌ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐ %name.
 
 %package -n bash-completion-%name
 Summary: bash completion for gammu
@@ -126,7 +115,6 @@ cmake   -DCMAKE_INSTALL_PREFIX="%_usr" \
 	-DINSTALL_LIBDATA_DIR=%_libdir \
 	-DINSTALL_DOC_DIR=%_gammu_docdir \
 	-DMYSQL_CONFIG="%_bindir/mysql_config" \
-	-DBUILD_PYTHON:FILEPATH=%_bindir/python \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 %if_disabled static
@@ -191,13 +179,16 @@ cp -R contrib/bash-completion %buildroot%_gammu_docdir/other/
 %_libdir/*.a
 %endif
 
-%files -n python-module-gammu
-%python_sitelibdir/gammu
-
 %files -n bash-completion-%name
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Thu May 07 2015 Michael Shigorin <mike@altlinux.org> 1.36.0-alt1
+- added debian watch file
+- new version (watch file uupdate)
+  + the python-gammu module is now shipped separately
+- build from srpm again
+
 * Tue Jun 04 2013 Michael Shigorin <mike@altlinux.org> 1.33.0-alt1
 - 1.33.0
 
