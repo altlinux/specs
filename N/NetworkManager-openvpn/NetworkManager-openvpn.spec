@@ -6,7 +6,7 @@
 %define gtkver 3
 
 Name: NetworkManager-openvpn
-Version: 1.0.0
+Version: 1.0.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -87,6 +87,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Fri May 08 2015 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1
+- Updated to 1.0.2.
+
 * Fri Feb 13 2015 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - Treat warrnings as errors again.
 - Updated to 1.0.0.
