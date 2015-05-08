@@ -1,20 +1,15 @@
 BuildRequires: desktop-file-utils
-%define		git 20110222
+%define		git 20140105
 
 Name:		fatrat
-Version:	1.1.3
-Release:	alt0.2.%git.qa10.1
+Version:	1.2.0
+Release:	alt1.beta2.%git
 Summary:	FatRat is an open source download/upload manager
 License: 	GPLv2
 Group: 		Networking/File transfer
-Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Url:		http://fatrat.dolezel.info/
-Source0:	http://www.dolezel.info/download/data/%name/%name-%version.tar.gz
-Patch0:		%name-1.1.3-fix_old_libtorrent-rasterbar.diff
-Patch1: %name-1.1.3-alt-link.diff
-Patch2: %name-1.1.3-alt-glibc-2.16.patch
-Patch3: %name-1.1.3-alt-torrent.patch
-Patch4: %name-1.1.3-alt-boost-1.52.0.patch
+# git://git.dolezel.info/fatrat.git
+Source0:	%name-%version.tar
 
 Requires:	libqt4-core
 
@@ -22,7 +17,7 @@ Requires:	libqt4-core
 BuildRequires: ImageMagick-tools cmake gcc-c++ libcurl-devel libgloox-devel libpion-net-devel libqt4-help libqt4-svg libqt4-webkit libqt4-xmlpatterns phonon-devel
 
 BuildRequires: /usr/bin/qcollectiongenerator-qt4
-BuildPreReq: libtorrent-rasterbar-devel
+BuildPreReq: libtorrent-rasterbar-devel libattr-devel libkqueue-devel
 
 %description
 FatRat is an open source download manager for Linux
@@ -42,18 +37,15 @@ programs which make use of FatRat.
 
 %prep
 %setup
-# #%patch0 -p1
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
 
 %build
 export PATH=$PATH:%_qt4dir/bin
 doc/generate.sh
-%add_optflags -fpermissive -DBOOST_ASIO_DYN_LINK
+%add_optflags -fpermissive -std=gnu++11
+%add_optflags -DBOOST_ASIO_DYN_LINK -DWITH_SFTP
 cmake \
 	-DCMAKE_INSTALL_PREFIX=%_prefix \
+	-DCMAKE_INSTALL_LIBDIR=%_libdir \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DWITH_SFTP=ON \
@@ -62,10 +54,11 @@ cmake \
 	-DWITH_NLS=ON \
 	-DWITH_WEBINTERFACE=ON \
 	-DWITH_CURL=ON \
+	-DWITH_CXX0X=ON \
 	-DWITH_DOCUMENTATION=ON
 
 %install
-%make DESTDIR=%buildroot install VERBOSE=1
+%makeinstall_std VERBOSE=1
 
 # Icons
 mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
@@ -75,6 +68,7 @@ convert -resize 16x16 gfx/%name.png %buildroot%_miconsdir/%name.png
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=FileTransfer \
 	%buildroot%_desktopdir/fatrat.desktop
+ln -s %name %buildroot%_bindir/%name-nogui
 
 %files
 %dir %_datadir/%name
@@ -93,6 +87,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_includedir/%name
 
 %changelog
+* Fri May 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.beta2.20140105
+- Version 1.2.0_beta2
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.1.3-alt0.2.20110222.qa10.1
 - rebuild with boost 1.57.0
 

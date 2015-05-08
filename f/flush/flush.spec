@@ -1,7 +1,8 @@
+%set_gcc_version 4.8
 Name:		flush
 Summary:	GTK-based BitTorrent client
 Version:	0.9.12
-Release:	alt1.4.qa3.1
+Release:	alt1.4.qa4
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 License:	GPLv3+
 Group:		Networking/File transfer
@@ -9,8 +10,8 @@ Url:		http://flush.sourceforge.net/
 Source0:	%name-%version.tar.bz2
 
 BuildRequires: boost-asio-devel boost-filesystem-devel boost-signals-devel
-BuildRequires: doxygen gcc-c++ libconfig-c++-devel libexpat-devel
-BuildRequires: libglademm-devel libnotify-devel libssl-devel libtorrent-rasterbar7-devel libdbus-devel
+BuildRequires: doxygen gcc%__gcc_version-c++ libconfig-c++-devel libexpat-devel
+BuildRequires: libglademm-devel libnotify-devel libssl-devel libtorrent-rasterbar-devel libdbus-devel
 
 Patch0:		%name-0.9.11-magnet_mime_support.patch
 
@@ -38,8 +39,8 @@ Flush uses Rasterbar's version of libtorrent.
 %patch0 -p1
 
 %build
-export CXXFLAGS+=-DBOOST_FILESYSTEM_VERSION=3
-export CFLAGS+=-DBOOST_FILESYSTEM_VERSION=3
+export CXXFLAGS+="--std=gnu++11 -DBOOST_FILESYSTEM_VERSION=3 -DGLIBMM_INCLUDED_FROM_WRAP_INIT_CC"
+export CFLAGS+="--std=gnu++11 -DBOOST_FILESYSTEM_VERSION=3 -DGLIBMM_INCLUDED_FROM_WRAP_INIT_CC"
 %configure --disable-bundle-package
 %make_build
 
@@ -71,6 +72,9 @@ cd ../..
 %_pixmapsdir/*
 
 %changelog
+* Fri May 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.12-alt1.4.qa4
+- Rebuilt with new libtorrent-rasterbar8
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.9.12-alt1.4.qa3.1
 - rebuild with boost 1.57.0
 

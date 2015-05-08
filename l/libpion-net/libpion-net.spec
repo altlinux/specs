@@ -1,24 +1,15 @@
 %define		srcname pion-net
 
 Name:		lib%srcname
-Version:	4.0.13
-Release:	alt1.1.qa3.1
+Version:	5.0.7
+Release:	alt1.git20141017
 Summary:	Pion Network Library (pion-net) is a C++ development library for implementing lightweight HTTP interfaces.
 License: 	Boost Software License v1.0
 Group: 		System/Libraries
-Packager:	Motsyo Gennadi <drool@altlinux.ru>
-Url:		http://www.pion.net/projects/pion-network-library
-Source0:	http://www.pion.net/files/%srcname-%version.tar.bz2
-Patch:		libpion-net-4.0.1-alt-fix-build-with-boost.patch
-Patch1: libpion-net-4.0.13-alt-boost-1.52.0.patch
-Patch2: libpion-net-4.0.13-alt-log4cplus.patch
-Patch3: libpion-net-4.0.13-alt-install.patch
-Patch4: libpion-net-4.0.13-alt-link.patch
+Url:		http://sourceforge.net/projects/pion/
+Source0:	%srcname-%version.tar
 
-# Automatically added by buildreq on Tue Sep 06 2011 (-bi)
-# optimized out: boost-devel elfutils i586-glibc-core libcom_err-devel libgfortran-devel libkrb5-devel libstdc++-devel pkg-config python-base python-modules-compiler ruby
 BuildRequires: boost-devel boost-asio-devel boost-filesystem-devel boost-interprocess-devel boost-signals-devel bzlib-devel doxygen gcc-c++ libicu-devel libssl-devel zlib-devel
-# buildreqs updated manualy by iv@, as robot is insane a bit
 
 BuildPreReq: python-modules python-devel
 BuildPreReq: liblog4cplus-devel libxml2-devel graphviz
@@ -85,14 +76,9 @@ BuildArch: noarch
 
 %prep
 %setup -n %srcname-%version
-#patch -p2
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
 
 %build
-%add_optflags -fpermissive
+%add_optflags -fpermissive -std=gnu++11
 export CPPFLAGS="%optflags"
 ./autogen.sh
 %configure \
@@ -106,18 +92,23 @@ export CPPFLAGS="%optflags"
 	--with-python=%_bindir/python \
 	--enable-doxygen-dot \
 	--enable-doxygen-man
-%make_build
+%make_build V=1
+
+%make docs
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 rm -rf %buildroot{%_libdir/%srcname/*.la,%_libdir/%srcname/*.a,%_libdir/*.la}
 
+install -d %buildroot%_sysconfdir/pion
+cp -fR platform/build/config/* %buildroot%_sysconfdir/pion/
+
+install -d %buildroot%_datadir/pion
+cp -fR platform/ui %buildroot%_datadir/pion/
+
 install -d %buildroot%_docdir/%srcname
-install -p -m644 net/doc/*.pdf AUTHORS ChangeLog NEWS \
+cp -fR doc/html doc/*.pdf AUTHORS ChangeLog NEWS *.md TODO *.html \
 	%buildroot%_docdir/%srcname
-pushd %buildroot%_datadir/pion/doc
-mv * %buildroot%_docdir/%srcname/
-popd
 
 %files
 %_libdir/*.so
@@ -152,6 +143,12 @@ popd
 # TODO: yajl support (need 2.0.5 minimum)
 
 %changelog
+* Thu May 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.7-alt1.git20141017
+- Version 5.0.7
+
+* Thu May 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.13-alt1.1.qa4
+- Rebuilt with log4cplus 2.0.0
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 4.0.13-alt1.1.qa3.1
 - rebuild with boost 1.57.0
 
