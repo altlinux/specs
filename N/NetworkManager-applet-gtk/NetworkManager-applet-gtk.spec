@@ -2,13 +2,10 @@
 #define git_date .git20141205
 %define git_date %nil
 
-# Always must be '3' now
-%define gtkver 3
-
 %def_without bluetooth
 
 Name: NetworkManager-applet-gtk
-Version: 1.0.0
+Version: 1.0.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -20,7 +17,7 @@ Patch: nm-applet-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildPreReq: libdbus-devel libdbus-glib libGConf-devel libgtk+%gtkver-devel intltool libtool libpolkit1-devel
+BuildPreReq: libdbus-devel libdbus-glib libGConf-devel libgtk+3-devel intltool libtool libpolkit1-devel
 
 BuildRequires: libwireless-devel
 BuildRequires: libnotify-devel
@@ -36,7 +33,7 @@ BuildRequires: iso-codes-devel
 BuildRequires: gnome-common
 BuildRequires: libgudev-devel
 BuildRequires: libmm-glib-devel
-BuildRequires: gobject-introspection-devel libgtk+%gtkver-gir-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsecret-devel
 # For migration from libgnome-keyring to libsecret
 BuildRequires: libgnome-keyring-devel
@@ -75,7 +72,7 @@ Requires: libnm-gtk = %version-%release
 Requires: libnm-util-devel >= %nm_version
 Requires: libnm-glib-devel >= %nm_version
 Requires: libnm-glib-vpn-devel >= %nm_version
-Requires: libgtk+%gtkver-devel
+Requires: libgtk+3-devel
 
 %description -n libnm-gtk-devel
 This package contains private header and pkg-config files to be used
@@ -161,6 +158,10 @@ make check
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Fri May 08 2015 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1
+- Minor spec cleanup.
+- Updated to 1.0.2.
+
 * Thu Feb 12 2015 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - Fix 'no icon on start' bug again.
 - Updated to 1.0.0.

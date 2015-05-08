@@ -27,7 +27,7 @@
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 
 Name: NetworkManager
-Version: 1.0.0
+Version: 1.0.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -75,6 +75,8 @@ Requires: %name-bluetooth = %version-%release
 Requires: %name-wifi = %version-%release
 Requires: %name-wwan = %version-%release
 %{?_enable_wimax:Requires: %name-wimax = %version-%release}
+
+Provides: network-config-subsystem
 
 %description
 NetworkManager is a system service that manages network interfaces and
@@ -377,6 +379,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--with-resolvconf=/sbin/resolvconf \
 	--enable-concheck \
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
+	--with-system-ca-path=/var/lib/ssl/certs \
 	%{subst_enable wimax} \
 	--enable-tests=yes \
 	%{?_enable_systemd:--with-systemdsystemunitdir=/lib/systemd/system} \
@@ -415,6 +418,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_sysconfdir/NetworkManager/VPN
 mkdir -p %buildroot%_sysconfdir/NetworkManager/system-connections
+mkdir -p %buildroot%_sysconfdir/NetworkManager/conf.d
 mkdir -p %buildroot/%_var/log/
 touch %buildroot/%_var/log/NetworkManager
 mkdir -p %buildroot/%_var/lib/NetworkManager
@@ -505,6 +509,7 @@ fi
 %dir %_sysconfdir/NetworkManager
 %dir %_sysconfdir/NetworkManager/VPN
 %dir %_sysconfdir/NetworkManager/system-connections
+%dir %_sysconfdir/NetworkManager/conf.d
 %dir %_var/lib/NetworkManager
 %dispatcherdir/
 %ghost %config(noreplace) %_var/log/NetworkManager
@@ -519,6 +524,8 @@ fi
 %{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
 %{?_enable_systemd:/lib/systemd/system/network-online.target.wants/NetworkManager-wait-online.service}
 
+%exclude %_man1dir/nmtui*
+%exclude %_man5dir/nm-settings-ifcfg-rh.*
 %exclude %_libdir/%name/libnm-device-plugin-*.so
 %exclude %_libdir/%name/libnm-wwan.so
 
@@ -543,6 +550,7 @@ fi
 %if_enabled nmtui
 %files tui
 %_bindir/nmtui*
+%_man1dir/nmtui*
 %endif
 
 %files devel
@@ -621,6 +629,20 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri May 08 2015 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1
+- Use symlinks for nmtui* manpages.
+- Package /etc/NetworkManager/conf.d/ directory.
+- Move nmtui manpages to tui subpackage.
+- Don't package nm-settings-ifcfg-rh manpage.
+- man: Add etcnet-alt decription and drop non-existent plugins.
+- Drop DNS plugins description from man page.
+- Use /var/lib/ssl/certs as system CA path.
+- etcnet-alt: Fix nm_settings_connection_replace_settings() call.
+- Update 'Don't use dns plugins' patch.
+- Provide network-config-subsystem (closes: #30262).
+- etcnet-alt: Get rid of duplicate code in the IP config.
+- Updated to 1.0.2.
+
 * Mon Feb 02 2015 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - Move dnsmasq and nm-dhcp-client requires to NetworkManager subpackage.
 - Drop libgsystem.
