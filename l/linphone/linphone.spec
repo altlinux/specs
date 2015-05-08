@@ -1,5 +1,5 @@
 Name: linphone
-Version: 3.8.1
+Version: 3.8.2
 Release: alt1
 License: GPLv2+
 Url: http://www.linphone.org/
@@ -109,7 +109,7 @@ This package contains development files for %name.
 %files cli
 %_bindir/linphonec
 %_bindir/linphonecsh
-%_bindir/auto_answer
+%_bindir/lp-autoanswer
 %_bindir/lp-gen-wrappers
 %_man1dir/linphonec.1.gz
 %_man1dir/linphonecsh.1.gz
@@ -124,6 +124,9 @@ This package contains development files for %name.
 %_datadir/tutorials/%name
 
 %changelog
+* Fri May 08 2015 Alexei Takaseev <taf@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Thu Apr 02 2015 Alexei Takaseev <taf@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
