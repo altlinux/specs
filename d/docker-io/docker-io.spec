@@ -10,7 +10,7 @@
 %global shortcommit 4e9bbfa
 
 Name:       %{repo}-io
-Version:    1.3.1
+Version:    1.6.1
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -81,7 +81,7 @@ Provides:       golang(%{import_path}/daemon/networkdriver/bridge) = %{version}-
 Provides:       golang(%{import_path}/daemon/networkdriver/ipallocator) = %{version}-%{release}
 Provides:       golang(%{import_path}/daemon/networkdriver/portallocator) = %{version}-%{release}
 Provides:       golang(%{import_path}/daemon/networkdriver/portmapper) = %{version}-%{release}
-Provides:       golang(%{import_path}/dockerversion) = %{version}-%{release}
+Provides:       golang(%{import_path}/autogen) = %{version}-%{release}
 Provides:       golang(%{import_path}/engine) = %{version}-%{release}
 Provides:       golang(%{import_path}/graph) = %{version}-%{release}
 Provides:       golang(%{import_path}/image) = %{version}-%{release}
@@ -194,7 +194,7 @@ install -p -m 644 contrib/init/systemd/%{repo}.socket %{buildroot}%{_unitdir}
 install -d -p %{buildroot}/%{gopath}/src/%{import_path}
 rm -rf pkg/symlink/testdata
 
-for dir in api builtins daemon dockerversion engine graph \
+for dir in api builtins daemon autogen engine graph \
            image links nat opts pkg registry runconfig utils
 do
     cp -rpav $dir %{buildroot}/%{gopath}/src/%{import_path}/
@@ -258,8 +258,8 @@ exit 0
 %doc LICENSE-vim-syntax README-vim-syntax.md
 %config(noreplace) %{_sysconfdir}/sysconfig/docker
 %config(noreplace) %{_sysconfdir}/sysconfig/docker-storage
-%{_mandir}/man1/docker*.1.gz
-%{_mandir}/man5/Dockerfile.5.gz
+%{_mandir}/man1/docker*.1.*
+%{_mandir}/man5/Dockerfile.5.*
 %{_bindir}/docker
 %dir %{_libexecdir}/docker
 %{_libexecdir}/docker/dockerinit
@@ -280,13 +280,10 @@ exit 0
 %dir %{gopath}/src/%{import_path}/*/*
 %dir %{gopath}/src/%{import_path}/*/*/*
 %dir %{gopath}/src/%{import_path}/*/*/*/*
-%{gopath}/src/%{import_path}/*/MAINTAINERS
 %{gopath}/src/%{import_path}/*/README.md
 %{gopath}/src/%{import_path}/*/*.go
 %{gopath}/src/%{import_path}/*/*/*.go
-%{gopath}/src/%{import_path}/*/*/MAINTAINERS
 %{gopath}/src/%{import_path}/*/*/*/*.go
-%{gopath}/src/%{import_path}/*/*/*/MAINTAINERS
 %{gopath}/src/%{import_path}/*/*/*/README.md
 %{gopath}/src/%{import_path}/*/*/*/*/*.go
 %exclude %{gopath}/src/%{import_path}/pkg
@@ -304,7 +301,6 @@ exit 0
 %dir %{gopath}/src/%{import_path}/pkg/*/*
 %dir %{gopath}/src/%{import_path}/pkg/*/*/*
 %{gopath}/src/%{import_path}/pkg/README.md
-%{gopath}/src/%{import_path}/pkg/*/MAINTAINER*
 %{gopath}/src/%{import_path}/pkg/*/LICENSE
 %{gopath}/src/%{import_path}/pkg/*/README.md
 %{gopath}/src/%{import_path}/pkg/*/*.go
@@ -312,7 +308,23 @@ exit 0
 %{gopath}/src/%{import_path}/pkg/*/*/*.go
 %{gopath}/src/%{import_path}/pkg/*/*/*/json
 %{gopath}/src/%{import_path}/pkg/*/*/*/*.tar
+
 %changelog
+* Fri May 08 2015 Evgeny Sinelnikov <sin@altlinux.ru> 1.6.1-alt1
+- Update to new version with security updates
+ + Fix read/write /proc paths (CVE-2015-3630)
+ + Prohibit VOLUME /proc and VOLUME / (CVE-2015-3631)
+ + Fix opening of file-descriptor 1 (CVE-2015-3627)
+ + Fix symlink traversal on container respawn allowing
+   local privilege escalation (CVE-2015-3629)
+ + Prohibit mount of /sys
+
+* Sat Apr 18 2015 Evgeny Sinelnikov <sin@altlinux.ru> 1.6.0-alt1
+- Update to last stable version
+- Avoid of using CAP_AUDIT_READ capability for support
+  less than 3.16.x kernel versions
+- Rename dockerversion to autogen (c40993777f152426ea029)
+
 * Wed Nov 12 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.1-alt1
 - New version.
 - Updated spec to Fedora 1.3.1-2.
