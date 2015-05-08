@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.28
+Version: 1.8.29
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,10 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon May 11 2015 Andrey Cherepanov <cas@altlinux.org> 1.8.29-alt1
+- If there is 'poweroff' option in kernel command line then power off
+  instead of reboot (useful for autoinstall)
+
 * Tue Mar 31 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.28-alt1
 - Added default APT::Cache-Limit=32M for installer.
 
