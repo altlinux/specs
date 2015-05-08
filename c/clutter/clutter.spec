@@ -15,16 +15,16 @@
 %def_enable wayland_compositor
 
 Name: clutter
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major.1
+Release: alt0.1
 
 Summary: Clutter Core Library
 License: LGPLv2+
 Group: System/Libraries
 Url: http://www.clutter-project.org/
 
-#Source: %name-%version.tar
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.40
 %define cogl_ver 1.20.0
@@ -140,7 +140,7 @@ gtkdocize
 	%{?_enable_xinput:--enable-xinput} \
 	%{?_enable_evdev_input:--enable-evdev-input} \
 	%{?_enable_gdk_pixbuf:--enable-gdk-pixbuf} \
-	--enable-gtk-doc \
+	%{?_enale_gtk_doc:--enable-gtk-doc} \
 	--enable-introspection \
 	%{?_enable_installed_tests:--enable-installed-tests}
 
@@ -168,8 +168,10 @@ gtkdocize
 %files -n lib%name-gir-devel
 %_datadir/gir-1.0/*.gir
 
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled installed_tests
 %files -n lib%name-tests
@@ -179,6 +181,9 @@ gtkdocize
 
 
 %changelog
+* Thu May 07 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.1-alt0.1
+- 1.22.1_8cf629d4
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
 - 1.22.0
 
