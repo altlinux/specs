@@ -3,7 +3,7 @@
 
 Name: asterisk-core-sounds-es-g729
 Summary: sounds for Asterisk
-Version: 1.4.26
+Version: 1.4.27
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -49,6 +49,9 @@ find -type f \
 %files -f sounds.list
 
 %changelog
+* Sun May 10 2015 Cronbuild Service <cronbuild@altlinux.org> 1.4.27-alt1
+- new version 1.4.27
+
 * Thu Sep 11 2014 Cronbuild Service <cronbuild@altlinux.org> 1.4.26-alt1
 - new version 1.4.26
 
