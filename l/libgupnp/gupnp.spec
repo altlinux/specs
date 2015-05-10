@@ -1,10 +1,11 @@
 %define _name gupnp
+%define ver_major 0.20
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: libgupnp
-Version: 0.20.13
+Version: %ver_major.14
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -12,9 +13,9 @@ Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gupnp.org/
 
-Source: http://www.gupnp.org/sources/%_name/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildPreReq: gnome-common libgssdp-devel >= 0.14.6 glib2-devel >= 2.24.0 libgio-devel
+BuildPreReq: gnome-common libgssdp-devel >= 0.14.6 libgio-devel >= 2.40.0
 BuildRequires: libxml2-devel libsoup-devel >= 2.48 libuuid-devel gtk-doc
 BuildRequires: vala-tools rpm-build-vala libvala-devel >= 0.22
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libsoup-gir-devel libgssdp-gir-devel}
@@ -108,6 +109,9 @@ GObject introspection devel data for the gUPnP library
 
 
 %changelog
+* Sun May 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.20.14-alt1
+- 0.20.14
+
 * Thu Jan 08 2015 Yuri N. Sedunov <aris@altlinux.org> 0.20.13-alt1
 - 0.20.13
 
