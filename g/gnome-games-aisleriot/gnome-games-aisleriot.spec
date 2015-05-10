@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A collection of card games
@@ -60,10 +60,10 @@ fi
 %_libdir/%_name/
 %dir %_libexecdir/%_name
 %_libexecdir/%_name/ar-cards-renderer
-%_datadir/%_name
-%_datadir/applications/*.desktop
+%_desktopdir/*.desktop
+%_datadir/%_name/
 %_iconsdir/hicolor/*/apps/*.png
-%_iconsdir/HighContrast/*/apps/*.svg
+%_iconsdir/hicolor/*/apps/*.svg
 %_sysconfdir/gconf/schemas/%_name.schemas
 %_datadir/glib-2.0/schemas/org.gnome.Patience.WindowState.gschema.xml
 %_datadir/appdata/sol.appdata.xml
@@ -72,6 +72,9 @@ fi
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
