@@ -19,10 +19,10 @@
 %endif
 
 Name: rygel
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
-Summary: A UPnP v2 Media Server
 
+Summary: A UPnP v2 Media Server
 Group: System/Servers
 License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Rygel
@@ -138,7 +138,6 @@ echo %version > .tarball-version
 	%{?_enable_mediathek_plugin:--enable-mediathek-plugin} \
 	%{?_enable_gst_launch_plugin:--enable-gst-launch-plugin}
 
-
 %make_build
 
 %install
@@ -178,6 +177,9 @@ echo %version > .tarball-version
 %_girdir/*.gir
 
 %changelog
+* Sun May 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.26.1-alt1
+- 0.26.1
+
 * Sun Mar 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0.26.0-alt1
 - 0.26.0
 
