@@ -1,7 +1,7 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
@@ -13,14 +13,17 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%name/%version/%name-%version.tar
 
+Patch: %name.patch
+
 BuildArch: noarch
 
 # perl(Gtk2/Ex/PodViewer.pm) at line 3501 (depth 4) inside eval SKIP
 Requires: perl(Gtk2/Ex/PodViewer.pm) xdg-utils unpaper
 
-# Automatically added by buildreq on Fri Dec 28 2012 (-bi)
-# optimized out: fontconfig libX11-locales libgdk-pixbuf libwayland-client libwayland-server perl-Cairo perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Encode perl-Glib perl-Gtk2 perl-HTML-Parser perl-HTML-Tagset perl-IO-Compress perl-IO-String perl-IO-Zlib perl-Math-Complex perl-Package-Constants perl-Pango perl-Readonly-XS perl-Try-Tiny perl-threads python-base
-BuildRequires: perl-Archive-Tar perl-Config-General perl-Goo-Canvas perl-Gtk2-Ex-Simple-List perl-Gtk2-ImageView perl-Locale-gettext perl-Log-Log4perl perl-Magick perl-PDF-API2 perl-Proc-ProcessTable perl-Readonly perl-Sane perl-Set-IntSpan perl-devel perl-List-MoreUtils
+# manually removed: python3 ruby ruby-stdlibs  rpm-build-python3
+# Automatically added by buildreq on Tue May 12 2015 (-bi)
+# optimized out: fontconfig libX11-locales libgdk-pixbuf libwayland-client libwayland-server perl-Cairo perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Encode perl-Exporter-Tiny perl-Glib perl-Gtk2 perl-HTML-Parser perl-HTML-Tagset perl-IO-Compress perl-IO-String perl-IO-Zlib perl-Math-Complex perl-Pango perl-Pod-Escapes perl-Pod-Simple perl-Try-Tiny perl-devel perl-parent perl-threads python-base python3 python3-base
+BuildRequires: libdb4-devel perl-Archive-Tar perl-Config-General perl-Filesys-Df perl-Goo-Canvas perl-Gtk2-Ex-Simple-List perl-Gtk2-ImageView perl-List-MoreUtils perl-Locale-gettext perl-Log-Log4perl perl-Magick perl-PDF-API2 perl-Proc-ProcessTable perl-Readonly perl-Sane perl-Set-IntSpan perl-Sub-Name perl-podlators
 
 BuildPreReq: perl-Magick perl-Sane >= 0.05
 
@@ -49,6 +52,7 @@ Scanning is handled with SANE via scanimage. PDF conversion is done by libtiff.
 
 %prep
 %setup
+%patch -p2
 #__subst "s|use Gtk2 -init;|use Gtk2; INIT { Gtk2->init; }|g" bin/%name
 # djvu %_bindir/cjb2
 %__subst "s|requires djvulibre-bin|djvu-utils|g" bin/%name
@@ -81,6 +85,9 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Mon May 11 2015 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
+- new version 1.3.1 (with rpmrb script)
+
 * Wed May 06 2015 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - new version 1.3.0 (with rpmrb script)
 
