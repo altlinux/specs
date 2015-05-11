@@ -1,3 +1,4 @@
+%def_disable snapshot
 # since 3.13.6
 # see https://git.gnome.org/browse/evolution-data-server/commit/?id=a2790163af4d3f375a778055d0e2699207dfd050
 %set_verify_elf_method unresolved=relaxed
@@ -15,13 +16,13 @@
 %def_enable goa
 # Ubuntu online accounts support
 %def_disable uoa
-%def_enable gtk_doc
+%{?_enable_snapshot:%def_enable gtk_doc}
 %def_enable introspection
 %def_enable vala
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Evolution Data Server
@@ -29,8 +30,11 @@ License: %lgpl2plus
 Group: Graphical desktop/GNOME
 URL: https://wiki.gnome.org/Apps/Evolution
 
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%endif
 Patch1: %name-1.4.2.1-debug-lock.patch
 
 # from configure.ac
@@ -272,6 +276,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
