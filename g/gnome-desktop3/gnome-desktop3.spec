@@ -10,7 +10,7 @@
 %def_enable installed_tests
 
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -173,6 +173,9 @@ export LIBS="$LIBS `pkg-config --libs gio-2.0` `pkg-config --libs gtk+-3.0`"
 
 
 %changelog
+* Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Thu Apr 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
