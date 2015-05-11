@@ -1,8 +1,8 @@
 %define rname modemmanager-qt
 
 Name: kf5-%rname
-Version: 5.9.0
-Release: alt2
+Version: 5.10.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -70,6 +70,9 @@ KF5 library
 %_K5lib/libKF5ModemManagerQt.so.*
 
 %changelog
+* Mon May 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1
+- new version
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt2
 - fix provides
 

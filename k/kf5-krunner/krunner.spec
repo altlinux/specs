@@ -1,7 +1,7 @@
 %define rname krunner
 
 Name: kf5-%rname
-Version: 5.9.0
+Version: 5.10.0
 Release: alt1
 %K5init altplace
 
@@ -31,7 +31,7 @@ information that match the text appear as the text is being typed.
 
 %package common
 Summary: %name common package
-Group: Graphical desktop/KDE
+Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
 %description common
@@ -65,6 +65,7 @@ KF5 library
 
 %files common -f %name.lang
 %doc README.md
+%_K5srvtyp/*.desktop
 
 %files devel
 %_K5inc/krunner_version.h
@@ -76,9 +77,11 @@ KF5 library
 %files -n libkf5runner
 %_K5lib/libKF5Runner.so.*
 %_K5qml/org/kde/runnermodel/
-%_K5srvtyp/*.desktop
 
 %changelog
+* Mon May 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1
+- new version
+
 * Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
 - new version
 
