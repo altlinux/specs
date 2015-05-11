@@ -3,7 +3,7 @@
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 %def_enable pty_helper
@@ -200,6 +200,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.40.2-alt1
+- 0.40.2
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt1
 - 0.40.0
 
