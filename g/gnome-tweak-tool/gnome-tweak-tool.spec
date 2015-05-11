@@ -1,8 +1,9 @@
 %def_disable snapshot
+%define _libexecdir %_prefix/libexec
 %define ver_major 3.16
 
 Name: gnome-tweak-tool
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -60,14 +61,19 @@ Features:
 
 %files -f %name.lang
 %_bindir/%name
+%_libexecdir/%name-lid-inhibitor
 %python_sitelibdir/gtweak
 %_datadir/applications/%name.desktop
 %_datadir/%name
 %_iconsdir/hicolor/*/*/*.png
+%_iconsdir/hicolor/*/*/*.svg
 %_datadir/appdata/%name.appdata.xml
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Thu Apr 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
