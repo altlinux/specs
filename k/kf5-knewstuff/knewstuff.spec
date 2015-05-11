@@ -1,7 +1,7 @@
 %define rname knewstuff
 
 Name: kf5-%rname
-Version: 5.9.0
+Version: 5.10.0
 Release: alt1
 %K5init altplace
 
@@ -31,7 +31,7 @@ specification.
 
 %package common
 Summary: %name common package
-Group: Graphical desktop/KDE
+Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
 %description common
@@ -66,6 +66,7 @@ KF5 library
 %files common -f %name.lang
 %doc COPYING.LIB README.md
 %_K5data/knewstuff/
+%_K5data/kmoretools/
 
 %files devel
 %_K5inc/knewstuff_version.h
@@ -78,6 +79,9 @@ KF5 library
 %_K5lib/libKF5NewStuff.so.*
 
 %changelog
+* Mon May 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1
+- new version
+
 * Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
 - new version
 

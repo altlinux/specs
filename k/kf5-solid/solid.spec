@@ -1,8 +1,8 @@
 %define rname solid
 
 Name: kf5-%rname
-Version: 5.9.0
-Release: alt2
+Version: 5.10.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -79,6 +79,9 @@ KF5 library
 %_K5qml/org/kde/solid/
 
 %changelog
+* Mon May 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1
+- new version
+
 * Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt2
 - update requires
 

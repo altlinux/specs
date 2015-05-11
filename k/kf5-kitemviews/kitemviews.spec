@@ -1,7 +1,7 @@
 %define rname kitemviews
 
 Name: kf5-%rname
-Version: 5.9.0
+Version: 5.10.0
 Release: alt1
 %K5init altplace
 
@@ -25,7 +25,7 @@ hierarchical lists.
 
 %package common
 Summary: %name common package
-Group: Graphical desktop/KDE
+Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
 %description common
@@ -71,6 +71,9 @@ KF5 library
 %_K5lib/libKF5ItemViews.so.*
 
 %changelog
+* Mon May 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1
+- new version
+
 * Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
 - new version
 

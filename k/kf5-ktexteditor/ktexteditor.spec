@@ -1,7 +1,7 @@
 %define rname ktexteditor
 
 Name: kf5-%rname
-Version: 5.9.0
+Version: 5.10.0
 Release: alt1
 %K5init altplace
 
@@ -31,7 +31,7 @@ application.
 
 %package common
 Summary: %name common package
-Group: Graphical desktop/KDE
+Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
 %description common
@@ -79,12 +79,15 @@ KF5 library
 %files -n libkf5texteditor
 %_K5lib/libKF5TextEditor.so.*
 %_K5plug/kf5/parts/katepart.so
-%_K5data/katepart5/
+%_datadir/katepart5/
 %_K5srv/*
 %_K5srvtyp/*
 %_K5xmlgui/katepart/
 
 %changelog
+* Mon May 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1
+- new version
+
 * Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1
 - new version
 
