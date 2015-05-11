@@ -1,6 +1,6 @@
 Name: fastnetmon
 Version: 1.1.1
-Release: alt2
+Release: alt3
 Summary: A high performance DoS/DDoS load analyzer.
 Group: Networking/Other
 
@@ -53,6 +53,9 @@ mv docs/THANKS.md ./
 
 
 %changelog
+* Mon May 11 2015 Alexei Takaseev <taf@altlinux.org> 1.1.1-alt3
+- update to git:7170f257cfaf2638d5735d8f165507962c43f139
+
 * Fri May 08 2015 Alexei Takaseev <taf@altlinux.org> 1.1.1-alt2
 - update to git:b4e1a9cc7779c33841d7cec41b94232a519299de
 
