@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -23,7 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source1: %_name.map
 Source2: %_name.lds
 
-%define glib_ver 2.37.6
+%define glib_ver 2.38
 %define gi_ver 0.9.5
 
 Requires: %name-locales = %version
@@ -225,6 +225,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 2.31.4-alt1
+- 2.31.4
+
 * Sun Mar 08 2015 Yuri N. Sedunov <aris@altlinux.org> 2.31.3-alt1
 - 2.31.3
 
