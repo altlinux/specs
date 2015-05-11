@@ -9,8 +9,8 @@
 %def_enable ssh
 
 Name: vinagre
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: VNC client for the GNOME Desktop
 License: GPLv2
@@ -77,6 +77,9 @@ rm -rf %buildroot%_datadir/doc
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Wed Apr 01 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt2
 - enabled rdp support via libfreerdp-1.1
 
