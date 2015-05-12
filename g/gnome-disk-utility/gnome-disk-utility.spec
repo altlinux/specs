@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-disk-utility
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Disk management application
@@ -66,7 +66,6 @@ RAID, SMART monitoring, etc
 %_desktopdir/gnome-disk-image-writer.desktop
 %_datadir/glib-2.0/schemas/org.gnome.Disks.gschema.xml
 %_iconsdir/hicolor/*/apps/*
-%_iconsdir/HighContrast/*x*/apps/gnome-disks.png
 %_man1dir/*.1.*
 # gsd plugin
 %_libdir/gnome-settings-daemon-3.0/gdu-sd-plugin.gnome-settings-plugin
@@ -77,6 +76,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Sun Mar 29 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
