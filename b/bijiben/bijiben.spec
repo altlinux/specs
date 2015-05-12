@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: bijiben
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Note editor for GNOME
@@ -50,8 +50,7 @@ desktop integration.
 %_datadir/applications/*
 %_datadir/%name
 %_iconsdir/hicolor/*x*/*/%name.png
-#%_iconsdir/hicolor/scalable/*/%name-symbolic.svg
-%_iconsdir/HighContrast/scalable/apps/%name.svg
+%_iconsdir/hicolor/scalable/*/%name-symbolic.svg
 %_datadir/gnome-shell/search-providers/%name-search-provider.ini
 %_datadir/dbus-1/services/org.gnome.Bijiben.SearchProvider.service
 %_xdgmimedir/packages/bijiben.xml
@@ -60,6 +59,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
