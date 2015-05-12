@@ -11,7 +11,7 @@
 %def_with bluetooth
 
 Name: gnome-control-center
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Control Center
@@ -37,7 +37,7 @@ Patch1: %name-3.10.1-alt-background_build.patch
 %define nm_ver 0.9.8
 %define goa_ver 3.7.91
 %define acc_ver 0.6.33
-%define sett_daemon_ver 3.16.1
+%define sett_daemon_ver 3.16.2
 %define cheese_ver 3.9.5
 %define bt_ver 3.12.0
 %define systemd_ver 40
@@ -180,6 +180,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
