@@ -2,12 +2,12 @@
 %define _libexecdir /usr/libexec
 %define qemu_user  _libvirt
 %define preferred_distros "altlinux,fedora,rhel"
-%define kvm_packages "qemu-kvm,qemu-system"
+%define kvm_packages ""
 %define libvirt_packages "libvirt"
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: Virtual Machine Manager
 
@@ -29,17 +29,18 @@ Requires: dconf
 Requires: dbus-tools-gui
 Requires: libosinfo >= 0.2.10
 Requires: librsvg
+
 # add requires based on "from gi.repository import foo"
 Requires: typelib(GObject)
 Requires: typelib(LibvirtGLib)
-Requires: typelib(Gtk)
+Requires: typelib(Gtk) = 3.0
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(Pango)
 Requires: typelib(GLib)
 Requires: typelib(Gio)
-Requires: typelib(GtkVnc)
-Requires: typelib(SpiceClientGtk)
+Requires: typelib(GtkVnc) = 2.0
+Requires: typelib(SpiceClientGtk) = 3.0
 Requires: typelib(SpiceClientGLib)
 Requires: typelib(Vte)
 Requires: typelib(Libosinfo)
@@ -93,7 +94,6 @@ machine).
 
 %build
 python setup.py configure \
-	--pkgversion="%version" \
 	--qemu-user=%qemu_user \
 	--libvirt-package-names=%libvirt_packages \
 	--kvm-package-names=%kvm_packages \
@@ -118,6 +118,8 @@ python setup.py install --root=%buildroot
 %_datadir/appdata/%name.appdata.xml
 %_datadir/icons/hicolor/*/apps/%name.png
 %_datadir/glib-2.0/schemas/*.gschema.xml
+%_datadir/GConf/gsettings/org.virt-manager.virt-manager.convert
+
 %_man1dir/%name.1*
 %doc README COPYING NEWS
 
@@ -142,6 +144,10 @@ python setup.py install --root=%buildroot
 %_man1dir/virt-xml.1*
 
 %changelog
+* Tue May 12 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+- update Requires (#30809)
+
 * Thu Sep 11 2014 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 
