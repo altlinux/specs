@@ -8,6 +8,7 @@
 %def_enable xinput
 %def_enable gdk_pixbuf
 %def_enable installed_tests
+%def_enable gtk_doc
 
 # libcogl compiled with --enable-wayland-egl-platform required
 %def_enable wayland_backend
@@ -15,16 +16,16 @@
 %def_enable wayland_compositor
 
 Name: clutter
-Version: %ver_major.1
-Release: alt0.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: Clutter Core Library
 License: LGPLv2+
 Group: System/Libraries
 Url: http://www.clutter-project.org/
 
-Source: %name-%version.tar
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.40
 %define cogl_ver 1.20.0
@@ -140,7 +141,7 @@ gtkdocize
 	%{?_enable_xinput:--enable-xinput} \
 	%{?_enable_evdev_input:--enable-evdev-input} \
 	%{?_enable_gdk_pixbuf:--enable-gdk-pixbuf} \
-	%{?_enale_gtk_doc:--enable-gtk-doc} \
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--enable-introspection \
 	%{?_enable_installed_tests:--enable-installed-tests}
 
@@ -181,6 +182,9 @@ gtkdocize
 
 
 %changelog
+* Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt1
+- 1.22.2
+
 * Thu May 07 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.1-alt0.1
 - 1.22.1_8cf629d4
 
