@@ -1,5 +1,5 @@
-%define lvm2version 2.02.118
-%define dmversion 1.02.95
+%define lvm2version 2.02.119
+%define dmversion 1.02.96
 
 %def_disable cluster
 %def_enable selinux
@@ -425,6 +425,9 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %python_sitelibdir/*
 
 %changelog
+* Tue May 12 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.119-alt1
+- 2.02.119
+
 * Fri Apr 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.118-alt1
 - 2.02.118
 
