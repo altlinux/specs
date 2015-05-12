@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.15
+%define ver_major 3.16
 
 %def_disable debug
 %def_enable ldap
@@ -14,7 +14,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.92
+Version: %ver_major.0
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -68,7 +68,6 @@ export GNUPG=/usr/bin/gpg
 	%{subst_enable debug} \
 	%{?_enable_gnome-keyring:--enable-gnome-keyring} \
 	%{subst_enable pkcs11} \
-	--disable-static \
 	--disable-schemas-compile
 
 %make_build
@@ -99,6 +98,9 @@ export GNUPG=/usr/bin/gpg
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Thu Apr 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.92-alt1
 - 3.15.92
 - built with gpg, not gpg2, due to incompatible upstream changes
