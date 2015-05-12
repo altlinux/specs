@@ -1,7 +1,7 @@
 Name:		doublecmd
 Summary:	Twin-panel (commander-style) file manager (GTK2 and QT4)
-Version:	0.6.1
-Release:	alt2
+Version:	0.6.2
+Release:	alt1
 Url:		http://doublecmd.sourceforge.net
 
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
@@ -89,6 +89,9 @@ install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt.desktop
 %_pixmapsdir/%name.*
 
 %changelog
+* Tue May 12 2015 Motsyo Gennadi <drool@altlinux.ru> 0.6.2-alt1
+- 0.6.2
+
 * Fri May 08 2015 Motsyo Gennadi <drool@altlinux.ru> 0.6.1-alt2
 - fix BuildRequires
 
