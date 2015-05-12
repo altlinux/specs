@@ -8,9 +8,10 @@
 %define _name webkitgtk
 
 %def_disable gtkdoc
+%def_disable gnu_ld
 
 Name: libwebkitgtk4
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 
 Summary: Web browser engine
@@ -179,19 +180,20 @@ rm -rf Source/ThirdParty/qunit/
 
 %build
 # Decrease debuginfo verbosity and use linker flags to reduce memory consumption
-%define optflags_debug -g1
-%add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
+%{?_disable_gnu_ld:%define optflags_debug -g1}
+%{?_disable_gnu_ld:%add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads}
 
 %cmake \
 -DPORT=GTK \
 %{?_enable_gtkdoc:-DENABLE_GTKDOC:BOOL=ON} \
 -DCMAKE_BUILD_TYPE=Release \
+-DENABLE_MINIBROWSER=ON \
 -DENABLE_TOUCH_EVENTS:BOOL=ON \
 -DENABLE_TOUCH_ICON_LOADING:BOOL=ON \
 -DENABLE_TOUCH_SLIDER:BOOL=ON \
 -DENABLE_FTPDIR:BOOL=ON \
 -DENABLE_MEDIA_STREAM:BOOL=ON \
--DUSE_LD_GOLD:BOOL=OFF
+%{?_disable_gnu_ld:-DUSE_LD_GOLD:BOOL=OFF}
 #-DENABLE_TELEPHONE_NUMBER_DETECTION:BOOL=ON \
 #-DENABLE_BATTERY_STATUS:BOOL=ON \
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
@@ -217,6 +219,7 @@ rm -rf Source/ThirdParty/qunit/
 %doc NEWS
 
 %files -n libwebkit2gtk-devel
+%_bindir/MiniBrowser
 %_libdir/libwebkit2gtk-%api_ver.so
 %dir %_includedir/webkitgtk-%api_ver
 %_includedir/webkitgtk-%api_ver/webkit2
@@ -256,6 +259,12 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.2-alt1
+- 2.8.2
+
+* Sun Apr 19 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt2
+- packaged MiniBrowser in -devel subpackage
+
 * Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
 - 2.8.1
 
