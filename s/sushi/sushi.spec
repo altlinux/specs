@@ -1,11 +1,11 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.15
+%define ver_major 3.16
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %def_enable introspection
 
 Name: sushi
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -13,7 +13,7 @@ Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: https://live.gnome.org/ThreePointOne/Features/FilePreviewing
 
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 #Requires: unoconv
 
@@ -96,6 +96,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Wed May 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
 * Tue Mar 10 2015 Yuri N. Sedunov <aris@altlinux.org> 3.15.90-alt1
 - 3.15.90
 
