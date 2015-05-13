@@ -1,12 +1,11 @@
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
-%def_enable gobject
 %def_enable introspection
 %def_enable qt
 %def_enable qt5
 
 Name: lightdm
-Version: 1.11.9
+Version: 1.14.0
 Release: alt1
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
@@ -38,7 +37,7 @@ BuildRequires: libdbus-glib-devel
 BuildRequires: gtk-doc yelp-tools itstool
 BuildRequires: libpam-devel
 BuildRequires: libgcrypt-devel
-%{?_enable_gobject:BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0) >= 2.26 pkgconfig(gio-unix-2.0) pkgconfig(gobject-2.0) pkgconfig(libxklavier) pkgconfig(x11)}
+BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0) >= 2.26 pkgconfig(gio-unix-2.0) pkgconfig(gobject-2.0) pkgconfig(libxklavier) pkgconfig(x11)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_qt:BuildRequires: pkgconfig(QtCore) pkgconfig(QtDBus) pkgconfig(QtGui) /usr/bin/moc-qt4}
 %{?_enable_qt5:BuildRequires: pkgconfig(Qt5Core) pkgconfig(Qt5DBus) pkgconfig(Qt5Gui) /usr/bin/moc-qt5}
@@ -123,7 +122,6 @@ GObject introspection devel data for the %name
 	--disable-static \
 	--disable-tests \
 	--enable-gtk-doc \
-	%{?_enable_gobject:--enable-liblightdm-gobject} \
 	%{?_enable_qt:--enable-liblightdm-qt} \
 	%{?_enable_qt5:--enable-liblightdm-qt5} \
 	--with-user-session=default \
@@ -213,7 +211,6 @@ fi
 /lib/tmpfiles.d/%name.conf
 %_datadir/polkit-1/rules.d/%name.rules
 
-%if_enabled gobject
 %files -n liblightdm-gobject
 %_libdir/liblightdm-gobject-?.so.*
 
@@ -223,7 +220,6 @@ fi
 
 %files gir-devel
 %_girdir/*.gir
-%endif
 %endif
 
 %if_enabled qt
@@ -246,6 +242,12 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue May 12 2015 Alexey Shabalin <shaba@altlinux.ru> 1.14.0-alt1
+- 1.14.0
+
+* Mon Nov 10 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.1-alt1
+- 1.12.1
+
 * Thu Sep 18 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.9-alt1
 - 1.11.9
 
