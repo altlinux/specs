@@ -23,7 +23,7 @@
 %define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -410,7 +410,9 @@ make install INSTALL_ROOT=%buildroot
 rm -rf %buildroot/%_qt5_docdir/qtwidgets/*tutorials-addressbook*
 %endif
 
-mkdir -p %buildroot/%_qt5_plugindir/accessible/
+# create/own dirs
+mkdir -p %buildroot/{%_qt5_archdatadir/mkspecs/modules,%_qt5_importdir,%_qt5_qmldir,%_qt5_libexecdir,%_qt5_translationdir,%_qt5_docdir}
+mkdir -p %buildroot/%_qt5_plugindir/{accessible,iconengines,kpackage/packagestructure,script,styles}/
 
 # remove .la files
 rm -rf %buildroot/%_qt5_libdir/*.la
@@ -471,9 +473,6 @@ cat >%buildroot/%_rpmmacrosdir/%gname <<__EOF__
 __EOF__
 cat %SOURCE1 >>%buildroot/%_rpmmacrosdir/%gname
 
-# create/own dirs
-mkdir -p %buildroot/{%_qt5_archdatadir/mkspecs/modules,%_qt5_importdir,%_qt5_qmldir,%_qt5_libexecdir,%_qt5_plugindir/iconengines,%_qt5_translationdir,%_qt5_docdir}
-
 # create compatibility symlinks to dirs
 for d in imports libexec mkspecs plugins ; do
 ln -s `relative %_qt5_archdatadir/$d %_qt5_prefix/$d` %buildroot/%_qt5_prefix/$d
@@ -531,6 +530,7 @@ done
 %files common
 %doc LICENSE.* LGPL_EXCEPTION.txt
 %dir %_qt5_docdir/
+%dir %_qt5_archdatadir/
 %dir %_qt5_importdir/
 %dir %_qt5_qmldir/
 %dir %_qt5_translationdir/
@@ -550,11 +550,15 @@ done
 %dir %_qt5_plugindir/generic/
 %dir %_qt5_plugindir/iconengines/
 %dir %_qt5_plugindir/imageformats/
+%dir %_qt5_plugindir/kpackage/
+%dir %_qt5_plugindir/kpackage/packagestructure/
 %dir %_qt5_plugindir/platforminputcontexts/
 %dir %_qt5_plugindir/platforms/
 %dir %_qt5_plugindir/platformthemes/
 %dir %_qt5_plugindir/printsupport/
+%dir %_qt5_plugindir/script/
 %dir %_qt5_plugindir/sqldrivers/
+%dir %_qt5_plugindir/styles/
 
 %files doc
 %if_disabled bootstrap
@@ -707,6 +711,10 @@ done
 
 
 %changelog
+* Wed May 13 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt3
+- add %%installqt5
+- add some dirs to common package
+
 * Thu Apr 02 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt2
 - build docs
 
