@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: lightdm-gtk-greeter
-Version: 1.9.0
+Version: 2.0.0
 Release: alt1
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
@@ -41,6 +41,8 @@ This package provides a GTK+-based LightDM greeter engine.
 	%{subst_enable introspection} \
 	--disable-static \
 	--disable-libindicator \
+	--disable-indicator-services-command \
+	--enable-at-spi-command="/usr/libexec/at-spi-bus-launcher --launch-immediately" \
 	--with-libxklavier \
 	--enable-maintainer-mode \
 	--libexecdir=%_libexecdir
@@ -66,6 +68,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Wed May 13 2015 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+
 * Fri Sep 19 2014 Alexey Shabalin <shaba@altlinux.ru> 1.9.0-alt1
 - 1.9.0
 

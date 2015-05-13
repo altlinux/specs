@@ -1,6 +1,6 @@
 Name: lxqt-lightdm-greeter
 Version: 0.7.0
-Release: alt4.gitc1aaae4
+Release: alt5.gitc1aaae4
 
 Summary: LightDM greeter for LXQt
 License: LGPL
@@ -50,6 +50,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %doc AUTHORS
 
 %changelog
+* Wed May 13 2015 Alexey Shabalin <shaba@altlinux.ru> 0.7.0-alt5.gitc1aaae4
+- rebuilt against current libraries
+
 * Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 0.7.0-alt4.gitc1aaae4
 - git commit c1aaae4
 - rebuilt against lxqt-0.9.0 and qt5
