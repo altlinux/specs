@@ -1,5 +1,5 @@
 Name: libdrm
-Version: 2.4.60
+Version: 2.4.61
 Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
@@ -11,7 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: docbook-style-xsl libudev-devel libpciaccess-devel xsltproc
+BuildRequires: docbook-style-xsl libudev-devel libpciaccess-devel xorg-util-macros xsltproc
 
 %description
 This library implements the userspace interface to the kernel DRM
@@ -56,6 +56,9 @@ develop programs which make use of %name
 %_man7dir/*.7*
 
 %changelog
+* Wed May 13 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.61-alt1
+- 2.4.61
+
 * Sat Mar 21 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.60-alt1
 - 2.4.60
 
