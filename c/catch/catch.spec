@@ -1,6 +1,6 @@
 Name: catch
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: C++ Unit Test framework ("all in one header")
 
@@ -24,7 +24,7 @@ It is implemented entirely in a set of header files,
 but is packaged up as a single header for extra convenience.
 
 %prep
-%setup
+%setup 
 
 %build
 
@@ -36,6 +36,9 @@ mv -f single_include/catch.hpp %buildroot%_includedir
 %_includedir/*.hpp
 
 %changelog
+* Wed May 13 2015 Pavel Vainerman <pv@altlinux.ru> 1.1-alt2
+- rebuild (new .gear/rules)
+
 * Mon Mar 30 2015 Pavel Vainerman <pv@altlinux.ru> 1.1-alt1
 - new upstream version
 
