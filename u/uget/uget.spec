@@ -1,5 +1,5 @@
 Name:		uget
-Version:	1.10.4
+Version:	2.0
 Release:	alt1
 Summary:	Download manager using GTK+ and libcurl
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -10,7 +10,7 @@ Source0:	http://downloads.sourceforge.net/urlget/%{name}-%{version}.tar.gz
 
 
 # Automatically added by buildreq on Wed Jun 09 2010
-BuildRequires: desktop-file-utils libgtk+3-devel gstreamer-devel intltool libcurl-devel libnotify-devel
+BuildRequires: desktop-file-utils libgtk+3-devel gstreamer-devel intltool libcurl-devel libnotify-devel libssl-devel
 
 %description
 uGet is a download manager with downloads queue, pause/resume, 
@@ -36,15 +36,15 @@ autoreconf -fisv
 %makeinstall
 
 desktop-file-install \
-	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
+	--dir $RPM_BUILD_ROOT%_desktopdir \
 	--delete-original \
-	$RPM_BUILD_ROOT%{_datadir}/applications/%{name}-gtk.desktop
+	$RPM_BUILD_ROOT%_desktopdir/%{name}-gtk.desktop
 
-%find_lang %{name}
+%find_lang %name
 
-%files -f %{name}.lang
+%files -f %name.lang
 %doc AUTHORS COPYING ChangeLog README
-%_bindir/%name-gtk
+%_bindir/*
 %_desktopdir/%name-gtk.desktop
 %_datadir/icons/hicolor/*/apps/%name-icon.*
 %_datadir/icons/hicolor/*/apps/%name-tray-*.png
@@ -53,6 +53,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu May 14 2015 Ilya Mashkin <oddity@altlinux.ru> 2.0-alt1
+- 2.0 (Closes: #31001)
+
 * Thu Sep 04 2014 Ilya Mashkin <oddity@altlinux.ru> 1.10.4-alt1
 - 1.10.4
 - update description
