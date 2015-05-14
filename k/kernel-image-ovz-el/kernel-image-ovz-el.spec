@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt132
+Release: alt133
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -47,7 +47,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab108.1-combined
+Patch0: patch-042stab108.2-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -333,7 +333,7 @@ subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+c
 find . -name "*.orig" -delete -or -name "*~" -delete
 
 %build
-export NPROCS=%nprocs
+[ "%__nprocs" -gt "%nprocs" ] || export NPROCS=%nprocs
 export ARCH=%base_arch
 KernelVer=%kversion-%flavour-%krelease
 
@@ -572,6 +572,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Thu May 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt133
+- Updated to 042stab108.2.
+
 * Tue May 05 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt132
 - Updated to 042stab108.1.
 
