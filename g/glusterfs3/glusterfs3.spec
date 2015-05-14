@@ -1,5 +1,5 @@
 %define oname glusterfs
-%define major 3.6
+%define major 3.7
 # if you wish to compile an rpm without rdma support, compile like this...
 # rpmbuild -ta @PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz --without rdma
 %{?_without_rdma:%global _without_rdma --disable-ibverbs}
@@ -18,7 +18,7 @@
 
 Summary: Cluster File System
 Name: glusterfs3
-Version: %major.3
+Version: %major.0
 Release: alt1
 License: GPLv2/LGPLv3
 Group: System/Base
@@ -348,6 +348,9 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Thu May 14 2015 Danil Mikhailov <danil@altlinux.org> 3.7.0-alt1
+- new version 3.7.0
+
 * Tue May 12 2015 Danil Mikhailov <danil@altlinux.org> 3.6.3-alt1
 - new version 3.6.3 (closes: #30957)
 
