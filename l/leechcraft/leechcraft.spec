@@ -1,28 +1,37 @@
 %define _unpackaged_files_terminate_build 1
-
-%def_disable torrent
+%def_enable torrent
 
 Name: leechcraft
 Version: 0.6.70
-Release: alt3
+Release: alt4
 
 Summary: LeechCraft DE
 License: Boost Software License
 Group: Graphical desktop/Other
 URL: http://%name.org
 
-# 5621455b5
+# e4303f5d379
 Source: %name-%version.tar
+
+%define qxmpp_ver 0.7.6
+%define qwt_ver 6.1.0
+%define torrent_ver 0.16.19
+%define gst_api_ver 0.10
 
 Requires: %name-data = %version-%release
 Requires: polkit udisks2
 Requires: libqt4-sql-sqlite
+%if "%gst_api_ver" == "0.10"
+Requires: gst-plugins-base
+Requires: gst-plugins-good
+Requires: gst-plugins-bad
+%else
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
+Requires: gst-plugins-bad%gst_api_ver
+%endif
 # for session mode
 Requires: openbox-base dbus-tools-gui
-
-%define qxmpp_ver 0.7.6
-%define qwt_ver 6.1.0
-%define torrent_ver 1.0.4
 
 %add_findreq_skiplist %_datadir/%name/fenet/wms/*.sh
 %add_findreq_skiplist %_datadir/%name/azoth/lc_azoth_modnok_latexconvert.sh
@@ -32,7 +41,12 @@ BuildRequires: cmake libqt4-devel qt4-mobility-devel libqtermwidget-devel libqwt
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: boost-asio-devel boost-locale-devel
 BuildRequires: qjson-devel libxml2-devel libpcre-devel
-BuildRequires: gst-plugins-devel libtag-devel libguess-devel
+%if "%gst_api_ver" == "0.10"
+BuildRequires: gst-plugins-devel
+%else
+BuildRequires: gst-plugins%gst_api_ver-devel
+%endif
+BuildRequires: libtag-devel libguess-devel
 BuildRequires: libqca2-devel libkqoauth-devel libhunspell-devel
 %{?_enable_torrent:BuildRequires: libtorrent-rasterbar-devel >= %torrent_ver}
 BuildRequires: libspeex-devel libqxmpp-devel >= %qxmpp_ver
@@ -142,6 +156,10 @@ __EOF__
 %_datadir/%name/cmake/
 
 %changelog
+* Thu May 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.70-alt4
+- updated to 0.6.70_e4303f5d
+- enabled torrent plugin
+
 * Fri May 01 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.70-alt3
 - added /etc/X11/wmsession.d/03LCDE
 
