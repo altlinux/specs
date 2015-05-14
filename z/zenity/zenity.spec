@@ -3,7 +3,7 @@
 %def_enable webkitgtk
 
 Name: zenity
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNOME port of dialog(1)
@@ -11,8 +11,8 @@ License: LGPLv2+
 Group: Graphical desktop/GNOME
 URL: https://wiki.gnome.org/Projects/Zenity
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 # from configure.ac
 %define intltool_ver 0.40.0
@@ -57,6 +57,9 @@ a cooler name.
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Thu May 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Thu Apr 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
