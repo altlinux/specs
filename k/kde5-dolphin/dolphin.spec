@@ -5,8 +5,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 0.0.1
-Release: alt2
+Version: 14.12.95
+Release: alt1
 %K5init
 
 Group: File tools
@@ -18,6 +18,7 @@ Requires: kf5-kio
 #Requires: kf5-kio-extras
 
 Source: %rname-%version.tar
+Patch1: alt-dbus-service.patch
 
 # Automatically added by buildreq on Fri Apr 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils
@@ -70,6 +71,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -105,12 +107,13 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5srv/*.desktop
 %_K5srvtyp/*.desktop
 %_K5xmlgui/dolphin*
+%_K5dbus_srv/org.kde.dolphin.FileManager1.service
 
 %files devel
 %_K5inc/?olphin*
 %_K5link/lib*.so
 %_K5lib/cmake/DolphinVcs/
-#%_K5archdata/mkspecs/modules/qt_milou.pri
+%_K5dbus_iface/org.freedesktop.FileManager1.xml
 
 %files -n %libdolphinprivate
 %_K5lib/libdolphinprivate.so.*
@@ -120,6 +123,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Thu May 14 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.95-alt1
+- update from master branch
+
 * Sat Apr 18 2015 Sergey V Turchin <zerg@altlinux.org> 0.0.1-alt2
 - fix requires
 
