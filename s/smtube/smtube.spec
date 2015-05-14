@@ -1,5 +1,5 @@
 Name:		smtube
-Version:	15.5.7
+Version:	15.5.10
 Release:	alt1
 Summary:	Youtube Browser for SMPlayer
 Summary(ru_RU.UTF8):	Браузер YouTube для SMPlayer
@@ -58,6 +58,9 @@ cd ./src && qmake "QMAKE_CXXFLAGS+=%optflags -DTRANSLATION_PATH=%_datadir/%name/
 %_datadir/%name/translations/*.qm
 
 %changelog
+* Thu May 14 2015 Motsyo Gennadi <drool@altlinux.ru> 15.5.10-alt1
+- 15.5.10
+
 * Fri May 08 2015 Motsyo Gennadi <drool@altlinux.ru> 15.5.7-alt1
 - new beta versia (writen from scratch)
 
