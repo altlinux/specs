@@ -1,5 +1,5 @@
 Name: xvkbd
-Version: 3.3
+Version: 3.6
 Release: alt1
 
 Summary: Virtual (on-screen) keyboard for X
@@ -8,6 +8,7 @@ Group: System/X11
 
 Url: http://homepage3.nifty.com/tsato/xvkbd/
 Source: %url/%name-%version.tar.gz
+Source100: xvkbd.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
@@ -15,8 +16,8 @@ BuildRequires: ImageMagick-tools imake libXaw-devel libXaw3d-devel
 BuildRequires: libXext-devel libXp-devel libXpm-devel libXtst-devel
 BuildRequires: xorg-cf-files xorg-sdk
 
-Summary(ru_RU.CP1251): Âèðòóàëüíàÿ (ýêðàííàÿ) êëàâèàòóðà äëÿ X
-Summary(uk_UA.CP1251): Â³ðòóàëüíà (åêðàííà) êëàâ³àòóðà äëÿ X
+Summary(ru_RU.UTF-8): Ð’Ð¸Ñ€Ñ‚ÑƒÐ°Ð»ÑŒÐ½Ð°Ñ (ÑÐºÑ€Ð°Ð½Ð½Ð°Ñ) ÐºÐ»Ð°Ð²Ð¸Ð°Ñ‚ÑƒÑ€Ð° Ð´Ð»Ñ X
+Summary(uk_UA.UTF-8): Ð’Ñ–Ñ€Ñ‚ÑƒÐ°Ð»ÑŒÐ½Ð° (ÐµÐºÑ€Ð°Ð½Ð½Ð°) ÐºÐ»Ð°Ð²Ñ–Ð°Ñ‚ÑƒÑ€Ð° Ð´Ð»Ñ X
 
 %description
 %name is a virtual (graphical) keyboard program for X Window System
@@ -43,7 +44,7 @@ for s in 48 36 32 24 22 16; do
 done
 
 %install
-%make_install DESTDIR=%buildroot install install.man
+%makeinstall_std install.man
 for s in 48 36 32 24 22 16; do
 	install -pDm644 %name-$s.png \
 		%buildroot%_iconsdir/hicolor/${s}x$s/apps/%name.png
@@ -51,7 +52,7 @@ done
 rm -rf %buildroot/%_datadir/X11
 
 install -d -m 0755 %buildroot%_desktopdir
-iconv -f cp1251 -t utf-8 > %buildroot%_desktopdir/%name.desktop <<__MENU__
+cat > %buildroot%_desktopdir/%name.desktop <<__MENU__
 [Desktop Entry]
 Version=1.0
 Name=%name
@@ -63,8 +64,8 @@ X-MultipleArgs=true
 Terminal=false
 StartupNotify=true
 Comment=On-screen keyboard for X
-Comment[ru]=Âèðòóàëüíàÿ (ýêðàííàÿ) êëàâèàòóðà äëÿ X
-Comment[uk]=Â³ðòóàëüíà (åêðàííà) êëàâ³àòóðà äëÿ X
+Comment[ru]=Ð’Ð¸Ñ€Ñ‚ÑƒÐ°Ð»ÑŒÐ½Ð°Ñ (ÑÐºÑ€Ð°Ð½Ð½Ð°Ñ) ÐºÐ»Ð°Ð²Ð¸Ð°Ñ‚ÑƒÑ€Ð° Ð´Ð»Ñ X
+Comment[uk]=Ð’Ñ–Ñ€Ñ‚ÑƒÐ°Ð»ÑŒÐ½Ð° (ÐµÐºÑ€Ð°Ð½Ð½Ð°) ÐºÐ»Ð°Ð²Ñ–Ð°Ñ‚ÑƒÑ€Ð° Ð´Ð»Ñ X
 __MENU__
 
 %files
@@ -75,6 +76,11 @@ __MENU__
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu May 14 2015 Michael Shigorin <mike@altlinux.org> 3.6-alt1
+- added debian-based watch file
+- new version (watch file uupdate)
+- converted spec to utf8
+
 * Tue Apr 03 2012 Michael Shigorin <mike@altlinux.org> 3.3-alt1
 - 3.3 (thx aris@ for heads-up)
 
