@@ -2,7 +2,7 @@
 
 Name: upower
 Version: 0.99.2
-Release: alt2
+Release: alt3
 
 Summary: Power Management Service
 License: GPLv2+
@@ -120,6 +120,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.99.2-alt3
+- 0.99.3_bb415e27 (fixed FDO #89476)
+
 * Mon Feb 23 2015 Yuri N. Sedunov <aris@altlinux.org> 0.99.2-alt2
 - 0.99.3 snapshot with fixes for iDevice
 - built against libimobiledevice.so.6
