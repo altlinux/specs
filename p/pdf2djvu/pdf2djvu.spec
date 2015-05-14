@@ -1,11 +1,11 @@
 Name: pdf2djvu
-Version: 0.7.17
-Release: alt4
+Version: 0.7.21
+Release: alt1
 
 Summary: PDF to DjVu converter
 License: GPLv2
 Group: Office
-Url: http://pdf2djvu.googlecode.com/
+Url: http://jwilk.net/software/pdf2djvu/
 # http://pdf2djvu.googlecode.com/files/%{name}_%version.tar.gz
 Source: %name-%version.tar
 Requires: djvu-utils
@@ -32,11 +32,14 @@ pdf2djvu creates DjVu files from PDF files. It's able to extract:
 %find_lang %name
 
 %files -f %name.lang
-%doc COPYING doc/changelog
+%doc doc/COPYING doc/changelog
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Thu May 14 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.21-alt1
+- new version
+
 * Mon Dec 01 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.17-alt4
 - rebuilt with new poppler
 
