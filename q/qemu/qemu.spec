@@ -162,7 +162,7 @@
 
 Name: qemu
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -672,6 +672,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Thu May 14 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt2
+- fixed CVE-2015-3456
+
 * Tue Apr 28 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt1
 - 2.3.0
 - build with ceph, xfsctl, libnfs, glusterfs support
