@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.0
-Release: alt1.git20141105
+Version: 1.5.1
+Release: alt1
 Summary: OpenStack test framework
 License: ASLv2.0
 Group: Development/Python
@@ -25,6 +25,7 @@ BuildPreReq: python-module-hacking python-module-coverage
 BuildPreReq: python-module-mimeparse python-module-mccabe
 BuildPreReq: python-module-flake8 pyflakes
 BuildPreReq: python-module-sphinx-devel python-module-oslosphinx
+BuildPreReq: python-module-requests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -37,6 +38,7 @@ BuildPreReq: python3-module-hacking python3-module-coverage
 BuildPreReq: python3-module-mimeparse python3-module-mccabe
 BuildPreReq: python3-module-flake8 python3-pyflakes
 BuildPreReq: python3-module-sphinx python3-module-oslosphinx
+BuildPreReq: python3-module-requests
 %endif
 
 %py_provides %oname
@@ -105,6 +107,8 @@ popd
 pushd %buildroot%_bindir
 for i in $(ls); do
 	sed -i 's|python|python3|g' $i
+	sed -i 's|python33|python3|g' $i
+	sed -i 's|tox|tox.py3|g' $i
 	mv $i $i.py3
 done
 popd
@@ -157,6 +161,9 @@ popd
 %endif
 
 %changelog
+* Fri May 15 2015 Alexey Shabalin <shaba@altlinux.ru> 1.5.1-alt1
+- 1.5.1
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.git20141105
 - Initial build for Sisyphus
 
