@@ -11,7 +11,7 @@
 %def_disable gnu_ld
 
 Name: libwebkitgtk4
-Version: 2.8.2
+Version: 2.8.3
 Release: alt1
 
 Summary: Web browser engine
@@ -259,6 +259,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Fri May 15 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.3-alt1
+- 2.8.3
+
 * Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.2-alt1
 - 2.8.2
 
