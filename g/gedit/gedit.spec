@@ -1,3 +1,4 @@
+%def_disable snapshot
 %set_verify_elf_method unresolved=relaxed
 %define _name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
@@ -7,10 +8,10 @@
 %def_enable introspection
 %def_enable python
 %def_enable zeitgeist
-%def_enable gtk_doc
+%{?_enable_snapshot:%def_enable gtk_doc}
 
 Name: gedit
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -18,8 +19,11 @@ License: GPLv2
 Group: Editors
 Url: http://www.gedit.org
 
-#Source: %name-%version.tar
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%endif
 Patch: %name-3.10.1-alt-settings.patch
 
 # use python3
@@ -33,7 +37,6 @@ AutoReqProv: nopython
 %define pkgdatadir %_datadir/%name
 %set_typelibdir %pkglibdir
 %set_girdir %pkgdatadir
-
 
 # From configure.ac
 %define glib_ver 2.40.0
@@ -219,6 +222,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Fri May 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Sun Apr 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
