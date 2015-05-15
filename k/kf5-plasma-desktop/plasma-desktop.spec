@@ -10,7 +10,7 @@
 
 Name: kf5-%rname
 Version: 5.3.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -31,7 +31,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: boost-devel extra-cmake-modules gcc-c++
 BuildRequires: qt5-declarative-devel qt5-phonon-devel qt5-svg-devel qt5-x11extras-devel
 BuildRequires: libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-devel libxapian-devel libxcbutil-image-devel
-BuildRequires: xorg-drv-synaptics-devel xorg-sdk
+BuildRequires: xorg-drv-synaptics-devel xorg-sdk xorg-drv-evdev-devel
 BuildRequires: iceauth mkfontdir xset
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
@@ -186,6 +186,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Fri May 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt2
+- update from Plasma/5.3 branch
+
 * Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - new version
 
