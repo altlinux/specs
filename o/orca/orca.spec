@@ -1,22 +1,24 @@
+%define ver_major 3.16
+
 Name: orca
-Version: 3.16.1
+Version: %ver_major.2
 Release: alt1
+
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению 
-Packager: Michael Pozhidaev <msp@altlinux.ru>
-License: LGPL
 Group: Accessibility
+License: LGPL
+Packager: Michael Pozhidaev <msp@altlinux.ru>
+
 URL: http://live.gnome.org/Orca
 
-Source0: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Source1: voiceman-server
 Source2: %name.watch
 Source3: orca-autostart.desktop
 
 #Patch1: orca-3.2.1-alt-voiceman.patch
 Patch2: orca-3.2.1-alt-punc.patch
-
-#%add_python3_req_skip GNOME GNOME__POA
 
 #Requires: voiceman
 
@@ -53,7 +55,7 @@ Orca - это программа экранного доступа для люд
 Jaws For Windows компании Freedom Scientific.
 
 %prep
-%setup -q
+%setup
 #%patch1 -p1
 %patch2 -p1
 
@@ -79,8 +81,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %dir %python3_sitelibdir/orca
 %python3_sitelibdir/orca/
 %_datadir/applications/*
-%_datadir/icons/hicolor/*/apps/orca.png
-%_datadir/icons/hicolor/scalable/apps/orca.svg
+%_iconsdir/hicolor/*/apps/orca.png
+%_iconsdir/hicolor/scalable/apps/orca.svg
+%_iconsdir/hicolor/symbolic/apps/orca-symbolic.svg
 %_man1dir/*
 %dir %_datadir/orca
 %_datadir/orca/*
@@ -88,6 +91,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %changelog
+* Fri May 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Fri Apr 17 2015 Cronbuild Service <cronbuild@altlinux.org> 3.16.1-alt1
 - Fresh up to v3.16.1 with the help of cronbuild and update-source-functions.
 
