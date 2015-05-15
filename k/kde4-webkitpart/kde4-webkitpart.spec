@@ -2,7 +2,7 @@
 
 Name: kde4-webkitpart
 Version: 1.3.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Group: Networking/WWW
@@ -14,6 +14,7 @@ Url: https://projects.kde.org/projects/extragear/base/kwebkitpart
 Provides: kde4-kwebkitpart = %EVR
 
 Source0: kwebkitpart-%version.tar
+Patch1: sanitize-html.patch
 
 BuildRequires: gcc-c++ kde4libs-devel
 
@@ -36,6 +37,7 @@ KDE 4 library
 
 %prep
 %setup -q -n kwebkitpart-%version
+%patch1 -p1
 
 sed -i '/add_subdirectory(kdelauncher)/d' CMakeLists.txt
 
@@ -67,6 +69,12 @@ sed -i "s|^Icon=.*|Icon=kwebkit|" src/kwebkitpart.desktop
 #%_K4apps/cmake/modules/*.cmake
 
 %changelog
+* Fri May 15 2015 Sergey V Turchin <zerg@altlinux.org> 1:1.3.4-alt2
+- security fix: CVE-2014-8600
+
+* Wed Oct 08 2014 Sergey V Turchin <zerg@altlinux.org> 1:1.3.4-alt0.M70P.1
+- built for M70P
+
 * Wed Oct 08 2014 Sergey V Turchin <zerg@altlinux.org> 1:1.3.4-alt1
 - new version
 
