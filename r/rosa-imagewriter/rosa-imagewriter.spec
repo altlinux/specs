@@ -1,6 +1,6 @@
 
 Name:		rosa-imagewriter
-Version:	2.4.0.0
+Version:	2.6.0.0
 Release:	alt1
 Summary:	Utility for writing raw disk images and hybrid isos to USB keys
 
@@ -28,7 +28,7 @@ Based on SUSE Studio Imagewriter.
 %patch -p1
 
 %build
-DESTDIR=%buildroot PREFIX=/usr qmake-qt5 RosaImageWriter.pro
+DESTDIR=%buildroot PREFIX=/usr %qmake_qt5 RosaImageWriter.pro
 %make_build
 
 %install
@@ -41,8 +41,8 @@ PATH=/usr/share/qt5/bin/:$PATH lang/build-translations %buildroot%_datadir/%name
 
 # install desktop file and icons
 install -D -m0644 %SOURCE1 %buildroot%_desktopdir/%{name}.desktop
-for size in 16 24 32 48 128; do \
-	install -D -m0644 res/src/usb-flash-stick-${size}.png \
+for size in 16 32; do \
+	install -D -m0644 res/src/icon-rosa-base-${size}.png \
 	%buildroot%_iconsdir/hicolor/${size}x${size}/apps/rosa-imagewriter.png
 done
 
@@ -54,5 +54,8 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri May 15 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.0.0-alt1
+- New version
+
 * Wed Mar 12 2014 Andrey Cherepanov <cas@altlinux.org> 2.4.0.0-alt1
 - Initial build for ALT Linux
