@@ -1,17 +1,25 @@
-
 Name: speech-dispatcher
-Version: 0.8.1
-Release: alt2
+Version: 0.8.2
+Release: alt1
+
+Summary: A speech output processing service
 License: %gpl2plus
 Group: Sound
-Summary: A speech output processing service
 URL: http://www.freebsoft.org/speechd
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 
-BuildRequires(pre): rpm-build-licenses 
+Source: http://devel.freebsoft.org/pub/projects/speechd/%name-%version.tar
+# fc
+Source1: %{name}d.service
+Patch: pkgconfig.patch
+Patch1: speech-dispatcher-0.8-alt-flite.patch
+# fc
+Patch2: thread-cancel-crash.patch
+
+BuildRequires(pre): rpm-build-licenses
 BuildRequires: libdotconf-devel >= 0.3
 BuildRequires: gcc-c++ glib2-devel glibc-devel-static intltool
-BuildRequires:  libXau-devel  libltdl7-devel 
+BuildRequires:  libXau-devel  libltdl7-devel
 BuildRequires: libalsa-devel libao-devel
 BuildRequires: flite-devel  libespeak-devel svox-pico
 BuildRequires(pre): rpm-build-python3
@@ -20,10 +28,6 @@ BuildRequires: libpulseaudio-devel
 
 %add_python3_req_skip speechd_config
 %add_python3_req_skip xdg
-
-Source0: %name-%version.tar
-Patch0: pkgconfig.patch
-Patch1: speech-dispatcher-0.8-alt-flite.patch
 
 %description
 Speech Dispatcher is a part of the Free(b)soft project, which is
@@ -103,9 +107,11 @@ BuildArch: noarch
 This python module allows programmsaccess speech-dispatcher service.
 
 %prep
-%setup -q 
-%patch0 -p2
+%setup
+%patch -p2
 %patch1 -p1
+%patch2 -p1
+
 %build
 %autoreconf
 %configure --with-espeak \
@@ -120,10 +126,16 @@ This python module allows programmsaccess speech-dispatcher service.
 %install
 %make_install DESTDIR='%buildroot' pyexecdir=%python3_sitelibdir_noarch install
 
-%files
+# service file
+install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
+
+%find_lang %name
+
+%files -f %name.lang
 %doc ANNOUNCE AUTHORS BUGS ChangeLog doc FAQ NEWS README README.packagers README.style README.translators TODO
 %_bindir/*
 %config %_sysconfdir/%name
+%_unitdir/%{name}d.service
 %dir %_libdir/%name
 %_libdir/%name/spd_alsa.so
 %exclude %_libdir/%name/spd_alsa.*a
@@ -137,7 +149,6 @@ This python module allows programmsaccess speech-dispatcher service.
 %_datadir/sounds/%name
 %_datadir/%name
 %_infodir/*
-/usr/share/locale/*/*/*.mo
 
 %files -n libspeechd
 %_libdir/libspeechd*.so.*
@@ -173,6 +184,10 @@ This python module allows programmsaccess speech-dispatcher service.
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri May 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
+- 0.8.2
+- added service file from fc
+
 * Tue Mar 10 2015 Paul Wolneykien <manowar@altlinux.org> 0.8.1-alt2
 - speech-dispatcher.pc: Set Cflags to -I${includedir}/speech-dispatcher
   (patch).

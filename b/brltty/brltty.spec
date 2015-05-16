@@ -1,7 +1,7 @@
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 
-%define pkg_version 4.5
-%define api_ver 0.6.0
+%define pkg_version 5.2
+%define api_ver 0.6.3
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
 
@@ -23,14 +23,16 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt3
+Release: alt1
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
 License: GPLv2+
 Url: http://mielke.cc/brltty/
 
-Source: http://mielke.cc/brltty/releases/%name-%version.tar.gz
+Source: http://mielke.cc/brltty/archive/%name-%version.tar.gz
+# from fc
+Source1: %name.service
 Source2: ru_brltty.tar
 Source44: import.info
 Patch0: brltty-cppflags.patch
@@ -275,7 +277,7 @@ echo ".so man1/brltty.1" > %buildroot%_man5dir/brltty.conf.5
 %endif
 
 # clean up the manuals:
-rm Documents/Manual-*/*/{*.mk,*.made,Makefile*}
+#rm Documents/Manual-*/*/{*.mk,*.made,Makefile*}
 mv Documents/BrlAPIref/{html,BrlAPIref}
 
 # Don't want static lib
@@ -291,15 +293,22 @@ touch %buildroot/lib/udev/devices/vcc/a
 tar xf ru_brltty.tar
 %__cp ru_brltty/* %buildroot%_sysconfdir/brltty/
 
-%files
+# service file
+install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%name.service
+
+%find_lang %name
+
+%files -f %name.lang
 %attr(0660, root, tty) %dev(c, 7, 128) /lib/udev/devices/vcsa
 %attr(0660, root, tty) %dev(c, 7, 128) /lib/udev/devices/vcsa0
 %attr(0660, root, tty) %dev(c, 7, 128) /lib/udev/devices/vcc/a
 
 %config(noreplace) %_sysconfdir/brltty.conf
 %_sysconfdir/brltty/
+%_unitdir/brltty.service
 %_bindir/brltty
 %_bindir/brltty-*
+%_bindir/eutp
 /%_lib/brltty/
 %exclude /%_lib/brltty/libbrlttybba.so
 %exclude /%_lib/brltty/libbrlttybxw.so
@@ -313,6 +322,7 @@ tar xf ru_brltty.tar
 %exclude /%_lib/brltty/libbrlttyxa2.so
 %endif
 %_man1dir/brltty.*
+%_man1dir/eutp.1.*
 %_man5dir/brltty.*
 %doc LICENSE-GPL LICENSE-LGPL
 %doc Documents/ChangeLog Documents/TODO
@@ -337,6 +347,7 @@ tar xf ru_brltty.tar
 %if_with at_spi2
 %files at-spi2
 /%_lib/brltty/libbrlttyxa2.so
+%_datadir/gdm/greeter/autostart/xbrlapi.desktop
 %endif
 
 %files -n brlapi
@@ -384,6 +395,9 @@ tar xf ru_brltty.tar
 %endif
 
 %changelog
+* Fri May 15 2015 Yuri N. Sedunov <aris@altlinux.org> 5.2-alt1
+- 5.2
+
 * Tue May 21 2013 Dmitry V. Levin <ldv@altlinux.org> 4.5-alt3
 - Fixed "find -perm" usage.
 
