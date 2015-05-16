@@ -1,5 +1,5 @@
 Name: vzctl
-Version: 4.9.1
+Version: 4.9.2
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
@@ -17,6 +17,8 @@ Requires: vzquota ploop >= 1.4
 Requires: network-config-subsystem
 # vzmigrate
 Requires: rsync
+# vzctl create
+Requires: attr
 
 BuildRequires: setproctitle-devel ploop libploop-devel libxml2-devel libcgroup-devel
 
@@ -129,6 +131,9 @@ exit 0
 /var/lib/vz
 
 %changelog
+* Fri May 15 2015 Terechkov Evgenii <evg@altlinux.org> 4.9.2-alt1
+- Updated to vzctl-4.9.2
+
 * Mon May  4 2015 Terechkov Evgenii <evg@altlinux.org> 4.9.1-alt1
 - Updated to vzctl-4.9.1
 
