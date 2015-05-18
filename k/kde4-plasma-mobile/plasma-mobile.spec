@@ -4,7 +4,7 @@
 %define rname plasma-mobile
 Name: kde4-plasma-mobile
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE mobile environment
@@ -23,7 +23,7 @@ Patch1: plasma-mobile-0.4-alt-fix-compile.patch
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde-common-devel kde4-kactivities-devel kde4libs kde4libs-devel kde4pimlibs libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-svg libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base rpm-build-gir ruby shared-desktop-ontologies shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: akonadi-devel boost-devel-headers gcc-c++ glib2-devel kde4-kactivities kde4base-workspace-devel kde4pimlibs-devel libqt3-devel python-module-distribute rpm-build-ruby soprano zlib-devel-static
 BuildRequires: akonadi-devel boost-devel gcc-c++
-BuildRequires: kde4base-workspace-devel kde4pimlibs-devel kde4-kactivities qt4-mobility-devel
+BuildRequires: kde4base-workspace-devel kde4pimlibs-devel kde4-kactivities qt4-mobility-devel libqt4-webkit-devel
 BuildRequires: shared-desktop-ontologies soprano-backend-redland soprano-backend-virtuoso soprano shared-desktop-ontologies-devel
 BuildRequires: kde4-nepomuk-core kde4-nepomuk-core-devel
 BuildRequires: kde-common-devel
@@ -126,6 +126,12 @@ rm -rf %buildroot/%_K4lib/imports/org/kde/dirmodel/
 
 
 %changelog
+* Mon May 18 2015 Sergey V Turchin <zerg@altlinux.org> 0.5-alt2
+- rebuild with new qtwebkit
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 0.5-alt0.M70P.1
+- built for M70P
+
 * Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.5-alt1
 - new version
 
