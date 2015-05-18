@@ -1,5 +1,5 @@
 Name: xfdesktop
-Version: 4.12.1
+Version: 4.12.2
 Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
@@ -61,6 +61,9 @@ BuildRequires: libICE-devel libnotify-devel libdbus-glib-devel
 %_datadir/backgrounds/xfce
 
 %changelog
+* Mon May 18 2015 Mikhail Efremov <sem@altlinux.org> 4.12.2-alt1
+- Updated to 4.12.2.
+
 * Mon Mar 23 2015 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt1
 - Updated to 4.12.1.
 
