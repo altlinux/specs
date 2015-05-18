@@ -1,5 +1,5 @@
 Name: autoconf-archive
-Version: 2014.02.28
+Version: 2015.02.24
 Release: alt1
 Summary: The Autoconf Macro Archive
 
@@ -52,6 +52,9 @@ rm -rf %buildroot%_datadir/%name
 %_infodir/autoconf-archive.info*
 
 %changelog
+* Mon May 18 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.02.24-alt1
+- 2015.02.24
+
 * Fri Mar 14 2014 Alexey Shabalin <shaba@altlinux.ru> 2014.02.28-alt1
 - 2014.02.28
 
