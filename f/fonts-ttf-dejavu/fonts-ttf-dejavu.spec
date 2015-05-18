@@ -2,7 +2,7 @@
 %define fname dejavu
 
 Name: fonts-ttf-%fname
-Version: 2.34
+Version: 2.35
 Release: alt1
 
 Summary: A font family based on the Bitstream Vera Fonts with a wider set of characters
@@ -51,6 +51,9 @@ install -m644 -pD fontconfig/{??-unhint-small-dejavu*.conf,??-dejavu*.conf} \
 %doc AUTHORS BUGS LICENSE NEWS README status.txt unicover.txt
 
 %changelog
+* Mon May 18 2015 Michael Shigorin <mike@altlinux.org> 2.35-alt1
+- new version (watch file uupdate)
+
 * Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 2.34-alt1
 - new version (watch file uupdate)
 - minor spec cleanup
