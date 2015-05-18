@@ -1,5 +1,5 @@
 Name: thunar
-Version: 1.6.8
+Version: 1.6.9
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -119,6 +119,9 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Mon May 18 2015 Mikhail Efremov <sem@altlinux.org> 1.6.9-alt1
+- Updated to 1.6.9.
+
 * Wed May 06 2015 Mikhail Efremov <sem@altlinux.org> 1.6.8-alt1
 - Disable documentation build.
 - Drop libstartup-notification-devel from BR.
