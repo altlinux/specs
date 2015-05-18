@@ -1,5 +1,5 @@
 Name: easytag
-Version: 2.2.2
+Version: 2.2.6
 Release: alt1
 
 Summary: Audio files tag viewer/editor
@@ -10,12 +10,13 @@ Url: https://wiki.gnome.org/Apps/EasyTAG
 Packager: Afanasov Dmitry <ender@altlinux.org>
 
 Source: %name-%version.tar
+#Patch: %name-%version-%release.patch
 
 BuildRequires: intltool gcc-c++
-BuildRequires: appdata-tools
 BuildRequires: xsltproc docbook-dtds docbook-style-xsl
 BuildRequires: desktop-file-utils
 BuildRequires: yelp-tools
+BuildRequires: libappstream-glib-devel
 
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.2.1
 BuildRequires: pkgconfig(ogg) >= 1.0 pkgconfig(vorbis) >= 1.0.1 pkgconfig(vorbisfile)
@@ -40,7 +41,8 @@ EasyTAG - это утилита для просмотра и редактиро�
 Monkey's звуковых файлов.
 
 %prep
-%setup -q
+%setup
+#%patch -p1
 
 %build
 %autoreconf
@@ -65,6 +67,9 @@ Monkey's звуковых файлов.
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon May 18 2015 Yuri N. Sedunov <aris@altlinux.org> 2.2.6-alt1
+- 2.2.6
+
 * Mon May 12 2014 Alexey Shabalin <shaba@altlinux.ru> 2.2.2-alt1
 - 2.2.2
 - build with gtk+-3
