@@ -1,6 +1,6 @@
 Name: xfburn
-Version: 0.5.2
-Release: alt2
+Version: 0.5.4
+Release: alt1
 
 Summary: CD-R/CD-RW disc writing application
 Url: http://www.xfce.org/projects/xfburn/ 
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: xfce4-dev-tools rpm-build-xfce4
 BuildPreReq: libxfce4ui-devel libexo-devel
 BuildRequires: libdbus-glib-devel xsltproc docbook-style-xsl
-BuildRequires: gst-plugins-devel libburn-devel libisofs-devel libgio-devel libgudev-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libburn-devel libisofs-devel libgio-devel libgudev-devel
 
 
 %description
@@ -52,6 +52,9 @@ Xfburn is a simple CD burning tool based on libburn/libisofs.
 /usr/share/man/man1/*
 
 %changelog
+* Mon May 18 2015 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
+- Updated to 0.5.4.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt2
 - Rebuild with libxfce4util-4.12.
 
