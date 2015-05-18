@@ -6,7 +6,7 @@
 %define binutils_ver %{get_version binutils}
 %define _keep_libtool_files 1
 #define _optlevel s
-%def_enable bootstrap
+%def_disable bootstrap
 %def_disable debug
 %def_disable static_thread
 %def_enable shared_thread
@@ -20,20 +20,9 @@
 %def_enable sql_sqlite2
 %def_enable sql_ibase
 %def_disable sql_tds
-%def_enable dbus
 %def_enable gtkstyle
 %def_enable glib
 %def_enable versioning_hack
-#
-%if_disabled bootstrap
-%def_enable phonon
-%def_disable pkg_phonon
-%else
-%def_disable phonon
-%def_disable pkg_phonon
-%endif
-#
-%def_disable webkit
 
 %define platform linux-g++
 %define graphicssystem raster
@@ -49,8 +38,7 @@
 %define minor	8
 %define bugfix	6
 %define beta	%nil
-%define rlz alt5
-%define phonon_ver 4.4.0
+%define rlz alt6
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -67,9 +55,7 @@ License: GPLv3 / LGPLv2.1
 Requires: lib%name = %version-%release
 Requires: %name-sql = %version-%release
 Requires: %name-assistant = %version-%release
-%if_enabled dbus
 Requires: %name-dbus = %version-%release
-%endif
 
 Source0: qt-everywhere-opensource-src-%version%beta.tar
 Source1: qt4-compat-map
@@ -176,14 +162,6 @@ BuildRequires: xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel libX
 %{?_enable_sql_tds:BuildRequires: libfreetds-devel}
 %{?_enable_sql_pgsql:BuildRequires: postgresql-devel > 8.0.4 libpq-devel > 8.0.4 libecpg-devel-static}
 %{?_enable_sql_ibase:BuildRequires: firebird-devel}
-%{?_enable_phonon:BuildRequires: libpulseaudio-devel}
-%if_enabled phonon
-%if_enabled pkg_phonon
-BuildRequires: gstreamer-devel gst-plugins-devel
-%else
-BuildRequires: phonon-devel
-%endif
-%endif
 %{?_enable_gtkstyle:BuildRequires: libgtk+2-devel}
 %{?_enable_glib:BuildRequires: glib2-devel}
 %{?_enable_sql_sqlite2:BuildRequires: libsqlite-devel}
@@ -223,17 +201,12 @@ Requires: lib%name-svg = %version-%release
 Requires: lib%name-script = %version-%release
 Requires: lib%name-designer = %version-%release
 Requires: lib%name-uitools = %version-%release
-%if_enabled webkit
-Requires: lib%name-webkit = %version-%release
-%endif
 Requires: lib%name-xmlpatterns = %version-%release
 Requires: lib%name-multimedia = %version-%release
 Requires: lib%name-help = %version-%release
 Requires: lib%name-declarative = %version-%release
 Requires: lib%name-clucene = %version-%release
-%if_enabled dbus
 Requires: lib%name-dbus = %version-%release
-%endif
 Provides: lib%name-x11 = %version-%release
 Provides: %name-x11 = %version-%release
 Provides: qt-x11 = %version-%release
@@ -389,14 +362,6 @@ Requires: %name-common = %version-%release
 Help library for the Qt%major GUI toolkit
 
 ##############################################
-%package -n lib%{name}-webkit
-Summary: WebKit library for the Qt%major GUI toolkit
-Group: System/Libraries
-Requires: %name-common = %version-%release
-%description -n lib%{name}-webkit
-WebKit library for the Qt%major GUI toolkit
-
-##############################################
 %package -n lib%{name}-clucene
 Summary: CLucene library for the Qt%major GUI toolkit
 Group: System/Libraries
@@ -449,16 +414,10 @@ Requires: libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcur
 Requires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
 Requires: xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel
 Requires: xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel libXtst-devel
-%if_enabled dbus
 Requires: libdbus-devel
-%endif
-%if_enabled phonon
-Requires: phonon-devel
-%endif
-%if_disabled webkit
 %if_disabled bootstrap
+Requires: phonon-devel
 Requires: libqt4-webkit-devel
-%endif
 %endif
 # for qcollectiongenerator
 Requires: lib%name-sql-sqlite
@@ -697,41 +656,6 @@ This package contains D-Bus utilities
 for the Qt%major toolkit and Qt-based programs.
 
 ##############################################
-%if_enabled pkg_phonon
-%package -n libphonon
-Version: %phonon_ver
-Summary: Phonon Multimedia Framework library
-Group: System/Libraries
-Requires: %name-common = %version-%release
-%description -n libphonon
-Phonon Multimedia Framework library
-%endif
-
-##############################################
-%if_enabled pkg_phonon
-%package -n phonon-devel
-Version: %phonon_ver
-Summary: Development files for Phonon
-Group: System/Libraries
-Requires: %name-common = %version-%release
-%description -n phonon-devel
-Development files for Phonon
-%endif
-
-##############################################
-%if_enabled pkg_phonon
-%package -n phonon-gstreamer
-Version: %phonon_ver
-Group: Sound
-Summary: GStreamer backend for Phonon
-Requires: libphonon = %phonon_ver-%release
-Requires: gst-plugins-good
-Provides: phonon-backend = %phonon_ver
-%description -n phonon-gstreamer
-GStreamer backend for Phonon
-%endif
-
-##############################################
 %package -n rpm-macros-%{name}
 Version: %major.%minor.%bugfix
 Summary: Set of RPM macros for packaging %name-based applications
@@ -877,16 +801,15 @@ CNFGR="\
 	\
 	-graphicssystem %graphicssystem -opengl %opengl_type \
 	-system-zlib -cups -openssl \
-	%{?_enable_webkit: -webkit}%{!?_enable_webkit: -no-webkit} \
+	-no-webkit \
 	-xmlpatterns -scripttools \
 	-multimedia -declarative \
 	-no-nas-sound -no-nis -iconv \
-	%{?_enable_phonon: -phonon}%{!?_enable_phonon: -no-phonon} \
-	%{?_enable_pkg_phonon: -gstreamer}%{!?_enable_pkg_phonon: -no-gstreamer} \
+	-no-phonon -no-gstreamer \
 	%{?_enable_gtkstyle: -gtkstyle}%{!?_enable_gtkstyle: -no-gtkstyle} \
 	%{?_enable_glib: -glib}%{!?_enable_glib: -no-glib} \
 	\
-	%{?_enable_dbus:-dbus-linked}%{!?_enable_dbus:-no-dbus} \
+	-dbus-linked \
 	\
 	-sm -mitshm -fontconfig -xfixes -xshape -xcursor -xinerama -xrender -xrandr -xkb -xinput -xsync \
 	\
@@ -1021,19 +944,7 @@ done
 #
 ln -s %name %buildroot/%_libdir/%rname-%version
 
-# cleanup phonon files
-%if_enabled phonon
-%if_disabled pkg_phonon
-rm -f  %buildroot/%_libdir/libphonon.* ||:
-rm -f  %buildroot/%qtdir/lib/libphonon.* ||:
-rm -f  %buildroot/%qtdir/plugins/phonon_backend/libphonon_*.so ||:
-rm -f  %buildroot/%_libdir/pkgconfig/phonon.pc ||:
-rm -rf %buildroot/%_includedir/%name/phonon ||:
-%endif
-%endif
-
 # install qdbus alternative
-%if_enabled dbus
 QDBUS_ALTPRIO=`printf '%%.2d%%.2d%%.2d%%.2d\n' 0 %major %minor %bugfix`
 mkdir -p %buildroot/%_altdir/
 cat > %buildroot/%_altdir/qdbus-%name <<__EOF__
@@ -1042,7 +953,6 @@ __EOF__
 cat > %buildroot/%_altdir/qdbusviewer-%name <<__EOF__
 %_bindir/qdbusviewer %qtdir/bin/qdbusviewer $QDBUS_ALTPRIO
 __EOF__
-%endif
 
 # install translations
 #install -m 644 ./translations/*.qm %buildroot/%qtdir/translations
@@ -1331,11 +1241,7 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %qtdir/imports/Qt/labs/gestures
 %qtdir/imports/Qt/labs/particles
 %qtdir/imports/Qt/labs/shaders
-%if_enabled webkit
-%qtdir/imports/QtWebKit/*
-%endif
 
-%if_enabled dbus
 %files dbus
 %_bindir/qdbusviewer-%name
 %qtdir/bin/qdbusviewer
@@ -1346,7 +1252,6 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %files -n lib%{name}-dbus
 %qtdir/lib/libQtDBus.so.*
 %_libdir/libQtDBus.so.*
-%endif
 
 %files -n lib%{name}-test
 %qtdir/lib/libQtTest.so.*
@@ -1377,13 +1282,6 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %qtdir/lib/libQtScriptTools.so.*
 %_libdir/libQtScriptTools.so.*
 
-%if_enabled webkit
-%files -n lib%{name}-webkit
-%qtdir/lib/libQtWebKit.so.*
-%_libdir/libQtWebKit.so.*
-%endif
-
-
 %files -n lib%name-devel
 %doc %_docdir/%name/*.txt
 #
@@ -1409,12 +1307,10 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %_bindir/rcc-%name
 %qtdir/bin/qt3to4
 %_bindir/qt3to4-%name
-%if_enabled dbus
 %qtdir/bin/qdbuscpp2xml
 %_bindir/qdbuscpp2xml-%name
 %qtdir/bin/qdbusxml2cpp
 %_bindir/qdbusxml2cpp-%name
-%endif
 %qtdir/bin/qmake
 %_bindir/qmake-%name
 %qtdir/bin/uic
@@ -1426,22 +1322,10 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 #
 %_includedir/%name
 %qtdir/include
-%if_enabled phonon
-%if_enabled pkg_phonon
-%exclude %_includedir/%name/phonon
-%endif
-%endif
 #
 %qtdir/lib/*.so
 %_libdir/*.so
 %_libdir/*.prl
-%if_enabled phonon
-%if_enabled pkg_phonon
-%exclude %qtdir/lib/libphonon.so
-%exclude %_libdir/libphonon.so
-%exclude %_libdir/libphonon.prl
-%endif
-%endif
 #
 %qtdir/plugins/graphicssystems/libqtracegraphicssystem.so
 #
@@ -1455,11 +1339,6 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %_datadir/%name/q3porting.xml
 #
 %_libdir/pkgconfig/*.pc
-%if_enabled phonon
-%if_enabled pkg_phonon
-%exclude %_libdir/pkgconfig/phonon.pc
-%endif
-%endif
 
 %files designer -f designer.lang
 %_bindir/designer*
@@ -1469,9 +1348,6 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 #
 %dir %qtdir/plugins/designer
 %qtdir/plugins/designer/*
-%if_enabled phonon
-%exclude %qtdir/plugins/designer/*phonon*.*
-%endif
 %qtdir/bin/designer*
 %qtdir/bin/linguist*
 #
@@ -1560,24 +1436,11 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %files -n rpm-macros-%{name}
 %_rpmmacrosdir/%name
 
-%if_enabled phonon
-%if_enabled pkg_phonon
-%files -n libphonon
-%_libdir/libphonon.so.*
-%qtdir/lib/libphonon.so.*
-%files -n phonon-gstreamer
-%qtdir/plugins/phonon_backend/libphonon_gstreamer.so
-%files -n phonon-devel
-%_includedir/%name/phonon
-%_libdir/pkgconfig/phonon.pc
-%qtdir/lib/libphonon.so
-%_libdir/libphonon.so
-%_libdir/libphonon.prl
-%qtdir/plugins/designer/*phonon*.so
-%endif
-%endif
 
 %changelog
+* Mon May 18 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt6
+- fix requires
+
 * Mon Apr 20 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt5
 - build qtwebkit in separate package
 
