@@ -3,7 +3,7 @@
 
 Name: qt4-mobility
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt Mobility Framework
@@ -21,14 +21,16 @@ Patch53: qt-mobility-opensource-src-1.2.2-no_rpath.patch
 Patch54: qt-mobility-opensource-src-1.2.2-sensors_ftbfs.patch
 # SuSE
 Patch101: qt-mobility-opensource-src-1.2.0-include-unistdh.patch
+# ALT
+Patch100: alt-disable-gstreamer.patch
 
 # Automatically added by buildreq on Tue Feb 07 2012 (-bi)
 # optimized out: elfutils fontconfig glib2-devel gst-plugins-bad gst-plugins-devel gstreamer-devel libGL-devel libX11-devel libXext-devel libXrandr-devel libXrender-devel libXv-devel libgst-plugins libqt4-clucene libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-xml libqt4-xmlpatterns libstdc++-devel libxml2-devel pkg-config python-base ruby xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel
 #BuildRequires: NetworkManager-devel gcc-c++ glibc-devel-static gst-plugins-bad-devel libalsa-devel libblkid-devel libbluez-devel libicu libpulseaudio-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libudev-devel phonon-devel python-module-distribute qt4-mobility-devel rpm-build-ruby
 BuildRequires(pre): libqt4-devel
 BuildRequires: NetworkManager-devel gcc-c++ glibc-devel
-BuildRequires: gst-plugins-bad-devel gst-plugins-devel libalsa-devel
-BuildRequires: libblkid-devel libbluez-devel libpulseaudio-devel
+#BuildRequires: gst-plugins-bad-devel gst-plugins-devel
+BuildRequires: libblkid-devel libbluez-devel libpulseaudio-devel libalsa-devel
 BuildRequires: libudev-devel phonon-devel
 # BuildRequires: qt4-qmf-devel
 
@@ -370,6 +372,9 @@ popd
 %endif
 
 %changelog
+* Mon May 18 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt2
+- build without gstreamer
+
 * Wed Oct 01 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt1
 - update to master 20140410
 
