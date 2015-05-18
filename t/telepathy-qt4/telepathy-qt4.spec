@@ -4,7 +4,7 @@
 
 Name: telepathy-qt4
 Version: 0.9.5
-Release: alt1
+Release: alt2
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -14,8 +14,13 @@ URL: http://telepathy.freedesktop.org/wiki/Telepathy%%20Qt
 Packager: Nazarov Denis <nenderus@altlinux.ru>
 
 Source: telepathy-qt-%version.tar
+# upstream
+Patch1: 0001-Export-BaseChannel.patch
+Patch2: 0002-Add-the-telepathy-qt-include-directories-to-the-tele.patch
+# FC
+Patch20: telepathy-qt-0.9.5-static_fPIC.patch
 # ALT
-Patch10: alt-fix-install.patch
+Patch100: alt-fix-install.patch
 
 # Automatically added by buildreq on Tue Apr 03 2012 (-bi)
 # optimized out: cmake-modules elfutils farstream farstream-devel fontconfig glib2-devel gstreamer-devel libdbus-devel libdbus-glib libdbus-glib-devel libgio-devel libqt4-clucene libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-xml libstdc++-devel libtelepathy-farstream libtelepathy-glib libtelepathy-glib-devel libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-xml xml-utils
@@ -55,7 +60,10 @@ Static libraries for %name.
 
 %prep
 %setup -qn telepathy-qt-%version
-%patch10 -p1
+%patch1 -p1
+%patch2 -p1
+%patch20 -p1
+%patch100 -p1
 
 find -type f -name \*.pc.in | \
 while read f ; do
@@ -93,6 +101,9 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Mon May 18 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.5-alt2
+- add upstream fixes
+
 * Mon Sep 29 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.5-alt1
 - new version
 - build with gstreamer1
