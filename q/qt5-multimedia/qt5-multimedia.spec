@@ -5,7 +5,7 @@
 
 Name: qt5-multimedia
 Version: 5.4.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
@@ -13,17 +13,18 @@ Url: http://qt-project.org/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
+Patch1: 0006-GStreamer-port-to-1.0.patch
+
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-declarative-devel
 BuildRequires: qt5-tools
 BuildRequires: pkgconfig(alsa)
-BuildRequires: pkgconfig(gstreamer-0.10)
-BuildRequires: pkgconfig(gstreamer-app-0.10)
-BuildRequires: pkgconfig(gstreamer-audio-0.10)
-BuildRequires: pkgconfig(gstreamer-base-0.10)
-BuildRequires: pkgconfig(gstreamer-interfaces-0.10)
-BuildRequires: pkgconfig(gstreamer-pbutils-0.10)
-BuildRequires: pkgconfig(gstreamer-plugins-bad-0.10)
-BuildRequires: pkgconfig(gstreamer-video-0.10)
+BuildRequires: pkgconfig(gstreamer-1.0)
+BuildRequires: pkgconfig(gstreamer-app-1.0)
+BuildRequires: pkgconfig(gstreamer-audio-1.0)
+BuildRequires: pkgconfig(gstreamer-base-1.0)
+BuildRequires: pkgconfig(gstreamer-pbutils-1.0)
+BuildRequires: pkgconfig(gstreamer-plugins-bad-1.0)
+BuildRequires: pkgconfig(gstreamer-video-1.0)
 BuildRequires: pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib)
 BuildRequires: pkgconfig(openal)
 BuildRequires: pkgconfig(xv)
@@ -75,6 +76,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
+%patch1 -p1
 syncqt.pl-qt5 \
     -version %version \
     -private \
@@ -84,7 +86,7 @@ syncqt.pl-qt5 \
     #
 
 %build
-%qmake_qt5
+%qmake_qt5 GST_VERSION=1.0
 %make_build
 %make docs
 
@@ -119,6 +121,9 @@ syncqt.pl-qt5 \
 %_qt5_docdir/*
 
 %changelog
+* Mon May 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt2
+- build with gstreamer-1.0
+
 * Wed Feb 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
 - new version
 
