@@ -1,5 +1,5 @@
 Name: cloog
-Version: 0.18.2
+Version: 0.18.3
 Release: alt1
 
 Summary: The Chunky Loop Generator
@@ -94,5 +94,8 @@ rm -r %buildroot%_libdir/{cloog-isl,isl}
 %exclude %_pkgconfigdir/cloog-isl.pc
 
 %changelog
+* Wed May 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.18.3-alt1
+- Updated to 0.18.3.
+
 * Wed Jan 22 2014 Dmitry V. Levin <ldv@altlinux.org> 0.18.2-alt1
 - Initial revision.
