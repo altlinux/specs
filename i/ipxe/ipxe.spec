@@ -8,14 +8,15 @@
 # 1af4:1000 -> pxe-virtio.rom virtio-net
 
 %define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000
-%define hash 93acb5d
+%define date 20150516
+%define hash a91b1f7
 
 Name: ipxe
-Version: 1.0.0
-Release: alt4.git%{hash}
+Version: %date
+Release: alt1.git%{hash}
 
 Summary: PXE boot firmware
-License: GPLv2 and BSD
+License: GPLv2 with additional permissions and BSD
 Group: Networking/Other
 Url: http://ipxe.org/
 #Vcs-Git: git://git.ipxe.org/ipxe.git
@@ -30,6 +31,7 @@ Requires: ipxe-bootimgs
 BuildRequires: mkisofs mtools syslinux binutils-devel edk2-tools
 BuildRequires: binutils-devel
 BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
+BuildRequires: liblzma-devel
 
 %description
 iPXE is the leading open source network boot firmware.
@@ -178,19 +180,25 @@ pxe_link 1af41000 virtio
 %_datadir/%name/ipxe.dsk
 %_datadir/%name/ipxe.lkrn
 %_datadir/%name/undionly.kpxe
-%doc COPYING COPYRIGHTS
+%doc COPYING COPYING.GPLv2 COPYING.UBDL
 
 %files roms -f rom.list
-%doc COPYING COPYRIGHTS
+%doc COPYING COPYING.GPLv2 COPYING.UBDL
 
 %files roms-qemu -f qemu.rom.list
-%doc COPYING COPYRIGHTS
+%doc COPYING COPYING.GPLv2 COPYING.UBDL
 %dir %_datadir/%name
 %_datadir/%name/pxe-*.rom
 %dir %_datadir/%name.efi
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Mon May 18 2015 Alexey Shabalin <shaba@altlinux.ru> 20150516-alt1.gita91b1f7
+- update to latest upstream snapshot
+- include patches from QEMU submodule
+- distribute additional permissions on top of GPLv2 ("UBDL")
+- define version of package as date of upstream snapshot
+
 * Fri Apr 18 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt4.git93acb5d
 - upstream git snapshot 93acb5d8d0635b8f7726bd993cde4a90a6b1d723
 
