@@ -1,100 +1,139 @@
-Name: mutt
-Version: 1.4.2.3
-Release: alt7
+# vim: set ft=spec: -*- rpm-spec -*-
+
+%def_disable debug
+
+%define oname mutt
+%define branch %nil
+Name: %oname%branch
+
+# hg log -r . --template '{latesttag}-{latesttagdistance}-{node|short}\n'
+Version: 1.5.23.88.hg577987ca2d02
+Release: alt1
 Epoch: 3
 
+%def_disable debug
+
+# patches
+%def_enable nntp
+
 %def_without dotlock
-%define docdir %_docdir/mutt-%version
+
+%define docdir %_docdir/%name-%version
 
 Summary: A text mode mail and news user agent
-License: GPLv2+
 Group: Networking/Mail
+License: GPL
 Url: http://www.mutt.org/
 
-# ftp://ftp.mutt.org/pub/mutt/mutt-%version.tar.gz
-Source: mutt-%version.tar
-Source1: http://jblosser.firinn.org/pub/config/mutt/mutt-16.xpm
-Source2: http://jblosser.firinn.org/pub/config/mutt/mutt-32.xpm
-Source3: http://www.math.fu-berlin.de/~guckes/mutt/mutt-48.xpm
-Source4: mutt.desktop
-Source5: http://www.fefe.de/muttfaq/faq.html
+# hg clone http://dev.mutt.org/hg/mutt
+Source: %oname%branch-%version.tar
+
+# http://jblosser.firinn.org/pub/config/mutt/ (DEAD)
+Source1: %oname-16.xpm
+# http://jblosser.firinn.org/pub/config/mutt/ (DEAD)
+Source2: %oname-32.xpm
+# http://www.math.fu-berlin.de/~guckes/mutt/ (DEAD)
+Source3: %oname-48.xpm
+Source4: %oname.desktop
+Source5: http://www.fefe.de/%{oname}faq/faq.html
 Source6: mutt-FAQ.ru.html
-Source7: http://solidlinux.com/~justin/mutt/mutt-gnupg-howto.txt
+# http://codesorcery.net/old/mutt/mutt-gnupg-howto
+Source7: %oname-gnupg-howto.txt
 # http://mutt.sourceforge.net/imap/
 Source8: Mutt-and-IMAP.html
-Source10: patchlist.sh
 
-%define vvv_version 1.4.2.2
-Patch11: http://mutt.kiev.ua/download/mutt-%vvv_version/mutt-%vvv_version-vvv-compressed.patch
-Patch12: http://mutt.kiev.ua/download/mutt-%vvv_version/mutt-%vvv_version-vvv-initials.patch
-Patch13: http://mutt.kiev.ua/download/mutt-%vvv_version/mutt-%vvv_version-vvv-nntp.patch
-Patch14: http://mutt.kiev.ua/download/mutt-%vvv_version/mutt-%vvv_version-vvv-quote.patch
+Source9: mutt-apply.sh
 
-Patch16: mutt-1.4-headercache.patch 
+Patch: %name-%version-%release.patch
 
-Patch21: mutt-1.3.22.1-alt-no_dotlock.patch
-Patch22: mutt-1.2.5-alt-8bitpgp.patch
-Patch23: mutt-1.3.28-alt-flea.patch
-Patch24: mutt-1.3.22.1-alt-altyesorno.patch
-Patch25: mutt-1.3.22.1-alt-send_charset-koi8-r.patch
-Patch26: mutt-1.3.22.1-alt-muttrc-show-docs.patch
-Patch27: mutt-1.3.22.1-alt-compressed-hooks.patch
-Patch28: mutt-1.4-alt-m4-fixes.patch
-Patch29: mutt-1.4-owl-muttbug-tmp.patch
-Patch30: mutt-1.4.2.1-owl-tmp.patch
-Patch31: mutt-1.4-alt-tmp.patch
-Patch32: mutt-1.4-alt-fixes.patch
-Patch33: mutt-1.4-alt-gpg.patch
-Patch34: mutt-1.4.2.1-alt-stat_check.patch
-Patch35: mutt-1.4.2.1-owl-man.patch
-Patch36: mutt-1.4.2.1-owl-bound.patch
-Patch37: mutt-1.4.2.2i-alt-fixes.patch
-Patch38: mutt-1.4.2.3-alt-bound.patch
-Patch39: mutt-1.4.2.3-alt-automake.patch
+BuildRequires: patchutils docbook-style-xsl xsltproc elinks
+BuildRequires: libgpgme-devel libncursesw-devel libssl-devel libsasl2-devel libidn-devel libdb4-devel
 
-Requires: MTA, urlview, mailcap
-
-BuildPreReq: OpenSP groff-base libncursesw-devel libssl-devel sgml-tools sgml-common
+Requires: urlview
+Requires: mailcap
+Requires: %{name}_bin = %EVR
 
 %description
-Mutt is a feature-rich text-based mail user agent.  Mutt supports local
-and remote mail spools (POP3 and IMAP, including with SSL), MIME, OpenPGP
-(PGP/MIME) with GnuPG and PGP, colored display, threading, and a lot of
-customization including arbitrary message headers, key remapping, colors,
-and more.
+Mutt is a feature-rich text-based mail user agent.  Mutt supports
+local and remote mail spools (POP3 and IMAP, including with SSL),
+MIME, OpenPGP (PGP/MIME) with GnuPG and PGP, colored display,
+threading, and a lot of customization including arbitrary message
+headers, key remapping, colors, and more.
+
+%package Nano
+Group: Networking/Mail
+Summary: A text mode mail and news user agent (nano variant)
+Requires: mutt = %EVR
+Requires: /usr/sbin/sendmail
+Provides: %{name}_bin = %EVR
+
+%description Nano
+Mutt is a feature-rich text-based mail user agent.  Mutt supports
+local and remote mail spools (POP3 and IMAP, including with SSL),
+MIME, OpenPGP (PGP/MIME) with GnuPG and PGP, colored display,
+threading, and a lot of customization including arbitrary message
+headers, key remapping, colors, and more.
+(nano version)
+
+%package default
+Group: Networking/Mail
+Summary: A text mode mail and news user agent (default variant)
+Requires: mutt = %EVR
+Requires: /usr/sbin/sendmail
+Provides: %{name}_bin = %EVR
+
+%description default
+Mutt is a feature-rich text-based mail user agent.  Mutt supports
+local and remote mail spools (POP3 and IMAP, including with SSL),
+MIME, OpenPGP (PGP/MIME) with GnuPG and PGP, colored display,
+threading, and a lot of customization including arbitrary message
+headers, key remapping, colors, and more.
+(default version)
+
+%package Mini
+Group: Networking/Mail
+Summary: A text mode mail and news user agent (mini variant)
+Requires: mutt = %EVR
+Requires: /usr/sbin/sendmail
+Provides: %{name}_bin = %EVR
+
+%description Mini
+Mutt is a feature-rich text-based mail user agent.  Mutt supports
+local and remote mail spools (POP3 and IMAP, including with SSL),
+MIME, OpenPGP (PGP/MIME) with GnuPG and PGP, colored display,
+threading, and a lot of customization including arbitrary message
+headers, key remapping, colors, and more.
+(mini version)
+
+%package Maxi
+Group: Networking/Mail
+Summary: A text mode mail and news user agent (maxi variant)
+Requires: mutt = %EVR
+Provides: %{name}_bin = %EVR
+Provides: mutt1.5 = %EVR
+Obsoletes: mutt1.5 < %EVR
+
+%description Maxi
+Mutt is a feature-rich text-based mail user agent.  Mutt supports
+local and remote mail spools (POP3 and IMAP, including with SSL),
+MIME, OpenPGP (PGP/MIME) with GnuPG and PGP, colored display,
+threading, and a lot of customization including arbitrary message
+headers, key remapping, colors, and more.
+(maxi version)
 
 %prep
 %setup
-install -pm755 %SOURCE10 .
+%patch -p1
 
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
+mutt_apply()
+{
+	%SOURCE9 $1
+}
 
-%patch16 -p1
-
-%patch21 -p1
-#%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1
-%patch39 -p1
-
-find -type f -name \*.orig -delete
+mutt_apply altlinux/patch-1.5.23.vvv.quote
+mutt_apply altlinux/patch-1.5.23.vvv.nntp
+mutt_apply altlinux/patch-1.5.23.vvv.initials
+mutt_apply altlinux/patch-1.5.23.rr.compressed
 
 %build
 export ac_cv_path_GDB=/usr/bin/gdb
@@ -105,73 +144,183 @@ export mutt_cv_worldwrite=no
 export mutt_cv_groupwrite=no
 %endif
 
-# Correct manual name (#2710).
-%__subst -p 's,/manual\.txt\\n,/manual.txt.bz2\\n,g' Muttrc.head.in
+%{expand:%%add_optflags %(getconf LFS_CFLAGS) -D_GNU_SOURCE}
 
-%{expand:%%add_optflags %(getconf LFS_CFLAGS) -D_GNU_SOURCE -fno-strict-aliasing}
-make -C m4 -f Makefile.am.in
-autoreconf -fisv -I m4
-%configure \
-	--with-sharedir=%_sysconfdir \
-	--with-docdir=%docdir \
+%autoreconf -I m4
+%define _configure_script ../configure
+
+echo %version > VERSION
+
+build()
+{
+	local flavour=$1; shift
+	mkdir -p build-$flavour
+	cd build-$flavour
+
+	%configure \
+		--with-docdir=%docdir \
+		%{subst_enable debug} \
+		--enable-nfs-fix \
+		--with-curses  \
+		"$@"
+		#
+
+	%make_build
+	cd -
+}
+
+build 'Nano' \
+	--disable-gpgme \
+	--disable-pop \
+	--disable-imap \
+	--disable-smtp \
+	--disable-nntp \
+	--enable-compressed \
+	--disable-hcache \
+	--without-gss \
+	--with-ssl \
+	--without-sasl \
+	--with-idn \
+	--without-bdb \
+	--without-gdbm \
+	--without-tokyocabinet \
+	#
+
+build 'default' \
+	--disable-gpgme \
 	--enable-pop \
 	--enable-imap \
+	--disable-smtp \
 	--enable-nntp \
-	--disable-warnings \
-	--with-ncurses \
-	--disable-domain \
-	--enable-nfs-fix \
-	--with-charmaps \
+	--enable-compressed \
+	--disable-hcache \
+	--without-gss \
 	--with-ssl \
-	--enable-compressed
+	--without-sasl \
+	--with-idn \
+	--without-bdb \
+	--without-gdbm \
+	--without-tokyocabinet \
+	#
 
-make clean
-make -C doc clean-real
-%make_build
+build 'Mini' \
+	--disable-gpgme \
+	--enable-pop \
+	--enable-imap \
+	--disable-smtp \
+	--enable-nntp \
+	--enable-compressed \
+	--enable-hcache \
+	--without-gss \
+	--with-ssl \
+	--without-sasl \
+	--with-idn \
+	--with-bdb \
+	--without-gdbm \
+	--without-tokyocabinet \
+	#
+
+build 'Maxi' \
+	--enable-gpgme \
+	--enable-pop \
+	--enable-imap \
+	--enable-smtp \
+	--enable-nntp \
+	--enable-compressed \
+	--enable-hcache \
+	--with-gss \
+	--with-ssl \
+	--with-sasl \
+	--with-idn \
+	--with-bdb \
+	--without-gdbm \
+	--without-tokyocabinet \
+	#
 
 %install
-%makeinstall sharedir=%buildroot%_sysconfdir docdir=%buildroot%docdir
+%makeinstall_std -C build-'Maxi'
+
+cat <<EOF > %buildroot%_bindir/mutt
+#!/bin/sh -e
+
+if [ -n "\$MUTT_FLAVOUR" ]; then
+        MUTT_FLAVOUR=\$(echo \$MUTT_FLAVOUR)
+elif [ -x "/usr/bin/\${0##*/}-Maxi" ]; then
+	MUTT_FLAVOUR=Maxi
+elif [ -x "/usr/bin/\${0##*/}-Mini" ]; then
+	MUTT_FLAVOUR=Mini
+elif [ -x "/usr/bin/\${0##*/}-default" ]; then
+	MUTT_FLAVOUR=default
+elif [ -x "/usr/bin/\${0##*/}-Nano" ]; then
+	MUTT_FLAVOUR=Nano
+fi
+
+exec "/usr/bin/\${0##*/}-\$MUTT_FLAVOUR" "\$@"
+
+EOF
+chmod a+x %buildroot%_bindir/mutt
+
+for f in Nano default Mini Maxi; do
+	cp build-$f/mutt %buildroot%_bindir/mutt-$f
+done
 
 # Icons.
-install -pD -m644 %SOURCE1 %buildroot%_miconsdir/mutt.xpm
-install -pD -m644 %SOURCE2 %buildroot%_niconsdir/mutt.xpm
-install -pD -m644 %SOURCE3 %buildroot%_liconsdir/mutt.xpm
-install -pD -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
+install -pD -m644 %_sourcedir/%oname-16.xpm %buildroot%_miconsdir/%oname.xpm
+install -pD -m644 %_sourcedir/%oname-32.xpm %buildroot%_niconsdir/%oname.xpm
+install -pD -m644 %_sourcedir/%oname-48.xpm %buildroot%_liconsdir/%oname.xpm
+
+# Menu.
+install -pD -m644 %_sourcedir/%oname.desktop %buildroot%_desktopdir/%oname.desktop
 
 # More docs.
-install -p -m644 %SOURCE5 %SOURCE6 %SOURCE7 %SOURCE8 *.nntp \
+install -p -m644 %_sourcedir/{faq.html,mutt-FAQ.ru.html,%oname-gnupg-howto.txt,Mutt-and-IMAP.html} *.nntp \
 	%buildroot%docdir/
-find %buildroot%docdir/ \( -name \*.txt -or -iname changelog\* \) -size +8k -print0 |
-	xargs -r0 bzip2 -9 --
+
+find %buildroot%docdir/ \( -name \*.txt -o -name ChangeLog\* \) -size +8k -print0 |
+	xargs -r0 gzip -9 --
+
+[ -s %buildroot%docdir/manual.txt.gz ] || exit 1
 
 # Fix configs.
 find %buildroot%_sysconfdir -type f -print0 |
-	xargs -r0 grep -FZl '%buildroot' |
-	xargs -r0 %__subst -p 's|%buildroot||g' --
+	xargs -r0 grep -FZl "%buildroot" |
+	xargs -r0 sed -i "s|%buildroot||g" --
 
-rm %buildroot%_sysconfdir/mime.types
+%find_lang %oname
 
-%find_lang mutt
-
-%files -f mutt.lang
+%files -f %oname.lang
 %if_with dotlock
 %attr(2711,root,mail) %_bindir/mutt_dotlock
-%else
-%exclude %_mandir/man?/*dotlock*
 %endif
 %config(noreplace) %_sysconfdir/Muttrc
 %_bindir/flea
 %_bindir/mutt
 %_bindir/muttbug
 %_bindir/pgp*
+%_bindir/smime_keys
 %_mandir/man?/*
-%_desktopdir/%name.desktop
+%_desktopdir/%oname.desktop
 %_miconsdir/*.xpm
 %_niconsdir/*.xpm
 %_liconsdir/*.xpm
 %docdir
 
+%files Nano
+%_bindir/mutt-Nano
+
+%files default
+%_bindir/mutt-default
+
+%files Mini
+%_bindir/mutt-Mini
+
+%files Maxi
+%_bindir/mutt-Maxi
+
 %changelog
+* Tue May 19 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:1.5.23.88.hg577987ca2d02-alt1
+- Updated to mutt-1-5-23-rel-88-577987ca2d02.
+
 * Wed Oct 30 2013 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.2.3-alt7
 - Fixed build with new automake.
 
