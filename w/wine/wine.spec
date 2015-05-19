@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.7.42
+Version: 1.7.43
 Release: alt1
 Epoch: 1
 
@@ -40,7 +40,7 @@ BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
 BuildRequires: zlib-devel libldap-devel libgnutls-devel
 BuildRequires: libxslt-devel libxml2-devel
-BuildRequires: libjpeg-devel liblcms-devel libpng-devel libtiff-devel
+BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel
 BuildRequires: libusb-devel libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libalsa-devel jackit-devel libieee1284-devel
 BuildRequires: libopenal-devel libGLU-devel
@@ -222,7 +222,8 @@ develop programs which make use of Wine.
 %ifarch x86_64
 	--enable-win64 \
 %endif
-	--disable-tests
+	--disable-tests \
+	--without-gstreamer
 
 make depend
 %make_build
@@ -424,6 +425,11 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Wed May 20 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.43-alt1
+- new version 1.7.43
+- build with liblcms2 (closes: #31006)
+- build without gstreamer (closes: #31015)
+
 * Sat May 02 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.42-alt1
 - new version 1.7.42
 
