@@ -4,14 +4,15 @@
 %define rname plasma-mediacenter
 Name: kde4-plasma-mediacenter
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Plasma Media Center
 License: GPLv2 / LGPLv2.1
 Url: http://kde.org/
 
-Requires: kde4-baloo kde4-kffmpegthumbnailer qt4-mobility
+Requires: kde4-baloo kde4-kffmpegthumbnailer
+Requires: libqt4-multimediakit
 
 Source: %rname-%version.tar
 
@@ -72,6 +73,9 @@ Devel stuff for %name
 %_K4link/lib*.so
 
 %changelog
+* Tue May 19 2015 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt2
+- fix requires
+
 * Tue Jun 24 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1
 - new version
 
