@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.82
+Release: alt100.83
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -530,6 +530,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Mon May 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.83
+- platform.in: added support for gcc >= 5.
+
 * Fri Mar 20 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.82
 - platform.in: removed -Wtrampolines from %%optflags_warnings (enabled
   by default in gcc >= 4.9.2-alt3).

@@ -1,4 +1,4 @@
-%define gcc_branch 4.9
+%define gcc_branch 5
 
 # this package can be compiled as cross tool, by defining _cross_platform
 # i.e. rpmbuild -ba --define '_cross_platform armh-alt-linux-gnueabi' gcc4.spec
@@ -8,8 +8,8 @@
 %define if_gcc_arch() %if %(A='%{?_cross_platform:%_cross_platform}%{!?_cross_platform:%_target_platform}'; [ %1 = ${A%%%%-*} ] && echo 1 || echo 0)
 
 Name: gcc%gcc_branch
-Version: 4.9.2
-Release: alt4
+Version: 5.1.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -23,8 +23,8 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define priority 492
-%define snapshot 20150212
+%define priority 511
+%define snapshot 20150422
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -103,11 +103,12 @@ Url: http://gcc.gnu.org/
 %def_without java
 %def_without ada
 %def_without go
+%def_without jit
 %define REQ >=
 
 %else # _cross_platform
 
-%def_enable compat
+%def_disable compat
 %def_enable multilib
 %def_with cxx
 %def_with fortran
@@ -117,7 +118,9 @@ Url: http://gcc.gnu.org/
 %def_without objc
 %endif
 %def_disable objc_gc
+%ifnarch aarch64
 %def_with java
+%endif
 # If you don't have already a usable gcc-java and libgcj for your arch,
 # do on some arch which has it rpmbuild -bc --with java_tar gcc4.spec
 # which creates libjava-classes-%version-%release.tar
@@ -138,6 +141,7 @@ Url: http://gcc.gnu.org/
 %def_without ada
 %endif
 
+%def_with jit
 %endif # _cross_platform
 
 %def_without pdf
@@ -150,23 +154,23 @@ Source: %srcfilename.tar
 %{?_with_java_bootstrap:Source1: libjava-classes-%version-%release.tar}
 
 # Fedora patches.
-Patch100: gcc49-hack.patch
-Patch101: gcc49-java-nomulti.patch
-Patch102: gcc49-ppc32-retaddr.patch
-Patch104: gcc49-i386-libgomp.patch
-Patch105: gcc49-sparc-config-detection.patch
-Patch106: gcc49-libgomp-omp_h-multilib.patch
-Patch107: gcc49-libtool-no-rpath.patch
-Patch108: gcc49-cloog-dl.patch
-Patch109: gcc49-cloog-dl2.patch
-Patch110: gcc49-pr38757.patch
-Patch112: gcc49-no-add-needed.patch
-Patch113: gcc49-color-auto.patch
-# Patch114: gcc49-libgo-p224.patch #FIPS
-Patch115: gcc49-aarch64-async-unw-tables.patch
-Patch116: gcc49-aarch64-unwind-opt.patch
-Patch117: gcc49-pr64336.patch
-
+Patch100: gcc5-hack.patch
+Patch101: gcc5-java-nomulti.patch
+Patch102: gcc5-ppc32-retaddr.patch
+# part of alt-libjava-makefile.patch
+#Patch103: gcc5-rh330771.patch
+Patch104: gcc5-i386-libgomp.patch
+Patch105: gcc5-sparc-config-detection.patch
+Patch106: gcc5-libgomp-omp_h-multilib.patch
+Patch107: gcc5-libtool-no-rpath.patch
+Patch108: gcc5-isl-dl.patch
+Patch110: gcc5-libstdc++-docs.patch
+Patch111: gcc5-no-add-needed.patch
+# Patch112: gcc5-libgo-p224.patch #FIPS
+Patch113: gcc5-aarch64-async-unw-tables.patch
+Patch114: gcc5-libsanitize-aarch64-va42.patch
+Patch115: gcc5-pr65689.patch
+Patch116: gcc5-pr65780.patch
 
 # Debian patches.
 Patch200: gcc-d-lang.diff
@@ -178,7 +182,6 @@ Patch206: libjava-sjlj.diff
 Patch207: libjava-disable-plugin.diff
 Patch208: libjava-fixed-symlinks.diff
 Patch209: boehm-gc-getnprocs.diff
-Patch211: fix-ffi_call_VFP-with-no-VFP-argument.diff
 Patch213: gccgo-version.diff
 Patch217: testsuite-hardening-format.diff
 Patch218: testsuite-hardening-printf-types.diff
@@ -188,14 +191,10 @@ Patch221: ada-gcc-name.diff
 Patch222: ada-symbolic-tracebacks.diff
 Patch223: libjava-armel-unwind.diff
 Patch224: testsuite-glibc-warnings.diff
-Patch225: gccgo-arm64.diff
-Patch226: pr61294.diff
-Patch227: pr61294-doc.diff
 
 # ALT patches.
 Patch700: alt-_GCC_AUTOCONF_VERSION.patch
 Patch701: alt-install.patch
-Patch702: alt-nowrap.patch
 Patch703: alt-libatomic-makefile.patch
 Patch704: alt-libgfortran-makefile.patch
 Patch705: alt-libjava-disable-static.patch
@@ -215,6 +214,7 @@ Patch718: alt-libgo-weak.patch
 Patch719: alt-libitm-fix-build-with-_FORTIFY_SOURCE.patch
 Patch721: alt-alt-gcc-base-version.patch
 Patch722: alt-defaults-trampolines.patch
+Patch723: alt-libgo-Werror-unused-result.patch
 Patch800: alt-libtool.m4-gcj.patch
 
 Provides: gcc = %version, %_bindir/%gcc_target_platform-gcc, %_bindir/gcc
@@ -230,7 +230,7 @@ Requires: libgcc1 %REQ %EVR
 Requires: libatomic1 %REQ %EVR
 %endif
 %ifarch %libasan_arches
-Requires: libasan1 = %EVR
+Requires: libasan2 %REQ %EVR
 %endif
 %ifarch %libitm_arches
 Requires: libitm1 %REQ %EVR
@@ -240,7 +240,7 @@ Requires: libtsan0 %REQ %EVR
 %endif
 %endif
 BuildPreReq: rpm-build >= 4.0.4-alt39, %alternatives_deps, %binutils_deps
-BuildPreReq: gcc5-c++ coreutils flex makeinfo
+BuildPreReq: gcc-c++ coreutils flex makeinfo
 BuildPreReq: libcloog-isl-devel libelf-devel libmpc-devel libmpfr-devel
 # due to manpages
 BuildPreReq: perl-Pod-Parser
@@ -251,7 +251,7 @@ BuildPreReq: zlib-devel
 %{?_with_objc:%{?_enable_objc_gc:BuildPreReq: libgc-devel}}
 %{?_enable_doxygen:BuildPreReq: doxygen graphviz tetex-latex}
 %{?_with_pdf:BuildPreReq: tetex-dvips}
-%{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu, glibc-devel-static, /proc, /dev/pts}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: autogen, dejagnu, glibc-devel-static, /proc, /dev/pts}}
 %{?_cross_platform:BuildPreReq: %_cross_platform-binutils}
 
 %if_with java
@@ -338,12 +338,12 @@ This package contains GNU Atomic static library.
 ####################################################################
 # Address Sanitizer library
 
-%package -n libasan1
+%package -n libasan2
 Summary: The Address Sanitizer runtime library
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libasan1
+%description -n libasan2
 This package contains the Address Sanitizer runtime library
 which is used for -fsanitize=address instrumented programs.
 
@@ -351,7 +351,7 @@ which is used for -fsanitize=address instrumented programs.
 Summary: The Address Sanitizer static library
 Group: Development/C
 Provides: libasan-devel-static = %version
-Requires: libasan1 %REQ %EVR
+Requires: libasan2 %REQ %EVR
 
 %description -n libasan%gcc_branch-devel-static
 This package contains Address Sanitizer static library.
@@ -436,6 +436,43 @@ Requires: libgomp%gcc_branch-devel = %EVR
 
 %description -n libgomp%gcc_branch-devel-static
 This package contains GCC OpenMP static library.
+
+####################################################################
+# GCC plugin for GDB
+%package gdb-plugin
+Summary: GCC plugin for GDB
+Group: Development/Debuggers
+Requires: gcc = %version-%release
+
+%description gdb-plugin
+This package contains GCC plugin for GDB C expression evaluation.
+
+%package gdb-plugin-devel
+Summary: GCC plugin for GDB support files
+Group: Development/C
+Requires: %name-gdb-plugin = %EVR
+
+%description gdb-plugin-devel
+This package contains GCC plugin for GDB support files.
+
+####################################################################
+# GCC JIT Library
+%package -n libgccjit0
+Summary: Library for embedding GCC inside programs and libraries
+Group: System/Libraries
+Requires: gcc = %version-%release
+
+%description -n libgccjit0
+This package contains shared library with GCC JIT front-end.
+
+%package -n libgccjit%gcc_branch-devel
+Summary: Support for embedding GCC inside programs and libraries
+Group: Development/C
+Provides: libgccjit-devel = %version
+Requires: libgccjit0 = %version-%release
+
+%description -n libgccjit%gcc_branch-devel
+This package contains header files for GCC JIT front-end.
 
 ####################################################################
 # quadmath library
@@ -973,7 +1010,7 @@ package includes the static libraries needed for Ada 95 development.
 Summary: Ada 95 support for gcc
 Group: Development/Other
 Provides: gcc-gnat = %version, %_bindir/gnat
-Obsoletes: gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
+Obsoletes: gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
 PreReq: %alternatives_deps, gcc-gnat-common
 Requires: %name = %EVR
 Requires: libgnat%gcc_branch-devel = %EVR
@@ -990,12 +1027,12 @@ in order to explicitly use the GNU Ada compiler version %version.
 ####################################################################
 # Go Libraries
 
-%package -n libgo5
+%package -n libgo7
 Summary: Go runtime libraries
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libgo5
+%description -n libgo7
 This package contains the shared libraries required to run programs
 compiled with the GNU Go compiler if they are compiled to use
 shared libraries.
@@ -1004,7 +1041,7 @@ shared libraries.
 Summary: Header files and libraries for Go development
 Group: Development/Other
 PreReq: gcc-common >= 1.4.7
-Requires: libgo5 = %EVR
+Requires: libgo7 %REQ %EVR
 
 %description -n libgo%gcc_branch-devel
 This package includes the include files and libraries needed for
@@ -1059,7 +1096,7 @@ Group: Development/Other
 BuildArch: noarch
 Provides: gcc-doc = %version
 Obsoletes: gcc-doc < %version
-Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc
+Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc gcc4.9-doc
 Conflicts: gcc-doc > %version
 
 %description doc
@@ -1073,17 +1110,21 @@ version %version.
 %patch100 -p0
 %patch101 -p0
 %patch102 -p0
+# part of alt-libjava-makefile.patch
+#%%patch103 -p0
 %patch104 -p0
 %patch105 -p0
 %patch106 -p0
 %patch107 -p0
+#%%patch108 -p0 -b .isl-dl~
 %patch110 -p0
-%patch112 -p0
+%patch111 -p0
+# %%patch112 -p0 #FIPS
+#rm -f libgo/go/crypto/elliptic/p224{,_test}.go
 %patch113 -p0
-# %%patch114 -p0 # FIPS
+%patch114 -p0
 %patch115 -p0
 %patch116 -p0
-%patch117 -p0
 
 # Debian patches.
 %patch200 -p2
@@ -1095,7 +1136,6 @@ version %version.
 %patch207 -p2
 %patch208 -p2
 %patch209 -p2
-%patch211 -p2
 %patch213 -p2
 %patch217 -p2
 %patch218 -p2
@@ -1107,14 +1147,10 @@ version %version.
 %patch223 -p2
 %endif
 %patch224 -p2
-%patch225 -p2
-%patch226 -p2
-%patch227 -p2
 
 # ALT patches.
 %patch700 -p1
 %patch701 -p1
-%patch702 -p1
 %patch703 -p1
 %patch704 -p1
 %patch705 -p1
@@ -1134,6 +1170,7 @@ version %version.
 %patch719 -p1
 %patch721 -p1
 %patch722 -p1
+%patch723 -p1
 
 # Set proper version info.
 echo %gcc_branch > gcc/BASE-VER
@@ -1142,6 +1179,7 @@ echo '%distribution %version-%release' > gcc/DEV-PHASE
 
 # due to autoconf >= 2.69
 > libgo/config/go.m4
+> gotools/config/go.m4
 
 # This testcase does not compile.
 rm libjava/testsuite/libjava.lang/PR35020*
@@ -1168,9 +1206,9 @@ sed -i 's/\[ -z "\$(MULTIDIRS)" \]/true/' config-ml.in
 find -type f -name \*.orig -delete -print
 
 # Automake >= 1.10 behaviour changed.
-find -name Makefile.am -print0 |
-	xargs -r0 fgrep -lZ '_LINK = ' -- |
-	xargs -r0 sed -i '/_LDFLAGS)/! s/^\([^ ]\+\)_LINK = \$([^ ]\+)/& \$(\1_LDFLAGS)/' --
+#find -name Makefile.am -print0 |
+#	xargs -r0 fgrep -lZ '_LINK = ' -- |
+#	xargs -r0 sed -i '/_LDFLAGS)/! s/^\([^ ]\+\)_LINK = \$([^ ]\+)/& \$(\1_LDFLAGS)/' --
 
 # Misdesign in libstdc++.
 cp -a libstdc++-v3/config/cpu/i{4,3}86/atomicity.h
@@ -1199,7 +1237,6 @@ find libstdc++-v3/doc/ -type f -print0 |
 	xargs -r0 sed -i 's|"latest-doxygen/|"%onlinedocs/libstdc++/latest-doxygen/|' --
 sed -i "s|\\(^INCLUDE_PATH[[:space:]]\\+=\\)[[:space:]]*$|\\1 $PWD/%buildtarget/%_target_platform/libstdc++-v3/include|" \
 	libstdc++-v3/doc/doxygen/user.cfg.in
-
 
 %build
 libtoolize --copy --install --force
@@ -1295,18 +1332,8 @@ export CC=%__cc \
 	libffi_cv_ro_eh_frame=yes \
 	#
 
-%configure \
+CONFIGURE_OPTS="\
 	--enable-shared \
-%ifdef _cross_platform
-	--libdir=%_cross_lib \
-	--disable-libssp \
-	--disable-libgomp \
-	--disable-libquadmath \
-	--disable-libgfortran \
-	--disable-libstdc++-v3 \
-%else
-	--enable-bootstrap \
-%endif
 	--program-suffix=%psuffix \
 	--with-slibdir=/%_lib \
 	--with-bugurl=http://bugzilla.altlinux.org \
@@ -1319,18 +1346,6 @@ export CC=%__cc \
 	--enable-gnu-unique-object \
 	--enable-linker-build-id \
 	--with-linker-hash-style=gnu \
-	--enable-languages="c%{?_with_cxx:,c++}%{?_with_fortran:,fortran}%{?_with_objc:,objc%{?_with_cxx:,obj-c++}}%{?_with_java:,java}%{?_with_ada:,ada}%{?_with_go:,go},lto" \
-	--enable-plugin \
-	%{?_with_objc:%{?_enable_objc_gc:--enable-objc-gc}} \
-%if_with java
-	--enable-java-awt=gtk \
-	--with-native-libdir=%_libdir/gcj%psuffix \
-	--with-ecj-jar=/usr/share/java/ecj.jar \
-	--with-java-home=%_prefix/lib/jvm/java-1.5.0-gcj%psuffix-1.5.0.0/jre \
-	--enable-libgcj-multifile \
-	--disable-libjava-multilib \
-	%{?_without_java_bootstrap:--enable-java-maintainer-mode} \
-%endif
 %ifndef	_cross_platform
 %ifarch %ix86
 	--with-arch=%_target_cpu --with-tune=generic \
@@ -1348,7 +1363,7 @@ export CC=%__cc \
 %endif
 %endif #_cross_platform
 %if_gcc_arch armh
-	--with-cpu=cortex-a8 --with-tune=cortex-a8 --with-arch=armv7-a \
+	--with-tune=cortex-a8 --with-arch=armv7-a \
 	--with-float=hard --with-fpu=vfpv3-d16 --with-abi=aapcs-linux \
 	--disable-sjlj-exceptions \
 %endif
@@ -1356,16 +1371,76 @@ export CC=%__cc \
 	--with-arch=armv5te --with-float=soft --with-abi=aapcs-linux \
 	--disable-sjlj-exceptions \
 %endif
+	"
+
+%configure \
+	$CONFIGURE_OPTS \
+%ifdef _cross_platform
+	--libdir=%_cross_lib \
+	--disable-libssp \
+	--disable-libgomp \
+	--disable-libquadmath \
+	--disable-libgfortran \
+	--disable-libstdc++-v3 \
+%else
+	--enable-bootstrap \
+%endif
+	--enable-languages="c%{?_with_cxx:,c++}%{?_with_fortran:,fortran}%{?_with_objc:,objc%{?_with_cxx:,obj-c++}}%{?_with_java:,java}%{?_with_ada:,ada}%{?_with_go:,go},lto" \
+	--enable-plugin \
+	%{?_with_objc:%{?_enable_objc_gc:--enable-objc-gc}} \
+%if_with java
+	--enable-java-awt=gtk \
+	--with-native-libdir=%_libdir/gcj%psuffix \
+	--with-ecj-jar=/usr/share/java/ecj.jar \
+	--with-java-home=%_prefix/lib/jvm/java-1.5.0-gcj%psuffix-1.5.0.0/jre \
+	--enable-libgcj-multifile \
+	--disable-libjava-multilib \
+	%{?_without_java_bootstrap:--enable-java-maintainer-mode} \
+%endif
 	#
 
 %make_build MAKEINFOFLAGS=--no-split \
-	BOOT_CFLAGS='%optflags' %{?!_cross_platform:bootstrap}
+	BOOT_CFLAGS='%optflags' \
+%ifarch %arm
+	%{?!_cross_platform:bootstrap}
+%else
+	%{?!_cross_platform:profiledbootstrap}
+%endif
 
 %if_enabled doxygen
 %make_build -C %_target_platform/libstdc++-v3/doc doc-html-doxygen
 %make_build -C %_target_platform/libstdc++-v3/doc doc-man-doxygen
 %endif #enabled_doxygen
 popd #%buildtarget
+
+%if_with jit
+rm -rf %buildtarget-gccjit
+mkdir %buildtarget-gccjit
+pushd %buildtarget-gccjit
+
+%configure \
+	$CONFIGURE_OPTS \
+	--disable-bootstrap \
+	--enable-host-shared \
+	--enable-languages=jit \
+	#
+
+%make_build MAKEINFOFLAGS=--no-split \
+	BOOT_CFLAGS='%optflags' all-gcc
+
+popd # %%buildtarget-gccjit
+
+cp -a %buildtarget-gccjit/gcc/libgccjit.so* %buildtarget/gcc/
+
+pushd %buildtarget/gcc/
+cp -a Makefile{,.orig}
+sed -e '/^CHECK_TARGETS/s/$/ check-jit/' -i Makefile
+sed -e "s,^lang\.\(.*\):.*,& jit.\1," -i Makefile
+touch -r Makefile.orig Makefile
+rm Makefile.orig
+popd # %%buildtarget/gcc/
+
+%endif # with_jit
 
 # build printable documentation
 %if_with pdf
@@ -1473,7 +1548,7 @@ pushd %buildroot%_bindir
 	%{?_with_java:rm gnative2ascii*}
 	for n in \
 	  cpp \
-	  gcc gcov \
+	  gcc gcov gcov-tool \
 	  %{?_with_cxx:g++} \
 	  %{?_with_fortran:gfortran} \
 	  %{?_with_java:gcj %java_binaries} \
@@ -1635,6 +1710,8 @@ for n in \
     %{?_with_java:gcc-java libgcj libgcj-plugins libgcj-devel} \
     %{?_with_objc:gcc-objc libobjc-devel libobjc-devel-static %{?_with_cxx:gcc-objc++}} \
     %{?_with_go:gcc-go libgo-devel libgo-devel-static} \
+    %{?_with_jit:libgccjit-devel} \
+    gcc-gdb-plugin gcc-gdb-plugin-devel \
     ; do
 	pref="${n%%%%-*}"
 	suf="${n#$pref}"
@@ -1681,6 +1758,7 @@ EOF
 cat >%buildroot%_altdir/%name <<EOF
 %_bindir/%gcc_target_platform-gcc	%_bindir/%gcc_target_platform-gcc%psuffix	%priority
 %_bindir/%gcc_target_platform-gcov	%_bindir/%gcc_target_platform-gcov%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
+%_bindir/%gcc_target_platform-gcov-tool	%_bindir/%gcc_target_platform-gcov-tool%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
 %_bindir/%gcc_target_platform-gcc-ar	%_bindir/%gcc_target_platform-gcc-ar%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
 %_bindir/%gcc_target_platform-gcc-nm	%_bindir/%gcc_target_platform-gcc-nm%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
 %_bindir/%gcc_target_platform-gcc-ranlib	%_bindir/%gcc_target_platform-gcc-ranlib%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
@@ -1730,6 +1808,10 @@ done)
 EOF
 %endif #with_ada
 
+%if_with jit
+ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
+%endif #with_jit
+
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/%name
@@ -1738,11 +1820,13 @@ EOF
 %gcc_doc_dir/gcc/
 %_bindir/gcc%psuffix
 %_bindir/gcov%psuffix
+%_bindir/gcov-tool%psuffix
 %_bindir/gcc-ar%psuffix
 %_bindir/gcc-nm%psuffix
 %_bindir/gcc-ranlib%psuffix
 %_bindir/%gcc_target_platform-gcc%psuffix
 %_bindir/%gcc_target_platform-gcov%psuffix
+%_bindir/%gcc_target_platform-gcov-tool%psuffix
 %_bindir/%gcc_target_platform-gcc-ar%psuffix
 %_bindir/%gcc_target_platform-gcc-nm%psuffix
 %_bindir/%gcc_target_platform-gcc-ranlib%psuffix
@@ -1863,6 +1947,7 @@ EOF
 %exclude %gcc_target_libdir/include/ssp
 %exclude %gcc_target_libdir/libcaf_single.la
 %exclude %gcc_target_libdir/plugin/gtype.state
+%exclude %gcc_target_libdir/plugin/libcc1plugin.la
 %exclude %gcc_target_libexecdir/liblto_plugin.la
 %exclude %_datadir/locale/de/LC_MESSAGES/libstdc++.mo
 %exclude %_datadir/locale/fr/LC_MESSAGES/libstdc++.mo
@@ -1878,14 +1963,12 @@ EOF
 %files -n libatomic1
 %_libdir/libatomic.so.1*
 %endif
-%endif #compat
 
 %ifarch %libasan_arches
-%files -n libasan1
-%_libdir/libasan.so.1*
+%files -n libasan2
+%_libdir/libasan.so.2*
 %endif
 
-%if_disabled compat
 %ifarch %libtsan_arches
 %files -n libtsan0
 %_libdir/libtsan.so.0*
@@ -1898,6 +1981,7 @@ EOF
 
 %files -n libgomp1
 %_libdir/libgomp.so.1*
+%_libdir/libgomp-plugin-host_nonshm.so.1*
 
 %ifarch %liblsan_arches
 %files -n liblsan0
@@ -1960,7 +2044,9 @@ EOF
 %dir %gcc_target_libdir/
 %dir %gcc_target_libdir/include/
 %gcc_target_libdir/include/omp.h
+%gcc_target_libdir/include/openacc.h
 %gcc_target_libdir/libgomp.so
+%gcc_target_libdir/libgomp-plugin-host_nonshm.so
 %gcc_target_libdir/libgomp.spec
 
 %files -n libgomp%gcc_branch-devel-static
@@ -2278,13 +2364,18 @@ EOF
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-go
 %_altdir/gccgo%gcc_branch
 %_bindir/gccgo%psuffix
+%_bindir/go%psuffix
+%_bindir/gofmt%psuffix
 %_bindir/%gcc_target_platform-gccgo%psuffix
 %_man1dir/gccgo%psuffix.*
+%_man1dir/go%psuffix.*
+%_man1dir/gofmt%psuffix.*
 %dir %gcc_target_libexecdir/
 %gcc_target_libexecdir/go1
+%gcc_target_libexecdir/cgo
 
-%files -n libgo5
-%_libdir/libgo.so.5*
+%files -n libgo7
+%_libdir/libgo.so.7*
 
 %files -n libgo%gcc_branch-devel
 %dir %gcc_doc_dir/
@@ -2293,12 +2384,34 @@ EOF
 %dir %gcc_target_libdir/
 %gcc_target_libdir/libgo.so
 %gcc_target_libdir/libgobegin.a
+%gcc_target_libdir/libnetgo.a
 %_libdir/go/%gcc_branch/
 
 %files -n libgo%gcc_branch-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgo%gcc_branch-devel-static
 %gcc_target_libdir/libgo.a
 %endif #with_go
+
+%if_with jit
+%files -n libgccjit0
+%_libdir/libgccjit.so.0*
+
+%files -n libgccjit%gcc_branch-devel
+%config %_sysconfdir/buildreqs/packages/substitute.d/libgccjit%gcc_branch-devel
+%_libdir/libgccjit.so
+%_includedir/libgccjit*.h
+%gcc_target_libdir/libgccjit.so
+%endif #with_jit
+
+%files gdb-plugin
+%config %_sysconfdir/buildreqs/packages/substitute.d/gcc%gcc_branch-gdb-plugin
+%_libdir/libcc1.so.0*
+%gcc_target_libdir/plugin/libcc1plugin.so*
+
+%files gdb-plugin-devel
+%config %_sysconfdir/buildreqs/packages/substitute.d/gcc%gcc_branch-gdb-plugin-devel
+%dir %gcc_target_libdir/
+%gcc_target_libdir/libcc1.so
 
 %files locales -f gcc%psuffix.lang
 
@@ -2310,6 +2423,7 @@ EOF
 %_infodir/gcc*.info*
 %_infodir/libitm.info*
 %_infodir/libgomp*.info*
+%_infodir/libgccjit.info*
 %{?_with_fortran:%_infodir/gfortran.info*}
 %ifarch %libquadmath_arches
 %{?_with_fortran:%_infodir/libquadmath.info*}
@@ -2328,16 +2442,16 @@ EOF
 %endif # _cross_platform
 
 %changelog
-* Fri May 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt4
-- Built in gcc5 compatibility mode.
-- Fixed gcc -dumpversion output.
+* Wed May 06 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.1.1-alt1
+- Updated to redhat/gcc-5-branch r222331.
+- Synced with Fedora gcc-5.1.1-1 and Debian gcc-5.1.1-1.
 
 * Wed Mar 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt3
 - Turned on -Wtrampolines by default.
 
 * Tue Mar 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt2
 - Updated to redhat/gcc-4_9-branch r220644.
-- Synced with Fedora gcc-4.9.2-6 and Debian 4.9.2-10.
+- Synced with Fedora gcc-4.9.2-6 and Debian gcc-4.9.2-10.
 - Dropped Linaro patch.
 
 * Thu Nov 13 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt1
@@ -2351,7 +2465,7 @@ EOF
 
 * Mon Sep 22 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.1-alt1
 - Updated to redhat/gcc-4_9-branch r215456.
-- Synced with Fedora gcc-4.9.1-10 and Debian 4.9.1-15.
+- Synced with Fedora gcc-4.9.1-10 and Debian gcc-4.9.1-15.
 
 * Tue Apr 08 2014 Dmitry V. Levin <ldv@altlinux.org> 4.8.2-alt3
 - Synced with Fedora gcc-4.8.2-15.
