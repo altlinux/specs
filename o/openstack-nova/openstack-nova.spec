@@ -2,7 +2,7 @@
 
 Name: openstack-nova
 Version: 2015.1.0
-Release: alt0.b3.0
+Release: alt1
 Summary: OpenStack Compute (nova)
 
 Group: System/Servers
@@ -54,11 +54,6 @@ Source22: nova-ifc-template
 Source24: nova-sudoers
 Source30: %name-novncproxy.sysconfig
 
-#
-# patches_base=2014.1.2
-#
-Patch0002: 0002-remove-runtime-dep-on-python-pbr.patch
-
 BuildArch: noarch
 
 BuildRequires: python-devel
@@ -67,18 +62,19 @@ BuildRequires: python-module-pbr
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six
 BuildRequires: python-module-babel
-BuildRequires: python-module-oslo.i18n
+BuildRequires: python-module-oslo.i18n >= 1.5.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-netaddr
 # Required to build module documents
 BuildRequires: python-module-boto
-BuildRequires: python-module-eventlet
+BuildRequires: python-module-eventlet >= 0.16.1
 BuildRequires: python-module-routes
 BuildRequires: python-module-SQLAlchemy
 BuildRequires: python-module-webob
 BuildRequires: python-module-migrate >= 0.9.5
 BuildRequires: python-module-iso8601
+BuildRequires: python-module-keystonemiddleware >= 1.5.0
 
 BuildRequires: graphviz
 
@@ -108,10 +104,9 @@ Summary: Components common to all OpenStack Nova services
 Group: System/Servers
 
 Requires: python-module-nova = %version-%release
-Requires: python-module-oslo.rootwrap
-Requires: python-module-oslo.messaging
-
-Requires(pre):		shadow-utils
+Requires: python-module-oslo.rootwrap >= 1.6.0
+Requires: python-module-oslo.messaging >= 1.8.0
+Requires(pre): shadow-utils
 
 %description common
 OpenStack Compute (codename Nova) is open source software designed to
@@ -393,8 +388,6 @@ This package contains the nova Python library.
 Summary: Documentation for OpenStack Compute
 Group: Documentation
 
-
-
 %description doc
 OpenStack Compute (codename Nova) is open source software designed to
 provision and manage large networks of virtual machines, creating a
@@ -405,15 +398,9 @@ This package contains documentation files for nova.
 %prep
 %setup
 
-%patch0002 -p1
-
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
 find nova -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
-
-sed -i '/setuptools_git/d' setup.py
-sed -i s/REDHATNOVAVERSION/%version/ nova/version.py
-sed -i s/REDHATNOVARELEASE/%release/ nova/version.py
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requiers_dist config
@@ -421,8 +408,12 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
 %build
 %python_build
+export PYTHONPATH="$( pwd ):$PYTHONPATH"
+sphinx-build -b man doc/source doc/build/man
+sphinx-build -b html doc/source doc/build/html
+bash tools/config/generate_sample.sh -b . -p nova -o etc/nova
 
-install -p -D -m 640 %SOURCE2 etc/nova/nova.conf.sample
+#install -p -D -m 640 %SOURCE2 etc/nova/nova.conf.sample
 
 # Avoid http://bugzilla.redhat.com/1059815. Remove when that is closed
 sed -i 's|group/name|group;name|; s|\[DEFAULT\]/|DEFAULT;|' etc/nova/nova.conf.sample
@@ -447,23 +438,8 @@ done < %SOURCE1
 %install
 %python_install
 
-# docs generation requires everything to be installed first
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-
-pushd doc
-
-SPHINX_DEBUG=1 sphinx-build -b html source build/html
-# Fix hidden-file-or-dir warnings
-rm -fr build/html/.doctrees build/html/.buildinfo
-
-# Create dir link to avoid a sphinx-build exception
-mkdir -p build/man/.doctrees/
-ln -s .  build/man/.doctrees/man
-SPHINX_DEBUG=1 sphinx-build -b man -c source source/man build/man
-mkdir -p %buildroot%_mandir/man1
-install -p -D -m 644 build/man/*.1 %buildroot%_mandir/man1/
-
-popd
+mkdir -p %buildroot%_man1dir
+install -p -D -m 644 doc/build/man/*.1 %buildroot%_man1dir/
 
 # Setup directories
 install -d -m 755 %buildroot%_sharedstatedir/nova
@@ -472,7 +448,7 @@ install -d -m 755 %buildroot%_sharedstatedir/nova/instances
 install -d -m 755 %buildroot%_sharedstatedir/nova/keys
 install -d -m 755 %buildroot%_sharedstatedir/nova/networks
 install -d -m 755 %buildroot%_sharedstatedir/nova/tmp
-install -d -m 755 %buildroot%_logdir/nova
+install -d -m 750 %buildroot%_logdir/nova
 
 # Setup ghost CA cert
 install -d -m 755 %buildroot%_sharedstatedir/nova/CA
@@ -487,16 +463,16 @@ touch %buildroot%_sharedstatedir/nova/CA/private/cakey.pem
 install -d -m 755 %buildroot%_sysconfdir/nova
 install -p -D -m 640 %SOURCE1 %buildroot%_datadir/nova/nova-dist.conf
 install -p -D -m 640 etc/nova/nova.conf.sample  %buildroot%_sysconfdir/nova/nova.conf
-install -p -D -m 640 etc/nova/rootwrap.conf %buildroot%_sysconfdir/nova/rootwrap.conf
-install -p -D -m 640 etc/nova/api-paste.ini %buildroot%_sysconfdir/nova/api-paste.ini
-install -p -D -m 640 etc/nova/policy.json %buildroot%_sysconfdir/nova/policy.json
+install -p -D -m 640 etc/nova/rootwrap.conf %buildroot%_sysconfdir/nova/
+install -p -D -m 640 etc/nova/api-paste.ini %buildroot%_sysconfdir/nova/
+install -p -D -m 640 etc/nova/policy.json %buildroot%_sysconfdir/nova/
 
 # Install version info file
 cat > %buildroot%_sysconfdir/nova/release <<EOF
 [Nova]
 vendor = ALTLinux
 product = OpenStack Nova
-package = %release
+package = %version
 EOF
 
 # tmpfiles
@@ -664,7 +640,7 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %config(noreplace) %_sysconfdir/polkit-1/rules.d/50-nova.rules
 
 %_tmpfilesdir/%name.conf
-%dir %attr(0755, nova, root) %_logdir/nova
+%dir %attr(0750, nova, root) %_logdir/nova
 %dir %attr(0755, nova, root) %_runtimedir/nova
 
 %_bindir/nova-manage
@@ -773,12 +749,15 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %files -n python-module-nova
 %doc LICENSE
 %python_sitelibdir/nova
-%python_sitelibdir/nova-%{version}*.egg-info
+%python_sitelibdir/nova-*.egg-info
 
 %files doc
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue May 19 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
+- 2015.1.0 Kilo release
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b3.0
 - 2015.1.0b3.0
 
