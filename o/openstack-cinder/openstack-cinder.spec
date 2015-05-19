@@ -3,7 +3,7 @@
 
 Name: openstack-cinder
 Version: 2015.1.0
-Release: alt0.b3.0
+Release: alt1
 Summary: OpenStack Volume service
 
 Group: System/Servers
@@ -28,40 +28,55 @@ Source113: openstack-cinder-backup.init
 
 Source20: cinder-sudoers
 
-#
-# patches_base=2014.1.1
-#
-Patch0002: 0002-Remove-runtime-dep-on-python-pbr-python-d2to1.patch
+Patch100: 0001-Slightly-cleanup-for-sample-config-generation.patch
 
 BuildArch: noarch
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-pbr
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
+BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-netaddr
-BuildRequires: crudini
 
 BuildRequires: graphviz
-BuildRequires: python-module-eventlet
-BuildRequires: python-module-routes
-BuildRequires: python-module-SQLAlchemy
+BuildRequires: python-module-eventlet >= 0.16.1
+BuildRequires: python-module-routes >= 1.12.3
+BuildRequires: python-module-SQLAlchemy >= 0.9.7
 BuildRequires: python-module-webob
-BuildRequires: python-module-migrate
+BuildRequires: python-module-migrate >= 0.9.5
 BuildRequires: python-module-iso8601
-BuildRequires: python-module-oslo.concurrency >= 1.4.1
-BuildRequires: python-module-oslo.context >= 0.1.0
-BuildRequires: python-module-oslo.db >= 1.4.1
-BuildRequires: python-module-oslo.log >= 0.4.0
-BuildRequires: python-module-oslo.messaging >= 1.6.0
-BuildRequires: python-module-oslo.middleware >= 0.3.0
-BuildRequires: python-module-oslo.rootwrap >= 1.5.0
-BuildRequires: python-module-oslo.serialization >= 1.2.0
-BuildRequires: python-module-oslo.utils >= 1.2.0
-BuildRequires: python-module-oslo.vmware >= 0.9.0
+BuildRequires: python-module-PasteDeploy
+BuildRequires: python-module-oslo.concurrency >= 1.8.0
+BuildRequires: python-module-oslo.context >= 0.2.0
+BuildRequires: python-module-oslo.db >= 1.7.0
+BuildRequires: python-module-oslo.log >= 1.0.0
+BuildRequires: python-module-oslo.messaging >= 1.8.0
+BuildRequires: python-module-oslo.middleware >= 1.0.0
+BuildRequires: python-module-oslo.rootwrap >= 1.6.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-oslo.utils >= 1.4.0
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.vmware >= 0.11.1
+BuildRequires: python-module-keystonemiddleware >= 1.5.0
+BuildRequires: python-module-osprofiler >= 0.3.0
+BuildRequires: python-module-glanceclient >= 0.15.0
+BuildRequires: python-module-paramiko >= 1.13.0
+BuildRequires: python-module-taskflow >= 0.7.1
+BuildRequires: python-module-anyjson
+BuildRequires: python-module-mox
+BuildRequires: python-module-testtools
+BuildRequires: python-module-testrepository
+BuildRequires: python-module-oslotest
+BuildRequires: python-module-swiftclient >= 2.2.0
+BuildRequires: python-module-barbicanclient >= 3.0.1
+BuildRequires: python-module-glanceclient >= 0.15.0
+BuildRequires: python-module-novaclient >= 2.22.0
 
 Requires: openstack-utils
 Requires: python-module-cinder = %version-%release
+Requires: python-module-PasteDeploy
 
 Requires(pre): shadow-utils
 
@@ -99,49 +114,33 @@ This package contains documentation files for cinder.
 
 %prep
 %setup
-
-%patch0002 -p1
+%patch100 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
 find cinder -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
-# TODO: Have the following handle multi line entries
-sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
-
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requires_dist config
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
-# We add REDHATCINDERVERSION/RELEASE with the pbr removal patch
-sed -i s/REDHATCINDERVERSION/%version/ cinder/version.py
-sed -i s/REDHATCINDERRELEASE/%release/ cinder/version.py
-
-install -p -D -m 640 %SOURCE5 etc/cinder/cinder.conf.sample
-
 %build
 %python_build
+
+export PYTHONPATH="$( pwd ):$PYTHONPATH"
+sphinx-build -b man doc/source doc/build/man
+sphinx-build -b html doc/source doc/build/html
+#install -p -D -m 640 %SOURCE5 etc/cinder/cinder.conf.sample
+bash tools/config/generate_sample.sh -b . -p cinder -o etc/cinder
 
 %install
 %python_install
 
-# docs generation requires everything to be installed first
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
+mkdir -p %buildroot%_man1dir
+install -p -D -m 644 doc/build/man/*.1 %buildroot%_man1dir/
 
-pushd doc
-
-SPHINX_DEBUG=1 sphinx-build -b html source build/html
 # Fix hidden-file-or-dir warnings
 rm -fr build/html/.doctrees build/html/.buildinfo
-
-# Create dir link to avoid a sphinx-build exception
-mkdir -p build/man/.doctrees/
-ln -s .  build/man/.doctrees/man
-SPHINX_DEBUG=1 sphinx-build -b man -c source source/man build/man
-mkdir -p %buildroot%_mandir/man1
-install -p -D -m 644 build/man/*.1 %buildroot%_mandir/man1/
-
-popd
 
 # Setup directories
 install -d -m 755 %buildroot%_sharedstatedir/cinder
@@ -244,6 +243,9 @@ rm -f %buildroot/usr/share/doc/cinder/README*
 %doc doc/build/html
 
 %changelog
+* Tue May 19 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
+- 2015.1.0 Kilo Release
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b3.0
 - 2015.1.0b3
 
