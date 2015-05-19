@@ -12,7 +12,7 @@
 
 Name: libwebkitgtk4
 Version: 2.8.3
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -21,6 +21,8 @@ License: %bsd %lgpl2plus
 Url: http://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
+# fc
+Patch10: webkitgtk-2.8.0-gcc5_fix.patch
 
 BuildPreReq: rpm-build-licenses
 
@@ -173,6 +175,7 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
+%patch10 -p1
 # Remove bundled libraries
 rm -rf Source/ThirdParty/leveldb/
 rm -rf Source/ThirdParty/gtest/
@@ -259,6 +262,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Tue May 19 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.3-alt2
+- fixed build with gcc-5 (fc patch)
+
 * Fri May 15 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.3-alt1
 - 2.8.3
 
