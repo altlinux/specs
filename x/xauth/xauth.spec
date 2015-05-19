@@ -1,5 +1,5 @@
 Name: xauth
-Version: 1.0.7
+Version: 1.0.9
 Release: alt1
 Epoch: 1
 Summary: X authority file utility
@@ -45,6 +45,9 @@ does that.
 %_man1dir/*
 
 %changelog
+* Tue May 19 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:1.0.9-alt1
+- 1.0.9
+
 * Fri Mar 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.0.7-alt1
 - 1.0.7
 
