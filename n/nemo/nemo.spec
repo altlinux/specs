@@ -1,4 +1,4 @@
-%define ver_major 2.4
+%define ver_major 2.6
 %define api_ver 3.0
 
 %def_enable exempi
@@ -8,7 +8,7 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -134,7 +134,6 @@ rm -f data/*.desktop
 subst 's@\.\/@xvfb-run -a ./@' eel/check-eel src/check-nemo
 
 %build
-sed -i -e 's@DISABLE_DEPRECATED_CFLAGS="-DG_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED"@@g' configure.in
 %autoreconf
 %configure \
     --disable-update-mimedb \
@@ -165,6 +164,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %files
 %_bindir/*
 %_libexecdir/nemo-convert-metadata
+%_libexecdir/nemo-extensions-list
 %dir %_libdir/%name-%api_ver
 %dir %_libdir/%name-%api_ver/components
 %_datadir/mime/packages/nemo.xml
@@ -176,7 +176,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_iconsdir/hicolor/*/actions/*.png
 %_iconsdir/hicolor/*/status/*.svg
 %_datadir/dbus-1/services/org.Nemo.service
-%_datadir/dbus-1/services/org.freedesktop.NemoFileManager1.service
+%_datadir/dbus-1/services/org.nemo.freedesktop.FileManager1.service
 %_datadir/gtksourceview-2.0/language-specs/nemo_action.lang
 %_datadir/gtksourceview-3.0/language-specs/nemo_action.lang
 %_datadir/polkit-1/actions/org.nemo.root.policy
@@ -209,6 +209,15 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Wed May 20 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
+* Fri May 8 2015 Vladimir Didenko <cow@altlinux.org> 2.5.1-alt2
+- git20150505
+
+* Tue Apr 14 2015 Vladimir Didenko <cow@altlinux.org> 2.5.1-alt1
+- 2.5.1
+
 * Tue Nov 25 2014 Vladimir Didenko <cow@altlinux.org> 2.4.4-alt1
 - 2.4.4
 

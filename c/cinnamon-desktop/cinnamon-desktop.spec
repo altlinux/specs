@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.4
+%define ver_major 2.6
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -8,7 +8,7 @@
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
@@ -154,6 +154,15 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Tue May 19 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
+* Fri May 8 2015 Vladimir Didenko <cow@altlinux.org> 2.5.1-alt2
+- git 20150506
+
+* Tue Apr 14 2015 Vladimir Didenko <cow@altlinux.org> 2.5.1-alt1
+- 2.5.1
+
 * Tue Nov 25 2014 Vladimir Didenko <cow@altlinux.org> 2.4.2-alt1
 - 2.4.2
 

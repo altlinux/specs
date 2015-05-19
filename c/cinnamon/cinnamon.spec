@@ -1,5 +1,7 @@
+%def_enable gtk_doc
+
 Name: cinnamon
-Version: 2.4.7
+Version: 2.6.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -74,6 +76,7 @@ BuildRequires: libpulseaudio-devel
 
 BuildRequires: desktop-file-utils
 BuildRequires: gtk-doc gnome-common intltool
+BuildRequires: at-spi2-atk-devel
 
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
@@ -91,6 +94,14 @@ BuildArch: noarch
 
 %description data
 This package provides noarch data needed for Cinnamon to work.
+
+%package devel-doc
+Summary: Development doc package for Cinnamon
+Group: Development/Documentation
+BuildArch: noarch
+
+%description devel-doc
+Development docs package for Cinnamon.
 
 %add_verify_elf_skiplist %_bindir/%name
 
@@ -172,7 +183,7 @@ rm -rf debian
 %build
 export CFLAGS="$RPM_OPT_FLAGS -Wno-error=deprecated-declarations"
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; fi;
-%configure --disable-static --enable-compile-warnings=yes --without-ca-certificates)
+%configure --disable-static --enable-compile-warnings=yes --without-ca-certificates %{?_enable_gtk_doc:--enable-gtk-doc})
 
 %make_build
 
@@ -216,6 +227,7 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_libexecdir/cinnamon/cinnamon-perf-helper
 
 %files data
+%_sysconfdir/cinnamon
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/applications/cinnamon.desktop
 %_datadir/applications/cinnamon2d.desktop
@@ -243,7 +255,21 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_mandir/man1/*.1.*
 %doc NEWS README
 
+%if_enabled gtk_doc
+%files devel-doc
+%_datadir/gtk-doc/html/*
+%endif
+
 %changelog
+* Wed May 20 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
+* Fri May 8 2015 Vladimir Didenko <cow@altlinux.org> 2.5.0-alt2
+- git20150508(g05ad66d)
+
+* Tue Apr 14 2015 Vladimir Didenko <cow@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Wed Apr 1 2015 Vladimir Didenko <cow@altlinux.org> 2.4.7-alt1
 - 2.4.7
 

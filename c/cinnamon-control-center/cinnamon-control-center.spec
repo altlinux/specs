@@ -1,4 +1,4 @@
-%define ver_major 2.4
+%define ver_major 2.6
 %define api_ver 1.0
 
 %def_disable debug
@@ -9,8 +9,8 @@
 %def_enable ibus
 
 Name: cinnamon-control-center
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -145,9 +145,7 @@ you'll want to install this package.
 %_libdir/%{name}-1/panels/libcolor.so
 %_libdir/%{name}-1/panels/libdisplay.so
 %_libdir/%{name}-1/panels/libnetwork.so
-%_libdir/%{name}-1/panels/libpower.so
 %_libdir/%{name}-1/panels/libregion.so
-%_libdir/%{name}-1/panels/libscreen.so
 %_libdir/%{name}-1/panels/libsoundnua.so
 %_libdir/%{name}-1/panels/libuniversal-access.so
 %_libdir/%{name}-1/panels/libwacom-properties.so
@@ -178,6 +176,12 @@ you'll want to install this package.
 
 
 %changelog
+* Tue May 19 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
+* Tue Apr 14 2015 Vladimir Didenko <cow@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Wed Apr 1 2015 Vladimir Didenko <cow@altlinux.org> 2.4.2-alt2
 - don't check NetworkManager version
 
