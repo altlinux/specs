@@ -1,5 +1,5 @@
 Name: wine-vanilla
-Version: 1.7.42
+Version: 1.7.43
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -36,7 +36,7 @@ BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
 BuildRequires: zlib-devel libldap-devel libgnutls-devel
 BuildRequires: libxslt-devel libxml2-devel
-BuildRequires: libjpeg-devel liblcms-devel libpng-devel libtiff-devel
+BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel
 BuildRequires: libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel
 BuildRequires: libopenal-devel libGLU-devel
@@ -185,7 +185,8 @@ develop programs which make use of Wine.
 %if_with build64
 	--enable-win64 \
 %endif
-	--disable-tests
+	--disable-tests \
+	--without-gstreamer
 
 %__make depend
 %make_build
@@ -346,6 +347,11 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Tue May 19 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.43-alt1
+- new version 1.7.43
+- build with liblcms2 (closes: #31006)
+- build without gstreamer (closes: #31014)
+
 * Sat May 02 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.42-alt1
 - new version 1.7.42
 
