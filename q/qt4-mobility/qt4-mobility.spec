@@ -3,13 +3,14 @@
 
 Name: qt4-mobility
 Version: 1.2.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt Mobility Framework
 License: LGPLv2 with exceptions
 Url: http://qt.nokia.com/products/qt-addons/mobility
 
+Requires: %name-common = %version-%release
 #Provides: qt-mobility = %version-%release
 
 Source: qt-mobility-opensource-src-%version.tar
@@ -45,7 +46,6 @@ of these technologies, but has applicability beyond the mobile device arena.
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
-BuildArch: noarch
 %description common
 %name common package
 
@@ -92,14 +92,16 @@ Provides: libqt4-versitorganizer-devel = %version-%release
 %package doc
 Group: Development/Documentation
 Summary: API documentation for %name
-Requires: qt4-assistant
 BuildArch: noarch
+Requires: %name-common = %version-%release
+Requires: qt4-assistant
 %description doc
 %summary.
 
 %package examples
 Group: Development/KDE and QT
 Summary: Qt Mobility Framework examples
+Requires: %name-common = %version-%release
 %description examples
 %summary.
 
@@ -261,39 +263,58 @@ done
 popd
 
 
-%files common
 %files
+%files common
 %doc LGPL_EXCEPTION.txt
-%_qt4dir/imports/QtMobility/
-%_qt4dir/imports/QtMultimediaKit/
-%_qt4dir/plugins/*
+%dir %_qt4dir/imports/QtMobility/
 
 %files -n libqt4-bearer
 %_libdir/libQtBearer.so.*
 %files -n libqt4-contacts
 %_libdir/libQtContacts.so.*
+%_qt4dir/plugins/contacts/
+%_qt4dir/imports/QtMobility/contacts/
 %files -n libqt4-connectivity
 %_libdir/libQtConnectivity.so.*
+%_qt4dir/imports/QtMobility/connectivity/
 %files -n libqt4-feedback
 %_libdir/libQtFeedback.so.*
+%_qt4dir/plugins/feedback/
+%_qt4dir/imports/QtMobility/feedback/
 %files -n libqt4-gallery
 %_libdir/libQtGallery.so.*
+%_qt4dir/imports/QtMobility/gallery/
 %files -n libqt4-location
 %_libdir/libQtLocation.so.*
+%_qt4dir/plugins/geoservices/
+%_qt4dir/plugins/landmarks/
+%_qt4dir/imports/QtMobility/location/
 %files -n libqt4-multimediakit
 %_libdir/libQtMultimediaKit.so.*
+%_qt4dir/plugins/audio/
+%_qt4dir/plugins/mediaservice/
+%_qt4dir/plugins/playlistformats/
+%_qt4dir/imports/QtMultimediaKit/
 %files -n libqt4-organizer
 %_libdir/libQtOrganizer.so.*
+%_qt4dir/imports/QtMobility/organizer/
 %files -n libqt4-publishsubscribe
 %_libdir/libQtPublishSubscribe.so.*
+%_qt4dir/imports/QtMobility/publishsubscribe/
 %files -n libqt4-sensors
 %_libdir/libQtSensors.so.*
+%_qt4dir/plugins/sensorgestures/
+%_qt4dir/plugins/sensors/
+%_qt4dir/imports/QtMobility/sensors/
 %files -n libqt4-serviceframework
 %_libdir/libQtServiceFramework.so.*
+%_qt4dir/imports/QtMobility/serviceframework/
 %files -n libqt4-systeminfo
 %_libdir/libQtSystemInfo.so.*
+%_qt4dir/imports/QtMobility/systeminfo/
 %files -n libqt4-versit
 %_libdir/libQtVersit.so.*
+%_qt4dir/plugins/versit/
 %files -n libqt4-versitorganizer
 %_libdir/libQtVersitOrganizer.so.*
 #%files -n libqt4-messaging
@@ -372,6 +393,9 @@ popd
 %endif
 
 %changelog
+* Tue May 19 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt3
+- package modules with libs
+
 * Mon May 18 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt2
 - build without gstreamer
 
