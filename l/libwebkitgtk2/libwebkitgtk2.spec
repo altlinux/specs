@@ -14,8 +14,8 @@
 %def_enable spellcheck
 
 Name: libwebkitgtk2
-Version: 2.4.8
-Release: alt3
+Version: 2.4.9
+Release: alt1
 
 Summary: Web browser engine
 License: %bsd %lgpl2plus
@@ -24,9 +24,7 @@ Url: http://www.webkitgtk.org/
 
 Source: http://webkitgtk.org/releases/webkitgtk-%version.tar.xz
 Patch: webkitgtk-2.1.92-alt-gtk2_compatibility.patch
-Patch2: webkitgtk-2.4.0-up-textrel.patch
 Patch3: webkitgtk-2.4.0-alt-link.patch
-Patch4: webkitgtk-2.4.8-fc-gmutexlocker.patch
 
 Requires: libjavascriptcoregtk2 = %version-%release
 %{?_enable_geolocation:Requires: geoclue2}
@@ -185,9 +183,7 @@ GObject introspection devel data for the JavaScriptCore library
 %prep
 %setup -n webkitgtk-%version
 %patch
-%patch2 -p1
 %patch3
-%patch4 -p1
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -280,6 +276,10 @@ xvfb-run make check
 %endif
 
 %changelog
+* Wed May 20 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.9-alt1
+- 2.4.9
+- dropped upstreamed patches
+
 * Tue May 05 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.8-alt3
 - rebuilt with geoclue2
 
