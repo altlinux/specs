@@ -1,18 +1,18 @@
-%define pypi_name ceilometer
+%define service ceilometer
 %def_without doc
 
 Name: openstack-ceilometer
 Version: 2015.1.0
-Release: alt0.b2.0
+Release: alt1
 Summary: OpenStack measurement collection service
 
 Group: System/Servers
 License: ASL 2.0
 Url: https://wiki.openstack.org/wiki/Ceilometer
 Source0: %name-%version.tar
-Source1: %pypi_name-dist.conf
-Source2: %pypi_name.logrotate
-Source3: %pypi_name.conf.sample
+Source1: %service-dist.conf
+Source2: %service.logrotate
+Source3: %service.conf.sample
 Source4: ceilometer-rootwrap-sudoers
 
 Source10: %name-api.service
@@ -23,7 +23,8 @@ Source14: %name-alarm-notifier.service
 Source15: %name-alarm-evaluator.service
 Source16: %name-notification.service
 Source17: %name-ipmi.service
-Source18: %name.tmpfiles
+Source18: %name-polling.service
+Source20: %name.tmpfiles
 
 Source110: %name-api.init
 Source111: %name-collector.init
@@ -33,6 +34,7 @@ Source114: %name-alarm-notifier.init
 Source115: %name-alarm-evaluator.init
 Source116: %name-notification.init
 Source117: %name-ipmi.init
+Source118: %name-polling.init
 
 BuildArch: noarch
 BuildRequires: python-devel
@@ -136,6 +138,8 @@ Summary: OpenStack ceilometer API service
 Group: System/Servers
 
 Requires: %name-common = %version-%release
+Requires: python-module-keystonemiddleware >= 1.5.0
+Requires: python-module-ceilometerclient >= 1.0.13
 
 %description api
 OpenStack ceilometer provides services to measure and
@@ -148,7 +152,7 @@ Summary: OpenStack ceilometer alarm services
 Group: System/Servers
 
 Requires: %name-common = %version-%release
-Requires: python-module-ceilometerclient
+Requires: python-module-ceilometerclient >= 1.0.13
 
 %description alarm
 OpenStack ceilometer provides services to measure and
@@ -171,6 +175,23 @@ collect metrics from OpenStack components.
 This package contains the ipmi agent to be run on OpenStack
 nodes from which IPMI sensor data is to be collected directly,
 by-passing Ironic's management of baremetal.
+
+%package polling
+Summary: OpenStack ceilometer polling agent
+Group: System/Servers
+
+Requires: %name-common = %version-%release
+Requires: python-module-libvirt
+
+%description polling
+Ceilometer aims to deliver a unique point of contact for billing systems to
+aquire all counters they need to establish customer billing, across all
+current and future OpenStack components. The delivery of counters must
+be tracable and auditable, the counters must be easily extensible to support
+new projects, and agents doing data collections should be
+independent of the overall system.
+
+This package contains the polling service.
 
 
 %package doc
@@ -242,6 +263,7 @@ install -p -D -m 644 %SOURCE4 %buildroot%_sysconfdir/sudoers.d/ceilometer
 install -p -D -m 640 etc/ceilometer/ceilometer.conf.sample %buildroot%_sysconfdir/ceilometer/ceilometer.conf
 install -p -D -m 640 etc/ceilometer/policy.json %buildroot%_sysconfdir/ceilometer/policy.json
 install -p -D -m 640 etc/ceilometer/pipeline.yaml %buildroot%_sysconfdir/ceilometer/pipeline.yaml
+install -p -D -m 640 etc/ceilometer/event_pipeline.yaml %buildroot%_sysconfdir/ceilometer/event_pipeline.yaml
 install -p -D -m 640 etc/ceilometer/api_paste.ini %buildroot%_sysconfdir/ceilometer/api_paste.ini
 install -p -D -m 640 etc/ceilometer/rootwrap.conf %buildroot%_sysconfdir/ceilometer/rootwrap.conf
 install -p -D -m 640 etc/ceilometer/rootwrap.d/ipmi.filters %buildroot%_sysconfdir/ceilometer/rootwrap.d/ipmi.filters
@@ -256,7 +278,8 @@ install -p -D -m 644 %SOURCE14 %buildroot%_unitdir/%name-alarm-notifier.service
 install -p -D -m 644 %SOURCE15 %buildroot%_unitdir/%name-alarm-evaluator.service
 install -p -D -m 644 %SOURCE16 %buildroot%_unitdir/%name-notification.service
 install -p -D -m 644 %SOURCE17 %buildroot%_unitdir/%name-ipmi.service
-install -p -D -m 644 %SOURCE18 %buildroot%_tmpfilesdir/%name.conf
+install -p -D -m 644 %SOURCE18 %buildroot%_unitdir/%name-polling.service
+install -p -D -m 644 %SOURCE20 %buildroot%_tmpfilesdir/%name.conf
 
 install -p -D -m 755 %SOURCE110 %buildroot%_initdir/%name-api
 install -p -D -m 755 %SOURCE111 %buildroot%_initdir/%name-collector
@@ -266,6 +289,7 @@ install -p -D -m 755 %SOURCE114 %buildroot%_initdir/%name-alarm-notifier
 install -p -D -m 755 %SOURCE115 %buildroot%_initdir/%name-alarm-evaluator
 install -p -D -m 755 %SOURCE116 %buildroot%_initdir/%name-notification
 install -p -D -m 755 %SOURCE117 %buildroot%_initdir/%name-ipmi
+install -p -D -m 755 %SOURCE117 %buildroot%_initdir/%name-polling
 
 # Install logrotate
 install -p -D -m 644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
@@ -308,6 +332,9 @@ rm -f %buildroot/usr/share/doc/ceilometer/README*
 %post ipmi
 %post_service %name-ipmi
 
+%post polling
+%post_service %name-polling
+
 %preun compute
 %preun_service %name-compute
 
@@ -330,6 +357,9 @@ rm -f %buildroot/usr/share/doc/ceilometer/README*
 %preun ipmi
 %preun_service %name-ipmi
 
+%preun polling
+%preun_service %name-polling
+
 %files common
 %doc LICENSE
 %dir %_sysconfdir/ceilometer
@@ -345,7 +375,6 @@ rm -f %buildroot/usr/share/doc/ceilometer/README*
 
 %_bindir/ceilometer-dbsync
 %_bindir/ceilometer-expirer
-%_bindir/ceilometer-polling
 %_bindir/ceilometer-send-sample
 
 %defattr(-, ceilometer, ceilometer, -)
@@ -371,6 +400,7 @@ rm -f %buildroot/usr/share/doc/ceilometer/README*
 %_initdir/%name-collector
 
 %files notification
+%config(noreplace) %attr(-, root, ceilometer) %_sysconfdir/ceilometer/event_pipeline.yaml
 %_bindir/ceilometer-agent-notification
 %_unitdir/%name-notification.service
 %_initdir/%name-notification
@@ -402,7 +432,15 @@ rm -f %buildroot/usr/share/doc/ceilometer/README*
 %_bindir/ceilometer-rootwrap
 %_sysconfdir/sudoers.d/ceilometer
 
+%files polling
+%_bindir/ceilometer-polling
+%_unitdir/%name-polling.service
+%_initdir/%name-polling
+
 %changelog
+* Wed May 20 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
+- 2015.1.0 Kilo Release
+
 * Wed Mar 11 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b2.0
 - 2015.1.0.b2
 
