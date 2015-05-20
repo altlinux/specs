@@ -1,7 +1,7 @@
 
 Name: openstack-glance
 Version: 2015.1.0
-Release: alt0.b3.0
+Release: alt1
 Summary: OpenStack Image Service
 
 Group: System/Servers
@@ -23,34 +23,32 @@ Source41: %name-registry.init
 Source42: %name-scrubber.init
 Source43: %name.tmpfiles
 
-#
-# patches_base=2014.2.2
-#
-
-Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
-Patch0004: 0004-notify-calling-process-we-are-ready-to-serve.patch
+Patch0001: 0001-notify-calling-process-we-are-ready-to-serve.patch
 
 BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-oslo.config >= 1.9.0
-BuildRequires: python-module-oslo.concurrency >= 1.4.1
+BuildRequires: python-module-oslo.config >= 1.9.3
+BuildRequires: python-module-oslo.concurrency >= 1.8.0
 BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.utils >= 1.2.0
-BuildRequires: python-module-oslo.db >= 1.5.0
-BuildRequires: python-module-oslo.i18n >= 1.3.0
-BuildRequires: python-module-oslo.messaging >= 1.6.0
-BuildRequires: python-module-oslo.policy >= 0.3.0
+BuildRequires: python-module-oslo.utils >= 1.4.0
+BuildRequires: python-module-oslo.db >= 1.7.0
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.messaging >= 1.8.0
+BuildRequires: python-module-oslo.policy >= 0.3.1
+BuildRequires: python-module-oslo.serialization >= 1.4.0
 BuildRequires: python-module-oslo.vmware >= 0.11.0
-BuildRequires: python-module-stevedore >= 1.1.0
-BuildRequires: python-module-keystonemiddleware >= 1.0.0
+BuildRequires: python-module-stevedore >= 1.3.0
+BuildRequires: python-module-taskflow >= 0.7.1
+BuildRequires: python-module-keystonemiddleware >= 1.5.0
 BuildRequires: python-module-keystoneclient >= 1.1.0
-
+BuildRequires: python-module-glance_store >= 0.3.0
+BuildRequires: python-module-semantic_version >= 2.3.1
 
 # Required to build module documents
 BuildRequires: python-module-boto
-BuildRequires: python-module-eventlet
+BuildRequires: python-module-eventlet >= 0.16.1
 BuildRequires: python-module-routes
 BuildRequires: python-module-SQLAlchemy >= 0.9.7
 BuildRequires: python-module-migrate >= 0.9.5
@@ -59,6 +57,7 @@ BuildRequires: python-module-pbr
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-eventlet >= 0.16.1
+BuildRequires: python-module-elasticsearch
 
 Requires(pre): shadow-utils
 Requires: python-module-glance = %version-%release
@@ -82,17 +81,17 @@ This package contains the API and registry servers.
 Summary: Glance Python libraries
 Group: Development/Python
 Requires: python-module-keystoneclient >= 1.1.0
-Requires: python-module-keystonemiddleware
-Requires: python-module-swiftclient
-Requires: python-module-oslo.vmware >= 0.11.0
-Requires: python-module-oslo.config >= 1.9.0
-Requires: python-module-oslo.concurrency >= 1.4.1
+Requires: python-module-keystonemiddleware >= 1.5.0
+Requires: python-module-swiftclient >= 2.2.0
+Requires: python-module-oslo.vmware >= 0.11.1
+Requires: python-module-oslo.config >= 1.9.3
+Requires: python-module-oslo.concurrency >= 1.8.0
 Requires: python-module-oslo.context >= 0.2.0
-Requires: python-module-oslo.utils >= 1.2.0
-Requires: python-module-oslo.log >= 0.4.0
-Requires: python-module-oslo.db >= 1.5.0
-Requires: python-module-oslo.i18n >= 1.3.0
-Requires: python-module-oslo.messaging >= 1.6.0
+Requires: python-module-oslo.utils >= 1.4.0
+Requires: python-module-oslo.log >= 1.0.0
+Requires: python-module-oslo.db >= 1.7.0
+Requires: python-module-oslo.i18n >= 1.5.0
+Requires: python-module-oslo.messaging >= 1.8.0
 
 %description -n python-module-glance
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -113,19 +112,13 @@ This package contains documentation files for glance.
 
 %prep
 %setup
-
-%patch0002 -p1
-#%patch0004 -p1
+%patch0001 -p1
 
 # Remove bundled egg-info
-rm -rf glance.egg-info
-sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
-# versioninfo is missing in f3 tarball
-echo %version > glance/versioninfo
+#rm -rf glance.egg-info
 
-sed -i '/setuptools_git/d; /setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
-sed -i s/REDHATGLANCEVERSION/%version/ glance/version.py
-sed -i s/REDHATGLANCERELEASE/%release/ glance/version.py
+sed -i "s|^#!.*||" tools/migrate_image_owners.py # Fix non-executable script warning
+sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.py glance/db/sqlalchemy/migrate_repo/manage.py
 
 
 # Remove the requirements file so that pbr hooks don't add it
@@ -157,6 +150,10 @@ done
 %build
 %python_build
 
+export PYTHONPATH="$( pwd ):$PYTHONPATH"
+sphinx-build -b man doc/source doc/build/man
+sphinx-build -b html doc/source doc/build/html
+
 %install
 %python_install
 
@@ -168,14 +165,8 @@ rm -f  %buildroot%python_sitelibdir/glance/openstack/common/test*
 # and replaced glanceclient
 rm -f %buildroot%_bindir/glance
 
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-pushd doc
-sphinx-build -b html source build/html
-sphinx-build -b man source build/man
-
 mkdir -p %buildroot%_mandir/man1
-install -p -D -m 644 build/man/*.1 %buildroot%_mandir/man1/
-popd
+install -p -D -m 644 doc/build/man/*.1 %buildroot%_mandir/man1/
 
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
@@ -284,6 +275,9 @@ done
 %doc doc/build/html
 
 %changelog
+* Wed May 20 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
+- 2015.1.0 Kilo Release
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b3.0
 - 2015.1.0.b3
 
