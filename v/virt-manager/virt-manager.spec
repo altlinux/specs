@@ -8,7 +8,7 @@
 
 Name: virt-manager
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -18,7 +18,7 @@ BuildArch: noarch
 
 # git://git.fedorahosted.org/virt-manager.git
 Source: %name-%version.tar
-# Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 Requires: virt-manager-common = %version-%release
 Requires: virt-install = %version-%release
@@ -90,7 +90,7 @@ machine).
 
 %prep
 %setup
-# %patch -p1
+%patch -p1
 
 %build
 python setup.py configure \
@@ -144,6 +144,14 @@ python setup.py install --root=%buildroot
 %_man1dir/virt-xml.1*
 
 %changelog
+* Wed May 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt2
+- backport patches from upstream master:
+  + domain: Fix memory stats for shutoff VM (#1215453)
+  + sshtunnels: fix exception when the address is not an IP (RH#1218958 ALT#31020)
+  + pollhelpers: Fix VM polling on old libvirt (RH#1219443)
+  + storage: do not throw exception if the volume or the pool don't exist (RH#219427)
+  + interface: read the start mode from the inactive conf XML (RH#1154480)
+
 * Tue May 12 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 - update Requires (#30809)
