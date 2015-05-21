@@ -1,5 +1,5 @@
 Name: ulogd
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 
 %def_disable nfacct
@@ -159,6 +159,9 @@ sed -i -r 's;^(plugin="%_libdir/ulogd/ulogd_inpflow_NFACCT\.so");#\1;' %buildroo
 %_libdir/%name/ulogd_output_DBI.so
 
 %changelog
+* Thu May 21 2015 Mikhail Efremov <sem@altlinux.org> 2.0.5-alt1
+- Updated to 2.0.5.
+
 * Mon Apr 21 2014 Mikhail Efremov <sem@altlinux.org> 2.0.4-alt1
 - Enable JSON plugin.
 - Updated to 2.0.4.
