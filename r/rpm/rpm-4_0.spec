@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.83
+Release: alt100.84
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -530,6 +530,11 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Thu May 21 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.84
+- set.c: rewritten without nested functions.
+- find-package: added support for newer naming of gcc and
+  libstdc++-devel.
+
 * Mon May 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.83
 - platform.in: added support for gcc >= 5.
 
