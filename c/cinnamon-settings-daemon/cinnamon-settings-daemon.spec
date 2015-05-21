@@ -1,4 +1,4 @@
-%define ver_major 2.4
+%define ver_major 2.6
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -9,7 +9,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -196,6 +196,12 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-background
 
 %changelog
+* Tue May 19 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
+* Tue Apr 14 2015 Vladimir Didenko <cow@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Mon Nov 10 2014 Vladimir Didenko <cow@altlinux.org> 2.4.3-alt1
 - 2.4.3
 

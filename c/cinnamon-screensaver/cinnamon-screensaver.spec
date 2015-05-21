@@ -1,4 +1,4 @@
-%define ver_major 2.4
+%define ver_major 2.6
 %def_disable static
 %def_disable docbook
 %def_enable consolekit
@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cinnamon Screensaver
@@ -42,11 +42,10 @@ BuildPreReq: libcinnamon-desktop-devel >= %desktop_ver
 BuildPreReq: libgnomekbd-devel >= %libgnomekbd_ver
 BuildRequires: libpam-devel gsettings-desktop-schemas-devel
 BuildRequires: xorg-proto-devel libXxf86vm-devel libSM-devel
-BuildRequires:libXScrnSaver-devel libXext-devel libXtst-devel xorg-xf86vidmodeproto-devel
+BuildRequires: libXScrnSaver-devel libXext-devel libXtst-devel xorg-xf86vidmodeproto-devel
+BuildRequires: libwebkit2gtk-devel
 %{?_enable_docbook:Requires: xmlto}
 %{?_with_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel}
-
-Requires: %name-translations
 
 %description
 cinnamon-screensaver is a screen saver and locker that aims to have
@@ -75,16 +74,23 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 %install
 %makeinstall_std
 
-%files 
+%files
 %_bindir/*
 %_datadir/dbus-1/services/org.cinnamon.ScreenSaver.service
 %_datadir/applications/%name.desktop
 %attr(2711,root,chkpwd) %_libexecdir/%name-dialog
+%_datadir/%name
 %_man1dir/*
 %attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/*
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue May 19 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
+* Fri May 8 2015 Vladimir Didenko <cow@altlinux.org> 2.5.0-alt1
+- git20150506
+
 * Mon Mar 30 2015 Vladimir Didenko <cow@altlinux.org> 2.4.2-alt1
 - 2.4.2
 

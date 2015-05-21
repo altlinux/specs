@@ -1,7 +1,7 @@
-# typelibs/girs dependencies (see below) added manually because of conflict with gnome-shell names
+%def_enable gtk_doc
 
 Name: muffin
-Version: 2.4.4
+Version: 2.6.0
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
@@ -69,6 +69,14 @@ Requires: gir(Clutter) = 1.0 gir(Gtk) = 3.0
 %description -n lib%name-devel
 Header files and libraries for developing Muffin plugins.
 
+%package -n lib%name-devel-doc
+Summary: Development doc package for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description -n lib%name-devel-doc
+Development docs package for Muffin.
+
 %package -n lib%name-gir
 Summary: GObject introspection data for the Muffin library
 Group: System/Libraries
@@ -95,7 +103,8 @@ GObject introspection devel data for the Muffin library
 %build
 %autoreconf
 %configure --disable-static \
-	--disable-schemas-compile
+	   --disable-schemas-compile \
+	   %{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
 
@@ -131,6 +140,11 @@ GObject introspection devel data for the Muffin library
 %_libdir/lib*.so
 %_pkgconfigdir/*
 
+%if_enabled gtk_doc
+%files -n lib%name-devel-doc
+%_datadir/gtk-doc/html/*
+%endif
+
 %files -n lib%name-gir
 %_libdir/%name/*.typelib
 
@@ -139,6 +153,12 @@ GObject introspection devel data for the Muffin library
 
 
 %changelog
+* Wed May 20 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
+* Tue Apr 14 2015 Vladimir Didenko <cow@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Fri Feb 6 2015 Vladimir Didenko <cow@altlinux.org> 2.4.4-alt1
 - 2.4.4
 

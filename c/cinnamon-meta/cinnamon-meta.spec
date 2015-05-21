@@ -1,8 +1,8 @@
-%define ver_major 2.4
+%define ver_major 2.6
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt4
+Release: alt1
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -58,7 +58,6 @@ Requires: gucharmap
 Requires: gnome-icon-theme
 Requires: gnome-icon-theme-symbolic
 Requires: gnome-themes-standard
-Requires: metacity-theme-adwaita
 Requires: libgtk2-engine-adwaita
 # default font
 Requires: fonts-otf-abattis-cantarell
@@ -128,6 +127,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Wed May 20 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Fri Mar 27 2015 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt4
 - add dependency on blueberry for bluetooth configuration
 
