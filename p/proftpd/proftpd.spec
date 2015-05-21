@@ -1,8 +1,8 @@
-%define ver 1.3.3rel
+%define ver 1.3.5
 
 Name: proftpd
 Version: %ver
-Release: alt2.qa1
+Release: alt2.gita31d0ab
 
 %define _libexecdir %{expand:%_libdir}
 %def_disable tests
@@ -33,6 +33,7 @@ Release: alt2.qa1
 %def_shared mod_sql_sqlite
 %def_shared mod_tls
 %def_shared mod_tls_shmcache
+%def_shared mod_tls_memcache
 %def_shared mod_facl
 %def_shared mod_load
 %def_shared mod_sftp
@@ -67,6 +68,7 @@ Patch5: %name-1.2.10-iconv.patch
 Patch6: %name-1.3.2rc1-mod_sql_mysql.patch
 Patch7: %name-1.3.2rc1-mod_sql_postgres.patch
 Patch9: %name-1.3.0-alt-ltdl.patch
+Patch10: %name-1.3.5-inc-pcre.patch
 
 # Debian patches
 Patch50: %name-deb-change_pam_name.patch
@@ -75,11 +77,13 @@ Patch51: %name-deb-core_create-home.patch
 Provides: ftpserver
 Requires: locale-en
 PreReq: anonftp
-AutoReq: yes, noshell
+AutoReq: yes, noshell, noperl
 
 Packager: Afanasov Dmitry <ender@altlinux.org>
 
-BuildRequires: gcc-c++ libncurses-devel libtinfo-devel zlib-devel libltdl-devel
+BuildRequires: gcc-c++ libncurses-devel libtinfo-devel zlib-devel libltdl-devel libpcre-devel
+# ftpmail findreq
+BuildRequires: perl-Mail-Sendmail
 
 %{?_with_mod_auth_pam:BuildRequires: pam-devel}
 %{?_with_mod_wrap:BuildRequires: libwrap-devel}
@@ -88,6 +92,7 @@ BuildRequires: gcc-c++ libncurses-devel libtinfo-devel zlib-devel libltdl-devel
 %{?_with_mod_ldap:BuildRequires: libldap-devel}
 %{?_with_mod_sql_postgres:BuildRequires: libpq-devel postgresql-devel}
 %{?_with_mod_tls:BuildRequires: libssl-devel}
+%{?_with_mod_tls_memcache:BuildRequires: libmemcached-devel}
 %{?_with_mod_facl:BuildRequires: libacl-devel}
 %{?_with_mod_sql_sqlite:BuildRequires: libsqlite3-devel}
 %{?_with_mod_facl:BuildRequires: libacl-devel}
@@ -181,6 +186,7 @@ Summary: An RFC2228 SSL/TLS module for ProFTPD
 Group: System/Servers
 Requires: %name = %version-%release
 
+
 %package -n %name-mod_facl
 Summary: POSIX ACL checking code (aka POSIX.1e hell)
 Group: System/Servers
@@ -226,6 +232,11 @@ Summary: Implements shared SSL session cache
 Group: System/Servers
 Requires: %name-mod_tls = %version-%release
 
+%package -n %name-mod_tls_memcache
+Summary: Implements shared SSL/TLS session cache in memcache
+Group: System/Servers
+Requires: %name = %version-%release
+
 %package -n %name-mod_exec
 Summary: Executes external scripts
 Group: System/Servers
@@ -246,6 +257,7 @@ Requires: %name = %version-%release
 Summary: ProFTPD control facility
 Group: System/Servers
 Requires: %name = %version-%release
+Buildarch: noarch
 
 %package -n %name-devel
 Summary: ProFTPD development header files
@@ -334,6 +346,9 @@ SQLite backend.
 %description -n %name-mod_tls_shmcache
 Module which provides a shared SSL session cache using SysV shared memory
 
+%description -n %name-mod_tls_memcache
+Module which provides a shared SSL session cache in a memcached server
+
 %description -n %name-mod_exec
 Module for executing external scripts
 
@@ -353,13 +368,14 @@ See control(8) for details.
 
 %prep
 %setup -q -n %name-%ver
-%patch1 -p1
+%patch1 -p2
 %patch2 -p1
 %patch4 -p1
 #patch5 -p1
 %patch6 -p1
 %patch7 -p1
 #%%patch9 -p1
+%patch10 -p2
 
 # debian patches
 %patch50 -p1
@@ -383,6 +399,8 @@ See control(8) for details.
         --enable-openssl \
         --enable-nls \
         --enable-facl \
+        --enable-memcache \
+        --enable-pcre \
         --with-modules=%mod_static_list \
         --with-shared=%mod_shared_list
 
@@ -465,10 +483,13 @@ fi
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %_sbindir/*
 %_bindir/ftp*
+%_man1dir/ftpasswd.*
+%_man1dir/ftpmail.*
+%_man1dir/ftpquota.*
 %_man1dir/ftpwho.*
 %_man1dir/ftpcount.*
 %_man1dir/ftptop.*
-%_man5dir/xferlog.*
+%_man5dir/*
 %_man8dir/%name.*
 %_man8dir/ftpshut.*
 %_man8dir/ftpdctl.*
@@ -580,6 +601,8 @@ fi
 %ifdef _shared_mod_sftp
 %files -n %name-mod_sftp
 %_libexecdir/%name/mod_sftp.*
+%_sysconfdir/blacklist.dat
+%_sysconfdir/dhparams.pem
 %endif
 
 %ifdef _shared_mod_sftp_pam
@@ -600,6 +623,11 @@ fi
 %ifdef _shared_mod_tls_shmcache
 %files -n %name-mod_tls_shmcache
 %_libexecdir/%name/mod_tls_shmcache.*
+%endif
+
+%ifdef _shared_mod_tls_memcache
+%files -n %name-mod_tls_memcache
+%_libexecdir/%name/mod_tls_memcache.*
 %endif
 
 %ifdef _shared_devel
@@ -637,8 +665,23 @@ fi
 %_controldir/%name
 
 %changelog
+* Thu May 21 2015 Konstantin A. Lepikhov <lakostis@altlinux.ru> 1.3.5-alt2.gita31d0ab
+- .spec fixes.
+
+* Wed May 20 2015 Konstantin A. Lepikhov <lakostis@altlinux.ru> 1.3.5-alt1.gita31d0ab
+- Updated to 1.3.5-a31d0ab GIT fixing following CVEs:
+  + CVE-2013-4359.
+- Include the fix for Bug 4169 (Unauthenticated copying of files
+  via SITE CPFR/CPTO allowed by mod_copy).
+- Configuration changes:
+  + enabled pcre support;
+  + enabled memcache support (mod_tls_memcache is using it).
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.3rel-alt2.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
+
+* Fri Aug 19 2011 Afanasov Dmitry <ender@altlinux.org> 1.3.4rc2-alt1
+- 1.3.4rc2
 
 * Thu Nov 04 2010 Afanasov Dmitry <ender@altlinux.org> 1.3.3rel-alt2
 - 1.3.3c stable release (closes: #24471)
