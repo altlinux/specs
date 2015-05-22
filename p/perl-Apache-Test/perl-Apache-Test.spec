@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Apache-Test
-Version: 1.38
+Version: 1.39
 Release: alt1
 
 Summary: Test.pm wrapper with helpers for testing Apache
@@ -29,7 +29,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Autoreq: yes, noperl
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/P/PH/PHRED/Apache-Test-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/S/SH/SHAY/Apache-Test-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Dec 09 2006
 BuildRequires: perl-devel perl-libwww apache-mod_perl
@@ -55,6 +55,9 @@ rm -f %buildroot%perl_vendor_privlib/Apache/TestConfigData.pm
 %perl_vendor_privlib/Apache/
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.39-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1
 - automated CPAN update
 
