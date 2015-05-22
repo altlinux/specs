@@ -1,7 +1,7 @@
 %define module Benchmark-Timer
 
 Name: perl-%module
-Version: 0.7103
+Version: 0.7107
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -38,6 +38,9 @@ out and profile your code.
 %perl_vendor_privlib/Benchmark
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.7107-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.7103-alt1
 - automated CPAN update
 
