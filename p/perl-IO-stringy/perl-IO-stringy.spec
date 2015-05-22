@@ -1,14 +1,14 @@
 %define dist IO-stringy
 Name: perl-%dist
-Version: 2.110
-Release: alt2
+Version: 2.111
+Release: alt1
 
 Summary: Filehandle-like I/O support for Perl in-core objects
 Group: Development/Perl
 License: GPL or Artistic
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DS/DSKOLL/IO-stringy-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ particular, IO::Scalar, IO::ScalarArray, and IO::Lines.
 %perl_vendor_privlib/IO
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 2.111-alt1
+- automated CPAN update
+
 * Mon Sep 26 2011 Alexey Tourbin <at@altlinux.ru> 2.110-alt2
 - rebuilt
 
