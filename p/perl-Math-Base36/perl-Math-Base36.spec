@@ -1,6 +1,6 @@
 %define dist Math-Base36
 Name: perl-%dist
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Encoding and decoding of base36 strings
@@ -32,6 +32,9 @@ This module converts to and from Base36 numbers (0..9 - A..Z)
 %perl_vendor_privlib/Math
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
