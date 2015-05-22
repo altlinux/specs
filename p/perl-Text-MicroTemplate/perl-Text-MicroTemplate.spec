@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Text-MicroTemplate
-Version: 0.20
+Version: 0.23
 Release: alt1
 
 Summary: Micro template engine with Perl5 language
@@ -46,6 +46,9 @@ None.
 %perl_vendor_privlib/*
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
