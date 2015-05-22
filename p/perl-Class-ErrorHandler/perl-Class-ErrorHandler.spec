@@ -1,7 +1,7 @@
 BuildRequires: perl(Module/Build.pm)
 %define dist Class-ErrorHandler
 Name: perl-%dist
-Version: 0.03
+Version: 0.04
 Release: alt1
 
 Summary: Base class for error handling
@@ -36,6 +36,9 @@ to communicate error messages back to the calling program.
 %perl_vendor_privlib/Class
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Wed Sep 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - automated CPAN update
 
