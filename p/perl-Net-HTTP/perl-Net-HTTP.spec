@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-HTTP
 Name: perl-%dist
-Version: 6.07
+Version: 6.09
 Release: alt1
 
 Summary: Low-level HTTP connection (client)
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MS/MSCHILLI/Net-HTTP-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/Net-HTTP-%{version}.tar.gz
 Patch: %name-6.07-alt.patch
 
 Conflicts: perl-libwww < 6
@@ -57,6 +57,9 @@ supports HTTP/1.0 and HTTP/1.1.
 %perl_vendor_privlib/Net/HTTPS*
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 6.09-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 6.07-alt1
 - automated CPAN update
 
