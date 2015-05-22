@@ -1,6 +1,6 @@
 %define dist Config-General
 Name: perl-%dist
-Version: 2.56
+Version: 2.58
 Release: alt1
 
 Summary: Generic Config Module
@@ -40,6 +40,9 @@ files.
 %perl_vendor_privlib/Config*
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 2.58-alt1
+- automated CPAN update
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 2.56-alt1
 - automated CPAN update
 
