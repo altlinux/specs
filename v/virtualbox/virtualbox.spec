@@ -57,7 +57,7 @@
 
 Name: virtualbox
 Version: 4.3.26
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -698,6 +698,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Fri May 22 2015 Michael Shigorin <mike@altlinux.org> 4.3.26-alt2
+- Fixed thinko in 4.3.22-alt2 (closes: #31023)
+
 * Sat Apr 11 2015 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.26-alt1
 - Update to new release with Linux 4.0 fixes
 
