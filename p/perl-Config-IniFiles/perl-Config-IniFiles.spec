@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Config-IniFiles
-Version: 2.83
+Version: 2.86
 Release: alt1
 
 Summary: Config-IniFiles - A module for reading .ini-style configuration files
@@ -52,6 +52,9 @@ sections can be grouped, and settings can be accessed from a tied hash.
 %perl_vendor_privlib/Config/
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 2.86-alt1
+- automated CPAN update
+
 * Tue Jan 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.83-alt1
 - automated CPAN update
 
