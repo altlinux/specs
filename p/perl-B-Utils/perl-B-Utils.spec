@@ -1,14 +1,14 @@
 %define dist B-Utils
 Name: perl-%dist
-Version: 0.25
-Release: alt1.1
+Version: 0.26
+Release: alt1
 
 Summary: Helper functions for op tree manipulation
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JJ/JJORE/B-Utils-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/B-Utils-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-ExtUtils-CBuilder perl-ExtUtils-Depends perl-Task-Weaken
@@ -31,6 +31,9 @@ B::Utils - Helper functions for op tree manipulation
 %perl_vendor_archlib/B
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1.1
 - rebuild with new perl 5.20.1
 
