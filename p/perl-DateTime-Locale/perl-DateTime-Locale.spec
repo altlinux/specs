@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist DateTime-Locale
 Name: perl-%dist
-Version: 0.45
-Release: alt3
+Version: 0.46
+Release: alt1
 
 Summary: Localization support for DateTime.pm
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Locale-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -17,7 +18,7 @@ BuildArch: noarch
 %add_findprov_skiplist */DateTime/Locale/[a-qs-z]*.pm
 
 # Automatically added by buildreq on Wed Oct 05 2011
-BuildRequires: perl-List-MoreUtils perl-Module-Build perl-Params-Validate perl-Test-Output
+BuildRequires: perl-List-MoreUtils perl-Module-Build perl-Params-Validate perl-Test-Output perl(Dist/CheckConflicts.pm)
 
 %description
 DateTime::Locale is primarily a factory for the various locale
@@ -38,6 +39,9 @@ on available locales.
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
+- automated CPAN update
+
 * Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.45-alt3
 - restored Provides: perl(DateTime/Locale/root.pm) for MouseX-Types-DateTime
 
