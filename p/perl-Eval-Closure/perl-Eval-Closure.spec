@@ -1,6 +1,6 @@
 %define dist Eval-Closure
 Name: perl-%dist
-Version: 0.12
+Version: 0.13
 Release: alt1
 
 Summary: Safely and cleanly create closures via string eval
@@ -45,6 +45,9 @@ if caching is to work properly).
 %perl_vendor_privlib/Eval
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
