@@ -1,7 +1,7 @@
 %define module IO-Multiplex
 
 Name: perl-%module
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: IO::Multiplex - Manage IO on many file handles
@@ -38,6 +38,9 @@ install -pDm755 contrib/portfw %buildroot%_bindir/portfw
 %perl_vendor_privlib/IO
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
 - automated CPAN update
 
