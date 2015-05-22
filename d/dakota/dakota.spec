@@ -3,13 +3,15 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 %set_compress_method gzip
+%define gccver 4.9
+%set_gcc_version %gccver
 
 %define teuver 10
 Name: dakota
-Version: 6.1
+Version: 6.2
 %define somver 0
 %define sover %somver.0.0
-Release: alt1.1
+Release: alt1
 Epoch: 1
 Summary: Design Analysis Kit for Optimization and Terascale Applications
 License: LGPL v2.1
@@ -22,7 +24,7 @@ Source: Dakota_stable.src.tar
 Requires: lib%name = %epoch:%version-%release
 
 BuildPreReq: libltdl-devel boost-signals-devel boost-filesystem-devel
-BuildPreReq: gcc-fortran gcc-c++ libnumpy-devel python-devel cmake
+BuildPreReq: gcc%gccver-fortran gcc%gccver-c++ libnumpy-devel python-devel cmake
 BuildPreReq: liblapack-devel doxygen libXtst-devel librandom-devel
 BuildPreReq: libteuchos%teuver-devel libnewmat-devel libfftw3-mpi-devel
 BuildPreReq: libICE-devel libSM-devel libX11-devel libXau-devel graphviz
@@ -365,6 +367,9 @@ install -m644 \
 %_libdir/*.a
 
 %changelog
+* Fri May 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:6.2-alt1
+- Version 6.2
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1:6.1-alt1.1
 - rebuild with boost 1.57.0
 
