@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Lingua-EN-Sentence
-Version: 0.27
+Version: 0.28
 Release: alt1
 
 Summary: Lingua-EN-Sentence - Module for splitting text into sentences
@@ -56,6 +56,9 @@ so it notices them.
 %perl_vendor_privlib/Lingua/
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
 - automated CPAN update
 
