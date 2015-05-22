@@ -1,6 +1,6 @@
 %define dist Test-Pod
 Name: perl-%dist
-Version: 1.48
+Version: 1.49
 Release: alt1
 
 Summary: Check for POD errors in files
@@ -33,6 +33,9 @@ its results in standard Test::Simple fashion.
 %perl_vendor_privlib/Test
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.49-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1
 - automated CPAN update
 
