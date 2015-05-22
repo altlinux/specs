@@ -1,6 +1,6 @@
 
 Name:    chef
-Version: 12.0.6
+Version: 12.3.0
 Release: alt1
 
 Summary: Clients for the chef systems integration framework
@@ -118,6 +118,9 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Wed May 20 2015 Andrey Cherepanov <cas@altlinux.org> 12.3.0-alt1
+- New version
+
 * Sat Jan 24 2015 Andrey Cherepanov <cas@altlinux.org> 12.0.6-alt1
 - Initial build in Sisyphus
 
