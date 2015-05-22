@@ -1,5 +1,5 @@
 Name: gcc-common
-Version: 1.4.19
+Version: 1.4.20
 Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
@@ -133,7 +133,7 @@ install -p -m644 {classpath,libgcj}.security %buildroot%_libdir/security/
 
 ln -s gcc_wrapper %buildroot%_bindir/gcc
 
-for n in cc cpp g++ gcc-{ar,nm,ranlib} gccgo gcj gcov gfortran gnat gtreelang protoize unprotoize; do
+for n in cc cpp g++ gcc-{ar,nm,ranlib} gccgo gcj gcov gcov-tool gfortran gnat gtreelang protoize unprotoize; do
 	ln -s gcc "%buildroot%_bindir/$n"
 done
 for n in gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gjnih gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert jv-scan; do
@@ -170,6 +170,7 @@ EOF
 %_bindir/gcc-ranlib
 %_bindir/gccbug
 %_bindir/gcov
+%_bindir/gcov-tool
 %_bindir/protoize
 %_bindir/unprotoize
 %_bindir/%_target_platform-gccbug
@@ -223,6 +224,9 @@ EOF
 %_bindir/gnat*
 
 %changelog
+* Fri May 22 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.20-alt1
+- gcc-common: added gcov-tool symlink.
+
 * Tue Apr 08 2014 Dmitry V. Levin <ldv@altlinux.org> 1.4.19-alt1
 - gcc-common: added gcc-{ar,nm,ranlib} symlinks.
 
