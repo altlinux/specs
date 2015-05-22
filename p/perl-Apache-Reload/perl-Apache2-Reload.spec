@@ -6,7 +6,7 @@
 %define _enable_test 1
 
 Name: perl-Apache-Reload
-Version: 0.12
+Version: 0.13
 Release: alt1
 
 Summary: Apache2::Reload - Reload Perl Modules when Changed on Disk
@@ -19,7 +19,7 @@ BuildRequires: apache2-mod_perl-devel
 
 BuildArch: noarch
 
-Source: http://www.cpan.org/authors/id/P/PH/PHRED/Apache-Reload-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/S/SH/SHAY/Apache-Reload-%{version}.tar.gz
 
 Conflicts: perl-Apache2-Reload < 0.11
 Obsoletes: perl-Apache2-Reload < 0.11
@@ -49,6 +49,9 @@ rm -rf %buildroot%perl_vendor_man3dir/*
 %perl_vendor_privlib/Apache/*
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - renamed to Apache-Reload
 - automated CPAN update
