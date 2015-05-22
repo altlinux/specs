@@ -1,5 +1,5 @@
 Name: liblensfun
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: A library to rectifying the defects introduced by your photographic equipment
@@ -7,8 +7,8 @@ Group: System/Libraries
 License: LGPLv3 and CC-BY-SA
 Url: http://sourceforge.net/projects/lensfun/
 
-Source: http://downloads.sourceforge.net/lensfun/lensfun-%version.tar.bz2
-Patch: lensfun-0.3.0-fc-mandir.patch
+Source: http://downloads.sourceforge.net/lensfun/lensfun-%version.tar.gz
+Patch: lensfun-0.3.1-alt-mandir.patch
 
 BuildRequires: cmake gcc-c++ glib2-devel libpng-devel
 BuildRequires: doxygen rpm-build-python3 python3-module-docutils
@@ -42,10 +42,12 @@ subst 's/\t/      /' apps/lensfun-add-adapter
 
 %build
 %cmake \
+	-DCMAKE_BUILD_TYPE:STRING=Release \
 	-DBUILD_TESTS:BOOL=OFF \
 	-DBUILD_DOC:BOOL=ON
 
 %cmake_build
+%cmake_build man
 
 %install
 %cmakeinstall_std
@@ -69,6 +71,9 @@ subst 's/\t/      /' apps/lensfun-add-adapter
 
 
 %changelog
+* Fri May 22 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Fri Nov 21 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 - removed obsolete patches
