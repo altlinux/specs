@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Sort-Versions
-Version: 1.60
+Version: 1.61
 Release: alt1
 
 Summary: Sort-Versions - a perl 5 module for sorting of revision-like numbers
@@ -88,6 +88,9 @@ style with (possibly) more than one dot is the style to use.
 %perl_vendor_privlib/Sort/
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.61-alt1
+- automated CPAN update
+
 * Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1
 - automated CPAN update
 
