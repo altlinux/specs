@@ -1,14 +1,14 @@
 %define dist libintl-perl
 Name: perl-libintl
-Version: 1.23
-Release: alt1.1
+Version: 1.24
+Release: alt1
 
 Summary: High-Level Interface to Uniforum Message Translation
 License: LGPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GU/GUIDO/libintl-perl-%{version}.tar.gz
 
 # avoid rpmdb bloat
 %add_findprov_skiplist */Locale/RecodeData/*
@@ -44,6 +44,9 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 	%perl_vendor_autolib/Locale
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1.1
 - rebuild with new perl 5.20.1
 
