@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt1.git20150319
+Release: alt1.git20150428
 Summary: asyncio port of botocore, the low-level, data-driven core of boto 3
 License: ASLv2.0
 Group: Development/Python
@@ -129,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Fri May 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20150428
+- New snapshot
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20150319
 - Version 0.1.3
 
