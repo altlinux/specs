@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist List-Compare
 Name: perl-%dist
-Version: 0.49
+Version: 0.52
 Release: alt1
 
 Summary: Compare elements of two or more lists
@@ -35,6 +35,9 @@ two lists at a time.
 %perl_vendor_privlib/List*
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
 - automated CPAN update
 
