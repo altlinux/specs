@@ -1,6 +1,6 @@
 Serial: 1
 Name: perl-ldap
-Version: 0.64
+Version: 0.65
 Release: alt1
 
 Summary: %name - A Client interface to LDAP servers
@@ -55,6 +55,9 @@ mv contrib/tklkup contrib/tklkup.pl
 %_bindir/*
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1:0.65-alt1
+- automated CPAN update
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.64-alt1
 - automated CPAN update
 
