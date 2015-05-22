@@ -1,6 +1,6 @@
 %define dist Lingua-EN-Inflect
 Name: perl-%dist
-Version: 1.895
+Version: 1.899
 Release: alt1
 
 Summary: Convert singular to plural, select "a" or "an"
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DC/DCONWAY/Lingua-EN-Inflect-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ rm Build.PL
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.899-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.895-alt1
 - 1.893 -> 1.895
 
