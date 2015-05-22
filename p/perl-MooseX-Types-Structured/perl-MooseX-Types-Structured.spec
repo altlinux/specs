@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Types-Structured
 Name: perl-%dist
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: Structured Type Constraints for Moose
@@ -35,6 +35,9 @@ explicitly name all the allowed type constraints inside the structure.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
