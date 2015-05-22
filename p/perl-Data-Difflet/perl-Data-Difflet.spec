@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.10
+%define module_version 0.11
 %define module_name Data-Difflet
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Module/Build.pm) perl(Term/ANSIColor.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(autodie.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Module/Build.p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.10
+Version: 0.11
 Release: alt1
 Summary: Ultra special pretty cute diff generator Mark II
 Group: Development/Perl
@@ -35,6 +35,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Thu Dec 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
