@@ -1,20 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(parent.pm)
 # END SourceDeps(oneline)
-%define module_version 0.02
+%define module_version 0.03
 %define module_name Devel-CheckBin
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.02
-Release: alt2
+Version: 0.03
+Release: alt1
 Summary: check that a command is available
 Group: Development/Perl
 License: perl
 URL: https://github.com/tokuhirom/Devel-CheckBin
 
-Source0: http://cpan.org.ua/authors/id/T/TO/TOKUHIROM/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TOKUHIROM/Devel-CheckBin-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- automated CPAN update
+
 * Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2
 - moved to Sysiphus as dependency
 
