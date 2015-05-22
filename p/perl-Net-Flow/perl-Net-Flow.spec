@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Flow
-Version: 1.002
+Version: 1.003
 Release: alt1
 
 Summary: decode and encode NetFlow/IPFIX datagrams
@@ -46,6 +46,9 @@ The Flow module provides the decoding function for NetFlow version 5,9 and IPFIX
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1
 - automated CPAN update
 
