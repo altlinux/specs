@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-CGI-Lite
-Version: 2.05
+Version: 3.00
 Release: alt1
 
 Summary: Process and decode WWW forms and cookies
@@ -50,6 +50,9 @@ behind the decoding process.
 %doc CHANGES README TODO examples
 
 %changelog
+* Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 3.00-alt1
+- automated CPAN update
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1
 - automated CPAN update
 
