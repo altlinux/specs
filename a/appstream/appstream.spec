@@ -2,7 +2,7 @@
 
 Name:    appstream
 Version: 0.8.0
-Release: alt1
+Release: alt2
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
 # lib LGPLv2+, tools GPLv2+
@@ -155,6 +155,9 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %endif
 
 %changelog
+* Fri May 22 2015 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt2
+- Rebuild with new version of xapian-core
+
 * Sat Feb 07 2015 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt1
 - New version
 

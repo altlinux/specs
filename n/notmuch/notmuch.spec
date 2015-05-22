@@ -1,6 +1,6 @@
 Name: notmuch
 Version: 0.19
-Release: alt1
+Release: alt2
 
 Summary: new email reading system called notmuch
 
@@ -105,6 +105,9 @@ EOF
 %_libdir/lib%name.so
 
 %changelog
+* Fri May 22 2015 Terechkov Evgenii <evg@altlinux.org> 0.19-alt2
+- Rebuild with libxapian-1.2.21
+
 * Thu Nov 20 2014 Terechkov Evgenii <evg@altlinux.org> 0.19-alt1
 - 0.19
 

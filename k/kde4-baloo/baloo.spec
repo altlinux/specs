@@ -3,7 +3,7 @@
 %define rname baloo
 Name: kde4-baloo
 Version: 4.14.3
-Release: alt2
+Release: alt2.1
 
 Group: Graphical desktop/KDE
 Summary: A framework for searching and managing metadata
@@ -142,6 +142,9 @@ Requires: %name-common = %EVR
 %_K4libdir/libbalooqueryparser.so.*
 
 %changelog
+* Sun Jun 07 2015 Michael Shigorin <mike@altlinux.org> 4.14.3-alt2.1
+- MNU: rebuilt against current libxapian
+
 * Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt2
 - share polkit actions with KDE5
 

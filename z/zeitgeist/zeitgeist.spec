@@ -7,7 +7,7 @@
 
 Name: zeitgeist
 Version: %major.15
-Release: alt1
+Release: alt2
 
 Summary: Framework providing Desktop activity awareness
 
@@ -213,6 +213,9 @@ rm -rf %buildroot%_prefix/doc/
 %endif
 
 %changelog
+* Fri May 22 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.15-alt2
+- rebuilt against libxapian-1.2.21 & gcc5
+
 * Sun Oct 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.15-alt1
 - 0.9.15_ce9affa8
 
