@@ -1,13 +1,14 @@
 Name: dos2unix
-Version: 6.0.5
+Version: 7.2.2
 Release: alt1
 
 Summary: Text file format converter
-Group: Text tools
 License: Freely distributable
-URL: http://waterlan.home.xs4all.nl/dos2unix.html
+Group: Text tools
 
+Url: http://waterlan.home.xs4all.nl/dos2unix.html
 Source: http://waterlan.home.xs4all.nl/dos2unix/%name-%version.tar.gz
+Source100: %name.watch
 
 Obsoletes: unix2dos
 Provides: unix2dos = %version-%release
@@ -39,6 +40,10 @@ rm -rf man/{es,nl}
 %doc *.txt
 
 %changelog
+* Sat May 23 2015 Michael Shigorin <mike@altlinux.org> 7.2.2-alt1
+- added watch file
+- new version (watch file uupdate)
+
 * Tue Jul 08 2014 Yuri N. Sedunov <aris@altlinux.org> 6.0.5-alt1
 - 6.0.5
 
