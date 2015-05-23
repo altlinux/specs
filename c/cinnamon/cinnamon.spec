@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: cinnamon
-Version: 2.6.0
-Release: alt1
+Version: 2.6.2
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -45,6 +45,7 @@ Requires: muffin >= %muffin_ver
 Requires: libmuffin-gir >= %muffin_ver
 Requires: %name-translations
 Requires: mintlocale
+Requires: gstreamer1.0
 
 # needed for settings (python.req ignores /usr/share/cinnamon-settings/cinnamon-settings.py)
 Requires: python-module-dbus
@@ -261,6 +262,13 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Sun May 24 2015 Vladimir Didenko <cow@altlinux.org> 2.6.2-alt2
+- Fix startup module in cinnamon-settings
+
+* Sat May 23 2015 Vladimir Didenko <cow@altlinux.org> 2.6.2-alt1
+- 2.6.2-6-g4dd9362
+- switch to gstramer1.0
+
 * Wed May 20 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
 - 2.6.0
 
