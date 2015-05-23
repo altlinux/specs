@@ -1,6 +1,8 @@
+%define gst_api_ver 1.0
+
 Name: clementine-codecs
 Version: 1.2.3
-Release: alt1
+Release: alt2
 
 Summary: Meta package with user friendly names for GStreamer codecs
 License: %gpl2plus
@@ -22,7 +24,7 @@ Gstreamer codecs
 Summary: AAC support for clementine
 Group: Sound
 
-Requires: gst-plugins-bad
+Requires: gst-plugins-bad%gst_api_ver
 
 %description -n %name-aac
 This package provides AAC support for clementine
@@ -32,7 +34,7 @@ This package provides AAC support for clementine
 Summary: Apple Lossless support for clementine
 Group: Sound
 
-Requires: gst-plugins-good gst-ffmpeg
+Requires: gst-plugins-good%gst_api_ver gst-libav
 
 %description -n %name-alac
 This package provides Apple Lossless support for clementine
@@ -42,7 +44,7 @@ This package provides Apple Lossless support for clementine
 Summary: Monkey Audio support for clementine
 Group: Sound
 
-Requires: gst-plugins-good gst-ffmpeg
+Requires: gst-plugins-good%gst_api_ver gst-libav
 
 %description -n %name-ape
 This package provides Monkey Audio support for clementine
@@ -52,7 +54,7 @@ This package provides Monkey Audio support for clementine
 Summary: FLAC support for clementine
 Group: Sound
 
-Requires: gst-plugins-good
+Requires: gst-plugins-good%gst_api_ver
 
 %description -n %name-flac
 This package provides FLAC support for clementine
@@ -62,7 +64,7 @@ This package provides FLAC support for clementine
 Summary: MP3 support for clementine
 Group: Sound
 
-Requires: gst-plugins-ugly
+Requires: gst-plugins-ugly%gst_api_ver
 
 %description -n %name-mp3
 This package provides mp3 support for clementine
@@ -72,7 +74,7 @@ This package provides mp3 support for clementine
 Summary: Ogg Vorbis support for clementine
 Group: Sound
 
-Requires: gst-plugins-base
+Requires: gst-plugins-base%gst_api_ver
 
 %description -n %name-ogg
 This package provides Ogg Vorbis support for clementine
@@ -82,7 +84,7 @@ This package provides Ogg Vorbis support for clementine
 Summary: Waveform Audio File Format support for clementine
 Group: Sound
 
-Requires: gst-plugins-ugly gst-ffmpeg
+Requires: gst-plugins-ugly%gst_api_ver gst-libav
 
 %description -n %name-wav
 This package provides Waveform Audio File Format support for clementine
@@ -92,7 +94,7 @@ This package provides Waveform Audio File Format support for clementine
 Summary: Windows Media Audio support for clementine
 Group: Sound
 
-Requires: gst-plugins-ugly gst-ffmpeg
+Requires: gst-plugins-ugly%gst_api_ver gst-libav
 
 %description -n %name-wma
 This package provides Windows Media Audio support for clementine
@@ -128,5 +130,8 @@ This package provides full set of clementine codecs
 %files -n %name-full
 
 %changelog
+* Sat May 23 2015 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt2
+- switch to gstreamer-1.0
+
 * Wed Feb 25 2015 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt1
 - Initial build (closes: #30819)
