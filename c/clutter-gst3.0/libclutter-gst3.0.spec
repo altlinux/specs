@@ -9,7 +9,7 @@
 %def_enable hw
 
 Name: %_name%api_ver
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: Library integrating clutter with GStreamer
@@ -68,6 +68,14 @@ Requires: lib%name-devel = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Clutter-Gst library.
 
+%package -n gst-plugins-clutter%gst_api_ver
+Summary: Clutter plugin for Gstreamer-1.0
+Group: System/Libraries
+Requires: lib%name = %version-%release
+
+%description -n gst-plugins-clutter%gst_api_ver
+This package provides Clutter plugin for Gstreamer (1.0 API version)
+
 %package -n lib%name-devel-doc
 Summary: Clutter-Gst development documentation
 Group: Development/Documentation
@@ -94,8 +102,6 @@ that use Clutter-Gst libraries.
 
 %files -n lib%name
 %_libdir/libclutter-gst-*.so.*
-%_libdir/gstreamer-%gst_api_ver/libgstclutter-%api_ver.so
-%exclude %_libdir/gstreamer-%gst_api_ver/libgstclutter-%api_ver.la
 
 %files -n lib%name-devel
 %_includedir/clutter-*
@@ -110,12 +116,20 @@ that use Clutter-Gst libraries.
 %_girdir/ClutterGst-%api_ver.gir
 %endif
 
+%files -n gst-plugins-clutter%gst_api_ver
+%_libdir/gstreamer-%gst_api_ver/libgstclutter-%api_ver.so
+%exclude %_libdir/gstreamer-%gst_api_ver/libgstclutter-%api_ver.la
+
 %if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
 %endif
 
 %changelog
+* Sun May 24 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.6-alt1
+- 3.0.6
+- moved gstreamer plugin to separate subpackage (BGO #746883)
+
 * Sun Jan 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
 - 3.0.4
 
