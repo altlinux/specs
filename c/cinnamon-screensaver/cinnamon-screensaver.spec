@@ -8,7 +8,7 @@
 
 Name: cinnamon-screensaver
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -85,6 +85,9 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 %doc AUTHORS NEWS README
 
 %changelog
+* Sat May 23 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt2
+- git20150523
+
 * Tue May 19 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
 - 2.6.0
 

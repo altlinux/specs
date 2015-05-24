@@ -5,7 +5,7 @@
 
 Name: %{_name}-session
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -33,7 +33,7 @@ Patch: %name-%version-%release.patch
 
 PreReq: xinitrc libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-cinnamon
-Requires: gstreamer dbus-tools-gui
+Requires: gstreamer1.0 dbus-tools-gui
 Requires: gnome-filesystem
 Requires: cinnamon-settings-daemon
 Requires: nemo
@@ -119,6 +119,10 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Sat May 23 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt2
+- git20150523
+- don't require gstreamer
+
 * Tue May 19 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
 - 2.6.0
 
