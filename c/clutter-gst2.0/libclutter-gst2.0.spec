@@ -1,4 +1,5 @@
 %define _name clutter-gst
+%define ver_major 2.0
 %define api_ver 2.0
 %define gst_api_ver 1.0
 %define gst_ver 1.2
@@ -9,7 +10,7 @@
 %def_enable hw
 
 Name: %_name%api_ver
-Version: 2.0.14
+Version: %ver_major.16
 Release: alt1
 
 Summary: Library integrating clutter with GStreamer
@@ -17,7 +18,7 @@ License: LGPL v2+
 Group: System/Libraries
 Url: http://www.clutter-project.org/
 
-Source: %_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 Patch: clutter-gst-1.9.90-alt-gtk-doc.patch
 
 %{?_enable_hw:Requires: gst-plugins-bad%gst_api_ver}
@@ -86,7 +87,7 @@ that use Clutter-Gst libraries.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files -n lib%name
 %_libdir/libclutter-gst-*.so.*
@@ -112,6 +113,9 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Sun May 24 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0.16-alt1
+- 2.0.16
+
 * Sun Jan 25 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0.14-alt1
 - 2.0.14
 
