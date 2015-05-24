@@ -1,154 +1,62 @@
-%def_without libQgpsmm
-%define abiversion 20
-
-Name: gpsd
-Summary: Service daemon for mediating access to a GPS
-Version: 3.4
-Release: alt4
-License: %bsd
-Group: System/Servers
+Name: libgps19
+Version: 2.94
+Release: alt3
+License: BSD
+Summary: Client libraries in C and Python for talking to a running gpsd or GPS
+Group: Sciences/Geosciences
 Url: http://developer.berlios.de/projects/gpsd/
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
 
-Source: %name-%version.tar
-Requires: libgps%abiversion = %version-%release
+Requires: gpsd
 
-BuildPreReq:	rpm-build-licenses
+Provides: libgps = %version-%release
+
+Source: gpsd-%version.tar
 
 # Automatically added by buildreq on Tue Sep 27 2011
 # optimized out: glib2-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libdbus-devel libdbus-glib libgpg-error libncurses-devel libstdc++-devel libtinfo-devel python-base python-modules xml-common xorg-xproto-devel
-BuildRequires: docbook-dtds docbook-style-xsl gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel python-devel xorg-cf-files xsltproc scons python-module-json chrpath
-
-%if_with libQgpsmm
-BuildRequires: libqt4-core libqt4-devel libqt4-network
-%endif
-
-%set_verify_elf_method unresolved=relaxed
+BuildRequires: docbook-dtds docbook-style-xsl gcc-c++ imake libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel python-devel xorg-cf-files xsltproc
 
 %description
-gpsd is a service daemon that mediates access to a GPS sensor
-connected to the host computer by serial or USB interface, making its
-data on the location/course/velocity of the sensor available to be
-queried on TCP port 2947 of the host computer.  With gpsd, multiple
-GPS client applications (such as navigational and wardriving software)
-can share access to a GPS without contention or loss of data.  Also,
-gpsd responds to queries with a format that is substantially easier to
-parse than NMEA 0183.  A client library is provided for applications.
-
-After installing this RPM, gpsd will automatically connect to USB
-GPSes when they are plugged in and requires no configuration.  For
-serial GPSes, you will need to start gpsd by hand.  Once connected,
-the daemon automatically discovers the correct baudrate, stop bits,
-and protocol. The daemon will be quiescent when there are no
-clients asking for location information, and copes gracefully when the
-GPS is unplugged and replugged.
-
-%package -n libgps%abiversion
-Summary: Client libraries in C and Python for talking to a running gpsd or GPS
-Group: Sciences/Geosciences
-Requires: gpsd
-%description -n libgps%abiversion
 Client libraries in C and Python for talking to a running gpsd or GPS
-
-%if_with libQgpsmm
-%package -n libQgpsmm%abiversion
-Summary: Qt bindings for gpsd
-Group: Sciences/Geosciences
-Requires: gpsd
-%description -n libQgpsmm%abiversion
-This package contains Qt bindings for gpsd
-%endif
-
-%package -n libgps-devel
-Summary: Development files for libgps
-Group: Development/C
-Requires: libgps%abiversion = %version-%release
-%if_with libQgpsmm
-Requires: libQgpsmm%abiversion = %version-%release
-%endif
-
-%description -n libgps-devel
-Development files for libgps
-
-%package -n gpsd-clients
-Summary: Clients for gpsd with an X interface
-Group: Sciences/Geosciences
-Requires: libgps%abiversion = %version-%release
-
-%description -n gpsd-clients
-xgpsspeed is a speedometer that uses position information from the GPS.
-It accepts an -h option and optional argument as for gps, or a -v option
-to dump the package version and exit. Additionally, it accepts -rv
-(reverse video) and -nc (needle color) options.
-
-cgps resembles xgps, but without the pictorial satellite display.  It
-can run on a serial terminal or terminal emulator.
-
-%package -n python-module-gps
-Summary: Python bindings to libgps
-Group: Development/Python
-
-%description -n python-module-gps
-Python bindings to libgps
+Compatibility package - old library
 
 %prep
-%setup
+%setup -n gpsd-%version
 
 %build
-scons prefix=/usr libdir=%_libdir
+%autoreconf
+%configure --enable-dbus
+
+%make_build
+%make xgps xgpsspeed
 
 %install
-DESTDIR=%buildroot scons  install
-find %buildroot -name '*.so' | xargs -n 1 chrpath -d
+%makeinstall
+# additional gpsd files
+mkdir -p %buildroot%_libdir/X11/app-defaults/
+cp xgpsspeed.ad %buildroot%_libdir/X11/app-defaults/xgpsspeed
+mkdir -p %buildroot%_sysconfdir/hotplug/usb
+cp gpsd.hotplug gpsd.usermap %buildroot%_sysconfdir/hotplug/usb/
+
+rm -rf %buildroot%_sbindir
+rm -rf %buildroot%_bindir
+rm -f %buildroot%_libdir/libgps*.so
+rm -rf %buildroot%_sysconfdir
+rm -rf %buildroot%_includedir
+rm -rf %buildroot%_datadir
+rm -rf %buildroot%python_sitelibdir_noarch
+rm -rf %buildroot%_libdir/X11
+rm -rf %buildroot%_pkgconfigdir
+rm -f %buildroot%_libdir/libgps*.so
+rm -f %buildroot%_libdir/libgps*.a
 
 %files
-%doc README INSTALL COPYING
-%_sbindir/gpsd
-%_sbindir/gpsdctl
-%_man8dir/gpsd*
-%_man5dir/*
-
-%files -n libgps%abiversion
 %_libdir/libgps*.so.*
 
-%if_with libQgpsmm
-%files -n libQgpsmm%abiversion
-%_libdir/libQgps*.so.*
-%endif
-
-%files -n libgps-devel
-%if_with libQgpsmm
-%_libdir/libQgpsmm.so
-%_libdir/libQgpsmm.prl
-%endif
-%_libdir/libgps*.so
-%_pkgconfigdir/*.pc
-%_includedir/*.h
-%_man3dir/*
-
-%files -n gpsd-clients
-%_bindir/*
-%_man1dir/*
-
-%files -n python-module-gps
-%python_sitelibdir/gps/
-%python_sitelibdir/*.egg-info
-
 %changelog
-* Sun May 24 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.4-alt4
-- Disabled libQgpsmm temporary
-  (undefined symbol _Z17libgps_dump_stateP10gps_data_t)
-
-* Sun May 24 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.4-alt3
-- Renamed libs for according SharedLibs Policy.
-
-* Sun May 24 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.4-alt2
-- Built libQgpsmm
-- added egg-info file to python-module-gps
-
-* Fri Mar 02 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 3.4-alt1
-- 3.4
-- build system changed to scons
+* Sun May 24 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.94-alt3
+- Compatibility package: built libgps only
 
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.94-alt2.1
 - Rebuild with Python-2.7
