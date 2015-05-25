@@ -1,5 +1,5 @@
 Name: ethtool
-Version: 3.2
+Version: 3.18
 Release: alt1
 Epoch: 1
 
@@ -58,6 +58,9 @@ install -pDm644 ethtool.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %doc AUTHORS NEWS README.ALT
 
 %changelog
+* Sat May 23 2015 Denis Pynkin <dans@altlinux.org> 1:3.18-alt1
+- 3.18
+
 * Sat Apr 21 2012 Michael Shigorin <mike@altlinux.org> 1:3.2-alt1
 - 3.2
 
