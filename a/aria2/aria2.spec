@@ -1,5 +1,5 @@
 Name: aria2
-Version: 1.18.9
+Version: 1.19.0
 Release: alt1
 
 Summary: aria2 - a simple utility for downloading files faster
@@ -70,9 +70,12 @@ Currently it has following features:
 #__install -pD -m755 src/aria2c %buildroot%_bindir/aria2c
 
 %makeinstall
-%find_lang aria2 --with-man --all-name
+%find_lang aria2 --all-name
+#find_lang aria2 --with-man --all-name
 
 ln -s aria2c  %buildroot%_bindir/%name
+
+#sed -i -e '1 s/^/.\\" -*- mode: troff; coding: utf8 -*-\n/;' doc/manual-src/ru/_build/man/aria2c.1
 
 bzip2 doc/manual-src/en/_build/man/aria2c.1
 bzip2 doc/manual-src/ru/_build/man/aria2c.1
@@ -84,7 +87,7 @@ install -pD -m644 doc/manual-src/ru/_build/man/aria2c.1.bz2 %buildroot%_mandir/r
 install -pD -m644 doc/manual-src/pt/_build/man/aria2c.1.bz2 %buildroot%_mandir/pt/man1/aria2c.1.bz2
 
 mkdir %buildroot%_docdir/%name-%version
-mv %buildroot%_docdir/aria2/README.* %buildroot%_docdir/%name-%version
+mv %buildroot%_docdir/aria2/* %buildroot%_docdir/%name-%version
 #mkdir %buildroot%_docdir/%name-%version/bash_completion
 #mv %buildroot%_docdir/aria2/bash_completion/* %buildroot%_docdir/%name-%version/bash_completion
 #mkdir %buildroot%_docdir/%name-%version/xmlrpc
@@ -92,18 +95,25 @@ mv %buildroot%_docdir/aria2/README.* %buildroot%_docdir/%name-%version
 
 
 %files -f aria2.lang
-%doc AUTHORS ChangeLog README*
+#doc AUTHORS ChangeLog README*
 %_bindir/%name
 %_bindir/aria2c
 %_man1dir/aria2c.1.bz2
 %_mandir/*/man1/aria2c.1.bz2*
-%_docdir/%name/bash_completion/*
-%_docdir/%name/xmlrpc/*
+%_docdir/%name-%version/*
+%_docdir/%name-%version/bash_completion/*
+%_docdir/%name-%version/xmlrpc/*
 
 #_datadir/locale/*/LC_MESSAGES/aria2.mo
 
 
 %changelog
+* Mon May 25 2015 Ilya Mashkin <oddity@altlinux.ru> 1.19.0-alt1
+- 1.19.0
+
+* Sat Feb 21 2015 Ilya Mashkin <oddity@altlinux.ru> 1.18.9-alt2
+- fix Russian man encoding (Thanks to Dmitry Levin)
+
 * Wed Feb 04 2015 Ilya Mashkin <oddity@altlinux.ru> 1.18.9-alt1
 - 1.18.9
 
