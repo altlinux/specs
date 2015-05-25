@@ -1,5 +1,5 @@
 Name: thunar
-Version: 1.6.9
+Version: 1.6.10
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -119,6 +119,9 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Mon May 25 2015 Mikhail Efremov <sem@altlinux.org> 1.6.10-alt1
+- Updated to 1.6.10.
+
 * Mon May 18 2015 Mikhail Efremov <sem@altlinux.org> 1.6.9-alt1
 - Updated to 1.6.9.
 
