@@ -1,6 +1,6 @@
 Name: gnulib
-Version: 0.1.114.caf1b31
-Release: alt2
+Version: 0.1.443.875ec93
+Release: alt1
 
 Summary: GNU Portability Library
 License: Freely distributable
@@ -27,8 +27,11 @@ source repository.
 install -pm755 %_datadir/gnu-config/config.{guess,sub} build-aux/
 # Thanks to USE_POSIX_THREADS_WEAK feature, we have to link
 # tests with @LIBMULTITHREAD@ in --no-as-needed mode.
-grep -rlZ '^test_.*@LIBMULTITHREAD@' modules |
-	xargs -r0 sed -i 's/^\(test_[^ +=]\+\)_LDADD.*@LIBMULTITHREAD@.*/&\n\1_LDFLAGS = -Wl,--no-as-needed/' --
+# Starting with commit v0.1-211-gc76f7ed, gnulib sets LIBMULTITHREAD
+# to -pthread instead of -lpthread, and gcc -Wl,--no-as-needed does not apply
+# to gcc -pthread.
+grep -lZ '^test_.*@LIBMULTITHREAD@' modules/*-tests |
+	xargs -r0 sed -i 's/^\(test_[^ +=]\+\)\(_LDADD.*\)@LIBMULTITHREAD@\(.*\)/\1\2-lpthread\3\n\1_LDFLAGS = -Wl,--no-as-needed/' --
 
 %build
 make info
@@ -47,6 +50,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Mon May 25 2015 Dmitry V. Levin <ldv@altlinux.org> 0.1.443.875ec93-alt1
+- Updated to gnulib snapshot v0.1-443-g875ec93.
+
 * Fri Feb 21 2014 Dmitry V. Levin <ldv@altlinux.org> 0.1.114.caf1b31-alt2
 - Adjusted link rules to link tests with -lpthread in --no-as-needed mode.
 
