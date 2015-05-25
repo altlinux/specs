@@ -9,34 +9,32 @@
 %define debug_package %{nil}
 
 Name:                wicd
-Version:             1.7.2.4
-Release:             alt2
+Version:             1.7.3
+Release:             alt1
 Summary:             Wireless and wired network connection manager
 
 Group:               System/Base
 License:             GPLv2+
-URL:                 http://wicd.sourceforge.net/
-Source0:             http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+URL:                 https://launchpad.net/wicd/
+Source0:             https://launchpad.net/wicd/1.7/%{version}/+download/%{name}-%{version}.tar.gz
 Source1:             org.wicd.daemon.service
 
-Patch0:              wicd-1.7.0-remove-WHEREAREMYFILES.patch
-Patch1:              wicd-1.7.1-dbus-failure.patch
+Patch0:              wicd-1.7.3-remove-WHEREAREMYFILES.patch
+Patch1:              wicd-1.7.3-dbus-failure.patch
 Patch2:              wicd-1.7.2.4-dbus-policy.patch
-Patch3:              wicd-1.7.1-DaemonClosing.patch
-Patch4:              wicd-1.7.2.4-unicode.patch
-Patch5:              770_769.diff
-Patch6:              wicd-1.7.2.4-check-for-daemon.patch
-Patch7:              wicd-1.7.2.4-curses_bz894646.patch
-Patch8:              wicd-1.7.2.4-sanitize.patch
+Patch3:              wicd-1.7.3-DaemonClosing.patch
+Patch4:              wicd-1.7.3-unicode.patch
+Patch5:              wicd-1.7.3-sanitize.patch
 
 BuildRequires(pre):  rpm-build-python
 BuildRequires: 	     python-module-babel
 BuildRequires:       babel
 BuildRequires:       python-devel
 BuildRequires:       desktop-file-utils
+BuildRequires:       gettext
 
-Requires:            pm-utils >= 1.2.4
 Requires:            %{name}-common = %{version}-%{release}
+BuildArch:	     noarch
 
 # TMP HACK
 #Requires: wicd-gtk = %version-%release
@@ -107,45 +105,33 @@ Client program for wicd that uses a GTK+ interface.
 %patch3 -p1
 
 # Unicode string handling problems
-%patch4 -p1
-
-# Upstream patch:
-# http://bazaar.launchpad.net/~wicd-devel/wicd/experimental/revision/770
-# For https://bugzilla.redhat.com/show_bug.cgi?id=981667
-%patch5 -p0
-
-# In wicd-client.py (the GTK+ client), make sure we were able to talk to
-# the daemon before running.  If we could not, exit as a failure and explain
-# to the user what they should try.
-# https://bugzilla.redhat.com/show_bug.cgi?id=1074315
-%patch6 -p1
-
-# Fix curses client crash on startup.
-# https://bugzilla.redhat.com/show_bug.cgi?id=894646
-%patch7 -p1
+%patch4 -p1 -b .orig
 
 # Prevent crash when saving network settings
 # Upstream bug report and patch:
 # https://bugs.launchpad.net/wicd/+bug/993912
-%patch8 -p1
- 
+%patch5 -p1
+
 %build
 rm -f po/ast.po
+export LANG=POSIX
 %{__python} setup.py configure \
     --distro redhat \
     --lib %{_libdir} \
     --share %{_datadir}/wicd \
     --etc %{_sysconfdir}/wicd \
     --bin %{_bindir} \
-    --pmutils %{_libdir}/pm-utils/sleep.d \
     --log %{_var}/log \
     --systemd %{_unitdir} \
-    --no-install-init
-%{__python} setup.py build
-%{__python} setup.py compile_translations
+    --no-install-init \
+    --no-install-pmutils \
+    --no-install-gnome-shell-extensions
+%python_build
+%__python setup.py compile_translations
 
 %install
-%{__python} setup.py install --skip-build --no-compile --root %{buildroot}
+export LANG=POSIX
+%python_build_install
 sed -i -e '/^#!\//, 1d'  %{buildroot}%{_datadir}/wicd/backends/be-external.py
 sed -i -e '/^#!\//, 1d'  %{buildroot}%{_datadir}/wicd/backends/be-ioctl.py
 sed -i -e '/^#!\//, 1d'  %{buildroot}%{_datadir}/wicd/cli/wicd-cli.py
@@ -191,10 +177,9 @@ desktop-file-install \
 %preun_service wicd
 
 %files
-%{_libdir}/pm-utils/sleep.d/55wicd
+%doc AUTHORS CHANGES LICENSE NEWS README other/WHEREAREMYFILES
 
 %files common -f %{name}.lang
-%doc AUTHORS CHANGES LICENSE NEWS README other/WHEREAREMYFILES
 %dir %{python_sitelibdir_noarch}/wicd
 %dir %{_sysconfdir}/wicd
 %dir %{_sysconfdir}/wicd/encryption
@@ -224,6 +209,7 @@ desktop-file-install \
 %config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wired_8021x
 %config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa
 %config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa-psk
+%config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa-psk-hex
 %config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa-peap
 %config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa2-leap
 %config(noreplace) %{_sysconfdir}/wicd/encryption/templates/wpa2-peap
@@ -265,16 +251,20 @@ desktop-file-install \
 
 %files gtk
 %dir %{_datadir}/wicd/gtk
-%dir %{_datadir}/pixmaps/wicd
 %{_sysconfdir}/xdg/autostart/wicd-tray.desktop
 %{_datadir}/wicd/gtk/*
-%{_datadir}/pixmaps/wicd/*
-%{_datadir}/pixmaps/wicd-gtk.xpm
 %{_bindir}/wicd-gtk
 %{_datadir}/icons/hicolor/*/apps/wicd-gtk.png
 %{_datadir}/icons/hicolor/scalable/apps/wicd-gtk.svg
+%{_datadir}/pixmaps/wicd-gtk.xpm
+%dir %{_datadir}/wicd/icons
+%{_datadir}/wicd/icons/*
 
 %changelog
+* Sat May 23 2015 Andrey Cherepanov <cas@altlinux.org> 1.7.3-alt1
+- New version
+- Remove dependency on pm-utils (https://bugzilla.redhat.com/show_bug.cgi?id=1208313)
+
 * Wed Apr 15 2015 Andrey Cherepanov <cas@altlinux.org> 1.7.2.4-alt2
 - Initial build in Sisyphus (ALT #30838)
 
