@@ -1,5 +1,5 @@
 Name: pcre
-Version: 8.33
+Version: 8.37
 Release: alt2
 
 Summary: Perl-compatible regular expression library
@@ -54,17 +54,18 @@ Provides: %name-devel-static = %version
 Obsoletes: %name-devel-static < %version
 Requires: lib%name-devel = %version-%release
 
-%package -n lib%{name}cpp
+%package -n lib%{name}cpp3
 Summary: Perl-compatible regular expressions C++ wrapper shared library
 Summary(ru_RU.UTF-8): Разделяемая библиотека для работы с регулярными выражениями Perl-стиля на C++
 Group: System/Libraries
+Provides: lib%{name}cpp = %version
 Requires: %libname = %version-%release
 
 %package -n lib%{name}cpp-devel
 Summary: Perl-compatible regular expressions C++ wrapper development library and header files
 Summary(ru_RU.UTF-8): Заголовочные файлы и библиотека для разработки на C++ с использованием PCRE
 Group: Development/C
-Requires: lib%{name}cpp = %version-%release, lib%name-devel = %version-%release
+Requires: lib%{name}cpp3 = %version-%release, lib%name-devel = %version-%release
 
 %package -n pcretest
 Summary: A program for testing Perl-compatible regular expressions
@@ -116,7 +117,7 @@ This package contains libpcre16 runtime dhared library.
 
 Данный пакет содержит динамическую разделяемую библиотеку libpcre16.
 
-%description -n lib%{name}cpp
+%description -n lib%{name}cpp3
 The PCRE library is a set of functions that implement regular expression
 pattern matching using the same syntax and semantics as Perl, with
 just a few differences.  The current implementation of PCRE corresponds
@@ -124,7 +125,7 @@ approximately with Perl 5.8.
 
 This package contains PCRE C++ wrapper shared library.
 
-%description -n lib%{name}cpp -l ru_RU.UTF-8
+%description -n lib%{name}cpp3 -l ru_RU.UTF-8
 Библиотека PCRE (Perl-compatible regular expressions) предоставляет набор
 функций для работы с регулярными выражениями, синтаксис и смысл которых
 полностью совпадают со встроенными регулярными выражениями языка Perl
@@ -275,7 +276,7 @@ rm %buildroot%_libdir/*.la
 %exclude %docdir/README
 
 %if_enabled cpp
-%files -n lib%{name}cpp
+%files -n lib%{name}cpp3
 %_libdir/libpcrecpp.so.*
 
 %files -n lib%{name}cpp-devel
@@ -295,6 +296,12 @@ rm %buildroot%_libdir/*.la
 %_man1dir/pcretest.*
 
 %changelog
+* Tue May 26 2015 Dmitry V. Levin <ldv@altlinux.org> 8.37-alt2
+- Bumped libpcrecpp soname due to libstdc++ ABI change.
+
+* Tue May 26 2015 Dmitry V. Levin <ldv@altlinux.org> 8.37-alt1
+- Updated to 8.37 (closes: #24958).
+
 * Thu May 30 2013 Dmitry V. Levin <ldv@altlinux.org> 8.33-alt2
 - Disabled JIT compiling support because it pulls in pthread library.
 
