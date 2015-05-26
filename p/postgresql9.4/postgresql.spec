@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     4
 %define postgresql_subminor  2
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -765,6 +765,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Tue May 26 2015 Alexei Takaseev <taf@altlinux.org> 9.4.2-alt2
+- rebuild with rpm-build-4.0.4-alt100.84
+
 * Thu May 21 2015 Alexei Takaseev <taf@altlinux.org> 9.4.2-alt1
 - 9.4.2
 
