@@ -9,13 +9,13 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        31.6.0
+Version:        38.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
 
-Packager:	Alexey Gladkov <legion@altlinux.ru>
+Packager:	Andrey Cherepanov <cas@altlinux.ru>
 
 Source0:	firefox-source.tar
 Source1:	rpm-build.tar
@@ -30,14 +30,17 @@ Patch6:		firefox3-alt-disable-werror.patch
 Patch14:	firefox-fix-install.patch
 Patch16:	firefox-cross-desktop.patch
 #Patch17:	firefox-disable-installer.patch
+Patch18:	mozilla-bug-1153109-enable-stdcxx-compat.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildRequires: rpm-macros-alternatives
-BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
+BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend glibc-kernheaders
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXdamage-devel
 BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: zip unzip
@@ -68,9 +71,9 @@ BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
 # Mozilla requires
-BuildRequires: libnspr-devel       >= 4.9.6
-BuildRequires: libnss-devel        >= 3.14.3
-BuildRequires: libnss-devel-static >= 3.14.3
+BuildRequires: libnspr-devel       >= 4.10.8
+BuildRequires: libnss-devel        >= 3.18.0
+BuildRequires: libnss-devel-static >= 3.18.0
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -108,6 +111,7 @@ tar -xf %SOURCE2
 %patch14 -p1
 %patch16 -p1
 #patch17 -p1
+%patch18 -p1
 
 #echo firefox_version > browser/config/version.txt
 
@@ -284,6 +288,22 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Mon May 25 2015 Andrey Cherepanov <cas@altlinux.org> 38.0.1-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2015-58 Mozilla Windows updater can be run outside of application directory
+  + MFSA 2015-57 Privilege escalation through IPC channel messages
+  + MFSA 2015-56 Untrusted site hosting trusted page can intercept webchannel responses
+  + MFSA 2015-55 Buffer overflow and out-of-bounds read while parsing MP4 video metadata
+  + MFSA 2015-54 Buffer overflow when parsing compressed XML
+  + MFSA 2015-53 Use-after-free due to Media Decoder Thread creation during shutdown
+  + MFSA 2015-52 Sensitive URL encoded information written to Android logcat
+  + MFSA 2015-51 Use-after-free during text processing with vertical text enabled
+  + MFSA 2015-50 Out-of-bounds read and write in asm.js validation
+  + MFSA 2015-49 Referrer policy ignored when links opened by middle-click and context menu
+  + MFSA 2015-48 Buffer overflow with SVG content and CSS
+  + MFSA 2015-47 Buffer overflow parsing H.264 video with Linux Gstreamer
+
 * Thu Apr 02 2015 Andrey Cherepanov <cas@altlinux.org> 31.6.0-alt1
 - New ESR version
 - Security fixes:

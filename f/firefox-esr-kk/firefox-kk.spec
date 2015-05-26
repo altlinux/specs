@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-esr-kk
-Version:	31.6.0
+Version:	38.0.1
 Release:	alt1
 Summary:	Kazakh (KZ) Language Pack for Firefox
 
@@ -72,6 +72,12 @@ ln -s %_datadir/myspell/kk_KZ.dic %buildroot/%cid_dict_dir/dictionaries/kk.dic
 %cid_dict_dir
 
 %changelog
+* Tue May 26 2015 Andrey Cherepanov <cas@altlinux.org> 38.0.1-alt1
+- New version
+
+* Wed May 13 2015 Andrey Cherepanov <cas@altlinux.org> 38.0-alt1
+- New version
+
 * Thu Apr 02 2015 Andrey Cherepanov <cas@altlinux.org> 31.6.0-alt1
 - New version
 
