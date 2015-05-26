@@ -1,6 +1,6 @@
 Name: wine-vanilla
 Version: 1.7.43
-Release: alt1
+Release: alt2
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -41,7 +41,9 @@ BuildRequires: libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libusb-devel libieee1284-devel
-BuildRequires: libv4l-devel gstreamer-devel gst-plugins-devel
+BuildRequires: libv4l-devel
+BuildRequires: libunixODBC-devel
+#BuildRequires: gstreamer-devel gst-plugins-devel
 
 # udev needed for udev version detect
 BuildRequires: libudev-devel udev libdbus-devel
@@ -84,6 +86,7 @@ Requires: lib%name = %version-%release
 Conflicts: wine
 
 Provides: winetricks
+Requires: cabextract
 
 #=========================================================================
 
@@ -95,15 +98,25 @@ which allows unmodified Windows 3.x/9x/NT binaries to run on x86 and x86_64
 Unixes. Wine does not require MS Windows, but it can use native system
 .dll files if they are available.
 
-%package -n %name-test
+%package test
 Summary: WinAPI test for Wine
 Summary(ru_RU.UTF-8): Тест WinAPI для Wine
 Group: Emulators
 Requires: %name = %version-%release
 
-%description -n %name-test
+%description test
 WinAPI test for Wine (unneeded for usual work).
 Warning: it may kill your X server suddenly.
+
+%package full
+Summary: Wine meta package
+Summary(ru_RU.UTF-8): Мета пакет Wine
+Group: Emulators
+Requires: %name = %version-%release
+Requires: lib%name-gl = %version-%release
+
+%description full
+Wine meta package
 
 %package -n lib%name
 Summary: Main library for Wine
@@ -259,7 +272,6 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %_man1dir/wineserver.*
 %_man1dir/winedbg.*
 
-
 %files -n lib%name
 %doc LICENSE AUTHORS COPYING.LIB
 %_libdir/libwine*.so.*
@@ -297,6 +309,7 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/glu32.dll.so
 %exclude %_libdir/wine/wined3d.dll.so
 
+%files full
 
 %files -n lib%name-twain
 %_libdir/wine/twain*
@@ -347,6 +360,11 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Tue May 26 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.43-alt2
+- add unixODBC-devel buildreq (closes: #31024)
+- add cabextract require (closes: #31024)
+- add wine-vanilla-full package (closes: #31024)
+
 * Tue May 19 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.43-alt1
 - new version 1.7.43
 - build with liblcms2 (closes: #31006)
