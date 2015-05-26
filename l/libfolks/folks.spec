@@ -10,7 +10,7 @@
 %def_enable zeitgeist
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GObject contact aggregation library
@@ -175,6 +175,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Tue May 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
+- 0.11.1
+
 * Fri Feb 13 2015 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
 - 0.11.0
 
