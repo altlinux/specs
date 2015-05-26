@@ -1,10 +1,11 @@
 %define _name appstream-glib
+%define ver_major 0.4
 %define api_ver 1.0
 %def_disable rpm
 %def_enable installed_tests
 
 Name: lib%_name
-Version: 0.3.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -159,12 +160,12 @@ the functionality of the installed %_name library.
 %files -n libappstream-builder
 %_bindir/appstream-builder
 %_libdir/libappstream-builder.so.*
-%dir %_libdir/asb-plugins
-%_libdir/asb-plugins/*.so
+%dir %_libdir/asb-plugins-2
+%_libdir/asb-plugins-2/*.so
 %_man1dir/appstream-builder.1.*
 %_datadir/bash-completion/completions/appstream-builder
 
-%exclude %_libdir/asb-plugins/*.la
+%exclude %_libdir/asb-plugins-2/*.la
 
 %files -n libappstream-builder-devel
 %_libdir/libappstream-builder.so
@@ -186,6 +187,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Tue May 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Tue Mar 31 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
 - 0.3.6
 
