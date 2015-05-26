@@ -1,5 +1,5 @@
 Name: gettext
-Version: 0.18.3.2
+Version: 0.19.4
 Release: alt1
 
 %define libintl libintl3
@@ -15,20 +15,15 @@ Source1: msghack.py
 Source2: msghack.1
 Source3: gettext-po-mode-start.el
 
-Patch1: 0001-po-gram-fix-memory-leaks.patch
-Patch2: 0002-libintl-Fix-pointer-use-after-free-and-make-error-ha.patch
-Patch3: 0003-msgfmt-adjust-the-default-value-of-PO-Revision-Date-.patch
-Patch4: 0004-Clear-error_message_count-before-parsing-PO-files.patch
+Patch12: gettext-deb-msgfmt-default-little-endian.patch
 
-Patch11: gettext-0.18.1.1-deb-project-id.patch
-Patch12: gettext-0.18.1.1-deb-msgfmt-default-little-endian.patch
-
-Patch21: gettext-0.18.3-alt-gettextize-quiet.patch
-Patch22: gettext-0.18.3-alt-autopoint-cvs-git.patch
-Patch23: gettext-0.18.3-alt-tmp-autopoint.patch
-Patch24: gettext-0.18-alt-gcc.patch
-Patch25: gettext-0.18-alt-doc.patch
-Patch26: gettext-0.18.3-alt-urlview.patch
+Patch20: gettext-alt-autogen.patch
+Patch21: gettext-alt-gettextize-quiet.patch
+Patch22: gettext-alt-autopoint-cvs-git.patch
+Patch23: gettext-alt-tmp-autopoint.patch
+Patch24: gettext-alt-gcc.patch
+Patch25: gettext-alt-doc.patch
+Patch26: gettext-alt-urlview.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -172,14 +167,9 @@ a formatted output library for C++.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
-%patch11 -p1
 %patch12 -p1
 
+%patch20 -p1
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
@@ -202,6 +192,10 @@ rm -rf archive
 # Regenerate texinfo documentation.
 find -type f -name '*.info*' -delete
 
+# Taken from gnulib.
+grep -lZ '^test_.*@LIBMULTITHREAD@' gettext-tools/gnulib-tests/Makefile.* |
+        xargs -r0 sed -i 's/^\(test_[^ +=]\+\)\(_LDADD.*\)@LIBMULTITHREAD@\(.*\)/\1\2-lpthread\3\n\1_LDFLAGS = -Wl,--no-as-needed/' --
+
 %build
 %if_with java
 if [ ! -f /proc/self/maps ]; then
@@ -209,7 +203,7 @@ if [ ! -f /proc/self/maps ]; then
 	exit 1
 fi
 %endif
-./autogen.sh --quick --skip-gnulib
+./autogen.sh --skip-gnulib
 %add_optflags -fno-strict-aliasing
 export ac_cv_prog_STRIP=:
 %configure --enable-shared \
@@ -334,6 +328,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Tue May 26 2015 Dmitry V. Levin <ldv@altlinux.org> 0.19.4-alt1
+- Updated to 0.19.4 (closes: #31007).
+
 * Tue Jan 07 2014 Dmitry V. Levin <ldv@altlinux.org> 0.18.3.2-alt1
 - Updated to 0.18.3.2.
 
