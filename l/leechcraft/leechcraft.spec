@@ -1,22 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable torrent
+%def_disable musiczombie
 
 Name: leechcraft
-Version: 0.6.70
-Release: alt4
+Version: 0.6.75
+Release: alt0.1
 
 Summary: LeechCraft DE
 License: Boost Software License
 Group: Graphical desktop/Other
 URL: http://%name.org
 
-# e4303f5d379
+# 00a4cac2
 Source: %name-%version.tar
 
 %define qxmpp_ver 0.7.6
 %define qwt_ver 6.1.0
 %define torrent_ver 0.16.19
-%define gst_api_ver 0.10
+%define gst_api_ver 1.0
 
 Requires: %name-data = %version-%release
 Requires: polkit udisks2
@@ -36,7 +37,8 @@ Requires: openbox-base dbus-tools-gui
 %add_findreq_skiplist %_datadir/%name/fenet/wms/*.sh
 %add_findreq_skiplist %_datadir/%name/azoth/lc_azoth_modnok_latexconvert.sh
 
-BuildRequires: gcc-c++
+%set_gcc_version 4.9
+BuildRequires: gcc4.9-c++
 BuildRequires: cmake libqt4-devel qt4-mobility-devel libqtermwidget-devel libqwt6-devel >= %qwt_ver
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: boost-asio-devel boost-locale-devel
@@ -53,14 +55,14 @@ BuildRequires: libspeex-devel libqxmpp-devel >= %qxmpp_ver
 BuildRequires: libXcomposite-devel libXdamage-devel libxkbfile-devel
 BuildRequires: libmagic-devel liblastfm-devel libudev-devel libpoppler-qt4-devel libpoppler-cpp-devel libdjvu-devel
 BuildRequires: libvlc-devel libspectre-devel libnl-devel libsensors3-devel libudisks2-devel
-BuildRequires: libtidy-devel
-#BuildRequires: libavformat-devel libswscale-devel libpostproc-devel libswresample-devel
+BuildRequires: libtidy-devel libGeoIP-devel
+%{?_enable_musiczombie:BuildRequires: libavformat-devel libswscale-devel libpostproc-devel libswresample-devel}
 
 %description
 LeechCraft is a free open source cross-platform modular live environment.
 
 %package data
-Summary: Arch independent files for LeechCraft 
+Summary: Arch independent files for LeechCraft
 Group: Graphical desktop/Other
 BuildArch: noarch
 
@@ -84,10 +86,11 @@ Development headers for LeechCraft.
 	-DHUNSPELL_LIBRARIES:FILEPATH=%_libdir/libhunspell.so \
 	-DENABLE_VROOBY_UDISKS2=ON \
 	-DENABLE_VROOBY_UDISKS=OFF \
-	-DENABLE_MUSICZOMBIE:BOOL=OFF \
 	-DENABLE_SYNCER:BOOL=OFF \
 	-DENABLE_OTLOZHU_SYNC:BOOL=OFF \
 	-DENABLE_XPROXY:BOOL=OFF \
+	-DUSE_GSTREAMER_10:BOOL=ON \
+	%{?_disable_musiczombie:-DENABLE_MUSICZOMBIE:BOOL=OFF} \
 	%{?_disable_torrent:-DENABLE_TORRENT:BOOL=OFF}
 
 %cmake_build
@@ -156,6 +159,10 @@ __EOF__
 %_datadir/%name/cmake/
 
 %changelog
+* Tue May 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.75-alt0.1
+- 0.6.75_00a4cac2
+- built against gstreamer-1.0 using gcc-4.9
+
 * Thu May 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.70-alt4
 - updated to 0.6.70_e4303f5d
 - enabled torrent plugin
