@@ -1,6 +1,6 @@
 Name: fuse
-Version: 2.9.3
-Release: alt4
+Version: 2.9.4
+Release: alt1
 
 Summary: a tool for creating virtual filesystems
 License: GPL
@@ -108,6 +108,9 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed May 27 2015 Denis Smirnov <mithraen@altlinux.ru> 2.9.4-alt1
+- 2.9.4
+
 * Sun Feb 09 2014 Denis Smirnov <mithraen@altlinux.ru> 2.9.3-alt4
 - fix wheelonly mode, thanks legion@ (ALT#29814)
 
