@@ -1,7 +1,7 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 
 Name: ufraw
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: UFRaw is a graphical utility for opening and converting RAW files from digital photo cameras
@@ -10,13 +10,17 @@ Group: Graphics
 
 Url: http://ufraw.sourceforge.net/
 Source: http://downloads.sourceforge.net/ufraw/ufraw-%version.tar.gz
+# https://sourceforge.net/p/ufraw/bugs/396/
+Patch: ufraw-0.21-CVE-2015-3885.patch
 
 PreReq: GConf
 
-BuildPreReq: liblcms2-devel
+%set_gcc_version 4.9
+BuildRequires: gcc4.9-c++ libgomp4.9-devel
+
 BuildPreReq: liblensfun-devel >= 0.2.5
 BuildPreReq: libexiv2-devel >= 0.20
-BuildRequires: gcc-c++ libgimp-devel libgomp-devel libgtkimageview-devel
+BuildRequires: liblcms2-devel libgimp-devel libgtkimageview-devel
 BuildRequires: libjpeg-devel liblcms-devel liblensfun-devel libpng-devel libtiff-devel
 BuildRequires: libcfitsio-devel zlib-devel bzlib-devel perl-podlators
 BuildRequires: libjasper-devel
@@ -39,6 +43,7 @@ GIMP plugin for opening and converting RAW files from digital photo cameras
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -81,6 +86,9 @@ fi
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Wed May 27 2015 Yuri N. Sedunov <aris@altlinux.org> 0.21-alt1
+- 0.21 (usibg gcc4.9)
+
 * Tue Oct 28 2014 Yuri N. Sedunov <aris@altlinux.org> 0.20-alt1
 - 0.20
 - removed obsolete patches
