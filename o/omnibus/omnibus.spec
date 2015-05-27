@@ -1,26 +1,27 @@
-%define  pkgname uber-s3
+%define  pkgname omnibus
  
-Name: 	 ruby-%pkgname
-Version: 0.2.4 
-Release: alt2
+Name: 	 %pkgname
+Version: 4.0.0 
+Release: alt1
  
-Summary: Ruby S3 client with synchronous and asynchronous I/O adapters
+Summary: Easily create full-stack installers for your Ruby project across a variety of platforms
 License: MIT/Ruby
 Group:   Development/Ruby
-Url:     https://github.com/pressly/uber-s3
+Url:     https://github.com/chef/omnibus.git
  
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
  
 Source:  %pkgname-%version.tar
-Patch1:  %name-prevent-nil-in-ssl-digest.patch
-
+# Use omnibus-software definitions
+Patch1:  omnibus-use-omnibus-software.patch
+ 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
  
 %description
-A simple, but very fast, S3 client for Ruby supporting synchronous
-(net-http) and asynchronous (em+fibers) io.
+Easily create full-stack installers for your Ruby project across a
+variety of platforms.
 
 %package doc
 Summary: Documentation files for %name
@@ -51,14 +52,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %files
 %doc README*
+%_bindir/%name
 %ruby_sitelibdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
-* Thu May 28 2015 Andrey Cherepanov <cas@altlinux.org> 0.2.4-alt2
-- Prevent nil parameters passed to SSL digest
-
-* Fri May 22 2015 Andrey Cherepanov <cas@altlinux.org> 0.2.4-alt1
+* Thu May 21 2015 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
 - Initial build for ALT Linux
