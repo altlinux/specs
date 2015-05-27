@@ -36,9 +36,9 @@
 %define rname	qt
 %define major	4
 %define minor	8
-%define bugfix	6
+%define bugfix	7
 %define beta	%nil
-%define rlz alt6
+%define rlz alt1
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -776,9 +776,8 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 export CFLAGS="%optflags" CXXFLAGS="%optflags"
 
 CNFGR="\
-	-L/usr/X11R6/%_lib \
 	-I%_includedir/pgsql/ -I%_includedir/mysql/ \
-	-I/usr/X11R6/include/X11/Xft -I/usr/include/fontconfig \
+	-I/usr/include/fontconfig \
         -prefix %qtdir \
 	-bindir %qtdir/bin \
 	-docdir %_docdir/%name \
@@ -1438,6 +1437,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Tue May 26 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt1
+- new version
+
 * Mon May 18 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt6
 - fix requires
 
