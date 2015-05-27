@@ -8,7 +8,7 @@
 %def_enable browser_plugin
 
 Name: evince
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A document viewer
@@ -199,6 +199,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Wed May 27 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
