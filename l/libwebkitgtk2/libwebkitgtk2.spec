@@ -15,7 +15,7 @@
 
 Name: libwebkitgtk2
 Version: 2.4.9
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 License: %bsd %lgpl2plus
@@ -276,6 +276,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Wed May 27 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.9-alt2
+- rebuilt for updated dependencies
+
 * Wed May 20 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.9-alt1
 - 2.4.9
 - dropped upstreamed patches
