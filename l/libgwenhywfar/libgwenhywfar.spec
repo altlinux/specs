@@ -1,7 +1,7 @@
 %define origname gwenhywfar
 
 Name:     libgwenhywfar
-Version:  4.13.1
+Version:  4.14.0
 Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
@@ -112,6 +112,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/cmake/gwenhywfar-*/gwenhywfar-config*.cmake
 
 %changelog
+* Wed May 27 2015 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt1
+- new version 4.14.0
+
 * Thu Apr 02 2015 Andrey Cherepanov <cas@altlinux.org> 4.13.1-alt1
 - new version 4.13.1
 
