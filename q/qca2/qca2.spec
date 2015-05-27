@@ -2,10 +2,10 @@
 
 Name: qca2
 %define major 2
-%define minor 0
-%define bugfix 3
+%define minor 1
+%define bugfix 0.3
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -14,8 +14,6 @@ License: LGPL
 Requires: lib%name = %version-%release
 
 Source: qca-%version.tar.bz2
-# FC
-Patch1: qca-2.0.3-gcc47.patch
 # ALT
 Patch10: qca-2.0.3-alt-paths.patch
 
@@ -189,17 +187,28 @@ utilize the for Qt Cryptographic Architecture (QCA).
 
 %prep
 %setup -q -n qca-%version
-%patch1 -p1
 %patch10 -p1
 
 
 %build
 export QTDIR=%_qt4dir
-%Kcmake -Dqca_CERTSTORE=%_datadir/ca-certificates/ca-bundle.crt -DQCA_GPG_EXECUTABLE=gpg
-%Kmake
+%Kbuild \
+    -DQCA_INSTALL_IN_QT_PREFIX=ON \
+    -Dqca_CERTSTORE=%_datadir/ca-certificates/ca-bundle.crt \
+    -DQCA_GPG_EXECUTABLE=gpg \
+    -DQT4_BUILD=ON \
+    #
 
 %install
 %Kinstall
+
+mkdir -p %buildroot/%_bindir
+ls -1d %buildroot/%_qt4dir/bin/* 2>/dev/null | while read f ; do
+    [ -f "$f" ] || continue
+    fname=`basename $f`
+    mv $f %buildroot/%_bindir/${fname}-qt4
+    ln -s `relative %_bindir/${fname}-qt4 %_qt4dir/bin/$fname-qt4` %buildroot/%_qt4dir/bin/$fname
+done
 
 [ -d %buildroot/%libdir_link/pkgconfig ] \
     && mv %buildroot/%libdir_link/pkgconfig %buildroot/%_libdir
@@ -219,7 +228,8 @@ popd
 
 %files
 %_bindir/*
-%_man1dir/*
+%_qt4dir/bin/*
+#%_man1dir/*
 
 %files -n lib%name
 %_libdir/lib*.so.*
@@ -246,11 +256,15 @@ popd
 %_libdir/lib*.so
 %libdir_link/lib*.so
 %libdir_link/lib*.so.*
-%_libdir/pkgconfig/qca2.pc
+%_pkgconfigdir/qca2.pc
+%_libdir/cmake/Qca/
 %_datadir/qt4/mkspecs/features/crypto.prf
 %_includedir/qt4/QtCrypto
 
 %changelog
+* Wed May 27 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.0.3-alt1
+- new version
+
 * Wed Oct 30 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt5
 - rebuilt with new libsasl2
 
