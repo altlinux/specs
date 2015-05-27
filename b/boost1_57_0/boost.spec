@@ -1,5 +1,5 @@
 %define ver_maj 1
-%define ver_min 58
+%define ver_min 57
 %define ver_rel 0
 
 %define namesuff %{ver_maj}_%{ver_min}_%ver_rel
@@ -7,7 +7,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -32,9 +32,11 @@
 %define mpidir %_libdir/%mpiimpl
 %endif
 
-Name: boost
+%add_optflags -D_GLIBCXX_USE_CXX11_ABI=0
+
+Name: boost%namesuff
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt4.1
 Epoch: 1
 
 Summary: Boost libraries
@@ -58,9 +60,6 @@ Patch31: boost-1.54.0-fedora-python-unused_typedef.patch
 Patch32: boost-1.54.0-fedora-spirit-unused_typedef-2.patch
 Patch33: boost-1.54.0-fedora-spirit-unused_typedef.patch
 Patch34: boost-1.57.0-python-cast-unused-typedef.patch
-Patch35: boost-1.58.0-Fix-exec_file-for-Python-3-3.4.patch
-Patch36: boost-1.58.0-Fix-a-regression-with-non-constexpr-types.patch
-
 
 # we use %%_python_version
 BuildRequires(pre): rpm-build-python >= 0.34.4-alt4
@@ -1239,8 +1238,6 @@ applications. This package contains python module.
 %patch32 -p1
 %patch33 -p1
 %patch34 -p2
-%patch35 -p1
-%patch36 -p1
 
 find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
 
@@ -1728,8 +1725,8 @@ done
 
 
 %changelog
-* Wed May 20 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.58.0-alt1
-- Updated to 1.58.0.
+* Tue May 19 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.57.0-alt4.1
+- Rebuilt as compat package without development files.
 
 * Sun Jan 04 2015 Ivan A. Melnikov <iv@altlinux.org> 1:1.57.0-alt4
 - improve Qt4 moc workaround
