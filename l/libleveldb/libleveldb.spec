@@ -1,6 +1,6 @@
 Name: libleveldb
 Version: 1.17
-Release: alt1
+Release: alt2
 
 Summary: A fast and lightweight key/value database library by Google
 
@@ -51,6 +51,9 @@ make install DESTDIR=%buildroot
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu May 28 2015 Alexei Takaseev <taf@altlinux.org> 1.17-alt2
+- rebuild with gcc-c++ 5.1
+
 * Fri May 02 2014 Alexei Takaseev <taf@altlinux.org> 1.17-alt1
 - 1.17
 
