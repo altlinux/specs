@@ -1,6 +1,6 @@
 Name: lnav
 Version: 0.7.3
-Release: alt1
+Release: alt2
 
 Summary: The log file navigator
 License: BSD
@@ -50,6 +50,9 @@ touch AUTHORS ChangeLog COPYING
 #   (putting out meaningful diags otherwise, e.g. in a chroot)
 
 %changelog
+* Thu May 28 2015 Michael Shigorin <mike@altlinux.org> 0.7.3-alt2
+- rebuilt against current libpcre*
+
 * Sun Apr 12 2015 Michael Shigorin <mike@altlinux.org> 0.7.3-alt1
 - new version (watch file uupdate)
 
