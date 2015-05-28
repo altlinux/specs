@@ -5,7 +5,7 @@
 
 Name: %{_name}-session
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -21,6 +21,8 @@ Source4: start%{_name}
 Source5: start%{_name}2d
 Source6: 02Cinnamon
 Source7: 02Cinnamon2D
+Source8: %{_name}.desktop
+Source9: %{_name}2d.desktop
 Patch: %name-%version-%release.patch
 
 # From configure.in
@@ -94,6 +96,10 @@ mkdir -p %buildroot%_x11sysconfdir/wmsession.d
 install -pD -m655 %SOURCE6 %buildroot%_x11sysconfdir/wmsession.d
 install -pD -m655 %SOURCE7 %buildroot%_x11sysconfdir/wmsession.d
 
+mkdir -p %buildroot%_datadir/xsessions
+install -pD -m655 %SOURCE8 %buildroot%_datadir/xsessions
+install -pD -m655 %SOURCE9 %buildroot%_datadir/xsessions
+
 rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 
 %find_lang --with-gnome --output=%name.lang %name-3.0
@@ -116,9 +122,13 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %config %_datadir/glib-2.0/schemas/org.cinnamon.SessionManager.gschema.xml
 %_mandir/man?/*
 %_x11sysconfdir/wmsession.d/*
+%_datadir/xsessions/*.desktop
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu May 28 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt3
+- add desktop files to xsessions directory
+
 * Sat May 23 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt2
 - git20150523
 - don't require gstreamer

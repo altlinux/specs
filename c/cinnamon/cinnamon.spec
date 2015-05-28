@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: cinnamon
-Version: 2.6.2
-Release: alt2
+Version: 2.6.3
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -236,7 +236,7 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/applications/cinnamon-menu-editor.desktop
 %_datadir/applications/cinnamon-settings-*.desktop
 %_datadir/applications/polkit-cinnamon-authentication-agent-1.desktop
-%_datadir/xsessions/cinnamon2d.desktop
+%exclude %_datadir/xsessions/cinnamon2d.desktop
 %_datadir/cinnamon/
 %_datadir/cinnamon-menu-editor/
 %_datadir/cinnamon-settings/
@@ -262,6 +262,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Thu May 28 2015 Vladimir Didenko <cow@altlinux.org> 2.6.3-alt1
+- 2.6.3
+
 * Sun May 24 2015 Vladimir Didenko <cow@altlinux.org> 2.6.2-alt2
 - Fix startup module in cinnamon-settings
 
