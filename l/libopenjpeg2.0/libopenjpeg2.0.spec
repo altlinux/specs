@@ -1,11 +1,12 @@
 %define _name openjpeg
-%define ver_major 2
+%define ver_major 2.1
 %define api_ver 2.0
-%define rev 2987
+%define libname libopenjp2
+%define rev 3004
 
 Name: lib%_name%api_ver
-Version: %ver_major.1.0
-Release: alt1
+Version: %ver_major.0
+Release: alt2
 
 Summary: JPEG 2000 codec library (API version 2.0)
 License: BSD
@@ -14,15 +15,16 @@ Url: http://www.openjpeg.org/
 
 %if %rev
 # Snapshots taken from stable release branch:
-#   svn co http://openjpeg.googlecode.com/svn/branches/openjpeg-2.0 openjpeg-2.0.0
-#   find openjpeg-2.0.0 -name ".svn" -print0| xargs -r0 rm -rf -- \;
-#   tar -cf openjpeg-2.0.0-%rev.tar.gz openjpeg-2.0.0
-Source: %_name-%version-%rev.tar.gz
+#   svn co http://openjpeg.googlecode.com/svn/branches/openjpeg-%ver_major openjpeg-%version
+#   find openjpeg-%version -name ".svn" -print0| xargs -r0 rm -rf -- \;
+#   tar -cf openjpeg-%version-%rev.tar openjpeg-%version
+Source: %_name-%version-%rev.tar
 %else
 Source: http://www.openjpeg.org/%_name-%version.tar.gz
 %endif
 
 BuildRequires: cmake libstdc++-devel libtiff-devel liblcms2-devel libpng-devel zlib-devel
+BuildRequires: doxygen
 
 %description
 OpenJPEG is an open-source JPEG 2000 codec written in C. This package contains
@@ -50,7 +52,8 @@ OpenJPEG is an open-source JPEG 2000 codec written in C.
 %build
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DOPENJPEG_INSTALL_LIB_DIR=%_lib \
-	-DBUILD_THIRDPARTY:BOOL=OFF
+	-DBUILD_THIRDPARTY:BOOL=OFF \
+	-DBUILD_DOC:BOOL=ON
 %cmake_build
 
 %install
@@ -60,20 +63,20 @@ OpenJPEG is an open-source JPEG 2000 codec written in C.
 for file in %buildroot%_bindir/opj_*; do
     mv $file ${file/opj_/opj2_}
 done
-mv %buildroot%_man1dir/opj_compress.1 %buildroot%_mandir/man1/opj2_compress.1
-mv %buildroot%_man1dir/opj_decompress.1 %buildroot%_mandir/man1/opj2_decompress.1
-mv %buildroot%_man1dir/opj_dump.1 %buildroot%_mandir/man1/opj2_dump.1
+mv %buildroot%_man1dir/opj_compress.1 %buildroot%_man1dir/opj2_compress.1
+mv %buildroot%_man1dir/opj_decompress.1 %buildroot%_man1dir/opj2_decompress.1
+mv %buildroot%_man1dir/opj_dump.1 %buildroot%_man1dir/opj2_dump.1
 
 %files
-%_libdir/libopenjp%ver_major.so.*
+%_libdir/%libname.so.*
 %doc AUTHORS LICENSE NEWS README
 
 %files devel
-%_includedir/%_name-%api_ver/
-%_libdir/%_name-%api_ver/
-%_libdir/libopenjp%ver_major.so
-%_pkgconfigdir/libopenjp%ver_major.pc
-%_man3dir/libopenjp%ver_major.3.*
+%_includedir/%_name-%ver_major/
+%_libdir/%_name-%ver_major/
+%_libdir/%libname.so
+%_pkgconfigdir/%libname.pc
+%_man3dir/%libname.3.*
 
 %files -n openjpeg-tools%api_ver
 %_bindir/opj2_compress
@@ -81,9 +84,13 @@ mv %buildroot%_man1dir/opj_dump.1 %buildroot%_mandir/man1/opj2_dump.1
 %_bindir/opj2_dump
 %_man1dir/*
 
-%exclude %_datadir/doc/%_name-%api_ver/
+%exclude %_datadir/doc/%_name-%ver_major/
+%exclude %_datadir/doc/html/
 
 %changelog
+* Thu May 28 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt2
+- updated to 2.1.0-rev3004
+
 * Fri Dec 26 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0 snapshot (rev2987)
 
