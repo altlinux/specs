@@ -9,7 +9,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt14.2.1
+Release: alt14.2.1.1
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -126,6 +126,11 @@ install -p -m644 %SOURCE4 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Thu May 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.58-alt14.2.1.1
+- Rebuilt for:
+ + libapt-pkg-libc6.9-6.so.5.
+ + gcc5 C++11 ABI.
+
 * Wed Sep 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.58-alt14.2.1
 - Rebuilt with libapt-pkg-libc6.9-6.so.4.
 

@@ -1,6 +1,6 @@
 Name: perl-AptPkg
 Version: 0.1.26
-Release: alt3.1.1
+Release: alt3.1.1.1
 
 Summary: Perl interface to libapt-pkg
 License: GPLv2+
@@ -39,6 +39,11 @@ cp -a /etc/apt/* t/cache/etc/
 	%perl_vendor_autolib/AptPkg/AptPkg.so
 
 %changelog
+* Thu May 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.26-alt3.1.1.1
+- Rebuilt for:
+ + libapt-pkg-libc6.9-6.so.5.
+ + gcc5 C++11 ABI.
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.26-alt3.1.1
 - rebuild with new perl 5.20.1
 

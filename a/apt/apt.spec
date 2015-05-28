@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt50
+Release: alt51
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -276,6 +276,10 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Thu May 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt51
+- Bumped soversion.
+- Rebuilt for C++11 ABI.
+
 * Tue Mar 31 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt50
 - Increased default APT::Cache-Limit:
  + up to 96M on 64bit systems.
