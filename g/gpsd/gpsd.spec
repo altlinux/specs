@@ -1,13 +1,13 @@
 %def_without libQgpsmm
-%define abiversion 20
+%define abiversion 22
 
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
-Version: 3.4
-Release: alt4
+Version: 3.14
+Release: alt1
 License: %bsd
 Group: System/Servers
-Url: http://developer.berlios.de/projects/gpsd/
+Url: http://www.catb.org/gpsd
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
 
 Source: %name-%version.tar
@@ -22,6 +22,8 @@ BuildRequires: docbook-dtds docbook-style-xsl gcc-c++ libXaw-devel libXext-devel
 %if_with libQgpsmm
 BuildRequires: libqt4-core libqt4-devel libqt4-network
 %endif
+
+BuildRequires: libbluez-devel
 
 %set_verify_elf_method unresolved=relaxed
 
@@ -100,12 +102,23 @@ scons prefix=/usr libdir=%_libdir
 %install
 DESTDIR=%buildroot scons  install
 find %buildroot -name '*.so' | xargs -n 1 chrpath -d
+chrpath -d %buildroot%_sbindir/*
+chrpath -d %buildroot%_bindir/cgps
+chrpath -d %buildroot%_bindir/gps2udp
+chrpath -d %buildroot%_bindir/gpsctl
+chrpath -d %buildroot%_bindir/gpsdecode
+chrpath -d %buildroot%_bindir/gpsmon
+chrpath -d %buildroot%_bindir/gpspipe
+chrpath -d %buildroot%_bindir/gpxlogger
+chrpath -d %buildroot%_bindir/lcdgps
+chrpath -d %buildroot%_bindir/ntpshmmon
+
 
 %files
 %doc README INSTALL COPYING
 %_sbindir/gpsd
 %_sbindir/gpsdctl
-%_man8dir/gpsd*
+%_man8dir/gps*
 %_man5dir/*
 
 %files -n libgps%abiversion
@@ -135,6 +148,12 @@ find %buildroot -name '*.so' | xargs -n 1 chrpath -d
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu May 28 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.14-alt1
+- 3.14
+- New URL: http://www.catb.org/gpsd
+- changed abiversion to 22
+- added libbluez-devel to BuildRequires
+
 * Sun May 24 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.4-alt4
 - Disabled libQgpsmm temporary
   (undefined symbol _Z17libgps_dump_stateP10gps_data_t)
