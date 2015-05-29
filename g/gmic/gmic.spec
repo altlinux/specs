@@ -1,8 +1,8 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
-%def_disable zart
+%def_enable zart
 
 Name: gmic
-Version: 1.6.1.0
+Version: 1.6.3.1
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -10,9 +10,8 @@ License: CeCILL v.2.0
 Group: Graphics
 Url: http://gmic.sourceforge.net/
 
-
-Source: http://downloads.sourceforge.net/gmic/gmic_%version.tar.gz
-Patch1: gmic-1.6.1.0-alt-makefile.patch
+Source: http://gmic.eu/files/source/%{name}_%version.tar.gz
+Patch: gmic-1.6.3.1-alt-makefile.patch
 
 Requires: lib%name = %version-%release
 
@@ -76,13 +75,16 @@ multi-spectral image datasets.
 %prep
 %setup -n gmic-%version
 dos2unix src/Makefile
-%patch1 -p1
+%patch -p1
 subst 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
 
 %build
+%if_enabled zart
+export QTDIR=%_qt4dir
+export PATH=%_qt4dir/bin:$PATH
+%endif
 pushd src
 %make_build
-%{?_enable_zart:%make_build zart}
 popd
 
 %install
@@ -113,14 +115,16 @@ popd
 %if_enabled zart
 %files zart
 %_bindir/zart
-%_datadir/zart/
-%doc zart/README
+%doc zart/README zart/Licence_CeCILL_V2*
 %endif
 
 %files -n gimp-plugin-gmic
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Fri May 29 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.3.1-alt1
+- 1.6.3.1
+
 * Mon Apr 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.1.0-alt1
 - 1.6.1.0
 
