@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt51
+Release: alt52
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -276,6 +276,9 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Fri May 29 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt52
+- Fixed apt usage with redefined rpm binary name.
+
 * Thu May 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt51
 - Bumped soversion.
 - Rebuilt for C++11 ABI.
