@@ -1,11 +1,11 @@
-%define sname networking-odl
+%define sname networking-vsphere
 
 %def_without python3
 
 Name: python-module-%sname
 Version: 2015.1.1
 Release: alt1
-Summary: Openstack OpenDaylight driver
+Summary: A set of Neutron drivers and agents to manage vSphere clusters.
 Group: Development/Python
 License: ASL 2.0
 Url: http://git.openstack.org/cgit/stackforge/%sname
@@ -19,46 +19,42 @@ BuildRequires: python-module-pbr >= 0.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-babel >= 1.3
-BuildRequires: python-module-six
-BuildRequires: python-module-oslo.log >= 0.4.0
+BuildRequires: python-module-oslo.vmware >= 0.6.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 0.6
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-babel >= 1.3
-BuildRequires: python3-module-six
-BuildRequires: python3-module-oslo.log >= 0.4.0
+BuildRequires: python3-module-oslo.vmware >= 0.6.0
 %endif
 
 %description
-OpenDaylight driver.
+A set of Neutron drivers and agents to manage vSphere clusters.
 
 %if_with python3
 %package -n python3-module-%sname
-Summary: Openstack OpenDaylight drivers
+Summary: A set of Neutron drivers and agents to manage vSphere clusters.
 Group: Development/Python3
 
 %description -n python3-module-%sname
-OpenDaylight drivers.
+A set of Neutron drivers and agents to manage vSphere clusters.
 %endif
 
 
 %package doc
-Summary: Documentation for Openstack OpenDaylight driver
+Summary: Documentation for Openstack vSphere driver
 Group: Development/Documentation
 
 %description doc
-Documentation for Openstack OpenDaylight drivers.
+Documentation for Openstack vSphere drivers.
 
 %prep
 %setup
 
 # Remove bundled egg-info
-rm -rf %sname.egg-info
+#rm -rf %sname.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -66,7 +62,6 @@ cp -a . ../python3
 %endif
 
 %build
-export OSLO_PACKAGE_VERSION=%version
 %python_build
 %if_with python3
 pushd ../python3
@@ -80,7 +75,6 @@ sphinx-build doc/source html
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-export OSLO_PACKAGE_VERSION=%version
 %python_install
 %if_with python3
 pushd ../python3
@@ -88,14 +82,27 @@ pushd ../python3
 popd
 %endif
 
+#mkdir -p %buildroot%_sysconfdir/neutron/plugins/ml2
+mkdir -p %buildroot%_sysconfdir/neutron/plugins/ovsvapp
+#mkdir -p %buildroot%_sysconfdir/neutron/rootwrap.d
+#mv %buildroot/usr/etc/neutron/plugins/ml2/* %buildroot%_sysconfdir/neutron/plugins/ml2/
+mv %buildroot/usr/etc/neutron/ovsvapp* %buildroot%_sysconfdir/neutron/plugins/ovsvapp/
+#mv %buildroot/usr/etc/neutron/rootwrap.d/* %buildroot%_sysconfdir/neutron/rootwrap.d/
+
 # Delete tests
 rm -fr %buildroot%python_sitelibdir/tests
 rm -fr %buildroot%python_sitelibdir/*/tests
+%if_with python3
 rm -fr %buildroot%python3_sitelibdir/tests
 rm -fr %buildroot%python3_sitelibdir/*/tests
+%endif
 
 %files
-%doc CONTRIBUTING.rst HACKING.rst LICENSE README.rst
+%doc README.rst
+#%_bindir/*
+#%config(noreplace) %_sysconfdir/neutron/plugins/ml2/*
+#%config(noreplace) %_sysconfdir/neutron/plugins/ovsvapp/*
+#%config(noreplace) %_sysconfdir/neutron/rootwrap.d/*
 %python_sitelibdir/*
 
 %if_with python3
@@ -108,7 +115,4 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 
 %changelog
 * Fri May 29 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
-- 2015.1.1
-
-* Mon Mar 16 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1-alt0.1
 - Initial release

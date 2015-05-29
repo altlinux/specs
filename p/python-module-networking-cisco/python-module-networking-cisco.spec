@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%sname
-Version: 0.2.0
-Release: alt2
+Version: 2015.1.0
+Release: alt1
 Summary: Networking Cisco contains the Cisco vendor code for Openstack Neutron
 Group: Development/Python
 License: ASL 2.0
@@ -82,10 +82,10 @@ popd
 
 mkdir -p %buildroot%_sysconfdir/neutron/plugins/ml2
 mkdir -p %buildroot%_sysconfdir/neutron/plugins/cisco
-mkdir -p %buildroot%_sysconfdir/neutron/rootwrap.d
-mv %buildroot/usr/etc/neutron/plugins/ml2/* %buildroot%_sysconfdir/neutron/plugins/ml2/
-mv %buildroot/usr/etc/neutron/plugins/cisco/* %buildroot%_sysconfdir/neutron/plugins/cisco/
-mv %buildroot/usr/etc/neutron/rootwrap.d/* %buildroot%_sysconfdir/neutron/rootwrap.d/
+#mkdir -p %buildroot%_sysconfdir/neutron/rootwrap.d
+mv %buildroot/usr/etc/neutron/ml2_* %buildroot%_sysconfdir/neutron/plugins/ml2/
+mv %buildroot/usr/etc/neutron/cisco_* %buildroot%_sysconfdir/neutron/plugins/cisco/
+#mv %buildroot/usr/etc/neutron/rootwrap.d/* %buildroot%_sysconfdir/neutron/rootwrap.d/
 
 # Delete tests
 rm -fr %buildroot%python_sitelibdir/tests
@@ -112,6 +112,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Fri May 29 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
+- 2015.1.0
+
 * Fri Apr 03 2015 Alexey Shabalin <shaba@altlinux.ru> 0.2.0-alt2
 - don't package config
 

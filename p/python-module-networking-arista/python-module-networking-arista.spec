@@ -3,14 +3,14 @@
 %def_without python3
 
 Name: python-module-%sname
-Version: 2015.1.1
-Release: alt0.1
+Version: 2015.1.5
+Release: alt1
 Summary: Openstack Arista Networking drivers
 Group: Development/Python
 License: ASL 2.0
 Url: http://git.openstack.org/cgit/stackforge/networking-arista
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -22,6 +22,7 @@ BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-six
 BuildRequires: python-module-oslo.log >= 0.4.0
+BuildRequires: python-module-jsonrpclib
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -33,6 +34,7 @@ BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-six
 BuildRequires: python3-module-oslo.log >= 0.4.0
+BuildRequires: python3-module-jsonrpclib
 %endif
 
 %description
@@ -57,9 +59,9 @@ Documentation for Openstack Arista Networking drivers.
 
 %prep
 %setup
-%patch -p1
+#%patch -p1
 
-sed -i 's/VERSION/%version/' networking_arista/__init__.py
+#sed -i 's/VERSION/%version/' networking_arista/__init__.py
 
 # Remove bundled egg-info
 rm -rf %sname.egg-info
@@ -111,5 +113,8 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Fri May 29 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.5-alt1
+- 2015.1.5
+
 * Mon Mar 16 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt0.1
 - Initial release
