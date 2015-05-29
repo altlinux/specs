@@ -1,5 +1,5 @@
 Name: libshell
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: A library of shell functions
@@ -43,6 +43,13 @@ as single file.
 /bin/shell-lib
 
 %changelog
+* Sat May 30 2015 Alexey Gladkov <legion@altlinux.ru> 0.4.0-alt1
+- New version (0.4.0).
+- New utilities:
+  + shell-git-config: New functions to read/write git-config-like config files.
+- shell-getopt changes:
+  + Detect ambiguous long options properly (break compatibility).
+
 * Tue Feb 24 2015 Alexey Gladkov <legion@altlinux.ru> 0.3.0-alt1
 - New version (0.3.0).
 - Fix bootstrap (ALT#29584).
