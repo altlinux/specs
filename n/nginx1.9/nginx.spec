@@ -20,7 +20,7 @@ Conflicts: nginx nginx1.6 nginx1.8
 # epoch need for Sisyphus because I work mainly with t7/branch
 Epoch: 1
 Version: 1.9.1
-Release: alt1
+Release: alt2
 
 Summary: Fast HTTP server
 License: BSD
@@ -40,14 +40,24 @@ Source10: nginx-rtmp-module.tar
 Source11: mime.types
 # https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng/
 Source50: nginx-goodies-nginx-sticky-module-ng.tar
+# https://github.com/zealot83/ngx_http_extended_status_module
+Source51: extended_status.tar
+# https://github.com/cfsego/nginx-limit-upstream.git
+Source52: limit-upstream.tar
+# https://github.com/gnosek/nginx-upstream-fair.git
+Source53: upstream-fair.tar
+# https://github.com/vozlt/nginx-module-vts.git
+Source54: vts.tar
+# hg clone http://bitbucket.org/lifeeth/mod_wsgi/
+Source55: mod_wsgi.tar
 Source100: %oname.watch
 
 Patch1: nginx-0.8-syslog.patch
 
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-
 # Automatically added by buildreq on Mon May 07 2007
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
+
+BuildPreReq: python-devel
 
 %if_with geoip
 BuildRequires: libGeoIP-devel
@@ -87,7 +97,7 @@ Provides: webserver
 Fast HTTP server, extremely useful as an Apache frontend
 
 %prep
-%setup -n %oname-%version -a 7 -a 8 -a 10 -a 50
+%setup -n %oname-%version -a 7 -a 8 -a 10 -a 50 -a 51 -a 52 -a 53 -a 54 -a 55
 %if_with syslog
 %patch1 -p2
 %endif
@@ -108,6 +118,7 @@ cp -f %SOURCE11 conf/mime.types
 	CPU="" \
 %endif # for x86_64 TODO for amd64/nocona
 # FIXME: %%configure?
+%add_optflags -DNGX_HAVE_REUSEPORT=1 -DSO_REUSEPORT=15
 CFLAGS="%optflags $CPU" ./configure \
 	--prefix=/ \
 	--conf-path=%nginx_etc/nginx.conf \
@@ -179,6 +190,9 @@ CFLAGS="%optflags $CPU" ./configure \
 	--with-stream \
 	--with-stream_ssl_module \
 	--add-module=nginx-goodies-nginx-sticky-module-ng \
+	--add-module=upstream-fair \
+	--add-module=mod_wsgi \
+	--add-module=vts \
 	--with-pcre-jit \
 	--with-threads \
 	--with-http_auth_request_module
@@ -282,7 +296,26 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %oname
 
 %changelog
+* Fri May 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.9.1-alt2
+- Enabled reuseport
+- Added modules:
+  + upstream-fair
+  + vts
+  + mod_wsgi
+
+* Fri May 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt0.M70T.3
+- Enabled reuseport
+
+* Thu May 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt0.M70T.2
+- Added modules:
+  + upstream-fair
+  + vts
+  + mod_wsgi
+
 * Wed May 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.9.1-alt1
+- Version 1.9.1
+
+* Tue May 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt0.M70T.1
 - Version 1.9.1
 
 * Mon May 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt0.M70T.3
