@@ -1,5 +1,5 @@
 Name: redis
-Version: 2.6.10
+Version: 3.0.1
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -54,7 +54,7 @@ for Windows currently.
 
 %prep
 %setup
-%__subst 's|\$(CCOPT) \$(DEBUG) \$(OBJ)|\$(OBJ) \$(CCOPT) \$(DEBUG)|g' src/Makefile
+sed -e 's|\$(CCOPT) \$(DEBUG) \$(OBJ)|\$(OBJ) \$(CCOPT) \$(DEBUG)|g' -i src/Makefile
 
 %build
 %make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}"
@@ -65,6 +65,7 @@ mkdir -p %buildroot%_sbindir/
 mkdir -p %buildroot%_sysconfdir/%name
 install -m644 %SOURCE1 %buildroot%_sysconfdir/%name/
 mv %buildroot%_bindir/redis-server %buildroot%_sbindir/
+mv %buildroot%_bindir/redis-sentinel %buildroot%_sbindir/
 
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_logdir/%name
@@ -122,6 +123,7 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_sysconfdir/tmpfile
 %_bindir/redis-cli
 %_bindir/redis-benchmark
 %_sbindir/redis-server
+%_sbindir/redis-sentinel
 
 %_man1dir/*
 
@@ -130,6 +132,10 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_sysconfdir/tmpfile
 
 
 %changelog
+* Fri May 29 2015 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.1-alt1
+- New version (3.0.1)
+- Fix pid file name (Closes: #30859)
+
 * Wed Feb 27 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.6.10-alt1
 - new version (2.6.10) (ALT #28374)
 - create temporary dir
