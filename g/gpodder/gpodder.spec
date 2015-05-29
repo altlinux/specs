@@ -1,5 +1,5 @@
 Name: gpodder
-Version: 3.8.3
+Version: 3.8.4
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
@@ -8,7 +8,7 @@ Group: Sound
 Url: http://gpodder.org
 BuildArch: noarch
 
-Source: %name-%version.tar.gz
+Source: %url/src/%name-%version.tar.gz
 
 BuildRequires: python-devel rpm-build-python python-module-mygpoclient
 BuildRequires: python-module-feedparser help2man intltool desktop-file-utils
@@ -55,6 +55,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/%name/extensions/sonos.py*
 
 %changelog
+* Fri May 29 2015 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
+- 3.8.4
+
 * Mon Nov 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 
