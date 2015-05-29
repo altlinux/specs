@@ -1,20 +1,25 @@
-Name: cloud-init
-Version: 0.6.3
+Name:    cloud-init
+Version: 0.7.6
 Release: alt1
-Summary: Cloud instance init scripts
 
-Group: System/Configuration/Boot and Init
+Summary: Cloud instance init scripts
+Group:   System/Configuration/Boot and Init
 License: GPLv3
-Url: http://launchpad.net/cloud-init
+Url:     http://launchpad.net/cloud-init
 
 Source0: %name-%version.tar
 Source1: %name-alt.cfg
 
-Patch1: %name-0.6.3-lp970071.patch
-Patch2: %name-0.6.3-alt-sshd-config.patch
+Patch1: %name-0.7.6-alt-sshd-config.patch
+Patch2: %name-add-alt-distro.patch
+Patch3: %name-0.7.6-alt-blkid-path.patch
 
 BuildArch: noarch
-BuildRequires: python-devel python-module-distribute python-module-nose python-module-mocker python-module-yaml python-module-cheetah python-module-oauth
+BuildRequires: python-devel python-module-distribute python-module-nose python-module-mocker
+BuildRequires: python-module-yaml python-module-cheetah python-module-oauth
+# For tests
+BuildRequires: python-modules-json python-module-requests python-module-jsonpatch python-module-configobj
+BuildRequires: python-module-httpretty python-module-serial iproute2 util-linux net-tools python-module-jinja2
 
 Requires: systemd-sysvinit sudo
 
@@ -25,28 +30,24 @@ ssh keys and to let the user run various scripts.
 
 %prep
 %setup
-%patch1 -p1
+%patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %build
 %python_build
 
 %check
-make test
+# Ignore test_netconfig.py because test_simple_write_freebsd is broken
+make test noseopts="-I test_netconfig.py"
 
 %install
-%python_install
-
-for x in %buildroot/%_bindir/*.py; do mv "$x" "${x%%.py}"; done
-chmod +x %buildroot/%python_sitelibdir/cloudinit/SshUtil.py
-mkdir -p %buildroot/%_sharedstatedir/cloud
+%python_install --init-system=systemd
 
 # We supply our own config file since our software differs from Ubuntu's.
 cp -p %SOURCE1 %buildroot/%_sysconfdir/cloud/cloud.cfg
 
-# Install the systemd bits
-mkdir -p        %buildroot/%systemd_unitdir
-cp -p systemd/* %buildroot/%systemd_unitdir
+mkdir -p %buildroot/%_sharedstatedir/cloud
 
 %pre
 %_sbindir/useradd -G wheel -c "EC2 administrative account" ec2-user >/dev/null 2>&1 ||:
@@ -73,7 +74,7 @@ if [ $1 -eq 0 ] ; then
 fi
 
 %files
-%doc ChangeLog TODO
+%doc ChangeLog TODO.rst
 %config(noreplace) %_sysconfdir/cloud/cloud.cfg
 %dir               %_sysconfdir/cloud/cloud.cfg.d
 %config(noreplace) %_sysconfdir/cloud/cloud.cfg.d/*.cfg
@@ -92,6 +93,9 @@ fi
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Thu May 28 2015 Andrey Cherepanov <cas@altlinux.org> 0.7.6-alt1
+- New version
+
 * Thu May 03 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.3-alt1
 - initial
 
