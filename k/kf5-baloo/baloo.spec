@@ -1,8 +1,8 @@
 %define rname baloo
 
 Name: kf5-%rname
-Version: 5.3.0
-Release: alt2.1
+Version: 5.3.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -116,6 +116,9 @@ KF5 library
 %_K5lib/libKF5BalooXapian.so.*
 
 %changelog
+* Mon Jun 08 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- new version
+
 * Sun Jun 07 2015 Michael Shigorin <mike@altlinux.org> 5.3.0-alt2.1
 - NMU: rebuilt against current libxapian
 
