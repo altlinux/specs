@@ -11,8 +11,10 @@
 %define weather_ion_sover 7
 %define libweather_ion libweather_ion%weather_ion_sover
 
+%def_disable qalculate
+
 Name: kf5-%rname
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 %K5init altplace
 
@@ -37,7 +39,10 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: qt5-phonon-devel qt5-script-devel qt5-x11extras-devel
-BuildRequires: libdbusmenu-qt5-devel libgps-devel libpam0-devel libqalculate-devel zlib-devel
+BuildRequires: libdbusmenu-qt5-devel libgps-devel libpam0-devel zlib-devel
+%if_enabled qalculate
+libqalculate-devel
+%endif
 BuildRequires: libwayland-client-devel libwayland-server-devel
 BuildRequires: libxapian-devel prison-devel
 BuildRequires: iceauth xmessage xprop xrdb xset xsetroot
@@ -187,7 +192,7 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5plug/plasma/*/*.so
 %_K5plug/phonon_platform/*.so
 %_K5plug/*.so
-%_K5plug/kpackage/packagestructure/plasma_package*.so
+%_K5plug/kpackage/
 %_K5qml/org/kde/plasma/private/*
 %_K5qml/org/kde/plasma/wallpapers/*
 %_K5qml/org/kde/plasma/workspace/*
@@ -241,6 +246,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Fri May 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- new version
+
 * Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - new version
 
