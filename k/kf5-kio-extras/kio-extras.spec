@@ -3,8 +3,10 @@
 %define molletnetwork_sover 5
 %define libmolletnetwork libmolletnetwork5%molletnetwork_sover
 
+%def_disable gcc5ready
+
 Name: kf5-%rname
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 %K5init altplace
 
@@ -23,7 +25,10 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdnssd-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libexiv2-devel libjpeg-devel libmtp-devel libopenslp-devel libsmbclient-devel libssh-devel openexr-devel python-module-google qt5-phonon-devel qt5-svg-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel qt5-svg-devel
-BuildRequires: libexiv2-devel libjpeg-devel libmtp-devel libopenslp-devel libsmbclient-devel libssh-devel openexr-devel
+%if_enabled gcc5ready
+BuildRequires: libexiv2-devel
+%endif
+BuildRequires: libjpeg-devel libmtp-devel libopenslp-devel libsmbclient-devel libssh-devel openexr-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
@@ -110,6 +115,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libmolletnetwork5.so.%molletnetwork_sover
 
 %changelog
+* Fri May 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- new version
+
 * Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - new version
 
