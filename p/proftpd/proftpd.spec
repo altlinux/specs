@@ -2,7 +2,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt2.gita31d0ab
+Release: alt3.rel.a
 
 %define _libexecdir %{expand:%_libdir}
 %def_disable tests
@@ -665,6 +665,10 @@ fi
 %_controldir/%name
 
 %changelog
+* Fri May 29 2015 L.A. Kostis <lakostis@altlinux.ru> 1.3.5-alt3.rel.a
+- 1.3.5a release.
+- Increased rlimit to 64M for xinetd.
+
 * Thu May 21 2015 Konstantin A. Lepikhov <lakostis@altlinux.ru> 1.3.5-alt2.gita31d0ab
 - .spec fixes.
 
