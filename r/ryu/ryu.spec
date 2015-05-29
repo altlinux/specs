@@ -1,6 +1,6 @@
 
 Name: ryu
-Version: 3.19
+Version: 3.21
 Release: alt1
 Summary: Component-based Software-defined Networking Framework
 Group: Development/Python
@@ -99,5 +99,8 @@ install -m 644 debian/log.conf %buildroot%_logrotatedir/%name
 %doc html
 
 %changelog
+* Fri May 29 2015 Alexey Shabalin <shaba@altlinux.ru> 3.21-alt1
+- 3.21
+
 * Wed Apr 01 2015 Alexey Shabalin <shaba@altlinux.ru> 3.19-alt1
 - Initial release
