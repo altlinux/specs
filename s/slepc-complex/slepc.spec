@@ -9,10 +9,10 @@
 %define ldir %_libdir/petsc-%scalar_type
 
 %define somver 3
-%define sover %somver.5.3
+%define sover %somver.5.4
 Name: %oname-%scalar_type
-Version: 3.5.3
-Release: alt2.git20141219
+Version: 3.5.4
+Release: alt1.git20150525
 Summary: Scalable Library for Eigenvalue Problem Computations (%scalar_type scalars)
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -278,6 +278,9 @@ sed -i 's|%buildroot||g' %buildroot%ldir/conf/*
 %endif
 
 %changelog
+* Fri May 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.4-alt1.git20150525
+- Version 3.5.4
+
 * Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.3-alt2.git20141219
 - Rebuilt with gcc4.9
 
@@ -396,4 +399,3 @@ sed -i 's|%buildroot||g' %buildroot%ldir/conf/*
 
 * Mon Jul 13 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p4-alt1
 - Initial build for Sisyphus
-
