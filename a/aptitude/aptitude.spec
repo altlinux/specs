@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt6.1.1
+Release: alt6.1.1.1
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -85,6 +85,11 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Thu May 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.5-alt6.1.1.1
+- Rebuilt for:
+ + libapt-pkg-libc6.9-6.so.5.
+ + gcc5 C++11 ABI.
+
 * Wed Sep 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.5-alt6.1.1
 - Rebuilt with libapt-pkg-libc6.9-6.so.4.
 
