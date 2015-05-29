@@ -21,14 +21,14 @@
 %endif
 
 %define somver 3
-%define sover %somver.5.3
+%define sover %somver.5.4
 
 %define topsomver 0
 %define topsover %topsomver.0.0
 
 Name: %oname-%scalar_type
-Version: 3.5.3
-Release: alt2
+Version: 3.5.4
+Release: alt1
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -811,6 +811,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Fri May 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.4-alt1
+- Version 3.5.4
+
 * Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.3-alt2
 - Rebuilt with gcc4.9
 
@@ -1036,4 +1039,3 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
-
