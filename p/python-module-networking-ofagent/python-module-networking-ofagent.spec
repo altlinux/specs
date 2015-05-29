@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%sname
-Version: 2015.1.2
-Release: alt2
+Version: 2015.1.4
+Release: alt1
 Summary: OpenStack Networking ofagent
 Group: Development/Python
 License: ASL 2.0
@@ -19,6 +19,7 @@ BuildRequires: python-module-pbr >= 0.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-babel >= 1.3
+BuildRequires: python-module-oslo.log >= 0.4.0
 BuildRequires: python-module-ryu >= 3.19
 
 %if_with python3
@@ -27,6 +28,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 0.6
 BuildRequires: python3-module-babel >= 1.3
+BuildRequires: python3-module-oslo.log >= 0.4.0
 BuildRequires: python3-module-ryu >= 3.19
 %endif
 
@@ -111,6 +113,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Fri May 29 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.4-alt1
+- 2015.1.4
+
 * Fri Apr 03 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt2
 - don't package config
 
