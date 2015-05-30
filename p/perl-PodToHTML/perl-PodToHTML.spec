@@ -1,4 +1,4 @@
-%define version    0.08
+%define version    0.09
 %define release    alt1
 
 Name: perl-PodToHTML
@@ -59,6 +59,9 @@ podtohtml  для  создания документов HTML  из одного
 %exclude /.perl.req
 
 %changelog
+* Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.09-alt1.1
+- New version 0.09
+
 * Sun Nov 07 2010 Vladimir Lettiev <crux@altlinux.ru> 0.08-alt1.1
 - rebuilt with perl 5.12
 
