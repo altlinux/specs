@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Perl-PrereqScanner
 
 Name: perl-Perl-PrereqScanner
-Version: 1.021
+Version: 1.023
 Release: alt1
 
 Summary: a tool to scan Perl code for its prerequisites
@@ -20,9 +20,10 @@ AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: perl-B-Hooks-EndOfScope perl-Class-Load perl-Clone perl-Data-OptList perl-Devel-GlobalDestruction perl-Eval-Closure perl-IO-String perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Moose perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-Validate perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-namespace-autoclean perl-namespace-clean perl-parent
-BuildRequires: perl-CPAN-Meta-Requirements perl-Getopt-Long-Descriptive perl-Module-Path perl-PPI perl-String-RewritePrefix perl-Variable-Magic perl-devel
+# Automatically added by buildreq on Sat May 30 2015
+# optimized out: perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Class-Load perl-Clone perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Encode perl-Eval-Closure perl-Exporter-Tiny perl-IO-String perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-clean perl-parent
+BuildRequires: perl-CPAN-Meta perl-Getopt-Long-Descriptive perl-Module-Path perl-Moose perl-PPI perl-String-RewritePrefix perl-namespace-autoclean perl-podlators
+
 BuildRequires: perl-Moose
 
 %description
@@ -47,7 +48,12 @@ The extraction may not be perfect but tries to do its best.
 %_bindir/scan_prereqs
 %_bindir/scan-perl-prereqs
 
+%_man1dir/scan*
+
 %changelog
+* Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.023-alt1
+- New version
+
 * Sun Nov 16 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.021-alt1
 - New version
 
