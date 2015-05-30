@@ -1,6 +1,6 @@
 Name: fail2ban
-Version: 0.8.13
-Release: alt3
+Version: 0.9.2
+Release: alt1
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -14,7 +14,9 @@ Source2: fail2ban.service
 
 BuildArch: noarch
 
+BuildPreReq: help2man python-modules-json
 %setup_python_module %name
+%py_requires json
 
 %description
 Fail2Ban is an intrusion prevention framework written in the Python
@@ -27,6 +29,7 @@ interface to a packet-control system or firewall installed locally
 
 %build
 %python_build
+export PYTHONPATH=$PWD
 cd man
 ./generate-man
 
@@ -35,6 +38,9 @@ mkdir -p %buildroot%_man1dir/
 cp man/*.1 %buildroot%_man1dir/
 mkdir -p %buildroot%_man5dir/
 cp man/*.5 %buildroot%_man5dir/
+install -d %buildroot%_var/run/fail2ban
+install -d %buildroot%_datadir
+ln -s %python_sitelibdir/%name %buildroot%_datadir/
 
 install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
 install -pD -m 644 %SOURCE2 %buildroot%_unitdir/%name.service
@@ -44,12 +50,16 @@ rm -rf %buildroot/%_docdir/%name/
 
 %files
 %doc ChangeLog README.md THANKS TODO
+%python_sitelibdir/*
 %_datadir/%name
 %_bindir/%name-*
 %dir %_sysconfdir/%name/
 %dir %_sysconfdir/%name/*.d
+%dir %_sysconfdir/%name/filter.d/ignorecommands
 %config(noreplace) %_sysconfdir/%name/*.conf
 %config(noreplace) %_sysconfdir/%name/*.d/*.conf
+%config(noreplace) %_sysconfdir/%name/*.d/*.py
+%config(noreplace) %_sysconfdir/%name/filter.d/ignorecommands/*
 %_var/run/fail2ban
 %_initdir/fail2ban
 %_unitdir/%name.service
@@ -58,6 +68,9 @@ rm -rf %buildroot/%_docdir/%name/
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sat May 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1
+- Version 0.9.2
+
 * Wed Jul 16 2014 Vitaly Lipatov <lav@altlinux.ru> 0.8.13-alt3
 - cleanup spec, fix config file permissions
 
