@@ -6,7 +6,7 @@
 %def_with libgsf
 
 Name: gnome-commander
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
@@ -21,7 +21,7 @@ Requires: gnome-vfs gnome-vfs-module-sftp gnome-vfs-module-smb
 %set_gcc_version 4.9
 BuildRequires: flex gcc4.9-c++
 
-BuildRequires: flex gnome-doc-utils gnome-doc-utils-xslt intltool
+BuildRequires: flex gnome-doc-utils gnome-doc-utils-xslt intltool libappstream-glib-devel
 BuildRequires: libgnomeui-devel libgnome-keyring-devel gnome-vfs-devel
 BuildRequires: libunique-devel python-devel
 %{?_with_exiv2:BuildRequires: libexiv2-devel}
@@ -60,6 +60,7 @@ and some extra features like FTP support.
 %_datadir/pixmaps/%name.png
 %_datadir/pixmaps/%name/
 %_datadir/appdata/%name.appdata.xml
+%_datadir/%name
 %_man1dir/*
 %doc AUTHORS ChangeLog NEWS README TODO doc/*.txt
 
@@ -68,6 +69,9 @@ and some extra features like FTP support.
 
 
 %changelog
+* Sat May 30 2015 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt1
+- 1.4.7
+
 * Thu May 28 2015 Yuri N. Sedunov <aris@altlinux.org> 1.4.6-alt1
 - 1.4.6
 - built with gcc-4.9
