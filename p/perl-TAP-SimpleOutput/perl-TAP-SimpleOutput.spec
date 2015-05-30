@@ -3,8 +3,8 @@
 %define real_name TAP-SimpleOutput
 
 Name: perl-TAP-SimpleOutput
-Version: 0.002
-Release: alt2
+Version: 0.003
+Release: alt1
 
 Summary: simple closure-driven TAP generator
 
@@ -45,6 +45,9 @@ output TAP easily and correctly, with a minimum of fuss.
 %perl_vendor_privlib/TAP*
 
 %changelog
+* Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.003-alt1
+- New version
+
 * Fri Sep 26 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.002-alt2
 - Rising release to override package from Autoimports/Sisyphus repository
 
