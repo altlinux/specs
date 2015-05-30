@@ -7,7 +7,7 @@
 %define builddir %_arch-alt-linux-gnu-m%bits
 
 Name: reduce
-Version: 20140706
+Version: 20150526
 Release: alt1
 Summary: REDUCE algebra system, Open Source release
 License: BSD / GPL / LGPL
@@ -89,7 +89,8 @@ Type1 fonts for REDUCE algebra system.
 %build
 export TARGET=%_arch
 export BITS=%bits
-export CXXFLAGS="-g -DHAVE_LIBXFT -I%_includedir/freetype2"
+%add_optflags -fno-strict-aliasing -DHAVE_LIBXFT -I%_includedir/freetype2
+export CXXFLAGS="%optflags"
 export TOPDIR=$PWD
 export FOXDIR=$TOPDIR/cslbuild/%builddir/fox
 export FOXINC=$TOPDIR/csl/fox
@@ -97,7 +98,6 @@ export FOXINC=$TOPDIR/csl/fox
 alias strip=echo
 
 #./autogen.sh
-%add_optflags
 %configure \
 	--prefix=/ \
 	--bindir=%_libdir/%name \
@@ -221,6 +221,9 @@ popd
 %files -n fonts-type1-%name -f %name.files
 
 %changelog
+* Sat May 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20150526-alt1
+- New snapshot
+
 * Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140706-alt1
 - New snapshot
 
