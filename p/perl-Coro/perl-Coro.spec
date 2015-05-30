@@ -1,8 +1,8 @@
 # Spec file for Perl module Coro
 
 Name: perl-Coro
-Version: 6.41
-Release: alt1.1
+Version: 6.42
+Release: alt1
 
 Summary: cooperative multitasking Perl module
 
@@ -53,6 +53,9 @@ export CORO_INTERFACE=u
 %perl_vendor_autolib/Coro
 
 %changelog
+* Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 6.42-alt1
+- New version
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 6.41-alt1.1
 - rebuild with new perl 5.20.1
 
