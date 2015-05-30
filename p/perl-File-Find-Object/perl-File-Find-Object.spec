@@ -1,9 +1,9 @@
 ## SPEC file for Perl module File::Find::Object
 
 Name: perl-File-Find-Object
-Version: 0.2.11
+Version: 0.2.13
 Serial: 1
-Release: alt3
+Release: alt1
 
 
 Summary: an object oriented File::Find replacement
@@ -23,9 +23,9 @@ AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
 
-# Automatically added by buildreq on Sun Aug 31 2014
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Devel-Symdump perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel perl-parent perl-podlators
-BuildRequires: perl-CPAN-Changes perl-Class-XSAccessor perl-HTML-Parser perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-unicore
+# Automatically added by buildreq on Sat May 30 2015
+# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Devel-Symdump perl-Encode perl-File-Find-Object-Rule perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Text-Glob perl-Tie-RefHash perl-autodie perl-devel perl-parent perl-podlators
+BuildRequires: perl-CPAN-Changes perl-HTML-Parser perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Test-TrailingSpace
 
 %description
 Perl module File::Find::Object does the same job as File::Find
@@ -52,6 +52,9 @@ the next() function, but setting a callback is still possible.
 %perl_vendor_privlib/File/Find/Object*
 
 %changelog
+* Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1:0.2.13-alt1
+- New version
+
 * Mon Sep 08 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1:0.2.11-alt3
 - Rising serial/release to override package from Autoimports/Sisyphus repository
 
