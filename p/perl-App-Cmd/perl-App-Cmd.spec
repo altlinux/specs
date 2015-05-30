@@ -1,7 +1,7 @@
 ## SPEC file for Perl module App::Cmd
 
 Name: perl-App-Cmd
-Version: 0.326
+Version: 0.327
 Release: alt1
 
 Summary: Perl module to write CLI apps with less suffering
@@ -20,9 +20,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sun Feb 03 2013
-# optimized out: perl-Data-OptList perl-IPC-Run3 perl-List-MoreUtils perl-Locale-Maketext-Simple perl-Module-Implementation perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Check perl-Params-Util perl-Params-Validate perl-Pod-Escapes perl-Pod-Simple perl-Probe-Perl perl-Sub-Exporter perl-Sub-Install perl-Try-Tiny perl-devel
-BuildRequires: perl-Capture-Tiny perl-Class-Load perl-Getopt-Long-Descriptive perl-IO-TieCombine perl-IPC-Cmd perl-Module-Pluggable perl-String-RewritePrefix perl-Test-Fatal perl-Test-Pod perl-Test-Script perl-parent ruby ruby-stdlibs
+# Automatically added by buildreq on Sat May 30 2015
+# optimized out: perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Data-OptList perl-Locale-Maketext-Simple perl-Module-Implementation perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Module-Runtime perl-Package-Stash perl-Package-Stash-XS perl-Params-Check perl-Params-Util perl-Params-Validate perl-Parse-CPAN-Meta perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-clean perl-parent
+BuildRequires: perl-CPAN-Meta perl-Capture-Tiny perl-Class-Load perl-Getopt-Long-Descriptive perl-IO-TieCombine perl-IPC-Cmd perl-Module-Pluggable perl-String-RewritePrefix perl-Sub-Name perl-Test-Fatal
 
 %description
 Perl module App::Cmd is intended to make it easy to write complex
@@ -44,6 +44,9 @@ the annoying things usually involved.
 %perl_vendor_privlib/App/Cmd*
 
 %changelog
+* Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.327-alt1
+- New version
+
 * Sat Jan 10 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.326-alt1
 - New version
 
