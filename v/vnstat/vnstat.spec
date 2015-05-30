@@ -1,7 +1,7 @@
 # SPEC file for vnStat package
 
 Name:    vnstat
-Version: 1.12
+Version: 1.14
 Release: alt1
 
 Summary: console-based network traffic monitor
@@ -16,8 +16,6 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 Source0: %name-%version.tar
 Source1: %name.control
 Source2: %{name}d.init
-Patch0:  %name-1.10-alt-conf.patch
-Patch1:  %name-1.12-alt-fix_manpages.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -84,8 +82,6 @@ output support for statistics collected using vnstat.
 
 %prep
 %setup -q
-%patch0
-%patch1
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -173,6 +169,9 @@ fi
 %_man1dir/%{name}i*
 
 %changelog
+* Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.14-alt1
+- New version 1.14
+
 * Wed Sep 17 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.12-alt1
 - New version 1.12
 
