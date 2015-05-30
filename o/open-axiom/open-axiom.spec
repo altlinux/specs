@@ -1,9 +1,15 @@
 %define oname axiom
 %define lisp sbcl
 
+%ifarch x86_64
+%define arch x86_64
+%else
+%define arch i586
+%endif
+
 Name: open-%oname
 Version: 1.5.0
-Release: alt2.svn20140502
+Release: alt2.svn20150403
 
 Summary: OpenAxiom Computer Algebra System
 License: BSD-style
@@ -26,7 +32,7 @@ Conflicts: fricas
 
 BuildRequires: texlive-base-bin texlive-latex-base /proc
 BuildRequires: libreadline-devel libncurses-devel binutils-devel
-BuildRequires: tcl-devel tk-devel %lisp gcc-c++
+BuildRequires: tcl-devel tk-devel %lisp gcc-c++ clang-devel
 BuildRequires: libgmp-devel texinfo libqt4-devel
 BuildRequires: sed gawk coreutils diffutils libXt-devel libXext-devel
 BuildRequires: libX11-devel libXpm-devel libXpm libXaw-devel
@@ -58,6 +64,17 @@ Documentation for OpenAxiom.
 %setup
 tar -xjf %SOURCE7
 
+sed -i 's|0x|(char)0x|g' \
+	src/hyper/ht_icon \
+	src/hyper/mouse11.bitmap \
+	src/hyper/mouse11.mask \
+	src/hyper/initx.c \
+	src/hyper/sdown3d.bitmap \
+	src/hyper/sdown3dpr.bitmap \
+	src/hyper/sup3d.bitmap \
+	src/hyper/sup3dpr.bitmap \
+	src/graph/include/light11.mask
+
 %build
 
 mv noweb/noweb/* noweb/
@@ -72,12 +89,15 @@ popd
 export SBCL_HOME=%_libdir/sbcl
 export PATH=$PATH:%_qt4dir/bin
 
+%add_optflags -std=gnu++11 -DHAVE_SYS_STAT_H=1 -DHAVE_UNISTD_H=1
+%add_optflags %optflags_shared
 #autoreconf
 ./build-setup.sh
 %configure \
 	--enable-threads \
 	--with-lisp=%lisp \
 	--with-x
+sed -i 's|^\(OBJEXT =\).*|\1 o|' $(find -name Makefile)
 %make
 
 %install
@@ -86,6 +106,13 @@ ln -s %name %buildroot%_bindir/%oname
 
 install -d %buildroot%_docdir/%name
 install -p -m644 src/doc/ps/* %buildroot%_docdir/%name
+
+install -d %buildroot%_libdir/%name/%arch-alt-linux-gnu/src/include
+install -d %buildroot%_libdir/%name/%arch-alt-linux-gnu/src/utils
+install -p -m644 src/include/* \
+	%buildroot%_libdir/%name/%arch-alt-linux-gnu/src/include/
+install -p -m644 src/utils/*.H \
+	%buildroot%_libdir/%name/%arch-alt-linux-gnu/src/utils/
 
 # icons
 install -D -m644 %SOURCE3 %buildroot%_miconsdir/%name.png
@@ -110,6 +137,9 @@ install -D -m644 %SOURCE6 %buildroot%_desktopdir/%name.desktop
 %_docdir/%name
 
 %changelog
+* Sat May 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.svn20150403
+- New snapshot
+
 * Fri May 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.svn20140502
 - New snapshot
 
