@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Archive::Tar::Wrapper
 
 Name: perl-Archive-Tar-Wrapper
-Version: 0.21
+Version: 0.23
 Release: alt1
 
 Summary: Perl wrapper around the 'tar' utility
@@ -46,6 +46,9 @@ files in the temporary directory on disk.
 
 
 %changelog
+* Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.23-alt1
+- New version
+
 * Thu Oct 23 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.21-alt1
 - New version
 
