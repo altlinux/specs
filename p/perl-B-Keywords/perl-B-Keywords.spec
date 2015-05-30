@@ -1,6 +1,6 @@
 ## SPEC file for Perl module B::Keywords
 
-%define version    1.13
+%define version    1.14
 %define release    alt1
 
 Name: perl-B-Keywords
@@ -21,7 +21,11 @@ Source: %real_name-%version.tar
 BuildArch: noarch
 
 AutoReqProv: perl, yes
-BuildPreReq: rpm-build-licenses perl-devel
+BuildRequires(pre): rpm-build-licenses perl-devel
+
+# Automatically added by buildreq on Sat May 30 2015
+# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-devel
+BuildRequires: perl-Test-Pod
 
 %description
 Perl module B::Keywords supplies seven arrays of keywords: @Scalars, 
@@ -45,6 +49,9 @@ non-function keywords (like __DATA__, NULL) to the @Functions array.
 %perl_vendor_privlib/B/Keywords*
 
 %changelog
+* Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.14-alt1
+- New version 1.14
+
 * Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.13-alt1
 - New version 1.13
 
