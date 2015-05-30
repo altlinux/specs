@@ -3,18 +3,23 @@
 %define real_name Class-Std
 
 Name: perl-Class-Std
-Version: 0.011
-Release: alt2
+Version: 0.013
+Release: alt1
 
 Summary: Perl module for creating standard "inside-out" classes 
 Group: Development/Perl
-License: Perl license
+License: %perl_license
 
 URL: %CPAN %real_name
-Source: http://search.cpan.org/CPAN/authors/id/D/DC/DCONWAY/%real_name-%version.tar.gz
+Source: %real_name-%version.tar
 Patch: %name-0.011-alt-pod.patch
 
-BuildRequires: perl-devel perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires(pre): rpm-build-licenses
+
+# Automatically added by buildreq on Sat May 30 2015
+# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-devel perl-parent perl-podlators
+BuildRequires: perl-HTML-Parser perl-Module-Build
+
 BuildArch: noarch
 
 %description
@@ -37,6 +42,9 @@ Chapters 15 and 16 of "Perl Best Practices" (O'Reilly, 2005).
 %doc README Changes
 
 %changelog
+* Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.013-alt1
+- New version
+
 * Tue Oct 09 2012 Vladimir Lettiev <crux@altlinux.ru> 0.011-alt2
 - corrected version
 - fixed POD
