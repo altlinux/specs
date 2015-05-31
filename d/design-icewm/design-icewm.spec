@@ -1,7 +1,7 @@
 %define theme AltClearlooks
 Name: design-icewm
 Version: 1.0
-Release: alt9
+Release: alt10
 Summary: Default theme for IceWM
 Group: Graphical desktop/Icewm
 License: GPL
@@ -9,6 +9,7 @@ Url: http://www.whatis.mynetcologne.de/icewm/index.html
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
 Source0: AltClearlooks.tar
 Source1: http://www.whatis.mynetcologne.de/icewm/20051225_gertplastik.tar
+Source2: sounds.tar
 BuildArch: noarch
 %description
 Default theme for IceWM
@@ -26,13 +27,21 @@ find %buildroot%_x11x11dir/icewm/themes -type d -print0 |
 pushd %buildroot%_x11x11dir/icewm/themes
 ln -s %theme default
 popd
+mkdir -p %buildroot%_x11x11dir/icewm/sounds
+tar xf %SOURCE2 -C %buildroot%_x11x11dir/icewm/
 
 %files
 %dir %_x11x11dir/icewm
 %dir %_x11x11dir/icewm/themes
 %_x11x11dir/icewm/themes/*
+%dir %_x11x11dir/icewm/sounds
+%_x11x11dir/icewm/sounds/*
 
 %changelog
+* Sun May 31 2015 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt10
+- added sound samples from http://triq.net/theme/icefx,
+  theme warp-icewmsoundtheme.tar.gz
+
 * Mon Feb 09 2015 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt9
 - added AltClearlooks theme and set as default
 
