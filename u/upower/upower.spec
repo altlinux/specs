@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec/upower
 
 Name: upower
-Version: 0.99.2
-Release: alt3
+Version: 0.99.3
+Release: alt1
 
 Summary: Power Management Service
 License: GPLv2+
@@ -67,7 +67,7 @@ GObject introspection devel data for the UPower library
 
 %prep
 %setup
-%patch -p1
+#%%patch -p1
 
 rm -f acinclude.m4
 
@@ -120,6 +120,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Sun May 31 2015 Yuri N. Sedunov <aris@altlinux.org> 0.99.3-alt1
+- 0.99.3 release
+
 * Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.99.2-alt3
 - 0.99.3_bb415e27 (fixed FDO #89476)
 
