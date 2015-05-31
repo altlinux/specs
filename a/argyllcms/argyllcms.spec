@@ -1,7 +1,7 @@
 %define _name hargyllcms
 
 Name: argyllcms
-Version: 1.6.3
+Version: 1.7.0
 Release: alt1
 
 Summary: ICC compatible color management system
@@ -11,8 +11,9 @@ License: GPLv3 and MIT
 URL: http://gitorious.org/%_name
 Source: http://people.freedesktop.org/~hughsient/releases/%_name-%version.tar.xz
 
-BuildRequires: libusb-devel libtiff-devel zlib-devel libjpeg-devel libX11-devel libXext-devel
-BuildRequires: libXxf86vm-devel libXinerama-devel libXScrnSaver-devel libXrandr-devel
+BuildRequires: libusb-devel libtiff-devel zlib-devel libjpeg-devel libpng-devel 
+BuildRequires: libX11-devel libXext-devel libXxf86vm-devel libXinerama-devel
+BuildRequires: libXScrnSaver-devel libXrandr-devel
 
 %description
 The Argyll color management system supports accurate ICC profile
@@ -47,6 +48,7 @@ This package contains the Argyll color management system documentation.
 
 %build
 %autoreconf
+export LIBS="$LIBS -lpng"
 %configure --disable-static
 
 # SMP-incompatible build
@@ -56,14 +58,16 @@ This package contains the Argyll color management system documentation.
 %make check
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_bindir/*
 %_libdir/libargyll.so.*
 %_libdir/libargyllicc.so.*
+%_libdir/libimdi.so.*
 %exclude %_libdir/libargyll.so
 %exclude %_libdir/libargyllicc.so
+%exclude %_libdir/libimdi.so
 %_datadir/color/argyll/
 %doc README *.txt
 
@@ -73,6 +77,9 @@ This package contains the Argyll color management system documentation.
 %exclude %_datadir/doc
 
 %changelog
+* Sun May 31 2015 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
 - 1.6.3
 
