@@ -3,7 +3,7 @@
 
 Name: icewm
 Version: 1.3.8
-Release: alt2
+Release: alt3
 Epoch: 2
 
 Summary: X11 Window Manager
@@ -36,6 +36,7 @@ Patch6:  %name-alt-cpustatus.patch
 Patch7:  %name-alt-taskbar.patch
 Patch8:  %name-1.3.7-trayicons.patch
 Patch9:  %name-build_fixes.patch
+Patch10: %name-1.3.8-stronger_control_in_icewm-session.patch
 
 PreReq: %name-light = %epoch:%version-%release
 
@@ -83,6 +84,7 @@ Recommends: iftop, mutt
 %patch7  -p2
 %patch8  -p2
 %patch9  -p2
+%patch10 -p2
 
 %add_optflags %optflags_nocpp
 
@@ -211,6 +213,10 @@ rm -rf %buildroot/%_x11x11dir/%name/themes/*
 %_pixmapsdir/*
 
 %changelog
+* Fri May 29 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.8-alt3
+- updated shutdown/reboot commands for using with systemd and sysvinit
+- added stronger control of startup sequence in icewm-session
+
 * Mon May 04 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.8-alt2
 - added conflicts to icewm-githubmod
 

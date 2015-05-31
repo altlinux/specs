@@ -1,17 +1,17 @@
 %def_without xtdesktop
 %def_without desklaunch
 Name: icewm-startup
-Version: 0.14
-Release: alt3
+Version: 0.15
+Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
 
 Summary(ru_RU.UTF-8): менеджер автозапуска программ IceWM
 License: GPL
 Group: Graphical desktop/Icewm
-Url: http://www.imath.kiev.ua/~vlasenko/
+Url: http://git.altlinux.org
 
-Packager: Igor Vlasenko <viy@altlinux.ru>
+Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 #Source: %name-%version.tar.bz2
 Source1: XXkb.conf
 
@@ -39,6 +39,20 @@ which allows one to configure IceWM default autostart via installing correspondi
 Имеющиеся модули позволяют при старте icewm обновлять локальное меню пользователя
 (если у него оно есть), запускать ivman, gkrellm, xxkb,
 запускать рабочий стол (idesk, xtdesktop, desklaunch, kdesktop) и т. д.
+
+%package delay
+Group: Graphical desktop/Icewm
+Summary: delay before starting programs
+Summary(ru_RU.UTF-8): задержка запуска программ
+Requires: %name
+AutoReq: no
+
+%description delay
+delay before starting programs, to eliminate possible artifacts,
+typically used to have time to start icewmtray.
+%description -l ru_RU.UTF-8 delay
+задержка перед запуском программ, чтобы устранить возможные артефакты,
+обычно используется, чтобы успел стартовать icewmtray.
 
 %package gkrellm
 Group: Graphical desktop/Icewm
@@ -210,6 +224,18 @@ AutoReq: no
 %description grun
 grun plug-in for setup dialog of launching applications in console mode.
 
+%package simple-sound
+Group: Graphical desktop/Icewm
+Summary: Startup and shutdown simple sound for IceWM
+Summary(ru_RU.UTF-8): Простейшие звуки при старте и выключении IceWM
+Requires: %name aplay
+AutoReq: no
+
+%description simple-sound
+Startup and shutdown simple sound for IceWM.
+%description -l ru_RU.UTF-8 simple-sound
+Простейшие звуки при старте и выключении IceWM.
+
 %prep
 %setup -q -c -T
 
@@ -249,19 +275,13 @@ EOF
 
 
 %install
+
+# Startup
+
 %__mkdir_p %buildroot/%icewmconfdir/startup.d
 cat <<'EOF' > %buildroot/%icewmconfdir/startup
 #!/bin/sh
 
-# delay before starting programs, to eliminate possible artifacts
-tmem=`free -m | awk '/Mem/{print $2}'`
-    if [ $tmem -le 512 ]
-	then delay=7
-    elif [ $tmem -gt 1024 ]
-	then delay=3
-    else delay=5
-    fi
-sleep $delay
 # starting all system-wide icewm autostart programs
 for file in %icewmconfdir/startup.d/*; do
   userfile=~/.icewm/startup.d/`echo $file | sed -e 's,%icewmconfdir/startup.d/,,'`
@@ -285,11 +305,55 @@ for file in ~/.icewm/startup.d/*; do
 done
 EOF
 
-echo 'xtoolwait gkrellm'> %buildroot/%icewmconfdir/startup.d/gkrellm
+# Shutdown
+
+%__mkdir_p %buildroot/%icewmconfdir/shutdown.d
+cat <<'EOF' > %buildroot/%icewmconfdir/shutdown
+#!/bin/sh
+
+# starting all system-wide icewm autostart programs in shutdown time
+for file in %icewmconfdir/shutdown.d/*; do
+  userfile=~/.icewm/shutdown.d/`echo $file | sed -e 's,%icewmconfdir/shutdown.d/,,'`
+  # root can disable autostart removing 'execute' bits
+  if [ -x $file ]; then 
+    # User-supplied programs disable system-wide programs.
+    # So user can disable system-wide program 
+    # by touching file in ~/.icewm/shutdown.d/ with the same name
+    # or even replace it with his own script.
+
+    # skip system-wide program if user-supplied file exists.
+    [ -e $userfile ] || . $file
+  fi
+done
+
+# starting user-supplied icewm autostart programs in shutdown time
+for file in ~/.icewm/shutdown.d/*; do
+  # running user files 
+  # user can disable autostart removing 'execute' bits
+  [ -x $file ] && . $file
+done
+EOF
+
+cat <<'EOF' > %buildroot/%icewmconfdir/startup.d/010-delay
+#!/bin/sh
+
+# delay before starting programs, to eliminate possible artifacts
+# name index 010- to save ability to run programs before this
+tmem=`free -m | awk '/Mem/{print $2}'`
+    if [ $tmem -le 512 ]
+	then delay=7
+    elif [ $tmem -gt 1024 ]
+	then delay=3
+    else delay=5
+    fi
+sleep $delay
+EOF
+
+echo 'xtoolwait gkrellm'> %buildroot/%icewmconfdir/startup.d/001-gkrellm
 echo 'kdesktop&'> %buildroot/%icewmconfdir/startup.d/kdesktop
 echo 'ivman&'> %buildroot/%icewmconfdir/startup.d/ivman
 
-cat <<EOF > %buildroot/%icewmconfdir/startup.d/idesk
+cat <<EOF > %buildroot/%icewmconfdir/startup.d/020-idesk
 #!/bin/sh
 if [ -e ~/.ideskrc ]; then 
   idesk &
@@ -299,7 +363,7 @@ fi
 EOF
 
 install -pD -m 644 %SOURCE1 %buildroot/%icewmconfdir/XXkb.conf
-cat <<EOF > %buildroot/%icewmconfdir/startup.d/xxkb
+cat <<EOF > %buildroot/%icewmconfdir/startup.d/001-xxkb
 #!/bin/sh
 # it is not wise to run non-configured xxkb, so we look 
 # whether it is configured.
@@ -312,8 +376,7 @@ if [ -e ~/.xxkbrc ] || [ -e /etc/X11/app-defaults/XXkb ]; then
 fi
 EOF
 
-install -pD -m 644 %SOURCE1 %buildroot/%icewmconfdir/XXkb.conf
-cp %buildroot/%icewmconfdir/startup.d/xxkb %buildroot/%icewmconfdir/startup.d/xxkb-tray
+cp %buildroot/%icewmconfdir/startup.d/001-xxkb %buildroot/%icewmconfdir/startup.d/060-xxkb-tray
 
 %if_with desklaunch
 cat <<EOF > %buildroot/%icewmconfdir/startup.d/desklaunch
@@ -339,7 +402,7 @@ fi
 EOF
 %endif #xtdesktop
 
-cat <<EOF > %buildroot/%icewmconfdir/startup.d/update-menus
+cat <<EOF > %buildroot/%icewmconfdir/startup.d/001-update-menus
 #!/bin/sh
 # if user has no local menu we will not create it either.
 # otherwise it is worth updating it.
@@ -348,16 +411,42 @@ if [ -e ~/.icewm/menu ]; then
 fi
 EOF
 
-cat <<EOF > %buildroot/%icewmconfdir/startup.d/networkmanager
+cat <<EOF > %buildroot/%icewmconfdir/startup.d/080-networkmanager
 #!/bin/sh
 /usr/libexec/polkit-1/polkit-gnome-authentication-agent-1&
 /usr/bin/nm-applet&
 EOF
 
-echo "tray_mixer_plus&" > %buildroot/%icewmconfdir/startup.d/tray_mixer_plus
+echo "tray_mixer_plus&" > %buildroot/%icewmconfdir/startup.d/070-tray_mixer_plus
+
+cat <<EOF > %buildroot/%icewmconfdir/startup.d/000-simple-sound
+#!/bin/sh
+
+if [ -e ~/.icewm/sounds/startup.wav ]; then
+    aplay ~/.icewm/sounds/startup.wav 2&> /dev/null&
+else
+    if [ -e /usr/share/X11/icewm/sounds/startup.wav ]; then
+    aplay /usr/share/X11/icewm/sounds/startup.wav 2&> /dev/null&
+    fi
+fi
+EOF
+
+cat <<EOF > %buildroot/%icewmconfdir/shutdown.d/000-simple-sound
+#!/bin/sh
+
+if [ -e ~/.icewm/sounds/shutdown.wav ]; then
+    aplay ~/.icewm/sounds/shutdown.wav 2&> /dev/null&
+else
+    if [ -e /usr/share/X11/icewm/sounds/shutdown.wav ]; then
+    aplay /usr/share/X11/icewm/sounds/shutdown.wav 2&> /dev/null&
+    fi
+fi
+EOF
 
 chmod 755 %buildroot/%icewmconfdir/startup.d/*
 chmod 755 %buildroot/%icewmconfdir/startup
+chmod 755 %buildroot/%icewmconfdir/shutdown.d/*
+chmod 755 %buildroot/%icewmconfdir/shutdown
 
 %post xxkb-tray
 if [ $1 -eq 1 ]; then
@@ -393,7 +482,12 @@ fi
 #%doc README
 %dir %icewmconfdir/startup.d
 %config %icewmconfdir/startup
+%dir %icewmconfdir/shutdown.d
+%config %icewmconfdir/shutdown
 #%_man1dir/*
+
+%files delay
+%config %icewmconfdir/startup.d/010-delay
 
 %if_with desklaunch
 %files desklaunch
@@ -401,10 +495,10 @@ fi
 %endif #desklaunch
 
 %files gkrellm
-%config %icewmconfdir/startup.d/gkrellm
+%config %icewmconfdir/startup.d/001-gkrellm
 
 %files idesk
-%config %icewmconfdir/startup.d/idesk
+%config %icewmconfdir/startup.d/020-idesk
 
 %files ivman
 %config %icewmconfdir/startup.d/ivman
@@ -413,7 +507,7 @@ fi
 %config %icewmconfdir/startup.d/kdesktop
 
 %files update-menus
-%config %icewmconfdir/startup.d/update-menus
+%config %icewmconfdir/startup.d/001-update-menus
 
 %if_with xtdesktop
 %files xtdesktop
@@ -421,21 +515,33 @@ fi
 %endif #xtdesktop
 
 %files xxkb
-%config %icewmconfdir/startup.d/xxkb
+%config %icewmconfdir/startup.d/001-xxkb
 
 %files xxkb-tray
-%config %icewmconfdir/startup.d/xxkb-tray
+%config %icewmconfdir/startup.d/060-xxkb-tray
 %icewmconfdir/XXkb.conf
 
 %files networkmanager
-%config %icewmconfdir/startup.d/networkmanager
+%config %icewmconfdir/startup.d/080-networkmanager
 
 %files tray_mixer_plus
-%config %icewmconfdir/startup.d/tray_mixer_plus
+%config %icewmconfdir/startup.d/070-tray_mixer_plus
 
 %files grun
 
+%files simple-sound
+%config %icewmconfdir/startup.d/000-simple-sound
+%config %icewmconfdir/shutdown.d/000-simple-sound
+
 %changelog
+* Sun May 31 2015 Dmitriy Khanzhin <jinn@altlinux.org> 0.15-alt1
+- added "shutdown" script, thx to YYY at forum
+- added simple-sound subpackage, thx to YYY and Leo-sp150 at forum
+- delay moved to separate subpackage
+- cosmetic fix of xxkb conf file
+- some programs are assigned numeric indexes
+- changed Url: and Packager:
+
 * Mon Feb 09 2015 Dmitriy Khanzhin <jinn@altlinux.org> 0.14-alt3
 - fixed typo in networkmanager subpackage
 
