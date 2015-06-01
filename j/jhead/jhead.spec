@@ -1,5 +1,5 @@
 Name: jhead
-Version: 2.97
+Version: 3.00
 Release: alt1
 
 Summary: Tool for handling EXIF data in JPEG image files
@@ -7,7 +7,7 @@ License: Public Domain
 Group: Graphics
 
 URL: http://www.sentex.net/~mwandel/jhead
-Source: %url/jhead-%version.tar.gz
+Source: %url/%name-%version.tar.gz
 
 # Without jpegtran from libjpeg-utils rotation feature will not work.
 # Exif thumbnail regeneration relies on 'mogrify' program from ImageMagick.
@@ -36,6 +36,9 @@ install -pD -m644 jhead.1 %buildroot%_man1dir/jhead.1
 %_man1dir/*
 
 %changelog
+* Mon Jun 01 2015 Yuri N. Sedunov <aris@altlinux.org> 3.00-alt1
+- 3.00
+
 * Wed Dec 24 2014 Yuri N. Sedunov <aris@altlinux.org> 2.97-alt1
 - 2.97
 
