@@ -1,5 +1,5 @@
 Name: livecd-net-eth
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: Try to autoconfigure ethernet interfaces
@@ -30,6 +30,9 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Mon Jun 01 2015 Michael Shigorin <mike@altlinux.org> 0.4.1-alt1
+- added the missing space (cosmetic fix)
+
 * Fri Apr 25 2014 Michael Shigorin <mike@altlinux.org> 0.4-alt1
 - do not touch:
   + networking configuration resulting from propagator/netboot;
