@@ -1,6 +1,6 @@
 Name:		viking
-Version:        1.2.1
-Release:	alt2
+Version:        1.6.0
+Release:	alt1
 
 Summary:	GPS data editor and analyzer
 
@@ -10,7 +10,8 @@ URL:		http://sourceforge.net/projects/viking/
 Source0:	%{name}-%{version}.tar
 
 BuildRequires: libcurl-devel libexpat-devel libgps-devel perl-XML-Parser intltool zlib-devel
-BuildRequires: gnome-doc-utils libgtk+2-devel gtk-doc
+BuildRequires: gnome-doc-utils libgtk+2-devel gtk-doc libgexiv2-devel bzlib-devel libmagic-devel
+BuildRequires: libsqlite3-devel
 
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
 
@@ -26,25 +27,29 @@ in C with the GTK+ 2.
 %build
 ln -s /usr/share/gnome-doc-utils/gnome-doc-utils.make
 %autoreconf
-%configure
+%configure --disable-mapnik
 %make
 
 %install
 %makeinstall
+find %buildroot/usr/share/gnome/help/viking/ -type l -delete
 
 %find_lang %name
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog COPYING NEWS README TODO doc/
 %{_bindir}/viking
-%{_bindir}/viking-remote
 /usr/share/applications/viking.desktop
 /usr/share/icons/hicolor/48x48/apps/viking.png
 /usr/share/gnome/help/viking
 /usr/share/omf/viking
+/usr/share/viking/
 
 
 %changelog
+* Mon Jun 01 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Thu Jul 21 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.2.1-alt2
 - build fixed
 
