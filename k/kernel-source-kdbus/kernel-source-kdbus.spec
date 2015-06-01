@@ -1,5 +1,5 @@
 Name: kernel-source-kdbus
-Version: 20150210 
+Version: 20150601 
 Release: alt1
 
 Summary: in-kernel dbus implementation
@@ -27,6 +27,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Jun 01 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20150601-alt1
+- updated from git
+
 * Tue Feb 10 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20150210-alt1
 - updated fron git
 
