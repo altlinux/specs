@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.32
-Release: alt2.1.1
+Release: alt2.1.1.1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -99,6 +99,7 @@ Patch21: %_bname-2.4.31-rh-nss-clean-memory-for-token-pin.patch
 Patch22: %_bname-2.4.31-rh-cve-nss-cipher-suite-ignored.patch
 Patch23: %_bname-2.4.31-rh-nss-default-cipher-suite-always-selected.patch
 Patch24: %_bname-2.4.31-rh-nss-multiple-tls-contexts.patch
+Patch25: openldap-2.4.32-alt-gcc5.1.patch
 
 ### REQUIRE Section
 
@@ -274,6 +275,8 @@ HTML and TXT versions
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+
+%patch25 -p2
 
 ### Extract AACLS patch
 %if_enabled aacls
@@ -700,6 +703,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Mon Jun 01 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.4.32-alt2.1.1.1
+- build with gcc 5.1 fixed
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.32-alt2.1.1
 - rebuild with new perl 5.20.1
 - disabled tests just for this release (TODO: clean up %%check section!)
