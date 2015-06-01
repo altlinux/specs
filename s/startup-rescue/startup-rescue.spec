@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.23
+Version: 0.24
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -28,14 +28,21 @@ This package contains scripts used to boot your system from rescue disk.
 %setup -n rescue-%version
 
 %install
-mkdir -p -- %buildroot{%_bindir,/sbin,/etc/rc.d}
+mkdir -p -- %buildroot{%_bindir,/sbin,%_initdir}
 
 install -pm755 rescue-shell %buildroot%_bindir/
 install -pm755 fixmbr find-fstab %buildroot/sbin/
 install -pm755 mount-fstab mount-system %buildroot/sbin/
 install -pm644 inittab.rescue mdadm-ro.conf %buildroot/etc/
-install -pDm755 rc.sysinit.rescue %buildroot/etc/rc.d/
-install -pDm755 sysreport.init %buildroot%_initdir/sysreport
+install -pm755 rc.sysinit.rescue %buildroot/etc/rc.d/
+install -pm755 sysreport.init %buildroot%_initdir/sysreport
+install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
+
+%post
+%post_service rescue-remote
+
+%preun
+%preun_service rescue-remote
 
 %files
 /sbin/*
@@ -44,8 +51,13 @@ install -pDm755 sysreport.init %buildroot%_initdir/sysreport
 /etc/inittab.rescue
 /etc/rc.d/rc.sysinit.rescue
 %_initdir/sysreport
+%_initdir/rescue-remote
 
 %changelog
+* Mon Jun 01 2015 Michael Shigorin <mike@altlinux.org> 0.24-alt1
+- added rescue-remote initscript
+- eliminated mdadm.conf spam (shows up during multiple live_rw boots)
+
 * Mon May 12 2014 Michael Shigorin <mike@altlinux.org> 0.23-alt1
 - moved *-forensic into a standalone package
 
