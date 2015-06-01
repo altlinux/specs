@@ -1,5 +1,5 @@
 Name: bmake
-Version: 20111010
+Version: 20150505
 Release: alt1
 
 Summary: The NetBSD make(1) tool
@@ -7,7 +7,7 @@ License: BSD with advertising
 Group: Development/Tools
 
 Url: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/
-Source: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/%name-%version.tar.gz
+Source: %name-%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Requires: pkgsrc-mk-files
@@ -47,6 +47,9 @@ install -pDm755 Linux/bmake %buildroot%_bindir/bmake
 %dir %_datadir/mk/
 
 %changelog
+* Mon Jun 01 2015 Fr. Br. George <george@altlinux.ru> 20150505-alt1
+- Autobuild version bump to 20150505
+
 * Sun Jan 08 2012 Michael Shigorin <mike@altlinux.org> 20111010-alt1
 - built for Sisyphus
 - minor spec cleanup
