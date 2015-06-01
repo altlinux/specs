@@ -4,7 +4,7 @@
 Name: openstack-heat
 Summary: OpenStack Orchestration (heat)
 Version: 2015.1.0
-Release: alt0.b2.0
+Release: alt1
 License: ASL 2.0
 Group: System/Servers
 Url: http://www.openstack.org
@@ -25,54 +25,59 @@ Source20: heat-dist.conf
 Source21: %name.tmpfiles
 Source22: heat.conf.sample
 
-#
-# patches_base=2014.1.2+1
-#
-Patch0001: 0001-remove-pbr-runtime-dependency.patch
-
 BuildArch: noarch
-BuildRequires: git
+# BuildRequires: git
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
+BuildRequires: python-module-pbr >= 0.6
 BuildRequires: python-module-argparse
-BuildRequires: python-module-eventlet
-BuildRequires: python-module-greenlet
+BuildRequires: python-module-eventlet >= 0.16.1
+BuildRequires: python-module-greenlet >= 0.3.2
 BuildRequires: python-module-httplib2
 BuildRequires: python-module-iso8601
 BuildRequires: python-module-kombu
 BuildRequires: python-module-lxml
 BuildRequires: python-module-netaddr
 BuildRequires: python-module-memcached
-BuildRequires: python-module-migrate
-BuildRequires: python-module-six
+BuildRequires: python-module-migrate >= 0.9.5
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-yaml
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 # These are required to build due to the requirements check added
 BuildRequires: python-module-PasteDeploy
-BuildRequires: python-module-routes
-BuildRequires: python-module-SQLAlchemy
+BuildRequires: python-module-routes >= 1.12.3
+BuildRequires: python-module-SQLAlchemy >= 0.9.7
 BuildRequires: python-module-webob
-BuildRequires: python-module-pbr
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-qpid
+BuildRequires: python-module-stevedore >= 1.3.0
+BuildRequires: python-module-requests >= 2.2.0
 
+BuildRequires: python-module-oslo.config >= 1.9.3
+BuildRequires: python-module-oslo.concurrency >= 1.8.0
+BuildRequires: python-module-oslo.context >= 0.2.0
+BuildRequires: python-module-oslo.db >= 1.7.0
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.log >= 1.0.0
+BuildRequires: python-module-oslo.messaging >= 1.8.0
+BuildRequires: python-module-oslo.middleware >= 1.0.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-oslo.utils >= 1.4.0
+BuildRequires: python-module-osprofiler >= 0.3.0
+BuildRequires: python-module-oslo.versionedobjects >= 0.1.1
+BuildRequires: python-module-keystonemiddleware >= 1.5.0
 
-BuildRequires: python-module-oslo.config >= 1.6.0
-BuildRequires: python-module-oslo.context >= 0.1.0
-BuildRequires: python-module-oslo.db >= 1.4.1
-BuildRequires: python-module-oslo.i18n >= 1.3.0
-BuildRequires: python-module-oslo.messaging >= 1.4.0
-BuildRequires: python-module-oslo.middleware >= 0.3.0
-BuildRequires: python-module-oslo.serialization >= 1.2.0
-BuildRequires: python-module-oslo.utils >= 1.2.0
-
-BuildRequires: python-module-cinderclient
-BuildRequires: python-module-keystoneclient
-BuildRequires: python-module-novaclient
-BuildRequires: python-module-neutronclient
-BuildRequires: python-module-swiftclient
-BuildRequires: python-module-heatclient
+BuildRequires: python-module-ceilometerclient >= 1.0.13
+BuildRequires: python-module-cinderclient >= 1.1.0
+BuildRequires: python-module-glanceclient >= 0.15.0
+BuildRequires: python-module-heatclient >= 0.3.0
+BuildRequires: python-module-keystoneclient >= 1.1.0
+BuildRequires: python-module-neutronclient >= 2.3.11
+BuildRequires: python-module-novaclient >= 2.22.0
+BuildRequires: python-module-saharaclient >= 0.8.0
+BuildRequires: python-module-swiftclient >= 2.2.0
+BuildRequires: python-module-troveclient >= 1.0.7
 
 Requires: %name-common = %version-%release
 Requires: %name-engine = %version-%release
@@ -141,11 +146,6 @@ AWS CloudWatch-compatible API to the Heat Engine
 %prep
 %setup
 
-%patch0001 -p1
-
-sed -i s/REDHATHEATVERSION/%version/ heat/version.py
-sed -i s/REDHATHEATRELEASE/%release/ heat/version.py
-
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requires_dist config
@@ -153,6 +153,9 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
 # Remove tests in contrib
 find contrib -name tests -type d | xargs rm -r
+
+# Generate sample config
+#tools/config/generate_sample.sh -b . -p heat -o etc/heat
 
 install -p -D -m 640 %SOURCE22 etc/heat/heat.conf.sample
 
@@ -163,16 +166,16 @@ install -p -D -m 640 %SOURCE22 etc/heat/heat.conf.sample
 #  Since icehouse, there was an uncommented keystone_authtoken section
 #  at the end of the file which mimics but also conflicted with our
 #  distro editing that had been done for many releases.
-sed -i '/^[^#[]/{s/^/#/; s/ //g}; /^#[^ ]/s/ = /=/' etc/heat/heat.conf.sample
-sed -i -e "s/^#heat_revision=.*$/heat_revision=%version-%release/I" etc/heat/heat.conf.sample
+#sed -i '/^[^#[]/{s/^/#/; s/ //g}; /^#[^ ]/s/ = /=/' etc/heat/heat.conf.sample
+#sed -i -e "s/^#heat_revision=.*$/heat_revision=%version-%release/I" etc/heat/heat.conf.sample
 
 #  TODO: Make this more robust
 #  Note it only edits the first occurance, so assumes a section ordering in sample
 #  and also doesn't support multi-valued variables.
-while read name eq value; do
-  test "$name" && test "$value" || continue
-  sed -i "0,/^# *$name=/{s!^# *$name=.*!#$name=$value!}" etc/heat/heat.conf.sample
-done < %SOURCE20
+#while read name eq value; do
+#  test "$name" && test "$value" || continue
+#  sed -i "0,/^# *$name=/{s!^# *$name=.*!#$name=$value!}" etc/heat/heat.conf.sample
+#done < %SOURCE20
 
 %build
 %python_build
@@ -323,6 +326,9 @@ cp -vr etc/heat/environment.d %buildroot/%_sysconfdir/heat
 %_initdir/%name-api-cloudwatch
 
 %changelog
+* Mon Jun 01 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
+- 2015.1.0 Kilo release
+
 * Fri Mar 13 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt0.b2.0
 - 2015.1.0b2
 
