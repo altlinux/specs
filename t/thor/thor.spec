@@ -1,26 +1,29 @@
-%define  pkgname uber-s3
+%define  pkgname thor
  
-Name: 	 ruby-%pkgname
-Version: 0.2.4 
-Release: alt2
+Name: 	 %pkgname
+Version: 0.19.1 
+Release: alt1
  
-Summary: Ruby S3 client with synchronous and asynchronous I/O adapters
+Summary: Thor is a toolkit for building powerful command-line interfaces.
 License: MIT/Ruby
 Group:   Development/Ruby
-Url:     https://github.com/pressly/uber-s3
- 
+Url:     http://whatisthor.com/
+# VCS:	 https://github.com/erikhuda/thor
+
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
  
 Source:  %pkgname-%version.tar
-Patch1:  %name-prevent-nil-in-ssl-digest.patch
-
+ 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
  
 %description
-A simple, but very fast, S3 client for Ruby supporting synchronous
-(net-http) and asynchronous (em+fibers) io.
+Thor is a simple and efficient tool for building self-documenting
+command line utilities. It removes the pain of parsing command line
+options, writing "USAGE:" banners, and can also be used as an
+alternative to the Rake build tool. The syntax is Rake-like, so it
+should be familiar to most Rake users.
 
 %package doc
 Summary: Documentation files for %name
@@ -33,7 +36,6 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch1 -p1
 %update_setup_rb
  
 %build
@@ -51,14 +53,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %files
 %doc README*
+%_bindir/%name
 %ruby_sitelibdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
-* Thu May 28 2015 Andrey Cherepanov <cas@altlinux.org> 0.2.4-alt2
-- Prevent nil parameters passed to SSL digest
-
-* Fri May 22 2015 Andrey Cherepanov <cas@altlinux.org> 0.2.4-alt1
+* Fri May 22 2015 Andrey Cherepanov <cas@altlinux.org> 0.19.1-alt1
 - Initial build for ALT Linux
