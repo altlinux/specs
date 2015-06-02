@@ -1,6 +1,6 @@
 Name: glib
 Version: 1.2.10
-Release: alt18
+Release: alt19
 
 Summary: A library of handy utility functions
 License: LGPLv2.1+
@@ -50,6 +50,10 @@ Static libraries for development statically linked glib-based programs.
 %patch4 -p1
 %patch5 -p1
 find -type f -name \*.orig -delete
+
+%add_optflags -std=gnu89
+sed -e 's,^Cflags:,& -std=gnu89 ,' -i *.pc.in
+sed -e 's,cflags="",cflags="-std=gnu89",' -i glib-config.in
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -104,6 +108,9 @@ bzip2 -9 %buildroot%docdir/NEWS
 %endif
 
 %changelog
+* Tue Jun 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.10-alt19
+- Fix build with gcc5 (hardcode -std=gnu89).
+
 * Sat Feb 26 2011 Dmitry V. Levin <ldv@altlinux.org> 1.2.10-alt18
 - Rebuilt for debuginfo.
 

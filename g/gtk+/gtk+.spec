@@ -1,6 +1,6 @@
 Name: gtk+
 Version: 1.2.10
-Release: alt20
+Release: alt21
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs for X
 License: LGPL
@@ -217,6 +217,9 @@ cp -a docs/{*.txt,html,text} %buildroot%pkgdocdir/devel
 %endif
 
 %changelog
+* Tue Jun 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.10-alt21
+- Rebuilt for new glib cflags.
+
 * Sat Feb 26 2011 Dmitry V. Levin <ldv@altlinux.org> 1.2.10-alt20
 - Rebuilt for debuginfo.
 
