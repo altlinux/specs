@@ -3,7 +3,6 @@
 %ifarch x86_64
 %define tbname         NVIDIA-Linux-x86_64
 %endif
-%define virtual_pkg_name NVIDIA_GLX
 %define bin_pkg_name     nvidia_glx
 %define module_name    nvidia
 %define dirsuffix %nil
@@ -15,7 +14,7 @@
 %define nv_version 340
 %define nv_release 76
 %define nv_minor %nil
-%define pkg_rel alt137
+%define pkg_rel alt138
 %ifarch x86_64
 %def_enable egl
 %else
@@ -87,6 +86,7 @@ Source2: nvidia.xinf
 Source100: nvidia_create_xinf
 
 Patch1: buildfix_kernel_3.14.patch
+Patch2: buildfix_kernel_4.0.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel
@@ -107,8 +107,6 @@ Sources for %{bin_pkg_name}_%{version} package
 %package -n %{bin_pkg_name}_%{version}
 PreReq: %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
-Provides: %virtual_pkg_name = %version-%release
-Obsoletes: %virtual_pkg_name < %version-%release
 #
 Group: %myGroup
 Summary: %mySummary
@@ -195,6 +193,7 @@ cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
 %patch1 -p1
+%patch2 -p1
 rm -rf precompiled
 popd
 
@@ -345,6 +344,9 @@ fi
 %endif
 
 %changelog
+* Tue Jun 02 2015 Sergey V Turchin <zerg@altlinux.org> 340.76-alt138
+- add fix against 4.0 kernel
+
 * Fri Feb 06 2015 Sergey V Turchin <zerg@altlinux.org> 340.76-alt137
 - new version
 
