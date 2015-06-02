@@ -14,7 +14,7 @@
 %define nv_version 304
 %define nv_release 125
 %define nv_minor %nil
-%define pkg_rel alt123
+%define pkg_rel alt124
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -82,6 +82,7 @@ Source100: nvidia_create_xinf
 
 Patch1: buildfix_kernel_3.14.patch
 Patch2: buildfix_kernel_3.19.patch
+Patch3: buildfix_kernel_4.0.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 ExclusiveArch: %ix86 x86_64
@@ -188,6 +189,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel/
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 rm -rf precompiled
 popd
 
@@ -319,6 +321,9 @@ fi
 %endif
 
 %changelog
+* Tue Jun 02 2015 Sergey V Turchin <zerg@altlinux.org> 304.125-alt124
+- add fix against 4.0 kernel
+
 * Fri Mar 20 2015 Sergey V Turchin <zerg@altlinux.org> 304.125-alt123
 - add patch against 3.19 kernel
 
