@@ -19,7 +19,7 @@
 Summary: Cluster File System
 Name: glusterfs3
 Version: %major.0
-Release: alt1
+Release: alt3
 License: GPLv2/LGPLv3
 Group: System/Base
 Url: http://www.gluster.org/
@@ -326,6 +326,7 @@ install -D -p -m 644 extras/glusterfs.vim \
 %config(noreplace) %_sysconfdir/logrotate.d/glusterfsd
 %_sharedstatedir/glusterd
 %_init_file1
+%_sbindir/glfsheal
 
 %files vim
 %doc COPYING-GPLV2 COPYING-LGPLV3
@@ -348,6 +349,11 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Tue Jun 02 2015 Danil Mikhailov <danil@altlinux.org> 3.7.0-alt3
+- Fix 0003-xlators-mgmt-don-t-allow-glusterd-fork-bomb-cache-th
+- Added glfsheal command
+
+
 * Thu May 14 2015 Danil Mikhailov <danil@altlinux.org> 3.7.0-alt1
 - new version 3.7.0
 
