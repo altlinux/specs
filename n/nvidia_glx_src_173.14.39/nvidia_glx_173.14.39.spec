@@ -12,7 +12,7 @@
 %define nv_version 173
 %define nv_release 14
 %define nv_minor 39
-%define pkg_rel alt73
+%define pkg_rel alt74
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -78,6 +78,7 @@ Patch1: buildfix_kernel_3.13.patch
 Patch2: buildfix_kernel_3.14.patch
 Patch3: buildfix_kernel_3.17.patch
 Patch4: buildfix_kernel_3.19.patch
+Patch5: buildfix_kernel_4.0.patch
 
 BuildRequires: kernel-build-tools libsysfs-devel
 ExclusiveArch: %ix86 x86_64
@@ -190,6 +191,7 @@ rm -rf precompiled
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 popd
 
 
@@ -409,6 +411,9 @@ fi
 %endif
 
 %changelog
+* Tue Jun 02 2015 Sergey V Turchin <zerg@altlinux.org> 173.14.39-alt74
+- add fix against 4.0 kernel
+
 * Fri Mar 20 2015 Sergey V Turchin <zerg@altlinux.org> 173.14.39-alt73
 - add patch against 3.19 kernel
 
