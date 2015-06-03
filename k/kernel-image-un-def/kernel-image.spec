@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	3.19
-%define kernel_sublevel	.8
+%define kernel_base_version	4.0
+%define kernel_sublevel	.4
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -314,7 +314,7 @@ in the kernel and update the documentation to reflect these changes.
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
 rm -rf kernel-source-%kernel_base_version
-tar -jxf %kernel_src/kernel-source-%kernel_base_version.tar.bz2
+tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1
 
@@ -544,14 +544,17 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu May 21 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.4-alt1
+- 4.0.4
+
+* Mon May 18 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.3-alt1
+- 4.0.3
+
 * Tue May 12 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.8-alt1
 - 3.19.8
 
-* Thu May 07 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.7-alt1
-- 3.19.7
-
-* Thu Apr 30 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.6-alt1
-- 3.19.6
+* Mon Apr 27 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.0-alt1
+- 4.0.0
 
 * Mon Apr 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.5-alt1
 - 3.19.5
