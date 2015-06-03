@@ -4,8 +4,8 @@
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.0
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -126,6 +126,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Jun 2 2015 Vladimir Didenko <cow@altlinux.org> 2.6.2-alt1
+- 2.6.2
+
 * Thu May 28 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt3
 - add desktop files to xsessions directory
 

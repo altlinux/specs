@@ -1,7 +1,7 @@
 %def_enable gtk_doc
 
 Name: cinnamon
-Version: 2.6.3
+Version: 2.6.7
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -35,7 +35,7 @@ Provides: desktop-notification-daemon
 Requires: upower
 Requires: polkit >= %polkit_ver
 # needed for session files
-Requires: cinnamon-session
+Requires: cinnamon-session >= 2.6.2
 Requires(post,preun):  GConf
 # needed for on-screen keyboard
 Requires: caribou
@@ -236,6 +236,7 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/applications/cinnamon-menu-editor.desktop
 %_datadir/applications/cinnamon-settings-*.desktop
 %_datadir/applications/polkit-cinnamon-authentication-agent-1.desktop
+%_datadir/applications/cinnamon-killer-daemon.desktop
 %exclude %_datadir/xsessions/cinnamon2d.desktop
 %_datadir/cinnamon/
 %_datadir/cinnamon-menu-editor/
@@ -262,6 +263,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Wed Jun 3 2015 Vladimir Didenko <cow@altlinux.org> 2.6.7-alt1
+- 2.6.7
+
 * Thu May 28 2015 Vladimir Didenko <cow@altlinux.org> 2.6.3-alt1
 - 2.6.3
 

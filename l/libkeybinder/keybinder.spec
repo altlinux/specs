@@ -4,7 +4,7 @@
 
 Name: libkeybinder
 Version: 0.3.0
-Release: alt2.git20120617
+Release: alt3.git20120617
 
 Summary: keybinder is a library for registering global keyboard shortcuts
 License: GPLv2
@@ -13,7 +13,8 @@ Url: http://kaizer.se/wiki/keybinder/
 
 BuildRequires: libgtk+2-devel xorg-server-common python-dev liblua5-devel
 BuildRequires: python-module-pygtk-devel libXext-devel
-BuildPreReq: gtk-doc gtk-doc-mkpdf
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildPreReq: gtk-doc
 # https://github.com/engla/keybinder.git
 Source: %name-%version.tar
 
@@ -27,6 +28,14 @@ The library contains:
  - An examples directory with programs in C, Lua, Python and Vala.
 
 
+%package gir
+Summary: GObject introspection data for the %name library
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gir
+GObject introspection data for the %name library
+
 %package devel
 Summary: Headers for %name
 Group: Development/C
@@ -34,6 +43,15 @@ Requires: %name = %version-%release
 
 %description devel
 Headers for building software that uses %name
+
+%package gir-devel
+Summary: GObject introspection devel data for the %name
+Group: System/Libraries
+BuildArch: noarch
+Requires: %name-gir = %version-%release
+
+%description gir-devel
+GObject introspection devel data for the %name library
 
 %if_enabled static
 %package devel-static
@@ -92,11 +110,20 @@ Lua5 binding to %name
 %files -n python-module-%sname
 %python_sitelibdir/%sname
 
+%files gir
+%_typelibdir/*
+
+%files gir-devel
+%_girdir/*
+
 #files -n lua5-%name
 #_libdir/lua/%luaver/*.so
 
 
 %changelog
+* Wed Jun 3 2015 Vladimir Didenko <cow at altlinux.org> 0.3.0-alt3.git20120617
+- add gir packages
+
 * Sat Sep 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt2.git20120617
 - Disabled lua5-libkeybinder (ALT #27509)
 
