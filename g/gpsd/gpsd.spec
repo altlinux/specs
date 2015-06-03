@@ -4,7 +4,7 @@
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
 Version: 3.14
-Release: alt1
+Release: alt2
 License: %bsd
 Group: System/Servers
 Url: http://www.catb.org/gpsd
@@ -17,13 +17,14 @@ BuildPreReq:	rpm-build-licenses
 
 # Automatically added by buildreq on Tue Sep 27 2011
 # optimized out: glib2-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libdbus-devel libdbus-glib libgpg-error libncurses-devel libstdc++-devel libtinfo-devel python-base python-modules xml-common xorg-xproto-devel
-BuildRequires: docbook-dtds docbook-style-xsl gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel python-devel xorg-cf-files xsltproc scons python-module-json chrpath
+BuildRequires: docbook-dtds docbook-style-xsl gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel python-devel xorg-cf-files xsltproc scons python-module-json
 
 %if_with libQgpsmm
 BuildRequires: libqt4-core libqt4-devel libqt4-network
 %endif
 
 BuildRequires: libbluez-devel
+BuildRequires: libusb-devel
 
 %set_verify_elf_method unresolved=relaxed
 
@@ -96,23 +97,23 @@ Python bindings to libgps
 %prep
 %setup
 
+# don't set RPATH
+sed -i 's|env.Prepend.*RPATH.*|pass #\0|' SConstruct
+
+# fixed linking with libm
+sed -i 's|parse_flags=usblibs . rtlibs . bluezlibs . ."-lgps".|parse_flags=usblibs + rtlibs + bluezlibs + ["-lgps", "-lm"]|' SConstruct
+
 %build
-scons prefix=/usr libdir=%_libdir
+scons \
+    prefix=/usr \
+    libdir=%_libdir \
+    debug=yes
 
 %install
-DESTDIR=%buildroot scons  install
-find %buildroot -name '*.so' | xargs -n 1 chrpath -d
-chrpath -d %buildroot%_sbindir/*
-chrpath -d %buildroot%_bindir/cgps
-chrpath -d %buildroot%_bindir/gps2udp
-chrpath -d %buildroot%_bindir/gpsctl
-chrpath -d %buildroot%_bindir/gpsdecode
-chrpath -d %buildroot%_bindir/gpsmon
-chrpath -d %buildroot%_bindir/gpspipe
-chrpath -d %buildroot%_bindir/gpxlogger
-chrpath -d %buildroot%_bindir/lcdgps
-chrpath -d %buildroot%_bindir/ntpshmmon
+DESTDIR=%buildroot scons install udev-install
 
+# systemd's units installed when udev-install is used
+rm -rf %buildroot/lib/systemd
 
 %files
 %doc README INSTALL COPYING
@@ -120,6 +121,7 @@ chrpath -d %buildroot%_bindir/ntpshmmon
 %_sbindir/gpsdctl
 %_man8dir/gps*
 %_man5dir/*
+%_udevrulesdir/*.rules
 
 %files -n libgps%abiversion
 %_libdir/libgps*.so.*
@@ -148,6 +150,13 @@ chrpath -d %buildroot%_bindir/ntpshmmon
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jun 03 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.14-alt2
+- Built with debuginfo
+- Added libusb-devel to BuildRequires
+- Installed udev-rules
+- Fixed linking with libm
+- Removed RPATH without chrpath
+
 * Thu May 28 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.14-alt1
 - 3.14
 - New URL: http://www.catb.org/gpsd
