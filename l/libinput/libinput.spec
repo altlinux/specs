@@ -2,7 +2,7 @@
 %def_disable gui
 
 Name: libinput
-Version: 0.15.1
+Version: 0.16.0
 Release: alt1
 
 Summary: Input devices library
@@ -88,6 +88,9 @@ This package contains GUI event viewer from %name.
 
 
 %changelog
+* Wed Jun 03 2015 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Tue May 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.15.1-alt1
 - 0.15.1
 
