@@ -1,6 +1,6 @@
 Name: fetchmail
 Version: 6.3.26
-Release: alt1
+Release: alt2
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 Group: Networking/Mail
@@ -10,6 +10,7 @@ Url: http://www.fetchmail.info
 
 Source0: %name-%version.tar.xz
 Source1: %name.init
+Source2: %name.service
 Source3: fetchmailrc.example
 Source10: fetchmailconf-large.png
 Source11: fetchmailconf-mini.png
@@ -126,6 +127,7 @@ rm -rf contrib/RCS
 chmod 644 contrib/*
 
 install -pDm755 %SOURCE1 %buildroot%_initdir/%name
+install -pDm644 %SOURCE2 %buildroot%_unitdir/%name.service
 touch %buildroot%_sysconfdir/%{name}rc
 
 install -pDm644 %SOURCE10 %buildroot%_liconsdir/%{name}conf.png
@@ -176,6 +178,7 @@ usermod -d %rtdir %name ||:
 
 %files daemon
 %_initdir/%name
+%_unitdir/%name.service
 %attr(640,root,%name) %config(noreplace,missingok) %_sysconfdir/%{name}rc
 %attr(775,root,%name) %rtdir
 
@@ -184,6 +187,9 @@ usermod -d %rtdir %name ||:
 
 %files -f %name.lang locales
 %changelog
+* Thu Jun  4 2015 Terechkov Evgenii <evg@altlinux.org> 6.3.26-alt2
+- Systemd unit added (ALT#31049) to daemon subpackage
+
 * Mon Jun 23 2014 Michael Shigorin <mike@altlinux.org> 6.3.26-alt1
 - new version (watch file uupdate)
 - build reverted to srpm again
