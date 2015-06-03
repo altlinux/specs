@@ -6,7 +6,7 @@
 Name: %realname%dialect
 %define patchlevel p6
 Version: %realver%patchlevel
-Release: alt5
+Release: alt6
 Epoch: 1
 
 %add_findreq_skiplist %_datadir/%realname%suff/config.guess
@@ -31,6 +31,7 @@ Patch3: automake-1.4-rh-backslash.patch
 Patch4: automake-1.4-rh-subdirs-89656.patch
 Patch5: automake-1.4-alt-texinfo.patch
 Patch6: automake-1.4-alt-aclocal_libtool.patch
+Patch7: 0001-automake.in-finish_languages-Use-not-do-.-From-Pavel.patch
 
 Provides: %realname = %epoch:%realver-%{release}0.%patchlevel
 Provides: aclocal(libtool)
@@ -53,6 +54,7 @@ you install Automake, you will also need to install GNU Autoconf package.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %configure
@@ -86,6 +88,9 @@ EOF
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Tue Jun 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.4p6-alt6
+- Fixed for perl >= 5.20.
+
 * Wed Sep 09 2009 Dmitry V. Levin <ldv@altlinux.org> 1:1.4p6-alt5
 - Removed obsolete %%install_info/%%uninstall_info calls.
 
