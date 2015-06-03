@@ -3,8 +3,8 @@
 %define postgrey_home %_localstatedir/%name
 
 Name: postgrey
-Version: 1.33
-Release: alt1.1
+Version: 1.35
+Release: alt1
 
 Summary: Greylisting Policy Server for Postfix and Exim
 License: GPL
@@ -94,6 +94,9 @@ install -pD -m0644 postgreyreport.1  %buildroot%_man1dir/postgreyreport.1
 %doc README* Changes
 
 %changelog
+* Tue Jun 02 2015 Andrey Cherepanov <cas@altlinux.org> 1.35-alt1
+- New version, new build fix ALT #31037
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
