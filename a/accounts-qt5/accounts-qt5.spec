@@ -3,7 +3,7 @@
 %define libname libaccounts-qt5%sover
 Name: accounts-qt5
 Version: 1.13
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Accounts framework Qt 5 bindings
@@ -34,7 +34,7 @@ Summary: %name library
 %package devel
 Summary: Development files for %name
 Group: Development/KDE and QT
-Requires: qt5-base-devel
+Requires: libaccounts-glib-devel qt5-base-devel
 %description devel
 Headers, development libraries and documentation for %name.
 
@@ -74,5 +74,8 @@ mv %buildroot/%_docdir/accounts-qt/qch/accounts.qch %buildroot/%_qt5_docdir/
 %_qt5_docdir/accounts.qch
 
 %changelog
+* Wed Jun 03 2015 Sergey V Turchin <zerg@altlinux.org> 1.13-alt2
+- fix requires
+
 * Mon May 25 2015 Sergey V Turchin <zerg@altlinux.org> 1.13-alt1
 - initial build
