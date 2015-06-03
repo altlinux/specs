@@ -1,6 +1,6 @@
 Name: liblog4cpp
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Summary: Log for C++
 Group: Development/C++
 
@@ -52,5 +52,8 @@ needed for development with %name.
 %_datadir/aclocal/*.m4
 
 %changelog
+* Wed Jun 03 2015 Alexei Takaseev <taf@altlinux.org> 1.1.1-alt2
+- rebuild with gcc-c++ 5.1
+
 * Thu Apr 30 2015 Alexei Takaseev <taf@altlinux.org> 1.1.1-alt1
 - Initial build for ALT

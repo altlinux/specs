@@ -1,6 +1,6 @@
 Name: fastnetmon
-Version: 1.1.1
-Release: alt3
+Version: 1.1.2
+Release: alt1
 Summary: A high performance DoS/DDoS load analyzer.
 Group: Networking/Other
 
@@ -10,12 +10,8 @@ License: GPLv2
 Url: https://github.com/FastVPSEestiOu/fastnetmon
 Source0: %name-%version.tar
 
-#BuildPreReq: rpm-macros-cmake
-# Automatically added by buildreq on Tue May 05 2015
-# optimized out: boost-devel-headers cmake-modules libcloog-isl4 libstdc++-devel libtinfo-devel
 BuildRequires: boost-devel cmake gcc-c++ liblog4cpp-devel libncurses-devel libpcap-devel
-
-BuildRequires: liblog4cpp-devel libpfring-devel gcc-c++ boost-devel cmake
+BuildRequires: libpfring-devel
 
 %description
 A high performance DoS/DDoS load analyzer built on top of multiple packet capture
@@ -53,6 +49,12 @@ mv docs/THANKS.md ./
 
 
 %changelog
+* Wed Jun 03 2015 Alexei Takaseev <taf@altlinux.org> 1.1.2-alt1
+- 1.1.2
+
+* Tue May 12 2015 Alexei Takaseev <taf@altlinux.org> 1.1.1-alt4
+- update to git:3829c685b9425491007e22b8622778f586df4986
+
 * Mon May 11 2015 Alexei Takaseev <taf@altlinux.org> 1.1.1-alt3
 - update to git:7170f257cfaf2638d5735d8f165507962c43f139
 
