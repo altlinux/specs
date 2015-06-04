@@ -1,6 +1,6 @@
 Name: bmcontrol
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: Control tool for MP707x controllers
 License: GNU GPLv3
@@ -29,13 +29,16 @@ Control tool for MP707x controllers
 # %makeinstall_std
 
 %install
-install -d -m0755 %buildroot%_sbindir
-install -m0755 bmcontrol %buildroot%_sbindir
+install -d -m0755 %buildroot%_bindir
+install -m0755 bmcontrol %buildroot%_bindir
 
 %files
-%attr(4711, root, root) %_sbindir/bmcontrol
+%attr(4711, root, root) %_bindir/bmcontrol
 
 %changelog
+* Thu Jun 04 2015 Pavel Isopenko <pauli@altlinux.org> 1.1-alt2
+- change executable destination to %_bindir
+
 * Tue Jun 02 2015 Pavel Isopenko <pauli@altlinux.org> 1.1-alt1
  -initial build for Sisyphus
 
