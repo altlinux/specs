@@ -1,6 +1,6 @@
 Name: fail2ban
 Version: 0.9.2
-Release: alt2
+Release: alt3
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -49,6 +49,9 @@ install -pD -m 644 files/fail2ban-tmpfiles.conf %buildroot%_tmpfilesdir/%name.co
 %python_install
 rm -rf %buildroot/%_docdir/%name/
 
+%pre
+rm -fR %_datadir/%name
+
 %files
 %doc ChangeLog README.md THANKS TODO
 %python_sitelibdir/*
@@ -69,6 +72,9 @@ rm -rf %buildroot/%_docdir/%name/
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Thu Jun 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt3
+- Fixed install (ALT #31047)
+
 * Mon Jun 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt2
 - Avoid requirement on systemd (ALT #31041)
 
