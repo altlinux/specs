@@ -9,8 +9,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -25,7 +25,7 @@ Patch: %name-%version-%release.patch
 %define glib2_ver 2.29.14
 %define gtk_ver 3.3.18
 %define gio_ver 2.29.14
-%define cinnamon_desktop_ver 1.9.0
+%define cinnamon_desktop_ver 2.6.3
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
 %define csds_ver 3.3.0
@@ -49,7 +49,7 @@ BuildPreReq: libcinnamon-desktop-devel >= %cinnamon_desktop_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: gsettings-desktop-schemas-devel >= %desk_schemas_ver
 BuildPreReq: libpulseaudio-devel >= %pulse_ver libcanberra-gtk3-devel
-BuildRequires: libdbus-devel libdbus-glib-devel libpolkit-devel 
+BuildRequires: libdbus-devel libdbus-glib-devel libpolkit-devel
 %{?_enable_smartcard:BuildRequires: libnss-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
 BuildRequires: libxkbfile-devel
@@ -196,6 +196,9 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-background
 
 %changelog
+* Tue Jun 2 2015 Vladimir Didenko <cow@altlinux.org> 2.6.2-alt1
+- 2.6.2
+
 * Sat May 23 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt2
 - git20150523
 

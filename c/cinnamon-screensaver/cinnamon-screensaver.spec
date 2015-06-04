@@ -7,8 +7,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -85,6 +85,9 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Jun 2 2015 Vladimir Didenko <cow@altlinux.org> 2.6.3-alt1
+- 2.6.3
+
 * Sat May 23 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt2
 - git20150523
 
