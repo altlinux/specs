@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.7.43
+Version: 1.7.44
 Release: alt1
 Epoch: 1
 
@@ -34,27 +34,24 @@ AutoReq: yes, noperl
 #==========================================================================
 
 # General dependencies
-BuildRequires: rpm-build-intro
+BuildRequires: rpm-build-intro >= 1.0
 BuildRequires: gcc util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
 BuildRequires: zlib-devel libldap-devel libgnutls-devel
 BuildRequires: libxslt-devel libxml2-devel
 BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel
-BuildRequires: libusb-devel libgphoto2-devel libsane-devel libcups-devel
-BuildRequires: libalsa-devel jackit-devel libieee1284-devel
+BuildRequires: libgphoto2-devel libsane-devel libcups-devel
+BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel
 BuildRequires: libopenal-devel libGLU-devel
-BuildRequires: libv4l-devel gstreamer-devel gst-plugins-devel libgsm-devel libmpg123-devel
+BuildRequires: libusb-devel libieee1284-devel
+BuildRequires: libv4l-devel
+BuildRequires: libunixODBC-devel
+#BuildRequires: gstreamer-devel gst-plugins-devel
 
 # udev needed for udev version detect
 BuildRequires: libudev-devel udev libdbus-devel
 
-
-# Note: xorg-x11-devel requires all X11 devel packages, but missed on Fedora based systems
-# Require here all subpackages
-# Skipped: libxorgconfig-devel libxkbfile-devel libxkbui-devel xcursorgen xorg-x11-font-utils
-# xorg-x11-util-macros xorg-x11-compat-devel libXfontcache-devel libFS-devel libXdmcp-devel
-# xorg-x11-xtrans-devel libdmx-devel libXp-devel libXtst-devel libXTrap-devel
 BuildRequires: libICE-devel libSM-devel
 BuildRequires: libX11-devel libXau-devel libXaw-devel libXrandr-devel
 BuildRequires: libXext-devel libXfixes-devel libXfont-devel libXft-devel libXi-devel
@@ -104,6 +101,7 @@ Obsoletes: %name-utils
 Obsoletes: %name-test
 
 Provides: winetricks
+Requires: cabextract
 
 #=========================================================================
 
@@ -150,6 +148,16 @@ Requires: %name = %epoch:%version-%release
 %description -n %name-test
 WinAPI test for Wine (unneeded for usual work).
 Warning: it may kill your X server suddenly.
+
+%package full
+Summary: Wine meta package
+Summary(ru_RU.UTF-8): Мета пакет Wine
+Group: Emulators
+Requires: %name = %version-%release
+Requires: lib%name-gl = %version-%release
+
+%description full
+Wine meta package
 
 %package -n lib%name
 Summary: Main library for Wine
@@ -361,6 +369,7 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/glu32.dll.so
 %exclude %_libdir/wine/wined3d.dll.so
 
+%files full
 
 %files -n lib%name-twain
 %_libdir/wine/twain*
@@ -425,6 +434,12 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Thu Jun 04 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.44-alt1
+- new version 1.7.44
+- add unixODBC-devel buildreq
+- add cabextract require
+- add wine-full package
+
 * Wed May 20 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.43-alt1
 - new version 1.7.43
 - build with liblcms2 (closes: #31006)
