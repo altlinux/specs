@@ -1,6 +1,6 @@
 Name: sysdig
 Version: 0.1.89
-Release: alt1
+Release: alt2
 
 Summary: A system exploration and troubleshooting tool
 
@@ -39,5 +39,8 @@ An open source system-level exploration and troubleshooting tool.
 %_datadir/%name/
 
 %changelog
+* Thu Jun 04 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.1.89-alt2
+- rebuild with c++11 ABI
+
 * Sun Sep 28 2014 Vitaly Lipatov <lav@altlinux.ru> 0.1.89-alt1
 - initial build for ALT Linux Sisyphus

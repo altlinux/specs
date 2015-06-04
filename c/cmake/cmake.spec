@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=strict
 Name: cmake
 Version: 3.2.2
-Release: alt2
+Release: alt3
 
 Summary: Cross-platform, open-source make system
 
@@ -252,6 +252,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Thu Jun  4 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 3.2.2-alt3
+- rebuild with c++11 ABI
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.2-alt2
 - Avoid requirement on gnustep-Backbone (ALT #30978)
 
