@@ -1,6 +1,6 @@
 Name: wine-vanilla
-Version: 1.7.43
-Release: alt2
+Version: 1.7.44
+Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -360,6 +360,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Thu Jun 04 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.44-alt1
+- new version 1.7.44
+
 * Tue May 26 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.43-alt2
 - add unixODBC-devel buildreq (closes: #31024)
 - add cabextract require (closes: #31024)
