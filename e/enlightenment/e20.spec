@@ -1,14 +1,15 @@
 %define ver_major 0.19
 %define efl_ver_major 1.14
-%define snapshot 2012-10-12
-%define cvs_date 96ba030e
+%define snapshot 2015-05-28
+%define cvs_date 1734fcaa
 %undefine cvs_date
-%define rel alt0.1
+%define rel alt0.2
 
 %def_disable static
 # only bluez4 supported
 %def_disable bluetooth
 %def_enable wayland
+%def_disable wl_drm
 %def_enable systemd
 %def_enable install_sysactions
 %def_with pam_helper
@@ -72,7 +73,7 @@ Requires: udisks2
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
 BuildRequires: rpm-build-xdg
-BuildRequires: efl-libs-devel >= %efl_ver_major.0 libelementary-devel >= %efl_ver_major.0
+BuildRequires: efl-libs-devel >= %efl_ver_major.1 libelementary-devel >= %efl_ver_major.1
 BuildRequires: libpam-devel libalsa-devel libudev-devel libxcbutil-keysyms-devel
 BuildRequires: libdbus-devel libp11-kit-devel xorg-xproto-devel libxcbutil-keysyms-devel
 BuildRequires: libuuid-devel
@@ -126,6 +127,7 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` `pkg-config --cflags uuid` -
 	--enable-shared \
 	--enable-pam \
 	%{?_enable_wayland:--enable-wayland-clients} \
+	%{?_disable_wl_drm:--disable-wl-drm} \
 	%{?_disable_install_sysactions:--disable-install-sysactions} \
 %if_with pam_helper
 	--with-pam-helper=%prefix/libexec/chkpwd-pam/chkpwd-pam \
@@ -196,6 +198,10 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Jun 03 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.2
+- 0.19.99_1734fcaa
+- disabled wayland drm module (requires efl from master)
+
 * Mon May 04 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.1
 - 0.19.99_96ba030e
 
