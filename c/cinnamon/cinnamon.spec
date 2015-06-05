@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 2.6.7
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -53,6 +53,7 @@ Requires: python-module-pygnome-gconf
 Requires: python-modules-json
 Requires: python-module-lxml
 Requires: polkit-gnome
+Requires: typelib(Keybinder) >= 3.0
 
 BuildPreReq: rpm-build-gir >= 0.7.1-alt6
 BuildPreReq: libclutter-devel >= %clutter_ver
@@ -263,6 +264,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Fri Jun 5 2015 Vladimir Didenko <cow@altlinux.org> 2.6.7-alt2
+- specify keybinder version
+
 * Wed Jun 3 2015 Vladimir Didenko <cow@altlinux.org> 2.6.7-alt1
 - 2.6.7
 
