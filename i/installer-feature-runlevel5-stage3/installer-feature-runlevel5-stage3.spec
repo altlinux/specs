@@ -1,5 +1,5 @@
 Name: installer-feature-runlevel5-stage3
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Provide a system with graphical boot
@@ -8,7 +8,7 @@ Group: System/Configuration/Other
 
 Url: http://www.altlinux.org/Installer/beans
 BuildArch: noarch
-Requires: /sbin/init startup
+Requires(post): /sbin/init startup xinitrc
 
 %description
 %summary
@@ -26,6 +26,9 @@ rm -f /etc/systemd/system/default.target
 %files
 
 %changelog
+* Fri Jun 05 2015 Michael Shigorin <mike@altlinux.org> 0.4.2-alt1
+- *ensure* inittab is there when tested for (closes: #31051)
+
 * Sat Nov 16 2013 Michael Shigorin <mike@altlinux.org> 0.4.1-alt1
 - ensure inittab is there (startup is required anyways)
 
