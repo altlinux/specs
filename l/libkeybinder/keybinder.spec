@@ -4,7 +4,7 @@
 
 Name: libkeybinder
 Version: 0.3.0
-Release: alt3.git20120617
+Release: alt4.git20120617
 
 Summary: keybinder is a library for registering global keyboard shortcuts
 License: GPLv2
@@ -13,7 +13,7 @@ Url: http://kaizer.se/wiki/keybinder/
 
 BuildRequires: libgtk+2-devel xorg-server-common python-dev liblua5-devel
 BuildRequires: python-module-pygtk-devel libXext-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: gobject-introspection-devel
 BuildPreReq: gtk-doc
 # https://github.com/engla/keybinder.git
 Source: %name-%version.tar
@@ -121,6 +121,9 @@ Lua5 binding to %name
 
 
 %changelog
+* Fri Jun 5 2015 Vladimir Didenko <cow at altlinux.org> 0.3.0-alt4.git20120617
+- don't require gtk3
+
 * Wed Jun 3 2015 Vladimir Didenko <cow at altlinux.org> 0.3.0-alt3.git20120617
 - add gir packages
 
