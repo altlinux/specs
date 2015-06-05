@@ -1,6 +1,6 @@
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -20,10 +20,10 @@
 %define libname  lib%gname
 %define major  5
 %define minor  4
-%define bugfix 1
+%define bugfix 2
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -412,7 +412,7 @@ rm -rf %buildroot/%_qt5_docdir/qtwidgets/*tutorials-addressbook*
 
 # create/own dirs
 mkdir -p %buildroot/{%_qt5_archdatadir/mkspecs/modules,%_qt5_importdir,%_qt5_qmldir,%_qt5_libexecdir,%_qt5_translationdir,%_qt5_docdir}
-mkdir -p %buildroot/%_qt5_plugindir/{accessible,iconengines,kpackage/packagestructure,script,styles}/
+mkdir -p %buildroot/%_qt5_plugindir/{accessible,iconengines,script,styles}/
 
 # remove .la files
 rm -rf %buildroot/%_qt5_libdir/*.la
@@ -550,8 +550,6 @@ done
 %dir %_qt5_plugindir/generic/
 %dir %_qt5_plugindir/iconengines/
 %dir %_qt5_plugindir/imageformats/
-%dir %_qt5_plugindir/kpackage/
-%dir %_qt5_plugindir/kpackage/packagestructure/
 %dir %_qt5_plugindir/platforminputcontexts/
 %dir %_qt5_plugindir/platforms/
 %dir %_qt5_plugindir/platformthemes/
@@ -711,6 +709,9 @@ done
 
 
 %changelog
+* Fri Jun 05 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- new version
+
 * Wed May 13 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt3
 - add %%installqt5
 - add some dirs to common package
