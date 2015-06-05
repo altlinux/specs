@@ -3,8 +3,8 @@
 %define _logcheck_home     %_localstatedir/logcheck
 
 Name: logcheck
-Version: 1.3.6
-Release: alt1.git20140902
+Version: 1.3.17
+Release: alt1.git20141024
 
 Summary: Mails anomalies in the system logfiles to the administrator
 License: GPL
@@ -17,6 +17,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 Requires: logtail = %version-%release
+Requires: perl-mime-construct
 
 # Automatically added by buildreq on Wed Oct 29 2008 (-bi)
 BuildRequires: OpenSP docbook-dtds docbook-to-man lockfile-progs
@@ -78,6 +79,11 @@ install -pD docs/logtail.8 %buildroot%_man8dir/logtail.8
 install -pD docs/logtail2.8 %buildroot%_man8dir/logtail2.8
 docbook-to-man docs/logcheck.sgml >%buildroot%_man8dir/logcheck.8
 
+install -d %buildroot%_sysconfdir/tmpfiles.d
+cat <<EOF >%buildroot%_sysconfdir/tmpfiles.d/%name.conf
+d /run/lock/%name 0755 %_logcheck_user %_logcheck_group -
+EOF
+
 %pre
 /usr/sbin/groupadd -r -f %_logcheck_group ||:
 /usr/sbin/useradd -g %_logcheck_group -c 'Logcheck User' -G adm \
@@ -99,6 +105,7 @@ docbook-to-man docs/logcheck.sgml >%buildroot%_man8dir/logcheck.8
 %attr(640,root,%_logcheck_group) %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/logcheck.logfiles
 %attr(640,root,%_logcheck_group) %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/header.txt
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/cron.d/%name
+%attr(644,%_logcheck_user,%_logcheck_group) %config %verify(not md5 mtime size) %_sysconfdir/tmpfiles.d/%name.conf
 %_sbindir/logcheck
 %_bindir/logcheck-test
 %dir %attr(0770,root,%_logcheck_group) %_localstatedir/%name
@@ -118,6 +125,9 @@ docbook-to-man docs/logcheck.sgml >%buildroot%_man8dir/logcheck.8
 %_man8dir/logtail*
 
 %changelog
+* Fri Jun 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.17-alt1.git20141024
+- Version 1.3.17
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.6-alt1.git20140902
 - Version 1.3.6
 
