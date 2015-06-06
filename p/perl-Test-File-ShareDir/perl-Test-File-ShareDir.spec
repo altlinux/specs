@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::File::ShareDir
 
 Name: perl-Test-File-ShareDir
-Version: 1.000005
+Version: 1.001001
 Release: alt1
 
 Summary: Create a Fake ShareDir for your modules for testing
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: perl-CPAN-Meta-Requirements perl-Class-Inspector perl-Parse-CPAN-Meta perl-Try-Tiny perl-devel
-BuildRequires: perl-CPAN-Meta perl-Class-Tiny perl-File-Copy-Recursive perl-File-ShareDir perl-Path-Tiny perl-Sub-Name perl-Test-Fatal
+# Automatically added by buildreq on Sat Jun 06 2015
+# optimized out: perl-CPAN-Meta-Requirements perl-Class-Inspector perl-Parse-CPAN-Meta perl-Try-Tiny perl-devel perl-parent
+BuildRequires: perl-CPAN-Meta perl-Class-Tiny perl-File-Copy-Recursive perl-File-ShareDir perl-Path-Tiny perl-Scope-Guard perl-Sub-Name perl-Test-Fatal
 
 %description
 Test::File::ShareDir is a Perl module to create a Fake ShareDir
@@ -42,6 +42,9 @@ for your modules for testing.
 
 
 %changelog
+* Sat Jun 06 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.001001-alt1
+- New version
+
 * Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.000005-alt1
 - New version
 
