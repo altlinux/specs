@@ -1,8 +1,8 @@
 ## SPEC file for Perl module Test::TrailingSpace
 
 Name: perl-Test-TrailingSpace
-Version: 0.0204
-Release: alt3
+Version: 0.0205
+Release: alt1
 
 Summary: test for trailing space in source files
 
@@ -42,6 +42,9 @@ of trailing space.
 %perl_vendor_privlib/Test/TrailingSpace*
 
 %changelog
+* Sat Jun 06 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.0205-alt1
+- New version
+
 * Mon Sep 08 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.0204-alt3
 - Rising release to override package from Autoimports/Sisyphus repository
 
