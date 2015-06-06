@@ -1,5 +1,5 @@
 Name: libdvbpsi
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: A library for decoding and generating MPEG 2 and DVB PSI sections
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 BuildRequires: doxygen graphviz fonts-type1-urw
 
-%define soname 9
+%define soname 10
 
 %description
 %name is a simple library designed for MPEG 2 TS and DVB PSI tables
@@ -61,6 +61,9 @@ information using the libdvbpsi
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Aug 03 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt1
+- 1.3.0 released
+
 * Wed Dec 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
 - 1.2.0 released
 
