@@ -1,5 +1,5 @@
 Name: perl-Time-Duration
-Version: 1.1
+Version: 1.20
 Release: alt1
 Epoch: 1
 
@@ -16,11 +16,7 @@ BuildArch: noarch
 Source: %real_name-%version.tar
 
 AutoReqProv: perl, yes
-BuildPreReq: rpm-build-licenses perl-devel
-
-# Automatically added by buildreq on Sun Apr 14 2013
-# optimized out: perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires(pre): rpm-build-licenses perl-devel
 
 %description
 Perl module Time::Duration provides functions for expressing 
@@ -36,11 +32,14 @@ durations in rounded or exact terms.
 %perl_vendor_install
 
 %files
-%doc README ChangeLog
+%doc README Changes
 %exclude /.perl.req
 %perl_vendor_privlib/Time/Duration*
 
 %changelog
+* Sat Jun 06 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1:1.20-alt1
+- New version
+
 * Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1:1.1-alt1
 - New version
 
