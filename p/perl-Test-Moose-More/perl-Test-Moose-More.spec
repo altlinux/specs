@@ -3,8 +3,8 @@
 %define real_name Test-Moose-More
 
 Name: perl-Test-Moose-More
-Version: 0.024
-Release: alt2
+Version: 0.029
+Release: alt1
 
 Summary: more tools for testing Moose packages
 
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Tue Sep 23 2014
-# optimized out: perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Check perl-CPAN-Meta-Requirements perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Encode perl-Eval-Closure perl-JSON-PP perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Metadata perl-Module-Runtime perl-Moose perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Scope-Guard perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Sub-Name perl-Syntax-Keyword-Junction perl-Try-Tiny perl-autobox perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent
-BuildRequires: perl-Moose-Autobox perl-Perl-Version perl-TAP-SimpleOutput perl-Test-CheckDeps perl-Variable-Magic perl-aliased
+# Automatically added by buildreq on Sat Jun 06 2015
+# optimized out: perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Check perl-CPAN-Meta-Requirements perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Encode perl-Eval-Closure perl-Exporter-Tiny perl-JSON-PP perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Metadata perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-clean perl-parent
+BuildRequires: perl-Moose perl-Perl-Version perl-Syntax-Keyword-Junction perl-TAP-SimpleOutput perl-Test-CheckDeps perl-aliased perl-namespace-autoclean
 
 %description
 Perl module Test::Moose::More contains a number of additional
@@ -46,6 +46,12 @@ any tests that it has and we do not, yet.
 %perl_vendor_privlib/Test*
 
 %changelog
+* Sat Jun 06 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.029-alt1
+- New version
+
+* Sun Nov 23 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.025-alt1
+- New version
+
 * Fri Sep 26 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.024-alt2
 - Rising release to override package from Autoimports/Sisyphus repository
 
