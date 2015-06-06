@@ -1,7 +1,7 @@
 ## SPEC file for Perl module URI-Encode
 
 Name: perl-URI-Encode
-Version: 0.09
+Version: 1.0.1
 Release: alt1
 
 Summary: Perl module for simple percent Encoding/Decoding
@@ -20,9 +20,9 @@ Patch0: %real_name-%version-%release.patch
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sat Jan 28 2012
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-YAML perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-devel perl-podlators
-BuildRequires: perl-Module-Build
+# Automatically added by buildreq on Sat Jun 06 2015
+# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-devel perl-parent perl-podlators
+BuildRequires: perl-HTML-Parser perl-Module-Build
 
 %description
 provides simple URI (Percent) encoding/decoding.
@@ -51,6 +51,9 @@ characters, use URI::Escape::XS .
 %perl_vendor_privlib/URI/Encode*
 
 %changelog
+* Sat Jun 06 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.1-alt1
+- New version
+
 * Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.09-alt1
 - New version
 
