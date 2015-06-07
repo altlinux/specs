@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.2
+Version: 0.9.1
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
@@ -21,12 +21,15 @@ BuildRequires: python-module-six python-module-cffi python-module-pycparser
 BuildRequires: libssl-devel
 BuildRequires: python-module-pyasn1
 BuildRequires: python-module-enum34
+BuildRequires: python-module-ipaddress
+BuildRequires: python-module-idna
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute python3-module-setuptools-tests
 BuildRequires: python3-module-six python3-module-cffi python3-module-pycparser
 BuildRequires: python3-module-pyasn1
 BuildRequires: python3-module-enum34
+BuildRequires: python3-module-idna
 %endif
 
 %setup_python_module %oname
@@ -89,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 7 2015 Vladimir Didenko <cow@altlinux.ru> 0.9.1-alt1
+- 0.9.1
+
 * Sat Apr 11 2015 Vladimir Didenko <cow@altlinux.ru> 0.8.2-alt1
 - 0.8.2
 
