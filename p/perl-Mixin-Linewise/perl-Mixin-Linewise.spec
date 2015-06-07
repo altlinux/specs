@@ -3,7 +3,7 @@
 %define real_name Mixin-Linewise
 
 Name: perl-Mixin-Linewise
-Version: 0.106
+Version: 0.108
 Release: alt1
 
 Summary: Perl module to work with handle-like string objects
@@ -22,9 +22,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildPreReq: rpm-build-licenses
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: perl-Data-OptList perl-Params-Util perl-Sub-Install
-BuildRequires: perl-Encode perl-PerlIO-utf8_strict perl-Sub-Exporter perl-devel
+# Automatically added by buildreq on Sun Jun 07 2015
+# optimized out: perl-CPAN-Meta-Requirements perl-Data-OptList perl-Encode perl-Params-Util perl-Parse-CPAN-Meta perl-Sub-Install
+BuildRequires: perl-CPAN-Meta perl-PerlIO-utf8_strict perl-Sub-Exporter perl-devel
 
 %description
 Perl module Mixin::Linewise simplifies the way to deal with opening
@@ -48,6 +48,9 @@ handling strings and filenames are added for you.
 %perl_vendor_privlib/Mixin/Linewise*
 
 %changelog
+* Sun Jun 07 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.108-alt1
+- New version
+
 * Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.106-alt1
 - New version
 
