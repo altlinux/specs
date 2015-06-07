@@ -12,7 +12,7 @@
 
 Name: libwebkitgtk4
 Version: 2.8.3
-Release: alt2
+Release: alt3
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -21,12 +21,15 @@ License: %bsd %lgpl2plus
 Url: http://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
+# https://bugs.webkit.org/show_bug.cgi?id=145385
+Patch: webkitgtk-2.8.3-up-bmalloc_xlarge.patch
+
 # fc
 Patch10: webkitgtk-2.8.0-gcc5_fix.patch
 
 BuildPreReq: rpm-build-licenses
 
-BuildRequires: gcc-c++ cmake libicu-devel bison perl-Switch zlib-devel
+BuildRequires: gcc-c++ cmake ccache libicu-devel bison perl-Switch zlib-devel
 BuildRequires: chrpath
 BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel
@@ -175,6 +178,7 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 %patch10 -p1
 # Remove bundled libraries
 rm -rf Source/ThirdParty/leveldb/
@@ -195,8 +199,8 @@ rm -rf Source/ThirdParty/qunit/
 -DENABLE_TOUCH_ICON_LOADING:BOOL=ON \
 -DENABLE_TOUCH_SLIDER:BOOL=ON \
 -DENABLE_FTPDIR:BOOL=ON \
--DENABLE_MEDIA_STREAM:BOOL=ON \
 %{?_disable_gnu_ld:-DUSE_LD_GOLD:BOOL=OFF}
+#-DENABLE_MEDIA_STREAM:BOOL=ON \
 #-DENABLE_TELEPHONE_NUMBER_DETECTION:BOOL=ON \
 #-DENABLE_BATTERY_STATUS:BOOL=ON \
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
@@ -262,6 +266,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Sun Jun 07 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.3-alt3
+- fixed BWO #145385
+
 * Tue May 19 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.3-alt2
 - fixed build with gcc-5 (fc patch)
 
