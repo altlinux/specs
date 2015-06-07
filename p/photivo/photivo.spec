@@ -1,11 +1,11 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 # /usr/bin/hg identify | cut -c -12
-%define rev f1a2a2889c33
-%def_without gimp
+%define rev 66a8c1082d88
+%def_with gimp
 
 Name: photivo
 Version: 0
-Release: alt10.%{rev}
+Release: alt11.%{rev}
 
 Summary: Photivo photo processor
 Group: Graphics
@@ -20,11 +20,14 @@ Patch: %name.patch
 
 Requires: %name-data = %version-%release
 
-BuildRequires: gcc-c++ ccache libgomp-devel libqt4-devel libltdl-devel
+%set_gcc_version 4.9
+BuildRequires: gcc4.9-c++ libgomp4.9-devel
+
+BuildRequires: ccache libqt4-devel libltdl-devel
 BuildRequires: libexiv2-devel liblensfun-devel libfftw3-devel liblqr-devel
-BuildRequires: libGraphicsMagick-c++-devel libjpeg-devel libtiff-devel libpng-devel bzlib-devel
-BuildRequires: liblcms-devel liblcms2-devel liblzma-devel
-BuildRequires: libgimp-devel
+BuildRequires: libGraphicsMagick-c++-devel libjpeg-devel libtiff-devel libpng-devel
+BuildRequires: bzlib-devel liblcms-devel liblcms2-devel liblzma-devel
+%{?_with_gimp:BuildRequires: libgimp-devel}
 
 %description
 Photivo is a free and open source photo processor. It handles RAW files
@@ -68,7 +71,7 @@ gimp workflow integration and batch mode.
 This package provides Photivo plugin for Gimp.
 
 %prep
-%setup -q -n %name
+%setup -n %name
 %patch -p1
 
 # quick hack for new liblensfun-0.2.6
@@ -76,7 +79,7 @@ find -type f -print0| xargs -r0 subst 's@#include <lensfun.h>@#include <lensfun/
 	s@#include "lensfun.h"@#include <lensfun/lensfun.h>@' --
 
 %build
-qmake-qt4 PREFIX=%_prefix
+qmake-qt4 PREFIX=%_prefix %{?_with_gimp:CONFIG+=WithGimp}
 %make_build
 
 %install
@@ -102,7 +105,7 @@ find %buildroot%_datadir/%name -type f -print0|xargs -r0 chmod 644 --
 
 %files data
 %_datadir/%name/
-%_datadir/applications/*
+%_desktopdir/%name.desktop
 %_datadir/pixmaps/photivo-appicon.png
 
 %if_with gimp
@@ -111,6 +114,10 @@ find %buildroot%_datadir/%name -type f -print0|xargs -r0 chmod 644 --
 %endif
 
 %changelog
+* Thu May 21 2015 Yuri N. Sedunov <aris@altlinux.org> 0-alt11.66a8c1082d88
+- update to current snapshot
+- built with gcc4.9
+
 * Tue Dec 03 2013 Yuri N. Sedunov <aris@altlinux.org> 0-alt10.f1a2a2889c33
 - update to current snapshot
 - built against libexiv2.so.13
