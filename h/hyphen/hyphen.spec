@@ -1,7 +1,7 @@
 Name: hyphen
 Summary: A text hyphenation library
-Version: 2.7.1
-Release: alt2
+Version: 2.8.8
+Release: alt1
 License: LGPLv2+ or MPLv1.1
 Group: System/Libraries
 URL: http://hunspell.sourceforge.net/
@@ -69,6 +69,9 @@ done
 %_datadir/hyphen/hyph_en*.dic
 
 %changelog
+* Sun Jun 07 2015 Valery Inozemtsev <shrek@altlinux.ru> 2.8.8-alt1
+- 2.8.8
+
 * Fri Apr 01 2011 Valery Inozemtsev <shrek@altlinux.ru> 2.7.1-alt2
 - rebuild for debuginfo (closes: #25310)
 
