@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Log::Dispatchouli
 
 Name: perl-Log-Dispatchouli
-Version: 2.010
+Version: 2.012
 Release: alt1
 
 Summary: a simple wrapper around Log::Dispatch
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: perl-Data-OptList perl-JSON-MaybeXS perl-Log-Dispatch perl-Module-Implementation perl-Module-Runtime perl-Params-Util perl-Params-Validate perl-Sub-Exporter perl-Sub-Install perl-Try-Tiny perl-Types-Serialiser perl-common-sense perl-devel perl-parent
-BuildRequires: perl-JSON-XS perl-Log-Dispatch-Array perl-String-Flogger perl-Sub-Exporter-GlobExporter perl-Sub-Name perl-Test-Deep perl-Test-Fatal
+# Automatically added by buildreq on Sun Jun 07 2015
+# optimized out: perl-CPAN-Meta-Requirements perl-Data-OptList perl-JSON-MaybeXS perl-Log-Dispatch perl-Module-Implementation perl-Module-Runtime perl-Params-Util perl-Params-Validate perl-Parse-CPAN-Meta perl-Sub-Exporter perl-Sub-Install perl-Try-Tiny perl-Types-Serialiser perl-common-sense perl-devel perl-parent
+BuildRequires: perl-CPAN-Meta perl-JSON-XS perl-Log-Dispatch-Array perl-String-Flogger perl-Sub-Exporter-GlobExporter perl-Sub-Name perl-Test-Deep perl-Test-Fatal
 
 %description
 Perl module Log::Dispatchouli is a thin layer above Log::Dispatch
@@ -50,6 +50,9 @@ memory. That last one is mostly useful for testing.
 %perl_vendor_privlib/Log/Dispatchouli*
 
 %changelog
+* Sun Jun 07 2015 Nikolay A. Fetisov <naf@altlinux.ru> 2.012-alt1
+- New version
+
 * Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.010-alt1
 - New version
 
