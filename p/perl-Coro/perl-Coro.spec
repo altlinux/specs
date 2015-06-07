@@ -1,7 +1,7 @@
 # Spec file for Perl module Coro
 
 Name: perl-Coro
-Version: 6.42
+Version: 6.43
 Release: alt1
 
 Summary: cooperative multitasking Perl module
@@ -20,9 +20,10 @@ Patch0: Coro-5.372-alt-EV_test_fix.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Thu Oct 18 2012 (-bi)
-# optimized out: elfutils perl-AnyEvent perl-BDB perl-Guard perl-IO-AIO perl-Log-Agent perl-common-sense perl-devel perl-libnet python-base ruby
-BuildRequires: gcc-c++ perl-AnyEvent-AIO perl-AnyEvent-BDB perl-EV perl-Event perl-Net-HTTP
+# Automatically added by buildreq on Sun Jun 07 2015 (-bi)
+# optimized out: elfutils perl-AnyEvent perl-BDB perl-Guard perl-IO-AIO perl-IO-Socket-IP perl-IO-Socket-SSL perl-Log-Agent perl-Net-HTTP perl-Net-SSLeay perl-URI perl-common-sense perl-devel perl-libnet python-base ruby ruby-stdlibs
+BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-BDB perl-Canary-Stability perl-EV perl-Event python-module-distribute python-module-google
+
 BuildRequires:  perl-Log-Agent perl-devel perl-libnet
 # python-module-distribute python-module-zope rpm-build-ruby
 
@@ -53,6 +54,9 @@ export CORO_INTERFACE=u
 %perl_vendor_autolib/Coro
 
 %changelog
+* Sun Jun 07 2015 Nikolay A. Fetisov <naf@altlinux.ru> 6.43-alt1
+- New version
+
 * Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 6.42-alt1
 - New version
 
