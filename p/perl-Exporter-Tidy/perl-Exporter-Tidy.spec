@@ -1,7 +1,7 @@
 # Spec file for Perl module Exporter::Tidy
 
 Name: perl-Exporter-Tidy
-Version: 0.07
+Version: 0.08
 Release: alt1
 
 Summary: Perl module Exporter::Tidy
@@ -48,6 +48,9 @@ symbols and serves as an easy, clean alternative to Exporter.
 %perl_vendor_privlib/Exporter/*
 
 %changelog
+* Sun Jun 07 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.08-alt1
+- New version
+
 * Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 0.07-alt1
 - New version
 
