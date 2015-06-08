@@ -4,7 +4,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		%r_name-esr
-Version:	31.6.0
+Version:	31.7.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -457,6 +457,18 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Mon Jun 08 2015 Andrey Cherepanov <cas@altlinux.org> 31.7.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2015-57 Privilege escalation through IPC channel messages
+  + MFSA 2015-54 Buffer overflow when parsing compressed XML
+  + MFSA 2015-51 Use-after-free during text processing with vertical
+    text enabled
+  + MFSA 2015-48 Buffer overflow with SVG content and CSS
+  + MFSA 2015-47 Buffer overflow parsing H.264 video with Linux
+    Gstreamer
+- Enigmail 1.8.2
+
 * Thu Apr 02 2015 Andrey Cherepanov <cas@altlinux.org> 31.6.0-alt1
 - New ESR version
 - Security fixes:
