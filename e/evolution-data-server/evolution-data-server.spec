@@ -17,12 +17,13 @@
 # Ubuntu online accounts support
 %def_disable uoa
 %{?_enable_snapshot:%def_enable gtk_doc}
+%def_enable gtk_doc
 %def_enable introspection
 %def_enable vala
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Evolution Data Server
@@ -276,6 +277,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Jun 08 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
+- 3.16.3
+
 * Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 

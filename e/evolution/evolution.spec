@@ -11,12 +11,13 @@
 %def_disable image_inline
 %def_enable autoar
 %def_enable tnef
+%def_enable installed_tests
 
 # %define plugins experimental
 %define plugins all
 
 Name: evolution
-Version: %ver_major.2.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -43,7 +44,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.16.2
+%define eds_ver 3.16.3
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.8.4
@@ -170,6 +171,15 @@ personal information-management tool.
 
 This package contains documentation needed to develop Evolution plugins.
 
+%package tests
+Summary: Tests for the Evolution
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed Evolution.
+
 %add_findprov_lib_path %_libdir/%name/%ver_base
 
 %define _libexecdir %_prefix/libexec
@@ -227,8 +237,8 @@ export KILL_PROCESS_CMD=%_bindir/killall
     --disable-schemas-compile \
     %{?_enable_map:--enable-contact-maps} \
     %{?_disable_image_inline:--disable-image-inline} \
-    %{subst_enable autoar}
-
+    %{subst_enable autoar} \
+    %{?_enable_installed_tests:--enable-installed-tests}
 %make_build
 
 %install
@@ -297,7 +307,17 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 %_datadir/appdata/%name-spamassassin.metainfo.xml
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/%name/installed-tests/
+%_datadir/installed-tests/%name/
+%endif
+
+
 %changelog
+* Mon Jun 08 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
+- 3.16.3
+
 * Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2.1-alt1
 - 3.16.2.1
 
