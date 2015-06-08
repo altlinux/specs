@@ -1,6 +1,6 @@
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.4
+%define ver_major 1.5
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -19,7 +19,7 @@ URL: http://gstreamer.freedesktop.org/
 Requires: lib%_name%api_ver >= %ver_major
 Requires: gstreamer%api_ver >= %ver_major
 
-Source: http://gstreamer.freedesktop.org/src/gst-plugins-bad/%_name-bad-%version.tar.xz
+Source: http://gstreamer.freedesktop.org/src/%_name-bad/%_name-bad-%version.tar.xz
 Patch: gst-plugins-bad-0.11.94-alt-intltool.patch
 
 BuildRequires: gst-plugins%api_ver-devel
@@ -30,11 +30,12 @@ BuildRequires: libmpcdec-devel libneon-devel liboil-devel libsoundtouch-devel li
 BuildRequires: libtimidity-devel libxvid-devel python-module-PyXML python-modules-email python-modules-encodings
 BuildRequires: timidity-instruments libcelt-devel libdc1394-devel libkate-devel libtiger-devel
 BuildRequires: libvpx-devel librtmp-devel liborc-devel orc libofa-devel libmusicbrainz-devel libass-devel
-BuildRequires: libzbar-devel libwayland-client-devel libwebp-devel libopenjpeg-devel libbluez-devel
+BuildRequires: libzbar-devel libwayland-client-devel libwayland-egl-devel libwebp-devel libopenjpeg-devel libbluez-devel
 BuildRequires: libfluidsynth-devel libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
 BuildRequires: libsbc-devel libschroedinger-devel libusb-devel libgudev-devel libopus-devel libcurl-devel
 BuildRequires: libvo-amrwbenc-devel librsvg-devel libvo-aacenc-devel libgcrypt-devel
 BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
+BuildRequires: libvisual0.4-devel libopencv-devel openexr-devel libx265-devel
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -89,17 +90,23 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_gst_libdir/*.so
 %exclude %_gst_libdir/*.la
 #%_typelibdir/GstEGL-%api_ver.typelib
+%_typelibdir/GstGL-%api_ver.typelib
 %_typelibdir/GstInsertBin-%api_ver.typelib
 %_typelibdir/GstMpegts-%api_ver.typelib
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
+%_datadir/gstreamer-%api_ver/presets/GstFreeverb.prs
+%_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/fist.xml
+%_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/palm.xml
 #%_datadir/gstreamer-%api_ver/presets/GstVP8Enc.prs
 #%_datadir/glib-2.0/schemas/*.xml
 
 %files devel
 %_includedir/gstreamer-%api_ver/*
+%_libdir/gstreamer-%api_ver/include/gst/gl/gstglconfig.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 #%_girdir/GstEGL-%api_ver.gir
+%_girdir/GstGL-%api_ver.gir
 %_girdir/GstInsertBin-%api_ver.gir
 %_girdir/GstMpegts-%api_ver.gir
 
@@ -110,6 +117,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Mon Jun 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Sun Dec 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
 - 1.4.5
 

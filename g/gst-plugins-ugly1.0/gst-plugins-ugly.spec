@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.4
+%define ver_major 1.5
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -17,13 +17,13 @@ Group: System/Libraries
 License: LGPL
 URL: http://gstreamer.freedesktop.org/
 
-Requires: gstreamer%api_ver >= 1.0.5
-Requires: lib%_name%api_ver >= 1.0.5
+Requires: gstreamer%api_ver >= %ver_major
+Requires: lib%_name%api_ver >= %ver_major
 
 Provides: %_name%api_ver-lame = %version-%release
 Provides: %_name%api_ver-mad = %version-%release
 
-Source: http://download.gnome.org/sources/%_name-ugly/%ver_major/%_name-ugly-%version.tar.xz
+Source: http://gstreamer.freedesktop.org/src/%_name-ugly/%_name-ugly-%version.tar.xz
 Patch: gst-plugins-ugly-1.0.1-alt-intltool.patch
 
 BuildRequires: gcc-c++ gst-plugins%api_ver-devel gtk-doc intltool liba52-devel libcdio-devel libid3tag-devel
@@ -77,6 +77,9 @@ collection.
 %_gtk_docdir/%_name-ugly-plugins-%api_ver/*
 
 %changelog
+* Mon Jun 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Sun Dec 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
 - 1.4.5
 

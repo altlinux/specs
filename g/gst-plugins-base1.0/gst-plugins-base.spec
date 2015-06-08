@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.4
+%define ver_major 1.5
 %define api_ver 1.0
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -22,7 +22,7 @@ Requires: gstreamer%api_ver
 Provides: gstreamer%api_ver(audio-hardware-sink) = %version
 Provides: gstreamer%api_ver(audio-hardware-source) = %version
 
-Source: http://download.gnome.org/sources/%_name-base/%ver_major/%_name-base-%version.tar.xz
+Source: http://gstreamer.freedesktop.org/src/%_name-base/%_name-base-%version.tar.xz
 Patch: gst-plugins-base-0.11.94-alt-intltool.patch
 
 BuildRequires: gcc-c++ orc >= 0.4.18 liborc-test-devel
@@ -167,6 +167,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Mon Jun 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Sun Dec 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
 - 1.4.5
 
