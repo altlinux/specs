@@ -1,6 +1,6 @@
 Name: xapian-omega
-Version: 1.2.3
-Release: alt1.qa1
+Version: 1.2.21
+Release: alt1
 
 Summary: A CGI search frontend and indexers built on Xapian
 
@@ -57,6 +57,7 @@ rm -rf %buildroot%_docdir/%name/
 %_bindir/scriptindex
 %_bindir/htdig2omega
 %_bindir/mbox2omega
+%_libdir/%name/bin/outlookmsg2html
 
 %dir %_datadir/omega
 %_datadir/omega/*.script
@@ -73,6 +74,10 @@ rm -rf %buildroot%_docdir/%name/
 %_man1dir/scriptindex.1*
 
 %changelog
+* Fri May 22 2015 Michael Shigorin <mike@altlinux.org> 1.2.21-alt1
+- 1.2.21
+  + added outlookmsg2html helper
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
