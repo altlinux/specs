@@ -2,7 +2,7 @@
 %global qt_module qtquick1
 
 Name: qt5-quick1
-Version: 5.4.1
+Version: 5.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -33,7 +33,6 @@ with classic Qt applications.
 Summary: Common package for %name
 Group: System/Configuration/Other
 Requires: qt5-base-common
-BuildArch: noarch
 %description common
 Common package for %name
 
@@ -86,6 +85,9 @@ syncqt.pl-qt5 \
 #%make INSTALL_ROOT=%buildroot install_docs ||:
 
 %files common
+%dir %_qt5_importdir/Qt/
+%dir %_qt5_importdir/Qt/labs/
+
 %files -n libqt5-declarative
 %doc LGPL_EXCEPTION.txt
 %_qt5_libdir/libQt?Declarative.so.*
@@ -110,6 +112,9 @@ syncqt.pl-qt5 \
 #%_qt5_docdir/*
 
 %changelog
+* Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- new version
+
 * Wed Feb 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
 - new version
 

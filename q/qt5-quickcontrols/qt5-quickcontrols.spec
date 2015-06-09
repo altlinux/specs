@@ -1,7 +1,7 @@
 %global qt_module qtquickcontrols
 
 Name: qt5-quickcontrols
-Version: 5.4.1
+Version: 5.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -30,7 +30,7 @@ Requires: qt5-base-common qt5-declarative-common
 Common package for %name
 
 %package doc
-BuildArch: noarch
+#BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
@@ -57,13 +57,16 @@ This package contains documentation for Qt5 %qt_module
 %files common
 %files
 %_qt5_archdatadir/qml/QtQuick/
-%doc LGPL_EXCEPTION.txt header.BSD
+%doc LGPL_EXCEPTION.txt
 
 %files doc
 %_qt5_docdir/qtquick*.qch
 %_qt5_docdir/qtquick*s/
 
 %changelog
+* Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- new version
+
 * Wed Feb 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
 - new version
 
