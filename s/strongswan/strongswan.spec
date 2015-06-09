@@ -62,7 +62,7 @@
 %define beta %nil
 
 Name: strongswan
-Version: 5.3.1
+Version: 5.3.2
 Release: alt1
 
 Summary: strongSwan IPsec implementation
@@ -220,6 +220,11 @@ cp -a testing/ %buildroot%pkgdocdir/
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Tue Jun 09 2015 Michael Shigorin <mike@altlinux.org> 5.3.2-alt1
+- new version (watch file uupdate)
+  + fixes CVE-2015-4171: client info disclosure, see
+    https://www.strongswan.org/blog/2015/06/08/
+
 * Tue Jun 02 2015 Michael Shigorin <mike@altlinux.org> 5.3.1-alt1
 - new version (watch file uupdate)
   + fixes CVE-2015-3991: DoS with potential code execution, see
