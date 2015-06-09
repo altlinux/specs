@@ -1,7 +1,7 @@
 %define ver_major 3.16
 
 Name: evolution-ews
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Group: Networking/Mail
@@ -78,6 +78,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/appdata/evolution-ews.metainfo.xml
 
 %changelog
+* Tue Jun 09 2015 Alexey Shabalin <shaba@altlinux.ru> 3.16.3-alt1
+- 3.16.3
+
 * Wed May 13 2015 Alexey Shabalin <shaba@altlinux.ru> 3.16.2-alt1
 - 3.16.2
 
