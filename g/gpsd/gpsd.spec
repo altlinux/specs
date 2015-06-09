@@ -3,8 +3,8 @@
 
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
-Version: 3.14
-Release: alt2
+Version: 3.15
+Release: alt1
 License: %bsd
 Group: System/Servers
 Url: http://www.catb.org/gpsd
@@ -49,7 +49,6 @@ GPS is unplugged and replugged.
 %package -n libgps%abiversion
 Summary: Client libraries in C and Python for talking to a running gpsd or GPS
 Group: Sciences/Geosciences
-Requires: gpsd
 %description -n libgps%abiversion
 Client libraries in C and Python for talking to a running gpsd or GPS
 
@@ -57,7 +56,6 @@ Client libraries in C and Python for talking to a running gpsd or GPS
 %package -n libQgpsmm%abiversion
 Summary: Qt bindings for gpsd
 Group: Sciences/Geosciences
-Requires: gpsd
 %description -n libQgpsmm%abiversion
 This package contains Qt bindings for gpsd
 %endif
@@ -150,6 +148,10 @@ rm -rf %buildroot/lib/systemd
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Jun 09 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.15-alt1
+- 3.15
+- Removed "Requires: gpsd" from lib* packages
+
 * Wed Jun 03 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.14-alt2
 - Built with debuginfo
 - Added libusb-devel to BuildRequires
