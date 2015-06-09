@@ -4,8 +4,8 @@
 
 
 Name: qt5-multimedia
-Version: 5.4.1
-Release: alt2
+Version: 5.4.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
@@ -121,6 +121,9 @@ syncqt.pl-qt5 \
 %_qt5_docdir/*
 
 %changelog
+* Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- new version
+
 * Mon May 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt2
 - build with gstreamer-1.0
 
