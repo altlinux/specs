@@ -6,7 +6,7 @@
 
 Name: qt5-webkit
 Version: 5.4.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -144,6 +144,9 @@ mv Source/ThirdParty/{gtest/,qunit/} \
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt2
+- 5.4.2 release
+
 * Fri Jun 05 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
 - new version
 
