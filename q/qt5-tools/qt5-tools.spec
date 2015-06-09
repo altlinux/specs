@@ -4,7 +4,7 @@
 %def_disable bootstrap
 
 Name: qt5-tools
-Version: 5.4.1
+Version: 5.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -281,6 +281,9 @@ done
 
 
 %changelog
+* Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- new version
+
 * Wed Feb 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
 - new version
 
