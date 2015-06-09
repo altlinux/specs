@@ -3,7 +3,7 @@
 %def_disable bootstrap
 
 Name: qt5-xmlpatterns
-Version: 5.4.1
+Version: 5.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -103,6 +103,9 @@ syncqt.pl-qt5 \
 %endif
 
 %changelog
+* Fri Jun 05 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- new version
+
 * Tue Feb 24 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
 - new version
 
