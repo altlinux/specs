@@ -19,7 +19,7 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Provide online accounts information
@@ -130,7 +130,7 @@ NOCONFIGURE=1 ./autogen.sh
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --output=%name.lang %name %{?_enable_telepathy:%name-tpaw}
 
@@ -175,6 +175,12 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Tue Jun 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
+- 3.16.3
+
+* Tue Jun 02 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt2
+- updated to 3.16.2_27b0ed00
+
 * Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 
