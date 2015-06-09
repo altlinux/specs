@@ -23,7 +23,7 @@
 %define bugfix 2
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -709,6 +709,9 @@ done
 
 
 %changelog
+* Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt3
+- 5.4.2 release
+
 * Mon Jun 08 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt2
 - build docs
 
