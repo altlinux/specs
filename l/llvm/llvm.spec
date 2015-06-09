@@ -12,7 +12,7 @@
 
 Name: llvm
 Version: 3.5.0
-Release: alt1
+Release: alt2
 Summary: The Low Level Virtual Machine
 Group: Development/C
 License: NCSA
@@ -25,6 +25,7 @@ Source3: http://llvm.org/releases/%version/clang-tools-extra-%clangtools_version
 
 Patch1: llvm+clang-3.5.0-alt-add-alt-triple.patch
 Patch2: llvm+clang-3.3-alt-arm-default-to-hardfloat.patch
+Patch3: llvm+clang-3.5.0-find-gcc5-files.patch
 
 BuildPreReq: /proc
 
@@ -32,6 +33,9 @@ BuildPreReq: /proc
 BuildRequires: gcc-c++
 %else
 BuildRequires: clang gcc-c++
+# clang-3.5.0-alt1 is broken with gcc-5
+BuildRequires: gcc4.9 gcc4.9-c++
+
 %endif
 
 # Automatically added by buildreq on Thu Aug 29 2013 (-ba)
@@ -103,6 +107,14 @@ Requires: clang = %version-%release
 
 %description -n clang-devel
 This package contains header files for the Clang compiler.
+
+%package -n clang-devel-static
+Summary: Static libraries for clang
+Group: Development/C
+Requires: clang = %version-%release
+
+%description -n clang-devel-static
+This package contains static libraries for the Clang compiler.
 
 %package -n clang-analyzer
 Summary: A source code analysis framework
@@ -196,6 +208,7 @@ mv compiler-rt-%{compilerrt_version}.src projects/compiler-rt
 %ifarch armh
 %patch2 -p1
 %endif
+%patch3 -p1
 
 sed -i "s|%{version}svn|%version|g" configure
 sed -i 's|/lib /usr/lib $lt_ld_extra|%_libdir $lt_ld_extra|' configure
@@ -338,6 +351,7 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 
 %files devel-static
 %_libdir/*.a
+%exclude %_libdir/libclang*.a
 
 %files -n clang
 %doc build/clang-docs/* build/tools/clang/clang-testlog.txt
@@ -351,6 +365,9 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %files -n clang-devel
 %_includedir/clang
 %_includedir/clang-c
+
+%files -n clang-devel-static
+%_libdir/libclang*.a
 
 %files -n clang-analyzer
 %_bindir/scan-build
@@ -393,6 +410,10 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %endif
 
 %changelog
+* Tue Jun 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.0-alt2
+- Fixed clang work with gcc >= 5.
+- Built clang-devel-static as separate package.
+
 * Thu Nov 27 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.0-alt1
 - Updated to 3.5.0 (ALT: #30435).
 - Rebuilt with clang.
