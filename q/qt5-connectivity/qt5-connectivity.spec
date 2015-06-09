@@ -2,7 +2,7 @@
 %global qt_module qtconnectivity
 
 Name: qt5-connectivity
-Version: 5.4.1
+Version: 5.4.2
 Release: alt1
 
 Group: System/Libraries
@@ -109,6 +109,9 @@ syncqt.pl-qt5 \
 %_qt5_docdir/*
 
 %changelog
+* Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- new version
+
 * Wed Feb 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
 - new version
 
