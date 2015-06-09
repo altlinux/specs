@@ -1,7 +1,7 @@
 
 Name: jsoncpp
 Version: 0.6.0
-Release: alt0.1
+Release: alt0.1.1
 %define sover 0
 %define libname lib%name%sover
 
@@ -89,5 +89,8 @@ sed -i 's|@@LIBDIR@@|%_libdir|g' %buildroot/%_libdir/pkgconfig/jsoncpp.pc
 #%_docdir/%name/
 
 %changelog
+* Thu Jun 04 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6.0-alt0.1.1
+- rebuild with c++11 ABI
+
 * Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt0.1
 - initial build
