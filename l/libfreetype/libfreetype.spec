@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libfreetype
-Version: 2.5.5
+Version: 2.6
 Release: alt1
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
@@ -21,11 +21,10 @@ Source3: ftconfig.h
 Patch5: freetype-2.4.10-osh.patch
 Patch2: freetype-2.5.4-alt-freetype-config.patch
 Patch3: freetype-2.4.10-alt-fttrigon.patch
-Patch6: ft2demos-2.5.4-alt-snprintf.patch
+#Patch6: ft2demos-2.5.4-alt-snprintf.patch
 Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
 Patch12: freetype-2.4.10-rh-enable-valid.patch
 Patch13: ft2demos-2.4.10-rh-more-demos.patch
-Patch21: ft2demos-2.4.10-deb-fixes.patch
 
 BuildRequires: bzlib-devel libX11-devel libharfbuzz-devel libpng-devel zlib-devel
 
@@ -84,13 +83,11 @@ ln -s ft2demos-%version ft2demos
 
 %patch2 -p1
 %patch3 -p1
-%patch6 -p1
+#patch6 -p1
 
 %patch11 -p1
 %patch12 -p1
 %patch13 -p0
-
-%patch21 -p0
 
 %build
 %add_optflags -fno-strict-aliasing %(getconf LFS_CFLAGS)
@@ -155,6 +152,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Wed Jun 10 2015 Valery Inozemtsev <shrek@altlinux.ru> 2.6-alt1
+- 2.6
+
 * Thu Jan 08 2015 Valery Inozemtsev <shrek@altlinux.ru> 2.5.5-alt1
 - 2.5.5
 
