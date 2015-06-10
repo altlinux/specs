@@ -1,12 +1,16 @@
+%define _name LibRaw
+
 Name: libraw
-Version: 0.16.0
+Version: 0.16.2
 Release: alt1
 
-Summary: library for reading RAW files obtained from digital photo cameras 
+Summary: library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
 License: CDDL LGPL LibRaw
 
 Url: http://www.libraw.org
+
+#Source: %url/data/%_name-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ libjasper-devel liblcms2-devel
@@ -81,6 +85,9 @@ This package contains static library.
 %_libdir/libraw_r.a
 
 %changelog
+* Wed Jun 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.16.2-alt1
+- 0.16.2 (ALT #29741)
+
 * Tue Jan 21 2014 Vladimir Lettiev <crux@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 
