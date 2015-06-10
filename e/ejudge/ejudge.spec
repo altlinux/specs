@@ -1,18 +1,19 @@
 %define ejudge_user ejudge
-%def_enable systemd
 %define ejudge_group judges
 %define ejudge_home /var/lib/ejudge
 %define cgi_bin_dir /var/www/cgi-bin
 %define httpd_htdocs_dir /var/www/html
 %define ejudge_socket_dir /var/run/ejudge
 %define lang_config_dir %{_sysconfdir}/ejudge/lang.d
+
+%def_enable systemd
+%brp_strip_none %_libexecdir/ejudge/bin/*
+%brp_strip_none %_libexecdir/ejudge/*
 %add_findreq_skiplist *vg*.in
 
-
 Name: ejudge
-Version: 2.3.29.1
+Version: 3.3.1
 Release: alt1
-
 
 Summary: Ejudge is a programming contest managment system
 Summary(ru_RU.UTF-8): Ejudge это система для проведения соревнований по программированию
@@ -22,10 +23,9 @@ Group: System/Servers
 Url: http://www.ejudge.ru
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-Source0: %name-2.3.29.1.tar
+Source0: ejudge-20150607.tar
 Source1: %name.rc
 Source2: %name.logrotate
-Source3: ejudge-install.sh
 Source4: ejudge-README-ALT.utf8
 Source5: ejudge-cntsguide.pdf
 Source6: ejudge-refmanual.pdf
@@ -36,12 +36,11 @@ Patch1: ejudge-stylecheck.patch
 Patch2: ejudge-tsc.c.patch
 Patch3: ejudge-compilers.patch
 
-BuildPreReq: flex, sed, mktemp, libexpat-devel, zlib-devel, libzip-devel, libncursesw-devel, libMySQL-devel, libcurl-devel, autoconf
-BuildRequires: libzip-devel
+BuildPreReq: gcc-c++, flex, sed, mktemp, libexpat-devel, zlib-devel, libzip-devel, libncursesw-devel, libmysqlclient-devel, libcurl-devel, autoconf, libuuid-devel, libelf-devel
 %if_enabled systemd
 BuildRequires: systemd
 %endif
-Requires: sharutils, apache2, iconv, gawk, a2ps
+Requires: sharutils, apache2, iconv, gawk, a2ps, mysql-server
 
 Obsoletes: libreuse
 
@@ -69,7 +68,7 @@ Requires: %name = %version-%release
 BuildArch: noarch
 
 %description doc
-User and contest administrator manual for ejudge system.
+User and contest administratoxr manual for ejudge system.
 
 %description doc -l ru_RU.UTF-8
 Документация пользователя и администратора для системы
@@ -77,14 +76,19 @@ User and contest administrator manual for ejudge system.
 
 %prep
 %setup -q -n ejudge
+
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-cp %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 .
+# %patch4 -p1
+cp  %SOURCE4 %SOURCE5 %SOURCE6 .
 sed -i "s/,-rpath,/,/" configure
-bzip2 -9k ChangeLog NEWS NEWS.RUS
 
 %build
+cd libdwarf
+%configure
+%make_build
+cd ..
 %configure                                                                \
 --enable-charset=utf-8                                                    \
 --enable-socket-path=%ejudge_socket_dir/userlist-socket                   \
@@ -148,12 +152,18 @@ install -p -m644 -D %SOURCE8 %buildroot%{_tmpfilesdir}/%name.conf
 %{_tmpfilesdir}/%name.conf
 %endif
 
-%doc AUTHORS ChangeLog.bz2 NEWS.bz2 NEWS.RUS.bz2 ejudge-install.sh ejudge-README-ALT.utf8
+%doc AUTHORS ejudge-README-ALT.utf8
 
 %files doc
 %doc ejudge-*.pdf
 
 %changelog
+* Tue Jun 09 2015 Denis Kirienko <dk@altlinux.org> 3.3.1-alt1
+- Version 3.3.1+ (git d43e8b707c, May 07 2015)
+- Support for kumir2 language
+- Script ejudge-install.sh removed from package, please, read
+  documentation at https://goo.gl/nqlPx0 and setup ejudge manually
+
 * Thu Jan 09 2014 Denis Kirienko <dk@altlinux.org> 2.3.29.1-alt1
 - Version 2.3.29.1
 
