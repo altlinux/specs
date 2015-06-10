@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -58,6 +58,9 @@ install -pD -m644 data/%name.1 %buildroot%_man1dir/%name.1
 %doc NEWS
 
 %changelog
+* Wed Jun 10 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Fri May 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
