@@ -1,5 +1,5 @@
 Name: linphone
-Version: 3.8.3
+Version: 3.8.4
 Release: alt1
 License: GPLv2+
 Url: http://www.linphone.org/
@@ -124,6 +124,9 @@ This package contains development files for %name.
 %_datadir/tutorials/%name
 
 %changelog
+* Wed Jun 10 2015 Alexei Takaseev <taf@altlinux.org> 3.8.4-alt1
+- 3.8.4
+
 * Fri Jun 05 2015 Alexei Takaseev <taf@altlinux.org> 3.8.3-alt1
 - 3.8.3
 
