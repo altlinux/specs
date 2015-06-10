@@ -3,7 +3,7 @@
 %define rname kdegraphics-strigi-analyzer
 Name: kde4-graphics-strigi-analyzer
 Version: 4.13.0
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: Strigi analyzers for various graphics types
@@ -60,6 +60,9 @@ KDE 4 core library.
 
 
 %changelog
+* Wed Jun 10 2015 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt2
+- rebuild with new libstrigi
+
 * Tue Apr 22 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 
