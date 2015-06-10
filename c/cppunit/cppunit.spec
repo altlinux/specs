@@ -1,8 +1,10 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%def_disable doc
+
 Name: cppunit
 Version: 1.12.1
-Release: alt2.svn20130422
+Release: alt2.svn20130422.1
 
 Summary: C++ port of the famous JUnit framework for unit testing
 License: LGPL
@@ -67,10 +69,15 @@ This package contains development documentation for CppUnit.
 %_man1dir/*
 %_pkgconfigdir/%name.pc
 
+%if_enabled docs
 %files devel-docs
 %doc %_docdir/%name-%version/*
+%endif
 
 %changelog
+* Mon Jun 01 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.12.1-alt2.svn20130422.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.1-alt2.svn20130422
 - New snapshot
 

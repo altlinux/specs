@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           manaworld
 Version:        0.5.2
-Release:        alt3_9.1
+Release:        alt3_9.1.1
 Summary:        2D MMORPG world
 
 Group:          Games/Other
@@ -20,6 +20,8 @@ BuildRequires:  libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_tt
 BuildRequires:  libSDL_gfx-devel gzip ctest cmake gettext
 Source44: import.info
 
+Patch55: manaworld-DSO-X11.patch
+
 %description
 The Mana World (TMW) is a serious effort to create an innovative free and open
 source MMORPG. TMW uses 2D graphics and aims to create a large and diverse
@@ -28,6 +30,7 @@ interactive world.
 %prep
 %setup -q -c -n tmw-%{version}
 %patch0 -p0
+%patch55 -p0
 
 
 %build
@@ -105,6 +108,9 @@ fi
 
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.2-alt3_9.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Dec 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt3_9.1
 - rebuild with new SDL
 

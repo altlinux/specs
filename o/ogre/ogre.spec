@@ -1,6 +1,6 @@
 Name: ogre
 Version: 1.9.0
-Release: alt1.1
+Release: alt1.1.1
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
@@ -9,7 +9,7 @@ Url: http://www.ogre3d.org/
 Source: %name-%version.tar
 Patch: %name-%version-alt-changes.patch
 
-BuildRequires: gcc-c++ cmake cegui-devel zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel doxygen graphviz texi2html libtbb-devel boost-devel libcg-devel
+BuildRequires: gcc-c++ cmake zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel doxygen graphviz texi2html libtbb-devel boost-devel libcg-devel
 BuildRequires: libXaw-devel libXrandr-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXinerama-devel libXi-devel libXpm-devel libXv-devel libXxf86misc-devel xorg-xf86miscproto-devel libXxf86vm-devel libXext-devel libGLU-devel libfreeimage-devel tinyxml-devel
 #BuildRequires:  glew-devel 
 BuildPreReq: libharfbuzz-devel libGLES-devel libpoco-devel
@@ -139,6 +139,10 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_libdir/OGRE/Samples
 
 %changelog
+* Tue Jun 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.9.0-alt1.1.1
+- Rebuilt for gcc5 C++11 ABI.
+- Removed BR: cegui-devel (needed by some samples).
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.9.0-alt1.1
 - rebuild with boost 1.57.0
 

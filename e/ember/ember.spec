@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/xmllint cppunit-devel gcc-c++ pkgconfig(atlascpp-0.6) pk
 # END SourceDeps(oneline)
 Name:           ember
 Version:        0.7.2
-Release:        alt1.1
+Release:        alt1.1.1
 Summary:        3D client for WorldForge
 
 Group:          Games/Other
@@ -31,6 +31,7 @@ Requires:       %{name}-media >= 0.7.2 %{name}-media < 0.7.3
 Obsoletes:      sear < 0.6.4-0.16
 Source44: import.info
 Patch33: ember-0.7.0-alt-linkage.patch
+Source55: boost.m4
 
 %description
 Ember is a client for MMORPGs using the WorldForge system.
@@ -48,6 +49,7 @@ It uses the Ogre 3D engine with CEGUI.
 # Encoding fix
 iconv -f iso-8859-1 -t utf-8 AUTHORS > AUTHORS.conv && mv -f AUTHORS.conv AUTHORS
 %patch33 -p1
+cp %SOURCE55 m4/boost.m4
 
 
 %build
@@ -99,6 +101,9 @@ chrpath -d %buildroot%_bindir/%name.bin
 %config %{_sysconfdir}/%{name}/*
 
 %changelog
+* Tue Jun 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.2-alt1.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.7.2-alt1.1
 - rebuild with boost 1.57.0
 
