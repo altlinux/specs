@@ -2,7 +2,7 @@
 
 Name: ccrtp
 Version: 2.0.9
-Release: alt1
+Release: alt1.1
 %define sover 2
 %define libccrtp libccrtp%sover
 %define docdir %_docdir/%name-%version
@@ -92,5 +92,8 @@ cp -a AUTHORS COPYING.addendum README doc/srcmodel* doc/html %buildroot%docdir
 %endif
 
 %changelog
+* Sun Jun 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.9-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Sep 24 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.9-alt1
 - initial build

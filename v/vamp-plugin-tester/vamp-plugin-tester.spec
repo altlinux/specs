@@ -1,6 +1,6 @@
 Name: vamp-plugin-tester
 Version: 1.0
-Release: alt1
+Release: alt1.1
 Summary: Vamp Plugin Tester
 License: MIT
 Group: Sound
@@ -30,6 +30,9 @@ install -m755 vamp-plugin-tester %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sun Sep 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
 - Initial build for Sisyphus
 

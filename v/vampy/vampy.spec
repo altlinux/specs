@@ -1,6 +1,6 @@
 Name: vampy
 Version: 2.0
-Release: alt1.hg20140806
+Release: alt1.hg20140806.1
 Summary: VamPy: Vamp Plugins in Python
 License: MIT
 Group: Sound
@@ -60,6 +60,9 @@ ln -s vampymod.so %buildroot%python_sitelibdir/vampy.so
 %python_sitelibdir/*
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0-alt1.hg20140806.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Sep 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.hg20140806
 - Initial build for Sisyphus
 

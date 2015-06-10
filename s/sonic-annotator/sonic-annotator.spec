@@ -1,6 +1,6 @@
 Name: sonic-annotator
 Version: 1.0
-Release: alt1.hg20140426
+Release: alt1.hg20140426.1
 Summary: A batch tool for audio feature extraction
 License: GPLv2
 Group: Sound
@@ -46,6 +46,9 @@ install -m755 %name %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt1.hg20140426.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.hg20140426
 - Initial build for Sisyphus
 

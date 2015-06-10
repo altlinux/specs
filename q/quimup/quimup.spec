@@ -1,7 +1,7 @@
 %define Name Quimup
 Name: quimup
 Version: 1.3.2
-Release: alt1
+Release: alt1.1
 Summary: A client for the music player daemon (MPD)
 License: %gpl2plus
 Group: Sound
@@ -74,6 +74,9 @@ done
 
 
 %changelog
+* Wed May 20 2015 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt1.1
+- rebuild with gcc5
+
 * Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt1
 - Version 1.3.2
 

@@ -1,5 +1,5 @@
 Version: 0.1.0
-Release: alt0.3.2
+Release: alt0.3.2.1
 
 Summary: Tartarus DNS client support
 Name: Tartarus-dnsupdate
@@ -49,6 +49,9 @@ cp %SOURCE1 %buildroot%_initdir/tdnsupdate
 %config(noreplace) %_sysconfdir/Tartarus/clients/*
 
 %changelog
+* Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.0-alt0.3.2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt0.3.2
 - Fixed build with gcc 4.7
 

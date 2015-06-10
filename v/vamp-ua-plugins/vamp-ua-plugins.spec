@@ -1,6 +1,6 @@
 Name: vamp-ua-plugins
 Version: 1.0
-Release: alt1
+Release: alt1.1
 Summary: Vamp plugins developed in DRIMS project
 License: GPL
 Group: Sound
@@ -31,6 +31,9 @@ install -m644 ua-vamp-plugins.* %buildroot%_libdir/vamp/
 %_libdir/vamp
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Sep 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
 - Initial build for Sisyphus
 

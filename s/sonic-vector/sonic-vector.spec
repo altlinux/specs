@@ -1,6 +1,6 @@
 Name: sonic-vector
 Version: 0.1
-Release: alt1.hg20140909
+Release: alt1.hg20140909.1
 Summary: Application for showing comparative alignments of audio recordings
 License: Free
 Group: Sound
@@ -51,6 +51,9 @@ install -p -m644 icons/* %buildroot%_pixmapsdir/
 %_pixmapsdir/*
 
 %changelog
+* Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1-alt1.hg20140909.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.hg20140909
 - Initial build for Sisyphus
 

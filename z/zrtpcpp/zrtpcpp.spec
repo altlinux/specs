@@ -2,7 +2,7 @@
 
 Name: zrtpcpp
 Version: 2.3.4
-Release: alt1
+Release: alt1.1
 %define sover 2
 %define libzrtpcpp libzrtpcpp%sover
 
@@ -77,5 +77,8 @@ Group: System/Libraries
 %endif
 
 %changelog
+* Sun Jun 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3.4-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Sep 24 2014 Sergey V Turchin <zerg@altlinux.org> 2.3.4-alt1
 - initial build

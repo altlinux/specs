@@ -9,7 +9,7 @@
 
 Name: protobuf
 Version: 2.6.0
-Release: alt1
+Release: alt1.1
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 Group: System/Libraries
@@ -252,6 +252,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %endif
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt1
 - Version 2.6.0
 - Added module for Python 3

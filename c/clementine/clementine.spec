@@ -2,7 +2,7 @@
 
 Name: clementine
 Version: 1.2.3
-Release: alt3
+Release: alt3.1
 Summary: A music player and library organiser
 
 Group: Sound
@@ -24,6 +24,9 @@ Patch4: %name-1.2.2-rosa-vkontakte-advanced.patch
 Patch5: %name-1.2.0-rosa-vkontakte-tags.patch
 Patch6: %name-1.2.0-rosa-ru-vkontakte.patch
 %endif
+
+Patch7: clementine-1.2.3-alt-libechonest-Wno-error=logical-not-parentheses.patch
+Patch8: clementine-1.2.3-udisks-namespace.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: boost-devel-headers cmake gcc-c++ gstreamer-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
@@ -61,6 +64,8 @@ tar -xf %{SOURCE2}
 %patch5 -p1 -b .vkontakte~
 %patch6 -p1 -b .vkontakte~
 %endif
+%patch7 -p2
+%patch8 -p1
 
 %build
 %K4build -DSTATIC_SQLITE=on -DBUILD_WERROR=off
@@ -78,6 +83,9 @@ tar -xf %{SOURCE2}
 %_datadir/clementine
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.3-alt3.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Feb 12 2015 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt3
 - add gst-plugins-base to requires - clementine crashes without it
 

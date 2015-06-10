@@ -1,6 +1,6 @@
 Name: vamp-live-host
 Version: 0.1
-Release: alt2.hg20131203
+Release: alt2.hg20131203.1
 Summary: Vamp Live Host - activate events based on features of live audio
 License: Free
 Group: Sound
@@ -43,6 +43,9 @@ install -m755 %name %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1-alt2.hg20131203.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.hg20131203
 - Built with portaudio
 
