@@ -1,7 +1,7 @@
 %define ver_major 1.6
 
 Name: darktable
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -13,14 +13,17 @@ Url: http://%name.org/
 #Source: %name-%version.tar
 Source: https://github.com/darktable-org/darktable/releases/download/release-%version/%name-%version.tar.xz
 
+%set_gcc_version 4.9
+BuildRequires: gcc4.9-c++ libgomp4.9-devel
+
 BuildPreReq:  rpm-build-gnome
 BuildRequires: /proc
 BuildRequires: libgio-devel >= 2.30 libgtk+2-devel >= 2.24
-BuildRequires: cmake gcc-c++ intltool libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel
+BuildRequires: cmake intltool libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel
 BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
 BuildRequires: libdbus-glib-devel libexiv2-devel libflickcurl-devel libsecret-devel
-BuildRequires: libgomp-devel libgphoto2-devel libjpeg-devel liblcms2-devel liblensfun-devel
+BuildRequires: libgphoto2-devel libjpeg-devel liblcms2-devel liblensfun-devel
 BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel libxkbfile-devel lsb-release
 BuildRequires: openexr-devel perl-Pod-Parser
 BuildRequires: libjson-glib-devel libsoup-devel xsltproc libpixman-devel libexpat-devel
@@ -67,6 +70,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Wed Jun 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.7-alt1
+- 1.6.7 using gcc-4.9
+
 * Tue Apr 28 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.6-alt1
 - 1.6.6
 
