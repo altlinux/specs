@@ -6,6 +6,7 @@
 %def_enable desktop
 %endif
 
+%def_disable gcc5ready
 %def_enable hupnp
 
 %add_findpackage_path %_kde4_bindir
@@ -13,11 +14,11 @@
 
 %define major 4
 %define minor 14
-%define bugfix 8
+%define bugfix 9
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -133,7 +134,10 @@ BuildRequires: libXrender-devel libXext-devel libXScrnSaver-devel grantlee-devel
 BuildRequires: libenchant-devel
 BuildRequires: libavahi-devel libjasper-devel libjpeg-devel
 BuildRequires: libgif-devel libxslt-devel liblzma-devel docbook-style-xsl docbook-dtds
-BuildRequires: openexr-devel libkrb5-devel shared-desktop-ontologies-devel
+%if_enabled gcc5ready
+BuildRequires: openexr-devel
+%endif
+BuildRequires: libkrb5-devel shared-desktop-ontologies-devel
 BuildRequires: polkit-qt-1-devel libpolkit1-devel libudev-devel
 BuildRequires: graphviz gcc-c++ libpcre-devel shared-mime-info
 BuildRequires: xml-utils libutempter-devel phonon-devel automoc
@@ -346,6 +350,12 @@ done
 %_K4includedir/*
 
 %changelog
+* Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.9-alt2
+- temporary build without openexr
+
+* Mon Jun 08 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.9-alt1
+- new version
+
 * Thu May 14 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.8-alt1
 - new version
 

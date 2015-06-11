@@ -1,5 +1,6 @@
 %define _kde_alternate_placement 1
 
+%def_disable gcc5ready
 %def_disable google
 %if_enabled kde_mobile
 %def_disable desktop
@@ -21,7 +22,7 @@
 
 %define major 4
 %define minor 11
-%define bugfix 18
+%define bugfix 20
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
@@ -134,7 +135,10 @@ BuildRequires: libstrigi-devel libusb-compat-devel xml-utils
 BuildRequires: libalternatives-devel libudev-devel
 BuildRequires: polkit-qt-1-devel libpolkit-devel libdbusmenu-qt-devel
 BuildRequires: soprano soprano-backend-redland libsoprano-devel
-BuildRequires: libqalculate-devel libjpeg-devel prison-devel qjson-devel
+%if_enabled gcc5ready
+BuildRequires: libqalculate-devel
+%endif
+BuildRequires: libjpeg-devel prison-devel qjson-devel
 BuildRequires: kde4pimlibs-devel akonadi-devel libraw1394-devel libpci-devel
 BuildRequires: python-module-PyQt4 python-module-sip python-devel
 BuildRequires: kde4-kactivities-devel
@@ -955,6 +959,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Jun 10 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.20-alt1
+- new version
+
 * Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.18-alt1
 - new version
 

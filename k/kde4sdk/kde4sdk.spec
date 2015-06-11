@@ -10,7 +10,7 @@ Name: kde4sdk
 %define minor 4
 %define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Software Development Kit
@@ -579,6 +579,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Wed Jun 10 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.1-alt2
+- rebuild with new strigi
+
 * Thu May 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.1-alt1
 - new version
 

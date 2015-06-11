@@ -14,7 +14,7 @@
 %define bugfix 0
 Name: kde4network
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -377,6 +377,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Jun 10 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt3
+- rebuild with new libstrigi
+
 * Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt2
 - rebuild with new libvncserver
 
