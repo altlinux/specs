@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 2.6.7
-Release: alt2
+Release: alt3
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -264,6 +264,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Thu Jun 11 2015 Vladimir Didenko <cow@altlinux.org> 2.6.7-alt3
+- remove upstream hack for pidgin and thunderbird systray icons
+
 * Fri Jun 5 2015 Vladimir Didenko <cow@altlinux.org> 2.6.7-alt2
 - specify keybinder version
 
