@@ -4,7 +4,7 @@
 Summary: The PHP5 scripting language
 Name:	 php5
 Version: 5.5.25
-Release: alt1
+Release: alt2
 
 %define php5_name      %name
 %define _php5_version  %version
@@ -48,6 +48,7 @@ Patch51: php-5.3.5-alt-build-gcc-version.patch
 Patch60: php-5.4.15-alt-bison-2.7.1.patch
 Patch61: php5-5.5.9-phar-phppath.patch
 Patch62: php-mysqlnd-socket.patch
+Patch70: php-5.4.15-alt-modules-syms-visibility.patch
 
 PreReq:  php5-libs = %version-%release
 Requires(post):  php5-suhosin
@@ -174,6 +175,7 @@ in use by other PHP5-related packages.
 %patch60 -p2
 %patch61 -p1
 %patch62 -p1
+%patch70 -p2
 
 cp Zend/LICENSE Zend/ZEND_LICENSE
 cp Zend/ZEND_CHANGES Zend/ZEND_ChangeLog 
@@ -402,6 +404,9 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Thu Jun 11 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.5.25-alt2
+- build fixed
+
 * Mon May 18 2015 Anton Farygin <rider@altlinux.ru> 5.5.25-alt1
 - new version
 
