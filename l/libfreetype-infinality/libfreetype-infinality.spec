@@ -1,7 +1,7 @@
 %define freetypemajorversion 6
 
 Name: libfreetype-infinality
-Version: 2.5.5
+Version: 2.6.0
 Release: alt1
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
@@ -18,8 +18,7 @@ Source92: README.infinality
 Patch1: freetype-2.4.10-rh-enable-valid.patch
 # Infinality patches. Now we use bohoomil upstream:
 # https://github.com/bohoomil/fontconfig-ultimate/
-Patch90:freetype-2.5.4-bohoomil-ftsmooth-20141207.patch
-Patch91: freetype-2.5.4-bohoomil-infinality-20141207.patch
+Patch91: freetype-2.6.0-bohoomil-infinality-20150610.patch
 
 Provides: freetype2-infinality = %version
 Obsoletes: freetype2-infinality < %version
@@ -43,7 +42,6 @@ overrides the system library using ld.so.conf.d mechanism.
 %setup -n %name-%version
 
 %patch1 -p1
-%patch90 -p1
 %patch91 -p1
 
 %build
@@ -98,6 +96,9 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %config %ld_so_conf
 
 %changelog
+* Thu Jun 11 2015 Vladimir Didenko <cow@altlinux.ru> 2.6.0-alt1
+- 2.6.0
+
 * Mon Jan 19 2015 Vladimir Didenko <cow@altlinux.ru> 2.5.5-alt1
 - 2.5.5
 
