@@ -1,5 +1,5 @@
 %define _name gstreamer
-%define ver_major 1.4
+%define ver_major 1.5
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
@@ -7,7 +7,7 @@
 %def_disable gtk-doc
 
 Name: %_name%api_ver
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -17,11 +17,12 @@ URL: http://gstreamer.freedesktop.org
 
 Requires: lib%name = %version-%release
 
-Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 Patch: %_name-0.11.94-alt-intltool.patch
 
 BuildRequires: docbook-utils flex gcc-c++ ghostscript-utils glib2-devel gtk-doc intltool libcheck-devel libxml2-devel
 BuildRequires: python-modules sgml-common transfig xml-utils gobject-introspection-devel
+BuildRequires: libcap-utils
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -106,21 +107,26 @@ Gstreamer plugins.
 	--disable-rpath \
 	--disable-tests \
 	--disable-debug \
-	--disable-static
-
+	--disable-static \
+	--with-bash-completion-dir=no
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %_name-%api_ver
 
+%post
+setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-ptp-helper 2>/dev/null ||:
+
 %files -f %_name-%api_ver.lang
-%doc AUTHORS NEWS README RELEASE
-%_libexecdir/%_name-%api_ver
+%dir %_libexecdir/%_name-%api_ver
+%_libexecdir/%_name-%api_ver/gst-plugin-scanner
+%_libexecdir/%_name-%api_ver/gst-ptp-helper
 %dir %_libdir/%_name-%api_ver
 %_libdir/%_name-%api_ver/*.so
 %exclude %_libdir/%_name-%api_ver/*.la
+%doc AUTHORS NEWS README RELEASE
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -134,6 +140,9 @@ Gstreamer plugins.
 
 %files devel
 %_includedir/*
+%dir %_libdir/%_name-%api_ver/include/
+%dir %_libdir/%_name-%api_ver/include/gst
+%_libdir/%_name-%api_ver/include/gst/gstconfig.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_datadir/aclocal/*
@@ -156,6 +165,9 @@ Gstreamer plugins.
 %_datadir/doc/%_name-%api_ver
 
 %changelog
+* Mon Jun 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Sun Dec 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
 - 1.4.5
 
