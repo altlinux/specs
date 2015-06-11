@@ -2,12 +2,13 @@
 %add_findpackage_path %_kde4_bindir
 %add_findreq_skiplist %_K4exec/khc_*
 
+%def_disable gcc5ready
 %def_disable ntrack
 
 %define rname kdebase-runtime
 %define major 15
 %define minor 4
-%define bugfix 0
+%define bugfix 2
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -43,7 +44,10 @@ BuildRequires: libcanberra-devel glib2-devel libpulseaudio-devel
 BuildRequires: libopenslp-devel libqca2-devel libgpgme-devel
 #BuildRequires: libqzeitgeist-devel
 %{?_enable_ntrack:BuildRequires: libntrack-qt4-devel}
-BuildRequires: libexiv2-devel exiv2 libssh-devel phonon-devel
+%if_enabled gcc5ready
+BuildRequires: libexiv2-devel exiv2
+%endif
+BuildRequires: libssh-devel phonon-devel
 BuildRequires: kde4libs-devel kde4pimlibs-devel
 
 %description
@@ -227,6 +231,10 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jun 11 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt1
+- new version
+- temporary build without exiv2
+
 * Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
 - new version
 
