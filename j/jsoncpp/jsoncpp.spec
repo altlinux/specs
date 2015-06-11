@@ -1,19 +1,21 @@
 
 Name: jsoncpp
-Version: 0.6.0
-Release: alt0.1.1
-%define sover 0
+Version: 1.6.2
+Release: alt1
+%define sover 1
 %define libname lib%name%sover
 
 Group: System/Libraries
 Summary: JSON library implemented in C++
 Url: http://sourceforge.net/projects/%name/
-License: Public Domain or MIT
+License: MIT
 
 Source: %name-src-%version.tar
-Source1: jsoncpp.pc
 
-BuildRequires: gcc-c++ python scons doxygen graphviz
+# Automatically added by buildreq on Thu Jun 11 2015 (-bi)
+# optimized out: cmake-modules elfutils fontconfig fonts-bitmap-misc libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
+#BuildRequires: cmake doxygen fonts-bitmap-terminus fonts-otf-stix fonts-ttf-dejavu fonts-ttf-google-droid-kufi fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif fonts-type1-urw gcc-c++ graphviz libdb4-devel python-module-google python-modules-compiler rpm-build-python3 rpm-build-ruby
+BuildRequires: cmake doxygen gcc-c++ graphviz rpm-build-python python-modules kde-common-devel
 
 %description
 %name is an implementation of a JSON (http://json.org) reader and writer in
@@ -45,52 +47,45 @@ This package contains the documentation for %name
 
 %prep
 %setup -n %name-src-%version
-grep -e "-Wall" SConstruct
-sed -i 's/CCFLAGS = "-Wall"/CCFLAGS = "%optflags"/' SConstruct
 
 %build
-scons platform=linux-gcc
-# make a proper shared lib.
-g++ -o libjsoncpp.so.0.0.0 -shared -Wl,-soname,libjsoncpp.so.0 buildscons/linux-gcc-*/src/lib_json/*.os -lpthread
+%Kbuild \
+  -DJSONCPP_WITH_CMAKE_PACKAGE=ON \
+  -DJSONCPP_WITH_PKGCONFIG_SUPPORT=ON \
+  -DJSONCPP_WITH_TESTS=OFF \
+  -DJSONCPP_LIB_BUILD_STATIC=OFF \
+  -DJSONCPP_LIB_BUILD_SHARED=ON \
+  #
 # build docs
 python doxybuild.py --with-dot --doxygen %_bindir/doxygen
 
 %install
-install -p -D lib%name.so.0.0.0 %buildroot/%_libdir/lib%name.so.0.0.0
-ln -s lib%name.so.0.0.0 %buildroot/%_libdir/lib%name.so
-ln -s lib%name.so.0.0.0 %buildroot/%_libdir/lib%name.so.0
-
-install -d %buildroot/%_includedir/%name/json
-install -p -m 0644 include/json/*.h %buildroot/%_includedir/%name/json
-mkdir -p %buildroot/%_docdir/%name/html
-for f in AUTHORS LICENSE NEWS.txt README.txt ; do
-    install -p -m 0644 $f %buildroot/%_docdir/%name
-done
-install -p -m 0644 dist/doxygen/*/*.{html,png} %buildroot/%_docdir/%name/html
-install -d %buildroot/%_libdir/pkgconfig
-install -p -m 0644 %SOURCE1 %buildroot/%_libdir/pkgconfig/
-sed -i 's|@@LIBDIR@@|%_libdir|g' %buildroot/%_libdir/pkgconfig/jsoncpp.pc
+%Kinstall
 
 %files -n %libname
-%dir %_docdir/%name/
-%doc %_docdir/%name/AUTHORS
-%doc %_docdir/%name/LICENSE
-%doc %_docdir/%name/*.txt
+%doc AUTHORS LICENSE
 %_libdir/lib%name.so.%sover
 %_libdir/lib%name.so.%sover.*
 
 %files devel
-%doc %_docdir/%name/html
+%doc dist/doxygen/jsoncpp-api-html-*
 %_libdir/lib%name.so
-%_includedir/%name/
+%_includedir/json/
 %_libdir/pkgconfig/jsoncpp.pc
+%_libdir/cmake/jsoncpp/
 
 #%files doc
 #%_docdir/%name/
 
 %changelog
+* Thu Jun 11 2015 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt1
+- new version
+
 * Thu Jun 04 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6.0-alt0.1.1
 - rebuild with c++11 ABI
+
+* Tue Feb 04 2014 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt0.0.M70P.2
+- built for M70P
 
 * Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt0.1
 - initial build
