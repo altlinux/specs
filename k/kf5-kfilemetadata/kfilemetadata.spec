@@ -1,7 +1,10 @@
 %define rname kfilemetadata
 
+%if_enabled gcc5ready
+%endif
+
 Name: kf5-%rname
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 %K5init altplace
 
@@ -18,7 +21,10 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: kf5-karchive-devel kf5-ki18n-devel
-BuildRequires: ebook-tools-devel libexiv2-devel libpoppler-qt5-devel libtag-devel
+BuildRequires: ebook-tools-devel libpoppler-qt5-devel libtag-devel
+%if_enabled gcc5ready
+BuildRequires: libexiv2-devel
+%endif
 BuildRequires: libattr-devel
 BuildRequires: libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel
 
@@ -75,6 +81,9 @@ KF5 library
 %_K5plug/kf5/kfilemetadata/
 
 %changelog
+* Fri May 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- new version
+
 * Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - new version
 
