@@ -1,5 +1,5 @@
 Name:		smtube
-Version:	15.5.10
+Version:	15.5.17
 Release:	alt1
 Summary:	Youtube Browser for SMPlayer
 Summary(ru_RU.UTF8):	Браузер YouTube для SMPlayer
@@ -8,8 +8,8 @@ Summary(de):	Youtube Browser für SMPlayer
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 License:	GPLv2+
 Group:		Video
-Url:		http://smplayer.sourceforge.net
-Source0:	http://downloads.sourceforge.net/smplayer/SMTube/%version/%name-%version-2.tar.bz2
+Url:		http://smtube.sourceforge.net/
+Source0:	http://downloads.sourceforge.net/project/smtube/SMTube/%version/%name-%version.tar.bz2
 
 BuildRequires:	gcc-c++ libqt4-devel
 
@@ -34,7 +34,7 @@ SMTube є утилітою для пошуку та завантаження в�
 Підтримується SMPlayer, VLC та деякі інші програвачі.
 
 %prep
-%setup -n %name-%version-2
+%setup -n %name-%version
 %patch0 -p1
 
 %build
@@ -58,6 +58,9 @@ cd ./src && qmake "QMAKE_CXXFLAGS+=%optflags -DTRANSLATION_PATH=%_datadir/%name/
 %_datadir/%name/translations/*.qm
 
 %changelog
+* Fri Jun 12 2015 Motsyo Gennadi <drool@altlinux.ru> 15.5.17-alt1
+- 15.5.17
+
 * Thu May 14 2015 Motsyo Gennadi <drool@altlinux.ru> 15.5.10-alt1
 - 15.5.10
 
