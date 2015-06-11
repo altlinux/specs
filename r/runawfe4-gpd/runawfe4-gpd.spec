@@ -1,6 +1,6 @@
 Name: runawfe4-gpd
 Version: 4.2.0
-Release: alt5
+Release: alt8
 
 Summary: Runawfe Graphic Process Designer
 
@@ -16,7 +16,7 @@ Packager: Danil Mikhailov <danil@altlinux.org>
 
 AutoReq: yes,noperl,nopython
 Requires: java >= 1.7, libwebkitgtk2
-#Requires: libsoup >= 2.48.1-alt1
+#Requires: libsoup >= 2.48.1
 
 BuildPreReq: rpm-build-compat maven
 Provides: osgi(ru.runa.gpd.form.ftl)
@@ -109,6 +109,12 @@ EOF
 #%attr(755,root,root) %runadir/workspace/
 
 %changelog
+* Thu Jun 11 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt8
+- Added binary builds
+
+* Tue Jun 09 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt7
+- Fixed https://sourceforge.net/p/runawfe/bugs/905/
+
 * Fri Apr 24 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt5
 - Enable binary packing for alt repo
 
