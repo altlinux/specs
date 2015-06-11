@@ -2,7 +2,7 @@
 %define oname cegui
 Name: %oname%sover
 Version: 0.7.6
-Release: alt1.4
+Release: alt1.4.1
 Summary: Free library providing windowing and widgets for graphics APIs / engines
 Group: System/Legacy libraries
 License: MIT
@@ -87,6 +87,9 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 #_datadir/CEGUI/xml_schemas
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.6-alt1.4.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt1.4
 - Moved this version into System/Legacy libraries
 

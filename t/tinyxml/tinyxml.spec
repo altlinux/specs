@@ -3,7 +3,7 @@
 
 Name: tinyxml
 Version: 2.6.2
-Release: alt1
+Release: alt1.1
 Summary: A simple, small, C++ XML parser
 Group: System/Libraries
 License: zlib
@@ -74,6 +74,9 @@ LD_LIBRARY_PATH=$PWD${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} ./xmltest
 %_libdir/*.so
 
 %changelog
+* Tue Jun 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.2-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Sep 25 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.2-alt1
 - New version.
 - Fixed Incorrect entity encoding (ALT#25562).

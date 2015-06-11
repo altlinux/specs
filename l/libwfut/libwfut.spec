@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 
 Name:           libwfut
 Version:        0.2.2
-Release:        alt1_1.1
+Release:        alt1_1.1.1
 Summary:        Software updater tool for WorldForge applications
 
 Group:          Development/C++
@@ -95,6 +95,9 @@ make check
 
 
 %changelog
+* Tue Jun 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.2-alt1_1.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.2.2-alt1_1.1
 - Rebuild with Python-2.7
 

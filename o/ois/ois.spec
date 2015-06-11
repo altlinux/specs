@@ -1,6 +1,6 @@
 Name:           ois
 Version:        1.3.0
-Release:        alt2.1
+Release:        alt2.1.1
 Summary:        Open Input System, OO gaming input library
 Group:          System/Libraries
 License:        zlib
@@ -61,6 +61,9 @@ export LIBS=-lX11
 %_libdir/pkgconfig/OIS.pc
 
 %changelog
+* Mon Jun 01 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.0-alt2.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2.1
 - Fixed build with glibc 2.16
 

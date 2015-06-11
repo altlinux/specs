@@ -1,7 +1,7 @@
 %define oname guichan
 Name: libguichan
 Version: 0.8.2
-Release: alt3
+Release: alt3.1
 
 Summary: Guichan - small, efficient C++ GUI library designed for games
 
@@ -60,6 +60,9 @@ export LDFLAGS="-L%_x11libdir"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.2-alt3.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Mar 22 2011 Fr. Br. George <george@altlinux.ru> 0.8.2-alt3
 - Rebuild with allegro-4.4
 

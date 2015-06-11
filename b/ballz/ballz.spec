@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           ballz
 Version:        1.0.2
-Release:        alt2_13
+Release:        alt2_13.1
 Summary:        Platform game with some puzzle elements
 Group:          Games/Other
 License:        BSD
@@ -84,6 +84,9 @@ EOF
 
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2-alt2_13.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_13
 - update to new release by fcimport
 
