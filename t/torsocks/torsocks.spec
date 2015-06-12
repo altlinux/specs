@@ -1,11 +1,11 @@
 Name: torsocks
-Version: 2.0.0
-Release: alt3
+Version: 2.1.0
+Release: alt1
 
 Summary: Use SOCKS-friendly applications with Tor
 Group: Security/Networking
 License: %gpl2only
-Url: https://code.google.com/p/torsocks/
+Url: https://gitweb.torproject.org/torsocks.git
 Packager: Vladimir Didenko <cow@altlinux.ru>
 
 Source: %name-%version.tar
@@ -55,6 +55,9 @@ install -p -m755 %SOURCE2 %buildroot%_bindir/torify
 %exclude %_datadir/doc/%name
 
 %changelog
+* Fri Jun 12 2015 Vladimir Didenko <cow@altlinux.org> 2.1.0-alt1
+- new version
+
 * Wed Dec 24 2014 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt3
 - move torify from tor to this package
 
