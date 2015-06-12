@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt133
+Release: alt134
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -350,6 +350,15 @@ cp -vf \
 	.config
 
 %make_build oldconfig
+
+diff -u \
+%ifarch %ix86
+	config-x86 \
+%else
+	config-%_target_cpu \
+%endif
+	.config ||:
+
 %make_build include/linux/version.h
 %make_build bzImage
 %make_build modules
@@ -572,6 +581,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt134
+- Updated to 042stab108.3 (CVE-2015-2925).
+
 * Thu May 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt133
 - Updated to 042stab108.2.
 
