@@ -1,6 +1,6 @@
 Name: findutils
-Version: 4.5.12
-Release: alt3
+Version: 4.5.14
+Release: alt1
 
 Summary: The GNU versions of find utilities (find and xargs)
 License: GPLv3+
@@ -12,7 +12,7 @@ Source: %name-%version-%release.tar
 
 %def_enable selinux
 
-BuildRequires: gnulib >= 0.1.58.0f3a662
+BuildRequires: gnulib >= 0.1.443.875ec93
 BuildRequires: glibc-devel-static
 BuildRequires: makeinfo
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -42,15 +42,18 @@ This package contains statically linked version of the GNU find program.
 # Build scripts expect to find findutils version in this file.
 echo -n %version > .tarball-version
 
+# git isn't needed for build.
+sed -i '/^git[[:space:]]/d' bootstrap.conf
+
 # Do not build locate.
 sed -i 's/ locate / /' Makefile*
 
 echo '@set LOCATE_DB /var/lib/locate/locatedb' >locate/dblocation.texi
 
-bzip2 -9k NEWS
+gzip -9kn NEWS
 
 %build
-./import-gnulib.sh -d %_datadir/gnulib
+./bootstrap --skip-po --gnulib-srcdir=%_datadir/gnulib
 
 %define _configure_script ../configure
 mkdir dynamic static
@@ -59,7 +62,6 @@ pushd dynamic
 mkdir locate
 echo '@set LOCATE_DB /var/lib/locate/locatedb' >locate/dblocation.texi
 %configure --bindir=/bin
-make -C po update-po
 %make_build MAKEINFOFLAGS=--no-split
 popd
 
@@ -101,14 +103,18 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 %_mandir/man?/find*
 %_mandir/man?/xargs*
 %_infodir/*.info*
-%doc AUTHORS NEWS.bz2 README THANKS
+%doc AUTHORS NEWS.gz README THANKS
 
 %files -n find-static
 %_bindir/find.static
 
 %changelog
+* Fri Jun 12 2015 Dmitry V. Levin <ldv@altlinux.org> 4.5.14-alt1
+- Updated to v4.5.14-33-gc631c8e.
+- Built with gnulib v0.1-58-g0f3a662.
+
 * Mon Jan 06 2014 Dmitry V. Levin <ldv@altlinux.org> 4.5.12-alt3
-- Updated to v2.16-1-g88d6541
+- Updated to v4.5.12-15-g603ccd8.
 - Built with gnulib v0.1-58-g0f3a662.
 
 * Mon Oct 28 2013 Dmitry V. Levin <ldv@altlinux.org> 4.5.12-alt2
