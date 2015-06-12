@@ -13,7 +13,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.3.6
+Version: 2.3.7
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -42,9 +42,9 @@ Source9: %name-client.conf
 Conflicts: syslogd < 1.4.1-alt11
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Thu Jan 15 2015
-# optimized out: libcloog-isl4 libcom_err-devel libgnutls-devel libkrb5-devel libp11-kit libssl-devel pkcs11-helper pkg-config
-BuildRequires: git-core glibc-devel-static iproute2 liblzo2-devel man net-tools
+# Automatically added by buildreq on Fri Jun 12 2015
+# optimized out: libcom_err-devel libgnutls-devel libkrb5-devel libp11-kit libssl-devel pkcs11-helper pkg-config
+BuildRequires: git-core glibc-devel-static iproute2 liblzo2-devel libpam-devel man net-tools pkcs11-helper-devel
 
 %{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_with_pkcs11:BuildRequires: pkcs11-helper-devel}
@@ -292,6 +292,9 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %doc sample/sample-scripts*
 
 %changelog
+* Fri Jun 12 2015 Nikolay A. Fetisov <naf@altlinux.ru> 2.3.7-alt1
+- New version 2.3.7
+
 * Thu Jan 15 2015 Nikolay A. Fetisov <naf@altlinux.ru> 2.3.6-alt1
 - New version 2.3.6
 - CVE-2014-8104 (Closes: 30529)
