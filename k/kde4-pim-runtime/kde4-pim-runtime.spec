@@ -1,13 +1,15 @@
 
 %add_findpackage_path %_kde4_bindir
 
+%def_disable gcc5ready
+
 %define rname kdepim-runtime
 %define major 4
 %define minor 14
-%define bugfix 8
+%define bugfix 9
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE Akonadi resources
@@ -40,12 +42,16 @@ Patch108: kdepim-4.11.1-alt-def-nepomuk.patch
 #BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libassuan-devel libgpgme-devel libindicate-qt-devel libxkbfile-devel soprano soprano-backend-redland xorg-xf86vidmodeproto-devel xsltproc
 BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel
-BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel
+#BuildRequires: soprano soprano-backend-redland
+BuildRequires: xsltproc grantlee-devel libsasl2-devel
 #BuildRequires: dblatex
 BuildRequires: libkgapi-devel qjson-devel libkfbapi-devel
 BuildRequires: kde4libs-devel kde4pimlibs-devel
 BuildRequires: kde4base-workspace-devel
-BuildRequires: libcurl-devel libxerces-c-devel libkolab-devel libkolabxml-devel
+BuildRequires: libcurl-devel
+%if_enabled gcc5ready
+BuildRequires: libxerces-c-devel libkolab-devel libkolabxml-devel
+%endif
 
 %description
 This package contains the Akonadi resources from kdepim which can be used without the applications in kdepim.
@@ -232,6 +238,12 @@ based on kdepim.
 
 
 %changelog
+* Fri Jun 12 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.9-alt2
+- temporary build without libkolab
+
+* Fri Jun 12 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.9-alt1
+- new version
+
 * Thu May 14 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.8-alt1
 - new version
 
