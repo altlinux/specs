@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Mozilla::CA
 
 Name: perl-Mozilla-CA
-Version: 20130114
+Version: 20141217
 Release: alt1
 
 Summary: Perl module provides CA cert bundle
@@ -51,6 +51,9 @@ ca-certificates .
 %exclude %perl_vendor_privlib/Mozilla/mk-ca-bundle.pl
 
 %changelog
+* Sat Jun 13 2015 Nikolay A. Fetisov <naf@altlinux.ru> 20141217-alt1
+- New version
+
 * Sun Feb 03 2013 Nikolay A. Fetisov <naf@altlinux.ru> 20130114-alt1
 - New version
 
