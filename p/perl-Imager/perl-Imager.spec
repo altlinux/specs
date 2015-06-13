@@ -1,8 +1,8 @@
 # SPEC file for Perl module Imager
 
 Name: perl-Imager
-Version: 1.000
-Release: alt1.1
+Version: 1.003
+Release: alt1
 
 Summary: Perl module for generating 24 bit Images
 Summary(ru_RU.UTF-8): Модуль Perl для создания 24-x битных изображений
@@ -48,6 +48,9 @@ IM_SUPPRESS_PROM=1 %perl_vendor_build
 %exclude /.perl.req
 
 %changelog
+* Sat Jun 13 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.003-alt1
+- New version 1.003
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1.1
 - rebuild with new perl 5.20.1
 
