@@ -4,7 +4,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		%r_name-esr
-Version:	31.7.0
+Version:	38.0.1
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -49,6 +49,8 @@ BuildRequires: libffi-devel
 BuildRequires: libproxy-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXdamage-devel
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -180,7 +182,7 @@ tar -xf %SOURCE2
 
 %patch6 -p1
 #patch8 -p2
-%patch9 -p1
+%patch9 -p0
 
 #echo %version > mail/config/version.txt
 
@@ -374,22 +376,19 @@ sed -i \
 dir="$PWD/objdir"
 
 %if_with enigmail
-mv -f -- \
-	$dir/mozilla/dist/enigmail \
-	%buildroot/%enigmail_ciddir
+mkdir -p %buildroot/%enigmail_ciddir
+unzip -q -u -d %buildroot/%enigmail_ciddir -- \
+	enigmail/build/enigmail*.xpi
 %endif
 
 %if_with lightning
 mkdir -p %buildroot/%lightning_ciddir
 unzip -q -u -d %buildroot/%lightning_ciddir -- \
-	$dir/mozilla/dist/xpi-stage/lightning*.xpi
+	$dir/dist/xpi-stage/lightning*.xpi
 
 mkdir -p %buildroot/%google_calendar_ciddir
 unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
-	$dir/mozilla/dist/xpi-stage/gdata-provider*.xpi
-
-#rm -rf -- %buildroot/%tbird_prefix/extensions/calendar-timezones@mozilla.org
-#rm -f -- %buildroot/%lightning_ciddir/application.ini
+	$dir/dist/xpi-stage/gdata-provider*.xpi
 %endif
 
 # Add real RPATH
@@ -457,6 +456,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Sat Jun 13 2015 Andrey Cherepanov <cas@altlinux.org> 38.0.1-alt1
+- New ESR version
+
 * Mon Jun 08 2015 Andrey Cherepanov <cas@altlinux.org> 31.7.0-alt1
 - New ESR version
 - Security fixes:
