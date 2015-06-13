@@ -4,7 +4,7 @@
 
 Summary:	Tab Mix Plus extensions for Firefox
 Name:		firefox-TabMixPlus
-Version:	0.4.1.5.2
+Version:	0.4.1.7.1
 Release:	alt1
 Source0:	%rname-%version.xpi
 License:	GPL
@@ -22,6 +22,7 @@ Tab browsing with an added boost.
 
 %prep
 %setup -c
+subst 's/37\.\*/38.*/' install.rdf
 
 %install
 mkdir -p %buildroot/%ciddir
@@ -36,6 +37,10 @@ fi
 %ciddir
 
 %changelog
+* Sat Jun 13 2015 Andrey Cherepanov <cas@altlinux.org> 0.4.1.7.1-alt1
+- New version (ALT #30406)
+- Increase MaxVer to current 38.x
+
 * Mon Oct 20 2014 Andrey Cherepanov <cas@altlinux.org> 0.4.1.5.2-alt1
 - New version (ALT #30406)
 
