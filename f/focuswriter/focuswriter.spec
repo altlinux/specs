@@ -1,5 +1,5 @@
 Name:		focuswriter
-Version:	1.5.1
+Version:	1.5.4
 Release:	alt1
 Summary:	FocusWriter is a fullscreen, distraction-free word processor
 License:	GPLv3
@@ -37,6 +37,9 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Jun 14 2015 Motsyo Gennadi <drool@altlinux.ru> 1.5.4-alt1
+- 1.5.4
+
 * Sun Jun 29 2014 Motsyo Gennadi <drool@altlinux.ru> 1.5.1-alt1
 - 1.5.1
 
