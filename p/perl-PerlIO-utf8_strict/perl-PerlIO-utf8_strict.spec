@@ -1,8 +1,8 @@
 ## SPEC file for Perl module PerlIO::utf8_strict
 
 Name: perl-PerlIO-utf8_strict
-Version: 0.005
-Release: alt1.1
+Version: 0.006
+Release: alt1
 
 Summary: fast and correct UTF-8 IO module
 
@@ -19,9 +19,9 @@ AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses
 
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: libcloog-isl4 perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-ExtUtils-CBuilder perl-IPC-Cmd perl-IPC-Run3 perl-JSON-PP perl-Locale-Maketext-Simple perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Params-Check perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Probe-Perl perl-Sub-Uplevel perl-devel perl-podlators
-BuildRequires: perl-HTML-Parser perl-Module-Build perl-Test-Exception perl-Test-Script
+# Automatically added by buildreq on Sat Jun 13 2015
+# optimized out: perl-Sub-Uplevel perl-devel
+BuildRequires: perl-Test-Exception
 
 %description
 Perl module PerlIO::utf8_strict provides a fast and correct UTF-8
@@ -44,6 +44,9 @@ input for correctness.
 %perl_vendor_autolib/PerlIO*
 
 %changelog
+* Sat Jun 13 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.006-alt1
+- New version
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.005-alt1.1
 - rebuild with new perl 5.20.1
 
