@@ -1,5 +1,5 @@
 Name: shelxle
-Version: 1.0.720
+Version: 1.0.723
 Release: alt1
 
 Summary: A Qt GUI for SHELX
@@ -30,15 +30,22 @@ qmake-qt4
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
+mkdir -p %buildroot%_iconsdir/hicolor/64x64/apps
+mv %buildroot%_pixmapsdir/%name.png %buildroot%_iconsdir/hicolor/64x64/apps/
+rm -rf %buildroot%_pixmapsdir
 
 %files
 %doc COPYING
 %_bindir/%name
 #_datadir/%name
 %_desktopdir/%name.desktop
-%_pixmapsdir/%name.png
+%_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Sat Jun 13 2015 Denis G. Samsonenko <ogion@altlinux.org> 1.0.723-alt1
+- new version
+- move %name.png to %_iconsdir/hicolor/64x64/apps/
+
 * Fri May 29 2015 Denis G. Samsonenko <ogion@altlinux.org> 1.0.720-alt1
 - new version
 
