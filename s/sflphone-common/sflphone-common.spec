@@ -2,7 +2,7 @@
 
 Name: sflphone-common
 Version: 1.4.1
-Release: alt2
+Release: alt2.1
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -15,7 +15,8 @@ Source: %name-%version.tar
 Patch1: sflphone-1.3.0-alt-find-gsm.patch
 Patch10: pjproject-2.0.1-alt-libav.patch
 Patch11: sflphone-1.3.0-alt-libav10.patch
-Patch12:sflphone-1.4.0-alt-fix-compile.patch
+Patch12: sflphone-1.4.0-alt-fix-compile.patch
+Patch13: sflphone-1.4.1-fix-build-with-gcc5.patch
 
 # Automatically added by buildreq on Tue Feb 19 2013 (-bi)
 # optimized out: elfutils gcc-c++ gnu-config libavcodec-devel libavutil-devel libccrtp-devel libcom_err-devel libcommoncpp2-devel libdbus-c++ libdbus-devel libgpg-error libkrb5-devel libopencore-amrnb0 libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators pkg-config python-base ruby ruby-stdlibs
@@ -40,6 +41,7 @@ Authors:
 %prep
 %setup -qn %name-%version
 %patch1 -p1
+%patch13 -p2
 pushd libs/pjproject-*/
 %patch10 -p1
 %patch11 -p1
@@ -83,6 +85,9 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Sun Jun 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.1-alt2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Apr 06 2015 Sergey V Turchin <zerg@altlinux.org> 1.4.1-alt2
 - rebuild with new libav
 

@@ -2,7 +2,7 @@
 %define major 3.3
 Name: python-module-Ice
 Version: %major.1
-Release: alt5
+Release: alt5.1
 
 Summary: The Ice runtime for Python applications
 
@@ -92,6 +92,9 @@ rm -rf %buildroot/slice
 %python_sitelibdir/Ice.pth
 
 %changelog
+* Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.1-alt5.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt5
 - Rebuilt with gcc 4.7
 

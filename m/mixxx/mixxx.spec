@@ -1,6 +1,6 @@
 Name: mixxx
 Version: 1.11.0
-Release: alt1.bzr20130612
+Release: alt1.bzr20130612.1
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -74,6 +74,9 @@ mv %buildroot%_libexecdir/mixxx/plugins/vamp \
 %_libdir/vamp
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.11.0-alt1.bzr20130612.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Sep 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1.bzr20130612
 - Version 1.11.0
 

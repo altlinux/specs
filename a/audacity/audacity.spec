@@ -1,6 +1,6 @@
 Name: audacity
 Version: 2.0.5
-Release: alt4
+Release: alt4.1
 
 Summary: Cross-platform audio editor
 License: GPL
@@ -99,6 +99,9 @@ tar -xf %SOURCE6 -C %buildroot%_datadir/%name/help/
 %_datadir/mime/packages/%name.xml
 
 %changelog
+* Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.5-alt4.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 2.0.5-alt4
 - try to recover MP3 processing capability (debian configure options)
 - tweaked icons installation

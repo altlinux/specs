@@ -2,7 +2,7 @@
 
 Name: svgui
 Version: 2.1
-Release: alt2.hg20140912
+Release: alt2.hg20140912.1
 Summary: SV GUI Library
 License: GPLv2
 Group: Sound
@@ -96,6 +96,9 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1-alt2.hg20140912.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt2.hg20140912
 - Built with dataquay-minefeld instead of dataquay
 

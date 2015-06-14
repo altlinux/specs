@@ -3,7 +3,7 @@
 
 Name: chromaprint
 Version: 1.1
-Release: alt2
+Release: alt3
 Summary: Library implementing the AcoustID fingerprinting
 
 Group: Sound
@@ -78,6 +78,9 @@ mkdir -p %buildroot/%_bindir
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed May 20 2015 Sergey V Turchin <zerg@altlinux.org> 1.1-alt3
+- rebuilt with gcc5
+
 * Wed May 28 2014 Sergey V Turchin <zerg@altlinux.org> 1.1-alt2
 - rebuilt with new libav
 

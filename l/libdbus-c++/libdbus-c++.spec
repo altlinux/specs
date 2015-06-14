@@ -4,7 +4,7 @@
 Summary: A C++ bindings for libdbus and libdbus-glib
 Name: libdbus-c++
 Version: 0.9.0
-Release: alt1
+Release: alt1.1
 License: LGPLv2.1
 Group: System/Libraries
 URL: http://www.freedesktop.org/wiki/Software/dbus-c++
@@ -83,7 +83,7 @@ Example programs which make use of libdbus-c++
 	   --disable-ecore \
 	   --enable-glib \
 	   --enable-doxygen-docs \
-	   --enable-examples \
+	   --disable-examples \
 	   %{subst_enable static} \
 	   #
 %make -C src libdbus-c++-1.la
@@ -120,6 +120,9 @@ make -C examples clean
 %doc examples
 
 %changelog
+* Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Feb 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
 - new version
 - merge patches from SuSE

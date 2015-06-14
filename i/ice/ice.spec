@@ -1,7 +1,7 @@
 %define major 3.3
 Name: ice
 Version: %major.1
-Release: alt2.3
+Release: alt2.3.1
 
 Summary: Files common to all Ice packages
 
@@ -281,6 +281,9 @@ fi
 
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.1-alt2.3.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2.3
 - Fixed build with glibc 2.16
 

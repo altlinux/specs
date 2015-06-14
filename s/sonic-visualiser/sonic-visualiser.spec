@@ -1,6 +1,6 @@
 Name: sonic-visualiser
 Version: 2.4
-Release: alt2.hg20140912
+Release: alt2.hg20140912.1
 Summary: Application for viewing and analysing the contents of music audio files
 License: GPLv2+
 Group: Sound
@@ -64,6 +64,9 @@ install -p -m644 i18n/* %buildroot%_qt5_translationdir/
 %_pixmapsdir/*
 
 %changelog
+* Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4-alt2.hg20140912.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt2.hg20140912
 - Built with dataquay-minefeld instead of dataquay
 

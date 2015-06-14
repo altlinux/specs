@@ -1,6 +1,6 @@
 Name: libtunepimp
 Version: 0.5.3
-Release: alt5.1
+Release: alt5.1.1
 
 Group: System/Libraries
 Summary: Library that provides access to the MusicBrainz server
@@ -88,6 +88,9 @@ popd
 %_target_libdir_noarch/python%_python_version/site-packages/*
 
 %changelog
+* Wed May 20 2015 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt5.1.1
+- Rebuild with gcc5
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.3-alt5.1
 - Rebuild with Python-2.7
 

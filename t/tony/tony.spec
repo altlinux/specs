@@ -1,6 +1,6 @@
 Name: tony
 Version: 0.6
-Release: alt2.hg20140909
+Release: alt2.hg20140909.1
 Summary: High quality scientific pitch and note annotation 
 License: GPLv2
 Group: Sound
@@ -52,6 +52,9 @@ install -p -m644 icons/* %buildroot%_pixmapsdir/
 %_pixmapsdir/*
 
 %changelog
+* Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6-alt2.hg20140909.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2.hg20140909
 - Built with portaudio
 - Built with dataquay-minefeld instead of dataquay

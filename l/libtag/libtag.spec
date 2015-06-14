@@ -2,7 +2,7 @@
 
 Name: libtag
 Version: 1.9.1
-Release: alt1
+Release: alt2
 
 Summary: TagLib, is well, a library for reading and editing audio meta data
 License: LGPL / MPL
@@ -87,6 +87,9 @@ install -m0644 %SOURCE2 ./
 %_includedir/taglib/*.tcc
 
 %changelog
+* Wed May 20 2015 Sergey V Turchin <zerg@altlinux.org> 1.9.1-alt2
+- rebuild with gcc5
+
 * Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.9.1-alt1
 - new version
 

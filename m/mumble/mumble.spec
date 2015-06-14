@@ -4,7 +4,7 @@
 
 Name: mumble
 Version: 1.2.8
-Release: alt2
+Release: alt2.1
 
 Summary: Voice chat software primarily intended for use while gaming
 License: BSD
@@ -210,6 +210,9 @@ mkdir -p %buildroot%_var/run/mumble-server/
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.8-alt2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Mar 11 2015 Paul Wolneykien <manowar@altlinux.org> 1.2.8-alt2
 - Configure speex, celt and opus libraries properly (patch).
 - Build with bundled CELT codec (v0.7.0 and v0.11.0).

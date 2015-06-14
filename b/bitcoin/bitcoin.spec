@@ -1,6 +1,6 @@
 Name: bitcoin
 Version: 0.9.3
-Release: alt1.rc1.1
+Release: alt1.rc1.1.1
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -9,10 +9,12 @@ Group: Networking/Other
 Url: http://www.bitcoin.org/
 Source: %name-%version.tar
 
+Patch1: bitcoin-0.9.3-boost-1.58-fix.patch
+
 BuildRequires: zlib-devel boost-devel libssl-devel gcc-c++ libdb4.8-devel libdb4.8_cxx-devel
 BuildRequires: boost-filesystem-devel boost-interprocess-devel boost-program_options-devel
 BuildRequires: libgtk+2-devel libwxGTK3.1-devel boost-asio-devel
-BuildRequires: libqt4-devel lcov ccache libminiupnpc-devel
+BuildRequires: libqt4-devel lcov libminiupnpc-devel
 BuildPreReq: libprotobuf-devel protobuf-compiler gcc-objc clang-devel
 BuildPreReq: libqrencode-devel boost-signals-devel
 
@@ -33,6 +35,8 @@ Before each transaction the coin's validity will be checked.
 
 %prep
 %setup
+
+%patch1 -p1
 
 %build
 ./autogen.sh
@@ -55,6 +59,11 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.3-alt1.rc1.1.1
+- Rebuilt with:
+ + gcc5 C++11 ABI.
+ + boost 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.9.3-alt1.rc1.1
 - rebuild with boost 1.57.0
 
