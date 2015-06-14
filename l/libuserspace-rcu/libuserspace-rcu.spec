@@ -1,7 +1,7 @@
 %define oname userspace-rcu
 Name: libuserspace-rcu
 Version: 0.8.7
-Release: alt1
+Release: alt2
 
 Summary: RCU (read-copy-update) implementation in user space
 
@@ -64,6 +64,8 @@ autoreconf -vif
 rm -vf %buildroot/%_libdir/*.la
 rm -rf %buildroot/%_docdir/%oname/
 
+cd doc/examples && make clean
+
 %check
 #TODO greenscientist: make check currently fail in mockbuild
 #make check
@@ -79,6 +81,9 @@ rm -rf %buildroot/%_docdir/%oname/
 %_pkgconfigdir/liburcu*.pc
 
 %changelog
+* Sun Jun 14 2015 Vitaly Lipatov <lav@altlinux.ru> 0.8.7-alt2
+- clean examples before packing
+
 * Sun Jun 14 2015 Vitaly Lipatov <lav@altlinux.ru> 0.8.7-alt1
 - new version 0.8.7 (with rpmrb script)
 
