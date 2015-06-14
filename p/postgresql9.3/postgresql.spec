@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     3
-%define postgresql_subminor  8
+%define postgresql_subminor  9
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -760,6 +760,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Sun Jun 14 2015 Alexei Takaseev <taf@altlinux.org> 9.3.9-alt1
+- 9.3.9
+
 * Wed Jun 03 2015 Alexei Takaseev <taf@altlinux.org> 9.3.8-alt1
 - 9.3.8
 
