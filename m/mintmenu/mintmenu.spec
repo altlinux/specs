@@ -3,7 +3,7 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.6.2
+Version:        5.6.3
 Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -23,18 +23,16 @@ Source50:	mintmenu.watch
 # SUSE patches from http://download.opensuse.org/repositories/home:/unamanic/Fedora_14/src/
 # PATCH-FIX-OPENSUSE mintmenu-suse_branding.patch william@witt-famiylnet: Suse branding
 Patch2:         mintmenu-alt_branding.patch
-# PATCH-FIX-OPENSUSE mintmenu-datadir.patch william@witt-famiylnet: move from /usr/lib to /usr/share
-Patch3:         mintmenu-5.5.8-alt-datadir.patch
 # PATCH-FIX-OPENSUSE mintmenu-run_as_superuser.patch william@witt-famiylnet: fix run as superuser
 Patch4:         mintmenu-run_as_superuser.patch
 # PATCH-FIX-OPENSUSE mintmenu-mintmenu_executables.patch william@witt-famiylnet: update paths for executable and bonobo server
 Patch9:         mintmenu-change_locale_directory.patch
 
 # alt patches
-Patch34:	mintmenu-5.5.1-alt-drop-mintinstall-check.patch
-Patch35:	mintmenu-5.2.1-alt-apt-cache.patch
+Patch34:	mintmenu-5.6.3-alt-drop-mintinstall-check.patch
+Patch35:	mintmenu-5.6.3-alt-apt-cache.patch
 Patch36:	mintmenu-5.2.1-alt-no-mintengines.patch
-Patch37:	mintmenu-5.2.1-alt-GPL-path.patch
+Patch37:	mintmenu-5.6.3-alt-GPL-path.patch
 Patch38:	mintmenu-5.5.1-alt-use-rpminstall.patch
 #Patch39:	mintmenu-5.2.1-alt-cyrillic.patch
 Patch40:	mintmenu-5.6.2-alt-xfce-logout.patch
@@ -70,21 +68,24 @@ added to your gnome-panel or launched in its own window.
 %prep
 %setup -q -n mintmenu
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 %patch4 -p1
 %patch9 -p1
-%patch34 -p1
+%patch34 -p0
 %if_with apthack
 %patch56 -p1
 %else
-%patch35 -p1
+%patch35 -p0
 %endif
 #%%patch36 -p1
-%patch37 -p1
+%patch37 -p0
 %patch38 -p1
 #%%patch39 -p1
 %patch40 -p0
 %patch41 -p1
+
+# Replace path to %%_datadir
+subst 's,/usr/lib/linuxmint,%_datadir/linuxmint,g' `find usr -type f`
 
 # drop deprecated plugins
 rm -f usr/lib/linuxmint/mintMenu/plugins/easygconf.py
@@ -131,6 +132,10 @@ sh -v %SOURCE33
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Sun Jun 14 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.3-alt1
+- New version
+- Change path to /usr/share by subst instead of separate patch
+
 * Thu Mar 19 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.2-alt1
 - New version
 - Move translations to other package
