@@ -16,7 +16,7 @@
 %define rname kdepim
 %define major 4
 %define minor 14
-%define bugfix 8
+%define bugfix 9
 Name: kde4pim
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -72,7 +72,8 @@ Patch104: kdepim-4.7.2-alt-migration.patch
 #BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libassuan-devel libgpgme-devel libindicate-qt-devel libxkbfile-devel soprano soprano-backend-redland xorg-xf86vidmodeproto-devel xsltproc
 BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel prison-devel qjson-devel
-BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel
+#BuildRequires: soprano soprano-backend-redland
+BuildRequires: xsltproc grantlee-devel libsasl2-devel
 #BuildRequires: dblatex
 BuildRequires: kde4-pim-runtime-devel libkgapi-devel >= 2.2
 BuildRequires: kde4-baloo-devel kde4-baloo-widgets-devel
@@ -1118,6 +1119,13 @@ Requires: %name-common = %version-%release
 %description -n libfollowupreminder4
 %name library
 
+%package  -n libpimsettingexporterprivate4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libpimsettingexporterprivate4
+%name library
+
 %package devel
 Summary: Devel stuff for %name
 Group: Development/KDE and QT
@@ -1721,6 +1729,8 @@ based on kdepim.
 %_K4libdir/libfollowupreminder.so.*
 %files -n libcalendarsupportcollectionpage4
 %_K4libdir/libcalendarsupportcollectionpage.so.*
+%files -n libpimsettingexporterprivate4
+%_K4libdir/libpimsettingexporterprivate.so.*
 
 %files devel
 %_K4link/*.so
@@ -1731,6 +1741,9 @@ based on kdepim.
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Jun 12 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.9-alt1
+- new version
+
 * Thu May 14 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.8-alt1
 - new version
 
