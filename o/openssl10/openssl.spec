@@ -1,6 +1,6 @@
 Name: openssl10
 Version: 1.0.1k
-Release: alt2
+Release: alt3
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -40,12 +40,22 @@ Patch26: openssl-rh-dh-1024.patch
 Patch27: openssl-rh-padlock64.patch
 Patch28: openssl-rh-SSL_DEFAULT_CIPHER_LIST.patch
 Patch30: openssl-rh-disable-sslv2v3.patch
+
+Patch84: openssl-rh-trusted-first.patch
 Patch101: openssl-rh-cve-2015-0209.patch
 Patch102: openssl-rh-cve-2015-0286.patch
 Patch103: openssl-rh-cve-2015-0287.patch
 Patch104: openssl-rh-cve-2015-0288.patch
 Patch105: openssl-rh-cve-2015-0289.patch
 Patch106: openssl-rh-cve-2015-0293.patch
+
+Patch107: openssl-rh-alt-chains.patch
+
+Patch108: openssl-rh-cve-2015-4000.patch
+Patch109: openssl-rh-cve-2015-1789.patch
+Patch110: openssl-rh-cve-2015-1790.patch
+Patch111: openssl-rh-cve-2015-1791.patch
+Patch112: openssl-rh-cve-2015-1792.patch
 
 %define shlib_soversion 10
 %define openssldir /var/lib/ssl
@@ -249,12 +259,20 @@ on the command line.
 %patch28 -p1
 %patch30 -p1
 
+%patch84 -p1
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
 %patch106 -p1
+
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
+%patch110 -p1
+%patch111 -p1
+%patch112 -p1
 
 find -type f -name \*.orig -delete
 
@@ -458,6 +476,10 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1k-alt3
+- Fixed CVE-2015-1789, CVE-2015-1790, CVE-2015-1791, CVE-2015-1792,
+  CVE-2015-0209, CVE-2015-4000.
+
 * Thu Mar 19 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1k-alt2
 - Fixed CVE-2015-0209, CVE-2015-0286, CVE-2015-0287, CVE-2015-0288,
   CVE-2015-0289, CVE-2015-0293.
