@@ -4,7 +4,7 @@
 %def_with pam
 
 Name: monit
-Version: 5.13
+Version: 5.14
 Release: alt1
 
 Summary: Process monitor and restart utility
@@ -166,6 +166,9 @@ grep -qs '^set pidfile ' /etc/monitrc /etc/monitrc.d/* ||
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Mon Jun 15 2015 Michael Shigorin <mike@altlinux.org> 5.14-alt1
+- new version (watch file uupdate)
+
 * Wed May 06 2015 Michael Shigorin <mike@altlinux.org> 5.13-alt1
 - new version (watch file uupdate)
 
