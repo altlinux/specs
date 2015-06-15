@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.11.3
-Release: alt3
+Version: 4.11.4
+Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -221,6 +221,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Mon Jun 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.4-alt1
+- Version 4.11.4
+
 * Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.3-alt3
 - Added PyQt4.phonon module (ALT #30697)
 
