@@ -1,6 +1,6 @@
 Name: runawfe4-gpd
 Version: 4.2.0
-Release: alt8
+Release: alt9
 
 Summary: Runawfe Graphic Process Designer
 
@@ -70,7 +70,7 @@ mv %gpd_path_arch/runa-gpd %gpd_path_arch/runawfe4-gpd
 chmod 755 %gpd_path_arch/runawfe4-gpd
 chrpath -d %gpd_path_arch/libcairo-swt.so
 cp -a %gpd_path_arch/* %buildroot/%runadir/
-cp -a workspace/ %buildroot/%runadir/
+cp -a gpd_source/workspace/ %buildroot/%runadir/
 
 mkdir -p %buildroot/%_bindir/
 cat >%buildroot/%_bindir/runawfe4-gpd <<EOF
@@ -109,6 +109,9 @@ EOF
 #%attr(755,root,root) %runadir/workspace/
 
 %changelog
+* Mon Jun 15 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt9
+- Update workspace
+
 * Thu Jun 11 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt8
 - Added binary builds
 
