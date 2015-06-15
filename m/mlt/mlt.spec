@@ -1,15 +1,22 @@
 %define set_disable() %{expand:%%force_disable %{1}} %{expand:%%undefine _enable_%{1}}
 %define set_enable() %{expand:%%force_enable %{1}} %{expand:%%undefine _disable_%{1}}
+%define mIF_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
+%define mIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%define mIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%define mIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable debug
 %def_disable vdpau
 
 %define Name MLT
-%define lname lib%name
+%define mlt_sover 6
+%define libmlt libmlt%mlt_sover
+%define mltxx_sover 3
+%define libmltxx libmlt++%mltxx_sover
 
 Name: mlt
-Version: 0.9.2
-Release: alt2
+Version: 0.9.6
+Release: alt1
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -24,6 +31,8 @@ Patch1: mlt-0.9.2-alt-configure-mmx.patch
 Patch2: mlt-0.9.0-alt-no-version-script.patch
 # SuSE
 Patch10: libmlt-0.8.2-vdpau.patch
+# Debian
+Patch20: 01-changed-preset-path.diff
 
 BuildRequires: ImageMagick-tools gcc-c++ jackit-devel ladspa_sdk libSDL-devel
 BuildRequires: libSDL_image-devel libX11-devel libavdevice-devel libavformat-devel
@@ -41,54 +50,55 @@ BuildRequires: libvdpau-devel
 Summary: %name utils
 Group: Video
 License: GPL
-
 %description utils
 %Name utils.
 
-%package -n %lname
+%package -n %libmlt
 Summary: %Name framework library
 License: GPL
 Group: System/Libraries
-
-%description -n %lname
+%mIF_ver_lt %version 0.10
+Provides: libmlt = %EVR
+Obsoletes: libmlt < %EVR
+%endif
+%description -n %libmlt
 %Name is a multimedia framework designed for television broadcasting.
 
-%package -n %lname-devel
+%package -n %libmltxx
+Summary: C++ wrapping for the MLT library
+Group: System/Libraries
+%mIF_ver_lt %version 0.10
+Provides: libmlt++ = %EVR
+Obsoletes: libmlt++ < %EVR
+%endif
+%description -n %libmltxx
+This mlt sub-project provides a C++ wrapping for the MLT library.
+
+%package -n libmlt-devel
 Summary: Development files for %Name framework
 License: GPL
 Group: Development/C
-Requires: %lname = %version-%release
-
-%description -n %lname-devel
+%description -n libmlt-devel
 Development files for %Name framework.
 
-%package -n %lname++
-Summary: C++ wrapping for the MLT library
-Group: System/Libraries
-
-%description -n %lname++
-This mlt sub-project provides a C++ wrapping for the MLT library.
-
-%package -n %lname++-devel
-Summary: Development files for %lname.
+%package -n libmlt++-devel
+Summary: Development files for %Name.
 Group: Development/C++
-Requires: %lname = %version-%release
-
-%description -n %lname++-devel
-Development files for %lname.
+%description -n libmlt++-devel
+Development files for %Name.
 
 %package -n python-module-%name
-Summary: Python package to work with MLT
+Summary: Python package to work with %Name
 Group: Development/Python
-
 %description -n python-module-%name
-This module allows to work with MLT using python..
+This module allows to work with %Name using python..
 
 %prep
 %setup -q
 %patch1 -p1
 %patch2 -p1
 %patch10 -p0
+%patch20 -p1
 
 [ -f src/mlt++/config.h ] || \
     install -m 0644 %SOURCE1 src/mlt++/config.h
@@ -121,7 +131,8 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt4dir
 	--without-kde \
 	--kde-includedir=%_K4includedir \
         --kde-libdir=%_K4lib \
-        --swig-languages=python
+        --swig-languages=python \
+        #
 #	--luma-compress \
 
 %make_build
@@ -136,30 +147,38 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 #%doc docs/melt.txt
 %_bindir/melt
 
-%files -n %lname
+%files -n %libmlt
 #%doc docs/services.txt docs/westley.txt
-%_libdir/%lname.so.*
-%_libdir/%name
-%_datadir/%name
+%_libdir/libmlt.so.%mlt_sover
+%_libdir/libmlt.so.*
+%_libdir/mlt
+%_datadir/mlt
 
-%files -n %lname-devel
-#%doc docs/framework.txt
-%_includedir/%name
-%_libdir/%lname.so
-%_pkgconfigdir/%name-framework.pc
-
-%files -n %lname++
-%_libdir/%lname++.so.*
-
-%files -n %lname++-devel
-%_includedir/%name++
-%_libdir/%lname++.so
-%_pkgconfigdir/%name++.pc
+%files -n %libmltxx
+%_libdir/libmlt++.so.%mltxx_sover
+%_libdir/libmlt++.so.*
 
 %files -n python-module-%name
 %python_sitelibdir/*
 
+%files -n libmlt-devel
+#%doc docs/framework.txt
+%_includedir/mlt/
+%_libdir/libmlt.so
+%_pkgconfigdir/mlt-framework.pc
+
+%files -n libmlt++-devel
+%_includedir/mlt++/
+%_libdir/libmlt++.so
+%_pkgconfigdir/mlt++.pc
+
 %changelog
+* Mon Jun 15 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt1
+- new version
+
+* Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt1.M70P.1
+- build for M70P
+
 * Fri Feb 27 2015 Denis Smirnov <mithraen@altlinux.ru> 0.9.2-alt2
 - rebuild with new sox
 
