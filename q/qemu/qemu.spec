@@ -83,6 +83,7 @@
 %endif
 
 %if_with aarch64
+%global target_list_system %target_list_system aarch64-softmmu
 %global target_list_user %target_list_user aarch64-linux-user
 %endif
 
@@ -162,7 +163,7 @@
 
 Name: qemu
 Version: 2.3.0
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -214,7 +215,7 @@ BuildRequires: iasl
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
 %{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.1.1}
-%{?_enable_glusterfs:BuildRequires: glusterfs3-devel}
+%{?_enable_glusterfs:BuildRequires: pkgconfig(glusterfs-api)}
 %{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 pkgconfig(vte-2.90) >= 0.32.0}
 %{?_enable_libssh2:BuildRequires: libssh2-devel >= 1.2.8}
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
@@ -672,6 +673,10 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Mon Jun 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt3
+- add aarch64-softmmu to target_list_system
+- fixed CVE-2015-4037, CVE-2015-3209
+
 * Thu May 14 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt2
 - fixed CVE-2015-3456
 

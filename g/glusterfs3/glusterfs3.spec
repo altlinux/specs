@@ -1,5 +1,8 @@
 %define oname glusterfs
 %define major 3.7
+%define _with_fusermount yes
+%define _without_ocf yes
+
 # if you wish to compile an rpm without rdma support, compile like this...
 # rpmbuild -ta @PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz --without rdma
 %{?_without_rdma:%global _without_rdma --disable-ibverbs}
@@ -16,10 +19,17 @@
 # rpmbuild -ta @PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz --without georeplication
 %{?_without_georeplication:%global _without_georeplication --disable-geo-replication}
 
-Summary: Cluster File System
+# if you wish to compile an rpm without the OCF resource agents...
+# rpmbuild -ta @PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz --without ocf
+%{?_without_ocf:%global _without_ocf --without-ocf}
+
+
 Name: glusterfs3
-Version: %major.0
-Release: alt3
+Version: %major.1
+Release: alt6
+
+Summary: Cluster File System
+
 License: GPLv2/LGPLv3
 Group: System/Base
 Url: http://www.gluster.org/
@@ -37,19 +47,24 @@ Source7: glusterd.init
 
 Patch0: %name-%version-%release.patch
 
+%add_verify_elf_skiplist %_libdir/libgfdb.so.0.0.1
+%add_verify_elf_skiplist %_libdir/glusterfs/xlator/mount/fuse.so
+
 %define _init_install() install -D -p -m 0755 %1 %buildroot%_initdir/%2 ;
 %define _init_file1     %_initdir/glusterd
 #%define _init_file2     %_initdir/glusterfsd
 
-# Automatically added by buildreq on Mon Nov 19 2012
-BuildRequires: flex glibc-devel-static libibverbs-devel libreadline-devel libssl-devel libxml2-devel python-module-mwlib
-BuildRequires: librdmacm-devel >= 1.0.19.1-alt1 libaio-devel zlib-devel liblvm2-devel glib2-devel
+# manually removed: -static i586-glibc-devel i586-libssl-devel python-module-google python-module-mwlib python-module-oslo.config python-module-oslo.serialization python3 ruby ruby-stdlibs 
+# Automatically added by buildreq on Sat Jun 13 2015
+# optimized out: gnu-config i586-glibc-core i586-glibc-pthread i586-libcrypto10 libcom_err-devel libdevmapper-devel libdevmapper-event libibverbs-devel libkrb5-devel libncurses-devel libssl-devel libtinfo-devel pkg-config python-base python-devel python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python-modules-ctypes python3-base userspace-rcu
+BuildRequires: flex git-core glib2-devel glibc-devel libacl-devel libaio-devel libattr-devel libdb4-devel liblvm2-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel python-module-cmd2 libuserspace-rcu-devel zlib-devel
+
+BuildPreReq: libssl-devel
+
 
 Conflicts: %oname
 
-Obsoletes: %oname-libs <= 2.0.0
 Obsoletes: %oname-common < 3.1.0
-Provides: %name-libs = %version-%release
 Provides: %name-common = %version-%release
 Provides: %name-core = %version-%release
 
@@ -71,6 +86,7 @@ both GlusterFS server and client framework.
 Summary: GlusterFS rdma support for ib-verbs
 Group: System/Base
 BuildRequires: libibverbs-devel
+BuildRequires: librdmacm-devel >= 1.0.19.1-alt1
 
 Requires: %name = %version-%release
 
@@ -85,6 +101,26 @@ is in user space and easily manageable.
 
 This package provides support to ib-verbs library.
 %endif
+
+%package ganesha
+Summary: NFS-Ganesha configuration
+Group: System/Base
+Requires: %name-server = %version-%release
+#Requires:         nfs-ganesha-gluster
+#Requires:         pcs
+
+%description ganesha
+GlusterFS is a distributed file-system capable of scaling to several
+petabytes. It aggregates various storage bricks over Infiniband RDMA
+or TCP/IP interconnect into one large parallel network file
+system. GlusterFS is one of the most sophisticated file systems in
+terms of features and extensibility.  It borrows a powerful concept
+called Translators from GNU Hurd kernel. Much of the code in GlusterFS
+is in user space and easily manageable.
+
+This package provides the configuration and related files for using
+NFS-Ganesha as the NFS server using GlusterFS.
+
 
 %if 0%{!?_without_georeplication:1}
 %package geo-replication
@@ -125,11 +161,45 @@ is in user space and easily manageable.
 
 This package provides support to FUSE based clients.
 
+%package -n lib%name-api
+Summary: GlusterFS api library
+Group: System/Libraries
+#Requires: %name = %version-%release
+#Requires:         %{name}-client-xlators = %{version}-%{release}
+
+%description -n lib%name-api
+GlusterFS is a distributed file-system capable of scaling to several
+petabytes. It aggregates various storage bricks over Infiniband RDMA
+or TCP/IP interconnect into one large parallel network file
+system. GlusterFS is one of the most sophisticated file systems in
+terms of features and extensibility.  It borrows a powerful concept
+called Translators from GNU Hurd kernel. Much of the code in GlusterFS
+is in user space and easily manageable.
+
+This package provides the glusterfs libgfapi library.
+
+%package -n lib%name-api-devel
+Summary: Development libraries for GlusterFS api library
+Group: Development/Other
+Requires: lib%name-api = %version-%release
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-api-devel
+GlusterFS is a distributed file-system capable of scaling to several
+petabytes. It aggregates various storage bricks over Infiniband RDMA
+or TCP/IP interconnect into one large parallel network file
+system. GlusterFS is one of the most sophisticated file systems in
+terms of features and extensibility.  It borrows a powerful concept
+called Translators from GNU Hurd kernel. Much of the code in GlusterFS
+is in user space and easily manageable.
+
+This package provides the api include files.
+
+
 %package server
 Summary: Clustered file-system server
 Group: System/Servers
 Requires: %name = %version-%release
-Requires: %name-client = %version-%release
 
 %description server
 GlusterFS is a clustered file-system capable of scaling to several
@@ -146,6 +216,7 @@ This package provides the glusterfs server daemon.
 Summary: Vim syntax file
 Group: Editors
 Requires: vim-common
+BuildArch: noarch
 
 %description vim
 GlusterFS is a clustered file-system capable of scaling to several
@@ -158,13 +229,17 @@ is in user space and easily manageable.
 
 Vim syntax file for GlusterFS.
 
-%package devel
+%package -n lib%name-devel
 Summary: Development Libraries
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: lib%name = %version-%release
+Requires: lib%name-api-devel = %version-%release
 Conflicts: %oname-devel
+# due fake %name-devel
+Obsoletes: %name-devel < %version-%release
+Provides: %name-devel = %version-%release
 
-%description devel
+%description -n lib%name-devel
 GlusterFS is a clustered file-system capable of scaling to several
 petabytes. It aggregates various storage bricks over Infiniband RDMA
 or TCP/IP interconnect into one large parallel network file
@@ -175,24 +250,59 @@ is in user space and easily manageable.
 
 This package provides the development libraries.
 
+%package -n %name-devel
+Summary: Development Libraries
+Group: Development/Other
+Requires: lib%name-devel = %version-%release
+Requires: lib%name-api-devel = %version-%release
+
+%description -n %name-devel
+Fake package for fix
+# apt-get install "pkgconfig(glusterfs-api)"
+Package pkgconfig(glusterfs-api) is a virtual package provided by:
+  libglusterfs3-api-devel 3.7.1-alt4
+  glusterfs3-devel 3.7.0-alt3
+You should explicitly select one to install.
+E: Package pkgconfig(glusterfs-api) is a virtual package with multiple good providers.
+
 %package -n python-module-%name
 Summary: Python module for %name
 Group: Development/Python
+BuildArch: noarch
 %setup_python_module %name
 
 %description -n python-module-%name
 This package provides Python API for %name
+
+%package -n lib%name
+Summary: GlusterFS common libraries
+Group: System/Base
+Obsoletes: %oname-libs <= 2.0.0
+Obsoletes: %name-libs
+Provides: %name-libs = %version-%release
+
+%description -n lib%name
+GlusterFS is a distributed file-system capable of scaling to several
+petabytes. It aggregates various storage bricks over Infiniband RDMA
+or TCP/IP interconnect into one large parallel network file
+system. GlusterFS is one of the most sophisticated file systems in
+terms of features and extensibility.  It borrows a powerful concept
+called Translators from GNU Hurd kernel. Much of the code in GlusterFS
+is in user space and easily manageable.
+
+This package provides the base GlusterFS libraries.
 
 %prep
 %setup
 %patch0 -p1
 
 %build
-sed -i 's,3.5git,%version,' configure.ac
 ./autogen.sh
-%configure %{?_without_rdma} %{?_without_epoll} %{?_with_fusermount} %{?_without_georeplication} --localstatedir=/var/ \
-	    --enable-qemu-block \
-	    --enable-bd-xlator
+%configure  %{?_without_rdma} %{?_without_epoll} %{?_with_fusermount} %{?_without_georeplication} \
+            %{?_without_ocf} \
+            --localstatedir=/var/ \
+            --enable-qemu-block \
+            --enable-bd-xlator
 
 # Remove rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -229,6 +339,8 @@ find %buildroot%_libdir -name '*.la' -delete
 
 # Remove installed docs, we include them ourselves as %%doc
 rm -rf %buildroot%_docdir/glusterfs/
+# move binary from datadir to bindir
+mv %buildroot%_datadir/glusterfs/scripts/gsync-sync-gfid %buildroot%_bindir/
 
 # Rename the samples, so we can include them as %%config
 #for file in %buildroot%_sysconfdir/glusterfs/*.sample; do
@@ -239,50 +351,56 @@ rm -rf %buildroot%_docdir/glusterfs/
 mkdir -p %buildroot%_sharedstatedir/glusterd
 
 
-
 # Update configuration file to /var/lib working directory
 sed -i 's|option working-directory %_sysconfdir/glusterd|option working-directory %_sharedstatedir/glusterd|g' \
-%buildroot%_sysconfdir/glusterfs/glusterd.vol
+    %buildroot%_sysconfdir/glusterfs/glusterd.vol
 
 # Install init script and sysconfig file
 %_init_install %SOURCE7 glusterd
-install -D -p -m 0644 %SOURCE1 \
-%buildroot%_sysconfdir/sysconfig/glusterd
+install -D -p -m 0644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/glusterd
 # Install wrapper umount script
-install -D -p -m 0755 %SOURCE3 \
-%buildroot/sbin/umount.glusterfs
+install -D -p -m 0755 %SOURCE3 %buildroot/sbin/umount.glusterfs
 # Client logrotate entry
-install -D -p -m 0644 %SOURCE4 \
-%buildroot%_sysconfdir/logrotate.d/glusterfs-fuse
+install -D -p -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/glusterfs-fuse
 # Server logrotate entry
-install -D -p -m 0644 %SOURCE5 \
-%buildroot%_sysconfdir/logrotate.d/glusterd
+install -D -p -m 0644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/glusterd
 # Legacy server logrotate entry
-install -D -p -m 0644 %SOURCE6 \
-%buildroot%_sysconfdir/logrotate.d/glusterfsd
+install -D -p -m 0644 %SOURCE6 %buildroot%_sysconfdir/logrotate.d/glusterfsd
 # Install vim syntax plugin
 install -D -p -m 644 extras/glusterfs.vim \
-%buildroot%_datadir/vim/vimfiles/syntax/glusterfs.vim
+    %buildroot%_datadir/vim/vimfiles/syntax/glusterfs.vim
+
+%if 0%{?_without_ocf:1}
+rm -rf %buildroot/usr/lib/ocf/
+%endif
+
+mv %buildroot/etc/ganesha/ganesha-ha.conf.sample %buildroot/etc/ganesha/ganesha.conf
 
 %files
-%doc ChangeLog INSTALL README THANKS COPYING-GPLV2 COPYING-LGPLV3
-%_libdir/*.so.*
+%doc ChangeLog INSTALL README.md THANKS COPYING-GPLV2 COPYING-LGPLV3
+%_bindir/glusterfind
 %_sbindir/glusterfs*
 %_sbindir/gluster
 %_sbindir/glusterd
 %dir %_libdir/glusterfs/
+%dir %_datadir/glusterfs/
 %_libdir/glusterfs/rpc-transport/
 %_libdir/glusterfs/auth/
+%exclude %_libdir/glusterfs/xlator/mount/api.so
 %_libdir/glusterfs/xlator/
+%_libexecdir/glusterfs/glusterfind/
+%_sbindir/gfind_missing_files
+%_libexecdir/glusterfs/gfind_missing_files/
+%_libexecdir/glusterfs/peer_mountbroker
+%_sbindir/gcron.py
+%_sbindir/snap_scheduler.py
 %exclude %_libdir/glusterfs/xlator/mount/fuse*
-%_logdir/glusterfs
+%_logdir/glusterfs/
 %_man8dir/*gluster*.8*
 %exclude %_man8dir/mount.glusterfs.8*
 %if 0%{!?_without_rdma:1}
 %exclude %_libdir/glusterfs/rpc-transport/rdma*
 %endif
-%_datadir/glusterfs/scripts/post-upgrade-script-for-quota.sh
-%_datadir/glusterfs/scripts/pre-upgrade-script-for-quota.sh
 
 
 %if 0%{!?_without_rdma:1}
@@ -304,9 +422,18 @@ install -D -p -m 644 extras/glusterfs.vim \
 %_datadir/glusterfs/scripts/slave-upgrade.sh
 %_datadir/glusterfs/scripts/gsync-upgrade.sh
 %_datadir/glusterfs/scripts/generate-gfid-file.sh
-%_bindir//gsync-sync-gfid
+%_bindir/gsync-sync-gfid
 %endif
 
+%files -n lib%name-api
+# libgfapi files
+%_libdir/libgfapi.so.*
+%_libdir/glusterfs/xlator/mount/api.so
+
+%files -n lib%name-api-devel
+%_pkgconfigdir/glusterfs-api.pc
+%_libdir/libgfapi.so
+%_includedir/glusterfs/api/
 
 %files client
 %config(noreplace) %_sysconfdir/logrotate.d/glusterfs-fuse
@@ -327,17 +454,55 @@ install -D -p -m 644 extras/glusterfs.vim \
 %_sharedstatedir/glusterd
 %_init_file1
 %_sbindir/glfsheal
+%_libdir/libgfdb.so.*
+
+%dir %_datadir/glusterfs/scripts/
+
+%_datadir/glusterfs/scripts/post-upgrade-script-for-quota.sh
+%_datadir/glusterfs/scripts/pre-upgrade-script-for-quota.sh
+%_datadir/glusterfs/scripts/stop-all-gluster-processes.sh
+
+%if 0%{!?_without_ocf:1}
+%dir /usr/lib/ocf/resource.d/
+/usr/lib/ocf/resource.d/glusterfs/
+%endif
+
+%files ganesha
+%dir /etc/ganesha/
+%config(noreplace) /etc/ganesha/ganesha.conf
+%dir /usr/lib/ganesha/
+/usr/lib/ganesha/create-export-ganesha.sh
+/usr/lib/ganesha/dbus-send.sh
+/usr/lib/ganesha/ganesha-ha.sh
+%if 0%{!?_without_ocf:1}
+/usr/lib/ocf/resource.d/heartbeat/
+%endif
 
 %files vim
 %doc COPYING-GPLV2 COPYING-LGPLV3
 %_datadir/vim/vimfiles/syntax/glusterfs.vim
 
-%files devel
-%_includedir/glusterfs
+# fake package for replace %name-devel 3.7.0
+%files -n %name-devel
+
+%files -n lib%name-devel
+%_includedir/glusterfs/
+%exclude %_includedir/glusterfs/api/
 %exclude %_includedir/glusterfs/y.tab.h
-%_libdir/*.so
-%_libdir/pkgconfig/glusterfs-api.pc
-%_libdir/pkgconfig/libgfchangelog.pc
+%_libdir/libgfchangelog.so
+%_libdir/libgfrpc.so
+%_libdir/libgfxdr.so
+%_libdir/libgfdb.so
+%_libdir/libglusterfs.so
+%_pkgconfigdir/libgfchangelog.pc
+# pkgconfiglib.req: WARNING: /tmp/.private/lav/glusterfs3-buildroot/usr/lib64/pkgconfig/libgfdb.pc: cannot find -lgfchangedb library path (skip)
+%_pkgconfigdir/libgfdb.pc
+
+%files -n lib%name
+%_libdir/libgfchangelog.so.*
+%_libdir/libgfrpc.so.*
+%_libdir/libgfxdr.so.*
+%_libdir/libglusterfs.so.*
 
 %files -n python-module-%name
 %python_sitelibdir_noarch/*
@@ -349,10 +514,31 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
-* Tue Jun 02 2015 Danil Mikhailov <danil@altlinux.org> 3.7.0-alt3
-- Fix 0003-xlators-mgmt-don-t-allow-glusterd-fork-bomb-cache-th
-- Added glfsheal command
+* Mon Jun 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.1-alt6
+- add fake glusterfs3-devel package (try to fix pkgconfig(glusterfs-api) provide problem)
 
+* Mon Jun 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.1-alt5
+- buildreq librdmacm-devel only if built with rdma
+- move ALT build specific files to .gear
+- fix interpackages requires
+
+* Sun Jun 14 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.1-alt4
+- backport patch glusterd: Buffer overflow causing crash for glusterd
+
+* Sun Jun 14 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.1-alt3
+- separate libs to libglusterfs3 (-devel) packages
+- separate nfs part to -ganesha subpackage
+- separate api to libglusterfs3-api (-devel) packages
+
+* Fri Jun 12 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.1-alt2
+- fix build, pack all new files
+- update buildreqs
+
+* Thu Jun 04 2015 Danil Mikhailov <danil@altlinux.org> 3.7.1-alt1
+- new version 3.7.1
+
+* Tue Jun 02 2015 Danil Mikhailov <danil@altlinux.org> 3.7.0-alt3
+- Added glfsheal command
 
 * Thu May 14 2015 Danil Mikhailov <danil@altlinux.org> 3.7.0-alt1
 - new version 3.7.0
