@@ -5,7 +5,7 @@
 
 Name: cryptsetup
 Version: 1.6.7
-Release: alt1
+Release: alt2
 
 Summary: utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
@@ -25,8 +25,9 @@ BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Sun Nov 15 2009
 BuildRequires: libdevmapper-devel libpopt-devel libuuid-devel
 BuildRequires: libudev-devel libselinux-devel
-BuildRequires: libgcrypt-devel
 BuildRequires: python-devel
+# Need support for fixed gcrypt PBKDF2 and fixed Whirlpool hash.
+BuildRequires: libgcrypt-devel  >= 1.6.1
 
 # Rename package from cryptsetup-luks-1.0.6-alt0.pre2 to cryptsetup-1.0.6-alt1
 Provides:  cryptsetup-luks = %version
@@ -67,6 +68,8 @@ cryptsetup может  управлять старыми дисками,  исп
 %package -n lib%name
 Group: System/Libraries
 Summary: Cryptsetup shared library
+# Need support for fixed gcrypt PBKDF2 and fixed Whirlpool hash.
+Requires: libgcrypt >= 1.6.1
 
 %description -n lib%name
 This package contains the cryptsetup shared library, libcryptsetup.
@@ -149,7 +152,7 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
 %autoreconf
-%configure --sbindir=%_root_sbindir --libdir=/%_lib --enable-cryptsetup-reencrypt --enable-python --disable-gcrypt-pbkdf2
+%configure --sbindir=%_root_sbindir --libdir=/%_lib --enable-cryptsetup-reencrypt --enable-python
 %make
 
 gcc debian/askpass.c -o debian/askpass
@@ -216,6 +219,9 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %exclude %python_sitelibdir/*.la
 
 %changelog
+* Mon Jun 15 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.7-alt2
+- rebuild with libgcrypt-1.6.3
+
 * Fri May 08 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.7-alt1
 - 1.6.7
 

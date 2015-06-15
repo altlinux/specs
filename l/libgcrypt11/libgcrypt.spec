@@ -1,21 +1,22 @@
 
 %def_enable static
 %def_disable pth
-%def_enable info_nogen
-%define req_gpgerror_ver 1.11
-%define soversion 20
+%define req_gpgerror_ver 1.0
+%define info_nogen 1
+%define soversion 11
 
-Name: libgcrypt
-Version: 1.6.3
-Release: alt1
+Name: libgcrypt%{soversion}
+Version: 1.5.4
+Release: alt2
 
-%define soname %{name}%{soversion}
-
-Group: System/Libraries
+Group: System/Legacy libraries
 Summary: The GNU crypto library
 License: LGPL
 URL: http://www.gnupg.org/
-Source: %name-%version.tar.bz2
+
+Requires: libgpg-error >= %req_gpgerror_ver
+Provides: libgcrypt = %version-%release
+Obsoletes: libgcrypt < %version-%release
 
 BuildRequires: libgpg-error-devel >= %req_gpgerror_ver
 %if_enabled static
@@ -25,40 +26,21 @@ BuildRequires: glibc-devel-static
 BuildRequires: libpth-devel
 %endif
 
-%package -n %soname
-Summary: The GNU crypto library
-Group: System/Libraries
-Requires: libgpg-error >= %req_gpgerror_ver
-Provides: %name = %version-%release
+Source: libgcrypt-%version.tar.bz2
+Source1: version-script-gcrypt-1.4.map
+# PLD
+Patch0:	libgcrypt-1.3.1-no_libnsl.patch
+Patch1:	libgcrypt-info.patch
+Patch2:	libgcrypt-am18.patch
+# ALT
+Patch3: libgcrypt-1.4.0-alt-autotools-version.patch
 
-%package -n %soname-pth
+%package pth
 Summary: GNU Crypto library with GNU Pth user-space thread support
-Group: System/Libraries
+Group: System/Legacy libraries
 Requires: libgpg-error >= %req_gpgerror_ver
-
-%package -n gcrypt-utils
-Group: Networking/Other
-Summary: Utilities for the %name package
-Conflicts: %name-devel <= 1.4.2
-Provides: %name-utils = %version-%release
-Obsoletes: %name-utils < %version-%release
-
-%package devel
-Group: Development/Other
-Summary: Development files for the %name package
-Requires: %soname = %version-%release
-Requires: libgpg-error-devel  >= %req_gpgerror_ver
-%if_enabled pth
-Requires: %soname-pth = %version-%release
-%endif
-Conflicts: %{name}0-devel
-
-%package devel-static
-Summary: Static libraries for the %name-devel package
-Group: Development/Other
-Requires: %name-devel = %version-%release
-Requires: libgpg-error-devel-static  >= %req_gpgerror_ver
-Conflicts: %{name}0-devel-static
+Provides: libgcrypt-pth = %version-%release
+Obsoletes: libgcrypt-pth < %version-%release
 
 %description
 Libgcrypt is a general purpose cryptographic library
@@ -69,110 +51,63 @@ RIPE-MD160, SHA-1, TIGER-192), MACs (HMAC for all hash algorithms),
 public key algorithms (RSA, ElGamal, DSA), large integer functions,
 random numbers and a lot of supporting functions.
 
-%description -n %soname
-Libgcrypt is a general purpose cryptographic library
-based on the code from GNU Privacy Guard.  It provides functions for all
-cryptograhic building blocks: symmetric ciphers
-(AES,DES,Blowfish,CAST5,Twofish,Arcfour), hash algorithms (MD5,
-RIPE-MD160, SHA-1, TIGER-192), MACs (HMAC for all hash algorithms),
-public key algorithms (RSA, ElGamal, DSA), large integer functions,
-random numbers and a lot of supporting functions.
 
-%description -n %soname-pth
+%description pth
 This is a portion of Libgcrypt supporting user-space
 threads provided by the GNU Pth library.
 
-%description -n gcrypt-utils
-This package contains %name utilities:
-* dumpsexp - debug tool for S-expressions
-* hmac256 - standalone HMAC-SHA-256 implementation
-
-%description devel
-Libgcrypt is a general purpose cryptographic library
-based on the code from GNU Privacy Guard.
-This package contains files needed to develop
-applications using libgcrypt (e.g. Aegypten project).
-
-%description devel-static
-Static libraries for the %name-devel package
-
 %prep
-%setup -q
-%if_enabled info_nogen
+%setup -q -n libgcrypt-%version
+cat %SOURCE1 >> src/libgcrypt.vers
+%if %info_nogen
 sed -i "s|^info_TEXINFOS|#info_TEXINFOS|" doc/Makefile.am
-sed -i "s|^gcrypt_TEXINFOS|#gcrypt_TEXINFOS|" doc/Makefile.am
 %endif
+%patch0 -p1
+%patch1 -p1
+#%patch2 -p1
+#%patch3 -p1
+
+%__rm -f COPYING.LIB
+%__ln_s %_licensedir/LGPL-2.1 COPYING.LIB
+
 
 %build
-%add_optflags %optflags_shared
 %autoreconf
 
-rm -f COPYING.LIB
-ln -s %_licensedir/LGPL-2.1 COPYING.LIB
-
+%add_optflags %optflags_shared
 %configure %{subst_enable static} \
     --enable-shared \
     --enable-noexecstack \
     --enable-ld-version-script \
-    --enable-random=linux \
     --disable-dev-random
 
 %make_build -C doc ||:
 %make_build
 
+%check
+%make check
+
 %install
 %makeinstall
-
-# relocate shared libraries from %_libdir/ to /%_lib/.
-mkdir -p %buildroot/%_lib
-mv -f %buildroot%_libdir/libgcrypt.so.* %buildroot/%_lib
-ln -sf ../../%_lib/libgcrypt.so.%soversion %buildroot%_libdir/libgcrypt.so
-
-%if_enabled info_nogen
+%if %info_nogen
 mkdir %buildroot/%_infodir/
 install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
-%check
-%make check
 
-%files -n gcrypt-utils
-%_bindir/dumpsexp
-%_bindir/hmac256
-%_bindir/mpicalc
-%_man1dir/hmac256.*
-
-%files -n %soname
-/%_lib/%name.so.*
-#%_libdir/%name-pthread.so.*
+%files
+%_libdir/libgcrypt.so.*
+#%_libdir/libgcrypt-pthread.so.*
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
 
 %if_enabled pth
-%files %soname-pth
-%_libdir/%name-pth.so.*
-%endif
-
-%files devel
-%_bindir/*-config
-%_includedir/*
-%_libdir/*.so
-%_datadir/aclocal/*
-%_infodir/*
-
-%if_enabled static
-%files devel-static
-%_libdir/*.a
+%files pth
+%_libdir/libgcrypt-pth.so.*
 %endif
 
 %changelog
-* Wed Jun 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.3-alt1
-- 1.6.3
-- rename libgrypt to libgcrypt20
-- rename libgcrypt-utils to gcrypt-utils
-- relocate shared libraries from %_libdir/ to /%_lib/
-
-* Mon Aug 11 2014 Sergey V Turchin <zerg@altlinux.org> 1.5.4-alt0.M70P.1
-- built for M70P
+* Mon Jun 15 2015 Alexey Shabalin <shaba@altlinux.ru> 1.5.4-alt2
+- build only library package as libgcrypt11 for compat
 
 * Mon Aug 11 2014 Sergey V Turchin <zerg@altlinux.org> 1.5.4-alt1
 - new version

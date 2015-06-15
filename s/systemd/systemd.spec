@@ -8,7 +8,7 @@
 %def_enable quotacheck
 %def_enable randomseed
 %def_enable coredump
-%def_disable gcrypt
+%def_enable gcrypt
 %def_disable qrencode
 %def_enable microhttpd
 %def_enable gnutls
@@ -23,6 +23,8 @@
 %def_enable resolved
 %def_disable terminal
 %def_disable kdbus
+%def_disable gnuefi
+%def_disable gudev
 %def_enable utmp
 %def_with python
 %def_enable gtk_doc
@@ -59,8 +61,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 219
-Release: alt2
+Version: 220
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -142,8 +144,7 @@ BuildRequires: libdbus-devel >= %dbus_ver
 %{?_enable_apparmor:BuildRequires: pkgconfig(libapparmor)}
 %{?_enable_elfutils:BuildRequires: elfutils-devel >= 0.158}
 BuildRequires: libaudit-devel
-BuildRequires: glib2-devel >= 2.26 libgio-devel
-BuildRequires: gobject-introspection-devel
+%{?_enable_gudev:BuildRequires: glib2-devel >= 2.26 libgio-devel gobject-introspection-devel}
 %{?_enable_xz:BuildRequires: pkgconfig(liblzma)}
 %{?_enable_zlib:BuildRequires: pkgconfig(zlib)}
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
@@ -158,7 +159,7 @@ BuildRequires: pkgconfig(mount) >= 2.20
 BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 1.6.0}
-BuildRequires: libgcrypt-devel
+%{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5}
 %{?_enable_qrencode:BuildRequires: libqrencode-devel}
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
@@ -166,6 +167,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_libidn:BuildRequires: pkgconfig(libidn)}
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_terminal:BuildRequires: pkgconfig(libevdev) >= 1.2 pkgconfig(xkbcommon) >= 0.5  pkgconfig(libdrm) >= 2.4 /usr/share/unifont/unifont.hex}
+%{?_enable_gnuefi:BuildRequires: gnu-efi}
 
 Requires: dbus >= %dbus_ver
 Requires: udev = %epoch:%version-%release
@@ -682,12 +684,13 @@ export KEXEC="/sbin/kexec"
 export CHKCONFIG="/sbin/chkconfig"
 export SETCAP="/sbin/setcap"
 export SULOGIN="/sbin/sulogin"
+export MOUNT_PATH="/bin/mount"
+export UMOUNT_PATH="/bin/umount"
 
 gtkdocize --docdir docs/
 intltoolize --force --automake
 %autoreconf
 %configure  \
-	--disable-static \
 	%{subst_with python} \
 	--with-rootprefix="" \
 	--with-rootlibdir=/%_lib \
@@ -733,6 +736,8 @@ intltoolize --force --automake
 	%{subst_enable ldconfig} \
 	%{subst_enable firstboot} \
 	%{subst_enable terminal} \
+	%{subst_enable gudev} \
+	%{subst_enable gnuefi} \
 	%{subst_enable kdbus} \
 	%{subst_enable seccomp} \
 	%{subst_enable ima} \
@@ -740,7 +745,7 @@ intltoolize --force --automake
 	%{subst_enable apparmor} \
 	%{subst_enable utmp} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--enable-introspection
+	--disable-static
 
 %make_build GCC_COLORS="" V=1
 
@@ -817,13 +822,6 @@ cat > %buildroot%_unitdir/getty@tty1.service.d/noclear.conf << EOF
 TTYVTDisallocate=no
 EOF
 
-# Temporary workaround for update runlevel
-ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/poweroff.target.wants/
-ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/rescue.target.wants/
-ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/multi-user.target.wants/
-ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/graphical.target.wants/
-ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/reboot.target.wants/
-
 # don't enable wall ask password service, it spams every console
 rm -f %buildroot%_unitdir/multi-user.target.wants/systemd-ask-password-wall.path
 
@@ -887,13 +885,6 @@ install -m644 %SOURCE64 %buildroot%_sysconfdir/bash_completion.d/systemd-cat
 install -m644 %SOURCE65 %buildroot%_sysconfdir/bash_completion.d/systemd-cgls
 install -m644 %SOURCE66 %buildroot%_sysconfdir/bash_completion.d/systemd-cgtop
 install -m644 %SOURCE67 %buildroot%_sysconfdir/bash_completion.d/systemd-detect-virt
-
-# Make sure the ghost-ing below works
-touch %buildroot%_sysconfdir/systemd/system/runlevel2.target
-touch %buildroot%_sysconfdir/systemd/system/runlevel3.target
-touch %buildroot%_sysconfdir/systemd/system/runlevel4.target
-touch %buildroot%_sysconfdir/systemd/system/runlevel5.target
-
 
 # Create new-style configuration files so that we can ghost-own them
 touch %buildroot%_sysconfdir/hostname
@@ -1205,11 +1196,6 @@ update_chrooted all
 %config(noreplace) %_sysconfdir/systemd/user.conf
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.systemd1.conf
 
-%ghost %config(noreplace) %_sysconfdir/systemd/system/runlevel2.target
-%ghost %config(noreplace) %_sysconfdir/systemd/system/runlevel3.target
-%ghost %config(noreplace) %_sysconfdir/systemd/system/runlevel4.target
-%ghost %config(noreplace) %_sysconfdir/systemd/system/runlevel5.target
-
 /sbin/systemctl
 /bin/systemctl
 /sbin/systemd
@@ -1246,7 +1232,6 @@ update_chrooted all
 /lib/systemd/systemd-reply-password
 /lib/systemd/systemd-rfkill
 /lib/systemd/systemd-shutdown
-/lib/systemd/systemd-shutdownd
 /lib/systemd/systemd-sleep
 /lib/systemd/systemd-socket-proxyd
 /lib/systemd/systemd-update-done
@@ -1403,8 +1388,9 @@ update_chrooted all
 %exclude %_libdir/*udev*.so
 %_pkgconfigdir/*.pc
 %exclude %_pkgconfigdir/*udev*.pc
+%_datadir/pkgconfig/systemd.pc
 %_includedir/systemd
-%doc LICENSE.LGPL2.1 LICENSE.MIT
+%doc LICENSE.LGPL2.1
 %_man3dir/*
 
 %files -n libnss-myhostname
@@ -1454,7 +1440,7 @@ update_chrooted all
 /lib/tmpfiles.d/x11.conf
 /lib/tmpfiles.d/tmp.conf
 /lib/tmpfiles.d/var.conf
-
+/lib/tmpfiles.d/home.conf
 
 /lib/systemd/systemd-binfmt
 /sbin/systemd-binfmt
@@ -1513,6 +1499,11 @@ update_chrooted all
 /lib/systemd/systemd-localed
 %_bindir/timedatectl
 /lib/systemd/systemd-timedated
+/lib/systemd/systemd-export
+/lib/systemd/systemd-import
+/lib/systemd/systemd-importd
+/lib/systemd/systemd-pull
+/lib/systemd/import-pubring.gpg
 
 %_mandir/*/*login*
 %exclude %_man3dir/*
@@ -1574,6 +1565,7 @@ update_chrooted all
 /lib/tmpfiles.d/systemd-remote.conf
 %_man8dir/systemd-journal-gatewayd.*
 %_man8dir/systemd-journal-remote.*
+%_man5dir/journal-remote.conf.*
 
 %if_enabled sysusers
 /lib/sysusers.d/systemd-remote.conf
@@ -1668,6 +1660,7 @@ update_chrooted all
 %files -n libudev-devel-doc
 %_datadir/gtk-doc/html/libudev
 
+%if_enabled gudev
 %files -n libgudev
 %_libdir/libgudev-*.so.*
 
@@ -1684,6 +1677,7 @@ update_chrooted all
 
 %files -n libgudev-gir-devel
 %_datadir/gir-1.0/*.gir
+%endif
 
 %files -n udev
 %doc README TODO NEWS LICENSE.GPL2
@@ -1756,6 +1750,11 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Fri May 22 2015 Alexey Shabalin <shaba@altlinux.ru> 1:220-alt1
+- 220
+- add patches from master
+- build with gcrypt support
+
 * Wed Mar 04 2015 Alexey Shabalin <shaba@altlinux.ru> 1:219-alt2
 - v219-stable snapshot 0436d5c5f4b39ba8177437fa92f082f8ef1830fb
 
