@@ -2,7 +2,7 @@
 
 Name: sflphone-common
 Version: 1.4.1
-Release: alt2.1
+Release: alt3
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -85,6 +85,9 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Mon Jun 15 2015 Sergey V Turchin <zerg@altlinux.org> 1.4.1-alt3
+- rebuild with new ucommon, ccrtp
+
 * Sun Jun 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.1-alt2.1
 - Rebuilt for gcc5 C++11 ABI.
 
