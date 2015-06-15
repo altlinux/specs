@@ -1,7 +1,7 @@
 Name: dnsmasq
-Version: 2.72
+Version: 2.73
 
-Release: alt2
+Release: alt1
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -127,6 +127,10 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Mon Jun 15 2015 Mikhail Efremov <sem@altlinux.org> 2.73-alt1
+- systemd: Fix dnsmasq start order (closes: #31025).
+- Updated to 2.73.
+
 * Tue Nov 11 2014 Lenar Shakirov <snejok@altlinux.ru> 2.72-alt2
 - /usr/sbin/dnsmasq{-helper} mode relaxed from 700 to 755
 
