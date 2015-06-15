@@ -5,23 +5,28 @@
 %def_with dbus
 %def_without xinerama
 %def_with browser_plugin
-%define jstype lib
+%define jstype moz
 #----------------------------------------------------------------------
 %define subst_with_to() %{expand:%%{?_with_%{1}:--with-%{2}}} %{expand:%%{?_without_%{1}:--without-%{2}}}
 
-Name: gxine
+Name:    gxine
 Summary: Mediaplayer - GTK-based GUI for xine libraries
 Summary(uk_UA.CP1251): Медіапрогравач - GTK+ GUI для бібліотек xine
 Summary(ru_RU.CP1251): Медиапроигрыватель - GTK+ GUI для библиотек xine
-Version: 0.5.11
-Release: alt10.3.qa2
+Version: 0.5.908
+Release: alt1
 License: %gpl2plus
-Group: Video
-URL: http://xinehq.de
-Source: %name-%version.tar
-Patch: gxine-0.5.11-alt-glib2.patch
-Patch1: gxine-0.5.11-alt-DSO.patch
-Packager: Led <led@altlinux.ru>
+Group:   Video
+URL:     http://www.xine-project.org/home
+Packager: Andrey Cherepanov <cas@altlinux.ru>
+
+Source:  %name-%version.tar
+Source1: %name.watch
+
+Patch1:  gxine-0.5.902-non-separate-toolbar.patch
+Patch2:  gxine-0.5.907-linkage.patch
+Patch3:  gxine-0.5.907-lirc.patch
+Patch4:  gxine-build-with-mozjs185.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: imake libgtk+2-devel libxine-devel zlib-devel
@@ -35,7 +40,7 @@ BuildRequires: desktop-file-utils ImageMagick-tools
 %{?_with_browser_plugin:BuildRequires: browser-plugins-npapi-devel libnspr-devel}
 %{!?jstype:%define jstype moz}
 %if %jstype == moz
-BuildRequires: xulrunner-devel
+BuildRequires: libmozjs-devel
 %endif
 %if %jstype == sea
 BuildRequires: seamonkey-devel
@@ -90,15 +95,11 @@ infrastructure.
 
 %prep
 %setup
-%patch -p0
-%patch1 -p0
-sed -i \
-    -e '/^Encoding=/d' \
-    -e '/^Exec=/s/$/ %%U/' \
-    -e '/^Categories=/ s/=.*$/=GTK;AudioVideo;Video;Player;TV;/' \
-    -e '/^MimeType=/ s|=.*$|='"$(cat %_datadir/mimetypes-devel/libxine)|" \
-    %name.desktop
-iconv -f cp1251 -t utf-8 >> %name.desktop <<__MENU__
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p2
+iconv -f cp1251 -t utf-8 >> %name.desktop.in <<__MENU__
 GenericName[ru]=Проигрыватель видео
 GenericName[uk]=Програвач відео
 Comment[ru]=Проигрывание фильмов и песен, или просмотр цифрового телевидения
@@ -164,6 +165,11 @@ rm -rf %buildroot%_pixmapsdir
 
 
 %changelog
+* Sun Jun 14 2015 Andrey Cherepanov <cas@altlinux.org> 0.5.908-alt1
+- New version
+- Fix upstream URL
+- Build with libmozjs
+
 * Fri Feb 28 2014 Andrey Cherepanov <cas@altlinux.org> 0.5.11-alt10.3.qa2
 - Fixed build
 
