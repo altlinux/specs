@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.7.44
+Version: 1.7.45
 Release: alt1
 Epoch: 1
 
@@ -434,6 +434,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Mon Jun 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.45-alt1
+- new version 1.7.45
+
 * Thu Jun 04 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.44-alt1
 - new version 1.7.44
 - add unixODBC-devel buildreq
