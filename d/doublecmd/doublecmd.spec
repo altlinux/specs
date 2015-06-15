@@ -1,6 +1,6 @@
 Name:		doublecmd
 Summary:	Twin-panel (commander-style) file manager (GTK2 and QT4)
-Version:	0.6.2
+Version:	0.6.3
 Release:	alt1
 Url:		http://doublecmd.sourceforge.net
 
@@ -89,6 +89,9 @@ install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt.desktop
 %_pixmapsdir/%name.*
 
 %changelog
+* Mon Jun 15 2015 Motsyo Gennadi <drool@altlinux.ru> 0.6.3-alt1
+- 0.6.3
+
 * Tue May 12 2015 Motsyo Gennadi <drool@altlinux.ru> 0.6.2-alt1
 - 0.6.2
 
@@ -102,9 +105,6 @@ install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt.desktop
 * Mon Feb 16 2015 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1
 - New version
 
-* Tue Dec 31 2013 Motsyo Gennadi <drool@altlinux.ru> 0.5.8-alt0.0.M60T.rev.5390
-- build for t6
-
 * Mon Dec 30 2013 Motsyo Gennadi <drool@altlinux.ru> 0.5.8-alt0.rev.5390
 - build for Sisyphus (thank for src.rpm to Anatoly Chernov)
 
@@ -116,9 +116,6 @@ install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt.desktop
 
 * Wed Feb 06 2013 Motsyo Gennadi <drool@altlinux.ru> 0.5.4-alt1
 - build for Sisyphus
-
-* Tue Dec 11 2012 Motsyo Gennadi <drool@altlinux.ru> 0.5.4-alt0.M60T.1
-- build for t6 (thank for src.rpm to Anatoly Chernov)
 
 * Mon Oct 22 2012 - Anatoly Chernov <aichernov@umail.ru>
 - New beta release 0.5.4-3.3 (beta 16.10.2012) with no problem ... :)
