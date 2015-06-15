@@ -1,9 +1,8 @@
-
 %def_disable mod_ffmpeg
 
 Name: freerdp
 Version: 1.1.0
-Release: alt1.beta1
+Release: alt2.beta1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -15,9 +14,9 @@ Source: FreeRDP-stable-1.1.tar
 
 Requires: xfreerdp = %version-%release %name-plugins-standard = %version-%release
 
-# Automatically added by buildreq on Sun Mar 22 2015
-# optimized out: cmake cmake-modules glib2-devel gstreamer-devel libX11-devel libXext-devel libXrender-devel libcom_err-devel libgst-plugins libkrb5-devel libxml2-devel pkg-config xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: ctest docbook-style-xsl git-core gst-plugins-devel libXcursor-devel libXinerama-devel libXrandr-devel libXv-devel libalsa-devel libcups-devel libdirectfb-devel libjpeg-devel libpcsclite-devel libpulseaudio-devel libssl-devel libxkbfile-devel
+# Automatically added by buildreq on Sun Jun 14 2015
+# optimized out: cmake-modules libX11-devel libXext-devel libcloog-isl4 libcom_err-devel libjpeg-devel libkrb5-devel pkg-config xorg-kbproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: cmake docbook-style-xsl git-core libXcursor-devel libXinerama-devel libXrender-devel libXv-devel libalsa-devel libcups-devel libdirectfb-devel libjpeg-devel-static libpcsclite-devel libpulseaudio-devel libssl-devel libxkbfile-devel
 %if_enabled mod_ffmpeg
 libavcodec-devel libavutil-devel
 %endif
@@ -99,7 +98,7 @@ Header files and unversioned libraries for libfreerdp.
     -DWITH_FFMPEG=OFF \
 %endif
     -DWITH_GSM=OFF \
-    -DWITH_GSTREAMER_1_0=OFF \
+    -DWITH_GSTREAMER=OFF \
     -DWITH_IPP=OFF \
     -DWITH_JPEG=ON \
     -DWITH_MANPAGES=OFF \
@@ -158,6 +157,9 @@ rm -f %buildroot%_libdir/*.a \
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Jun 15 2015 Mikhail Kolchin <mvk@altlinux.org> 1.1.0-alt2.beta1
+- disable gstreamer support (ALT #31013)
+
 * Sun Mar 22 2015 Mikhail Kolchin <mvk@altlinux.org> 1.1.0-alt1.beta1
 - stable-1.1 snapshot 770c67d340d5f0a7b48d53a1ae0fc23aff748fc4
 
