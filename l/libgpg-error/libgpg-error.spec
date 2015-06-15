@@ -1,7 +1,7 @@
 %def_enable static
 
 Name: libgpg-error
-Version: 1.17
+Version: 1.19
 Release: alt1
 
 Group: System/Libraries
@@ -12,16 +12,8 @@ URL: http://www.gnupg.org/
 Packager: Sergey V Turchin <zerg@altlinux.org>
 
 Source: %name-%version.tar.bz2
-Source1: version-script.map
-Source2: compat.lds
-# PLD
-Patch1: libgpg-error-am18.patch
-# ALT
-Patch10: libgpg-error-alt-version-script.patch
 
-# Automatically added by buildreq on Wed Jun 02 2010 (-bi)
-#BuildRequires: cvs glibc-devel-static libsubversion-auth-gnome-keyring libsubversion-auth-kwallet rpm-build-qt4 subversion
-BuildRequires: cvs glibc-devel
+BuildRequires: glibc-devel
 %if_enabled static
 BuildRequires: glibc-devel-static
 %endif
@@ -50,24 +42,27 @@ Static build of the GnuPG error library.
 
 %prep
 %setup -q
-#%patch1 -p1
-#%patch10 -p1
-
-#cat %SOURCE1 >>src/gpg-error.vers
-#install -m 0644 %SOURCE2 src/
-%autoreconf
 
 %build
+%autoreconf
 %configure %{subst_enable static} --disable-rpath
 %make_build
-%make check
 
 %install
 %makeinstall
+
+# relocate shared libraries from %_libdir/ to /%_lib/.
+mkdir -p %buildroot/%_lib
+mv -f %buildroot%_libdir/libgpg-error.so.* %buildroot/%_lib
+ln -sf ../../%_lib/libgpg-error.so.0 %buildroot%_libdir/libgpg-error.so
+
 %find_lang %name
 
+%check
+%make check
+
 %files -f %name.lang
-%_libdir/lib*.so.*
+/%_lib/lib*.so.*
 %_bindir/gpg-error
 %doc AUTHORS ChangeLog NEWS README
 
@@ -76,6 +71,8 @@ Static build of the GnuPG error library.
 %_libdir/*.so
 %_includedir/*
 %_datadir/aclocal/*
+%_man1dir/gpg-error-config.*
+%_infodir/gpgrt.*
 
 %if_enabled static
 %files devel-static
@@ -83,6 +80,13 @@ Static build of the GnuPG error library.
 %endif
 
 %changelog
+* Wed Jun 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.19-alt1
+- 1.19
+- relocate shared libraries from %_libdir/ to /%_lib/.
+
+* Tue Nov 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.17-alt0.M70P.1
+- built for M70P
+
 * Tue Nov 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.17-alt1
 - new version
 
