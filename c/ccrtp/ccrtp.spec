@@ -1,9 +1,9 @@
 %def_disable static
 
 Name: ccrtp
-Version: 2.0.9
-Release: alt1.1
-%define sover 2
+Version: 2.1.2
+Release: alt1
+%define sover 3
 %define libccrtp libccrtp%sover
 %define docdir %_docdir/%name-%version
 
@@ -92,8 +92,14 @@ cp -a AUTHORS COPYING.addendum README doc/srcmodel* doc/html %buildroot%docdir
 %endif
 
 %changelog
+* Mon Jun 15 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt1
+- new version
+
 * Sun Jun 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.9-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
+
+* Thu Oct 23 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.9-alt0.M70P.1
+- built for M70P
 
 * Wed Sep 24 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.9-alt1
 - initial build

@@ -1,7 +1,7 @@
 Name: ucommon
-Version: 6.1.11
+Version: 6.3.3
 Release: alt1
-%define sover 6
+%define sover 7
 %define libcommoncpp libcommoncpp%sover
 %define libucommon libucommon%sover
 %define libusecure libusecure%sover
@@ -83,6 +83,7 @@ Group: System/Libraries
       -DINSTALL_LIBDIR=%_libdir \
       #
 
+
 %cmake_build
 %cmake_build doc
 
@@ -127,10 +128,12 @@ chmod 0755 %buildroot/%_bindir/commoncpp-config
 %_man1dir/keywait.*
 
 %files devel
+%dir %_datadir/ucommon/
 %_libdir/*.so
 %_includedir/ucommon/
 %_includedir/commoncpp/
 %_libdir/pkgconfig/*.pc
+%_datadir/ucommon/cmake/
 %_bindir/ucommon-config
 %_man1dir/ucommon-config.*
 %_bindir/commoncpp-config
@@ -140,5 +143,11 @@ chmod 0755 %buildroot/%_bindir/commoncpp-config
 %doc BUILD/doc/html/*
 
 %changelog
+* Mon Jun 15 2015 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
+- new version
+
+* Thu Oct 23 2014 Sergey V Turchin <zerg@altlinux.org> 6.1.11-alt0.M70P.1
+- built for M70P
+
 * Wed Sep 24 2014 Sergey V Turchin <zerg@altlinux.org> 6.1.11-alt1
 - initial build
