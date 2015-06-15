@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: cinnamon
-Version: 2.6.7
-Release: alt3
+Version: 2.6.8
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -264,6 +264,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Mon Jun 15 2015 Vladimir Didenko <cow@altlinux.org> 2.6.8-alt1
+- 2.6.8
+
 * Thu Jun 11 2015 Vladimir Didenko <cow@altlinux.org> 2.6.7-alt3
 - remove upstream hack for pidgin and thunderbird systray icons
 
