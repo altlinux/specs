@@ -2,7 +2,7 @@
 
 Name: kdenlive
 Version: 0.9.10
-Release: alt1
+Release: alt2
 
 Summary: KDE Non Linear Video Editor
 Summary(ru_RU.utf8): Редактор нелинейного видео монтажа для KDE
@@ -24,8 +24,6 @@ Patch3: alt-prefer-vlc.patch
 BuildRequires: cmake cmake-modules gcc-c++
 BuildRequires: kde4base-workspace-devel libqt4-devel kde-common-devel qjson-devel
 BuildRequires: libmlt-devel libmlt++-devel >= %req_ver_mlt
-# Nepomuk
-BuildRequires: soprano soprano-backend-virtuoso soprano-backend-redland libsoprano-devel
 
 %description
 Kdenlive is a non-linear video editor for GNU/Linux, which supports
@@ -67,6 +65,12 @@ mv altlinux/doc .
 %_K4xdg_mime/*
 
 %changelog
+* Tue Jun 16 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.10-alt2
+- rebuild with new mlt
+
+* Thu Apr 16 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.10-alt0.M70P.1
+- build for M70P
+
 * Fri Oct 17 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.10-alt1
 - new version
 
