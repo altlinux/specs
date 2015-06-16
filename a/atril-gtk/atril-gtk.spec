@@ -6,8 +6,11 @@
 %def_disable introspection
 %def_disable libs_subpackage
 
+# it uses webkit
+%def_disable epub
+
 Name:           %_name-gtk
-Version:        1.8.1
+Version:        1.10.0
 Release:        alt1
 Summary:        Document viewer
 
@@ -34,6 +37,7 @@ BuildRequires:  intltool
 BuildRequires:  t1lib-devel
 BuildRequires:  yelp-tools
 %{?_enable_introspection:BuildRequires:  gobject-introspection-devel}
+%{?_enable_epub:BuildRequires: libwebkitgtk2-devel}
 
 BuildRequires:  mate-common
 BuildRequires:  libcairo-gobject-devel
@@ -128,6 +132,15 @@ Conflicts: mate-document-viewer-xps
 %description xps
 This package contains a backend to let atril display xps files.
 
+%package epub
+Summary: Atril backend for ePub documents
+Group: Publishing
+Requires: %name = %{version}-%{release}
+Conflicts: mate-document-viewer-djvu
+
+%description epub
+This package contains a backend to let atril display ePub documents.
+
 %prep
 %setup
 %patch -p1
@@ -137,13 +150,13 @@ NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--disable-static \
 	--disable-scrollkeeper \
-	--enable-introspection \
 	--enable-comics \
 	--enable-dvi=yes \
 	--enable-djvu=yes \
 	--enable-t1lib=yes \
 	--enable-pixbuf=yes \
 	--enable-xps=yes \
+	%{subst_enable epub} \
 	--with-gtk=2.0 \
 	%{subst_enable introspection} \
 	--without-keyring \
@@ -181,6 +194,10 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_datadir}/MateConf/gsettings/atril.convert
 %{_datadir}/thumbnailers/atril.thumbnailer
 %{_datadir}/help/*/*
+
+# don't package appdata file:
+# for atril-gtk there should be changed description at least
+%exclude %_datadir/appdata/atril.appdata.xml
 
 %if_enabled libs_subpackage
 %files -n lib%name
@@ -238,7 +255,20 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_libdir}/atril/3/backends/libpixbufdocument.so*
 %{_libdir}/atril/3/backends/pixbufdocument.atril-backend
 
+%if_enabled epub
+%files epub
+%{_libdir}/atril/3/backends/libepubdocument.so*
+%{_libdir}/atril/3/backends/epubdocument.atril-backend
+%{_libdir}/atril/3/backends/epub/
+%endif
+
 %changelog
+* Tue Jun 16 2015 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
+- Don't use MateAboutDialog.
+- Update "Drop lockdown functionality" patch.
+- Drop obsoleted patches.
+- Updated to 1.10.0.
+
 * Mon Nov 10 2014 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt1
 - Updated to 1.8.1.
 
