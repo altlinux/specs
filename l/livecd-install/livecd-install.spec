@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: Permanently install Live system
@@ -61,6 +61,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Tue Jun 16 2015 Michael Shigorin <mike@altlinux.org> 0.9.3-alt1
+- Security fix: purge LiveCD's sudoers (closes: #31071).
+
 * Fri Apr 24 2015 Mikhail Efremov <sem@altlinux.org> 0.9.2-alt1
 - Use alterator-service-functions.
 - Setup and save /etc/adjtime.
