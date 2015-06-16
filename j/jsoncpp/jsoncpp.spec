@@ -1,7 +1,7 @@
 
 Name: jsoncpp
 Version: 1.6.2
-Release: alt1
+Release: alt2
 %define sover 1
 %define libname lib%name%sover
 
@@ -35,6 +35,7 @@ generate.
 %package devel
 Summary: Development headers and library for %name
 Group: Development/C++
+Conflicts: libjson-devel < 0.12
 %description devel
 This package contains the development headers and library for %name.
 
@@ -78,6 +79,9 @@ python doxybuild.py --with-dot --doxygen %_bindir/doxygen
 #%_docdir/%name/
 
 %changelog
+* Tue Jun 16 2015 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt2
+- add conflict with old json-c devel package (ALT#31072)
+
 * Thu Jun 11 2015 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt1
 - new version
 
