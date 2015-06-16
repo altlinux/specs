@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.9
-%define		svn svn4636
+%define		svn svn5161
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -16,7 +16,7 @@ Url:		http://qmmp.ylsoftware.com/plugins_en.php
 Source0:	%name-%branch-%svn.tar.bz2
 
 
-BuildRequires:	libqt4-devel gcc-c++ libmpg123-devel libqmmp-devel >= %branch libtag-devel >= 1.6 yasm
+BuildRequires:	libqt4-devel gcc-c++ libmpg123-devel libqmmp-devel >= %branch libtag-devel >= 1.6 libxmp-devel yasm
 
 %description
 Plugin pack is a set of extra plugins for Qmmp.
@@ -74,6 +74,22 @@ FFap - улучшенный декодер Monkey's Audio (APE) (поддерж�
 %description -l uk_UA.UTF8 -n %name-in-ffap
 FFap - покращений декодер Monkey's Audio (APE) (підтримка 24-х біт та вбудованого cue) для Qmmp.
 
+%package -n %name-in-xmp
+Summary: XMP - support for MOD, S3M, IT and others tracker formats
+Summary(ru_RU.UTF8): XMP - поддержка для MOD, S3M, IT и прочих трекерных форматов
+Summary(uk_UA.UTF8): XMP - підтримка для MOD, S3M, IT та інших трекерних форматів
+Group: Sound
+Requires: qmmp >= %version-%release
+
+%description -n %name-in-xmp
+XMP - support for MOD, S3M, IT and others tracker formats
+
+%description -l ru_RU.UTF8 -n %name-in-xmp
+XMP - поддержка для MOD, S3M, IT и прочих трекерных форматов
+
+%description -l uk_UA.UTF8 -n %name-in-xmp
+XMP - підтримка для MOD, S3M, IT та інших трекерних форматів
+
 %package -n %name-qsui
 Summary: Qmmp Simple Ui - simple user interface based on standard widgets set
 Summary(ru_RU.UTF8): Qmmp Simple Ui - простой пользовательский интерфейс с использованием стандартных элементов
@@ -107,10 +123,19 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %files -n %name-in-ffap
 %_libdir/qmmp/Input/libffap.so
 
+%files -n %name-in-xmp
+%_libdir/qmmp/Input/libxmp.so
+
 %files -n %name-qsui
 %_libdir/qmmp/Ui/libqsui.so
 
 %changelog
+* Tue Jun 16 2015 Motsyo Gennadi <drool@altlinux.ru> 0.9.0-alt1.svn5161
+- build svn5161
+
+* Sun Jun 14 2015 Motsyo Gennadi <drool@altlinux.ru> 0.9.0-alt1.svn5138
+- build svn5138
+
 * Thu Dec 25 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.0-alt1.svn4636
 - build svn4636
 

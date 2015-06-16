@@ -1,10 +1,37 @@
 %define branch 0.9
-%define svn svn4636
+%define svn svn5161
+
+%define rel alt1
+
+%if "%rel" == "alt0.M51"
+%define PLUG_DISABLE "UDISKS2_PLUGIN OPUS_PLUGIN WITH_NEW_JACK"
+%define PLUG_ENABLE "FFMPEG_LEGACY UDISKS_PLUGIN JACK_PLUGIN"
+%endif
+
+%if "%rel" == "alt0.M60T"
+%define PLUG_DISABLE "UDISKS2_PLUGIN"
+%define PLUG_ENABLE "UDISKS_PLUGIN WITH_NEW_JACK"
+%endif
+
+%if "%rel" == "alt0.M70T"
+%define PLUG_DISABLE "UDISKS_PLUGIN"
+%define PLUG_ENABLE "UDISKS2_PLUGIN WITH_NEW_JACK"
+%endif
+
+%if "%rel" == "alt0.M80T"
+%define PLUG_DISABLE "UDISKS_PLUGIN"
+%define PLUG_ENABLE "UDISKS2_PLUGIN WITH_NEW_JACK"
+%endif
+
+%if "%rel" == "alt1"
+%define PLUG_DISABLE "UDISKS_PLUGIN"
+%define PLUG_ENABLE "UDISKS2_PLUGIN WITH_NEW_JACK"
+%endif
 
 Version: %branch.0
 Epoch: 1
 Name: qmmp
-Release: alt1.%svn
+Release: %rel.%svn
 Summary: QMMP - Qt-based multimedia player
 Summary(ru_RU.UTF8): Qmmp - мультимедиа проигрыватель на базе Qt
 Summary(uk_UA.UTF8): Qmmp - мультимедіа програвач на базі Qt
@@ -18,7 +45,7 @@ Requires: unzip winamplike-skins lib%name = %version-%release
 
 BuildPreReq: rpm-build-wlskins doxygen
 
-BuildRequires: cmake >= 2.4.8
+# #BuildRequires: cmake >= 2.8.6
 BuildRequires: gcc-c++ libavformat-devel libcdio-devel
 BuildRequires: libcurl-devel libfaad-devel libmad-devel libmodplug-devel
 BuildRequires: libmpcdec-devel libpulseaudio-devel >= 0.9.15 libqt4-devel
@@ -26,10 +53,12 @@ BuildRequires: libsamplerate-devel libtag-devel >= 1.6 libvorbis-devel
 BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
 BuildRequires: libprojectM-devel >= 2.0.1 jackit-devel xorg-xf86miscproto-devel
 BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4 libwildmidi-devel >= 0.2.3.4
-BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel >= 1.0.3 libudisks2-devel
+BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel >= 1.0.3
 
+%if "%rel" != "alt0.M51"
 # disable for 5.1
 BuildRequires: libopusfile-devel
+%endif
 
 %description
 QMMP is an audio-player, written with help of Qt library.
@@ -603,8 +632,10 @@ Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager qmmp-rgscan
 Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-sid
 Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste qmmp-eff-extrastereo
 
+%if "%rel" != "alt0.M51"
 # disable for 5.1
 Requires: qmmp-in-opus
+%endif
 
 %description -n %name-full
 Virtual package for full installation Qmmp (exclude %name-devel).
@@ -614,26 +645,33 @@ Virtual package for full installation Qmmp (exclude %name-devel).
 
 %build
 # # with CMake
-cmake \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DLIB_DIR:STRING=%_lib \
-	-DUSE_OSS:BOOL=TRUE
+# # cmake \
+# # 	-DCMAKE_INSTALL_PREFIX=%prefix \
+# # 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+# # 	-DCMAKE_C_FLAGS:STRING="%optflags" \
+# # 	-DLIB_DIR:STRING=%_lib \
+# # 	-DUSE_OSS:BOOL=TRUE
 
 # # with QMake
-# #export PATH=$PATH:%_qt4dir/bin
-# #qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %name.pro
-# #%make_build VERBOSE=1
+subst 's|taglib mad|taglib libmad|g' src/plugins/Input/mad/mad.pro
+export PATH=$PATH:%_qt4dir/bin
+qmake	"QMAKE_CFLAGS+=%optflags" \
+	"QMAKE_CXXFLAGS+=%optflags" \
+	LIB_DIR=/%_lib \
+	'DISABLED_PLUGINS=OSS4_PLUGIN %PLUG_DISABLE' \
+	'CONFIG+=%PLUG_ENABLE' \
+	%name.pro
+%make_build VERBOSE=1
 
 cd doc && doxygen Doxyfile
 
 %install
 # # with CMake
-%make DESTDIR=%buildroot install
+# # %make DESTDIR=%buildroot install
 
 # # with QMake
-# #%make INSTALL_ROOT=%buildroot%prefix install
+%make INSTALL_ROOT=%buildroot%prefix install
+cp src/qmmpui/{playlistheadermodel.h,metadataformatter.h} %buildroot%_includedir/qmmpui/
 
 mkdir -p %buildroot%_datadir/%name
 ln -s %_wlskindir %buildroot%_datadir/%name/skins
@@ -724,9 +762,11 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-in-sid
 %_libdir/%name/Input/libsid*
 
+%if "%rel" != "alt0.M51"
 # disable for 5.1
 %files -n %name-in-opus
 %_libdir/%name/Input/libopus*
+%endif
 
 # Visualization plugins
 %files -n %name-vis-analyzer
@@ -824,6 +864,24 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Tue Jun 16 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5161
+- 0.9.0 svn5161 version
+
+* Tue Jun 16 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5157.1
+- fix build
+
+* Tue Jun 16 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5157
+- 0.9.0 svn5157 version
+
+* Sun Jun 14 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5138
+- 0.9.0 svn5138 version
+
+* Sat Jun 13 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5136
+- 0.9.0 svn5136 version
+
+* Sun May 03 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn4802
+- 0.9.0 svn4802 version
+
 * Thu Dec 25 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn4636
 - 0.9.0 svn4636 version
 - build with cmake
