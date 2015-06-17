@@ -1,6 +1,6 @@
 
 Name: libssh
-Version: 0.6.3
+Version: 0.6.5
 Release: alt1
 
 Group: System/Libraries
@@ -82,6 +82,13 @@ install -m 0644 %SOURCE2 ./
 %_libdir/*.so
 
 %changelog
+* Wed Jun 17 2015 Sergey V Turchin <zerg@altlinux.org> 0.6.5-alt1
+- new version
+- security fix: CVE-2015-3146
+
+* Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.6.3-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.6.3-alt1
 - new version
 - security fixes: CVE-2014-0017, CVE-2014-0017
