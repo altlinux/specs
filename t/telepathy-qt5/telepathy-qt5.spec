@@ -2,7 +2,7 @@
 %define farstream_dev  pkgconfig(farstream-0.2) libtelepathy-farstream-devel
 
 Name: telepathy-qt5
-Version: 0.9.5
+Version: 0.9.6.1
 Release: alt1
 
 Summary: Telepathy framework - Qt5 connection manager library 
@@ -12,9 +12,6 @@ Group: System/Libraries
 URL: http://telepathy.freedesktop.org/wiki/Telepathy%%20Qt
 
 Source: telepathy-qt-%version.tar
-# SuSE
-Patch10: Add-missing-QObject-include.patch
-Patch11: add-the-telepathy-qt-include.patch
 # ALT
 Patch100: alt-fix-install.patch
 
@@ -53,8 +50,6 @@ Static libraries for %name.
 
 %prep
 %setup -qn telepathy-qt-%version
-%patch10 -p1
-%patch11 -p1
 %patch100 -p1
 
 find -type f -name \*.pc.in | \
@@ -65,7 +60,7 @@ done
 %build
 export PATH=%_qt5_bindir:$PATH
 export QT_DOC_DIR=%_qt5_docdir
-%Kbuild \
+%Kcmake \
     -DDESIRED_QT_VERSION=5 \
     -DENABLE_FARSTREAM:BOOL=ON \
     -DENABLE_FARSIGHT:BOOL=OFF \
@@ -74,6 +69,24 @@ export QT_DOC_DIR=%_qt5_docdir
     -DENABLE_EXAMPLES=OFF \
     -DDISABLE_WERROR=ON \
     #
+
+# hack against broken gstreamer1.0-devel
+pushd BUILD-*
+if [ ! -e %_includedir/gstreamer-1.0/gst/gstconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gstconfig.h ]
+then
+    mkdir -p gst
+    [ -e gst/gstconfig.h ] || \
+	ln -s %_libdir/gstreamer-1.0/include/gst/gstconfig.h gst/gstconfig.h
+fi
+if [ ! -e %_includedir/gstreamer-1.0/gst/gl/gstglconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h ]
+then
+    mkdir -p gst/gl
+    [ -e gst/gl/gstglconfig.h ] || \
+	ln -s %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h gst/gl/gstglconfig.h
+fi
+popd
+
+%Kmake
 pushd BUILD*/
 make doxygen-doc
 popd
@@ -95,5 +108,8 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Wed Jun 17 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6.1-alt1
+- new version
+
 * Mon May 18 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.5-alt1
 - initial build
