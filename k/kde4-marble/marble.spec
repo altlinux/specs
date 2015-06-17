@@ -4,7 +4,7 @@
 %define rname marble
 %define major 15
 %define minor 4
-%define bugfix 1
+%define bugfix 2
 Name: kde4-marble
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -126,6 +126,9 @@ KDE 4 library
 
 
 %changelog
+* Wed Jun 17 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt1
+- new version
+
 * Thu May 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.1-alt1
 - new version
 
