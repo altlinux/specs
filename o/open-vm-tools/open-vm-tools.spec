@@ -16,7 +16,7 @@
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt1
+Release: alt1.1
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -29,6 +29,7 @@ Source4: %name-desktop.tmpfile
 Source5: %toolsdaemon.pam
 
 Patch100: add-altlinux-open-vm-tools.patch
+Patch200: open-vm-tools-9.10.0-fix-build-with-gcc5.patch
 
 BuildRequires: gcc-c++
 BuildRequires: doxygen
@@ -78,6 +79,7 @@ VMware virtual machines.
 %prep
 %setup
 %patch100 -p1
+%patch200 -p2
 
 %build
 # Use -Wno-unused-local-typedefs to build with GCC 4.8
@@ -196,6 +198,9 @@ fi
 %_libdir/libvmtools.so
 
 %changelog
+* Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.10.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Apr 13 2015 Alexey Shabalin <shaba@altlinux.ru> 9.10.0-alt1
 - 9.10.0
 

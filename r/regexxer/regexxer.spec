@@ -1,6 +1,6 @@
 Name: regexxer
 Version: 0.11
-Release: alt1.git20140920
+Release: alt1.git20140920.1
 
 Summary: regexxer is a nifty search/replace tool for the desktop user.
 Group: Text tools
@@ -48,6 +48,9 @@ typing find/grep/sed/awk/perl command lines.
 %_datadir/glib-2.0/schemas/org.regexxer.gschema.xml
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11-alt1.git20140920.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.git20140920
 - Version 0.11
 

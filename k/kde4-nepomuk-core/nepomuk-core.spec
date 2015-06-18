@@ -6,7 +6,7 @@ Name: kde4-nepomuk-core
 %define minor  14
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt1.1
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -143,6 +143,9 @@ done
 %_K4link/*.so
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.14.3-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Apr 03 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 

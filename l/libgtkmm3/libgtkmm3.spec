@@ -6,7 +6,7 @@
 
 Name: libgtkmm3
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
 License: LGPL
@@ -99,6 +99,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.16.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

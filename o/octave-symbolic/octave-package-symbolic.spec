@@ -7,7 +7,7 @@ BuildRequires: pkgconfig(ginac)
 %define octave_descr_name Symbolic
 Name: octave-%octave_pkg_name
 Version: 1.1.0
-Release: alt2.1
+Release: alt2.1.1
 Summary: Symbolic Computations.
 
 Group: Sciences/Mathematics
@@ -55,6 +55,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0-alt2.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2.1
 - Rebuilt with new libginac
 

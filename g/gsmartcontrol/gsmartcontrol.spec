@@ -1,6 +1,6 @@
 Name: gsmartcontrol
 Version: 0.8.7
-Release: alt1
+Release: alt1.1
 
 Summary: GSmartControl is a graphical user interface for smartctl
 Group: Graphical desktop/Other
@@ -48,6 +48,9 @@ to determine its health, as well as run various tests on it.
 %exclude %_datadir/pixmaps/gsmartcontrol.*
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.7-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Oct 27 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt1
 - 0.8.7
 - spec cleanup

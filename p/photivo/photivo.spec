@@ -5,7 +5,7 @@
 
 Name: photivo
 Version: 0
-Release: alt11.%{rev}
+Release: alt11.%{rev}.1
 
 Summary: Photivo photo processor
 Group: Graphics
@@ -20,8 +20,7 @@ Patch: %name.patch
 
 Requires: %name-data = %version-%release
 
-%set_gcc_version 4.9
-BuildRequires: gcc4.9-c++ libgomp4.9-devel
+BuildRequires: gcc-c++ libgomp-devel
 
 BuildRequires: ccache libqt4-devel libltdl-devel
 BuildRequires: libexiv2-devel liblensfun-devel libfftw3-devel liblqr-devel
@@ -114,6 +113,9 @@ find %buildroot%_datadir/%name -type f -print0|xargs -r0 chmod 644 --
 %endif
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0-alt11.66a8c1082d88.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu May 21 2015 Yuri N. Sedunov <aris@altlinux.org> 0-alt11.66a8c1082d88
 - update to current snapshot
 - built with gcc4.9

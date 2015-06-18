@@ -2,7 +2,7 @@
 
 Name: kde4-%origname
 Version: 4.0.9
-Release: alt2
+Release: alt2.1
 
 Summary: A powerfull batch renamer for KDE4
 Group: File tools
@@ -47,6 +47,9 @@ It can also change access and modification dates, permissions, and file ownershi
 %_K4srv/*
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.9-alt2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Jan 17 2014 Yuri N. Sedunov <aris@altlinux.org> 4.0.9-alt2
 - rebuilt against libexiv2.so.13
 

@@ -1,7 +1,7 @@
 Summary: Free firewire audio driver library
 Name: libffado
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 License: GPLv2+
 Group: Sound
 Url: http://www.ffado.org/
@@ -92,6 +92,9 @@ rm -rf %buildroot
 %python_sitelibdir_noarch/%modulename
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Oct 30 2012 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
 - Autobuild version bump to 2.1.0
 - Separate python module

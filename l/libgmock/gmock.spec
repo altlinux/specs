@@ -1,6 +1,6 @@
 Name: libgmock
 Version: 1.7.0
-Release: alt1
+Release: alt1.1
 Summary: Google C++ Mocking Framework
 Group: Development/C++
 License: BSD
@@ -68,6 +68,9 @@ install -D scripts/gmock-config %buildroot%_bindir/gmock-config
 %_libdir/*.a
 
 %changelog
+* Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Oct 17 2013 Fr. Br. George <george@altlinux.ru> 1.7.0-alt1
 - Autobuild version bump to 1.7.0
 

@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.18.alpha
-Release: alt1
+Release: alt1.1
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -9,6 +9,8 @@ License: Various (all distributable)
 Url: http://www.wildfiregames.com/0ad/
 Requires: %name-data = %epoch:%version
 Source: %name-%version.tar
+
+Patch: 0ad-0.0.18-fix-build-with-gcc5.patch
 
 BuildRequires: gcc-c++ python zip cmake
 BuildRequires: boost-devel boost-filesystem-devel boost-flyweight-devel boost-signals-devel 
@@ -33,6 +35,8 @@ educational celebration of game development and ancient history.
 
 %prep
 %setup
+
+%patch -p1
 
 %build
 mkdir -p libraries/source/fcollada/src/output/debug/FCollada
@@ -71,6 +75,9 @@ cp -a binaries/data/* %buildroot/%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Sun Jun 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:0.0.18.alpha-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Mar 14 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.18.alpha-alt1
 - 0.0.18
 

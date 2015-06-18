@@ -1,6 +1,6 @@
 Name: nxsadmin
 Version: 0.2.1
-Release: alt5.qa1
+Release: alt5.qa1.1
 
 Summary: Administering graphic tool for FreeNX server
 
@@ -43,6 +43,9 @@ install -m 644 %name-icon.png %buildroot%_niconsdir
 %_desktopdir/%name.desktop
 %_niconsdir/*.png
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.1-alt5.qa1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.2.1-alt5.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:

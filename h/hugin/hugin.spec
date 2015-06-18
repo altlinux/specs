@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: hugin
 Version: 2013.0.0
-Release: alt3
+Release: alt3.1
 
 Group: Graphics
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
@@ -9,6 +9,9 @@ License: GPL
 Url: http://hugin.sourceforge.net/
 Source0: %name-%version.tar
 Source1: %name.desktop
+
+Patch1: hugin-2013.0.0-lensfun_0.3.patch
+Patch2: hugin-2013.0.0-boost1.56.patch
 
 BuildPreReq: libpano13-devel boost-devel >= 1.34 wxGTK-devel >= 2.8.0
 BuildPreReq: libgtk+2-devel >= 2.0.3 boost-thread-devel >= 1.34 gcc-c++ gcc-fortran
@@ -28,11 +31,14 @@ panorama, stitch any series of overlapping pictures and much more.
 %prep
 %setup -q
 
+%patch1 -p1
+%patch2 -p1
+
 %build
 ###From CVS only
 suffix=`echo %_libdir | sed s/[^0-9]*//`
 cmake -DCMAKE_INSTALL_PREFIX=/usr/ -DINSTALL_XRC_DIR="/usr/share/hugin/xrc" -DLIB_SUFFIX="$suffix" .
-make
+%make_build
 
 %install
 ###Check line below
@@ -74,6 +80,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 /usr/share/icons/hicolor/32x32/apps/hugin.png
 
 %changelog
+* Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2013.0.0-alt3.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Dec 10 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2013.0.0-alt3
 - rebuild with libexiv2
 

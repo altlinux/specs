@@ -3,7 +3,7 @@
 
 Name: gwenview
 Version: 1.4.2
-Release: alt18
+Release: alt18.1
 Summary: Simple image viewer for KDE.
 License: GPL
 Group: Graphics
@@ -85,6 +85,9 @@ tar xf %SOURCE2 -C %buildroot%_K3apps/%name
 %_libdir/libkdeinit_gwenview.so
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.2-alt18.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Jan 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt18
 - rebuilt against libexiv2.so.13
 

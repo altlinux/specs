@@ -4,7 +4,7 @@
 
 Name:    ardour
 Version: 3.2
-Release: alt2
+Release: alt2.1
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
@@ -145,6 +145,9 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png %buildroot%
 %_iconsdir/ardour3.png
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2-alt2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 3.2-alt2
 - Beautify desktop file
 - Add Jack server connector to requires

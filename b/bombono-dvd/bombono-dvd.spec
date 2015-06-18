@@ -1,7 +1,7 @@
 Summary: DVD authoring program with nice and clean GUI
 Name: bombono-dvd
 Version: 1.2.2
-Release: alt2
+Release: alt2.1
 License: GPL
 Group: Video
 Url: http://www.bombono.org
@@ -59,6 +59,9 @@ ln -s %_datadir/fonts/ttf/freefont/FreeSans.ttf %buildroot%_datadir/bombono/reso
 %_datadir/mime/packages/*
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.2-alt2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt2
 - Fixed build
 

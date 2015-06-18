@@ -1,6 +1,6 @@
 Name: libtntdb
 Version: 1.2
-Release: alt1
+Release: alt1.1
 
 Summary: C++ library for easy access to databases
 License: LGPL
@@ -49,5 +49,8 @@ This package contains development part of Tntdb.
 %_includedir/tntdb
 
 %changelog
+* Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Feb 13 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2-alt1
 - initial

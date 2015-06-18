@@ -1,6 +1,6 @@
 Name: xinput-calibrator
 Version: 0.7.5
-Release: alt1
+Release: alt1.1
 
 Summary: A generic touchscreen calibration program for X.Org
 License: MIT
@@ -37,5 +37,8 @@ make
 %_man1dir/xinput_calibrator.*
 
 %changelog
+* Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.5-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Dec 25 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.5-alt1
 - initial

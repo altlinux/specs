@@ -4,7 +4,7 @@
 %define octave_descr_name Xraylib
 Name: octave-%octave_pkg_name
 Version: 1.0.8
-Release: alt2
+Release: alt2.1
 Summary: GNU Scientific Library
 
 Group: Sciences/Mathematics
@@ -47,6 +47,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.8-alt2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.0.8-alt2
 - Rebuild with the next version of Octave: 3.8.0
 

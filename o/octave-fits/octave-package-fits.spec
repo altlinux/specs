@@ -5,7 +5,7 @@ Serial: 1
 %define octave_descr_name FITS
 Name: octave-%octave_pkg_name
 Version: 1.0.5
-Release: alt2
+Release: alt2.1
 Summary: Reading and writing FITS (Flexible Image Transport System) files.
 
 Group: Sciences/Mathematics
@@ -59,6 +59,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.0.5-alt2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.0.5-alt2
 - updated by octave-package-builder
 

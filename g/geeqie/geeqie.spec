@@ -1,6 +1,6 @@
 Name: geeqie
 Version: 1.1
-Release: alt4
+Release: alt4.1
 
 Summary: Graphics file browser utility
 License: GPLv2+
@@ -85,6 +85,9 @@ install -pD -m644 geeqie.png %buildroot%_liconsdir/geeqie.png
 %_man1dir/*
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1-alt4.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Apr 03 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt4
 - applied some patches from geeqie bugtracker and mailing list
 - built against liblcms2 (ALT #29943)

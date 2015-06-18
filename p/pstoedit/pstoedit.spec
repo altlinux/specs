@@ -2,7 +2,7 @@
 
 Name: pstoedit
 Version: 3.62
-Release: alt4
+Release: alt4.1
 
 Summary: converts Postscript(TM) and PDF files to other vector graphic formats
 Summary(ru_RU.KOI8-R): преобразует файлы Postscript(TM) и PDF в другие векторные форматы
@@ -159,6 +159,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.62-alt4.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Feb 17 2015 Anton Farygin <rider@altlinux.ru> 3.62-alt4
 - Rebuild with new libImageMagick
 

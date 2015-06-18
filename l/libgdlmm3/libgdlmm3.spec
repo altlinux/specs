@@ -9,7 +9,7 @@
 
 Name: lib%{_name}3
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: C++ bindings for the gdl library
 Group: System/Libraries
@@ -79,6 +79,9 @@ make check
 %endif
 
 %changelog
+* Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.7.3-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Mar 01 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.3-alt1
 - 3.7.3
 

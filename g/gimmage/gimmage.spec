@@ -1,6 +1,6 @@
 Name: gimmage
 Version: 0.2.3
-Release: alt4.1
+Release: alt4.1.1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -50,6 +50,9 @@ install -p -m644 %SOURCE1 %buildroot%_desktopdir/
 %_desktopdir/*
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.3-alt4.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt4.1
 - Fixed build with glibc 2.16
 

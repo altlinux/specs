@@ -1,6 +1,6 @@
 Name: ganv
 Version: 1.4.2
-Release: alt1
+Release: alt1.1
 Summary: Interactive Gtk widget for interactive "boxes and lines" or graph-like environments
 License: GPLv3
 Group: Graphics
@@ -99,6 +99,9 @@ This package contains tests for lib%name.
 %doc docs/*
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.2-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1
 - Initial build for Sisyphus
 

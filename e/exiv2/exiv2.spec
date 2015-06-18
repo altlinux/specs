@@ -1,6 +1,6 @@
 Name: exiv2
 Version: 0.24
-Release: alt1
+Release: alt1.1
 
 Summary: Command line tool to access EXIF data in image files
 License: GPLv2+
@@ -67,6 +67,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.24-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Dec 02 2013 Yuri N. Sedunov <aris@altlinux.org> 0.24-alt1
 - 0.24
 

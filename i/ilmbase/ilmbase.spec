@@ -3,7 +3,7 @@
 
 Name: ilmbase
 Version: 2.2.0
-Release: alt1
+Release: alt1.1
 
 %define common %name%libsover-common
 %define libhalf libhalf%libsover
@@ -163,6 +163,9 @@ done
 
 
 %changelog
+* Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.2.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt1
 - new version
 

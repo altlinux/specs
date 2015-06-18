@@ -1,7 +1,7 @@
 %define oname idioskopos
 Name: lib%oname
 Version: 0.4.1
-Release: alt2.1
+Release: alt2.1.1
 
 Summary: C++ library that simplifies (hopefully) the addition of object reflection and introspection
 
@@ -55,6 +55,9 @@ Libraries/include files for development with %name.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.1-alt2.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt2.1
 - Fixed build
 

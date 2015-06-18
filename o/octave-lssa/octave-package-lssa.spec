@@ -4,7 +4,7 @@
 %define octave_descr_name lssa
 Name: octave-%octave_pkg_name
 Version: 0.1.2
-Release: alt2
+Release: alt2.1
 Summary: Least squares spectral analysis
 
 Group: Sciences/Mathematics
@@ -49,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.2-alt2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 0.1.2-alt2
 - Rebuild with the next version of Octave: 3.8.0
 

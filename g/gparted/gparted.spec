@@ -3,7 +3,7 @@
 
 Name: gparted
 Version: 0.22.0
-Release: alt1
+Release: alt1.1
 
 Summary: %Name Partition Editor
 Summary(ru_RU.UTF-8): Редактор разделов %Name
@@ -88,6 +88,9 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.22.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Mar 27 2015 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
 - 0.22.0
 

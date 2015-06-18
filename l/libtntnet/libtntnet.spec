@@ -1,6 +1,6 @@
 Name: libtntnet
 Version: 2.1
-Release: alt1
+Release: alt1.1
 
 Summary: Web application server for web applications written in C++
 License: LGPL
@@ -81,5 +81,8 @@ This package contains sample web server written with tntnet.
 %_man8dir/tntnet.8*
 
 %changelog
+* Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Feb 13 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt1
 - initial

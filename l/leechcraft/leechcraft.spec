@@ -2,9 +2,12 @@
 %def_enable torrent
 %def_disable musiczombie
 
+# https://bugzilla.gnome.org/show_bug.cgi?id=739767
+%add_optflags -I%_libdir/gstreamer-1.0/include
+
 Name: leechcraft
 Version: 0.6.75
-Release: alt0.1
+Release: alt0.1.1
 
 Summary: LeechCraft DE
 License: Boost Software License
@@ -37,8 +40,7 @@ Requires: openbox-base dbus-tools-gui
 %add_findreq_skiplist %_datadir/%name/fenet/wms/*.sh
 %add_findreq_skiplist %_datadir/%name/azoth/lc_azoth_modnok_latexconvert.sh
 
-%set_gcc_version 4.9
-BuildRequires: gcc4.9-c++
+BuildRequires: gcc-c++
 BuildRequires: cmake libqt4-devel qt4-mobility-devel libqtermwidget-devel libqwt6-devel >= %qwt_ver
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: boost-asio-devel boost-locale-devel
@@ -159,6 +161,9 @@ __EOF__
 %_datadir/%name/cmake/
 
 %changelog
+* Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.75-alt0.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue May 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.75-alt0.1
 - 0.6.75_00a4cac2
 - built against gstreamer-1.0 using gcc-4.9

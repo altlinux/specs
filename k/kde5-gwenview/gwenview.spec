@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 15.4.0
-Release: alt1
+Release: alt1.1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -96,5 +96,8 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 15.4.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
 - initial build

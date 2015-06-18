@@ -1,6 +1,6 @@
 Name: syfi
 Version: 1.1.0
-Release: alt5.bzr20130304
+Release: alt5.bzr20130304.1
 Summary: Symbolic Finite Elements (SyFi) and The SyFi Form Compiler (SFC)
 License: GPL v2
 Group: Sciences/Mathematics
@@ -180,6 +180,9 @@ popd
 %_datadir/%name/demo
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0-alt5.bzr20130304.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat May 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt5.bzr20130304
 - Rebuilt with updated NumPy
 

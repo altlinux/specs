@@ -4,7 +4,7 @@
 
 Name: libgtkmm2
 Version: %major.4
-Release: alt1
+Release: alt1.1
 
 Summary: A C++ interface for GTK2 (a GUI library for X)
 License: LGPL
@@ -85,6 +85,9 @@ mm-common-prepare
 #%_datadir/%rname-%api_version
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.24.4-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sun Jun 30 2013 Yuri N. Sedunov <aris@altlinux.org> 2.24.4-alt1
 - 2.24.4
 

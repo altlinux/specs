@@ -1,7 +1,7 @@
 %define _name luminance
 Name: %_name-hdr
 Version: 2.4.0
-Release: alt2
+Release: alt2.1
 
 Summary: A graphical tool for creating and processing HDR images
 Group: Graphics
@@ -10,6 +10,8 @@ Url: http://qtpfsgui.sourceforge.net/
 
 Source: http://downloads.sourceforge.net/project/qtpfsgui/luminance/%version/%name-%version.tar.bz2
 Source1: luminance-hdr_lang_ru.qm
+
+Patch1: luminance-2.4.0-qt5-printsupport.patch
 
 Obsoletes: qtpfsgui
 Provides: qtpfsgui = %version-%release
@@ -32,6 +34,8 @@ provide a workflow for HDR imaging.
 #cp %SOURCE1 i18n/lang_ru.qm
 #rm -f i18n/lang_ru.ts
 
+%patch1 -p1
+
 %build
 %cmake
 %cmake_build
@@ -51,6 +55,9 @@ provide a workflow for HDR imaging.
 %doc AUTHORS Changelog README TODO BUGS
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.0-alt2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Jan 31 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt2
 - enabled FITS support
 

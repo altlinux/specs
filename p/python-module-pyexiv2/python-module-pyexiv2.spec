@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.3.2
-Release: alt2.bzr20120921
+Release: alt2.bzr20120921.1
 
 Summary: A python binding to exiv2, the C++ library for manipulation of EXIF and IPTC image metadata
 License: GPLv2+
@@ -46,6 +46,9 @@ scons install DESTDIR=%buildroot CXXFLAGS="%optflags"
 %doc doc/*
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.2-alt2.bzr20120921.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt2.bzr20120921
 - Snapshot from bzr
 

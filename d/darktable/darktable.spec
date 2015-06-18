@@ -2,7 +2,7 @@
 
 Name: darktable
 Version: %ver_major.7
-Release: alt1
+Release: alt1.1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPLv3
@@ -13,8 +13,7 @@ Url: http://%name.org/
 #Source: %name-%version.tar
 Source: https://github.com/darktable-org/darktable/releases/download/release-%version/%name-%version.tar.xz
 
-%set_gcc_version 4.9
-BuildRequires: gcc4.9-c++ libgomp4.9-devel
+BuildRequires: gcc-c++ libgomp-devel
 
 BuildPreReq:  rpm-build-gnome
 BuildRequires: /proc
@@ -70,6 +69,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.7-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Jun 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.7-alt1
 - 1.6.7 using gcc-4.9
 

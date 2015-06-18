@@ -2,7 +2,7 @@
 
 Name: libccfits
 Version: 2.4
-Release: alt2
+Release: alt2.1
 
 Summary: A C++ interface for cfitsio
 Group: System/Libraries
@@ -69,6 +69,9 @@ cp -R html %buildroot%_datadir/doc/%name/
 %_datadir/doc/%name/
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4-alt2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Apr 08 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt2
 - fixed build with new libcfitsio-3.280-alt1
 

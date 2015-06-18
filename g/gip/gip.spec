@@ -1,6 +1,6 @@
 Name: gip
 Version: 1.7.0
-Release: alt2
+Release: alt2.1
 Summary: Internet Protocol Calculator for Gnome
 
 Group: Networking/Other
@@ -41,6 +41,9 @@ export LIBDIR=lib
 %doc AUTHORS ChangeLog COPYING
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.0-alt2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Feb 07 2011 Vladimir Lettiev <crux@altlinux.ru> 1.7.0-alt2
 - fixed %%files section (do not include debuginfo files)
 

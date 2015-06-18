@@ -1,6 +1,6 @@
 Name: libextractor
 Version: 1.3
-Release: alt1
+Release: alt1.1
 
 Summary: libextractor is a simple library for keyword extraction
 
@@ -92,6 +92,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Jul 08 2014 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
 - 1.3
 

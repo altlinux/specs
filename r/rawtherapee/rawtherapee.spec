@@ -11,7 +11,7 @@
 
 Name: rawtherapee
 Version: 4.2
-Release: alt1
+Release: alt1.1
 
 Summary: THe Experimental RAw Photo Editor
 License: GPLv3+
@@ -96,6 +96,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Mar 31 2015 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
 - 4.2
 
