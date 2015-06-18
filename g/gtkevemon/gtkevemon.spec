@@ -1,6 +1,6 @@
 Name: gtkevemon
 Version: 1.8
-Release: alt2.qa2
+Release: alt2.qa2.1
 Summary: GtkEveMon is a skill monitoring application for EVE Online 
 
 Packager: Alexey Borovskoy <alb@altlinux.ru>
@@ -45,6 +45,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/*
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8-alt2.qa2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt2.qa2
 - Fixed build
 

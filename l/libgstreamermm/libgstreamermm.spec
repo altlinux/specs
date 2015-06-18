@@ -2,7 +2,7 @@
 %define oname gstreamermm
 Name: libgstreamermm
 Version: %major.8
-Release: alt2.1
+Release: alt2.1.1
 
 Summary: C++ wrapper for GStreamer library
 
@@ -61,6 +61,9 @@ rm -rf %buildroot%_libdir/gstreamermm-0.10
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.10.8-alt2.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Apr 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.8-alt2.1
 - Fixed build with new glib2
 

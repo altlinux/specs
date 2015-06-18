@@ -8,7 +8,7 @@ BuildRequires: perl(FileHandle.pm) perl(IPC/Open3.pm) perl(Text/Wrap.pm)
 %define octave_descr_name Communications
 Name: octave-%octave_pkg_name
 Version: 1.2.0
-Release: alt1
+Release: alt1.1
 Summary: Communications
 
 Group: Sciences/Mathematics
@@ -53,6 +53,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.2.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.2.0-alt1
 - updated by octave-package-builder
 

@@ -1,6 +1,6 @@
 Name: paprefs
 Version: 0.9.10
-Release: alt1
+Release: alt1.1
 
 Summary: PulseAudio Preferences
 License: GPL
@@ -55,6 +55,9 @@ touch -r configure.ac.stamp configure.ac
 %_datadir/paprefs/paprefs.glade
 
 %changelog
+* Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.10-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Apr 07 2014 Ilya Mashkin <oddity@altlinux.ru> 0.9.10-alt1
 - 0.9.10
 - add patches

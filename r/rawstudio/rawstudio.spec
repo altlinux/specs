@@ -2,7 +2,7 @@
 
 Name: rawstudio
 Version: %ver_major
-Release: alt0.1
+Release: alt0.1.1
 
 Summary: Rawstudio is an open source raw-image converter written in GTK+
 License: GPLv2+
@@ -57,6 +57,9 @@ glib-gettextize -c -f
 %exclude %_pkgconfigdir
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1-alt0.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Feb 19 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt0.1
 - 2.1 snapshot
 

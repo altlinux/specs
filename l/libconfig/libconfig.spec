@@ -2,7 +2,7 @@
 
 Name: libconfig
 Version: 1.4.9
-Release: alt1
+Release: alt1.1
 
 Summary: C/C++ Configuration File Library
 License: LGPLv2.1+
@@ -120,6 +120,9 @@ sed -i '/examples.*Makefile/d' configure.ac
 %endif
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.9-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Jun 19 2014 Michael Shigorin <mike@altlinux.org> 1.4.9-alt1
 - new version 1.4.9
 

@@ -2,7 +2,7 @@
 
 Name: nemiver
 Version: %ver_major.6
-Release: alt0.1
+Release: alt0.1.1
 
 Summary: A GNOME C/C++ Debugger
 Group: Development/Debuggers
@@ -68,6 +68,9 @@ export ac_cv_path_GDB_PROG=%_bindir/gdb
 %_includedir/%name/
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.6-alt0.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Nov 03 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt0.1
 - 0.9.6 snapshot (ef396727ad)
 

@@ -4,7 +4,7 @@
 %define octave_descr_name level-set
 Name: octave-%octave_pkg_name
 Version: 0.1.0
-Release: alt1
+Release: alt1.1
 Summary: Level-Set
 
 Group: Sciences/Mathematics
@@ -51,6 +51,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 0.1.0-alt1
 - updated by octave-package-builder
 

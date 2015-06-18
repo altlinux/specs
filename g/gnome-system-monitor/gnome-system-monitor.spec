@@ -8,7 +8,7 @@
 
 Name: gnome-system-monitor
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Simple process monitor
 License: GPLv2+
@@ -76,6 +76,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.16.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

@@ -1,6 +1,6 @@
 Name: nomacs
 Version: 1.6.3
-Release: alt2.1
+Release: alt2.1.1
 
 License: GPLv3
 Group: Graphics
@@ -42,6 +42,9 @@ rm -rf {LibRaw,exiv2,expat,zlib}*
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.3-alt2.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Mar 13 2014 Dmitry Derjavin <dd@altlinux.org> 1.6.3-alt2.1
 - NMU: rebuild with libopencv-2.4.8.1;
 

@@ -1,8 +1,7 @@
-%set_gcc_version 4.8
 Name:		flush
 Summary:	GTK-based BitTorrent client
 Version:	0.9.12
-Release:	alt1.4.qa4
+Release:	alt1.4.qa4.1
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 License:	GPLv3+
 Group:		Networking/File transfer
@@ -10,7 +9,7 @@ Url:		http://flush.sourceforge.net/
 Source0:	%name-%version.tar.bz2
 
 BuildRequires: boost-asio-devel boost-filesystem-devel boost-signals-devel
-BuildRequires: doxygen gcc%__gcc_version-c++ libconfig-c++-devel libexpat-devel
+BuildRequires: doxygen gcc-c++ libconfig-c++-devel libexpat-devel
 BuildRequires: libglademm-devel libnotify-devel libssl-devel libtorrent-rasterbar-devel libdbus-devel
 
 Patch0:		%name-0.9.11-magnet_mime_support.patch
@@ -72,6 +71,9 @@ cd ../..
 %_pixmapsdir/*
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.12-alt1.4.qa4.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri May 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.12-alt1.4.qa4
 - Rebuilt with new libtorrent-rasterbar8
 

@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.10.0
-Release: alt1
+Release: alt1.1
 %K5init altplace
 
 Group: System/Libraries
@@ -53,6 +53,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.10.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon May 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1
 - new version
 

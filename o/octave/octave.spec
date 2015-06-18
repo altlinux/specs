@@ -1,6 +1,6 @@
 Name: octave
 Version: 3.8.2
-Release: alt1.1
+Release: alt1.1.1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -141,6 +141,9 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.8.2-alt1.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.2-alt1.1
 - Rebuilt with qscintilla2 2.9
 

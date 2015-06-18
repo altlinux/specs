@@ -4,7 +4,7 @@
 
 Name: %{_name}2
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: C++ wrapper for the libxml2 XML parser library
 Group: System/Libraries
@@ -68,6 +68,9 @@ sed -i 's|\(doctooldir\)\ glibmm\-2\.4|\1 mm-common-util|' configure
 %_docdir/%_name-%xml_ver/*
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.37.1-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.37.1-alt1
 - Version 2.37.1
 

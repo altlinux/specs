@@ -1,6 +1,6 @@
 Name: patchage
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: A modular patch bay for JACK and LASH audio systems
 License: %gpl2plus
@@ -54,6 +54,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/%name/*
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Version 1.0.0
 

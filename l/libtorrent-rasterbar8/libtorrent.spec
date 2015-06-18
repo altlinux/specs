@@ -10,7 +10,7 @@
 Name: libtorrent-rasterbar%{abiversion}
 Version: 0.16.19
 Epoch: 3
-Release: alt1
+Release: alt1.1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -137,6 +137,9 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:0.16.19-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri May 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3:0.16.19-alt1
 - Version 0.16.19
 

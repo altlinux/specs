@@ -1,6 +1,6 @@
 %define mversion	6
-%define dversion	%mversion.9.0
-%define drelease	10
+%define dversion	%mversion.9.1
+%define drelease	3
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -38,7 +38,7 @@ BuildPreReq: libpng-devel
 # Automatically added by buildreq on Wed Nov 03 2010
 BuildRequires: bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libdjvu-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel librsvg-devel libtiff-devel libwmf-devel libxml2-devel openexr-devel perl-devel transfig xdg-utils xorg-cf-files 
 
-BuildRequires: libjpeg-devel liblcms2-devel liblzma-devel libwebp-devel libgraphviz-devel libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath openexr-devel liblqr-devel libdjvu-devel libltdl-devel perl-parent
+BuildRequires: libjpeg-devel liblcms2-devel liblzma-devel libwebp-devel libgraphviz-devel libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath openexr-devel liblqr-devel libdjvu-devel libltdl-devel perl-parent libopenjpeg2.0-devel
 %if_enabled librsvg
 BuildRequires: librsvg-devel libpixman-devel
 %endif
@@ -226,6 +226,13 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu May 28 2015 Anton Farygin <rider@altlinux.ru> 6.9.1.3-alt1
+- new version 6.9.1.3
+
+* Wed May 20 2015 Anton Farygin <rider@altlinux.ru> 6.9.1.2-alt1
+- new version 6.9.1.2
+- built with openjpeg2
+
 * Thu Mar 12 2015 Anton Farygin <rider@altlinux.ru> 6.9.0.10-alt1
 - new version 6.9.0.10
 

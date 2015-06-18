@@ -4,7 +4,7 @@
 %define rname gwenview
 Name: kde4-gwenview
 Version: 4.14.3
-Release: alt1
+Release: alt1.1
 
 Group: Graphics
 Summary: Image viewer for KDE
@@ -76,6 +76,9 @@ KDE 4 core library.
 
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.14.3-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Mar 25 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 

@@ -1,6 +1,6 @@
 Name: mysql-workbench-gpl
 Version: 5.2.47
-Release: alt1.1
+Release: alt1.1.1
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Summary: A MySQL visual database modeling tool
@@ -133,6 +133,9 @@ cp images/icons/MySQLWorkbenchDocIcon32x32.png %buildroot%_iconsdir/hicolor/32x3
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.47-alt1.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2.47-alt1.1
 - Rebuilt with new ctemplate
 

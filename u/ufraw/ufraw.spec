@@ -2,7 +2,7 @@
 
 Name: ufraw
 Version: 0.21
-Release: alt1
+Release: alt1.1
 
 Summary: UFRaw is a graphical utility for opening and converting RAW files from digital photo cameras
 License: GPLv2+
@@ -15,8 +15,7 @@ Patch: ufraw-0.21-CVE-2015-3885.patch
 
 PreReq: GConf
 
-%set_gcc_version 4.9
-BuildRequires: gcc4.9-c++ libgomp4.9-devel
+BuildRequires: gcc-c++ libgomp-devel
 
 BuildPreReq: liblensfun-devel >= 0.2.5
 BuildPreReq: libexiv2-devel >= 0.20
@@ -86,6 +85,9 @@ fi
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.21-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed May 27 2015 Yuri N. Sedunov <aris@altlinux.org> 0.21-alt1
 - 0.21 (usibg gcc4.9)
 

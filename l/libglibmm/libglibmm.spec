@@ -4,7 +4,7 @@
 
 Name: libglibmm
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: C++ wrapper for GLib
 License: LGPL
@@ -94,6 +94,9 @@ mm-common-prepare --force --copy
 %_docdir/%rname-2.4
 
 %changelog
+* Fri May 29 2015 Anton Farygin <rider@altlinux.ru> 2.44.0-alt2
+- rebuild in new environment
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 2.44.0-alt1
 - 2.44.0
 

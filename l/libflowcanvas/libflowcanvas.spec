@@ -1,6 +1,6 @@
 Name: libflowcanvas
 Version: 0.7.1
-Release: alt1
+Release: alt1.1
 
 Summary: A canvas widget for graph-like interfaces
 License: %gpl2plus
@@ -51,6 +51,9 @@ Headers for building software that uses %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.1-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Aug 07 2014 Michael Shigorin <mike@altlinux.org> 0.7.1-alt1
 - NMU: 0.7.1 (NB: deprecated upstream)
 - re-enabled graphviz-2.30+ support (thanks debian for libcgraph patch)

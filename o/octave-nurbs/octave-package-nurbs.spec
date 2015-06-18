@@ -4,7 +4,7 @@
 %define octave_descr_name Nurbs
 Name: octave-%octave_pkg_name
 Version: 1.3.7
-Release: alt1
+Release: alt1.1
 Summary: Nurbs.
 
 Group: Sciences/Mathematics
@@ -13,6 +13,7 @@ URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
 
+BuildPreReq: libgomp-devel
 BuildRequires: octave-devel
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
@@ -51,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.7-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1.3.7-alt1
 - updated by octave-package-builder
 

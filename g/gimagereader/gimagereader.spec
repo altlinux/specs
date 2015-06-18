@@ -1,6 +1,6 @@
 Name: gimagereader
 Version: 2.93
-Release: alt1
+Release: alt1.1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -53,6 +53,9 @@ gImageReader is a simple Gtk front-end to tesseract. Features include:
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.93-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Oct 10 2014 Vitaly Lipatov <lav@altlinux.ru> 2.93-alt1
 - initial build for ALT Linux Sisyphus
 

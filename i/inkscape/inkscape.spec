@@ -4,7 +4,7 @@
 %define pre %nil
 Name: inkscape
 Version: 0.91
-Release: alt1
+Release: alt1.1
 
 Summary: A Vector Drawing Application
 
@@ -128,6 +128,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.91-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Feb 18 2015 Vitaly Lipatov <lav@altlinux.ru> 0.91-alt1
 - new version 0.91 (with rpmrb script)
 

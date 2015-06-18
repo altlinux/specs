@@ -2,7 +2,7 @@
 
 Name:		lib%src
 Version:	1.0
-Release:	alt1.2
+Release:	alt1.2.1
 Summary:	A rock-solid, full-featured Jabber/XMPP client library
 Group:		System/Libraries
 License:	GPLv2
@@ -56,6 +56,9 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 %_libdir/*.so
 
 %changelog
+* Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt1.2.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Sep 23 2011 Alexey Tourbin <at@altlinux.ru> 1.0-alt1.2
 - Rebuilt for debuginfo
 

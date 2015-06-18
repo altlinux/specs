@@ -1,7 +1,7 @@
 %define cvs 20091223
 Name: libtuxcap
 Version: 1.4.0
-Release: alt2.cvs%cvs
+Release: alt2.cvs%cvs.1
 License: GNU
 Summary: The TuxCap Games Framework is a GNU/Linux and Mac OSX port of the PopCap Games Framework used for 2D game development.
 Group: System/Libraries
@@ -51,6 +51,9 @@ sed -i '/pythondemo1/d' tuxcap/CMakeLists.txt
 %_libdir/*.so
 
 %changelog
+* Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.0-alt2.cvs20091223.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Feb 17 2015 Anton Farygin <rider@altlinux.ru> 1.4.0-alt2.cvs20091223
 - Rebuild with new libImageMagick
 

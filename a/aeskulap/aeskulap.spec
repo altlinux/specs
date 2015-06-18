@@ -2,7 +2,7 @@
 
 Name: aeskulap
 Version: 0.2.2
-Release: alt2.1.qa3
+Release: alt2.1.qa3.1
 
 Summary: Medial image viewer for DICOM images
 License: GPL/LGPL
@@ -67,6 +67,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING COPYING.LIB NEWS README
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.2-alt2.1.qa3.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Apr 03 2013 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt2.1.qa3
 - Fix build with new GConf
 

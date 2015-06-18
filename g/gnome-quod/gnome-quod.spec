@@ -1,6 +1,6 @@
 Name: gnome-quod
 Version: 0.2.3
-Release: alt1.qa1
+Release: alt1.qa1.1
 Summary: Place pieces on a grid so that they make a square
 Group: Games/Puzzles
 License: GPL3
@@ -45,6 +45,9 @@ done
 %_datadir/%name/*
 %_man6dir/*
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.3-alt1.qa1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

@@ -3,7 +3,7 @@
 
 Name:     easystroke
 Version:  0.6.0
-Release:  alt2.1
+Release:  alt2.1.1
 
 Summary: a gesture-recognition application for X11
 
@@ -73,6 +73,9 @@ mkdir -p -- %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.0-alt2.1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.6.0-alt2.1
 - rebuild with boost 1.57.0
 

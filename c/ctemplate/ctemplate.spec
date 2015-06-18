@@ -1,6 +1,6 @@
 Name: ctemplate
 Version: 2.3
-Release: alt1.svn20140319
+Release: alt1.svn20140319.1
 License: BSD
 Group: System/Libraries
 Summary: HTML template library written in C inspired by perl HTML::Template
@@ -63,6 +63,9 @@ Use library to build a variable list and pass it to a template.
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3-alt1.svn20140319.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1.svn20140319
 - Version 2.3
 

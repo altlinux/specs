@@ -1,6 +1,6 @@
 Name:		infector
 Version:	0.4
-Release:	alt2.qa1
+Release:	alt2.qa1.1
 Group:		Games/Puzzles
 Summary:	Simple, clean implementation of the board games Ataxx and Hexxagon
 License:	GPLv3
@@ -37,6 +37,9 @@ sed -i 's/=.*buildroot/=/' %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4-alt2.qa1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt2.qa1
 - NMU: rebuilt for debuginfo.
 

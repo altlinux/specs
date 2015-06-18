@@ -5,7 +5,7 @@
 
 Name: gnote
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -81,6 +81,9 @@ desktop-file-install \
 %doc README TODO NEWS AUTHORS
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.16.0-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Mar 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

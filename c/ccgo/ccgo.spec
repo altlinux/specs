@@ -1,6 +1,6 @@
 Name: ccgo
 Version: 0.3.6.4
-Release: alt1
+Release: alt1.1
 
 Summary: a program for playing the game Go
 License: GPL v2
@@ -36,6 +36,9 @@ like GNU Go. It's also a SGF (smart game format) Go record viewer.
 %_datadir/pixmaps/%name
 
 %changelog
+* Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.6.4-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Feb 16 2015 Ilya Mashkin <oddity@altlinux.ru> 0.3.6.4-alt1
 - 0.3.6.4
 

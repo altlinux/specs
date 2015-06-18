@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/mkoctfile /usr/bin/nc-config /usr/bin/octave glibc-devel
 %define octave_descr_name netcdf
 Name: octave-%octave_pkg_name
 Version: 1.0.5
-Release: alt1
+Release: alt1.1
 Summary: netcdf
 
 Group: Sciences/Mathematics
@@ -57,6 +57,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.5-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1.0.5-alt1
 - updated by octave-package-builder
 

@@ -5,7 +5,7 @@ Serial: 1
 %define octave_descr_name quaternion
 Name: octave-%octave_pkg_name
 Version: 2.2.1
-Release: alt1
+Release: alt1.1
 Summary: Quaternion
 
 Group: Sciences/Mathematics
@@ -52,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.2.1-alt1.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1:2.2.1-alt1
 - updated by octave-package-builder
 

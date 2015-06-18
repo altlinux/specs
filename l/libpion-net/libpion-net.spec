@@ -1,8 +1,10 @@
 %define		srcname pion-net
 
+%add_optflags -DBOOST_NO_CXX11_RVALUE_REFERENCES=1
+
 Name:		lib%srcname
 Version:	5.0.7
-Release:	alt1.git20141017
+Release:	alt1.git20141017.1
 Summary:	Pion Network Library (pion-net) is a C++ development library for implementing lightweight HTTP interfaces.
 License: 	Boost Software License v1.0
 Group: 		System/Libraries
@@ -143,6 +145,9 @@ cp -fR doc/html doc/*.pdf AUTHORS ChangeLog NEWS *.md TODO *.html \
 # TODO: yajl support (need 2.0.5 minimum)
 
 %changelog
+* Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.0.7-alt1.git20141017.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu May 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.7-alt1.git20141017
 - Version 5.0.7
 

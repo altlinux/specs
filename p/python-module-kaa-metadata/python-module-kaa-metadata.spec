@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.8
-Release: alt1.git20130624
+Release: alt1.git20130624.1
 
 Summary: Module for retrieving information about media files
 
@@ -112,6 +112,9 @@ cp -fR doc/.build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.8-alt1.git20130624.1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Aug 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.8-alt1.git20130624
 - Version 0.7.8
 
