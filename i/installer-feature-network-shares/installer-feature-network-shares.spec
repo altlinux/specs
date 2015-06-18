@@ -1,5 +1,5 @@
 Name: installer-feature-network-shares
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 %define hookdir %_datadir/install2/postinstall.d
@@ -38,6 +38,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Jun 18 2015 Andrey Cherepanov <cas@altlinux.org> 0.8-alt1
+- Fix continue work in empty installation
+
 * Fri May 08 2015 Andrey Cherepanov <cas@altlinux.org> 0.7-alt1
 - Conditional FTP settings changes
 
