@@ -1,8 +1,8 @@
 %define _libname libfreshwrapper-pepperflash
 
 Name: freshplayerplugin
-Version: 0.2.3
-Release: alt2
+Version: 0.3.0
+Release: alt1
 Summary: PPAPI-host NPAPI-plugin adapter
 License: MIT
 Group: System/Libraries
@@ -13,9 +13,9 @@ Source: %name-%version.tar
 
 ExclusiveArch: %ix86 x86_64
 
-# Automatically added by buildreq on Tue Mar 10 2015 (-bb)
-# optimized out: cmake cmake-modules elfutils fontconfig fontconfig-devel glib2-devel libEGL-devel libGL-devel libX11-devel libXrender-devel libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libjson-c libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: ctest gcc-c++ libGLES-devel libXrandr-devel libalsa-devel libconfig-devel libevent-devel libgtk+2-devel libpulseaudio-devel libssl-devel ragel
+# Automatically added by buildreq on Thu Jun 18 2015 (-ba)
+# optimized out: cmake cmake-modules elfutils fontconfig fontconfig-devel glib2-devel libEGL-devel libGL-devel libX11-devel libXrender-devel libatk-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libjson-c libopencore-amrnb0 libopencore-amrwb0 libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
+BuildRequires: ctest gcc-c++ libGLES-devel libXcursor-devel libXrandr-devel libalsa-devel libavcodec-devel libconfig-devel libevent-devel libgtk+2-devel libpulseaudio-devel libssl-devel libv4l-devel libva-devel ragel
 
 %{?!_without_check:%{?!_disable_check:BuildPreReq: ctest}}
 
@@ -47,11 +47,14 @@ install -Dm 0664 data/freshwrapper.conf.example %buildroot%_sysconfdir/freshwrap
 make -C BUILD check
 
 %files
-%doc COPYING LICENSE.MIT README.md
+%doc COPYING LICENSE README.md
 %_libdir/browser-plugins/%_libname.so
 %config %_sysconfdir/freshwrapper.conf
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.0-alt1
+- Updated to 0.3.0.
+
 * Tue Mar 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.3-alt2
 - Rebuilt with new update-pepperflash (arepo).
 - Add R: update-pepperflash.
