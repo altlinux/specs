@@ -7,7 +7,7 @@
 %endif
 
 %def_disable gcc5ready
-%def_enable hupnp
+%def_disable hupnp
 
 %add_findpackage_path %_kde4_bindir
 %add_findreq_skiplist %_K4apps/cmake/modules*.py
@@ -18,7 +18,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -77,6 +77,7 @@ Patch202: 30_kfileshare_kdesu_fileshareset.diff
 Patch203: 31_relax_plugin_kde_version_check.diff
 # SuSE
 Patch301: desktop-translations.diff
+Patch302: 0001-Drop-Nepomuk-from-KParts-LINK_INTERFACE_LIBRARIES.patch
 # upstream
 # ALT
 Patch1000: kdelibs-4.8.4-alt-xdg-dirs.patch
@@ -156,7 +157,7 @@ Requires: %name = %version-%release
 Requires: cmake libqt4-devel kde-common-devel >= %major.%minor
 Requires: libXrender-devel libXext-devel libXdmcp-devel libXcomposite-devel libXdamage-devel libxkbfile-devel libXtst-devel libXScrnSaver-devel
 Requires: libXpm-devel libXxf86vm-devel libXt-devel libXft-devel
-Requires: libstrigi-devel libsoprano-devel libpcre-devel libgif-devel xml-utils
+Requires: libstrigi-devel libpcre-devel libgif-devel xml-utils
 Requires: libutempter-devel bzlib-devel phonon-devel automoc shared-desktop-ontologies-devel
 Requires: docbook-style-xsl docbook-dtds
 
@@ -180,6 +181,7 @@ applications for KDE 4.
 %patch203 -p1
 #
 %patch301 -p0
+%patch302 -p1
 #
 %patch1000 -p1 -b .xdg-dirs
 %patch1001 -p1 -b .custom-kdedir
@@ -244,11 +246,10 @@ export XDG_DATA_DIRS=%_K4datadir:%_datadir
     -DKDE_PLATFORM_PROFILE="Mobile" \
 %endif
     -DPCRE_INCLUDE_DIR=%_includedir/pcre \
-%if_enabled hupnp
-    -DHUPNP_ENABLED:BOOL=ON \
-%endif
+    -DHUPNP_ENABLED:BOOL=%{?_enable_hupnp:ON}%{!?_enable_hupnp:OFF} \
     -DWITH_FAM:BOOL=OFF \
     -DWITH_SOLID_UDISKS2=ON \
+    -DKIO_NO_SOPRANO=ON \
     -DKDE_DISTRIBUTION_TEXT="%distribution %_target_cpu" \
     -DKDE4_AUTH_BACKEND_NAME="POLKITQT-1" \
     -DKDE_DEFAULT_HOME:STRING=".kde4"
@@ -350,6 +351,10 @@ done
 %_K4includedir/*
 
 %changelog
+* Thu Jun 18 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.9-alt3
+- remove libsoprano-devel from devel package requires
+- build without hupnp
+
 * Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.9-alt2
 - temporary build without openexr
 
