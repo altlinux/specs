@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.13.0
-Release: alt2
+Release: alt3
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -13,6 +13,9 @@ Requires: %name-database tar bzip2
 Source: %name-%version.tar
 Source10: mysql_install_db
 # Upstream
+Patch1: upstream-do_not_crash_when_setmntent_returns_NULL.patch
+Patch2: upstream_dont_call_insert_from_Q_ASSERT.patch
+Patch3: upstream-fix_buffer_overflow_in_AKTEST_FAKESERVER_MAIN.patch
 # RH
 Patch10: akonadi-1.7.0-mysql_conf.patch
 # ALT
@@ -25,7 +28,7 @@ Patch106: akonadi-1.6.2-alt-own-mysql_install_db.patch
 Patch107: akonadi-1.6.2-alt-check-nepomuk.patch
 
 BuildRequires(pre): libqt4-devel
-BuildRequires: gcc-c++ automoc libsoprano-devel soprano
+BuildRequires: gcc-c++ automoc
 BuildRequires: libqt4-devel >= 4.4 kde-common-devel >= 4
 BuildRequires: shared-mime-info >=  0.20
 BuildRequires: pkg-config cmake xsltproc xml-utils
@@ -130,6 +133,9 @@ Development files for %name
 
 %prep
 %setup -q
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 #
 %patch10 -p1
 #
@@ -152,6 +158,7 @@ export CMAKE_LIBRARY_PATH=%_libdir
     -DINCLUDE_INSTALL_DIR=%_includedir \
     -DMYSQLD_EXECUTABLE:FILEPATH=%_sbindir/mysqld \
     -DINSTALL_QSQLITE_IN_QT_PREFIX=ON \
+    -DWITH_SOPRANO=FALSE \
     #
 %Kmake
 
@@ -199,6 +206,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Jun 18 2015 Sergey V Turchin <zerg@altlinux.org> 1.13.0-alt3
+- add upstream fixes
+
 * Fri Jan 23 2015 Sergey V Turchin <zerg@altlinux.org> 1.13.0-alt2
 - rebuild with new boost
 
