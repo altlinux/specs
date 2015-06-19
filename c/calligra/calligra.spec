@@ -6,8 +6,8 @@
 %define koffice_ver 4:2.3.70
 
 Name: calligra
-Version: 2.9.2
-Release: alt2.1
+Version: 2.9.5
+Release: alt1
 Epoch: 0
 %define libname lib%name
 
@@ -35,9 +35,9 @@ Source: http://download.kde.org/stable/calligra-%version/calligra-%version.tar
 Source1: FindOkular.cmake
 # FC
 # ALT
-Patch101: calligra-2.6.0-alt-build-active.patch
-Patch102: calligra-2.8.0-alt-fix-compile.patch
-Patch103: calligra-2.9.0-alt-disable-products.patch
+Patch101: alt-build-active.patch
+Patch102: alt-fix-compile.patch
+Patch103: alt-disable-products.patch
 
 # Automatically added by buildreq on Fri Nov 02 2012 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static ilmbase-devel kde4libs kde4libs-devel kde4pimlibs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libgst-plugins libjpeg-devel libpng-devel libpoppler-devel libpoppler4-qt4 libpq-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libtiff-devel libxkbfile-devel openssh-common phonon-devel pkg-config python-base rpm-build-gir ruby shared-desktop-ontologies-devel shared-mime-info soprano-backend-redland soprano-backend-virtuoso xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -531,7 +531,7 @@ mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 %_K4apps/kritaanimation/
 %_K4conf/krita*.knsrc
 #%_K4conf/kritagemini*
-%_K4conf/kritasketch*
+#%_K4conf/kritasketch*
 %_K4srv/calligra/krita*.desktop
 %_K4srv/krita_kra_thumbnail.desktop
 %_K4srvtyp/krita*.desktop
@@ -694,6 +694,9 @@ mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 %_K4libdir/libkritacolord.so
 
 %changelog
+* Fri Jun 19 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.9.5-alt1
+- new version
+
 * Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0:2.9.2-alt2.1
 - Rebuilt for gcc5 C++11 ABI.
 
