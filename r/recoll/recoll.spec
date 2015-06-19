@@ -3,8 +3,8 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.20.6
-Release: alt2
+Version: 1.21.0
+Release: alt1
 
 Summary: A personal full text search package
 License: %gpl2plus
@@ -115,6 +115,9 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Fri Jun 19 2015 Michael Shigorin <mike@altlinux.org> 1.21.0-alt1
+- new version (watch file uupdate)
+
 * Fri May 22 2015 Michael Shigorin <mike@altlinux.org> 1.20.6-alt2
 - rebuilt against libxapian 1.2.21
 
