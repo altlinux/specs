@@ -3,7 +3,7 @@
 %define docdir %_defaultdocdir/%name-%version
 
 Name: freeipmi
-Version: 1.4.8
+Version: 1.4.9
 Release: alt1
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
@@ -177,6 +177,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Fri Jun 19 2015 Anton Farygin <rider@altlinux.ru> 1.4.9-alt1
+- new version 1.4.9
+
 * Thu Jan 15 2015 Anton Farygin <rider@altlinux.ru> 1.4.8-alt1
 - new version 1.4.8
 
