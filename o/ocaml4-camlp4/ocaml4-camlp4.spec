@@ -1,5 +1,5 @@
 Name: ocaml4-camlp4
-Version: 4.02.0.1
+Version: 4.02.1_3
 Release: alt0.1
 
 Summary: Preprocessor for OCaml 4.02
@@ -12,6 +12,9 @@ Url: https://github.com/ocaml/camlp4
 Packager: %packager
 
 Source0: %name-%version.tar
+
+Requires: rpm-build-ocaml4 >= 1.1
+BuildPreReq: rpm-build-ocaml4 >= 1.1
 
 # Automatically added by buildreq on Sun Oct 19 2014
 # optimized out: ocaml4 ocaml4-runtime
@@ -51,6 +54,12 @@ make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%b
 %_libdir/ocaml/camlp4/
 
 %changelog
+* Fri Jun 19 2015 Andrey Bergman <vkni@altlinux.org> 4.02.1_3-alt0.1
+- Version update.
+
+* Mon Feb 02 2015 Andrey Bergman <vkni@altlinux.org> 4.02.1+2-alt0.1
+- Version update. Added rpm-build-ocaml4 to buildreq.
+
 * Sat Oct 18 2014 Andrey Bergman <vkni@altlinux.org> 4.02.0.1-alt0.1
 - Initial release for Sisyphus after removal from Ocaml distribution
 (see ocaml 4.02.0 changelog).
