@@ -19,8 +19,8 @@ Name: %{oname}1.9
 Conflicts: nginx nginx1.6 nginx1.8
 # epoch need for Sisyphus because I work mainly with t7/branch
 Epoch: 1
-Version: 1.9.1
-Release: alt2
+Version: 1.9.2
+Release: alt1
 
 Summary: Fast HTTP server
 License: BSD
@@ -50,6 +50,18 @@ Source53: upstream-fair.tar
 Source54: vts.tar
 # hg clone http://bitbucket.org/lifeeth/mod_wsgi/
 Source55: mod_wsgi.tar
+# https://github.com/openresty/redis2-nginx-module.git
+Source56: redis2.tar
+# https://github.com/openresty/echo-nginx-module.git
+Source57: echo.tar
+# http://wiki.nginx.org/HttpRedis
+Source58: ngx_http_redis.tar
+# https://github.com/openresty/srcache-nginx-module.git
+Source59: srcache.tar
+# https://github.com/openresty/set-misc-nginx-module.git
+Source60: set-misc.tar
+# https://github.com/simpl/ngx_devel_kit.git
+Source61: devel_kit.tar
 Source100: %oname.watch
 
 Patch1: nginx-0.8-syslog.patch
@@ -97,7 +109,7 @@ Provides: webserver
 Fast HTTP server, extremely useful as an Apache frontend
 
 %prep
-%setup -n %oname-%version -a 7 -a 8 -a 10 -a 50 -a 51 -a 52 -a 53 -a 54 -a 55
+%setup -n %oname-%version -a 7 -a 8 -a 10 -a 50 -a 51 -a 52 -a 53 -a 54 -a 55 -a 56 -a 57 -a 58 -a 59 -a 60 -a 61
 %if_with syslog
 %patch1 -p2
 %endif
@@ -193,6 +205,12 @@ CFLAGS="%optflags $CPU" ./configure \
 	--add-module=upstream-fair \
 	--add-module=mod_wsgi \
 	--add-module=vts \
+	--add-module=redis2 \
+	--add-module=echo \
+	--add-module=ngx_http_redis \
+	--add-module=srcache \
+	--add-module=devel_kit \
+	--add-module=set-misc \
 	--with-pcre-jit \
 	--with-threads \
 	--with-http_auth_request_module
@@ -296,12 +314,24 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %oname
 
 %changelog
-* Fri May 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.9.1-alt2
+* Fri Jun 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.9.2-alt1
+- Version 1.9.2
 - Enabled reuseport
 - Added modules:
   + upstream-fair
   + vts
   + mod_wsgi
+
+* Tue Jun 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt0.M70T.5
+- Added set-misc module
+
+* Mon Jun 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt0.M70T.4
+- Added modules:
+  + redis2
+  + redis
+  + echo
+  + srcache
+>>>>>>> t7
 
 * Fri May 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt0.M70T.3
 - Enabled reuseport
