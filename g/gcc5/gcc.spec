@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 5.1.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -24,7 +24,7 @@ Url: http://gcc.gnu.org/
 %endif
 
 %define priority 511
-%define snapshot 20150422
+%define snapshot 20150612
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -170,7 +170,7 @@ Patch111: gcc5-no-add-needed.patch
 Patch113: gcc5-aarch64-async-unw-tables.patch
 Patch114: gcc5-libsanitize-aarch64-va42.patch
 Patch115: gcc5-pr65689.patch
-Patch116: gcc5-pr65780.patch
+Patch116: gcc5-pr65956.patch
 
 # Debian patches.
 Patch200: gcc-d-lang.diff
@@ -1172,6 +1172,16 @@ version %version.
 %patch722 -p1
 %patch723 -p1
 
+%ifarch %{arm}
+# Workaround PR65956, undo the overalignment optimization
+# on ARM because it has broken backend.
+sed -i -e 's/align != TYPE_ALIGN/align < TYPE_ALIGN/' gcc/tree-sra.c
+%endif
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1211957
+sed -i -e 's/ -Wl,-z,nodlopen//g' gcc/ada/gcc-interface/Makefile.in
+
+
 # Set proper version info.
 echo %gcc_branch > gcc/BASE-VER
 echo %version > gcc/FULL-VER
@@ -1401,11 +1411,7 @@ CONFIGURE_OPTS="\
 
 %make_build MAKEINFOFLAGS=--no-split \
 	BOOT_CFLAGS='%optflags' \
-%ifarch %arm
-	%{?!_cross_platform:bootstrap}
-%else
 	%{?!_cross_platform:profiledbootstrap}
-%endif
 
 %if_enabled doxygen
 %make_build -C %_target_platform/libstdc++-v3/doc doc-html-doxygen
@@ -2384,6 +2390,7 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %dir %gcc_target_libdir/
 %gcc_target_libdir/libgo.so
 %gcc_target_libdir/libgobegin.a
+%gcc_target_libdir/libgolibbegin.a
 %gcc_target_libdir/libnetgo.a
 %_libdir/go/%gcc_branch/
 
@@ -2442,6 +2449,10 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %endif # _cross_platform
 
 %changelog
+* Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.1.1-alt2
+- Updated to redhat/gcc-5-branch 224186.
+- Synced with Fedora gcc-5.1.1-4 and Debian gcc-5.1.1-12.
+
 * Wed May 06 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.1.1-alt1
 - Updated to redhat/gcc-5-branch r222331.
 - Synced with Fedora gcc-5.1.1-1 and Debian gcc-5.1.1-1.
