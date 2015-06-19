@@ -1,7 +1,7 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -48,7 +48,7 @@ SeaVGABIOS is an open-source VGABIOS implementation.
 %patch -p1
 
 echo %version > .version
-sed -i '/VERSION="${VERSION}-.*"$/d' scripts/buildversion.sh
+
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
@@ -61,6 +61,7 @@ build_bios() {
 	echo "CONFIG_DEBUG_LEVEL=%{debug_level}" >> .config
 	make oldnoconfig V=1
 	make V=1 \
+		VERSION=%version \
 		HOSTCC=gcc \
 		CC=x86_64-linux-gnu-gcc \
 		AS=x86_64-linux-gnu-as \
@@ -108,6 +109,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Fri Jun 19 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.2-alt1
+- 1.8.2
+
 * Tue Mar 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.1-alt1
 - 1.8.1
 
