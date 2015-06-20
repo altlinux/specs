@@ -11,7 +11,7 @@
 
 Name: zabbix
 Version: 2.4.5
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -461,6 +461,10 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Sat Jun 20 2015 Alexei Takaseev <taf@altlinux.org> 1:2.4.5-alt2
+- Support macros in URL map elements (ALT#31084)
+- ALT#31021
+
 * Wed Apr 22 2015 Alexei Takaseev <taf@altlinux.org> 1:2.4.5-alt1
 - 2.4.5
 
