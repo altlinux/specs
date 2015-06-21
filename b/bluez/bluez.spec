@@ -2,8 +2,8 @@
 %def_enable obex
 
 Name: bluez
-Version: 5.30
-Release: alt2
+Version: 5.31
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPLv2+
@@ -133,6 +133,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Mon Jun 22 2015 Yuri N. Sedunov <aris@altlinux.org> 5.31-alt1
+- 5.31
+
 * Thu Apr 16 2015 Yuri N. Sedunov <aris@altlinux.org> 5.30-alt2
 - install gatttool (ALT #30942)
 
