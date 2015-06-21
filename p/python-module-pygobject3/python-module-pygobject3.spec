@@ -5,7 +5,7 @@
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -15,7 +15,7 @@ Group: Development/Python
 Url: http://www.pygtk.org/
 
 #Source: %_name-%version.tar
-Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%major/%_name-%version.tar.xz
 
 %setup_python_module pygobject3
 
@@ -203,6 +203,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
