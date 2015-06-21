@@ -1,5 +1,5 @@
 %define _name gudev
-%define ver_major 219
+%define ver_major 230
 %define api_ver 1.0
 
 %def_disable static
@@ -8,7 +8,7 @@
 
 Name: lib%_name
 Version: %ver_major
-Release: alt3
+Release: alt1
 Epoch: 1
 
 Summary: UDev GObject bindings
@@ -113,6 +113,9 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Sun Jun 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1:230-alt1
+- 230
+
 * Fri May 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1:219-alt3
 - first build separate from systemd
 
