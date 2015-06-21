@@ -13,7 +13,7 @@
 
 Name: ejudge
 Version: 3.3.1
-Release: alt1
+Release: alt2
 
 Summary: Ejudge is a programming contest managment system
 Summary(ru_RU.UTF-8): Ejudge это система для проведения соревнований по программированию
@@ -23,7 +23,7 @@ Group: System/Servers
 Url: http://www.ejudge.ru
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-Source0: ejudge-20150607.tar
+Source0: ejudge-master.zip
 Source1: %name.rc
 Source2: %name.logrotate
 Source4: ejudge-README-ALT.utf8
@@ -36,7 +36,7 @@ Patch1: ejudge-stylecheck.patch
 Patch2: ejudge-tsc.c.patch
 Patch3: ejudge-compilers.patch
 
-BuildPreReq: gcc-c++, flex, sed, mktemp, libexpat-devel, zlib-devel, libzip-devel, libncursesw-devel, libmysqlclient-devel, libcurl-devel, autoconf, libuuid-devel, libelf-devel
+BuildPreReq: gcc-c++, unzip, flex, sed, mktemp, libexpat-devel, zlib-devel, libzip-devel, libncursesw-devel, libmysqlclient-devel, libcurl-devel, autoconf, libuuid-devel, libelf-devel
 %if_enabled systemd
 BuildRequires: systemd
 %endif
@@ -48,7 +48,7 @@ Obsoletes: libreuse
 Ejudge is a programming contest managment system.
 
 You must configure ejudge before running it.
-Please read ejudge-README-ALT.utf8 for defails.
+Please read https://goo.gl/nqlPx0 for details.
 
 %description -l ru_RU.UTF-8
 Ejudge - это система для организации соревнований по программированию.
@@ -58,7 +58,7 @@ Ejudge - это система для организации соревнова�
 задач: с выбором ответа, с кратким или развернутым ответом
 
 Ejudge требует аккуратной настройки перед использованием.
-Ссылка на инструкции по настройке в файле ejudge-README-ALT.utf8
+Инструкцию по настройке можно найти на https://goo.gl/nqlPx0
 
 %package doc
 Summary: Documentation for ejudge
@@ -75,7 +75,7 @@ User and contest administratoxr manual for ejudge system.
 проведения соревновний по программированию ejudge.
 
 %prep
-%setup -q -n ejudge
+%setup -q -n ejudge-master
 
 %patch1 -p1
 %patch2 -p1
@@ -158,6 +158,10 @@ install -p -m644 -D %SOURCE8 %buildroot%{_tmpfilesdir}/%name.conf
 %doc ejudge-*.pdf
 
 %changelog
+* Sun Jun 21 2015 Denis Kirienko <dk@altlinux.org> 3.3.1-alt2
+- Version 3.3.1+ (git c02f98755d, Jun 19, 2015 )
+- Fixed run_version value in mysql database
+
 * Tue Jun 09 2015 Denis Kirienko <dk@altlinux.org> 3.3.1-alt1
 - Version 3.3.1+ (git d43e8b707c, May 07 2015)
 - Support for kumir2 language
