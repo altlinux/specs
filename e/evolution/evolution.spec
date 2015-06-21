@@ -17,16 +17,16 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.3
-Release: alt1
+Version: %ver_major.4
+Release: alt0.1
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
 Group: Office
 Url: https://wiki.gnome.org/Apps/Evolution
 
-#Source: %name-%version.tar
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-3.13.90-alt-link.patch
 
 ### Patches ###
@@ -315,6 +315,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Sun Jun 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.4-alt0.1
+- 3.16.4 snapshot
+
 * Mon Jun 08 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
 - 3.16.3
 
