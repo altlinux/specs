@@ -51,9 +51,10 @@
 %define src_3_18_version 2.05
 %define src_3_19_version 2.06
 %define src_4_0_version 2.06
+%define src_4_1_version 2.06
 
 Name: etercifs
-Version: 5.4.12
+Version: 5.4.13
 Release: alt1
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
@@ -115,6 +116,7 @@ Source59: %src_package_name-3.19-%src_3_19_version.tar.bz2
 Source60: %src_package_name-centos60-%src_centos60_version.tar.bz2
 Source70: %src_package_name-centos70-%src_centos70_version.tar.bz2
 Source140: %src_package_name-4.0-%src_4_0_version.tar.bz2
+Source141: %src_package_name-4.1-%src_4_1_version.tar.bz2
 
 Conflicts: linux-cifs
 
@@ -155,6 +157,7 @@ Provides: %src_package_name-3.17 = %version-%release
 Provides: %src_package_name-3.18 = %version-%release
 Provides: %src_package_name-3.19 = %version-%release
 Provides: %src_package_name-4.0 = %version-%release
+Provides: %src_package_name-4.1 = %version-%release
 
 Obsoletes: %src_package_name-2.6.24
 Obsoletes: %src_package_name-2.6.25
@@ -305,6 +308,7 @@ cp %SOURCE59 %buildroot/%etercifs_src/
 
 # v4.x kernels
 cp %SOURCE140 %buildroot/%etercifs_src/
+cp %SOURCE141 %buildroot/%etercifs_src/
 
 # CentOS 6.x
 cp %SOURCE60 %buildroot/%etercifs_src/
@@ -396,6 +400,8 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.19-%src_3_19_version.tar.bz2
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.19-%version.tar.bz2
 ln -s ../../../../%etercifs_src/%src_package_name-4.0-%src_4_0_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-4.0-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-4.1-%src_4_1_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-4.1-%version.tar.bz2
 
 # Special case for Fedora 15 v2.6.4x.* kernels
 ln -s ../../../../%etercifs_src/%src_package_name-3.0-%src_3_0_version.tar.bz2 \
@@ -425,6 +431,21 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
 %_sbindir/%name-build
 
 %changelog
+* Sun Jun 21 2015 Pavel Shilovsky <piastry@altlinux.org> 5.4.13-alt1
+- Update CentOS 7.0 sources (3.10.0-229.1.2)
+- Update .gear/rules
+- Add sources for 4.1 (v4.1-rc8)
+- Update 3.16 sources from stable (v3.16.7-ckt13)
+- Update 3.13 sources from stable (v3.13.11-ckt21)
+- Update 4.0 sources from stable (v4.0.5)
+- Update 3.19 sources from stable (v3.19.8)
+- Update 3.18 sources from stable (v3.18.16)
+- Update 3.14 sources from stable (v3.14.44)
+- Update 3.12 sources from stable (v3.12.44)
+- Update 3.10 sources from stable (v3.10.80)
+- Update 3.4 sources from stable (v3.4.108)
+- Update 3.2 sources from stable (v3.2.69)
+
 * Tue Mar 03 2015 Pavel Shilovsky <piastry@altlinux.org> 5.4.12-alt1
 - Add sources for 4.0 (v4.0-rc1)
 - Update 3.13 sources from stable (v3.13.11-ckt16)
