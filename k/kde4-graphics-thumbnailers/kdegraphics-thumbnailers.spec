@@ -2,7 +2,7 @@
 
 %define rname kdegraphics-thumbnailers
 Name: kde4-graphics-thumbnailers
-Version: 4.12.2
+Version: 15.4.2
 Release: alt1
 
 Group: Graphics
@@ -60,6 +60,12 @@ KDE 4 core library.
 
 
 %changelog
+* Mon Jun 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt1
+- new version
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt0.M70P.1
+- built for M70P
+
 * Tue Feb 04 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
 - bump version
 
