@@ -4,7 +4,7 @@
 
 Name: lib%rname
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: This library provides a C++ interface to pango
 License: LGPL
@@ -73,6 +73,9 @@ BuildArch: noarch
 %_docdir/%rname-%api_ver
 
 %changelog
+* Thu May 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt2
+- rebuilt with gcc5
+
 * Mon Mar 30 2015 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
 - 2.36.0
 

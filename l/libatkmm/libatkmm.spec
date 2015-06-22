@@ -4,7 +4,7 @@
 
 Name: libatkmm
 Version: %major.7
-Release: alt1
+Release: alt2
 
 Summary: A C++ interface for ATK library
 License: LGPLv2.1+
@@ -74,6 +74,9 @@ mm-common-prepare -f
 %_docdir/%rname-%api_version
 
 %changelog
+* Thu May 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.22.7-alt2
+- rebuilt with gcc5
+
 * Wed Apr 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.22.7-alt1
 - 2.22.7
 
