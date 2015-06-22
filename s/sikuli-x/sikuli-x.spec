@@ -1,6 +1,6 @@
 Name: sikuli-x
 Version: 1.0
-Release: alt5.rc3
+Release: alt5.rc3.1
 
 Summary: GUI control scripting tool
 License: MIT
@@ -118,6 +118,9 @@ chmod 0755 %buildroot%_bindir/sikuli
 %_datadir/java/sikuli-script.jar
 
 %changelog
+* Tue Jun 23 2015 Sergey V Turchin <zerg@altlinux.org> 1.0-alt5.rc3.1
+- Rebuild with gcc5
+
 * Sat Dec 13 2014 Dmitry Derjavin <dd@altlinux.org> 1.0-alt5.rc3
 - Specified required junit version.
 

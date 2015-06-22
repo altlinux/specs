@@ -30,7 +30,7 @@
 %define sover 2.4
 Name: lib%bname%sover
 Version: 2.4.9.1
-Release: alt2
+Release: alt2.1
 Epoch: 1
 Summary: Open Source Computer Vision Library
 License: Distributable
@@ -287,6 +287,9 @@ sed -i \
 %_datadir/*/samples
 
 %changelog
+* Mon Jun 22 2015 Sergey V Turchin <zerg@altlinux.org> 1:2.4.9.1-alt2.1
+- rebuild with gcc5
+
 * Mon Oct 06 2014 Sergey V Turchin <zerg@altlinux.org> 1:2.4.9.1-alt2
 - enable ffmpeg
 - disable gstreamer1
