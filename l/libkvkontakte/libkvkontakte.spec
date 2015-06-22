@@ -2,8 +2,8 @@
 
 %define rname libkvkontakte
 Name: libkvkontakte
-Version: 1.0.0
-Release: alt5
+Version: 4.11.90
+Release: alt1
 
 Group: System/Libraries
 Summary: vk.com access library
@@ -40,6 +40,7 @@ Development files for %name
 
 
 %files
+%_K4libdir/libkvkontakte.so.1
 %_K4libdir/libkvkontakte.so.*
 #%_K4iconsdir/hicolor/*/apps/kvkontakte.*
 #%_K4apps/libkvkontakte/
@@ -52,6 +53,9 @@ Development files for %name
 
 
 %changelog
+* Mon Jun 22 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.90-alt1
+- new version
+
 * Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt5
 - digikam-3.1.0
 
