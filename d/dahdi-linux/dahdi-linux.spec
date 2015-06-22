@@ -4,7 +4,7 @@
 #============================================================================
 Name: dahdi-linux
 Summary: DAHDI drivers for Digium hardware and Asterisk
-Version: 2.10.1
+Version: 2.10.2
 Release: alt1
 License: GPL
 Group: System/Kernel and hardware
@@ -81,6 +81,9 @@ tar cjf \
 %_usrsrc/kernel/sources/kernel-source-dahdi-%version.tar.bz2
 
 %changelog
+* Mon Jun 22 2015 Cronbuild Service <cronbuild@altlinux.org> 2.10.2-alt1
+- new version 2.10.2
+
 * Thu Feb 19 2015 Denis Smirnov <mithraen@altlinux.ru> 2.10.1-alt1
 - new version 2.10.1
 
