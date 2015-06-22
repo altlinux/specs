@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.66
+Version: 1.1.68
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,12 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Jun 22 2015 Michael Shigorin <mike@altlinux.org> 1.1.68-alt1
+- LIVE_CLEANUP_KDRIVERS actually works
+
+* Mon Jun 08 2015 Michael Shigorin <mike@altlinux.org> 1.1.67-alt1
+- minor post-tweaks
+
 * Mon Jun 01 2015 Michael Shigorin <mike@altlinux.org> 1.1.66-alt1
 - remote rescue
 
