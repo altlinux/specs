@@ -22,12 +22,10 @@
 %def_enable timesyncd
 %def_enable resolved
 %def_disable terminal
-%def_disable kdbus
+%def_enable kdbus
 %def_disable gnuefi
-%def_disable gudev
 %def_enable utmp
 %def_with python
-%def_enable gtk_doc
 %def_enable xz
 %def_enable zlib
 %def_enable bzip2
@@ -61,7 +59,7 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 220
+Version: 221
 Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
@@ -70,7 +68,8 @@ License: LGPLv2.1+
 
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 
-Source:%name-%version.tar
+Source: %name-%version.tar
+Source2: systemd-sysv-install
 Source4: altlinux-openresolv.path
 Source5: altlinux-openresolv.service
 Source6: altlinux-libresolv.path
@@ -144,16 +143,15 @@ BuildRequires: libdbus-devel >= %dbus_ver
 %{?_enable_apparmor:BuildRequires: pkgconfig(libapparmor)}
 %{?_enable_elfutils:BuildRequires: elfutils-devel >= 0.158}
 BuildRequires: libaudit-devel
-%{?_enable_gudev:BuildRequires: glib2-devel >= 2.26 libgio-devel gobject-introspection-devel}
 %{?_enable_xz:BuildRequires: pkgconfig(liblzma)}
 %{?_enable_zlib:BuildRequires: pkgconfig(zlib)}
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
 %{?_enable_lz4:BuildRequires: liblz4-devel}
 BuildRequires: libkmod-devel >= 15 kmod
 BuildRequires: kexec-tools
-%{?_with_python:BuildRequires: python-devel python-module-sphinx}
+%{?_with_python:BuildPreReq: rpm-build-python rpm-build-python3}
+%{?_with_python:BuildRequires: python-devel python3-devel python-module-sphinx python-module-lxml python3-module-lxml}
 BuildRequires: quota
-BuildRequires: gtk-doc
 BuildRequires: pkgconfig(blkid) >= 2.24
 BuildRequires: pkgconfig(mount) >= 2.20
 BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
@@ -502,6 +500,15 @@ Requires: libsystemd = %epoch:%version-%release
 %description -n python-module-%name
 This package contains python binds for systemd APIs
 
+%package -n python3-module-%name
+Summary: Python3 Bindings for systemd
+License: LGPLv2+
+Group: Development/Python3
+Requires: libsystemd = %epoch:%version-%release
+
+%description -n python3-module-%name
+This package contains python3 binds for systemd APIs
+
 %package -n udev
 Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
@@ -619,57 +626,6 @@ Requires: libudev1 = %epoch:%version-%release
 %description -n libudev-devel
 Shared library and headers for libudev
 
-%package -n libudev-devel-doc
-Summary: Development documentaion for libudev
-Group: Development/Documentation
-BuildArch: noarch
-Conflicts: libudev-devel < %version
-
-%description -n libudev-devel-doc
-This package provides development documentations for libudev.
-
-%package -n libgudev
-Summary: GObject bindings for libudev
-Group: System/Libraries
-Requires: libudev1 = %epoch:%version-%release
-
-%description -n libgudev
-This package provides shared library to access udev device information
-
-%package -n libgudev-gir
-Summary: GObject introspection data for the GUdev library
-Group: System/Libraries
-Requires: libgudev = %epoch:%version-%release
-
-%description -n libgudev-gir
-GObject introspection data for the GUdev library
-
-%package -n libgudev-devel
-Summary: Libraries and headers for libgudev
-Group: Development/C
-Requires: libgudev = %epoch:%version-%release
-
-%description -n libgudev-devel
-Shared library and headers for libgudev
-
-%package -n libgudev-devel-doc
-Summary: Development documentaion for gudev
-Group: Development/Documentation
-BuildArch: noarch
-Conflicts: libgudev-devel < %version
-
-%description -n libgudev-devel-doc
-This package provides development documentations for gudev.
-
-%package -n libgudev-gir-devel
-Summary: GObject introspection devel data for the GUdev library
-Group: System/Libraries
-BuildArch: noarch
-Requires: libgudev-gir = %epoch:%version-%release libgudev-devel = %epoch:%version-%release
-
-%description -n libgudev-gir-devel
-GObject introspection devel data for the GUdev library
-
 %prep
 %setup -q
 %patch1 -p1
@@ -681,18 +637,20 @@ export QUOTACHECK="/sbin/quotacheck"
 export KILL="/bin/kill"
 export KMOD="/bin/kmod"
 export KEXEC="/sbin/kexec"
-export CHKCONFIG="/sbin/chkconfig"
 export SETCAP="/sbin/setcap"
 export SULOGIN="/sbin/sulogin"
 export MOUNT_PATH="/bin/mount"
 export UMOUNT_PATH="/bin/umount"
 
-gtkdocize --docdir docs/
 intltoolize --force --automake
 %autoreconf
-%configure  \
+
+mkdir build2
+mkdir build3
+
+CONFIGURE_OPTS=" \
 	%{subst_with python} \
-	--with-rootprefix="" \
+	--with-rootprefix="/" \
 	--with-rootlibdir=/%_lib \
 	--with-pamlibdir=/%_lib/security \
 	--enable-split-usr \
@@ -700,7 +658,6 @@ intltoolize --force --automake
 	--with-sysvrcnd-path=/etc/rc.d \
 	--with-rc-local-script-path-start=/etc/rc.d/rc.local \
 	--with-debug-shell=/bin/bash \
-	--enable-compat-libs \
 	--with-kbd-loadkeys=/bin/loadkeys \
 	--with-kbd-setfont=/bin/setfont \
 	--with-telinit=/sbin/telinit \
@@ -736,7 +693,6 @@ intltoolize --force --automake
 	%{subst_enable ldconfig} \
 	%{subst_enable firstboot} \
 	%{subst_enable terminal} \
-	%{subst_enable gudev} \
 	%{subst_enable gnuefi} \
 	%{subst_enable kdbus} \
 	%{subst_enable seccomp} \
@@ -744,18 +700,43 @@ intltoolize --force --automake
 	%{subst_enable selinux} \
 	%{subst_enable apparmor} \
 	%{subst_enable utmp} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--disable-static
+	--disable-static"
+
+%define _configure_script ../configure
+pushd build3
+%configure  \
+	${CONFIGURE_OPTS} \
+	--disable-manpages \
+	--disable-compat-libs \
+	PYTHON=%__python3
 
 %make_build GCC_COLORS="" V=1
+popd
+
+pushd build2
+%configure  \
+	${CONFIGURE_OPTS} \
+	--enable-compat-libs \
+	PYTHON=%__python
+
+%make_build GCC_COLORS="" V=1
+popd
 
 %install
-%make DESTDIR=%buildroot install
+# first install python3 so the binaries are overwritten by the python2 ones
+pushd build3
+%makeinstall_std
+popd
+pushd build2
+%makeinstall_std
+popd
 
 %find_lang %name
 
 # Make sure these directories are properly owned
 mkdir -p %buildroot%_unitdir/{basic,default,dbus,graphical,poweroff,rescue,reboot}.target.wants
+
+install -m755 %SOURCE2 %buildroot/lib/systemd/systemd-sysv-install
 
 ln -s rc-local.service %buildroot%_unitdir/local.service
 install -m644 %SOURCE4 %buildroot%_unitdir/altlinux-openresolv.path
@@ -1185,10 +1166,13 @@ update_chrooted all
 
 %_sysconfdir/profile.d/systemd.sh
 
+
 /lib/tmpfiles.d/systemd-nologin.conf
 /lib/tmpfiles.d/systemd.conf
+/lib/tmpfiles.d/systemd-nspawn.conf
 
 %_sysconfdir/xdg/systemd
+%_sysconfdir/X11/xinit.d/50-systemd-user.sh
 
 %config(noreplace) %_sysconfdir/systemd/bootchart.conf
 %config(noreplace) %_sysconfdir/systemd/journald.conf
@@ -1239,6 +1223,7 @@ update_chrooted all
 /lib/systemd/systemd-user-sessions
 /lib/systemd/systemd-vconsole-setup
 /lib/systemd/altlinux-save-dmesg
+/lib/systemd/systemd-sysv-install
 
 %dir %_unitdir
 %_unitdir/*
@@ -1247,7 +1232,8 @@ update_chrooted all
 %exclude %_unitdir/*networkd*
 %exclude %_unitdir/*resolv*
 %exclude %_unitdir/*/*resolv*
-%exclude %_unitdir/dbus-org.freedesktop.network1.service
+%exclude %_unitdir/*org.freedesktop.network1.*
+%exclude %_unitdir/*/*org.freedesktop.network1.*
 %endif
 %if_enabled timesyncd
 %exclude %_unitdir/*timesyncd*
@@ -1305,6 +1291,7 @@ update_chrooted all
 %_mandir/*/*vconsole*
 
 %_man8dir/systemd-activate*
+%_man8dir/systemd-bus-proxyd*
 %_man8dir/systemd-debug-generator*
 %_man8dir/systemd-efi-boot-generator*
 %_man8dir/systemd-fsck*
@@ -1358,6 +1345,7 @@ update_chrooted all
 %_datadir/systemd/language-fallback-map
 %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
 %_datadir/dbus-1/services/org.freedesktop.systemd1.service
+%_unitdir/*org.freedesktop.systemd1.*
 
 %if_enabled polkit
 %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
@@ -1392,6 +1380,8 @@ update_chrooted all
 %_includedir/systemd
 %doc LICENSE.LGPL2.1
 %_man3dir/*
+%exclude %_man3dir/udev*
+%exclude %_man3dir/libudev*
 
 %files -n libnss-myhostname
 /%_lib/libnss_myhostname.so.*
@@ -1523,7 +1513,6 @@ update_chrooted all
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.network1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
 %_datadir/dbus-1/system-services/org.freedesktop.network1.service
-/lib/systemd/system/dbus-org.freedesktop.network1.service
 /lib/systemd/system-preset/85-networkd.preset
 /lib/systemd/systemd-networkd
 /lib/systemd/systemd-networkd-wait-online
@@ -1531,10 +1520,14 @@ update_chrooted all
 /lib/systemd/systemd-resolve-host
 /lib/tmpfiles.d/systemd-network.conf
 %_unitdir/systemd-networkd.service
+%_unitdir/systemd-resolved.service
 %_unitdir/systemd-networkd-wait-online.service
-%_unitdir/dbus-org.freedesktop.network1.service
-%_unitdir/*resolv*
+%_unitdir/*org.freedesktop.network1.*
+%_unitdir/*org.freedesktop.resolve1.*
+%_unitdir/altlinux-libresolv*
+%_unitdir/altlinux-openresolv*
 %_unitdir/*/*resolv*
+%_unitdir/*/*network1*
 /lib/systemd/network/*.network
 %_mandir/*/*network*
 %_mandir/*/*netdev*
@@ -1628,6 +1621,10 @@ update_chrooted all
 %if_with python
 %files -n python-module-%name
 %python_sitelibdir/%name
+
+%files -n python3-module-%name
+%python3_sitelibdir/%name
+
 %endif
 
 %files -n journalctl
@@ -1656,28 +1653,8 @@ update_chrooted all
 %_libdir/libudev.so
 %_pkgconfigdir/libudev.pc
 %_datadir/pkgconfig/udev.pc
-
-%files -n libudev-devel-doc
-%_datadir/gtk-doc/html/libudev
-
-%if_enabled gudev
-%files -n libgudev
-%_libdir/libgudev-*.so.*
-
-%files -n libgudev-devel
-%_includedir/gudev-1.0
-%_libdir/libgudev-*.so
-%_pkgconfigdir/gudev-*.pc
-
-%files -n libgudev-devel-doc
-%_datadir/gtk-doc/html/gudev
-
-%files -n libgudev-gir
-%_libdir/girepository-1.0/*.typelib
-
-%files -n libgudev-gir-devel
-%_datadir/gir-1.0/*.gir
-%endif
+%_man3dir/udev*
+%_man3dir/libudev*
 
 %files -n udev
 %doc README TODO NEWS LICENSE.GPL2
@@ -1706,6 +1683,7 @@ update_chrooted all
 %_mandir/*/*hwdb*
 %_mandir/*/*link*
 %_man5dir/systemd.device*
+%exclude %_man3dir/*
 
 %files -n udev-extras
 /lib/udev/accelerometer
@@ -1750,6 +1728,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Jun 22 2015 Alexey Shabalin <shaba@altlinux.ru> 1:221-alt1
+- 221
+
 * Fri May 22 2015 Alexey Shabalin <shaba@altlinux.ru> 1:220-alt1
 - 220
 - add patches from master
