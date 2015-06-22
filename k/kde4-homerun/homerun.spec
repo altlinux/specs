@@ -5,7 +5,7 @@
 
 %define rname homerun
 Name: kde4-homerun
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -77,6 +77,9 @@ of the homerun launcher.
 %_K4libdir/cmake/Homerun/
 
 %changelog
+* Mon Jun 22 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.5-alt1
+- new version
+
 * Mon May 12 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.4-alt1
 - new version
 
