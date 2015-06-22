@@ -77,7 +77,7 @@
 %def_with dbus
 %def_with polkit
 %def_with capng
-
+%def_with firewalld
 
 %if_with qemu || lxc || uml
 %def_with nwfilter
@@ -97,8 +97,17 @@
 
 %def_without wireshark
 
+%ifarch x86_64
+%define with_loader_nvram "%_datadir/ovmf/ovmf_code-x64.bin:%_datadir/ovmf/ovmf_vars-x64.bin"
+%endif
+
+%ifarch %ix86
+%define with_loader_nvram "%_datadir/ovmf/ovmf_code-ia32.bin:%_datadir/ovmf/ovmf_vars-ia32.bin"
+%endif
+
+
 Name: libvirt
-Version: 1.2.15
+Version: 1.2.16
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -562,6 +571,7 @@ sed -i 's/vircgrouptest //' tests/Makefile.am
 		%{subst_with fuse} \
 		%{subst_with dbus} \
 		%{subst_with polkit} \
+		%{subst_with firewalld} \
 		%{subst_with capng} \
 		%{subst_with libpcap} \
 		%{subst_with macvtap} \
@@ -569,6 +579,7 @@ sed -i 's/vircgrouptest //' tests/Makefile.am
 		%{?_with_driver_modules:--with-driver-modules} \
 		%{subst_with dtrace} \
 		%{?_with_wireshark:--with-wireshark-dissector} \
+		--with-loader-nvram=%with_loader_nvram \
 		%{subst_with sasl}
 
 
@@ -583,7 +594,7 @@ do
   (cd examples/$i ; make clean ; rm -rf .deps .libs Makefile Makefile.in)
 done
 
-install -d -m 0755 %buildroot%_localstatedir/run/libvirt/
+install -d -m 0755 %buildroot%_runtimedir/%name
 rm -f %buildroot%_libdir/*.{a,la}
 rm -f %buildroot%_libdir/%name/*/*.{a,la}
 
@@ -731,7 +742,7 @@ fi
 %dir %attr(0700, root, root) %_sysconfdir/libvirt
 %dir %_datadir/libvirt
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt
-%dir %_localstatedir/run/libvirt
+%dir %_runtimedir/%name
 %dir %attr(0700, root, root) %_sysconfdir/libvirt/nwfilter
 %config(noreplace) %_sysconfdir/sysconfig/libvirtd
 %config /lib/tmpfiles.d/libvirtd.conf
@@ -779,6 +790,7 @@ fi
 %if_with polkit
 %_datadir/polkit-1/actions/org.libvirt.unix.policy
 %_datadir/polkit-1/actions/org.libvirt.api.policy
+%_datadir/polkit-1/rules.d/50-libvirt.rules
 %endif
 
 %if_with network
@@ -788,7 +800,7 @@ fi
 %dir %attr(0700, root, root) %_sysconfdir/libvirt/qemu/networks/autostart
 %dir %_datadir/libvirt/networks
 %_datadir/libvirt/networks/default.xml
-%dir %_localstatedir/run/libvirt/network
+%dir %_runtimedir/%name/network
 %dir %attr(0700, root, root) %_localstatedir/lib/libvirt/network
 %dir %attr(0755, root, root) %_localstatedir/lib/libvirt/dnsmasq
 %endif
@@ -860,7 +872,7 @@ fi
 %files qemu-common
 %config(noreplace) %_sysconfdir/libvirt/qemu.conf
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.qemu
-%dir %attr(0700, root, root) %_localstatedir/run/libvirt/qemu
+%dir %attr(0750, root, root) %_runtimedir/%name/qemu
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/cache/libvirt/qemu
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt/qemu
@@ -880,7 +892,7 @@ fi
 %files lxc
 %config(noreplace) %_sysconfdir/libvirt/lxc.conf
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.lxc
-%dir %_localstatedir/run/libvirt/lxc
+%dir %_runtimedir/%name/lxc
 %dir %attr(0700, root, root) %_localstatedir/lib/libvirt/lxc
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt/lxc
 %_datadir/augeas/lenses/libvirtd_lxc.aug
@@ -891,7 +903,7 @@ fi
 %if_with uml
 %files uml
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.uml
-%dir %_localstatedir/run/libvirt/uml
+%dir %_runtimedir/%name/uml
 %dir %attr(0700, root, root) %_localstatedir/lib/libvirt/uml
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt/uml
 %endif
@@ -902,6 +914,7 @@ fi
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt/libxl
 %dir %attr(0700, root, root) %_localstatedir/lib/libvirt/libxl
 %config(noreplace) %_sysconfdir/libvirt/libxl*.conf
+%config(noreplace) %_sysconfdir/logrotate.d/libvirtd.libxl
 %_datadir/augeas/lenses/libvirtd_libxl.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_libxl.aug
 %endif
@@ -924,6 +937,12 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Jun 19 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.16-alt1
+- 1.2.16
+- build with firewalld support
+- allow password-less access with polkit for 'vmusers' group
+- define default OVMF nvram path
+
 * Tue May 05 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.15-alt1
 - 1.2.15
 - build with glusterfs support
