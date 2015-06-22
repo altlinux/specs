@@ -4,7 +4,7 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 4.6.0
+Version: 4.11.0
 Release: alt1
 
 Group: Graphics
@@ -121,7 +121,7 @@ done
 
 %files core -f %rname.lang
 %doc AUTHORS ChangeLog README TODO NEWS COPYING-*
-%_K4bindir/dnginfo
+#%_K4bindir/dnginfo
 %_K4bindir/dngconverter
 #%_K4bindir/multithread
 %_K4bindir/panoramagui
@@ -162,6 +162,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Mon Jun 22 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.0-alt1
+- new version
+
 * Tue Dec 23 2014 Sergey V Turchin <zerg@altlinux.org> 4.6.0-alt1
 - new version
 
