@@ -3,7 +3,7 @@
 %define beta %nil
 Name: libmsn
 Version: 4.2.1
-Release: alt2
+Release: alt3
 
 Group: Development/C++
 Summary: Reusable, open-source and fully documented library for MSN
@@ -64,6 +64,9 @@ Files needed to build applications based on %name.
 %_libdir/libmsn.so
 
 %changelog
+* Mon Jun 22 2015 Sergey V Turchin <zerg@altlinux.org> 4.2.1-alt3
+- rebuild with gcc5
+
 * Tue Oct 09 2012 Sergey V Turchin <zerg@altlinux.org> 4.2.1-alt2
 - fix to build with gcc 4.7
 
