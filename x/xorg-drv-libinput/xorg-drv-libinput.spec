@@ -4,7 +4,7 @@
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-libinput
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Xorg libinput input driver
@@ -73,6 +73,9 @@ install -p -m 0644 %SOURCE1 %buildroot%_xconfdir/90-libinput.conf
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Mon Jun 22 2015 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Fri May 22 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - first build for Sisyphus
 
