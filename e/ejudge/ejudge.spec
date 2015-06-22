@@ -13,7 +13,7 @@
 
 Name: ejudge
 Version: 3.3.1
-Release: alt2
+Release: alt3
 
 Summary: Ejudge is a programming contest managment system
 Summary(ru_RU.UTF-8): Ejudge это система для проведения соревнований по программированию
@@ -158,6 +158,9 @@ install -p -m644 -D %SOURCE8 %buildroot%{_tmpfilesdir}/%name.conf
 %doc ejudge-*.pdf
 
 %changelog
+* Mon Jun 22 2015 Denis Kirienko <dk@altlinux.org> 3.3.1-alt3
+- git 6c4bc898e2, Jun 21, 2015 (new contest editor interface)
+
 * Sun Jun 21 2015 Denis Kirienko <dk@altlinux.org> 3.3.1-alt2
 - Version 3.3.1+ (git c02f98755d, Jun 19, 2015 )
 - Fixed run_version value in mysql database
