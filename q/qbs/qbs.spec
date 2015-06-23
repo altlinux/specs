@@ -1,5 +1,5 @@
 Name: qbs
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 
 Summary: Qt Build Suite
@@ -13,7 +13,7 @@ Source: http://download.qt-project.org/official_releases/%name/%version/%name-%v
 
 BuildRequires: gcc-c++
 BuildRequires: glibc-devel-static
-BuildRequires: libqt4-devel
+BuildRequires: qt5-script-devel
 BuildRequires: rpm-build-gir
 
 %description
@@ -45,7 +45,7 @@ Provides examples for using the %name
 %setup
 
 %build
-%qmake_qt4 -r %name.pro \
+%qmake_qt5 -r %name.pro \
 	QBS_INSTALL_PREFIX=%_prefix \
 	QBS_LIB_INSTALL_DIR=%_libdir \
 	QBS_PLUGINS_INSTALL_DIR=%_libdir \
@@ -59,11 +59,12 @@ Provides examples for using the %name
 %__make INSTALL_ROOT=%buildroot install
 
 %files
-%doc LGPL_EXCEPTION.txt LICENSE.LGPL README
+%doc LGPL_EXCEPTION.txt LICENSE.LGPLv3 LICENSE.LGPLv21 README
 %_bindir/%name
 %_bindir/%name-config
 %_bindir/%name-config-ui
 %_bindir/%name-qmltypes
+%_bindir/%name-setup-android
 %_bindir/%name-setup-qt
 %_bindir/%name-setup-toolchains
 %dir %_datadir/%name
@@ -87,6 +88,9 @@ Provides examples for using the %name
 %_datadir/%name/examples
 
 %changelog
+* Tue Jun 23 2015 Nazarov Denis <nenderus@altlinux.org> 1.4.0-alt1
+- Version 1.4.0
+
 * Wed Oct 15 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.2-alt1
 - Version 1.3.2
 
