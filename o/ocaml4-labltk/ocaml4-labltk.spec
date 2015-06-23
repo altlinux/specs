@@ -2,7 +2,7 @@
 
 Name: ocaml4-%_name
 Version: 8.06.0
-Release: alt1
+Release: alt2
 
 Summary: Tcl/Tk interface for OCaml
 Group: Development/ML
@@ -11,6 +11,8 @@ License: LGPLv2+ with exceptions
 
 Url: https://forge.ocamlcore.org/projects/labltk/
 Source: %_name-%version.tar
+
+Conflicts: labltk
 
 Requires: ocaml4
 Requires: %name-runtime = %version-%release
@@ -28,6 +30,7 @@ contains files needed to develop OCaml programs using LablTk.
 Summary: Tk toolkit bindings for OCaml
 Group: Development/ML
 Requires: ocaml4-runtime
+Conflicts: labltk-runtime
 
 %description runtime
 Objective Caml is a high-level, strongly-typed, functional and
@@ -40,6 +43,7 @@ contains files needed to run bytecode OCaml programs using LablTk.
 Summary: OCaml interface browser
 Group: Development/ML
 Requires: %name-runtime
+Conflicts: ocamlbrowser
 
 %description -n ocaml4-ocamlbrowser
 Objective Caml is a high-level, strongly-typed, functional and
@@ -78,5 +82,8 @@ make install \
 %_bindir/ocamlbrowser
 
 %changelog
+* Tue Jun 23 2015 Andrey Bergman <vkni@altlinux.org> 8.06.0-alt2
+- Added conflicts with ocaml 3 versions.
+
 * Tue Oct 28 2014 Alexey Shabalin <shaba@altlinux.ru> 8.06.0-alt1
 - initial build for ocaml4
