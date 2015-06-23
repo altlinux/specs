@@ -1,7 +1,7 @@
 
 Name:           bleachbit
-Version:        1.6
-Release:        alt3
+Version:        1.8
+Release:        alt1
 
 Summary:        Remove unnecessary files, free space, and maintain privacy
 License:        GPLv3+
@@ -46,13 +46,16 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %find_lang %name
 
 %files -f %name.lang
-%doc COPYING README
+%doc COPYING README.md
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_datadir/%name/
 %_pixmapsdir/%name.png
 
 %changelog
+* Sun Jun 21 2015 Andrey Cherepanov <cas@altlinux.org> 1.8-alt1
+- New version
+
 * Sat Feb 14 2015 Andrey Cherepanov <cas@altlinux.org> 1.6-alt3
 - Fix apt cleaner for apt-rpm support (ALT #30736)
 
