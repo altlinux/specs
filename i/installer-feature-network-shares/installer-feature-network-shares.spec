@@ -1,5 +1,5 @@
 Name: installer-feature-network-shares
-Version: 0.8
+Version: 0.8.1
 Release: alt1
 
 %define hookdir %_datadir/install2/postinstall.d
@@ -38,6 +38,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Jun 23 2015 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt1
+- Return 0 in any case in last conditionals
+
 * Thu Jun 18 2015 Andrey Cherepanov <cas@altlinux.org> 0.8-alt1
 - Fix continue work in empty installation
 
