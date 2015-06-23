@@ -1,6 +1,6 @@
 Name: rrd
-Version: 1.4.7
-Release: alt4.1
+Version: 1.5.3
+Release: alt1
 
 %define native rrdtool
 %define abiversion 4
@@ -23,10 +23,13 @@ Source10: MRTG-HOWTO
 Patch0: rrd-1.4.5-alt-build-tcl.patch
 Patch1: rrdtool-1.4.5-automake-1.11.2.patch
 Patch2: rrdtool-1.4.7-alt-DSO.patch
+Patch3: rrdtool-1.5.3-top-dir.patch
+Patch4: rrdtool-1.5.3-arm-crash-fix.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: rpm-build-licenses
+BuildRequires: rpm-build-licenses rpm-build-tcl
+BuildRequires: chrpath
 
 # Automatically added by buildreq on Wed Oct 12 2011
 BuildRequires: groff-base libdbi-devel libpango-devel libpng-devel libxml2-devel lua5 perl-Pod-Parser perl-devel python-devel ruby tcl-devel
@@ -204,18 +207,22 @@ This package contains tcl extension for access the Round Robin Databases.
 %prep
 %setup -n %native-%version
 %patch0 -p2
-%patch1 -p1
-%patch2 -p2
+#patch1 -p1
+#patch2 -p2
+%patch3 -p1
+%patch4 -p1
 
 find doc bindings/perl-piped -type f -print0 |
 	xargs -r0 fgrep -l /usr/local |
 	xargs -r perl -pi -e 's,/usr/local,%prefix,g'
 
 %build
-%add_optflags -I%_builddir/%native-%version/src %optflags_shared -I%_includedir/cgilib
+%add_optflags -I%_builddir/%native-%version/src %optflags_shared -I%_includedir/cgilib -lpng
 %autoreconf
 %configure \
+	--disable-rpath \
 	--enable-shared \
+	--with-pic \
 	--disable-static \
 	--with-tcllib=%_libdir \
 	--disable-ruby \
@@ -252,7 +259,10 @@ mv %buildroot%_datadir/%native/examples %buildroot%_docdir/%native-%version/
 # ...and %buildroot%_datadir/%native isn't needed more ;-) //asy
 rmdir %buildroot%_datadir/%native
 
-cp {CONTRIBUTORS,COPYRIGHT,README,TODO,NEWS,THREADS} %buildroot%_docdir/%native-%version/
+# RPATH
+find %buildroot -name '*.so' | xargs -n 1 chrpath -d
+
+cp {CONTRIBUTORS,COPYRIGHT,TODO,NEWS,THREADS,LICENSE} %buildroot%_docdir/%native-%version/
 
 #
 # rrdcached
@@ -261,6 +271,16 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/{rc.d/init.d,sysconfig}
 install -d $RPM_BUILD_ROOT%_localstatedir/rrdcached
 install -m644 %SOURCE1 $RPM_BUILD_ROOT%_initdir/rrdcached
 sed -e 's|@@USER@@|%rrdcached_user|g' < %SOURCE2 > $RPM_BUILD_ROOT%_sysconfdir/sysconfig/rrdcached
+
+# warning: Installed (but unpackaged) file(s) found:
+#    /usr/lib/perl/5.16.3/RRDp.pm
+#    /usr/lib/perl/5.16.3/x86_64-linux-thread-multi/RRDs.pm
+#    /usr/lib/perl/5.16.3/x86_64-linux-thread-multi/auto/RRDp/.packlist
+#    /usr/lib/perl/5.16.3/x86_64-linux-thread-multi/auto/RRDs/.packlist
+#    /usr/lib/perl/5.16.3/x86_64-linux-thread-multi/auto/RRDs/RRDs.bs
+#    /usr/lib/perl/5.16.3/x86_64-linux-thread-multi/auto/RRDs/RRDs.so
+#    /usr/lib/perl/5.16.3/x86_64-linux-thread-multi/perllocal.pod
+rm -rf %buildroot/usr/lib/perl
 
 %pre cached
 # %%rrdcached_user is root now, so groupadd/useradd is not needed
@@ -314,6 +334,9 @@ sed -e 's|@@USER@@|%rrdcached_user|g' < %SOURCE2 > $RPM_BUILD_ROOT%_sysconfdir/s
 %endif
 
 %changelog
+* Sat Jun 20 2015 Sergey Y. Afonin <asy@altlinux.ru> 1.5.3-alt1
+- 1.5.3
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt4.1
 - rebuild with new perl 5.20.1
 
