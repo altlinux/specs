@@ -3,7 +3,7 @@
 %define liblastfm_fingerprint liblastfm_fingerprint%sover
 %define liblastfm_common liblastfm-common%sover
 Name: liblastfm
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 
 Group: System/Libraries
@@ -60,7 +60,9 @@ Install this package if you want do compile applications using the %name library
 %setup -q
 
 %build
-%Kbuild
+%Kbuild \
+    -DBUILD_WITH_QT4=ON \
+    #
 
 %install
 %Kinstall
@@ -82,6 +84,12 @@ Install this package if you want do compile applications using the %name library
 %_includedir/*
 
 %changelog
+* Tue Jun 23 2015 Sergey V Turchin <zerg@altlinux.org> 1.0.9-alt1
+- new version
+
+* Fri May 23 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.8-alt0.M70P.1
+- built for M70P
+
 * Thu May 22 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.8-alt1
 - new version
 
