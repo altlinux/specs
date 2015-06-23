@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libksba
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Group: System/Libraries
@@ -43,7 +43,7 @@ Static libraries for the %name-devel package
 %setup -q
 %patch1 -p1
 #%patch2 -p1
-%patch10 -p1
+#%patch10 -p1
 
 #__aclocal
 #__autoconf
@@ -63,6 +63,7 @@ Static libraries for the %name-devel package
 
 %files
 %doc AUTHORS NEWS README 
+%_libdir/*.so.8
 %_libdir/*.so.*
 
 %files -n %name-devel
@@ -80,6 +81,12 @@ Static libraries for the %name-devel package
 %endif
 
 %changelog
+* Tue Jun 23 2015 Sergey V Turchin <zerg@altlinux.org> 1.3.3-alt1
+- new version
+
+* Tue Nov 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt0.M70P.1
+- built for M70P
+
 * Tue Nov 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt1
 - new version
 
