@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: epiphany
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -101,6 +101,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/appdata/epiphany.appdata.xml
 
 %changelog
+* Tue Jun 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
