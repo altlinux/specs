@@ -1,6 +1,6 @@
 
 Name: grantlee
-Version: 0.4.0
+Version: 0.5.1
 Release: alt1
 
 Group: System/Libraries
@@ -87,8 +87,10 @@ mkdir -p %buildroot%_docdir/HTML/en/grantlee-apidocs
 cp -prf BUILD*/apidox/* %buildroot%_docdir/HTML/en/grantlee-apidocs
 
 %files -n lib%name
-%doc AUTHORS CHANGELOG README GOALS
+%doc AUTHORS CHANGELOG README
+%_libdir/libgrantlee_core.so.0
 %_libdir/libgrantlee_core.so.*
+%_libdir/libgrantlee_gui.so.0
 %_libdir/libgrantlee_gui.so.*
 %_libdir/grantlee/
 
@@ -103,6 +105,12 @@ cp -prf BUILD*/apidox/* %buildroot%_docdir/HTML/en/grantlee-apidocs
 %_docdir/HTML/en/grantlee-apidocs/
 
 %changelog
+* Tue Jun 23 2015 Sergey V Turchin <zerg@altlinux.org> 0.5.1-alt1
+- new version
+
+* Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt0.M70P.1
+- built for M70P
+
 * Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
 - new version
 
