@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-zabbix-server
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 
 Summary: Alterator module for Zabbix server setup
@@ -47,6 +47,9 @@ Alterator module for Zabbix server setup
 %_sysconfdir/nginx/webapps-available.d/alterator-zabbix-server.conf
 
 %changelog
+* Tue Jun 23 2015 Anton Farygin <rider@altlinux.ru> 0.0.5-alt1
+- Use zabbix data for ALT Linux, if available 
+
 * Mon Dec 15 2014 Mikhail Efremov <sem@altlinux.org> 0.0.4-alt1
 - Use https for Zabbix.
 
