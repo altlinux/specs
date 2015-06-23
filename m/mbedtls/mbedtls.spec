@@ -1,9 +1,9 @@
 %define oldname polarssl
-%define soversion 8
+%define soversion 9
 
 Name: mbedtls
-Version: 1.3.10
-Release: alt2
+Version: 1.3.11
+Release: alt1
 
 Summary: Light-weight cryptographic and SSL/TLS library
 License: GPLv2
@@ -28,7 +28,6 @@ Summary: Light-weight cryptographic and SSL/TLS library
 Group: System/Libraries
 Conflicts: hiawatha
 Provides: lib%name = %version-%release
-
 
 %description -n lib%name%soversion
 mbed TLS is a light-weight open source cryptographic and SSL/TLS
@@ -110,6 +109,12 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Tue Jun 23 2015 Nazarov Denis <nenderus@altlinux.org> 1.3.11-alt1
+- Version 1.3.11
+
+* Sat Mar 07 2015 Nazarov Denis <nenderus@altlinux.org> 1.3.10-alt0.M70T.1
+- Build for branch t7
+
 * Sat Mar 07 2015 Nazarov Denis <nenderus@altlinux.org> 1.3.10-alt2
 - Package libmbedtls renamed according to Shared Libs Policy
 
