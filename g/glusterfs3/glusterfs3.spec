@@ -25,8 +25,8 @@
 
 
 Name: glusterfs3
-Version: %major.1
-Release: alt6
+Version: %major.2
+Release: alt1
 
 Summary: Cluster File System
 
@@ -60,7 +60,6 @@ Patch0: %name-%version-%release.patch
 BuildRequires: flex git-core glib2-devel glibc-devel libacl-devel libaio-devel libattr-devel libdb4-devel liblvm2-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel python-module-cmd2 libuserspace-rcu-devel zlib-devel
 
 BuildPreReq: libssl-devel
-
 
 Conflicts: %oname
 
@@ -235,7 +234,6 @@ Group: Development/Other
 Requires: lib%name = %version-%release
 Requires: lib%name-api-devel = %version-%release
 Conflicts: %oname-devel
-# due fake %name-devel
 Obsoletes: %name-devel < %version-%release
 Provides: %name-devel = %version-%release
 
@@ -249,21 +247,6 @@ called Translators from GNU Hurd kernel. Much of the code in GlusterFS
 is in user space and easily manageable.
 
 This package provides the development libraries.
-
-%package -n %name-devel
-Summary: Development Libraries
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-api-devel = %version-%release
-
-%description -n %name-devel
-Fake package for fix
-# apt-get install "pkgconfig(glusterfs-api)"
-Package pkgconfig(glusterfs-api) is a virtual package provided by:
-  libglusterfs3-api-devel 3.7.1-alt4
-  glusterfs3-devel 3.7.0-alt3
-You should explicitly select one to install.
-E: Package pkgconfig(glusterfs-api) is a virtual package with multiple good providers.
 
 %package -n python-module-%name
 Summary: Python module for %name
@@ -376,6 +359,7 @@ rm -rf %buildroot/usr/lib/ocf/
 
 mv %buildroot/etc/ganesha/ganesha-ha.conf.sample %buildroot/etc/ganesha/ganesha.conf
 
+# TODO: move common part to -common?
 %files
 %doc ChangeLog INSTALL README.md THANKS COPYING-GPLV2 COPYING-LGPLV3
 %_bindir/glusterfind
@@ -388,6 +372,7 @@ mv %buildroot/etc/ganesha/ganesha-ha.conf.sample %buildroot/etc/ganesha/ganesha.
 %_libdir/glusterfs/auth/
 %exclude %_libdir/glusterfs/xlator/mount/api.so
 %_libdir/glusterfs/xlator/
+%dir %_libexecdir/glusterfs/
 %_libexecdir/glusterfs/glusterfind/
 %_sbindir/gfind_missing_files
 %_libexecdir/glusterfs/gfind_missing_files/
@@ -482,9 +467,6 @@ mv %buildroot/etc/ganesha/ganesha-ha.conf.sample %buildroot/etc/ganesha/ganesha.
 %doc COPYING-GPLV2 COPYING-LGPLV3
 %_datadir/vim/vimfiles/syntax/glusterfs.vim
 
-# fake package for replace %name-devel 3.7.0
-%files -n %name-devel
-
 %files -n lib%name-devel
 %_includedir/glusterfs/
 %exclude %_includedir/glusterfs/api/
@@ -514,6 +496,10 @@ mv %buildroot/etc/ganesha/ganesha-ha.conf.sample %buildroot/etc/ganesha/ganesha.
 %preun_service glusterd
 
 %changelog
+* Tue Jun 23 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.2-alt1
+- new version 3.7.2
+- drop fake glusterfs3-devel package
+
 * Mon Jun 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.1-alt6
 - add fake glusterfs3-devel package (try to fix pkgconfig(glusterfs-api) provide problem)
 
