@@ -1,5 +1,5 @@
-%define firmwaredir /lib/firmware
 %define _localstatedir %_var
+%add_findreq_skiplist %_x11sysconfdir/xinit.d/*
 
 %def_enable elfutils
 %def_enable libcryptsetup
@@ -60,7 +60,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 221
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -129,6 +129,7 @@ Source67: systemd-detect-virt-bash3
 
 %define dbus_ver 1.4.6
 
+BuildPreReq: rpm-build-xdg
 BuildRequires: glibc-kernheaders
 BuildRequires: intltool >= 0.40.0
 BuildRequires: gperf
@@ -168,22 +169,22 @@ BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 %{?_enable_gnuefi:BuildRequires: gnu-efi}
 
 Requires: dbus >= %dbus_ver
-Requires: udev = %epoch:%version-%release
+Requires: udev = %EVR
 Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 Requires: acl
-Requires: util-linux >= 2.25
+Requires: util-linux >= 2.26
 
 # Requires: selinux-policy >= 3.8.5
 
-Requires: %name-utils = %epoch:%version-%release
-Requires: %name-services = %epoch:%version-%release
-Requires: pam_%name = %epoch:%version-%release
-Requires: journalctl = %epoch:%version-%release
+Requires: %name-utils = %EVR
+Requires: %name-services = %EVR
+Requires: pam_%name = %EVR
+Requires: journalctl = %EVR
 
 # /*bin/journalctl is in a subpackage.
 # We want to be able to install a new journalctl and use the old (stable) systemd.
-Conflicts: journalctl < %epoch:%version-%release
+Conflicts: journalctl < %EVR
 
 # Copy from SysVinit
 PreReq: coreutils
@@ -191,7 +192,7 @@ Requires: /sbin/sulogin
 Requires: sysvinit-utils
 
 Obsoletes: systemd-units < 0:43-alt1
-Provides: systemd-units = %epoch:%version-%release
+Provides: systemd-units = %EVR
 Provides: syslogd-daemon
 
 %description
@@ -208,15 +209,15 @@ work as a drop-in replacement for sysvinit.
 Group: System/Libraries
 Summary: Systemd Library
 
-Provides: libsystemd-daemon = %epoch:%version-%release
-Provides: libsystemd-login = %epoch:%version-%release
-Provides: libsystemd-id128 = %epoch:%version-%release
-Provides: libsystemd-journal = %epoch:%version-%release
+Provides: libsystemd-daemon = %EVR
+Provides: libsystemd-login = %EVR
+Provides: libsystemd-id128 = %EVR
+Provides: libsystemd-journal = %EVR
 
-Obsoletes: libsystemd-daemon < %epoch:%version-%release
-Obsoletes: libsystemd-login < %epoch:%version-%release
-Obsoletes: libsystemd-id128 < %epoch:%version-%release
-Obsoletes: libsystemd-journal < %epoch:%version-%release
+Obsoletes: libsystemd-daemon < %EVR
+Obsoletes: libsystemd-login < %EVR
+Obsoletes: libsystemd-id128 < %EVR
+Obsoletes: libsystemd-journal < %EVR
 
 %description -n libsystemd
 The libsystemd library provides a reference implementation of various
@@ -228,19 +229,19 @@ Group: Development/C
 Summary: Development headers for systemd Library
 License: LGPLv2+ and MIT
 
-Requires: libsystemd = %epoch:%version-%release
+Requires: libsystemd = %EVR
 
-Provides: libsystemd-daemon-devel = %epoch:%version-%release
-Provides: libsystemd-journal-devel = %epoch:%version-%release
-Provides: libsystemd-login-devel = %epoch:%version-%release
-Provides: libsystemd-id128-devel = %epoch:%version-%release
-Provides: systemd-devel = %epoch:%version-%release
+Provides: libsystemd-daemon-devel = %EVR
+Provides: libsystemd-journal-devel = %EVR
+Provides: libsystemd-login-devel = %EVR
+Provides: libsystemd-id128-devel = %EVR
+Provides: systemd-devel = %EVR
 
-Obsoletes: libsystemd-daemon-devel < %epoch:%version-%release
-Obsoletes: libsystemd-journal-devel < %epoch:%version-%release
-Obsoletes: libsystemd-login-devel < %epoch:%version-%release
-Obsoletes: libsystemd-id128-devel < %epoch:%version-%release
-Obsoletes: systemd-devel < %epoch:%version-%release
+Obsoletes: libsystemd-daemon-devel < %EVR
+Obsoletes: libsystemd-journal-devel < %EVR
+Obsoletes: libsystemd-login-devel < %EVR
+Obsoletes: libsystemd-id128-devel < %EVR
+Obsoletes: systemd-devel < %EVR
 
 %description -n libsystemd-devel
 The libsystemd library provides a reference implementation of various
@@ -276,7 +277,7 @@ Summary: libnss-mymachines is plugin for local system host name resolution
 Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
 Requires: dbus >= %dbus_ver
-Requires: %name-services = %epoch:%version-%release
+Requires: %name-services = %EVR
 
 %description -n libnss-mymachines
 nss-mymachines for automatically resolves the names
@@ -291,7 +292,7 @@ Summary: nss-resolve is plugin for resolve hostnames via systemd-resolved
 Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
 Requires: dbus >= %dbus_ver
-Requires: %name-networkd = %epoch:%version-%release
+Requires: %name-networkd = %EVR
 
 %description -n libnss-resolve
 NSS module "nss-resolve" has been added which can be used
@@ -318,7 +319,7 @@ systemd-logind.service, and hence the systemd control group hierarchy.
 %package sysvinit
 Group: System/Configuration/Boot and Init
 Summary: systemd System V init tools
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 # Obsoletes: SysVinit
 Provides: SysVinit = 2.88-alt0.1
 #Obsoletes:      upstart
@@ -332,7 +333,7 @@ Drop-in replacement for the System V init tools of systemd.
 %package utils
 Group: System/Configuration/Boot and Init
 Summary: systemd utils
-Conflicts: %name < %epoch:%version-%release
+Conflicts: %name < %EVR
 
 %description utils
 This package contains utils from systemd:
@@ -344,9 +345,9 @@ This package contains utils from systemd:
 %package services
 Group: System/Configuration/Boot and Init
 Summary: systemd services
-Conflicts: %name < %epoch:%version-%release
-Requires: pam_%name = %epoch:%version-%release
-Requires: %name-utils = %epoch:%version-%release
+Conflicts: %name < %EVR
+Requires: pam_%name = %EVR
+Requires: %name-utils = %EVR
 Requires: dbus >= %dbus_ver
 Conflicts: service <= 0.5.25-alt1
 Conflicts: chkconfig <= 1.3.59-alt3
@@ -363,7 +364,7 @@ This package contains dbus services and utils from systemd:
 Group: System/Base
 Summary: System service that manages networks
 Conflicts: %name < 1:214-alt13
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 Requires: iproute2
 Provides: network-config-subsystem
 
@@ -376,7 +377,7 @@ as well as creating virtual network devices.
 Group: System/Configuration/Other
 Summary: Network Time Synchronization
 Conflicts: %name < 1:214-alt13
-Requires: %name-networkd = %epoch:%version-%release
+Requires: %name-networkd = %EVR
 Provides: ntp-client
 
 %description timesyncd
@@ -386,7 +387,7 @@ to synchronize the local system clock with a Network Time Protocol Server.
 %package analyze
 Group: System/Configuration/Boot and Init
 Summary: Analyze tool for systemd.
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description analyze
 Analyze tool for systemd.
@@ -394,7 +395,7 @@ Analyze tool for systemd.
 %package journal-gateway
 Group: System/Servers
 Summary: Journal Gateway Daemon
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description journal-gateway
 This service provides access to the journal via HTTP and JSON.
@@ -418,7 +419,7 @@ Tool to query the journal from systemd.
 %package coredump
 Group: System/Servers
 Summary: systemd-coredump and coredumpctl utils
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description coredump
 systemd-coredump and coredumpctl utils.
@@ -426,7 +427,7 @@ systemd-coredump and coredumpctl utils.
 %package stateless
 Group: System/Servers
 Summary: systems that boot up with an empty /etc directory
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description stateless
 This package contains:
@@ -450,9 +451,9 @@ Summary: Bash completion for systemd utils
 Group: Shells
 BuildArch: noarch
 Requires: bash-completion
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 # Not to loose it on upgrades after the split.
-Requires: bash-completion-journalctl = %epoch:%version-%release
+Requires: bash-completion-journalctl = %EVR
 
 %description -n bash-completion-%name
 Bash completion for %name.
@@ -461,8 +462,8 @@ Bash completion for %name.
 Summary: Zsh completion for systemd utils
 Group: Shells
 BuildArch: noarch
-Requires: %name = %epoch:%version-%release
-Requires: zsh-completion-journalctl = %epoch:%version-%release
+Requires: %name = %EVR
+Requires: zsh-completion-journalctl = %EVR
 
 %description -n zsh-completion-%name
 Zsh completion for %name.
@@ -472,8 +473,8 @@ Summary: Bash completion for journalctl from systemd
 Group: Shells
 BuildArch: noarch
 Requires: bash-completion
-Requires: journalctl = %epoch:%version-%release
-Conflicts: journalctl < %epoch:%version-%release
+Requires: journalctl = %EVR
+Conflicts: journalctl < %EVR
 # File conflict with the releases before splitting out journalctl.
 # 0:208-alt3 was the first release when the pkg was split in Sisyphus.
 Conflicts: bash-completion-%name < 0:208-alt3
@@ -485,7 +486,7 @@ Bash completion for journalctl from systemd.
 Summary: Zsh completion for journalctl from systemd
 Group: Shells
 BuildArch: noarch
-Requires: journalctl = %epoch:%version-%release
+Requires: journalctl = %EVR
 Conflicts: zsh-completion-%name < 1:214-alt14
 
 %description -n zsh-completion-journalctl
@@ -495,7 +496,7 @@ Zsh completion for journalctl from systemd
 Summary: Python Bindings for systemd
 License: LGPLv2+
 Group: Development/Python
-Requires: libsystemd = %epoch:%version-%release
+Requires: libsystemd = %EVR
 
 %description -n python-module-%name
 This package contains python binds for systemd APIs
@@ -504,7 +505,7 @@ This package contains python binds for systemd APIs
 Summary: Python3 Bindings for systemd
 License: LGPLv2+
 Group: Development/Python3
-Requires: libsystemd = %epoch:%version-%release
+Requires: libsystemd = %EVR
 
 %description -n python3-module-%name
 This package contains python3 binds for systemd APIs
@@ -513,13 +514,13 @@ This package contains python3 binds for systemd APIs
 Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
 License: GPLv2+
-PreReq: shadow-utils dmsetup kmod >= 15 util-linux >= 2.20 losetup >= 2.19.1
-PreReq: udev-rules = %epoch:%version-%release
-PreReq: udev-hwdb = %epoch:%version-%release
-PreReq: systemd-utils = %epoch:%version-%release
+PreReq: shadow-utils dmsetup kmod >= 15 util-linux >= 2.26 losetup >= 2.19.1
+PreReq: udev-rules = %EVR
+PreReq: udev-hwdb = %EVR
+PreReq: systemd-utils = %EVR
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
-Conflicts: systemd < %epoch:%version-%release
+Conflicts: systemd < %EVR
 Conflicts: util-linux <= 2.22-alt2
 Conflicts: DeviceKit
 
@@ -535,7 +536,7 @@ provide a very flexible device naming policy
 Summary: Extra rules and tools for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
-Requires: udev = %epoch:%version-%release
+Requires: udev = %EVR
 
 %description -n udev-extras
 The udev-extras package contains an additional rules and tools
@@ -546,7 +547,7 @@ Summary: Rule files for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 Provides: %_sysconfdir/udev/rules.d /lib/udev/rules.d
-Conflicts: udev < %epoch:%version-%release
+Conflicts: udev < %EVR
 BuildArch: noarch
 
 %description -n udev-rules
@@ -560,7 +561,7 @@ Summary: Hardware database for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 Provides: %_sysconfdir/udev/hwdb.d /lib/udev/hwdb.d
-Conflicts: udev < %epoch:%version-%release
+Conflicts: udev < %EVR
 BuildArch: noarch
 
 %description -n udev-hwdb
@@ -571,9 +572,9 @@ Summary: CD rule generator for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 BuildArch: noarch
-PreReq: udev-rules = %epoch:%version-%release
-Provides: udev-rule-generator = %epoch:%version-%release
-Obsoletes: udev-rule-generator < %epoch:%version-%release
+PreReq: udev-rules = %EVR
+Provides: udev-rule-generator = %EVR
+Obsoletes: udev-rule-generator < %EVR
 
 %description -n udev-rule-generator-cdrom
 This package contains CD rule generator for udev
@@ -583,7 +584,7 @@ Summary: Net rule generator for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 BuildArch: noarch
-PreReq: udev-rules = %epoch:%version-%release
+PreReq: udev-rules = %EVR
 
 %description -n udev-rule-generator-net
 This package contains Net rule generator for udev
@@ -593,7 +594,7 @@ Summary: Bash completion for udev utils
 Group: Shells
 BuildArch: noarch
 Requires: bash-completion
-Requires: udev = %epoch:%version-%release
+Requires: udev = %EVR
 
 %description -n bash-completion-udev
 Bash completion for udev.
@@ -602,7 +603,7 @@ Bash completion for udev.
 Summary: Zsh completion for udev utils
 Group: Shells
 BuildArch: noarch
-Requires: udev = %epoch:%version-%release
+Requires: udev = %EVR
 Conflicts: zsh-completion-%name < 1:214-alt14
 
 %description -n zsh-completion-udev
@@ -621,7 +622,7 @@ This package provides shared library to access udev device information
 Summary: Libraries and headers for libudev
 Group: Development/C
 License: LGPLv2.1+
-Requires: libudev1 = %epoch:%version-%release
+Requires: libudev1 = %EVR
 
 %description -n libudev-devel
 Shared library and headers for libudev
@@ -654,9 +655,9 @@ CONFIGURE_OPTS=" \
 	--with-rootlibdir=/%_lib \
 	--with-pamlibdir=/%_lib/security \
 	--enable-split-usr \
-	--with-sysvinit-path=/etc/rc.d/init.d \
-	--with-sysvrcnd-path=/etc/rc.d \
-	--with-rc-local-script-path-start=/etc/rc.d/rc.local \
+	--with-sysvinit-path=%_initdir \
+	--with-sysvrcnd-path=%_sysconfdir/rc.d \
+	--with-rc-local-script-path-start=%_sysconfdir/rc.d/rc.local \
 	--with-debug-shell=/bin/bash \
 	--with-kbd-loadkeys=/bin/loadkeys \
 	--with-kbd-setfont=/bin/setfont \
@@ -1171,8 +1172,8 @@ update_chrooted all
 /lib/tmpfiles.d/systemd.conf
 /lib/tmpfiles.d/systemd-nspawn.conf
 
-%_sysconfdir/xdg/systemd
-%_sysconfdir/X11/xinit.d/50-systemd-user.sh
+%_xdgconfigdir/%name
+%_x11sysconfdir/xinit.d/50-systemd-user.sh
 
 %config(noreplace) %_sysconfdir/systemd/bootchart.conf
 %config(noreplace) %_sysconfdir/systemd/journald.conf
@@ -1728,6 +1729,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Jun 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1:221-alt2
+- add add_findreq_skiplist %_x11sysconfdir/xinit.d/*
+
 * Mon Jun 22 2015 Alexey Shabalin <shaba@altlinux.ru> 1:221-alt1
 - 221
 
