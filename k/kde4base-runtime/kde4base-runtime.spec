@@ -11,7 +11,7 @@
 %define bugfix 2
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -231,6 +231,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Jun 24 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt2
+- rebuild with new libgcrypt
+
 * Thu Jun 11 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt1
 - new version
 - temporary build without exiv2
