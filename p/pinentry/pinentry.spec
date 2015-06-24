@@ -1,8 +1,8 @@
 %def_disable libcap
 
 Name: pinentry
-Version: 0.9.0
-Release: alt2
+Version: 0.9.4
+Release: alt1
 
 Group: File tools
 Summary: Simple PIN or passphrase entry dialog
@@ -17,8 +17,6 @@ Requires: %name-gtk2 = %version-%release
 # ftp://ftp.gnupg.org/gcrypt/pinentry/%name-%version.tar.gz
 Source: %name-%version.tar
 Source1: pinentry-wrapper
-# FC
-Patch2: 0002-Fix-qt4-pinentry-window-created-in-the-background.patch
 # ALT
 Patch10: alt-mask-xprop.patch
 
@@ -29,6 +27,7 @@ BuildRequires(pre): libqt4-devel
 BuildRequires: libcap-devel
 %endif
 BuildRequires: gcc-c++ libgtk+2-devel libncursesw-devel
+BuildRequires: libsecret-devel gcr-libs-devel
 
 %description
 This is simple PIN or passphrase entry dialog which
@@ -40,6 +39,7 @@ Summary: %summary
 Provides: %name = %version-%release
 Provides: %name-terminal = %version-%release
 Provides: %name-console = %version-%release
+Provides: %name-tty = %EVR
 Provides: %name-curses = %EVR
 Obsoletes: %name-curses < %EVR
 Conflicts: pinentry < 0.7.2 pinentry-curses < 0.7.2
@@ -55,6 +55,14 @@ Provides: %name-x11 = %version-%release
 Provides: pinentry-gtk = %EVR
 Obsoletes: pinentry-gtk < %EVR
 
+%package gnome3
+Group: %group
+Summary: %summary
+Requires: %name-common = %EVR
+Requires: xprop
+Provides: %name = %version-%release
+Provides: %name-x11 = %version-%release
+
 %package qt4
 Group: %group
 Summary: %summary
@@ -68,45 +76,76 @@ Obsoletes: pinentry-qt < %EVR
 %description gtk2
 This is simple PIN or passphrase entry dialog which
 utilize the Assuan protocol as described by the aegypten project.
-
+%description gnome3
+This is simple PIN or passphrase entry dialog which
+utilize the Assuan protocol as described by the aegypten project.
 %description qt4
 This is simple PIN or passphrase entry dialog which
 utilize the Assuan protocol as described by the aegypten project.
-
 %description common
 This package contains common files and documentation for %name.
 
 %prep
-%setup
-install -m0644 %SOURCE1 pinentry-wrapper
-%patch2 -p1
-%patch10 -p0
+%setup -T -c
+tar xf %SOURCE0
+mv %name-%version gui
 
-
+pushd gui
 rm doc/*.info
-
 pushd qt4
-for m in *.moc; do
-    h="${m%%.moc}.h"
-    rm $m
+rm -f *.moc
+for h in *.h; do
+    m="${h%%.h}.moc"
     moc-qt4 $h -o $m
 done
 popd
 %autoreconf
+popd
+
+cp -ar gui tui
+install -m0644 %SOURCE1 pinentry-wrapper
+%patch10 -p0
+
 
 %build
+%add_optflags -std=gnu++11
+
+pushd gui
 %configure \
     --disable-rpath \
+    --disable-pinentry-curses \
+    --disable-pinentry-tty \
     --enable-pinentry-gtk2 \
     --enable-pinentry-qt4 \
-    --enable-pinentry-curses \
+    --enable-pinentry-qt4-clipboard \
+    --enable-pinentry-gnome3 \
+    --enable-libsecret \
     %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
     #
-
 %make_build
+popd
+
+pushd tui
+%configure \
+    --disable-rpath \
+    --enable-pinentry-curses \
+    --enable-pinentry-tty \
+    --disable-pinentry-gtk2 \
+    --disable-pinentry-qt4 \
+    --disable-pinentry-gnome3 \
+    --disable-libsecret \
+    %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
+    #
+%make_build
+popd
 
 %install
+pushd gui
 %makeinstall_std
+popd
+pushd tui
+%makeinstall_std
+popd
 rm %buildroot%_bindir/%name
 
 ln -s %name-gtk-2 %buildroot/%_bindir/%name-gtk
@@ -122,13 +161,20 @@ install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 %_bindir/%name-qt4
 %_bindir/%name-qt
 
+%files gnome3
+%_bindir/%name-gnome3
+
 %files common
-%doc AUTHORS NEWS README THANKS
+%doc gui/AUTHORS gui/NEWS gui/README gui/THANKS
 %_bindir/%name
 %_bindir/%name-curses
+%_bindir/%name-tty
 %_infodir/*.info*
 
 %changelog
+* Tue Jun 23 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.4-alt1
+- new version
+
 * Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt2
 - don't require xprop for console subpackage
 
