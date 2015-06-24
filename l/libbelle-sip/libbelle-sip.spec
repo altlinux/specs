@@ -1,6 +1,6 @@
 Name: libbelle-sip
 Version: 1.4.1
-Release: alt1
+Release: alt2
 Summary: Linphone sip stack
 
 Group: System/Libraries
@@ -56,6 +56,9 @@ make
 %_libdir/pkgconfig/belle-sip.pc
 
 %changelog
+* Wed Jun 24 2015 Alexei Takaseev <taf@altlinux.org> 1.4.1-alt2
+- Rebuild with new libmbedtls-1.3.11
+
 * Wed May 06 2015 Alexei Takaseev <taf@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
