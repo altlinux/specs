@@ -4,7 +4,7 @@
 
 Name: libktorrent
 Version: 1.3.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: BitTorrent library for KDE
@@ -72,6 +72,12 @@ This package contains the development files for %name.
 %_K4link/lib*.so
 
 %changelog
+* Wed Jun 24 2015 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt3
+- rebuild with new libgcrypt
+
+* Mon Sep 08 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1.M70P.1
+- build for M70P
+
 * Mon Sep 08 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt2
 - add upstream fix against "authenticated peers not to get accepted"
 
