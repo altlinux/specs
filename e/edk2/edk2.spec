@@ -1,11 +1,11 @@
 %define SVNDATE 20150616
 %define SVNREV 17642
-%define TOOL_CHAIN_TAG GCC49
+%define TOOL_CHAIN_TAG GCC48
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
 Version: %{SVNDATE}svn%{SVNREV}
-Release: alt1
+Release: alt2
 Summary: EFI Development Kit II
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
@@ -20,7 +20,7 @@ License: BSD
 Group: Emulators
 Url: http://www.tianocore.org
 
-BuildRequires: gcc4.9-c++
+BuildRequires: gcc-c++-x86_64-linux-gnu gcc4.8-c++
 BuildRequires: iasl nasm
 BuildRequires: python-devel python-modules-sqlite3
 BuildRequires: libuuid-devel
@@ -62,6 +62,7 @@ Group: Emulators
 Requires: ipxe-roms-qemu
 Requires: seavgabios
 License: BSD License (no advertising) with restrictions on use and redistribution
+BuildArch: noarch
 
 %description ovmf
 EFI Development Kit II
@@ -99,28 +100,40 @@ sed -i \
 	 s|^ACTIVE_PLATFORM[[ ]*=.*|ACTIVE_PLATFORM = MdeModulePkg/MdeModulePkg.dsc|" \
 	 BaseTools/Conf/target.template
 
+sed -i \
+	"s|^DEFINE UNIXGCC_X64_PETOOLS_PREFIX|DEFINE UNIXGCC_X64_PETOOLS_PREFIX = x86_64-linux-gnu-|; \
+	 s|^DEFINE UNIXGCC_IA32_PETOOLS_PREFIX|DEFINE UNIXGCC_IA32_PETOOLS_PREFIX = x86_64-linux-gnu-|; \
+	 s|DEF(GCC48_X64_PREFIX)make|make|; \
+	 s|DEF(GCC48_IA32_PREFIX)make|make|; \
+	 s|DEF(GCC49_X64_PREFIX)make|make|; \
+	 s|DEF(GCC49_IA32_PREFIX)make|make|" \
+	 BaseTools/Conf/tools_def.template
+
 %build
+export GCC48_BIN=x86_64-linux-gnu-
 source ./edksetup.sh
 # prepare
 #cp /usr/share/seabios/bios-csm.bin OvmfPkg/Csm/Csm16/Csm16.bin
 #cp /usr/share/seabios/bios-csm.bin corebootPkg/Csm/Csm16/Csm16.bin
-%make -C BaseTools
+%make \
+	 -C BaseTools
+
 
 (cd UefiCpuPkg/ResetVector/Vtf0; python Build.py)
 
 #source ./edksetup.sh
-%ifarch x86_64
+#%ifarch x86_64
 build -p FatPkg/FatPkg.dsc -m FatPkg/EnhancedFatDxe/Fat.inf -b RELEASE -a X64
-%endif
+#%endif
 build -p FatPkg/FatPkg.dsc -m FatPkg/EnhancedFatDxe/Fat.inf -b RELEASE -a IA32
 mkdir -p FatBinPkg/EnhancedFatDxe/{X64,Ia32}
-%ifarch x86_64
+#%ifarch x86_64
 cp -a Build/Fat/RELEASE_%{TOOL_CHAIN_TAG}/X64/Fat.efi FatBinPkg/EnhancedFatDxe/X64/Fat.efi
-%endif
+#%endif
 cp -a Build/Fat/RELEASE_%{TOOL_CHAIN_TAG}/IA32/Fat.efi FatBinPkg/EnhancedFatDxe/Ia32/Fat.efi
-%ifarch x86_64
+#%ifarch x86_64
 build -p OvmfPkg/OvmfPkgX64.dsc -D BUILD_NEW_SHELL -D SECURE_BOOT_ENABLE=TRUE -D FD_SIZE_2MB -b RELEASE -a X64
-%endif
+#%endif
 build -p OvmfPkg/OvmfPkgIa32.dsc -D BUILD_NEW_SHELL -D SECURE_BOOT_ENABLE=TRUE -D FD_SIZE_2MB -b RELEASE -a IA32
 
 %install
@@ -189,11 +202,11 @@ mkdir -p %buildroot%_datadir/ovmf
 install -D -m644 Build/OvmfIa32/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF.fd %buildroot%_datadir/ovmf/ovmf-ia32.bin
 install -D -m644 Build/OvmfIa32/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_CODE.fd %buildroot%_datadir/ovmf/ovmf_code-ia32.bin
 install -D -m644 Build/OvmfIa32/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_VARS.fd %buildroot%_datadir/ovmf/ovmf_vars-ia32.bin
-%ifarch x86_64
+#%ifarch x86_64
 install -D -m644 Build/OvmfX64/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF.fd %buildroot%_datadir/ovmf/ovmf-x64.bin
 install -D -m644 Build/OvmfX64/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_CODE.fd %buildroot%_datadir/ovmf/ovmf_code-x64.bin
 install -D -m644 Build/OvmfX64/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_VARS.fd %buildroot%_datadir/ovmf/ovmf_vars-x64.bin
-%endif
+#%endif
 
 %files tools
 %_bindir/BootSectImage
@@ -238,6 +251,9 @@ install -D -m644 Build/OvmfX64/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_VARS.fd %buildr
 %_datadir/ovmf/*
 
 %changelog
+* Wed Jun 24 2015 Alexey Shabalin <shaba@altlinux.ru> 20150616svn17642-alt2
+- buils ovmf as noarch
+
 * Wed Jun 17 2015 Alexey Shabalin <shaba@altlinux.ru> 20150616svn17642-alt1
 - svn snapshot r17642
 - add ovmf package
