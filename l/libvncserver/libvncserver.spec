@@ -10,7 +10,7 @@
 Name: libvncserver
 %define libname %name
 Version: 0.9.10
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: An easy API to write one's own VNC server
@@ -157,6 +157,9 @@ mkdir -p x11vnc
 
 
 %changelog
+* Wed Jun 24 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.10-alt2
+- rebuild with new libgcrypt
+
 * Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.10-alt1
 - new version
 
