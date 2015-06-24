@@ -7,14 +7,14 @@
 
 Name: leechcraft
 Version: 0.6.75
-Release: alt0.1.1
+Release: alt0.2
 
 Summary: LeechCraft DE
 License: Boost Software License
 Group: Graphical desktop/Other
 URL: http://%name.org
 
-# 00a4cac2
+# 37f7ed557
 Source: %name-%version.tar
 
 %define qxmpp_ver 0.7.6
@@ -161,6 +161,9 @@ __EOF__
 %_datadir/%name/cmake/
 
 %changelog
+* Wed Jun 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.75-alt0.2
+- 0.6.75_37f7ed55
+
 * Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.75-alt0.1.1
 - Rebuilt for gcc5 C++11 ABI.
 
