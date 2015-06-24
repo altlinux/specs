@@ -163,7 +163,7 @@
 
 Name: qemu
 Version: 2.3.0
-Release: alt3
+Release: alt4
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -254,6 +254,7 @@ Requires: seavgabios
 Requires: seabios >= 1.7.4-alt2
 Requires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d
 Requires: %name-img = %version-%release
+Requires: edk2-ovmf
 
 %description common
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -673,6 +674,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Wed Jun 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt4
+- add requires edk2-ovmf
+
 * Mon Jun 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt3
 - add aarch64-softmmu to target_list_system
 - fixed CVE-2015-4037, CVE-2015-3209
