@@ -1,6 +1,6 @@
 Name: dirmngr
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Client for Managing/Downloading CRLs
 Group: System/Libraries
@@ -48,6 +48,12 @@ install -pm644 AUTHORS NEWS README THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Wed Jun 24 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt2
+- rebuild with new libgcrypt
+
+* Mon Jun 16 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt0.M70P.1
+- built for M70P
+
 * Thu Jun 05 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1
 - new version
 
