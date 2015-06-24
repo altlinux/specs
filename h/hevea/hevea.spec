@@ -1,9 +1,9 @@
 %define target TARGET=opt
 
 Name: hevea
-Version: 1.10
-Release: alt3.qa1
-Packager: Grigory Batalov <bga@altlinux.ru>
+Version: 2.23
+Release: alt1
+Packager: %packager
 
 Group: Publishing
 Summary: A fast and powerful LaTeX to HTML translator
@@ -14,10 +14,7 @@ Source: %url/distri/%name-%version.tar.gz
 
 Requires: /usr/bin/latex, /usr/bin/pdflatex
 
-BuildRequires: rpm-build-ocaml
-
-# Automatically added by buildreq on Wed Jul 02 2008
-BuildRequires: ocaml
+BuildRequires: rpm-build-ocaml4 ocaml4 ocaml4-ocamlbuild
 
 %description
 HeVeA is a LaTeX to HTML translator. Its remarkable features are
@@ -55,6 +52,9 @@ rm -f config.sh
 %doc README CHANGES LICENSE pub.txt
 
 %changelog
+* Wed Jun 24 2015 Andrey Bergman <vkni@altlinux.org> 2.23-alt1
+- Update to version 2.23.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.10-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
