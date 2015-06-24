@@ -97,18 +97,11 @@
 
 %def_without wireshark
 
-%ifarch x86_64
-%define with_loader_nvram "%_datadir/ovmf/ovmf_code-x64.bin:%_datadir/ovmf/ovmf_vars-x64.bin"
-%endif
-
-%ifarch %ix86
-%define with_loader_nvram "%_datadir/ovmf/ovmf_code-ia32.bin:%_datadir/ovmf/ovmf_vars-ia32.bin"
-%endif
-
+%define with_loader_nvram "%_datadir/ovmf/ovmf_code-x64.bin:%_datadir/ovmf/ovmf_vars-x64.bin:%_datadir/ovmf/ovmf_code-ia32.bin:%_datadir/ovmf/ovmf_vars-ia32.bin"
 
 Name: libvirt
 Version: 1.2.16
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -937,6 +930,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Jun 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.16-alt2
+- update OVMF nvram path
+
 * Fri Jun 19 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.16-alt1
 - 1.2.16
 - build with firewalld support
