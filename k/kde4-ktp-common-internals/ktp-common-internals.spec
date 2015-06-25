@@ -4,7 +4,7 @@
 %define rname ktp-common-internals
 Name: kde4-ktp-common-internals
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Common internals for KDE Telepathy
@@ -144,6 +144,12 @@ done
 %_K4includedir/KTp/
 
 %changelog
+* Thu Jun 25 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt2
+- rebuild with new libgcrypt
+
+* Fri Oct 31 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt0.M70P.1
+- built for M70P
+
 * Tue Oct 21 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
 - new version
 
