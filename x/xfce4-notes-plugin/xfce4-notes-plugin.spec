@@ -1,5 +1,5 @@
 Name: xfce4-notes-plugin
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Sticky notes plugin for the Xfce panel
@@ -54,6 +54,9 @@ BuildRequires: libunique-devel
 %_desktopdir/xfce4-notes.desktop
 
 %changelog
+* Thu Jun 25 2015 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt1
+- Updated to 1.8.1.
+
 * Mon Apr 20 2015 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
 - Avoid an ambiguous reference for Timeout object.
 - Drop obsoleted patch.
