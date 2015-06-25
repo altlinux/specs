@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.0.7
-Release: alt1.1
+Release: alt1.2
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -244,10 +244,6 @@ sed -i 's,^IMAGELIB.\+$,IMAGELIB = graphicsmagick,' PLUGINS/src/text2skin/Makefi
 
 %build
 (cd PLUGINS/src/xineliboutput && sh configure)
-
-%ifarch %ix86
-sed '/^all:/ s,FFdecsa_test.done,,' -i PLUGINS/src/sc/FFdecsa/Makefile
-%endif
 
 %make_build
 
@@ -596,6 +592,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Tue Jun 23 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.7-alt1.2
+- Reenabled FFdecsa testsuite on %%ix86.
+
 * Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.7-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
