@@ -1,7 +1,7 @@
 %define sover 5
 Name: libotr%sover
 Version: 4.1.0
-Release: alt2
+Release: alt2.1
 
 Group: System/Libraries
 Summary: Off-The-Record Messaging library and toolkit
@@ -87,6 +87,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_man1dir/*
 
 %changelog
+* Thu Jun 25 2015 Sergey V Turchin <zerg@altlinux.org> 4.1.0-alt2.1
+- Rebuild with new libgcrypt
+
 * Mon Jan 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.0-alt2
 - Renamed {devel,utils} subpackages to libotr-{devel,utils}.
 
