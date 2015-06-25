@@ -4,8 +4,8 @@
 %define lngg Kazakh
 
 Name: kde4-i18n-%lng
-Version: 15.4.0
-Release: alt2
+Version: 15.4.2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE
@@ -95,6 +95,9 @@ fi
 
 
 %changelog
+* Thu Jun 25 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt1
+- new version
+
 * Mon Apr 27 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt2
 - fix conflicts
 
