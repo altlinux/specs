@@ -3,14 +3,14 @@
 %define sname vacuum
 
 Name: %sname-im
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: Crossplatform Jabber/XMPP client
 License: GPL3
 Group: Networking/Instant messaging
 Url: http://www.vacuum-im.org
-Source: %sname-%version.tar.xz
+Source: %name-%version.tar.gz
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
@@ -21,7 +21,7 @@ BuildRequires: gcc-c++ libX11-devel phonon-devel libXScrnSaver-devel
 Crossplatform Jabber/XMPP client
 
 %prep
-%setup -n %sname-%version
+%setup -n %name-%version
 
 %build
 qmake-qt4  INSTALL_PREFIX=%_prefix INSTALL_APP_DIR=%name INSTALL_LIB_DIR=%_lib -recursive vacuum.pro
@@ -36,6 +36,7 @@ mv %buildroot%_bindir/%sname %buildroot%_bindir/%name
 rm -rf %buildroot%_datadir/%name/resources/emoticons/kolobok*
 
 %files
+%doc AUTHORS CHANGELOG COPYING README TRANSLATORS
 %_bindir/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
@@ -47,6 +48,9 @@ rm -rf %buildroot%_datadir/%name/resources/emoticons/kolobok*
 %doc README CHANGELOG AUTHORS TRANSLATORS
 
 %changelog
+* Fri Jun 26 2015 Ilya Mashkin <oddity@altlinux.ru> 1.2.5-alt1
+- 1.2.5
+
 * Mon Mar 31 2014 Ilya Mashkin <oddity@altlinux.ru> 1.2.4-alt1
 - 1.2.4
 
