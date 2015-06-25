@@ -1,11 +1,11 @@
 %define _name gstvalidate
-%define ver_major 1.4
+%define ver_major 1.5
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
 Name: gst-validate
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: GStreamer Validate Tools and Library
 Group: System/Libraries
@@ -14,7 +14,7 @@ Url: http://cgit.freedesktop.org/gstreamer/gst-devtools/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
-%define gst_ver 1.4.0
+%define gst_ver 1.5.2
 
 Requires: lib%name = %version-%release
 
@@ -96,16 +96,21 @@ GObject introspection devel data for the Gst Validate library.
 %_bindir/gst-validate-media-check-%api_ver
 %_bindir/gst-validate-transcoding-%api_ver
 %_libdir/%name-launcher/
-%_datadir/gstreamer-%gst_api_ver/validate-scenario/
+%_datadir/gstreamer-%gst_api_ver/validate/
 
 %files -n lib%name -f %name.lang
 %_libdir/lib%_name-%api_ver.so.*
+%_libdir/lib%{_name}_preload-%api_ver.so.*
 %_libdir/lib%_name-default-overrides-%api_ver.so.*
+%dir %_libdir/gstreamer-%gst_api_ver/validate/
+%_libdir/gstreamer-%gst_api_ver/validate/*.so
+%exclude %_libdir/gstreamer-%gst_api_ver/validate/*.la
 %doc ChangeLog README
 
 %files -n lib%name-devel
 %_includedir/gstreamer-%gst_api_ver/gst/validate/
 %_libdir/lib%_name-%api_ver.so
+%_libdir/lib%{_name}_preload-%api_ver.so
 %_libdir/lib%_name-default-overrides-%api_ver.so
 %_pkgconfigdir/%name-%api_ver.pc
 
@@ -117,8 +122,12 @@ GObject introspection devel data for the Gst Validate library.
 
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/%name-%api_ver/
+%_datadir/gtk-doc/html/%name-plugins-%api_ver/
 
 %changelog
+* Thu Jun 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
 * Tue Nov 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt2
 - disabled build of incomplete docs for launcher
 
