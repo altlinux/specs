@@ -60,7 +60,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 221
-Release: alt2
+Release: alt3
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1729,6 +1729,10 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Jun 25 2015 Alexey Shabalin <shaba@altlinux.ru> 1:221-alt3
+- backport patches from upstream master
+- add --no-redirect for chkconfig in systemd-sysv-install
+
 * Wed Jun 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1:221-alt2
 - add add_findreq_skiplist %_x11sysconfdir/xinit.d/*
 
