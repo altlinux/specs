@@ -1,6 +1,6 @@
 Name: rpm-build-guestfs
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: RPM helper post script for build guestfs appliance
 License: GPL
@@ -21,13 +21,16 @@ mkdir -p %_libdir/guestfs
 cp /boot/vmlinuz-*-*-def-* %_libdir/guestfs/vmlinuz.%_arch
 
 kver=$(ls -1 /boot/vmlinuz-*-def-* | sed -e "s|/boot/vmlinuz-||")
-make-initrd --no-checks --config=/etc/initrd.mk.d/guestfs.mk.example --kernel=$kver
+make-initrd --verbose --no-checks --config=/etc/initrd.mk.d/guestfs.mk.example --kernel=$kver
 chmod 644 %_libdir/guestfs/*
 
 %postun
 rm -rf %_libdir/guestfs
 
 %changelog
+* Thu Jun 25 2015 Alexey Shabalin <shaba@altlinux.ru> 0.2-alt2
+- add --verbose to make-initrd
+
 * Fri Feb 13 2015 Alexey Shabalin <shaba@altlinux.ru> 0.2-alt1
 - update
 

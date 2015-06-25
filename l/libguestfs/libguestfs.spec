@@ -17,8 +17,8 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.29.2
-Release: alt1.1
+Version: 1.29.6
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -41,7 +41,7 @@ BuildRequires: gobject-introspection-devel libgjs
 BuildRequires: cpio gperf perl-podlators perl-devel genisoimage xml-utils db4-utils zip unzip
 # po4a 
 BuildRequires: qemu-kvm qemu-system
-BuildRequires: libncurses-devel libreadline-devel
+BuildRequires: libncurses-devel libtinfo-devel libreadline-devel
 BuildRequires: libpcre-devel libmagic-devel libvirt-devel libxml2-devel libconfig-devel hivex-devel
 BuildRequires: libacl-devel libcap-devel
 BuildRequires: netpbm
@@ -150,22 +150,26 @@ Requires: golang
 %description -n golang-guestfs
 golang-%name contains Go language bindings for %name.
 
-%package tools
+%package -n guestfs-tools
 Summary: System administration tools for virtual machines
 Group: File tools
 License: GPLv2+
 Requires: %name = %version-%release
+Provides: %name-tools = %version-%release
+Obsoletes: %name-tools < %version-%release
+
+Requires: guestfs-data
+Requires: libosinfo
 
 # for virt-make-fs:
 Requires: qemu-img
+Requires: libvirt-daemon-driver-qemu >= 0.10.2
 
 # for virt-sysprep:
 Requires: %_bindir/fusermount
 Requires: %_bindir/getopt
-Requires: %_bindir/guestmount
-Requires: %_bindir/virt-inspector
 
-%description tools
+%description -n guestfs-tools
 This package contains miscellaneous system administrator command line
 tools for virtual machines.
 
@@ -270,7 +274,7 @@ Summary: Convert a virtual machine to run on KVM
 Group: Development/Other
 License: GPLv2+
 Requires: %name = %version-%release
-Requires: %name-tools = %version-%release
+Requires: guestfs-tools = %version-%release
 Requires: gawk
 Requires: gzip
 Requires: unzip
@@ -416,7 +420,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man3dir/guestfs-golang.3*
 %endif
 
-%files tools
+%files -n guestfs-tools
 %doc README
 %config(noreplace) %_sysconfdir/libguestfs-tools.conf
 %_man5dir/libguestfs-tools.conf.5*
@@ -586,6 +590,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Thu Feb 12 2015 Alexey Shabalin <shaba@altlinux.ru> 1.29.6-alt1
+- 1.29.6
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.29.2-alt1.1
 - rebuild with new perl 5.20.1
 
