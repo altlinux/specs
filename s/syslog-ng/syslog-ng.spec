@@ -10,8 +10,8 @@
 %def_enable	mongodb
 
 Name: syslog-ng
-Version: 3.6.1
-Release: alt1
+Version: 3.6.3
+Release: alt2
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -152,6 +152,7 @@ autoconf
 
 %build
 skip_submodules=1 ./autogen.sh
+%add_optflags -levtlog -livykis -lgmodule-2.0 -lglib-2.0 -lpcre
 %configure \
  --sbindir=/sbin \
  --sysconfdir=%_sysconfdir/%name \
@@ -166,6 +167,7 @@ skip_submodules=1 ./autogen.sh
  --enable-tcp-wrapper \
  --enable-spoof-source \
  --with-embedded-crypto \
+ --enable-manpages \
  %{subst_enable geoip} \
  %{subst_enable smtp} \
  %{subst_enable json} \
@@ -197,6 +199,10 @@ install -m644 -p config.h %buildroot%_includedir/%name
 
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_sysconfdir/%name/conf.d 
+
+# installation of xsd  broken in 3.6.3
+install -c -m 644 doc/xsd/patterndb-1.xsd doc/xsd/patterndb-2.xsd doc/xsd/patterndb-3.xsd doc/xsd/patterndb-4.xsd \
+    %buildroot%_datadir/%name/xsd
 
 find %buildroot -name "*.la" -exec rm -f {} +
 
@@ -258,6 +264,8 @@ fi
 %_libdir/%name/libpseudofile.so
 %_libdir/%name/libsyslogformat.so
 %_libdir/%name/libsystem-source.so
+%_libdir/%name/libsdjournal.so
+
 %_libdir/lib%name-*.so.*
 
 %dir %_datadir/%name
@@ -318,6 +326,15 @@ fi
 %_libdir/pkgconfig/%name-test.pc
 
 %changelog
+* Thu Jun 25 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.6.3-alt2
+- changed default configuration:
+  + removed "unix-dgram ("/var/lib/klogd/dev/log");"
+    (/var/lib/klogd/dev/log is a part of klogd package)
+  + changed "_" to "-" in names of options
+
+* Sun Jun 21 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.6.3-alt1
+- 3.6.3
+
 * Sat Dec 06 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.6.1-alt1
 - 3.6.1 (ALT #30325)
 - new subpackage devel-test
