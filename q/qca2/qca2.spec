@@ -5,7 +5,7 @@ Name: qca2
 %define minor 1
 %define bugfix 0.3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -262,6 +262,9 @@ popd
 %_includedir/qt4/QtCrypto
 
 %changelog
+* Thu Jun 25 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.0.3-alt2
+- rebuild with new libgcrypt
+
 * Wed May 27 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.0.3-alt1
 - new version
 
