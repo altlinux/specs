@@ -1,8 +1,8 @@
-%global svnrev  2595
+%global svnrev  2604
 
 Name:           inxi
-Version:        2.2.21
-Release:        alt2
+Version:        2.2.25
+Release:        alt1.r%svnrev
 Summary:        A full featured system information script
 Summary(ru):    Скрипт вывода полной информации об оборудовании и системе
 
@@ -52,6 +52,9 @@ install -p -D -m 644 %{name}.1.gz %{buildroot}/%{_mandir}/man1/%{name}.1.gz
 
 
 %changelog
+* Thu Jun 25 2015 Andrey Cherepanov <cas@altlinux.org> 2.2.25-alt1.r2604
+- New version
+
 * Sat May 23 2015 Andrey Cherepanov <cas@altlinux.org> 2.2.21-alt2
 - New version
 
