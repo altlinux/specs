@@ -10,7 +10,7 @@
 
 Name: branding-%brand-%theme
 Version: 3.0
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
@@ -341,6 +341,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Thu Jun 25 2015 Andrey Cherepanov <cas@altlinux.org> 3.0-alt2
+- Add styles for tabs in web interface
+
 * Wed Feb 04 2015 Andrey Cherepanov <cas@altlinux.org> 3.0-alt1
 - 3.0 release
 - Fix text colors in QTreeView in Alterator
