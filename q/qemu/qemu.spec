@@ -163,7 +163,7 @@
 
 Name: qemu
 Version: 2.3.0
-Release: alt4
+Release: alt5
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -674,6 +674,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Thu Jun 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt5
+- Fixes a crash during image compression (RH#1214855)
+
 * Wed Jun 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt4
 - add requires edk2-ovmf
 
