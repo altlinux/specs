@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -133,7 +133,7 @@ GObject introspection devel data for the GStreamer library
 %_typelibdir/GstAudio-%api_ver.typelib
 %_typelibdir/GstFft-%api_ver.typelib
 %_typelibdir/GstPbutils-%api_ver.typelib
-%_typelibdir/GstRiff-%api_ver.typelib
+#%_typelibdir/GstRiff-%api_ver.typelib
 %_typelibdir/GstRtp-%api_ver.typelib
 %_typelibdir/GstRtsp-%api_ver.typelib
 %_typelibdir/GstSdp-%api_ver.typelib
@@ -158,7 +158,7 @@ GObject introspection devel data for the GStreamer library
 %_girdir/GstAudio-%api_ver.gir
 %_girdir/GstFft-%api_ver.gir
 %_girdir/GstPbutils-%api_ver.gir
-%_girdir/GstRiff-%api_ver.gir
+#%_girdir/GstRiff-%api_ver.gir
 %_girdir/GstRtp-%api_ver.gir
 %_girdir/GstRtsp-%api_ver.gir
 %_girdir/GstSdp-%api_ver.gir
@@ -167,6 +167,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Thu Jun 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
 * Mon Jun 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
 - 1.5.1
 

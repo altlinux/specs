@@ -1,10 +1,10 @@
 %define _name ges
-%define ver_major 1.4
+%define ver_major 1.5
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
 Name: gstreamer-editing-services
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -14,9 +14,12 @@ Url: http://cgit.freedesktop.org/gstreamer/gst-editing-services/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
-%define gst_ver 1.4.0
+%define gst_ver 1.5.2
 
-BuildRequires: gcc-c++ gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver
+Requires: lib%_name = %version-%release
+Requires: gst-validate >= %gst_ver
+
+BuildRequires: gcc-c++ flex gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver
 BuildRequires: libgst-validate-devel libxml2-devel
 BuildRequires: gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
 BuildRequires: gtk-doc
@@ -85,11 +88,15 @@ library.
 %install
 %makeinstall_std
 
-%files -n lib%_name
+%files
 %_bindir/%_name-launch-%api_ver
-%_libdir/lib%_name-%api_ver.so.*
 %_datadir/gstreamer-%gst_api_ver/validate-scenario/*.scenario
 %doc ChangeLog README RELEASE NEWS AUTHORS
+
+%exclude %_libdir/gst-validate-launcher/
+
+%files -n lib%_name
+%_libdir/lib%_name-%api_ver.so.*
 
 %files -n lib%_name-devel
 %_includedir/gstreamer-%gst_api_ver/%_name/
@@ -106,6 +113,9 @@ library.
 %_datadir/gtk-doc/html/%_name-%api_ver/
 
 %changelog
+* Thu Jun 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
 * Tue Nov 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - first build for Sisyphus
 

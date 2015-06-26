@@ -1,10 +1,14 @@
 %define ver_major 0.94
+%define api_ver 1.0
 %define gst_api_ver 1.0
+
 %define gst_ver 1.4.0
+%define gtk_ver 3.10
+%define gi_ver 1.32
 
 Name: pitivi
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -12,16 +16,17 @@ Group: Video
 Url: http://www.pitivi.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 # use python3
 AutoReqProv: nopython
 %define __python %nil
 %add_python3_compile_include %_libdir/%name/python
 
-Requires: python3-module-gst%gst_api_ver  >= %gst_ver
+Requires: python3-module-gst%gst_api_ver >= %gst_ver
 Requires: gst-plugins-gnonlin%gst_api_ver
+Requires: gstreamer-editing-services
 Requires: gst-libav >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver >= %gst_ver
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
@@ -31,6 +36,9 @@ Requires: gst-plugins-ugly%gst_api_ver >= %gst_ver
 BuildRequires: intltool yelp-tools rpm-build-gir libcairo-devel
 BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
 BuildRequires: python3-module-pycairo-devel
+BuildRequires: gst-plugins%gst_api_ver-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver gobject-introspection-devel >= %gi_ver
+BuildRequires: libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel libgtk+3-gir-devel
 
 %description
 Pitivi is a video editor built upon the GStreamer Editing Services.
@@ -42,8 +50,8 @@ newbies and professionals alike.
 
 %build
 #NOCONFIGURE=1 ./autogen.sh
-#%autoreconf
-%configure
+%autoreconf -I m4 -I common/m4
+%configure --disable-static
 
 %install
 %makeinstall_std
@@ -53,6 +61,7 @@ newbies and professionals alike.
 %files -f %name.lang
 %doc AUTHORS NEWS RELEASE
 %_bindir/*
+%_libdir/libpitivi-1.0.so
 %_libdir/%name/
 %_datadir/%name/
 %_datadir/mime/packages/%name.xml
@@ -61,7 +70,14 @@ newbies and professionals alike.
 %_man1dir/%name.1*
 %_datadir/appdata/%name.appdata.xml
 
+%_typelibdir/Pitivi-%api_ver.typelib
+
+%exclude %_girdir/Pitivi-%api_ver.gir
+
 %changelog
+* Thu Jun 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.94-alt2
+- updated to 0.94-937f6cf0
+
 * Mon Nov 03 2014 Yuri N. Sedunov <aris@altlinux.org> 0.94-alt1
 - 0.94
 
