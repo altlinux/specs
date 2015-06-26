@@ -14,7 +14,7 @@
 %def_enable gstreamer1
 
 Name: efl
-Version: 1.14.1
+Version: 1.14.2
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -304,6 +304,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Fri Jun 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
+- 1.14.2
+
 * Wed Jun 03 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
 - 1.14.1
 
