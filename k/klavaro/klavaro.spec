@@ -1,5 +1,5 @@
 Name: klavaro
-Version: 3.00
+Version: 3.01
 Release: alt1
 
 Summary: Yet another touch typing tutor
@@ -10,7 +10,7 @@ Url: http://klavaro.sourceforge.net/en/
 Source: http://downloads.sourceforge.net/klavaro/klavaro-%version.tar.bz2
 
 BuildPreReq: libgtk+3-devel >= 3.8.0
-BuildRequires: libcurl-devel intltool
+BuildRequires: libcurl-devel intltool libappstream-glib-devel
 
 %description
 Klavaro is just another free touch typing tutor program. It intends to
@@ -23,7 +23,6 @@ subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
 
 %build
 %autoreconf
-# while GtkDataBox-GTK3 not released
 %configure --disable-shared
 %make_build
 
@@ -33,15 +32,20 @@ subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/*
-%_datadir/klavaro/
-%_desktopdir/klavaro.desktop
-%_man1dir/*
-%_iconsdir/hicolor/*/apps/klavaro.png
-# linked in statically GtkDataBox-GTK3
-%exclude %_libdir/libgtkdatabox.a
+%_bindir/%name
+%_datadir/%name/
+%_desktopdir/%name.desktop
+%_man1dir/%name.1*
+%_iconsdir/hicolor/*/apps/%name.png
+%_datadir/appdata/%name.appdata.xml
+
+%exclude %_libdir/libgtkdataboks.a
+
 
 %changelog
+* Fri Jun 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.01-alt1
+- 3.01
+
 * Thu Jan 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.00-alt1
 - 3.0.0
 
