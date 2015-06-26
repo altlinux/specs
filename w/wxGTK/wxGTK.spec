@@ -8,7 +8,7 @@
 
 Name: wxGTK
 Version: %wxbranch.12
-Release: alt1.svn20131012
+Release: alt1.svn20131012.1
 Serial:	2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -319,6 +319,9 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_datadir/wx/examples
 
 %changelog
+* Fri Jun 26 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.8.12-alt1.svn20131012.1
+- Rebuilt for gcc5 C++11 ABI (ALT#31100).
+
 * Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.8.12-alt1.svn20131012
 - Version 2.8.12
 
