@@ -1,5 +1,5 @@
 Name: purple-plugin-whatsapp
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: WhatsApp protocol implementation for libpurple (Pidgin)
@@ -34,6 +34,9 @@ separately). Only one client can connect at a time (including your phone).
 %_pixmapsdir/pidgin/protocols/*/whatsapp.png
 
 %changelog
+* Fri Jun 26 2015 Mikhail Kolchin <mvk@altlinux.org> 0.8.3-alt1
+- new version
+
 * Fri May 15 2015 Mikhail Kolchin <mvk@altlinux.org> 0.8.2-alt1
 - new version
 
