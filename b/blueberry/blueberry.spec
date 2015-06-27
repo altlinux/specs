@@ -1,6 +1,6 @@
 Name: blueberry
 Version: 1.0.9
-Release: alt1
+Release: alt2
 
 Summary: A Bluetooth configuration tool
 License: %gpl3only
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
-Requires: rfkill
+Requires: rfkill wmctrl
 Requires: libgtk+3-gir, libgnome-bluetooth-gir
 
 %description
@@ -43,6 +43,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Sat Jun 27 2015 Vladimir Didenko <cow@altlinux.org> 1.0.9-alt2
+- add wmctrl to deps
+
 * Sat Jun 27 2015 Vladimir Didenko <cow@altlinux.org> 1.0.9-alt1
 - 1.0.9
 - added missed deps (closes: #31108)
