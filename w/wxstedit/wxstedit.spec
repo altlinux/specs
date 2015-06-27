@@ -2,7 +2,7 @@
 
 Name: wxstedit
 Version: 1.6.0
-Release: alt3.r3169.1
+Release: alt3.r3169.2
 Summary: sample program for the wxWidgets's wxStyledTextCtrl Scintilla wrapper
 License: wxWidgets License
 Group: Editors
@@ -121,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt3.r3169.2
+- Rebuilt with gcc5
+
 * Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt3.r3169.1
 - Rebuilt with updated libwxGTK3.1
 

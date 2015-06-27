@@ -1,6 +1,6 @@
 Name: dvdstyler
 Version: 2.8
-Release: alt1.rc3
+Release: alt2.rc3
 Summary: %name is a crossplatform DVD Authoring System
 Summary(ru_RU.UTF-8): %name - это программа для создания DVD дисков
 License: GPL
@@ -92,6 +92,9 @@ install -p -m 644 data/%name.png %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Sat Jul 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt2.rc3
+- Rebuilt with gcc5
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt1.rc3
 - Rebuilt with updated wxGTK3.1
 

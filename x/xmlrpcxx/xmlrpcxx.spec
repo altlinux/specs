@@ -1,6 +1,6 @@
 Name: xmlrpcxx
 Version: 0.7
-Release: alt1.git20100306
+Release: alt2.git20100306
 Summary: C++ implementation of the XML-RPC protocol
 License: LGPLv2.1+
 Group: System/Libraries
@@ -74,6 +74,9 @@ cmake \
 %_libdir/*.so
 
 %changelog
+* Mon Jul 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt2.git20100306
+- Rebuilt with gcc5
+
 * Sun Mar 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.git20100306
 - Initial build for Sisyphus
 

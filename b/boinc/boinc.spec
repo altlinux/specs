@@ -1,6 +1,6 @@
 Name:		boinc
 Version: 7.4.42
-Release: alt1.1
+Release: alt1.2
 Packager:	Paul Wolneykien <manowar@altlinux.ru>
 License:	GPLv3+/LGPLv3+
 Group:		Sciences/Other
@@ -505,6 +505,9 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 
 
 %changelog
+* Sat Jul 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.4.42-alt1.2
+- Rebuilt with gcc5
+
 * Sat Mar 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.4.42-alt1.1
 - Rebuilt with wxGTK3.1 (instead of wxGTK3.0) & gtk+3 (instead of gtk+2)
 
