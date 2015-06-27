@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 1.8.4
+Version: 1.9.2
 Release: alt1
 
 Group: System/Libraries
@@ -18,6 +18,9 @@ Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch: noarch
 BuildRequires: python-module-setuptools
+
+# Skip findreq on all modules:
+%add_findreq_skiplist %python_sitelibdir/%name/modules/*
 
 %description
 Ansible is a radically simple model-driven configuration management,
@@ -54,9 +57,12 @@ cp -va library/* %buildroot%python_sitelibdir/%name/modules
 %_man1dir/%{name}*
 %python_sitelibdir/%{name}*
 %doc examples/playbooks examples/scripts examples/hosts
-%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md
+%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md ISSUE_TEMPLATE.md
 
 %changelog
+* Sat Jun 27 2015 Terechkov Evgenii <evg@altlinux.org> 1.9.2-alt1
+- 1.9.2 (ALT#30995)
+
 * Sat Feb 28 2015 Terechkov Evgenii <evg@altlinux.org> 1.8.4-alt1
 - 1.8.4
 
