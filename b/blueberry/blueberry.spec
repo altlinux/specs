@@ -1,5 +1,5 @@
 Name: blueberry
-Version: 1.0.3
+Version: 1.0.9
 Release: alt1
 
 Summary: A Bluetooth configuration tool
@@ -13,6 +13,8 @@ Patch: %name-%version-%release.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
+Requires: rfkill
+Requires: libgtk+3-gir, libgnome-bluetooth-gir
 
 %description
 The Blueberry is a front-end to gnome-bluetooth. Supposed to be
@@ -41,5 +43,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Sat Jun 27 2015 Vladimir Didenko <cow@altlinux.org> 1.0.9-alt1
+- 1.0.9
+- added missed deps (closes: #31108)
+
 * Fri Mar 27 2015 Vladimir Didenko <cow@altlinux.org> 1.0.3-alt1
 - initial release
