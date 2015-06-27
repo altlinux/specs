@@ -7,7 +7,7 @@
 
 Name: python-module-wx
 Version: %major.12.1
-Release: alt1.svn20120530
+Release: alt2.svn20120530
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -224,6 +224,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Sat Jun 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.12.1-alt2.svn20120530
+- Rebuilt with gcc5
+
 * Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.12.1-alt1.svn20120530
 - Version 2.8.12.1
 
