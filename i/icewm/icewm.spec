@@ -3,7 +3,7 @@
 
 Name: icewm
 Version: 1.3.8
-Release: alt3
+Release: alt4
 Epoch: 2
 
 Summary: X11 Window Manager
@@ -213,6 +213,9 @@ rm -rf %buildroot/%_x11x11dir/%name/themes/*
 %_pixmapsdir/*
 
 %changelog
+* Sat Jun 27 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.8-alt4
+- extended strong control on startup step
+
 * Fri May 29 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.8-alt3
 - updated shutdown/reboot commands for using with systemd and sysvinit
 - added stronger control of startup sequence in icewm-session
