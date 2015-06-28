@@ -1,6 +1,6 @@
 Name: dbblast
 Version: 0.1.8
-Release: alt10.1
+Release: alt11
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -46,6 +46,9 @@ cp helpdocs/* %buildroot/usr/share/dbblast
 %_datadir/*
 
 %changelog
+* Sun Jun 28 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt11
+- rebuilt against libexiv2.so.14
+
 * Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.8-alt10.1
 - Rebuilt for gcc5 C++11 ABI.
 
