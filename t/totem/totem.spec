@@ -5,7 +5,7 @@
 %define gst_api_ver 1.0
 %define gst_ver 1.4.2
 %define gst_plugins_ver 1.2.4
-%define gtk_ver 3.11.5
+%define gtk_ver 3.16.0
 %define grilo_ver 0.2.12
 %define glib_ver 2.36.0
 %define clutter_ver 1.17.3
@@ -32,7 +32,7 @@
 %def_disable jamendo
 
 Name: totem
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -404,6 +404,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Jun 29 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Thu May 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
