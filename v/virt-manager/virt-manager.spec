@@ -7,8 +7,8 @@
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.2.0
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -144,6 +144,9 @@ python setup.py install --root=%buildroot
 %_man1dir/virt-xml.1*
 
 %changelog
+* Mon Jun 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.1-alt1
+- git snapshot
+
 * Wed May 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt2
 - backport patches from upstream master:
   + domain: Fix memory stats for shutoff VM (#1215453)
