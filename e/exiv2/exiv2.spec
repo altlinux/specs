@@ -1,6 +1,9 @@
+%def_enable video
+%def_enable webready
+
 Name: exiv2
-Version: 0.24
-Release: alt1.1
+Version: 0.25
+Release: alt1
 
 Summary: Command line tool to access EXIF data in image files
 License: GPLv2+
@@ -14,12 +17,13 @@ Requires: libexiv2 = %version-%release
 
 BuildRequires: gcc-c++ libexpat-devel zlib-devel
 BuildRequires: doxygen xsltproc graphviz
+%{?_enable_webready:BuildRequires: libcurl-devel libssh-devel libgcrypt-devel}
 
 %description
-Exiv2 comprises of a C++ library and a command line utility to access image
-metadata. Exiv2 supports full read and write access to the EXIF and IPTC
-metadata, EXIF MakerNote support, extract and delete methods for EXIF
-thumbnails, classes to access IFD and so on.
+Exiv2 comprises of a C++ library and a command line utility to access
+image metadata. Exiv2 supports full read and write access to the EXIF and
+IPTC metadata, EXIF MakerNote support, extract and delete methods for
+EXIF thumbnails, classes to access IFD and so on.
 
 %package -n libexiv2
 Summary: EXIF and IPTC metadata manipulation library
@@ -45,7 +49,9 @@ exiv2 library.
 %make -C config -f config.make
 %configure \
 	--disable-static \
-	--disable-rpath
+	--disable-rpath \
+	%{subst_enable video} \
+	%{subst_enable webready}
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
@@ -53,12 +59,12 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %makeinstall_std
 %find_lang exiv2
 
-%files -f exiv2.lang
+%files
 %_bindir/exiv2
 %_man1dir/*
 %doc README doc/ChangeLog
 
-%files -n libexiv2
+%files -n libexiv2 -f exiv2.lang
 %_libdir/libexiv2.so.*
 
 %files -n libexiv2-devel
@@ -67,6 +73,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_pkgconfigdir/*
 
 %changelog
+* Sun Jun 28 2015 Yuri N. Sedunov <aris@altlinux.org> 0.25-alt1
+- 0.25
+- explicitly enabled video files and WebReady support
+
 * Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.24-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 

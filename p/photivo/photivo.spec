@@ -5,7 +5,7 @@
 
 Name: photivo
 Version: 0
-Release: alt11.%{rev}.1
+Release: alt12.%{rev}
 
 Summary: Photivo photo processor
 Group: Graphics
@@ -113,6 +113,9 @@ find %buildroot%_datadir/%name -type f -print0|xargs -r0 chmod 644 --
 %endif
 
 %changelog
+* Mon Jun 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0-alt12.66a8c1082d88
+- rebuilt against libexiv2.so.14
+
 * Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0-alt11.66a8c1082d88.1
 - Rebuilt for gcc5 C++11 ABI.
 

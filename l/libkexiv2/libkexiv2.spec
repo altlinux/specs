@@ -10,16 +10,15 @@
 
 Name: libkexiv2
 Version: 0.1.9
-Release: alt8.1
+Release: alt9
+
 Group: System/Libraries
 Summary: KDE Exiv2 Interface
+Group: System/Libraries
 License: GPLv2
-URL: http://www.kipi-plugins.org/ 
+URL: http://www.kipi-plugins.org/
 Source: %name-%version.tar.bz2
 Patch1: libkexiv2-0.1.9-exiv2-21.patch
-
-# Automatically added by buildreq on Mon May 07 2007
-#BuildRequires: doxygen gcc-c++ graphviz imake kde-i18n-uk kdelibs-devel libdnet-devel libexiv2-devel libjpeg-devel libXext-devel libXt-devel qt3-designer qt3-doc-html qtcl xml-utils xorg-cf-files
 
 BuildRequires: gcc-c++
 BuildRequires: autoconf >= 2.5
@@ -34,7 +33,6 @@ BuildRequires: libjpeg-devel libdnet-devel xorg-cf-files xml-utils libpng-devel
 Libkexiv2 is a wrapper around Exiv2 library to manipulate pictures
 metadata.
 
-
 %package devel
 Summary: Development files for %name
 Group: Development/KDE and QT
@@ -46,7 +44,6 @@ Libkexiv2 is a wrapper around Exiv2 library to manipulate pictures
 metadata.
 This package contains the libraries and header files needed to develop
 programs which make use of %name.
-
 
 %if_enabled static
 %package devel-static
@@ -66,7 +63,6 @@ programs which make use of static %name.
 %setup
 %patch1 -p0
 
-
 %build
 %add_optflags -I%_includedir/tqtinterface
 %configure \
@@ -82,22 +78,17 @@ programs which make use of static %name.
     --without-arts \
     --enable-new-ldflags \
     --disable-gcc-hidden-visibility
-
 %make_build
-
 
 %install
 %make DESTDIR=%buildroot install
 bzip2 --best --keep --force ChangeLog
-
-
 
 %if_enabled shared
 %files
 %doc AUTHORS NEWS README
 %_libdir/*.so.*
 %endif
-
 
 %files devel
 %doc ChangeLog.*
@@ -106,7 +97,6 @@ bzip2 --best --keep --force ChangeLog
 %_pkgconfigdir/*
 %_includedir/%name
 
-
 %if_enabled static
 %files devel-static
 %_libdir/*.a
@@ -114,6 +104,9 @@ bzip2 --best --keep --force ChangeLog
 
 
 %changelog
+* Mon Jun 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt9
+- rebuilt against libexiv2.so.14
+
 * Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.9-alt8.1
 - Rebuilt for gcc5 C++11 ABI.
 

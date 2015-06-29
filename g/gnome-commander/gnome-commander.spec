@@ -7,7 +7,7 @@
 
 Name: gnome-commander
 Version: %ver_major.7
-Release: alt1.1
+Release: alt2
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
 License: GPL
@@ -19,8 +19,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: gnome-vfs gnome-vfs-module-sftp gnome-vfs-module-smb
 
 BuildRequires: flex gcc-c++
-
-BuildRequires: flex gnome-doc-utils gnome-doc-utils-xslt intltool libappstream-glib-devel
+BuildRequires: gnome-doc-utils gnome-doc-utils-xslt intltool libappstream-glib-devel
 BuildRequires: libgnomeui-devel libgnome-keyring-devel gnome-vfs-devel
 BuildRequires: libunique-devel python-devel
 %{?_with_exiv2:BuildRequires: libexiv2-devel}
@@ -68,6 +67,9 @@ and some extra features like FTP support.
 
 
 %changelog
+* Sun Jun 28 2015 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt2
+- rebuilt against libexiv2.so.14
+
 * Fri Jun 19 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.7-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
