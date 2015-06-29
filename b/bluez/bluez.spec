@@ -3,7 +3,7 @@
 
 Name: bluez
 Version: 5.31
-Release: alt1
+Release: alt2
 
 Summary: Bluetooth utilities
 License: GPLv2+
@@ -77,15 +77,6 @@ install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
 ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
 mkdir -p %buildroot%_libdir/bluetooth/plugins %buildroot%_localstatedir/bluetooth
 
-mkdir %buildroot%_sysconfdir/modprobe.d
-cat <<__EOF__ > %buildroot%_sysconfdir/modprobe.d/bluetooth.conf
-# use "reset=1" as default, since it should be safe for recent devices and
-# solves all kind of problems.
-options btusb reset=1
-
-install bluetooth /sbin/modprobe --first-time --ignore-install bluetooth && { /sbin/modprobe uinput; /bin/true; }
-__EOF__
-
 find %buildroot%_libdir -name \*.la -delete
 
 %check
@@ -107,7 +98,6 @@ chkconfig bluetoothd on
 %doc AUTHORS ChangeLog README
 %_initdir/bluetoothd
 %config %_sysconfdir/dbus-1/system.d/bluetooth.conf
-%_sysconfdir/modprobe.d/bluetooth.conf
 %_unitdir/*.service
 %_prefix/lib/systemd/user/obex.service
 /lib/udev/rules.d/*-hid2hci.rules
@@ -133,6 +123,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Mon Jun 29 2015 Yuri N. Sedunov <aris@altlinux.org> 5.31-alt2
+- removed obsolete /etc/modprobe.d/bluetooth.conf
+
 * Mon Jun 22 2015 Yuri N. Sedunov <aris@altlinux.org> 5.31-alt1
 - 5.31
 
