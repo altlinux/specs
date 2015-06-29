@@ -1,46 +1,48 @@
 %define _name gst-python
-%define ver_major 1.4
+%define ver_major 1.5
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 
 Name: python-module-gst%gst_api_ver
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
-Summary: Python bindings for GStreamer-1.0
+Summary: GStreamer overrides for PyGobject
 Group: Development/Python
-License: LGPL2.1+
+License: LGPL
 Url: http://gstreamer.freedesktop.org/
 
-Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
-#Source: %_name-%version.tar
+Provides: %_name = %version-%release
 
-BuildRequires: rpm-build-gir
-BuildRequires: gst-plugins%gst_api_ver-devel >= %ver_major
+Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
+Patch: %name-1.5.2-python-libs.patch
+
+BuildRequires: gst-plugins%gst_api_ver-devel
 BuildRequires: python-module-pygobject3-devel python-modules-compiler
 # for python3
 BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
+# for check
+BuildRequires: /proc gstreamer%gst_api_ver gst-plugins-base%gst_api_ver
 
 %description
-This module contains a wrapper that allows GStreamer applications
-to be written in Python.
+This package provides GStreamer overrides for PyGobject.
 
 %package -n python3-module-gst%gst_api_ver
-Summary: Python3 bindings for GStreamer-1.0
-Group: Development/Python3
-License: LGPL2.1+
+Summary: GStreamer overrides for PyGobject
+Group: Development/Python
+License: LGPLv2+
 
 %description -n python3-module-gst%gst_api_ver
-This module contains a wrapper that allows GStreamer applications
-to be written in Python3.
+This package provides GStreamer overrides for PyGobject.
 
 %prep
 %setup -n %_name-%version -a0
 mv %_name-%version py3build
-# skip usless check for Windows
-subst '/^AM_CHECK_PYTHON_LIBS/d' configure.ac py3build/configure.ac
-# make plugin parallel installable
-subst 's/libgstpythonplugin/libgstpython3plugin/' py3build/plugin/Makefile.am
+for d in {.,py3build}; do
+pushd $d
+%patch
+popd
+done
 
 %build
 %autoreconf
@@ -48,9 +50,8 @@ subst 's/libgstpythonplugin/libgstpython3plugin/' py3build/plugin/Makefile.am
 %make_build
 
 pushd py3build
-export PYTHON=python3
 %autoreconf
-%configure
+%configure PYTHON=%_bindir/python3
 %make_build
 popd
 
@@ -62,20 +63,21 @@ pushd py3build
 popd
 
 %files
-%_gst_libdir/libgstpythonplugin.so
 %python_sitelibdir/gi/overrides/*
+%exclude %python_sitelibdir/gi/overrides/*.la
+# gstreamer plugin
+%exclude %_gst_libdir/libgstpythonplugin.*
 %doc AUTHORS NEWS
 
-%exclude %python_sitelibdir/gi/overrides/*.la
-
 %files -n python3-module-gst%gst_api_ver
-%_gst_libdir/libgstpython3plugin.so
 %python3_sitelibdir/gi/overrides/*
-
 %exclude %python3_sitelibdir/gi/overrides/*.la
-%exclude %_gst_libdir/*.la
+
 
 %changelog
+* Fri Jun 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
 * Tue Nov 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1.1
 - fixed name of python3 package
 
