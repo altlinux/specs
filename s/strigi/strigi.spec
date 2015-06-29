@@ -1,9 +1,9 @@
 
-%def_disable gcc5ready
+%def_enable exiv2
 
 Name: strigi
 Version: 0.7.8
-Release: alt4
+Release: alt5
 
 Summary: The fastest and smallest desktop searching program
 License: LGPL2+
@@ -26,7 +26,7 @@ Patch103: libstreams-0003-Build-fix-for-gcc-4.8.patch
 
 BuildRequires: boost-devel bzlib-devel cmake cppunit-devel dbus-tools-gui gcc-c++ libattr-devel
 BuildRequires: libclucene-core-devel libqt4-devel phonon-devel xml-utils libxml2-devel
-%if_enabled gcc5ready
+%if_enabled exiv2
 BuildRequires: libexiv2-devel
 %endif
 BuildRequires: libexpat-devel kde-common-devel
@@ -83,7 +83,7 @@ popd
     -DENABLE_INOTIFY:BOOL=ON \
     -DENABLE_FAM=OFF \
     -DENABLE_DBUS:BOOL=ON \
-%if_enabled gcc5ready
+%if_enabled exiv2
     -DENABLE_EXIV2:BOOL=ON \
 %else
     -DENABLE_EXIV2:BOOL=OFF \
@@ -125,9 +125,12 @@ install -m0644 %SOURCE3 %buildroot/%_desktopdir/
 
 
 %changelog
+* Mon Jun 29 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.8-alt5
+- build with exiv2
+
 * Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.8-alt4
 - rebuild with gcc-5
-- temporary build witout exiv2
+- temporary build without exiv2
 
 * Wed Feb 26 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.8-alt3
 - fix to build with gcc-4.8
