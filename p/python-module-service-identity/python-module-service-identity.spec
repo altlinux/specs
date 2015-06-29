@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%package_name
-Version: 1.0.0
+Version: 14.0.0
 Release: alt1
 
 Summary: Service identity verification for pyOpenSSL
@@ -76,14 +76,17 @@ popd
 %files
 %doc AUTHORS.rst LICENSE README.rst
 %python_sitelibdir/%oname/
-%exclude %python_sitelibdir/*.egg-info
+%python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%package_name
 %python3_sitelibdir/%oname/
-%exclude %python3_sitelibdir/*.egg-*
+%python3_sitelibdir/*.egg-*
 %endif
 
 %changelog
+* Mon Jun 29 2015 Vladimir Didenko <cow@altlinux.org> 14.0.0-alt1
+- new version
+
 * Thu Jul 31 2014 Vladimir Didenko <cow@altlinux.org> 1.0.0-alt1
 - initial build for Sisyphus

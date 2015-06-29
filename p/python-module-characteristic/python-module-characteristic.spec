@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.0
+Version: 14.3.0
 Release: alt1
 
 Summary: Python library that eases the chores of implementing attributes
@@ -17,10 +17,10 @@ Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildPreReq: rpm-build-python
-BuildRequires: python-devel python-module-distribute
+BuildRequires: python-devel python-module-distribute python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-distribute python3-module-setuptools-tests
 %endif
 
 %setup_python_module %oname
@@ -70,7 +70,7 @@ popd
 %doc AUTHORS.rst CONTRIBUTING.rst README.rst
 %python_sitelibdir/%oname.py
 %python_sitelibdir/test_%oname.py
-%exclude %python_sitelibdir/*.egg-info
+%python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/*.pyc
 %exclude %python_sitelibdir/*.pyo
 
@@ -78,10 +78,13 @@ popd
 %files -n python3-module-%oname
 %python3_sitelibdir/%oname.py
 %python3_sitelibdir/test_%oname.py
-%exclude %python3_sitelibdir/*.egg-*
+%python3_sitelibdir/*.egg-*
 %exclude %python3_sitelibdir/__pycache__/
 %endif
 
 %changelog
+* Mon Jun 29 2015 Vladimir Didenko <cow@altlinux.ru> 14.3.0-alt1
+- new version
+
 * Thu Jul 31 2014 Vladimir Didenko <cow@altlinux.ru> 0.1.0-alt1
 - initial build for Sisyphus
