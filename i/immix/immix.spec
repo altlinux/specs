@@ -2,7 +2,7 @@
 
 Name: immix
 Version: 1.3
-Release: alt10.1
+Release: alt11
 
 Summary: Aligns and merges a set of similar images
 License: GPLv3+
@@ -44,6 +44,9 @@ install -pD -m644 packaging/immix.desktop %buildroot%_desktopdir/immix.desktop
 %_desktopdir/immix.desktop
 
 %changelog
+* Sun Jun 28 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt11
+- rebuilt against libexiv2.so.14
+
 * Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3-alt10.1
 - Rebuilt for gcc5 C++11 ABI.
 
