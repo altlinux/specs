@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.5
+Version: 0.2.0
 Release: alt1
 
 Summary: Python wrapper for hiredis
@@ -67,15 +67,18 @@ popd
 %files
 %doc COPYING
 %python_sitelibdir/%oname/
-%exclude %python_sitelibdir/*.egg-info
+%python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/%oname/
-%exclude %python3_sitelibdir/*.egg-*
+%python3_sitelibdir/*.egg-*
 %endif
 
 %changelog
+* Mon Jun 29 2015 Vladimir Didenko <cow@altlinux.ru> 0.2.0-alt1
+- 0.2.0
+
 * Fri Nov 28 2014 Vladimir Didenko <cow@altlinux.ru> 0.1.5-alt1
 - 0.1.5
 
