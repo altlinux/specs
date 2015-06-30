@@ -3,7 +3,7 @@
 %define rname libkexiv2
 Name: libkexiv24
 Version: 15.4.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Wrapper around Exiv2 library
@@ -56,6 +56,9 @@ Development files for %name
 %_libdir/cmake/%rname-*
 
 %changelog
+* Tue Jun 30 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt2
+- rebuild with new exiv2
+
 * Mon Jun 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt1
 - new version
 
