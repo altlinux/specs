@@ -1,7 +1,7 @@
 %define _localstatedir /var
 
 Name: sanlock
-Version: 3.2.1
+Version: 3.2.4
 Release: alt1
 Summary: A shared storage lock manager
 
@@ -162,6 +162,7 @@ install -Dd -m 0775 %buildroot%_localstatedir/run/fence_sanlockd
 %_sbindir/wdmd
 %dir /etc/wdmd.d
 %dir %attr(0775,sanlock,sanlock) %_localstatedir/run/sanlock
+%dir %attr(0775,root,sanlock) %_localstatedir/run/wdmd
 %_man8dir/wdmd*
 %_man8dir/sanlock*
 %config(noreplace) %_sysconfdir/logrotate.d/sanlock
@@ -176,6 +177,7 @@ install -Dd -m 0775 %buildroot%_localstatedir/run/fence_sanlockd
 %files devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/*
 
 %files -n python-module-%name
 %python_sitelibdir/*
@@ -198,6 +200,9 @@ install -Dd -m 0775 %buildroot%_localstatedir/run/fence_sanlockd
 %_man8dir/sanlk-reset*
 
 %changelog
+* Tue Jun 30 2015 Alexey Shabalin <shaba@altlinux.ru> 3.2.4-alt1
+- 3.2.4
+
 * Wed Sep 24 2014 Alexey Shabalin <shaba@altlinux.ru> 3.2.1-alt1
 - 3.2.1
 
