@@ -1,6 +1,6 @@
 Name: rpm-build-ocaml4
-Version: 1.1.1
-Release: alt0.1
+Version: 1.1.2
+Release: alt1
 BuildArch: noarch
 
 Summary: RPM helpers to rebuild OCaml packages
@@ -32,6 +32,14 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Tue Jun 30 2015 Andrey Bergman <vkni@altlinux.org> 1.1.2-alt1
+- Corrected cmi required: skips dependencies if md5 sum is 0. This
+is necessary for modules with C interfaces (C modules are
+beyond the scope of rpm-build-ocaml4).
+
+* Sun Jun 21 2015 Andrey Bergman <vkni@altlinux.org> 1.1.1-alt1
+- Corrected ocaml- required/provides.
+
 * Wed Oct 29 2014 Andrey Bergman <vkni@altlinux.org> 1.1.1-alt0.1
 - Port to Ocaml4.
 
