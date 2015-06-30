@@ -11,17 +11,16 @@
 
 Name: %{_name}2
 Version: 2.1.6
-Release: alt0.1
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/%_name
 
-Source: %_name-%version.tar
-#Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
+#Source: %_name-%version.tar
+Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
 Source1: %name.control
-Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
 Obsoletes: %_name
 
@@ -100,7 +99,6 @@ This package contains development documentation for lib%name.
 
 %prep
 %setup -n %_name-%version
-%patch1
 
 %build
 %autoreconf
@@ -179,6 +177,10 @@ fi
 %endif
 
 %changelog
+* Tue Jun 30 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt1
+- 2.1.6 release
+- removed upstreamed udisks-1.92.0-alt-udiskd_dir.patch
+
 * Fri Mar 27 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt0.1
 - 2.1.6 snaphot
 
