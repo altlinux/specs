@@ -1,5 +1,5 @@
 Name: speech-dispatcher
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: A speech output processing service
@@ -13,8 +13,6 @@ Source: http://devel.freebsoft.org/pub/projects/speechd/%name-%version.tar
 Source1: %{name}d.service
 Patch: pkgconfig.patch
 Patch1: speech-dispatcher-0.8-alt-flite.patch
-# fc
-Patch2: thread-cancel-crash.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libdotconf-devel >= 0.3
@@ -24,7 +22,7 @@ BuildRequires: libalsa-devel libao-devel
 BuildRequires: flite-devel  libespeak-devel svox-pico
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-base python3-devel
-BuildRequires: libpulseaudio-devel
+BuildRequires: libsndfile-devel libpulseaudio-devel
 
 %add_python3_req_skip speechd_config
 %add_python3_req_skip xdg
@@ -110,7 +108,6 @@ This python module allows programmsaccess speech-dispatcher service.
 %setup
 %patch -p2
 %patch1 -p1
-%patch2 -p1
 
 %build
 %autoreconf
@@ -144,8 +141,6 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %_libdir/%name-modules/sd_espeak
 %_libdir/%name-modules/sd_generic
 %_libdir/%name-modules/sd_cicero
-# gnome-speech.conf breaks autospawn
-%exclude %_sysconfdir/%name/clients/gnome-speech.conf
 %_datadir/sounds/%name
 %_datadir/%name
 %_infodir/*
@@ -184,6 +179,9 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Jun 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Fri May 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - 0.8.2
 - added service file from fc
