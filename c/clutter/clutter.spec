@@ -16,7 +16,7 @@
 %def_enable wayland_compositor
 
 Name: clutter
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Clutter Core Library
@@ -182,6 +182,9 @@ gtkdocize
 
 
 %changelog
+* Tue Jun 30 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.4-alt1
+- 1.22.4
+
 * Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt1
 - 1.22.2
 
