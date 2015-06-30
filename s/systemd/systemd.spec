@@ -40,11 +40,10 @@
 
 %def_disable sysusers
 %def_disable ldconfig
-%def_disable firstboot
+%def_enable firstboot
 
 %if_enabled sysusers
 %def_enable ldconfig
-%def_enable firstboot
 %endif
 
 %ifarch ia64 %ix86 ppc64 x86_64
@@ -60,7 +59,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 221
-Release: alt3
+Release: alt4
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -341,6 +340,7 @@ This package contains utils from systemd:
  - systemd-modules-load
  - systemd-sysctl
  - systemd-tmpfiles
+ - systemd-firstboot
 
 %package services
 Group: System/Configuration/Boot and Init
@@ -432,7 +432,6 @@ Requires: %name = %EVR
 %description stateless
 This package contains:
  - systemd-sysusers util and unit
- - systemd-firstboot util and unit
  - ldconfig unit
  - systemd-update-done unit
 
@@ -793,6 +792,7 @@ rm -rf %buildroot%_docdir/systemd
 
 # add defaults services
 ln -r -s %buildroot%_unitdir/remote-fs.target %buildroot%_unitdir/multi-user.target.wants
+ln -r -s %buildroot%_unitdir/machines.target %buildroot%_unitdir/multi-user.target.wants
 ln -r -s %buildroot%_unitdir/systemd-quotacheck.service %buildroot%_unitdir/local-fs.target.wants
 ln -r -s %buildroot%_unitdir/quotaon.service %buildroot%_unitdir/local-fs.target.wants
 
@@ -1457,6 +1457,11 @@ update_chrooted all
 /sbin/systemd-machine-id-setup
 %_man1dir/systemd-machine-id-*
 
+%if_enabled firstboot
+/sbin/systemd-firstboot
+%_man1dir/systemd-firstboot.*
+%endif
+
 %ghost %config(noreplace) %_sysconfdir/machine-info
 %ghost %config(noreplace) %_sysconfdir/hostname
 %ghost %config(noreplace) %_sysconfdir/vconsole.conf
@@ -1520,9 +1525,9 @@ update_chrooted all
 /lib/systemd/systemd-resolved
 /lib/systemd/systemd-resolve-host
 /lib/tmpfiles.d/systemd-network.conf
-%_unitdir/systemd-networkd.service
-%_unitdir/systemd-resolved.service
-%_unitdir/systemd-networkd-wait-online.service
+%_unitdir/systemd-networkd.*
+%_unitdir/systemd-resolved.*
+%_unitdir/systemd-networkd-wait-online.*
 %_unitdir/*org.freedesktop.network1.*
 %_unitdir/*org.freedesktop.resolve1.*
 %_unitdir/altlinux-libresolv*
@@ -1598,11 +1603,6 @@ update_chrooted all
 /lib/tmpfiles.d/etc.conf
 %_mandir/*/*sysusers*
 
-%if_enabled firstboot
-/sbin/systemd-firstboot
-%_unitdir/systemd-firstboot.service
-%_unitdir/sysinit.target.wants/systemd-firstboot.service
-%endif
 %if_enabled ldconfig
 %_unitdir/ldconfig.service
 %_unitdir/sysinit.target.wants/ldconfig.service
@@ -1729,6 +1729,11 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Jun 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:221-alt4
+- backport patches from upstream master
+- add systemd-firstboot to utils package
+- autostart machines.target for multi-user.target
+
 * Thu Jun 25 2015 Alexey Shabalin <shaba@altlinux.ru> 1:221-alt3
 - backport patches from upstream master
 - add --no-redirect for chkconfig in systemd-sysv-install
