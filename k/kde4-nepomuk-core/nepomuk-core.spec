@@ -6,7 +6,7 @@ Name: kde4-nepomuk-core
 %define minor  14
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1.1
+Release: alt2
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -30,7 +30,7 @@ Patch4: nepomuk-core-4.14.3-alt-disable-migrator.patch
 #BuildRequires: doxygen gcc-c++ glib2-devel graphviz kde4libs-devel libicu libqt3-devel python-module-distribute rpm-build-ruby soprano zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel kde4libs-devel
 #BuildRequires: doxygen graphviz
-BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano shared-desktop-ontologies-devel
+BuildRequires: libsoprano-devel soprano-backend-redland soprano-backend-virtuoso soprano shared-desktop-ontologies-devel
 BuildRequires: libtag-devel libpoppler-qt4-devel libexiv2-devel ebook-tools-devel
 BuildRequires: libavresample-devel libavdevice-devel libpostproc-devel libswscale-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
@@ -143,6 +143,9 @@ done
 %_K4link/*.so
 
 %changelog
+* Tue Jun 30 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt2
+- rebuild with new exiv2
+
 * Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.14.3-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
