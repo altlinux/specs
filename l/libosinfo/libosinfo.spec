@@ -1,8 +1,8 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 0.2.11
-Release: alt2
+Version: 0.2.12
+Release: alt1
 
 License: LGPLv2+
 Group: System/Libraries
@@ -132,6 +132,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Jun 30 2015 Alexey Shabalin <shaba@altlinux.ru> 0.2.12-alt1
+- 0.2.12
+
 * Tue Sep 30 2014 Alexey Shabalin <shaba@altlinux.ru> 0.2.11-alt2
 - update altlinux support
 
