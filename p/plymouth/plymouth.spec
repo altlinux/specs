@@ -10,7 +10,7 @@
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
 Version: 0.9.2
-Release: alt1
+Release: alt2.git.ed5aa69
 License: GPLv2+
 Group: System/Base
 
@@ -23,10 +23,13 @@ Patch: %name-%version-%release.patch
 Requires(post): plymouth-scripts
 Requires: lib%name = %version-%release
 
-BuildRequires: libdrm-devel
+BuildRequires: libpng-devel >= 1.2.16
+BuildRequires: pkgconfig(libpng) >= 1.2.16
+BuildRequires: pkgconfig(libudev)
+BuildRequires: pkgconfig(pangocairo) >= 1.21.0
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.14.0
+BuildRequires: pkgconfig(libdrm)
 BuildRequires: systemd-devel
-BuildRequires: libudev-devel
-BuildRequires: libgtk+3-devel
 BuildRequires: xsltproc docbook-dtds docbook-style-xsl
 
 Conflicts: bootsplash
@@ -64,7 +67,7 @@ used by Plymouth.
 Summary: Plymouth graphics libraries
 Group: System/Libraries
 Requires: lib%name = %version-%release
-BuildRequires: libpng-devel
+
 
 %description -n lib%name-graphics
 This package contains the libply-splash-graphics library
@@ -107,8 +110,6 @@ event start-up services fail.
 Summary: Plymouth label plugin
 Group: System/Base
 Requires: lib%name = %version-%release
-BuildRequires: libpango-devel >= 1.21.0
-BuildRequires: libcairo-devel
 
 %description plugin-label
 This package contains the label control plugin for
@@ -273,6 +274,7 @@ export UDEVADM="/sbin/udevadm"
 	--disable-static				\
 	--enable-tracing				\
 	--enable-drm-renderer				\
+	--enable-pango					\
 	--enable-documentation				\
 	--with-logo=%_pixmapsdir/altlinux.png		\
 	--with-background-start-color-stop=0x0073B3	\
@@ -282,10 +284,11 @@ export UDEVADM="/sbin/udevadm"
 	--without-rhgb-compat-link			\
 	--with-system-root-install			\
 	--enable-systemd-integration			\
-	--with-release-file=/etc/altlinux-release
+	--with-systemdunitdir=%_unitdir			\
+	--with-boot-tty=tty1				\
+	--with-shutdown-tty=tty1			\
+	--with-release-file=/etc/os-release
 
-#	--with-boot-tty=tty7				\
-#	--with-shutdown-tty=tty1			\
 
 %make
 
@@ -474,6 +477,9 @@ fi \
 %files system-theme
 
 %changelog
+* Tue Jun 30 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.2-alt2.git.ed5aa69
+- upstream snapshot ed5aa69d4aa336898ebd2755d6222343f7cc2050
+
 * Wed Apr 15 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.2-alt1
 - 0.9.2
 
