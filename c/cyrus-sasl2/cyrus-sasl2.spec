@@ -7,7 +7,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.26
-Release: alt5
+Release: alt6
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: Freely Distributable
@@ -260,6 +260,7 @@ rm -f %buildroot%_libdir/sasl2-%abiversion/*.la
 %_libdir/sasl2-%abiversion/libsasldb.so*
 %_libdir/sasl2-%abiversion/libsrp.so*
 %_libdir/sasl2-%abiversion/libscram.so*
+%_libdir/sasl2-%abiversion/libgs2.so*
 
 %doc COPYING AUTHORS INSTALL NEWS README ChangeLog doc/TODO
 
@@ -283,6 +284,11 @@ rm -f %buildroot%_libdir/sasl2-%abiversion/*.la
 %endif
 
 %changelog
+* Tue Jun 30 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt6
+- 20141117 git snapshot
+- added lsb init header
+- added checking exsists of /var/run/saslauthd subdirectory
+
 * Sat Jun 14 2014 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt5
 - 20140330 git snapshot
 - moved plugins to sasl2-%%abiversion directoy (ALT #30113)
