@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	31.3.0
+Version:	38.0.1
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
-BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
+BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel
 BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: bzlib-devel zlib-devel
@@ -364,22 +364,20 @@ sed -i \
 	-e 's,@tbird_release@,%release,' \
 	%buildroot/%_sysconfdir/rpm/macros.d/%name
 
-dir="$PWD/objdir"
-
 %if_with enigmail
 mv -f -- \
-	$dir/mozilla/dist/enigmail \
+	$PWD/objdir/mozilla/dist/enigmail \
 	%buildroot/%enigmail_ciddir
 %endif
 
 %if_with lightning
 mkdir -p %buildroot/%lightning_ciddir
 unzip -q -u -d %buildroot/%lightning_ciddir -- \
-	$dir/mozilla/dist/xpi-stage/lightning*.xpi
+	$PWD/objdir/dist/xpi-stage/lightning*.xpi
 
 mkdir -p %buildroot/%google_calendar_ciddir
 unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
-	$dir/mozilla/dist/xpi-stage/gdata-provider*.xpi
+	$PWD/objdir/dist/xpi-stage/gdata-provider*.xpi
 
 #rm -rf -- %buildroot/%tbird_prefix/extensions/calendar-timezones@mozilla.org
 #rm -f -- %buildroot/%lightning_ciddir/application.ini
@@ -450,6 +448,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Sat Jun 20 2015 Alexey Gladkov <legion@altlinux.ru> 38.0.1-alt1
+- New version (38.0.1).
+
 * Thu Dec 11 2014 Alexey Gladkov <legion@altlinux.ru> 31.3.0-alt1
 - New version (31.3.0).
 - Fixed:
