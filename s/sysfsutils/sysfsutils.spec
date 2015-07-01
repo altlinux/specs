@@ -6,7 +6,7 @@
 
 Name: sysfsutils
 Version: 2.1.0
-Release: alt7
+Release: alt8
 
 %define lib_name libsysfs
 %define docdir %_docdir/%lib_name-%version
@@ -24,6 +24,7 @@ Patch: %name-%version-%release.patch
 
 Source1: sysfs.conf
 Source2: sysfs.init
+Source3: sysfs.service
 
 %package -n %lib_name
 Summary: Main library for %name
@@ -77,7 +78,7 @@ develop applications which will use %lib_name.
 %make_build -k check
 
 %install
-mkdir -p %buildroot{/%_lib,%docdir,%_sysconfdir,%_initdir}
+mkdir -p %buildroot{/%_lib,%docdir,%_sysconfdir,%_initdir,%_unitdir}
 
 %makeinstall_std
 
@@ -88,6 +89,7 @@ ln -sf "../../%_lib/$v" %buildroot%_libdir/%lib_name.so
 
 install -p -m644 %_sourcedir/sysfs.conf %buildroot%_sysconfdir/sysfs.conf
 install -p -m755 %_sourcedir/sysfs.init %buildroot%_initdir/sysfs
+install -p -m644 %_sourcedir/sysfs.service %buildroot%_unitdir/sysfs.service
 
 install -p -m644 AUTHORS CREDITS ChangeLog NEWS TODO docs/*.txt %buildroot%docdir/
 bzip2 -9f %buildroot%docdir/{ChangeLog,*.txt}
@@ -101,6 +103,7 @@ bzip2 -9f %buildroot%docdir/{ChangeLog,*.txt}
 %files
 %config(noreplace) %_sysconfdir/sysfs.conf
 %_initdir/sysfs
+%_unitdir/sysfs.service
 %_bindir/*
 %_man1dir/*
 
@@ -121,6 +124,9 @@ bzip2 -9f %buildroot%docdir/{ChangeLog,*.txt}
 %endif
 
 %changelog
+* Wed Jul  1 2015 Terechkov Evgenii <evg@altlinux.org> 2.1.0-alt8
+- Add systemd unit file (ALT#31048)
+
 * Tue Jul 08 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.0-alt7
 - NMU: update init script:
   + do not auto enable service
