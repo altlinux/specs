@@ -8,7 +8,7 @@
 
 Name:    v8-%MAJOR_VERSION.%MINOR_VERSION
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt1
+Release: alt2
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
@@ -106,6 +106,9 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Wed Jul 01 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.61.30-alt2
+- Use correct v8 version from chromium 43.0.2357.130
+
 * Tue Jun 30 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.61.30-alt1
 - Build for Sisyphus
 
