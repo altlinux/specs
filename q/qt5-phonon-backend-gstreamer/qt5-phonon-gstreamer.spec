@@ -1,7 +1,7 @@
 
 Name: qt5-phonon-backend-gstreamer
-Version: 4.8.1
-Release: alt2
+Version: 4.8.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Gstreamer phonon backend
@@ -30,12 +30,27 @@ Gstreamer phonon backend
 %setup -q
 
 %build
+%add_optflags %optflags_shared -UPIE -U__PIE__
 %K4cmake \
     -DPHONON_BUILD_PHONON4QT5=ON \
     -DINCLUDE_INSTALL_DIR=%_includedir/kde5 \
     -DICON_INSTALL_DIR=%_datadir/kf5/icons \
     -DPLUGIN_INSTALL_DIR:PATH=%_qt5_plugindir
-%K4make VERBOSE=1
+pushd BUILD-*/gstreamer
+if [ ! -e %_includedir/gstreamer-1.0/gst/gstconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gstconfig.h ]
+then
+    mkdir -p gst
+    [ -e gst/gstconfig.h ] || \
+       ln -s %_libdir/gstreamer-1.0/include/gst/gstconfig.h gst/gstconfig.h
+fi
+if [ ! -e %_includedir/gstreamer-1.0/gst/gl/gstglconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h ]
+then
+    mkdir -p gst/gl
+    [ -e gst/gl/gstglconfig.h ] || \
+       ln -s %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h gst/gl/gstglconfig.h
+fi
+popd
+%K4make
 
 %install
 %K4install
@@ -46,6 +61,9 @@ Gstreamer phonon backend
 %_datadir/kf5/icons/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt1
+- new version
+
 * Tue Mar 24 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.1-alt2
 - fix icon paths
 
