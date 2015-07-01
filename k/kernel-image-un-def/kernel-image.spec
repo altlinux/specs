@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.0
-%define kernel_sublevel	.6
+%define kernel_sublevel	.7
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -338,7 +338,8 @@ find . -name "*.orig" -delete -or -name "*~" -delete
 
 %build
 export ARCH=%base_arch
-export NPROCS=%nprocs
+# use *at least* %%nprocs jobs
+[ "%__nprocs" -gt "%nprocs" ] || export NPROCS=%nprocs
 KernelVer=%kversion-%flavour-%krelease
 
 echo "Building Kernel $KernelVer"
@@ -348,6 +349,8 @@ echo "Building Kernel $KernelVer"
 cp -vf config-%_target_cpu .config
 
 %make_build oldconfig
+# just to add difference between given and actual config to build log
+diff -u config-%_target_cpu .config ||:
 #%make_build include/linux/version.h
 %make_build bzImage
 %make_build modules
@@ -544,6 +547,10 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Jul 01 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:4.0.7-alt1
+- Updated to 4.0.7.
+- spec: added some useful tweaks.
+
 * Tue Jun 23 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.6-alt1
 - 4.0.6
 - dependence on bootloader-utils upgraded
