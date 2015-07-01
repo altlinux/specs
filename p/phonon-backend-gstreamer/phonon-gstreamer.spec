@@ -3,7 +3,7 @@
 %endif
 
 Name: phonon-backend-gstreamer
-Version: 4.8.1
+Version: 4.8.2
 Release: alt1
 
 Group: System/Libraries
@@ -43,7 +43,21 @@ Gstreamer phonon backend
     -DPLUGIN_INSTALL_DIR:PATH=%_qt4dir \
     -DUSE_INSTALL_PLUGIN:BOOL=ON \
     #
-%K4make
+pushd BUILD-*/gstreamer
+if [ ! -e %_includedir/gstreamer-1.0/gst/gstconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gstconfig.h ]
+then
+    mkdir -p gst
+    [ -e gst/gstconfig.h ] || \
+       ln -s %_libdir/gstreamer-1.0/include/gst/gstconfig.h gst/gstconfig.h
+fi
+if [ ! -e %_includedir/gstreamer-1.0/gst/gl/gstglconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h ]
+then
+    mkdir -p gst/gl
+    [ -e gst/gl/gstglconfig.h ] || \
+       ln -s %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h gst/gl/gstglconfig.h
+fi
+popd
+%K4make VERBOSE=1
 
 %install
 %K4install
@@ -54,6 +68,9 @@ Gstreamer phonon backend
 %_iconsdir/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt1
+- new version
+
 * Tue Dec 09 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.1-alt1
 - new version
 
