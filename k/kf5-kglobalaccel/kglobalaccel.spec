@@ -1,7 +1,7 @@
 %define rname kglobalaccel
 
 Name: kf5-%rname
-Version: 5.10.0
+Version: 5.11.0
 Release: alt1
 %K5init altplace
 
@@ -71,8 +71,10 @@ KF5 library
 %files
 %_bindir/*5
 %_K5bin/kglobalaccel5
+%_K5lib/libKF5GlobalAccelPrivate.so
 %_K5srv/kglobalaccel5.desktop
 %_K5dbus_srv/org.kde.kglobalaccel.service
+%_K5plug/org.kde.kglobalaccel5*/
 
 %files devel
 %_K5inc/kglobalaccel_version.h
@@ -86,6 +88,9 @@ KF5 library
 %_K5lib/libKF5GlobalAccel.so.*
 
 %changelog
+* Tue Jun 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.11.0-alt1
+- new version
+
 * Mon May 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1
 - new version
 
