@@ -1,6 +1,6 @@
 Name: iptables
 Version: 1.4.21
-Release: alt2
+Release: alt3
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
 License: GPLv2+
@@ -92,6 +92,8 @@ operates with netfilter.
 
 %prep
 %setup -n %name-%version-%release
+sed s/NFPROTO_IPV4/NFPROTO_IPV6/ extensions/libipt_NETFLOW.c \
+	> extensions/libip6t_NETFLOW.c
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -223,6 +225,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 01 2015 Dmitry V. Levin <ldv@altlinux.org> 1.4.21-alt3
+- Packaged libip6t_NETFLOW.so (closes: #29813).
+
 * Sat Feb 14 2015 Anton Farygin <rider@altlinux.ru> 1.4.21-alt2
 - xtables: SET target: Add mapping of meta informations 
   (skbinfo ipset extension) (closes: #30729)
