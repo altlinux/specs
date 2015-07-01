@@ -1,6 +1,6 @@
 Name: ocaml4-camlp4
 Version: 4.02.1_3
-Release: alt0.1
+Release: alt1
 
 Summary: Preprocessor for OCaml 4.02
 License: QPL & LGPL
@@ -54,6 +54,9 @@ make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%b
 %_libdir/ocaml/camlp4/
 
 %changelog
+* Wed Jul 01 2015 Andrey Bergman <vkni@altlinux.org> 4.02.1_3-alt1
+- Rebuild with new rpm-build-ocaml4.
+
 * Fri Jun 19 2015 Andrey Bergman <vkni@altlinux.org> 4.02.1_3-alt0.1
 - Version update.
 

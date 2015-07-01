@@ -8,7 +8,7 @@
 
 Name: ocaml4
 Version: 4.02.2
-Release: alt2
+Release: alt3
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -250,6 +250,9 @@ install -p -m644 ocamlbuild/man/ocamlbuild.1.bz2 %buildroot%_man1dir/
 %doc ocamldoc/stdlib.pdf 
 
 %changelog
+* Wed Jul 01 2015 Andrey Bergman <vkni@altlinux.org> 4.02.2-alt3
+- Rebuild with new rpm-build-ocaml4.
+
 * Tue Jun 23 2015 Andrey Bergman <vkni@altlinux.org> 4.02.2-alt2
 - Corrected ocaml-reprov program to print zeroes if md5 sum is missing.
 
