@@ -2,13 +2,13 @@
 %define libchromaprint libchromaprint%sover
 
 Name: chromaprint
-Version: 1.1
-Release: alt3
+Version: 1.2
+Release: alt1
 Summary: Library implementing the AcoustID fingerprinting
 
 Group: Sound
 License: LGPLv2+
-Url: http://www.acoustid.org/chromaprint/
+Url: http://www.acoustid.org/chromaprint
 Source: %name-%version.tar
 
 Patch1: chromaprint-1.1-alt-libav9.patch
@@ -50,8 +50,8 @@ applications which will use %name.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+#%patch1 -p1
+#%patch2 -p1
 
 %build
 %Kbuild \
@@ -61,14 +61,14 @@ applications which will use %name.
 
 %install
 %Kinstall
-mkdir -p %buildroot/%_bindir
-[ -x %buildroot/%_bindir/fpcollect ] || install -m 0755 BUILD*/tools/fpcollect  %buildroot/%_bindir/
+#mkdir -p %buildroot/%_bindir
+#[ -x %buildroot/%_bindir/fpcollect ] || install -m 0755 BUILD*/tools/fpcollect  %buildroot/%_bindir/
 
-%files
-%_bindir/*
+#%files
+#%_bindir/*
 
 %files -n %libchromaprint
-%doc NEWS.txt README.txt
+%doc NEWS.txt README.md
 %_libdir/libchromaprint.so.%sover
 %_libdir/libchromaprint.so.%sover.*
 
@@ -78,6 +78,9 @@ mkdir -p %buildroot/%_bindir
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 1.2-alt1
+- new version
+
 * Wed May 20 2015 Sergey V Turchin <zerg@altlinux.org> 1.1-alt3
 - rebuilt with gcc5
 
