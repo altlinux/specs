@@ -1,6 +1,6 @@
 
 Name: cfitsio
-Version: 3.360
+Version: 3.370
 Release: alt1
 %define sversion %(echo %version | tr -d .)
 
@@ -112,7 +112,8 @@ install -m755 f{,un}pack %buildroot/%_bindir/
 %_bindir/*
 
 %files -n lib%name
-%_libdir/*.so.3*
+%_libdir/*.so.3
+%_libdir/*.so.3.*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -124,6 +125,9 @@ install -m755 f{,un}pack %buildroot/%_bindir/
 #%_libdir/*.a
 
 %changelog
+* Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 3.370-alt1
+- new version
+
 * Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 3.360-alt1
 - new version
 

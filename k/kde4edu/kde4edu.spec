@@ -1,5 +1,7 @@
 
 %def_disable kpercentage
+%def_disable qalculate
+%def_disable openbabel
 %def_enable artikulate
 
 %add_findpackage_path %_kde4_bindir
@@ -11,7 +13,7 @@ Name: kde4edu
 %define minor 14
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1.1
+Release: alt2
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -55,19 +57,28 @@ Requires: kde4-marble
 Requires: %name-rocs = %version-%release
 
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
-Patch2: kdeedu-4.3.90-alt-kturtle-default-language.patch
+Patch1: alt-kstars-fix-compile.patch
+Patch2: alt-kturtle-default-language.patch
 
 # Automatically added by buildreq on Thu Oct 16 2008 (-bi)
 #BuildRequires: boost-python-devel eigen facile gcc-c++ getfemxx indilib-devel kde4base-runtime-devel kde4base-workspace-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libbfd-devel libcfitsio-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel libopenbabel-devel libpth-devel libqalculate-devel libreadline-devel libusb-devel libxkbfile-devel libxslt-devel nvidia_glx_177.80 openbabel python-modules-encodings rpm-build-ruby subversion xorg-xf86vidmodeproto-devel xsltproc
 BuildRequires(pre): kde4base-workspace-devel
-BuildRequires: python-modules-encodings python-devel boost-devel boost-python-devel eigen2 eigen3 facile gcc-c++ libindi-devel
+BuildRequires: python-modules-encodings python-devel boost-devel boost-python-devel eigen2 eigen3 gcc-c++ libindi-devel
 BuildRequires: libbfd-devel libcfitsio-devel wcslib-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel
-BuildRequires: libpth-devel libqalculate-devel libreadline-devel libusb-devel
+BuildRequires: libpth-devel libreadline-devel libusb-devel
+%if_enabled qalculate
+BuildRequires: libqalculate-devel
+%endif
+BuildRequires: libluajit-devel
 %if_enabled artikulate
 BuildRequires: qt-gstreamer1-devel
 %endif
-BuildRequires: ocaml xplanet attica-devel libspectre-devel libgps-devel qt4-mobility-devel
-BuildRequires: libxslt-devel xsltproc libopenbabel-devel >= 2.2 openbabel avogadro-devel libglew-devel
+BuildRequires: ocaml4 facile
+BuildRequires: xplanet attica-devel libspectre-devel libgps-devel qt4-mobility-devel
+BuildRequires: libxslt-devel xsltproc libglew-devel
+%if_enabled openbabel
+BuildRequires: libopenbabel-devel >= 2.2 openbabel avogadro-devel
+%endif
 BuildRequires: libkdeedu4-devel kde4-analitza-devel pkgconfig(chemical-mime-data) shared-mime-info
 BuildRequires: libshape-devel qextserialport-devel libquazip-devel grantlee-devel
 BuildRequires: kde4base-runtime-devel kde4base-workspace-devel
@@ -642,6 +653,7 @@ KDE 4 library
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
 %patch2 -p1
 
 %if_disabled artikulate
@@ -691,8 +703,10 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4iconsdir/hicolor/*/mimetypes/application-x-k*.*
 %endif
 
+%if_enabled openbabel
 %files -n libcompoundviewer4
 %_K4libdir/libcompoundviewer.so.*
+%endif
 
 %if_enabled artikulate
 %files artikulate
@@ -767,8 +781,11 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4cfg/maximabackend.kcfg
 %_K4cfg/sagebackend.kcfg
 %_K4cfg/octavebackend.kcfg
+%_K4cfg/luabackend.kcfg
 %_K4cfg/python2backend.kcfg
+%if_enabled qalculate
 %_K4cfg/qalculatebackend.kcfg
+%endif
 %_K4cfg/scilabbackend.kcfg
 %_K4conf/cantor.knsrc
 %_K4conf/cantor_*.knsrc
@@ -1097,6 +1114,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jul 02 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt2
+- rebuild with new libindi
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 4.14.3-alt1.1
 - rebuild with boost 1.57.0
 

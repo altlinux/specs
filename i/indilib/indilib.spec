@@ -2,7 +2,7 @@
 
 
 Name: indilib
-Version: 0.9.9
+Version: 1.0.0
 Release: alt1
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
@@ -96,6 +96,9 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt1
+- new version
+
 * Thu Nov 27 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.9-alt1
 - new version
 
