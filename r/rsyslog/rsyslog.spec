@@ -3,7 +3,7 @@
 %def_disable mmcount
 
 Name: rsyslog
-Version: 8.9.0
+Version: 8.11.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -356,6 +356,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-snmp \
 	--enable-unlimited-select \
 	--enable-usertools \
+	--enable-generate-man-pages \
 	--with-systemdsystemunitdir=%systemd_unitdir
 
 %make_build
@@ -514,6 +515,9 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Thu Jul 02 2015 Alexey Shabalin <shaba@altlinux.ru> 8.11.0-alt1
+- 8.11.0
+
 * Thu Apr 09 2015 Alexey Shabalin <shaba@altlinux.ru> 8.9.0-alt1
 - 8.9.0
 
