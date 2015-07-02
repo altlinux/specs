@@ -2,7 +2,7 @@
 
 Name: qt5-phonon
 Version: 4.8.3
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE5 Multimedia Framework
@@ -55,6 +55,7 @@ with Phonon.
 
 
 %build
+%add_optflags %optflags_shared -UPIE -U__PIE__
 %Kcmake \
     -DPHONON_BUILD_PHONON4QT5:BOOL=ON \
     -DSHARE_INSTALL_PREFIX:PATH=%_datadir \
@@ -67,14 +68,14 @@ with Phonon.
 %install
 %Kinstall
 
-mkdir -p %buildroot/%_qt5_plugindir/phonon_backend
+mkdir -p %buildroot/%_qt5_plugindir/phonon4qt5_backend
 
 
 %files -n libphonon4qt5experimental
 %_libdir/libphonon4qt5experimental.so.*
 
 %files -n libphonon4qt5
-%dir %_qt5_plugindir/phonon_backend/
+%dir %_qt5_plugindir/phonon4qt5_backend/
 %_libdir/libphonon4qt5.so.*
 
 %files devel
@@ -91,6 +92,9 @@ mkdir -p %buildroot/%_qt5_plugindir/phonon_backend
 %_datadir/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
 
 %changelog
+* Thu Jul 02 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt2
+- rebuild with gcc5
+
 * Fri Dec 19 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt1
 - new version
 
