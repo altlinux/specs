@@ -1,6 +1,6 @@
 Name: runawfe4-server
 Version: 4.2.0
-Release: alt14
+Release: alt19
 
 Summary: Runawfe server
 
@@ -58,6 +58,7 @@ cd ..
 %if %distrname == "Ubuntu" ||  %distrname == "Debian"
 mvn clean package -Dappserver=jboss7
 %else
+#mvn clean package -Dappserver=jboss7
 mvn -o package -Dappserver=jboss7 #for offline build in git.alt
 %endif
 
@@ -190,6 +191,21 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %attr(644,root,root) /lib/systemd/system/%name.service
 
 %changelog
+* Thu Jul 02 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt19
+- Update to trunk code@6444
+
+* Fri Jun 26 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt18
+- Update to trunk code@6397
+
+* Wed Jun 17 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt17
+- Update to trunk code@6345
+
+* Wed Jun 10 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt16
+- Revert save db to dir
+
+* Tue Jun 09 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt15
+- Update standalone-runa-local.xml, save db in memory, added mvcc=true
+
 * Wed Apr 22 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt14
 - Change gksudo on gksu
 
