@@ -8,7 +8,7 @@
 
 Name:    v8-%MAJOR_VERSION.%MINOR_VERSION
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt2
+Release: alt3
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
@@ -24,9 +24,9 @@ BuildRequires: python-modules-multiprocessing
 Provides: %libname
 
 %description
-V8 is Google's open source JavaScript engine. V8 is written in C++ and is used
-in Google Chrome, the open source browser from Google. V8 implements ECMAScript
-as specified in ECMA-262, 5rd edition.
+V8 is Google's open source JavaScript engine. V8 is written in C++ and
+is used in Google Chrome, the open source browser from Google. V8
+implements ECMAScript as specified in ECMA-262, 5rd edition.
 
 %package -n lib%name
 Summary: Google's JavaScript Engine
@@ -37,9 +37,9 @@ Provides: %libname = %MAJOR_VERSION.%MINOR_VERSION
 Obsoletes: %libname = %MAJOR_VERSION.%MINOR_VERSION
 
 %description -n lib%name
-V8 is Google's open source JavaScript engine. V8 is written in C++ and is used
-in Google Chrome, the open source browser from Google. V8 implements ECMAScript
-as specified in ECMA-262, 5rd edition.
+V8 is Google's open source JavaScript engine. V8 is written in C++ and
+is used in Google Chrome, the open source browser from Google. V8
+implements ECMAScript as specified in ECMA-262, 5rd edition.
 
 %package -n lib%name-devel
 Group:   Development/C++
@@ -57,7 +57,6 @@ Development headers and libraries for V8.
 %setup -q
 tar xf %SOURCE1
 sed -i 's|build/gyp/gyp|gyp|g' Makefile
-#sed -i "s|'-Wno-unused-but-set-variable'||g" SConstruct
 
 %build
 build/gyp_v8 \
@@ -65,7 +64,8 @@ build/gyp_v8 \
 	-Dclang=0 \
 	-Dhost_clang=0 \
 	-Dcomponent=shared_library \
-	-Dv8_use_snapshot='true' \
+	-Dv8_use_snapshot=true \
+	-Dv8_use_external_startup_data=1 \
 	-Dv8_enable_i18n_support=0 \
 	-Dwerror='' \
 	-Dsoname_version=%{soversion}
@@ -78,10 +78,11 @@ build/gyp_v8 \
 %endif
 
 %install
-mkdir -p %buildroot{%_libdir,%_bindir,%_includedir}
+mkdir -p %buildroot{%_libdir/v8,%_bindir,%_includedir}
 install -p -m755 out/Release/d8 %buildroot%_bindir/
 install -p -m644 out/Release/lib.target/libv8.so.%soversion %buildroot%_libdir/
 ln -s libv8.so.%soversion %buildroot%_libdir/libv8.so
+install -p -m644 out/Release/*.bin %buildroot%_libdir/v8/
 install -p -m644 include/*.h %buildroot%_includedir/
 
 %check
@@ -106,6 +107,9 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Thu Jul 02 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.61.30-alt3
+- Build and package external startup data
+
 * Wed Jul 01 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.61.30-alt2
 - Use correct v8 version from chromium 43.0.2357.130
 
