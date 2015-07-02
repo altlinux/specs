@@ -38,7 +38,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt1
+%define rlz alt2
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -1437,6 +1437,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Thu Jul 02 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt2
+- rebuild with gcc5
+
 * Tue May 26 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt1
 - new version
 
