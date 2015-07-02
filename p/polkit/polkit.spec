@@ -1,6 +1,6 @@
 Name: polkit
-Version: 0.112
-Release: alt4
+Version: 0.113
+Release: alt1
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -136,6 +136,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Thu Jul 02 2015 Yuri N. Sedunov <aris@altlinux.org> 0.113-alt1
+- 0.113
+
 * Tue Jun 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.112-alt4
 - updated to 264cc195e (fixed FDO bugs #90879, 90877, 76358, 90829(CVE-2015-3218))
 
