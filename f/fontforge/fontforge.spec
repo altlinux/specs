@@ -5,7 +5,7 @@
 
 Name: fontforge
 Version: 20120731
-Release: alt2
+Release: alt3
 Summary: FontForge -- font editor
 Summary(ru_RU.KOI8-R): Редактор шрифтов FontForge
 
@@ -15,16 +15,18 @@ Url: http://fontforge.sourceforge.net/
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %{name}_full-%version-b.tar.bz2
+Source: %{name}_full-%version.tar
 Source2: %name.png
 Patch0: %name-%version.patch
 
 # manually removed: glibc-devel-static packages-info-i18n-common
-# Automatically added by buildreq on Mon Oct 29 2007
-BuildRequires: gcc-c++ imake libfreetype-devel libjpeg-devel
-BuildRequires: libpng-devel libtiff-devel libungif-devel libXi-devel
-BuildRequires: libxml2-devel  python-devel xorg-cf-files libX11-devel
-BuildPreReq: libfreetype-devel
+# Automatically added by buildreq on Thu Jul 02 2015
+# optimized out: fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libX11-devel libXft-devel libXrender-devel libcairo-devel libcloog-isl4 libfreetype-devel libpango-devel libpng-devel libwayland-client libwayland-server pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: glibc-devel-static libSM-devel libXi-devel libdb4-devel libgtk+2-devel libxml2-devel python-module-distribute python-module-google python-module-sphinxcontrib
+
+#BuildRequires: libpng-devel libtiff-devel libungif-devel libXi-devel
+#BuildRequires: libxml2-devel  python-devel xorg-cf-files libX11-devel
+#BuildPreReq: libfreetype-devel
 
 Obsoletes: pfaedit
 Provides: pfaedit
@@ -67,7 +69,7 @@ FontForge development files
 FontForge python module
 
 %prep
-%setup -q -n %{name}-%version-b
+%setup -q -n %{name}-%version
 %patch -p0
 
 %build
@@ -138,6 +140,10 @@ popd
 %files -n python-module-%name -f python-module-%name
 
 %changelog
+* Thu Jul 02 2015 Pavel Vainerman <pv@altlinux.ru> 20120731-alt3
+- move to git
+- update build requires
+
 * Thu Jul 03 2014 Pavel Vainerman <pv@altlinux.ru> 20120731-alt2
 - added patch needed for the correct loading of libraries (python-module)
 
