@@ -1,5 +1,5 @@
 Name: nfdump
-Version: 1.6.12
+Version: 1.6.13
 Release: alt1
 Summary: collect and process netflow data
 
@@ -10,11 +10,17 @@ Url: http://sourceforge.net/projects/nfdump/
 Source: %name-%version.tar
 Source2: nfcapd.init
 Source3: nfcapd.sysconfig
+Source4: nfcapd.service
+Source5: %name.tmpfiles
+Source6: sfcapd.init
+Source7: sfcapd.sysconfig
+Source8: sfcapd.service
+
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildRequires: rpm-build-licenses
 
-BuildRequires: librrd-devel libpcap-devel flex bison
+BuildRequires: librrd-devel libpcap-devel flex bison zlib-devel
 
 %description
 Nfdump is a set of tools to collect and process netflow data.
@@ -36,41 +42,70 @@ This program is run only by NfSen.
 %setup -q
 
 %build
-%configure --enable-nfprofile --enable-sflow --enable-readpcap --enable-compat15
+%autoreconf
+%configure \
+	--enable-nfprofile \
+	--enable-sflow \
+	--enable-readpcap \
+	--enable-nfpcapd \
+	--enable-nsel \
+	--enable-compat15
+
 %make_build
 
 %install
 %makeinstall_std
-mkdir -p %buildroot{%_cachedir/nfcapd,%_sysconfdir/sysconfig,%_initdir,%_runtimedir/nfcapd}
-cp %SOURCE2 %buildroot%_initdir/nfcapd
-cp %SOURCE3 %buildroot%_sysconfdir/sysconfig/nfcapd
+mkdir -p %buildroot{%_cachedir/{nfcapd,sfcapd},%_sysconfdir/sysconfig,%_initdir,%_unitdir,%_tmpfilesdir,%_runtimedir/{nfcapd,sfcapd}}
+
+install -m0755 %SOURCE2 %buildroot%_initdir/
+install -m0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/
+install -m0644 %SOURCE4 %buildroot%_unitdir/
+install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/
+install -m0755 %SOURCE6 %buildroot%_initdir/
+install -m0644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/
+install -m0644 %SOURCE8 %buildroot%_unitdir/
 
 %pre
 %_sbindir/groupadd -r -f nfcapd
 %_sbindir/useradd -r -n -g nfcapd -d %_cachedir/nfcapd -s /bin/false nfcapd >/dev/null 2>&1 ||:
 
+%_sbindir/groupadd -r -f sfcapd
+%_sbindir/useradd -r -n -g sfcapd -d %_cachedir/sfcapd -s /bin/false sfcapd >/dev/null 2>&1 ||:
+
 %post
 %post_service nfcapd
+%post_service sfcapd
 
 %preun
 %preun_service nfcapd
+%preun_service sfcapd
 
 %files
 %exclude %_bindir/nfprofile
-%exclude %_man1dir/nfprofile.1.gz
+%exclude %_man1dir/nfprofile.1.*
 %_bindir/*
 %_man1dir/*
-%config %_initdir/nfcapd
-%config %_sysconfdir/sysconfig/nfcapd
+%_initdir/*
+%_unitdir/*
+%_tmpfilesdir/*
+%config(noreplace) %_sysconfdir/sysconfig/*
 %attr(770,root,nfcapd) %dir %_cachedir/nfcapd
 %attr(775,root,nfcapd) %dir %_runtimedir/nfcapd
+%attr(770,root,sfcapd) %dir %_cachedir/sfcapd
+%attr(775,root,sfcapd) %dir %_runtimedir/sfcapd
 %doc README NEWS AUTHORS ChangeLog COPYING
 
 %files nfprofile
 %_bindir/nfprofile
-%_man1dir/nfprofile.1.gz
+%_man1dir/nfprofile.1.*
 
 %changelog
+* Thu Jul 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.13-alt1
+- 1.6.13
+- add --enable-nsel configure options
+- add sfcapd init script
+- add systemd unit and tmpfiles files
+
 * Wed May 07 2014 Sergey Y. Afonin <asy@altlinux.ru> 1.6.12-alt1
 - New version 1.6.12
 
