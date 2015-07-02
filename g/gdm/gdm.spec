@@ -19,10 +19,10 @@
 %def_with plymouth
 %def_without xevie
 %def_with systemd
-%def_disable wayland
+%def_enable wayland
 
 Name: gdm
-Version: %ver_major.1.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -203,12 +203,11 @@ mkdir -p %buildroot%_sysconfdir/X11/wms-methods.d
 %makeinstall_std
 rm -f %buildroot%_sysconfdir/pam.d/gdm
 
+# env.d directories
+mkdir -p %buildroot{%_sysconfdir/X11,%_datadir}/gdm/env.d
+
 # install external hook for update_wms
 install -m755 %SOURCE2 %buildroot%_sysconfdir/X11/wms-methods.d/%name
-
-# don't install fallback greeter
-rm -f %buildroot%_datadir/gdm/greeter/applications/gdm-simple-greeter.desktop
-rm -f %buildroot%_datadir/gdm/greeter/applications/polkit-gnome-authentication-agent-1.desktop
 
 find %buildroot -name '*.a' -delete
 find %buildroot -name '*.la' -delete
@@ -242,7 +241,7 @@ xvfb-run %make check
 %_unitdir/gdm.service
 
 %files data -f %name.lang
-# %config %_sysconfdir/pam.d/gdm
+#%config %_sysconfdir/pam.d/gdm
 %config %_sysconfdir/pam.d/gdm-autologin
 %config %_sysconfdir/pam.d/gdm-password
 %config %_sysconfdir/pam.d/gdm-launch-environment
@@ -297,6 +296,12 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Thu Jul 02 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
+* Mon May 18 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1.1-alt2
+- explicitly enabled wayland support
+
 * Thu Apr 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1.1-alt1
 - 3.16.1.1
 
