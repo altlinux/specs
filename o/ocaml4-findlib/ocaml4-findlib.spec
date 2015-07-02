@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml4-%_name
 Version: 1.5.5
-Release: alt1
+Release: alt2
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -13,7 +13,7 @@ Patch1: findlib-1.1.2pl1-alt-native.patch
 Patch2: findlib-1.1.2pl1-alt-wizard.patch
 
 # Automatically added by buildreq on Tue Apr 08 2008 (-bi)
-BuildRequires: ocaml4-camlp4 ocaml4-labltk libtinfo-devel ocaml4-ocamldoc
+BuildRequires: rpm-build-ocaml4 ocaml4-camlp4 ocaml4-labltk libtinfo-devel ocaml4-ocamldoc
 BuildRequires: ocaml4-ocamlbuild libX11-devel tcl-devel tk-devel
 
 %package -n ocaml4-ocamlfind-mini
@@ -95,6 +95,9 @@ rm -f %buildroot%_libdir/ocaml/site-lib/findlib/findlib.cmxs
 %doc doc/* LICENSE
 
 %changelog
+* Wed Jul 01 2015 Andrey Bergman <vkni@altlinux.org> 1.5.5-alt2
+- Rebuild with new rpm-build-ocaml4.
+
 * Tue Oct 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.5.5-alt1
 - 1.5.5
 - initial build for ocaml4

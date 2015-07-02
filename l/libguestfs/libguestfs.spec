@@ -18,7 +18,7 @@
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.29.6
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -53,6 +53,7 @@ BuildRequires: liblzma-devel
 BuildRequires: libfuse-devel
 %endif
 %if_enabled ocaml
+BuildPreReq: rpm-build-ocaml4
 BuildRequires: ocaml4 ocaml4-findlib ocaml4-ocamldoc ocaml4-ocamlbuild
 #BuildRequires: ocaml-gettext
 %endif
@@ -173,24 +174,28 @@ Requires: %_bindir/getopt
 This package contains miscellaneous system administrator command line
 tools for virtual machines.
 
-%package -n ocaml-%name
+%package -n ocaml4-%name
 Summary: OCaml bindings for %name
 Group: Development/Other
 Requires: %name = %version-%release
+Provides: ocaml-%name = %version-%release
+Obsoletes: ocaml-%name < %version-%release
 
-%description -n ocaml-%name
-ocaml-%name contains OCaml bindings for %name.
+%description -n ocaml4-%name
+ocaml4-%name contains OCaml bindings for %name.
 
 This is for toplevel and scripting access only.  To compile OCaml
 programs which use %name you will also need ocaml-%name-devel.
 
-%package -n ocaml-%name-devel
+%package -n ocaml4-%name-devel
 Summary: OCaml bindings for %name
 Group: Development/Other
-Requires: ocaml-%name = %version-%release
+Requires: ocaml4-%name = %version-%release
+Provides: ocaml-%name-devel = %version-%release
+Obsoletes: ocaml-%name-devel < %version-%release
 
-%description -n ocaml-%name-devel
-ocaml-%name-devel contains development libraries
+%description -n ocaml4-%name-devel
+ocaml4-%name-devel contains development libraries
 required to use the OCaml bindings for %name.
 
 %package -n perl-Sys-Guestfs
@@ -512,7 +517,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 #/lib/udev/rules.d/99-guestfsd.rules
 
 %if_enabled ocaml
-%files -n ocaml-%name
+%files -n ocaml4-%name
 %_libdir/ocaml/guestfs
 %exclude %_libdir/ocaml/guestfs/*.a
 %exclude %_libdir/ocaml/guestfs/*.cmxa
@@ -521,7 +526,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_libdir/ocaml/stublibs/*.so
 %_libdir/ocaml/stublibs/*.so.owner
 
-%files -n ocaml-%name-devel
+%files -n ocaml4-%name-devel
 %doc ocaml/examples/*.ml
 %_libdir/ocaml/guestfs/*.a
 %_libdir/ocaml/guestfs/*.cmxa
@@ -590,6 +595,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Thu Jul 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1.29.6-alt2
+- vkni@: Rebuild with new rpm-build-ocaml4. Renamed ocaml packages to ocaml4-.
+
 * Thu Feb 12 2015 Alexey Shabalin <shaba@altlinux.ru> 1.29.6-alt1
 - 1.29.6
 

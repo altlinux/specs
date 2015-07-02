@@ -2,7 +2,7 @@
 
 Name: ocaml4-%_name
 Version: 8.06.0
-Release: alt2
+Release: alt3
 
 Summary: Tcl/Tk interface for OCaml
 Group: Development/ML
@@ -82,6 +82,9 @@ make install \
 %_bindir/ocamlbrowser
 
 %changelog
+* Wed Jul 01 2015 Andrey Bergman <vkni@altlinux.org> 8.06.0-alt3
+- Rebuild with new rpm-build-ocaml4.
+
 * Tue Jun 23 2015 Andrey Bergman <vkni@altlinux.org> 8.06.0-alt2
 - Added conflicts with ocaml 3 versions.
 

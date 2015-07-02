@@ -1,6 +1,6 @@
 Name: facile
 Version: 1.1
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Constraint programming library
@@ -32,6 +32,9 @@ make DESTDIR=%buildroot install
 %_libdir/ocaml/facile
 
 %changelog
+* Wed Jul 01 2015 Andrey Bergman <vkni@altlinux.org> 1.1-alt4
+- Rebuild with new rpm-build-ocaml4.
+
 * Wed Jun 24 2015 Andrey Bergman <vkni@altlinux.org> 1.1-alt3
 - Adopted for Ocaml 4.x
 
