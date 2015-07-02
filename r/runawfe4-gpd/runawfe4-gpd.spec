@@ -1,6 +1,6 @@
 Name: runawfe4-gpd
 Version: 4.2.0
-Release: alt9
+Release: alt12
 
 Summary: Runawfe Graphic Process Designer
 
@@ -76,16 +76,14 @@ mkdir -p %buildroot/%_bindir/
 cat >%buildroot/%_bindir/runawfe4-gpd <<EOF
 #!/bin/sh
 gpddir="\$HOME/runawfe4-gpd"
-gpdconfdir="\$HOME/runawfe4-gpd/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings"
-gpdconf="\$gpdconfdir/ru.runa.gpd.prefs"
-mkdir -p "\$gpddir"
-mkdir -p \$gpdconfdir
-cp -na %runadir/workspace/ "\$gpddir/"
 
-if [ ! -e \$gpdconf ] ; then
-
-echo "eclipse.preferences.version=1" >> \$gpdconf
-echo "defaultFCKEditor=ck4" >> \$gpdconf
+if [ ! -e ""\$gpddir/"" ] ; then
+    gpdconfdir="\$HOME/runawfe4-gpd/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings"
+    gpdconf="\$gpdconfdir/ru.runa.gpd.prefs"
+    mkdir -p "\$gpddir"
+    mkdir -p \$gpdconfdir
+    cp -na %runadir/workspace/ "\$gpddir/"
+    chown -R \$USER "\$gpddir/"/workspace/
 
 fi
 
@@ -109,6 +107,15 @@ EOF
 #%attr(755,root,root) %runadir/workspace/
 
 %changelog
+* Thu Jul 02 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt12
+- Fix workspace, update to 4.2.0 stable branch code@6444
+
+* Tue Jun 30 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt11
+- Remove hash project
+
+* Fri Jun 26 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt10
+- Fix error after creating new project
+
 * Mon Jun 15 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt9
 - Update workspace
 
