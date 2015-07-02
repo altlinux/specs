@@ -8,7 +8,7 @@
 
 Name:    v8-%MAJOR_VERSION.%MINOR_VERSION
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt3
+Release: alt4
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
@@ -100,6 +100,7 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %files -n lib%name
 %doc AUTHORS ChangeLog LICENSE LICENSE.*
 %_libdir/*.so.*
+%_libdir/v8/*.bin
 
 %files -n lib%name-devel
 %_includedir/*.h
@@ -107,6 +108,9 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Thu Jul 02 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.61.30-alt4
+- Real package .bin files
+
 * Thu Jul 02 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.61.30-alt3
 - Build and package external startup data
 
