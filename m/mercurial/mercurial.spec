@@ -1,5 +1,5 @@
 
-Version: 3.2.3
+Version: 3.4.2
 Release: alt1
 Name: mercurial
 %setup_python_module %name
@@ -94,21 +94,19 @@ make -C doc all
 
 %install
 %python_install
-install -D doc/hg.1 %buildroot/%_man1dir/hg.1
-install -D doc/hgrc.5 %buildroot/%_man5dir/hgrc.5
-install -D doc/hgignore.5 %buildroot/%_man5dir/hgignore.5
-install -D contrib/bash_completion %buildroot/%_sysconfdir/bash_completion.d/%name
-install -D contrib/hgk  %buildroot/%_bindir/hgk
-install contrib/hg-ssh %buildroot/%_bindir/
+install -D doc/hg.1 %buildroot%_man1dir/hg.1
+install -D doc/hgrc.5 %buildroot%_man5dir/hgrc.5
+install -D doc/hgignore.5 %buildroot%_man5dir/hgignore.5
+install -D contrib/bash_completion %buildroot%_sysconfdir/bash_completion.d/%name
+install -D contrib/hgk  %buildroot%_bindir/hgk
+install contrib/hg-ssh %buildroot%_bindir/
 
-mkdir -p %buildroot/%_sysconfdir/%name/hgrc.d
-install -m 644 contrib/mergetools.hgrc %buildroot/%_sysconfdir/%name/hgrc.d/mergetools.rc
+mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 
 %files
 %doc CONTRIBUTORS README contrib doc/*html
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/hgrc.d
-%config(noreplace) %_sysconfdir/%name/hgrc.d/mergetools.rc
 %_bindir/hg
 %_bindir/hg-ssh
 %dir %python_sitelibdir/mercurial
@@ -129,6 +127,9 @@ install -m 644 contrib/mergetools.hgrc %buildroot/%_sysconfdir/%name/hgrc.d/merg
 %python_sitelibdir/hgext/*
 
 %changelog
+* Thu Jul 02 2015 Alexey Shabalin <shaba@altlinux.ru> 3.4.2-alt1
+- 3.4.2
+
 * Mon Dec 22 2014 Alexey Shabalin <shaba@altlinux.ru> 3.2.3-alt1
 - 3.2.3
 
