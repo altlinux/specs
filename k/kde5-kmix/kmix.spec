@@ -1,7 +1,7 @@
 %define rname kmix
 
 Name: kde5-%rname
-Version: 15.4.0
+Version: 15.4.3
 Release: alt1
 %K5init altplace
 
@@ -52,7 +52,7 @@ developing applications that use %name.
 %install
 %K5install
 %K5install_move data kmix
-%find_lang %name --with-kde --without-mo --all-name
+%find_lang %name --with-kde --all-name
 
 
 %files -f %name.lang
@@ -71,5 +71,8 @@ developing applications that use %name.
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Jul 02 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt1
+- new version
+
 * Mon Apr 27 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
 - initial build
