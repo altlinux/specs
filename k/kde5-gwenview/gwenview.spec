@@ -4,8 +4,8 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 15.4.0
-Release: alt2
+Version: 15.4.3
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -96,6 +96,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Thu Jul 02 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt1
+- new version
+
 * Mon Jun 29 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt2
 - rebuild with new exiv2
 
