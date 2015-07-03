@@ -4,6 +4,9 @@
 %def_disable nacl
 %def_disable verbose
 %def_disable clang
+%def_disable shared_libraries
+
+%define v8_version 4.3.61.30
 
 %if_enabled debug
 %define buildtype Debug
@@ -12,7 +15,7 @@
 %endif
 
 Name:           chromium
-Version:        41.0.2272.118
+Version:        43.0.2357.130
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -30,19 +33,19 @@ Source100:      %name.sh
 Source101:      chromium.desktop
 Source102:      chromium.xml
 Source200:      %name.default
+Source201:		libs
+
 Provides:       chromium-browser = %version
 Obsoletes:      chromium-browser < %version
 
 ## Start Patches
 # Patches from SUSE
-# PATCH-FIX-OPENSUSE Fix the WEBRTC cpu-features for the ARM builds
-Patch6:	 	chromium-arm-webrtc-fix.patch
-# PATCH-FIX-OPENSUSE removes build part for courgette
-Patch13:	chromium-no-courgette.patch
 # PATCH-FIX-OPENSUSE enables reading of the master preference
 Patch14:	chromium-master-prefs-path.patch
 # PATCH-FIX-OPENSUSE Fix some includes specifically for the GCC version used
 Patch20:	chromium-gcc-fixes.patch
+# PATCH-FIX-OPENSUSE patches in the system v8 library
+Patch63:    chromium-system-v8.patch
 # PATCH-FIX-UPSTREAM Add more charset aliases
 Patch64:	chromium-more-codec-aliases.patch
 # PATCH-FIX-OPENSUSE Compile the sandbox with -fPIE settings
@@ -65,7 +68,6 @@ Patch69:	chromium-alt-krb5-fix-path.patch
 Patch71:	chromium-set-desktop-file-name.patch
 
 # Patches from Debian
-Patch80:	chromium-nspr.patch
 Patch85:	chromium-fix-manpage.patch
 Patch86:	chromium-icon.patch
 # Old, but specific
@@ -76,15 +78,11 @@ Patch91:	chromium-arm.patch
 # New from Debian
 Patch92:	chromium-third-party-cookies-off-by-default.patch
 Patch93:	chromium-ps-print.patch
-Patch94:	chromium-linker-flags.patch
 
 # Patches from ALT Linux
 Patch95:	chromium-fix-shrank-by-one-character.patch
 Patch96:	chromium-set-ffmpeg-flags-for-multimedia.patch
 Patch98: 	chromium-fix-ffmpeg-build-on-ia32.patch
-
-%add_findreq_skiplist %_libdir/%name/xdg-settings
-%add_findreq_skiplist %_libdir/%name/xdg-mime
 
 BuildRequires: /proc
 
@@ -95,10 +93,12 @@ BuildRequires:  flex
 BuildRequires:  clang
 BuildRequires:  gcc-c++
 %else
-BuildRequires:  gcc-c++ >= 4.8.0
+# There is too many errors while build by gcc 5.x. See https://code.google.com/p/chromium/issues/detail?id=466760
+BuildRequires:  gcc4.9-c++
 %endif
 BuildRequires:  gperf
 BuildRequires:	gst-plugins-devel
+BuildRequires:	jsoncpp-devel
 BuildRequires:  libalsa-devel
 BuildRequires:  libavcodec-devel
 BuildRequires:  libavformat-devel
@@ -117,6 +117,7 @@ BuildRequires:  libgnome-keyring-devel
 BuildRequires:  libhunspell-devel
 BuildRequires:  libharfbuzz-devel
 #BuildRequires:  libicu-devel >= 4.0
+BuildRequires:  libjpeg-devel
 BuildRequires:  libkrb5-devel
 BuildRequires:  libnspr-devel
 BuildRequires:  libnss-devel
@@ -130,7 +131,9 @@ BuildRequires:  libspeex-devel
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
+BuildRequires:  libv8-devel = %v8_version
 BuildRequires:  libvpx-devel
+BuildRequires:  libwebp-devel
 BuildRequires:  libx264-devel
 BuildRequires:  libxslt-devel
 BuildRequires:  libXdamage-devel
@@ -165,7 +168,9 @@ BuildRequires:  python-modules-logging
 BuildRequires:  subversion
 BuildRequires:  wdiff
 BuildRequires:  yasm
-#BuildRequires:  zlib-devel
+BuildRequires:  usbids
+BuildRequires:  xdg-utils
+BuildRequires:  zlib-devel
 
 Provides: 		webclient, /usr/bin/xbrowser
 BuildPreReq: 	alternatives >= 0.2.0
@@ -217,19 +222,17 @@ to Gnome's Keyring.
 %setup -q -n %name
 tar xf %SOURCE10 -C src
 
-%patch6  -p0 -d src
 %patch8  -p2
-%patch13 -p2
 %patch14 -p2
 %patch17 -p1
 %patch20 -p0 -d src
 %patch28 -p2
+%patch63 -p1 -d src
 %patch64 -p0 -d src
 %patch66 -p1
 %patch69 -p2
 %patch71 -p2
 
-%patch80 -p2
 %patch85 -p1
 %patch86 -p0
 %patch87 -p1
@@ -238,10 +241,15 @@ tar xf %SOURCE10 -C src
 %patch91 -p1
 %patch92 -p1
 %patch93 -p1
-%patch94 -p1
 %patch95 -p0
 %patch96 -p0
-%patch98 -p0
+#patch98 -p0
+
+# Replace anywhere v8 to system package
+subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
+subst 's,v8_libplatform,v8,' src/third_party/pdfium/samples/samples.gyp
+sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi src/chrome/js_unittest_rules.gypi
+grep -Rl '^#include [<"]v8/include' * 2>/dev/null | while read f;do subst 's,^\(#include [<"]\)v8/include/,\1,' "$f";done
 
 # Move vpx/internal/vpx_codec_internal.h to one directory up
 grep -Rl 'vpx/internal/vpx_codec_internal.h' src/third_party/libvpx | xargs subst 's,vpx/internal/vpx_codec_internal.h,vpx/vpx_codec_internal.h,'
@@ -249,6 +257,125 @@ mv -f src/third_party/libvpx/source/libvpx/vpx/{internal/,}vpx_codec_internal.h
 
 # Make sure that the requires legal files can be found
 cp -a src/AUTHORS src/LICENSE .
+
+# Remove most bundled libraries. Some are still needed.
+cd src
+#	'base/third_party/icu' \
+#	'third_party/ffmpeg' \
+#build/linux/unbundle/remove_bundled_libraries.py \
+#	'base/third_party/dmg_fp' \
+#	'base/third_party/dynamic_annotations' \
+#	'base/third_party/nspr' \
+#	'base/third_party/superfasthash' \
+#	'base/third_party/symbolize' \
+#	'base/third_party/valgrind' \
+#	'base/third_party/xdg_mime' \
+#	'base/third_party/xdg_user_dirs' \
+#	'breakpad/src/third_party/curl' \
+#	'chrome/third_party/mozilla_security_manager' \
+#	'courgette/third_party' \
+#	'crypto/third_party/nss' \
+#	'net/third_party/mozilla_security_manager' \
+#	'net/third_party/nss' \
+#	'third_party/WebKit' \
+#	'third_party/analytics' \
+#	'third_party/angle' \
+#	'third_party/angle/src/third_party/compiler' \
+#	'third_party/brotli' \
+#	'third_party/cacheinvalidation' \
+#	'third_party/cld_2' \
+#	'third_party/cros_system_api' \
+#	'third_party/cython/python_flags.py' \
+#	'third_party/dom_distiller_js' \
+#	'third_party/dom_distiller_js/dist/proto_gen/third_party/dom_distiller_js' \
+#	'third_party/fips181' \
+#	'third_party/flot' \
+#	'third_party/google_input_tools' \
+#	'third_party/google_input_tools/third_party/closure_library' \
+#	'third_party/google_input_tools/third_party/closure_library/third_party/closure' \
+#	'third_party/hunspell' \
+#	'third_party/iccjpeg' \
+#	'third_party/jstemplate' \
+#	'third_party/khronos' \
+#	'third_party/leveldatabase' \
+#	'third_party/libaddressinput' \
+#	'third_party/libjingle' \
+#	'third_party/libphonenumber' \
+#	'third_party/libsecret' \
+#	'third_party/libsrtp' \
+#	'third_party/libudev' \
+#	'third_party/libusb' \
+#	'third_party/libxml/chromium' \
+#	'third_party/libXNVCtrl' \
+#	'third_party/libyuv' \
+#	'third_party/lss' \
+#	'third_party/lzma_sdk' \
+#	'third_party/mesa' \
+#	'third_party/modp_b64' \
+#	'third_party/mojo' \
+#	'third_party/mt19937ar' \
+#	'third_party/npapi' \
+#	'third_party/openmax_dl' \
+#	'third_party/opus' \
+#	'third_party/ots' \
+#	'third_party/pdfium' \
+#	'third_party/pdfium/third_party/base' \
+#	'third_party/pdfium/third_party/bigint' \
+#	'third_party/pdfium/third_party/freetype' \
+#	'third_party/polymer' \
+#	'third_party/protobuf' \
+#	'third_party/qcms' \
+#	'third_party/readability' \
+#	'third_party/sfntly' \
+#	'third_party/skia' \
+#	'third_party/smhasher' \
+#	'third_party/sqlite' \
+#	'third_party/tcmalloc' \
+#	'third_party/trace-viewer' \
+#	'third_party/trace-viewer/third_party/components/polymer' \
+#	'third_party/trace-viewer/third_party/d3' \
+#	'third_party/trace-viewer/third_party/gl-matrix' \
+#	'third_party/trace-viewer/third_party/jszip' \
+#	'third_party/trace-viewer/third_party/tvcm' \
+#	'third_party/trace-viewer/third_party/tvcm/third_party/beautifulsoup/polymer_soup.py' \
+#	'third_party/undoview' \
+#	'third_party/usrsctp' \
+#	'third_party/web-animations-js' \
+#	'third_party/webdriver' \
+#	'third_party/webrtc' \
+#	'third_party/widevine' \
+#	'third_party/x86inc' \
+#	'third_party/zlib/google' \
+#	'url/third_party/mozilla' \
+#	'v8/src/third_party/fdlibm' \
+#	'v8/src/third_party/kernel' \
+#	'v8/src/third_party/valgrind' \
+#	--do-remove
+
+sed '16i#define WIDEVINE_CDM_VERSION_STRING "The Cake Is a Lie"' -i third_party/widevine/cdm/widevine_cdm_version.h
+echo > "third_party/adobe/flash/flapper_version.h"
+
+# Rebuild configuration of bundled ffmpeg
+pushd third_party/ffmpeg
+ffmpeg_target_arch=ia32
+build_ffmpeg_args=" --disable-asm"
+
+%ifarch x86_64
+ffmpeg_target_arch=x64
+%endif
+%ifarch arm armh
+ffmpeg_target_arch=arm
+%endif
+
+chromium/scripts/build_ffmpeg.py \
+	linux-noasm \
+	${ffmpeg_target_arch} \
+	--branding Chrome \
+	--config-only \
+	-- ${build_ffmpeg_args}
+chromium/scripts/copy_config.sh
+#chromium/scripts/generate_gyp.py
+popd
 
 %build
 ## create make files
@@ -272,15 +399,19 @@ _google_api_key='AIzaSyAIIWz7zaCwYcUSe3ZaRPviXjMjkBP4-xY'
 _google_default_client_id='1018394967181.apps.googleusercontent.com'
 _google_default_client_secret='h_PrTP1ymJu83YTLyz-E25nP'
 
-pushd src
-
+cd src
 ./build/gyp_chromium -f ninja build/all.gyp \
+%if_enabled shared_libraries
+	-Dcomponent=shared_library \
+%endif
 	-Dbuild_ffmpegsumo=1 \
 %if_disabled nacl
 	-Ddisable_nacl=1 \
+	-Ddisable_pnacl=1 \
 %endif
 	-Ddisable_sse2=1 \
 	-Denable_plugin_installation=0 \
+    -Ddisable_newlib_untar=1 \
 %if_enabled clang
 	-Dclang=1 \
 %else
@@ -292,6 +423,7 @@ pushd src
 	-Dffmpeg_branding=Chrome \
 	-Djavascript_engine=v8 \
 	-Dlinux_fpic=1 \
+	-Dlinux_dump_symbols=1 \
 	-Dlinux_link_gsettings=1 \
 	-Dlinux_link_libpci=1 \
 	-Dlinux_link_libspeechd=1 \
@@ -300,12 +432,17 @@ pushd src
 	-Dlinux_strip_binary=1 \
 	-Dlinux_sandbox_chrome_path=%_libdir/chromium/chromium \
 	-Dlinux_sandbox_path=%_libdir/chromium/chrome-sandbox \
+	-Dclang_use_chrome_plugins=0 \
+	-Dhost_clang=0 \
 	-Dlinux_use_bundled_binutils=0 \
 	-Dlinux_use_bundled_gold=0 \
 	-Dlinux_use_gold_flags=0 \
 	-Dlogging_like_official_build=1 \
 	-Dproprietary_codecs=1 \
 	-Dremove_webcore_debug_symbols=1 \
+	-Dusb_ids_path=/usr/share/misc/usb.ids \
+	-Dwerror= \
+	-Ddisable_fatal_linker_warnings=1 \
 %ifarch x86_64
 	-Dtarget_arch=x64 \
 %endif
@@ -329,31 +466,44 @@ pushd src
 	-Darm_neon=0 \
 %endif
 %endif
+%ifnarch arm armh
+	-Denable_webrtc=0 \
+	-Denable_widevine=0 \
+%endif
 	-Duse_pulseaudio=1 \
 	-Duse_system_bzip2=1 \
 	-Duse_system_ffmpeg=0 \
 	-Duse_system_flac=1 \
+	-Duse_system_harfbuzz=1 \
 	-Duse_system_icu=0 \
+	-Duse_system_jsoncpp=1 \
 	-Duse_system_libbz2=1 \
-	-Duse_system_libexif=1 \
 	-Duse_system_libevent=1 \
-	-Duse_system_libjpeg=0 \
+	-Duse_system_libexif=1 \
+	-Duse_system_libjpeg=1 \
 	-Duse_system_libmtp=0 \
 	-Duse_system_libopus=1 \
-	-Duse_system_libpng=0 \
-	-Duse_system_libwebp=0 \
-	-Duse_system_libyuv=1 \
+	-Duse_system_libpng=1 \
+	-Duse_system_libusb=0 \
+	-Duse_system_libvpx=0 \
+	-Duse_system_libwebp=1 \
 	-Duse_system_libxml=1 \
+	-Duse_system_libxnvctrl=0 \
 	-Duse_system_libxslt=1 \
-	-Duse_system_nspr=1 \
+	-Duse_system_libyuv=1 \
+	-Duse_system_minizip=1 \
+	-Duse_system_nspr=0 \
 	-Duse_system_protobuf=0 \
+	-Duse_system_re2=1 \
+	-Duse_system_snappy=1 \
 	-Duse_system_speex=1 \
 	-Duse_system_sqlite=0 \
-	-Duse_system_v8=0 \
-	-Duse_system_vpx=0 \
-	-Duse_system_xdg_utils=0 \
+	-Duse_system_ssl=0 \
+	-Duse_system_v8=1 \
+	-Duse_system_xdg_utils=1 \
 	-Duse_system_yasm=1 \
-	-Duse_system_zlib=0
+	-Duse_system_zlib=1 \
+	-Dwant_separate_host_toolset=0
 # Unused flags
 #	-Dlinux_use_tcmalloc=0 \
 
@@ -369,9 +519,10 @@ ninja-build -C out/Release \
 	chrome \
 	chrome_sandbox \
 	chromedriver \
-	pdf
-
-popd
+	clearkeycdm
+# Obsoleted or failed to build target
+#	widevinecdmadapter
+#	pdf
 
 %install
 mkdir -p %buildroot%_libdir/chromium/
@@ -390,19 +541,24 @@ mkdir -p %buildroot%_mandir/man1/
 
 pushd src/out/%buildtype
 
+cp -a chrome %buildroot%_libdir/chromium/chromium
 cp -a chrome_sandbox %buildroot%_libdir/chromium/chrome-sandbox
-cp -a *.pak *.bin locales xdg-mime %buildroot%_libdir/chromium/
+cp -a *.pak locales %buildroot%_libdir/chromium/
 cp -a chromedriver %buildroot%_libdir/chromium/
 cp -a icudtl.dat %buildroot%_libdir/chromium/
 
-# Patch xdg-settings to use the chromium version of xdg-mime as that the system one is not KDE4 compatible
-sed "s|xdg-mime|%_libdir/chromium/xdg-mime|g" xdg-settings > %{buildroot}%{_libdir}/chromium/xdg-settings
-
-cp -a chrome %buildroot%_libdir/chromium/chromium
 cp -a chrome.1 %buildroot%_mandir/man1/chrome.1
 cp -a chrome.1 %buildroot%_mandir/man1/chromium.1
-cp -a libffmpegsumo.so %buildroot%_libdir/chromium/libffmpegsumo.so
-cp -a libpdf.so %buildroot%_libdir/chromium/libpdf.so
+
+# Copy plugin libraries
+cp -av lib*.so %buildroot%_libdir/chromium/
+
+%if_enabled shared_libraries
+mkdir -p %buildroot%_libdir/chromium/lib
+pushd lib
+cp -v `cat %SOURCE201` %buildroot%_libdir/chromium/lib
+popd
+%endif
 
 # NaCl
 %if_enabled nacl
@@ -447,7 +603,15 @@ printf '%_bindir/%name\t%_libdir/%name/%name-kde\t15\n' > %buildroot%_altdir/%na
 printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%name-gnome
 
 # Strip Chromium executables to disable debuginfo generation (became too huge)
-strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver,libffmpegsumo.so,libpdf.so}
+strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver} \
+%if_enabled shared_libraries
+      %buildroot/%_libdir/chromium/lib/lib*.so \
+%endif
+      %buildroot/%_libdir/chromium/lib*.so
+
+# Package link to external startup data from v8
+ln -s %_libdir/v8/natives_blob.bin  %buildroot%_libdir/chromium/natives_blob.bin
+ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bin
 
 %files
 %doc AUTHORS LICENSE
@@ -459,8 +623,10 @@ strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver,libffmp
 %_libdir/chromium/chromium
 %_libdir/chromium/chromedriver
 %_libdir/chromium/chromium-generic
-%_libdir/chromium/libffmpegsumo.so
-%_libdir/chromium/libpdf.so
+%_libdir/chromium/lib*.so
+%if_enabled shared_libraries
+%_libdir/chromium/lib/
+%endif
 %_libdir/chromium/icudtl.dat
 %_libdir/chromium/plugins/
 %_libdir/chromium/locales/
@@ -468,16 +634,14 @@ strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver,libffmp
 %_libdir/chromium/nacl_*
 %_libdir/chromium/libppGoogleNaClPluginChrome.so
 %endif
-%attr(755,root,root) %_libdir/chromium/xdg-settings
-%attr(755,root,root) %_libdir/chromium/xdg-mime
 %_libdir/chromium/*.pak
-%_libdir/chromium/*.bin
 %_man1dir/chrom*
 %_desktopdir/%name.desktop
 %_datadir/gnome-control-center/default-apps/chromium.xml
 %_iconsdir/hicolor/*/apps/chromium.*
 %_altdir/%name
 %_altdir/%name-generic
+%_libdir/chromium/*.bin
 
 %files kde
 %attr(755, root, root) %_libdir/chromium/chromium-kde
@@ -488,6 +652,75 @@ strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver,libffmp
 %_altdir/%name-gnome
 
 %changelog
+* Mon Jun 29 2015 Andrey Cherepanov <cas@altlinux.org> 43.0.2357.130-alt1
+- New version
+- Security fixes:
+  - High CVE-2015-1266: Scheme validation error in WebUI.
+  - High CVE-2015-1268: Cross-origin bypass in Blink.
+  - Medium CVE-2015-1267: Cross-origin bypass in Blink.
+  - Medium CVE-2015-1269: Normalization error in HSTS/HPKP preload list.
+- use more external shared libraries (especially libv8)
+
+* Mon Jun 15 2015 Andrey Cherepanov <cas@altlinux.org> 43.0.2357.125-alt1
+- New version
+- Fixes:
+  - Resolved browser font magnification/scaling issue
+- Cannot package missing libpdf.so
+- Add clearkeycdm component
+- Disable build on i586 (because memory exhausted while linking)
+- Disable automatic external extensions loading (see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=786909)
+  Also you can use --show-component-extension-options command line parameter
+  to view all hidden extensions
+
+* Thu Jun 04 2015 Andrey Cherepanov <cas@altlinux.org> 43.0.2357.81-alt1
+- New version
+- Fixes:
+  - [490611] Fixed an issue where sometimes a blank page would print.
+  - [478714] Icons not displaying properly on Linux.
+
+* Wed May 20 2015 Andrey Cherepanov <cas@altlinux.org> 43.0.2357.65-alt1
+- New version
+- Security fixes:
+  - High CVE-2015-1252: Sandbox escape in Chrome.
+  - High CVE-2015-1253: Cross-origin bypass in DOM.
+  - High CVE-2015-1254: Cross-origin bypass in Editing.
+  - High CVE-2015-1255: Use-after-free in WebAudio.
+  - High CVE-2015-1256: Use-after-free in SVG.
+  - High CVE-2015-1251: Use-after-free in Speech.
+  - Medium CVE-2015-1257: Container-overflow in SVG.
+  - Medium CVE-2015-1258: Negative-size parameter in Libvpx.
+  - Medium CVE-2015-1259: Uninitialized value in PDFium.
+  - Medium CVE-2015-1260: Use-after-free in WebRTC.
+  - Medium CVE-2015-1261: URL bar spoofing.
+  - Medium CVE-2015-1262: Uninitialized value in Blink.
+  - Low CVE-2015-1263: Insecure download of spellcheck dictionary.
+  - Low CVE-2015-1264: Cross-site scripting in bookmarks.
+
+* Tue May 19 2015 Andrey Cherepanov <cas@altlinux.org> 42.0.2311.152-alt1
+- New version
+
+* Wed Apr 29 2015 Andrey Cherepanov <cas@altlinux.org> 42.0.2311.135-alt1
+- New version
+- Security fixes:
+  - High CVE-2015-1243: Use-after-free in DOM.
+
+* Wed Apr 15 2015 Andrey Cherepanov <cas@altlinux.org> 42.0.2311.90-alt1
+- New version
+- Security fixes:
+  - High CVE-2015-1235: Cross-origin-bypass in HTML parser.
+  - Medium CVE-2015-1236: Cross-origin-bypass in Blink.
+  - High CVE-2015-1237: Use-after-free in IPC.
+  - High CVE-2015-1238: Out-of-bounds write in Skia.
+  - Medium CVE-2015-1240: Out-of-bounds read in WebGL.
+  - Medium CVE-2015-1241: Tap-Jacking.
+  - High CVE-2015-1242: Type confusion in V8.
+  - Medium CVE-2015-1244: HSTS bypass in WebSockets.
+  - Medium CVE-2015-1245: Use-after-free in PDFium.
+  - Medium CVE-2015-1246: Out-of-bounds read in Blink.
+  - Medium CVE-2015-1247: Scheme issues in OpenSearch.
+  - Medium CVE-2015-1248: SafeBrowsing bypass.
+
+
 * Thu Apr 02 2015 Andrey Cherepanov <cas@altlinux.org> 41.0.2272.118-alt1
 - New version
 - Security fixes:
