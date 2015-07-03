@@ -1,6 +1,6 @@
 
 Name: kdbg
-Version: 2.5.4
+Version: 2.5.5
 Release: alt1
 
 Group: Development/Other
@@ -48,6 +48,12 @@ inspecting variables, and stepping through code.
 #%_iconsdir/*/*/apps/kdbg.*
 
 %changelog
+* Fri Jul 03 2015 Sergey V Turchin <zerg@altlinux.org> 2.5.5-alt1
+- new version
+
+* Fri Jan 24 2014 Sergey V Turchin <zerg@altlinux.org> 2.5.4-alt0.M70P.1
+- built for M70P
+
 * Fri Jan 24 2014 Sergey V Turchin <zerg@altlinux.org> 2.5.4-alt1
 - new version
 
