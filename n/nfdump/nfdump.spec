@@ -1,6 +1,6 @@
 Name: nfdump
 Version: 1.6.13
-Release: alt1
+Release: alt2
 Summary: collect and process netflow data
 
 Group: Monitoring
@@ -38,6 +38,13 @@ the netflow data from the files stored by nfcapd and creates
 the corresponding output files for every channel required.
 This program is run only by NfSen.
 
+%package nftrack
+Summary: nftrack - Port tracking decoder for NfSen plugin PortTracker.
+Group: Monitoring
+
+%description nftrack
+nftrack - Port tracking decoder for NfSen plugin PortTracker.
+
 %prep
 %setup -q
 
@@ -45,6 +52,7 @@ This program is run only by NfSen.
 %autoreconf
 %configure \
 	--enable-nfprofile \
+	--enable-nftrack \
 	--enable-sflow \
 	--enable-readpcap \
 	--enable-nfpcapd \
@@ -83,6 +91,7 @@ install -m0644 %SOURCE8 %buildroot%_unitdir/
 %files
 %exclude %_bindir/nfprofile
 %exclude %_man1dir/nfprofile.1.*
+%exclude %_bindir/nftrack
 %_bindir/*
 %_man1dir/*
 %_initdir/*
@@ -99,7 +108,13 @@ install -m0644 %SOURCE8 %buildroot%_unitdir/
 %_bindir/nfprofile
 %_man1dir/nfprofile.1.*
 
+%files nftrack
+%_bindir/nftrack
+
 %changelog
+* Fri Jul 03 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.13-alt2
+- add nftrack package
+
 * Thu Jul 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.13-alt1
 - 1.6.13
 - add --enable-nsel configure options
