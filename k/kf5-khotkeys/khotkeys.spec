@@ -4,7 +4,7 @@
 %define libkhotkeysprivate libkhotkeysprivate%khotkeysprivate_sover
 
 Name: kf5-%rname
-Version: 5.3.1
+Version: 5.3.2
 Release: alt1
 %K5init altplace
 
@@ -88,6 +88,9 @@ KF5 library
 %_K5lib/libkhotkeysprivate.so.%khotkeysprivate_sover
 
 %changelog
+* Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
+- new version
+
 * Fri May 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
 - new version
 
