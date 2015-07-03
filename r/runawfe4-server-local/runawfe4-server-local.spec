@@ -1,6 +1,6 @@
 Name: runawfe4-server-local
 Version: 4.2.0
-Release: alt4
+Release: alt13
 
 Summary: Runawfe local server
 
@@ -20,7 +20,8 @@ Source7: runawfe4-server-local-stop.desktop
 Packager: Danil Mikhailov <danil@altlinux.org>
 
 #PreReq:
-Requires: runawfe4-server jboss-as-vanilla
+Requires: jboss-as-vanilla
+#Conflicts: runawfe4-server
 
 #BuildPreReq:
 # Automatically added by buildreq on Fri Sep 06 2013
@@ -52,38 +53,74 @@ mkdir -p %buildroot/lib/systemd/system/
 mkdir -p %buildroot%_desktopdir/
 mkdir -p %buildroot%_pixmapsdir/
 mkdir -p %buildroot%jbossdir/../docs/examples/configs/
+mkdir -p %buildroot%runadir/
+mkdir -p %buildroot/var/run/
+mkdir -p %buildroot/%_bindir/
 
 #FIX correct path to jboss-as/bin
 cp %SOURCE1 %buildroot%jbossdir/../docs/examples/configs/
+cp %SOURCE1 %buildroot%jbossdir/configuration/
 cp %SOURCE3 %buildroot/etc/jboss-as/
 cp %SOURCE4 %buildroot/lib/systemd/system/
 cp %SOURCE5 %buildroot%_desktopdir/
 cp %SOURCE6 %buildroot%_pixmapsdir/
 cp %SOURCE7 %buildroot%_desktopdir/
+cp -a simulation/* %buildroot%jbossdir/../
+cp -a simulation_cache/ %buildroot%runadir/
+touch %buildroot/var/run/%name.pid
+chmod a+rw %buildroot/var/run/%name.pid
 
-mkdir -p %buildroot/%_bindir/
 
 cat >%buildroot/%_bindir/%name <<EOF
 #!/bin/sh
 localdir=~/%name/
 
-rm -f /var/run/%name.pid
-ln -s /var/run/jboss-as/jboss-as-standalone.pid /var/run/%name.pid
+#rm -f /var/run/%name.pid
+ln -sf /var/run/jboss-as/jboss-as-standalone.pid /var/run/%name.pid &> /dev/null
+#TODO after start
+#cat /var/run/jboss-as/jboss-as-standalone.pid > /var/run/%name.pid 
 
 if [ ! -e "\$localdir" ] ; then
 jboss-as-cp -c standalone-runa-local.xml -l "\$localdir"
-cp %jbossdir/deployments/runawfe.ear "\$localdir"/deployments/
+ln -s %jbossdir/deployments/runawfe.ear "\$localdir"/deployments/
+cp -a %runadir/simulation_cache/* "\$localdir"
+cp -a %jbossdir/../adminkit/ %jbossdir/../samples/ %jbossdir/../standalone/wfe.custom/ "\$localdir"
 fi
 
+rm -f "\$localdir"/deployments/runawfe.ear.*
+
+cd "\$localdir"
 JBOSS_BASE_DIR=/usr/share/jboss-as/standalone "\$localdir"/bin/standalone.sh -c standalone-runa-local.xml > "\$localdir"/%name.log 2>&1 &
 
-sleep 20
+count=0
+launched=false
+
+until [ \$count -gt 200 ]
+  do
+    if [ -e "\$localdir"/deployments/runawfe.ear.deployed ] ; then
+      launched=true
+      break
+    fi
+    sleep 1
+    let count=\$count+1;
+done
+
 xdg-open http://127.0.0.1:28080/wfe/
 
 EOF
 
-#Templates for another ear from runa developer
-cp -a wfe-ear/target/runawfe-demo %buildroot/%jbossdir/deployments/
+cat >%buildroot/%_bindir/%name-stop <<EOF
+#!/bin/sh
+localdir=~/%name/
+
+/usr/share/jboss-as/bin/jboss-cli.sh --connect command=:shutdown
+#killall java
+
+EOF
+
+#Uses one ear for server and local server
+mkdir -p %buildroot/%jbossdir/deployments/
+cp -a wfe-ear/target/runawfe.ear %buildroot/%jbossdir/deployments/
 
 install -D -m754 %SOURCE2 %buildroot%_initdir/%name
 
@@ -93,17 +130,54 @@ install -D -m754 %SOURCE2 %buildroot%_initdir/%name
 %pre
 
 %files
-%jbossdir/../docs/examples/configs/*
 /etc/jboss-as/jboss-as-%name.conf
 %_pixmapsdir/*
 %_desktopdir/*
-%attr(755,%jbossuser,root) %jbossdir/deployments/*
 %attr(755,root,root) %_bindir/%name
-%attr(644,root,root) /lib/systemd/system/%name.service
+%attr(755,root,root) %_bindir/%name-stop
 
+%jbossdir/../adminkit/
+%jbossdir/../samples/
+%jbossdir/../standalone/wfe.custom/
+%jbossdir/configuration/*
+%jbossdir/../docs/examples/configs/*
+%attr(755,%jbossuser,root) %jbossdir/deployments/*
+
+%runadir/simulation_cache/
+%_runtimedir/%name.pid
+%_bindir/%name-stop
+
+%attr(644,root,root) /lib/systemd/system/%name.service
 %_initdir/%name
 
 %changelog
+* Thu Jul 02 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt13
+- Update to trunk code@6444
+
+* Wed Jul 01 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt12
+- Fixed bugs 1068, added runawfe4-server-local-stop for stopping server
+
+* Thu Jun 25 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt11
+- Updated ear to code@6397
+
+* Wed Jun 24 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt10
+- Added simulation cache, change stop server
+
+* Wed Jun 24 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt9
+- Change samples dir, rebuild ear from code@6345
+
+* Wed Jun 17 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt8
+- Remove requires runawfe4-server
+
+* Tue Jun 16 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt7
+- Added samples
+
+* Wed Jun 10 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt6
+- Revert save db to dir
+
+* Tue Jun 09 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt5
+- Update standalone-runa-local.xml, save db in memory, added mvcc=true
+
 * Thu Apr 23 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt4
 - Added log saving, fix browser opening
 
