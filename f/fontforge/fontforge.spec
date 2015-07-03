@@ -1,32 +1,35 @@
-# Patent related warning:
-# it is possible to build with --with-freetype-bytecode
-# but it is FORBIDDEN in some countries. See documentation
-%def_with bytecode
+%def_enable python 
+%def_enable docs
+# %def_disable gtk
 
 Name: fontforge
-Version: 20120731
-Release: alt3
+Version: 20150612
+Release: alt0.3
 Summary: FontForge -- font editor
 Summary(ru_RU.KOI8-R): Редактор шрифтов FontForge
 
 License: BSD
 Group: Publishing
-Url: http://fontforge.sourceforge.net/
+Url: https://github.com/fontforge/fontforge
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Pavel Vainerman <pv at altlinux.org>
 
-Source: %{name}_full-%version.tar
+Source: %name-%version.tar.gz
 Source2: %name.png
-Patch0: %name-%version.patch
 
 # manually removed: glibc-devel-static packages-info-i18n-common
 # Automatically added by buildreq on Thu Jul 02 2015
 # optimized out: fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libX11-devel libXft-devel libXrender-devel libcairo-devel libcloog-isl4 libfreetype-devel libpango-devel libpng-devel libwayland-client libwayland-server pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: glibc-devel-static libSM-devel libXi-devel libdb4-devel libgtk+2-devel libxml2-devel python-module-distribute python-module-google python-module-sphinxcontrib
+BuildRequires: glibc-devel-static libSM-devel libXi-devel libdb4-devel libxml2-devel 
+BuildRequires: git-core zlib-devel glib2-devel libgio-devel libpango-devel libcairo-devel
 
-#BuildRequires: libpng-devel libtiff-devel libungif-devel libXi-devel
-#BuildRequires: libxml2-devel  python-devel xorg-cf-files libX11-devel
-#BuildPreReq: libfreetype-devel
+#%if_enabled gtk
+#libgtk+2-devel
+#%endif
+
+%if_enabled python
+BuildRequires: python-module-distribute python-module-google python-module-sphinxcontrib ipython
+%endif
 
 Obsoletes: pfaedit
 Provides: pfaedit
@@ -48,48 +51,57 @@ FontForge позволяет пользователям создавать и изменять
 Summary: FontForge shared library
 Group: System/Libraries
 
+%description -n lib%name
+FontForge shared library
+
 %package -n lib%name-devel
 Summary: FontForge development files
 Group: Development/C
 Requires: lib%name = %version-%release
 
+%description -n lib%name-devel
+FontForge development files
+
+%if_enabled python
 %package -n python-module-%name
 Summary: FontForge python module
 Group: Development/Python
 Requires: python
 Requires: lib%name = %version-%release
 
-%description -n lib%name
-FontForge shared library
-
-%description -n lib%name-devel
-FontForge development files
-
 %description -n python-module-%name
 FontForge python module
 
-%prep
-%setup -q -n %{name}-%version
-%patch -p0
-
-%build
-%add_optflags -fno-strict-aliasing
-%configure 	--disable-static \
-			--with-freetype-src=%_includedir/freetype2/freetype/internal \
-			--with-gdraw \
-			--enable-pyextension \
-%if_with bytecode
-			--with-freetype-bytecode
+%def_enable python-extension
+%def_enable python-scripting
 %else
+%def_disable python-extension
+%def_disable python-scripting
+%endif
+
+%if_enabled docs
+%package -n doc
+Summary: FontForge documentations
+Group: Documentation
+
+%description -n doc
+FontForge documetations
 
 %endif
+
+%prep
+%setup -q -n %{name}-%version
+#tar -xf %name-%version.tar.gz --strip 1
+
+%build
+./bootstrap
+%autoreconf
+%add_optflags -fno-strict-aliasing -I../libltdl
+%configure 	--disable-static %{subst_enable python-extension} %{subst_enable python-scripting}
 
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 %make_build
-pushd pyhook
-%python_build
-popd
 
 %install
 install -D -m644 %SOURCE2 %buildroot%_niconsdir/%name.png
@@ -109,12 +121,6 @@ Categories=Graphics;Publishing;
 MimeType=application/x-font;application/x-font-bdf;application/x-font-ttf;application/x-font-truetype;application/x-truetype-font;application/font-tdpfr;application/x-font-afm;application/x-font-type1;
 EOF
 
-pushd pyhook
-python setup.py install --root=%buildroot \
-                          --optimize=2 \
-                          --record=../python-module-%name
-popd
-
 %find_lang FontForge
 
 %files -f FontForge.lang
@@ -123,12 +129,14 @@ popd
 %_datadir/%name/
 %_man1dir/*
 %_desktopdir/%name.desktop
-%_niconsdir/*
+%_iconsdir/hicolor/*/*/*
+# %_datadir/mime/packages/*
 
 %files -n lib%name
 %_libdir/libgunicode.so.*
 %_libdir/libgdraw.so.*
 %_libdir/libfontforge.so.*
+%_libdir/libfontforgeexe.so.*
 %_libdir/libgutils.so.*
 %_libdir/libgioftp.so.*
 
@@ -137,9 +145,26 @@ popd
 %_includedir/%name/
 %_pkgconfigdir/*.pc
 
-%files -n python-module-%name -f python-module-%name
+%if_enabled python
+%files -n python-module-%name 
+%python_sitelibdir/*.so
+%endif
+
+%if_enabled docs
+%files -n doc
+%dir %_docdir/%name
+%_docdir/%name/*
+%_docdir/%name/.htaccess
+%endif
 
 %changelog
+* Fri Jul 03 2015 Pavel Vainerman <pv@altlinux.ru> 20150612-alt0.3
+- test build
+
+* Thu Jul 02 2015 Pavel Vainerman <pv@altlinux.ru> 20150612-alt0.1
+- new version
+- update system build
+
 * Thu Jul 02 2015 Pavel Vainerman <pv@altlinux.ru> 20120731-alt3
 - move to git
 - update build requires
