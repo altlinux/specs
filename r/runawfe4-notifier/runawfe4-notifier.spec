@@ -1,6 +1,6 @@
 Name: runawfe4-notifier
 Version: 4.2.0
-Release: alt3
+Release: alt4
 
 Summary: Runawfe notifier client
 
@@ -71,8 +71,8 @@ ln -s /var/log/runawfe4-notifier/rtn.log %buildroot/%runadir/rtn.log
 
 
 %if %distrname == "Debian"
-#gpd copy path for vendor
-%define rtn_path target/deb_rtn
+#removed special version for debian
+%define rtn_path target/rtn
 %else
 %define rtn_path target/rtn
 %endif
@@ -106,6 +106,9 @@ cp target/classes/*.wav %buildroot/%runadir/
 %attr(766,root,root) /var/log/runawfe4-notifier/rtn.log
 %attr(755,root,root) %_bindir/runawfe4-notifier
 %changelog
+* Fri Jul 03 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt4
+- Update to trunk code@6444 stable 4.2.0
+
 * Tue Apr 21 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt3
 - Update server port to 28080
 
