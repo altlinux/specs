@@ -1,9 +1,9 @@
 # TODO:fix build Python bindings
 %def_disable python
-%define  git_rev e4b5828
+%define  git_rev 757a50c
 
 Name: 	 gnucash
-Version: 2.6.6
+Version: 2.6.7
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -107,8 +107,7 @@ export PYTHON=/usr/bin/python
 %endif
 
 # Print fake revision to build from VCS
-echo -e '#!/bin/sh\ntest $1 = "-r" && echo "%git_rev"\ntest $1 = "-t" && echo "git"\nexit 0' > util/gnc-scm-info
-export PATH=util:$PATH
+echo -e '#!/bin/sh\ntest $1 = "-r" && echo "%git_rev"\ntest $1 = "-t" && echo "git"\nexit 0' > util/gnc-vcs-info
 
 %configure \
 	   --enable-ofx \
@@ -178,6 +177,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Fri Jul 03 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.7-alt1
+- New version
+
 * Thu Apr 16 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.6-alt1
 - New version
 
