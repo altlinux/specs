@@ -1,5 +1,5 @@
 Name: djview4
-Version: 4.8
+Version: 4.10.3
 Release: alt1
 
 Summary: DjVu viewers, encoders and utilities (QT4 based version)
@@ -10,8 +10,7 @@ Url: http://djvu.sourceforge.net/djview4.html
 # http://download.sourceforge.net/djvu/djview-%version.tar.gz
 Source: djview-%version.tar
 
-Patch1: djview-4.8-rh-swap.patch
-Patch2: djview-4.8-rh-include.patch
+Patch1: djview-4.8-rh-include.patch
 
 %def_disable static
 %define qtdir %_libdir/qt4
@@ -62,7 +61,6 @@ The djview3 distributed with djvulibre uses the same approach.
 %prep
 %setup -n djview-%version
 %patch1 -p1
-%patch2 -p1
 
 sed -i '/^#/d' desktopfiles/djvulibre-djview4.desktop
 sed -i 's,^\(plugindir[[:space:]]*=[[:space:]]*\).*,\1%browser_plugins_path,' nsdejavu/Makefile.in
@@ -75,11 +73,20 @@ export PATH=$QTDIR/bin:$PATH
 
 %install
 %makeinstall_std
-rm %buildroot%_datadir/djvu/%name/desktop/prebuilt-hi*-djview4.png
-install -Dpm644 desktopfiles/hi32-djview4.png \
+
+# Перемещаем плагин для браузеров в предназначенное для этого место.
+mkdir -p %buildroot%browser_plugins_path
+mv %buildroot%_libdir/mozilla/plugins/nsdejavu.so %buildroot%browser_plugins_path/nsdejavu.so
+# Стираем файл .la, который нужен лишь libtool'у для генерации имён библиотек.
+rm -f %buildroot%_libdir/mozilla/plugins/nsdejavu.la
+
+install -Dpm644 desktopfiles/prebuilt-hi32-djview4.png \
 	%buildroot%_niconsdir/djvulibre-djview4.png
 install -Dpm644 desktopfiles/djvulibre-djview4.desktop \
 	%buildroot%_desktopdir/djvulibre-djview4.desktop
+
+mv %buildroot%_bindir/djview %buildroot%_bindir/djview4
+ln -s %buildroot%_bindir/djview4 djview
 
 %find_lang %name
 %set_verify_elf_method strict
@@ -90,12 +97,18 @@ install -Dpm644 desktopfiles/djvulibre-djview4.desktop \
 %_desktopdir/*.desktop
 %_datadir/djvu/%name/
 %_niconsdir/*
+%_iconsdir/hicolor/32x32/mimetypes/*
+%_iconsdir/hicolor/64x64/mimetypes/*
+%_iconsdir/hicolor/scalable/mimetypes/*
 
 %files -n mozilla-plugin-djvu4
 %browser_plugins_path/*.so*
 %_mandir/man?/nsdejavu*
 
 %changelog
+* Fri Jul 03 2015 Andrey Bergman <vkni@altlinux.org> 4.10.3-alt1
+- Updated to 4.10.3. Removed unnecessary patch, added mime icons.
+
 * Sat Apr 13 2013 Dmitry V. Levin <ldv@altlinux.org> 4.8-alt1
 - Updated to 4.8.
 
