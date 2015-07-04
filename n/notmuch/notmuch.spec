@@ -1,6 +1,6 @@
 Name: notmuch
-Version: 0.19
-Release: alt2
+Version: 0.20.2
+Release: alt1
 
 Summary: new email reading system called notmuch
 
@@ -83,6 +83,8 @@ cat >%buildroot%_emacs_sitestart_dir/%name.el <<EOF
 (require 'notmuch)
 EOF
 
+install -m0755 notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
+
 %files
 %_bindir/%name
 %_sysconfdir/bash_completion.d/%name
@@ -93,6 +95,7 @@ EOF
 %doc AUTHORS README NEWS
 
 %files emacs
+%_bindir/notmuch-emacs-mua
 %_emacs_sitestart_dir/%name.el
 %_emacslispdir/*.el*
 %_emacslispdir/*%{name}*
@@ -105,6 +108,9 @@ EOF
 %_libdir/lib%name.so
 
 %changelog
+* Sat Jul  4 2015 Terechkov Evgenii <evg@altlinux.org> 0.20.2-alt1
+- 0.20.2
+
 * Fri May 22 2015 Terechkov Evgenii <evg@altlinux.org> 0.19-alt2
 - Rebuild with libxapian-1.2.21
 
