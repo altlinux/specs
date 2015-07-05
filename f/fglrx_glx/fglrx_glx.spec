@@ -19,7 +19,7 @@ Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
 Version: 15.101.1001
-Release: alt1
+Release: alt2
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -269,6 +269,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Sun Jul 5 2015 barssc <barssc@altlinux.ru> 2:15.101.1001-alt2
+- Kernel module: fixed build for x32
+
 * Sun Jul 5 2015 barssc <barssc@altlinux.ru> 2:15.101.1001-alt1
 - Catalyst 15.5
 - Kernel module: fixed build for kernel 4.0.x and 4.1.0-rc 
