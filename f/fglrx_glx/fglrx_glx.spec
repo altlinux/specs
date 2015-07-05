@@ -1,4 +1,4 @@
-%define cat_ver 14.501.1003
+%define cat_ver 15.101.1001
 
 %ifarch %ix86
 %define archdir arch/x86
@@ -12,19 +12,20 @@
 
 %define _libexecdir %_prefix/libexec
 %define _switchdir %_libexecdir/X11/drv.d
+%define new_version 15.5
 
 %define bname fglrx
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
-Version: 14.501.1003
-Release: alt4
+Version: 15.101.1001
+Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
 URL: http://www.amd.com
 License: Proprietary
-Source0: http://www2.ati.com/drivers/beta/amd-driver-installer-%version-x86.x86_64.run
+Source0: amd-catalyst-omega-%new_version-linux-run-installers.run
 Source1: atieventsd.service
 Source2: %bname-switch.c
 Source3: authatieventsd.sh
@@ -34,11 +35,11 @@ Source9: ati-powermode.sh
 Source11: atieventsd.init
 Source12: aticonfig.1
 Patch0: %bname-13.20.16-printk-loglevel.patch
-#Patch1: %bname-14.10-remove-unused.patch
-#Patch2: %bname-14.10-linux-3.14.patch
-#Patch3: %bname-14.10-alt.patch
-Patch4: %bname-linux3.17.patch
-Patch5: %bname-14.12_kernel-3.19.x.patch
+Patch1: %bname-firegl-4.1.patch
+Patch2: %bname-kcl-4.1.patch
+Patch3: %bname-kcl-acpi-4.1.patch
+Patch4: %bname-kcl-str-4.1.patch
+
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
 %{?epoch:Provides: %bname = %version-%release}
@@ -114,11 +115,11 @@ ATI/AMD %bname (Radeon video card driver) module sources for Linux kernel.
 sh %SOURCE0 --extract .
 cd common/lib/modules/%bname/build_mod
 %patch0 -p1
-#%patch1 -p1
-#%patch2 -p1
-#%patch3 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 %patch4 -p1
-%patch5 -p1
+
 cd -
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
 for d in {common,%archdir}/lib/modules/%bname/build_mod; do
@@ -268,6 +269,10 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Sun Jul 5 2015 barssc <barssc@altlinux.ru> 2:15.101.1001-alt1
+- Catalyst 15.5
+- Kernel module: fixed build for kernel 4.0.x and 4.1.0-rc 
+
 * Mon Apr 20 2015 barssc <barssc@altlinux.ru> 2:14.501.1003-alt4
 - add authatieventsd for kde4
 - fixed launch atieventsd
