@@ -1,6 +1,6 @@
 %define module_name	fglrx
-%define module_version	14.501.1003
-%define module_release alt2
+%define module_version	15.101.1001
+%define module_release alt1
 
 %define flavour std-def
 BuildRequires(pre): kernel-headers-modules-std-def
@@ -65,6 +65,12 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Jul  5 2015 barssc <barssc@altlinux.org> 2:15.101.1001-alt1
+- 15.101.1001
+
+* Sat Apr  4 2015 barssc <barssc@altlinux.org> 2:14.501.1003-alt3
+- fix build for kernel 3.19.x
 
 * Sat Dec  13 2014 barssc <barssc@altlinux.org> 2:14.501.1003-alt2
 - 14.501.1003
