@@ -1,11 +1,12 @@
 Name: ansible-shell
 Summary: Interactive shell for ansible
 Version: 0.0.1
-Release: alt2
+Release: alt3.1
 
 Group: System/Libraries
-License: Distributable
+License: GPLv3
 Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 Url: https://github.com/dominis/ansible-shell
 
 BuildArch: noarch
@@ -16,6 +17,7 @@ Interactive shell for ansible built-in tab completion for all the modules.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %python_build
@@ -28,6 +30,12 @@ Interactive shell for ansible built-in tab completion for all the modules.
 %doc README.md
 
 %changelog
+* Sun Jul  5 2015 Terechkov Evgenii <evg@altlinux.org> 0.0.1-alt3.1
+- Fix for https://github.com/dominis/ansible-shell/issues/39
+
+* Sun Jul  5 2015 Terechkov Evgenii <evg@altlinux.org> 0.0.1-alt3
+- git-20150705
+
 * Mon Dec  2 2013 Terechkov Evgenii <evg@altlinux.org> 0.0.1-alt2
 - git-20131202
 
