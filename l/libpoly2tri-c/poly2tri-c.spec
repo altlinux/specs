@@ -4,7 +4,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A 2D constrained Delaunay triangulation library
 Group: System/Libraries
@@ -31,6 +31,8 @@ Development files for %name.
 %setup -n %_name-%version
 
 %build
+# with gcc5 produce error: ISO C does not support '__FUNCTION__' predefined identifier
+sed -i 's/-pedantic//' configure.ac
 %autoreconf
 %configure --disable-static
 %make
@@ -49,6 +51,9 @@ Development files for %name.
 %_pkgconfigdir/%_name.pc
 
 %changelog
+* Mon Jul 06 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt2
+- fixed build with gcc5
+
 * Tue Feb 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - first build for Sisyphus
 
