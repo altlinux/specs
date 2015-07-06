@@ -5,13 +5,15 @@
 #%define snapshot %{gitdate}git%git_version
 %define snapshot %nil
 
+%def_disable gpsd
+
 # Tarfile created using git
 # git clone git://anongit.freedesktop.org/geoclue
 # git archive --format=tar --prefix=geoclue-0.11.1.1/ %git_version | gzip > ~/RPM/SOURCES/geoclue-0.11.1.1-20090310.tar.gz
 
 Name: lib%_name
 Version: 0.12.99
-Release: alt1%snapshot
+Release: alt2%snapshot
 
 Summary: A modular geoinformation service
 Group: System/Libraries
@@ -28,7 +30,7 @@ BuildRequires: libGConf2-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: NetworkManager-glib-devel
 BuildRequires: libgypsy-devel
-BuildRequires: libgps-devel >= 2.91
+%{?_enable_gpsd:BuildRequires: libgps-devel >= 2.91}
 # for skyhook provider
 BuildRequires: libsoup-gnome-devel
 BuildRequires: gtk-doc
@@ -86,7 +88,9 @@ A gypsy provider for geoclue
 
 %build
 %autoreconf
-%configure --disable-static --enable-gtk-doc
+%configure --disable-static \
+	--enable-gtk-doc \
+	%{subst_enable gpsd}
 # SMP-incompatible build
 %make
 
@@ -147,10 +151,12 @@ cp test/.libs/geoclue-test-gui %buildroot%_bindir/
 %files -n %_name-gui
 %_bindir/geoclue-test-gui
 
+%if_enabled gpsd
 %files -n %_name-gpsd
 %_libexecdir/geoclue-gpsd
 %_datadir/geoclue-providers/geoclue-gpsd.provider
 %_datadir/dbus-1/services/org.freedesktop.Geoclue.Providers.Gpsd.service
+%endif
 
 %files -n %_name-gypsy
 %_libexecdir/geoclue-gypsy
@@ -158,6 +164,9 @@ cp test/.libs/geoclue-test-gui %buildroot%_bindir/
 %_datadir/dbus-1/services/org.freedesktop.Geoclue.Providers.Gypsy.service
 
 %changelog
+* Tue May 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.12.99-alt2
+- disabled gpsd provider (incompatible with libgps >= 3)
+
 * Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.99-alt1
 - 0.12.99
 
