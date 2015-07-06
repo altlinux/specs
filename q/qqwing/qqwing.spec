@@ -1,6 +1,6 @@
 Name: qqwing
 Version: 1.3.4
-Release: alt1
+Release: alt2
 
 Summary: Command-line Sudoku solver and generator
 Group: Games/Boards
@@ -56,6 +56,9 @@ developing applications that use lib%name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jul 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3.4-alt2
+- rebuilt for gcc5 CXX11 ABI change
+
 * Sun Apr 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3.4-alt1
 - 1.3.4
 
