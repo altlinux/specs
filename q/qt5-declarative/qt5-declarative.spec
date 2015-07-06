@@ -4,7 +4,7 @@
 %def_disable bootstrap
 
 Name: qt5-declarative
-Version: 5.4.2
+Version: 5.5.0
 Release: alt1
 
 Group: System/Libraries
@@ -95,6 +95,7 @@ syncqt.pl-qt5 \
     -version %version \
     -private \
     -module QtQml \
+    -module QtQmlDevTools \
     -module QtQuick \
     -module QtQuickTest \
     -module QtQuickParticles \
@@ -175,6 +176,9 @@ syncqt.pl-qt5 \
 %_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Mon Jul 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Fri Jun 05 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
 - new version
 

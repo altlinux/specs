@@ -1,7 +1,7 @@
 %global qt_module qtquickcontrols
 
 Name: qt5-quickcontrols
-Version: 5.4.2
+Version: 5.5.0
 Release: alt1
 
 Group: System/Libraries
@@ -57,13 +57,16 @@ This package contains documentation for Qt5 %qt_module
 %files common
 %files
 %_qt5_archdatadir/qml/QtQuick/
-%doc LGPL_EXCEPTION.txt
+%doc README
 
 %files doc
 %_qt5_docdir/qtquick*.qch
 %_qt5_docdir/qtquick*s/
 
 %changelog
+* Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
 - new version
 
