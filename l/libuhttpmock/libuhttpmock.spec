@@ -3,16 +3,16 @@
 
 Name: lib%_name
 Version: 0.4.0
-Release: alt2
+Release: alt3
 
 Summary: HTTP web service mocking library
 Group: System/Libraries
 License: LGPLv2
-Url: http://gitorious.org/uhttpmock/
+Url: https://gitlab.com/%_name/%_name
 
-Source: http://tecnocode.co.uk/downloads/%_name-%version.tar
+Source: %_name-%version.tar
 
-%define glib_ver 2.32
+%define glib_ver 2.36
 %define soup_ver 2.38
 
 BuildRequires: intltool gtk-doc
@@ -100,6 +100,9 @@ GObject introspection devel data for the %_name library.
 %_datadir/gir-1.0/Uhm-%api_ver.gir
 
 %changelog
+* Mon Jul 06 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt3
+- 0.4.0 release (from gitlab, not github)
+
 * Sun Apr 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt2
 - updated to 0.4.0_d30225faf
 
