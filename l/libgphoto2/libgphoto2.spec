@@ -6,8 +6,8 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.7
-Release: alt2
+Version: 2.5.8
+Release: alt1
 
 Group: System/Libraries
 Summary: Library to access to digital cameras
@@ -238,6 +238,9 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Mon Jul 06 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.8-alt1
+- 2.5.8
+
 * Tue Mar 17 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.7-alt2
 - cut out more smaller subpackages to comply with the Shared libs policy
 - added Provides/Obsoletes

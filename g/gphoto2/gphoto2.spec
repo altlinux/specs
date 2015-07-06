@@ -1,6 +1,6 @@
 Name: gphoto2
-Version: 2.5.6
-Release: alt2
+Version: 2.5.8
+Release: alt1
 
 Group: Graphics
 Summary: Command line utilities to access digital cameras
@@ -56,6 +56,9 @@ gPhoto - универсальный комплект программ и биб�
 %doc %_docdir/%name/test-hook.sh
 
 %changelog
+* Mon Jul 06 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.8-alt1
+- 2.5.8
+
 * Tue Mar 17 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.6-alt2
 - removed hard require on libgphoto2
 
