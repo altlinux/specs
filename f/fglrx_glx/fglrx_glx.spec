@@ -19,7 +19,7 @@ Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
 Version: 15.101.1001
-Release: alt3
+Release: alt4
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -269,6 +269,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Mon Jul 6 2015 barssc <barssc@altlinux.ru> 2:15.101.1001-alt4
+- cleaned fglrx-firegl-4.1.patch
+
 * Sun Jul 5 2015 barssc <barssc@altlinux.ru> 2:15.101.1001-alt3
 - Kernel module: fixed build for x32
 
