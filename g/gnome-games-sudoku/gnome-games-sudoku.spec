@@ -7,7 +7,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME Sudoku game
 Group: Games/Boards
@@ -19,7 +19,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%versio
 Provides:  %__name = %version-%release
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.13.0
+%define gtk_ver 3.15.0
 
 BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: gcc-c++ gnome-common intltool yelp-tools libgio-devel >= %glib_ver
@@ -50,12 +50,16 @@ in popularity.
 %_iconsdir/hicolor/*x*/apps/%__name.png
 %_iconsdir/hicolor/scalable/apps/%__name.svg
 %_iconsdir/hicolor/scalable/apps/%__name-symbolic.svg
-%_iconsdir/HighContrast/*x*/apps/%__name.png
+%exclude %_iconsdir/HighContrast/*x*/apps/%__name.png
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Mon Jul 06 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt2
+- rebuilt with gcc5
+- removed legacy high contrast icons
+
 * Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 
