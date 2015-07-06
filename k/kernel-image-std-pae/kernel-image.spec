@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
 %define kernel_base_version	3.14
-%define kernel_sublevel .46
+%define kernel_sublevel .47
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -552,6 +552,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Sat Jul 04 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.14.47-alt1
+- Updated to 3.14.47.
+
 * Wed Jul 01 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.14.46-alt1
 - Updated to 3.14.46.
 - spec: added some useful tweaks.
