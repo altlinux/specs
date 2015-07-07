@@ -1,8 +1,9 @@
 %def_with vkontakte
+%define gst_api_ver 1.0
 
 Name: clementine
 Version: 1.2.3
-Release: alt3.1
+Release: alt4
 Summary: A music player and library organiser
 
 Group: Sound
@@ -11,27 +12,18 @@ Url: http://code.google.com/p/clementine-player
 Packager: Pavel Maleev <rolland@altlinux.org>
 
 Source0: %name-%version.tar.gz
-Source1: clementine_48.png
-Patch: %name-1.2.3-alt-desktop.patch
-Patch1: %name-1.2.0-chromaprint-avcodec.patch
-Patch2: clementine-0.6-alt-install-icons.patch
-Patch3: %name-1.2.2-alt-unistd.patch
-%if_with vkontakte
-# Vkontakte support. Patches are taken from Rosa
-# https://abf.io/current/clementine.git
-Source2: %name-vk-files.tar.bz2
-Patch4: %name-1.2.2-rosa-vkontakte-advanced.patch
-Patch5: %name-1.2.0-rosa-vkontakte-tags.patch
-Patch6: %name-1.2.0-rosa-ru-vkontakte.patch
-%endif
-
-Patch7: clementine-1.2.3-alt-libechonest-Wno-error=logical-not-parentheses.patch
-Patch8: clementine-1.2.3-udisks-namespace.patch
+Patch1: %name-1.2.3-alt-vreen.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: boost-devel-headers cmake gcc-c++ gstreamer-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
+BuildRequires: boost-devel-headers cmake gcc-c++ libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
+BuildRequires: gstreamer%{gst_api_ver}-devel gst-plugins%gst_api_ver-devel gstreamer%gst_api_ver-utils
+BuildRequires: libchromaprint-devel
+BuildRequires: libcryptopp-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libpulseaudio-devel
+BuildRequires: libechonest-devel
 
-BuildRequires: kde-common-devel libqt4-sql-sqlite gst-plugins-gio libqca2-devel protobuf-compiler
+BuildRequires: kde-common-devel libqt4-sql-sqlite libqca2-devel protobuf-compiler
 # Enable Google Drive support
 BuildRequires: libgoogle-sparsehash
 %if_with vkontakte
@@ -39,10 +31,10 @@ BuildRequires: libgoogle-sparsehash
 BuildRequires: libvreen-devel
 %endif
 BuildPreReq: libfftw3-devel libavcodec-devel libavformat-devel libpcre-devel
-BuildPreReq: libprotobuf-devel qjson-devel gst-plugins-devel libcdio-devel
+BuildPreReq: libprotobuf-devel qjson-devel libcdio-devel
 
 # Clementine crashes without it
-Requires: gst-plugins-base
+Requires: gst-plugins-base%{gst_api_ver}
 
 %description
 Clementine is a modern music player and library organiser.
@@ -53,19 +45,7 @@ advantage of Qt4.
 
 %prep
 %setup
-%patch -p2
 %patch1 -p2
-%patch2 -p1
-%patch3 -p2
-
-%if_with vkontakte
-tar -xf %{SOURCE2}
-%patch4 -p1 -b .vkontakte~
-%patch5 -p1 -b .vkontakte~
-%patch6 -p1 -b .vkontakte~
-%endif
-%patch7 -p2
-%patch8 -p1
 
 %build
 %K4build -DSTATIC_SQLITE=on -DBUILD_WERROR=off
@@ -78,11 +58,18 @@ tar -xf %{SOURCE2}
 %_bindir/clementine
 %_bindir/clementine-tagreader
 %_desktopdir/clementine.desktop
-%_iconsdir/hicolor/*/apps/application-x-clementine.*
 %_datadir/kde4/services/*
 %_datadir/clementine
+%_datadir/appdata/clementine.appdata.xml
+%_datadir/icons/hicolor/*/apps/*.png
+%_datadir/icons/hicolor/*/apps/*.svg
+
 
 %changelog
+* Tue Jul 7 2015 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt4
+- git20150522
+- build with gstreamer1.0
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.3-alt3.1
 - Rebuilt for gcc5 C++11 ABI.
 
