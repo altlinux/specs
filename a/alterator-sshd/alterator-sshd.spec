@@ -2,7 +2,7 @@
 
 Name: alterator-sshd
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Packager:  Dmitriy Kruglikov <dkr@altlinux.ru>
 
@@ -19,7 +19,7 @@ Requires: alterator-l10n >= 2.9-alt8
 Requires: alterator-service-functions >= 1.0
 Conflicts: alterator >= 5.0
 Conflicts: alterator-fbi >= 6.0
-Conflicts: alterator-service-functions >= 2.0
+#Conflicts: alterator-service-functions >= 2.0
 
 # Automatically added by buildreq on Wed Apr 08 2009
 BuildRequires: alterator rpm-macros-fillup
@@ -43,6 +43,9 @@ OpenSSHd system configuration module
 
 
 %changelog
+* Tue Jul 07 2015 Andrey Cherepanov <cas@altlinux.org> 0.3-alt2
+- Disable upper limit of alterator-service-functions in backport to p7 branch
+
 * Wed Jul 07 2010 Dmitriy Kruglikov <dkr@altlinux.org> 0.3-alt1
 - RC Candidate
 
