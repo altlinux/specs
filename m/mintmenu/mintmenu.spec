@@ -4,7 +4,7 @@
 
 Name:           mintmenu
 Version:        5.6.4
-Release:        alt1
+Release:        alt2
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
@@ -17,6 +17,7 @@ Source33:	mintmenu_test.sh
 Source34:	list-mintmenu.conf
 Source35:	list-mintmenu.lua
 Source36:	list-mintmenu.ignore
+Source37:	mintmenu-altlinux.png
 
 Source50:	mintmenu.watch
 
@@ -45,6 +46,7 @@ Requires: python-module-pygnome-desktop
 Requires: python-module-pyxdg
 Requires: python-module-configobj
 Requires: python-module-apt
+Requires: menu-icons-default
 Requires: mint-translations
 
 Requires: apt
@@ -118,6 +120,12 @@ install -Dm644 %SOURCE36 %buildroot/etc/buildreqs/files/ignore.d/list-mintmenu
 # check patches
 sh -v %SOURCE33
 
+# Use alternative for menu button icon
+mkdir -p %buildroot%_altdir
+rm -f %{buildroot}usr/lib/linuxmint/mintMenu/mintMenu.png
+install -Dm644 %SOURCE37 %buildroot%_pixmapsdir/mintmenu-altlinux.png
+printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlinux.png\t20\n" > %buildroot%_altdir/mintmenu-icon-alt
+
 %files -f %{name}.lang
 %_bindir/mintmenu
 %_datadir/linuxmint/*
@@ -125,6 +133,8 @@ sh -v %SOURCE33
 %_datadir/dbus-1/services/*.service
 %_datadir/glib-2.0/schemas/*.xml
 %_man1dir/%name.1.*
+%_pixmapsdir/mintmenu-altlinux.png
+%_altdir/mintmenu-icon-alt
 
 # list-mintmenu
 /usr/share/apt
@@ -132,6 +142,11 @@ sh -v %SOURCE33
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Tue Jul 07 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.4-alt2
+- Use alternative for menu button icon
+- Use ALT Linux logotype for menu button icon
+- Add Russian localization for applet description
+
 * Tue Jun 16 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.4-alt1
 - New version
 
