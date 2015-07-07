@@ -5,7 +5,7 @@ Serial: 1
 %define octave_descr_name FITS
 Name: octave-%octave_pkg_name
 Version: 1.0.5
-Release: alt2.1
+Release: alt3
 Summary: Reading and writing FITS (Flexible Image Transport System) files.
 
 Group: Sciences/Mathematics
@@ -43,6 +43,7 @@ The Octave-FITS package provides functions for
 
 %build
 %define build_flags CXXFLAGS=-I%_includedir/cfitsio
+%define build_flags CXXFLAGS=-I%_includedir/cfitsio
 tar czf ../%octave_pkg_name-%version.tar.gz *
 rm -rf *
 %build_flags octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
@@ -59,6 +60,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 1:1.0.5-alt3
+- Rebuild with the next version of Octave: 4.0.0
+
 * Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.0.5-alt2.1
 - Rebuilt for gcc5 C++11 ABI.
 

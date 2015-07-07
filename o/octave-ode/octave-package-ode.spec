@@ -2,7 +2,7 @@
 %define octave_descr_name ODE
 Name: octave-%octave_pkg_name
 Version: 1.0.1
-Release: alt2
+Release: alt3
 Summary: Ordinary Differential Equation (ODE) Solvers
 
 Group: Sciences/Mathematics
@@ -55,6 +55,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 1.0.1-alt3
+- Rebuild with the next version of Octave: 4.0.0
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.0.1-alt2
 - Rebuild with the next version of Octave: 3.8.0
 

@@ -1,8 +1,9 @@
 %define lib_name libpfs
+%def_without octave
 
 Name: pfstools
 Version: 1.8.5
-Release: alt1.8.1
+Release: alt1.8.2
 
 Summary: High Dynamic Range (HDR) Images and Video manipulation tools
 License: GPLv2+
@@ -15,7 +16,11 @@ Patch2: pfstools-1.7.0-gdal.patch
 
 # Automatically added by buildreq on Fri Apr 22 2011
 # optimized out: fontconfig ilmbase-devel libGL-devel libGLU-devel libgfortran-devel libgotoblas2-devel libhdf5-6-seq libqt4-core libqt4-devel libqt4-gui libstdc++-devel libtiff-devel libtinfo-devel octave pkg-config texlive-latex-base zlib-devel
-BuildRequires: gcc-c++ libImageMagick-devel libfftw3-devel libfreeglut-devel libgdal-devel libgeos-devel libhdf5-devel libjpeg-devel liblapack-devel libncurses-devel libnetpbm-devel libreadline-devel octave-devel openexr-devel
+BuildRequires: gcc-c++ libImageMagick-devel libfftw3-devel libfreeglut-devel libgdal-devel libgeos-devel libhdf5-devel libjpeg-devel liblapack-devel libncurses-devel libnetpbm-devel libreadline-devel openexr-devel
+
+%if_with octave
+BuildRequires: octave-devel
+%endif
 
 # Optimized out build requirements we want to add as safety belt
 # (so pfstools build will not fail if due to changes in other packages
@@ -54,6 +59,7 @@ Requires: %lib_name = %version-%release
 This package contains the headers that programmers will need to develop
 application which will use %lib_name.
 
+%if_with octave
 %package octave
 Summary: Octave interaction with PFS tools
 Group: Graphics
@@ -61,6 +67,7 @@ Group: Graphics
 %description octave
 The pfstools-octave package contains programs to process red, green and blue
 channels or luminance channels in pfs stream using Octave.
+%endif
 
 %package gdal
 Summary: PFS Tools using the GDAL library to handle GIS information
@@ -76,9 +83,8 @@ using the GDAL library.
 %patch2 -p1
 
 %build
-%add_optflags $(pkg-config hdf5-seq --cflags)
-export CFLAGS="%optflags"
-export CXXFLAGS="%optflags"
+export CFLAGS="$(pkg-config hdf5-seq --cflags)"
+export CXXFLAGS="$CFLAGS"
 %autoreconf
 # We can not use %%configure macro when build with octave in current repo...
 ./configure --prefix=/usr --libdir=%_libdir --disable-static --with-qtdir=%_libdir/qt4
@@ -172,6 +178,7 @@ export CXXFLAGS="%optflags"
 %_libdir/pkgconfig/*.pc
 %_libdir/*.so
 
+%if_with octave
 %files octave
 %_bindir/pfsoctavelum
 %_bindir/pfsoctavergb
@@ -181,12 +188,16 @@ export CXXFLAGS="%optflags"
 %_man1dir/pfsoctavelum.*
 %_man1dir/pfsoctavergb.*
 %_man1dir/pfsstat.*
+%endif
 
 %files gdal
 %_bindir/pfsingdal
 %_man1dir/pfsingdal.*
 
 %changelog
+* Wed Jul 08 2015 Paul Wolneykien <manowar@altlinux.org> 1.8.5-alt1.8.2
+- Disable Octave package (rebuilding with Octave v4.0.0 fails).
+
 * Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.5-alt1.8.1
 - Rebuilt for gcc5 C++11 ABI.
 
