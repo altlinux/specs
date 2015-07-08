@@ -6,7 +6,7 @@
 %def_disable clang
 %def_disable shared_libraries
 
-%define v8_version 4.3.61.30
+%define v8_version 4.3.61.34
 
 %if_enabled debug
 %define buildtype Debug
@@ -15,7 +15,7 @@
 %endif
 
 Name:           chromium
-Version:        43.0.2357.130
+Version:        43.0.2357.132
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -652,6 +652,9 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Wed Jul 08 2015 Andrey Cherepanov <cas@altlinux.org> 43.0.2357.132-alt1
+- New version
+
 * Mon Jun 29 2015 Andrey Cherepanov <cas@altlinux.org> 43.0.2357.130-alt1
 - New version
 - Security fixes:
