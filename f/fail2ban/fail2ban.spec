@@ -1,12 +1,13 @@
 Name: fail2ban
 Version: 0.9.2
-Release: alt3
+Release: alt4
 
 Summary: Fail2Ban is an intrusion prevention framework
 
 License: GPL v2
 Group: Development/Python
 Url: http://www.fail2ban.org
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 Source1: alt-initd
@@ -46,7 +47,7 @@ ln -s %python_sitelibdir/%name %buildroot%_datadir/
 install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
 install -pD -m 644 %SOURCE2 %buildroot%_unitdir/%name.service
 install -pD -m 644 files/fail2ban-tmpfiles.conf %buildroot%_tmpfilesdir/%name.conf
-%python_install
+%python_install --optimize=2
 rm -rf %buildroot/%_docdir/%name/
 
 %pre
@@ -72,6 +73,9 @@ rm -fR %_datadir/%name
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Wed Jul 08 2015 Eugeny A. Rostovtsev <real at altlinux.org> 0.9.2-alt4
+- Fixed for i586 (ALT #31119)
+
 * Thu Jun 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt3
 - Fixed install (ALT #31047)
 
