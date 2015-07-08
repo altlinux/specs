@@ -1,6 +1,6 @@
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -19,11 +19,11 @@
 %define gname  qt5
 %define libname  lib%gname
 %define major  5
-%define minor  4
-%define bugfix 2
+%define minor  5
+%define bugfix 0
 Name: qt5-base
-Version: %major.%minor.%bugfix
-Release: alt3
+Version: 5.5.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -289,6 +289,20 @@ Requires: %name-common = %EVR
 %description -n lib%{gname}-widgets
 Widgets library for the Qt%major toolkit
 
+%package -n lib%{gname}-egldeviceintegration
+Summary: EGL integration library for the Qt%major toolkit
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n lib%{gname}-egldeviceintegration
+EGL integration library for the Qt%major toolkit
+
+%package -n lib%{gname}-xcbqpa
+Summary: EGL integration library for the Qt%major toolkit
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n lib%{gname}-xcbqpa
+EGL integration library for the Qt%major toolkit
+
 %prep
 %setup -n %rname-opensource-src-%version
 %patch1 -p1 -b .QTBUG-35459
@@ -441,7 +455,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: %version
+Version: 5.5.0
 __EOF__
 
 # rpm macros
@@ -547,6 +561,7 @@ done
 %dir %_qt5_plugindir/
 %dir %_qt5_plugindir/accessible/
 %dir %_qt5_plugindir/bearer/
+%dir %_qt5_plugindir/egldeviceintegrations/
 %dir %_qt5_plugindir/generic/
 %dir %_qt5_plugindir/iconengines/
 %dir %_qt5_plugindir/imageformats/
@@ -557,6 +572,7 @@ done
 %dir %_qt5_plugindir/script/
 %dir %_qt5_plugindir/sqldrivers/
 %dir %_qt5_plugindir/styles/
+%dir %_qt5_plugindir/xcbglintegrations/
 
 %files doc
 %if_disabled bootstrap
@@ -610,6 +626,8 @@ done
 %_pkgconfigdir/Qt%{major}Test.pc
 %_pkgconfigdir/Qt%{major}Widgets.pc
 %_pkgconfigdir/Qt%{major}Xml.pc
+%_pkgconfigdir/Qt%{major}EglDeviceIntegration.pc
+%_pkgconfigdir/Qt%{major}XcbQpa.pc
 
 %files devel-static
 %_qt5_libdir/libQt%{major}*.a
@@ -669,11 +687,13 @@ done
 %files -n lib%{gname}-gui
 %_qt5_libdir/libQt%{major}Gui.so.*
 %_qt5_libdatadir/libQt%{major}Gui.so.*
+%_qt5_plugindir/egldeviceintegrations/*
 %_qt5_plugindir/generic/*
 %_qt5_plugindir/imageformats/*
 %_qt5_plugindir/platforminputcontexts/*
 %_qt5_plugindir/platforms/*
 %_qt5_plugindir/platformthemes/*
+%_qt5_plugindir/xcbglintegrations/*
 
 %files -n lib%{gname}-network
 %_qt5_libdir/libQt%{major}Network.so.*
@@ -707,8 +727,19 @@ done
 %_qt5_libdir/libQt%{major}Xml.so.*
 %_qt5_libdatadir/libQt%{major}Xml.so.*
 
+%files -n lib%{gname}-egldeviceintegration
+%_qt5_libdir/libQt%{major}EglDeviceIntegration.so.*
+%_qt5_libdatadir/libQt%{major}EglDeviceIntegration.so.*
+
+%files -n lib%{gname}-xcbqpa
+%_qt5_libdir/libQt%{major}XcbQpa.so.*
+%_qt5_libdatadir/libQt%{major}XcbQpa.so.*
+
 
 %changelog
+* Fri Jul 03 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt3
 - 5.4.2 release
 

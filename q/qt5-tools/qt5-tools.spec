@@ -2,9 +2,10 @@
 %define qt_module qttools
 %define gname qt5
 %def_disable bootstrap
+%def_disable qtconfig
 
 Name: qt5-tools
-Version: 5.4.2
+Version: 5.5.0
 Release: alt1
 
 Group: System/Libraries
@@ -141,7 +142,9 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
+%if_enabled qtconfig
 %patch1 -p1
+%endif
 syncqt.pl-qt5 \
     -version %version \
     -private \
@@ -149,6 +152,7 @@ syncqt.pl-qt5 \
     -module QtDesigner \
     -module QtDesignerComponents \
     -module QtHelp \
+    -module QtUiPlugin \
     -module QtUiTools \
     #
 %qmake_qt5
@@ -164,11 +168,18 @@ syncqt.pl-qt5 \
 %install_qt5
 %make INSTALL_ROOT=%buildroot install_docs
 
+# fix pc-files
+sed -i -e '/^Requires:/s/Qt5UiPlugin//' %buildroot/%_pkgconfigdir/*.pc
+
 # Add desktop files
 desktop-file-install \
   --dir=%buildroot/%_desktopdir \
   --vendor="qt5" \
-  %SOURCE20 %SOURCE21 %SOURCE22 %SOURCE23 %SOURCE24
+  %SOURCE20 %SOURCE21 %SOURCE22 %SOURCE23 \
+%if_enabled qtconfig
+  %SOURCE24 \
+%endif
+  #
 
 # icons
 install -m644 -p -D src/assistant/assistant/images/assistant.png %buildroot/%_iconsdir/hicolor/32x32/apps/assistant-qt5.png
@@ -176,7 +187,9 @@ install -m644 -p -D src/assistant/assistant/images/assistant-128.png %buildroot/
 install -m644 -p -D src/designer/src/designer/images/designer.png %buildroot/%_iconsdir/hicolor/32x32/apps/designer-qt5.png
 install -m644 -p -D src/qdbus/qdbusviewer/images/qdbusviewer.png %buildroot/%_iconsdir/hicolor/32x32/apps/qdbusviewer-qt5.png
 install -m644 -p -D src/qdbus/qdbusviewer/images/qdbusviewer-128.png %buildroot/%_iconsdir/hicolor/128x128/apps/qdbusviewer-qt5.png
+%if_enabled qtconfig
 convert -resize 32x32 src/qtconfig/images/appicon.png %buildroot/%_iconsdir/hicolor/32x32/apps/qtconfig-qt5.png
+%endif
 # linguist icons
 for icon in src/linguist/linguist/images/icons/linguist-*-32.png ; do
   size=$(echo $(basename ${icon}) | cut -d- -f2)
@@ -197,6 +210,7 @@ done
 %_bindir/qhelpgenerator*
 %_bindir/qtpaths*
 %_bindir/qtdiag*
+%_bindir/qtplugininfo*
 %_qt5_bindir/lconvert*
 %_qt5_bindir/lrelease*
 %_qt5_bindir/lupdate*
@@ -206,12 +220,15 @@ done
 %_qt5_bindir/qhelpgenerator*
 %_qt5_bindir/qtpaths*
 %_qt5_bindir/qtdiag*
+%_qt5_bindir/qtplugininfo*
 
+%if_enabled qtconfig
 %files -n qt5-qtconfig
 %_bindir/qtconfig-qt5
 %_qt5_bindir/qtconfig
 %_desktopdir/*qtconfig.desktop
 %_iconsdir/hicolor/*/apps/qtconfig*.*
+%endif
 
 %files -n qt5-assistant
 %_bindir/assistant-qt5
@@ -248,6 +265,7 @@ done
 %_qt5_headerdir/QtDesignerComponents/
 %_qt5_headerdir/QtHelp/
 %_qt5_headerdir/QtUiTools/
+%_qt5_headerdir/QtUiPlugin/
 %_qt5_libdir/libQt*.prl
 %_qt5_libdir/libQt*.so
 %_qt5_libdir/pkgconfig/Qt*CLucene.pc
@@ -281,6 +299,9 @@ done
 
 
 %changelog
+* Mon Jul 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
 - new version
 

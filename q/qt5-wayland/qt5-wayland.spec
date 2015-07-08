@@ -2,7 +2,7 @@
 %global qt_module qtwayland
 
 Name: qt5-wayland
-Version: 5.4.2
+Version: 5.5.0
 Release: alt1
 
 Group: System/Libraries
@@ -16,6 +16,7 @@ Source: %qt_module-opensource-src-%version.tar
 # optimized out: elfutils fontconfig glibc-devel-static libGL-devel libX11-devel libXfixes-devel libcloog-isl4 libfreetype-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-script-devel ruby ruby-stdlibs wayland-devel xorg-compositeproto-devel xorg-fixesproto-devel xorg-xproto-devel
 #BuildRequires: fontconfig-devel gcc-c++ git-core glib2-devel libEGL-devel libXcomposite-devel libXext-devel libXrender-devel libudev-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel libxkbcommon-devel python-module-protobuf qt5-base-devel-static qt5-phonon-devel qt5-quick1-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-ruby
 BuildRequires: fontconfig-devel gcc-c++ git-core glib2-devel libEGL-devel libXcomposite-devel libXext-devel libXrender-devel
+BuildRequires: libinput-devel
 BuildRequires: libudev-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel libxkbcommon-devel
 BuildRequires: qt5-base-devel-static qt5-tools-devel
 #BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-base-devel-static qt5-tools
@@ -122,6 +123,9 @@ git init
 #%_qt5_docdir/*
 
 %changelog
+* Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Tue Jun 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
 - new version
 
