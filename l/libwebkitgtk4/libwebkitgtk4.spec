@@ -11,8 +11,8 @@
 %def_disable gnu_ld
 
 Name: libwebkitgtk4
-Version: 2.8.3
-Release: alt3
+Version: 2.8.4
+Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -21,8 +21,6 @@ License: %bsd %lgpl2plus
 Url: http://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
-# https://bugs.webkit.org/show_bug.cgi?id=145385
-Patch: webkitgtk-2.8.3-up-bmalloc_xlarge.patch
 
 # fc
 Patch10: webkitgtk-2.8.0-gcc5_fix.patch
@@ -178,7 +176,6 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
-%patch -p1
 %patch10 -p1
 # Remove bundled libraries
 rm -rf Source/ThirdParty/leveldb/
@@ -266,6 +263,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Wed Jul 08 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.4-alt1
+- 2.8.4
+
 * Sun Jun 07 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.3-alt3
 - fixed BWO #145385
 
