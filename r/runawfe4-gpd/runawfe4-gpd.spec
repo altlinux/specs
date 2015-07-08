@@ -1,6 +1,6 @@
 Name: runawfe4-gpd
 Version: 4.2.0
-Release: alt12
+Release: alt13
 
 Summary: Runawfe Graphic Process Designer
 
@@ -26,6 +26,8 @@ BuildRequires: chrpath
 %define runadir %_libdir/runawfe4-gpd
 %define distrname %(distr_vendor -d)
 
+#Define for Fedora build http://forums.fedoraforum.org/showthread.php?t=182293
+%define debug_package %{nil}
 #
 %define gpd_path gpd_source/plugins/ru.runa.gpd.maven/target/products/RunaWFE_DeveloperStudio/linux/gtk
 
@@ -53,7 +55,10 @@ web interface with tasklist, form player, graphical process designer, bots and m
 export MAVEN_OPTS="-Dmaven.repo.local=$(pwd)/.m2/repository/" 
 
 cd gpd_source/plugins/
+#Online build
 #mvn clean package 
+#Offline build but not working
+#For altlinux need local online build and copy binary files
 #mvn -o package #for offline build in git.alt
 
 %install
@@ -107,6 +112,9 @@ EOF
 #%attr(755,root,root) %runadir/workspace/
 
 %changelog
+* Wed Jul 08 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt13
+- Change port to 28080 by runtime .settings
+
 * Thu Jul 02 2015 Danil Mikhailov <danil@altlinux.org> 4.2.0-alt12
 - Fix workspace, update to 4.2.0 stable branch code@6444
 
