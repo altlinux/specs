@@ -1,10 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: cert-sh-functions
-Version: 0.3
+Version: 1.0.0
 Release: alt1
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
 BuildArch: noarch
 
@@ -19,17 +17,27 @@ Requires: openssl
 helper functions for ssl certificate generation
 
 %prep
-%setup -q
+%setup
 
 %install
-%__install -Dpm755 cert-sh %buildroot%_bindir/cert-sh
-%__install -Dpm644 %name %buildroot%_bindir/%name
+install -Dpm755 cert-sh %buildroot%_bindir/cert-sh
+install -Dpm644 %name %buildroot%_bindir/%name
 
 %files
 %doc README
 %_bindir/*
 
 %changelog
+* Wed Jul 08 2015 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
+- Minor spec cleanup.
+- ssl_generate(): Make errors fatal.
+- Make new self-signed certificate if expired (closes: #19082).
+- Make errors not fatal.
+- Fix ssl_check_pem() (closes: #24983).
+- Use 1024 bits for dhparam as default.
+- Allow set number of bits as argument to ssl_make_key().
+- Use 2048 bits for RSA key by default (closes: #31116).
+
 * Thu Apr 23 2009 Alexey I. Froloff <raorn@altlinux.org> 0.3-alt1
 - cert-sh: simple wrapper for cert-sh-functions
 
