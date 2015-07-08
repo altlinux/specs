@@ -1,7 +1,7 @@
 Name: ntp
 Version: 4.2.8
 #define vers_rc p5
-Release: alt1
+Release: alt2
 %define srcname %name-%version%{?vers_rc:%vers_rc}
 
 Summary: The Network Time Protocol (NTP)
@@ -37,6 +37,9 @@ BuildRequires: libcap-devel
 
 # ntp_crypto_rnd.c:93: undefined reference to `arc4random_buf'
 BuildRequires: libssl-devel
+
+# for sbin/update-leap
+BuildRequires: perl-File-Fetch perl-Digest-SHA
 
 # Root directory for chrooted environment, must not be same as real system root.
 %define ROOT /var/lib/ntpd
@@ -143,7 +146,7 @@ from remote machines via a network.
 %patch1 -p1
 
 # Fix progname initialization when argc==0.
-fgrep -rl 'progname = argv[0];' . |
+fgrep -rl --include='*.c' 'progname = argv[0];' . |
 	xargs grep -l 'main *(' |
 	while read f; do
 		n="${f##*/}"
@@ -178,7 +181,8 @@ make DESTDIR=$RPM_BUILD_ROOT perllibdir=%perl_vendor_privlib install
 
 # Manpages.
 %__mkdir_p $RPM_BUILD_ROOT{%_man1dir,%_man8dir}
-%__install -p -m644 ntp.1 $RPM_BUILD_ROOT%_man1dir/
+#__install -p -m644 ntp.1 $RPM_BUILD_ROOT%_man1dir/
+sed "s|@VERSION@|%version|" < ntp.1 > $RPM_BUILD_ROOT%_man1dir/ntp.1
 %__install -p -m644 {ntpd,ntpdate,ntpsweep}.8 $RPM_BUILD_ROOT%_man8dir/
 for f in $RPM_BUILD_ROOT%_sbindir/*; do
 	t="$RPM_BUILD_ROOT%_man8dir/${f##*/}.8"
@@ -188,20 +192,24 @@ done
 # Docs.
 %define docdir %_docdir/%name-%version
 %__mkdir_p $RPM_BUILD_ROOT%docdir
-mv $RPM_BUILD_ROOT%_docdir/ntp4 $RPM_BUILD_ROOT%docdir
+mv $RPM_BUILD_ROOT%_docdir/ntp  $RPM_BUILD_ROOT%docdir
 mv $RPM_BUILD_ROOT%_docdir/sntp $RPM_BUILD_ROOT%docdir
 %__cp -a COPYRIGHT NEWS TODO WHERE-TO-START README.bk README.hackers README.refclocks README.versions \
 	$RPM_BUILD_ROOT%docdir/
-
 
 %__install -pD -m755 %SOURCE1 $RPM_BUILD_ROOT%_initdir/ntpd
 %__install -pD -m644 ntpd.sysconfig $RPM_BUILD_ROOT%_sysconfdir/sysconfig/ntpd
 %__install -pD -m600 %SOURCE3 $RPM_BUILD_ROOT%_sysconfdir/%name.conf
 
+# Prepare for chroot
 %__mkdir_p $RPM_BUILD_ROOT%ROOT/tmp
 %__install -pD -m600 %SOURCE4 $RPM_BUILD_ROOT%ROOT%_sysconfdir/%name/keys
 touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/%name/{drift,step-tickers}
 %__ln_s ..%ROOT%_sysconfdir/%name $RPM_BUILD_ROOT%_sysconfdir/
+cat <<EOF >$RPM_BUILD_ROOT%ROOT%_sysconfdir/services
+ntp	123/tcp		# Network Time Protocol
+ntp	123/udp		# Network Time Protocol
+EOF
 
 %define r_dir %ROOT%_sysconfdir/%name
 %define r_link %_sysconfdir/%name
@@ -248,7 +256,7 @@ fi
 
 %files doc
 %dir %docdir
-%docdir/ntp4
+%docdir/ntp
 %docdir/sntp
 %docdir/[A-Z]*
 
@@ -281,6 +289,7 @@ fi
 %defattr(640,root,ntpd,710)
 %dir %ROOT
 %dir %ROOT%_sysconfdir
+%ROOT%_sysconfdir/services
 %attr(1770,root,ntpd) %dir %ROOT/tmp
 %attr(1770,root,ntpd) %dir %ROOT%_sysconfdir/%name
 %config(noreplace) %ROOT%_sysconfdir/%name/keys
@@ -288,6 +297,11 @@ fi
 %attr(640,ntpd,ntpd) %ghost %ROOT%_sysconfdir/%name/drift
 
 %changelog
+* Tue Jul 07 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt2
+- 4.2.8p3
+- used chroot by default
+- used --panicgate by default
+
 * Mon Dec 22 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt1
 - 4.2.8 (ALT #30591, CVEs 2014 9293-9296)
 - refactored ntp.conf (ALT #19494#c7)
