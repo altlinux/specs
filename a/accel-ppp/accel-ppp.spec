@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.9.0
-Release: alt2
+Release: alt3
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,11 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Jul 09 2015 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt3
+- pppoe: check for tag length in print_packet function (fixes sigsegv)
+- shaper: fixed parsing ecn/noecn for fq_codel
+- ipoe: fixed authentication with chap-secrets
+
 * Tue Dec 30 2014 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt2
 - ipoe: fixed incorrect timer deletion
 - ipoe: fixed mask calculation from ipaddr radius attribute
