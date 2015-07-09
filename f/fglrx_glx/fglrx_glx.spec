@@ -1,5 +1,3 @@
-%define cat_ver 15.101.1001
-
 %ifarch %ix86
 %define archdir arch/x86
 %define xfdir xpic
@@ -12,20 +10,21 @@
 
 %define _libexecdir %_prefix/libexec
 %define _switchdir %_libexecdir/X11/drv.d
-%define new_version 15.5
+%define new_version 15.7
 
 %define bname fglrx
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
-Version: 15.101.1001
-Release: alt4
+%define real_version 15.20.1046
+Version: 15.120.1046
+Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
 URL: http://www.amd.com
 License: Proprietary
-Source0: amd-catalyst-omega-%new_version-linux-run-installers.run
+Source0: amd-driver-installer-%real_version-x86.x86_64.run
 Source1: atieventsd.service
 Source2: %bname-switch.c
 Source3: authatieventsd.sh
@@ -48,7 +47,7 @@ Provides: xorg-drv-%bname
 
 Requires: xorg-server >= 1.5.0
 Requires: libdrm >= 2.4.5-alt2
-Requires: libGL libXrandr libXi libXcursor libXinerama
+Requires: libGL libEGL libXrandr libXi libXcursor libXinerama
 
 BuildPreReq: kernel-build-tools
 BuildRequires: imake libXaw-devel libXext-devel libXp-devel libXpm-devel xorg-cf-files
@@ -116,7 +115,7 @@ sh %SOURCE0 --extract .
 cd common/lib/modules/%bname/build_mod
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 
@@ -160,10 +159,11 @@ ln -s %bname-libGL.so.1.2 %buildroot%_x11x11libdir/%bname/libGL.so.1.2
 ln -s libGL.so.1.2 %buildroot%_x11x11libdir/%bname/libGL.so.1
 ln -s %bname-libGL.so.1.2 %buildroot%_x11x11libdir/%bname/libGLESv2.so.2
 
-#ln -s {X11/%bname,%buildroot%_libdir}/libGL.so.1.2
+
 install -d -m 0755 %buildroot%_sysconfdir/X11/%_lib
-ln -sr %buildroot{%_x11x11libdir/%bname,%_sysconfdir/X11/%_lib}/libGL.so.1.2
-ln -s %buildroot{%_sysconfdir/X11/%_lib,%_libdir}/libGL.so.1.2
+ln -sr %buildroot{%_x11x11libdir/%bname,%_libdir}/libGL.so.1.2
+#ln -sr %buildroot{%_x11x11libdir/%bname,%_sysconfdir/X11/%_lib}/libGL.so.1.2
+#ln -s %buildroot{%_sysconfdir/X11/%_lib,%_libdir}/libGL.so.1.2
 symlinks -c %buildroot%_libdir
 
 install -p -m 0644 %archdir/usr{/X11R6,}/%_lib/lib* %buildroot%_libdir/
@@ -242,7 +242,7 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/LICENSE*
 %_switchdir/*
-%_sysconfdir/X11/%_lib/libGL.so.1.*
+#%_sysconfdir/X11/%_lib/libGL.so.1.*
 
 
 %files -n %bname-tools -f %bname-tools.lang
@@ -269,6 +269,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Thu Jul 9 2015 barssc <barssc@altlinux.ru> 2:15.120.1046-alt1
+- Catalyst 15.7
+
 * Mon Jul 6 2015 barssc <barssc@altlinux.ru> 2:15.101.1001-alt4
 - cleaned fglrx-firegl-4.1.patch
 
