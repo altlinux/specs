@@ -1,0 +1,49 @@
+%define rname ktp-approver
+
+Name: kde5-%rname
+Version: 15.04.3
+Release: alt1
+%K5init altplace
+
+Group: Graphical desktop/KDE
+Summary: KDE Channel Approver for Telepathy
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Fri Jun 05 2015 (-bi)
+# optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libdbusmenu-qt52 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libtelepathy-qt5 libtelepathy-qt5-devel libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs
+#BuildRequires: dbus-tools extra-cmake-modules gcc-c++ kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-knotifications-devel kf5-kservice-devel libdb4-devel libtelepathy-qt5-devel-static python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires: dbus-tools libtelepathy-qt5-devel-static
+BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-knotifications-devel kf5-kservice-devel
+
+%description
+%summary
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build
+
+%install
+%K5install
+%find_lang %name --with-kde --all-name
+
+%files -f %name.lang
+%doc COPYING*
+%config %_K5xdgconf/*rc
+%_K5plug/*.so
+%_K5dbus_srv/*.service
+%_K5srv/kded/*.desktop
+%_K5srvtyp/*.desktop
+
+%changelog
+* Thu Jul 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.04.3-alt1
+- new version
+
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt0.1
+- initial build

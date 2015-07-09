@@ -1,0 +1,96 @@
+%define rname ktp-accounts-kcm
+
+%define sover 9
+%define libktpaccountskcminternal libktpaccountskcminternal%sover
+
+Name: kde5-%rname
+Version: 15.04.3
+Release: alt1
+%K5init altplace
+
+Requires: telepathy-mission-control
+
+Group: Graphical desktop/KDE
+Summary: KDE Configuration Module for Telepathy Instant Messaging Accounts
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Wed Jun 03 2015 (-bi)
+# optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libaccounts-glib libaccounts-qt51 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsignon-qt51 libstdc++-devel libtelepathy-qt5 libtelepathy-qt5-devel perl-Encode perl-XML-Parser pkg-config python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs
+#BuildRequires: accounts-qt5-devel extra-cmake-modules gcc-c++ intltool kde5-kaccounts-integration-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libdb4-devel libtelepathy-qt5-devel-static python-module-google rpm-build-python3 rpm-build-ruby signon-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires: intltool accounts-qt5-devel libtelepathy-qt5-devel-static signon-devel
+BuildRequires: kde5-kaccounts-integration-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
+BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
+BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
+
+%description
+This is a KControl Module which handles adding/editing/removing Telepathy
+Accounts. It interacts with any Telepathy Spec compliant AccountManager
+to manipulate the accounts.
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n %libktpaccountskcminternal
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libktpaccountskcminternal
+KF5 library
+
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build
+
+%install
+%K5install
+%find_lang %name --with-kde --all-name
+
+%files common -f %name.lang
+%doc COPYING*
+
+%files
+%_K5plug/*.so
+%_K5plug/kaccounts/
+#%_K5plug/kaccounts/ui/ktpaccountskcm_plugin_kaccounts.so
+%_K5srv/*.desktop
+%_K5srvtyp/*.desktop
+%_datadir/telepathy/profiles/
+%_datadir/accounts/
+
+#%files devel
+#%_K5inc/ktp-accounts-kcm_version.h
+#%_K5inc/ktp-accounts-kcm/
+#%_K5link/lib*.so
+#%_K5lib/cmake/ktp-accounts-kcm
+#%_K5archdata/mkspecs/modules/qt_ktp-accounts-kcm.pri
+
+%files -n %libktpaccountskcminternal
+%_K5lib/libktpaccountskcminternal.so.%sover
+%_K5lib/libktpaccountskcminternal.so.*
+
+%changelog
+* Thu Jul 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.04.3-alt1
+- new version
+
+* Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt1
+- initial build
