@@ -4,13 +4,13 @@
 
 Name: ocspd
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: OCSP Responder
 Group: System/Servers
 License: License: %asl
 Url: https://pki.openca.org/projects/ocspd/
-Packager: Packager: Vladimir Didenko <cow@altlinux.ru>
+Packager: Vladimir Didenko <cow@altlinux.ru>
 
 Source0: %name-%version.tar
 Source1: %name.init
@@ -79,5 +79,8 @@ mv %buildroot%_sysconfdir/%name/ca.d/* %buildroot%_sysconfdir/%name/ca-samples.d
 %_man3dir/*.3.*
 
 %changelog
+* Thu Jul 9 2015 Vladimir Didenko <cow@altlinux.ru> 3.1.1-alt2
+- Add reload command to service file
+
 * Mon Jul 6 2015 Vladimir Didenko <cow@altlinux.ru> 3.1.1-alt1
 - Initial build
