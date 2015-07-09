@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.2.2
+Version: 2.2.3
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,16 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Jul 09 2015 Vitaly Lipatov <lav@altlinux.ru> 2.2.3-alt1
+- introduce get_default_txtrelease instead RELEASEPREFIX from config
+- drop 4.0 style version support in branch names and distro version
+- rpmgs/rpmrb: fix default release
+- rpmgs: skip repacking for the same target
+- introduce rhas (echo | egrep -q) and test it
+- functions/alt: improve release checking (failed on release number more than 9)
+- wide use rhas instead echo | grep -q
+- estrlist: improve has, add match with egrep
+
 * Thu Jan 29 2015 Vitaly Lipatov <lav@altlinux.ru> 2.2.2-alt1
 - update srpms repos
 
