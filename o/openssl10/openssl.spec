@@ -1,6 +1,6 @@
 Name: openssl10
 Version: 1.0.1k
-Release: alt3
+Release: alt4
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -476,6 +476,9 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Thu Jul 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1k-alt4
+- Fixed CVE-2015-1793.
+
 * Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1k-alt3
 - Fixed CVE-2015-1789, CVE-2015-1790, CVE-2015-1791, CVE-2015-1792,
   CVE-2015-0209, CVE-2015-4000.
