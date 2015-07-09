@@ -4,7 +4,7 @@
 
 Name: ocspd
 Version: 3.1.1
-Release: alt2
+Release: alt2.1
 
 Summary: OCSP Responder
 Group: System/Servers
@@ -65,6 +65,7 @@ mv %buildroot%_sysconfdir/%name/ca.d/* %buildroot%_sysconfdir/%name/ca-samples.d
 %preun_service %name
 
 %files
+%doc AUTHORS COPYING ChangeLog INSTALL README NEWS
 %config(noreplace) %_sysconfdir/%name/pki/token.d/*.xml
 %config(noreplace) %_sysconfdir/%name/%name.xml
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -79,6 +80,9 @@ mv %buildroot%_sysconfdir/%name/ca.d/* %buildroot%_sysconfdir/%name/ca-samples.d
 %_man3dir/*.3.*
 
 %changelog
+* Thu Jul 9 2015 Vladimir Didenko <cow@altlinux.ru> 3.1.1-alt2.1
+- pack doc files
+
 * Thu Jul 9 2015 Vladimir Didenko <cow@altlinux.ru> 3.1.1-alt2
 - Add reload command to service file
 
