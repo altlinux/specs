@@ -1,5 +1,5 @@
 Name: primus
-Version: 20140118
+Version: 20150710
 Release: alt1
 
 Summary: Faster OpenGL offloading for Bumblebee
@@ -14,7 +14,7 @@ Source1: primusrun
 
 BuildRequires: unzip libGL-devel gcc4.7-c++ libX11-devel glibc-devel libstdc++4.7-devel
 
-Requires: bumblebee
+Requires: bumblebee xorg-dri-intel xorg-drv-intel
 
 %description
 Primus is a shared library that provides OpenGL and GLX APIs and
@@ -44,6 +44,10 @@ install -pD -m755 %SOURCE1 %buildroot%_bindir/primusrun
 %_bindir/primusrun
 
 %changelog
+* Fri Jul 10 2015 barssc <barssc@altlinux.org> 20150710-alt1
+- new version
+- closed bug #31111
+
 * Sat Jan 18 2014 barssc <barssc@altlinux.org> 20140118-alt1
 - new version
 
