@@ -1,96 +1,114 @@
-Name: qcad
+# TODO: translation change is not affect ui
+
+Name: 	 qcad
 Summary: a professional CAD system
-Summary(ru_RU.UTF-8): Профессиональная CAD система
-Version: 2.0.5.0
-Release: alt6.qa3
-Url: http://www.ribbonsoft.com/qcad.html
-License: GPL
-Group: Graphics
+Summary(ru_RU.UTF-8): Профессиональная система CAD
+Version: 3.9.4.0
+Release: alt1
 
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Url: 	 http://www.ribbonsoft.com/qcad.html
+# VCS:   https://github.com/qcad/qcad.git
+License: GPLv3 with exceptions
+Group:   Graphics
 
-Requires: qt3-assistant
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source0: qcad-%version.tar.bz2
+Source0: qcad-%version.tar
 Source1: qcad.desktop
 
-Source10: qcad-icons.tar.bz2
-Source11: qcad-tango-icons.tar.bz2
-
-Patch0: qcad-2.0.5.0-x86_64.patch
-Patch1: qcad-2.0.5.0-alt-qassistant.patch
-Patch2: qcad-2.0.5.0-alt-qcaddoc.adp.patch
-Patch3: qcad-2.0.5.0-alt-gcc43.patch
-
-# Automatically added by buildreq on Sat Apr 14 2007
-BuildRequires: gcc-c++ libqt3-devel python
+BuildRequires: gcc-c++ libqt4-devel python
+BuildRequires: libqt4-webkit-devel
+BuildRequires: libGL-devel
+BuildRequires: libGLU-devel
+BuildRequires: libssl-devel
+BuildRequires: libdbus-devel
+BuildRequires: qtscriptgenerator
 BuildRequires: desktop-file-utils
 
 %description
-QCad is a professional CAD System. With QCad you can easily construct and
-change drawings with ISO-text and many other features and save them as
-DXF-files. These DXF-files are the interface to many CAD-systems such
+QCad is a professional CAD System. With QCad you can easily construct
+and change drawings with ISO-text and many other features and save them
+as DXF-files. These DXF-files are the interface to many CAD-systems such
 as AutoCAD(TM) and many others.
 
 %description -l ru_RU.UTF-8
-QCad это профессиональная CAD система. С QCad вы можете легко создавать и
-изменять рисунки с вставленным текстом и сохранять это в DXF файлы.
-Через DXF файлы есть возможность обмениваться данными с другими CAD системами
-(например AutoCAD(TM)).
+QCad это профессиональная CAD система. С QCad вы можете легко создавать
+и изменять рисунки с вставленным текстом и сохранять это в DXF файлы.
+Через DXF файлы есть возможность обмениваться данными с другими CAD
+системами (например AutoCAD(TM)).
 
 %prep
 %setup -q
-
-tar -xjf %SOURCE11
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-
-subst "s,FULLASSISTANTPATH,%_libdir/qt3/bin," qcad/src/qc_applicationwindow.cpp
-subst "s,QCADDOCPATH,%_docdir/%name-%version," qcad/src/qc_applicationwindow.cpp
+# Fix missing generated files for Qt 4.8.7
+cp -a src/3rdparty/qt-labs-qtscriptgenerator-4.8.{6,7}
+mv src/3rdparty/qt-labs-qtscriptgenerator-4.8.7/qt-labs-qtscriptgenerator-4.8.{6,7}.pro
+%qmake_qt4
+lupdate-qt4 %name.pro
 
 %build
-export RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
-export QTDIR=%_libdir/qt3
-export PATH=$PATH:$QTDIR/bin
-cd scripts
-./build_qcad.sh
-
-cd ..
-find -name \*.ts -exec lrelease {} \;
+%make_build
 
 %install
-install -pD -m755 qcad/qcad %buildroot%_bindir/%name
-mkdir -p %buildroot%_datadir/%name
-cp -pR qcad/{fonts,patterns,qm} %buildroot%_datadir/qcad
-find -name \*.qm -exec cp -t %buildroot%_datadir/qcad/qm {} \;
+# Main executable
+install -Dm755 release/qcad-bin %buildroot%_libdir/%name/qcad-bin
 
-for l in $(find %buildroot%_datadir/%name/qm -name \*.qm); do
-	echo -n $l | sed 's,.*_\(.*\)\.qm,%lang\(\1\) ,' >> %name.lang
+# Make executable wrapper
+install -d %buildroot%_bindir
+cat > %buildroot%_bindir/%name << WRAPPER.
+#!/bin/sh
+
+cd %_libdir/%name
+./qcad-bin
+WRAPPER.
+chmod +x %buildroot%_bindir/%name
+
+# Libraries
+install -d %buildroot%_libdir
+cp release/lib*.so %buildroot%_libdir
+
+# Translations
+install -d %buildroot%_libdir/%name/ts
+cp ts/*.qm %buildroot%_libdir/%name/ts
+
+# Documentation
+install -Dm644 readme.txt %buildroot%_libdir/%name/readme.txt
+
+echo other stuff
+# Other stuff
+cp -a   examples \
+	fonts \
+	libraries \
+	linetypes \
+	patterns \
+	plugins \
+	scripts \
+	"%buildroot%_libdir/%name/"
+
+# Desktop file
+install -Dm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
+
+# Icon
+install -Dm644 ./support/doc/api/qcad_icon.png %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
+
+# Add localization fo qcad.lang
+for l in $(find %buildroot%_libdir/%name/qm -name \*.qm); do
+	echo -n $l | sed 's,.*_\(.*\)\.qm,%%lang\(\1\) ,' >> %name.lang
 	echo $l | sed "s,%buildroot,," >> %name.lang
 done
 
-install -pD -m644 %SOURCE1 %buildroot%_desktopdir/qcad.desktop
-mkdir -p %buildroot%_iconsdir
-tar -xjf %SOURCE10 -C %buildroot%_iconsdir
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Application \
-	--add-category=Engineering \
-	%buildroot%_desktopdir/qcad.desktop
-
-%files -f %name.lang
-%doc qcad/doc/*
+%files
+%doc gpl-3.0-exceptions.txt gpl-3.0.txt README.md LICENSE.txt
 %_bindir/%name
-%dir %_datadir/%name
-%dir %_datadir/%name/qm
-%_datadir/%name/fonts
-%_datadir/%name/patterns
+%dir %_libdir/%name
+%_libdir/lib*.so*
+%_libdir/%name/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Jul 08 2015 Andrey Cherepanov <cas@altlinux.org> 3.9.4.0-alt1
+- New version (ALT #29086)
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.5.0-alt6.qa3
 - NMU: rebuilt for updated dependencies.
 
