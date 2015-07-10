@@ -3,7 +3,7 @@
 %define octave_descr_name queueing
 Name: octave-%octave_pkg_name
 Version: 1.2.3
-Release: alt1
+Release: alt2
 Summary: Octave package for Queueing Networks and Markov chains analysis
 
 Group: Sciences/Mathematics
@@ -50,6 +50,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 1.2.3-alt2
+- Rebuild with the next version of Octave: 4.0.0
+
 * Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1.2.3-alt1
 - updated by octave-package-builder
 

@@ -4,7 +4,7 @@
 %define octave_descr_name InformationTheory
 Name: octave-informationtheory
 Version: 0.1.8
-Release: alt2
+Release: alt3
 Summary: Information Theory
 
 Group: Sciences/Mathematics
@@ -49,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 0.1.8-alt3
+- Rebuild with the next version of Octave: 4.0.0
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 0.1.8-alt2
 - Rebuild with the next version of Octave: 3.8.0
 

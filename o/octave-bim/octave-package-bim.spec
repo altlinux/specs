@@ -4,7 +4,7 @@ Serial: 1
 %define octave_descr_name bim
 Name: octave-%octave_pkg_name
 Version: 1.1.4
-Release: alt1
+Release: alt2
 Summary: PDE Solver using a Finite Element/Finite Volume approach
 
 Group: Sciences/Mathematics
@@ -51,6 +51,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 1:1.1.4-alt2
+- Rebuild with the next version of Octave: 4.0.0
+
 * Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.1.4-alt1
 - updated by octave-package-builder
 

@@ -4,7 +4,7 @@ Serial: 1
 %define octave_descr_name Statistics
 Name: octave-%octave_pkg_name
 Version: 1.2.3
-Release: alt1
+Release: alt2
 Summary: Statistics
 
 Group: Sciences/Mathematics
@@ -51,6 +51,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 1:1.2.3-alt2
+- Rebuild with the next version of Octave: 4.0.0
+
 * Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.2.3-alt1
 - updated by octave-package-builder
 

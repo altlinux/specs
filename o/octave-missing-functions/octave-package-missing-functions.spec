@@ -4,7 +4,7 @@
 %define octave_descr_name missing-functions
 Name: octave-missing-functions
 Version: 1.0.2
-Release: alt2
+Release: alt3
 Summary: Missing Functions
 
 Group: Sciences/Mathematics
@@ -49,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 1.0.2-alt3
+- Rebuild with the next version of Octave: 4.0.0
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.0.2-alt2
 - Rebuild with the next version of Octave: 3.8.0
 
