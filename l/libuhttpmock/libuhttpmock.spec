@@ -2,8 +2,8 @@
 %define api_ver 0.0
 
 Name: lib%_name
-Version: 0.4.0
-Release: alt3
+Version: 0.6.0
+Release: alt0.1
 
 Summary: HTTP web service mocking library
 Group: System/Libraries
@@ -100,6 +100,9 @@ GObject introspection devel data for the %_name library.
 %_datadir/gir-1.0/Uhm-%api_ver.gir
 
 %changelog
+* Fri Jul 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt0.1
+- 0.6.0_36d462a0
+
 * Mon Jul 06 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt3
 - 0.4.0 release (from gitlab, not github)
 
