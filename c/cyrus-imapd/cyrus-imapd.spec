@@ -8,8 +8,8 @@
 %define _cyrusconf %_confdir/prefork.conf
 
 Name: cyrus-imapd
-Version: 2.4.17
-Release: alt1.1
+Version: 2.4.18
+Release: alt1
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -24,7 +24,7 @@ Source0: %name-%version.tar
 Source1: cyrus-procmailrc
 Source2: cyrus-user-procmailrc.template
 Source3: %name.logrotate
-Source4: %name.imap-2.1.x-conf
+Source4: %name.imapd-conf
 Source5: README.ALT
 Source6: %name.control
 Source7: %name.pam-config
@@ -143,11 +143,10 @@ autoheader
 autoconf
 
 # this is hack
-echo '#define CYRUS_CVSDATE 20071211' > imap/xversion.h
+#echo '#define CYRUS_CVSDATE 20071211' > imap/xversion.h
 
 %configure \
   --enable-netscapehack \
-  --enable-listext \
   --enable-nntp \
   --enable-murder \
   --with-snmp \
@@ -158,10 +157,8 @@ echo '#define CYRUS_CVSDATE 20071211' > imap/xversion.h
   --with-service-path=%_cyrexecdir \
   --with-cyrus-user=%_cyrususer \
   --with-cyrus-group=%_cyrusgroup \
-  --with-auth=unix \
   --enable-idled \
   --with-bdb-incdir=%_includedir/db4 \
-  --with-devrandom=/dev/urandom \
   --enable-replication
 
 #  --with-krb=%prefix/lib/krb5
@@ -389,6 +386,12 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Fri Jul 10 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.4.18-alt1
+- 2.4.18
+- added lsb init header
+- added ability to disable copying of certificates in init script
+  (Closes: #29984)
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.17-alt1.1
 - rebuild with new perl 5.20.1
 
