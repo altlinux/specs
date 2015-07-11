@@ -2,8 +2,8 @@
 %def_enable obex
 
 Name: bluez
-Version: 5.31
-Release: alt2
+Version: 5.32
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPLv2+
@@ -123,6 +123,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Sat Jul 11 2015 Yuri N. Sedunov <aris@altlinux.org> 5.32-alt1
+- 5.32
+
 * Mon Jun 29 2015 Yuri N. Sedunov <aris@altlinux.org> 5.31-alt2
 - removed obsolete /etc/modprobe.d/bluetooth.conf
 
