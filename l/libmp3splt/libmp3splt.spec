@@ -1,7 +1,7 @@
 %define api_ver 0
 
 Name: libmp3splt
-Version: 0.9.1b
+Version: 0.9.2
 Release: alt1
 
 Summary: library for mp3splt, a mp3/ogg/flac splitter
@@ -10,7 +10,7 @@ Group: System/Libraries
 Url: http://mp3splt.sourceforge.net/mp3splt_page/home.php
 Packager: Alex V. Myltsev <avm@altlinux.ru>
 
-Source: %name-%version.tar.gz
+Source: http://prdownloads.sourceforge.net/mp3splt/%name-%version.tar.gz
 BuildRequires: libltdl-devel libpcre-devel libmad-devel libogg-devel
 BuildRequires: libvorbis-devel libid3tag-devel libflac-devel
 BuildRequires: doxygen graphviz
@@ -53,6 +53,9 @@ Development files for libmp3splt.
 %_datadir/doc/%name/
 
 %changelog
+* Sat Jul 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
+- 0.9.2
+
 * Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.1b-alt1
 - 0.9.1b
 
