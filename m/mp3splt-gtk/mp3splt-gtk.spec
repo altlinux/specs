@@ -5,7 +5,7 @@
 %def_enable gtk3
 
 Name: mp3splt-gtk
-Version: 0.9.1b
+Version: 0.9.2
 Release: alt1
 
 Summary: GTK3 GUI for libmp3splt
@@ -13,10 +13,10 @@ License: GPLv2+
 Group: Sound
 Url: http://mp3splt.sourceforge.net/mp3splt_page/home.php
 
-Source: %name-%version.tar.gz
+Source: http://prdownloads.sourceforge.net/mp3splt/%name-%version.tar.gz
 
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-ugly%gst_api_ver
-BuildRequires: libmp3splt-devel >= 0.9.1b libltdl-devel
+BuildRequires: libmp3splt-devel >= 0.9.2 libltdl-devel
 %if_enabled gtk3
 BuildRequires: libgtk+3-devel
 %else
@@ -54,6 +54,9 @@ mp3splt-gtk features :
 %_man1dir/%name.1*
 
 %changelog
+* Sat Jul 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
+- 0.9.2
+
 * Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.1b-alt1
 - 0.9.1b
 

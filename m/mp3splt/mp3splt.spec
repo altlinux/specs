@@ -1,5 +1,5 @@
 Name: mp3splt
-Version: 2.6.1b
+Version: 2.6.2
 Release: alt1
 
 Summary: utility to split mp3, ogg and flac files without decoding
@@ -8,9 +8,9 @@ Group: Sound
 Url: http://mp3splt.sourceforge.net/mp3splt_page/home.php
 Packager: Alex V. Myltsev <avm@altlinux.ru>
 
-Source: %name-%version.tar.gz
+Source: http://prdownloads.sourceforge.net/mp3splt/%name-%version.tar.gz
 
-BuildRequires: libmp3splt-devel >= 0.9.1b
+BuildRequires: libmp3splt-devel >= 0.9.2
 
 %description
 Mp3Splt is a command line utility to split mp3, ogg and flac files
@@ -44,6 +44,9 @@ files in few seconds.
 %_man1dir/oggsplt.1.*
 
 %changelog
+* Sat Jul 11 2015 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
+- 2.6.2
+
 * Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 2.6.1b-alt1
 - 2.6.1b
 
