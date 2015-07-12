@@ -4,7 +4,7 @@
 %def_without x11_support
 
 Name: gnote
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Note-taking application
@@ -81,6 +81,9 @@ desktop-file-install \
 %doc README TODO NEWS AUTHORS
 
 %changelog
+* Sun Jul 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Mon Jun 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
