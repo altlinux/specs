@@ -1,8 +1,9 @@
-Summary: A tool for combine images (make a panoramas) using a multiresolution spline
 Name: enblend
-Version: 4.1.2
-Release: alt1.1
-License: GPLv2+ 
+Version: 4.1.3
+Release: alt1
+
+Summary: A tool for combine images (make a panoramas) using a multiresolution spline
+License: GPLv2+
 Group: Graphics
 URL: http://enblend.sourceforge.net/
 Packager: Sergei Epiphanov <serpiph@altlinux.ru>
@@ -11,11 +12,10 @@ Source1: %name.readme
 
 Provides: enfuse
 
-
-BuildRequires: boost-devel gcc-c++ libstdc++-devel automake autoconf boost-filesystem-devel
+BuildRequires: boost-devel gcc-c++ libstdc++-devel boost-filesystem-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libglew-devel liblcms2-devel libvigra-devel
 BuildRequires: libxmi-devel libXmu-devel libXi-devel
-BuildRequires: libGLU-devel libGLUT-devel openexr-devel liblcms-devel libstlport-devel
+BuildRequires: libGLU-devel libGLUT-devel openexr-devel libstlport-devel
 BuildRequires: gnuplot texinfo fonts-ttf-freefont ghostscript perl transfig tidy help2man
 BuildRequires: libgsl-devel
 
@@ -26,21 +26,15 @@ the  input  images  invisible and very suitable to make panoramas.
 
 %prep
 
-%setup -q
+%setup
 
 %build
-
-export CPPFLAGS=-I/usr/include/lcms
-autoreconf -fisv
-#mkdir build
-#cd build
+%autoreconf
 %configure --with-boost-filesystem=yes
-%make
-#cd ..
-%install
+%make_build
 
-#cd build
-%makeinstall
+%install
+%makeinstall_std
 
 %files
 %doc AUTHORS NEWS README
@@ -49,6 +43,9 @@ autoreconf -fisv
 
 
 %changelog
+* Sun Jul 12 2015 Yuri N. Sedunov <aris@altlinux.org> 4.1.3-alt1
+- 4.1.3
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 4.1.2-alt1.1
 - rebuild with boost 1.57.0
 

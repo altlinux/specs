@@ -1,24 +1,23 @@
+%define _name vigra
 %def_disable static
 
-Name: libvigra
+Name: lib%_name
 Version: 1.10.0
-Release: alt1
-
-Packager: Victor Forsyuk <force@altlinux.org>
+Release: alt2
 
 Summary: Generic Programming for Computer Vision
 License: MIT
 Group: System/Libraries
 
-Url: http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra
-Source: %url/vigra%version.tar.gz
+Url: http://kogs-www.informatik.uni-hamburg.de/~koethe/%_name
+Source: %url/%_name-%version.tar
 
 # Automatically added by buildreq on Wed Jun 13 2007
-BuildRequires: gcc-c++ libfftw3-devel libjpeg-devel libpng-devel libtiff-devel cmake
-BuildRequires: libhdf5-devel doxygen
+BuildRequires: gcc-c++ cmake libfftw3-devel libjpeg-devel libpng-devel libtiff-devel
+BuildRequires: libhdf5-devel libgomp-devel openexr-devel doxygen
 
-Provides: vigra
-Obsoletes: vigra
+Provides: %_name
+Obsoletes: %_name
 
 %description
 VIGRA stands for "Vision with Generic Algorithms". It's a novel
@@ -29,8 +28,8 @@ algorithms and data structures.
 Summary: Headers for developing programs that will use %name
 Group: Development/C
 Requires: %name = %version-%release
-Provides: vigra-devel
-Obsoletes: vigra-devel
+Provides: %_name-devel
+Obsoletes: %_name-devel
 
 %description devel
 This package contains the headers that programmers will need to develop
@@ -40,35 +39,39 @@ applications which will use %name.
 Summary: Development documentation for vigra library
 Group: Development/C
 Requires: %name-devel = %version-%release
-Provides: vigra-devel-doc
-Obsoletes: vigra-devel-doc
+Provides: %_name-devel-doc
+Obsoletes: %_name-devel-doc
 BuildArch: noarch
 
 %description devel-doc
 Development documentation for vigra library.
 
 %prep
-%setup -n vigra%version
-
+%setup -n %_name-%version
 
 %build
-%cmake -DWITH_VIGRANUMPY=0
+%cmake -DWITH_VIGRANUMPY:BOOL=OFF \
+	-DWITH_OPENEXR:BOOL=ON
 %cmake_build
 
 %install
-%cmake_install install DESTDIR=%buildroot
+%cmakeinstall_std
 
 %files
-%_libdir/*.so.*
+%_libdir/%{name}impex.so.*
 
 %files devel
-%_bindir/*
-%_includedir/vigra
+%_bindir/%_name-config
+%_includedir/%_name/
 %_libdir/*.so
-%_libdir/vigra
+%_libdir/%_name/
 
 
 %changelog
+* Sun Jul 12 2015 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt2
+- updated to 1.10.0_72b8210c
+- enabled OpenEXR support (required by hugin)
+
 * Wed Jan 29 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.10.0-alt1
 - 1.10.0
 - build system changed to CMAKE
