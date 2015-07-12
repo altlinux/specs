@@ -1,27 +1,27 @@
 Name: binwalk
-Version: 1.2.1
-Release: alt1
+Version: 2.0.1
+Release: alt2
 
 Summary: Firmware Analysis Tool
 
 License: MIT License
 Group: File tools
-Url: http://code.google.com/p/binwalk/
+Url: https://github.com/devttys0/binwalk
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://binwalk.googlecode.com/files/%name-%version.tar
+# Source-url: https://github.com/devttys0/binwalk/archive/v%version.tar.gz
+Source: %name-%version.tar
 
-BuildArch: noarch
-
-# Automatically added by buildreq on Mon Oct 14 2013
-# optimized out: python-base python-devel python-module-dateutil python-module-distribute python-module-imaging python-module-numpy python-module-numpy-testing python-module-pyparsing python-module-zope python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-tkinter python-modules-unittest python3-base
-BuildRequires: python-module-cmd2 python-module-magic python-module-matplotlib python-module-mwlib python-module-protobuf
+# manually removed:  python3 ruby ruby-stdlibs
+# Automatically added by buildreq on Sun Jul 12 2015
+# optimized out: python-base python-devel python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python-modules-compiler python-modules-email python3-base
+BuildRequires: libdb4-devel python-module-cmd2 python-module-google python-module-mwlib python-module-oslo.config python-module-oslo.serialization
 
 # TODO (see https://bugzilla.altlinux.org/show_bug.cgi?id=19293):
 #BuildPreReq: python-module-magic > 5.0.0
 
-Requires: python-module-matplotlib python-module-numpy
+#Requires: python-module-matplotlib python-module-numpy
 
 %description
 Binwalk is a firmware analysis tool designed to assist in the analysis,
@@ -53,20 +53,27 @@ firmware headers, kernels, bootloaders, filesystems, etc.
 # Note! changed direct in the repo
 
 %build
-cd src
+%configure --disable-bundles
 %python_build
+#make_build
 
 %install
-cd src
+#makeinstall_std prefix=%buildroot%_prefix
 %python_install
+[ "%_libdir" = "/usr/lib" ] || mv %buildroot/usr/lib %buildroot%_libdir
 
 %files
-%doc docs/*
 %_bindir/*
 %python_sitelibdir/%name/
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Jul 12 2015 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt2
+- fix build
+
+* Mon Dec 08 2014 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
+- new version 2.0.1 (with rpmrb script)
+
 * Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - initial build for ALT Linux Sisyphus
 
