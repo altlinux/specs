@@ -1,5 +1,5 @@
 Name: clamtk
-Version: 5.11
+Version: 5.19
 Release: alt1
 
 Summary: Easy to use front-end for ClamAV
@@ -59,6 +59,9 @@ done
 %_man1dir/*
 
 %changelog
+* Mon Jul 13 2015 Vitaly Lipatov <lav@altlinux.ru> 5.19-alt1
+- new version 5.19 (with rpmrb script)
+
 * Tue Nov 25 2014 Vitaly Lipatov <lav@altlinux.ru> 5.11-alt1
 - new version 5.11 (with rpmrb script) (ALT bug #30502)
 
