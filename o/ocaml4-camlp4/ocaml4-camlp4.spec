@@ -1,6 +1,6 @@
 Name: ocaml4-camlp4
 Version: 4.02.1_3
-Release: alt1
+Release: alt2
 
 Summary: Preprocessor for OCaml 4.02
 License: QPL & LGPL
@@ -17,10 +17,10 @@ Requires: rpm-build-ocaml4 >= 1.1
 BuildPreReq: rpm-build-ocaml4 >= 1.1
 
 # Automatically added by buildreq on Sun Oct 19 2014
-# optimized out: ocaml4 ocaml4-runtime
 BuildRequires: ocaml4-ocamlbuild
-
 Requires: ocaml4-runtime ocaml4
+
+Conflicts: camlp4
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -54,6 +54,9 @@ make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%b
 %_libdir/ocaml/camlp4/
 
 %changelog
+* Sun Jul 12 2015 Andrey Bergman <vkni@altlinux.org> 4.02.1_3-alt2
+- Added conflict with camlp4.
+
 * Wed Jul 01 2015 Andrey Bergman <vkni@altlinux.org> 4.02.1_3-alt1
 - Rebuild with new rpm-build-ocaml4.
 
