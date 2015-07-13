@@ -10,7 +10,7 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.2.6.9
+Version: 0.2.6.10
 Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
@@ -140,6 +140,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Mon Jul 13 2015 Vladimir Didenko <cow@altlinux.ru> 0.2.6.10-alt1
+- new version
+
 * Fri Jun 12 2015 Vladimir Didenko <cow@altlinux.ru> 0.2.6.9-alt1
 - new version
 
@@ -189,7 +192,7 @@ fi
 
 * Thu Aug 09 2007 Sviatoslav Sviridov <svd@altlinux.ru> 0.1.2.16-alt1
 - Updated to 0.1.2.16
-  + Major security fixes: close immediately after missing authentication 
+  + Major security fixes: close immediately after missing authentication
     on control port; do not allow multiple authentication attempts.
 
 * Tue Jul 24 2007 Sviatoslav Sviridov <svd@altlinux.ru> 0.1.2.15-alt1
