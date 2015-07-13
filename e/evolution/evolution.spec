@@ -18,7 +18,7 @@
 
 Name: evolution
 Version: %ver_major.4
-Release: alt0.1
+Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
@@ -44,7 +44,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.16.3
+%define eds_ver 3.16.4
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.8.4
@@ -315,6 +315,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Jul 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.4-alt1
+- 3.16.4 release
+
 * Sun Jun 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.4-alt0.1
 - 3.16.4 snapshot
 
