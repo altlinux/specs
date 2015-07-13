@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -50,7 +50,7 @@ Requires: gnome-terminal
 # Screensaver
 Requires: cinnamon-screensaver  
 #Gvfs
-Requires: gvfs gvfs-backends
+Requires: gvfs gvfs-backends gvfs-utils
 # Char map - required by cinnamon keyboard applet
 Requires: gucharmap
 
@@ -127,6 +127,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Wed Jul 8 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt2
+- add gvfs-utils to requirements (required by xdg-open)
+
 * Wed May 20 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
 - 2.6.0
 
