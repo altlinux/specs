@@ -1,0 +1,329 @@
+Summary: The Pale Moon project browser
+Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
+
+Name: palemoon
+Version: 25.6.0b2
+Release: alt0.1
+License: MPL/GPL/LGPL
+Group: Networking/WWW
+Url: https://github.com/MoonchildProductions/Pale-Moon
+
+Packager: Hihin Ruslan <ruslandh@altlinux.ru>
+
+%define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
+
+%define palemoon_prefix                 %_libdir/%name
+%define palemoon_datadir                %_datadir/%name
+%define palemoon_arch_extensionsdir     %palemoon_prefix/extensions
+%define palemoon_noarch_extensionsdir   %palemoon_datadir/extensions
+
+Source: %name-source.tar
+Source1: rpm-build.tar
+Source2: searchplugins.tar
+Source4: %name-mozconfig
+Source6: %name.desktop
+Source7: firefox.c
+Source8: firefox-prefs.js
+
+Patch5: firefox-duckduckgo.patch
+Patch6: firefox3-alt-disable-werror.patch
+#Patch14:	firefox-fix-install.patch
+Patch16: firefox-cross-desktop.patch
+#Patch17:	mozilla-disable-installer.patch
+Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
+Patch20: mozilla_palimoon-bug-1025605-GLIBCXX.patch
+
+BuildRequires(pre): mozilla-common-devel
+BuildRequires(pre): rpm-build-mozilla.org
+BuildRequires(pre): browser-plugins-npapi-devel
+
+# Automatically added by buildreq on Sun Jul 12 2015
+# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libpango-devel libstdc++-devel libwayland-client libwayland-server libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins-devel imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel python-modules-json unzip xorg-cf-files yasm zip
+
+BuildRequires: rpm-macros-alternatives
+BuildRequires: libIDL-devel makedepend glibc-kernheaders
+BuildRequires: libX11-devel libXext-devel libXft-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libcurl-devel libhunspell-devel libjpeg-devel
+BuildRequires: xorg-cf-files chrpath alternatives
+#BuildRequires: zip unzip
+BuildRequires: bzlib-devel zlib-devel
+BuildRequires: libcairo-devel libpixman-devel
+BuildRequires: libGL-devel
+BuildRequires: libwireless-devel
+BuildRequires: libnotify-devel
+BuildRequires: libevent-devel
+BuildRequires: libproxy-devel
+BuildRequires: libshell
+BuildRequires: libvpx-devel
+BuildRequires: libgio-devel
+BuildRequires: libfreetype-devel fontconfig-devel
+BuildRequires: libstartup-notification-devel
+BuildRequires: libffi-devel
+BuildRequires: gstreamer-devel
+BuildRequires: libopus-devel
+BuildRequires: libpulseaudio-devel
+BuildRequires: libicu-devel
+BuildRequires: libsqlite3-devel
+
+# Python requires
+BuildRequires: python-module-distribute
+BuildRequires: python-modules-compiler
+BuildRequires: python-modules-logging
+BuildRequires: python-modules-sqlite3
+#BuildRequires: python-modules-json
+
+# Mozilla requires
+BuildRequires: libnspr-devel       >= 4.10.8-alt1
+BuildRequires: libnss-devel        >= 3.18.0-alt1
+BuildRequires: libnss-devel-static >= 3.18.0-alt1
+
+BuildRequires: autoconf_2.13
+%set_autoconf_version 2.13
+
+# Protection against fraudulent DigiNotar certificates
+Requires: libnss >= 3.12.11-alt3
+
+%description
+The %name project is a redesign of Mozilla's  Firefox browser component,
+written using the XUL user interface language and designed to be
+cross-platform.
+
+%description -l ru_RU.UTF8
+Интернет-браузер %name - кроссплатформенная модификация браузера Mozilla Firefox ,
+созданная с использованием языка XUL для описания интерфейса пользователя.
+
+%package -n rpm-build-%name
+Summary: RPM helper macros to rebuild %name packages
+Group: Development/Other
+BuildArch: noarch
+
+Requires: mozilla-common-devel
+Requires: rpm-build-mozilla.org
+
+%description -n rpm-build-%name
+These helper macros provide possibility to rebuild
+%name packages by some Alt Linux Team Policy compatible way.
+
+%prep
+%setup -n %name-%version -c
+cd %name
+
+tar -xf %SOURCE1
+tar -xf %SOURCE2
+
+#patch5  -p1
+%patch6  -p1
+#patch14 -p1
+%patch16 -p1
+#patch17 -p1
+%patch18 -p1
+%patch20 -p1
+
+cat >> browser/confvars.sh <<EOF
+MOZ_UPDATER=
+MOZ_JAVAXPCOM=
+MOZ_EXTENSIONS_DEFAULT=' gio'
+MOZ_CHROME_FILE_FORMAT=jar
+EOF
+
+echo %version > browser/config/version.txt
+
+%ifnarch %ix86 x86_64 armh
+echo "ac_add_options --disable-methodjit" >> .mozconfig
+echo "ac_add_options --disable-monoic" >> .mozconfig
+echo "ac_add_options --disable-polyic" >> .mozconfig
+echo "ac_add_options --disable-tracejit" >> .mozconfig
+%endif
+
+%__subst s~'$(MOZ_APP_NAME)-$(MOZ_APP_VERSION)'~'$(MOZ_APP_NAME)$(MOZ_APP_VERSION)'~g  ./config/baseconfig.mk
+
+%__subst s~'Moonchild\ Productions'~'Moonchild_Productions'~g  ./build/application.ini
+%__subst s~'Pale\ Moon'~'Pale_Moon'~g  ./build/application.ini
+
+#%__subst s~'Moonchild\ Productions'~'"Moonchild\ Productions"'~g  ./build/application.ini
+#%__subst s~'Pale\ Moon'~'"Pale\ Moon"'~g  ./build/application.ini
+
+%build
+cd %name
+cp -f %SOURCE4 .mozconfig
+
+%add_optflags %optflags_shared
+%add_findprov_lib_path %palemoon_prefix
+export MOZ_BUILD_APP=browser
+
+# Mozilla builds with -Wall with exception of a few warnings which show up
+# everywhere in the code; so, don't override that.
+#
+# Disable C++ exceptions since Mozilla code is not exception-safe
+#
+MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
+                sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
+export CFLAGS="$MOZ_OPT_FLAGS"
+export CXXFLAGS="$MOZ_OPT_FLAGS"
+
+# Add fake RPATH
+rpath="/$(printf %%s '%palemoon_prefix' |tr '[:print:]' '_')"
+export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
+export LDFLAGS="-Wl,-rpath,%palemoon_prefix"
+#make -f client.mk build STRIP="/bin/true" MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
+
+export PREFIX="%prefix"
+export LIBDIR="%_libdir"
+export LIBIDL_CONFIG=%_bindir/libIDL-config-2
+export srcdir="$PWD"
+export SHELL=/bin/sh
+
+%__autoconf
+# On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
+# however builds tend to fail on other arches when building in parallel.
+MOZ_SMP_FLAGS=-j1
+%ifarch %ix86 x86_64
+[ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
+[ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
+%endif
+
+make -f client.mk \
+	MAKENSISU= \
+	STRIP="/bin/true" \
+	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
+	MOZ_APP_VERSION="" \
+	mozappdir=%buildroot/%palemoon_prefix \
+	build
+
+gcc %optflags \
+	-Wall -Wextra \
+	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
+	-DMOZ_PROGRAM=\"%palemoon_prefix/%name-bin\" \
+	%SOURCE7 -o %name
+
+%install
+cd %name
+
+echo %palemoon_prefix
+
+mkdir -p \
+	%buildroot/%mozilla_arch_extdir/%palemoon_cid \
+	%buildroot/%mozilla_noarch_extdir/%palemoon_cid \
+	#
+
+#install -d %buildroot%palemoon_prefix
+
+#install -d %buildroot%palemoon_prefix
+
+pushd objdir
+#install -d %buildroot%palemoon_prefix/bin
+#cp -RfLp  dist/bin/* %buildroot%palemoon_prefix/bin
+%makeinstall_std MOZ_APP_VERSION=
+popd
+
+rm  -f %buildroot/%_bindir/%name
+
+install  %name  %buildroot/%_bindir/%name
+
+#mv -f %buildroot%palemoon_prefix-%version %buildroot%palemoon_prefix
+
+#cp  %buildroot/%palemoon_prefix/%name-bin  %buildroot%_bindir/%name
+
+# install altlinux-specific configuration
+install -D -m 644 %SOURCE8 %buildroot/%palemoon_prefix/browser/defaults/preferences/all-altlinux.js
+
+cat > %buildroot/%palemoon_prefix/browser/defaults/preferences/%name-l10n.js <<EOF
+pref("intl.locale.matchOS",		true);
+pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
+EOF
+
+# icons
+for s in 16 22 24 32 48 256; do
+	install -D -m 644 \
+		browser/branding/official/default$s.png \
+		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%name.png
+done
+
+# install rpm-build-%name
+mkdir -p -- \
+	%buildroot/%_rpmmacrosdir
+sed \
+	-e 's,@palemoon_version@,%version,' \
+	-e 's,@palemoon_release@,%release,' \
+	rpm-build/rpm.macros.%name.standalone > %buildroot/%_rpmmacrosdir/%name
+
+#install -m755 %name %buildroot/%_bindir/%name
+
+cd %buildroot
+
+#sed -i \
+#	-e 's,\(MinVersion\)=.*,\1=5.0.1,g' \
+#	-e 's,\(MaxVersion\)=.*,\1=5.0.1,g' \
+#	./%palemoon_prefix/application.ini
+
+mv -f %buildroot%palemoon_prefix/application.ini %buildroot%palemoon_prefix/browser/application.ini
+
+# install menu file
+install -D -m 644 %SOURCE6 ./%_desktopdir/%name.desktop
+
+# Add alternatives
+mkdir -p ./%_altdir
+printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' >./%_altdir/%name
+
+rm -f -- \
+	./%palemoon_prefix/%name \
+	./%palemoon_prefix/removed-files
+
+# Remove devel files
+rm -rf -- \
+	./%_includedir/%name-%version \
+	./%_datadir/idl/%name-%version \
+	./%_libdir/%name-devel-%version \
+
+#
+
+# Add real RPATH
+(set +x
+	rpath="/$(printf %%s '%palemoon_prefix' |tr '[:print:]' '_')"
+
+	find \
+		%buildroot/%palemoon_prefix \
+	-type f |
+	while read f; do
+		t="$(readlink -ev "$f")"
+
+		file "$t" | fgrep -qs ELF || continue
+
+		if chrpath -l "$t" | fgrep -qs "RPATH=$rpath"; then
+			chrpath -r "%palemoon_prefix" "$t"
+		fi
+	done
+)
+
+%pre
+for n in defaults browserconfig.properties; do
+	[ ! -L "%palemoon_prefix/$n" ] || rm -f "%palemoon_prefix/$n"
+done
+
+%files
+%_altdir/%name
+%_bindir/%name
+%dir %palemoon_prefix
+%palemoon_prefix/*
+%mozilla_arch_extdir/%palemoon_cid
+%mozilla_noarch_extdir/%palemoon_cid
+%_desktopdir/%name.desktop
+%_miconsdir/%name.png
+%_iconsdir/hicolor/22x22/apps/%name.png
+%_iconsdir/hicolor/24x24/apps/%name.png
+%_niconsdir/%name.png
+%_liconsdir/%name.png
+%_iconsdir/hicolor/256x256/apps/%name.png
+
+%files -n rpm-build-%name
+%_rpmmacrosdir/%name
+
+%changelog
+* Mon Jul 13 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.6.0b2-alt0.1
+- New Version
+
+* Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
+- initial build for ALT Linux Sisyphus
