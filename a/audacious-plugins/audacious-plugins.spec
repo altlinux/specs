@@ -2,7 +2,7 @@
 %define rel %nil
 %define oname audacious
 Name: audacious-plugins
-Version: 3.6.1
+Version: 3.6.2
 Release: alt1
 
 Summary: Plugins for Audacious
@@ -48,7 +48,7 @@ This package contains the base I/O plugins:
 %build
 %configure \
 	--enable-amidiplug --enable-sid \
-	--enable-gio  \
+	--enable-gio --disable-adplug \
 	--disable-jack --enable-pulse \
 %ifnarch x86_64
 	--disable-sse2 \
@@ -66,6 +66,10 @@ This package contains the base I/O plugins:
 %_libdir/%oname/*
 
 %changelog
+* Sun Jul 12 2015 Vitaly Lipatov <lav@altlinux.ru> 3.6.2-alt1
+- new version 3.6.2 (with rpmrb script)
+- disable adplug plugin (uses libbinio)
+
 * Wed May 06 2015 Vitaly Lipatov <lav@altlinux.ru> 3.6.1-alt1
 - new version 3.6.1 (with rpmrb script)
 
