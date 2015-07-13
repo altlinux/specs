@@ -8,7 +8,7 @@ Name: adobe-flash-player
 %define ver_fake   11
 %define ver_ix86   11.2.202.481
 %define ver_x86_64 11.2.202.481
-Release: alt48
+Release: alt49
 Serial: 3
 
 %define ver_real %ver_fake
@@ -138,6 +138,9 @@ echo "At this moment you must install manually nspluginwrapper and i586-%name (s
 %endif
 
 %changelog
+* Mon Jul 13 2015 Sergey V Turchin <zerg@altlinux.org> 3:11-alt49
+- update changelog
+
 * Wed Jul 08 2015 Sergey V Turchin <zerg@altlinux.org> 3:11-alt48
 - update changelog
 
@@ -152,7 +155,8 @@ echo "At this moment you must install manually nspluginwrapper and i586-%name (s
   CVE-2015-3132, CVE-2015-3133, CVE-2015-3134, CVE-2015-3135,
   CVE-2015-3136, CVE-2015-3137, CVE-2015-4428, CVE-2015-4429,
   CVE-2015-4430, CVE-2015-4431, CVE-2015-4432, CVE-2015-4433,
-  CVE-2015-5116, CVE-2015-5117, CVE-2015-5118, CVE-2015-5119
+  CVE-2015-5116, CVE-2015-5117, CVE-2015-5118, CVE-2015-5119,
+  CVE-2015-5122, CVE-2015-5123
 
 * Wed Jun 24 2015 Sergey V Turchin <zerg@altlinux.org> 3:11-alt46
 - new version
