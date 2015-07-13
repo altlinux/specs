@@ -1,8 +1,8 @@
 %define lng_list af ar as ast be be@latin bg bn bn_IN br bs ca ca@valencia crh cs csb cy da de el en en_GB en_US eo es et eu fa fi fr fy ga gd gl gu ha he hi hne hr hsb hu hy ia id is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms nb nds ne nl nn oc or pa pl ps pt pt_BR ro ru se si sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta te tg th tr tt ug uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW
 
 %define major 5
-%define minor 1
-%define bugfix 1
+%define minor 12
+%define bugfix 0
 
 Name: kf5-filesystem
 Version: %major.%minor.%bugfix
@@ -97,6 +97,9 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir/kde5
 %dir %_desktopdir/kf5
 
 %changelog
+* Mon Jul 13 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1
+- change data dirs order in helper script
+
 * Thu Apr 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
 - update dirs
 
