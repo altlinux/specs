@@ -1,6 +1,6 @@
 Name: xfce4-verve-plugin
-Version: 1.0.1
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: Command line plugin for Xfce Desktop
 License: %gpl2plus
@@ -23,11 +23,15 @@ BuildRequires: intltool libdbus-glib-devel libpcre-devel libxml2-devel perl-XML-
 Requires: xfce4-panel >= 4.8
 
 %description
-The Verve panel plugin is a comfortable command line plugin for the Xfce
-panel. It supports several nice features, such as:
+The Verve panel plugin is a comfortable command line (or smartbookmark)
+plugin for the Xfce panel. It supports several nice features, such as:
     * Command history
     * Auto-completion (including command history)
-    * Open URLs and eMail addresses in your favourite applications
+    * Open URLs and e-mail addresses in your favourite applications
+    * Expansion of variables in directory names with wordexp,
+      and variable and alias support in commands by running them
+      through current shell
+    * Optional support for sending ! and \ queries to DuckDuckGo
     * Focus grabbing via D-BUS (so you can bind a shortcut to it)
     * Custom input field width
 
@@ -47,10 +51,17 @@ panel. It supports several nice features, such as:
 %files -f %name.lang
 %doc README AUTHORS
 %_bindir/*
-%_libdir/xfce4/panel/plugins/*
+%_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
 
+%exclude %_libdir/xfce4/panel/plugins/*.la
+
 %changelog
+* Mon Jul 13 2015 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
+- Don't package *.la file.
+- Description updated.
+- Updated to 1.1.0.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt2
 - Rebuild with libxfce4util-4.12.
 
