@@ -1,6 +1,6 @@
-%define rname mirall
+%define rname owncloudclient
 Name: owncloud-client
-Version: 1.7.1
+Version: 1.8.4
 Release: alt1
 
 Group: Networking/File transfer
@@ -45,18 +45,28 @@ desktop-file-install \
     --dir=%buildroot/%_desktopdir \
     %{SOURCE1}
 
-%find_lang --with-qt mirall
+%find_lang --with-qt %rname
 
-%files -f mirall.lang
+%files -f %rname.lang
 %config(noreplace) %_sysconfdir/ownCloud/sync-exclude.lst
 %_bindir/owncloud
 %_bindir/owncloudcmd
 %_desktopdir/%name.desktop
 #%_datadir/owncloud-client
+%_datadir/nautilus-python/extensions/
 %_iconsdir/hicolor/*/apps/owncloud.*
 %_iconsdir/hicolor/*/apps/ownCloud_*.*
 
 %changelog
+* Mon Jul 13 2015 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt1
+- new version
+
+* Wed Jul 08 2015 Sergey V Turchin <zerg@altlinux.org> 1.8.3-alt1
+- new version
+
+* Mon Feb 02 2015 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt0.M70P.1
+- build for M70P
+
 * Mon Feb 02 2015 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt1
 - new version
 
