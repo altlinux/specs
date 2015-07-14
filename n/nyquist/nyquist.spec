@@ -1,12 +1,12 @@
 Name: nyquist
-Version: 3.08
+Version: 3.09
 Release: alt1
 
 Summary: Sound synthesis and composition language with a Lisp syntax
 Group: Sound
 License: BSD
 Url: http://www-2.cs.cmu.edu/~music/music.software.html
-Source: http://www-2.cs.cmu.edu/~music/nyquist/nyqsrc308.zip
+Source: http://download.sourceforge.net/%name/nyqsrc309.zip
 Source1: %name-Makefile
 
 BuildRequires: unzip gcc-c++ libalsa-devel liblo-devel libportaudio2-devel
@@ -80,6 +80,9 @@ chmod 0755 %buildroot%_bindir/jny
 %doc doc
 
 %changelog
+* Tue Jul 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.09-alt1
+- 3.09
+
 * Sat Dec 07 2013 Yuri N. Sedunov <aris@altlinux.org> 3.08-alt1
 - first build for Susiphus (based on fc spec)
 
