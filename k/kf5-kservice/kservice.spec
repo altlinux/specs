@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.12.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -12,6 +12,7 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-skip-antikde-mimeapps-list.patch
+Patch2: alt-initial-preference.patch
 
 # Automatically added by buildreq on Thu Feb 12 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs xml-common xml-utils
@@ -53,6 +54,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build
@@ -79,6 +81,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Tue Jul 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt2
+- prefer KDE5 apps by default
+
 * Fri Jul 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1
 - new version
 
