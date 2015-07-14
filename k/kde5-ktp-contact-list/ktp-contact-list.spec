@@ -2,13 +2,15 @@
 
 Name: kde5-%rname
 Version: 15.04.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: Telepathy contact list application
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: kde5-ktp-common-internals-core
 
 Source: %rname-%version.tar
 
@@ -76,6 +78,9 @@ KF5 library
 #%_K5lib/libktp-contact-list.so.*
 
 %changelog
+* Tue Jul 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.04.3-alt2
+- fix requires
+
 * Thu Jul 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.04.3-alt1
 - new version
 
