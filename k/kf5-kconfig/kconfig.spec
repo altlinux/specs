@@ -1,7 +1,7 @@
 %define rname kconfig
 
 Name: kf5-%rname
-Version: 5.11.0
+Version: 5.12.0
 Release: alt1
 %K5init altplace
 
@@ -72,8 +72,7 @@ KF5 library
 %_K5bin/kwriteconfig5
 
 %files devel
-%_bindir/kconfig_compiler_kf5
-%_K5bin/kconfig_compiler_kf5
+%_K5exec/kconfig_compiler_kf5
 %_K5inc/kconfig_version.h
 %_K5inc/KConfigCore/
 %_K5inc/KConfigGui/
@@ -89,6 +88,9 @@ KF5 library
 %_K5lib/libKF5ConfigGui.so.*
 
 %changelog
+* Fri Jul 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1
+- new version
+
 * Tue Jun 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.11.0-alt1
 - new version
 
