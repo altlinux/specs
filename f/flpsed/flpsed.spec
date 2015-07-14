@@ -1,6 +1,6 @@
 Name: flpsed
-Version: 0.7.2
-Release: alt2
+Version: 0.7.3
+Release: alt1
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: Add arbitrary text lines to existing PostScript document
 Summary(ru_RU.UTF-8): Добавление и редактирование текстовых полей в готовый PostScript-документ
@@ -65,6 +65,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_man1dir/*
 
 %changelog
+* Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 0.7.3-alt1
+- Autobuild version bump to 0.7.3
+
 * Wed Jul 09 2014 Fr. Br. George <george@altlinux.ru> 0.7.2-alt2
 - Fix buildreq
 
