@@ -1,7 +1,7 @@
 Summary: X Render Extension Test Tool
 Name: rendercheck
-Version: 1.4
-Release: alt1.qa1
+Version: 1.5
+Release: alt1
 License: BSD
 Group: System/X11
 Source: %name-%version.tar.bz2
@@ -29,7 +29,7 @@ iterations to encourage pixmap migration, are controlled only in
 source.
 
 %prep
-%setup -q
+%setup
 
 %build
 ./autogen.sh
@@ -45,6 +45,9 @@ source.
 %_man1dir/*
 
 %changelog
+* Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 1.5-alt1
+- Autobuild version bump to 1.5
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
