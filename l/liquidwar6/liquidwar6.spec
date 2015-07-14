@@ -1,5 +1,5 @@
 Name: liquidwar6
-Version: 0.4.3681
+Version: 0.6.3902
 Summary: A unique multiplayer wargame
 Summary(fr): Un "wargame" multijoueur inédit.
 Summary(de): Ein einzigartiges Kriegspiel für mehrere Spieler.
@@ -75,6 +75,9 @@ rm -rf %buildroot%prefix/libexec
 %_desktopdir/%{name}*
 
 %changelog
+* Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 0.6.3902-alt1
+- Autobuild version bump to 0.6.3902
+
 * Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 0.4.3681-alt1
 - Autobuild version bump to 0.4.3681
 
