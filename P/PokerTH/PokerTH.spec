@@ -2,17 +2,17 @@
 
 Name: PokerTH
 Version: 1.1.1
-Release: alt1.1.1
+Release: alt2
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
-License: AGPLv3+
+License: %gagpl3plus
 Url: http://www.pokerth.net/
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-#BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses >= 2.0.5-alt1
 
 # Automatically added by buildreq on Tue May 26 2009
 BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-interprocess-devel gcc-c++ libSDL-devel libSDL_mixer-devel libcurl-devel libdb4-devel libgnutls-openssl-devel libgsasl-devel qt5-base-devel
@@ -49,6 +49,10 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Tue Jul 14 2015 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt2
+- Fix build with Qt-5.5.0.
+- Use rpm-build-licenses again.
+
 * Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1-alt1.1.1
 - Rebuilt for gcc5 C++11 ABI.
 
