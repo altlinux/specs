@@ -2,8 +2,8 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.68
-Release: alt4
+Version: 1.0.71
+Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -194,6 +194,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Tue Jul 14 2015 Anton Farygin <rider@altlinux.ru> 1.0.71-alt1
+- new version 1.0.71
+
 * Thu May 28 2015 Anton Farygin <rider@altlinux.ru> 1.0.68-alt4
 - rebuild in new environment
 
