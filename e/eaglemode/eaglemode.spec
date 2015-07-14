@@ -1,5 +1,5 @@
 Name: eaglemode
-Version: 0.88.0
+Version: 0.89.0
 Release: alt1
 Group: Graphical desktop/Other
 Summary: Futuristic desktop allowing user to visit almost everything by zooming in
@@ -63,6 +63,9 @@ mv %buildroot%_libdir/%name/include %buildroot%_includedir/%name && ln -s %_incl
 %_includedir/%name/*
 
 %changelog
+* Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 0.89.0-alt1
+- Autobuild version bump to 0.89.0
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 0.88.0-alt1
 - Autobuild version bump to 0.88.0
 
