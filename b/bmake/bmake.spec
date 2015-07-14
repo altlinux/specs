@@ -1,5 +1,5 @@
 Name: bmake
-Version: 20150505
+Version: 20150606
 Release: alt1
 
 Summary: The NetBSD make(1) tool
@@ -47,6 +47,9 @@ install -pDm755 Linux/bmake %buildroot%_bindir/bmake
 %dir %_datadir/mk/
 
 %changelog
+* Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 20150606-alt1
+- Autobuild version bump to 20150606
+
 * Mon Jun 01 2015 Fr. Br. George <george@altlinux.ru> 20150505-alt1
 - Autobuild version bump to 20150505
 
