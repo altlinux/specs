@@ -1,6 +1,6 @@
 %define PName Asana-Math
 Name: fonts-otf-asana-math
-Version: 000.954
+Version: 000.955
 Release: alt1
 License: OFL
 Group: System/Fonts/True type
@@ -68,6 +68,9 @@ ln -s ../../..%_datadir/fonts/ttf/%PName %buildroot%_sysconfdir/X11/fontpath.d/t
 %_datadir/fonts/ttf/%PName
 
 %changelog
+* Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 000.955-alt1
+- Autobuild version bump to 000.955
+
 * Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 000.954-alt1
 - Autobuild version bump to 000.954
 
