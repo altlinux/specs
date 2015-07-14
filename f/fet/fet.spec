@@ -7,7 +7,7 @@ Summary(hu.UTF-8):	FET egy nyílt forrású órarend-készítő program
 Summary(pl.UTF-8):	Narzędzie do automatycznego układania planów dla szkół i uczelni
 Summary(ru_RU.UTF-8):	Программа для составления расписаний учебного заведения
 Name: fet
-Version: 5.27.0
+Version: 5.27.4
 Release: alt1
 License: GPL v2
 Group: Office
@@ -123,6 +123,7 @@ done
 %_bindir/*
 %dir %_datadir/%name
 %dir %_datadir/%name/translations
+%_datadir/%name/translations/fet_untranslated.qm
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %_pixmapsdir/*
@@ -132,6 +133,9 @@ done
 %_datadir/%name/examples
 
 %changelog
+* Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 5.27.4-alt1
+- Autobuild version bump to 5.27.4
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 5.27.0-alt1
 - Autobuild version bump to 5.27.0
 
