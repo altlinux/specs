@@ -1,5 +1,5 @@
 Name: pspp
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 Summary: A program for statistical analysis of sampled data
 Group: Sciences/Mathematics
@@ -55,18 +55,20 @@ make check
 %_bindir/pspp-dump-sav
 %_infodir/pspp*
 %_libdir/%name/
-%_mandir/man1/pspp-dump-sav.*
+%_man1dir/*
 %_datadir/appdata/pspp.appdata.xml
 %_datadir/applications/pspp.desktop
 %_datadir/icons/hicolor/*/apps/%name.png
 %_datadir/icons/hicolor/*/mimetypes/*.png
 %_datadir/icons/hicolor/scalable/apps/pspp.svg
 %_datadir/pspp/
-# FIXME this should be marked as doc
-%_datadir/doc/pspp/
-%_mandir/man1/pspp-convert.1.*
+%doc %_datadir/doc/pspp
 
 %changelog
+* Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 0.8.5-alt1
+- Autobuild version bump to 0.8.5
+- Package mans
+
 * Thu Oct 23 2014 Fr. Br. George <george@altlinux.ru> 0.8.4-alt1
 - Autobuild version bump to 0.8.4
 - Fix buildreq for pango warning evasion
