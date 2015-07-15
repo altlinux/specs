@@ -6,7 +6,7 @@
 %def_enable desktop
 %endif
 
-%def_disable gcc5ready
+%def_enable openexr
 %def_disable hupnp
 
 %add_findpackage_path %_kde4_bindir
@@ -14,11 +14,11 @@
 
 %define major 4
 %define minor 14
-%define bugfix 9
+%define bugfix 10
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -96,7 +96,7 @@ Patch1012: kdelibs-4.1.2-alt-mark-user-edited.patch
 Patch1013: kdelibs-4.6.3-alt-places-add-docs.patch
 Patch1014: kdelibs-4.2.2-alt-find-usb.patch
 Patch1015: kdelibs-4.3.0-alt-resources-order.patch
-Patch1016: kdelibs-4.6.0-alt-initial-preference.patch
+Patch1016: kdelibs-4.14.9-alt-initial-preference.patch
 Patch1017: kdelibs-4.6.0-alt-def-plasma.patch
 Patch1018: kdelibs-4.5.0-alt-def-fonts.patch
 Patch1019: kdelibs-4.6.0-alt-kfileplaces.patch
@@ -135,7 +135,7 @@ BuildRequires: libXrender-devel libXext-devel libXScrnSaver-devel grantlee-devel
 BuildRequires: libenchant-devel
 BuildRequires: libavahi-devel libjasper-devel libjpeg-devel
 BuildRequires: libgif-devel libxslt-devel liblzma-devel docbook-style-xsl docbook-dtds
-%if_enabled gcc5ready
+%if_enabled openexr
 BuildRequires: openexr-devel
 %endif
 BuildRequires: libkrb5-devel shared-desktop-ontologies-devel
@@ -351,6 +351,10 @@ done
 %_K4includedir/*
 
 %changelog
+* Wed Jul 15 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt1
+- new version
+- prefer KDE4 apps
+
 * Thu Jun 18 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.9-alt3
 - remove libsoprano-devel from devel package requires
 - build without hupnp
