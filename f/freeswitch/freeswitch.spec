@@ -1,20 +1,26 @@
 Name: freeswitch
-Version: 1.5.13
-Release: alt2.1
+Version: 1.4.20
+Release: alt1
+Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
 License: MPL
 Group: System/Servers
 Url: http://www.freeswitch.org/
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
+Source1: %name.init
+Source2: %name.tmpfiles
+Source3: %name.sysconfig
+Source4: modules.conf
 
 BuildRequires: gcc-c++ gsmlib-devel libalsa-devel
 BuildRequires: libgnutls-devel libncurses-devel libssl-devel libunixODBC-devel
 BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
 BuildRequires: libspeex-devel libsqlite3-devel libX11-devel libmp4v2-devel
 BuildRequires: libxmlrpc-devel libyaml-devel libiksemel-devel libedit-devel
-BuildRequires: libsndfile-devel libpcre-devel libapr1-devel libaprutil1-devel
+BuildRequires: libsndfile-devel libpcre-devel liblua5-devel
 BuildRequires: libilbc1-devel libjs-devel libjson-devel flite-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
 BuildRequires: libpcap-devel perl-devel python-devel
@@ -214,13 +220,17 @@ This package provides simple web-based UI.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-%autoreconf
+./bootstrap.sh
+cat %SOURCE4 >modules.conf
 %configure \
     --enable-fhs \
     --enable-system-xmlrpc-c \
+    --enable-system-lua \
     --localstatedir=%_var \
+    --with-modinstdir=%_libdir/freeswitch \
     --with-logfiledir=%_var/log/freeswitch \
     --with-dbdir=%_var/lib/freeswitch/db \
     --with-htdocsdir=%_datadir/freeswitch/htdocs \
@@ -229,6 +239,7 @@ This package provides simple web-based UI.
     --with-scriptdir=%_datadir/freeswitch/scripts \
     --with-recordingsdir=%_var/spool/freeswitch \
     --enable-core-libedit-support \
+    --enable-core-pgsql-support \
     --enable-core-odbc-support \
     --enable-zrtp \
     --with-erlang=%_bindir/erl \
@@ -238,15 +249,27 @@ This package provides simple web-based UI.
     #
 make
 
+pushd libs/freetdm
+%configure --with-modinstdir=%_libdir/freeswitch --with-libpri --with-libisdn --with-pic
+make
+popd
+
 %install
-%make_install sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot install
+mkdir -p %buildroot%_sysconfdir/freetdm/autoload_configs
+PERL_ARCHLIB=%perl_vendorarch %make_install sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot install
+%make_install sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot config-vanilla
 (cd conf && find dialplan directory -type f | cpio -pmd %buildroot%_sysconfdir/%name)
 install -pm0644 src/mod/endpoints/mod_gsmopen/configs/gsmopen.conf.xml \
 	%buildroot%_sysconfdir/%name/autoload_configs/
+pushd libs/freetdm
+%make_install sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot install
+popd
 
-install -pm0755 -D freeswitch.init %buildroot%_initdir/freeswitch
-install -pm0644 -D freeswitch.sysconfig %buildroot%_sysconfdir/sysconfig/freeswitch
-install -pm0644 -D freeswitch.tmpfiles %buildroot%_tmpfilesdir/freeswitch.conf
+mkdir -p %buildroot%_libdir/freetdm
+mv %buildroot%_libdir/freeswitch/ftmod_* %buildroot%_libdir/freetdm/
+install -pm0755 -D %SOURCE1 %buildroot%_initdir/freeswitch
+install -pm0644 -D %SOURCE2 %buildroot%_tmpfilesdir/freeswitch.conf
+install -pm0644 -D %SOURCE3 %buildroot%_sysconfdir/sysconfig/freeswitch
 
 mkdir -p \
     %buildroot%_sbindir \
@@ -255,8 +278,11 @@ mkdir -p \
     %buildroot%_logdir/freeswitch/{cdr-csv,xml_cdr}
 
 mv %buildroot%_bindir/freeswitch %buildroot%_sbindir/
+mv %buildroot/%_sysconfdir/freetdm/autoload_configs/* %buildroot%_sysconfdir/freeswitch/autoload_configs/
 
-find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
+find %buildroot%_libdir/%name  -name \*.la -delete
+find %buildroot%_libdir/freetdm  -name \*.la -delete
+
 %add_python_req_skip _freeswitch
 
 #---------------------------------------------------------------
@@ -405,7 +431,8 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/dialplan/skinny-patterns
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/dialplan/public
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/default.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/default/99998_example.com.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/default/01_example.com.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/default/01_Talking_Clock.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/skinny-patterns.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/skinny-patterns/20-Demo.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/skinny-patterns/20-Local_extension.xml
@@ -425,10 +452,8 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/mrcp_profiles/*.xml
 
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/sip_profiles
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/sip_profiles/internal
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/sip_profiles/external
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/sip_profiles/*.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/sip_profiles/internal/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/sip_profiles/external/*.xml
 
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/skinny_profiles
@@ -439,6 +464,8 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_sbindir/freeswitch
 %_bindir/fs_cli
 %_bindir/fs_ivrd
+%_bindir/fs_encode
+%_bindir/tone2wav
 
 %dir %_libdir/%name
 %_libdir/%name/mod_abstraction.so
@@ -680,6 +707,9 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Wed Jul 15 2015 Anton Farygin <rider@altlinux.ru> 1:1.4.20-alt1
+- build 1.4.20 as new version
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.13-alt2.1
 - rebuild with new perl 5.20.1
 
