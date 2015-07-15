@@ -6,7 +6,7 @@
 
 %define rname kdepimlibs
 Name: kde4pimlibs
-Version: 4.14.9
+Version: 4.14.10
 Release: alt1
 
 Group: System/Libraries
@@ -34,7 +34,7 @@ BuildRequires: boost-devel bzlib-devel gcc-c++ shared-mime-info xsltproc libxslt
 BuildRequires: libgpg-error-devel libgpgme-devel libassuan-devel libpth-devel
 BuildRequires: libldap-devel libstrigi-devel prison-devel qjson-devel
 BuildRequires: libgpgme-devel libsasl2-devel libical-devel >= %ical_req
-BuildRequires: libsoprano-devel soprano-backend-redland soprano shared-desktop-ontologies-devel
+#BuildRequires: libsoprano-devel soprano-backend-redland soprano shared-desktop-ontologies-devel
 BuildRequires: akonadi-devel >= %akonadi_req
 BuildRequires: kde4libs-devel >= %version
 
@@ -416,6 +416,9 @@ mkdir -p %buildroot/%_datadir/akonadi/agents/
 %_K4libdir/libsyndication.so.*
 
 %changelog
+* Wed Jul 15 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt1
+- new version
+
 * Mon Jun 08 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.9-alt1
 - new version
 
