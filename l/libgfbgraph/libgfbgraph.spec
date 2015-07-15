@@ -2,20 +2,20 @@
 %define ver_major 0.2
 %define api_ver 0.2
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
 Version: %ver_major.3
-Release: alt0.1
+Release: alt1
 
 Summary: A GObject library for Facebook Graph API
 License: %lgpl2plus
 Group: System/Libraries
 Url: http://developer.gnome.org/
 
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+#Source: %name-%version.tar
 
 %define glib_ver 2.31.2
 
@@ -66,7 +66,7 @@ Requires: %name-gir = %version-%release
 GObject introspection devel data for the LibGFBGraph library.
 
 %prep
-%setup
+%setup -n %_name-%version
 
 %build
 %autoreconf
@@ -82,6 +82,7 @@ GObject introspection devel data for the LibGFBGraph library.
 %find_lang %name
 
 %check
+# see tests/README
 #%make check
 
 %files -f %name.lang
@@ -107,6 +108,9 @@ GObject introspection devel data for the LibGFBGraph library.
 %endif
 
 %changelog
+* Wed Jul 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
+- 0.2.3 release
+
 * Tue Feb 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt0.1
 - first build for Sisyphus
 
