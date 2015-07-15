@@ -1,21 +1,20 @@
 Name: gif2png
-Version: 2.5.8
+Version: 2.5.11
 Release: alt1
 
 Summary: A GIF to PNG converter
 Group: Graphics
-License: BSD-style
+License: Zlib
 Url: http://catb.org/~esr/gif2png/
 
-# http://catb.org/~esr/%name/%name-%version.tar.gz
-Source: gif2png-%version.tar
-Source1: test-1.gif
-Source2: test-2.gif
+# https://gitlab.com/esr/gif2png
+# git://git.altlinux.org/gears/g/gif2png.git
+Source: %name-%version-%release.tar
 Patch1: gif2png-2.5.8-alt-web2png.patch
 Patch2: gif2png-2.5.8-deb-warnings.patch
 
-# Automatically added by buildreq on Mon Oct 21 2002
-BuildRequires: libpng-devel zlib-devel
+# Automatically added by buildreq on Wed Jul 15 2015
+BuildRequires: libpng-devel zlib-devel python-modules xmlto
 
 %description
 The gif2png program converts files from the obsolescent Graphic
@@ -42,37 +41,32 @@ The distribution also includes a Python script, web2png, that will
 convert entire web hierarchies (images and HTML or PHP pages).
 
 %prep
-%setup
+%setup -n %name-%version-%release
 %patch1 -p1
 %patch2 -p1
 
 %build
-%configure
-%make_build
+%make_build CFLAGS='%optflags -DVERSION=\"$(VERSION)\"' LDFLAGS=
 
 %install
-%makeinstall_std
+make install prefix=%buildroot%_prefix
 
 %check
-p=%buildroot%_bindir/gif2png
-for i in 1 2; do
-	f=%_sourcedir/test-$i.gif
-	install -pm644 $f _tmp.gif
-	$p _tmp.gif
-	$p -f < $f > _tmp.png
-	$p -O -f < $f > _tmp.png
-done
+%make_build -k -C test
 
 %files
 %_bindir/gif2png
 %_mandir/man?/gif2png.*
-%doc AUTHORS COPYING README NEWS
+%doc COPYING NEWS README
 
 %files -n web2png
 %_bindir/web2png
 %_mandir/man?/web2png.*
 
 %changelog
+* Wed Jul 15 2015 Dmitry V. Levin <ldv@altlinux.org> 2.5.11-alt1
+- 2.5.8 -> 2.5.11.
+
 * Mon Sep 17 2012 Dmitry V. Levin <ldv@altlinux.org> 2.5.8-alt1
 - Updated to 2.5.8.
 - Moved web2png to separate subpackage.
