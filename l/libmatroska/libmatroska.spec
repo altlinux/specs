@@ -1,6 +1,6 @@
 Name: libmatroska
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: an extensible open standard Audio/Video container format
 License: LGPL
@@ -67,6 +67,9 @@ HTML)
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Jul 15 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt2
+- rebuilt with gcc5
+
 * Fri Jan 16 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt1
 - 1.4.2 released
 

@@ -1,21 +1,19 @@
-%define gname mkvmerge-gui
-
 %def_disable debug
 %def_disable profiling
 
 %def_enable gui
 %def_enable bz2
 %def_enable lzo
-%def_enable wxwidgets
-%def_disable qt
+%def_disable wxwidgets
+%def_enable qt
 %def_with flac
-%def_with tools
+%def_without tools
 
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 7.7.0
-Release: alt2
+Version: 8.1.0
+Release: alt1
 
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL
@@ -31,7 +29,7 @@ BuildRequires: libexpat-devel libvorbis-devel ImageMagick ruby ruby-stdlibs syml
 BuildRequires: libcurl-devel libebml-devel >= 1.3.1 libmatroska-devel >= 1.4.2
 
 %{?_enable_wxwidgets:BuildRequires: libpango-devel libwxGTK3.1-devel}
-%{?_enable_qt:BuildRequires: libSM-devel libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel libqt4-devel}
+%{?_enable_qt:BuildRequires: qt5-base-devel}
 %{?_enable_bz2:BuildRequires: bzlib-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_with_flac:BuildRequires: libflac-devel}
@@ -43,13 +41,14 @@ With these tools one can extract tracks/data from (mkvextract) Matroska
 files and create (mkvmerge) Matroska files from other media files.
 
 %if_enabled gui
-%package -n %gname
+%package gui
 Summary: GUI for mkvmerge including a chapter editor
 License: GPL
 Group: Video
 Provides: mmg = %version-%release
+Provides: mkvmerge-gui = %version-%release
 
-%description -n %gname
+%description gui
 Matroska is a new multimedia file format aiming to become the new
 container format for the future.
 mkvmerge GUI is a wxWindows based GUI for mkvmerge. It offers easy
@@ -111,19 +110,9 @@ bzip2 --best --force --keep ChangeLog
 mkdir -p %buildroot%_defaultdocdir/%name-%version
 install -m0644 AUTHORS ChangeLog.* README.md %buildroot%_defaultdocdir/%name-%version
 cp -ar examples %buildroot%_defaultdocdir/%name-%version
-mv %buildroot%_datadir/doc/%name/guide %buildroot%_defaultdocdir/%name-%version
 
 %if_with tools
 install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %buildroot%_bindir
-%endif
-
-%if_enabled gui
-mv %buildroot%_bindir/mmg %buildroot%_bindir/%gname
-ln -s %gname %buildroot%_bindir/mmg
-mv %buildroot%_man1dir/mmg.1 %buildroot%_man1dir/%gname.1
-ln -s %gname.1 %buildroot%_man1dir/mmg.1
-sed -i 's/mkvmergeGUI/%gname/' %buildroot%_desktopdir/mkvmergeGUI.desktop 
-find %buildroot%_datadir -name 'mkvmergeGUI.*' -exec rename mkvmergeGUI %gname "{}" +
 %endif
 
 %find_lang %name
@@ -145,13 +134,11 @@ find %buildroot%_datadir -name 'mkvmergeGUI.*' -exec rename mkvmergeGUI %gname "
 %_desktopdir/mkvinfo.desktop
 
 %if_enabled gui
-%files -n %gname
-%_bindir/%gname
-%_bindir/mmg
-%_man1dir/%gname.*
-%_man1dir/mmg.*
-%_iconsdir/hicolor/*/apps/%{gname}.*
-%_desktopdir/%gname.desktop
+%files gui
+%_bindir/%name-gui
+%_man1dir/%name-gui.*
+%_iconsdir/hicolor/*/apps/%name-gui.*
+%_desktopdir/%name-gui.desktop
 %_xdgmimedir/packages/%name.xml
 %endif
 
@@ -163,6 +150,9 @@ find %buildroot%_datadir -name 'mkvmergeGUI.*' -exec rename mkvmergeGUI %gname "
 %endif
 
 %changelog
+* Wed Jul 15 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.1.0-alt1
+- 8.1.0 released
+
 * Sat Mar 14 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.7.0-alt2
 - rebuilt with wxGTK 3.1
 

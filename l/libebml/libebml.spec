@@ -1,6 +1,6 @@
 Name: libebml
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: Extensible Binary Meta Language access library
 License: GPL/QPL
@@ -43,6 +43,9 @@ Files needed to build programs using libebml
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Jul 15 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.1-alt2
+- rebuilt with gcc5
+
 * Fri Jan 16 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.1-alt1
 - 1.3.1 released
 
