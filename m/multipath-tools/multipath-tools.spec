@@ -4,7 +4,7 @@
 
 Name: multipath-tools
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -61,12 +61,14 @@ kpartx manages partition creation and removal for device-mapper devices.
 
 %build
 # non-SMP build
-%make_build LIB=%_lib
+%make_build LIB=%_lib SYSTEMDPATH=lib
 
 %install
 mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
 %makeinstall_std \
 	DESTDIR=%buildroot \
+	SYSTEMDPATH=lib \
+	LIB=%_lib \
 	bindir=%_sbindir \
 	syslibdir=%_libdir \
 	libdir=%_libmpathdir \
@@ -74,9 +76,9 @@ mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrules
 	udevrulesdir=%_udevrulesdir \
 	unitdir=%_unitdir
 
-install -pm644 %SOURCE2 %buildroot%_udevrulesdir/62-multipath.rules
+#install -pm644 %SOURCE2 %buildroot%_udevrulesdir/62-multipath.rules
 install -pm755 %SOURCE3 %buildroot%_initdir/multipathd
-install -pm644 %SOURCE4 %buildroot%_modulesloaddir/multipath.conf
+#install -pm644 %SOURCE4 %buildroot%_modulesloaddir/multipath.conf
 mv -f %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 cp -a multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
 
@@ -94,7 +96,7 @@ cp -a multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
 %_sbindir/mpathpersist
 %_udevrulesdir/*
 %exclude %_udevrulesdir/kpartx.rules
-%_modulesloaddir/*
+#%_modulesloaddir/*
 %dir %_sysconfdir/multipath
 %config(noreplace) %attr(644,root,root) %_sysconfdir/multipath.conf
 %_initdir/*
@@ -116,6 +118,10 @@ cp -a multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
 %_man8dir/kpartx.8.*
 
 %changelog
+* Tue Jul 14 2015 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt2
+- upstream snapshot (770e6d0da035deaced82885939161c2b69225e10)
+- add patches from suse
+
 * Thu Mar 05 2015 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt1
 - 0.5.0
 
