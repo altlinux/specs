@@ -23,11 +23,14 @@
 %def_enable nmtui
 %def_enable bluez5dun
 
+# There is no sources in debuginfo with LTO
+%def_disable lto
+
 %define _name %name-daemon
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 
 Name: NetworkManager
-Version: 1.0.2
+Version: 1.0.4
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -390,6 +393,9 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--with-session-tracking=ck \
 	--with-suspend-resume=upower \
 %endif
+	--enable-polkit=yes \
+	--enable-polkit-agent \
+	--enable-modify-system=no \
 	--enable-etcnet-alt \
 	--disable-ifcfg-rh \
 	--disable-ifcfg-suse \
@@ -408,6 +414,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--disable-bluez5-dun \
 %endif
 	--enable-introspection=auto \
+	%{subst_enable lto} \
 	--enable-more-warnings=error
 
 %make_build
@@ -629,6 +636,20 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Jul 14 2015 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt1
+- Fix build with LTO (but disable it by default).
+- etcnet-alt: Update nm_platform_*() functions call.
+- etcnet-alt: Update tests.
+- etcnet-alt: Explicitly set DHCPv6 as config method if needed.
+- etcnet-alt: Allow 1/0 values in config files as TRUE/FALSE.
+- etcnet-alt: Fix NM_CONTROLLED reading.
+- etcnet-alt: Add 'no-nm-controlled' test.
+- etcnet-alt: Setup more errors.
+- etcnet-alt: Change options_true_value() signature.
+- etcnet-alt: Explicitly disable IP configuration if needed.
+- etcnet-alt: Print plugin name in messages.
+- Updated to 1.0.4.
+
 * Fri May 08 2015 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1
 - Use symlinks for nmtui* manpages.
 - Package /etc/NetworkManager/conf.d/ directory.

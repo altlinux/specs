@@ -5,7 +5,7 @@
 %def_without bluetooth
 
 Name: NetworkManager-applet-gtk
-Version: 1.0.2
+Version: 1.0.4
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -158,6 +158,10 @@ make check
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Wed Jul 15 2015 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt1
+- Don't allow to create new connection for missing device plugins.
+- Updated to 1.0.4.
+
 * Fri May 08 2015 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1
 - Minor spec cleanup.
 - Updated to 1.0.2.
