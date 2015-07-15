@@ -1,5 +1,5 @@
 Name: rdesktop
-Version: 1.8.1
+Version: 1.8.3
 Release: alt1
 
 Summary: A RDP client for accessing Windows Remote Desktop Services
@@ -8,9 +8,6 @@ Group: Networking/Remote access
 
 Url: http://www.rdesktop.org/
 Source0: %name-%version.tar
-#Patch0: %{name}-pcsc.patch
-#Patch1: %{name}-libao.patch
-Patch2: Raw-keyboard-patch-for-1.8.1.patch
 
 BuildRequires:  libao-devel libX11-devel openssl-devel libpcsclite-devel libgssglue-devel libXrandr-devel libpcsclite-devel libalsa-devel libsamplerate-devel
 
@@ -23,7 +20,6 @@ Vista, 2008, 7, and 2008 R2.
 
 %prep
 %setup -q
-%patch2 -p1
 
 %build
 %autoreconf
@@ -45,6 +41,9 @@ sed -i 's/slash 0x56 altgr/#slash 0x56 altgr/' %buildroot%_datadir/%name/keymaps
 %_man1dir/*
 
 %changelog
+* Wed Jul 15 2015 Michael A. Kangin <prividen@altlinux.org> 1.8.3-alt1
+- 1.8.3
+
 * Tue Dec 10 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.8.1-alt1
 - 1.8.1 (closes: #29643)
 - Update Raw-keyboard-patch-for-1.8.1.patch
