@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     4
 %define MINOR_VERSION     3
 %define BUILD_NUMBER      61
-%define PATCH_LEVEL       34
+%define PATCH_LEVEL       38
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 %def_without tests
@@ -108,6 +108,9 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Wed Jul 15 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.61.38-alt1
+- New version for chromium-43.0.2357.134
+
 * Wed Jul 08 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.61.34-alt1
 - New version
 
