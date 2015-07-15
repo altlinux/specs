@@ -11,7 +11,7 @@
 %define bugfix 3
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -42,6 +42,7 @@ Patch9: kdebase-4.3.3-alt-passwd-len.patch
 Patch10: kdebase-4.4.1-alt-dolphin-toolbar.patch
 Patch11: kdebase-4.4.1-alt-konqueror-toolbar.patch
 Patch12: kdebase-4.7.3-alt-copy-first.patch
+Patch13: kdebase-15.4.3-alt-kfmclient-loop.patch
 # upstream
 
 BuildRequires(pre): kde4libs-devel
@@ -259,6 +260,7 @@ KDE 4 library.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 cp -ar altlinux/places plasma/applets/
 echo "add_subdirectory(places)" >> plasma/applets/CMakeLists.txt
@@ -604,6 +606,9 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Wed Jul 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt2
+- prevent kfmclient wrap loop
+
 * Wed Jul 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt1
 - new version
 - use default dolphin priority
