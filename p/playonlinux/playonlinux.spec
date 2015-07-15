@@ -1,18 +1,20 @@
-%define oname PlayOnLinux
+%define  oname PlayOnLinux
+
+Name:    playonlinux
+Version: 4.2.8
+Release: alt1
 
 Summary: Play your Windows games on Linux
-Name: playonlinux
-Version: 4.2.5
-Release: alt1
 License: GPLv3
-Group: Games/Other
-Url: http://www.playonlinux.com
-Packager: Boris Savelev <boris@altlinux.org>
+Group:   Games/Other
+Url:     http://www.playonlinux.com
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: http://www.playonlinux.com/script_files/%oname/%version/%{oname}_%version.tar.gz
 Source1: playonlinux.sh
 Source2: %oname.desktop
 
+BuildRequires: python-module-wx2.9
 Requires: ImageMagick
 Requires: wget
 Requires: gettext
@@ -20,9 +22,10 @@ Requires: unzip
 Requires: cabextract
 Requires: xterm
 Requires: binutils
+Requires: python-module-wx2.9
 
 %add_findreq_skiplist %_datadir/%name/bash/*
-%filter_from_requires \.^/opt.d
+%add_findreq_skiplist %_datadir/%name/lib/scripts.lib
 
 ExclusiveArch: %ix86
 
@@ -64,6 +67,15 @@ rm -f %buildroot%_datadir/%name/bin/smile
 %_datadir/desktop-directories/%oname.directory
 
 %changelog
+* Fri Jul 03 2015 Andrey Cherepanov <cas@altlinux.org> 4.2.8-alt1
+- New version
+- Fix conflict with python-module-wx3.0
+
+* Thu Jul 02 2015 Andrey Cherepanov <cas@altlinux.org> 4.2.5-alt2
+- Fix autorequires for gnustep
+- Change packager name
+- Fix build conflict with python-module-wx2.9
+
 * Wed Jan 07 2015 Andrey Cherepanov <cas@altlinux.org> 4.2.5-alt1
 - New version
 - Remove obsolete encoding and add localization to desktop file
