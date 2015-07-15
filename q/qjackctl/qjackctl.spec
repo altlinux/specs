@@ -8,7 +8,7 @@
 %def_disable jack_version
 
 Name: qjackctl
-Version: 0.3.12
+Version: 0.4.0
 %ifdef cvsbuild
 Release: alt0.cvs%cvsdate
 %else
@@ -80,9 +80,13 @@ export PATH=%_qt4dir/bin:$PATH
 %dir %_datadir/%name/translations
 %_iconsdir/hicolor/*/*/*.*
 %_man1dir/*
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Wed Jul 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Mon Oct 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt1
 - 0.3.12
 
