@@ -8,7 +8,7 @@
 %define rname kdebase
 %define major 15
 %define minor 4
-%define bugfix 1
+%define bugfix 3
 Name: kde4base
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -41,8 +41,7 @@ Patch8: kdebase-4.3.3-alt-chfn.patch
 Patch9: kdebase-4.3.3-alt-passwd-len.patch
 Patch10: kdebase-4.4.1-alt-dolphin-toolbar.patch
 Patch11: kdebase-4.4.1-alt-konqueror-toolbar.patch
-Patch12: kdebase-4.5.3-alt-dolphin-prefer.patch
-Patch13: kdebase-4.7.3-alt-copy-first.patch
+Patch12: kdebase-4.7.3-alt-copy-first.patch
 # upstream
 
 BuildRequires(pre): kde4libs-devel
@@ -260,7 +259,6 @@ KDE 4 library.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
 
 cp -ar altlinux/places plasma/applets/
 echo "add_subdirectory(places)" >> plasma/applets/CMakeLists.txt
@@ -606,6 +604,10 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Wed Jul 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt1
+- new version
+- use default dolphin priority
+
 * Fri May 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.1-alt1
 - new version
 
