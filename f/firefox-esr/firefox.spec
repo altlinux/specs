@@ -9,7 +9,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        38.0.1
+Version:        38.1.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -288,6 +288,20 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Thu Jul 16 2015 Andrey Cherepanov <cas@altlinux.org> 38.1.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2015-70 NSS accepts export-length DHE keys with regular DHE cipher suites
+  + MFSA 2015-69 Privilege escalation through internal workers
+  + MFSA 2015-67 Key pinning is ignored when overridable errors are encountered
+  + MFSA 2015-66 Vulnerabilities found through code inspection
+  + MFSA 2015-65 Use-after-free in workers while using XMLHttpRequest
+  + MFSA 2015-64 ECDSA signature validation fails to handle some signatures correctly
+  + MFSA 2015-63 Use-after-free in Content Policy due to microtask execution error
+  + MFSA 2015-62 Out-of-bound read while computing an oscillator rendering range in Web Audio
+  + MFSA 2015-61 Type confusion in Indexed Database Manager
+  + MFSA 2015-60 Local files or privileged URLs in pages can be opened into new tabs
+
 * Mon May 25 2015 Andrey Cherepanov <cas@altlinux.org> 38.0.1-alt1
 - New ESR version
 - Security fixes:
