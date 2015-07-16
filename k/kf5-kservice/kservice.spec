@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.12.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -47,6 +47,7 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
+Requires: altlinux-freedesktop-menu-generic
 %description -n libkf5service
 KF5 library
 
@@ -81,6 +82,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Thu Jul 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt3
+- require altlinux-freedesktop-menu
+
 * Tue Jul 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt2
 - prefer KDE5 apps by default
 
