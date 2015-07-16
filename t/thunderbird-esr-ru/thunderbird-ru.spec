@@ -5,7 +5,7 @@
 %define cid_dict_dir   %tbird_noarch_extensionsdir/%cid_dict
 
 Name:		thunderbird-esr-ru
-Version:	38.0.1
+Version:	38.1.0
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Thunderbird
 
@@ -69,6 +69,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %cid_dict_dir
 
 %changelog
+* Thu Jul 16 2015 Andrey Cherepanov <cas@altlinux.org> 38.1.0-alt1
+- New ESR version
+
 * Sun Jun 14 2015 Andrey Cherepanov <cas@altlinux.org> 38.0.1-alt1
 - New ESR version
 
