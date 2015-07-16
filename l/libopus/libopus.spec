@@ -1,5 +1,5 @@
 Name: libopus
-Version: 1.0.3
+Version: 1.1
 Release: alt1
 
 Summary: Opus Audio Codec library
@@ -64,6 +64,9 @@ statically linked libopus-based software.
 %endif
 
 %changelog
+* Thu Jul 16 2015 Anton Farygin <rider@altlinux.ru> 1.1-alt1
+- 1.1
+
 * Wed Mar 04 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.3-alt1
 - 1.0.3
 
