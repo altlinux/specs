@@ -1,6 +1,6 @@
 Name: nfdump
 Version: 1.6.13
-Release: alt2
+Release: alt3
 Summary: collect and process netflow data
 
 Group: Monitoring
@@ -65,13 +65,13 @@ nftrack - Port tracking decoder for NfSen plugin PortTracker.
 %makeinstall_std
 mkdir -p %buildroot{%_cachedir/{nfcapd,sfcapd},%_sysconfdir/sysconfig,%_initdir,%_unitdir,%_tmpfilesdir,%_runtimedir/{nfcapd,sfcapd}}
 
-install -m0755 %SOURCE2 %buildroot%_initdir/
-install -m0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/
-install -m0644 %SOURCE4 %buildroot%_unitdir/
-install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/
-install -m0755 %SOURCE6 %buildroot%_initdir/
-install -m0644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/
-install -m0644 %SOURCE8 %buildroot%_unitdir/
+install -m0755 %SOURCE2 %buildroot%_initdir/nfcapd
+install -m0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/nfcapd
+install -m0644 %SOURCE4 %buildroot%_unitdir/nfcapd.service
+install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
+install -m0755 %SOURCE6 %buildroot%_initdir/sfcapd
+install -m0644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/sfcapd
+install -m0644 %SOURCE8 %buildroot%_unitdir/sfcapd.service
 
 %pre
 %_sbindir/groupadd -r -f nfcapd
@@ -112,6 +112,9 @@ install -m0644 %SOURCE8 %buildroot%_unitdir/
 %_bindir/nftrack
 
 %changelog
+* Thu Jul 16 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.13-alt3
+- fixed init and unit names
+
 * Fri Jul 03 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.13-alt2
 - add nftrack package
 
