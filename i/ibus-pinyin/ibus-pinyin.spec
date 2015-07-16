@@ -1,7 +1,7 @@
 
 Name:       ibus-pinyin
 Version:    1.5.0
-Release:    alt2
+Release:    alt3
 Summary:    The Chinese Pinyin and Bopomofo engines for IBus input platform
 
 License:    GPLv2+
@@ -10,6 +10,8 @@ URL:        http://code.google.com/p/ibus
 Source0:    http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
 Patch0:     ibus-pinyin-fixes-lua-compile.patch
 Patch1:     ibus-pinyin-support-set-content-type-method.patch
+
+Packager:   Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires:  glib2-devel sqlite3 gcc-c++ python-devel
 BuildRequires:  gnome-common
@@ -55,6 +57,10 @@ The Chinese Pinyin and Bopomofo input methods for IBus platform.
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Jul 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt3
+- Rebuild with new version of gcc
+- Fix packager name
+
 * Mon May 19 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt2
 - Move from autoimport to Sisyphus (ALT #29978)
 
