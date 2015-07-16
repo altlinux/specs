@@ -1,7 +1,6 @@
 %define _kde_alternate_placement 1
 
-%def_disable gcc5ready
-%def_disable google
+%def_disable qalculate
 %if_enabled kde_mobile
 %def_disable desktop
 %else
@@ -22,7 +21,7 @@
 
 %define major 4
 %define minor 11
-%define bugfix 20
+%define bugfix 21
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
@@ -107,7 +106,7 @@ Patch1037: kdebase-workspace-4.6.4-alt-hide-configs.patch
 Patch1038: kdebase-workspace-4.8.5-alt-session-exclude.patch
 Patch1039: kdebase-workspace-4.11.4-alt-def-plasma-digitalclock.patch
 Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
-#
+Patch1041: kde-workspace-4.11.21-alt-menu-icon.patch
 Patch1042: kdebase-workspace-4.8.5-alt-netbook-def-menu-groups.patch
 Patch1043: kdebase-workspace-4.8.5-alt-def-plasma-netbook.patch
 Patch1044: kdebase-workspace-4.8.5-alt-workspaceoptions.patch
@@ -124,9 +123,6 @@ Patch1053: kdebase-workspace-4.11.5-alt-oxygen-decoration-color-selinux.patch
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
 BuildRequires(pre): libpolkit-devel
-%if_enabled google
-BuildRequires: google-gadgets-devel
-%endif
 BuildRequires: bzlib-devel gcc-c++ libXft-devel libGLES-devel
 BuildRequires: libxcb-devel libxcbutil-image-devel libxcb-render-util-devel libxcbutil-keysyms-devel
 BuildRequires: libbluez-devel libkrb5-devel libpam-devel libaudit-devel
@@ -135,7 +131,7 @@ BuildRequires: libstrigi-devel libusb-compat-devel xml-utils
 BuildRequires: libalternatives-devel libudev-devel
 BuildRequires: polkit-qt-1-devel libpolkit-devel libdbusmenu-qt-devel
 BuildRequires: soprano soprano-backend-redland libsoprano-devel
-%if_enabled gcc5ready
+%if_enabled qalculate
 BuildRequires: libqalculate-devel
 %endif
 BuildRequires: libjpeg-devel prison-devel qjson-devel
@@ -207,9 +203,6 @@ Requires: /usr/bin/qdbus dbus-tools-gui
 Requires: qalculate-common
 Requires: kde4-kscreen
 Requires: polkit-kde-ksysguard polkit-kde-kfontinst polkit-kde-kcmclock
-%if_enabled google
-#Requires: google-gadgets-qt
-%endif
 Requires: polkit-kde-agent-1
 %if_enabled baloo
 Requires: kde4-baloo
@@ -503,9 +496,6 @@ KDE 4 library
 # move default ksplash theme to use another by default
 #sed -i 's|Default|Air|g' ksplash/ksplashx/themes/air/CMakeLists.txt
 #sed -i 's|Default|Air|g' ksplash/ksplashx/themes/air/Theme.rc
-%if_disabled google
-rm -rf plasma/generic/scriptengines/google_gadgets
-%endif
 
 %patch20 -p1
 %patch21 -p1
@@ -564,7 +554,7 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %patch1038 -p1
 %patch1039 -p1
 %patch1040 -p1
-#
+%patch1041 -p1
 %patch1042 -p1
 %patch1043 -p1
 %patch1044 -p1
@@ -959,6 +949,10 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jul 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.21-alt1
+- new version
+- set default menu icon
+
 * Wed Jun 10 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.20-alt1
 - new version
 
