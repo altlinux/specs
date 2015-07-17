@@ -2,7 +2,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.3
-Release: alt1.git20150312
+Release: alt2.git20150312
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -140,6 +140,9 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Fri Jul 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt2.git20150312
+- Rebuilt with gcc5
+
 * Sat Mar 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt1.git20150312
 - Version 3.0.3
 - Built with gtk3 instead of gtk2
