@@ -1,13 +1,14 @@
 Name: zpaq
-Version: 660
+Version: 705
 Release: alt1
 
 Summary: A journaling archiver optimized for backup
 
 Group: Archiving/Compression
-License: GPLv3
+License: Public domain
 Url: http://mattmahoney.net/dc/zpaq.html
 
+# Use $ rpmrb NEWVERSION for update the package
 Source: http://mattmahoney.net/dc/%name%version.zip
 
 # Automatically added by buildreq on Thu Mar 21 2013
@@ -70,6 +71,10 @@ ln -s lib%name.so.0 %buildroot%_libdir/lib%name.so
 %_includedir/*.h
 
 %changelog
+* Fri Jul 17 2015 Vitaly Lipatov <lav@altlinux.ru> 705-alt1
+- new version 705 (with rpmrb script)
+- license changed to Public domain
+
 * Mon Jan 19 2015 Vitaly Lipatov <lav@altlinux.ru> 660-alt1
 - new version 660 (with rpmrb script)
 
