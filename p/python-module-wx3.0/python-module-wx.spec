@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.3.0
-Release: alt3.git20150311
+Release: alt4.git20150311
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -479,6 +479,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Fri Jul 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3.0-alt4.git20150311
+- Rebuilt with gcc5
+
 * Mon Apr 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3.0-alt3.git20150311
 - Generate *.py files from *.i (ALT #30897)
 
