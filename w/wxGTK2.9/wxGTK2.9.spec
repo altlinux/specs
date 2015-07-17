@@ -9,7 +9,7 @@
 
 Name: wxGTK2.9
 Version: %wxbranch.5
-Release: alt3.svn20120816
+Release: alt4.svn20130718
 Epoch: 2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -135,7 +135,7 @@ mkdir $dist && cd $dist
 GST_CFLAGS="$(pkg-config --cflags gstreamer-0.10)"
 export LIBS="-lX11"
 DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
-%add_optflags -fno-strict-aliasing $GST_CFLAGS $DEFS
+%add_optflags -fno-strict-aliasing -std=gnu++11 $GST_CFLAGS $DEFS
 %configure $CONF_FLAG \
 	--with-sdl \
 	--enable-unicode \
@@ -320,6 +320,12 @@ ln -sf ../..%_libdir/wx/config/$wx_config_filename %buildroot%_bindir/wx-config
 %_datadir/wx/examples
 
 %changelog
+* Fri Jul 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.9.5-alt4.svn20130718
+- Rebuilt with gcc5
+
+* Fri Jul 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.9.5-alt3.svn20130718
+- New snapshot
+
 * Tue Mar 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.9.5-alt3.svn20120816
 - Built without libgnomeprintui and with libgtk+2
 
