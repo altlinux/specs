@@ -1,12 +1,11 @@
-%define nm_version 0.9.9.98
-%define nm_applet_version 0.9.9.98
+%define nm_version 0.9.10
+%define nm_applet_version 0.9.10
 %define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20130405
-%define gtkver 3
 
 Name: NetworkManager-ssh
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -18,11 +17,13 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: libgnome-keyring-devel perl-XML-Parser
+BuildRequires: perl-XML-Parser
 BuildRequires: intltool
 BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
-BuildRequires: libgtk+%gtkver-devel
+BuildRequires: libnm-gtk-devel >= %nm_version
+BuildRequires: libgtk+3-devel
+BuildRequires: libsecret-devel
 
 Requires: NetworkManager-daemon   >= %nm_version
 Requires: openssh
@@ -36,7 +37,6 @@ License: %gpl2plus
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
 Requires: shared-mime-info >= 0.16
-Requires: gnome-keyring
 Requires: %nm_applet_name >= %nm_applet_version
 Requires: %name = %version-%release
 
@@ -57,8 +57,7 @@ NetworkManager panel applet.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-	--with-gtkver=%gtkver \
-	--enable-more-warnings=no
+	--enable-more-warnings=error
 %make_build
 
 %install
@@ -83,6 +82,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Fri Jul 17 2015 Mikhail Efremov <sem@altlinux.org> 0.9.4-alt1
+- Updated BR.
+- Updated to 0.9.4.
+
 * Tue Jun 24 2014 Mikhail Efremov <sem@altlinux.org> 0.9.3-alt1
 - Update requires: NetworkManager -> NetworkManager-daemon.
 - Update BR: Use libnm-glib-vpn-devel.
