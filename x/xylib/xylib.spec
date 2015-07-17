@@ -1,6 +1,6 @@
 Name: xylib
 Version: 1.3
-Release: alt1
+Release: alt2
 Summary: Library for reading x-y data
 License: LGPL v2.1
 Group: File tools
@@ -70,6 +70,9 @@ This package contains development files of xylib.
 %_includedir/*
 
 %changelog
+* Mon Jul 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt2
+- Rebuilt with gcc5
+
 * Sat Jun 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1
 - Version 1.3
 

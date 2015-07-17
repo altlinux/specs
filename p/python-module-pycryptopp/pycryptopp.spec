@@ -1,7 +1,7 @@
 %define oname pycryptopp
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt1.git20130916
+Release: alt2.git20130916
 Summary: Python wrappers for a few algorithms from the Crypto++ library
 License: GPLv2+ or other (see copyright)
 Group: Development/Python
@@ -65,6 +65,9 @@ python setup.py test
 %python_sitelibdir/*/bench
 
 %changelog
+* Sat Jul 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt2.git20130916
+- Rebuilt with gcc5
+
 * Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20130916
 - Initial build for Sisyphus
 

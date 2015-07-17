@@ -1,7 +1,7 @@
 %define oname	cryptopp
 Name: libcryptopp
 Version: 5.6.2
-Release: alt1
+Release: alt1.1
 
 # convert 5.6.2 -> 562 format
 %define orig_version	%(echo %version | sed -e "s/\\.//g")
@@ -111,6 +111,9 @@ EOF
 #%_datadir/cryptopp/
 
 %changelog
+* Sat Jul 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.2-alt1.1
+- Rebuilt with gcc5
+
 * Wed Jul 17 2013 Evgeny Sinelnikov <sin@altlinux.ru> 5.6.2-alt1
 - Update to last stable release with multiple fixes and SHA-3 implemetation
 - Change license from GPL to Boost Software License 1.0
