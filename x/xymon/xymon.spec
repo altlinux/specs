@@ -25,6 +25,7 @@
 
 ##########################################################################
 ##########################################################################
+%define _libexecdir %_prefix/libexec
 
 %define serverName	xymon
 %define clientName	xymon-client
@@ -60,7 +61,7 @@ License:	%gpl2only
 URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
-Version:	4.3.16
+Version:	4.3.21
 Release:	alt1
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
@@ -119,7 +120,7 @@ Requires(post):		/usr/sbin/semodule /usr/sbin/semanage /sbin/restorecon
 Requires(postun):	/usr/sbin/semodule /usr/sbin/semanage
 %endif # selinux
 
-%{?_disable_trunk:Requires:	ntp}
+#%{?_disable_trunk:Requires:	ntpdate ntp-utils}
 %{?_enable_altshell:Requires:	%shell}
 %{?_enable_snmp:BuildRequires:	libnet-snmp-devel}
 %{?_enable_dietlibc:BuildRequires:	/usr/bin/diet}
@@ -129,7 +130,7 @@ Requires(postun):	/usr/sbin/semodule /usr/sbin/semanage
 #################
 
 # move static www files from HOME/www to HOME/static
-Patch1: xymon_4313.installstaticwww.patch
+Patch1: xymon_4317.installstaticwww.patch
 
 # specify location of help files instead of assuming
 Patch2: xymon.helpdir.patch
@@ -181,10 +182,6 @@ Patch18: xymon.nullfollowsincl.patch
 Patch19: xymon.nolocalclient.patch
 
 
-# allow http tests to store the raw output as a data message (data=)
-Patch27: xymon_branch.datahttp.patch
-
-
 # don't print default env file name unless running xymoncmd with --debug
 # see: https://sourceforge.net/tracker/?func=detail&aid=3170846&group_id=128058&atid=710490
 Patch30: xymon.quietcmd.patch
@@ -229,9 +226,6 @@ Patch54: xymon.serverclient.patch
 # of after the fact (preparing for systemd unit files)
 Patch59: xymon.shellinclude.patch
 
-
-# add submitted summary results to nongreen.html
-Patch102: xymon.nongreensummaries.patch
 
 # fork the vmstat collector on clients by piping to a shell instead
 # of putting it all on a single command line
@@ -282,8 +276,8 @@ Patch502: xymonclient-linux.sh-ifconfig-route.patch
 # configurable top and ps (allow to use vzprocps)
 Patch503: xymonclient-linux.sh-various-procps.patch
 
-# build/Makefile.rules bug
-Patch504: xymon-4.3.13-build-rules.patch
+# rollback of changes for cgiwrap introduced in 4.3.20
+Patch504: xymon-4.3.21-FollowSymLinks.patch
 
 ##########################################################################
 ##########################################################################
@@ -475,14 +469,12 @@ the Xymon server in NCV format.
 %patch54 -b .serverclient
 %patch59 -b .shellinclude
 
-%patch102 -b .nongreensummaries
 %patch103 -b .pipevmstatfork
 
 %patch203 -b .usrlibs
 
 %if_disabled trunk
 %patch26 -b .httpheaders
-%patch27 -b .datahttp
 %patch3 -b .rundir
 %else # trunk
 %patch326 -b .httpheaders
@@ -499,8 +491,7 @@ the Xymon server in NCV format.
 %patch501 -p0
 %patch502 -p2
 %patch503 -p1
-%patch504 -p2
-
+%patch504 -p1
 
 %if_disabled trunk
   PROTOFILE="xymond/etcfiles/protocols.cfg.DIST"
@@ -665,13 +656,16 @@ popd
 ##########################################################################
 
 %install
+
+# rollback of changes for cgiwrap introduced in 4.3.20
+%{__perl} -p -e 's/ln -f \$\(INSTALLROOT\)/ln -sf /g;' -i %{_builddir}/%{name}-%{version}/web/Makefile
+
 install -d %{buildroot}%{wwwCacheDirectory}
 install -d %{buildroot}%{runDirectory}
 install -d %{buildroot}%{_bindir}
 make PKGBUILD=1 INSTALLROOT=%{buildroot} install
 
 install -m 644 %{SOURCE3} README.redhat
-
 
 %if_enabled dietlibc
    # Copy the smaller, static client binaries back into the client section
@@ -1277,6 +1271,13 @@ done
 ################ end extra clients ################
 
 %changelog
+* Fri Jul 17 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.3.21-alt1
+- new version (CVE-2015-1430 was fixed in previous 4.3.18)
+- moved binaries from /usr/lib to /usr/libexec
+  (xymonserver.cfg of earlier installed package should be updated manualy)
+- removed "Requires: ntp" (but ntpdate and ntpq may be needed
+  in some installations)
+
 * Wed Feb 12 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.3.16-alt1
 - new version
 - added xymonclient-linux.sh-various-procps.patch
