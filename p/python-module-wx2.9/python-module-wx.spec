@@ -8,7 +8,7 @@
 
 Name: python-module-%oname
 Version: %major.5.0
-Release: alt1.svn20120812
+Release: alt2.svn20120812
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -193,7 +193,8 @@ cp -a . ../python3
 
 %build
 INCS="-I%_includedir/wx-%major/wx/aui -I%_includedir/wx-%major/wx/propgrid"
-%add_optflags -fno-strict-aliasing $INCS
+DEFS="-DwxUSE_WEBVIEW=1"
+%add_optflags -fno-strict-aliasing -std=gnu++11 $INCS $DEFS
 
 %python_build_debug \
 	NO_SCRIPTS=1 \
@@ -220,7 +221,7 @@ done
 unset CFLAGS
 unset CXXFLAGS
 unset FFLAGS
-%add_optflags -DNPY_PY3K -fno-strict-aliasing $INCS
+%add_optflags -DNPY_PY3K -fno-strict-aliasing -std=gnu++11 $INCS $DEFS
 
 %python3_build_debug \
 	NO_SCRIPTS=1 \
@@ -369,6 +370,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Fri Jul 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.5.0-alt2.svn20120812
+- Rebuilt with gcc5
+
 * Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.5.0-alt1.svn20120812
 - Version 2.9.5.0
 
