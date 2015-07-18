@@ -1,6 +1,6 @@
 Name: patool
-Version: 1.5
-Release: alt1
+Version: 1.7
+Release: alt2
 
 Summary: Portable command line archive file manager
 
@@ -25,13 +25,18 @@ files without having to remember a myriad of programs and options.
 The archive format is determined by the file(1) program and as a
 fallback by the archive file extension.
 
-patool supports 7z (.7z), ACE (.ace), ALZIP (.alz), AR (.a), ARC (.arc),
-ARJ (.arj), BZIP2 (.bz2), CAB (.cab), compress (.Z), CPIO (.cpio),
-DEB (.deb), GZIP (.gz), LRZIP (.lrz), LZH (.lha, .lzh), LZIP (.lz),
-LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar), RZIP (.rz), TAR (.tar),
+patool supports 7z (.7z), ACE (.ace), ADF (.adf), ALZIP (.alz),
+APE (.ape), AR (.a), ARC (.arc),
+ARJ (.arj), BZIP2 (.bz2), CAB (.cab), COMPRESS (.Z), CPIO (.cpio),
+DEB (.deb), DMS (.dms), FLAC (.flac), GZIP (.gz),
+LRZIP (.lrz), LZH (.lha, .lzh), LZIP (.lz), LZMA (.lzma),
+LZOP (.lzo), RPM (.rpm), RAR (.rar), RZIP (.rz), SHN (.shn), TAR (.tar),
 XZ (.xz), ZIP (.zip, .jar) and ZOO (.zoo) formats. It relies on helper
 applications to handle those archive formats (for example bzip2 for
 BZIP2 archives).
+
+The archive formats TAR, ZIP, BZIP2 and GZIP are supported natively
+and do not require helper applications to be installed.
 
 %prep
 %setup -n %name-%version
@@ -46,10 +51,16 @@ BZIP2 archives).
 %_bindir/%name
 %_man1dir/%name.*
 %python_sitelibdir/patoolib/
-%python_sitelibdir/_Patool_configdata.py
-%python_sitelibdir/Patool-*.egg-info
+%python_sitelibdir/_patool_configdata.*
+%python_sitelibdir/patool-*.egg-info
 
 %changelog
+* Sat Jul 18 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt2
+- add support zpaq files from future 1.8 version
+
+* Sun Sep 14 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt1
+- new version 1.7 (with rpmrb script)
+
 * Mon May 05 2014 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt1
 - new version 1.5 (with rpmrb script)
 
