@@ -9,7 +9,7 @@
 %def_enable hw
 
 Name: %_name%api_ver
-Version: %ver_major.6
+Version: %ver_major.8
 Release: alt1
 
 Summary: Library integrating clutter with GStreamer
@@ -126,6 +126,9 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Sat Jul 18 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt1
+- 3.0.8
+
 * Sun May 24 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.6-alt1
 - 3.0.6
 - moved gstreamer plugin to separate subpackage (BGO #746883)
