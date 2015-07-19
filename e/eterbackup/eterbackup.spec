@@ -1,5 +1,5 @@
 Name: eterbackup
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Etersoft backup tools for journaling backup
@@ -46,6 +46,11 @@ See detailed russian description here: http://wiki.etersoft.ru/Eterbackup
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Sun Jul 19 2015 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- bugfix release
+- eterpack: fix find special files
+- eterpack: support for --depth 0 (create one archive per all directory tree)
+
 * Sun Jul 19 2015 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - eterpack: add compare command (compare archive with directory without unpacking)
 - eterpack: fix packing root files in depth 2 or more archives
