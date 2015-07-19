@@ -1,10 +1,10 @@
-%define ver_major 0.6
+%define ver_major 0.7
 %define api_ver %ver_major
 %def_enable introspection
 %def_enable gtk_doc
 
 Name: libgrss
-Version: %ver_major
+Version: %ver_major.0
 Release: alt1
 
 Summary: A Glib-based library to manage RSS and Atom feeds
@@ -12,7 +12,7 @@ Group: System/Libraries
 License: LGPLv2+
 Url: https://wiki.gnome.org/
 
-Source: ftp://ftp.gnome.org/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.42.1
 %define soup_ver 2.48.0
@@ -64,10 +64,6 @@ This package contains development documentation for %name library.
 %prep
 %setup
 
-# fix wrong {typelib,gir}dir
-subst 's/\$(libdir)\/girepository-%api_ver/\$(INTROSPECTION_TYPELIBDIR)/
-       s/\$(datadir)\/gir-%api_ver/\$(INTROSPECTION_GIRDIR)/' src/Makefile.am
-
 %build
 %autoreconf
 %configure --disable-static \
@@ -81,13 +77,13 @@ subst 's/\$(libdir)\/girepository-%api_ver/\$(INTROSPECTION_TYPELIBDIR)/
 %make check
 
 %files
-%_libdir/%name-%api_ver.so.*
+%_libdir/%name.so.*
 %doc NEWS README
 
 %files devel
-%_includedir/%name-%api_ver/
-%_libdir/%name-%api_ver.so
-%_pkgconfigdir/%name-%api_ver.pc
+%_includedir/%name/
+%_libdir/%name.so
+%_pkgconfigdir/%name.pc
 
 %if_enabled introspection
 %files gir
@@ -103,6 +99,9 @@ subst 's/\$(libdir)\/girepository-%api_ver/\$(INTROSPECTION_TYPELIBDIR)/
 %endif
 
 %changelog
+* Sun Jul 19 2015 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Thu Jan 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt1
 - first build for Sisyphus
 
