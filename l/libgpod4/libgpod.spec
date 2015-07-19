@@ -2,7 +2,7 @@
 
 Name: libgpod4
 Version: 0.8.3
-Release: alt4
+Release: alt5
 
 Summary: iPod access library
 Group: Sound
@@ -11,6 +11,7 @@ URL: http://www.gtkpod.org/libgpod
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-0.8.3-alt-swig.patch
 
 Provides: libgpod = %version-%release
 Obsoletes: libgpod < 0.7
@@ -21,7 +22,7 @@ BuildRequires: libsgutils-devel libusb-devel zlib-devel libimobiledevice-devel
 BuildRequires: libtag-devel libxml2-devel libgdk-pixbuf-devel
 BuildRequires: python-module-pygobject-devel python-module-mutagen swig
 BuildRequires: rpm-build-licenses
-BuildRequires: mono-devel libgtk-sharp2-devel
+BuildRequires: /proc mono-devel libgtk-sharp2-devel
 
 %description
 libgpod is a library meant to abstract access to an iPod content. It
@@ -81,6 +82,7 @@ libgpod-sharp.
 %prep
 %setup
 %patch -p1
+%patch1
 
 # remove execute perms on the python examples as they'll be installed in %%doc
 chmod -x bindings/python/examples/*.py
@@ -137,6 +139,9 @@ rm -f %buildroot%python_sitelibdir/gpod/*.la
 %_pkgconfigdir/libgpod-sharp.pc
 
 %changelog
+* Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt5
+- fixed build with newer swig
+
 * Mon Feb 23 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt4
 - rebuilt against libimobiledevice.so.6
 
