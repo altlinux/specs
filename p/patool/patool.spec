@@ -1,6 +1,6 @@
 Name: patool
-Version: 1.7
-Release: alt2
+Version: 1.8
+Release: alt1
 
 Summary: Portable command line archive file manager
 
@@ -55,6 +55,9 @@ and do not require helper applications to be installed.
 %python_sitelibdir/patool-*.egg-info
 
 %changelog
+* Sun Jul 19 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8-alt1
+- new version 1.8 (with rpmrb script)
+
 * Sat Jul 18 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt2
 - add support zpaq files from future 1.8 version
 
