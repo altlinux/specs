@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 25.6.0b3
-Release: alt1
+Release: alt2
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -16,8 +16,6 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 %define palemoon_datadir                %_datadir/%name
 %define palemoon_arch_extensionsdir     %palemoon_prefix/extensions
 %define palemoon_noarch_extensionsdir   %palemoon_datadir/extensions
-
-
 
 Source: %name-source.tar
 Source1: rpm-build.tar
@@ -85,7 +83,6 @@ tar -xf %SOURCE2
 %patch18 -p1
 %patch20 -p1
 
-
 cat >> browser/confvars.sh <<EOF
 MOZ_UPDATER=
 MOZ_JAVAXPCOM=
@@ -95,6 +92,17 @@ EOF
 
 echo %version > browser/config/version.txt
 
+
+%__subst s~'$(MOZ_APP_NAME)-$(MOZ_APP_VERSION)'~'$(MOZ_APP_NAME)$(MOZ_APP_VERSION)'~g  ./config/baseconfig.mk
+#subst s~'Moonchild Productions'~'Moonchild_Productions'~g  ./build/application.ini
+#subst s~'Pale Moon'~'Pale_Moon'~g  ./build/application.ini
+
+%__subst s~'"Moonchild Productions"'~'"Moonchild_Productions"'~g  ./build/application.ini
+%__subst s~'"Pale Moon"'~'"Pale_Moon"'~g  ./build/application.ini
+
+cp -f %SOURCE4 .mozconfig
+
+
 %ifnarch %ix86 x86_64 armh
 echo "ac_add_options --disable-methodjit" >> .mozconfig
 echo "ac_add_options --disable-monoic" >> .mozconfig
@@ -102,19 +110,10 @@ echo "ac_add_options --disable-polyic" >> .mozconfig
 echo "ac_add_options --disable-tracejit" >> .mozconfig
 %endif
 
-subst s~'$(MOZ_APP_NAME)-$(MOZ_APP_VERSION)'~'$(MOZ_APP_NAME)$(MOZ_APP_VERSION)'~g  ./config/baseconfig.mk
-#subst s~'Moonchild Productions'~'Moonchild_Productions'~g  ./build/application.ini
-#subst s~'Pale Moon'~'Pale_Moon'~g  ./build/application.ini
-
-subst s~'"Moonchild Productions"'~'"Moonchild_Productions"'~g  ./build/application.ini
-subst s~'"Pale Moon"'~'"Pale_Moon"'~g  ./build/application.ini
-
-cp -f %SOURCE4 .mozconfig
-
 %ifarch %ix86
+#ac_add_options --disable-cairo
 echo 'ac_add_options --enable-optimize="-O3 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
-
 
 %build
 cd %name
@@ -122,7 +121,6 @@ cd %name
 %add_optflags %optflags_shared
 %add_findprov_lib_path %palemoon_prefix
 export MOZ_BUILD_APP=browser
-
 
 # Mozilla builds with -Wall with exception of a few warnings which show up
 # everywhere in the code; so, don't override that.
@@ -146,8 +144,6 @@ export LIBIDL_CONFIG=%_bindir/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
 
-
-
 %__autoconf
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
@@ -156,9 +152,6 @@ MOZ_SMP_FLAGS=-j1
 [ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
 [ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
 %endif
-
-
-
 
 make -f client.mk \
 	MAKENSISU= \
@@ -185,10 +178,9 @@ mkdir -p \
 	%buildroot/%mozilla_noarch_extdir/%palemoon_cid \
 	#
 
-
 #install -d %buildroot%palemoon_prefix
 
-#install -d %buildroot%palemoon_prefix 
+#install -d %buildroot%palemoon_prefix
 
 pushd objdir
 #install -d %buildroot%palemoon_prefix/bin
@@ -196,19 +188,13 @@ pushd objdir
 %makeinstall_std MOZ_APP_VERSION=
 popd
 
-
-
 rm  -f %buildroot/%_bindir/%name
 
 install  %name  %buildroot/%_bindir/%name
 
 #mv -f %buildroot%palemoon_prefix-%version %buildroot%palemoon_prefix
 
-
-
 #cp  %buildroot/%palemoon_prefix/%name-bin  %buildroot%_bindir/%name
-
-
 
 # install altlinux-specific configuration
 install -D -m 644 %SOURCE8 %buildroot/%palemoon_prefix/browser/defaults/preferences/all-altlinux.js
@@ -225,9 +211,6 @@ for s in 16 22 24 32 48 256; do
 		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%name.png
 done
 
-
-
-
 # install rpm-build-%name
 mkdir -p -- \
 	%buildroot/%_rpmmacrosdir
@@ -238,9 +221,7 @@ sed \
 
 #install -m755 %name %buildroot/%_bindir/%name
 
-
 cd %buildroot
-
 
 #sed -i \
 #	-e 's,\(MinVersion\)=.*,\1=5.0.1,g' \
@@ -255,8 +236,6 @@ install -D -m 644 %SOURCE6 ./%_desktopdir/%name.desktop
 # Add alternatives
 mkdir -p ./%_altdir
 printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' >./%_altdir/%name
-
-
 
 rm -f -- \
 	./%palemoon_prefix/%name \
@@ -312,6 +291,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Sat Jul 18 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.6.0b3-alt2
+- Update from upstream
+
 * Tue Jul 14 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.6.0b3-alt1
 - New Version
 
