@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.4.2
+Version: 5.5
 Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
@@ -201,6 +201,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %endif
 
 %changelog
+* Mon Jul 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.5-alt1
+- Version 5.5
+
 * Mon Jun 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.2-alt1
 - Version 5.4.2
 
