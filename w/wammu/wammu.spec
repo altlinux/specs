@@ -1,13 +1,13 @@
 Name: wammu
-Version: 0.38
-Release: alt2
+Version: 0.39
+Release: alt1
 
 Summary: Mobile phone manager
 License: GPL
 Group: Communications
 
 Url: http://wammu.eu
-Source: http://dl.cihar.com/wammu/v0/%name-%version.tar.bz2
+Source0: http://dl.cihar.com/wammu/v0/%name-%version.tar.bz2
 Source100: wammu.watch
 Packager: L.A. Kostis <lakostis@altlinux.ru>
 
@@ -49,6 +49,9 @@ subst '/man1/ D' INSTALLED_FILES
 %_mandir/*/man1/*
 
 %changelog
+* Wed Jul 15 2015 Michael Shigorin <mike@altlinux.org> 0.39-alt1
+- new version (watch file uupdate)
+
 * Thu May 07 2015 Michael Shigorin <mike@altlinux.org> 0.38-alt2
 - rebuilt against current {python-module-,}gammu
 - added debian watch file
