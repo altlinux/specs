@@ -1,6 +1,6 @@
 Name: zpaq
 Version: 705
-Release: alt1
+Release: alt2
 
 Summary: A journaling archiver optimized for backup
 
@@ -13,7 +13,7 @@ Source: http://mattmahoney.net/dc/%name%version.zip
 
 # Automatically added by buildreq on Thu Mar 21 2013
 # optimized out: libstdc++-devel
-BuildRequires: gcc-c++ libgomp-devel unzip
+BuildRequires: gcc-c++ libgomp-devel unzip perl-podlators
 
 %description
 zpaq is a journaling archiver optimized for user-level incremental
@@ -51,6 +51,7 @@ g++ %optflags -Dunix -shared -fPIC libzpaq.cpp -Wl,-soname,%name.so.0 -o lib%nam
 ln -s lib%name.so.0 lib%name.so
 g++ %optflags -Dunix -DNDEBUG zpaq.cpp -L.  -o zpaq -l%name -lm -lpthread
 #g++ %optflags -Dunix zpaqd.cpp -L. -l%name -o zpaqd -L. -lzpaq -lm
+pod2man zpaq.pod > zpaq.1
 
 %install
 install -D zpaq %buildroot%_bindir/zpaq
@@ -58,10 +59,12 @@ install -D zpaq %buildroot%_bindir/
 install -D lib%name.so.0 %buildroot%_libdir/lib%name.so.0
 install -D libzpaq.h %buildroot%_includedir/libzpaq.h
 ln -s lib%name.so.0 %buildroot%_libdir/lib%name.so
+install -m0644 -D zpaq.1 %buildroot%_man1dir/zpaq.1
 
 %files
 %doc readme.txt
 %_bindir/*
+%_man1dir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -71,6 +74,9 @@ ln -s lib%name.so.0 %buildroot%_libdir/lib%name.so
 %_includedir/*.h
 
 %changelog
+* Tue Jul 21 2015 Vitaly Lipatov <lav@altlinux.ru> 705-alt2
+- convert and pack man page
+
 * Fri Jul 17 2015 Vitaly Lipatov <lav@altlinux.ru> 705-alt1
 - new version 705 (with rpmrb script)
 - license changed to Public domain
