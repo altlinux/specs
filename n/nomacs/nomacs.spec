@@ -1,16 +1,16 @@
 Name: nomacs
-Version: 1.6.3
-Release: alt2.1.1
+Version: 1.6.4
+Release: alt1
 
 License: GPLv3
 Group: Graphics
 Summary: A fast and small image viewer
 Url: http://www.nomacs.org
 
-Source: http://sourceforge.net/projects/nomacs/files/%name-%version/%name-%version.tar.bz2
+Source: http://sourceforge.net/projects/nomacs/files/%name-%version/%name-%version.tar.gz
 
 BuildRequires: cmake gcc-c++ libqt4-devel libexiv2-devel libgomp-devel
-BuildRequires: libtiff-devel libopencv-devel libraw-devel-static zlib-devel
+BuildRequires: libtiff-devel libopencv-devel libraw-devel zlib-devel
 
 %description
 nomacs is a free image viewer small, fast and able to handle the most common
@@ -42,6 +42,9 @@ rm -rf {LibRaw,exiv2,expat,zlib}*
 %_pixmapsdir/%name.png
 
 %changelog
+* Wed Jul 01 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
+- 1.6.4
+
 * Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.3-alt2.1.1
 - Rebuilt for gcc5 C++11 ABI.
 
