@@ -1,13 +1,19 @@
-%define lvm2version 2.02.119
-%define dmversion 1.02.96
+%define lvm2version 2.02.125
+%define dmversion 1.02.102
 
 %def_disable cluster
 %def_enable selinux
 %def_enable lvmetad
+%def_enable lvmpolld
+%def_disable lvmlockd
 %def_disable blkid_wiping
 
-%define cache_type internal
-%define thin_type internal
+%if_enabled lvmlockd
+ %def_enable lockd_sanlock
+  %if_enabled cluster
+   %def_enable lockd_dlm
+  %endif
+%endif
 
 Summary: Userland logical volume management tools
 Name: lvm2
@@ -23,6 +29,7 @@ Source1: dmcontrol_update
 Source3: lvm2-monitor.init
 Source4: lvm2-lvmetad.init
 Source5: blk-availability.init
+Source6: lvm2-lvmpolld.init
 
 Patch: %name-%version-%release.patch
 
@@ -39,11 +46,13 @@ BuildRequires: gcc-c++
 BuildRequires: libreadline-devel libtinfo-devel libudev-devel CUnit-devel
 BuildRequires: libudev-devel >= 205
 BuildRequires: systemd-devel
+BuildRequires: thin-provisioning-tools
 BuildRequires: python-devel python-module-setuptools
 %{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static}
 %{?_enable_cluster:BuildRequires: libcman-devel libdlm-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
 %{?_enable_blkid_wiping:BuildRequires: libblkid-devel >= 2.24}
+%{?_enable_lockd_sanlock:BuildRequires: sanlock-devel}
 
 %description
 LVM2 includes all of the support for handling read/write operations
@@ -142,6 +151,11 @@ Group: System/Libraries
 Requires: libdevmapper-event = %dmversion-%release
 Requires: libdevmapper-devel = %dmversion-%release
 
+%package lockd
+Summary: LVM locking daemon
+Group: System/Base
+Requires: %name = %version-%release
+
 %package -n python-module-lvm
 Summary: Python module to access LVM
 License: LGPLv2
@@ -176,6 +190,9 @@ libdevmapper-event.
 This package contains files needed to develop applications that use
 the device-mapper event library.
 
+%description lockd
+LVM commands use lvmlockd to coordinate access to shared storage.
+
 %description -n python-module-lvm
 Python module to allow the creation and use of LVM
 logical volumes, physical volumes, and volume groups.
@@ -188,7 +205,7 @@ logical volumes, physical volumes, and volume groups.
 
 %build
 %autoreconf
-export ac_cv_path_MODPROBE_CMD=/sbin/modprobe
+export ac_cv_path_MODPROBE_CMD=%_sbindir/modprobe
 
 %if_enabled static
 %configure \
@@ -200,13 +217,13 @@ export ac_cv_path_MODPROBE_CMD=/sbin/modprobe
 	ac_cv_lib_dl_dlopen=no \
 	--with-optimisation="%optflags -Os" \
 	--with-group= \
-	--with-staticdir=/sbin \
+	--with-staticdir=%_sbindir \
 	--with-user= \
 	--disable-pkgconfig \
 	--with-device-uid=0 \
 	--with-device-gid=6 \
 	--with-device-mode=0660 \
-	--with-dmeventd-path="/sbin/dmeventd"
+	--with-dmeventd-path="%_sbindir/dmeventd"
 	#
 %__make libdm
 %__make lib
@@ -222,6 +239,7 @@ mv libdm/ioctl/libdevmapper.a .
 	%{subst_enable selinux} \
 	--disable-static_link \
 	--enable-lvm1_fallback \
+	--with-lvm1=internal \
 	--enable-readline \
 	--with-group= \
 	--with-user= \
@@ -239,16 +257,35 @@ mv libdm/ioctl/libdevmapper.a .
 	--enable-dmeventd \
 	--with-udevdir=%_udevrulesdir \
 %if_enabled lvmetad
-	--enable-lvmetad \
+	%{subst_enable lvmetad} \
 	--enable-udev-systemd-background-jobs \
 %endif
+	%{subst_enable lvmpolld} \
 	--enable-udev_sync \
 	%{subst_enable blkid_wiping} \
-	--with-dmeventd-path="/sbin/dmeventd" \
+	%{?_enable_lockd_dlm:--enable-lockd-dlm} \
+	%{?_enable_lockd_sanlock:--enable-lockd-sanlock} \
+	--with-dmeventd-path="%_sbindir/dmeventd" \
 	--with-systemdsystemunitdir=%_unitdir \
 	--with-tmpfilesdir=%_tmpfilesdir \
-	--with-cache=%cache_type \
-	--with-thin=%thin_type \
+	--with-default-pid-dir=%_runtimedir \
+	--with-default-dm-run-dir=%_runtimedir \
+	--with-default-run-dir=%_runtimedir \
+	--with-pool=internal \
+	--with-cluster=internal \
+	--with-snapshots=internal \
+	--with-mirrors=internal \
+	--with-raid=internal \
+	--with-cache=internal \
+	--with-cache-check=/usr/sbin/cache_check \
+	--with-cache-dump=/usr/sbin/cache_dump \
+	--with-cache-repair=/usr/sbin/cache_repair \
+	--with-cache-restore=/usr/sbin/cache_restore \
+	--with-thin=internal \
+	--with-thin-check=/usr/sbin/thin_check \
+	--with-thin-dump=/usr/sbin/thin_dump \
+	--with-thin-repair=/usr/sbin/thin_repair \
+	--with-thin-restore=/usr/sbin/thin_restore \
 	--enable-python-bindings
 
 %__make
@@ -261,7 +298,7 @@ mv libdm/ioctl/libdevmapper.a .
 %makeinstall_std install_tmpfiles_configuration
 
 chmod -R u+rwX %buildroot
-%{?_enable_static:install -pm755 lvm.static %buildroot/sbin/}
+%{?_enable_static:install -pm755 lvm.static %buildroot%_sbindir}
 
 ### device-mapper part
 
@@ -294,10 +331,7 @@ popd
 # provide a symlink for devmapper.pc
 ln -sf devmapper.pc %buildroot%_pkgconfigdir/libdevmapper.pc
 
-### cluster stuff
-%if_enabled cluster
-install -pm755 scripts/lvmconf.sh %buildroot/sbin/lvmconf
-%endif
+install -pm755 scripts/lvmconf.sh %buildroot%_sbindir/lvmconf
 
 ### lvm2-monitor init script
 
@@ -305,35 +339,51 @@ mkdir -p %buildroot%_initdir
 install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
 install -m 0755 %SOURCE4 %buildroot%_initdir/lvm2-lvmetad
 install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
+install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
+
+# Fix tmpfiles
+sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 
 %post
-%post_service lvm2-monitor
 %if_enabled lvmetad
 %post_service lvm2-lvmetad
 %endif
+%if_enabled lvmpolld
+%post_service lvm2-lvmpolld
+%endif
 %post_service blk-availability
+%post_service lvm2-monitor
 
 %preun
 %preun_service lvm2-monitor
 %if_enabled lvmetad
 %preun_service lvm2-lvmetad
 %endif
+%if_enabled lvmpolld
+%preun_service lvm2-lvmpolld
+%endif
 %preun_service blk-availability
+
+%post lockd
+%post_service lvm2-lvmlockd
+
+%preun lockd
+%preun_service lvm2-lvmlockd
 
 %files
 %doc README WHATS_NEW udev/12-dm-permissions.rules
-/sbin/*
-%exclude /sbin/dmsetup
-%exclude /sbin/dmcontrol_update
-%if_enabled cluster
-%exclude /sbin/lvmconf
-%endif
-%exclude /sbin/dmeventd
-%{?_enable_static:%exclude /sbin/*.static}
+%doc doc/*.txt
+%_sbindir/*
+%exclude %_sbindir/dmsetup
+%exclude %_sbindir/dmcontrol_update
+%exclude %_sbindir/blkdeactivate
+%exclude %_sbindir/dmeventd
+%{?_enable_static:%exclude %_sbindir/*.static}
 %_mandir/man?/*
-%exclude %_mandir/man8/dmsetup*
+%exclude %_man8dir/dmsetup*
+%exclude %_man8dir/blkdeactivate*
 %if_enabled cluster
-%exclude %_mandir/man8/clvm*
+%exclude %_man8dir/clvm*
 %endif
 %config(noreplace) %_sysconfdir/lvm/lvm.conf
 %config(noreplace) %_sysconfdir/lvm/lvmlocal.conf
@@ -344,10 +394,13 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %_unitdir/blk-availability.service
 %if_enabled lvmetad
 %_initdir/lvm2-lvmetad
-%_unitdir/lvm2-lvmetad.service
-%_unitdir/lvm2-lvmetad.socket
+%_unitdir/lvm2-lvmetad*
 %_unitdir/lvm2-pvscan@.service
 %_udevrulesdir/69-dm-lvm-metad.rules
+%endif
+%if_enabled lvmpolld
+%_initdir/lvm2-lvmpolld
+%_unitdir/lvm2-lvmpolld*
 %endif
 /lib/systemd/system-generators/lvm2-activation-generator
 %_tmpfilesdir/%name.conf
@@ -362,15 +415,17 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 
 %if_enabled static
 %files static
-/sbin/*.static
+%_sbindir/*.static
 %endif # static
 
 %if_enabled cluster
 %files -n clvm
-/usr/sbin/clvmd
-#%_initdir/clvmd
+%_sbindir/clvmd
+%_initdir/clvmd
+%_unitdir/lvm2-clvmd*
+%_unitdir/lvm2-cluster*
+%_unitdir/clvmd.service
 %_man8dir/clvmd*
-%_sbindir/lvmconf
 %endif
 
 %files -n liblvm2
@@ -398,9 +453,11 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 
 %files -n dmsetup
 %doc WHATS_NEW_DM
-%_man8dir/dmsetup*
 %_sbindir/dmsetup
 %_sbindir/dmcontrol_update
+%_man8dir/dmsetup*
+%_sbindir/blkdeactivate
+%_man8dir/blkdeactivate*
 %_udevrulesdir/*
 %if_enabled lvmetad
 %exclude %_udevrulesdir/69-dm-lvm-metad.rules
@@ -414,6 +471,7 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %files -n libdevmapper-event
 /%_lib/libdevmapper-event.so.*
 %_libdir/libdevmapper-event-*.so*
+%dir %_libdir/device-mapper
 %_libdir/device-mapper/libdevmapper-event-*.so*
 
 %files -n libdevmapper-event-devel
@@ -421,10 +479,24 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %_includedir/libdevmapper-event.h
 %_pkgconfigdir/devmapper-event.pc
 
+%if_enabled lvmlockd
+%files lockd
+%_sbindir/lvmlockd
+%_sbindir/lvmlockctl
+%_man8dir/lvmlockd*
+%_unitdir/lvm2-lvmlock*
+%_initdir/lvm2-lvmlock*
+%endif
+
 %files -n python-module-lvm
 %python_sitelibdir/*
 
 %changelog
+* Tue Jul 14 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.125-alt1
+- 2.02.125
+- move blkdeactivate to dmsetup package
+- enable lvmpolld
+
 * Tue May 12 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.119-alt1
 - 2.02.119
 

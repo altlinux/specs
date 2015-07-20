@@ -58,8 +58,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 221
-Release: alt4
+Version: 222
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1171,6 +1171,7 @@ update_chrooted all
 /lib/tmpfiles.d/systemd-nologin.conf
 /lib/tmpfiles.d/systemd.conf
 /lib/tmpfiles.d/systemd-nspawn.conf
+/lib/tmpfiles.d/journal-nocow.conf
 
 %_xdgconfigdir/%name
 %_x11sysconfdir/xinit.d/50-systemd-user.sh
@@ -1687,10 +1688,8 @@ update_chrooted all
 %exclude %_man3dir/*
 
 %files -n udev-extras
-/lib/udev/accelerometer
 /lib/udev/v4l_id
 /lib/udev/collect
-/lib/udev/rules.d/61-accelerometer.rules
 /lib/udev/rules.d/78-sound-card.rules
 
 %files -n udev-rules
@@ -1705,7 +1704,6 @@ update_chrooted all
 %exclude %_sysconfdir/udev/rules.d/80-net-setup-link.rules
 %exclude /lib/udev/rules.d/75-*-generator.rules
 # extras
-%exclude /lib/udev/rules.d/61-accelerometer.rules
 %exclude /lib/udev/rules.d/78-sound-card.rules
 # systemd
 %exclude /lib/udev/rules.d/70-uaccess.rules
@@ -1729,6 +1727,10 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Jul 15 2015 Alexey Shabalin <shaba@altlinux.ru> 1:222-alt1
+- 222
+- several patches from master
+
 * Tue Jun 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:221-alt4
 - backport patches from upstream master
 - add systemd-firstboot to utils package
