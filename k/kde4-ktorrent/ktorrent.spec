@@ -6,7 +6,7 @@
 
 Name: kde4-%rname
 Version: 4.3.1
-Release: alt2
+Release: alt3
 
 Group:     Networking/File transfer
 Summary:   KDE client for BitTorrent network 
@@ -64,6 +64,12 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K4xdg_apps \
 
 
 %changelog
+* Mon Jul 20 2015 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt3
+- rebuild (ALT#31153)
+
+* Mon Sep 08 2014 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt1.M70P.1
+- build for M70P
+
 * Mon Sep 08 2014 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt2
 - fix magnet urls handling
 
