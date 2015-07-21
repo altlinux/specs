@@ -1,5 +1,5 @@
 Name: giter
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -16,6 +16,8 @@ Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%v
 BuildArchitectures: noarch
 
 Conflicts: etersoft-build-utils < 2.1
+
+Requires: eepm >= 1.5.13
 
 %description
 This package contains a set of helper utils for git and gitum.
@@ -39,6 +41,10 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Tue Jul 21 2015 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
+- add gpick - git cherry pick all commits from git log file
+- use fixed epm assure
+
 * Sat Dec 13 2014 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - fix remote detecting
 - rewrite to support various length commands
