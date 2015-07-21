@@ -12,10 +12,11 @@
 %endif
 %def_disable	bsfilter
 %def_disable	tnef
+%def_disable 	gdata
 
 Name:   	claws-mail
-Version:	3.11.1
-Release: 	alt2.1
+Version:	3.12.0
+Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -56,7 +57,9 @@ BuildRequires: libwebkitgtk2-devel
 BuildRequires: libsoup-gnome-devel
 
 # For plugin-gdata
-BuildRequires: libgdata-devel
+%if_enabled gdata
+BuildRequires: libgdata-devel >= 0.17.1
+%endif
 
 # For plugin-rssyl
 BuildRequires: libexpat-devel
@@ -158,12 +161,15 @@ Requires:	%name-plugin-bsfilter = %version-%release
 Requires:	%name-plugin-clamd = %version-%release
 Requires:	%name-plugin-fancy = %version-%release
 Requires:	%name-plugin-fetchinfo = %version-%release
+%if_enabled gdata
 Requires:	%name-plugin-gdata = %version-%release
+%endif
 %if_enabled geolocation
 Requires:	%name-plugin-geolocation = %version-%release
 %endif
 Requires:	%name-plugin-libravatar = %version-%release
 Requires:	%name-plugin-mailmbox = %version-%release
+Requires:	%name-plugin-managesieve = %version-%release
 Requires:	%name-plugin-newmail = %version-%release
 Requires:	%name-plugin-notification = %version-%release
 Requires:	%name-plugin-pdfviewer = %version-%release
@@ -381,6 +387,24 @@ Requires:	%name = %version-%release
 %description	plugin-mailmbox
 This plugin handles mailboxes in mbox format.
 
+%package	plugin-managesieve
+Summary:	This plugin handles managing Sieve filters
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-managesieve
+The Claws Mail ManageSieve plugin provides an interface for managing
+Sieve filters. Sieve filters are used for filtering mail on mail
+servers, usually with an IMAP account.
+
+This plugin handles managing Sieve filters, editing them, and checking
+their syntax.
+
+To learn how to write Sieve filters, see RFC 5228
+https://tools.ietf.org/html/rfc5228
+and the Sieve language extensions
+http://sieve.info/documents#sieve_language_extensions
+
 %package	plugin-newmail
 Summary:	This plugin writes a msg header summary to a log file
 Group:		Networking/Mail
@@ -551,6 +575,9 @@ cp -p %SOURCE1 po/
 		--disable-manual \
 		%{subst_enable appdata} \
 		%{subst_enable gtk3} \
+		%if_disabled gdata
+		--disable-gdata-plugin \
+		%endif
 		%if_disabled geolocation
 		--disable-geolocation-plugin \
 		%endif
@@ -709,10 +736,12 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %_datadir/appdata/claws-mail-fetchinfo.metainfo.xml
 %endif
 
+%if_enabled gdata
 %files plugin-gdata
 %_claws_plugins_path/gdata.so
 %if_enabled appdata
 %_datadir/appdata/claws-mail-gdata.metainfo.xml
+%endif
 %endif
 
 %if_enabled geolocation
@@ -738,6 +767,12 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %_claws_plugins_path/mailmbox.so
 %if_enabled appdata
 %_datadir/appdata/claws-mail-mailmbox.metainfo.xml
+%endif
+
+%files plugin-managesieve
+%_claws_plugins_path/managesieve.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-managesieve.metainfo.xml
 %endif
 
 %files plugin-newmail
@@ -810,6 +845,12 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Tue Jul 21 2015 Mikhail Efremov <sem@altlinux.org> 3.12.0-alt1
+- Disable gdata plugin (it requires libgdata >= 0.17.1).
+- Package new managesieve plugin.
+- Use Russian translation again.
+- Updated to 3.12.0.
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 3.11.1-alt2.1
 - rebuild with new perl 5.20.1
 
