@@ -3,8 +3,9 @@
 %define gst_api_ver 1.0
 %def_enable wayland
 %def_disable wayland_egl
-%def_enable fb
 %def_enable multisense
+%def_enable fb
+# fb requires tslib?
 %def_disable tslib
 %def_disable egl
 %def_disable xcb
@@ -14,17 +15,18 @@
 %def_enable gstreamer1
 
 Name: efl
-Version: 1.14.2
-Release: alt1
+Version: 1.15.0
+Release: alt0.2
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
 
-Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.xz
+Source: http://download.enlightenment.org/rel/libs/%name/%name-%version-beta2.tar.xz
 # 9b167d9
 #Source: %name-%version.tar
+Patch: efl-1.15.0-alt-ecore_fb.patch
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
@@ -138,8 +140,8 @@ This package contains headers, development libraries, test programs and
 documentation for EFL.
 
 %prep
-%setup
-#%%patch -p1
+%setup -n %name-%version-beta2
+%patch -p1
 #subst 's/xcb-xprint//
 #	/ECORE_XCB_XPRINT/d' configure.ac
 
@@ -208,7 +210,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_libdir/ethumb/
 %_libdir/ethumb_client/
 %_libdir/evas/
-%_datadir/dbus-1/services/org.enlightenment.Efreet.service
+#%_datadir/dbus-1/services/org.enlightenment.Efreet.service
 %_datadir/dbus-1/services/org.enlightenment.Ethumb.service
 %_datadir/ecore/
 %_datadir/ecore_imf/
@@ -226,7 +228,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_datadir/evas/
 %_datadir/elua/
 %_datadir/mime/packages/edje.xml
-%_prefix/lib/systemd/user/efreet.service
+#%_prefix/lib/systemd/user/efreet.service
 %_prefix/lib/systemd/user/ethumb.service
 %doc AUTHORS README NEWS COMPLIANCE
 
@@ -239,6 +241,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/embryo_cc
 %_bindir/eolian_cxx
 %_bindir/eolian_gen
+%_bindir/efl_debug
+%_bindir/efl_debugd
+%_bindir/eina_btlog
 %_includedir/*
 %_libdir/cmake/*
 %_libdir/*.so
@@ -249,7 +254,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/ecore-cxx.pc
 %_pkgconfigdir/ecore-drm.pc
 %_pkgconfigdir/ecore-evas.pc
-%_pkgconfigdir/ecore-fb.pc
+%{?_enable_fb:%_pkgconfigdir/ecore-fb.pc}
 %_pkgconfigdir/ecore-file.pc
 %_pkgconfigdir/ecore-imf-evas.pc
 %_pkgconfigdir/ecore-imf.pc
@@ -289,7 +294,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/ethumb_client.pc
 %_pkgconfigdir/evas-cxx.pc
 %_pkgconfigdir/evas-drm.pc
-%_pkgconfigdir/evas-fb.pc
+%{?_enable_fb:%_pkgconfigdir/evas-fb.pc}
 %_pkgconfigdir/evas-opengl-x11.pc
 %_pkgconfigdir/evas-software-buffer.pc
 %_pkgconfigdir/evas-software-x11.pc
@@ -304,6 +309,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Tue Jul 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt0.2
+- 1.15.0 beta2
+
 * Fri Jun 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
 - 1.14.2
 

@@ -1,15 +1,17 @@
 %define ver_major 0.19
-%define efl_ver_major 1.14
-%define snapshot 2015-05-28
-%define cvs_date 1734fcaa
+%define efl_ver_major 1.15
+%define snapshot 2015-07-21
+%define cvs_date aae280bf
 %undefine cvs_date
-%define rel alt0.2
+%define rel alt0.4
 
 %def_disable static
 # only bluez4 supported
 %def_disable bluetooth
 %def_enable wayland
-%def_disable wl_drm
+%def_enable xwayland
+%def_enable wl_drm
+%def_enable wl_x11
 %def_enable systemd
 %def_enable install_sysactions
 %def_with pam_helper
@@ -70,13 +72,14 @@ Requires: gnome-icon-theme
 Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%name >= 0.55
 Requires: udisks2
+Requires: pulseaudio-daemon
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
 BuildRequires: rpm-build-xdg
-BuildRequires: efl-libs-devel >= %efl_ver_major.1 libelementary-devel >= %efl_ver_major.1
+BuildRequires: efl-libs-devel >= %efl_ver_major libelementary-devel >= %efl_ver_major
 BuildRequires: libpam-devel libalsa-devel libudev-devel libxcbutil-keysyms-devel
 BuildRequires: libdbus-devel libp11-kit-devel xorg-xproto-devel libxcbutil-keysyms-devel
-BuildRequires: libuuid-devel
+BuildRequires: libuuid-devel libpulseaudio-devel
 BuildRequires: doxygen
 # for sysv
 BuildRequires: pm-utils
@@ -111,7 +114,7 @@ Development headers for Enlightenment.
 #%patch3 -p2
 %patch4 -p1 -b .gsd
 %patch5 -p1 -b .nosuid
-%patch6 -p2
+%patch6 -p2 -b .ptrace
 %if_with pam_helper
 %patch11 -p1 -b .pam_helper
 %endif
@@ -126,8 +129,10 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` `pkg-config --cflags uuid` -
 	%{subst_enable static} \
 	--enable-shared \
 	--enable-pam \
-	%{?_enable_wayland:--enable-wayland-clients} \
-	%{?_disable_wl_drm:--disable-wl-drm} \
+	%{subst_enable wayland} \
+	%{subst_enable xwayland} \
+	%{?_enable_wl_drm:--enable-wl-drm} \
+	%{?_enable_wl_x11:--enable-wl-x11} \
 	%{?_disable_install_sysactions:--disable-install-sysactions} \
 %if_with pam_helper
 	--with-pam-helper=%prefix/libexec/chkpwd-pam/chkpwd-pam \
@@ -198,6 +203,15 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Jul 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.4
+- 0.19.99.0_aae280bf
+- built with efl/elementary-1.15.0-beta2
+
+* Tue Jul 14 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.3
+- 0.19.99.0_964fabe6
+- built with efl/elementary-1.15.0-beta1
+- updated buildreqs
+
 * Wed Jun 03 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.2
 - 0.19.99_1734fcaa
 - disabled wayland drm module (requires efl from master)
