@@ -7,8 +7,8 @@
 
 %define bname gavl
 Name: lib%bname
-Version: 1.2.0
-Release: alt1.0
+Version: 1.4.0
+Release: alt1
 Summary: Library for handling uncompressed audio- and video data
 License: %gpl2plus
 Group: System/Libraries
@@ -144,6 +144,9 @@ install -m 0644 AUTHORS README TODO %buildroot%_docdir/%name-%version/
 
 
 %changelog
+* Tue Jul 21 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.4.0-alt1
+- New version
+
 * Thu Sep 22 2011 Hihin Ruslan <ruslandh@altlinux.ru> 1.2.0-alt1.0
 - New version
 
