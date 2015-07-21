@@ -2,14 +2,18 @@
 
 Name: xmlrpc-c
 Version: 1.32.5
-Release: alt1.svn2451
+Release: alt2.svn2451
 
 Summary: XML-RPC C library - an implementation of the xmlrpc protocol
 License: BSD-style
 Group: System/Libraries
 
 Url: http://xmlrpc-c.sourceforge.net/
+
 Source: %name-%version.tar
+
+BuildPreReq: rpm-macros-cmake
+
 Patch0: %name-cmake.patch
 Patch1: %name-1.12.00-alt-configure-fixes.patch
 Patch2: %name-30x-redirect.patch
@@ -84,22 +88,19 @@ The header file for developing applications that use
 %patch8 -p1
 
 %build
-mkdir -p build
-cd build
 export CFLAGS="$RPM_OPT_FLAGS -Wno-uninitialized -Wno-unknown-pragmas"
 export CXXFLAGS="$RPM_OPT_FLAGS"
-cmake .. \
+
+%cmake \
 	-D_lib:STRING=%_libdir \
 	-DMUST_BUILD_CURL_CLIENT:BOOL=ON \
 	-DMUST_BUILD_LIBWWW_CLIENT:BOOL=OFF \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
 	-DENABLE_TOOLS:BOOL=ON
-%make_build VERBOSE=1
+%cmake_build VERBOSE=1
 
 %install
-cd build
-%makeinstall_std
+%cmakeinstall_std
 rm -f %buildroot%_libdir/*.a
 mkdir -p %buildroot%_pkgconfigdir
 mv %buildroot%prefix%_pkgconfigdir/*.pc %buildroot%_pkgconfigdir
@@ -121,7 +122,7 @@ mv %buildroot%prefix%_pkgconfigdir/*.pc %buildroot%_pkgconfigdir
 
 %files -n %libname-devel
 %_bindir/xmlrpc-c-config
-%_includedir/xmlrpc-c
+%_includedir/xmlrpc-c/
 %_includedir/*.h
 %_pkgconfigdir/*.pc
 %_libdir/*.so
@@ -131,6 +132,10 @@ mv %buildroot%prefix%_pkgconfigdir/*.pc %buildroot%_pkgconfigdir
 
 
 %changelog
+* Tue Jul 21 2015 Vitaly Lipatov <lav@altlinux.ru> 1.32.5-alt2.svn2451
+- use cmake macros
+- rebuild with new libstdc++
+
 * Tue Mar 11 2014 Timur Aitov <timonbl4@altlinux.org> 1.32.5-alt1.svn2451
 - 1.32.5
 
