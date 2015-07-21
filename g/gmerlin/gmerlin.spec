@@ -2,8 +2,8 @@
 
 Summary: Base library for gmerlin applications
 Name: gmerlin
-Version: 1.0.0
-Release: alt1.2
+Version: 1.2.0
+Release: alt1
 License: GPL
 Group: Development/C++
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -12,20 +12,23 @@ Source: %name-%version.tar.gz
 Source90: %name-rpmlintrc
 Patch: %name-0.4.3-conf.patch
 Patch1: gmerlin-0.4.3-package.patch
-Patch2: gmerlin-1.0.0-alt-DSO.patch
 #Patch5: %name-0.4.3-alt-camelot.patch
+Patch2: gmerlin-1.2.0_glibc.patch
+#Patch3: gmerlin-1.2.0_no_test.patch
+#Patch4: gmerlin-1.2.0_app.patch
 
 Url: http://gmerlin.sourceforge.net/
 
-# Automatically added by buildreq on Mon Mar 28 2011
-BuildRequires: doxygen imake libXfixes-devel
-BuildRequires: libXinerama-devel libXtst-devel libXv-devel
-BuildRequires: libcddb-devel libcdio-devel libesd-devel libgavl-devel
-BuildRequires: libgtk+2-devel jackit-devel libpulseaudio-devel
-BuildRequires: libquicktime-devel libtiff-devel libv4l-devel libxml2-devel
-BuildRequires: xorg-cf-files libalsa-devel libmjpegtools-devel
-BuildRequires: libXext-devel libvisual0.4-devel libmusicbrainz-devel
-BuildRequires: desktop-file-utils libpng-devel
+# Automatically added by buildreq on Wed Jul 22 2015
+# optimized out: fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libatk-devel libaudiofile-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libjpeg-devel libpango-devel libpng-devel libquicktime111-core libwayland-client libwayland-server makeinfo pkg-config xorg-fixesproto-devel xorg-inputproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: doxygen imake libXinerama-devel libXtst-devel libXv-devel 
+BuildRequires: libalsa-devel libcddb-devel libcdio-devel libesd-devel libexif-devel
+BuildRequires: libgavl-devel libgtk+2-devel libjack-devel libmusicbrainz-devel
+BuildRequires: libpulseaudio-devel libquicktime-devel libtiff-devel libv4l-devel libvisual0.4-devel
+BuildRequires: libxml2-devel xorg-cf-files
+
+BuildRequires: desktop-file-utils
+
 
 %description
 Base library for gmerlin applications.
@@ -301,17 +304,17 @@ Run xmms visualization plugins without having to run xmms.
 # Applications: Camelot
 #
 
-#package camelot
-#Summary: Webcam application
-#Group: Video
-#Requires: %name-x11 = %version
-#Requires: %name-v4l = %version
-#Requires: %name-video-playback-plugin
-#Requires: %name-video-recorder-plugin
-#Requires: %name-image-writer-plugin
+# #%%package camelot
+# #%%Summary: Webcam application
+# #%%Group: Video
+# #%%Requires: %name-x11 = %version
+# #%%Requires: %name-v4l = %version
+# #%%Requires: %name-video-playback-plugin
+# #%%Requires: %name-video-recorder-plugin
+# #%%Requires: %name-image-writer-plugin
 
-#description camelot
-#Webcam application.
+# %%description camelot
+# %%Webcam application.
 
 #
 # Utilities
@@ -387,16 +390,26 @@ Gavl plugins for gmerlin.
 %setup gmerlin-%version
 %patch0 -p1
 %patch1 -p1
-%patch2 -p2
 #patch5 -p2
+%patch2 -p1
+#patch3 -p1
+
+sed -i 's|^\(.*_LDADD.*\)|\1 -lgavl -lgobject-2.0|' tests/Makefile.am
+sed -i "s|^\(.*_LDADD =\)\(.*\)|\1 `pkg-config gtk+-2.0 --libs` -lX11 \2|" \
+       apps/*/Makefile.am
+ 
 
 %build
 AUTOPOINT=true %autoreconf
 
-%add_optflags -UGTK_DISABLE_DEPRECATED
-%configure \
-	--prefix=%prefix \
-	--disable-gtktest
+
+%add_optflags -UGTK_DISABLE_DEPRECATED `pkg-config gtk+-2.0 --cflags`
+LIBS="-ldl" %configure \
+    --prefix=%prefix \
+    --disable-gtktest \
+    --disable-rpath
+
+
 
 %make_build \
 	docdir=%_docdir/%name
@@ -406,9 +419,9 @@ AUTOPOINT=true %autoreconf
 
 install -d -m 755 %buildroot/%_niconsdir/
 
-rm -f  %buildroot/%_infodir/gmerlin.info.bz2
-rm -f  %buildroot/%_infodir/gmerlin.info
-rmdir  %buildroot/%_infodir
+#rm -f  %buildroot/%_infodir/gmerlin.info.bz2
+#rm -f  %buildroot/%_infodir/gmerlin.info
+#rmdir  %buildroot/%_infodir
 
 #install -p -m 644 doc/gmerlin.info %buildroot/%_infodir
 
@@ -417,7 +430,7 @@ pushd  %buildroot/%_niconsdir/
 	mv %buildroot/%_datadir/gmerlin/icons/mixer_icon.png      gmerlin-alsamixer.png
 	mv %buildroot/%_datadir/gmerlin/icons/player_icon.png     gmerlin-player.png
 	mv %buildroot/%_datadir/gmerlin/icons/transcoder_icon.png gmerlin-transcoder.png
-#	mv %buildroot/%_datadir/gmerlin/icons/camelot_icon.png    gmerlin-camelot.png
+# 	mv %buildroot/%_datadir/gmerlin/icons/camelot_icon.png    gmerlin-camelot.png
 	mv %buildroot/%_datadir/gmerlin/icons/kbd_icon.png        gmerlin-kbd.png
 	mv %buildroot/%_datadir/gmerlin/icons/plugincfg_icon.png  gmerlin-plugincfg.png
 	mv %buildroot/%_datadir/gmerlin/icons/recorder_icon.png   gmerlin-recorder.png
@@ -483,7 +496,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/%name/icons/state_*.png
 %_datadir/%name/icons/tab_close.png
 %_datadir/%name/icons/tracks_dnd_32.png
-#_infodir/%name.info*
+%_infodir/%name.info*
+#%%exclude %_iconsdir/%{name}-camelot.png
 
 %files -n libgmerlin
 %_libdir/libgmerlin.so.*
@@ -580,18 +594,22 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/%{name}_alsamixer
 %_desktopdir/%name-alsamixer.desktop
 %_niconsdir/%name-alsamixer.png
+%exclude %_liconsdir/%name-alsamixer.png
 
 
-#files camelot
-#_bindir/camelot
-#_desktopdir/%name-camelot.desktop
-#_niconsdir/%name-camelot.png
+# %%files camelot
+# %%_bindir/camelot
+# %%_desktopdir/%name-camelot.desktop
+# %%_niconsdir/%name-camelot.png
+# %%_niconsdir/camelot_icon.png
+# %%_iconsdir/camelot_icon.png
 
 %files kbd
 %_bindir/%{name}_kbd
 %_bindir/%{name}_kbd_config
 %_desktopdir/%name-kbd.desktop
 %_niconsdir/%name-kbd.png
+%exclude %_liconsdir/%name-kbd.png
 
 %files player -f %name.lang
 %_bindir/%name
@@ -604,20 +622,25 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/%name/skins/Default/*
 %_desktopdir/%name-player.desktop
 %_niconsdir/%name-player.png
+%exclude %_liconsdir/%name-player.png
 %doc %_man1dir/%name.1.gz
 %doc %_man1dir/%{name}_play.1.gz
 %doc %_man1dir/%{name}_remote.1.gz
 
 %files recorder
+%_bindir/%{name}-record
 %_bindir/%{name}_recorder
 %_desktopdir/%name-recorder.desktop
 %_niconsdir/%name-recorder.png
+%exclude %_liconsdir/%name-recorder.png
+%doc %_man1dir/%{name}-record.1.bz2
 
 %files transcoder
 %_bindir/%{name}_transcoder
 %_bindir/%{name}_transcoder_remote
 %_desktopdir/%name-transcoder.desktop
 %_niconsdir/%name-transcoder.png
+%exclude %_liconsdir/%name-transcoder.png
 %doc %_man1dir/%{name}_transcoder.1.gz
 %doc %_man1dir/%{name}_transcoder_remote.1.gz
 
@@ -628,24 +651,27 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/%name/plugins/vis_scope.so
 %_desktopdir/%name-visualizer.desktop
 %_niconsdir/%name-visualizer.png
+%exclude %_liconsdir/%name-visualizer.png
 
 %files utils
 %_bindir/%{name}_imgconvert
 %_bindir/%{name}_imgdiff
 %_bindir/%{name}_psnr
 %_bindir/%{name}_ssim
+%_bindir/album2m3u
+%_bindir/album2pls
+%_bindir/gmerlin_vanalyze
+
 %_bindir/%name-video-thumbnailer
 %_bindir/%{name}_vpsnr
 %_bindir/%{name}_plugincfg
 %_desktopdir/%name-plugincfg.desktop
 %_niconsdir/%name-plugincfg.png
+%exclude %_liconsdir/%name-plugincfg.png
 
 %changelog
-* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.2
-- Rebuilt with libpng15 and libtiff5
-
-* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.1
-- Fixed build
+* Tue Jul 21 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.2.0-alt1
+- New version
 
 * Sat Sep 24 2011 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.0-alt1
 - New version
@@ -683,3 +709,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 * Sat Feb 27 2010 Toni Graffy <toni@links2linux.de> - 0.4.3-0.pm.1
 - update to 0.4.3
+
+
+
