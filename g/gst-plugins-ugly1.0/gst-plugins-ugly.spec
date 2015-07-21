@@ -10,7 +10,7 @@
 
 Name: %_name-ugly%api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A set of encumbered GStreamer plugins
 Group: System/Libraries
@@ -77,6 +77,9 @@ collection.
 %_gtk_docdir/%_name-ugly-plugins-%api_ver/*
 
 %changelog
+* Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt2
+- rebuilt against libcdio.so.16
+
 * Thu Jun 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
 - 1.5.2
 

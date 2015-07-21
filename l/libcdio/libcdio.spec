@@ -1,6 +1,7 @@
 Name: libcdio
-Version: 0.82
-Release: alt4
+Version: 0.93
+Release: alt1
+
 Summary: CD-ROM/CD-image access library
 License: GPLv3+
 Group: System/Libraries
@@ -12,7 +13,7 @@ Source: %name-%version.tar
 # git://git.altlinux.org/gears/l/libcdio.git
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libcddb-devel libncurses-devel
+BuildRequires: gcc-c++ libcddb-devel libncurses-devel help2man
 
 %description
 This library is to encapsulate CD-ROM reading and control. Applications
@@ -67,8 +68,6 @@ info.
 %install
 %makeinstall_std
 
-install -pm644 *++.pc %buildroot%_pkgconfigdir/
-
 %files
 %doc AUTHORS README NEWS THANKS TODO
 %_libdir/*.so.*
@@ -95,6 +94,9 @@ install -pm644 *++.pc %buildroot%_pkgconfigdir/
 %_man1dir/*.1*
 
 %changelog
+* Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.93-alt1
+- 0.93 (0.94_4f41eb68)
+
 * Mon Apr 25 2011 Dmitry V. Levin <ldv@altlinux.org> 0.82-alt4
 - Rebuilt for more debuginfo.
 

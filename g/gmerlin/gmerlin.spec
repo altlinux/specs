@@ -3,7 +3,7 @@
 Summary: Base library for gmerlin applications
 Name: gmerlin
 Version: 1.2.0
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: Development/C++
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -17,12 +17,15 @@ Patch2: gmerlin-1.2.0_glibc.patch
 #Patch3: gmerlin-1.2.0_no_test.patch
 #Patch4: gmerlin-1.2.0_app.patch
 
+# http://git.pld-linux.org/gitweb.cgi?p=packages/gmerlin.git;a=blob_plain;f=cdio.patch;hb=HEAD
+Patch10: gmerlin-1.2.0-pld-cdio.patch
+
 Url: http://gmerlin.sourceforge.net/
 
 # Automatically added by buildreq on Wed Jul 22 2015
 # optimized out: fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libatk-devel libaudiofile-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libjpeg-devel libpango-devel libpng-devel libquicktime111-core libwayland-client libwayland-server makeinfo pkg-config xorg-fixesproto-devel xorg-inputproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: doxygen imake libXinerama-devel libXtst-devel libXv-devel 
-BuildRequires: libalsa-devel libcddb-devel libcdio-devel libesd-devel libexif-devel
+BuildRequires: doxygen imake libXinerama-devel libXtst-devel libXv-devel
+BuildRequires: libalsa-devel libcddb-devel libcdio-paranoia-devel libesd-devel libexif-devel
 BuildRequires: libgavl-devel libgtk+2-devel libjack-devel libmusicbrainz-devel
 BuildRequires: libpulseaudio-devel libquicktime-devel libtiff-devel libv4l-devel libvisual0.4-devel
 BuildRequires: libxml2-devel xorg-cf-files
@@ -394,22 +397,20 @@ Gavl plugins for gmerlin.
 %patch2 -p1
 #patch3 -p1
 
+%patch10 -p1
+
 sed -i 's|^\(.*_LDADD.*\)|\1 -lgavl -lgobject-2.0|' tests/Makefile.am
 sed -i "s|^\(.*_LDADD =\)\(.*\)|\1 `pkg-config gtk+-2.0 --libs` -lX11 \2|" \
        apps/*/Makefile.am
- 
 
 %build
 AUTOPOINT=true %autoreconf
 
-
-%add_optflags -UGTK_DISABLE_DEPRECATED `pkg-config gtk+-2.0 --cflags`
+CFLAGS="-DGTK_DISABLE_DEPRECATED %(pkg-config --cflags gtk+-2.0)"
 LIBS="-ldl" %configure \
     --prefix=%prefix \
     --disable-gtktest \
     --disable-rpath
-
-
 
 %make_build \
 	docdir=%_docdir/%name
@@ -670,6 +671,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_liconsdir/%name-plugincfg.png
 
 %changelog
+* Fri Jul 31 2015 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1.1
+- rebuilt against newest libcdio{,-paranoia}
+
 * Tue Jul 21 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.2.0-alt1
 - New version
 
