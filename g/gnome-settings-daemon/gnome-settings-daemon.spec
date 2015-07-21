@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -108,7 +108,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %make_build
 
 %install
-%makeinstall_std udevrulesdir=/lib/udev/rules.d
+%makeinstall_std udevrulesdir=%_udevrulesdir
 %find_lang --with-gnome %name
 
 %check
@@ -175,7 +175,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %doc AUTHORS NEWS
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
-/lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
+%_udevrulesdir/61-gnome-settings-daemon-rfkill.rules
 
 %exclude %_libdir/%name-%api_ver/*.la
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
@@ -206,6 +206,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Tue Jul 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
+- 3.16.3
+
 * Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 
