@@ -1,15 +1,15 @@
 Name: emotion_generic_players
-Version: 1.14.0
-Release: alt1
+Version: 1.15.0
+Release: alt0.2
 
 Summary: A set of players for Emotion
 License: LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
 
-Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.xz
+Source: http://download.enlightenment.org/rel/libs/%name/%name-%version-beta2.tar.xz
 
-BuildRequires: efl-libs-devel >= 1.14.0 libvlc-devel >= 2.0
+BuildRequires: efl-libs-devel >= 1.15.0 libvlc-devel >= 2.0
 
 %description
 These are additional "generic" players for Evas that are stand-alone
@@ -22,7 +22,7 @@ loader.
 
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%version-beta2
 
 %build
 %configure
@@ -39,6 +39,9 @@ loader.
 %doc AUTHORS COPYING README
 
 %changelog
+* Tue Jul 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt0.2
+- 1.15.0 beta2
+
 * Thu May 07 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
 - 1.14.0 release
 
