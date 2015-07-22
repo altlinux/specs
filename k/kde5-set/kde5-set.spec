@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt5
+Release: alt6
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -19,7 +19,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
 Requires: qt5-dbus kf5-kwin kf5-kactivities kf5-plasma-desktop kf5-kinit kf5-kdeclarative
-Requires: kde5-dolphin
+Requires: kde5-dolphin kde5-kwrite
 
 %package -n kde5-small
 Summary: %summary
@@ -44,11 +44,13 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5
 Requires: kf5-kwrited kf5-milou kf5-plasma-nm-maxi
+Requires: kde5-konversation kde5-kate
 
 %package -n kde5-maxi
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-big
+#Requires: kde5-telepathy
 
 %description
 %summary
@@ -73,6 +75,9 @@ Requires: kde5-big
 %files -n kde5-maxi
 
 %changelog
+* Wed Jul 22 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt6
+- update requires
+
 * Wed Apr 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt5
 - update requires
 
