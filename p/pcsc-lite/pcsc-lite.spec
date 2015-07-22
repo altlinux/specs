@@ -4,7 +4,7 @@
 
 Name: pcsc-lite
 Version: 1.8.13
-Release: alt1
+Release: alt2
 
 Summary: PC/SC Lite smart card framework and applications
 License: %bsd
@@ -17,6 +17,9 @@ Source0: pcsc-lite-%version.tar
 Source1: pcscd.init
 Source2: pcsc-lite-pcscd.sysconfig
 Source3: pcsc-lite.tmpfiles
+
+Patch1: pcsc-lite-polkit-1.patch
+Patch2: pcsc-lite-polkit-2.patch
 
 Requires: libpcsclite = %version-%release
 
@@ -69,6 +72,9 @@ Static libraries for libpcsclite
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+
 subst 's|AC_PREREQ(\[2.69\])|AC_PREREQ(\[2.68\])|' configure.ac
 
 %build
@@ -113,7 +119,8 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %dir %_sysconfdir/reader.conf.d
 %config(noreplace) %_sysconfdir/sysconfig/pcscd
 %_initdir/pcscd
-%_unitdir/*
+%_unitdir/pcscd.*
+%_unitdir/sockets.target.wants/*
 /lib/tmpfiles.d/pcsc-lite.conf
 %_sbindir/pcscd
 #_bindir/make_hash_link.sh
@@ -143,6 +150,9 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %endif
 
 %changelog
+* Wed Jul 22 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.13-alt2
+- add patches from upstream master
+
 * Thu Nov 13 2014 Alexey Shabalin <shaba@altlinux.ru> 1.8.13-alt1
 - 1.8.13
 
