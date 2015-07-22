@@ -1,7 +1,7 @@
-%define ver_major 3.12
+%define ver_major 3.14
 
 Name: meld
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Meld Diff Viewer
@@ -51,6 +51,9 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %doc NEWS README
 
 %changelog
+* Thu Jul 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue Dec 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
 - 3.12.3
 
