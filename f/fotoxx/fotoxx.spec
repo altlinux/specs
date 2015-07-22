@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 15.06
+Version: 15.07
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -87,6 +87,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed Jul 22 2015 Yuri N. Sedunov <aris@altlinux.org> 15.07-alt1
+- 15.07
+
 * Wed Jun 24 2015 Yuri N. Sedunov <aris@altlinux.org> 15.06-alt1
 - 15.06
 
