@@ -1,7 +1,8 @@
+%define libwbc_alternatives_version 0.12.0
 
 Name: sssd
-Version: 1.12.4
-Release: alt2.git.bdb7e
+Version: 1.13.0
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -23,10 +24,13 @@ Patch: %name-%version-%release.patch
 
 %define sssdstatedir %_localstatedir/lib/sss
 %define dbpath %sssdstatedir/db
+%define keytabdir %sssdstatedir/keytabs
 %define pipepath %sssdstatedir/pipes
 %define mcpath %sssdstatedir/mc
 %define pubconfpath %sssdstatedir/pubconf
 %define gpocachepath %sssdstatedir/gpo_cache
+
+%define sssd_user _sssd
 
 Requires: %name-client = %version-%release
 Requires: libsss_idmap = %version-%release
@@ -47,6 +51,7 @@ BuildRequires: libldap-devel
 BuildRequires: libpam-devel
 BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
+BuildRequires: libssl-devel
 BuildRequires: libpcre-devel >= 7
 BuildRequires: libxslt
 BuildRequires: libxml2-devel
@@ -60,7 +65,7 @@ BuildRequires: libselinux-devel
 BuildRequires: libsemanage-devel
 BuildRequires: bind-utils
 BuildRequires: libkeyutils-devel
-BuildRequires: libnl3-devel
+BuildRequires: libnl-devel
 BuildRequires: glib2-devel
 BuildRequires: diffstat
 BuildRequires: findutils
@@ -309,6 +314,7 @@ be used by Python applications.
 Summary: The SSSD libwbclient implementation
 Group: System/Libraries
 License: GPLv3+ and LGPLv3+
+Conflicts: libwbclient < 4.2.3-alt1
 
 %description -n libwbclient-%name
 The SSSD libwbclient implementation.
@@ -317,6 +323,7 @@ The SSSD libwbclient implementation.
 Summary: Development libraries for the SSSD libwbclient implementation
 Group: Development/C
 License: GPLv3+ and LGPLv3+
+Requires: libwbclient-%name = %version-%release
 
 %description -n libwbclient-%name-devel
 Development libraries for the SSSD libwbclient implementation.
@@ -345,14 +352,23 @@ Development libraries for the SSSD libwbclient implementation.
     --with-test-dir=/dev/shm \
     --enable-krb5-locator-plugin \
     --enable-pac-responder \
+    --enable-sss-default-nss-plugin \
+    --with-sssd-user=%sssd_user \
     --disable-rpath \
-    --disable-static
+    --disable-static \
+    --without-python3-bindings
 
 # %%make_build all docs
 %make all docs
 
 %install
 %make install DESTDIR=%buildroot
+
+if [ ! -f %buildroot%_libdir/%name/modules/libwbclient.so.%libwbc_alternatives_version]
+    then
+	echo "Expected libwbclient version not found, please check if version has changed."
+	exit -1
+fi
 
 %find_lang sssd
 
@@ -375,12 +391,39 @@ find %buildroot -name "*.la" -exec rm -f {} \;
 # Suppress developer-only documentation
 rm -Rf %buildroot%_docdir/%name
 
+mkdir -p %buildroot%pubconfpath/krb5.include.d
+
+# Add alternatives for libwbclient
+mkdir -p %buildroot%_altdir
+printf '%_libdir/libwbclient.so.%libwbc_alternatives_version\t%_libdir/%name/modules/libwbclient.so.%libwbc_alternatives_version\t20\n' > %buildroot%_altdir/libwbclient-sss
+printf '%_libdir/libwbclient.so.0\t%_libdir/%name/modules/libwbclient.so.0\t20\n' >> %buildroot%_altdir/libwbclient-sss
+
+printf '%_libdir/libwbclient.so\t%_libdir/%name/modules/libwbclient.so\t20\n' >> %buildroot%_altdir/libwbclient-sss-devel
+
+ln -s ../..%_libdir/%name/modules/libwbclient.so.%libwbc_alternatives_version %buildroot%_libdir/
+ln -s ../..%_libdir/%name/modules/libwbclient.so.0 %buildroot%_libdir/
+ln -s ../..%_libdir/%name/modules/libwbclient.so %buildroot%_libdir/
+
+# Add alternatives for idmap-plugin
+mkdir -p %buildroot/%_altdir
+printf '%_libdir/cifs-utils/idmap-plugin\t%_libdir/cifs-utils/cifs_idmap_sss.so\t20\n' > %buildroot%_altdir/cifs-idmap-plugin-sss
+
+
 %check
 export CK_TIMEOUT_MULTIPLIER=10
 %make check VERBOSE=yes
 unset CK_TIMEOUT_MULTIPLIER
 
+%pre
+%_sbindir/groupadd -r -f %sssd_user 2> /dev/null ||:
+%_sbindir/useradd -r -n -g %sssd_user -d %sssdstatedir -s /dev/null -c "User for sssd" %sssd_user 2> /dev/null ||:
+
 %post
+# Sinse 0.13.0 we are run sssd as non-root user. Migrate files owner.
+chown %sssd_user:%sssd_user %dbpath/cache* %dbpath/ccache* %dbpath/config.ldb
+chown %sssd_user:%sssd_user %mcpath/*
+chown %sssd_user:%sssd_user %pubconfpath/kdcinfo* %pubconfpath/kpasswdinfo*
+chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %post_service %name
 
 %preun
@@ -407,7 +450,9 @@ unset CK_TIMEOUT_MULTIPLIER
 #Internal shared libraries
 %_libdir/%name/libsss_child.so
 %_libdir/%name/libsss_crypt.so
+%_libdir/%name/libsss_cert.so
 %_libdir/%name/libsss_debug.so
+%_libdir/%name/libsss_krb5_common.so
 %_libdir/%name/libsss_ldap_common.so
 %_libdir/%name/libsss_util.so
 %_libdir/%name/libsss_semanage.so
@@ -426,17 +471,18 @@ unset CK_TIMEOUT_MULTIPLIER
 
 %dir %sssdstatedir
 %dir %_localstatedir/cache/krb5rcache
-%attr(700,root,root) %dir %dbpath
-%dir %mcpath
-%ghost %attr(0644,root,root) %verify(not md5 size mtime) %mcpath/passwd
-%ghost %attr(0644,root,root) %verify(not md5 size mtime) %mcpath/group
-%dir %pipepath
-%dir %pubconfpath
-%dir %gpocachepath
-%attr(700,root,root) %dir %pipepath/private
-%attr(750,root,root) %dir %_var/log/%name
-%attr(700,root,root) %dir %_sysconfdir/sssd
-%attr(0640,root,root) %config(noreplace) %_sysconfdir/sssd/sssd.conf
+%attr(700,%sssd_user,%sssd_user) %dir %dbpath
+%attr(755,%sssd_user,%sssd_user) %dir %mcpath
+%ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/passwd
+%ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/group
+%attr(755,%sssd_user,%sssd_user) %dir %pipepath
+%attr(755,%sssd_user,%sssd_user) %dir %gpocachepath
+%attr(755,%sssd_user,%sssd_user) %dir %pubconfpath
+%attr(755,root,root) %dir %pubconfpath/krb5.include.d
+%attr(700,%sssd_user,%sssd_user) %dir %pipepath/private
+%attr(770,root,%sssd_user) %dir %_var/log/%name
+%attr(750,root,%sssd_user) %dir %_sysconfdir/sssd
+%attr(0640,root,%sssd_user) %config(noreplace) %_sysconfdir/sssd/sssd.conf
 %dir %_sysconfdir/systemd/system/sssd.service.d
 %config(noreplace) %_sysconfdir/systemd/system/sssd.service.d/journal.conf
 %config(noreplace) %_sysconfdir/logrotate.d/sssd
@@ -456,6 +502,8 @@ unset CK_TIMEOUT_MULTIPLIER
 %files -n python-module-sss
 %python_sitelibdir/pysss.so
 %python_sitelibdir/pysss_murmur.so
+%python_sitelibdir/_py2sss.so
+%python_sitelibdir/_py2sss_murmur.so
 
 %files ldap
 %_libdir/%name/libsss_ldap.so
@@ -463,9 +511,8 @@ unset CK_TIMEOUT_MULTIPLIER
 %_datadir/%name/sssd.api.d/sssd-ldap.conf
 
 %files krb5-common
-%_libdir/%name/libsss_krb5_common.so
-%_libexecdir/%name/ldap_child
-%_libexecdir/%name/krb5_child
+%attr(4710,root,%sssd_user) %_libexecdir/%name/ldap_child
+%attr(4710,root,%sssd_user) %_libexecdir/%name/krb5_child
 
 %files krb5
 %_libdir/%name/libsss_krb5.so
@@ -476,9 +523,9 @@ unset CK_TIMEOUT_MULTIPLIER
 %_libexecdir/%name/sssd_pac
 
 %files ipa
-%dir %pubconfpath/krb5.include.d
+%attr(700,%sssd_user,%sssd_user) %dir %keytabdir
 %_libdir/%name/libsss_ipa.so
-%_libexecdir/%name/selinux_child
+%attr(4710,root,%sssd_user) %_libexecdir/%name/selinux_child
 %_man5dir/sssd-ipa*
 %_datadir/%name/sssd.api.d/sssd-ipa.conf
 
@@ -490,7 +537,7 @@ unset CK_TIMEOUT_MULTIPLIER
 %_datadir/%name/sssd.api.d/sssd-ad.conf
 
 %files proxy
-%_libexecdir/%name/proxy_child
+%attr(4710,root,%sssd_user) %_libexecdir/%name/proxy_child
 %_libdir/%name/libsss_proxy.so
 %_datadir/%name/sssd.api.d/sssd-proxy.conf
 
@@ -501,6 +548,7 @@ unset CK_TIMEOUT_MULTIPLIER
 %_libdir/krb5/plugins/libkrb5/sssd_krb5_locator_plugin.so
 %_libdir/krb5/plugins/authdata/sssd_pac_plugin.so
 %_libdir/cifs-utils/cifs_idmap_sss.so
+%_altdir/cifs-idmap-plugin-sss
 %_libdir/%name/modules/sssd_krb5_localauth_plugin.so
 %_man8dir/pam_sss*
 %_man8dir/sssd_krb5_locator_plugin*
@@ -535,6 +583,7 @@ unset CK_TIMEOUT_MULTIPLIER
 
 %files -n python-module-ipa_hbac
 %python_sitelibdir/pyhbac.so
+%python_sitelibdir/_py2hbac.so
 
 %files -n libsss_nss_idmap
 %_libdir/libsss_nss_idmap.so.*
@@ -548,7 +597,6 @@ unset CK_TIMEOUT_MULTIPLIER
 %files dbus
 %doc COPYING
 %_libexecdir/%name/sssd_ifp
-# %_libdir/%name/libsss_config.so
 %_man5dir/sssd-ifp.5*
 # InfoPipe DBus plumbing
 %_sysconfdir/dbus-1/system.d/org.freedesktop.sssd.infopipe.conf
@@ -566,16 +614,28 @@ unset CK_TIMEOUT_MULTIPLIER
 
 %files -n python-module-sss_nss_idmap
 %python_sitelibdir/pysss_nss_idmap.so
+%python_sitelibdir/_py2sss_nss_idmap.so
 
 %files -n libwbclient-%name
 %_libdir/%name/modules/libwbclient.so.*
+%ghost %_libdir/libwbclient.so.0
+%ghost %_libdir/libwbclient.so.%libwbc_alternatives_version
+%_altdir/libwbclient-sss
 
 %files -n libwbclient-%name-devel
 %_includedir/wbclient_sssd.h
 %_libdir/%name/modules/libwbclient.so
+%ghost %_libdir/libwbclient.so
 %_pkgconfigdir/wbclient_sssd.pc
+%_altdir/libwbclient-sss-devel
 
 %changelog
+* Mon Jul 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.13.0-alt1
+- 1.13.0
+- add alternatives for libwbclient
+- add alternatives for cifs-idmap plugin
+- use _sssd user for run services
+
 * Mon Apr 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.12.4-alt2.git.bdb7e
 - branch upstream/sssd-1-12 bdb7e7f514629696e73902b2af3a93839be3e8a4
 

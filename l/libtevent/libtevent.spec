@@ -1,5 +1,5 @@
 Name: libtevent
-Version: 0.9.24
+Version: 0.9.25
 Release: alt1
 Summary: The tevent library
 License: LGPLv3+
@@ -10,6 +10,7 @@ Source: %name-%version.tar
 Source10: buildtools.tar
 Source11: replace.tar
 Source12: talloc.tar
+Source13: third_party.tar
 
 BuildRequires: libtalloc-devel >= 2.1.0
 BuildRequires: libpytalloc-devel >= 2.1.0
@@ -39,7 +40,7 @@ Requires: %name = %version-%release
 Python bindings for libtevent
 
 %prep
-%setup -q -a 10 -a 11 -a 12
+%setup -q -a 10 -a 11 -a 12 -a 13
 mkdir lib
 mv -f replace lib/
 mv -f talloc lib/
@@ -71,6 +72,9 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/tevent.py*
 
 %changelog
+* Wed Jul 15 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.25-alt1
+- 0.9.25
+
 * Mon Mar 23 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.24-alt1
 - 0.9.24
 
