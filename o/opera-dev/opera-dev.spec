@@ -1,9 +1,9 @@
 %define		softver 32.0
-%define		buildver 1926.0
+%define		buildver 1933.0
 
 Name:		opera-dev
 Version:	%softver.%buildver
-Release:	alt1.1
+Release:	alt1
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Summary:	A fast and secure web browser and Internet suite
 Group:		Networking/WWW
@@ -64,6 +64,9 @@ subst 's|PepperFlash/libpepflashplayer.so|pepper-plugins/libpepflashplayer.so|g'
 %_datadir/lintian
 
 %changelog
+* Thu Jul 23 2015 Motsyo Gennadi <drool@altlinux.ru> 32.0.1933.0-alt1
+- packed 32.0.1933.0 snapshot
+
 * Thu Jul 16 2015 Motsyo Gennadi <drool@altlinux.ru> 32.0.1926.0-alt1.1
 - change git folders
 
