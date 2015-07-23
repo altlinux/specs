@@ -2,7 +2,7 @@
 %define rname kaffeine
 Name: kde4-%rname
 Version: 1.2.2
-Release: alt2
+Release: alt3
 
 Group: Video
 Summary: Multimedia Player
@@ -27,7 +27,6 @@ and Ogg Vorbis. It also handles Video CDs, DVDs, and DVB cards.
 %prep
 %setup -q -n %rname-%version
 %patch1 -p1
-echo "X-KDE4-InitialPreference=30" >> src/kaffeine.desktop
 
 %build
 %K4cmake
@@ -52,6 +51,9 @@ echo "X-KDE4-InitialPreference=30" >> src/kaffeine.desktop
 %_K4xdg_apps/kaffeine.desktop
 
 %changelog
+* Thu Jul 23 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt3
+- don't increase InitialPreference
+
 * Tue Oct 09 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt2
 - fix to build with gcc 4.7
 
