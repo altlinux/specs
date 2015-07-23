@@ -59,7 +59,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 222
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1727,6 +1727,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Jul 23 2015 Alexey Shabalin <shaba@altlinux.ru> 1:222-alt2
+- tmpfiles: downgrade errors when a file system does not support file attributes
+
 * Wed Jul 15 2015 Alexey Shabalin <shaba@altlinux.ru> 1:222-alt1
 - 222
 - several patches from master
