@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -134,6 +134,8 @@ Requires: seahorse
 ## All gvfs-backends
 Requires: gvfs-backends
 Requires: fuse-gvfs
+# see ALT #31129
+Requires: xdg-utils gvfs-utils
 Requires: gnome-disk-utility >= %gdu_ver
 ## Display manager (gdm or gdm2.20)
 Requires: gdm-gnome >= %ver_major
@@ -404,6 +406,9 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Thu Jul 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt2
+- added xdg-utils, gvfs-utils to -default (https://bugzilla.altlinux.org/show_bug.cgi?id=31129)
+
 * Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - added gnome-calendar, gnome-characters to -default
 
