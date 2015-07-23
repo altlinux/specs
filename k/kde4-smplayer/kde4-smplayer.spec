@@ -3,8 +3,7 @@
 %define rname smplayer
 Name: kde4-%rname
 Version: 14.9.0.%svn
-#Version: 14.9.0.7046
-Release: alt1
+Release: alt3
 
 Summary: A great MPlayer/MPV front-end
 Summary(ru_RU.UTF8): Мощный интерфейс для MPlayer/MPV
@@ -20,6 +19,8 @@ Requires: mplayer
 Source: %name-%version.tar
 Patch1: alt-defines.patch
 Patch2: alt-defaults.patch
+Patch3: alt-ui-defaults.patch
+Patch4: alt-config-dir.patch
 
 # Automatically added by buildreq on Thu Jul 23 2015 (-bi)
 # optimized out: elfutils fontconfig glibc-devel-static libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-script libqt4-xml libstdc++-devel phonon-devel python-base python3 python3-base zlib-devel
@@ -59,6 +60,8 @@ SMPlayer розробено на інструментарії Qt і є муль�
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 export PATH=%_qt4dir/bin:$PATH
 
@@ -110,6 +113,12 @@ done
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Thu Jul 23 2015 Sergey V Turchin <zerg@altlinux.org> 14.9.0.7046-alt3
+- separate configs with smplayer
+
+* Thu Jul 23 2015 Sergey V Turchin <zerg@altlinux.org> 14.9.0.7046-alt2
+- update UI defaults
+
 * Thu Jul 23 2015 Sergey V Turchin <zerg@altlinux.org> 14.9.0.7046-alt1
 - update to r7046
 
