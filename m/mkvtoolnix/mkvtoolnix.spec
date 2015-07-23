@@ -12,7 +12,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 8.1.0
+Version: 8.2.0
 Release: alt1
 
 Summary: Tools to create, alter and inspect Matroska files
@@ -47,6 +47,7 @@ License: GPL
 Group: Video
 Provides: mmg = %version-%release
 Provides: mkvmerge-gui = %version-%release
+Obsoletes: mkvmerge-gui
 
 %description gui
 Matroska is a new multimedia file format aiming to become the new
@@ -150,6 +151,9 @@ install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %b
 %endif
 
 %changelog
+* Thu Jul 23 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.2.0-alt1
+- 8.2.0 released
+
 * Wed Jul 15 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.1.0-alt1
 - 8.1.0 released
 
