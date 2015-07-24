@@ -1,7 +1,7 @@
 %define modulename emonoda
 
 Name: emonoda
-Version: 1.9.13
+Version: 1.9.17
 Release: alt1
 
 Summary: The set of tools to organize and management of your torrents
@@ -22,10 +22,11 @@ BuildRequires(pre): rpm-build-python3
 Provides: rtfetch
 Obsoletes: rtfetch
 
+# manually removed: python3-module-pycairo python3-module-pygobject3 python3-module-zmq pythonium
 # manually removed:  ruby ruby-stdlibs
 # Automatically added by buildreq on Sun Jul 19 2015
 # optimized out: python3 python3-base python3-module-greenlet python3-module-pycparser python3-module-setuptools
-BuildRequires: libdb4-devel mailcap python3-module-Cython0.18 python3-module-chardet python3-module-nose python3-module-pycairo python3-module-pygobject3 python3-module-zmq pythonium
+BuildRequires: libdb4-devel mailcap python3-module-Cython0.18 python3-module-chardet python3-module-nose
 
 # do not require by findreq...
 Requires: python3-module-yaml
@@ -55,5 +56,14 @@ The set of tools to organize and management of your torrents.
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Sat Jul 25 2015 Vitaly Lipatov <lav@altlinux.ru> 1.9.17-alt1
+- new version
+ + issue 33: fixed error messages about broken torrents
+ + emfind: fixed behaviour on broken symlinks
+ + verbose init errors
+ + fixed #35: empty log on stdout/stderr redirection
+ + dump config as yaml
+ + fixed #36: Added option another_data_root_dirs for core/emfind
+
 * Sun Jul 19 2015 Vitaly Lipatov <lav@altlinux.ru> 1.9.13-alt1
 - initial build for ALT Linux Sisyphus (formely rtfetch)
