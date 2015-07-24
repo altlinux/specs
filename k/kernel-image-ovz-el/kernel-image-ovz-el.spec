@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt135
+Release: alt137
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -581,6 +581,12 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Fri Jul 24 2015 Dmitry V. Levin <ldv@altlinux.org> 2.6.32-alt137
+- Backported AT_EMPTY_PATH fixes from 042stab111.1 (closes: #31136).
+
+* Thu Jul 23 2015 Dmitry V. Levin <ldv@altlinux.org> 2.6.32-alt136
+- Updated to 042stab108.8 (fixes multiple CVEs).
+
 * Tue Jul 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt135
 - Updated to 042stab108.6.
 
