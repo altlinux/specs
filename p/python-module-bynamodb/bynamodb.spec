@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1.git20150414
+Release: alt1.git20150717
 Summary: High-Level DynamoDB Interface for Pythonwrapping Low-Level Interface of boto
 License: MIT
 Group: Development/Python
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.6-alt1.git20150717
+- New snapshot
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.6-alt1.git20150414
 - Version 0.1.6
 
