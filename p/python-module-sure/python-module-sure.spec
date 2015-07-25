@@ -3,8 +3,8 @@
 
 Name: python-module-%modname
 
-Version: 1.2.8
-Release: alt1.git20141223
+Version: 1.2.12
+Release: alt1.git20150625
 
 Summary: Assertion toolbox for python
 
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.12-alt1.git20150625
+- Version 1.2.12
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.8-alt1.git20141223
 - Version 1.2.8
 - Added module for Python 3
