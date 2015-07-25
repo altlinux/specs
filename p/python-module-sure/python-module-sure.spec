@@ -4,7 +4,7 @@
 Name: python-module-%modname
 
 Version: 1.2.12
-Release: alt1.git20150625
+Release: alt2.git20150625
 
 Summary: Assertion toolbox for python
 
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.12-alt2.git20150625
+- Fixed for new mock
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.12-alt1.git20150625
 - Version 1.2.12
 
