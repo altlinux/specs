@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.1
-Release: alt1.git20150203
+Version: 1.0.5
+Release: alt1.git20150714
 Summary: RadSSH Module
 License: BSD
 Group: Development/Python
@@ -156,6 +156,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt1.git20150714
+- Version 1.0.5
+
 * Thu Feb 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.git20150203
 - Initial build for Sisyphus
 
