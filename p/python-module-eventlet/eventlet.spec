@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.17.1
-Release: alt1.git20150225
+Version: 0.17.4
+Release: alt1.git20150722
 Summary: Highly concurrent networking library
 License: MIT
 Group: Development/Python
@@ -141,7 +141,6 @@ popd
 %files
 %doc AUTHORS NEWS README*
 %python_sitelibdir/*
-%exclude %python_sitelibdir/tests
 %exclude %python_sitelibdir/*/pickle
 
 %files docs
@@ -154,10 +153,12 @@ popd
 %files -n python3-module-%oname
 %doc AUTHORS NEWS README*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/tests
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17.4-alt1.git20150722
+- Version 0.17.4
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17.1-alt1.git20150225
 - Version 0.17.1
 
