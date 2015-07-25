@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:		python-module-%{pypi_name}
-Version:	0.10.7
+Version:	1.3.0
 Release:	alt1
 Summary:	Python Build Reasonableness
 Group:		Development/Python
@@ -80,7 +80,6 @@ rm -rf html/.{doctrees,buildinfo}
 pushd ../python3
 %python3_install
 popd
-rm -rf %{buildroot}%{python3_sitelibdir}/%{pypi_name}/test*
 pushd %buildroot%_bindir
 for i in $(ls); do
 	mv $i $i.py3
@@ -89,9 +88,6 @@ popd
 %endif
 
 %python_install
-
-# do not include tests due to unmet dependencies
-rm -rf %{buildroot}%{python_sitelibdir}/%{pypi_name}/test*
 
 %files
 %doc html README.rst LICENSE
@@ -111,6 +107,9 @@ rm -rf %{buildroot}%{python_sitelibdir}/%{pypi_name}/test*
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1
+- Version 1.3.0
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.7-alt1
 - Version 0.10.7
 
