@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.2.6
-Release: alt1.git20150420
+Version: 0.5.4.2
+Release: alt1.git20150725
 Summary: Opinionated wrapper around boto that reads yaml
 License: MIT
 Group: Development/Python
@@ -26,6 +26,9 @@ BuildPreReq: python-module-nose python-module-mock
 BuildPreReq: python-module-requests python-modules-json
 BuildPreReq: python-module-pytz python-module-radssh
 BuildPreReq: python-module-httpretty python-module-moto
+BuildPreReq: python-module-dnslib python-module-ultra_rest_client
+BuildPreReq: python-module-pyrelic python-module-radssh
+BuildPreReq: python-module-slacker python-module-delfick_app
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -39,6 +42,9 @@ BuildPreReq: python3-module-nose python3-module-mock
 BuildPreReq: python3-module-requests
 BuildPreReq: python3-module-pytz python3-module-radssh
 BuildPreReq: python3-module-httpretty python3-module-moto
+BuildPreReq: python3-module-dnslib python3-module-ultra_rest_client
+BuildPreReq: python3-module-pyrelic python3-module-radssh
+BuildPreReq: python3-module-slacker python3-module-delfick_app
 %endif
 
 %py_provides %oname
@@ -119,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.4.2-alt1.git20150725
+- Version 0.5.4.2
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2.6-alt1.git20150420
 - Version 0.5.2.6
 
