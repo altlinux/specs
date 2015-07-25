@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.104.0
-Release: alt1.git20150416
+Version: 1.1.3
+Release: alt1.git20150723
 Summary: The low-level, core functionality of boto 3
 License: ASLv2.0
 Group: Development/Python
@@ -21,6 +21,7 @@ BuildPreReq: python-module-six python-module-jmespath
 BuildPreReq: python-module-dateutil python-module-tox
 BuildPreReq: python-module-nose python-module-mock
 BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-guzzle_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -141,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20150723
+- Version 1.1.3
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.104.0-alt1.git20150416
 - Version 0.104.0
 
