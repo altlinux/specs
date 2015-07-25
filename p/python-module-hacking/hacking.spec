@@ -1,11 +1,11 @@
 %define oname hacking
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 0.10.2
-Release: alt1.git20150723
+Release: alt2.git20150723
 Summary: OpenStack Hacking Guideline Enforcement
 License: ASLv2.0
 Group: Development/Python
@@ -38,7 +38,7 @@ BuildPreReq: python3-module-mock python3-module-subunit
 BuildPreReq: python3-module-sphinx python3-module-oslosphinx
 BuildPreReq: python3-module-testrepository python3-module-testscenarios
 BuildPreReq: python3-module-testtools python3-module-mimeparse
-BuildPreReq: python3-module-eventlet
+BuildPreReq: python3-module-eventlet python3-module-requests
 %endif
 
 %py_provides %oname
@@ -141,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt2.git20150723
+- Enabled check
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt1.git20150723
 - Version 0.10.2
 - Disabled check (for bootstrap)
