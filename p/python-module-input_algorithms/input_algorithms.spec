@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.4.2
-Release: alt1.git20150430
+Version: 0.4.4.6
+Release: alt1.git20150625
 Summary: Thin DSL for creating input_algorithms
 License: MIT
 Group: Development/Python
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4.6-alt1.git20150625
+- Version 0.4.4.6
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4.2-alt1.git20150430
 - Version 0.4.4.2
 
