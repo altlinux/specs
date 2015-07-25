@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.0
-Release: alt1.git20150420
+Version: 0.7.1
+Release: alt1.git20150712
 Summary: JSON Matching Expressions
 License: MIT
 Group: Development/Python
@@ -134,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.git20150712
+- Version 0.7.1
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1.git20150420
 - Version 0.7.0
 
