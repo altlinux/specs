@@ -1,10 +1,11 @@
 %define oname hacking
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.9.3
-Release: alt1.git20141105
+Version: 0.10.2
+Release: alt1.git20150723
 Summary: OpenStack Hacking Guideline Enforcement
 License: ASLv2.0
 Group: Development/Python
@@ -25,6 +26,7 @@ BuildPreReq: python-module-mock python-module-subunit
 BuildPreReq: python-module-sphinx python-module-oslosphinx
 BuildPreReq: python-module-testrepository python-module-testscenarios
 BuildPreReq: python-module-testtools python-module-mimeparse
+BuildPreReq: python-module-eventlet
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -36,6 +38,7 @@ BuildPreReq: python3-module-mock python3-module-subunit
 BuildPreReq: python3-module-sphinx python3-module-oslosphinx
 BuildPreReq: python3-module-testrepository python3-module-testscenarios
 BuildPreReq: python3-module-testtools python3-module-mimeparse
+BuildPreReq: python3-module-eventlet
 %endif
 
 %py_provides %oname
@@ -138,6 +141,10 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt1.git20150723
+- Version 0.10.2
+- Disabled check (for bootstrap)
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1.git20141105
 - Initial build for Sisyphus
 
