@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.16
-Release: alt1.git20150420
+Version: 1.1.1
+Release: alt1.git20150723
 Summary: The AWS SDK for Python
 License: ASLv2.0
 Group: Development/Python
@@ -22,6 +22,7 @@ BuildPreReq: python-module-jmespath python-module-six
 BuildPreReq: python-module-nose python-module-mock
 BuildPreReq: python-module-futures
 BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
+BuildPreReq: python-module-guzzle_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -143,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20150723
+- Version 1.1.1
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.16-alt1.git20150420
 - Version 0.0.16
 
