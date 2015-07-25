@@ -1,4 +1,6 @@
-%define		svn 6748
+%define		svn 7048
+
+%define		rel alt1
 
 Name:		smplayer
 Summary:	A great MPlayer/MPV front-end (QT4)
@@ -8,15 +10,19 @@ License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
 Version:	14.9.0
-Release:	alt1.%svn
-Packager:	Alexey Morsov <swi@altlinux.ru>
+Release:	%rel.%svn.1
+Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
 Patch0:		smplayer-paths-fix-alt.patch
-Patch1:		smplayer-0.8.5-disable_update.patch
+Patch1:		smplayer-14.9.0-disable_update_autoshutdown.patch
 
-Requires:	mplayer
 BuildRequires:	gcc-c++ libqt4-devel >= 4.2
 Provides: %name
+
+%if "%rel" != "alt1"
+Requires: mplayer
+%endif
+
 
 %description
 smplayer intends to be a complete front-end for MPlayer/MPV, from basic features
@@ -47,15 +53,33 @@ SMPlayer направлений на те, щоб стати як можна б�
 SMPlayer розробено на інструментарії Qt і є мультиплатформним.
 Зібрано з Qt4
 
+
+%if "%rel" == "alt1"
+%package -n %name-mpv
+Summary: A great MPV front-end (QT4)
+Group: Video
+Requires: %name mpv
+BuildArch: noarch
+
+%description -n %name-mpv
+Virtual package for SMPlayer, requires a MPV
+
+%package -n %name-mplayer
+Summary: A great MPlayer front-end (QT4)
+Group: Video
+Requires: %name mplayer
+BuildArch: noarch
+
+%description -n %name-mplayer
+Virtual package for SMPlayer, requires a MPlayer
+%endif
+
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
 sed -i 's|DOC_PATH=$(PREFIX)/share/doc/packages/smplayer|DOC_PATH=%_docdir/%name-%version|g' Makefile
-
-#hack for qt4.5rc
-#rm -f src/translations/%{name}_gl.ts
-#sed -i 's|translations/smplayer_gl.ts||g' src/%{name}.pro
+sed -i 's|0UNKNOWN|%svn|g' get_svn_revision.sh
 
 %build
 export PATH=$PATH:%_qt4dir/bin
@@ -74,7 +98,19 @@ export OPTFLAGS="%optflags"
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_man1dir/*
 
+%if "%rel" == "alt1"
+%files -n %name-mpv
+%files -n %name-mplayer
+%endif
+
 %changelog
+* Sun Jul 26 2015 Motsyo Gennadi <drool@altlinux.ru> 14.9.0-alt1.7048.1
+- update Ukrainian translation (fixed typo)
+
+* Sat Jul 25 2015 Motsyo Gennadi <drool@altlinux.ru> 14.9.0-alt1.7048
+- ALT bug #31142
+- svn7048
+
 * Mon Feb 23 2015 Motsyo Gennadi <drool@altlinux.ru> 14.9.0-alt1.6748
 - svn6748
 
