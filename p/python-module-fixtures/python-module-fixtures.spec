@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:           python-module-%{pypi_name}
-Version:        0.3.14
+Version:        1.3.1
 Release:        alt1
 Summary:        Fixtures, reusable state for writing clean tests and more
 
@@ -12,7 +12,9 @@ URL:            https://launchpad.net/python-fixtures
 Source0:        %{name}-%{version}.tar
 BuildArch:      noarch
 
-BuildRequires:  python-devel
+BuildRequires:  python-devel python-module-mock
+BuildRequires:  python-module-setuptools-tests
+BuildRequires:  python-module-mimeparse
 
 Requires:       python-module-testtools
 
@@ -28,8 +30,10 @@ contract in unittest compatible test cases easy and straight forward.
 Summary:        Fixtures, reusable state for writing clean tests and more
 Group:		Development/Python
 BuildArch:      noarch
-BuildRequires:  rpm-build-python3
-BuildRequires:  python3-module-setuptools
+BuildRequires(pre):  rpm-build-python3
+BuildRequires:  python3-module-setuptools python3-module-mock
+BuildRequires:  python3-module-setuptools-tests
+BuildRequires:  python3-module-mimeparse
 Requires:       python3-module-testtools
 
 %description -n python3-module-%{pypi_name}
@@ -67,6 +71,14 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test -v
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc README GOALS NEWS Apache-2.0 BSD COPYING
 %{python_sitelibdir}/%{pypi_name}
@@ -80,5 +92,8 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1
+- Version 1.3.1
+
 * Mon Jul 14 2014 Lenar Shakirov <snejok@altlinux.ru> 0.3.14-alt1
 - First build for ALT (based on Fedora 0.3.14-3.fc21.src)
