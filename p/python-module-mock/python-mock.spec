@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%{pypi_name}
-Version: 1.0.1
+Version: 1.3.0
 Release: alt1
 Summary: A Python Mocking and Patching Library for Testing
 
@@ -14,7 +14,10 @@ Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: python-devel
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pbr
+
+%py_requires funcsigs
 
 %description
 Mock is a Python module that provides a core mock class. It removes the need
@@ -28,7 +31,9 @@ needed attributes in the normal way.
 Summary:        A Python Mocking and Patching Library for Testing
 Group:		Development/Python
 BuildArch:      noarch
-BuildRequires:  rpm-build-python3
+BuildRequires(pre):  rpm-build-python3
+BuildRequires: python3-module-pbr python3-module-setuptools
+%py3_requires funcsigs
 
 %description -n python3-module-%{pypi_name}
 Mock is a Python module that provides a core mock class. It removes the need
@@ -66,19 +71,19 @@ popd
 %python_install
 
 %files
-%doc docs/ README.txt PKG-INFO LICENSE.txt
-%{python_sitelibdir}/*.egg-info
-%{python_sitelibdir}/%{pypi_name}.py*
+%doc docs/ README.rst PKG-INFO LICENSE.txt
+%{python_sitelibdir}/*
 
 %if_with python3
 %files -n python3-module-mock
-%doc docs/ README.txt PKG-INFO LICENSE.txt
-%{python3_sitelibdir}/*.egg-info
-%{python3_sitelibdir}/%{pypi_name}.py*
-%{python3_sitelibdir}/__pycache__/%{pypi_name}*
+%doc docs/ README.rst PKG-INFO LICENSE.txt
+%{python3_sitelibdir}/*
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1
+- Version 1.3.0
+
 * Fri Aug 29 2014 Lenar Shakirov <snejok@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 
