@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.3
-Release: alt1.git20150419
+Version: 0.9.8.2
+Release: alt1.git20150725
 Summary: Code to deeply merge multiple python dictionaries
 License: WTFPL
 Group: Development/Python
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8.2-alt1.git20150725
+- Version 0.9.8.2
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1.git20150419
 - Version 0.9.3
 
