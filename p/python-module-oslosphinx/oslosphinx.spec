@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.5.0
+Version: 3.0.0
 Release: alt1
 Summary: OpenStack Sphinx Extensions and Theme
 License: ASLv2.0
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1
+- Version 3.0.0
+
 * Fri May 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 
