@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6.1
-Release: alt1.git20141115
+Version: 1.7.1
+Release: alt1.git20150621
 Summary: Customized Exception class
 License: MIT
 Group: Development/Python
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt1.git20150621
+- Version 1.7.1
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.git20141115
 - Initial build for Sisyphus
 
