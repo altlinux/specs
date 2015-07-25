@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.4.1
-Release: alt1.git20150222
+Version: 0.4.7
+Release: alt1.git20150722
 Summary: A library that allows your python tests to easily mock out the boto library
 License: ASLv2.0
 Group: Development/Python
@@ -114,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.7-alt1.git20150722
+- Version 0.4.7
+
 * Tue Feb 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20150222
 - Version 0.4.1
 
