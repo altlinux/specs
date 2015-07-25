@@ -1,8 +1,8 @@
 %define icons_name Simple
 
 Name: icon-theme-simple
-Version: 2.1
-Release: alt3
+Version: 2.7
+Release: alt1
 
 Summary: Additonal sets of icons for the GNOME and Xfce
 Summary(ru_RU.UTF-8): Набор пиктограмм Simple для GNOME и Xfce
@@ -10,8 +10,7 @@ License: GPL
 URL: http://www.gnome-look.org/content/show.php/Simple?content=99470
 
 Group: Graphical desktop/GNOME
-Source0: Simple-%{version}.tar.bz2
-Source1: actions-%{version}.tar.bz2
+Source: Simple-%version.tar.bz2
 BuildArch: noarch
 
 %description
@@ -25,16 +24,16 @@ Sets of icons for GNOME and XFCE based on original icons - OxygenRefit2.
 %install
 install -m755 -d %buildroot%_iconsdir
 tar xjf %SOURCE0 -C %buildroot%_iconsdir/
-tar xjf %SOURCE1 -C %buildroot%_iconsdir/
-mv -f %buildroot%_iconsdir/actions-%{version}/* %buildroot%_iconsdir/%icons_name-%{version}/scalable/actions/
-rm -rf %buildroot%_iconsdir/actions-%{version}
-mv %buildroot%_iconsdir/%icons_name-%{version} %buildroot%_iconsdir/%icons_name
+mv %buildroot%_iconsdir/%icons_name-%version %buildroot%_iconsdir/%icons_name
 ln -s %_iconsdir/%icons_name/scalable/apps/clock.png %buildroot%_iconsdir/%icons_name/scalable/apps/xfce4-clock.png
 
 %files
 %_iconsdir/%icons_name
 
 %changelog
+* Sat Jul 25 2015 Mikhail Kolchin <mvk@altlinux.org> 2.7-alt1
+- Update to version 2.7
+
 * Tue May 24 2011 Mikhail Efremov <sem@altlinux.org> 2.1-alt3
 - Symlink xfce4-clock to clock icon.
 - Minor spec cleanup.
@@ -47,4 +46,3 @@ ln -s %_iconsdir/%icons_name/scalable/apps/clock.png %buildroot%_iconsdir/%icons
 
 * Sun Oct 11 2009 Denis Koryavov <dkoryavov@altlinux.org> 1.95-alt1
 - First build for Sisyphus.
-
