@@ -1,5 +1,5 @@
 %define branch 0.9
-%define svn svn5161
+%define svn svn5273
 
 %define rel alt1
 
@@ -864,6 +864,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sun Jul 26 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5273
+- 0.9.0 svn5273 version
+
 * Tue Jun 16 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5161
 - 0.9.0 svn5161 version
 

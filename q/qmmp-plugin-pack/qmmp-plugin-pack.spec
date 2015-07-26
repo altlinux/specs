@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.9
-%define		svn svn5161
+%define		svn svn5273
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -130,6 +130,9 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %_libdir/qmmp/Ui/libqsui.so
 
 %changelog
+* Sun Jul 26 2015 Motsyo Gennadi <drool@altlinux.ru> 0.9.0-alt1.svn5273
+- build svn5273
+
 * Tue Jun 16 2015 Motsyo Gennadi <drool@altlinux.ru> 0.9.0-alt1.svn5161
 - build svn5161
 
