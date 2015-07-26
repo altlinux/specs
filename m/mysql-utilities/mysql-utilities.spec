@@ -1,5 +1,5 @@
 Name: mysql-utilities
-Version: 1.4.4
+Version: 1.6.1
 Release: alt1
 
 Summary: MySQL Utilities
@@ -12,16 +12,17 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Upstream has a mirror redirector for downloads, so the URL is hard to
 # represent statically.  You can get the tarball by following a link from
-# http://dev.mysql.com/downloads/tools/utilities/
+# http://dev.mysql.com/downloads/utilities/
+# Source-url: https://launchpad.net/ubuntu/+archive/primary/+files/mysql-utilities_%version.orig.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires: python-devel
 
-BuildRequires: python-module-mysql >= 1.2.1
+BuildRequires: python-module-mysql >= 2.0.3
 
-Requires: python-module-mysql >= 1.2.1
+Requires: python-module-mysql >= 2.0.3
 
 # Is it correct method to disable python modules providing?
 AutoProv: nopython
@@ -90,9 +91,18 @@ rm -rf %buildroot%python_sitelibdir/mysql/connector/
 %_bindir/mysqlfabric
 %_bindir/mysqlrplms
 %_bindir/mysqlrplsync
+%_bindir/mysqlbinlogmove
+%_bindir/mysqlbinlogpurge
+%_bindir/mysqlbinlogrotate
+%_bindir/mysqlgrants
+%_bindir/mysqlslavetrx
 %python_sitelibdir/mysql/fabric
 
 %changelog
+* Sun Jul 26 2015 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
+- new version 1.6.1 (with rpmrb script)
+- download source from launchpad
+
 * Fri Sep 19 2014 Vitaly Lipatov <lav@altlinux.ru> 1.4.4-alt1
 - initial build for ALT Linux Sisyphus
 

@@ -2,7 +2,7 @@
 %define oname mysql-connector-python
 
 Name: python-module-mysql
-Version: 1.2.3
+Version: 2.0.4
 Release: alt1
 
 Summary: MySQL Connector for Python
@@ -16,6 +16,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Upstream has a mirror redirector for downloads, so the URL is hard to
 # represent statically.  You can get the tarball by following a link from
 # http://dev.mysql.com/downloads/connector/python/
+# Source-url: http://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-%version.zip
 Source: %oname-%version.tar
 
 BuildArch: noarch
@@ -52,7 +53,6 @@ Documentation: http://dev.mysql.com/doc/connector-python/en/index.html
 
 %prep
 %setup -n %oname-%version
-chmod -x python?/examples/*py
 
 mkdir -p ../BUILD3
 cp -fR . ../BUILD3
@@ -77,18 +77,21 @@ popd
 %endif
 
 %files
-%doc ChangeLog COPYING README* docs/README_DOCS.txt
-%doc python2/examples
+%doc CHANGES.txt LICENSE.txt README* docs/README_DOCS.txt
+%doc examples
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-mysql
-%doc ChangeLog COPYING README* docs/README_DOCS.txt
-%doc python3/examples
+%doc CHANGES.txt LICENSE.txt README* docs/README_DOCS.txt
+%doc examples
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Sun Jul 26 2015 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt1
+- new version 2.0.4 (with rpmrb script)
+
 * Sat Sep 20 2014 Vitaly Lipatov <lav@altlinux.ru> 1.2.3-alt1
 - import archive mysql-connector-python-1.2.3
 
