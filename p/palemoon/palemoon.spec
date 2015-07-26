@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 25.6.0.rel
-Release: alt1
+Release: alt1.1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -112,7 +112,8 @@ echo "ac_add_options --disable-tracejit" >> .mozconfig
 
 %ifarch %ix86
 #ac_add_options --disable-cairo
-echo 'ac_add_options --enable-optimize="-O3 -msse2 -mfpmath=sse"' >> .mozconfig
+#echo 'ac_add_options --enable-optimize="-O3 -msse2 -mfpmath=sse"' >> .mozconfig
+echo 'ac_add_options --enable-optimize=" -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
 %build
@@ -291,6 +292,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Sun Jul 26 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.6.0.rel-alt1.1
+- Fix x86 version
+
 * Sat Jul 25 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.6.0.rel-alt1
 - New version
 
