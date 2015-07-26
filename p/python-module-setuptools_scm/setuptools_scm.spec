@@ -3,14 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.0
-Release: alt1
+Version: 1.6.0
+Release: alt1.git20150723
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/setuptools_scm/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/pypa/setuptools_scm.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -57,6 +58,13 @@ It falls back to PKG-INFO/.hg_archival.txt when necessary.
 %prep
 %setup
 
+git config --global user.email "real at altlinux.org"
+git config --global user.name "REAL"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag -m "%version" %version
+
 %if_with python3
 cp -fR . ../python3
 %endif
@@ -71,10 +79,12 @@ popd
 %endif
 
 %install
+python setup.py egg_info
 %python_install
 
 %if_with python3
 pushd ../python3
+python3 setup.py egg_info
 %python3_install
 popd
 %endif
@@ -102,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Sun Jul 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.git20150723
+- Version 1.6.0
+
 * Fri Apr 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus
 
