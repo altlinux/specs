@@ -1,5 +1,5 @@
 Name: sisyphus-mirror
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: a simple script for mirroring Sisyphus/Master/updates/etc via rsync
@@ -36,6 +36,16 @@ install -m0644 include %buildroot%_sysconfdir/%name
 %doc AUTHORS README.UTF8
 
 %changelog
+* Mon Jul 27 2015 Aleksey Avdeev <solo@altlinux.org> 0.8.3-alt1
+- New features:
+  + New command-line options:
+    + --link-list (ALT #31163)
+- Update default rsync options:
+  + add /files/.timestamp to include (ALT #31172)
+- Change the list of architectures synchronized by default:
+  + add x86_64-i586
+  - remove x86_32
+
 * Mon Nov 16 2009 Vladimir V. Kamarzin <vvk@altlinux.org> 0.8.2-alt1
 - Speed up stage of $mirror movement from temp dir to main dir.
 - Use shell-getopt.
