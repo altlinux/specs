@@ -1,5 +1,5 @@
 Name: putty
-Version: 0.64
+Version: 0.65
 Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
@@ -55,6 +55,9 @@ install -pD -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Mon Jul 27 2015 Michael Shigorin <mike@altlinux.org> 0.65-alt1
+- new version (watch file uupdate)
+
 * Tue Mar 03 2015 Michael Shigorin <mike@altlinux.org> 0.64-alt1
 - security fixes:
   + failure to scrub private keys from memory after use, see
