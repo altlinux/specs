@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.1.8
-Release: alt1.git20150416
+Version: 1.1.9
+Release: alt1.git20150722
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
 Group: Development/Python
@@ -128,7 +128,8 @@ popd
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 chmod +x create_docs.sh
-./create_docs.sh
+cd docs
+../create_docs.sh
 
 %check
 python setup.py test
@@ -155,7 +156,7 @@ popd
 %python_sitelibdir/*
 
 %files docs
-%doc html examples
+%doc docs/html examples
 
 %if_with python3
 %files -n python3-module-%oname
@@ -165,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.9-alt1.git20150722
+- Version 1.1.9
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.8-alt1.git20150416
 - Version 1.1.8
 
