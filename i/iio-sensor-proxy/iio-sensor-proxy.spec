@@ -1,4 +1,4 @@
-%define ver_major 1.0
+%define ver_major 1.1
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -14,7 +14,7 @@ License: GPLv2+
 Url: https://github.com/hadess/%name
 
 Source: %name-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires: gnome-common intltool gtk-doc
 BuildRequires: libgio-devel systemd-devel
@@ -49,7 +49,7 @@ Developer documentation for %name.
 
 %prep
 %setup
-#%patch -p1
+%patch -p1
 
 %build
 %autoreconf
@@ -76,6 +76,9 @@ Developer documentation for %name.
 
 
 %changelog
+* Mon Jul 27 2015 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
+- 1.1
+
 * Sat May 23 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
 - first build for Sisyphus
 
