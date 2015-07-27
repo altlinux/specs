@@ -1,6 +1,6 @@
 Name: hydra
 Version: 8.1
-Release: alt1
+Release: alt2
 
 Summary: A very fast network logon cracker which support many different services
 Summary(ru_RU.KOI8-R): Очень быстрый сетевой взломщик с поддержкой множства сервисов
@@ -10,13 +10,14 @@ Url: http://thc.org/thc-hydra/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source: %name-%version.tar.gz
-Source1: %name.menu
+Source1: x%name.desktop
+Source2: xhydra.png
 Patch0: hydra-5.4-open-fix.patch
 Provides: hydra = %version-%release
-Requires: hydra-common hydra-gtk hydra-pwinspector
+Requires: hydra-common hydra-gtk hydra-pwinspector 
 
 # Automatically added by buildreq on Wed Jun 08 2005
-BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libgtk+2-devel libpango-devel libpq-devel libssl-devel pkgconfig gcc-c++
+BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libgtk+2-devel libpango-devel libpq-devel libssl-devel pkgconfig gcc-c++ libssh-devel desktop-file-utils
 
 %description
 A very fast network logon cracker which support many different services
@@ -78,29 +79,62 @@ PW-Inspector считывает пароли и отображает соответствующие требованиям
 %make
 
 %install
+
+#make install PREFIX="%{buildroot}"
+# PREFIX="%{buildroot}/usr" MANDIR="%{buildroot}/usr/share/man"
+
+mkdir -p %{buildroot}%{_datadir}/{applications,pixmaps}
+install -m 644 -p %{SOURCE2} %{buildroot}%{_datadir}/pixmaps/
+
+desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1};
+
+
 %__install -pm755 -d %buildroot%_bindir
-%__install -pm755 -d %buildroot%_menudir
+%__install -pm755 -d %buildroot%_man1dir
 %__install -pm755 %name %buildroot%_bindir/%name
 %__install -pm755 x%name %buildroot%_bindir/x%name
 %__install -pm755 pw-inspector %buildroot%_bindir/pw-inspector
-%__install -pm644 %SOURCE1 %buildroot%_menudir/%name
+%__install -pm755 hydra-wizard.sh %buildroot%_bindir/hydra-wizard.sh
+%__install -pm755 dpl4hydra.sh %buildroot%_bindir/dpl4hydra.sh
 
 
-%files
+
+bzip2 %name.1
+bzip2 xhydra.1
+bzip2 pw-inspector.1
+install -pD -m644 %name.1.bz2 %buildroot%_man1dir/%name.1.bz2
+install -pD -m644 x%name.1.bz2 %buildroot%_man1dir/x%name.1.bz2
+install -pD -m644 pw-inspector.1.bz2 %buildroot%_man1dir/pw-inspector.1.bz2
+
+
+%find_lang %name
+
+%files  -f %name.lang
 %doc CHANGES README LICENSE
 
 %files common
 %_bindir/%name
+%_bindir/hydra-wizard.sh
+%_bindir/dpl4hydra.sh
+%_man1dir/hydra*
 
 %files gtk
 %doc hydra-gtk/AUTHORS hydra-gtk/COPYING hydra-gtk/INSTALL hydra-gtk/NEWS hydra-gtk/README
-#_libdir/menu/%name
 %_bindir/x%name
+%_man1dir/xhydra*
+%_datadir/pixmaps/*
+%_datadir/applications/*
+
 
 %files pwinspector
 %_bindir/pw-inspector
+%_man1dir/pw-inspector*
 
 %changelog
+* Tue Jul 28 2015 Ilya Mashkin <oddity@altlinux.ru> 8.1-alt2
+- build with libssh (Closes: #31173)
+- add man pages
+
 * Tue Dec 09 2014 Ilya Mashkin <oddity@altlinux.ru> 8.1-alt1
 - 8.1
 
