@@ -10,7 +10,7 @@
 
 Name: kf5-%rname
 Version: 5.3.2
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -100,7 +100,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 
 %build
 %K5cmake \
@@ -188,6 +188,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Mon Jul 27 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt3
+- return default menu icon
+
 * Fri Jul 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt2
 - set default menu icon
 
