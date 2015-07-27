@@ -3,7 +3,6 @@
 %ifarch x86_64
 %define tbname         NVIDIA-Linux-x86_64
 %endif
-%define virtual_pkg_name NVIDIA_GLX
 %define bin_pkg_name     nvidia_glx
 %define module_name    nvidia
 %define dirsuffix %nil
@@ -15,7 +14,7 @@
 %define nv_version 346
 %define nv_release 35
 %define nv_minor %nil
-%define pkg_rel alt139
+%define pkg_rel alt140
 %ifarch x86_64
 %def_enable egl
 %else
@@ -108,8 +107,6 @@ Sources for %{bin_pkg_name}_%{version} package
 %package -n %{bin_pkg_name}_%{version}
 PreReq: %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
-Provides: %virtual_pkg_name = %version-%release
-Obsoletes: %virtual_pkg_name < %version-%release
 #
 Group: %myGroup
 Summary: %mySummary
@@ -347,6 +344,9 @@ fi
 %endif
 
 %changelog
+* Mon Jul 27 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt140
+- fix provides
+
 * Wed Mar 11 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt139
 - don't package kernel module sources
 
