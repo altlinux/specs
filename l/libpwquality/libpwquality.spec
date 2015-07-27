@@ -1,7 +1,7 @@
 %define _name pwquality
 
 Name: lib%_name
-Version: 1.2.4
+Version: 1.3.0
 Release: alt1
 
 Summary: A library for password generation and password quality checking
@@ -108,6 +108,7 @@ ln -sf ../../%_lib/%name.so.1 %buildroot%_libdir/%name.so
 %_includedir/%_name.h
 %_libdir/%name.so
 %_pkgconfigdir/%_name.pc
+%_man3dir/pwquality.3.*
 
 %files -n python-module-%_name
 %python_sitelibdir/%_name.so
@@ -118,6 +119,9 @@ ln -sf ../../%_lib/%name.so.1 %buildroot%_libdir/%name.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Jul 27 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Mon Aug 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 - new python3 subpackage
