@@ -1,7 +1,7 @@
 %define oname mockup
 Name: python-module-%oname
-Version: 2.0.0
-Release: alt1.git20150213
+Version: 2.0.6
+Release: alt1.git20150726
 Summary: A collection of client side patterns for faster and easier web development
 License: BSD
 Group: Development/Python
@@ -61,6 +61,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Mon Jul 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.6-alt1.git20150726
+- Version 2.0.6
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.git20150213
 - Initial build for Sisyphus
 
