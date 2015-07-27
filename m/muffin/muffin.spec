@@ -2,7 +2,7 @@
 
 Name: muffin
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -29,7 +29,6 @@ BuildRequires: zenity
 BuildRequires: gobject-introspection-devel libclutter-gir-devel libgtk+3-gir-devel
 BuildRequires: libcinnamon-desktop-devel libcinnamon-desktop-gir-devel
 
-
 %description
 Muffin is a window and compositing manager that displays and manages
 your desktop via OpenGL. Muffin combines a sophisticated display engine
@@ -41,8 +40,8 @@ used as the display core of a larger system such as Cinnamon.
 For this reason, Muffin is very extensible via plugins, which
 are used both to add fancy visual effects and to rework the window
 management behaviors to meet the needs of the environment.
-
 %package utils
+
 Summary: Additional utilities for %name
 Group: Development/GNOME and GTK+
 Requires: %name = %version-%release
@@ -147,12 +146,19 @@ GObject introspection devel data for the Muffin library
 
 %files -n lib%name-gir
 %_libdir/%name/*.typelib
+# There is already registered upstream issue https://github.com/linuxmint/muffin/issues/199
+# But untill it will be fixed by Cinnamon devs we handle it manually.
+%filter_from_provides /typelib(Meta)/d
+
 
 %files -n lib%name-gir-devel
 %_libdir/%name/*.gir
 
 
 %changelog
+* Mon Jul 27 2015 Vladimir Didenko <cow@altlinux.org> 2.6.1-alt2
+- don't provide Meta typelib (closes: #31171)
+
 * Tue Jun 2 2015 Vladimir Didenko <cow@altlinux.org> 2.6.1-alt1
 - 2.6.1
 
@@ -243,7 +249,7 @@ GObject introspection devel data for the Muffin library
 * Wed Apr 24 2013 Vladimir Didenko <cow@altlinux.org> 1.7.3-alt2
 - 1.7.3-16-ge0ad43f
 - created gir and gir-devel subpackages
-- use set_typelibdir and set_girdir macroses. 
+- use set_typelibdir and set_girdir macroses.
 
 * Tue Apr 16 2013 Vladimir Didenko <cow@altlinux.org> 1.7.3-alt1
 - 1.7.3
