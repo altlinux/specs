@@ -25,7 +25,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -554,7 +554,7 @@ KDE 4 library
 %patch1038 -p1
 %patch1039 -p1
 %patch1040 -p1
-%patch1041 -p1
+#%patch1041 -p1
 %patch1042 -p1
 %patch1043 -p1
 %patch1044 -p1
@@ -949,6 +949,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Jul 27 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.21-alt2
+- return default menu icon
+
 * Thu Jul 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.21-alt1
 - new version
 - set default menu icon
