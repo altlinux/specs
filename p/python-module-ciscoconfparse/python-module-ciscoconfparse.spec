@@ -2,18 +2,20 @@
 %def_with python3
 
 Name:       python-module-%oname
-Version:    1.2.14
+Version:    1.2.37
 Release:    alt1
 Summary:    Library for parses through Cisco IOS-style configurations
 License:    GPLv3
 URL:       http://github.com/mpenning/%oname
 Source:    %name-%version.tar
+Patch0:    ciscoconfparse-1.2.37-setuptools_hg-alt.patch
 Group:      Development/Python
 
 BuildArch:  noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
+Requires: python-module-ipaddr
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -45,6 +47,7 @@ It can:
 
 %prep
 %setup
+%patch0 -p2
 
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
@@ -79,15 +82,22 @@ rm -fr %buildroot%python_sitelibdir/*/*test*
 rm -fr %buildroot%python3_sitelibdir/*/*test*
 
 %files
-%doc LICENSE README.rst
+%doc LICENSE README.rst TODO CHANGES
 %python_sitelibdir/*
+# skip Flask:
+%exclude %python_sitelibdir/%oname/ccp_flask.py*
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
+# skip Flask:
+%exclude %python3_sitelibdir/%oname/ccp_flask.py*
 %endif
 
 %changelog
+* Tue Jul 28 2015 Terechkov Evgenii <evg@altlinux.org> 1.2.37-alt1
+- 1.2.37
+
 * Mon Mar 16 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.14-alt1
 - Initial release for Sisyphus
 
