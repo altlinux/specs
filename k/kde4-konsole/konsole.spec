@@ -7,7 +7,7 @@
 %define bugfix 3
 Name: kde4-konsole
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Terminals
 Summary: Terminal emulator for KDE
@@ -23,7 +23,7 @@ Conflicts: kdebase-wm <= 3.5.12-alt2
 Source0: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: kdebase-4.8.0-alt-konsole-allow-sgid.patch
 Patch2: kdebase-4.10.0-alt-konsole-profiles.patch
-Patch3: kdebase-4.9.1-alt-no-transparency.patch
+Patch3: kdebase-4.14.3-alt-no-transparency.patch
 # Dmitry Prokoptsev
 Patch1000: BR59256fixed.diff
 # upstream
@@ -88,6 +88,9 @@ __EOF__
 
 
 %changelog
+* Mon Jul 27 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt2
+- allow transparent backgroungs
+
 * Fri Nov 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - new version
 
