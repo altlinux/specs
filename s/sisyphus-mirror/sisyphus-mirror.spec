@@ -1,5 +1,5 @@
 Name: sisyphus-mirror
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: a simple script for mirroring Sisyphus/Master/updates/etc via rsync
@@ -36,6 +36,10 @@ install -m0644 include %buildroot%_sysconfdir/%name
 %doc AUTHORS README.UTF8
 
 %changelog
+* Mon Jul 27 2015 Aleksey Avdeev <solo@altlinux.org> 0.8.4-alt1
+- Change the list of architectures synchronized by default:
+  + add x86_32 (for old repo)
+
 * Mon Jul 27 2015 Aleksey Avdeev <solo@altlinux.org> 0.8.3-alt1
 - New features:
   + New command-line options:
