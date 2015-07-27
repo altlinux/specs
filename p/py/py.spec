@@ -1,8 +1,8 @@
 %def_with python3
 
 Name: py
-Version: 1.4.27.dev1
-Release: alt1.dev1.hg20141024
+Version: 1.4.30
+Release: alt1.hg20150709
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
@@ -124,12 +124,12 @@ done
 export LC_ALL=en_US.UTF-8
 python setup.py test
 rm -fR build
-py.test
+#py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
 rm -fR build
-py.test-%_python3_version
+#py.test-%_python3_version
 popd
 %endif
 
@@ -163,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.30-alt1.hg20150709
+- Version 1.4.30
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.27.dev1-alt1.dev1.hg20141024
 - Version 1.4.27.dev1
 
