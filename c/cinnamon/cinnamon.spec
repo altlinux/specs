@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 2.6.13
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -79,6 +79,11 @@ BuildRequires: libpulseaudio-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gtk-doc gnome-common intltool
 BuildRequires: at-spi2-atk-devel
+
+# There is already registered upstream issue https://github.com/linuxmint/muffin/issues/199
+# But untill it will be fixed by Cinnamon devs we handle it manually.
+# Note: to handle dependency we require libmuffin-gir explicitly
+%filter_from_requires /typelib(Meta)/d
 
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
@@ -264,6 +269,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Mon Jul 27 2015 Vladimir Didenko <cow@altlinux.org> 2.6.13-alt2
+- Don't require Meta typelib (libmuffin-gir doesn't provide it anymore)
+
 * Thu Jul 16 2015 Vladimir Didenko <cow@altlinux.org> 2.6.13-alt1
 - 2.6.13-6-g53359f
 
