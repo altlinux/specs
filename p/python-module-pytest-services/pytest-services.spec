@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.4
-Release: alt1.git20150120
+Version: 1.1.3
+Release: alt1.git20150725
 Summary: Services plugin for pytest testing framework
 License: MIT
 Group: Development/Python
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20150725
+- Version 1.1.3
+
 * Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt1.git20150120
 - Version 1.0.4
 
