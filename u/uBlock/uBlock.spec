@@ -4,8 +4,8 @@
 %define cidf_dir       %firefox_noarch_extensionsdir/%cid
 
 Name: uBlock
-Version: 1.0,0.1
-Release: alt1
+Version: 1.0.0.1
+Release: alt1.1
 
 Summary: uBlock: an efficient blocker extension for your browser. Fast, potent, and lean
 License: GPLv3
@@ -17,9 +17,12 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %name.tar
 
-# Automatically added by buildreq on Sun Jul 26 2015
+# Automatically added by buildreq on Tue Jul 28 2015
 # optimized out: python-base python-module-Zope2 python-modules python-modules-compiler python-modules-encodings python-modules-json
 BuildRequires: libdb4-devel
+BuildRequires: python-module-distribute
+BuildRequires: python-modules-json
+
 
 %package -n palemoon-uBlock
 Group: System/Libraries
@@ -38,20 +41,22 @@ thousands more filters than other popular blockers out there.
 
 
 %description -l ru_RU.utf8
-uBock-origin - эффективный блокировщик: он использует меньше оперативной памяти и меньше нагружает ЦП,
-при этом используя больше фильтров, чем другие популярные блокировщики.
+uBock-origin - эффективный блокировщик: он использует меньше оперативной памяти и меньше нагружает ЦП, 
+чем другие популярные блокировщики, при этом используя больше фильтров.
 
 %description -n palemoon-uBlock
 Plugin uBlock: an efficient blocker extension for palemoon. Fast, potent, and lean.
 
 %description  -l ru_RU.utf8 -n palemoon-uBlock
-Плагин uBlock для блокировки рекламнвх ролтков в palenoon
+Плагин uBlock  эффективный блокировщик: он использует меньше оперативной памяти и меньше нагружает ЦП, 
+чем другие популярные блокировщики, при этом используя больше фильтров.
 
 %description -n firefox-uBlock
 Plugin uBlock: an efficient blocker extension for palemoon. Fast, potent, and lean.
 
 %description  -l ru_RU.utf8 -n firefox-uBlock
-Плагин uBlock для блокировки рекламнвх ролтков в firefox
+uBock-origin - эффективный блокировщик: он использует меньше оперативной памяти и меньше нагружает ЦП, 
+чем другие популярные блокировщики, при этом используя больше фильтров.
 
 %prep
 %setup -n %name
@@ -76,5 +81,8 @@ popd
 %cidf_dir
 
 %changelog
+* Tue Jul 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.0.1-alt1.1
+- Fix Builds
+
 * Mon Jul 27 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.0,0.1-alt1
 - initial build for ALT Linux Sisyphus
