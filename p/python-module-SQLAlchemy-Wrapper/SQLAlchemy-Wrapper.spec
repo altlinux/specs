@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.0
-Release: alt1.git20150102
+Version: 1.5.3
+Release: alt1.git20150722
 Summary: A framework-independent wrapper for SQLAlchemy that makes it really easy to use
 License: MIT
 Group: Development/Python
@@ -18,12 +18,14 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-inflection python-module-SQLAlchemy
 BuildPreReq: python-module-pytest-cov python-module-tox
+BuildPreReq: python-module-mock
 BuildPreReq: python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-inflection python3-module-SQLAlchemy
 BuildPreReq: python3-module-pytest-cov python3-module-tox
+BuildPreReq: python3-module-mock
 BuildPreReq: python3-modules-sqlite3
 %endif
 
@@ -93,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.3-alt1.git20150722
+- Version 1.5.3
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20150102
 - Initial build for Sisyphus
 
