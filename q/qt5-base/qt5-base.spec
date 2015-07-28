@@ -23,7 +23,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.5.0
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -54,7 +54,6 @@ Patch1002: alt-dont-require-plugin-file.patch
 %define _qt5_qmldir %_qt5_archdatadir/qml
 %define _qt5_libdir %_libdir
 %define _qt5_libexecdir %_qt5_archdatadir/libexec
-%define _qt5_libdatadir %_qt5_prefix/lib
 %define _qt5_plugindir %_qt5_archdatadir/plugins
 %define _qt5_settingsdir %_sysconfdir/xdg
 %define _qt5_sysconfdir %_qt5_settingsdir
@@ -475,7 +474,7 @@ cat >%buildroot/%_rpmmacrosdir/%gname <<__EOF__
 %%_qt5_importdir %_qt5_importdir
 %%_qt5_qmldir %_qt5_qmldir
 %%_qt5_libdir %_qt5_libdir
-%%_qt5_libdatadir %_qt5_libdatadir
+%%_qt5_libdatadir %_qt5_prefix/lib
 %%_qt5_libexecdir %_qt5_libexecdir
 %%_qt5_plugindir %_qt5_plugindir
 %%_qt5_settingsdir %_qt5_settingsdir
@@ -530,8 +529,10 @@ ls -1d %buildroot/%_qt5_libdir/* | \
 while read f ; do
     [ -d "$f" ] && continue
     fname=`basename $f`
-    ln -s `relative $f %buildroot/%_qt5_libdatadir/$fname` %buildroot/%_qt5_libdatadir/$fname
+    ln -s `relative $f %buildroot/%_qt5_prefix/lib/$fname` %buildroot/%_qt5_prefix/lib/$fname
 done
+# link includes into qt prefix
+ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %buildroot/%_qt5_prefix/include
 
 
 %if 0%{?qtchooser}
@@ -551,7 +552,7 @@ done
 %dir %_qt5_prefix/
 %dir %_qt5_prefix/doc/
 %dir %_qt5_prefix/imports/
-%dir %_qt5_libdatadir/
+%dir %_qt5_prefix/lib/
 %dir %_qt5_prefix/libexec/
 %dir %_qt5_prefix/plugins/
 %if "%_qt5_prefix" != "%_qt5_datadir"
@@ -605,12 +606,13 @@ done
 %_bindir/qlalr*
 %_qt5_bindir/qlalr*
 %dir %_qt5_headerdir
+%dir %_qt5_prefix/include/
 %_qt5_headerdir/Qt*/
 %dir %_qt5_prefix/mkspecs/
 %_qt5_archdatadir/mkspecs/
-%_qt5_libdatadir/libQt%{major}*.prl
+%_qt5_prefix/lib/libQt%{major}*.prl
 %_qt5_libdir/libQt%{major}*.prl
-%_qt5_libdatadir/libQt%{major}*.so
+%_qt5_prefix/lib/libQt%{major}*.so
 %_qt5_libdir/libQt%{major}*.so
 %dir %_qt5_libdir/cmake/
 %_qt5_libdir/cmake/Qt%{major}*/
@@ -631,7 +633,7 @@ done
 
 %files devel-static
 %_qt5_libdir/libQt%{major}*.a
-%_qt5_libdatadir/libQt%{major}*.a
+%_qt5_prefix/lib/libQt%{major}*.a
 %_pkgconfigdir/Qt%{major}Bootstrap.pc
 %_pkgconfigdir/Qt%{major}OpenGLExtensions.pc
 %_pkgconfigdir/Qt%{major}PlatformSupport.pc
@@ -674,19 +676,19 @@ done
 
 %files -n lib%{gname}-core
 %_qt5_libdir/libQt%{major}Core.so.*
-%_qt5_libdatadir/libQt%{major}Core.so.*
+%_qt5_prefix/lib/libQt%{major}Core.so.*
 
 %files -n lib%{gname}-concurrent
 %_qt5_libdir/libQt%{major}Concurrent.so.*
-%_qt5_libdatadir/libQt%{major}Concurrent.so.*
+%_qt5_prefix/lib/libQt%{major}Concurrent.so.*
 
 %files -n lib%{gname}-dbus
 %_qt5_libdir/libQt%{major}DBus.so.*
-%_qt5_libdatadir/libQt%{major}DBus.so.*
+%_qt5_prefix/lib/libQt%{major}DBus.so.*
 
 %files -n lib%{gname}-gui
 %_qt5_libdir/libQt%{major}Gui.so.*
-%_qt5_libdatadir/libQt%{major}Gui.so.*
+%_qt5_prefix/lib/libQt%{major}Gui.so.*
 %_qt5_plugindir/egldeviceintegrations/*
 %_qt5_plugindir/generic/*
 %_qt5_plugindir/imageformats/*
@@ -697,46 +699,49 @@ done
 
 %files -n lib%{gname}-network
 %_qt5_libdir/libQt%{major}Network.so.*
-%_qt5_libdatadir/libQt%{major}Network.so.*
+%_qt5_prefix/lib/libQt%{major}Network.so.*
 %_qt5_plugindir/bearer/*
 
 %files -n lib%{gname}-opengl
 %_qt5_libdir/libQt%{major}OpenGL.so.*
-%_qt5_libdatadir/libQt%{major}OpenGL.so.*
+%_qt5_prefix/lib/libQt%{major}OpenGL.so.*
 
 %files -n lib%{gname}-printsupport
 %_qt5_libdir/libQt%{major}PrintSupport.so.*
-%_qt5_libdatadir/libQt%{major}PrintSupport.so.*
+%_qt5_prefix/lib/libQt%{major}PrintSupport.so.*
 %_qt5_plugindir/printsupport/*
 
 %files -n lib%{gname}-sql
 %_qt5_libdir/libQt%{major}Sql.so.*
-%_qt5_libdatadir/libQt%{major}Sql.so.*
+%_qt5_prefix/lib/libQt%{major}Sql.so.*
 %_qt5_plugindir/sqldrivers/libqsqlite.so
 
 %files -n lib%{gname}-test
 %_qt5_libdir/libQt%{major}Test.so.*
-%_qt5_libdatadir/libQt%{major}Test.so.*
+%_qt5_prefix/lib/libQt%{major}Test.so.*
 
 %files -n lib%{gname}-widgets
 %_qt5_libdir/libQt%{major}Widgets.so.*
-%_qt5_libdatadir/libQt%{major}Widgets.so.*
+%_qt5_prefix/lib/libQt%{major}Widgets.so.*
 #%_qt5_plugindir/accessible/*
 
 %files -n lib%{gname}-xml
 %_qt5_libdir/libQt%{major}Xml.so.*
-%_qt5_libdatadir/libQt%{major}Xml.so.*
+%_qt5_prefix/lib/libQt%{major}Xml.so.*
 
 %files -n lib%{gname}-egldeviceintegration
 %_qt5_libdir/libQt%{major}EglDeviceIntegration.so.*
-%_qt5_libdatadir/libQt%{major}EglDeviceIntegration.so.*
+%_qt5_prefix/lib/libQt%{major}EglDeviceIntegration.so.*
 
 %files -n lib%{gname}-xcbqpa
 %_qt5_libdir/libQt%{major}XcbQpa.so.*
-%_qt5_libdatadir/libQt%{major}XcbQpa.so.*
+%_qt5_prefix/lib/libQt%{major}XcbQpa.so.*
 
 
 %changelog
+* Tue Jul 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt3
+- link include directory to qt prefix
+
 * Fri Jul 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt2
 - build docs
 
