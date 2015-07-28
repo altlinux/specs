@@ -3,7 +3,7 @@
 
 Name: qt5-svg
 Version: 5.5.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - Support for rendering and displaying SVG
@@ -74,10 +74,20 @@ syncqt.pl-qt5 \
 %install_qt5
 %make INSTALL_ROOT=%buildroot install_docs ||:
 
+# install libs into qt prefix
+mkdir -p %buildroot/%_qt5_prefix/lib
+ls -1d %buildroot/%_qt5_libdir/* | \
+while read f ; do
+    [ -d "$f" ] && continue
+    fname=`basename $f`
+    ln -s `relative $f %buildroot/%_qt5_libdatadir/$fname` %buildroot/%_qt5_libdatadir/$fname
+done
+
 %files common
 %files -n libqt5-svg
 %doc LGPL_EXCEPTION.txt
 %_qt5_libdir/libQt?Svg.so.*
+%_qt5_libdatadir/libQt?Svg.so.*
 %_qt5_plugindir/iconengines/libqsvgicon.so
 %_qt5_plugindir/imageformats/libqsvg.so
 
@@ -85,6 +95,8 @@ syncqt.pl-qt5 \
 %_qt5_headerdir/QtSvg/
 %_qt5_libdir/lib*.so
 %_qt5_libdir/lib*.prl
+%_qt5_libdatadir/lib*.so
+%_qt5_libdatadir/lib*.prl
 %_qt5_libdir/cmake/Qt?Svg/
 #%_qt5_libdir/cmake/Qt?Gui/*
 %_qt5_libdir/pkgconfig/Qt5Svg.pc
@@ -95,6 +107,9 @@ syncqt.pl-qt5 \
 %_qt5_docdir/qtsvg/
 
 %changelog
+* Tue Jul 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt2
+- install libs into qt prefix
+
 * Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 
