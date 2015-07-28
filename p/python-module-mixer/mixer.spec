@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.0.7
-Release: alt2.git20150123
+Version: 5.1.10
+Release: alt1.git20150727
 Summary: Mixer -- Is a fixtures replacement
 License: BSD
 Group: Development/Python
@@ -142,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.10-alt1.git20150727
+- Version 5.1.10
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.7-alt2.git20150123
 - Fixed for new fake-factory & Django 1.8+
 
