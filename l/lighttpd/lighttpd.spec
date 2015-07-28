@@ -13,8 +13,8 @@
 %define svnrev 2961
 
 Name: lighttpd
-Version: 1.4.35
-Release: alt2
+Version: 1.4.36
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -201,6 +201,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Tue Jul 28 2015 Alexei Takaseev <taf@altlinux.org> 1.4.36-alt1
+- 1.4.36
+
 * Wed Apr 29 2015 Alexei Takaseev <taf@altlinux.org> 1.4.35-alt2
 - update to svn2986
 
