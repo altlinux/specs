@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3
-Release: alt7.a0
+Version: 1.4
+Release: alt1.a0.git20150727
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -14,6 +14,7 @@ Url: http://sphinx.pocoo.org/
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/sphinx-doc/sphinx.git
 Source0: %name-%version.tar
 Source1: conf.py.template
 Source2: macro
@@ -30,14 +31,16 @@ BuildPreReq: python-module-Pygments
 BuildPreReq: python-module-docutils python-module-jinja2 texlive-latex-base
 # for tests
 BuildPreReq:  python-module-nose python-modules-json
-BuildPreReq: python-module-snowballstemmer
+BuildPreReq: python-module-snowballstemmer python-module-babel
+BuildPreReq: python-module-alabaster python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3 python3-module-objects.inv
 BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python3-module-Pygments python3-module-docutils
 BuildPreReq: python3-module-jinja2 python3-module-nose
 BuildPreReq: python-tools-2to3 python3-module-jinja2-tests
-BuildPreReq: python3-module-snowballstemmer
+BuildPreReq: python3-module-snowballstemmer python3-module-babel
+BuildPreReq: python3-module-alabaster python3-module-sphinx_rtd_theme
 %endif
 
 %py_requires simplejson
@@ -269,7 +272,7 @@ install -d %buildroot%_man1dir
 
 cp -fR doc/_build/html %buildroot%_docdir/%name/
 #install -p -m644 doc/_build/latex/*.pdf %buildroot%_docdir/%name/pdf
-install -p -m644 AUTHORS CHANGES EXAMPLES LICENSE README.rst TODO \
+install -p -m644 AUTHORS CHANGES* EXAMPLES LICENSE README.rst \
 	%buildroot%_docdir/%name
 #install -p -m644 doc/_build/man/*.1 %buildroot%_man1dir
 
@@ -373,6 +376,9 @@ install -p -m644 conf.py.template \
 %endif
 
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4-alt1.a0.git20150727
+- Version 1.4a0
+
 * Thu Jun 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt7.a0
 - Avoid download objects.inv
 
