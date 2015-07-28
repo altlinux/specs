@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.0.4
-Release: alt2
+Version: 2.0
+Release: alt1
 Summary: Port of the Tulip project (asyncio module, PEP 3156) on Python 2
 License: ASLv2.0
 Group: Development/Python
@@ -132,15 +132,17 @@ popd
 cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test
+export PYTHONPATH=$PWD
+python runtests.py
 %if_with python3
 pushd ../python3
-python3 setup.py test
+export PYTHONPATH=$PWD
+python3 runtests.py
 popd
 %endif
 
 %files
-%doc AUTHORS README TODO
+%doc AUTHORS *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/test*
@@ -156,7 +158,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS README TODO
+%doc AUTHORS *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
@@ -167,6 +169,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1
+- Version 2.0
+
 * Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt2
 - Added necessary requirements
 
