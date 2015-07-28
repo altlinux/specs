@@ -1,11 +1,11 @@
 %define oname pytest-bdd
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
-Version: 2.5.3
-Release: alt1.git20141229
+Version: 2.14.1
+Release: alt1.git20150713
 Summary: BDD library for the py.test runner
 License: MIT
 Group: Development/Python
@@ -22,7 +22,7 @@ BuildPreReq: python-module-detox python-module-mock
 BuildPreReq: python-module-pytest-pep8 python-module-pytest-cov
 BuildPreReq: python-module-pytest-cache python-module-pytest-xdist
 BuildPreReq: python-module-markupsafe python-module-greenlet
-BuildPreReq: python-module-virtualenv
+BuildPreReq: python-module-virtualenv python-module-parse_type
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -31,7 +31,7 @@ BuildPreReq: python3-module-detox python3-module-mock
 BuildPreReq: python3-module-pytest-pep8 python3-module-pytest-cov
 BuildPreReq: python3-module-pytest-cache python3-module-pytest-xdist
 BuildPreReq: python3-module-markupsafe python3-module-greenlet
-BuildPreReq: python3-module-virtualenv
+BuildPreReq: python3-module-virtualenv python3-module-parse_type
 %endif
 
 %py_provides pytest_bdd
@@ -104,10 +104,12 @@ popd
 %python_install
 
 %check
-python setup.py test
+export PYTHONPATH=$PWD
+py.test -vv
 %if_with python3
 pushd ../python3
-python3 setup.py test
+export PYTHONPATH=$PWD
+py.test-%_python3_version -vv
 popd
 %endif
 
@@ -127,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.1-alt1.git20150713
+- Version 2.14.1
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.3-alt1.git20141229
 - Version 2.5.3
 
