@@ -1,5 +1,5 @@
 Name: qbs
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Qt Build Suite
@@ -9,7 +9,7 @@ Group: Development/Tools
 Url: http://qt-project.org/wiki/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: http://download.qt-project.org/official_releases/%name/%version/%name-%version.src.tar.gz
+Source: http://download.qt-project.org/official_releases/%name/%version/%name-src-%version.tar.gz
 
 BuildRequires: gcc-c++
 BuildRequires: glibc-devel-static
@@ -42,7 +42,7 @@ BuildArch: noarch
 Provides examples for using the %name
 
 %prep
-%setup
+%setup -n %name-src-%version
 
 %build
 %qmake_qt5 -r %name.pro \
@@ -88,6 +88,9 @@ Provides examples for using the %name
 %_datadir/%name/examples
 
 %changelog
+* Wed Jul 29 2015 Nazarov Denis <nenderus@altlinux.org> 1.4.1-alt1
+- Version 1.4.1
+
 * Tue Jun 23 2015 Nazarov Denis <nenderus@altlinux.org> 1.4.0-alt1
 - Version 1.4.0
 
