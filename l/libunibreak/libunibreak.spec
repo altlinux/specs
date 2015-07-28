@@ -1,5 +1,5 @@
 Name: libunibreak
-Version: 1.1
+Version: 3.0
 Release: alt1
 
 Summary: Unicode line-breaking library
@@ -34,10 +34,7 @@ developing applications that use libunibreak.
 %setup
 
 %build
-%autoreconf
-%configure \
-   --disable-static
-
+%configure --disable-static
 %make_build
 
 %install
@@ -50,8 +47,11 @@ developing applications that use libunibreak.
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/libunibreak.pc
+%_libdir/pkgconfig/%name.pc
 
 %changelog
+* Tue Jul 28 2015 Mikhail Kolchin <mvk@altlinux.org> 3.0-alt1
+- new version
+
 * Mon Sep 29 2014 Mikhail Kolchin <mvk@altlinux.org> 1.1-alt1
 - initial build for ALT Linux Sisyphus
