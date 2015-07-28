@@ -2,7 +2,7 @@
 
 %define prefx python-module-twisted
 Name: %prefx-core
-Version: 14.0.2
+Version: 15.2.1
 Release: alt1
 %setup_python_module twisted-core
 Summary: An asynchronous networking framework written in Python
@@ -249,6 +249,16 @@ Twisted is an event-based framework for internet applications.
 
 The Twisted positioning framework.
 
+%package -n %prefx-logger
+Summary: Classes and functions to do granular logging
+Group: Development/Python
+Requires: %name
+
+%description -n %prefx-logger
+Twisted is an event-based framework for internet applications.
+
+This package contains classes and functions to do granular logging.
+
 %prep
 %setup -n %origname-%version
 
@@ -294,7 +304,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %_bindir/manhole
 %_bindir/tap2deb
 %_bindir/tap2rpm
-%_bindir/tapconvert
+#_bindir/tapconvert
 #_bindir/mktap
 %_bindir/twistd
 %_bindir/pyhtmlizer
@@ -365,7 +375,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 
 %python_sitelibdir/twisted/scripts/
 %exclude %python_sitelibdir/twisted/scripts/test
-%exclude %python_sitelibdir/twisted/scripts/tkunzip.py*
+#exclude %python_sitelibdir/twisted/scripts/tkunzip.py*
 %exclude %python_sitelibdir/twisted/scripts/trial.py*
 
 %dir %python_sitelibdir/twisted/spread/
@@ -408,7 +418,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/internet/tksupport.py*
 %python_sitelibdir/twisted/spread/ui/tkutil.py*
 %python_sitelibdir/twisted/spread/ui/tktree.py*
-%python_sitelibdir/twisted/scripts/tkunzip.py*
+#python_sitelibdir/twisted/scripts/tkunzip.py*
 
 %files zsh
 %defattr(-,root,root,-)
@@ -440,6 +450,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/pair/test
 %python_sitelibdir/twisted/persisted/test
 %python_sitelibdir/twisted/positioning/test
+%python_sitelibdir/twisted/logger/test
 
 %files -n %prefx-news
 %python_sitelibdir/twisted/news/
@@ -517,7 +528,14 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/positioning/
 %exclude %python_sitelibdir/twisted/positioning/test
 
+%files -n %prefx-logger
+%python_sitelibdir/twisted/logger/
+%exclude %python_sitelibdir/twisted/logger/test
+
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 15.2.1-alt1
+- Version 15.2.1
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.0.2-alt1
 - Version 14.0.2
 
