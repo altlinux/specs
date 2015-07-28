@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.1
-Release: alt1.git20150115
+Version: 0.3.4
+Release: alt1.git20150723
 Summary: Global base classes for Pyramid SQLAlchemy applications
 License: Public domain
 Group: Development/Python
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt1.git20150723
+- Version 0.3.4
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20150115
 - Version 0.3.1
 
