@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.3
-Release: alt1.dev1.git20150423
+Version: 0.3.4
+Release: alt1.dev1.git20150720
 Summary: Autogenerate Colander schemas based on SQLAlchemy models
 License: MIT
 Group: Development/Python
@@ -137,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt1.dev1.git20150720
+- Version 0.3.4.dev1
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1.dev1.git20150423
 - Version 0.3.3.dev1
 
