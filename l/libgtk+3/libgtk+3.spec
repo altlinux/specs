@@ -21,7 +21,7 @@
 
 Name: libgtk+3
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -34,6 +34,8 @@ Source: %_name-%version.tar
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Patch: gtk+-2.16.5-alt-stop-spam.patch
+# https://bugzilla.gnome.org/show_bug.cgi?id=740554
+Patch1: gtk+-3.17.4-bgo740554.patch
 
 %define glib_ver 2.43.4
 %define gi_ver 1.41.0
@@ -213,6 +215,7 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
+%patch1 -p1
 
 %{?_enable_snapshot:touch README INSTALL}
 
@@ -402,6 +405,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Mon Jul 27 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.6-alt2
+- applied patch from BGO #740554
+
 * Tue Jul 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.6-alt1
 - 3.16.6
 
