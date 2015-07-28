@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 0.8.7
-Release: alt2
+Version: 0.10.0
+Release: alt1
 Summary: A Python Document-Object Mapper for working with MongoDB
 
 License: MIT
@@ -14,9 +14,11 @@ Url: http://hmarr.com/mongoengine/
 Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-rednose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-rednose
 %endif
 
 %description
@@ -69,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt1
+- Version 0.10.0
+
 * Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.7-alt2
 - Added .egg-info
 
