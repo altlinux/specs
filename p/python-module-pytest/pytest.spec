@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.7.0
-Release: alt1.dev1.hg20141030
+Version: 2.8.0
+Release: alt1.dev4.git20150726
 Summary: Simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
@@ -12,7 +12,7 @@ Url: http://pytest.org
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 
-# hg clone https://bitbucket.org/hpk42/pytest
+# https://github.com/pytest-dev/pytest.git
 Source: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
@@ -139,6 +139,9 @@ cp -fR doc/en/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0-alt1.dev4.git20150726
+- Version 2.8.0.dev4
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1.dev1.hg20141030
 - Version 2.7.0.dev1
 
