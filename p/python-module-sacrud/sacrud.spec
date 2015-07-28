@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.6
-Release: alt1.dev1.git20150406
+Version: 0.3.2
+Release: alt1.post0.git20150710
 Summary: sacrud - CRUD interface for SQLAlchemy
 License: MIT
 Group: Development/Python
@@ -22,8 +22,9 @@ BuildPreReq: python-module-SQLAlchemy python-module-transaction
 BuildPreReq: python-module-zope.sqlalchemy python-module-webhelpers
 BuildPreReq: python-module-webtest python-module-nose
 BuildPreReq: python-module-pyramid-tests python-modules-sqlite3
-BuildPreReq: python-module-six
-BuildPreReq: python-module-sphinx-devel itcase_sphinx_theme
+BuildPreReq: python-module-six python-module-coverage
+BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-itcase_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -31,7 +32,7 @@ BuildPreReq: python3-module-SQLAlchemy python3-module-transaction
 BuildPreReq: python3-module-zope.sqlalchemy python3-module-webhelpers
 BuildPreReq: python3-module-webtest python3-module-nose
 BuildPreReq: python3-module-pyramid-tests python3-modules-sqlite3
-BuildPreReq: python3-module-six
+BuildPreReq: python3-module-six python3-module-coverage
 %endif
 
 %py_provides %oname
@@ -117,7 +118,6 @@ cp -fR . ../python3
 
 pushd docs
 tar -xf %SOURCE1
-cp -fR %_datadir/itcase_sphinx_theme _themes
 popd
 
 %prepare_sphinx .
@@ -141,6 +141,7 @@ pushd ../python3
 popd
 %endif
 
+export PYTHONPATH=$PWD
 %make -C docs pickle
 %make -C docs html
 
@@ -180,6 +181,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.post0.git20150710
+- Version 0.3.2.post0
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.6-alt1.dev1.git20150406
 - Version 0.2.6.dev1
 
