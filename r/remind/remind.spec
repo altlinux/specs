@@ -2,7 +2,7 @@
 # see patch for a list
 
 Name: remind
-Version: 03.01.14
+Version: 03.01.15
 Release: alt1
 
 Summary: Remind is a full-featured calendar/alarm program
@@ -98,6 +98,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 # - cronjob subpackage?
 
 %changelog
+* Tue Jul 28 2015 Michael Shigorin <mike@altlinux.org> 03.01.15-alt1
+- new version (watch file uupdate)
+
 * Mon Apr 27 2015 Michael Shigorin <mike@altlinux.org> 03.01.14-alt1
 - new version (watch file uupdate)
 
