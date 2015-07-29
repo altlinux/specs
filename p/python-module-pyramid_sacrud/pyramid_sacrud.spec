@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.8
-Release: alt1.dev1.git20150424
+Version: 0.1.1
+Release: alt1.post1.git20150710
 Summary: Pyramid CRUD interface based on sacrud and SQLAlchemy
 License: MIT
 Group: Development/Python
@@ -28,7 +28,7 @@ BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-module-webhelpers python-module-ColanderAlchemy
 BuildPreReq: python-module-zope.sqlalchemy
 BuildPreReq: python-modules-logging
-BuildPreReq: python-module-sphinx-devel itcase_sphinx_theme
+BuildPreReq: python-module-sphinx-devel python-module-itcase_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -119,7 +119,6 @@ cp -fR . ../python3
 %endif
 
 pushd docs
-cp -fR %_datadir/itcase_sphinx_theme _themes
 tar -xf %SOURCE1
 popd
 %prepare_sphinx .
@@ -162,11 +161,10 @@ popd
 %endif
 
 %files
-%doc *.rst
+%doc *.rst example
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/example
 
 %files tests
 %python_sitelibdir/*/tests
@@ -179,16 +177,18 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst
+%doc *.rst example
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/example
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Wed Jul 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.post1.git20150710
+- Version 0.1.1.post1
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.8-alt1.dev1.git20150424
 - Version 0.0.8.dev1
 
