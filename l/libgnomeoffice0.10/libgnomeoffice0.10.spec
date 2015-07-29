@@ -6,13 +6,13 @@
 %def_enable introspection
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.22
+Version: %ver_major.23
 Release: alt1
 
 Summary: Library for writing gnome office programs
 Group: Graphical desktop/GNOME
 License: GPL
-Url: http://projects.gnome.org/gnumeric/
+Url: http://www.gnumeric.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
@@ -137,6 +137,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Wed Jul 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.23-alt1
+- 0.10.23
+
 * Fri Apr 17 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.22-alt1
 - 0.10.22
 
