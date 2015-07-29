@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.7
-Release: alt1.post1.git20150405
+Version: 0.0.9
+Release: alt1.dev1.git20150710
 Summary: Form generator for SQLAlchemy models
 License: MIT
 Group: Development/Python
@@ -23,7 +23,7 @@ BuildPreReq: python-module-webtest python-module-webhelpers
 BuildPreReq: python-module-BeautifulSoup4 python-module-waitress
 BuildPreReq: python-module-webob python-module-markupsafe
 BuildPreReq: python-module-ColanderAlchemy
-BuildPreReq: python-module-sphinx-devel itcase_sphinx_theme
+BuildPreReq: python-module-sphinx-devel python-module-itcase_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -75,7 +75,6 @@ This package contains documentation for %oname.
 cp -fR . ../python3
 %endif
 
-cp -fR %_datadir/itcase_sphinx_theme docs/_themes
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 
@@ -132,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.9-alt1.dev1.git20150710
+- Version 0.0.9.dev1
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.7-alt1.post1.git20150405
 - Version 0.0.7.post1
 
