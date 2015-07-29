@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.2
+Version: 2.6
 Release: alt1
 Summary: Invoke py.test as distutils command with dependency resolution
 License: MIT
@@ -15,11 +15,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-hgtools
+BuildPreReq: python-module-hgtools python-module-setuptools_scm
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-hgtools
+BuildPreReq: python3-module-hgtools python3-module-setuptools_scm
 %endif
 
 %py_provides ptr
@@ -71,16 +71,19 @@ popd
 %endif
 
 %files
-%doc README
+%doc *.txt docs/*.rst
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README
+%doc *.txt docs/*.rst
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Jul 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6-alt1
+- Version 2.6
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2-alt1
 - Initial build for Sisyphus
 
