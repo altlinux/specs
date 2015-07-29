@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.0
-Release: alt1.git20141118
+Version: 0.1.7
+Release: alt1.dev1.git20150722
 Summary: SQLAlchemy MPTT mixins (Nested Sets)
 License: MIT
 Group: Development/Python
@@ -17,13 +17,14 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-nose python-module-SQLAlchemy
-BuildPreReq: python-module-sphinx-devel itcase_sphinx_theme
+BuildPreReq: python-module-sphinx-devel python-module-coverage
+BuildPreReq: python-module-itcase_sphinx_theme
 BuildPreReq: python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-nose python3-module-SQLAlchemy
-BuildPreReq: python3-modules-sqlite3
+BuildPreReq: python3-modules-sqlite3 python3-module-coverage
 %endif
 
 %py_provides %oname
@@ -75,7 +76,6 @@ This package contains documentation for %oname.
 cp -fR . ../python3
 %endif
 
-cp -fR %_datadir/itcase_sphinx_theme docs/_themes
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 
@@ -133,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.7-alt1.dev1.git20150722
+- Version 0.1.7.dev1
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20141118
 - Version 0.1.0
 
