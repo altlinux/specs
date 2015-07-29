@@ -4,14 +4,13 @@
 %def_enable introspection
 
 Name: libgsf
-Version: %ver_major.33
+Version: %ver_major.34
 Release: alt1
 
 Summary: GNOME Structured file library
 License: %lgpl2plus
 Group: System/Libraries
-Url: http://www.gnome.org/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Url: http://www.gnumeric.org/
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
@@ -146,6 +145,9 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 
 
 %changelog
+* Wed Jul 29 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.34-alt1
+- 1.14.34
+
 * Fri Apr 17 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.33-alt1
 - 1.14.33
 

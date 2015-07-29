@@ -11,13 +11,13 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.22
+Version: %ver_major.23
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
 Group: Office
-Url: http://www.gnome.org/gnumeric/
+Url: http://www.gnumeric.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: gnumeric-desktop-alt.patch
@@ -26,17 +26,16 @@ Patch1: gnumeric-1.12.1-alt-locale_dir.patch
 Obsoletes: %name-light
 Provides: %name-light = %version-%release
 
-%define scrollkeeper_ver 0.3.14
-%define gsf_ver 1.14.33
-%define gda_ver 4.0
+%define gsf_ver 1.14.34
+%define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.22
+%define goffice_ver 0.10.23
 %if_with python
 # Provided by python_loader.so
 Provides: python%__python_version(Gnumeric)
 %endif
 
-PreReq: scrollkeeper >= %scrollkeeper_ver
+PreReq: scrollkeeper
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
 Requires: libgnomeoffice%goffice_api_ver >= %goffice_ver
 Requires: libspreadsheet%{api_ver} = %version-%release
@@ -50,7 +49,7 @@ BuildRequires: intltool gnome-doc-utils zlib-devel librarian
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgsf-gir-devel libgnomeoffice%goffice_api_ver-gir-devel}
 %{?_with_perl:BuildRequires: perl-devel}
 %{?_with_python:BuildRequires: python-module-pygobject3-devel}
-%{?_with_gda:BuildRequires: libgda4-devel >= %gda_ver libgnomedb4-devel}
+%{?_with_gda:BuildRequires: libgda5-devel >= %gda_ver libgnomedb4-devel}
 %{?_enable_check:BuildRequires: xvfb-run}
 
 %description
@@ -181,6 +180,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jul 29 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.23-alt1
+- 1.12.23
+
 * Fri Apr 17 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.22-alt1
 - 1.12.22
 
