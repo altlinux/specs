@@ -1,5 +1,5 @@
 Name: bind
-Version: 9.9.6
+Version: 9.9.7
 Release: alt2
 
 Summary: ISC BIND - DNS server
@@ -37,7 +37,7 @@ Source44: bind.empty
 Source50: bind.service
 
 # NB: there must be at least one patch :)
-Patch0001: 0001-bind-9.8.3-owl-warnings.patch
+Patch0001: 0001-bind-9.9.7-owl-warnings.patch
 Patch0002: 0002-bind-9.8.3-openbsd-owl-pidfile.patch
 Patch0003: 0003-bind-9.9.1-openbsd-owl-chroot-defaults.patch
 Patch0004: 0004-bind-9.9.1-alt-owl-chroot.patch
@@ -450,6 +450,13 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Jul 29 2015 Fr. Br. George <george@altlinux.ru> 9.9.7-alt2
+- Update to ftp://ftp.isc.org/isc/bind9/9.9.7-P2/bind-9.9.7-P2.tar.gz
+
+* Tue Jul 28 2015 Fr. Br. George <george@altlinux.ru> 9.9.7-alt1
+- Update to ftp://ftp.isc.org/isc/bind9/9.9.7-P1/bind-9.9.7-P1.tar.gz
+- CVE-2015-5477 fix
+
 * Thu Dec 11 2014 Fr. Br. George <george@altlinux.ru> 9.9.6-alt2
 - Update to ftp://ftp.isc.org/isc/bind9/9.9.6-P1/bind-9.9.6-P1.tar.gz
 
