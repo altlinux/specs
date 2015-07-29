@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.8.1
-Release: alt1.git20141125
+Version: 2.0.0
+Release: alt1.git20150728
 Summary: py.test plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
 Group: Development/Python
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.git20150728
+- Version 2.0.0
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt1.git20141125
 - New snapshot
 
