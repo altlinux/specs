@@ -3,7 +3,7 @@
 %define rname smplayer
 Name: kde4-%rname
 Version: 14.9.0.%svn
-Release: alt3
+Release: alt4
 
 Summary: A great MPlayer/MPV front-end
 Summary(ru_RU.UTF8): Мощный интерфейс для MPlayer/MPV
@@ -25,7 +25,7 @@ Patch4: alt-config-dir.patch
 # Automatically added by buildreq on Thu Jul 23 2015 (-bi)
 # optimized out: elfutils fontconfig glibc-devel-static libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-script libqt4-xml libstdc++-devel phonon-devel python-base python3 python3-base zlib-devel
 #BuildRequires: gcc-c++ libqt4-webkit-devel rpm-build-python3 ruby ruby-stdlibs zlib-devel-static
-BuildRequires: gcc-c++ libqt4-devel libqt4-webkit-devel
+BuildRequires: gcc-c++ libqt4-devel
 
 %description
 smplayer intends to be a complete front-end for MPlayer/MPV, from basic features
@@ -104,8 +104,9 @@ while read f; do
     mv $f $filedir/$newname
 done
 
+%find_lang --without-mo --with-qt smplayer
 
-%files
+%files -f smplayer.lang
 %_bindir/%name
 %_desktopdir/kde4/*.desktop
 %_docdir/%name-%version
@@ -113,6 +114,12 @@ done
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Wed Jul 29 2015 Sergey V Turchin <zerg@altlinux.org> 14.9.0.7046-alt4
+- fix package translations
+
+* Fri Jul 24 2015 Sergey V Turchin <zerg@altlinux.org> 14.9.0.7046-alt2.M70P.1
+- built for M70P
+
 * Thu Jul 23 2015 Sergey V Turchin <zerg@altlinux.org> 14.9.0.7046-alt3
 - separate configs with smplayer
 
