@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        4.34
+Version:        4.39
 Release:        alt1
 Summary:        Python Remote Objects
 Group:          Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildPreReq: python-devel python-module-sphinx-devel
 BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-serpent
+BuildPreReq: python-module-serpent python3-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
@@ -214,6 +214,9 @@ popd
 %endif
 
 %changelog
+* Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.39-alt1
+- Version 4.39
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.34-alt1
 - Version 4.34
 
