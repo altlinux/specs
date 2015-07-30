@@ -1,5 +1,5 @@
 Name: balance
-Version: 3.54
+Version: 3.57
 Release: alt1
 
 Summary: TCP load-balancing proxy server
@@ -7,6 +7,7 @@ License: GPLv2
 Group: System/Servers
 Url: https://www.inlab.de/balance.html
 Source: %name-%version.tar.gz
+Patch: %name-3.54-optflags.patch
 Packager: Michael A. Kangin <prividen@altlinux.org>
 
 %description
@@ -15,7 +16,8 @@ load balancing and failover mechanisms.  The program behaviour can
 be controlled at runtime using a simple command line syntax.
 
 %prep
-%setup 
+%setup
+%patch -p2
 
 %build
 %make_build
@@ -32,6 +34,10 @@ install %name.1 %buildroot%_man1dir/
 %dir %_runtimedir/%name
 
 %changelog
+* Thu Jul 30 2015 L.A. Kostis <lakostis@altlinux.ru> 3.57-alt1
+- NMU:
+  + updated to 3.57.
+
 * Mon Jan 30 2012 Michael A. Kangin <prividen@altlinux.org> 3.54-alt1
 - Build for ALTLinux
 
