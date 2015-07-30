@@ -1,10 +1,11 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
+#set_autoconf_version 2.13
 %define sover 0
 
 Name: dataspaces
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 Summary: An Extreme-Scale Data Management Framework
 License: BSD
@@ -75,6 +76,7 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
 %add_optflags %optflags_shared
+%autoreconf
 %configure \
 	--enable-dimes \
 	 CC=mpicc FC=mpif90
@@ -97,7 +99,7 @@ done
 popd
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc AUTHORS ChangeLog COPYING CREDITS KNOWN_BUGS NEWS README RELEASE_VERSIONS
 %_bindir/*
 %exclude %_bindir/test*
 
@@ -105,11 +107,15 @@ popd
 %_libdir/*.so.*
 
 %files -n lib%name-devel
+%doc examples
 %_bindir/test*
 %_includedir/*
 %_libdir/*.so
 
 %changelog
+* Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1
+- Version 1.6.0
+
 * Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus
 
