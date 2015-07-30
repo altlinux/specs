@@ -1,9 +1,9 @@
 
-%define svn 7046
+%define svn 7049
 %define rname smplayer
 Name: kde4-%rname
 Version: 14.9.0.%svn
-Release: alt4
+Release: alt1
 
 Summary: A great MPlayer/MPV front-end
 Summary(ru_RU.UTF8): Мощный интерфейс для MPlayer/MPV
@@ -14,7 +14,7 @@ Group: Video
 Url: http://www.smplayer.info/
 License: GPLv2
 
-Requires: mplayer
+Requires: %name-backend %name-common = %EVR
 
 Source: %name-%version.tar
 Patch1: alt-defines.patch
@@ -27,6 +27,28 @@ Patch4: alt-config-dir.patch
 #BuildRequires: gcc-c++ libqt4-webkit-devel rpm-build-python3 ruby ruby-stdlibs zlib-devel-static
 BuildRequires: gcc-c++ libqt4-devel
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Conflicts: kde4-smplayer < 14.9.0.7049
+
+%package backend-2-mpv
+Group: System/Libraries
+Summary: MPV %name backend
+Provides:  %name-backend = %version-%release
+Provides:  %name-backend-mpv = %version-%release
+Requires: %name-common = %EVR
+Requires: mpv
+
+%package backend-4-mplayer
+Group: System/Libraries
+Summary: MPlayer %name backend
+Provides:  %name-backend = %version-%release
+Provides:  %name-backend-mplayer = %version-%release
+Requires: %name-common = %EVR
+Requires: mplayer
+
 %description
 smplayer intends to be a complete front-end for MPlayer/MPV, from basic features
 like playing videos, DVDs, and VCDs to more advanced features like support
@@ -34,8 +56,6 @@ for MPlayer/MPV filters and more. One of the main features is the ability to
 remember the state of a played file, so when you play it later it will resume
 at the same point and with the same settings. smplayer is developed with
 the Qt toolkit, so it's multi-platform.
-Compiled with Qt4
-
 %description -l ru_RU.UTF8
 SMPlayer стремится быть как можно более полным интерфейсом для MPlayer/MPV,
 от базовых функций проигрывания видео, DVD, VCDs до самого продвинутого
@@ -44,8 +64,6 @@ SMPlayer стремится быть как можно более полным �
 того, чтобы при следующем его открытии Вы могли смотреть его дальше с
 того же места и с теми же параметрами настроек. SMPlayer разработан на
 инструментарии Qt и является мультиплатформенным.
-Скомпилировано с Qt4
-
 %description -l uk_UA.UTF8
 SMPlayer направлений на те, щоб стати як можна більш повним інтерфейсом
 для MPlayer/MPV, від базових функцій відтворення відео, DVD, VCD до самого
@@ -54,7 +72,12 @@ SMPlayer направлений на те, щоб стати як можна б�
 відтворюється, для того, щоб при наступному його відкритті Ви мали змогу
 переглядати його далі з того ж місця і з тими ж параметрами налаштувань.
 SMPlayer розробено на інструментарії Qt і є мультиплатформним.
-Зібрано з Qt4
+%description common
+%name common package
+%description backend-2-mpv
+MPV %name backend
+%description backend-4-mplayer
+MPlayer %name backend
 
 %prep
 %setup
@@ -106,14 +129,26 @@ done
 
 %find_lang --without-mo --with-qt smplayer
 
-%files -f smplayer.lang
+%files common -f smplayer.lang
+%dir %_datadir/%name/translations/
+
+%files backend-2-mpv
+%files backend-4-mplayer
+
+%files
 %_bindir/%name
 %_desktopdir/kde4/*.desktop
 %_docdir/%name-%version
 %_datadir/%name
+%exclude %_datadir/%name/translations/*
 %_iconsdir/hicolor/*/apps/%name.*
 
+
 %changelog
+* Thu Jul 30 2015 Sergey V Turchin <zerg@altlinux.org> 14.9.0.7049-alt1
+- update to r7049
+- allow to use with mpv and without mplayer
+
 * Wed Jul 29 2015 Sergey V Turchin <zerg@altlinux.org> 14.9.0.7046-alt4
 - fix package translations
 
