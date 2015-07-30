@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.8
-Release: alt1.git20150108
+Version: 1.11
+Release: alt1.git20150621
 Summary: Serializer for literal Python expressions
 License: MIT
 Group: Development/Python
@@ -16,11 +16,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-flake8
+BuildPreReq: python-module-flake8 python-module-pytz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-flake8
+BuildPreReq: python3-module-flake8 python3-module-pytz
 %endif
 
 %py_provides %oname
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11-alt1.git20150621
+- Version 1.11
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt1.git20150108
 - Version 1.8
 
