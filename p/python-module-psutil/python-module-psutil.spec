@@ -1,9 +1,10 @@
 %define oname psutil
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 2.1.3
+Version: 3.1.1
 Release: alt1
 
 Summary: A process utilities module for Python
@@ -20,10 +21,13 @@ Source: %oname-%version.tar
 %add_python_req_skip _psutil_sunos _psutil_windows
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests /proc
+BuildPreReq: python-module-mock
+BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-mock
 %endif
 
 %setup_python_module %oname
@@ -72,21 +76,32 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py build_ext -i
+export PYTHONPATH=$PWD
+py.test -vv
+%if_with python3
+pushd ../python3
+python3 setup.py build_ext -i
+export PYTHONPATH=$PWD
+py.test-%_python3_version -vv
+popd
+%endif
+
 %files
 %doc CREDITS *.rst LICENSE TODO docs/*.rst examples
-%python_sitelibdir/%oname/
-%python_sitelibdir/_*.so
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
 %doc CREDITS *.rst LICENSE TODO docs/*.rst examples
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/_*.so
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt1
+- Version 3.1.1
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.3-alt1
 - Version 2.1.3
 - Added module for Python 3
