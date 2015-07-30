@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0
-Release: alt1.dev.git20141014
+Version: 5.0
+Release: alt1.dev.git20150725
 Summary: A simple wrapper around optparse for powerful command line utilities
 License: BSD
 Group: Development/Python
@@ -185,6 +185,9 @@ popd
 %endif
 
 %changelog
+* Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt1.dev.git20150725
+- Version 5.0-dev
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1.dev.git20141014
 - Initial build for Sisyphus
 
