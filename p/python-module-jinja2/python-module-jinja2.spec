@@ -1,10 +1,11 @@
 %define oname jinja2
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 2.8
-Release: alt2.git20140610
+Version: 2.9
+Release: alt1.dev.git20150726
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
@@ -19,13 +20,13 @@ Source0: %name-%version.tar
 
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
 # for docs
 BuildPreReq: python-module-sphinx python-module-Pygments
 BuildPreReq: python-module-jinja2-tests python-module-markupsafe
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -134,14 +135,14 @@ make test
 %python_sitelibdir_noarch/jinja2/
 %python_sitelibdir_noarch/*.egg-info
 %exclude %python_sitelibdir_noarch/jinja2/tests.py*
-%exclude %python_sitelibdir_noarch/jinja2/testsuite
+#exclude %python_sitelibdir_noarch/jinja2/testsuite
 %exclude %python_sitelibdir_noarch/jinja2/pickle
 %doc AUTHORS CHANGES
 %doc ext/
 
 %files tests
 %python_sitelibdir_noarch/jinja2/tests.py*
-%python_sitelibdir_noarch/jinja2/testsuite
+#python_sitelibdir_noarch/jinja2/testsuite
 
 %files doc
 %doc docs/_build/html/*
@@ -156,14 +157,19 @@ make test
 %python3_sitelibdir_noarch/jinja2/
 %python3_sitelibdir_noarch/*.egg-info
 %exclude %python3_sitelibdir_noarch/jinja2/tests.py*
-%exclude %python3_sitelibdir_noarch/jinja2/testsuite
+%exclude %python3_sitelibdir_noarch/jinja2/*/tests.*
+#exclude %python3_sitelibdir_noarch/jinja2/testsuite
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir_noarch/jinja2/tests.py*
-%python3_sitelibdir_noarch/jinja2/testsuite
+%python3_sitelibdir_noarch/jinja2/*/tests.*
+#python3_sitelibdir_noarch/jinja2/testsuite
 %endif
 
 %changelog
+* Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9-alt1.dev.git20150726
+- Version 2.9.dev
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt2.git20140610
 - New snapshot
 
