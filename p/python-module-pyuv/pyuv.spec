@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.2
-Release: alt1.git20150116
+Version: 1.1.0
+Release: alt1.git20150619
 Summary: Python interface for libuv
 License: MIT
 Group: Development/Python
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20150619
+- Version 1.1.0
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.git20150116
 - New snapshot
 
