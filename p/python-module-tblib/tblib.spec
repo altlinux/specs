@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.git20150112
+Version: 1.1.0
+Release: alt1.git20150727
 Summary: Traceback fiddling library. Allows you to pickle tracebacks
 License: BSD
 Group: Development/Python
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20150727
+- Version 1.1.0
+
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20150112
 - Initial build for Sisyphus
 
