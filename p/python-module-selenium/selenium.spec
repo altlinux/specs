@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.44.0
+Version: 2.47.0
 Release: alt1
 Summary: Python bindings for Selenium
 License: ASL
@@ -83,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.47.0-alt1
+- Version 2.47.0
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.44.0-alt1
 - Version 2.44.0
 
