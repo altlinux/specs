@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0
-Release: alt1.a6.git20150216
+Release: alt1.a7.git20150730
 Summary: A tool for measuring code coverage of Python programs
 License: BSD
 Group: Development/Python
@@ -134,6 +134,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1.a7.git20150730
+- Version 4.0a7
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1.a6.git20150216
 - Version 4.0a6
 
