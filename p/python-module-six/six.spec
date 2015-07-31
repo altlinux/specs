@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.9.0
-Release: alt1.hg20150105
+Release: alt1.hg20150430
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt1.hg20150430
+- New snapshot
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt1.hg20150105
 - Version 1.9.0
 
