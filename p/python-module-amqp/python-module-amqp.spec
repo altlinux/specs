@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 2.0.0
-Release: alt1.a1.git20140930
+Release: alt1.a1.git20150615
 Group: Development/Python
 License: GPLv2
 Summary: fork of amqplib used by Kombu containing additional features and improvements
@@ -23,6 +23,18 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 This is a fork of amqplib_ which was originally written by Barry Pederson.
 It is maintained by the Celery_ project, and used by kombu as a pure python
 alternative when librabbitmq is not available.
+
+%package tests
+Summary: Tests for %module_name
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This is a fork of amqplib_ which was originally written by Barry Pederson.
+It is maintained by the Celery_ project, and used by kombu as a pure python
+alternative when librabbitmq is not available.
+
+This package contains tests for %module_name.
 
 %package pickles
 Summary: Pickles for %module_name
@@ -55,6 +67,18 @@ Group: Development/Python3
 This is a fork of amqplib_ which was originally written by Barry Pederson.
 It is maintained by the Celery_ project, and used by kombu as a pure python
 alternative when librabbitmq is not available.
+
+%package -n python3-module-%module_name-tests
+Summary: Tests for %module_name
+Group: Development/Python3
+Requires: python3-module-%module_name = %EVR
+
+%description -n python3-module-%module_name-tests
+This is a fork of amqplib_ which was originally written by Barry Pederson.
+It is maintained by the Celery_ project, and used by kombu as a pure python
+alternative when librabbitmq is not available.
+
+This package contains tests for %module_name.
 
 %prep
 %setup
@@ -98,6 +122,10 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%module_name/
 %doc AUTHORS Changelog LICENSE README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -109,9 +137,17 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%module_name/
 %files -n python3-module-%module_name
 %doc AUTHORS Changelog LICENSE README.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%module_name-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1.git20150615
+- New snapshot
+- Extracted tests into separate package
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1.git20140930
 - Version 2.0.0a1
 
