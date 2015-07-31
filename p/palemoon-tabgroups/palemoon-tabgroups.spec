@@ -8,7 +8,7 @@
 
 Name: palemoon-tabgroups
 Version: 0.2
-Release: alt1
+Release: alt1.1
 Summary: Provides tab groups (Panorama)
 
 License: GPL2
@@ -24,6 +24,7 @@ BuildRequires(pre):	rpm-build-palemoon
 
 # Automatically added by buildreq on Wed Jul 29 2015
 BuildRequires: libdb4-devel
+Requires: palemoon
 
 %description
 Create and manage tab groups in a side-by-side
@@ -55,6 +56,8 @@ fi
 %cid_dir
 
 %changelog
+* Fri Jul 31 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.2-alt1.1
+- Fix requires
+
 * Wed Jul 29 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.2-alt1
 - initial build for ALT Linux Sisyphus
-

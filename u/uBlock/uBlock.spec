@@ -5,7 +5,7 @@
 
 Name: uBlock
 Version: 1.0.0.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: uBlock: an efficient blocker extension for your browser. Fast, potent, and lean
 License: GPLv3
@@ -27,10 +27,12 @@ BuildRequires: python-modules-json
 %package -n palemoon-uBlock
 Group: System/Libraries
 Summary: Plugin  uBlock for palemoon
+Requires: palemoon
 
 %package -n firefox-uBlock
 Group: System/Libraries
 Summary: Plugin  uBlock for fitefox
+Requires: firefox
 
 BuildRequires(pre):	rpm-build-palemoon
 BuildRequires(pre):	rpm-build-firefox
@@ -81,6 +83,9 @@ popd
 %cidf_dir
 
 %changelog
+* Fri Jul 31 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.0.1-alt1.2
+- Add  Requires
+
 * Tue Jul 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.0.1-alt1.1
 - Fix Builds
 

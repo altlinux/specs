@@ -6,9 +6,9 @@
 
 %define pname zing_locale_switcher
 
-Name: palemoon-zing_locale_switcher
+Name:    palemoon-zing_locale_switcher
 Version: 2.1.3
-Release: alt1
+Release: alt1.1
 Summary: The Palemoon locale switcher
 
 License: GPL3
@@ -26,6 +26,7 @@ BuildRequires(pre):	rpm-build-palemoon
 
 # Automatically added by buildreq on Thu Jul 16 2015
 BuildRequires: libdb4-devel unzip
+Requires: palemoon
 
 %description
 This is an extension that allows quick and easy changing
@@ -56,5 +57,8 @@ fi
 %cid_dir
 
 %changelog
+* Fri Jul 31 2015 Hihin Ruslan <ruslandh@altlinux.ru> 2.1.3-alt1.1
+- Add  Requires to palemoon
+
 * Thu Jul 16 2015 Hihin Ruslan <ruslandh@altlinux.ru> 2.1.3-alt1
 - initial build for ALT Linux Sisyphus
