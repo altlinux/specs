@@ -1,5 +1,5 @@
 Name: sisyphus-mirror
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 
 Summary: a simple script for mirroring Sisyphus/Master/updates/etc via rsync
@@ -12,6 +12,8 @@ Source0: %name-%version.tar
 
 Requires: rsync >= 3.0.2-alt0.2.M40.1
 
+BuildPreReq: control
+
 %description
 This is a simple script for mirroring Sisyphus/Master/updates/etc via rsync.
 You may run it via cron.
@@ -23,19 +25,32 @@ You may run it via cron.
 
 install -d -m0755 %buildroot%_sysconfdir/%name
 install -d -m0755 %buildroot%_bindir
+install -d -m0755 %buildroot%_controldir
 
 install -m0755 %name %buildroot%_bindir
 install -m0644 %name.conf %buildroot%_sysconfdir/%name
 install -m0644 exclude %buildroot%_sysconfdir/%name
 install -m0644 include %buildroot%_sysconfdir/%name
+install -m0755 %name-srpms.control %buildroot%_controldir/%name-srpms
+
+%pre
+%pre_control %name-srpms
+
+%post
+%post_control -s nomirror %name-srpms
 
 %files
 %_bindir/*
+%_controldir/*
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/*
 %doc AUTHORS README.UTF8
 
 %changelog
+* Fri Jul 31 2015 Aleksey Avdeev <solo@altlinux.org> 0.8.5-alt1
+- Fix of dangling symlinks <arch>/SRPMS.*/*.src.rpm (ALT #31179)
+- Add manage mirroring src.rpm packets through the control
+
 * Mon Jul 27 2015 Aleksey Avdeev <solo@altlinux.org> 0.8.4-alt1
 - Change the list of architectures synchronized by default:
   + add x86_32 (for old repo)
