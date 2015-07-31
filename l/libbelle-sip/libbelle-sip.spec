@@ -1,6 +1,6 @@
 Name: libbelle-sip
 Version: 1.4.1
-Release: alt2
+Release: alt3
 Summary: Linphone sip stack
 
 Group: System/Libraries
@@ -11,10 +11,11 @@ License: GPL
 Url: http://www.belle-sip.org
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
-# Automatically added by buildreq on Tue Feb 25 2014
-# optimized out: antlr3-C antlr3-java gnu-config java jpackage-utils libcloog-isl4 libstdc++-devel pkg-config stringtemplate4
+# Automatically added by buildreq on Fri Jul 31 2015
+# optimized out: antlr3-C antlr3-java gnu-config java jpackage-utils libstdc++-devel pkg-config stringtemplate4 tzdata-java
 BuildRequires: antlr3-C-devel antlr3-tool gcc-c++ java-devel
-BuildRequires: /proc rpm-build-java libmbedtls-devel
+
+BuildRequires: /proc rpm-build-java
 
 %description
 Belle-sip is an object oriented c written SIP stack used by Linphone.
@@ -30,21 +31,38 @@ Libraries and headers required to develop software with belle-sip
 %prep
 %setup
 %patch0 -p1
-./autogen.sh
 
 %build
-#%%configure --disable-tests --disable-shared --enable-shared
-#%%configure
+pushd polarssl
+sh ./autogen.sh
+./configure --prefix=/usr --libdir=%_libdir
+make
+popd
+
+./autogen.sh
+
+export LDFLAGS="$LDFLAGS -L${RPM_BUILD_DIR}/%name-%version/polarssl/library/.libs"
+export CFLAGS="$CFLAGS -I${RPM_BUILD_DIR}/%name-%version/polarssl/include"
+export CPPFLAGS="$CPPFLAGS -I${RPM_BUILD_DIR}/%name-%version/polarssl/include"
+
 ./configure --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin \
             --sbindir=/usr/sbin --sysconfdir=/etc --datadir=/usr/share \
             --includedir=/usr/include --libdir=%_libdir \
             --libexecdir=/usr/lib --localstatedir=/var/lib \
             --sharedstatedir=/var/lib --mandir=/usr/share/man \
             --infodir=/usr/share/info --disable-static
+
+sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+
 make
 
 %install
+
 %makeinstall
+
+pushd polarssl
+make install DESTDIR=%buildroot
+popd
 
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README
@@ -56,6 +74,9 @@ make
 %_libdir/pkgconfig/belle-sip.pc
 
 %changelog
+* Thu Jul 30 2015 Alexei Takaseev <taf@altlinux.org> 1.4.1-alt3
+- Disable system libmbedtls, use polarssl from linphone.org
+
 * Wed Jun 24 2015 Alexei Takaseev <taf@altlinux.org> 1.4.1-alt2
 - Rebuild with new libmbedtls-1.3.11
 
