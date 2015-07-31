@@ -3,12 +3,12 @@
 %global modname mccabe
 
 Name:               python-module-mccabe
-Version:            0.2.1
+Version:            0.3.1
 Release:            alt1
 Summary:            McCabe complexity checker
 
 Group:              Development/Python
-License:            MIT
+License:            Expat
 URL:                http://pypi.python.org/pypi/mccabe
 Source0:            %{name}-%{version}.tar
 
@@ -75,11 +75,11 @@ popd
 # %endif
 
 %files
-%doc README.rst
+%doc README.rst LICENSE
 %{python_sitelibdir}/%{modname}.py*
 %{python_sitelibdir}/%{modname}-%{version}*
 
-%if_with python3
+%if_with python3 LICENSE
 %files -n python3-module-mccabe
 %doc README.rst
 %{python3_sitelibdir}/%{modname}.py*
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1
+- Version 0.3.1
+
 * Fri Aug 01 2014 Lenar Shakirov <snejok@altlinux.ru> 0.2.1-alt1
 - First build for ALT (based on Fedora 0.2.1-6.fc21.src)
 
