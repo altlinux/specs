@@ -15,7 +15,7 @@
 
 Name: kf5-%rname
 Version: 5.3.2
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -214,6 +214,7 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5srv/kded/*.desktop
 %_K5srvtyp/*.desktop
 %_K5dbus_srv/*.service
+%_datadir/dbus-1/services/*.service
 %_datadir/xsessions/plasma.desktop
 %_datadir/sddm/themes/*/
 
@@ -246,6 +247,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Fri Jul 31 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt3
+- move dbus service to standard place
+
 * Mon Jul 13 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt2
 - change XDG data dirs order in startkde
 
