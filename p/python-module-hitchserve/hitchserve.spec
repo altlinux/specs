@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.8
-Release: alt1.git20150705
+Version: 0.3.9
+Release: alt1.git20150730
 Summary: Service orchestration library for the Hitch testing framework
 License: AGPLv3+
 Group: Development/Python
@@ -19,18 +19,19 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-hitch python-module-humanize
 BuildPreReq: python-module-colorama python-module-psutil
 BuildPreReq: python-module-pyuv python-module-tblib
-BuildPreReq: python-module-faketime
+BuildPreReq: python-module-faketime python-module-hitchenvironment
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-hitch python3-module-humanize
 BuildPreReq: python3-module-colorama python3-module-psutil
 BuildPreReq: python3-module-pyuv python3-module-tblib
-BuildPreReq: python3-module-faketime
+BuildPreReq: python3-module-faketime python3-module-hitchenvironment
 %endif
 
 %py_provides %oname
 %py_requires hitch humanize colorama psutil pyuv tblib faketime
+%py_requires hitchenvironment
 
 %description
 HitchServe is a UNIX service orchestration library for the Hitch testing
@@ -42,6 +43,7 @@ Summary: Service orchestration library for the Hitch testing framework
 Group: Development/Python3
 %py3_provides %oname
 %py3_requires hitch humanize colorama psutil pyuv tblib faketime
+%py3_requires hitchenvironment
 
 %description -n python3-module-%oname
 HitchServe is a UNIX service orchestration library for the Hitch testing
@@ -92,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.9-alt1.git20150730
+- Version 0.3.9
+
 * Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.8-alt1.git20150705
 - Initial build for Sisyphus
 
