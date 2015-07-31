@@ -1,5 +1,5 @@
-Version: 4.3.3
-Release: alt1.hg20140508
+Version: 5.0
+Release: alt1.hg20141226
 %setup_python_module cx_Freeze
 %define origname cx-freeze
 
@@ -166,6 +166,9 @@ rm -f $(find %buildroot -name 'windist*')
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt1.hg20141226
+- Version 5.0
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.3-alt1.hg20140508
 - Version 4.3.3
 
