@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.1
+Version: 0.4.3
 Release: alt1
 Summary: Coloured output for nosetests
 License: BSD
@@ -16,13 +16,16 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-nose python-module-termstyle
+BuildPreReq: python-module-colorama
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-nose python3-module-termstyle
+BuildPreReq: python3-module-colorama
 %endif
 
 %py_provides %oname
+%py_requires nose termstyle colorama
 
 %description
 rednose is a nosetests plugin for adding colour (and readability) to
@@ -32,6 +35,7 @@ nosetest console results.
 Summary: Coloured output for nosetests
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires nose termstyle colorama
 
 %description -n python3-module-%oname
 rednose is a nosetests plugin for adding colour (and readability) to
@@ -81,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt1
+- Version 0.4.3
+
 * Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1
 - Initial build for Sisyphus
 
