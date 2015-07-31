@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6
-Release: alt1.git20150224
+Version: 0.7
+Release: alt1.git20150720
 Summary: Plugin for the nose testing framework for running tests in a subprocess
 License: BSD
 Group: Development/Python
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.git20150720
+- Version 0.7
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.git20150224
 - Version 0.6
 
