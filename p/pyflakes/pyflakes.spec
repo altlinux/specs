@@ -1,7 +1,7 @@
 %def_with python3
 
 Name:           pyflakes
-Version:        0.8.1
+Version:        0.9.2
 Release:        alt1
 Summary:        A simple program which checks Python source files for errors
 
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1
+- Version 0.9.2
+
 * Fri Aug 01 2014 Lenar Shakirov <snejok@altlinux.ru> 0.8.1-alt1
 - First build for ALT (based on Fedora 0.8.1-3.fc21.src)
 
