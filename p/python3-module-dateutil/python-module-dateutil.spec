@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 2.3
-Release: alt2.git20141203
+Version: 2.4.2
+Release: alt1.git20150728
 
 Summary: Extensions to the standard datetime module (Python 3)
 
@@ -56,6 +56,9 @@ python3 dateutil/test/test.py
 
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1.git20150728
+- Version 2.4.2
+
 * Thu Dec 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt2.git20141203
 - Don't delete dateutil-zoneinfo.tar.gz
 
