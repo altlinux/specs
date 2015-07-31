@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%module_name
-Version: 3.1.17
-Release: alt1.git20141119
+Version: 3.1.18
+Release: alt1.git20150422
 Group: Development/Python
 License: BSD License
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
@@ -38,6 +38,25 @@ execute asynchronously (in the background) or synchronously
 (wait until ready).
 
 Celery is used in production systems to process millions of tasks a day.
+
+%package tests
+Summary: Tests for %module_name
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+Celery is an open source asynchronous task queue/job queue based on
+distributed message passing.  It is focused on real-time operation,
+but supports scheduling as well.
+
+The execution units, called tasks, are executed concurrently on one or
+more worker nodes using multiprocessing, `Eventlet`_ or `gevent`_.  Tasks can
+execute asynchronously (in the background) or synchronously
+(wait until ready).
+
+Celery is used in production systems to process millions of tasks a day.
+
+This package contains tests for %module_name.
 
 %package docs
 Summary: Documentation for %module_name
@@ -73,6 +92,25 @@ execute asynchronously (in the background) or synchronously
 (wait until ready).
 
 Celery is used in production systems to process millions of tasks a day.
+
+%package -n python3-module-%module_name-tests
+Summary: Tests for %module_name
+Group: Development/Python3
+Requires: python3-module-%module_name = %EVR
+
+%description -n python3-module-%module_name-tests
+Celery is an open source asynchronous task queue/job queue based on
+distributed message passing.  It is focused on real-time operation,
+but supports scheduling as well.
+
+The execution units, called tasks, are executed concurrently on one or
+more worker nodes using multiprocessing, `Eventlet`_ or `gevent`_.  Tasks can
+execute asynchronously (in the background) or synchronously
+(wait until ready).
+
+Celery is used in production systems to process millions of tasks a day.
+
+This package contains tests for %module_name.
 
 %prep
 %setup
@@ -129,6 +167,10 @@ popd
 %exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/celery*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %files docs
 %doc docs/.build/html/*
@@ -138,9 +180,17 @@ popd
 %doc Changelog *.txt *.rst TODO
 %_bindir/*.py3
 %python3_sitelibdir/celery*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%module_name-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.18-alt1.git20150422
+- Version 3.1.18
+- Extracted tests into separate package
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.17-alt1.git20141119
 - Version 3.1.17
 
