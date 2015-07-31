@@ -1,6 +1,6 @@
 
 Name: kf5-rpm-build
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Group: Development/KDE and QT
@@ -36,6 +36,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Fri Jul 31 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt1
+- move dbus *5*.service to standard place
+
 * Tue Apr 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
 - move k*5 dirs to _datadir
 
