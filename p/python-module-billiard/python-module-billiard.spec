@@ -1,5 +1,5 @@
 Name: python-module-billiard
-Version: 3.3.0.18
+Version: 3.3.0.20
 Release: alt1
 
 Summary: billiard is a fork of the Python 2.7 multiprocessing package
@@ -35,6 +35,9 @@ python setup.py install --root=%buildroot --record=INSTALLED_FILES
 %doc html LICENSE.txt CHANGES.txt
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.0.20-alt1
+- Version 3.3.0.20
+
 * Sat Oct 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.0.18-alt1
 - Version 3.3.0.18 (ALT #30404)
 
