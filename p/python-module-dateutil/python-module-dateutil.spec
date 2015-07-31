@@ -1,12 +1,12 @@
 Name: python-module-dateutil
-Version: 2.3
-Release: alt2
+Version: 2.4.2
+Release: alt1
 
 Summary: Extensions to the standard datetime module
 
 License: PSF
 Group: Development/Python
-Url: https://pypi.python.org/pypi/python-dateutil/2.2
+Url: https://pypi.python.org/pypi/python-dateutil/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -53,6 +53,9 @@ python setup.py test
 
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1
+- Version 2.4.2
+
 * Thu Dec 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt2
 - Don't delete dateutil-zoneinfo.tar.gz
 
