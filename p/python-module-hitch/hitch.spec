@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1.git20150730
 Summary: Loosely coupled testing framework
 License: AGPLv3+
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.6-alt1.git20150730
+- Version 0.4.6
+
 * Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt1.git20150730
 - Initial build for Sisyphus
 
