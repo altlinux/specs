@@ -4,8 +4,8 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 2014.10
-Release: alt2
+Version: 2015.4
+Release: alt1
 
 %setup_python_module %oname
 
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2015.4-alt1
+- Version 2015.4
+
 * Thu Dec 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2014.10-alt2
 - Added %oname-zoneinfo
 
