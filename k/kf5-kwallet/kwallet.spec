@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.12.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-kwalletd4.patch
 
 # Automatically added by buildreq on Fri Feb 13 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libgpg-error libgpg-error-devel libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs
@@ -62,6 +63,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -77,9 +79,11 @@ KF5 library
 %files
 %_bindir/kwalletd5
 %_K5bin/kwalletd5
+%_K5bin/kwallet-query
 %_K5notif/*.notifyrc
 %_K5srv/*.desktop
 %_K5dbus_srv/*.service
+%_datadir/dbus-1/services/*.service
 
 %files devel
 %_K5inc/kwallet_version.h
@@ -95,6 +99,9 @@ KF5 library
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Fri Jul 31 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt2
+- move dbus service to standard place
+
 * Fri Jul 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1
 - new version
 

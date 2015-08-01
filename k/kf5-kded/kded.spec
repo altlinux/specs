@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.12.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -71,7 +71,8 @@ KF5 library
 %_K5bin/kded5
 %_K5lib/libkdeinit5_*.so
 %_K5srvtyp/*.desktop
-%_K5dbus_srv/*.service
+#%_K5dbus_srv/*.service
+%_datadir/dbus-1/services/*.service
 
 %files devel
 #%_K5inc/kded_version.h
@@ -85,6 +86,9 @@ KF5 library
 #%_K5lib/libKF5DED.so.*
 
 %changelog
+* Fri Jul 31 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt2
+- move dbus service to standard place
+
 * Fri Jul 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1
 - new version
 
