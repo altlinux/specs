@@ -3,7 +3,7 @@
 Summary: Base library for gmerlin applications
 Name: gmerlin
 Version: 1.2.0
-Release: alt1.1
+Release: alt1.2
 License: GPL
 Group: Development/C++
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -20,18 +20,20 @@ Patch2: gmerlin-1.2.0_glibc.patch
 # http://git.pld-linux.org/gitweb.cgi?p=packages/gmerlin.git;a=blob_plain;f=cdio.patch;hb=HEAD
 Patch10: gmerlin-1.2.0-pld-cdio.patch
 
+Patch11: gmerlin-1.2.0-vt4l1.patch
+
 Url: http://gmerlin.sourceforge.net/
 
 # Automatically added by buildreq on Wed Jul 22 2015
 # optimized out: fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libatk-devel libaudiofile-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libjpeg-devel libpango-devel libpng-devel libquicktime111-core libwayland-client libwayland-server makeinfo pkg-config xorg-fixesproto-devel xorg-inputproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: doxygen imake libXinerama-devel libXtst-devel libXv-devel
-BuildRequires: libalsa-devel libcddb-devel libcdio-paranoia-devel libesd-devel libexif-devel
+BuildRequires: libalsa-devel libcddb-devel libesd-devel libexif-devel
 BuildRequires: libgavl-devel libgtk+2-devel libjack-devel libmusicbrainz-devel
 BuildRequires: libpulseaudio-devel libquicktime-devel libtiff-devel libv4l-devel libvisual0.4-devel
 BuildRequires: libxml2-devel xorg-cf-files
 
+BuildRequires: libcdio-paranoia-devel libcdio-devel >=  0.93 
 BuildRequires: desktop-file-utils
-
 
 %description
 Base library for gmerlin applications.
@@ -241,6 +243,7 @@ Provides: %name-video-recorder-plugin
 %description v4l
 Video4linux plugin for package gmerlin.
 
+
 #
 # cdaudio
 #
@@ -307,17 +310,17 @@ Run xmms visualization plugins without having to run xmms.
 # Applications: Camelot
 #
 
-# #%%package camelot
-# #%%Summary: Webcam application
-# #%%Group: Video
-# #%%Requires: %name-x11 = %version
-# #%%Requires: %name-v4l = %version
-# #%%Requires: %name-video-playback-plugin
-# #%%Requires: %name-video-recorder-plugin
-# #%%Requires: %name-image-writer-plugin
+#%%package camelot
+#Summary: Webcam application
+#Group: Video
+#Requires: %name-x11 = %version
+#Requires: %name-v4l = %version
+#Requires: %name-video-playback-plugin
+#Requires: %name-video-recorder-plugin
+#Requires: %name-image-writer-plugin
 
-# %%description camelot
-# %%Webcam application.
+#%%description camelot
+#Webcam application.
 
 #
 # Utilities
@@ -398,17 +401,21 @@ Gavl plugins for gmerlin.
 #patch3 -p1
 
 %patch10 -p1
+%patch11 -p1
 
+
+
+%build
 sed -i 's|^\(.*_LDADD.*\)|\1 -lgavl -lgobject-2.0|' tests/Makefile.am
 sed -i "s|^\(.*_LDADD =\)\(.*\)|\1 `pkg-config gtk+-2.0 --libs` -lX11 \2|" \
        apps/*/Makefile.am
 
-%build
 AUTOPOINT=true %autoreconf
 
 CFLAGS="-DGTK_DISABLE_DEPRECATED %(pkg-config --cflags gtk+-2.0)"
 LIBS="-ldl" %configure \
     --prefix=%prefix \
+    --enable-vtl \
     --disable-gtktest \
     --disable-rpath
 
@@ -598,12 +605,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_liconsdir/%name-alsamixer.png
 
 
-# %%files camelot
-# %%_bindir/camelot
-# %%_desktopdir/%name-camelot.desktop
-# %%_niconsdir/%name-camelot.png
-# %%_niconsdir/camelot_icon.png
-# %%_iconsdir/camelot_icon.png
+#%files camelot
+#%%_bindir/camelot
+#%%_desktopdir/%name-camelot.desktop
+#%%_niconsdir/%name-camelot.png
+#%%_niconsdir/camelot_icon.png
+#%%_iconsdir/camelot_icon.png
 
 %files kbd
 %_bindir/%{name}_kbd
@@ -671,6 +678,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_liconsdir/%name-plugincfg.png
 
 %changelog
+* Sat Aug 01 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.2.0-alt1.2
+- add gmerlin-1.2.0-vtl1.patch
+
 * Fri Jul 31 2015 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1.1
 - rebuilt against newest libcdio{,-paranoia}
 
@@ -713,6 +723,4 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 * Sat Feb 27 2010 Toni Graffy <toni@links2linux.de> - 0.4.3-0.pm.1
 - update to 0.4.3
-
-
 
