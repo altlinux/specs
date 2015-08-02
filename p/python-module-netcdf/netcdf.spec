@@ -5,8 +5,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.32
-Release: alt1.git20150411
+Version: 0.1.3
+Release: alt1.git20150725
 Summary: Allows use one or multiple NetCDF files in a transparent way through polimorphic methods
 License: MIT
 Group: Development/Python
@@ -87,7 +87,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %if_with python3
 pushd ../python3
 #python3_install
-2to3 -w -n %oname/%oname.py
+2to3 -w -n %oname/*.py
 install -d %buildroot%python3_sitelibdir/%oname
 install -p -m644 %oname/* %buildroot%python3_sitelibdir/%oname/
 popd
@@ -99,7 +99,7 @@ py.test -vv
 #if_with python3
 %if 0
 pushd ../python3
-#python3 setup.py test
+python3 setup.py test
 py.test-%_python3_version -vv
 popd
 %endif
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20150725
+- Version 0.1.3
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.32-alt1.git20150411
 - Version 0.0.32
 
