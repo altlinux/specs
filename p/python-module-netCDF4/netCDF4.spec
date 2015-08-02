@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.9
-Release: alt1.git20150722
+Release: alt1.git20150728
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
 Group: Development/Python
@@ -166,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.9-alt1.git20150728
+- New snapshot
+
 * Mon Jul 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.9-alt1.git20150722
 - Version 1.1.9
 
