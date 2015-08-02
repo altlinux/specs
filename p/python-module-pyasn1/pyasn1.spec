@@ -5,7 +5,7 @@
 Summary: Abstract Syntax Notation One (ASN.1), Python implementation
 Name: python-module-%oname
 Version: 0.1.8
-Release: alt1.rc1
+Release: alt2
 %setup_python_module %oname
 Url: http://pyasn1.sourceforge.net/
 Source0: %modulename-%version.tar.gz
@@ -122,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.8-alt2
+- Version 0.1.8
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.8-alt1.rc1
 - Version 0.1.8rc1
 
