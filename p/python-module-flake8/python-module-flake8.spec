@@ -3,15 +3,16 @@
 %global modname flake8
 
 Name:             python-module-%{modname}
-Version:          2.4.0
-Release:          alt1
+Version:          2.4.1
+Release:          alt1.git20150710
 Summary:          Code checking using pep8 and pyflakes
 
 Group:            Development/Python
 License:          MIT
 URL:              http://pypi.python.org/pypi/%{modname}
+# https://gitlab.com/pycqa/flake8.git
 Source0:          %{name}-%{version}.tar
-Patch0: flake8-2.4.0-alt-requirements.patch
+#Patch0: flake8-2.4.0-alt-requirements.patch
 
 BuildArch:        noarch
 BuildRequires:    python-devel python-modules-multiprocessing
@@ -95,7 +96,7 @@ This is version of the package running with Python 3.
 
 %prep
 %setup
-%patch0 -p2
+#patch0 -p2
 
 #sed -i -e '/^#!\s*\/.*bin\/.*python/d' flake8/pep8.py
 #chmod -x flake8/pep8.py
@@ -154,6 +155,12 @@ popd
 
 
 %changelog
+* Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt1.git20150710
+- Snapshot from git
+
+* Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt1
+- Version 2.4.1
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1
 - Version 2.4.0
 
