@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.9.0
-Release: alt1.git20141113
+Version: 0.10.1
+Release: alt1.git20150730
 Summary: Simple Python task execution
 License: BSD
 Group: Development/Python
@@ -20,6 +20,7 @@ BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
 BuildPreReq: python-module-invocations-tests python-module-releases
 BuildPreReq: python-module-alabaster python-module-nose
 BuildPreReq: python-module-spec python-module-mock
+BuildPreReq: python-module-flake8
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -27,7 +28,10 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-invocations-tests python3-module-releases
 BuildPreReq: python3-module-nose
 BuildPreReq: python3-module-spec python3-module-mock
+BuildPreReq: python3-module-flake8
 %endif
+
+%add_findreq_skiplist %python_sitelibdir/%oname/vendor/yaml3/__init__.py
 
 %py_provides %oname
 
@@ -40,6 +44,7 @@ feature set.
 Summary: Simple Python task execution
 Group: Development/Python3
 %py3_provides %oname
+%add_findreq_skiplist %python3_sitelibdir/%oname/vendor/yaml2/*.py
 
 %description -n python3-module-%oname
 Invoke is a Python (2.6+ and 3.2+) task execution tool & library,
@@ -144,6 +149,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.1-alt1.git20150730
+- Version 0.10.1
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.git20141113
 - Initial build for Sisyphus
 
