@@ -1,17 +1,17 @@
 %define oname pyglet
 
-%def_enable docs
+%def_disable docs
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2
-Release: alt4.alpha1.hg20140614
+Version: 1.3.0
+Release: alt4.a1.hg20150730
 Summary: Cross-platform windowing and multimedia library
 
 Group: Development/Python
 License: BSD
 URL: http://www.pyglet.org/
-# hg clone https://pyglet.googlecode.com/hg/ pyglet
+# hg clone https://bitbucket.org/pyglet/pyglet
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -114,9 +114,10 @@ mkdir -p doc/_build/html
 ./make.py docs
 
 %if_enabled docs
-%generate_pickles $PWD $PWD/doc/_build/html %oname
+#generate_pickles $PWD $PWD/doc/_build/html %oname
+%make -C doc pickle
 install -d %buildroot%python_sitelibdir/%oname
-cp -fR pickle %buildroot%python_sitelibdir/%oname/
+cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %files
@@ -142,6 +143,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt4.a1.hg20150730
+- Version 1.3.0a1
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt4.alpha1.hg20140614
 - New snapshot
 
