@@ -3,7 +3,7 @@
 
 Summary: Docutils -- Python Documentation Utilities
 Version: 0.13
-Release: alt1.svn20140708
+Release: alt1.svn20150603
 %setup_python_module %oname
 Name: %packagename
 # http://svn.code.sf.net/p/docutils/code/trunk/docutils/
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1.svn20150603
+- New snapshot
+
 * Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1.svn20140708
 - Version 0.13
 
