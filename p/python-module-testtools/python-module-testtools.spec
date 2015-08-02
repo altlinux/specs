@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.5.0
+Version: 1.8.0
 Release: alt1
 Summary: extensions to the Python standard library's unit testing framework
 
@@ -16,9 +16,10 @@ Source: %name-%version.tar
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools-tests git
 BuildRequires: python-module-unittest2 python-module-mimeparse
 BuildRequires: python-module-six python-module-argparse
+BuildRequires: python-module-pbr
 BuildRequires: python-module-sphinx-devel python-module-extras
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -26,6 +27,7 @@ BuildRequires: python3-devel python3-module-setuptools-tests
 BuildRequires: python3-module-unittest2 python3-module-mimeparse
 BuildRequires: python3-module-six python3-module-argparse
 BuildPreReq: python3-module-extras
+BuildRequires: python3-module-pbr
 %endif
 
 %description
@@ -61,6 +63,7 @@ This package contains documentation for %oname.
 Summary: extensions to the Python 3 standard library's unit testing framework
 Group: Development/Python3
 %add_python3_req_skip twisted
+%add_findreq_skiplist %python3_sitelibdir/%oname/_compat2x.py
 
 %description -n python3-module-%oname
 testtools is a set of extensions to the Python standard library's unit
@@ -74,6 +77,13 @@ sources.
 
 sed -i 's|python-mimeparse|mimeparse|' setup.py
 sed -i "s|.*unittest2.*||" setup.py
+
+git config --global user.email "real at altlinux.org"
+git config --global user.name "REAL"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag -m "%version" %version
 
 %prepare_sphinx .
 ln -s ../objects.inv doc/
@@ -131,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1
+- Version 1.8.0
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1
 - Version 1.5.0
 
