@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.10
-Release: alt2.git20141230
+Version: 1.11
+Release: alt1.git20150211
 Summary: Python subprocess interface
 License: MIT
 Group: Development/Python
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11-alt1.git20150211
+- Version 1.11
+
 * Thu Jan 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10-alt2.git20141230
 - Fixed Group
 
