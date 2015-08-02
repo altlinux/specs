@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.9.0
+Version: 2.1.1
 Release: alt1
 Summary: virtualenv-based automation of test activities
 License: MIT
@@ -123,6 +123,7 @@ popd
 
 %python_install
 
+export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C doc pickle
 %make -C doc html
 
@@ -159,6 +160,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1
+- Version 2.1.1
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt1
 - Version 1.9.0
 
