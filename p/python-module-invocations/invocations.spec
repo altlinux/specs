@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.2
-Release: alt2.git20141113
+Version: 0.10.0
+Release: alt1.git20150611
 Summary: Reusable Invoke tasks
 License: BSD
 Group: Development/Python
@@ -134,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt1.git20150611
+- Version 0.10.0
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt2.git20141113
 - Added necessary requirements
 - Enabled testing
