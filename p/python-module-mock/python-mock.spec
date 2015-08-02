@@ -3,18 +3,18 @@
 
 Name: python-module-%{pypi_name}
 Version: 1.3.0
-Release: alt1
+Release: alt1.git20150731
 Summary: A Python Mocking and Patching Library for Testing
 
 Group: Development/Python
 License: BSD
 Url: https://pypi.python.org/pypi/%{pypi_name}
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
+# https://github.com/testing-cabal/mock.git
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-devel python-module-setuptools git
 BuildRequires: python-module-pbr
 
 %py_requires funcsigs
@@ -47,6 +47,13 @@ needed attributes in the normal way.
 %prep
 %setup
 
+git config --global user.email "real at altlinux.org"
+git config --global user.name "REAL"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag -m "%version" %version
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -71,16 +78,19 @@ popd
 %python_install
 
 %files
-%doc docs/ README.rst PKG-INFO LICENSE.txt
+%doc docs/index.txt README.rst LICENSE.txt NEWS
 %{python_sitelibdir}/*
 
 %if_with python3
 %files -n python3-module-mock
-%doc docs/ README.rst PKG-INFO LICENSE.txt
+%doc docs/index.txt README.rst LICENSE.txt NEWS
 %{python3_sitelibdir}/*
 %endif
 
 %changelog
+* Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20150731
+- Snapshot from git
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1
 - Version 1.3.0
 
