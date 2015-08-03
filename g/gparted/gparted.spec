@@ -2,8 +2,8 @@
 %define Name GParted
 
 Name: gparted
-Version: 0.22.0
-Release: alt1.1
+Version: 0.23.0
+Release: alt1
 
 Summary: %Name Partition Editor
 Summary(ru_RU.UTF-8): Редактор разделов %Name
@@ -18,6 +18,9 @@ Source1: %name-pam
 Source2: %name-security
 
 AutoReq: yes, noshell
+
+Requires: hdparm
+#Requires: ntfs-3g btrfs-progs >= 4.1
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libparted-devel >= 3.2
@@ -88,6 +91,9 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Tue Aug 04 2015 Yuri N. Sedunov <aris@altlinux.org> 0.23.0-alt1
+- 0.23.0
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.22.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
