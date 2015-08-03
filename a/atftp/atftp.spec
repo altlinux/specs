@@ -1,6 +1,6 @@
 Name: atftp
-Version: 0.7
-Release: alt1.qa1
+Version: 0.7.1
+Release: alt1
 
 Summary: Advanced Trivial File Transfer Protocol
 License: GPLv2+
@@ -68,6 +68,9 @@ touch %buildroot%_sysconfdir/mtftp.conf
 %dir %attr(0770,root,_atftpd) %_runtimedir/atftpd
 
 %changelog
+* Mon Aug 03 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.1-alt1
+- 0.7.1 released
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
