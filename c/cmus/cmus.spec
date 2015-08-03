@@ -4,7 +4,7 @@
 %define name cmus
 %define version 2.6.0
 %define rcname rc0
-%define release alt1
+%define release alt2
 %define debug 0
 
 Name: %name
@@ -52,6 +52,7 @@ BuildRequires(build): libavutil-devel
 BuildRequires(build): libwavpack-devel
 BuildRequires(build): libcue-devel
 BuildRequires(build): libcdio-devel
+BuildRequires(build): libcdio-paranoia-devel
 BuildRequires(build): libcddb-devel
 BuildRequires(build): libdiscid-devel
 BuildRequires(build): libopusfile-devel
@@ -541,6 +542,9 @@ mv cmus-status-display examples
 
 
 %changelog
+* Tue Jul 21 2015 Terechkov Evgenii <evg@altlinux.org> 2.6.0-alt2
+- Rebuild with libcdio-0.93 and libcdio-paranoia-devel
+
 * Sat Sep 20 2014 Terechkov Evgenii <evg@altlinux.org> 2.6.0-alt1
 - 2.6.0
 - Added subpackage for OPUS plugin

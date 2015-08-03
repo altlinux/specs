@@ -1,6 +1,6 @@
 Name: libcddb
 Version: 1.3.2
-Release: alt3
+Release: alt4
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -65,6 +65,9 @@ This package contains the cddb_query is a simple app that use %name.
 %doc examples
 
 %changelog
+* Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt4
+- rebuilt against libcdio.so.16
+
 * Mon Apr 25 2011 Dmitry V. Levin <ldv@altlinux.org> 1.3.2-alt3
 - Fixed rpath issue.
 - Rebuilt for debuginfo.

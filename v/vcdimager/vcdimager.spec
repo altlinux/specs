@@ -4,8 +4,8 @@
 %def_disable static
 
 Name: vcdimager
-Version: %ver_major.23
-%define release alt2.4
+Version: %ver_major.24
+%define release alt1
 
 %ifdef cvsdate
 Release: %{release}cvs%cvsdate
@@ -17,24 +17,23 @@ Summary: VideoCD (pre-)mastering and ripping tool
 Group: Video
 License: GPL
 Url: http://%name.org
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
 
-%ifndef cvsdate
-Source: %url/pub/%name/%name%{ver_major}_UNSTABLE/%name-%version.tar.gz
+%ifdef cvsdate
+Source: %url/pub/%name/%name%{ver_major}_UNSTABLE/%name-%version-%cvsdate.tar.gz
 %else
-Source: %name-%version-%cvsdate.tar.bz2
+Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 %endif
 
 %define libcdio_ver 0.72
 
 Requires: libvcd = %version-%release
 
-#BuildPreReq: kernel-headers-std26-up
 BuildPreReq: help2man
 BuildPreReq: libcdio-devel >= %libcdio_ver
 
-# Automatically added by buildreq on Thu Jul 22 2004
-BuildRequires: gcc-c++ glib2 libcdio-devel libpopt-devel libstdc++-devel libxml2-devel pkgconfig tetex-core tetex-latex zlib-devel
+BuildRequires: gcc-c++ libcdio-devel libpopt-devel
+BuildRequires: libxml2-devel zlib-devel
+#BuildRequires: tetex-core tetex-latex
 
 %description
 GNU VCDImager is a full-featured mastering suite for authoring,
@@ -55,7 +54,7 @@ vcdxgen     XML VCD-description generator
 vcdxbuild   Builds a VCD/SVCD according to a supplied XML control file.
 vcdxrip     Reverses the process for a given VCD or SVCD disc.
 vcdxminfo   Debugging tool for displaying MPEG stream properties.
-vcdinfo	    Dispalys information about VCD.
+vcdinfo     Dispalys information about VCD.
 cdxa2mpeg   Simple tool for converting RIFF CDXA file to plain mpeg.
 
 %package -n libvcd
@@ -86,9 +85,9 @@ statically linked against libvcd.
 
 %prep
 %ifndef cvsdate
-%setup -q
+%setup
 %else
-%setup -q -n %name
+%setup -n %name
 pushd docs
 %__cp  version.texi version-vcd-info.texi
 %__cp  version.texi version-vcdxrip.texi
@@ -102,12 +101,12 @@ popd
 %ifdef cvsdate
 NOCONFIGURE=1 ./autogen.sh
 %endif
-
+%autoreconf
 %configure \
     %{subst_enable static}
 
 %make_build
-%make_build -C docs pdf
+#%make_build -C docs pdf
 
 %install
 %makeinstall
@@ -130,8 +129,8 @@ done
 %_bindir/*
 %_infodir/*.info*
 %_man1dir/*
-%doc AUTHORS BUGS FAQ TODO ChangeLog NEWS README THANKS 
-%doc docs/*.pdf
+%doc AUTHORS BUGS FAQ TODO ChangeLog NEWS README THANKS
+#%doc docs/*.pdf
 
 %files -n libvcd
 %_libdir/*.so.*
@@ -147,6 +146,9 @@ done
 %endif
 
 %changelog
+* Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.7.24-alt1
+- 0.7.24
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.23-alt2.4
 - NMU: rebuilt for debuginfo.
 

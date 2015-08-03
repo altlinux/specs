@@ -25,7 +25,7 @@
 
 Name: gvfs
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -52,7 +52,7 @@ Patch6: gvfs-1.19.90-alt-1-logind-state.patch
 %define glib_ver 2.38
 %define libsoup_ver 2.42
 %define avahi_ver 0.6
-%define libcdio_paranoia_ver 0.82
+%define libcdio_paranoia_ver 10.2
 %define hal_ver 0.5.10
 %define bluez_ver 4.0
 %define gdu_ver 3.3.91
@@ -83,7 +83,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_gtk:BuildPreReq: libgtk+3-devel}
 %{?_enable_http:BuildPreReq: libsoup-gnome-devel >= %libsoup_ver libxml2-devel}
 %{?_enable_avahi:BuildPreReq: libavahi-glib-devel >= %avahi_ver libavahi-devel >= %avahi_ver}
-%{?_enable_cdda:BuildPreReq: libcdio-devel >= %libcdio_paranoia_ver}
+%{?_enable_cdda:BuildPreReq: libcdio-paranoia-devel >= %libcdio_paranoia_ver}
 %{?_enable_fuse:BuildPreReq: libfuse-devel}
 %{?_enable_hal:BuildPreReq: libhal-devel >= %hal_ver}
 %{?_enable_obexftp:BuildPreReq: libbluez-devel >= %bluez_ver libdbus-glib-devel libexpat-devel}
@@ -497,6 +497,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt2
+- rebuilt against libcdio_{cdda,paranoia}.so.2
+
 * Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt1
 - 1.24.1
 
