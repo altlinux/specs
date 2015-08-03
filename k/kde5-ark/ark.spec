@@ -1,0 +1,101 @@
+%define rname ark
+
+%define sover 15
+%define libkerfuffle libkerfuffle%sover
+
+Name: kde5-%rname
+Version: 15.7.80
+Release: alt1
+%K5init altplace
+
+Group: Archiving/Compression
+Summary: KDE archivers frontend
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+Requires: unrar p7zip unzip zip
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Wed Aug 05 2015 (-bi)
+# optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs xml-common xml-utils zlib-devel
+#BuildRequires: bzlib-devel extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-kglobalaccel-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libarchive-devel libdb4-devel liblzma-devel python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby zlib-devel-static
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires: bzlib-devel libarchive-devel liblzma-devel zlib-devel
+BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
+BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
+BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kglobalaccel-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
+BuildRequires: kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwallet-devel
+BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+
+%description
+Frontend to many archivers.
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n %libkerfuffle
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libkerfuffle
+KF5 library
+
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build
+
+%install
+%K5install
+%find_lang %name --with-kde --all-name
+
+%files common -f %name.lang
+%doc COPYING*
+
+%files
+%config(noreplace) %_K5xdgconf/ark.*
+%_K5bin/ark
+%_K5plug/arkpart.so
+%_K5plug/kf5/kio_dnd/extracthere.so
+%_K5xmlgui/ark/
+%_K5xdgapp/*ark*.desktop
+%_K5srv/ark*.desktop
+%_K5cfg/*ark*.kcfg
+%_K5srv/ServiceMenus/ark_*.desktop
+%_K5icon/hicolor/*/apps/ark.*
+#
+%_K5plug/kerfuffle_*.so
+%_K5srv/kerfuffle_*.desktop
+%_K5srvtyp/kerfuffle*.desktop
+
+#%files devel
+#%_K5inc/ark_version.h
+#%_K5inc/ark/
+#%_K5link/lib*.so
+#%_K5lib/cmake/ark
+#%_K5archdata/mkspecs/modules/qt_ark.pri
+
+%files -n %libkerfuffle
+%_K5lib/libkerfuffle.so.%sover
+%_K5lib/libkerfuffle.so.*
+
+%changelog
+* Mon Aug 03 2015 Sergey V Turchin <zerg@altlinux.org> 15.7.80-alt1
+- initial build
