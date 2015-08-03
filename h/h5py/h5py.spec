@@ -4,7 +4,7 @@
 
 Name: h5py
 Version: 2.5.0
-Release: alt1.a0.git20150227
+Release: alt2.git20150720
 Summary: Python interface to the Hierarchical Data Format library, version 5
 License: MIT
 Group: Development/Python
@@ -296,6 +296,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt2.git20150720
+- Version 2.5.0
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt1.a0.git20150227
 - Version 2.5.0a0
 
