@@ -2,7 +2,7 @@
 %define otrs_user otrs
 
 Name: otrs
-Version: 4.0.8
+Version: 4.0.10
 Release: alt1
 
 Summary: Open source Ticket Request System
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-build-licenses rpm-macros-webserver-common rpm-macros-ap
 BuildRequires: perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib
 
 Source0: %name-%version.tar.gz
-Source1: README.ALT
+Source1: README.ALT.rus
 Source2: otrs-hold.conf
 Source3: apache2.conf
 
@@ -62,7 +62,7 @@ mkdir -p %buildroot%installdir
 cp -rp * %buildroot%installdir/
 
 #install docs
-install -pD -m0644 %SOURCE1 README.ALT
+install -pD -m0644 %SOURCE1 README.ALT.rus
 
 #replace '/opt/otrs' to '/var/www/webapps/otrs' in all files
 find %buildroot%installdir -type f -exec sed -i -e "s/\/opt\/otrs/\/var\/www\/webapps\/otrs/g" {} \;
@@ -129,7 +129,7 @@ cd %installdir/bin/
 %doc COPYING-Third-Party
 %doc INSTALL.md
 %doc README.md
-%doc README.ALT
+%doc README.ALT.rus
 %doc UPGRADING.md
 %doc Custom/README
 %defattr(0775,root, %webserver_group)
@@ -150,6 +150,10 @@ cd %installdir/bin/
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Mon Aug 03 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.0.10-alt1
+- New version
+- added mpm_itk_module section to configuration of apache2
+
 * Tue Jun 09 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.0.8-alt1
 - New version
 
