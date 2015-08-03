@@ -1,11 +1,12 @@
 Name:           lxde-icon-theme
-Version:        0.5.0
+Version:        0.5.1
 Release:        alt1
 Summary:        Default icon theme for LXDE
 
 Group:          Graphical desktop/Other
 License:        LGPLv3
-URL:            http://nuovext.pwsp.net/
+URL:            http://lxde.org
+# Download from http://sourceforge.net/projects/lxde/files/LXDE Icon Theme/
 Source0:        %name-%version.tar.bz2
 
 BuildArch:      noarch
@@ -35,6 +36,9 @@ gtk-update-icon-cache -f -t %_iconsdir/nuoveXT2 &>/dev/null ||:
 %_iconsdir/nuoveXT2
 
 %changelog
+* Mon Aug 03 2015 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt1
+- New version
+
 * Mon Feb 25 2013 Andrey Cherepanov <cas@altlinux.org> 0.5.0-alt1
 - Initial build in Sisyphus
 
