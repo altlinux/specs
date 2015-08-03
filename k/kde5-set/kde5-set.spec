@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt7
+Release: alt8
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -36,10 +36,11 @@ Group: Graphical desktop/KDE
 Provides: kde5-normal = %EVR kde5-default = %EVR
 Obsoletes: kde5-normal < %EVR kde5-default < %EVR
 Requires: kde5-small
+Requires: kde5-video-player
+#Requires: kde5-audio-player
 Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass kf5-oxygen
 Requires: kf5-systemsettings kf5-khelpcenter kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
-Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons
-Requires: kde5-dragon
+Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons kde5-kwalletmanager
 
 %package -n kde5-big
 Summary: %summary
@@ -77,6 +78,9 @@ Requires: kde5-big
 %files -n kde5-maxi
 
 %changelog
+* Thu Aug 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt8
+- update requires
+
 * Wed Aug 05 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt7
 - update requires
 
