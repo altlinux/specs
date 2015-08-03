@@ -3,7 +3,7 @@
 
 Name: %_name%soname
 Version: 0.82
-Release: alt1
+Release: alt2
 
 Summary: CD-ROM/CD-image access library
 License: GPLv3+
@@ -48,6 +48,7 @@ These C++ libraries provide object-oriented wrappers to the libcdio APIs.
 %files
 %doc AUTHORS README NEWS THANKS TODO
 %_libdir/*.so.*
+%exclude %_libdir/libudf.so.*
 %exclude %_libdir/*++.so.*
 
 %files -n libcdio%{soname}++
@@ -55,6 +56,9 @@ These C++ libraries provide object-oriented wrappers to the libcdio APIs.
 
 
 %changelog
+* Mon Aug 03 2015 Yuri N. Sedunov <aris@altlinux.org> 0.82-alt2
+- exclude libudf
+
 * Mon Aug 03 2015 Yuri N. Sedunov <aris@altlinux.org> 0.82-alt1
 - compat libraries without -devel packages
 
