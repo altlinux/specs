@@ -31,7 +31,7 @@ popd \
 
 
 Name: python-module-chardet
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Character encoding auto-detection in Python
@@ -83,7 +83,7 @@ rm -rf %buildroot%_bindir/
 #_bindir/chardetect
 %python_sitelibdir/%pkgname/
 %python_sitelibdir/%pkgname-*egg-info/
-%doc docs
+#doc docs
 
 %if_with python3
 %files -n python3-module-%pkgname
@@ -92,6 +92,9 @@ rm -rf %buildroot%_bindir/
 %endif
 
 %changelog
+* Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1
+- Version 2.3.0
+
 * Sun Apr 13 2014 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
 - new version 2.2.1 (with rpmrb script)
 - build for python3 too
