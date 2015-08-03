@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.12.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -24,7 +24,7 @@ BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-knotifications-dev
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: libgcrypt-devel libgpgme-devel
 BuildRequires: kf5-kdoctools-devel-static kf5-kdoctools
-#BuildRequires: kf5-gpgmepp-devel
+BuildRequires: kde5-gpgmepp-devel boost-devel-headers
 
 %description
 This framework contains two main components:
@@ -99,6 +99,9 @@ KF5 library
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Mon Aug 03 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt3
+- build with gpgmepp
+
 * Fri Jul 31 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt2
 - move dbus service to standard place
 
