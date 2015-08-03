@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.git20150222
+Version: 0.5
+Release: alt1.git20150617
 Summary: Run a subprocess in a pseudo terminal
 License: ISCL
 Group: Development/Python
@@ -139,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20150617
+- Version 0.5
+
 * Tue Mar 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20150222
 - Version 0.4
 
