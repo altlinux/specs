@@ -1,5 +1,5 @@
 Name: 		skrooge
-Version: 	1.12.0
+Version: 	1.12.5
 Release: 	alt1
 License: 	%gpl2plus
 Summary: 	Personal finances manager for KDE4
@@ -60,6 +60,10 @@ and intuitive.
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Aug 03 2015 Andrey Cherepanov <cas@altlinux.org> 1.12.5-alt1
+- New version 1.12.5
+- Fix watch file for new stable version tarball
+
 * Sun May 10 2015 Andrey Cherepanov <cas@altlinux.org> 1.12.0-alt1
 - New version 1.12.0
 
