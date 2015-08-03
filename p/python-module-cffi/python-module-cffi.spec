@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-cffi
-Version: 0.8.6
-Release: alt2
+Version: 1.1.2
+Release: alt1
 
 Summary: Foreign Function Interface for Python calling C code
 
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1
+- Version 1.1.2
+
 * Mon Aug 04 2014 Lenar Shakirov <snejok@altlinux.ru> 0.8.6-alt2
 - python{3,}-module-pycparser added to Requires
 - Because find-requires script /usr/lib/rpm/python3.req.py says:
