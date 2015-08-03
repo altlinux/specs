@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 14.05.14
+Version: 2015.04.28
 Release: alt1
 Summary: Python package for providing Mozilla's CA Bundle
 License: MPLv2
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2015.04.28-alt1
+- Version 2015.04.28
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.05.14-alt1
 - Initial build for Sisyphus
 
