@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.1
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: NTLM support, including an authentication handler for urllib2
 License: Free
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
+- Version 1.1.0
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2
 - Added module for Python 3
 
