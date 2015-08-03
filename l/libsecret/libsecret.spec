@@ -7,7 +7,7 @@
 %def_enable vala
 
 Name: libsecret
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
@@ -128,6 +128,9 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Mon Aug 03 2015 Yuri N. Sedunov <aris@altlinux.org> 0.18.3-alt1
+- 0.18.3
+
 * Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.18.2-alt1
 - 0.18.2
 
