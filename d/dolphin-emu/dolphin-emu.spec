@@ -1,6 +1,6 @@
 Name: dolphin-emu
-Version: 4.0.2
-Release: alt4.git20150715
+Version: 5.0
+Release: alt1.rc
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -11,70 +11,49 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
-Source: dolphin-%version.tar.gz
-Patch0: %name-%version-alt.patch
-Patch1: %name-4.0.2-alt-gtk3.patch
-Patch2: %name-4.0.2-alt-polarssl.patch
+Source: dolphin-%version-rc.tar.gz
+Patch0: %name-%version-rc-alt-git.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: libSDL2-devel
+BuildRequires: libSFML-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXcursor-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libXdmcp-devel
 BuildRequires: libXi-devel
+BuildRequires: libXinerama-devel
 BuildRequires: libXmu-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libalsa-devel
 BuildRequires: libao-devel
 BuildRequires: libavformat-devel
-BuildRequires: libavresample-devel
 BuildRequires: libbluez-devel
-BuildRequires: libgomp-devel
-BuildRequires: libgtk+3-devel
+BuildRequires: libevdev-devel
+BuildRequires: libgtk+2-devel
 BuildRequires: liblzo2-devel
 BuildRequires: libminiupnpc-devel
 BuildRequires: libopenal-devel
-BuildRequires: libmbedtls-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libpulseaudio-devel
-BuildRequires: libsfml-devel
 BuildRequires: libsoil-devel
+BuildRequires: libsoundtouch-devel
 BuildRequires: libswscale-devel
-BuildRequires: libusb-devel
-BuildRequires: libwxGTK3.1-devel
-BuildRequires: libyui-devel
-BuildRequires: libpixman-devel
-BuildRequires: libharfbuzz-devel
-BuildRequires: libexpat-devel
-BuildRequires: libxshmfence-devel
-BuildRequires: libpng-devel
-BuildRequires: libXinerama-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXcomposite-devel
-BuildRequires: libxkbcommon-devel
-BuildRequires: libwayland-cursor-devel
-BuildRequires: at-spi2-atk-devel
-BuildRequires: libat-spi2-core-devel
-BuildRequires: libwayland-egl-devel
-BuildRequires: libepoxy-devel
 BuildRequires: libudev-devel
-BuildRequires: libevdev-devel
+BuildRequires: libusb-devel
 
 %description
 Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
 you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %prep
-%setup -n dolphin-%version
-#patch0 -p1
-#patch1 -p2
-#patch2 -p2
+%setup -n dolphin-%version-rc
+%patch0 -p1
 
 %build
-%add_optflags -fpermissive
-%cmake -Wno-dev
-%make_build -C BUILD VERBOSE=1
+%cmake
+%make_build -C BUILD
 
 %install
 %makeinstall_std -C BUILD
@@ -87,6 +66,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Mon Aug 03 2015 Nazarov Denis <nenderus@altlinux.org> 5.0-alt1.rc
+- Version 5.0 RC
+
 * Thu Jul 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt4.git20150715
 - New snapshot
 
