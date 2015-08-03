@@ -5,7 +5,7 @@
 
 Name: awstats
 Version: 7.4
-Release: alt0.6.20150714
+Release: alt0.7.20150714
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.KOI8-R):	Анализатор логов Web-сервера в режиме реального времени
@@ -168,9 +168,15 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Tue Aug 04 2015 L.A. Kostis <lakostis@altlinux.ru> 7.4-alt0.7.20150714
+- More fixes and improvements:
+  + improve Opera detection.
+  + Add Yandex Browser detection.
+  + fix Edge detection.
+
 * Mon Aug 03 2015 L.A. Kostis <lakostis@altlinux.ru> 7.4-alt0.6.20150714
-- Some improvements: 
-  + add M$ Edge browser 
+- Some improvements:
+  + add M$ Edge browser
   + Improve Windows 10 detection.
 
 * Sun Aug 02 2015 L.A. Kostis <lakostis@altlinux.ru> 7.4-alt0.5.20150714
