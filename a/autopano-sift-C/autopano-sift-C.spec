@@ -2,7 +2,7 @@
 
 Name: autopano-sift-C
 Version: 2.5.1
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Group: Graphics
@@ -42,6 +42,9 @@ mkdir -p %buildroot%_bindir
 %_man7dir/*
 
 %changelog
+* Mon Jul 13 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.5.1-alt4
+- rebuilt against libpano13.so.3
+
 * Sat Sep 22 2012 Sergei Epiphanov <serpiph@altlinux.ru> 1:2.5.1-alt3
 - Rebuild with new libpng15
 

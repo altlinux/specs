@@ -1,6 +1,6 @@
 Name: libpano13
-Version: 2.9.18
-Release: alt2
+Version: 2.9.19
+Release: alt1
 
 Group: System/Libraries
 Summary: %name - library for panorama stitching programs. This is new generation and development version
@@ -11,11 +11,10 @@ Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 Source0: %name-%{version}.tar.gz
 Patch0: %name-configure.patch
 Patch1: %name.patch
-Patch2: %name-%version.patch
 
 # Automatically added by buildreq on Sat Dec 03 2005
 BuildPreReq: rpm-build-java
-BuildRequires: gcc-c++ gcc-fortran libgcj-devel libjpeg-devel libpng-devel libstdc++-devel libtiff-devel zlib-devel autoconf automake libtool
+BuildRequires: gcc-c++ gcc-fortran libgcj-devel libjpeg-devel libpng-devel libstdc++-devel libtiff-devel zlib-devel
 
 %package devel
 Group: System/Libraries
@@ -61,26 +60,18 @@ PTuncrop    - This program takes as input a cropped TIFF and generates an
 panoinfo    - Display info from pano12 dll/library
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 %patch0 -p1
 #Off because MAX_FISHEYE_FOV value is equal 720, not 160
 %patch1 -p1
-%patch2 -p1
 
 %build
-#From bootstrap
-mkdir -p ./config
-aclocal -I m4
-libtoolize --force --copy
-autoheader --force
-automake --add-missing --copy
-autoconf
-
+%autoreconf
 %configure --with-java=%_javadir
 %make
 
 %install
-%makeinstall
+%makeinstall_std
 
 %files
 %doc README README.linux AUTHORS NEWS
@@ -98,6 +89,10 @@ autoconf
 %_man1dir/*
 
 %changelog
+* Mon Jul 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.9.19-alt1
+- 2.9.19
+- removed obsolete libpano13-2.9.18.patch
+
 * Sat Sep 22 2012 Sergei Epiphanov <serpiph@altlinux.ru> 2.9.18-alt2
 - Rebuild with new libpng and libtiff
 

@@ -1,7 +1,7 @@
 Summary:        Open source color profiler
 Name:           lprof
 Version:        1.11.4.1
-Release:       	alt6.20100921.3
+Release:       	alt6.20100921.4
 License:        GPL
 Group:          Graphics
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -38,6 +38,9 @@ scons install PREFIX=%buildroot/usr
 %_datadir/lprof
 
 %changelog
+* Sun Jul 12 2015 Yuri N. Sedunov <aris@altlinux.org> 1.11.4.1-alt6.20100921.4
+- rebuilt against libvigraimpex.so.6
+
 * Thu Jan 30 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.11.4.1-alt6.20100921.3
 - Rebuild with libvigra 1.10.0
 

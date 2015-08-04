@@ -1,17 +1,13 @@
-BuildRequires: desktop-file-utils
 Name: hugin
-Version: 2013.0.0
-Release: alt3.1
+Version: 2015.0.0
+Release: alt0.2
 
-Group: Graphics
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
-License: GPL
+Group: Graphics
+License: GPLv2+
 Url: http://hugin.sourceforge.net/
-Source0: %name-%version.tar
-Source1: %name.desktop
 
-Patch1: hugin-2013.0.0-lensfun_0.3.patch
-Patch2: hugin-2013.0.0-boost1.56.patch
+Source: %name-%version.tar
 
 BuildPreReq: libpano13-devel boost-devel >= 1.34 wxGTK-devel >= 2.8.0
 BuildPreReq: libgtk+2-devel >= 2.0.3 boost-thread-devel >= 1.34 gcc-c++ gcc-fortran
@@ -21,65 +17,61 @@ BuildRequires: boost-signals-devel libglew-devel libGLUT-devel libXi-devel libXm
 BuildRequires: glib-devel libgtk+2-devel libjpeg-devel libpano13-devel perl-podlators
 BuildRequires: libpng-devel libstdc++-devel libtiff-devel wxGTK-devel
 BuildRequires: zlib-devel libpango-devel zip cmake openexr-devel libexiv2-devel libtclap-devel
-BuildRequires: liblensfun-devel swig
-Requires: enblend >= 3.2 libpano13 wxGTK >= 2.6.0  autopano-sift-C perl-Image-ExifTool make
+BuildRequires: liblensfun-devel libvigra-devel libgomp-devel libfftw3-devel libsqlite3-devel swig
+BuildRequires: desktop-file-utils
+
+Requires: enblend >= 3.2 libpano13 wxGTK >= 2.8.0  autopano-sift-C perl-Image-ExifTool make
 
 %description
 With hugin you can assemble a mosaic of photographs into a complete immersive
 panorama, stitch any series of overlapping pictures and much more.
 
 %prep
-%setup -q
-
-%patch1 -p1
-%patch2 -p1
+%setup
 
 %build
-###From CVS only
 suffix=`echo %_libdir | sed s/[^0-9]*//`
 cmake -DCMAKE_INSTALL_PREFIX=/usr/ -DINSTALL_XRC_DIR="/usr/share/hugin/xrc" -DLIB_SUFFIX="$suffix" .
 %make_build
 
 %install
-###Check line below
-#/bin/ln -s %%_datadir/automake/mkinstalldirs config/mkinstalldirs
-
-make install DESTDIR=%buildroot
-###Check line below
-%find_lang %name
-###Check line below ???
-%find_lang nona_gui
-/bin/cat nona_gui.lang >>%name.lang
-
-/bin/install -p -m644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
+%makeinstall_std
+%find_lang --output=%name.lang %name nona_gui
 /bin/install -p -m644 -D src/hugin1/hugin/xrc/data/hugin.png %buildroot%_datadir/pixmaps/%name.png
 /bin/install -p -m644 -D src/hugin1/hugin/xrc/data/hugin.png %buildroot%_niconsdir/%name.png
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Photography \
-	%buildroot%_desktopdir/hugin.desktop
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Photography \
-	%buildroot%_desktopdir/PTBatcherGUI.desktop
 
+for file in hugin PTBatcherGUI calibrate_lens_gui pto_gen; do
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=Photography \
+	%buildroot%_desktopdir/$file.desktop
+done
 
 %files -f %name.lang
-%doc AUTHORS COPYING LICENCE_VIGRA README
+%doc AUTHORS README
 %_bindir/*
-%dir %_datadir/hugin
-%dir %_datadir/hugin/xrc
-%_datadir/applications/*
-%_datadir/hugin/
+%_desktopdir/*.desktop
+%_datadir/%name/
 %_datadir/pixmaps/*
 %_datadir/mime/packages/hugin.xml
-%_libdir/hugin
+%_libdir/%name/
 %python_sitelibdir/*
 %_niconsdir/*
-%_desktopdir/*
-%_man1dir/*
 %_iconsdir/gnome/48x48/mimetypes/gnome-mime-application-x-ptoptimizer-script.png
-/usr/share/icons/hicolor/32x32/apps/hugin.png
+%_man1dir/*
+%_datadir/appdata/PTBatcherGUI.appdata.xml
+%_datadir/appdata/calibrate_lens_gui.appdata.xml
+%_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sat Aug 01 2015 Yuri N. Sedunov <aris@altlinux.org> 2015.0.0-alt0.2
+- 2015.0.0 rc3
+
+* Mon Jul 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2015.0.0-alt0.1
+- 2015.0.0 rc2
+- removed obsolete patches
+- updated buildreqs
+- spec cleanup
+
 * Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2013.0.0-alt3.1
 - Rebuilt for gcc5 C++11 ABI.
 
