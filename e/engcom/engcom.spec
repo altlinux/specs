@@ -1,5 +1,5 @@
 Name: engcom
-Version: 1.37
+Version: 1.38
 Release: alt1
 
 Summary: The Open English-Russian Dictionary of Computer Terms
@@ -153,6 +153,10 @@ cd -
 %_datadir/stardict/dic/*
 
 %changelog
+* Tue Aug 04 2015 Vitaly Lipatov <lav@altlinux.ru> 1.38-alt1
+- cleanup all scripts
+- update words (about 2470 articles)
+
 * Tue Oct 21 2014 Vitaly Lipatov <lav@altlinux.ru> 1.37-alt1
 - new version, about 2450 articles
 
