@@ -7,7 +7,7 @@
 
 Name: signon
 Version: 8.57
-Release: alt2
+Release: alt3
 
 Group: System/Servers
 Summary: Accounts framework for Linux and POSIX based platforms
@@ -100,13 +100,13 @@ mkdir -p %buildroot/%_libdir/signon/extensions/
 
 %files common
 %doc README TODO NOTES
+%dir %_libdir/signon/
 %dir %_libdir/signon/extensions/
 
 %files
 %config(noreplace) %_sysconfdir/signond.conf
-%_bindir/signond
-%_bindir/signonpluginprocess
-%_libdir/signon/
+%_bindir/signon*
+%_libdir/signon/*
 %_datadir/dbus-1/services/*.service
 
 %files devel
@@ -135,6 +135,9 @@ mkdir -p %buildroot/%_libdir/signon/extensions/
 %_libdir/libsignon-qt5.so.*
 
 %changelog
+* Tue Aug 04 2015 Sergey V Turchin <zerg@altlinux.org> 8.57-alt3
+- fix package shared directories
+
 * Mon Aug 03 2015 Sergey V Turchin <zerg@altlinux.org> 8.57-alt2
 - own extensions directory
 
