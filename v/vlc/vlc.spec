@@ -1,6 +1,6 @@
 Name: vlc
 Version: 2.2.1
-Release: alt2
+Release: alt3
 
 Summary: VLC media player
 License: GPLv2
@@ -1352,6 +1352,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Tue Aug 04 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt3
+- rebuilt with recent libdvbpsi, libcdio, live555 and x265
+
 * Wed Jul 15 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt2
 - rebuilt with gcc5
 

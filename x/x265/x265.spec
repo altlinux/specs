@@ -1,5 +1,5 @@
 Name: x265
-Version: 1.4
+Version: 1.7
 Release: alt1
 
 Summary: H.265/HEVC encoder
@@ -62,5 +62,11 @@ cmake -DCMAKE_CXX_FLAGS='%optflags' -DCMAKE_INSTALL_PREFIX=%prefix -DLIB_INSTALL
 %_pkgconfigdir/*
 
 %changelog
+* Sat Jun 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7-alt1
+- 1.7 release
+
+* Wed Apr 29 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6-alt1
+- 1.6 release
+
 * Tue Dec 09 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4-alt1
 - 1.4 release

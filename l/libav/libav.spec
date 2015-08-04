@@ -73,8 +73,8 @@
 # }}}
 
 Name: libav
-Version: 11.3
-Release: alt2
+Version: 11.4
+Release: alt1
 Epoch: 1
 
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
@@ -96,7 +96,7 @@ BuildRequires: perl-podlators
 %{?_enable_libmp3lame:BuildRequires: liblame-devel}
 %{?_enable_libvorbis:BuildRequires: libvorbis-devel}
 %{?_enable_libfaac:BuildRequires: libfaac-devel}
-%{?_enable_libcdio:BuildRequires: libcdio-devel}
+%{?_enable_libcdio:BuildRequires: libcdio-devel libcdio-paranoia-devel}
 %{?_enable_libgsm:BuildRequires: libgsm-devel}
 %{?_enable_libpulse:BuildRequires: libpulseaudio-devel}
 %{?_enable_libxvid:BuildRequires: libxvid-devel}
@@ -563,6 +563,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Sat Jun 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:11.4-alt1
+- 11.4 released
+
 * Thu Apr 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:11.3-alt2
 - built with gnutls (closes: #30890)
 
