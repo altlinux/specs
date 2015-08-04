@@ -7,7 +7,7 @@
 
 Name: signon
 Version: 8.57
-Release: alt1
+Release: alt2
 
 Group: System/Servers
 Summary: Accounts framework for Linux and POSIX based platforms
@@ -21,6 +21,8 @@ Requires: dbus
 Source: signon-%version.tar
 # FC
 Patch1: signon-8.57-no_static.patch
+# ALT
+Patch10: alt-fix-compile.patch
 
 # Automatically added by buildreq on Fri May 29 2015 (-bi)
 # optimized out: elfutils fontconfig fonts-bitmap-misc kf5-attica-devel kf5-kjs-devel libGL-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-sql libqt5-test libqt5-xml libstdc++-devel libwayland-client libwayland-server pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-webkit-devel ruby ruby-stdlibs
@@ -37,7 +39,6 @@ client library for applications to communicate with this system.
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
-BuildArch: noarch
 %description common
 %name common package
 
@@ -78,6 +79,7 @@ Requires: %name-common = %version-%release
 %prep
 %setup -n signon-%version
 %patch1 -p1 -b .no_static
+%patch10 -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -94,10 +96,11 @@ export PATH=%_qt5_bindir:$PATH
 %installqt5
 
 # create/own libdir/extensions
-mkdir -p %buildroot/%_libdir/extensions/
+mkdir -p %buildroot/%_libdir/signon/extensions/
 
 %files common
 %doc README TODO NOTES
+%dir %_libdir/signon/extensions/
 
 %files
 %config(noreplace) %_sysconfdir/signond.conf
@@ -132,5 +135,8 @@ mkdir -p %buildroot/%_libdir/extensions/
 %_libdir/libsignon-qt5.so.*
 
 %changelog
+* Mon Aug 03 2015 Sergey V Turchin <zerg@altlinux.org> 8.57-alt2
+- own extensions directory
+
 * Fri May 29 2015 Sergey V Turchin <zerg@altlinux.org> 8.57-alt1
 - initial build
