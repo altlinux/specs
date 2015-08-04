@@ -5,8 +5,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 14.12.95
-Release: alt1
+Version: 15.7.80
+Release: alt2
 %K5init
 
 Group: File tools
@@ -26,11 +26,11 @@ Patch1: alt-dbus-service.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel
 BuildRequires: libxapian-devel desktop-file-utils
-#BuildRequires: kf5-baloo-widgets-devel
+BuildRequires: kf5-kfilemetadata-devel kf5-baloo-devel kde5-baloo-widgets-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel
-BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kguiaddons-devel
+BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel
 BuildRequires: kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel
@@ -123,6 +123,12 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Tue Aug 04 2015 Sergey V Turchin <zerg@altlinux.org> 15.7.80-alt2
+- build with baloo
+
+* Mon Aug 03 2015 Sergey V Turchin <zerg@altlinux.org> 15.7.80-alt1
+- new beta
+
 * Thu May 14 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.95-alt1
 - update from master branch
 
