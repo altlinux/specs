@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.2.3
+Version: 2.3.0
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -22,9 +22,9 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: giter >= 0.5
+Requires: giter >= 0.8
 Requires: eepm >= 1.5.0
-Requires: erc >= 0.5
+Requires: erc >= 0.7
 
 Requires: rpm-build
 Requires: rpm-build-compat >= %altcompat_ver
@@ -70,6 +70,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Aug 04 2015 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- use git.alt for git repos and gear.alt for build commands
+- update pkgrules
+- rpmgp: use list packages from giter
+- rpmbph: do no fast forward merge
+
 * Thu Jul 09 2015 Vitaly Lipatov <lav@altlinux.ru> 2.2.3-alt1
 - introduce get_default_txtrelease instead RELEASEPREFIX from config
 - drop 4.0 style version support in branch names and distro version
