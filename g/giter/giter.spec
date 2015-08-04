@@ -1,5 +1,5 @@
 Name: giter
-Version: 0.6
+Version: 0.8
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -41,6 +41,15 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Tue Aug 04 2015 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
+- gpush: force use first arg
+- giter: fix command checking
+
+* Tue Aug 04 2015 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
+- use GITHOST/GEARHOST instead GIRARHOST
+- gpick: add patch support, but it is better to use git am directly
+- giter: add list packages
+
 * Tue Jul 21 2015 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
 - add gpick - git cherry pick all commits from git log file
 - use fixed epm assure
