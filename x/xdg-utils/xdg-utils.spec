@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.0
-Release: alt11
+Release: alt12
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 License: MIT
@@ -16,6 +16,8 @@ Patch4: mate-screensaver.patch
 Patch5: xdg-open-generic-mimeapps.patch
 Patch6: xdg-su-use-gnomesu-for-xfce-if-available.patch
 Patch7: xdg-open-fix-ifs-use.patch
+Patch8: xdg-open-kde5.patch
+Patch9: xdg-su-kde5.patch
 
 BuildArch: noarch
 
@@ -64,6 +66,8 @@ popd
 %patch5 -p1
 %patch6 -p2
 %patch7 -p2
+%patch8 -p1
+%patch9 -p1
 
 %build
 %autoreconf
@@ -88,6 +92,9 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Tue Aug 04 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt12
+- add KDE5 support to xdg-su and xdg-open (ALT#31161)
+
 * Thu Feb 26 2015 Michael Shigorin <mike@altlinux.org> 1.1.0-alt11
 - xdg-su: added MATE support (closes: #30458)
 
