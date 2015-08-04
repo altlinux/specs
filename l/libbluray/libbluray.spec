@@ -1,5 +1,5 @@
 Name: libbluray
-Version: 0.7.0
+Version: 0.8.1
 Release: alt1
 Summary: BD library
 
@@ -34,7 +34,7 @@ This package contains various utilities using libbluray library.
 
 %prep
 %setup
-sed -i s,noinst_PROGRAMS,bin_PROGRAMS, src/Makefile.am
+#sed -i s,noinst_PROGRAMS,bin_PROGRAMS, Makefile.am
 
 %build
 export JDK_HOME=/usr/lib/jdk
@@ -47,7 +47,7 @@ export JDK_HOME=/usr/lib/jdk
 
 %files
 %_libdir/*.so.*
-%_datadir/libbluray
+%_datadir/java/libbluray*.jar
 
 %files devel
 %_includedir/*
@@ -58,6 +58,9 @@ export JDK_HOME=/usr/lib/jdk
 %_bindir/*
 
 %changelog
+* Tue Aug 04 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.1-alt1
+- 0.8.1 released
+
 * Wed Apr 08 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.0-alt1
 - 0.7.0 released
 
