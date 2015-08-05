@@ -4,13 +4,14 @@
 
 Name: python-module-%oname
 Version: 0.7.6
-Release: alt1
+Release: alt1.git20150703
 Summary: A configurable sidebar-enabled Sphinx theme
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/alabaster/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/bitprophet/alabaster.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -74,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt1.git20150703
+- Snapshot from git
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt1
 - Version 0.7.6
 - Added module for Python 3
