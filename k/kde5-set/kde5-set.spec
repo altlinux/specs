@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt6
+Release: alt7
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -19,7 +19,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
 Requires: qt5-dbus kf5-kwin kf5-kactivities kf5-plasma-desktop kf5-kinit kf5-kdeclarative
-Requires: kde5-dolphin kde5-kwrite
+Requires: kde5-dolphin
 
 %package -n kde5-small
 Summary: %summary
@@ -27,7 +27,8 @@ Group: Graphical desktop/KDE
 Requires: kde5-mini
 Requires: kf5-sddm-kcm kf5-polkit-kde-agent kf5-kio-extras kf5-breeze kf5-powerdevil kf5-ksysguard
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kf5-kde-cli-tools
-Requires: kde5-kmix kde5-konsole kde5-gwenview
+Requires: kde5-kmix kde5-konsole kde5-gwenview kde5-kwrite
+Requires: kde5-ark
 
 %package -n kde5
 Summary: %summary
@@ -37,7 +38,8 @@ Obsoletes: kde5-normal < %EVR kde5-default < %EVR
 Requires: kde5-small
 Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass kf5-oxygen
 Requires: kf5-systemsettings kf5-khelpcenter kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
-Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons 
+Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons
+Requires: kde5-dragon
 
 %package -n kde5-big
 Summary: %summary
@@ -75,6 +77,9 @@ Requires: kde5-big
 %files -n kde5-maxi
 
 %changelog
+* Wed Aug 05 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt7
+- update requires
+
 * Wed Jul 22 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt6
 - update requires
 
