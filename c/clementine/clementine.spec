@@ -3,7 +3,7 @@
 
 Name: clementine
 Version: 1.2.3
-Release: alt4
+Release: alt5
 Summary: A music player and library organiser
 
 Group: Sound
@@ -66,6 +66,9 @@ advantage of Qt4.
 
 
 %changelog
+* Wed Aug 5 2015 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt5
+- rebuilt with new libcdio
+
 * Tue Jul 7 2015 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt4
 - git20150522
 - build with gstreamer1.0
