@@ -3,7 +3,7 @@
 
 Name: libarchive
 Version: 3.1.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
@@ -12,6 +12,12 @@ Url: http://www.libarchive.org/
 #Url: https://github.com/libarchive/libarchive
 
 Source0: libarchive-%version.tar.gz
+Patch1: libarchive-3.1.2-acl.patch
+Patch2: libarchive-3.1.2-security-rhbz-1216891.patch
+Patch3: libarchive-3.1.2-testsuite.patch
+Patch4: libarchive-3.1.3-CVE-2013-0211_read_buffer_overflow.patch
+Patch10: directory-traversal-fix.patch
+Patch11: libarchive-openssl.patch
 
 # Automatically added by buildreq on Mon Mar 11 2013 (-bi)
 # optimized out: elfutils pkg-config python-base ruby ruby-stdlibs
@@ -56,6 +62,12 @@ developing applications that use %name.
 
 %prep
 %setup -q
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch10 -p1
+%patch11 -p0
 %autoreconf
 
 
@@ -97,6 +109,10 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 05 2015 Sergey V Turchin <zerg@altlinux.org> 3.1.2-alt2
+- merge SuSE and FC patches
+- security fixes: CVE-2013-0211
+
 * Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 3.1.2-alt1
 - new version
 
