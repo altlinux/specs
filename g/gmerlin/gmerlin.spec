@@ -3,13 +3,14 @@
 Summary: Base library for gmerlin applications
 Name: gmerlin
 Version: 1.2.0
-Release: alt1.2
+Release: alt1.3
 License: GPL
 Group: Development/C++
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %name-%version.tar.gz
 Source90: %name-rpmlintrc
+
 Patch: %name-0.4.3-conf.patch
 Patch1: gmerlin-0.4.3-package.patch
 #Patch5: %name-0.4.3-alt-camelot.patch
@@ -17,10 +18,14 @@ Patch2: gmerlin-1.2.0_glibc.patch
 #Patch3: gmerlin-1.2.0_no_test.patch
 #Patch4: gmerlin-1.2.0_app.patch
 
-# http://git.pld-linux.org/gitweb.cgi?p=packages/gmerlin.git;a=blob_plain;f=cdio.patch;hb=HEAD
-Patch10: gmerlin-1.2.0-pld-cdio.patch
-
 Patch11: gmerlin-1.2.0-vt4l1.patch
+
+# http://git.pld-linux.org/gitweb.cgi?p=packages/gmerlin.git
+Patch20: gmerlin-1.2.0-pld-cdio.patch
+Patch21: %name-link.patch
+Patch22: %name-icons.patch
+Patch23: %name-info.patch
+Patch24: %name-am.patch
 
 Url: http://gmerlin.sourceforge.net/
 
@@ -32,7 +37,7 @@ BuildRequires: libgavl-devel libgtk+2-devel libjack-devel libmusicbrainz-devel
 BuildRequires: libpulseaudio-devel libquicktime-devel libtiff-devel libv4l-devel libvisual0.4-devel
 BuildRequires: libxml2-devel xorg-cf-files
 
-BuildRequires: libcdio-paranoia-devel libcdio-devel >=  0.93 
+BuildRequires: libcdio-paranoia-devel libcdio-devel >=  0.93
 BuildRequires: desktop-file-utils
 
 %description
@@ -243,7 +248,6 @@ Provides: %name-video-recorder-plugin
 %description v4l
 Video4linux plugin for package gmerlin.
 
-
 #
 # cdaudio
 #
@@ -400,15 +404,23 @@ Gavl plugins for gmerlin.
 %patch2 -p1
 #patch3 -p1
 
-%patch10 -p1
 %patch11 -p1
 
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
 
 
 %build
+gettextize -f
+
+
 sed -i 's|^\(.*_LDADD.*\)|\1 -lgavl -lgobject-2.0|' tests/Makefile.am
 sed -i "s|^\(.*_LDADD =\)\(.*\)|\1 `pkg-config gtk+-2.0 --libs` -lX11 \2|" \
        apps/*/Makefile.am
+
 
 AUTOPOINT=true %autoreconf
 
@@ -432,7 +444,6 @@ install -d -m 755 %buildroot/%_niconsdir/
 #rmdir  %buildroot/%_infodir
 
 #install -p -m 644 doc/gmerlin.info %buildroot/%_infodir
-
 
 pushd  %buildroot/%_niconsdir/
 	mv %buildroot/%_datadir/gmerlin/icons/mixer_icon.png      gmerlin-alsamixer.png
@@ -505,7 +516,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/%name/icons/tab_close.png
 %_datadir/%name/icons/tracks_dnd_32.png
 %_infodir/%name.info*
-#%%exclude %_iconsdir/%{name}-camelot.png
+#%%exclude %_iconsdir/%name-camelot.png
 
 %files -n libgmerlin
 %_libdir/libgmerlin.so.*
@@ -604,7 +615,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_niconsdir/%name-alsamixer.png
 %exclude %_liconsdir/%name-alsamixer.png
 
-
 #%files camelot
 #%%_bindir/camelot
 #%%_desktopdir/%name-camelot.desktop
@@ -636,12 +646,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc %_man1dir/%{name}_remote.1.gz
 
 %files recorder
-%_bindir/%{name}-record
+%_bindir/%name-record
 %_bindir/%{name}_recorder
 %_desktopdir/%name-recorder.desktop
 %_niconsdir/%name-recorder.png
 %exclude %_liconsdir/%name-recorder.png
-%doc %_man1dir/%{name}-record.1.bz2
+%doc %_man1dir/%name-record.1.bz2
 
 %files transcoder
 %_bindir/%{name}_transcoder
@@ -678,6 +688,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_liconsdir/%name-plugincfg.png
 
 %changelog
+* Wed Aug 05 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.2.0-alt1.3
+- Add Patchs from http://git.pld-linux.org/gitweb.cgi?p=packages/gmerlin.git
+
 * Sat Aug 01 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.2.0-alt1.2
 - add gmerlin-1.2.0-vtl1.patch
 
@@ -700,7 +713,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
   * freedesktop-desktop-file-proposed-patch for gmerlin-visualizer
   * postclean-03-private-rpm-macros for the spec file
   * postclean-05-filetriggers for the spec file
- 
 
 * Mon Mar 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt4
 - Fixed BuildRequires by Hihin Ruslan <ruslandh@altlinux.ru>
