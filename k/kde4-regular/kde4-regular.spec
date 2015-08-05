@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.14
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -59,7 +59,7 @@ Requires: kde4-synaptiks
 Requires: kde4-soundkonverter
 Requires: kde4-digikam kde4-digikam-image-plugins kde4-digikam-utils kde4-digikam-i18n
 Requires: kde4-kipi-plugins-core
-Requires: kdenlive
+#Requires: kdenlive
 Requires: skanlite
 Requires: kde4plasma-addon-yawp
 Requires: kde4-ksshaskpass
@@ -82,6 +82,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Wed Aug 05 2015 Sergey V Turchin <zerg@altlinux.org> 4.14-alt2
+- remove kdenlive because KDE5 now
+
 * Sat Sep 06 2014 Sergey V Turchin <zerg@altlinux.org> 4.14-alt1
 - update requires
 
