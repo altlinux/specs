@@ -10,7 +10,7 @@
 Name: kaffeine
 Version: 0.8.8
 %define beta %nil
-Release: alt9.2
+Release: alt9.3
 
 Group: Video
 Summary: A Xine-based Media Player for KDE
@@ -39,7 +39,7 @@ Patch10: kaffeine-0.8.8-mp3InputPlugBuild.patch
 #BuildRequires: doxygen gcc-c++ gcc-fortran graphviz gst-plugins-devel imake kdepim-devel libXt-devel libXtst-devel libcdio-devel libjpeg-devel liblame-devel libxine-devel qt3-designer qt3-doc-html rpm-build-ruby xml-utils xorg-cf-files xorg-inputproto-devel
 BuildRequires(pre): kdelibs-devel
 BuildRequires: doxygen gcc-c++ graphviz kdepim-devel libpng-devel
-BuildRequires: libcdio-devel libjpeg-devel liblame-devel libxine-devel xml-utils
+BuildRequires: libcdio-paranoia-devel libjpeg-devel liblame-devel libxine-devel xml-utils
 %if_with gstreamer
 BuildRequires: gst-plugins-devel
 %endif
@@ -163,6 +163,9 @@ export PATH=%qtdir/bin:%kdedir/bin:$PATH
 %endif
 
 %changelog
+* Wed Aug 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt9.3
+- rebuilt against libcdio_{cdda,paranoia}.so.2
+
 * Tue Apr 01 2014 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt9.2
 - Build fix for vorbisenc by append vorbis and ogg for check pkgconfig.
 
