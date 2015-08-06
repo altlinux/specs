@@ -3,14 +3,14 @@
 
 Name: elementary
 Version: %ver_major.0
-Release: alt0.2
+Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
 Group: Graphical desktop/Enlightenment
 License: LGPLv2+
 Url: http://www.enlightenment.org
 
-Source: http://download.enlightenment.org/rel/libs/%name/%name-%version-beta2.tar.xz
+Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.xz
 # ef4c303
 #Source: %name-%version.tar
 
@@ -58,7 +58,7 @@ The lib%name-devel package contains libraries and header files for
 developing applications that use Elementary libraries.
 
 %prep
-%setup -n %name-%version-beta2
+%setup -n %name-%version
 
 %build
 %autoreconf
@@ -104,6 +104,9 @@ developing applications that use Elementary libraries.
 %_iconsdir/*.png
 
 %changelog
+* Wed Aug 05 2015 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
+- 1.15.0 release
+
 * Tue Jul 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt0.2
 - 1.15.0 beta2
 

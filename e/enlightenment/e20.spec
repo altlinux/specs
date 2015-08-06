@@ -1,9 +1,9 @@
 %define ver_major 0.19
 %define efl_ver_major 1.15
 %define snapshot 2015-07-21
-%define cvs_date aae280bf
+%define cvs_date dddbe2a5
 %undefine cvs_date
-%define rel alt0.4
+%define rel alt0.5
 
 %def_disable static
 # only bluez4 supported
@@ -73,6 +73,7 @@ Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%name >= 0.55
 Requires: udisks2
 Requires: pulseaudio-daemon
+Requires: geoclue2
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
 BuildRequires: rpm-build-xdg
@@ -203,6 +204,10 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.5
+- 0.19.99.0_dddbe2a5
+- built with efl/elementary-1.15.0 release
+
 * Tue Jul 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.4
 - 0.19.99.0_aae280bf
 - built with efl/elementary-1.15.0-beta2
