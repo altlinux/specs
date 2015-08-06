@@ -1,6 +1,6 @@
 Name: remmina
 Version: 1.1.2
-Release: alt1
+Release: alt2
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -32,10 +32,10 @@ Files required to build plugins for remmina
 %package plugins
 Summary: A set of plugins for remmina
 Group: Networking/Remote access
-Requires: freerdp-plugins-standard
+Requires: %name freerdp-plugins-standard
 
 %description plugins
-A set of plugins for remote desktop client - remmina
+A set of plugins for %name remote desktop client
 
 %package plugins-gnome
 Summary: A set of plugins-gnome for remmina
@@ -43,7 +43,7 @@ Group: Networking/Remote access
 Requires: %name-plugins
 
 %description plugins-gnome
-A set of plugins-gnome for remote desktop client - remmina
+A set of plugins-gnome for %name remote desktop client
 
 %prep
 %setup
@@ -53,7 +53,8 @@ sed -i '/target_link_libraries/s/)/ -lgnutls)/' remmina-plugins/vnc/CMakeLists.t
 %build
 %cmake	-DWITH_APPINDICATOR=OFF \
 	-DWITH_TELEPATHY=OFF \
-	-DCMAKE_INSTALL_LIBDIR=%_lib
+	-DCMAKE_INSTALL_LIBDIR=%_lib \
+	-DREMMINA_PLUGINDIR=%_libdir/remmina/plugins
 	
 %make_build -C BUILD
 
@@ -86,10 +87,15 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_libdir/remmina/plugins/remmina-plugins-gnome.so
 
 %files devel
-%_includedir/%name
+#_includedir/%name
 %_pkgconfigdir/*
 
 %changelog
+* Tue Aug 04 2015 Michael Shigorin <mike@altlinux.org> 1.1.2-alt2
+- fixed plugins path on non-x86_64
+- fixed build (closes: #31184)
+- added missing R: %name (closes: #27266)
+
 * Sat Mar 21 2015 Mikhail Kolchin <mvk@altlinux.org> 1.1.2-alt1
 - new version
 
