@@ -3,10 +3,10 @@
 
 Summary: Docutils -- Python Documentation Utilities
 Version: 0.13
-Release: alt1.svn20150603
+Release: alt2.git20150716
 %setup_python_module %oname
 Name: %packagename
-# http://svn.code.sf.net/p/docutils/code/trunk/docutils/
+# git://repo.or.cz/docutils.git
 Source0: %modulename-%version.tar.gz
 License: public domain, Python, BSD, GPL (see COPYING.txt)
 Group: Development/Python
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt2.git20150716
+- Snapshot from git
+
 * Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1.svn20150603
 - New snapshot
 
