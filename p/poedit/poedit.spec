@@ -1,22 +1,31 @@
-# Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
+
+%def_without cpprest
+%def_without cld2
 
 Name: poedit
-Version: 1.4.6.1
-Release: alt2.qa1
+Version: 1.8.4
+Release: alt1
 
 Summary: Cross-platform translation files editor
-Summary(ru_RU.CP1251): Кроссплатформенный редактор файлов переводов
+Summary(ru_RU.UTF-8): РљСЂРѕСЃСЃРїР»Р°С‚С„РѕСЂРјРµРЅРЅС‹Р№ СЂРµРґР°РєС‚РѕСЂ С„Р°Р№Р»РѕРІ РїРµСЂРµРІРѕРґРѕРІ
+Group: Editors
 License: MIT
 Url: http://www.poedit.net/
-Group: Editors
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/poedit/%name-%version.tar.gz
+Source: https://github.com/vslavik/%name/releases/download/v%version-oss/%name-%version.tar.gz
 
 Requires: gettext-tools
+
+%define cpprest_ver 2.5
+
 BuildPreReq: desktop-file-utils
-BuildRequires: gcc-c++ wxGTK-devel libdb4-devel libgtkspell-devel
+BuildRequires: gcc-c++ libwxGTK3.0-devel libdb4_cxx-devel libgtkspell3-devel
+BuildRequires: libicu-devel liblucene++-devel libexpat-devel po4a
+BuildRequires: boost-locale-devel
+%{?_with_cpprest:BuildRequires: libcpprest-devel >= %cpprest_ver}
+%{?_with_cld2:BuildRequires: libcld2-devel}
 
 %description
 This program is GUI frontend to GNU Gettext utilities and catalogs
@@ -24,36 +33,41 @@ editor/source code parser. It helps with translating application into
 another language. For details on principles of the solution used, see
 GNU Gettext documentation or wxWindows' wxLocale class reference.
 
-%description -l ru_RU.CP1251
-Эта программа является оболочкой для утилит GNU Gettext. С её помощью
-удобно переводить сообщения приложений на разные языки. Более подробно
-принципы работы описаны в документации для GNU Gettext и класса
-wxLocale библиотеки wxWindows.
+%description -l ru_RU.UTF-8
+Р­С‚Р° РїСЂРѕРіСЂР°РјРјР° СЏРІР»СЏРµС‚СЃСЏ РѕР±РѕР»РѕС‡РєРѕР№ РґР»СЏ СѓС‚РёР»РёС‚ GNU Gettext. РЎ РµС‘ РїРѕРјРѕС‰СЊСЋ
+СѓРґРѕР±РЅРѕ РїРµСЂРµРІРѕРґРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёСЏ РїСЂРёР»РѕР¶РµРЅРёР№ РЅР° СЂР°Р·РЅС‹Рµ СЏР·С‹РєРё. Р‘РѕР»РµРµ РїРѕРґСЂРѕР±РЅРѕ
+РїСЂРёРЅС†РёРїС‹ СЂР°Р±РѕС‚С‹ РѕРїРёСЃР°РЅС‹ РІ РґРѕРєСѓРјРµРЅС‚Р°С†РёРё РґР»СЏ GNU Gettext Рё РєР»Р°СЃСЃР°
+wxLocale Р±РёР±Р»РёРѕС‚РµРєРё wxWindows.
 
 %prep
 %setup
 
 %build
-%configure
-%make_build --silent --no-print-directory
+%configure \
+	%{subst_with cpprest} \
+	%{subst_with cld2}
+%make_build
 
 %install
-%makeinstall_std --silent --no-print-directory
+%makeinstall_std
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS NEWS README TODO
+%doc AUTHORS NEWS README
 %_bindir/%name
+%_libexecdir/%name-dump-legacy-tm
 %_man1dir/%name.1.*
 %_datadir/%name/
 %_desktopdir/%name.desktop
+%_desktopdir/%name-uri.desktop
 %_pixmapsdir/%name.png
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/*x*/*/*.png
+%_iconsdir/hicolor/scalable/*/*.svg
 
 %changelog
+* Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
+- 1.8.4
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.6.1-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
