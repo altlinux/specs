@@ -1,5 +1,5 @@
 %define branch 0.9
-%define svn svn5273
+%define svn svn5329
 
 %define rel alt1
 
@@ -45,8 +45,7 @@ Requires: unzip winamplike-skins lib%name = %version-%release
 
 BuildPreReq: rpm-build-wlskins doxygen
 
-# #BuildRequires: cmake >= 2.8.6
-BuildRequires: gcc-c++ libavformat-devel libcdio-devel
+BuildRequires: gcc-c++ libavformat-devel
 BuildRequires: libcurl-devel libfaad-devel libmad-devel libmodplug-devel
 BuildRequires: libmpcdec-devel libpulseaudio-devel >= 0.9.15 libqt4-devel
 BuildRequires: libsamplerate-devel libtag-devel >= 1.6 libvorbis-devel
@@ -54,6 +53,16 @@ BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
 BuildRequires: libprojectM-devel >= 2.0.1 jackit-devel xorg-xf86miscproto-devel
 BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4 libwildmidi-devel >= 0.2.3.4
 BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel >= 1.0.3
+
+# for libcdio-paranoia
+%define libcdio libcdio-devel
+%if "%rel" == "alt1"
+%define libcdio libcdio-paranoia-devel
+%endif
+%if "%rel" == "alt0.M80T"
+%define libcdio libcdio-paranoia-devel
+%endif
+BuildRequires: %libcdio
 
 %if "%rel" != "alt0.M51"
 # disable for 5.1
@@ -864,6 +873,10 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Thu Aug 06 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5329
+- 0.9.0 svn5329 version
+- rebuild with libcdio-paranoia
+
 * Sun Jul 26 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5273
 - 0.9.0 svn5273 version
 
