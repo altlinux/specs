@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.7.0
-Release: alt1.git20150302
+Version: 3.0.0
+Release: alt1.dev0.git20150806
 Summary: Python Imaging Library (Fork)
 License: Standard PIL License
 Group: Development/Python
@@ -153,7 +153,7 @@ popd
 %endif
 
 %files
-%doc *.rst docs/COPYING docs/LICENSE *.md
+%doc *.rst docs/COPYING LICENSE *.md
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -172,7 +172,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst docs/COPYING docs/LICENSE *.md
+%doc *.rst docs/COPYING LICENSE *.md
 %_bindir/*.py3
 %python3_sitelibdir/*
 
@@ -181,6 +181,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.dev0.git20150806
+- Version 3.0.0.dev0
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1.git20150302
 - New snapshot
 - Added devel package
