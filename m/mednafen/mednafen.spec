@@ -1,37 +1,42 @@
 Name: mednafen
-Version: 0.8.13
-Release: alt3.1
+Version: 0.9.38.5
+Release: alt1
 
 Summary: Multi-consoles Emulator
+Group: Emulators
 License: GPLv2+
 Url: http://mednafen.sourceforge.net/
-
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-Group: Emulators
-Source0: http://downloads.sourceforge.net/%name/%name-0.8.D.3.tar.bz2
-Patch: mednafen-0.8.13-alt-zlib-1.2.7.patch
+
+Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
+
+BuildRequires: gcc-c++
 BuildRequires: libcdio-devel libvorbis-devel libSDL_net-devel
-BuildRequires: libsndfile-devel zlib-devel bison gettext
- #gcc gcc-c++
-BuildRequires: gcc4.4 gcc4.4-c++
+BuildRequires: libsndfile-devel zlib-devel bison
 BuildRequires: libSDL-devel libGL-devel libX11-devel libGLU-devel
 BuildRequires: libXaw-devel libXext-devel libXp-devel libXpm-devel xorg-cf-files
 BuildRequires: libXrandr-devel libXi-devel libXcursor-devel libXinerama-devel
 
-
 %description
 A portable command-line driven, multi-system emulator which uses OpenGL and
-SDL. It emulates the following:
+SDL.
+The following systems are supported:
 * Atari Lynx
-* Famicom
+* Neo Geo Pocket (Color)
+* WonderSwan
 * GameBoy (Color)
 * GameBoy Advance
-* Neo Geo Pocket (Color)
-* NES (NTSC & PAL)
-* PC Engine
-* TurboGrafx 16 (CD)
+* Nintendo Entertainment System
+* Super Nintendo Entertainment System/Super Famicom
+* Virtual Boy
+* PC Engine/TurboGrafx 16 (CD)
 * SuperGrafx
 * PC-FX
+* Sega Game Gear
+* Sega Genesis/Megadrive
+* Sega Master System
+* Sony PlayStation
+
 Mednafen has the ability to remap hotkey functions and virtual system
 inputs to a keyboard, a joystick or both simultaneously. Save states are
 supported, as is real-time game rewinding. Screen snapshots may be taken at the
@@ -41,29 +46,28 @@ reasons.
 
 
 %prep
-%setup -q -n %name
-%patch -p2
-
-find ./src -type f -exec chmod 644 '{}' +
-find ./src -type d -exec chmod 755 '{}' +
+%setup -n %name
 
 %build
-export CC=gcc-4.4 CXX=g++-4.4
-#autoreconf -i
 %configure
-%make
+%make_build
 
 %install
 
-%makeinstall
+%makeinstall_std
 %find_lang %name
 
 %files -f %name.lang
-%doc ABOUT-NLS AUTHORS COPYING ChangeLog INSTALL TODO Documentation/*
+%doc AUTHORS ChangeLog TODO README* Documentation/*
 %_bindir/%name
+%_datadir/%name/
 
 
 %changelog
+* Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.38.5-alt1
+- 0.9.38.5
+- built against libcdio.so.16
+
 * Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.13-alt3.1
 - Fixed build with zlib 1.2.7
 
