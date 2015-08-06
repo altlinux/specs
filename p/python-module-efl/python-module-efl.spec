@@ -1,8 +1,8 @@
 %define _name python-efl
-%define efl_ver 1.14.0
+%define efl_ver 1.15.0
 
 Name: python-module-efl
-Version: 1.14.0
+Version: 1.15.0
 Release: alt1
 
 Summary: Python bindings for EFL libraries
@@ -90,6 +90,9 @@ popd
 %doc AUTHORS README* ChangeLog
 
 %changelog
+* Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
+- 1.15.0
+
 * Mon May 04 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
 - 1.14.0
 
