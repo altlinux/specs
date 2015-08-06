@@ -1,9 +1,11 @@
 %def_with inotify
 %def_with fam
+%def_enable qtgui
+
 %define pre %nil
 
 Name: recoll
-Version: 1.21.0
+Version: 1.21.1
 Release: alt1
 
 Summary: A personal full text search package
@@ -19,7 +21,8 @@ Source4: recoll_uk.qm
 Source100: recoll.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ libqt4-devel qt4-settings libXt-devel libaspell-devel xorg-cf-files ImageMagick
+BuildRequires: gcc-c++ libaspell-devel ImageMagick
+%{?_enable_qtgui:BuildRequires: libqt4-devel qt4-settings libXt-devel xorg-cf-files}
 %{?_with_fam:BuildRequires: libfam-devel}
 BuildRequires: libxapian-devel >= 0.9
 BuildRequires: rpm-build-licenses
@@ -35,6 +38,10 @@ backend (Xapian), for which it provides an easy to use, feature-rich,
 easy administration interface.
 
 See also recoll-extras package for somewhat more exotic stuff.
+%if_disabled qtgui
+
+Note that this package has been built without its usual GUI.
+%endif
 
 %package extras
 Summary: More helper scripts for Recoll
@@ -71,9 +78,9 @@ subst '/^Categories=/s/=/=Qt;/' desktop/*.desktop
 
 %build
 export CXXFLAGS="%optflags" PATH="$PATH:%_libdir/qt4/bin"
-%configure %{subst_with inotify} %{subst_with fam}
+%configure %{subst_with inotify} %{subst_with fam} %{subst_enable qtgui}
 %make_build
-bzip2 --best --keep --force ChangeLog
+gzip --best --keep --force ChangeLog
 for s in 128 96 72 64 36 32 24 22 16; do
     convert -depth 8 -resize ${s}x$s desktop/%name{.xcf,-$s.png}
 done
@@ -92,13 +99,15 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 %_bindir/*
 %_libdir/%name
 %_datadir/%name
-%_datadir/appdata/*
 %exclude %_datadir/%name/filters/rcllyx
 %exclude %_datadir/%name/filters/*.py
 %exclude %_datadir/%name/filters/*.zip
+%if_enabled qtgui
+%_datadir/appdata/*
 %_iconsdir/hicolor/*/apps/*
 %_pixmapsdir/*
 %_desktopdir/*
+%endif
 %_man1dir/*
 %_man5dir/*
 %doc ChangeLog.* README
@@ -115,6 +124,10 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Thu Aug 06 2015 Michael Shigorin <mike@altlinux.org> 1.21.1-alt1
+- new version (watch file uupdate)
+- made qtgui build conditional
+
 * Fri Jun 19 2015 Michael Shigorin <mike@altlinux.org> 1.21.0-alt1
 - new version (watch file uupdate)
 
