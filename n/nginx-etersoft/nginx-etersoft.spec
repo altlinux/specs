@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.7
+Version: 0.2.8
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -58,6 +58,12 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Thu Aug 06 2015 Vitaly Lipatov <lav@altlinux.ru> 0.2.8-alt1
+- log.conf: add logdata
+- mediawiki: improve
+- store-proxy: cache lock on
+- store-proxy: ignore Set-Cookie
+
 * Mon Mar 10 2014 Vitaly Lipatov <lav@altlinux.ru> 0.2.7-alt1
 - fix limit name
 - improve stop-injection
