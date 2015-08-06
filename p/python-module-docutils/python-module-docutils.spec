@@ -3,7 +3,7 @@
 
 Summary: Docutils -- Python Documentation Utilities
 Version: 0.13
-Release: alt2.git20150716
+Release: alt3.git20150716
 %setup_python_module %oname
 Name: %packagename
 # git://repo.or.cz/docutils.git
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt3.git20150716
+- Disabled bad assert
+
 * Thu Aug 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt2.git20150716
 - Snapshot from git
 
