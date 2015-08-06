@@ -1,5 +1,5 @@
 Name: iso-codes
-Version: 3.57
+Version: 3.60
 Release: alt1
 
 Group: System/Internationalization
@@ -53,6 +53,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 3.60-alt1
+- 3.60
+
 * Sun Apr 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.57-alt1
 - 3.57
 
