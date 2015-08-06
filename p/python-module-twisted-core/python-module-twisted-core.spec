@@ -2,7 +2,7 @@
 
 %define prefx python-module-twisted
 Name: %prefx-core
-Version: 15.2.1
+Version: 15.3.0
 Release: alt1
 %setup_python_module twisted-core
 Summary: An asynchronous networking framework written in Python
@@ -15,6 +15,10 @@ Source1: README.ALT-ru_RU.UTF-8
 
 BuildRequires: python-devel python-modules-compiler
 BuildPreReq: python-module-zope.interface
+Requires: %prefx-logger = %EVR
+Obsoletes: %prefx-lore <= %EVR
+Provides: %prefx-lore = %EVR
+%py_provides lore
 Requires: python-module-OpenSSL
 
 Conflicts: %name-core < %version-%release
@@ -283,7 +287,8 @@ rm -rf %buildroot%python_sitelibdir/twisted/internet/iocpreactor
 
 # Man pages
 mkdir -p %buildroot%_man1dir/
-cp -a doc/core/man/*.1 doc/lore/man/*.1 doc/mail/man/*.1 \
+#cp -a doc/core/man/*.1 doc/lore/man/*.1 doc/mail/man/*.1 \
+cp -a doc/core/man/*.1 doc/mail/man/*.1 \
 	doc/conch/man/*.1 \
 	%buildroot%_man1dir/
 rm -rf doc/core/man doc/lore/man doc/mail/man doc/conch/man \
@@ -310,7 +315,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %_bindir/pyhtmlizer
 
 %_man1dir/*
-%exclude %_man1dir/lore.1*
+#exclude %_man1dir/lore.1*
 %exclude %_man1dir/cftp.1*
 %exclude %_man1dir/ckeygen.1*
 %exclude %_man1dir/conch.1*
@@ -350,7 +355,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/plugins/*.py*
 %exclude %python_sitelibdir/twisted/plugins/twisted_trial.py*
 %exclude %python_sitelibdir/twisted/plugins/twisted_news.py*
-%exclude %python_sitelibdir/twisted/plugins/twisted_lore.py*
+#exclude %python_sitelibdir/twisted/plugins/twisted_lore.py*
 %exclude %python_sitelibdir/twisted/plugins/twisted_runner.py*
 %exclude %python_sitelibdir/twisted/plugins/twisted_mail.py*
 %exclude %python_sitelibdir/twisted/plugins/twisted_conch.py*
@@ -369,9 +374,9 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/python/*.py*
 %python_sitelibdir/twisted/python/*.so
 
-%dir %python_sitelibdir/twisted/python/zsh/
-%python_sitelibdir/twisted/python/zsh/README.txt
-%python_sitelibdir/twisted/python/zsh/_*
+#dir %python_sitelibdir/twisted/python/zsh/
+#python_sitelibdir/twisted/python/zsh/README.txt
+#python_sitelibdir/twisted/python/zsh/_*
 
 %python_sitelibdir/twisted/scripts/
 %exclude %python_sitelibdir/twisted/scripts/test
@@ -441,7 +446,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/scripts/trial.py*
 %python_sitelibdir/twisted/application/test
 %python_sitelibdir/twisted/news/test
-%python_sitelibdir/twisted/lore/test
+#python_sitelibdir/twisted/lore/test
 %python_sitelibdir/twisted/runner/test
 %python_sitelibdir/twisted/mail/test
 %python_sitelibdir/twisted/web/test
@@ -457,13 +462,13 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %exclude %python_sitelibdir/twisted/news/test
 %python_sitelibdir/twisted/plugins/twisted_news.py*
 
-%files -n %prefx-lore
-%doc doc/lore/*
-%_bindir/lore
-%_man1dir/lore.1*
-%python_sitelibdir/twisted/lore/
-%exclude %python_sitelibdir/twisted/lore/test
-%python_sitelibdir/twisted/plugins/twisted_lore.py*
+#files -n %prefx-lore
+#doc doc/lore/*
+#_bindir/lore
+#_man1dir/lore.1*
+#python_sitelibdir/twisted/lore/
+#exclude %python_sitelibdir/twisted/lore/test
+#python_sitelibdir/twisted/plugins/twisted_lore.py*
 
 %files -n %prefx-runner
 %python_sitelibdir/twisted/runner/
@@ -533,6 +538,10 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %exclude %python_sitelibdir/twisted/logger/test
 
 %changelog
+* Thu Aug 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 15.3.0-alt1
+- Version 15.3.0
+- Added requirement on logger for core (ALT #31188)
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 15.2.1-alt1
 - Version 15.2.1
 
