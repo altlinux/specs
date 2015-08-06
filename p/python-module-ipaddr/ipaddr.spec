@@ -3,18 +3,18 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 2.1.7
-Release: alt1.1
+Version: 2.1.10
+Release: alt2
 
 Summary: Library for working with IP addressess, both IPv4 and IPv6
 License: Apache License, Version 2.0
 Group: Development/Python
-Url: http://code.google.com/p/ipaddr-py/
+Url: https://github.com/google/ipaddr-py
 Packager: Liudmila Butorina <lbutorina@altlinux.org>
 
 BuildArch: noarch
 
-Source0: %modulename-%version.tar.gz
+Source0: %modulename-%version.tar
 
 BuildPreReq: %py_dependencies setuptools
 %if_with python3
@@ -51,6 +51,9 @@ pushd ../python3
 popd
 %endif
 
+%check
+./test-2to3.sh
+
 %install
 %python_install --record=INSTALLED_FILES
 
@@ -61,6 +64,7 @@ popd
 %endif
 
 %files -f INSTALLED_FILES
+%doc README
 
 %if_with python3
 %files -n python3-module-%modulename
@@ -68,6 +72,14 @@ popd
 %endif
 
 %changelog
+* Thu Aug  6 2015 Terechkov Evgenii <evg@altlinux.org> 2.1.10-alt2
+- Update sources to current trunk (git commit c813f47)
+
+* Thu Aug  6 2015 Terechkov Evgenii <evg@altlinux.org> 2.1.10-alt1
+- 2.1.10
+- Update URL
+- %%check section added
+
 * Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.7-alt1.1
 - Added module for Python 3
 
