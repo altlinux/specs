@@ -7,18 +7,18 @@
 %def_enable wayland
 
 Name: ibus
-Version: 1.5.10
+Version: 1.5.11
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
 License: LGPLv2+
 Group: System/Libraries
-Url: http://code.google.com/p/%name/
+Url: https://github.com/ibus/ibus/wiki
 
 Source: https://github.com/%name/%name/releases/download/%version/%name-%version.tar.gz
 Source1: ibus-xinput
 
-Patch: ibus-%version-up.patch
+#Patch: ibus-%version-up.patch
 
 %define gtk2_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-2.0)
 %define gtk3_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-3.0)
@@ -142,7 +142,7 @@ override some functions in GObject-Introspection.
 
 %prep
 %setup
-%patch -p1
+#%%patch -p1
 
 %build
 %autoreconf
@@ -254,6 +254,9 @@ fi
 %python_sitelibdir/gi/overrides/IBus.py*
 
 %changelog
+* Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.11-alt1
+- 1.5.11
+
 * Fri Apr 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.10-alt1
 - 1.5.10
 
