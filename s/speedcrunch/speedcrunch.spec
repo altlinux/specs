@@ -1,14 +1,14 @@
 Name: speedcrunch
-Version: 0.10.1
-Release: alt3
-Summary: A fast power user calculator for KDE
+Version: 0.11
+Release: alt1.1
+Summary: A fast power user calculator
 Group: Office
 License: GPLv2
 Url: http://www.speedcrunch.org/
-Source0: http://speedcrunch.googlecode.com/files/%name-%version.tar.gz
+Source0: %name-%version.tar.gz
 Source1: %name.desktop
 
-BuildRequires: cmake >= 2.4.4 gcc-c++ /usr/bin/convert libqt4-devel libSM-devel libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel
+BuildRequires: ImageMagick-tools cmake doxygen fonts-ttf-dejavu fonts-type1-urw gcc-c++ libqt4-devel
 
 %description
 SpeedCrunch is a fast, high precision and powerful desktop calculator.
@@ -21,6 +21,7 @@ full keyboard-friendly and more than 15 built-in math function.
 
 %build
 export PATH=$PATH:%_qt4dir/bin
+lrelease src/resources/locale/*.ts
 cd src && \
 cmake \
         -DCMAKE_INSTALL_PREFIX=%_prefix \
@@ -28,7 +29,6 @@ cmake \
         -DCMAKE_CXX_FLAGS:STRING="%optflags" \
         -DCMAKE_C_FLAGS:STRING="%optflags"
 %make_build
-lrelease i18n/*.ts \
 
 %install
 cd src
@@ -38,21 +38,28 @@ cd src
 # icons
 %__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 cd ..
-convert -resize 48x48 src/resources/%name.png %buildroot%_liconsdir/%name.png
-convert -resize 32x32 src/resources/%name.png %buildroot%_niconsdir/%name.png
-convert -resize 16x16 src/resources/%name.png %buildroot%_miconsdir/%name.png
+convert -resize 48x48 gfx/%name.svg %buildroot%_liconsdir/%name.png
+convert -resize 32x32 gfx/%name.svg %buildroot%_niconsdir/%name.png
+convert -resize 16x16 gfx/%name.svg %buildroot%_miconsdir/%name.png
+
+# docs
+cd doc && doxygen Doxyfile
 
 %files
-%doc ChangeLog* INSTALL.txt PACKAGERS HACKING.txt LISEZMOI README TRANSLATORS doc/*.pdf doc/*.odt
+%doc doc/*.pdf doc/*.odt doc/*.docbook doc/html
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_datadir/%name
-%exclude %_datadir/%name/books/images/make_math_pngs.sh
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri Aug 07 2015 Motsyo Gennadi <drool@altlinux.ru> 0.11-alt1.1
+- fix BuildRequires
+
+* Fri Aug 07 2015 Motsyo Gennadi <drool@altlinux.ru> 0.11-alt1
+- new version 0.11 (#31189)
+
 * Tue Jul 26 2011 Motsyo Gennadi <drool@altlinux.ru> 0.10.1-alt3
 - build without ugly script (#25953)
 
