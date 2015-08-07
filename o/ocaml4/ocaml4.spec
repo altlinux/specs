@@ -7,8 +7,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml4
-Version: 4.02.2
-Release: alt3
+Version: 4.02.3
+Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -250,6 +250,9 @@ install -p -m644 ocamlbuild/man/ocamlbuild.1.bz2 %buildroot%_man1dir/
 %doc ocamldoc/stdlib.pdf 
 
 %changelog
+* Fri Aug 07 2015 Andrey Bergman <vkni@altlinux.org> 4.02.3-alt1
+- Update to version 4.02.3
+
 * Wed Jul 01 2015 Andrey Bergman <vkni@altlinux.org> 4.02.2-alt3
 - Rebuild with new rpm-build-ocaml4.
 
