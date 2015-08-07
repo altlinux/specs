@@ -7,7 +7,7 @@
 
 Name: sddm
 Version: 0.11.0
-Release: alt3
+Release: alt4
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -15,7 +15,7 @@ Summary: Lightweight QML-based display manager
 Url: https://github.com/sddm/sddm
 License: GPLv2+
 
-Requires: xinitrc xauth
+Requires: xinitrc xauth design-graphics
 
 Source: %name-%version.tar
 Source1: sddm.conf
@@ -30,6 +30,7 @@ Patch1: create_pid_file.patch
 Patch100: alt-defaults.patch
 Patch101: alt-branding.patch
 Patch102: alt-wmsession.patch
+Patch103: alt-systemctl-path.patch
 
 # Automatically added by buildreq on Thu Apr 02 2015 (-bi)
 # optimized out: cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-test libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-module-BeautifulSoup python-module-PyStemmer python-module-Pygments python-module-google python-module-google-apputils python-module-matplotlib python-module-numpy python-module-pyExcelerator python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-zope.interface python-modules python-modules-compiler python-modules-email python-modules-encodings qt5-base-devel qt5-tools
@@ -53,6 +54,7 @@ ability to create smooth, animated user interfaces.
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1 -b .wmsession
+%patch103 -p1
 
 %build
 %K5build \
@@ -87,6 +89,12 @@ install -p -m 0644 %SOURCE10 %buildroot%_sysconfdir/pam.d/sddm
 install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 #install -p -m 0644 %SOURCE12 %buildroot%_sysconfdir/pam.d/sddm-greeter
 
+# create default theme
+cp -ar %buildroot/%_datadir/sddm/themes/maui %buildroot/%_datadir/sddm/themes/default
+sed -i 's|^background=.*|background=%_datadir/design/current/backgrounds/xdm.png|' %buildroot/%_datadir/sddm/themes/default/theme.conf
+sed -i 's|^\(Name=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/default/metadata.desktop
+sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/default/metadata.desktop
+
 %pre
 /usr/sbin/useradd -c 'SDDM User' -s /sbin/nologin -d %_localstatedir/sddm -r %sddm_user 2> /dev/null || :
 
@@ -109,6 +117,12 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Fri Aug 07 2015 Sergey V Turchin <zerg@altlinux.org> 0.11.0-alt4
+- fix path to systemctl
+- setup default theme
+- hide nologin users
+- don't setup initial backgroung color
+
 * Mon Apr 20 2015 Sergey V Turchin <zerg@altlinux.org> 0.11.0-alt3
 - don't uppercase xdg session name
 
