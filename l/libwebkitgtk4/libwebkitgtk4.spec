@@ -11,7 +11,7 @@
 %def_disable gnu_ld
 
 Name: libwebkitgtk4
-Version: 2.8.4
+Version: 2.8.5
 Release: alt1
 
 Summary: Web browser engine
@@ -24,6 +24,8 @@ Source: %url/releases/%_name-%version.tar.xz
 
 # fc
 Patch10: webkitgtk-2.8.0-gcc5_fix.patch
+Patch11: webkitgtk-2.8.4-memory-limit.patch
+Patch12: webkitgtk-2.8.4-youtube.patch
 
 BuildPreReq: rpm-build-licenses
 
@@ -177,6 +179,9 @@ GObject introspection devel data for the JavaScriptCore library
 %prep
 %setup -n %_name-%version
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
+
 # Remove bundled libraries
 rm -rf Source/ThirdParty/leveldb/
 rm -rf Source/ThirdParty/gtest/
@@ -263,6 +268,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Fri Aug 07 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.5-alt1
+- 2.8.5
+
 * Wed Jul 08 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.4-alt1
 - 2.8.4
 
