@@ -1,11 +1,12 @@
 Name: dnsmasq
-Version: 2.73
+Version: 2.75
 
 Release: alt1
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
 Url: http://www.thekelleys.org.uk/dnsmasq
+# git://thekelleys.org.uk/dnsmasq.git
 Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.sysconfig
@@ -127,6 +128,10 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Fri Aug 07 2015 Mikhail Efremov <sem@altlinux.org> 2.75-alt1
+- systemd: Add Wants=network-online.target.
+- Updated to 2.75.
+
 * Mon Jun 15 2015 Mikhail Efremov <sem@altlinux.org> 2.73-alt1
 - systemd: Fix dnsmasq start order (closes: #31025).
 - Updated to 2.73.
