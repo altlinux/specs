@@ -1,5 +1,5 @@
 Name:    texmf-standalone
-Version: 1.1b
+Version: 1.2
 Release: alt1
 Summary: Compile TeX pictures stand-alone or as part of a document
 Summary(ru_RU.UTF-8): LaTeX класс для раздельной компиляции изображений TeX
@@ -58,6 +58,9 @@ install -pD -m644 doc/latex/standalone/* %buildroot%_texmfdoc/tex/latex/standalo
 %_texmfdoc/tex/latex/standalone/*
 
 %changelog
+* Fri Aug 07 2015 Andrey Bergman <vkni@altlinux.org> 1.2-alt1
+- Version update.
+
 * Sat Mar 29 2014 Andrey Bergman <vkni@altlinux.org> 1.1b-alt1
 - Initial release for Sisyphus
 
