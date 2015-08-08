@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1.git20150125
+Release: alt1.git20150413
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
 Group: Development/Python
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.git20150413
+- New snapshot
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.git20150125
 - Initial build for Sisyphus
 
