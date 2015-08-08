@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.2
-Release: alt1
+Release: alt1.git20150601
 
 Summary: Pythonic argument parser, that will make you smile
 
@@ -14,17 +14,18 @@ Url: https://github.com/docopt/docopt
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# https://github.com/docopt/docopt.git
 Source: http://pypi.python.org/packages/source/d/docopt/docopt-%version.tar
 
 BuildArch: noarch
 
 # buildreq add all packages :)
-BuildRequires:  python-module-setuptools
-BuildRequires:  python-module-nose
+BuildRequires:  python-module-setuptools-tests
+BuildRequires:  python-module-nose python-modules-json
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools python3-module-nose
+BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-nose
 %endif
 
 %description
@@ -77,6 +78,14 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test -v
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %python_sitelibdir/%oname.py*
 %python_sitelibdir/%oname-*.egg-info
@@ -89,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20150601
+- Snapshot from git
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1
 - Version 0.6.2
 - Added module for Python 3
