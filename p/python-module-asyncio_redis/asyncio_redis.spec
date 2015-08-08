@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.13.4
-Release: alt1.git20140818
+Version: 0.14.1
+Release: alt1.git20150808
 Summary: PEP 3156 implementation of the redis protocol
 License: BSD
 Group: Development/Python
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.1-alt1.git20150808
+- Version 0.14.1
+
 * Sat Jan 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.4-alt1.git20140818
 - Initial build for Sisyphus
 
