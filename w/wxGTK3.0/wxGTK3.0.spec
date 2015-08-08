@@ -2,7 +2,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.3
-Release: alt2.git20150312
+Release: alt3.git20150312
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -105,7 +105,8 @@ DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
 	--enable-stl \
 	--enable-std_containers \
 	--enable-std_string_conv_in_wxstring \
-	--enable-ipv6
+	--enable-ipv6 \
+	--with-subdirs
 
 %make_build SHARED_LD_CXX='perl %SOURCE2 $(CXX) -shared -fPIC -g -o'
 
@@ -140,6 +141,9 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt3.git20150312
+- Added %_bindir/wxrc-3.0 (ALT #31197)
+
 * Fri Jul 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt2.git20150312
 - Rebuilt with gcc5
 
