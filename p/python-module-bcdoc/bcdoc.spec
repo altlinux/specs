@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.13.0
-Release: alt1.git20150223
+Version: 0.16.0
+Release: alt1.git20150617
 Summary: ReST document generation tools for botocore
 License: ASLv2.0
 Group: Development/Python
@@ -83,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16.0-alt1.git20150617
+- Version 0.16.0
+
 * Tue Feb 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.0-alt1.git20150223
 - Version 0.13.0
 
