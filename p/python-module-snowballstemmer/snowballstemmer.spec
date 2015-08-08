@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: 16 stemmer algorithms (15 + Poerter English stemmer) generated from Snowball algorithms
 License: BSD
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1
+- Version 1.2.0
+
 * Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus
 
