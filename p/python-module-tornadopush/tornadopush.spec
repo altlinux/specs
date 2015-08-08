@@ -1,11 +1,11 @@
 %define oname tornadopush
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
-Version: 0.6.2
-Release: alt1.git20150119
+Version: 0.7.2
+Release: alt1.git20150808
 Summary: Push and presence server built with Tornado and Redis
 License: MIT
 Group: Development/Python
@@ -34,6 +34,7 @@ BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
+%py_requires itsdangerous yaml jsmin tornadoredis toredis
 
 %description
 Push and presence server built with Tornado and Redis.
@@ -42,6 +43,7 @@ Push and presence server built with Tornado and Redis.
 Summary: Push and presence server built with Tornado and Redis
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires itsdangerous yaml jsmin tornadoredis toredis
 
 %description -n python3-module-%oname
 Push and presence server built with Tornado and Redis.
@@ -101,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1.git20150808
+- Version 0.7.2
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20150119
 - Version 0.6.2
 
