@@ -1,6 +1,6 @@
 %define oname futures
 Name: python-module-%oname
-Version: 2.2.0
+Version: 3.0.3
 Release: alt1
 Summary: Backport of the concurrent.futures package from Python 3.2
 License: BSD
@@ -30,6 +30,9 @@ Backport of the concurrent.futures package from Python 3.2.
 %python_sitelibdir/*
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt1
+- Version 3.0.3
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1
 - Version 2.2.0
 
