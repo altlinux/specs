@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: ipython
-Version: 3.1.0
+Version: 3.2.1
 Release: alt1
 
 %setup_python_module IPython
@@ -191,6 +191,9 @@ cp -fR docs/build/html/* examples %buildroot%_docdir/%name/
 
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
+- Version 3.2.1
+
 * Wed Apr 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt1
 - Version 3.1.0
 
