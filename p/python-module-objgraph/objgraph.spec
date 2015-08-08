@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.8.1
+Version: 2.0.1
 Release: alt1
 Summary: Draws Python object reference graphs with graphviz
 License: MIT
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1
+- Version 2.0.1
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt1
 - Version 1.8.1
 - Added module for Python 3
