@@ -1,6 +1,6 @@
 Name:    texmf-latex-beamer
-Version: 3.10
-Release: alt0.1
+Version: 3.36
+Release: alt1
 Summary: A LaTeX class that allows create pdf-presentations
 Summary(ru_RU.UTF-8): LaTeX класс для подготовки презентаций в pdf-формате
 License: GPL
@@ -54,7 +54,7 @@ emacs support for beamer LaTeX class
 %__mkdir_p %buildroot%_emacslispdir
 
 # Документация
-%__mkdir_p %buildroot%_texmfdoc/tex/latex/beamer/{themes,emulation,examples/{a-conference-talk,a-lecture,lyx-based-presentation},solutions/{conference-talks,generic-talks,short-talks}}
+%__mkdir_p %buildroot%_texmfdoc/tex/latex/beamer/{themes,emulation,examples/{a-conference-talk,a-lecture},solutions/{conference-talks,generic-talks,short-talks}}
 
 install -pD -m644 base/*.sty %buildroot%_texmfmain/tex/latex/beamer/base/
 install -pD -m644 base/*.cls %buildroot%_texmfmain/tex/latex/beamer/base/
@@ -87,14 +87,12 @@ install -pD -m644 base/translator/dicts/translator-theorem-dictionary/* %buildro
 
 # Документация
 install -pD -m644 {AUTHORS,ChangeLog,FILES,INSTALL,README,TODO} %buildroot%_texmfdoc/tex/latex/beamer/
-install -pD -m644 doc/beameruserguide.pdf %buildroot%_texmfdoc/tex/latex/beamer/
+#install -pD -m644 doc/beameruserguide.pdf %buildroot%_texmfdoc/tex/latex/beamer/
 install -pD -m644 doc/emulation/* %buildroot%_texmfdoc/tex/latex/beamer/emulation/
 
 # Примеры
 install -pD -m644 examples/a-conference-talk/* %buildroot%_texmfdoc/tex/latex/beamer/examples/a-conference-talk
 install -pD -m644 examples/a-lecture/* %buildroot%_texmfdoc/tex/latex/beamer/examples/a-lecture
-install -pD -m644 examples/lyx-based-presentation/* %buildroot%_texmfdoc/tex/latex/beamer/examples/lyx-based-presentation
-install -pD -m644 examples/*.pdf %buildroot%_texmfdoc/tex/latex/beamer/examples/
 
 # Решения
 install -pD -m644 solutions/conference-talks/* %buildroot%_texmfdoc/tex/latex/beamer/solutions/conference-talks
@@ -107,16 +105,16 @@ install -pD -m644 emacs/beamer.el %buildroot%_emacslispdir/
 %files
 %dir %_texmfmain/tex/latex/beamer
 %dir %_texmfmain/tex/latex/beamer/base
-%dir %_texmfmain/tex/latex/beamer/base/emulation
-%dir %_texmfmain/tex/latex/beamer/base/multimedia
-%dir %_texmfmain/tex/latex/beamer/base/themes
-%dir %_texmfmain/tex/latex/beamer/base/translator
-%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-basic-dictionary
-%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-bibliography-dictionary
-%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-environment-dictionary
-%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-months-dictionary
-%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-numbers-dictionary
-%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-theorem-dictionary
+#%%dir %_texmfmain/tex/latex/beamer/base/emulation
+#%%dir %_texmfmain/tex/latex/beamer/base/multimedia
+#%%dir %_texmfmain/tex/latex/beamer/base/themes
+#%%dir %_texmfmain/tex/latex/beamer/base/translator
+#%%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-basic-dictionary
+#%%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-bibliography-dictionary
+#%%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-environment-dictionary
+#%%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-months-dictionary
+#%%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-numbers-dictionary
+#%%dir %_texmfmain/tex/latex/beamer/base/translator/dicts/translator-theorem-dictionary
 
 %dir %_texmfdoc/tex/latex/beamer
 
@@ -132,6 +130,9 @@ install -pD -m644 emacs/beamer.el %buildroot%_emacslispdir/
 %_emacslispdir/beamer.el
 
 %changelog
+* Sat Aug 08 2015 Andrey Bergman <vkni@altlinux.org> 3.36-alt1
+- Update to version 3.36.
+
 * Thu Dec 09 2010 Andrey Bergman <vkni@altlinux.org> 3.10-alt0.1
 - Update to version 3.10.
 
