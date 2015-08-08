@@ -1,6 +1,6 @@
 Name: texmf-pgf
-Version: 2.10
-Release: alt0.1
+Version: 3.0.1
+Release: alt1
 Summary: A sophisticated graphical macro package for LaTeX, plain-TeX
 Summary(ru_RU.UTF-8): Изощрённый макропакет TeX/LaTeX/ConTeXt для создания рисунков, диаграмм и графиков
 License: LPPL (LaTeX Project Public License)
@@ -44,7 +44,7 @@ mkdir -p %buildroot%_texmfmain/tex/generic/pgf/libraries/shapes/circuits
 mkdir -p %buildroot%_texmfmain/tex/latex/pgf/compatibility
 mkdir -p %buildroot%_texmfmain/tex/latex/pgf/frontendlayer/libraries
 
-install -pD -m644 doc/generic/pgf/{AUTHORS,ChangeLog,FILES,INSTALL,README,TODO,pgfmanual.pdf} %buildroot%_texmfdoc/pgf/
+install -pD -m644 doc/generic/pgf/{AUTHORS,ChangeLog,FILES,INSTALL,README,pgfmanual.pdf} %buildroot%_texmfdoc/pgf/
 install -pD -m644 tex/context/third/pgf/basiclayer/* %buildroot%_texmfmain/tex/context/pgf/basiclayer/
 install -pD -m644 tex/context/third/pgf/frontendlayer/* %buildroot%_texmfmain/tex/context/pgf/frontendlayer/
 install -pD -m644 tex/context/third/pgf/math/* %buildroot%_texmfmain/tex/context/pgf/math/
@@ -100,16 +100,16 @@ install -pD -m644 tex/plain/pgf/utilities/* %buildroot%_texmfmain/tex/plain/pgf/
 %dir %_texmfmain/tex/generic/pgf/
 %dir %_texmfmain/tex/generic/pgf/basiclayer/
 %dir %_texmfmain/tex/generic/pgf/frontendlayer/
-%dir %_texmfmain/tex/generic/pgf/frontendlayer/tikz
-%dir %_texmfmain/tex/generic/pgf/frontendlayer/tikz/libraries/
-%dir %_texmfmain/tex/generic/pgf/frontendlayer/tikz/libraries/circuits
-%dir %_texmfmain/tex/generic/pgf/frontendlayer/tikz/libraries/datavisualization
-%dir %_texmfmain/tex/generic/pgf/frontendlayer/tikz/libraries/graphs
+#%%dir %_texmfmain/tex/generic/pgf/frontendlayer/tikz
+#%%dir %_texmfmain/tex/generic/pgf/frontendlayer/tikz/libraries/
+#%%dir %_texmfmain/tex/generic/pgf/frontendlayer/tikz/libraries/circuits
+#%%dir %_texmfmain/tex/generic/pgf/frontendlayer/tikz/libraries/datavisualization
+#%%dir %_texmfmain/tex/generic/pgf/frontendlayer/tikz/libraries/graphs
 %dir %_texmfmain/tex/generic/pgf/libraries/
-%dir %_texmfmain/tex/generic/pgf/libraries/datavisualization
-%dir %_texmfmain/tex/generic/pgf/libraries/decorations
-%dir %_texmfmain/tex/generic/pgf/libraries/shapes
-%dir %_texmfmain/tex/generic/pgf/libraries/shapes/circuits
+#%%dir %_texmfmain/tex/generic/pgf/libraries/datavisualization
+#%%dir %_texmfmain/tex/generic/pgf/libraries/decorations
+#%%dir %_texmfmain/tex/generic/pgf/libraries/shapes
+#%%dir %_texmfmain/tex/generic/pgf/libraries/shapes/circuits
 %dir %_texmfmain/tex/generic/pgf/modules/
 %dir %_texmfmain/tex/generic/pgf/math/
 %dir %_texmfmain/tex/generic/pgf/systemlayer/
@@ -159,6 +159,9 @@ install -pD -m644 tex/plain/pgf/utilities/* %buildroot%_texmfmain/tex/plain/pgf/
 %_texmfmain/tex/plain/pgf/utilities/*
 
 %changelog
+* Sat Aug 08 2015 Andrey Bergman <vkni@altlinux.org> 3.0.1-alt1
+- Update to version 3.0.1.
+
 * Thu Dec 09 2010 Andrey Bergman <vkni@altlinux.org> 2.10-alt0.1
 - Update to version 2.10.
 
