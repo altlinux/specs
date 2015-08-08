@@ -1,10 +1,11 @@
 %define oname jedi
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.8.1
-Release: alt1.final0.git20150102
+Version: 0.9.0
+Release: alt1.git20150623
 Summary: An autocompletion tool for Python that can be used for text editors
 License: MIT
 Group: Development/Python
@@ -156,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.git20150623
+- Version 0.9.0
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1.final0.git20150102
 - Initial build for Sisyphus
 
