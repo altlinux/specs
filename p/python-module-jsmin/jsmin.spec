@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.0
+Version: 2.1.2
 Release: alt1
 Summary: JavaScript minifier
 License: MIT
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2-alt1
+- Version 2.1.2
+
 * Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1
 - Version 2.1.0
 
