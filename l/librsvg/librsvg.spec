@@ -7,12 +7,11 @@
 %def_disable static
 %def_enable gtk-doc
 %def_enable pixbuf_loader
-%def_enable gtk_theme
 %def_enable introspection
 %def_enable vala
 
 Name: %bname
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 Epoch: 1
 
@@ -22,10 +21,10 @@ Group: System/Libraries
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
 
-# From configure.in
+# From configure.ac
 %define glib_ver 2.24.0
 %define gio_ver 2.24.0
-%define gtk3_ver 3.2.0
+%define gtk3_ver 3.10.0
 %define libxml2_ver 2.7.0
 %define cairo_ver 1.2.0
 %define croco_ver 0.6.7
@@ -132,7 +131,6 @@ GObject introspection devel data for the %name library
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{?_enable_pixbuf_loader:--enable-pixbuf-loader} \
-	%{?_enable_gtk_theme:--enable-gtk-theme} \
 	%{?_enable_introspection:--enable-introspection=yes} \
 	%{?_enable_vala:--enable-vala=yes}
 
@@ -183,6 +181,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sat Aug 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.10-alt1
+- 2.40.10
+
 * Fri Mar 27 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.9-alt1
 - 2.40.9
 
