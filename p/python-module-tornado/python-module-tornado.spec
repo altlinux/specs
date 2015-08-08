@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 4.1.0
+Version: 4.2.1
 Release: alt1
 Summary: Scalable, non-blocking web server and tools
 
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1
+- Version 4.2.1
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
 - Version 4.1.0
 
