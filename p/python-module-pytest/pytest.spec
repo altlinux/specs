@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.8.0
-Release: alt1.dev4.git20150726
+Release: alt1.dev4.git20150807
 Summary: Simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
@@ -139,6 +139,9 @@ cp -fR doc/en/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0-alt1.dev4.git20150807
+- New snapshot
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0-alt1.dev4.git20150726
 - Version 2.8.0.dev4
 
