@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt1
+Release: alt2
 Summary: Port of the Tulip project (asyncio module, PEP 3156) on Python 2
 License: ASLv2.0
 Group: Development/Python
@@ -25,7 +25,7 @@ BuildPreReq: python3-module-mock python3-module-asyncio
 %endif
 
 %py_provides %oname
-%py_requires futures
+%py_requires concurrent.futures
 %add_python_req_skip msvcrt
 
 %description
@@ -169,6 +169,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt2
+- Fixed requirements
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1
 - Version 2.0
 
