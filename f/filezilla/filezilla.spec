@@ -1,15 +1,16 @@
 Name: filezilla
-Version: 3.3.3
-Release: alt1.qa1
+Version: 3.12.0.2
+Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
-Packager: Stanislav Yadykin <tosick@altlinux.ru>
 
 Group: Networking/File transfer
 License: GPL
-URL: http://filezilla.sourceforge.net/
+Url: http://filezilla.sourceforge.net/
 Source: FileZilla_%{version}_src.tar.bz2
 
-BuildRequires: gcc-c++ libgnutls-devel libidn-devel libgtk+2-devel wxGTK-devel libdbus-devel xdg-utils
+# Automatically added by buildreq on Sun Aug 09 2015 (-ba)
+# optimized out: at-spi2-atk elfutils fontconfig glib2-devel gnu-config libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libp11-kit libpango-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base tinyxml
+BuildRequires: gcc-c++ libdbus-devel libgnutls-devel libgtk+3-devel libsqlite3-devel libwxGTK3.0-devel tinyxml-devel xdg-utils
 
 %description
 FileZilla is a fast and reliable FTP client and server with lots
@@ -20,7 +21,7 @@ of useful features and an intuitive interface
 
 %build
 %configure
-%make
+%make_build
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -32,14 +33,19 @@ of useful features and an intuitive interface
 %dir %_datadir/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
+%_datadir/appdata/filezilla.appdata.xml
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 %_pixmapsdir/%name.png
+%_iconsdir/hicolor/scalable/apps/filezilla.svg
 %_man1dir/*
 %_man5dir/*
 
 %changelog
+* Sun Aug 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.12.0.2-alt1
+- Updated to 3.12.0.2.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.3.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
@@ -86,4 +92,4 @@ of useful features and an intuitive interface
 3.0.0-0.beta5.1mdv2007.1
 + Revision: 112676
 - Import filezilla
- 
+
