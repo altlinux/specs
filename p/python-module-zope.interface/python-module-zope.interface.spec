@@ -1,6 +1,6 @@
 %define version 4.1.3
 #define subver c1
-%define release alt1.dev0.git20141227
+%define release alt1.dev0.git20150601
 %define oname zope.interface
 %setup_python_module %oname
 
@@ -171,6 +171,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt1.dev0.git20150601
+- New snapshot
+
 * Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt1.dev0.git20141227
 - Version 4.1.3.dev0
 
