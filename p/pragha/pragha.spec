@@ -1,19 +1,31 @@
+%def_disable libxfce4ui
+
 Name: pragha
-Version: 1.3.1
-Release: alt2.git20140727
+Version: 1.3.2.2
+Release: alt1
+
 Summary: Pragha is a "Fork" of consonance Music manager
 License: GPLv3
 Group: Sound
 Url: http://pragha.wikispaces.com/
 Source0: %name-%version.tar
+Patch: pragha-1.3.2.2-alt-cdrom_include.patch
 
-BuildRequires: gst-plugins-devel libcddb-devel libcdio-devel libclastfm-devel
-BuildRequires: libdbus-glib-devel libexo-devel libglyr-devel
-BuildRequires: libkeybinder-devel libnotify-devel libtag-devel xfce4-dev-tools
-BuildPreReq: gstreamer1.0-devel libgtk+3-devel libpeas-devel
-BuildPreReq: gst-plugins1.0-devel libxfce4ui-devel libtotem-pl-parser-devel
+%define gtk_ver 3.14
+
+Requires: gst-plugins-base1.0
+Requires: gst-plugins-good1.0
+
+BuildRequires: libcddb-devel libcdio-paranoia-devel libclastfm-devel
+BuildRequires: libexo-devel libglyr-devel
+BuildRequires: libkeybinder-devel libnotify-devel libtag-devel
+BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel libgtk+3-devel >= %gtk_ver libpeas-devel
+BuildPreReq:  libtotem-pl-parser-devel
 BuildPreReq: libgudev-devel libsoup-devel libgrilo-devel libmtp-devel
 BuildPreReq: rygel-devel libcdparanoia-devel
+# requires for autogen.sh
+BuildRequires: xfce4-dev-tools
+%{?_enable_libxfce4ui:BuildRequires: libxfce4ui-devel}
 
 %description
 Pragha is a reproducer and administrator of music for GNU/Linux, based
@@ -22,11 +34,12 @@ light, and simultaneously complete without obstructing the daily work.
 
 %prep
 %setup
+%patch
 
 %build
 . autogen.sh
-LDFLAGS="$LDFLAGS -ldbus-glib-1" ; export LDFLAGS
-%configure
+%configure \
+	%{subst_enable libxfce4ui}
 %make_build V=1
 
 %install
@@ -34,17 +47,23 @@ LDFLAGS="$LDFLAGS -ldbus-glib-1" ; export LDFLAGS
 %find_lang %name
 
 %files -f %name.lang
-%doc ChangeLog FAQ NEWS
-#exclude %_datadir/%name/doc
 %_datadir/appdata/*
 %_bindir/*
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/128x128/apps/pragha.png
+%_iconsdir/hicolor/*x*/apps/pragha.png
 %_man1dir/%name.1.gz
 %_pixmapsdir/%name
 %_libdir/%name
+%doc ChangeLog FAQ NEWS README
+
+#%exclude %_datadir/doc/%name
 
 %changelog
+* Sun Aug 09 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3.2.2-alt1
+- 1.3.2.2 release
+- updated {build,}reqs
+- disabled xfce integration to avoid using GTK+2 and GTK+3 in the same process.
+
 * Sat Sep 27 2014 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt2.git20140727
 - rebuilt without rygel support, not ready for 2.4
 
