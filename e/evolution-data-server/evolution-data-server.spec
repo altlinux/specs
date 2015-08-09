@@ -24,7 +24,7 @@
 
 Name: evolution-data-server
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Evolution Data Server
 License: %lgpl2plus
@@ -277,6 +277,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Sun Aug 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.4-alt2
+- rebuilt against libgdata.so.22
+
 * Mon Jul 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.4-alt1
 - 3.16.4 release
 

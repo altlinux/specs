@@ -1,25 +1,37 @@
-%define ver_major 0.16
+%def_disable snapshot
+%define _name gdata
+%define ver_major 0.17
+%define api_ver 0.0
+
 %def_enable gnome
 %def_enable goa
+%def_enable vala
+%def_enable gtk_doc
 
-Name: libgdata
-Version: %ver_major.1
+Name: lib%_name
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library for the GData protocol
 Group: System/Libraries
 License: LGPLv2+
-URL: http://live.gnome.org/libgdata
+Url: https://wiki.gnome.org/Projects/libgdata
 
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%endif
 
 %define soup_ver 2.37.91
 %define goa_ver 3.7.90
+%define uhttpmock_ver 0.5.0
 
-BuildRequires: gnome-common gtk-doc intltool
+BuildRequires: autoconf-archive gtk-doc intltool
 BuildRequires: libgdk-pixbuf-devel libgtk+3-devel liboauth-devel
-BuildRequires: libjson-glib-devel libuhttpmock-devel
+BuildRequires: libjson-glib-devel libuhttpmock-devel >= %uhttpmock_ver
 BuildRequires: gobject-introspection-devel libjson-glib-gir-devel libuhttpmock-gir-devel
+%{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_gnome:BuildRequires: gcr-libs-devel libxml2-devel libsoup-gnome-devel >= %soup_ver libsoup-gnome-gir-devel}
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver libgnome-online-accounts-gir-devel}
 
@@ -45,6 +57,19 @@ Requires: %name = %version-%release
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%package devel-doc
+Summary: Development documentation for the %name
+Group: Development/Documentation
+Conflicts: %name < %version-%release
+BuildArch: noarch
+
+%description devel-doc
+libgdata is a GLib-based library for accessing online service APIs using the
+GData protocol --- most notably, Google's services. It provides APIs to access
+the common Google services, and has full asynchronous support.
+
+This package contains development documentation for the %name.
+
 %package gir-devel
 Summary: GObject introspection devel data for the GData library
 Group: System/Libraries
@@ -61,23 +86,23 @@ GObject introspection devel data for the GData library.
 %build
 %autoreconf
 %configure \
-	--enable-gtk-doc \
+	--disable-static \
 	%{subst_enable gnome} \
 	%{subst_enable goa} \
 	--enable-introspection \
-	--disable-static
+	%{?_enable_gtk_doc:--enable-gtk-doc}
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
-%find_lang gdata
+%find_lang %_name
 
 %check
 # network connection required for tests
 #%%make check
 
-%files -f gdata.lang
+%files -f %_name.lang
 %doc NEWS README AUTHORS
 %_libdir/*.so.*
 
@@ -85,15 +110,23 @@ GObject introspection devel data for the GData library.
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/%name.pc
-%_datadir/gtk-doc/html/gdata
+%{?_enable_vala:%_vapidir/%name.*}
+
+%if_enabled gtk_doc
+%files devel-doc
+%_datadir/gtk-doc/html/%_name/
+%endif
 
 %files gir
-%_typelibdir/*.typelib
+%_typelibdir/GData-%api_ver.typelib
 
 %files gir-devel
-%_girdir/*.gir
+%_girdir/GData-%api_ver.gir
 
 %changelog
+* Fri Jul 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.17.2-alt1
+- 0.17.2
+
 * Mon Nov 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.16.1-alt1
 - 0.16.1
 

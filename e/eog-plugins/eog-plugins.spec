@@ -6,7 +6,7 @@
 
 Name: %_name-plugins
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: EOG plugins
 License: %gpl2plus
@@ -103,6 +103,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Sun Aug 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt2
+- rebuilt against libgdata.so.22
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

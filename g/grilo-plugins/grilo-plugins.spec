@@ -2,7 +2,7 @@
 
 Name: grilo-plugins
 Version: %ver_major.14
-Release: alt2
+Release: alt3
 Summary: Plugins for the Grilo framework
 Group: Sound
 License: LGPLv2+
@@ -83,6 +83,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Sun Aug 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.14-alt3
+- rebuilt against libgdata.so.22
+
 * Tue Apr 28 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.14-alt2
 - fixed buildreqs
 
