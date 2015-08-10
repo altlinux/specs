@@ -1,5 +1,5 @@
 Name: t1utils
-Version: 1.37
+Version: 1.39
 Release: alt1
 
 Summary: Programs for manipulating PostScript Type 1 fonts
@@ -7,7 +7,8 @@ License: freely modifiable and distributable
 Group: Publishing
 
 Url: http://www.lcdf.org/type
-Source: %url/%name-%version.tar.gz
+Source0: %url/%name-%version.tar.gz
+Source1: %name.watch
 
 %description
 The t1utils package is a set of programs for manipulating PostScript Type 1
@@ -30,6 +31,10 @@ and Macintosh resource forks.
 %_man1dir/*
 
 %changelog
+* Mon Aug 10 2015 Michael Shigorin <mike@altlinux.org> 1.39-alt1
+- added debian watch file
+- new version (watch file uupdate)
+
 * Fri Jul 01 2011 Victor Forsiuk <force@altlinux.org> 1.37-alt1
 - 1.37
 
