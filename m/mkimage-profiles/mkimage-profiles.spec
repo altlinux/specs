@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.70
+Version: 1.1.71
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Aug 10 2015 Michael Shigorin <mike@altlinux.org> 1.1.71-alt1
+- docs feature
+
 * Mon Jul 20 2015 Michael Shigorin <mike@altlinux.org> 1.1.70-alt1
 - check KFLAVOURS
 
