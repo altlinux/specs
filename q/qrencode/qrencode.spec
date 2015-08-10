@@ -1,5 +1,5 @@
 Name: qrencode
-Version: 3.4.3
+Version: 3.4.4
 Release: alt1
 
 Summary: Generate QR 2D barcodes
@@ -61,7 +61,8 @@ cd ./tests
 %_man1dir/*
 
 %files -n libqrencode
-%_libdir/*.so.*
+%_libdir/libqrencode.so.3
+%_libdir/libqrencode.so.*
 
 %files -n libqrencode-devel
 %_includedir/*
@@ -69,6 +70,12 @@ cd ./tests
 %_pkgconfigdir/*
 
 %changelog
+* Mon Aug 10 2015 Sergey V Turchin <zerg@altlinux.org> 3.4.4-alt1
+- new version
+
+* Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 3.4.3-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 3.4.3-alt1
 - new version
 
