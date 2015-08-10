@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        38.0.6
+Version:        39.0.3
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -298,6 +298,24 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Aug 10 2015 Alexey Gladkov <legion@altlinux.ru> 39.0.3-alt1
+- New release (39.0.3).
+- Fixed:
+  + 2015-78 Same origin violation and local file stealing via PDF reader
+  + 2015-71 NSS incorrectly permits skipping of ServerKeyExchange
+  + 2015-70 NSS accepts export-length DHE keys with regular DHE cipher suites
+  + 2015-69 Privilege escalation through internal workers
+  + 2015-68 OS X crash reports may contain entered key press information
+  + 2015-67 Key pinning is ignored when overridable errors are encountered
+  + 2015-66 Vulnerabilities found through code inspection
+  + 2015-65 Use-after-free in workers while using XMLHttpRequest
+  + 2015-64 ECDSA signature validation fails to handle some signatures correctly
+  + 2015-63 Use-after-free in Content Policy due to microtask execution error
+  + 2015-62 Out-of-bound read while computing an oscillator rendering range in Web Audio
+  + 2015-61 Type confusion in Indexed Database Manager
+  + 2015-60 Local files or privileged URLs in pages can be opened into new tabs
+  + 2015-59 Miscellaneous memory safety hazards (rv:39.0 / rv:31.8 / rv:38.1)
+
 * Sat Jun 13 2015 Alexey Gladkov <legion@altlinux.ru> 38.0.6-alt1
 - New release (38.0.6).
 
