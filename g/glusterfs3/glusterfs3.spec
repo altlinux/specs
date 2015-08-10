@@ -25,7 +25,7 @@
 
 
 Name: glusterfs3
-Version: %major.2
+Version: %major.3
 Release: alt1
 
 Summary: Cluster File System
@@ -496,6 +496,9 @@ mv %buildroot/etc/ganesha/ganesha-ha.conf.sample %buildroot/etc/ganesha/ganesha.
 %preun_service glusterd
 
 %changelog
+* Mon Aug 10 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.3-alt1
+- new version 3.7.3
+
 * Tue Jun 23 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.2-alt1
 - new version 3.7.2
 - drop fake glusterfs3-devel package
