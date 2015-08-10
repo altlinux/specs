@@ -21,11 +21,9 @@
 %def_enable networkd
 %def_enable timesyncd
 %def_enable resolved
-%def_disable terminal
 %def_enable kdbus
 %def_disable gnuefi
 %def_enable utmp
-%def_with python
 %def_enable xz
 %def_enable zlib
 %def_enable bzip2
@@ -58,8 +56,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 222
-Release: alt2
+Version: 224
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -149,8 +147,6 @@ BuildRequires: libaudit-devel
 %{?_enable_lz4:BuildRequires: liblz4-devel}
 BuildRequires: libkmod-devel >= 15 kmod
 BuildRequires: kexec-tools
-%{?_with_python:BuildPreReq: rpm-build-python rpm-build-python3}
-%{?_with_python:BuildRequires: python-devel python3-devel python-module-sphinx python-module-lxml python3-module-lxml}
 BuildRequires: quota
 BuildRequires: pkgconfig(blkid) >= 2.24
 BuildRequires: pkgconfig(mount) >= 2.20
@@ -164,7 +160,6 @@ BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 %{?_enable_libcurl:BuildRequires: pkgconfig(libcurl)}
 %{?_enable_libidn:BuildRequires: pkgconfig(libidn)}
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
-%{?_enable_terminal:BuildRequires: pkgconfig(libevdev) >= 1.2 pkgconfig(xkbcommon) >= 0.5  pkgconfig(libdrm) >= 2.4 /usr/share/unifont/unifont.hex}
 %{?_enable_gnuefi:BuildRequires: gnu-efi}
 
 Requires: dbus >= %dbus_ver
@@ -491,24 +486,6 @@ Conflicts: zsh-completion-%name < 1:214-alt14
 %description -n zsh-completion-journalctl
 Zsh completion for journalctl from systemd
 
-%package -n python-module-%name
-Summary: Python Bindings for systemd
-License: LGPLv2+
-Group: Development/Python
-Requires: libsystemd = %EVR
-
-%description -n python-module-%name
-This package contains python binds for systemd APIs
-
-%package -n python3-module-%name
-Summary: Python3 Bindings for systemd
-License: LGPLv2+
-Group: Development/Python3
-Requires: libsystemd = %EVR
-
-%description -n python3-module-%name
-This package contains python3 binds for systemd APIs
-
 %package -n udev
 Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
@@ -645,11 +622,7 @@ export UMOUNT_PATH="/bin/umount"
 intltoolize --force --automake
 %autoreconf
 
-mkdir build2
-mkdir build3
-
-CONFIGURE_OPTS=" \
-	%{subst_with python} \
+%configure  \
 	--with-rootprefix="/" \
 	--with-rootlibdir=/%_lib \
 	--with-pamlibdir=/%_lib/security \
@@ -692,7 +665,6 @@ CONFIGURE_OPTS=" \
 	%{subst_enable sysusers} \
 	%{subst_enable ldconfig} \
 	%{subst_enable firstboot} \
-	%{subst_enable terminal} \
 	%{subst_enable gnuefi} \
 	%{subst_enable kdbus} \
 	%{subst_enable seccomp} \
@@ -700,36 +672,13 @@ CONFIGURE_OPTS=" \
 	%{subst_enable selinux} \
 	%{subst_enable apparmor} \
 	%{subst_enable utmp} \
-	--disable-static"
-
-%define _configure_script ../configure
-pushd build3
-%configure  \
-	${CONFIGURE_OPTS} \
-	--disable-manpages \
-	--disable-compat-libs \
-	PYTHON=%__python3
+	--disable-static \
+	--enable-compat-libs
 
 %make_build GCC_COLORS="" V=1
-popd
-
-pushd build2
-%configure  \
-	${CONFIGURE_OPTS} \
-	--enable-compat-libs \
-	PYTHON=%__python
-
-%make_build GCC_COLORS="" V=1
-popd
 
 %install
-# first install python3 so the binaries are overwritten by the python2 ones
-pushd build3
 %makeinstall_std
-popd
-pushd build2
-%makeinstall_std
-popd
 
 %find_lang %name
 
@@ -1295,7 +1244,6 @@ update_chrooted all
 %_man8dir/systemd-activate*
 %_man8dir/systemd-bus-proxyd*
 %_man8dir/systemd-debug-generator*
-%_man8dir/systemd-efi-boot-generator*
 %_man8dir/systemd-fsck*
 %_man8dir/systemd-fstab-generator*
 %_man8dir/systemd-getty-generator*
@@ -1620,15 +1568,6 @@ update_chrooted all
 %exclude %_datadir/zsh/site-functions/_udevadm
 %exclude %_datadir/zsh/site-functions/_journalctl
 
-%if_with python
-%files -n python-module-%name
-%python_sitelibdir/%name
-
-%files -n python3-module-%name
-%python3_sitelibdir/%name
-
-%endif
-
 %files -n journalctl
 /bin/journalctl
 /sbin/journalctl
@@ -1727,6 +1666,10 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Aug 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1:224-alt1
+- 224
+- drop python subpackages
+
 * Thu Jul 23 2015 Alexey Shabalin <shaba@altlinux.ru> 1:222-alt2
 - tmpfiles: downgrade errors when a file system does not support file attributes
 
