@@ -1,5 +1,5 @@
 Name: virt-what
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: Detect if we are running in a virtual machine
@@ -8,7 +8,7 @@ Group: Emulators
 
 # http://git.annexia.org/?p=virt-what.git;a=summary
 Url: http://et.redhat.com/~rjones/virt-what/
-Source: %url/files/%name-%version.tar.gz
+Source: %url/files/%name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed Sep 22 2010
@@ -47,6 +47,9 @@ know about or cannot detect.
 %_man1dir/*
 
 %changelog
+* Mon Aug 10 2015 Michael Shigorin <mike@altlinux.org> 1.15-alt1
+- 1.15
+
 * Wed Apr 30 2014 Michael Shigorin <mike@altlinux.org> 1.14-alt1
 - 1.14 (closes: #30049)
 - added R: dmidecode to fix virtualbox test silent failure
