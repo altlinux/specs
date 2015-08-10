@@ -5,7 +5,7 @@
 
 Name: awstats
 Version: 7.4
-Release: alt0.7.20150714
+Release: alt0.9.20150714
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.KOI8-R):	Анализатор логов Web-сервера в режиме реального времени
@@ -126,7 +126,12 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 /usr/sbin/groupadd -r -f %_pseudouser_group ||:
 /usr/sbin/useradd -g %_pseudouser_group -c 'AWStats log analyzer' \
         -d %_pseudouser_home -s /dev/null -r %_pseudouser_user >/dev/null 2>&1 ||:
+
+%pre apache
 /usr/sbin/usermod -g %_pseudouser_group -G %apache_group %_pseudouser_user
+
+%pre apache2
+/usr/sbin/usermod -g %_pseudouser_group -G %apache2_group %_pseudouser_user
 
 %post apache
 %post_apacheconf
@@ -168,6 +173,9 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Mon Aug 10 2015 L.A. Kostis <lakostis@altlinux.ru> 7.4-alt0.9.20150714
+- Add awstats to apache2 group too (closes #28698).
+
 * Tue Aug 04 2015 L.A. Kostis <lakostis@altlinux.ru> 7.4-alt0.7.20150714
 - More fixes and improvements:
   + improve Opera detection.
