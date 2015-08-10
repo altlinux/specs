@@ -1,5 +1,5 @@
 Name: recoverjpeg
-Version: 2.2.3
+Version: 2.3
 Release: alt1
 
 Summary: Recover jpeg pictures and mov movies from damaged devices
@@ -7,7 +7,8 @@ License: GPLv2
 Group: File tools
 
 Url: http://www.rfc1149.net/devel/recoverjpeg
-Source: http://www.rfc1149.net/download/%name/%name-%version.tar.gz
+Source0: http://www.rfc1149.net/download/%name/%name-%version.tar.gz
+Source1: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++
@@ -44,6 +45,9 @@ NB: sort-pictures(1) requires ImageMagick-tools, exif
 %_man1dir/*.1*
 
 %changelog
+* Mon Aug 10 2015 Michael Shigorin <mike@altlinux.org> 2.3-alt1
+- new version (watch file uupdate)
+
 * Tue Apr 22 2014 Michael Shigorin <mike@altlinux.org> 2.2.3-alt1
 - initial build for ALT Linux Sisyphus based on fedora package
 
