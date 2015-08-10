@@ -1,6 +1,6 @@
 Name: wine-vanilla
-Version: 1.7.47
-Release: alt2
+Version: 1.7.49
+Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -363,6 +363,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Mon Aug 10 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.49-alt1
+- new version 1.7.49
+
 * Wed Jul 22 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.47-alt2
 - add requires to wine-mono and wine-gecko to full subpackage (closes: #31149)
 
