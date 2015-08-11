@@ -1,10 +1,10 @@
 %define oname unittest2
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 0.6.0
-Release: alt1.a1.hg20120312
+Version: 1.1.0
+Release: alt1.hg20150630
 
 Summary: Backport of Python 2.7 unittest module
 License: Same as Python
@@ -14,19 +14,21 @@ BuildArch: noarch
 
 Url: http://pypi.python.org/pypi/unittest2
 
+# hg clone https://hg.python.org/unittest2
 Source: %name-%version.tar
-
-Packager: Andrey Rahmatullin <wrar@altlinux.org>
 
 %setup_python_module %oname
 
-BuildPreReq: python-module-setuptools
-%{?!_without_check:%{?!_disable_check:BuildRequires: %py_dependencies setuptools.command.test}}
+BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-traceback2 python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-traceback2 python3-module-six
 BuildPreReq: python-tools-2to3
 %endif
+
+%py_requires traceback2 six
 
 %description
 unittest2 is a backport of the new features added to the unittest
@@ -37,6 +39,7 @@ testing framework in Python 2.7. It is tested to run on Python 2.4 -
 %package -n python3-module-%oname
 Summary: Port of Python 2.7 unittest module
 Group: Development/Python3
+%py3_requires traceback2 six
 
 %description -n python3-module-%oname
 unittest2 is a port of the features added to the unittest testing
@@ -80,8 +83,7 @@ popd
 %files
 %doc README.txt
 %_bindir/*
-%python_sitelibdir/%oname/
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -91,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.hg20150630
+- Version 1.1.0
+
 * Fri Jun 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.a1.hg20120312
 - Version 0.6.0a1
 
