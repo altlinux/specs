@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Aug 11 2015 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
+- pkgrepl: fix comma after packagename
+- check original package name in add_32bit_requires
+- repl: use .x86_64-i586 repl files for wine packages
+- introduce build32on64 and use it
+- merge rules for very old distros to main distro rule
+
 * Tue Aug 04 2015 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - use git.alt for git repos and gear.alt for build commands
 - update pkgrules
