@@ -1,5 +1,5 @@
 Name: eterbackup
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: Etersoft backup tools for journaling backup
@@ -46,6 +46,11 @@ See detailed russian description here: http://wiki.etersoft.ru/Eterbackup
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Tue Aug 11 2015 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
+- overall fixes
+- etertimemachine: add delete with log2 algorithm using
+- add eterremove for remove obsoleted dirs/files
+
 * Sun Jul 19 2015 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - bugfix release
 - eterpack: fix find special files
