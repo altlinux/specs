@@ -3,8 +3,8 @@
 %def_with python3
 
 Name:           python-module-%{pypi_name}
-Version:        0.0.18
-Release:        alt3
+Version:        0.0.20
+Release:        alt1
 Summary:        A repository of test results
 Group:          Development/Python
 
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.20-alt1
+- Version 0.0.20
+
 * Mon Aug 18 2014 Lenar Shakirov <snejok@altlinux.ru> 0.0.18-alt3
 - Enable python3
 
