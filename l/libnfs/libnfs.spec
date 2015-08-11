@@ -1,5 +1,5 @@
 Name: libnfs
-Version: 1.9.7
+Version: 1.9.8
 Release: alt1
 
 Summary: NFS client library
@@ -55,8 +55,15 @@ This package provides utilities from LibNFS package.
 
 %files utils
 %_bindir/nfs-ls
+%_bindir/nfs-cat
+%_bindir/nfs-cp
 %_man1dir/nfs-ls.1.*
+%_man1dir/nfs-cat.1.*
+%_man1dir/nfs-cp.1.*
 
 %changelog
+* Tue Aug 11 2015 Yuri N. Sedunov <aris@altlinux.org> 1.9.8-alt1
+- 1.9.8
+
 * Tue Feb 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1.9.7-alt1
 - first build for Sisyphus
