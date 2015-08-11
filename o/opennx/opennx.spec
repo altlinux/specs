@@ -1,54 +1,36 @@
 # Enable USBIP support
 %define with_usbip %{?_with_usbip: 1} %{?!_with_usbip: 0}
 
-Summary: An OpenSource NX client
 Name: opennx
-Version: 0.16
-Release: alt18.svn708
+Version: 0.16.e
+Release: alt27.svn724
+
+Summary: An OpenSource NX client
+
 License: LGPL/GPL
 Group: Networking/Remote access
 Url: http://sourceforge.net/projects/opennx
-Packager: Boris Savelev <boris@altlinux.org>
 
-Source: %name-%version.tar
+Packager: Denis Baranov <baraka@altlinux.org>
 
-Patch: %name-0.16-disable-opensc.patch
+Source: ftp://ftp.etersoft.ru/pub/Etersoft/RX@Etersoft/1.1/sources/tarball/%name-%version.tar
 
 %if %with_usbip
 Requires: usbip2-nxclient
 %endif
 
 # Automatically added by buildreq on Sat Sep 19 2009
-BuildRequires: gcc-c++ imake libSM-devel libXmu-devel nx ImageMagick-tools
+BuildRequires: gcc-c++ imake libSM-devel libXmu-devel nx
 BuildRequires: libopensc-devel libsmbclient-devel
-BuildRequires: libwxGTK-devel xorg-cf-files zip libcups-devel
+BuildRequires: xorg-cf-files zip libcups-devel
 BuildRequires: libXau-devel
+BuildRequires: libwxGTK3.1-devel
 
 %description
 opennx is an OSS replacement for Nomachine's NX client.
 
 %prep
 %setup
-
-#patch0 -p1
-
-test -d conf || mkdir conf
-#Convince gettextize not to modify EXTRA_DIST
-test -f conf/config.rpath || touch conf/config.rpath
-#Convince gettextize not to modify AC_CONFIG_FILES
-test -f po/Makefile.in.in || touch po/Makefile.in.in
-#Tweak gettextize
-#Stupid gettextize uses /dev/tty for interactively getting a
-#confirm of it's "oh so incredibly important notes".
-#YES, i've read them at least a dozen times and now, i REALLY
-#don't want to hit RETURN anymore!
-GETTEXTIZE=`which gettextize`
-test -n "$GETTEXTIZE" && \
-    sed -e 's@/dev/tty@/dev/null@' "$GETTEXTIZE" > gettextize.local
-test -f gettextize.local && sh gettextize.local -f --no-changelog
-rm -f gettextize.local
-test -e conf/mkinstalldirs || touch conf/mkinstalldirs
-%autoreconf
 
 %build
 %configure \
@@ -67,16 +49,18 @@ test -e conf/mkinstalldirs || touch conf/mkinstalldirs
 
 mkdir -p %buildroot{%_bindir,%_desktopdir}
 
-ln -s ../..%_libdir/%name/bin/%name %buildroot%_bindir/%name
-ln -s ../../share/%name %buildroot%_libdir/%name/share
+# FIXME: drop using these symlinks
+ln -s %_libdir/%name/bin/%name %buildroot%_bindir/%name
+ln -s %_datadir/%name %buildroot%_libdir/%name/share
 for f in nxesd nxssh nxservice nxproxy ; do
-    ln -s  ../../../bin/$f %buildroot%_libdir/%name/bin/$f
+    ln -s  %_bindir/$f %buildroot%_libdir/%name/bin/$f
 done
 
 mkdir -p %buildroot%_libdir/%name/%_lib
 
 for lib in libsmbclient.so libcups.so ; do
-    ln -s %_libdir/`readlink %_libdir/$lib` %buildroot%_libdir/%name/%_lib/$lib
+    test -r %_libdir/$lib.? || exit
+    ln -s %_libdir/$lib.? %buildroot%_libdir/%name/%_lib/$lib
 done
 
 cp %buildroot%_datadir/%name/applnk/xdg/*.desktop %buildroot%_desktopdir
@@ -86,15 +70,15 @@ subst "s|/usr/NX/bin|%_bindir|g" %buildroot%_desktopdir/*
 
 install -d %buildroot{%_niconsdir,%_miconsdir,%_liconsdir}
 for f in nx opennx-admin opennx-wizard ; do
-    convert -size 16x16 ./extres/scalable/apps/$f.svg %buildroot%_miconsdir/$f.png
-    convert -size 32x32 ./extres/scalable/apps/$f.svg %buildroot%_niconsdir/$f.png
-    convert -size 48x48 ./extres/scalable/apps/$f.svg %buildroot%_liconsdir/$f.png
+    install -m 644 ./extres/16x16/apps/$f.png %buildroot%_miconsdir/$f.png
+    install -m 644 ./extres/32x32/apps/$f.png %buildroot%_niconsdir/$f.png
+    install -m 644 ./extres/48x48/apps/$f.png %buildroot%_liconsdir/$f.png
 done
 
 install -d %buildroot%_iconsdir/hicolor/{16x16,32x32,48x48}/mimetypes/
-convert -background none -size 16x16 ./extres/scalable/mimetypes/nx-desktop.svg %buildroot%_iconsdir/hicolor/16x16/mimetypes/nx-desktop.png
-convert -background none -size 32x32 ./extres/scalable/mimetypes/nx-desktop.svg %buildroot%_iconsdir/hicolor/32x32/mimetypes/nx-desktop.png
-convert -background none -size 48x48 ./extres/scalable/mimetypes/nx-desktop.svg %buildroot%_iconsdir/hicolor/48x48/mimetypes/nx-desktop.png
+install -m 644 ./extres/16x16/mimetypes/nx-desktop.png %buildroot%_iconsdir/hicolor/16x16/mimetypes/nx-desktop.png
+install -m 644 ./extres/32x32/mimetypes/nx-desktop.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/nx-desktop.png
+install -m 644 ./extres/48x48/mimetypes/nx-desktop.png %buildroot%_iconsdir/hicolor/48x48/mimetypes/nx-desktop.png
 
 %if %with_usbip
 install -d -m 755 %buildroot%_sysconfdir/udev/rules.d
@@ -109,7 +93,6 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %files -f %name.lang
-%doc COPYING INSTALL
 %_bindir/%name
 %_libdir/%name
 %_datadir/%name
@@ -123,11 +106,49 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %changelog
-* Tue Jul 21 2015 Michael Shigorin <mike@altlinux.org> 0.16-alt18.svn708
-- NMU: rebuild
+* Tue Aug 11 2015 Vitaly Lipatov <lav@altlinux.ru> 0.16.e-alt27.svn724
+- fix release for build in ALT Linux
 
-* Wed Mar 28 2012 Boris Savelev <boris@altlinux.org> 0.16-alt17.svn708
-- update from trunk
+* Tue Aug 11 2015 Vitaly Lipatov <lav@altlinux.ru> 0.16-eter27.svn724
+- add .gear in sisyphus branch
+- fix compiles in all versions of wxWidgets (2.8, 2.9, 3.0, 3.1)
+- do autoreconf
+
+* Sun Jan 26 2014 Vitaly Lipatov <lav@altlinux.ru> 0.16-eter26.svn724
+- fix build with libsmbclient from samba 4.0, fix symlink to libsmbclient
+
+* Thu Oct 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.16-eter25.svn724
+- remove PidFile option from cups config (eterbug #9490)
+
+* Mon Aug 12 2013 Vitaly Lipatov <lav@altlinux.ru> 0.16-eter24.svn724
+- use absolute path for links, fix requires
+
+* Mon Aug 05 2013 Vitaly Lipatov <lav@altlinux.ru> 0.16-eter23.svn724
+- add Num Lock state as a parameter to be send
+
+* Mon Jun 10 2013 Denis Baranov <baraka@altlinux.ru> 0.16-eter22.svn724
+- Add patch for translate
+
+* Mon Feb 11 2013 Denis Baranov <baraka@altlinux.ru> 0.16-eter21.svn724
+- Now all paths write to config after start
+
+* Fri Jan 18 2013 Denis Baranov <baraka@altlinux.ru> 0.16-eter20.svn724
+- Translate of Resume button correct
+- Update translations
+- Add translate for Wizard button
+
+* Thu Jan 17 2013 Denis Baranov <baraka@altlinux.ru> 0.16-eter19.svn724
+- Add copy icon in spec
+
+* Fri Jan 04 2013 Denis Baranov <baraka@altlinux.ru> 0.16-eter18.svn724
+- Add wizard button to start menu
+
+* Thu Jan 03 2013 Denis Baranov <baraka@altlinux.ru> 0.16-eter17.svn724
+- update from trunk opennx-0.16.0.724
+
+* Fri Jun 01 2012 Denis Baranov <baraka@altlinux.ru> 0.16-eter17.svn708
+- Initial build
+- update from ALTLinux
 
 * Fri Jun 17 2011 Boris Savelev <boris@altlinux.org> 0.16-alt16.svn634
 - update from trunk
