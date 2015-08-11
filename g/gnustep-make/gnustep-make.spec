@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt15.svn20140202
+Release: alt16.svn20140202
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
@@ -109,7 +109,6 @@ rm -f %buildroot%_infodir/*
 %doc ChangeLog*
 %_sysconfdir/GNUstep/
 %_bindir/*
-%attr(755,root,root) %_sysconfdir/profile.d/*
 %dir %_datadir/GNUstep
 %dir %_datadir/GNUstep/Makefiles
 %dir %_datadir/GNUstep/Makefiles
@@ -124,6 +123,7 @@ rm -f %buildroot%_infodir/*
 %_man7dir/*
 
 %files devel
+%attr(755,root,root) %_sysconfdir/profile.d/*
 %_datadir/GNUstep/Makefiles/*.make
 %_datadir/GNUstep/Makefiles/*.template
 %_datadir/GNUstep/Makefiles/Instance
@@ -136,6 +136,9 @@ rm -f %buildroot%_infodir/*
 %_docdir/GNUstep
 
 %changelog
+* Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt16.svn20140202
+- Moved /etc/profile.d/GNUstep.sh from %name into %name-devel (ALT #31199)
+
 * Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt15.svn20140202
 - New snapshot
 
