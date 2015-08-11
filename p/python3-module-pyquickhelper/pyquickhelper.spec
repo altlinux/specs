@@ -1,7 +1,10 @@
 %define oname pyquickhelper
+
+%def_disable check
+
 Name: python3-module-%oname
-Version: 1.1.494
-Release: alt1.git20150423
+Version: 1.2.763
+Release: alt1.git20150809
 Summary: Folder synchronization, a logging function, helpers to generate documentation and more
 License: BSD
 Group: Development/Python3
@@ -20,16 +23,19 @@ BuildPreReq: python3-module-requests python3-module-docutils
 BuildPreReq: python3-module-matplotlib ipython3 graphviz
 BuildPreReq: python3-module-flake8 python3-tools-pep8
 BuildPreReq: python3-module-autopep8 python3-module-sphinx-devel
-BuildPreReq: python3-module-zmq
+BuildPreReq: python3-module-zmq python3-module-pip
+BuildPreReq: python3-module-pyjenkins
 BuildPreReq: python3-module-solar_theme python3-modules-tkinter
 BuildPreReq: python3-module-sphinxcontrib-images
 BuildPreReq: python3-module-matplotlib-sphinxext
+BuildPreReq: python3-module-sphinxjp.themes.revealjs
 
 %py3_provides %oname
 Requires: git pandoc xset /proc
 %py3_requires numpy pandas six dateutils requests docutils IPython pep8
-%py3_requires matplotlib flake8 autopep8 sphinx zmq tkinter
-%py3_requires sphinxcontrib.images matplotlib.sphinxext
+%py3_requires matplotlib flake8 autopep8 sphinx zmq tkinter pip
+%py3_requires sphinxcontrib.images matplotlib.sphinxext pyjenkins
+%py3_requires sphinxjp.themes.revealjs
 
 %description
 Various functionalities: folder synchronization, a logging function,
@@ -73,6 +79,8 @@ git commit -a -m "%version"
 git tag -m "%version" %version
 
 %prepare_sphinx _doc/sphinxdoc
+rm -f _doc/sphinxdoc/conf.py
+ln -s source/conf.py _doc/sphinxdoc/
 ln -s ../objects.inv _doc/sphinxdoc/source/
 
 %build
@@ -86,13 +94,14 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 export LC_ALL=en_US.UTF-8
+export PYTHONPATH=%buildroot%python3_sitelibdir
 python3 setup.py build_sphinx
 mv _doc/sphinxdoc/build docs
 
 %check
 export LC_ALL=en_US.UTF-8
-python3 setup.py test
-#python3 setup.py unittests
+python3 setup.py test -v
+python3 setup.py unittests -v
 
 %files
 %doc *.rst
@@ -102,6 +111,9 @@ python3 setup.py test
 %doc build/notebooks docs
 
 %changelog
+* Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.763-alt1.git20150809
+- Version 1.2.763
+
 * Thu Apr 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.494-alt1.git20150423
 - New snapshot
 
