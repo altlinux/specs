@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: extensions to the Python standard library's unit testing framework
 
 Group: Development/Python
@@ -29,6 +29,8 @@ BuildRequires: python3-module-six python3-module-argparse
 BuildPreReq: python3-module-extras
 BuildRequires: python3-module-pbr
 %endif
+
+%py_requires mimeparse traceback2
 
 %description
 testtools is a set of extensions to the Python standard library's unit
@@ -64,6 +66,7 @@ Summary: extensions to the Python 3 standard library's unit testing framework
 Group: Development/Python3
 %add_python3_req_skip twisted
 %add_findreq_skiplist %python3_sitelibdir/%oname/_compat2x.py
+%py3_requires traceback2 mimeparse
 
 %description -n python3-module-%oname
 testtools is a set of extensions to the Python standard library's unit
@@ -75,8 +78,7 @@ sources.
 %prep
 %setup
 
-sed -i 's|python-mimeparse|mimeparse|' setup.py
-sed -i "s|.*unittest2.*||" setup.py
+sed -i 's|python-mimeparse|mimeparse|' setup.py requirements.txt
 
 git config --global user.email "real at altlinux.org"
 git config --global user.name "REAL"
@@ -141,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt2
+- Fixed requirements
+
 * Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1
 - Version 1.8.0
 
