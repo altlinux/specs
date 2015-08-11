@@ -1,6 +1,6 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.26
+Version: 0.1.27
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -35,6 +35,9 @@ install -m644 share/* %buildroot%_datadir/%name
 %_bindir/*
 %_datadir/%name
 %changelog
+* Tue Aug 11 2015 Denis Smirnov <mithraen@altlinux.ru> 0.1.27-alt1
+- use gear.alt for commands and git.alt for git repo
+
 * Thu Mar 26 2015 Denis Smirnov <mithraen@altlinux.ru> 0.1.26-alt1
 - use git push --follow-tags
 - remove update-asterisk-1.6.2
