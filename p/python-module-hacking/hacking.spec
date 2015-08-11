@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.10.2
-Release: alt2.git20150723
+Release: alt3.git20150723
 Summary: OpenStack Hacking Guideline Enforcement
 License: ASLv2.0
 Group: Development/Python
@@ -42,6 +42,7 @@ BuildPreReq: python3-module-eventlet python3-module-requests
 %endif
 
 %py_provides %oname
+%py_requires mccabe flake8
 
 %description
 hacking is a set of flake8 plugins that test and enforce the OpenStack
@@ -62,6 +63,7 @@ This package contains tests for %oname.
 Summary: OpenStack Hacking Guideline Enforcement
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires mccabe flake8
 
 %description -n python3-module-%oname
 hacking is a set of flake8 plugins that test and enforce the OpenStack
@@ -141,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt3.git20150723
+- Added necessary requirements
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt2.git20150723
 - Enabled check
 
