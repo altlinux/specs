@@ -1,6 +1,6 @@
 Name: daemontools-asterisk
 Summary: Daemontools script for Asterisk
-Version: 0.4
+Version: 0.5
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -13,6 +13,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name
 
 Requires(pre): daemontools-common
+Requires: asterisk-initscript >= 0.69
 
 BuildPreReq: daemontools-common
 
@@ -21,16 +22,14 @@ BuildPreReq: daemontools-common
 
 %install
 %daemontools_install %SOURCE0 asterisk
-
-%triggerpostun -- asterisk1.4
-%daemontools_postun asterisk asterisk _asterisk
-
-%triggerin -- asterisk1.4
-%daemontools_postin asterisk
+touch %buildroot%_sysconfdir/daemontools.d/asterisk/down
 
 %files
 %_sysconfdir/daemontools.d/asterisk
 %changelog
+* Tue Aug 11 2015 Denis Smirnov <mithraen@altlinux.ru> 0.5-alt1
+- start Asterisk from initscript
+
 * Sat Aug 21 2010 Denis Smirnov <mithraen@altlinux.ru> 0.4-alt1
 - create coredumps
 - wait for DAHDI initialize before start
