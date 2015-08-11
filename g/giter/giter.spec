@@ -1,5 +1,5 @@
 Name: giter
-Version: 0.9
+Version: 1.0
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -10,7 +10,7 @@ Url: http://wiki.etersoft.ru/Giter
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# git-clone http://git.altlinux.org/people/lav/packages/giter.git
+# Source-git http://git.altlinux.org/people/lav/packages/giter.git
 Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%version.tar
 
 BuildArchitectures: noarch
@@ -20,7 +20,7 @@ Conflicts: etersoft-build-utils < 2.1
 Requires: eepm >= 1.5.13
 
 %description
-This package contains a set of helper utils for git and gitum.
+This package contains a set of helper utils for git, gitum and etersoft-build-utils.
 See info in Russian on %url.
 
 RECOMMENDED packages: git-core gitum
@@ -41,6 +41,12 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Tue Aug 11 2015 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
+- gpush: push to pub.*, git.* by default
+- fix get_gear_name (when run outside git repo)
+- gpush: fix args -b -a
+- gremote: rewrite -u
+
 * Tue Aug 04 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
 - gpush: fix options handling
 
