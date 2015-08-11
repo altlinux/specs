@@ -6,8 +6,8 @@
 %def_enable fts
 
 Name: zeitgeist
-Version: %major.15
-Release: alt2
+Version: %major.16
+Release: alt1
 
 Summary: Framework providing Desktop activity awareness
 
@@ -213,6 +213,9 @@ rm -rf %buildroot%_prefix/doc/
 %endif
 
 %changelog
+* Tue Aug 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.16-alt1
+- 0.9.16
+
 * Fri May 22 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.15-alt2
 - rebuilt against libxapian-1.2.21 & gcc5
 
