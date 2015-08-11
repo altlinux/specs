@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 Summary: Python implementation of subunit test streaming protocol
 License: Apache or BSD
@@ -157,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
+- Version 1.1.0
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Version 1.0.0
 
