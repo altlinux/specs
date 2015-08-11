@@ -4,7 +4,7 @@
 #============================================================================
 Name: asterisk-base
 Summary: User and groups for asterisk-related packages
-Version: 0.69
+Version: 0.70
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -225,6 +225,9 @@ done
 %_sysconfdir/modprobe.d/dahdi.conf
 
 %changelog
+* Tue Aug 11 2015 Denis Smirnov <mithraen@altlinux.ru> 0.70-alt1
+- use asterisk-daemontools if installed
+
 * Thu Mar 26 2015 Denis Smirnov <mithraen@altlinux.ru> 0.69-alt1
 - add sip.conf
 
