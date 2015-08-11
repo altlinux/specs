@@ -1,39 +1,48 @@
 Name: mobile-broadband-provider-info
-Version: 20120614
+Version: 20150608
 Release: alt1
 
 Summary: Mobile Broadband Service Provider Database
-License: Creative Commons Public Domain
 Group: System/Configuration/Networking
-Packager: Yuri N. Sedunov <aris@altlinux.org>
+License: Creative Commons Public Domain
+Url: https://wiki.gnome.org/Projects/NetworkManager/MobileBroadband/ServiceProviders
+
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar
 
 BuildArch: noarch
 
-Url: http://live.gnome.org/NetworkManager/MobileBroadband/ServiceProviders
-# http://svn.gnome.org/viewvc/mobile-broadband-provider-info
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar.xz
+# for check
+BuildRequires: xmllint
 
 %description
-This package contains mobile broadband settings for different service providers
-in different countries.
+This package contains listings of mobile broadband (3G) providers and
+associated network and plan information.
 
 %prep
-%setup -q
-subst 's@$(libdir)/pkgconfig@%_datadir/pkgconfig@' Makefile*
+%setup
+# subst date as version
+sed -i -e 's|, [0-9]*,|, %version,|' configure.ac
 
 %build
+%autoreconf
 %configure
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
+
+%check
+%make check
 
 %files
-%_datadir/%name
+%_datadir/%name/
 %_datadir/pkgconfig/*
 %doc ChangeLog COPYING NEWS README
 
 %changelog
+* Tue Aug 11 2015 Yuri N. Sedunov <aris@altlinux.org> 20150608-alt1
+- uptaed to git snapshot (4c6b2437b71)
+
 * Thu Jun 14 2012 Yuri N. Sedunov <aris@altlinux.org> 20120614-alt1
 - updated to 20120614 ftp release
 
