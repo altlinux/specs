@@ -1,5 +1,5 @@
-%define lvm2version 2.02.125
-%define dmversion 1.02.102
+%define lvm2version 2.02.127
+%define dmversion 1.02.104
 
 %def_disable cluster
 %def_enable selinux
@@ -376,11 +376,13 @@ sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 %_sbindir/*
 %exclude %_sbindir/dmsetup
 %exclude %_sbindir/dmcontrol_update
+%exclude %_sbindir/dmstats
 %exclude %_sbindir/blkdeactivate
 %exclude %_sbindir/dmeventd
 %{?_enable_static:%exclude %_sbindir/*.static}
 %_mandir/man?/*
 %exclude %_man8dir/dmsetup*
+%exclude %_man8dir/dmstats*
 %exclude %_man8dir/blkdeactivate*
 %if_enabled cluster
 %exclude %_man8dir/clvm*
@@ -458,6 +460,8 @@ sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 %_man8dir/dmsetup*
 %_sbindir/blkdeactivate
 %_man8dir/blkdeactivate*
+%_sbindir/dmstats
+%_man8dir/dmstats*
 %_udevrulesdir/*
 %if_enabled lvmetad
 %exclude %_udevrulesdir/69-dm-lvm-metad.rules
@@ -492,6 +496,9 @@ sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 %python_sitelibdir/*
 
 %changelog
+* Tue Aug 11 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.127-alt1
+- 2.02.127
+
 * Tue Jul 14 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.125-alt1
 - 2.02.125
 - move blkdeactivate to dmsetup package
