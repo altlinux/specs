@@ -100,8 +100,8 @@
 %define with_loader_nvram "%_datadir/ovmf/ovmf_code-x64.bin:%_datadir/ovmf/ovmf_vars-x64.bin:%_datadir/ovmf/ovmf_code-ia32.bin:%_datadir/ovmf/ovmf_vars-ia32.bin"
 
 Name: libvirt
-Version: 1.2.16
-Release: alt2
+Version: 1.2.18
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -930,6 +930,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Aug 11 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.18-alt1
+- 1.2.18
+
 * Wed Jun 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.16-alt2
 - update OVMF nvram path
 
