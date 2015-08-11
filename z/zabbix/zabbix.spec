@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev 52341
+%define svnrev 54796
 
 %def_with pgsql
 
@@ -10,8 +10,8 @@
 %endif
 
 Name: zabbix
-Version: 2.4.5
-Release: alt2
+Version: 2.4.6
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -461,6 +461,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Tue Aug 11 2015 Alexei Takaseev <taf@altlinux.org> 1:2.4.6-alt1
+- 2.4.6
+
 * Sat Jun 20 2015 Alexei Takaseev <taf@altlinux.org> 1:2.4.5-alt2
 - Support macros in URL map elements (ALT#31084)
 - ALT#31021
