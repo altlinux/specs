@@ -1,6 +1,6 @@
 Name: shake
-Version: 0.99
-Release: alt2.1
+Version: 1.0
+Release: alt1
 
 Summary: Userspace filesystem defragmenter
 
@@ -10,7 +10,8 @@ Url: http://vleu.net/shake/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://ftp.twaren.net/Unix/NonGNU/shake/%name-%version.tar.bz2
+# Source-url: https://github.com/unbrice/shake/archive/v%version.tar.gz
+Source: %name-%version.tar
 Patch: shake-0.99-glibc-2.17.patch
 
 # Automatically added by buildreq on Fri Jan 02 2009
@@ -42,6 +43,9 @@ http://mydebianblog.blogspot.com/2008/05/linux_19.html
 %_man8dir/*
 
 %changelog
+* Wed Aug 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
+- new version 1.0 (with rpmrb script)
+
 * Wed Mar 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.99-alt2.1
 - Fixed build with glibc 2.17
 
