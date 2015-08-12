@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.0
-Release: alt1.git20141227
+Version: 0.2.0
+Release: alt1.git20150528
 Summary: Click params for GeoJSON CLI
 License: MIT
 Group: Development/Python
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20150528
+- Version 0.2.0
+
 * Wed Jan 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20141227
 - Initial build for Sisyphus
 
