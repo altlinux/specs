@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.6.1
-Release: alt1.git20150208
+Version: 2.7.2
+Release: alt1.git20150808
 Summary: An implementation of the psycopg2 module using cffi
 License: LGPLv3+
 Group: Development/Python
@@ -89,10 +89,6 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
-
 python setup.py test ||:
 install -d %buildroot%python_sitelibdir/%oname/_impl/__pycache__
 install -m644 %oname/_impl/__pycache__/*.so \
@@ -133,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.2-alt1.git20150808
+- Version 2.7.2
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.1-alt1.git20150208
 - Initial build for Sisyphus
 
