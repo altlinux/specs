@@ -4,34 +4,33 @@
 %def_with mysql
 %def_with pg
 %def_with sqlite
-%def_with python3
+%def_without python3
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
-Name: gdal
-Version: 2.0.0
-Release: alt1
+Name: gdal1
+Version: 1.11.2
+Release: alt2
 Group: Sciences/Geosciences
 
 License: MIT
 URL: http://www.gdal.org/
 
-Source: %name-%version.tar
+Source: gdal-%version.tar
 
-Patch0: %name-1.7.1-alt-swig_python.patch
+Patch0: gdal-1.7.1-alt-swig_python.patch
 # Patch1: %name-1.7.1-alt-pydir.patch
-Patch2: %name-1.7.1-alt-apps_install.patch
-Patch3: %name-1.7.1-alt-inst_docs.patch
+Patch2: gdal-1.7.1-alt-apps_install.patch
+Patch3: gdal-1.7.1-alt-inst_docs.patch
 # Patch4: %name-1.8.0-alt-libpng15.patch
-Patch5: %name-1.8.0-alt-libproj.so_name.patch
-Patch6: %name-1.11.2-alt-python3.patch
-Patch7: %name-2.0.0-alt-swig_perl.patch
+Patch5: gdal-1.8.0-alt-libproj.so_name.patch
+Patch6: gdal-1.11.2-alt-python3.patch
 
 %define libname lib%name
 
 # Automatically added by buildreq on Thu Aug 12 2010
 BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-BeautifulSoup python-module-genshi python-module-xlwt python-modules-ctypes swig
 
-BuildPreReq: chrpath libnetcdf-devel
+BuildPreReq: chrpath
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel libnumpy-py3-devel python3-module-genshi
@@ -67,7 +66,7 @@ This package contains various scripts for GDAL (written in python)
 
 %package -n %libname
 Summary: Libraries required for the GDAL library
-Group: Sciences/Geosciences
+Group: System/Legacy libraries
 
 %description -n %libname
 Libraries required for the GDAL library
@@ -77,7 +76,7 @@ Summary: Development files for using the GDAL library
 Group: Development/C
 Requires: %libname = %version-%release
 
-%description -n lib%name-devel
+%description -n %libname-devel
 Development files for using the GDAL library
 
 %package -n python-module-%name
@@ -112,8 +111,7 @@ Requires: %name
 Perl modules for GDAL/OGR.
 
 %prep
-%setup
-%patch7 -p2
+%setup -n gdal-%version
 %patch0 -p1
 # %patch1 -p2
 %patch2 -p2
@@ -128,12 +126,12 @@ find swig/python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
-%add_optflags -fno-strict-aliasing -I%_includedir/netcdf
+%add_optflags -fno-strict-aliasing
 %configure \
         --enable-static=no \
         --disable-rpath \
-	--datadir=%_datadir/%name \
-	--includedir=%_includedir/%name \
+	--datadir=%_datadir/gdal \
+	--includedir=%_includedir/gdal \
 	--with-libz \
 	--with-png \
 %if_with libtiff
@@ -166,8 +164,7 @@ find swig/python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 	--with-xerces-inc=%_includedir/xercesc \
 	--with-xerces-lib=%_libdir\
 	--without-pcraster        \
-	--with-threads \
-	--with-netcdf=%prefix
+	--with-threads
 #	--with-grass=%_libdir/grass62 \
 
 # Hack around the issue: https://trac.osgeo.org/gdal/ticket/3084
@@ -194,7 +191,7 @@ cp -a %buildroot%python_sitelibdir/GDAL*/osgeo %buildroot%python_sitelibdir/
 make DESTDIR=%buildroot install-docs
 make DESTDIR=%buildroot install-man
 mv %buildroot/usr/man %buildroot/usr/share
-install -p -m644 NEWS %buildroot%_docdir/%name
+install -p -m644 NEWS %buildroot%_docdir/gdal
 mkdir -p  %buildroot/%_libdir/perl5/
 mv %buildroot/usr/lib/perl5/*-linux-thread-multi/* %buildroot/%_libdir/perl5/
 
@@ -207,54 +204,52 @@ done
 pushd swig/python3
 %python3_install
 popd
-sed -i 's|__bool__ = __nonzero__||' \
-	%buildroot%python3_sitelibdir/osgeo/ogr.py
 %endif
 
-%files
-%_datadir/%name
-%_bindir/ogr*
-%_bindir/gdal*
-%_bindir/testepsg
-%_bindir/nearblack
-%exclude %_bindir/gdal-config
-%exclude %_bindir/*.dox
-%exclude %_bindir/*.py
-%_man1dir/*
+#files
+#_datadir/%name
+#_bindir/ogr*
+#_bindir/gdal*
+#_bindir/testepsg
+#_bindir/nearblack
+#exclude %_bindir/gdal-config
+#exclude %_bindir/*.dox
+#exclude %_bindir/*.py
+#_man1dir/*
 
-%files doc
-%_docdir/%name
+#files doc
+#_docdir/%name
 
-%files scripts
-%_bindir/*.py
+#files scripts
+#_bindir/*.py
 
-%files -n %libname-devel
-%_bindir/gdal-config
-%_libdir/*.so
-%_includedir/%name
-%_pkgconfigdir/*
+#files -n %libname-devel
+#_bindir/gdal-config
+#_libdir/*.so
+#_includedir/%name
+#_pkgconfigdir/*
 
 %files -n %libname
 %_libdir/*.so.*
 
-%files -n python-module-%name
-%python_sitelibdir/*
+#files -n python-module-%name
+#python_sitelibdir/*
 #exclude %python_sitelibdir/[^o]*
 
-%if_with python3
-%files -n python3-module-%name
-%python3_sitelibdir/*
-%endif
+#if_with python3
+#files -n python3-module-%name
+#python3_sitelibdir/*
+#endif
 
-%files -n perl-Geo-GDAL
-%perl_vendor_archlib/Geo
-%perl_vendor_autolib/Geo
+#files -n perl-Geo-GDAL
+#perl_vendor_archlib/Geo
+#perl_vendor_autolib/Geo
 # %exclude %perl_vendor_archlib/Geo/*.dox
 # %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
-* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1
-- Version 2.0.0
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.2-alt2
+- Moved this version into System/Legacy libraries
 
 * Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.2-alt1
 - Version 1.11.2
