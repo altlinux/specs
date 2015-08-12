@@ -1,5 +1,5 @@
 %define oname pysqlite2
-%define version 2.6.3
+%define version 2.7.0
 %define release alt1
 %setup_python_module %oname
 
@@ -12,7 +12,6 @@ Source0: pysqlite.tar
 License: zlib/libpng license
 Group: Development/Python
 BuildRequires: libsqlite3-devel
-Packager: Python Development Team <python@packages.altlinux.org>
 
 BuildPreReq: python-module-sphinx-devel texlive-latex-recommended
 
@@ -90,6 +89,9 @@ cp -fR doc/sphinx/.build/pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/%oname/test/py25
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1
+- Version 2.7.0
+
 * Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.3-alt1
 - Version 2.6.3
 
