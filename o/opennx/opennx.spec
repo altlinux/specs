@@ -3,7 +3,7 @@
 
 Name: opennx
 Version: 0.16.e
-Release: alt27.svn724
+Release: alt28.svn724
 
 Summary: An OpenSource NX client
 
@@ -106,6 +106,9 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %changelog
+* Wed Aug 12 2015 Vitaly Lipatov <lav@altlinux.ru> 0.16.e-alt28.svn724
+- fixed wrong cast, fixed 3.1.0 building
+
 * Tue Aug 11 2015 Vitaly Lipatov <lav@altlinux.ru> 0.16.e-alt27.svn724
 - fix release for build in ALT Linux
 
