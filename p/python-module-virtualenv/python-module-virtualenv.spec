@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%modulename
-Version: 12.0.5
+Version: 13.1.0
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -124,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 13.1.0-alt1
+- Version 13.1.0
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 12.0.5-alt1
 - Version 12.0.5
 
