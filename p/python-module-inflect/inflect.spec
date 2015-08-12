@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.5
-Release: alt1.pre1.git20140708
+Release: alt2.git20150109
 Summary: Correctly generate plurals, singular nouns, ordinals, indefinite articles
 License: AGPLv3
 Group: Development/Python
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt2.git20150109
+- Version 0.2.5
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.pre1.git20140708
 - Initial build for Sisyphus
 
