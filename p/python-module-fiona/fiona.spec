@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.5.0
-Release: alt1.git20150301
+Version: 1.6.0
+Release: alt1.git20150810
 Summary: Fiona reads and writes spatial data files
 License: BSD
 Group: Development/Python
@@ -19,7 +19,7 @@ BuildPreReq: libgdal-devel libproj-devel gcc-c++
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Cython python-module-cligj
 BuildPreReq: python-module-six python-module-nose
-BuildPreReq: python-module-click-tests
+BuildPreReq: python-module-click-tests python-module-click-plugins
 BuildPreReq: python-modules-logging python-modules-json
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
@@ -27,12 +27,12 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-Cython python3-module-cligj
 BuildPreReq: python3-module-six python3-module-nose
-BuildPreReq: python3-module-click-tests
+BuildPreReq: python3-module-click-tests python3-module-click-plugins
 %endif
 
 Conflicts: fio
 %py_provides %oname
-%py_requires logging json cligj six click
+%py_requires logging json cligj six click click_plugins
 
 %description
 Fiona is OGR's neat, nimble, no-nonsense API for Python programmers.
@@ -49,7 +49,7 @@ and Shapely.
 Summary: Fiona reads and writes spatial data files
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires logging json cligj six click
+%py3_requires logging json cligj six click click_plugins
 
 %description -n python3-module-%oname
 Fiona is OGR's neat, nimble, no-nonsense API for Python programmers.
@@ -170,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.git20150810
+- Version 1.6.0
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.git20150301
 - New snapshot
 
