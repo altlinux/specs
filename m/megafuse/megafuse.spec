@@ -1,6 +1,6 @@
 Name: megafuse
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 # commit 50bc488cb54826b452b54a960efc25181519b3ba
 
@@ -19,7 +19,7 @@ Packager: Danil Mikhailov <danil@altlinux.org>
 
 # Automatically added by buildreq on Tue Aug 11 2015
 # optimized out: libdb4-devel libstdc++-devel pkg-config python3-base
-BuildRequires: gcc-c++ libcryptopp-devel libcurl-devel libdb4_cxx-devel libfreeimage-devel libfuse-devel libreadline-devel
+BuildRequires: gcc-c++ libcryptopp-devel libcurl-devel libdb4.7_cxx-devel libfreeimage-devel libfuse-devel libreadline-devel
 
 #cppcheck doxygen  glibc-devel libcares-devel libcrypto7 libcryptopp-devel libcurl-devel libdb4-devel libfreeimage-devel libfuse-devel libreadline-devel libsqlite3-devel libssl-devel zlib-devel
 
@@ -40,6 +40,7 @@ rm -rf %buildroot%_includedir/
 
 mkdir -p %buildroot%_initdir/ %buildroot/lib/systemd/system/ %buildroot/etc/ %buildroot%_bindir/
 cp MegaFuse %buildroot%_bindir/%name 
+ln -s %name %buildroot%_bindir/MegaFuse
 
 cp %SOURCE2 %buildroot/lib/systemd/system/
 cp %SOURCE3 %buildroot/etc/
@@ -48,9 +49,8 @@ cp %SOURCE3 %buildroot/etc/
 
 %pre
 %files
-%_bindir/*
-#%_libdir/libmega.so.500
-#%_libdir/libmega.so.500.0.0
+%_bindir/%name
+%_bindir/MegaFuse
 
 /lib/systemd/system/%name.service
 #Change rule because service start from user and he hasnt permission
@@ -59,5 +59,8 @@ cp %SOURCE3 %buildroot/etc/
 
 
 %changelog
+* Wed Aug 12 2015 Danil Mikhailov <danil@altlinux.org> 1.0.0-alt2
+- added MegaFuse link
+
 * Tue Aug 11 2015 Danil Mikhailov <danil@altlinux.org> 1.0.0-alt1
 - initial build for ALT Linux Sisyphus
