@@ -1,10 +1,11 @@
 %define module_name html5lib
 
 %def_with python3
+%def_without docs
 
 Name: python-module-%module_name
 Epoch: 1
-Version: 0.999
+Version: 0.999999
 Release: alt1
 
 Summary: Library for working with HTML5 documents
@@ -96,8 +97,10 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%if_with docs
 %prepare_sphinx .
 ln -s ../objects.inv doc/
+%endif
 
 %build
 %python_build
@@ -108,8 +111,10 @@ find -type f -name '*.py' -exec 2to3 -w '{}' +
 popd
 %endif
 
+%if_with docs
 %make -C doc pickle
 %make -C doc html
+%endif
 
 %install
 %python_install --record=INSTALLED_FILES
@@ -119,21 +124,27 @@ pushd ../python3
 popd
 %endif
 
+%if_with docs
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%module_name/
+%endif
 
 %files -f INSTALLED_FILES
 %doc README.rst
 #exclude %python_sitelibdir/*/tests
+%if_with docs
 %exclude %python_sitelibdir/*/pickle
+%endif
 
 #files tests
 #python_sitelibdir/*/tests
 
+%if_with docs
 %files pickles
 %python_sitelibdir/*/pickle
 
 %files doc
 %doc doc/_build/html/*
+%endif
 
 %if_with python3
 %files -n python3-module-%module_name
@@ -145,6 +156,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.999999-alt1
+- Version 0.999999
+
 * Thu Aug 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.999-alt1
 - Version 0.999
 
