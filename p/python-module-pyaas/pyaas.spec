@@ -1,0 +1,87 @@
+%define oname pyaas
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 0.6.0
+Release: alt1.git20150805
+Summary: Python-as-a-Service is a set of utilities for creating Tornado applications
+License: MIT
+Group: Development/Python
+Url: https://pypi.python.org/pypi/pyaas
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://github.com/moertle/pyaas.git
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-tornado
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-tornado
+%endif
+
+%py_provides %oname
+%py_requires tornado
+
+%description
+PyaaS, or pyaas, or Python-as-a-Service, is a simple wrapper around
+Tornado that makes it quick and easy to rapid deploy new web
+applications. It has a settings parser, storage engine, and
+authentication modules.
+
+%if_with python3
+%package -n python3-module-%oname
+Summary: Python-as-a-Service is a set of utilities for creating Tornado applications
+Group: Development/Python3
+%py3_provides %oname
+%py3_requires tornado
+
+%description -n python3-module-%oname
+PyaaS, or pyaas, or Python-as-a-Service, is a simple wrapper around
+Tornado that makes it quick and easy to rapid deploy new web
+applications. It has a settings parser, storage engine, and
+authentication modules.
+%endif
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%build
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+%files
+%doc *.txt *.rst docs
+%python_sitelibdir/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt *.rst docs
+%python3_sitelibdir/*
+%endif
+
+%changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20150805
+- Initial build for Sisyphus
+
