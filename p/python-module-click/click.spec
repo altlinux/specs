@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.0
-Release: alt1.dev.git20150725
+Release: alt1.dev.git20150808
 Summary: A simple wrapper around optparse for powerful command line utilities
 License: BSD
 Group: Development/Python
@@ -185,6 +185,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt1.dev.git20150808
+- New snapshot
+
 * Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt1.dev.git20150725
 - Version 5.0-dev
 
