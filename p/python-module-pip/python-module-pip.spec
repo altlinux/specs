@@ -1,4 +1,4 @@
-%define version 6.0.6
+%define version 7.1.0
 %define release alt1
 %setup_python_module pip
 
@@ -14,7 +14,6 @@ License: MIT
 Group: Development/Python
 BuildArch: noarch
 URL: http://www.pip-installer.org
-Packager: Sergey Alembekov <rt@altlinux.ru>
 
 BuildRequires: python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel
@@ -114,6 +113,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.1.0-alt1
+- Version 7.1.0
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.6-alt1
 - Version 6.0.6
 
