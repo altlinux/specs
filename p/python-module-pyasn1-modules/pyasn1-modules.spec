@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.5
+Version: 0.0.7
 Release: alt1
 Summary: ASN.1 modules for Python
 License: BSD
@@ -14,11 +14,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-pyasn1
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-pyasn1
 %endif
 %py_requires pyasn1
@@ -65,17 +65,41 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test -v
+pushd tools
+export PYTHONPATH=%buildroot%python_sitelibdir
+for i in ../test/*; do
+	sh $i ||exit 1
+done
+popd
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+pushd tools
+export PYTHONPATH=%buildroot%python3_sitelibdir
+for i in ../test/*; do
+	sed -i 's|python |python3 |' $i
+	sh $i ||exit 1
+done
+popd
+popd
+%endif
+
 %files
-%doc CHANGES README
+%doc *.txt
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGES README
+%doc *.txt
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.7-alt1
+- Version 0.0.7
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1
 - Version 0.0.5
 
