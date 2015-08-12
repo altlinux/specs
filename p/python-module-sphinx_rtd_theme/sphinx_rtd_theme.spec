@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.5
-Release: alt1.git20141202
+Version: 0.1.8
+Release: alt1.git20150730
 Summary: ReadTheDocs.org theme for Sphinx
 License: MIT
 Group: Development/Python
@@ -73,6 +73,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.8-alt1.git20150730
+- Version 0.1.8
+
 * Mon Jan 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt1.git20141202
 - New snapshot
 - Added module for Python 3
