@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.8.0
-Release: alt1.git20150226
+Version: 0.8.2
+Release: alt1.git20150811
 Summary: Push to and pull from a Git repository using Mercurial
 License: GPLv2
 Group: Development/Python
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.git20150811
+- Version 0.8.2
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.git20150226
 - Version 0.8.0
 
