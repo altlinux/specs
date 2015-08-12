@@ -12,11 +12,11 @@
 %endif
 %def_disable	bsfilter
 %def_disable	tnef
-%def_disable 	gdata
+%def_enable 	gdata
 
 Name:   	claws-mail
 Version:	3.12.0
-Release: 	alt1
+Release: 	alt2
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -845,6 +845,9 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Wed Aug 12 2015 Mikhail Efremov <sem@altlinux.org> 3.12.0-alt2
+- Enable gdata plugin again.
+
 * Tue Jul 21 2015 Mikhail Efremov <sem@altlinux.org> 3.12.0-alt1
 - Disable gdata plugin (it requires libgdata >= 0.17.1).
 - Package new managesieve plugin.
