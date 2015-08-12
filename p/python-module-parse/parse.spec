@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6.5
-Release: alt1.git20141117
+Version: 1.6.6
+Release: alt1
 Summary: parse() is the opposite of format()
 License: BSD
 Group: Development/Python
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.6-alt1
+- Version 1.6.6
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.5-alt1.git20141117
 - Initial build for Sisyphus
 
