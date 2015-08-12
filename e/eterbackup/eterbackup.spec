@@ -1,5 +1,5 @@
 Name: eterbackup
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: Etersoft backup tools for journaling backup
@@ -46,6 +46,10 @@ See detailed russian description here: http://wiki.etersoft.ru/Eterbackup
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Wed Aug 12 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
+- eterpack: rewrite exclude working (use dir name or path)
+- extend and improve exclude tests
+
 * Wed Aug 12 2015 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
 - eterpack: fix exclude issues
 - eterpack: fix compare for single archive
