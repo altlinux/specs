@@ -1,31 +1,31 @@
 %define oname m2crypto
 
 %def_without python3
+%def_disable check
 
 Summary: Support for using OpenSSL in python scripts.
 Version: 0.22
-Release: alt1.r739
+Release: alt2.git20140728
 %setup_python_module %oname
-Name: %packagename
-# svn co http://svn.osafoundation.org/m2crypto/trunk m2crypto
-Source0: m2crypto-%version.tar.gz
+Name: python-module-%oname
+# https://github.com/tempbottle/M2Crypto.git
+Source0: %name-%version.tar.gz
 License: BSD
 Group: Development/Python
 URL: http://wiki.osafoundation.org/bin/view/Projects/MeTooCrypto
 # Automatically added by buildreq on Thu Aug 26 2010
 BuildRequires: libssl-devel python-module-py python-module-setuptools swig
 
-BuildRequires: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools-tests libnumpy-devel
 Requires: python
 %add_findreq_skiplist %python_sitelibdir/M2Crypto/SSL/TwistedProtocolWrapper.py
 Packager: Fr. Br. George <george@altlinux.ru>
 
 # Fore test
 BuildRequires: python-module-setuptools openssl
-BuildPreReq: python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-py python-tools-2to3 libnumpy-py3-devel
 %endif
 
@@ -43,7 +43,7 @@ This package allows you to call OpenSSL functions from python scripts.
 %endif
 
 %prep
-%setup -q -n %modulename-%version
+%setup
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -77,7 +77,6 @@ popd
 %endif
 
 %install
-
 CFLAGS="%optflags" ; export CFLAGS
 if pkg-config openssl ; then
 	CFLAGS="$CFLAGS `pkg-config --cflags openssl`" ; export CFLAGS
@@ -85,26 +84,39 @@ if pkg-config openssl ; then
 fi
 
 %python_build_install
+install -m644 SWIG/_m2crypto.py %buildroot%python_sitelibdir/M2Crypto/
+
 %if_with python3
 pushd ../python3
 %python3_build_install
+install -m644 SWIG/_m2crypto.py %buildroot%python3_sitelibdir/M2Crypto/
 popd
 %endif
 
-#check
-#python setup.py test
+%check
+install -m644 SWIG/_m2crypto.py M2Crypto/
+python setup.py test -v
+%if_with python3
+pushd ../python3
+install -m644 SWIG/_m2crypto.py M2Crypto/
+python3 setup.py test -v
+popd
+%endif
 
 %files
 %doc CHANGES LICENCE README demo tests doc/*
-%python_sitelibdir/M2Crypto*
+%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGES LICENCE README doc/*
-%python3_sitelibdir/M2Crypto*
+%doc CHANGES LICENCE README demo tests doc/*
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Aug 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt2.git20140728
+- Snapthot from git
+
 * Sun May 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt1.r739
 - Version 0.22
 
