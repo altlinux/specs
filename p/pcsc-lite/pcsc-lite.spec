@@ -3,8 +3,8 @@
 %def_disable static
 
 Name: pcsc-lite
-Version: 1.8.13
-Release: alt2
+Version: 1.8.14
+Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
 License: %bsd
@@ -12,20 +12,20 @@ Group: System/Servers
 
 Url: http://pcsclite.alioth.debian.org/
 
-Source0: pcsc-lite-%version.tar
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Source1: pcscd.init
 Source2: pcsc-lite-pcscd.sysconfig
 Source3: pcsc-lite.tmpfiles
 
-Patch1: pcsc-lite-polkit-1.patch
-Patch2: pcsc-lite-polkit-2.patch
-
 Requires: libpcsclite = %version-%release
 
 BuildRequires: rpm-build-licenses perl-podlators
+BuildRequires: flex
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.111
 BuildRequires: pkgconfig(libudev)
+BuildRequires: pkgconfig(systemd)
 
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -72,8 +72,7 @@ Static libraries for libpcsclite
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%patch -p1
 
 subst 's|AC_PREREQ(\[2.69\])|AC_PREREQ(\[2.68\])|' configure.ac
 
@@ -150,6 +149,9 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %endif
 
 %changelog
+* Thu Aug 13 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.14-alt1
+- 1.8.14
+
 * Wed Jul 22 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.13-alt2
 - add patches from upstream master
 
