@@ -5,8 +5,8 @@
 %def_disable test
 
 Name: libgxps
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: GObject based library for handling and rendering XPS documents
 Group: System/Libraries
@@ -84,7 +84,10 @@ This package contains development documentation for %name
 %make_build
 
 %install
-make DESTDIR=%buildroot install
+%makeinstall_std
+
+%check
+%make check
 
 %files
 %_libdir/*.so.*
@@ -93,7 +96,7 @@ make DESTDIR=%buildroot install
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%_pkgconfigdir/*.pc
 
 %if_enabled introspection
 %files gir
@@ -112,9 +115,12 @@ make DESTDIR=%buildroot install
 %{?_enable_man:%_man1dir/*}
 
 %files devel-doc
-%_datadir/gtk-doc/html/%name
+%_datadir/gtk-doc/html/%name/
 
 %changelog
+* Thu Aug 13 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
+- 0.2.3
+
 * Mon Mar 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt2
 - rebuilt against libarchive.so.13
 
