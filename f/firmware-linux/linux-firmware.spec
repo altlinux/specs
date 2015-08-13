@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20150506
+Version: 20150811
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -17,7 +17,7 @@ Provides: firmware-iwl6000 firmware-iwl6050
 Obsoletes: firmware-iwl1000 
 Obsoletes: firmware-iwl3945 firmware-iwl4965 firmware-iwl5000 firmware-iwl5150 
 Obsoletes: firmware-iwl6000 firmware-iwl6050 
-Requires: firmware-ipw2200 firmware-ipw2100 firmware-ipw3945
+#Requires: firmware-ipw2200 firmware-ipw2100 firmware-ipw3945
 Provides:  firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870 firmware-rt3090
 Obsoletes: firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870 firmware-rt3090
 Provides: firmware-amd-ucode
@@ -46,6 +46,7 @@ rm rt73.bin rt2561.bin rt2561s.bin rt2661.bin
 rm -f usbdux/*dux */*.asm *spec
 
 # Fallback symlink in case kernel driver lags behind
+# TODO: drop it when we move to 3.19+ or so
 ln -s fw_sst_0f28.bin-48kHz_i2s_master intel/fw_sst_0f28.bin-i2s_master
 
 %install
@@ -60,6 +61,10 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Thu Aug 13 2015 Michael Shigorin <mike@altlinux.org> 20150811-alt1
+- updated from git
+- dropped Requires: firmware-ipw* (closes: #30308)
+
 * Mon Jun 01 2015 Michael Shigorin <mike@altlinux.org> 20150506-alt1
 - updated from git
 
