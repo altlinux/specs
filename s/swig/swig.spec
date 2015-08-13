@@ -1,7 +1,7 @@
 # vim:set ft=spec:
 Name: swig
 Epoch: 1
-Version: 3.0.6
+Version: 3.0.7
 Release: alt1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -31,12 +31,19 @@ BuildRequires: tcl-devel xorg-cf-files tidy htmldoc perl-devel
 Provides: %name-devel = %version
 Obsoletes: %name-deve
 Obsoletes: %name-runtime-guile  %name-runtime-php  %name-runtime-python  %name-runtime-perl  %name-runtime-ruby  %name-runtime-tcl
+Requires: %name-data = %EVR
+
+%package data
+BuildArch: noarch
+Summary: SWIG data files
+Group: Development/C
+Conflicts: %name < %EVR
 
 %package doc
 BuildArch: noarch
 Summary: SWIG documentation
 Group: Books/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package runtime-guile
 Group: System/Libraries
@@ -74,6 +81,13 @@ and special directives and produces interfaces to Perl, Python, and Tcl.
 It allows scripting languages to use C/C++ code with minimal effort.
 
 This package contains SWIG documentation.
+
+%description data
+SWIG takes an interface description file written in a combination of C/C++
+and special directives and produces interfaces to Perl, Python, and Tcl.
+It allows scripting languages to use C/C++ code with minimal effort.
+
+This package contains SWIG data files.
 
 %description runtime-guile
 SWIG takes an interface description file written in a combination of C/C++
@@ -173,7 +187,6 @@ cp -a Examples Doc %buildroot%docdir/
 %_bindir/*
 #%_datadir/aclocal/%name.m4
 %_includedir/*
-%_datadir/%{name}
 %dir %docdir
 %docdir/[A-Z][A-Z]*
 
@@ -181,6 +194,9 @@ cp -a Examples Doc %buildroot%docdir/
 %dir %docdir
 %docdir/[A-Z][a-z]*
 %_man1dir/*
+
+%files data
+%_datadir/%{name}
 
 #%files runtime-guile
 #%_libdir/libswigguile*.so*
@@ -207,6 +223,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Thu Aug 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.7-alt1
+- Version 3.0.7
+
 * Wed Jul 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.6-alt1
 - Version 3.0.6 (ALT #31128)
 
