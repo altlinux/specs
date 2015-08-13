@@ -1,5 +1,5 @@
 Name: usbutils
-Version: 007
+Version: 008
 Release: alt1
 
 Summary: Linux USB utilities
@@ -11,9 +11,8 @@ Url: http://sourceforge.net/projects/linux-usb/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: usbids
-
-BuildPreReq: libusb-devel >= 1.0.0
+BuildRequires: pkgconfig(libusb-1.0) >= 1.0.0
+BuildRequires: pkgconfig(libudev) >= 196
 
 %description
 usbutils contains an utility (lsusb) for inspecting devices connected to
@@ -25,12 +24,11 @@ the USB bus.
 
 %build
 %autoreconf
-%configure --datadir=%_datadir/misc --disable-usbids --disable-zlib
+%configure --datadir=%_datadir/misc
 %make_build
 
 %install
 %makeinstall
-rm -f %buildroot%_sbindir/update-usbids.sh
 rm -f %buildroot%_datadir/pkgconfig/usbutils.pc
 rm -f %buildroot%_bindir/lsusb.py
 
@@ -41,6 +39,9 @@ rm -f %buildroot%_bindir/lsusb.py
 %doc AUTHORS NEWS
 
 %changelog
+* Thu Aug 13 2015 Alexey Shabalin <shaba@altlinux.ru> 008-alt1
+- 008
+
 * Wed Jul 31 2013 Alexey Shabalin <shaba@altlinux.ru> 007-alt1
 - 007
 
