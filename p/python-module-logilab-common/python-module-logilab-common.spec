@@ -3,8 +3,8 @@
 
 %define oname logilab-common
 Name: python-module-%oname
-Version: 0.63.2
-Release: alt1.hg20141130
+Version: 1.0.2
+Release: alt1.hg20150708
 
 Summary: Useful miscellaneous modules used by Logilab projects
 License: LGPLv2.1+
@@ -75,11 +75,9 @@ cp -a . ../python3
 %endif
 
 %build
-rm corbautils.py
 %python_build
 %if_with python3
 pushd ../python3
-rm corbautils.py
 cp setup.py setup.py.back
 find -type f -name '*.py' -exec sed -i 's|unittest2|unittest|g' -- '{}' +
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
@@ -92,22 +90,32 @@ popd
 %if_with python3
 pushd ../python3
 %python3_install
+install -p -m644 logilab/__init__.py \
+	%buildroot%python3_sitelibdir/logilab/
 popd
 rm -rf %buildroot%python3_sitelibdir/logilab/common/test
 mv %buildroot%_bindir/pytest %buildroot%_bindir/pytest3
 %endif
 
 %python_install
+install -p -m644 logilab/__init__.py \
+	%buildroot%python_sitelibdir/logilab/
 install -pD -m644 doc/pytest.1 %buildroot%_man1dir/pytest.1
 rm -rf %buildroot%python_sitelibdir/logilab/common/test
 
 %check
-touch build/lib/logilab/__init__.py
-PYTHONPATH=$(pwd)/build/lib/ \
-    $(pwd)/build/scripts-%_python_version/pytest \
+PYTHONPATH=%buildroot%python_sitelibdir \
+    %buildroot%_bindir/pytest \
     -t test \
     -s test_4
-rm -f build/lib/logilab/__init__.py
+%if_with python3
+pushd ../python3
+PYTHONPATH=%buildroot%python3_sitelibdir \
+    %buildroot%_bindir/pytest3 \
+    -t test \
+    -s test_4
+popd
+%endif
 
 %files
 %_bindir/pytest
@@ -125,6 +133,9 @@ rm -f build/lib/logilab/__init__.py
 %endif
 
 %changelog
+* Thu Aug 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.hg20150708
+- Version 1.0.2
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.63.2-alt1.hg20141130
 - Version 0.63.2
 
