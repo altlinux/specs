@@ -1,9 +1,9 @@
-%def_disable check
+#def_disable check
 %def_with python3
 
 %define oname astroid
 Name: python-module-%oname
-Version: 1.3.2
+Version: 1.3.8
 Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
@@ -25,14 +25,18 @@ Requires: python-module-logilab-common >= 0.60.0
 %python_module_declare %python_sitelibdir/logilab
 
 BuildRequires: python-module-logilab-common
+BuildPreReq: python-module-setuptools-tests python-module-six
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: /usr/bin/pytest}}
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute /usr/bin/pytest3
-BuildRequires: python3-module-logilab-common
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-logilab-common /usr/bin/pytest3
+BuildPreReq: python3-module-six
 BuildPreReq: python-tools-2to3
 %endif
+
+%py_requires logilab.common six
 
 %description
 The aim of this module is to provide a common base representation of
@@ -46,10 +50,30 @@ object, which can either generate extended ast (let's call them astng ;)
 by visiting an existant ast tree or by inspecting living object. Methods
 are added by monkey patching ast classes.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+The aim of this module is to provide a common base representation of
+python source code for projects such as pychecker, pyreverse, pylint...
+Well, actually the development of this library is essentialy governed by
+pylint's needs.
+It extends class defined in the compiler.ast [1] module (python <= 2.4)
+or in the builtin _ast module (python >= 2.5) with some additional
+methods and attributes. Instance attributes are added by a builder
+object, which can either generate extended ast (let's call them astng ;)
+by visiting an existant ast tree or by inspecting living object. Methods
+are added by monkey patching ast classes.
+
+This package contains tests for %oname.
+
 %if_with python3
 %package -n python3-module-%oname
 Summary: Python 3 Abstract Syntax Tree New Generation
 Group: Development/Python3
+%py3_requires logilab.common six
 
 Provides: python3-module-logilab-astng = %version-%release
 Obsoletes: python3-module-logilab-astng <= 0.24.2
@@ -67,6 +91,25 @@ methods and attributes. Instance attributes are added by a builder
 object, which can either generate extended ast (let's call them astng ;)
 by visiting an existant ast tree or by inspecting living object. Methods
 are added by monkey patching ast classes.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+The aim of this module is to provide a common base representation of
+python source code for projects such as pychecker, pyreverse, pylint...
+Well, actually the development of this library is essentialy governed by
+pylint's needs.
+It extends class defined in the compiler.ast [1] module (python <= 2.4)
+or in the builtin _ast module (python >= 2.5) with some additional
+methods and attributes. Instance attributes are added by a builder
+object, which can either generate extended ast (let's call them astng ;)
+by visiting an existant ast tree or by inspecting living object. Methods
+are added by monkey patching ast classes.
+
+This package contains tests for %oname.
 %endif
 
 %prep
@@ -86,45 +129,46 @@ popd
 
 %install
 %python_install
-rm -rf %buildroot%python_sitelibdir/logilab/astng/test
-rm -rf %buildroot%python_sitelibdir/logilab/__init__.py*
 
 %if_with python3
 pushd ../python3
 %python3_install
-rm -rf %buildroot%python3_sitelibdir/logilab/astng/test
-rm -rf %buildroot%python3_sitelibdir/logilab/__init__.py*
 popd
 %endif
 
 %check
-touch build/lib/logilab/__init__.py
-ln -sf %python_sitelibdir/logilab/common build/lib/logilab/common
-PYTHONPATH=$(pwd)/build/lib/ pytest -t test
-rm -f build/lib/logilab/{common,__init__.py}
+#PYTHONPATH=%buildroot%python_sitelibdir pytest -vv
 
 %if_with python3
-pushd ../python3
-touch build/lib/logilab/__init__.py
-ln -sf %python3_sitelibdir/logilab/common build/lib/logilab/common
-PYTHONPATH=$(pwd)/build/lib/ pytest3 -t test
-rm -f build/lib/logilab/{common,__init__.py}
-popd
+PYTHONPATH=%buildroot%python3_sitelibdir pytest3 -vv
 %endif
 
 %files
 %python_sitelibdir/astroid/
+%exclude %python_sitelibdir/astroid/test*
 %python_sitelibdir/*.egg-info
 %doc ChangeLog README
+
+%files tests
+%python_sitelibdir/astroid/test*
 
 %if_with python3
 %files -n python3-module-%oname
 %doc ChangeLog README
 %python3_sitelibdir/astroid/
+%exclude %python3_sitelibdir/astroid/test*
+%exclude %python3_sitelibdir/astroid/*/test*
 %python3_sitelibdir/*.egg-info
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/astroid/test*
+%python3_sitelibdir/astroid/*/test*
 %endif
 
 %changelog
+* Thu Aug 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.8-alt1
+- Version 1.3.8
+
 * Thu Dec 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt1
 - Version 1.3.2 (ALT #30535)
 
