@@ -1,7 +1,7 @@
 # TODO: use special user
 Name: maldetect
 Version: 1.4.2
-Release: alt2
+Release: alt3
 
 Summary: inux Malware Detect (LMD) is a malware scanner for Linux 
 
@@ -13,7 +13,8 @@ BuildArch: noarch
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: http://www.rfxn.com/downloads/%name-%version.tar.gz
+#Source-url: http://www.rfxn.com/downloads/%name-%version.tar.gz
+# Source-url: http://www.rfxn.com/downloads/%name-current.tar.gz
 Source: %name-%version.tar
 
 %define maldetdir /var/lib/%name
@@ -89,6 +90,11 @@ EOF
 %maldetdir/
 
 %changelog
+* Fri Aug 14 2015 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt3
+- update to real 1.4.2 version
+- detection and alerting of openssl heartbleed vulnerability
+- update signatures
+
 * Thu Oct 10 2013 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt2
 - fix tmpwatch dir
 
