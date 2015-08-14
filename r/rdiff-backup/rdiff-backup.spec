@@ -1,6 +1,6 @@
 Name: rdiff-backup
-Version: 1.2.8
-Release: alt1.1.1
+Version: 1.3.3
+Release: alt1
 
 Summary: Backup software
 
@@ -12,10 +12,25 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://savannah.nongnu.org/download/%name/%name-%version.tar
 
+# from http://wiki.rdiff-backup.org/wiki/index.php/BashCompletion
+Source1: rdiff-backup.bash_completion
+
+# docs are already installed by doc macro
+Patch1: rdiff-backup-1.2.0-dont-install-docs.patch
+
+# Workaround to build with librsync >= 1.0.0
+Patch2: rdiff-backup-1.2.8-librsync-1.0.0.patch
+
+# Upstream bug: https://savannah.nongnu.org/bugs/?26064
+#
+Patch3: http://dev.sgu.ru/rpm/rdiff-backup--popen2.patch
+
+
 BuildPreReq: rpm-build-python
 
 # Automatically added by buildreq on Thu Mar 29 2007
-BuildRequires: librsync-devel python-devel python-modules-compiler
+BuildRequires: python-devel python-modules-compiler
+BuildRequires: librsync-devel >= 0.9.6
 
 %description
 rdiff-backup is a script, written in Python, that backs up one
@@ -31,12 +46,18 @@ from the previous backup will be transmitted.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %python_build
 
 %install
 %python_install
+# install bash_completion
+mkdir -p -m 0755 %buildroot/%_sysconfdir/bash_completion.d
+install -m 0644 %SOURCE1 %buildroot/%_sysconfdir/bash_completion.d/%name
 
 %files
 %doc CHANGELOG README FAQ.html examples.html
@@ -46,8 +67,14 @@ from the previous backup will be transmitted.
 %_man1dir/rdiff-backup-statistics.1*
 %python_sitelibdir/rdiff_backup/
 %python_sitelibdir/*.egg-info
+%config(noreplace) %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Fri Aug 14 2015 Vitaly Lipatov <lav@altlinux.ru> 1.3.3-alt1
+- new version 1.3.3 (with rpmrb script)
+- add patches from Fedora and ROSA
+- add bash completion
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.8-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
