@@ -5,7 +5,7 @@
 %def_disable test
 
 Name: libgxps
-Version: %ver_major.3
+Version: %ver_major.3.1
 Release: alt1
 
 Summary: GObject based library for handling and rendering XPS documents
@@ -118,6 +118,9 @@ This package contains development documentation for %name
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Aug 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.3.1-alt1
+- 0.2.3.1
+
 * Thu Aug 13 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - 0.2.3
 
