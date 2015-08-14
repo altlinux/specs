@@ -1,5 +1,5 @@
 Name: shelxle
-Version: 1.0.723
+Version: 1.0.737
 Release: alt1
 
 Summary: A Qt GUI for SHELX
@@ -22,7 +22,7 @@ J. Appl. Cryst. (2011). 44, 1281-1284.
 %prep
 %setup
 #patch0 -p1
-subst 's/Qt;Science;Chemistry;Physics;Education/Education;Science;Chemistry;/' %name.desktop
+subst 's/Qt;Science;Chemistry;Physics;Education/Science;Chemistry;/' %name.desktop
 
 %build
 qmake-qt4
@@ -42,6 +42,9 @@ rm -rf %buildroot%_pixmapsdir
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Fri Aug 14 2015 Denis G. Samsonenko <ogion@altlinux.org> 1.0.737-alt1
+- new version
+
 * Sat Jun 13 2015 Denis G. Samsonenko <ogion@altlinux.org> 1.0.723-alt1
 - new version
 - move %name.png to %_iconsdir/hicolor/64x64/apps/
