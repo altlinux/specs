@@ -1,11 +1,11 @@
 %define _name appstream-glib
-%define ver_major 0.4
+%define ver_major 0.5
 %define api_ver 1.0
 %def_disable rpm
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -187,6 +187,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Fri Aug 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Tue Jul 21 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
