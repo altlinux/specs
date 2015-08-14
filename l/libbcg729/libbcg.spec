@@ -1,7 +1,7 @@
 Summary: Bcg729 codec plugin for mediastreamer2
 Name: libbcg729
 Version: 0.1
-Release: alt1
+Release: alt2
 License: GPL
 Group: Communications
 Url: http://www.belledonne-communications.com
@@ -44,6 +44,9 @@ sh ./autogen.sh
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Aug 14 2015 Konstantin Artyushkin <akv@altlinux.org> 0.1-alt2
+- incrementing Release for Sisyphus. Must be +1 then p(7/6/5) 
+
 * Mon Feb 16 2015 Konstantin Artyushkin <akv@altlinux.org> 0.1-alt1
 - initial build for ALT Linux Sisyphus
 
