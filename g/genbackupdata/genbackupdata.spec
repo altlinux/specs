@@ -1,6 +1,6 @@
 Name: genbackupdata
-Version: 1.7
-Release: alt4
+Version: 1.8
+Release: alt1
 
 Summary: A program to generate test data for testing backup software
 
@@ -11,13 +11,17 @@ Url: http://liw.fi/%name/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://code.liw.fi/debian/pool/main/g/%name/%{name}_%version.orig.tar.gz
+Source: http://code.liw.fi/debian/pool/main/g/%name/%{name}_%version.orig.tar
 Source44: import.info
 
 BuildArch: noarch
 
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
+# Automatically added by buildreq on Sat Aug 15 2015
+# optimized out: python-base python-devel python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python-modules-compiler python-modules-email python-modules-logging python3-base
+BuildRequires: python-module-cmd2 python-module-pycrypto
+
 BuildRequires: python-devel
 # END SourceDeps(oneline)
 
@@ -69,6 +73,9 @@ make check
 %python_sitelibdir_noarch/*
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8-alt1
+- new version 1.8 (with rpmrb script)
+
 * Thu Aug 13 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt4
 - human build for ALT Linux Sisyphus
 
