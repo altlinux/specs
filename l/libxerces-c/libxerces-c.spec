@@ -11,7 +11,7 @@
 %define threads pthreads
 
 Name: libxerces-c
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: Xerces-C++ validating XML parser
@@ -22,6 +22,7 @@ Group: System/Libraries
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: http://apache-mirror.rbc.ru/pub/apache//xerces/c/3/sources/xerces-c-%version.tar.bz2
 Source: %oname-%version.tar
 
 # Automatically added by buildreq on Wed Mar 09 2005
@@ -120,6 +121,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_bindir/*
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3.1.2-alt1
+- new version 3.1.2 (with rpmrb script)
+
 * Mon Dec 03 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.1.1-alt1
 - new version (closes #28167)
 
