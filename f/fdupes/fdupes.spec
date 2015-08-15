@@ -1,17 +1,16 @@
-# Unpackaged files in buildroot should terminate build
-%define _unpackaged_files_terminate_build 1
-
 Name: fdupes
-Version: 1.40
-Release: alt2.qa1
+Version: 1.51
+Release: alt1
 
 Summary: Identifies duplicate files within given directories
+
 License: %mit
 Group: File tools
 Url: http://netdial.caribe.net/~adrian2/fdupes.html
 
 Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
+# Source-url: https://github.com/adrianlopezroche/fdupes/archive/fdupes-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
@@ -24,21 +23,25 @@ residing within specified directories.
 %setup
 
 %build
-%make_build --silent
+%make_build
 
 %install
-%define INSTALLDIR %buildroot%_bindir
-%define MANPAGEDIR %buildroot%_mandir
-mkdir -p %INSTALLDIR
-mkdir -p %buildroot%_man1dir
-%makeinstall INSTALLDIR=%INSTALLDIR MANPAGEDIR=%MANPAGEDIR install --silent
+%makeinstall PREFIX=%buildroot%prefix MAN_BASE_DIR=%buildroot%_mandir install
+
+%check
+./fdupes testdir
+./fdupes -r testdir
 
 %files
-%doc CHANGES CONTRIBUTORS INSTALL README TODO testdir/
+%doc CHANGES CONTRIBUTORS README TODO
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sun Aug 16 2015 Vitaly Lipatov <lav@altlinux.ru> 1.51-alt1
+- new version 1.51 (with rpmrb script)
+- add check section, do not pack tests
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.40-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
