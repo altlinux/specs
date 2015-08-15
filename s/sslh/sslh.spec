@@ -1,5 +1,5 @@
 Name: sslh
-Version: 1.16
+Version: 1.17
 Release: alt1
 
 Summary: A ssl/ssh multiplexer
@@ -52,6 +52,9 @@ install -D -m 755 %SOURCE1 %buildroot%_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.17-alt1
+- new version 1.17 (with rpmrb script)
+
 * Wed Sep 24 2014 Vitaly Lipatov <lav@altlinux.ru> 1.16-alt1
 - new version 1.16 (with rpmrb script)
 
