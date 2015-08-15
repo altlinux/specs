@@ -1,5 +1,5 @@
 Name: pinta
-Version: 1.4
+Version: 1.6
 Release: alt1
 
 Summary: An easy to use drawing and image editing program
@@ -12,15 +12,15 @@ Url: http://pinta-project.com/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://github.com/downloads/PintaProject/Pinta/%name-%version.tar
+# Source-url: https://github.com/PintaProject/Pinta/archive/%version.tar.gz
+Source: %name-%version.tar
 
 # Mono only available on these:
 ExclusiveArch: %ix86 x86_64 ppc ppc64 ia64 %arm sparcv9 alpha s390x
 
-# Automatically added by buildreq on Sat Feb 25 2012
-# optimized out: libavahi-sharp  mono mono-csharp mono-data mono-data-sqlite mono-devel mono-extras mono-mcs mono-mscorlib mono-wcf mono-web mono-winforms mono-winfxcore ndesk-dbus ndesk-dbus-glib perl-Encode pkg-config
+
 # Manually:
-BuildRequires: intltool mono-devel mono-addins-devel libgtk-sharp2-devel
+BuildRequires: glib2-devel intltool mono-devel mono-addins-devel libgtk-sharp2-devel
 
 Requires: icon-theme-hicolor
 
@@ -36,6 +36,7 @@ It's goal is to provide a simplified alternative to GIMP for casual users.
 %__subst 's!$(InstallPrefix)/lib/!$(InstallPrefix)/%_lib/!' Pinta.Install.proj
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -53,6 +54,9 @@ It's goal is to provide a simplified alternative to GIMP for casual users.
 %_pixmapsdir/%{name}*
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.6-alt1
+- new version 1.6 (with rpmrb script)
+
 * Wed Jul 31 2013 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
 - new version 1.4 (with rpmrb script)
 
