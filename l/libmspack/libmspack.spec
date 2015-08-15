@@ -1,5 +1,5 @@
 Name: libmspack
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Compressors and decompressors for Microsoft compression formats
@@ -10,7 +10,8 @@ Url: http://www.cabextract.org.uk/libmspack/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.cabextract.org.uk/libmspack/%name-%version.tar
+# Source-url: https://github.com/kyz/libmspack/archive/v%{version}alpha.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: gcc
 
@@ -36,6 +37,8 @@ in development of the %name-based applications.
 %setup
 
 %build
+mkdir m4
+%autoreconf
 %configure --disable-static
 %make_build
 
@@ -53,6 +56,12 @@ in development of the %name-based applications.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- new version 0.5 (with rpmrb script)
+
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt1
+- new version 1.5 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - update to 0.4-alpha
 
