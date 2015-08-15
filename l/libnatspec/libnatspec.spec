@@ -1,5 +1,5 @@
 Name: libnatspec
-Version: 0.2.7
+Version: 0.2.8
 Release: alt1
 
 Summary: Library for national and language-specific issues
@@ -92,6 +92,9 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 0.2.8-alt1
+- natspec: add missed -l (--locale) option
+
 * Wed Feb 04 2015 Vitaly Lipatov <lav@altlinux.ru> 0.2.7-alt1
 - remove example sources, fix authors in patches, add patch for unzip-6.0
 - natspec command: small rewrite output
