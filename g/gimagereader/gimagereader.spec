@@ -1,6 +1,8 @@
+%def_with qt4
+
 Name: gimagereader
-Version: 2.93
-Release: alt1.1
+Version: 3.1.2
+Release: alt1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -12,13 +14,21 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://sourceforge.net/projects/gimagereader/files/%version/%name-%version.tar
 
-# Workaround for rbhz#1065695
-Patch: gimagereader_no-sane-exit.patch
+# TODO: tesseract-devel missed pkgconfig file
 
-# manually removed:  python3 ruby ruby-stdlibs 
-# Automatically added by buildreq on Fri Oct 10 2014
-# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gnu-config libX11-devel libat-spi2-core libatk-devel libatkmm-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcairomm-devel libcloog-isl4 libenchant-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgtk+3-devel libgtkmm3-devel libgtkspell3-devel libpango-devel libpangomm-devel libpoppler8-glib libsigc++2-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-server perl-XML-Parser pkg-config python3-base tesseract xorg-xproto-devel
-BuildRequires: gcc-c++ glibc-devel intltool libdb4-devel libgtkspellmm3-devel libpoppler-glib-devel libsane-devel tesseract-devel
+BuildRequires(pre): rpm-macros-cmake
+
+BuildRequires: cmake gcc-c++ libsane-devel tesseract-devel libgomp5-devel
+
+%if_with qt4
+BuildRequires: libqt4-devel libqtspell-qt4-devel libpoppler-qt4-devel
+%endif
+
+BuildRequires: libqtspell-qt5-devel libpoppler-qt5-devel qt5-base-devel qt5-imageformats
+BuildRequires: libgtksourceviewmm3-devel libgtkspellmm3-devel libpoppler-glib-devel
+
+# for compatibility
+Requires: %name-gtk
 
 %description
 gImageReader is a simple Gtk front-end to tesseract. Features include:
@@ -30,29 +40,138 @@ gImageReader is a simple Gtk front-end to tesseract. Features include:
  - Editing of output text, including search/replace and removing line breaks
  - Spellchecking for output text (if corresponding dictionary installed)
 
+%package gtk
+Group: Office
+Summary: A Gtk+ front-end to tesseract-ocr
+Requires: %name-common = %version-%release
+Obsoletes: %name < 2.94
+
+%description gtk
+gImageReader is a simple front-end to tesseract. Features include:
+ - Automatic page layout detection
+ - User can manually define and adjust recognition regions
+ - Import images from disk, scanning devices, clipboard and screenshots
+ - Supports multipage PDF documents
+ - Recognized text displayed directly next to the image
+ - Editing of output text, including search/replace and removing line breaks
+ - Spellchecking for output text (if corresponding dictionary installed)
+This package contains the Gtk+ front-end.
+
+%package qt5
+Group: Office
+Summary: A Qt 5 front-end to tesseract-ocr
+Requires: %name-common = %version-%release
+
+%description qt5
+gImageReader is a simple front-end to tesseract. Features include:
+ - Automatic page layout detection
+ - User can manually define and adjust recognition regions
+ - Import images from disk, scanning devices, clipboard and screenshots
+ - Supports multipage PDF documents
+ - Recognized text displayed directly next to the image
+ - Editing of output text, including search/replace and removing line breaks
+ - Spellchecking for output text (if corresponding dictionary installed)
+This package contains the Qt front-end.
+
+%if_with qt4
+%package qt4
+Group: Office
+Summary: A Qt4 front-end to tesseract-ocr
+Requires: %name-common = %version-%release
+
+%description qt4
+gImageReader is a simple front-end to tesseract. Features include:
+ - Automatic page layout detection
+ - User can manually define and adjust recognition regions
+ - Import images from disk, scanning devices, clipboard and screenshots
+ - Supports multipage PDF documents
+ - Recognized text displayed directly next to the image
+ - Editing of output text, including search/replace and removing line breaks
+ - Spellchecking for output text (if corresponding dictionary installed)
+This package contains the Qt front-end.
+%endif
+
+%package common
+Group: Office
+Summary: Common files for %name
+BuildArch: noarch
+
+%description common
+Common files for %name.
+
 %prep
 %setup
-%patch0 -p1
 
 %build
-%configure --disable-versioncheck
-%make_build
+%cmake -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%_docdir/%name-common"
+%cmake_build
+mv BUILD build-gtk
+
+%if_with qt4
+%cmake -DINTERFACE_TYPE=qt4 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%_docdir/%name-common"
+%cmake_build
+mv BUILD build-qt4
+%endif
+
+%cmake -DINTERFACE_TYPE=qt5 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%_docdir/%name-common"
+%cmake_build
+mv BUILD build-qt5
 
 %install
-%makeinstall_std
+rm -rf BUILD
+cp -al build-gtk BUILD
+%cmakeinstall_std
+
+%if_with qt4
+rm -rf BUILD
+cp -al build-qt4 BUILD
+%cmakeinstall_std
+%endif
+
+rm -rf BUILD
+cp -al build-qt5 BUILD
+%cmakeinstall_std
+
 %find_lang %name
 
-%files -f %name.lang
+# make link to old base command
+ln -s %name-gtk %buildroot%_bindir/%name
+
+
+%files common -f %name.lang
+%doc COPYING
 %doc AUTHORS ChangeLog NEWS README TODO
-%_bindir/%name
-%_datadir/%name/
-%_datadir/appdata/%name.appdata.xml
-%_desktopdir/%name.desktop
 %_iconsdir/hicolor/48x48/apps/%name.png
+%_iconsdir/hicolor/128x128/apps/%name.png
 %_iconsdir/hicolor/256x256/apps/%name.png
+%doc %_docdir/%name-common/manual*.html
+
+%files gtk
+%_bindir/%name-gtk
+%_datadir/appdata/%name-gtk.appdata.xml
+%_desktopdir/%name-gtk.desktop
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 
+%if_with qt4
+%files qt4
+%_bindir/%name-qt4
+%_datadir/appdata/%name-qt4.appdata.xml
+%_desktopdir/%name-qt4.desktop
+%endif
+
+%files qt5
+%_bindir/%name-qt5
+%_datadir/appdata/%name-qt5.appdata.xml
+%_desktopdir/%name-qt5.desktop
+
+%files
+%_bindir/%name
+
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3.1.2-alt1
+- new version 3.1.2 (with rpmrb script)
+- split into -gtk, -qt4, -qt5 package
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.93-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
