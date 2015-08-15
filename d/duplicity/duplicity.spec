@@ -1,5 +1,5 @@
 Name: duplicity
-Version: 0.6.24
+Version: 0.7.04
 Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
@@ -16,6 +16,8 @@ BuildPreReq: rpm-build-compat >= 1.2
 
 # No required by default
 %add_python_req_skip dropbox
+# No required by default (OpenStack)
+%add_python_req_skip pyrax
 
 %description
 Duplicity incrementally backs up files and directory by encrypting
@@ -48,6 +50,9 @@ hard links.
 %python_sitelibdir/duplicity-*.egg-info
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 0.7.04-alt1
+- new version 0.7.04 (with rpmrb script)
+
 * Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.6.24-alt1
 - new version 0.6.24 (with rpmrb script)
 
