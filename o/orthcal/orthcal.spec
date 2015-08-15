@@ -1,15 +1,16 @@
 Name: orthcal
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: Eastern Orthodox Calendar with daily Feasts
 
-Url: https://apps.ubuntu.com/cat/applications/orthcal/
+Url: https://launchpad.net/orthcal/
 License: GPLv3
 Group: Office
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: https://launchpad.net/orthcal/trunk/orthcal-%version/+download/orthcal-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -30,7 +31,7 @@ Eastern Orthodox Calendar with daily Feasts.
 %__subst "s|/opt/extras.ubuntu.com|%_datadir|g" bin/* *.desktop
 
 %install
-make install INSTALLDIR=%buildroot%_datadir/%name DESTDIR=%buildroot
+%makeinstall_std INSTALLDIR=%buildroot%_datadir/%name
 mkdir -p %buildroot%_bindir/
 ln -s %_datadir/%name/bin/OrthCal.pl %buildroot%_bindir/%name
 
@@ -40,5 +41,8 @@ ln -s %_datadir/%name/bin/OrthCal.pl %buildroot%_bindir/%name
 %_desktopdir/extras-%name.desktop
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
+- new version 1.4 (with rpmrb script)
+
 * Tue Sep 18 2012 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
 - initial build for ALT Linux Sisyphus
