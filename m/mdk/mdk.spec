@@ -1,5 +1,5 @@
 Name: mdk
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 
 Summary: GNU MIX Development Kit
@@ -11,7 +11,7 @@ Url: http://www.gnu.org/software/mdk/mdk.html
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%name/%name-%version.tar
+Source: http://ftp.gnu.org/gnu/mdk/v%version/%name-%version.tar
 Patch: %name-1.2.3.patch
 Patch1: %name-1.2.7-enable-deprecated.patch
 
@@ -79,6 +79,9 @@ rm -f %buildroot%_infodir/dir
 %_emacslispdir/*
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.2.8-alt1
+- new version 1.2.8 (with rpmrb script)
+
 * Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 1.2.7-alt1
 - New version 1.2.7
 - Enable deprecated functions because g_completion* have no replacement
