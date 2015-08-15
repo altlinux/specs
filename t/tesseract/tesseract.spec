@@ -1,20 +1,21 @@
-%set_verify_elf_method none
+#set_verify_elf_method none
 
 Name:     tesseract
-Version:  3.02.02
-Release:  alt1
+Version: 3.04.00
+Release: alt1
 
 Summary:  Raw Open source OCR Engine
 
 License:  Apache License
 Group:    Graphics
-Url:      http://code.google.com/p/tesseract-ocr
+Url:      https://github.com/tesseract-ocr
 
 Packager: Andrey Cherepanov <cas@altlinux.org> 
 
-Source:   http://tesseract-ocr.googlecode.com/files/%name-%version.tar
+# Source-url: https://github.com/tesseract-ocr/tesseract/archive/%version.tar.gz
+Source:   %name-%version.tar
 
-BuildRequires: gcc-c++ 
+BuildRequires: gcc-c++
 BuildRequires: libtiff-devel
 BuildRequires: libleptonica-devel >= 1.60
 
@@ -419,7 +420,7 @@ Obsoletes: tesseract-vie < %version
 Data files required to recognize Vietnamese OCR.
 
 %prep
-%setup -q
+%setup
 
 %build
 sh autogen.sh
@@ -446,6 +447,7 @@ cp -v tessdata/*.traineddata %buildroot%_datadir/tessdata/
 
 %files devel
 %_includedir/%name/
+%_pkgconfigdir/%name.pc
 %_libdir/lib*.so
 
 %files langpack-bg
@@ -555,6 +557,9 @@ cp -v tessdata/*.traineddata %buildroot%_datadir/tessdata/
 
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3.04.00-alt1
+- new version 3.04.00 (with rpmrb script)
+
 * Mon Dec 09 2013 Andrey Cherepanov <cas@altlinux.org> 3.02.02-alt1
 - New version
 
