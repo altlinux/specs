@@ -1,5 +1,5 @@
 Name: erc
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -47,6 +47,9 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
+- erc: add -f (--force) for override target, improve test
+
 * Tue Aug 04 2015 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
 - add zpaq and pax to supported formats
 - erc: add options support and implement --quiet
