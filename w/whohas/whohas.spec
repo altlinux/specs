@@ -1,5 +1,5 @@
 Name: whohas
-Version: 0.29
+Version: 0.29.1
 Release: alt1
 
 Summary: Command line tool for query package lists
@@ -10,12 +10,16 @@ Url: http://www.philippwesche.org/200811/whohas/intro.html
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.philippwesche.org/200811/%name/%name-%version.tar
+#Source: http://www.philippwesche.org/200811/%name/%name-%version.tar
+# Source-url: https://github.com/whohas/whohas/archive/%version.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Oct 07 2009 (-bi)
-BuildRequires: perl-libwww perl-threads
+BuildRequires: perl-libwww perl-threads perl-forks
+
+Requires: perl-forks
 
 %description
 whohas is a command line tool that allows querying several package
@@ -25,19 +29,24 @@ package maintainers find ebuilds, pkgbuilds and similar package
 definitions from other distributions to learn from.
 
 %prep
-%setup -q
-chmod a-x Changelog intro.* html_assets/*
+%setup
+
+%build
+%make_build
 
 %install
-install -Dp -m 0755 program/%name %buildroot%_bindir/%name
-install -Dp -m 0644 usr/share/man/man1/%name.1 %buildroot%_man1dir/%name.1
+%makeinstall_std PREFIX=%prefix docdir=%_docdir/%name-%version
+rm -rf %buildroot%_mandir/de/
 
 %files
-%doc Changelog intro.txt intro.html html_assets/
+%doc %_docdir/%name-%version
 %_bindir/%name
 %_man1dir/%name.*
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 0.29.1-alt1
+- new version 0.29.1 (with rpmrb script)
+
 * Mon Jan 16 2012 Vitaly Lipatov <lav@altlinux.ru> 0.29-alt1
 - new version 0.29 (with rpmrb script)
 
