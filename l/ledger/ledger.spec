@@ -1,35 +1,38 @@
 Name: ledger
-Version: 3.0.2
-Release: alt1.1
+Version: 3.1.aed3709
+Release: alt1
 
 Summary: Ledger is a highly flexible, double-entry accounting system
 
 License: %bsd
 Group: Office
-Url: http://www.newartisans.com/software/ledger.html
+Url: http://www.ledger-cli.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/ledger/ledger/archive/v2.6.3.tar.gz
+# Source-url: https://github.com/ledger/ledger/archive/v%version.tar.gz
 Source: %name-%version.tar
-Patch: %name-2.6.0.90-alt-makefile.patch
 
 Requires: libledger = %version-%release
 
-BuildPreReq: rpm-build-licenses
+BuildPreReq: cmake rpm-macros-cmake rpm-build-licenses
 
-# manual removed: python3 ruby ruby-stdlibs
-# Automatically added by buildreq on Fri Feb 07 2014
-# optimized out: boost-python-headers libstdc++-devel makeinfo python-base python-devel python-module-distribute python-module-zope python-modules python-modules-compiler python-modules-email python3-base
-BuildRequires: boost-devel-headers boost-python-devel gcc-c++ glibc-devel libexpat-devel libgmp-devel libofx-devel libpcre-devel python-module-cmd2 python-module-mwlib python-module-protobuf
+# manual removed: python3 ruby ruby-stdlibs  python-module-cmd2 python-module-mwlib python-module-protobuf
+# Automatically added by buildreq on Sat Aug 15 2015
+# optimized out: boost-devel boost-devel-headers boost-python-headers cmake cmake-modules libgmp-devel libstdc++-devel python-base python-devel python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python3-base
+BuildRequires: boost-filesystem-devel boost-python-devel ccmake gcc-c++ libedit-devel libicu-devel libmpfr-devel
+
+BuildRequires: libutfcpp-devel
 
 %description
 Ledger is an accounting program which is invoked from the command-line
 using a textual ledger file.  To start using Ledger, you will need to
-create such a file containing your financial transactions.  A sample
-has been provided in the file "sample.dat".  See the documentation
-(ledger.pdf, or ledger.info) for full documentation on creating a
-ledger file and using Ledger to generate reports.
+create such a file containing your financial transactions.
+See the documentation (ledger.pdf, or ledger.info) for full documentation
+on creating a ledger file and using Ledger to generate reports.
+
+A sample has been provided in the file "sample.dat":
+$ ledger -f %_docdir/%name-%version/sample.dat reg
 
 %package -n libledger
 Summary: Libraries for ledger accounting system
@@ -94,33 +97,28 @@ This package contains emacs libraries to ease use of ledger.
 
 %prep
 %setup
-%patch -p1
-touch AUTHORS
-%autoreconf
 
 %build
-%add_optflags -I %_includedir/pcre
-%add_optflags -I %_includedir/libofx
-%add_optflags -I %_includedir/python2.7
-%configure --disable-static --enable-xml --enable-ofx --enable-python
-%make_build
+%cmake -DUSE_PYTHON=yes
+# 15.08.2015: disabled due ledger3.info install bug
+# -DBUILD_DOCS=yes
+%cmake_build
 
 %install
-%makeinstall
+%cmakeinstall_std
 
 %files
-%doc LICENSE README NEWS sample.dat
+%doc LICENSE.md README.md
+%doc test/input/sample.dat
 %_bindir/%name
-%_infodir/*
+%_man1dir/*
 
 %files -n libledger
-%_libdir/*.so.*
-%_libdir/libledger-*.so
+%_libdir/libledger.so.3
 
 %files -n libledger-devel
-%_includedir/%name
+%_includedir/%name/
 %_libdir/libledger.so
-%_libdir/libamounts.so
 
 %files -n python-module-ledger
 %_libdir/python*/site-packages/*
@@ -129,6 +127,9 @@ touch AUTHORS
 #%_emacslispdir/*
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3.1.aed3709-alt1
+- new version 3.1 (with rpmrb script)
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 3.0.2-alt1.1
 - rebuild with boost 1.57.0
 
