@@ -1,7 +1,7 @@
 # http://bugzilla.gnome.org/show_bug.cgi?id=347922
 # guile -c "(use-modules (ice-9 slib)) (require 'printf)"
 Name: slib
-Version: 3b4
+Version: 3b5
 Release: alt1
 
 Summary: platform independent library for scheme
@@ -82,7 +82,7 @@ This package provides files necessary to use slib with mzscheme
 
 %prep
 %setup -q -n slib
-%patch -p1 -b .guile
+#patch -p1 -b .guile
 %__subst "s|/usr/lib/slib|%_datadir/%name|g" guile.init
 
 %install
@@ -120,6 +120,9 @@ install -m644 %SOURCE1 %buildroot%_datadir/guile/site/slibcat
 #%ghost %_libdir/plt2/slibcat
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3b5-alt1
+- new version 3b5 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 3b4-alt1
 - new version 3b4 (with rpmrb script)
 
