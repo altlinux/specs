@@ -1,5 +1,5 @@
 Name: giter
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -41,6 +41,10 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
+- gpush: fix add list
+- check for merge.ff only at a popular operations
+
 * Tue Aug 11 2015 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - gpush: push to pub.*, git.* by default
 - fix get_gear_name (when run outside git repo)
