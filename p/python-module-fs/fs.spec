@@ -1,9 +1,10 @@
 %define oname fs
 
 %def_with python3
+%def_without docs
 
 Name: python-module-%oname
-Version: 0.5.0
+Version: 0.5.2
 Release: alt1
 Summary: Filesystem abstraction layer
 License: BSD
@@ -112,8 +113,10 @@ This package contains documentation for %oname.
 cp -fR . ../python3
 %endif
 
+%if_with docs
 %prepare_sphinx .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %python_build_debug
@@ -138,11 +141,13 @@ popd
 
 %python_install
 
+%if_with docs
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs pickle
 %make -C docs html
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %check
 python setup.py test
@@ -161,13 +166,17 @@ popd
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/*/test*
+%if_with docs
 %exclude %python_sitelibdir/*/pickle
+%endif
 
+%if_with docs
 %files pickles
 %python_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %files tests
 %python_sitelibdir/*/tests
@@ -189,6 +198,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1
+- Version 0.5.2
+
 * Mon Dec 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus
 
