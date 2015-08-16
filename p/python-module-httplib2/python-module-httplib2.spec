@@ -5,7 +5,7 @@
 
 Summary: A comprehensive HTTP client library in Python
 Name: %packagename
-Version: 0.9
+Version: 0.9.1
 Release: alt1
 Source0: %origname-%version.tar.gz
 License: MIT
@@ -59,18 +59,21 @@ popd
 
 
 %files
-%doc CHANGELOG *.html *.md doc/html
+#doc CHANGELOG *.html *.md doc/html
 %python_sitelibdir/%origname/
 %python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%origname
-%doc CHANGELOG *.html *.md doc/html
+#doc CHANGELOG *.html *.md doc/html
 %python3_sitelibdir/*
 %endif
 
 
 %changelog
+* Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1
+- Version 0.9.1
+
 * Thu Aug 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1
 - Version 0.9
 
