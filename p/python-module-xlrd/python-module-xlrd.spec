@@ -1,7 +1,7 @@
 
 Name:           python-module-xlrd
-Version:        0.9.2
-Release:        alt2
+Version:        0.9.4
+Release:        alt1
 Summary:        Library to extract data from Microsoft Excel (TM) spreadsheet files
 
 Group:          Development/Python
@@ -73,6 +73,9 @@ rm -rf %buildroot%_bindir/runxlrd.py* \
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4-alt1
+- Version 0.9.4
+
 * Mon Mar 31 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt2
 - Increase release to prevent Fedoraimport/Sisyphus warning
 
