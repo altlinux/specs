@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.4.4
-Release:        alt1.dev0.git20150427
+Release:        alt1.dev0.git20150815
 Epoch: 1
 Summary:        Fast numerical array expression evaluator for Python and NumPy
 Group:          Development/Python
@@ -168,6 +168,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.4.4-alt1.dev0.git20150815
+- New snapshot
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.4.4-alt1.dev0.git20150427
 - Version 2.4.4.dev0
 
