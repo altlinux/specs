@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 6.2.1
+Version: 6.3
 Release: alt1
 Summary: Classes and setuptools plugin for Mercurial repositories
 License: MIT
@@ -113,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.3-alt1
+- Version 6.3
+
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.2.1-alt1
 - Version 6.2.1
 
