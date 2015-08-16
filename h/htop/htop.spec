@@ -5,7 +5,7 @@
 
 Name: htop
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPL
@@ -19,9 +19,9 @@ Patch: htop-0.8.3-alt-desktop.patch
 Packager: Ilya Evseev <evseev@altlinux.ru>
 
 BuildRequires: /proc
-BuildPreReq: libncurses-devel
+BuildRequires: libncurses-devel ImageMagick-tools
 %if_enabled unicode
-BuildPreReq: libncursesw-devel
+BuildRequires: libncursesw-devel
 %endif
 
 %define rman1dir %_mandir/ru/man1
@@ -64,7 +64,10 @@ htop использует для работы с экраном библиоте
 %install
 %makeinstall_std
 install -pDm644 %SOURCE1 %buildroot%rman1dir/%name.1
-install -pDm644 %name.png %buildroot%_niconsdir/%name.png
+install -pDm644 %name.png %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
+
+mkdir -p %buildroot%_niconsdir
+convert %name.png -resize 32x32 %buildroot%_niconsdir/%name.png
 rm -r %buildroot%_pixmapsdir/
 
 %files
@@ -74,8 +77,13 @@ rm -r %buildroot%_pixmapsdir/
 %doc AUTHORS README ChangeLog
 %_desktopdir/%name.*
 %_niconsdir/%name.*
+%_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sun Aug 16 2015 Michael Shigorin <mike@altlinux.org> 1.0.3-alt2
+- fixed 128px icon path, added proper 32px icon path
+  (thanks shadowsbrother@ for spotting this)
+
 * Thu Aug 28 2014 Michael Shigorin <mike@altlinux.org> 1.0.3-alt1
 - new version (watch file uupdate)
 - enabled OOM score support (closes: #30245)
