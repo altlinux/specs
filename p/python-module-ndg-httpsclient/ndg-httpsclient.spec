@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.3
+Version: 0.4.0
 Release: alt1
 
 Summary: Provides enhanced HTTPS support for httplib and urllib2 using PyOpenSSL
@@ -185,6 +185,9 @@ rm -f documentation/Makefile
 %endif
 
 %changelog
+* Mon Aug 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1
+- Version 0.4.0
+
 * Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1
 - Version 0.3.3
 
