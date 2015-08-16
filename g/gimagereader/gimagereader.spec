@@ -2,30 +2,36 @@
 
 Name: gimagereader
 Version: 3.1.2
-Release: alt1
+Release: alt2
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
 License: GPLv3+
 Group: Office
-Url: http://sourceforge.net/projects/gimagereader/
+Url: https://github.com/manisandro/gImageReader
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# TODO: https://github.com/manisandro/gImageReader/archive/v%version.tar.gz
 Source: http://sourceforge.net/projects/gimagereader/files/%version/%name-%version.tar
-
-# TODO: tesseract-devel missed pkgconfig file
 
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake gcc-c++ libsane-devel tesseract-devel libgomp5-devel
 
+# need pkgconfig from 3.04 and above
+BuildRequires: tesseract-devel >= 3.04.00
+
+# gtk
+BuildRequires: libgtksourceviewmm3-devel libgtkspellmm3-devel libpoppler-glib-devel
+
 %if_with qt4
 BuildRequires: libqt4-devel libqtspell-qt4-devel libpoppler-qt4-devel
 %endif
 
+# qt5
 BuildRequires: libqtspell-qt5-devel libpoppler-qt5-devel qt5-base-devel qt5-imageformats
-BuildRequires: libgtksourceviewmm3-devel libgtkspellmm3-devel libpoppler-glib-devel
+
 
 # for compatibility
 Requires: %name-gtk
@@ -168,6 +174,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Aug 16 2015 Vitaly Lipatov <lav@altlinux.ru> 3.1.2-alt2
+- build with tesseract 3.04
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3.1.2-alt1
 - new version 3.1.2 (with rpmrb script)
 - split into -gtk, -qt4, -qt5 package
