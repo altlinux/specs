@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.4
-Release: alt1
+Version: 2.3.0
+Release: alt1.b1
 Summary: A Python library to read/write Excel 2007 xlsx/xlsm files
 License: MIT/Expat
 Group: Development/Python
@@ -15,15 +15,17 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-jdcal
+BuildPreReq: python-module-jdcal python-modules-json
+BuildPreReq: python-module-et_xmlfile
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-jdcal
+BuildPreReq: python3-module-et_xmlfile
 %endif
 
 %py_provides %oname
-%py_requires jdcal
+%py_requires jdcal json et_xmlfile
 
 %description
 openpyxl is a Python library to read/write Excel 2010 xlsx/xlsm files.
@@ -35,7 +37,7 @@ Python the Office Open XML format.
 Summary: A Python library to read/write Excel 2007 xlsx/xlsm files
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires jdcal
+%py3_requires jdcal et_xmlfile
 
 %description -n python3-module-%oname
 openpyxl is a Python library to read/write Excel 2010 xlsx/xlsm files.
@@ -87,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1.b1
+- Version 2.3.0-b1
+
 * Wed Feb 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.4-alt1
 - Initial build for Sisyphus
 
