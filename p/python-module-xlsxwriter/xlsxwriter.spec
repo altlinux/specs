@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.1
-Release: alt1.git20150324
+Version: 0.7.3
+Release: alt1.git20150806
 Summary: A Python module for creating Excel XLSX files
 License: BSD
 Group: Development/Python
@@ -137,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1.git20150806
+- Version 0.7.3
+
 * Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.git20150324
 - Version 0.7.1
 
