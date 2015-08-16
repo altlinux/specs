@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.2.1
+Version: 5.4
 Release: alt1
 
 Summary: Store and access your passwords safely
@@ -20,6 +20,7 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-fs python-module-pycrypto
 BuildPreReq: python-module-mock python-module-nose
 BuildPreReq: python-module-keyczar python-module-gdata
+BuildPreReq: python-module-pytest-runner
 BuildPreReq: python-modules-logging python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -27,6 +28,7 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-fs python3-module-pycrypto
 BuildPreReq: python3-module-mock python3-module-nose
 BuildPreReq: python3-module-keyczar
+BuildPreReq: python3-module-pytest-runner
 %endif
 
 %setup_python_module %oname
@@ -128,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4-alt1
+- Version 5.4
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2.1-alt1
 - Version 5.2.1
 
