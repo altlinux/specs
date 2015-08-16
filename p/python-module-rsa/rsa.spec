@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.1.4
+Version: 3.2
 Release: alt1
 Summary: Pure-Python RSA implementation
 License: ASLv2
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt1
+- Version 3.2
+
 * Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.4-alt1
 - Initial build for Sisyphus
 
