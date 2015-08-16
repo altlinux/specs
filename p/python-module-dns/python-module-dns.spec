@@ -1,11 +1,11 @@
 %define modulename dns
 
 # Testing requires network access
-%def_without check
+#def_without check
 
 Name: python-module-%modulename
-Version: 1.11.1
-Release: alt1.git20140716
+Version: 1.12.0
+Release: alt1.git20150714
 
 Summary: DNS toolkit
 License: BSD-like
@@ -59,6 +59,9 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.0-alt1.git20150714
+- Version 1.12.0
+
 * Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.1-alt1.git20140716
 - New snapshot
 
