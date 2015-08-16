@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt1.a1.git20141030
+Release: alt1.a1.git20150729
 Summary: Hamcrest framework for matcher objects
 License: BSD
 Group: Development/Python
@@ -17,11 +17,13 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-six python-module-tox
+BuildPreReq: python-module-pytest-cov python-module-mock
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-six python3-module-tox
+BuildPreReq: python3-module-pytest-cov python3-module-mock
 %endif
 
 %py_provides %oname
@@ -138,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1.git20150729
+- New snapshot
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1.git20141030
 - Initial build for Sisyphus
 
