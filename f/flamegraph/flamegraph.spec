@@ -1,5 +1,5 @@
 Name: flamegraph
-Version: 20150713
+Version: 20150816
 Release: alt1
 
 Summary: Flame Graphs visualize profiled code-paths
@@ -27,5 +27,8 @@ done
 %doc README.md example-stacks.txt example.svg demos dev/README
 
 %changelog
+* Sun Aug 16 2015 Terechkov Evgenii <evg@altlinux.org> 20150816-alt1
+- git-20150816
+
 * Mon Jul 13 2015 Terechkov Evgenii <evg@altlinux.org> 20150713-alt1
 - git-20150713
