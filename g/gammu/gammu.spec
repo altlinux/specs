@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: gammu
-Version: 1.36.0
+Version: 1.36.4
 Release: alt1
 
 Summary: Mobile phones management utility
@@ -9,8 +9,7 @@ License: GPL
 Group: Communications
 
 Url: http://wammu.eu/gammu/
-Source0: http://dl.cihar.com/gammu/releases/%name-%version.tar.xz
-Source100: gammu.watch
+Source: http://dl.cihar.com/gammu/releases/%name-%version.tar.bz2
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -115,6 +114,7 @@ cmake   -DCMAKE_INSTALL_PREFIX="%_usr" \
 	-DINSTALL_LIBDATA_DIR=%_libdir \
 	-DINSTALL_DOC_DIR=%_gammu_docdir \
 	-DMYSQL_CONFIG="%_bindir/mysql_config" \
+	-DBUILD_PYTHON:FILEPATH=%_bindir/python \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 %if_disabled static
@@ -183,6 +183,11 @@ cp -R contrib/bash-completion %buildroot%_gammu_docdir/other/
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Sun Aug 16 2015 Michael Shigorin <mike@altlinux.org> 1.36.4-alt1
+- 1.36.4
+- dropped python module (standalone package since 2.1)
+- converted Russian subpackage descriptions to UTF-8
+
 * Thu May 07 2015 Michael Shigorin <mike@altlinux.org> 1.36.0-alt1
 - added debian watch file
 - new version (watch file uupdate)
