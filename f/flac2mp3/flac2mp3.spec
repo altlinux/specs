@@ -1,5 +1,5 @@
 Name: flac2mp3
-Version: 0.3.0
+Version: 1.0.0
 Release: alt1
 
 Summary: Tool to convert audio files from flac to mp3 format including the copying of tags
@@ -12,7 +12,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-# https://github.com/robinbowes/flac2mp3
+# Source-git: https://github.com/robinbowes/flac2mp3.git
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Mon Mar 31 2014 (-bi)
@@ -37,5 +37,8 @@ install -D %name.pl %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Aug 16 2015 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version
+
 * Mon Mar 31 2014 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
 - initial build for ALT Linux Sisyphus
