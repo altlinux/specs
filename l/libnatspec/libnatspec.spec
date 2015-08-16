@@ -1,5 +1,5 @@
 Name: libnatspec
-Version: 0.2.8
+Version: 0.3.0
 Release: alt1
 
 Summary: Library for national and language-specific issues
@@ -92,6 +92,10 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Sun Aug 16 2015 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
+- netspec cli: always print with \n
+- README-ru recode to utf8
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 0.2.8-alt1
 - natspec: add missed -l (--locale) option
 
