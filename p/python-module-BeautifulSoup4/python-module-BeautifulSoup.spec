@@ -6,7 +6,7 @@
 
 %define oname BeautifulSoup4
 Name: python-module-%oname
-Version: 4.3.2
+Version: 4.4.0
 Release: alt1
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
@@ -23,9 +23,12 @@ Source: BeautifulSoup-%version.tar.bz2
 
 # Automatically added by buildreq on Sat May 26 2007
 BuildRequires: python-devel python-modules-compiler python-modules-encodings
+
+BuildPreReq: python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python-tools-2to3
+BuildPreReq: python3-module-setuptools-tests
 %endif
 
 %description
@@ -76,6 +79,7 @@ cp -a . ../python3
 %endif
 
 %build
+export LC_ALL=en_US.UTF-8
 %python_build
 %if_with python3
 pushd ../python3
@@ -85,6 +89,7 @@ popd
 %endif
 
 %install
+export LC_ALL=en_US.UTF-8
 %python_install
 %if_with python3
 pushd ../python3
@@ -95,6 +100,11 @@ popd
 %check
 export LC_ALL=en_US.UTF-8
 python -m unittest discover -s bs4
+%if_with python3
+pushd ../python3
+python3 -m unittest discover -s bs4
+popd
+%endif
 
 %files
 %doc *.txt
@@ -109,12 +119,17 @@ python -m unittest discover -s bs4
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/bs4/test*
+%exclude %python3_sitelibdir/bs4/*/test*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/bs4/test*
+%python3_sitelibdir/bs4/*/test*
 %endif
 
 %changelog
+* Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.0-alt1
+- Version 4.4.0
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1
 - Version 4.3.2
 
