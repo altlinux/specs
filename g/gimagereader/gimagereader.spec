@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.1.2
-Release: alt2
+Release: alt3
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -101,6 +101,7 @@ This package contains the Qt front-end.
 Group: Office
 Summary: Common files for %name
 BuildArch: noarch
+Conflicts: %name < 3.1.2
 
 %description common
 Common files for %name.
@@ -174,6 +175,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Aug 17 2015 Vitaly Lipatov <lav@altlinux.ru> 3.1.2-alt3
+- fix inter package requires
+
 * Sun Aug 16 2015 Vitaly Lipatov <lav@altlinux.ru> 3.1.2-alt2
 - build with tesseract 3.04
 
