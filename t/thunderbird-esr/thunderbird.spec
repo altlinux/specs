@@ -4,7 +4,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		%r_name-esr
-Version:	38.1.0
+Version:	38.2.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -456,6 +456,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Mon Aug 17 2015 Andrey Cherepanov <cas@altlinux.org> 38.2.0-alt1
+- New ESR version
+
 * Thu Jul 16 2015 Andrey Cherepanov <cas@altlinux.org> 38.1.0-alt1
 - New ESR version
   + MFSA NSS incorrectly permits skipping of ServerKeyExchange
