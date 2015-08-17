@@ -1,9 +1,11 @@
 %def_enable gssapi
 %def_enable liblogging_stdlog
 %def_disable mmcount
+# GuardTime KSI
+%def_disable gt_ksi
 
 Name: rsyslog
-Version: 8.11.0
+Version: 8.12.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -32,6 +34,7 @@ BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
 BuildRequires: libestr-devel >= 0.1.9
 %{?_enable_liblogging_stdlog:BuildRequires: liblogging-devel >= 1.0.3}
+%{?_enable_gt_ksi:BuildRequires: libksi-devel >= 3.2.2.0}
 BuildRequires: libjson-c-devel
 BuildRequires: liblognorm-devel >= 1.0.2
 BuildRequires: libmongo-client-devel >= 0.1.4
@@ -329,6 +332,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-kmsg \
 	--enable-largefile \
 	--enable-libdbi \
+	%{?_enable_gt_ksi:--enable-gt-ksi} \
 	%{?_enable_liblogging_stdlog:--enable-liblogging-stdlog} \
 	--enable-mail \
 	--enable-mmanon \
@@ -515,6 +519,9 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Mon Aug 17 2015 Alexey Shabalin <shaba@altlinux.ru> 8.12.0-alt1
+- 8.12.0
+
 * Thu Jul 02 2015 Alexey Shabalin <shaba@altlinux.ru> 8.11.0-alt1
 - 8.11.0
 
