@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6.0
-Release: alt1.git20150723
+Version: 1.7.0
+Release: alt1.git20150812
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python
@@ -112,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.git20150812
+- Version 1.7.0
+
 * Sun Jul 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.git20150723
 - Version 1.6.0
 
