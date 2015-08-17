@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.6
+Version: 2.6.1
 Release: alt1
 Summary: Invoke py.test as distutils command with dependency resolution
 License: MIT
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools-tests git
 BuildPreReq: python-module-hgtools python-module-setuptools_scm
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -39,6 +39,15 @@ pytest runner.
 
 %prep
 %setup
+
+pushd ..
+git config --global user.email "real at altlinux.org"
+git config --global user.name "REAL"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag -m "%version" %version
+popd
 
 %if_with python3
 cp -fR . ../python3
@@ -81,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.1-alt1
+- Version 2.6.1
+
 * Wed Jul 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6-alt1
 - Version 2.6
 
