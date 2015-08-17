@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        39.0.3
+Version:        40.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -29,7 +29,6 @@ Patch6:		firefox3-alt-disable-werror.patch
 Patch14:	firefox-fix-install.patch
 Patch16:	firefox-cross-desktop.patch
 #Patch17:	firefox-disable-installer.patch
-Patch18:	mozilla-bug-1153109-enable-stdcxx-compat.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -119,7 +118,6 @@ tar -xf %SOURCE2
 %patch14 -p1
 %patch16 -p1
 #patch17 -p1
-%patch18 -p1
 
 #echo firefox_version > browser/config/version.txt
 
@@ -298,6 +296,24 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Aug 17 2015 Alexey Gladkov <legion@altlinux.ru> 40.0.2-alt1
+- New release (40.0.2).
+- Fixed:
+  + 2015-92 Use-after-free in XMLHttpRequest with shared workers
+  + 2015-91 Mozilla Content Security Policy allows for asterisk wildcards in violation of CSP specification
+  + 2015-90 Vulnerabilities found through code inspection
+  + 2015-89 Buffer overflows on Libvpx when decoding WebM video
+  + 2015-88 Heap overflow in gdk-pixbuf when scaling bitmap images
+  + 2015-87 Crash when using shared memory in JavaScript
+  + 2015-86 Feed protocol with POST bypasses mixed content protections
+  + 2015-85 Out-of-bounds write with Updater and malicious MAR file
+  + 2015-84 Arbitrary file overwriting through Mozilla Maintenance Service with hard links
+  + 2015-83 Overflow issues in libstagefright
+  + 2015-82 Redefinition of non-configurable JavaScript object properties
+  + 2015-81 Use-after-free in MediaStream playback
+  + 2015-80 Out-of-bounds read with malformed MP3 file
+  + 2015-79 Miscellaneous memory safety hazards (rv:40.0 / rv:38.2)
+
 * Mon Aug 10 2015 Alexey Gladkov <legion@altlinux.ru> 39.0.3-alt1
 - New release (39.0.3).
 - Fixed:

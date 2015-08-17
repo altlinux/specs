@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-be
-Version:	39.0.3
+Version:	40.0.2
 Release:	alt1
 Summary:	Belarusian (BE) Language Pack for Firefox
 
@@ -70,6 +70,9 @@ ln -s %_datadir/myspell/be_BY.dic %buildroot/%cid_dict_dir/dictionaries/be.dic
 %cid_dict_dir
 
 %changelog
+* Mon Aug 17 2015 Alexey Gladkov <legion@altlinux.ru> 40.0.2-alt1
+- New version (40.0.2).
+
 * Mon Aug 10 2015 Alexey Gladkov <legion@altlinux.ru> 39.0.3-alt1
 - New version (39.0.3).
 
