@@ -1,5 +1,5 @@
-%define	version	1.15.2
-%define release alt1
+%define	version	1.16.0
+%define release alt1.git20150429
 %define source_version %version
 %define source_name  paramiko
 %setup_python_module paramiko
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16.0-alt1.git20150429
+- Version 1.16.0
+
 * Thu Feb 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15.2-alt1
 - Version 1.15.2
 
