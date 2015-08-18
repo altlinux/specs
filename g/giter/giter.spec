@@ -1,5 +1,5 @@
 Name: giter
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -41,6 +41,11 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Wed Aug 19 2015 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
+- grebase: error if there is no unpublished commits
+- estrlist: fix when empty list
+- fix gpush behaviour
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt1
 - set 'merge.ff only' only for repos pushed to git.*:/projects
 - add glog command
