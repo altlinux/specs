@@ -11,7 +11,7 @@
 %define frame_border   navy
 
 Name: WindowMaker
-Version: 0.95.6
+Version: 0.95.7
 Release: alt1
 Packager: %packager
 
@@ -186,7 +186,7 @@ export LINGUAS GNUSTEP_LOCAL_ROOT
 	--with-pixmapdir=%_datadir \
 	--with-appspath=%gnustepdir/Apps \
 	--with-menu-textdomain=menu-messages \
-                            --with-nlsdir=%_datadir/locale \
+                            --localedir=%_datadir/locale \
 	--with-gnustepdir=%gnustepdir \
 	--enable-modelock \
 	--enable-xinerama \
@@ -231,7 +231,7 @@ cat WPrefs.lang >> WindowMaker.lang
 rm -rf %buildroot%_mandir/cs
 
 %files -f %name.lang
-%doc AUTHORS BUGFORM BUGS COPYING COPYING.WTFPL FAQ FAQ.I18N INSTALL-WMAKER README* TODO
+%doc AUTHORS BUGFORM BUGS COPYING COPYING.WTFPL FAQ INSTALL-WMAKER README* TODO
 %config(noreplace) %_sysconfdir/X11/WindowMaker
 %config(noreplace) %_sysconfdir/menu-methods/WindowMaker
 %config(noreplace) %_sysconfdir/X11/wmsession.d/*
@@ -306,6 +306,12 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Tue Aug 18 2015 Michael Shigorin <mike@altlinux.org> 0.95.7-alt1
+- Built for Sisyphus.
+
+* Tue Aug 18 2015 Andrey Bergman <vkni@altlinux.org> 0.95.7-alt0.1
+- Update to a new version. Corrected menu patch.
+
 * Tue Sep 09 2014 Michael Shigorin <mike@altlinux.org> 0.95.6-alt1
 - 0.95.6
 
