@@ -1,6 +1,6 @@
 
 Name: libmwaw
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 Summary: Import library for some old mac text documents
 Group: System/Libraries
@@ -83,6 +83,9 @@ rm -f %buildroot/%_bindir/mwawFile
 %_bindir/*
 
 %changelog
+* Tue Aug 18 2015 Alexey Shabalin <shaba@altlinux.ru> 0.3.5-alt1
+- 0.3.5
+
 * Mon Jan 19 2015 Alexey Shabalin <shaba@altlinux.ru> 0.3.4-alt1
 - 0.3.4
 
