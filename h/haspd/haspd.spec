@@ -11,7 +11,7 @@
 
 Name: haspd
 Version: 3.3
-Release: alt7
+Release: alt8
 
 Summary: HASP drivers and license managers
 
@@ -52,6 +52,17 @@ Provides: sntl-sud = 7.3.0-0
 
 # due propritary library packed
 %set_verify_elf_method skip
+# https://bugzilla.altlinux.org/show_bug.cgi?id=31207
+# find-requires: ERROR: /usr/lib/rpm/lib.req failed
+%add_findreq_skiplist /usr/lib/sentinel/*
+# find-requires: ERROR: /usr/lib/rpm/lib.req failed
+# ldd: ERROR: /tmp/.private/lav/haspd-buildroot/usr/sbin/aksusbd: trace failed
+# ldd: exited with unknown exit code (132)
+%add_findreq_skiplist /usr/sbin/aksusbd
+%add_findreq_skiplist /usr/sbin/*
+
+# disable make debuginfo (due the same ldd problem)
+%define __find_debuginfo_files %nil
 
 ExclusiveOS: Linux
 %if %_vendor == "alt"
@@ -100,6 +111,8 @@ Linux kernel modules for HASP LPT keys
 %setup -q
 patch -p0 <etersoft/aksparpub.c.patch
 patch -p0 <etersoft/aksparpub.h.patch
+
+%build
 
 %install
 #export KBUILD_VERBOSE=1
@@ -171,6 +184,10 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 #module_dir/2*
 
 %changelog
+* Tue Aug 18 2015 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt8
+- haspd.init: run all service if usbkeytest is not compiled
+- note about not compiled usbkeytest
+
 * Fri Nov 29 2013 Andrey Cherepanov <cas@altlinux.org> 3.3-alt7
 - Add udev rules to use 1C hasp key if plugged without haspd restart
   (see eterbug #9425)
