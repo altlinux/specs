@@ -5,8 +5,8 @@
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: EOG plugins
 License: %gpl2plus
@@ -103,6 +103,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Tue Aug 18 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
+- 3.16.1
+
 * Sun Aug 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt2
 - rebuilt against libgdata.so.22
 
