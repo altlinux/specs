@@ -1,5 +1,5 @@
 Name: eterbackup
-Version: 0.9
+Version: 1.0
 Release: alt1
 
 Summary: Etersoft backup tools for journaling backup
@@ -40,12 +40,19 @@ See detailed russian description here: http://wiki.etersoft.ru/Eterbackup
 %files
 %doc README.md LICENSE TODO
 %_bindir/eterpack
+%_bindir/eterremove
 %_bindir/etertimemachine
 #%_datadir/%name/
 %_man1dir/*
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Tue Aug 18 2015 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
+- pack eterremove command
+- add eterattrstore: separate command for save&restore special files and file attrs
+- eterpack: use external eterattrstore
+- update eterpack man page, add backup/restore sinonyms addition to update/extract
+
 * Wed Aug 12 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
 - eterpack: rewrite exclude working (use dir name or path)
 - extend and improve exclude tests
