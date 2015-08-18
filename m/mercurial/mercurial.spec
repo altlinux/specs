@@ -1,5 +1,5 @@
 
-Version: 3.4.2
+Version: 3.5
 Release: alt1
 Name: mercurial
 %setup_python_module %name
@@ -127,6 +127,9 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python_sitelibdir/hgext/*
 
 %changelog
+* Tue Aug 18 2015 Alexey Shabalin <shaba@altlinux.ru> 3.5-alt1
+- 3.5
+
 * Thu Jul 02 2015 Alexey Shabalin <shaba@altlinux.ru> 3.4.2-alt1
 - 3.4.2
 
