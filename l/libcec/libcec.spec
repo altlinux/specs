@@ -1,5 +1,5 @@
 Name: libcec
-Version: 2.2.0
+Version: 3.0.1
 Release: alt1
 
 Summary: CEC Adaptor communication shared library
@@ -7,9 +7,9 @@ License: GPL
 Group: System/Libraries
 Url: http://libcec.pulse-eight.com/
 
-Source: %name-%version-%release.tar
+Source0: %name-%version-%release.tar
 
-BuildRequires: gcc-c++ liblockdev-devel libudev-devel
+BuildRequires: cmake gcc-c++ libcec-platform-devel liblockdev-devel libudev-devel
 
 %package devel
 Summary: CEC Adaptor communication development library
@@ -36,12 +36,12 @@ This package contains commandline utilities of libcec.
 %setup
 
 %build
-%autoreconf
-%configure --disable-static
+cmake . -DCMAKE_INSTALL_PREFIX=%prefix
 %make_build
 
 %install
 %makeinstall_std
+sed -i '/^Requires:/ s,platform ,,' %buildroot%_pkgconfigdir/libcec.pc
 
 %files
 %_libdir/lib*.so.*
@@ -52,9 +52,13 @@ This package contains commandline utilities of libcec.
 %_pkgconfigdir/libcec.pc
 
 %files utils
-%_bindir/cec-client
+%_bindir/cec-client*
+%_bindir/cecc-client*
 
 %changelog
+* Wed Jul 22 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.1-alt1
+- 3.0.1
+
 * Fri Jan 09 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt1
 - 2.2.0
 
