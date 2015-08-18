@@ -1,7 +1,7 @@
 
 Name: rkward
 Version: 0.6.3
-Release: alt2
+Release: alt3
 Summary: Graphical frontend for R language
 License: GPL-2.0
 Group: Sciences/Mathematics
@@ -21,9 +21,7 @@ BuildRequires: gcc-fortran
 BuildRequires: gcc-c++
 BuildRequires: gettext
 BuildRequires: qt4-devel
-#BuildRequires: kde4-filesystem
 BuildRequires: kde4libs-devel
-#BuildRequires: update-desktop-files
 Requires: R-base
 Requires: libkde4base-runtime
 
@@ -40,46 +38,19 @@ combiner la puissance du langage R et la (relative) simplicité d'utilisation
 des outils statistiques commerciaux. L'objectif à long terme est de voir son
 intégration dans les suites bureautiques.
 
-#if #suse_version < 1120
-#%%define _kde4_htmldir %%_docdir/kde/HTML/
-#endif
 
 %prep
 %setup
 %patch0 -p1 
 
 %build
-#cmake_kde4 -d build
-#make_jobs
 %cmake_insource
 
-%make_build # VERBOSE=1
+%make_build 
 
 %install
-#pushd build
 %makeinstall_std
-#popd
 
-#desktop-file-install \
-# --vendor="" \
-# --dir=%%buildroot%%kde4_datadir/applications/kde4 \
-#buildroot%%_desktopdir/kde4/%%name.desktop
-#suse_update_desktop_file -n rkward
-#
-#This file is conflicting with the kdelibs one
-#rm -f %%buildroot%%_datadir/kde4/apps/katepart/syntax/r.xml
-# already in R-base package
-#rm -f %%buildroot%%_libdir/R/library/R.css
-
-%find_lang %name
-
-#post
-#touch --no-create %%_iconsdir/locolor
-#touch --no-create %%_iconsdir/crystalsvg
-
-#postun
-#touch --no-create %%_iconsdir/locolor
-#touch --no-create %%_iconsdir/crystalsvg
 
 %files
 %_bindir/%name
@@ -98,6 +69,9 @@ intégration dans les suites bureautiques.
 %_datadir/mime/packages/vnd.%name.r.xml
 
 %changelog
+* Tue Aug 18 2015 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt3
+-  clean spec 
+
 * Mon Aug 17 2015 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt2
 - initial build for ALT Linux Sisyphus
 
