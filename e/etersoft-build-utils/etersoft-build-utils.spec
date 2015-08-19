@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -22,9 +22,9 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: giter >= 0.8
+Requires: giter >= 1.2
 Requires: eepm >= 1.5.0
-Requires: erc >= 0.7
+Requires: erc >= 0.8
 
 Requires: rpm-build
 Requires: rpm-build-compat >= %altcompat_ver
@@ -70,6 +70,16 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Aug 19 2015 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt1
+- rpmcs: make fixes in right order, fix Group in correct place
+- rpmurl: full rewrite, use http://packages.altlinux.org/en/Sisyphus
+- rpmunmets: improve print out
+- rpmgs: do not check before download, we run wget -c (continue) anywhere
+- rpmgs: use erc with --force
+- rpmbugs: rewrite very obsoleted code, add spec detection
+- rpmlog: add comment about missed tag, check for no new commits
+- initial support for colorify with csed
+
 * Tue Aug 11 2015 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
 - pkgrepl: fix comma after packagename
 - check original package name in add_32bit_requires
