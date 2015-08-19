@@ -1,6 +1,6 @@
 Name: mcabber
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: console Jabber client
 License: GPL
@@ -54,6 +54,9 @@ for more information.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Aug 19 2015 Denis Smirnov <mithraen@altlinux.ru> 1.0.0-alt2
+- fix watch-file
+
 * Wed Jul 01 2015 Denis Smirnov <mithraen@altlinux.ru> 1.0.0-alt1
 - new version 1.0.0
 
