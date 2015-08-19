@@ -1,7 +1,7 @@
 
 Name: rkward
 Version: 0.6.3
-Release: alt3
+Release: alt4
 Summary: Graphical frontend for R language
 License: GPL-2.0
 Group: Sciences/Mathematics
@@ -38,21 +38,20 @@ combiner la puissance du langage R et la (relative) simplicité d'utilisation
 des outils statistiques commerciaux. L'objectif à long terme est de voir son
 intégration dans les suites bureautiques.
 
-
 %prep
 %setup
-%patch0 -p1 
+%patch0 -p1
 
 %build
 %cmake_insource
 
-%make_build 
+%make_build
 
 %install
 %makeinstall_std
+%find_lang %name
 
-
-%files
+%files -f %name.lang
 %_bindir/%name
 %_libdir/R/library/*
 %_libdir/kde4/libexec/%name.*
@@ -64,11 +63,15 @@ intégration dans les suites bureautiques.
 %_docdir/HTML/en/rkwardplugins/*
 %_iconsdir/hicolor/*/apps/*
 %_datadir/kde4/services/%name.protocol
-%_datadir/locale/*/LC_MESSAGES/%name.mo
 %_man1dir/%name.1.gz
 %_datadir/mime/packages/vnd.%name.r.xml
+# missed by find_lang
+%_datadir/locale/x-test/LC_MESSAGES/rkward.mo
 
 %changelog
+* Wed Aug 19 2015 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt4
+-  rebuild with %find_lang macro 
+
 * Tue Aug 18 2015 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt3
 -  clean spec 
 
