@@ -1,8 +1,8 @@
 %define rname kservice
 
 Name: kf5-%rname
-Version: 5.12.0
-Release: alt3
+Version: 5.13.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -82,6 +82,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Wed Aug 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.13.0-alt1
+- new version
+
 * Thu Jul 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt3
 - require altlinux-freedesktop-menu
 

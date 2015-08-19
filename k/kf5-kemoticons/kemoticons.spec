@@ -1,7 +1,7 @@
 %define rname kemoticons
 
 Name: kf5-%rname
-Version: 5.12.0
+Version: 5.13.0
 Release: alt1
 %K5init altplace
 
@@ -79,6 +79,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Wed Aug 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.13.0-alt1
+- new version
+
 * Fri Jul 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1
 - new version
 

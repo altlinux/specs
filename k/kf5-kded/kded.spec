@@ -1,8 +1,8 @@
 %define rname kded
 
 Name: kf5-%rname
-Version: 5.12.0
-Release: alt2
+Version: 5.13.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -86,6 +86,9 @@ KF5 library
 #%_K5lib/libKF5DED.so.*
 
 %changelog
+* Wed Aug 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.13.0-alt1
+- new version
+
 * Fri Jul 31 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt2
 - move dbus service to standard place
 
