@@ -11,7 +11,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.2.11
+Version: 1.2.12
 Release: alt1
 
 Summary: Color daemon
@@ -169,7 +169,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_libdir/colord-sensors/libdtp94-private.so
 %_libdir/colord-sensors/libhuey-private.so
 %_libdir/colord-sensors/libmunki-private.so
-
+%_libdir/colord-sensors/libospark-private.so
 
 %dir %_libdir/colord-plugins
 %_libdir/colord-plugins/libcd_plugin_camera.so
@@ -281,6 +281,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Wed Aug 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.2.12-alt1
+- 1.2.12
+
 * Mon Jun 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1.2.11-alt1
 - 1.2.11
 
