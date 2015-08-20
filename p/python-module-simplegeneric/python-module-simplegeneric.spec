@@ -3,7 +3,7 @@
 %global modname simplegeneric
 
 Name:           python-module-%{modname}
-Version:        0.8
+Version:        0.8.1
 Release:        alt1
 Summary:        Simple generic functions (similar to Python's own len(), pickle.dump(), etc.)
 
@@ -102,6 +102,9 @@ PYTHONPATH=$(pwd) %{__python} setup.py test
 %endif
 
 %changelog
+* Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1
+- Version 0.8.1
+
 * Mon Aug 11 2014 Lenar Shakirov <snejok@altlinux.ru> 0.8-alt1
 - First build for ALT (based on Fedora 0.8-9.fc21.src)
 
