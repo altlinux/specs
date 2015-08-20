@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: py%oname
-Version: 3.1.2
-Release: alt1.dev.git20150418
+Version: 3.2.2
+Release: alt1.dev0.git20150817
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -15,6 +15,7 @@ Url: http://www.pytables.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/PyTables/PyTables.git
+# branch: develop
 Source: %name-%version.tar.gz
 
 Requires: python-module-%oname = %{?epoch:%epoch:}%version-%release
@@ -343,6 +344,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.2.2-alt1.dev0.git20150817
+- Version 3.2.2.dev0
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.1.2-alt1.dev.git20150418
 - New snapshot
 
