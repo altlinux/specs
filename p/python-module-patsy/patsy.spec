@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: A Python package for describing statistical models and for building design matrices
@@ -155,6 +155,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1
+- Version 0.4.0
+
 * Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1
 - Version 0.3.0
 
