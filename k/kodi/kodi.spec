@@ -1,6 +1,6 @@
 Name: kodi
-Version: 14.2
-Release: alt1.1
+Version: 15.1
+Release: alt1
 
 Summary: Kodi Media Center
 License: GPL
@@ -13,7 +13,6 @@ Obsoletes: xbmc
 Requires: kodi-data = %version-%release
 
 Source0: %name-%version-%release.tar
-Source1: pvr-addons.tar
 
 BuildRequires: cmake gcc-c++ doxygen swig gperf nasm unzip zip
 BuildRequires: boost-devel bzlib-devel libmysqlclient-devel libSDL_image-devel libSDL_mixer-devel
@@ -26,7 +25,7 @@ BuildRequires: libcec-devel >= 2.2.0 libcdio-devel libcurl-devel libdbus-devel l
 BuildRequires: libexpat-devel libfaad-devel libflac-devel libfreetype-devel libfribidi-devel
 BuildRequires: libgnutls-devel libjasper-devel libjpeg-devel liblzo2-devel libyajl-devel
 BuildRequires: libmicrohttpd-devel libmms-devel libmodplug-devel libmpeg2-devel
-BuildRequires: libpcrecpp-devel libpng-devel libsmbclient-devel
+BuildRequires: libpcrecpp-devel libgif-devel libpng-devel libsmbclient-devel
 BuildRequires: libsqlite3-devel libtiff-devel libvorbis-devel libwavpack-devel
 BuildRequires: libplist-devel libpulseaudio-devel libssh-devel librtmp-devel python-devel
 BuildRequires: libbluez-devel libtag-devel tinyxml-devel libudev-devel
@@ -34,7 +33,7 @@ BuildRequires: fontconfig-devel libgcrypt-devel liblame-devel libxml2-devel libx
 BuildRequires: java-1.7.0-openjdk-devel /proc zlib-devel
 
 %ifarch %ix86 x86_64
-BuildRequires: libva-devel libvdpau-devel libGL-devel libGLU-devel libglew-devel
+BuildRequires: libva-devel libvdpau-devel libGL-devel libGLU-devel libGLEW-devel
 %endif
 %ifarch %arm
 BuildRequires: libEGL-devel libGLES-devel
@@ -49,6 +48,11 @@ Obsoletes: xbmc-data
 # commonly used by external plugins
 %py_requires json logging sqlite3 xml
 
+%package devel
+Summary: Kodi development part
+Group: Development/C++
+Requires: kodi = %version-%release
+
 %description
 Kodi is an media-player and entertainment hub for all your digital media.
 
@@ -56,15 +60,17 @@ Kodi is an media-player and entertainment hub for all your digital media.
 Kodi is an media-player and entertainment hub for all your digital media.
 This package contains all architecture-independent data requried for Kodi.
 
+%description devel
+Kodi is an media-player and entertainment hub for all your digital media.
+This package contains development part of Kodi.
+
 %define docdir %_defaultdocdir/%name-%version
 
-%add_optflags -fgnu89-inline
-
 %prep
-%setup -a1
-sed -i s,build_addons_with_dependencies=no,build_addons_with_dependencies=yes, pvr-addons/configure.ac
+%setup
 
 %build
+export ac_cv_type__Bool=yes
 [ ! -x bootstrap ] || sh bootstrap
 %configure --disable-non-free \
 	--enable-pulse \
@@ -79,11 +85,7 @@ sed -i s,build_addons_with_dependencies=no,build_addons_with_dependencies=yes, p
 %make_build
 
 %install
-make \
-    DESTDIR=%buildroot \
-    bindir=%_bindir \
-    libdir=%_libdir \
-    datadir=%_datadir install
+%makeinstall_std
 
 rm -rf \
     %buildroot%_datadir/kodi/addons/library.kodi.* \
@@ -95,12 +97,8 @@ mv %buildroot%_datadir/doc/kodi %buildroot%docdir
 mkdir -p \
     %buildroot%_sysconfdir/sysconfig \
     %buildroot%_sysconfdir/X11/wmsession.d \
-    %buildroot%_libdir/kodi/system/players/paplayer/timidity
-
-cat >%buildroot%_libdir/kodi/system/players/paplayer/timidity/timidity.cfg << 'E_O_F'
-dir /usr/share/timidity
-source midia.cfg
-E_O_F
+    %buildroot%_datadir/kodi/language \
+    %buildroot%_datadir/kodi/sounds
 
 cat >%buildroot%_sysconfdir/X11/wmsession.d/20KODI << 'E_O_F'
 NAME=Kodi
@@ -138,7 +136,6 @@ E_O_F
 
 %files data
 %dir %_datadir/kodi
-%_datadir/kodi/FEH.py
 %_datadir/kodi/addons
 %_datadir/kodi/language
 %_datadir/kodi/media
@@ -146,7 +143,17 @@ E_O_F
 %_datadir/kodi/system
 %_datadir/kodi/userdata
 
+%files devel
+%_includedir/kodi
+%_libdir/kodi/*.cmake
+
 %changelog
+* Tue Aug 18 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.1-alt1
+- 15.1 Isengard released
+
+* Wed Jul 22 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.0-alt1
+- 15.0 Isengard released
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.2-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
