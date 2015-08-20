@@ -24,8 +24,8 @@
 %def_enable installed_tests
 
 Name: gvfs
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -497,6 +497,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Thu Aug 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.24.2-alt1
+- 1.24.2
+
 * Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt2
 - rebuilt against libcdio_{cdda,paranoia}.so.2
 
