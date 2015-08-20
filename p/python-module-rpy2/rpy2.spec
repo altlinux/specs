@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.5.6
+Version: 2.6.2
 Release: alt1
 Summary: A simple and efficient access to R from Python, version 2
 License: MPL/GPL/LGPL
@@ -20,20 +20,20 @@ BuildPreReq: libpcre-devel liblzma-devel bzlib-devel zlib-devel
 BuildPreReq: libicu-devel
 BuildPreReq: python-devel R-devel liblapack-devel libreadline-devel
 BuildPreReq: python-module-setuptools-tests python-module-singledispatch
-BuildPreReq: python-module-six
-#BuildPreReq: python-module-sphinx-devel python-module-Pygments
-#BuildPreReq: graphviz
+BuildPreReq: python-module-six python-modules-sqlite3
+BuildPreReq: python-module-sphinx-devel python-module-Pygments
+BuildPreReq: graphviz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-singledispatch
-BuildPreReq: python3-module-six
+BuildPreReq: python3-module-six python3-modules-sqlite3
 %endif
 %setup_python_module %oname
 
 #add_python_req_skip pandas
 Requires: %oname-common = %EVR
-%py_requires singledispatch
+%py_requires singledispatch sqlite3
 
 %description
 RPy is a very simple, yet robust, Python interface to the R Programming
@@ -50,7 +50,7 @@ graphical libraries, as well as R-like structures and functions.
 Summary: A simple and efficient access to R from Python, version 2
 Group: Development/Python3
 Requires: %oname-common = %EVR
-%py3_requires singledispatch
+%py3_requires singledispatch sqlite3
 
 %description -n python3-module-%oname
 RPy is a very simple, yet robust, Python interface to the R Programming
@@ -185,18 +185,18 @@ pushd ../python3
 popd
 %endif
 
-#export PYTHONPATH=%buildroot%python_sitelibdir
-#pushd doc
-#make html
-#popd
+export PYTHONPATH=%buildroot%python_sitelibdir
+sphinx-apidoc -o doc -F rpy
+%make -C doc pickle
+%make -C doc html
 
 #install -d %buildroot%_docdir/%oname/demos
 #cp -fR doc/build/html %buildroot%_docdir/%oname/
 #cp -fR doc/build/latex/*.pdf %buildroot%_docdir/%oname/
 #install -p -m644 demos/*.py %buildroot%_docdir/%oname/demos
 
-#install -d %buildroot%python_sitelibdir/rpy2
-#cp -fR doc/build/pickle %buildroot%python_sitelibdir/rpy2/
+install -d %buildroot%python_sitelibdir/rpy2
+cp -fR doc/_build/pickle %buildroot%python_sitelibdir/rpy2/
 
 install -d %buildroot%_sysconfdir/profile.d
 cat <<EOF > %buildroot%_sysconfdir/profile.d/%oname.sh
@@ -204,11 +204,16 @@ export R_HOME=%_libdir/R
 EOF
 
 %check
-python setup.py test
+cd ~
+export PYTHONPATH=%buildroot%python_sitelibdir
+python -m rpy2.tests -v
+python -m unittest -v rpy2.robjects.tests.testVector
+python -m unittest discover -v rpy2.robjects
 %if_with python3
-pushd ../python3
-python3 setup.py test
-popd
+export PYTHONPATH=%buildroot%python3_sitelibdir
+python3 -m rpy2.tests -v
+python3 -m unittest -v rpy2.robjects.tests.testVector
+python3 -m unittest discover -v rpy2.robjects
 %endif
 
 %files
@@ -217,7 +222,7 @@ popd
 %exclude %python_sitelibdir/*/tests*
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/tests
-#exclude %python_sitelibdir/%oname/pickle
+%exclude %python_sitelibdir/%oname/pickle
 
 %files -n %oname-common
 %_sysconfdir/profile.d/*
@@ -227,12 +232,12 @@ popd
 %python_sitelibdir/*/*/tests
 %python_sitelibdir/*/*/*/tests
 
-#files pickles
-#dir %python_sitelibdir/%oname
-#python_sitelibdir/%oname/pickle
+%files pickles
+%dir %python_sitelibdir/%oname
+%python_sitelibdir/%oname/pickle
 
-#files doc
-#_docdir/%oname
+%files doc
+%doc doc/_build/html/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -249,6 +254,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt1
+- Version 2.6.2
+
 * Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.6-alt1
 - Version 2.5.6
 
