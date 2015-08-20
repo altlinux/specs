@@ -1,8 +1,8 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.12.0
-Release: alt3
+Version: 5.13.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -99,6 +99,9 @@ KF5 library
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Wed Aug 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.13.0-alt1
+- new version
+
 * Mon Aug 03 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt3
 - build with gpgmepp
 
