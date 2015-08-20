@@ -1,6 +1,6 @@
 %define oname pjproject
 Name: libpjsip
-Version: 2.4
+Version: 2.4.5
 Release: alt1
 
 Summary: Libraries for building embedded/non-embedded VoIP applications
@@ -160,6 +160,9 @@ echo -e '\n' >> %buildroot%_includedir/pj/config_site.h
 %_pkgconfigdir/libpjproject.pc
 
 %changelog
+* Thu Aug 20 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.5-alt1
+- new version 2.4.5 (with rpmrb script)
+
 * Thu Aug 20 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4-alt1
 - initial build for ALT Linux Sisyphus
 
