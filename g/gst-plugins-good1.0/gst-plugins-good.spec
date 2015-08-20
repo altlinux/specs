@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: %_name-good%api_ver
-Version: %ver_major.2
+Version: %ver_major.90
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -20,7 +20,7 @@ URL: http://gstreamer.freedesktop.org/
 Source: http://gstreamer.freedesktop.org/src/%_name-good/%_name-good-%version.tar.xz
 Patch: gst-plugins-good-0.11.94-alt-intltool.patch
 
-BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel gtk-doc intltool libSM-devel libXdamage-devel libXext-devel
+BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel gtk-doc intltool libSM-devel libXdamage-devel libXext-devel libXfixes-devel
 BuildRequires: libXv-devel libavc1394-devel libcairo-devel libdv-devel libflac-devel libiec61883-devel libjpeg-devel
 BuildRequires: liboil-devel libpulseaudio-devel libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpack-devel
 BuildRequires: python-module-PyXML python-modules-email python-modules-encodings liborc-devel orc libgdk-pixbuf-devel
@@ -72,6 +72,9 @@ This package contains development documentation for GStreamer Good Plugins
 %_gtk_docdir/*
 
 %changelog
+* Thu Aug 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.90-alt1
+- 1.5.90
+
 * Thu Jun 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
 - 1.5.2
 
