@@ -1,8 +1,8 @@
 %define rname dragon
 
 Name: kde5-%rname
-Version: 15.7.80
-Release: alt2
+Version: 15.08.0
+Release: alt1
 %K5init altplace
 
 Group: Video
@@ -77,6 +77,9 @@ KF5 library
 %_K5data/solid/actions/*.desktop
 
 %changelog
+* Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Thu Aug 06 2015 Sergey V Turchin <zerg@altlinux.org> 15.7.80-alt2
 - provide kde5-video-player
 

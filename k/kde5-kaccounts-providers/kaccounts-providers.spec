@@ -1,7 +1,7 @@
 %define rname kaccounts-providers
 
 Name: kde5-%rname
-Version: 15.4.3
+Version: 15.08.0
 Release: alt1
 %K5init altplace
 
@@ -15,12 +15,13 @@ BuildArch: noarch
 
 Source: %rname-%version.tar
 
-# Automatically added by buildreq on Tue Aug 04 2015 (-bi)
-# optimized out: cmake cmake-modules libqt5-core libstdc++-devel perl-Encode perl-XML-Parser pkg-config python-base python3 python3-base
-#BuildRequires: extra-cmake-modules gcc-c++ intltool libdb4-devel qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
+# Automatically added by buildreq on Fri Aug 21 2015 (-bi)
+# optimized out: cmake cmake-modules libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-widgets libstdc++-devel perl-Encode perl-XML-Parser pkg-config python-base python3 python3-base qt5-base-devel
+#BuildRequires: accounts-qt5-devel extra-cmake-modules gcc-c++ intltool kde5-kaccounts-integration-devel kf5-kcoreaddons-devel rpm-build-python3 ruby ruby-stdlibs signon-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
-BuildRequires: libaccounts-glib-devel intltool
+BuildRequires: accounts-qt5-devel signon-devel intltool
+BuildRequires: kde5-kaccounts-integration-devel kf5-kcoreaddons-devel
 
 %description
 %summary.
@@ -45,9 +46,12 @@ Requires: kf5-filesystem
 
 %files
 %config(noreplace) /etc/signon-ui/webkit-options.d/*.conf
-/usr/share/accounts/providers/google.provider
+%_datadir/accounts/providers/*.provider
 
 
 %changelog
+* Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Tue Aug 04 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt1
 - initial build
