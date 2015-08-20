@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 Summary: Better living through Python with decorators
 License: BSD
@@ -12,7 +12,7 @@ Url: http://pypi.python.org/pypi/decorator
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %oname-%version.tar.gz
-Source1: https://raw.githubusercontent.com/micheles/decorator/24d5f1539f0d876e4871ecca4f671d0710ab35bf/docs/README.rst
+#Source1: https://raw.githubusercontent.com/micheles/decorator/24d5f1539f0d876e4871ecca4f671d0710ab35bf/docs/README.rst
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
@@ -69,7 +69,7 @@ since:
 %prep
 %setup
 
-install -Dm644 %SOURCE1 docs/README.rst
+#install -Dm644 %SOURCE1 docs/README.rst
 
 %if_with python3
 rm -rf ../python3
@@ -103,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
+- Version 4.0.2
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
 - Version 4.0.1
 
