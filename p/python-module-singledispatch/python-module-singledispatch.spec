@@ -4,8 +4,8 @@
 %def_with python3
 
 Name:           python-module-%{pypi_name}
-Version:        3.4.0.2
-Release:        alt1.1
+Version:        3.4.0.3
+Release:        alt1
 Summary:        This library brings functools.singledispatch from Python 3.4 to Python 2.6-3.3
 Group:          Development/Python
 
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0.3-alt1
+- Version 3.4.0.3
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0.2-alt1.1
 - Added module for Python 3
 
