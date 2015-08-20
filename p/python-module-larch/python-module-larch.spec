@@ -2,8 +2,8 @@
 %global pkgname larch
 
 Name: python-module-larch
-Version: 1.20130808
-Release: alt3
+Version: 1.20131130
+Release: alt1
 
 Summary: Python B-tree library
 
@@ -13,7 +13,8 @@ Url: http://liw.fi/%pkgname/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://code.liw.fi/debian/pool/main/p/%oldname/%{oldname}_%version.orig.tar.gz
+# Source-url: http://code.liw.fi/debian/pool/main/p/%oldname/%{oldname}_%version.orig.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
 
@@ -24,7 +25,7 @@ BuildRequires: python-devel
 
 # build-time only
 BuildRequires: cmdtest
-#BuildRequires: python-module-coverage-test-runner
+BuildRequires: python-module-coverage-test-runner
 BuildRequires: python-module-sphinx
 # build- and run-time
 BuildRequires: python-module-cliapp
@@ -68,7 +69,7 @@ This package contains the documentation for %pkgname, a Python
 framework for Unix command line programs.
 
 %prep
-%setup -n %pkgname-%version
+%setup
 
 %build
 %python_build
@@ -83,6 +84,7 @@ cp -p fsck-larch.1 %buildroot%_man1dir/
 
 %check
 exit 0
+# TODO: fix rm .coverage issue
 # CoverageTestRunner trips up on build directory;
 # since we've already done the install phase, remove it first
 rm -rf build
@@ -98,6 +100,9 @@ make check
 %doc doc/_build/html/*
 
 %changelog
+* Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 1.20131130-alt1
+- new version 1.20131130 (with rpmrb script)
+
 * Thu Aug 13 2015 Vitaly Lipatov <lav@altlinux.ru> 1.20130808-alt3
 - human build for ALT Linux Sisyphus
 
