@@ -8,7 +8,7 @@
 
 Name: openstack-neutron
 Version: 2015.1.0
-Release: alt1
+Release: alt2
 Provides: openstack-quantum = %version-%release
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
 Summary: OpenStack Networking Service
@@ -619,7 +619,25 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %doc README.rst
 %python_sitelibdir/neutron
 %python_sitelibdir/neutron/plugins/__init__.*
-%exclude %python_sitelibdir/neutron/plugins/*
+# don't exclude python_sitelibdir/neutron/plugins/common
+%exclude %python_sitelibdir/neutron/plugins/bigswitch
+%exclude %python_sitelibdir/neutron/plugins/brocade
+%exclude %python_sitelibdir/neutron/plugins/cisco
+%exclude %python_sitelibdir/neutron/plugins/hyperv
+%exclude %python_sitelibdir/neutron/plugins/ibm
+%exclude %python_sitelibdir/neutron/plugins/linuxbridge
+%exclude %python_sitelibdir/neutron/plugins/metaplugin
+%exclude %python_sitelibdir/neutron/plugins/midonet
+%exclude %python_sitelibdir/neutron/plugins/ml2
+%exclude %python_sitelibdir/neutron/plugins/nuage
+%exclude %python_sitelibdir/neutron/plugins/nec
+%exclude %python_sitelibdir/neutron/plugins/oneconvergence
+%exclude %python_sitelibdir/neutron/plugins/openvswitch
+%exclude %python_sitelibdir/neutron/plugins/plumgrid
+%exclude %python_sitelibdir/neutron/plugins/vmware
+%exclude %python_sitelibdir/neutron/plugins/embrane
+%exclude %python_sitelibdir/neutron/plugins/opencontrail
+%exclude %python_sitelibdir/neutron/plugins/sriovnicagent
 %python_sitelibdir/*.egg-info
 
 %files bigswitch
@@ -807,6 +825,9 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %dir %_sysconfdir/neutron/conf.d/neutron-sriov-nic-agent
 
 %changelog
+* Thu Aug 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2015.1.0-alt2
+- neutron/plugins/common exclusion fixed. closes: #31220
+
 * Mon May 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
 - 2015.1.0 Kilo Release
 
