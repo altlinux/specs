@@ -8,8 +8,8 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.90
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -36,6 +36,7 @@ BuildRequires: libsbc-devel libschroedinger-devel libusb-devel libgudev-devel li
 BuildRequires: libvo-amrwbenc-devel librsvg-devel libvo-aacenc-devel libgcrypt-devel
 BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 BuildRequires: libvisual0.4-devel libopencv-devel openexr-devel libx265-devel
+BuildRequires: libgtk+3-devel
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -117,6 +118,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Thu Aug 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.90-alt1
+- 1.5.90
+
 * Tue Aug 04 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt2
 - rebuilt against libx265.so.59
 
