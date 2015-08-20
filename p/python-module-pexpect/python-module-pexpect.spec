@@ -1,10 +1,11 @@
 %define oname pexpect
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 3.3
-Release: alt1
+Version: 4.0
+Release: alt1.dev.git20150811
 
 %setup_python_module %oname
 
@@ -14,19 +15,22 @@ License: Python Software Foundation License
 Group: Development/Python
 Url: http://pexpect.sourceforge.net/
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://pexpect.sourceforge.net/%modulename-%version.tar.gz
+# https://github.com/pexpect/pexpect.git
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 Obsoletes: %oname < 0.999-alt6
 Provides: %oname
 
-BuildPreReq: python-devel
+%add_findreq_skiplist %python_sitelibdir/%oname/async.py
+
+BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
+BuildPreReq: python-module-pytest-cov python-module-ptyprocess
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-pytest-cov python3-module-ptyprocess
 %endif
 
 BuildPreReq: python-module-sphinx-devel
@@ -60,7 +64,7 @@ control it as if a human were typing commands.
 This package contains pickles for Pexpect.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -93,6 +97,14 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
+%check
+py.test -vv --cov pexpect --cov-config .coveragerc
+%if_with python3
+pushd ../python3
+py.test-%_python3_version -vv --cov pexpect --cov-config .coveragerc
+popd
+%endif
+
 %files
 %doc DEVELOPERS* LICENSE README.rst doc/_build/html examples
 %python_sitelibdir/*
@@ -108,6 +120,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1.dev.git20150811
+- Version 4.0.dev
+
 * Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1
 - Version 3.3
 - Added module for Python 3
