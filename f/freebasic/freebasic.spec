@@ -1,7 +1,7 @@
 
 Name:		freebasic
-Version:	1.02.0
-Release:	alt2
+Version:	1.03.0
+Release:	alt1
 
 Summary:	FreeBASIC language compiler
 License:	GPL
@@ -75,6 +75,9 @@ cp -a doc/html/* %buildroot%_docdir/freebasic
 %_man1dir/*
 
 %changelog
+* Wed Aug 19 2015 Andrey Cherepanov <cas@altlinux.org> 1.03.0-alt1
+- New version 1.03.0
+
 * Wed Apr 15 2015 Andrey Cherepanov <cas@altlinux.org> 1.02.0-alt2
 - Replace old i586-freebasic
 
