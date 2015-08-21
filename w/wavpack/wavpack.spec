@@ -1,12 +1,13 @@
 Name: wavpack
-Version: 4.60.1
+Version: 4.70.0
 Release: alt1
 
 Summary: Open audio compression codec
 License: BSD
 Group: Sound
 Url: http://www.wavpack.com/
-# http://www.wavpack.com/%name-%version.tar.bz2
+
+# Source-url:http://www.wavpack.com/%name-%version.tar.bz2
 Source: %name-%version.tar
 Patch: wavpack-fc-pkgconfig.patch
 
@@ -39,7 +40,7 @@ This package contains development files for WavPack library.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 
 %build
 %autoreconf
@@ -48,27 +49,24 @@ This package contains development files for WavPack library.
 
 %install
 %makeinstall_std
-%define docdir %_docdir/%name-%version
-mkdir -p %buildroot%docdir
-install -pm644 license.txt ChangeLog doc/* %buildroot%docdir/
 
 %files
 %_bindir/*
 %_man1dir/*
 
 %files -n lib%name
+%doc COPYING ChangeLog README
 %_libdir/lib*.so.*
-%dir %docdir/
-%docdir/license.txt
 
 %files -n lib%name-devel
 %_libdir/lib*.so
 %_includedir/wavpack/
 %_pkgconfigdir/*.pc
-%docdir/
-%exclude %docdir/license.txt
 
 %changelog
+* Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 4.70.0-alt1
+- new version (4.70.0) with rpmgs script
+
 * Tue Jun 28 2011 Dmitry V. Levin <ldv@altlinux.org> 4.60.1-alt1
 - Updated to 4.60.1.
 - Packaged documentation.
