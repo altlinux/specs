@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.1
-Release: alt1.1
+Version: 0.10.2
+Release: alt1
 
 Summary: A platform-independent file locking module
 
@@ -18,10 +18,10 @@ Source: https://pypi.python.org/packages/source/l/lockfile/lockfile-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python-devel
+BuildRequires: python-devel python-module-distribute python-module-pbr
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools python3-module-pbr
 %endif
 
 %description
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 0.10.2-alt1
+- new version 0.10.2 (with rpmrb script)
+
 * Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.1
 - Added module for Python 3
 
