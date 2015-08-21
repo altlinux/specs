@@ -4,8 +4,8 @@
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.6.8
-Release: alt2
+Version: 2.6.10
+Release: alt1
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -30,21 +30,25 @@ Source4: avidemux_ru.ts
 %if_enabled ownffmpeg
 Patch1: avidemux-2.5.6-alt-ffmpeg-0.9.2.patch
 %endif
-Patch2: avidemux-2.6.8-alt-i18n-qm-path.patch
+Patch2: avidemux-2.6.10-alt-i18n-qm-path.patch
 Patch3: avidemux-2.6.0-alt-crash-retranslate.patch
-Patch4: avidemux-2.6.0-alt-flags.patch
+Patch4: avidemux-2.6.10-alt-flags.patch
 #
 Patch100: avidemux-2.5.1-opencore-check.patch
 
-# Automatically added by buildreq on Thu Oct 28 2010 (-bi)
-#BuildRequires: bzlib-devel cmake gcc-c++ git-svn glibc-devel-static libGL-devel libSDL-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXvMC-devel libXxf86misc-devel libaften-devel libesd-devel libfaad-devel libjack-devel liblame-devel libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsubversion-auth-gnome-keyring libsubversion-auth-kwallet libvdpau-devel libvorbis-devel libvpx-devel libx264-devel libxkbfile-devel libxml2-devel libxvid-devel perl-IO-Compress qt4-designer rpm-build-ruby tetex-core xml-utils xsltproc yasm
-BuildRequires: bzlib-devel cmake gcc-c++ glibc-devel libSDL-devel python-devel
-BuildRequires: libaften-devel libfaad-devel libjack-devel liblame-devel
-BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel
-BuildRequires: libvdpau-devel libva-devel libxvba-devel
-BuildRequires: libvorbis-devel libvpx-devel libx264-devel
-BuildRequires: libxml2-devel libxvid-devel perl-IO-Compress libqt4-devel libsqlite3-devel
-BuildRequires: xml-utils xsltproc yasm kde-common-devel libalsa-devel
+# Automatically added by buildreq on Mon Aug 24 2015 (-bi)
+# optimized out: cmake-modules elfutils glibc-devel-static libEGL-devel libGL-devel libX11-devel libXext-devel libXv-devel libalsa-devel libgpg-error libjack-devel libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libqt5-core libqt5-gui libqt5-script libqt5-widgets libqt5-xml libstdc++-devel libvorbis-devel libxcb-devel makeinfo perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage pkg-config python-base python3 python3-base qt5-base-devel rpm-build-gir rsync ruby ruby-stdlibs xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+#BuildRequires: bzlib-devel cmake gcc-c++ git-core libSDL-devel libXvMC-devel libaften-devel libarts-devel libdca-devel libfaad-devel liblame-devel liblzma-devel liblzo2-devel libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel libsqlite3-devel libva-devel libvdpau-devel libvpx-devel libx264-devel libx265-devel libxvid-devel nss-ldapd perl-podlators python-module-google qt5-script-devel qt5-tools rpm-build-python3 rpm-build-ruby texi2html xsltproc yasm zlib-devel-static
+BuildRequires: bzlib-devel cmake gcc-c++ yasm glibc-devel libSDL-devel python-devel
+BuildRequires: libaften-devel libdca-devel libfaad-devel libjack-devel liblame-devel
+BuildRequires: liblzma-devel liblzo2-devel libsqlite3-devel
+BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel
+BuildRequires: libvdpau-devel libva-devel libxvba-devel libXv-devel libXvMC-devel
+BuildRequires: libvorbis-devel libvpx-devel libx264-devel libx265-devel
+BuildRequires: libxml2-devel libxvid-devel
+BuildRequires: perl-podlators perl-IO-Compress texi2html
+BuildRequires: qt5-base-devel qt5-script-devel qt5-tools
+BuildRequires: xml-utils xsltproc yasm kde-common-devel libalsa-devel zlib-devel
 
 %description
 Avidemux is a graphical tool to edit AVI. It allows you to multiplex and
@@ -99,7 +103,7 @@ Common files for %name
 %patch4 -p1
 %patch100 -p1
 
-cp -f %SOURCE4 po/
+#cp -f %SOURCE4 po/
 
 %if_enabled ownffmpeg
 install -m 0644 %SOURCE1 avidemux_core/ffmpeg_package
@@ -109,10 +113,10 @@ grep -rlw 'amd/amdxvba\.h' | xargs sed -i 's|amd/\(amdxvba\.h\)|\1|g'
 
 
 %build
-export QTDIR=%_qt4dir
+export QTDIR=%_qt5_prefix
 BUILDDIR=$PWD
-sh bootStrap.bash --with-core --with-cli --with-qt4 --without-gtk --with-plugins
-lrelease-qt4 po/*.ts
+sh bootStrap.bash --with-core --with-cli --with-qt4 --enable-qt5 --without-gtk --with-plugins
+lrelease-qt5 po/*.ts
 for p in po/*.po ; do
     FLNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||'`
     msgfmt -o po/"$FLNG".mo $p
@@ -131,7 +135,7 @@ done
 install -pD -m644 avidemux_icon.png %buildroot/%_pixmapsdir/%rname.png
 install -pD -m644 %SOURCE2 %buildroot/%_desktopdir/%rname.desktop
 install -pD -m644 %SOURCE3 %buildroot/%_libdir/ADM_plugins6/autoScripts/lib/
-ln -s avidemux3_qt4 %buildroot/%_bindir/%rname
+ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 
 for p in po/*.mo ; do
     LNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||' -e 's|@.*||'`
@@ -139,17 +143,17 @@ for p in po/*.mo ; do
     mkdir -p %buildroot/%_datadir/locale/"$LNG"/LC_MESSAGES
     install -m 0644 po/"$FLNG".mo %buildroot/%_datadir/locale/"$LNG"/LC_MESSAGES/avidemux.mo
 done
-mkdir -p %buildroot/%_datadir/avidemux6/i18n/
-install -m 0644 po/avidemux*.qm %buildroot/%_datadir/avidemux6/i18n/
+#mkdir -p %buildroot/%_datadir/avidemux6/i18n/
+#install -m 0644 po/avidemux*.qm %buildroot/%_datadir/avidemux6/i18n/
 
-%find_lang avidemux
+%find_lang --with-qt avidemux
 #echo "%%defattr(644,root,root,755)" > avidemux.lang
-for f in %buildroot/%_datadir/avidemux6/i18n/avidemux*.qm
-do
-    LNG=`echo "$f"| sed -e 's|^.*/\(.*\)_\([a-z][a-z]\)[^[:alpha:]].*|\2|'`
-    FILE=%%_datadir/avidemux6/i18n/`basename "$f"`
-    echo "%%lang($LNG) $FILE" >>avidemux.lang
-done
+#for f in %buildroot/%_datadir/avidemux6/i18n/avidemux*.qm
+#do
+#    LNG=`echo "$f"| sed -e 's|^.*/\(.*\)_\([a-z][a-z]\)[^[:alpha:]].*|\2|'`
+#    FILE=%%_datadir/avidemux6/i18n/`basename "$f"`
+#    echo "%%lang($LNG) $FILE" >>avidemux.lang
+#done
 
 
 
@@ -157,8 +161,8 @@ done
 %_desktopdir/*.desktop
 %_bindir/avidemux
 %_bindir/avidemux3_cli
-%_bindir/avidemux3_jobs
-%_bindir/avidemux3_qt4
+%_bindir/avidemux3_jobs*
+%_bindir/avidemux3_qt5
 %_libdir/libADM_UI*.so*
 %_libdir/libADM_render*.so
 %_libdir/libADM6*
@@ -168,13 +172,17 @@ done
 %_pixmapsdir/*
 #%_datadir/ADM_scripts
 %dir %_datadir/avidemux6
-%dir %_datadir/avidemux6/i18n
+%dir %_datadir/avidemux6/qt5
+%dir %_datadir/avidemux6/qt5/i18n
 %_datadir/avidemux6/help
 
 # devel
 %exclude %_includedir/avidemux
 
 %changelog
+* Fri Aug 21 2015 Sergey V Turchin <zerg@altlinux.org> 2.6.10-alt1
+- new version
+
 * Wed Jul 23 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.8-alt2
 - Convert Russian localization from gettext to qt linguist format
 
