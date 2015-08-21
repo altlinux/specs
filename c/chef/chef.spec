@@ -1,6 +1,6 @@
 
 Name:    chef
-Version: 12.3.0
+Version: 12.4.1
 Release: alt1
 
 Summary: Clients for the chef systems integration framework
@@ -36,6 +36,7 @@ BuildRequires: ruby-net-ssh-multi
 BuildRequires: ruby-plist
 BuildRequires: ruby-rack
 BuildRequires: ruby-rest-client
+BuildRequires: ruby-syslog-logger > 1.6.0
 BuildRequires: ruby-ucf
 
 Requires: ruby-highline
@@ -65,14 +66,26 @@ Documentation for %{name}.
 %prep
 %setup
 %update_setup_rb
+pushd chef-config
+%update_setup_rb
+popd
 
 %build
 %ruby_config
 %ruby_build
+pushd chef-config
+%ruby_config
+%ruby_build
+popd
 
 %install
 %ruby_install
 %rdoc lib/
+pushd chef-config
+%ruby_install
+%rdoc lib/
+popd
+
 # Remove unnecessary files
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
@@ -118,6 +131,9 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Mon Aug 03 2015 Andrey Cherepanov <cas@altlinux.org> 12.4.1-alt1
+- New version
+
 * Wed May 20 2015 Andrey Cherepanov <cas@altlinux.org> 12.3.0-alt1
 - New version
 
