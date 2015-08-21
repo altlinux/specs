@@ -1,6 +1,6 @@
 # TODO: use external wxsqlite3 (from altautoimports)
 Name: myrulib
-Version: 0.29.16
+Version: 0.29.16.git0fe54bf16
 Release: alt1
 
 Summary: Tool for maintaining fb2 files collection
@@ -9,7 +9,7 @@ Url: http://myrulib.lintest.ru/
 Source: %name-%version.tar
 License: GPL
 
-# git://gitorious.org/myrulib/lintest.git
+# Source-git: https://github.com/lintest/myrulib.git
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.org>
 Group: Office
 
@@ -28,9 +28,18 @@ export and so on.
 
 %prep
 %setup
+# assure we do not build it
+rm -rf 3rdparty/{sqlite3,wxsqlite3}
+
+# hack due search wxcode_gtk2u_wxsqlite3-2.8 but libwxsql3 contains wxcode_gtk2_wxsqlite3-2.8
+subst 's|wx_temp="$wx_temp""u"|wx_temp="$wx_temp"|g' ./configure
 
 %build
-%configure --with-expat --without-wxsqlite
+# note: checking for SQLITE_ENABLE_ICU support in system SQLite... no
+# so we can't use --with-icu
+%configure --with-expat \
+    --without-strip \
+    --without-sqlite --without-wxsqlite  --without-bzip2
 %make_build CFLAGS="%optflags" CXXFLAGS="%optflags"
 
 %install
@@ -50,6 +59,9 @@ install sources/MyRuLib/desktop/home-64x64.png %buildroot%_iconsdir/hicolor/64x6
 %_iconsdir/hicolor/64x64/apps/myrulib.png
 
 %changelog
+* Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 0.29.16.git0fe54bf16-alt1
+- build from last git
+
 * Sat Sep 28 2013 Vitaly Lipatov <lav@altlinux.ru> 0.29.16-alt1
 - version 0.29.16
 - fiw MSW database creation error
