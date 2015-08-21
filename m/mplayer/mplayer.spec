@@ -306,7 +306,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt13
+Release: alt14
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -381,7 +381,7 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_png:BuildRequires: libpng-devel}
 %{?_enable_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_openjpeg:BuildRequires: libopenjpeg-devel}
-%{?_enable_libcdio:BuildRequires: libcdio-devel}
+%{?_enable_libcdio:BuildRequires: libcdio-devel libcdio-paranoia-devel}
 %{?_enable_libgtop:BuildRequires: pkgkonfig(libgtop-2.0)}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_enable_xvid:BuildRequires: libxvid-devel}
@@ -1108,6 +1108,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Fri Aug 21 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.1-alt14
+- rebuilt with recent libcdio
+
 * Sat Dec 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.1-alt13
 - rebuilt without live555
 
