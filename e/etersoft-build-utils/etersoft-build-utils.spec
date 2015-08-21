@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 2.3.3-alt1
+- rpmcs: fix replace build requires
+- rpmgp: fix for get via public url
+- rpmurl: small fix
+
 * Wed Aug 19 2015 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt1
 - rpmcs: make fixes in right order, fix Group in correct place
 - rpmurl: full rewrite, use http://packages.altlinux.org/en/Sisyphus
