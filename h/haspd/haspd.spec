@@ -11,7 +11,7 @@
 
 Name: haspd
 Version: 3.3
-Release: alt9
+Release: alt10
 
 Summary: HASP drivers and license managers
 
@@ -112,7 +112,7 @@ Linux kernel modules for HASP LPT keys
 patch -p0 <etersoft/aksparpub.c.patch
 patch -p0 <etersoft/aksparpub.h.patch
 # Cleanup deprecated compatibility rules
-sed '/Compatibility/,$d' aksusbd/udev/rules.d/80-hasp.rules
+%__subst '/Compatibility/,$d' aksusbd/udev/rules.d/80-hasp.rules
 
 %build
 
@@ -186,6 +186,9 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 #module_dir/2*
 
 %changelog
+* Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt10
+- fix udev rule replacement
+
 * Wed Aug 19 2015 Andrey Cherepanov <cas@altlinux.org> 3.3-alt9
 - Cleanup deprecated compatibility rules to prevent fail on daemon
   startup
