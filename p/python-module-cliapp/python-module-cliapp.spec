@@ -2,8 +2,8 @@
 %global pkgname cliapp
 
 Name: python-module-cliapp
-Version: 1.20140719
-Release: alt2
+Version: 1.20150701
+Release: alt1
 
 Summary: Python framework for Unix command line programs
 
@@ -13,7 +13,7 @@ Url: http://liw.fi/%pkgname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: http://code.liw.fi/debian/pool/main/p/%oldname/%{oldname}_%version.orig.tar.gz
+# Source-url: http://code.liw.fi/debian/pool/main/p/%oldname/%{oldname}_%version.orig.tar.xz
 Source: %name-%version.tar
 Source44: import.info
 
@@ -21,8 +21,7 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel
 
 BuildArch: noarch
-# due missed coverage.erase()
-#BuildRequires: python-module-coverage-test-runner
+BuildRequires: python-module-coverage-test-runner
 BuildRequires: python-module-sphinx
 
 %description
@@ -50,14 +49,13 @@ framework for Unix command line programs.
 %python_install
 
 %check
-exit 0
 # CoverageTestRunner trips up on build directory;
 # since we've already done the install phase, remove it first
 rm -rf build
-# ./cliapp/runcmd.py also missing tests
-# (fixed in current Git but introduces other changes)
-echo ./cliapp/runcmd.py >> without-tests
-make check
+
+# rm: cannot remove '.coverage': No such file or directory
+#make check
+python -m CoverageTestRunner --ignore-missing-from=without-tests
 
 %files
 %doc COPYING NEWS README
@@ -69,6 +67,9 @@ make check
 %doc doc/_build/html/*
 
 %changelog
+* Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 1.20150701-alt1
+- new version (1.20150701) with rpmgs script
+
 * Wed Aug 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1.20140719-alt2
 - human build for ALT Linux Sisyphus
 
