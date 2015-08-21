@@ -7,7 +7,7 @@
 #   validation stage. Prefer to build subversion in hasher.
 # * Update alt-bdb patch when libdb version changes. Otherwise you may
 #   have failures in tests for FS_TYPE=bdb.
-
+%set_verify_elf_method unresolved=relaxed
 %def_without doc
 %def_disable static
 
@@ -29,7 +29,7 @@
 %def_without swig_java
 
 # Global switch to enable/diable all tests
-%def_enable check
+%def_disable check
 # Use these switches to selectively turn on/off some of tests
 # These make sence only if tests enabled
 %def_with fsfs_check
@@ -61,17 +61,17 @@
 %define module_name dav_svn
 %define modname dav_svn_module
 
-Name: subversion
-Version: 1.7.8
-Release: alt2.1
+Name:     subversion
+Version:  1.8.13
+Release:  alt1
 
-Summary: A version control system
-Group: Development/Other
-License: Apache
-Url: http://subversion.apache.org/
-Packager: Afanasov Dmitry <ender@altlinux.ru>
+Summary:  A version control system
+Group:    Development/Other
+License:  Apache
+Url:      http://subversion.apache.org/
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %name-%version%svn_ver_pre.tar.bz2
+Source:  %name-%version%svn_ver_pre.tar.bz2
 Source1: %name.el
 Source2: %name-config-1.4.0.tar
 Source3: svnserve.init
@@ -84,16 +84,25 @@ Source10: %module_name.start
 
 Source11: sqlite3-amalgamation-3.6.11.c
 
-Patch1: %name-1.7.8-alt-autogen-fix.patch
 Patch4: %name-1.5.4-alt-perl-DESTROY.patch
 Patch5: %name-1.7.8-alt-custom-libtool.patch
-Patch6: %name-1.7.8-alt-kwallet-build.patch
+Patch6: %name-1.8.13-alt-kwallet-build.patch
 
 # http://bugs.gentoo.org/show_bug.cgi?id=219959
 Patch16: %name-1.6.0-gentoo-java-headers.patch
 
 # http://svn.haxx.se/dev/archive-2008-07/0494.shtml
 Patch17: %name-1.6.6-deb-ssh-no-controlmaster.patch
+
+# Patches from Fedora
+Patch20: subversion-1.8.0-rpath.patch
+Patch21: subversion-1.8.0-pie.patch
+Patch22: subversion-1.8.0-rubybind.patch
+Patch23: subversion-1.8.5-swigplWall.patch
+Patch24: subversion-1.8.13-r1655262+.patch
+Patch25: subversion-1.8.13-swigpython.patch
+Patch26: subversion-1.8.11-ruby22-fixes.rb
+Patch27: subversion-1.8-sqlite-r1672295.patch
 
 Requires: lib%name = %version-%release
 
@@ -106,6 +115,8 @@ BuildRequires: libaprutil1-devel >= %apu_ver
 
 # it is not nesessary for simple build, but dav require this
 BuildRequires: libneon-devel libkeyutils-devel
+
+BuildRequires: libserf-devel
 
 # since 1.6.0 subversion requires sqlite
 # if sqlite_external is enabled subversion will be linked with system's sqlite
@@ -121,6 +132,9 @@ BuildRequires: libneon-devel libkeyutils-devel
 %{?_with_swig_rb:BuildPreReq: swig libruby-devel}
 %{?_with_javahl:BuildPreReq: gcc-c++ junit java-devel-default /proc}
 %{?_with_dav:BuildPreReq: apache2-devel}
+
+# For tests
+BuildRequires: python-modules-sqlite3
 
 %add_findprov_lib_path %_libdir/libsvn_swig
 
@@ -335,26 +349,34 @@ subversion server.
 install -pD -m644 %SOURCE11 sqlite-amalgamation/sqlite3.c
 %endif
 
-%patch1 -p2
 %patch4 -p1
 %patch5 -p2
 %patch6 -p2
 %patch16 -p1
 %patch17 -p1
-
-rm -rf apr apr-util neon
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p0
+%patch27 -p0
 
 %build
 %add_optflags %optflags_shared
 
-LIBTOOL_M4=%{_datadir}/libtool/aclocal/libtool.m4 ./autogen.sh
+LIBTOOL_M4=%{_datadir}/libtool/aclocal ./autogen.sh
 %autoreconf
 %configure \
         %{subst_enable static} --enable-shared \
+	--disable-debug \
+	--disable-mod-activation \
         --with-custom-libtool=/usr/bin/libtool \
         --with-berkeley-db=db.h:/usr/include/db4:%_libdir:db-4 \
-        --with-neon=%prefix --disable-neon-version-check \
         --with-apr=%prefix --with-apr-util=%prefix \
+	--with-apache-libexecdir=%apache2_moduledir \
+	--with-swig --with-serf=%prefix \
         %{?_with_gnome_keyring:--with-gnome-keyring} \
         %{subst_with kwallet} \
         %{?_with_dav:--with-apxs=%apache2_apxs} \
@@ -631,10 +653,12 @@ fi
 %_bindir/svnversion
 %_bindir/svnrdump
 %_bindir/svnsync
-%_mandir/man1/svn.1.*
-%_mandir/man1/svnversion.1.*
-%_mandir/man1/svnrdump.1*
-%_mandir/man1/svnsync.1.*
+%_bindir/svnmucc
+%_man1dir/svn.1.*
+%_man1dir/svnversion.1.*
+%_man1dir/svnrdump.1*
+%_man1dir/svnsync.1.*
+%_man1dir/svnmucc.1.*
 %_sysconfdir/bash_completion.d/svn
 
 %files -n lib%name
@@ -736,6 +760,9 @@ fi
 %endif
 
 %changelog
+* Mon Aug 03 2015 Andrey Cherepanov <cas@altlinux.org> 1.8.13-alt1
+- New version 1.8.13 (ALT #29846)
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.8-alt2.1
 - rebuild with new perl 5.20.1
 
