@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 1.8.4
+Version: 1.8.5
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -23,7 +23,8 @@ BuildArchitectures: noarch
 %if %{expand:%%{?_rpmmacrosdir:0}%%{!?_rpmmacrosdir:1}}
 %define _rpmmacrosdir %_sysconfdir/rpm/macros.d
 %endif
-BuildPreReq: altlinux-release
+# see eterbug #10699 https://bugs.etersoft.ru/show_bug.cgi?id=10699
+#BuildPreReq: altlinux-release
 %else
 # Provide includes macros
 Provides: rpm-build-python rpm-build-perl rpm-macros-ttf rpm-build-licenses rpm-macros-cmake
@@ -110,6 +111,10 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Tue Aug 18 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.5-alt1
+- add _udevrulesdir and _udevhwdbdir for ALT Linux p5
+- add skip for add_findreq_lib_path
+
 * Thu Jul 09 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.4-alt1
 - update macros cmake
 - macros.compat: add _runtimedir
