@@ -3,13 +3,13 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 1.5.5
-Release: alt3
+Version: 2.0.5
+Release: alt1
 
 Summary: Library to implement a well-behaved Unix daemon process
 
 
-License: PSF-2
+License: Apache-2
 Group: Development/Python
 Url: http://pypi.python.org/pypi/python-daemon/
 
@@ -17,9 +17,11 @@ Source: python-%module_name-%version.tar
 
 BuildArch: noarch
 BuildRequires: python-module-setuptools
+BuildRequires: python-module-lockfile > 0.10 python-module-json python-module-docutils
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-lockfile > 0.10 python3-module-simplejson python3-module-docutils
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -42,7 +44,6 @@ Library to implement a well-behaved Unix daemon process.
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -64,19 +65,22 @@ popd
 %endif
 
 %files
-%doc ChangeLog LICENSE.PSF-2
+%doc ChangeLog LICENSE.*
 %python_sitelibdir/daemon
 %python_sitelibdir/python_daemon*
 
 %if_with python3
 %files -n python3-module-%module_name
-%doc ChangeLog LICENSE.PSF-2
+%doc ChangeLog LICENSE.*
 %python3_sitelibdir/daemon
 %python3_sitelibdir/python_daemon*
 %endif
 
 
 %changelog
+* Wed Aug 19 2015 Terechkov Evgenii <evg@altlinux.org> 2.0.5-alt1
+- Update to 2.0.5
+
 * Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.5-alt3
 - Added module for Python 3
 
