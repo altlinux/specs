@@ -1,14 +1,15 @@
 %define ver_major 1.5
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
-%def_with system_libav
+# switched from libav to ffmpeg since 1.5.90
+%def_without system_libav
 %if_without system_libav
 %set_verify_elf_method textrel=relaxed
 %endif
 
 Name: gst-libav
 Version: %ver_major.90
-Release: alt1
+Release: alt2
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
 Group: System/Libraries
@@ -16,12 +17,42 @@ License: GPL
 Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
+Patch: %name-1.5.90-up-bgo753869.patch
 
-%define libav_ver 11.3
+%define libav_ver 11.4
 
-BuildRequires: gst-plugins%gst_api_ver-devel >= %ver_major libavformat-devel >= %libav_ver
-BuildRequires: orc liborc-devel libswscale-devel libavresample-devel zlib-devel bzlib-devel gtk-doc
-%{?_without_system_libav:BuildRequires: glibc-devel-static libSDL-devel libXvMC-devel liblzo2-devel libvdpau-devel nasm}
+BuildRequires: gst-plugins%gst_api_ver-devel >= %ver_major 
+BuildRequires: orc liborc-devel zlib-devel bzlib-devel gtk-doc
+%if_with system_libav
+BuildRequires: libavformat-devel >= %libav_ver libswscale-devel libavresample-devel
+%else
+BuildRequires: glibc-devel-static yasm
+BuildRequires: libX11-devel libXext-devel libXvMC-devel libXfixes-devel
+BuildRequires: libfreetype-devel libSDL-devel
+BuildRequires: libgnutls-devel
+BUildRequires: liblame-devel
+BuildRequires: libvorbis-devel
+BuildRequires: libcdio-devel libcdio-paranoia-devel
+BuildRequires: libgsm-devel
+BuildRequires: libpulseaudio-devel
+BuildRequires: libxvid-devel
+BuildRequires: libx264-devel
+BuildRequires: libx265-devel
+BuildRequires: libdc1394-devel libraw1394-devel
+BuildRequires: libschroedinger-devel
+BuildRequires: libtheora-devel
+BuildRequires: bzlib-devel
+BuildRequires: liblzo2-devel
+BuildRequires: libva-devel
+BuildRequires: libvdpau-devel
+BuildRequires: libopencore-amrwb-devel
+BuildRequires: libopencore-amrnb-devel
+BuildRequires: libvpx-devel
+BuildRequires: libv4l-devel
+BuildRequires: librtmp-devel
+BuildRequires: frei0r-devel
+BuildRequires: libspeex-devel
+%endif
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters
@@ -46,6 +77,7 @@ plug-in.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -67,6 +99,10 @@ plug-in.
 %_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 
 %changelog
+* Fri Aug 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.90-alt2
+- switch to build with bundled ffmpeg
+- fixed BGO #753869 (upstream patch)
+
 * Thu Aug 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.90-alt1
 - 1.5.90
 

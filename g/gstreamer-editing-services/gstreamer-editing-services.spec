@@ -4,7 +4,7 @@
 %define api_ver 1.0
 
 Name: gstreamer-editing-services
-Version: %ver_major.2
+Version: %ver_major.90
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -113,6 +113,9 @@ library.
 %_datadir/gtk-doc/html/%_name-%api_ver/
 
 %changelog
+* Fri Aug 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.90-alt1
+- 1.5.90
+
 * Thu Jun 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
 - 1.5.2
 
