@@ -1,13 +1,13 @@
 %define oname fonttools
 Name: python-module-%oname
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 Summary: Converts OpenType and TrueType fonts to and from XML
 
 Group: Development/Python
 License: LGPL
-Url: http://sourceforge.net/projects/fonttools/
+Url: https://github.com/behdad/fonttools/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -15,7 +15,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 %add_python_req_skip Res calldll macfs
 
-Source: http://downloads.sourceforge.net/%oname/%oname-%version.tar
+# Source-url: https://github.com/behdad/fonttools/archive/%version.tar.gz
+Source: %name-%version.tar
+
+BuildArch: noarch
 
 BuildPreReq: rpm-build-compat >= 1.2
 
@@ -30,10 +33,10 @@ supports TrueType, OpenType, AFM and to an extent Type 1 and some
 Mac-specific formats.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 # macOS
-rm Lib/fontTools/ttLib/test/ttBrowser.py
+#rm Lib/fontTools/ttLib/test/ttBrowser.py
 
 %build
 %python_build
@@ -43,12 +46,16 @@ rm Lib/fontTools/ttLib/test/ttBrowser.py
 
 %files
 %_bindir/ttx
+%_bindir/pyft*
 %python_sitelibdir/FontTools/
 %python_sitelibdir/FontTools.pth
 #%python_sitelibdir/%oname-%version-py%__python_version.egg-info
 %_man1dir/*
 
 %changelog
+* Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 2.5-alt1
+- new version (2.5) with rpmgs script
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.4-alt1
 - new version 2.4 (with rpmrb script)
 
