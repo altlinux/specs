@@ -5,8 +5,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 15.7.80
-Release: alt2
+Version: 15.08.0
+Release: alt1
 %K5init
 
 Group: File tools
@@ -123,6 +123,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Tue Aug 04 2015 Sergey V Turchin <zerg@altlinux.org> 15.7.80-alt2
 - build with baloo
 

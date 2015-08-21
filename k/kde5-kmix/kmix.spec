@@ -1,7 +1,7 @@
 %define rname kmix
 
 Name: kde5-%rname
-Version: 15.4.3
+Version: 15.08.0
 Release: alt1
 %K5init altplace
 
@@ -71,6 +71,9 @@ developing applications that use %name.
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Thu Jul 02 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt1
 - new version
 

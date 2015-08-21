@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 15.4.3
+Version: 15.08.0
 Release: alt1
 %K5init
 
@@ -77,7 +77,7 @@ KF5 library
 %_K5plug/*.so
 %_K5xdgapp/*.desktop
 %_K5data/gwenview/
-%_K5data/gvpart/
+#%_K5data/gvpart/
 %_K5icon/*/*/apps/gwenview.*
 %_K5srv/ServiceMenus/*.desktop
 %_K5srv/*.desktop
@@ -96,6 +96,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Thu Jul 02 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname akonadi
 
 Name: kde5-%rname
-Version: 15.7.80
+Version: 15.08.0
 Release: alt1
 %K5init altplace
 
@@ -119,6 +119,8 @@ KF5 library
 install -m 0755 %SOURCE10 %buildroot/%_K5bin/akonadi5_mysql_install_db
 mv %buildroot/%_K5xdgmime/akonadi{,5}-mime.xml
 
+mkdir -p %buildroot/%_K5srv/akonadi/contact
+
 %files
 %_K5dbus_srv/org.freedesktop.Akonadi.Control.service
 %_K5bin/akonadi_agent_launcher
@@ -140,6 +142,8 @@ mv %buildroot/%_K5xdgmime/akonadi{,5}-mime.xml
 
 %files common
 %dir %_K5xdgconf/akonadi/
+%dir %_K5srv/akonadi/
+%dir %_K5srv/akonadi/contact/
 %config(noreplace) %_K5xdgconf/akonadi.categories
 %_K5xdgmime/akonadi5-mime.xml
 
@@ -156,5 +160,11 @@ mv %buildroot/%_K5xdgmime/akonadi{,5}-mime.xml
 %_K5lib/libKF5AkonadiPrivate.so.*
 
 %changelog
+* Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
+* Mon Aug 10 2015 Sergey V Turchin <zerg@altlinux.org> 15.7.90-alt1
+- new version
+
 * Mon Aug 03 2015 Sergey V Turchin <zerg@altlinux.org> 15.7.80-alt1
 - initial build
