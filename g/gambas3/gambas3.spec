@@ -1,8 +1,9 @@
-%define appdir  %_datadir/%name 
+%define appdir  %_datadir/%name
 %def_enable    opengl
+%def_without   jit
 
 Name:		gambas3
-Version:	3.7.1
+Version:	3.8.0
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -39,6 +40,7 @@ BuildRequires:  libgmp-devel
 BuildRequires:	libgnome-keyring-devel
 BuildRequires:	libgsl-devel
 BuildRequires:	libgtk+2-devel
+BuildRequires:	libgtk+3-devel
 BuildRequires:	libgtkglext-devel
 BuildRequires:	libICE-devel
 BuildRequires:	libjpeg-devel
@@ -54,6 +56,10 @@ BuildRequires:	libSDL-devel
 BuildRequires:	libSDL_image-devel
 BuildRequires:	libSDL_mixer-devel
 BuildRequires:	libSDL_ttf-devel
+BuildRequires:	libSDL2-devel
+BuildRequires:	libSDL2_image-devel
+BuildRequires:	libSDL2_mixer-devel
+BuildRequires:	libSDL2_ttf-devel
 BuildRequires:	libsqlite3-devel
 BuildRequires:	libsqlite-devel
 BuildRequires:	libssl-devel
@@ -69,11 +75,16 @@ BuildRequires:	llvm-devel
 BuildRequires:	pkg-config
 BuildRequires:	postgresql-devel
 BuildRequires:	qt4-devel
+BuildRequires:  qt5-base-devel
+BuildRequires:  qt5-svg-devel
+BuildRequires:  qt5-webkit-devel
+BuildRequires:  qt5-x11extras-devel
 BuildRequires:	xdg-utils
 BuildRequires:	zlib-devel
 
 Patch1:		%name-2.99.1-nolintl.patch
 Patch2:		%name-2.99.1-noliconv.patch
+Patch3:		%name-3.8.0-fix-bad-elf-symbol-in-gb.sdl2.patch
 # Use libv4l1
 Patch4:		%name-3.3.4-use-libv4l1.patch
 
@@ -130,6 +141,7 @@ Requires:	%name-gb-desktop = %version-%release
 Requires:	%name-gb-eval-highlight = %version-%release
 Requires:	%name-gb-form = %version-%release
 Requires:	%name-gb-form-dialog = %version-%release
+Requires:       %name-gb-form-editor = %version-%release
 Requires:	%name-gb-form-mdi = %version-%release
 Requires:	%name-gb-form-stock = %version-%release
 Requires:	%name-gb-gtk = %version-%release
@@ -168,7 +180,6 @@ Requires:      %name-gb-complex = %version-%release
 Requires:      %name-gb-compress = %version-%release
 Requires:      %name-gb-crypt = %version-%release
 Requires:      %name-gb-data = %version-%release
-Requires:      %name-gb-db = %version-%release
 Requires:      %name-gb-db-form = %version-%release
 Requires:      %name-gb-db-mysql = %version-%release
 Requires:      %name-gb-db-odbc = %version-%release
@@ -176,57 +187,29 @@ Requires:      %name-gb-db-postgresql = %version-%release
 Requires:      %name-gb-db-sqlite2 = %version-%release
 Requires:      %name-gb-db-sqlite3 = %version-%release
 Requires:      %name-gb-dbus = %version-%release
-Requires:      %name-gb-desktop = %version-%release
-Requires:      %name-gb-desktop-gnome = %version-%release
-Requires:      %name-gb-eval-highlight = %version-%release
-Requires:      %name-gb-form = %version-%release
-Requires:      %name-gb-form-dialog = %version-%release
-Requires:      %name-gb-form-mdi = %version-%release
-Requires:      %name-gb-form-stock = %version-%release
-Requires:      %name-gb-httpd = %version-%release
-Requires:      %name-gb-gmp = %version-%release
-Requires:      %name-gb-gsl = %version-%release
-Requires:      %name-gb-gtk = %version-%release
-Requires:      %name-gb-gtk-opengl = %version-%release
-Requires:      %name-gb-gui = %version-%release
-Requires:      %name-gb-image = %version-%release
-Requires:      %name-gb-image-effect = %version-%release
-Requires:      %name-gb-image-imlib = %version-%release
-Requires:      %name-gb-args = %version-%release
-Requires:      %name-gb-cairo = %version-%release
-Requires:      %name-gb-chart = %version-%release
-Requires:      %name-gb-clipper = %version-%release
-Requires:      %name-gb-complex = %version-%release
-Requires:      %name-gb-compress = %version-%release
-Requires:      %name-gb-crypt = %version-%release
-Requires:      %name-gb-data = %version-%release
 Requires:      %name-gb-db = %version-%release
-Requires:      %name-gb-db-form = %version-%release
-Requires:      %name-gb-db-mysql = %version-%release
-Requires:      %name-gb-db-odbc = %version-%release
-Requires:      %name-gb-db-postgresql = %version-%release
-Requires:      %name-gb-db-sqlite2 = %version-%release
-Requires:      %name-gb-db-sqlite3 = %version-%release
-Requires:      %name-gb-dbus = %version-%release
-Requires:      %name-gb-desktop = %version-%release
 Requires:      %name-gb-desktop-gnome = %version-%release
+Requires:      %name-gb-desktop = %version-%release
 Requires:      %name-gb-eval-highlight = %version-%release
-Requires:      %name-gb-form = %version-%release
 Requires:      %name-gb-form-dialog = %version-%release
 Requires:      %name-gb-form-mdi = %version-%release
 Requires:      %name-gb-form-stock = %version-%release
-Requires:      %name-gb-httpd = %version-%release
+Requires:      %name-gb-form = %version-%release
 Requires:      %name-gb-gmp = %version-%release
 Requires:      %name-gb-gsl = %version-%release
 Requires:      %name-gb-gtk = %version-%release
 Requires:      %name-gb-gtk-opengl = %version-%release
+Requires:      %name-gb-gtk3 = %version-%release
 Requires:      %name-gb-gui = %version-%release
+Requires:      %name-gb-httpd = %version-%release
 Requires:      %name-gb-image = %version-%release
 Requires:      %name-gb-image-effect = %version-%release
 Requires:      %name-gb-image-imlib = %version-%release
 Requires:      %name-gb-image-io = %version-%release
 Requires:      %name-gb-inotify = %version-%release
+%if_with jit
 Requires:      %name-gb-jit = %version-%release
+%endif
 Requires:      %name-gb-logging = %version-%release
 Requires:      %name-gb-map = %version-%release
 Requires:      %name-gb-markdown = %version-%release
@@ -234,10 +217,10 @@ Requires:      %name-gb-media = %version-%release
 Requires:      %name-gb-memcached = %version-%release
 Requires:      %name-gb-mime = %version-%release
 Requires:      %name-gb-ncurses = %version-%release
-Requires:      %name-gb-net = %version-%release
 Requires:      %name-gb-net-curl = %version-%release
 Requires:      %name-gb-net-pop3 = %version-%release
 Requires:      %name-gb-net-smtp = %version-%release
+Requires:      %name-gb-net = %version-%release
 Requires:      %name-gb-openal = %version-%release
 %if_enabled opengl
 Requires:      %name-gb-opengl = %version-%release
@@ -258,6 +241,8 @@ Requires:      %name-gb-report2 = %version-%release
 Requires:      %name-gb-scanner = %version-%release
 Requires:      %name-gb-sdl = %version-%release
 Requires:      %name-gb-sdl-sound = %version-%release
+Requires:      %name-gb-sdl2 = %version-%release
+Requires:      %name-gb-sdl2-audio = %version-%release
 Requires:      %name-gb-settings = %version-%release
 Requires:      %name-gb-signal = %version-%release
 Requires:      %name-gb-util = %version-%release
@@ -270,6 +255,11 @@ Requires:      %name-gb-xml-libxml = %version-%release
 Requires:      %name-gb-xml-rpc = %version-%release
 Requires:      %name-gb-xml-xslt = %version-%release
 Requires:      %name-gb-web = %version-%release
+# New components
+Requires:      %name-gb-form-editor = %version-%release
+Requires:      %name-gb-qt5 = %version-%release
+Requires:      %name-gb-qt5-opengl = %version-%release
+Requires:      %name-gb-qt5-webkit = %version-%release
 
 %description full
 Gambas3 with all components.
@@ -496,6 +486,14 @@ Requires:	%name-runtime = %version-%release
 %description gb-gtk
 This package includes the Gambas3 GTK2 GUI component.
 
+%package gb-gtk3
+Summary:	Gambas3 component package for gtk3
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-gtk3
+This package includes the Gambas3 GTK3 GUI component.
+
 %if_enabled opengl
 %package gb-gtk-opengl
 Summary:	Gambas3 component package for gtk.opengl
@@ -516,13 +514,13 @@ Requires:	%name-runtime = %version-%release
 This is a component that just loads gb.qt if you are running KDE or
 gb.gtk in the other cases.
 
-%package gb-image 
-Summary:	Gambas3 component package for image 
+%package gb-image
+Summary:	Gambas3 component package for image
 License:	GPLv2 or QPL
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
-%description gb-image 
+%description gb-image
 Image processing component for Gambas3.
 
 %package gb-image-effect
@@ -557,6 +555,7 @@ Requires:	%name-runtime = %version-%release
 %description gb-inotify
 This component allows you to perform inotify operations.
 
+%if_with jit
 %package gb-jit
 Summary:	Gambas3 Just In Time compiler
 Group:		Development/Tools
@@ -564,6 +563,7 @@ Requires:	%name-runtime = %version-%release
 
 %description gb-jit
 Gambas3 Just In Time compiler.
+%endif
 
 %package gb-logging
 Summary:	Gambas3 component package for logging
@@ -639,8 +639,8 @@ Requires:	%name-runtime = %version-%release
 This Gambas3 component allows your programs to easily become FTP or HTTP
 clients.
 
-%package gb-net-pop3 
-Summary:	Gambas3 component package for net.pop3 
+%package gb-net-pop3
+Summary:	Gambas3 component package for net.pop3
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
@@ -649,8 +649,8 @@ This component implements a POP3 client. It allows to retrieve mails by
 following the POP3 protocol. It support SSL/TLS encryption provided
 that openssl is installed on your system.
 
-%package gb-net-smtp 
-Summary:	Gambas3 component package for net.smtp 
+%package gb-net-smtp
+Summary:	Gambas3 component package for net.smtp
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
@@ -669,12 +669,12 @@ Requires:      %name-runtime = %version-%release
 Gambas3 component package for openal.
 
 %if_enabled opengl
-%package gb-opengl 
-Summary:	Gambas3 component package for opengl 
+%package gb-opengl
+Summary:	Gambas3 component package for opengl
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
-%description gb-opengl 
+%description gb-opengl
 This component allows you to use the Mesa libraries to do 3D operations.
 
 %package gb-opengl-glu
@@ -719,12 +719,12 @@ Requires:	%name-runtime = %version-%release
 %description gb-option
 This component allows you to interpret command-line options.
 
-%package gb-pcre 
-Summary:	Gambas3 component package for pcre 
+%package gb-pcre
+Summary:	Gambas3 component package for pcre
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
-%description gb-pcre 
+%description gb-pcre
 This component allows you to use Perl compatible regular expresions
 within Gambas code.
 
@@ -818,6 +818,22 @@ manages up to 32 sound tracks that can play sounds from memory, and
 one music track that can play music from a file. Everything is mixed
 in real time.
 
+%package gb-sdl2
+Summary:	Gambas3 component for sdl2
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-sdl2
+Gambas3 component for sdl2
+
+%package gb-sdl2-audio
+Summary:	Gambas3 component for sdl2-audio
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-sdl2-audio
+Gambas3 component for sdl2-audio.
+
 %package gb-settings
 Summary:	Gambas3 component package for settings
 Group:		Development/Tools
@@ -852,12 +868,12 @@ Requires:	%name-runtime = %version-%release
 Component written in Gambas3 that provides utility functions to the
 web applications.
 
-%package gb-v4l 
-Summary:	Gambas3 component package for v4l 
+%package gb-v4l
+Summary:	Gambas3 component package for v4l
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
-%description gb-v4l 
+%description gb-v4l
 This component allows access to Video4Linux devices.
 
 %package gb-vb
@@ -920,10 +936,44 @@ Requires:	%name-runtime = %version-%release
 %description gb-xml-xslt
 This component allows you to use xml-xslt.
 
+%package gb-form-editor
+Summary:	Gambas3 component package for form.editor
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-form-editor
+This package contains form.editor component.
+
+%package gb-qt5
+Summary:	Gambas3 component package for qt5
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-qt5
+This package includes Gambas3 QT5 GUI component.
+
+%package gb-qt5-opengl
+Summary:	Gambas3 component package for qt5-opengl
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-qt5-opengl
+This package contains the Gambas3 qt-opengl components.
+
+%package gb-qt5-webkit
+Summary:	Gambas3 component package for qt5-webkit
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-qt5-webkit
+This package contains the Gambas3 qt-webkit components.
+
+
 %prep
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 %patch4 -p2
 
 # We used to patch these out, but this is simpler.
@@ -1002,6 +1052,10 @@ for i in main; do
 	sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' $i/libtool
 	sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' $i/libtool
 done
+# for some unholy reason, using system libtool breaks on qt5. so we don't.
+pushd gb.qt5
+make %?_smp_mflags
+popd
 make LIBTOOL=%_bindir/libtool %?_smp_mflags
 
 %install
@@ -1198,6 +1252,13 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.gtk.info
 %appdir/info/gb.gtk.list
 
+%files gb-gtk3
+%_libdir/%name/gb.gtk3.component
+%_libdir/%name/gb.gtk3.so*
+%_libdir/%name/gb.gtk3.la
+%appdir/info/gb.gtk3.info
+%appdir/info/gb.gtk3.list
+
 %if_enabled opengl
 %files gb-gtk-opengl
 %_libdir/%name/gb.gtk.opengl.*
@@ -1231,9 +1292,11 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.inotify.*
 %appdir/info/gb.inotify.*
 
+%if_with jit
 %files gb-jit
 %_libdir/%name/gb.jit.*
 %appdir/info/gb.jit.*
+%endif
 
 %files gb-logging
 %{_libdir}/%{name}/gb.logging.*
@@ -1331,11 +1394,11 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.pdf.info
 %appdir/info/gb.pdf.list
 
-%files gb-qt4 
+%files gb-qt4
 %_libdir/%name/gb.qt4.component
-%_libdir/%name/gb.qt4.so* 
-%_libdir/%name/gb.qt4.la 
-%appdir/info/gb.qt4.info 
+%_libdir/%name/gb.qt4.so*
+%_libdir/%name/gb.qt4.la
+%appdir/info/gb.qt4.info
 %appdir/info/gb.qt4.list
 
 %files gb-qt4-ext
@@ -1375,6 +1438,22 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %files gb-sdl-sound
 %_libdir/%name/gb.sdl.sound.*
 %appdir/info/gb.sdl.sound.*
+
+%files gb-sdl2
+%_libdir/%name/gb.sdl2.component
+%_libdir/%name/gb.sdl2.so
+%_libdir/%name/gb.sdl2.so.*
+%_libdir/%name/gb.sdl2.la
+%appdir/info/gb.sdl2.info
+%appdir/info/gb.sdl2.list
+
+%files gb-sdl2-audio
+%_libdir/%name/gb.sdl2.audio.component
+%_libdir/%name/gb.sdl2.audio.so
+%_libdir/%name/gb.sdl2.audio.so.*
+%_libdir/%name/gb.sdl2.audio.la
+%appdir/info/gb.sdl2.audio.info
+%appdir/info/gb.sdl2.audio.list
 
 %files gb-settings
 %_libdir/%name/gb.settings.*
@@ -1431,7 +1510,34 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.xml.xslt.*
 %appdir/info/gb.xml.xslt.*
 
+%files gb-form-editor
+%_libdir/%name/gb.form.editor.*
+%appdir/info/gb.form.editor.*
+%appdir/control/gb.form.editor/
+
+%files gb-qt5
+%_libdir/%name/gb.qt5.component
+%_libdir/%name/gb.qt5.so*
+%_libdir/%name/gb.qt5.la
+%appdir/info/gb.qt5.info
+%appdir/info/gb.qt5.list
+
+%files gb-qt5-opengl
+%_libdir/%name/gb.qt5.opengl.*
+%appdir/info/gb.qt5.opengl.*
+
+%files gb-qt5-webkit
+%_libdir/%name/gb.qt5.webkit.*
+%appdir/info/gb.qt5.webkit.*
+
 %changelog
+* Sun Aug 16 2015 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
+- New version (http://gambaswiki.org/wiki/doc/release/3.8.0)
+- New components: gb.form.editor, gb.qt5, gb.qt5.opengl, gb.qt5.webkit
+- Remove trailing spaces in spec file
+- Add support for GTK+3 and SDL2 components
+- Build without gb.jit
+
 * Wed Apr 01 2015 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
 - New version (http://gambaswiki.org/wiki/doc/release/3.7.1)
 - Remove gambas3-examples package because IDE use online access for
