@@ -1,5 +1,7 @@
+%define oversion %(echo %version | sed -e "s|\\.|_|g")
+
 Name: iozone
-Version: 3.429
+Version: 3.430
 Release: alt1
 
 Summary: IOzone Filesystem Benchmark
@@ -11,7 +13,6 @@ Url: http://www.iozone.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-%define oversion %(echo %version | sed -e "s|\\.|_|g")
 # Source-url: http://www.iozone.org/src/current/%name%oversion.tar
 Source: %name-%version.tar
 Source1: %name-graphs
@@ -89,6 +90,9 @@ catdoc Run_rules.doc >Run_rules.txt
 %_datadir/%name/
 
 %changelog
+* Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 3.430-alt1
+- new version 3.430 (with rpmrb script)
+
 * Sat Nov 22 2014 Vitaly Lipatov <lav@altlinux.ru> 3.429-alt1
 - new version (3.429) with rpmgs script
 - recode spec to utf-8
