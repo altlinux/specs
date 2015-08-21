@@ -1,18 +1,24 @@
+%define haproxy_user    _haproxy
+%define haproxy_group   %haproxy_user
+%define haproxy_home    %_localstatedir/haproxy
+%define haproxy_confdir %_sysconfdir/haproxy
+%define haproxy_datadir %_datadir/haproxy
+
 Name: haproxy
-Version: 1.4.20
+Version: 1.5.14
 Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 License: GPLv2+
 Group: System/Servers
 
-URL: http://haproxy.1wt.eu/
-Source0: http://haproxy.1wt.eu/download/1.4/src/%name-%version.tar.gz
-Source1: haproxy.cfg
-Source2: haproxy.init
+URL: http://www.haproxy.org/
+Source: %name-%version.tar
+Source1: %name.cfg
+Source2: %name.init
+Source3: %name.logrotate
 
-# Automatically added by buildreq on Wed Mar 23 2011
-BuildRequires: libpcre-devel
+BuildRequires: libpcre-devel zlib-devel libssl-devel
 
 %description
 HA-Proxy is a TCP/HTTP reverse proxy which is particularly suited for high
@@ -40,33 +46,41 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%make TARGET=linux26 USE_PCRE=1 USE_LINUX_TPROXY=1 USE_LINUX_SPLICE=1 \
-	${regparm_opts} "ADDINC=$(pcre-config --cflags)" "CFLAGS=%optflags"
-
-# Build the contrib halog program. Build correct version (halog or halog64)
-# and make sure it always installed as halog.
-halog="halog"
-%if "%_lib" == "lib64"
-halog="halog64"
-%endif
+%make_build CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 \
+	"${regparm_opts}" PREFIX="%_prefix" ADDINC="$(pcre-config --cflags)" CFLAGS="%optflags"
 
 pushd contrib/halog
-%make $halog
-%if "%_lib" == "lib64"
-mv $halog halog
-%endif
+%make halog OPTIMIZE="%optflags"
+popd
+
+pushd contrib/iprange
+%make iprange OPTIMIZE="%optflags"
+popd
+
+pushd contrib/systemd
+%make haproxy.service PREFIX="%_prefix"
 popd
 
 %install
-%make_install install DESTDIR=%buildroot PREFIX=/usr
+%make_install install-bin DESTDIR=%buildroot PREFIX="%_prefix"
+%make_install install-man DESTDIR=%buildroot PREFIX="%_prefix"
 
-install -d -m0755 %buildroot%_datadir/haproxy/
-cp -p examples/errorfiles/* %buildroot%_datadir/haproxy/
+install -p -D -m 0644 %SOURCE1 %buildroot%haproxy_confdir/%name.cfg
+install -D -m 0755 %SOURCE2 %buildroot%_initrddir/haproxy
+install -p -D -m 0644 contrib/systemd/haproxy.service %buildroot%_unitdir/%name.service
+install -p -D -m 0644 %SOURCE3 %buildroot%_logrotatedir/%name
+install -d -m 0755 %buildroot%haproxy_home
+install -d -m 0755 %buildroot%haproxy_datadir
+install -d -m 0755 %buildroot%_bindir
+install -p -m 0755 contrib/halog/halog %buildroot%_bindir/halog
+install -p -m 0755 contrib/iprange/iprange %buildroot%_bindir/iprange
+cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 
-install -D -m0644 %SOURCE1 %buildroot%_sysconfdir/haproxy/haproxy.cfg
-install -D -m0755 %SOURCE2 %buildroot%_initrddir/haproxy
 
-install -D -m0755 contrib/halog/halog %buildroot%_bindir/halog
+%pre
+%_sbindir/groupadd -r -f %haproxy_group >/dev/null 2>&1 ||:
+%_sbindir/useradd -g %haproxy_group -c 'HA Proxy' \
+    -d %haproxy_home -s /dev/null -r -l -M %haproxy_user >/dev/null 2>&1 ||:
 
 %post
 %post_service haproxy
@@ -75,16 +89,29 @@ install -D -m0755 contrib/halog/halog %buildroot%_bindir/halog
 %preun_service haproxy
 
 %files
-%doc CHANGELOG LICENSE doc/architecture.txt doc/configuration.txt
-%config(noreplace) %_sysconfdir/haproxy/
-%config %_initrddir/haproxy
-%_sbindir/haproxy
-%_datadir/haproxy
-%_bindir/halog
+%doc CHANGELOG LICENSE README ROADMAP doc/architecture.txt doc/configuration.txt doc/proxy-protocol.txt examples/*.cfg
+%dir %haproxy_confdir
+%config(noreplace) %haproxy_confdir/%name.cfg
+%dir %haproxy_datadir
+%haproxy_datadir/*
+%_logrotatedir/%name
+%_initrddir/%name
+%_unitdir/%name.service
+%_sbindir/*
+%_bindir/*
 %_man1dir/*
-%exclude /usr/doc
+%attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Fri Aug 21 2015 Alexey Shabalin <shaba@altlinux.ru> 1.5.14-alt1
+- 1.5.14
+- run demon as _haproxy user
+- update default config
+- update init script
+- add systemd unit
+- build with libssl support
+- build with zlib support
+
 * Fri Mar 16 2012 Victor Forsiuk <force@altlinux.org> 1.4.20-alt1
 - 1.4.20
 
