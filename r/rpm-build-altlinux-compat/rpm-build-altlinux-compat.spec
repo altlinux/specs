@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 1.8.5
+Version: 1.8.6
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -111,6 +111,9 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.6-alt1
+- add add_findreq_skiplist/add_findprov_skiplist empty macros
+
 * Tue Aug 18 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.5-alt1
 - add _udevrulesdir and _udevhwdbdir for ALT Linux p5
 - add skip for add_findreq_lib_path
