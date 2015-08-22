@@ -1,5 +1,5 @@
 Name: uftp
-Version: 3.7.1
+Version: 4.7
 Release: alt1
 
 Summary: A multicast FTP
@@ -8,9 +8,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 License: GPL
 Group: Networking/File transfer
-Url: http://www.tcnj.edu/~bush/uftp.html
+Url: http://uftp-multicast.sourceforge.net/
 
-Source: http://www.tcnj.edu/~bush/downloads/%name-%version.tar
+Source: http://sourceforge.net/projects/uftp-multicast/files/source-tar/uftp-%version.tar
 
 # Automatically added by buildreq on Thu Jan 31 2013
 BuildRequires: libssl-devel
@@ -68,6 +68,9 @@ remote printing plants.
 %doc ReadMe.txt
 
 %changelog
+* Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 4.7-alt1
+- new version 4.7 (with rpmrb script)
+
 * Thu Jan 31 2013 Vitaly Lipatov <lav@altlinux.ru> 3.7.1-alt1
 - new version 3.7.1 (with rpmrb script)
 
