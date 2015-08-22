@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: ipython
-Version: 3.2.1
+Version: 4.0.0
 Release: alt1
 
 %setup_python_module IPython
@@ -23,15 +23,23 @@ BuildPreReq: python3-module-tornado python-module-setuptools pyjsdoc
 BuildPreReq: python-module-sphinx-devel python-module-zmq
 BuildPreReq: python-module-tornado python-modules-sqlite3
 BuildPreReq: python-module-matplotlib-sphinxext python-module-numpydoc
-BuildPreReq: python-module-jsonschema
+BuildPreReq: python-module-jsonschema python-module-traitlets
+BuildPreReq: python-module-pexpect python-module-pickleshare
+BuildPreReq: python-module-simplegeneric python-module-ipykernel
+BuildPreReq: python-module-ipyparallel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-traitlets
+BuildPreReq: python3-module-pexpect python3-module-pickleshare
+BuildPreReq: python3-module-simplegeneric python3-module-ipykernel
+BuildPreReq: python3-module-ipyparallel
 %endif
 
 %add_python_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted msvcrt oct2py rpy2 System builtins clr
 %add_python3_req_skip __main__
-%py_requires jsonschema
+%py_requires jsonschema traitlets pexpect simplegeneric ipykernel
+%py_requires ipyparallel
 
 
 %description
@@ -61,7 +69,8 @@ Group: Development/Python3
 %add_python3_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted
 %add_python3_req_skip msvcrt wx gtk compiler OpenGL oct2py rpy2
 %add_python3_req_skip System clr
-%py3_requires jsonschema
+%py3_requires jsonschema traitlets pexpect simplegeneric ipykernel
+%py3_requires ipyparallel
 
 %description -n %{name}3
 IPython provides a replacement for the interactive Python interpreter with
@@ -112,8 +121,9 @@ This package contains examples for IPython.
 #patch0 -p1
 rm -f IPython/Extensions/{PhysicalQInteractive.py,scitedirector.py,ipy_render.py,ipy_synchronize_with.py,ipy_traits_completer.py,ipy_winpdb.py,win32clip.py}
 
+mkdir -p pushd IPython/html/static
 pushd IPython/html/static
-rm -fR components
+#rm -fR components
 tar -xf %SOURCE1
 popd
 
@@ -143,7 +153,7 @@ rm -rf %buildroot%python3_sitelibdir/IPython/{tests,frontend/cocoa,*/tests,kerne
 rm -f %buildroot%_bindir/iptest3
 popd
 pushd %buildroot%_bindir
-for i in ipcluster ipcontroller ipengine ipython
+for i in $(ls)
 do
 	mv $i ${i}3
 done
@@ -164,7 +174,6 @@ cp -fR docs/build/html/* examples %buildroot%_docdir/%name/
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*3
-%exclude %_bindir/%{name}3*
 %endif
 %_man1dir/*
 %dir %_docdir/%name
@@ -185,12 +194,14 @@ cp -fR docs/build/html/* examples %buildroot%_docdir/%name/
 %if_with python3
 %files -n %{name}3
 %_bindir/*3
-%_bindir/%{name}3*
 %python3_sitelibdir/*
 %endif
 
 
 %changelog
+* Sat Aug 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1
+- Version 4.0.0
+
 * Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
 - Version 3.2.1
 
