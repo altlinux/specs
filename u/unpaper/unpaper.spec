@@ -1,5 +1,5 @@
 Name: unpaper
-Version: 0.4.2
+Version: 6.1
 Release: alt1
 
 Summary: unpaper is a post-processing tool for scanned sheets of paper
@@ -17,9 +17,10 @@ Packager: Yury Aliaev <mutabor@altlinux.ru>
 Source: http://www.flameeyes.eu/files/%name-%version.tar
 
 BuildPreReq: docbook-style-xsl
-# Automatically added by buildreq on Fri May 25 2012
-# optimized out: libgpg-error xml-common
-BuildRequires: libdb4-devel netpbm xsltproc
+# manually removed: python3 python3-module-zope ruby ruby-stdlibs 
+# Automatically added by buildreq on Sat Aug 22 2015
+# optimized out: libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit pkg-config python3-base
+BuildRequires: libavformat-devel xsltproc
 
 %description
 unpaper is a post-processing tool for scanned sheets of paper,
@@ -56,9 +57,12 @@ unpaper есть программа для обработки страниц п�
 %_bindir/*
 %_man1dir/*
 %doc %_docdir/%name/
-%doc AUTHORS NEWS README TODO
+%doc AUTHORS NEWS README.md
 
 %changelog
+* Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt1
+- new version 6.1 (with rpmrb script)
+
 * Thu Apr 25 2013 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
 - cleanup spec
 - new version 0.4.2 (with rpmrb script)
