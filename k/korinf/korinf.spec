@@ -1,8 +1,8 @@
 Name: korinf
-Version: 2.0.10
+Version: 2.0.12
 Release: alt1
 
-Summary: Korinf multidistro build system
+Summary: Korinf multidistro single source build system
 
 License: AGPLv3
 Group: Development/Other
@@ -47,6 +47,18 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 2.0.12-alt1
+- remove unsupported ALT Linux 4.0/4.1
+- last_rpm: use more correct rpmevrcmp
+- remove suddenly printer package name
+- add Fedora/22
+
+* Tue Jun 16 2015 Vitaly Lipatov <lav@altlinux.ru> 2.0.11-alt1
+- fix linked systems list, update system list
+- mount: try to umount twice
+- mainbuild: never override links
+- converts/archlinux: use number part of version
+
 * Fri Feb 06 2015 Vitaly Lipatov <lav@altlinux.ru> 2.0.10-alt1
 - get_target_list: fix TARGETPATH assert
 - set_rebuildlist: remove TARGETPATH assert
