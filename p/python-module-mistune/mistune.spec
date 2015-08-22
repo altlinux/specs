@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7
-Release: alt1.git20150730
+Release: alt1.git20150811
 Summary: The fastest markdown parser in pure Python
 License: BSD
 Group: Development/Python
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.git20150811
+- New snapshot
+
 * Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.git20150730
 - Version 0.7
 
