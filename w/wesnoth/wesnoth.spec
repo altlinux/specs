@@ -34,7 +34,7 @@ BuildRequires: libvorbis-devel
 #define wessuffix -%wesdesktopsuffix
 
 Name: wesnoth%wessuffix
-Version: 1.12.1
+Version: 1.12.4
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
@@ -350,7 +350,7 @@ mv %buildroot%_datadir/%name/data/tools/unit_tree %buildroot/%python_sitelibdir_
 
 mkdir -p %buildroot%_docdir/%name-%version/manual
 mv %buildroot%_docdir/%name/* %buildroot%_docdir/%name-%version/manual/
-install -m 0644 README copyright changelog.* %buildroot%_docdir/%name-%version/
+install -m 0644 README.md copyright changelog.* %buildroot%_docdir/%name-%version/
 install -d -m 0755 %buildroot%_iconsdir/hicolor/64x64/apps
 mv %buildroot{%_pixmapsdir/wesnoth-icon,%_iconsdir/hicolor/64x64/apps/%name}.png
 mv %buildroot{%_pixmapsdir/wesnoth_editor-icon,%_iconsdir/hicolor/64x64/apps/wesnoth_editor%{wessuffix}}.png
@@ -552,7 +552,7 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/README
+%doc %_docdir/%name-%version/README.md
 %doc %_docdir/%name-%version/copyright
 %doc %_docdir/%name-%version/changelog.* 
 %dir %_datadir/%name
@@ -583,7 +583,7 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 
 %files doc
 %dir %_docdir/%name-%version
-%_docdir/%name-%version/manual
+/%_docdir/%name-%version/manual
 
 %if_enabled editor
 %files editor
@@ -628,6 +628,9 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Fri Aug 21 2015 Igor Vlasenko <viy@altlinux.ru> 1.12.4-alt1
+- 1.20.4 stable release
+
 * Tue Feb 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1
 - 1.20.1 stable release
 
