@@ -1,5 +1,5 @@
 Name: tea
-Version: 37.2.0
+Version: 41.0.0
 Release: alt1
 
 Summary: Powerful text editor with many HTML editing and text processing functions
@@ -59,6 +59,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 41.0.0-alt1
+- new version 41.0.0 (with rpmrb script)
+
 * Sat Apr 05 2014 Vitaly Lipatov <lav@altlinux.ru> 37.2.0-alt1
 - new version 37.2.0 (with rpmrb script)
 
