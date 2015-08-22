@@ -1,7 +1,7 @@
 %define destname rpm-uscan
 %define debian_ver 2.14.4
 Name: %destname
-Version: 0.15.%debian_ver
+Version: 0.16.%debian_ver
 Release: alt1
 
 Summary: Utility to check watch files
@@ -43,6 +43,9 @@ install -Dm644 scripts/uscan.1 %buildroot%_man1dir/%destname.1
 %_man1dir/*
 
 %changelog
+* Sat Aug 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.16.2.14.4-alt1
+- bugfix release
+
 * Sun Jun 15 2014 Igor Vlasenko <viy@altlinux.ru> 0.15.2.14.4-alt1
 - new version
 
