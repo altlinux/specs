@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.45
+Version: 0.46
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -14,8 +14,9 @@ License: GPL2+
 Source: %name-%version.tar
 
 Requires: /usr/bin/relative /usr/bin/parentlock
-# for mail 
-Requires: perl(Date/Format.pm) qa-robot
+# for mail
+%filter_from_requires /^mutt/d
+Requires: perl(Date/Format.pm) qa-robot /usr/bin/mutt
 
 %description
 %summary
@@ -78,6 +79,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Sun Aug 23 2015 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
+- Mass 0.15 support
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1
 - fixes for too many files in dir listing in cpanbuilder
 
