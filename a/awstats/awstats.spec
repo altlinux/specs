@@ -5,7 +5,7 @@
 
 Name: awstats
 Version: 7.4
-Release: alt0.9.20150714
+Release: alt0.10.20150714
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.KOI8-R):	Анализатор логов Web-сервера в режиме реального времени
@@ -173,6 +173,10 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Sat Aug 22 2015 L.A. Kostis <lakostis@altlinux.ru> 7.4-alt0.10.20150714
+- lib/search_engines.pm: disable keywords decoding for google/yandex due
+  result encryption.
+
 * Mon Aug 10 2015 L.A. Kostis <lakostis@altlinux.ru> 7.4-alt0.9.20150714
 - Add awstats to apache2 group too (closes #28698).
 
