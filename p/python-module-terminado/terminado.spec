@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.git20150203
+Version: 0.5
+Release: alt1.git20150717
 Summary: Terminals served by tornado websockets
 License: BSD
 Group: Development/Python
@@ -182,6 +182,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20150717
+- Version 0.5
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20150203
 - Version 0.4
 
