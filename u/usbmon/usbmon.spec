@@ -1,6 +1,6 @@
 Name: usbmon
-Version: 5.4
-Release: alt1.qa1
+Version: 6
+Release: alt1
 
 Summary: A basic front-end to usbmon
 Group: System/Base
@@ -10,7 +10,7 @@ Url: http://people.redhat.com/zaitcev/linux/
 
 Packager: Denis Baranov <baraka@altlinux.org>
 
-Source: %name-%version.tar
+Source: http://people.redhat.com/zaitcev/linux/%name-%version.tar
 
 %description
 The usbmon program collects and prints a trace of USB transactions as they
@@ -36,6 +36,9 @@ install -p -m 755 -t %buildroot%_sbindir usbmon
 %_man8dir/usbmon.8*
 
 %changelog
+* Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 6-alt1
+- new version 6 (with rpmrb script)
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
