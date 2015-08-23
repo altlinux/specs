@@ -2,7 +2,7 @@
 
 Name: ipython
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 %setup_python_module IPython
 
@@ -157,6 +157,7 @@ for i in $(ls)
 do
 	mv $i ${i}3
 done
+mv ipython33 ipython3
 popd
 %endif
 
@@ -199,6 +200,9 @@ cp -fR docs/build/html/* examples %buildroot%_docdir/%name/
 
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2
+- %_bindir/ipython33 -> %_bindir/ipython3
+
 * Sat Aug 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1
 - Version 4.0.0
 
