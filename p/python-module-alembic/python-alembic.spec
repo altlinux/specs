@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-alembic
-Version: 0.7.7
+Version: 0.8.1
 Release: alt1
 
 Summary: Database migration tool for SQLAlchemy
@@ -24,6 +24,7 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: help2man
 BuildRequires: python-devel
 BuildRequires: python-module-mako
+BuildRequires: python-module-setuptools-tests
 
 BuildRequires: python-module-nose
 BuildRequires: python-module-SQLAlchemy >= 0.7.4
@@ -31,7 +32,7 @@ BuildRequires: python-module-SQLAlchemy >= 0.7.4
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-mako python3-module-nose
-BuildPreReq: python3-module-SQLAlchemy
+BuildPreReq: python3-module-SQLAlchemy python3-module-setuptools-tests
 %endif
 
 %py_requires markupsafe
@@ -127,6 +128,9 @@ install -m 0644 alembic.1 %buildroot%_man1dir/alembic.1
 %endif
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1
+- Version 0.8.1
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.7-alt1
 - Version 0.7.7
 
