@@ -1,11 +1,11 @@
 %define oname nbconvert
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
 Summary: Converting Jupyter Notebooks
 License: BSD
 Group: Development/Python
@@ -138,6 +138,7 @@ export PATH=$PATH:%buildroot%_bindir
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
+export LC_ALL=en_US.UTF-8
 export PYTHONPATH=$PWD
 nosetests -vv
 %if_with python3
@@ -182,6 +183,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2
+- Enabled check
+
 * Sat Aug 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1
 - Initial build for Sisyphus
 
