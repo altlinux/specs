@@ -1,5 +1,5 @@
 Name:		gis-weather
-Version:	0.7.8.5
+Version:	0.7.8.7
 Release:	alt1
 License:	GPLv3
 Summary:	Customizable weather widget
@@ -61,5 +61,8 @@ grep -rl '^#!' %buildroot%_datadir/%name/ | xargs chmod 0755
 %_datadir/%name
 
 %changelog
+* Sun Aug 23 2015 Motsyo Gennadi <drool@altlinux.ru> 0.7.8.7-alt1
+- 0.7.8.7
+
 * Mon Jul 06 2015 Motsyo Gennadi <drool@altlinux.ru> 0.7.8.5-alt1
 - initial build for ALT Linux from OpenSUSE package
