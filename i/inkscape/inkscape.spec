@@ -4,7 +4,7 @@
 %define pre %nil
 Name: inkscape
 Version: 0.91
-Release: alt1.1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
@@ -39,7 +39,7 @@ BuildPreReq: desktop-file-utils
 # optimized out: fontconfig fontconfig-devel glib2-devel gnome-vfs libGConf-devel libX11-devel libatk-devel libatkmm-devel libavahi-glib libcairo-devel libcairomm-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgpg-error libgtk+2-devel libp11-kit libpango-devel libpangomm-devel libpng-devel libpoppler-devel libpoppler8-glib libsigc++2-devel libstdc++-devel  libxml2-devel perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-distribute python-module-peak python-module-zope python-modules xorg-xproto-devel zlib-devel
 BuildRequires: boost-devel-headers gcc-c++  intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms2-devel libpoppler-glib-devel libpopt-devel  libxslt-devel perl-devel python-module-mwlib python-module-paste zlib-devel
 %{?_with_gnome_vfs:BuildRequires: gnome-vfs-devel}
-BuildRequires: libwpg-devel librevenge-devel
+BuildRequires: libwpg-devel librevenge-devel libcdr-devel libvisio-devel
 BuildRequires: libpng-devel
 BuildRequires: libpoppler-devel
 
@@ -90,6 +90,8 @@ subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%_python_version|" ./configure
         --with-perl             \
         --with-xft              \
         --enable-lcms           \
+        --enable-cdr            \
+        --enable-visio          \
         --enable-poppler-cairo
 %make_build
 
@@ -128,6 +130,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 0.91-alt2
+- build with libcdr and libvisio
+
 * Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.91-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
