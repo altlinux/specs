@@ -1,11 +1,10 @@
-BuildRequires: desktop-file-utils
 # TODO: rename package
 %define oname autoscan-network
 %define _subver	.bin
 
 Name: AutoScan
 Version: 1.50
-Release: alt1.1.qa1
+Release: alt2
 
 Summary: AutoScan - a utility for network exploration
 
@@ -21,6 +20,8 @@ Patch1: autoscan-network-fixcurl.patch
 
 # Automatically added by buildreq on Mon Oct 25 2010
 BuildRequires: libao-devel libcurl-devel libelf-devel libgnomeui-devel libvorbis-devel libvte-devel libxml2-devel
+
+BuildRequires: desktop-file-utils
 
 BuildPreReq: libgnome-keyring-devel
 
@@ -62,6 +63,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_niconsdir/%oname.png
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 1.50-alt2
+- fix desktop file
+
 * Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.50-alt1.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
