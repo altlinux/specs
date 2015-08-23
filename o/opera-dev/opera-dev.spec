@@ -1,5 +1,5 @@
-%define		softver 32.0
-%define		buildver 1933.0
+%define		softver 33.0
+%define		buildver 1963.0
 
 Name:		opera-dev
 Version:	%softver.%buildver
@@ -64,6 +64,9 @@ subst 's|PepperFlash/libpepflashplayer.so|pepper-plugins/libpepflashplayer.so|g'
 %_datadir/lintian
 
 %changelog
+* Sun Aug 23 2015 Motsyo Gennadi <drool@altlinux.ru> 33.0.1963.0-alt1
+- packed 33.0.1963.0 snapshot
+
 * Thu Jul 23 2015 Motsyo Gennadi <drool@altlinux.ru> 32.0.1933.0-alt1
 - packed 32.0.1933.0 snapshot
 
