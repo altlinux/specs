@@ -1,7 +1,7 @@
 %define oname pymyinstall
 Name: python3-module-%oname
-Version: 0.9.184
-Release: alt1.git20150422
+Version: 1.1.434
+Release: alt1.git20150823
 Summary: Easy installation of modules for data scientists
 License: BSD
 Group: Development/Python3
@@ -10,10 +10,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/sdpython/pymyinstall.git
 Source: %name-%version.tar
-BuildArch: noarch
+#BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools-tests graphviz
 BuildPreReq: python3-module-pyquickhelper python3-module-sphinx-devel
 BuildPreReq: python3-module-requests python3-module-pip
 BuildPreReq: python3-module-sphinx_readable_theme
@@ -56,6 +56,10 @@ python3 setup.py build_sphinx
 export LC_ALL=en_US.UTF-8
 %python3_install
 
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
 %check
 export LC_ALL=en_US.UTF-8
 python3 setup.py test
@@ -63,9 +67,13 @@ python3 setup.py test
 
 %files
 %doc *.rst _doc/sphinxdoc/build/html build/notebooks
+%_bindir/*
 %python3_sitelibdir/*
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.434-alt1.git20150823
+- Version 1.1.434
+
 * Thu Apr 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.184-alt1.git20150422
 - Initial build for Sisyphus
 
