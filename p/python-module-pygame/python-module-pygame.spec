@@ -1,13 +1,11 @@
-%define fix_permissions \
-find -type d -print0 | xargs -0 chmod 0775 \
-find -type f -print0 | xargs -0 chmod 0664
 %define oname pygame
 
+# TODO: build with python3 (alt bug #31082)
 %def_without python3
 
 Name: python-module-%oname
 Version: 1.9.1
-Release: alt5
+Release: alt6
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
@@ -32,8 +30,15 @@ Requires: libSDL >= 1.2.7
 # Automatically added by buildreq on Sun Jul 22 2007
 BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libsmpeg-devel libX11-devel python-devel python-modules-compiler libpng-devel libjpeg-devel
 
-BuildPreReq: libnumpy-devel libv4l-devel
+BuildPreReq: libnumpy-devel libv4l-devel rpm-build-intro
+
+BuildPreReq: libportmidi-devel >= 217-alt3
+
 %if_with python3
+# TODO: _arraysurfarray was in our package for python2
+# TODO https://bugzilla.altlinux.org/show_bug.cgi?id=31226
+%add_python3_req_skip _arraysurfarray opencv
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel
 BuildPreReq: python3-module-distribute python-tools-2to3
@@ -151,6 +156,7 @@ cp -a . ../python3
 %build
 export LOCALBASE=%_prefix
 python config.py
+sed -i 's|-lporttime||g' Setup
 sed -i 's|\(lpthread\)|\1 -lm|g' Setup
 %add_optflags -fno-strict-aliasing
 %python_build_debug
@@ -158,6 +164,7 @@ sed -i 's|\(lpthread\)|\1 -lm|g' Setup
 %if_with python3
 pushd ../python3
 python3 config.py
+sed -i 's|-lporttime||g' Setup
 sed -i 's|\(lpthread\)|\1 -lm|g' Setup
 for i in $(find ./ -name '*.py'); do
 	2to3 -w -n $i
@@ -189,10 +196,13 @@ popd
 %python3_sitelibdir/*
 
 %files -n python3-module-%oname-devel
-%{python3_includedir}mu/*
+%{python3_includedir}m/*
 %endif
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt6
+- build with new fixed libportmidi
+
 * Sat Dec 13 2014 Dmitry Derjavin <dd@altlinux.org> 1.9.1-alt5
 - Revision up for p7 rebuild.
 
