@@ -1,12 +1,12 @@
 %define oname notebook
 
 %def_with python3
-%def_disable check
-%def_without docs
+#def_disable check
+%def_with docs
 
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt1
+Release: alt2
 Summary: Jupyter Interactive Notebook
 License: BSD
 Group: Development/Python
@@ -18,8 +18,8 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests pandoc
 BuildPreReq: python-module-zmq python-module-jinja2
-BuildPreReq: python-module-tornado python-module-ipython_genutils
-BuildPreReq: python-module-traitlets python-module-jupyter_core
+BuildPreReq: python-module-tornado python-module-ipython_genutils-tests
+BuildPreReq: python-module-traitlets-tests python-module-jupyter_core
 BuildPreReq: python-module-jupyter_client python-module-nbformat
 BuildPreReq: python-module-nbconvert python-module-ipykernel
 BuildPreReq: python-module-mock python-module-terminado
@@ -30,8 +30,8 @@ BuildPreReq: python-module-sphinx-devel
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests pandoc
 BuildPreReq: python3-module-zmq python3-module-jinja2
-BuildPreReq: python3-module-tornado python3-module-ipython_genutils
-BuildPreReq: python3-module-traitlets python3-module-jupyter_core
+BuildPreReq: python3-module-tornado python3-module-ipython_genutils-tests
+BuildPreReq: python3-module-traitlets-tests python3-module-jupyter_core
 BuildPreReq: python3-module-jupyter_client python3-module-nbformat
 BuildPreReq: python3-module-nbconvert python3-module-ipykernel
 BuildPreReq: python3-module-mock python3-module-terminado
@@ -136,14 +136,15 @@ popd
 export PYTHONPATH=$PWD
 %make -C docs pickle
 %make -C docs html
+cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %check
-python setup.py test -v
+export LC_ALL=en_US.UTF-8
 nosetests -vv --with-coverage --cover-package=%oname %oname
-%if_with python3
+#if_with python3
+%if 0
 pushd ../python3
-python3 setup.py test -v
 nosetests3 -vv --with-coverage --cover-package=%oname %oname
 popd
 %endif
@@ -154,6 +155,13 @@ popd
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/tests
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%files docs
+%doc docs/build/html/*
 
 %files tests
 %python_sitelibdir/*/tests
@@ -175,6 +183,10 @@ popd
 %endif
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt2
+- Enabled check
+- Added documentation
+
 * Sat Aug 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1
 - Initial build for Sisyphus
 
