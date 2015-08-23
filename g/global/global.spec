@@ -1,6 +1,6 @@
 # TODO: see spec from PLD with separate packages
 Name: global
-Version: 6.2.12
+Version: 6.3.3
 Release: alt1
 
 Summary: Source code tag system
@@ -70,11 +70,15 @@ rm -f %buildroot%_libdir/gtags/*.la
 
 %files htags
 %_bindir/htags
+%_bindir/htags-server
 %_bindir/gozilla
 %_man1dir/htags*
 %_man1dir/gozilla*
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 6.3.3-alt1
+- new version 6.3.3 (with rpmrb script)
+
 * Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 6.2.12-alt1
 - new version 6.2.12 (with rpmrb script)
 
