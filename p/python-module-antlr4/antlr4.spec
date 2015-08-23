@@ -1,6 +1,6 @@
 %define oname antlr4
 Name: python-module-%oname
-Version: 4.5
+Version: 4.5.2
 Release: alt1
 Summary: ANTLR 4.5 runtime for Python 2
 License: BSD
@@ -32,6 +32,9 @@ ANTLR 4.5 runtime for Python 2.
 %python_sitelibdir/*
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.2-alt1
+- Version 4.5.2
+
 * Fri Apr 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5-alt1
 - Initial build for Sisyphus
 
