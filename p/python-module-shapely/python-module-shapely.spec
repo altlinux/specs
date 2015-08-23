@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 1.5.2
-Release: alt1.git20150202
+Version: 1.5.10
+Release: alt1.git20150820
 
 Summary: Planar geometries, predicates, and operations
 
@@ -20,11 +20,13 @@ BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Cython libnumpy-devel
 BuildPreReq: python-module-descartes python-module-sphinx-devel
 BuildPreReq: python-module-geos python-module-matplotlib-sphinxext
+BuildPreReq: python-module-packaging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-Cython libnumpy-py3-devel
 BuildPreReq: python3-module-descartes python3-module-geos
+BuildPreReq: python3-module-packaging
 %endif
 
 %setup_python_module %module_name
@@ -127,13 +129,13 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%module_name/
 %check
 export LC_ALL=en_US.UTF-8
 python setup.py test
-#python setup.py build_ext -i
-#py.test -vv
+python setup.py build_ext -i
+py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
-#python3 setup.py build_ext -i
-#py.test-%_python3_version -vv
+python3 setup.py build_ext -i
+py.test-%_python3_version -vv
 popd
 %endif
 
@@ -161,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.10-alt1.git20150820
+- Version 1.5.10
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt1.git20150202
 - New snapshot
 
