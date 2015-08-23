@@ -1,7 +1,7 @@
 %define major 0.9
 Name: podofo
-Version: %major.1
-Release: alt1.1
+Version: %major.3
+Release: alt1
 
 Summary: PDF manipulation library and tools
 Summary(ru_RU.UTF8): Библиотека и инструменты для работы с PDF
@@ -77,6 +77,9 @@ Development files for the PoDoFo library.
 %_libdir/*.so
 
 %changelog
+* Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
+- new version 0.9.3 (with rpmrb script)
+
 * Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.1
 - Fixed build
 
