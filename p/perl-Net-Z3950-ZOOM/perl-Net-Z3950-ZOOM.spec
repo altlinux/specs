@@ -1,17 +1,20 @@
 %define dist Net-Z3950-ZOOM
 Name: perl-%dist
-Version: 1.28
-Release: alt4.1
+Version: 1.30
+Release: alt1
 
 Summary: Perl extension implementing the ZOOM API for Information Retrieval
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
+# Source-url: http://search.cpan.org/CPAN/authors/id/M/MI/MIRK/Net-Z3950-ZOOM-%version.tar.gz
 Source: %dist-%version.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011 (-bi)
 BuildRequires: libssl-devel libwrap-devel libyaz-devel perl-MARC-Record perl-XML-LibXML perl-devel
+
+BuildRequires: libyaz-devel >= 4.0.0
 
 %description
 This distribution contains three Perl modules for the price of one.
@@ -36,11 +39,15 @@ grep -lZ connect t/*.t |xargs -r0 rm -v
 %files
 %_bindir/zselect
 %_bindir/zoomdump
+%_bindir/zoom-delete-records
 %perl_vendor_archlib/Net
 %perl_vendor_autolib/Net
 %perl_vendor_archlib/ZOOM*
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 1.30-alt1
+- new version 1.30 (with rpmrb script)
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.28-alt4.1
 - rebuild with new perl 5.20.1
 
