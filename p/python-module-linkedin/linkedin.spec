@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.2
-Release: alt1.git20150214
+Release: alt1.git20150625
 Summary: Python Interface to the LinkedIn API
 License: MIT
 Group: Development/Python
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt1.git20150625
+- New snapshot
+
 * Thu Apr 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt1.git20150214
 - Initial build for Sisyphus
 
