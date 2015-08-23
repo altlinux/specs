@@ -1,5 +1,5 @@
 Name: update-kernel
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 
 Summary: Update kernel and modules
@@ -38,6 +38,9 @@ install -pm755 remove-old-kernels %buildroot%_sbindir/
 %_sbindir/remove-old-kernels
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
+- check if we already have lastest kernel package (alt bug #26715)
+
 * Thu Jul 11 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.6-alt1
 - skip install if the latest kernel is already installed (ALT bug #26715)
 
