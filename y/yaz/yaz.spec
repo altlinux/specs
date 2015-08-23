@@ -7,14 +7,16 @@
 %define subst_with_to() %{expand:%%{?_with_%{1}:--with-%{2}}} %{expand:%%{?_without_%{1}:--without-%{2}}}
 
 Name: yaz
-Version: 3.0.53
-Release: alt1.qa1
+Version: 5.13.0
+Release: alt1
 
 Summary: Z39.50/SRW/SRU toolkit
+
 License: Revised BSD License
 Group: Development/Other
 URL: http://www.indexdata.dk/%name/
-# http://ftp.indexdata.dk/pub/%name/%name-%version.tar.gz
+
+# Source-url: http://ftp.indexdata.dk/pub/%name/%name-%version.tar.gz
 Source: %name-%version.tar
 
 %define lname lib%name
@@ -110,7 +112,6 @@ bzip2 --best --force --keep NEWS
 %exclude %_bindir/%name-asncomp
 %_man1dir/*
 %exclude %_man1dir/%name-asncomp.*
-%exclude %_man8dir/%name-config.*
 %_man7dir/%name-log.*
 %_man8dir/%name-ztest.*
 
@@ -131,7 +132,6 @@ bzip2 --best --force --keep NEWS
 %_datadir/%name/
 %exclude %_datadir/%name/etc
 %_man1dir/%name-asncomp.*
-%_man8dir/%name-config.*
 
 %if_enabled static
 %files -n %lname-devel-static
@@ -142,6 +142,9 @@ bzip2 --best --force --keep NEWS
 %_docdir/%name/
 
 %changelog
+* Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 5.13.0-alt1
+- new version 5.13.0 (with rpmrb script)
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0.53-alt1.qa1
 - NMU: rebuilt with libicuuc.so.50.
 
