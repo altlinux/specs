@@ -1,11 +1,11 @@
 %define oname autopep8
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
-Version: 1.1.2
-Release: alt1.a0.git20150226
+Version: 1.2.1
+Release: alt1.a0.git20150809
 Summary: Automatically formats Python code to conform to the PEP 8 style guide
 License: MIT
 Group: Development/Python
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.a0.git20150809
+- Version 1.2.1a0
+
 * Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.a0.git20150226
 - Version 1.1.2a0
 
