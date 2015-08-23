@@ -1,6 +1,6 @@
 Name: herrie
 Version: 2.2
-Release: alt3
+Release: alt4
 
 Summary: A command line music player
 
@@ -41,6 +41,9 @@ manager and playlist interface and supports a number of file formats
 %_man1dir/%name.1*
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt4
+- fix build with libmodplug (where is right placement of modplug.h?)
+
 * Sat Mar 07 2009 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt3
 - build without XSPF (wait for new herrie with libxspf support)
 
