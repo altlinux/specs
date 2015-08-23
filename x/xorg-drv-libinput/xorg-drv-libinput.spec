@@ -4,12 +4,12 @@
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-libinput
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Xorg libinput input driver
 Group: System/X11
-Url: http://ww.x.org
+Url: http://www.x.org
 License: MIT/X11
 
 %if_enabled snapshot
@@ -20,7 +20,7 @@ Source: ftp://ftp.x.org/pub/individual/driver/%_name-%version.tar.bz2
 # fc
 Source1: 90-libinput.conf
 
-%define libinput_ver 0.19
+%define libinput_ver 0.21.0
 
 PreReq: XORG_ABI_XINPUT = %get_xorg_abi_xinput
 Requires: libinput >= %libinput_ver
@@ -73,6 +73,9 @@ install -p -m 0644 %SOURCE1 %buildroot%_xconfdir/90-libinput.conf
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Sun Aug 23 2015 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
+- 0.13.0_9563334
+
 * Thu Jul 16 2015 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
