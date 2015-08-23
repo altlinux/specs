@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 1.2.763
-Release: alt1.git20150809
+Version: 1.3.808
+Release: alt1.git20150823
 Summary: Folder synchronization, a logging function, helpers to generate documentation and more
 License: BSD
 Group: Development/Python3
@@ -24,7 +24,9 @@ BuildPreReq: python3-module-matplotlib ipython3 graphviz
 BuildPreReq: python3-module-flake8 python3-tools-pep8
 BuildPreReq: python3-module-autopep8 python3-module-sphinx-devel
 BuildPreReq: python3-module-zmq python3-module-pip
-BuildPreReq: python3-module-pyjenkins
+BuildPreReq: python3-module-pyjenkins ipython3
+BuildPreReq: python3-module-jupyter_console python3-module-ipywidgets
+BuildPreReq: python3-module-jupyter
 BuildPreReq: python3-module-solar_theme python3-modules-tkinter
 BuildPreReq: python3-module-sphinxcontrib-images
 BuildPreReq: python3-module-matplotlib-sphinxext
@@ -33,9 +35,9 @@ BuildPreReq: python3-module-sphinxjp.themes.revealjs
 %py3_provides %oname
 Requires: git pandoc xset /proc
 %py3_requires numpy pandas six dateutils requests docutils IPython pep8
-%py3_requires matplotlib flake8 autopep8 sphinx zmq tkinter pip
+%py3_requires matplotlib flake8 autopep8 sphinx zmq tkinter pip jupyter
 %py3_requires sphinxcontrib.images matplotlib.sphinxext pyjenkins
-%py3_requires sphinxjp.themes.revealjs
+%py3_requires sphinxjp.themes.revealjs jupyter_console ipywidgets
 
 %description
 Various functionalities: folder synchronization, a logging function,
@@ -111,6 +113,9 @@ python3 setup.py unittests -v
 %doc build/notebooks docs
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.808-alt1.git20150823
+- Version 1.3.808
+
 * Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.763-alt1.git20150809
 - Version 1.2.763
 
