@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.4.5
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -73,8 +73,8 @@ BuildArch: noarch
 %prep
 %setup -q -n %name-%version
 %patch0 -p1
-cp %_datadir/CMake/Modules/FindFreetype.cmake cmake/modules/
-%patch1 -p0
+#cp %_datadir/CMake/Modules/FindFreetype.cmake cmake/modules/
+#patch1 -p0
 
 # recode man page to UTF-8
 pushd scribus/manpages
@@ -168,6 +168,10 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.4.5-alt2
+- rebuild with new libpodofo 0.9.3
+- drop patching _datadir/CMake/Modules/FindFreetype.cmake
+
 * Mon Mar 02 2015 Paul Wolneykien <manowar@altlinux.org> 1:1.4.5-alt1
 - Freshed up to v1.4.5 with the help of cronbuild and update-source-functions.
 

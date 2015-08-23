@@ -2,8 +2,8 @@
 
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 1.43.0
-Release: alt1
+Version: 1.48.0
+Release: alt2
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -45,9 +45,7 @@ BuildRequires: libqt4-devel >= 4.8.0
 BuildRequires: python-module-PyQt4-devel >= 4.9.6
 BuildRequires: python-module-mechanize >= 0.1.11
 BuildRequires: libImageMagick-devel >= 6.5.9
-BuildRequires: python-module-lxml
-# have only 3.1.1
-# >= 3.2.1
+BuildRequires: python-module-lxml >= 3.2.1
 BuildRequires: python-module-dateutil >= 1.4.1
 BuildRequires: python-module-cssutils >= 0.9.9
 BuildRequires: python-module-BeautifulSoup >= 3.0.5
@@ -61,11 +59,7 @@ BuildRequires: libmtp-devel >= 1.1.5
 BuildRequires: python-module-netifaces >= 0.8
 BuildRequires: python-module-psutil >= 0.6.1
 BuildRequires: python-module-cssselect >= 0.7.1
-
-# wait for new apsw: https://bugzilla.altlinux.org/show_bug.cgi?id=29828
-BuildRequires: python-module-apsw
-# have only 3.7.15.2
-#>= 3.7.17
+BuildRequires: python-module-apsw >= 3.7.17
 
 %description
 calibre is an e-book library manager. It can view, convert and catalog e-books
@@ -99,8 +93,10 @@ TXT, PDF, LRS и FB2.
 mkdir -p %buildroot%python_sitelibdir/
 python setup.py install --staging-libdir=%buildroot%_libdir --libdir=%_libdir --prefix=%_prefix --root=%buildroot --staging-root=%buildroot/%_prefix
 %find_lang --with-kde %name
-# fix /etc placement
-mv %buildroot{/usr,}/etc
+
+# fix bash completion file placement
+install -m644 -D %buildroot%_datadir/bash-completion/completions/calibre %buildroot/etc/bash_completion.d/%name
+rm -rf %buildroot%_datadir/bash-completion
 
 chrpath -d %buildroot%_libdir/%name/%name/plugins/*.so
 
@@ -121,6 +117,13 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/appdata/*.appdata.xml
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 1.48.0-alt2
+- rebuild with updated apws, lxml
+- rebuild with new podofo 0.9.3
+
+* Mon Oct 13 2014 Vitaly Lipatov <lav@altlinux.ru> 1.48.0-alt1
+- new version 1.48.0 (with rpmrb script)
+
 * Mon Jul 07 2014 Vitaly Lipatov <lav@altlinux.ru> 1.43.0-alt1
 - new version 1.43.0 (with rpmrb script) (fix ALT bug #30128)
 
