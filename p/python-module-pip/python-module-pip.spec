@@ -1,4 +1,4 @@
-%define version 7.1.0
+%define version 7.1.2
 %define release alt1
 %setup_python_module pip
 
@@ -113,6 +113,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
 %endif
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.1.2-alt1
+- Version 7.1.2
+
 * Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.1.0-alt1
 - Version 7.1.0
 
