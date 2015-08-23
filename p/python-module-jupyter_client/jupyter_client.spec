@@ -1,11 +1,11 @@
 %define oname jupyter_client
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
 Summary: Jupyter protocol implementation and client libraries
 License: BSD
 Group: Development/Python
@@ -18,7 +18,7 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-traitlets python-module-jupyter_core
 BuildPreReq: python-module-zmq-tests python-module-ipython_genutils-tests
-BuildPreReq: python-module-nose
+BuildPreReq: python-module-nose ipython python-module-mock
 #BuildPreReq: python-module-ipykernel
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-traitlets python3-module-jupyter_core
 BuildPreReq: python3-module-zmq-tests python3-module-ipython_genutils-tests
-BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-nose ipython3 python3-module-mock
 #BuildPreReq: python3-module-ipykernel
 %endif
 
@@ -156,10 +156,12 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 rm -fR build
+export PYTHONPATH=$PWD
 py.test -vv
 %if_with python3
 pushd ../python3
 rm -fR build
+export PYTHONPATH=$PWD
 py.test-%_python3_version -vv
 popd
 %endif
@@ -195,6 +197,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2
+- Enabled check
+
 * Fri Aug 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1
 - Initial build for Sisyphus
 
