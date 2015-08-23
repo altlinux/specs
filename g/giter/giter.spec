@@ -1,5 +1,5 @@
 Name: giter
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -41,6 +41,12 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Mon Aug 24 2015 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
+- ginit: use full path to people packages
+- ginit: hack for git.eter
+- gpull: add hack for use sisyphus branch for /gear repos
+- gpull: use sisyphus only for empty run with many remote branch
+
 * Wed Aug 19 2015 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
 - grebase: error if there is no unpublished commits
 - estrlist: fix when empty list
