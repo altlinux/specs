@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.15.2
+Version: 0.16.2
 Release: alt1
 
 Summary: Python Data Analysis Library
@@ -172,7 +172,7 @@ popd
 %files docs
 %doc doc/build/html
 #doc doc/source
-%doc examples
+#doc examples
 
 %if_with python3
 %files -n python3-module-%oname
@@ -189,6 +189,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16.2-alt1
+- Version 0.16.2
+
 * Sun Mar 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.2-alt1
 - Version 0.15.2
 
