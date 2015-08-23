@@ -1,6 +1,6 @@
 Name: repocop-report-qa-robot
-Version: 0.35
-Release: alt2
+Version: 0.36
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ install -m755 bin/* $RPM_BUILD_ROOT%_datadir/repocop-report-email/bin/
 %_datadir/repocop-report-email
 
 %changelog
+* Sun Aug 23 2015 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- support for mutt1.5
+
 * Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.35-alt2
 - NMU: added missing Pod dependencies
 
