@@ -1,7 +1,8 @@
 %define oname pyensae
+
 Name: python3-module-%oname
-Version: 1.1.270
-Release: alt1.git20150423
+Version: 1.1.324
+Release: alt1.git20150816
 Summary: Helpers for teaching purposes (includes sqllite helpers)
 License: BSD
 Group: Development/Python3
@@ -88,6 +89,9 @@ python3 setup.py test
 %doc _doc/sphinxdoc/build/html build/notebooks
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.324-alt1.git20150816
+- Version 1.1.324
+
 * Thu Apr 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.270-alt1.git20150423
 - Initial build for Sisyphus
 
