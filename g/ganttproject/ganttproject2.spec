@@ -1,17 +1,23 @@
 Name: ganttproject
-Version: 2.0.10
+Version: 2.7.1
 Release: alt1
 
 Summary: GanttProject is a tool for creating a project schedule by means of Gantt chart and resource load chart
+
 License: GPLv2 with library exceptions
 Group: Office
-
 Url: http://www.ganttproject.biz/
-Source: %name-%version.zip
+
+# Source-url: http://www.ganttproject.biz/dl/2.7.1/any
+Source: %name-%version.tar
 Packager: Denis Medvedev <nbr@altlinux.ru> 
 
 BuildArch: noarch
-BuildRequires: unzip
+
+AutoProv: yes,noosgi
+
+Requires: /usr/bin/java
+
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
 
@@ -35,14 +41,15 @@ and spreadsheet applications.
 %install
 install -d %buildroot%_datadir/%name
 install -d %buildroot%_bindir
-mv * %buildroot%_datadir/%name/
+cp -a * %buildroot%_datadir/%name/
 
-cat > %buildroot%_bindir/%name << EOF
-#!/bin/sh
-cd %_datadir/%name
-./%name.sh \$@
-EOF
-chmod 755 %buildroot%_bindir/%name %buildroot%_datadir/%name/%name.sh
+#cat > %buildroot%_bindir/%name << EOF
+##!/bin/sh
+#cd %_datadir/%name
+#./%name \$@
+#EOF
+#chmod 755 %buildroot%_bindir/%name %buildroot%_datadir/%name/%name
+ln -s %_datadir/%name/%name %buildroot%_bindir/%name 
 
 #Create the desktop entry
 mkdir -p %buildroot%_desktopdir
@@ -89,18 +96,21 @@ ganttproject
 EOF
 
 #Copy the icon
-install -D %buildroot%_datadir/%name/plugins/net.sourceforge.ganttproject_2.0.0/data/resources/icons/ganttproject.png %buildroot%_datadir/icons/hicolor/32x32/apps/%name.png
+install -D %buildroot%_datadir/%name/plugins/net.sourceforge.ganttproject/data/resources/icons/ganttproject.png %buildroot%_datadir/icons/hicolor/32x32/apps/%name.png
 
 %files
+%_bindir/%name
+%_datadir/%name/
 %_desktopdir/*
 %_datadir/application-registry/*
 %_datadir/mimelnk/application/*
 %_datadir/icons/hicolor/32x32/apps/*
-%_bindir/%name
-#_datadir/%name/%name.sh
-%_datadir/%name
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
+- new version 2.7.1 (with rpmrb script) (alt bug #30172)
+- cleanup spec
+
 * Fri Dec 23 2011 Michael Shigorin <mike@altlinux.org> 2.0.10-alt1
 - 2.0.10
 - ensure that the wrapper script is executable
