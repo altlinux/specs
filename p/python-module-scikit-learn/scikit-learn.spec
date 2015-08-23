@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.17
-Release: alt1.dev0.git20150424
+Release: alt1.dev0.git20150820
 Summary: A set of python modules for machine learning and data mining
 License: BSD
 Group: Development/Python
@@ -167,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17-alt1.dev0.git20150820
+- New snapshot
+
 * Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17-alt1.dev0.git20150424
 - New snapshot
 
