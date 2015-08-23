@@ -1,12 +1,18 @@
 Name: libportmidi
 Version: 217
-Release: alt2.qa1
+Release: alt3
+
 Summary: Platform Independent Library for MIDI I/O
+
 License: MIT
 Group: Sound
 Url: http://portmedia.sourceforge.net/portmidi/
+
 Packager: Egor Glukhov <kaman@altlinux.org>
-Source0: %name-%version.tar
+
+# Source-url: http://prdownloads.sourceforge.net/portmedia/portmidi-src-%{version}.zip
+Source: %name-%version.tar
+
 BuildPreReq: cmake
 BuildRequires: gcc-c++ libalsa-devel
 
@@ -17,42 +23,57 @@ input and output of MIDI data using a system-independent interface.
 %package devel
 Summary: Development files for PortMidi
 Group: Development/C
-BuildArch: noarch
+Requires: %name = %version-%release
 
 %description devel
 Development files for PortMidi.
 
 %prep
 %setup
-sed -i -e 's|/usr/local/lib|%_libdir|g' \
-    -e 's|/usr/local/include|%_includedir|g' \
-    pm_common/CMakeLists.txt pm_dylib/CMakeLists.txt
+
+rm -f portmidi_cdt.zip */*.exe */*/*.exe
+
+# Fix permissons and encoding issues:
+find . -name "*.c" -exec chmod -x {} \;
+find . -name "*.h" -exec chmod -x {} \;
+for i in *.txt */*.txt */*/*.txt ; do
+   chmod -x $i
+   sed 's|\r||' $i > $i.tmp
+   touch -r $i $i.tmp
+   mv -f $i.tmp $i
+done
 
 %build
-cmake . \
-        -DCMAKE_INSTALL_PREFIX=%_prefix \
-%if %_lib == lib64
-        -DLIB_SUFFIX=64 \
-%endif
-        -DCMAKE_CXX_FLAGS:STRING="%optflags" \
-        -DCMAKE_BUILD_TYPE="Release" \
-        -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY="Release" \
-        -DCMAKE_LIBRARY_OUTPUT_DIRECTORY="Release" \
-        -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="Release" \
-        -DCMAKE_SKIP_RPATH=YES
+%cmake_insource \
+    -DVERSION=%version \
+    -DCMAKE_CACHEFILE_DIR=%{_builddir}/%{name}-%{version}/build
 %make_build
+
+# Build the doxygen documentation:
+#doxygen
+
+# Skip python modules building
 
 %install
 %makeinstall_std
 
+# Why don't they install this header file?
+install -pm 644 pm_common/pmutil.h %{buildroot}%{_includedir}/
+rm -f %buildroot%_libdir/libportmidi_s.a
+rm -f %buildroot%_libdir/libpmjni.so
+
 %files
-%exclude %_libdir/libportmidi_s.a
-%_libdir/libportmidi.so
+%_libdir/libportmidi.so.*
 
 %files devel
 %_includedir/*
+%_libdir/libportmidi.so
 
 %changelog
+* Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 217-alt3
+- build from 217 official tarball
+- add patches from Fedora project
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 217-alt2.qa1
 - NMU: rebuilt for updated dependencies.
 
