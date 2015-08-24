@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-neutronclient
-Version: 2.3.11
+Version: 2.3.12
 Release: alt1
 Summary: Python API and CLI for OpenStack Neutron
 Group: Development/Python
@@ -12,11 +12,6 @@ Source0: %name-%version.tar
 
 Provides: python-module-quantumclient
 Obsoletes: python-module-quantumclient
-
-#
-# patches_base=2.3.4
-#
-Patch0001: 0001-Remove-runtime-dependency-on-python-pbr.patch
 
 BuildArch: noarch
 
@@ -35,7 +30,7 @@ BuildRequires: python-module-iso8601 >= 0.1.9
 BuildRequires: python-module-netaddr >= 0.7.12
 BuildRequires: python-module-oslo.i18n >= 1.3.0
 BuildRequires: python-module-oslo.serialization >= 1.2.0
-BuildRequires: python-module-oslo.utils >= 1.2.0
+BuildRequires: python-module-oslo.utils >= 1.4.0
 BuildRequires: python-module-requests >= 2.2.0
 BuildRequires: python-module-keystoneclient >= 1.1.0
 BuildRequires: python-module-simplejson >= 2.2.0
@@ -89,11 +84,6 @@ This package contains auto-generated documentation.
 
 %prep
 %setup
-
-%patch0001 -p1
-
-# We provide version like this in order to remove runtime dep on pbr.
-sed -i s/REDHATNEUTRONCLIENTVERSION/%version/ neutronclient/version.py
 
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
@@ -151,6 +141,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.12-alt1
+- 2.3.12 (no changes)
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.11-alt1
 - 2.3.11
 - add python3 package
