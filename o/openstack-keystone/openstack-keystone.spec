@@ -1,7 +1,7 @@
 %def_without python3
 
 Name: openstack-keystone
-Version: 2015.1.0
+Version: 2015.1.1
 Release: alt1
 Summary: OpenStack Identity Service
 
@@ -15,8 +15,6 @@ Source1: %name.logrotate
 Source2: %name.service
 Source3: %name.sysctl
 Source4: %name.tmpfiles
-Source5: %name-sample-data
-Source20: keystone-dist.conf
 Source100: %name.init
 
 BuildArch: noarch
@@ -31,17 +29,18 @@ Requires(pre): shadow-utils
 BuildRequires: python-devel
 BuildRequires: python-module-sphinx >= 1.0
 BuildRequires: python-module-oslosphinx >= 2.5.0
-BuildRequires: python-module-pbr
+BuildRequires: python-module-pbr >= 0.6
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-pycadf
+BuildRequires: python-module-pycadf >= 0.8.0
 BuildRequires: python-module-passlib
 BuildRequires: python-module-webtest
 BuildRequires: python-module-SQLAlchemy >= 0.9.7
 BuildRequires: python-module-migrate >= 0.9.5
-BuildRequires: python-module-jsonschema
+BuildRequires: python-module-jsonschema >= 2.0.0
 BuildRequires: python-module-oslo.config >= 1.9.3
-BuildRequires: python-module-oslo.messaging >= 1.8.0
+BuildRequires: python-module-oslo.concurrency >= 1.8.0
+BuildRequires: python-module-oslo.messaging >= 1.9.0
 BuildRequires: python-module-oslo.db >= 1.7.0
 BuildRequires: python-module-oslo.i18n >= 1.5.0
 BuildRequires: python-module-oslo.log >= 1.0.0
@@ -53,7 +52,7 @@ BuildRequires: python-module-oslotest >= 1.5.1
 BuildRequires: python-module-routes >= 1.12.3
 BuildRequires: python-module-paste
 BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-keystoneclient >= 1.1.0
+BuildRequires: python-module-keystoneclient >= 1.2.0
 BuildRequires: python-module-dogpile-cache >= 0.5.3
 BuildRequires: python-module-ldap
 BuildRequires: python-module-oauthlib >= 0.6
@@ -66,17 +65,18 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx >= 1.0
 BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-pbr
+BuildRequires: python3-module-pbr >= 0.6
 BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-pycadf
+BuildRequires: python3-module-pycadf >= 0.8.0
 BuildRequires: python3-module-passlib
 BuildRequires: python-module-webtest
 BuildRequires: python3-module-SQLAlchemy >= 0.9.7
 BuildRequires: python3-module-migrate >= 0.9.5
-BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-jsonschema >= 2.0.0
 BuildRequires: python3-module-oslo.config >= 1.9.3
-BuildRequires: python3-module-oslo.messaging >= 1.8.0
+BuildRequires: python3-module-oslo.concurrency >= 1.8.0
+BuildRequires: python3-module-oslo.messaging >= 1.9.0
 BuildRequires: python3-module-oslo.db >= 1.7.0
 BuildRequires: python3-module-oslo.i18n >= 1.5.0
 BuildRequires: python3-module-oslo.log >= 1.0.0
@@ -88,7 +88,7 @@ BuildRequires: python3-module-oslotest >= 1.5.1
 BuildRequires: python3-module-routes >= 1.12.3
 BuildRequires: python3-module-paste
 BuildRequires: python3-module-PasteDeploy >= 1.5.0
-BuildRequires: python3-module-keystoneclient >= 1.1.0
+BuildRequires: python3-module-keystoneclient >= 1.2.0
 BuildRequires: python3-module-dogpile-cache >= 0.5.3
 BuildRequires: python3-module-ldap
 BuildRequires: python3-module-oauthlib >= 0.6
@@ -107,13 +107,13 @@ Summary: Keystone Python libraries
 Group: Development/Python
 Requires: openssl
 Requires: python-module-oslo.config >= 1.9.3
-Requires: python-module-oslo.messaging >= 1.8.0
+Requires: python-module-oslo.messaging >= 1.9.0
 Requires: python-module-oslo.db >= 1.7.0
 Requires: python-module-oslo.i18n >= 1.5.0
 Requires: python-module-oslo.utils >= 1.4.0
 # add not finded requires
-Requires: python-module-dogpile-cache
-Requires: python-module-PasteDeploy
+Requires: python-module-dogpile-cache >= 0.5.3
+Requires: python-module-PasteDeploy >= 1.5.0
 Requires: python-module-pysaml2
 
 %description -n python-module-keystone
@@ -126,14 +126,16 @@ This package contains the Keystone Python library.
 Summary: Keystone Python libraries
 Group: Development/Python3
 Requires: openssl
-Requires: python3-module-oslo.config >= 1.6.0
-Requires: python3-module-oslo.messaging >= 1.6.0
-Requires: python3-module-oslo.db
-Requires: python3-module-oslo.i18n
-Requires: python3-module-oslo.utils
+Requires: python3-module-oslo.config >= 1.9.3
+Requires: python3-module-oslo.messaging >= 1.9.0
+Requires: python3-module-oslo.db >= 1.7.0
+Requires: python3-module-oslo.i18n >= 1.5.0
+Requires: python3-module-oslo.utils >= 1.4.0
 
 # add not finded requires
-Requires: python3-module-dogpile-cache
+Requires: python3-module-dogpile-cache >= 0.5.3
+Requires: python3-module-PasteDeploy >= 1.5.0
+Requires: python3-module-pysaml2
 
 %description -n python3-module-keystone
 Keystone is a Python implementation of the OpenStack
@@ -168,8 +170,6 @@ cp -a . ../python3
 %endif
 
 %build
-cp etc/keystone.conf.sample etc/keystone.conf
-# distribution defaults are located in keystone-dist.conf
 %python_build
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build -b man doc/source doc/build/man
@@ -199,17 +199,14 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 install -d -m 755 %buildroot%_sysconfdir/keystone
-install -p -D -m 640 etc/keystone.conf %buildroot%_sysconfdir/keystone/keystone.conf
-install -p -D -m 644 etc/keystone-paste.ini %buildroot%_datadir/keystone/keystone-dist-paste.ini
-# kilo-3 workaround: remove federation from default pipeline
-sed -i '/^pipeline/s/federation_extension//' %buildroot%_datadir/keystone/keystone-dist-paste.ini
+install -p -D -m 640 etc/keystone.conf.sample %buildroot%_sysconfdir/keystone/keystone.conf
+install -p -D -m 644 etc/keystone-paste.ini %buildroot%_sysconfdir/keystone/
 
-install -p -D -m 644 %SOURCE20 %buildroot%_datadir/keystone/keystone-dist.conf
-install -p -D -m 644 etc/policy.v3cloudsample.json %buildroot%_datadir/keystone/policy.v3cloudsample.json
+install -p -D -m 644 etc/policy.v3cloudsample.json %buildroot%_sysconfdir/keystone/policy.v3cloudsample.json
 install -p -D -m 640 etc/logging.conf.sample %buildroot%_sysconfdir/keystone/logging.conf
-install -p -D -m 640 etc/default_catalog.templates %buildroot%_sysconfdir/keystone/default_catalog.templates
-install -p -D -m 640 etc/policy.json %buildroot%_sysconfdir/keystone/policy.json
-install -p -D -m 640 etc/sso_callback_template.html %buildroot%_sysconfdir/keystone/sso_callback_template.html
+install -p -D -m 644 etc/default_catalog.templates %buildroot%_sysconfdir/keystone/default_catalog.templates
+install -p -D -m 644 etc/policy.json %buildroot%_sysconfdir/keystone/policy.json
+install -p -D -m 644 etc/sso_callback_template.html %buildroot%_sysconfdir/keystone/sso_callback_template.html
 install -p -D -m 644 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/openstack-keystone
 install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/openstack-keystone.service
 install -d -m 755 %buildroot%_sysctldir
@@ -217,9 +214,6 @@ install -p -D -m 644 %SOURCE3 %buildroot%_sysctldir/openstack-keystone.conf
 install -d -m 755 %buildroot%_tmpfilesdir
 install -p -D -m 644 %SOURCE4 %buildroot%_tmpfilesdir/openstack-keystone.conf
 install -p -D -m 755 %SOURCE100 %buildroot%_initdir/%name
-# Install sample data script.
-install -p -D -m 755 tools/sample_data.sh %buildroot%_datadir/keystone/sample_data.sh
-install -p -D -m 755 %SOURCE5 %buildroot%_bindir/openstack-keystone-sample-data
 # Install sample HTTPD integration files
 install -p -D -m 644 httpd/keystone.py  %buildroot%_datadir/keystone/keystone.wsgi
 install -p -D -m 644 httpd/wsgi-keystone.conf  %buildroot%_datadir/keystone/
@@ -265,19 +259,15 @@ fi
 %files
 %doc LICENSE
 %doc README.rst
+%doc tools/sample_data.sh
 %_bindir/keystone-all
 %_bindir/keystone-manage
-%_bindir/openstack-keystone-sample-data
 %_man1dir/keystone*.1.*
 %if_with python3
 %_bindir/python3-keystone-all
 %_bindir/python3-keystone-manage
 %endif
 %dir %_datadir/keystone
-%attr(0644, root, keystone) %_datadir/keystone/keystone-dist.conf
-%attr(0644, root, keystone) %_datadir/keystone/keystone-dist-paste.ini
-%attr(0644, root, keystone) %_datadir/keystone/policy.v3cloudsample.json
-%attr(0755, root, root) %_datadir/keystone/sample_data.sh
 %attr(0644, root, keystone) %_datadir/keystone/keystone.wsgi
 %attr(0644, root, keystone) %_datadir/keystone/wsgi-keystone.conf
 %_unitdir/%name.service
@@ -290,10 +280,12 @@ fi
 %dir %attr(0750, root, keystone) %_sysconfdir/keystone/ssl/private
 %ghost %attr(0640, root, keystone) %_sysconfdir/keystone/ssl/private/signing_key.pem
 %config(noreplace) %attr(0640, root, keystone) %_sysconfdir/keystone/keystone.conf
-%config(noreplace) %attr(0640, root, keystone) %_sysconfdir/keystone/logging.conf
-%config(noreplace) %attr(0640, root, keystone) %_sysconfdir/keystone/default_catalog.templates
-%config(noreplace) %attr(0640, keystone, keystone) %_sysconfdir/keystone/policy.json
-%config(noreplace) %attr(0640, keystone, keystone) %_sysconfdir/keystone/sso_callback_template.html
+%config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/logging.conf
+%config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/default_catalog.templates
+%config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/keystone-paste.ini
+%config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/policy.json
+%config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/policy.v3cloudsample.json
+%config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/sso_callback_template.html
 %config(noreplace) %_sysconfdir/logrotate.d/openstack-keystone
 %dir %attr(0755, keystone, keystone) %_sharedstatedir/keystone
 %dir %attr(0750, keystone, keystone) %_logdir/keystone
@@ -303,16 +295,22 @@ fi
 %files -n python-module-keystone
 %python_sitelibdir/keystone
 %python_sitelibdir/keystone-*.egg-info
+%exclude %python_sitelibdir/keystone/contrib/example
 
 %if_with python3
 %files -n python3-module-keystone
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/keystone/contrib/example
 %endif
 
 %files doc
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
+- 2015.1.1
+- move dist configs from datadir to sysconfdir
+
 * Thu May 14 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
 - Release Kilo 2015.1.0
 
