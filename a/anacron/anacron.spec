@@ -1,6 +1,6 @@
 Name: anacron
 Version: 2.3
-Release: alt6
+Release: alt7
 Epoch: 1
 
 Summary: A cron-like program that doesn't go by time
@@ -101,6 +101,9 @@ sed -i s,RPM_LOCKFILE,%lockfile, %buildroot%_initdir/%name
 %doc ChangeLog README TODO
 
 %changelog
+* Mon Aug 24 2015 Alexey Gladkov <legion@altlinux.ru> 1:2.3-alt7
+- run-anacronjobs: Ignore return code of jobs.
+
 * Mon Apr 01 2013 Dmitry V. Levin <ldv@altlinux.org> 1:2.3-alt6
 - anacron.service: redirect standard descriptors (closes: #28775).
 
