@@ -1,11 +1,11 @@
 %define oname watchdog
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt1.git20150222
+Release: alt1.git20150727
 Summary: Filesystem events monitoring
 License: ASLv2.0
 Group: Development/Python
@@ -17,11 +17,17 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-argh python-module-yaml
+BuildPreReq: python-module-pytest-timeout
+BuildPreReq: python-module-pytest-cov
 BuildPreReq: python-module-sphinx-devel python-module-pathtools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-pathtools
+BuildPreReq: python3-module-argh python3-module-yaml
+BuildPreReq: python3-module-pytest-timeout
+BuildPreReq: python3-module-pytest-cov
 %endif
 
 %py_provides %oname
@@ -100,10 +106,10 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test
+python setup.py test -v
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py test -v
 popd
 %endif
 
@@ -130,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20150727
+- New snapshot
+
 * Tue Feb 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20150222
 - New snapshot
 
