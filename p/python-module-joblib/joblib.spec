@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.2
-Release: alt1
+Version: 0.9.0
+Release: alt1.b3
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
 Group: Development/Python
@@ -14,10 +14,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools python-modules-json
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-nose python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose
 %endif
 
 %description
@@ -111,6 +113,16 @@ pushd ../python3
 popd
 %endif
 
+%check
+rm -fR build
+py.test -vv
+%if_with python3
+pushd ../python3
+rm -fR build
+py.test-%_python3_version -vv
+popd
+%endif
+
 %files
 %doc PKG-INFO *.rst
 %python_sitelibdir/*
@@ -132,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.b3
+- Version 0.9.0b3
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1
 - Version 0.8.2
 
