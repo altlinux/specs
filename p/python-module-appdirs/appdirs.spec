@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.1
-Release: alt1.git20140820
+Release: alt1.git20150722
 Summary: Determining appropriate platform-specific dirs, e.g. a "user data dir"
 License: MIT
 Group: Development/Python
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1.git20150722
+- New snapshot
+
 * Mon Nov 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1.git20140820
 - Initial build for Sisyphus
 
