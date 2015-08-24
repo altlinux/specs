@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.4
-Release: alt1.git20141219
+Version: 0.3.0
+Release: alt1.git20150711
 Summary: Python wrapper for HTML Tidy (tidylib) on Python 2 and 3
 License: MIT
 Group: Development/Python
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20150711
+- Version 0.3.0
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1.git20141219
 - Initial build for Sisyphus
 
