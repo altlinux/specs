@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.5
-Release: alt1.git20141105
+Version: 0.5.0
+Release: alt1.git20150806
 Summary: Decorator for parameterized testing with Nose
 License: BSD
 Group: Development/Python
@@ -62,12 +62,13 @@ popd
 %endif
 
 %check
+export LC_ALL=en_US.UTF-8
 python setup.py test
-nosetests
+#nosetests -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
-nosetests3
+nosetests3 -vv
 popd
 %endif
 
@@ -82,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.git20150806
+- Version 0.5.0
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt1.git20141105
 - Initial build for Sisyphus
 
