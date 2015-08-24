@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 Summary: OpenStack oslo.db library
 Group: Development/Python
@@ -19,14 +19,14 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 0.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-oslo.utils >= 1.2.0
-BuildRequires: python-module-oslo.i18n >= 1.3.0
-BuildRequires: python-module-oslo.config >= 1.9.0
+BuildRequires: python-module-oslo.utils >= 1.4.0
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.config >= 1.9.3
 BuildRequires: python-module-migrate python-module-migrate-tests
 BuildRequires: python-module-alembic >= 0.7.2
 BuildRequires: python-module-eventlet
 BuildRequires: python-module-oslotest
-BuildRequires: python-module-stevedore >= 1.1.0
+BuildRequires: python-module-stevedore >= 1.3.0
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-iso8601 >= 0.1.9
 
@@ -43,14 +43,14 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 0.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-oslo.utils >= 1.2.0
-BuildRequires: python3-module-oslo.i18n >= 1.3.0
-BuildRequires: python3-module-oslo.config >= 1.9.0
+BuildRequires: python3-module-oslo.utils >= 1.4.0
+BuildRequires: python3-module-oslo.i18n >= 1.5.0
+BuildRequires: python3-module-oslo.config >= 1.9.3
 BuildRequires: python3-module-migrate python3-module-migrate-tests
 BuildRequires: python3-module-alembic >= 0.7.2
 BuildRequires: python3-module-eventlet
 BuildRequires: python3-module-oslotest
-BuildRequires: python3-module-stevedore >= 1.1.0
+BuildRequires: python3-module-stevedore >= 1.3.0
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-iso8601 >= 0.1.9
 %endif
@@ -90,9 +90,6 @@ Documentation for the Oslo database handling library.
 
 %prep
 %setup
-
-# Remove bundled egg-info
-#rm -rf %sname.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -143,6 +140,9 @@ rm -fr doc/build/html/.buildinfo
 %doc doc/build/html
 
 %changelog
+* Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1.7.2-alt1
+- 1.7.2
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 1.7.1-alt1
 - 1.7.1
 
