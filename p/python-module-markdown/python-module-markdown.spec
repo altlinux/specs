@@ -1,5 +1,5 @@
-%define version 2.6.0
-%define release alt1.git20150219
+%define version 2.6.2
+%define release alt1.git20150620
 %define modulename markdown
 
 %def_with python3
@@ -124,6 +124,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt1.git20150620
+- Version 2.6.2
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt1.git20150219
 - Version 2.6.0
 
