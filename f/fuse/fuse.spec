@@ -1,6 +1,6 @@
 Name: fuse
 Version: 2.9.4
-Release: alt1
+Release: alt2
 
 Summary: a tool for creating virtual filesystems
 License: GPL
@@ -10,6 +10,7 @@ Url: http://sourceforge.net/projects/fuse
 
 Source: %name-%version.tar
 Source1: fusermount-control
+Source2: fuserumount
 
 Patch0: %name.Makefile.patch
 Patch1: %name.udev.patch
@@ -80,6 +81,8 @@ rm -fr %buildroot%_sysconfdir/init.d
 mkdir -p %buildroot%_udevrulesdir/
 mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 
+install -pD %SOURCE2 %buildroot%_bindir/fuserumount
+
 %pre
 %_sbindir/groupadd -r -f fuse
 %_sbindir/groupadd -r -f cuse
@@ -95,6 +98,7 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 /sbin/mount.fuse
 %attr(4710,root,fuse) %_bindir/fusermount
 %_bindir/ulockmgr_server
+%attr(4710,root,fuse) %_bindir/fuserumount
 %_man1dir/*
 %_man8dir/*
 
@@ -108,6 +112,9 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Aug 24 2015 Denis Smirnov <mithraen@altlinux.ru> 2.9.4-alt2
+- add fuserumount script (ALT#31225)
+
 * Wed May 27 2015 Denis Smirnov <mithraen@altlinux.ru> 2.9.4-alt1
 - 2.9.4
 
