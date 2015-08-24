@@ -7,8 +7,8 @@
 %def_enable mellanox
 
 Name: openstack-neutron
-Version: 2015.1.0
-Release: alt2
+Version: 2015.1.1
+Release: alt1
 Provides: openstack-quantum = %version-%release
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
 Summary: OpenStack Networking Service
@@ -21,6 +21,7 @@ Source0: %name-%version.tar
 Source1: neutron.logrotate
 Source2: neutron-sudoers
 Source3: %name.tmpfiles
+Source5: neutron.sysconfig
 
 Source10: neutron-server.service
 Source11: neutron-linuxbridge-agent.service
@@ -48,18 +49,27 @@ Source120: neutron-metering-agent.init
 Source121: neutron-sriov-nic-agent.init
 Source122: neutron-netns-cleanup.init
 
-Source30: neutron-dist.conf
-
 BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr
+BuildRequires: python-module-pbr >= 0.6
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-eventlet
+BuildRequires: python-module-eventlet >= 0.16.1
+BuildRequires: python-module-oslo.concurrency >= 1.8.0
+BuildRequires: python-module-oslo.config >= 1.9.3
+BuildRequires: python-module-oslo.context >= 0.2.0
+BuildRequires: python-module-oslo.db >= 1.7.0
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.log >= 1.0.0
+BuildRequires: python-module-oslo.messaging >= 1.8.0
+BuildRequires: python-module-oslo.middleware >= 1.0.0
+BuildRequires: python-module-oslo.rootwrap >= 1.6.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-oslo.utils >= 1.4.0
 
 Requires: python-module-neutron = %version-%release
 Requires: python-module-oslo.rootwrap
@@ -88,7 +98,7 @@ Group: Development/Python
 Provides: python-module-quantum = %version-%release
 Obsoletes: python-module-quantum < 2013.2-0.4.b3
 
-Requires: python-module-keystoneclient >= 1.1.0
+Requires: python-module-keystoneclient >= 1.2.0
 Requires: python-module-keystonemiddleware >= 1.5.0
 Requires: python-module-oslo.config >= 1.9.0
 Requires: python-module-neutronclient >= 2.3.11
@@ -422,15 +432,6 @@ rm -rf %buildroot%python_sitelibdir/neutron/plugins/*/tests
 rm -f %buildroot%python_sitelibdir/neutron/plugins/*/run_tests.*
 rm -f %buildroot/etc/init.d/neutron-server
 
-# Move rootwrap files to proper location
-install -d -m 755 %buildroot%_datadir/neutron/rootwrap
-mv %buildroot/etc/neutron/rootwrap.d/*.filters %buildroot%_datadir/neutron/rootwrap
-
-# Move config files to proper location
-install -d -m 755 %buildroot%_sysconfdir/neutron
-mv %buildroot%_sysconfdir/neutron/api-paste.ini %buildroot%_datadir/neutron/api-paste.ini
-chmod 640  %buildroot%_sysconfdir/neutron/plugins/*/*.ini
-
 # Install logrotate
 install -p -D -m 644 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/%name
 
@@ -439,6 +440,9 @@ install -p -D -m 400 %SOURCE2 %buildroot%_sysconfdir/sudoers.d/neutron
 
 # Install tmpfiles
 install -p -D -m 644 %SOURCE3 %buildroot%_tmpfilesdir/%name.conf
+
+# Install sysconfig
+install -p -D -m 644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/neutron
 
 # Install systemd units
 install -p -D -m 644 %SOURCE10 %buildroot%_unitdir/neutron-server.service
@@ -469,38 +473,20 @@ install -p -D -m 755 %SOURCE121 %buildroot%_initdir/neutron-sriov-nic-agent
 install -p -D -m 755 %SOURCE122 %buildroot%_initdir/neutron-netns-cleanup
 
 # Setup directories
-install -d -m 755 %buildroot%_datadir/neutron
 install -d -m 755 %buildroot%_sharedstatedir/neutron
 install -d -m 755 %buildroot%_logdir/neutron
 install -d -m 755 %buildroot%_runtimedir/neutron
 
-# Install dist conf
-install -p -D -m 640 %SOURCE30 %buildroot%_datadir/neutron/neutron-dist.conf
-
-# Create and populate configuration directory for L3 agent that is not accessible for user modification
-mkdir -p %buildroot%_datadir/neutron/l3_agent
-ln -s %_sysconfdir/neutron/l3_agent.ini %buildroot%_datadir/neutron/l3_agent/l3_agent.conf
-
-# Create dist configuration directory for neutron-server (may be filled by advanced services)
-mkdir -p %buildroot%_datadir/neutron/server
-
-# Create configuration directories for all services that can be populated by users with custom *.conf files
-mkdir -p %buildroot%_sysconfdir/neutron/conf.d
-for service in server ovs-cleanup netns-cleanup; do
-    mkdir -p %buildroot%_sysconfdir/neutron/conf.d/neutron-$service
-done
-for service in linuxbridge openvswitch nec dhcp l3 metadata mlnx metering sriov-nic; do
-    mkdir -p %buildroot%_sysconfdir/neutron/conf.d/neutron-$service-agent
-done
-
 # Kill hyperv agent since it's of no use for Linux
 rm %buildroot/%_bindir/neutron-hyperv-agent
+
+
+sed -i -e 's|# root_helper = sudo|root_helper = sudo neutron-rootwrap /etc/neutron/rootwrap.conf|' %buildroot%_sysconfdir/neutron/neutron.conf
 
 %pre
 %_sbindir/groupadd -r -f neutron 2>/dev/null ||:
 %_sbindir/useradd -r -g neutron -G neutron,wheel -c 'OpenStack Neutron Daemons' \
         -s /sbin/nologin  -d %_sharedstatedir/neutron neutron 2>/dev/null ||:
-
 
 %post
 %post_service neutron-dhcp-agent
@@ -579,23 +565,14 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %_initdir/neutron-server
 %_initdir/neutron-netns-cleanup
 
+%config(noreplace) %_sysconfdir/sysconfig/neutron
 %dir %_sysconfdir/neutron
-%attr(-, root, neutron) %_datadir/neutron/neutron-dist.conf
-%attr(-, root, neutron) %_datadir/neutron/api-paste.ini
-%dir %_datadir/neutron/l3_agent
-%dir %_datadir/neutron/server
-%_datadir/neutron/l3_agent/*.conf
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/dhcp_agent.ini
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/l3_agent.ini
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/metadata_agent.ini
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/policy.json
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/api-paste.ini
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/neutron.conf
-%dir %_sysconfdir/neutron/conf.d
-%dir %_sysconfdir/neutron/conf.d/neutron-dhcp-agent
-%dir %_sysconfdir/neutron/conf.d/neutron-l3-agent
-%dir %_sysconfdir/neutron/conf.d/neutron-metadata-agent
-%dir %_sysconfdir/neutron/conf.d/neutron-server
-%dir %_sysconfdir/neutron/conf.d/neutron-netns-cleanup
 %config(noreplace) %_sysconfdir/neutron/rootwrap.conf
 %dir %_sysconfdir/neutron/plugins
 %config(noreplace) %_sysconfdir/logrotate.d/*
@@ -604,46 +581,28 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %dir %attr(0755, neutron, neutron) %_logdir/neutron
 %dir %attr(0755, neutron, neutron) %_runtimedir/neutron
 %_tmpfilesdir/%name.conf
-%dir %_datadir/neutron
-%dir %_datadir/neutron/rootwrap
-%_datadir/neutron/rootwrap/debug.filters
-%_datadir/neutron/rootwrap/dhcp.filters
-%_datadir/neutron/rootwrap/ipset-firewall.filters
-%_datadir/neutron/rootwrap/iptables-firewall.filters
-%_datadir/neutron/rootwrap/l3.filters
 %dir %_sysconfdir/neutron/rootwrap.d
-#%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/rootwrap.d/*.filters
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/rootwrap.d/*.filters
+%exclude %_sysconfdir/neutron/rootwrap.d/linuxbridge-plugin.filters
+%exclude %_sysconfdir/neutron/rootwrap.d/nec-plugin.filters
+%exclude %_sysconfdir/neutron/rootwrap.d/openvswitch-plugin.filters
 
 %files -n python-module-neutron
 %doc LICENSE
 %doc README.rst
 %python_sitelibdir/neutron
-%python_sitelibdir/neutron/plugins/__init__.*
-# don't exclude python_sitelibdir/neutron/plugins/common
-%exclude %python_sitelibdir/neutron/plugins/bigswitch
-%exclude %python_sitelibdir/neutron/plugins/brocade
-%exclude %python_sitelibdir/neutron/plugins/cisco
-%exclude %python_sitelibdir/neutron/plugins/hyperv
-%exclude %python_sitelibdir/neutron/plugins/ibm
-%exclude %python_sitelibdir/neutron/plugins/linuxbridge
-%exclude %python_sitelibdir/neutron/plugins/metaplugin
-%exclude %python_sitelibdir/neutron/plugins/midonet
-%exclude %python_sitelibdir/neutron/plugins/ml2
-%exclude %python_sitelibdir/neutron/plugins/nuage
-%exclude %python_sitelibdir/neutron/plugins/nec
-%exclude %python_sitelibdir/neutron/plugins/oneconvergence
-%exclude %python_sitelibdir/neutron/plugins/openvswitch
-%exclude %python_sitelibdir/neutron/plugins/plumgrid
-%exclude %python_sitelibdir/neutron/plugins/vmware
-%exclude %python_sitelibdir/neutron/plugins/embrane
-%exclude %python_sitelibdir/neutron/plugins/opencontrail
-%exclude %python_sitelibdir/neutron/plugins/sriovnicagent
 %python_sitelibdir/*.egg-info
+%exclude %python_sitelibdir/neutron/plugins/openvswitch/agent/xenapi
+%if_disabled embrane
+%exclude %python_sitelibdir/neutron/plugins/embrane
+%endif
+%if_disabled plumgrid
+%exclude %python_sitelibdir/neutron/plugins/plumgrid
+%endif
 
 %files bigswitch
 %doc LICENSE
 %_bindir/neutron-restproxy-agent
-%python_sitelibdir/neutron/plugins/bigswitch
 %dir %_sysconfdir/neutron/plugins/bigswitch
 %_sysconfdir/neutron/plugins/bigswitch/ssl
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/bigswitch/*.ini
@@ -652,7 +611,6 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %files brocade
 %doc LICENSE
 %doc neutron/plugins/brocade/README.md
-%python_sitelibdir/neutron/plugins/brocade
 %dir %_sysconfdir/neutron/plugins/brocade
 %dir %_sysconfdir/neutron/plugins/brocade/vyatta
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/brocade/*.ini
@@ -665,7 +623,6 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %doc neutron/plugins/cisco/README
 %_bindir/neutron-cisco-apic-host-agent
 %_bindir/neutron-cisco-apic-service-agent
-%python_sitelibdir/neutron/plugins/cisco
 %dir %_sysconfdir/neutron/plugins/cisco
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/cisco/*.ini
 %endif
@@ -674,7 +631,6 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %files embrane
 %doc LICENSE
 %doc neutron/plugins/embrane/README
-%python_sitelibdir/neutron/plugins/embrane
 %dir %_sysconfdir/neutron/plugins/embrane
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/embrane/*.ini
 %endif
@@ -683,7 +639,6 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %doc LICENSE
 %_bindir/neutron-ibm-agent
 %doc neutron/plugins/ibm/README
-%python_sitelibdir/neutron/plugins/ibm
 %dir %_sysconfdir/neutron/plugins/ibm
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/ibm/*.ini
 
@@ -694,8 +649,7 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %_bindir/neutron-linuxbridge-agent
 %_unitdir/neutron-linuxbridge-agent.service
 %_initdir/neutron-linuxbridge-agent
-%python_sitelibdir/neutron/plugins/linuxbridge
-%_datadir/neutron/rootwrap/linuxbridge-plugin.filters
+%config %_sysconfdir/neutron/rootwrap.d/linuxbridge-plugin.filters
 %dir %_sysconfdir/neutron/plugins/linuxbridge
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/linuxbridge/*.ini
 %endif
@@ -707,30 +661,25 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %_bindir/neutron-mlnx-agent
 %_unitdir/neutron-mlnx-agent.service
 %_initdir/neutron-mlnx-agent
-#%python_sitelibdir/neutron/plugins/mlnx
 %dir %_sysconfdir/neutron/plugins/mlnx
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/mlnx/*.ini
-%dir %_sysconfdir/neutron/conf.d/neutron-mlnx-agent
 %endif
 
 %files metaplugin
 %doc LICENSE
 %doc neutron/plugins/metaplugin/README
-%python_sitelibdir/neutron/plugins/metaplugin
 %dir %_sysconfdir/neutron/plugins/metaplugin
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/metaplugin/*.ini
 
 %files midonet
 %doc LICENSE
 #%%doc neutron/plugins/midonet/README
-%python_sitelibdir/neutron/plugins/midonet
 %dir %_sysconfdir/neutron/plugins/midonet
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/midonet/*.ini
 
 %files ml2
 %doc LICENSE
 %doc neutron/plugins/ml2/README
-%python_sitelibdir/neutron/plugins/ml2
 %dir %_sysconfdir/neutron/plugins/ml2
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/ml2/*.ini
 
@@ -740,15 +689,12 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %_bindir/neutron-nec-agent
 %_unitdir/neutron-nec-agent.service
 %_initdir/neutron-nec-agent
-%python_sitelibdir/neutron/plugins/nec
-%_datadir/neutron/rootwrap/nec-plugin.filters
+%config %_sysconfdir/neutron/rootwrap.d/nec-plugin.filters
 %dir %_sysconfdir/neutron/plugins/nec
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/nec/*.ini
-%dir %_sysconfdir/neutron/conf.d/neutron-nec-agent
 
 %files nuage
 %doc LICENSE
-%python_sitelibdir/neutron/plugins/nuage
 %dir %_sysconfdir/neutron/plugins/nuage
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/nuage/*.ini
 
@@ -756,14 +702,12 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %doc LICENSE
 %doc neutron/plugins/oneconvergence/README
 %_bindir/neutron-nvsd-agent
-%python_sitelibdir/neutron/plugins/oneconvergence
 %dir %_sysconfdir/neutron/plugins/oneconvergence
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/oneconvergence/nvsdplugin.ini
 
 %files opencontrail
 %doc LICENSE
 #%doc neutron/plugins/opencontrail/README
-%python_sitelibdir/neutron/plugins/opencontrail
 %dir %_sysconfdir/neutron/plugins/opencontrail
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/opencontrail/*.ini
 
@@ -777,13 +721,9 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %_initdir/neutron-openvswitch-agent
 %_unitdir/neutron-ovs-cleanup.service
 %_initdir/neutron-ovs-cleanup
-%python_sitelibdir/neutron/plugins/openvswitch
-%exclude %python_sitelibdir/neutron/plugins/openvswitch/agent/xenapi
-%_datadir/neutron/rootwrap/openvswitch-plugin.filters
+%config %_sysconfdir/neutron/rootwrap.d/openvswitch-plugin.filters
 %dir %_sysconfdir/neutron/plugins/openvswitch
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/openvswitch/*.ini
-%dir %_sysconfdir/neutron/conf.d/neutron-openvswitch-agent
-%dir %_sysconfdir/neutron/conf.d/neutron-ovs-cleanup
 %endif
 
 %files ovsvapp
@@ -797,14 +737,12 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %files plumgrid
 %doc LICENSE
 %doc neutron/plugins/plumgrid/README
-%python_sitelibdir/neutron/plugins/plumgrid
 %dir %_sysconfdir/neutron/plugins/plumgrid
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/plumgrid/*.ini
 %endif
 
 %files vmware
 %doc LICENSE
-%python_sitelibdir/neutron/plugins/vmware
 %dir %_sysconfdir/neutron/plugins/vmware
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/vmware/*.ini
 
@@ -814,17 +752,18 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 %_initdir/neutron-metering-agent
 %_bindir/neutron-metering-agent
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/metering_agent.ini
-%dir %_sysconfdir/neutron/conf.d/neutron-metering-agent
 
 %files sriov-nic-agent
 %doc LICENSE
 %_bindir/neutron-sriov-nic-agent
 %_unitdir/neutron-sriov-nic-agent.service
 %_initdir/neutron-sriov-nic-agent
-%python_sitelibdir/neutron/plugins/sriovnicagent
-%dir %_sysconfdir/neutron/conf.d/neutron-sriov-nic-agent
 
 %changelog
+* Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
+- 2015.1.1
+- drop neutron-dist.conf in datadir
+
 * Thu Aug 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2015.1.0-alt2
 - neutron/plugins/common exclusion fixed. closes: #31220
 
