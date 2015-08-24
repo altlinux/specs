@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.1
-Release: alt1.git20140725
+Version: 1.0.0
+Release: alt1.git20150618
 Summary: Tools for testing processes
 License: BSD
 Group: Development/Python
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20150618
+- Version 1.0.0
+
 * Fri Jan 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.git20140725
 - Initial build for Sisyphus
 
