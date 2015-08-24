@@ -1,22 +1,14 @@
-%set_automake_version 1.11
-
-%define python_sitearch %(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")
-
-Name: guake
+Name:    guake
+Version: 0.8.0
+Release: alt1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
-Version: 0.4.4
-Release: alt2.1
-License: GPL v2+
-Group: Terminals
-URL: http://guake.org/
-Source: http://guake.org/files/%{name}-%{version}.tar.gz
 
-Patch1: guake-fc18-focus_gnome_shell.patch
-Patch2: guake-fc18-notification.patch
-Patch3: guake-fc18-port_number_regex.patch
-Patch4: guake-fc18-SIGTERM_to_fail.patch
-
+License: GPLv2+
+Group:   Terminals
+URL: 	 http://guake.org/
+# VCS:	 https://github.com/Guake/guake.git
+Source0: %name-%version.tar
 
 BuildRequires(pre): etersoft-build-utils libGConf-devel rpm-build-gnome python-devel rpm-build-python
 BuildRequires:  glibc-devel-static intltool libgtk+2-devel python-devel python-module-pygtk-devel python-module-vte python-modules-encodings GConf
@@ -26,47 +18,30 @@ Requires: GConf
 Requires: dbus
 Requires: python-module-pygtk-libglade notification-daemon
 
+Patch1: guake-fix-desktop-files.patch
+BuildRequires: desktop-file-utils
+
 %description
 Guake is a drop-down terminal for Gnome Desktop Environment, so you
 just need to press a key to invoke him, and press again to hide.
 
 %prep
 %setup -q
-
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
-libtoolize
-aclocal -I m4
-autoconf
-autoheader
-automake
-%configure  --disable-static --disable-schemas-install
-sed -i -e 's|pythondir = ${prefix}/lib/|pythondir = ${prefix}/%_lib/|' src/Makefile
+%autoreconf
+%configure --disable-static --disable-schemas-install
 %make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}"
 
 %install
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 %makeinstall
 
+rm -f %buildroot%_libdir/guake/*.la %buildroot%_iconsdir/hicolor/icon-theme.cache
+install -Dm644 data/guake-autostart.desktop.in %buildroot%gnome_autostartdir/guake.desktop
 
 %find_lang %name
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Utility \
-	%buildroot%_desktopdir/%name.desktop
-
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=X-GNOME-PersonalSettings \
-	--add-category=Accessibility \
-	%buildroot%_desktopdir/%name-prefs.desktop
-
-rm -f %buildroot%python_sitearch/%name/globalhotkeys.la
-
-mkdir -p %buildroot%gnome_autostartdir
-ln -s %_desktopdir/%name.desktop %buildroot%gnome_autostartdir/guake.desktop
 
 %post
 %gconf2_install %name
@@ -76,22 +51,25 @@ if [ $1 = 0 ]; then
   %gconf2_uninstall %name
 fi
 
-
 %files -f %name.lang
-%defattr(644,root,root,755)
-%doc AUTHORS ChangeLog COPYING README TODO
+%doc AUTHORS ChangeLog COPYING NEWS README.rst
 %config %_sysconfdir/gconf/schemas/*
 %attr(755,root,root) %_bindir/*
-%python_sitearch/%name
-%_desktopdir/*.desktop
-%_datadir/dbus-1/services/org.guake.Guake.service
+%python_sitelibdir_noarch/%name
 %_datadir/%name
 %_pixmapsdir/guake
-%_mandir/man1/guake.1*
-%_datadir/icons/hicolor/*/apps/%{name}*.png
+%_desktopdir/*.desktop
+%_datadir/dbus-1/services/org.guake.Guake.service
+%_sysconfdir/gconf/schemas/guake.schemas
+%_man1dir/guake.1*
 %gnome_autostartdir/guake.desktop
+%_iconsdir/hicolor/*/apps/%{name}*.png
 
 %changelog
+* Mon Aug 24 2015 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt1
+- New version
+- Build from upstream Git repository
+
 * Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4-alt2.1
 - Fixed build
 
