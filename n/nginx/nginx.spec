@@ -15,7 +15,7 @@
 %def_enable rtmp
 
 Name: nginx
-Version: 1.6.3
+Version: 1.8.0
 Release: alt1
 
 Summary: Fast HTTP server
@@ -271,6 +271,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Mon Aug 24 2015 Denis Smirnov <mithraen@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+- update cache-purge patch
+
 * Fri Apr 10 2015 Denis Smirnov <mithraen@altlinux.ru> 1.6.3-alt1
 - 1.6.3
 - update rtmp module to 1.1.7
