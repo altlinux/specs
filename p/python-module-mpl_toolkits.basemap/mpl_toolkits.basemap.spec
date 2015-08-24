@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.8
-Release: alt2.git20140331
+Release: alt2.git20140816
 Summary: Plot on map projections (with coastlines and political boundaries)
 License: OSI Approved
 Group: Development/Python
@@ -261,6 +261,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt2.git20140816
+- New snapshot
+
 * Wed Apr 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt2.git20140331
 - Fixed build
 

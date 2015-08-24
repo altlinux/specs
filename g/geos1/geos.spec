@@ -1,8 +1,8 @@
-%def_with python3
+%def_without python3
 
-Name: geos
-Version: 3.6.0
-Release: alt1.dev.git20150816
+Name: geos1
+Version: 3.5.0
+Release: alt3.dev.git20150203
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -102,7 +102,7 @@ cp -fR . ../python3
 ./autogen.sh
 %configure \
 	--disable-static \
-	--enable-python \
+	--disable-python \
 	--disable-ruby
 
 %if_with python3
@@ -171,33 +171,33 @@ rm -f %buildroot%python3_sitelibdir/geos/*.la
 bzip2 ChangeLog
 
 %files -n lib%name
-%doc AUTHORS ChangeLog* COPYING NEWS README TODO
+#doc AUTHORS ChangeLog* COPYING NEWS README TODO
 %_libdir/lib*.so.*
 
-%files -n lib%name-devel
-%_bindir/%name-config
-%_libdir/lib*.so
-%_includedir/*
+#files -n lib%name-devel
+#_bindir/%name-config
+#_libdir/lib*.so
+#_includedir/*
 
-%files -n python-module-%name
-%python_sitelibdir/*
+#files -n python-module-%name
+#python_sitelibdir/*
 
-%if_with python3
-%files -n python3-module-%name
-%python3_sitelibdir/*
-%endif
+#if_with python3
+#files -n python3-module-%name
+#python3_sitelibdir/*
+#endif
 
-%if 0
-%files -n ruby-%name
-%ruby_sitearchdir/*
-%endif
+#if 0
+#files -n ruby-%name
+#ruby_sitearchdir/*
+#endif
 
-%files doc
-%doc doc/doxygen_docs/html/*
+#files doc
+#doc doc/doxygen_docs/html/*
 
 %changelog
-* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.0-alt1.dev.git20150816
-- Version 3.6.0dev
+* Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt3.dev.git20150203
+- Moved this version into System/Legacy libraries
 
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt2.dev.git20150203
 - New snapshot
