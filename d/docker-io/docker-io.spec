@@ -10,7 +10,7 @@
 %global shortcommit 4e9bbfa
 
 Name:       %{repo}-io
-Version:    1.6.1
+Version:    1.8.1
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -136,7 +136,7 @@ find . -name "*.go" \
         -print |\
         xargs sed -i 's/github.com\/docker\/docker\/vendor\/src\/code.google.com\/p\/go\/src\/pkg\///g'
 sed -i 's/\!bash//g' contrib/completion/bash/docker
-sed -i 's/go-md2man -in "$FILE" -out/pandoc -s -t man "$FILE" -o/g' docs/man/md2man-all.sh
+sed -i 's/go-md2man -in "$FILE" -out/pandoc -s -t man "$FILE" -o/g' man/md2man-all.sh
 
 %build
 # set up temporary build gopath, and put our directory there
@@ -148,7 +148,7 @@ export DOCKER_BUILDTAGS='selinux'
 export GOPATH=$(pwd)/_build:%{gopath}:$(pwd)/vendor
 
 hack/make.sh dynbinary
-docs/man/md2man-all.sh
+man/md2man-all.sh
 cp contrib/syntax/vim/LICENSE LICENSE-vim-syntax
 cp contrib/syntax/vim/README.md README-vim-syntax.md
 
@@ -163,9 +163,9 @@ install -p -m 755 bundles/%{version}/dynbinary/dockerinit-%{version} %{buildroot
 
 # install manpages
 install -d %{buildroot}%{_mandir}/man1
-install -p -m 644 docs/man/man1/docker*.1 %{buildroot}%{_mandir}/man1
+install -p -m 644 man/man1/docker*.1 %{buildroot}%{_mandir}/man1
 install -d %{buildroot}%{_mandir}/man5
-install -p -m 644 docs/man/man5/Dockerfile.5 %{buildroot}%{_mandir}/man5
+install -p -m 644 man/man5/Dockerfile.5 %{buildroot}%{_mandir}/man5
 
 # install bash completion
 install -dp %{buildroot}%{_datadir}/bash-completion/completions
@@ -194,8 +194,7 @@ install -p -m 644 contrib/init/systemd/%{repo}.socket %{buildroot}%{_unitdir}
 install -d -p %{buildroot}/%{gopath}/src/%{import_path}
 rm -rf pkg/symlink/testdata
 
-for dir in api builtins daemon autogen engine graph \
-           image links nat opts pkg registry runconfig utils
+for dir in api daemon graph image links opts pkg registry runconfig utils
 do
     cp -rpav $dir %{buildroot}/%{gopath}/src/%{import_path}/
 done
@@ -310,6 +309,9 @@ exit 0
 %{gopath}/src/%{import_path}/pkg/*/*/*/*.tar
 
 %changelog
+* Mon Aug 24 2015 Vladimir Didenko <cow@altlinux.org> 1.8.1-alt1
+- New version.
+
 * Fri May 08 2015 Evgeny Sinelnikov <sin@altlinux.ru> 1.6.1-alt1
 - Update to new version with security updates
  + Fix read/write /proc paths (CVE-2015-3630)
