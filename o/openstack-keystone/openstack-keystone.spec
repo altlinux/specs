@@ -2,7 +2,7 @@
 
 Name: openstack-keystone
 Version: 2015.1.1
-Release: alt1
+Release: alt2
 Summary: OpenStack Identity Service
 
 %add_python_req_skip xmldsig
@@ -252,7 +252,6 @@ if [ -f %_logdir/keystone/keystone-manage.log ]; then
     chown keystone:keystone %_logdir/keystone/keystone-manage.log
 fi
 
-
 %preun
 %preun_service %name
 
@@ -281,11 +280,11 @@ fi
 %ghost %attr(0640, root, keystone) %_sysconfdir/keystone/ssl/private/signing_key.pem
 %config(noreplace) %attr(0640, root, keystone) %_sysconfdir/keystone/keystone.conf
 %config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/logging.conf
-%config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/default_catalog.templates
-%config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/keystone-paste.ini
-%config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/policy.json
-%config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/policy.v3cloudsample.json
-%config(noreplace) %attr(0644, root, keystone) %_sysconfdir/keystone/sso_callback_template.html
+%config %_sysconfdir/keystone/default_catalog.templates
+%config %_sysconfdir/keystone/keystone-paste.ini
+%config %_sysconfdir/keystone/policy.json
+%config %_sysconfdir/keystone/policy.v3cloudsample.json
+%config %_sysconfdir/keystone/sso_callback_template.html
 %config(noreplace) %_sysconfdir/logrotate.d/openstack-keystone
 %dir %attr(0755, keystone, keystone) %_sharedstatedir/keystone
 %dir %attr(0750, keystone, keystone) %_logdir/keystone
@@ -307,6 +306,9 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt2
+- drop "noreplace" from dist configs
+
 * Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
 - 2015.1.1
 - move dist configs from datadir to sysconfdir
