@@ -2,8 +2,8 @@
 
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 1.48.0
-Release: alt2
+Version: 2.35.0
+Release: alt1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -12,37 +12,45 @@ License: GPL
 Group: File tools
 Url: http://calibre-ebook.com/
 
-Packager: Damir Shayhutdinov <damir@altlinux.ru>
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# #Source-url: http://status.calibre-ebook.com/dist/src
 # Source-url: http://download.calibre-ebook.com/%version/calibre-%version.tar.xz
 Source: %name-%version.tar
 Source1: calibre-mount-helper
 
 Patch: calibre-no-update.patch
 Patch1: calibre-0.8.55-alt-no-macmenu.patch
-Patch2: calibre-qt4-4.8.5-private-headers.patch
 
 Requires: fonts-ttf-liberation
+Requires: xkeyboard-config
 
 Requires: python-module-netifaces
 
-%add_python_req_skip win32serviceutil win32service win32event win32con win32com win32api pythoncom usbobserver
+%add_python_req_skip win32serviceutil win32service win32event win32con win32com win32api win32gui winerror _winreg pywintypes pythoncom usbobserver
 
 BuildRequires: chrpath
 BuildRequires: xdg-utils >= 1.0.2
 BuildRequires: /proc
 
-BuildRequires: gcc-c++ libX11-devel libXext-devel libjpeg-devel libusb-devel libsqlite3-devel
+BuildRequires: gcc-c++ libX11-devel libXext-devel libXrender-devel libpng-devel libjpeg-devel libusb-devel libsqlite3-devel
 
-BuildRequires: python >= 2.7.1
+# wait: have 2.7.8 only
+BuildRequires: python >= 2.7.8
+#BuildRequires: python >= 2.7.9
 BuildRequires: python-modules-json python-modules-compiler python-modules-curses python-modules-encodings
 BuildRequires: python-module-sip-devel
 
-# Note: checked with http://calibre-ebook.com/download_linux 28.08.2013
+# Note: checked with http://calibre-ebook.com/download_linux 23.08.2015
 BuildRequires: python-module-imaging >= 1.1.6
-BuildRequires: libqt4-devel >= 4.8.0
-BuildRequires: python-module-PyQt4-devel >= 4.9.6
+
+# missed in the official list
+BuildRequires: glib2-devel fontconfig-devel libfreetype-devel libssl-devel libudev-devel
+
+# no more common qt headers package
+#BuildRequires: libqt5-devel >= 5.3.2
+BuildRequires: qt5-base-devel-static >= 5.3.2
+BuildRequires: python-module-PyQt5-devel >= 5.3.1
+
 BuildRequires: python-module-mechanize >= 0.1.11
 BuildRequires: libImageMagick-devel >= 6.5.9
 BuildRequires: python-module-lxml >= 3.2.1
@@ -50,7 +58,7 @@ BuildRequires: python-module-dateutil >= 1.4.1
 BuildRequires: python-module-cssutils >= 0.9.9
 BuildRequires: python-module-BeautifulSoup >= 3.0.5
 BuildRequires: python-module-dns >= 1.6.0
-BuildRequires: libpoppler-qt4-devel >= 0.20.2
+BuildRequires: libpoppler-qt5-devel >= 0.20.2
 BuildRequires: libpodofo-devel >= 0.8.2
 BuildRequires: libwmf-devel >= 0.2.8
 BuildRequires: libchm-devel >= 0.4
@@ -58,7 +66,9 @@ BuildRequires: libicu-devel >= 4.4
 BuildRequires: libmtp-devel >= 1.1.5
 BuildRequires: python-module-netifaces >= 0.8
 BuildRequires: python-module-psutil >= 0.6.1
+# need it really?
 BuildRequires: python-module-cssselect >= 0.7.1
+BuildRequires: python-module-dbus >= 1.2.0
 BuildRequires: python-module-apsw >= 3.7.17
 
 %description
@@ -81,9 +91,8 @@ TXT, PDF, LRS и FB2.
 %prep
 %setup -n %name
 # don't check for new upstream version
-%patch -p1
-%patch1 -p1
-%patch2 -p2
+#patch -p1
+#patch1 -p1
 
 %build
 %python_build
@@ -117,6 +126,10 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/appdata/*.appdata.xml
 
 %changelog
+* Mon Aug 24 2015 Vitaly Lipatov <lav@altlinux.ru> 2.35.0-alt1
+- new version (2.35.0) with rpmgs script
+- build with Qt5, update build requires
+
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 1.48.0-alt2
 - rebuild with updated apws, lxml
 - rebuild with new podofo 0.9.3
