@@ -1,15 +1,13 @@
 %def_with python3
 
 Name:       python-module-keystoneclient
-Version:    1.3.0
+Version:    1.3.2
 Release:    alt1
 Summary:    Client library for OpenStack Identity API
 License:    ASL 2.0
 URL:        http://pypi.python.org/pypi/%{name}
 Source:    %name-%version.tar
 Group:      Development/Python
-
-Patch0001: 0001-Remove-runtime-dependency-on-python-pbr.patch
 
 BuildArch:  noarch
 
@@ -21,16 +19,16 @@ BuildRequires: python-module-argparse
 BuildRequires: python-module-iso8601 >= 0.1.9
 BuildRequires: python-module-prettytable >= 0.7
 BuildRequires: python-module-requests >= 2.2.0
-BuildRequires: python-module-oslo.config >= 1.9.0
-BuildRequires: python-module-oslo.i18n >= 1.3.0
-BuildRequires: python-module-oslo.serialization >= 1.2.0
-BuildRequires: python-module-oslo.utils >= 1.2.0
+BuildRequires: python-module-oslo.config >= 1.9.3
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-oslo.utils >= 1.4.0
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-netaddr >= 0.7.12
 BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-stevedore >= 1.1.0
+BuildRequires: python-module-stevedore >= 1.3.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -42,16 +40,16 @@ BuildRequires: python3-module-argparse
 BuildRequires: python3-module-iso8601 >= 0.1.9
 BuildRequires: python3-module-prettytable >= 0.7
 BuildRequires: python3-module-requests >= 2.2.0
-BuildRequires: python3-module-oslo.config >= 1.9.0
-BuildRequires: python3-module-oslo.i18n >= 1.3.0
-BuildRequires: python3-module-oslo.serialization >= 1.2.0
-BuildRequires: python3-module-oslo.utils >= 1.2.0
+BuildRequires: python3-module-oslo.config >= 1.9.3
+BuildRequires: python3-module-oslo.i18n >= 1.5.0
+BuildRequires: python3-module-oslo.serialization >= 1.4.0
+BuildRequires: python3-module-oslo.utils >= 1.4.0
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-netaddr >= 0.7.12
 BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-stevedore >= 1.1.0
+BuildRequires: python3-module-stevedore >= 1.3.0
 %endif
 
 %description
@@ -79,15 +77,8 @@ Identity API.
 %prep
 %setup
 
-%patch0001 -p1
-
-# We provide version like this in order to remove runtime dep on pbr.
-sed -i s/REDHATKEYSTONECLIENTVERSION/%version/ keystoneclient/__init__.py
-
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
-# Remove bundled egg-info
-rm -rf python_keystoneclient.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -144,6 +135,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 
