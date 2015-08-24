@@ -1,10 +1,11 @@
 %define oname pytest-cov
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 2.0.0
-Release: alt1.git20150801
+Version: 2.1.0
+Release: alt1.git20150823
 Summary: py.test plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
 Group: Development/Python
@@ -18,11 +19,13 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-coverage python-module-cov-core
 BuildPreReq: python-module-virtualenv python-module-pytest-xdist
+BuildPreReq: python-module-process-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-coverage python3-module-cov-core
 BuildPreReq: python3-module-virtualenv python3-module-pytest-xdist
+BuildPreReq: python3-module-process-tests
 %endif
 
 %py_provides pytest_cov
@@ -76,12 +79,17 @@ popd
 %endif
 
 %check
+export PYTHONPATH=%buildroot%python_sitelibdir
+py.test -vv
 python setup.py test
 %if_with python3
 pushd ../python3
+export PYTHONPATH=%buildroot%python3_sitelibdir
 python3 setup.py test
+py.test-%_python3_version -vv
 popd
 %endif
+exit 1
 
 %files
 %doc *.rst
@@ -94,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1.git20150823
+- Version 2.1.0
+
 * Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.git20150801
 - New snapshot
 
