@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 1.8.0
+Version: 1.8.2
 Release: alt1
 Summary: OpenStack oslo.concurrency library
 Group: Development/Python
@@ -22,9 +22,9 @@ BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-iso8601 >= 0.1.9
-BuildRequires: python-module-oslo.config >= 1.9.0
-BuildRequires: python-module-oslo.i18n >= 1.3.0
-BuildRequires: python-module-oslo.utils >= 1.2.0
+BuildRequires: python-module-oslo.config >= 1.9.3
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.utils >= 1.4.0
 BuildRequires: python-module-fixtures >= 0.3.14
 BuildRequires: python-module-retrying >= 1.2.3
 
@@ -39,9 +39,9 @@ BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-iso8601 >= 0.1.9
-BuildRequires: python3-module-oslo.config >= 1.9.0
-BuildRequires: python3-module-oslo.i18n >= 1.3.0
-BuildRequires: python3-module-oslo.utils >= 1.2.0
+BuildRequires: python3-module-oslo.config >= 1.9.3
+BuildRequires: python3-module-oslo.i18n >= 1.5.0
+BuildRequires: python3-module-oslo.utils >= 1.4.0
 BuildRequires: python3-module-fixtures >= 0.3.14
 BuildRequires: python3-module-retrying >= 1.2.3
 
@@ -86,9 +86,6 @@ Documentation for the Oslo concurrency handling library.
 
 %prep
 %setup
-
-# Remove bundled egg-info
-#rm -rf %sname.egg-info
 
 %if_with python3
 rm -rf ../python3
@@ -135,6 +132,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.2-alt1
+- 1.8.2
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 
