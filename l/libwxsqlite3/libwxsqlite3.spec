@@ -3,8 +3,8 @@
 %define oname wxsqlite3
 
 Name: libwxsqlite3
-Version: 3.0.5
-Release: alt2
+Version: 3.2.1
+Release: alt1
 
 Summary: C++ wrapper around the SQLite 3.x database
 
@@ -16,7 +16,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: http://prdownloads.sourceforge.net/wxcode/%oname-%version.tar.gz
 Source: %name-%version.tar
-Source1: %oname-3.0.5.pc.in
 Source44: import.info
 
 # Automatically added by buildreq on Sun Sep 29 2013
@@ -78,7 +77,6 @@ find -name sqlite3 -type d | xargs rm -rfv
 # copy correct configure file and set permission
 chmod a+x configure29 configure
 cp configure29 configure
-cp %SOURCE1 %name.pc.in
 
 %build
 %configure
@@ -91,14 +89,14 @@ cp %SOURCE1 %name.pc.in
 mkdir %buildroot%wxincdir
 mv %buildroot%_includedir/wx %buildroot%wxincdir
 
-find %buildroot -name '*.la' -exec rm -f {} ';'
+#find %buildroot -name '*.la' -exec rm -f {} ';'
 
 # install own Debian-compatible pkgconfig file
 mkdir -p %buildroot%_pkgconfigdir
 sed -e "s!@VERSION@!%version!" \
 	-e "s!@LIBDIR@!%_lib!" \
 	-e "s!@WXVERSION@!%wxversion!g" \
-%SOURCE1 > %buildroot%_pkgconfigdir/%oname-%wxversion.pc
+wxsqlite3.pc.in > %buildroot%_pkgconfigdir/%oname-%wxversion.pc
 
 %files
 %doc LICENCE.txt Readme.txt
@@ -113,6 +111,9 @@ sed -e "s!@VERSION@!%version!" \
 %doc docs/html
 
 %changelog
+* Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- new version 3.2.1 (with rpmrb script)
+
 * Sun Sep 29 2013 Vitaly Lipatov <lav@altlinux.ru> 3.0.5-alt2
 - initial build to ALT Linux Sisyphus
 
