@@ -1,6 +1,6 @@
 
 Name: openstack-glance
-Version: 2015.1.0
+Version: 2015.1.1
 Release: alt1
 Summary: OpenStack Image Service
 
@@ -12,11 +12,6 @@ Source1: %name-api.service
 Source2: %name-registry.service
 Source3: %name-scrubber.service
 Source4: %name.logrotate
-
-Source5: glance-api-dist.conf
-Source6: glance-registry-dist.conf
-Source7: glance-cache-dist.conf
-Source8: glance-scrubber-dist.conf
 
 Source40: %name-api.init
 Source41: %name-registry.init
@@ -38,13 +33,14 @@ BuildRequires: python-module-oslo.i18n >= 1.5.0
 BuildRequires: python-module-oslo.messaging >= 1.8.0
 BuildRequires: python-module-oslo.policy >= 0.3.1
 BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.vmware >= 0.11.0
+BuildRequires: python-module-oslo.vmware >= 0.11.1
 BuildRequires: python-module-stevedore >= 1.3.0
 BuildRequires: python-module-taskflow >= 0.7.1
 BuildRequires: python-module-keystonemiddleware >= 1.5.0
-BuildRequires: python-module-keystoneclient >= 1.1.0
+BuildRequires: python-module-keystoneclient >= 1.2.0
 BuildRequires: python-module-glance_store >= 0.3.0
 BuildRequires: python-module-semantic_version >= 2.3.1
+BuildRequires: python-module-jsonschema >= 2.0.0
 
 # Required to build module documents
 BuildRequires: python-module-boto
@@ -53,7 +49,7 @@ BuildRequires: python-module-routes
 BuildRequires: python-module-SQLAlchemy >= 0.9.7
 BuildRequires: python-module-migrate >= 0.9.5
 BuildRequires: python-module-webob
-BuildRequires: python-module-pbr
+BuildRequires: python-module-pbr >= 0.6
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-eventlet >= 0.16.1
@@ -125,27 +121,6 @@ sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.p
 # to distutils requiers_dist config
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
-# Programmatically update defaults in example config
-api_dist=%SOURCE5
-registry_dist=%SOURCE6
-cache_dist=%SOURCE7
-scrubber_dist=%SOURCE8
-for svc in api registry cache scrubber; do
-  #  First we ensure all values are commented in appropriate format.
-  #  Since icehouse, there was an uncommented keystone_authtoken section
-  #  at the end of the file which mimics but also conflicted with our
-  #  distro editing that had been done for many releases.
-  sed -i '/^[^#[]/{s/^/#/; s/ //g}; /^#[^ ]/s/ = /=/' etc/glance-$svc.conf
-
-  #  TODO: Make this more robust
-  #  Note it only edits the first occurance, so assumes a section ordering in sample
-  #  and also doesn't support multi-valued variables like dhcpbridge_flagfile.
-  eval dist_conf=\$${svc}_dist
-  while read name eq value; do
-    test "$name" && test "$value" || continue
-    sed -i "0,/^# *$name=/{s!^# *$name=.*!#$name=$value!}" etc/glance-$svc.conf
-  done < $dist_conf
-done
 
 %build
 %python_build
@@ -168,32 +143,12 @@ rm -f %buildroot%_bindir/glance
 mkdir -p %buildroot%_mandir/man1
 install -p -D -m 644 doc/build/man/*.1 %buildroot%_mandir/man1/
 
-# Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
-rm -f %buildroot%_sysconfdir/glance*.conf
-rm -f %buildroot%_sysconfdir/glance*.ini
-rm -f %buildroot%_sysconfdir/logging.cnf.sample
-rm -f %buildroot%_sysconfdir/policy.json
-rm -f %buildroot%_sysconfdir/schema-image.json
-rm -f %buildroot/usr/share/doc/glance/README.rst
+install -d -m 0755 %buildroot%_sysconfdir/glance
+cp -pr etc/* %buildroot%_sysconfdir/glance
+rm -rf %buildroot%_sysconfdir/glance/oslo-config-generator
+mv %buildroot%_sysconfdir/glance/glance-swift.conf{.sample,}
 
-# Setup directories
-install -d -m 755 %buildroot%_datadir/glance
 install -d -m 755 %buildroot%_sharedstatedir/glance/images
-
-# Config file
-install -p -D -m 640 etc/glance-api.conf %buildroot%_sysconfdir/glance/glance-api.conf
-install -p -D -m 644 %SOURCE5 %buildroot%_datadir/glance/glance-api-dist.conf
-install -p -D -m 644 etc/glance-api-paste.ini %buildroot%_datadir/glance/glance-api-dist-paste.ini
-install -p -D -m 640 etc/glance-registry.conf %buildroot%_sysconfdir/glance/glance-registry.conf
-install -p -D -m 644 %SOURCE6 %buildroot%_datadir/glance/glance-registry-dist.conf
-install -p -D -m 644 etc/glance-registry-paste.ini %buildroot%_datadir/glance/glance-registry-dist-paste.ini
-install -p -D -m 640 etc/glance-cache.conf %buildroot%_sysconfdir/glance/glance-cache.conf
-install -p -D -m 644 %SOURCE7 %buildroot%_datadir/glance/glance-cache-dist.conf
-install -p -D -m 640 etc/glance-scrubber.conf %buildroot%_sysconfdir/glance/glance-scrubber.conf
-install -p -D -m 644 %SOURCE8 %buildroot%_datadir/glance/glance-scrubber-dist.conf
-install -p -D -m 640 etc/policy.json %buildroot%_sysconfdir/glance/policy.json
-install -p -D -m 640 etc/schema-image.json %buildroot%_sysconfdir/glance/schema-image.json
 
 # Initscripts
 install -p -D -m 644 %SOURCE1 %buildroot%_unitdir/openstack-glance-api.service
@@ -216,23 +171,6 @@ install -d -m 755 %buildroot%_runtimedir/glance
 # Install log directory
 install -d -m 755 %buildroot%_logdir/glance
 
-# Programmatically update defaults in sample config
-# which is installed at /etc/$project/$program.conf
-# TODO: Make this more robust
-# Note it only edits the first occurance, so assumes a section ordering in sample
-# and also doesn't support multi-valued variables.
-for svc in api registry cache scrubber; do
-  cfg=%buildroot%_sysconfdir/glance/glance-$svc.conf
-  test -e $cfg || continue
-  while read name eq value; do
-    test "$name" && test "$value" || continue
-    # Note some values in upstream glance config may not be commented
-    # and if not, they might not match the default value in code.
-    # So we comment out both froms to have dist config take precedence.
-    sed -i "0,/^#* *$name *=/{s!^#* *$name *=.*!#$name=$value!}" $cfg
-  done < %buildroot%_datadir/glance/glance-$svc-dist.conf
-done
-
 
 %pre
 # 161:161 for glance (openstack-glance)
@@ -253,18 +191,24 @@ done
 %files
 %doc README.rst
 %_bindir/*
-%_datadir/glance
 %_unitdir/*
 %_initdir/*
 %_tmpfilesdir/*
 
 %_man1dir/*
 %dir %_sysconfdir/glance
-%config(noreplace) %attr(-, root, glance) %_sysconfdir/glance/*
+%config(noreplace) %attr(640, root, glance) %_sysconfdir/glance/*.conf
+%config %_sysconfdir/glance/*.ini
+%config %_sysconfdir/glance/*.json
+%config %_sysconfdir/glance/*.conf.sample
+%dir %_sysconfdir/glance/metadefs
+%_sysconfdir/glance/metadefs/README
+%config %_sysconfdir/glance/metadefs/*.json
 %config(noreplace) %_sysconfdir/logrotate.d/%name
-%dir %attr(0755, glance, nobody) %_sharedstatedir/glance
+%dir %attr(0755, glance, glance) %_sharedstatedir/glance
+%dir %attr(0755, glance, glance) %_sharedstatedir/glance/images
 %dir %attr(0750, glance, glance) %_logdir/glance
-%dir %attr(0755, glance, nobody) %_runtimedir/glance
+%dir %attr(0755, glance, glance) %_runtimedir/glance
 
 %files -n python-module-glance
 %doc README.rst
@@ -275,6 +219,9 @@ done
 %doc doc/build/html
 
 %changelog
+* Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
+- 2015.1.1
+
 * Wed May 20 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
 - 2015.1.0 Kilo Release
 
