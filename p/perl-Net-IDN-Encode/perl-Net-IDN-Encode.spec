@@ -3,7 +3,7 @@
 %define real_name Net-IDN-Encode
 
 Name: perl-Net-IDN-Encode
-Version: 2.202
+Version: 2.300
 Release: alt1
 
 Summary: Encoding and decoding of Internationalized Domain Names
@@ -48,6 +48,9 @@ Net::IDN::Punycode - ASCII-compatible encoding of Unicode
 %perl_vendor_archlib/Net
 
 %changelog
+* Tue Aug 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 2.300-alt1
+- New version
+
 * Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 2.202-alt1
 - New version
 
