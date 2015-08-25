@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-novaclient
-Version: 2.23.0
+Version: 2.23.2
 Release: alt1
 Summary: Python API and CLI for OpenStack Nova
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 #
 # patches_base=2.17.0
 #
-Patch0001: 0001-Remove-runtime-dependency-on-python-pbr.patch
+Patch2: novaclient-fix-oslo_namespace.patch
 
 BuildArch: noarch
 
@@ -93,10 +93,7 @@ This package contains auto-generated documentation.
 %prep
 %setup
 
-%patch0001 -p1
-
-# We provide version like this in order to remove runtime dep on pbr.
-sed -i s/REDHATNOVACLIENTVERSION/%version/ novaclient/__init__.py
+%patch2 -p1
 
 # Remove bundled egg-info
 rm -rf python_novaclient.egg-info
@@ -152,7 +149,7 @@ rm -fr html/.doctrees html/.buildinfo
 %_bindir/nova
 %python_sitelibdir/*
 %_sysconfdir/bash_completion.d
-%_mandir/man1/nova.1.gz
+%_mandir/man1/nova.*
 
 %if_with python3
 %files -n python3-module-novaclient
@@ -164,6 +161,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
+* Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2.23.2-alt1
+- 2.23.2
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2.23.0-alt1
 - 2.23.0
 
