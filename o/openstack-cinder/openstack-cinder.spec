@@ -2,7 +2,7 @@
 %add_python_req_skip hp3parclient
 
 Name: openstack-cinder
-Version: 2015.1.0
+Version: 2015.1.1
 Release: alt1
 Summary: OpenStack Volume service
 
@@ -28,9 +28,10 @@ Source113: openstack-cinder-backup.init
 
 Source20: cinder-sudoers
 
-Patch100: 0001-Slightly-cleanup-for-sample-config-generation.patch
+Patch101: openstack-cinder-2015.1.1-alt-fix-genconfig.patch
 
 BuildArch: noarch
+BuildRequires: crudini
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-pbr
@@ -48,6 +49,7 @@ BuildRequires: python-module-webob
 BuildRequires: python-module-migrate >= 0.9.5
 BuildRequires: python-module-iso8601
 BuildRequires: python-module-PasteDeploy
+BuildRequires: python-module-oslo.config >= 1.9.3
 BuildRequires: python-module-oslo.concurrency >= 1.8.0
 BuildRequires: python-module-oslo.context >= 0.2.0
 BuildRequires: python-module-oslo.db >= 1.7.0
@@ -114,7 +116,7 @@ This package contains documentation files for cinder.
 
 %prep
 %setup
-%patch100 -p1
+%patch101 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -144,18 +146,16 @@ rm -fr build/html/.doctrees build/html/.buildinfo
 
 # Setup directories
 install -d -m 755 %buildroot%_sharedstatedir/cinder
-install -d -m 755 %buildroot%_sharedstatedir/cinder/tmp
+install -d -m 755 %buildroot%_cachedir/cinder
 install -d -m 755 %buildroot%_logdir/cinder
 
 # Install config files
 install -d -m 755 %buildroot%_sysconfdir/cinder
-install -p -D -m 640 %SOURCE1 %buildroot%_datadir/cinder/cinder-dist.conf
 install -p -D -m 640 etc/cinder/cinder.conf.sample %buildroot%_sysconfdir/cinder/cinder.conf
+install -p -D -m 644 etc/cinder/{api-paste.ini,policy.json,rootwrap.conf} %buildroot%_sysconfdir/cinder/
+cp -a etc/cinder/rootwrap.d %buildroot%_sysconfdir/cinder/
 install -d -m 755 %buildroot%_sysconfdir/cinder/volumes
 install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/tgt/conf.d/cinder.conf
-install -p -D -m 640 etc/cinder/rootwrap.conf %buildroot%_sysconfdir/cinder/rootwrap.conf
-install -p -D -m 640 etc/cinder/api-paste.ini %buildroot%_sysconfdir/cinder/api-paste.ini
-install -p -D -m 640 etc/cinder/policy.json %buildroot%_sysconfdir/cinder/policy.json
 
 # Install initscripts for services
 install -p -D -m 644 %SOURCE10 %buildroot%_unitdir/openstack-cinder-api.service
@@ -178,10 +178,6 @@ install -p -D -m 644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/openstack-cinde
 # Install pid directory
 install -d -m 755 %buildroot%_runtimedir/cinder
 
-# Install rootwrap files in /usr/share/cinder/rootwrap
-mkdir -p %buildroot%_datadir/cinder/rootwrap/
-install -p -D -m 644 etc/cinder/rootwrap.d/* %buildroot%_datadir/cinder/rootwrap/
-
 # Remove unneeded in production stuff
 rm -f %buildroot%_bindir/cinder-debug
 rm -fr %buildroot%python_sitelibdir/cinder/tests
@@ -189,6 +185,27 @@ rm -f %buildroot%python_sitelibdir/cinder/openstack/common/test.*
 rm -f %buildroot%python_sitelibdir/cinder/test.*
 rm -fr %buildroot%python_sitelibdir/run_tests.*
 rm -f %buildroot/usr/share/doc/cinder/README*
+
+### set default configuration (mostly applies to package-only setups and quickstart, i.e. not generally crowbar)
+%define cinder_conf %buildroot%_sysconfdir/cinder/cinder.conf
+crudini --set %cinder_conf DEFAULT log_dir /var/log/cinder
+crudini --set %cinder_conf DEFAULT state_path /var/lib/cinder
+crudini --set %cinder_conf DEFAULT lock_path /var/run/cinder
+crudini --set %cinder_conf DEFAULT volumes_dir /etc/cinder/volumes
+crudini --set %cinder_conf DEFAULT iscsi_helper lioadm
+crudini --set %cinder_conf DEFAULT sql_connection mysql://cinder:cinder@localhost/cinder
+crudini --set %cinder_conf DEFAULT rootwrap_config /etc/cinder/rootwrap.conf
+crudini --set %cinder_conf DEFAULT auth_strategy keystone
+#NOTE(saschpe): Can't hurt to set the default volume_group, only the LVM driver has a it otherwise:
+crudini --set %cinder_conf DEFAULT volume_group cinder-volumes
+crudini --set %cinder_conf DEFAULT lvm_type thin
+crudini --set %cinder_conf keystone_authtoken signing_dir /var/cache/cinder/keystone-signing
+crudini --set %cinder_conf keystone_authtoken admin_tenant_name %%SERVICE_TENANT_NAME%%
+crudini --set %cinder_conf keystone_authtoken admin_user %%SERVICE_USER%%
+crudini --set %cinder_conf keystone_authtoken admin_password %%SERVICE_PASSWORD%%
+crudini --set %cinder_conf keystone_authtoken auth_host 127.0.0.1
+crudini --set %cinder_conf keystone_authtoken auth_port 35357
+crudini --set %cinder_conf keystone_authtoken auth_protocol http
 
 %pre
 # 165:165 for ceilometer (openstack-cinder)
@@ -212,14 +229,13 @@ rm -f %buildroot/usr/share/doc/cinder/README*
 %files
 %doc LICENSE
 %dir %_sysconfdir/cinder
-%config(noreplace) %attr(-, root, cinder) %_sysconfdir/cinder/cinder.conf
-%config(noreplace) %attr(-, root, cinder) %_sysconfdir/cinder/api-paste.ini
-%config(noreplace) %attr(-, root, cinder) %_sysconfdir/cinder/rootwrap.conf
-%config(noreplace) %attr(-, root, cinder) %_sysconfdir/cinder/policy.json
+%config(noreplace) %attr(0640, root, cinder) %_sysconfdir/cinder/cinder.conf
+%config %attr(0640, root, cinder) %_sysconfdir/cinder/api-paste.ini
+%config %_sysconfdir/cinder/rootwrap.conf
+%config %_sysconfdir/cinder/policy.json
 %config(noreplace) %_sysconfdir/logrotate.d/openstack-cinder
 %config(noreplace) %_sysconfdir/sudoers.d/cinder
 %config(noreplace) %_sysconfdir/tgt/conf.d/cinder.conf
-%attr(-, root, cinder) %_datadir/cinder/cinder-dist.conf
 
 %dir %attr(0750, cinder, root) %_logdir/cinder
 %dir %attr(0755, cinder, root) %_runtimedir/cinder
@@ -229,12 +245,11 @@ rm -f %buildroot/usr/share/doc/cinder/README*
 %_unitdir/*
 %_initdir/*
 %_tmpfilesdir/*
-%_datadir/cinder
 %_man1dir/cinder*.1.*
 
-%defattr(-, cinder, cinder, -)
-%dir %_sharedstatedir/cinder
-%dir %_sharedstatedir/cinder/tmp
+%dir %attr(0755, cinder, cinder) %_sharedstatedir/cinder
+%dir %attr(0755, cinder, cinder) %_cachedir/cinder
+
 
 %files -n python-module-cinder
 %python_sitelibdir/*
@@ -243,6 +258,10 @@ rm -f %buildroot/usr/share/doc/cinder/README*
 %doc doc/build/html
 
 %changelog
+* Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
+- 2015.1.1
+- drop dist config in datadir
+
 * Tue May 19 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
 - 2015.1.0 Kilo Release
 
