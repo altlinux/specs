@@ -1,7 +1,7 @@
 %add_findreq_skiplist %python_sitelibdir/nova/cloudpipe/*.template
 
 Name: openstack-nova
-Version: 2015.1.0
+Version: 2015.1.1
 Release: alt1
 Summary: OpenStack Compute (nova)
 
@@ -70,7 +70,7 @@ BuildRequires: python-module-netaddr
 BuildRequires: python-module-boto
 BuildRequires: python-module-eventlet >= 0.16.1
 BuildRequires: python-module-routes
-BuildRequires: python-module-SQLAlchemy
+BuildRequires: python-module-SQLAlchemy >= 0.9.7
 BuildRequires: python-module-webob
 BuildRequires: python-module-migrate >= 0.9.5
 BuildRequires: python-module-iso8601
@@ -755,6 +755,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
+- 2015.1.1
+
 * Tue May 19 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
 - 2015.1.0 Kilo release
 
