@@ -1,13 +1,13 @@
 Name: leafnode
-Version: 1.11.10
-Release: alt1.1
+Version: 1.11.11
+Release: alt1
 
 Summary: a leafsite NNTP server
 License: Artistic
 Group: System/Servers
 
 Url: http://www.leafnode.org
-Source0: ftp://wpxx02.toxi.uni-wuerzburg.de/pub/%name-%version.tar.bz2
+Source0: ftp://wpxx02.toxi.uni-wuerzburg.de/pub/%{name}-%{version}.tar.xz
 Source1: %name.texpire
 Source2: %name.filters
 Source3: %name.xinetd
@@ -114,6 +114,9 @@ chmod -R u=rwX,go=rX %_spooldir/news/
 %_bindir/*
 
 %changelog
+* Tue Aug 25 2015 Michael Shigorin <mike@altlinux.org> 1.11.11-alt1
+- new version (watch file uupdate)
+
 * Fri May 16 2014 Michael Shigorin <mike@altlinux.org> 1.11.10-alt1.1
 - added C: cyrus-imapd (thx repocop)
 
