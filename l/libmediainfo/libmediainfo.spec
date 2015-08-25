@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 0.7.70
+Version: 0.7.76
 Release: alt1
 
 Group: System/Libraries
@@ -104,6 +104,9 @@ install -m 644 Project/GNU/Library/libmediainfo.pc %buildroot%_pkgconfigdir
 %_libdir/*.so
 
 %changelog
+* Tue Aug 25 2015 Motsyo Gennadi <drool@altlinux.ru> 0.7.76-alt1
+- 0.7.76
+
 * Wed Oct 01 2014 Motsyo Gennadi <drool@altlinux.ru> 0.7.70-alt1
 - 0.7.70
 

@@ -1,5 +1,5 @@
 Name: mediainfo
-Version: 0.7.70
+Version: 0.7.76
 Release: alt1
 
 Group: File tools
@@ -147,6 +147,9 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %_K4srv/ServiceMenus/mediainfo-gui.desktop
 
 %changelog
+* Tue Aug 25 2015 Motsyo Gennadi <drool@altlinux.ru> 0.7.76-alt1
+- 0.7.76
+
 * Wed Oct 01 2014 Motsyo Gennadi <drool@altlinux.ru> 0.7.70-alt1
 - 0.7.70
 
