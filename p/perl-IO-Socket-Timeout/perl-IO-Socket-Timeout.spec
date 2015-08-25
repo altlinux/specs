@@ -3,7 +3,7 @@
 %define real_name IO-Socket-Timeout
 
 Name: perl-IO-Socket-Timeout
-Version: 0.29
+Version: 0.31
 Release: alt1
 
 Summary: Perl IO::Socket with read/write timeout
@@ -48,5 +48,8 @@ modules, like IO::Socket::INET.
 %perl_vendor_privlib/IO/Socket/Timeout*
 
 %changelog
+* Tue Aug 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.31-alt1
+- New version
+
 * Fri May 29 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.29-alt1
 - Initial build for ALT Linux Sisyphus
