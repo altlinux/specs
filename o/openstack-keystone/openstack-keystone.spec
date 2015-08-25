@@ -2,7 +2,7 @@
 
 Name: openstack-keystone
 Version: 2015.1.1
-Release: alt2
+Release: alt3
 Summary: OpenStack Identity Service
 
 %add_python_req_skip xmldsig
@@ -40,7 +40,7 @@ BuildRequires: python-module-migrate >= 0.9.5
 BuildRequires: python-module-jsonschema >= 2.0.0
 BuildRequires: python-module-oslo.config >= 1.9.3
 BuildRequires: python-module-oslo.concurrency >= 1.8.0
-BuildRequires: python-module-oslo.messaging >= 1.9.0
+BuildRequires: python-module-oslo.messaging >= 1.8.0
 BuildRequires: python-module-oslo.db >= 1.7.0
 BuildRequires: python-module-oslo.i18n >= 1.5.0
 BuildRequires: python-module-oslo.log >= 1.0.0
@@ -76,7 +76,7 @@ BuildRequires: python3-module-migrate >= 0.9.5
 BuildRequires: python3-module-jsonschema >= 2.0.0
 BuildRequires: python3-module-oslo.config >= 1.9.3
 BuildRequires: python3-module-oslo.concurrency >= 1.8.0
-BuildRequires: python3-module-oslo.messaging >= 1.9.0
+BuildRequires: python3-module-oslo.messaging >= 1.8.0
 BuildRequires: python3-module-oslo.db >= 1.7.0
 BuildRequires: python3-module-oslo.i18n >= 1.5.0
 BuildRequires: python3-module-oslo.log >= 1.0.0
@@ -107,7 +107,7 @@ Summary: Keystone Python libraries
 Group: Development/Python
 Requires: openssl
 Requires: python-module-oslo.config >= 1.9.3
-Requires: python-module-oslo.messaging >= 1.9.0
+Requires: python-module-oslo.messaging >= 1.8.0
 Requires: python-module-oslo.db >= 1.7.0
 Requires: python-module-oslo.i18n >= 1.5.0
 Requires: python-module-oslo.utils >= 1.4.0
@@ -127,7 +127,7 @@ Summary: Keystone Python libraries
 Group: Development/Python3
 Requires: openssl
 Requires: python3-module-oslo.config >= 1.9.3
-Requires: python3-module-oslo.messaging >= 1.9.0
+Requires: python3-module-oslo.messaging >= 1.8.0
 Requires: python3-module-oslo.db >= 1.7.0
 Requires: python3-module-oslo.i18n >= 1.5.0
 Requires: python3-module-oslo.utils >= 1.4.0
@@ -306,6 +306,9 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt3
+- update requires
+
 * Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt2
 - drop "noreplace" from dist configs
 
