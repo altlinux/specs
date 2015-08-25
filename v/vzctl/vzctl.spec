@@ -1,5 +1,5 @@
 Name: vzctl
-Version: 4.9.3
+Version: 4.9.4
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
@@ -131,6 +131,9 @@ exit 0
 /var/lib/vz
 
 %changelog
+* Tue Aug 25 2015 Terechkov Evgenii <evg@altlinux.org> 4.9.4-alt1
+- Updated to vzctl-4.9.4
+
 * Wed Jul 29 2015 Terechkov Evgenii <evg@altlinux.org> 4.9.3-alt1
 - Updated to vzctl-4.9.3
 
