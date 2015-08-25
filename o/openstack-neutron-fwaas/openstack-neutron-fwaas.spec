@@ -1,7 +1,7 @@
 %define sname neutron-fwaas
 
 Name: openstack-%sname
-Version: 2015.1.0
+Version: 2015.1.1
 Release: alt1
 Summary: OpenStack Networking FWaaS
 
@@ -19,7 +19,7 @@ BuildRequires: python-module-pbr
 BuildRequires: python-module-six
 BuildRequires: python-module-d2to1
 
-Requires: openstack-neutron >= 2015.1.0
+Requires: openstack-neutron >= 2015.1.1
 Requires: python-module-%sname = %version-%release
 
 %description
@@ -30,7 +30,7 @@ requires Neutron to run.
 %package -n python-module-%sname
 Summary: Neutron FWaaS Python libraries
 Group: Development/Python
-Requires: python-module-neutron >= 2015.1.0
+Requires: python-module-neutron >= 2015.1.1
 
 %description -n python-module-%sname
 This package contains the code for the Neutron Firewall as a Service
@@ -46,7 +46,7 @@ This package contains the neutron Python library.
 #rm -f requirements.txt
 
 %build
-%python_build 
+%python_build
 
 %install
 %python_install --install-data=/
@@ -66,5 +66,8 @@ This package contains the neutron Python library.
 
 
 %changelog
+* Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
+- 2015.1.1
+
 * Fri May 29 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
 - initial build for Kilo
