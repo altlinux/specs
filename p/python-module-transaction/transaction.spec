@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.4
-Release: alt1.dev.git20140404
+Version: 1.4.5
+Release: alt1.dev0.git20150807
 Summary: Transaction management for Python
 License: ZPLv2.1
 Group: Development/Python
@@ -187,6 +187,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.5-alt1.dev0.git20150807
+- Version 1.4.5.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.4-alt1.dev.git20140404
 - Version 1.4.4dev
 - Enables testing
