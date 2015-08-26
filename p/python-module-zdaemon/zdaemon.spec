@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
-Release: alt1.dev.git20140809
+Version: 4.1.1
+Release: alt1.dev0.git20150416
 Summary: Daemon process control library and tools for Unix-based systems
 License: ZPL
 Group: Development/Python
@@ -129,6 +129,9 @@ python setup.py test
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git20150416
+- Version 4.1.1.dev0
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev.git20140809
 - Version 4.0.1dev
 - Enabled testing
