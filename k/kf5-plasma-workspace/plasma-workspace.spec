@@ -14,8 +14,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.3.2
-Release: alt4
+Version: 5.4.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -135,7 +135,7 @@ KF5 library
 %K5install
 
 %K5install_move data drkonqi ksmserver ksplash kstyle solid
-%K5install_move data desktop-directories doc kconf_update
+%K5install_move data desktop-directories doc kconf_update kio_desktop
 
 mkdir -p %buildroot/%_bindir
 ln -s `relative %_kf5_bin/startkde %_bindir/startkde5` %buildroot/%_bindir/startkde5
@@ -195,12 +195,14 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5plug/phonon_platform/*.so
 %_K5plug/*.so
 %_K5plug/kpackage/
+%_K5plug/kf5/kio/desktop.so
 %_K5qml/org/kde/plasma/private/*
 %_K5qml/org/kde/plasma/wallpapers/*
 %_K5qml/org/kde/plasma/workspace/*
 %_K5qml/org/kde/private/*
 %_K5data/drkonqi/
 %_K5data/plasma/
+%_K5data/kio_desktop/
 %_K5data/ksplash/
 %_K5data/kstyle/
 %_K5data/ksmserver/
@@ -249,6 +251,15 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
+* Sat Aug 22 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.95-alt1
+- new version
+
+* Fri Aug 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt5
+- rebuild with new baloo
+
 * Thu Aug 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt4
 - disable screenlocker by default
 

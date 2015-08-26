@@ -5,8 +5,8 @@
 
 %def_enable exiv2
 
-Name: kf5-%rname
-Version: 5.3.2
+Name: kde5-%rname
+Version: 15.08.0
 Release: alt1
 %K5init altplace
 
@@ -17,6 +17,8 @@ License: GPLv2+ / LGPLv2+
 
 Requires: %name-common = %version-%release
 Requires: kf5-kio
+Provides: kf5-kio-extras = %EVR
+Obsoletes: kf5-kio-extras < %EVR
 
 Source: %rname-%version.tar
 
@@ -115,6 +117,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libmolletnetwork5.so.%molletnetwork_sover
 
 %changelog
+* Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
 - new version
 

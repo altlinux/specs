@@ -12,7 +12,7 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: kf5-%rname
-Version: 5.3.2
+Version: 5.4.0
 Release: alt1
 %K5init altplace
 
@@ -21,7 +21,7 @@ Summary: KDE Workspace 5 Window Manager
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-#Requires: libqt5-multimedia
+Requires: libqt5-multimedia
 
 Source: %rname-%version.tar
 Patch1: alt-defaults.patch
@@ -31,7 +31,8 @@ Patch1: alt-defaults.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdecoration-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libepoxy-devel libinput-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-devel python-module-google qt5-multimedia-devel qt5-script-devel qt5-tools-devel-static qt5-x11extras-devel rpm-build-gir rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
-BuildRequires: libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-devel
+BuildRequires: libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-cursor-devel libxcbutil-keysyms-devel
+BuildRequires: libxkbcommon-devel libgbm-devel
 BuildRequires: libepoxy-devel libinput-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: qt5-multimedia-devel qt5-script-devel qt5-tools-devel-static qt5-x11extras-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel
@@ -117,11 +118,14 @@ KF5 library
 
 %files
 %config(noreplace) %_K5xdgconf/*.knsrc
+%config(noreplace) %_K5xdgconf/*.categories
 %_K5bin/kwin*
 %_K5exec/kwin*
 %_K5lib/libkdeinit5_*.so
 %_K5plug/kwin/
+%_K5plug/org.kde.kglobalaccel5.platforms/
 %_K5plug/org.kde.kdecoration2/
+%_K5plug/org.kde.kwin.waylandbackends/
 %_K5plug/*.so
 %_K5cf_bin/kwin5*
 %_K5qml/org/kde/kwin/
@@ -161,6 +165,12 @@ KF5 library
 
 
 %changelog
+* Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
+* Sat Aug 22 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.95-alt1
+- new version
+
 * Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
 - new version
 

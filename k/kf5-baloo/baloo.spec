@@ -1,7 +1,7 @@
 %define rname baloo
 
 Name: kf5-%rname
-Version: 5.3.2
+Version: 5.13.0
 Release: alt1
 %K5init altplace
 
@@ -20,7 +20,8 @@ Patch1: alt-disable-indexing.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libxapian-devel python-module-google qt5-declarative-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel
-BuildRequires: libxapian-devel
+#BuildRequires: libxapian-devel
+BuildRequires: liblmdb-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
@@ -64,11 +65,11 @@ Requires: %name-common = %version-%release
 %description -n libkf5baloo
 KF5 library
 
-%package -n libkf5balooxapian
+%package -n libkf5balooengine
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
-%description -n libkf5balooxapian
+%description -n libkf5balooengine
 KF5 library
 
 
@@ -109,13 +110,17 @@ KF5 library
 %_K5lib/cmake/KF5Baloo
 #%_K5archdata/mkspecs/modules/qt_Baloo.pri
 %_K5dbus_iface/*.baloo.*.xml
+%_pkgconfigdir/Baloo.pc
 
 %files -n libkf5baloo
 %_K5lib/libKF5Baloo.so.*
-%files -n libkf5balooxapian
-%_K5lib/libKF5BalooXapian.so.*
+%files -n libkf5balooengine
+%_K5lib/libKF5BalooEngine.so.*
 
 %changelog
+* Wed Aug 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.13.0-alt1
+- new version
+
 * Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
 - new version
 
