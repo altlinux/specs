@@ -1,10 +1,11 @@
 %define oname future
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.14.3
-Release: alt1.git20150203
+Version: 0.15.0
+Release: alt1.git20150725
 Summary: Clean single-source support for Python 3 and 2
 License: MIT
 Group: Development/Python
@@ -16,10 +17,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-sphinx-devel
+BuildPreReq: python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-bootstrap-theme python-tools-2to3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %description
@@ -117,6 +119,18 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 export PYTHONPATH=
 
+%check
+python setup.py build_ext -i
+export PYTHONPATH=$PWD/src
+python setup.py test -v
+%if_with python3
+pushd ../python3
+python3 setup.py build_ext -i
+export PYTHONPATH=$PWD/src
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %_bindir/*
@@ -148,6 +162,9 @@ export PYTHONPATH=
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.0-alt1.git20150725
+- Version 0.15.0
+
 * Wed Apr 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.3-alt1.git20150203
 - Version 0.14.3
 
