@@ -1,7 +1,7 @@
 %def_enable static
 
 Name: libgpg-error
-Version: 1.19
+Version: 1.20
 Release: alt1
 
 Group: System/Libraries
@@ -80,6 +80,9 @@ ln -sf ../../%_lib/libgpg-error.so.0 %buildroot%_libdir/libgpg-error.so
 %endif
 
 %changelog
+* Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 1.20-alt1
+- new version
+
 * Wed Jun 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.19-alt1
 - 1.19
 - relocate shared libraries from %_libdir/ to /%_lib/.
