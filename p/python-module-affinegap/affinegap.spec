@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0
-Release: alt1.git20141119
+Version: 1.1
+Release: alt1.git20150304
 Summary: A Cython implementation of the affine gap string distance
 License: MIT
 Group: Development/Python
@@ -44,7 +44,6 @@ known as the Smith-Waterman algorithm.
 
 %if_with python3
 cp -fR . ../python3
-sed -i 's|%oname|%oname.%oname|' ../python3/%oname/__init__.py
 %endif
 
 %build
@@ -88,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.git20150304
+- Version 1.1
+
 * Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.git20141119
 - Initial build for Sisyphus
 
