@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.4
+Version: 4.1.6
 Release: alt1
 Summary: Generic Transparent Proxies
 License: ZPL
@@ -72,6 +72,7 @@ cp -fR . ../python3
 %endif
 
 %build
+%add_optflags -fno-strict-aliasing
 %python_build
 
 %if_with python3
@@ -115,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.6-alt1
+- Version 4.1.6
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.4-alt1
 - Version 4.1.4
 - Added module for Python 3
