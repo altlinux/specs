@@ -5,13 +5,14 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 4.0.2
-Release: alt1.dev.git20140324
+Release: alt1.dev.git20150614
 Summary: Encapsulation of date/time values
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/DateTime/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/DateTime.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -105,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.0.2-alt1.dev.git20150614
+- New snapshot
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.0.2-alt1.dev.git20140324
 - Version 4.0.2dev
 
