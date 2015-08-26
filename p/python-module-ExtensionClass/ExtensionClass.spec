@@ -1,7 +1,7 @@
 %define oname ExtensionClass
 Name: python-module-%oname
-Version: 4.1
-Release: alt1.git20141218
+Version: 4.1.3
+Release: alt1.dev0.git20150522
 Summary: Metaclass for subclassable extension types
 License: ZPLv2.1
 Group: Development/Python
@@ -68,6 +68,9 @@ nosetests
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt1.dev0.git20150522
+- Version 4.1.3.dev0
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt1.git20141218
 - Version 4.1
 
