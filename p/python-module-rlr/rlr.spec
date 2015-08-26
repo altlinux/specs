@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0
-Release: alt1.git20141119
+Version: 1.5
+Release: alt1.git20150507
 Summary: Regularized Logistic Regression
 License: MIT
 Group: Development/Python
@@ -16,14 +16,16 @@ Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Cython libnumpy-devel python-module-nose
+BuildPreReq: python-module-pylbfgs
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-Cython libnumpy-py3-devel python3-module-nose
+BuildPreReq: python3-module-pylbfgs
 %endif
 
 %py_provides %oname
-%py_requires numpy
+%py_requires numpy pylbfgs
 
 %description
 A Cython implementation of L2 regularized logistic regression.
@@ -32,7 +34,7 @@ A Cython implementation of L2 regularized logistic regression.
 Summary: Regularized Logistic Regression
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires numpy
+%py3_requires numpy pylbfgs
 
 %description -n python3-module-%oname
 A Cython implementation of L2 regularized logistic regression.
@@ -45,12 +47,12 @@ cp -fR . ../python3
 %endif
 
 %build
-cython rlr/lr.pyx
+#cython rlr/lr.pyx
 %python_build_debug
 
 %if_with python3
 pushd ../python3
-cython3 rlr/lr.pyx
+#cython3 rlr/lr.pyx
 %python3_build_debug
 popd
 %endif
@@ -62,6 +64,10 @@ popd
 pushd ../python3
 %python3_install
 popd
+%endif
+
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
@@ -83,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.git20150507
+- Version 1.5
+
 * Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.git20141119
 - Initial build for Sisyphus
 
