@@ -1,8 +1,8 @@
 %define oname Products.ZCTextIndex
 
 Name: python-module-%oname
-Version: 2.13.6
-Release: alt1.dev.git20140219
+Version: 2.14.0
+Release: alt1.dev0.git20150618
 Summary: Full text indexing for ZCatalog / Zope 2
 License: ZPLv2.1
 Group: Development/Python
@@ -56,6 +56,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.0-alt1.dev0.git20150618
+- Version 2.14.0.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.6-alt1.dev.git20140219
 - Version 2.13.6dev
 - Enables testing
