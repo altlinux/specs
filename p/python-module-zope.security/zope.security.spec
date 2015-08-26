@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.2
-Release: alt2.dev.git20140319
+Version: 4.0.4
+Release: alt1.dev0.git20150602
 Summary: Zope Security Framework
 License: ZPLv2.1
 Group: Development/Python
@@ -196,6 +196,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1.dev0.git20150602
+- Version 4.0.4.dev0
+
 * Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt2.dev.git20140319
 - Python 3: moved examples into separate package
 
