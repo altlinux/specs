@@ -3,7 +3,7 @@
 %define snapshot 2015-07-21
 %define cvs_date dddbe2a5
 %undefine cvs_date
-%define rel alt0.5
+%define rel alt0.6
 
 %def_disable static
 # only bluez4 supported
@@ -204,6 +204,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Aug 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.6
+- 0.19.99.0_6bef668a
+
 * Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.5
 - 0.19.99.0_dddbe2a5
 - built with efl/elementary-1.15.0 release
