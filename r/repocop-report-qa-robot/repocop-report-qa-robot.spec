@@ -1,5 +1,5 @@
 Name: repocop-report-qa-robot
-Version: 0.36
+Version: 0.37
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ install -m755 bin/* $RPM_BUILD_ROOT%_datadir/repocop-report-email/bin/
 %_datadir/repocop-report-email
 
 %changelog
+* Wed Aug 26 2015 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- new version (code cleanup)
+
 * Sun Aug 23 2015 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
 - support for mutt1.5
 
