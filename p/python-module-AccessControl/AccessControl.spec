@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 3.0.11
-Release: alt1.git20141102
+Release: alt1.git20141218
 Summary: Security framework for Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -61,6 +61,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.11-alt1.git20141218
+- New snapshot
+
 * Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.11-alt1.git20141102
 - Version 3.0.11
 
