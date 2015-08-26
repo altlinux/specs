@@ -1,10 +1,10 @@
 %define oname categorical-distance
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 1.2
-Release: alt2.git20141205
+Version: 1.5
+Release: alt1.git20150304
 Summary: Compare categorical variables
 License: MIT
 Group: Development/Python
@@ -69,11 +69,11 @@ popd
 
 %check
 python setup.py test
-nosetests -v
+nosetests -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
-nosetests3 -v
+nosetests3 -vv
 popd
 %endif
 
@@ -88,6 +88,10 @@ popd
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.git20150304
+- Version 1.5
+- Added module for Python 3
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.git20141205
 - Fixed build
 
