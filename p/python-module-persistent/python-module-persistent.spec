@@ -10,8 +10,8 @@
 %endif
 
 Name: python-module-%modulename
-Version: 4.0.8
-Release: alt2
+Version: 4.1.1
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -157,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1
+- Version 4.1.1
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.8-alt2
 - Avoid conflict with ZODB3
 
