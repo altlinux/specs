@@ -1,5 +1,5 @@
 Name: gpgme
-Version: 1.4.4
+Version: 1.5.5
 Release: alt1
 
 %define min_gnupg_version 1.9.6
@@ -85,12 +85,13 @@ GPGME-based statically linked applications.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#%patch4 -p1
 
 rm doc/*.info* m4/{libtool,lt}*.m4
 
-%build
 %autoreconf
+
+%build
 mkdir -p tmp_bin
 ln -sf %_bindir/gpg2 tmp_bin/gpg
 export PATH=$PWD/tmp_bin:$PATH
@@ -110,6 +111,7 @@ export PATH=$PWD/tmp_bin:$PATH
 %makeinstall_std
 
 %check
+export PATH=$PWD/tmp_bin:$PATH
 %make_build -k check
 
 %files -n lib%name
@@ -129,6 +131,15 @@ export PATH=$PWD/tmp_bin:$PATH
 %endif
 
 %changelog
+* Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 1.5.5-alt1
+- new version
+
+* Mon Aug 11 2014 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt1
+- new version
+
+* Mon Aug 11 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.4-alt0.M70P.1
+- built for M70P
+
 * Mon Aug 11 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.4-alt1
 - new version
 - security fixes: CVE-2014-3564
