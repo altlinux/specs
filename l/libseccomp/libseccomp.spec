@@ -4,7 +4,7 @@
 
 Name: lib%oname
 Version: 2.1.1
-Release: alt1.git20141021
+Release: alt2.git20141021
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2
 Group: System/Libraries
@@ -82,6 +82,7 @@ popd
 %endif
 
 %build
+subst 's/AC_INIT(\[libseccomp\], \[0.0.0\])/AC_INIT([libseccomp],[%version])/' configure.ac
 ./autogen.sh
 %configure \
 	--enable-python
@@ -128,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 27 2015 Afanasov Dmitry <ender@altlinux.org> 2.1.1-alt2.git20141021
+- fix version in pkg-config file
+
 * Wed Jan 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1.git20141021
 - Initial build for Sisyphus
 
