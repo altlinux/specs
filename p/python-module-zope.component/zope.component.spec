@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.2.2
-Release: alt1.dev0.git20150128
+Version: 4.2.3
+Release: alt1.dev0.git20150604
 Summary: Zope Component Architecture
 License: ZPLv2.1
 Group: Development/Python
@@ -137,6 +137,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.3-alt1.dev0.git20150604
+- Version 4.2.3.dev0
+
 * Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.2-alt1.dev0.git20150128
 - Version 4.2.2.dev0
 
