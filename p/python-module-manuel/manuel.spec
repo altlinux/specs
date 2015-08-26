@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.7.2
-Release: alt2
+Version: 1.8.0
+Release: alt1
 Summary: Manuel lets you build tested documentation
 License: ZPL
 Group: Development/Python
@@ -14,12 +14,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-six python-module-zope.testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-six python3-module-zope.testing
 BuildPreReq: python-tools-2to3
 %endif
+
+%py_requires six
 
 %description
 Manuel lets you build tested documentation.
@@ -28,6 +32,7 @@ Manuel lets you build tested documentation.
 %package -n python3-module-%oname
 Summary: Manuel lets you build tested documentation (Python 3)
 Group: Development/Python3
+%py3_requires six
 
 %description -n python3-module-%oname
 Manuel lets you build tested documentation.
@@ -88,8 +93,16 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test -v
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
-%doc *.txt
+%doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/test*
 
@@ -101,7 +114,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/test*
 
@@ -110,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1
+- Version 1.8.0
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.2-alt2
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
