@@ -1,7 +1,7 @@
 %define oname MultiMapping
 Name: python-module-%oname
-Version: 2.13.1
-Release: alt1.dev.git20130313
+Version: 3.0
+Release: alt1.dev0.git20150411
 Summary: Special MultiMapping objects used in Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -52,6 +52,9 @@ python setup.py test
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1.dev0.git20150411
+- Version 3.0.dev0
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.1-alt1.dev.git20130313
 - Version 2.13.1dev
 - Enabled testing
