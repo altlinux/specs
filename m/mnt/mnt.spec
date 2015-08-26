@@ -1,6 +1,6 @@
 Name: mnt
 Summary: Mount hotplug devices as normal user
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 License: GPLv2
 Group: System/Base
@@ -25,6 +25,9 @@ install -D -m 755 umnt %buildroot%_bindir/umnt
 %_bindir/umnt
 
 %changelog
+* Wed Aug 26 2015 Denis Smirnov <mithraen@altlinux.ru> 1.0.2-alt1
+- add fusermount -u support for umnt
+
 * Fri Aug 07 2015 Denis Smirnov <mithraen@altlinux.ru> 1.0.1-alt1
 - fix unmount with udiskctl
 
