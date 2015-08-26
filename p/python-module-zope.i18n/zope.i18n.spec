@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.0
-Release: alt2
+Version: 4.0.1
+Release: alt1
 Summary: Zope Internationalization Support
 License: ZPLv2.1
 Group: Development/Python
@@ -137,6 +137,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
+- Version 4.0.1
+
 * Mon Dec 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2
 - Version 4.0.0
 
