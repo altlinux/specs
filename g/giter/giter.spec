@@ -1,5 +1,5 @@
 Name: giter
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -41,6 +41,12 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Wed Aug 26 2015 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt1
+- gremote: create git.* alias for our repos on git.*
+- introduce gclone: git clone with git alias rewriting
+- gremote: add -p option for convert paths to public
+- giter: add print git url command
+
 * Mon Aug 24 2015 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
 - ginit: use full path to people packages
 - ginit: hack for git.eter
