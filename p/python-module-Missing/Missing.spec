@@ -1,13 +1,14 @@
 %define oname Missing
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt1.dev.git20130505
+Release: alt1.dev.git20141218
 Summary: Special Missing objects used in Zope2
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/Missing/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/Missing.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -51,6 +52,9 @@ python setup.py test
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.dev.git20141218
+- New snapshot
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.dev.git20130505
 - Version 3.0.1dev
 - Enabled testing
