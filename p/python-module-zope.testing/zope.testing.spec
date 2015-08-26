@@ -3,14 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.4
-Release: alt2.dev0.git20150128
+Version: 4.4.0
+Release: alt1.git20150825
 Summary: Zope testing helpers
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.testing/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/zope.testing.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -98,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.0-alt1.git20150825
+- Version 4.4.0
+
 * Mon Feb 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.4-alt2.dev0.git20150128
 - Version 4.1.4.dev0
 
