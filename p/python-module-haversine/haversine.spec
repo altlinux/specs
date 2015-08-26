@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1
-Release: alt1.git20130720
+Version: 0.4.2
+Release: alt1.git20150615
 Summary: Calculate the distance bewteen 2 points on Earth
 License: GPLv3
 Group: Development/Python
@@ -63,6 +63,10 @@ pushd ../python3
 popd
 %endif
 
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
 %check
 python setup.py build_ext -i
 python -c "from %oname import %oname"
@@ -84,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20150615
+- Version 0.4.2
+
 * Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20130720
 - Initial build for Sisyphus
 
