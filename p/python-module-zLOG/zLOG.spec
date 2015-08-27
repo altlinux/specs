@@ -1,7 +1,7 @@
 %define oname zLOG
 Name: python-module-%oname
 Version: 2.12.0
-Release: alt1.git20130313
+Release: alt1.git20141220
 Summary: A general logging facility
 License: ZPLv2.1
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-zconfig
+BuildPreReq: python-module-setuptools-tests python-module-zconfig-tests
 
 %py_provides %oname
 
@@ -45,6 +45,7 @@ This package contains tests for %oname.
 %python_install
 
 %check
+export PYTHONPATH=$PWD/src
 python setup.py test
 
 %files
@@ -56,6 +57,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Thu Aug 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.0-alt1.git20141220
+- New snapshot
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.0-alt1.git20130313
 - Snapshot from git
 
