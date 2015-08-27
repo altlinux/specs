@@ -1,7 +1,7 @@
 Name: xmacro
 
 Version: 0.3
-Release: alt1.pre
+Release: alt2.pre
 
 Summary: Recording and replaying keyboard and mouse events
 Summary(ru_RU.UTF-8): Записывает и воспроизводит события клавиатуры и мыши
@@ -25,7 +25,7 @@ to use the XTrap extension but it's not widespread in precompiled X servers...)
 The programs are heavily based on the xremote utility of Jan Ekholm (chakie at
 infa.abo.fi).
 
-%description -l ru_RU.UTF8
+%description -l ru_RU.UTF-8
 Пакет XMacro содержит две простых программы, написанных на С++ (xmacrorec и
 xmacroplay) для записи и воспроизведения событий клавиатуры и мыши на X-сервере.
 Эта функциональность достигается за счет расширения XTEST. (Кстати, было бы
@@ -49,5 +49,8 @@ cp xmacrorec xmacrorec2 xmacroplay %buildroot/%_bindir
 %_bindir/xmacro*
 
 %changelog
+* Thu Aug 27 2015 Anton Midyukov <antohami@altlinux.org> 0.3-alt2.pre
+- Fix encoding in description
+
 * Fri Jul 17 2015 Anton Midyukov <antohami@altlinux.org> 0.3-alt1.pre
 - Initial build for ALT Linux Sisyphus.
