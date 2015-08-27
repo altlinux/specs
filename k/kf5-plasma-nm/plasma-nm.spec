@@ -2,7 +2,7 @@
 %def_disable openswan
 
 Name: kf5-%rname
-Version: 5.3.2
+Version: 5.4.0
 Release: alt1
 %K5init altplace
 
@@ -54,6 +54,8 @@ Requires: %name-connect-openswan
 Requires: %name-connect-strongswan
 Requires: %name-connect-l2tp
 Requires: %name-connect-pptp
+Requires: %name-connect-sstp
+Requires: %name-connect-ssh
 %description maxi
 %summary.
 
@@ -124,6 +126,22 @@ Requires: NetworkManager-pptp
 %description connect-pptp
 %summary.
 
+%package connect-sstp
+Group: Graphical desktop/KDE
+Summary: SSTP support for %name
+Requires: %name
+Requires: NetworkManager-sstp
+%description connect-sstp
+%summary.
+
+%package connect-ssh
+Group: Graphical desktop/KDE
+Summary: SSH support for %name
+Requires: %name
+Requires: NetworkManager-ssh
+%description connect-ssh
+%summary.
+
 
 %prep
 %setup -n %rname-%version
@@ -184,7 +202,21 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5plug/libplasmanetworkmanagement_pptpui.so
 %_K5srv/plasmanetworkmanagement_pptpui.desktop
 
+%files connect-sstp
+%_K5plug/libplasmanetworkmanagement_sstpui.so
+%_K5srv/plasmanetworkmanagement_sstpui.desktop
+
+%files connect-ssh
+%_K5plug/libplasmanetworkmanagement_sshui.so
+%_K5srv/plasmanetworkmanagement_sshui.desktop
+
 %changelog
+* Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
+* Sat Aug 22 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.95-alt1
+- new version
+
 * Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
 - new version
 

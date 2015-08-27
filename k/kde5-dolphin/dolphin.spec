@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 15.08.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: File tools
@@ -123,6 +123,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Mon Aug 24 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
+- rebuild with new baloo
+
 * Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 

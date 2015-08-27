@@ -9,8 +9,8 @@
 
 
 Name: kf5-%rname
-Version: 5.3.2
-Release: alt3
+Version: 5.4.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -32,7 +32,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: boost-devel extra-cmake-modules gcc-c++
 BuildRequires: qt5-declarative-devel qt5-phonon-devel qt5-svg-devel qt5-x11extras-devel
 BuildRequires: libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-devel libxapian-devel libxcbutil-image-devel
-BuildRequires: xorg-drv-synaptics-devel xorg-sdk xorg-drv-evdev-devel
+BuildRequires: xorg-drv-synaptics-devel xorg-sdk xorg-drv-evdev-devel xkeyboard-config-devel
 BuildRequires: iceauth mkfontdir xset
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
@@ -113,7 +113,7 @@ KF5 library
 
 %K5install_move data color-schemes doc
 %K5install_move data kcm_componentchooser kcminput kcmkeyboard kcmkeys kcm_phonon kcmsolidactions
-%K5install_move data kconf_update kcontrol kdisplay kdm kfontinst konqsidebartng ksmserver solid kpackage
+%K5install_move data kconf_update kcontrol kdisplay kfontinst konqsidebartng ksmserver solid kpackage
 %K5install_move data plasma/desktoptheme plasma/plasmoids/touchpad
 
 %find_lang %name --with-kde --all-name
@@ -158,7 +158,6 @@ KF5 library
 %_K5data/plasma/desktoptheme/default/icons/*
 %_K5data/kcontrol/
 %_K5data/kdisplay/
-%_K5data/kdm/
 %_K5data/kfontinst/
 %_K5data/konqsidebartng/
 %_K5data/ksmserver/
@@ -188,6 +187,15 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- new version
+
+* Sat Aug 22 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.95-alt1
+- new version
+
+* Fri Aug 21 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt4
+- rebuild with new baloo
+
 * Mon Jul 27 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt3
 - return default menu icon
 

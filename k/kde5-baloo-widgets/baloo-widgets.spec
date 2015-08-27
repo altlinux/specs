@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 15.08.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -78,6 +78,9 @@ KF5 library
 %_K5lib/libKF5BalooWidgets.so.*
 
 %changelog
+* Mon Aug 24 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
+- rebuild with new baloo
+
 * Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
