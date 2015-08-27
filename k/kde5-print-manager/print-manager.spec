@@ -5,13 +5,15 @@
 
 Name: kde5-%rname
 Version: 15.08.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Configuration/Printing
 Summary: Printer management for KDE
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: cups system-config-printer-udev
 
 Source: %rname-%version.tar
 Patch1: alt-lib-sover.patch
@@ -85,5 +87,8 @@ KF5 library
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Thu Aug 27 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
+- fix requires
+
 * Mon Aug 24 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - initial build
