@@ -8,7 +8,7 @@
 
 Name: pitivi
 Version: %ver_major
-Release: alt2
+Release: alt3
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -75,6 +75,9 @@ newbies and professionals alike.
 %exclude %_girdir/Pitivi-%api_ver.gir
 
 %changelog
+* Thu Aug 27 2015 Yuri N. Sedunov <aris@altlinux.org> 0.94-alt3
+- updated to 0.94-f346a5a9
+
 * Thu Jun 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.94-alt2
 - updated to 0.94-937f6cf0
 
