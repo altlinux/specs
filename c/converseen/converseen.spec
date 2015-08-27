@@ -1,6 +1,6 @@
 Name: converseen
 Version: 0.9.2
-Release: alt1
+Release: alt2
 Summary: Converseen is a free cross-platform batch image processor.
 Summary(ru_RU.UTF-8): Converseen — свободная программа пакетного конвертирования изображений.
 License: GPLv3
@@ -21,7 +21,7 @@ Moreover, Converseen is able to transform an entire PDF file into a bunch
 of images with the characteristics you prefer: you can choose one of the 100+
 formats, you can set the size, resolution and the filename.
 
-%description -l ru_RU.UTF8
+%description -l ru_RU.UTF-8
 Converseen — свободная кроссплатформенная программа для Windows и Linux 
 для пакетного конвертирования, изменения размера, поворота изображений в один
 клик.
@@ -50,5 +50,8 @@ desktop-file-validate %buildroot/%_desktopdir/%name.desktop
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Thu Aug 27 2015 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt2
+- Fix encoding in description
+
 * Thu Aug 20 2015 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
 - Initial build for ALT Linux Sisyphus (Closes: 31215).
