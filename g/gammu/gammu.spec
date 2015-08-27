@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: gammu
-Version: 1.36.4
+Version: 1.36.5
 Release: alt1
 
 Summary: Mobile phones management utility
@@ -9,7 +9,7 @@ License: GPL
 Group: Communications
 
 Url: http://wammu.eu/gammu/
-Source: http://dl.cihar.com/gammu/releases/%name-%version.tar.bz2
+Source: http://dl.cihar.com/gammu/releases/%name-%version.tar.xz
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -183,6 +183,9 @@ cp -R contrib/bash-completion %buildroot%_gammu_docdir/other/
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Thu Aug 27 2015 Michael Shigorin <mike@altlinux.org> 1.36.5-alt1
+- 1.36.5
+
 * Sun Aug 16 2015 Michael Shigorin <mike@altlinux.org> 1.36.4-alt1
 - 1.36.4
 - dropped python module (standalone package since 2.1)
