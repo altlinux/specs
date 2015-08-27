@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt9
+Release: alt10
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -12,7 +12,7 @@ BuildArch: noarch
 %package -n kde5-runtime
 Summary: %summary
 Group: Graphical desktop/KDE
-Requires: kf5-kio kf5-kded qt5-phonon-backend qt5-quickcontrols
+Requires: kf5-kio kf5-kded qt5-phonon-backend qt5-quickcontrols kf5-kwayland-integration
 
 %package -n kde5-mini
 Summary: %summary
@@ -38,6 +38,7 @@ Obsoletes: kde5-normal < %EVR kde5-default < %EVR
 Requires: kde5-small
 Requires: kde5-video-player
 #Requires: kde5-audio-player
+Requires: pam0_kwallet5
 Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass kf5-oxygen
 Requires: kf5-systemsettings kf5-khelpcenter kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
 Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons kde5-kwalletmanager
@@ -78,6 +79,9 @@ Requires: kde5-big
 %files -n kde5-maxi
 
 %changelog
+* Thu Aug 27 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt10
+- update requires
+
 * Thu Aug 27 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt9
 - update requires
 
