@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.94.2
+Version: 0.94.3
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -236,6 +236,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_mandir/man8/ceph-authtool.8*
 %_mandir/man8/ceph-debugpack.8*
 %_mandir/man8/ceph-clsinfo.8.gz
+%_mandir/man8/ceph-create-keys.8.gz
 %_mandir/man8/librados-config.8.gz
 %_mandir/man8/ceph-post-file.8*
 %_mandir/man8/ceph-rest-api.8*
@@ -291,6 +292,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Aug 27 2015 Alexei Takaseev <taf@altlinux.org> 0.94.3-alt1
+- 0.94.3
+
 * Thu Jun 11 2015 Alexei Takaseev <taf@altlinux.org> 0.94.2-alt1
 - 0.94.2
 
