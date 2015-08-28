@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.1
-Release: alt1.dev0.git10141229
+Version: 4.1.2
+Release: alt1.dev0.git10150605
 Summary: Zope 3 Template Application Languate (TAL)
 License: ZPL
 Group: Development/Python
@@ -129,6 +129,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
+export LC_ALL=en_US.UTF-8
 python setup.py test
 %if_with python3
 pushd ../python3
@@ -163,6 +164,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt1.dev0.git10150605
+- Version 4.1.2.dev0
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git10141229
 - Version 4.1.1.dev0
 
