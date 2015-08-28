@@ -11,7 +11,7 @@
 
 Name: python-module-%modulename
 Version: 4.1.1
-Release: alt1
+Release: alt2
 
 %setup_python_module %modulename
 
@@ -157,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt2
+- Really version 4.1.1
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1
 - Version 4.1.1
 
