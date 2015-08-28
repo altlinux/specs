@@ -3,20 +3,29 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.0
-Release: alt3
+Version: 4.0.1
+Release: alt1.dev0.git20150613
 Summary: Page template resource plugin for zope.browserresource
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.ptresource/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/zope.ptresource.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.browserresource
+BuildPreReq: python-module-zope.pagetemplate
+BuildPreReq: python-module-zope.publisher python-module-zope.security
+BuildPreReq: python-module-zope.testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.browserresource
+BuildPreReq: python3-module-zope.pagetemplate
+BuildPreReq: python3-module-zope.publisher python3-module-zope.security
+BuildPreReq: python3-module-zope.testing
 %endif
 
 %py_requires zope.browserresource zope.interface zope.pagetemplate
@@ -127,6 +136,15 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+py.test -vv src/zope/ptresource/tests.py
+#if_with python3
+%if 0
+pushd ../python3
+py.test-%_python3_version -vv src/zope/ptresource/tests.py
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -150,6 +168,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev0.git20150613
+- Version 4.0.1.dev0
+- Enabled check
+
 * Sat Dec 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3
 - Version 4.0.0
 
