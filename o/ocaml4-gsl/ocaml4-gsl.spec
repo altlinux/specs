@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 
 Name:           ocaml4-gsl
-Version:        1.18.4
+Version:        1.18.5
 Release:        alt1
 Summary:        Interface to GSL (GNU scientific library) for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотеки GSL для OCaml
@@ -76,14 +76,18 @@ mkdir -p %buildroot/%docdir
 %dir %ocamlsitelib/gsl/
 %ocamlsitelib/gsl/gsl.cma
 %ocamlsitelib/gsl/gsl.cmxs
+%ocamlsitelib/gsl/libgsl_stubs.a
 
 %files devel
-%ocamlsitelib/gsl/*.a
+%ocamlsitelib/gsl/gsl.a
 %ocamlsitelib/gsl/*.cmxa
 %ocamlsitelib/gsl/*.cmi
 %ocamlsitelib/gsl/META
 
 %changelog
+* Thu Aug 27 2015 Andrey Bergman <vkni@altlinux.org> 1.18.5-alt1
+- Version update. Corrected packaging of *.a files.
+
 * Wed Jun 24 2015 Andrey Bergman <vkni@altlinux.org> 1.18.4-alt1
 - Version update. Built with ocaml4.
 
