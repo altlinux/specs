@@ -19,7 +19,7 @@
 %define bugfix 10
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -416,7 +416,7 @@ Requires: %name-common = %version-%release
 
 %package akregator
 Summary: RSS/Atom feed reader for KDE
-Group: Graphical desktop/KDE
+Group: Networking/News
 Requires: %name-core = %version-%release
 %description akregator
 RSS/Atom feed reader for KDE
@@ -1741,6 +1741,9 @@ based on kdepim.
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Aug 28 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt2
+- update from upstream/KDE/4.14
+
 * Thu Jul 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt1
 - new version
 
