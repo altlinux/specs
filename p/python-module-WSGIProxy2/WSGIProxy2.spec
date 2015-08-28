@@ -1,11 +1,11 @@
 %define oname WSGIProxy2
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
-Version: 0.4.2
-Release: alt1.dev0.git20131221
+Version: 0.4.3
+Release: alt1.dev0.git20141227
 Summary: A WSGI Proxy with various http client backends
 License: MIT
 Group: Development/Python
@@ -100,11 +100,11 @@ export PYTHONPATH=$PWD
 %make -C docs html
 
 %check
-nosetests
+nosetests -vv
 #if_with python3
 %if 0
 pushd ../python3
-nosetests3
+nosetests3 -vv
 popd
 %endif
 
@@ -129,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt1.dev0.git20141227
+- Version 0.4.3.dev0
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.dev0.git20131221
 - Initial build for Sisyphus
 
