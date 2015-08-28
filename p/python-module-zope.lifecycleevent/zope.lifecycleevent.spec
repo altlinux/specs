@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1
+Version: 4.1.1
+Release: alt1.dev0.git20141229
 Summary: Object life-cycle events
 License: ZPL
 Group: Development/Python
@@ -13,10 +13,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.event python-module-zope.component-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.event python3-module-zope.component-tests
 %endif
 
 %py_requires zope.interface zope.component zope.event
@@ -106,6 +108,16 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+export PYTHONPATH=$PWD/src
+python src/zope/lifecycleevent/tests.py -v
+%if_with python3
+pushd ../python3
+export PYTHONPATH=$PWD/src
+python3 src/zope/lifecycleevent/tests.py -v
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -123,12 +135,16 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/tests.*
 
-#files -n python3-module-%oname-tests
-#python3_sitelibdir/*/*/tests.*
-#python3_sitelibdir/*/*/*/tests.*
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests.*
+%python3_sitelibdir/*/*/*/tests.*
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git20141229
+- Version 4.1.1.dev0
+- Enabled check
+
 * Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
 - Version 4.1.0
 
