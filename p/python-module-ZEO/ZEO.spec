@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1.git20150106
+Version: 4.2.0
+Release: alt1.dev0.git20150605
 Summary: ZEO provides a client-server storage implementation for ZODB
 License: ZPL
 Group: Development/Python
@@ -30,6 +30,16 @@ BuildPreReq: python-module-zope.interface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-zope.testing
+BuildPreReq: python3-module-manuel
+BuildPreReq: python3-module-random2
+BuildPreReq: python3-module-ZODB-tests
+BuildPreReq: python3-module-transaction
+BuildPreReq: python3-module-persistent
+BuildPreReq: python3-module-zc.lockfile
+BuildPreReq: python3-module-zconfig
+BuildPreReq: python3-module-zdaemon
+BuildPreReq: python3-module-zope.interface
 %endif
 
 %py_requires ZODB persistent zc.lockfile ZConfig zdaemon zope.interface
@@ -61,6 +71,7 @@ This package contains tests for ZEO.
 %package -n python3-module-%oname
 Summary: ZEO provides a client-server storage implementation for ZODB
 Group: Development/Python3
+%py3_requires ZODB persistent zc.lockfile ZConfig zdaemon zope.interface
 
 %description -n python3-module-%oname
 ZEO is a client-server system for sharing a single storage among many
@@ -74,6 +85,7 @@ protocol layered on top of TCP.
 Summary: Tests for ZEO
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
+%py3_requires zope.testing ZODB.tests
 
 %description -n python3-module-%oname-tests
 ZEO is a client-server system for sharing a single storage among many
@@ -117,6 +129,11 @@ popd
 
 %check
 python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
 
 %files
 %doc *.txt
@@ -148,6 +165,9 @@ python setup.py test
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt1.dev0.git20150605
+- Version 4.2.0.dev0
+
 * Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1.git20150106
 - Version 4.1.0
 
