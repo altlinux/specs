@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.0
-Release: alt3
+Version: 4.1.0
+Release: alt1
 Summary: Zope Container
 License: ZPL
 Group: Development/Python
@@ -13,16 +13,29 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.dottedname python-module-zope.schema
+BuildPreReq: python-module-zope.location python-module-zope.event
+BuildPreReq: python-module-zope.lifecycleevent python-module-zope.size
+BuildPreReq: python-module-zope.filerepresentation
+BuildPreReq: python-module-zope.traversing-tests
+BuildPreReq: python-module-zope.component-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.dottedname python3-module-zope.schema
+BuildPreReq: python3-module-zope.location python3-module-zope.event
+BuildPreReq: python3-module-zope.lifecycleevent python3-module-zope.size
+BuildPreReq: python3-module-zope.filerepresentation
+BuildPreReq: python3-module-zope.traversing-tests
+BuildPreReq: python3-module-zope.component-tests
 %endif
 
 Requires: python-module-zope.i18nmessageid
 %py_requires zope.interface zope.dottedname zope.schema zope.traversing
 %py_requires zope.component zope.event zope.location zope.security
 %py_requires zope.lifecycleevent zope.size zope.filerepresentation
+BuildPreReq: python3-module-zope.traversing-tests
 
 %description
 This package define interfaces of container components, and provides
@@ -100,27 +113,45 @@ pushd ../python3
 popd
 %endif
 
+%check
+rm -fR build
+#py.test -vv
+#if_with python3
+%if 0
+pushd ../python3
+rm -fR build
+py.test-%_python3_version -vv
+popd
+%endif
+
 %files
 %doc *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/*/test*
 
 %files tests
 %python_sitelibdir/*/*/tests
+%python_sitelibdir/*/*/test*
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
+- Version 4.1.0
+- Enabled check
+
 * Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3
 - Added necessary requirements
 
