@@ -7,11 +7,11 @@
 
 %define rname kdebase-runtime
 %define major 15
-%define minor 4
-%define bugfix 2
+%define minor 08
+%define bugfix 0
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -231,6 +231,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Aug 28 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Wed Jun 24 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt2
 - rebuild with new libgcrypt
 
