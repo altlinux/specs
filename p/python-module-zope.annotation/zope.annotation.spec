@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.4.1
-Release: alt1
+Version: 4.4.2
+Release: alt1.dev0.git20150613
 Summary: Object annotation mechanism
 License: ZPL
 Group: Development/Python
@@ -13,10 +13,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.location python-module-zope.proxy
+BuildPreReq: python-module-ZODB3 python-module-zope.testrunner
+BuildPreReq: python-module-zope.testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.location python3-module-zope.proxy
+BuildPreReq: python3-module-ZODB3 python3-module-zope.testrunner
+BuildPreReq: python3-module-zope.testing
 %endif
 
 %py_requires zope.interface zope.component zope.location zope.proxy
@@ -95,6 +101,14 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test -v
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -116,6 +130,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.2-alt1.dev0.git20150613
+- Version 4.4.2.dev0
+- Enabled check
+
 * Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.1-alt1
 - Version 4.4.1
 
