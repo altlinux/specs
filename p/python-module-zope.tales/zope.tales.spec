@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
+Version: 4.1.1
 Release: alt1
 Summary: Zope Template Application Language Expression Syntax (TALES)
 License: ZPL
@@ -13,14 +13,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.tal python-module-six
+BuildPreReq: python-module-zope.testrunner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.tal python3-module-six
+BuildPreReq: python3-module-zope.testrunner
 BuildPreReq: python-tools-2to3
 %endif
 
-%py_requires zope zope.interface zope.tal
+%py_requires zope zope.interface zope.tal six
 
 %description
 Template Attribute Language - Expression Syntax.
@@ -29,7 +33,7 @@ Template Attribute Language - Expression Syntax.
 %package -n python3-module-%oname
 Summary: Zope Template Application Language Expression Syntax (TALES) (Python 3)
 Group: Development/Python3
-%py3_requires zope zope.interface zope.tal
+%py3_requires zope zope.interface zope.tal six
 
 %description -n python3-module-%oname
 Template Attribute Language - Expression Syntax.
@@ -92,6 +96,14 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test -v
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -113,6 +125,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1
+- Version 4.1.1
+- Enabled check
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
 - Version 4.1.0
 
