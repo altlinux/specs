@@ -3,20 +3,29 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
-Release: alt1
+Version: 4.0.2
+Release: alt1.dev0.git20150613
 Summary: Zope sendmail
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.sendmail/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/zope.sendmail.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-transaction python-module-zope.i18nmessageid
+BuildPreReq: python-module-zope.schema python-module-zope.configuration
+BuildPreReq: python-module-zope.security python-module-zope.testing
+BuildPreReq: python-module-zope.component-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-transaction python3-module-zope.i18nmessageid
+BuildPreReq: python3-module-zope.schema python3-module-zope.configuration
+BuildPreReq: python3-module-zope.security python3-module-zope.testing
+BuildPreReq: python3-module-zope.component-tests
 %endif
 
 %py_requires zope transaction zope.i18nmessageid zope.interface
@@ -96,6 +105,14 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
+%check
+python setup.py test -v
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %_bindir/*
@@ -122,6 +139,10 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1.dev0.git20150613
+- Version 4.0.2.dev0
+- Enabled check
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
 - Version 4.0.1
 
