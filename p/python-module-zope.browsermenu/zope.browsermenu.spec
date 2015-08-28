@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt3
+Version: 4.1.1
+Release: alt1
 Summary: Browser menu implementation for Zope
 License: ZPL
 Group: Development/Python
@@ -13,10 +13,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.browser python-module-zope.configuration
+BuildPreReq: python-module-zope.i18nmessageid python-module-zope.pagetemplate
+BuildPreReq: python-module-zope.publisher python-module-zope.schema
+BuildPreReq: python-module-zope.security python-module-zope.traversing
+BuildPreReq: python-module-zope.testrunner python-module-zope.component-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.browser python3-module-zope.configuration
+BuildPreReq: python3-module-zope.i18nmessageid python3-module-zope.pagetemplate
+BuildPreReq: python3-module-zope.publisher python3-module-zope.schema
+BuildPreReq: python3-module-zope.security python3-module-zope.traversing
+BuildPreReq: python3-module-zope.testrunner python3-module-zope.component-tests
 %endif
 
 %py_requires zope zope.browser zope.component zope.configuration
@@ -97,6 +107,15 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test -v
+#if_with python3
+%if 0
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -118,6 +137,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1
+- Version 4.1.1
+- Enabled check
+
 * Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt3
 - Version 4.1.0
 
