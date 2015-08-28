@@ -2,18 +2,17 @@
 %def_without doc
 
 Name: openstack-ceilometer
-Version: 2015.1.0
+Version: 2015.1.1
 Release: alt1
 Summary: OpenStack measurement collection service
 
 Group: System/Servers
 License: ASL 2.0
 Url: https://wiki.openstack.org/wiki/Ceilometer
-Source0: %name-%version.tar
-Source1: %service-dist.conf
+Source: %name-%version.tar
 Source2: %service.logrotate
-Source3: %service.conf.sample
 Source4: ceilometer-rootwrap-sudoers
+Source5: openstack-ceilometer-polkit.rules
 
 Source10: %name-api.service
 Source11: %name-collector.service
@@ -36,13 +35,53 @@ Source116: %name-notification.init
 Source117: %name-ipmi.init
 Source118: %name-polling.init
 
+Provides: %name-common = %version-%release
+Obsoletes: %name-common < %version-%release
+
+Requires: python-module-ceilometer = %version-%release
+Requires: openstack-utils
+Requires: python-module-PasteDeploy
+Requires(pre):    shadow-utils
+
+
 BuildArch: noarch
+BuildRequires: crudini
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-d2to1
+
+BuildRequires: python-module-eventlet >= 0.16.1
+BuildRequires: python-module-SQLAlchemy >= 0.9.7
+BuildRequires: python-module-webob >= 1.2.3
+BuildRequires: python-module-migrate >= 0.9.5
+BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-jsonpath-rw >= 1.2.0
+BuildRequires: python-module-jsonschema >= 2.0.0
+BuildRequires: python-module-PasteDeploy >= 1.5.0
+BuildRequires: python-module-oslo.context >= 0.2.0
+BuildRequires: python-module-oslo.db >= 1.7.0
+BuildRequires: python-module-oslo.concurrency >= 1.8.0
+BuildRequires: python-module-oslo.config >= 1.9.3
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.policy >= 0.3.1
+BuildRequires: python-module-oslo.rootwrap >= 1.6.0
+BuildRequires: python-module-oslo.messaging >= 1.8.0
+BuildRequires: python-module-oslo.middleware >= 1.0.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-oslo.utils >= 1.4.0
+BuildRequires: python-module-oslo.log >= 1.0.0
+BuildRequires: python-module-oslo.vmware
+BuildRequires: python-module-keystonemiddleware >= 1.5.0
+BuildRequires: python-module-lxml >= 2.3
+BuildRequires: python-module-novaclient
+BuildRequires: python-module-neutronclient
+BuildRequires: python-module-ceilometerclient
+BuildRequires: python-module-glanceclient
+BuildRequires: python-module-swiftclient
+
 
 %description
 OpenStack ceilometer provides services to measure and
@@ -51,7 +90,10 @@ collect metrics from OpenStack components.
 %package -n       python-module-ceilometer
 Summary: OpenStack ceilometer python libraries
 Group: Development/Python
-
+Requires: python-module-PasteDeploy
+Requires: python-module-ceilometerclient
+Requires: python-module-keystoneclient
+Requires: python-module-keystonemiddleware
 
 %description -n   python-module-ceilometer
 OpenStack ceilometer provides services to measure and
@@ -59,27 +101,10 @@ collect metrics from OpenStack components.
 
 This package contains the ceilometer python library.
 
-%package common
-Summary: Components common to all OpenStack ceilometer services
-Group: System/Servers
-
-Requires: python-module-ceilometer = %version-%release
-Requires: openstack-utils
-
-Requires(pre):    shadow-utils
-
-%description common
-OpenStack ceilometer provides services to measure and
-collect metrics from OpenStack components.
-
-This package contains components common to all OpenStack
-ceilometer services.
-
 %package compute
 Summary: OpenStack ceilometer compute agent
 Group: System/Servers
-
-Requires: %name-common = %version-%release
+Requires: %name = %version-%release
 
 %description compute
 OpenStack ceilometer provides services to measure and
@@ -91,8 +116,7 @@ running on OpenStack compute nodes.
 %package central
 Summary: OpenStack ceilometer central agent
 Group: System/Servers
-
-Requires: %name-common = %version-%release
+Requires: %name = %version-%release
 
 %description central
 OpenStack ceilometer provides services to measure and
@@ -103,13 +127,11 @@ This package contains the central ceilometer agent.
 %package collector
 Summary: OpenStack ceilometer collector
 Group: System/Servers
-
-Requires: %name-common = %version-%release
+Requires: %name = %version-%release
 
 # For compat with older provisioning tools.
 # Remove when all reference the notification package explicitly
 Requires: %name-notification
-
 Requires: python-module-pymongo >= 2.5.2
 
 %description collector
@@ -122,8 +144,7 @@ which collects metrics from the various agents.
 %package notification
 Summary: OpenStack ceilometer notification agent
 Group: System/Servers
-
-Requires: %name-common = %version-%release
+Requires: %name = %version-%release
 
 %description notification
 OpenStack ceilometer provides services to measure and
@@ -136,10 +157,7 @@ various OpenStack services.
 %package api
 Summary: OpenStack ceilometer API service
 Group: System/Servers
-
-Requires: %name-common = %version-%release
-Requires: python-module-keystonemiddleware >= 1.5.0
-Requires: python-module-ceilometerclient >= 1.0.13
+Requires: %name = %version-%release
 
 %description api
 OpenStack ceilometer provides services to measure and
@@ -150,9 +168,7 @@ This package contains the ceilometer API service.
 %package alarm
 Summary: OpenStack ceilometer alarm services
 Group: System/Servers
-
-Requires: %name-common = %version-%release
-Requires: python-module-ceilometerclient >= 1.0.13
+Requires: %name = %version-%release
 
 %description alarm
 OpenStack ceilometer provides services to measure and
@@ -164,8 +180,7 @@ and evaluation services.
 %package ipmi
 Summary: OpenStack ceilometer ipmi agent
 Group: System/Servers
-
-Requires: %name-common = %version-%release
+Requires: %name = %version-%release
 Requires: ipmitool
 
 %description ipmi
@@ -179,8 +194,7 @@ by-passing Ironic's management of baremetal.
 %package polling
 Summary: OpenStack ceilometer polling agent
 Group: System/Servers
-
-Requires: %name-common = %version-%release
+Requires: %name = %version-%release
 Requires: python-module-libvirt
 
 %description polling
@@ -221,17 +235,13 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
 %build
 %python_build
-install -p -D -m 640 %SOURCE3 etc/ceilometer/ceilometer.conf.sample
-
-# Programmatically update defaults in sample config
-# which is installed at /etc/ceilometer/ceilometer.conf
-# TODO: Make this more robust
-# Note it only edits the first occurance, so assumes a section ordering in sample
-# and also doesn't support multi-valued variables.
-while read name eq value; do
-  test "$name" && test "$value" || continue
-  sed -i "0,/^# *$name=/{s!^# *$name=.*!#$name=$value!}" etc/ceilometer/ceilometer.conf.sample
-done < %SOURCE1
+oslo-config-generator --output-file etc/ceilometer/ceilometer.conf \
+    --namespace ceilometer \
+    --namespace oslo.concurrency \
+    --namespace oslo.db \
+    --namespace oslo.messaging \
+    --namespace oslo.policy \
+    --namespace keystonemiddleware.auth_token
 
 %install
 %python_install
@@ -251,22 +261,18 @@ popd
 
 # Setup directories
 install -d -m 755 %buildroot%_sharedstatedir/ceilometer
-install -d -m 755 %buildroot%_sharedstatedir/ceilometer/tmp
+install -d -m 755 %buildroot%_cachedir/ceilometer
 install -d -m 755 %buildroot%_logdir/ceilometer
 
 # Install config files
 install -d -m 755 %buildroot%_sysconfdir/ceilometer
 install -d -m 755 %buildroot%_sysconfdir/ceilometer/rootwrap.d
 install -d -m 755 %buildroot%_sysconfdir/sudoers.d
-install -p -D -m 640 %SOURCE1 %buildroot%_datadir/ceilometer/ceilometer-dist.conf
 install -p -D -m 644 %SOURCE4 %buildroot%_sysconfdir/sudoers.d/ceilometer
-install -p -D -m 640 etc/ceilometer/ceilometer.conf.sample %buildroot%_sysconfdir/ceilometer/ceilometer.conf
-install -p -D -m 640 etc/ceilometer/policy.json %buildroot%_sysconfdir/ceilometer/policy.json
-install -p -D -m 640 etc/ceilometer/pipeline.yaml %buildroot%_sysconfdir/ceilometer/pipeline.yaml
-install -p -D -m 640 etc/ceilometer/event_pipeline.yaml %buildroot%_sysconfdir/ceilometer/event_pipeline.yaml
-install -p -D -m 640 etc/ceilometer/api_paste.ini %buildroot%_sysconfdir/ceilometer/api_paste.ini
-install -p -D -m 640 etc/ceilometer/rootwrap.conf %buildroot%_sysconfdir/ceilometer/rootwrap.conf
-install -p -D -m 640 etc/ceilometer/rootwrap.d/ipmi.filters %buildroot%_sysconfdir/ceilometer/rootwrap.d/ipmi.filters
+install -p -D -m 644 etc/ceilometer/ceilometer.conf %buildroot%_sysconfdir/ceilometer/ceilometer.conf
+install -p -D -m 644 etc/ceilometer/{api_paste.ini,event_definitions.yaml,event_pipeline.yaml,pipeline.yaml,policy.json} %buildroot%_sysconfdir/ceilometer/
+install -p -D -m 644 etc/ceilometer/rootwrap.conf %buildroot%_sysconfdir/ceilometer/rootwrap.conf
+install -p -D -m 644 etc/ceilometer/rootwrap.d/ipmi.filters %buildroot%_sysconfdir/ceilometer/rootwrap.d/ipmi.filters
 
 
 # Install initscripts for services
@@ -296,6 +302,8 @@ install -p -D -m 644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
 # Install pid directory
 install -d -m 755 %buildroot%_runtimedir/ceilometer
 
+install -D -m 644 %SOURCE5 %buildroot%_datadir/polkit-1/rules.d/11-openstack-ceilometer.rules
+
 # Remove unneeded in production stuff
 rm -f %buildroot%_bindir/ceilometer-debug
 rm -fr %buildroot%python_sitelibdir/tests
@@ -303,7 +311,15 @@ rm -fr %buildroot%python_sitelibdir/*/tests
 rm -fr %buildroot%python_sitelibdir/run_tests.*
 rm -f %buildroot/usr/share/doc/ceilometer/README*
 
-%pre common
+%define ceilometer_conf %buildroot%_sysconfdir/ceilometer/ceilometer.conf
+crudini --set %ceilometer_conf DEFAULT log_dir %_logdir/ceilometer
+crudini --set %ceilometer_conf DEFAULT policy_file %_sysconfdir/ceilometer/policy.json
+crudini --set %ceilometer_conf DEFAULT lock_path %_runtimedir/ceilometer
+crudini --set %ceilometer_conf keystone_authtoken signing_dir %_cachedir/ceilometer/keystone-signing
+crudini --set %ceilometer_conf database connection mongodb://localhost:27017/ceilometer
+
+
+%pre
 # 166:166 for ceilometer (openstack-ceilometer)
 %_sbindir/groupadd -r -g 166 -f ceilometer 2>/dev/null ||:
 %_sbindir/useradd -r -u 166 -g ceilometer -G ceilometer,nobody  -c 'OpenStack Ceilometer Daemons' \
@@ -360,26 +376,24 @@ rm -f %buildroot/usr/share/doc/ceilometer/README*
 %preun polling
 %preun_service %name-polling
 
-%files common
+%files
 %doc LICENSE
 %dir %_sysconfdir/ceilometer
-%attr(-, root, ceilometer) %_datadir/ceilometer/ceilometer-dist.conf
-%config(noreplace) %attr(-, root, ceilometer) %_sysconfdir/ceilometer/ceilometer.conf
-%config(noreplace) %attr(-, root, ceilometer) %_sysconfdir/ceilometer/policy.json
-%config(noreplace) %attr(-, root, ceilometer) %_sysconfdir/ceilometer/pipeline.yaml
-%config(noreplace) %attr(-, root, ceilometer) %_sysconfdir/ceilometer/api_paste.ini
+%config(noreplace) %attr(0640, root, ceilometer) %_sysconfdir/ceilometer/ceilometer.conf
+%config %_sysconfdir/ceilometer/event_definitions.yaml
+%config %_sysconfdir/ceilometer/pipeline.yaml
+%config %_sysconfdir/ceilometer/policy.json
+%config %_sysconfdir/ceilometer/api_paste.ini
 %config(noreplace) %_sysconfdir/logrotate.d/%name
-%dir %attr(0755, ceilometer, root) %_logdir/ceilometer
+%dir %attr(0750, ceilometer, adm) %_logdir/ceilometer
 %dir %attr(0755, ceilometer, root) %_runtimedir/ceilometer
 %_tmpfilesdir/%name.conf
 
 %_bindir/ceilometer-dbsync
 %_bindir/ceilometer-expirer
 %_bindir/ceilometer-send-sample
-
-%defattr(-, ceilometer, ceilometer, -)
-%dir %_sharedstatedir/ceilometer
-%dir %_sharedstatedir/ceilometer/tmp
+%dir %attr(0755, ceilometer, ceilometer) %_sharedstatedir/ceilometer
+%dir %attr(0755, ceilometer, ceilometer) %_cachedir/ceilometer
 
 %files -n python-module-ceilometer
 %python_sitelibdir/*
@@ -393,6 +407,7 @@ rm -f %buildroot/usr/share/doc/ceilometer/README*
 %_bindir/ceilometer-agent-compute
 %_unitdir/%name-compute.service
 %_initdir/%name-compute
+%_datadir/polkit-1/rules.d/11-openstack-ceilometer.rules
 
 %files collector
 %_bindir/ceilometer-collector*
@@ -400,7 +415,7 @@ rm -f %buildroot/usr/share/doc/ceilometer/README*
 %_initdir/%name-collector
 
 %files notification
-%config(noreplace) %attr(-, root, ceilometer) %_sysconfdir/ceilometer/event_pipeline.yaml
+%config %_sysconfdir/ceilometer/event_pipeline.yaml
 %_bindir/ceilometer-agent-notification
 %_unitdir/%name-notification.service
 %_initdir/%name-notification
@@ -424,8 +439,8 @@ rm -f %buildroot/usr/share/doc/ceilometer/README*
 %_initdir/%name-alarm-evaluator
 
 %files ipmi
-%config(noreplace) %attr(-, root, ceilometer) %_sysconfdir/ceilometer/rootwrap.conf
-%config(noreplace) %attr(-, root, ceilometer) %_sysconfdir/ceilometer/rootwrap.d/ipmi.filters
+%config %_sysconfdir/ceilometer/rootwrap.conf
+%config %_sysconfdir/ceilometer/rootwrap.d/ipmi.filters
 %_bindir/ceilometer-agent-ipmi
 %_unitdir/%name-ipmi.service
 %_initdir/%name-ipmi
@@ -438,6 +453,11 @@ rm -f %buildroot/usr/share/doc/ceilometer/README*
 %_initdir/%name-polling
 
 %changelog
+* Fri Aug 28 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
+- 2015.1.1
+- drop common package
+- drop dist config in datadir
+
 * Wed May 20 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
 - 2015.1.0 Kilo Release
 
