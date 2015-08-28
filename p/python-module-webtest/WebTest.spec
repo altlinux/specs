@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.19
-Release: alt1.dev0.git20150208
+Release: alt1.dev0.git20150724
 Summary: Helper to test WSGI applications
 License: MIT
 Group: Development/Python
@@ -113,6 +113,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Aug 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.19-alt1.dev0.git20150724
+- New snapshot
+
 * Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.19-alt1.dev0.git20150208
 - Version 2.0.19.dev0
 
