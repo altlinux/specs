@@ -21,11 +21,11 @@
 
 %define major 4
 %define minor 11
-%define bugfix 21
+%define bugfix 22
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -949,6 +949,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Aug 28 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt1
+- new version
+
+* Fri Aug 07 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.21-alt3
+- allow to unlock screen by nopasswdlogin user
+
 * Mon Jul 27 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.21-alt2
 - return default menu icon
 
