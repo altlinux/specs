@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
-Release: alt2
+Version: 4.0.2
+Release: alt1.dev.git20141106
 Summary: Sequence Sorting
 License: ZPLv2.1
 Group: Development/Python
@@ -13,10 +13,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-nose python-module-coverage
+BuildPreReq: python-module-nosexcover
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose python3-module-coverage
+BuildPreReq: python3-module-nosexcover
 %endif
 
 %py_requires zope
@@ -89,6 +93,16 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test -v
+nosetests -vv --with-xunit --with-xcoverage
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+nosetests3 -vv --with-xunit --with-xcoverage
+popd
+%endif
+
 %files
 %doc *.txt
 %python_sitelibdir/*
@@ -110,6 +124,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1.dev.git20141106
+- Version 4.0.2dev
+- Enabled check
+
 * Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt2
 - Added module for Python 3
 
