@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt2
+Version: 4.2.1
+Release: alt1
 Summary: Zope Page Templates
 License: ZPL
 Group: Development/Python
@@ -13,10 +13,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.component python-module-zope.security
+BuildPreReq: python-module-zope.tales python-module-zope.proxy
+BuildPreReq: python-module-zope.untrustedpython
+BuildPreReq: python-module-zope.i18n python-module-zope.i18nmessageid
+BuildPreReq: python-module-zope.traversing python-module-zope.testing
+BuildPreReq: python-module-zope.component-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.component python3-module-zope.security
+BuildPreReq: python3-module-zope.tales python3-module-zope.proxy
+BuildPreReq: python3-module-zope.i18n python3-module-zope.i18nmessageid
+BuildPreReq: python3-module-zope.traversing python3-module-zope.testing
+BuildPreReq: python3-module-zope.component-tests
 %endif
 
 %py_requires zope zope.interface zope.component zope.security zope.tales
@@ -104,6 +115,15 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test -v
+#if_with python3
+%if 0
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -125,6 +145,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1
+- Version 4.2.1
+- Enabled check
+
 * Sat Feb 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt2
 - Added necessary requirements
 
