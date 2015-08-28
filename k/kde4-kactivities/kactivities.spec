@@ -8,7 +8,7 @@ Name: kde4-kactivities
 %define minor 13
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: KDE activity manager
@@ -116,6 +116,9 @@ done
 %_K4link/*.so
 
 %changelog
+* Fri Aug 28 2015 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt3
+- update from 4.13 branch
+
 * Tue Aug 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt2
 - update from 4.13 branch
 
