@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1
+Version: 4.1.1
+Release: alt1.dev0.git20150203
 Summary: StructuredText parser
 License: ZPLv2.1
 Group: Development/Python
@@ -13,10 +13,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-nosexcover python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nosexcover python3-module-coverage
 %endif
 
 %py_requires zope
@@ -95,14 +97,26 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test -v
+nosetests -vv --with-xunit --with-xcoverage
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+nosetests3 -vv --with-xunit --with-xcoverage
+popd
+%endif
+
 %files
 %doc *.txt *.rst docs/*.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests.*
+%exclude %python_sitelibdir/*/*/*/examples*
 
 %files tests
 %python_sitelibdir/*/*/tests.*
+%python_sitelibdir/*/*/*/examples*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -111,13 +125,19 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/examples*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/*/tests.*
+%python3_sitelibdir/*/*/*/examples*
 %endif
 
 %changelog
+* Sat Aug 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git20150203
+- Version 4.1.1.dev0
+- Enabled check
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
 - Version 4.1.0
 
