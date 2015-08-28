@@ -14,26 +14,28 @@
 %def_enable pipe
 %def_enable anon
 %def_enable fs
+%def_disable websocket # TODO
 %def_disable oracle # libs not present in sisyphus
+%def_disable tests
 
-%define git e21b878
-%define majver 2.2
-%define minver 14
-%define rel alt1
+%define git c4e9b0d
+%define majver 2.3
+%define minver 3
+%define rel alt2
 
 Name: jabberd2
 Version: %majver.%minver
 %ifndef git
 Release: %rel
 %else
-Release: %rel.git.%git.qa1
+Release: %rel.git.%git
 %endif
 
 Summary: Jabber IM server 2nd version
 Group: System/Servers
 License: %gpl2plus
 Url: http://jabberd2.xiaoka.com/
-Packager: Alexey Sidorov <alexsid@altlinux.ru>
+Packager: L.A. Kostis <lakostis@altlinux.org>
 
 %ifndef git
 Source: http://ftp.xiaoka.com/jabberd2/releases/jabberd-%version.tar.bz2
@@ -49,11 +51,15 @@ Source8: %name.logrotate
 
 Patch1: jabberd2-autoconf.patch
 Patch2: jabberd2-alt-ldapvcard-fix.patch
-Patch3: jabberd2-alt-sysconf.patch
+Patch3: jabberd2-alt-ldapvcard-jpeg-fix.patch
+Patch4: jabberd2-alt-sysconf.patch
+Patch5: jabberd2-alt-websocket-fix.patch
+Patch6:	jabberd2-alt-systemddir.patch
+Patch7: jabberd2-alt-blowfish-no-asm.patch
 
 BuildRequires(pre): rpm-build-licenses jabber-common libidn-devel >= 0.3.0 libudns-devel
 # Automatically added by buildreq on Mon Oct 22 2007
-BuildRequires: gcc-c++ libexpat-devel zlib-devel >= 1.2.3 cppunit-devel
+BuildRequires: gcc-c++ libexpat-devel zlib-devel >= 1.2.3
 
 Requires: jabber-common >= 0.2 su coreutils xmlstarlet libudns
 Obsoletes: jabberd2-router jabberd2-resolver
@@ -94,11 +100,9 @@ BuildRequires: libldap-devel >= 2.1.0
 BuildRequires: libpam-devel
 %endif
 
-#package resolver
-#Summary: Resolver package for jabberd2
-#License: GPL
-#Group: System/Servers
-#Requires: %name = %version-%release
+%if_enabled tests
+BuildRequires: check
+%endif
 
 %package s2s
 Summary: Server to Server package for jabberd2
@@ -186,12 +190,6 @@ which is jabberd/secret by default.
 You MUST change this to secure user/pass pair.
 Please read %_docdir/UPGRADE before upgrade.
 
-#description resolver
-#Resolver service for jabberd.
-#This service resolve external DNS entries.
-#
-#For example: this done for DNS SRV record in S2S service.
-
 %description s2s
 Server to Server service for jabberd.
 This service is for connection you jabber server with another,
@@ -255,24 +253,22 @@ Oracle auth and storage module for Jabberd.
 # rename package jabberd -> jabberd2
 %__subst "s|AC_INIT(\[jabberd\]|AC_INIT(\[jabberd2\]|g" configure.ac
 
-# some hacks for autoconf < required by upstream
-#__subst "s|AC_PREREQ(2.61)|AC_PREREQ(2.59)|g" configure.ac
-#patch1 -p1
-
 #fix ldapvcard typo
 %patch2 -p2
-
+%patch3 -p2
 #set db drivers by default
-%patch3 -p1
-
-#here we correct stupid errors :)
-#__subst "s|authreg_ldapvcard_la|storage_ldapvcard_la|g" storage/Makefile.am
+%patch4 -p1
+#fix websocket
+%patch5 -p2
+#fix systemd dir location
+%patch6 -p2
+# fix crypt_blowfish
+%patch7 -p2
 
 %build
 %autoreconf
 %configure --sysconfdir=%_sysconfdir/%name \
 	--bindir=%_libexecdir/%name \
-	--with-sasl=gsasl \
 	%{subst_enable debug} \
 	%{subst_enable ssl} \
 	%{subst_enable mysql} \
@@ -285,8 +281,8 @@ Oracle auth and storage module for Jabberd.
 	%{subst_enable anon} \
 	%{subst_enable fs} \
 	%{subst_enable oracle} \
-	--disable-ntlogon \
-	--disable-sspi		# ntlogon & sspi not for us. windows only :)
+	%{subst_enable websocket} \
+	%{subst_enable tests}
 
 %make_build
 
@@ -299,8 +295,7 @@ install %SOURCE7 %buildroot%_jabber_server_dir/jabberd2
 
 # move all docs to %_docdir
 mv tools/db* tools/*.pl tools/*.rb tools/*.schema tools/pam_jabberd %buildroot%_docdir/%name-%version/
-mv README ChangeLog NEWS AUTHORS COPYING README.protocol TODO UPGRADE %buildroot%_docdir/%name-%version/
-#mv README.ALT-ru_RU.UTF8 db-update-vcard.mysql %buildroot%_docdir/%name-%version/
+mv README.md NEWS AUTHORS COPYING README.protocol TODO %buildroot%_docdir/%name-%version/
 
 # delete the dist files of the configs
 rm -f %buildroot/%_sysconfdir/%name/*.xml.dist
@@ -329,6 +324,14 @@ mkdir -p %buildroot%_initdir
 tar -xf %SOURCE3 -C %buildroot%_initdir
 chmod +x %buildroot%_initdir/*
 
+# fix systemd services naming
+pushd %buildroot%_unitdir
+for i in *.service; do 
+	sed -i 's,\(jabberd\)\([\.\-]\),\12\2,g' "$i"; 
+	mv "$i" "$(echo $i | sed 's,jabberd,%name,')"
+done
+popd
+
 install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 
 %pre
@@ -345,12 +348,6 @@ install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 %preun
 %preun_service %name-router
 %preun_service %name
-
-#post resolver
-#post_service %name-resolver
-
-#preun resolver
-#preun_service %name-resolver
 
 %post sm
 %post_service %name-sm
@@ -381,6 +378,7 @@ install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 #[^d][^b]*
 
 %_initdir/%name
+%_unitdir/%name.service
 %dir %_libexecdir/%name
 %dir %_localstatedir/jabberd2
 %attr(2770,root,jabberd2) %dir %_localstatedir/jabberd2/*
@@ -400,21 +398,16 @@ install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 %attr(0640,root,jabberd2) %config(noreplace) %_sysconfdir/%name/router-filter.xml
 %_libexecdir/%name/router
 %_initdir/%name-router
+%_unitdir/%name-router.service
 %_jabber_server_dir/jabberd2
 %_man8dir/router*
-
-#files resolver
-#attr(0640,root,jabberd2) %config(noreplace) %_sysconfdir/%name/cfg.d/*resolver*
-#attr(0640,root,jabberd2) %config(noreplace) %_sysconfdir/%name/resolver.xml
-#_libexecdir/%name/resolver
-#_initdir/%name-resolver
-#_man8dir/resolver*
 
 %files s2s
 %attr(0640,root,jabberd2) %config(noreplace) %_sysconfdir/%name/cfg.d/*s2s*
 %attr(0640,root,jabberd2) %config(noreplace) %_sysconfdir/%name/s2s.xml
 %_libexecdir/%name/s2s
 %_initdir/%name-s2s
+%_unitdir/%name-s2s.service
 %_man8dir/s2s*
 
 
@@ -423,6 +416,7 @@ install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 %attr(0640,root,jabberd2) %config(noreplace) %_sysconfdir/%name/c2s.xml
 %_libexecdir/%name/c2s
 %_initdir/%name-c2s
+%_unitdir/%name-c2s.service
 %if_enabled pipe
 %_libdir/%name/*pipe.so*
 %endif
@@ -442,6 +436,7 @@ install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 %attr(0640,root,jabberd2) %config(noreplace) %_sysconfdir/%name/templates/*.xml
 %_libexecdir/%name/sm
 %_initdir/%name-sm
+%_unitdir/%name-sm.service
 %_libdir/%name/mod_*.so*
 %_libdir/%name/libstorage.so*
 %if_enabled fs
@@ -496,9 +491,27 @@ install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Fri Aug 28 2015 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt2.git.c4e9b0d
+- Fix crypt_blowfish compile on x86 (disable asm code due missing x86.S).
+
+* Fri Aug 28 2015 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt1.git.c4e9b0d
+- GIT snapshot c4e9b0d (mostly for Logjam attack fix).
+- Added systemd units.
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.14-alt1.git.e21b878.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 
+* Wed Aug 22 2012 L.A. Kostis <lakostis@altlinux.ru> 2.2.17-alt1.git.aabcffa
+- GIT snapshot aabcffa (Fixed possibility of Unsolicited Dialback
+  Attack).
+
+* Thu Jun 07 2012 L.A. Kostis <lakostis@altlinux.ru> 2.2.17-alt0.git.53dbe6e
+- GIT snapshot 53dbe6e (Fix for invalid default router.xml).
+- disable tests by default.
+
+* Fri Mar 16 2012 L.A. Kostis <lakostis@altlinux.ru> 2.2.14-alt2.git.c8ad0e2
+- GIT snapshot c8ad0e2 (Apple Chat Server improvements).
+- cleanup ldapvcard storage patch from Gentoo.
 * Mon Jan 16 2012 L.A. Kostis <lakostis@altlinux.ru> 2.2.14-alt1.git.e21b878
 - GIT snapshot e21b878.
 - fix init.d scripts permissions.
