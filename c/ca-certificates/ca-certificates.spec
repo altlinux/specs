@@ -1,5 +1,5 @@
 Name: ca-certificates
-Version: 2012.01.17
+Version: 2015.08.04
 Release: alt1
 
 Summary: Common CA Certificates
@@ -9,7 +9,6 @@ BuildArch: noarch
 
 Source0: mozilla.tar
 Source1: alt.tar
-Source2: cacert.org.tar
 
 BuildRequires: openssl
 
@@ -23,8 +22,8 @@ compliance, and that full responsibility to assess them rests with
 the user.
 
 %prep
-%setup -c -a1 -a2
-patch -p0 < mozilla/mk-ca-bundle.patch
+%setup -c -a1
+patch -p1 < mozilla/mk-ca-bundle.patch
 
 %build
 export TZ=UTC
@@ -34,18 +33,11 @@ popd
 pushd alt
 	for t in alt; do
 		printf '#\n# %%s\n#\n\n' 'ALT CA'
-		openssl x509 -in $t.crt -text -fingerprint
+		openssl x509 -sha256 -in $t.crt -text -fingerprint
 		printf '\n\n'
 	done >crt
 popd
-pushd cacert.org
-	for t in root class3; do
-		printf '#\n# %%s\n#\n\n' "http://www.cacert.org/certs/$t.crt"
-		openssl x509 -in "$t.crt" -text -fingerprint
-		printf '\n\n'
-	done >crt
-popd
-cat {mozilla,alt,cacert.org}/crt >ca-bundle.crt
+cat {mozilla,alt}/crt >ca-bundle.crt
 
 %install
 install -pDm644 ca-bundle.crt %buildroot%_datadir/%name/ca-bundle.crt
@@ -54,6 +46,14 @@ install -pDm644 ca-bundle.crt %buildroot%_datadir/%name/ca-bundle.crt
 %_datadir/%name
 
 %changelog
+* Fri Aug 28 2015 L.A. Kostis <lakostis@altlinux.ru> 2015.08.04-alt1
+- mozilla/certdata.txt: updated ca-certificates to v2.5.
+- mozilla/mk-ca-bundle.pl:
+  + updated to v1.25.
+  + use SHA256 for fingerprint.
+  + remove MD5 from valid cert signature list.
+- remove cacert (untrusted signature).
+
 * Wed Feb 08 2012 Dmitry V. Levin <ldv@altlinux.org> 2012.01.17-alt1
 - mozilla/certdata.txt: updated to revision 1.81.
 - Filtered out untrusted certs from mozilla bundle (closes: #26904).
