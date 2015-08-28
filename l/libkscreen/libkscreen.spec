@@ -1,6 +1,6 @@
 Name: libkscreen
-Version: 1.0.5
-Release: alt2
+Version: 1.0.6
+Release: alt0.1
 
 Group: System/Libraries
 Summary: Display configuration library
@@ -52,6 +52,12 @@ developing applications that use %name.
 %_K4libdir/pkgconfig/kscreen.pc
 
 %changelog
+* Fri Aug 28 2015 Sergey V Turchin <zerg@altlinux.org> 1.0.6-alt0.1
+- update from kdelibs4 branch
+
+* Thu Dec 11 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.5-alt1.M70P.1
+- built for M70P
+
 * Thu Dec 11 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.5-alt2
 - fix pnp.ids usage
 
