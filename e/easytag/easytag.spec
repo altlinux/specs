@@ -1,11 +1,11 @@
 Name: easytag
-Version: 2.2.6
+Version: 2.4.0
 Release: alt1
 
 Summary: Audio files tag viewer/editor
 Summary(ru_RU.UTF-8): Утилита для редактирования тегов звуковых файлов
-License: GPL
 Group: Sound
+License: GPLv2+
 Url: https://wiki.gnome.org/Apps/EasyTAG
 Packager: Afanasov Dmitry <ender@altlinux.org>
 
@@ -59,14 +59,21 @@ Monkey's звуковых файлов.
 %make check
 
 %files -f %name.lang
-%doc ChangeLog COPYING HACKING README THANKS TODO
 %_bindir/%name
-%_datadir/appdata/%name.appdata.xml
-%_man1dir/%name.1*
-%_iconsdir/hicolor/*/apps/%name.*
 %_desktopdir/%name.desktop
+%_datadir/glib-2.0/schemas/org.gnome.EasyTAG.enums.xml
+%_datadir/glib-2.0/schemas/org.gnome.EasyTAG.gschema.xml
+%_iconsdir/hicolor/*/apps/%name.*
+%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%name-nautilus.metainfo.xml
+%_man1dir/%name.1*
+%doc ChangeLog HACKING README THANKS TODO
 
 %changelog
+* Sat Aug 29 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Mon May 18 2015 Yuri N. Sedunov <aris@altlinux.org> 2.2.6-alt1
 - 2.2.6
 
