@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1
+Version: 4.1.1
+Release: alt1.dev0.git20150204
 Summary: Method and property caching decorators
 License: ZPLv2.1
 Group: Development/Python
@@ -13,10 +13,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.testrunner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.testrunner
 %endif
 
 %py_requires zope
@@ -111,6 +113,14 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test -v
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -134,6 +144,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sat Aug 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git20150204
+- Version 4.1.1.dev0
+- Enabled check
+
 * Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
 - Version 4.1.0
 
