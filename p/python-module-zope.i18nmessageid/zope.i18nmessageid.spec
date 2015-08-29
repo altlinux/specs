@@ -3,22 +3,27 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.3
-Release: alt1
+Version: 4.0.4
+Release: alt1.dev0.git20150309
 Summary: Message Identifiers for internationalization
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.i18nmessageid/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/zope.i18nmessageid.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
-BuildPreReq: python-module-zope
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-nose python-module-coverage
+BuildPreReq: python-module-nosexcover
+BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-zope python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose python3-module-coverage
+BuildPreReq: python3-module-nosexcover
+BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides zope.i18nmessageid
@@ -55,6 +60,17 @@ of the 'zope.i18n' package.
 This package contains tests for zope.i18nmessageid
 %endif
 
+%package pickles
+Summary: Pickles for zope.i18nmessageid
+Group: Development/Python
+
+%description pickles
+This package provides facilities for *declaring* messages within
+program source text;  translation of the messages is the responsiblitiy
+of the 'zope.i18n' package.
+
+This package contains pickles for zope.i18nmessageid
+
 %package tests
 Summary: Tests for zope.i18nmessageid
 Group: Development/Python
@@ -74,7 +90,11 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+
 %build
+%add_optflags -fno-strict-aliasing
 %python_build
 %if_with python3
 pushd ../python3
@@ -90,27 +110,56 @@ pushd ../python3
 popd
 %endif
 
+export PYTHONPATH=$PWD/src
+%make -C docs pickle
+%make -C docs html
+install -d %buildroot%python_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+export PYTHONPATH=$PWD/src
+python setup.py test -v
+nosetests -vv --with-xunit --with-xcoverage
+%if_with python3
+pushd ../python3
+export PYTHONPATH=$PWD/src
+python3 setup.py test -v
+nosetests3 -vv --with-xunit --with-xcoverage
+popd
+%endif
+
 %files
-%doc *.txt
+%doc *.txt *.rst docs/_build/html
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests.*
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
 
 %files tests
 %python_sitelibdir/*/*/tests.*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst docs/_build/html
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/tests.*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests.*
+%python3_sitelibdir/*/*/*/tests.*
 %endif
 
 %changelog
+* Sat Aug 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1.dev0.git20150309
+- Version 4.0.4.dev0
+- Added documentation
+- Enabled check
+
 * Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt1
 - Version 4.0.3
 
