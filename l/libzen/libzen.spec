@@ -1,5 +1,5 @@
 Name: libzen
-Version: 0.4.29
+Version: 0.4.31
 Release: alt1
 
 Group: System/Libraries
@@ -75,6 +75,9 @@ install -m 644 Project/GNU/Library/libzen.pc %buildroot%_pkgconfigdir
 %_libdir/*.so
 
 %changelog
+* Tue Aug 25 2015 Motsyo Gennadi <drool@altlinux.ru> 0.4.31-alt1
+- 0.4.31
+
 * Wed Oct 01 2014 Motsyo Gennadi <drool@altlinux.ru> 0.4.29-alt1
 - 0.4.29
 
