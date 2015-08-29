@@ -11,8 +11,8 @@
 %endif
 
 Name: python-module-waitress
-Version: 0.8.9
-Release: alt1
+Version: 0.8.10
+Release: alt1.dev0
 
 %setup_python_module %modulename
 
@@ -113,13 +113,18 @@ popd
 %endif
 
 %install
-%python_install
-
 %if_with python3
 pushd ../%py3dir
 %python3_install
 popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
 %endif
+
+%python_install
 
 %check
 # by setting the PYTHONPATH to the current dir
@@ -137,9 +142,12 @@ popd
 
 %files
 %doc README.rst CHANGES.txt COPYRIGHT.txt LICENSE.txt docs
-%python_sitelibdir_noarch/%modulename
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
+%python_sitelibdir_noarch/*
 %exclude %python_sitelibdir_noarch/%modulename/test*
-%python_sitelibdir_noarch/%modulename-%version-py2.?.egg-info
 
 %files tests
 %python_sitelibdir_noarch/%modulename/test*
@@ -147,15 +155,18 @@ popd
 %if_with python3
 %files -n %py3name
 %doc README.rst CHANGES.txt COPYRIGHT.txt LICENSE.txt docs
-%python3_sitelibdir_noarch/%modulename
+%_bindir/*.py3
+%python3_sitelibdir_noarch/*
 %exclude %python3_sitelibdir_noarch/%modulename/test*
-%python3_sitelibdir_noarch/%modulename-%version-py3.?.egg-info
 
 %files -n %py3name-tests
 %python3_sitelibdir_noarch/%modulename/test*
 %endif
 
 %changelog
+* Sat Aug 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.10-alt1.dev0
+- Version 0.8.10dev0
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.9-alt1
 - Version 0.8.9
 
