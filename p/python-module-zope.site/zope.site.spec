@@ -1,10 +1,11 @@
 %define oname zope.site
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 4.0.0
-Release: alt3
+Version: 4.0.1
+Release: alt1.dev0.git20150608
 Summary: Local registries for zope component architecture
 License: ZPL
 Group: Development/Python
@@ -13,10 +14,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-%oname-tests
+BuildPreReq: python-module-zope.annotation python-module-zope.container-tests
+BuildPreReq: python-module-zope.security python-module-zope.event
+BuildPreReq: python-module-zope.lifecycleevent python-module-zope.location
+BuildPreReq: python-module-zope.testing python-module-zope.traversing-tests
+BuildPreReq: python-module-zope.component-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-%oname-tests
+BuildPreReq: python3-module-zope.annotation python3-module-zope.container-tests
+BuildPreReq: python3-module-zope.security python3-module-zope.event
+BuildPreReq: python3-module-zope.lifecycleevent python3-module-zope.location
+BuildPreReq: python3-module-zope.testing python3-module-zope.traversing-tests
+BuildPreReq: python3-module-zope.component-tests
 %endif
 
 %py_requires zope.annotation zope.container zope.security
@@ -109,6 +122,16 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+export PYTHONPATH=$PWD/src
+python setup.py test -v
+%if_with python3
+pushd ../python3
+export PYTHONPATH=$PWD/src
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -132,6 +155,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sat Aug 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev0.git20150608
+- Version 4.0.1.dev0
+
 * Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3
 - Version 4.0.0
 
