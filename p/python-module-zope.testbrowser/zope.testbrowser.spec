@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.0.0
-Release: alt2.dev0.git20140125
+Release: alt2.dev0.git20150220
 Summary: Programmable browser for functional black-box tests
 License: ZPLv2.1
 Group: Development/Python
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.0-alt2.dev0.git20150220
+- New snapshot
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.0-alt2.dev0.git20140125
 - Restored zope.testbrowser.connection
 
