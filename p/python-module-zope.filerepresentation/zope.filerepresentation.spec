@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1
+Version: 4.1.1
+Release: alt1.dev0.git20150228
 Summary: File-system Representation Interfaces
 License: ZPLv2.1
 Group: Development/Python
@@ -13,13 +13,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.interface
+BuildPreReq: python-module-zope.schema
+BuildPreReq: python-module-nose python-module-coverage
+BuildPreReq: python-module-nosexcover
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.interface
+BuildPreReq: python3-module-zope.schema
+BuildPreReq: python3-module-nose python3-module-coverage
+BuildPreReq: python3-module-nosexcover
 %endif
 
-%py_requires zope zope.interface
+%py_requires zope zope.interface zope.schema
 
 %description
 File-system representation interfaces.
@@ -45,7 +53,7 @@ This package contains tests for %oname.
 %package -n python3-module-%oname
 Summary: File-system Representation Interfaces
 Group: Development/Python3
-%py3_requires zope zope.interface
+%py3_requires zope zope.interface zope.schema
 
 %description -n python3-module-%oname
 File-system representation interfaces.
@@ -103,6 +111,16 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test -v
+nosetests -vv --with-xunit --with-xcoverage
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+nosetests3 -vv --with-xunit --with-xcoverage
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -126,6 +144,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git20150228
+- Version 4.1.1.dev0
+- Enabled check
+
 * Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
 - Version 4.1.0
 
