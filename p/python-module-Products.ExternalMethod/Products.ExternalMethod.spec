@@ -1,8 +1,10 @@
 %define oname Products.ExternalMethod
 
+%def_disable check
+
 Name: python-module-%oname
-Version: 2.13.2
-Release: alt1.git20141102
+Version: 2.14
+Release: alt1.dev0.git20150618
 Summary: Provides support for external Python methods within a Zope 2 environment
 License: ZPLv2.1
 Group: Development/Python
@@ -61,6 +63,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14-alt1.dev0.git20150618
+- Version 2.14.dev0
+
 * Tue Nov 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.2-alt1.git20141102
 - Version 2.13.2
 
