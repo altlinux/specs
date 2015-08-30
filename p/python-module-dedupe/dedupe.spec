@@ -1,10 +1,10 @@
 %define oname dedupe
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 0.7.7.1.3
-Release: alt1.git20150301
+Version: 1.1.0
+Release: alt1.git20150829
 Summary: A python library for accurate and scaleable data deduplication and entity-resolution
 License: MIT
 Group: Development/Python
@@ -16,13 +16,15 @@ Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Cython python-module-numpy
-BuildPreReq: python-module-hcluster python-module-categorical-distance
+BuildPreReq: python-module-dedupe-hcluster
+BuildPreReq: python-module-categorical-distance
 BuildPreReq: python-module-rlr python-module-affinegap
-BuildPreReq: python-module-haversine python-module-BTrees
+BuildPreReq: python-module-cHaversine python-module-BTrees
 BuildPreReq: python-module-zope.interface python-module-zope.index
 BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-module-fastcluster python-module-metafone
 BuildPreReq: python-module-canonicalize python-module-simplecosine
+BuildPreReq: python-module-highered
 BuildPreReq: python-modules-json python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -30,17 +32,18 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-Cython python3-module-numpy
 BuildPreReq: python3-module-hcluster python3-module-categorical-distance
 BuildPreReq: python3-module-rlr python3-module-affinegap
-BuildPreReq: python3-module-haversine python3-module-BTrees
+BuildPreReq: python3-module-cHaversine python3-module-BTrees
 BuildPreReq: python3-module-zope.interface python3-module-zope.index
 BuildPreReq: python3-module-nose python3-module-coverage
 BuildPreReq: python3-module-fastcluster python3-module-metafone
 BuildPreReq: python3-module-canonicalize python3-module-simplecosine
+BuildPreReq: python3-module-highered python3-module-simplejson
 %endif
 
 %py_provides %oname
-%py_requires numpy hcluster categorical rlr haversine BTrees json
+%py_requires numpy hcluster categorical rlr cHaversine BTrees json
 %py_requires zope.interface zope.index fastcluster metafone canonicalize
-%py_requires simplecosine
+%py_requires simplecosine affinegap
 
 %description
 dedupe is a library that uses machine learning to perform de-duplication
@@ -60,9 +63,9 @@ dedupe will help you:
 Summary: A python library for accurate and scaleable data deduplication and entity-resolution
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires numpy hcluster categorical rlr haversine BTrees json
+%py3_requires numpy hcluster categorical rlr cHaversine BTrees json
 %py3_requires zope.interface zope.index fastcluster metafone canonicalize
-%py3_requires simplecosine
+%py3_requires simplecosine affinegap
 
 %description -n python3-module-%oname
 dedupe is a library that uses machine learning to perform de-duplication
@@ -136,6 +139,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
+export PYTHONPATH=$PWD
+python setup.py build_ext -i
+#python tests/canonical_test.py
 %if_with python3
 pushd ../python3
 python3 setup.py test
@@ -160,6 +166,10 @@ popd
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20150829
+- Version 1.1.0
+- Added module for Python 3
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.7.1.3-alt1.git20150301
 - Version 0.7.7.1.3
 
