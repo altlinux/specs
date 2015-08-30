@@ -10,8 +10,8 @@ BuildRequires(pre): rpm-build-python
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.15.1
-Release: alt1.git20150425
+Version: 0.17.0
+Release: alt1.git20150829
 
 Summary: SciPy is the library of scientific codes
 
@@ -474,6 +474,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17.0-alt1.git20150829
+- Version 0.17.0
+
 * Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.1-alt1.git20150425
 - Version 0.15.1
 
