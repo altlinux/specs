@@ -7,7 +7,7 @@
 %define major 2.24
 Name: python-module-%oname
 Version: %major.1
-Release: alt9.git20111002
+Release: alt10.git20111002
 
 Summary: Python bindings for the GTK+ widget set (from upstream git)
 
@@ -228,6 +228,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.24.1-alt10.git20111002
+- Rebuilt with updated NumPy
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.24.1-alt9.git20111002
 - Rebuilt with updated NumPy
 
