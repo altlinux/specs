@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.0
-Release: alt3
+Version: 4.0.1
+Release: alt1.dev0.git20150613
 Summary: Zope Viewlets
 License: ZPLv2.1
 Group: Development/Python
@@ -13,10 +13,34 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.browserpage
+BuildPreReq: python-module-zope.configuration
+BuildPreReq: python-module-zope.contentprovider
+BuildPreReq: python-module-zope.event
+BuildPreReq: python-module-zope.i18nmessageid
+BuildPreReq: python-module-zope.location
+BuildPreReq: python-module-zope.publisher
+BuildPreReq: python-module-zope.schema
+BuildPreReq: python-module-zope.security
+BuildPreReq: python-module-zope.traversing-tests
+BuildPreReq: python-module-zope.testing
+BuildPreReq: python-module-zope.size
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.browserpage
+BuildPreReq: python3-module-zope.configuration
+BuildPreReq: python3-module-zope.contentprovider
+BuildPreReq: python3-module-zope.event
+BuildPreReq: python3-module-zope.i18nmessageid
+BuildPreReq: python3-module-zope.location
+BuildPreReq: python3-module-zope.publisher
+BuildPreReq: python3-module-zope.schema
+BuildPreReq: python3-module-zope.security
+BuildPreReq: python3-module-zope.traversing-tests
+BuildPreReq: python3-module-zope.testing
+BuildPreReq: python3-module-zope.size
 %endif
 
 %py_requires zope zope.browserpage zope.component zope.configuration
@@ -44,7 +68,7 @@ interfaces.
 Summary: Tests for Zope Viewlets
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing zope.size
+%py3_requires zope.testing zope.size zope.traversing.testing
 
 %description -n python3-module-%oname-tests
 Viewlets provide a generic framework for building pluggable user
@@ -56,7 +80,7 @@ This package contains tests for Zope Viewlets.
 Summary: Tests for Zope Viewlets
 Group: Development/Python
 Requires: %name = %version-%release
-%py_requires zope.testing zope.size
+%py_requires zope.testing zope.size zope.traversing.testing
 
 %description tests
 Viewlets provide a generic framework for building pluggable user
@@ -69,6 +93,7 @@ This package contains tests for Zope Viewlets.
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -99,6 +124,15 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test -v
+#if_with python3
+%if 0
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -122,6 +156,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev0.git20150613
+- Version 4.0.1.dev0
+- Enabled check
+
 * Thu Dec 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3
 - Version 4.0.0
 
