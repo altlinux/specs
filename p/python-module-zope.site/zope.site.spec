@@ -1,11 +1,11 @@
 %define oname zope.site
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 4.0.1
-Release: alt1.dev0.git20150608
+Release: alt2.dev0.git20150608
 Summary: Local registries for zope component architecture
 License: ZPL
 Group: Development/Python
@@ -21,6 +21,8 @@ BuildPreReq: python-module-zope.security python-module-zope.event
 BuildPreReq: python-module-zope.lifecycleevent python-module-zope.location
 BuildPreReq: python-module-zope.testing python-module-zope.traversing-tests
 BuildPreReq: python-module-zope.component-tests
+BuildPreReq: python-module-zope.size
+BuildPreReq: python-module-ZODB-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -30,6 +32,9 @@ BuildPreReq: python3-module-zope.security python3-module-zope.event
 BuildPreReq: python3-module-zope.lifecycleevent python3-module-zope.location
 BuildPreReq: python3-module-zope.testing python3-module-zope.traversing-tests
 BuildPreReq: python3-module-zope.component-tests
+BuildPreReq: python3-module-zope.size python3-module-zodbpickle
+BuildPreReq: python3-module-ZODB-tests
+BuildPreReq: python3-module-zope.filerepresentation
 %endif
 
 %py_requires zope.annotation zope.container zope.security
@@ -125,7 +130,8 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %check
 export PYTHONPATH=$PWD/src
 python setup.py test -v
-%if_with python3
+#if_with python3
+%if 0
 pushd ../python3
 export PYTHONPATH=$PWD/src
 python3 setup.py test -v
@@ -155,6 +161,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt2.dev0.git20150608
+- Enabled check
+
 * Sat Aug 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev0.git20150608
 - Version 4.0.1.dev0
 
