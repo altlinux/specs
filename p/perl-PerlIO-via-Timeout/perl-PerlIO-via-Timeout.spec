@@ -3,7 +3,7 @@
 %define real_name PerlIO-via-Timeout
 
 Name: perl-PerlIO-via-Timeout
-Version: 0.30
+Version: 0.32
 Release: alt1
 
 Summary: a PerlIO layer that adds read & write timeout to a handle
@@ -48,5 +48,8 @@ before reading/writing.
 %perl_vendor_privlib/PerlIO/via/Timeout*
 
 %changelog
+* Sun Aug 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.32-alt1
+- New version
+
 * Fri May 29 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.30-alt1
 - Initial build for ALT Linux Sisyphus
