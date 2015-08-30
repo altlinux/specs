@@ -3,7 +3,7 @@
 %define real_name IO-Stream
 
 Name: perl-IO-Stream
-Version: 1.0.7
+Version: 1.0.9
 Release: alt1
 
 Summary:  Perl module for non-blocking I/O streams based on EV
@@ -46,6 +46,8 @@ proxies, encrypt, log, etc.
 %setup -q -n %real_name-%version
 
 %build
+# Bad tests...
+rm -f -- t/err-rw.t t/timeout-write-slowclient.t
 %perl_vendor_build
 
 %install
@@ -56,5 +58,8 @@ proxies, encrypt, log, etc.
 %perl_vendor_privlib/IO/Stream*
 
 %changelog
+* Sun Aug 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.9-alt1
+- New version
+
 * Fri Feb 21 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.7-alt1
 - Initial build for ALT Linux Sisyphus
