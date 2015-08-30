@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1
+Version: 4.1.1
+Release: alt1.dev0.git20150402
 Summary: Indices for using with catalog like text, field, etc.
 License: ZPLv2.1
 Group: Development/Python
@@ -13,10 +13,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-ZODB3 python-module-zope.testrunner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-ZODB3 python3-module-zope.testrunner
 %endif
 
 %py_requires zope ZODB3 zope.interface
@@ -105,6 +107,14 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test -v
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -132,6 +142,10 @@ popd
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git20150402
+- Version 4.1.1.dev0
+- Enabled check
+
 * Mon Dec 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
 - Version 4.1.0
 
