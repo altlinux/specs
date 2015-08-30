@@ -1,8 +1,10 @@
 %define oname Zope2
 
+%def_disable check
+
 Name: python-module-%oname
 Version: 4.0
-Release: alt4.a1.dev.git20150217
+Release: alt4.a1.dev.git20150806
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -189,7 +191,7 @@ done
 
 install -p -m644 %SOURCE1 %buildroot%python_sitelibdir
 
-cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 # There is a file in the package named .DS_Store or .DS_Store.gz, 
 # the file name used by Mac OS X to store folder attributes.  
@@ -228,9 +230,13 @@ python setup.py test
 %python_sitelibdir/%oname/pickle
 
 %files docs
-%doc docs/.build/html/*
+%doc docs/_build/html/*
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt4.a1.dev.git20150806
+- New snapshot
+- Disabled check for bootstrap
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt4.a1.dev.git20150217
 - New snapshot
 
