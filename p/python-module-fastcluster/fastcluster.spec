@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.13
+Version: 1.1.20
 Release: alt1
 Summary: Fast hierarchical clustering routines for Python
 License: BSD
@@ -65,6 +65,14 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test -v
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+popd
+%endif
+
 %files
 %doc *.txt docs/*
 %python_sitelibdir/*
@@ -76,6 +84,10 @@ popd
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.20-alt1
+- Version 1.1.20
+- Enabled check
+
 * Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.13-alt1
 - Initial build for Sisyphus
 
