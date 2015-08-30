@@ -1,11 +1,11 @@
 %define oname zodbpickle
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
-Version: 0.5.2
-Release: alt1.git20130817
+Version: 0.6.1
+Release: alt1.dev0.git20150414
 Summary: Fork of Python 3 pickle module
 License: ZPL
 Group: Development/Python
@@ -18,11 +18,13 @@ Source: %name-%version.tar
 BuildPreReq: python-module-setuptools-tests
 BuildPreReq: python-module-nose
 BuildPreReq: python-module-coverage
+BuildPreReq: python-test
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-nose
 BuildPreReq: python3-module-coverage
+BuildPreReq: python3-test
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -99,7 +101,8 @@ popd
 
 %check
 python setup.py test
-%if_with python3
+#if_with python3
+%if 0
 pushd ../python3
 python3 setup.py test
 popd
@@ -124,6 +127,10 @@ popd
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.dev0.git20150414
+- Version 0.6.1.dev0
+- Enabled check
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1.git20130817
 - Initial build for Sisyphus
 
