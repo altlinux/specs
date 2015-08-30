@@ -1,7 +1,10 @@
 %define oname Products.MIMETools
+
+%def_disable check
+
 Name: python-module-%oname
-Version: 2.13.1
-Release: alt1.dev.git20130313
+Version: 2.14.0
+Release: alt1.dev0.git20150618
 Summary: MIMETools provides the <!--#mime--> tag for DocumentTemplate
 License: ZPLv2.1
 Group: Development/Python
@@ -63,6 +66,10 @@ python setup.py test
 %python_sitelibdir/Products/*/tests.*
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.0-alt1.dev0.git20150618
+- Version 2.14.0.dev0
+- Disabled check for bootstrap
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.1-alt1.dev.git20130313
 - Version 2.13.1dev
 
