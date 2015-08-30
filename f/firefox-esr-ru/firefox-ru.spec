@@ -5,17 +5,17 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-esr-ru
-Version:	38.2.0
+Version:	38.2.1
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Firefox
 
 License:	MPL/GPL/LGPL
 Group:		Networking/WWW
 URL:		http://www.mozilla-russia.org/products/firefox/
-Packager:	Alexey Gladkov <legion@altlinux.ru>
-BuildArch:	noarch
+Packager:	Andey Cherepanov <cas@altlinux.org>
 
 Source0:	ru-%version.xpi
+Source1: 	bugzillaaltlinux.xml
 
 Requires:	firefox >= %version
 Requires:	hunspell-ru
@@ -38,15 +38,14 @@ cd ..
 
 mkdir -p -- \
 	%buildroot/%cid_dir \
-	%buildroot/%cid_dict_dir/dictionaries
+	%buildroot/%cid_dict_dir/dictionaries \
+	%buildroot%firefox_prefix/distribution/searchplugins/locale/ru
 
 # Install translation
 cp -r -- %cid/* %buildroot/%cid_dir
-
-#sed -r -i \
-#    -e 's,<em:maxVersion>4.0</em:maxVersion>,<em:maxVersion>4.*</em:maxVersion>,g' \
-#    -e 's,<em:minVersion>4.0</em:minVersion>,<em:minVersion>4.0</em:minVersion>,g' \
-#    %buildroot/%ciddir/install.rdf
+cp %buildroot/%cid_dir/browser/searchplugins/* %SOURCE1 \
+   %buildroot%firefox_prefix/distribution/searchplugins/locale/ru
+rm -rf %buildroot/%cid_dir/browser/searchplugins
 
 # Install dictionary
 cat > %buildroot/%cid_dict_dir/install.rdf <<-EOF
@@ -73,12 +72,17 @@ EOF
 ln -s %_datadir/myspell/ru_RU.aff %buildroot/%cid_dict_dir/dictionaries/ru.aff
 ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 
-
 %files
 %cid_dir
 %cid_dict_dir
+%firefox_prefix/distribution/searchplugins/locale/ru
 
 %changelog
+* Fri Aug 28 2015 Andrey Cherepanov <cas@altlinux.org> 38.2.1-alt1
+- New version
+- Use locale search engines settings
+- Add search in ALT Linux Bugzilla
+
 * Wed Aug 12 2015 Andrey Cherepanov <cas@altlinux.org> 38.2.0-alt1
 - New version
 

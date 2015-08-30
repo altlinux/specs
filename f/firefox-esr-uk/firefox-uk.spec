@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name: firefox-esr-uk
-Version: 38.2.0
+Version: 38.2.1
 Release: alt1
 
 Summary: Ukrainian (UA) Language Pack for Firefox
@@ -14,11 +14,11 @@ Group: Networking/WWW
 
 URL: http://www.mozilla.org.ua
 Source: uk.xpi
+Source1: bugzillaaltlinux.xml
 
-Packager: Alexey Gladkov <legion@altlinux.ru>
+Packager: Andey Cherepanov <cas@altlinux.org>
 
 Requires: hunspell-uk
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-firefox rpm-build-licenses
 BuildRequires: unzip
@@ -36,10 +36,14 @@ cd ..
 
 mkdir -p -- \
 	%buildroot/%cid_dir \
-	%buildroot/%cid_dict_dir/dictionaries
+	%buildroot/%cid_dict_dir/dictionaries \
+        %buildroot%firefox_prefix/distribution/searchplugins/locale/uk
 
 # Install translation
 cp -r -- %cid/* %buildroot/%cid_dir
+cp %buildroot/%cid_dir/browser/searchplugins/* %SOURCE1 \
+   %buildroot%firefox_prefix/distribution/searchplugins/locale/uk
+rm -rf %buildroot/%cid_dir/browser/searchplugins
 
 # Install dictionary
 cat > %buildroot/%cid_dict_dir/install.rdf <<-EOF
@@ -70,8 +74,14 @@ ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk.dic
 %files
 %cid_dir
 %cid_dict_dir
+%firefox_prefix/distribution/searchplugins/locale/uk
 
 %changelog
+* Fri Aug 28 2015 Andrey Cherepanov <cas@altlinux.org> 38.2.1-alt1
+- New version
+- Use locale search engines settings
+- Add search in ALT Linux Bugzilla
+
 * Wed Aug 12 2015 Andrey Cherepanov <cas@altlinux.org> 38.2.0-alt1
 - New version
 
