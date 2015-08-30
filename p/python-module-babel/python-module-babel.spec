@@ -1,12 +1,12 @@
 %define oname babel
 
 %def_with python3
-%def_without docs
-%def_disable check
+%def_with docs
+#def_disable check
 
 Name: python-module-%oname
 Version: 3.0
-Release: alt2.dev.git20150805
+Release: alt3.dev.git20150805
 
 Summary: a collection of tools for internationalizing Python applications
 License: BSD
@@ -134,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt3.dev.git20150805
+- Enabled tests and docs
+
 * Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt2.dev.git20150805
 - Added missing files
 
