@@ -1,8 +1,8 @@
 ## SPEC file for Perl module Dist::Zilla::Plugin::Test::Perl::Critic
 
 Name: perl-Dist-Zilla-Plugin-Test-Perl-Critic
-Version: 2.112410
-Release: alt4
+Version: 3.000
+Release: alt1
 
 Summary: Dist::Zilla tests to check code against best practices
 
@@ -42,6 +42,9 @@ Dist::Zilla tests to check code against best practices.
 %perl_vendor_privlib/Dist/Zilla/Plugin*
 
 %changelog
+* Sun Aug 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 3.000-alt1
+- New version
+
 * Fri Sep 26 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.112410-alt4
 - Rising release to override package from Autoimports/Sisyphus repository
 
