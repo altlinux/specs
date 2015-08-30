@@ -3,7 +3,7 @@
 %define real_name Lingua-Translit
 
 Name: perl-Lingua-Translit
-Version: 0.21
+Version: 0.22
 Release: alt1
 
 Summary: Perl module to transliterate text between writing systems
@@ -22,8 +22,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildPreReq: rpm-build-licenses
 
-# Automatically added by buildreq on Sat Aug 04 2012
-BuildRequires: perl-Encode perl-devel
+# Automatically added by buildreq on Sun Aug 30 2015
+# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple
+BuildRequires: perl-devel perl-podlators perl-unicore
 
 %description
 Perl module Lingua::Translit can be used to convert text from one
@@ -46,6 +47,9 @@ is supported.
 %_bindir/translit
 
 %changelog
+* Sun Aug 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.22-alt1
+- New version
+
 * Wed Oct 29 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.21-alt1
 - New version
 
