@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt3.git20150425
+Release: alt3.git20150829
 
 Summary: Matlab(TM) style python plotting package
 
@@ -26,6 +26,7 @@ Source1: setup.cfg
 %setup_python_module pylab
 
 BuildPreReq: python3-module-pygobject3 git
+BuildPreReq: python-module-setuptools-tests
 BuildPreReq: python-module-matplotlib python-module-numpydoc ipython 
 BuildRequires: dvipng gcc-c++ libgtk+2-devel python-module-PyQt4-devel
 BuildPreReq: python-module-ctypes python-module-pygtk_git-devel
@@ -44,7 +45,7 @@ BuildPreReq: python-module-pyparsing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
-BuildPreReq: python3-module-setuptools
+BuildPreReq: python3-module-setuptools-tests
 BuildPreReq: python3-module-scipy-devel python3-module-markupsafe
 BuildPreReq: python3-module-pytz python3-module-dateutil
 BuildPreReq: python3-module-PySide
@@ -499,6 +500,7 @@ done
 %python_sitelibdir/matplotlib/compat
 %python_sitelibdir/matplotlib/axes
 %python_sitelibdir/matplotlib/style
+%python_sitelibdir/matplotlib/externals
 %exclude %python_sitelibdir/mpl_toolkits
 %exclude %python_sitelibdir/*/*/test*
 
@@ -628,6 +630,7 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/compat
 %python3_sitelibdir/matplotlib/axes
 %python3_sitelibdir/matplotlib/style
+%python3_sitelibdir/matplotlib/externals
 %exclude %python3_sitelibdir/mpl_toolkits
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
@@ -686,6 +689,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.git20150829
+- New snapshot
+
 * Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.git20150425
 - New snapshot
 
