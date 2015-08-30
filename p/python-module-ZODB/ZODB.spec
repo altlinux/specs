@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1.git20150111
+Version: 4.2.1
+Release: alt1.dev0.git20150714
 Summary: Zope Object Database: object database and persistence
 License: ZPL
 Group: Development/Python
@@ -138,6 +138,12 @@ popd
 
 %check
 python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+exit 1
 
 %files
 %doc *.txt *.rst
@@ -176,6 +182,9 @@ python setup.py test
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.dev0.git20150714
+- Version 4.2.1.dev0
+
 * Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1.git20150111
 - Version 4.1.0
 
