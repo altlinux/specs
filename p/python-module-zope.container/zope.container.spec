@@ -3,14 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1
+Version: 4.1.1
+Release: alt1.dev0.git20150608
 Summary: Zope Container
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.container/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/zope.container.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -20,6 +21,8 @@ BuildPreReq: python-module-zope.lifecycleevent python-module-zope.size
 BuildPreReq: python-module-zope.filerepresentation
 BuildPreReq: python-module-zope.traversing-tests
 BuildPreReq: python-module-zope.component-tests
+BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-repoze.sphinx.autointerface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -71,6 +74,18 @@ implementation.
 
 This package contains tests for Zope Container.
 
+%package pickles
+Summary: Pickles for Zope Container
+Group: Development/Python
+
+%description pickles
+This package define interfaces of container components, and provides
+container implementations such as a BTreeContainer and OrderedContainer,
+as well as the base class used by zope.site.folder for the Folder
+implementation.
+
+This package contains pickles for Zope Container.
+
 %package tests
 Summary: Tests for Zope Container
 Group: Development/Python
@@ -94,6 +109,9 @@ rm -fR src/*.egg-info
 cp -fR . ../python3
 %endif
 
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+
 %build
 %add_optflags -fno-strict-aliasing
 %python_build
@@ -113,6 +131,11 @@ pushd ../python3
 popd
 %endif
 
+%make -C docs pickle
+%make -C docs html
+install -d %buildroot%python_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
 %check
 rm -fR build
 #py.test -vv
@@ -125,10 +148,14 @@ popd
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst docs/_build/html
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/test*
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
 
 %files tests
 %python_sitelibdir/*/*/tests
@@ -136,7 +163,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst docs/_build/html
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/test*
@@ -148,6 +175,10 @@ popd
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git20150608
+- Version 4.1.1.dev0
+- Added documentation
+
 * Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
 - Version 4.1.0
 - Enabled check
