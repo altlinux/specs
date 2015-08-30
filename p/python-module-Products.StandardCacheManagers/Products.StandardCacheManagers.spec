@@ -1,10 +1,10 @@
 %define oname Products.StandardCacheManagers
 
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 2.14.0
-Release: alt1.dev0.git20150618
+Release: alt2.dev0.git20150618
 Summary: Cache managers for Zope 2
 License: ZPLv2.1
 Group: Development/Python
@@ -55,7 +55,8 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 %check
 export PYTHONPATH=$PWD/src
-python setup.py test
+python setup.py test -v
+python -m unittest %oname.tests.test_AcceleratedHTTPCacheManager
 
 %files
 %doc *.txt
@@ -67,6 +68,9 @@ python setup.py test
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.0-alt2.dev0.git20150618
+- Enabled check
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.0-alt1.dev0.git20150618
 - Version 2.14.0.dev0
 
