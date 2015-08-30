@@ -1,8 +1,10 @@
 %define oname Products.PythonScripts
 
+%def_disable check
+
 Name: python-module-%oname
-Version: 2.13.3
-Release: alt1.dev.git20130313
+Version: 2.14.0
+Release: alt1.dev0.git20150618
 Summary: Provides support for restricted execution of Python scripts in Zope 2
 License: ZPLv2.1
 Group: Development/Python
@@ -64,6 +66,10 @@ python setup.py test
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.0-alt1.dev0.git20150618
+- Version 2.14.0.dev0
+- Disabled testing for bootstrap
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.3-alt1.dev.git20130313
 - Version 2.13.3dev
 - Enabled testing
