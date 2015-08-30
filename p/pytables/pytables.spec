@@ -6,7 +6,7 @@
 
 Name: py%oname
 Version: 3.2.2
-Release: alt1.dev0.git20150817
+Release: alt1.dev0.git20150828
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -344,6 +344,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.2.2-alt1.dev0.git20150828
+- New snapshot
+
 * Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.2.2-alt1.dev0.git20150817
 - Version 3.2.2.dev0
 
