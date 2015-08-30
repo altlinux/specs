@@ -1,10 +1,11 @@
 %define oname socketpool
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.5.3
-Release: alt1.git20140425
+Release: alt1.git20150511
 Summary: Simple Python socket pool
 License: BSD
 Group: Development/Python
@@ -26,6 +27,7 @@ BuildPreReq: python3-module-py
 %endif
 
 %py_provides %oname
+%py_requires eventlet gevent
 
 %description
 Socket pool is a simple socket pool that suports multiple factories and
@@ -36,6 +38,7 @@ library.
 Summary: Simple Python socket pool
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires eventlet gevent
 
 %description -n python3-module-%oname
 Socket pool is a simple socket pool that suports multiple factories and
@@ -94,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt1.git20150511
+- New snapshot
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt1.git20140425
 - Initial build for Sisyphus
 
