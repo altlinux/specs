@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt2.hg20130902
+Release: alt2.hg20150514
 Summary: Toolkit for IsoGeometric Analysis (IGA)
 License: BSD
 Group: Development/Python
@@ -38,7 +38,7 @@ cp -fR . ../python3
 %endif
 
 %build
-%add_optflags %optflags_shared
+%add_optflags %optflags_shared -fno-strict-aliasing
 %python_build_debug
 
 %if_with python3
@@ -56,6 +56,18 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py build_ext -i
+export PYTHONPATH=$PWD
+%make testall
+%if_with python3
+pushd ../python3
+python3 setup.py build_ext -i
+export PYTHONPATH=$PWD
+%make testall PYTHON=python3
+popd
+%endif
+
 %files
 %doc *.rst
 %python_sitelibdir/*
@@ -67,6 +79,10 @@ popd
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.hg20150514
+- New snapshot
+- Enabled check
+
 * Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.hg20130902
 - Added module for Python 3
 
