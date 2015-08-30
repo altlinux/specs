@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt14.git20150424
+Release: alt15.git20150829
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -100,21 +100,6 @@ create arrays of arbitrary type.
 There are also basic facilities for discrete fourier transform,
 basic linear algebra and random number generation.
 
-%package -n python3-module-numpydoc
-Summary: numpydoc module for NumPy (Python 3)
-Group: Development/Python3
-BuildArch: noarch
-
-%description -n python3-module-numpydoc
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
-This package contains numpydoc module for NumPy.
-
 #package -n python3-module-%oname-addons
 #Summary: Addons for NumPy (Python 3)
 #Group: Development/Python3
@@ -187,7 +172,6 @@ Summary: Development files of NumPy (Python 3)
 Group: Development/Python3
 Requires: lib%oname-py3 = %version-%release
 Requires: python3-module-%oname = %version-%release
-#Requires: python3-module-numpydoc = %version-%release
 Requires: python3-module-%oname-addons = %version-%release
 Requires: python3-devel
 # numpydoc
@@ -209,37 +193,6 @@ create arrays of arbitrary type.
 
 This package contains development files of NumPy.
 %endif
-
-%package -n python-module-numpydoc
-Summary: numpydoc module for NumPy
-Group: Development/Python
-BuildArch: noarch
-
-%description -n python-module-numpydoc
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
-This package contains numpydoc module for NumPy.
-
-%package -n python-module-numpydoc-tests
-Summary: Tests for numpydoc
-Group: Development/Python
-BuildArch: noarch
-Requires: python-module-numpydoc = %version-%release
-
-%description -n python-module-numpydoc-tests
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
-This package contains tests for numpydoc module for NumPy.
 
 %package pickles
 Summary: Pickles for NumPy
@@ -1061,25 +1014,10 @@ fi
 %endif
 %endif
 
-%_python_set_noarch
-#pre -n python-module-numpydoc
-#rm -fR %python_sitelibdir/numpydoc*.egg-info
-
-#files -n python-module-numpydoc
-#python_sitelibdir/numpydoc*
-#exclude %python_sitelibdir/numpydoc/tests
-
-#files -n python-module-numpydoc-tests
-#python_sitelibdir/numpydoc/tests
-
-#if_with python3
-#files -n python3-module-numpydoc
-#python3_sitelibdir/numpydoc*
-#endif
-
-# TODO: restore requirement on scipy for tests
-
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt15.git20150829
+- New snapshot
+
 * Fri May 01 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt14.git20150424
 - Added dgetrf into lapack_lite
 
