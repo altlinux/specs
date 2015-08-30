@@ -1,10 +1,10 @@
 %define oname Products.PythonScripts
 
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 2.14.0
-Release: alt1.dev0.git20150618
+Release: alt2.dev0.git20150618
 Summary: Provides support for restricted execution of Python scripts in Zope 2
 License: ZPLv2.1
 Group: Development/Python
@@ -17,7 +17,8 @@ Source: %name-%version.tar
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-AccessControl python-module-Acquisition
 BuildPreReq: python-module-DateTime python-module-DocumentTemplate
-BuildPreReq: python-module-RestrictedPython python-module-zExceptions
+BuildPreReq: python-module-RestrictedPython-tests python-module-zExceptions
+BuildPreReq: python-module-nose
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -31,6 +32,7 @@ environment.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
+%py_requires RestrictedPython.tests
 
 %description tests
 The Python Scripts product provides support for restricted execution of
@@ -55,6 +57,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %check
 export PYTHONPATH=$PWD/src
 python setup.py test
+nosetests -vv %oname
 
 %files
 %doc *.txt
@@ -66,6 +69,9 @@ python setup.py test
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.0-alt2.dev0.git20150618
+- Enabled check
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.0-alt1.dev0.git20150618
 - Version 2.14.0.dev0
 - Disabled testing for bootstrap
