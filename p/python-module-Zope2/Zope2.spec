@@ -1,10 +1,10 @@
 %define oname Zope2
 
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 4.0
-Release: alt4.a1.dev.git20150806
+Release: alt5.a1.dev.git20150806
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -200,7 +200,8 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
 %check
-python setup.py test
+export PYTHONPATH=$PWD/src
+python setup.py test -v
 
 %files
 %doc *.txt
@@ -233,6 +234,9 @@ python setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt5.a1.dev.git20150806
+- Enabled check
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt4.a1.dev.git20150806
 - New snapshot
 - Disabled check for bootstrap
