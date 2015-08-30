@@ -1,10 +1,10 @@
 %define oname Products.PloneTestCase
 
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 0.9.19
-Release: alt2.dev0.git20141203
+Release: alt3.dev0.git20141203
 Summary: Integration testing framework for Plone
 License: GPL
 Group: Development/Python
@@ -21,6 +21,7 @@ BuildPreReq: python-module-Products.GenericSetup
 BuildPreReq: python-module-Products.CMFPlone
 BuildPreReq: python-module-plone.app.folder
 BuildPreReq: python-module-unittest2
+BuildPreReq: python-module-five.localsitemanager
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -48,7 +49,8 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-python setup.py test
+python setup.py test -v
+python -m unittest -v Products.PloneTestCase.tests
 
 %files
 %doc *.txt
@@ -56,6 +58,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.19-alt3.dev0.git20141203
+- Enabled check
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.19-alt2.dev0.git20141203
 - New snapshot
 - Disabled check for bootstrap
