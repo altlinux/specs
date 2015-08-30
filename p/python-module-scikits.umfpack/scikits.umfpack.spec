@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.1
-Release: alt2.git20150223
+Release: alt2.git20150812
 Summary: Python interface to UMFPACK sparse direct solver
 License: BSD
 Group: Development/Python
@@ -84,12 +84,14 @@ This package contains pickles for %oname.
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 
 %build
+export LC_ALL=en_US.UTF-8
 %python_build_debug
 
 %if_with python3
@@ -99,6 +101,7 @@ popd
 %endif
 
 %install
+export LC_ALL=en_US.UTF-8
 %python_install
 
 %if_with python3
@@ -116,6 +119,7 @@ install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
+export LC_ALL=en_US.UTF-8
 pushd ~
 export PYTHONPATH=%buildroot%python_sitelibdir
 nosetests -v scikits.umfpack
@@ -130,7 +134,7 @@ popd
 %endif
 
 %files
-%doc README docs/_build/html
+%doc *.md docs/_build/html
 %python_sitelibdir/%mname/umfpack
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/%mname/umfpack/tests
@@ -143,7 +147,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README docs/_build/html
+%doc *.md docs/_build/html
 %python3_sitelibdir/%mname/umfpack
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/%mname/umfpack/tests
@@ -153,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.1-alt2.git20150812
+- New snapshot
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.1-alt2.git20150223
 - Rebuilt with updated NumPy
 
