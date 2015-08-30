@@ -6,7 +6,7 @@
 
 Name: pympi
 Version: %ver.b6
-Release: alt16.cvs20141103
+Release: alt17.cvs20141103
 Summary: Implementation of MPI in python
 License: Free for non-commertial using
 Group: Networking/Other
@@ -264,6 +264,9 @@ popd
 %python_sitelibdir/%Name/pingpong.so
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.b6-alt17.cvs20141103
+- Rebuilt with updated NumPy
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.b6-alt16.cvs20141103
 - Rebuilt with updated NumPy
 
