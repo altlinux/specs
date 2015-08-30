@@ -1,11 +1,11 @@
 %define oname ZEO
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 4.2.0
-Release: alt1.dev0.git20150605
+Release: alt2.dev0.git20150605
 Summary: ZEO provides a client-server storage implementation for ZODB
 License: ZPL
 Group: Development/Python
@@ -29,11 +29,12 @@ BuildPreReq: python-module-zdaemon
 BuildPreReq: python-module-zope.interface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-zope.testing
 BuildPreReq: python3-module-manuel
 BuildPreReq: python3-module-random2
 BuildPreReq: python3-module-ZODB-tests
+BuildPreReq: python3-module-zodbpickle
 BuildPreReq: python3-module-transaction
 BuildPreReq: python3-module-persistent
 BuildPreReq: python3-module-zc.lockfile
@@ -102,6 +103,7 @@ This package contains tests for ZEO.
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -129,7 +131,8 @@ popd
 
 %check
 python setup.py test
-%if_with python3
+#if_with python3
+%if 0
 pushd ../python3
 python3 setup.py test
 popd
@@ -165,6 +168,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt2.dev0.git20150605
+- Enabled check
+
 * Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt1.dev0.git20150605
 - Version 4.2.0.dev0
 
