@@ -3,20 +3,31 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.3
-Release: alt1
+Version: 4.0.4
+Release: alt1.dev0.git20150225
 Summary: Zope Configuration Markup Language (ZCML)
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.configuration/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/zope.configuration.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.i18nmessageid
+BuildPreReq: python-module-zope.schema
+BuildPreReq: python-module-nose python-module-coverage
+BuildPreReq: python-module-nosexcover
+BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-repoze.sphinx.autointerface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-zope.i18nmessageid
+BuildPreReq: python3-module-zope.schema
+BuildPreReq: python3-module-nose python3-module-coverage
+BuildPreReq: python3-module-nosexcover
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -68,6 +79,22 @@ This package contains tests for Zope Configuration Markup Language
 (ZCML).
 %endif
 
+%package pickles
+Summary: Pickles for Zope Configuration Markup Language (ZCML)
+Group: Development/Python
+
+%description pickles
+The zope configuration system provides an extensible system for
+supporting various kinds of configurations.
+
+It is based on the idea of configuration directives. Users of the
+configuration system provide configuration directives in some language
+that express configuration choices. The intent is that the language be
+pluggable. An XML language is provided by default.
+
+This package contains pickles for Zope Configuration Markup Language
+(ZCML).
+
 %package tests
 Summary: Tests for Zope Configuration Markup Language (ZCML)
 Group: Development/Python
@@ -93,6 +120,9 @@ This package contains tests for Zope Configuration Markup Language
 rm -rf ../python3
 cp -a . ../python3
 %endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
 
 %build
 %python_build
@@ -122,18 +152,40 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+export PYTHONPATH=$PWD/src
+%make -C docs pickle
+%make -C docs html
+install -d %buildroot%python_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+export PYTHONPATH=$PWD/src
+python setup.py test -v
+nosetests -vv --with-xunit --with-xcoverage
+%if_with python3
+pushd ../python3
+export PYTHONPATH=$PWD/src
+python3 setup.py test -v
+nosetests3 -vv --with-xunit --with-xcoverage
+popd
+%endif
+
 %files
-%doc *.txt
+%doc *.txt *.rst docs/_build/html
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
 
 %files tests
 %python_sitelibdir/*/*/tests
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst docs/_build/html
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
@@ -143,6 +195,11 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1.dev0.git20150225
+- Version 4.0.4.dev0
+- Added documentation
+- Enabled check
+
 * Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt1
 - Version 4.0.3
 
