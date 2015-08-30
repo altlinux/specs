@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.8
+Version: 1.2.9
 Release: alt1
 Summary: A jquery-like library for python
 License: BSD
@@ -14,13 +14,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel python-module-cssselect
-BuildPreReq: python-module-webob
+BuildPreReq: python-module-webob python-module-lxml
+BuildPreReq: python-module-unittest2 python-module-restkit
+BuildPreReq: python-module-requests python-module-webtest
+BuildPreReq: python-module-nose python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-cssselect
+BuildPreReq: python3-module-webob python3-module-lxml
+BuildPreReq: python3-module-unittest2 python3-module-restkit
+BuildPreReq: python3-module-requests python3-module-webtest
+BuildPreReq: python3-module-nose python3-module-coverage
 %endif
+
+%py_provides %oname
+%py_requires lxml cssselect restkit webob requests
 
 %description
 pyquery allows you to make jquery queries on xml documents. The API is
@@ -64,6 +75,8 @@ This package contains documentation for %oname.
 %package -n python3-module-%oname
 Summary: A jquery-like library for python
 Group: Development/Python3
+%py3_provides %oname
+%py3_requires lxml cssselect restkit webob requests
 
 %description -n python3-module-%oname
 pyquery allows you to make jquery queries on xml documents. The API is
@@ -108,6 +121,16 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
+%check
+python setup.py test -v
+nosetests -v
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+nosetests3 -v
+popd
+%endif
+
 %files
 %doc *.rst
 %python_sitelibdir/*
@@ -126,6 +149,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.9-alt1
+- Version 1.2.9
+- Enabled check
+
 * Tue Jul 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.8-alt1
 - Initial build for Sisyphus
 
