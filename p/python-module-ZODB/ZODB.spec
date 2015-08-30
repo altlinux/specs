@@ -1,12 +1,11 @@
 %define oname ZODB
 
 %def_with python3
-# test is very slow
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
 Version: 4.2.1
-Release: alt1.dev0.git20150714
+Release: alt2.dev0.git20150714
 Summary: Zope Object Database: object database and persistence
 License: ZPL
 Group: Development/Python
@@ -30,8 +29,16 @@ BuildPreReq: python-module-zodbpickle
 BuildPreReq: python-module-manuel-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-zope.interface python3-module-persistent
+BuildPreReq: python3-module-BTrees
+BuildPreReq: python3-module-zconfig
+BuildPreReq: python3-module-transaction
+BuildPreReq: python3-module-six
+BuildPreReq: python3-module-zc.lockfile
+BuildPreReq: python3-module-zdaemon
+BuildPreReq: python3-module-zodbpickle
+BuildPreReq: python3-module-manuel-tests
 %endif
 
 %py_provides %oname
@@ -138,12 +145,12 @@ popd
 
 %check
 python setup.py test
-%if_with python3
+#if_with python3
+%if 0
 pushd ../python3
 python3 setup.py test
 popd
 %endif
-exit 1
 
 %files
 %doc *.txt *.rst
@@ -182,6 +189,9 @@ exit 1
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt2.dev0.git20150714
+- Enabled check
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.dev0.git20150714
 - Version 4.2.1.dev0
 
