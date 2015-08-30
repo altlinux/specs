@@ -1,10 +1,11 @@
 %define oname numdifftools
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.7.3
-Release: alt1.git20141217
+Version: 0.9.12
+Release: alt1.git20150828
 Summary: Solves automatic numerical differentiation problems in one or more variables
 License: BSD
 Group: Development/Python
@@ -13,18 +14,31 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/pbrod/numdifftools.git
 Source: Numdifftools-%version.tar
-BuildArch: noarch
+#BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-scipy
+BuildPreReq: python-devel python-module-scipy git xvfb-run
 BuildPreReq: python-module-numpy-addons python-module-matplotlib
 BuildPreReq: python-module-coverage python-module-setuptools-tests
+BuildPreReq: python-module-setuptools_scm python-module-six
+BuildPreReq: python-module-algopy python-module-numpydoc
+BuildPreReq: python-module-pytest-runner python-module-pycairo
+BuildPreReq: python-module-pytest-cov python-module-nose
+BuildPreReq: python-module-sphinx-devel python-module-pygobject3
+BuildPreReq: python-module-sphinx_rtd_theme texlive-latex-recommended
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-scipy
 BuildPreReq: python3-module-numpy-addons python3-module-matplotlib
 BuildPreReq: python3-module-coverage python3-module-setuptools-tests
+BuildPreReq: python3-module-setuptools_scm python3-module-six
+BuildPreReq: python3-module-algopy python3-module-nose
+BuildPreReq: python3-module-pytest-runner
+BuildPreReq: python3-module-pytest-cov
 %endif
+
+%py_provides %oname
+%py_requires numpy scipy algopy
 
 %description
 Numdifftools is a suite of tools to solve automatic numerical
@@ -52,6 +66,17 @@ also produce error estimates on the result.
 
 This package contains test suite for Numdifftools.
 
+%package pickles
+Summary: Pickles for Numdifftools
+Group: Development/Python
+
+%description pickles
+Numdifftools is a suite of tools to solve automatic numerical
+differentiation problems in one or more variables. All of these methods
+also produce error estimates on the result.
+
+This package contains pickles for Numdifftools.
+
 %package test
 Summary: Test suite for Numdifftools
 Group: Development/Python
@@ -78,11 +103,20 @@ This package contains documentation for Numdifftools.
 %prep
 %setup
 
-sed -i 's|@VERSION@|%version|' %oname/_version.py
+git config --global user.email "real at atlinux.org"
+git config --global user.name "REAL"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag -m "%version" %version
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
 
 %build
 %python_build_debug
@@ -93,6 +127,11 @@ pushd ../python3
 popd
 %endif
 
+export PYTHONPATH=$PWD
+python setup.py test ||:
+xvfb-run python setup.py docs
+xvfb-run make -C docs pickle
+
 %install
 %python_install
 
@@ -102,40 +141,61 @@ pushd ../python3
 popd
 %endif
 
-# disable check because bug in girar-builder
-#check
-#export PYTHONPATH=%buildroot%python_sitelibdir
-#mkdir -p ~/.matplotlib
-#cp %_libdir/python*/site-packages/matplotlib/mpl-data/matplotlibrc \
-#	~/.matplotlib/
-#sed -i 's|^\(backend\).*|\1 : Agg|' ~/.matplotlib/matplotlibrc
-#cd ~
-#python -c "import numdifftools as nd; nd.test(coverage=True)"
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
+%check
+export PYTHONPATH=%buildroot%python_sitelibdir
+mkdir -p ~/.matplotlib
+cp %_libdir/python%_python_version/site-packages/matplotlib/mpl-data/matplotlibrc \
+	~/.matplotlib/
+sed -i 's|^\(backend\).*|\1 : Agg|' ~/.matplotlib/matplotlibrc
+pushd ~
+xvfb-run python -c "import numdifftools as nd; nd.test(coverage=True)"
+popd
+xvfb-run py.test -vv -rsxXf
+%if_with python3
+pushd ../python3
+export PYTHONPATH=%buildroot%python3_sitelibdir
+pushd ~
+xvfb-run python3 -c "import numdifftools as nd; nd.test(coverage=True)"
+popd
+xvfb-run py.test-%_python3_version -vv -rsxXf
+popd
+%endif
 
 %files
 %python_sitelibdir/*
-#exclude %python_sitelibdir/%oname/test
-%exclude %python_sitelibdir/%oname/*.pyo
+%exclude %python_sitelibdir/%oname/test*
+%exclude %python_sitelibdir/%oname/pickle
 
-#files test
-#python_sitelibdir/%oname/test
-#exclude %python_sitelibdir/%oname/test/*.pyo
+%files pickles
+%python_sitelibdir/%oname/pickle
+
+%files test
+%python_sitelibdir/%oname/test*
 
 %files doc
-%doc docs/*
+%doc docs/*.pdf docs/_build/html
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-#exclude %python3_sitelibdir/%oname/test
-%exclude %python3_sitelibdir/%oname/__pycache__/*.pyo
+%exclude %python3_sitelibdir/%oname/test*
+%exclude %python3_sitelibdir/%oname/*/test*
 
-#files -n python3-module-%oname-test
-#python3_sitelibdir/%oname/test
-#exclude %python3_sitelibdir/%oname/test/__pycache__/*.pyo
+%files -n python3-module-%oname-test
+%python3_sitelibdir/%oname/test*
+%python3_sitelibdir/%oname/*/test*
 %endif
 
 %changelog
+* Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.12-alt1.git20150828
+- Version 0.9.12
+
 * Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1.git20141217
 - Version 0.7.3
 
