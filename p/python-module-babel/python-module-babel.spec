@@ -4,8 +4,8 @@
 #def_disable check
 
 Name: python-module-%oname
-Version: 2.0
-Release: alt1.dev.git20140407
+Version: 3.0
+Release: alt1.dev.git20150805
 
 Summary: a collection of tools for internationalizing Python applications
 License: BSD
@@ -19,12 +19,14 @@ Source1: CLDR.tar
 
 BuildArch: noarch
 BuildPreReq: python-module-setuptools-tests python-module-sphinx-devel
+BuildPreReq: python-module-pytest-cov
 %{?!_without_check:%{?!_disable_check:BuildRequires: %py_dependencies setuptools.command.test pytz}}
 
 %setup_python_module babel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-pytest-cov
 BuildPreReq: python3-module-pytz python-tools-2to3
 %endif
 %py_requires pytz
@@ -76,9 +78,6 @@ pushd ../python3
 python scripts/import_cldr.py CLDR/
 find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 find -type f -name '*.py' -exec 2to3 -w '{}' +
-sed -i \
-	's|from UserDict import DictMixin|from collections import MutableMapping as DictMixin|' \
-	babel/localedata.py
 %python3_build build_ext
 popd
 %endif
@@ -117,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1.dev.git20150805
+- Version 3.0-dev
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.dev.git20140407
 - Version 2.0-dev
 
