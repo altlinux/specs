@@ -1,6 +1,6 @@
 Summary: Simple debugging utility
 Name: scanmem
-Version: 0.14
+Version: 0.15.2
 Release: alt1
 Url: http://taviso.decsystem.org/
 Source: %name-%version.tar
@@ -8,7 +8,7 @@ Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 License: GPLv2
 Group: Development/Debuggers
 
-BuildRequires: libreadline-devel
+BuildRequires: libreadline-devel intltool /proc
 
 %description
 scanmem is a simple interactive debugging utility for linux, used to
@@ -21,6 +21,7 @@ to cheat at video games.
 %setup
 
 %build
+./autogen.sh
 %configure
 %make
 
@@ -31,9 +32,12 @@ install -D -m 644 scanmem.1 %buildroot%_man1dir/scanmem.1
 %files
 %_sbindir/scanmem
 %_man1dir/scanmem.1.gz
-%doc ChangeLog COPYING INSTALL NEWS README TODO
+%doc ChangeLog COPYING NEWS README TODO
 
 %changelog
+* Mon Aug 31 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.15.2-alt1
+- New version
+
 * Fri Jun 20 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.14-alt1
 - New version
 
