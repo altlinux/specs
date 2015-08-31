@@ -1,4 +1,4 @@
-%define version 2.0.7
+%define version 2.0.12
 %define release alt0.1
 %setup_python_module pyspf
 
@@ -9,7 +9,7 @@ Summary: Python module and programs for SPF (Sender Policy Framework)
 
 Group: Development/Python
 License: Python Software Foundation License
-Url: http://sourceforge.net/projects/pymilter/
+Url: https://pypi.python.org/pypi/pyspf/
 Source0: pyspf-%version.tar
 
 BuildArch: noarch
@@ -38,6 +38,9 @@ should be done during the MAIL FROM:<...> command.
 %doc CHANGELOG PKG-INFO README test
 
 %changelog
+* Mon Aug 31 2015 L.A. Kostis <lakostis@altlinux.ru> 2.0.12-alt0.1
+- 2.0.12.
+
 * Fri Aug 03 2012 L.A. Kostis <lakostis@altlinux.ru> 2.0.7-alt0.1
 - 2.0.7.
 
