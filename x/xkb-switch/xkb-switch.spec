@@ -1,7 +1,7 @@
 Summary:        Change keyboard layout from console
 Name:           xkb-switch
-Version:        0
-Release:        alt1.git97bf2c86f
+Version:        1.3.1
+Release:        alt1.git532d92321
 URL:            https://github.com/ierton/xkb-switch
 Packager: 	Valentin Rosavitskiy <valintinr@altlinux.org>
 License:	GPL v2+
@@ -33,6 +33,9 @@ cmake . -DCMAKE_INSTALL_PREFIX:PATH=%_usr -DINSTALL_LIBDIR=:PATH=%_libdir .
 %_libdir/libxkbswitch.so
 
 %changelog
+* Mon Aug 31 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 1.3.1-alt1.git532d92321
+- New version
+
 * Thu Oct 30 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0-alt1.git97bf2c86f
 - Initial build for ALT
 
