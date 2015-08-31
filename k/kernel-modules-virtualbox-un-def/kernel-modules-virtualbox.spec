@@ -1,7 +1,7 @@
 %define module_name	virtualbox
-%define module_version	4.3.26
+%define module_version	4.3.30
 
-%define module_release	alt2
+%define module_release	alt1
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -37,8 +37,6 @@ BuildRequires: kernel-source-%pci_module_name = %module_version
 BuildRequires: kernel-source-%net_module_name = %module_version
 BuildRequires: kernel-source-%net_module_adaptor_name = %module_version
 
-Patch0: vbox-kernel-4.1-build.patch
-
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
@@ -61,9 +59,6 @@ tar jxvf %kernel_src/kernel-source-%drv_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%pci_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%net_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%net_module_adaptor_name-%module_version.tar.bz2
-pushd kernel-source-vboxpci-%module_version/linux/
-%patch0 -p0
-popd
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -100,6 +95,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Aug 31 2015 Aleksey Avdeev <solo@altlinux.org> 4.3.30-alt1
+- Update template for virtualbox 4.3.30.
 
 * Wed Jan 28 2015 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.20-alt1
 - Update template for virtualbox 4.3.20.

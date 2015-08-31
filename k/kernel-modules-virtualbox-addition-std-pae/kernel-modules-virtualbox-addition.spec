@@ -1,5 +1,5 @@
 %define module_name	virtualbox-addition
-%define module_version	4.3.26
+%define module_version	4.3.30
 %define module_release	alt1
 
 %define flavour		std-pae
@@ -96,6 +96,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Aug 31 2015 Aleksey Avdeev <solo@altlinux.org> 4.3.30-alt1
+- Update template for virtualbox 4.3.30.
 
 * Thu Jan 29 2015 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.20-alt1
 - Update template for virtualbox 4.3.20
