@@ -3,23 +3,27 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.18
-Release: alt1
+Version: 0.19
+Release: alt1.git20150621
 Summary: Python library for arbitrary-precision floating-point arithmetic
 License: New BSD License
 Group: Development/Python
-Url: http://code.google.com/p/mpmath/
+Url: http://mpmath.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/fredrik-johansson/mpmath.git
 Source: %oname-all-%version.tar
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-gmpy python-module-matplotlib
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: texlive-latex-recommended
+BuildPreReq: python-module-pygobject3 python-module-pycairo
+BuildPreReq: texlive-latex-recommended xvfb-run
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-gmpy python-tools-2to3
+BuildPreReq: python3-module-matplotlib python3-module-pycairo
+BuildPreReq: python3-module-pygobject3
 %endif
 
 BuildArch: noarch
@@ -38,6 +42,25 @@ high-precision arithmetic if gmpy is installed.
 
 If matplotlib is available, mpmath also provides a convenient plotting
 interface.
+
+%package tests
+Summary: Tests for Mpmath
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+Mpmath is a pure-Python library for multiprecision floating-point
+arithmetic. It provides an extensive set of transcendental functions,
+unlimited exponent sizes, complex numbers, interval arithmetic,
+numerical integration and differentiation, root-finding, linear algebra,
+and much more. Almost any calculation can be performed just as well at
+10-digit or 1000-digit precision, and in many cases mpmath implements
+asymptotically fast algorithms that scale well for extremely high
+precision work. Mpmath internally uses Python's builtin long integers by
+default, but automatically switches to GMP/MPIR for much faster
+high-precision arithmetic if gmpy is installed.
+
+This package contains tests for Mpmath.
 
 %if_with python3
 %package -n python3-module-%oname
@@ -58,6 +81,25 @@ high-precision arithmetic if gmpy is installed.
 
 If matplotlib is available, mpmath also provides a convenient plotting
 interface.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Mpmath
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+Mpmath is a pure-Python library for multiprecision floating-point
+arithmetic. It provides an extensive set of transcendental functions,
+unlimited exponent sizes, complex numbers, interval arithmetic,
+numerical integration and differentiation, root-finding, linear algebra,
+and much more. Almost any calculation can be performed just as well at
+10-digit or 1000-digit precision, and in many cases mpmath implements
+asymptotically fast algorithms that scale well for extremely high
+precision work. Mpmath internally uses Python's builtin long integers by
+default, but automatically switches to GMP/MPIR for much faster
+high-precision arithmetic if gmpy is installed.
+
+This package contains tests for Mpmath.
 %endif
 
 %package doc
@@ -131,12 +173,12 @@ cp -fR doc/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 export PYTHONPATH=%buildroot%python_sitelibdir
-python mpmath/tests/runtests.py
+xvfb-run python mpmath/tests/runtests.py
 
 %if_with python3
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
-python mpmath/tests/runtests.py
+xvfb-run python mpmath/tests/runtests.py
 popd
 %endif
 
@@ -146,6 +188,9 @@ popd
 %exclude %python_sitelibdir/%oname/pickle
 %exclude %python_sitelibdir/%oname/tests
 #exclude %python_sitelibdir/%oname/libmp/exec_py3.py*
+
+%files tests
+%python_sitelibdir/%oname/tests
 
 %files doc
 %doc doc/build/* demo
@@ -159,9 +204,15 @@ popd
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 #exclude %python3_sitelibdir/%oname/libmp/exec_py2.py*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/tests
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.19-alt1.git20150621
+- Version 0.19
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt1
 - Version 0.18
 
