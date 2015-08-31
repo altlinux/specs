@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.5
-Release: alt1.git20141020
+Version: 0.4.9
+Release: alt1.git20150830
 Summary: Lightweight in-process concurrent programming
 License: MIT
 Group: Development/Python
@@ -15,10 +15,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-module-setuptools
+BuildPreReq: python-module-setuptools-tests gcc-c++
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %description
@@ -104,8 +104,20 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test -v
+export PYTHONPATH=$PWD
+python run-tests.py -n
+%if_with python3
+pushd ../python3
+python3 setup.py test -v
+export PYTHONPATH=$PWD
+python3 run-tests.py -n
+popd
+%endif
+
 %files
-%doc AUTHORS LICENSE NEWS README* doc/greenlet.txt
+%doc AUTHORS LICENSE NEWS README* doc/*.txt
 %python_sitelibdir/*
 %_includedir/python%_python_version/greenlet
 
@@ -114,12 +126,16 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS LICENSE NEWS README* doc/greenlet.txt
+%doc AUTHORS LICENSE NEWS README* doc/*.txt
 %python3_sitelibdir/*
 %_includedir/python%_python3_version%_python3_abiflags/greenlet
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.9-alt1.git20150830
+- Version 0.4.9
+- Enabled check
+
 * Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt1.git20141020
 - Version 0.4.5
 
