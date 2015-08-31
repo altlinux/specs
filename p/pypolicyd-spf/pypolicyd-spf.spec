@@ -2,7 +2,7 @@
 %define pypolicy_owner policyd-spf
 
 Name: pypolicyd-spf
-Version: 1.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Postfix policy server for SPF checking
@@ -20,6 +20,7 @@ BuildArch: noarch
 %setup_python_module %name
 
 BuildRequires: python-module-pyspf
+Requires: python-module-ipaddr
 Provides: postfix-policyd-spf-python
 
 %description
@@ -54,9 +55,12 @@ subst '/\/share\/man/d' INSTALLED_FILES
 %dir %_sysconfdir/postfix-policyd-spf-python
 %_sysconfdir/postfix-policyd-spf-python/*.commented
 %exclude %python_sitelibdir/*.egg-info
-%doc README* TODO CHANGES COPYING
+%doc README* CHANGES COPYING
 
 %changelog
+* Mon Aug 31 2015 L.A. Kostis <lakostis@altlinux.ru> 1.3.2-alt1
+- 1.3.2.
+
 * Fri Aug 03 2012 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt1
 - 1.1.
 
