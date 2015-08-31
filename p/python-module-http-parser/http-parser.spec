@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt1.git20140925
+Release: alt1.git20150514
 Summary: http request/response parser
 License: MIT
 Group: Development/Python
@@ -90,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20150514
+- New snapshot
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20140925
 - Initial build for Sisyphus
 
