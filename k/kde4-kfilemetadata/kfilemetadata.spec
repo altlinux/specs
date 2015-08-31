@@ -2,7 +2,7 @@
 %define rname kfilemetadata
 Name: kde4-kfilemetadata
 Version: 4.14.3
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: A library for extracting file metadata
@@ -60,6 +60,9 @@ Summary: %name library
 %_K4libdir/cmake/KFileMetaData/
 
 %changelog
+* Mon Aug 31 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt3
+- update from 4.14 branch
+
 * Tue Jun 30 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt2
 - rebuild with new exiv2
 
