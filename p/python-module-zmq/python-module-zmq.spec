@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 14.6.0
+Version: 14.7.0
 Release: alt1
 Summary: Software library for fast, message-based applications
 
@@ -178,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 31 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 14.7.0-alt1
+- New version
+
 * Tue Apr 28 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 14.6.0-alt1
 - New version
 
