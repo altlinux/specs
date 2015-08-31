@@ -7,11 +7,11 @@
 
 %define rname kdebase
 %define major 15
-%define minor 4
-%define bugfix 3
+%define minor 08
+%define bugfix 0
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -43,6 +43,7 @@ Patch10: kdebase-4.4.1-alt-dolphin-toolbar.patch
 Patch11: kdebase-4.4.1-alt-konqueror-toolbar.patch
 Patch12: kdebase-4.7.3-alt-copy-first.patch
 Patch13: kdebase-15.4.3-alt-kfmclient-loop.patch
+Patch14: kdebase-15.08.0-alt-restore-dolphin.patch
 # upstream
 
 BuildRequires(pre): kde4libs-devel
@@ -261,6 +262,7 @@ KDE 4 library.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 cp -ar altlinux/places plasma/applets/
 echo "add_subdirectory(places)" >> plasma/applets/CMakeLists.txt
@@ -340,10 +342,10 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 %_K4srv/plasma-applet-places.desktop
 
 %files dolphin
-%_K4bindir/dolphin
+%_K4bindir/dolphin4
 %_K4bindir/servicemenudeinstallation
 %_K4bindir/servicemenuinstallation
-%_K4libdir/libkdeinit4_dolphin.so
+%_K4libdir/libkdeinit4_dolphin4.so
 %_K4lib/dolphinpart.so*
 %_K4lib/kcm_dolphin*.so*
 %_K4lib/kio_filenamesearch.so
@@ -355,7 +357,7 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 %_K4srv/filenamesearch.protocol
 %_K4cfg/dolphin_*.kcfg
 %_K4conf/servicemenu.knsrc
-%_K4doc/en/dolphin/
+#%_K4doc/en/dolphin/
 
 %files konqueror
 %config /%_sysconfdir/alternatives/packages.d/kde4-konqueror
@@ -583,7 +585,7 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 %_K4srv/khtml_plugins.desktop
 
 %files -n libdolphinprivate4
-%_K4libdir/libdolphinprivate.so.*
+%_K4libdir/libdolphinprivate4.so.*
 
 %files -n libkonq4
 %_K4libdir/libkonq.so.*
@@ -606,6 +608,9 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Mon Aug 31 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Wed Jul 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt2
 - prevent kfmclient wrap loop
 
