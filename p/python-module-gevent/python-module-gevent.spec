@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1.git20141213
+Release: alt2.b4.dev0.git20150825
 
 Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
 
@@ -185,6 +185,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2.b4.dev0.git20150825
+- Version 1.1b4.dev0
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20141213
 - New snapshot
 - Extracted greentest into separate package
