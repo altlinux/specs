@@ -6,7 +6,7 @@
 Summary: Restkit is an HTTP resource kit for Python
 Name: python-module-%sname
 Version: 4.2.2
-Release: alt1.git20140731
+Release: alt2.git20140731
 # http://github.com/benoitc/restkit
 Source0: %name-%version.tar
 #Source0: http://pypi.python.org/packages/source/r/%sname/%sname-%version.tar.gz
@@ -29,6 +29,8 @@ BuildPreReq: python3-module-http-parser python3-module-socketpool
 BuildPreReq: python-tools-2to3 python3-module-nose python3-module-webob
 %endif
 
+%py_requires http_parser socketpool
+
 %description
 Restkit is an HTTP resource kit for Python. 
 It allows you to easily access to HTTP resource and build objects around it. 
@@ -37,6 +39,7 @@ It's the base of couchdbkit a Python CouchDB framework.
 %package -n python3-module-%sname
 Summary: Restkit is an HTTP resource kit for Python
 Group: Development/Python3
+%py3_requires http_parser socketpool
 
 %description -n python3-module-%sname
 Restkit is an HTTP resource kit for Python. 
@@ -97,6 +100,9 @@ python setup.py test
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.2-alt2.git20140731
+- Added necessary requirements
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.2-alt1.git20140731
 - Version 4.2.2
 
