@@ -19,7 +19,7 @@
 
 %def_disable debug
 
-%def_without manual
+%def_with manual
 %def_with additions
 %def_with webservice
 %def_without java
@@ -56,8 +56,8 @@
 %define gcc_version 4.5
 
 Name: virtualbox
-Version: 4.3.26
-Release: alt2
+Version: 4.3.30
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -80,12 +80,8 @@ Source7:	vboxadd.init
 Source8:	vboxadd-service.init
 Source9:	vboxweb-service.sysconfig
 Source10:	vboxweb-service.init
-Source13:	http://download.virtualbox.org/%name/%version/UserManual.pdf
 Source15:	os_altlinux.png
 Source16:	os_altlinux_64.png
-Source17:	http://download.virtualbox.org/%name/%version/%distname.chm
-Source20:	http://download.virtualbox.org/%name/%version/SDKRef.pdf
-Source21:	%distname-HTML-%{version}_OSE.tar
 Source22:	%name.service
 
 %if_enabled debug
@@ -119,6 +115,8 @@ BuildRequires: python-dev
 BuildRequires: libpam-devel
 %if_with manual
 BuildRequires: texlive-latex-recommended
+BuildRequires: docbook-style-xsl
+BuildRequires: /usr/bin/chmcmd
 %endif
 %if_with vnc
 BuildRequires: libvncserver-devel
@@ -266,6 +264,7 @@ required to use the vboxdrv kernel module in the ALT Linux system.
 The kernel module itself is not included - you need to install the
 appropriate kernel-modules-virtualbox-* package for your kernel.
 
+%if_with manual
 %package doc
 Summary: VirtualBox documentation
 Group: Documentation
@@ -273,6 +272,7 @@ BuildArch: noarch
 
 %description doc
 This package contains VirtualBox User Manual.
+%endif
 
 %package sdk
 Summary: VirtualBox SDK
@@ -335,6 +335,12 @@ echo "VBOX_VENDOR_SHORT          := ALT" >> LocalConfig.kmk
 echo "VBOX_PRODUCT               := VM VirtualBox OSE" >> LocalConfig.kmk
 
 echo "VBOX_USE_SYSTEM_XORG_HEADERS := 1" >> LocalConfig.kmk
+
+%if_with manual
+echo "VBOX_WITH_DOCS_SDKREF      := 1" >> LocalConfig.kmk
+echo "VBOX_WITH_DOCS_CHM         := 1" >> LocalConfig.kmk
+echo "VBOX_CHMCMD                := 1" >> LocalConfig.kmk
+%endif
 
 source env.sh
 kmk -j1 VBOXDIR=%vboxdir
@@ -402,11 +408,12 @@ cp -a \
     *.fd \
     *.py \
     components/ \
-    sdk/ \
 %if_with webservice
     vboxwebsrv \
 %endif
     %buildroot%vboxdir
+
+find sdk -maxdepth 1 -mindepth 1 -not -name docs -print0 | xargs -0 cp -R --target-directory=%buildroot%vboxdir --parents
 
 %if_with python
 cd sdk/installer >/dev/null
@@ -527,8 +534,11 @@ install -m644 virtualbox.desktop %buildroot%_desktopdir/
 
 # install docs
 mkdir -p %buildroot%_defaultdocdir/%name-doc-%version
-cp %SOURCE13 %SOURCE17 %SOURCE20 %buildroot%_defaultdocdir/%name-doc-%version/
-tar -xf %SOURCE21 -C %buildroot%_defaultdocdir/%name-doc-%version/
+%if_with manual
+install -m644 UserManual.pdf VirtualBox.chm %buildroot%_defaultdocdir/%name-doc-%version/
+find sdk/docs -maxdepth 1 -mindepth 1 -print0 | xargs -0 -i install -m644 {} %buildroot%_defaultdocdir/%name-doc-%version/
+cp -r ../obj/manual/en_US/HTMLHelp %buildroot%_defaultdocdir/%name-doc-%version/HTML
+%endif
 
 # install unit file
 install -pDm644 %SOURCE22 %buildroot%_unitdir/%name.service
@@ -686,8 +696,10 @@ mountpoint -q /dev || {
 %dir %vboxdatadir
 %vboxdatadir/VBoxCreateUSBNode.sh
 
+%if_with manual
 %files doc
 %_defaultdocdir/%name-doc-%version
+%endif
 
 %files sdk
 %_bindir/xpidl
@@ -698,6 +710,13 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Aug 31 2015 Aleksey Avdeev <solo@altlinux.org> 4.3.30-alt1
+- Update to last stable release
+- All documentation is build
+
+* Sun Jul 05 2015 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.28-alt1
+- Update to last stable release
+
 * Fri May 22 2015 Michael Shigorin <mike@altlinux.org> 4.3.26-alt2
 - Fixed thinko in 4.3.22-alt2 (closes: #31023)
 
