@@ -1,8 +1,8 @@
 %set_automake_version 1.11
 
 Name: lldpd
-Version: 0.6.1
-Release: alt2.1
+Version: 0.7.15
+Release: alt1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
@@ -23,13 +23,19 @@ Source4: lldpd.conf
 
 %def_with snmp
 %def_with xml
+%def_with readline
+%def_with json
+%def_with seccomp
 
 BuildRequires: libssl-devel
 BuildRequires: doxygen
 BuildRequires: libevent-devel
 
+%{?_with_readline:BuildRequires: libreadline-devel}
 %{?_with_snmp:BuildRequires: libnet-snmp-devel}
 %{?_with_xml:BuildRequires: libxml2-devel}
+%{?_with_json:BuildRequires: libjson-devel}
+%{?_with_seccomp:BuildRequires: libseccomp-devel}
 
 %description
 LLDP (Link Layer Discovery Protocol) (also known as 802.1ab) is an
@@ -50,6 +56,7 @@ real physical devices, not on bridges, vlans, etc. However, vlans can
 be mapped on the bonding device. You can bridge vlan but not add vlans
 on bridges. More complex setups may give false results.
 
+
 %package devel
 Group: Development/C
 Summary: Link Layer Discovery Protocol Daemon
@@ -57,10 +64,35 @@ Summary: Link Layer Discovery Protocol Daemon
 %description devel
 Header files for LLDP Daemon
 
+
+%package -n bash-completion-lldpd
+Summary: Bash completion for lldpd
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+Requires: %name = %version-%release
+
+%description -n bash-completion-lldpd
+Bash completion for lldpd.
+
+
+%package -n zsh-completion-lldpd
+Summary: Zsh completion for lldpd
+Group: Shells
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description -n zsh-completion-lldpd
+Zsh completion for lldpd.
+
+
 %prep
 %setup
 
 %build
+# upstream moved tree to submodule
+mkdir libevent
+
 %autoreconf
 %configure \
     %{subst_enable cdp} \
@@ -70,9 +102,15 @@ Header files for LLDP Daemon
     %{subst_enable lldpmed} \
     %{subst_enable dot1} \
     %{subst_enable dot3} \
+    %{subst_with readline} \
     %{subst_with snmp} \
     %{subst_with xml} \
-    --with-privsep-chroot=%_localstatedir/%name
+    %{subst_with json} \
+    %{subst_with seccomp} \
+    --with-privsep-user=_lldpd \
+    --with-privsep-group=_lldpd \
+    --with-privsep-chroot=%_localstatedir/%name \
+    --with-systemdsystemunitdir=%_unitdir
 
 %make
 
@@ -84,6 +122,11 @@ install -m644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/lldpd
 install -m750 -D %SOURCE3 %buildroot%_sysconfdir/chroot.d/lldpd.all
 install -m750 -D %SOURCE4 %buildroot%_sysconfdir/chroot.d/lldpd.conf
 mkdir -p %buildroot%_localstatedir/%name/etc
+
+mv %buildroot/etc/bash_completion.d/lldpcli.bash-completion %buildroot/etc/bash_completion.d/lldpcli
+
+mkdir %buildroot%_datadir/zsh/site-functions -p
+mv %buildroot/usr/share/zsh/vendor-completions/_lldpcli %buildroot%_datadir/zsh/site-functions
 
 %pre
 if [ $1 = 1 ]; then
@@ -99,9 +142,12 @@ fi
 %preun_service %name
 
 %files
+%_unitdir/*
 %_initdir/*
 %_sysconfdir/sysconfig/lldpd
 %_sysconfdir/chroot.d/*
+%dir %_sysconfdir/lldpd.d
+%config(noreplace) %_sysconfdir/lldpd.d/*
 %_sbindir/*
 %_libdir/liblldpctl.so*
 %_datadir/doc/%name-%version/
@@ -113,7 +159,21 @@ fi
 %_libdir/liblldpctl.a
 %_pkgconfigdir/*
 
+%files -n bash-completion-lldpd
+%_sysconfdir/bash_completion.d/*
+
+%files -n zsh-completion-lldpd
+%_datadir/zsh/site-functions/*
+
 %changelog
+* Wed Aug 26 2015 Afanasov Dmitry <ender@altlinux.org> 0.7.15-alt1
+- 0.7.15
+- add json output and seccomp support
+- build bash and zsh completions in a separate packages
+
+* Mon Dec 02 2013 Afanasov Dmitry <ender@altlinux.org> 0.7.6-alt1
+- new version (upstream commit 5f7d1c)
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2.1
 - Fixed build
 
