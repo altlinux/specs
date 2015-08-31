@@ -1,5 +1,5 @@
-#define git_date .git20141029
-%define git_date %nil
+%define git_date .git20151102
+#define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -22,6 +22,7 @@
 %def_disable teamdctl
 %def_enable nmtui
 %def_enable bluez5dun
+%def_enable vala
 
 # There is no sources in debuginfo with LTO
 %def_disable lto
@@ -30,7 +31,7 @@
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 
 Name: NetworkManager
-Version: 1.0.4
+Version: 1.0.7
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -45,6 +46,7 @@ Source6: NetworkManager.sysconfig
 Source7: 30-efw
 Source8: 80-etcnet-iface-scripts
 Source9: NetworkManager-prestart
+Source10: nm-dispatcher-sh-functions
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -69,6 +71,7 @@ BuildRequires: libreadline-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
 %{?_enable_bluez5dun:BuildRequires: libbluez-devel}
+%{?_enable_vala:BuildRequires: vala-tools}
 
 Requires: nm-dhcp-client
 Requires: dnsmasq
@@ -376,7 +379,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--disable-static \
 	--with-crypto=nss \
 	--with-dhclient=/sbin/dhclient \
-	--with-dhcpcd=/sbin/dhcpcd \
+	--with-dhcpcd=yes \
 	--with-dnsmasq=/usr/sbin/dnsmasq \
 	--enable-gtk-doc=yes \
 	--with-resolvconf=/sbin/resolvconf \
@@ -401,6 +404,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--disable-ifcfg-suse \
 	--disable-ifupdown \
 	--disable-ifnet \
+	--with-setting-plugins-default='etcnet-alt,ibft' \
 	--with-modem-manager-1 \
 	%{subst_enable teamdctl} \
 %if_enabled nmtui
@@ -415,6 +419,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 %endif
 	--enable-introspection=auto \
 	%{subst_enable lto} \
+	%{subst_enable vala} \
 	--enable-more-warnings=error
 
 %make_build
@@ -449,6 +454,9 @@ install -Dm0755 initscript/Alt/NetworkManager %buildroot%_initdir/NetworkManager
 
 # Install NetworkManager pre start script
 install -Dm0755 %SOURCE9 %buildroot%_sbindir/NetworkManager-prestart
+
+# Install functions file for nm-dispather scripts
+install -Dm0644 %SOURCE10 %buildroot%_libexecdir/NetworkManager/nm-dispatcher-sh-functions
 
 %check
 make check
@@ -504,7 +512,7 @@ fi
 %doc %_man1dir/*.*
 %doc %_man5dir/*.*
 %doc %_man8dir/*.*
-%_defaultdocdir/%name-%version/examples/
+%doc %_defaultdocdir/%name-%version/
 %dir %_libexecdir/NetworkManager/
 %dir %_libdir/NetworkManager/
 %_libdir/NetworkManager/libnm-*.so
@@ -564,6 +572,7 @@ fi
 %dir %_includedir/%name
 %_includedir/%name/%name.h
 %_includedir/%name/NetworkManagerVPN.h
+%_includedir/%name/nm-version-macros.h
 %_includedir/%name/nm-version.h
 %_pkgconfigdir/%name.pc
 
@@ -595,6 +604,7 @@ fi
 %exclude %_includedir/libnm-glib/nm-vpn-*.h
 %_pkgconfigdir/libnm-glib.pc
 %_libdir/libnm-glib.so
+%{?_enable_vala:%_vapidir/libnm-glib.*}
 
 %files -n libnm-glib-vpn-devel
 %_includedir/libnm-glib/nm-vpn-*.h
@@ -607,6 +617,7 @@ fi
 %_includedir/%name/nm-utils*.h
 %_pkgconfigdir/libnm-util.pc
 %_libdir/libnm-util.so
+%{?_enable_vala:%_vapidir/libnm-util.*}
 
 %files -n libnm-devel-doc
 %doc %_datadir/gtk-doc/html/libnm
@@ -636,6 +647,18 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Nov 02 2015 Mikhail Efremov <sem@altlinux.org> 1.0.7-alt1.git20151102
+- nm-dispatcher-sh-functions: Drop debug output.
+- Enable vala bindings (closes: #31422).
+- Upstream git snapshot (nm-1-0 branch).
+
+* Mon Aug 31 2015 Mikhail Efremov <sem@altlinux.org> 1.0.6-alt1
+- Fix pkg-check of gio-unix-2.0 and gmodule.
+- Add ability to skip any dispatcher script.
+- Let the configure script find dhcpcd path.
+- Own %_defaultdocdir/%name-%version/.
+- Updated to 1.0.6.
+
 * Tue Jul 14 2015 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt1
 - Fix build with LTO (but disable it by default).
 - etcnet-alt: Update nm_platform_*() functions call.

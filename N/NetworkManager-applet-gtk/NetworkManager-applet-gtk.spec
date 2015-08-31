@@ -1,11 +1,11 @@
 %define nm_version 1.0.0
-#define git_date .git20141205
-%define git_date %nil
+%define git_date .git20151102
+#define git_date %nil
 
 %def_without bluetooth
 
 Name: NetworkManager-applet-gtk
-Version: 1.0.4
+Version: 1.0.7
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -135,6 +135,7 @@ make check
 %doc %_man1dir/*.*
 
 %_datadir/applications/*.desktop
+%_datadir/appdata/*.appdata.xml
 %dir %_datadir/gnome-vpn-properties
 
 %if_with bluetooth
@@ -158,6 +159,14 @@ make check
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Mon Nov 02 2015 Mikhail Efremov <sem@altlinux.org> 1.0.7-alt1.git20151102
+- Upstream git snapshot (nma-1-0 branch).
+
+* Mon Aug 31 2015 Mikhail Efremov <sem@altlinux.org> 1.0.6-alt1
+- Package appdata file.
+- configure: Fix macro name.
+- Updated to 1.0.6.
+
 * Wed Jul 15 2015 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt1
 - Don't allow to create new connection for missing device plugins.
 - Updated to 1.0.4.
