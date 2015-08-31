@@ -3,7 +3,7 @@
 
 Name: openstack-heat
 Summary: OpenStack Orchestration (heat)
-Version: 2015.1.0
+Version: 2015.1.1
 Release: alt1
 License: ASL 2.0
 Group: System/Servers
@@ -21,11 +21,10 @@ Source13: openstack-heat-api-cfn.init
 Source14: openstack-heat-engine.init
 Source15: openstack-heat-api-cloudwatch.init
 
-Source20: heat-dist.conf
 Source21: %name.tmpfiles
-Source22: heat.conf.sample
 
 BuildArch: noarch
+BuildRequires: crudini
 # BuildRequires: git
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
@@ -72,26 +71,24 @@ BuildRequires: python-module-ceilometerclient >= 1.0.13
 BuildRequires: python-module-cinderclient >= 1.1.0
 BuildRequires: python-module-glanceclient >= 0.15.0
 BuildRequires: python-module-heatclient >= 0.3.0
-BuildRequires: python-module-keystoneclient >= 1.1.0
+BuildRequires: python-module-keystoneclient >= 1.2.0
 BuildRequires: python-module-neutronclient >= 2.3.11
 BuildRequires: python-module-novaclient >= 2.22.0
 BuildRequires: python-module-saharaclient >= 0.8.0
 BuildRequires: python-module-swiftclient >= 2.2.0
 BuildRequires: python-module-troveclient >= 1.0.7
 
-Requires: %name-common = %version-%release
-Requires: %name-engine = %version-%release
-Requires: %name-api = %version-%release
-Requires: %name-api-cfn = %version-%release
-Requires: %name-api-cloudwatch = %version-%release
+Requires: python-module-heat = %version-%release
+Requires(pre): shadow-utils
 
-%description
-Heat provides AWS CloudFormation and CloudWatch functionality for OpenStack.
+Provides: %name-common  = %version-%release
+Obsoletes: %name-common  < %version-%release
 
-%package common
-Summary: Heat common
-Group: System/Servers
+%package -n python-module-heat
+Summary: Openstack Orchestration (Heat) - Python module
+Group:   Development/Python
 
+Requires: python-module-PasteDeploy
 Requires: python-module-ceilometerclient
 Requires: python-module-cinderclient
 Requires: python-module-glanceclient
@@ -102,16 +99,17 @@ Requires: python-module-novaclient
 Requires: python-module-swiftclient
 Requires: python-module-troveclient
 
-Requires(pre): shadow-utils
+%description -n python-module-heat
+This package contains the core Python module of OpenStack Heat.
 
-%description common
-Components common to all OpenStack Heat services
+%description
+Heat provides AWS CloudFormation and CloudWatch functionality for OpenStack.
 
 %package engine
 Summary: The Heat engine
 Group: System/Servers
 
-Requires: %name-common = %version-%release
+Requires: %name = %version-%release
 
 %description engine
 OpenStack API for starting CloudFormation templates on OpenStack
@@ -120,7 +118,7 @@ OpenStack API for starting CloudFormation templates on OpenStack
 Summary: The Heat API
 Group: System/Servers
 
-Requires: %name-common = %version-%release
+Requires: %name = %version-%release
 
 %description api
 OpenStack-native ReST API to the Heat Engine
@@ -129,7 +127,7 @@ OpenStack-native ReST API to the Heat Engine
 Summary: Heat CloudFormation API
 Group: System/Servers
 
-Requires: %name-common = %version-%release
+Requires: %name = %version-%release
 
 %description api-cfn
 AWS CloudFormation-compatible API to the Heat Engine
@@ -138,14 +136,22 @@ AWS CloudFormation-compatible API to the Heat Engine
 Summary: Heat CloudWatch API
 Group: System/Servers
 
-Requires: %name-common = %version-%release
+Requires: %name = %version-%release
 
 %description api-cloudwatch
 AWS CloudWatch-compatible API to the Heat Engine
 
+%package plugin-heat_docker
+Summary: OpenStack Orchestration (Heat) - Support for Docker
+Group: System/Servers
+Requires: %name = %version-%release
+Requires: %name-engine = %version-%release
+
+%description plugin-heat_docker
+This plugin enables using Docker containers as resources in a Heat template.
+
 %prep
 %setup
-
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requires_dist config
@@ -154,35 +160,25 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 # Remove tests in contrib
 find contrib -name tests -type d | xargs rm -r
 
-# Generate sample config
-#tools/config/generate_sample.sh -b . -p heat -o etc/heat
-
-install -p -D -m 640 %SOURCE22 etc/heat/heat.conf.sample
-
-# Programmatically update defaults in sample config
-# which is installed at /etc/heat/heat.conf
-
-#  First we ensure all values are commented in appropriate format.
-#  Since icehouse, there was an uncommented keystone_authtoken section
-#  at the end of the file which mimics but also conflicted with our
-#  distro editing that had been done for many releases.
-#sed -i '/^[^#[]/{s/^/#/; s/ //g}; /^#[^ ]/s/ = /=/' etc/heat/heat.conf.sample
-#sed -i -e "s/^#heat_revision=.*$/heat_revision=%version-%release/I" etc/heat/heat.conf.sample
-
-#  TODO: Make this more robust
-#  Note it only edits the first occurance, so assumes a section ordering in sample
-#  and also doesn't support multi-valued variables.
-#while read name eq value; do
-#  test "$name" && test "$value" || continue
-#  sed -i "0,/^# *$name=/{s!^# *$name=.*!#$name=$value!}" etc/heat/heat.conf.sample
-#done < %SOURCE20
 
 %build
 %python_build
+# Generate sample config
+oslo-config-generator --config-file=config-generator.conf
 
+pushd contrib/heat_docker
+OSLO_PACKAGE_VERSION=%version python setup.py build
+popd
 
 %install
 %python_install
+
+pushd contrib/heat_docker
+OSLO_PACKAGE_VERSION=%version python setup.py install --prefix=%_prefix --root=%buildroot
+# no need for the egg-info file
+rm -r %buildroot%python_sitelibdir/heat_contrib_docker-*.egg-info
+popd
+
 sed -i -e '/^#!/,1 d' %buildroot/%python_sitelibdir/heat/db/sqlalchemy/migrate_repo/manage.py
 mkdir -p %buildroot%_logdir/heat
 mkdir -p %buildroot%_runtimedir/heat
@@ -202,8 +198,9 @@ install -p -D -m 755 %SOURCE13 %buildroot%_initdir/openstack-heat-api-cfn
 install -p -D -m 755 %SOURCE14 %buildroot%_initdir/openstack-heat-engine
 install -p -D -m 755 %SOURCE15 %buildroot%_initdir/openstack-heat-api-cloudwatch
 
-mkdir -p %buildroot%_sharedstatedir/heat
-mkdir -p %buildroot%_sysconfdir/heat
+install -d -m 755 %buildroot%_sharedstatedir/heat
+install -d -m 755 %buildroot%_sysconfdir/heat
+install -d -m 755 %buildroot%_cachedir/heat
 
 %if_enabled doc
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
@@ -216,24 +213,25 @@ install -p -D -m 644 build/man/*.1 %buildroot%_man1dir
 popd
 %endif
 
-rm -f %buildroot/%_bindir/heat-db-setup
-rm -f %buildroot/%_mandir/man1/heat-db-setup.*
 rm -rf %buildroot/var/lib/heat/.dummy
-rm -f %buildroot/usr/bin/cinder-keystone-setup
 rm -rf %buildroot/%python_sitelibdir/heat/tests
 
-install -p -D -m 640 %_builddir/%name-%version/etc/heat/heat.conf.sample %buildroot/%_sysconfdir/heat/heat.conf
-install -p -D -m 640 %SOURCE20 %buildroot%_datadir/heat/heat-dist.conf
-install -p -D -m 640 %_builddir/%name-%version/etc/heat/api-paste.ini %buildroot/%_datadir/heat/api-paste-dist.ini
-install -p -D -m 640 etc/heat/policy.json %buildroot/%_sysconfdir/heat
+install -p -D -m 640 etc/heat/heat.conf.sample %buildroot/%_sysconfdir/heat/heat.conf
+install -p -m 644 etc/heat/*{json,ini} %buildroot/%_sysconfdir/heat/
+install -d -m 755  %buildroot%_sysconfdir/heat/{environment.d,templates}
+install -p -m 644 etc/heat/environment.d/*.yaml %buildroot%_sysconfdir/heat/environment.d
+install -p -m 644 etc/heat/templates/*.yaml %buildroot%_sysconfdir/heat/templates
 
-# TODO: move this to setup.cfg
-cp -vr etc/heat/templates %buildroot/%_sysconfdir/heat
-cp -vr etc/heat/environment.d %buildroot/%_sysconfdir/heat
+%define heat_conf %buildroot%_sysconfdir/heat/heat.conf
+crudini --set %heat_conf DEFAULT log_dir %_logdir/heat
+crudini --set %heat_conf DEFAULT lock_path %_runtimedir/heat
+crudini --set %heat_conf keystone_authtoken signing_dir %_cachedir/heat/keystone-signing
+crudini --set %heat_conf keystone_authtoken admin_tenant_name '%%SERVICE_TENANT_NAME%%'
+crudini --set %heat_conf keystone_authtoken admin_user heat
+crudini --set %heat_conf keystone_authtoken admin_password '%%SERVICE_PASSWORD%%'
+crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 
-
-
-%pre common
+%pre
 # 187:187 for heat (openstack-heat)
 %_sbindir/groupadd -r -g 187 -f heat 2>/dev/null ||:
 %_sbindir/useradd -r -u 187 -g heat -c 'OpenStack Heat Daemons' \
@@ -259,30 +257,32 @@ cp -vr etc/heat/environment.d %buildroot/%_sysconfdir/heat
 %preun api-cloudwatch
 %preun_service %name-api-cloudwatch
 
-%files
 
-%files common
+
+%files
 %doc LICENSE
+%_bindir/heat-db-setup
 %_bindir/heat-manage
 %_bindir/heat-keystone-setup
 %_bindir/heat-keystone-setup-domain
-%python_sitelibdir/heat*
-%attr(-, root, heat) %_datadir/heat/heat-dist.conf
-%attr(-, root, heat) %_datadir/heat/api-paste-dist.ini
 %dir %attr(0755,heat,root) %_logdir/heat
 %dir %attr(0755,heat,root) %_runtimedir/heat
 %dir %attr(0755,heat,root) %_sharedstatedir/heat
-%dir %attr(0755,heat,root) %_sysconfdir/heat
+%dir %_sysconfdir/heat
 %_tmpfilesdir/%name.conf
 %config(noreplace) %_sysconfdir/logrotate.d/openstack-heat
-%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/heat.conf
-%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/policy.json
-%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/environment.d
-%config(noreplace) %attr(-, root, heat) %_sysconfdir/heat/templates
+%config(noreplace) %attr(0640, root, heat) %_sysconfdir/heat/heat.conf
+%config %_sysconfdir/heat/api-paste.ini
+%config %_sysconfdir/heat/policy.json
+%config %_sysconfdir/heat/environment.d
+%config %_sysconfdir/heat/templates
 %if_enabled doc
 %_mandir/man1/heat-keystone-setup.1.gz
 %_mandir/man1/heat-manage.1.gz
 %endif
+
+%files -n python-module-heat
+%python_sitelibdir/*
 
 %files engine
 %doc README.rst LICENSE
@@ -325,7 +325,16 @@ cp -vr etc/heat/environment.d %buildroot/%_sysconfdir/heat
 %_unitdir/%name-api-cloudwatch.service
 %_initdir/%name-api-cloudwatch
 
+%files plugin-heat_docker
+%_prefix/lib/heat/docker
+
 %changelog
+* Mon Aug 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
+- 2015.1.1
+- drop common package
+- drop dist config in datadir
+
+
 * Mon Jun 01 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
 - 2015.1.0 Kilo release
 
