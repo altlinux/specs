@@ -1,11 +1,12 @@
 %define oname babel
 
 %def_with python3
-#def_disable check
+%def_without docs
+%def_disable check
 
 Name: python-module-%oname
 Version: 3.0
-Release: alt1.dev.git20150805
+Release: alt2.dev.git20150805
 
 Summary: a collection of tools for internationalizing Python applications
 License: BSD
@@ -86,12 +87,23 @@ popd
 %if_with python3
 pushd ../python3
 %python3_install
+install -p -m644 %oname/localedata/__init__.py \
+	%buildroot%python3_sitelibdir/%oname/localedata/
 popd
+mv %buildroot%python3_sitelibdir/Babel-*-py%_python3_version.egg-info \
+	%buildroot%python3_sitelibdir/Babel-%version-py%_python3_version.egg-info
 mv %buildroot%_bindir/pybabel %buildroot%_bindir/pybabel3
 %endif
-%python_install
 
+%python_install
+install -p -m644 %oname/localedata/__init__.py \
+	%buildroot%python_sitelibdir/%oname/localedata/
+mv %buildroot%python_sitelibdir/Babel-*-py%_python_version.egg-info \
+	%buildroot%python_sitelibdir/Babel-%version-py%_python_version.egg-info
+
+%if_with docs
 %make -C docs html
+%endif
 
 %check
 python setup.py test
@@ -105,17 +117,26 @@ popd
 %_bindir/pybabel
 %python_sitelibdir/babel/
 %python_sitelibdir/*.egg-info
-%doc AUTHORS CHANGES README docs/_build/html
+%doc AUTHORS CHANGES README
+%if_with docs
+%doc docs/_build/html
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS CHANGES README docs/_build/html
+%doc AUTHORS CHANGES README
+%if_with docs
+%doc docs/_build/html
+%endif
 %_bindir/pybabel3
 %python3_sitelibdir/babel/
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt2.dev.git20150805
+- Added missing files
+
 * Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1.dev.git20150805
 - Version 3.0-dev
 
