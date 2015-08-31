@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.1
-Release: alt2.dev76.git20150409
+Release: alt2.dev120.git20150826
 Summary: Partial differential equation (PDE) solver
 License: Public
 Group: Development/Python
@@ -17,10 +17,14 @@ Source1: %oname-%version.pdf
 #Source2: reference-2.0.2.pdf
 BuildArch: noarch
 
-BuildPreReq: python-devel libnumpy-devel python-module-pysparse
+BuildPreReq: texlive-latex-recommended
+BuildPreReq: python-devel libnumpy-devel python-module-pysparse git
 BuildPreReq: python-module-setuptools-tests python-module-bitten
-BuildPreReq: python-module-scipy python-module-gist Mayavi xvfb-run
+BuildPreReq: python-module-scipy python-module-gist xvfb-run
 BuildPreReq: python-module-matplotlib python-module-gnuplot
+BuildPreReq: python-module-sphinx-devel python-module-numpydoc
+BuildPreReq: python-module-sphinxcontrib.traclinks python-module-vtk6.2
+BuildPreReq: python-module-sphinxcontrib-bibtex python-module-PyQt4
 %setup_python_module %oname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -79,6 +83,16 @@ written in Python, based on a standard finite volume (FV) approach
 
 This package contains tests for FiPy.
 
+%package pickles
+Summary: Pickles for FiPy
+Group: Development/Python
+
+%description pickles
+FiPy is an object oriented, partial differential equation (PDE) solver,
+written in Python, based on a standard finite volume (FV) approach
+
+This package contains pickles for FiPy.
+
 %package tests
 Summary: Tests for FiPy
 Group: Development/Python
@@ -117,12 +131,23 @@ This package contains documentation for FiPy.
 #sed -i 's|with|with_|' \
 #	fipy/viewers/gnuplotViewer/gnuplot1DViewer.py
 
+git config --global user.email "real at altlinux.org"
+git config --global user.name "REAL"
+git init-db
+git add . -A
+git commit -a -m "%version"
+git tag -m "version-%version" version-%version
+python setup.py egg_info
+
 %if_with python3
 cp -fR . ../python3
 find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 install -p -m644 %SOURCE1 .
+
+%prepare_sphinx .
+ln -s ../objects.inv documentation/
 
 %build
 %python_build
@@ -139,7 +164,6 @@ popd
 #install -d %buildroot%python_sitelibdir/%oname/utils
 #install -p -m644 utils/* \
 #	%buildroot%python_sitelibdir/%oname/utils
-cp -fR examples %buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 pushd ../python3
@@ -147,13 +171,17 @@ pushd ../python3
 popd
 %endif
 
+export PYTHONPATH=%buildroot%python_sitelibdir
+xvfb-run python setup.py build_docs --pickle
+xvfb-run python setup.py build_docs --html
 install -d %buildroot%_docdir/%name
-cp -fR documentation/* %buildroot%_docdir/%name/
+cp -fR documentation/_build/html %buildroot%_docdir/%name/
+cp -fR documentation/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 xvfb-run python setup.py test
-#if_with python3
-%if 0
+%if_with python3
+#if 0
 pushd ../python3
 xvfb-run python3 setup.py test
 popd
@@ -164,7 +192,10 @@ popd
 %exclude %python_sitelibdir/*/test*
 %exclude %python_sitelibdir/*/*/test*
 %exclude %python_sitelibdir/*/*/*/test*
-%exclude %python_sitelibdir/*/examples
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
 
 %files tests
 %python_sitelibdir/*/test*
@@ -172,10 +203,10 @@ popd
 %python_sitelibdir/*/*/*/test*
 
 %files examples
-%python_sitelibdir/*/examples
+%doc examples/*
 
 %files doc
-%doc DISCLAIMER.txt LICENSE.txt README.txt *.pdf
+%doc *.rst *.pdf
 %_docdir/%name
 
 %if_with python3
@@ -194,6 +225,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt2.dev120.git20150826
+- Version 3.1-dev120
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt2.dev76.git20150409
 - Version 3.1-dev76
 
