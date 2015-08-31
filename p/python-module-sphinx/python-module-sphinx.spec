@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt1.a0.git20150727
+Release: alt1.a0.git20150813
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -96,7 +96,7 @@ Requires: python3-module-%oname = %epoch:%version-%release
 %py3_requires nose
 %add_python3_req_skip compiler
 %add_python3_req_skip missing_module missing_package1 missing_package2
-%add_python3_req_skip missing_package3
+%add_python3_req_skip missing_package3 typing
 
 %description -n python3-module-%oname-tests
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -155,6 +155,7 @@ Requires: %name = %epoch:%version-%release
 %add_python_req_skip compiler
 %add_python_req_skip missing_module missing_package1 missing_package2
 %add_python_req_skip missing_package3
+%add_findreq_skiplist %python_sitelibdir/%oname/tests/typing_test_data.py
 
 %description tests
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -376,6 +377,9 @@ install -p -m644 conf.py.template \
 %endif
 
 %changelog
+* Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4-alt1.a0.git20150813
+- New snapshot
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4-alt1.a0.git20150727
 - Version 1.4a0
 
