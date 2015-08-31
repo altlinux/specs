@@ -32,7 +32,7 @@
 %def_disable jamendo
 
 Name: totem
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -64,6 +64,7 @@ Requires: gst-plugins-bad%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 Requires: gst-libav
 Requires: iso-codes
+Requires: grilo-plugins
 
 # use python3
 AutoReqProv: nopython
@@ -93,7 +94,7 @@ BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libgnome-desktop3-devel
 %{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel pylint-py3}
 %{?_enable_vala:BuildRequires: libvala-devel >= 0.14 vala-tools}
-BuildRequires: libdbus-devel libgdata-devel gsettings-desktop-schemas-devel
+BuildRequires: libdbus-devel gsettings-desktop-schemas-devel
 %{?_enable_lirc:BuildRequires: liblirc-devel}
 %{?_enable_tracker:BuildRequires: tracker-devel}
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
@@ -404,6 +405,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Aug 31 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
+- 3.16.3
+
 * Mon Jun 29 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 
