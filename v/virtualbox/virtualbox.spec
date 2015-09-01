@@ -57,7 +57,7 @@
 
 Name: virtualbox
 Version: 4.3.30
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -282,6 +282,14 @@ Requires: python-module-vboxapi = %version-%release
 %description sdk
 This package contains VirtualBox SDK.
 
+%package sdk-xpcom
+Summary: VirtualBox SDK XPCOM
+Group: Development/Other
+Requires: %name-sdk = %EVR
+
+%description sdk-xpcom
+This package contains VirtualBox SDK for XPCOM.
+
 %prep
 %setup -q -n %distarchive
 %patch -p1
@@ -415,6 +423,12 @@ cp -a \
 
 find sdk -maxdepth 1 -mindepth 1 -not -name docs -print0 | xargs -0 cp -R --target-directory=%buildroot%vboxdir --parents
 
+cd ../../../../include/
+for d in iprt VBox/com; do
+	cp -R --target-directory=%buildroot%vboxdir/sdk/bindings/xpcom/include --parents $d
+done
+cd -
+
 %if_with python
 cd sdk/installer >/dev/null
   VBOX_INSTALL_PATH=%vboxdir VBOX_VERSION=%version python vboxapisetup.py install --install-lib=%python_sitelibdir --root=%buildroot
@@ -429,11 +443,28 @@ cp -a \
 # create links
 for n in VBoxAutostart \
          VBoxBalloonCtrl \
+	 VBoxHeadless \
          VBoxManage \
          VBoxSDL \
          VBoxTunctl \
          VBoxVolInfo \
+         VirtualBox; do
+    ln -s $n %buildroot%vboxdir/$(echo $n | tr A-Z a-z)
+done
+for n in VBoxAutostart \
+         vboxautostart \
+         VBoxBalloonCtrl \
+         vboxballoonctrl \
+         VBoxManage \
+         vboxmanage \
+         VBoxSDL \
+         vboxsdl \
+         VBoxTunctl \
+         vboxtunctl \
+         VBoxVolInfo \
+         vboxvolinfo \
          VirtualBox \
+         virtualbox \
 %if_with webservice
          vboxwebsrv \
 %endif
@@ -705,11 +736,21 @@ mountpoint -q /dev || {
 %_bindir/xpidl
 %vboxdir/xpidl
 %vboxdir/sdk
+%exclude %vboxdir/sdk/bindings/xpcom/include/iprt
+%exclude %vboxdir/sdk/bindings/xpcom/include/VBox/com
 %if_with python
 %exclude %vboxdir/sdk/bindings/xpcom/python/xpcom
 %endif
 
+%files sdk-xpcom
+%vboxdir/sdk/bindings/xpcom/include/iprt
+%vboxdir/sdk/bindings/xpcom/include/VBox/com
+
 %changelog
+* Tue Sep 01 2015 Aleksey Avdeev <solo@altlinux.org> 4.3.30-alt2
+- Add subpackage virtualbox-sdk-xpcom (Closes: 31178)
+- Add synonyms lowercase (Closes: 31245)
+
 * Mon Aug 31 2015 Aleksey Avdeev <solo@altlinux.org> 4.3.30-alt1
 - Update to last stable release
 - All documentation is build
