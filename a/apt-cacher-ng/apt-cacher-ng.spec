@@ -1,6 +1,6 @@
 Name: apt-cacher-ng
-Version: 0.8.0
-Release: alt2
+Version: 0.8.5
+Release: alt1
 
 Summary: Caching HTTP download proxy for software packages
 
@@ -12,7 +12,8 @@ Source: http://ftp.debian.org/debian/pool/main/a/apt-cacher-ng/%{name}_%version.
 Source1: acng.service
 Source2: acng.init
 Patch0: acng-conf.patch
-Patch1: acng-0.8.0-alt-vfilepattern.patch
+Patch1: acng-0.8.5-alt-vfilepattern.patch
+Patch2: acng-0.8.5-alt-perl_tobase64.patch
 
 # Automatically added by buildreq on Wed May 30 2012
 # optimized out: cmake cmake-modules libstdc++-devel pkg-config
@@ -28,6 +29,7 @@ resource usage.
 %setup
 %patch0 -p 1
 %patch1 -p 1
+%patch2 -p 1
 echo "-llzma" >> link.flags
 
 %build
@@ -35,11 +37,12 @@ echo "-llzma" >> link.flags
 
 %install
 mkdir -p %buildroot%_sbindir
-install build/apt-cacher-ng %buildroot%_sbindir/
-install build/in.acng %buildroot%_sbindir/
+install -p -m 755 build/apt-cacher-ng %buildroot%_sbindir/
+install -p -m 755 build/in.acng %buildroot%_sbindir/
 
-mkdir -p %buildroot%_libdir/%name
-install scripts/{expire-caller.pl,distkill.pl,urlencode-fixer.pl} %buildroot%_libdir/%name/
+mkdir -p %buildroot%_libexecdir/%name
+install -p -m 755 scripts/{expire-caller.pl,distkill.pl,urlencode-fixer.pl} %buildroot%_libexecdir/%name/
+install -p -m 755 build/acngtool %buildroot%_libexecdir/%name/
 
 mkdir -p %buildroot%_sysconfdir/%name
 cp -a conf/* %buildroot%_sysconfdir/%name/
@@ -51,10 +54,10 @@ cat <<'_EOF'_ > %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 _EOF_
 
 mkdir -p %buildroot%_initdir
-install -m755 %SOURCE2 %buildroot%_initdir/acng
+install -p -m755 %SOURCE2 %buildroot%_initdir/acng
 
 mkdir -p %buildroot%_man8dir
-install -m644 doc/man/*.8 %buildroot%_man8dir
+install -p -m644 doc/man/*.8 %buildroot%_man8dir
 
 mkdir -p %buildroot%_logdir/%name/
 mkdir -p %buildroot%_cachedir/%name/
@@ -72,7 +75,7 @@ install -pDm 644 systemd/%name.conf %buildroot/lib/tmpfiles.d/%name.conf
 /lib/tmpfiles.d/*
 %_sbindir/apt-cacher-ng
 %_sbindir/in.acng
-%_libdir/%name/
+%_libexecdir/%name/
 %config(noreplace) %_sysconfdir/%name/
 %config(noreplace) %_sysconfdir/apt/apt.conf.d/%name.conf
 %_initdir/acng
@@ -94,6 +97,12 @@ chmod ug+rw %_logdir/%name/* ||:
 %preun_service acng
 
 %changelog
+* Mon Aug 31 2015 Terechkov Evgenii <evg@altlinux.org> 0.8.5-alt1
+- 0.8.5
+- vfilepattern patch updated
+- TOBASE64 patch for fix perl deparsing in perl.req
+- Replace %%_libdir to %%_libexecdir
+
 * Fri Nov 21 2014 Terechkov Evgenii <evg@altlinux.org> 0.8.0-alt2
 - 0.8.0
 - %name pseudouser/group (just as in upstream) for daemon
