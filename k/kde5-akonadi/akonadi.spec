@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 15.08.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Databases
@@ -34,7 +34,6 @@ concurrent read, write, and query access.
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
-BuildArch: noarch
 Requires: kf5-filesystem
 %description common
 %name common package
@@ -120,6 +119,7 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/akonadi5_mysql_install_db
 mv %buildroot/%_K5xdgmime/akonadi{,5}-mime.xml
 
 mkdir -p %buildroot/%_K5srv/akonadi/contact
+mkdir -p %buildroot/%_K5lib/akonadi5/contact
 
 %files
 %_K5dbus_srv/org.freedesktop.Akonadi.Control.service
@@ -141,6 +141,8 @@ mkdir -p %buildroot/%_K5srv/akonadi/contact
 %_K5bin/akonadi5_mysql_install_db
 
 %files common
+%dir %_K5lib/akonadi5/
+%dir %_K5lib/akonadi5/contact/
 %dir %_K5xdgconf/akonadi/
 %dir %_K5srv/akonadi/
 %dir %_K5srv/akonadi/contact/
@@ -160,6 +162,9 @@ mkdir -p %buildroot/%_K5srv/akonadi/contact
 %_K5lib/libKF5AkonadiPrivate.so.*
 
 %changelog
+* Tue Sep 01 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
+- add plugins dir
+
 * Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
