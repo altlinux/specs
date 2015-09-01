@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.7
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -133,11 +133,6 @@ install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 
 %make_build LIBTOOL_EXPORT_OPTIONS=-Wl,--version-script=compat.map,compat.lds
 
-%check
-# due to version script
-echo : >>%_name/abicheck.sh
-%make check
-
 %install
 %makeinstall_std
 
@@ -158,6 +153,12 @@ chmod 755 %buildroot%_rpmlibdir/gdk-pixbuf-loaders.filetrigger
 touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 %find_lang %_name
+
+%check
+# due to version script
+echo : >>%_name/abicheck.sh
+#%make check
+
 
 %files
 %_bindir/gdk-pixbuf-query-loaders
@@ -225,6 +226,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Tue Sep 01 2015 Yuri N. Sedunov <aris@altlinux.org> 2.31.7-alt1
+- 2.31.7
+
 * Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 2.31.5-alt1
 - 2.31.5
 
