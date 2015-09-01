@@ -1,7 +1,7 @@
 %define docdir %_docdir/%name
 
 Name: libvdpau
-Version: 1.1
+Version: 1.1.1
 Release: alt1
 Epoch: 1
 Group: System/Libraries
@@ -78,6 +78,10 @@ Documentation for VDPAU library
 %docdir/html
 
 %changelog
+* Tue Sep 01 2015 Sergey V Turchin <zerg@altlinux.org> 1:1.1.1-alt1
+- new version
+- security fixes: CVE-2015-5198, CVE-2015-5199, CVE-2015-5200
+
 * Tue Jun 23 2015 Sergey V Turchin <zerg@altlinux.org> 1:1.1-alt1
 - new version
 
