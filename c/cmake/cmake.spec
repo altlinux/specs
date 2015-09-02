@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=strict
 Name: cmake
 Version: 3.2.2
-Release: alt3
+Release: alt3.1
 
 Summary: Cross-platform, open-source make system
 
@@ -252,6 +252,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Wed Sep 02 2015 Sergey V Turchin <zerg@altlinux.org> 3.2.2-alt3.1
+- remove variable dereference from FindPkgConfig
+
 * Thu Jun  4 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 3.2.2-alt3
 - rebuild with c++11 ABI
 
