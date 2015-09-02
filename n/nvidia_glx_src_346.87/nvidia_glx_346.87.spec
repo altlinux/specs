@@ -14,13 +14,13 @@
 %define nv_version 346
 %define nv_release 87
 %define nv_minor %nil
-%define pkg_rel alt143
+%define pkg_rel alt144
 %ifarch x86_64
 %def_enable egl
 %else
 %def_enable egl
 %endif
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -344,6 +344,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 02 2015 Sergey V Turchin <zerg@altlinux.org> 346.87-alt144
+- don't package kernel module sources
+
 * Mon Jul 27 2015 Sergey V Turchin <zerg@altlinux.org> 346.87-alt143
 - new version
 
