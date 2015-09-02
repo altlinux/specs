@@ -14,7 +14,7 @@
 %define nv_version 352
 %define nv_release 41
 %define nv_minor %nil
-%define pkg_rel alt144
+%define pkg_rel alt145
 %ifarch x86_64
 %def_enable egl
 %else
@@ -344,6 +344,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 02 2015 Sergey V Turchin <zerg@altlinux.org> 352.41-alt145
+- fix building of kernel module
+
 * Tue Sep 01 2015 Sergey V Turchin <zerg@altlinux.org> 352.41-alt144
 - new version
 
