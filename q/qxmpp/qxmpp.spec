@@ -1,5 +1,5 @@
 Name: qxmpp
-Version: 0.8.3
+Version: 0.9.1
 Release: alt1
 
 Summary: Qt XMPP library
@@ -8,7 +8,8 @@ Group: Development/KDE and QT
 Url: https://github.com/%name-project/%name
 
 #VCS: https://github.com/qxmpp-project/qxmpp.git
-Source: %url/archive/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ libqt4-devel libspeex-devel
 BuildRequires: libtheora-devel libvpx-devel doxygen
@@ -80,6 +81,7 @@ details.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %qmake_qt4 PREFIX=%_prefix LIBDIR=%_lib \
@@ -111,6 +113,9 @@ install -m644 AUTHORS CHANGELOG README.md %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name/README.md
 
 %changelog
+* Wed Sep 02 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Sat Apr 18 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
