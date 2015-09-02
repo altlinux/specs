@@ -1,9 +1,22 @@
-%define build_debug 0
-%define build_test 1
-%define build_bench 1
+
+%def_enable build_test
+%def_disable static
+%define mysqld_user mysql
+%define _libexecdir %_sbindir
+%define ROOT %_localstatedir/mysql
+
+%def_with pcre
+
+%ifarch x86_64
+%def_with tokudb
+%def_with mroonga
+%else
+%def_without tokudb
+%def_without mroonga
+%endif
 
 Name: mariadb
-Version: 5.5.34
+Version: 10.0.21
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -11,44 +24,54 @@ License: GPLv2 with exceptions
 Group: Databases
 
 Url: http://mariadb.org/
-Source0: %name-%version.tar
-Source2: mysqld.sysconfig
-Source4: libmysql.version
-Source5: mysqld.init
-Source6: mysqld_wrapper
-Source7: safe_mysqld
-Source10: mysql.tmpfiles.d
-Source11: mysqld.service
+Source: %name-%version.tar
 
-Source12: mysqld-prepare-db-dir
-Source13: mysqld-wait-ready
+Source1: mysqld.init
+Source2: mysql.logrotate
+Source3: safe_mysqld
+Source4: mysqld_wrapper
+Source5: my.cnf
+Source6: mysql.chroot.lib
+Source7: mysql.chroot.conf
+Source8: mysql.chroot.all
+Source9: mysql_migrate
+Source10: mysqld.sysconfig
+Source14: README.ALT-ru_RU.UTF-8
+Source15: alt-mysql_install_db.sh
+Source16: mysql.control
 
-Source15: client.cnf
-Source16: server.cnf
-Source17: mysql-clients.cnf
+
+Source20: mysql.tmpfiles.d
+Source21: mysqld.service
+Source22: mysqld-prepare-db-dir
+Source23: mysqld-wait-ready
+
+Source25: client.cnf
+Source26: server.cnf
+Source27: mysql-clients.cnf
 
 
-# the following patches are rediffed from the mysql-5.5 src.rpm to mariadb-5.5
-# fedora patches
-Patch1: mariadb-5.5-errno.patch
-Patch2: mariadb-5.5-strmov.patch
-Patch3: mariadb-5.5-install-test.patch
-Patch4: mysql-expired-certs.patch
-Patch7: mariadb-5.5-versioning.patch
-Patch8: mariadb-5.5-dubious-exports.patch
-#Patch12: mysql-openssl-test.patch
+# ALTLinux
+Patch1: mariadb-10.0.21-alt-chroot.patch
+Patch2: mysql-5.0.20-alt-libdir.patch
+Patch4: mariadb-10.0.21-alt-client.patch
+Patch5: mariadb-10.0.21-alt-load_defaults.patch
+Patch7: mysql-5.5.25-alt-mysql_config-libs.patch
 
-# mandriva patches
-Patch101: mariadb-5.5-logrotate.patch
-Patch102: mariadb-5.5-initscript.patch
-Patch103: mariadb-5.5-mysql_upgrade-exit-status.patch
-Patch106: mariadb-5.5-hotcopy.patch
-Patch107: mariadb-5.5-mysql_install_db-quiet.alt.patch
+# Patches specific for this mysql package
+Patch30: mariadb-errno.patch
+Patch31: mariadb-string-overflow.patch
+Patch32: mariadb-basedir.patch
+Patch33: mariadb-covscan-signexpr.patch
+Patch34: mariadb-covscan-stroverflow.patch
+Patch36: mariadb-ssltest.patch
 
 Requires: %name-server = %EVR %name-client = %EVR
 
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel libpam0-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
-BuildRequires: libaio-devel libjemalloc-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
+BuildRequires: libaio-devel libjemalloc-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel liblz4-devel
+BuildRequires: chrooted control
+%{?_with_pcre:BuildRequires: libpcre-devel >= 8.35}
 
 %define soname 18
 
@@ -88,44 +111,39 @@ mariadb-obsolete package:
 
 %package server
 Summary: A very fast and reliable MariaDB database server
-Group: System/Servers
+Group: Databases
 Requires: lib%name = %EVR %name-client = %EVR
 Requires: %name-common = %EVR
 Provides: mysql-server = %version-%release
 Provides: mysql = %version
+Provides: %name-engine-extra = %EVR
+Obsoletes: %name-engine-extra < %EVR
+Provides: %name-engine-obsolete = %EVR
+Obsoletes: %name-engine-obsolete < %EVR
+%if_with tokudb
+Provides: %name-engine-tokudb = %EVR
+Obsoletes: %name-engine-tokudb < %EVR
+%endif
+
 Conflicts: MySQL-server
 
 %description server
 Core mysqld server. For a full MariaDB database server, install
 package 'mariadb'.
 
-%ifarch x86_64
-%package engine-tokudb
-Summary: MariaDB tokudb storage engines
-Group: System/Servers
+%package server-perl
+Summary: Perl utils for MySQL-server
+Group: Databases
 Requires: %name-server = %EVR
+Conflicts: %name-server < %EVR
+BuildArch: noarch
 
-%description engine-tokudb
-MariaDB tokudb storage engine.
-%endif
-
-%package engine-extra
-Summary: MariaDB extra storage engines
-Group: System/Servers
-Requires: %name-server = %EVR
-
-%description engine-extra
-MariaDB oqgraph and sphinx storage engines.
-
-%package engine-obsolete
-Summary: MariaDB obsolete storage engines
-Group: System/Servers
-Requires: %name-server = %EVR
-
-%description engine-obsolete
-MariaDB obsolete storage engines. InnoDB and Federated are being replaced
-by XtraDB and FederatedX storage engines. These obsolete storage engines
-are provided in case you need the vanilla mysql storage engines.
+%description server-perl
+MySQL is a true multi-user, multi-threaded SQL (Structured Query
+Language) database server. MySQL is a client/server implementation
+that consists of a server daemon (mysqld) and many different client
+programs/libraries.
+This package contents perl utils for MySQL-server.
 
 %package client
 Summary: Client
@@ -147,7 +165,6 @@ Conflicts: MySQL-server
 %description common
 This package contains the common files for MariaDB client and servers.
 
-%if %build_bench
 %package bench
 Summary: Benchmarks and test system
 Group: System/Servers
@@ -157,7 +174,6 @@ Conflicts: MySQL-bench
 
 %description bench
 This package contains MariaDB benchmark scripts and data.
-%endif
 
 %package -n libmysqlclient%soname
 Summary: Shared libraries
@@ -215,70 +231,65 @@ version.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
+%patch5 -p1
 %patch7 -p1
-%patch8 -p1
-#patch12 -p1
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch106 -p1
-%patch107 -p0
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
+%patch33 -p1
+%patch34 -p1
+%patch36 -p1
 
-# antiborker
-perl -pi -e "s|\@bindir\@|%_bindir|g" support-files/* scripts/*
-perl -pi -e "s|\@sbindir\@|%_sbindir|g" support-files/* scripts/*
-perl -pi -e "s|\@libexecdir\@|%_sbindir|g" support-files/* scripts/*
-perl -pi -e "s|\@localstatedir\@|/var/lib/mysql|g" support-files/* scripts/*
-perl -pi -e "s|^basedir=.*|basedir=%prefix|g" support-files/* scripts/mysql_install_db*
+# Replace that horror.
+sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
 
-# this may be part of the problems with mysql-test
-# http://bugs.mysql.com/bug.php?id=52223
-perl -pi -e "s|basedir/lib\b|basedir/%_lib\b|g" mysql-test/mysql-test-run.pl
-perl -pi -e "s|basedir/lib/|basedir/%_lib/|g" mysql-test/mysql-test-run.pl
+# Prepare commands list for completion in mysql client.
+sed -ne 's/^\(  { "[A-Z][^"]*"\).*/\1, 0, 0, 0, "" },/pg' <sql/lex.h >client/mysql_symbols.inc
 
-# workaround for upstream bug #56342
-rm -f mysql-test/t/ssl_8k_key-master.opt
+# Not needed with 5.5 but doesn't hurt anyways
+chmod -R a-s,go-w sql-bench
 
 #fix shebang.req: ERROR: /usr/src/tmp/mariadb-buildroot/usr/share/mysql/sql-bench/innotest1: trailing <CR> in interpreter: #!/usr/bin/perl<CR>
 find sql-bench -type f -name 'innotest*' | xargs dos2unix
 
 %build
-mkdir build
-pushd build
-    cmake .. \
+CFLAGS="%optflags -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
+# force PIC mode so that we can build libmysqld.so
+CFLAGS="$CFLAGS -fPIC"
+# GCC 4.9 causes segfaults: https://mariadb.atlassian.net/browse/MDEV-6360
+CFLAGS="$CFLAGS -fno-delete-null-pointer-checks"
+CXXFLAGS="$CFLAGS"
+export CFLAGS CXXFLAGS
+LDFLAGS="$LDFLAGS -pie -Wl,-z,relro,-z,now"
+export LDFLAGS
+
+%cmake \
 	-DBUILD_CONFIG=mysql_release \
 	-DFEATURE_SET="community" \
 	-DINSTALL_LAYOUT=RPM \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
+	-DCMAKE_C_FLAGS:STRING="$CFLAGS" \
+	-DCMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DMYSQL_DATADIR=/var/lib/mysql \
-	-DINSTALL_SBINDIR=sbin \
-	-DINSTALL_SYSCONFDIR=%_sysconfdir \
-	-DINSTALL_PLUGINDIR=%_lib/mysql/plugin \
-	-DINSTALL_MANDIR=share/man \
-	-DINSTALL_SHAREDIR=share/mysql \
-	-DINSTALL_LIBDIR=%_lib \
-	-DINSTALL_INCLUDEDIR=include/mysql \
-	-DINSTALL_INFODIR=share/info \
-	-DINSTALL_MYSQLDATADIR=/var/lib/mysql \
-	-DINSTALL_MYSQLTESTDIR=share/mysql/mysql-test \
-	-DINSTALL_SQLBENCHDIR=share/mysql \
-	-DINSTALL_SUPPORTFILESDIR=share/mysql \
-	-DINSTALL_MYSQLSHAREDIR=share/mysql \
-	-DMYSQL_UNIX_ADDR=/var/lib/mysql/mysql.sock \
+	-DMYSQL_UNIX_ADDR="%ROOT/mysql.sock" \
+	-DMYSQL_DATADIR="%ROOT" \
+	-DMYSQL_USER=mysql \
 	-DWITH_READLINE=ON \
 	-DWITH_LIBWRAP=ON \
 	-DWITH_JEMALLOC=system \
 	-DWITH_SSL=system \
 	-DWITH_ZLIB=system \
+	%{?_with_pcre: -DWITH_PCRE=system -DPCRE_INCLUDES=/usr/include/pcre} \
+	%{?_without_tokudb: -DWITHOUT_TOKUDB=ON} \
+	%{?_without_mroonga: -DWITHOUT_MROONGA=ON} \
 	-DWITH_PIC=ON \
-	-DEXTRA_CHARSETS=all \
+	-DWITH_EXTRA_CHARSETS=all \
+	-DWITH_INNOBASE_STORAGE_ENGINE=ON \
+	-DWITH_PARTITION_STORAGE_ENGINE=ON \
+	-DWITH_FEDERATED_STORAGE_ENGINE=ON \
 	-DENABLED_LOCAL_INFILE=ON \
 	-DWITH_EMBEDDED_SERVER=ON \
 	-DWITHOUT_EXAMPLE_STORAGE_ENGINE=ON \
@@ -287,62 +298,65 @@ pushd build
 	-DCOMPILATION_COMMENT="(%distribution)" \
 	-DMYSQL_SERVER_SUFFIX="-%release"
 
+#	-DWITH_EMBEDDED_SERVER=ON \
 #	-DWITH_PLUGIN_FEEDBACK=ON \
 
-# override upstream version script by now (adds 747 symbols as of 5.5.30)
-# NB: might be dropped some day in favour of upstream one
-# (which is also based on fedora's and mageia's in its turn);
-# so far there's a problem with version script not being used
-# thus had to kludge it in indefinitely again :-/
-install -pD %SOURCE4 libmysql/libmysql.version
-
-popd
-
-%make_build -C build
+%cmake_build
 
 %install
+mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_infodir,%_datadir/sql-bench,/var/log/mysql}
+mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%_libdir/mysql/plugin/,dev,log,tmp,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
+touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START}
+
 # don't fiddle with the initscript!
 export DONT_GPRINTIFY=1
 
-%makeinstall_std -C build
+%cmakeinstall_std
 
 # RPM install style leftovers
-rm -rf %buildroot%_sysconfdir/init.d/mysql
+rm -f %buildroot%_sysconfdir/init.d/mysql
+rm -f %buildroot%_sbindir/rcmysql
 rm -rf %buildroot{%_libdir/libmysqld.a,%_defaultdocdir/*}
 
 mkdir -p %buildroot%_var/run/mysqld
 mkdir -p %buildroot%_var/log/mysqld
 mkdir -p %buildroot/var/lib/mysql/db/{mysql,test}
 
-# install init scripts
-install -Dm0755 %SOURCE5 %buildroot%_initdir/mysqld
-install -Dm 755 %SOURCE6 %buildroot%_sbindir/mysqld_wrapper
-install -Dm 755 %SOURCE7 %buildroot%_sbindir/safe_mysqld
+# Install various helper scripts.
+install -pD -m755 %SOURCE1 %buildroot%_initdir/mysqld
+install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/mysql
+install -pD -m755 %SOURCE3 %buildroot%_sbindir/safe_mysqld
+install -pD -m755 %SOURCE4 %buildroot%_sbindir/mysqld_wrapper
+install -pD -m750 %SOURCE6 %buildroot%_sysconfdir/chroot.d/mysql.lib
+%ifarch x86_64
+sed -i s,usr/lib,usr/lib64,g %buildroot%_sysconfdir/chroot.d/mysql.lib
+%endif
+install -pD -m750 %SOURCE7 %buildroot%_sysconfdir/chroot.d/mysql.conf
+install -pD -m750 %SOURCE8 %buildroot%_sysconfdir/chroot.d/mysql.all
+install -pD -m750 %SOURCE9 %buildroot%_sbindir/mysql_migrate
+install -pD -m644 %SOURCE10 %buildroot%_sysconfdir/sysconfig/mysqld
+install -pD -m755 %SOURCE16 %buildroot%_sysconfdir/control.d/facilities/mysqld
 
 # install configuration files
-install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/mysqld
 install -m0644 support-files/rpm/my.cnf %buildroot%_sysconfdir/my.cnf
-install -m0644 %SOURCE15 %buildroot%_sysconfdir/my.cnf.d/client.cnf
-install -m0644 %SOURCE16 %buildroot%_sysconfdir/my.cnf.d/server.cnf
-install -m0644 %SOURCE17 %buildroot%_sysconfdir/my.cnf.d/mysql-clients.cnf
-%ifarch x86_64
+install -m0644 %SOURCE25 %buildroot%_sysconfdir/my.cnf.d/client.cnf
+install -m0644 %SOURCE26 %buildroot%_sysconfdir/my.cnf.d/server.cnf
+install -m0644 %SOURCE27 %buildroot%_sysconfdir/my.cnf.d/mysql-clients.cnf
+%if_with tokudb
 install -m0644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
 %endif
 
-install -Dm 0644 %SOURCE10 %buildroot%_tmpfilesdir/mysql.conf
-install -Dm 644 %SOURCE11 %buildroot%_unitdir/mysqld.service
-sed -i 's|@dir@|%_libexecdir/%name|g' %buildroot%_unitdir/mysqld.service
-mkdir -p %buildroot%_libexecdir/%name
-install -Dm 755 %SOURCE12 %buildroot%_libexecdir/%name
-install -Dm 755 %SOURCE13 %buildroot%_libexecdir/%name
+#install -Dm 0644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
+#install -Dm 644 %SOURCE21 %buildroot%_unitdir/mysqld.service
+#sed -i 's|@dir@|%_libexecdir/%name|g' %buildroot%_unitdir/mysqld.service
+#mkdir -p %buildroot%_libexecdir/%name
+#install -Dm 755 %SOURCE22 %buildroot%_libexecdir/%name
+#install -Dm 755 %SOURCE23 %buildroot%_libexecdir/%name
 
 
-install -Dm 644 support-files/mysql-log-rotate.sh %buildroot%_sysconfdir/logrotate.d/mysql
-
-# bork
-#mv %buildroot%_bindir/mysqlaccess.conf %buildroot%_sysconfdir/
-#chmod 644 %buildroot%_sysconfdir/mysqlaccess.conf
-mv %buildroot%_datadir/mysql/aclocal %buildroot%_datadir/aclocal
+# Backwards compatibility symlinks (ALT #14863)
+mkdir -p %buildroot%_bindir
+ln -snf ../sbin/safe_mysqld %buildroot%_bindir/mysqld_safe
 
 pushd %buildroot%_bindir
     ln -sf mysqlcheck mysqlrepair
@@ -350,54 +364,71 @@ pushd %buildroot%_bindir
     ln -sf mysqlcheck mysqloptimize
 popd
 
+# Install configuration files.
+install -pD -m644 /dev/null %buildroot%_sysconfdir/my.cnf
+install -pD -m600 %SOURCE5 %buildroot%ROOT/my.cnf
+
 # most current distro packages have it in %_bindir (hello kde4?)
 # but the server subpackage obtains /usr/sbin/mysql_install_db autoreq
 ln -sf {../bin,%buildroot%_sbindir}/mysql_install_db
 
-# nuke -Wl,--as-needed from the mysql_config file
-#perl -pi -e "s|^ldflags=.*|ldflags=\'-rdynamic\'|g" %buildroot%_bindir/mysql_config
+# Fix libmysqlclient_r symlinks
+(
+        cd %buildroot%_libdir
+        N="libmysqlclient_r.so"
+        for l in $N.*; do
+                if [ -h $l ]; then
+                        t=${l#$N}
+                        ln -sf libmysqlclient.so$t $N$t
+                fi
+        done
+)
 
-# cmake generates some completely wacko references to -lprobes_mysql when
-# building with dtrace support.  Haven't found where to shut that off,
-# so resort to this blunt instrument.  While at it, let's not reference
-# libmysqlclient_r anymore either.
-#sed -e 's/-lprobes_mysql//' -e 's/-lmysqlclient_r/-lmysqlclient/' \
-#	%%buildroot%%_bindir/mysql_config >mysql_config.tmp
-#cp -f mysql_config.tmp %%buildroot%%_bindir/mysql_config
-#chmod 755 %%buildroot%%_bindir/mysql_config
-#install -m 0755 -d %%buildroot/var/lib/mysql
-
-# Remove libmysqld.a, + hardlink libmysqld.so.%%libmysqlembedded_major so that it's provided
-#rm -f %%buildroot%%_libdir/libmysqld.a
-#ln %%buildroot%%_libdir/libmysqld.so.%%major %%buildroot%%_libdir/libmysqld.so.%%libmysqlembedded_major.%%libmysqlembedded_minor
-#ln -s libmysqld.so.%%libmysqlembedded_major.%%libmysqlembedded_minor %%buildroot%%_libdir/libmysqld.so.%%libmysqlembedded_major
-
-# libmysqlclient_r is no more.  Upstream tries to replace it with symlinks
-# but that really doesn't work (wrong soname in particular).  We'll keep
-# just the devel libmysqlclient_r.so link, so that rebuilding without any
-# source change is enough to get rid of dependency on libmysqlclient_r.
-rm -f %buildroot%_libdir/libmysqlclient_r.so*
-ln -s libmysqlclient.so %buildroot%_libdir/libmysqlclient_r.so
+#rm -f %buildroot%_libdir/libmysqlclient_r.so*
+#ln -s libmysqlclient.so %buildroot%_libdir/libmysqlclient_r.so
 
 # remove static libs
 rm -f %buildroot%_libdir/libmysqlclient.a
 rm -f %buildroot%_libdir/libmysqlclient_r.a
 
-# mysql-test includes one executable that doesn't belong under /usr/share,
-# so move it and provide a symlink
-mv %buildroot%_datadir/mysql/mysql-test/lib/My/SafeProcess/my_safe_process %buildroot%_bindir
-ln -s %_bindir/my_safe_process %buildroot%_datadir/mysql/mysql-test/lib/My/SafeProcess/my_safe_process
+# Populate chroot with data to some extent.
+install -pD -m644 %buildroot%_datadir/mysql/charsets/* \
+	     %buildroot%ROOT%_datadir/mysql/charsets
 
-# fix location perl modules
-mkdir -p %buildroot%perl_vendor_privlib
-mv %buildroot%_datadir/mysql/mysql-test/lib/* %buildroot%perl_vendor_privlib/
-rm -rf %buildroot%_datadir/mysql/mysql-test/lib
-ln -s ../../../../%perl_vendor_privlib %buildroot%_datadir/mysql/mysql-test/lib
-# rm v1 test framework
-rm -rf %buildroot%_datadir/mysql/mysql-test/lib/v1
+(
+    cd %buildroot%_datadir/mysql
+    for i in */errmsg.sys; do
+	install -pD -m644 $i  %buildroot%ROOT%_datadir/mysql/$i
+    done
+)
 
-# mysql client statically built against a local embedded library, pretty useless
-rm -f %buildroot%_bindir/mysql_embedded
+# Fix perl autodetection.
+grep -EZl '^[[:space:]]*use the ' %buildroot%_bindir/* |
+         xargs -r0 subst -p 's/\([[:space:]]*\)\(use the \)/\1then \2/g'
+
+
+subst -p 's/\(BUGmysql="\)\([^"]*\)"/\1\2,mysql@packages.altlinux.org"/g' %buildroot%_bindir/mysqlbug
+
+mkdir -p %buildroot%_docdir/%name-%version
+install -p -m644 README %SOURCE14 BUILD/support-files/*.cnf %buildroot%_docdir/%name-%version
+
+rm -f %buildroot%_bindir/safe_mysqld
+rm -f %buildroot%_datadir/mysql/mysql{-*.spec,-log-rotate,.server}
+
+touch %buildroot%ROOT/log/queries
+touch %buildroot%_logdir/mysql/info
+
+rm -rf %buildroot%_datadir/mysql-test
+rm -f %buildroot%_libdir/mysql/plugin/*.la
+#rmdir %buildroot%_libdir/mysql/plugin/debug
+
+# broken manpages referencing missing paths
+#rm -f %buildroot%_man1dir/mysql{_client_,}test_embedded.1
+
+%define get_datadir \
+DATADIR=`/usr/bin/my_print_defaults mysqld |sed -ne 's/^--datadir=\\(.*\\)/\\1/pg' |tail -1` \
+[ -n "$DATADIR" ] || { echo "Failed to read configuration"; exit 1; }
+
 
 # this command enables plugins, but needs ini file + configuration in my.cnf before executing
 # and oh yeah, mysql must be stopped... => useless
@@ -409,12 +440,10 @@ rm -f %buildroot%_libdir/mysql/plugin/daemon_example.ini
 #rm -f %buildroot%_libdir/mysql/plugin/auth_test_plugin.so
 #rm -f %buildroot%_libdir/mysql/plugin/dialog_examples.so
 
+
 # house cleaning
+rm -f %buildroot%_bindir/mysql_embedded
 rm -rf %buildroot%_datadir/info
-rm -rf %buildroot%_datadir/mysql/solaris
-rm -f %buildroot%_bindir/client_test
-rm -f %buildroot%_bindir/make_win_binary_distribution
-rm -f %buildroot%_bindir/make_win_src_distribution
 rm -f %buildroot%_datadir/mysql/binary-configure
 rm -f %buildroot%_datadir/mysql/config.huge.ini
 rm -f %buildroot%_datadir/mysql/config.medium.ini
@@ -423,9 +452,6 @@ rm -f %buildroot%_datadir/mysql/mysqld_multi.server
 rm -f %buildroot%_datadir/mysql/mysql-log-rotate
 rm -f %buildroot%_datadir/mysql/mysql.server
 rm -f %buildroot%_datadir/mysql/ndb-config-2-node.ini
-rm -f %buildroot%_datadir/mysql/binary-configure
-rm -f %buildroot%_mandir/man1/make_win_bin_dist.1*
-rm -f %buildroot%_mandir/man1/make_win_src_distribution.1*
 rm -f %buildroot%_datadir/mysql/magic
 
 # no idea how to fix this
@@ -439,41 +465,32 @@ rm -f %buildroot%prefix/README
 
 ################################################################################
 # run the tests
-%if %build_test
+%if_enabled build_test
 %check
-pushd build
+pushd BUILD
     ctest -VV
 popd
 %endif
 
 %pre server
-# delete the mysql group if no mysql user is found, before adding the user
-if [ -z "`getent passwd mysql`" ] && ! [ -z "`getent group mysql`" ]; then
-    %_sbindir/groupdel mysql 2> /dev/null || :
-fi
+/usr/sbin/groupadd -r -f %mysqld_user
+/usr/sbin/useradd -r -g %mysqld_user -d %ROOT -s /dev/null -c "MariaDB server" -n %mysqld_user >/dev/null 2>&1 ||:
 
-/usr/sbin/groupadd -r -f mysql
-/usr/sbin/useradd -r -g mysql -d /var/lib/mysql -s /dev/null -c "MariaDB server" -n mysql >/dev/null 2>&1 ||:
-
-# enable plugins
-#if [ -f %_sysconfdir/my.cnf ]; then
-#    perl -pi -e "s|^#plugin-load|plugin-load|g" %_sysconfdir/my.cnf
-#    perl -pi -e "s|^#federated|federated|g" %_sysconfdir/my.cnf
-#    # switch to federatedx provider
-#    perl -pi -e "s|;ha_federated\.so$|;ha_federatedx\.so|g" %_sysconfdir/my.cnf
-#fi
+%pre_control mysqld
 
 %post server
+rm -rf %ROOT/dev
+%_sysconfdir/chroot.d/mysql.all force
+%post_control -s local mysqld
+
 %post_service mysqld
 
 %preun server
 %preun_service mysqld
 
 %postun server
-if [ "$1" = "0" ]; then
-    if [ -f /var/lock/subsys/mysqld ]; then
-        %_initdir/mysqld restart > /dev/null 2>/dev/null || :
-    fi
+if [ $1 = 0 ]; then
+    rm -f %ROOT/lib/* %ROOT/var/yp/binding/*
 fi
 
 %files
@@ -481,174 +498,136 @@ fi
 %files server
 %doc README COPYING
 %_initdir/mysqld
-%_tmpfilesdir/mysql.conf
-%_sysconfdir/logrotate.d/mysql
-%config(noreplace) %_sysconfdir/sysconfig/mysqld
-%config(noreplace) %_sysconfdir/my.cnf
+%config(noreplace) %_sysconfdir/sysconfig/*
+%config(noreplace) %_sysconfdir/logrotate.d/*
+%config(noreplace) %_sysconfdir/control.d/facilities/*
+%config %_sysconfdir/chroot.d/*
+%ghost %config(noreplace,missingok) %_sysconfdir/my.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
-%_unitdir/mysqld.service
-%dir %_libexecdir/%name
-%_libexecdir/%name/*
+%if_with tokudb
+%config(noreplace) %_sysconfdir/my.cnf.d/tokudb.cnf
+%endif
+#%_tmpfilesdir/mysql.conf
+#%_unitdir/mysqld.service
+#%dir %_libexecdir/%name
+#%_libexecdir/%name/*
 
-%_libdir/mysql/plugin
-
-%_sbindir/*
-
-%_bindir/aria_chk
-%_bindir/aria_dump_log
-%_bindir/aria_ftdump
-%_bindir/aria_pack
-%_bindir/aria_read_log
-%_bindir/innochecksum
-%_bindir/myisamchk
-%_bindir/myisam_ftdump
-%_bindir/myisamlog
-%_bindir/myisampack
-%_bindir/my_print_defaults
-%_bindir/mysqlbug
-%_bindir/mysql_convert_table_format
-%_bindir/mysqld_multi
-%_bindir/mysqld_safe
-%_bindir/mysql_install_db
+%_bindir/aria*
+%_bindir/*isam*
 %_bindir/mysql_fix_extensions
-%_bindir/mysqlhotcopy
 %_bindir/mysql_secure_installation
-%_bindir/mysql_setpermission
-%_bindir/mysqltest
 %_bindir/mysql_tzinfo_to_sql
 %_bindir/mysql_upgrade
-%_bindir/mysql_zap
-%_bindir/perror
-%_bindir/resolveip
-%_bindir/resolve_stack_dump
+%_bindir/mysqld_multi
+%_bindir/mysqld_safe
 
-%attr(0755,mysql,mysql) %dir /var/lib/mysql
-%attr(0755,mysql,mysql) %dir %_var/run/mysqld
-%attr(0755,mysql,mysql) %dir %_var/log/mysqld
+%_bindir/mysql_install_db
 
-%_mandir/man1/innochecksum.1*
-%_mandir/man1/myisamchk.1*
-%_mandir/man1/myisamlog.1*
-%_mandir/man1/myisampack.1*
-%_mandir/man1/my_print_defaults.1*
-#_mandir/man1/mysqlbug.1*
-%_mandir/man1/mysql_convert_table_format.1*
-%_mandir/man1/mysqld_multi.1*
-%_mandir/man1/mysqld_safe.1*
-%_mandir/man1/mysql_fix_extensions.1*
-%_mandir/man1/mysql_fix_privilege_tables.1*
-%_mandir/man1/mysqlhotcopy.1*
-%_mandir/man1/mysql_install_db.1*
-%_mandir/man1/mysqlman.1*
-%_mandir/man1/mysql_secure_installation.1*
-%_mandir/man1/mysql.server.1*
-%_mandir/man1/mysql_setpermission.1*
-%_mandir/man1/mysqlslap.1*
-%_mandir/man1/mysql_tzinfo_to_sql.1*
-%_mandir/man1/mysql_upgrade.1*
-%_mandir/man1/mysql_zap.1*
-%_mandir/man1/perror.1*
-%_mandir/man1/resolveip.1*
-%_mandir/man1/resolve_stack_dump.1*
-%_mandir/man1/mysqlbug.1.*
-%_mandir/man8/mysqld.8*
-%_mandir/man8/mysqlmanager.8*
-
-%exclude %_libdir/mysql/plugin/ha_innodb.so
-%exclude %_libdir/mysql/plugin/ha_oqgraph.so
-%exclude %_libdir/mysql/plugin/ha_sphinx.so
-%ifarch x86_64
-%exclude %_libdir/mysql/plugin/ha_tokudb.so
+%if_with tokudb
+%_bindir/tokuftdump
+%_bindir/tokuft_logprint
+%_datadir/mysql/mroonga
 %endif
+
+%_sbindir/*
+%_libdir/mysql/plugin
+%attr(750,root,adm) %dir /var/log/mysql
+%ghost %verify(not md5 mtime size) /var/log/mysql/*
+%dir %_docdir/%name-%version
+%_docdir/%name-%version/README
+%_docdir/%name-%version/README.*
+%_docdir/%name-%version/*.cnf
+%attr(600,root,root) %config(noreplace,missingok) %ROOT/my.cnf
+%attr(3771,root,mysql) %dir %ROOT
+%attr(710,root,mysql) %dir %ROOT/%_lib
+%attr(710,root,mysql) %dir %ROOT/%_libdir
+%attr(710,root,mysql) %dir %ROOT/%_libdir/mysql
+%attr(710,root,mysql) %dir %ROOT/%_libdir/mysql/plugin
+%attr(710,root,mysql) %dir %ROOT%_sysconfdir
+%ghost %ROOT%_sysconfdir/hosts
+%ghost %ROOT%_sysconfdir/services
+%ghost %ROOT%_sysconfdir/*.conf
+%dir %ROOT/dev
+%ghost %ROOT/dev/urandom
+%attr(710,root,mysql) %dir %ROOT/var
+%dir %ROOT/var/nis
+%ghost %ROOT/var/nis/NIS_COLD_START
+%dir %ROOT/var/yp
+%dir %ROOT/var/yp/binding
+%dir %ROOT/usr
+%dir %ROOT%_datadir
+%ROOT%_datadir/mysql
+%attr(3770,root,mysql) %dir %ROOT/db
+%attr(750,mysql,mysql) %dir %ROOT/db/*
+%attr(3770,root,mysql) %dir %ROOT/log
+%attr(660,mysql,mysql) %ghost %verify(not md5 mtime size) %ROOT/log/*
+%attr(3770,root,mysql) %dir %ROOT/tmp
 
 %files common
 %_datadir/mysql
-%exclude %_datadir/mysql/sql-bench
-%exclude %_datadir/mysql/mysql-test
-
-%ifarch x86_64
-%files engine-tokudb
-%config(noreplace) %_sysconfdir/my.cnf.d/tokudb.cnf
-%doc storage/tokudb/README*
-%_bindir/tokuftdump
-%_libdir/mysql/plugin/ha_tokudb.so
+%exclude %_datadir/mysql/SELinux
+%if_with tokudb
+%exclude %_datadir/mysql/mroonga
 %endif
 
-%files engine-obsolete
-%_libdir/mysql/plugin/ha_innodb.so
-
-%files engine-extra
-%_libdir/mysql/plugin/ha_oqgraph.so
-%_libdir/mysql/plugin/ha_sphinx.so
+%files server-perl
+%_bindir/mysql_convert_table_format
+%_bindir/mysql_find_rows
+%_bindir/mysql_setpermission
+%_bindir/mysql_zap
+%_bindir/mysqlhotcopy
+%_bindir/mysqlaccess
+%_bindir/mysqldumpslow
+%_bindir/mytop
 
 %files client
 %dir %_sysconfdir/my.cnf.d
 %config(noreplace) %_sysconfdir/my.cnf.d/client.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/mysql-clients.cnf
+%_bindir/innochecksum
 %_bindir/msql2mysql
+%_bindir/my_print_defaults
 %_bindir/mysql
-%_bindir/mysqlaccess
+%_bindir/mysql_client_test
 %_bindir/mysqladmin
 %_bindir/mysqlanalyze
 %_bindir/mysqlbinlog
+%_bindir/mysqlbug
 %_bindir/mysqlcheck
 %_bindir/mysqldump
-%_bindir/mysqldumpslow
-%_bindir/mysql_find_rows
 %_bindir/mysqlimport
 %_bindir/mysqloptimize
 %_bindir/mysqlrepair
 %_bindir/mysqlshow
 %_bindir/mysqlslap
+%_bindir/mysqltest
 %_bindir/mysql_waitpid
+%_bindir/perror
 %_bindir/replace
-%_bindir/mytop
+%_bindir/resolve*
 
-%_mandir/man1/msql2mysql.1*
-%_mandir/man1/myisam_ftdump.1*
-%_mandir/man1/mysql.1*
-%_mandir/man1/mysqlaccess.1*
-%_mandir/man1/mysqladmin.1*
-%_mandir/man1/mysqlbinlog.1*
-%_mandir/man1/mysqlcheck.1*
-%_mandir/man1/mysqldump.1*
-%_mandir/man1/mysqldumpslow.1*
-%_mandir/man1/mysql_find_rows.1*
-%_mandir/man1/mysqlimport.1*
-%_mandir/man1/mysqlshow.1*
-%_mandir/man1/mysql_waitpid.1*
-%_mandir/man1/replace.1*
+%_mandir/man?/*
+%exclude %_man1dir/mysql_config.1*
+%exclude %_man1dir/mysql_client_test_embedded.1*
+%exclude %_man1dir/mysqltest_embedded.1*
 
-%if %build_bench
+
 %files bench
-%doc build/sql-bench/README
-%_bindir/my_safe_process
-%_bindir/mysql_client_test
-%_bindir/mysql_client_test_embedded
-%_bindir/mysqltest_embedded
-%_datadir/mysql/sql-bench
-#attr(-,mysql,mysql) %_datadir/mysql/mysql-test
-%perl_vendor_privlib/*
-%_mandir/man1/mysql-stress-test.pl.1*
-%_mandir/man1/mysql-test-run.pl.1*
-%_mandir/man1/mysql_client_test.1*
-%_mandir/man1/mysql_client_test_embedded.1*
-%_mandir/man1/mysqltest.1*
-%_mandir/man1/mysqltest_embedded.1*
-%endif
+%_datadir/sql-bench
 
 %files -n libmysqlclient%soname
-%_libdir/libmysqlclient.so.*
+%_libdir/*.so.*
+%exclude %_libdir/libmysqld.so.*
 
 %files -n libmysqlclient-devel
 %doc INSTALL-SOURCE
 %_bindir/mysql_config
-%_libdir/libmysqlclient_r.so
-%_libdir/libmysqlclient.so
-%_includedir/mysql
+%_libdir/*.so
+%exclude %_libdir/libmysqld.so
+%_includedir/*
 #_mandir/man1/comp_err.1*
-%_mandir/man1/mysql_config.1*
-%_datadir/aclocal/mysql.m4
+%_man1dir/mysql_config.1*
+%_aclocaldir/mysql.m4
 # mysqlservices library is static, because it doesn't contain any code
 # itself, and is meant to be statically linked to all plugins.
 %_libdir/libmysqlservices.a
@@ -660,8 +639,16 @@ fi
 
 %files -n libmariadbembedded-devel
 %_libdir/libmysqld.so
+%_bindir/mysql_client_test_embedded
+%_bindir/mysqltest_embedded
+%_man1dir/mysql_client_test_embedded.1*
+%_man1dir/mysqltest_embedded.1*
 
 %changelog
+* Tue Aug 18 2015 Alexey Shabalin <shaba@altlinux.ru> 10.0.21-alt1
+- 10.0.21
+- sync with MySQL-5.5.43-alt1 (patches, build options, files, chroot)
+
 * Sat Dec 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.34-alt1
 - New version
 
