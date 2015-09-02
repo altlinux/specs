@@ -56,8 +56,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 224
-Release: alt1
+Version: 225
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -175,6 +175,9 @@ Requires: %name-utils = %EVR
 Requires: %name-services = %EVR
 Requires: pam_%name = %EVR
 Requires: journalctl = %EVR
+
+Requires: libnss-myhostname = %EVR
+Requires: libnss-mymachines = %EVR
 
 # /*bin/journalctl is in a subpackage.
 # We want to be able to install a new journalctl and use the old (stable) systemd.
@@ -789,6 +792,7 @@ mkdir -p %buildroot%_localstatedir/lib/systemd/coredump
 mkdir -p %buildroot%_localstatedir/lib/systemd/catalog
 mkdir -p %buildroot%_localstatedir/lib/systemd/backlight
 mkdir -p %buildroot%_localstatedir/lib/systemd/rfkill
+mkdir -p %buildroot%_localstatedir/lib/systemd/journal-upload
 mkdir -p %buildroot%_localstatedir/log/journal
 touch %buildroot%_localstatedir/lib/systemd/catalog/database
 touch %buildroot%_sysconfdir/udev/hwdb.bin
@@ -960,6 +964,9 @@ chmod g+s  /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2> /dev/null`
 # Apply ACL to the journal directory
 /usr/bin/setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx %_localstatedir/log/journal/ >/dev/null 2>&1 || :
 
+# remove obsolete systemd-readahead file
+rm -f /.readahead > /dev/null 2>&1 || :
+
 if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
         /sbin/systemctl preset \
@@ -1049,18 +1056,66 @@ fi
 %endif
 
 %post -n libnss-myhostname
-if [ "$1" = "1" ]; then
-    grep -q '^hosts:[[:blank:]].\+myhostname' \
-    /etc/nsswitch.conf || \
-    sed -i.rpmorig 's/^\(hosts:.\+\)$/\1 myhostname/' /etc/nsswitch.conf >/dev/null 2>&1 || :
+if [ -f /etc/nsswitch.conf ] ; then
+        sed -i.rpmorig -e '
+                /^hosts:/ !b
+                /\<myhostname\>/ b
+                s/[[:blank:]]*$/ myhostname/
+                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 fi
 update_chrooted all
 
 %postun -n libnss-myhostname
 if [ "$1" = "0" ]; then
-    grep -q '^hosts:[[:blank:]].\+myhostname' \
-        /etc/nsswitch.conf && \
-    sed -i 's/ myhostname//' /etc/nsswitch.conf
+        if [ -f /etc/nsswitch.conf ] ; then
+                sed -i.rpmorig -e '
+                        /^hosts:/ !b
+                        s/[[:blank:]]\+myhostname\>//
+                        ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+        fi
+fi
+update_chrooted all
+
+%post -n libnss-mymachines
+if [ -f /etc/nsswitch.conf ] ; then
+        sed -i.rpmorig -e '
+                /^hosts:/ !b
+                /\<mymachines\>/ b
+                s/[[:blank:]]*$/ mymachines/
+                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+
+        sed -i.rpmorig -e '
+                /^passwd:/ !b
+                /\<mymachines\>/ b
+                s/[[:blank:]]*$/ mymachines/
+                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+
+        sed -i.rpmorig -e '
+                /^group:/ !b
+                /\<mymachines\>/ b
+                s/[[:blank:]]*$/ mymachines/
+                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+fi
+update_chrooted all
+
+%postun -n libnss-mymachines
+if [ "$1" = "0" ]; then
+        if [ -f /etc/nsswitch.conf ] ; then
+                sed -i.rpmorig -e '
+                        /^hosts:/ !b
+                        s/[[:blank:]]\+mymachines\>//
+                        ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+
+                sed -i.rpmorig -e '
+                        /^passwd:/ !b
+                        s/[[:blank:]]\+mymachines\>//
+                        ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+
+                sed -i.rpmorig -e '
+                        /^group:/ !b
+                        s/[[:blank:]]\+mymachines\>//
+                        ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+        fi
 fi
 update_chrooted all
 
@@ -1344,6 +1399,7 @@ update_chrooted all
 
 %files -n libnss-resolve
 /%_lib/libnss_resolve.so.*
+%_man8dir/*nss*resolve*
 
 %files -n pam_%name
 %config %_sysconfdir/pam.d/systemd-user
@@ -1506,6 +1562,7 @@ update_chrooted all
 %files journal-gateway
 %dir %_localstatedir/log/journal/remote
 %config(noreplace) %_sysconfdir/systemd/journal-remote.conf
+%dir %attr(0755,systemd-journal-upload,systemd-journal-upload) %_localstatedir/lib/systemd/journal-upload
 /lib/systemd/systemd-journal-gatewayd
 /lib/systemd/systemd-journal-remote
 %_unitdir/systemd-journal-gatewayd.*
@@ -1666,6 +1723,13 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Sep 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1:225-alt2
+- enable nss-mymachines in /etc/nsswitch.conf
+- always install libnss-myhostname and libnss-mymachines
+
+* Fri Aug 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1:225-alt1
+- 225
+
 * Mon Aug 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1:224-alt1
 - 224
 - drop python subpackages
