@@ -14,8 +14,8 @@
 %define nv_version 304
 %define nv_release 125
 %define nv_minor %nil
-%define pkg_rel alt124
-%def_enable kernelsource
+%define pkg_rel alt125
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -321,6 +321,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 02 2015 Sergey V Turchin <zerg@altlinux.org> 304.125-alt125
+- don't package kernel module sources
+
 * Tue Jun 02 2015 Sergey V Turchin <zerg@altlinux.org> 304.125-alt124
 - add fix against 4.0 kernel
 
