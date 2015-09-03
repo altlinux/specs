@@ -7,7 +7,7 @@
 
 Name: sddm
 Version: 0.11.0
-Release: alt6
+Release: alt7
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -117,6 +117,9 @@ sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/defa
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Thu Sep 03 2015 Sergey V Turchin <zerg@altlinux.org> 0.11.0-alt7
+- fix wm sessions list
+
 * Thu Aug 27 2015 Sergey V Turchin <zerg@altlinux.org> 0.11.0-alt6
 - fix pam KWallet support
 
