@@ -1,6 +1,6 @@
 Name: screen
 Version: 4.0.3
-Release: alt10.1
+Release: alt11
 
 Summary: A screen manager that supports multiple sessions on one terminal
 License: GPLv2+
@@ -115,6 +115,9 @@ ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
 %doc NEWS README FAQ doc/README.DOTSCREEN doc/*.ps.*
 
 %changelog
+* Thu Sep 03 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.3-alt11
+- Fixed CVE-2015-6806.
+
 * Wed Feb 27 2013 Fr. Br. George <george@altlinux.ru> 4.0.3-alt10.1
 - Rebuild with -Werror removed
 
