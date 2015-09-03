@@ -5,8 +5,8 @@
 %define rname okular
 Name: kde4-okular
 %define major 15
-%define minor 4
-%define bugfix 1
+%define minor 08
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -132,6 +132,9 @@ Development files for %name
 
 
 %changelog
+* Fri Aug 28 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Thu May 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.1-alt1
 - new version
 
