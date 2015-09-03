@@ -2,20 +2,21 @@
 
 Name: blueman
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: The GTK+ bluetooth management utility
 Group: System/Libraries
 License: GPLv3
 Url: https://github.com/blueman-project/blueman
 
-Requires: bluez >= 4.35
-Requires: polkit-gnome
-Provides: bluez-gnome
-
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
+Requires: bluez >= 4.35
+Requires: dconf obexd pulseaudio-bluez
 Requires: gnome-icon-theme
+
+Provides: bluez-gnome
 
 # use python3
 AutoReqProv: nopython
@@ -36,7 +37,6 @@ Features:
     * Easy to use interface
     * Storing Favourite devices
     * Send files
-    * Browse files on devices
     * List all seen devices
     * View Local/Remote Device information
     * View transfer speeds and link quality
@@ -48,9 +48,14 @@ Features:
 
 %prep
 %setup
-
+%patch -p1
 subst 's/DBusServiceUnknownError/DBusException/' blueman/*/*.py
 find -name Makefile.am | xargs sed -i 's,pythondir,pyexecdir,'
+
+# fix shebangs for python3
+find ./ -type f -print0| xargs -r0 subst 's@\(#!\/usr\/bin\/env python\)@\13@' --
+# fix bluetoothd path
+subst 's@\/usr\/sbin\/bluetoothd@/usr/libexec/bluetooth/bluetoothd@' apps/blueman-report
 
 %build
 %autoreconf
@@ -78,7 +83,6 @@ EOF
 %_bindir/%name-adapters
 %_bindir/%name-applet
 %_bindir/%name-assistant
-%_bindir/%name-browse
 %_bindir/%name-manager
 %_bindir/%name-report
 %_bindir/%name-sendto
@@ -91,7 +95,7 @@ EOF
 %_desktopdir/%name-adapters.desktop
 %_desktopdir/%name-manager.desktop
 %_datadir/%name/
-%_datadir/dbus-1/services/%name-applet.service
+%_datadir/dbus-1/services/org.%name.Applet.service
 %_datadir/dbus-1/system-services/org.%name.Mechanism.service
 %_datadir/polkit-1/actions/org.blueman.policy
 %_datadir/glib-2.0/schemas/org.%name.gschema.xml
@@ -104,6 +108,12 @@ EOF
 %exclude %python3_sitelibdir/_%{name}.la
 
 %changelog
+* Thu Sep 03 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt2
+- switched to upstream master branch
+- fixed python shebangs (ALT #31252)
+- fixed bluetoothd path for blueman-report
+- fixed reqs
+
 * Mon Aug 24 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
 - 2.0 with python3
 
