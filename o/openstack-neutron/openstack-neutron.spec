@@ -8,7 +8,7 @@
 
 Name: openstack-neutron
 Version: 2015.1.1
-Release: alt1
+Release: alt2
 Provides: openstack-quantum = %version-%release
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
 Summary: OpenStack Networking Service
@@ -760,6 +760,10 @@ sed -i -e 's|# root_helper = sudo|root_helper = sudo neutron-rootwrap /etc/neutr
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Fri Sep 04 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2015.1.1-alt2
+- config files changed in neutron-openvswitch-agent.service and 
+  neutron-dhcp-agent.service
+
 * Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
 - 2015.1.1
 - drop neutron-dist.conf in datadir
