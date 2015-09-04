@@ -2,7 +2,7 @@
 %def_enable obex
 
 Name: bluez
-Version: 5.33
+Version: 5.34
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -76,6 +76,8 @@ install -m755 attrib/gatttool %buildroot%_bindir/
 install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
 ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
 mkdir -p %buildroot%_libdir/bluetooth/plugins %buildroot%_localstatedir/bluetooth
+# configdir
+mkdir -p %buildroot%_sysconfdir/bluetooth
 
 find %buildroot%_libdir -name \*.la -delete
 
@@ -96,6 +98,7 @@ chkconfig bluetoothd on
 
 %files
 %doc AUTHORS ChangeLog README
+%dir %_sysconfdir/bluetooth
 %_initdir/bluetoothd
 %config %_sysconfdir/dbus-1/system.d/bluetooth.conf
 %_unitdir/*.service
@@ -123,6 +126,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Fri Sep 04 2015 Yuri N. Sedunov <aris@altlinux.org> 5.34-alt1
+- 5.34
+
 * Mon Aug 03 2015 Yuri N. Sedunov <aris@altlinux.org> 5.33-alt1
 - 5.33
 
