@@ -1,6 +1,6 @@
 Name: galera
 Version: 25.3.12
-Release: alt2
+Release: alt3
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
 License: GPLv2
@@ -73,13 +73,13 @@ install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README
 %preun_service garbd
 
 %files -n libgalera_smm
+%dir %_libdir/galera
 %_libdir/galera/libgalera_smm.so
 
 %files garbd
 %dir %_sysconfdir/garbd
 %config(noreplace) %_sysconfdir/garbd/garbd.conf
 %dir %_docdir/galera
-%dir %_libdir/galera
 %_sbindir/garbd
 %_unitdir/garbd.service
 %_initdir/garbd
@@ -93,6 +93,9 @@ install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Fri Sep 04 2015 Alexey Shabalin <shaba@altlinux.ru> 25.3.12-alt3
+- run daemon garbd as nobody user
+
 * Fri Sep 04 2015 Alexey Shabalin <shaba@altlinux.ru> 25.3.12-alt2
 - split galera arbitrator and wsrep provider to different packages
 
