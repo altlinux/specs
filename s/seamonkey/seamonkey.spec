@@ -14,7 +14,7 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.33.1
+Version: 2.35
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -46,8 +46,6 @@ Patch7:     	seamonkey-2.19-elfhack.patch
 Patch8:		seamonkey-2.26-enable-addons.patch
 Patch9:		mozilla-js-makefile.patch
 Patch10:		firefox-32-baseline-disable.patch
-# Bug 1128161 - Fix build error when logging is disabled
-Patch11:	seamonkey-fix-build-without-logging.patch
 
 PreReq:		urw-fonts
 
@@ -170,10 +168,6 @@ pushd mozilla
 %patch10 -p2
 popd
 %endif
-
-pushd mozilla
-%patch11 -p1
-popd
 
 ### Copying .mozconfig to build directory
 cp -f %SOURCE7 .mozconfig
@@ -404,6 +398,9 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Fri Sep 04 2015 Andrey Cherepanov <cas@altlinux.org> 1:2.35-alt1
+- New version
+
 * Wed Mar 25 2015 Andrey Cherepanov <cas@altlinux.org> 1:2.33.1-alt1
 - New version
 - Security fixes:
