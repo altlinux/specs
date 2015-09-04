@@ -6,7 +6,7 @@
 %def_disable clang
 %def_disable shared_libraries
 
-%define v8_version 4.4.63.31
+%define v8_version 4.5.103.29
 
 %if_enabled debug
 %define buildtype Debug
@@ -15,7 +15,7 @@
 %endif
 
 Name:           chromium
-Version:        44.0.2403.157
+Version:        45.0.2454.85
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -72,7 +72,6 @@ Patch85:	chromium-fix-manpage.patch
 Patch86:	chromium-icon.patch
 # Old, but specific
 Patch87:	chromium-cups1.5.patch
-Patch88:	chromium-arm-no-float-abi.patch
 Patch90:	chromium-gcc4.7.patch
 Patch91:	chromium-arm.patch
 # New from Debian
@@ -236,10 +235,9 @@ tar xf %SOURCE10 -C src
 %patch85 -p1
 %patch86 -p0
 %patch87 -p1
-%patch88 -p1
 %patch90 -p1
 %patch91 -p1
-%patch92 -p1
+%patch92 -p0
 %patch93 -p1
 %patch95 -p0
 %patch96 -p0
@@ -652,6 +650,20 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Wed Sep 02 2015 Andrey Cherepanov <cas@altlinux.org> 45.0.2454.85-alt1
+- New version
+- Security fixes:
+  - High CVE-2015-1291: Cross-origin bypass in DOM.
+  - High CVE-2015-1292: Cross-origin bypass in ServiceWorker.
+  - High CVE-2015-1293: Cross-origin bypass in DOM.
+  - High CVE-2015-1294: Use-after-free in Skia.
+  - High CVE-2015-1295: Use-after-free in Printing.
+  - High CVE-2015-1296: Character spoofing in omnibox.
+  - Medium CVE-2015-1297: Permission scoping error in WebRequest.
+  - Medium CVE-2015-1298: URL validation error in extensions.
+  - Medium CVE-2015-1299: Use-after-free in Blink.
+  - Medium CVE-2015-1300: Information leak in Blink.
+
 * Wed Aug 26 2015 Andrey Cherepanov <cas@altlinux.org> 44.0.2403.157-alt1
 - New version
 
