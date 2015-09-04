@@ -6,7 +6,7 @@
 %def_disable static
 %def_disable compat
 
-%if_enabled compat
+%if_disabled compat
 %def_enable cpp
 %def_enable glib
 %def_enable qt5
@@ -29,18 +29,18 @@
 %endif
 
 %define rname poppler
-%define somajor 53
+%define somajor 54
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 34
+%define minor 35
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -395,8 +395,8 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
-* Fri Sep 04 2015 Sergey V Turchin <zerg@altlinux.org> 0.34.0-alt2
-- build compat library
+* Fri Sep 04 2015 Sergey V Turchin <zerg@altlinux.org> 0.35.0-alt1
+- new version
 
 * Wed Aug 05 2015 Sergey V Turchin <zerg@altlinux.org> 0.34.0-alt1
 - new version
