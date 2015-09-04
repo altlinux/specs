@@ -4,7 +4,7 @@
 
 Name:           mintmenu
 Version:        5.6.4
-Release:        alt2
+Release:        alt3
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
@@ -142,6 +142,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Fri Sep 04 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.4-alt3
+- Change menu icon to 22x22 simplified ALT Linux logo
+
 * Tue Jul 07 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.4-alt2
 - Use alternative for menu button icon
 - Use ALT Linux logotype for menu button icon
