@@ -5,7 +5,7 @@
 
 Name: kf5-%rname
 Version: 5.4.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -13,6 +13,7 @@ Summary: Audio Volume Plasma Applet
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
+Provides: kde5-volume-control
 Requires: pulseaudio-daemon
 
 Source: %rname-%version.tar
@@ -88,6 +89,9 @@ KF5 library
 %_K5lib/libQPulseAudioPrivate.so.*
 
 %changelog
+* Fri Sep 04 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt2
+- provide kde5-volume-control
+
 * Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
 - new version
 

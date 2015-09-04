@@ -2,13 +2,15 @@
 
 Name: kde5-%rname
 Version: 15.08.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Sound
 Summary: KDE sound mixer
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Provides: kde5-volume-control
 
 Source: %rname-%version.tar
 
@@ -71,6 +73,9 @@ developing applications that use %name.
 %_K5dbus_iface/*.xml
 
 %changelog
+* Fri Sep 04 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
+- provide kde5-volume-control
+
 * Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
