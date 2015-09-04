@@ -6,8 +6,8 @@
 %define koffice_ver 4:2.3.70
 
 Name: calligra
-Version: 2.9.5
-Release: alt2
+Version: 2.9.7
+Release: alt1
 Epoch: 0
 %define libname lib%name
 
@@ -561,7 +561,7 @@ mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 %_K4lib/kexidb_*driver.so
 %_K4lib/kexidb_sqlite3_icu.so
 %_K4lib/keximigrate_*.so
-%_K4lib/kexirelationdesignshape.so
+#%_K4lib/kexirelationdesignshape.so
 %_K4xdg_apps/*kexi.desktop
 %_K4conf/kexirc
 %_K4srvtyp/kexi*.desktop
@@ -569,7 +569,7 @@ mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 %_K4srv/calligra/kexiformhandler.desktop
 %_K4srv/calligra/keximigrationhandler.desktop
 %_K4srv/calligra/kexiqueryhandler.desktop
-%_K4srv/calligra/kexirelationdesignshape.desktop
+#%_K4srv/calligra/kexirelationdesignshape.desktop
 %_K4srv/calligra/kexireporthandler.desktop
 %_K4srv/calligra/kexiscripthandler.desktop
 %_K4srv/calligra/kexitablehandler.desktop
@@ -684,9 +684,7 @@ mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 %_K4lib/okularGenerator_*.so
 %_K4xdg_apps/okularApplication_*.desktop
 %_K4srv/libokularGenerator_*.desktop
-%_K4srv/calligra/libokularGenerator_*.desktop
 %_K4srv/okular*.desktop
-%_K4srv/calligra/okular*.desktop
 
 %files -n %libname
 %_K4libdir/lib*.so.*
@@ -694,6 +692,9 @@ mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 %_K4libdir/libkritacolord.so
 
 %changelog
+* Fri Sep 04 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.9.7-alt1
+- new version
+
 * Tue Jun 30 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.9.5-alt2
 - rebuild with new exiv2
 
