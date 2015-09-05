@@ -1,18 +1,21 @@
 Name: telepathy-haze
-Version: 0.8.0
-Release: alt1
+Version: 0.8.0.1
+Release: alt0.1
 
 Summary: a connection manager built around libpurple
 License: GPL v2 or later
 Group: Networking/Instant messaging
 Url: http://developer.pidgin.im/wiki/TelepathyHaze
 
-Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
+# VCS: git://anongit.freedesktop.org/telepathy/telepathy-haze
+Source: %name-%version.tar
+#Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
 
 BuildPreReq: glib2-devel >= 2.22 libgio-devel libdbus-glib-devel >= 0.73
 BuildRequires: libpurple-devel >= 2.7.0 libtelepathy-glib-devel >= 0.13.9
 # for check:
 BuildRequires: python-module-twisted-words python-module-twisted-core-gui
+BuildRequires: python-module-cffi python-module-service-identity
 
 %description
 telepathy-haze is a connection manager built around libpurple, the
@@ -22,14 +25,15 @@ be supported by telepathy-haze; for now, XMPP, MSN and AIM are known to
 work acceptably, and others will probably work too.
 
 %prep
-%setup -q
+%setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %check
 %make check
@@ -41,6 +45,10 @@ work acceptably, and others will probably work too.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.haze.service
 
 %changelog
+* Sat Sep 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.1
+- updated to 0.8.0.1_83589722
+- fixed buildreqs for check stage
+
 * Thu Oct 03 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
