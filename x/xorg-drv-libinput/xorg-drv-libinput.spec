@@ -1,11 +1,11 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name xf86-input-libinput
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-libinput
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: Xorg libinput input driver
 Group: System/X11
@@ -19,9 +19,9 @@ Source: ftp://ftp.x.org/pub/individual/driver/%_name-%version.tar.bz2
 %endif
 Patch: xf86-input-libinput-0.14.0-alt-include.patch
 # fc
-Source1: 90-libinput.conf
+Source1: 99-libinput.conf
 
-%define libinput_ver 0.21.0
+%define libinput_ver 1.0
 
 PreReq: XORG_ABI_XINPUT = %get_xorg_abi_xinput
 Requires: libinput >= %libinput_ver
@@ -75,6 +75,10 @@ install -p -m 0644 %SOURCE1 %buildroot%_xconfdir/90-libinput.conf
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Sat Sep 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt2
+- updated to 0.14.0_6abd3412
+- mv {90,99}-libinput.conf to overlap 95-input-keyboard.conf
+
 * Mon Aug 31 2015 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
 - 0.14.0
 
