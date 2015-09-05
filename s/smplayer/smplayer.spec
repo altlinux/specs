@@ -1,4 +1,4 @@
-%define		svn 7048
+%define		svn 7102
 
 %define		rel alt1
 
@@ -10,7 +10,7 @@ License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
 Version:	14.9.0
-Release:	%rel.%svn.1
+Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
 Patch0:		smplayer-paths-fix-alt.patch
@@ -104,6 +104,9 @@ export OPTFLAGS="%optflags"
 %endif
 
 %changelog
+* Sun Sep 06 2015 Motsyo Gennadi <drool@altlinux.ru> 14.9.0-alt1.7102
+- svn7102
+
 * Sun Jul 26 2015 Motsyo Gennadi <drool@altlinux.ru> 14.9.0-alt1.7048.1
 - update Ukrainian translation (fixed typo)
 
