@@ -1,7 +1,7 @@
 ## SPEC file for Perl module App::Cmd
 
 Name: perl-App-Cmd
-Version: 0.327
+Version: 0.328
 Release: alt1
 
 Summary: Perl module to write CLI apps with less suffering
@@ -20,9 +20,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sat May 30 2015
-# optimized out: perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Data-OptList perl-Locale-Maketext-Simple perl-Module-Implementation perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Module-Runtime perl-Package-Stash perl-Package-Stash-XS perl-Params-Check perl-Params-Util perl-Params-Validate perl-Parse-CPAN-Meta perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-clean perl-parent
-BuildRequires: perl-CPAN-Meta perl-Capture-Tiny perl-Class-Load perl-Getopt-Long-Descriptive perl-IO-TieCombine perl-IPC-Cmd perl-Module-Pluggable perl-String-RewritePrefix perl-Sub-Name perl-Test-Fatal
+# Automatically added by buildreq on Sat Sep 05 2015
+# optimized out: perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Data-OptList perl-Encode perl-Locale-Maketext-Simple perl-Module-Implementation perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Module-Runtime perl-Package-Stash perl-Package-Stash-XS perl-Params-Check perl-Params-Util perl-Params-Validate perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-clean perl-parent
+BuildRequires: perl-CPAN-Meta perl-Capture-Tiny perl-Class-Load perl-Getopt-Long-Descriptive perl-IO-TieCombine perl-IPC-Cmd perl-Module-Pluggable perl-String-RewritePrefix perl-Sub-Name perl-Test-Fatal perl-podlators
 
 %description
 Perl module App::Cmd is intended to make it easy to write complex
@@ -44,6 +44,9 @@ the annoying things usually involved.
 %perl_vendor_privlib/App/Cmd*
 
 %changelog
+* Sat Sep 05 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.328-alt1
+- New version
+
 * Sat May 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.327-alt1
 - New version
 
