@@ -3,7 +3,7 @@
 %define real_name DBD-Cassandra
 
 Name: perl-DBD-Cassandra
-Version: 0.15
+Version: 0.16
 Release: alt1
 
 Summary: DBD database driver for Cassandra's CQL3
@@ -49,6 +49,9 @@ is not very good, so this might become XS some day.
 %perl_vendor_privlib/DBD/Cassandra*
 
 %changelog
+* Sat Sep 05 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.16-alt1
+- New version
+
 * Tue Aug 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.15-alt1
 - New version
 
