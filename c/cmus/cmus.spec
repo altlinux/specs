@@ -2,9 +2,9 @@
 # $Id: cmus.spec,v 1.34 2006/08/20 13:58:03 eugene Exp $
 
 %define name cmus
-%define version 2.6.0
+%define version 2.7.1
 %define rcname rc0
-%define release alt2
+%define release alt1
 %define debug 0
 
 Name: %name
@@ -45,7 +45,7 @@ BuildRequires(build): libmodplug-devel
 BuildRequires(build): libmpcdec-devel
 BuildRequires(build): libfaad-devel
 BuildRequires(build): libmikmod-devel
-BuildRequires(build): libmpeg4ip-devel
+BuildRequires(build): libmp4v2-devel >= 2.0
 BuildRequires(build): libavcodec-devel
 BuildRequires(build): libavformat-devel
 BuildRequires(build): libavutil-devel
@@ -56,6 +56,7 @@ BuildRequires(build): libcdio-paranoia-devel
 BuildRequires(build): libcddb-devel
 BuildRequires(build): libdiscid-devel
 BuildRequires(build): libopusfile-devel
+BuildRequires(build): libayemu-devel
 
 # Automatically added by buildreq on Sat Jul 28 2007
 BuildRequires: libstdc++-devel
@@ -120,6 +121,7 @@ CMus - маленький и быстрый музыкальный проигр�
     o AAC (.aac, audio/aac, audio/aacp)
     o WavPack (.wv)
     o CDIO
+    o VTX (AY/YM)
   * Выход:
     o ALSA
     o OSS
@@ -343,6 +345,22 @@ CMus - маленький и быстрый музыкальный проигр�
 
 Этот пакет содержит расширение для поддержки CUE-файлов.
 
+%package in-vtx
+Summary: VTX plugin for CMus
+Group: Sound
+
+Requires: %name = %version-%release
+
+%description in-vtx
+CMus is a small and fast music player using the ncurses library.
+
+This package contains plugin for VTX (AY/YM) support.
+
+%description -l ru_RU.UTF-8 in-vtx
+CMus - маленький и быстрый музыкальный проигрыватель, использующий
+библиотеку ncurses.
+
+Этот пакет содержит расширение для поддержки VTX (AY/YM) файлов.
 
 %package out-alsa
 Summary: ALSA output plugin for CMus
@@ -438,6 +456,7 @@ CXXFLAGS="${CXXFLAGS:--pipe -Wall -O2 -g}" ; export CXXFLAGS
         CONFIG_AO=y \
         CONFIG_OSS=y \
         CONFIG_OPUS=y \
+        CONFIG_VTX=y \
         CONFIG_CDDB=y \
         CONFIG_DISCID=y \
         CONFIG_CDIO=y \
@@ -525,6 +544,9 @@ mv cmus-status-display examples
 %files in-cue
 %_libexecdir/%name/ip/cue.so
 
+%files in-vtx
+%_libexecdir/%name/ip/vtx.so
+
 
 %files out-alsa
 %_libexecdir/%name/op/alsa.so
@@ -542,6 +564,10 @@ mv cmus-status-display examples
 
 
 %changelog
+* Tue Aug  4 2015 Terechkov Evgenii <evg@altlinux.org> 2.7.1-alt1
+- New version
+- Build VTX input plugin
+
 * Tue Jul 21 2015 Terechkov Evgenii <evg@altlinux.org> 2.6.0-alt2
 - Rebuild with libcdio-0.93 and libcdio-paranoia-devel
 
