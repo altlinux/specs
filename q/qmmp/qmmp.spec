@@ -1,5 +1,5 @@
 %define branch 0.9
-%define svn svn5329
+%define svn svn5545
 
 %define rel alt1
 
@@ -474,6 +474,26 @@ Requires: qmmp = %version-%release
 %description -n %name-mms
 Qmmp Plugin for MMS stream protocol support
 
+# Interface plugins
+%package -n %name-qsui
+Summary: Qmmp Simple Ui - simple user interface based on standard widgets set
+Summary(ru_RU.UTF8): Qmmp Simple Ui - простой пользовательский интерфейс с использованием стандартных элементов
+Summary(uk_UA.UTF8): Qmmp Simple Ui - простий інтерфейс користувача з використанням стандартних елементів
+Group: Sound
+Requires: qmmp >= %version-%release
+Provides: qmmp-plugin-pack-qsui
+Obsoletes: qmmp-plugin-pack-qsui
+
+%description -n %name-qsui
+Qmmp Simple Ui - simple user interface based on standard widgets set for Qmmp.
+
+%description -l ru_RU.UTF8 -n %name-qsui
+Qmmp Simple Ui - простой пользовательский интерфейс с использованием стандартных элементов для Qmmp.
+
+%description -l uk_UA.UTF8 -n %name-qsui
+Qmmp Simple Ui - простий інтерфейс користувача з використанням стандартних елементів для Qmmp.
+
+
 # General plugins
 %package -n %name-converter
 Summary: Qmmp Converter Plugin
@@ -640,6 +660,7 @@ Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager qmmp-rgscan
 Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-sid
 Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste qmmp-eff-extrastereo
+Requires: qmmp-qsui
 
 %if "%rel" != "alt0.M51"
 # disable for 5.1
@@ -716,7 +737,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 %files -n lib%name
 %_libdir/*.so.0
-%_libdir/*.so.0.9*
+%_libdir/*.so.0.10*
 
 # Output plugins
 %files -n %name-out-pulseaudio
@@ -807,6 +828,10 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-mms
 %_libdir/%name/Transports/libmms*
 
+# Interface plugins
+%files -n %name-qsui
+%_libdir/%name/Ui/libqsui*
+
 # General plugins
 %files -n %name-converter
 %_libdir/%name/General/libconverter*
@@ -873,6 +898,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sun Sep 06 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5545
+- 0.9.0 svn5545 version
+
 * Thu Aug 06 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5329
 - 0.9.0 svn5329 version
 - rebuild with libcdio-paranoia
