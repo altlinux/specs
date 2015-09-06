@@ -1,6 +1,6 @@
 %define module_name	eprd
 %define module_version	0.5.0
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		ovz-el
 BuildRequires(pre): kernel-headers-modules-ovz-el
@@ -8,7 +8,7 @@ BuildRequires(pre): kernel-headers-modules-ovz-el
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
-Summary: kdbus kernel module
+Summary: eprd kernel module
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
@@ -66,6 +66,9 @@ install -D -m 644 README %buildroot%_docdir/%module_name-%module_version/README
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sun Sep 06 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5.0-alt2
+- Spec changed (updated summary)
 
 * Wed Sep 02 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5.0-alt1
 - Initial build for ALT
