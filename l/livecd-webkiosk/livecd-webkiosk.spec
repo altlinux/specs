@@ -1,6 +1,6 @@
 Name: livecd-webkiosk
 Version: 0.4.2
-Release: alt1
+Release: alt5
 
 Summary: start the browser for a suitable webkiosk environment
 License: Public domain
@@ -8,7 +8,6 @@ Group: System/X11
 
 Url: http://en.altlinux.org/starterkits
 Packager: Michael Shigorin <mike@altlinux.org>
-BuildArch: noarch
 
 Requires: ratpoison xinit
 
@@ -26,6 +25,7 @@ Summary: seamonkey webkiosk setup
 Group: System/X11
 Requires: %name = %version-%release
 Requires: seamonkey
+BuildArch: noarch
 
 %description seamonkey
 %summary
@@ -35,12 +35,14 @@ Requires: seamonkey
 Summary: firefox webkiosk setup
 Group: System/X11
 Requires: %name = %version-%release
-Requires: livecd-firefox firefox-fullscreen-kiosk
+Requires: livecd-firefox firefox-r-kiosk
+BuildArch: noarch
 
 %description firefox
 %summary
 (the browser == firefox)
 
+%ifarch x86_64
 %package chromium
 Summary: chromium webkiosk setup
 Group: System/X11
@@ -50,12 +52,14 @@ Requires: chromium
 %description chromium
 %summary
 (the browser == chromium)
+%endif
 
 %package qupzilla
 Summary: qupzilla webkiosk setup
 Group: System/X11
 Requires: %name = %version-%release
 Requires: qupzilla >= 1.8.0
+BuildArch: noarch
 
 %description qupzilla
 %summary
@@ -106,12 +110,14 @@ exec firefox "\$@"
 _EOF_
 chmod +x %wrapper
 
+%ifarch x86_64
 %post chromium
 cat > %wrapper << _EOF_
 #!/bin/sh
 exec chromium --kiosk --start-maximized "\$@"
 _EOF_
 chmod +x %wrapper
+%endif
 
 %post qupzilla
 cat > %wrapper << _EOF_
@@ -129,11 +135,25 @@ chmod +x %wrapper
 
 %files firefox
 
+%ifarch x86_64
 %files chromium
+%endif
 
 %files qupzilla
 
 %changelog
+* Mon Sep 07 2015 Michael Shigorin <mike@altlinux.org> 0.4.2-alt5
+- reenabled noarch for non-chromium subpackages
+
+* Mon Sep 07 2015 Michael Shigorin <mike@altlinux.org> 0.4.2-alt4
+- s/firefox-fullscreen-kiosk/firefox-r-kiosk/
+
+* Fri Jun 19 2015 Michael Shigorin <mike@altlinux.org> 0.4.2-alt3
+- there are 32-bit capable browsers out there still :)
+
+* Thu Jun 18 2015 Andrey Cherepanov <cas@altlinux.org> 0.4.2-alt2
+- rebuild without 32-bit support
+
 * Wed Dec 31 2014 Michael Shigorin <mike@altlinux.org> 0.4.2-alt1
 - disable DPMS (thanks valintinr@)
 
