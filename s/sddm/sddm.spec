@@ -6,8 +6,8 @@
 %define sddm_confdir %x11confdir/sddm
 
 Name: sddm
-Version: 0.11.0
-Release: alt7
+Version: 0.12.0
+Release: alt1
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -15,7 +15,7 @@ Summary: Lightweight QML-based display manager
 Url: https://github.com/sddm/sddm
 License: GPLv2+
 
-Requires: xinitrc xauth design-graphics
+Requires: xinitrc >= 2.4.43 xauth design-graphics
 
 Source: %name-%version.tar
 Source1: sddm.conf
@@ -31,6 +31,7 @@ Patch100: alt-defaults.patch
 Patch101: alt-branding.patch
 Patch102: alt-wmsession.patch
 Patch103: alt-systemctl-path.patch
+Patch104: alt-fix-desktop-session-name.patch
 
 # Automatically added by buildreq on Thu Apr 02 2015 (-bi)
 # optimized out: cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-test libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-module-BeautifulSoup python-module-PyStemmer python-module-Pygments python-module-google python-module-google-apputils python-module-matplotlib python-module-numpy python-module-pyExcelerator python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-zope.interface python-modules python-modules-compiler python-modules-email python-modules-encodings qt5-base-devel qt5-tools
@@ -51,16 +52,18 @@ ability to create smooth, animated user interfaces.
 %prep
 %setup -n %name-%version
 %patch1 -p1
-%patch100 -p1
+%patch100 -p1 -b .defaults
 %patch101 -p1
 %patch102 -p1 -b .wmsession
 %patch103 -p1
+%patch104 -p1
 
 %build
 %K5build \
     -DDATA_INSTALL_DIR=%_datadir/sddm \
     -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir/sddm \
     -DLIBEXEC_INSTALL_DIR=%_libexecdir/sddm \
+    -DSYSTEMD_SYSTEM_UNIT_DIR=%_unitdir \
     -DENABLE_JOURNALD=ON \
     -DMINIMUM_VT=1 \
     -DSESSION_COMMAND="/etc/X11/Xsession" \
@@ -69,14 +72,14 @@ ability to create smooth, animated user interfaces.
     -DRUNTIME_DIR="%_runtimedir/sddm" \
     -DPID_FILE="%_runtimedir/sddm.pid" \
     -DCONFIG_FILE="%sddm_confdir/sddm.conf" \
+    -DQT_IMPORTS_DIR="%_qt5_qmldir" \
+    -DDBUS_CONFIG_FILENAME="sddm_org.freedesktop.DisplayManager.conf" \
+    -DUID_MIN=500 \
+    -DUID_MAX=60000 \
     #
 
 %install
 %K5install
-
-pushd %buildroot/%_K5conf_dbus_sysd
-mv org.freedesktop.DisplayManager.conf sddm_org.freedesktop.DisplayManager.conf
-popd
 
 install -Dm 0644 %SOURCE1 %buildroot/%sddm_confdir/sddm.conf
 install -Dpm 0644 %SOURCE2 %buildroot/lib/tmpfiles.d/sddm.conf
@@ -117,6 +120,10 @@ sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/defa
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Mon Sep 07 2015 Sergey V Turchin <zerg@altlinux.org> 0.12.0-alt1
+- new version
+- using /usr/share/xsessions
+
 * Thu Sep 03 2015 Sergey V Turchin <zerg@altlinux.org> 0.11.0-alt7
 - fix wm sessions list
 
