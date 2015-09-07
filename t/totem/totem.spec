@@ -33,7 +33,7 @@
 
 Name: totem
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -405,6 +405,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt2
+- rebuilt against libgrilo-0.2.so.10
+
 * Mon Aug 31 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
 - 3.16.3
 

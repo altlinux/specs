@@ -6,7 +6,7 @@
 
 Name: gnome-photos
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: Photos - access, organize and share your photos on GNOME
 License: %gpl2plus
@@ -66,6 +66,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt3
+- rebuilt against libgrilo-0.2.so.10
+
 * Sun Aug 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt2
 - rebuilt against libgdata.so.22
 

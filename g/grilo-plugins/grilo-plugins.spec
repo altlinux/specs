@@ -1,8 +1,11 @@
 %define ver_major 0.2
 
+%def_disable lua_factory
+
 Name: grilo-plugins
-Version: %ver_major.14
-Release: alt3
+Version: %ver_major.15
+Release: alt1
+
 Summary: Plugins for the Grilo framework
 Group: Sound
 License: LGPLv2+
@@ -13,7 +16,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildRequires: gnome-common intltool >= 0.40.0
 BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.36
-BuildRequires: libgrilo-devel >= 0.2.12
+BuildRequires: libgrilo-devel >= 0.2.13
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp-devel >= 0.13
 BuildRequires: libgupnp-av-devel >= 0.5
@@ -35,6 +38,7 @@ BuildRequires: libavahi-gobject-devel libavahi-glib-devel libavahi-devel
 BuildRequires: libmediaart2.0-devel
 BuildRequires: librest-devel
 BuildRequires: libarchive-devel
+%{?_enable_lua_factory: BuildRequires: liblua-devel >= 5.3}
 
 Requires: grilo-tools
 Requires: tracker
@@ -65,12 +69,12 @@ This package contains plugins to get information from theses sources:
 %build
 %autoreconf
 %configure \
-	--disable-static
-
+	--disable-static \
+	%{?_enable_lua_factory:--enable-lua-factory}
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 # Remove files that will not be packaged
 rm -f %buildroot%_libdir/grilo-%ver_major/*.la
@@ -83,6 +87,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.15-alt1
+- 0.2.15
+
 * Sun Aug 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.14-alt3
 - rebuilt against libgdata.so.22
 
