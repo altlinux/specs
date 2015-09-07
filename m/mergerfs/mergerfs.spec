@@ -1,5 +1,5 @@
 Name: mergerfs
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 Summary: A FUSE union filesystem
 
@@ -34,6 +34,9 @@ make man
 %doc README.md
 
 %changelog
+* Mon Sep  7 2015 Terechkov Evgenii <evg@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Sat Sep  5 2015 Terechkov Evgenii <evg@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
