@@ -1,6 +1,6 @@
 Name: gdb
-Version: 7.5.0.20121002
-Release: alt5
+Version: 7.9
+Release: alt1
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -21,9 +21,7 @@ Patch3: gdb-alt-bfd.patch
 
 ### Debian patches
 Patch11: dwarf2-cfi-warning.patch
-Patch12: gdb-fortran-main.patch
 Patch13: linux-clear-thread-list.patch
-Patch14: man-page-args.patch
 
 ### Fedora patches
 # Work around out-of-date dejagnu that does not have KFAIL
@@ -115,6 +113,9 @@ Patch229: gdb-6.3-bz140532-ppc-unwinding-test.patch
 # Testcase for exec() from threaded program (BZ 202689).
 #=fedoratest
 Patch231: gdb-6.3-bz202689-exec-from-pthread-test.patch
+# Backported fixups post the source tarball.
+#Xdrop: Just backports.
+Patch232: gdb-upstream.patch
 # Testcase for PPC Power6/DFP instructions disassembly (BZ 230000).
 #=fedoratest+ppc
 Patch234: gdb-6.6-bz230000-power6-disassembly-test.patch
@@ -152,18 +153,12 @@ Patch415: gdb-6.6-buildid-locate-core-as-arg.patch
 # Workaround librpm BZ 643031 due to its unexpected exit() calls (BZ 642879).
 #=push
 Patch519: gdb-6.6-buildid-locate-rpm-librpm-workaround.patch
-# Add kernel vDSO workaround (`no loadable ...') on RHEL-5 (kernel BZ 765875).
-#=push
-Patch276: gdb-6.6-bfd-vdso8k.patch
 # Fix displaying of numeric char arrays as strings (BZ 224128).
 #=fedoratest: But it is failing anyway, one should check the behavior more.
 Patch282: gdb-6.7-charsign-test.patch
 # Test PPC hiding of call-volatile parameter register.
 #=fedoratest+ppc
 Patch284: gdb-6.7-ppc-clobbered-registers-O2-test.patch
-# Testsuite fixes for more stable/comparable results.
-#=fedoratest
-Patch287: gdb-6.7-testsuite-stable-results.patch
 # Test hiding unexpected breakpoints on intentional step commands.
 #=fedoratest
 Patch290: gdb-6.5-missed-trap-on-step-test.patch
@@ -189,9 +184,6 @@ Patch315: gdb-6.8-bz442765-threaded-exec-test.patch
 # Test a crash on libraries missing the .text section.
 #=fedoratest
 Patch320: gdb-6.5-section-num-fixup-test.patch
-# Fix PRPSINFO in the core files dumped by gcore (BZ 254229).
-#=push
-Patch329: gdb-6.8-bz254229-gcore-prpsinfo.patch
 # Fix register assignments with no GDB stack frames (BZ 436037).
 #=push+work: This fix is incorrect.
 Patch330: gdb-6.8-bz436037-reg-no-longer-active.patch
@@ -237,11 +229,6 @@ Patch397: gdb-follow-child-stale-parent.patch
 # Workaround ccache making lineno non-zero for command-line definitions.
 #=fedoratest: ccache is rarely used and it is even fixed now.
 Patch403: gdb-ccache-workaround.patch
-# Implement `info common' for Fortran.
-#=push
-Patch404: gdb-fortran-common-reduce.patch
-#=push
-Patch405: gdb-fortran-common.patch
 # Testcase for "Do not make up line information" fix by Daniel Jacobowitz.
 #=fedoratest
 Patch407: gdb-lineno-makeup-test.patch
@@ -270,9 +257,6 @@ Patch491: gdb-gdb-add-index-script.patch
 # Out of memory is just an error, not fatal (uninitialized VLS vars, BZ 568248).
 #=drop+work: Inferior objects should be read in parts, then this patch gets obsoleted.
 Patch496: gdb-bz568248-oom-is-error.patch
-# Fix gcore writer for -Wl,-z,relro (PR corefiles/11804).
-#=push: There is different patch on gdb-patches, waiting now for resolution in kernel.
-Patch504: gdb-bz623749-gcore-relro.patch
 # Verify GDB Python built-in function gdb.solib_address exists (BZ # 634108).
 #=fedoratest
 Patch526: gdb-bz634108-solib_address.patch
@@ -285,31 +269,15 @@ Patch547: gdb-test-dw2-aranges.patch
 # [archer-keiths-expr-cumulative+upstream] Import C++ testcases.
 #=fedoratest
 Patch548: gdb-test-expr-cumulative-archer.patch
-# Fix dlopen of libpthread.so, patched glibc required (Gary Benson, BZ 669432).
-#=push
-Patch618: gdb-dlopen-stap-probe-1of7.patch
-Patch717: gdb-dlopen-stap-probe-2of7.patch
-Patch718: gdb-dlopen-stap-probe-3of7.patch
-Patch719: gdb-dlopen-stap-probe-4of7.patch
-Patch720: gdb-dlopen-stap-probe-5of7.patch
-Patch721: gdb-dlopen-stap-probe-6of7.patch
-Patch722: gdb-dlopen-stap-probe-7of7.patch
-Patch619: gdb-dlopen-stap-probe-test.patch
-Patch723: gdb-dlopen-stap-probe-test2.patch
 # Work around PR libc/13097 "linux-vdso.so.1" warning message.
 #=push
 Patch627: gdb-glibc-vdso-workaround.patch
 # Hack for proper PIE run of the testsuite.
 #=fedoratest
 Patch634: gdb-runtest-pie-override.patch
-# Enable smaller %{_bindir}/gdb in future by no longer using -rdynamic.
-#=push
-Patch643: gdb-python-rdynamic.patch
 # Print reasons for failed attach/spawn incl. SELinux deny_ptrace (BZ 786878).
 #=push
 Patch653: gdb-attach-fail-reasons-5of5.patch
-#=fedora
-Patch657: gdb-attach-fail-reasons-5of5configure.patch
 # Workaround crashes from stale frame_info pointer (BZ 804256).
 #=fedora
 Patch661: gdb-stale-frame_info.patch
@@ -323,15 +291,42 @@ Patch698: gdb-rhel5.9-testcase-xlf-var-inside-mod.patch
 # Testcase for `Setting solib-absolute-prefix breaks vDSO' (BZ 818343).
 #=fedoratest
 Patch703: gdb-rhbz-818343-set-solib-absolute-prefix-testcase.patch
-# Implement MiniDebugInfo F-18 Feature consumer (Alexander Larsson, BZ 834068).
-#=fedora
-Patch716: gdb-minidebuginfo.patch
-# [ppc32] Fix stepping over symbol-less code crash regression (BZ 860696).
-Patch725: gdb-step-symless.patch
-# Fix crash printing classes (BZ 849357, Tom Tromey).
-Patch726: gdb-print-class.patch
-# Permit passing pointers as address number even for C++ methods (Keith Seitz).
-Patch728: gdb-check-type.patch
+# Fix `GDB cannot access struct member whose offset is larger than 256MB'
+# (RH BZ 795424).
+#=push+work
+Patch811: gdb-rhbz795424-bitpos-20of25.patch
+Patch812: gdb-rhbz795424-bitpos-21of25.patch
+Patch813: gdb-rhbz795424-bitpos-22of25.patch
+Patch814: gdb-rhbz795424-bitpos-23of25.patch
+Patch816: gdb-rhbz795424-bitpos-25of25.patch
+Patch817: gdb-rhbz795424-bitpos-25of25-test.patch
+Patch818: gdb-rhbz795424-bitpos-lazyvalue.patch
+# Import regression test for `gdb/findvar.c:417: internal-error:
+# read_var_value: Assertion `frame' failed.' (RH BZ 947564) from RHEL 6.5.
+#=fedoratest
+Patch832: gdb-rhbz947564-findvar-assertion-frame-failed-testcase.patch
+# Fix crash on 'enable count' (Simon Marchi, BZ 993118).
+Patch843: gdb-enable-count-crash.patch
+# [rhel6] DTS backward Python compatibility API (BZ 1020004, Phil Muldoon).
+Patch848: gdb-dts-rhel6-python-compat.patch
+# Fix crash of -readnow /usr/lib/debug/usr/bin/gnatbind.debug (BZ 1069211).
+Patch852: gdb-gnat-dwarf-crash-3of3.patch
+# VLA (Fortran dynamic arrays) from Intel + archer-jankratochvil-vla tests.
+Patch888: gdb-vla-intel.patch
+Patch983: gdb-vla-intel-logical-not.patch
+Patch889: gdb-vla-intel-stringbt-fix.patch
+Patch912: gdb-vla-intel-04of23-fix.patch
+Patch887: gdb-archer-vla-tests.patch
+# Continue backtrace even if a frame filter throws an exception (Phil Muldoon).
+Patch918: gdb-btrobust.patch
+# Display Fortran strings in backtraces.
+Patch925: gdb-fortran-frame-string.patch
+# Fix Python GIL with gdb.execute("continue") (Phil Muldoon, BZ 1116957).
+Patch927: gdb-python-gil.patch
+# Fix jit-reader.h for multi-lib.
+Patch978: gdb-jit-reader-multilib.patch
+# Temporarily disable dg-extract-results.py to fix gdb.sum sorting.
+Patch982: gdb-no-dg-extract-results-py.patch
 
 %def_enable tui
 %def_disable check
@@ -432,10 +427,10 @@ mv readline/doc readline-doc
 %patch274 -p1
 %patch659 -p1
 #patch353 -p1
-%patch276 -p1
+#patch276 -p1
 %patch282 -p1
 %patch284 -p1
-%patch287 -p1
+#patch287 -p1
 %patch290 -p1
 %patch294 -p1
 %patch296 -p1
@@ -444,7 +439,7 @@ mv readline/doc readline-doc
 %patch311 -p1
 %patch315 -p1
 %patch320 -p1
-%patch329 -p1
+#patch329 -p1
 %patch330 -p1
 %patch331 -p1
 %patch343 -p1
@@ -456,8 +451,8 @@ mv readline/doc readline-doc
 %patch392 -p1
 %patch397 -p1
 %patch403 -p1
-%patch404 -p1
-%patch405 -p1
+#patch404 -p1
+#patch405 -p1
 %patch389 -p1
 %patch394 -p1
 %patch407 -p1
@@ -471,41 +466,46 @@ mv readline/doc readline-doc
 %patch490 -p1
 %patch491 -p1
 %patch496 -p1
-%patch504 -p1
+#patch504 -p1
 %patch526 -p1
 %patch542 -p1
 %patch547 -p1
 %patch548 -p1
-%patch618 -p1
-%patch717 -p1
-%patch718 -p1
-%patch719 -p1
-%patch720 -p1
-%patch721 -p1
-%patch722 -p1
-%patch723 -p1
-%patch619 -p1
+#patch618 -p1
 %patch627 -p1
 %patch634 -p1
-%patch643 -p1
-#patch653 -p1
+#patch643 -p1
+%patch653 -p1
 #patch657 -p1
 %patch661 -p1
 %patch690 -p1
 %patch698 -p1
 %patch703 -p1
-%patch716 -p1
-%patch725 -p1
-%patch726 -p1
-%patch728 -p1
+#patch811 -p1
+#patch812 -p1
+#patch813 -p1
+#patch814 -p1
+#patch816 -p1
+#patch817 -p1
+#patch818 -p1
+
+%patch832 -p1
+%patch843 -p1
+%patch852 -p1
+%patch887 -p1
+%patch918 -p1
+%patch925 -p1
+%patch927 -p1
+%patch978 -p1
+%patch982 -p1
+%patch848 -p1
+
 %patch337 -p1
 %patch335 -p1
 
 # Debian patches
 %patch11 -p1
-%patch12 -p1
 %patch13 -p1
-%patch14 -p1
 
 # ALT patches
 %patch1 -p1
@@ -580,12 +580,11 @@ popd #light
 %makeinstall_std -C %buildtarget
 install -pm755 light/gdb/gdb %buildroot%_bindir/gdb-light
 
-install -pm755 gdb/gdb_gcore.sh %buildroot%_bindir/gcore
 install -pm644 %_sourcedir/gdb-gstack.man %buildroot%_man1dir/gstack.1
 install -pDm644 %_sourcedir/gdb.desktop %buildroot%_desktopdir/gdb.desktop
 
 # These files are already packaged as a part of binutils.
-rm %buildroot%_infodir/{bfd,configure,standard}*
+rm %buildroot%_infodir/bfd*
 rm %buildroot%_datadir/locale/*/LC_MESSAGES/{bfd,opcodes}.mo
 
 pushd %buildtarget
@@ -607,6 +606,9 @@ pushd %buildtarget/gdb
 %__cc %optflags -o orphanripper %_sourcedir/gdb-orphanripper.c -lutil
 ./orphanripper make -k -j%__nprocs check ||:
 popd
+
+# contained in gdb binary
+%add_python_req_skip _gdb
 
 %files
 %_bindir/*
@@ -632,6 +634,9 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Tue Sep 08 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.9-alt1
+- 7.9 released, synced with fedora 7.9-11
+
 * Thu Jan 30 2014 Evgeny Sinelnikov <sin@altlinux.ru> 7.5.0.20121002-alt5
 - Built with python support (closes: #29759).
 - Added separate subpackages gdb-common and gdb-light.
