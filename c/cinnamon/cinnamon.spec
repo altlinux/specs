@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 2.6.13
-Release: alt2
+Release: alt3
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -54,6 +54,7 @@ Requires: python-modules-json
 Requires: python-module-lxml
 Requires: polkit-gnome
 Requires: typelib(Keybinder) >= 3.0
+Requires: python-module-PAM
 
 BuildPreReq: rpm-build-gir >= 0.7.1-alt6
 BuildPreReq: libclutter-devel >= %clutter_ver
@@ -269,6 +270,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Tue Sep 8 2015 Vladimir Didenko <cow@altlinux.org> 2.6.13-alt3
+- Add python-module-PAM to requirements (closes: #31262)
+
 * Mon Jul 27 2015 Vladimir Didenko <cow@altlinux.org> 2.6.13-alt2
 - Don't require Meta typelib (libmuffin-gir doesn't provide it anymore)
 
