@@ -4,15 +4,16 @@
 %define _root_sbindir /sbin
 
 Name: cryptsetup
-Version: 1.6.7
-Release: alt2
+Version: 1.6.8
+Release: alt1
 
 Summary: utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
 
-License: %gpl2only
+License: %gpllgpl2plus
 Group: System/Kernel and hardware
-URL: http://code.google.com/p/cryptsetup/
+URL: https://gitlab.com/cryptsetup/cryptsetup/
+# git: https://gitlab.com/cryptsetup/cryptsetup.git
 
 Source0: %name-%version.tar
 Source1: %name.README.ALT.utf-8
@@ -26,6 +27,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: libdevmapper-devel libpopt-devel libuuid-devel
 BuildRequires: libudev-devel libselinux-devel
 BuildRequires: python-devel
+BuildRequires: libpwquality-devel >= 1.0.0
+
 # Need support for fixed gcrypt PBKDF2 and fixed Whirlpool hash.
 BuildRequires: libgcrypt-devel  >= 1.6.1
 
@@ -152,7 +155,7 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
 %autoreconf
-%configure --sbindir=%_root_sbindir --libdir=/%_lib --enable-cryptsetup-reencrypt --enable-python
+%configure --sbindir=%_root_sbindir --libdir=/%_lib --enable-cryptsetup-reencrypt --enable-python --enable-pwquality
 %make
 
 gcc debian/askpass.c -o debian/askpass
@@ -184,7 +187,7 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %files -f %name.lang
 %doc docs/*
 %doc AUTHORS FAQ README
-%doc --no-dereference COPYING
+%doc --no-dereference COPYING COPYING.LGPL
 %doc README.ALT.utf-8
 %_root_sbindir/%name
 %_sbindir/%name
@@ -219,6 +222,11 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %exclude %python_sitelibdir/*.la
 
 %changelog
+* Tue Sep 08 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.8-alt1
+- 1.6.8
+- build with libpwquality
+- fix License (ALT #31260)
+
 * Mon Jun 15 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.7-alt2
 - rebuild with libgcrypt-1.6.3
 
