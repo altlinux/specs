@@ -8,7 +8,7 @@
 %define libktpwidgets libktpwidgets%sover
 
 Name: kde5-ktp-common-internals
-Version: 15.04.3
+Version: 15.08.0
 Release: alt1
 %K5init altplace
 
@@ -117,15 +117,19 @@ developing applications that use %name.
 %_K5icon/hicolor/*/apps/telepathy-kde.*
 
 %files core
-%dir %_K5plug/kaccounts
-%dir %_K5plug/kaccounts/daemonplugins
+%dir %_K5plug/kaccounts/
+%dir %_K5plug/kaccounts/daemonplugins/
+%dir %_K5plug/kpeople/
+%dir %_K5plug/kpeople/actions/
+%dir %_K5plug/kpeople/datasource/
+%dir %_K5plug/kpeople/widgets/
 %_K5exec/ktp-proxy
 %_K5qml/org/kde/telepathy/
-%_K5plug/*plugin.so
+%_K5plug/*/*/*plugin.so
 %_K5plug/ktploggerplugin_tplogger.so
 %_K5plug/kaccounts/daemonplugins/kaccounts_ktp_plugin.so
 %_K5cfg/ktp-proxy-config.kcfg
-%_K5srv/*plugin.desktop
+#%_K5srv/*plugin.desktop
 %_K5srv/ktploggerplugin_tplogger.desktop
 %_K5srvtyp/ktp_logger_plugin.desktop
 %_K5notif/*rc
@@ -156,6 +160,9 @@ developing applications that use %name.
 %_libdir/cmake/KTp/
 
 %changelog
+* Tue Sep 08 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Thu Jul 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.04.3-alt1
 - new version
 

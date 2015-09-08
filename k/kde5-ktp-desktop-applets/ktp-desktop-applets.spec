@@ -1,8 +1,8 @@
 %define rname ktp-desktop-applets
 
 Name: kde5-%rname
-Version: 15.04.3
-Release: alt2
+Version: 15.08.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -76,6 +76,9 @@ KF5 library
 #%_K5lib/libktp-desktop-applets.so.*
 
 %changelog
+* Tue Sep 08 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Tue Jul 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.04.3-alt2
 - fix requires
 
