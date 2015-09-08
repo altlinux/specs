@@ -6,7 +6,7 @@
 %define soversion 20
 
 Name: libgcrypt
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 
 %define soname %{name}%{soversion}
@@ -165,6 +165,9 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Tue Sep 08 2015 Sergey V Turchin <zerg@altlinux.org> 1.6.4-alt1
+- new version
+
 * Wed Jun 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.3-alt1
 - 1.6.3
 - rename libgrypt to libgcrypt20
