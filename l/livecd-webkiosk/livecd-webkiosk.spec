@@ -1,6 +1,6 @@
 Name: livecd-webkiosk
-Version: 0.4.2
-Release: alt5
+Version: 0.4.3
+Release: alt1
 
 Summary: start the browser for a suitable webkiosk environment
 License: Public domain
@@ -114,7 +114,7 @@ chmod +x %wrapper
 %post chromium
 cat > %wrapper << _EOF_
 #!/bin/sh
-exec chromium --kiosk --start-maximized "\$@"
+exec chromium --kiosk --start-maximized --disable-translate --no-first-run "\$@"
 _EOF_
 chmod +x %wrapper
 %endif
@@ -142,6 +142,9 @@ chmod +x %wrapper
 %files qupzilla
 
 %changelog
+* Tue Sep 08 2015 Michael Shigorin <mike@altlinux.org> 0.4.3-alt1
+- tweaked chromium options as its kiosk doesn't mute "first run"
+
 * Mon Sep 07 2015 Michael Shigorin <mike@altlinux.org> 0.4.2-alt5
 - reenabled noarch for non-chromium subpackages
 
