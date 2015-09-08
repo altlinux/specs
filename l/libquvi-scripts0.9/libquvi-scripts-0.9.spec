@@ -4,7 +4,7 @@
 
 Name: %_name%ver_major
 Version: %ver_major.%snapshot
-Release: alt1
+Release: alt2
 
 Summary: Lua scripts for parsing the media details
 Group: System/Libraries
@@ -17,6 +17,8 @@ Patch: %_name-0.9.20130903-alt-pkgconfig.patch
 BuildArch: noarch
 # for tests
 #BuildRequires: libquvi%ver_major-devel
+
+Requires: lua5 lua-module-luasocket
 
 %description
 %name contains the embedded lua scripts that libquvi uses for parsing
@@ -59,6 +61,9 @@ subst 's@\(^pkgconfigdir[[:space:]]=[[:space:]]\$(\)libdir\()/pkgconfig\)@\1data
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Tue Sep 08 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.20131130-alt2
+- reqs: lua5 lua-module-luasocket
+
 * Mon Sep 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.20131130-alt1
 - new official snapshot
 
