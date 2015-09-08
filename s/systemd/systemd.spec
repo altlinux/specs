@@ -56,8 +56,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 225
-Release: alt2
+Version: 226
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1282,6 +1282,7 @@ update_chrooted all
 %_man5dir/systemd.exec*
 %_man5dir/systemd.kill*
 %_man5dir/systemd.mount*
+%_man5dir/systemd.nspawn*
 %_man5dir/systemd.path*
 %_man5dir/systemd.preset*
 %_man5dir/systemd.resource-control*
@@ -1723,6 +1724,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Sep 08 2015 Alexey Shabalin <shaba@altlinux.ru> 1:226-alt1
+- 226
+
 * Wed Sep 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1:225-alt2
 - enable nss-mymachines in /etc/nsswitch.conf
 - always install libnss-myhostname and libnss-mymachines
