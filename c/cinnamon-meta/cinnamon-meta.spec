@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -59,6 +59,7 @@ Requires: gnome-icon-theme
 Requires: gnome-icon-theme-symbolic
 Requires: gnome-themes-standard
 Requires: libgtk2-engine-adwaita
+Requires: gnome-backgrounds
 # default font
 Requires: fonts-otf-abattis-cantarell
 
@@ -127,6 +128,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Tue Sep 8 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt3
+- add gnome-backgrounds to requirements (closes: #31262)
+
 * Wed Jul 8 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt2
 - add gvfs-utils to requirements (required by xdg-open)
 
