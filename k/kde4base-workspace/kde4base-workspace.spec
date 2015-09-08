@@ -25,7 +25,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -606,7 +606,7 @@ install -m 0644 %SOURCE3 %buildroot/%_sysconfdir/pam.d/kde4-kscreensaver
 mkdir -p %buildroot/%_bindir
 ln -s `relative %_kde4_bindir/startkde %_bindir/startkde4` %buildroot/%_bindir/startkde4
 
-# Add chksession support
+# Add wmsession support
 mkdir -p %buildroot/%x11confdir/wmsession.d/
 cat <<__EOF__ > %buildroot/%x11confdir/wmsession.d/01KDE4
 NAME=KDE
@@ -617,6 +617,18 @@ SCRIPT:
 exec %_bindir/startkde4
 __EOF__
 
+# Add freedesktop xsession support
+mkdir -p %buildroot/%_datadir/xsessions/
+cat <<__EOF__ > %buildroot/%_datadir/xsessions/KDE4.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Type=XSession
+Exec=%_bindir/startkde4
+TryExec=%_bindir/startkde4
+DesktopNames=KDE
+Name=KDE
+Comment=K Desktop Environment 4
+__EOF__
 
 # Create menu session
 mkdir -p %buildroot/%_menudir/
@@ -739,11 +751,15 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %config(noreplace) %_sysconfdir/pam.d/kde4-kscreensaver
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.kde.*.conf
 %if_enabled desktop
-%config(noreplace) %x11confdir/wmsession.d/*KDE*
+%config(noreplace) %x11confdir/wmsession.d/??KDE4
+%_datadir/xsessions/KDE4.desktop
 %exclude %_sysconfdir/dbus-1/system.d/org.kde.kcontrol.kcmkdm.conf
 %endif
 %_menudir/kde4-session
 %doc README
+%doc BUILD-*/kcontrol/kfontinst/dbus/org.kde.fontinst.policy
+%doc BUILD-*/kcontrol/dateandtime/org.kde.kcontrol.kcmclock.policy
+%doc BUILD-*/libs/ksysguard/processcore/org.kde.ksysguard.processlisthelper.policy
 %if_enabled desktop
 %config(noreplace) %_sysconfdir/ksysguarddrc4
 %endif
@@ -796,7 +812,6 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %if_enabled desktop
 %exclude %_K4lib/kgreet_*.so*
 %endif
-#%_datadir/polkit-1/actions/org.kde.*.policy
 %_datadir/polkit-1/actions/org.kde.powerdevil.backlighthelper.policy
 %if_enabled desktop
 %exclude %_datadir/polkit-1/actions/org.kde.kcontrol.kcmkdm.policy
@@ -949,6 +964,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Sep 08 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt2
+- add xsessions entry
+
 * Fri Aug 28 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt1
 - new version
 
