@@ -15,7 +15,7 @@
 
 Name: kf5-%rname
 Version: 5.4.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -147,9 +147,9 @@ cat <<__EOF__ > %buildroot/%x11confdir/wmsession.d/01PLASMA
 NAME=Plasma
 DESC=Plasma by KDE
 ICON=%_K5icon/hicolor/48x48/apps/kwin.png
-EXEC=%_bindir/startkde5
+EXEC=%_kf5_bin/startkde
 SCRIPT:
-exec %_bindir/startkde5
+exec %_kf5_bin/startkde
 __EOF__
 
 
@@ -251,6 +251,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Tue Sep 08 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt2
+- fix path to startkde in session file
+
 * Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
 - new version
 
