@@ -3,7 +3,7 @@
 
 Name: %_name%ver_major
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Command line tool for parsing video download links
 Group: System/Libraries
@@ -11,6 +11,8 @@ License: LGPLv2+
 Url: http://quvi.sourceforge.net/
 
 Source: http://downloads.sourceforge.net/project/%_name/%ver_major/%_name-%version.tar.xz
+
+Requires: libquvi-scripts%ver_major
 
 BuildRequires: %_name-scripts%ver_major-devel
 BuildRequires: libgio-devel libcurl-devel liblua5-devel libproxy-devel libgcrypt-devel
@@ -56,6 +58,9 @@ This package provides files needed for building applications against
 %_man7dir/quvi-object.7.*
 
 %changelog
+* Tue Sep 08 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt2
+- reqs: libquvi-scripts0.9
+
 * Mon Sep 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
 - 0.9.4
 
