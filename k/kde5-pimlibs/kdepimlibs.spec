@@ -2,7 +2,7 @@
 
 Name: kde5-pimlibs
 Version: 15.08.0
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -118,7 +118,12 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data akonadi/plugins/serializer
+mkdir %buildroot/%_K5data/akonadi/
+for f in %buildroot/%_datadir/akonadi5/*.xs* ; do
+    fname=`basename $f`
+    dname=`dirname $f`
+    ln -s `relative %_datadir/akonadi5/$fname %_K5data/akonadi/$fname` %buildroot/%_K5data/akonadi/$fname
+done
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -126,6 +131,7 @@ KF5 library
 %config(noreplace) %_K5xdgconf/kdepimlibs*
 %_K5xdgmime/*.xml
 %_K5icon/*/*/apps/*_protocol.*
+%dir %_K5data/akonadi/
 
 %files
 %_K5bin/akonadi*
@@ -141,6 +147,7 @@ KF5 library
 
 %files devel
 %_K5plug/designer/akonadi*.so
+%_K5data/akonadi/*.xs*
 %_datadir/akonadi5/*.xs*
 %_K5inc/akonadi_version.h
 %_K5inc/Akonadi*/
@@ -169,6 +176,9 @@ KF5 library
 
 
 %changelog
+* Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt4
+- add symlinks for devel data
+
 * Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt3
 - find akonadi resources in alternate place
 
