@@ -1,6 +1,6 @@
 
 Name: kf5-rpm-build
-Version: 5.2.0
+Version: 5.3.0
 Release: alt1
 
 Group: Development/KDE and QT
@@ -36,6 +36,11 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- add _K5conf_up and _K5conf_bin macros
+- fix paths in cmake files during install
+- move akonadi data to /usr/share/akonadi5 during install
+
 * Fri Jul 31 2015 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt1
 - move dbus *5*.service to standard place
 
