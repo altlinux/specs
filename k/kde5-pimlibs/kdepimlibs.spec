@@ -2,7 +2,7 @@
 
 Name: kde5-pimlibs
 Version: 15.08.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -14,6 +14,7 @@ Requires: kde5-akonadi
 
 Source: %rname-%version.tar
 Patch1: alt-akonadi-plugins-dir.patch
+Patch2: alt-akonadi-resources-dir.patch
 
 # Automatically added by buildreq on Wed Aug 12 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms libxml2-devel pkg-config python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs shared-mime-info xml-common xml-utils
@@ -110,6 +111,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build
@@ -124,14 +126,13 @@ KF5 library
 %config(noreplace) %_K5xdgconf/kdepimlibs*
 %_K5xdgmime/*.xml
 %_K5icon/*/*/apps/*_protocol.*
-%dir %_K5data/akonadi/
 
 %files
 %_K5bin/akonadi*
 %_K5plug/kf5/kio/*.so
 %_K5plug/*akonadi*.so
-%_K5data/akonadi/contact/
-%_K5data/akonadi/plugins/
+%_datadir/akonadi5/contact/*
+%_datadir/akonadi5/plugins/*
 %_K5cfg/*.kcfg
 %_K5srv/akonadi/contact/*.desktop
 %_K5srv/akonadi*.desktop
@@ -140,7 +141,7 @@ KF5 library
 
 %files devel
 %_K5plug/designer/akonadi*.so
-%_K5data/akonadi/*.xs*
+%_datadir/akonadi5/*.xs*
 %_K5inc/akonadi_version.h
 %_K5inc/Akonadi*/
 %_K5inc/akonadi/
@@ -168,6 +169,9 @@ KF5 library
 
 
 %changelog
+* Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt3
+- find akonadi resources in alternate place
+
 * Tue Sep 01 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
 - find akonadi plugins in alternate place
 

@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 15.08.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Databases
@@ -19,6 +19,7 @@ Patch2: alt-mysql-conf.patch
 Patch3: alt-mysql-paths.patch
 Patch4: alt-mysqlcheck-detached.patch
 Patch5: alt-own-mysql-install-db.patch
+Patch6: alt-find-resources.patch
 
 # Automatically added by buildreq on Thu Aug 06 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-sql libqt5-test libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs shared-mime-info
@@ -106,6 +107,12 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 %K5build \
@@ -120,6 +127,7 @@ mv %buildroot/%_K5xdgmime/akonadi{,5}-mime.xml
 
 mkdir -p %buildroot/%_K5srv/akonadi/contact
 mkdir -p %buildroot/%_K5lib/akonadi5/contact
+mkdir -p %buildroot/%_datadir/akonadi5/{agents,contact,plugins,accountwizard}
 
 %files
 %_K5dbus_srv/org.freedesktop.Akonadi.Control.service
@@ -146,6 +154,11 @@ mkdir -p %buildroot/%_K5lib/akonadi5/contact
 %dir %_K5xdgconf/akonadi/
 %dir %_K5srv/akonadi/
 %dir %_K5srv/akonadi/contact/
+%dir %_datadir/akonadi5/
+%dir %_datadir/akonadi5/accountwizard/
+%dir %_datadir/akonadi5/agents/
+%dir %_datadir/akonadi5/contact/
+%dir %_datadir/akonadi5/plugins/
 %config(noreplace) %_K5xdgconf/akonadi.categories
 %_K5xdgmime/akonadi5-mime.xml
 
@@ -162,6 +175,9 @@ mkdir -p %buildroot/%_K5lib/akonadi5/contact
 %_K5lib/libKF5AkonadiPrivate.so.*
 
 %changelog
+* Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt3
+- not't search for resources in KDE4 place
+
 * Tue Sep 01 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
 - add plugins dir
 
