@@ -1,5 +1,5 @@
 Name: gxkb
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
 
 Summary: Keyboard indicator and switcher
@@ -24,8 +24,6 @@ switch to another one. It's written in C and uses the GTK library.
 
 %install
 %makeinstall_std
-install -pD -m644 debian/%name.desktop %buildroot%_desktopdir/%name.desktop
-install -pD -m644 debian/%name.xpm %buildroot%_datadir/pixmaps/%name.xpm
 
 %files
 %_bindir/%name
@@ -33,9 +31,12 @@ install -pD -m644 debian/%name.xpm %buildroot%_datadir/pixmaps/%name.xpm
 %_datadir/%name/
 %_datadir/pixmaps/%name.xpm
 %_man1dir/%name.1.*
-%doc AUTHORS NEWS
+%doc doc/AUTHORS doc/NEWS
 
 %changelog
+* Wed Sep 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt1
+- 0.7.6
+
 * Tue May 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt1
 - 0.7.5
 
