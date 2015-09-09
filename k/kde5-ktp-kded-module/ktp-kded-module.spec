@@ -1,7 +1,7 @@
 %define rname ktp-kded-module
 
 Name: kde5-%rname
-Version: 15.04.3
+Version: 15.08.0
 Release: alt1
 %K5init altplace
 
@@ -78,6 +78,9 @@ KF5 library
 #%_K5lib/libktp-kded-module.so.*
 
 %changelog
+* Tue Sep 08 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Thu Jul 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.04.3-alt1
 - new version
 
