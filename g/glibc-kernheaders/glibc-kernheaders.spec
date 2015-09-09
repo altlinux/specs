@@ -1,8 +1,8 @@
-%define kernel_base_version 4.1
+%define kernel_base_version 4.2
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
-Version: %kernel_base_version.3
+Version: %kernel_base_version
 Release: alt1
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
@@ -26,6 +26,9 @@ Obsoletes: linux-libc-headers < %version
 %endif
 %ifarch %arm
 %define base_arch arm
+%endif
+%ifarch aarch64
+%define base_arch arm64
 %endif
 %ifarch ppc ppc64
 %define base_arch powerpc
@@ -78,6 +81,10 @@ done
 %hdr_dir
 
 %changelog
+* Wed Sep 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2-alt1
+- Updated to v4.2.
+- Added aarch64 support.
+
 * Mon Jul 27 2015 Dmitry V. Levin <ldv@altlinux.org> 4.1.3-alt1
 - Updated to v4.1.3.
 
