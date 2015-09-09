@@ -1,7 +1,7 @@
-%def_disable python3
+%def_enable python3
 
 Name: cracklib
-Version: 2.9.1
+Version: 2.9.5
 Release: alt1
 
 Summary: A password-checking library.
@@ -88,6 +88,7 @@ mv %name-%version py3build
 %if_enabled python3
 pushd py3build
 export PYTHON=python3
+export am_cv_python_version=%__python3_version%_python3_abiflags
 %autoreconf
 %configure \
 	--disable-static \
@@ -153,6 +154,10 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 %endif
 
 %changelog
+* Wed Sep 09 2015 Yuri N. Sedunov <aris@altlinux.org> 2.9.5-alt1
+- 2.9.5
+- python3-module subpackage
+
 * Sat Dec 07 2013 Yuri N. Sedunov <aris@altlinux.org> 2.9.1-alt1
 - 2.9.1
 - fixed filetrigger (ALT #29637)
