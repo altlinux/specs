@@ -47,7 +47,7 @@
 
 Name: kde5-pim
 Version: 15.08.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -67,6 +67,7 @@ Requires: %name-korganizer
 
 Source: %rname-%version.tar
 Patch1: alt-akonadi-plugins-dir.patch
+Patch2: alt-akonadi-resources-dir.patch
 
 # Automatically added by buildreq on Thu Sep 03 2015 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl elfutils glibc-devel-static kde5-akonadi-devel kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libgpg-error-devel libgst-plugins1.0 libical-devel libjson-c libkf5gpgmepp-pthread libqt5-concurrent libqt5-core libqt5-dbus libqt5-declarative libqt5-designer libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-texttospeech libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-phonon-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel ruby ruby-stdlibs shared-mime-info xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -472,6 +473,7 @@ Electronic organizer for KDE
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 # rename against kde4 conflict
 find kalarm -type f | \
@@ -503,7 +505,7 @@ done
 
 %files akonadi
 %_K5bin/akonadi_*_agent
-%_K5data/akonadi/agents/*.desktop
+%_datadir/akonadi5/agents/*.desktop
 %_K5notif/akonadi_*_agent.notifyrc
 %doc %_K5doc/en/akonadi_*_agent/
 #
@@ -516,7 +518,7 @@ done
 %_K5bin/ispdb
 %_K5bin/accountwizard
 %_K5plug/accountwizard_plugin.so
-%_K5data/akonadi/accountwizard/
+%_datadir/akonadi5/accountwizard/*
 %_K5xdgapp/org.kde.accountwizard.desktop
 #
 %_K5bin/importwizard
@@ -891,6 +893,9 @@ done
 %_K5lib/libtemplateparser.so.*
 
 %changelog
+* Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
+- move akonadi resources to alternate place
+
 * Fri Aug 21 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
