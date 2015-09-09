@@ -1,128 +1,278 @@
+
+%define common_lisp_controller 0
+
+# generate/package docs
+%define docs 1
+
+# define to enable verbose build for debugging
+#define sbcl_verbose 1
+%define sbcl_shell /bin/bash
+
 Name: sbcl
-Version: 1.1.12
+Summary: Steel Bank Common Lisp
+Version: 1.2.15
 Release: alt1
-
-Summary: Steel Bank Common ANSI Common Lisp
-License: Distributable
-Group: Development/Lisp
-URL: http://sbcl.sourceforge.net/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
+Group: Development/Lisp
+License: BSD
+Url: http://sbcl.sourceforge.net/
+Source0: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-%version-source.tar.bz2
 
-Source: %name-%version-source.tar.bz2
+ExclusiveArch: %arm %ix86 x86_64 ppc sparcv9
+
+# Pre-generated html docs
+Source1: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-%version-documentation-html.tar.bz2
+
+## x86 section
+#Source10: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.0.15-x86-linux-binary.tar.bz2
+%ifarch %ix86
+%define sbcl_arch x86
+BuildRequires: sbcl
+# or
+#define sbcl_bootstrap_src -b 10
+%endif
+
+## x86_64 section
+#Source20: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.2.0-x86-64-linux-binary.tar.bz2
+%ifarch x86_64
+%define sbcl_arch x86-64
+BuildRequires: sbcl
+# or
+#define sbcl_bootstrap_src -b 20
+#define sbcl_bootstrap_dir sbcl-1.2.0-x86-64-linux
+%endif
+
+## ppc section
+# Thanks David!
+#Source30: sbcl-1.0.1-patched_el4-powerpc-linux.tar.bz2
+#Source30: sbcl-1.0.1-patched-powerpc-linux.tar.bz2
+%ifarch ppc
+%define sbcl_arch ppc
+BuildRequires: sbcl
+# or
+#define sbcl_bootstrap_src -b 30
+%endif
+
+## sparc section
+#Source40: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-0.9.17-sparc-linux-binary.tar.bz2
+%ifarch sparcv9
+%define sbcl_arch sparc
+BuildRequires: sbcl
+# or
+#define sbcl_bootstrap_src -b 40
+%endif
+
+## arm section
+#Source50: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.2.0-armel-linux-binary.tar.bz2
+%ifarch armv5tel
+%define sbcl_arch arm
+BuildRequires: sbcl
+# or
+#define sbcl_bootstrap_src -b 50
+#define sbcl_bootstrap_dir sbcl-1.2.0-armel-linux
+%endif
+
+#Source60: http://downloads.sourceforge.net/sourceforge/sbcl/sbcl-1.2.0-armhf-linux-binary.tar.bz2
+# generated on a fedora20 arm box, sf bootstrap missing sb-gmp
+#Source60: sbcl-1.2.0-armhf-linux-binary-2.tar.bz2
+%ifarch armv6hl armv7hl
+%define sbcl_arch arm
+BuildRequires: sbcl
+# or
+#define sbcl_bootstrap_src -b 60
+#define sbcl_bootstrap_dir sbcl-1.2.0-armhf-vfp
+%endif
+
+%if 0%{?common_lisp_controller}
+BuildRequires: common-lisp-controller
+Requires: common-lisp-controller
+Requires(post): common-lisp-controller
+Requires(preun): common-lisp-controller
+Source200: sbcl.sh
+Source201: sbcl.rc
+Source202: sbcl-install-clc.lisp
+%endif
 
 Patch1: %name-1.0-lib_dir.patch
-Patch2: %name-1.0-no-as-needed.patch
-Patch3: %name-1.0.5-test-passed.patch
-Patch4: %name-1.0.44-prefix.patch
-Patch5: %name-1.0.44-runtime.patch
+Patch2: sbcl-1.1.13-personality.patch
+Patch3: sbcl-1.2.11-optflags.patch
+Patch6: sbcl-0.9.5-verbose-build.patch
 
-BuildRequires: sbcl /usr/bin/tex
-BuildRequires: /proc
+
+## upstreamable patches
+Patch50: sbcl-1.2.11-generate_version.patch
+
+
+
+
+## upstream patches
+
+# %%check/tests
+BuildRequires: ed /proc sbcl /usr/bin/tex
+BuildRequires: hostinfo coreutils
+%if 0%{?docs}
+#Requires(post): /sbin/install-info
+#Requires(preun): /sbin/install-info
+# doc generation
+BuildRequires: ghostscript
+BuildRequires: texinfo
+BuildRequires: time
+%endif
 
 %description
-Steel Bank Common Lisp (SBCL) is an open source (free software) compiler 
-and runtime system for ANSI Common Lisp. It provides an interactive 
-environment including an integrated native compiler, a debugger, 
-and many extensions.
-
-SBCL runs on many UNIX and UNIX-like systems.
-
-SBCL is a fork off of the main branch of CMU CL. Broadly speaking,
-SBCL is distinguished from CMU CL by a greater emphasis on
-maintainability. Maybe someday this will translate into better
-stability, better ANSI compliance, and so forth, but for now, the big
-advantage is that an SBCL system is built directly from scratch, as an
-ordinary software system is.
-
-SBCL also places less emphasis than CMU CL does on non-ANSI
-extensions, either on backward compatibility with the old CMU CL
-non-ANSI extensions or on adding new non-ANSI extensions.
-
-SBCL derives most of its code from CMU CL, created at Carnegie Mellon
-University. Radical changes have been made to some parts of the system
-(particularly bootstrapping) but most fundamentals (like the mapping
-of Lisp abstractions onto the underlying hardware, the basic
-architecture of the compiler, and most of the runtime support code)
-are only slightly changed. Enough changes have been made to the
-interface and architecture that calling the new system CMU Common Lisp
-would cause confusion - the world does not need multiple incompatible
-systems named CMU CL. But it's appropriate to acknowledge the descent
-from the CMU hackers (and post-CMU CMU CL hackers) who did most of the
-heavy lifting to make the system work. So the system is named Steel
-Bank after the industries where Andrew Carnegie and Andrew Mellon,
-respectively, made the big bucks.
+Steel Bank Common Lisp (SBCL) is a Open Source development environment
+for Common Lisp. It includes an integrated native compiler,
+interpreter, and debugger.
 
 %prep
-%setup -q
+%setup -c -n sbcl-%version -a 1 %{?sbcl_bootstrap_src}
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-#patch4 -p1
-%patch5 -p1
+pushd sbcl-%version
+%patch1 -p1 
+%patch2 -p1 -b .personality
+%patch3 -p1 -b .optflags
+%{?sbcl_verbose:%patch6 -p1 -b .verbose-build}
+%patch50 -p1 -b .generate_version
 
-#__subst "s|/usr/local/lib/sbcl/|%_libdir/sbcl/|" src/runtime/runtime.c
 %__subst "s|/usr/lib/sbcl/|%_libdir/sbcl/|" src/runtime/runtime.c
 
+# fix permissions (some have eXecute bit set)
+find . -name '*.c' | xargs chmod 644
+
+# set version.lisp-expr
+sed -i.rpmver -e "s|\"%version\"|\"%version-%release\"|" version.lisp-expr
+
+# make %%doc items available in parent dir to make life easier
+cp -alf BUGS COPYING README CREDITS NEWS TLA TODO PRINCIPLES ..
+ln -s sbcl-%version/doc ../doc
+popd
+
 %build
-export CFLAGS="$RPM_OPT_FLAGS -D_LARGEFILE64_SOURCE"
-#export CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE -D_LARGEFILE64_SOURCE"
+pushd sbcl-%version
+
 export SBCL_HOME=%_libdir/sbcl/
-export INSTALL_ROOT=%_prefix 
-sh ./make.sh  
-
-# comment 30102010
-cd doc
-sh ./make-doc.sh
-cd ..
+export INSTALL_ROOT=%prefix
 
 
+#export SBCL_HOME=%prefix/lib/sbcl
+%{?sbcl_arch:export SBCL_ARCH=%sbcl_arch}
+%{?sbcl_shell} \
+./make.sh \
+  --prefix=%prefix \
+  %{?sbcl_bootstrap_dir:--xc-host="`pwd`/../%sbcl_bootstrap_dir/run-sbcl.sh"}
 
-# docs, two strings from FC
-#make -C doc/manual html info
+# docs
+%if 0%{?docs}
+make -C doc/manual info
 
-# shorten long doc file names close to maxpathlen
-#pushd doc/manual/sbcl
-#method_sockets=$(basename $(ls Method-sb*sockets*.html) .html)
-#mv "${method_sockets}.html" Method-sockets.html
-#sed -i -e "s|${method_sockets}|Method-sockets|" General-Sockets.html
-#popd
-
-
-
-
-
-# pretending that sb-bsd-sockets and sb-posix passed 
-#touch contrib/sb-bsd-sockets/test-passed
-#touch contrib/sb-posix/test-passed
-
+# Handle pre-generated docs
+tar xvjf %SOURCE1
+cp -av %name-%version/doc/manual/* doc/manual/
+%endif
+popd
 
 %install
-%define _compress_method skip
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%_libdir/sbcl/
-mkdir -p %buildroot%_mandir/man1/
+pushd sbcl-%version
+mkdir -p %buildroot{%_bindir,%_libdir,%_mandir}
 
-unset SBCL_HOME 
-export INSTALL_ROOT=%buildroot%_prefix
-export LIB_DIR=%buildroot%_libdir 
-sh ./install.sh
+unset SBCL_HOME
+
+export INSTALL_ROOT=%buildroot%prefix
+export LIB_DIR=%buildroot%_libdir
+
+%{?sbcl_shell} ./install.sh
 
 
-cp BUGS COPYING CREDITS INSTALL NEWS PRINCIPLES OPTIMIZATIONS README \
-   TLA TODO %buildroot%_docdir/%name/
 
-# remove files used by Mac OS X
-find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+%if 0%{?common_lisp_controller}
+install -m744 -p -D %SOURCE200 %buildroot%_libdir/common-lisp/bin/sbcl.sh
+install -m644 -p -D %SOURCE201 %buildroot%_sysconfdir/sbcl.rc
+install -m644 -p -D %SOURCE202 %buildroot%_libdir/sbcl/install-clc.lisp
+# linking ok? -- Rex
+cp -p %buildroot%prefix/lib/sbcl/sbcl.core %buildroot%_libdir/sbcl/sbcl-dist.core
+%endif
+popd
+
+## Unpackaged files
+rm -rfv %buildroot%_docdir/sbcl
+rm -fv  %buildroot%_infodir/dir
+# CVS crud
+find %buildroot -name CVS -type d | xargs rm -rfv
+find %buildroot -name .cvsignore | xargs rm -fv
+# 'test-passed' files from %%check
+find %buildroot -name 'test-passed' | xargs rm -vf
+
+%check
+pushd sbcl-%version
+ERROR=0
+# sanity check, essential contrib modules get built/included?
+CONTRIBS="sb-posix.fasl sb-bsd-sockets.fasl"
+for CONTRIB in $CONTRIBS ; do
+  if [ ! -f %buildroot%_libdir/sbcl/contrib/$CONTRIB ]; then
+    echo "WARNING: ${CONTRIB} awol!"
+    ERROR=1
+    echo "ulimit -a"
+    ulimit -a
+  fi
+done
+pushd tests
+# verify --version output
+test "$(source ./subr.sh; SBCL_ARGS= run_sbcl --version 2>/dev/null | cut -d' ' -f2)" = "%version-%release"
+# still seeing Failure: threads.impure.lisp / (DEBUGGER-NO-HANG-ON-SESSION-LOCK-IF-INTERRUPTED)
+time %{?sbcl_shell} ./run-tests.sh ||:
+popd
+exit $ERROR
+popd
+
+#mkdir -p %buildroot{%_libdir/sbcl/contrib,%_libdir/sbcl/site-systems}
+#mv %buildroot%prefix/lib/sbcl/* %buildroot%_libdir/sbcl/*
+#mv %buildroot%prefix/lib/contrib/* %_libdir/sbcl/contrib/
+#mv %buildroot%prefix/lib/site-systems/* %_libdir/sbcl/site-systems/
+
+
+%post
+%if 0%{?common_lisp_controller}
+/usr/sbin/register-common-lisp-implementation sbcl > /dev/null 2>&1 ||:
+%endif
+
+%preun
+
+%if 0%{?common_lisp_controller}
+/usr/sbin/unregister-common-lisp-implementation sbcl > /dev/null 2>&1 ||:
+%endif
+
 
 %files
-%_bindir/*
-%_libdir/sbcl
-%_mandir/man?/*
-%_docdir/*
-
+%doc COPYING
+%doc BUGS CREDITS NEWS PRINCIPLES README TLA TODO
+%_bindir/sbcl
+%dir %_libdir/sbcl/
+%_libdir/sbcl/contrib/
+%_libdir/sbcl/site-systems/
+%_man1dir/sbcl.1*
+%if 0%{?docs}
+%doc doc/manual/sbcl.html
+%doc doc/manual/asdf.html
+#_infodir/asdf.info*
+#_infodir/sbcl.info*
+%endif
+%if 0%{?common_lisp_controller}
+%_libdir/common-lisp/bin/*
+%_libdir/sbcl/install-clc.lisp
+%_libdir/sbcl/sbcl-dist.core
+%verify(not md5 size) %_libdir/sbcl/sbcl.core
+%config(noreplace) %_sysconfdir/sbcl.rc
+%else
+%_libdir/sbcl/sbcl.core
+%endif
 
 %changelog
+* Wed Sep 09 2015 Ilya Mashkin <oddity@altlinux.ru> 1.2.15-alt1
+- 1.2.15
+- sync spec with FC
+- docs from SF
+- info removed
+
 * Wed Oct 30 2013 Ilya Mashkin <oddity@altlinux.ru> 1.1.12-alt1
 - 1.1.12
 
@@ -239,13 +389,13 @@ find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' 
 * Thu Mar 16 2006 Vadim V. Zhytnikov <vvzhy@altlinux.ru> 0.9.10-alt1
 - new version
 - using clisp as cross-compilation host
-- builds on x86_64 
+- builds on x86_64
 
 * Wed Jan 11 2006 Vadim V. Zhytnikov <vvzhy@altlinux.ru> 0.9.8-alt2
 - package /usr/lib/sbcl
 
 * Mon Jan 09 2006 Vadim V. Zhytnikov <vvzhy@altlinux.ru> 0.9.8-alt1
-- new version 
+- new version
 
 * Fri Oct 14 2005 Vadim V. Zhytnikov <vvzhy@altlinux.ru> 0.9.5-alt1
 - new version
@@ -309,3 +459,4 @@ core path bug fixed
 
 * Sun Jan 27 2002 Vitaly Lugovsky <warlock@skeptik.net>
 - First RPM release.
+
