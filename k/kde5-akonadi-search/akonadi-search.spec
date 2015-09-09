@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 15.08.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -86,7 +86,7 @@ KF5 library
 %files
 %_K5bin/*
 %_K5plug/akonadi/*.so
-%_K5data/akonadi/agents/*.desktop
+%_datadir/akonadi5/agents/*.desktop
 
 %files devel
 %_K5inc/akonadi_search_version.h
@@ -103,6 +103,9 @@ KF5 library
 %_K5lib/libKF5AkonadiSearchPIM.so.*
 
 %changelog
+* Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
+- move akonadi resources
+
 * Thu Aug 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
