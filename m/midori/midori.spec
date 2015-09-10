@@ -1,5 +1,5 @@
 Name: midori
-Version: 0.5.6
+Version: 0.5.11
 Release: alt1
 
 Summary: is a lightweight web browser
@@ -8,10 +8,14 @@ Group: Networking/WWW
 Url: http://www.midori-browser.org/
 
 # https://launchpad.net/midori
-Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Source: https://launchpad.net/%name/trunk/%version/+download/%name-%version.tar.bz2
+#Patch: %name-%version-%release.patch
+Patch1: midori-alt-providers.patch
 
-BuildRequires: cmake libzeitgeist-devel gcr-libs-devel intltool libXScrnSaver-devel libgranite-devel libgranite-vala libnotify-devel librsvg-utils libsoup-gnome-devel libsqlite3-devel libwebkitgtk3-devel libxml2-devel
+BuildRequires: cmake gcc-c++ libzeitgeist2.0-devel gcr-libs-devel intltool
+BuildRequires: libgranite-devel libgranite-vala libnotify-devel librsvg-utils
+BuildRequires: libsoup-gnome-devel libsqlite3-devel libwebkit2gtk-devel libxml2-devel
+BuildRequires: libXScrnSaver-devel
 
 %description
 Midori is a lightweight web browser.
@@ -27,14 +31,17 @@ Midori is a lightweight web browser.
 
 %prep
 %setup
-%patch0 -p1
+#%patch -p1
+%patch1 -p1
 
 %build
-./configure --prefix=%_prefix --enable-granite
-make
+%cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
+	-DHALF_BRO_INCOM_WEBKIT2:BOOL=ON \
+	-DUSE_GRANITE:BOOL=ON
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -53,6 +60,9 @@ make
 %_docdir/%name
 
 %changelog
+* Wed Sep 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.5.11-alt1
+- 0.5.11
+
 * Mon Dec 09 2013 Vladimir Lettiev <crux@altlinux.ru> 0.5.6-alt1
 - 0.5.6
 - build with libgranite (Closes: #29341)

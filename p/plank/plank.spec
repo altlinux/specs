@@ -1,93 +1,93 @@
-%set_verify_elf_method rpath=relaxed
+%define ver_major 0.9
+%def_disable dbusmenu
 
 Name: plank
-Version: 0.5.0
-Release: alt5
+Version: %ver_major.1
+Release: alt1
 
 Summary: Elegant, simple, clean dock
 License: GPLv3+
 Group: Graphical desktop/Other
 Url: https://launchpad.net/plank
 
-Source0: %name-%version.tar.xz
+Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.xz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Thu Oct 10 2013
-BuildRequires: gnome-common intltool libbamf3-devel libgee-devel vala-tools
+Requires: bamfdaemon
+
+BuildRequires: intltool libbamf3-devel libgee0.8-devel vala-tools xmllint
 BuildRequires: xvfb-run dbus-tools-gui libgtk+3-devel libwnck3-devel
+BuildRequires: libXi-devel libXfixes-devel
+%{?_enable_dbusmenu:BuildRequires: libdbusmenu-glib-devel}
 
 %description
 Plank is a dock enabling you to start applications and manage your windows.
 
-%package -n libplank0
+%package -n lib%name
 Summary: Library to build a elegant, simple, clean dock
 Group: System/Libraries
 
-Requires: libplank-common = %version-%release
+Requires: lib%name-common = %version-%release
 
-%description -n libplank0
+%description -n lib%name
 Plank is a dock enabling you to start applications and manage your windows.
 
-%package -n libplank-devel
+%package -n lib%name-devel
 Summary: Library to build a elegant, simple, clean dock (development files)
 Group: Development/C
 
-%description -n libplank-devel
+%description -n lib%name-devel
 Plank is a dock enabling you to start applications and manage your windows.
 
-%package -n libplank-common
+%package -n lib%name-common
 Summary: Library to build a elegant, simple, clean dock
 Group: Graphical desktop/Other
-
 BuildArch: noarch
 
 # TODO:
 # Depends: plank-theme-pantheon
 
-%description -n libplank-common
+%description -n lib%name-common
 Plank is a dock enabling you to start applications and manage your windows.
 
-%package -n libplank-doc
+%package -n lib%name-doc
 Summary: Library to build a elegant, simple, clean dock - documentation
 Group: Documentation
-
 BuildArch: noarch
+Conflicts: lib%name < %version
 
-# TODO: re-check
-# Suggests: devhelp
-
-%description -n libplank-doc
+%description -n lib%name-doc
 Plank is a dock enabling you to start applications and manage your windows.
 
 This package contains the documentation.
 
-%package -n libplank-vala
+%package -n lib%name-vala
 Summary: Vala language bindings for plank library
 Group: Development/Other
 BuildArch: noarch
-Requires: libplank0 = %version-%release
+Requires: lib%name = %version-%release
 
-%description -n libplank-vala
+%description -n lib%name-vala
 This package provides Vala language bindings for plank library.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure \
   --enable-headless-tests \
-  --disable-gee-0.8
-#  --enable-docs
+  %{subst_enable dbusmenu}
 %make_build V=1
 
-#%check
-#make check || exit 1
-
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
+
+%check
+#make check || exit 1
+
 
 %files -f %name.lang
 %_sysconfdir/apport/crashdb.conf.d/plank-crashdb.conf
@@ -95,26 +95,30 @@ This package provides Vala language bindings for plank library.
 %_datadir/icons/hicolor/*/apps/plank.*
 %_man1dir/plank.*
 %_desktopdir/plank.desktop
+%_datadir/appdata/plank.appdata.xml
 %exclude %_datadir/apport/package-hooks/source_plank.py
 
-%files -n libplank0
-%_libdir/libplank.so.*
+%files -n lib%name
+%_libdir/lib%name.so.*
 
-%files -n libplank-devel
-%_libdir/libplank.so
+%files -n lib%name-devel
+%_libdir/lib%name.so
 %_includedir/plank
 %_pkgconfigdir/plank.pc
 
-%files -n libplank-common
+%files -n lib%name-common
 %_datadir/plank/themes
 
-%files -n libplank-doc
+%files -n lib%name-doc
 
-%files -n libplank-vala
+%files -n lib%name-vala
 %_datadir/vala/vapi/plank.deps
 %_datadir/vala/vapi/plank.vapi
 
 %changelog
+* Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Mon Nov 25 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt5
 - Built with --disable-gee-0.8
 

@@ -1,26 +1,34 @@
-Name: noise
-Version: 0.2.4
-Release: alt2
+%define ver_major 0.3
+%define gst_api_ver 1.0
 
-Summary: Simple, fast, and good looking music player
+Name: noise
+Version: %ver_major.1
+Release: alt1
+
+Summary: The official elementary music player
 Group: Sound
 License: GPLv3
-
 Url: https://launchpad.net/noise
 
-Source0: %name-%version.tgz
+Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tgz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-BuildRequires: cmake libsqlheavy-devel libsqlite3-devel libgee-devel
-BuildRequires: libgpod-devel libxml2-devel libgtk+3-devel libpeas-devel
-BuildRequires: libgranite-devel gstreamer-devel gst-plugins-devel
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
+Requires: gst-plugins-bad%gst_api_ver
+
+BuildRequires: cmake gcc-c++ vala-tools libsqlheavy-devel libsqlite3-devel libgee0.8-devel
+BuildRequires: libxml2-devel libgtk+3-devel libpeas-devel
+BuildRequires: libgranite-devel gst-plugins%gst_api_ver-devel
 BuildRequires: libsoup-devel libjson-glib-devel libpixman-devel libtag-devel
-BuildRequires: libXdmcp-devel libnotify-devel libpng-devel gcc-c++
+BuildRequires: libXdmcp-devel libnotify-devel libpng-devel
 BuildRequires: libXdamage-devel libgranite-vala libXxf86vm-devel
 BuildRequires: libharfbuzz-devel libXinerama-devel libXi-devel libXrandr-devel
 BuildRequires: libXcursor-devel libXcomposite-devel libxkbcommon-devel
 BuildRequires: libwayland-cursor-devel at-spi2-atk-devel
+BuildRequires: libzeitgeist2.0-devel libgpod-devel libusbmuxd-devel
+BuildRequires: gobject-introspection-devel
 
 %description
 Noise is an easy to use, stable, fast and good looking music library
@@ -31,11 +39,11 @@ artwork, information, and scrobble your music, playlists and smart playlists,
 find music similar to the currently playing song, simple UI, fast searching
 for music, queue system, mass song editing and more...
 
-%package -n libnoise-core
+%package -n lib%name-core
 Summary: Simple, fast, and good looking music player (core library)
 Group: System/Libraries
 
-%description -n libnoise-core
+%description -n lib%name-core
 Noise is an easy to use, stable, fast and good looking music library
 organizer written in vala.
 
@@ -46,13 +54,12 @@ for music, queue system, mass song editing and more...
 
 This package contains the shared library.
 
-%package -n libnoise-core-devel
+%package -n lib%name-core-devel
 Summary: Simple, fast, and good looking music player (development files)
 Group: Development/C
+Requires: lib%name-core = %version-%release
 
-Requires: libnoise-core = %version-%release
-
-%description -n libnoise-core-devel
+%description -n lib%name-core-devel
 Noise is an easy to use, stable, fast and good looking music library
 organizer written in vala.
 
@@ -64,45 +71,44 @@ for music, queue system, mass song editing and more...
 This package contains the development files.
 
 %prep
-%setup -q
+%setup
+# fix libdir
+find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINATION}/|g' --
 
 %build
-%cmake_insource
-%make_build
+%cmake -DCMAKE_BUILD_TYPE:STRING="Release"
+%cmake_build
 
 %install
-%make_install DESTDIR=%buildroot install
-
-%ifarch x86_64
-mkdir -p %buildroot%_libdir/
-mv %buildroot/usr/lib/* %buildroot%_libdir/
-%endif
+%cmakeinstall_std
 
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/*
-%_libdir/noise/plugins
-%_datadir/applications/noise.desktop
+%_libdir/%name/plugins
+%_desktopdir/%name.desktop
+%_datadir/%name/
 %_datadir/glib-2.0/schemas/org.pantheon.noise.gschema.xml
 %_datadir/glib-2.0/schemas/org.pantheon.noise.lastfm.gschema.xml
 %_datadir/icons/hicolor/*/apps/multimedia-audio-player.svg
-%_datadir/noise
 
+%files -n lib%name-core
+%_libdir/lib%name-core.so.*
 
-%files -n libnoise-core
-%_libdir/libnoise-core.so.*
-
-%files -n libnoise-core-devel
-%_includedir/noise-core/noise-core.h
-%_libdir/libnoise-core.so
-%_pkgconfigdir/noise-core.pc
+%files -n lib%name-core-devel
+%_includedir/%name-core/
+%_libdir/lib%name-core.so
+%_pkgconfigdir/%name-core.pc
 
 # TODO:
-#    /usr/share/vala/vapi/noise-core.deps
-#    /usr/share/vala/vapi/noise-core.vapi
+#    /usr/share/vala/vapi/%name-core.deps
+#    /usr/share/vala/vapi/%name-core.vapi
 
 %changelog
+* Wed Sep 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Fri Sep 13 2013 Igor Zubkov <icesik@altlinux.org> 0.2.4-alt2
 - fix build on x86_64
 

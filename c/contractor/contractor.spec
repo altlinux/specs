@@ -1,17 +1,19 @@
+%define ver_major 0.3
+
 Name: contractor
-Version: 0.3
-Release: alt4.r132
+Version: %ver_major.1
+Release: alt1
 
 Summary: service for sharing data between apps
 License: GPLv3+
 Group: Graphical desktop/Other
 Url: https://launchpad.net/contractor
 
-Source0: %name.tar.xz
+Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-BuildRequires: cmake vala glib2-devel libgee-devel libgio-devel gcc-c++
+BuildRequires: cmake gcc-c++ vala libgee0.8-devel libgio-devel
 
 %description
 A sharing service that allows source apps to send their data to
@@ -19,22 +21,24 @@ registered destination apps. This way, data source apps don't have to
 have the destination apps hard coded into them.
 
 %prep
-%setup -q -n %name
+%setup
 
 %build
-%cmake_insource
-%make_build VERBOSE=1
+%cmake
+%cmake_build VERBOSE=1
 
 %install
-%make_install DESTDIR=%buildroot install
+%cmakeinstall_std
 
 %files
-%doc INSTALL
 %_bindir/*
-%_datadir/contractor
 %_datadir/dbus-1/services/org.elementary.contractor.service
+%doc INSTALL
 
 %changelog
+* Thu Sep 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Mon Jan 06 2014 Igor Zubkov <icesik@altlinux.org> 0.3-alt4.r132
 - r132
 
