@@ -1,7 +1,7 @@
 
 Name: akonadi
-Version: 1.13.0
-Release: alt3
+Version: 1.13.1
+Release: alt0.1
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -12,10 +12,6 @@ Requires: %name-database tar bzip2
 
 Source: %name-%version.tar
 Source10: mysql_install_db
-# Upstream
-Patch1: upstream-do_not_crash_when_setmntent_returns_NULL.patch
-Patch2: upstream_dont_call_insert_from_Q_ASSERT.patch
-Patch3: upstream-fix_buffer_overflow_in_AKTEST_FAKESERVER_MAIN.patch
 # RH
 Patch10: akonadi-1.7.0-mysql_conf.patch
 # ALT
@@ -133,9 +129,6 @@ Development files for %name
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 #
 %patch10 -p1
 #
@@ -206,6 +199,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt0.1
+- update from 1.13 branch
+
 * Thu Jun 18 2015 Sergey V Turchin <zerg@altlinux.org> 1.13.0-alt3
 - add upstream fixes
 
