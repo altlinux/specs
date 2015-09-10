@@ -1,21 +1,20 @@
-# TODO: fix this
-%set_verify_elf_method unresolved=relaxed
+%define api_ver 0.2
 
 Name: sqlheavy
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: GObject wrapper for SQLite
 License: LGPLv2.1 or v3
 Group: System/Libraries
-Url: http://gitorious.org/sqlheavy
+Url: https://github.com/nemequ/sqlheavy
 
-# commit 7ae6112960a0ac4d77d904dd8cc561dcac62b6e2
-Source0: %name.tar.xz
+# commit e83b497a
+Source: %name-%version.tar
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-BuildRequires: libgio-devel libsqlite3-devel libgtk+2-devel vala
+BuildRequires: libgio-devel libsqlite3-devel gobject-introspection-devel vala-tools
 
 %description
 SQLHeavy is a convenience wrapper on top of SQLite. Though its primary
@@ -23,11 +22,11 @@ purpose is to provide an easy to use Vala interface, it also provides
 a very nice C interface and GObject Introspection support, and may be
 easier to use from other languages than the standard SQLite interface
 
-%package -n libsqlheavy
+%package -n lib%name
 Summary: GObject wrapper for SQLite (library)
 Group: System/Libraries
 
-%description -n libsqlheavy
+%description -n lib%name
 SQLHeavy is a convenience wrapper on top of SQLite. Though its primary
 purpose is to provide an easy to use Vala interface, it also provides
 a very nice C interface and GObject Introspection support, and may be
@@ -35,13 +34,12 @@ easier to use from other languages than the standard SQLite interface
 
 This package contains the shared library.
 
-%package -n libsqlheavy-devel
+%package -n lib%name-devel
 Summary: GObject wrapper for SQLite (development files)
 Group: Development/C
+Requires: lib%name = %version-%release
 
-Requires: libsqlheavy = %version-%release
-
-%description -n libsqlheavy-devel
+%description -n lib%name-devel
 SQLHeavy is a convenience wrapper on top of SQLite. Though its primary
 purpose is to provide an easy to use Vala interface, it also provides
 a very nice C interface and GObject Introspection support, and may be
@@ -49,38 +47,26 @@ easier to use from other languages than the standard SQLite interface
 
 This package contains the development files.
 
-%package -n libsqlheavygtk
-Summary: SQLHeavy GTK+ integration library (library)
+%package -n lib%name-gir
+Summary: GObject introspection data for the SQLHeavy library
 Group: System/Libraries
+Requires: lib%name = %version-%release
 
-Requires: libsqlheavy = %version-%release
+%description -n lib%name-gir
+GObject introspection data for the SQLHeavy library.
 
-%description -n libsqlheavygtk
-SQLHeavy is a convenience wrapper on top of SQLite. Though its primary
-purpose is to provide an easy to use Vala interface, it also provides
-a very nice C interface and GObject Introspection support, and may be
-easier to use from other languages than the standard SQLite interface
+%package -n lib%name-gir-devel
+Summary: GObject introspection devel data for the SQLHeavy library
+Group: Development/Other
+Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %version-%release
 
-This package contains a library to help integrate SQLHeavy into GTK+
-applications.
+%description -n lib%name-gir-devel
+GObject introspection devel data for the SQLHeavy library.
 
-%package -n libsqlheavygtk-devel
-Summary: SQLHeavy GTK+ integration library (development files)
-Group: Development/C
-
-Requires: libsqlheavygtk = %version-%release
-
-%description -n libsqlheavygtk-devel
-SQLHeavy is a convenience wrapper on top of SQLite. Though its primary
-purpose is to provide an easy to use Vala interface, it also provides
-a very nice C interface and GObject Introspection support, and may be
-easier to use from other languages than the standard SQLite interface
-
-This package contains the development files for a library to help
-integrate SQLHeavy into GTK+ applications.
 
 %prep
-%setup -q -n %name
+%setup
 
 %build
 touch ChangeLog
@@ -90,38 +76,31 @@ touch ChangeLog
 %make_build V=1
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
-%files -n libsqlheavy
-%_libdir/libsqlheavy0.2.so.*
-%_datadir/sqlheavy/0.2/schemas/*
+%files -n lib%name
+%_libdir/lib%name%api_ver.so.*
 
-%files -n libsqlheavy-devel
-%_libdir/libsqlheavy0.2.so
-%_includedir/sqlheavy/sqlheavy-0.2/SQLHeavy.h
-%_pkgconfigdir/sqlheavy-0.2.pc
+%files -n lib%name-devel
+%_libdir/lib%name%api_ver.so
+%_includedir/%name/
+%_pkgconfigdir/%name-%api_ver.pc
+%_vapidir/%name-%api_ver.deps
+%_vapidir/%name-%api_ver.vapi
 
-%_datadir/vala/vapi/sqlheavy-0.2.deps
-%_datadir/vala/vapi/sqlheavy-0.2.vapi
+%files -n lib%name-gir
+%_typelibdir/SQLHeavy-%api_ver.typelib
 
+%files -n lib%name-gir-devel
+%_girdir/SQLHeavy-%api_ver.gir
 
-%files -n libsqlheavygtk
-%_libdir/libsqlheavygtk0.2.so.*
-
-%files -n libsqlheavygtk-devel
-%_libdir/libsqlheavygtk0.2.so
-%_includedir/sqlheavy/sqlheavy-0.2/SQLHeavyGTK.h
-%_pkgconfigdir/sqlheavygtk-0.2.pc
-
-%_datadir/vala/vapi/sqlheavygtk-0.2.deps
-%_datadir/vala/vapi/sqlheavygtk-0.2.vapi
-
-# TODO:
-#    /usr/lib/girepository-1.0/SQLHeavy-0.2.typelib
-#    /usr/share/gir-1.0/SQLHeavy-0.2.gir
-#    /usr/share/man/man1/sqlheavy-gen-orm.1.gz
 
 %changelog
+* Thu Sep 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2-alt2
+- updated to 0.2_e83b497a from new url
+- removed %%{name}gtk subpackages
+- new {gir,}-devel subpackages
+
 * Thu Sep 12 2013 Igor Zubkov <icesik@altlinux.org> 0.2-alt1
 - build for Sisyphus
 
