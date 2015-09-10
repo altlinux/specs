@@ -2,7 +2,7 @@
 
 Name: kdenlive
 Version: 15.08.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Summary: KDE Non Linear Video Editor
@@ -18,6 +18,7 @@ Requires: icon-theme-oxygen
 
 Source: %name-%version.tar
 Patch1: alt-prefer-vlc.patch
+Patch2: alt-find-lumas.patch
 
 # Automatically added by buildreq on Mon Jul 27 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libmlt-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs shared-mime-info xml-common xml-utils
@@ -45,6 +46,7 @@ DV, HDV and AVCHD(not complete yet) editing.
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build
@@ -71,6 +73,9 @@ sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.des
 %_man1dir/kdenlive*
 
 %changelog
+* Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
+- fix find kdenlive lumas
+
 * Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
