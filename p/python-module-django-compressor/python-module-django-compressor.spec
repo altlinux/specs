@@ -4,7 +4,7 @@
 %def_with python3
 
 Name:		python-module-%oname
-Version:	1.4
+Version:	1.5
 Release:	alt1
 
 Summary:	Compresses linked and inline JavaScript or CSS into single cached files
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 10 2015 Lenar Shakirov <snejok@altlinux.ru> 1.5-alt1
+- Version 1.5
+
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1
 - Version 1.4
 - Added module for Python 3
