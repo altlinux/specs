@@ -1,5 +1,7 @@
+%define ver_major 0.3
+
 Name: wingpanel
-Version: 0.2.5
+Version: %ver_major.0.2
 Release: alt1
 
 Summary: A super sexy space-saving top panel
@@ -7,24 +9,18 @@ Group: Graphical desktop/Other
 License: GPLv3+
 Url: https://launchpad.net/wingpanel
 
-Source0: %name-%version.tgz
+Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar.xz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-BuildRequires: cmake glib2-devel libindicator-gtk3-devel libgranite-devel
+BuildRequires: gcc-c++ cmake glib2-devel libindicator-gtk3-devel libgranite-devel
 BuildRequires: libpixman-devel libexpat-devel libXdmcp-devel libXdamage-devel
 BuildRequires: libXxf86vm-devel libharfbuzz-devel libpng-devel
 BuildRequires: libXinerama-devel libXi-devel libXrandr-devel libXcursor-devel
 BuildRequires: libXcomposite-devel libxkbcommon-devel libwayland-cursor-devel
-BuildRequires: at-spi2-atk-devel gcc-c++ libgranite-vala
+BuildRequires: at-spi2-atk-devel libgranite-vala
+BuildRequires: libwnck3-devel libido3-devel
 
-#Recommends: indicator-application,
-#            indicator-datetime,
-#            indicator-me,
-#            indicator-messages,
-#            indicator-session,
-#            indicator-sound
-#Provides: indicator-renderer
 
 %description
 A replacement for the traditional GNOME Panel, designed to be a lightweight
@@ -32,24 +28,29 @@ container for system/application indicators and notification icons.
 Designed by elementary Project.
 
 %prep
-%setup -q
+%setup
 
 %build
-%cmake_insource
-%make_build VERBOSE=1
+%cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
+		-DNO_INDICATOR_NG:BOOL=ON \
+		-DOLD_LIB_IDO:BOOL=ON
+%cmake_build VERBOSE=1
 
 %install
-%make_install DESTDIR=%buildroot install
+%cmakeinstall_std
 
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/*
-%_datadir/applications/wingpanel.desktop
+%_desktopdir/%name.desktop
 %_datadir/glib-2.0/schemas/org.pantheon.desktop.wingpanel.gschema.xml
-%_datadir/icons/hicolor/scalable/apps/wingpanel.svg
+%_iconsdir/hicolor/scalable/apps/wingpanel.svg
 
 %changelog
+* Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.0.2-alt1
+- 0.3.0.2
+
 * Mon Oct 07 2013 Igor Zubkov <icesik@altlinux.org> 0.2.5-alt1
 - 0.2.3 -> 0.2.5
 

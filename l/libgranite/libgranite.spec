@@ -1,24 +1,26 @@
-%define origname granite
+%define _name granite
+%define ver_major 0.3
+%define api_ver 1.0
 
 Name: libgranite
-Version: 0.2.3
+Version: %ver_major.1
 Release: alt1
 
-Summary: Extension of GTK+ libraries
+Summary: Extension of GTK+3 libraries
 Group: System/Libraries
 License: GPLv3+
 Url: https://launchpad.net/granite
 
-Source0: %origname-%version.tgz
+Source: https://launchpad.net/%_name/%ver_major/%version/+download/%_name-%version.tar.xz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-BuildRequires: cmake rpm-build-gir vala libgtk+3-devel libgee-devel
+BuildRequires: cmake rpm-build-gir vala libgtk+3-devel libgee0.8-devel
 BuildRequires: libpixman-devel gobject-introspection-devel libXdmcp-devel
 BuildRequires: libXdamage-devel libXxf86vm-devel libharfbuzz-devel libpng-devel
 BuildRequires: libXinerama-devel libXi-devel libXrandr-devel libXcursor-devel
 BuildRequires: libXcomposite-devel libxkbcommon-devel libwayland-cursor-devel
-BuildRequires: at-spi2-atk-devel libgtk+3-gir-devel libgee-gir-devel
+BuildRequires: at-spi2-atk-devel libgtk+3-gir-devel libgee0.8-gir-devel
 BuildRequires: libexpat-devel
 
 %description
@@ -81,7 +83,7 @@ Requires: %name-gir = %version-%release
 GObject introspection devel data for the granite library.
 
 %prep
-%setup -q -n %origname-%version
+%setup -n %_name-%version
 
 %build
 %cmake_insource
@@ -90,33 +92,37 @@ GObject introspection devel data for the granite library.
 %install
 %makeinstall_std
 
-%find_lang %origname
+%find_lang %_name
 
-%files -f %origname.lang
+%files -f %_name.lang
 %doc AUTHORS INSTALL README
 %_libdir/*.so.*
 
 %files devel
 %_libdir/*.so
-%dir %_includedir/granite
-%_includedir/granite/*.h
-%_pkgconfigdir/granite.pc
+%dir %_includedir/%_name
+%_includedir/%_name/*.h
+%_pkgconfigdir/%_name.pc
 
-%files -n granite-demo
+%files -n %_name-demo
 %_bindir/*
+%_desktopdir/%_name-demo.desktop
 %_datadir/icons/hicolor/*/*/*.svg
 
 %files gir
-%_typelibdir/Granite-1.0.typelib
+%_typelibdir/Granite-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Granite-1.0.gir
+%_girdir/Granite-%api_ver.gir
 
 %files vala
-%_datadir/vala/vapi/granite.deps
-%_datadir/vala/vapi/granite.vapi
+%_datadir/vala/vapi/%_name.deps
+%_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Sun Sep 06 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Mon Mar 03 2014 Igor Zubkov <icesik@altlinux.org> 0.2.3-alt1
 - 0.2.3
 
