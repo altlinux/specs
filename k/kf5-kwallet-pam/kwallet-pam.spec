@@ -1,8 +1,8 @@
 %define rname kwallet-pam
 
 Name: kf5-%rname
-Version: 5.4.0
-Release: alt2
+Version: 5.4.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -68,6 +68,9 @@ done
 %_pam_modules_dir/pam_kwallet5.so
 
 %changelog
+* Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
+- new version
+
 * Thu Aug 27 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt2
 - fix path to KDE4 kwalletd
 

@@ -14,8 +14,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.4.0
-Release: alt2
+Version: 5.4.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -251,6 +251,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
+- new version
+
 * Tue Sep 08 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt2
 - fix path to startkde in session file
 

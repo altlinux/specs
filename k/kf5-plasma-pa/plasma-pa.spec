@@ -4,8 +4,8 @@
 %define libqpulseaudioprivate libqpulseaudioprivate%sover
 
 Name: kf5-%rname
-Version: 5.4.0
-Release: alt2
+Version: 5.4.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -77,7 +77,7 @@ KF5 library
 %_K5cf_upd/*
 %_K5srv/*.desktop
 
-%files devel
+#%files devel
 #%_K5inc/plasma-pa_version.h
 #%_K5inc/plasma-pa/
 #%_K5link/lib*.so
@@ -89,6 +89,9 @@ KF5 library
 %_K5lib/libQPulseAudioPrivate.so.*
 
 %changelog
+* Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
+- new version
+
 * Fri Sep 04 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt2
 - provide kde5-volume-control
 
