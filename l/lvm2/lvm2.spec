@@ -1,5 +1,5 @@
-%define lvm2version 2.02.127
-%define dmversion 1.02.104
+%define lvm2version 2.02.130
+%define dmversion 1.02.107
 
 %def_disable cluster
 %def_enable selinux
@@ -46,7 +46,7 @@ BuildRequires: gcc-c++
 BuildRequires: libreadline-devel libtinfo-devel libudev-devel CUnit-devel
 BuildRequires: libudev-devel >= 205
 BuildRequires: systemd-devel
-BuildRequires: thin-provisioning-tools
+BuildRequires: thin-provisioning-tools >= 0.5.4
 BuildRequires: python-devel python-module-setuptools
 %{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static}
 %{?_enable_cluster:BuildRequires: libcman-devel libdlm-devel}
@@ -389,7 +389,7 @@ sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 %endif
 %config(noreplace) %_sysconfdir/lvm/lvm.conf
 %config(noreplace) %_sysconfdir/lvm/lvmlocal.conf
-%config %_sysconfdir/lvm/profile/*.profile
+%config(noreplace) %verify(not md5 mtime size) %_sysconfdir/lvm/profile/*.profile
 %_initdir/lvm2-monitor
 %_unitdir/lvm2-monitor.service
 %_initdir/blk-availability
@@ -496,6 +496,9 @@ sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 %python_sitelibdir/*
 
 %changelog
+* Thu Sep 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.130-alt1
+- 2.02.130
+
 * Tue Aug 11 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.127-alt1
 - 2.02.127
 
