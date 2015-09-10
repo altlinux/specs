@@ -1,6 +1,6 @@
 Name: libical
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -32,7 +32,8 @@ use libical.
 %patch -p1
 
 %build
-%cmake
+%cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
+	-DSHARED_ONLY:BOOL=ON
 %cmake_build
 
 %install
@@ -52,9 +53,11 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %_pkgconfigdir/*.pc
 %_libdir/cmake/LibIcal/
 
-%exclude %_libdir/*.a
 
 %changelog
+* Thu Sep 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt3
+- built with SHARED_ONLY=ON to prevent cmake search for the static libraries (ALT #31266)
+
 * Fri Mar 27 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt2
 - CMakeLists.txt: fixed hardcoded libdir producing broken
   pkgconfig file under x86_64
