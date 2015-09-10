@@ -47,7 +47,7 @@
 
 Name: kde5-pim
 Version: 15.08.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -391,7 +391,7 @@ KF5 library
 Summary: KDE PIM storage framework
 Group: Graphical desktop/KDE
 Requires: %name-common = %EVR
-Requires: kde5-pimlibs kde5-akonadi-search
+Requires: kde5-pim-runtime kde5-akonadi-search
 %description akonadi
 KDE PIM storage framework
 
@@ -893,6 +893,9 @@ done
 %_K5lib/libtemplateparser.so.*
 
 %changelog
+* Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt3
+- fix requires
+
 * Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
 - move akonadi resources to alternate place
 
