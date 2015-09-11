@@ -1,5 +1,5 @@
 Name: ZeroBraneStudio
-Version: 0.80
+Version: 1.10
 Release: alt1
 Summary: lightweight cross-platform Lua IDE
 License: MIT
@@ -10,7 +10,8 @@ BuildArch: noarch
 # https://github.com/pkulchenko/ZeroBraneStudio
 Source: %name-%version.tar
 
-Requires: wxlua luarocks(luasocket) >= 3.0 luarocks(copas) luarocks(mobdebug) luarocks(lua-parser-loose)
+Requires: wxlua luarocks(luasocket) >= 3.0
+# Requires: luarocks(copas) luarocks(mobdebug) luarocks(lua-parser-loose)
 Requires: lua5
 
 BuildRequires: desktop-file-utils
@@ -24,25 +25,39 @@ others). It originated from the Estrela Editor.
 
 %prep
 %setup
-rm -rf bin lualibs
+rm -rf bin \
+	zbstudio/ZeroBraneStudio.app \
+	lualibs/{socket{,.lua},mime.lua} \
+; echo FIXME: Leaving \
+	lualibs/{copas,coxpcall} \
+	lualibs/mobdebug \
+	lualibs/lua_{lexer,parser}_loose.lua \
 
 %install
-sed -r -i "/ide.config.stylesoutshell/ i ide.config.path.lua = '/usr/bin/lua'" src/main.lua
+sed -r -i "/ide.config.stylesoutshell/ i ide.config.path.lua = '%_bindir/lua'" src/main.lua
 
-mkdir -p %buildroot%_desktopdir %buildroot/usr/share/icons
-cp -a . %buildroot/usr/share/%name
-cp -a zbstudio/res/icons %buildroot/usr/share/icons/hicolor
+mkdir -p %buildroot%_desktopdir %buildroot%_iconsdir
+cp -a . %buildroot%_datadir/%name
+cp -a zbstudio/res/icons %buildroot%_iconsdir/hicolor
 
 desktop-file-install \
-	--set-key=Exec --set-value='sh -c "cd /usr/share/%name ; exec lua src/main.lua"' \
-	 --dir=%buildroot%_desktopdir zbstudio/res/zbstudio.desktop
+	--set-key=Exec --set-value='sh -c "cd %_datadir/%name ; exec lua src/main.lua"' \
+	--dir=%buildroot%_desktopdir zbstudio/res/zbstudio.desktop
+
+#
+%add_findreq_skiplist %_datadir/%name/zbstudio.sh
+%add_findreq_skiplist %_datadir/%name/build/*
 
 %files
 %doc CHANGELOG.md LICENSE README*
-/usr/share/%name
+%_datadir/%name
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Sep 11 2015 Ildar Mulyukov <ildar@altlinux.ru> 1.10-alt1
+- new version
+- luadist integration should fail
+
 * Tue Oct 28 2014 Ildar Mulyukov <ildar@altlinux.ru> 0.80-alt1
 - initial build for ALT Linux Sisyphus
