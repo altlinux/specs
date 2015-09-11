@@ -2,7 +2,7 @@
 
 %define rname libkvkontakte
 Name: libkvkontakte
-Version: 4.11.90
+Version: 4.12.0
 Release: alt1
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://www.digikam.org/
 License: GPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-fix-compile.patch
 
 # Automatically added by buildreq on Thu Apr 19 2012 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-webkit libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -29,7 +30,7 @@ Development files for %name
 
 %prep
 %setup -qn %rname-%version
-
+%patch1 -p1
 
 %build
 %K4build
@@ -53,6 +54,9 @@ Development files for %name
 
 
 %changelog
+* Fri Sep 11 2015 Sergey V Turchin <zerg@altlinux.org> 4.12.0-alt1
+- new version
+
 * Mon Jun 22 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.90-alt1
 - new version
 
