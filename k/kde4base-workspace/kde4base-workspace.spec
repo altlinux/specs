@@ -25,7 +25,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -65,7 +65,7 @@ Patch851: kubuntu_always_show_kickoff_subtext.diff
 # ROSA
 Patch900: kde-workspace-4.11.13-alt-screenlocker-background.patch
 # ALT
-Patch1000: kdebase-workspace-4.11.1-alt-startkde.patch
+Patch1000: alt-startkde.patch
 Patch1001: kdebase-workspace-4.6.0-alt-kdm-confdir.patch
 Patch1002: kdebase-workspace-4.6.3-alt-kdm-cmd-poweroff.patch
 Patch1003: kdebase-workspace-4.11.6-alt-kdm-defaults.patch
@@ -964,6 +964,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Sep 11 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt3
+- don't set background color on kde start
+
 * Tue Sep 08 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt2
 - add xsessions entry
 
