@@ -1,6 +1,6 @@
 Name: obconf
 Version: 2.0.4
-Release: alt0.25gcc7a188
+Release: alt1
 
 Summary: Obconf is a configuration tool for the Openbox window manager
 License: GPLv2+
@@ -9,19 +9,20 @@ Url: http://www.icculus.org/openbox/
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 Source2: %name.pod
 
-Patch0: obconf-2.0.3-alt-fix-desktop-files.patch
+Patch0: %name-%version-alt.patch
 
-Requires: openbox
+Requires: openbox >= 3.5.1
 
 Requires(post,postun): desktop-file-utils
 BuildPreReq: desktop-file-utils
 Requires(post,postun): shared-mime-info >= 0.15-alt2
 
+BuildPreReq: libopenbox-devel >= 3.5.1
 # Automatically added by buildreq on Sat Nov 15 2008 (-bi)
-BuildRequires: libglade-devel libopenbox-devel libstartup-notification-devel
+BuildRequires: libglade-devel libstartup-notification-devel
 BuildRequires: perl-podlators
 
 %description
@@ -59,6 +60,10 @@ install -pD -m 644 obconf.1 %buildroot%_man1dir/obconf.1
 %_datadir/pixmaps/obconf.png
 
 %changelog
+* Mon Sep 14 2015 Aleksey Avdeev <solo@altlinux.org> 2.0.4-alt1
+- release-2.0.4
+- rebuild with new openbox
+
 * Mon Aug 15 2011 Mykola Grechukh <gns@altlinux.ru> 2.0.4-alt0.25gcc7a188
 - new version
 

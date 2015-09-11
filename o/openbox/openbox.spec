@@ -1,6 +1,6 @@
 Name: openbox
-Version: 3.5.0
-Release: alt5
+Version: 3.6.1
+Release: alt2
 
 Summary: Openbox is a standards compliant, fast, light-weight, extensible window manager
 Summary(ru_RU.UTF-8): Openbox это следующий стандартам, быстрый, лёгкий, расширяемый оконный менеджер
@@ -10,7 +10,7 @@ Url: http://openbox.org/
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 Source2: %name-icons.tar.bz2
 Source3: %name.menu
 Source4: %name.menu-method
@@ -19,28 +19,28 @@ Source6: %name-kde.wmsession
 Source7: %name-gnome.wmsession
 
 # Debian
-Source11: kdetrayproxy.pod
 Source12: gnome-panel-control.pod
 Source13: menu.xml
 
 # ALT Linux
 Patch2: openbox-alt-menu-rc.xml.in.patch
-Patch3: openbox-3.3.1-alt-TheBear-theme.patch
-Patch4: openbox-3.4.4-alt-TheBear-theme-2.patch
-Patch5: openbox-3.4.9-alt-desktop-file.patch
 
 Requires: lib%name = %version-%release
 # for menu "Run" item
 Requires: Xdialog
 
-Requires: %name-base = %version-%release
+Requires: %_bindir/openbox-session
+Requires: %name-themes
+Requires: %_libexecdir/openbox-autostart
 
 Conflicts: openbox-extras
 
 BuildPreReq: gettext >= 0.15
 
-# Automatically added by buildreq on Tue Jan 12 2010 (-bi)
-BuildRequires: cvs gnome-session imake kdebase-wm libSM-devel libXau-devel libXcursor-devel libXext-devel libXinerama-devel libXrandr-devel libpango-devel libstartup-notification-devel libxml2-devel xorg-cf-files
+# Automatically added by buildreq on Fri Sep 11 2015 (-bi)
+# optimized out: elfutils fontconfig fontconfig-devel glib2-devel libICE-devel libX11-devel libXau-devel libXext-devel libXft-devel libXrender-devel libfreetype-devel libstartup-notification libxcb-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage pkg-config python-base rpm-build-gir xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xz
+BuildRequires: imake libSM-devel libXcursor-devel libXinerama-devel libXrandr-devel libpango-devel libstartup-notification-devel libxml2-devel perl-podlators xorg-cf-files
+
 BuildRequires: perl-podlators
 
 %description
@@ -57,6 +57,8 @@ desktop environments.
 %package -n lib%name
 Summary: Openbox libraries
 Group: System/Libraries
+Requires: %_datadir/themes/Clearlooks/openbox-3/themerc
+Conflicts: openbox-base <= 3.5.0-alt5
 
 %description -n lib%name
 This package contains libraries for Openbox window manager:
@@ -92,7 +94,7 @@ Openbox pure WM.
 Summary: Run KDE with Openbox as the WM
 Group: Graphical desktop/Other
 BuildArch: noarch
-Requires: %name-base = %version-%release
+Requires: %_bindir/openbox
 
 %description kde
 Run KDE with Openbox as the WM.
@@ -100,7 +102,7 @@ Run KDE with Openbox as the WM.
 %package gnome
 Summary: Run GNOME with Openbox as the WM
 Group: Graphical desktop/Other
-Requires: %name-base = %version-%release
+Requires: %_bindir/openbox
 
 %description gnome
 Run GNOME with Openbox as the WM.
@@ -109,18 +111,156 @@ Run GNOME with Openbox as the WM.
 Summary: XDG support for Openbox
 Group: Graphical desktop/Other
 BuildArch: noarch
-Requires: %name-base = %version-%release
 Requires: python-module-pyxdg
 
 %description autostart
 XDG support for Openbox.
 
+%package themes
+Summary: A Openbox themes engine
+Group: System/Libraries
+BuildArch: noarch
+Requires: %_datadir/themes/Artwiz-boxed/openbox-3/themerc
+Requires: %_datadir/themes/Bear2/openbox-3/themerc
+Requires: %_datadir/themes/Clearlooks/openbox-3/themerc
+Requires: %_datadir/themes/Clearlooks-3.4/openbox-3/themerc
+Requires: %_datadir/themes/Clearlooks-Olive/openbox-3/themerc
+Requires: %_datadir/themes/Mikachu/openbox-3/themerc
+Requires: %_datadir/themes/Natura/openbox-3/themerc
+Requires: %_datadir/themes/Onyx/openbox-3/themerc
+Requires: %_datadir/themes/Onyx-Citrus/openbox-3/themerc
+Requires: %_datadir/themes/Orang/openbox-3/themerc
+Requires: %_datadir/themes/Syscrash/openbox-3/themerc
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description themes
+This is a virtual package requires all themes engine
+distributed with Openbox.
+
+%package theme-Artwiz-boxed
+Summary: A Openbox theme engine - Artwiz-boxed
+Summary(ru_RU.UTF-8): Тема для Openbox - Artwiz-boxed
+Group: Graphical desktop/Other
+BuildArch: noarch
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description theme-Artwiz-boxed
+This package contains the Openbox theme engine named Artwiz-boxed.
+This theme distributed with Openbox.
+
+%package theme-Bear2
+Summary: A Openbox theme engine - Bear2
+Summary(ru_RU.UTF-8): Тема для Openbox - Bear2
+Group: Graphical desktop/Other
+BuildArch: noarch
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description theme-Bear2
+This package contains the Openbox theme engine named Bear2.
+This theme distributed with Openbox.
+
+%package theme-Clearlooks
+Summary: A Openbox theme engine - Clearlooks
+Summary(ru_RU.UTF-8): Тема для Openbox - Clearlooks
+Group: Graphical desktop/Other
+BuildArch: noarch
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description theme-Clearlooks
+This package contains the Openbox theme engine named Clearlooks.
+This theme distributed with Openbox.
+
+%package theme-Clearlooks-3.4
+Summary: A Openbox theme engine - Clearlooks-3.4
+Summary(ru_RU.UTF-8): Тема для Openbox - Clearlooks-3.4
+Group: Graphical desktop/Other
+BuildArch: noarch
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description theme-Clearlooks-3.4
+This package contains the Openbox theme engine named Clearlooks-3.4.
+This theme distributed with Openbox.
+
+%package theme-Clearlooks-Olive
+Summary: A Openbox theme engine - Clearlooks-Olive
+Summary(ru_RU.UTF-8): Тема для Openbox - Clearlooks-Olive
+Group: Graphical desktop/Other
+BuildArch: noarch
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description theme-Clearlooks-Olive
+This package contains the Openbox theme engine named Clearlooks-Olive.
+This theme distributed with Openbox.
+
+%package theme-Mikachu
+Summary: A Openbox theme engine - Mikachu
+Summary(ru_RU.UTF-8): Тема для Openbox - Mikachu
+Group: Graphical desktop/Other
+BuildArch: noarch
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description theme-Mikachu
+This package contains the Openbox theme engine named Mikachu.
+This theme distributed with Openbox.
+
+%package theme-Natura
+Summary: A Openbox theme engine - Natura
+Summary(ru_RU.UTF-8): Тема для Openbox - Natura
+Group: Graphical desktop/Other
+BuildArch: noarch
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description theme-Natura
+This package contains the Openbox theme engine named Natura.
+This theme distributed with Openbox.
+
+%package theme-Onyx
+Summary: A Openbox theme engine - Onyx
+Summary(ru_RU.UTF-8): Тема для Openbox - Onyx
+Group: Graphical desktop/Other
+BuildArch: noarch
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description theme-Onyx
+This package contains the Openbox theme engine named Onyx.
+This theme distributed with Openbox.
+
+%package theme-Onyx-Citrus
+Summary: A Openbox theme engine - Onyx-Citrus
+Summary(ru_RU.UTF-8): Тема для Openbox - Onyx-Citrus
+Group: Graphical desktop/Other
+BuildArch: noarch
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description theme-Onyx-Citrus
+This package contains the Openbox theme engine named Onyx-Citrus.
+This theme distributed with Openbox.
+
+%package theme-Orang
+Summary: A Openbox theme engine - Orang
+Summary(ru_RU.UTF-8): Тема для Openbox - Orang
+Group: Graphical desktop/Other
+BuildArch: noarch
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description theme-Orang
+This package contains the Openbox theme engine named Orang.
+This theme distributed with Openbox.
+
+%package theme-Syscrash
+Summary: A Openbox theme engine - Syscrash
+Summary(ru_RU.UTF-8): Тема для Openbox - Syscrash
+Group: Graphical desktop/Other
+BuildArch: noarch
+Conflicts: openbox-base <= 3.5.0-alt5
+
+%description theme-Syscrash
+This package contains the Openbox theme engine named Syscrash.
+This theme distributed with Openbox.
+
 %prep
 %setup -q -a2
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 sed -i '/^obrender_libobrender_la_LIBADD/ a\\tobt/libobt.la \\' Makefile.am
 
 %build
@@ -130,10 +270,8 @@ sed -i '/^obrender_libobrender_la_LIBADD/ a\\tobt/libobt.la \\' Makefile.am
 	--disable-static
 %make_build
 
-cp %SOURCE11 .
 cp %SOURCE12 .
 
-pod2man --section=1 --release=%version --center "Openbox documentation" kdetrayproxy.pod > kdetrayproxy.1
 pod2man --section=1 --release=%version --center "Openbox documentation" gnome-panel-control.pod > gnome-panel-control.1
 
 %install
@@ -143,7 +281,6 @@ rm -rf %buildroot%_datadir/doc/
 
 # manual pages
 mkdir -p %buildroot%_man1dir/
-install -pD -m 644 kdetrayproxy.1 %buildroot%_man1dir/
 install -pD -m 644 gnome-panel-control.1 %buildroot%_man1dir/
 
 # icons
@@ -185,7 +322,6 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %exclude %_man1dir/gnome-panel-control.*
 %_datadir/gnome/wm-properties/*
 %_datadir/pixmaps/*
-%_datadir/themes/*
 %_liconsdir/%name.xpm
 %_niconsdir/%name.xpm
 %_iconsdir/hicolor/64x64/apps/OpenBox.xpm
@@ -211,6 +347,7 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_bindir/openbox-gnome-session
 %_bindir/gdm-control
 %_bindir/gnome-panel-control
+%_datadir/gnome-session/sessions/openbox-gnome*.session
 %_datadir/xsessions/openbox-gnome.desktop
 %_man1dir/openbox-gnome-session.*
 %_man1dir/gnome-panel-control.*
@@ -224,7 +361,63 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_libdir/*.a
 %endif
 
+%files themes
+
+%files theme-Artwiz-boxed
+%_datadir/themes/Artwiz-boxed
+
+%files theme-Bear2
+%_datadir/themes/Bear2
+
+%files theme-Clearlooks
+%_datadir/themes/Clearlooks
+
+%files theme-Clearlooks-3.4
+%_datadir/themes/Clearlooks-3.4
+
+%files theme-Clearlooks-Olive
+%_datadir/themes/Clearlooks-Olive
+
+%files theme-Mikachu
+%_datadir/themes/Mikachu
+
+%files theme-Natura
+%_datadir/themes/Natura
+
+%files theme-Onyx
+%_datadir/themes/Onyx
+
+%files theme-Onyx-Citrus
+%_datadir/themes/Onyx-Citrus
+
+%files theme-Orang
+%_datadir/themes/Orang
+
+%files theme-Syscrash
+%_datadir/themes/Syscrash
+
 %changelog
+* Wed Sep 16 2015 Aleksey Avdeev <solo@altlinux.org> 3.6.1-alt2
+- Remove kdetrayproxy.1: kdetrayproxy removed in openbox-3.5.0
+
+* Mon Sep 14 2015 Aleksey Avdeev <solo@altlinux.org> 3.6.1-alt1
+- 3.5.0 -> 3.6.1
+- Fix requires for openbox package: add %%_libexecdir/openbox-autostart
+- Remove TheBear theme (move to package openbox-theme-TheBear)
+- All themes engine highlighted in the sub-packages:
+  + openbox-themes (virtual)
+  + openbox-theme-Artwiz-boxed
+  + openbox-theme-Bear2
+  + openbox-theme-Clearlooks
+  + openbox-theme-Clearlooks-3.4
+  + openbox-theme-Clearlooks-Olive
+  + openbox-theme-Mikachu
+  + openbox-theme-Natura
+  + openbox-theme-Onyx
+  + openbox-theme-Onyx-Citrus
+  + openbox-theme-Orang
+  + openbox-theme-Syscrash
+
 * Fri Oct 03 2014 Lenar Shakirov <snejok@altlinux.ru> 3.5.0-alt5
 - make autostart and kde packages noarch
 

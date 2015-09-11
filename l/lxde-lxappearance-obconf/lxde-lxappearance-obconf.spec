@@ -1,6 +1,6 @@
 %define upstreamname obconf
 Name: lxde-lxappearance-%upstreamname
-Version: 0.2.0
+Version: 0.2.2
 Release: alt1
 
 Summary: %name is tool for configuring openbox within LXDE.
@@ -20,7 +20,6 @@ This plugin allows to configure openbox.
 
 %prep
 %setup -n %upstreamname-%version
-sed -i '/no/ d' po/LINGUAS
 
 %build
 autoreconf -fisv
@@ -30,14 +29,18 @@ touch -r po/Makefile po/stamp-it
 
 %install
 %makeinstall_std
-%find_lang %upstreamname
+%find_lang lxappearance-%upstreamname
 
-%files -f %upstreamname.lang
+%files -f lxappearance-%upstreamname.lang
 %doc CHANGELOG README
 %_libdir/lxappearance/plugins/%upstreamname.so
 %_datadir/lxappearance/%upstreamname
 
 %changelog
+* Mon Sep 14 2015 Aleksey Avdeev <solo@altlinux.org> 0.2.2-alt1
+- new version
+- rebuilt with new openbox
+
 * Tue May 08 2012 Radik Usupov <radik@altlinux.org> 0.2.0-alt1
 - new upsreame snapshot
 
