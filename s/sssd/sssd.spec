@@ -1,8 +1,8 @@
 %define libwbc_alternatives_version 0.12.0
 
 Name: sssd
-Version: 1.13.0
-Release: alt1
+Version: 1.13.1
+Release: alt0.1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -16,7 +16,7 @@ Patch: %name-%version-%release.patch
 
 # Determine the location of the LDB modules directory
 %define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
-%define ldb_version 1.1.20
+%define ldb_version 1.1.21
 
 %define _localstatedir /var
 %define _libexecdir /usr/libexec
@@ -51,7 +51,7 @@ BuildRequires: libldap-devel
 BuildRequires: libpam-devel
 BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
-BuildRequires: libssl-devel
+# BuildRequires: libssl-devel
 BuildRequires: libpcre-devel >= 7
 BuildRequires: libxslt
 BuildRequires: libxml2-devel
@@ -443,6 +443,7 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_libexecdir/%name/sssd_autofs
 %_libexecdir/%name/sssd_ssh
 %_libexecdir/%name/sssd_sudo
+%attr(4710,root,%sssd_user) %_libexecdir/%name/p11_child
 
 %dir %_libdir/%name
 %_libdir/%name/libsss_simple.so
@@ -630,6 +631,9 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_altdir/libwbclient-sss-devel
 
 %changelog
+* Thu Sep 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.13.1-alt0.1
+- upstram snapshot
+
 * Mon Jul 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.13.0-alt1
 - 1.13.0
 - add alternatives for libwbclient

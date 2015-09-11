@@ -5,7 +5,6 @@
 %def_without talloc
 %def_without tevent
 %def_without tdb
-%def_without ntdb
 %def_without ldb
 
 %def_with profiling_data
@@ -33,7 +32,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.2.3
+Version: 4.3.0
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -77,6 +76,7 @@ Requires: libwbclient = %version-%release
 %endif
 
 BuildRequires: libe2fs-devel
+BuildRequires: libxfs-devel
 BuildRequires: libacl-devel
 BuildRequires: libaio-devel
 BuildRequires: libarchive-devel
@@ -98,11 +98,10 @@ BuildRequires: libiniparser-devel
 BuildRequires: libkrb5-devel libssl-devel libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl
-%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.2 libpytalloc-devel}
+%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.3 libpytalloc-devel}
 %{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.25 python-module-tevent}
-%{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.6  python-module-tdb}
-%{?_without_ntdb:BuildRequires: libntdb-devel >= 1.0  python-module-ntdb}
-%{?_without_ldb:BuildRequires: libldb-devel >= 1.1.20 python-module-pyldb-devel}
+%{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.7  python-module-tdb}
+%{?_without_ldb:BuildRequires: libldb-devel >= 1.1.21 python-module-pyldb-devel}
 #{?_with_clustering_support:BuildRequires: ctdb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
 %{?_with_systemd:BuildRequires: libsystemd-devel}
@@ -517,17 +516,12 @@ and use CTDB instead.
 %define _tdb_lib ,!tdb,!pytdb
 %endif
 
-%define _ntdb_lib ,ntdb,pyntdb
-%if_without ntdb
-%define _ntdb_lib ,!ntdb,!pyntdb
-%endif
-
-%define _ldb_lib ,ldb,pyldb
+%define _ldb_lib ,ldb,pyldb,!pyldb-util
 %if_without ldb
-%define _ldb_lib ,!ldb,!pyldb
+%define _ldb_lib ,!ldb,!pyldb,!pyldb-util
 %endif
 
-%define _samba4_libraries heimdal,!zlib,!popt%{_talloc_lib}%{_tevent_lib}%{_tdb_lib}%{_ntdb_lib}%{_ldb_lib}
+%define _samba4_libraries heimdal,!zlib,!popt%{_talloc_lib}%{_tevent_lib}%{_tdb_lib}%{_ldb_lib}
 
 %define _samba4_idmap_modules idmap_ad,idmap_rid,idmap_adex,idmap_hash,idmap_tdb2,idmap_ldap
 %define _samba4_pdb_modules pdb_tdbsam,pdb_ldap,pdb_ads,pdb_smbpasswd,pdb_wbc_sam,pdb_samba4
@@ -818,17 +812,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_man1dir/smbtree.1*
 %_man8dir/smbspool.8*
 %_man8dir/smbta-util.8*
-%if_with ntdb
-%_bindir/ntdbbackup
-%_bindir/ntdbdump
-%_bindir/ntdbrestore
-%_bindir/ntdbtool
-%_man3dir/ntdb.3*
-%_man8dir/ntdbbackup.8*
-%_man8dir/ntdbdump.8*
-%_man8dir/ntdbrestore.8*
-%_man8dir/ntdbtool.8*
-%endif
 %if_with tdb
 %_bindir/tdbbackup
 %_bindir/tdbdump
@@ -883,7 +866,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libauth-sam-reply-samba4.so
 %_libdir/samba/libauth-samba4.so
 %_libdir/samba/libauthkrb5-samba4.so
-%_libdir/samba/libccan-samba4.so
 %_libdir/samba/libcli-cldap-samba4.so
 %_libdir/samba/libcli-ldap-common-samba4.so
 %_libdir/samba/libcli-ldap-samba4.so
@@ -897,15 +879,20 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/liberrors-samba4.so
 %_libdir/samba/libevents-samba4.so
 %_libdir/samba/libflag-mapping-samba4.so
+%_libdir/samba/libgenrand-samba4.so
 %_libdir/samba/libgpo-samba4.so
 %_libdir/samba/libgse-samba4.so
 %_libdir/samba/libhttp-samba4.so
 %_libdir/samba/libinterfaces-samba4.so
+%_libdir/samba/libiov-buf-samba4.so
 %_libdir/samba/libkrb5samba-samba4.so
 %_libdir/samba/libldbsamba-samba4.so
 %_libdir/samba/liblibcli-lsa3-samba4.so
 %_libdir/samba/liblibcli-netlogon3-samba4.so
 %_libdir/samba/liblibsmb-samba4.so
+%_libdir/samba/libmessages-dgm-samba4.so
+%_libdir/samba/libmessages-util-samba4.so
+%_libdir/samba/libmsghdr-samba4.so
 %_libdir/samba/libmsrpc3-samba4.so
 %_libdir/samba/libndr-samba-samba4.so
 %_libdir/samba/libndr-samba4.so
@@ -922,6 +909,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libsamba3-util-samba4.so
 %_libdir/samba/libsamdb-common-samba4.so
 %_libdir/samba/libsecrets3-samba4.so
+%_libdir/samba/libserver-id-db-samba4.so
 %_libdir/samba/libserver-role-samba4.so
 %_libdir/samba/libsmb-transport-samba4.so
 %_libdir/samba/libsmbd-base-samba4.so
@@ -929,11 +917,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libsmbd-shim-samba4.so
 %_libdir/samba/libsmbldaphelper-samba4.so
 %_libdir/samba/libsmbregistry-samba4.so
+%_libdir/samba/libsys-rw-samba4.so
 %_libdir/samba/libsocket-blocking-samba4.so
+%_libdir/samba/libtalloc-report-samba4.so
 %_libdir/samba/libtdb-wrap-samba4.so
+%_libdir/samba/libtime-basic-samba4.so
 %_libdir/samba/libtrusts-util-samba4.so
 %_libdir/samba/libutil-cmdline-samba4.so
-%_libdir/samba/libutil-ntdb-samba4.so
 %_libdir/samba/libutil-reg-samba4.so
 %_libdir/samba/libutil-setid-samba4.so
 %_libdir/samba/libutil-tdb-samba4.so
@@ -949,10 +939,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libsmbclient.so.*
 %_mandir/man7/libsmbclient.7*
 %endif # ! with_libsmbclient
-
-%if_with ntdb
-%_libdir/samba/libntdb.so.*
-%endif
 
 %if_with talloc
 %_libdir/samba/libtalloc.so.*
@@ -975,7 +961,6 @@ TDB_NO_FSYNC=1 %make_build test
 
 %files common
 %_tmpfilesdir/%name.conf
-%_datadir/samba/codepages
 %config(noreplace) %_sysconfdir/logrotate.d/samba
 %attr(0700,root,root) %dir /var/log/samba
 %attr(0700,root,root) %dir /var/log/samba/old
@@ -1025,7 +1010,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_sbindir/samba_spnupdate
 %_sbindir/samba_upgradedns
 %_sbindir/upgradeprovision
-%_libdir/mit_samba.so
 %_libdir/samba/bind9/dlz_bind9.so
 %_libdir/samba/libheimntlm-samba4.so.*
 %_libdir/samba/libkdc-samba4.so.*
@@ -1049,8 +1033,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libprocess-model-samba4.so
 %_libdir/samba/libservice-samba4.so
 %dir %_libdir/samba/process_model
-%_libdir/samba/process_model/onefork.so
-%_libdir/samba/process_model/prefork.so
 %_libdir/samba/process_model/standard.so
 %dir %_libdir/samba/service
 %_libdir/samba/service/cldap.so
@@ -1066,7 +1048,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/service/s3fs.so
 %_libdir/samba/service/smb.so
 %_libdir/samba/service/web.so
-%_libdir/samba/service/winbind.so
 %_libdir/samba/service/winbindd.so
 %_libdir/samba/service/wrepl.so
 %_libdir/libdcerpc-server.so.*
@@ -1077,8 +1058,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libposix-eadb-samba4.so
 %_libdir/samba/bind9/dlz_bind9_9.so
 %else
-%exclude %_libdir/samba/libdfs-server-ad-samba4.so
-%exclude %_libdir/samba/libdnsserver-common-samba4.so
 %doc %_defaultdocdir/%name/README.dc-libs
 %endif
 
@@ -1170,7 +1149,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libsamba-python-samba4.so
 %_libdir/samba/libshares-samba4.so
 %_libdir/samba/libsmbpasswdparser-samba4.so
-%_libdir/samba/libtdb-compat-samba4.so
 %_libdir/samba/libxattr-tdb-samba4.so
 
 %if_with dc
@@ -1250,7 +1228,6 @@ TDB_NO_FSYNC=1 %make_build test
 
 %files test-libs
 %_libdir/libtorture.so.*
-%_libdir/samba/libsubunit-samba4.so
 %if_with dc
 %_libdir/samba/libdlz-bind9-for-torture-samba4.so
 %else
@@ -1311,14 +1288,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_initdir/ctdb
 %_tmpfilesdir/ctdb.conf
 
-%dir %_sysconfdir/ctdb/nfs-rpc-checks.d
-%_sysconfdir/ctdb/nfs-rpc-checks.d/10.statd.check
-%_sysconfdir/ctdb/nfs-rpc-checks.d/20.nfsd.check
-%_sysconfdir/ctdb/nfs-rpc-checks.d/30.lockd.check
-%_sysconfdir/ctdb/nfs-rpc-checks.d/40.mountd.check
-%_sysconfdir/ctdb/nfs-rpc-checks.d/50.rquotad.check
+%_sysconfdir/ctdb/nfs-checks.d
+%_sysconfdir/ctdb/nfs-linux-kernel-callout
 %_sysconfdir/sudoers.d/ctdb
-%_sysconfdir/ctdb/events.d/
+%_sysconfdir/ctdb/events.d
 %dir %_sysconfdir/ctdb/notify.d
 %_sysconfdir/ctdb/notify.d/README
 %_sbindir/ctdbd
@@ -1356,6 +1329,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Thu Sep 10 2015 Alexey Shabalin <shaba@altlinux.ru> 4.3.0-alt1
+- 4.3.0
+
 * Wed Jul 15 2015 Alexey Shabalin <shaba@altlinux.ru> 4.2.3-alt1
 - 4.2.3
 - add alternatives for libwbclient

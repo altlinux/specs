@@ -1,5 +1,5 @@
 Name: libldb
-Version: 1.1.20
+Version: 1.1.21
 Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
@@ -9,6 +9,8 @@ Url: http://ldb.samba.org/
 Source: http://samba.org/ftp/ldb/%name-%version.tar
 Source2: lib.tar
 Source3: buildtools.tar
+Source4: third_party.tar
+Source5: ldb-modules.sh
 
 BuildRequires: python-devel python-module-tdb libpytalloc-devel python-module-tevent
 BuildRequires: libtalloc-devel libtdb-devel libtevent-devel libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
@@ -51,7 +53,7 @@ Requires: %name-devel = %version-%release
 Development files for the Python bindings for the LDB library
 
 %prep
-%setup -q -a2 -a3
+%setup -q -a2 -a3 -a4
 
 %build
 %undefine _configure_gettext
@@ -66,6 +68,9 @@ Development files for the Python bindings for the LDB library
 
 %install
 %makeinstall_std
+
+install -D -m755 %SOURCE5 %buildroot%_sysconfdir/profile.d/ldb-modules.sh
+sed -i s,@libdir@,%_libdir,g %buildroot%_sysconfdir/profile.d/ldb-modules.sh
 
 rm -f %buildroot%_libdir/*.a
 rm -f %buildroot/%_man3dir/_*
@@ -87,6 +92,7 @@ rm -f %buildroot/%_man3dir/_*
 %exclude %_libdir/libpyldb-util.so
 
 %files -n ldb-tools
+%_sysconfdir/profile.d/ldb-modules.sh
 %_bindir/*
 %_man1dir/*
 %_libdir/ldb/libldb-cmdline.so
@@ -101,6 +107,9 @@ rm -f %buildroot/%_man3dir/_*
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Thu Sep 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.21-alt1
+- 1.1.21
+
 * Mon Mar 23 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.20-alt1
 - 1.1.20
 
