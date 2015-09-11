@@ -1,19 +1,21 @@
+%define ver_major 0.2
+
 Name: cerbere
-Version: 0.2
-Release: alt5.r45
+Version: %ver_major.1
+Release: alt1
 
 Summary: service to relaunch Pantheon apps
 Group: Graphical desktop/Other
 License: GPLv2+
 Url: https://launchpad.net/cerbere
-
-Source0: %name.tar.xz
-
-Patch0: cerbere-0.2-alt-fix-desktop-file.patch
-
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-BuildRequires: cmake vala glib2-devel libgio-devel libgee-devel gcc-c++
+Source: https://launchpad.net/%name/0.x/%version/+download/%name-%version.tgz
+Patch0: cerbere-0.2-alt-fix-desktop-file.patch
+
+Requires: dconf
+
+BuildRequires: cmake vala libgio-devel libgee0.8-devel gcc-c++
 
 %description
 Cerbere is a sort of watchdog designed for Pantheon. It monitors a predefined
@@ -22,15 +24,15 @@ end. This is helpful to keep the panel, dock, and wallpaper running, even if
 they crash or are killed by another process.
 
 %prep
-%setup -q -n %name
-%patch0 -p1
+%setup
+%patch -p1
 
 %build
-%cmake_insource
-%make_build VERBOSE=1
+%cmake
+%cmake_build VERBOSE=1
 
 %install
-%make_install DESTDIR=%buildroot install
+%cmakeinstall_std
 
 %files
 %doc INSTALL
@@ -39,6 +41,9 @@ they crash or are killed by another process.
 %_datadir/glib-2.0/schemas/org.pantheon.cerbere.gschema.xml
 
 %changelog
+* Fri Sep 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Sun Jan 05 2014 Igor Zubkov <icesik@altlinux.org> 0.2-alt5.r45
 - r45
 
