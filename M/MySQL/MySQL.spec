@@ -1,6 +1,6 @@
 Name: MySQL
 Version: 5.5.43
-Release: alt1
+Release: alt2
 
 %def_without debug
 %def_without libs
@@ -41,6 +41,7 @@ Patch4: mysql-5.5.25-alt-client.patch
 Patch5: mysql-5.5.28-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-5.5.25-alt-mysql_config-libs.patch
+Patch8: mysql-5.5.43-alt-aarch64-lib64.patch
 
 # Fedora
 Patch100: mysql-versioning.patch
@@ -288,6 +289,7 @@ This package contains MySQL benchmark scripts and data.
 %patch4 -p1
 %patch5 -p1
 %patch7 -p1
+%patch8 -p1
 
 %patch100 -p1
 %patch101 -p1
@@ -359,7 +361,7 @@ install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/mysql
 install -pD -m755 %SOURCE3 %buildroot%_sbindir/safe_mysqld
 install -pD -m755 %SOURCE4 %buildroot%_sbindir/mysqld_wrapper
 install -pD -m750 %SOURCE6 %buildroot%_sysconfdir/chroot.d/mysql.lib
-%ifarch x86_64
+%if "%_libdir" == "/usr/lib64"
 sed -i s,usr/lib,usr/lib64,g %buildroot%_sysconfdir/chroot.d/mysql.lib
 %endif
 install -pD -m750 %SOURCE7 %buildroot%_sysconfdir/chroot.d/mysql.conf
@@ -647,6 +649,9 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Sat Sep 12 2015 Michael Shigorin <mike@altlinux.org> 5.5.43-alt2
+- added aarch64 support (glebfm@)
+
 * Tue Apr 07 2015 Michael Shigorin <mike@altlinux.org> 5.5.43-alt1
 - 5.5.43
 
