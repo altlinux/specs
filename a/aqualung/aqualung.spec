@@ -1,6 +1,6 @@
 Name: aqualung
 Summary: Aqualung is a music player for the GNU/Linux operating system
-Version: 0.9svn1309
+Version: 0.9svn1311
 Release: alt1
 License: GPL
 Group: Sound
@@ -10,9 +10,9 @@ Patch: use_glib_instead_of_libmac_for_charconv.patch
 #Source:			%name-%version.tar.gz
 Url: http://aqualung.sf.net
 
-# Automatically added by buildreq on Mon Jun 10 2013
-# optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpango-devel libraptor-devel libstdc++-devel libusb-compat libwayland-client libwayland-server pkg-config xz zlib-devel
-BuildRequires: gcc-c++ libalsa-devel libavformat-devel libcddb-devel libcdio-devel libflac-devel libgtk+2-devel libifp-devel libjack-devel liblame-devel liblrdf-devel liblua5-devel libmac-devel libmad-devel libmodplug-devel libmpcdec-devel liboggz-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libspeex-devel libusb-compat-devel libvorbis-devel libwavpack-devel libxml2-devel
+# Automatically added by buildreq on Mon Sep 14 2015
+# optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcdio-devel libcdio-paranoia libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpango-devel libstdc++-devel libusb-compat libwayland-client libwayland-server pkg-config raptor2-devel xz zlib-devel
+BuildRequires: gcc-c++ libalsa-devel libavformat-devel libcddb-devel libcdio-paranoia-devel libflac-devel libgtk+2-devel libifp-devel libjack-devel liblame-devel liblrdf-devel liblua5-devel libmac-devel libmad-devel libmodplug-devel libmpcdec-devel liboggz-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libspeex-devel libusb-compat-devel libvorbis-devel libwavpack-devel libxml2-devel
 
 %description
 Aqualung is a music player for the GNU/Linux operating system.
@@ -126,6 +126,9 @@ install -m 0644 %name.desktop \
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Sep 14 2015 Fr. Br. George <george@altlinux.ru> 0.9svn1311-alt1
+- Autobuild version bump to 0.9svn1311
+
 * Mon Sep 29 2014 Fr. Br. George <george@altlinux.ru> 0.9svn1309-alt1
 - Autobuild version bump to 0.9svn1309
 
