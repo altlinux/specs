@@ -2,7 +2,7 @@
 %global pypi_name django-pyscss
 
 Name: python-module-%pypi_name
-Version: 1.0.6
+Version: 2.0.2
 Release: alt1
 Summary: Makes it easier to use PySCSS in Django
 Group: Development/Python
@@ -40,5 +40,8 @@ pyScss within Django.
 %python_sitelibdir/*
 
 %changelog
+* Mon Sep 14 2015 Lenar Shakirov <snejok@altlinux.ru> 2.0.2-alt1
+- New version
+
 * Tue Mar 17 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.6-alt1
 - Initial package.
