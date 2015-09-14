@@ -1,5 +1,5 @@
 Name: hyperrogue
-Version: 55
+Version: 66
 Release: alt1
 Source: %name-%version.zip
 Url: http://www.roguetemple.com/z/hyper.php
@@ -73,6 +73,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 66-alt1
+- Autobuild version bump to 66
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 55-alt1
 - Autobuild version bump to 55
 - Switch font to DejaVuSansBold
