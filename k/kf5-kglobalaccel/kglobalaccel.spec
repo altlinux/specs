@@ -1,7 +1,7 @@
 %define rname kglobalaccel
 
 Name: kf5-%rname
-Version: 5.13.0
+Version: 5.14.0
 Release: alt1
 %K5init altplace
 
@@ -41,6 +41,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: libkf5globalaccelprivate
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -96,6 +97,9 @@ KF5 library
 %_K5lib/libKF5GlobalAccelPrivate.so.*
 
 %changelog
+* Mon Sep 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt1
+- new version
+
 * Wed Aug 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.13.0-alt1
 - new version
 
