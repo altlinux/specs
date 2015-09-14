@@ -1,13 +1,12 @@
 Name: live-install
-Version: 20150304
+Version: 20150829
 Release: alt1
-Summary: Copy altlinux live to fixed disk
+Summary: Copy running system to fixed disk
 Group: System/Configuration/Other
 License: GPL
 BuildArch: noarch
 
-Requires: syslinux-extlinux grub2-pc fstyp
-Requires: rsync mdadm fdisk gdisk
+Requires: mdadm cfdisk sfdisk btrfs-progs e2fsprogs rsync grub2-pc syslinux-extlinux
 
 Source: %name-%version.tar.gz
 
@@ -28,6 +27,12 @@ mkdir -p %buildroot/%_datadir/%name/scripts.d
 %dir %_datadir/%name/scripts.d
 
 %changelog
+* Sat Aug 29 2015 Eugene Prokopiev <enp@altlinux.ru> 20150829-alt1
+- major improvements:
+  + select root device by partition label and autodetect boot devices
+  + use only umounted root device (even multi-device btrfs)
+  + use grub2 for btrfs and extlinux for ext3/4 (even on md-raid)
+
 * Wed Mar 04 2015 Eugene Prokopiev <enp@altlinux.ru> 20150304-alt1
 - do not touch etc/mtab
 
