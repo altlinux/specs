@@ -1,0 +1,49 @@
+%define oname compose
+
+Name: docker-%oname
+Version: 1.4.0
+Release: alt1
+
+Summary: Run multi-container applications with Docker
+
+License: %asl
+Group: Development/Python
+Url: https://github.com/docker/compose
+
+Source: %oname-%version.tar
+Patch: %oname-%version-%release.patch
+
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-licenses
+BuildPreReq: rpm-build-python
+BuildRequires: python-devel python-module-distribute
+
+%setup_python_module %oname
+
+%description
+Compose is a tool for defining and running multi-container applications
+with Docker. With Compose, you define a multi-container application in a
+single file, then spin your application up in a single command which does
+everything that needs to be done to get it running.
+
+
+%prep
+%setup -n %oname-%version
+%patch0 -p1
+
+%build
+%python_build
+
+%install
+%python_install
+
+%files
+%doc LICENSE README.md
+%_bindir/docker-%oname
+%python_sitelibdir/%oname/
+%python_sitelibdir/*.egg-info
+
+%changelog
+* Mon Sep 14 2015 Vladimir Didenko <cow@altlinux.ru> 1.4.0-alt1
+- 1.4.0

@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.23.0
-Release: alt1.git20141211
+Version: 0.32.0
+Release: alt1
 Summary: WebSocket client for python. hybi13 is supported
 License: LGPLv2.1
 Group: Development/Python
@@ -133,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 14 2015 Vladimir Didenko <cow@altlinux.org> 0.32.0-alt1
+- new version
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt1.git20141211
 - Initial build for Sisyphus
 
