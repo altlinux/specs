@@ -1,6 +1,6 @@
 Name: 	  osync
-Version:  1.0
-Release:  alt0.1.pre.gitd765bef
+Version:  1.01
+Release:  alt1
 
 Summary:  A robust two way (bidirectional) file sync script based on rsync with fault tolerance
 License:  BSD
@@ -44,5 +44,8 @@ install -Dm 0644 osync-srv %buildroot%_initdir/osync-srv
 %_initdir/osync-srv
 
 %changelog
+* Mon Sep 14 2015 Andrey Cherepanov <cas@altlinux.org> 1.01-alt1
+- New version
+
 * Thu Jun 25 2015 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.1.pre.gitd765bef
 - Initial build for ALT Linux
