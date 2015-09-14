@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 5.9
-Release: alt4
+Release: alt6
 
 %define rootdatadir /lib
 
@@ -10,19 +10,20 @@ Group: System/Base
 Url: http://invisible-island.net/%name/%name.html
 
 # ftp://invisible-island.net/%name/%name-%version.tar.gz
-Source: %name-%version.tar
+Source: %name-%version.tgz
 
 Source100: %name-alt-terms.tar
 Source101: %name-baseterms
 Source102: %name-resetall.sh
 
-Patch: %name-%version-alt.patch
+Patch: ncurses-alt.patch
 
 Obsoletes: ncurses3
 Requires: termutils-devel = %version-%release
 
 # Automatically added by buildreq on Thu Nov 12 2009
-BuildRequires: libgpm-devel libncurses-devel gcc-c++
+BuildRequires: libgpm-devel libncurses-devel gcc4.9-c++
+%set_gcc_version 4.9
 
 #build parameters
 %def_with utf8
@@ -394,7 +395,7 @@ popd # build-utf8
 # build classic version
 pushd build-classic
 #NO SMP
-%make
+%make_build
 
 %if_with cxx
 # Build c++ shared library.
@@ -415,7 +416,7 @@ popd # build-classic
 %if_with utf8
 pushd build-utf8
 #NO SMP
-%make
+%make_build
 
 %if_with cxx
 # Build c++ shared library.
@@ -664,6 +665,12 @@ done
 %endif # with_utf8
 
 %changelog
+* Mon Sep 14 2015 Fr. Br. George <george@altlinux.ru> 5.9-alt6
+- Update to 5.9-20141206
+
+* Thu Jul 16 2015 Fr. Br. George <george@altlinux.ru> 5.9-alt5
+- Change packaging scheme
+
 * Tue Jul 02 2013 Fr. Br. George <george@altlinux.ru> 5.9-alt4
 - Thanks asdus@ for tuning this up
 - Version up to 5.9-20130622
