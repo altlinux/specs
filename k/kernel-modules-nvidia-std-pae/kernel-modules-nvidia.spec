@@ -4,8 +4,8 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	346.87
-%define module_release	alt1
+%define module_version	352.41
+%define module_release	alt2
 %define flavour		std-pae
 
 %setup_kernel_module %flavour
@@ -33,13 +33,13 @@
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.18
-%define legacy4 304.125
+%define legacy4 304.128
 %else
 %define legacy4 %nil
 %endif
 %define legacy4_src %(echo %legacy4 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.18
-%define legacy5 340.76
+%define legacy5 340.93
 %else
 %define legacy5 %nil
 %endif
@@ -201,6 +201,12 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Sep 03 2015 Sergey V Turchin <zerg at altlinux dot org> 352.41-alt2..
+- new release (340.93)
+
+* Wed Sep 02 2015 Sergey V Turchin <zerg at altlinux dot org> 352.41-alt1..
+- new releases (352.41, 304.128)
 
 * Wed Jul 29 2015 Sergey V Turchin <zerg at altlinux dot org> 346.87-alt1..
 - new release (346.87)
