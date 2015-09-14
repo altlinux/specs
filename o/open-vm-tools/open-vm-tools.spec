@@ -8,15 +8,15 @@
 %def_with gtk2
 %def_with gtkmm
 
-%global majorversion    9.10
-%global minorversion    2
-%global toolsbuild      2822639
+%global majorversion    10.0
+%global minorversion    0
+%global toolsbuild      3000743
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt1
+Release: alt1.%toolsbuild
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -188,6 +188,7 @@ fi
 %_sysconfdir/xdg/autostart/*.desktop
 %_bindir/vmware-user-suid-wrapper
 %_bindir/vmware-vmblock-fuse
+%_bindir/vmhgfs-fuse
 %_libdir/%name/plugins/vmusr/
 %_tmpfilesdir/*.conf
 
@@ -200,6 +201,9 @@ fi
 %_libdir/libvmtools.so
 
 %changelog
+* Mon Sep 14 2015 Alexey Shabalin <shaba@altlinux.ru> 10.0.0-alt1.3000743
+- open-vm-tools-10.0.0-3000743
+
 * Thu Aug 13 2015 Alexey Shabalin <shaba@altlinux.ru> 9.10.2-alt1
 - 9.10.2
 
