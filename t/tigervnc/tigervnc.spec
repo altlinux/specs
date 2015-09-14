@@ -1,8 +1,8 @@
 %define _deffontdir catalogue:%_sysconfdir/X11/fontpath.d
 
 Name: tigervnc
-Version: 1.1.0
-Release: alt2
+Version: 1.3.1
+Release: alt1
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -16,30 +16,48 @@ Obsoletes: tightvnc < 1.7.6
 Source0: %name-%version.tar.gz
 Source1: vncserver.init
 Source6: vncviewer.desktop
-Source7: xserver110.patch
 
-Source100: xorg-server-source-1.12.1.tar.bz2
+# XXX buildreq
 
-Patch0: tigervnc-102434.patch
-Patch4: tigervnc-cookie.patch
-Patch8: tigervnc-viewer-reparent.patch
-Patch10: tigervnc11-ldnow.patch
-Patch11: tigervnc11-gethomedir.patch
-Patch13: tigervnc11-rh692048.patch
-Patch14: tigervnc11-xorg111.patch
-Patch15: tigervnc11-xorg112.patch
+Source100: xorg-server-source-1.15.1.tar.bz2
+Source101: tightpasswd.tar.gz
+Source200: repatch_spec.sh
+source201: repatch_spec.unused
 
-Patch100: tigervnc-1.1.0-tightvnc-passwd.patch
-Patch101: tigervnc-1.0.90-vncviewer-iso10646-1.patch
-Patch102: tigervnc-1.1.0-alt-xor.patch
+## FC patches
+Patch1: FC-cookie.patch
+Patch2: FC-tigervnc11-ldnow.patch
+Patch3: FC-tigervnc11-gethomedir.patch
+Patch4: FC-tigervnc11-rh692048.patch
+Patch5: FC-0001-tigervnc-xserver-1.14-patch.patch
+Patch6: FC-inetd-nowait.patch
+Patch7: FC-setcursor-crash.patch
+Patch8: FC-manpages.patch
+Patch9: FC-getmaster.patch
+Patch10: FC-shebang.patch
+Patch11: FC-1.3.0-xserver-1.15.patch
+Patch12: FC-format-security.patch
+Patch13: FC-zrle-crash.patch
+Patch14: FC-cursor.patch
+Patch15: FC-xstartup.patch
+Patch16: FC-ppc64le.patch
+Patch17: FC-1.3.1-xserver-1.16.patch
+Patch18: FC-pointersync.patch
 
-# Automatically added by buildreq on Tue Mar 30 2010
-BuildRequires: ImageMagick-tools doxygen flex gcc-c++ libGL-devel libSM-devel libX11-devel libXau-devel libXdmcp-devel libXext-devel libXfont-devel
-BuildRequires: libXi-devel libXtst-devel libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel xorg-bigreqsproto-devel xorg-damageproto-devel
-BuildRequires: xorg-fixesproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel
-BuildRequires: xorg-xcmiscproto-devel xorg-xf86driproto-devel xorg-xtrans-devel zlib-devel libjpeg-devel desktop-file-utils intltool xorg-util-macros
-BuildRequires: xorg-font-utils libfontenc-devel xorg-compositeproto-devel xorg-sdk libturbojpeg-devel xorg-glproto-devel
-BuildRequires: libgnutls-devel libgcrypt-devel libgpg-error-devel libpam-devel
+## Ubuntu patches
+
+## ALT patches
+Patch501: tigervnc-1.3.1-stdinpasswd.patch
+
+# TODO (if any)
+Patch601: tigervnc-viewer-reparent.patch
+
+# Automatically added by buildreq on Wed Jun 25 2014
+# optimized out: cmake-modules fontconfig libGL-devel libICE-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libcloog-isl4 libdrm-devel libgpg-error libgpg-error-devel libp11-kit libstdc++-devel pkg-config xorg-fixesproto-devel xorg-fontsproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-recordproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: ImageMagick-tools cmake doxygen flex gcc-c++ libSM-devel libXdmcp-devel libXfont-devel libXtst-devel libfltk-devel libgcrypt-devel libgnutls-devel libjpeg-devel libpam-devel libpixman-devel libssl-devel libxkbfile-devel libxshmfence-devel xorg-bigreqsproto-devel xorg-damageproto-devel xorg-dri2proto-devel xorg-dri3proto-devel xorg-glproto-devel xorg-presentproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcmiscproto-devel xorg-xineramaproto-devel xorg-xtrans-devel zlib-devel
+
+BuildRequires: xorg-sdk xorg-font-utils
+
 %ifarch %ix86 x86_64
 BuildRequires: nasm
 %endif
@@ -71,76 +89,92 @@ Group: Networking/Remote access
 TigerVNC extension for Xorg server
 
 %prep
-%setup -q -n %name-%version
-
-mkdir -p m4
-touch config.rpath
-
-%patch0 -p1 -b .102434
-%patch4 -p1 -b .cookie
-%patch8 -p1 -b .viewer-reparent
-%patch10 -p1 -b .ldnow
-%patch11 -p1 -b .gethomedir
-%patch13 -p1 -b .rh692048
-%patch101 -p1 -b .iso10646-1
-%patch102 -p1 -b .xor
-
+#setup -q -n %name-%version
+%setup -a101
 tar -xjf %SOURCE100 -C unix/xserver
-%patch14 -p1
-pushd unix/xserver
-patch -p1 -b --suffix .vnc < %{SOURCE7}
-%patch15 -p1
+pushd unix
+patch -p0 < xserver114.patch
 popd
 
-%patch100 -p1
+## FC apply patches
+%patch1 -p1 -b .cookie
+%patch2 -p1 -b .ldnow
+%patch3 -p1 -b .gethomedir
+%patch4 -p1 -b .rh692048
+#patch5 -p1 -b .vnc
+%patch6 -p1 -b .inetd-nowait
+%patch7 -p1 -b .setcursor-crash
+%patch8 -p1 -b .manpages
+%patch9 -p1 -b .getmaster
+%patch10 -p1 -b .shebang
+%patch11 -p1 -b .115
+%patch12 -p1 -b .format-security
+%patch13 -p1 -b .zrle-crash
+%patch14 -p1 -b .cursor
+%patch15 -p1 -b .xstartup
+%patch16 -p1 -b .ppc64le
+#patch17 -p1 -b .116
+%patch18 -p1 -b .pointersync
 
-# Use newer gettext
-sed -i "s|AM_GNU_GETTEXT_VERSION.*|GETTEXT_PACKAGE=%name\nAC_SUBST(GETTEXT_PACKAGE)\nIT_PROG_INTLTOOL|" configure.ac
-sed -i "s|^\(.*\)|\1 ru|" po/LINGUAS
+## Ubuntu apply patches
 
-#install -m0644 %_includedir/xorg/xf86Module.h unix/xserver/hw/xfree86/common/xf86Module.h
+## ALT apply patches
+%patch501 -p1
 
 %build
-%autoreconf
-%configure \
-	--with-system-jpeg \
-	--disable-static
+%add_optflags -fPIC
+%cmake_insource
 %make_build
 
 pushd unix/xserver
 %autoreconf
 %configure \
-	--enable-ipv6 \
-	--disable-xorg \
-	--disable-xnest \
-	--disable-xvfb \
-	--disable-dmx \
-	--disable-xwin \
-	--disable-xephyr \
-	--disable-kdrive \
-	--disable-static \
-	--disable-xinerama \
 	--disable-composite \
-	--with-default-font-path=%_deffontdir \
-	--with-xkb-output=%_localstatedir/xkb \
-	--enable-glx \
-	--disable-dri \
-	--enable-dri2 \
 	--disable-config-dbus \
 	--disable-config-hal \
+	--disable-config-udev \
+	--disable-devel-docs \
+	--disable-dmx \
+	--disable-dri \
+	--disable-kdrive \
+	--disable-selective-werror \
+	--disable-static \
+	--disable-unit-tests \
+	--disable-wayland \
+	--disable-xephyr \
+	--disable-xinerama \
+	--disable-xnest \
+	--disable-xorg \
+	--disable-xvfb \
+	--disable-xwayland \
+	--disable-xwin \
+	--enable-dri2 \
+	--enable-dri3 \
+	--enable-glx \
+	--enable-install-libxf86config \
+	--enable-ipv6 \
+	--with-default-font-path=%_deffontdir \
+	--with-dri-driver-path=%_libdir/dri \
 	--with-module-dir="%_xorgmoduledir" \
-	--disable-unit-tests
+	--with-pic \
+	--with-xkb-output=%_localstatedir/xkb
 
 %make_build
 popd
 
 # Build icons
 pushd media
+%cmake_insource -DDATA_DIR:PATH=%_datadir
 %make
 popd
 
+# Build tightvnc compatible vncpasswd
+pushd tightpasswd
+cc %optflags *.c -o tightpasswd
+popd
+
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 pushd unix/xserver/hw/vnc
 %make DESTDIR=%buildroot install
@@ -165,28 +199,22 @@ cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/vncservers
 # VNCSERVERS="1:myusername"
 __EOF__
 
-# Install desktop stuff
-mkdir -p %buildroot%_datadir/icons/hicolor/{16x16,24x24,48x48}/apps
+install -D %SOURCE6 %buildroot%_desktopdir/vncviewer.desktop
 
-pushd media/icons
-
-convert +antialias -background transparent tigervnc.svg tigervnc_48.png
-convert +antialias -background transparent ../tigervnc_16.svg tigervnc_16.png
-for s in 16 48; do
-install -m644 tigervnc_$s.png %buildroot%_datadir/icons/hicolor/${s}x$s/apps/tigervnc.png
-done
+# Build tightvnc compatible vncpasswd
+pushd tightpasswd
+install tightpasswd %buildroot%_bindir/tightpasswd
+install vncpasswd.man %buildroot%_man1dir/tightpasswd.1
 popd
 
-mkdir -p %buildroot%_datadir/applications
-desktop-file-install --dir %buildroot%_datadir/applications %SOURCE6
+%find_lang %name
 
-#find_lang %name
-
-%files
+%files -f %name.lang
 %doc LICENCE.TXT
 %_bindir/vncviewer
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/*/apps/*.svg
 %_man1dir/vncviewer.1*
 
 %files server
@@ -194,19 +222,29 @@ desktop-file-install --dir %buildroot%_datadir/applications %SOURCE6
 %config(noreplace) %_sysconfdir/sysconfig/vncservers
 %_bindir/vncconfig
 %_bindir/vncpasswd
+%_bindir/tightpasswd
 %_bindir/x0vncserver
 %_bindir/Xvnc
 %_bindir/vncserver
 %_man1dir/Xvnc.1*
 %_man1dir/vncpasswd.1*
+%_man1dir/tightpasswd.1*
 %_man1dir/vncconfig.1*
 %_man1dir/vncserver.1*
 %_man1dir/x0vncserver.1*
 
-#%files -n xorg-extension-vnc
-#%_xorgmoduledir/extensions/*.so
+%files -n xorg-extension-vnc
+%_xorgmoduledir/extensions/*.so
 
 %changelog
+* Wed Jun 25 2015 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
+- Version update
+- FC patches import
+- Old vncpasswd binary renamed to tightpasswd
+
+* Tue Apr 22 2015 Fr. Br. George <george@altlinux.ru> 1.3.0-alt1
+- Massive submajor version update
+
 * Wed Oct 22 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.1.0-alt2
 - disabled vnc extension
 
