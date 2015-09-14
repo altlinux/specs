@@ -1,7 +1,7 @@
 %define rname kwayland
 
 Name: kf5-%rname
-Version: 5.4.0
+Version: 5.4.1
 Release: alt1
 %K5init altplace
 
@@ -64,13 +64,14 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING.LIB
+%config(noreplace) %_K5xdgconf/org_kde_kwayland.categories
 
 %files devel
 %_K5inc/kwayland_version.h
 %_K5inc/KWayland/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Wayland
-#%_K5archdata/mkspecs/modules/qt_KWayland.pri
+%_K5archdata/mkspecs/modules/qt_KWayland*.pri
 
 %files -n libkf5waylandclient
 %_K5lib/libKF5WaylandClient.so.*
@@ -78,6 +79,9 @@ KF5 library
 %_K5lib/libKF5WaylandServer.so.*
 
 %changelog
+* Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
+- new version
+
 * Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
 - new version
 

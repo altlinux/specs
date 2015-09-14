@@ -1,7 +1,7 @@
 %define rname breeze
 
 Name: kf5-%rname
-Version: 5.4.0
+Version: 5.4.1
 Release: alt1
 %K5init altplace
 
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-icons-defaults.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs
@@ -50,6 +51,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -80,6 +82,9 @@ mv %buildroot/%_datadir/icons/* %buildroot/%_K5data/icons/
 %_K5wall/*
 
 %changelog
+* Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
+- new version
+
 * Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
 - new version
 
