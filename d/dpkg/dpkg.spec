@@ -2,7 +2,7 @@
 
 Summary: Package maintenance system for Debian Linux
 Name: dpkg
-Version: 1.17.25
+Version: 1.18.1
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Packaging
@@ -89,6 +89,9 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 1.18.1-alt1
+- Autobuild version bump to 1.18.1
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.17.25-alt1
 - Autobuild version bump to 1.17.25
 
