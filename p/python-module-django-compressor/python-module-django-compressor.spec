@@ -5,7 +5,7 @@
 
 Name:		python-module-%oname
 Version:	1.5
-Release:	alt1
+Release:	alt2
 
 Summary:	Compresses linked and inline JavaScript or CSS into single cached files
 
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 14 2015 Lenar Shakirov <snejok@altlinux.ru> 1.5-alt2
+- Fixed build
+
 * Thu Sep 10 2015 Lenar Shakirov <snejok@altlinux.ru> 1.5-alt1
 - Version 1.5
 
