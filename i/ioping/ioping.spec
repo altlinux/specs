@@ -1,6 +1,6 @@
 Name: ioping
 Version: 0.9
-Release: alt1
+Release: alt2
 Summary: simple disk I/O latency monitoring tool
 
 Group: File tools
@@ -30,6 +30,9 @@ CFLAGS="$RPM_OPT_FLAGS" make
 %attr(644,root,root) %_man1dir/ioping.1.*
 
 %changelog
+* Mon Sep 14 2015 Denis Smirnov <mithraen@altlinux.ru> 0.9-alt2
+- fix .gear/tags/list
+
 * Tue Sep 08 2015 Denis Smirnov <mithraen@altlinux.ru> 0.9-alt1
 - 0.9
 
