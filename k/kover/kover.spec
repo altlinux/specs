@@ -1,52 +1,38 @@
-Name:		kover
-Summary:	WYSIWYG CD cover printer with CDDB support
-Version:	4
-Release:	alt1.qa1
-Source:		http://lisas.de/kover/%name-%version.tar.bz2
-Source1:	%name.desktop
-Patch0:		%name-fix-mimetypes.patch
-Patch1:		%name-4-gcc44.patch
-Url:		http://lisas.de/kover
-Group:		Archiving/Other
-Packager:.	Fr. Br. George <george@altlinux.ru>
-License:	GPLv2+
+Name: kover
+Summary: WYSIWYG CD cover printer with CDDB support
+Version: 6
+Release: alt2
+Source: %name-%version.tar.bz2
+Source1: %name.desktop
+Patch0: %name-fix-mimetypes.patch
+Patch1: %name-4-gcc44.patch
+Url: http://lisas.de/kover
+Group: Archiving/Other
+License: GPLv2+
 
-BuildPreReq:	rpm-macros-kde-common-devel
+BuildPreReq: rpm-macros-kde-common-devel
 
 # Automatically added by buildreq on Tue May 11 2010
-BuildRequires: gcc-c++ kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libcddb-devel libcdio-devel libxkbfile-devel
+BuildRequires: gcc-c++ kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libcddb-devel libxkbfile-devel
+
+BuildRequires: libcdio-devel >= 0.90
 
 %description
 Kover is an easy to use WYSIWYG CD cover printer with CDDB support.
 
 %prep
-%setup -q
-%patch1 -p1
+%setup
 mkdir -p build
 
 %build
-cd build
-cmake .. \
-    -DCMAKE_SKIP_RPATH:BOOL=yes \
-    -DCMAKE_BUILD_TYPE=MinSizeRel \
-    -DCMAKE_C_FLAGS:STRING='-pipe -Wall -O2' \
-    -DCMAKE_CXX_FLAGS:STRING='-pipe -Wall -O2' \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DLIB_DESTINATION=lib64 \
-    %if "lib64" == "lib64" 
-    -DLIB_SUFFIX="64"
-    %else 
-    -DLIB_SUFFIX=""
-    %endif 
-
-%make_build
+%cmake
+%cmake_build
 
 %install
-install -D %SOURCE1 %buildroot/%_desktopdir/kde4/%name.desktop
+#install -D %SOURCE1 %buildroot/%_desktopdir/kde4/%name.desktop
 
-cd build
-%makeinstall DESTDIR=%buildroot
-cd -
+%cmakeinstall_std
+
 %find_lang %name
 
 %files -f %name.lang
@@ -61,6 +47,13 @@ cd -
 %_desktopdir/kde4/%name.desktop
 
 %changelog
+* Mon Sep 14 2015 Fr. Br. George <george@altlinux.ru> 6-alt2
+- Rebuild for new libcdio
+
+* Mon Apr 14 2014 Fr. Br. George <george@altlinux.ru> 6-alt1
+- Autobuild version bump to 6
+- Fix build (switch to cmake)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
@@ -109,13 +102,11 @@ cd -
 - new release 3
 - Import kover
 
-* Mon Jun 26 2006 Nicolas Lécureuil <neoclust@mandriva.org> 2.9.6-5mdv2007.0
 - Rebuild to generate category
 
 * Mon May 08 2006 Laurent MONTEL <lmontel@mandriva.com> 2.9.6-4
 - Rebuild to generate category
 
-* Mon Jan 16 2006 Nicolas Lécureuil <neoclust@mandriva.org> 2.9.6-3mdk
 - Add patch2 : Fix ticket #20442
 - clean spec
 - use mkrel
