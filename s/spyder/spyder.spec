@@ -1,6 +1,6 @@
 Summary: Scientific Python Development Environment
 Name: spyder
-Version: 2.3.4
+Version: 2.3.6
 Release: alt1
 Source0: http://spyderlib.googlecode.com/files/%name-%version.zip
 Source1: %name.desktop
@@ -99,6 +99,12 @@ install -D -m644 spyderlib/images/spyder.svg %buildroot%_iconsdir/hires/scalable
 %python_sitelibdir/spyderplugins
 
 %changelog
+* Mon Sep 14 2015 Fr. Br. George <george@altlinux.ru> 2.3.6-alt1
+- Autobuild version bump to 2.3.6
+
+* Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 2.3.5.2-alt1
+- Autobuild version bump to 2.3.5.2
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 2.3.4-alt1
 - Autobuild version bump to 2.3.4
 
