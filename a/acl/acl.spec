@@ -1,5 +1,5 @@
 Name: acl
-Version: 2.2.52
+Version: 2.2.52.0.29.519e
 Release: alt1
 
 Summary: ACL manipulation utilities
@@ -53,16 +53,13 @@ linked programs which make use of POSIX access control lists.
 %setup
 
 %build
-make configure
+./autogen.sh
 %configure %{subst_enable static}
-%make_build DEBUG= OPTIMIZER=
+%make_build V=1
 
 %install
-make install install-lib install-dev \
-    DIST_ROOT=%buildroot
-
-# Workaround bug in makefiles
-rm -rf %buildroot%_datadir/doc/%name
+%makeinstall_std \
+	dist_doc_DATA='README doc/CHANGES doc/extensions.txt doc/libacl.txt'
 
 # Relocate shared libraries from %_libdir/ to /%_lib/.
 mkdir -p %buildroot/%_lib
@@ -79,7 +76,7 @@ mv %buildroot%_bindir/chacl %buildroot/bin/
 %find_lang %name
 
 %check
-if ./setfacl/setfacl -m u:`id -u`:rwx .; then
+if ./tools/setfacl -m u:`id -u`:rwx .; then
 	make tests
 else
 	echo 'ACLs are probably not supported by the file system'
@@ -89,16 +86,17 @@ fi
 /bin/*
 %_bindir/*
 %_mandir/man[15]/*
-%doc doc/CHANGES.gz README
+%_docdir/%name/
 
 %files -n lib%name
 /%_lib/*.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
-%_mandir/man[23]/*
+%_man3dir/*
 %_includedir/acl/
 %_includedir/sys/acl.h
+%_pkgconfigdir/*.pc
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -106,6 +104,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 15 2015 Dmitry V. Levin <ldv@altlinux.org> 2.2.52.0.29.519e-alt1
+- Updated to v2.2.52-29-g519e393.
+
 * Sat Sep 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.2.52-alt1
 - Updated to v2.2.52-7-gc3ce1b7.
 
