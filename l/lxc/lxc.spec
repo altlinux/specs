@@ -26,8 +26,8 @@
 %define init_script systemd
 
 Name: lxc
-Version: 1.1.2
-Release: alt2
+Version: 1.1.3
+Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -187,6 +187,10 @@ __EOF__
 
 
 %changelog
+* Tue Sep 15 2015 Denis Pynkin <dans@altlinux.org> 1.1.3-alt1
+- New version.
+  Security fixes and ABI changes in upstream.
+
 * Thu Apr 23 2015 Denis Pynkin <dans@altlinux.org> 1.1.2-alt2
 - Removed creation/deletion of unneeded lxc-dnsmasq user.
 
