@@ -7,10 +7,10 @@
 %define rname kdesdk
 Name: kde4sdk
 %define major 15
-%define minor 4
-%define bugfix 1
+%define minor 08
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Software Development Kit
@@ -291,6 +291,7 @@ do
     pushd $d
     %K4build \
 	-DKDE4_BUILD_TESTS=OFF \
+	-DBUILD_KF5=OFF \
 	-DHUNSPELL_INCLUDE_DIR=%_includedir \
 	-DHUNSPELL_LIBRARIES=%_libdir/libhunspell.so
     popd
@@ -579,6 +580,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Tue Sep 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Wed Jun 10 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.1-alt2
 - rebuild with new strigi
 
