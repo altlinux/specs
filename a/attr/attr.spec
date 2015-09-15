@@ -1,5 +1,5 @@
 Name: attr
-Version: 2.4.47
+Version: 2.4.47.0.35.dce9
 Release: alt1
 
 Summary: Utilities for managing filesystem extended attributes
@@ -60,15 +60,12 @@ statically linked programs which make use of extended attributes.
 %setup
 
 %build
-make configure
+./autogen.sh
 %configure %{subst_enable static}
-%make_build DEBUG= OPTIMIZER=
+%make_build V=1
 
 %install
-make install install-lib install-dev DIST_ROOT=%buildroot
-
-# Workaround bug in makefiles
-rm -rf %buildroot%_datadir/doc/%name
+%makeinstall_std dist_doc_DATA='README doc/CHANGES'
 
 # Relocate shared libraries from %_libdir/ to /%_lib/.
 mkdir -p %buildroot/%_lib
@@ -81,24 +78,26 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %find_lang %name
 
 %check
-if ./setfattr/setfattr -n user.name -v value .; then
+if ./tools/setfattr -n user.name -v value .; then
 	make tests
 else
 	echo 'xattrs are probably not supported by the file system'
 fi
 
 %files -f %name.lang
-%doc README doc/CHANGES.gz
 %_bindir/*
-%_mandir/man[15]/*
+%_man1dir/*
+%_docdir/%name/
 
 %files -n lib%name
+%config(noreplace) %_sysconfdir/xattr.conf
 /%_lib/*.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
-%_mandir/man[23]/*
+%_man3dir/*
 %_includedir/*
+%_pkgconfigdir/*.pc
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -106,6 +105,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 15 2015 Dmitry V. Levin <ldv@altlinux.org> 2.4.47.0.35.dce9-alt1
+- Updated to v2.4.47-35-gdce9b44.
+
 * Sat Sep 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.47-alt1
 - Updated to v2.4.47-4-gda8435b.
 
