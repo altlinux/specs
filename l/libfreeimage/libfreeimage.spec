@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.16.0
-Release: alt2.1
+Release: alt2.2
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -82,6 +82,9 @@ LIB_SUFFIX=64
 %_libdir/libfreeimage.so
 
 %changelog
+* Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt2.2
+- rebuilt against libraw.so.15
+
 * Mon Jun 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.16.0-alt2.1
 - Rebuilt for gcc5 C++11 ABI.
 

@@ -12,7 +12,7 @@
 
 Name: gthumb
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: An image file viewer and browser for GNOME
 Summary(ru_RU.UTF-8): Просмотрщик изображений и фотоальбом для GNOME
@@ -54,7 +54,7 @@ BuildRequires: libsoup-gnome-devel >= %soup_ver libsecret-devel
 BuildRequires: librsvg-devel intltool perl-XML-Parser gnome-common yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel libwebp-devel >= %webp_ver libjson-glib-devel
 BuildRequires: libwebkitgtk4-devel >= %webkit_ver
-%{?_enable_libraw:BuildPreReq: libraw-devel >= %libraw_ver}
+%{?_enable_libraw:BuildPreReq: libraw-devel >= %libraw_ver libgomp-devel}
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
 %{?_enable_web_albums:BuildRequires: bison flex}
 %{?_enabled_libchamplain:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
@@ -167,6 +167,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt3
+- rebuilt against libraw.so.15
+
 * Sun Jun 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt2
 - rebuilt against libexiv2.so.14
 

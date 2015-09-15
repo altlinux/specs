@@ -2,7 +2,7 @@
 
 Name: evas_generic_loaders
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A set of loaders for Evas
 License: LGPLv2.1+
@@ -20,11 +20,11 @@ Provides:  %{name}1.8 = %version-%release
 
 BuildRequires: gcc-c++ efl-libs-devel >= %ver_major
 BuildRequires: libpoppler-devel
-BuildRequires: libraw-devel-static
 BuildRequires: libspectre-devel
 BuildRequires: librsvg-devel
 BuildRequires: gst-plugins1.0-devel
 BuildRequires: zlib-devel
+BuildRequires: libraw-devel libgomp-devel
 
 %description
 These are additional "generic" loaders for Evas that are stand-alone
@@ -56,6 +56,9 @@ subst 's@/usr/lib@%_libdir@' src/bin/pdf/evas_generic_pdf_loader.libreoffice
 %doc AUTHORS COPYING README
 
 %changelog
+* Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt2
+- rebuilt against libraw.so.15
+
 * Wed Aug 05 2015 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
 - 1.15.0 release
 

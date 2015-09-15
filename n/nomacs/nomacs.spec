@@ -1,6 +1,6 @@
 Name: nomacs
 Version: 1.6.4
-Release: alt1
+Release: alt2
 
 License: GPLv3
 Group: Graphics
@@ -42,6 +42,9 @@ rm -rf {LibRaw,exiv2,expat,zlib}*
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt2
+- rebuilt against libraw.so.15
+
 * Wed Jul 01 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
 - 1.6.4
 
