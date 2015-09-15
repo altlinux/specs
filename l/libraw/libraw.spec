@@ -1,19 +1,21 @@
 %define _name LibRaw
 
 Name: libraw
-Version: 0.16.2
+Version: 0.17.0
 Release: alt1
 
 Summary: library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
-License: CDDL LGPL LibRaw
+License: CDDL LGPL LibRaw, GPLv2 GPLv3 - demosaic packs
 
 Url: http://www.libraw.org
 
-#Source: %url/data/%_name-%version.tar.gz
-Source: %name-%version.tar
+Source: %url/data/%_name-%version.tar.gz
+#Source: %name-%version.tar
+Source1: %url/data/%_name-demosaic-pack-GPL2-%version.tar.gz
+Source2: %url/data/%_name-demosaic-pack-GPL3-%version.tar.gz
 
-BuildRequires: gcc-c++ libjasper-devel liblcms2-devel
+BuildRequires: gcc-c++ libjasper-devel liblcms2-devel libjpeg-devel libgomp-devel
 
 %description
 LibRaw is a library for reading RAW files from digital photo cameras
@@ -26,6 +28,7 @@ This package contains shared library.
 Group: Graphics
 Summary: sample tools based on the libraw
 Requires: %name = %version-%release
+
 %description samples
 LibRaw is a library for reading RAW files from digital photo cameras
 (CRW/CR2, NEF, RAF, DNG, MOS, KDC, DCR, etc.; virtually all RAW formats
@@ -37,6 +40,7 @@ This package contains samples binaries.
 Group: Development/C
 Summary: library for reading RAW files
 Requires: %name = %version-%release
+
 %description devel
 LibRaw is a library for reading RAW files from digital photo cameras
 (CRW/CR2, NEF, RAF, DNG, MOS, KDC, DCR, etc.; virtually all RAW formats
@@ -48,6 +52,7 @@ This package contains library headers.
 Group: Development/C
 Summary: static library for reading RAW files
 Requires: %name-devel = %version-%release
+
 %description devel-static
 LibRaw is a library for reading RAW files from digital photo cameras
 (CRW/CR2, NEF, RAF, DNG, MOS, KDC, DCR, etc.; virtually all RAW formats
@@ -56,7 +61,7 @@ required for subsequent RAW conversion.
 This package contains static library.
 
 %prep
-%setup -q
+%setup -n %_name-%version -a1 -a2
 
 %build
 %autoreconf
@@ -85,6 +90,11 @@ This package contains static library.
 %_libdir/libraw_r.a
 
 %changelog
+* Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.17.0-alt1
+- 0.17.0
+- built with external demosaic methods distributed in separate tarballs
+- updated buildreqs
+
 * Wed Jun 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.16.2-alt1
 - 0.16.2 (ALT #29741)
 
