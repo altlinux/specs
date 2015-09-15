@@ -1,4 +1,9 @@
 
+%def_with libs
+%def_with devel
+%def_with common
+%def_with client
+%def_with bench
 %def_enable build_test
 %def_disable static
 %define mysqld_user mysql
@@ -17,7 +22,7 @@
 
 Name: mariadb
 Version: 10.0.21
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -39,23 +44,24 @@ Source10: mysqld.sysconfig
 Source14: README.ALT-ru_RU.UTF-8
 Source15: alt-mysql_install_db.sh
 Source16: mysql.control
-
+Source17: mysqld-chroot.control
 
 Source20: mysql.tmpfiles.d
 Source21: mysqld.service
-Source22: mysqld-prepare-db-dir
-Source23: mysqld-wait-ready
+Source22: mysqld.service.d
 
 Source25: client.cnf
 Source26: server.cnf
 Source27: mysql-clients.cnf
+Source28: server-chroot.cnf
+Source29: server-no-chroot.cnf
 
 
 # ALTLinux
 Patch1: mariadb-10.0.21-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mariadb-10.0.21-alt-client.patch
-Patch5: mariadb-10.0.21-alt-load_defaults.patch
+#Patch5: mariadb-10.0.21-alt-load_defaults.patch
 Patch7: mysql-5.5.25-alt-mysql_config-libs.patch
 
 # Patches specific for this mysql package
@@ -72,6 +78,7 @@ BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI
 BuildRequires: libaio-devel libjemalloc-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel liblz4-devel
 BuildRequires: chrooted control
 %{?_with_pcre:BuildRequires: libpcre-devel >= 8.35}
+BuildRequires: libxml2-devel
 
 %define soname 18
 
@@ -126,6 +133,7 @@ Obsoletes: %name-engine-tokudb < %EVR
 %endif
 
 Conflicts: MySQL-server
+Conflicts: mariadb-galera-server
 
 %description server
 Core mysqld server. For a full MariaDB database server, install
@@ -136,6 +144,8 @@ Summary: Perl utils for MySQL-server
 Group: Databases
 Requires: %name-server = %EVR
 Conflicts: %name-server < %EVR
+Conflicts: MySQL-server-perl
+Conflicts: mariadb-galera-server-perl
 BuildArch: noarch
 
 %description server-perl
@@ -151,6 +161,7 @@ Group: Databases
 Requires: lib%name = %EVR %name-common = %EVR
 Provides: mysql-client = %version-%release
 Conflicts: MySQL-client
+Conflicts: mariadb-galera-client
 
 %description client
 This package contains the standard MariaDB clients.
@@ -160,6 +171,7 @@ Summary: Common files used in client and servers
 Group: Databases
 BuildArch: noarch
 Conflicts: MySQL-server
+Conflicts: mariadb-galera-common
 #Conflicts: %name-server < 5.5.33a
 
 %description common
@@ -171,6 +183,7 @@ Group: System/Servers
 Requires: %name-client = %EVR
 Provides: mysql-bench = %version-%release
 Conflicts: MySQL-bench
+Conflicts: mariadb-galera-bench
 
 %description bench
 This package contains MariaDB benchmark scripts and data.
@@ -232,7 +245,7 @@ version.
 %patch1 -p1
 %patch2 -p1
 %patch4 -p1
-%patch5 -p1
+#%patch5 -p1
 %patch7 -p1
 %patch30 -p1
 %patch31 -p1
@@ -335,23 +348,24 @@ install -pD -m750 %SOURCE7 %buildroot%_sysconfdir/chroot.d/mysql.conf
 install -pD -m750 %SOURCE8 %buildroot%_sysconfdir/chroot.d/mysql.all
 install -pD -m750 %SOURCE9 %buildroot%_sbindir/mysql_migrate
 install -pD -m644 %SOURCE10 %buildroot%_sysconfdir/sysconfig/mysqld
-install -pD -m755 %SOURCE16 %buildroot%_sysconfdir/control.d/facilities/mysqld
+install -pD -m755 %SOURCE16 %buildroot%_controldir/mysqld
+install -pD -m755 %SOURCE17 %buildroot%_controldir/mysqld-chroot
 
 # install configuration files
-install -m0644 support-files/rpm/my.cnf %buildroot%_sysconfdir/my.cnf
-install -m0644 %SOURCE25 %buildroot%_sysconfdir/my.cnf.d/client.cnf
-install -m0644 %SOURCE26 %buildroot%_sysconfdir/my.cnf.d/server.cnf
-install -m0644 %SOURCE27 %buildroot%_sysconfdir/my.cnf.d/mysql-clients.cnf
+install -pD -m644 support-files/rpm/my.cnf %buildroot%_sysconfdir/my.cnf
+install -pD -m644 %SOURCE25 %buildroot%_sysconfdir/my.cnf.d/client.cnf
+install -pD -m644 %SOURCE26 %buildroot%_sysconfdir/my.cnf.d/server.cnf
+install -pD -m644 %SOURCE27 %buildroot%_sysconfdir/my.cnf.d/mysql-clients.cnf
+install -pD -m644 %SOURCE28 %buildroot%_sysconfdir/my.cnf.server/server-chroot.cnf
+install -pD -m644 %SOURCE29 %buildroot%_sysconfdir/my.cnf.server/server-no-chroot.cnf
+
 %if_with tokudb
-install -m0644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
+install -pD -m644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
 %endif
 
-#install -Dm 0644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
-#install -Dm 644 %SOURCE21 %buildroot%_unitdir/mysqld.service
-#sed -i 's|@dir@|%_libexecdir/%name|g' %buildroot%_unitdir/mysqld.service
-#mkdir -p %buildroot%_libexecdir/%name
-#install -Dm 755 %SOURCE22 %buildroot%_libexecdir/%name
-#install -Dm 755 %SOURCE23 %buildroot%_libexecdir/%name
+install -pD -m644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
+install -pD -m644 %SOURCE21 %buildroot%_unitdir/mysqld.service
+install -pD -m644 %SOURCE22 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/user.conf
 
 
 # Backwards compatibility symlinks (ALT #14863)
@@ -365,8 +379,8 @@ pushd %buildroot%_bindir
 popd
 
 # Install configuration files.
-install -pD -m644 /dev/null %buildroot%_sysconfdir/my.cnf
-install -pD -m600 %SOURCE5 %buildroot%ROOT/my.cnf
+#install -pD -m644 /dev/null %buildroot%_sysconfdir/my.cnf
+#install -pD -m600 %SOURCE5 %buildroot%ROOT/my.cnf
 
 # most current distro packages have it in %_bindir (hello kde4?)
 # but the server subpackage obtains /usr/sbin/mysql_install_db autoreq
@@ -477,11 +491,13 @@ popd
 /usr/sbin/useradd -r -g %mysqld_user -d %ROOT -s /dev/null -c "MariaDB server" -n %mysqld_user >/dev/null 2>&1 ||:
 
 %pre_control mysqld
+%pre_control mysqld-chroot
 
 %post server
 rm -rf %ROOT/dev
 %_sysconfdir/chroot.d/mysql.all force
 %post_control -s local mysqld
+%post_control -s enabled mysqld-chroot
 
 %post_service mysqld
 
@@ -500,17 +516,17 @@ fi
 %_initdir/mysqld
 %config(noreplace) %_sysconfdir/sysconfig/*
 %config(noreplace) %_sysconfdir/logrotate.d/*
-%config(noreplace) %_sysconfdir/control.d/facilities/*
+%config %_controldir/*
 %config %_sysconfdir/chroot.d/*
-%ghost %config(noreplace,missingok) %_sysconfdir/my.cnf
+%config(noreplace) %_sysconfdir/my.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
+%config(noreplace) %_sysconfdir/my.cnf.server/*.cnf
 %if_with tokudb
 %config(noreplace) %_sysconfdir/my.cnf.d/tokudb.cnf
 %endif
-#%_tmpfilesdir/mysql.conf
-#%_unitdir/mysqld.service
-#%dir %_libexecdir/%name
-#%_libexecdir/%name/*
+%_tmpfilesdir/mysql.conf
+%_unitdir/mysqld.service
+%config(noreplace) %_sysconfdir/systemd/system/mysqld.service.d/user.conf
 
 %_bindir/aria*
 %_bindir/*isam*
@@ -531,13 +547,12 @@ fi
 
 %_sbindir/*
 %_libdir/mysql/plugin
-%attr(750,root,adm) %dir /var/log/mysql
-%ghost %verify(not md5 mtime size) /var/log/mysql/*
+%attr(750,mysql,adm) %dir %_logdir/mysql
+%ghost %verify(not md5 mtime size) %_logdir/mysql/*
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/README
 %_docdir/%name-%version/README.*
 %_docdir/%name-%version/*.cnf
-%attr(600,root,root) %config(noreplace,missingok) %ROOT/my.cnf
 %attr(3771,root,mysql) %dir %ROOT
 %attr(710,root,mysql) %dir %ROOT/%_lib
 %attr(710,root,mysql) %dir %ROOT/%_libdir
@@ -563,11 +578,13 @@ fi
 %attr(660,mysql,mysql) %ghost %verify(not md5 mtime size) %ROOT/log/*
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
+%if_with common
 %files common
 %_datadir/mysql
 %exclude %_datadir/mysql/SELinux
 %if_with tokudb
 %exclude %_datadir/mysql/mroonga
+%endif
 %endif
 
 %files server-perl
@@ -580,6 +597,7 @@ fi
 %_bindir/mysqldumpslow
 %_bindir/mytop
 
+%if_with client
 %files client
 %dir %_sysconfdir/my.cnf.d
 %config(noreplace) %_sysconfdir/my.cnf.d/client.cnf
@@ -610,15 +628,24 @@ fi
 %exclude %_man1dir/mysql_config.1*
 %exclude %_man1dir/mysql_client_test_embedded.1*
 %exclude %_man1dir/mysqltest_embedded.1*
+%endif
 
-
+%if_with bench
 %files bench
 %_datadir/sql-bench
+%endif
 
+%if_with libs
 %files -n libmysqlclient%soname
 %_libdir/*.so.*
 %exclude %_libdir/libmysqld.so.*
 
+%files -n libmariadbembedded
+%doc README COPYING
+%_libdir/libmysqld.so.*
+#%_libdir/libmysqld.so.%%libmysqlembedded_major*
+
+%if_with devel
 %files -n libmysqlclient-devel
 %doc INSTALL-SOURCE
 %_bindir/mysql_config
@@ -632,10 +659,6 @@ fi
 # itself, and is meant to be statically linked to all plugins.
 %_libdir/libmysqlservices.a
 
-%files -n libmariadbembedded
-%doc README COPYING
-%_libdir/libmysqld.so.*
-#%_libdir/libmysqld.so.%%libmysqlembedded_major*
 
 %files -n libmariadbembedded-devel
 %_libdir/libmysqld.so
@@ -644,7 +667,22 @@ fi
 %_man1dir/mysql_client_test_embedded.1*
 %_man1dir/mysqltest_embedded.1*
 
+%endif
+%endif
+
 %changelog
+* Tue Sep 15 2015 Alexey Shabalin <shaba@altlinux.ru> 10.0.21-alt2
+- don't read config in /var/lib/mysql/my.cnf
+- use /etc/my.cnf.d/server.cnf as default server config
+- drop hardcode chroot and datadir in safe_mysql, mysqld_wrapper, mysql_install_db;
+  read chroot and datadir from config
+- split chroot and non-chroot options 
+  to /etc/my.cnf.server/server-chroot.cnf and /etc/my.cnf.server/server-no-chroot.cnf
+- add control mysqld-chroot for enable and disable chroot
+- add native systemd unit
+- add optional config /etc/systemd/system/mysqld.service.d/user.conf
+  for run as mysql user
+
 * Tue Aug 18 2015 Alexey Shabalin <shaba@altlinux.ru> 10.0.21-alt1
 - 10.0.21
 - sync with MySQL-5.5.43-alt1 (patches, build options, files, chroot)
