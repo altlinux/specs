@@ -5,7 +5,7 @@
 %define label digiKam
 Name: kde4-%rname
 %define lname lib%name
-Version: 4.11.0
+Version: 4.13.0
 Release: alt1
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -13,13 +13,17 @@ License: %gpl2plus
 Group: Graphics
 Url: http://www.digikam.org/
 
-Packager: Aeliya Grevnyov <gray_graff@altlinux.org>
 Conflicts: digikam <= 0.9.6-alt3
+Requires: libqt4-sql-sqlite kde4base-runtime libkipi4 libqt4-sql-mysql
+Requires: %lname = %version-%release
+Requires: %name-i18n = %version-%release
+Requires: %name-data = %version-%release
+%if_enabled marble
+Requires: %name-marble = %version-%release
+%endif
 
 BuildRequires(pre): rpm-build-licenses kde-common-devel
-
 BuildPreReq: libpng-devel
-
 # Automatically added by buildreq on Wed Sep 01 2010
 BuildRequires: doxygen gcc-c++ graphviz kde4graphics-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libgphoto2-devel libjasper-devel libjpeg-devel liblensfun-devel liblqr-devel libxkbfile-devel libtiff-devel
 BuildRequires: libpgf-devel libclapack-devel libusb-compat-devel liblcms2-devel
@@ -32,19 +36,12 @@ BuildRequires: kde4-baloo-devel
 BuildRequires: kde4edu-devel
 %endif
 
-
-Requires: libqt4-sql-sqlite kde4base-runtime libkipi4 libqt4-sql-mysql
-Requires: %lname = %version-%release
-Requires: %name-i18n = %version-%release
-Requires: %name-data = %version-%release
-%if_enabled marble
-Requires: %name-marble = %version-%release
-%endif
 Source0: %rname-%version.tar
 Source1: %rname-po-%version.tar
 Source2: %rname-doc-%version.tar
 Source3: %rname-doc-translated-%version.tar
-Patch1: build-without-mysql.patch
+Patch1: alt-build-without-mysql.patch
+Patch2: alt-fix-build.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -143,6 +140,7 @@ Marble support for %lname.
 %prep
 %setup -q -n %rname-%version  -a1 -a2 -a3
 %patch1 -p2
+%patch2 -p1
 
 # change double to qreal for casting on arm
 find -type f -name \*.cpp | \
@@ -229,6 +227,9 @@ rm -f %buildroot/%_K4i18n/*/*/libkgeomap*
 %_K4link/*.so
 
 %changelog
+* Fri Sep 11 2015 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
 * Mon Jun 22 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.0-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 4.11.0
+Version: 4.13.0
 Release: alt1
 
 Group: Graphics
@@ -22,6 +22,7 @@ Source12: FindKipi.cmake
 Patch1: alt-arm-cast-to-qreal.patch
 Patch2: alt-lib-version.patch
 Patch3: alt-find-qtsoap.patch
+Patch4: alt-fix-build.patch
 
 Requires: %name-core = %version-%release
 Requires: %name-expoblending = %version-%release
@@ -33,7 +34,7 @@ BuildRequires(pre): kde4libs-devel kde4graphics-devel
 BuildRequires: gcc-c++ kde4pimlibs-devel libgomp-devel libkgeomap-devel qjson-devel libqca2-devel
 BuildRequires: libgio-devel libgpod-devel libgtk+2-devel boost-devel
 BuildRequires: libopencv-devel libsane-devel libxslt-devel xsltproc libexpat-devel libxml2-devel libjpeg-devel
-BuildRequires: qoauth-devel qjson-devel herqq-devel qtsoap-devel
+BuildRequires: qoauth-devel libkqoauth-devel qjson-devel herqq-devel qtsoap-devel
 BuildRequires: qt-gstreamer1-devel libImageMagick-devel ImageMagick-tools
 BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel flex
 
@@ -76,6 +77,7 @@ KDE 4 library.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 mv %rname-po-%version po
 mv %rname-doc-%version doc
 #install -m 0644 %SOURCE10 cmake/modules
@@ -162,6 +164,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Fri Sep 11 2015 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
 * Mon Jun 22 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.0-alt1
 - new version
 
