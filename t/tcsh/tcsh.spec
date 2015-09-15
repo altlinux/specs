@@ -1,6 +1,6 @@
 Name: tcsh
 Version: 6.18.01
-Release: alt1
+Release: alt2
 
 Summary: An enhanced version of csh, the C shell
 License: BSD
@@ -31,6 +31,8 @@ Patch101: tcsh-6.10.00-glibc_compat.patch
 Patch300: tcsh-6.14.00-suse-owl-alt-shtmp.patch
 Patch301: tcsh-6.10.01-deb-man.patch
 Patch302: tcsh-6.10.01-alt-cleanups.patch
+
+Patch400: tcsh-6.18.01-gcc5-calloc.patch
 
 Provides: csh = %version
 
@@ -77,6 +79,8 @@ HTML doc files for tcsh.
 #%patch300 -p1
 #%patch301 -p1
 #%patch302 -p1
+
+%patch400 -p1
 
 cat > catalogs << _EOF
 de ISO-8859-1 german
@@ -137,6 +141,9 @@ done > tcsh.lang
 %doc tcsh.html/*
 
 %changelog
+* Sun Sep 06 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.18.01-alt2
+- Fixed infinite loop when built with gcc5.
+
 * Tue Feb 28 2012 Victor Forsiuk <force@altlinux.org> 6.18.01-alt1
 - 6.18.01
 
