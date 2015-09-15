@@ -2,8 +2,8 @@
 
 %define rname kamera
 Name: kde4-kamera
-Version: 4.14.3
-Release: alt2
+Version: 15.08.0
+Release: alt1
 
 Group: Graphics
 Summary: KDE support for digital cameras
@@ -59,6 +59,9 @@ Development files for %name
 
 
 %changelog
+* Tue Sep 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
+- new version
+
 * Wed Jan 28 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt2
 - rebuild with new gphoto
 
