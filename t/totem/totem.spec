@@ -32,8 +32,8 @@
 %def_disable jamendo
 
 Name: totem
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -405,6 +405,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.4-alt1
+- 3.16.4
+
 * Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt2
 - rebuilt against libgrilo-0.2.so.10
 
