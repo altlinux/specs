@@ -5,8 +5,8 @@
 
 %define rname kdeutils
 Name: kde4utils
-%define major 14
-%define minor 12
+%define major 15
+%define minor 4
 %define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -498,6 +498,9 @@ done
 
 
 %changelog
+* Tue Sep 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt1
+- new version
+
 * Thu Apr 23 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt1
 - new version
 
