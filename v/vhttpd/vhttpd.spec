@@ -1,5 +1,5 @@
 Name: vhttpd
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
 
 Source:%name-%version.tar
@@ -87,6 +87,13 @@ guile bindings for %name
 %_libdir/libguile-*
 
 %changelog
+* Tue Sep 15 2015 Mikhail Efremov <sem@altlinux.org> 0.7.6-alt1
+- Declare request_server() in the http_client.h.
+- Add missing include.
+- Fix signed/unsigned comparison warning.
+- Use retcode_t instead of int in struct error_entry_t.
+- Fix buffer overflow in case of IPv6.
+
 * Fri Aug 08 2014 Mikhail Efremov <sem@altlinux.org> 0.7.5-alt1
 - Fix work without IPv6.
 
