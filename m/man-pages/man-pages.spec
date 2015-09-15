@@ -1,13 +1,12 @@
 Name: man-pages
 Version: 4.02
-Release: alt1
+Release: alt2
 
 Summary: Man (manual) pages from the Linux Documentation Project
 Summary(ru_RU.UTF8): Руководства пользователя Linux Documentation Project
 License: distributable
 Group: Documentation
 Url: http://www.kernel.org/doc/man-pages/
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
 # http://www.kernel.org/pub/linux/docs/man-pages/%name-%version.tar.bz2
 Source: %name-%version.tar.gz
@@ -34,6 +33,11 @@ Conflicts: bind-utils <= 9.3.6-alt3
 
 # due to security.2
 Conflicts: libcint-devel <= 7.3.00-alt1.svn20090707
+
+# due to attr.5
+Conflicts: attr < 2.4.47.0.35.dce9
+# due to *attr.2
+Conflicts: libattr-devel < 2.4.47.0.35.dce9
 
 %description
 A large collection of man pages (reference material) from the Linux
@@ -90,9 +94,6 @@ rm -f man*/quota*
 # fdutils
 rm -f man4/fd.4
 
-# libattr-devel
-rm -f man2/{fgetxattr,flistxattr,fremovexattr,fsetxattr,getxattr,lgetxattr,listxattr,llistxattr,lremovexattr,lsetxattr,removexattr,setxattr}.2
-
 # Refer to original crypt(3)
 %define cryptpfx std
 mv man3/crypt.3 man3/crypt-%cryptpfx.3
@@ -128,6 +129,9 @@ find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.s
 %_datadir/%name/
 
 %changelog
+* Tue Sep 15 2015 Dmitry V. Levin <ldv@altlinux.org> 4.02-alt2
+- Packaged *attr(2).
+
 * Mon Sep 14 2015 Fr. Br. George <george@altlinux.ru> 4.02-alt1
 - Autobuild version bump to 4.02
 
