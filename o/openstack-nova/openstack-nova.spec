@@ -2,7 +2,7 @@
 
 Name: openstack-nova
 Version: 2015.1.1
-Release: alt1
+Release: alt2
 Summary: OpenStack Compute (nova)
 
 Group: System/Servers
@@ -376,6 +376,10 @@ Requires: openssl
 # Require openssh for ssh-keygen
 Requires: openssh-common
 Requires: sudo
+
+Requires: python-module-ldap
+Requires: python-module-SQLAlchemy
+Requires: python-module-PasteDeploy
 
 %description -n python-module-nova
 OpenStack Compute (codename Nova) is open source software designed to
@@ -755,6 +759,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Sep 15 2015 Lenar Shakirov <snejok@altlinux.ru> 2015.1.1-alt2
+- Added Requires: python-module-{ldap,SQLAlchemy,PasteDeploy}
+
 * Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
 - 2015.1.1
 
