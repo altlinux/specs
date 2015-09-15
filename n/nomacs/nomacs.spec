@@ -1,16 +1,18 @@
 Name: nomacs
-Version: 1.6.4
-Release: alt2
+Version: 2.4.6
+Release: alt1
 
 License: GPLv3
 Group: Graphics
 Summary: A fast and small image viewer
 Url: http://www.nomacs.org
 
-Source: http://sourceforge.net/projects/nomacs/files/%name-%version/%name-%version.tar.gz
+Source: https://github.com/%name/%name/archive/%name-%version.tar.bz2
 
 BuildRequires: cmake gcc-c++ libqt4-devel libexiv2-devel libgomp-devel
-BuildRequires: libtiff-devel libopencv-devel libraw-devel zlib-devel
+BuildRequires: libtiff-devel libopencv-devel libraw-devel libgomp-devel
+BuildRequires: zlib-devel libwebp-devel libquazip-devel
+#BuildRequires: libqpsd-devel
 
 %description
 nomacs is a free image viewer small, fast and able to handle the most common
@@ -21,10 +23,13 @@ or via LAN is possible. It allows to compare images and spot the differences
 
 %prep
 %setup
-rm -rf {LibRaw,exiv2,expat,zlib}*
 
 %build
-%cmake ../ImageLounge
+%cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
+	-DUSE_SYSTEM_LIBQPSD:BOOL=OFF \
+	-DUSE_SYSTEM_QUAZIP:BOOL=ON \
+	-DUSE_SYSTEM_WEBP:BOOL=ON
+
 %cmake_build
 
 %install
@@ -42,6 +47,9 @@ rm -rf {LibRaw,exiv2,expat,zlib}*
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.6-alt1
+- 2.4.6
+
 * Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt2
 - rebuilt against libraw.so.15
 
