@@ -1,5 +1,5 @@
 Name: mdds
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 Summary: A collection of multi-dimensional data structures and indexing algorithms
 
@@ -58,6 +58,9 @@ cp -p misc/%name.pc %buildroot/%_datadir/pkgconfig
 %doc AUTHORS COPYING NEWS README
 
 %changelog
+* Wed Sep 16 2015 Fr. Br. George <george@altlinux.ru> 0.12.1-alt1
+- Autobuild version bump to 0.12.1
+
 * Wed Feb 11 2015 Fr. Br. George <george@altlinux.ru> 0.12.0-alt1
 - Autobuild version bump to 0.12.0
 
