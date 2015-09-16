@@ -2,18 +2,23 @@
 %define oname rabbitmq
 
 Name: rabbitmq-server
-Version: 3.2.2
+Version: 3.5.4
 Release: alt1
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
 Source: %name-%version.tar
-Source1: rabbitmq-server.service
+Source100: codegen.tar
+Source1: rabbitmq-server.init
 Source2: rabbitmq-script-wrapper
 Source3: rabbitmq-server.logrotate
 Source4: rabbitmq-env.conf
 Source5: include.mk
-Source6: rabbitmq-server.init
+Source6: rabbitmq-server.service
+Source7: rabbitmq-server.tmpfiles
+
+Patch: rabbitmq-probe-ephemeral-port.patch
+
 URL: http://www.rabbitmq.com/
 Packager: Maxim Ivanov <redbaron@altlinux.org>
 
@@ -40,6 +45,9 @@ Erlang header files for %name
 
 %prep
 %setup -q
+mkdir -p codegen
+tar -xf %SOURCE100 -C codegen
+%patch -p1
 
 %build
 sed -i 's|@libexecdir@|%_libexecdir|g' %SOURCE2
@@ -58,16 +66,19 @@ mkdir -p %buildroot%_localstatedir/%oname/mnesia
 mkdir -p %buildroot%_logdir/%oname
 
 #Copy all necessary lib files etc.
-install -p -D -m 0755 %SOURCE1 %buildroot%_unitdir/%oname.service
+
+#Sysvinit support
+install -p -D -m 0755 %SOURCE1 %buildroot%_initrddir/%oname
+
 install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/rabbitmqctl
 install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/%name
-
+install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/%oname-plugins
 install -p -D -m 0644 %SOURCE3 %buildroot%_logrotatedir/%name
-install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%oname/%oname.conf
-
+install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%oname/%{oname}-env.conf
 install -p -D -m 0644 %SOURCE5 %buildroot%_datadir/%name/include.mk
-#Sysvinit support
-install -p -D -m 0755 %SOURCE6 %buildroot%_initrddir/%oname
+install -p -D -m 0644 %SOURCE6 %buildroot%_unitdir/%oname.service
+install -p -D -m 0644 %SOURCE7 %buildroot%_tmpfilesdir/%oname.conf
+install -d %buildroot%_runtimedir/%oname
 
 mkdir -p %buildroot%_sysconfdir/%oname/conf.d
 rm %buildroot%_erllibdir/%name/{LICENSE,LICENSE-MPL-RabbitMQ,INSTALL}
@@ -92,19 +103,24 @@ mkdir -p %buildroot/%_erlanglibdir/%name/priv
 %exclude %_erlanglibdir/%name/include
 %attr(0750, rabbitmq, rabbitmq) %dir %_localstatedir/%oname
 %attr(0750, rabbitmq, rabbitmq) %dir %_logdir/%oname
+%attr(0750, rabbitmq, rabbitmq) %dir %_runtimedir/%oname
 %config(noreplace) %_logrotatedir/*
 %config(noreplace) %_sysconfdir/%oname
 %_man1dir/*
 %_man5dir/*
 %_unitdir/%oname.service
+%_tmpfilesdir/%oname.conf
 %_initrddir/%oname
-%doc LICENSE LICENSE-MPL-RabbitMQ README INSTALL
+%doc LICENSE LICENSE-MPL-RabbitMQ README INSTALL docs/rabbitmq.config.example
 
 %files -n %name-devel
 %_erlanglibdir/%name/include
 %_datadir/%name
 
 %changelog
+* Wed Sep 16 2015 Alexey Shabalin <shaba@altlinux.ru> 3.5.4-alt1
+- 3.5.4
+
 * Sun Dec 29 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 3.2.2-alt1
 - New version (ALT #27190)
 
