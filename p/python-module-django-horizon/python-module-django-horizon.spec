@@ -4,7 +4,7 @@
 
 Name: python-module-django-horizon
 Version: 2015.1.1
-Release: alt1
+Release: alt2
 Summary: Django application for talking to Openstack
 
 Group: System/Servers
@@ -103,6 +103,8 @@ Requires: python-module-xstatic-smart-table
 Requires: python-module-xstatic-term.js
 Requires: python-module-xstatic-angular-lrdragndrop
 Requires: python-module-xstatic-magic-search
+
+Requires: python-module-django-tests
 
 Requires: openssl
 Requires: logrotate
@@ -403,6 +405,9 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %doc html
 
 %changelog
+* Wed Sep 16 2015 Lenar Shakirov <snejok@altlinux.ru> 2015.1.1-alt2
+- Add Requires: python-module-django-tests
+
 * Wed Sep 09 2015 Lenar Shakirov <snejok@altlinux.ru> 2015.1.1-alt1
 - 2015.1.1-alt1
 
