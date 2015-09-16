@@ -1,17 +1,17 @@
 %define packagename cairo-dock
 
 Summary: Plugins for cairo-dock
-Summary(ru_RU.UTF-8): Плашины для cairo-dock
+Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt1
+Release: alt2
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
 Url: https://launchpad.net/cairo-dock-plug-ins
 
 Source: cairo-dock-plug-ins-%version.tar.gz
-#Patch: %name-alt-deps.patch
+Patch1: netspeed.patch
 
 Requires: cairo-dock >= %version
 
@@ -77,7 +77,7 @@ This package contains various plugins for cairo-dock.
 
 %description -l ru_RU.UTF-8
 Сairo-dock использует cairo для рендеринга приятной графики и Glitz для
-задействования аппартного ускорения. Это полностью настраиваемая и
+задействования аппаратного ускорения. Это полностью настраиваемая и
 многофункциональная панель задач. Вы можете легко включить апплеты не ней.
 
 Пакет содержит различные плагины для cairo-dock.
@@ -944,7 +944,7 @@ binding for Cairo-Dock.
 
 %prep
 %setup -n cairo-dock-plug-ins-%version
-#patch -p1
+%patch1 -p1
 
 %build
 # Need dbusmenu-* for extra plugins
@@ -963,17 +963,21 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Wed Sep 16 2015 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt2
+- Small fix in spec
+- Add netspeed.patch
+
 * Wed Sep 09 2015 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt1
-- New version 3.4.1:
-  - removed:
+- New version 3.4.1
+- removed:
     - Gmenu
     - Recent-Events
-  - added
-    + Screenshot
-    + Sound-Effects
-	+ cairo-dock-vala
-	+ cairo-dock-vala-devel
-	+ python-module-cairo-dock
+- added:
+  + Screenshot
+  + Sound-Effects
+  + cairo-dock-vala
+  + cairo-dock-vala-devel
+  + python-module-cairo-dock
 
 * Sat Aug 23 2014 Mikhail Efremov <sem@altlinux.org> 3.1.0-alt1.M70P.1
 - Rebuild with libetpan-1.5.
