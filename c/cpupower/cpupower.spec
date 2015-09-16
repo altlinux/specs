@@ -1,4 +1,4 @@
-%define kernel_base_version 3.19
+%define kernel_base_version 4.2
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: cpupower
@@ -48,7 +48,7 @@ developing applications that use %name.
 
 %prep
 %setup -cT
-tar -xf %kernel_src/%kernel_source.tar.*
+tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
 %patch -p1
 
@@ -128,6 +128,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_includedir/*
 
 %changelog
+* Wed Sep 16 2015 Alexey Shabalin <shaba@altlinux.ru> 4.2-alt1
+- build from kernel-source-4.2
+
 * Tue Apr 21 2015 Alexey Shabalin <shaba@altlinux.ru> 3.19-alt1
 - build from kernel-source-3.19
 
