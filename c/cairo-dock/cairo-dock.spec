@@ -1,9 +1,9 @@
 Name: cairo-dock
 Version: 3.4.1
-Release: alt1
+Release: alt2
 
 Summary: A light and eye-candy dock to launch your programs easily
-Summary(ru_RU.UTF-8): Приятный для глаз док для простого запуска ваших программ
+Summary(ru_RU.UTF-8): Приятный глазу док для простого запуска ваших программ
 License: GPLv3+
 Group: Graphical desktop/Other
 # http://glx-dock.org
@@ -23,7 +23,7 @@ easily plug applets into it.
 
 %description -l ru_RU.UTF-8
 Сairo-dock использует cairo для рендеринга приятной графики и Glitz для
-задействования аппартного ускорения. Это полностью настраиваемая и
+задействования аппаратного ускорения. Это полностью настраиваемая и
 многофункциональная панель задач. Вы можете легко включить апплеты не ней.
 
 %package devel
@@ -87,6 +87,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Sep 16 2015 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt2
+- Small fix in spec
+
 * Wed Sep 09 2015 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt1
 - New version 3.4.1
 - Updated buildreqs
