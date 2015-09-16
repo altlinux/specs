@@ -22,7 +22,7 @@
 %def_enable wayland
 
 Name: gdm
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -296,6 +296,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Wed Sep 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
+- 3.16.3
+
 * Thu Jul 02 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 
