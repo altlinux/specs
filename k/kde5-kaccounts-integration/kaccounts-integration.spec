@@ -3,8 +3,8 @@
 %define libkaccounts libkaccounts%sover
 
 Name: kde5-%rname
-Version: 15.08.0
-Release: alt2
+Version: 15.08.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -92,6 +92,9 @@ mkdir -p %buildroot/%_K5plug/kaccounts/ui
 %_K5srv/kded/accounts.desktop
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
 - fix path in cmake files
 

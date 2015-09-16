@@ -8,7 +8,7 @@
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 
 Name: kde5-pim-runtime
-Version: 15.08.0
+Version: 15.08.1
 Release: alt1
 %K5init altplace
 
@@ -31,6 +31,7 @@ BuildRequires: xsltproc libsasl2-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-kalarmcal-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel
 BuildRequires: kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmbox-devel kde5-kmime-devel kde5-kpimtextedit-devel
 BuildRequires: kde5-pimlibs-devel kde5-syndication-devel
+BuildRequires: kf5-libkgapi-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel
 BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel
@@ -126,7 +127,7 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5notif/akonadi_*
 
 %files devel
-%_K5link/lib*.so
+#%_K5link/lib*.so
 %_K5dbus_iface/*.xml
 
 %files -n %libmaildir
@@ -146,5 +147,8 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - initial build

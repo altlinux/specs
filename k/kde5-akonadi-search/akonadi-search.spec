@@ -1,8 +1,8 @@
 %define rname akonadi-search
 
 Name: kde5-%rname
-Version: 15.08.0
-Release: alt2
+Version: 15.08.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -103,6 +103,9 @@ KF5 library
 %_K5lib/libKF5AkonadiSearchPIM.so.*
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
 - move akonadi resources
 

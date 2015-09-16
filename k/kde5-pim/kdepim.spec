@@ -46,8 +46,8 @@
 %define libtemplateparser libtemplateparser%pim_sover
 
 Name: kde5-pim
-Version: 15.08.0
-Release: alt3
+Version: 15.08.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -893,6 +893,9 @@ done
 %_K5lib/libtemplateparser.so.*
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt3
 - fix requires
 

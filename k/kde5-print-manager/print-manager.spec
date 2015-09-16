@@ -4,8 +4,8 @@
 %define libkcupslib libkcupslib%sover
 
 Name: kde5-%rname
-Version: 15.08.0
-Release: alt2
+Version: 15.08.1
+Release: alt1
 %K5init altplace
 
 Group: System/Configuration/Printing
@@ -87,6 +87,9 @@ KF5 library
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Thu Aug 27 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
 - fix requires
 

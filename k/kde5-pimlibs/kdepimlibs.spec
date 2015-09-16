@@ -1,8 +1,8 @@
 %define rname kdepimlibs
 
 Name: kde5-pimlibs
-Version: 15.08.0
-Release: alt4
+Version: 15.08.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -176,6 +176,9 @@ done
 
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt4
 - add symlinks for devel data
 

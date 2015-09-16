@@ -5,8 +5,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 15.08.0
-Release: alt2
+Version: 15.08.1
+Release: alt1
 %K5init
 
 Group: File tools
@@ -88,8 +88,8 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
     %buildroot/%_K5xdgapp/org.kde.dolphin.desktop
 # kf5-kio-extras
 #    --add-mime-type=x-scheme-handler/network \
-#    --add-mime-type=x-scheme-handler/desktop \
 # kf5-plasma-workspace
+#    --add-mime-type=x-scheme-handler/desktop \
 #    --add-mime-type=x-scheme-handler/remote \
 #    --add-mime-type=x-scheme-handler/programs \
 #    --add-mime-type=x-scheme-handler/applications \
@@ -123,6 +123,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Mon Aug 24 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
 - rebuild with new baloo
 
