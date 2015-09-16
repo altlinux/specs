@@ -1,7 +1,7 @@
 %def_enable updatedb
 
 Name: shared-mime-info
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: Shared MIME-Info Specification
@@ -12,7 +12,7 @@ Url: http://www.freedesktop.org/wiki/Software/%name
 Source: http://www.freedesktop.org/~hadess/%name-%version.tar.xz
 Source2: %name.filetrigger
 Patch: %name-0.19-alt-cachedir-param.patch
-
+Patch1: %name-1.5-alt-swf.patch
 Requires: rpm-build-xdg
 
 BuildPreReq: rpm-build-licenses rpm-build-xdg
@@ -20,10 +20,7 @@ BuildPreReq: intltool xml-utils
 # for build test programs
 BuildPreReq: libgio-devel
 
-# Automatically added by buildreq on Sun Jun 08 2008
 BuildRequires: glib2-devel libxml2-devel perl-XML-Parser xml-utils
-
-# subst 's/<mime-type type=\"application\/vnd.adobe.flash.movie\">/<mime-type type=\"application\/x-shockwave-flash\">/g' /usr/share/mime/packages/freedesktop.org.xml
 
 %description
 This is the freedesktop.org shared MIME info database.
@@ -51,7 +48,7 @@ format and merging them together.
 %prep
 %setup
 %patch
-
+%patch1 -b .swf
 rm -f freedesktop.org.xml
 
 %build
@@ -101,6 +98,11 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Wed Sep 16 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
+- 1.5
+- replaced default "vnd.adobe.flash.movie" type by old non-standard alias "x-shockwave-flash"
+  to play local swf-files with browsers
+
 * Sun Feb 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
 - 1.4
 
