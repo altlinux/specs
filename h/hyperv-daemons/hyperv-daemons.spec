@@ -1,4 +1,4 @@
-%define kernel_base_version 3.19
+%define kernel_base_version 4.2
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: hyperv-daemons
@@ -12,7 +12,7 @@ URL: http://www.kernel.org
 
 # git://git.altlinux.org/gears/h/%name.git
 # Patch: %name-%version-%release.patch
-Patch2: %name-altlinux.patch
+#Patch2: %name-altlinux.patch
 
 Source5: hv_get_dhcp_info.sh
 Source6: hv_get_dns_info.sh
@@ -80,10 +80,10 @@ functionality for Linux.
 
 %prep
 %setup -cT
-tar -xf %kernel_src/%kernel_source.tar.*
+tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
 # %patch -p1
-%patch2 -p1
+# %patch2 -p1
 
 %build
 %add_optflags -I../../include/uapi -I../../include
@@ -192,6 +192,9 @@ fi
 %_udevrulesdir/hypervfcopyd.rules
 
 %changelog
+* Wed Sep 16 2015 Alexey Shabalin <shaba@altlinux.ru> 4.2-alt1
+- build from kernel-source-4.2
+
 * Tue Apr 21 2015 Alexey Shabalin <shaba@altlinux.ru> 3.19-alt1
 - build from kernel-source-3.19.5
 
