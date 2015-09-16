@@ -2,7 +2,7 @@
 %define otrs_user otrs
 
 Name: otrs
-Version: 4.0.10
+Version: 4.0.12
 Release: alt1
 
 Summary: Open source Ticket Request System
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 Requires(pre): %{_sbindir}/useradd
 Requires(post): perl
-Requires: webserver-common perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib perl-Unicode-Normalize perl-Term-ANSIColor perl-TimeDate perl-YAML-LibYAML perl-Time-Piece perl-Archive-Zip perl-Template
+Requires: webserver-common perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib perl-Unicode-Normalize perl-Term-ANSIColor perl-TimeDate perl-YAML-LibYAML perl-Time-Piece perl-Archive-Zip perl-Archive-Tar perl-Template
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-webserver-common rpm-macros-apache2 >= 3.9
 BuildRequires: perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib
@@ -150,6 +150,11 @@ cd %installdir/bin/
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Wed Sep 16 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.0.12-alt1
+- New version
+- added perl-Archive-Tar to Requires
+- updated README.ALT.rus
+
 * Mon Aug 03 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.0.10-alt1
 - New version
 - added mpm_itk_module section to configuration of apache2
