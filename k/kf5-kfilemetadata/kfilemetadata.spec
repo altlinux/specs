@@ -3,7 +3,7 @@
 %def_enable exiv2
 
 Name: kf5-%rname
-Version: 5.13.0
+Version: 5.14.0
 Release: alt1
 %K5init altplace
 
@@ -13,6 +13,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-fix-compile.patch
 
 # Automatically added by buildreq on Thu Feb 26 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils fontconfig libavcodec-devel libavutil-devel libcloog-isl4 libopencore-amrnb0 libopencore-amrwb0 libpoppler1-qt5 libqt5-core libqt5-gui libqt5-xml libstdc++-devel pkg-config python-base ruby ruby-stdlibs
@@ -57,6 +58,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -66,7 +68,7 @@ KF5 library
 %find_lang %name --all-name
 
 %files common -f %name.lang
-%doc COPYING* Readme.md
+%doc COPYING* README.md
 
 %files devel
 #%_K5inc/kfilemetadata_version.h
@@ -80,6 +82,9 @@ KF5 library
 %_K5plug/kf5/kfilemetadata/
 
 %changelog
+* Mon Sep 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt1
+- new version
+
 * Wed Aug 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.13.0-alt1
 - new version
 

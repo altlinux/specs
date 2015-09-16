@@ -1,7 +1,7 @@
 %define rname kdelibs4support
 
 Name: kf5-%rname
-Version: 5.13.0
+Version: 5.14.0
 Release: alt1
 %K5init altplace
 
@@ -19,6 +19,7 @@ Patch1: alt-find-docbookxml.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ perl-URI
 BuildRequires: libssl-devel
+BuildRequires: NetworkManager-devel libnm-util-devel libnm-glib-devel
 BuildRequires: qt5-quick1-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
@@ -67,6 +68,7 @@ KF5 library
 
 %install
 %K5install
+%K5install_move data doc
 mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
 
 %find_lang %name --with-kde --all-name
@@ -94,7 +96,7 @@ mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
 %_K5data/kssl/
 %_K5data/widgets/pics/*.png
 %_K5srv/*.desktop
-%_K5srv/kded/networkstatus.desktop
+#%_K5srv/kded/networkstatus.desktop
 %_K5srv/metainfo.protocol
 %_K5srvtyp/*.desktop
 
@@ -114,6 +116,9 @@ mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Mon Sep 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt1
+- new version
+
 * Wed Aug 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.13.0-alt1
 - new version
 

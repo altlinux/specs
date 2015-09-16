@@ -1,7 +1,7 @@
 %define rname kio
 
 Name: kf5-%rname
-Version: 5.13.0
+Version: 5.14.0
 Release: alt1
 %K5init altplace
 
@@ -83,6 +83,7 @@ KF5 library
 
 %install
 %K5install
+%K5install_move data doc
 %find_lang %name --with-kde --all-name
 %K5find_qtlang %name --all-name
 
@@ -124,6 +125,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Sep 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt1
+- new version
+
 * Wed Aug 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.13.0-alt1
 - new version
 
