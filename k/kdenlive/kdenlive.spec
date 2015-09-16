@@ -1,8 +1,8 @@
 %define req_ver_mlt 0.9.0
 
 Name: kdenlive
-Version: 15.08.0
-Release: alt2
+Version: 15.08.1
+Release: alt1
 %K5init no_altplace
 
 Summary: KDE Non Linear Video Editor
@@ -73,6 +73,9 @@ sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.des
 %_man1dir/kdenlive*
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
 - fix find kdenlive lumas
 
