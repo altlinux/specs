@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 5.9
-Release: alt6
+Release: alt7
 
 %define rootdatadir /lib
 
@@ -345,6 +345,8 @@ pushd build-classic
 	--enable-sigwinch \
 	--enable-echo \
 	--enable-warnings \
+	--enable-pc-files \
+	--with-pkg-config-libdir=%_pkgconfigdir \
 	--disable-rpath \
 	--disable-root-environ \
 	--disable-home-terminfo \
@@ -378,6 +380,8 @@ pushd build-utf8
 	--enable-sigwinch \
 	--enable-echo \
 	--enable-warnings \
+	--enable-pc-files \
+	--with-pkg-config-libdir=%_pkgconfigdir \
 	--disable-rpath \
 	--disable-root-environ \
 	--disable-home-terminfo \
@@ -561,6 +565,7 @@ done
 
 %files -n libtic-devel
 %_libdir/libtic.so
+%_pkgconfigdir/tic.pc
 %_includedir/%name/term_entry.h
 %_includedir/%name/nc_tparm.h
 
@@ -568,6 +573,7 @@ done
 %_libdir/libtinfo.so
 %_includedir/termcap.h
 %_includedir/term.h
+%_pkgconfigdir/tinfo.pc
 %dir %_includedir/%name/
 %_includedir/%name/termcap.h
 %_includedir/%name/term.h
@@ -610,6 +616,7 @@ done
 %files -n lib%name-devel
 %_bindir/%{name}5-config
 %_libdir/lib*[musl].so
+%_pkgconfigdir/*[musl].pc
 %_includedir/*
 %_man1dir/*-config*
 %exclude %_includedir/term*.h
@@ -649,6 +656,7 @@ done
 %_includedir/%name/curses?.h
 %_includedir/%name/cursslk.h
 %_includedir/%name/etip.h
+%_pkgconfigdir/ncurses++*.pc
 
 %files -n lib%name++-devel-static
 %_libdir/libncurses++*.a
@@ -662,9 +670,13 @@ done
 %_bindir/%{name}w5-config
 %_libdir/lib*[musl]w.so
 %_includedir/%{name}w
+%_pkgconfigdir/*[musl]w.pc
 %endif # with_utf8
 
 %changelog
+* Wed Sep 16 2015 Fr. Br. George <george@altlinux.ru> 5.9-alt7
+- Package .pc files (Closes: #30312)
+
 * Mon Sep 14 2015 Fr. Br. George <george@altlinux.ru> 5.9-alt6
 - Update to 5.9-20141206
 
