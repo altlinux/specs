@@ -4,7 +4,7 @@
 
 Name: lynx
 Version: %ver
-Release: alt8.%subver.2
+Release: alt9.%subver.2
 
 Summary: Text based browser for the world wide web
 License: GPL
@@ -66,6 +66,7 @@ Data files for lynx
 #don't use configure macros
 #	--libdir=/etc \
 CFLAGS="$RPM_OPT_FLAGS -w -DUSE_SSL -D_USE_PLD -U_GNU_SOURCE " LDFLAGS=-s \
+%_configure_update_config
 ./configure \
 	--prefix=/usr \
 	--sysconfdir=/etc \
@@ -159,6 +160,9 @@ install -m 644 %SOURCE101 %buildroot/%_liconsdir/lynx.xpm
 %_datadir/%name
 
 %changelog
+* Thu Sep 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.8.6-alt9.rel.2.2
+- Updated config.{sub,guess} configs.
+
 * Sun Apr 17 2011 Igor Vlasenko <viy@altlinux.ru> 2.8.6-alt8.rel.2.2
 - NMU: converted menu to desktop file
 
