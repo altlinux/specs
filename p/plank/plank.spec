@@ -1,8 +1,8 @@
-%define ver_major 0.9
+%define ver_major 0.10
 %def_disable dbusmenu
 
 Name: plank
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Elegant, simple, clean dock
@@ -10,7 +10,7 @@ License: GPLv3+
 Group: Graphical desktop/Other
 Url: https://launchpad.net/plank
 
-Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.xz
+Source: https://launchpad.net/%name/1.0/%version/+download/%name-%version.tar.xz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -116,6 +116,9 @@ This package provides Vala language bindings for plank library.
 %_datadir/vala/vapi/plank.vapi
 
 %changelog
+* Thu Sep 17 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
 - 0.9.1
 
