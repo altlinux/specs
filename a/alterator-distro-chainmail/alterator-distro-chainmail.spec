@@ -1,6 +1,6 @@
 Name: alterator-distro-chainmail
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -56,6 +56,7 @@ during installation.
 %config(noreplace) %_sysconfdir/alterator/logs/.order
 %dir %_datadir/alterator/ui/chainmail/
 %_datadir/alterator/ui/chainmail/framework/
+%_datadir/alterator/ui/chainmail/login/
 %_libexecdir/alterator/hooks/*.d/*
 %_datadir/alterator/interfaces/guile/workflow/*
 
@@ -64,6 +65,10 @@ during installation.
 %_datadir/install2/steps/*.desktop
 
 %changelog
+* Fri Sep 18 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt2
+- login: Set focus to login field by default.
+- Add /chainmail/login interface again.
+
 * Fri Jan 30 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt1
 - Update Chainmail's workflow.
 - Drop /chainmail/login interface.
