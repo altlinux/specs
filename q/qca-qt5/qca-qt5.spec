@@ -4,7 +4,7 @@ Name: qca-qt5
 %define minor 1
 %define bugfix 0.3
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -13,6 +13,9 @@ License: LGPL
 Requires: lib%name = %version-%release
 
 Source: %name-%version.tar
+# SuSE
+Patch1: 0001-Add-missing-QIODevice-include.patch
+Patch2: ansi.diff
 # ALT
 Patch10: qca-2.0.3-alt-paths.patch
 
@@ -185,6 +188,8 @@ utilize the for Qt Cryptographic Architecture (QCA).
 
 %prep
 %setup -q -n %name-%version
+%patch1 -p1
+%patch2 -p1
 %patch10 -p1
 
 
@@ -244,6 +249,9 @@ done
 #%_qt5_headerdir/Qca-qt5/QtCrypto
 
 %changelog
+* Thu Sep 17 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.0.3-alt3
+- sync patches with SuSE
+
 * Thu Jun 25 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.0.3-alt2
 - rebuild with new libgcrypt
 
