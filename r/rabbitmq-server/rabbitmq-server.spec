@@ -3,7 +3,7 @@
 
 Name: rabbitmq-server
 Version: 3.5.4
-Release: alt1
+Release: alt2
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
@@ -53,6 +53,8 @@ tar -xf %SOURCE100 -C codegen
 sed -i 's|@libexecdir@|%_libexecdir|g' %SOURCE2
 sed -i 's|@localstatedir@|%_localstatedir|g' %SOURCE2
 sed -i 's|@RABBITMQ_DIR@|%_erllibdir/%name|g' %SOURCE5
+
+export VERSION=%version
 %make_build
 
 %install
@@ -118,6 +120,9 @@ mkdir -p %buildroot/%_erlanglibdir/%name/priv
 %_datadir/%name
 
 %changelog
+* Thu Sep 17 2015 Alexey Shabalin <shaba@altlinux.ru> 3.5.4-alt2
+- Fix version
+
 * Wed Sep 16 2015 Alexey Shabalin <shaba@altlinux.ru> 3.5.4-alt1
 - 3.5.4
 
