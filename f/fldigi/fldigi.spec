@@ -1,11 +1,12 @@
 Name:    fldigi
-Version: 3.22.13
+Version: 3.23.00
 Release: alt1
 Summary: Fldigi is a software modem for Amateur Radio use
 
 License: GPLv3+
 Group:   Communications
 URL:	 http://www.w1hkj.com/Fldigi.html
+# Download from http://www.w1hkj.com/download.html
 
 Source0: %name-%version.tar
 Source1: %name.watch
@@ -13,7 +14,8 @@ Source1: %name.watch
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
 BuildPreReq: libXfixes-devel
 
-BuildRequires: gcc-c++ libX11-devel libXext-devel libXft-devel libfltk-devel libjpeg-devel libpng-devel libsamplerate-devel libXcursor-devel
+BuildRequires: gcc-c++ libX11-devel libXext-devel libXft-devel libfltk-devel 
+BuildRequires: libjpeg-devel libpng-devel libsamplerate-devel libXcursor-devel
 BuildRequires: asciidoc-a2x
 BuildRequires: hamlib-devel
 BuildRequires: libportaudio2-devel
@@ -23,30 +25,17 @@ BuildRequires: perl-RPC-XML
 BuildRequires: perl-Term-ReadLine-Gnu
 
 %description
-Fldigi is a software modem for Amateur Radio use. It is a sound card
-based program that is used for both transmitting and receiving data in
-any of the following modes:
+Fldigi is a modem program which supports most of the digital modes used
+by ham radio operators today. You can also use the program for
+calibrating your sound card to WWV or doing a frequency measurement
+test. The program also comes with a CW decoder. fldigi is written with
+the help of the Fast Light Toolkit X GUI. Fldigi is a fast moving
+project many added features with each update.
 
-BPSK and QPSK       31, 63, 125, 250 (both), and 63F and 500 (BPSK only)
-PSKR                125, 250, and 500
-CW                  speeds from 5 to 200 wpm
-DominoEX            4, 5, 8, 11, 16 and 22; also with FEC
-Hellschreiber       Feld Hell, Slow Hell, Hell x5/x9, FSKHell(-105) and
-                    Hell 80
-MFSK                4, 8, 11, 16, 22, 31, 32 and 64; most with image
-                    support
-MT63                500, 1000 and 2000
-OLIVIA              various tones and bandwidths
-RTTY                various baud rates, shifts, nbr. of data bits, etc.
-THOR                4, 5, 8, 11, 16 and 22
-Throb and ThrobX    1, 2, and 4
-WWV                 receive only - calibrate your sound card to WWV
-Frequency Analysis  receive only - measure the frequency of a carrier
-
-Fldigi can also control a transceiver using Hamlib or RigCAT I/O,
-perform online or cdrom QRZ queries, log QSOs with the built-in logbook
-or Xlog, and send reception reports to the PSK Automatic Propagation
-Reporter.
+Flarq (Fast Light Automatic Repeat Request) is a file transfer
+application that is based on the ARQ specification developed by Paul
+Schmidt, K9PS.  It is capable of transmitting and receiving frames of
+ARQ data via fldigi.
 
 %prep
 %setup
@@ -69,6 +58,10 @@ Reporter.
 %doc %_man1dir/*
 
 %changelog
+* Thu Sep 17 2015 Andrey Cherepanov <cas@altlinux.org> 3.23.00-alt1
+- New version
+- Truncate description
+
 * Sun Jul 26 2015 Andrey Cherepanov <cas@altlinux.org> 3.22.13-alt1
 - New version
 
