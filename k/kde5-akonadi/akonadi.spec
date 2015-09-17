@@ -1,8 +1,8 @@
 %define rname akonadi
 
 Name: kde5-%rname
-Version: 15.08.0
-Release: alt3
+Version: 15.08.1
+Release: alt1
 %K5init altplace
 
 Group: Databases
@@ -175,6 +175,9 @@ mkdir -p %buildroot/%_datadir/akonadi5/{agents,contact,plugins,accountwizard}
 %_K5lib/libKF5AkonadiPrivate.so.*
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt3
 - not't search for resources in KDE4 place
 

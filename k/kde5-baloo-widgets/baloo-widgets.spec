@@ -1,8 +1,8 @@
 %define rname baloo-widgets
 
 Name: kde5-%rname
-Version: 15.08.0
-Release: alt2
+Version: 15.08.1
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -78,6 +78,9 @@ KF5 library
 %_K5lib/libKF5BalooWidgets.so.*
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Mon Aug 24 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
 - rebuild with new baloo
 

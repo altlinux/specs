@@ -1,8 +1,8 @@
 %define rname kmix
 
 Name: kde5-%rname
-Version: 15.08.0
-Release: alt2
+Version: 15.08.1
+Release: alt1
 %K5init altplace
 
 Group: Sound
@@ -73,6 +73,9 @@ developing applications that use %name.
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Fri Sep 04 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt2
 - provide kde5-volume-control
 
