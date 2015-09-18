@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -32,6 +32,8 @@ BuildRequires: python3-module-enum34
 BuildRequires: python3-module-idna
 %endif
 
+Requires: python-module-cffi
+
 %setup_python_module %oname
 
 %description
@@ -45,6 +47,7 @@ digests and key derivation functions.
 %package -n python3-module-%oname
 Summary: Cryptographic recipes and primitives to Python developers (Python 3).
 Group: Development/Python3
+Requires: python3-module-cffi
 
 %description -n python3-module-%oname
 cryptography is a package which provides cryptographic recipes and primitives to Python developers.
@@ -92,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Sep 18 2015 Vladimir Didenko <cow@altlinux.ru> 1.0.1-alt2
+- Add cffi to requirements (closes: #31280)
+
 * Mon Sep 7 2015 Vladimir Didenko <cow@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 
