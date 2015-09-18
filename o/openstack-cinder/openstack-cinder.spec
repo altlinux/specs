@@ -3,7 +3,7 @@
 
 Name: openstack-cinder
 Version: 2015.1.1
-Release: alt1
+Release: alt2
 Summary: OpenStack Volume service
 
 Group: System/Servers
@@ -258,6 +258,9 @@ crudini --set %cinder_conf keystone_authtoken auth_protocol http
 %doc doc/build/html
 
 %changelog
+* Fri Sep 18 2015 Lenar Shakirov <snejok@altlinux.ru> 2015.1.1-alt2
+- .service files fixed
+
 * Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
 - 2015.1.1
 - drop dist config in datadir
