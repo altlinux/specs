@@ -1,6 +1,6 @@
 Name: webrtc-audio-processing
 Version: 0.1
-Release: alt1
+Release: alt2
 Summary: WebRTC Audio Processing library
 License: BSD
 Group: System/Libraries
@@ -9,6 +9,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar.xz
 Patch: %name-%version-alt-link.patch
+Patch1: webrtc-fix-typedefs-on-other-arches.patch
 
 BuildRequires: gcc-c++
 
@@ -40,6 +41,7 @@ develop programs which make use of %name
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -59,6 +61,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Sep 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1-alt2
+- Fixed build on non-x86 architectures.
+
 * Sun May 13 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.1-alt1
 - initial release
 
