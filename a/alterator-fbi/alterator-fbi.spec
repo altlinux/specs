@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.30
+Version: 5.31
 Release: alt1
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
@@ -131,6 +131,13 @@ fi ||:
 
 
 %changelog
+* Fri Sep 18 2015 Mikhail Efremov <sem@altlinux.org> 5.31-alt1
+- Use empty password to check in case of blocked IP.
+- Allow empty passwords.
+- Check password even if IP address is blocked.
+- Write login attempts in the log.
+- Don't allow to login after several failed attempts.
+
 * Tue Sep 09 2014 Andrey Cherepanov <cas@altlinux.org> 5.30-alt1
 - Replace %%H in any place of X-Alterator-URI for support different port
   in URI (ALT #30298)
