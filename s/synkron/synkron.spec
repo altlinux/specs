@@ -1,6 +1,6 @@
 Name:		synkron
-Version:	1.6.1
-Release:	alt1.qa1
+Version:	1.6.2
+Release:	alt1
 Summary:	Is a simple Qt application that allows you to sync folders
 License:	GPLv2
 Group:		File tools
@@ -8,9 +8,7 @@ Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Url:		http://synkron.sourceforge.net/
 Source0:	http://kent.dl.sourceforge.net/sourceforge/synkron/Synkron-%version-src.tar.gz
 
-# Automatically added by buildreq on Sun Feb 10 2008 (-bi)
-# Manually removed linux-libc-headers packages-info-i18n-common
-BuildRequires: ImageMagick gcc-c++ libqt4-devel libqt4-network
+BuildRequires: /usr/bin/convert gcc-c++ libqt4-devel libqt4-network
 
 %description
 Synkron is a simple Qt application that allows you to sync folders,
@@ -68,6 +66,9 @@ convert -resize 16x16 images/Synkron128.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri Sep 18 2015 Motsyo Gennadi <drool@altlinux.ru> 1.6.2-alt1
+- 1.6.2
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
