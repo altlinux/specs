@@ -1,8 +1,8 @@
 Name: apt-scripts-nvidia
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
-Summary: APT Lua script for NVIDIA driver
+Summary: APT Lua scripts for NVIDIA driver
 License: GPL
 Group: System/Configuration/Packaging
 
@@ -13,7 +13,7 @@ BuildArch: noarch
 
 %description
 apt-get install-nvidia
-	This script will install NVIDIA driver.
+	This scripts will install NVIDIA driver.
 
 %prep
 %setup -qn scripts-nvidia-%version
@@ -37,6 +37,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Fri Sep 18 2015 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
+- install 32-bit packages with 64-bit nvidia_glx_* on x86_64
+
 * Tue Jul 22 2014 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt1
 - install 32-bit drivers on x86_64
 
