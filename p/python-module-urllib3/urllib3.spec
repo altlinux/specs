@@ -3,8 +3,10 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 20150729
+Version: 20150503
 Release: alt1
+
+Epoch: 1
 
 Summary: Library with thread-safe connection pooling, file post support, sanity friendly etc
 License: MIT
@@ -156,6 +158,11 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Sep 18 2015 Lenar Shakirov <snejok@altlinux.ru> 1:20150503-alt1
+- Build old snapshot - 20150503 (1.10.4)
+  * Problem between python-requests and urllib3
+  * Epoch: 1
+
 * Mon Aug 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20150729-alt1
 - New snapshot
 
