@@ -1,6 +1,6 @@
 Name: libjson
 Version: 0.10
-Release: alt2
+Release: alt3
 
 Summary: JSON implementation in C
 License: MIT
@@ -52,6 +52,9 @@ This package contains development part of JSON-C
 %_pkgconfigdir/json.pc
 
 %changelog
+* Fri Sep 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.10-alt3
+- Fixed FTBFS.
+
 * Tue May 27 2014 Alexey Shabalin <shaba@altlinux.ru> 0.10-alt2
 - rename source package from json-c to libjson
 
