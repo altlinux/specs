@@ -3,7 +3,7 @@
 %define real_name               python
 Name: %real_name
 
-Version: 2.7.8
+Version: 2.7.10
 Release: alt1
 
 %define package_name		%real_name
@@ -63,7 +63,7 @@ Patch20: python-2.5.4-alt-python-config.patch
 Patch21: python-2.6-ctypes-noexecmem.patch
 Patch22: python-2.6.6-alt-bdist_altrpm.patch
 Patch23: python-2.7.4-alt-linux2-platform.patch
-Patch24: python-2.7.4-python-config-ldflags-alt.patch
+Patch24: python-2.7.10-python-config-ldflags-alt.patch
 
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
@@ -82,7 +82,7 @@ Requires: %name-modules-logging
 
 BuildPreReq: rpm >= 4.0.4-alt36.d8, rpm-build-python >= 0.34.4-alt1
 # Automatically added by buildreq on Sun Apr 08 2007
-BuildRequires: bzlib-devel gcc-c++ libdb4-devel libexpat-devel libgdbm-devel libncursesw-devel libreadline-devel libsqlite3-devel libssl-devel tk-devel unzip zlib-devel libffi-devel
+BuildRequires: bzlib-devel gcc-c++ libdb4-devel libexpat-devel libgdbm-devel libncursesw-devel libreadline-devel libsqlite3-devel libssl-devel tk-devel unzip zlib-devel libffi-devel libbluez-devel
 
 %if 0%{?with_valgrind}
 BuildRequires: valgrind-devel
@@ -584,6 +584,15 @@ Lock by using subprocesses instead of threads. Due to this, the
 multiprocessing module allows the programmer to fully leverage multiple
 processors on a given machine.
 
+%package modules-ensurepip
+Summary: Bootstrapping the pip installer
+Group: Development/Python
+Requires: %name-modules = %version-%release
+
+%description modules-ensurepip
+The ensurepip package provides support for bootstrapping the pip
+installer into an existing Python installation or virtual environment.
+
 #%package info
 #Summary: Info documentation for the Python scripting language
 #Group: Development/Python
@@ -643,7 +652,7 @@ rm -r Modules/expat
 #patch21 -p1
 %patch22 -p2
 %patch23 -p1
-%patch24 -p1
+%patch24 -p2
 
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
@@ -967,6 +976,12 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %files modules-multiprocessing -f modules-multiprocessing-list
 %python_libdir/multiprocessing
 
+%files modules-ensurepip
+%exclude %python_libdir/ensurepip/_bundled
+%python_libdir/ensurepip/*py
+%python_libdir/ensurepip/*pyc
+%python_libdir/ensurepip/*pyo
+
 #%files obsolete
 #%python_libdir/lib-old
 
@@ -1048,6 +1063,10 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %python_libdir/lib-dynload/_tkinter.so
 
 %changelog
+* Fri Sep 18 2015 Vladimir Didenko <cow@altlinux.org> 2.7.10-alt1
+- New version (closes: #31270)
+- Enable bluetooth support (closes: #31261)
+
 * Thu Nov 13 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.8-alt1
 - New version.
 
