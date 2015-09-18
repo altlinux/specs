@@ -1,6 +1,6 @@
 Name: installer-distro-chainmail
 Version: 3.0.0
-Release: alt5
+Release: alt6
 
 Summary: Installer files for IVK chainmail
 License: GPL
@@ -41,7 +41,7 @@ Provides: installer-chainmail-stage3 = %version-%release
 Requires: installer-common-stage3
 #modules
 Requires: alterator-grub
-Requires: alterator-distro-chainmail >= 2.96.1-alt1
+Requires: alterator-distro-chainmail >= 3.0.0-alt2
 Requires: alterator-net-eth
 Requires: installer-feature-vm-ofs-stage3
 Requires: alterator-auth
@@ -75,6 +75,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/ivk-scripts/
 
 %changelog
+* Thu Sep 17 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt6
+- Setup chainmail-specific login interface again.
+
 * Wed Mar 04 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt5
 - Remove /etc/cron.d/osec.
 
