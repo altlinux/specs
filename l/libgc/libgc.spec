@@ -1,12 +1,13 @@
 Name: libgc
 Version: 7.2d
-Release: alt2
+Release: alt3
 
 Summary: The Boehm-Demers-Weiser conservative garbage collector
 License: MIT and GPLv2+
 Group: System/Libraries
 Url: http://www.hpl.hp.com/personal/Hans_Boehm/gc/
 Source: %url/gc_source/gc-%version.tar.gz
+Patch: gc-aarch64.patch
 
 BuildRequires: gcc-c++
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
@@ -42,6 +43,7 @@ This package contains static libgc library.
 
 %prep
 %setup -n gc-7.2
+%patch -p1
 
 %build
 # see bugzilla.redhat.com/689877
@@ -91,6 +93,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %endif
 
 %changelog
+* Fri Sep 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.2d-alt3
+- Added aarch64 architecture support.
+
 * Mon Sep 03 2012 Dmitry V. Levin <ldv@altlinux.org> 7.2d-alt2
 - Built with USE_LIBC_PRIVATES again to make GC_linux_main_stack_base()
   work without /proc mounted.
