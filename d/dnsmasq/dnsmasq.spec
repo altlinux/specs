@@ -1,7 +1,7 @@
 Name: dnsmasq
 Version: 2.75
 
-Release: alt1
+Release: alt2
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -128,6 +128,9 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Fri Sep 18 2015 Mikhail Efremov <sem@altlinux.org> 2.75-alt2
+- Avoid dependency on /sbin/resolvconf.
+
 * Fri Aug 07 2015 Mikhail Efremov <sem@altlinux.org> 2.75-alt1
 - systemd: Add Wants=network-online.target.
 - Updated to 2.75.
