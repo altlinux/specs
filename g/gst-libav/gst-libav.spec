@@ -8,8 +8,8 @@
 %endif
 
 Name: gst-libav
-Version: %ver_major.90
-Release: alt2
+Version: %ver_major.91
+Release: alt1
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
 Group: System/Libraries
@@ -17,7 +17,6 @@ License: GPL
 Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
-Patch: %name-1.5.90-up-bgo753869.patch
 
 %define libav_ver 11.4
 
@@ -77,7 +76,6 @@ plug-in.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -99,6 +97,9 @@ plug-in.
 %_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 
 %changelog
+* Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.91-alt1
+- 1.5.91
+
 * Fri Aug 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.90-alt2
 - switch to build with bundled ffmpeg
 - fixed BGO #753869 (upstream patch)

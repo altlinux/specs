@@ -3,9 +3,11 @@
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
+%def_disable python3
+
 Name: gst-validate
 Version: %ver_major.90
-Release: alt1
+Release: alt2
 
 Summary: GStreamer Validate Tools and Library
 Group: System/Libraries
@@ -17,10 +19,19 @@ Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 %define gst_ver 1.5.2
 
 Requires: lib%name = %version-%release
+Requires: gst-plugins-base%gst_api_ver
+
+%if_enabled python3
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+%add_python3_compile_include %_libdir/gst-validate-launcher/python
+%endif
 
 BuildRequires: gcc-c++ gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver libxml2-devel
-BuildRequires: gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
+BuildRequires: libcairo-devel gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
 BuildRequires: gtk-doc
+%{?_enable_python3:BuildRequires: rpm-build-python3 python3-devel}
 
 %description
 The goal of GstValidate is to be able to detect when elements are not
@@ -82,7 +93,9 @@ GObject introspection devel data for the Gst Validate library.
 %build
 %autoreconf
 %configure --enable-gtk-doc \
-	--disable-sphinx-doc
+	--disable-sphinx-doc \
+	%{?_enable_python3:PYTHON=%__python3}
+
 %make_build
 
 %install
@@ -95,6 +108,7 @@ GObject introspection devel data for the Gst Validate library.
 %_bindir/gst-validate-%api_ver
 %_bindir/gst-validate-media-check-%api_ver
 %_bindir/gst-validate-transcoding-%api_ver
+%_bindir/%name-images-check-%api_ver
 %_libdir/%name-launcher/
 %_datadir/gstreamer-%gst_api_ver/validate/
 
@@ -102,6 +116,7 @@ GObject introspection devel data for the Gst Validate library.
 %_libdir/lib%_name-%api_ver.so.*
 %_libdir/lib%{_name}_preload-%api_ver.so.*
 %_libdir/lib%_name-default-overrides-%api_ver.so.*
+%_libdir/lib%{_name}video-%api_ver.so.*
 %dir %_libdir/gstreamer-%gst_api_ver/validate/
 %_libdir/gstreamer-%gst_api_ver/validate/*.so
 %exclude %_libdir/gstreamer-%gst_api_ver/validate/*.la
@@ -109,9 +124,11 @@ GObject introspection devel data for the Gst Validate library.
 
 %files -n lib%name-devel
 %_includedir/gstreamer-%gst_api_ver/gst/validate/
+%_includedir/gstreamer-%gst_api_ver/lib/validate/
 %_libdir/lib%_name-%api_ver.so
 %_libdir/lib%{_name}_preload-%api_ver.so
 %_libdir/lib%_name-default-overrides-%api_ver.so
+%_libdir/lib%{_name}video-%api_ver.so
 %_pkgconfigdir/%name-%api_ver.pc
 
 %files -n lib%name-gir
@@ -125,6 +142,9 @@ GObject introspection devel data for the Gst Validate library.
 %_datadir/gtk-doc/html/%name-plugins-%api_ver/
 
 %changelog
+* Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.90-alt2
+- rebuilt with libcairo
+
 * Fri Aug 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.90-alt1
 - 1.5.90
 
