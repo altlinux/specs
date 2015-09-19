@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: %_name-good%api_ver
-Version: %ver_major.90
+Version: %ver_major.91
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -72,6 +72,9 @@ This package contains development documentation for GStreamer Good Plugins
 %_gtk_docdir/*
 
 %changelog
+* Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.91-alt1
+- 1.5.91
+
 * Thu Aug 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.90-alt1
 - 1.5.90
 

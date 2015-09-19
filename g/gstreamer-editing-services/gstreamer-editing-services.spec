@@ -3,8 +3,10 @@
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
+%def_disable python3
+
 Name: gstreamer-editing-services
-Version: %ver_major.90
+Version: %ver_major.91
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -14,15 +16,23 @@ Url: http://cgit.freedesktop.org/gstreamer/gst-editing-services/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
-%define gst_ver 1.5.2
+%define gst_ver 1.5.91
 
 Requires: lib%_name = %version-%release
-Requires: gst-validate >= %gst_ver
+Requires: gst-validate >= 1.5.90
+
+%if_enabled python3
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+%add_python3_compile_include %_libdir/gst-validate-launcher/python
+%endif
 
 BuildRequires: gcc-c++ flex gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver
 BuildRequires: libgst-validate-devel libxml2-devel
 BuildRequires: gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
 BuildRequires: gtk-doc
+%{?_enable_python3:BuildRequires: rpm-build-python3 python3-devel}
 
 %description
 This is a high-level library for facilitating the creation of audio/video
@@ -82,7 +92,9 @@ library.
 
 %build
 %autoreconf
-%configure --enable-gtk-doc
+%configure --enable-gtk-doc \
+	%{?_enable_python3:PYTHON=%__python3}
+
 %make_build
 
 %install
@@ -91,9 +103,13 @@ library.
 %files
 %_bindir/%_name-launch-%api_ver
 %_datadir/gstreamer-%gst_api_ver/validate-scenario/*.scenario
+%_libdir/gstreamer-%gst_api_ver/libgstnle.so
+#%_datadir/bash-completion/completions/%_name-launch-%api_ver
 %doc ChangeLog README RELEASE NEWS AUTHORS
 
-%exclude %_libdir/gst-validate-launcher/
+# for tests only?
+%exclude %_libdir/gst-validate-launcher/python/*
+%exclude %_libdir/gstreamer-%gst_api_ver/libgstnle.la
 
 %files -n lib%_name
 %_libdir/lib%_name-%api_ver.so.*
@@ -113,6 +129,9 @@ library.
 %_datadir/gtk-doc/html/%_name-%api_ver/
 
 %changelog
+* Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.91-alt1
+- 1.5.91
+
 * Fri Aug 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.90-alt1
 - 1.5.90
 

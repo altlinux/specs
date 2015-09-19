@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.90
+Version: %ver_major.91
 Release: alt1
 
 Summary: GStreamer-%api_ver RTSP server library
@@ -101,6 +101,9 @@ GObject introspection devel data for the GStreamer RTSP server library.
 
 
 %changelog
+* Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.91-alt1
+- 1.5.91
+
 * Thu Aug 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.90-alt1
 - 1.5.90
 
