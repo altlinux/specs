@@ -1,9 +1,9 @@
 %define _name geoclue
-%define ver_major 2.2
+%define ver_major 2.3
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 
-%def_enable gtk_doc
+%def_disable gtk_doc
 
 Name: %{_name}2
 Version: %ver_major.0
@@ -23,7 +23,7 @@ Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%v
 
 BuildRequires: intltool yelp-tools gtk-doc libgio-devel >= %glib_ver
 BuildRequires: libjson-glib-devel libsoup-devel >= %soup_ver libmm-glib-devel >= %mm_ver
-BuildRequires: libnotify-devel systemd-devel
+BuildRequires: libdbus-devel libavahi-glib-devel libnotify-devel systemd-devel
 # for check
 BuildRequires: /proc dbus-tools-gui
 
@@ -101,8 +101,10 @@ mkdir -p %buildroot%_localstatedir/%_name
 %files devel
 %_libdir/pkgconfig/%_name-%api_ver.pc
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/%_name/
+%endif
 
 %files demo
 %_libexecdir/%_name-%api_ver/demos/
@@ -110,6 +112,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 
 %changelog
+* Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Sun Apr 26 2015 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
