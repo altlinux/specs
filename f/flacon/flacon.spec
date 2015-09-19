@@ -1,5 +1,5 @@
 Name: flacon
-Version: 1.0.1
+Version: 1.2.0
 Release: alt1
 
 Summary: Audio File Encoder
@@ -11,11 +11,15 @@ Group: Sound
 Url: http://%name.github.io/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
+#https://github.com/%name/%name/archive/v%version.tar.gz
 Source0: %name-%version.tar.gz
 
 Requires: shntool
 
-BuildRequires: cmake gcc-c++ libuchardet-devel phonon-devel
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: libuchardet-devel
+BuildRequires: phonon-devel
 
 %description
 Extracts audio tracks from audio CD image to separate tracks.
@@ -55,6 +59,12 @@ popd
 %_man1dir/%name.1.gz
 
 %changelog
+* Sat Sep 19 2015 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt1
+- Version 1.2.0
+
+* Wed Aug 27 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.1-alt0.M70T.1
+- Build for branch t7
+
 * Tue Aug 26 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.1-alt1
 - Version 1.0.1
 
