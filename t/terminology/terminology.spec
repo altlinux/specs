@@ -1,7 +1,7 @@
 %define ver_major 0.9
 
 Name: terminology
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: EFL terminal emulator
@@ -60,6 +60,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README
 
 %changelog
+* Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - 0.9.0
 
