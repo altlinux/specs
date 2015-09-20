@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mer
 %define oldname eris
 Name:           liberis
 Version:        1.3.23
-Release:        alt1_3.1
+Release:        alt1_5
 Summary:        Client-side session layer for Atlas-C++
 
 Group:          Development/C++
@@ -74,6 +74,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-1.3.la
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt1_5
+- update to new release by fcimport
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.23-alt1_3.1
 - Rebuilt for gcc5 C++11 ABI.
 
