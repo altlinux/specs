@@ -1,34 +1,42 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gdouros-alexander-fonts
+# https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
+# "in lieu of a licence:
+# Fonts and documents in this site are not pieces of property or merchandise
+# items; they carry no trademark, copyright, license or other market tags;
+# they are free for any use. George Douros"
+
 %global fontname gdouros-alexander
-%global fontconf 62-%{fontname}.conf
+%global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-alexander
-Version:        3.01
-Release:        alt3_8
+Version:        6.00
+Release:        alt1_2
 Summary:        A Greek typeface inspired by Alexander Wilson
 
-Group:          System/Fonts/True type
-License:        Copyright only
+License:        Public Domain
 URL:            http://users.teilar.gr/~g1951d/
-Source0:        http://users.teilar.gr/~g1951d/Alexander.zip
-Source1:        %{oldname}-fontconfig.conf
-Source2:        http://users.teilar.gr/~g1951d/Samples.pdf
+Source0:        http://users.teilar.gr/~g1951d/TextFonts.zip
+Source1:        http://users.teilar.gr/~g1951d/Textfonts.pdf
+Source2:        %{oldname}-fontconfig.conf
+Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
+BuildRequires:  libappstream-glib
 Source44: import.info
 
 %description
 A text typeface using the Greek letters designed by Alexander Wilson
-(1714-1786), a Scottish doctor, astronomer, and typefounder, who established a
-typefoundry in Glasgow in 1744. The type was especially designed for an edition
-of Homera.'s epics, published in 1756-8 by Andrew and Robert Foulis, printers to
-the University of Glasgow. A modern revival, Wilson Greek, was designed by
-Matthew Carter in 1995. Peter S. Baker is also using Wilsona.'s Greek type in his
-Junicode font for medieval scholars (2007).
+(1714-1786), a Scottish doctor, astronomer, and type founder, who established a
+type foundry in Glasgow in 1744. The type was especially designed for an
+edition of Homera.'s epics, published in 1756-8 by Andrew and Robert Foulis,
+printers to the University of Glasgow. A modern revival, Wilson Greek, was
+designed by Matthew Carter in 1995. Peter S. Baker is also using Wilsona.'s Greek
+type in his Junicode font for medieval scholars (2007).
 
 Latin and Cyrillic are based on a Garamond typeface. The font covers the
 Windows Glyph List, IPA Extensions, Greek Extended, Ancient Greek Numbers,
@@ -38,26 +46,27 @@ Superscript, Numerators, Denominators, Fractions, Old Style Figures, Historical
 Forms, Stylistic Alternates, Ligatures).
 
 It was created by George Douros.
+
 %prep
 %setup -n %{oldname}-%{version} -q -c
-install -pm 644 %{SOURCE2} .
+cp -p %{SOURCE1} .
 
 %build
 
-
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p Alexander.otf %{buildroot}%{_fontdir}
+install -m 0644 -p Alexander.ttf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE1} \
+install -m 0644 -p %{SOURCE2} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -93,15 +102,22 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+%check
+appstream-util validate-relax --nonet \
+      %{buildroot}/%{_datadir}/appdata/%{fontname}.metainfo.xml
+
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/Alexander.otf
-
-%doc Samples.pdf
-
+%{_fontbasedir}/*/%{_fontstem}/Alexander.ttf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
+%doc Textfonts.pdf
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 6.00-alt1_2
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 3.01-alt3_8
 - update to new release by fcimport
 
