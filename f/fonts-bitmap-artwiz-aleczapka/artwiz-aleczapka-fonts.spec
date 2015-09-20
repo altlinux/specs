@@ -11,7 +11,7 @@ software and support an extended character set. \
 
 Name:		fonts-bitmap-artwiz-aleczapka
 Version:	1.3
-Release:	alt2_16
+Release:	alt2_17
 Summary:	Very small futuristic font family
 Group:		System/Fonts/True type
 License:	GPLv2
@@ -59,11 +59,11 @@ Source44: import.info
 %common_desc
 This is a metapackage, which pulls in all the separated fonts in this family.
 
-%package common
+%package -n fonts-bitmap-artwiz-aleczapka-common
 Summary:	Common files for Artwiz Aleczapka fonts (documentation...)
 Group:		System/Fonts/True type
 
-%description common
+%description -n fonts-bitmap-artwiz-aleczapka-common
 %common_desc
 
 %package -n fonts-bitmap-artwiz-aleczapka-anorexia
@@ -371,7 +371,7 @@ fi
 %files
 # This is a dummy metapackage.
 
-%files common
+%files -n fonts-bitmap-artwiz-aleczapka-common
 # generic docs are the same for every lang (AUTHORS has all info in german dir
 # so use it from german font dir)
 %doc artwiz-aleczapka-de-sources-1.3/{AUTHORS,COPYING,README,VERSION}
@@ -380,6 +380,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_17
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_16
 - update to new release by fcimport
 
