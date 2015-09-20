@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-didot
 Version: 20070616
-Release: alt3_19
+Release: alt3_20
 Summary: GFS Didot fonts
 
 License:   OFL
@@ -102,6 +102,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20070616-alt3_20
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20070616-alt3_19
 - update to new release by fcimport
 
