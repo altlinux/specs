@@ -7,18 +7,25 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-symbola
-Version:        6.13
-Release:        alt1_6
+Version:        8.00
+Release:        alt1_3
 Summary:        A symbol font
 
-License:        Copyright only
+# https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
+# "in lieu of a licence:
+# Fonts and documents in this site are not pieces of property or merchandise
+# items; they carry no trademark, copyright, license or other market tags;
+# they are free for any use. George Douros"
+License:        Public Domain
 URL:            http://users.teilar.gr/~g1951d/
-Source0:        http://users.teilar.gr/~g1951d/Symbola613.zip
-Source1:        %{oldname}-fontconfig.conf
-Source2:        %{fontname}.metainfo.xml
+Source0:        http://users.teilar.gr/~g1951d/Symbola.zip
+Source1:        http://users.teilar.gr/~g1951d/Symbola.pdf
+Source2:        %{oldname}-fontconfig.conf
+Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
+BuildRequires:  libappstream-glib
 Source44: import.info
 
 %description
@@ -31,23 +38,11 @@ others.
 
 It was created by George Douros.
 
-
-%package doc
-Summary:        Glyph table for %{fontname} font
-Group:          Documentation 
-License:        Copyright only
-BuildArch:      noarch
-
-%description doc
-%{summary}.
-
-
 %prep
 %setup -n %{oldname}-%{version} -q -c
-
+cp -p %{SOURCE1} .
 
 %build
-
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
@@ -56,13 +51,12 @@ install -m 0644 -p Symbola.ttf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE1} \
+install -m 0644 -p %{SOURCE2} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
-# Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
+install -Dm 0644 -p %{SOURCE3} \
         %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -99,16 +93,22 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+%check
+appstream-util validate-relax --nonet \
+      %{buildroot}/%{_datadir}/appdata/%{fontname}.metainfo.xml
+
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/Symbola.ttf
 %{_datadir}/appdata/%{fontname}.metainfo.xml
-
-%files doc
 %doc Symbola.pdf
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 8.00-alt1_3
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 6.13-alt1_6
 - update to new release by fcimport
 
