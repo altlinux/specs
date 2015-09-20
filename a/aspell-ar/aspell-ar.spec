@@ -3,7 +3,7 @@
 Summary: Arabic dictionary for Aspell
 Name: aspell-%{lang}
 Version: 1.2
-Release: alt2_13
+Release: alt2_14
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -44,6 +44,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/aspell/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_14
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_13
 - update to new release by fcimport
 
