@@ -1,6 +1,6 @@
 Name:          festival-freebsoft-utils
 Version:       0.10
-Release:       alt3_8
+Release:       alt3_9
 Summary:       A collection of utilities that enhance Festival with some useful features
 
 Group:         Sound
@@ -50,6 +50,9 @@ cp -p *.scm %{buildroot}/%{_datadir}/festival/
 %{_datadir}/festival/*.scm
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_9
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_8
 - update to new release by fcimport
 
