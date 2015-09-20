@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Regexp-IPv6
 Version:        0.03
-Release:        alt1_11
+Release:        alt1_13
 Summary:        Regular expression for IPv6 addresses
 License:        GPLv2+ or Artistic
 Group:          Development/Perl
@@ -44,6 +44,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_13
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_11
 - update to new release by fcimport
 
