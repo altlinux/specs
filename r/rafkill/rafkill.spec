@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           rafkill
 Version:        1.2.3
-Release:        alt4_16
+Release:        alt4_18
 Summary:        Top-down shooter with powerups
 Group:          Games/Other
 License:        GPLv2
@@ -112,6 +112,9 @@ EOF
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt4_18
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt4_16
 - update to new release by fcimport
 
