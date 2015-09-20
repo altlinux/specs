@@ -10,7 +10,7 @@ Hebrew from the Culmus project.
 
 Name:           fonts-ttf-culmus
 Version:        0.130
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Fonts for Hebrew from Culmus project
 
 License:        GPLv2
@@ -453,6 +453,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.130-alt2_7
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.130-alt2_6
 - update to new release by fcimport
 
