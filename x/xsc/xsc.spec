@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name: xsc
 Version:  1.5
-Release:  alt2_12
+Release:  alt2_14
 Summary: A clone of the old vector graphics video game Star Castle
 
 Group: Games/Other
@@ -51,6 +51,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/32x32/apps/xsc.png
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_14
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_12
 - update to new release by fcimport
 
