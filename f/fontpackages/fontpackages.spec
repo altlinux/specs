@@ -2,12 +2,18 @@
 BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 # END SourceDeps(oneline)
 %define fedora 21
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name fontpackages
+%define version 1.44
 %global spectemplatedir %{_sysconfdir}/rpmdevtools/
 %global ftcgtemplatedir %{_datadir}/fontconfig/templates/
 
+# Use the same directory of the main package for subpackage licence and docs
+%global _docdir_fmt %{name}
+
 Name:    fontpackages
 Version: 1.44
-Release: alt4_11
+Release: alt4_15
 Summary: Common directory and macro definitions used by font packages
 
 Group:     System/Configuration/Other
@@ -16,6 +22,8 @@ Group:     System/Configuration/Other
 License:   LGPLv3+
 URL:       http://fedoraproject.org/wiki/fontpackages
 Source0:   http://fedorahosted.org/releases/f/o/%{name}/%{name}-%{version}.tar.xz
+Patch0:    dnf.patch
+Patch1:    %{name}-drop-fccache.patch
 
 BuildArch: noarch
 Source44: import.info
@@ -55,7 +63,12 @@ Summary: Tools used to check fonts and font packages
 
 Requires: fontconfig fontforge
 Requires: curl make mutt1.5
+%if 0%{fedora} >= 22
+Requires: dnf-command(repoquery)
+Requires: createrepo_c
+%else
 Requires: yum-utils
+%endif
 
 # repo-font-audit script need to run fedoradev-pkgowners command
 # which is available on Fedora only and not on RHEL.
@@ -64,24 +77,26 @@ Requires: fedora-packager
 %endif
 
 %description tools
-This package contains tools used to check fonts and font packages
+This package contains tools used to check fonts and font packages.
 
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+
 %if 0%{?rhel}
 sed -i 's|/usr/bin/fedoradev-pkgowners|""|g' bin/repo-font-audit
 %endif
 
+# Drop obosolete %defattr (#1047031)
+sed -i '/^%%defattr/d' rpm/macros.fonts
+
 %build
-for file in bin/repo-font-audit bin/compare-repo-font-audit ; do
 sed -i "s|^DATADIR\([[:space:]]*\)\?=\(.*\)$|DATADIR=%{_datadir}/%{name}|g" \
-  $file
-done
+  bin/repo-font-audit bin/compare-repo-font-audit
 
 %install
-rm -fr %{buildroot}
-
 # Pull macros out of macros.fonts and emulate them during install
 for dir in fontbasedir        fontconfig_masterdir \
            fontconfig_confdir fontconfig_templatedir ; do
@@ -110,7 +125,6 @@ install -m 0755 -p private/core-fonts-report \
 install -m 0755 -p bin/*                       %{buildroot}%{_bindir}
 
 cat <<EOF > %{name}-%{version}.files
-%defattr(0644,root,root,0755)
 %dir ${_fontbasedir}
 %dir ${_fontconfig_masterdir}
 %dir ${_fontconfig_confdir}
@@ -119,12 +133,16 @@ EOF
 rm -rf %buildroot%{spectemplatedir}
 
 %files devel
-%doc license.txt readme.txt
+%doc license.txt
+%doc readme.txt
 %dir %{ftcgtemplatedir}
 %{ftcgtemplatedir}/*conf
 %{ftcgtemplatedir}/*txt
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_15
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_11
 - update to new release by fcimport
 
