@@ -4,8 +4,8 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Carp.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-URI-Escape-XS
-Version:        0.12
-Release:        alt1_4.1
+Version:        0.13
+Release:        alt1_1
 Summary:        Drop-In replacement for URI::Escape
 License:        GPL+ or Artistic
 
@@ -33,15 +33,11 @@ uses XS, it is really fast except for uri_escape("noop").
 %setup -q -n URI-Escape-XS-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS" NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -53,6 +49,9 @@ make test
 %{perl_vendor_archlib}/URI*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_1
+- update to new release by fcimport
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_4.1
 - rebuild with new perl 5.20.1
 
