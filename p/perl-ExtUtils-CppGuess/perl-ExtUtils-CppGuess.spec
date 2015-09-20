@@ -1,26 +1,27 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Config.pm) perl(ExtUtils/MakeMaker.pm) perl(XSLoader.pm) perl(blib.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Config.pm) perl(XSLoader.pm) perl(blib.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
 Name:           perl-ExtUtils-CppGuess
-Version:        0.08
+Version:        0.11
 Release:        alt1_1
 Summary:        Guess C++ compiler and flags
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/ExtUtils-CppGuess/
-Source0:        http://www.cpan.org/authors/id/E/ET/ETJ/ExtUtils-CppGuess-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/D/DA/DAVIDO/ExtUtils-CppGuess-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(Module/Build.pm)
-BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Capture/Tiny.pm)
+BuildRequires:  perl(Cwd.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(ExtUtils/Manifest.pm)
+BuildRequires:  perl(Fatal.pm)
 BuildRequires:  perl(File/Path.pm)
 BuildRequires:  perl(File/Spec/Functions.pm)
-BuildRequires:  perl(Cwd.pm)
-BuildRequires:  perl(Fatal.pm)
-BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(Test/More.pm)
 Source44: import.info
 
 %description
@@ -31,24 +32,28 @@ compatible with the C compiler that your perl was built with.
 %setup -q -n ExtUtils-CppGuess-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
-./Build
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+make %{?_smp_mflags}
 
 %install
-./Build install destdir=%{buildroot} create_packlist=0
+make pure_install DESTDIR=%{buildroot}
+
+find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 
 # %{_fixperms} %{buildroot}/*
 
 %check
-./Build test
+make test
 
 %files
 %doc Changes README
-#%%{perl_vendor_privlib}/auto/*
 %{perl_vendor_privlib}/ExtUtils*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_1
 - update to new release by fcimport
 
