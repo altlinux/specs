@@ -5,7 +5,7 @@ BuildRequires: perl-devel perl-podlators
 %add_findreq_skiplist %perl_vendor_privlib/Gearman/Task.pm
 Name:           perl-Gearman
 Version:        1.12
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Distributed job system
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -70,6 +70,9 @@ make test
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_3
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_1
 - update to new release by fcimport
 
