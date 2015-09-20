@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ unzip
 
 Name:           libflann
 Version:        1.8.4
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 Group:          Development/C
@@ -125,6 +125,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1_6
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1_4
 - update to new release by fcimport
 
