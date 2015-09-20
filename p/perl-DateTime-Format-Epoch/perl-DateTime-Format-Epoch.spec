@@ -1,28 +1,42 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DateTime/LeapSecond.pm) perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Module/Build.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Epoch
 Version:        0.16
-Release:        alt1
+Release:        alt1_2
 Summary:        Convert DateTimes to/from epoch seconds
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Format-Epoch/
-Source:        http://www.cpan.org/authors/id/C/CH/CHORNY/DateTime-Format-Epoch-%{version}.tar.gz
+Source0:        http://www.cpan.org/modules/by-module/DateTime/DateTime-Format-Epoch-%{version}.tar.gz
 BuildArch:      noarch
+# Build
+BuildRequires:  findutils
+BuildRequires:  make
+BuildRequires:  sed
 BuildRequires:  perl
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Runtime
 BuildRequires:  perl(DateTime.pm)
+BuildRequires:  perl(DateTime/LeapSecond.pm)
 BuildRequires:  perl(Math/BigInt.pm)
-BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Params/Validate.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+BuildRequires:  perl(warnings.pm)
+# Tests only
 BuildRequires:  perl(Test/More.pm)
+# Optional tests only
 BuildRequires:  perl(Test/Pod.pm)
 Requires:       perl(DateTime.pm) >= 0.31
 Requires:       perl(Math/BigInt.pm) >= 1.66
 
 
+
 Source44: import.info
+%filter_from_requires /^perl\\(Math.BigInt.pm\\)$/d
+%filter_from_requires /^perl\\(DateTime.pm\\)/d
 
 %description
 This module can convert a DateTime object (or any object that can be
@@ -31,28 +45,28 @@ epoch. It can also do the reverse.
 
 %prep
 %setup -q -n DateTime-Format-Epoch-%{version}
-
-# replace CRLF
 find -type f -print0 | xargs -0 sed -i 's/\r$//'
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
-./Build
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=true
+make %{?_smp_mflags}
 
 %install
-./Build install destdir=%{buildroot} create_packlist=0
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
-
+make pure_install DESTDIR=%{buildroot}
 # %{_fixperms} %{buildroot}/*
 
 %check
-./Build test
+make test
 
 %files
-%doc Changes LICENSE README TODO
+%doc LICENSE
+%doc Changes README TODO
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_2
+- update to new release by fcimport
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
