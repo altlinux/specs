@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN/Meta/Requirements.pm) perl(Module/Build.pm) perl(if.pm)
 # END SourceDeps(oneline)
 Name:		perl-Test-Kwalitee
 Version:	1.22
-Release:	alt1_2
+Release:	alt1_4
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -69,6 +69,9 @@ chmod -c 755 %{buildroot}%{_bindir}/kwalitee-metrics
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1_4
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1_2
 - update to new release by fcimport
 
