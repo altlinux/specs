@@ -5,7 +5,7 @@
 
 Name:           aspell-%{lang}
 Version:        2.01
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Slovak dictionaries for Aspell
 
 Group:          Text tools
@@ -43,6 +43,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_11
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_10
 - update to new release by fcimport
 
