@@ -1,7 +1,6 @@
-%define fedora 21
 Name:           mirrormagic
 Version:        2.0.2
-Release:        alt5_16
+Release:        alt5_18
 Summary:        Puzzle game where you steer a beam of light using mirrors
 Group:          Games/Other
 License:        GPL+
@@ -9,13 +8,16 @@ URL:            http://www.artsoft.org/mirrormagic/
 Source0:        http://www.artsoft.org/RELEASES/unix/%{name}/%{name}-%{version}.tar.gz
 Source1:        %{name}.desktop
 Source2:        %{name}.png
+Source3:        %{name}.appdata.xml
 Patch0:         %{name}-%{version}-fixes.patch
 Patch1:         %{name}-%{version}-64bit.patch
 Patch2:         %{name}-%{version}-fs-toggle.patch
 Patch3:         %{name}-%{version}-highscore.patch
 Patch4:         %{name}-%{version}-yesno.patch
 Patch5:         %{name}-%{version}-format-security.patch
+Patch6:         %{name}-%{version}-fix-inline-use.patch
 BuildRequires:  libSDL_image-devel libSDL_mixer-devel desktop-file-utils
+BuildRequires:  libappstream-glib
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -35,6 +37,7 @@ familiar from the games "Deflektor" and "Mindbender".
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 
 %build
@@ -49,30 +52,29 @@ cp -a graphics levels music sounds $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-              \
-%endif
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
 install -p -m 644 %{SOURCE2} \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
 %doc CHANGES COPYING README
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%if 0%{?fedora} && 0%{?fedora} < 19
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%else
-%{_datadir}/applications/%{name}.desktop
-%endif
-%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
+%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_18
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_16
 - update to new release by fcimport
 
