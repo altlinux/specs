@@ -3,7 +3,7 @@ BuildRequires: libICE-devel libSDL-devel libSM-devel libX11-devel
 # END SourceDeps(oneline)
 Name:           biloba
 Version:        0.9.3
-Release:        alt2_8
+Release:        alt2_9
 Summary:        A tactical board game
 
 Group:          Games/Other
@@ -92,6 +92,9 @@ desktop-file-install                    \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt2_9
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt2_8
 - update to new release by fcimport
 
