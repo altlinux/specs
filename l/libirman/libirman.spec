@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libirman
 Version:        0.4.5
-Release:        alt3_12
+Release:        alt3_14
 Summary:        Library for IRMAN hardware
 
 Group:          System/Libraries
@@ -34,12 +34,11 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-autoreconf
+autoreconf -f
 
 
 %build
 libtoolize --force --copy
-autoreconf
 %configure --disable-static --disable-rpath \
   --prefix=%{_prefix} \
   --mandir=%{_mandir} \
@@ -65,6 +64,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt3_14
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt3_12
 - update to new release by fcimport
 
