@@ -5,7 +5,7 @@ BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name:           librfid
 Version:        0.2.0 
-Release:        alt3_10
+Release:        alt3_11
 Summary:     The librfid is a Free Software RFID library
 
 Group:          System/Libraries
@@ -69,6 +69,9 @@ done
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_11
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_10
 - update to new release by fcimport
 
