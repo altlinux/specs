@@ -1,6 +1,4 @@
-%set_automake_version 1.11
-
-%define major 3.14
+%define major 3.18
 %define _unpackaged_files_terminate_build 1
 
 Name: libgdl3
@@ -125,6 +123,9 @@ This package provides development documentation for gdl.
 %_gtk_docdir/*
 
 %changelog
+* Sun Sep 20 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Thu Sep 25 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt1
 - 3.14.0
 
