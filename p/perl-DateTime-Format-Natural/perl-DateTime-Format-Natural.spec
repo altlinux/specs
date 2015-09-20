@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Term/ReadLine.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Natural
-Version:        1.02
+Version:        1.03
 Release:        alt1_1
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
@@ -12,6 +12,7 @@ URL:            http://search.cpan.org/dist/DateTime-Format-Natural/
 Source0:        http://www.cpan.org/authors/id/S/SC/SCHUBIGER/DateTime-Format-Natural-%{version}.tar.gz
 BuildArch:      noarch
 # Build
+BuildRequires:  glibc-utils
 BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
@@ -83,6 +84,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1_1
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1_1
 - update to new release by fcimport
 
