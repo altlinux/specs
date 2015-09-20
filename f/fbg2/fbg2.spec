@@ -1,7 +1,7 @@
 %define fedora 21
 Name:		fbg2
 Version:	0.4
-Release:	alt3_13
+Release:	alt3_14
 Summary:	A falling block stacking game
 Group:		Games/Other
 # Code is GPLv2+, music and graphics are CC-BY-SA
@@ -95,6 +95,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/fbg2.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_14
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_13
 - update to new release by fcimport
 
