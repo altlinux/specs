@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/convert /usr/bin/glib-gettextize /usr/bin/rsvg-convert /
 %define fedora 21
 Name:           pioneers
 Version:        15.3
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Turnbased board strategy game (colonize an island)
 Group:          Games/Other
 License:        GPLv2+
@@ -145,6 +145,9 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/%{name}-editor.svg
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 15.3-alt1_3
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 15.3-alt1_2
 - update to new release by fcimport
 
