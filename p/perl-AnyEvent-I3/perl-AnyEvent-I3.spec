@@ -5,7 +5,7 @@ BuildRequires: perl(AnyEvent.pm) perl(AnyEvent/Handle.pm) perl(AnyEvent/Socket.p
 # END SourceDeps(oneline)
 Name:           perl-AnyEvent-I3
 Version:        0.16
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Communicate with the i3 window manager
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/anyevent-i3/
@@ -38,6 +38,9 @@ make pure_install DESTDIR=%{buildroot}
 %{perl_vendor_privlib}/AnyEvent/I3.pm
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_3
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_1
 - update to new release by fcimport
 
