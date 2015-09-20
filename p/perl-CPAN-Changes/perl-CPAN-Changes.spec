@@ -1,31 +1,39 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(ExtUtils/Command.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
-Version:	0.30
-Release:	alt1_2
+Version:	0.400002
+Release:	alt1_1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/CPAN-Changes/
-Source0:	http://search.cpan.org/CPAN/authors/id/B/BR/BRICAS/CPAN-Changes-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/H/HA/HAARG/CPAN-Changes-%{version}.tar.gz
 BuildArch:	noarch
+# Module Build
 BuildRequires:	perl
-BuildRequires:	perl(Cwd.pm)
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
-BuildRequires:	perl(File/Path.pm)
-BuildRequires:	perl(Moo.pm)
-BuildRequires:	perl(Pod/Usage.pm)
+# Module Runtime
+BuildRequires:	perl(Encode.pm)
 BuildRequires:	perl(Scalar/Util.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test/Builder.pm)
-BuildRequires:	perl(Test/More.pm)
-BuildRequires:	perl(Test/Pod.pm)
-BuildRequires:	perl(Test/Pod/Coverage.pm)
 BuildRequires:	perl(Text/Wrap.pm)
 BuildRequires:	perl(version.pm)
 BuildRequires:	perl(warnings.pm)
+# Script Runtime
+BuildRequires:	perl(Getopt/Long.pm)
+BuildRequires:	perl(Pod/Usage.pm)
+# Test Suite
+BuildRequires:	perl(Test/More.pm)
+# Optional Tests
+BuildRequires:	perl(Moo.pm)
+# Extra Tests
+BuildRequires:	perl(Test/Pod.pm)
+BuildRequires:	perl(Test/Pod/Coverage.pm)
+# Runtime
+Requires:	perl(version.pm) >= 0.99.06
 Source44: import.info
 
 %description
@@ -64,6 +72,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_2
 - update to new release by fcimport
 
