@@ -2,7 +2,7 @@
 %define oldname lwp
 Name:           liblwp
 Version:        2.6
-Release:        alt1_11
+Release:        alt1_12
 Summary:        C library for user-mode threading
 Group:          System/Libraries
 License:        LGPLv2
@@ -59,6 +59,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_12
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_11
 - update to new release by fcimport
 
