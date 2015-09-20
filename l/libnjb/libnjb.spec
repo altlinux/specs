@@ -12,18 +12,18 @@ BuildRequires: /usr/bin/doxygen libncurses-devel
 
 Name:		libnjb
 Version:	2.2.7
-Release:	alt3_9
+Release:	alt3_11
 Summary:	A software library for talking to the Creative Nomad Jukeboxes and Dell DJs
 URL:		http://libnjb.sourceforge.net/
 
 Group:		System/Libraries
 Source0:	http://download.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 License:	BSD
-Requires:	udev
 BuildRequires: libusb-compat-devel libusb-devel
 BuildRequires:	zlib-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	doxygen
+BuildRequires:	systemd
 Source44: import.info
 
 %description
@@ -64,11 +64,10 @@ make install DESTDIR=$RPM_BUILD_ROOT pkgdocdir=%{_pkgdocdir}
 # Remove libtool archive remnant
 rm -f $RPM_BUILD_ROOT%{_libdir}/libnjb.la
 # Install udev rules file.
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d
-install -p -m 644 libnjb.rules $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/60-libnjb.rules
+install -p -D -m0644 libnjb.rules $RPM_BUILD_ROOT%{_udevrulesdir}/60-libnjb.rules
 # Copy documentation to a good place
 install -p -m 644 AUTHORS ChangeLog ChangeLog-old FAQ \
-INSTALL LICENSE HACKING $RPM_BUILD_ROOT%{_pkgdocdir}
+        INSTALL HACKING $RPM_BUILD_ROOT%{_pkgdocdir}
 # Touch generated files to make them always have the same time stamp.
 touch -r configure.ac \
       $RPM_BUILD_ROOT%{_pkgdocdir}/html/* \
@@ -82,8 +81,10 @@ touch -r configure.ac \
 #rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/html
 
 %files
+%doc LICENSE
 %{_libdir}/*.so.*
-%config(noreplace) %{_sysconfdir}/udev/rules.d/*
+%{_udevrulesdir}/*
+
 %files examples
 %{_bindir}/*
 
@@ -96,6 +97,9 @@ touch -r configure.ac \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_11
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_9
 - update to new release by fcimport
 
