@@ -4,7 +4,7 @@ BuildRequires: perl(CGI.pm) perl(HTML/Template.pm) perl(blib.pm) perl-devel perl
 # END SourceDeps(oneline)
 Name:           perl-Math-Geometry-Voronoi
 Version:        1.3
-Release:        alt3_13.1
+Release:        alt3_15
 Summary:        Compute Voronoi diagrams from sets of points
 License:        (GPL+ or Artistic) and MIT
 # Perl module is licensed as Perl, underlaying C code is MIT
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_15
+- update to new release by fcimport
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_13.1
 - rebuild with new perl 5.20.1
 
