@@ -3,7 +3,7 @@
 %define name cjkuni-uming-fonts
 %define version 0.2.20080216.1
 %global fontname cjkuni-uming
-%global fontconf 65-0-ttf-arphic-uming.conf
+%global fontconf 65-ttf-arphic-uming.conf
 %global fontconf3 90-ttf-arphic-uming-embolden.conf
 
 %global catalogue        %{_sysconfdir}/X11/fontpath.d
@@ -17,7 +17,7 @@ the CJK Unifonts project.
 
 Name:           fonts-ttf-cjkuni-uming
 Version:        0.2.20080216.1
-Release:        alt4_54
+Release:        alt4_56
 Summary:        Chinese Unicode TrueType font in Ming face
 
 Group:          System/Fonts/True type
@@ -114,6 +114,9 @@ fi
 %doc ../%{umingbuilddir}/README
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_56
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_54
 - update to new release by fcimport
 
