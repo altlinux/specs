@@ -1,6 +1,6 @@
 Name:           ularn
 Version:        1.5p4
-Release:        alt2_22
+Release:        alt2_23
 Summary:        Simple roguelike game
 
 Group:          Games/Other
@@ -74,6 +74,9 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/app
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_23
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_22
 - update to new release by fcimport
 
