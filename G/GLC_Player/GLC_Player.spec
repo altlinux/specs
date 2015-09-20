@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libqt4-devel unzip
 # END SourceDeps(oneline)
 Name:           GLC_Player
 Version:        2.3.0
-Release:        alt2_9
+Release:        alt2_11
 Summary:        GLC_Player is an Open Source software used to view 3d models (OBJ Format)
 
 Group:          Graphics
@@ -95,6 +95,9 @@ EOF
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt2_11
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt2_9
 - update to new release by fcimport
 
