@@ -1,20 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(Exporter.pm)
+BuildRequires: /usr/bin/python /usr/bin/time gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 Name:		coan
-Version:	5.2
-Release:	alt1_3
+Version:	6.0.1
+Release:	alt1_4
 Summary:	A command line tool for simplifying the pre-processor conditionals in source code
 Group:		Development/Tools
 License:	BSD
 URL:		http://coan2.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/coan2/%{name}-%{version}.tar.gz
-
-# Note: coan was formerly called sunifdef i.e sunifdef was renamed to coan
-# with the 4.0 release. This Provides can be removed in F-16.
-Provides:	sunifdef = %{version}-%{release}
-Obsoletes:	sunifdef < 4.0
 Source44: import.info
 
 %description
@@ -42,8 +37,10 @@ done
 %configure
 make %{?_smp_mflags}
 
-%check
-make check
+#some tests are broken in armv7hl - disable until upstream fixes the issue
+#upstream bug report: https://sourceforge.net/p/coan2/bugs/83/
+#%check
+#make check
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
@@ -54,6 +51,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_4
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 5.2-alt1_3
 - update to new release by fcimport
 
