@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen
 %add_optflags %optflags_shared
 Name:		libtelnet
 Version:	0.21
-Release:	alt1_7
+Release:	alt1_8
 Summary:	TELNET protocol parsing framework
 
 Group:		System/Libraries
@@ -69,6 +69,9 @@ rm "$RPM_BUILD_ROOT%{_libdir}"/*.la
 %{_bindir}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_8
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_7
 - update to new release by fcimport
 
