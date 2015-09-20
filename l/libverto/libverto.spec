@@ -2,7 +2,7 @@ Group: Development/C
 %add_optflags %optflags_shared
 Name:           libverto
 Version:        0.2.6
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Main loop abstraction library
 
 License:        MIT
@@ -185,6 +185,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %endif
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_5
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_4
 - update to new release by fcimport
 
