@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           nogravity-data
 Version:        2.00
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Data files for No Gravity
 Group:          Games/Other
 License:        GPLv2+
@@ -38,6 +38,9 @@ install -p -m 644 NOGRAVITY.RMX $RPM_BUILD_ROOT%{_datadir}/nogravity
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_12
 - update to new release by fcimport
 
