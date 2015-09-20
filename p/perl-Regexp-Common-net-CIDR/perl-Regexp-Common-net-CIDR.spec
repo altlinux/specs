@@ -1,17 +1,20 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Socket.pm) perl(YAML.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Regexp-Common-net-CIDR
-Version:        0.02
-Release:        alt1_11
+Version:        0.03
+Release:        alt1_1
 Summary:        Provide patterns for CIDR blocks
 License:        GPLv2
-Group:          Development/Perl
+
 URL:            http://search.cpan.org/dist/Regexp-Common-net-CIDR/
-Source0:        http://www.cpan.org/authors/id/R/RU/RUZ/Regexp-Common-net-CIDR-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/B/BP/BPS/Regexp-Common-net-CIDR-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(inc/Module/Install.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(Regexp/Common.pm)
 Source44: import.info
 
@@ -26,6 +29,13 @@ Now only next IPv4 formats are supported:
 %prep
 %setup -q -n Regexp-Common-net-CIDR-%{version}
 
+# Remove bundled modules
+for f in $(find inc/Module -name *.pm); do
+  pat=$(echo "$f" | sed 's,/,\\/,g;s,\.,\\.,g')
+  rm $f
+  sed -i -e "/$pat/d" MANIFEST
+done
+
 %build
 # --skipdeps causes ExtUtils::AutoInstall not to try auto-installing
 # missing modules
@@ -33,7 +43,6 @@ Now only next IPv4 formats are supported:
 make %{?_smp_mflags}
 
 %install
-
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
@@ -49,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_11
 - update to new release by fcimport
 
