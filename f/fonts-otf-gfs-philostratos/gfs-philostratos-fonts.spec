@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-philostratos
 Version: 20090902
-Release: alt3_8
+Release: alt3_9
 Summary: A revival of the a.'Griechische Antiquaa.' Greek typeface
 
 License:   OFL
@@ -118,6 +118,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20090902-alt3_9
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20090902-alt3_8
 - update to new release by fcimport
 
