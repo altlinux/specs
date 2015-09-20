@@ -4,7 +4,7 @@
 
 Name:           aspell-te
 Version:        0.01
-Release:        alt2_12
+Release:        alt2_13
 Summary:        GNU Aspell Telugu Dictionary Package
 
 Group:          Text tools
@@ -50,6 +50,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_13
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_12
 - update to new release by fcimport
 
