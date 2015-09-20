@@ -3,25 +3,25 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Vars
-Version:	0.005
-Release:	alt2_6
+Version:	0.008
+Release:	alt1_1
 Summary:	Detects unused variables
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-Vars/
-Source0:	http://search.cpan.org/CPAN/authors/id/G/GF/GFUJI/Test-Vars-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/Test-Vars-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Build requirements
 # ===================================================================
+BuildRequires:	coreutils
+BuildRequires:	make
 BuildRequires:	perl(Module/Build.pm)
-BuildRequires:	perl(CPAN/Meta.pm)
-BuildRequires:	perl(CPAN/Meta/Prereqs.pm)
 BuildRequires:	perl(File/Basename.pm)
+BuildRequires:	perl(File/Copy.pm)
 BuildRequires:	perl(File/Spec.pm)
-BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(utf8.pm)
-BuildRequires:	perl(warnings.pm)
+BuildRequires:	sed
 # ===================================================================
 # Module requirements
 # ===================================================================
@@ -29,14 +29,24 @@ BuildRequires:	perl
 BuildRequires:	perl(B.pm)
 BuildRequires:	perl(constant.pm)
 BuildRequires:	perl(ExtUtils/Manifest.pm)
+BuildRequires:	perl(IO/Pipe.pm)
 BuildRequires:	perl(parent.pm)
+BuildRequires:	perl(Storable.pm)
+BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Symbol.pm)
 BuildRequires:	perl(Test/Builder/Module.pm)
+BuildRequires:	perl(warnings.pm)
 # ===================================================================
 # Test suite requirements
 # ===================================================================
-BuildRequires:	perl(Test/Builder/Tester.pm)
 BuildRequires:	perl(Test/More.pm)
+BuildRequires:	perl(Test/Tester.pm)
+# ===================================================================
+# Optional test requirements
+# ===================================================================
+%if !0%{?rhel:1} && !0%{?perl_bootstrap:1}
+BuildRequires:	perl(Moose/Role.pm)
+%endif
 # ===================================================================
 # Author/Release test requirements
 # ===================================================================
@@ -58,11 +68,11 @@ Test::Vars finds unused variables in order to keep the source code tidy.
 sed -i -e '1s|^#!perl|#!/usr/bin/perl|' example/*.t
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build
 
 %install
-./Build install destdir=%{buildroot} create_packlist=0
+./Build install --destdir=%{buildroot} --create_packlist=0
 # %{_fixperms} %{buildroot}
 
 %check
@@ -70,10 +80,18 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 ./Build test --test_files="xt/*.t"
 
 %files
-%doc Changes LICENSE README.md example/
+%if 0%{?_licensedir:1}
+%doc LICENSE
+%else
+%doc LICENSE
+%endif
+%doc Changes README.md example/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.005-alt2_6
 - update to new release by fcimport
 
