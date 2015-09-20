@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ glib-devel
+BuildRequires: gcc-c++ glib-devel libsocket
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Summary:       Library for the Yahoo! Messenger Protocol
 Name:          libyahoo2  
 Version:       1.0.1
-Release:       alt3_8
+Release:       alt3_9
 Group:         System/Libraries
 License:       GPLv2
 Url:           http://libyahoo2.sourceforge.net/
@@ -56,6 +56,9 @@ sed -i -e 's,-@RELEASE@,,' %buildroot%_pkgconfigdir/%name.pc
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_9
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_8
 - update to new release by fcimport
 
