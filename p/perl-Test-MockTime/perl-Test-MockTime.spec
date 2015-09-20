@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-MockTime
-Version:        0.13
-Release:        alt1_2
+Version:        0.15
+Release:        alt1_1
 Summary:        Replaces actual time with simulated time
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -15,6 +15,10 @@ BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Time/Local.pm)
 BuildRequires:  perl(Time/Piece.pm)
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 
 # for improved tests
 BuildRequires:  perl(Test/Pod.pm)
@@ -55,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_2
 - update to new release by fcimport
 
