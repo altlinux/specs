@@ -6,7 +6,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators
 BuildRequires: perl(Locale/Maketext.pm)
 Name:           perl-Catalyst-Controller-HTML-FormFu
 Version:        1.00
-Release:        alt1_1
+Release:        alt1_3
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
 
@@ -98,6 +98,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_3
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_1
 - update to new release by fcimport
 
