@@ -7,7 +7,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-pod
 
 Name:           perl-HTML-Entities-Interpolate
 Version:        1.05
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Call HTML::Entities::encode_entities via a hash within a string
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/HTML-Entities-Interpolate/
@@ -43,6 +43,9 @@ via a hash within a string.
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1_6
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1_4
 - update to new release by fcimport
 
