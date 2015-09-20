@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-conakry
 Version:	20070829
-Release:	alt3_11
+Release:	alt3_12
 Summary:	N'Ko font by Michael Everson
 
 License:	OFL
@@ -94,6 +94,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20070829-alt3_12
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 20070829-alt3_11
 - update to new release by fcimport
 
