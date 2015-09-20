@@ -4,7 +4,7 @@ BuildRequires: perl(File/Spec/Functions.pm) perl-base perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Perl-MinimumVersion
 Version:        1.38
-Release:        alt1_4
+Release:        alt1_7
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -73,6 +73,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_7
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_4
 - update to new release by fcimport
 
