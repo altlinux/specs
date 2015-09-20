@@ -1,20 +1,32 @@
 Serial: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(Test/More.pm) perl-Module-Build perl-base perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-base perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Modern-Perl
 Version:        1.20150127
-Release:        alt1
+Release:        alt1_3
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Modern-Perl/
-Source:        http://www.cpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
 BuildArch:      noarch
+# Module Build
 BuildRequires:  perl
+BuildRequires:  perl(autodie.pm)
 BuildRequires:  perl(Module/Build.pm)
-BuildRequires:  perl(Test/Simple.pm)
+# Module Runtime
+BuildRequires:  perl(feature.pm)
+BuildRequires:  perl(IO/File.pm)
+BuildRequires:  perl(IO/Handle.pm)
+BuildRequires:  perl(mro.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Test Suite
+BuildRequires:  perl(Test/More.pm)
+# Runtime
+Requires:       perl(autodie.pm) >= 2.22
 Source44: import.info
 Provides: perl(Modern/Perl.pm) = 2012.0
 
@@ -26,24 +38,25 @@ and modules.  Wouldn't it be nice to use them all with a single command?
 %setup -q -n Modern-Perl-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build
 
 %install
-
-./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+./Build install --destdir=%{buildroot} --create_packlist=0
+# %{_fixperms} %{buildroot}
 
 %check
 ./Build test
 
 %files
+%doc LICENSE
 %doc Changes README
-%{perl_vendor_privlib}/*
+%{perl_vendor_privlib}/Modern/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.20150127-alt1_3
+- update to new release by fcimport
+
 * Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.20150127-alt1
 - automated CPAN update
 
