@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:		escape
 Version:	200912250
-Release:	alt3_10
+Release:	alt3_12
 Summary:	Extensible block-pushing puzzle game
 
 Group:		Games/Other
@@ -122,6 +122,9 @@ EOF
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 200912250-alt3_12
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 200912250-alt3_10
 - update to new release by fcimport
 
