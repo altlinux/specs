@@ -1,7 +1,7 @@
 %define oldname dmz-cursor-themes
 Name:           x-cursor-themes-dmz
 Version:        0.4
-Release:        alt2_9
+Release:        alt2_10
 Summary:        X cursors themes
 
 Group:          Graphical desktop/Other
@@ -42,6 +42,9 @@ cp -pr dmz-aa/xcursors %{buildroot}/%{_datadir}/icons/dmz-aa/cursors
 %{_datadir}/icons/dmz-aa/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_10
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_9
 - update to new release by fcimport
 
