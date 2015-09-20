@@ -13,8 +13,8 @@ BuildRequires: librest-gir-devel pkgconfig(gio-2.0)
 
 Summary: A GObject library for interacting with oVirt REST API
 Name: libgovirt
-Version: 0.3.2
-Release: alt1_1
+Version: 0.3.3
+Release: alt1_2
 License: LGPLv2+
 Group: Development/C
 Source: http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
@@ -84,6 +84,9 @@ make check
 %endif
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_1
 - update to new release by fcimport
 
