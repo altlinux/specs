@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Pod.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Module-Manifest-Skip
 Version:        0.23
-Release:        alt1_2
+Release:        alt1_4
 Summary:        MANIFEST.SKIP Manangement for Modules
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -67,6 +67,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_4
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_2
 - update to new release by fcimport
 
