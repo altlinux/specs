@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build/Tiny.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-devel perl-podlators
+BuildRequires: perl(Module/Build/Tiny.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-experimental
-Version:        0.013
-Release:        alt1_2
+Version:        0.014
+Release:        alt1_1
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -14,6 +14,9 @@ Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/experimental-%{version
 # a core dual-lived module and Module::Build::Tiny is not.
 Source1:        Makefile.PL
 BuildArch:      noarch
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
@@ -23,9 +26,6 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(version.pm)
 BuildRequires:  perl(warnings.pm)
 # Tests:
-BuildRequires:  perl(File/Spec.pm)
-BuildRequires:  perl(IO/Handle.pm)
-BuildRequires:  perl(IPC/Open3.pm)
 BuildRequires:  perl(Test/More.pm)
 Source44: import.info
 
@@ -50,10 +50,14 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 make test
 
 %files
-%doc Changes LICENSE README
+%doc LICENSE
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_1
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1_2
 - update to new release by fcimport
 
