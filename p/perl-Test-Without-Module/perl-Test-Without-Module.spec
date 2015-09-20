@@ -4,7 +4,7 @@ BuildRequires: perl(File/Find.pm) perl(File/Temp.pm) perl(Symbol.pm) perl-devel 
 # END SourceDeps(oneline)
 Name:           perl-Test-Without-Module
 Version:        0.18
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Test fallback behavior in absence of modules
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -51,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_4
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_2
 - update to new release by fcimport
 
