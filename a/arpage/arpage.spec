@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ pkgconfig(gthread-2.0)
 
 Name:		arpage
 Version:	0.3.3
-Release:	alt2_17.1
+Release:	alt2_19
 Summary:	A JACK MIDI arpeggiator
 
 Group:		Sound
@@ -74,6 +74,9 @@ install -m 644 %{_builddir}/%{name}-%{version}/src/arpage.png %{buildroot}%{_dat
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_19
+- update to new release by fcimport
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.3-alt2_17.1
 - Rebuilt for gcc5 C++11 ABI.
 
