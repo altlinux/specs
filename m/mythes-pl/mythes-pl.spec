@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: mythes-pl
 Summary: Polish thesaurus
 Version: 1.5
-Release: alt1_12
+Release: alt1_13
 Source: http://downloads.sourceforge.net/synonimy/OOo2-Thesaurus-%{version}.zip
 Group: Text tools
 URL: http://synonimy.ux.pl/
@@ -41,6 +41,9 @@ cp -p th_pl_PL_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_12
 - update to new release by fcimport
 
