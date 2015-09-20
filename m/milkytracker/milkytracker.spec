@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libalsa-devel zlib-devel
 %define fedora 21
 Name:           milkytracker
 Version:        0.90.85
-Release:        alt2_9
+Release:        alt2_11
 Summary:        Module tracker software for creating music
 
 Group:          Sound
@@ -75,6 +75,9 @@ desktop-file-install \
 %{_datadir}/pixmaps/milkytracker.png
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.90.85-alt2_11
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.90.85-alt2_9
 - update to new release by fcimport
 
