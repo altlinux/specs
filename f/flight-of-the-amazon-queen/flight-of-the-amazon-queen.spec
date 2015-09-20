@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           flight-of-the-amazon-queen
 Version:        1.0
-Release:        alt4_11
+Release:        alt4_12
 Summary:        Flight of the Amazon Queen - Adventure Game
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -61,6 +61,9 @@ desktop-file-install \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_11
 - update to new release by fcimport
 
