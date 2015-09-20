@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-apa-new-athena-unicode
 Version:	3.4
-Release:	alt3_10
+Release:	alt3_11
 Summary:	New Athena Unicode is a libre/open multilingual font
 
 License:	OFL
@@ -93,6 +93,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.4-alt3_11
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.4-alt3_10
 - update to new release by fcimport
 
