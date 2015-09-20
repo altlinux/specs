@@ -3,15 +3,16 @@ BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(base.pm) perl(sigtrap.pm)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name: libhugetlbfs
-Version: 2.18
-Release: alt1_4
+Version: 2.19
+Release: alt1_1
 Summary: A library which provides easy access to huge pages of memory
 
 Group: System/Libraries
 License: LGPLv2+
-URL: http://libhugetlbfs.sourceforge.net/
-Source0: http://downloads.sourceforge.net/libhugetlbfs/%{name}-%{version}.tar.gz
-Patch0: libhugetlbfs-2.18-s390.patch
+URL: https://github.com/libhugetlbfs/libhugetlbfs
+Source0: https://www.mgebm.net/~emunson/%{name}-%{version}.tar.gz
+Patch0: libhugetlbfs-2.19-restrict-is-keyword.patch
+Patch1: libhugetlbfs-2.19-gcc-5.patch
 
 BuildRequires: glibc-devel
 BuildRequires: glibc-devel-static
@@ -46,7 +47,8 @@ pool size control. pagesize lists page sizes available on the machine.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .s390
+%patch0 -p1 -b .restrct
+%patch1 -p1 -b .gcc5
 
 %build
 # Parallel builds are not reliable
@@ -104,6 +106,9 @@ rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 %exclude %{_libdir}/perl5/TLBC
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.19-alt1_1
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.18-alt1_4
 - update to new release by fcimport
 
