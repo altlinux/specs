@@ -4,7 +4,7 @@ Summary: Brazilian Portuguese dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 20090702
-Release: alt2_7
+Release: alt2_9
 License: LGPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -12,7 +12,6 @@ Source: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{l
 Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 Obsoletes: aspell-pt <= 50:0.50
-Provides: aspell-pt = %{version}
 
 %define debug_package %{nil}
 Source44: import.info
@@ -36,6 +35,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20090702-alt2_9
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 20090702-alt2_7
 - update to new release by fcimport
 
