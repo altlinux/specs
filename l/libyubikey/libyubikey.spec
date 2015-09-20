@@ -1,6 +1,6 @@
 %add_optflags %optflags_shared
 Name:           libyubikey
-Version:        1.11
+Version:        1.12
 Release:        alt1_3
 Summary:        C library for decrypting and parsing Yubikey One-time passwords
 
@@ -27,7 +27,7 @@ libyubikey.
 %setup -q
 
 %build
-%configure --disable-static
+%configure --disable-static --disable-silent-rules
 # --disable-rpath doesn't work for the configure script
 %{__sed} -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 %{__sed} -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -41,12 +41,13 @@ export LD_LIBRARY_PATH=${RPM_BUILD_DIR}/%{name}-%{version}/.libs
 %{__make} install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
 
 %files
-%doc AUTHORS COPYING NEWS ChangeLog README
+%doc AUTHORS NEWS ChangeLog README
+%doc COPYING
 %{_bindir}/modhex
 %{_bindir}/ykparse
 %{_bindir}/ykgenerate
 %{_libdir}/libyubikey.so.0
-%{_libdir}/libyubikey.so.0.1.5
+%{_libdir}/libyubikey.so.0.1.6
 %{_mandir}/man1/ykgenerate.1*
 %{_mandir}/man1/ykparse.1*
 %{_mandir}/man1/modhex.1*
@@ -56,6 +57,9 @@ export LD_LIBRARY_PATH=${RPM_BUILD_DIR}/%{name}-%{version}/.libs
 %{_libdir}/libyubikey.so
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_3
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1_3
 - update to new release by fcimport
 
