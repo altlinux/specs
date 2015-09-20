@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libacpi
 Version:        0.2
-Release:        alt2_22
+Release:        alt2_24
 Summary:        General purpose library for ACPI 
 
 Group:          System/Libraries
@@ -36,7 +36,7 @@ developing applications that use %{name}.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-sed -i "s/CFLAGS += .*/CFLAGS += -fPIC $RPM_OPT_FLAGS/;s&usr/local&usr&" config.mk
+sed -i "s|CFLAGS += .*|CFLAGS += -fPIC $RPM_OPT_FLAGS|;s&usr/local&usr&" config.mk
 sed -i "s&\${PREFIX}/share/doc/%{name}&%{_pkgdocdir}&g" Makefile
 
 
@@ -68,6 +68,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_24
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_22
 - update to new release by fcimport
 
