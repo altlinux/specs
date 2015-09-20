@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(lwp)
+BuildRequires: libsocket pkgconfig(lwp)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname rpc2
 Name:           librpc2
 Version:        2.10
-Release:        alt1_11
+Release:        alt1_13
 Summary:        C library for remote procedure calls over UDP
 Group:          System/Libraries
 License:        LGPLv2
@@ -39,6 +39,7 @@ developing applications that use %{oldname}.
 %patch1 -p1 -b .format-security
 
 %build
+export CC="gcc -fPIC"
 %configure --disable-static --with-lua
 # Don't use rpath!
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -61,6 +62,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_13
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_11
 - update to new release by fcimport
 
