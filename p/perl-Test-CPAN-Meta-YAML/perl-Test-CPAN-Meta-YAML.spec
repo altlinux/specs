@@ -4,13 +4,13 @@ BuildRequires: perl(YAML.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-CPAN-Meta-YAML
 Version:	0.25
-Release:	alt1
+Release:	alt1_3
 Summary:	Validate a META.yml file within a CPAN distribution
 Group:		Development/Perl
 License:	Artistic 2.0
 URL:		http://search.cpan.org/dist/Test-CPAN-Meta-YAML/
-Source:	http://www.cpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-YAML-%{version}.tar.gz
-Patch0:		Test-CPAN-Meta-YAML-0.23-utf8.patch
+Source0:	http://search.cpan.org/CPAN/authors/id/B/BA/BARBIE/Test-CPAN-Meta-YAML-%{version}.tar.gz
+Patch0:		Test-CPAN-Meta-YAML-0.25-utf8.patch
 BuildArch:	noarch
 # Module Build
 BuildRequires:	perl
@@ -46,7 +46,7 @@ See CPAN::Meta for further details of the CPAN Meta Specification.
 %prep
 %setup -q -n Test-CPAN-Meta-YAML-%{version}
 
-# Recode LICENSE as UTF-8
+# Recode documentation as UTF-8
 %patch0
 
 %build
@@ -71,6 +71,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_3
+- update to new release by fcimport
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
 - automated CPAN update
 
