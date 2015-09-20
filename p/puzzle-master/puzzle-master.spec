@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libqt4-devel
 # END SourceDeps(oneline)
 Name:           puzzle-master
 Version:        2.0.0
-Release:        alt2_6
+Release:        alt2_8
 Summary:        Fun and addictive jigsaw puzzle game
 
 Group:          Games/Other
@@ -51,6 +51,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %doc LICENSE-DOCS
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_8
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_6
 - update to new release by fcimport
 
