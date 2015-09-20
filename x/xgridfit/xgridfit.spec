@@ -14,7 +14,7 @@ Requires: python-module-libxml2
 
 Name:    xgridfit
 Version: 2.2
-Release: alt3_11%{?patchlevel:.%{patchlevel}}%{?alphatag:.%{alphatag}}
+Release: alt3_12%{?patchlevel:.%{patchlevel}}%{?alphatag:.%{alphatag}}
 Summary: Font hinting tool
 
 # This is where we drop fontforge
@@ -104,6 +104,9 @@ xmlcatalog --noout --del \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_12.a.20100725cvs
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_11.a.20100725cvs
 - update to new release by fcimport
 
