@@ -1,6 +1,6 @@
 Name:           icc-profiles-basiccolor-printing2009
 Version:        1.2.0
-Release:        alt2_5
+Release:        alt2_6
 Summary:        The OpenICC profiles from basICColor
 
 Group:          Graphical desktop/Other
@@ -56,6 +56,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_6
+- update to new release by fcimport
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_5
 - moved to Sisyphus as dependency to fop
 
