@@ -10,7 +10,7 @@ Group: System/Libraries
 
 Name:		libechonest
 Version: 	2.3.0
-Release:	alt1_1
+Release:	alt1_3
 Summary:	C++ wrapper for the Echo Nest API
 
 License:	GPLv2+
@@ -122,6 +122,9 @@ time make test -C %{_target_platform} ARGS="--timeout 300 --output-on-failure" |
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_3
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_1
 - update to new release by fcimport
 
