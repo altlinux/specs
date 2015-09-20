@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 Name:           nogravity
 Version:        2.00
-Release:        alt2_22
+Release:        alt2_23
 Summary:        Space shooter in 3D
 Group:          Games/Other
 License:        GPLv2+
@@ -15,6 +15,7 @@ Source4:        nogravity--Makefile.am
 Source5:        nogravity--bootstrap
 Source6:        nogravity--configure.in
 Source7:        nogravity.sh
+Source8:        %{name}.appdata.xml
 Patch0:         nogravity--snd_sdlmixer_c-powerpc-fix.diff
 Patch1:         nogravity--fullscreen_as_option.patch
 Patch2:         nogravity--fixed_path_to_game_data.diff
@@ -29,9 +30,10 @@ Patch9:         nogravity-2.00-rhbz699274.patch
 Patch10:        nogravity-2.00-libpng15.patch
 Patch11:        0001-v3xscene-Remove-some-unused-code.patch
 Patch12:        0002-rlx32-Stop-using-MaxExtentableObjet.patch
+Patch13:        nogravity-2.00-stdint_h.patch
 Requires:       %{name}-data = %{version}
 BuildRequires:  libSDL_mixer-devel libopenal-devel libpng-devel libvorbis-devel
-BuildRequires:  automake desktop-file-utils
+BuildRequires:  automake desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor xdriinfo glxinfo
 Source44: import.info
 Patch33: nogravity-2.00-alt-libpng15.patch
@@ -61,6 +63,7 @@ cp %{SOURCE6} ./src/Linux/configure.in
 #patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 sed -i 's/\r//g' GNU.TXT README.TXT
 pushd src/Linux
 sh bootstrap
@@ -86,26 +89,32 @@ popd
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 install -m 755 src/Linux/%{name}-software $RPM_BUILD_ROOT%{_bindir}
 install -m 755 src/Linux/%{name}-opengl   $RPM_BUILD_ROOT%{_bindir}
 install -p -m 755 %{SOURCE7} $RPM_BUILD_ROOT%{_bindir}/%{name}
-desktop-file-install \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE2}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE2}
 install -p -m 644 %{SOURCE3} \
-$RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+install -p -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
 %doc GNU.TXT README.TXT
 %{_bindir}/%{name}*
-%{_datadir}/applications/*%{name}.desktop
+%{_datadir}/appdata/%{name}.appdata.xml
+%{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_23
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_22
 - update to new release by fcimport
 
