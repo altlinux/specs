@@ -3,8 +3,8 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 %define oldname fedora-gnat-project-common
 Name:           rpm-build-gnat
-Version:        3.8
-Release:        alt1_4
+Version:        3.9
+Release:        alt1_1
 Summary:        Files shared by Ada libraries
 Summary(sv):    Gemensamma filer för adabibliotek
 
@@ -14,6 +14,7 @@ URL:            https://fedorahosted.org/released/fedora-gnat-project-common
 Source1:        https://fedorahosted.org/released/fedora-gnat-project-common/download/fedora-gnat-project-common-%{version}.tar.gz
 BuildArch:      noarch
 
+BuildRequires:  sed
 Requires:       setup
 # workaround for https://bugzilla.redhat.com/show_bug.cgi?id=613407:
 Requires:       libgnat-devel-static
@@ -79,6 +80,9 @@ cp -p macros.gnat %{buildroot}%_rpmmacrosdir/gnat
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.9-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_4
 - update to new release by fcimport
 
