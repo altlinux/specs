@@ -1,25 +1,32 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Path.pm) perl(FileHandle.pm) perl(Filter/Util/Call.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(PerlIO.pm) perl(Socket.pm) perl(Test/Deep.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(overload.pm) perl(threads/shared.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Class-Field
 Version:        0.23
-Release:        alt1
+Release:        alt1_1
 Summary:        Class Field Accessor Generator
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Class-Field/
-Source:        http://www.cpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(inc/Module/Install.pm)
+BuildRequires:  make
+BuildRequires:  findutils
+BuildRequires:  perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Encode.pm)
 BuildRequires:  perl(Exporter.pm)
-BuildRequires:  perl(Module/Install/TestBase.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(File/Find.pm)
+BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/Pod.pm)
+BuildRequires:  perl(utf8.pm)
+BuildRequires:  perl(warnings.pm)
 Source44: import.info
 
 %description
@@ -28,7 +35,6 @@ used to declare fields and constants in your class.
 
 %prep
 %setup -q -n Class-Field-%{version}
-find -type f -exec chmod -x {} +
 
 
 %build
@@ -36,7 +42,7 @@ find -type f -exec chmod -x {} +
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
@@ -47,10 +53,14 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
+%doc LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - automated CPAN update
 
