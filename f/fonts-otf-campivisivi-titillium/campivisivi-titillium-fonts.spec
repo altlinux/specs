@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-campivisivi-titillium
 Version:        20120913
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Sans-serif typeface designed inside Campi Visivi's Type Design course
 
 License:        OFL
@@ -97,6 +97,9 @@ fi
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20120913-alt1_6
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20120913-alt1_5
 - update to new release by fcimport
 
