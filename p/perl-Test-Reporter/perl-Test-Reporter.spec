@@ -3,8 +3,8 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Reporter
-Version:        1.60
-Release:        alt2_3
+Version:        1.62
+Release:        alt1_3
 Summary:        Sends test results to cpan-testers@perl.org
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -33,12 +33,11 @@ BuildRequires:  perl(vars.pm)
 # Tests:
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(File/Find.pm)
-BuildRequires:  perl(File/Spec/Functions.pm)
-BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(Test/More.pm)
-# Optional tests:
-BuildRequires:  perl(Test/Script.pm)
 Source44: import.info
+# Optional tests:
+# CPAN::Meta not useful
 
 %description
 Test::Reporter reports the test results of any given distribution to the
@@ -61,10 +60,14 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 make test
 
 %files
-%doc Changes CONTRIBUTING LICENSE README
+%doc LICENSE
+%doc Changes CONTRIBUTING.mkdn README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.62-alt1_3
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.60-alt2_3
 - update to new release by fcimport
 
