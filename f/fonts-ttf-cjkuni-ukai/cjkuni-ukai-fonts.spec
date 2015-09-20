@@ -17,7 +17,7 @@ the CJK Unifonts project.
 
 Name:           fonts-ttf-cjkuni-ukai
 Version:        0.2.20080216.1
-Release:        alt4_52
+Release:        alt4_53
 Summary:        Chinese Unicode TrueType font in Kai face
 
 Group:          System/Fonts/True type
@@ -114,6 +114,9 @@ fi
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_53
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_52
 - update to new release by fcimport
 
