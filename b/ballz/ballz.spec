@@ -2,13 +2,13 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           ballz
-Version:        1.0.2
-Release:        alt2_13.1
+Version:        1.0.3
+Release:        alt1_1
 Summary:        Platform game with some puzzle elements
 Group:          Games/Other
 License:        BSD
-URL:            http://code.google.com/p/db-tins07/
-Source0:        http://db-tins07.googlecode.com/files/%{name}-%{version}.tar.gz
+URL:            https://gitlab.com/groups/ballz
+Source0:        %{name}-%{version}.tar.gz
 BuildRequires:  liballegro-devel dumb-devel libguichan-devel desktop-file-utils
 Source44: import.info
 
@@ -18,8 +18,8 @@ which is genetically modified by the British secret service. Your mission is
 to rescue captured British soldiers from a prison in Iran.
 
 The game was written in 72 hours for the TINS competition, a competition
-similar to Speedhack. The name TINS is an recursive acronym for a.'TINS is
-not Speedhacka.'.
+similar to Speedhack. The name TINS is an recursive acronym for 'TINS is
+not Speedhack'.
 
 
 %prep
@@ -36,43 +36,6 @@ make %{?_smp_mflags}
 %makeinstall_std
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
-# Register as an application to be visible in the software center
-#
-# NOTE: It would be *awesome* if this file was maintained by the upstream
-# project, translated and installed into the right place during `make install`.
-#
-# See http://www.freedesktop.org/software/appstream/docs/ for more details.
-#
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2014 Ravi Srinivasan <ravishankar.srinivasan@gmail.com> -->
-<!--
-BugReportURL: https://code.google.com/p/db-tins07/issues/detail?id=1
-SentUpstream: 2014-09-24
--->
-<application>
-  <id type="desktop">ballz.desktop</id>
-  <metadata_license>CC0-1.0</metadata_license>
-  <summary>A platform game with puzzle elements</summary>
-  <description>
-    <p>
-      Ballz is a platformer with some puzzle elements.
-      You take control of a ball which is genetically modified by the British
-      secret service.
-    </p>
-    <p>
-      Your mission is to rescue captured British soldiers from a prison in Iran.
-    </p>
-  </description>
-  <url type="homepage">http://code.google.com/p/db-tins07/</url>
-  <screenshots>
-    <screenshot type="default">https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/ballz/a.png</screenshot>
-    <screenshot type="default">https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/ballz/b.png</screenshot>
-  </screenshots>
-</application>
-EOF
-
 %files
 %doc AUTHORS README BSD-license ChangeLog
 %{_bindir}/%{name}
@@ -84,6 +47,9 @@ EOF
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_1
+- update to new release by fcimport
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2-alt2_13.1
 - Rebuilt for gcc5 C++11 ABI.
 
