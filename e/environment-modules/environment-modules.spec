@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/runtest libICE-devel libSM-devel libsocket
 
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_14
+Release:        alt1_16
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -36,6 +36,9 @@ Patch5:         environment-modules-tcl86.patch
 # https://sourceforge.net/p/modules/patches/15/
 # https://bugzilla.redhat.com/show_bug.cgi?id=1184979
 Patch6:         environment-modules-py3-and-doc-fix.patch
+# Fix unload from loaded modulefile
+# https://bugzilla.redhat.com/show_bug.cgi?id=1117334
+Patch7:         environment-modules-3.2.10-unload-from-module.patch
 
 BuildRequires:  tcl-devel tclx libX11-devel
 BuildRequires:  dejagnu
@@ -81,6 +84,7 @@ have access to the module alias.
 %patch4 -p1 -b .format
 %patch5 -p1 -b .tcl86
 %patch6 -p1 -b .py3
+%patch7 -p1 -b .unload-from-module
 
 
 %build
@@ -136,6 +140,9 @@ EOF
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_16
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_14
 - update to new release by fcimport
 
