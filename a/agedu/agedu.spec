@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: libsocket
+# END SourceDeps(oneline)
 %global rel r9153
 
 Name:		agedu
 Version:	0
-Release:	alt2_8.%{rel}
+Release:	alt2_9.%{rel}
 Summary:	An utility for tracking down wasted disk space
 Group:		File tools
 License:	MIT
@@ -36,6 +39,9 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0-alt2_9.r9153
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0-alt2_8.r9153
 - update to new release by fcimport
 
