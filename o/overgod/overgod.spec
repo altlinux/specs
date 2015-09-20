@@ -1,6 +1,6 @@
 Name:           overgod
 Version:        1.0
-Release:        alt2_21
+Release:        alt2_23
 Summary:        Another arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -8,10 +8,12 @@ URL:            http://www.allegro.cc/depot/Overgod
 Source0:        http://downloads.sourceforge.net/overgod/overgod.tar.gz
 Source1:        overgod.desktop
 Source2:        overgod.png
+Source3:        overgod.appdata.xml
 Patch0:         overgod-1.0.patch
 Patch1:         overgod-1.0-format-string.patch
 Patch2:         overgod-1.0-shield_bmp_array_overrun.patch
-BuildRequires:  liballegro-devel desktop-file-utils
+Patch3:         overgod-1.0-inline-use-fix.patch
+BuildRequires:  liballegro-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -31,6 +33,7 @@ ways.
 %patch0 -p1 -z .unix
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 sed -i 's/\r//' readme.txt licence.txt
 
 # as-needed
@@ -47,23 +50,29 @@ make install PREFIX=$RPM_BUILD_ROOT%{_prefix}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 install -p -m 644 %{SOURCE2} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
 %doc readme.txt licence.txt
 %{_bindir}/overgod
 %{_datadir}/overgod
-%{_datadir}/applications/*overgod.desktop
+%{_datadir}/appdata/overgod.appdata.xml
+%{_datadir}/applications/overgod.desktop
 %{_datadir}/icons/hicolor/48x48/apps/overgod.png
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_23
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_21
 - update to new release by fcimport
 
