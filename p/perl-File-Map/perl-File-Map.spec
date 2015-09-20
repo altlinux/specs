@@ -1,38 +1,46 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Config.pm) perl(IPC/Open3.pm) perl(POSIX.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(open.pm) perl(subs.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Map
-Version:        0.63
-Release:        alt1.1_1
+Version:        0.64
+Release:        alt1_1
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/File-Map/
 Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/File-Map-%{version}.tar.gz
+BuildRequires:  coreutils
+BuildRequires:  findutils
 BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Run-time
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(PerlIO/Layers.pm)
-BuildRequires:  perl(Sub/Exporter.pm)
 BuildRequires:  perl(Sub/Exporter/Progressive.pm)
+BuildRequires:  perl(subs.pm)
 BuildRequires:  perl(XSLoader.pm)
 # Tests
-BuildRequires:  perl(File/Temp.pm)
-BuildRequires:  perl(if.pm)
+BuildRequires:  perl(Config.pm)
+BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(IO/Handle.pm)
 BuildRequires:  perl(IO/Socket/INET.pm)
+BuildRequires:  perl(IPC/Open3.pm)
+BuildRequires:  perl(open.pm)
+# Pod::Coverage::TrustPod 1.08 not used
+BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(Scalar/Util.pm)
-BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/Fatal.pm)
 BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(Test/NoWarnings.pm)
-BuildRequires:  perl(Test/Warn.pm)
+# Test::Pod 1.41 not used
+# Test::Pod::Coverage 1.08 not used
 BuildRequires:  perl(Test/Warnings.pm)
 BuildRequires:  perl(threads.pm)
 BuildRequires:  perl(Time/HiRes.pm)
+BuildRequires:  perl(utf8.pm)
 
 
 Source44: import.info
@@ -71,6 +79,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1_1
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1.1_1
 - update to new release by fcimport
 
