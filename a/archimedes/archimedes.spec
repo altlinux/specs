@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/dvipdf gcc-c++ texlive-base-bin texlive-latex-base
 Summary:	2D Quantum Monte Carlo simulator for semiconductor devices
 Name:		archimedes
 Version:	2.0.1
-Release:	alt1_3
+Release:	alt1_4
 License:	GPLv3+
 Group:		Engineering
 URL:		http://www.gnu.org/software/archimedes/
@@ -51,6 +51,9 @@ rm -rf ${buildroot}
 %doc AUTHORS ChangeLog COPYING doc examples NEWS README THANKS
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_4
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_3
 - update to new release by fcimport
 
