@@ -14,7 +14,7 @@ bold weight.
 
 Name:		fonts-otf-adf-gillius
 Version:	1.008
-Release:	alt3_10
+Release:	alt3_11
 Summary:	Gillius ADF sans-serif typeface family
 
 License:	GPLv2+ with exceptions
@@ -143,6 +143,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.008-alt3_11
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.008-alt3_10
 - update to new release by fcimport
 
