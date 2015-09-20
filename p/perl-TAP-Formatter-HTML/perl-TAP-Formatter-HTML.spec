@@ -4,7 +4,7 @@ BuildRequires: perl(Alien/SeleniumRC.pm) perl(App/Prove.pm) perl(CPAN.pm) perl(C
 # END SourceDeps(oneline)
 Name:           perl-TAP-Formatter-HTML
 Version:        0.11
-Release:        alt1_6
+Release:        alt1_8
 Summary:        TAP Test Harness output delegate for html output
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -52,6 +52,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_8
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_6
 - update to new release by fcimport
 
