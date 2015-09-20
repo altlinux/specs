@@ -1,59 +1,64 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Scalar/Util.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Contextual-Return
-Version:        0.004007
-Release:        alt2_6
+Version:        0.004008
+Release:        alt1_1
 Summary:        Create context-sensitive return values
-Group:          Development/Perl
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Contextual-Return
 Source0:        http://search.cpan.org/CPAN/authors/id/D/DC/DCONWAY/Contextual-Return-%{version}.tar.gz
-BuildArch:      noarch 
-BuildRequires:  perl(Data/Dumper.pm)
+BuildArch:      noarch
+# Build
+BuildRequires:  make
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(Test/Pod.pm)
-BuildRequires:  perl(Test/Pod/Coverage.pm)
-BuildRequires:  perl(version.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Runtime
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(overload.pm)
+BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Want.pm)
+# Tests only
+BuildRequires:  perl(Test/More.pm)
+# Optional tests only
+BuildRequires:  perl(Test/Pod.pm)
+Requires:       perl(Data/Dumper.pm)
 
 
 Source44: import.info
-
+%filter_from_provides /^perl\\(DB.pm\\)$/d
 
 %description
 This module allows you to define return values of a perl sub that are
 appropriate given the calling context.
 
-
 %prep
 %setup -q -n Contextual-Return-%{version}
 
-
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor 
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
-
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -depth -type d -exec rmdir {} ';' 2>/dev/null
 # %{_fixperms} %{buildroot}
-
 
 %check
 make test
 
-
 %files
 %doc Changes README
-%{perl_vendor_privlib}/Contextual/
-
+%{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.004008-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.004007-alt2_6
 - update to new release by fcimport
 
