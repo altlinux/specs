@@ -5,12 +5,12 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-CPAN-Meta
 Version:        0.25
-Release:        alt1
+Release:        alt1_4
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/Test-CPAN-Meta/
-Source:        http://www.cpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-%{version}.tar.gz
-Patch0:         Test-CPAN-Meta-0.24-utf8.patch
+Source0:        http://www.cpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-%{version}.tar.gz
+Patch0:         Test-CPAN-Meta-0.25-utf8.patch
 BuildArch:      noarch
 # Module Build
 BuildRequires:  perl
@@ -67,6 +67,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_4
+- update to new release by fcimport
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
 - automated CPAN update
 
