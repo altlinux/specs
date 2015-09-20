@@ -2,8 +2,8 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname npth
 Name:           libnpth
-Version:        1.1
-Release:        alt1_1
+Version:        1.2
+Release:        alt1_2
 Summary:        The New GNU Portable Threads library
 # software uses dual licensing (or both in parallel)
 License:        LGPLv3+ or GPLv2+ or (LGPLv3+ and GPLv2+)
@@ -17,9 +17,9 @@ Provides: npth = %{version}-%{release}
 
 %description
 nPth is a non-preemptive threads implementation using an API very similar
-to the one known from GNU Pth.  It has been designed as a replacement of
-GNU Pth for non-ancient operating systems.  In contrast to GNU Pth is is
-based on the system's standard threads implementation.  Thus nPth allows
+to the one known from GNU Pth. It has been designed as a replacement of
+GNU Pth for non-ancient operating systems. In contrast to GNU Pth is is
+based on the system's standard threads implementation. Thus nPth allows
 the use of libraries which are not compatible to GNU Pth.
 
 %package        devel
@@ -63,6 +63,9 @@ make check
 %{_datadir}/aclocal/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_2
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
 - update to new release by fcimport
 
