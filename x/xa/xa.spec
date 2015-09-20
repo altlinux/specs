@@ -1,6 +1,6 @@
 Name:           xa
 Version:        2.3.7
-Release:        alt1_1
+Release:        alt1_2
 Summary:        6502/65816 cross-assembler
 
 Group:          Development/Tools
@@ -61,6 +61,9 @@ make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} INSTALL="install -p"
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_2
+- update to new release by fcimport
+
 * Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_1
 - update to new release by fcimport
 
