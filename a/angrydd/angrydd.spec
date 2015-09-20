@@ -1,6 +1,6 @@
 Name:           angrydd
 Version:        1.0.1
-Release:        alt5_12
+Release:        alt5_13
 Summary:        Falling blocks game
 
 Group:          Games/Other
@@ -58,6 +58,9 @@ desktop-file-install                    \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_12
 - update to new release by fcimport
 
