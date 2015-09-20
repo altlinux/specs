@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           clonekeen
 Version:        0.8.4
-Release:        alt1_6
+Release:        alt1_8
 Summary:        "Commander Keen: Invasion of the Vorticons" clone
 Group:          Games/Other
 License:        GPLv3+
@@ -90,6 +90,9 @@ sed -i s,/usr/libexec,%{_libexecdir},g %buildroot%{_libexecdir}/%{name}* %buildr
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_8
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_6
 - update to new release by fcimport
 
