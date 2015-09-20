@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin
 # END SourceDeps(oneline)
 Name:       alleyoop
 Version:    0.9.8
-Release:    alt1_4
+Release:    alt1_5
 License:    GPLv2+
 Group:      Development/Tools
 Summary:    Graphical front-end to the Valgrind memory checker for x86
@@ -53,8 +53,10 @@ desktop-file-install --dir ${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE1}
 export GCONF_CONFIG_SOURCE="$(gconftool-2 --get-default-source)"
 gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/%{name}.schemas &>/dev/null
 
+
 %postun
 gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/%{name}.schemas &>/dev/null
+
 
 %files -f %{name}.lang
 %doc COPYING README NEWS AUTHORS ChangeLog
@@ -64,6 +66,9 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/%{name}.schem
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.8-alt1_5
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.8-alt1_4
 - update to new release by fcimport
 
