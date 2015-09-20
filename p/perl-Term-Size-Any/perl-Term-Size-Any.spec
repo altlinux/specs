@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Term-Size-Any
 Version:        0.002
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Retrieve terminal size
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -51,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_17
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_15
 - update to new release by fcimport
 
