@@ -1,6 +1,6 @@
 Name: xgrav
 Version:  1.2.0
-Release:  alt2_15
+Release:  alt2_16
 Summary: A simple physics simulation for a large number of particles
 
 Group: Games/Other
@@ -57,6 +57,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/32x32/apps/xgrav.png
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_16
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_15
 - update to new release by fcimport
 
