@@ -5,7 +5,7 @@ BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name:		libindicator
 Version:	12.10.1
-Release:	alt1_4
+Release:	alt1_5
 Summary:	Shared functions for Ayatana indicators
 
 Group:		System/Libraries
@@ -167,6 +167,9 @@ done
 %{_libexecdir}/indicator-loader3
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_5
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_4
 - update to new release by fcimport
 
