@@ -4,7 +4,7 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) p
 # END SourceDeps(oneline)
 Name:           perl-Test-utf8
 Version:        1.01
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Handy utf8 tests
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_3
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_1
 - update to new release by fcimport
 
