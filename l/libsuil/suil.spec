@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ waf
 
 Name:       libsuil
 Version:    0.8.2
-Release:    alt1_2
+Release:    alt1_3
 Summary:    A lightweight C library for loading and wrapping LV2 plugin UIs
 
 Group:      System/Libraries
@@ -95,6 +95,9 @@ install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_pkgdocdir}
 %{_mandir}/man3/%{oldname}.3*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1_3
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1_2
 - update to new release by fcimport
 
