@@ -3,7 +3,7 @@ BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name: inksmoto
 Version: 0.7.0
-Release: alt2_12
+Release: alt2_13
 Summary: The new xmoto level editor for Inkscape
 
 Group: Games/Other
@@ -44,6 +44,9 @@ cp -pr inksmoto %{buildroot}%{_datadir}/inkscape/extensions/
 %doc AUTHORS COPYING INSTALL README
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_12
 - update to new release by fcimport
 
