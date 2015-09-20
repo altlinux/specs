@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(Pod/Simple/HTML.pm) perl(
 # END SourceDeps(oneline)
 Name:           perl-Pod-MinimumVersion
 Version:        50
-Release:        alt3_11
+Release:        alt3_13
 Summary:        Perl version for POD directives used
 License:        GPLv3+
 Group:          Development/Perl
@@ -53,6 +53,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 50-alt3_13
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 50-alt3_11
 - update to new release by fcimport
 
