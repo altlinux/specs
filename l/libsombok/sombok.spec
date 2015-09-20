@@ -5,14 +5,14 @@ BuildRequires: /usr/bin/doxygen
 %define oldname sombok
 %define fedora 21
 Name:           libsombok
-Version:        2.3.1
-Release:        alt2_3
+Version:        2.4.0
+Release:        alt1_1
 Summary:        Unicode Text Segmentation Package
 
 Group:          System/Libraries
 License:        GPLv2+ or Artistic clarified
 URL:            http://sf.net/projects/linefold/
-Source0:        http://downloads.sourceforge.net/linefold/%{oldname}-%{version}.tar.gz
+Source0:        https://github.com/hatukanezumi/sombok/archive/%{oldname}-%{version}.tar.gz
 
 # libthai is available only in Fedora and EL6
 %if 0%{?rhel} > 5 || 0%{?fedora}
@@ -46,7 +46,7 @@ developing applications that use %{oldname}.
 
 
 %prep
-%setup -n %{oldname}-%{version} -q
+%setup -q -n %{oldname}-%{oldname}-%{version}
 
 
 %build
@@ -74,6 +74,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt2_3
 - update to new release by fcimport
 
