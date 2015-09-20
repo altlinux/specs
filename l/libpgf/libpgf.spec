@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/dot /usr/bin/doxygen gcc-c++
 %add_optflags %optflags_shared
 Name:           libpgf
 Version:        6.14.12
-Release:        alt1_1
+Release:        alt1_4
 Summary:        PGF (Progressive Graphics File) library
 
 Group:          System/Libraries
@@ -13,6 +13,10 @@ URL:            http://www.libpgf.org
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.tar.gz
 # Modernize automake usage
 Patch0:         libpgf-auto.patch
+
+## backport upstream fixes
+Patch147: libpgf-r147.patch
+Patch148: libpgf-r148.patch
 
 BuildRequires:  doxygen
 BuildRequires:  libtool
@@ -37,15 +41,20 @@ developing applications that use %{name}.
 %prep
 %setup -q -n %{name}
 %patch0 -p1 -b .auto
+%patch147 -p1 -b .r147
+%patch148 -p1 -b .r148
 # Fix line endings
 sed -i -e 's/\r//' configure.ac README
 
 sed -i 's|$(DESTDIR)$(datadir)/doc/$(DOC_MODULE)|$(RPM_BUILD_DIR)/libpgf|g' doc/Makefile.am
 
-
-%build
 sh autogen.sh
 
+
+%build
+# FIXME/TODO: document need for -DLIBPGF_DISABLE_OPENMP
+# commit 52c998909401f404f1c7029b537ec900f3f780d0 doesn't say why, but
+# I *think* it's related to digikam -- rex
 export CFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP"
 export CXXFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP"
 
@@ -54,8 +63,10 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+make install DESTDIR=%{buildroot}
+
+# unpackaged files
+rm -fv %{buildroot}%{_libdir}/libpgf.la
 
 
 %files
@@ -64,13 +75,16 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %files devel
 %doc html
-%{_includedir}/%{name}
+%{_includedir}/libpgf/
 %{_libdir}/libpgf.so
 %{_libdir}/pkgconfig/libpgf.pc
-%{_mandir}/man3/*
+%{_mandir}/man3/*.3*
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 6.14.12-alt1_4
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 6.14.12-alt1_1
 - update to new release by fcimport
 
