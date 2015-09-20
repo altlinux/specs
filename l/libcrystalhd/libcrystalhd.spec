@@ -2,13 +2,16 @@
 BuildRequires: gcc-c++ libcrystalhd-devel
 # END SourceDeps(oneline)
 BuildRequires(pre): kernel-build-tools
+%add_optflags %optflags_shared
 %global majorminor 1.0
 %global date 20120405
+# Avoid to emit gstreamer provides - rhbz#1184975
+%undefine __gstreamer1_provides
 
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt3_8
+Release:       alt3_11
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal_hd/
@@ -156,6 +159,9 @@ mv driver kernel-source-crystalhd-%version
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_11
+- update to new release by fcimport
+
 * Wed Apr 08 2015 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_8
 - rules: MODE="0660", GROUP="video" (closes: #30916)
 
