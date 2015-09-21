@@ -6,7 +6,7 @@ BuildRequires: unzip
 Summary: Arabic hunspell dictionaries
 Name: hunspell-ar
 Version: 3.5
-Release: alt1_1
+Release: alt1_2
 License: GPLv2 or LGPLv2 or MPLv1.1
 Group: Text tools
 URL: http://ayaspell.sourceforge.net/
@@ -43,6 +43,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.5-alt1_2
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 3.5-alt1_1
 - update to new release by fcimport
 
