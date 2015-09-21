@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 Name:      libmythes
 Summary:   A thesaurus library
 Version:   1.2.4
-Release:   alt1_2
+Release:   alt1_4
 Source:    http://downloads.sourceforge.net/hunspell/%{oldname}-%{version}.tar.gz
 Group:     System/Libraries
 URL:       http://hunspell.sourceforge.net/
@@ -56,6 +56,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_bindir}/th_gen_idx.pl
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_4
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_2
 - update to new release by fcimport
 
