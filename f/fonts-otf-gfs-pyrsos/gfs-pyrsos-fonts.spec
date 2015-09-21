@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-pyrsos
 Version: 20090618
-Release: alt3_9
+Release: alt3_10
 Summary: A 20th century italic Greek typeface
 
 Group:     System/Fonts/True type
@@ -107,6 +107,9 @@ fi
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20090618-alt3_10
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20090618-alt3_9
 - update to new release by fcimport
 
