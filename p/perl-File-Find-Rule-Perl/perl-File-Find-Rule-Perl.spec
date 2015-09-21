@@ -1,15 +1,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl(inc/Module/Install/DSL.pm) perl-devel perl-podlators
+BuildRequires: perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Find-Rule-Perl
-Version:        1.13
-Release:        alt3_8
+Version:        1.15
+Release:        alt1_3
 Summary:        Common rules for searching for Perl things
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/File-Find-Rule-Perl/
-Source0:        http://search.cpan.org/CPAN/authors/id/A/AD/ADAMK/File-Find-Rule-Perl-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/File-Find-Rule-Perl-%{version}.tar.gz
+# Filter out the files rpm generates in sourcedir.
+Patch0:         File-Find-Rule-Perl-1.15-fedora.patch
 BuildArch:      noarch
 BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(lib.pm)
@@ -22,48 +24,36 @@ BuildRequires:  perl(File/Spec/Unix.pm)
 BuildRequires:  perl(Params/Util.pm)
 BuildRequires:  perl(Parse/CPAN/Meta.pm)
 BuildRequires:  perl(Test/More.pm)
-# For improved tests
-%if !%{defined perl_bootstrap}
-BuildRequires:  perl(Perl/MinimumVersion.pm)
-BuildRequires:  perl(Test/MinimumVersion.pm)
-BuildRequires:  perl(Test/Pod.pm)
-BuildRequires:  perl(Test/CPAN/Meta.pm)
-%endif
 Source44: import.info
 
 %description
 Common rules for searching for Perl things.
 
 %prep
-%setup -q -T -c
-%setup -q -T -D -a0
+%setup -q -n File-Find-Rule-Perl-%{version}
+%patch0 -p1
 
 %build
-cd File-Find-Rule-Perl-%{version}
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
-cd ..
 
 %install
-cd File-Find-Rule-Perl-%{version}
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-cd ..
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type d -depth -exec rmdir {} 2>/dev/null ';'
 chmod -R u+w $RPM_BUILD_ROOT/*
 
 %check
-%if !%{defined perl_bootstrap}
-cd File-Find-Rule-Perl-%{version}
-make test AUTOMATED_TESTING=1
-cd ..
-%endif
+make test
 
 %files
-%doc File-Find-Rule-Perl-%{version}/Changes File-Find-Rule-Perl-%{version}/LICENSE
+%doc Changes
 %{perl_vendor_privlib}/File
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1_3
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt3_8
 - update to new release by fcimport
 
