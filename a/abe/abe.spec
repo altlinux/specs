@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           abe
 Version:        1.1
-Release:        alt5_25
+Release:        alt5_26
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 Group:          Games/Other
@@ -55,7 +55,7 @@ mv -f COPYING.new COPYING
 
 %build
 %configure --with-data-dir=%{_datadir}/%{name}
-sed -i "s/^CFLAGS =.*/CFLAGS = ${RPM_OPT_FLAGS} \$\(SDL_CFLAGS\)/" src/Makefile
+sed -i "s|^CFLAGS =.*|CFLAGS = ${RPM_OPT_FLAGS} \$\(SDL_CFLAGS\)|" src/Makefile
 make %{?_smp_mflags}
 
 %install
@@ -101,6 +101,9 @@ touch --no-create %{icondir} >&/dev/null ||:
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_26
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_25
 - update to new release by fcimport
 
