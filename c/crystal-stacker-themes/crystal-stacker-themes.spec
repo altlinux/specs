@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           crystal-stacker-themes
 Version:        1.0
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Themes for the Crystal Stacker game
 Group:          Games/Other
 License:        Crystal Stacker
@@ -52,6 +52,9 @@ install -p -m 644 *.xm *.cth $RPM_BUILD_ROOT%{_datadir}/crystal-stacker
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11
 - update to new release by fcimport
 
