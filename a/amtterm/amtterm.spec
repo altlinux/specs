@@ -4,7 +4,7 @@ BuildRequires: perl(SOAP/Lite.pm)
 Name:         amtterm
 License:      GPLv2+
 Version:      1.3
-Release:      alt2_9
+Release:      alt2_10
 Summary:      Serial-over-lan (sol) client for Intel AMT
 Group:        Networking/WWW
 URL:          http://www.kraxel.org/blog/linux/amtterm/
@@ -43,6 +43,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ \
 %{_datadir}/applications/gamt.desktop
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_10
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_9
 - update to new release by fcimport
 
