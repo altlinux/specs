@@ -1,6 +1,6 @@
 Name:           bsp
 Version:        5.2
-Release:        alt2_11
+Release:        alt2_13
 Summary:        The most popular node builder for Doom
 
 Group:          Games/Other
@@ -33,7 +33,7 @@ mv bsp.6.tmp bsp.6
 
 %build
 %configure
-make CFLAGS='%{optflags}' %{?_smp_mflags}
+make CFLAGS='%{optflags}' LIBS="-lm" %{?_smp_mflags}
 
 
 %install
@@ -42,12 +42,16 @@ install -D -p -m 644 bsp.6 $RPM_BUILD_ROOT/%{_mandir}/man6/bsp.6
 
 
 %files
-%doc AUTHORS ChangeLog COPYING INSTALL NEWS README visplane.txt test-wads/
+%doc AUTHORS ChangeLog INSTALL NEWS README visplane.txt test-wads/
+%doc COPYING
 %{_bindir}/bsp
 %{_mandir}/man6/bsp.6*
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 5.2-alt2_13
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 5.2-alt2_11
 - update to new release by fcimport
 
