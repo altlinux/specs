@@ -1,7 +1,7 @@
 
 Name: 	 xrdp
 Version: 0.6.1
-Release: alt1
+Release: alt1.1
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -72,6 +72,7 @@ desktop clients.
 cp %SOURCE5 %name-init
 
 subst "s|/usr/lib|%_libdir|g" %name-init
+find . -type f -name Makefile.am -exec subst "s|\${localstatedir}\/run|/var/run|g" {} \;
 
 # remove unused modules from xrdp login combobox
 sed -i -e '/\[xrdp2\]/,$d' xrdp/xrdp.ini
@@ -167,6 +168,9 @@ install -Dp -m 755 sesman/startwm-bash.sh %buildroot%_sysconfdir/xrdp/startwm-ba
 
 
 %changelog
+* Mon Sep 21 2015 L.A. Kostis <lakostis@altlinux.ru> 0.6.1-alt1.1
+- fix pidfile path and sysv init script.
+
 * Fri Feb 07 2014 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1
 - New version (ALT #19193)
 - Use patches and init scripts from Fedora and Debian (ALT #27853)
