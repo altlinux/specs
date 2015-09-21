@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-HasVersion
 Version:        0.012
-Release:        alt3_11
+Release:        alt3_13
 Summary:        Check Perl modules have version numbers
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.012-alt3_13
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.012-alt3_11
 - update to new release by fcimport
 
