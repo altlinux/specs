@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-oc
 Summary: Occitan hunspell dictionaries
 Version: 0.5
-Release: alt2_9
+Release: alt2_10
 Source: https://addons.mozilla.org/en-US/firefox/downloads/file/34604/occitan-languedocien-%{version}-fx+tb+sm.xpi
 Group: Text tools
 URL: https://addons.mozilla.org/en-US/firefox/addon/8235
@@ -35,6 +35,9 @@ cp -p dictionaries/oc-FR.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/oc_FR.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2_10
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2_9
 - update to new release by fcimport
 
