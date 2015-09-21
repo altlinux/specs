@@ -2,7 +2,7 @@
 
 Name: openstack-nova
 Version: 2015.1.1
-Release: alt2
+Release: alt3
 Summary: OpenStack Compute (nova)
 
 Group: System/Servers
@@ -140,6 +140,7 @@ Requires: genisoimage
 Requires: bridge-utils
 Requires: sysfsutils
 Requires: guestfs-data python-module-libguestfs libguestfs-tools
+Requires: polkit
 
 %description compute
 OpenStack Compute (codename Nova) is open source software designed to
@@ -759,6 +760,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Sep 21 2015 Lenar Shakirov <snejok@altlinux.ru> 2015.1.1-alt3
+- Added Requires: polkit
+
 * Tue Sep 15 2015 Lenar Shakirov <snejok@altlinux.ru> 2015.1.1-alt2
 - Added Requires: python-module-{ldap,SQLAlchemy,PasteDeploy}
 
