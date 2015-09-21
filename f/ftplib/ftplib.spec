@@ -1,6 +1,6 @@
 Name:		ftplib
 Version:	3.1
-Release:	alt2_13
+Release:	alt2_14
 Summary:	Library of FTP routines
 Group:		System/Libraries
 License:	LGPLv2+
@@ -75,6 +75,9 @@ done
 %{_bindir}/qftp
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2_14
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2_13
 - update to new release by fcimport
 
