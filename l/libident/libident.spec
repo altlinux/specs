@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libident
 Version:        0.32
-Release:        alt2_11
+Release:        alt2_12
 Summary:        New LibIdent C library
 Group:          System/Libraries
 License:        Public Domain
@@ -105,6 +105,9 @@ fi
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_12
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_11
 - update to new release by fcimport
 
