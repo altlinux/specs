@@ -4,7 +4,7 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Cwd.pm) perl(Exporter.pm) p
 # END SourceDeps(oneline)
 Name:           perl-accessors
 Version:        1.01
-Release:        alt1_16
+Release:        alt1_18
 Summary:        Create accessor methods in caller's package
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -44,6 +44,9 @@ find $RPM_BUILD_ROOT%{perl_vendor_privlib} -name *.pm | xargs chmod a-x
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_18
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_16
 - update to new release by fcimport
 
