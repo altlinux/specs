@@ -1,25 +1,22 @@
 Group: Text tools
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(IPC/Open2.pm)
-# END SourceDeps(oneline)
 Name:           colordiff
-Version:        1.0.13
-Release:        alt1_6
+Version:        1.0.15
+Release:        alt1_1
 Summary:        Color terminal highlighter for diff files
 
 License:        GPLv2+
 URL:            http://www.colordiff.org/
 Source0:        http://www.colordiff.org/%{name}-%{version}.tar.gz
-# Non-upstream, better default colors for Fedora default desktop themes
-Patch0:         %{name}-1.0.6-colors.patch
+# https://github.com/daveewart/colordiff/pull/21
+Patch0:         https://github.com/scop/colordiff/commit/6f719aa.patch
 
 BuildArch:      noarch
-Requires:       xz
-Requires:       bzip2
-Requires:       gzip
-Requires:       less
 Requires:       diffutils
-Requires:       which
+Requires:       less
+Requires:     bzip2
+Requires:     gzip
+Requires:     xz
+Requires:       curl
 Provides:       cdiff
 Source44: import.info
 
@@ -31,7 +28,6 @@ pretty syntax highlighting.  Color schemes can be customized.
 %prep
 %setup -q
 %patch0 -p1
-mv colordiffrc colordiffrc-darkbg ; cp -p colordiffrc-lightbg colordiffrc
 
 # those are defaults of old 1.0.8a-alt1 by Pavlov Konstantin <thresh@>
 sed -i -e 's/banner=yes/banner=no/' colordiffrc-*
@@ -49,7 +45,7 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
 %files
 %{!?_licensedir:%global license %%doc}
 %doc COPYING
-%doc BUGS CHANGES colordiffrc-darkbg colordiffrc-lightbg README
+%doc BUGS CHANGES colordiffrc colordiffrc-gitdiff colordiffrc-lightbg README
 %config(noreplace) %{_sysconfdir}/colordiffrc
 %{_bindir}/cdiff
 %{_bindir}/colordiff
@@ -58,6 +54,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.15-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_6
 - update to new release by fcimport
 
