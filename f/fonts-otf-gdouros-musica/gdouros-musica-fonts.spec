@@ -1,52 +1,62 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gdouros-musica-fonts
 %global fontname gdouros-musica
-%global fontconf 62-%{fontname}.conf
+%global fontconf 65-%{fontname}.conf
+%global checkout 20150430
 
 Name:           fonts-otf-gdouros-musica
-Version:        2.52
-Release:        alt3_8
+Version:        3.12
+Release:        alt1_0.4.20150430
 Summary:        A font for musical symbols
 
-Group:          System/Fonts/True type
-License:        Copyright only
+# https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
+# "in lieu of a licence:
+# Fonts and documents in this site are not pieces of property or merchandise
+# items; they carry no trademark, copyright, license or other market tags;
+# they are free for any use. George Douros"
+License:        Public Domain
 URL:            http://users.teilar.gr/~g1951d/
 Source0:        http://users.teilar.gr/~g1951d/Musica.zip
-Source1:        %{oldname}-fontconfig.conf
+Source1:        http://users.teilar.gr/~g1951d/Musica.pdf
+Source2:        %{oldname}-fontconfig.conf
+Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
+BuildRequires:  libappstream-glib
 Source44: import.info
 
 %description
-Musica covers the following scripts and symbols supported by The Unicode
-Standard 5.2: Basic Latin, Greek and Coptic, some Punctuation and other
-Symbols, Byzantine Musical Symbols, (Western) Musical Symbols, Archaic Greek
-Musical Notation.
+Musica is a work-font for Ancient Greek, Byzantine and Western musical symbols.
+The font also covers basic Latin, along with a few common symbols. Besides
+musical notation glyphs supported by the Unicode Standard 7.0, Musica provides
+extra symbols in Plane 15.
 
 It was created by George Douros.
+
 %prep
 %setup -n %{oldname}-%{version} -q -c
-
+cp -p %{SOURCE1} .
 
 %build
 
-
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p Musica.otf %{buildroot}%{_fontdir}
+install -m 0644 -p Musica.ttf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE1} \
+install -m 0644 -p %{SOURCE2} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -82,16 +92,22 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+%check
+appstream-util validate-relax --nonet \
+      %{buildroot}/%{_datadir}/appdata/%{fontname}.metainfo.xml
+
 
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/Musica.otf
-
-%doc
-
+%{_fontbasedir}/*/%{_fontstem}/Musica.ttf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
+%doc Musica.pdf
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.12-alt1_0.4.20150430
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.52-alt3_8
 - update to new release by fcimport
 
