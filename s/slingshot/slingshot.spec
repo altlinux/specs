@@ -1,6 +1,6 @@
 Name: slingshot
 Version:  0.8.1p
-Release:  alt4_12
+Release:  alt4_13
 Summary: A Newtonian strategy game
 
 Group: Games/Other
@@ -67,6 +67,9 @@ install -p -m 664 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
 %{_datadir}/appdata/slingshot.appdata.xml
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.1p-alt4_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.1p-alt4_12
 - update to new release by fcimport
 
