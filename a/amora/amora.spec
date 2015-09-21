@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/pkg-config
 # END SourceDeps(oneline)
 Name:           amora
 Version:        1.1
-Release:        alt2_14
+Release:        alt2_15
 Summary:        A mobile remote assistant
 
 Group:          Communications
@@ -55,6 +55,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
 %{_mandir}/man8/amorad.8*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_15
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_14
 - update to new release by fcimport
 
