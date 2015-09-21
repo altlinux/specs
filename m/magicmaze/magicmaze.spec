@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ perl(Archive/Tar.pm) perl(Archive/Zip.pm)
 %define fedora 21
 Name:           magicmaze
 Version:        1.0.2
-Release:        alt2_14
+Release:        alt2_16
 Summary:        Board game featuring a maze which the players change each turn
 Group:          Games/Other
 License:        zlib and Redistributable, no modification permitted
@@ -80,6 +80,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_16
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_14
 - update to new release by fcimport
 
