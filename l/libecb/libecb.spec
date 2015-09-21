@@ -1,16 +1,17 @@
 %add_optflags %optflags_shared
-%global snapshot 20150218
+%global snapshot 20150608
 # Do not create debuginfo sub-package because there is no binary executable
 %global debug_package %{nil}
 Name:       libecb
 Version:    0.%{snapshot}
-Release:    alt1_1
+Release:    alt1_2
 Summary:    Compiler built-ins
 Group:      Development/C
 License:    BSD or GPLv2+
 URL:        http://software.schmorp.de/pkg/libecb
 # Snapshot from CVS :pserver:anonymous@cvs.schmorp.de/schmorpforge libecb 
 Source0:    %{name}-%{snapshot}.tar.xz
+BuildRequires:  coreutils
 BuildRequires:  perl-podlators
 Source44: import.info
 
@@ -19,7 +20,7 @@ This project delivers you many GCC built-ins, attributes and a number of
 generally useful low-level functions, such as popcount, expect, prefetch,
 noinline, assume, unreachable and so on.
 
-This is a dummy package. All the usefull files are delivered by %{name}-devel
+This is a dummy package. All the useful files are delivered by %{name}-devel
 package.
 
 
@@ -58,6 +59,9 @@ install -m 0644 -t %{buildroot}%{_mandir}/man3 *.3
 %{_mandir}/man3/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20150608-alt1_2
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.20150218-alt1_1
 - update to new release by fcimport
 
