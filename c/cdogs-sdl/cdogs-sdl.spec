@@ -1,17 +1,38 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: gcc-c++ libdevil-devel
+# END SourceDeps(oneline)
 Name:           cdogs-sdl
-Version:        0.4
-Release:        alt4_14
+Version:        0.5.8
+Release:        alt1_2
 Summary:        C-Dogs is an arcade shoot-em-up
 Group:          Games/Other
-License:        GPLv2+
-URL:            http://lumaki.com/code/cdogs/
-Source0:        http://icculus.org/%{name}/files/src/%{name}-%{version}.tar.bz2
+# The game-engine is GPLv2+
+# The original game art is Redistributable, no modification permitted
+# This is slowly being replaced upstream by CC art
+License:        GPLv2+ and Redistributable, no modification permitted and CC-BY and CC-BY-SA and CC0
+URL:            http://cxong.github.io/cdogs-sdl/
+# This uses git-submodules and github's foo/bat/archive/tag.tar.gz feature
+# does not deal with this. To regenerate do:
+# git clone git clone https://github.com/cxong/cdogs-sdl.git
+# cd cdogs-sdl
+# git checkout %{version}
+# git submodule init
+# git submodule update --init --recursive
+# git submodule update --recursive
+# rm -rf `find -name .git`
+# cd ..
+# mv cdogs-sdl cdogs-sdl-%{version}
+# tar cvfJ cdogs-sdl-%{version}.tar.xz cdogs-sdl-%{version}
+Source0:        cdogs-sdl-%{version}.tar.xz
 Source1:        %{name}.desktop
-Patch0:         cdogs-sdl-0.4-64bit.patch
-Patch1:         cdogs-sdl-0.4-default-cfg.patch
-Patch2:         cdogs-sdl-0.4-open.patch
-BuildRequires:  libSDL_mixer-devel desktop-file-utils
-Requires:       cdogs-data = 0.4
+Source2:        %{name}.appdata.xml
+Patch0:         cdogs-sdl-0.5.8-cmake.patch
+BuildRequires: ctest cmake libSDL_mixer-devel libSDL_image-devel ncurses-devel libphysfs-devel
+BuildRequires:  desktop-file-utils libicns-utils libappstream-glib
+Requires:       icon-theme-hicolor
+Obsoletes:      cdogs-data < 0.5
+Provides:       cdogs-data = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -23,35 +44,49 @@ C-Dogs came with several built in missions and dogfight maps. This version
 does too. The author of the DOS version of C-Dogs was Ronny Wester. We would
 like to thank Ronny for releasing the C-Dogs sources to the public.
 
+
 %prep
 %setup -q
-%patch0 -p1 -z .64bit
-%patch1 -p1 -z .cfg
-%patch2 -p1 -z .open
+%patch0 -p1
 sed -i 's/\r//' doc/original_readme.txt
-# stop this from getting installed as %%doc
-rm doc/INSTALL
+
 
 %build
-pushd src
-make %{?_smp_mflags} DATADIR=%{_datadir}/cdogs-data \
-  CFLAGS="$RPM_OPT_FLAGS -fsigned-char" I_AM_CONFIGURED=yes cdogs
-popd
+%{fedora_cmake} -DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/
+make %{?_smp_mflags}
+icns2png -x build/macosx/cdogs-icon.icns
 
 %install
-# DIY, as make install wants to install the data too, and thats in another rpm
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
-install -m 755 src/cdogs $RPM_BUILD_ROOT%{_bindir}
+%makeinstall_std
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
+
+for i in 16 32 48 128; do
+  mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${i}x${i}/apps
+  install -m 644 cdogs-icon_${i}x${i}x32.png \
+    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${i}x${i}/apps/%{name}.png
+done
+
+
 %files
 %doc doc/*
-%{_bindir}/cdogs
+%{_bindir}/%{name}*
+%{_datadir}/%{name}
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
+
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.5.8-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt4_14
 - update to new release by fcimport
 
