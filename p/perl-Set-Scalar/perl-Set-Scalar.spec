@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Set-Scalar
 Version:        1.29
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Basic set operations
 Group:          Development/Perl
 License:        GPL+ or Artistic
@@ -38,6 +38,9 @@ make test
 %{perl_vendor_privlib}/Set/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_3
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_1
 - update to new release by fcimport
 
