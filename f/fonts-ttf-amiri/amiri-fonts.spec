@@ -20,7 +20,7 @@ O.U.O.U.O. O.O.U.U.O.O.O.O. O.U.O.U.U.O.U.O.O. U.U.U. U.U.O. O.O.O. O.U.O.O. O.O
 
 Name:    fonts-ttf-amiri
 Version: 0.107
-Release: alt1_2
+Release: alt1_3
 License: OFL
 
 Source0: http://downloads.sourceforge.net/project/amiri/%{fontname}-%{version}.zip
@@ -160,6 +160,9 @@ fi
 %doc documentation/* OFL.txt OFL-FAQ.txt
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.107-alt1_3
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.107-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
