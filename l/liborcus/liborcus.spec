@@ -1,6 +1,6 @@
 Name: liborcus
-Version: 0.7.0
-Release: alt2.1
+Version: 0.9.2
+Release: alt1
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
@@ -9,13 +9,11 @@ Url: http://gitorious.org/orcus
 Source: %name-%version.tar.bz2
 Patch: liborcus-alt-boost.patch
 
-%define libver 0.8
+%define libver 0.10
 
 # Automatically added by buildreq on Thu Jul 25 2013
 # optimized out: boost-devel boost-intrusive-devel libstdc++-devel pkg-config
 BuildRequires: boost-devel-headers boost-interprocess-devel boost-program_options-devel gcc-c++ zlib-devel boost-filesystem-devel mdds-devel
-
-BuildRequires: chrpath
 
 %description
 %name is a standalone file import filter library for spreadsheet
@@ -66,8 +64,8 @@ sed -i \
 
 %install
 make install DESTDIR=%buildroot
-chrpath -d %buildroot/%_libdir/*.so.*.*.*
 rm -f %buildroot/%_libdir/*.la
+ln -s %name-%libver.pc %buildroot%_pkgconfigdir/%name.pc
 
 %files
 %doc AUTHORS
@@ -76,12 +74,15 @@ rm -f %buildroot/%_libdir/*.la
 %files devel
 %_includedir/%name-%libver
 %_libdir/%name-*%libver.so
-%_libdir/pkgconfig/%name-*%libver.pc
+%_libdir/pkgconfig/%{name}*.pc
 
 %files tools
 %_bindir/orcus-*
 
 %changelog
+* Mon Sep 21 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.2-alt1
+- Updated to 0.9.2.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.7.0-alt2.1
 - rebuild with boost 1.57.0
 
