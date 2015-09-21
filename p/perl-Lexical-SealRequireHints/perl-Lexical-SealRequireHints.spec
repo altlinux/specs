@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/
 # END SourceDeps(oneline)
 Name:           perl-Lexical-SealRequireHints
 Version:        0.009
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Prevent leakage of lexical hints
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -59,6 +59,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1_3
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1_1
 - update to new release by fcimport
 
