@@ -1,7 +1,7 @@
 Name:		lpairs
 Summary:	Classical memory game with cards
 Version:	1.0.4
-Release:	alt3_14
+Release:	alt3_16
 License:	GPLv2+ and CC-BY-SA and Freely redistributable without restriction
 Group: 		Games/Other
 URL:		http://lgames.sourceforge.net/index.php?project=LPairs
@@ -31,6 +31,11 @@ will be counted but there is no highscore chart or limit to this.
 %patch1 -p0
 
 %build
+# FIXME: Package suffers from c11/inline issues
+# Workaround by appending -std=gnu89 to CFLAGS
+# Proper fix would be to fix the source-code
+CFLAGS="${RPM_OPT_FLAGS} -std=gnu89"
+
 %configure inst_dir="%{_datadir}/%{name}"
 make %{?_smp_mflags}
 
@@ -56,6 +61,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_16
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_14
 - update to new release by fcimport
 
