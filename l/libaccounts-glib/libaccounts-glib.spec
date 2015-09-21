@@ -4,15 +4,13 @@ BuildRequires: /usr/bin/gtkdocize /usr/bin/xmllint /usr/bin/xsltproc docbook-dtd
 %add_optflags %optflags_shared
 Name:		libaccounts-glib
 Version:	1.18
-Release:	alt1_1
+Release:	alt1_2
 Group:		System/Libraries
 Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
-URL:		https://code.google.com/p/accounts-sso/
+URL:        https://gitlab.com/accounts-sso/libaccounts-glib
 
-# Source available from https://drive.google.com/drive/#folders/0B8fX9XOwH_g4alFsYV8tZTI4VjQ
-# as per https://groups.google.com/forum/#!topic/accounts-sso-announce/8MserPgUV5M
-Source0:	%{name}-%{version}.tar.gz
+Source0:    https://gitlab.com/accounts-sso/%{name}/repository/archive.tar.gz?ref=VERSION_%{version}#/%{name}-%{version}.tar.gz
 
 BuildRequires:	libdbus-glib-devel
 BuildRequires:	libxml2-devel
@@ -101,6 +99,9 @@ rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 %doc %{_datadir}/gtk-doc/html/libaccounts-glib/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1_2
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1_1
 - update to new release by fcimport
 
