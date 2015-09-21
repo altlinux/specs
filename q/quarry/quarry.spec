@@ -3,21 +3,19 @@ BuildRequires: /usr/bin/scrollkeeper-config pkgconfig(gthread-2.0) pkgconfig(gtk
 # END SourceDeps(oneline)
 Name:           quarry
 Version:        0.2.0
-Release:        alt5_12
+Release:        alt5_18
 Summary:        A multi-purpose board game GUI
 
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://home.gna.org/quarry/
 Source0:        http://download.gna.org/quarry/quarry-%{version}.tar.gz
+Patch0:         quarry-format-security.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  librsvg-devel
-BuildRequires:	gtk2-devel
+BuildRequires:  gtk2-devel
 BuildRequires:  scrollkeeper
-#Requires:       
-Requires(post):         scrollkeeper
-Requires(postun):       scrollkeeper
 Source44: import.info
 
 %description
@@ -30,9 +28,11 @@ programs.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
+export CFLAGS="%{optflags} -std=gnu89"
 %configure --disable-scrollkeeper-update
 make %{?_smp_mflags}
 
@@ -49,6 +49,16 @@ desktop-file-install \
 
 %find_lang %{name}
 
+%post
+/bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
+
+
+%postun
+if [ $1 -eq 0 ]; then
+/bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
+
+fi
+
 %files -f %{name}.lang
 %doc AUTHORS ChangeLog COPYING COPYING-DOC NEWS README THANKS TODO
 %{_bindir}/quarry
@@ -60,6 +70,9 @@ desktop-file-install \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_18
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_12
 - update to new release by fcimport
 
