@@ -1,15 +1,16 @@
 %def_enable static
 
 Name: libusb
-Version: 1.0.19
+Version: 1.0.20
 Release: alt1
+
 Summary: Libusb is a library which allows userspace access to USB devices
 License: LGPL
 Group: System/Libraries
-Url: http://sourceforge.net/projects/libusb/
 
-Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Url: http://libusb.info/
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: doxygen libudev-devel
 
@@ -22,8 +23,8 @@ Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
-This package contains header files needed for the development of programs that
-use libusb
+This package contains header files needed for the development
+of programs that use libusb
 
 %package devel-static
 Summary: Libusb is a library which allows userspace access to USB devices
@@ -43,7 +44,7 @@ Requires: %name = %version-%release
 This package contains documentation for %name
 
 %prep
-%setup -q
+%setup
 %patch -p1
 mkdir m4
 
@@ -55,7 +56,7 @@ mkdir m4
 %make -C doc docs
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 mkdir -p %buildroot/%_lib
 for f in %buildroot%_libdir/lib*.so; do
@@ -82,6 +83,10 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %doc doc/html
 
 %changelog
+* Sat Sep 19 2015 Michael Shigorin <mike@altlinux.org> 1.0.20-alt1
+- 1.0.20 (closes: #21313)
+- minor spec cleanup
+
 * Tue Jul 08 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.0.19-alt1
 - 1.0.19
 
