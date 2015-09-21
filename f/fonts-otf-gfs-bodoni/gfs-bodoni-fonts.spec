@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-bodoni
 Version: 20070415
-Release: alt3_18
+Release: alt3_19
 Summary: GFS Bodoni fonts
 
 License:   OFL
@@ -103,6 +103,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_19
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_18
 - update to new release by fcimport
 
