@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.44
+%define ver_major 1.46
 %def_enable doctool
 
 Name: gobject-introspection
@@ -7,7 +7,7 @@ Version: %ver_major.0
 Release: alt1
 
 Summary: Introspection system for GObject-based libraries
-Group: Development/C
+Group: System/Libraries
 License: GPLv2+, LGPLv2+, MIT
 URL: https://live.gnome.org/GObjectIntrospection
 
@@ -20,7 +20,7 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
-BuildPreReq: libgio-devel >= 2.43.91
+BuildPreReq: libgio-devel >= 2.45.2
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel libgio-devel
 BuildRequires: python-devel python-modules-ctypes python-modules-compiler rpm-build-gir
 %{?_enable_doctool:BuildRequires: python-module-mako}
@@ -30,10 +30,19 @@ GObject introspection provides tools and libraries to help manage its
 common metadata format for representing GObject-based C APIs, designed
 for bindings, documentation tools and API verification.
 
+%package x11
+Summary: x11-dependent typelibs
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description x11
+This package provides x11-dependent typelibs from %name package.
+
 %package devel
 Summary: Libraries and headers for gobject-introspection
 Group: Development/C
 Requires: %name = %version-%release libgio-devel rpm-build-gir
+Requires: %name-x11 = %version-%release
 Provides: gir-repository-devel = %version-%release
 Obsoletes: gir-repository-devel
 
@@ -77,7 +86,26 @@ gobject-introspection.
 
 %files
 %_libdir/lib*.so.*
-%_libdir/girepository-1.0
+%dir %_typelibdir/
+%_typelibdir/DBus-1.0.typelib
+%_typelibdir/DBusGLib-1.0.typelib
+%_typelibdir/GIRepository-2.0.typelib
+%_typelibdir/GL-1.0.typelib
+%_typelibdir/GLib-2.0.typelib
+%_typelibdir/GModule-2.0.typelib
+%_typelibdir/GObject-2.0.typelib
+%_typelibdir/Gio-2.0.typelib
+%_typelibdir/cairo-1.0.typelib
+%_typelibdir/fontconfig-2.0.typelib
+%_typelibdir/freetype2-2.0.typelib
+%_typelibdir/libxml2-2.0.typelib
+%_typelibdir/win32-1.0.typelib
+
+%files x11
+%_typelibdir/xfixes-4.0.typelib
+%_typelibdir/xft-2.0.typelib
+%_typelibdir/xlib-2.0.typelib
+%_typelibdir/xrandr-1.3.typelib
 
 %files devel
 %_includedir/%name-1.0
@@ -86,7 +114,7 @@ gobject-introspection.
 %dir %_libdir/%name
 %_libdir/%name/giscanner/
 %_pkgconfigdir/*.pc
-%_datadir/gir-1.0
+%_girdir/
 %_datadir/%name-1.0
 %_datadir/aclocal/*.m4
 %_man1dir/*.1*
@@ -95,6 +123,9 @@ gobject-introspection.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.46.0-alt1
+- 1.46.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.44.0-alt1
 - 1.44.0
 

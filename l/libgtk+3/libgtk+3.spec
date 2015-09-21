@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk+
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 3.0
 %define binary_ver 3.0.0
 %define _libexecdir %_prefix/libexec
@@ -20,7 +20,7 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -35,12 +35,13 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=740554
-Patch1: gtk+-3.17.4-0-bgo740554.patch
+# https://bug740554.bugzilla-attachments.gnome.org/attachment.cgi?id=308706
+Patch1: gtk+-3.17.4-bgo740554.patch
 
-%define glib_ver 2.43.4
+%define glib_ver 2.45.0
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
-%define pango_ver 1.36.7
+%define pango_ver 1.37.1
 %define atk_ver 2.15.1
 %define atspi_ver 2.8.1
 %define pixbuf_ver 2.30.0
@@ -322,6 +323,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %doc AUTHORS NEWS.bz2 README
 
 %files devel
+%_bindir/gtk-builder-tool
 %_includedir/gtk-%api_ver/
 %_libdir/libgdk-3.so
 %_libdir/libgtk-3.so
@@ -333,6 +335,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %dir %_datadir/gtk-%api_ver
 %_datadir/gtk-%api_ver/gtkbuilder.rng
 %_datadir/aclocal/gtk-%api_ver.m4
+%_man1dir/gtk-builder-tool.1*
 
 %if_enabled wayland
 %_pkgconfigdir/gtk+-wayland-%api_ver.pc
@@ -405,6 +408,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Fri Sep 18 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.7-alt1
 - 3.16.7
 

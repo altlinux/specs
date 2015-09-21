@@ -1,9 +1,9 @@
 %define _name org.gnome.sound-juicer
-%define ver_major 3.16
+%define ver_major 3.18
 %define gst_api_ver 1.0
 
 Name: sound-juicer
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Clean and lean CD ripper
@@ -14,7 +14,7 @@ Url: http://live.gnome.org/SoundJuicer
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver
 Requires: iso-codes
 
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildPreReq: gcc-c++ gnome-common
 BuildRequires: intltool yelp-tools desktop-file-utils libappstream-glib-devel
@@ -63,6 +63,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

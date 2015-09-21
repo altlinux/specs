@@ -1,10 +1,10 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
 Name: gnome-initial-setup
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -20,7 +20,8 @@ Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 %define secret_ver 0.18
 %define geoclue_ver 2.1.2
 
-Requires: dconf gdm geoclue2 >= %geoclue_ver ibus
+Requires: gnome-shell gdm dconf geoclue2 >= %geoclue_ver
+Requires: ibus gnome-keyring gnome-getting-started-docs
 
 BuildRequires: intltool
 BuildRequires: libgio-devel >= %glib_ver
@@ -78,6 +79,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Mon May 18 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
 - 3.16.3
 

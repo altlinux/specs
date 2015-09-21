@@ -5,7 +5,7 @@
 %def_enable gtk_doc
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Library integrating clutter with GTK+3
@@ -16,7 +16,7 @@ Url: http://www.clutter-project.org/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 #Source: %_name-%version.tar
 
-BuildRequires: libgtk+3-devel >= 3.6.0 libclutter-devel >= 1.22.4 gtk-doc
+BuildRequires: libgtk+3-devel >= 3.6.0 libclutter-devel >= 1.23.7 gtk-doc
 %{?_enable_introspection:BuildRequires: libjson-glib-gir-devel libclutter-gir-devel libgtk+3-gir-devel}
 
 %description
@@ -104,6 +104,9 @@ touch AUTHORS
 %endif
 
 %changelog
+* Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
+- 1.6.4
+
 * Tue Jun 30 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
 - 1.6.2
 

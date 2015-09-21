@@ -1,9 +1,9 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 1.0
 %def_enable python
 
 Name: gitg
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: git repository viewer targeting gtk+/GNOME
@@ -13,6 +13,7 @@ URL: http://trac.novowork.com/gitg/
 
 #Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Patch: gitg-3.18.0-alt-makefile.patch
 
 PreReq: lib%name = %version-%release
 
@@ -24,11 +25,10 @@ AutoReqProv: nopython
 %define __python %nil
 %endif
 
-
 %define glib_ver 2.38
 %define gtk_ver 3.12
 %define gtksourceview_ver 3.10
-%define git2_ver 0.22.8
+%define git2_ver 0.23.6
 %define webkit_ver 2.6.0
 %define gtkspell_ver 3.0.3
 %define peas_ver 1.5.0
@@ -102,13 +102,13 @@ library.
 
 %prep
 %setup
-subst 's/name=\"WebKit2\" version=\"3.0\"/name="WebKit2" version="4.0"/' Gitg-%api_ver.gir
+%patch
 
 %build
-%autoreconf
+#%autoreconf
 %configure --disable-static \
 	%{subst_enable python}
-%make_build
+%make
 
 %install
 %makeinstall_std
@@ -158,6 +158,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Thu Apr 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

@@ -12,7 +12,7 @@
 
 Name: %_name-%abi_ver
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -181,6 +181,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Mon Aug 24 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt3
+- rebuilt against libebook-contacts-1.2.so.2
+
 * Tue Feb 24 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt2
 - rebuilt against libebook-contacts-1.2.so.1
 

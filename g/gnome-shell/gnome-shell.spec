@@ -1,10 +1,10 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.16
+%define ver_major 3.18
 %define gst_api_ver 1.0
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -23,13 +23,14 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 AutoReqProv: nopython
 %define __python %nil
 
+%define session_ver 3.16
 %define clutter_ver 1.21.5
 %define gjs_ver 1.39.0
-%define mutter_ver 3.16.3
-%define gtk_ver 3.15.0
+%define mutter_ver 3.18.0
+%define gtk_ver 3.16.0
 %define gio_ver 2.37.0
 %define gstreamer_ver 0.11.92
-%define eds_ver 3.5.3
+%define eds_ver 3.17.2
 %define telepathy_ver 0.17.5
 %define telepathy_logger_ver 0.2.4
 %define polkit_ver 0.100
@@ -47,7 +48,7 @@ AutoReqProv: nopython
 
 Requires: %name-data = %version-%release
 Requires: mutter-gnome >= %mutter_ver
-Requires: gnome-session >= %ver_major
+Requires: gnome-session >= %session_ver
 Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
 Requires: at-spi2-atk ca-certificates polkit caribou
 # since 3.11.x requires org.gnome.login-screen schema
@@ -57,7 +58,7 @@ Requires: libgnomekbd
 # network.js requires
 Requires: gnome-control-center
 # since 3.16
-# Requires: polari
+Requires: polari
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(AccountsService)
@@ -233,6 +234,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Thu Jul 02 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
 - 3.16.3
 

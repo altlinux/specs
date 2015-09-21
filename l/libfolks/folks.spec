@@ -10,16 +10,16 @@
 %def_enable zeitgeist
 
 Name: lib%_name
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.2
+Release: alt0.1
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
 License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Folks
 
-Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
-#Source: %_name-%version.tar
+#Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: %_name-%version.tar
 
 %define glib_ver 2.40.0
 %define tp_glib_ver 0.19.9
@@ -35,7 +35,7 @@ BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: vala-tools
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel >= %zeitgeist_ver}
 %{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel libgee0.8-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel libgee0.8-gir-devel libtracker-gir-devel}
 %{?_enable_vala:BuildRequires:  libvala-devel >= %vala_ver vala >= %vala_ver vala-tools >= %vala_ver libtelepathy-glib-vala evolution-data-server-vala}
 %{?_enable_libsocialweb:BuildRequires: libsocialweb-devel libsocialweb-gir-devel %{?_enable_vala:libsocialweb-vala}}
 
@@ -175,6 +175,12 @@ the functionality of the Folks library.
 
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt0.1
+- 0.11.2_46e5abf5
+
+* Sat Aug 22 2015 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt2
+- rebuilt with eds/cheese-3.17 libraries
+
 * Tue May 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
 - 0.11.1
 

@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.10
+%define ver_major 3.18
 %define api_ver 3.0
 
 Name: ghex
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Binary editor for GNOME
@@ -55,12 +55,11 @@ developing applications that use GtkGHex library.
 %find_lang --with-gnome --output=%name.lang %name %name-%api_ver
 
 %files -f %name.lang
-%_bindir/*
+%_bindir/%name
 %_datadir/applications/%name.desktop
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.GHex.gschema.xml
 %_iconsdir/hicolor/*/apps/*
-%_iconsdir/HighContrast/*x*/apps/%name.png
 %_libdir/*.so.*
 %_datadir/appdata/%name.appdata.xml
 %doc AUTHORS NEWS README
@@ -71,6 +70,9 @@ developing applications that use GtkGHex library.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Sep 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

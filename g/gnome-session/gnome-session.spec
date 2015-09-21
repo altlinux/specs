@@ -1,4 +1,4 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
@@ -210,7 +210,7 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_datadir/%name/sessions/gnome-dummy.session
 %_datadir/xsessions/gnome.desktop
 %_iconsdir/gnome.svg
-%_iconsdir/hicolor/*/apps/session-properties.*
+%_iconsdir/hicolor/*/apps/session-properties*
 #%config %_sysconfdir/X11/wmsession.d/02Gnome
 %config %_datadir/glib-2.0/schemas/org.gnome.SessionManager.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
@@ -235,6 +235,9 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_datadir/%name/sessions/gnome-wayland.session
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

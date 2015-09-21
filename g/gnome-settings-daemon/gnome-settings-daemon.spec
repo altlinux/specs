@@ -1,4 +1,4 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -44,6 +44,7 @@ Requires: system-config-printer-udev
 Requires: rfkill
 Requires: geoclue2 >= %geoclue_ver
 Requires: xkeyboard-config
+Requires: iio-sensor-proxy
 
 # From configure.ac
 BuildPreReq: glib2-devel >= %glib_ver
@@ -206,6 +207,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue Jul 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
 - 3.16.3
 

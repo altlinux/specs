@@ -14,7 +14,7 @@
 
 Name: rhythmbox
 Version: %ver_major.1
-Release: alt2%rev
+Release: alt3%rev
 
 Summary: Music Management Application
 License: GPL
@@ -485,6 +485,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sat Sep 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt3
+- rebuilt for gnome-3.18
+
 * Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt2
 - rebuilt against libgrilo-0.2.so.10
 

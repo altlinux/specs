@@ -1,5 +1,5 @@
-%define ver_major 3.16
-%define ver_base 3.16
+%define ver_major 3.18
+%define ver_base 3.18
 %define gst_api_ver 1.0
 
 %def_disable static
@@ -17,7 +17,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -44,7 +44,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.16.5
+%define eds_ver 3.18.0
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.8.4
@@ -315,6 +315,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Mon Aug 10 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.5-alt1
 - 3.16.5
 

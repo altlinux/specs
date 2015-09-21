@@ -1,4 +1,4 @@
-%define ver_major 3.16
+%define ver_major 3.17
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -7,7 +7,7 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.0
+Version: %ver_major.91
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -29,7 +29,7 @@ Patch: gnome-keyring-3.14.0-alt-lfs.patch
 PreReq: libcap-utils
 Requires: libp11-kit >= %p11kit_ver
 
-# From configure.in
+# From configure.ac
 BuildPreReq: gnome-common libgio-devel >= %glib_ver
 BuildPreReq: intltool >= 0.35.0 gtk-doc xsltproc
 BuildPreReq: libdbus-devel >= %dbus_ver
@@ -80,7 +80,7 @@ and start the keyring daemon.
 %make_build
 
 %check
-#xvfb-run %make check
+#%make check
 
 %install
 %makeinstall_std
@@ -97,7 +97,7 @@ setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 %_datadir/dbus-1/services/org.gnome.keyring.service
 %_datadir/dbus-1/services/org.freedesktop.secrets.service
 %_sysconfdir/xdg/autostart/*.desktop
-%config %_datadir/glib-2.0/schemas/org.gnome.crypto.cache.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.crypto.cache.gschema.xml
 %_datadir/GConf/gsettings/org.gnome.crypto.cache.convert
 %_datadir/p11-kit/modules/gnome-keyring.module
 %_libdir/gnome-keyring/
@@ -117,6 +117,9 @@ setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Sat Sep 05 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.91-alt1
+- 3.17.91
+
 * Wed Apr 08 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

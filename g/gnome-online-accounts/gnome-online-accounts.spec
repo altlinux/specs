@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.16
+%define ver_major 3.18
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -14,12 +14,13 @@
 %def_enable pocket
 %def_enable media_server
 %def_enable foursquare
+%def_enable lastfm
 
 %def_enable gtk_doc
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
@@ -125,6 +126,7 @@ NOCONFIGURE=1 ./autogen.sh
 	%{?_enable_windows_live:--enable-windows-live} \
 	%{?_enable_media_server:--enable-media-server} \
 	%{subst_enable foursquare} \
+	%{subst_enable lastfm} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
@@ -136,17 +138,15 @@ NOCONFIGURE=1 ./autogen.sh
 
 %files -f %name.lang
 %_libexecdir/goa-daemon
+%_libexecdir/goa-identity-service
 %_datadir/%name/
+%_datadir/dbus-1/services/org.gnome.Identity.service
 %_datadir/dbus-1/services/org.gnome.OnlineAccounts.service
 %_datadir/glib-2.0/schemas/org.gnome.online-accounts.gschema.xml
 %_datadir/icons/hicolor/*/*/*.png
+%{?_enable_telepathy:%_iconsdir/hicolor/scalable/apps/im-*.svg}
 %_man8dir/goa-daemon.*
-%doc NEWS
-
-%if_enabled telepathy
-#%_datadir/glib-2.0/schemas/org.gnome.telepathy-account-widgets.gschema.xml
-%_iconsdir/hicolor/scalable/apps/im-*.svg
-%endif
+%doc README NEWS
 
 %files -n lib%name
 %_libdir/libgoa-%api_ver.so.*
@@ -175,6 +175,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.4-alt1
 - 3.16.4
 

@@ -1,11 +1,11 @@
 %define _name org.gnome.Documents
 %define _name1 org.gnome.Books
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.4
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -49,7 +49,7 @@ Requires: typelib(Zpj)
 %define evince_ver 3.13.3
 %define tracker_ver 0.17.2
 %define goa_ver 3.2.0
-%define gdata_ver 0.13.3
+%define gdata_ver 0.17.2
 %define soup_ver 2.41.3
 %define gi_ver 1.31.6
 
@@ -153,6 +153,9 @@ GObject introspection devel data for the %name library.
 %_datadir/appdata/%_name1.appdata.xml
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0.1-alt1
+- 3.18.0.1
+
 * Fri Sep 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.4-alt1
 - 3.16.4
 

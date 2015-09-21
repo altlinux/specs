@@ -1,12 +1,12 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.50
+%define ver_major 2.52
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
 %def_enable introspection
-%def_disable vala
+%def_enable vala
 
 Name: libsoup
 Version: %ver_major.0
@@ -221,6 +221,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.52.0-alt1
+- 2.52.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 2.50.0-alt1
 - 2.50.0
 

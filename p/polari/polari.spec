@@ -1,8 +1,8 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define _name org.gnome.Polari
 
 Name: polari
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Internet Relay Chat client for GNOME
@@ -25,13 +25,14 @@ Requires: typelib(GLib)
 Requires: typelib(GObject)
 Requires: typelib(Gtk)
 Requires: typelib(Pango)
+Requires: typelib(PangoCairo)
 Requires: typelib(Polari)
 Requires: typelib(Soup)
 Requires: typelib(TelepathyGLib)
 Requires: typelib(TelepathyLogger)
 
 %set_typelibdir %_libdir/%name/girepository-1.0
-%define gtk_ver 3.15.6
+%define gtk_ver 3.16
 
 BuildRequires: gtk-doc gnome-common intltool desktop-file-utils
 BuildRequires: libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel
@@ -72,6 +73,9 @@ with GNOME 3 Desktop.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed Apr 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

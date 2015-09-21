@@ -1,4 +1,4 @@
-%define ver_major 3.16
+%define ver_major 3.17
 %define panel_api_ver 5.0
 %def_enable frequency_selector
 %def_disable mini_commander
@@ -7,7 +7,7 @@
 %def_with upower
 
 Name: gnome-applets
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -23,7 +23,7 @@ Patch: %name-2.9.90-alt-modemlights.patch
 # From configure.ac
 %define gtk_ver 3.15.2
 %define glib_ver 2.27.5
-%define gnome_panel_ver 3.15.2
+%define gnome_panel_ver 3.17.2
 %define libgtop_ver 2.11.92
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
@@ -31,7 +31,7 @@ Patch: %name-2.9.90-alt-modemlights.patch
 %define system_tools_backends_ver 1.1.3
 %define libnotify_ver 0.7.1
 %define icon_theme_ver 3.14
-%define libgweather_ver 3.5.1
+%define libgweather_ver 3.17.1
 %define nm_ver 0.7
 
 Requires: %name-charpick = %version-%release
@@ -447,6 +447,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_iconsdir/hicolor/scalable/*/netspeed*.svg
 
 %changelog
+* Tue Aug 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.2-alt1
+- 3.17.2
+
 * Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

@@ -1,10 +1,10 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Maps is a map application for GNOME
@@ -19,7 +19,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define glib_ver 2.39.3
 %define gjs_ver 1.43.3
 %define tracker_ver 0.16
-%define geocode_ver 3.16.2
+%define geocode_ver 3.18.0
 %define geoclue_ver 2.1.0
 %define champlain_ver 0.12.6
 
@@ -28,7 +28,6 @@ Requires: libgeocode-glib-gir >= %geocode_ver
 Requires: libchamplain-gir >= %champlain_ver
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
-Requires: typelib(cairo)
 Requires: typelib(Champlain)
 Requires: typelib(Clutter)
 Requires: typelib(Cogl)
@@ -91,6 +90,9 @@ Maps is a map application for GNOME.
 %exclude %_girdir/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sun Sep 20 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 

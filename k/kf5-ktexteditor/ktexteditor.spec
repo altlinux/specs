@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.14.0
-Release: alt1
+Release: alt1.1
 %K5init altplace
 
 Group: System/Libraries
@@ -85,6 +85,9 @@ KF5 library
 %_K5xmlgui/katepart/
 
 %changelog
+* Thu Sep 24 2015 Yuri N. Sedunov <aris@altlinux.org> 5.14.0-alt1.1
+- rebuilt against libgit2.so.23
+
 * Mon Sep 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt1
 - new version
 

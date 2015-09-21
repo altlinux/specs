@@ -2,11 +2,11 @@
 
 %define _name baobab
 %define __name org.gnome.baobab
-%define ver_major 3.16
+%define ver_major 3.17
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
-Version: %ver_major.1
+Version: %ver_major.90
 Release: alt1
 
 Summary: The GNOME disk usage analyser.
@@ -57,6 +57,9 @@ popd
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Wed Sep 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.90-alt1
+- 3.17.90
+
 * Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

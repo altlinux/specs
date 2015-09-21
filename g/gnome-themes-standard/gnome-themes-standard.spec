@@ -1,7 +1,7 @@
-%define ver_major 3.16
+%define ver_major 3.18
 
 Name: gnome-themes-standard
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of standard themes for GNOME desktop
@@ -99,6 +99,9 @@ done
 %exclude %_libdir/gtk-2.0/2.10.0/engines/libadwaita.la
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed May 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 

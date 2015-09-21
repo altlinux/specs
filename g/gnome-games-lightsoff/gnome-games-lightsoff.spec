@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name lightsoff
-%define ver_major 3.16
+%define ver_major 3.18
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Lights Off is a puzzle game
@@ -52,6 +52,9 @@ and its non-diagonal neighbors.
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed Apr 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1.1-alt1
 - 3.16.1.1
 

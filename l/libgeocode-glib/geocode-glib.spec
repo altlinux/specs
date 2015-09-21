@@ -1,10 +1,10 @@
 %define _name geocode-glib
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 1.0
 %def_enable introspection
 
 Name: lib%{_name}
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Convenience library for the Yahoo! Place Finder APIs
@@ -20,12 +20,8 @@ BuildRequires: intltool gnome-doc-utils gtk-doc
 %{?_enable_introspection:BuildRequires: libsoup-gnome-gir-devel libjson-glib-gir-devel}
 
 %description
-The %_name is a convenience library for the Yahoo! Place Finder APIs, as
-described at http://developer.yahoo.com/geo/placefinder/
-
-The Place Finder web service allows to do geocoding (finding longitude
-and latitude from an address), and reverse geocoding (finding an address
-from coordinates).
+%_name is a helper library for geocoding and reverse-geocoding
+services offered by OpenStreetMap and Nominatim.
 
 %package devel
 Summary: Development files for %_name library
@@ -33,12 +29,8 @@ Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
-The %_name is a convenience library for the Yahoo! Place
-Finder APIs, as described at http://developer.yahoo.com/geo/placefinder/
-
-The Place Finder web service allows to do geocoding (finding longitude
-and latitude from an address), and reverse geocoding (finding an address
-from coordinates).
+%_name is a helper library for geocoding and reverse-geocoding
+services offered by OpenStreetMap and Nominatim.
 
 This package contains files needed to develop with %_name.
 
@@ -78,7 +70,10 @@ GObject introspection devel data for the %_name library
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
+
+%check
+#%make check
 
 %find_lang %_name
 
@@ -104,6 +99,9 @@ GObject introspection devel data for the %_name library
 %endif
 
 %changelog
+* Sun Sep 20 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 

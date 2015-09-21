@@ -1,6 +1,6 @@
 Name: gala
 Version: 0.2.0
-Release: alt0.2
+Release: alt0.3
 
 Summary: Pantheon Window Manager
 Group: Graphical desktop/Other
@@ -99,6 +99,9 @@ install -p -m644 vapi/gdesktopenums-3.0.vapi vapi/xfixes-4.0.vapi  %buildroot%_v
 
 
 %changelog
+* Thu Sep 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt0.3
+- rebuilt against libgnome-desktop-3.so.12
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt0.2
 - new -vala subpackage
 

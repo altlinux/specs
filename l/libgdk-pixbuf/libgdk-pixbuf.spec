@@ -1,7 +1,7 @@
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
-%define ver_major 2.31
+%define ver_major 2.32
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -226,6 +226,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
+- 2.32.0
+
 * Tue Sep 01 2015 Yuri N. Sedunov <aris@altlinux.org> 2.31.7-alt1
 - 2.31.7
 

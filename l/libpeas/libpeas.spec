@@ -1,8 +1,9 @@
-%define ver_major 1.14
+%define ver_major 1.16
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
 %def_disable js
+# removed since 1.10.0
 %def_disable gjs
 %def_enable lua
 %def_enable vala
@@ -196,6 +197,12 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
+* Tue Jul 28 2015 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
+- 1.15.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
 - 1.14.0
 

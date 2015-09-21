@@ -1,9 +1,7 @@
-#%%set_automake_version 1.11
-
 %define ver_major 0.2
 
 Name: grilo
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1
 Summary: Content discovery framework
 Group: Sound
@@ -137,6 +135,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %_gtk_docdir/*
 
 %changelog
+* Sat Sep 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.14-alt1
+- 0.2.14
+
 * Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.13-alt1
 - 0.2.13
 

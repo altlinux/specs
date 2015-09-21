@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %def_enable introspection
@@ -15,10 +15,11 @@ Url: https://live.gnome.org/ThreePointOne/Features/FilePreviewing
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-#Requires: unoconv
-
 %define gst_ver 1.0
 %define clutter_ver 1.11.4
+
+Requires: gst-plugins-base%gst_api_ver
+#Requires: unoconv
 
 BuildRequires: intltool
 BuildRequires: libgtksourceview3-devel libgjs-devel
@@ -78,7 +79,7 @@ GObject introspection devel data for the Sushi library.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
@@ -92,10 +93,12 @@ GObject introspection devel data for the Sushi library.
 %_libdir/%name/girepository-1.0/Sushi-%api_ver.typelib
 %_datadir/%name/
 %_datadir/dbus-1/services/*
-%_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Wed Sep 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed May 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

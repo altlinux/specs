@@ -1,11 +1,11 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Contacts manager for GNOME
@@ -59,6 +59,9 @@ BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel intltoo
 %doc AUTHORS README NEWS
 
 %changelog
+* Wed Sep 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed Apr 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 

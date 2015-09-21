@@ -1,13 +1,13 @@
 %define _name gtksourceview
 %define api_ver 3.0
-%define ver_major 3.16
+%define ver_major 3.18
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 %def_enable vala
 
 Name: lib%{_name}3
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -25,7 +25,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 BuildPreReq: rpm-build-gnome
 
 # From configure.ac
-BuildPreReq: gnome-common
+BuildPreReq: autoconf-archive
 BuildPreReq: intltool >= %intltool_ver
 BuildPreReq: gtk-doc >= 1.11
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -34,8 +34,6 @@ BuildPreReq: libxml2-devel >= %libxml2_ver
 BuildRequires: gcc-c++ perl-XML-Parser zlib-devel libgio-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libvala-devel}
-# for check
-BuildRequires: xvfb-run
 
 %description
 GtkSourceView is a text widget that extends the standard gtk+ 2.x text
@@ -97,7 +95,7 @@ GObject introspection devel data for the GtkSourceView library
 %make_build
 
 %check
-#xvfb-run %make check
+#%make check
 
 %install
 %makeinstall_std
@@ -131,6 +129,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Sun Sep 20 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Sun Apr 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 3.0
 %define _name org.gnome.Nautilus
 
@@ -11,7 +11,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -36,7 +36,7 @@ Patch35: %name-2.22.1-umountfstab.patch
 %define glib_ver 2.43.4
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
-%define gtk_ver 3.13.2
+%define gtk_ver 3.18.0
 %define libxml2_ver 2.4.7
 %define exif_ver 0.5.12
 %define exempi_ver 2.1.0
@@ -200,6 +200,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed May 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 

@@ -1,7 +1,7 @@
-%define ver_major 3.16
+%define ver_major 3.18
 
 Name: yelp-tools
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Collection of tools for building and converting documentation
@@ -41,6 +41,9 @@ package just wraps things up in a developer-friendly way.
 %doc AUTHORS README
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

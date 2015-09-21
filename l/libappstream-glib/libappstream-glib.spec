@@ -5,7 +5,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -15,11 +15,14 @@ Url: http://www.freedesktop.org/wiki/Distributions/AppStream/
 
 Source: http://people.freedesktop.org/~hughsient/%_name/releases/%_name-%version.tar.xz
 
+%define glib_ver 2.45.8
+%define soup_ver 2.51.92
+
 Obsoletes: appdata-tools < 0.1.9
 Provides: appdata-tools = %version-%release
 
-BuildRequires: intltool glib2-devel >= 2.16.1 libgtk+3-devel
-BuildRequires: libarchive-devel libsoup-devel libgdk-pixbuf-devel
+BuildRequires: intltool glib2-devel >= %glib_ver libgtk+3-devel
+BuildRequires: libarchive-devel libsoup-devel >= %soup_ver libgdk-pixbuf-devel
 BuildRequires: libpango-devel libsqlite3-devel
 BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel
 BuildRequires: gtk-doc docbook-utils docbook-dtds
@@ -187,6 +190,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Fri Aug 14 2015 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 

@@ -2,8 +2,8 @@
 %define ver_major 2.2
 
 Name: scratch-text-editor
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major.1
+Release: alt2
 
 Summary: The text editor that works
 License: GPLv3
@@ -13,7 +13,7 @@ Url: https://launchpad.net/scratch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-Source: https://launchpad.net/%_name/2.x/%ver_major/+download/%name-%version.tgz
+Source: https://launchpad.net/%_name/freya/%version/+download/%name-%version.tar.xz
 
 Requires: contractor
 
@@ -111,6 +111,12 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Thu Sep 24 2015 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt2
+- rebuilt with vala-0.30
+
+* Thu Sep 17 2015 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Thu Sep 10 2015 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 

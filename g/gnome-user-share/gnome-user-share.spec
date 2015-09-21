@@ -1,11 +1,10 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.14
+%define ver_major 3.18
 %define httpd /usr/sbin/httpd2
 %define modules_path %_sysconfdir/httpd2/modules
-%def_enable bluetooth
 
 Name: gnome-user-share
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome user file sharing
@@ -17,13 +16,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: apache2 >= 2.2
 Requires: apache2-mod_dnssd >= 0.6
-%{?_enable_bluetooth:Requires: bluez}
 
 BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
 BuildRequires: libgtk+3-devel libnotify-devel libcanberra-gtk3-devel
 BuildRequires: libnautilus-devel libselinux-devel libgudev-devel
 BuildRequires: apache2 apache2-mod_dnssd
-%{?_enable_bluetooth:BuildRequires: libgnome-bluetooth-devel}
 
 %description
 gnome-user-share is a small package that binds together various free
@@ -46,9 +43,7 @@ mDNSResolver running.
 %build
 %autoreconf
 %configure  --with-httpd=%httpd \
-	--with-modules-path=%modules_path \
-	%{subst_enable bluetooth}
-
+	--with-modules-path=%modules_path
 %make_build
 
 %install
@@ -57,20 +52,21 @@ mDNSResolver running.
 %find_lang --with-gnome %name
 
 %files -f gnome-user-share.lang
-%{?_enable_bluetooth:%_libexecdir/%name-obexpush}
 %_libexecdir/%name-webdav
 %_desktopdir/%name-webdav.desktop
 %_datadir/%name/
-%{?_enable_bluetooth:%_iconsdir/hicolor/*x*/apps/gnome-obex-server.png}
 %_libdir/nautilus/extensions-3.0/libnautilus-share-extension.so
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.desktop.file-sharing.gschema.xml
-%_sysconfdir/xdg/autostart/%name-*.desktop
+#%_sysconfdir/xdg/autostart/%name-*.desktop
 %doc README NEWS
 
 %exclude %_libdir/nautilus/extensions-3.0/*.la
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Thu Dec 18 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - 3.14.2
 

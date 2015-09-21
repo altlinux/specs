@@ -1,10 +1,9 @@
-%set_automake_version 1.11
-%define ver_major 3.16
+%define ver_major 3.17
 %define _libexecdir /usr/libexec
 %def_without x11_support
 
 Name: gnote
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: Note-taking application
@@ -81,6 +80,9 @@ desktop-file-install \
 %doc README TODO NEWS AUTHORS
 
 %changelog
+* Sun Sep 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.1-alt1
+- 3.17.1
+
 * Sun Jul 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 
