@@ -11,7 +11,7 @@ BuildRequires: waf
 
 Name:           libserd
 Version:        0.20.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        A lightweight C library for RDF syntax
 
 Group:          System/Libraries
@@ -88,6 +88,9 @@ install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_pkgdocdir}
 %{_mandir}/man3/*.3*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt1_1
 - update to new release by fcimport
 
