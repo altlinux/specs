@@ -4,7 +4,7 @@ BuildRequires: unzip
 %define fedora 21
 Name:           lacewing
 Version:        1.10
-Release:        alt2_24
+Release:        alt2_25
 Summary:        Arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -82,6 +82,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_25
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_24
 - update to new release by fcimport
 
