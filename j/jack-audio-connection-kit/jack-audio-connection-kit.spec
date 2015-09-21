@@ -1,7 +1,7 @@
 Summary: The Jack Audio Connection Kit
 Name: jack-audio-connection-kit
-Version: 1.9.7
-Release: alt1.1
+Version: 1.9.10
+Release: alt1
 Epoch: 1
 License: GPLv2 and GPLv2+ and LGPLv2+
 Group: Sound
@@ -10,11 +10,12 @@ URL: http://www.jackaudio.org
 Provides: jackd = %epoch:%version-%release
 Obsoletes: jackd < %epoch:%version
 
-Source0: http://www.grame.fr/~letz/jack-%version.tar.bz2
+Source0: https://dl.dropboxusercontent.com/u/28869550/jack-1.9.10.tar.bz2
 Source2: %name-script.pa
 Source3: %name-limits.conf
 Patch0: jack-realtime-compat.patch
-Patch1: jack-1.9.7-alt-fix.patch
+Patch1: jack-1.9.10-alt-doxygen-path.patch
+Patch2: jack-1.9.10-gcc5.patch
 
 BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpat-devel libffado-devel libfreebob-devel
 BuildRequires: libncurses-devel libreadline-devel libsamplerate-devel libsndfile-devel python-modules-compiler
@@ -64,9 +65,10 @@ Utilities that control and interact with the JACK server-jackd
 %setup -q -n jack-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
-./waf configure --prefix=%_prefix --libdir=/%_lib --doxygen --firewire --freebob --alsa --dbus --classic
+./waf configure --prefix=%_prefix --libdir=/%_libdir --doxygen --firewire --freebob --alsa --dbus --classic
 [ -n "$NPROCS" ] || NPROCS=%__nprocs; ./waf build -j$NPROCS
 
 %install
@@ -87,6 +89,7 @@ mv %buildroot%_datadir/jack-audio-connection-kit/reference/html/* %buildroot%_da
 %_bindir/jack_disconnect
 %_bindir/jack_lsp
 %_libdir/libjackserver.so.*
+%_libdir/libjacknet.so.*
 %dir %_libdir/jack
 %_libdir/jack/*.so
 %_datadir/dbus-1/services/org.jackaudio.service
@@ -103,10 +106,14 @@ mv %buildroot%_datadir/jack-audio-connection-kit/reference/html/* %buildroot%_da
 %files -n libjack-devel
 %_includedir/jack
 %_libdir/libjack.so
+%_libdir/libjacknet.so
+%_libdir/libjackserver.so
 %_pkgconfigdir/*.pc
 %_datadir/doc/%name
 
 %files utils
+%_bindir/alsa_in
+%_bindir/alsa_out
 %exclude %_bindir/jack_load
 %exclude %_bindir/jack_unload
 %exclude %_bindir/jack_connect
@@ -118,10 +125,15 @@ mv %buildroot%_datadir/jack-audio-connection-kit/reference/html/* %buildroot%_da
 %exclude %_man1dir/jack_connect.1*
 %exclude %_man1dir/jack_disconnect.1*
 %exclude %_man1dir/jack_lsp.1*
+%_man1dir/alsa_in.1*
+%_man1dir/alsa_out.1*
 %_man1dir/jack_*.1*
 %_man1dir/jackrec.1*
 
 %changelog
+* Thu Sep 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.9.10-alt1
+- Updated to 1.9.10.
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1:1.9.7-alt1.1
 - Rebuild with Python-2.7
 
