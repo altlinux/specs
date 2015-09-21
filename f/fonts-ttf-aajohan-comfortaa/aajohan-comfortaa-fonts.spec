@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-aajohan-comfortaa
 Version:        2.004
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Modern style true type font
 
 License:        OFL
@@ -99,6 +99,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.004-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.004-alt1_4
 - update to new release by fcimport
 
