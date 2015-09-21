@@ -1,7 +1,7 @@
 Name: stardict-dic-zh_TW
 Summary: Traditional Chinese(zh_TW) dictionaries for StarDict
 Version: 2.4.2
-Release: alt2_14
+Release: alt2_15
 Group: Text tools
 License: GPL+
 URL: http://stardict.sourceforge.net
@@ -58,6 +58,9 @@ cp -rf stardict-* ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic/
 %{_datadir}/stardict/dic/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_15
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_14
 - update to new release by fcimport
 
