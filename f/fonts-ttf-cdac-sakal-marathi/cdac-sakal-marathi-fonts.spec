@@ -5,7 +5,7 @@ Group: System/Fonts/True type
 
 Name:        fonts-ttf-cdac-sakal-marathi
 Version:     9.21
-Release:     alt1_4
+Release:     alt1_5
 Summary:     Marathi language font from CDAC
 
 License:     OFL
@@ -83,6 +83,9 @@ fi
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 9.21-alt1_5
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 9.21-alt1_4
 - converted for ALT Linux by srpmconvert tools
 
