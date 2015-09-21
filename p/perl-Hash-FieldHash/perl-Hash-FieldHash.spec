@@ -4,7 +4,7 @@ BuildRequires: perl(Benchmark.pm) perl(Config.pm) perl(Data/Dumper.pm) perl(Hash
 # END SourceDeps(oneline)
 Name:           perl-Hash-FieldHash
 Version:        0.14
-Release:        alt2.1_1
+Release:        alt2.1_3
 Summary:        Lightweight field hash implementation
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -68,6 +68,9 @@ find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
 %{perl_vendor_archlib}/Hash/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2.1_3
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2.1_1
 - update to new release by fcimport
 
