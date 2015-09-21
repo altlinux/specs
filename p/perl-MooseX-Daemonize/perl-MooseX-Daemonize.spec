@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Cwd.pm) perl(File/Spec/Functions.pm) perl(List/Util.pm) perl(Module/Build/Tiny.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Getopt/OptionTypeMap.pm) perl(POE.pm) perl(Sub/Exporter.pm) perl(Test/Builder.pm) perl(YAML.pm) perl(namespace/autoclean.pm) perl-devel perl-podlators
+BuildRequires: perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(Module/Build.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Getopt/OptionTypeMap.pm) perl(POE.pm) perl(Sub/Exporter.pm) perl(Test/Builder.pm) perl(YAML.pm) perl(namespace/autoclean.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-Daemonize
-Version:        0.19
-Release:        alt1_1
+Version:        0.20
+Release:        alt1_2
 Summary:        Role for daemonizing your Moose based application
 License:        GPL+ or Artistic
 
@@ -13,7 +13,7 @@ URL:            http://search.cpan.org/dist/MooseX-Daemonize/
 Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/MooseX-Daemonize-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Devel/AssertOS.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(Module/Build/Tiny.pm)
 BuildRequires:  perl(Moose.pm)
 BuildRequires:  perl(MooseX/Getopt.pm)
 BuildRequires:  perl(MooseX/Types/Path/Class.pm)
@@ -22,6 +22,7 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/Fatal.pm)
 BuildRequires:  perl(Test/Moose.pm)
+BuildRequires:  perl(Test/Pod/Coverage.pm)
 
 
 Source44: import.info
@@ -35,24 +36,26 @@ roles as an infrastructure to do that.
 %setup -q -n MooseX-Daemonize-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%{__perl} Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
+./Build
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-
+./Build install --destdir=%{buildroot} --create_packlist=0
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
-make test
+./Build test
 
 %files
 %doc Changes README
-%{perl_vendor_privlib}/*
+%doc LICENCE
+%{perl_vendor_privlib}/MooseX*
+%{perl_vendor_privlib}/Test*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_2
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_1
 - update to new release by fcimport
 
