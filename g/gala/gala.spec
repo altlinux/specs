@@ -1,6 +1,6 @@
 Name: gala
 Version: 0.2.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: Pantheon Window Manager
 Group: Graphical desktop/Other
@@ -38,6 +38,15 @@ Requires: lib%name = %version-%release
 %description -n lib%name-devel
 This package contains headers and development libraries for lib%name
 
+%package -n lib%name-vala
+Summary: Vala language bindings for the Gala library
+Group: Development/Other
+BuildArch: noarch
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-vala
+This package provides Vala language bindings for the Gala library.
+
 
 %prep
 %setup
@@ -49,6 +58,10 @@ This package contains headers and development libraries for lib%name
 
 %install
 %makeinstall_std
+# install libmutter.{vapi,deps}, gdesktopenums-3.0.vapi xfixes-4.0.vapi to resolve dependencies
+install -p -m644 vapi/libmutter.{vapi,deps} %buildroot%_vapidir/
+install -p -m644 vapi/gdesktopenums-3.0.vapi vapi/xfixes-4.0.vapi  %buildroot%_vapidir/
+
 %find_lang %name
 
 %files -f %name.lang
@@ -75,11 +88,20 @@ This package contains headers and development libraries for lib%name
 %_includedir/%name/
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
-#%_vapidir/%name.deps
-#%_vapidir/%name.vapi
+
+%files -n lib%name-vala
+%_vapidir/%name.deps
+%_vapidir/%name.vapi
+%_vapidir/libmutter.deps
+%_vapidir/libmutter.vapi
+%_vapidir/gdesktopenums-3.0.vapi
+%_vapidir/xfixes-4.0.vapi
 
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt0.2
+- new -vala subpackage
+
 * Fri Sep 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt0.1
 - 0.2.0_r479
 
