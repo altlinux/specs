@@ -5,7 +5,7 @@ BuildRequires: perl(DBD/SQLite.pm) perl(DBIx/XHTML_Table.pm) perl(Object/Accesso
 Name:           perl-DBIx-Simple
 Summary:        Easy-to-use OO interface to DBI
 Version:        1.35
-Release:        alt2_11
+Release:        alt2_13
 License:        Public Domain
 Group:          Development/Perl
 Source0:        http://search.cpan.org/CPAN/authors/id/J/JU/JUERD/DBIx-Simple-%{version}.tar.gz
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.35-alt2_13
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.35-alt2_11
 - update to new release by fcimport
 
