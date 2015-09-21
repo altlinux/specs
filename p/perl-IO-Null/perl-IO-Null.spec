@@ -4,7 +4,7 @@ BuildRequires: perl(IO/Handle.pm) perl(Test.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-IO-Null
 Version:        1.01
-Release:        alt2_19
+Release:        alt2_21
 Summary:        Class for null filehandles
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_21
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_19
 - update to new release by fcimport
 
