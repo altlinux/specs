@@ -4,7 +4,7 @@ BuildRequires: perl(Attribute/Handlers.pm) perl(B.pm) perl(B/Utils.pm) perl(Deve
 # END SourceDeps(oneline)
 Name:           perl-constant-defer
 Version:        6
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Constant subs with deferred value calculation
 License:        GPLv3+
 Group:          Development/Perl
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 6-alt1_3
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 6-alt1_1
 - update to new release by fcimport
 
