@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-ambrosia
 Version: 20080624
-Release: alt3_13
+Release: alt3_14
 Summary: GFS Ambrosia majuscule Greek font
 
 License:   OFL
@@ -117,6 +117,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20080624-alt3_14
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20080624-alt3_13
 - update to new release by fcimport
 
