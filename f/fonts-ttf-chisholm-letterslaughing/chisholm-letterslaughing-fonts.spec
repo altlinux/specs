@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-chisholm-letterslaughing
 Version:	20030323
-Release:	alt3_9
+Release:	alt3_10
 Summary:	Letters Laughing is a decorative/LED sans-serif font
 
 License:	OFL	
@@ -88,6 +88,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20030323-alt3_10
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20030323-alt3_9
 - update to new release by fcimport
 
