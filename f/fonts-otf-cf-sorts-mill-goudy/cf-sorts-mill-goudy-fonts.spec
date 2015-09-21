@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-cf-sorts-mill-goudy
 Version:        3.1 
-Release:        alt3_8
+Release:        alt3_9
 Summary:        Goudy Oldstyle and Italic fonts  
 
 License:        MIT
@@ -92,6 +92,9 @@ fi
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.1-alt3_9
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt3_8
 - update to new release by fcimport
 
