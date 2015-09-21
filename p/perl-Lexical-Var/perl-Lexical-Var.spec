@@ -4,12 +4,14 @@ BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/
 # END SourceDeps(oneline)
 Name:           perl-Lexical-Var
 Version:        0.009
-Release:        alt2_4.1
+Release:        alt2_7
 Summary:        Static variables without name space pollution
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Lexical-Var/
 Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-Var-%{version}.tar.gz
+# Update code to work with Perl 5.21.x (CPAN RT#101058)
+Patch0:         Lexical-Var-0.009-Fix-RT-101058.patch
 BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
@@ -34,6 +36,7 @@ infrastructure for modules that manage name spaces.
 
 %prep
 %setup -q -n Lexical-Var-%{version}
+%patch0 -p1
 
 %build
 perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
@@ -53,6 +56,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_7
+- update to new release by fcimport
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_4.1
 - rebuild with new perl 5.20.1
 
