@@ -12,7 +12,7 @@ this package.
 
 Name:    fonts-ttf-ecolier-court
 Version: 20070702
-Release: alt3_19
+Release: alt3_20
 Summary: Schoolchildren cursive fonts
 
 Group:     System/Fonts/True type
@@ -155,6 +155,9 @@ fi
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20070702-alt3_20
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20070702-alt3_19
 - update to new release by fcimport
 
