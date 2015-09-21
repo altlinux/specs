@@ -1,14 +1,19 @@
 %add_optflags %optflags_shared
 Name:           libXNVCtrl
-Version:        169.12
-Release:        alt2_11
+Version:        352.21
+Release:        alt1_2
 Summary:        Library providing the NV-CONTROL API
 Group:          System/Libraries
 License:        GPLv2+
 URL:            ftp://download.nvidia.com/XFree86/nvidia-settings/
-Source0:        ftp://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-%{version}.tar.gz
-Patch0:         libXNVCtrl-imake.patch
-BuildRequires: xorg-cf-files gccmakedep imake libX11-devel libXext-devel
+Source0:        ftp://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-%{version}.tar.bz2
+Patch0:         libxnvctrl_so_0.patch
+Patch1:         libxnvctrl_optflags.patch
+
+BuildRequires: make
+BuildRequires: libX11-devel
+BuildRequires: libXext-devel
+BuildRequires: coreutils
 Source44: import.info
 
 %description
@@ -22,7 +27,7 @@ themselves.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -30,34 +35,32 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n nvidia-settings-1.0
-%patch0 -p1 -z .imake
-pushd src/%{name}
-xmkmf
-#libdir doesnt get set right on sparc64
-%ifarch sparc64
-sed -i -e 's|/usr/lib|/usr/lib64|g' Makefile
-%endif
-popd
+%setup -q -n nvidia-settings-%{version}
+%patch0 -p1
+%patch1 -p1
 
 
 %build
-pushd src/%{name}
-make %{?_smp_mflags} CDEBUGFLAGS="$RPM_OPT_FLAGS"
-popd
+make %{?_smp_mflags} \
+   CC="gcc" \
+   NV_VERBOSE=1 \
+   OPTFLAGS="%{optflags}" \
+   -C src/%{name}
 
 
 %install
 pushd src/%{name}
-make install DESTDIR=$RPM_BUILD_ROOT INSTINCFLAGS="-p -m 644"
+install -m 0755 -d $RPM_BUILD_ROOT%{_libdir}/
+install -p -m 0755 libXNVCtrl.so.0.0.0    $RPM_BUILD_ROOT%{_libdir}/
+ln -s libXNVCtrl.so.0.0.0 $RPM_BUILD_ROOT%{_libdir}/libXNVCtrl.so.0
+ln -s libXNVCtrl.so.0 $RPM_BUILD_ROOT%{_libdir}/libXNVCtrl.so
+install -m 0755 -d $RPM_BUILD_ROOT%{_includedir}/NVCtrl/
+install -p -m 0644 {nv_control,NVCtrl,NVCtrlLib}.h $RPM_BUILD_ROOT%{_includedir}/NVCtrl/
 popd
-# imake installs these under X11/extensions, but apps expect them under NVCtrl
-mv $RPM_BUILD_ROOT%{_includedir}/X11/extensions \
-  $RPM_BUILD_ROOT%{_includedir}/NVCtrl
 
 
 %files
-%doc COPYING src/%{name}/README.LIBXNVCTRL
+%doc COPYING
 %{_libdir}/%{name}.so.0*
 
 %files devel
@@ -67,6 +70,9 @@ mv $RPM_BUILD_ROOT%{_includedir}/X11/extensions \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 352.21-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 169.12-alt2_11
 - update to new release by fcimport
 
