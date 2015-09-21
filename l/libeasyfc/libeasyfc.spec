@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(freetype2)
 %add_optflags %optflags_shared
 Name:		libeasyfc
 Version:	0.13.0
-Release:	alt1_5
+Release:	alt1_6
 Summary:	Easy configuration generator interface for fontconfig
 
 Group:		System/Libraries
@@ -95,6 +95,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/gir-*/Easyfc-*.gir
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1_6
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1_5
 - update to new release by fcimport
 
