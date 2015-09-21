@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-porson
 Version: 20060908
-Release: alt3_19
+Release: alt3_20
 Summary: GFS Porson Greek font
 
 Group:     System/Fonts/True type
@@ -113,6 +113,9 @@ fi
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20060908-alt3_20
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20060908-alt3_19
 - update to new release by fcimport
 
