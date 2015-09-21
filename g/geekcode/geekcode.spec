@@ -1,14 +1,20 @@
+Group: Games/Other
 Name:           geekcode
 Version:        1.7.3
-Release:        alt2_14
+Release:        alt2_17
 Summary:        Geek Code generator
 Summary(pl):    Generator Geek Code
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://sourceforge.net/projects/%{name}/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+# CFLAGS, full RELRO
+Patch0:         %{name}-1.7.3-flags.patch
 # sf#879355
-Patch0:         %{name}-1.7.3-choice.patch
+Patch1:         %{name}-1.7.3-choice.patch
+BuildRequires:  binutils
+BuildRequires:  coreutils
+BuildRequires:  gcc
+BuildRequires:  make
 Source44: import.info
 
 %description
@@ -25,19 +31,24 @@ gdziekolwiek indziej, gdzie chcemy się pochwalić swoją geekowatością.
 %setup -q
 sed -i 's/\r//' COPYING
 %patch0 -p1
+%patch1 -p1
 
 %build
-make %{?_smp_mflags} CFLAGS="%{optflags}"
+make %{?_smp_mflags}
 
 %install
 mkdir -p %{buildroot}%{_bindir}
 install -m 755 geekcode %{buildroot}%{_bindir}
 
 %files
-%doc CHANGES COPYING README
+%doc COPYING
+%doc CHANGES README
 %{_bindir}/%{name}
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt2_17
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt2_14
 - update to new release by fcimport
 
