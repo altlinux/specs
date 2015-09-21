@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ swig
 %define oldname re2
 Name:           libre2
 Version:        20131024
-Release:        alt1_3
+Release:        alt1_5
 Summary:        C++ fast alternative to backtracking RE engines
 Group:          System/Libraries
 License:        BSD
@@ -71,6 +71,9 @@ make %{?_smp_mflags} shared-test
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20131024-alt1_5
+- update to new release by fcimport
+
 * Sun Dec 21 2014 Igor Vlasenko <viy@altlinux.ru> 20131024-alt1_3
 - new version
 
