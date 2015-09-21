@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %define fedora 21
 Name:           scorchwentbonkers
 Version:        1.1
-Release:        alt2_17
+Release:        alt2_19
 Summary:        Realtime remake of Scorched Earth
 Group:          Games/Other
 License:        zlib
@@ -79,6 +79,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_19
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_17
 - update to new release by fcimport
 
