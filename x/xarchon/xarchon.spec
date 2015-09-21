@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libICE-devel libSM-devel libesd-devel
 # END SourceDeps(oneline)
 Name:           xarchon
 Version:        0.50
-Release:        alt2_17
+Release:        alt2_20
 Summary:        Arcade board game
 Group:          Games/Other
 License:        GPL+
@@ -14,7 +14,7 @@ Patch0:         %{name}-fonts.patch
 Patch1:         %{name}-destdir.patch
 Patch2:         http://ftp.debian.org/debian/pool/main/x/%{name}/%{name}_0.50-10.1.diff.gz
 Patch3:         xarchon-0.50-gcc43.patch
-BuildRequires:  gtk+-devel esound-devel libXpm-devel
+BuildRequires:  gtk+-devel libXpm-devel
 BuildRequires:  desktop-file-utils ImageMagick
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -62,6 +62,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_20
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_17
 - update to new release by fcimport
 
