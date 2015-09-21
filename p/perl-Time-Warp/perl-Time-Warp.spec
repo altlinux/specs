@@ -1,16 +1,17 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Time-Warp 
 Version:    0.52
-Release:    alt1
-# Warp.pm -> GPL+ or Artistic
+Release:    alt1_2
 License:    GPL+ or Artistic 
-Group:      Development/Perl
 Summary:    Control over the flow of time
-Source:     http://www.cpan.org/authors/id/S/SZ/SZABGAB/Time-Warp-%{version}.tar.gz
+Source:     http://search.cpan.org/CPAN/authors/id/S/SZ/SZABGAB/Time-Warp-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/Time-Warp
+BuildRequires:  findutils
+BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
@@ -34,13 +35,12 @@ over the measurement of time.
 %setup -q -n Time-Warp-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
+find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} +
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -51,6 +51,9 @@ make test
 %{perl_vendor_archlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1_2
+- update to new release by fcimport
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
 - automated CPAN update
 
