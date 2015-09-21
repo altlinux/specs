@@ -1,21 +1,24 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Pod/Usage.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Pod-Markdown
-Version:        2.002
-Release:        alt1_2
+Version:        3.002
+Release:        alt1_1
 Summary:        Convert POD to Markdown
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Pod-Markdown/
 Source0:        http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  coreutils
+BuildRequires:  findutils
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 # Run-time:
+BuildRequires:  perl(Encode.pm)
 BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Pod/Simple.pm)
 BuildRequires:  perl(Pod/Simple/Methody.pm)
@@ -27,7 +30,6 @@ BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(IO/Handle.pm)
 BuildRequires:  perl(IPC/Open3.pm)
 BuildRequires:  perl(lib.pm)
-BuildRequires:  perl(List/Util.pm)
 BuildRequires:  perl(Symbol.pm)
 BuildRequires:  perl(Test/Differences.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -54,12 +56,16 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 make test
 
 %files
+%doc LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 %{_mandir}/man[13]/*
 %{_bindir}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.002-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.002-alt1_2
 - update to new release by fcimport
 
