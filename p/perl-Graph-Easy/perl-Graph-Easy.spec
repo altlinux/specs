@@ -11,7 +11,7 @@ BuildRequires: perl(Benchmark.pm) perl(Devel/Size.pm) perl(File/Find/Object.pm) 
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 Name:           perl-Graph-Easy
 Version:        0.75
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Convert or render graphs as ASCII, HTML, SVG or via Graphviz
 License:        GPLv2+ and ASL 1.1
 Group:          Development/Perl
@@ -90,6 +90,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1_3
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1_1
 - update to new release by fcimport
 
