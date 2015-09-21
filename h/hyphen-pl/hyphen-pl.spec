@@ -5,7 +5,7 @@ Name: hyphen-pl
 Summary: Polish hyphenation rules
 %define upstreamid 20060726
 Version: 0.%{upstreamid}
-Release: alt1_10
+Release: alt1_11
 Source: http://pl.openoffice.org/pliki/hyph_pl_PL.zip
 Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
@@ -42,6 +42,9 @@ cp -p hyph_pl_PL.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20060726-alt1_11
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.20060726-alt1_10
 - update to new release by fcimport
 
