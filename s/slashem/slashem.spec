@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           slashem
 Version:        0.0.8
-Release:        alt2_0.17.E0F1
+Release:        alt2_0.18.E0F1
 Summary:        Super Lotsa Added Stuff Hack - Extended Magic
 
 Group:          Games/Other
@@ -160,6 +160,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.ap
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.18.E0F1
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.17.E0F1
 - update to new release by fcimport
 
