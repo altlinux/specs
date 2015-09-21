@@ -2,7 +2,7 @@
 Summary: A library for accessing deltacloud
 Name: libdeltacloud
 Version: 0.9
-Release: alt2_9
+Release: alt2_11
 License: LGPLv2+
 Group: System/Libraries
 URL: https://git.fedorahosted.org/git/deltacloud/libdeltacloud.git
@@ -82,6 +82,9 @@ rm -f $RPM_BUILD_ROOT/%{_lib}/libdeltacloud.a
 %{_libdir}/pkgconfig/libdeltacloud.pc
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_11
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_9
 - update to new release by fcimport
 
