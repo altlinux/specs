@@ -1,6 +1,6 @@
 Name:           worminator-data
 Version:        3.0R2.1
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Data for worminator the game
 Group:          Games/Other
 License:        GPLv2+
@@ -40,6 +40,9 @@ rm $RPM_BUILD_ROOT%{_datadir}/worminator/ICON.ICO
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_12
 - update to new release by fcimport
 
