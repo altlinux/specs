@@ -5,14 +5,13 @@
 %define pkgname net-ssh
 
 Name: ruby-%pkgname
-Version: 2.0.15
-Release: alt1.1
+Version: 3.0.0
+Release: alt1
 
 Summary: Pure-Ruby implementation of the SSH2 client protocol
-Group: Development/Ruby
+Group:   Development/Ruby
 License: MIT/Ruby
-Url: http://rubyforge.org/projects/net-ssh/
-
+Url:     https://github.com/net-ssh/net-ssh
 BuildArch: noarch
 
 Source: %pkgname-%version.tar
@@ -50,7 +49,7 @@ Documentation files for %name
 %ruby_test_unit -Ilib:test test/test_all.rb
 
 %files
-%doc README.rdoc THANKS.rdoc
+%doc README.rdoc THANKS.txt
 %ruby_sitelibdir/*
 
 %files doc
@@ -58,6 +57,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Net/SSH
 
 %changelog
+* Mon Sep 21 2015 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
+- New version
+
 * Thu Dec 06 2012 Led <led@altlinux.ru> 2.0.15-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 - disabled check

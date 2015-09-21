@@ -1,8 +1,8 @@
 %define  pkgname plist
  
 Name: 	 ruby-%pkgname
-Version: 3.0.0 
-Release: alt2
+Version: 3.1.0 
+Release: alt1
  
 Summary: All-purpose Property List manipulation library for Ruby
 License: MIT/Ruby
@@ -13,7 +13,6 @@ Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
  
 Source:  %pkgname-%version.tar
-Patch1:  %name-fix-syntax-errors.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
@@ -34,7 +33,6 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch1 -p1
 %update_setup_rb
  
 %build
@@ -58,5 +56,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Sep 21 2015 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version
+
 * Tue Feb 17 2015 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt2
 - Return to Sisyphus
