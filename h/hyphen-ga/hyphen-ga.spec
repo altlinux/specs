@@ -5,7 +5,7 @@ Name: hyphen-ga
 Summary: Irish hyphenation rules
 %define upstreamid 20040220
 Version: 0.%{upstreamid}
-Release: alt1_9
+Release: alt1_10
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_ga_IE.zip
 Group: Text tools
 URL: http://borel.slu.edu/fleiscin/index.html
@@ -31,6 +31,9 @@ cp -p hyph_ga_IE.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20040220-alt1_10
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.20040220-alt1_9
 - update to new release by fcimport
 
