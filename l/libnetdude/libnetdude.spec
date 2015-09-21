@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gtkdoc-mkdb /usr/sbin/tcpdump gcc-c++ libmagic-devel lib
 %add_optflags %optflags_shared
 Name:           libnetdude
 Version:        0.11
-Release:        alt1_11
+Release:        alt1_12
 Summary:        Management framework for pcap packet traces
 
 Group:          System/Libraries
@@ -80,6 +80,9 @@ rm -rf %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/
 %{_datadir}/gtk-doc/html/%{name}/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_12
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_11
 - update to new release by fcimport
 
