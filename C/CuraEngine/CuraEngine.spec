@@ -3,8 +3,8 @@ Group: Engineering
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           CuraEngine
-Version:        14.12.1
-Release:        alt1_1
+Version:        15.04
+Release:        alt1_2
 Summary:        Engine for processing 3D models into G-code instructions for 3D printers
 License:        AGPLv3
 URL:            https://github.com/Ultimaker/%{name}
@@ -33,8 +33,9 @@ sed -i 's| $(BUILD_DIR)/libclipper.a||g' Makefile
 sed -i 's|CFLAGS +=|CFLAGS?=|' Makefile
 sed -i 's|--static||g' Makefile
 
+
 %build
-CFLAGS="-I. -Ilibs -c %{optflags} -std=c++11 -fomit-frame-pointer" make %{?_smp_mflags}
+CFLAGS='-I. -Ilibs -c %{optflags} -std=c++11 -fomit-frame-pointer -DVERSION=\"%{version}\"' make %{?_smp_mflags}
 
 %install
 install -Dpm0755 build/%{name} %{buildroot}/%{_bindir}/%{name}
@@ -47,6 +48,9 @@ make test
 %{_bindir}/%{name}
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 15.04-alt1_2
+- update to new release by fcimport
+
 * Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 14.12.1-alt1_1
 - update to new release by fcimport
 
