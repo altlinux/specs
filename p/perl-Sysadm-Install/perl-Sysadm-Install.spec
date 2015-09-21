@@ -1,37 +1,47 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Spec/Functions.pm) perl(Log/Log4perl/Util.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Summary:	Typical installation tasks for system administrators
 Name:		perl-Sysadm-Install
-Version:	0.44
-Release:	alt1_3
+Version:	0.46
+Release:	alt1_1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Sysadm-Install/
 Source0:	http://search.cpan.org/CPAN/authors/id/M/MS/MSCHILLI/Sysadm-Install-%{version}.tar.gz
 BuildArch:	noarch
+# Module Build
+BuildRequires:	findutils
+BuildRequires:	make
+BuildRequires:	perl
+BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+# Module Runtime
 BuildRequires:	perl(Archive/Tar.pm)
-BuildRequires:	perl(Config.pm)
 BuildRequires:	perl(Cwd.pm)
 BuildRequires:	perl(Encode.pm)
 BuildRequires:	perl(Expect.pm)
-BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 BuildRequires:	perl(File/Basename.pm)
 BuildRequires:	perl(File/Copy.pm)
 BuildRequires:	perl(File/Path.pm)
+BuildRequires:	perl(File/Spec/Functions.pm)
 BuildRequires:	perl(File/Temp.pm)
 BuildRequires:	perl(File/Which.pm)
 BuildRequires:	perl(HTTP/Request.pm)
 BuildRequires:	perl(HTTP/Status.pm)
 BuildRequires:	perl(Log/Log4perl.pm)
+BuildRequires:	perl(Log/Log4perl/Util.pm)
 BuildRequires:	perl(LWP/UserAgent.pm)
+BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Term/ReadKey.pm)
-# For test suite
+BuildRequires:	perl(warnings.pm)
+# Test Suite
+BuildRequires:	perl(Carp.pm)
+BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(Test/More.pm)
-# Runtime deps not automatically picked up by RPM
+BuildRequires:	perl(utf8.pm)
+# Runtime
 Requires:	perl(Archive/Tar.pm)
-Requires:	perl(Config.pm)
 Requires:	perl(Encode.pm)
 Requires:	perl(Expect.pm)
 Requires:	perl(HTTP/Request.pm)
@@ -71,13 +81,16 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 # %{_fixperms} %{buildroot}
 
 %files
-%doc Changes README eg
+%doc Changes README eg/
 # one-liner is an overly-generic name to include in %%{_bindir} and is included
 # as %%doc if needed
 %exclude %{_bindir}/one-liner
 %{perl_vendor_privlib}/Sysadm/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1_3
 - update to new release by fcimport
 
