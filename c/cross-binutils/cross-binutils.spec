@@ -50,10 +50,13 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 %define build_hexagon		0
 %define build_unicore32		0
 
+# BZ 1124342: Enable deterministic archives by default.
+%define enable_deterministic_archives 1
+
 Summary: A GNU collection of cross-compilation binary utilities
 Name: %{cross}-binutils
-Version: 2.25
-Release: alt1_3
+Version: 2.25.1
+Release: alt1_1
 License: GPLv3+
 Group: Development/Tools
 URL: http://sources.redhat.com/binutils
@@ -83,15 +86,21 @@ Patch09: binutils-2.22.52.0.1-export-demangle.h.patch
 Patch10: binutils-2.22.52.0.4-no-config-h-check.patch
 # Fix addr2line to use the dynamic symbol table if it could not find any ordinary symbols.
 Patch11: binutils-2.23.52.0.1-addr2line-dynsymtab.patch
-
+# Patch12: binutils-2.23.2-kernel-ld-r.patch
 Patch12: binutils-2.25-kernel-ld-r.patch
 # Correct bug introduced by patch 12
 Patch13: binutils-2.23.2-aarch64-em.patch
 # Fix detections little endian PPC shared libraries
 Patch14: binutils-2.24-ldforcele.patch
+# Fix parsing of corupt iHex binaries
+Patch15: binutils-2.25.1-ihex-parsing.patch
+# backport https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=e9c1bdad269c0c3352eebcc9481ed65144001b0b
+# Qt linked with gold crash on startup, BZ #1193044
+Patch16: binutils-2.25.1-dynamic_list.patch
 
 # Fix formatless sprintfs in Score-specific code.
 Patch100: cross-binutils-2.25-fixup-for-sh64.patch
+Patch101: cross-binutils-2.25-fixup-microblaze.patch
 
 BuildRequires: texinfo >= 4.0 gettext flex bison zlib-devel
 # BZ 920545: We need pod2man in order to build the manual pages.
@@ -222,14 +231,20 @@ cd %{srcdir}
 %patch12 -p1 -b .kernel-ld-r~
 %patch13 -p1 -b .aarch64~
 %patch14 -p1 -b .ldforcele~
+%patch15 -p1 -b .ihex~
+%patch16 -p1 -b .dynamic_list~
 %endif
 
 %patch100 -p1 -b .sh64-fixup~
+%patch101 -p1 -b .microblaze-fixup~
 
 # We cannot run autotools as there is an exact requirement of autoconf-2.59.
 
-# On ppc64 we might use 64KiB pages
+# On ppc64 and aarch64, we might use 64KiB pages
 sed -i -e '/#define.*ELF_COMMONPAGESIZE/s/0x1000$/0x10000/' bfd/elf*ppc.c
+sed -i -e '/#define.*ELF_COMMONPAGESIZE/s/0x1000$/0x10000/' bfd/elf*aarch64.c
+sed -i -e '/common_pagesize/s/4 /64 /' gold/powerpc.cc
+sed -i -e '/pagesize/s/0x1000,/0x10000,/' gold/aarch64.cc
 # LTP sucks
 perl -pi -e 's/i\[3-7\]86/i[34567]86/g' */conf*
 sed -i -e 's/%''{release}/%{release}/g' bfd/Makefile{.am,.in}
@@ -348,7 +363,7 @@ function config_target () {
     export CFLAGS="$RPM_OPT_FLAGS"
     CARGS=
 
-    case $target in i?86*|sparc*|ppc*|s390*|sh*|arm*)
+    case $target in i?86*|sparc*|ppc*|powerpc*|s390*|sh*|arm*)
 	    CARGS="$CARGS --enable-64-bit-bfd"
 	    ;;
     esac
@@ -358,8 +373,8 @@ function config_target () {
 	    ;;
     esac
 
-    case $target in ppc*|ppc64*)
-	    CARGS="$CARGS --enable-targets=spu"
+    case $target in ppc*|powerpc*)
+	    CARGS="$CARGS --enable-targets=spu,powerpc-linux,ppc64le-linux-gnu,ppcle-linux-gnu"
 	    ;;
     esac
 
@@ -660,6 +675,9 @@ sed -i -e /sys-root/d files.ppc64-linux-gnu
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.25.1-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.25-alt1_3
 - update to new release by fcimport
 
