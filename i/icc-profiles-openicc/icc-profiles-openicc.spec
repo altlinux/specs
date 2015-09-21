@@ -1,6 +1,6 @@
 Name:           icc-profiles-openicc
 Version:        1.3.1
-Release:        alt2_8
+Release:        alt2_9
 Summary:        The OpenICC profiles
 
 Group:          Graphics
@@ -81,6 +81,9 @@ install -pm 0644 *.png $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_9
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_8
 - update to new release by fcimport
 
