@@ -1,7 +1,7 @@
 BuildRequires: libkmahjongg4-common
 Name:        mj
 Version:     1.14
-Release:     alt1_1
+Release:     alt1_7
 Summary:     Mah-Jong program with network option
 Summary(sv): Mah-Jong-program med nätmöjlighet
 
@@ -18,6 +18,8 @@ Source0:     %name-GPL-%version-src.tar.bz2
 # and run the command:
 # ./remove-non-GPL.sh %version
 Source1:     remove-non-GPL.sh
+Source2:     icon.svg
+Patch:	     mj-1.14-crash.patch
 
 BuildRequires: perl
 BuildRequires: gtk2-devel
@@ -28,7 +30,6 @@ BuildRequires: desktop-file-utils
 
 %global desktopdir %_datadir/applications
 %global icontop %_datadir/icons/hicolor
-%global icondir %icontop/32x32/apps
 Source44: import.info
 
 %description
@@ -54,6 +55,7 @@ kombination av de två.
 
 %prep
 %setup -q -n %name-%version-src
+%patch
 # Convert the kdegames tiles to the format of the bundled ones.
 mkdir tiles-kdegames
 cd tiles-kdegames
@@ -72,12 +74,14 @@ done
 %gettile WIND_3 EW
 %gettile WIND_4 WW
 %gettile DRAGON_1 WD
+# A simpler path would be to convert WD.xpm here, but that breaks because
+# of bug 1217178
+# Pixmap representing the back of a tile.  Use chocolate3 as a bamboo color.
+convert tile.png -crop 25x35+1+1 -fill chocolate3 -opaque ivory ./--.xpm
+# Pixmap used for programming errors.  Use red.  Should never show up.
+convert tile.png -crop 25x35+1+1 -fill red -opaque ivory XX.xpm
 %gettile DRAGON_2 GD
 %gettile DRAGON_3 RD
-# Pixmap representing the back of a tile.  Use chocolate3 as a bamboo color.
-convert WD.xpm -fill chocolate3 -opaque ivory ./--.xpm
-# Pixmap used for programming errors.  Use red.  Should never show up.
-convert WD.xpm -fill red -opaque ivory XX.xpm
 # The "tongs" are ok according to the README file.
 cp -p ../tiles-v1/tong* .
 
@@ -106,9 +110,46 @@ make install install.man DESTDIR=%buildroot%_prefix/ MANDIR=share/man/man1 \
      INSTPGMFLAGS=
 mkdir %buildroot%desktopdir
 desktop-file-install --dir=%buildroot%desktopdir %name.desktop
-mkdir -p %buildroot%icondir
-convert icon.ico %buildroot%icondir/%name.png
+mkdir -p %buildroot%icontop/scalable/apps
+install -m 644 %SOURCE2 %buildroot%icontop/scalable/apps/%name.svg
+for res in 16 22 24 32 48 256
+do  mkdir -p %buildroot%icontop/${res}x${res}/apps
+    inkscape --without-gui \
+	     --export-png=%buildroot%icontop/${res}x${res}/apps/%name.png \
+	     --file=%SOURCE2 --export-height=$res --export-width=$res
+done
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Your Name <email@address.com> -->
+<!--
+EmailAddress: mahjong@stevens-bradfield.com
+SentUpstream: 2014-09-24
+-->
+<application>
+  <id type="desktop">mj.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>Mahjong game platforms with network capability </summary>
+  <description>
+    <p>
+      Game platforms with network capability game can be played by four humans,
+      by a human vs three computer players, or any other combination.
+    </p>
+  </description>
+  <url type="homepage">http://mahjong.julianbradfield.org/</url>
+  <screenshots>
+    <screenshot type="default">http://mahjong.julianbradfield.org/screenshots/11.gif</screenshot>
+  </screenshots>
+</application>
+EOF
 
 %post
 touch --no-create %icontop &>/dev/null || :
@@ -116,17 +157,22 @@ touch --no-create %icontop &>/dev/null || :
 %postun
 if [ $1 -eq 0 ] ; then
     touch --no-create %icontop &>/dev/null
+
 fi
 
 %files
 %doc ChangeLog CHANGES LICENCE README rules.txt use.txt
 %_bindir/*
 %_mandir/man1/*
+%{_datadir}/appdata/*.appdata.xml
 %desktopdir/%name.desktop
-%icondir/%name.png
+%icontop/*/apps/%name.*
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_7
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_1
 - update to new release by fcimport
 
