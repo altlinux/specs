@@ -9,7 +9,7 @@ ghostscript font configuration files for Chinese fonts.
 
 Name:           ghostscript-chinese
 Version:        0.4.0
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Ghostscript Chinese fonts configuration files
 Group:          System/Fonts/True type
 License:        GPLv2+
@@ -84,6 +84,9 @@ done
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_6
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_5
 - update to new release by fcimport
 
