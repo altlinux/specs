@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: xhtml2fo-style-xsl
 Version: 20051222
-Release: alt1_10
+Release: alt1_11
 Group: Text tools
 
 Summary: Antenna House, Inc. XHTML to XSL:FO stylesheets
@@ -62,6 +62,9 @@ fi
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20051222-alt1_11
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 20051222-alt1_10
 - update to new release by fcimport
 
