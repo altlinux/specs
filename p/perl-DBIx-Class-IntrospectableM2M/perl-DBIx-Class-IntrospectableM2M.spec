@@ -1,18 +1,34 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(DBIx/Class/Core.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DBIx-Class-IntrospectableM2M
-Version:        0.001001
-Release:        alt1_7
+Version:        0.001002
+Release:        alt1_2
 Summary:        Introspect many-to-many shortcuts
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DBIx-Class-IntrospectableM2M/
-Source0:        http://www.cpan.org/authors/id/G/GR/GRODITI/DBIx-Class-IntrospectableM2M-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IL/ILMARI/DBIx-Class-IntrospectableM2M-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(DBIx/Class.pm)
+# Build
+BuildRequires:  make
+BuildRequires:  perl
+BuildRequires:  perl(Config.pm)
+BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(ExtUtils/MM_Unix.pm)
+BuildRequires:  perl(Fcntl.pm)
+BuildRequires:  perl(File/Find.pm)
+BuildRequires:  perl(File/Path.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Runtime
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(DBIx/Class.pm)
+BuildRequires:  perl(DBIx/Class/Core.pm)
+BuildRequires:  perl(warnings.pm)
+# Tests only
 BuildRequires:  perl(Test/More.pm)
 Source44: import.info
 
@@ -28,15 +44,11 @@ and examined.
 %setup -q -n DBIx-Class-IntrospectableM2M-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
-
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
-
+make pure_install DESTDIR=%{buildroot}
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -47,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.001002-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.001001-alt1_7
 - update to new release by fcimport
 
