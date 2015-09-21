@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: pcsc-lite-ccid
-Version: 1.4.5
-Release: alt3
+Version: 1.4.20
+Release: alt1
 
 Summary: USB CCID IFD Handler
 Group: System/Libraries
@@ -50,6 +50,9 @@ cp -a src/92_pcscd_ccid.rules %buildroot/lib/udev/rules.d/
 /lib/udev/rules.d/92_pcscd_ccid.rules
 
 %changelog
+* Mon Sep 21 2015 Michael Shigorin <mike@altlinux.org> 1.4.20-alt1
+- 1.4.20 (closes: #31292)
+
 * Tue May 29 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.5-alt3
 - Add JaCarta Flash support (ALT #27377)
 
