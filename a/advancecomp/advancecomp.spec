@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/gzip /usr/bin/valgrind /usr/
 # END SourceDeps(oneline)
 Name:           advancecomp
 Version:        1.19
-Release:        alt1_3
+Release:        alt1_5
 Summary:        Recompression utilities for .PNG, .MNG and .ZIP files
 License:        GPLv3
 URL:            http://advancemame.sourceforge.net/
@@ -46,6 +46,9 @@ make check
 %{_mandir}/man1/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1_5
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1_3
 - update to new release by fcimport
 
