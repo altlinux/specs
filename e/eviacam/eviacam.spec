@@ -1,13 +1,16 @@
-Summary: Mouse replacement software that moves the pointer as you move your head
-Name: eviacam
-Version: 1.7.0
-Release: alt2
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-Group: System/Base
-License: GPLv3
-Url: http://viacam.org
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Name:     eviacam
+Version:  2.0.1
+Release:  alt1
+
+Summary:  Mouse replacement software that moves the pointer as you move your head
+Group: 	  System/Base
+License:  GPLv3
+Url:      http://viacam.org
+# VCS:    git://git.code.sf.net/p/eviacam/eviacam
+
+Packager: Andrey Cherepanov <cas@altlinux.org>
+Source:   %name-%version.tar
+Patch:    %name-%version-%release.patch
 
 BuildRequires: libwxGTK-devel libopencv-devel libXtst-devel libXext-devel libgtk+2-devel gcc-c++ libv4l-devel
 
@@ -39,6 +42,9 @@ is required. Based on the award winning Facial Mouse software.
 %_datadir/pixmaps/*
 
 %changelog
+* Sun Sep 20 2015 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- New version (ALT #31285)
+
 * Fri Apr 18 2014 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt2
 - Do not link with obsoleted library libopencv_ts
 
