@@ -14,7 +14,7 @@ BuildRequires: gcc-c++
 
 Name:       liblilv
 Version:    0.20.0
-Release:    alt1_2
+Release:    alt1_4
 Summary:    An LV2 Resource Description Framework Library
 
 Group:      System/Libraries
@@ -111,6 +111,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{python_sitelibdir}/_%{oldname}.so
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt1_4
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt1_2
 - update to new release by fcimport
 
