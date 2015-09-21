@@ -14,7 +14,7 @@ This package provides the free Korean TrueType fonts.
 
 Name:           fonts-ttf-baekmuk
 Version:        2.2
-Release:        alt2_38
+Release:        alt2_39
 Summary:        Free Korean TrueType fonts
 
 License:        Baekmuk
@@ -238,6 +238,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_39
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_38
 - update to new release by fcimport
 
