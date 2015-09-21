@@ -11,20 +11,23 @@ BuildRequires: perl(Encode.pm) perl(English.pm) perl(IO/Handle.pm) perl(IPC/Open
 %global debug_package %{nil}
 
 Name:		perl-Test-Mojibake
-Version:	1.0
-Release:	alt1_4
+Version:	1.1
+Release:	alt1_1
 Summary:	Check your source for encoding misbehavior
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Mojibake/
 Source0:	http://search.cpan.org/CPAN/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
-Patch0:		Test-Mojibake-1.0-no-Test::Version.patch
-Patch1:		Test-Mojibake-1.0-old-Test::More.patch
+Patch0:		Test-Mojibake-1.1-no-Test::Version.patch
+Patch1:		Test-Mojibake-1.1-old-Test::More.patch
 Patch2:		Test-Mojibake-1.0-old-Test::Pod.patch
 BuildArch:	noarch
 # ===================================================================
 # Module build requirements
 # ===================================================================
+BuildRequires:	coreutils
+BuildRequires:	findutils
+BuildRequires:	make
 BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # ===================================================================
@@ -32,7 +35,9 @@ BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # ===================================================================
 BuildRequires:	perl(File/Spec/Functions.pm)
 BuildRequires:	perl(Pod/Usage.pm)
+BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test/Builder.pm)
+BuildRequires:	perl(warnings.pm)
 # ===================================================================
 # Optional module requirements
 # ===================================================================
@@ -40,6 +45,7 @@ BuildRequires:	perl(Unicode/CheckUTF8.pm)
 # ===================================================================
 # Regular test suite requirements
 # ===================================================================
+BuildRequires:	perl(blib.pm)
 BuildRequires:	perl(Test/Builder/Tester.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Script.pm)
@@ -56,7 +62,6 @@ BuildRequires:	perl(Test/CPAN/Meta.pm)
 BuildRequires:	perl(Test/DistManifest.pm)
 BuildRequires:	perl(Test/EOL.pm)
 BuildRequires:	perl(Test/HasVersion.pm)
-BuildRequires:	perl(Test/Kwalitee.pm)
 BuildRequires:	perl(Test/MinimumVersion.pm)
 BuildRequires:	perl(Test/NoTabs.pm)
 BuildRequires:	perl(Test/Pod.pm)
@@ -76,6 +81,7 @@ BuildRequires:	perl(Test/Version.pm)
 # Modules only available from EL-8
 %if 0%{?fedora} || 0%{?rhel} > 7
 BuildRequires:	perl(Perl/Critic/Policy/Modules/ProhibitModuleShebang.pm)
+BuildRequires:	perl(Test/Kwalitee.pm)
 BuildRequires:	perl(Test/Pod/LinkCheck.pm)
 %endif
 %endif
@@ -142,7 +148,10 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 # %{_fixperms} %{buildroot}
 
 %check
-make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1}
+make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1} \
+%if ! 0%{?fedora} && 0%{?rhel} < 8
+	TEST_FILES="$(echo $(find t/ -name '*.t' | grep -Fv release-kwalitee.t))"
+%endif
 
 %files
 %doc Changes LICENSE README
@@ -151,6 +160,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1}
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_4
 - update to new release by fcimport
 
