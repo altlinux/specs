@@ -1,10 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libGL-devel libSDL-devel zlib-devel
 # END SourceDeps(oneline)
-%define fedora 21
 Name:           CriticalMass
 Version:        1.5
-Release:        alt2_12
+Release:        alt2_15
 Summary:        SDL/OpenGL space shoot'em up game also known as critter
 Group:          Games/Other
 License:        GPLv2+
@@ -14,8 +13,9 @@ Source1:        %{name}.desktop
 Patch0:         CriticalMass-1.0.2-res-change-rh566533.patch
 Patch1:         CriticalMass-1.5-libpng15.patch
 Patch2:         CriticalMass-1.5-gcc47.patch
+Patch3:         CriticalMass-1.5-cflags.patch
 BuildRequires:  libSDL_image-devel libSDL_mixer-devel libpng-devel curl-devel
-BuildRequires:  tinyxml-devel desktop-file-utils
+BuildRequires:  tinyxml-devel desktop-file-utils libtool
 Requires:       icon-theme-hicolor opengl-games-utils
 # Also known as critter, so make "yum install critter" work
 Provides:       critter = %{version}-%{release}
@@ -34,16 +34,15 @@ a tiny spacecraft and sent after them.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-sed -i 's/curl-gnutls/curl/g' configure
+%patch3 -p1
+sed -i 's/curl-gnutls/curl/g' configure.in
+touch NEWS README AUTHORS ChangeLog
+autoreconf -ivf
 
 
 %build
 %configure
-# ./configure doesn't properly pick up our CFLAGS, and we need to override
-# the CFLAGS anyways, so as to not define USE_ONLINE_UPDATE, to stop critter
-# from phoning home
-CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE=1 -D_REENTRANT -DGAME_HAS_HERO_PARTICLE -I/usr/include/SDL"
-make CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS -std=c++0x"
+make %{?_smp_mflags}
 
 
 %install
@@ -55,26 +54,64 @@ rm $RPM_BUILD_ROOT%{_bindir}/Packer
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-              \
-%endif
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/256x256/apps
 install -p -m 644 critter.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/256x256/apps
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ryan Lerch <rlerch@redhat.com> -->
+<!--
+EmailAddress: crittermail2005@telus.net
+SentUpstream: 2014-09-17
+-->
+<application>
+  <id type="desktop">CriticalMass.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>A top-down space shoot-em-up game</summary>
+  <description>
+    <p>
+      Critical Mass (also known as Critter) is a top-down shoot-em-up game where your home world
+      has been infested by an aggressive army of space critters and
+      you are required to pilot a small spacecraft to destroy them all.
+    </p>
+  </description>
+  <url type="homepage">http://criticalmass.sourceforge.net/</url>
+  <screenshots>
+    <screenshot type="default">http://criticalmass.sourceforge.net/images-critter/pics.v100/snap09.jpeg</screenshot>
+    <screenshot>http://criticalmass.sourceforge.net/images-critter/pics.v100/snap17.jpeg</screenshot>
+    <screenshot>http://criticalmass.sourceforge.net/images-critter/pics.v100/snap13.jpeg</screenshot>
+    <screenshot>http://criticalmass.sourceforge.net/images-critter/pics.v100/snap04.jpeg</screenshot>
+    <screenshot>http://criticalmass.sourceforge.net/images-critter/pics.v100/snap00.jpeg</screenshot>
+  </screenshots>
+  <!-- FIXME: change this to an upstream email address for spec updates
+  <updatecontact>someone_who_cares@upstream_project.org</updatecontact>
+   -->
+</application>
+EOF
 
 %files
 %doc COPYING Readme.html TODO
 %{_bindir}/critter*
 %{_datadir}/Critical_Mass
 %{_mandir}/man6/critter.6*
+%{_datadir}/appdata/*%{name}.appdata.xml
 %{_datadir}/applications/*%{name}.desktop
 %{_datadir}/icons/hicolor/256x256/apps/critter.png
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_15
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_12
 - update to new release by fcimport
 
