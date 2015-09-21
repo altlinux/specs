@@ -3,8 +3,8 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Plack-Test-ExternalServer
-Version:        0.01
-Release:        alt3_12
+Version:        0.02
+Release:        alt1_1
 Summary:        Run HTTP tests on external live servers
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -39,25 +39,25 @@ HTTP or a locally spawned server.
 %setup -q -n Plack-Test-ExternalServer-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
-
 # %{_fixperms} %{buildroot}/*
 
 %check
 RELEASE_TESTING=1 make test
 
 %files
-%doc Changes LICENSE README
-%{perl_vendor_privlib}/*
+%doc Changes README
+%doc LICENSE
+%{perl_vendor_privlib}/Plack*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.01-alt3_12
 - update to new release by fcimport
 
