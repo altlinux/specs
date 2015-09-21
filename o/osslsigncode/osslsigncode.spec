@@ -4,7 +4,7 @@ BuildRequires: pkgconfig(libcurl)
 Summary: Tool for Authenticode signing of EXE/CAB files
 Name: osslsigncode
 Version: 1.5.2
-Release: alt2_4
+Release: alt2_5
 License: GPLv2+
 Group: File tools
 URL: http://sourceforge.net/projects/osslsigncode/
@@ -37,6 +37,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt2_5
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt2_4
 - update to new release by fcimport
 
