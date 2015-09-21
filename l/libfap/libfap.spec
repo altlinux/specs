@@ -1,6 +1,6 @@
 %add_optflags %optflags_shared
 Name:           libfap
-Version:        1.4
+Version:        1.5
 Release:        alt1_1
 Summary:        An APRS parser written in C
 
@@ -51,6 +51,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_1
+- update to new release by fcimport
+
 * Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_1
 - update to new release by fcimport
 
