@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/Command.
 BuildRequires: perl(Moose.pm)
 Name:           perl-Config-GitLike
 Version:        1.16
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Git-compatible config file parsing
 License:        GPL+ or Artistic
 
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_3
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_1
 - update to new release by fcimport
 
