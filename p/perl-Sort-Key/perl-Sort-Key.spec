@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Sort-Key
 Version:        1.33
-Release:        alt1.1_1
+Release:        alt1.1_3
 Summary:        Fastest way to sort anything in Perl
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -52,6 +52,9 @@ make test
 %{perl_vendor_archlib}/Sort*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1.1_3
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1.1_1
 - update to new release by fcimport
 
