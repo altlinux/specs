@@ -4,7 +4,7 @@ BuildRequires: perl(English.pm) perl(Exporter.pm) perl(IO/File.pm) perl(Module/B
 # END SourceDeps(oneline)
 Name:           perl-Test-Pod-Content
 Version:        0.0.6
-Release:        alt2_9
+Release:        alt2_11
 Summary:        Test a Pod's content
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt2_11
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt2_9
 - update to new release by fcimport
 
