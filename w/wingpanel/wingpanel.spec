@@ -1,40 +1,65 @@
-%define ver_major 0.3
+%define ver_major 2.0
+%define api_ver %ver_major
+%define rev 93
 
 Name: wingpanel
-Version: %ver_major.0.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1.%rev
 
 Summary: A super sexy space-saving top panel
 Group: Graphical desktop/Other
 License: GPLv3+
 Url: https://launchpad.net/wingpanel
 
-Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar.xz
+# rev 93
+Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar
+Patch: wingpanel-2.0.0-alt-gala_plugin_install.patch
 
-Packager: Igor Zubkov <icesik@altlinux.org>
+%define gtk_ver 3.14
 
-BuildRequires: gcc-c++ cmake glib2-devel libindicator-gtk3-devel libgranite-devel
-BuildRequires: libpixman-devel libexpat-devel libXdmcp-devel libXdamage-devel
-BuildRequires: libXxf86vm-devel libharfbuzz-devel libpng-devel
-BuildRequires: libXinerama-devel libXi-devel libXrandr-devel libXcursor-devel
-BuildRequires: libXcomposite-devel libxkbcommon-devel libwayland-cursor-devel
-BuildRequires: at-spi2-atk-devel libgranite-vala
-BuildRequires: libwnck3-devel libido3-devel
-
+BuildRequires: gcc-c++ cmake libgtk+3-devel >= %gtk_ver
+BuildRequires: libgranite-devel libnotify-devel libgala-devel
+BuildRequires: vala-tools libgranite-vala libgala-vala
 
 %description
 A replacement for the traditional GNOME Panel, designed to be a lightweight
 container for system/application indicators and notification icons.
 Designed by elementary Project.
 
+%package -n lib%name
+Summary: Shared library for Wingpanel
+Group: System/Libraries
+
+%description -n lib%name
+This package contains shared library needed to run Wingpanel.
+
+%package -n lib%name-devel
+Summary: Development files for lib%name
+Group: Development/C
+Requires: lib%name = %version-%release
+
+%description -n lib%name-devel
+This package contains headers and development libraries for lib%name
+
+%package -n lib%name-vala
+Summary: Vala language bindings for the Wingpanel library
+Group: Development/Other
+BuildArch: noarch
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-vala
+This package provides Vala language bindings for the Wingpanel library.
+
+
 %prep
 %setup
+%patch
+# fix pc-file
+subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 
 %build
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
-		-DNO_INDICATOR_NG:BOOL=ON \
-		-DOLD_LIB_IDO:BOOL=ON
-%cmake_build VERBOSE=1
+%cmake_build V=1
 
 %install
 %cmakeinstall_std
@@ -42,12 +67,27 @@ Designed by elementary Project.
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/*
+%_bindir/%name
+%_libdir/gala/plugins/libwingpanel-interface.so
 %_desktopdir/%name.desktop
 %_datadir/glib-2.0/schemas/org.pantheon.desktop.wingpanel.gschema.xml
-%_iconsdir/hicolor/scalable/apps/wingpanel.svg
+
+%files -n lib%name
+%_libdir/lib%name-%api_ver.so.*
+
+%files -n lib%name-devel
+%_includedir/%name-%api_ver/
+%_libdir/lib%name-%api_ver.so
+%_pkgconfigdir/%name-%api_ver.pc
+
+%files -n lib%name-vala
+%_vapidir/%name-%api_ver.deps
+%_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Sun Sep 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1.93
+- 2.0.0_rev93
+
 * Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.0.2-alt1
 - 0.3.0.2
 
