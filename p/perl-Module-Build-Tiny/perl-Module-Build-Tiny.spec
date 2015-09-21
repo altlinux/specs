@@ -5,7 +5,7 @@ BuildRequires: perl(Config.pm) perl-Module-Build perl-devel perl-podlators
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
 Version:	0.039
-Release:	alt1_1
+Release:	alt1_3
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		https://github.com/Leont/module-build-tiny
@@ -81,6 +81,9 @@ AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_3
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_1
 - update to new release by fcimport
 
