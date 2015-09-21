@@ -5,7 +5,7 @@ BuildRequires: liballegro-devel
 %define oldname ants
 Name:           Ants
 Version:        1.4
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Guide the insects safely home before they drop of the cliff
 Group:          Games/Other
 License:        Public Domain
@@ -75,6 +75,9 @@ install -p -m 644 %{SOURCE3} \
 %{_datadir}/applications/%{oldname}-level-editor.desktop
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_17
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_15
 - update to new release by fcimport
 
