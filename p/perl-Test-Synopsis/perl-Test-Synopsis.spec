@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:		perl-Test-Synopsis
 Version:	0.11
-Release:	alt1_1
+Release:	alt1_4
 Summary:	Test your SYNOPSIS code
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -49,7 +49,11 @@ BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 BuildRequires:	perl(Test/Portability/Files.pm)
 BuildRequires:	perl(Test/Spelling.pm) hunspell-en
+# Disable using of Test::Vars, because it failed with Perl 5.22.0
+# There is not a properly fix for it yet
+%if ! 0%(perl -e 'print $] >= 5.022')
 BuildRequires:	perl(Test/Vars.pm)
+%endif
 BuildRequires:	perl(Test/Version.pm)
 %endif
 # Runtime
@@ -93,6 +97,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_4
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_1
 - update to new release by fcimport
 
