@@ -3,7 +3,7 @@ BuildRequires: xml-utils
 
 Name:           xhtml1-dtds
 Version:        1.0
-Release:        alt1_%{date}.11
+Release:        alt1_%{date}.13
 Summary:        XHTML 1.0 document type definitions
 
 Group:          Text tools
@@ -12,7 +12,7 @@ Group:          Text tools
 License:        W3C
 URL:            http://www.w3.org/TR/2002/REC-xhtml1-%{date}/
 # Source0 generated with Source99, see comments in the script
-Source0:        %{name}-%{date}.tar.bz2
+Source0:        %{name}-%{date}.tar.xz
 Source1:        %{name}.catalog.xml
 Source99:       %{name}-prepare-tarball.sh
 Patch0:         %{name}-sgml-catalog.patch
@@ -113,6 +113,9 @@ cd - >/dev/null
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_20020801.13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_20020801.11
 - update to new release by fcimport
 
