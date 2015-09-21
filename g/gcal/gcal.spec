@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/less /usr/bin/perl /usr/bin/pg /usr/sbin/zdump libncurses-devel libtinfo-devel
 # END SourceDeps(oneline)
-%global gcalmantag 3.6
+%global gcalmantag 4
 
 Name:		gcal
-Version:	3.6.3
-Release:	alt1_3
+Version:	4
+Release:	alt1_2
 Summary:	GNU Gregorian calendar program
 
 Group:		Text tools
@@ -68,6 +68,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/*.1*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 4-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.6.3-alt1_3
 - update to new release by fcimport
 
