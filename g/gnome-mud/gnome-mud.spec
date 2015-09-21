@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize pkgconfig(gmodule-2
 # END SourceDeps(oneline)
 Name:		gnome-mud
 Version:	0.11.2
-Release:	alt2_15
+Release:	alt2_16
 Summary:	A MUD client for GNOME
 
 Group:		Games/Other
@@ -86,6 +86,9 @@ fi
 %{_mandir}/man6/%{name}.6*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_16
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_15
 - update to new release by fcimport
 
