@@ -5,19 +5,22 @@ BuildRequires: perl(CPAN.pm) perl(Catalyst/Controller.pm) perl(Catalyst/Log.pm) 
 # END SourceDeps(oneline)
 Name:           perl-Catalyst-View-Mason
 Version:        0.19
-Release:        alt1_1
+Release:        alt1_4
 Summary:        Mason View Class
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/Catalyst-View-Mason/
 Source0:        http://www.cpan.org/authors/id/F/FL/FLORA/Catalyst-View-Mason-%{version}.tar.gz
+# Use stderr capturing mechanims that works with Catalyst > 5.90079,
+# bug #1190033, CPAN RT#102381
+Patch0:         Catalyst-View-Mason-0.19-Use-Capture-Tiny-IO-Capture.patch
 
 BuildArch:      noarch
 BuildRequires:  perl(Catalyst.pm)
 BuildRequires:  perl(Catalyst/Helper.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(HTML/Mason.pm)
-BuildRequires:  perl(IO/Capture/Stderr.pm)
+BuildRequires:  perl(Capture/Tiny.pm)
 BuildRequires:  perl(MRO/Compat.pm)
 BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Test/Exception.pm)
@@ -34,6 +37,7 @@ Catalyst::View::Mason comes to the rescue.
 
 %prep
 %setup -q -n Catalyst-View-Mason-%{version}
+%patch0 -p1
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -54,6 +58,9 @@ make test
 %{perl_vendor_privlib}/Catalyst*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_4
+- update to new release by fcimport
+
 * Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_1
 - update to new release by fcimport
 
