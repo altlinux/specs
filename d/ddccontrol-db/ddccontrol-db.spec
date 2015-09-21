@@ -18,7 +18,7 @@ BuildRequires: /usr/bin/perl
 Name:             ddccontrol-db
 URL:              http://ddccontrol.sourceforge.net/
 Version:          20061014
-Release:          alt1_6.%{git_suffix}
+Release:          alt1_7.%{git_suffix}
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
 License:          GPLv2+
@@ -57,6 +57,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20061014-alt1_7.20120904gite8cc385a
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 20061014-alt1_6.20120904gite8cc385a
 - update to new release by fcimport
 
