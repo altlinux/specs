@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: glib2-devel libSDL-devel libesd-devel libgtk+2-devel libncurses-devel
+BuildRequires: glib2-devel libSDL-devel libesd-devel libgtk+2-devel libncurses-devel libsocket
 # END SourceDeps(oneline)
 # State dir for savegames
 %global _localstatedir /var/lib/games
@@ -9,7 +9,7 @@ BuildRequires: glib2-devel libSDL-devel libesd-devel libgtk+2-devel libncurses-d
 Summary:	A drug dealing game
 Name:		dopewars
 Version:	1.5.12
-Release:	alt1_15.%{rel}svn
+Release:	alt1_18.%{rel}svn
 URL:		http://dopewars.sourceforge.net/
 License:	GPLv2+
 Group:		Games/Other
@@ -19,10 +19,6 @@ Group:		Games/Other
 # tar jcf dopewars-%{version}-%{rel}svn.tar.bz2
 Source0:	%{name}-%{version}-%{rel}svn.tar.bz2
 
-# Add ARM64 support (BZ #925272)
-Patch0:		dopewars-aarch64.patch
-
-BuildRequires:	esound-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	gtk2-devel
 BuildRequires:	ncurses-devel
@@ -31,6 +27,7 @@ BuildRequires:	libSDL_mixer-devel
 # SVN stuff
 BuildRequires:	automake
 BuildRequires:	autoconf
+BuildRequires:	libtool
 BuildRequires:	gettext
 Source44: import.info
 
@@ -58,7 +55,7 @@ the Simple DirectMedia Layer mixer (SDL_mixer).
 %prep
 #%setup -q
 %setup -q -n %{name}
-%patch0 -p1 -b .aarch64
+
 # Clean out svn stuff
 find . -name .svn | xargs rm -rf;
 # Fix documentation
@@ -67,11 +64,11 @@ mv ChangeLog.new ChangeLog
 chmod 644 doc/*.html
 
 %build
-./autogen.sh
+NOCONFIGURE=1 autoreconf -vif
 %configure \
 	--enable-shared --disable-static \
 	--enable-gui-server --enable-curses-client \
-	--enable-gui-client --with-sdl --with-esd
+	--enable-gui-client --with-sdl --without-esd
 make %{?_smp_mflags}
 
 %install
@@ -87,6 +84,7 @@ desktop-file-install --vendor="" \
 
 # Remove documentation installed by make install
 rm -rf %{buildroot}%{_docdir}
+
 
 %post
 %{_bindir}/dopewars -C %{_var}/dopewars.sco
@@ -108,6 +106,9 @@ rm -rf %{buildroot}%{_docdir}
 %{_libdir}/dopewars/libsound_sdl.so
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_18.1033svn
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_15.1033svn
 - update to new release by fcimport
 
