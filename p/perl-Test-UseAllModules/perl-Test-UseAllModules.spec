@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-UseAllModules
 Version:        0.17
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Do use_ok() for all the MANIFESTed modules
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -68,6 +68,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_3
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_1
 - update to new release by fcimport
 
