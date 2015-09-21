@@ -3,8 +3,8 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Pg
-Version:        0.16010
-Release:        alt1_6
+Version:        0.16011
+Release:        alt1_1
 Summary:        Parse and format PostgreSQL dates and times
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -13,9 +13,8 @@ Source0:        http://search.cpan.org/CPAN/authors/id/D/DM/DMAKI/DateTime-Forma
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
-BuildRequires:  perl(CPAN/Meta.pm)
-BuildRequires:  perl(CPAN/Meta/Prereqs.pm)
 BuildRequires:  perl(File/Basename.pm)
+BuildRequires:  perl(File/Copy.pm)
 BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
@@ -23,6 +22,7 @@ BuildRequires:  perl(utf8.pm)
 BuildRequires:  perl(warnings.pm)
 # Runtime
 BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/Duration.pm)
 BuildRequires:  perl(DateTime/Format/Builder.pm)
@@ -31,8 +31,8 @@ BuildRequires:  perl(DateTime/TimeZone/Floating.pm)
 BuildRequires:  perl(DateTime/TimeZone/UTC.pm)
 BuildRequires:  perl(vars.pm)
 # Tests only
-BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Test/More.pm)
+# Optional tests only
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 Source44: import.info
@@ -59,10 +59,14 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build test
 
 %files
-%doc Changes LICENSE
+%doc LICENSE
+%doc Changes
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.16011-alt1_1
+- update to new release by fcimport
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.16010-alt1_6
 - update to new release by fcimport
 
