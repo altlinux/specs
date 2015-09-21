@@ -5,7 +5,7 @@ Name: hunspell-tet
 Summary: Tetum hunspell dictionaries
 %define upstreamid 20050108
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/tet_ID.zip
 Group: Text tools
 URL: http://borel.slu.edu/crubadan/apps.html
@@ -49,6 +49,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20050108-alt2_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20050108-alt2_11
 - update to new release by fcimport
 
