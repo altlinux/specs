@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/find /usr/bin/perl /usr/bin/pkg-config /usr/bin/xargs gc
 %add_optflags %optflags_shared
 Name:           libAfterImage
 Version:        1.20
-Release:        alt1_12
+Release:        alt1_13
 Summary:        A generic image manipulation library
 
 Group:          System/Libraries
@@ -100,6 +100,9 @@ touch -r ChangeLog $RPM_BUILD_ROOT%{_bindir}/afterimage-{config,libs}
 %{_libdir}/*.so
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_13
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_12
 - update to new release by fcimport
 
