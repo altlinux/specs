@@ -5,7 +5,7 @@ BuildRequires: bzlib-devel gcc-c++
 %define oldname atlascpp
 Name:           libatlascpp
 Version:        0.6.3
-Release:        alt1_3.1
+Release:        alt1_5
 Summary:        WorldForge message protocol library
 
 Group:          Development/C++
@@ -81,6 +81,9 @@ make %{?_smp_mflags} check
 %{_mandir}/man3/Atlas*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt1_5
+- update to new release by fcimport
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.3-alt1_3.1
 - Rebuilt for gcc5 C++11 ABI.
 
