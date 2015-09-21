@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20150216
+%define date 20150921
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.21
+Version: 0.0.23
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -262,6 +262,11 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Mon Sep 21 2015 Andriy Stepanov <stanv@altlinux.ru> 0.0.23-alt1
+- Deny untrasted network connections
+  Deny write protected data RW USB devices
+  Deny write protected files to file-systems
+
 * Mon Feb 16 2015 Andriy Stepanov <stanv@altlinux.ru> 0.0.21-alt1
 - Introduce officer_exec_t, utempter screen hard link
 
