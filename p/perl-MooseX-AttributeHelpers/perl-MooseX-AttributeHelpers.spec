@@ -1,20 +1,19 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-AttributeHelpers
-Version:        0.23
-Release:        alt3_13
+Version:        0.24
+Release:        alt1_1
 Summary:        Extended Moose attribute interfaces
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/MooseX-AttributeHelpers/
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/MooseX-AttributeHelpers-%{version}.tar.gz
-# Perl 5.18 compatibility, CPAN RT#81564
-Patch0:         MooseX-AttributeHelpers-0.23-Fix-tests-to-cope-radnomized-hash-keys.patch
+Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/MooseX-AttributeHelpers-%{version}.tar.gz
+
 BuildArch:      noarch
 
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(Module/Build/Tiny.pm)
 BuildRequires:  perl(Moose.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/Moose.pm)
@@ -33,27 +32,27 @@ used attribute helper methods for more specific types of data.
 
 %prep
 %setup -q -n MooseX-AttributeHelpers-%{version}
-%patch0 -p1
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%{__perl} Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
+./Build
 
 %install
-make pure_install DESTDIR=%{buildroot}
-
-find %{buildroot} -type f -name .packlist -exec rm -f {} +
-
-# %{_fixperms} %{buildroot}/*
+./Build install --destdir=$RPM_BUILD_ROOT --create_packlist=0
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
-make test
+./Build test
 
 %files
-%doc ChangeLog README t/
-%{perl_vendor_privlib}/*
+%doc Changes README t/
+%doc LICENSE
+%{perl_vendor_privlib}/MooseX*
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt3_13
 - update to new release by fcimport
 
