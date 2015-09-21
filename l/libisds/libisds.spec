@@ -3,16 +3,20 @@ BuildRequires: libexpat-devel libssl-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libisds
-Version:        0.10
+Version:        0.10.1
 Release:        alt1_1
 Summary:        Library for accessing the Czech Data Boxes
 Group:          System/Libraries
 License:        LGPLv3
 URL:            http://xpisar.wz.cz/%{name}/
 Source0:        %{url}dist/%{name}-%{version}.tar.xz
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  gcc
 BuildRequires:  libxml2-devel
 BuildRequires:  libcurl-devel
 BuildRequires:  libgcrypt-devel
+BuildRequires:  make
 BuildRequires:  libgpgme-devel
 BuildRequires:  expat-devel >= 2.0.0
 # Run-time:
@@ -31,6 +35,7 @@ Data Box Information System) SOAPa..services as defined in Czech ISDS Act
 Summary:        Development files for %{name}
 Group:          Development/C
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       gcc
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -70,6 +75,9 @@ rm -rf client/.deps
 %doc client specification
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.10.1-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
 - update to new release by fcimport
 
