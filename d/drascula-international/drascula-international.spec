@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           drascula-international
 Version:        1.0
-Release:        alt4_9
+Release:        alt4_10
 Summary:        Subtitles for Drascula: The Vampire Strikes Back
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -101,6 +101,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
 
 
 %changelog
+* Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_10
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_9
 - update to new release by fcimport
 
