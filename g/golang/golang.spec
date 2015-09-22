@@ -10,43 +10,56 @@
 %global _unpackaged_files_terminate_build 1
 
 %global go_arches %ix86 x86_64 %arm
+%global go_root %_libdir/golang
 
 %ifarch x86_64
-%global gohostarch  amd64
+%global go_hostarch  amd64
 %endif
-%ifarch %{ix86}
-%global gohostarch  386
+%ifarch %ix86
+%global go_hostarch  386
 %endif
-%ifarch %{arm}
-%global gohostarch  arm
+%ifarch %arm
+%global go_hostarch  arm
 %endif
 
 %def_disable check
 
-Name:		golang
-Version:	1.4.2
-Release:	alt1
-Summary:	The Go Programming Language
-Group:		Development/Other
-License:	BSD
-URL:		http://golang.org/
+Name:    golang
+Version: 1.5.1
+Release: alt1
+Summary: The Go Programming Language
+Group:   Development/Other
+License: BSD
+URL:     http://golang.org/
 
-Packager:	Alexey Gladkov <legion@altlinux.ru>
+Packager: Alexey Gladkov <legion@altlinux.ru>
 
-Source0:	golang-%version.tar
-Patch0:		golang-1.2-verbose-build.patch
-Patch2:		golang-1.4.2-alt-certs-path.patch
+Source0: golang-%version.tar
+Source1: golang-gdbinit
+Patch0:  golang-1.2-verbose-build.patch
+Patch2:  golang-alt-certs-path.patch
 
-ExclusiveArch:	%go_arches
+ExclusiveArch: %go_arches
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %_libdir/golang
-%brp_strip_none %_libdir/golang/bin/*
+%set_verify_elf_method skip
+%add_debuginfo_skiplist %go_root
+%brp_strip_none %go_root/bin/*
 
 AutoReq: nocpp
 
+BuildRequires: golang
+BuildRequires: libselinux-utils
+BuildRequires: libpcre-devel
+
 # for test suite
-%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
+%{?_enable_check:BuildRequires: /proc}
+
+Provides:  golang-godoc = %version-%release
+Obsoletes: golang-godoc
+
+# Due to vet, cover utilities.
+Conflicts: golang-tools <= 0-alt1.git7e09e072
+
 
 %description
 Go is expressive, concise, clean, and efficient. Its concurrency mechanisms
@@ -56,29 +69,29 @@ modular program construction.
 
 
 %package gdb
-Summary: The Go Runtime support for GDB
-Group: Development/Other
-Requires:    %name = %version-%release
-BuildArch: noarch
+Summary:   The Go Runtime support for GDB
+Group:     Development/Other
+Requires:  %name = %version-%release
 
 %description gdb
 The Go Runtime support for GDB.
 
 
-%package godoc
-Summary: The Go documentation tool
-Group: Documentation
-Requires:    %name = %version-%release
-Requires:    %name-docs = %version-%release
+%ifarch x86_64
+%package shared
+Summary: Golang shared object libraries
+Group:   Development/Other
 
-%description godoc
-The Go documentation tool.
+%description shared
+%summary.
+%endif
 
 
 %package docs
-Summary: Go sources and documentation
-Group: Documentation
-BuildArch:  noarch
+Summary:   Go sources and documentation
+Group:     Documentation
+BuildArch: noarch
+Requires:  %name = %version-%release
 
 %description docs
 Go sources and documentation.
@@ -89,143 +102,176 @@ Go sources and documentation.
 
 # increase verbosity of build
 %patch0 -p1
-%patch2 -p2
-
+%patch2 -p1
 
 %build
-export PATH="$GOROOT/bin:$PATH"
-export GOROOT_FINAL=%_libdir/%name
+# go1.5 bootstrapping. The compiler is written in golang.
+export GOROOT_BOOTSTRAP=%go_root
 
-# TODO use the system linker to get the system link flags and build-id
-# when https://code.google.com/p/go/issues/detail?id=5221 is solved
-#export GO_LDFLAGS="-linkmode external -extldflags $RPM_LD_FLAGS"
+# set up final install location
+export GOROOT_FINAL=%go_root
 
 export GOHOSTOS=linux
-export GOHOSTARCH=%gohostarch
+export GOHOSTARCH=%go_hostarch
+
+export GOOS=linux
+export GOARCH=%go_hostarch
 
 # use our gcc options for this build, but store gcc as default for compiler
-export CC="gcc $RPM_OPT_FLAGS $RPM_LD_FLAGS"
+export CC="gcc"
 export CC_FOR_TARGET="gcc"
+export CFLAGS="$RPM_OPT_FLAGS"
+export LDFLAGS="$RPM_LD_FLAGS"
 
 # build
 cd src
 ./make.bash --no-clean
+cd ..
+
+%ifarch x86_64
+export GOROOT=$PWD
+export PATH="$GOROOT/bin:$PATH"
+
+# TODO get linux/386 support for shared objects.
+# golang shared objects for stdlib
+go install -v -buildmode=shared std
+%endif
+
 
 %check
 %if_enabled check
 export GOROOT=$PWD
 export PATH="$GOROOT/bin:$PATH"
 export CGO_ENABLED=0
+export CC="gcc"
+export CFLAGS="$RPM_OPT_FLAGS"
+export LDFLAGS="$RPM_LD_FLAGS"
 
 cd src
-./run.bash --no-rebuild
+./run.bash --no-rebuild -v -k
 %endif
+
 
 %install
 # create the top level directories
 mkdir -p -- \
 	%buildroot/%_bindir \
-	%buildroot/%_libdir/%name \
+	%buildroot/%go_root \
 	%buildroot/%_datadir/%name
 
-# install binaries and runtime files into libdir
-cp -av bin pkg src \
-	%buildroot/%_libdir/%name
+cp -afv api bin doc favicon.ico lib pkg robots.txt src test VERSION \
+	%buildroot/%go_root/
 
-# install sources and other data in datadir
-cp -av api doc include lib favicon.ico robots.txt \
-	%buildroot/%_datadir/%name
+find %buildroot/%go_root -exec touch -r $PWD/VERSION "{}" \;
 
-# remove the unnecessary zoneinfo file (Go will always use the system one first)
-rm -rfv -- \
-	%buildroot/%_datadir/%name/lib/time
+# remove bootstrap files
+rm -rfv -- %buildroot/%go_root/pkg/bootstrap
 
-find %buildroot/%_libdir/%name/src -maxdepth 1 -type f -print0 |
-	xargs -0 rm -fv --
-
-# remove plan9 files
-#rm -fv -- %buildroot/%_datadir/%name/include/plan9/mklibc.rc
-rm -rfv -- %buildroot/%_datadir/%name/include/plan9
-
-# remove testdata, tests, and non-go files: this is all we need for godoc
+# remove testdata, tests, and non-go files
 find \
-	%buildroot/%_libdir/%name/src \
-	%buildroot/%_datadir/%name/doc \
+	%buildroot/%go_root/src \
 	\( \
-		\( -type d -name 'testdata'  \) -o \
-		\( -type f -name 'Makefile'  \) -o \
-		\( -type f -name '*_test.go' \) -o \
-		\( -type f -name 'test_*'    \) -o \
-		\( -type f -name 'test.'     \) \
+		\( -type d -name 'testdata'   \) -o \
+		\( -type f -name 'Makefile'   \) -o \
+		\( -type f -name '*_test.go'  \) -o \
+		\( -type f -name 'test_*'     \) -o \
+		\( -type f -name '*test.bash' \) -o \
+		\( -type f -name 'test.'      \) \
 	\) \
 		-print0 |
 	xargs -0 rm -rfv --
 
-# add symlinks for things in datadir
-for z in %buildroot/%_datadir/%name/*; do
-	n="${z##*/}"
-	path="$(relative "$z" "%buildroot/%_libdir/%name/$n")"
-	ln -sv -- "$path" %buildroot/%_libdir/%name/$n
-done
+# remove scripts for other platform.
+find \
+	%buildroot/%go_root/src \
+		-maxdepth 1 \
+	\( \
+		\( -type f -name '*.rc'  \) -o \
+		\( -type f -name '*.bat' \)    \
+	\) \
+		-print0 |
+	xargs -0 rm -fv --
+
+# remove the unnecessary zoneinfo file (Go will always use the system one first)
+rm -rfv -- \
+	%buildroot/%go_root/lib/time
 
 # add symlinks for binaries.
-for z in %buildroot%_libdir/%name/bin/*; do
+for z in %buildroot%go_root/bin/*; do
+	[ -x "$z" ] || continue
+
 	n="${z##*/}"
 	path="$(relative "$z" "%buildroot/%_bindir/$n")"
+
+	ln -sv -- "$path" %buildroot/%_bindir/$n
+done
+
+# https://golang.org/doc/go1.5#moving
+# Because the go/types package has now moved into the main repository (see below),
+# the vet and cover tools have also been moved. They are no longer maintained in
+# the external golang.org/x/tools repository, although (deprecated) source still
+# resides there for compatibility with old releases.
+for z in cover vet; do
+	z="%buildroot%go_root/pkg/tool/linux_%{go_hostarch}/$z"
+	[ -x "$z" ] || continue
+
+	n="${z##*/}"
+	path="$(relative "$z" "%buildroot/%_bindir/$n")"
+
 	ln -sv -- "$path" %buildroot/%_bindir/$n
 done
 
 # restore the gdb debugging script, needed at runtime by gdb
 mkdir -p -- %buildroot/%_datadir/%name/gdb
-mv -fv  \
-	%buildroot/%_libdir/%name/src/runtime/runtime-gdb.py \
-	%buildroot/%_datadir/%name/gdb
+sed \
+    -e 's,@GOROOT@,%go_root,g' \
+    %SOURCE1 > %buildroot/%_datadir/%name/gdb/golang-gdbinit
+
+mkdir -p -- %buildroot/%_datadir/%name/src
+for n in syscall regexp; do
+	mkdir -- %buildroot/%_datadir/%name/src/$n
+
+	find %buildroot/%go_root/src/$n \
+		\( \
+			\( -type f -name '*.sh' \) -o \
+			\( -type f -name '*.pl' \)    \
+		\) \
+			-print0 |
+		xargs -0 mv -fvt %buildroot/%_datadir/%name/src/$n --
+done
+
 
 %files
-# binaries
-%dir %_libdir/%name
-%dir %_libdir/%name/bin
-%_libdir/%name/bin/go
-%_libdir/%name/bin/gofmt
-%_libdir/%name/pkg
-%_libdir/%name/src
+%_bindir/*
+%go_root
 
-# data
-%dir %_datadir/%name
-%_datadir/%name/api
-%_datadir/%name/include
+%exclude %go_root/src/runtime/runtime-gdb.py*
 
-# symlinks (lib -> share)
-%_bindir/go
-%_bindir/gofmt
-%_libdir/%name/api
-%_libdir/%name/include
+%ifarch x86_64
+%exclude %go_root/pkg/linux_%{go_hostarch}_dynlink
+
+%files shared
+%go_root/pkg/linux_%{go_hostarch}_dynlink
+%endif
 
 
 %files gdb
-# GDB script
 %_datadir/%name/gdb
-
-
-%files godoc
-%_libdir/%name/doc
-%_libdir/%name/favicon.ico
-%_libdir/%name/lib
-%_libdir/%name/robots.txt
+%go_root/src/runtime/runtime-gdb.py*
 
 
 %files docs
-%doc AUTHORS CONTRIBUTORS LICENSE PATENTS VERSION
-
-# data
 %dir %_datadir/%name
-%_datadir/%name/doc
-%_datadir/%name/favicon.ico
-%_datadir/%name/robots.txt
-%_datadir/%name/lib
+%_datadir/%name/src
+
+%doc AUTHORS CONTRIBUTORS LICENSE PATENTS VERSION
 
 
 %changelog
+* Tue Sep 22 2015 Alexey Gladkov <legion@altlinux.ru> 1.5.1-alt1
+- New version (1.5.1).
+- The vet and cover tools have been moved to this package.
+
 * Sun May 03 2015 Alexey Gladkov <legion@altlinux.ru> 1.4.2-alt1
 - New version (1.4.2).
 - Disable tests.

@@ -1,4 +1,4 @@
-%global abbrev 7e09e072
+%global abbrev d02228d1
 
 # build ids are not currently generated:
 # https://code.google.com/p/go/issues/detail?id=5238
@@ -23,6 +23,7 @@
 %global gohostarch  arm
 %endif
 
+%global go_version 1.5.1
 %global go_path    %_libdir/golang
 %global go_root    %_libdir/golang
 %global go_tooldir %_libdir/golang/pkg/tool/linux_%gohostarch
@@ -35,7 +36,7 @@
 
 Name:		golang-tools
 Version:	0
-Release:	alt1.git%abbrev
+Release:	alt2.git%abbrev
 Summary:	Supplementary tools and packages for Go
 
 Group:		Development/Other
@@ -49,8 +50,8 @@ Source0:	golang-tools-%version.tar
 ExclusiveArch:	%go_arches
 AutoReq:	nocpp
 
-BuildRequires:	golang >= 1.4.2
-Requires:	golang >= 1.4.2
+BuildRequires:	golang >= %go_version
+Requires:	golang >= %go_version
 
 %description
 The collection of developer tools.
@@ -60,7 +61,7 @@ The collection of developer tools.
 Summary:	Libraries of supplementary Go tools
 Group:		Development/Other
 ExclusiveArch:	%go_arches
-Requires:	golang >= 1.4.2
+Requires:	golang >= %go_version
 
 %description devel
 %{summary}
@@ -83,6 +84,8 @@ ln -s $PWD .build/src/golang.org/x/tools
 
 rm -rf -- .build/src/golang.org/x/tools/cmd/html2article
 rm -rf -- .build/src/golang.org/x/tools/cmd/present
+rm -rf -- .build/src/golang.org/x/tools/cmd/cover
+rm -rf -- .build/src/golang.org/x/tools/cmd/vet
 
 cd .build/bin
 for d in ../src/golang.org/x/tools/cmd/*; do
@@ -94,14 +97,6 @@ rm -rf -- rpm
 
 mkdir -p -- %buildroot/%_bindir
 mv -f -- .build/bin/* %buildroot/%_bindir/
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1129281
-mkdir -p -- %buildroot/%go_tooldir
-
-for n in cover vet; do
-	t="$(relative "%_bindir/$n" "%buildroot/%go_tooldir/$n")"
-	ln -s -- "$t" "%buildroot/%go_tooldir/$n"
-done
 
 mkdir -p -- %buildroot/%go_path/src/golang.org/x/tools
 cp -av * %buildroot/%go_path/src/golang.org/x/tools/
@@ -120,11 +115,14 @@ find %buildroot/%go_path/src \
 
 %files
 %_bindir/*
-%go_tooldir/*
 
 %files devel
 %go_path/src/golang.org/x/tools
 
 %changelog
+* Sat Sep 26 2015 Alexey Gladkov <legion@altlinux.ru> 0-alt2.gitd02228d1
+- New snapshot.
+- The vet and cover tools have been moved to golang.
+
 * Mon Jul 06 2015 Alexey Gladkov <legion@altlinux.ru> 0-alt1.git7e09e072
 - First build for ALTLinux.
