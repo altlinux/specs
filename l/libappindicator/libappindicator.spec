@@ -3,7 +3,7 @@
 
 Name: libappindicator
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -32,7 +32,8 @@ none of those are available.
 %package -n python-module-appindicator
 Summary: Python 2 bindings for %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name-gir = %version-%release
+Requires: %name-gtk3-gir = %version-%release
 
 %description -n python-module-appindicator
 This package contains the Python 2 bindings for the appindicator library.
@@ -102,6 +103,7 @@ This package provides GObject introspection devel data for the %name-gtk3
 Summary: Documentation for %name
 Group: Documentation
 BuildArch: noarch
+Requires: %name = %version-%release
 
 %description devel-doc
 This package contains the documentation for the appindicator libraries.
@@ -109,6 +111,8 @@ This package contains the documentation for the appindicator libraries.
 %package sharp
 Summary: Application indicators library - C#
 Group: System/Libraries
+Requires: %name-gir = %version-%release
+Requires: %name-gtk3-gir = %version-%release
 
 %description sharp
 A library to allow applications to export a menu into the Unity Menu bar. Based
@@ -225,5 +229,8 @@ popd
 %_pkgconfigdir/appindicator-sharp-0.1.pc
 
 %changelog
+* Tue Sep 22 2015 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt2
+- Updated requires.
+
 * Sun Sep 20 2015 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt1
 - Initial build for ALT Linux Sisyphus.
