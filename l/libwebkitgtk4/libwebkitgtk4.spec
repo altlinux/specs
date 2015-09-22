@@ -9,9 +9,12 @@
 
 %def_disable gtkdoc
 %def_disable gnu_ld
+%def_disable media_stream
+%def_enable x11
+%def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.8.5
+Version: 2.10.0
 Release: alt1
 
 Summary: Web browser engine
@@ -21,13 +24,13 @@ License: %bsd %lgpl2plus
 Url: http://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
-
 # fc
-Patch10: webkitgtk-2.8.0-gcc5_fix.patch
-Patch11: webkitgtk-2.8.4-memory-limit.patch
 Patch12: webkitgtk-2.8.4-youtube.patch
 
 BuildPreReq: rpm-build-licenses
+
+Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
+Requires: hyphen-en hyphen-ru
 
 BuildRequires: gcc-c++ cmake ccache libicu-devel bison perl-Switch zlib-devel
 BuildRequires: chrpath
@@ -53,18 +56,19 @@ BuildRequires: ruby ruby-stdlibs
 BuildRequires: libGL-devel libXcomposite-devel libXdamage-devel
 BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libsoup-gir-devel
 BuildRequires: geoclue2-devel
-BuildRequires: libenchant-devel
+BuildRequires: libenchant-devel libhyphen-devel
 BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
 BuildRequires: libgtk+2-devel libpixman-devel libexpat-devel
 
 BuildRequires: libXdmcp-devel libxshmfence-devel libXxf86vm-devel
 BuildRequires: libXinerama-devel libXi-devel libXrandr-devel
 BuildRequires: libXcursor-devel libxkbcommon-devel
-BuildRequires: libwayland-cursor-devel libwayland-egl-devel
+%{?_enable_wayland:BuildRequires: libwayland-server-devel libwayland-cursor-devel libwayland-egl-devel}
 BuildRequires: libnotify-devel libgnutls-devel libnettle-devel
 BuildRequires: libtasn1-devel libp11-kit-devel libgcrypt-devel
 # for battery status
 BuildRequires: libupower-devel
+%{?_enable_media_stream:BuildRequires: libopenwebrtc-devel}
 
 %description
 WebKit is an open source web browser engine.
@@ -178,10 +182,7 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
-%patch10 -p1
-%patch11 -p1
 %patch12 -p1
-
 # Remove bundled libraries
 rm -rf Source/ThirdParty/leveldb/
 rm -rf Source/ThirdParty/gtest/
@@ -201,14 +202,17 @@ rm -rf Source/ThirdParty/qunit/
 -DENABLE_TOUCH_ICON_LOADING:BOOL=ON \
 -DENABLE_TOUCH_SLIDER:BOOL=ON \
 -DENABLE_FTPDIR:BOOL=ON \
-%{?_disable_gnu_ld:-DUSE_LD_GOLD:BOOL=OFF}
-#-DENABLE_MEDIA_STREAM:BOOL=ON \
+%{?_enable_x11:-DENABLE_X11_TARGET:BOOL=ON} \
+%{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
+%{?_disable_gnu_ld:-DUSE_LD_GOLD:BOOL=OFF} \
+%{?_enable_media_stream:-DENABLE_MEDIA_STREAM:BOOL=ON}
 #-DENABLE_TELEPHONE_NUMBER_DETECTION:BOOL=ON \
 #-DENABLE_BATTERY_STATUS:BOOL=ON \
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
 #-DENABLE_ORIENTATION_EVENTS:BOOL=ON
 
 %cmake_build
+#%make -C BUILD
 
 %install
 %cmakeinstall_std
@@ -222,6 +226,7 @@ rm -rf Source/ThirdParty/qunit/
 %_libexecdir/webkit2gtk-%api_ver/WebKitPluginProcess
 %_libexecdir/webkit2gtk-%api_ver/WebKitPluginProcess2
 %_libexecdir/webkit2gtk-%api_ver/WebKitWebProcess
+%_libexecdir/webkit2gtk-%api_ver/WebKitDatabaseProcess
 %dir %_libdir/webkit2gtk-%api_ver
 %dir %_libdir/webkit2gtk-%api_ver/injected-bundle
 %_libdir/webkit2gtk-%api_ver/injected-bundle/libwebkit2gtkinjectedbundle.so
@@ -268,6 +273,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Fri Aug 07 2015 Yuri N. Sedunov <aris@altlinux.org> 2.8.5-alt1
 - 2.8.5
 
