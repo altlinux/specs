@@ -1,8 +1,10 @@
 %define rname kde-cli-tools
 
+%def_disable bootstrap
+
 Name: kf5-%rname
 Version: 5.4.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -10,10 +12,7 @@ Summary: KDE Workspace 5 common cli tools
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: eject
-#Requires: kf5-kdialog
-#Requires: %_K5bin/kdialog
-Requires: kf5-kdelibs4support
+Requires: eject kf5-kdelibs4support
 
 Source: %rname-%version.tar
 
@@ -29,6 +28,9 @@ BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-ki
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel
 BuildRequires: kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+%if_disabled bootstrap
+BuildRequires: kde5-kdialog
+%endif
 
 %description
 KDE common command line tools.
@@ -76,6 +78,9 @@ KF5 library
 %_K5srv/*.desktop
 
 %changelog
+* Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt2
+- rebuild to require proper kdialog
+
 * Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
 - new version
 
