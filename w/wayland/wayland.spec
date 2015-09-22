@@ -1,14 +1,13 @@
 # enable compilation of wayland-scannner
-%def_enable scanner
 %def_disable doc
 
 Name: wayland
-Version: 1.8.1
+Version: 1.9.0
 Release: alt1
 
 Summary: Wayland protocol libraries
 Group: System/X11
-License: GPLv2+
+License: MIT
 Url: http://%name.freedesktop.org/
 
 # git://anongit.freedesktop.org/wayland/wayland
@@ -32,7 +31,7 @@ Summary: Common headers for Wayland
 License: MIT
 
 %description devel
-Common headers for Wayland
+Common headers for Wayland.
 
 %package -n lib%name-client
 Summary: Wayland client library
@@ -95,7 +94,6 @@ This package provides development files for Wayland cursor helper library.
 %build
 %autoreconf
 %configure --disable-static \
-	%{subst_enable scanner} \
 	%{?_disable_doc:--disable-documentation}
 %make_build
 
@@ -122,6 +120,7 @@ This package provides development files for Wayland cursor helper library.
 
 %files -n lib%name-client
 %_libdir/lib%name-client.so.*
+%doc README COPYING
 
 %files -n lib%name-client-devel
 %_includedir/%name-client*.h
@@ -147,6 +146,9 @@ This package provides development files for Wayland cursor helper library.
 %_pkgconfigdir/%name-cursor.pc
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Tue Jul 07 2015 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
