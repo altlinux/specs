@@ -1,5 +1,5 @@
 Name: jool
-Version: 3.3.3
+Version: 3.3.4
 Release: alt1
 Summary: Jool is an Open Source implementation of IPv4/IPv6 Translation on Linux.
 Group: Networking/Other
@@ -75,5 +75,8 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Sep 22 2015 Alexei Takaseev <taf@altlinux.org> 3.3.4-alt1
+- 3.3.4
+
 * Wed Sep 02 2015 Alexei Takaseev <taf@altlinux.org> 3.3.3-alt1
 - Initial build for ALT Linux Sisyphus
