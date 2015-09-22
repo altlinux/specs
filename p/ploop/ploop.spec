@@ -1,5 +1,5 @@
 Name: ploop
-Version: 1.14
+Version: 1.14.1
 Release: alt1
 Group: System/Base
 License: GNU GPL
@@ -58,8 +58,13 @@ make DESTDIR=%buildroot LIBDIR=%_libdir TMPFILESDIR=%_tmpfilesdir install
 %files -n lib%name-devel
 %_libdir/libploop.so
 %_includedir/%name
+%_libdir/pkgconfig/ploop.pc
 
 %changelog
+* Tue Sep 22 2015 Terechkov Evgenii <evg@altlinux.org> 1.14.1-alt1
+- New version
+- Add pkg-config support
+
 * Tue Sep 22 2015 Terechkov Evgenii <evg@altlinux.org> 1.14-alt1
 - New version
 
