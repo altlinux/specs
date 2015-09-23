@@ -11,8 +11,8 @@
 %def_enable libraw
 
 Name: gthumb
-Version: %ver_major.0
-Release: alt3
+Version: %ver_major.1
+Release: alt1
 
 Summary: An image file viewer and browser for GNOME
 Summary(ru_RU.UTF-8): Просмотрщик изображений и фотоальбом для GNOME
@@ -24,7 +24,7 @@ Url: http://gthumb.sourceforge.net/
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
 # From configure.ac
@@ -167,6 +167,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Sep 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
+- 3.4.1
+
 * Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt3
 - rebuilt against libraw.so.15
 
