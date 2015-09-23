@@ -9,7 +9,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        38.2.1
+Version:        38.3.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -288,6 +288,18 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Wed Sep 23 2015 Andrey Cherepanov <cas@altlinux.org> 38.3.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2015-113 Memory safety errors in libGLES in the ANGLE graphics library
+  + MFSA 2015-112 Vulnerabilities found through code inspection
+  + MFSA 2015-111 Errors in the handling of CORS preflight request headers
+  + MFSA 2015-110 Dragging and dropping images exposes final URL after redirects
+  + MFSA 2015-106 Use-after-free while manipulating HTML media content
+  + MFSA 2015-105 Buffer overflow while decoding WebM video
+  + MFSA 2015-101 Buffer overflow in libvpx while parsing vp9 format video
+  + MFSA 2015-100 Arbitrary file manipulation by local user through Mozilla updater
+
 * Fri Aug 28 2015 Andrey Cherepanov <cas@altlinux.org> 38.2.1-alt1
 - New ESR version
 - Security fixes:
