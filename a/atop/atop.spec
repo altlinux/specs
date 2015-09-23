@@ -1,11 +1,11 @@
 Name: atop
-Version: 2.0.2
+Version: 2.2
 Release: alt1
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
 URL: http://www.%{name}tool.nl
-Source: %url/download/atop-2.0.2.tar
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: libncurses-devel zlib-devel
@@ -31,7 +31,10 @@ gzip -c9 ChangeLog > ChangeLog.gz
 
 
 %install
-%makeinstall_std INIPATH=%_initddir
+mkdir -p %buildroot/usr/lib/pm-utils/sleep.d
+for i in systemdinstall sysvinstall;do
+make $i DESTDIR=%buildroot INIPATH=%_initddir SYSDPATH=%_unitdir
+done
 :> %buildroot%_sysconfdir/%{name}rc
 
 
@@ -49,15 +52,22 @@ gzip -c9 ChangeLog > ChangeLog.gz
 %config(noreplace) %_sysconfdir/%name/*
 %ghost %config(noreplace) %_sysconfdir/%{name}rc
 %_bindir/*
+%_sbindir/atopacctd
 %_man1dir/*
 %_man5dir/*
+%_man8dir/atopacctd.8.*
 %_sysconfdir/cron.d/*
 %_sysconfdir/logrotate.d/*
 %_initdir/*
+%_unitdir/%name.service
+%_unitdir/atopacct.service
 %_logdir/%name
-
+%_libexecdir/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Sat Sep 19 2015 Terechkov Evgenii <evg@altlinux.org> 2.2-alt1
+- 2.2
+
 * Sun Dec 23 2012 Led <led@altlinux.ru> 2.0.2-alt1
 - 2.0.2
 - updated URL
