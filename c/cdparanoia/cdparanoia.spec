@@ -1,6 +1,6 @@
 Name: cdparanoia
 Version: 10.2
-Release: alt4
+Release: alt5
 Serial: 1
 Summary: Utility to copy digital audio cd's.
 License: GPL
@@ -12,8 +12,6 @@ Requires: lib%name = %{?serial:%serial:}%version-%release
 Source: %url/download/%name-III-%version.src.tgz
 Patch0: cdparanoia-10.2-#463009.patch
 Patch1: cdparanoia-10.2-endian.patch
-# ALT
-Patch10: cdparanoia-10.2-alt-armh.patch
 
 %description
 This CDDA reader distribution ('%name') reads audio from the CDROM
@@ -53,11 +51,13 @@ This package contains development libraries and header files for %name.
 %setup -q -n %name-III-%version
 %patch0 -p3
 %patch1 -p1
-%patch10 -p1
 
 %build
 %define _optlevel 0
 %add_optflags -Wno-pointer-sign -Wno-unused -Werror-implicit-function-declaration
+install -pm755 -- /usr/share/gnu-config/config.{sub,guess} .
+ln -sf config.sub configure.sub
+ln -sf config.guess configure.guess
 %configure
 %make OPT="$RPM_OPT_FLAGS"
 
@@ -82,6 +82,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Wed Sep 23 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:10.2-alt5
+- Switched to system config.{sub,guess} scripts.
+
 * Mon Sep 24 2012 Sergey V Turchin <zerg@altlinux.org> 1:10.2-alt4
 - fix to build for armh (ALT#27759)
 
