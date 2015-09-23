@@ -1,10 +1,10 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define realname icewm
 %def_with menu
-%define gitrev .git956b8d7
+%define gitrev .gitd490895
 
 Name: %realname-githubmod
-Version: 1.3.10
+Version: 1.3.11
 Release: alt1
 
 Summary: X11 Window Manager
@@ -13,10 +13,10 @@ License: LGPLv2
 Url: https://github.com/bbidulock/icewm
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
 
-Provides: icewm = %version-%release
-Provides: icewm-light = %version-%release
+Provides: %realname = %version-%release
+Provides: %realname-light = %version-%release
 Requires: design-%realname >= 1.0-alt6
-Conflicts: icewm-light
+Conflicts: %realname-light
 
 Source0: %name.tar
 Source1: %realname.menu
@@ -70,7 +70,7 @@ popd
 pushd BUILD
 %makeinstall_std
 popd
-BUILD/genpref > %buildroot/%_x11x11dir/%realname/preferences
+cp %buildroot/%_datadir/doc/%realname/preferences %buildroot/%_x11x11dir/%realname/preferences
 
 %if_with menu
 mkdir -p %buildroot%_menudir
@@ -101,6 +101,8 @@ desktop-file-install --vendor alt --dir %buildroot%_desktopdir %SOURCE10
 # remove unpackaged files
 rm -f %buildroot/%_bindir/%realname-set-gnomewm
 rm -rf %buildroot/%_x11x11dir/%realname/themes/*
+rm -rf %buildroot/%_datadir/doc/%realname
+rm -rf %buildroot/%_datadir/xsessions
 
 %files -f %realname.lang
 %dir %_sysconfdir/X11/%realname
@@ -114,12 +116,12 @@ rm -rf %buildroot/%_x11x11dir/%realname/themes/*
 %_x11x11dir/%realname/mailbox
 %_x11x11dir/%realname/taskbar
 %_x11x11dir/%realname/themes
-%config(noreplace) %_x11x11dir/%realname/keys
-%config(noreplace) %_x11x11dir/%realname/menu
-%config(noreplace) %_x11x11dir/%realname/preferences
-%config(noreplace) %_x11x11dir/%realname/programs
-%config(noreplace) %_x11x11dir/%realname/toolbar
-%config(noreplace) %_x11x11dir/%realname/winoptions
+%_x11x11dir/%realname/keys
+%_x11x11dir/%realname/menu
+%_x11x11dir/%realname/preferences
+%_x11x11dir/%realname/programs
+%_x11x11dir/%realname/toolbar
+%_x11x11dir/%realname/winoptions
 %if_with menu
 %_menudir/*
 %else
@@ -134,6 +136,9 @@ rm -rf %buildroot/%_x11x11dir/%realname/themes/*
 %doc AUTHORS NEWS README.md BUILD/doc/*.html icewm-old-changelog.bz2
 
 %changelog
+* Tue Sep 22 2015 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.11-alt1
+- 1.3.11 release
+
 * Sun Jul 05 2015 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.10-alt1
 - 1.3.10 release
 - updated reboot/shutdown commands for use with systemd and sysvinit
