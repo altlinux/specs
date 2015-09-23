@@ -1,5 +1,5 @@
 %define _name metacity
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 3.0
 %def_disable static
 %def_enable compositor
@@ -7,7 +7,7 @@
 %def_enable shape
 
 Name: %_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Metacity window manager
@@ -249,6 +249,9 @@ theme.
 %_datadir/themes/Simple/*
 
 %changelog
+* Wed Sep 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed Apr 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
