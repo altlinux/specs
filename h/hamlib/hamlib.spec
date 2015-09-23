@@ -1,6 +1,6 @@
 
 Name:           hamlib
-Version:        1.2.15.3
+Version:        3.0
 Release:        alt1
 Summary:        Run-time library to control radio transceivers and receivers
 
@@ -9,15 +9,13 @@ License:        GPLv2+ and LGPLv2+
 URL:            http://hamlib.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # Install python and perl bindings into proper dirs
-Patch0:         hamlib-1.2.13-bindings.patch
-# Install python bindings to sitearch
-Patch1:         hamlib-1.2.15.3-sitearch-fix.patch
+Patch0:         hamlib-3.0-bindings.patch
 BuildRequires:  gcc-c++
 BuildRequires:  python-devel, swig, libgd2-devel, libxml2-devel, tcl-devel
 BuildRequires:  libusb-devel, pkgconfig, boost-devel, libltdl3-devel
 BuildRequires:  doxygen
 BuildRequires:  perl-devel
-
+BuildRequires:  libusb-compat-devel
 
 %description
 Hamlib provides a standardized programming interface that applications
@@ -91,19 +89,15 @@ Hamlib TCL Language bindings to allow radio control from TCL scripts.
 
 %prep
 %setup -q
-%patch0 -p1 -b .bindings
-%patch1 -p1 -b .sitearch-fix
+%patch0 -p2
 
 %build
 %configure \
-        --with-ldtl-include=%_includedir \
-        --with-ldtl-lib=%_libdir \
-        --disable-static \
-        --with-rigmatrix \
-        --enable-tcl-binding \
+        --with-xml-support \
+        --with-tcl-binding \
         --with-perl-binding \
         --with-python-binding \
-#	usrp depreciated
+        --disable-static
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
@@ -142,12 +136,10 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %files
 %doc AUTHORS ChangeLog PLAN COPYING.LIB COPYING README THANKS TODO
 %_bindir/*
-%_sbindir/*
 %_libdir/libhamlib.so.*
-%dir %_libdir/hamlib
-%_libdir/hamlib/hamlib-*.so
 %_man1dir/*
 %_man8dir/*
+%_infodir/*
 
 %files devel
 %doc README.developer
@@ -163,7 +155,6 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 
 %files doc
 %doc COPYING.LIB
-%doc __tmp_doc/*
 
 %files c++
 %_libdir/libhamlib++.so.*
@@ -181,9 +172,12 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %python_sitelibdir/_Hamlib.so
 
 %files tcl
-%_libdir/hamlibtcl*
+%_libdir/tcl/Hamlib/hamlibtcl*
 
 %changelog
+* Wed Sep 23 2015 Andrey Cherepanov <cas@altlinux.org> 3.0-alt1
+- New version
+
 * Sun Dec 28 2014 Andrey Cherepanov <cas@altlinux.org> 1.2.15.3-alt1
 - Build for Sisyphus (thans Red Hat maintainers)
 
