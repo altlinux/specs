@@ -6,7 +6,7 @@
 %def_disable clang
 %def_disable shared_libraries
 
-%define v8_version 4.5.103.29
+%define v8_version 4.5.103.34
 
 %if_enabled debug
 %define buildtype Debug
@@ -15,7 +15,7 @@
 %endif
 
 Name:           chromium
-Version:        45.0.2454.85
+Version:        45.0.2454.99
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -130,7 +130,7 @@ BuildRequires:  libspeex-devel
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
-BuildRequires:  libv8-devel = %v8_version
+BuildRequires:  libv8-chromium-devel = %v8_version
 BuildRequires:  libvpx-devel
 BuildRequires:  libwebp-devel
 BuildRequires:  libx264-devel
@@ -539,6 +539,9 @@ mkdir -p %buildroot%_mandir/man1/
 
 pushd src/out/%buildtype
 
+# Strip Chromium executables to disable debuginfo generation (became too huge)
+strip chrome chrome_sandbox chromedriver
+
 cp -a chrome %buildroot%_libdir/chromium/chromium
 cp -a chrome_sandbox %buildroot%_libdir/chromium/chrome-sandbox
 cp -a *.pak locales %buildroot%_libdir/chromium/
@@ -600,8 +603,7 @@ printf '%_bindir/%name\t%_libdir/%name/%name-generic\t10\n' > %buildroot%_altdir
 printf '%_bindir/%name\t%_libdir/%name/%name-kde\t15\n' > %buildroot%_altdir/%name-kde
 printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%name-gnome
 
-# Strip Chromium executables to disable debuginfo generation (became too huge)
-strip %buildroot/%_libdir/chromium/{chromium,chrome-sandbox,chromedriver} \
+strip \
 %if_enabled shared_libraries
       %buildroot/%_libdir/chromium/lib/lib*.so \
 %endif
@@ -650,6 +652,13 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Wed Sep 23 2015 Andrey Cherepanov <cas@altlinux.org> 45.0.2454.99-alt1
+- New version
+- Strip binaries before install
+
+* Mon Sep 21 2015 Andrey Cherepanov <cas@altlinux.org> 45.0.2454.93-alt1
+- New version
+
 * Wed Sep 02 2015 Andrey Cherepanov <cas@altlinux.org> 45.0.2454.85-alt1
 - New version
 - Security fixes:

@@ -1,14 +1,14 @@
 %define MAJOR_VERSION     4
 %define MINOR_VERSION     5
 %define BUILD_NUMBER      103
-%define PATCH_LEVEL       29
+%define PATCH_LEVEL       34
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 %def_without tests
 
 Name:    v8-chromium
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt2
+Release: alt1
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
@@ -121,6 +121,12 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Wed Sep 23 2015 Andrey Cherepanov <cas@altlinux.org> 4.5.103.34-alt1
+- New version for chromium-45.0.2454.99
+
+* Mon Sep 21 2015 Andrey Cherepanov <cas@altlinux.org> 4.5.103.31-alt1
+- New version for chromium-45.0.2454.93
+
 * Mon Sep 07 2015 Andrey Cherepanov <cas@altlinux.org> 4.5.103.29-alt2
 - Rename to libv8-chromium without version number in name
 
