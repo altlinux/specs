@@ -1,6 +1,8 @@
+%define _libexecdir /usr/libexec
+
 Name: ceph
 Version: 0.94.3
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -23,6 +25,7 @@ BuildRequires(pre): rpm-build-python
 
 Requires: librados2 = %version-%release
 Requires: librbd1 = %version-%release
+Requires: lsb-release
 %description
 Ceph is a distributed network file system designed to provide excellent
 performance, reliability, and scalability.
@@ -149,6 +152,7 @@ install -dm0755 %buildroot%_unitdir
 install -pDm0644 systemd/ceph-mds@.service %buildroot%_unitdir/ceph-mds@.service
 install -pDm0644 systemd/ceph-mon@.service %buildroot%_unitdir/ceph-mon@.service
 install -pDm0644 systemd/ceph-osd@.service %buildroot%_unitdir/ceph-osd@.service
+install -pDm0644 systemd/ceph.target       %buildroot%_unitdir/ceph.target
 
 ln -sf ../../etc/init.d/ceph %buildroot%_sbindir/rcceph
 ln -sf ../../etc/init.d/ceph-radosgw %buildroot%_sbindir/rcceph-radosgw
@@ -246,6 +250,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 /var/log/ceph/
 %_runtimedir/ceph/
 %_unitdir/ceph-*
+%_unitdir/ceph.target
 %_libexecdir/ceph/ceph-osd-prestart.sh
 
 %files fuse
@@ -292,6 +297,10 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Sep 23 2015 Alexei Takaseev <taf@altlinux.org> 0.94.3-alt2
+- Fix path to ceph-osd-prestart.sh, add lost ceph.target
+  (ALT:#31295)
+
 * Thu Aug 27 2015 Alexei Takaseev <taf@altlinux.org> 0.94.3-alt1
 - 0.94.3
 
