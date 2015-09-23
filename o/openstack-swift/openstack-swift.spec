@@ -1,7 +1,6 @@
-
 Name: openstack-swift
-Version: 2.2.2
-Release: alt2
+Version: 2.3.0
+Release: alt1
 Summary: OpenStack Object Storage (Swift)
 
 Group: System/Servers
@@ -18,10 +17,6 @@ Source25: %name-account-auditor.service
 Source26: %name-account-auditor@.service
 Source27: %name-account-reaper.service
 Source28: %name-account-reaper@.service
-Source120: %name-account.init
-Source123: %name-account-replicator.init
-Source125: %name-account-auditor.init
-Source127: %name-account-reaper.init
 Source4: %name-container.service
 Source41: %name-container@.service
 Source42: container-server.conf
@@ -31,12 +26,6 @@ Source45: %name-container-auditor.service
 Source46: %name-container-auditor@.service
 Source47: %name-container-updater.service
 Source48: %name-container-updater@.service
-Source49: %name-container-reconciler.service
-Source140: %name-container.init
-Source143: %name-container-replicator.init
-Source145: %name-container-auditor.init
-Source147: %name-container-updater.init
-Source149: %name-container-reconciler.init
 Source5: %name-object.service
 Source51: %name-object@.service
 Source52: object-server.conf
@@ -47,25 +36,29 @@ Source56: %name-object-auditor@.service
 Source57: %name-object-updater.service
 Source58: %name-object-updater@.service
 Source59: %name-object-expirer.service
+Source63: %name-container-reconciler.service
+Source6: %name-proxy.service
+Source120: %name-account.init
+Source123: %name-account-replicator.init
+Source125: %name-account-auditor.init
+Source127: %name-account-reaper.init
+Source140: %name-container.init
+Source143: %name-container-replicator.init
+Source145: %name-container-auditor.init
+Source147: %name-container-updater.init
+Source149: %name-container-reconciler.init
 Source150: %name-object.init
 Source153: %name-object-replicator.init
 Source155: %name-object-auditor.init
 Source157: %name-object-updater.init
 Source159: %name-object-expirer.init
+Source160: %name-proxy.init
 
-# Is it possible to supply an instance-style expirer unit for single-node?
-Source6: %name-proxy.service
 Source61: proxy-server.conf
 Source62: object-expirer.conf
 Source64: container-reconciler.conf
-Source160: %name-proxy.init
 Source20: %name.tmpfs
 Source7: swift.conf
-
-#
-# patches_base=1.13.1
-#
-Patch0001: 0001-remove-runtime-requirement-on-pbr.patch
 
 BuildArch: noarch
 BuildRequires: python-devel
@@ -159,8 +152,6 @@ This package contains documentation files for %name.
 %prep
 %setup
 
-%patch0001 -p1
-
 # Remove bundled egg-info
 rm -rf swift.egg-info
 # let RPM handle deps
@@ -202,7 +193,6 @@ install -p -D -m 644 %SOURCE45 %buildroot%_unitdir/%name-container-auditor.servi
 install -p -D -m 644 %SOURCE46 %buildroot%_unitdir/%name-container-auditor@.service
 install -p -D -m 644 %SOURCE47 %buildroot%_unitdir/%name-container-updater.service
 install -p -D -m 644 %SOURCE48 %buildroot%_unitdir/%name-container-updater@.service
-install -p -D -m 644 %SOURCE49 %buildroot%_unitdir/%name-container-reconciler.service
 install -p -D -m 644 %SOURCE5 %buildroot%_unitdir/%name-object.service
 install -p -D -m 644 %SOURCE51 %buildroot%_unitdir/%name-object@.service
 install -p -D -m 644 %SOURCE53 %buildroot%_unitdir/%name-object-replicator.service
@@ -212,6 +202,7 @@ install -p -D -m 644 %SOURCE56 %buildroot%_unitdir/%name-object-auditor@.service
 install -p -D -m 644 %SOURCE57 %buildroot%_unitdir/%name-object-updater.service
 install -p -D -m 644 %SOURCE58 %buildroot%_unitdir/%name-object-updater@.service
 install -p -D -m 644 %SOURCE59 %buildroot%_unitdir/%name-object-expirer.service
+install -p -D -m 644 %SOURCE63 %buildroot%_unitdir/%name-container-reconciler.service
 install -p -D -m 644 %SOURCE6 %buildroot%_unitdir/%name-proxy.service
 
 # sysv init scripts
@@ -455,6 +446,9 @@ done
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Sep 23 2015 Lenar Shakirov <snejok@altlinux.ru> 2.3.0-alt1
+- 2.3.0-alt1
+
 * Mon Apr 06 2015 Alexey Shabalin <shaba@altlinux.ru> 2.2.2-alt2
 - fixed init scripts
 
