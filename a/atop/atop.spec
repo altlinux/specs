@@ -1,6 +1,6 @@
 Name: atop
 Version: 2.2
-Release: alt1
+Release: alt2
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
@@ -65,6 +65,9 @@ done
 %_libexecdir/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Thu Sep 24 2015 Terechkov Evgenii <evg@altlinux.org> 2.2-alt2
+- Systemd unit file fixed
+
 * Sat Sep 19 2015 Terechkov Evgenii <evg@altlinux.org> 2.2-alt1
 - 2.2
 
