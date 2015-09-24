@@ -1,5 +1,5 @@
 %define _name atk
-%define ver_major 2.16
+%define ver_major 2.18
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
@@ -12,8 +12,6 @@ Summary: Accessibility features for Gtk+
 License: %lgpl2plus
 Group: System/Libraries
 Url: http://developer.gnome.org/projects/gap
-
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source1: atk-compat.map
@@ -153,6 +151,9 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %endif
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.18.0-alt1
+- 2.18.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 2.16.0-alt1
 - 2.16.0
 

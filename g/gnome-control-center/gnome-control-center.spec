@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 2.0
 
 %def_disable debug
@@ -11,8 +11,8 @@
 %def_with bluetooth
 
 Name: gnome-control-center
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GNOME Control Center
 License: GPLv2+
@@ -26,20 +26,19 @@ Source: %name-%version.tar
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
 Patch: %name-3.8.3-alt-lfs.patch
-Patch1: %name-3.10.1-alt-background_build.patch
 
 # From configure.ac
 %define gtk_ver 3.15.0
 %define glib_ver 2.40.0
-%define desktop_ver 3.11.3
+%define desktop_ver 3.17.90
 %define fontconfig_ver 1.0.0
 %define gsds_ver 3.16.1
 %define nm_ver 0.9.8
 %define goa_ver 3.7.91
 %define acc_ver 0.6.33
-%define sett_daemon_ver 3.16.3
+%define sett_daemon_ver 3.18.0
 %define cheese_ver 3.9.5
-%define bt_ver 3.12.0
+%define bt_ver 3.18.0
 %define systemd_ver 40
 %define wacom_ver 0.7
 %define ibus_ver 1.5.2
@@ -128,7 +127,6 @@ you'll want to install this package.
 %prep
 %setup
 %patch -p1 -b .lfs
-#%patch1
 
 %build
 %if_enabled snapshot
@@ -157,8 +155,8 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/%name/pixmaps
 %dir %_datadir/%name/sounds
 %_datadir/%name/sounds/gnome-sounds-default.xml
-%dir %_datadir/%name/datetime
-%_datadir/%name/datetime/backward
+#%dir %_datadir/%name/datetime
+#%_datadir/%name/datetime/backward
 %_datadir/%name/icons/
 %_desktopdir/*.desktop
 %_datadir/pixmaps/faces/
@@ -180,6 +178,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt2
 - rebuilt against libgrilo-0.2.so.10
 

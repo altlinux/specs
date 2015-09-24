@@ -1,4 +1,4 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -18,11 +18,11 @@
 %def_with libaudit
 %def_with plymouth
 %def_without xevie
-%def_with systemd
 %def_enable wayland
+%def_enable xsession
 
 Name: gdm
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -71,26 +71,29 @@ Requires: gnome-session >= 3.7.1
 Requires: gnome-session-wayland
 Requires: gnome-settings-daemon >= 3.15.90
 
-BuildPreReq: desktop-file-utils gnome-common rpm-build-gnome
+BuildPreReq: gcc-c++ desktop-file-utils gnome-common rpm-build-gnome
 BuildPreReq: intltool >= 0.40.0 yelp-tools itstool
 BuildPreReq: iso-codes-devel
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libaccountsservice-devel >= %accountsservice_ver
 BuildPreReq: dconf
-%{?_with_systemd:BuildRequires: systemd-devel libsystemd-devel}
+BuildRequires: systemd-devel libsystemd-devel
 %{?_with_selinux:BuildPreReq: libselinux-devel libattr-devel}
 %{?_with_libaudit:BuildPreReq: libaudit-devel}
 %{?_with_plymouth:BuildPreReq: plymouth-devel}
 BuildPreReq: libpam-devel
 %{?_with_tcp_wrappers:BuildPreReq: libwrap-devel}
 BuildPreReq: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
-BuildPreReq: libX11-devel libXau-devel libXrandr-devel libXext-devel libXdmcp-devel libXft-devel libSM-devel
-BuildPreReq: libXi-devel xorg-inputproto-devel libXinerama-devel xorg-xineramaproto-devel libXevie-devel
-BuildPreReq: xorg-xephyr xorg-server
+BuildRequires: libXdmcp-devel
+
+BuildRequires: libX11-devel libXau-devel libXrandr-devel libXext-devel libXft-devel libSM-devel
+BuildRequires: libXi-devel xorg-inputproto-devel libXinerama-devel xorg-xineramaproto-devel libXevie-devel
+BuildRequires: xorg-xephyr xorg-server
+
 BuildPreReq: libcheck-devel >= %check_ver
 
-BuildRequires:  gcc-c++ libdmx-devel
+BuildRequires: libdmx-devel
 BuildRequires: librsvg-devel perl-XML-Parser docbook-dtds xsltproc zenity
 BuildRequires: gobject-introspection-devel
 BuildRequires: libdaemon-devel
@@ -182,7 +185,6 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 	%{subst_with xinerama} \
 	%{subst_with xdmcp} \
 	%{?_with_tcp_wrappers:--with-tcp-wrappers} \
-	%{subst_with systemd} \
 	--with-pam-prefix=%_sysconfdir \
 	--with-default-pam-config=%default_pam_config \
 	%{subst_with xevie} \
@@ -192,8 +194,8 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 	--with-initial-vt=%vt_nr \
 	--with-dmconfdir=%_sysconfdir/X11/sessions \
 	--disable-dependency-tracking \
-	%{?_enable_wayland:--enable-wayland-support}
-
+	%{?_enable_wayland:--enable-wayland-support} \
+	%{?_enable_xsession:--enable-gdm-xsession}
 %make_build
 
 %install
@@ -296,6 +298,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed Sep 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
 - 3.16.3
 

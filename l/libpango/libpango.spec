@@ -1,5 +1,6 @@
 %define _name pango
-%define ver_major 1.36
+%define ver_major 1.38
+%define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
 %def_disable gtk_doc
@@ -8,14 +9,13 @@
 %def_enable libthai
 
 Name: lib%_name
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
 License: %lgpl2plus
 Group: System/Libraries
 Url: http://www.pango.org/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
@@ -26,7 +26,7 @@ Source13: pangoft2-compat.lds
 Source14: pangocairo-compat.map
 Source15: pangocairo-compat.lds
 
-Patch: pango-1.32.2-alt-compat-version-script.patch
+Patch: pango-1.37.0-alt-compat-version-script.patch
 # check.defs always true
 Patch3: pango-1.30.0-alt-check_defs.patch
 
@@ -46,8 +46,8 @@ Obsoletes: gscript
 %define thai_ver 0.1.9
 
 # We need to prereq these so we can run pango-querymodules in post
-PreReq: glib2 >= %glib_ver
-PreReq: libXft
+#PreReq: glib2 >= %glib_ver
+#PreReq: libXft
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses gnome-common gtk-doc
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
@@ -59,7 +59,9 @@ BuildPreReq: libharfbuzz-devel >= %hb_ver
 BuildPreReq: gtk-doc >= %gtk_doc_ver
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
 %{?_enable_libthai:BuildPreReq: libthai-devel >= %thai_ver}
-BuildPreReq: gcc-c++ help2man
+BuildRequires: gcc-c++ help2man
+# for check
+BuildRequires: fonts-otf-abattis-cantarell
 
 %description
 A library to handle unicode strings as well as complex bidirectional
@@ -131,44 +133,27 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %patch3
 
 %build
-%add_optflags -fno-strict-aliasing
 %autoreconf
 %configure \
     %{subst_enable static} \
     %{subst_enable introspection} \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
-    %{?_enable_installed_tests:--enable-installed-tests} \
-    --enable-man
+    %{?_enable_installed_tests:--enable-installed-tests}
 %make_build
 
 %check
-#%make check
+%make check
 
 %install
 %makeinstall_std
-ln %buildroot%_bindir/%_name-querymodules %buildroot%_libdir/%_name/
-touch %buildroot%_libdir/%_name/%module_ver/modules.cache
-mkdir -p %buildroot%_sysconfdir/%_name
-
-%post
-%_libdir/%_name/%_name-querymodules --system --update-cache
 
 %files
-%_bindir/%_name-querymodules
 %_bindir/%_name-view
-%dir %_libdir/%_name
-%dir %_libdir/%_name/%module_ver
-%dir %_libdir/%_name/%module_ver/modules
-%_libdir/%name-1.0.so.*
-%_libdir/%{name}cairo-1.0.so.*
-%_libdir/%{name}ft2-1.0.so.*
-%_libdir/%{name}xft-1.0.so.*
-%_libdir/%_name/%module_ver/*/*.so
-%_libdir/%_name/%_name-querymodules
-%ghost %_libdir/%_name/%module_ver/modules.cache
-%_man1dir/%_name-querymodules.*
+%_libdir/%name-%api_ver.so.*
+%_libdir/%{name}cairo-%api_ver.so.*
+%_libdir/%{name}ft2-%api_ver.so.*
+%_libdir/%{name}xft-%api_ver.so.*
 %_man1dir/%_name-view.*
-%dir %_sysconfdir/%_name
 %doc AUTHORS NEWS README
 
 %files devel
@@ -178,7 +163,10 @@ mkdir -p %buildroot%_sysconfdir/%_name
 
 %if_enabled introspection
 %files gir
-%_typelibdir/*
+%_typelibdir/Pango-%api_ver.typelib
+%_typelibdir/PangoCairo-%api_ver.typelib
+%_typelibdir/PangoFT2-%api_ver.typelib
+%_typelibdir/PangoXft-%api_ver.typelib
 
 %files gir-devel
 %_girdir/*
@@ -199,9 +187,11 @@ mkdir -p %buildroot%_sysconfdir/%_name
 %_datadir/installed-tests/%_name/
 %endif
 
-%exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.38.0-alt1
+- 1.38.0
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 1.36.8-alt1
 - 1.36.8
 - libthai support enabled

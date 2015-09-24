@@ -1,6 +1,6 @@
-%set_automake_version 1.11
+%define _libexecdir %_prefix/libexec
 
-%define ver_major 0.26
+%define ver_major 0.28
 %def_enable external_plugin
 %def_enable mpris_plugin
 %def_enable mediathek_plugin
@@ -19,7 +19,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -31,9 +31,10 @@ Url: https://wiki.gnome.org/Projects/Rygel
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define libxml_ver 2.7
-%define vala_ver 0.22.0
+%define vala_ver 0.24.0
+%define gi_ver 1.33.4
 %define gssdp_ver 0.13.0
-%define gupnp_ver 0.19.0
+%define gupnp_ver 0.20.14
 %define gupnp_av_ver 0.12.4
 %define gupnp_dlna_ver 0.9.4
 %define gstreamer_ver 1.0
@@ -50,8 +51,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define mediaart_ver 1.9
 %define tracker_ver 1.4.0
 
-BuildRequires: intltool gnome-common gtk-doc
-BuildRequires: gobject-introspection-devel >= 1.33.4
+BuildRequires: intltool autoconf-archive gtk-doc
+BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: pkgconfig(gssdp-1.0) >= %gssdp_ver
 BuildRequires: pkgconfig(gupnp-1.0) >= %gupnp_ver
 BuildRequires: pkgconfig(gupnp-av-1.0) >= %gupnp_av_ver
@@ -93,6 +94,21 @@ Requires: %name = %version-%release
 %description devel
 Files for development with %name.
 
+%package devel-doc
+Summary: Development documentation for Rygel libraries
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name-devel < %version
+
+%description devel-doc
+Rygel is an implementation of the UPnP MediaServer V 2.0 specification that is
+specifically designed for GNOME. It is based on GUPnP and is written (mostly)
+in Vala language. The project was previously known as gupnp-media-server.
+
+This package contains documentation needed to develop applications using Rygel
+libraries.
+
+
 %package tracker
 Summary: Tracker plugin for %name
 Group: System/Servers
@@ -125,8 +141,6 @@ echo %version > .tarball-version
 
 %build
 %autoreconf
-# glib-gettextize --force --copy
-# ./autogen.sh
 %configure \
 	%{subst_enable vala} \
 	%{subst_with ui} \
@@ -137,21 +151,21 @@ echo %version > .tarball-version
 	%{subst_enable playbin_plugin} \
 	%{?_enable_mediathek_plugin:--enable-mediathek-plugin} \
 	%{?_enable_gst_launch_plugin:--enable-gst-launch-plugin}
-
 %make_build
 
 %install
-
 %makeinstall_std
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/%name.conf
-%_bindir/*
-%_libdir/librygel-*.so.*
+%_bindir/%name
+%_bindir/%name-preferences
+%_libexecdir/%name/
+%_libdir/lib%name-*.so.*
 %_libdir/%name-*
-%exclude %_libdir/%name-*/plugins/librygel-tracker.so
+%exclude %_libdir/%name-*/plugins/lib%name-tracker.so
 %_datadir/%name
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
@@ -165,10 +179,13 @@ echo %version > .tarball-version
 %_libdir/%name-*/plugins/librygel-tracker.so
 
 %files devel
-%_libdir/librygel-*.so
+%_libdir/lib%name-*.so
 %_includedir/%name-*
 %_pkgconfigdir/*.pc
 %_datadir/vala/vapi/*
+
+%files devel-doc
+%_datadir/gtk-doc/html/lib%name-*/
 
 %files gir
 %_typelibdir/*.typelib
@@ -177,6 +194,9 @@ echo %version > .tarball-version
 %_girdir/*.gir
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 0.28.0-alt1
+- 0.28.0
+
 * Sun May 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.26.1-alt1
 - 0.26.1
 

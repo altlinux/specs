@@ -1,7 +1,8 @@
-%define ver_major 3.16
+%define ver_major 3.18
+%define _name org.gnome.Devhelp
 
 Name: devhelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's help program
@@ -81,12 +82,14 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %_bindir/*
 %dir %_devhelpdir
 %_devhelpdir/*
-%_desktopdir/%name.desktop
+%_desktopdir/%_name.desktop
 %_iconsdir/hicolor/*/apps/devhelp.*
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+%_datadir/dbus-1/services/%_name.service
 %_datadir/GConf/gsettings/*.convert
-%_datadir/glib-2.0/schemas/*.gschema.xml
-%_datadir/appdata/*.appdata.xml
+%_datadir/glib-2.0/schemas/org.gnome.devhelp.gschema.xml
+%_man1dir/%name.1.*
+%_datadir/appdata/%_name.appdata.xml
 %doc AUTHORS NEWS README
 
 %files -n lib%name
@@ -101,6 +104,12 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
+* Tue Sep 01 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.91-alt1
+- 3.17.91
+
 * Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.16
+%define ver_major 3.18
 %define _name ca.desrt.dconf-editor
 
 Name: dconf-editor
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: dconf confuguration editor
@@ -13,13 +13,13 @@ Url: https://wiki.gnome.org/Projects/dconf
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-%define gtk_ver 3.15.7
+%define gtk_ver 3.16
 %define dconf_ver 0.24
 
 Requires: dconf >= %dconf_ver
 
 BuildPreReq: libgtk+3-devel >= %gtk_ver libdconf-devel >= %dconf_ver
-BuildRequires: libxml2-devel rpm-build-gnome gnome-common
+BuildRequires: libxml2-devel rpm-build-gnome gnome-common vala-tools
 BuildRequires: intltool libappstream-glib-devel yelp-tools
 
 %description
@@ -55,6 +55,9 @@ This package provides graphical dconf configuration editor.
 %doc README
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

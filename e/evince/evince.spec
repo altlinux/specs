@@ -1,14 +1,15 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 3
 %define so_ver 4
 
 %def_enable xps
 %def_enable introspection
 %def_enable browser_plugin
+%def_enable multimedia
 
 Name: evince
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document viewer
@@ -23,6 +24,7 @@ Requires: lib%name = %version-%release
 Requires: gnome-icon-theme gnome-icon-theme-symbolic icon-theme-adwaita
 Requires: gvfs-backend-recent-files
 Requires: dconf
+%{?_enable_multimedia:Requires: gst-plugins-base1.0 gst-libav}
 
 %define poppler_ver 0.24.0
 %define gtk_ver 3.14.0
@@ -37,6 +39,7 @@ BuildRequires: libarchive-devel
 BuildRequires: libgnome-desktop3-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
 %{?_enable_browser_plugin:BuildRequires:browser-plugins-npapi-devel}
+%{?_enable_multimedia:BuildRequires: gst-plugins1.0-devel}
 BuildRequires: libSM-devel libICE-devel libXi-devel
 
 %if_enabled introspection
@@ -118,8 +121,9 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 	%{subst_enable xps} \
 	%{subst_enable introspection} \
 	%{?_enable_browser_plugin:--enable-browser-plugin} \
+	%{subst_enable multimedia} \
 	--disable-static
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -199,6 +203,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed May 27 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

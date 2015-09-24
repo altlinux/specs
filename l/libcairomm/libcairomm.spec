@@ -1,6 +1,7 @@
 Name: libcairomm
-Version: 1.11.2
-Release: alt1.1
+Version: 1.12.0
+Release: alt1
+
 Summary: This library provides a C++ interface to cairo
 License: LGPL
 Group: System/Libraries
@@ -10,10 +11,14 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: doxygen gcc-c++ graphviz libcairo-devel libsigc++2.0-devel mm-common
+%define cairo_ver 1.10
+%define sigc_ver 2.6.0
+
+BuildRequires: doxygen gcc-c++ graphviz mm-common
+BuildRequires: libcairo-devel >= %cairo_ver libsigc++2.0-devel >= %sigc_ver
 
 %description
-This library provides a C++ interface to cairo
+This library provides a C++ interface to cairo.
 
 %package devel
 Summary: Headers and development files of %name library
@@ -26,7 +31,7 @@ for compiling or development of applications that wants C++ interface
 of %name library.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 >build/doc-reference.am
@@ -39,7 +44,7 @@ of %name library.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc AUTHORS NEWS
@@ -52,6 +57,9 @@ of %name library.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.11.2-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 

@@ -1,9 +1,9 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.16
+%define ver_major 3.17
 %def_enable introspection
 
 Name: gcr
-Version: %ver_major.0
+Version: %ver_major.4
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -18,7 +18,7 @@ Requires: libtasn1-utils
 Conflicts: gnome-keyring < 3.3.0
 
 %define glib_ver 2.38.0
-%define gtk_ver 3.10
+%define gtk_ver 3.12
 %define p11kit_ver 0.19.0
 %define vala_ver 0.18.1
 %define gcrypt_ver 1.4.5
@@ -178,6 +178,9 @@ This package contains development documentation for GCR libraries.
 
 
 %changelog
+* Wed Aug 05 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.4-alt1
+- 3.17.4
+
 * Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

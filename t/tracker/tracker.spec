@@ -1,4 +1,4 @@
-%define ver_major 1.4
+%define ver_major 1.6
 %define ver_api 1.0
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
@@ -11,7 +11,7 @@
 %def_enable network_manager
 %def_enable libmediaart
 %def_disable evolution
-%def_disable rss
+%def_enable rss
 %def_enable preferences
 %def_enable poppler
 %def_enable libgxps
@@ -49,7 +49,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -82,7 +82,7 @@ Requires: lib%name = %version-%release
 %define eds_ver 2.32.0
 %define gee_ver 0.3
 %define taglib_ver 1.6
-%define libgrss_ver 0.5
+%define libgrss_ver 0.7
 %define rest_ver 0.7
 %define nm_ver 0.8
 %define gst_ver 0.10.31
@@ -304,10 +304,12 @@ rm -rf %buildroot%_datadir/tracker-tests
 %_libexecdir/tracker-writeback
 %_libexecdir/tracker-miner-apps
 %_libexecdir/tracker-miner-user-guides
+%{?_enable_rss:%_libexecdir/%name-miner-rss}
 
 %_datadir/dbus-1/services/*.service
 %_man1dir/tracker-miner-fs.*
 %_man5dir/tracker-miner-fs.cfg.*
+%{?_enable_rss:%_man1dir/%name-miner-rss.1.*}
 
 %dir %_datadir/%name
 %_datadir/%name/*.xml
@@ -381,6 +383,7 @@ rm -rf %buildroot%_datadir/tracker-tests
 %_libdir/evolution/*/plugins/*
 %endif
 
+
 %if_enabled nautilus_extension
 %files -n nautilus-%name
 %nautilus_extdir/libnautilus-tracker-tags.so
@@ -395,6 +398,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Fri Jul 31 2015 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 

@@ -1,8 +1,8 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define _libexecdir %_prefix/libexec
 
 Name: bijiben
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note editor for GNOME
@@ -59,6 +59,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Sun Sep 20 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 

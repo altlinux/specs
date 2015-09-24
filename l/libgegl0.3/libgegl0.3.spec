@@ -5,8 +5,8 @@
 %def_enable gtk_doc
 
 Name: lib%_name%api_ver
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt0.1
 
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -16,7 +16,7 @@ Url: http://www.gimp.org
 Source: %_name-%version.tar
 
 BuildRequires: asciidoc gcc-c++ graphviz glib2-devel gtk-doc intltool libSDL-devel
-BuildRequires: libavformat-devel libbabl-devel libjpeg-devel libopenraw-devel
+BuildRequires: libavformat-devel libbabl-devel libjpeg-devel libraw-devel libgomp-devel
 BuildRequires: librsvg-devel libspiro-devel openexr-devel python-modules-encodings
 BuildRequires: ruby w3m liblua5-devel libgtk+3-devel enscript
 BuildRequires: libexiv2-devel libjasper-devel libpng-devel liblensfun-devel
@@ -119,6 +119,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt0.1
+- 0.3.1_d03be6e2
+
 * Thu Apr 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt2
 - updated to 0.3.0_89579cc1
 

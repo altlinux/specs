@@ -7,7 +7,7 @@
 %def_disable memphis
 
 Name: lib%_name
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: Map view library for Clutter
@@ -15,7 +15,7 @@ License: LGPLv2+
 Group: System/Libraries
 Url: https://wiki.gnome.org/Projects/%name
 
-Source: http://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 #Source: %_name-%version.tar
 
 %define glib_ver 2.16
@@ -192,6 +192,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Fri Sep 18 2015 Yuri N. Sedunov <aris@altlinux.org> 0.12.11-alt1
+- 0.12.11
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.12.10-alt1
 - 0.12.10
 

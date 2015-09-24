@@ -1,8 +1,8 @@
-%define ver_major 3.16
+%define ver_major 3.17
 %define _libexecdir %_prefix/libexec
 
 Name: notification-daemon
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Desktop Notification Daemon
@@ -50,6 +50,9 @@ Flashback. This is reason for version number change.
 %doc AUTHORS NEWS
 
 %changelog
+* Tue Aug 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.2-alt1
+- 3.17.2
+
 * Wed Apr 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

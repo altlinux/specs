@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.16
+%define ver_major 3.18
 %define parser_ver 3.10.1
 %define gst_api_ver 1.0
 %define gst_ver 1.4.2
@@ -32,7 +32,7 @@
 %def_disable jamendo
 
 Name: totem
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -405,6 +405,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.4-alt1
 - 3.16.4
 

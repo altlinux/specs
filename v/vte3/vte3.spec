@@ -1,12 +1,11 @@
 %define _name vte
-%define ver_major 0.40
+%define ver_major 0.42
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
-%def_enable pty_helper
 %def_disable static
 %def_enable introspection
 %def_enable gtk_doc
@@ -16,19 +15,19 @@ License: LGPL
 Group: Terminals
 
 Requires: lib%name = %version-%release
-Requires: gnome-pty-helper
 
+#Source: %_name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 %define gtk3_ver 3.8.0
 %define glib_ver 2.40.0
 %define pango_ver 1.22
 %define gir_ver 0.10.2
-%define tls_ver 3.2.0
+%define tls_ver 3.2.7
 
 BuildPreReq: rpm-build-python
 
-BuildRequires: gperf
+BuildRequires: gcc-c++ gperf
 BuildRequires: libncurses-devel libcairo-devel
 BuildRequires: intltool >= 0.35.0
 BuildRequires: gtk-doc >= 1.1.0
@@ -54,7 +53,6 @@ emulator widget for use with GTK+3.
 %package -n lib%name
 Summary: Terminal emulator widget library for use with GTK+3
 Group: System/Libraries
-Requires: gnome-pty-helper
 
 %description -n lib%name
 VTE is a terminal emulator widget for use with GTK+3.
@@ -109,7 +107,6 @@ Requires: lib%name-gir = %version-%release
 GObject introspection devel data for the %name library
 
 
-%define helperdir %_libdir/%_name
 %define pkgdocdir %_docdir/%name-%version
 
 %prep
@@ -118,16 +115,7 @@ GObject introspection devel data for the %name library
 %build
 %autoreconf
 %configure \
-	--disable-dependency-tracking \
-	--libexecdir=%helperdir \
-	--without-glX \
-%if_enabled pty_helper
-	--enable-gnome-pty-helper \
-%else
-	--disable-gnome-pty-helper \
-%endif
 	--enable-shared \
-	--disable-schemas-compile \
 	%{subst_enable static} \
 	%{subst_enable introspection} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
@@ -153,14 +141,6 @@ find %buildroot -type f -name '*.la' -delete
 %files
 %_bindir/*
 
-%if 0
-%files utils
-%helperdir/*
-%if_enabled pty_helper
-%exclude %helperdir/gnome-pty-helper
-%endif
-%endif
-
 %files -n lib%name -f %name.lang
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
@@ -170,11 +150,6 @@ find %buildroot -type f -name '*.la' -delete
 %pkgdocdir/README
 %_libdir/*.so.*
 %_sysconfdir/profile.d/vte.sh
-%if_enabled pty_helper
-#%dir %helperdir
-#%attr(2711,root,utmp) %helperdir/gnome-pty-helper
-%exclude %helperdir/gnome-pty-helper
-%endif
 
 %files -n lib%name-devel
 %pkgdocdir/*.txt
@@ -200,6 +175,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
+- 0.42.0
+
 * Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.40.2-alt1
 - 0.40.2
 

@@ -3,8 +3,8 @@
 # see https://git.gnome.org/browse/evolution-data-server/commit/?id=a2790163af4d3f375a778055d0e2699207dfd050
 %set_verify_elf_method unresolved=relaxed
 
-%define ver_major 3.16
-%define ver_base 3.16
+%define ver_major 3.18
+%define ver_base 3.18
 %define ver_lib 1.2
 
 %def_disable debug
@@ -23,7 +23,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -40,12 +40,12 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 
 # from configure.ac
 %define glib_ver 2.40.0
-%define gtk3_ver 3.6.0
+%define gtk3_ver 3.10.0
 %define libsoup_ver 2.42
 %define gcr_ver 3.4
 %define secret_ver 0.5
-%define sqlite_ver 3.5
-%define gweather_ver 3.8.0
+%define sqlite_ver 3.7.17
+%define gweather_ver 3.10.0
 %define ical_ver 0.43
 %define gdata_ver 0.15.1
 %define goa_ver 3.8.0
@@ -277,6 +277,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Mon Aug 10 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.5-alt1
 - 3.16.5
 

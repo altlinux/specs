@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.16
+%define ver_major 3.17
 
 %def_disable debug
 %def_enable ldap
@@ -14,7 +14,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.0
+Version: %ver_major.4
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -24,7 +24,7 @@ Url: https://wiki.gnome.org/Apps/Seahorse
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gnupg gcr
+Requires: gnupg2 gcr
 Requires: pinentry-x11
 %{?_enable_ssh:Requires: openssh-clients}
 %{?_enable_sharing:Requires: avahi-daemon}
@@ -59,7 +59,7 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 
 %build
 %autoreconf
-export GNUPG=/usr/bin/gpg
+#export GNUPG=/usr/bin/gpg
 %configure \
 	%{subst_enable ldap} \
 	%{subst_enable hkp} \
@@ -98,6 +98,9 @@ export GNUPG=/usr/bin/gpg
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Sat Sep 05 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.4-alt1
+- 3.17.4
+
 * Tue May 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

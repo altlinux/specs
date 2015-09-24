@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name tali
-%define ver_major 3.16
+%define ver_major 3.18
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of Yahtzee Dice Game
@@ -58,6 +58,9 @@ include any or all of your dice.
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed May 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

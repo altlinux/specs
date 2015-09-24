@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.44
+%define ver_major 2.46
 %define pcre_ver 8.11
 
 %def_disable snapshot
@@ -20,7 +20,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -409,6 +409,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.46.0-alt1
+- 2.46.0
+
 * Wed May 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.44.1-alt1
 - 2.44.1
 

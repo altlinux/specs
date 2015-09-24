@@ -1,30 +1,33 @@
-%define ver_major 1.24
-%def_enable http
-%def_enable avahi
-%def_enable cdda
-%def_enable fuse
-%def_disable hal
-%def_enable gphoto2
-%def_enable keyring
-%def_enable samba
-%def_enable archive
+%define ver_major 1.26
+
 %def_disable gdu
-%def_enable afc
-%def_enable afp
-%def_enable udisks2
-%def_enable libmtp
-%def_enable goa
-%def_enable bluray
-%def_enable nfs
+%def_disable gtk_doc
+%def_disable hal
 # obexftp support removed since 3.15.91
 %def_disable obexftp
+%def_enable afc
+%def_enable afp
+%def_enable archive
+%def_enable avahi
+%def_enable bluray
+%def_enable cdda
+%def_enable fuse
+%def_enable gcr
+%def_enable goa
+%def_enable gphoto2
 %def_enable gtk
-%def_enable systemd_login
-%def_disable gtk_doc
+%def_enable http
 %def_enable installed_tests
+%def_enable keyring
+%def_enable libmtp
+%def_enable nfs
+%def_enable samba
+%def_enable systemd_login
+%def_enable udisks2
+%def_enable google
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -34,8 +37,7 @@ URL: ftp://ftp.gnome.org
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
-Patch: gvfs-1.11.3-alt-gettext.patch
-Patch1: gvfs-1.16.0-archive-integration.patch
+Patch1: gvfs-1.25.92-archive-integration.patch
 Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
 Patch4: gvfs-1.16.2-alt-lfs.patch
 Patch5: gvfs-1.15.4-alt-tmpfiles_dir.patch
@@ -58,10 +60,11 @@ Patch6: gvfs-1.19.90-alt-1-logind-state.patch
 %define gdu_ver 3.3.91
 %define udisks_ver 1.99
 %define mtp_ver 1.1.5
-%define goa_ver 3.7.90
+%define goa_ver 3.17.1
 %define libarchive_ver 3.0.22
 %define imobiledevice_ver 1.1.5
 %define nfs_ver 1.9.7
+%define gdata_ver 0.17.3
 
 Requires: dconf
 %{?_enable_hal:Requires: gnome-mount}
@@ -80,26 +83,28 @@ BuildRequires: openssh-clients
 BuildRequires: libgudev-devel
 # required if autoreconf used
 BuildRequires: libgcrypt-devel
-%{?_enable_gtk:BuildPreReq: libgtk+3-devel}
-%{?_enable_http:BuildPreReq: libsoup-gnome-devel >= %libsoup_ver libxml2-devel}
-%{?_enable_avahi:BuildPreReq: libavahi-glib-devel >= %avahi_ver libavahi-devel >= %avahi_ver}
-%{?_enable_cdda:BuildPreReq: libcdio-paranoia-devel >= %libcdio_paranoia_ver}
-%{?_enable_fuse:BuildPreReq: libfuse-devel}
-%{?_enable_hal:BuildPreReq: libhal-devel >= %hal_ver}
-%{?_enable_obexftp:BuildPreReq: libbluez-devel >= %bluez_ver libdbus-glib-devel libexpat-devel}
-%{?_enable_gphoto2:BuildPreReq: libgphoto2-devel}
-%{?_enable_keyring:BuildPreReq: libsecret-devel}
-%{?_enable_samba:BuildPreReq: libsmbclient-devel}
-%{?_enable_archive:BuildPreReq: libarchive-devel >= %libarchive_ver}
-%{?_enable_gdu:BuildPreReq: libgdu-devel >= %gdu_ver libgudev-devel}
 %{?_enable_afc:BuildPreReq: libimobiledevice-devel >= %imobiledevice_ver}
 %{?_enable_afp:BuildPreReq: libgcrypt-devel}
-%{?_enable_udisks2:BuildPreReq: libudisks2-devel >= %udisks_ver}
-%{?_enable_libmtp:BuildPreReq: libmtp-devel >= %mtp_ver}
-%{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
+%{?_enable_archive:BuildPreReq: libarchive-devel >= %libarchive_ver}
+%{?_enable_avahi:BuildPreReq: libavahi-glib-devel >= %avahi_ver libavahi-devel >= %avahi_ver}
 %{?_enable_bluray:BuildRequires: libbluray-devel}
+%{?_enable_cdda:BuildPreReq: libcdio-paranoia-devel >= %libcdio_paranoia_ver}
+%{?_enable_fuse:BuildPreReq: libfuse-devel}
+%{?_enable_gcr:BuildRequires: gcr-libs-devel}
+%{?_enable_gdu:BuildPreReq: libgdu-devel >= %gdu_ver libgudev-devel}
+%{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
+%{?_enable_gphoto2:BuildPreReq: libgphoto2-devel}
+%{?_enable_gtk:BuildPreReq: libgtk+3-devel}
+%{?_enable_hal:BuildPreReq: libhal-devel >= %hal_ver}
+%{?_enable_http:BuildPreReq: libsoup-gnome-devel >= %libsoup_ver libxml2-devel}
+%{?_enable_keyring:BuildPreReq: libsecret-devel}
+%{?_enable_libmtp:BuildPreReq: libmtp-devel >= %mtp_ver}
 %{?_enable_nfs:BuildPreReq: libnfs-devel >= %nfs_ver}
+%{?_enable_obexftp:BuildPreReq: libbluez-devel >= %bluez_ver libdbus-glib-devel libexpat-devel}
+%{?_enable_samba:BuildPreReq: libsmbclient-devel}
 %{?_enable_systemd_login:BuildPreReq: libsystemd-login-devel}
+%{?_enable_udisks2:BuildPreReq: libudisks2-devel >= %udisks_ver}
+%{?_enable_google:BuildPreReq: libgdata-devel >= %gdata_ver}
 
 BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ perl-XML-Parser
@@ -174,6 +179,12 @@ Group: System/Libraries
 Requires: %name = %version-%release
 Requires: nfs-clients
 
+%package backend-google
+Summary: Google drive backend for gvfs
+Group: System/Libraries
+Requires: %name = %version-%release
+Requires: gnome-online-accounts
+
 %package backends
 Summary: All backends for gvfs
 Group: System/Libraries
@@ -187,6 +198,7 @@ Requires: gvfs gvfs-backend-smb gvfs-backend-dnssd
 %{?_enable_goa:Requires: gvfs-backend-goa}
 %{?_enable_libmtp:Requires: gvfs-backend-mtp}
 %{?_enable_nfs:Requires: gvfs-backend-nfs}
+%{?_enable_google:Requires: gvfs-backend-google}
 
 %package utils
 Summary: Command line applications for gvfs.
@@ -255,6 +267,9 @@ devices (Media Transfer Protocol) to applications using gvfs.
 %description backend-nfs
 This package provides support for mounting NFS shares using gvfs.
 
+%description backend-google
+This package provides support for mounting google drive using gvfs.
+
 %description backends
 This virtual package contains the all backends for gvfs.
 
@@ -276,7 +291,6 @@ The %name-tests package provides programms for testing GVFS.
 
 %prep
 %setup
-%patch -p1
 %patch1 -p1 -b .archive-integration
 #%%patch3 -p1 -b .headers-install
 %patch4 -p1 -b .lfs
@@ -294,7 +308,6 @@ export ac_cv_path_SSH_PROGRAM=%_bindir/ssh
         %{subst_enable cdda} \
         %{subst_enable fuse} \
         %{subst_enable hal} \
-        %{subst_enable obexftp} \
         %{subst_enable gphoto2} \
         %{subst_enable keyring} \
         %{subst_enable samba} \
@@ -307,6 +320,7 @@ export ac_cv_path_SSH_PROGRAM=%_bindir/ssh
         %{subst_enable bluray} \
         %{subst_enable nfs} \
         %{subst_enable gtk} \
+        %{subst_enable google} \
         %{?_enable_systemd_login:--enable-libsystemd-login} \
         %{?_enable_gtk_doc:--enable-gtk-doc} \
         %{?_enable_installed_tests:--enable-installed-tests}
@@ -314,7 +328,6 @@ export ac_cv_path_SSH_PROGRAM=%_bindir/ssh
 
 %install
 %makeinstall_std
-
 %find_lang %name
 
 %check
@@ -389,7 +402,7 @@ killall -USR1 gvfsd >&/dev/null || :
 %if_enabled libmtp
     %exclude %_libexecdir/gvfsd-mtp
     %exclude %_datadir/%name/mounts/mtp.mount
-    %exclude %_datadir/dbus-1/services/org.gtk.Private.MTPVolumeMonitor.service
+    %exclude %_datadir/dbus-1/services/org.gtk.vfs.MTPVolumeMonitor.service
 %endif
 
 %if_enabled gtk
@@ -400,6 +413,11 @@ killall -USR1 gvfsd >&/dev/null || :
 %if_enabled nfs
     %exclude %_libexecdir/gvfsd-nfs
     %exclude %_datadir/%name/mounts/nfs.mount
+%endif
+
+%if_enabled google
+    %exclude %_libexecdir/gvfsd-google
+    %exclude %_datadir/%name/mounts/google.mount
 %endif
 
 %files devel
@@ -469,13 +487,19 @@ killall -USR1 gvfsd >&/dev/null || :
 %_libexecdir/gvfs-mtp-volume-monitor
 %_datadir/%name/mounts/mtp.mount
 %_datadir/%name/remote-volume-monitors/mtp.monitor
-%_datadir/dbus-1/services/org.gtk.Private.MTPVolumeMonitor.service
+%_datadir/dbus-1/services/org.gtk.vfs.MTPVolumeMonitor.service
 %endif
 
 %if_enabled nfs
 %files backend-nfs
 %_libexecdir/gvfsd-nfs
 %_datadir/%name/mounts/nfs.mount
+%endif
+
+%if_enabled google
+%files backend-google
+%_libexecdir/gvfsd-google
+%_datadir/%name/mounts/google.mount
 %endif
 
 %files backends
@@ -497,6 +521,10 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
+- 1.26.0
+- new google backend
+
 * Thu Aug 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.24.2-alt1
 - 1.24.2
 

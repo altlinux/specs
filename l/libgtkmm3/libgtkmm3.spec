@@ -1,12 +1,12 @@
 %define api_version 3.0
 %define rname gtkmm
-%define ver_major 3.16
+%define ver_major 3.18
 %def_disable atkmm
 %def_disable demos
 
 Name: libgtkmm3
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
 License: LGPL
@@ -17,12 +17,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%ver_major/%rname-%version.
 
 Provides: %rname = %version
 
-%define gtk_ver 3.15.9
-%define glib_ver 2.43.4
+%define gtk_ver 3.18.0
+%define glib_ver 2.46.1
+%define pangomm_ver 2.38.1
+%define atkmm_ver 2.24.1
+%define cairo_ver 1.12.0
 
 BuildRequires: gcc-c++ mm-common doxygen  xsltproc libgtk+3-devel >= %gtk_ver
-BuildRequires: libglibmm-devel >= %glib_ver libpangomm-devel >= 2.28.2
-BuildRequires: libatkmm-devel >= 2.22.5 libcairomm-devel >= 1.9.2
+BuildRequires: libglibmm-devel >= %glib_ver libpangomm-devel >= %pangomm_ver
+BuildRequires: libatkmm-devel >= %atkmm_ver libcairomm-devel >= %cairo_ver
+BuildRequires: libepoxy-devel
 # for check
 BuildRequires: xvfb-run
 
@@ -99,6 +103,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.16.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 

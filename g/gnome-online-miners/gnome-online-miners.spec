@@ -10,7 +10,7 @@
 
 Name: gnome-online-miners
 Version: %ver_major.3
-Release: alt3
+Release: alt4
 
 Summary: A set of miners for online content
 Group: Graphical desktop/GNOME
@@ -81,6 +81,9 @@ Flickr, Google, SkyDrive and ownCloud.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Sat Sep 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt4
+- rebuilt for gnome-3.18
+
 * Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt3
 - rebuilt against libgrilo-0.2.so.10
 

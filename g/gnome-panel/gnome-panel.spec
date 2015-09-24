@@ -1,4 +1,4 @@
-%define ver_major 3.16
+%define ver_major 3.17
 %define api_ver 3.0
 %define applet_api_ver 5.0
 %def_disable static
@@ -7,7 +7,7 @@
 %def_enable eds
 
 Name: gnome-panel
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
@@ -29,7 +29,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define eds_ver 3.5.91
 %define cairo_ver 1.0
 %define tp_glib_ver 0.14
-%define gweather_ver 3.9.2
+%define gweather_ver 3.17.1
 %define rsvg_ver 2.36.2
 
 Conflicts: gnome-power-manager < 2.15.3
@@ -193,6 +193,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Tue Aug 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.2-alt1
+- 3.17.2
+
 * Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

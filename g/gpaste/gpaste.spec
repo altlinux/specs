@@ -1,10 +1,10 @@
-%define ver_major 3.16
+%define ver_major 3.17
 %define api_ver 1.0
 %define _name GPaste
 %define _libexecdir %_prefix/libexec
 
 Name: gpaste
-Version: %ver_major.2.1
+Version: %ver_major.90
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -12,7 +12,8 @@ Group: Text tools
 License: GPLv3+
 Url: https://github.com/Keruspe/GPaste
 
-Source: http://www.imagination-land.org/files/%name/%name-%version.tar.xz
+#Source: http://www.imagination-land.org/files/%name/%name-%version.tar.xz
+Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 
@@ -101,9 +102,9 @@ in notification area.
 %_bindir/%name
 %_libexecdir/%name/
 %exclude %_libexecdir/%name/%name-applet
-%_desktopdir/org.gnome.GPaste.Settings.desktop
+#%_desktopdir/org.gnome.GPaste.Settings.desktop
 %_desktopdir/org.gnome.GPaste.Ui.desktop
-%_datadir/appdata/org.gnome.GPaste.Settings.appdata.xml
+#%_datadir/appdata/org.gnome.GPaste.Settings.appdata.xml
 %_datadir/appdata/org.gnome.GPaste.Ui.appdata.xml
 %_datadir/dbus-1/services/*.service
 %_datadir/glib-2.0/schemas/*.xml
@@ -134,9 +135,13 @@ in notification area.
 
 %files -n gnome-shell-extension-%name
 %_datadir/gnome-shell/extensions/GPaste@gnome-shell-extensions.gnome.org/
+%_datadir/gnome-shell/search-providers/org.gnome.GPaste.search-provider.ini
 
 
 %changelog
+* Wed Aug 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.90-alt1
+- 3.17.90
+
 * Thu May 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2.1-alt1
 - 3.16.2.1
 

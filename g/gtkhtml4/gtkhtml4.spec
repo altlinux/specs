@@ -1,24 +1,23 @@
-%define ver_major 4.8
+%define ver_major 4.10
 %define origname gtkhtml
 %def_disable static
 %def_disable gtk_doc
 %define api_ver 4.0
 
 Name: gtkhtml4
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkHTML is a HTML rendering/editing library
 License: LGPLv2
 Group: Graphical desktop/GNOME
 Url: http://projects.gnome.org/evolution/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%origname/%ver_major/%origname-%version.tar.xz
 
-# from configure.in
-%define gtk3_ver 3.0.5
-%define libsoup_ver 2.33.92
+# from configure.ac
+%define gtk3_ver 3.2.0
+%define libsoup_ver 2.34
 %define enchant_ver 1.1.17
 %define cairo_ver 1.10.0
 
@@ -123,6 +122,9 @@ statically linked with GtkHTML.
 %endif
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 4.10.0-alt1
+- 4.10.0
+
 * Mon Oct 13 2014 Yuri N. Sedunov <aris@altlinux.org> 4.8.5-alt1
 - 4.8.5
 

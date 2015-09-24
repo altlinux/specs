@@ -1,4 +1,4 @@
-%define ver_major 2.44
+%define ver_major 2.46
 %define _libexecdir %_prefix/libexec
 %def_enable installed_tests
 
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: ca-certificates gsettings-desktop-schemas >= 3.2.0
 
-%define glib_ver 2.40
+%define glib_ver 2.45.1
 %define gnutls_ver 2.12.8
 %define p11kit_ver 0.8
 %define libproxy_ver 0.3.1
@@ -80,6 +80,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.46.0-alt1
+- 2.46.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 2.44.0-alt1
 - 2.44.0
 

@@ -1,4 +1,4 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define _name org.gnome.Vino
 
 Name: vino
@@ -48,6 +48,9 @@ connect to a running GNOME session using VNC.
 %doc AUTHORS NEWS README docs/TODO docs/remote-desktop.txt docs/debugging.txt
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

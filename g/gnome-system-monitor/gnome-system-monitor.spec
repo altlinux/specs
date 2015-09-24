@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.16
+%define ver_major 3.18
 %def_enable systemd
 %def_enable wnck
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.0.1
+Release: alt1
 
 Summary: Simple process monitor
 License: GPLv2+
@@ -26,10 +26,10 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define libxml_ver 2.0
 %define rsvg_ver 2.35
 %define gnome_icon_theme_ver 3.0.0
-%define systemd_ver 38
+%define systemd_ver 44
 
 BuildPreReq: rpm-build-gnome
-BuildRequires: gcc-c++ gnome-common appdata-tools
+BuildRequires: gcc-c++ gnome-common libappstream-glib-devel
 BuildRequires: intltool yelp-tools
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libglibmm-devel >= %glibmm_ver
@@ -41,7 +41,7 @@ BuildPreReq: libxml2-devel >= %libxml_ver
 BuildPreReq: librsvg-devel >= %rsvg_ver
 
 %{?_enable_wnck:BuildPreReq: libwnck3-devel >= %libwnck_ver}
-%{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel}
+%{?_enable_systemd:BuildRequires: systemd-devel libsystemd-devel}
 
 %description
 Gnome-system-monitor is a simple process and system monitor.
@@ -55,11 +55,10 @@ Gnome-system-monitor is a simple process and system monitor.
     --disable-schemas-compile \
     %{subst_enable systemd} \
     %{subst_enable wnck}
-
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -76,6 +75,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0.1-alt1
+- 3.18.0.1
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.16.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 

@@ -1,9 +1,9 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %def_enable libnotify
 %def_enable webkitgtk
 
 Name: zenity
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME port of dialog(1)
@@ -57,6 +57,9 @@ a cooler name.
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue Jun 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.3-alt1
 - 3.16.3
 

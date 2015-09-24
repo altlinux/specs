@@ -1,7 +1,7 @@
-%define ver_major 3.16
+%define ver_major 3.18
 
 Name: gnome-music
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -19,7 +19,7 @@ AutoReqProv: nopython
 
 Requires: tracker
 
-%define gtk_ver 3.12.0
+%define gtk_ver 3.14.0
 %define grilo_ver 0.2.6
 %define python_ver 3.3
 %define mediaart_ver 1.9
@@ -63,6 +63,9 @@ Music playing application for GNOME3.
 %exclude %_libdir/%name/libgd.la
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue Aug 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 

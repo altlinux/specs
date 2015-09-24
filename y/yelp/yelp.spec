@@ -1,18 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.16
+%define ver_major 3.18
 %def_disable debug
-%def_disable lzma
+%def_enable lzma
 
 Name: yelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Lightweight help browser for GNOME
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 URL: https://live.gnome.org/yelp
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
@@ -20,7 +19,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define gio_ver 2.38
 %define gtk_ver 3.13.3
 %define xslt_ver 1.1.4
-%define webkit_ver 1.3.10
+%define webkit_ver 2.8
 %define yelpxsl_ver 3.12.0
 %define intltool_ver 0.5.0
 
@@ -32,7 +31,7 @@ BuildPreReq: rpm-build-licenses rpm-build-gnome gnome-common intltool >= %intlto
 BuildPreReq: libgio-devel >= %gio_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libxslt-devel >= %xslt_ver
-BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
+BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
 BuildPreReq: yelp-xsl >= %yelpxsl_ver
 BuildRequires: zlib-devel bzlib-devel libsqlite3-devel
 %{?_enable_lzma:BuildRequires: liblzma-devel}
@@ -109,9 +108,12 @@ Yelp.
 
 %files -n lib%name
 %_libdir/*.so.*
+%_libdir/%name/
+%exclude %_libdir/%name/*.la
+%exclude %_libdir/%name/*/*.la
 
 %files -n lib%name-devel
-%_includedir/*
+%_includedir/lib%name/
 %_libdir/*.so
 #%_libdir/pkgconfig/*
 
@@ -119,6 +121,9 @@ Yelp.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Mon May 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 

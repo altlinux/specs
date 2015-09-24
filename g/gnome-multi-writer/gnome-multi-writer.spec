@@ -1,4 +1,4 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define _name org.gnome.MultiWriter
 
 Name: gnome-multi-writer
@@ -53,6 +53,9 @@ USB devices simultaneously.
 %doc README.md AUTHORS NEWS
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

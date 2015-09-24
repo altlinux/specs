@@ -1,10 +1,10 @@
 %define _name gtksourceviewmm
-%define ver_major 3.12
+%define ver_major 3.18
 %define api_ver 3.0
 
 Name: lib%{_name}3
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: gtksourceviewmm is a C++ wrapper for the gtksourceview widget library
 License: LGPL
@@ -13,9 +13,9 @@ Url: http://projects.gnome.org/gtksourceviewmm/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-# From configure.in
+# From configure.ac
 BuildPreReq: mm-common intltool
-BuildPreReq: libgtksourceview3-devel >= 3.12.0 libgtkmm3-devel >= 3.12.0
+BuildPreReq: libgtksourceview3-devel >= 3.18.0 libgtkmm3-devel >= 3.18.0
 BuildPreReq: gcc-c++ libstdc++-devel
 BuildPreReq: doxygen graphviz xsltproc
 
@@ -80,6 +80,9 @@ Documentation for %_name.
 %pkgdocdir
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.12.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 

@@ -1,8 +1,8 @@
-%define ver_major 0.22
+%define ver_major 0.23
 %define api_ver 1.0
 
 Name: libgit2-glib
-Version: %ver_major.8
+Version: %ver_major.6
 Release: alt1
 
 Summary: Git library for GLib
@@ -10,10 +10,11 @@ Group: System/Libraries
 License: LGPLv2+
 Url: https://live.gnome.org/Libgit2-glib
 
+#Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define libgit2_ver 0.22.0
-%define glib_ver 2.28
+%define libgit2_ver 0.23.0
+%define glib_ver 2.44
 
 BuildRequires: gnome-common gtk-doc
 BuildRequires: libgio-devel >= %glib_ver libgit2-devel >= %libgit2_ver
@@ -73,7 +74,8 @@ This package contains documentation needed for developing Libgit2-glib applicati
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+	--enable-gtk-doc
 %make_build
 
 %install
@@ -101,6 +103,12 @@ This package contains documentation needed for developing Libgit2-glib applicati
 %_datadir/gtk-doc/*
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 0.23.6-alt1
+- 0.23.6
+
+* Fri Aug 07 2015 Yuri N. Sedunov <aris@altlinux.org> 0.23.4-alt1
+- 0.23.4
+
 * Thu Apr 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.22.8-alt1
 - 0.22.8
 

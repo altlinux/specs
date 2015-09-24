@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _name org.gnome.Photos
-%define ver_major 3.16
+%define ver_major 3.18
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.3
 
 Name: gnome-photos
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
 License: %gpl2plus
@@ -66,6 +66,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt3
 - rebuilt against libgrilo-0.2.so.10
 

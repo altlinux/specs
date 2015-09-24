@@ -1,47 +1,56 @@
-%define ver_major 3.14
+%define ver_major 3.18
+
+# Enable parallel-installability with autoconf-archive,
+# by disabling installation of its M4 macros
+%def_with autoconf_archive
 
 Name: gnome-common
 Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome-common contains useful things common to building gnome packages
-License: GPL
+License: GPLv2+
 Group: Development/GNOME and GTK+
 Url: http://www.gnome.org/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildArch: noarch
 
+%{?_with_autoconf_archive:Requires: autoconf-archive}
+
 %description
-gnome-common is for building various GNOME modules from CVS. It is not
-needed to run GNOME.
+gnome-common is for building various GNOME modules from VCS.
+It is not needed to run GNOME.
 
 %prep
 %setup
 
 %build
 %autoreconf
-%configure
+%configure %{?_with_autoconf_archive:--with-autoconf-archive}
 %make_build
 
 %install
 %makeinstall_std
-cp doc-build/README README.doc
 
 %files
 %_bindir/gnome-autogen.sh
-%_bindir/gnome-doc-common
 %_datadir/aclocal/gnome-common.m4
 %_datadir/aclocal/gnome-compiler-flags.m4
 %_datadir/aclocal/gnome-code-coverage.m4
+
+%if_without autoconf_archive
 %_datadir/aclocal/ax_check_enable_debug.m4
 %_datadir/aclocal/ax_code_coverage.m4
-%_datadir/%name/
-%doc README* ChangeLog
+%endif
+
+%doc README ChangeLog
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 

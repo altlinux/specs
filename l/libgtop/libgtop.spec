@@ -1,5 +1,7 @@
 %define oldname libgtop2
-%define ver_major 2.30
+%define ver_major 2.32
+%define api_ver 2.0
+
 %def_disable static
 %def_with examples
 %def_enable introspection
@@ -12,7 +14,6 @@ Summary: LibGTop library
 License: GPLv2+
 Group: System/Libraries
 Url: ftp://ftp.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Obsoletes: %oldname < 2.14.2
 Provides: %oldname = %version-%release
@@ -20,10 +21,9 @@ Provides: %oldname = %version-%release
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch2: %name-2.0.0-texinfo.patch
 Patch4: %name-2.9.90-alt-examples_makefile.patch
-Patch5: %name-2.0.1-alt-as.patch
 
-# From configure.in
-%define glib_ver 2.6.0
+# from configure.ac
+%define glib_ver 2.26.0
 
 BuildPreReq: rpm-build-gnome
 BuildPreReq: intltool >= 0.35
@@ -108,15 +108,13 @@ GObject introspection devel data for the LibGTop library
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup -q
+%setup
 %patch2 -p1
 %patch4 -p1
-%patch5 -p1
 
 rm -rf doc/*.info
 
 %build
-gtkdocize
 %autoreconf
 %configure \
 	%{subst_enable static} \
@@ -126,11 +124,11 @@ gtkdocize
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
-%find_lang %name-2.0
+%find_lang %name-%api_ver
 
-%files -f %name-2.0.lang
+%files -f %name-%api_ver.lang
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
@@ -141,7 +139,7 @@ gtkdocize
 %endif
 
 %files devel
-%_includedir/%name-2.0
+%_includedir/%name-%api_ver/
 %_libdir/*.so
 %_pkgconfigdir/*
 %_infodir/*.info*
@@ -156,13 +154,16 @@ gtkdocize
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/GTop-2.0.typelib
+%_libdir/girepository-1.0/GTop-%api_ver.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/GTop-2.0.gir
+%_datadir/gir-1.0/GTop-%api_ver.gir
 %endif
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
+- 2.32.0
+
 * Tue Apr 29 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.0-alt1
 - 2.30.0
 

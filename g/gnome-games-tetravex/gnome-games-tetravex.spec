@@ -2,7 +2,7 @@
 
 %define _name tetravex
 %define __name gnome-%_name
-%define ver_major 3.16
+%define ver_major 3.18
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -50,13 +50,15 @@ times are stored in a system-wide scoreboard.
 %_desktopdir/%__name.desktop
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
-%_iconsdir/HighContrast/*x*/apps/*.png
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
 %_datadir/appdata/%__name.appdata.xml
 
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Thu Mar 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

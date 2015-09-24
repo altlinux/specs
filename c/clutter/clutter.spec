@@ -1,4 +1,4 @@
-%define ver_major 1.22
+%define ver_major 1.24
 
 %def_enable x11_backend
 %def_enable gdk_backend
@@ -16,7 +16,7 @@
 %def_enable wayland_compositor
 
 Name: clutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Clutter Core Library
@@ -27,8 +27,8 @@ Url: http://www.clutter-project.org/
 #Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.40
-%define cogl_ver 1.20.0
+%define glib_ver 2.44
+%define cogl_ver 1.21.2
 %define json_glib_ver 0.12.0
 %define atk_ver 2.5.3
 %define cairo_ver 1.12
@@ -39,7 +39,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define xfixes_ver 3
 %define xcomposite_ver 0.4
 %define gdk_ver 3.3.18
-%define libinput_ver 0.8
+%define libinput_ver 0.19
 
 BuildRequires: libGL-devel
 BuildRequires: pkgconfig(cogl-1.0) >= %cogl_ver pkgconfig(cairo-gobject) >= %cairo_ver pkgconfig(atk) >= %atk_ver pkgconfig(pangocairo) >= %pango_ver pkgconfig(cogl-pango-1.0) pkgconfig(json-glib-1.0) >= %json_glib_ver
@@ -182,6 +182,9 @@ gtkdocize
 
 
 %changelog
+* Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Tue Jun 30 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.4-alt1
 - 1.22.4
 

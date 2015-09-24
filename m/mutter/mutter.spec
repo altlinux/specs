@@ -1,10 +1,9 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
-%def_enable gtk_doc
 
 Name: mutter
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -29,16 +28,15 @@ BuildRequires: libcairo-devel >= 1.10.0
 BuildRequires: gsettings-desktop-schemas-devel >= 3.15.4
 BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-devel libXi-devel >= 1.6.0
 BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
-BuildRequires: libclutter-devel >= 1.21.3 libcogl-devel >= 1.17.1 libwayland-server-devel >= 1.6.90
+BuildRequires: libxcb-devel
+BuildRequires: libclutter-devel >= 1.23.4 libcogl-devel >= 1.17.1 libwayland-server-devel >= 1.6.90
 BuildRequires: libgdk-pixbuf-devel libgbm-devel
-BuildRequires: gtk-doc
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
 BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
 BuildRequires: libgnome-desktop3-devel libupower-devel >= 0.99.0
 BuildRequires: libxkbcommon-x11-devel libinput-devel >= 0.8 libxkbfile-devel xkeyboard-config-devel
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel
-
 
 %set_typelibdir %_libdir/%name
 %set_girdir %_libdir/%name
@@ -92,15 +90,6 @@ Requires: %name = %epoch:%version-%release
 This package contains everything necessary to use Mutter in GNOME desktop
 environment.
 
-%package devel-doc
-Summary: Development docs package for mutter
-Group: Development/Documentation
-BuildArch: noarch
-Conflicts: %name < %version
-
-%description devel-doc
-Development docs package for mutter.
-
 %prep
 %setup
 [ ! -d m4 ] && mkdir m4
@@ -109,7 +98,6 @@ Development docs package for mutter.
 %autoreconf
 DATADIRNAME=share %configure \
 	--enable-introspection \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--disable-static \
 	--disable-schemas-compile \
 	--enable-compile-warnings=maximum
@@ -155,14 +143,11 @@ DATADIRNAME=share %configure \
 %_datadir/glib-2.0/schemas/org.gnome.mutter.wayland.gschema.xml
 %_datadir/GConf/gsettings/mutter-schemas.convert
 %_datadir/gnome-control-center/keybindings/*.xml
-#%_datadir/gnome/wm-properties/%name-wm.desktop
-
-%if_enabled gtk_doc
-%files devel-doc
-%_datadir/gtk-doc/html/*
-%endif
 
 %changelog
+* Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1:3.18.0-alt1
+- 3.18.0
+
 * Thu Jul 02 2015 Yuri N. Sedunov <aris@altlinux.org> 1:3.16.3-alt1
 - 3.16.3
 

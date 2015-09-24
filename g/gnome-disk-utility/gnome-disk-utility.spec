@@ -1,8 +1,9 @@
-%define ver_major 3.16
+%define ver_major 3.18
+%define _name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-disk-utility
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Disk management application
@@ -25,7 +26,7 @@ Patch: %name-3.16.0-alt-lfs.patch
 %define dvdread_ver 4.2.0
 %define lzma_ver 5.0.5
 
-BuildRequires: gnome-common intltool xsltproc
+BuildRequires: autoconf-archive intltool xsltproc libappstream-glib-devel
 BuildPreReq: libudisks2-devel >= %udisks_ver
 BuildPreReq: libgio-devel  >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -62,10 +63,12 @@ RAID, SMART monitoring, etc
 %_bindir/gnome-disk-image-mounter
 %_bindir/gnome-disks
 %_desktopdir/gnome-disk-image-mounter.desktop
-%_desktopdir/gnome-disks.desktop
 %_desktopdir/gnome-disk-image-writer.desktop
+%_desktopdir/%_name.desktop
+%_datadir/dbus-1/services/%_name.service
 %_datadir/glib-2.0/schemas/org.gnome.Disks.gschema.xml
 %_iconsdir/hicolor/*/apps/*
+%_datadir/appdata/%_name.appdata.xml
 %_man1dir/*.1.*
 # gsd plugin
 %_libdir/gnome-settings-daemon-3.0/gdu-sd-plugin.gnome-settings-plugin
@@ -76,6 +79,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Sun May 24 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 
