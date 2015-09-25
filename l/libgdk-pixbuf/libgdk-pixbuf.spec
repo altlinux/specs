@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -173,14 +173,11 @@ echo : >>%_name/abicheck.sh
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-icns.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-ico.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-jpeg.so
-%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-pcx.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-png.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-pnm.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-qtif.so
-%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-ras.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tga.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tiff.so
-%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-wbmp.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xbm.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xpm.so
 %exclude %_libdir/%_name-%api_ver/%binary_ver/loaders/*.la
@@ -226,6 +223,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Fri Sep 25 2015 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt1
+- 2.32.1
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
 - 2.32.0
 
