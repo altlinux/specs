@@ -1,10 +1,10 @@
-%define ver_major 3.17
+%define ver_major 3.18
 %define api_ver 1.0
 %define _name GPaste
 %define _libexecdir %_prefix/libexec
 
 Name: gpaste
-Version: %ver_major.90
+Version: %ver_major
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -12,15 +12,15 @@ Group: Text tools
 License: GPLv3+
 Url: https://github.com/Keruspe/GPaste
 
-#Source: http://www.imagination-land.org/files/%name/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: http://www.imagination-land.org/files/%name/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 
 BuildRequires: intltool appdata-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libdbus-devel libgtk+3-devel libclutter-devel
 BuildRequires: gnome-control-center-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel vala-tools
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel vala-tools libvala-devel
 
 %description
 This package provides gpaste-daemon is a clipboard management daemon with DBus
@@ -100,16 +100,15 @@ in notification area.
 
 %files -f %_name.lang
 %_bindir/%name
+%_bindir/%name-client
 %_libexecdir/%name/
 %exclude %_libexecdir/%name/%name-applet
-#%_desktopdir/org.gnome.GPaste.Settings.desktop
 %_desktopdir/org.gnome.GPaste.Ui.desktop
-#%_datadir/appdata/org.gnome.GPaste.Settings.appdata.xml
 %_datadir/appdata/org.gnome.GPaste.Ui.appdata.xml
 %_datadir/dbus-1/services/*.service
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/gnome-control-center/keybindings/*.xml
-%_man1dir/%name.1.*
+%_man1dir/%name-client.1.*
 %doc AUTHORS NEWS README.md THANKS TODO
 
 %files -n lib%name
@@ -139,6 +138,9 @@ in notification area.
 
 
 %changelog
+* Wed Sep 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18-alt1
+- 3.18
+
 * Wed Aug 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.90-alt1
 - 3.17.90
 
