@@ -1,5 +1,5 @@
 Name: pulseaudio
-Version: 6.0
+Version: 7.0
 Release: alt1
 
 Summary: PulseAudio is a networked sound server
@@ -13,7 +13,7 @@ BuildRequires: gcc-c++
 BuildRequires: doxygen intltool jackit-devel libalsa-devel libasyncns-devel
 BuildRequires: libavahi-devel libbluez-devel libwebrtc-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
-BuildRequires: liblirc-devel libltdl7-devel
+BuildRequires: liblirc-devel libltdl7-devel libsoxr-devel
 BuildRequires: libsndfile-devel libspeex-devel libssl-devel libwrap-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libjson-c-devel libgtk+2-devel libGConf-devel
@@ -217,6 +217,7 @@ touch config.rpath
     --localstatedir=/var \
     --with-access-group=audio \
     --enable-per-user-esound-socket \
+    --with-bash-completion-dir=%_sysconfdir/bash_completion.d \
     --disable-static \
     #
 
@@ -232,7 +233,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-6.0
+%define pulselibdir %_libdir/pulse-7.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -261,7 +262,10 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/pulseaudio
 %_datadir/zsh/site-functions/_pulseaudio
 
-%_libdir/libpulsecore-6.0.so
+%_libdir/libpulsecore-7.0.so
+
+%_libexecdir/systemd/user/pulseaudio.service
+%_libexecdir/systemd/user/pulseaudio.socket
 
 %dir %pulselibdir
 %dir %pulsemoduledir
@@ -318,7 +322,10 @@ find %buildroot%_libdir -name \*.la -delete
 %_man1dir/pacat.1*
 %_man1dir/pacmd.1*
 %_man1dir/padsp.1*
+%_man1dir/pamon.1*
 %_man1dir/paplay.1*
+%_man1dir/parec.1*
+%_man1dir/parecord.1*
 %_man1dir/pasuspender.1*
 %_man1dir/pax11publish.1*
 
@@ -365,7 +372,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-6.0.so
+%_libdir/pulseaudio/libpulsecommon-7.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -374,12 +381,15 @@ find %buildroot%_libdir -name \*.la -delete
 %_includedir/pulse
 %_pkgconfigdir/*.pc
 %_datadir/vala/vapi/*
-%exclude %_libdir/libpulsecore-6.0.so
+%exclude %_libdir/libpulsecore-7.0.so
 
 %files -n lib%name-devel-doc
 %doc doxygen/html
 
 %changelog
+* Fri Sep 25 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.0-alt1
+- 7.0 released
+
 * Fri Feb 13 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0-alt1
 - 6.0 released
 
