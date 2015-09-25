@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.14.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -13,6 +13,7 @@ License: GPLv2+ / LGPLv2+
 Requires: upower udisks2
 
 Source: %rname-%version.tar
+Patch1: alt-no-hal.patch
 
 # Automatically added by buildreq on Mon Jan 19 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
@@ -50,6 +51,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -79,6 +81,9 @@ KF5 library
 %_K5qml/org/kde/solid/
 
 %changelog
+* Fri Sep 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt2
+- remove HAL backend
+
 * Mon Sep 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt1
 - new version
 
