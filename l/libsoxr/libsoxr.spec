@@ -1,7 +1,7 @@
 %define realname soxr
 
 Name: lib%realname
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 Group: System/Libraries
 Summary: The SoX Resampler library
@@ -58,5 +58,8 @@ rm -rf %buildroot%_docdir/*
 %_pkgconfigdir/soxr.pc
 
 %changelog
+* Fri Sep 25 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1.2-alt1
+- 0.1.2 released
+
 * Wed Apr 22 2015 Motsyo Gennadi <drool@altlinux.ru> 0.1.1-alt1
 - build for ALT Linux
