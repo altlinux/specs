@@ -3,7 +3,7 @@
 %define _name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 3.0
 %def_enable introspection
 %def_enable python
@@ -11,7 +11,7 @@
 %{?_enable_snapshot:%def_enable gtk_doc}
 
 Name: gedit
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -39,9 +39,9 @@ AutoReqProv: nopython
 %set_girdir %pkgdatadir
 
 # From configure.ac
-%define glib_ver 2.40.0
-%define gtk_ver 3.15.7
-%define gtksourceview_ver 3.16.1
+%define glib_ver 2.44.0
+%define gtk_ver 3.16
+%define gtksourceview_ver 3.17.5
 %define peas_ver 1.7.0
 %define enchant_ver 1.2.0
 
@@ -124,9 +124,7 @@ This package contains documentation needed to develop plugins for gedit.
 
 %prep
 %setup
-
-%patch -p1 -b .settings
-rm -f data/gedit.desktop.in
+#%%patch -p1 -b .settings
 
 %build
 %autoreconf
@@ -201,7 +199,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/gedit.convert
 %_datadir/appdata/%_name.appdata.xml
-%doc BUGS README AUTHORS NEWS
+%doc README AUTHORS NEWS
 
 %exclude %pkgdatadir/gir-1.0/
 
@@ -222,6 +220,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
+* Tue Aug 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.90-alt1
+- 3.17.90
+
 * Fri May 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 
