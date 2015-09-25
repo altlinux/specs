@@ -3,7 +3,7 @@
 %def_enable libcoverart
 
 Name: goobox
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: CD player and ripper for GNOME
@@ -56,6 +56,9 @@ subst 's|1\.0\.0beta1|1.0.0|' configure*
 
 
 %changelog
+* Wed Sep 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
+- 3.4.1
+
 * Tue Apr 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
