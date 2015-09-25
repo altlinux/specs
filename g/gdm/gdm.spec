@@ -23,7 +23,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -31,6 +31,8 @@ URL: http://wiki.gnome.org/Projects/GDM
 Group: Graphical desktop/GNOME
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+# while we have no new Mesa and Xorg
+Patch: gdm-3.18.0-alt-disable_wayland.patch
 Source1: gdm_xdmcp.control
 Source2: gdm.wms-method
 
@@ -166,6 +168,7 @@ This package contains user documentation for Gdm.
 
 %prep
 %setup
+%patch
 %patch2 -p1
 %patch7 -p1
 %patch11 -p1 -b .lfs
@@ -298,6 +301,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Fri Sep 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1.1
+- temporarily disabled default wayland session before new Mesa and Xorg
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
