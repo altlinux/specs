@@ -2,22 +2,22 @@
 
 Name: nemiver
 Version: %ver_major.6
-Release: alt0.1.1
+Release: alt1
 
 Summary: A GNOME C/C++ Debugger
 Group: Development/Debuggers
 License: GPLv2+
 Url: http://projects.gnome.org/nemiver/
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Requires: gdb
 
 BuildRequires: mm-common gcc-c++ boost-devel libgtkmm3-devel libxml2-devel
 BuildRequires: libgtksourceviewmm3-devel libgtop-devel libsqlite3-devel libvte3-devel
 BuildRequires: libgdlmm3-devel gsettings-desktop-schemas-devel ghex-devel dconf
-BuildRequires: intltool yelp-tools itstool doxygen
+BuildRequires: intltool yelp-tools itstool doxygen libappstream-glib-devel
 # if autoreconf used
 BuildRequires: libGConf-devel
 
@@ -57,8 +57,7 @@ export ac_cv_path_GDB_PROG=%_bindir/gdb
 %_libdir/%name/
 %_datadir/glib-2.0/schemas/org.nemiver.gschema.xml
 %_datadir/applications/%name.desktop
-%_iconsdir/hicolor/*/apps/%name.*
-%_iconsdir/HighContrast/*x*/apps/%name.png
+%_iconsdir/hicolor/*/apps/%{name}*
 %_datadir/%name/
 %_datadir/appdata/%name.appdata.xml
 %_man1dir/*
@@ -68,6 +67,9 @@ export ac_cv_path_GDB_PROG=%_bindir/gdb
 %_includedir/%name/
 
 %changelog
+* Thu Sep 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt1
+- 0.9.6 release
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.6-alt0.1.1
 - Rebuilt for gcc5 C++11 ABI.
 
