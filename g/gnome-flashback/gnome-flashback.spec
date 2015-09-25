@@ -1,8 +1,8 @@
-%define ver_major 3.17
+%define ver_major 3.18
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-flashback
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -30,11 +30,17 @@ Requires: gnome-filesystem
 Requires: xdg-user-dirs
 Requires: gnome-icon-theme gnome-icon-theme-symbolic
 Requires: gnome-screensaver
-Requires: gnome-keyring polkit-gnome
+Requires: gnome-keyring
 Requires: gnome-control-center
 Requires: nautilus
+# since 3.18
+Requires: polkit accountsservice
+Requires: upower
+Requires: bluez
+Requires: NetworkManager-applet-gtk
+Requires: ibus xkeyboard-config
 
-BuildRequires: rpm-build-gnome gnome-common intltool
+BuildRequires: rpm-build-gnome gnome-common
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libdbus-glib-devel >= %dbus_glib_ver
@@ -43,7 +49,10 @@ BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libcanberra-gtk3-devel libpulseaudio-devel
 BuildRequires: libXext-devel libXrandr-devel
 BuildRequires: libupower-devel
-
+# since 3.18
+BuildRequires: libpolkit-devel libgnome-bluetooth-devel libxcb-devel
+BuildRequires: libibus-devel libxkbcommon-x11-devel
+BuildRequires: libxkbfile-devel xkeyboard-config-devel
 
 %description
 GNOME Flashback provides unofficial session and helper application.
@@ -92,19 +101,6 @@ __EOF__
 # link to our gnome3 menus
 ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
-# polkit-gnome desktop file
-mkdir -p %buildroot%_datadir/gnome/autostart
-cat > %buildroot%_datadir/gnome/autostart/gnome-authentication-agent.desktop << _EOF_
-[Desktop Entry]
-Name=Authentication Agent
-Comment=PolicyKit Authentication Agent for the GNOME Flashback session
-Exec=/usr/libexec/polkit-1/polkit-gnome-authentication-agent-1
-Terminal=false
-Type=Application
-NoDisplay=true
-OnlyShowIn=GNOME-Flashback;
-_EOF_
-
 %find_lang --with-gnome --output=%name.lang %name
 
 %check
@@ -117,19 +113,25 @@ _EOF_
 %_libexecdir/%name-metacity
 %_desktopdir/%name.desktop
 %_desktopdir/%name-init.desktop
+%_datadir/desktop-directories/X-GNOME-Flashback-Settings-System.directory
+%_datadir/desktop-directories/X-GNOME-Flashback-Settings.directory
 %_datadir/gnome-session/sessions/%name-compiz.session
 %_datadir/gnome-session/sessions/%name-metacity.session
 #%config %_sysconfdir/X11/wmsession.d/09GnomeFlashback
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_xdgmenusdir/%name-applications.menu
-%_datadir/gnome/autostart/gnome-authentication-agent.desktop
 %_datadir/xsessions/%name-metacity.desktop
+%_xdgconfigdir/autostart/%name-nm-applet.desktop
+%_xdgconfigdir/autostart/%name-screensaver.desktop
 %doc AUTHORS NEWS README
 
 %exclude %_datadir/xsessions/%name-compiz.desktop
 
 
 %changelog
+* Fri Sep 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue Aug 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.2-alt1
 - 3.17.2
 
