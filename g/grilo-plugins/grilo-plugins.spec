@@ -3,8 +3,8 @@
 %def_disable lua_factory
 
 Name: grilo-plugins
-Version: %ver_major.15
-Release: alt2
+Version: %ver_major.16
+Release: alt1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -87,6 +87,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Thu Sep 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.16-alt1
+- 0.2.16
+
 * Sat Sep 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.15-alt2
 - rebuilt with goa-3.17.91
 
