@@ -15,8 +15,8 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: mlt
-Version: 0.9.6
-Release: alt2
+Version: 0.9.8
+Release: alt1
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -177,6 +177,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Fri Sep 25 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt1
+- new version
+
 * Wed Jul 29 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt2
 - build with qt5
 
