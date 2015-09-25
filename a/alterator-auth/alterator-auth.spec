@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.29
+Version: 0.29.1
 Release: alt1
 
 BuildArch: noarch
@@ -55,6 +55,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Sep 25 2015 Andrey Cherepanov <cas@altlinux.org> 0.29.1-alt1
+- Read domain name from domain parameter of resolvconf -l
+
 * Thu Apr 23 2015 Andrey Cherepanov <cas@altlinux.org> 0.29-alt1
 - Enable service settime-rfc867 for ALT domain
 - Add settime-rfc867 to requirements
