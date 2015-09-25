@@ -38,7 +38,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt2
+%define rlz alt3
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -952,6 +952,8 @@ __EOF__
 cat > %buildroot/%_altdir/qdbusviewer-%name <<__EOF__
 %_bindir/qdbusviewer %qtdir/bin/qdbusviewer $QDBUS_ALTPRIO
 __EOF__
+mkdir -p %buildroot/usr/lib/kde4/bin/
+ln -s `relative %qtdir/bin/qdbus /usr/lib/kde4/bin/qdbus` %buildroot/usr/lib/kde4/bin/qdbus
 
 # install translations
 #install -m 644 ./translations/*.qm %buildroot/%qtdir/translations
@@ -1248,6 +1250,7 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %_bindir/qdbus-%name
 %qtdir/bin/qdbus
 %_altdir/qdbus-%name
+/usr/lib/kde4/bin/qdbus
 %files -n lib%{name}-dbus
 %qtdir/lib/libQtDBus.so.*
 %_libdir/libQtDBus.so.*
@@ -1437,6 +1440,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Fri Sep 25 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt3
+- add qdbus symlink for KDE4
+
 * Thu Jul 02 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt2
 - rebuild with gcc5
 
