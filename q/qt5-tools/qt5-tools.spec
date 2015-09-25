@@ -4,9 +4,12 @@
 %def_disable bootstrap
 %def_disable qtconfig
 
+%define major 5
+%define minor 5
+%define bugfix 0
 Name: qt5-tools
-Version: 5.5.0
-Release: alt1
+Version: %major.%minor.%bugfix
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -33,6 +36,7 @@ BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-webkit-devel
 BuildRequires: libXext-devel libX11-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
+BuildRequires: rpm-macros-alternatives
 %if_disabled bootstrap
 BuildRequires: qt5-tools
 %endif
@@ -149,11 +153,11 @@ syncqt.pl-qt5 \
     -version %version \
     -private \
     -module QtCLucene \
+    -module QtHelp \
+    -module QtUiTools \
+    -module QtUiPlugin \
     -module QtDesigner \
     -module QtDesignerComponents \
-    -module QtHelp \
-    -module QtUiPlugin \
-    -module QtUiTools \
     #
 %qmake_qt5
 
@@ -180,6 +184,18 @@ desktop-file-install \
   %SOURCE24 \
 %endif
   #
+
+# install qdbus alternative
+QDBUS_ALTPRIO=`printf '%%.2d%%.2d%%.2d%%.2d\n' 0 %major %minor %bugfix`
+mkdir -p %buildroot/%_altdir/
+cat > %buildroot/%_altdir/qdbus-%_qt5 <<__EOF__
+%_bindir/qdbus %_qt5_bindir/qdbus $QDBUS_ALTPRIO
+__EOF__
+cat > %buildroot/%_altdir/qdbusviewer-%_qt5 <<__EOF__
+%_bindir/qdbusviewer %_qt5_bindir/qdbusviewer $QDBUS_ALTPRIO
+__EOF__
+mkdir -p %buildroot/usr/lib/kf5/bin/
+ln -s `relative %_bindir/qdbus-%_qt5 /usr/lib/kf5/bin/qdbus` %buildroot/usr/lib/kf5/bin/qdbus
 
 # icons
 install -m644 -p -D src/assistant/assistant/images/assistant.png %buildroot/%_iconsdir/hicolor/32x32/apps/assistant-qt5.png
@@ -241,8 +257,11 @@ done
 %endif
 
 %files -n qt5-dbus
+%_altdir/qdbus-%_qt5
 %_bindir/qdbus-qt5
 %_qt5_bindir/qdbus
+/usr/lib/kf5/bin/qdbus
+%_altdir/qdbusviewer-%_qt5
 %_bindir/qdbusviewer*
 %_qt5_bindir/qdbusviewer*
 %_desktopdir/*qdbusviewer.desktop
@@ -299,6 +318,9 @@ done
 
 
 %changelog
+* Fri Sep 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt2
+- add alternavices for qdbus and qdbusviewer
+
 * Mon Jul 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 
