@@ -1,7 +1,7 @@
-%define ver_major 3.16
+%define ver_major 3.18
 
 Name: orca
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
@@ -77,20 +77,21 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README TODO
-%_bindir/orca
-%dir %python3_sitelibdir/orca
-%python3_sitelibdir/orca/
+%_bindir/%name
+%python3_sitelibdir/%name/
 %_datadir/applications/*
-%_iconsdir/hicolor/*/apps/orca.png
-%_iconsdir/hicolor/scalable/apps/orca.svg
-%_iconsdir/hicolor/symbolic/apps/orca-symbolic.svg
+%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_man1dir/*
-%dir %_datadir/orca
-%_datadir/orca/*
-%_sysconfdir/xdg/autostart/orca-autostart.desktop
-%_datadir/gdm/greeter/autostart/orca-autostart.desktop
+%_datadir/%name/
+%_sysconfdir/xdg/autostart/%name-autostart.desktop
+%_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Fri Sep 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Fri May 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 
