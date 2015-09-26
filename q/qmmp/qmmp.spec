@@ -1,10 +1,10 @@
-%define branch 0.9
-%define svn svn5545
+%define branch 0.10
+%define svn svn5598
 
 %define rel alt1
 
 %if "%rel" == "alt0.M51"
-%define PLUG_DISABLE "UDISKS2_PLUGIN OPUS_PLUGIN WITH_NEW_JACK"
+%define PLUG_DISABLE "UDISKS2_PLUGIN OPUS_PLUGIN WITH_NEW_JACK WITH_QSUI"
 %define PLUG_ENABLE "FFMPEG_LEGACY UDISKS_PLUGIN JACK_PLUGIN"
 %endif
 
@@ -660,11 +660,10 @@ Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager qmmp-rgscan
 Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-sid
 Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste qmmp-eff-extrastereo
-Requires: qmmp-qsui
 
 %if "%rel" != "alt0.M51"
 # disable for 5.1
-Requires: qmmp-in-opus
+Requires: qmmp-in-opus qmmp-qsui
 %endif
 
 %description -n %name-full
@@ -829,8 +828,10 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %_libdir/%name/Transports/libmms*
 
 # Interface plugins
+%if "%rel" != "alt0.M51"
 %files -n %name-qsui
 %_libdir/%name/Ui/libqsui*
+%endif
 
 # General plugins
 %files -n %name-converter
@@ -898,6 +899,10 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sat Sep 26 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn5598
+- 0.10.0 svn5598 version
+- bump version
+
 * Sun Sep 06 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn5545
 - 0.9.0 svn5545 version
 
