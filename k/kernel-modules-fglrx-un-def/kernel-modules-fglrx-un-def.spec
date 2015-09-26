@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	15.201.1151
-%define module_release alt1
+%define module_release alt2
 
 %define flavour un-def
 BuildRequires(pre): kernel-headers-modules-un-def
@@ -38,7 +38,8 @@ PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 
 Requires: fglrx_glx
 
-ExclusiveArch: x86_64
+ExclusiveArch: %karch
+#ExclusiveArch: x86_64
 
 %description
 Kernel drivers for AMD/ATI Proprietary Linux Catalyst(tm) software suite.
@@ -65,6 +66,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Sep  26 2015 barssc <barssc@altlinux.org> 2:15.201.1151-alt2
+- rebuild with fixed sources
 
 * Sat Sep  26 2015 barssc <barssc@altlinux.org> 2:15.201.1151-alt1
 - Catalyst 15.9
