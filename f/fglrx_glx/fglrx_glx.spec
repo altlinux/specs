@@ -18,7 +18,7 @@ Name: %{bname}_glx
 Epoch: 2
 %define real_version 15.201.1151
 Version: 15.201.1151
-Release: alt1
+Release: alt2
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -34,11 +34,10 @@ Source9: ati-powermode.sh
 Source11: atieventsd.init
 Source12: aticonfig.1
 Patch0: %bname-13.20.16-printk-loglevel.patch
-Patch1: %bname-firegl-4.1.patch
+Patch1: %bname-firegl-4.3.patch
 Patch2: %bname-kcl-4.1.patch
-Patch3: %bname-kcl-acpi-4.1.patch
-Patch4: %bname-kcl-str-4.1.patch
-Patch5: %bname-firegl-4_1.patch
+Patch3: %bname-kcl-acpi-4.3.patch
+Patch4: %bname-kcl-str-4.3.patch
 
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
@@ -115,11 +114,10 @@ ATI/AMD %bname (Radeon video card driver) module sources for Linux kernel.
 sh %SOURCE0 --extract .
 cd common/lib/modules/%bname/build_mod
 %patch0 -p1
-#%patch1 -p1
+%patch1 -p1
 #%patch2 -p1
-#%patch3 -p1
+%patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 cd -
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
@@ -271,6 +269,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Sat Sep 26 2015 barssc <barssc@altlinux.ru> 2:15.201.1151-alt2
+- Kernel module: fixed build for kernel 4.2 and 4.3
+
 * Sat Sep 26 2015 barssc <barssc@altlinux.ru> 2:15.201.1151-alt1
 - Catalyst 15.9
 
