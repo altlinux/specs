@@ -1,12 +1,12 @@
 %define _name ges
-%define ver_major 1.5
+%define ver_major 1.6
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
 %def_disable python3
 
 Name: gstreamer-editing-services
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -19,7 +19,7 @@ Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 %define gst_ver 1.5.91
 
 Requires: lib%_name = %version-%release
-Requires: gst-validate >= 1.5.90
+Requires: gst-validate >= 1.6.0
 
 %if_enabled python3
 # use python3
@@ -129,6 +129,9 @@ library.
 %_datadir/gtk-doc/html/%_name-%api_ver/
 
 %changelog
+* Sat Sep 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.91-alt1
 - 1.5.91
 

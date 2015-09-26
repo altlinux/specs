@@ -1,12 +1,12 @@
 %define _name gst-rtsp-server
-%define ver_major 1.5
+%define ver_major 1.6
 %define api_ver 1.0
 
 %def_enable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer-%api_ver RTSP server library
@@ -17,7 +17,7 @@ Url: http://gstreamer.freedesktop.org/modules/%_name-server.html
 Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 
 %define glib_ver 2.32.0
-%define gst_ver 1.5.90
+%define gst_ver 1.6.0
 
 Requires: gst-plugins-base%api_ver >= %gst_ver gst-plugins-good%api_ver gst-plugins-bad%api_ver
 
@@ -101,6 +101,9 @@ GObject introspection devel data for the GStreamer RTSP server library.
 
 
 %changelog
+* Sat Sep 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.91-alt1
 - 1.5.91
 
