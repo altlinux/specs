@@ -2,7 +2,7 @@
 %def_without desklaunch
 Name: icewm-startup
 Version: 0.15
-Release: alt1
+Release: alt2
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -199,7 +199,8 @@ update-menus plug-in для менеджера автозапуска прогр
 %package networkmanager
 Group: Graphical desktop/Icewm
 Summary: start gnome networkmanager applet
-Requires: %name NetworkManager-gnome polkit-gnome
+Requires: %name ModemManager NetworkManager-applet-gtk
+Requires: NetworkManager-wifi usb-modeswitch
 AutoReq: no
 
 %description networkmanager
@@ -534,6 +535,9 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Sat Sep 26 2015 Dmitriy Khanzhin <jinn@altlinux.org> 0.15-alt2
+- updated requires for networkmanager subpackage
+
 * Sun May 31 2015 Dmitriy Khanzhin <jinn@altlinux.org> 0.15-alt1
 - added "shutdown" script, thx to YYY at forum
 - added simple-sound subpackage, thx to YYY and Leo-sp150 at forum
