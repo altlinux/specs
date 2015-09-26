@@ -10,21 +10,21 @@
 
 %define _libexecdir %_prefix/libexec
 %define _switchdir %_libexecdir/X11/drv.d
-%define new_version 15.7
+%define new_version 15.9
 
 %define bname fglrx
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
-%define real_version 15.20.1046
-Version: 15.120.1046
+%define real_version 15.201.1151
+Version: 15.201.1151
 Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
 URL: http://www.amd.com
 License: Proprietary
-Source0: amd-driver-installer-%real_version-x86.x86_64.run
+Source0: AMD-Catalyst-%new_version-Linux-installer-%real_version-x86.x86_64.run
 Source1: atieventsd.service
 Source2: %bname-switch.c
 Source3: authatieventsd.sh
@@ -38,6 +38,7 @@ Patch1: %bname-firegl-4.1.patch
 Patch2: %bname-kcl-4.1.patch
 Patch3: %bname-kcl-acpi-4.1.patch
 Patch4: %bname-kcl-str-4.1.patch
+Patch5: %bname-firegl-4_1.patch
 
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
@@ -114,10 +115,11 @@ ATI/AMD %bname (Radeon video card driver) module sources for Linux kernel.
 sh %SOURCE0 --extract .
 cd common/lib/modules/%bname/build_mod
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 #%patch2 -p1
-%patch3 -p1
+#%patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 cd -
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
@@ -269,6 +271,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Sat Sep 26 2015 barssc <barssc@altlinux.ru> 2:15.201.1151-alt1
+- Catalyst 15.9
+
 * Thu Jul 9 2015 barssc <barssc@altlinux.ru> 2:15.120.1046-alt1
 - Catalyst 15.7
 
