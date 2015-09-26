@@ -1,6 +1,6 @@
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.5
+%define ver_major 1.6
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -30,13 +30,15 @@ BuildRequires: libmpcdec-devel libneon-devel liboil-devel libsoundtouch-devel li
 BuildRequires: libtimidity-devel libxvid-devel python-module-PyXML python-modules-email python-modules-encodings
 BuildRequires: timidity-instruments libcelt-devel libdc1394-devel libkate-devel libtiger-devel
 BuildRequires: libvpx-devel librtmp-devel liborc-devel orc libofa-devel libmusicbrainz-devel libass-devel
-BuildRequires: libzbar-devel libwayland-client-devel libwayland-egl-devel libwebp-devel libopenjpeg-devel libbluez-devel
+BuildRequires: libzbar-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel libEGL-devel
+BuildRequires: libwebp-devel libopenjpeg-devel libbluez-devel
 BuildRequires: libfluidsynth-devel libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
 BuildRequires: libsbc-devel libschroedinger-devel libusb-devel libgudev-devel libopus-devel libcurl-devel
 BuildRequires: libvo-amrwbenc-devel librsvg-devel libvo-aacenc-devel libgcrypt-devel
 BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
-BuildRequires: libvisual0.4-devel libopencv-devel openexr-devel libx265-devel
-BuildRequires: libgtk+3-devel
+BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
+BuildRequires: libgtk+3-devel libclutter-devel
+BuildRequires: libopencv-devel
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -70,12 +72,17 @@ This package contains documentation for GStreamer Bad Plug-ins.
 
 %build
 %autoreconf
+
+# broken opencv.pc
+%define opencv_libs %(pkg-config --libs opencv |sed -e 's|%_libdir/lib|-l|g' |sed -e 's|\.so||g')
+
 %configure \
     --disable-examples \
     --enable-experimental \
     %{subst_enable gtk_doc} \
     --disable-static \
-    --with-html-dir=%_gtk_docdir
+    --with-html-dir=%_gtk_docdir \
+    OPENCV_LIBS="%opencv_libs"
 
 %make_build
 
@@ -118,6 +125,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Sat Sep 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.91-alt1
 - 1.5.91
 
