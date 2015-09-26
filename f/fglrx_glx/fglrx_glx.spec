@@ -18,7 +18,7 @@ Name: %{bname}_glx
 Epoch: 2
 %define real_version 15.201.1151
 Version: 15.201.1151
-Release: alt2
+Release: alt3
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -269,6 +269,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Sat Sep 26 2015 barssc <barssc@altlinux.ru> 2:15.201.1151-alt3
+- Kernel module: fixed build for kernel 3.18
+
 * Sat Sep 26 2015 barssc <barssc@altlinux.ru> 2:15.201.1151-alt2
 - Kernel module: fixed build for kernel 4.2 and 4.3
 
