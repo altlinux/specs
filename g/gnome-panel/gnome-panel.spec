@@ -1,13 +1,13 @@
-%define ver_major 3.17
+%define ver_major 3.18
 %define api_ver 3.0
 %define applet_api_ver 5.0
 %def_disable static
-%def_enable gtk_doc
+%def_disable gtk_doc
 %def_enable introspection
 %def_enable eds
 
 Name: gnome-panel
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
@@ -31,6 +31,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define tp_glib_ver 0.14
 %define gweather_ver 3.17.1
 %define rsvg_ver 2.36.2
+%define gtk_doc_ver 1.24.1
 
 Conflicts: gnome-power-manager < 2.15.3
 Requires: lib%name = %version-%release
@@ -43,9 +44,9 @@ Requires: tzdata
 
 BuildPreReq: rpm-build-gnome >= 0.4
 
-# From configure.in
-BuildPreReq: gnome-common
-BuildPreReq: intltool >= 0.35 yelp-tools
+# From configure.ac
+BuildRequires: intltool yelp-tools gtk-doc
+%{?_enable_gtk_doc:BuildPreReq: gtk-doc >= %gtk_doc_ver}
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
@@ -56,12 +57,10 @@ BuildPreReq: libgnome-menus-devel >= %gnome_menus_ver
 BuildPreReq: libcairo-devel >= %cairo_ver
 BuildPreReq: libtelepathy-glib-devel >= %tp_glib_ver
 BuildPreReq: libgweather-devel >= %gweather_ver
-%{?_enable_eds:BuildPreReq: evolution-data-server-devel >= %eds_ver}
 BuildPreReq: librsvg-devel >= %rsvg_ver
-BuildPreReq: libX11-devel libXt-devel libXau-devel libXrandr-devel libXi-devel
-BuildPreReq: gtk-doc >= 1.0 yelp-tools
-BuildPreReq: libxml2-devel
-BuildRequires: libdconf-devel >= %dconf_ver libdbus-glib-devel libpolkit-devel libSM-devel perl-XML-Parser
+BuildRequires: libX11-devel libXt-devel libXau-devel libXrandr-devel libXi-devel libxml2-devel
+BuildRequires: libdconf-devel >= %dconf_ver libpolkit-devel libSM-devel
+%{?_enable_eds:BuildPreReq: evolution-data-server-devel >= %eds_ver}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
@@ -193,6 +192,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Sat Sep 26 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Tue Aug 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.2-alt1
 - 3.17.2
 
