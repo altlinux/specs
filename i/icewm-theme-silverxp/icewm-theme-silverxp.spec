@@ -1,6 +1,6 @@
 Name: icewm-theme-silverxp
 Version: 1.2.17
-Release: alt5
+Release: alt6
 
 License: GPL
 Group: Graphical desktop/Icewm
@@ -28,19 +28,33 @@ decorations.
 /bin/mv %buildroot%_x11x11dir/icewm/themes/%theme %buildroot%_x11x11dir/icewm/themes/SilverXP
 
 # fix font name
-/bin/sed -i 's,-koi8-r,-*-*,g' %buildroot%_x11x11dir/icewm/themes/*/default.theme
-# do not paint buttons border
-/bin/sed -i 's,^#  $,ShowButtonBorder=0,' %buildroot%_x11x11dir/icewm/themes/*/default.theme
+/bin/sed -i 's,-koi8-r,-*-*,g' %buildroot%_x11x11dir/icewm/themes/SilverXP/default.theme
 
-find %buildroot%_x11x11dir/icewm/themes -type f -print0 | 
-	xargs -r0 chmod 0444
-find %buildroot%_x11x11dir/icewm/themes -type d -print0 | 
-	xargs -r0 chmod 0755
+cat <<'EOF' >> %buildroot%_x11x11dir/icewm/themes/SilverXP/default.theme
+# Colors for memory monitor:
+
+#  User program usage in memory monitor
+ColorMEMStatusUser="rgb:00/FF/00"
+
+#  OS buffers usage in memory monitor
+ColorMEMStatusBuffers="rgb:FF/00/00"
+
+#  OS cached usage in memory monitor
+ColorMEMStatusCached="rgb:FF/FF/FF"
+
+#  Free memory in memory monitor
+ColorMEMStatusFree=""
+
+EOF
 
 %files
 %_x11x11dir/icewm/themes/SilverXP
 
 %changelog
+* Sat Sep 26 2015 Dmitriy Khanzhin <jinn@altlinux.org> 1.2.17-alt6
+- added colors for memory monitor
+- cleanup spec
+
 * Mon Jan 07 2013 Dmitriy Khanzhin <jinn@altlinux.org> 1.2.17-alt5
 - updated some .xpm's for fix breaks themes with xorg 1.12.3.902 and later
   (bfo#54168)
