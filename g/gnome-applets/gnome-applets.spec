@@ -1,17 +1,16 @@
-%define ver_major 3.17
+%define ver_major 3.18
 %define panel_api_ver 5.0
 %def_enable frequency_selector
 %def_disable mini_commander
 %def_enable battstat
 %def_enable modemlights
-%def_with upower
 
 Name: gnome-applets
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Small applications for the GNOME panel
-License: GPL
+License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
@@ -21,9 +20,9 @@ Source1: 01-cpufreq.pkla
 Patch: %name-2.9.90-alt-modemlights.patch
 
 # From configure.ac
-%define gtk_ver 3.15.2
-%define glib_ver 2.27.5
-%define gnome_panel_ver 3.17.2
+%define gtk_ver 3.16.0
+%define glib_ver 2.44.0
+%define gnome_panel_ver 3.18.0
 %define libgtop_ver 2.11.92
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
@@ -41,8 +40,10 @@ Requires: %name-geyes = %version-%release
 Requires: %name-gweather = %version-%release
 Requires: %name-multiload = %version-%release
 Requires: %name-accessx-status = %version-%release
-Requires: %name-windowpicker = %version-%release
 Requires: %name-netspeed = %version-%release
+Requires: %name-brightness = %version-%release
+Requires: %name-inhibit = %version-%release
+Requires: %name-tracker-search-bar = %version-%release
 %{?_enable_frequency_selector:Requires: %name-cpufreq = %version-%release}
 %{?_enable_mini_commander:Requires: %name-mini-commander = %version-%release}
 %{?_enable_modemlights:Requires: %name-modemlights = %version-%release}
@@ -63,11 +64,11 @@ BuildPreReq: intltool >= 0.35
 BuildPreReq: libX11-devel libXt-devel
 BuildPreReq: libgucharmap-devel >= 2.33.2
 BuildPreReq: libgweather-devel >= %libgweather_ver
-BuildRequires: rpm-build-gnome
+BuildRequires: rpm-build-gnome icon-theme-adwaita
 BuildRequires: python-devel python-modules-compiler gnome-settings-daemon-devel libxml2-devel
 BuildRequires: libdbus-devel libdbus-glib-devel
-BuildRequires: libpolkit1-devel gnome-common xorg-cf-files yelp-tools xsltproc
-%{?_with_upower:BuildRequires: libupower-devel}
+BuildRequires: libpolkit1-devel xorg-cf-files yelp-tools
+BuildRequires: tracker-devel libupower-devel
 %{?_enable_frequency_selector:BuildRequires: libcpufreq-devel}
 
 # for invest applet
@@ -278,6 +279,35 @@ PreReq: %name-common = %version-%release
 netspeed_applet is a little GNOME applet that shows the traffic on a
 specified network device.
 
+%package brightness
+Summary: Applet that allows to adjust laptop panel brightness
+Group: Graphical desktop/GNOME
+PreReq: %name-common = %version-%release
+
+%description brightness
+This package provides brightness_applet for gnome-panel that allows user
+to adjust laptop panel brightness.
+
+%package inhibit
+Summary: Applet that allows to inhibit automatic power saving
+Group: Graphical desktop/GNOME
+PreReq: %name-common = %version-%release
+
+%description inhibit
+This package provides inhibit_applet for gnome-panel that allows user
+to inhibit automatic power saving.
+
+%package tracker-search-bar
+Summary: Applet that allows to search with tracker
+Group: Graphical desktop/GNOME
+PreReq: %name-common = %version-%release
+Requires: tracker
+
+%description tracker-search-bar
+This package provides tracker-search-bar applet for gnome-panel that allows user
+to search data quickly using Tracker.
+
+
 %define _libexecdir %gnome_appletsdir
 
 %prep
@@ -288,8 +318,6 @@ specified network device.
 %autoreconf
 export CFLAGS="$CFLAGS `pkg-config --cflags dbus-glib-1`"
 %configure \
-    --disable-dependency-tracking \
-    --disable-schemas-install \
     %{?_enable_mini_commander:--enable-mini-commander} \
     %{?_disable_battstat:--disable-battstat} \
     %{?_disable_frequency_selector:--disable-frequency-selector}
@@ -301,8 +329,8 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-glib-1`"
 
 install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
-%define applets accessx-status battstat char-palette cpufreq-applet command-line drivemount gweather geyes stickynotes_applet multiload trashapplet windowpicker netspeed_applet
-%find_lang --with-gnome %name %name-3.0 %applets
+%define applets accessx-status battstat char-palette cpufreq-applet command-line drivemount gweather geyes stickynotes_applet multiload trashapplet netspeed_applet windowpicker brightness inhibit tracker-search-bar
+%find_lang --with-gnome %name-3.0 %applets
 
 %files
 
@@ -315,9 +343,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %files accessx-status -f accessx-status.lang
 %gnome_appletsdir/accessx-status*
 %_datadir/%name/ui/accessx-status-applet-menu.xml
-%_datadir/pixmaps/accessx-status*
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.AccessxStatusApplet.panel-applet
 %_datadir/dbus-1/services/org.gnome.panel.applet.AccessxStatusAppletFactory.service
+%_datadir/%name/accessx-status-applet/
 %_iconsdir/hicolor/48x48/apps/ax-applet.png
 
 %if_enabled battstat
@@ -336,6 +364,7 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %attr(4711,root,root) %_bindir/cpufreq-selector
 %endif
 %gnome_appletsdir/cpufreq-applet
+%_datadir/%name/cpufreq-applet/
 %_datadir/%name/ui/cpufreq-applet-menu.xml
 %_datadir/%name/builder/cpufreq-preferences.ui
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.CPUFreqApplet.panel-applet
@@ -408,7 +437,7 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_datadir/%name/ui/multiload-applet-menu.xml
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.MultiLoadApplet.panel-applet
 %_datadir/dbus-1/services/org.gnome.panel.applet.MultiLoadAppletFactory.service
-%_datadir/pixmaps/*cpu*
+#%_datadir/pixmaps/*cpu*
 %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.multiload.gschema.xml
 
 %files stickynotes -f stickynotes_applet.lang
@@ -430,12 +459,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_datadir/dbus-1/services/org.gnome.panel.applet.TrashAppletFactory.service
 
 %files windowpicker -f windowpicker.lang
-%gnome_appletsdir/window-picker-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.WindowPickerFactory.service
+%gnome_appletsdir/%panel_api_ver/libwindow-picker-applet.so.*
 %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-picker-applet.gschema.xml
-%_datadir/%name/ui/window-picker-about-logo.png
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.WindowPicker.panel-applet
-%_datadir/%name/ui/menu.xml
 
 %files netspeed -f netspeed_applet.lang
 %_libdir/%name/netspeed_applet2
@@ -446,7 +472,48 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_iconsdir/hicolor/*x*/*/netspeed*.png
 %_iconsdir/hicolor/scalable/*/netspeed*.svg
 
+%files brightness -f brightness.lang
+%_libdir/%name/gnome-brightness-applet
+%_datadir/dbus-1/services/org.gnome.panel.applet.BrightnessAppletFactory.service
+%_datadir/%name/icons/hicolor/*/*/gpm-brightness*
+%_datadir/%name/ui/brightness-applet-menu.xml
+%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.BrightnessApplet.panel-applet
+%_iconsdir/hicolor/*/*/gnome-brightness*
+
+%files inhibit -f inhibit.lang
+%_libdir/%name/gnome-inhibit-applet
+%_datadir/dbus-1/services/org.gnome.panel.applet.InhibitAppletFactory.service
+%_datadir/%name/icons/hicolor/*/*/gpm-inhibit*
+%_datadir/%name/icons/hicolor/*/*/gpm-uninhibit*
+%_datadir/%name/ui/inhibit-applet-menu.xml
+%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.InhibitApplet.panel-applet
+%_iconsdir/hicolor/*/*/gnome-inhibit*
+
+%files tracker-search-bar -f tracker-search-bar.lang
+%_libdir/%name/tracker-search-bar
+%_datadir/%name/ui/tracker-search-bar*.xml
+%_datadir/%name/ui/tracker-search-bar.ui
+%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.panel.SearchBar.panel-applet
+%_datadir/dbus-1/services/org.gnome.panel.applet.SearchBarFactory.service
+
+#exclude invest-applet files
+%exclude %_bindir/invest-chart
+%exclude %_libdir/%name/invest-applet
+%exclude %python3_sitelibdir_noarch/*
+%exclude %_datadir/dbus-1/services/org.gnome.panel.applet.InvestAppletFactory.service
+%exclude %_datadir/%name/invest-applet
+%exclude %_datadir/%name/builder/financialchart.ui
+%exclude %_datadir/%name/builder/prefs-dialog.ui
+%exclude %_datadir/%name/ui/invest-applet-menu.xml
+%exclude %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.InvestApplet.panel-applet
+%exclude %_datadir/help/*/invest-applet/
+%exclude %_iconsdir/hicolor/*/*/invest-applet*
+
 %changelog
+* Sun Sep 27 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+- new -brightness, -inhibit, -tracker subpackages
+
 * Tue Aug 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.2-alt1
 - 3.17.2
 
