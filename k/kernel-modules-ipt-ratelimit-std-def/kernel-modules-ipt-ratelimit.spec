@@ -1,6 +1,6 @@
 %define module_name             ipt-ratelimit
 %define module_version          0.1
-%define module_release 		alt1
+%define module_release 		alt2
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -55,6 +55,9 @@ install -m644 -D xt_ratelimit.ko %buildroot/%module_dir/xt_ratelimit.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sun Sep 27 2015 Alexei Takaseev <taf@altlinux.org> 0.1-alt2
+- fix compilation for kernels > 3.18
 
 * Fri Sep 25 2015 Alexei Takaseev <taf@altlinux.org> 0.1-alt1
 - Initial RPM release
