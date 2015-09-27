@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Sun Sep 27 2015 Vladimir Didenko <cow@altlinux.ru> 1.0.2-alt1
+- 1.0.2
+
 * Fri Sep 18 2015 Vladimir Didenko <cow@altlinux.ru> 1.0.1-alt2
 - Add cffi to requirements (closes: #31280)
 
