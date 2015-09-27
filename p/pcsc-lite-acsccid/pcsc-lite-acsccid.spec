@@ -1,13 +1,16 @@
-Name:           pcsc-lite-acsccid
-BuildRequires:  libusb-compat-devel libpcsclite-devel flex
-Version:        1.0.4
-Release:        alt1
-Group:          System/Servers
-License:        LGPLv2.1+
-Url:            http://acsccid.sourceforge.net/
-Summary:        PCSC Driver for ACS CCID Based Smart Card Readers
-Source:         %name-%version.tar
-Patch0:         %name-%version-alt-fix.patch
+Name: pcsc-lite-acsccid
+Version: 1.1.0
+Release: alt1
+
+Summary: PCSC Driver for ACS CCID Based Smart Card Readers
+License: LGPLv2.1+
+Group: System/Servers
+
+Url: http://acsccid.sourceforge.net/
+Source: %name-%version.tar
+Patch: %name-%version-alt-ACR38U-CCID-rule.patch
+
+BuildRequires: libusb-devel libpcsclite-devel flex
 
 Provides: pcsc-acsccid = %version-%release
 Obsoletes: pcsc-acsccid < %version-%release
@@ -21,18 +24,17 @@ pcsc-lite package.
 
 %prep
 %setup
-%patch0 -p2
+%patch -p1
 
 %build
 %configure --enable-composite-as-multislot
 %make
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 mkdir -p %buildroot/lib/udev
 mkdir %buildroot/lib/udev/rules.d
 sed 's:GROUP="pcscd":GROUP="scard":' <src/92_pcscd_acsccid.rules >%buildroot/lib/udev/rules.d/92_pcscd_acsccid.rules
-
 
 %files
 %doc AUTHORS COPYING README
@@ -40,11 +42,15 @@ sed 's:GROUP="pcscd":GROUP="scard":' <src/92_pcscd_acsccid.rules >%buildroot/lib
 %_libdir/pcsc/drivers/*
 
 %changelog
+* Wed Sep 23 2015 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1
+- 1.1.0
+- updated patch (is it still needed?)
+
 * Mon Dec 17 2012 Ivan Ovcherenko <asdus@altlinux.org> 1.0.4-alt1
 - Updated to 1.0.4
 
 * Tue Sep 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.3-alt2
-- added 072f:90cc USB ID 
+- added 072f:90cc USB ID
 
 * Tue Mar 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.3-alt1
 - 1.0.3
