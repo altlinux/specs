@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 3.17
+%define ver_major 3.18
 %define api_ver 3.0
 %def_enable color_management
 %def_enable introspection
@@ -8,13 +8,13 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.92
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
 License: %gpl2plus
 Group: Graphics
-Url: http://www.gnome.org
+Url: https://wiki.gnome.org/Apps/EyeOfGnome
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-3.7.91-alt-gir.patch
@@ -164,6 +164,9 @@ the functionality of the EOG GUI.
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Mon Sep 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Mon Sep 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.92-alt1
 - 3.17.92
 
