@@ -1,13 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Archive/Zip.pm) perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Signature.pm) perl(Net/FTP.pm) perl(Socket.pm) perl(YAML.pm) perl(inc/Module/Install.pm) perl(subs.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Signature.pm) perl(Net/FTP.pm) perl(Socket.pm) perl(YAML.pm) perl(inc/Module/Install.pm) perl(subs.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Alien-SeleniumRC
-%define upstream_version 2.93
+%define upstream_version 2.95
+
+%{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_1
 
 Summary:    Packaging up SeleniumRC java server
 License:    GPL+ or Artistic
@@ -35,7 +37,7 @@ a pure-HTML+JS library that performs automated tasks in JavaScript.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %{make}
 
@@ -47,10 +49,13 @@ a pure-HTML+JS library that performs automated tasks in JavaScript.
 
 %files
 %doc Changes  README SIGNATURE
-%perl_vendor_privlib/*
+%{perl_vendor_privlib}/*
 /usr/bin/selenium-rc
 
 %changelog
+* Mon Sep 28 2015 Igor Vlasenko <viy@altlinux.ru> 2.95-alt1_1
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.93-alt1_4
 - update by mgaimport
 
