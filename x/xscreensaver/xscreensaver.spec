@@ -10,7 +10,7 @@
 
 Name: xscreensaver
 Version: 5.33
-Release: alt1
+Release: alt2
 
 Summary: A screen saver and locker for the X window system
 License: BSD
@@ -62,6 +62,7 @@ Conflicts: %name > %version-%release
 Conflicts: %name < %version-%release
 Provides: %name-devel = %version-%release
 Obsoletes: %name-devel <= 5.05-alt1
+BuildArch: noarch
 
 %description -n rpm-build-%name
 A modular screen saver and locker for the X Window System.
@@ -81,6 +82,7 @@ Provides: %name-hack = %version-%release
 Requires: netpbm libjpeg-utils
 # By noseguy and phosphor
 Requires: fortune-mod
+BuildArch: noarch
 
 %description hacks
 A modular screen saver and locker for the X Window System.
@@ -110,6 +112,7 @@ Summary: A screen saver and locker for the X window system - MATE Screensaver mo
 Group: Graphical desktop/Other
 Requires: %name-modules = %version-%release
 Requires: mate-screensaver
+BuildArch: noarch
 
 %description -n mate-screensaver-modules-xscreensaver
 A modular screen saver and locker for the X Window System.
@@ -123,6 +126,7 @@ Summary: A screen saver and locker for the X window system - MATE Screensaver mo
 Group: Graphical desktop/Other
 Requires: %name-modules-gl = %version-%release
 Requires: mate-screensaver
+BuildArch: noarch
 
 %description -n mate-screensaver-modules-xscreensaver-gl
 A modular screen saver and locker for the X Window System.
@@ -312,6 +316,9 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 %files -n mate-screensaver-modules-xscreensaver-gl -f xscreensaver-mate-gl
 
 %changelog
+* Mon Sep 28 2015 Michael Shigorin <mike@altlinux.org> 5.33-alt2
+- some subpackages made noarch
+
 * Mon Aug 10 2015 Michael Shigorin <mike@altlinux.org> 5.33-alt1
 - new version 5.33
 
