@@ -3,11 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Devel-Platform-Info
-%define upstream_version 0.14
+%define upstream_version 0.15
+
+%{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_1
 
 Summary:    Retrieve Solaris platform metadata
 License:    GPL+ or Artistic
@@ -54,6 +56,9 @@ the usage for CPAN Testers.
 %perl_vendor_privlib/*
 
 %changelog
+* Mon Sep 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_3
 - update by mgaimport
 
