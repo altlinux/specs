@@ -2,7 +2,7 @@
 
 Name: openstack-nova
 Version: 2015.1.1
-Release: alt3
+Release: alt4
 Summary: OpenStack Compute (nova)
 
 Group: System/Servers
@@ -10,8 +10,6 @@ License: ASL 2.0
 Url: http://openstack.org/projects/compute/
 Source0: %name-%version.tar
 
-Source1: nova-dist.conf
-Source2: nova.conf.sample
 Source6: nova.logrotate
 
 Source3: %name.tmpfiles
@@ -55,17 +53,38 @@ Source24: nova-sudoers
 Source30: %name-novncproxy.sysconfig
 
 BuildArch: noarch
-
+# /proc need for generate sample config fix "nova.cmd.novncproxy: [Errno 2] No such file or directory: '/proc/stat'"
+BuildRequires: /proc
+BuildRequires: crudini
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six
 BuildRequires: python-module-babel
+BuildRequires: python-module-PasteDeploy
+BuildRequires: python-module-websockify >= 0.6.0 python-module-numpy
+BuildRequires: python-module-oslo.concurrency
+BuildRequires: python-module-oslo.config >= 1.9.3
+BuildRequires: python-module-oslo.context >= 0.2.0
+BuildRequires: python-module-oslo.log >= 1.0.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-oslo.utils >= 1.4.0
+BuildRequires: python-module-oslo.db >= 1.7.0
+BuildRequires: python-module-oslo.rootwrap >= 1.6.0
+BuildRequires: python-module-oslo.messaging >= 1.8.0
 BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-rfc3986 >= 0.2.0
+BuildRequires: python-module-oslo.middleware >= 1.0.0
+BuildRequires: python-module-oslo.vmware >= 0.11.1
+BuildRequires: python-module-psutil >= 1.1.1
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-netaddr
+BuildRequires: python-module-cinderclient >= 1.1.0
+BuildRequires: python-module-neutronclient >= 2.3.11
+BuildRequires: python-module-glanceclient >= 0.15.0
+BuildRequires: python-module-barbicanclient
 # Required to build module documents
 BuildRequires: python-module-boto
 BuildRequires: python-module-eventlet >= 0.16.1
@@ -418,28 +437,6 @@ sphinx-build -b man doc/source doc/build/man
 sphinx-build -b html doc/source doc/build/html
 bash tools/config/generate_sample.sh -b . -p nova -o etc/nova
 
-#install -p -D -m 640 %SOURCE2 etc/nova/nova.conf.sample
-
-# Avoid http://bugzilla.redhat.com/1059815. Remove when that is closed
-sed -i 's|group/name|group;name|; s|\[DEFAULT\]/|DEFAULT;|' etc/nova/nova.conf.sample
-
-# Programmatically update defaults in sample config
-# which is installed at /etc/nova/nova.conf
-
-#  First we ensure all values are commented in appropriate format.
-#  Since icehouse, there was an uncommented keystone_authtoken section
-#  at the end of the file which mimics but also conflicted with our
-#  distro editing that had been done for many releases.
-sed -i '/^[^#[]/{s/^/#/; s/ //g}; /^#[^ ]/s/ = /=/' etc/nova/nova.conf.sample
-
-#  TODO: Make this more robust
-#  Note it only edits the first occurance, so assumes a section ordering in sample
-#  and also doesn't support multi-valued variables like dhcpbridge_flagfile.
-while read name eq value; do
-  test "$name" && test "$value" || continue
-  sed -i "0,/^# *$name=/{s!^# *$name=.*!#$name=$value!}" etc/nova/nova.conf.sample
-done < %SOURCE1
-
 %install
 %python_install
 
@@ -454,6 +451,7 @@ install -d -m 755 %buildroot%_sharedstatedir/nova/keys
 install -d -m 755 %buildroot%_sharedstatedir/nova/networks
 install -d -m 755 %buildroot%_sharedstatedir/nova/tmp
 install -d -m 750 %buildroot%_logdir/nova
+install -d -m 750 %buildroot%_cachedir/nova
 
 # Setup ghost CA cert
 install -d -m 755 %buildroot%_sharedstatedir/nova/CA
@@ -466,11 +464,12 @@ touch %buildroot%_sharedstatedir/nova/CA/private/cakey.pem
 
 # Install config files
 install -d -m 755 %buildroot%_sysconfdir/nova
-install -p -D -m 640 %SOURCE1 %buildroot%_datadir/nova/nova-dist.conf
 install -p -D -m 640 etc/nova/nova.conf.sample  %buildroot%_sysconfdir/nova/nova.conf
 install -p -D -m 640 etc/nova/rootwrap.conf %buildroot%_sysconfdir/nova/
 install -p -D -m 640 etc/nova/api-paste.ini %buildroot%_sysconfdir/nova/
 install -p -D -m 640 etc/nova/policy.json %buildroot%_sysconfdir/nova/
+mkdir -p %buildroot%_sysconfdir/nova/rootwrap.d/
+install -p -D -m 644 etc/nova/rootwrap.d/* %buildroot%_sysconfdir/nova/rootwrap.d/
 
 # Install version info file
 cat > %buildroot%_sysconfdir/nova/release <<EOF
@@ -530,9 +529,6 @@ install -d -m 755 %buildroot%_runtimedir/nova
 install -p -D -m 644 nova/cloudpipe/client.ovpn.template %buildroot%_datadir/nova/client.ovpn.template
 install -p -D -m 644 %SOURCE22 %buildroot%_datadir/nova/interfaces.template
 
-# Install rootwrap files in /usr/share/nova/rootwrap
-mkdir -p %buildroot%_datadir/nova/rootwrap/
-install -p -D -m 644 etc/nova/rootwrap.d/* %buildroot%_datadir/nova/rootwrap/
 
 # Install policy-kit rules to allow nova user to manage libvirt
 install -p -D -m 644 %SOURCE23 %buildroot%_sysconfdir/polkit-1/rules.d/50-nova.rules
@@ -548,6 +544,29 @@ rm -f %buildroot%python_sitelibdir/nova/test.*
 rm -fr %buildroot%python_sitelibdir/run_tests.*
 rm -f %buildroot%_bindir/nova-combined
 rm -f %buildroot/usr/share/doc/nova/README*
+
+### set default configuration (mostly applies to package-only setups and quickstart, i.e. not generally crowbar)
+%define nova_conf %buildroot%_sysconfdir/nova/nova.conf
+crudini --set %nova_conf DEFAULT log_dir /var/log/nova
+crudini --set %nova_conf DEFAULT state_path /var/lib/nova
+crudini --set %nova_conf DEFAULT connection_type libvirt
+crudini --set %nova_conf DEFAULT lock_path %_runtimedir/nova
+crudini --set %nova_conf DEFAULT compute_driver libvirt.LibvirtDriver
+crudini --set %nova_conf DEFAULT image_service nova.image.glance.GlanceImageService
+crudini --set %nova_conf DEFAULT volume_api_class nova.volume.cinder.API
+crudini --set %nova_conf DEFAULT auth_strategy keystone
+crudini --set %nova_conf DEFAULT network_api_class nova.network.neutronv2.api.API
+crudini --set %nova_conf DEFAULT service_neutron_metadata_proxy True
+crudini --set %nova_conf DEFAULT security_group_api neutron
+crudini --set %nova_conf DEFAULT injected_network_template /usr/share/nova/interfaces.template
+crudini --set %nova_conf neutron admin_username neutron
+crudini --set %nova_conf neutron admin_password '%%SERVICE_PASSWORD%%'
+crudini --set %nova_conf neutron admin_tenant_name '%%SERVICE_TENANT_NAME%%'
+crudini --set %nova_conf database connection mysql://nova:nova@localhost/nova
+crudini --set %nova_conf keystone_authtoken signing_dir /var/cache/nova/keystone-signing
+crudini --set %nova_conf keystone_authtoken admin_tenant_name '%%SERVICE_TENANT_NAME%%'
+crudini --set %nova_conf keystone_authtoken admin_user nova
+crudini --set %nova_conf keystone_authtoken admin_password '%%SERVICE_PASSWORD%%'
 
 %pre common
 # 162:162 for nova (openstack-nova)
@@ -635,27 +654,24 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE
 %dir %_sysconfdir/nova
 %_sysconfdir/nova/release
-%attr(-, root, nova) %_datadir/nova/nova-dist.conf
-%config(noreplace) %attr(-, root, nova) %_sysconfdir/nova/nova.conf
-%config(noreplace) %attr(-, root, nova) %_sysconfdir/nova/api-paste.ini
-%config(noreplace) %attr(-, root, nova) %_sysconfdir/nova/rootwrap.conf
-%config(noreplace) %attr(-, root, nova) %_sysconfdir/nova/policy.json
+%config(noreplace) %attr(0640, root, nova) %_sysconfdir/nova/nova.conf
+%config(noreplace) %attr(0640, root, nova) %_sysconfdir/nova/api-paste.ini
+%config %_sysconfdir/nova/rootwrap.conf
+%dir %_sysconfdir/nova/rootwrap.d
+%config %attr(0640, root, nova) %_sysconfdir/nova/policy.json
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/sudoers.d/nova
 %config(noreplace) %_sysconfdir/polkit-1/rules.d/50-nova.rules
 
 %_tmpfilesdir/%name.conf
-%dir %attr(0750, nova, root) %_logdir/nova
+%dir %attr(0750, nova, adm) %_logdir/nova
 %dir %attr(0755, nova, root) %_runtimedir/nova
 
 %_bindir/nova-manage
 %_bindir/nova-rootwrap
 
 %_datadir/nova
-%exclude %_datadir/nova/rootwrap/compute.filters
-%exclude %_datadir/nova/rootwrap/network.filters
-%exclude %_datadir/nova/rootwrap/api-metadata.filters
-
+%dir %_cachedir/nova
 %_man1dir/nova*.1.*
 
 %defattr(-, nova, nova, -)
@@ -665,20 +681,24 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %dir %_sharedstatedir/nova/keys
 %dir %_sharedstatedir/nova/networks
 %dir %_sharedstatedir/nova/tmp
+%dir %_cachedir/nova
 
 %files compute
+%config %_sysconfdir/nova/rootwrap.d/compute.filters
+%config %_sysconfdir/nova/rootwrap.d/baremetal-compute-ipmi.filters
+%config %_sysconfdir/nova/rootwrap.d/baremetal-deploy-helper.filters
 %_bindir/nova-compute
 %_bindir/nova-idmapshift
 %_unitdir/%name-compute.service
 %_initdir/%name-compute
-%_datadir/nova/rootwrap/compute.filters
 
 %files network
+%config %_sysconfdir/nova/rootwrap.d/network.filters
 %_bindir/nova-network
 %_bindir/nova-dhcpbridge
 %_unitdir/%name-network.service
 %_initdir/%name-network
-%_datadir/nova/rootwrap/network.filters
+
 
 %files scheduler
 %_bindir/nova-scheduler
@@ -707,10 +727,10 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %ghost %config(missingok,noreplace) %verify(not md5 size mtime) %_sharedstatedir/nova/CA/private/cakey.pem
 
 %files api
+%config %_sysconfdir/nova/rootwrap.d/api-metadata.filters
 %_bindir/nova-api*
 %_unitdir/%name-*api.service
 %_initdir/%name-*api
-%_datadir/nova/rootwrap/api-metadata.filters
 
 %files conductor
 %_bindir/nova-conductor
@@ -760,6 +780,10 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Sep 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt4
+- update BR: for fix generate sample config file
+- drop dist configs in /usr/share
+
 * Mon Sep 21 2015 Lenar Shakirov <snejok@altlinux.ru> 2015.1.1-alt3
 - Added Requires: polkit
 
