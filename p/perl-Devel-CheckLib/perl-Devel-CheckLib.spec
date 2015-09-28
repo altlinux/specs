@@ -3,7 +3,7 @@
 %define real_name Devel-CheckLib
 
 Name: perl-Devel-CheckLib
-Version: 1.03
+Version: 1.05
 Release: alt1
 
 Summary: check that a library is available
@@ -22,8 +22,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildPreReq: perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Oct 14 2012
-BuildRequires: perl-IO-CaptureOutput perl-devel
+# Automatically added by buildreq on Mon Sep 28 2015
+# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent
+BuildRequires: perl-IO-CaptureOutput perl-devel perl-podlators
 
 %description
 Perl module Devel::CheckLib provides a way of checking whether
@@ -43,9 +44,13 @@ attempting to compile a simple program and link against it.
 %doc README CHANGES
 %exclude /.perl.req
 %_bindir/use-devel-checklib
+%_man1dir/use-devel-checklib*
 %perl_vendor_privlib/Devel/CheckLib*
 
 %changelog
+* Mon Sep 28 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.05-alt1
+- New version
+
 * Sat Jan 10 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.03-alt1
 - New version
 
