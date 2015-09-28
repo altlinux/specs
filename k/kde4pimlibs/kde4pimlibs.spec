@@ -7,7 +7,7 @@
 %define rname kdepimlibs
 Name: kde4pimlibs
 Version: 4.14.11
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: K Desktop Environment 4 - PIM Libraries
@@ -416,6 +416,9 @@ mkdir -p %buildroot/%_datadir/akonadi/agents/
 %_K4libdir/libsyndication.so.*
 
 %changelog
+* Mon Sep 28 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.11-alt3
+- update from 4.14 branch
+
 * Fri Sep 11 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.11-alt2
 - update from 4.14 branch
 
