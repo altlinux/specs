@@ -5,13 +5,13 @@
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: EOG plugins
 License: %gpl2plus
 Group: Graphics
-Url: http://www.gnome.org
+Url: https://wiki.gnome.org/Apps/EyeOfGnome
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
@@ -103,6 +103,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Mon Sep 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
+- 3.16.2
+
 * Tue Aug 18 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
