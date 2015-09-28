@@ -4,12 +4,12 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %define	major 7
 %define libname libmysqlcppconn%{major}
-%define develname libmysqlcppconn-d
+%define develname libmysqlcppconn-devel
 
 Summary:	A MySQL database connector for C++
 Name:		mysql-connector-c++
 Version:	1.1.6
-Release:	alt1_1
+Release:	alt2_1
 Group:		System/Libraries
 License:	GPLv2
 URL:		http://dev.mysql.com/downloads/connector/cpp/
@@ -119,7 +119,6 @@ rm -fr %{buildroot}%_prefix/Licenses_for_Third-Party_Components.txt
 rm -f %{buildroot}%{_libdir}/libmysqlcppconn-static.a
 
 %files -n %{libname}
-#%{_libdir}/*.so.%{major}{,.*}
 %{_libdir}/*.so.*
 
 %files -n %{develname}
@@ -132,6 +131,9 @@ rm -f %{buildroot}%{_libdir}/libmysqlcppconn-static.a
 
 
 %changelog
+* Mon Sep 28 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt2_1
+- devel bugfixes
+
 * Mon Sep 28 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_1
 - use mageia
 
