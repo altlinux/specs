@@ -3,11 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Data-YAML
-%define upstream_version 0.0.6
+%define upstream_version 0.0.7
+
+%{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_5
+Release:    alt1_1
 
 Summary:    Easy YAML serialisation
 License:    GPL+ or Artistic
@@ -18,7 +20,7 @@ Source0:    http://www.cpan.org/modules/by-module/Data/%{upstream_name}-%{upstre
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(version.pm)
-BuildArch: noarch
+BuildArch:  noarch
 Source44: import.info
 
 %description
@@ -43,13 +45,13 @@ tripping of YAML serialized Perl data structures.
 %makeinstall_std
 
 %files
-%doc Changes META.yml README SIGNATURE
+%doc Changes META.json META.yml  README SIGNATURE
 %perl_vendor_privlib/*
 
-
-
-
 %changelog
+* Mon Sep 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.7-alt1_1
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt1_5
 - update by mgaimport
 
