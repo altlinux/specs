@@ -1,4 +1,4 @@
-%define ver_major 3.16
+%define ver_major 3.18
 %define _oldname gnome2-utils
 
 Name: gnome-utils
@@ -19,7 +19,7 @@ Obsoletes: %name-common
 
 Requires: gnome-dictionary >= %version
 Requires: gnome-disk-usage >= %version
-Requires: gnome-font-viewer >= %version
+Requires: gnome-font-viewer >= 3.16.2
 Requires: gnome-screenshot >= %version
 
 %description
@@ -39,6 +39,9 @@ Font Viewer	  - preview fonts.
 
 
 %changelog
+* Mon Sep 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Sat Mar 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
 - 3.16.0
 

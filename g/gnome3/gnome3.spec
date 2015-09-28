@@ -1,8 +1,8 @@
-%define ver_major 3.16
+%define ver_major 3.18
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -17,6 +17,8 @@ BuildPreReq: rpm-build-licenses
 ## Core components
 %define session_ver %ver_major.0
 ## Applications
+%define roller_ver 3.16.4
+%define eog_ver 3.16.1
 %define network_manager_ver 0.8.995
 %define terminal_ver %ver_major
 %define epiphany_ver %ver_major
@@ -27,11 +29,12 @@ BuildPreReq: rpm-build-licenses
 %define gnome_nettool_ver 3.8
 %define gud_ver %ver_major
 %define gdm_ver %ver_major
-%define gdu_ver 3.12
-%define evo_ver 3.12
+%define gdu_ver %ver_major
+%define evo_ver %ver_major
 %define emp_ver 3.12
-%define brasero_ver 3.12.0
+%define brasero_ver 3.12.1
 %define accerciser_ver 3.14
+%define recorder_ver 3.17
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
@@ -57,6 +60,7 @@ Requires: gnome-session >= %session_ver
 #Requires: gnome-panel >= %ver_major
 Requires: pulseaudio-daemon
 Requires: gnome-control-center >= %ver_major
+Requires: xorg-drv-libinput
 Requires: gnome-shell >= %ver_major
 Requires: gnome-shell-extensions >= %ver_major
 # user settings utility
@@ -77,6 +81,7 @@ Requires: gnome-logs >= %ver_major
 Requires: gucharmap >= %ver_major
 Requires: gnome-calculator >= %ver_major
 Requires: gnome-calendar >= %ver_major
+Requires: gnome-todo >= %ver_major
 Requires: gnome-characters >= %ver_major
 
 # Applications
@@ -85,7 +90,7 @@ Requires: nautilus >= %ver_major
 ## Default terminal emulator
 Requires: gnome-terminal >= %terminal_ver
 ## Default archiving tool
-Requires: file-roller >= %ver_major
+Requires: file-roller >= %roller_ver
 ## Default text editor
 Requires: gedit >= %ver_major
 
@@ -127,10 +132,10 @@ Requires: libcanberra-gtk3
 ## Color manager
 Requires: gnome-color-manager
 ## Password keeper
-Requires: gnome-keyring
+Requires: gnome-keyring >= %ver_major
 # Encryption keys management
-Requires: seahorse
-#Requires: seahorse-agent
+Requires: seahorse >= %ver_major
+Requires: pinentry-gnome3
 ## All gvfs-backends
 Requires: gvfs-backends
 Requires: fuse-gvfs
@@ -172,7 +177,7 @@ Requires: notification-daemon
 ## Plugins for gedit
 Requires: gedit-plugins >= %gedit_plugins_ver
 ## Stock multimedia applications
-Requires: gnome-sound-recorder >= %ver_major
+Requires: gnome-sound-recorder >= %recorder_ver
 ## Default music player
 Requires: gnome-music >= %ver_major
 ## Extneded music player
@@ -190,7 +195,7 @@ Requires: gnome-games >= %ver_major
 Requires: gnome-photos >= %ver_major
 ## Default image viewer
 Requires: eog >= %ver_major
-Requires: eog-plugins >= %ver_major
+Requires: eog-plugins
 ## Default CD/DVD burning interface
 Requires: brasero >= %brasero_ver
 ## Clipboard manager
@@ -254,7 +259,6 @@ Group: Graphical desktop/GNOME
 Requires: %name-default = %version-%release
 
 # Sound & graphics & video
-
 ## CD-ripper
 Requires: goobox
 ## Image viewer, browser and simple editor
@@ -406,6 +410,10 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Fri Sep 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- added xorg-drv-libinput to -minimal
+- added pinentry-gnome3, gnome-todo to -default
+
 * Thu Jul 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt2
 - added xdg-utils, gvfs-utils to -default (https://bugzilla.altlinux.org/show_bug.cgi?id=31129)
 
