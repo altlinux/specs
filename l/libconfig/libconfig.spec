@@ -1,8 +1,8 @@
 %def_enable static
 
 Name: libconfig
-Version: 1.4.9
-Release: alt1.1
+Version: 1.5
+Release: alt1
 
 Summary: C/C++ Configuration File Library
 License: LGPLv2.1+
@@ -120,6 +120,9 @@ sed -i '/examples.*Makefile/d' configure.ac
 %endif
 
 %changelog
+* Mon Sep 28 2015 Michael Shigorin <mike@altlinux.org> 1.5-alt1
+- new version 1.5
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.9-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
