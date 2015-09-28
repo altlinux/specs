@@ -1,11 +1,11 @@
 Name: kernel-headers-common
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: Common header files for the Linux kernel
 License: GPL
 Group: Development/Kernel
-ExclusiveArch: %ix86 x86_64 %arm
+ExclusiveArch: %ix86 x86_64 %arm aarch64
 
 Source0: adjust_kernel_headers
 Source1: adjust_kernel_headers.8
@@ -22,6 +22,9 @@ Source4: kheaders.filetrigger
 %endif
 %ifarch ppc ppc64
 %define base_arch powerpc
+%endif
+%ifarch aarch64
+%define base_arch arm64
 %endif
 
 %define _unpackaged_files_terminate_build 1
@@ -116,8 +119,11 @@ done
 %ghost /var/run/kernel/*
 
 %changelog
+* Mon Sep 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.5-alt1
+- Added aarch64 architecture support.
+
 * Thu Jun 20 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.4-alt1
-- Add kheaders.filetrigger for kernel headers adjustment.
+- Added kheaders.filetrigger for kernel headers adjustment.
 
 * Thu Feb 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.3-alt1.1
 - Rebuilt for newer %%arm macro.
