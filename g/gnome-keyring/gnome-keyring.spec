@@ -1,4 +1,4 @@
-%define ver_major 3.17
+%define ver_major 3.18
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -7,7 +7,7 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -79,13 +79,13 @@ and start the keyring daemon.
 
 %make_build
 
-%check
-#%make check
-
 %install
 %makeinstall_std
 
 %find_lang --with-gnome %name
+
+%check
+#%make check
 
 %post
 setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
@@ -117,6 +117,9 @@ setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Mon Sep 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Sat Sep 05 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.91-alt1
 - 3.17.91
 
