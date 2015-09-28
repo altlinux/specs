@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.17
+%define ver_major 3.18
 
 %def_disable debug
 %def_enable ldap
@@ -14,7 +14,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -29,7 +29,7 @@ Requires: pinentry-x11
 %{?_enable_ssh:Requires: openssh-clients}
 %{?_enable_sharing:Requires: avahi-daemon}
 
-BuildPreReq: rpm-build-gnome libappstream-glib-devel
+BuildPreReq: rpm-build-gnome gnome-common libappstream-glib-devel
 
 # From configure.ac
 BuildPreReq: intltool >= 0.35
@@ -98,6 +98,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Mon Sep 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Sat Sep 05 2015 Yuri N. Sedunov <aris@altlinux.org> 3.17.4-alt1
 - 3.17.4
 
