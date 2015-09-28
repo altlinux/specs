@@ -1,13 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Data-DPath
-%define upstream_version 0.50
+%define upstream_version 0.54
+
+%{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_1
 
 Summary:    Magic functions available inside filter conditions
 License:    GPL+ or Artistic
@@ -31,7 +33,6 @@ BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(Text/Balanced.pm)
 BuildRequires: perl(aliased.pm)
 BuildRequires: perl(constant.pm)
-BuildRequires: perl(feature.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
 BuildArch:  noarch
@@ -58,7 +59,11 @@ no description found
 %doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 
+
 %changelog
+* Mon Sep 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1_1
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1_3
 - update by mgaimport
 
