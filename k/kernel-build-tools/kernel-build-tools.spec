@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.103.1
+Version: 0.104
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -55,6 +55,9 @@ install -Dpm644 kernel-macros \
 %_rpmmacrosdir/kernel
 
 %changelog
+* Tue Sep 29 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.104-alt1
+- kernel-macros: added new arch translation aarch64 -> arm64.
+
 * Tue Jul 16 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.103.1-alt1
 - fix *_kernel_headers macros.
 
