@@ -1,5 +1,5 @@
 Name: apt-scripts-nvidia
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: APT Lua scripts for NVIDIA driver
@@ -9,7 +9,6 @@ Group: System/Configuration/Packaging
 Source: scripts-nvidia-%version.tar
 
 BuildRequires: apt
-BuildArch: noarch
 
 %description
 apt-get install-nvidia
@@ -21,22 +20,30 @@ apt-get install-nvidia
 %build
 
 %install
-for f in *.lua; do install -pD -m755 $f %buildroot/usr/share/apt/scripts/$f; done
+for f in *.lua; do install -pD -m755 $f %buildroot/%_datadir/apt/scripts/$f; done
 for f in *.conf; do install -pD -m644 $f %buildroot/etc/apt/apt.conf.d/$f; done
+%ifnarch x86_64
+# remove arepo helper
+rm -f %buildroot/%_datadir/apt/scripts/nvidia-64bit-helper.*
+rm -f %buildroot/etc/apt/apt.conf.d/nvidia-64bit-helper.*
+%endif
 
 #cat *.conf >.apt.conf
-#apt-get -c .apt.conf -o Dir::Bin::scripts=%buildroot/usr/share/apt/scripts install-nvidia
+#apt-get -c .apt.conf -o Dir::Bin::scripts=%buildroot/%_datadir/apt/scripts install-nvidia
 #apt-get -c .apt.conf script ./install-nvidia.lua
 
 mkdir -p %buildroot/etc/buildreqs/files/ignore.d
 ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreqs/files/ignore.d/%name
 
 %files
-/usr/share/apt
+%_datadir/apt/scripts/*
 %config /etc/apt/apt.conf.d/*
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Mon Sep 28 2015 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt1
+- install 64-bit helper script only on specific architecture
+
 * Fri Sep 18 2015 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
 - install 32-bit packages with 64-bit nvidia_glx_* on x86_64
 
