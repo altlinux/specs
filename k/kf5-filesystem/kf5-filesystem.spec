@@ -1,7 +1,7 @@
 %define lng_list af ar as ast be be@latin bg bn bn_IN br bs ca ca@valencia crh cs csb cy da de el en en_GB en_US eo es et eu fa fi fr fy ga gd gl gu ha he hi hne hr hsb hu hy ia id is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms nb nds ne nl nn oc or pa pl ps pt pt_BR ro ru se si sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta te tg th tr tt ug uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW
 
 %define major 5
-%define minor 12
+%define minor 14
 %define bugfix 0
 
 Name: kf5-filesystem
@@ -57,7 +57,7 @@ mkdir -p %buildroot/%_K5xdgmenu
 
 mkdir -p %buildroot/%_K5inc
 mkdir -p %buildroot/%_K5link
-mkdir -p %buildroot/%_K5plug/kf5/parts
+mkdir -p %buildroot/%_K5plug/kf5/{kio_dnd,parts}
 mkdir -p %buildroot/%_K5cf_bin
 
 mkdir -p %buildroot/%_K5xdgconf/{autostart,colors,menus,ui}
@@ -97,6 +97,9 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir/kde5
 %dir %_desktopdir/kf5
 
 %changelog
+* Tue Sep 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt1
+- fix error message when execute kde5 script with arguments
+
 * Mon Jul 13 2015 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1
 - change data dirs order in helper script
 
