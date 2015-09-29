@@ -1,46 +1,52 @@
 Name: nsd
-Version: 3.2.10
-Release: alt1
+Version: 4.1.5
+Release: alt2
 
-Summary: Fast and lean authoritative DNS Name Server
+Summary: Name Server Daemon
 License: BSD
 Group: System/Servers
+Url: http://www.nlnetlabs.nl/projects/nsd/
 
-URL: http://www.nlnetlabs.nl/projects/nsd/
-Source: http://www.nlnetlabs.nl/downloads/nsd/nsd-%version.tar.gz
-Source1: nsd.conf
-Source2: nsd.init
+Source0: %name-%version.tar
+Source1: %name.conf
+Source2: %name.service
+Source3: example.com.zone
+Source4: 0.0.10.zone
 
-# Automatically added by buildreq on Sat Nov 26 2011
-BuildRequires: flex libssl-devel libwrap-devel
+BuildRequires: flex bison libevent-devel libssl-devel
 
 %description
-NSD is a complete implementation of an authoritative DNS name server.
+NSD is an authoritative only, high performance, simple and open source name server
 
 %prep
 %setup
 
 %build
-%configure --enable-bind8-stats --enable-checking --enable-nsec3 \
-	--with-user=_nsd \
-	--with-pidfile=%_runtimedir/nsd/nsd.pid \
-	--with-difffile=%_localstatedir/nsd/ixfr.db \
-	--with-dbfile=%_localstatedir/nsd/nsd.db \
-	--with-xfrdfile=%_localstatedir/nsd/xfrd.state
-
+%autoreconf
+%configure \
+  --with-user=_nsd \
+  --enable-bind8-stats \
+  --enable-zone-stats \
+  --enable-ratelimit \
+  --with-pidfile=%_runtimedir/%name.pid \
+  --with-dbfile=%_localstatedir/%name/%name.db
 %make_build
 
 %install
 %makeinstall_std
-install -pDm644 %SOURCE1 %buildroot/etc/nsd/nsd.conf
-install -pDm755 %SOURCE2 %buildroot%_initdir/nsd
-install -d %buildroot/var/run/nsd
-install -d %buildroot%_localstatedir/nsd
-
+mkdir -p %buildroot/%systemd_unitdir
+mkdir -p %buildroot/%_localstatedir/%name
+mkdir -p %buildroot/%_initdir
+mv %buildroot/%_sysconfdir/%name/%name.conf.sample .
+cp %SOURCE1 %buildroot/%_sysconfdir/%name
+cp %SOURCE2 %buildroot/%systemd_unitdir
+cp %SOURCE3 %buildroot/%_sysconfdir/%name
+cp %SOURCE4 %buildroot/%_sysconfdir/%name
+cp contrib/%name.init %buildroot/%_initdir/%name
 
 %pre
 /usr/sbin/groupadd -r -f _nsd
-/usr/sbin/useradd -r -g _nsd -d /etc/nsd -s /sbin/nologin -n -c "Domain Name Server" _nsd >/dev/null 2>&1 ||:
+/usr/sbin/useradd -r -g _nsd -d /var/empty -s /sbin/nologin -n -c "Name Server Daemon" _nsd >/dev/null 2>&1 ||:
 
 %preun
 %preun_service nsd
@@ -49,18 +55,27 @@ install -d %buildroot%_localstatedir/nsd
 %post_service nsd
 
 %files
-%dir /etc/nsd
-%config(noreplace) /etc/nsd/nsd.conf
-%config %_initdir/nsd
 %_sbindir/*
-%attr(0755,_nsd,_nsd) %dir /var/run/nsd
-%attr(0755,_nsd,_nsd) %dir %_localstatedir/nsd
+%dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/%name.conf
+%config(noreplace) %_sysconfdir/%name/*.zone
+%systemd_unitdir/%name.service
+%attr(0755,root,root) %_initdir/%name
+%attr(0755,_nsd,_nsd) %dir %_localstatedir/%name
 %_man5dir/*
 %_man8dir/*
-%exclude /etc/nsd/nsd.conf.sample
-%doc nsd.conf.sample doc/{CREDITS,ChangeLog,LICENSE,NSD*,README,RELNOTES}
+%doc doc contrib %name.conf.sample
 
 %changelog
+* Tue Sep 29 2015 Eugene Prokopiev <enp@altlinux.ru> 4.1.5-alt2
+- add old changelog rows to respect srpm inheritance check
+
+* Tue Sep 29 2015 Eugene Prokopiev <enp@altlinux.ru> 4.1.5-alt1
+- new version
+
+* Fri Sep 04 2015 Eugene Prokopiev <enp@altlinux.ru> 4.1.3-alt1
+- initial build from svn
+
 * Tue Feb 28 2012 Victor Forsiuk <force@altlinux.org> 3.2.10-alt1
 - 3.2.10
 
