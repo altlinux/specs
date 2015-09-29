@@ -5,8 +5,8 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-ru
-Version:	40.0.2
-Release:	alt2
+Version:	41.0
+Release:	alt1
 Summary:	Russian (RU) Language Pack for Firefox
 
 License:	MPL/GPL/LGPL
@@ -81,6 +81,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %firefox_prefix/distribution/searchplugins/locale/ru
 
 %changelog
+* Tue Sep 29 2015 Alexey Gladkov <legion@altlinux.ru> 41.0-alt1
+- New version (41.0).
+
 * Sun Sep 13 2015 Alexey Gladkov <legion@altlinux.ru> 40.0.2-alt2
 - Add ALT Linux Bugzilla and wikipedia (RU) search plugins (ALT#31227).
 
