@@ -2,7 +2,7 @@
 %define exec_prefix /
 %define _prefix /
 Name: ipset
-Version: 6.24
+Version: 6.26
 Release: alt1
 
 Summary: Tools for managing sets of IP or ports with iptables
@@ -96,6 +96,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Tue Sep 29 2015 Anton Farygin <rider@altlinux.ru> 6.26-alt1
+- new version
+
 * Wed Feb 11 2015 Anton Farygin <rider@altlinux.ru> 6.24-alt1
 - new version
 
