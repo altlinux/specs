@@ -8,27 +8,27 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        40.0.2
+Version:        41.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
 
-Packager:	Alexey Gladkov <legion@altlinux.ru>
+Packager:       Alexey Gladkov <legion@altlinux.ru>
 
-Source0:	firefox-source.tar
-Source1:	rpm-build.tar
-Source2:	searchplugins.tar
-Source4:	firefox-mozconfig
-Source6:	firefox.desktop
-Source7:	firefox.c
-Source8:	firefox-prefs.js
+Source0:        firefox-source.tar
+Source1:        rpm-build.tar
+Source2:        searchplugins.tar
+Source4:        firefox-mozconfig
+Source6:        firefox.desktop
+Source7:        firefox.c
+Source8:        firefox-prefs.js
 
-Patch5:		firefox-duckduckgo.patch
-Patch6:		firefox3-alt-disable-werror.patch
-Patch14:	firefox-fix-install.patch
-Patch16:	firefox-cross-desktop.patch
-#Patch17:	firefox-disable-installer.patch
+Patch5:         firefox-duckduckgo.patch
+Patch6:         firefox3-alt-disable-werror.patch
+Patch14:        firefox-fix-install.patch
+Patch16:        firefox-cross-desktop.patch
+#Patch17:       firefox-disable-installer.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -56,7 +56,7 @@ BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
-BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libicu-devel
@@ -296,6 +296,31 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sat Sep 26 2015 Alexey Gladkov <legion@altlinux.ru> 41.0-alt1
+- New release (41.0).
+- Fixed:
+  + 2015-114 Information disclosure via the High Resolution Time API
+  + 2015-113 Memory safety errors in libGLES in the ANGLE graphics library
+  + 2015-112 Vulnerabilities found through code inspection
+  + 2015-111 Errors in the handling of CORS preflight request headers
+  + 2015-110 Dragging and dropping images exposes final URL after redirects
+  + 2015-109 JavaScript immutable property enforcement can be bypassed
+  + 2015-108 Scripted proxies can access inner window
+  + 2015-107 Out-of-bounds read during 2D canvas display on Linux 16-bit color depth systems
+  + 2015-106 Use-after-free while manipulating HTML media content
+  + 2015-105 Buffer overflow while decoding WebM video
+  + 2015-104 Use-after-free with shared workers and IndexedDB
+  + 2015-103 URL spoofing in reader mode
+  + 2015-102 Crash when using debugger with SavedStacks in JavaScript
+  + 2015-101 Buffer overflow in libvpx while parsing vp9 format video
+  + 2015-100 Arbitrary file manipulation by local user through Mozilla updater
+  + 2015-99 Site attribute spoofing on Android by pasting URL with unknown scheme
+  + 2015-98 Out of bounds read in QCMS library with ICC V4 profile attributes
+  + 2015-97 Memory leak in mozTCPSocket to servers
+  + 2015-96 Miscellaneous memory safety hazards (rv:41.0 / rv:38.3)
+  + 2015-95 Add-on notification bypass through data URLs
+  + 2015-94 Use-after-free when resizing canvas element during restyling
+
 * Mon Aug 17 2015 Alexey Gladkov <legion@altlinux.ru> 40.0.2-alt1
 - New release (40.0.2).
 - Fixed:
