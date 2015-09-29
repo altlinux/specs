@@ -3,8 +3,9 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 2.0.0
-Release: alt1.a1.git20150615
+Version: 1.4.6
+Epoch: 1
+Release: alt1
 Group: Development/Python
 License: GPLv2
 Summary: fork of amqplib used by Kombu containing additional features and improvements
@@ -144,6 +145,9 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
 %changelog
+* Mon Sep 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1:1.4.6-alt1
+- downgrade to 1.4.6
+
 * Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1.git20150615
 - New snapshot
 - Extracted tests into separate package
