@@ -8,7 +8,7 @@
 
 Name: openstack-neutron
 Version: 2015.1.1
-Release: alt2
+Release: alt3
 Provides: openstack-quantum = %version-%release
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
 Summary: OpenStack Networking Service
@@ -51,6 +51,7 @@ Source122: neutron-netns-cleanup.init
 
 BuildArch: noarch
 
+BuildRequires: crudini
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 0.6
@@ -423,6 +424,8 @@ sphinx-build -b html doc/source doc/build/html
 %install
 %python_install --prefix=%_prefix --install-data=/
 
+install -d -m 750 %buildroot%_cachedir/neutron
+
 # Remove unused files
 rm -rf %buildroot%python_sitelibdir/bin
 rm -rf %buildroot%python_sitelibdir/doc
@@ -482,6 +485,27 @@ rm %buildroot/%_bindir/neutron-hyperv-agent
 
 
 sed -i -e 's|# root_helper = sudo|root_helper = sudo neutron-rootwrap /etc/neutron/rootwrap.conf|' %buildroot%_sysconfdir/neutron/neutron.conf
+
+## ALTLinux configuration defaults
+%define neutron_conf %buildroot/etc/neutron/neutron.conf
+%define plugin_dir %buildroot/etc/neutron/plugins/
+crudini --set %neutron_conf DEFAULT core_plugin neutron.plugins.ml2.plugin.Ml2Plugin
+crudini --set %neutron_conf DEFAULT service_plugins "neutron.services.l3_router.l3_router_plugin.L3RouterPlugin"
+crudini --set %neutron_conf DEFAULT state_path /var/lib/neutron
+crudini --set %neutron_conf agent root_helper "sudo neutron-rootwrap /etc/neutron/rootwrap.conf"
+crudini --set %neutron_conf DEFAULT log_dir /var/log/neutron
+crudini --set %neutron_conf oslo_concurrency lock_path /var/run/neutron
+crudini --set %neutron_conf keystone_authtoken signing_dir /var/cache/neutron/keystone-signing
+for i in dhcp_agent.ini l3_agent.ini ; do
+  crudini --set %buildroot/etc/neutron/$i DEFAULT interface_driver neutron.agent.linux.interface.BridgeInterfaceDriver
+done
+crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespaces True
+
+#crudini --set %buildroot/etc/neutron/l3_agent.ini DEFAULT external_network_bridge "br-ex"
+#crudini --set %buildroot/etc/neutron/l3_agent.ini DEFAULT external_network_bridge ""
+#crudini --set %plugin_dir/ml2/ml2_conf.ini ml2 mechanism_drivers linuxbridge
+#crudini --set %plugin_dir/ml2/ml2_conf.ini securitygroup firewall_driver neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+#crudini --set %plugin_dir/linuxbridge/linuxbridge_conf.ini securitygroup firewall_driver neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 
 %pre
 %_sbindir/groupadd -r -f neutron 2>/dev/null ||:
@@ -578,8 +602,9 @@ sed -i -e 's|# root_helper = sudo|root_helper = sudo neutron-rootwrap /etc/neutr
 %config(noreplace) %_sysconfdir/logrotate.d/*
 %config(noreplace) %_sysconfdir/sudoers.d/neutron
 %dir %attr(0755, neutron, neutron) %_sharedstatedir/neutron
-%dir %attr(0755, neutron, neutron) %_logdir/neutron
-%dir %attr(0755, neutron, neutron) %_runtimedir/neutron
+%dir %attr(0750, neutron, adm) %_logdir/neutron
+%dir %attr(0750, neutron, neutron) %_runtimedir/neutron
+%dir %attr(0750, neutron, neutron) %_cachedir/neutron
 %_tmpfilesdir/%name.conf
 %dir %_sysconfdir/neutron/rootwrap.d
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/rootwrap.d/*.filters
@@ -760,6 +785,12 @@ sed -i -e 's|# root_helper = sudo|root_helper = sudo neutron-rootwrap /etc/neutr
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Tue Sep 29 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt3
+- fix neutron-server.service
+- fix neutron-dhcp-agent.init
+- update tmpfiles
+- update default config install section with crudini
+
 * Fri Sep 04 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2015.1.1-alt2
 - config files changed in neutron-openvswitch-agent.service and 
   neutron-dhcp-agent.service
