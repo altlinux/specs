@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     4
 %define MINOR_VERSION     5
 %define BUILD_NUMBER      103
-%define PATCH_LEVEL       34
+%define PATCH_LEVEL       35
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 %def_without tests
@@ -121,6 +121,11 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Mon Sep 28 2015 Andrey Cherepanov <cas@altlinux.org> 4.5.103.35-alt1
+- New version for chromium-45.0.2454.101
+- Security fixes:
+  - High CVE-2015-1304: Cross-origin bypass in V8.
+
 * Wed Sep 23 2015 Andrey Cherepanov <cas@altlinux.org> 4.5.103.34-alt1
 - New version for chromium-45.0.2454.99
 

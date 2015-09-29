@@ -6,7 +6,7 @@
 %def_disable clang
 %def_disable shared_libraries
 
-%define v8_version 4.5.103.34
+%define v8_version 4.5.103.35
 
 %if_enabled debug
 %define buildtype Debug
@@ -15,7 +15,7 @@
 %endif
 
 Name:           chromium
-Version:        45.0.2454.99
+Version:        45.0.2454.101
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -652,6 +652,12 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Mon Sep 28 2015 Andrey Cherepanov <cas@altlinux.org> 45.0.2454.101-alt1
+- New version
+- Security fixes:
+  - High CVE-2015-1303: Cross-origin bypass in DOM.
+  - High CVE-2015-1304: Cross-origin bypass in V8.
+
 * Wed Sep 23 2015 Andrey Cherepanov <cas@altlinux.org> 45.0.2454.99-alt1
 - New version
 - Strip binaries before install
