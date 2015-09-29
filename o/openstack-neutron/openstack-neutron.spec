@@ -8,7 +8,7 @@
 
 Name: openstack-neutron
 Version: 2015.1.1
-Release: alt3
+Release: alt5
 Provides: openstack-quantum = %version-%release
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
 Summary: OpenStack Networking Service
@@ -785,6 +785,9 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Tue Sep 29 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt5
+- fix init for neutron-openvswitch-agent
+
 * Tue Sep 29 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt3
 - fix neutron-server.service
 - fix neutron-dhcp-agent.init
