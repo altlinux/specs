@@ -1,22 +1,30 @@
+%def_disable snapshot
+
 %define api_version 2.4
 %define rname gtkmm
 %define major 2.24
 
 Name: libgtkmm2
 Version: %major.4
-Release: alt1.1
+Release: alt2
 
 Summary: A C++ interface for GTK2 (a GUI library for X)
 License: LGPL
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
+%if_enabled snapshot
+Source: %rname-%version.tar
+%else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.xz
+%endif
+Patch: %rname-2.24.4-cxx11.patch
+
 Provides: %rname = %version
 
-BuildRequires: mm-common >= 0.9.6
+BuildRequires: mm-common >= 0.9.8
 BuildRequires: gcc-c++ libgtk+2-devel >= 2.24.0 libpangomm-devel libatkmm-devel
+%{?_enable_snapshot:BuildRequires: perl-XML-Parser doxygen graphviz}
 
 %description
 Gtkmm provides a C++ interface to the GTK+ GUI library. gtkmm2 wraps GTK+ 2.
@@ -53,13 +61,16 @@ Requires: %name-devel = %version-%release
 The %name-demos package contains source code of demo programs for %name.
 
 %prep
-%setup -q -n %rname-%version
+%setup -n %rname-%version
+%patch
 
 %build
 mm-common-prepare
 %autoreconf
 %configure \
-	--disable-static
+	--disable-static \
+	%{?_enable_snapshot:--enable-maintainer-mode}
+
 %make_build
 
 %install
@@ -85,6 +96,9 @@ mm-common-prepare
 #%_datadir/%rname-%api_version
 
 %changelog
+* Mon Sep 28 2015 Yuri N. Sedunov <aris@altlinux.org> 2.24.4-alt2
+- rebuilt with newer *mm libraries
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.24.4-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 

@@ -3,7 +3,7 @@
 
 Name: gparted
 Version: 0.23.0
-Release: alt1
+Release: alt1.1
 
 Summary: %Name Partition Editor
 Summary(ru_RU.UTF-8): Редактор разделов %Name
@@ -58,10 +58,13 @@ general approach is to keep the GUI as simple as possible.
 
 %prep
 %setup
+# fix for libsigc++2-2.6.x
+subst '/class_slot.h/d' include/Win_GParted.h
 
 %build
 #%%define _optlevel s
 #NOCONFIGURE=1 ./autogen.sh
+%add_optflags -std=c++11
 %configure %{subst_with pic} --bindir=%_sbindir \
 	--enable-libparted-dmraid \
 	--enable-online-resize
@@ -91,6 +94,9 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.23.0-alt1.1
+- rebuilt with newer *mm libraries
+
 * Tue Aug 04 2015 Yuri N. Sedunov <aris@altlinux.org> 0.23.0-alt1
 - 0.23.0
 
