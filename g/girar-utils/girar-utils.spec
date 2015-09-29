@@ -1,5 +1,5 @@
 Name:     girar-utils
-Version:  1.5.6.1
+Version:  1.5.7
 Release:  alt1
 
 Summary:  git.alt client utilities
@@ -30,6 +30,10 @@ This package contains client utilities for git.alt.
 %_mandir/man?/*
 
 %changelog
+* Wed Sep 30 2015 Andrey Cherepanov <cas@altlinux.org> 1.5.7-alt1
+- [girar-show] support GIT_ALT for git.alt host
+- [girar-show] fix log detect
+
 * Thu Oct 02 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.6.1-alt1
 - [girar-show] Show only FAILED messages in statistics mode
 
