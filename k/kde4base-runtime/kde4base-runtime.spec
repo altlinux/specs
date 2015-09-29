@@ -8,7 +8,7 @@
 %define rname kdebase-runtime
 %define major 15
 %define minor 08
-%define bugfix 0
+%define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -66,7 +66,7 @@ Summary: Core files for %name
 Group: Graphical desktop/KDE
 Requires: %libname = %EVR
 Requires: phonon-backend
-Requires: kde4-icon-theme-oxygen shared-desktop-ontologies kde4pimlibs
+Requires: qt4-dbus kde4-icon-theme-oxygen shared-desktop-ontologies kde4pimlibs
 %ifnarch s390 s390x
 Requires: eject
 %endif
@@ -231,6 +231,10 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Sep 29 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+- fix requires to qdbus
+
 * Fri Aug 28 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
