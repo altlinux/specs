@@ -1,8 +1,11 @@
 
-%define svn 7049
 %define rname smplayer
-Name: kde4-%rname
-Version: 14.9.0.%svn
+%define svn 7148
+%define xde kde4
+%define XDE KDE4
+%define xapp kde4
+Name: %xde-%rname
+Version: 15.9.0.%svn
 Release: alt1
 
 Summary: A great MPlayer/MPV front-end
@@ -31,7 +34,9 @@ BuildRequires: gcc-c++ libqt4-devel
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
+%if %xde == "kde4"
 Conflicts: kde4-smplayer < 14.9.0.7049
+%endif
 
 %package backend-2-mpv
 Group: System/Libraries
@@ -86,6 +91,8 @@ MPlayer %name backend
 %patch3 -p1
 %patch4 -p1
 
+sed -i 's|@APP_PREFIX@|%xde|' src/paths.cpp
+
 export PATH=%_qt4dir/bin:$PATH
 
 sed -i 's|^PREFIX=.*|PREFIX=%_prefix|' Makefile
@@ -111,18 +118,18 @@ export PATH=%_qt4dir/bin:$PATH
 
 # renames
 mv %buildroot/%_bindir/smplayer %buildroot/%_bindir/%name
-mkdir -p %buildroot/%_desktopdir/kde4/
-mv %buildroot/%_desktopdir/*.desktop %buildroot/%_desktopdir/kde4/
+mkdir -p %buildroot/%_desktopdir/%xapp/
+mv %buildroot/%_desktopdir/*.desktop %buildroot/%_desktopdir/%xapp/
 find %buildroot/%_desktopdir/ -type f -name \*.desktop | \
 while read f; do
-    sed -i 's|^Exec=\(.*\)|Exec=kde4-\1|' $f
-    sed -i 's|^Icon=\(.*\)|Icon=kde4-\1|' $f
-    sed -i 's|SMPlayer|SMPlayer KDE4|g' $f
+    sed -i 's|^Exec=\(.*\)|Exec=%xde-\1|' $f
+    sed -i 's|^Icon=\(.*\)|Icon=%xde-\1|' $f
+    sed -i 's|SMPlayer|SMPlayer %XDE|g' $f
 done
 find %buildroot/%_iconsdir/ -type f | \
 while read f; do
     oldname=`basename $f`
-    newname="kde4-$oldname"
+    newname="%xde-$oldname"
     filedir=`dirname $f`
     mv $f $filedir/$newname
 done
@@ -130,6 +137,7 @@ done
 %find_lang --without-mo --with-qt smplayer
 
 %files common -f smplayer.lang
+%dir %_datadir/%name
 %dir %_datadir/%name/translations/
 
 %files backend-2-mpv
@@ -137,14 +145,17 @@ done
 
 %files
 %_bindir/%name
-%_desktopdir/kde4/*.desktop
+%_desktopdir/%xapp/*.desktop
 %_docdir/%name-%version
-%_datadir/%name
-%exclude %_datadir/%name/translations/*
+%_datadir/%name/*
+%exclude %_datadir/%name/translations
 %_iconsdir/hicolor/*/apps/%name.*
 
 
 %changelog
+* Wed Sep 30 2015 Sergey V Turchin <zerg@altlinux.org> 15.9.0.7148-alt1
+- new version
+
 * Thu Jul 30 2015 Sergey V Turchin <zerg@altlinux.org> 14.9.0.7049-alt1
 - update to r7049
 - allow to use with mpv and without mplayer
