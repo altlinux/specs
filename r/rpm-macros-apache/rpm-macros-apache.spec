@@ -10,10 +10,10 @@
 
 Name: rpm-macros-%macrosname
 Version: 0.2
-Release: %branch_release alt3
+Release: %branch_release alt4
 
 Summary: RPM macros to Apache Web server
-Summary(ru_RU.KOI8-R): RPM макросы для веб-сервера Apache
+Summary(ru_RU.UTF-8): RPM п╪п╟п╨я─п╬я│я▀ п╢п╩я▐ п╡п╣п╠-я│п╣я─п╡п╣я─п╟ Apache
 License: %asl
 Group: Development/Other
 
@@ -37,9 +37,9 @@ BuildArch: noarch
 The package provide a set of macros for packaging Web applications
 according to the ALT Linux Web Packaging Policy.
 
-%description -l ru_RU.KOI8-R
-Макросы для обеспечения сборки пакетов веб серверов и приложений
-в соответствии с ALT Linux Web Packaging Policy.
+%description -l ru_RU.UTF-8
+п°п╟п╨я─п╬я│я▀ п╢п╩я▐ п╬п╠п╣я│п©п╣я┤п╣п╫п╦я▐ я│п╠п╬я─п╨п╦ п©п╟п╨п╣я┌п╬п╡ п╡п╣п╠ я│п╣я─п╡п╣я─п╬п╡ п╦ п©я─п╦п╩п╬п╤п╣п╫п╦п╧
+п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦ я│ ALT Linux Web Packaging Policy.
 
 
 %install
@@ -50,6 +50,10 @@ install -pD -m644 %SOURCE1 %buildroot%rpm_masrosdir/%name
 %rpm_masrosdir/%name
 
 %changelog
+* Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 0.2-alt4
+- Re-added %%apache_{root,home} macros as aliases
+- Converted spec to UTF-8
+
 * Tue Aug 14 2012 Aleksey Avdeev <solo@altlinux.ru> 0.2-alt3
 - Remove repocop-unittest-data-%%name subpacage (Closes: #26075)
 

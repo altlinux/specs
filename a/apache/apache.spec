@@ -29,7 +29,7 @@
 
 Name: apache
 Version: %apache_version
-Release: %branch_release alt7.1
+Release: %branch_release alt8
 
 Summary: The most widely used Web server on the Internet
 License: %asl
@@ -97,6 +97,7 @@ Patch5: apache_1.3.23-nondbm.patch
 
 Patch8: apache-1.3.23-alt-db4.patch
 Patch10: apache-1.3.31-acl-support.patch
+Patch11: apache-1.3.41-mod_perl-gcc43.patch
 
 Patch75: apache-1.3.27-openbsd-tmp.patch
 Patch76: apache-1.3.34-alt-linkage.patch
@@ -820,6 +821,8 @@ cd $RPM_BUILD_DIR/apache_%apache_version
 %patch10 -p1
 %endif
 
+%patch11 -p0
+
 %patch75 -p1
 %patch76 -p1
 %patch77 -p1
@@ -1458,6 +1461,9 @@ fi
 # - macro for %_cachedir/httpd/
 
 %changelog
+* Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 1.3.42rusPL30.24-alt8
+- added apache-1.3.41-mod_perl-gcc43.patch by Salvador Ortiz Garcia
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.42rusPL30.24-alt7.1
 - rebuild with new perl 5.20.1
 
