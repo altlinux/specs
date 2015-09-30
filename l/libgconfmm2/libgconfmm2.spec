@@ -3,20 +3,19 @@
 %define major 2.28
 
 Name: libgconfmm2
-Version: %major.2
-Release: alt2
+Version: %major.3
+Release: alt1
 
 Summary: A C++ interface for GConf2
 License: LGPL
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar.bz2
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%major/%_name-%version.tar.bz2
+Patch: gconfmm-2.28.3-cxx11.patch
 
 BuildPreReq: doxygen
-BuildRequires: mm-common gcc-c++ libGConf-devel libgtkmm2-devel
+BuildRequires: mm-common >= 0.9.8 gcc-c++ libGConf-devel libgtkmm2-devel
 
 %description
 This package provides a C++ interface for gconf2.  It is a subpackage
@@ -45,7 +44,8 @@ This package provides API documentation of %_name library.
 %define pkgdocdir %_docdir/%_name-%api_version
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
+%patch
 
 %build
 mm-common-prepare
@@ -53,11 +53,10 @@ mm-common-prepare
 %configure \
            --disable-static \
            --enable-shared
-
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -74,6 +73,9 @@ mm-common-prepare
 %pkgdocdir/reference/
 
 %changelog
+* Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 2.28.3-alt1
+- 2.28.3
+
 * Thu Apr 21 2011 Yuri N. Sedunov <aris@altlinux.org> 2.28.2-alt2
 - rebuild using new mm-common
 
