@@ -14,7 +14,7 @@
 %define nv_version 352
 %define nv_release 41
 %define nv_minor %nil
-%define pkg_rel alt145
+%define pkg_rel alt146
 %ifarch x86_64
 %def_enable egl
 %else
@@ -87,6 +87,7 @@ Source100: nvidia_create_xinf
 
 Patch1: buildfix_kernel_3.14.patch
 Patch2: alt-fix-build-kernel.patch
+Patch3: alt-ignore-dma-remap.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel
@@ -194,6 +195,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel/
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 rm -rf precompiled
 popd
 
@@ -344,6 +346,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 30 2015 Sergey V Turchin <zerg@altlinux.org> 352.41-alt146
+- ignore kernel CONFIG_X86_DMA_REMAP
+
 * Wed Sep 02 2015 Sergey V Turchin <zerg@altlinux.org> 352.41-alt145
 - fix building of kernel module
 
