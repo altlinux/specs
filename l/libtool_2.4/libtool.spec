@@ -6,7 +6,7 @@
 
 Name: libtool_%ltversion
 Version: 2.4.2
-Release: alt3
+Release: alt4
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -188,6 +188,9 @@ done
 %ltdocdir/*demo*
 
 %changelog
+* Wed Sep 30 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.2-alt4
+- Changed libtool.m4 to use lib64 suffix for AArch64 architecture.
+
 * Sat Nov 02 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.2-alt3
 - Updated build dependencies.
 
