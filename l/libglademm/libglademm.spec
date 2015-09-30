@@ -1,6 +1,6 @@
 %define devhelp_bookdir %_datadir/devhelp/books
 
-%define req_libglade_version 2.5.1
+%define req_libglade_version 2.6.1
 %define req_gtkmm_version 2.12.0
 
 %define api_version 2.4
@@ -9,17 +9,17 @@
 
 Name: libglademm
 Version: %major.7
-Release: alt2.qa2.1
+Release: alt3
+
 Summary: C++ interface of glade2 library
 License: LGPL
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: http://ftp.gnome.org/pub/GNOME/sources//%name/%major/%name-%version.tar.bz2
 
-BuildRequires: doxygen gcc-c++ graphviz libglade-devel libgtkmm2-devel xsltproc
-BuildPreReq: libglade2-devel >= %req_libglade_version
+BuildRequires: doxygen gcc-c++ graphviz xsltproc
+BuildPreReq: libglade-devel >= %req_libglade_version
 BuildPreReq: libgtkmm2-devel >= %req_gtkmm_version
 
 %description
@@ -46,10 +46,11 @@ Thie package provides documentation for
 compiling or developing applications that use Glade 2 C++ interface.
 
 %prep
-%setup -q
+%setup
 subst "s|gnomemm-2.6/libglademm-2.4/docs|%name-%version|g" docs/reference/doxygen_to_devhelp.xsl
 
 %build
+%add_optflags -std=c++11
 %configure \
 	--disable-static
 
@@ -74,6 +75,9 @@ subst "s|gnomemm-2.6/libglademm-2.4/docs|%name-%version|g" docs/reference/doxyge
 %_docdir/%name-doc-%version
 
 %changelog
+* Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 2.6.7-alt3
+- rebuilt with newer *mm libraries
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.7-alt2.qa2.1
 - Rebuilt for gcc5 C++11 ABI.
 
