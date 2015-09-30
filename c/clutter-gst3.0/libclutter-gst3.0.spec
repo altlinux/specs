@@ -9,7 +9,7 @@
 %def_enable hw
 
 Name: %_name%api_ver
-Version: %ver_major.10
+Version: %ver_major.12
 Release: alt1
 
 Summary: Library integrating clutter with GStreamer
@@ -19,13 +19,15 @@ Url: http://www.clutter-project.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-%{?_enable_hw:Requires: gst-plugins-bad%gst_api_ver}
-
 %define glib_ver 2.18
 %define cogl_ver 1.18.2
 %define clutter_ver 1.20
+%define gst_ver 1.4.0
 
-BuildRequires: libgio-devel >= %glib_ver gst-plugins%gst_api_ver-devel gtk-doc
+Requires: gst-plugins-base%gst_api_ver >= %gst_ver
+%{?_enable_hw:Requires: gst-plugins-bad%gst_api_ver}
+
+BuildRequires: libgio-devel >= %glib_ver gst-plugins%gst_api_ver-devel >= %gst_ver gtk-doc
 BuildRequires: libcogl-devel >= %cogl_ver libclutter-devel >= %clutter_ver
 BuildRequires: libgudev-devel
 %{?_enable_introspection:BuildRequires: libclutter-gir-devel gst-plugins%gst_api_ver-gir-devel}
@@ -126,6 +128,9 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.12-alt1
+- 3.0.12
+
 * Fri Sep 04 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.10-alt1
 - 3.0.10
 
