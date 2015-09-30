@@ -3,13 +3,14 @@
 %define api_ver 3.0
 %def_disable snapshot
 %def_enable doc
+
 %if_enabled snapshot
 %def_disable doc
 %endif
 
 Name: lib%{_name}3
 Version: %ver_major.3
-Release: alt1.1
+Release: alt2
 
 Summary: C++ bindings for the gdl library
 Group: System/Libraries
@@ -18,8 +19,10 @@ Url: http://www.gtkmm.org/
 
 #Source: %_name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Patch: gdlmm-3.7.3-cxx11.patch
 
-BuildRequires: gcc-c++ mm-common libglibmm-devel libgtkmm3-devel libgdl3-devel >= 3.7.0
+BuildRequires: gcc-c++ mm-common >= 0.9.8
+BuildRequires: libglibmm-devel libgtkmm3-devel libgdl3-devel >= 3.7.0
 BuildRequires: perl-XML-Parser
 %{?_enable_snapshot:BuildRequires: xsltproc doxygen graphviz}
 
@@ -47,9 +50,10 @@ This package contains the API documentation for %_name.
 
 %prep
 %setup -n %_name-%version
+%patch
 
 %build
-%{?_enable_snapshot:mm-common-prepare -f}
+mm-common-prepare
 %autoreconf
 %configure \
 %{?_enable_snapshot:--enable-maintainer-mode} \
@@ -57,10 +61,10 @@ This package contains the API documentation for %_name.
 %make_build
 
 %install
-make DESTDIR=%buildroot install
+%makeinstall_std
 
 %check
-make check
+%make check
 
 %files
 %_libdir/*.so.*
@@ -79,6 +83,9 @@ make check
 %endif
 
 %changelog
+* Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.7.3-alt2
+- rebuilt with newer *mm libraries
+
 * Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.7.3-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
