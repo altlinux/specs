@@ -1,27 +1,26 @@
-%define ver_major 2.37
+%define ver_major 2.40
 %define xml_ver 2.6
 %define _name libxml++
 
 Name: %{_name}2
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
 Group: System/Libraries
 License: LGPLv2+
 Url: http://libxmlplusplus.sourceforge.net/
 
-Source: %_name-%version.tar
-
-BuildRequires: libxml2-devel >= 2.6.1
-BuildRequires: doxygen gcc-c++ libglibmm-devel
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildPreReq: mm-common
+BuildRequires: libxml2-devel >= 2.6.1
+BuildRequires: doxygen gcc-c++ libglibmm-devel >= 2.46.0
 
 %description
-libxml++ is a C++ wrapper for the libxml2 XML parser library. It's original
-author is Ari Johnson and it is currently maintained by Christophe de Vienne
-and Murray Cumming.
+libxml++ is a C++ wrapper for the libxml2 XML parser library.
+It has SAX and DOM-like APIs, but does not attempt to conform exactly to
+the DOM specification. Its API is simpler than the underlying libxml2 C API.
 
 %package devel
 Summary: Development files for %name
@@ -43,14 +42,14 @@ This package contains the development documentation for libxml++ library.
 %prep
 %setup -n %_name-%version
 
-sed -i 's|\(doctooldir\)\ glibmm\-2\.4|\1 mm-common-util|' configure
+#sed -i 's|\(doctooldir\)\ glibmm\-2\.4|\1 mm-common-util|' configure
 
 %build
 %configure --disable-static
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 
@@ -68,6 +67,9 @@ sed -i 's|\(doctooldir\)\ glibmm\-2\.4|\1 mm-common-util|' configure
 %_docdir/%_name-%xml_ver/*
 
 %changelog
+* Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
+- 2.40.0
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.37.1-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
