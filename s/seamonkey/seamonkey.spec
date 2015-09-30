@@ -14,8 +14,8 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.35
-Release: alt1
+Version: 2.38
+Release: alt2
 Epoch:   1
 Summary: Web browser and mail reader
 License: MPL/NPL
@@ -25,7 +25,7 @@ Packager:   Andrey Cherepanov <cas@altlinux.org>
 
 Url: http://www.mozilla.org/projects/seamonkey/
 
-Source0:	%name-%version.source.tar.bz2
+Source0:	%name-%version.source.tar.xz
 Source2:	mozilla-searchplugins.tar
 Source3:	seamonkey-alt-browser.desktop
 Source4:	seamonkey-alt-mail.desktop
@@ -45,7 +45,7 @@ Patch6:		seamonkey-2.13.2-alt-fix-build.patch
 Patch7:     	seamonkey-2.19-elfhack.patch
 Patch8:		seamonkey-2.26-enable-addons.patch
 Patch9:		mozilla-js-makefile.patch
-Patch10:		firefox-32-baseline-disable.patch
+Patch10:	firefox-32-baseline-disable.patch
 
 PreReq:		urw-fonts
 
@@ -86,6 +86,7 @@ BuildRequires: gst-plugins-devel >= 0.10.25
 BuildRequires: libpulseaudio-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
+BuildRequires: libGConf-devel
 
 # Mozilla requires
 BuildRequires:	libnspr-devel       >= 4.9.2-alt1
@@ -150,7 +151,7 @@ cd comm-release
 tar -xf %SOURCE6 -C mailnews/extensions/
 %endif
 
-%patch -p1
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p0
@@ -398,6 +399,12 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Mon Oct 12 2015 Michael Shigorin <mike@altlinux.org> 1:2.38-alt2
+- Enabled logging, see https://bugzilla.mozilla.org/1129718
+
+* Mon Oct 12 2015 <cas@altlinux.org> 1:2.38-alt1
+- New version
+
 * Fri Sep 04 2015 Andrey Cherepanov <cas@altlinux.org> 1:2.35-alt1
 - New version
 
