@@ -2,7 +2,7 @@
 
 Name: FlightGear
 Version: 3.4.0
-Release: alt1
+Release: alt3
 
 Summary: open-source flight simulator
 License: GPL
@@ -26,6 +26,8 @@ Patch2: FlightGear-1.0.0-alt-fix-build.patch
 Patch3: flightgear-2.6.0-fedora-format.patch
 Patch4: flightgear-2.6.0-fedora-snprintf.patch
 Patch5: FlightGear-2.8.0-alt-Boost.patch
+Patch6: FlightGear-3.4.0-gentoo-cmake-1.patch
+Patch7: FlightGear-3.4.0-gentoo-cmake-2.patch
 
 Requires: fgfs-data = %version
 #Requires: fgrun >= 1.6.1
@@ -62,9 +64,9 @@ http://www.4p8.com/eric.brasseur/flight_simulator_tutorial.html
 
 %prep
 %setup
-#patch3 -p1
-#patch4 -p1
 %patch5 -p2
+%patch6 -p1
+%patch7 -p1
 
 sed -i 's/\r//' docs-mini/AptNavFAQ.FlightGear.html
 for ext in Cygwin IRIX Joystick Linux MSVC MSVC8 MacOS SimGear Unix \
@@ -110,6 +112,13 @@ rm -rf %buildroot%_datadir/locale
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt3
+- rebuilt against OpenSceneGraph 3.2.3
+
+* Tue Sep 29 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt2
+- rebuilt against current OpenSceneGraph (incl. gcc5 C++11 ABI change)
+- added gentoo patches
+
 * Thu Feb 19 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
