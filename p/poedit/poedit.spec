@@ -5,7 +5,7 @@
 %def_without cld2
 
 Name: poedit
-Version: 1.8.4
+Version: 1.8.5
 Release: alt1
 
 Summary: Cross-platform translation files editor
@@ -22,8 +22,8 @@ Requires: gettext-tools
 
 BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ libwxGTK3.0-devel libdb4_cxx-devel libgtkspell3-devel
-BuildRequires: libicu-devel liblucene++-devel libexpat-devel po4a
-BuildRequires: boost-locale-devel
+BuildRequires: libicu-devel liblucene++-devel libexpat-devel
+BuildRequires: boost-locale-devel zlib-devel
 %{?_with_cpprest:BuildRequires: libcpprest-devel >= %cpprest_ver}
 %{?_with_cld2:BuildRequires: libcld2-devel}
 
@@ -65,6 +65,9 @@ wxLocale библиотеки wxWindows.
 %_iconsdir/hicolor/scalable/*/*.svg
 
 %changelog
+* Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt1
+- 1.8.5
+
 * Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
 - 1.8.4
 
