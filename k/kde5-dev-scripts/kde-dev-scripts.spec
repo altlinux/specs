@@ -1,0 +1,60 @@
+%define rname kde-dev-scripts
+
+%add_findreq_skiplist %_K5bin/kdedoc
+%add_findreq_skiplist %_K5bin/package_crystalsvg
+
+Name: kde5-dev-scripts
+Version: 15.08.1
+Release: alt1
+%K5init altplace
+
+Group: Graphical desktop/KDE
+Summary: Various development scripts
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+BuildArch: noarch
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Thu Oct 01 2015 (-bi)
+# optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl kf5-kdoctools-devel less libgpg-error libqt5-core libstdc++-devel perl-Encode perl-HTTP-Date perl-HTTP-Message perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage perl-Term-ANSIColor perl-URI perl-XML-Parser perl-XML-RegExp perl-libwww python-base python3 python3-base rpm-build-gir termutils xml-common xml-utils
+#BuildRequires: cvs extra-cmake-modules gcc-c++ git-core graphviz kde5-konqueror kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static perl-XML-DOM perl-podlators python-module-google qt5-base-devel rpm-build-python3 ruby ruby-stdlibs subversion
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires: graphviz perl-XML-DOM perl-podlators rpm-build-python rpm-build-python3 ruby ruby-stdlibs
+BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
+
+%description
+%summary.
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build
+
+%install
+%K5install
+
+# fix scripts for strong /usr/lib/rpm/find-requires
+pushd %buildroot/%_K5bin
+for f in `(file ./* | grep bash; file ./* | grep shell) | awk -F: '{print $1}' | xargs grep -l ^=head`
+do
+    mv "$f" "$f.tmp"
+    awk 'BEGIN{found=0;} /^=head/ {if (found==0){print "cat <<\\__EOF__";found=1;};} {print} END{if (found!=0) print "__EOF__";}' <"$f.tmp" >"$f"
+    rm -f "$f.tmp"
+    chmod a+x $f
+done
+popd
+
+
+%find_lang %name --with-kde --all-name
+
+%files -f %name.lang
+%doc COPYING* README
+%_K5bin/*
+
+%changelog
+* Wed Sep 30 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- initial build
