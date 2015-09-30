@@ -1,6 +1,6 @@
 Name: libofx
 Version: 0.9.10
-Release: alt1.1
+Release: alt1.2
 
 Summary: The OFX parser library
 Group: System/Libraries
@@ -47,6 +47,7 @@ Headers, documentation and other files for development with libofx.
 rm -f ofxdump/ofxdump.1
 
 %build
+%add_optflags -std=c++11
 %autoreconf
 %configure --disable-static
 %make
@@ -74,6 +75,9 @@ rm -f ofxdump/ofxdump.1
 %_docdir/%name/
 
 %changelog
+* Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.10-alt1.2
+- rebuilt against newer libxml++
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.10-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
