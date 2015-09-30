@@ -1,6 +1,6 @@
 Name: gsmartcontrol
 Version: 0.8.7
-Release: alt1.1
+Release: alt2
 
 Summary: GSmartControl is a graphical user interface for smartctl
 Group: Graphical desktop/Other
@@ -10,6 +10,9 @@ Url: http://gsmartcontrol.sourceforge.net/home/
 Source: %name-%version.tar.bz2
 Patch: gsmartcontrol-0.8.6-alt-glibc-2.16.patch
 Patch1: gsmartcontrol-0.8.7-alt-lfs.patch
+
+# upstream
+Patch10: gsmartcontrol_parser_crash_fix.diff
 
 Requires: smartmontools
 
@@ -26,8 +29,10 @@ to determine its health, as well as run various tests on it.
 %setup
 %patch -p2
 %patch1
+%patch10
 
 %build
+%add_optflags -std=c++11
 %configure
 %make_build
 
@@ -48,6 +53,10 @@ to determine its health, as well as run various tests on it.
 %exclude %_datadir/pixmaps/gsmartcontrol.*
 
 %changelog
+* Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt2
+- applied gsmartcontrol_parser_crash_fix.diff from upstream
+- built with newer *mm libraries
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.7-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
