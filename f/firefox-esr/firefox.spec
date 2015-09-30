@@ -10,7 +10,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
 Version:        38.3.0
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -58,7 +58,7 @@ BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
-BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libicu-devel
@@ -85,7 +85,7 @@ Provides:	webclient
 Provides:	firefox = %name-%version
 Conflicts:	firefox
 Requires:	mozilla-common
-Requires:	gst-plugins-ugly
+Requires:	gst-plugins-ugly1.0
 
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss >= 3.12.11-alt3
@@ -288,6 +288,9 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Mon Sep 28 2015 Andrey Cherepanov <cas@altlinux.org> 38.3.0-alt2
+- Use GStreamer 1.0 (ALT #31305)
+
 * Wed Sep 23 2015 Andrey Cherepanov <cas@altlinux.org> 38.3.0-alt1
 - New ESR version
 - Security fixes:
