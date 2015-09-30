@@ -1,17 +1,20 @@
-%define ver_major 3.16
+%define ver_major 3.18
 
 Name: simple-scan
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple scanning utility
 License: GPLv3+
 Group: Graphics
-
 Url: http://launchpad.net/%name
-Source: %url/%ver_major/%version/+download/simple-scan-%version.tar.xz
 
-BuildRequires: gnome-common intltool yelp-tools
+Source: %url/%ver_major/%version/+download/simple-scan-%version.tar.xz
+Patch: simple-scan-3.18.0-up-packagekit_optional.patch
+
+Requires: sane xdg-utils gnome-icon-theme
+
+BuildRequires: autoconf-archive intltool yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel libgudev-devel libcolord-devel
 BuildRequires: libjpeg-devel libsane-devel zlib-devel
 BuildRequires: vala-tools
@@ -22,8 +25,10 @@ scanner and quickly have the image/document in an appropriate format.
 
 %prep
 %setup
+%patch
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -41,6 +46,9 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Thu Sep 24 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Wed Jun 24 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 
