@@ -17,8 +17,8 @@
 %def_enable ntlm
 
 Name: openldap
-Version: %_sover.32
-Release: alt2.1.1.1
+Version: %_sover.42
+Release: alt1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -86,12 +86,8 @@ Patch8: %_bname-2.3.37-alt-ntlm.patch
 
 Patch11: %_bname-2.3.43-fix-ucred.patch
 
-Patch12: %_bname-2.4.25-rh-manpages.patch
 Patch13: %_bname-2.4.25-rh-ldaprc-currentdir.patch
 Patch14: %_bname-2.4.25-rh-reentrant-gethostby.patch
-Patch15: %_bname-2.4.28-rh-dns-priority.patch
-Patch16: %_bname-2.4.28-rh-syncrepl-unset-tls-options.patch
-Patch17: %_bname-2.4.30-rh-constraint-count.patch
 Patch18: %_bname-2.4.31-rh-nss-allow-ca-dbdir-pemfile.patch
 Patch19: %_bname-2.4.31-rh-tls-unbind-shutdown-order.patch
 Patch20: %_bname-2.4.31-rh-nss-dont-overwrite-verify-cert-error.patch
@@ -100,6 +96,7 @@ Patch22: %_bname-2.4.31-rh-cve-nss-cipher-suite-ignored.patch
 Patch23: %_bname-2.4.31-rh-nss-default-cipher-suite-always-selected.patch
 Patch24: %_bname-2.4.31-rh-nss-multiple-tls-contexts.patch
 Patch25: openldap-2.4.32-alt-gcc5.1.patch
+Patch26: openldap-2.4.42-CVE-2015-6908.patch
 
 ### REQUIRE Section
 
@@ -269,14 +266,11 @@ HTML and TXT versions
 
 %patch11 -p1
 
-%patch12 -p1
 %patch13 -p1
 %patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
 
-%patch25 -p2
+#%patch25 -p2
+%patch26 -p1
 
 ### Extract AACLS patch
 %if_enabled aacls
@@ -703,6 +697,11 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Wed Sep 30 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.4.42-alt1
+- updated to 2.4.42
+- obsolete patches removed
+- CVE-2015-6908 fixed
+
 * Mon Jun 01 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.4.32-alt2.1.1.1
 - build with gcc 5.1 fixed
 
