@@ -1,6 +1,6 @@
 Name: poco
-Version: 1.5.3
-Release: alt1.git20140701
+Version: 1.6.1
+Release: alt1
 Summary: POrtable COmponents C++ Libraries
 License: Boost Software License v1.0
 Group: Development/C++
@@ -96,6 +96,7 @@ cmake \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
+	-DPCRE_INCLUDE_DIR:STRING="%optflags" \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DPOCO_UNBUNDLED:BOOL=ON \
 	.
@@ -128,6 +129,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 #files -n lib%name-devel-docs
 
 %changelog
+* Wed Sep 30 2015 Alexei Takaseev <taf@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Wed Sep 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.3-alt1.git20140701
 - Initial build for Sisyphus
 
