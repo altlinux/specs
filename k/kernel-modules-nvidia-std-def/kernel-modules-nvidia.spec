@@ -5,7 +5,7 @@
 
 %define module_name	nvidia
 %define module_version	352.41
-%define module_release	alt2
+%define module_release	alt3
 %define flavour		std-def
 
 %setup_kernel_module %flavour
@@ -201,6 +201,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Sep 30 2015 Sergey V Turchin <zerg at altlinux dot org> 352.41-alt3..
+- ignore CONFIG_X86_DMA_REMAP
 
 * Thu Sep 03 2015 Sergey V Turchin <zerg at altlinux dot org> 352.41-alt2..
 - new release (340.93)
