@@ -1,5 +1,5 @@
 Name: filesystem
-Version: 2.3.11
+Version: 2.3.12
 Release: alt1
 
 Summary: The basic directory layout for a GNU/Linux system
@@ -44,7 +44,7 @@ cat %_sourcedir/%name-dir.list |while read attr dir name extra; do
 	mkdir ".$name"
 done
 
-%ifarch x86_64 ppc64
+%if "%_lib" == "lib64"
 cat %_sourcedir/%name-dir64.list |while read attr dir name extra; do
 	mkdir ".$name"
 done
@@ -57,6 +57,9 @@ done
 %files -f list
 
 %changelog
+* Thu Oct 01 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3.12-alt1
+- Made lib64 conditions same for %%build and %%install stages.
+
 * Thu May 17 2012 Dmitry V. Levin <ldv@altlinux.org> 2.3.11-alt1
 - Added /run directory.
 
