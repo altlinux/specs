@@ -3,7 +3,7 @@
 Name: 	 qcad
 Summary: a professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
-Version: 3.9.4.0
+Version: 3.10.2.0
 Release: alt1
 
 Url: 	 http://www.ribbonsoft.com/qcad.html
@@ -39,9 +39,6 @@ QCad это профессиональная CAD система. С QCad вы м
 
 %prep
 %setup -q
-# Fix missing generated files for Qt 4.8.7
-cp -a src/3rdparty/qt-labs-qtscriptgenerator-4.8.{6,7}
-mv src/3rdparty/qt-labs-qtscriptgenerator-4.8.7/qt-labs-qtscriptgenerator-4.8.{6,7}.pro
 %qmake_qt4
 lupdate-qt4 %name.pro
 
@@ -106,6 +103,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Oct 01 2015 Andrey Cherepanov <cas@altlinux.org> 3.10.2.0-alt1
+- New version
+
 * Wed Jul 08 2015 Andrey Cherepanov <cas@altlinux.org> 3.9.4.0-alt1
 - New version (ALT #29086)
 
