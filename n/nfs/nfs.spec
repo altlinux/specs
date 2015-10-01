@@ -1,6 +1,6 @@
 Name: nfs
-Version: 1.3.2
-Release: alt2
+Version: 1.3.3
+Release: alt1
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -155,7 +155,6 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/idmapd.service
 %systemd_unitdir/svcgssd.service
 
-%systemd_unitdir/nfs-config.service
 %systemd_unitdir/nfs-server.service
 %systemd_unitdir/nfs-mountd.service
 %systemd_unitdir/nfs-idmapd.service
@@ -210,10 +209,10 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/gssd.service
 %systemd_unitdir/nfslock.service
 
+%systemd_unitdir/nfs-config.service
 %systemd_unitdir/nfs-client.target
 %systemd_unitdir/auth-rpcgss-module.service
 %systemd_unitdir/var-lib-nfs-rpc_pipefs.mount
-%systemd_unitdir/nfs-blkmap.target
 %systemd_unitdir/nfs-blkmap.service
 %systemd_unitdir/rpc-statd.service
 %systemd_unitdir/rpc-statd-notify.service
@@ -258,6 +257,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Thu Oct 01 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.3.3-alt1
+- 1.3.3 released
+
 * Thu Feb 05 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.3.2-alt2
 - use 4.0 as default nfs version for a while
 
