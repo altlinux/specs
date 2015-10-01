@@ -1,6 +1,6 @@
 Name: SimGear
-Version: 3.4.0
-Release: alt2
+Version: 3.6.0
+Release: alt0.1
 
 Summary: Simulator Construction Tools
 License: GPL
@@ -9,8 +9,8 @@ Group: System/Libraries
 Url: http://www.flightgear.org
 Packager: Michael Shigorin <mike@altlinux.org>
 Source: %name-%version.tar.gz
-Patch0: simgear-2.6.0-fedora-format.patch
-Patch1: simgear-2.6.0-fedora-aarch64.patch
+Patch0: simgear-3.2.0-fedora-format.patch
+Patch1: simgear-3.6.0-fedora-aarch64.patch
 
 # Automatically added by buildreq on Sat Mar 03 2012
 # optimized out: cmake-modules libGL-devel libICE-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
@@ -57,6 +57,10 @@ This package contains header files for SimGear.
 %_includedir/simgear
 
 %changelog
+* Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 3.6.0-alt0.1
+- 3.6.0-RC
+- updated fedora patches
+
 * Fri Jul 24 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt2
 - added another fedora patch
 - disabled tests following fedora too (to fix FTBFS)

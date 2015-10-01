@@ -1,8 +1,8 @@
 %define osg_version %(pkg-config --modversion openscenegraph)
 
 Name: osgEarth
-Version: 2.1.1
-Release: alt1.5
+Version: 2.7
+Release: alt1
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
 License: LGPL
@@ -117,29 +117,62 @@ popd
 
 %_bindir/osgearth_annotation
 %_bindir/osgearth_cache
-%_bindir/osgearth_clouds
-%_bindir/osgearth_composite
+#_bindir/osgearth_clouds
+#_bindir/osgearth_composite
 %_bindir/osgearth_controls
 %_bindir/osgearth_elevation
 %_bindir/osgearth_featureeditor
 %_bindir/osgearth_featureinfo
 %_bindir/osgearth_features
 %_bindir/osgearth_imageoverlay
-%_bindir/osgearth_labels
+#_bindir/osgearth_labels
 %_bindir/osgearth_manip
 %_bindir/osgearth_map
 %_bindir/osgearth_measure
-%_bindir/osgearth_ocean
+#_bindir/osgearth_ocean
 %_bindir/osgearth_shadercomp
 %_bindir/osgearth_tilesource
 %_bindir/osgearth_toc
 %_bindir/osgearth_version
 %_bindir/osgearth_viewer
 
+%_bindir/osgearth_atlas
+%_bindir/osgearth_backfill
+%_bindir/osgearth_boundarygen
+%_bindir/osgearth_cache_test
+%_bindir/osgearth_city
+%_bindir/osgearth_clamp
+%_bindir/osgearth_clipplane
+%_bindir/osgearth_colorfilter
+%_bindir/osgearth_conv
+%_bindir/osgearth_createtile
+%_bindir/osgearth_featurefilter
+%_bindir/osgearth_featurequery
+%_bindir/osgearth_fog
+%_bindir/osgearth_graticule
+%_bindir/osgearth_los
+%_bindir/osgearth_minimap
+%_bindir/osgearth_mrt
+%_bindir/osgearth_occlusionculling
+%_bindir/osgearth_overlayviewer
+%_bindir/osgearth_package
+%_bindir/osgearth_pick
+%_bindir/osgearth_sequencecontrol
+%_bindir/osgearth_shadergen
+%_bindir/osgearth_sharedlayer
+%_bindir/osgearth_terrainprofile
+%_bindir/osgearth_tfs
+%_bindir/osgearth_tileindex
+%_bindir/osgearth_tracks
+%_bindir/osgearth_transform
+
 %files data
 %_datadir/osgEarth
 
 %changelog
+* Thu Oct 01 2015 Michael Shigorin <mike@altlinux.org> 2.7-alt1
+- 2.7 built against OpenSceneGraph 3.4.0
+
 * Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 2.1.1-alt1.5
 - rebuilt against current OpenSceneGraph
 

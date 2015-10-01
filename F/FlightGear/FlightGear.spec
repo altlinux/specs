@@ -1,8 +1,8 @@
 %def_without dbus
 
 Name: FlightGear
-Version: 3.4.0
-Release: alt3
+Version: 3.6.0
+Release: alt0.1
 
 Summary: open-source flight simulator
 License: GPL
@@ -20,14 +20,10 @@ Source12: fg-48.png
 Source13: fg-64.png
 Source14: fg-128.png
 Source15: FlightGear.desktop
-#Patch0: FlightGear-1.9.1-gcc44.patch
-Patch1: FlightGear-1.0.0-alt-expat-fix.patch
-Patch2: FlightGear-1.0.0-alt-fix-build.patch
-Patch3: flightgear-2.6.0-fedora-format.patch
-Patch4: flightgear-2.6.0-fedora-snprintf.patch
-Patch5: FlightGear-2.8.0-alt-Boost.patch
-Patch6: FlightGear-3.4.0-gentoo-cmake-1.patch
-Patch7: FlightGear-3.4.0-gentoo-cmake-2.patch
+Patch1: 0001-check-to-be-sure-that-n-is-not-being-set-as-format-t.patch
+Patch2: 0002-make-ShivaVG-and-FGAdminUI-static-libraries.patch
+Patch5: 0005-explicitely-link-with-libX11.patch
+Patch6: 0006-make-fglauncher-a-static-library.patch
 
 Requires: fgfs-data = %version
 #Requires: fgrun >= 1.6.1
@@ -64,14 +60,19 @@ http://www.4p8.com/eric.brasseur/flight_simulator_tutorial.html
 
 %prep
 %setup
-%patch5 -p2
+%patch1 -p1
+%patch2 -p1
+%patch5 -p1
 %patch6 -p1
-%patch7 -p1
 
 sed -i 's/\r//' docs-mini/AptNavFAQ.FlightGear.html
 for ext in Cygwin IRIX Joystick Linux MSVC MSVC8 MacOS SimGear Unix \
 	Win32-X autoconf mingw plib src xmlsyntax; do
 	rm -f docs-mini/README.$ext
+done
+for f in docs-mini/README.xmlparticles Thanks; do
+	iconv -f iso-8859-1 -t utf-8 -o ${f}.utf8 ${f}
+	mv -f ${f}.utf8 ${f}
 done
 
 # argh
@@ -112,6 +113,11 @@ rm -rf %buildroot%_datadir/locale
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 3.6.0-alt0.1
+- 3.6.0-RC
+- dropped obsolete patches
+- replaced gentoo patches with fedora ones
+
 * Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt3
 - rebuilt against OpenSceneGraph 3.2.3
 
