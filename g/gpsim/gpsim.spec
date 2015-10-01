@@ -1,5 +1,5 @@
 Name: gpsim
-Version: 0.28.1
+Version: 0.29.0
 Release: alt1
 
 Summary: Software simulator for Microchip PIC microcontrollers
@@ -136,6 +136,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/*.so
 
 %changelog
+* Wed Sep 30 2015 Andrey Cherepanov <cas@altlinux.org> 0.29.0-alt1
+- New version
+
 * Wed Feb 11 2015 Andrey Cherepanov <cas@altlinux.org> 0.28.1-alt1
 - New version
 
