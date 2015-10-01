@@ -22,7 +22,7 @@
 
 Name: mariadb
 Version: 10.0.21
-Release: alt2
+Release: alt4
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -56,6 +56,8 @@ Source27: mysql-clients.cnf
 Source28: server-chroot.cnf
 Source29: server-no-chroot.cnf
 
+
+Patch0: %name-%version-%release.patch
 
 # ALTLinux
 Patch1: mariadb-10.0.21-alt-chroot.patch
@@ -242,6 +244,7 @@ version.
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch4 -p1
@@ -671,6 +674,13 @@ fi
 %endif
 
 %changelog
+* Thu Oct 01 2015 Alexey Shabalin <shaba@altlinux.ru> 10.0.21-alt4
+- snapshot branch upstream/10.0
+- comment empty options in /etc/sysconfig/mysqld (ALT #31293)
+- change description MySQL -> MySQL/MariaDB (ALT #31307)
+- update README.ALT
+- add bug report url in mysql_install_db
+
 * Tue Sep 15 2015 Alexey Shabalin <shaba@altlinux.ru> 10.0.21-alt2
 - don't read config in /var/lib/mysql/my.cnf
 - use /etc/my.cnf.d/server.cnf as default server config
