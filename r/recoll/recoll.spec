@@ -5,7 +5,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.21.1
+Version: 1.21.2
 Release: alt1
 
 Summary: A personal full text search package
@@ -124,6 +124,9 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Thu Oct 01 2015 Michael Shigorin <mike@altlinux.org> 1.21.2-alt1
+- new version (watch file uupdate)
+
 * Thu Aug 06 2015 Michael Shigorin <mike@altlinux.org> 1.21.1-alt1
 - new version (watch file uupdate)
 - made qtgui build conditional
