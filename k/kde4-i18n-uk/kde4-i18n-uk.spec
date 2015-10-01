@@ -4,7 +4,7 @@
 %define lngg Ukrainian
 
 Name: kde4-i18n-%lng
-Version: 15.08.0
+Version: 15.08.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -44,12 +44,15 @@ while read cm; do
     fi
 done
 
-for d in docs messages
+for d in messages docs
 do
     [ -d $d ] || continue
     pushd $d
-    grep -qe "^add_subdirectory([[:space:]]*kdepim[[:space:]]*)" CMakeLists.txt \
-	|| echo "add_subdirectory( kdepim )" >> CMakeLists.txt
+    for subd in `ls -1d *` ; do
+	[ -d $subd ] || continue
+	grep -qe "^add_subdirectory([[:space:]]*$subd[[:space:]]*)" CMakeLists.txt \
+		|| echo "add_subdirectory($subd)" >> CMakeLists.txt
+    done
     popd
 done
 
@@ -115,6 +118,9 @@ fi
 %lang(%lng) %_K4apps/autocorrect/%{lng}*.xml
 
 %changelog
+* Thu Oct 01 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
+- new version
+
 * Mon Aug 31 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
