@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.20
+Version: 2.9.21
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -55,6 +55,7 @@ Conflicts: alterator-sslkey               < 0.2.0-alt1
 Conflicts: alterator-snort                < 0.2.0-alt1
 Conflicts: alterator-hotstandby           < 0.3.3-alt1
 Conflicts: alterator-printers	          < 6.0-alt8
+Conflicts: alterator-drweb	          < 0.99.4-alt1
 
 %description
 translations for all alterator modules
@@ -110,6 +111,10 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Jul 13 2015 Andrey Cherepanov <cas@altlinux.org> 2.9.21-alt1
+- Add Russian translation and help for alterator-mass-management
+- More ru_RU help (thanks azol@)
+
 * Fri Mar 13 2015 Andrey Cherepanov <cas@altlinux.org> 2.9.20-alt1
 - Update Russian translation for alterator-auth
 
