@@ -1,8 +1,8 @@
 %define sover 2
 
 Name: dbusmenu-qt5
-Version: 0.9.2
-Release: alt1
+Version: 0.9.3
+Release: alt0.1
 
 Group: System/Libraries
 Summary: A Qt implementation of the DBusMenu protocol
@@ -63,6 +63,9 @@ Development files for %{name}
 %_pkgconfigdir/dbusmenu-qt5.pc
 
 %changelog
+* Fri Oct 02 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt0.1
+- use 0.9.3 snapshot 15.10.2015
+
 * Wed Mar 04 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt1
 - initial build
 
