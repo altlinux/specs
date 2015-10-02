@@ -1,6 +1,6 @@
 
 Name: libssh
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Group: System/Libraries
@@ -83,6 +83,9 @@ install -m 0644 %SOURCE2 ./
 %_libdir/*.so
 
 %changelog
+* Fri Oct 02 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt1
+- new version
+
 * Tue Jun 30 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1
 - new version
 
