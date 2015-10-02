@@ -3,7 +3,7 @@
 %define oversion 15_0
 
 Name:    iceb
-Version: 16.0
+Version: 16.1
 Release: alt1
 
 Summary: Free financial accounting system (console)
@@ -74,6 +74,9 @@ rm -rf %buildroot%_libdir/%name/*.{a,la}
 %_datadir/%oname
 
 %changelog
+* Fri Oct 02 2015 Andrey Cherepanov <cas@altlinux.org> 16.1-alt1
+- new version 16.1
+
 * Tue Sep 01 2015 Andrey Cherepanov <cas@altlinux.org> 16.0-alt1
 - new version 16.0
 
