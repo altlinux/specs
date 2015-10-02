@@ -2,7 +2,7 @@
 
 Name: python-module-novaclient
 Version: 2.23.2
-Release: alt1
+Release: alt2
 Summary: Python API and CLI for OpenStack Nova
 
 Group: Development/Python
@@ -19,7 +19,7 @@ BuildArch: noarch
 
 Requires: python-module-simplejson
 Requires: python-module-keystoneclient
-Requires: python-module-keyring
+#Requires: python-module-keyring
 
 BuildRequires: python-devel
 BuildRequires: python-module-d2to1
@@ -70,7 +70,7 @@ Summary: Python API and CLI for OpenStack Nova
 Group: Development/Python3
 Requires: python3-module-simplejson
 Requires: python3-module-keystoneclient
-Requires: python3-module-keyring
+#Requires: python3-module-keyring
 
 %description -n python3-module-novaclient
 This is a client for the OpenStack Nova API. There's a Python API (the
@@ -161,6 +161,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
+* Fri Oct 02 2015 Alexey Shabalin <shaba@altlinux.ru> 2.23.2-alt2
+- drop Requires: python-module-keyring
+
 * Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2.23.2-alt1
 - 2.23.2
 
