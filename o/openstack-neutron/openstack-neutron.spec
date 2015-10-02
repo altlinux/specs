@@ -8,7 +8,7 @@
 
 Name: openstack-neutron
 Version: 2015.1.1
-Release: alt5
+Release: alt6
 Provides: openstack-quantum = %version-%release
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
 Summary: OpenStack Networking Service
@@ -48,6 +48,8 @@ Source119: neutron-mlnx-agent.init
 Source120: neutron-metering-agent.init
 Source121: neutron-sriov-nic-agent.init
 Source122: neutron-netns-cleanup.init
+
+Patch: neutron-netaddr-broadcast-bug.patch
 
 BuildArch: noarch
 
@@ -404,6 +406,7 @@ SR-IOV network cards.
 
 %prep
 %setup
+%patch0 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -785,6 +788,9 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Fri Oct 02 2015 Lenar Shakirov <snejok@altlinux.ru> 2015.1.1-alt6
+- neutron-netaddr-broadcast-bug.patch added
+
 * Tue Sep 29 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt5
 - fix init for neutron-openvswitch-agent
 
