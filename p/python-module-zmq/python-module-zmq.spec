@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 14.7.0
-Release: alt1
+Release: alt2
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: http://www.zeromq.org/bindings:python
 # http://github.com/zeromq/pyzmq.git
 Source: %name-%version.tar
 
-BuildRequires: gcc4.7-c++ python-devel libzeromq-devel python-module-nose python-modules-json python-module-Cython python-module-numpy
+BuildRequires: gcc-c++ python-devel libzeromq-devel python-module-nose python-modules-json python-module-Cython python-module-numpy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-nose python3-module-Cython
@@ -178,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.7.0-alt2
+- Switched to build with default g++.
+
 * Mon Aug 31 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 14.7.0-alt1
 - New version
 
