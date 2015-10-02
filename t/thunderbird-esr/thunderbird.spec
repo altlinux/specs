@@ -5,7 +5,7 @@
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		%r_name-esr
 Version:	38.3.0
-Release:	alt1
+Release:	alt2
 License:	MPL/GPL
 Group:		Networking/Mail
 URL:		http://www.mozillamessaging.com
@@ -34,7 +34,7 @@ BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: bzlib-devel zlib-devel
 BuildRequires: mozldap-devel
 BuildRequires: zip unzip
-BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libcairo-devel libpixman-devel
 BuildRequires: libGL-devel
 BuildRequires: libwireless-devel
@@ -456,6 +456,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Fri Oct 02 2015 Andrey Cherepanov <cas@altlinux.org> 38.3.0-alt2
+- Use GStreamer 1.0
+
 * Thu Oct 01 2015 Andrey Cherepanov <cas@altlinux.org> 38.3.0-alt1
 - New ESR version
 
