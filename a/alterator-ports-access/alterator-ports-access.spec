@@ -2,7 +2,7 @@
 
 Name: alterator-ports-access
 Version: 0.0.3
-Release: alt6
+Release: alt8
 Packager: Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildArch: noarch
 Source:%name-%version.tar
@@ -27,9 +27,10 @@ Alterator module to control serial/USB ports access
 
 %install
 %makeinstall
-%find_lang %name
+#find_lang %name
 
-%files -f %name.lang
+#files -f %name.lang
+%files
 %_altdata_dir/applications/*
 %_altdata_dir/ui/*/*
 %_alterator_backend3dir/*
@@ -39,6 +40,12 @@ Alterator module to control serial/USB ports access
 /lib/udev/alterator-ports-access
 
 %changelog
+* Fri Oct 02 2015 Michael Shigorin <mike@altlinux.org> 0.0.3-alt8
+- Translations moved to alterator-l10n as of 2.9-alt49
+
+* Tue Sep 25 2012 Michael Shigorin <mike@altlinux.org> 0.0.3-alt7
+- Add logging (serial port enabled/disabled) as requested
+
 * Mon Sep 24 2012 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt6
 - Fix serial available ports list 2
 
