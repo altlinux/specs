@@ -3,8 +3,8 @@
 %define pkgname yajl-ruby
 
 Name: %pkgname
-Version: 0.7.5
-Release: alt1.2
+Version: 1.2.1
+Release: alt1
 
 Summary: YAJL C Bindings for Ruby
 Group: Development/Ruby
@@ -41,16 +41,21 @@ Documentation files for %name.
 %install
 %ruby_install
 %rdoc lib/
+# Remove unnecessary files
+rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
 %files
-%doc README.rdoc
+%doc README.md CHANGELOG.md
 %ruby_sitelibdir/*
 %ruby_sitearchdir/*
 
 %files doc
-%ruby_ri_sitedir/Yajl*
+%ruby_ri_sitedir/*
 
 %changelog
+* Thu Oct 01 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
+- New version
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 0.7.5-alt1.2
 - Rebuilt with ruby-2.0.0-alt1
 

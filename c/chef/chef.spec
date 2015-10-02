@@ -1,6 +1,6 @@
 
 Name:    chef
-Version: 12.4.1
+Version: 12.4.4
 Release: alt1
 
 Summary: Clients for the chef systems integration framework
@@ -24,20 +24,26 @@ Source4: chef-client.rb
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
-BuildRequires: chef-zero
-BuildRequires: erubis
-BuildRequires: ohai
+BuildRequires: chef-zero >= 4.2.2
+BuildRequires: chef-zero < 4.3.2
+BuildRequires: erubis >= 2.7
+BuildRequires: ohai >= 8.0
+BuildRequires: ohai < 8.6
 BuildRequires: ruby-activesupport
-BuildRequires: ruby-diff-lcs
-BuildRequires: ruby-highline
-BuildRequires: ruby-mixlib-authentication
-BuildRequires: ruby-net-ssh
-BuildRequires: ruby-net-ssh-multi
-BuildRequires: ruby-plist
+BuildRequires: ruby-diff-lcs >= 1.2.4
+BuildRequires: ruby-highline >= 1.6.9
+BuildRequires: ruby-mixlib-cli >= 1.4
+BuildRequires: ruby-mixlib-log >= 1.3
+BuildRequires: ruby-mixlib-authentication >= 1.3
+BuildRequires: ruby-mixlib-shellout >= 2.0.0
+BuildRequires: ruby-net-ssh >= 2.6
+BuildRequires: ruby-net-ssh-multi >= 1.1
+BuildRequires: ruby-plist >= 3.1.0
 BuildRequires: ruby-rack
 BuildRequires: ruby-rest-client
-BuildRequires: ruby-syslog-logger > 1.6.0
+BuildRequires: ruby-syslog-logger >= 1.6.0
 BuildRequires: ruby-ucf
+BuildRequires: ruby-ffi-yajl >= 2.2
 
 Requires: ruby-highline
 
@@ -131,6 +137,13 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Fri Oct 02 2015 Andrey Cherepanov <cas@altlinux.org> 12.4.4-alt1
+- New version
+
+* Sun Sep 20 2015 Andrey Cherepanov <cas@altlinux.org> 12.4.2-alt1
+- New version
+- Check for component versions according chef.gemspec
+
 * Mon Aug 03 2015 Andrey Cherepanov <cas@altlinux.org> 12.4.1-alt1
 - New version
 

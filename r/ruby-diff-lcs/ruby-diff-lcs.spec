@@ -2,14 +2,15 @@
 
 %define pkgname diff-lcs
 
-Name: ruby-%pkgname
-Version: 1.1.2
-Release: alt2.1
+Name:    ruby-%pkgname
+Version: 1.2.5
+Release: alt1
 
 Summary: Port of Algorithm::Diff
-Group: Development/Ruby
+Group:   Development/Ruby
 License: MIT
-Url: http://rubyforge.org/projects/ruwiki/
+Url:     http://diff-lcs.rubyforge.org/
+#VCS:	 https://github.com/halostatue/diff-lcs.git
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -48,7 +49,7 @@ Documentation files for %pkgname
 %rdoc lib/
 
 %files
-%doc ChangeLog README
+%doc *.rdoc
 %_bindir/*
 %ruby_sitelibdir/*
 
@@ -56,6 +57,9 @@ Documentation files for %pkgname
 %ruby_ri_sitedir/Diff*
 
 %changelog
+* Mon Sep 21 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.5-alt1
+- New version
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 1.1.2-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 
