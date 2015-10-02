@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt14
+Release: alt15
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -60,9 +60,13 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-big
 #Requires: kde5-telepathy
-Requires: kde5-lokalize kde5-okteta
-#Requires: kde5-kapptemplate kde5-kde-dev-scripts
 Requires: kdenlive
+
+%package -n kde5-somedevel
+Summary: %summary
+Group: Graphical desktop/KDE
+Requires: kde5-runtime
+Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts
 
 %description
 %summary
@@ -78,6 +82,8 @@ Requires: kdenlive
 %summary
 %description -n kde5-maxi
 %summary
+%description -n kde5-somedevel
+%summary
 
 %files -n kde5-runtime
 %files -n kde5-mini
@@ -85,8 +91,12 @@ Requires: kdenlive
 %files -n kde5
 %files -n kde5-big
 %files -n kde5-maxi
+%files -n kde5-somedevel
 
 %changelog
+* Fri Oct 02 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt15
+- move development tools to separate package
+
 * Thu Oct 01 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt14
 - update requires
 
