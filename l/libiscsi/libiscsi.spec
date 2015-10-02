@@ -1,5 +1,5 @@
 Name: libiscsi
-Version: 1.12.0
+Version: 1.15.0
 Release: alt1
 
 Summary: iSCSI client library
@@ -8,7 +8,7 @@ Group: System/Libraries
 
 Url: https://github.com/sahlberg/libiscsi
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+# Patch: %name-%version-%release.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: bc
@@ -38,7 +38,7 @@ The libiscsi-devel package includes the header files for libiscsi.
 
 %prep
 %setup
-%patch -p1
+# %patch -p1
 
 %build
 %autoreconf
@@ -63,6 +63,9 @@ The libiscsi-devel package includes the header files for libiscsi.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Oct 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1.15.0-alt1
+- 1.15.0
+
 * Tue Aug 05 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt1
 - 1.12.0
 
