@@ -13,11 +13,11 @@
 %def_with debugtools
 
 Name: openvswitch
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
-License: Apache
+License: ASL 2.0 and LGPLv2+ and SISSL
 Group: Networking/Other
 
 Url: http://openvswitch.org
@@ -34,21 +34,9 @@ Source10: setup-ovsbr
 Source11: %name.service
 Source12: %name.tmpfiles
 
-Patch: openvswitch-2.0_alt_fix_function.patch
-Patch2: openvswitch-2.3.1-fix-link.patch
-
-# backported patches from upstream
-Patch11: 0001-Build-Add-support-for-shared-libraries-and-versioning.patch
-Patch12: 0001-lib-Correctly-pass-collected-AM_LDFLAGS-to-linker.patch
-Patch13: 0001-include-Use-include--in-public-headers.patch
-Patch14: 0001-include-Install-openflow-and-openvswitch-headers.patch
-Patch15: 0001-lib-Add-support-for-pkgconfig-for-libopenvswitch.patch
-Patch16: 0001-lib-Add-support-for-pkgconfig-for-libofproto.patch
-Patch17: 0001-lib-Add-support-for-pkgconfig-for-libovsdb.patch
-Patch18: 0001-lib-Add-support-for-pkgconfig-for-libsflow.patch
-Patch19: 0001-lib-Add-new-header-openvswitchversionh-to-versioning-info.patch
-Patch20: 0001-lib-Add-API-to-set-program-name-and-version.patch
-Patch21: 0001-pkg-config-Fix-Cflags-in-package-config-files.patch
+Patch1: %name-%version-%release.patch
+Patch2: openvswitch-2.0_alt_fix_function.patch
+Patch3: openvswitch-2.4.0-fix-link.patch
 
 Obsoletes: %name-controller <= %name-%version
 Obsoletes: %name-ovsdbmonitor <= %name-%version
@@ -82,7 +70,7 @@ Source for kernel modules supporting the openvswitch datapath
 %if_with debugtools
 %package debugtools
 Group: Networking/Other
-License: Apache-2.0
+License: ASL 2.0
 Summary: Open vSwitch bug reporting tool
 BuildArch: noarch
 Requires: %name-common = %version-%release
@@ -96,7 +84,7 @@ Linux drivers for performance and vlan problems.
 
 %package common
 Group: Networking/Other
-License: Apache-2.0
+License: ASL 2.0 and LGPLv2+ and SISSL
 Summary: Common Open vSwitch code
 
 %description common
@@ -105,7 +93,7 @@ and openvswitch-controller.
 
 %package vtep
 Group: Networking/Other
-License: Apache-2.0
+License: ASL 2.0
 Summary: Open vSwitch VTEP emulator
 Requires: %name = %version-%release
 
@@ -114,7 +102,7 @@ A VTEP emulator that uses Open vSwitch for forwarding.
 
 %package devel
 Summary: Open vSwitch Devel Libraries
-License: Apache-2.0
+License: ASL 2.0
 Group: Development/C
 Requires: %name = %version-%release
 
@@ -132,21 +120,9 @@ Python bindings for the Open vSwitch database
 
 %prep
 %setup
-%patch -p0
-%patch2 -p1
-
-#upstream patches
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
+%patch1 -p1
+%patch2 -p0
+%patch3 -p1
 
 %if_with ksrc
 # it's not datapath/linux due to shared configure script; thx led@
@@ -165,6 +141,7 @@ popd
 %configure \
 	--disable-static \
 	--enable-shared \
+	--enable-ssl \
 	--with-rundir=%_runtimedir/%name \
 	--with-logdir=%_logdir/%name \
 	--with-dbdir=%_localstatedir/%name \
@@ -245,15 +222,16 @@ touch %buildroot%_sysconfdir/%name/system-id.conf
 %preun_service %name
 
 %files
-%doc AUTHORS DESIGN INSTALL.* NOTICE
-%doc REPORTING-BUGS NEWS PORTING
-%doc CodingStyle README README-lisp
-%doc WHY-OVS COPYING
+%doc AUTHORS DESIGN.md INSTALL.* NOTICE
+%doc REPORTING-BUGS.md NEWS PORTING.md
+%doc CodingStyle.md README.md README-lisp.md FAQ.md
+%doc WHY-OVS.md COPYING
 %_bindir/ovs-dpctl
 %_bindir/ovs-dpctl-top
 %_bindir/ovs-pcap
 %_bindir/ovs-tcpundump
-
+%_bindir/ovs-testcontroller
+%_bindir/ovs-docker
 %_bindir/ovs-vsctl
 %_bindir/ovsdb-tool
 %_sbindir/ovs-vlan-bug-workaround
@@ -271,7 +249,7 @@ touch %buildroot%_sysconfdir/%name/system-id.conf
 %_man8dir/ovs-dpctl.8*
 %_man8dir/ovs-dpctl-top.8*
 %_man8dir/ovs-vlan-bug-workaround.8*
-
+%_man8dir/ovs-testcontroller.8*
 %_man8dir/ovs-vsctl.8*
 %_man8dir/ovs-vswitchd.8*
 
@@ -285,7 +263,7 @@ touch %buildroot%_sysconfdir/%name/system-id.conf
 %config(noreplace) %ghost %_sysconfdir/openvswitch/system-id.conf
 %config(noreplace) %_sysconfdir/profile.d/openvswitch.sh
 %config(noreplace) %_sysconfdir/sysconfig/%name
-%config %_sysconfdir/logrotate.d/openvswitch
+%config(noreplace) %_sysconfdir/logrotate.d/openvswitch
 %config(noreplace) %_sysconfdir/net/options.d/01-openvswitch
 %_sysconfdir/net/scripts/*
 
@@ -343,6 +321,7 @@ touch %buildroot%_sysconfdir/%name/system-id.conf
 #endif
 
 %files vtep
+%doc vtep/README.ovs-vtep.md
 %_bindir/vtep-ctl
 %_man5dir/vtep.5.*
 %_man8dir/vtep-ctl.8.*
@@ -364,6 +343,9 @@ touch %buildroot%_sysconfdir/%name/system-id.conf
 %endif
 
 %changelog
+* Fri Oct 02 2015 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt1
+- build branch-2.4
+
 * Tue Feb 03 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.1-alt1
 - build branch-2.3
 - add systemd unit
