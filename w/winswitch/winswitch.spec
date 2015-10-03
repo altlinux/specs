@@ -1,13 +1,13 @@
 Name: winswitch
-Version: 0.12.20
-Release: alt2
+Version: 0.12.21
+Release: alt1
 
 Summary: Front end for controlling remote desktop sessions
 License: GPLv3
 Group: Networking/Remote access
 
-Url: http://winswitch.org/
-Source: %name-%version.tar.gz
+Url: http://winswitch.org
+Source: %name-%version.src.tar.xz
 
 BuildRequires: python-devel rpm-build-python rpm-build-xdg libpng-devel
 BuildRequires: python-module-setuptools python-module-pygtk-devel
@@ -61,6 +61,9 @@ rmdir %buildroot/usr/lib/{nautilus,python*{/site-packages,}}
 %_xdgmimedir/*
 
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 0.12.21-alt1
+- 0.12.21
+
 * Mon Mar 09 2015 Michael Shigorin <mike@altlinux.org> 0.12.20-alt2
 - don't filter out WMs for the applet, people can run trayer et al
 
