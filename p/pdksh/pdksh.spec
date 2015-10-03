@@ -1,6 +1,6 @@
 Name: pdksh
 Version: 5.2.14
-Release: alt2.qa1
+Release: alt3
 Epoch: 1
 
 Summary: A public domain clone of the Korn shell (ksh)
@@ -13,9 +13,13 @@ Patch0: pdksh-5.2.14-patches1.patch
 Patch1: pdksh-5.2.14-alignia64.patch
 Patch2: pdksh-5.2.14-patches2.patch
 Patch3: pdksh-5.2.14-coreutils-posix-fix.patch
+Patch4: pdksh-child_max.patch
+Patch5: pdksh-5.2.14-fix-str-fmt.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Provides: /bin/ksh
+
+%set_gcc_version 4.9
 
 %description
 The %name package contains PD-ksh, a clone of the Korn shell (ksh).
@@ -27,11 +31,13 @@ Install the %name package if you want to use a version of the ksh
 shell.
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p0
 
 %build
 %configure
@@ -39,8 +45,8 @@ shell.
 
 %install
 mkdir -p %buildroot%_bindir
-install -pD -m755 ksh %buildroot/bin/ksh
-install -pD -m644 ksh.1 %buildroot%_man1dir/ksh.1
+install -pDm755 ksh %buildroot/bin/ksh
+install -pDm644 ksh.1 %buildroot%_man1dir/ksh.1
 ln -s ksh.1 %buildroot%_man1dir/%name.1
 ln -s ../../bin/ksh %buildroot%_bindir/
 ln -s ksh %buildroot%_bindir/%name
@@ -52,6 +58,10 @@ ln -s ksh %buildroot%_bindir/%name
 %doc BUG-REPORTS ChangeLog* CONTRIBUTORS LEGAL NEWS NOTES PROJECTS README
 
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 1:5.2.14-alt3
+- build with gcc4 (FTBFS with gcc5)
+- added some of mageia patches while at that
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:5.2.14-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
