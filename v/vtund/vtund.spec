@@ -1,6 +1,6 @@
 %define item vtun
 
-%define release_pre alt2
+%define release_pre alt3
 
 # for distr selected
 %def_without M40
@@ -71,8 +71,8 @@ saving, etc.  It is completely a user space implementation and does
 not require modification to any kernel parts.
 
 %prep
-
 %setup -n %item-%version
+%add_optflags "-std=gnu89"
 aclocal
 autoconf
 %configure
@@ -107,6 +107,9 @@ sed -i 's,/usr/lib,%_libdir,g' %buildroot%_initdir/vtund
 %_man5dir/*
 
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 3.0.3-alt3
+- gcc5 FTBFS workaround (-std=gnu89)
+
 * Wed Jan 28 2015 Michael Shigorin <mike@altlinux.org> 3.0.3-alt2
 - NMU: fixed initscript on x86_64 (closes: #30676)
 - minor spec cleanup
