@@ -1,12 +1,12 @@
 Name: wmgtemp
 Version: 1.1
-Release: alt1.qa1
+Release: alt2
 
 Summary: Dock app for WindowMaker that displays the CPU and SYS temperatures
 License: Artistic
 Group: Graphical desktop/Window Maker
 
-URL: http://www.fluxcode.net/
+Url: http://www.fluxcode.net/projects/wmgtemp
 Source0: http://www.fluxcode.net/%name-%version.tar.gz
 Source1: %name.menu
 
@@ -14,22 +14,25 @@ Source1: %name.menu
 BuildRequires: libXext-devel libXpm-devel libsensors3-devel
 
 %description
-wmgtemp graphically displays the CPU and System temperatures using the lm_sensors package.
-It was originally intended to work with the VIA686A chipset but an increasing list of
-sensors are being supported. It displays the CPU and System temperature values, a scaling
-graph of temperature history, and high-temperature warning lights.
+wmgtemp graphically displays the CPU and System temperatures
+using the lm_sensors package.  It was originally intended to work
+with the VIA686A chipset but an increasing list of sensors are
+being supported. It displays the CPU and System temperature
+values, a scaling graph of temperature history, and
+high-temperature warning lights.
 
 %prep
 %setup
 
 %build
 cd src
+%add_optflags "-std=gnu89"
 %make_build CCFLAGS="%optflags"
 
 %install
-install -p -D -m755 src/%name $RPM_BUILD_ROOT%_bindir/%name
-install -p -D -m644 %name.1 $RPM_BUILD_ROOT%_man1dir/%name.1
-install -p -D -m644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
+install -pDm755 src/%name %buildroot%_bindir/%name
+install -pDm644 %name.1 %buildroot%_man1dir/%name.1
+install -pDm644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
 %_bindir/*
@@ -37,6 +40,10 @@ install -p -D -m644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 %_menudir/*
 
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 1.1-alt2
+- gcc5 FTBFS workaround (-std=gnu89)
+- minor spec cleanup
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
