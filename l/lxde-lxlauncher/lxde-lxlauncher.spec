@@ -2,7 +2,7 @@
 %define origname lxlauncher
 
 Name: lxde-%origname
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: LXLauncher is an open source clone of Asus launcher for EeePC
@@ -56,6 +56,9 @@ install -dm755 %buildroot%_datadir/%origname/{backgrounds,icons}
 %_datadir/%origname
 
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 0.2.4-alt1
+- 0.2.4
+
 * Wed Sep 24 2014 Michael Shigorin <mike@altlinux.org> 0.2.3-alt1
 - initial release (based on lxde-lxpanel.spec and fedora package)
 
