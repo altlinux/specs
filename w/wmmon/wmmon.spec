@@ -3,18 +3,17 @@
 
 Name: wmmon
 Version: 1.0b2
-Release: alt4
+Release: alt5
 
 Summary: Nice system monitor for WindowMaker
 Group: Graphical desktop/Window Maker
 License: GPL
 
-Packager: Sir Raorn <raorn@altlinux.ru>
-
-Source: %name-%version.tar.gz
+Url: http://repo.or.cz/w/dockapps.git
+Source0: %name-%version.tar.gz
 Source1: %name.menu
-
 Patch: %name-1.0b2-deb-fixes.patch
+Packager: Sir Raorn <raorn@altlinux.ru>
 
 # Automatically added by buildreq on Tue Feb 15 2005
 BuildRequires: libXt-devel libXext-devel libXpm-devel
@@ -41,6 +40,7 @@ WMMon currently provides:
 %prep
 %setup -n %name.app
 %patch -p1
+sed -i 's,cc ,cc -std=gnu89 ,' wmmon/Makefile
 
 %build
 cd %name
@@ -48,17 +48,23 @@ cd %name
 
 %install
 cd %name
-install -D -pm755 %name %buildroot%_x11bindir/%name
-install -D -pm644 %SOURCE1 %buildroot%_menudir/%name
-install -D -pm644 %name.1 %buildroot%_x11mandir/man1/%name.1x
+install -pDm755 %name %buildroot%_bindir/%name
+install -pDm644 %SOURCE1 %buildroot%_menudir/%name
+install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 
 %files
 %doc BUGS CHANGES COPYING HINTS INSTALL README TODO
-%_x11bindir/%name
-%_x11mandir/man1/%name.1x*
+%_bindir/%name
+%_man1dir/%name.1*
 %_menudir/%name
 
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 1.0b2-alt5
+- gcc5 FTBFS workaround (-std=gnu89)
+- moved to %_bindir
+- added an Url:
+- minor spec cleanup
+
 * Tue Oct 15 2013 Michael Shigorin <mike@altlinux.org> 1.0b2-alt4
 - fixed menu file to reference %_bindir/%name
 
