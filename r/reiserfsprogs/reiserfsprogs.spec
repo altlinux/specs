@@ -2,13 +2,16 @@
 
 Name: reiserfsprogs
 Version: 3.6.24
-Release: alt2
+Release: alt3
+
 Summary: The utilities to create Reiserfs volume
 License: GPLv2 with "Anti-Plagiarism" modification
 Group: System/Kernel and hardware
+
 Url: http://git.kernel.org/?p=linux/kernel/git/jeffm/%name.git;a=summary
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
 Obsoletes: reiserfs-utils
 Provides: reiserfs-utils = %version-%release
 Conflicts: progsreiserfs < 0.3.0.5-alt3
@@ -24,11 +27,12 @@ Reiserfs.
 
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 
 %build
+%add_optflags "-std=gnu89"
 %autoreconf
 %configure --enable-largefile
 %make_build V=1
@@ -45,6 +49,9 @@ Reiserfs.
 
 
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 3.6.24-alt3
+- gcc5 FTBFS workaround (-std=gnu89)
+
 * Wed Nov 20 2013 Led <led@altlinux.ru> 3.6.24-alt2
 - debugreiserfs: fix use after free while closing log
 
