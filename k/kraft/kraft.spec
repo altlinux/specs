@@ -1,7 +1,7 @@
 
 Name:           kraft
-Version:        0.55
-Release:        alt1.1
+Version:        0.58
+Release:        alt1
 
 Summary:        Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
@@ -10,6 +10,7 @@ Group:          Office
 URL:            http://www.volle-kraft-voraus.de/
 
 Source0:        kraft-%{version}.tar.bz2
+Patch:		kraft-fix-l10n-build-with-cmake.patch
 
 BuildRequires(pre): kde4libs-devel
 BuildRequires: 	gcc-c++
@@ -31,6 +32,7 @@ Authors:
 
 %prep
 %setup -q -n %name-%version
+%patch -p2
 
 %build
 sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DIR}|' src/CMakeLists.txt
@@ -46,11 +48,13 @@ sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DI
 %_K4datadir/apps/*
 %_K4xdg_apps/*
 %_K4cfg/*
-%_libdir/lib*
 %_iconsdir/*/*/*/*.png
 
-
 %changelog 
+* Sat Oct 03 2015 Andrey Cherepanov <cas@altlinux.org> 0.58-alt1
+- New version 0.58
+- Fix l10n build in cmake
+
 * Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.55-alt1.1
 - Rebuilt with new ctemplate
 
