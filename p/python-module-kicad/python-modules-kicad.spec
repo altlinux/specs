@@ -3,7 +3,7 @@
 
 Name: python-module-%modulename
 Version: 0.0
-Release: alt1.%rev.1
+Release: alt2.%rev.1
 
 %setup_python_module %modulename
 
@@ -20,6 +20,8 @@ Source: python-module-kicad-%version.tar
 
 #BuildPreReq: %py_dependencies setuptools
 BuildRequires: python-module-setuptools
+
+Provides: python2.7(pcbnew)
 
 %description
 Development of a new Python scripting API for KiCad based on Piers Titus van
@@ -42,5 +44,8 @@ sphinx.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sat Oct 03 2015 Anton Midyukov <antohami@altlinux.org> 0.0-alt2.e565781f.1
+- Add provides python2.7(pcbnew)
+
 * Fri Oct 02 2015 Anton Midyukov <antohami@altlinux.org> 0.0-alt1.e565781f.1
 - Initial build for Alt Linux Sisyphus.
