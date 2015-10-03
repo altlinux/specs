@@ -1,16 +1,16 @@
 %define rname pugixml
 
 Name:           libpugixml
-Version:        1.0
-Release:        alt3
+Version:        1.6
+Release:        alt1
 Summary:        A light-weight C++ XML processing library
 
 Group:          System/Libraries
 License:        MIT
 URL:            http://pugixml.org
+# VCS:		https://github.com/zeux/pugixml/
 
 Source0:        http://pugixml.googlecode.com/files/%rname-%version.tar.gz
-Patch0:         pugixml-1.0-set_lib_soversion.patch
 
 BuildRequires:  ctest cmake
 BuildRequires:  gcc-c++
@@ -38,7 +38,6 @@ Development files for package %{name}
 
 %prep
 %setup -q -n %rname-%version
-%patch0
 cp scripts/CMakeLists.txt .
 
 %build
@@ -65,6 +64,9 @@ mv BUILD/*.so %buildroot%_libdir/
 %_includedir/*.hpp
 
 %changelog
+* Sat Oct 03 2015 Andrey Cherepanov <cas@altlinux.org> 1.6-alt1
+- New version
+
 * Tue Jan 14 2014 Andrey Cherepanov <cas@altlinux.org> 1.0-alt3
 - Make devel .so library as symlink to so-named library
 
