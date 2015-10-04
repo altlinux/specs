@@ -1,15 +1,15 @@
 %define wxbranch 3.1
 
 Name: wxGTK3.1
-Version: %wxbranch.0
-Release: alt4.git20150312
+Version: 3.1.0
+Release: alt5.git20150312
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
 Group: System/Libraries
 Url: http://wxwidgets.org
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Anton Midyukov <antohami@altlinux.org>
 
 # https://github.com/wxWidgets/wxWidgets.git
 Source: %name-%version.tar
@@ -66,7 +66,7 @@ wxGTK example programs.
 
 %prep
 %setup
-subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
+%__subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
 
 rm -fR src/{expat,jpeg,tiff,zlib,png}
 
@@ -341,6 +341,9 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt5.git20150312
+- Rebuilt for new gcc5 C++11 ABI.
+
 * Sat Jun 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt4.git20150312
 - Rebuilt with gcc5
 

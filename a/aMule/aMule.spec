@@ -2,7 +2,7 @@
 %define		_rc	rc8
 Name:		aMule
 Version:	2.3.1
-Release:	alt2.2
+Release:	alt3
 
 Summary:	aMule - eMule client.
 License:	GPL
@@ -78,6 +78,9 @@ for multiplatform support.
 %dir %_docdir/amule
 
 %changelog
+* Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 2.3.1-alt3
+- Rebuilt for new gcc5 C++11 ABI.
+
 * Sat Jul 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.1-alt2.2
 - Rebuilt with gcc5
 
