@@ -1,6 +1,6 @@
 Name: moneymanagerex
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: Simple to use financial management software
 License: GPLv2
@@ -55,5 +55,8 @@ TODO: build with external lua, ccpunit, wxsqlite3
 
 
 %changelog
+* Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 1.2.2-alt2
+- Rebuilt for new gcc5 C++11 ABI.
+
 * Thu Aug 13 2015 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
 - initial build for ALT Linux Sisyphus
