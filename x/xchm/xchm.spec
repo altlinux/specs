@@ -1,6 +1,6 @@
 Name: xchm
 Version: 1.23
-Release: alt2
+Release: alt3
 
 Summary: xCHM - the CHM viewer for UNIX
 License: GPLv2+
@@ -48,6 +48,9 @@ install -pD -m644 art/xchm-48.xpm %buildroot%_liconsdir/xchm.xpm
 %_liconsdir/*
 
 %changelog
+* Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 1.23-alt3
+- Rebuilt for new gcc5 C++11 ABI.
+
 * Mon Jul 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.23-alt2
 - Rebuilt with gcc5
 
