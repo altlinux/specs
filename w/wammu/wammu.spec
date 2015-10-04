@@ -1,6 +1,6 @@
 Name: wammu
 Version: 0.39
-Release: alt1
+Release: alt2
 
 Summary: Mobile phone manager
 License: GPL
@@ -49,6 +49,9 @@ subst '/man1/ D' INSTALLED_FILES
 %_mandir/*/man1/*
 
 %changelog
+* Sun Oct 04 2015 Michael Shigorin <mike@altlinux.org> 0.39-alt2
+- rebuilt against current python-module-wx (gcc5 C++ ABI)
+
 * Wed Jul 15 2015 Michael Shigorin <mike@altlinux.org> 0.39-alt1
 - new version (watch file uupdate)
 
