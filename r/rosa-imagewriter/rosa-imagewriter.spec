@@ -1,12 +1,12 @@
 
 Name:		rosa-imagewriter
-Version:	2.6.0.0
+Version:	2.6.1.0
 Release:	alt1
 Summary:	Utility for writing raw disk images and hybrid isos to USB keys
 
 License:	GPLv3
 Group:		Archiving/Other
-URL:		https://abf.rosalinux.ru/captainflint/rosa-image-writer
+URL:		https://abf.io/soft/rosa-imagewriter
 
 Packager:   	Andrey Cherepanov <cas@altlinux.org>
 
@@ -54,6 +54,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Oct 04 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.1.0-alt1
+- New version
+
 * Fri May 15 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.0.0-alt1
 - New version
 
