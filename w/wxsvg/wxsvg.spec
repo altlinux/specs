@@ -1,6 +1,6 @@
 Name: wxsvg
 Version: 1.5
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: wxSVG is viewer SVG files
@@ -71,6 +71,9 @@ rm -f ./configure
 %_libdir/pkgconfig/*
 
 %changelog
+* Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 1:1.5-alt3
+- Rebuilt for new gcc5 C++11 ABI.
+
 * Sat Jul 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.5-alt2
 - Rebuilt with gcc5
 
