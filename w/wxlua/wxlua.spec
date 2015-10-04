@@ -1,6 +1,6 @@
 Name: wxlua
 Version: 2.8.12.3
-Release: alt3.r246.2
+Release: alt4.r246.2
 Summary: Lua IDE with a GUI debugger and binding generator
 License: wxWidgets License
 Group: Development/Other
@@ -128,6 +128,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 2.8.12.3-alt4.r246.2
+- Rebuilt for new gcc5 C++11 ABI.
+
 * Mon Jul 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.12.3-alt3.r246.2
 - Rebuilt with gcc5
 
