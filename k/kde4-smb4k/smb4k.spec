@@ -5,7 +5,7 @@
 
 %define rname smb4k
 Name: kde4-%rname
-Version: 1.1.4
+Version: 1.2.1
 Release: alt1
 
 Group: Networking/Other
@@ -52,7 +52,7 @@ Developemnt files for %name
 
 %install
 %K4install
-%K4find_lang --with-kde %rname
+%K4find_lang --with-kde --all-name %rname
 
 # move plasmoid module
 mkdir -p  %buildroot/%_K4lib/smb4k/
@@ -65,7 +65,8 @@ ln -s \
 
 %files -f %rname.lang
 %_kde4_bindir/*
-%_K4libdir/libkdeinit4_smb4k.so
+#%_K4libdir/libkdeinit4_smb4k.so
+%_K4libdir/libsmb4ktooltips.so
 %_K4lib/*.so
 %_K4lib/smb4k/
 %_K4exec/mounthelper
@@ -88,6 +89,12 @@ ln -s \
 
 
 %changelog
+* Mon Oct 05 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1
+- new version
+
+* Fri Jan 16 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.4-alt0.M70P.1
+- built for M70P
+
 * Tue Jan 13 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.4-alt1
 - new version
 
