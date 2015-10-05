@@ -2,7 +2,7 @@ Summary: The Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
-Version: 25.7.0.rel
+Version: 25.7.2
 Release: alt1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
@@ -73,7 +73,9 @@ These helper macros provide possibility to rebuild
 cd %name
 
 tar -xf %SOURCE1
+pushd browser/locales/generic/
 tar -xf %SOURCE2
+popd
 
 #patch5  -p1
 %patch6  -p1
@@ -292,6 +294,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Oct 05 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.7.2-alt1
+- New Version
+
 * Sat Aug 29 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.7.0.rel-alt1
 - New Version
 
@@ -315,3 +320,4 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+
