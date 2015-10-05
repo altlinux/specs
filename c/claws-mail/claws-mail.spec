@@ -16,7 +16,7 @@
 
 Name:   	claws-mail
 Version:	3.12.0
-Release: 	alt2
+Release: 	alt3
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -845,6 +845,16 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Mon Oct 05 2015 Mikhail Efremov <sem@altlinux.org> 3.12.0-alt3
+- Patches from upstream:
+  + Fix several memory leaks in RSSyl.
+  + Fix string leaks.
+  + managesieve: fix memory leak.
+  + fix bug 3531, 'a/z hotkeys crash Claws immediately after startup'.
+  + Fix crash on double notification popup.
+  + Fix crash in address completion when matching group name.
+  + managesieve: close windows when unloading.
+
 * Wed Aug 12 2015 Mikhail Efremov <sem@altlinux.org> 3.12.0-alt2
 - Enable gdata plugin again.
 
