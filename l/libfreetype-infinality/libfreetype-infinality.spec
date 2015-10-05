@@ -1,7 +1,7 @@
 %define freetypemajorversion 6
 
 Name: libfreetype-infinality
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
@@ -18,7 +18,7 @@ Source92: README.infinality
 Patch1: freetype-2.4.10-rh-enable-valid.patch
 # Infinality patches. Now we use bohoomil upstream:
 # https://github.com/bohoomil/fontconfig-ultimate/
-Patch91: freetype-2.6.0-bohoomil-infinality-20150610.patch
+Patch91: freetype-2.6.1-bohoomil-infinality-20151005.patch
 
 Provides: freetype2-infinality = %version
 Obsoletes: freetype2-infinality < %version
@@ -48,7 +48,7 @@ overrides the system library using ld.so.conf.d mechanism.
 %add_optflags -fno-strict-aliasing
 %define libdir %{_libdir}/%name
 %configure %{subst_enable static} \
-    --libdir=%libdir
+    --libdir=%libdir --with-optimization=no
 
 # get rid of RPATH
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
@@ -64,6 +64,7 @@ mkdir -p %buildroot${ld_so_conf%%/*}
 echo %_libdir/%name > %buildroot%ld_so_conf
 chmod 644 %buildroot%ld_so_conf
 %filter_from_provides '/^libfreetype\.so\./d'
+%filter_from_provides '/^debug/d'
 
 mkdir -p %buildroot%_sysconfdir/X11/profile.d
 install -pm755 %SOURCE91 %buildroot%_sysconfdir/X11/profile.d/
@@ -72,7 +73,7 @@ install -pm755 %SOURCE91 %buildroot%_sysconfdir/X11/profile.d/
 mkdir -p %buildroot%docdir
 cp -a docs/{FTL.TXT,LICENSE.TXT,CHANGES} %buildroot%docdir/
 pushd %buildroot%docdir
-    bzip2 -9 CHANGES 
+    bzip2 -9 CHANGES
 popd
 cp %SOURCE91 %buildroot%docdir
 cp %SOURCE92 %buildroot%docdir
@@ -96,6 +97,11 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %config %ld_so_conf
 
 %changelog
+* Mon Oct 5 2015 Vladimir Didenko <cow@altlinux.ru> 2.6.1-alt1
+- 2.6.1
+- Remove debug(libfreetype.so) from provides (closes: #31325)
+- update infinality patch
+
 * Thu Jun 11 2015 Vladimir Didenko <cow@altlinux.ru> 2.6.0-alt1
 - 2.6.0
 
