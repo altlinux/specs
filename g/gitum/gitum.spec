@@ -1,6 +1,6 @@
 Name: gitum
 Version: 0.8.3
-Release: alt3
+Release: alt4
 
 Summary: Git Upstream Manager
 License: GPLv2
@@ -9,7 +9,7 @@ Group: Development/Other
 # git clone git://git.altlinux.org/people/piastry/packages/gitum.git
 
 Url: http://wiki.etersoft.ru/GitUM
-Packager: Pavel Shilovsky <piastry@altlinux.org>
+Packager: Konstantin Artyushkin <akv@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -49,6 +49,9 @@ and ready for a submission in the same time.
 %_bindir/%name
 
 %changelog
+* Mon Oct 05 2015 Konstantin Artyushkin <akv@altlinux.org> 0.8.3-alt4
+- fix for 0xE0 bug in hex of files by git.diff()
+
 * Mon Feb 16 2015 Pavel Shilovsky <piastry@altlinux.org> 0.8.3-alt3
 - Fix url
 
