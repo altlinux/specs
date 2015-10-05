@@ -10,11 +10,7 @@
 %def_disable debug
 %def_disable static_thread
 %def_enable shared_thread
-%ifnarch %arm
 %def_enable docs
-%else
-%def_disable docs
-%endif
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_sqlite2
@@ -38,7 +34,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt3
+%define rlz alt4
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -91,7 +87,7 @@ Patch204: qt-everywhere-opensource-src-4.6.3-glib_eventloop_nullcheck.patch
 Patch205: qt-x11-opensource-src-4.5.1-enable_ft_lcdfilter.patch
 Patch206: qt-everywhere-opensource-src-4.8.3-qdbusconnection_no_debug.patch
 Patch207: qt-everywhere-opensource-src-4.8.1-icu_no_debug.patch
-#
+Patch208: qt-everywhere-opensource-src-4.8.6-systemtrayicon.patch
 Patch209: qt-everywhere-opensource-src-4.8.5-QTBUG-21900.patch
 Patch210: qt-everywhere-opensource-src-4.8.0-QTBUG-22037.patch
 Patch211: qt-everywhere-opensource-src-4.8.2--assistant-crash.patch
@@ -99,6 +95,7 @@ Patch212: qt-everywhere-opensource-src-4.8.0-tp-qtreeview-kpackagekit-crash.patc
 Patch213: qt-everywhere-opensource-src-4.8.3-no_Werror.patch
 Patch214: qt-everywhere-opensource-src-4.8.5-QTBUG-4862.patch
 #
+Patch216: qt-everywhere-opensource-src-4.8.6-QTBUG-34614.patch
 Patch217: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
 # MDV
 # ALT
@@ -697,7 +694,7 @@ Install this package if you want to create RPM packages that use %name
 %patch205 -p1
 %patch206 -p1
 %patch207 -p1
-#
+%patch208 -p1
 %patch209 -p1
 %patch210 -p1
 %patch211 -p1
@@ -705,6 +702,7 @@ Install this package if you want to create RPM packages that use %name
 %patch213 -p1
 %patch214 -p1
 #
+%patch216 -p0
 %patch217 -p1
 # MDV
 # ALT
@@ -942,6 +940,13 @@ done
 %endif
 #
 ln -s %name %buildroot/%_libdir/%rname-%version
+
+# clean from WebKit
+rm -f %buildroot/%qtdir/imports/QtWebKit/*
+rm -f %buildroot/%_libdir/libQtWebKit.*
+rm -f %buildroot/%qtdir/lib/libQtWebKit.*
+rm -f %buildroot/%_includedir/%name/QtWebKit/*
+rm -f %buildroot/%_pkgconfigdir/QtWebKit.pc
 
 # install qdbus alternative
 QDBUS_ALTPRIO=`printf '%%.2d%%.2d%%.2d%%.2d\n' 0 %major %minor %bugfix`
@@ -1440,6 +1445,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Fri Oct 02 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt4
+- adds patch for sni-qt system tray plugin support
+
 * Fri Sep 25 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt3
 - add qdbus symlink for KDE4
 
