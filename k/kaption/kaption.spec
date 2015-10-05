@@ -2,7 +2,7 @@
 
 Name:    kaption
 Version: 0.1.1
-Release: alt1
+Release: alt2
 Summary: A KDE utility similar to Jing or Skitch not yet as powerful as them
 
 License: GPLv2+
@@ -10,6 +10,7 @@ Group:   Graphics
 URL:     http://kde-apps.org/content/show.php/?content=%{kdeapp}
 
 Source:  http://kde-apps.org/CONTENT/content-files/%kdeapp-%name-%version.tar.bz2
+Patch:   kaption-fix-l10n-build.patch
 
 BuildRequires(pre): kde4libs-devel
 BuildRequires:  gcc-c++
@@ -29,6 +30,7 @@ This program has the following features:
 
 %prep
 %setup -q -n %name-%version
+%patch -p2
 
 %build
 %K4build -DCMAKE_SKIP_RPATH=1
@@ -46,6 +48,9 @@ This program has the following features:
 
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 0.1.1-alt2
+- Fix l10n build
+
 * Mon Oct 08 2012 Andrey Cherepanov <cas@altlinux.org> 0.1.1-alt1
 - Initial build in Sisyphus
 
