@@ -1,5 +1,5 @@
 %define module_name	ipt_netflow
-%define module_version	2.0.1
+%define module_version	2.1
 
 %define module_release alt1
 
@@ -59,6 +59,9 @@ install ipt_NETFLOW.ko %buildroot/%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Feb 10 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru>  2.1-alt1
+- new version
 
 * Wed Oct 22 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru>  2.0.1-alt1
 - new version
