@@ -3,7 +3,7 @@
 
 Name: opennx
 Version: 0.16.e
-Release: alt29.svn724
+Release: alt30
 
 Summary: An OpenSource NX client
 
@@ -106,6 +106,11 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %changelog
+* Mon Oct 05 2015 Vitaly Lipatov <lav@altlinux.ru> 0.16.e-alt30
+- fixed exit message: exit function now accept exit message
+- fixed 'no sessions' bug
+- fixed possible mistakes in code, added version dependency
+
 * Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 0.16.e-alt29.svn724
 - Rebuilt for new gcc5 C++11 ABI.
 
