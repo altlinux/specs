@@ -8,7 +8,7 @@
 
 Name:    v8-%MAJOR_VERSION.%MINOR_VERSION
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt1
+Release: alt2
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
@@ -16,7 +16,7 @@ Group:   System/Libraries
 Url:     http://code.google.com/p/v8
 
 Source:  %name-%version.tar
-BuildPreReq: gcc-c++ gyp
+BuildPreReq: gcc4.9-c++ gyp
 BuildRequires: python-modules-multiprocessing
 
 Provides: %libname
@@ -99,6 +99,9 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 3.24.35.33-alt2
+- Build with gcc 4.9
+
 * Wed Apr 30 2014 Andrey Cherepanov <cas@altlinux.org> 3.24.35.33-alt1
 - new version
 - security fixes:
