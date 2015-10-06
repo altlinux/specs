@@ -1,10 +1,10 @@
 Name: libaacs
 Version: 0.8.1
-Release: alt1
-Summary: BD AACS library
+Release: alt2
 
-Group: System/Libraries
+Summary: BD AACS library
 License: LGPL
+Group: System/Libraries
 Url: http://bd.videolan.org/
 
 Source: %name-%version-%release.tar
@@ -44,6 +44,9 @@ This package contains the headers and libraries for libaacs development.
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Oct 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.1-alt2
+- rebuilt with recent libgcrypt
+
 * Wed Apr 08 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.1-alt1
 - 0.8.1 released
 
@@ -67,4 +70,3 @@ This package contains the headers and libraries for libaacs development.
 
 * Wed May 11 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1-alt0.1
 - initial
-
