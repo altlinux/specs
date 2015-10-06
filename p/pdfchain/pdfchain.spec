@@ -1,7 +1,7 @@
 
 Name:		pdfchain
 Version:	0.4.4
-Release:	alt1.1
+Release:	alt2
 
 Summary:	A graphical user interface for the PDF Toolkit (PDFtk)
 Group:		Office
@@ -25,6 +25,7 @@ files to one pdf file or split. There are also some options and tools.
 [ -s NEWS ] && exit 1
 
 %build
+%add_optflags -std=c++11
 %configure
 %make_build
 
@@ -42,6 +43,9 @@ rm -rf %buildroot%_docdir/pdfchain
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Oct 06 2015 Andrey Cherepanov <cas@altlinux.org> 0.4.4-alt2
+- Fix build with c++11
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.4-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
