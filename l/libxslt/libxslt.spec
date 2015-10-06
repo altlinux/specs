@@ -1,6 +1,6 @@
 Name: libxslt
 Version: 1.1.28
-Release: alt2
+Release: alt3
 
 Summary: Library providing XSLT support
 License: MIT
@@ -175,6 +175,9 @@ make check
 %pkgdocdir/python/examples/*.xsl
 
 %changelog
+* Tue Oct 06 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.28-alt3
+- Rebuild with libgcrypt.
+
 * Wed Nov 12 2014 Dmitry V. Levin <ldv@altlinux.org> 1.1.28-alt2
 - Updated to v1.1.28-36-g73e08bf.
 
