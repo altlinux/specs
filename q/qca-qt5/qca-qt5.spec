@@ -2,9 +2,9 @@
 Name: qca-qt5
 %define major 2
 %define minor 1
-%define bugfix 0.3
+%define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -14,7 +14,6 @@ Requires: lib%name = %version-%release
 
 Source: %name-%version.tar
 # SuSE
-Patch1: 0001-Add-missing-QIODevice-include.patch
 Patch2: ansi.diff
 # ALT
 Patch10: qca-2.0.3-alt-paths.patch
@@ -188,18 +187,20 @@ utilize the for Qt Cryptographic Architecture (QCA).
 
 %prep
 %setup -q -n %name-%version
-%patch1 -p1
 %patch2 -p1
 %patch10 -p1
 
 
 %build
 export QTDIR=%_qt5_prefix
+export QC_CERTSTORE_PATH="%_datadir/ca-certificates/ca-bundle.crt"
 %Kbuild \
+    -DBUILD_TESTS=OFF \
     -DQCA_INSTALL_IN_QT_PREFIX=ON \
     -Dqca_CERTSTORE=%_datadir/ca-certificates/ca-bundle.crt \
     -DQCA_GPG_EXECUTABLE=gpg \
     -DQT4_BUILD=OFF \
+    -DQCA_SUFFIX=qt5 \
     #
 
 %install
@@ -249,6 +250,9 @@ done
 #%_qt5_headerdir/Qca-qt5/QtCrypto
 
 %changelog
+* Tue Oct 06 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
+- new version
+
 * Thu Sep 17 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.0.3-alt3
 - sync patches with SuSE
 
