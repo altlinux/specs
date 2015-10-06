@@ -1,20 +1,18 @@
 Name:    synfigstudio
-Version: 1.0.0
-Release: alt1.1
+Version: 1.0.1
+Release: alt1
 
 Summary: Synfig studio - animation program
 Group:   Office
 License: GPL
 Url:     http://www.synfig.org
+# VCS:	 https://github.com/synfig/synfig
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 #Source: http://prdownloads.sf.net/synfig/%name-%version.tar.gz
 Source:  %name-%version.tar
-Patch1:  synfigstudio-0.62.00-cflags.patch
-Patch2:  synfigstudio-1.0-fix-splash.patch
-Patch3:  synfigstudio-1.0-release.patch
-
+Patch0:  synfigstudio-build-with-sigc++-2.0.patch
 
 BuildPreReq: fonts-ttf-liberation
 BuildRequires: gcc-c++ libgtkmm2-devel
@@ -22,6 +20,7 @@ BuildRequires: libsynfig-devel >= %version
 BuildRequires: intltool
 BuildRequires: ImageMagick-tools
 BuildRequires: libgtkmm3-devel
+BuildRequires: libsigc++2-devel
 BuildRequires: /proc
 
 BuildPreReq: libsynfig-devel = %version
@@ -48,18 +47,20 @@ Header files for Synfig studio.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p2
-%patch3 -p2
+%patch0 -p2
 
 %build
 %autoreconf
-#export CPPFLAGS="-fno-inline"
+%add_optflags -std=c++11 -I%_includedir/sigc++-2.0 -I%_libdir/sigc++-2.0/include
 %configure
 %make_build
 
 %install
 %makeinstall_std
+
+# Remove generated mime database
+find %buildroot%_xdgmimedir/ -maxdepth 1 -a -type f -delete
+
 %find_lang %name
 
 %files -f %name.lang
@@ -82,6 +83,9 @@ Header files for Synfig studio.
 %_includedir/synfigapp*/
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
+- New version
+
 * Fri Jul 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 

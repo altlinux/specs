@@ -1,6 +1,6 @@
 %define oname ETL
 Name:    libetl
-Version: 0.04.18
+Version: 0.04.19
 Release: alt1
 
 Summary: Voria Extended Class and Template Library
@@ -10,12 +10,11 @@ License: GPL
 Group:   Development/C++
 Url:     http://www.synfig.com
 
-Packager: Yuriy Shirokov <yushi@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # git clone git://synfig.git.sourceforge.net/gitroot/synfig/synfig
 Source: http://prdownloads.sf.net/synfig/%oname-%version.tar
 
-# Automatically added by buildreq on Fri Jan 12 2007
 BuildRequires: gcc-c++
 
 %package devel
@@ -46,6 +45,9 @@ designed to complement and supplement the C++ STL.
 %_pkgconfigdir/ETL.pc
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 0.04.19-alt1
+- New version
+
 * Wed Apr 29 2015 Andrey Cherepanov <cas@altlinux.org> 0.04.18-alt1
 - New version
 

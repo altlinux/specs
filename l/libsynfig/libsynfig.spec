@@ -6,8 +6,8 @@
 %define oname synfig
 
 Name:    libsynfig
-Version: 1.0.0
-Release: alt1.1
+Version: 1.0.1
+Release: alt1
 
 Summary: Vector-based 2D animation software package
 
@@ -15,11 +15,10 @@ License: free
 Group:   Development/C++
 Url:     http://www.synfig.org/
 
-Packager: Yuriy Shirokov <yushi@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-#Source: http://www.bridgetone.com/voria/files/%oname-%version.tar.bz2
-#Source: http://prdownloads.sf.net/synfig/%oname-%version.tar.gz
 Source: %oname-%version.tar
+Patch:  libsynfig-isnan.patch
 
 BuildRequires: ImageMagick-tools cvs fontconfig-devel gcc-c++ libavformat-devel
 BuildRequires: libetl-devel libfreetype-devel libjpeg-devel libltdl7-devel
@@ -46,14 +45,12 @@ Header files for Synfig.
 
 %prep
 %setup -q -n %oname-%version
+%patch -p2
 
 %build
-%__libtoolize  --copy --force
-autoreconf --install --force
-%add_optflags -fpermissive
+%autoreconf
+%add_optflags -fpermissive -std=c++11
 %configure
-#%__subst "s|\$(includedir)/synfig|\$(includedir)|g" src/synfig/Makefile
-#%__subst "s|%_includedir/synfig-0.0|\$(pkgincludedir)/synfig-0.0|g" src/synfig/Makefile
 %make_build
 
 %install
@@ -73,6 +70,10 @@ autoreconf --install --force
 %_libdir/lib*.so
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
+- New version
+- Spec cleanup
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
