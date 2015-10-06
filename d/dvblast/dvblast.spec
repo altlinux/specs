@@ -1,6 +1,6 @@
 Name: dvblast
-Version: 2.2
-Release: alt9
+Version: 3.0
+Release: alt1
 
 Summary: Video/Audio streaming application based on the linux-dvb API
 License: GPLv2+
@@ -11,7 +11,7 @@ Packager: Alexei Takaseev <taf@altlinux.ru>
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: bitstream-headers
+BuildRequires: bitstream-headers libev-devel
 
 %description 
 DVBlast is a simple and powerful streaming application based on the
@@ -47,6 +47,9 @@ install -pm0644 -D dvblast.1 %buildroot%_man1dir/dvblast.1
 %_man1dir/dvblast.1*
 
 %changelog
+* Tue Oct 06 2015 Alexei Takaseev <taf@altlinux.org> 3.0-alt1
+- 3.0
+
 * Sat Jan 31 2015 Alexei Takaseev <taf@altlinux.org> 2.2-alt9
 - Rebuild with new bitstream
 
