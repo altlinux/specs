@@ -1,5 +1,5 @@
 Name: libbluray
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 Summary: BD library
 
@@ -58,6 +58,9 @@ export JDK_HOME=/usr/lib/jdk
 %_bindir/*
 
 %changelog
+* Tue Oct 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt1
+- 0.9.0 released
+
 * Tue Aug 04 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.1-alt1
 - 0.8.1 released
 
