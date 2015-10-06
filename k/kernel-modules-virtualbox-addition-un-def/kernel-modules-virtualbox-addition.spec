@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version	4.3.30
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
@@ -22,6 +22,8 @@ License: GPL
 Group: System/Kernel and hardware
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+
+Patch1: virtualbox-addition-4.2.patch
 
 ExclusiveOS: Linux
 Url: http://www.virtualbox.org/
@@ -63,6 +65,9 @@ that are needed for additonal guests support for VirtualBox.
 %setup -T -c -n kernel-source-%module_name-%module_version
 tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
+pushd kernel-source-%vfs_module_name-%module_version
+%patch1 -p7
+popd
 tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 
 # %%if "%flavour" == "ovz-el"
@@ -96,6 +101,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Oct  6 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.3.30-alt2
+- build with kernel 4.2 fixed
 
 * Mon Aug 31 2015 Aleksey Avdeev <solo@altlinux.org> 4.3.30-alt1
 - Update template for virtualbox 4.3.30.

@@ -1,6 +1,6 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.248
-%define module_release alt8
+%define module_release alt9
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
@@ -28,6 +28,7 @@ Patch2: bcmwl-build-kernel3.17.patch
 Patch3: bcmwl-build-kernel3.18.patch
 Patch4: bcmwl-build-kernel4.0.patch
 Patch5: bcmwl-fix.patch
+Patch6: bcmwl-build-4.2.patch
 BuildRequires: perl sharutils
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-source-%module_name = %module_version
@@ -59,6 +60,7 @@ pushd bcmwl
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p2
 popd
 
 %build
@@ -102,6 +104,9 @@ __EOF__
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Oct  5 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt9
+- build with kernel 4.2 fixed
 
 * Mon Sep 28 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt8
 - #30807 fixed
