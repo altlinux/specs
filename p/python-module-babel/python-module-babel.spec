@@ -4,19 +4,21 @@
 %def_with docs
 #def_disable check
 
-Name: python-module-%oname
-Version: 3.0
-Release: alt3.dev.git20150805
+Name:    python-module-%oname
+Version: 2.1.1
+Release: alt1
+Epoch:   1
 
 Summary: a collection of tools for internationalizing Python applications
 License: BSD
 Group: Development/Python
 
-Url: http://babel.edgewall.org
+Url: http://babel.pocoo.org/
 
 # https://github.com/mitsuhiko/babel.git
 Source: %name-%version.tar
 Source1: CLDR.tar
+Patch1:	fix-import_cldr.patch
 
 BuildArch: noarch
 BuildPreReq: python-module-setuptools-tests python-module-sphinx-devel
@@ -63,6 +65,7 @@ localization (L10N) can be separated into two different aspects:
 
 %prep
 %setup -a1
+%patch1 -p1
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -72,11 +75,11 @@ cp -a . ../python3
 ln -s ../objects.inv docs/
 
 %build
-python scripts/import_cldr.py CLDR/
+python scripts/import_cldr.py CLDR/common
 %python_build
 %if_with python3
 pushd ../python3
-python scripts/import_cldr.py CLDR/
+python scripts/import_cldr.py CLDR/common
 find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build build_ext
@@ -87,19 +90,11 @@ popd
 %if_with python3
 pushd ../python3
 %python3_install
-install -p -m644 %oname/localedata/__init__.py \
-	%buildroot%python3_sitelibdir/%oname/localedata/
 popd
-mv %buildroot%python3_sitelibdir/Babel-*-py%_python3_version.egg-info \
-	%buildroot%python3_sitelibdir/Babel-%version-py%_python3_version.egg-info
 mv %buildroot%_bindir/pybabel %buildroot%_bindir/pybabel3
 %endif
 
 %python_install
-install -p -m644 %oname/localedata/__init__.py \
-	%buildroot%python_sitelibdir/%oname/localedata/
-mv %buildroot%python_sitelibdir/Babel-*-py%_python_version.egg-info \
-	%buildroot%python_sitelibdir/Babel-%version-py%_python_version.egg-info
 
 %if_with docs
 %make -C docs html
@@ -134,6 +129,14 @@ popd
 %endif
 
 %changelog
+* Tue Oct 06 2015 Andrey Cherepanov <cas@altlinux.org> 1:2.1.1-alt1
+- Return to stable release 2.1.1
+- Set Epoch to 1
+
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 3.0-alt4.dev.git20150928
+- New version
+- Fix project homepage
+
 * Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt3.dev.git20150805
 - Enabled tests and docs
 
