@@ -3,8 +3,8 @@
 %define _home %_localstatedir/%name
 
 Name: eggdrop
-Version: 1.6.19
-Release: alt2.qa1
+Version: 1.6.21
+Release: alt3
 
 Summary: Eggdrop is an IRC bot, written in C
 License: GPL
@@ -16,9 +16,11 @@ Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
 Source0: %name-%version.tar
 Source1: %name.README.ALT.UTF8
 Source2: %name.init
+Patch1:  %name-clang-ftbfs.patch
+Patch2:  %name-fix-config-interpreter.patch
 
-# Automatically added by buildreq on Mon Sep 06 2004 (-bi)
 BuildRequires: tcl-devel zlib-devel autoconf_2.5
+%add_findreq_skiplist %_datadir/%name/scripts/*
 
 %description
 Eggdrop is an IRC bot, written in C.  If you don't know what IRC is,
@@ -30,6 +32,8 @@ privileged users and let them gain ops, etc.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p2
 
 %build
 autoconf
@@ -96,7 +100,6 @@ rm -rf %buildroot%_datadir/%name/doc
 %dir %_datadir/%name/help/msg
 %dir %_datadir/%name/scripts
 %dir %_datadir/%name/text
-%dir %_logdir/%name
 %dir %attr(1770,root,%_group) %_home
 %dir %attr(1770,root,%_group) %_home/scripts
 %dir %attr(1770,root,%_group) %_var/run/%name
@@ -105,21 +108,16 @@ rm -rf %buildroot%_datadir/%name/doc
 %_initdir/%name
 %_bindir/%name
 %_bindir/%name-%version
-%_datadir/%name/language/*
-%_datadir/%name/text/*
 %_libdir/%name/modules
 %_libdir/%name/modules-%version/*.so
-%_datadir/%name/%name.conf
-%_datadir/%name/help/*.help
-%_datadir/%name/help/set/*.help
-%_datadir/%name/help/msg/*.help
-%_datadir/%name/scripts/CONTENTS
-%_datadir/%name/scripts/*.tcl
-%_datadir/%name/scripts/*botchk
+%_datadir/%name/*
 %_man1dir/%name.1.*
 %doc doc/* README*
 
 %changelog
+* Tue Oct 06 2015 Andrey Cherepanov <cas@altlinux.org> 1.6.21-alt3
+- New version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.19-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
