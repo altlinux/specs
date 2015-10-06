@@ -3,7 +3,7 @@
 
 Name: 	 openerp
 Version: 7.0
-Release: alt3.20140326
+Release: alt4.20140326
 
 Summary: Business Applications Server
 
@@ -65,7 +65,6 @@ BuildPreReq:   rpm-build-python
 BuildPreReq:   rsync
 BuildPreReq:   unzip 
 BuildRequires: python-devel 
-BuildRequires: postgresql9.1-python
 BuildRequires: python-module-babel 
 BuildRequires: python-module-cli
 BuildRequires: python-module-dateutil 
@@ -419,6 +418,10 @@ getent passwd openerp > /dev/null || \
 %files full
 
 %changelog
+* Tue Oct 06 2015 Andrey Cherepanov <cas@altlinux.org> 7.0-alt4.20140326
+- Do not use strict version of postgresql-python to prevent conflict
+  with psycopg2
+
 * Thu Apr 03 2014 Andrey Cherepanov <cas@altlinux.org> 7.0-alt3.20140326
 - Use bundled fonts for icons on buttons
 - Remove LibreOffice plugin from server distribution
