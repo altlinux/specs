@@ -1,6 +1,6 @@
 Name: alterator-root
 Version: 1.1
-Release: alt2
+Release: alt3
 
 Source:%name-%version.tar
 
@@ -38,6 +38,9 @@ alterator module for edit system administrator properties
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/root.d
 
 %changelog
+* Tue Oct 06 2015 Aleksey Avdeev <solo@altlinux.org> 1.1-alt3
+- fix test (closes: #31317)
+
 * Wed Nov 18 2009 Stanislav Ievlev <inger@altlinux.org> 1.1-alt2
 - add passwordbox API for code reuse in firsttime like interfaces
 
