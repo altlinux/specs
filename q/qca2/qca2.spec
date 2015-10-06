@@ -3,9 +3,9 @@
 Name: qca2
 %define major 2
 %define minor 1
-%define bugfix 0.3
+%define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -192,7 +192,9 @@ utilize the for Qt Cryptographic Architecture (QCA).
 
 %build
 export QTDIR=%_qt4dir
+export QC_CERTSTORE_PATH="%_datadir/ca-certificates/ca-bundle.crt"
 %Kbuild \
+    -DBUILD_TESTS=OFF \
     -DQCA_INSTALL_IN_QT_PREFIX=ON \
     -Dqca_CERTSTORE=%_datadir/ca-certificates/ca-bundle.crt \
     -DQCA_GPG_EXECUTABLE=gpg \
@@ -262,6 +264,9 @@ popd
 %_includedir/qt4/QtCrypto
 
 %changelog
+* Tue Oct 06 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
+- new version
+
 * Thu Jun 25 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.0.3-alt2
 - rebuild with new libgcrypt
 
