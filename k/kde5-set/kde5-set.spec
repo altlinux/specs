@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt15
+Release: alt16
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -50,6 +50,7 @@ Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5
+Requires: kf5-plasma-workspace-wallpapers
 Requires: kf5-kwrited kf5-milou kf5-plasma-nm-maxi
 Requires: kf5-user-manager
 Requires: kde5-konversation kde5-kate kde5-print-manager
@@ -94,6 +95,9 @@ Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts
 %files -n kde5-somedevel
 
 %changelog
+* Tue Oct 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt16
+- update requires
+
 * Fri Oct 02 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt15
 - move development tools to separate package
 
