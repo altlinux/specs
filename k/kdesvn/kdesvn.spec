@@ -1,7 +1,7 @@
 
 Name:           kdesvn
 Version:        1.6.0
-Release:        alt1
+Release:        alt2
 Summary:        A subversion client for KDE4 with KIO integration
 
 Group:          Development/Tools
@@ -9,6 +9,7 @@ License:        GPLv2+
 URL:            https://projects.kde.org/projects/playground/devtools/kdesvn
 # git clone git://anongit.kde.org/kdesvn
 Source0:        %name-%{version}.tar
+Patch:		kdesvn-fix-l10n-build.patch
 
 BuildRequires(pre): kde4libs-devel
 BuildRequires:  gcc-c++
@@ -35,6 +36,7 @@ developing applications that use the %{name} subversion wrapper library.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %K4build
@@ -70,5 +72,8 @@ rm %buildroot%_K4srv/svn*.protocol
 %_includedir/svnqt
 
 %changelog
+* Tue Oct 06 2015 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt2
+- Fix localization build
+
 * Wed Mar 19 2014 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
 - First build KDE4 version for ALT Linux (ALT #29251)
