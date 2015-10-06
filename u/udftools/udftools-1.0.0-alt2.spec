@@ -8,7 +8,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 
 Name: udftools
 Version: 1.0.0
-Release: alt2.1.qa1
+Release: alt3
 Summary: Tools for work with UDF filesystems and CD-R(W)/DVD packet writing drives
 Group: Archiving/Cd burning
 License: %gpl2plus
@@ -19,6 +19,7 @@ Source: %name-cvs-%cvsdate.tar
 Source: %name-%version%prerel.tar
 %endif
 Patch: %name-cvs-20080518-shared.patch
+Patch1: build-with-gcc5.patch
 
 BuildRequires: libncurses-devel libreadline-devel
 BuildRequires: rpm-build-licenses
@@ -44,7 +45,7 @@ BuildRequires: rpm-build-licenses
 %setup -n %name-%version%prerel
 %endif
 %patch -p1
-
+%patch1 -p1
 
 %build
 %autoreconf
@@ -65,6 +66,9 @@ BuildRequires: rpm-build-licenses
 
 
 %changelog
+* Tue Oct 06 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt3
+- Fix build with gcc5
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt2.1.qa1
 - NMU: rebuilt for debuginfo.
 
