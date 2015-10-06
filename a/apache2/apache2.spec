@@ -3,7 +3,7 @@
 # %%branch_switch set %%branch_release use
 #%%define branch_switch Mxx
 
-%define apache_version 2.2.24
+%define apache_version 2.2.31
 
 %define mmn 20051115
 
@@ -39,12 +39,11 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt3
+Release: alt1
 
 License: %asl
 Group: System/Servers
 Url: http://httpd.apache.org/
-Packager: Aleksey Avdeev <solo@altlinux.ru>
 
 Summary: The most widely used Web server on the Internet
 Summary(ru_RU.UTF-8): Самый популярный веб-сервер Internet
@@ -1801,6 +1800,10 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Tue Oct 06 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.2.31-alt1
+- updated to 2.2.31
+- imported srpms as new git
+
 * Wed May 29 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.24-alt3
 - In a2enmod added a mandatory dependency checking for inclusion
   (Closes: #28992)
