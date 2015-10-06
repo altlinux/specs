@@ -1,10 +1,13 @@
 Name:		rosa-launcher
-Version:	2.0.0
-Release:	alt1.r53.1
+Version:	2.1.6
+Release:	alt1
 Summary:	ROSA Desktop Application Launcher
+
 Group:		Graphical desktop/KDE
 License:	GPLv3
 URL:		http://www.rosalab.ru/
+# VCS:		https://abf.rosalinux.ru/import/rosa-launcher.git
+# Download:     wget -c --content-disposition http://file-store.rosalinux.ru/download/<hash from .abf.yml>
 
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 
@@ -12,6 +15,7 @@ Source0:	%name-%version.tar.gz
 Patch1:     %name-2.0.0-fix-plugin-path.patch
 Patch2:     %name-2.0.0-fix-base-dir.patch
 Patch3:     %name-2.0.0-fix-desktop-file.patch
+Patch4:     %name-fix-l10n-build.patch
 
 Requires:	kde4base-workspace
 
@@ -22,6 +26,7 @@ BuildRequires: kde4base-devel
 BuildRequires: soprano-backend-redland
 BuildRequires: soprano
 BuildRequires: qjson-devel
+BuildRequires: kde4-baloo-devel
 
 Provides:   simplywelcome = %version-%release
 
@@ -33,6 +38,7 @@ ROSA Desktop Application Launcher.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 %build
 %K4build
@@ -42,7 +48,7 @@ ROSA Desktop Application Launcher.
 mkdir -p %buildroot%_iconsdir/hicolor/128x128/apps/
 install -m0644 assets/rosa-icon.png  %buildroot%_iconsdir/hicolor/128x128/apps/rosalauncher.png
 
-%find_lang %name
+%find_lang ROSA_Launcher --output=%name.lang
 
 %files -f %name.lang
 %_bindir/*
@@ -52,20 +58,11 @@ install -m0644 assets/rosa-icon.png  %buildroot%_iconsdir/hicolor/128x128/apps/r
 %_libdir/timeframe/*-timeframe-plugin.so
 %_datadir/%name/*
 %_iconsdir/hicolor/128x128/apps/rosalauncher.png
-%lang(ar)      %_K4i18n/ar/LC_MESSAGES/*
-%lang(de)      %_K4i18n/de/LC_MESSAGES/*
-%lang(es)      %_K4i18n/es/LC_MESSAGES/*
-%lang(et)      %_K4i18n/et/LC_MESSAGES/*
-%lang(eu)      %_K4i18n/eu/LC_MESSAGES/*
-%lang(fr)      %_K4i18n/fr/LC_MESSAGES/*
-%lang(pt_BR)   %_K4i18n/pt_BR/LC_MESSAGES/*
-%lang(ru)      %_K4i18n/ru/LC_MESSAGES/*
-%lang(sl)      %_K4i18n/sl/LC_MESSAGES/*
-%lang(sw)      %_K4i18n/sw/LC_MESSAGES/*
-%lang(tr)      %_K4i18n/tr/LC_MESSAGES/*
-%lang(zh_TW)   %_K4i18n/zh_TW/LC_MESSAGES/*
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 2.1.6-alt1
+- New version
+
 * Mon Feb 25 2013 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1.r53.1
 - Add icon for plasmoid
 - Fix desktop file
