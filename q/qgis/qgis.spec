@@ -1,9 +1,10 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
+%define grass_version 7.0.1
 
 Name:    qgis
-Version: 2.4.0
-Release: alt2.git4dce5ec
+Version: 2.10.1
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPLv3+ with exceptions
@@ -13,14 +14,13 @@ Url:     http://qgis.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
-# %%name-mapserver-httpd.conf
-# %%name-mapserver-README.fedora
 
 # Fix detection problem for GRASS libraries
-Patch0: %name-2.4.0-grass.patch
 Patch1: %name-ignore-bundled-modules.patch
-Patch2: %name-2.4.0-qreal.patch
-Patch3: %name-2.4.0-sip.patch
+Patch2: %name-2.10.1-sip.patch
+Patch3: %name-fix-unresolved-variable.patch
+# Need to build otb-python for otbAppication
+Patch4: %name-disable-otb-plugin.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -42,7 +42,7 @@ BuildRequires: libfcgi-devel
 BuildRequires: flex bison
 BuildRequires: libgdal-devel
 BuildRequires: libgeos-devel
-BuildRequires: grass-devel = 6.4.3
+BuildRequires: grass-devel = %grass_version
 BuildRequires: libgsl-devel
 BuildRequires: libspatialite-devel
 BuildRequires: postgresql-devel
@@ -63,7 +63,9 @@ BuildRequires: libsqlite3-devel
 BuildRequires: python-module-qscintilla2-qt4-devel
 BuildRequires: libqscintilla2-qt4-devel
 BuildRequires: python-module-OWSLib
+BuildRequires: gzip
 
+Requires: libqt4-sql-sqlite
 Requires: gpsbabel
 
 # We don't want to provide private Python extension libs
@@ -108,39 +110,37 @@ Requires: python-module-sip
 %description python
 Python integration and plug-ins for Quantum GIS.
 
-%package mapserver 
+%package server 
 Summary: FCGI based OGC web map server
 Group: Sciences/Geosciences
+Provides:  %name-mapserver = %version-%release
+Obsoletes: %name-mapserver < %version-%release
 Requires: %name = %version-%release
 Requires: libfcgi
 
-%description mapserver
+%description server
 This FastCGI OGC web map server implements OGC WMS 1.3.0 and 1.1.1.
 The services are prepared as regular projects in QGIS. They're rendered
 using the QGIS libraries. The server also supports SLD (Styled Layer
 Descriptor) for styling. Sample configurations for Httpd and Lighttpd
 are included.
 
-Please refer to %name-mapserver-README for details!
+Please refer to %name-server-README for details!
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # Delete bundled libs
-rm -rf src/core/spatialite
-rm -rf src/core/gps/qwtpolar
 rm -rf src/core/gps/qextserialport
+rm -rf "python/ext-libs/!(CMakeLists.txt|tests)"
+rm -rf src/plugins/dxf2shp_converter/
+sed -i '/dxf2shp_converter/d' src/plugins/CMakeLists.txt
 
-# TODO Don't build unsupported Python bindings
-subst 's/^\(ADD_SUBDIRECTORY(otb)\)/#\1/' python/plugins/processing/algs/CMakeLists.txt
-subst 's/^\(ADD_SUBDIRECTORY(saga)\)/#\1/' python/plugins/processing/algs/CMakeLists.txt
-rm -rf python/plugins/processing/algs/{otb,saga}
-subst 's/^\(.*OTBAlgorithmProvider\)/#\1/g' python/plugins/processing/core/Processing.py
-subst 's/^\(.*SagaAlgorithmProvider\)/#\1/g' python/plugins/processing/core/Processing.py
+gzip ChangeLog
 
 %build
 CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
@@ -166,17 +166,29 @@ cmake \
 	-DQGIS_CGIBIN_SUBDIR:PATH=%_libexecdir/%name \
 	-DWITH_BINDINGS:BOOL=TRUE \
 	-DGRASS_PREFIX:PATH=%_libdir/grass \
+	-DGRASS_BASE:PATH=%_libdir/grass \
+	-DMAPSERVER_SKIP_ECW=TRUE \
 	-DWITH_MAPSERVER:BOOL=TRUE \
 	-DBINDINGS_GLOBAL_INSTALL:BOOL=TRUE \
+	-DWITH_CUSTOM_WIDGETS:BOOL=TRUE \
 	-DGDAL_INCLUDE_DIR:PATH=%_includedir/gdal \
 	-DGDAL_LIBRARY:PATH=%_libdir/libgdal.so \
 	-DGEOS_LIBRARY:PATH=%_libdir/libgeos_c.so \
 	-DENABLE_TESTS:BOOL=FALSE \
-	-DWITH_INTERNAL_QWTPOLAR:BOOL=FALSE \
+	-DWITH_INTERNAL_DATEUTIL:BOOL=FALSE \
+	-DWITH_INTERNAL_HTTPLIB2:BOOL=FALSE \
+	-DWITH_INTERNAL_JINJA2:BOOL=FALSE \
+	-DWITH_INTERNAL_MARKUPSAFE:BOOL=FALSE \
+	-DWITH_INTERNAL_OWSLIB:BOOL=FALSE \
+	-DWITH_INTERNAL_PYGMENTS:BOOL=FALSE \
+	-DWITH_INTERNAL_PYTZ:BOOL=FALSE \
 	-DWITH_INTERNAL_QEXTSERIALPORT:BOOL=FALSE \
-	-DWITH_PYSPATIALITE:BOOL=FALSE \
-	-DWITH_SPATIALITE:BOOL=TRUE \
+	-DWITH_INTERNAL_QWTPOLAR:BOOL=FALSE \
+	-DWITH_INTERNAL_SIX:BOOL=FALSE \
 	-DWITH_INTERNAL_SPATIALITE:BOOL=FALSE \
+	-DWITH_PYSPATIALITE:BOOL=FALSE \
+	-DWITH_SERVER:BOOL=TRUE \
+	-DWITH_SPATIALITE:BOOL=TRUE \
 	-DQEXTSERIALPORT_LIBRARY:PATH=%_libdir/libqextserialport.so \
 	-DQEXTSERIALPORT_INCLUDE_DIR:PATH=%_includedir/qt4/QtExtSerialPort \
 	-DQWTPOLAR_INCLUDE_DIR:PATH=%_includedir/qwt \
@@ -219,7 +231,12 @@ install -pm0644 \
 	%buildroot%_datadir/%name/images/icons/%name-mime-icon.png \
 	%buildroot%_datadir/icons/hicolor/128x128/mimetypes/application-x-qgis-project.png
 
-# Packed by %%doc in mapserver, see qgis-mapserver-README
+# Install basic QGIS Mapserver configuration for Apache
+install -pd %buildroot%_sysconfdir/httpd/conf.d
+install -pm0644 altlinux/%{name}-server-httpd.conf \
+    %buildroot%_sysconfdir/httpd/conf.d/qgis-server.conf
+
+# Packed by %%doc in server, see qgis-server-README
 rm -f %buildroot%_libexecdir/%name/wms_metadata.xml
 rm -f %buildroot%_libexecdir/%name/admin.sld
 
@@ -234,25 +251,26 @@ rm -f BUGS \
 	README
 popd
 
-# Fix Serbian locale names
-mv %buildroot%_datadir/qgis/i18n/qgis_sr{_Cyrl,}.qm
-mv %buildroot%_datadir/qgis/i18n/qgis_sr{_Latn,@latin}.qm
-%find_lang %name --with-qt
+# Install server docs
+mkdir -p %buildroot%_datadir/doc/%name-server-%version
+cp src/server/admin.sld src/server/wms_metadata.xml altlinux/%name-server-README altlinux/%name-server-httpd.conf \
+   %buildroot%_datadir/doc/%name-server-%version
 
-%files -f %{name}.lang
-#TODO: Encoding problem on the help page
-# CONTRIBUTORS and AUTHORS are intended be viewed in the About-Box
-# ChangeLog is 4 MB, therefore don't ship it
-%doc BUGS NEWS CODING COPYING Exception_to_GPL_for_Qt.txt PROVENANCE README
+%find_lang %name --with-qt
+# Add missing localization
+echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
+
+
+%files -f %name.lang
+%doc BUGS NEWS CODING COPYING Exception_to_GPL_for_Qt.txt PROVENANCE README.md ChangeLog.gz
 # QGIS shows these files in the GUI
 %_datadir/%name/doc
-
 %dir %_datadir/%name/i18n/
 %_libdir/lib%{name}_analysis.so.*
 %_libdir/lib%{name}_core.so.*
 %_libdir/lib%{name}_gui.so.*
-%_libdir/lib%{name}sqlanyconnection.so.*
 %_libdir/lib%{name}_networkanalysis.so.*
+%_libdir/lib%{name}_server.so.*
 %_libdir/%name
 %_bindir/%name
 %_bindir/qbrowser
@@ -268,10 +286,9 @@ mv %buildroot%_datadir/qgis/i18n/qgis_sr{_Latn,@latin}.qm
 %_datadir/%name/images
 %_datadir/%name/resources
 %_datadir/%name/svg
-%exclude %_libdir/libqgisgrass.so.*
-%exclude %_libdir/%name/libgrassprovider.so
-%exclude %_libdir/%name/libgrassrasterprovider.so
-%exclude %_libdir/%name/libgrassplugin.so
+%exclude %_libdir/libqgisgrass*.so.*
+%exclude %_libdir/%name/libgrassprovider*.so
+%exclude %_libdir/%name/libgrassrasterprovider*.so
 %exclude %_libdir/%name/grass
 %_datadir/mimelnk/application/*
 
@@ -279,12 +296,12 @@ mv %buildroot%_datadir/qgis/i18n/qgis_sr{_Latn,@latin}.qm
 %_datadir/%name/FindQGIS.cmake
 %_includedir/%name
 %_libdir/lib%{name}*.so
+%_libdir/qt4/plugins/designer/libqgis_customwidgets.so*
 
 %files grass
-%_libdir/lib%{name}grass.so.*
-%_libdir/%name/libgrassprovider.so
-%_libdir/%name/libgrassrasterprovider.so
-%_libdir/%name/libgrassplugin.so
+%_libdir/lib%{name}grass*.so.*
+%_libdir/%name/libgrassprovider*.so
+%_libdir/%name/libgrassrasterprovider*.so
 %_libdir/%name/grass
 %_datadir/%name/grass
 
@@ -292,12 +309,18 @@ mv %buildroot%_datadir/qgis/i18n/qgis_sr{_Latn,@latin}.qm
 %_libdir/libqgispython.so.*
 %_datadir/%name/python
 %python_sitelibdir/%name
+%python_sitelibdir/PyQt4/uic/widget-plugins/
 
-%files mapserver
-%doc ./src/mapserver/admin.sld ./src/mapserver/wms_metadata.xml ./altlinux/%{name}-mapserver-README ./altlinux/%name-mapserver-httpd.conf
+%files server
+%doc %_datadir/doc/%name-server-%version
+%config(noreplace) %_sysconfdir/httpd/conf.d/%{name}-server.conf
 %_libexecdir/%name
 
 %changelog
+* Thu Oct 08 2015 Andrey Cherepanov <cas@altlinux.org> 2.10.1-alt1
+- New version
+- Add libqt4-sql-sqlite to requirements for work with bookmarks
+
 * Thu Apr 16 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt2.git4dce5ec
 - rebuilt with qwt-6.1.2/qwtpolar-1.1.1
 
