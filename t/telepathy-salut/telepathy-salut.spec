@@ -1,8 +1,6 @@
-#%%set_verify_elf_method unresolved=relaxed
-
 Name: telepathy-salut
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: A link-local XMPP connection manager
 License: LGPLv2.1+
@@ -24,7 +22,7 @@ BuildRequires: python-module-avahi python-module-twisted-core-gui
 A link-local XMPP connection manager for telepathy.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure --disable-static
@@ -35,7 +33,7 @@ A link-local XMPP connection manager for telepathy.
 #%%make check
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 rm -rf %buildroot%_docdir/%name/
 
@@ -52,6 +50,9 @@ rm -rf %buildroot%_docdir/%name/
 %exclude %_libdir/telepathy/salut-0/lib/*.la
 
 %changelog
+* Wed Oct 07 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt2
+- rebuild (ALT #31331)
+
 * Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1
 
