@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.1.443.875ec93
+Version: 0.1.585.2fda85
 Release: alt1
 
 Summary: GNU Portability Library
@@ -50,6 +50,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Tue Oct 06 2015 Dmitry V. Levin <ldv@altlinux.org> 0.1.585.2fda85-alt1
+- Updated to gnulib snapshot v0.1-585-g2fda85e.
+
 * Mon May 25 2015 Dmitry V. Levin <ldv@altlinux.org> 0.1.443.875ec93-alt1
 - Updated to gnulib snapshot v0.1-443-g875ec93.
 

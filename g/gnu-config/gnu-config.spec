@@ -1,5 +1,5 @@
 Name: gnu-config
-Version: 1.0.678.9c71
+Version: 1.0.690.869a
 Release: alt1
 
 Summary: GNU config.guess and config.sub files
@@ -30,6 +30,9 @@ install -pm755 config.guess config.sub %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Sun Sep 13 2015 Dmitry V. Levin <ldv@altlinux.org> 1.0.690.869a-alt1
+- Updated to release-1-0-690-g869aecc.
+
 * Wed Mar 04 2015 Dmitry V. Levin <ldv@altlinux.org> 1.0.678.9c71-alt1
 - Updated to release-1-0-678-g9c71dc5.
 
