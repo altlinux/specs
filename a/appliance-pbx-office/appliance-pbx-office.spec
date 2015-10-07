@@ -3,7 +3,7 @@ Name: appliance-pbx-office
 Summary: Asterisk for office virtual packege
 BuildArch: noarch
 Version: 4.0.1
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Servers
 
@@ -16,7 +16,7 @@ Requires: appliance-network-debug
 Requires: appliance-service-nagios
 Requires: appliance-asterisk-test
 Requires: tftp-server-xinetd
-Requires: postgresql9.0
+Requires: postgresql9.4
 
 Requires: mithraen-pbx-systemtest
 
@@ -52,6 +52,9 @@ Requires: xfsprogs
 %files
 
 %changelog
+* Wed Oct 07 2015 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt3
+- postgresql 9.4
+
 * Sun Jun 16 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt2
 - add Url tag
 
