@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     4
-%define postgresql_subminor  4
+%define postgresql_subminor  5
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -364,6 +364,7 @@ install -d -m700 %buildroot%_localstatedir/%PGSQL/backups
 mkdir -p %buildroot%_includedir/%PGSQL/port
 cp src/include/port/linux.h %buildroot%_includedir/%PGSQL/port/
 ln -s port/linux.h %buildroot%_includedir/%PGSQL/os.h
+ln -s %_includedir/%PGSQL %buildroot%_includedir/postgresql
 
 # Chrooted environment
 mkdir -p %buildroot%ROOT/{bin,dev,%_lib,tmp,%_sysconfdir/%PGSQL,%_localstatedir,%_libdir/%PGSQL,%_libdir/locale}
@@ -711,6 +712,7 @@ fi
 %if_with devel
 %files -f devel.lang devel
 %_includedir/%PGSQL
+%_includedir/postgresql
 %_bindir/pg_config
 %_man1dir/pg_config.*
 %dir %_libdir/%PGSQL
@@ -765,6 +767,10 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Oct 07 2015 Alexei Takaseev <taf@altlinux.org> 9.4.5-alt1
+- 9.4.5
+- Add symlink /usr/include/postgresql->pgsql (ALT:#28249)
+
 * Sun Jun 14 2015 Alexei Takaseev <taf@altlinux.org> 9.4.4-alt1
 - 9.4.4
 
