@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	15.201.1151
-%define module_release alt1
+%define module_release alt3
 
 %define flavour std-pae
 BuildRequires(pre): kernel-headers-modules-std-pae
@@ -66,10 +66,13 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
+* Tue Oct  06 2015 barssc <barssc@altlinux.org> 2:15.201.1151-alt3
+- modifed spec file
+
 * Sat Sep  26 2015 barssc <barssc@altlinux.org> 2:15.201.1151-alt1
 - Catalyst 15.9
 
-* Thu Jul  9 2015 barssc <barssc@altlinux.org> 2:15.120.1046-alt1
+* Mon Jul  6 2015 barssc <barssc@altlinux.org> 2:15.120.1046-alt1
 - Catalyst 15.7
 
 * Mon Jul  6 2015 barssc <barssc@altlinux.org> 2:15.101.1001-alt2
@@ -77,6 +80,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 
 * Sat Jul  5 2015 barssc <barssc@altlinux.org> 2:15.101.1001-alt1
 - 15.101.1001
+
+* Sat Apr  4 2015 barssc <barssc@altlinux.org> 2:14.501.1003-alt3
+- fix build for kernel 3.19.x
 
 * Sat Dec  13 2014 barssc <barssc@altlinux.org> 2:14.501.1003-alt2
 - 14.501.1003
