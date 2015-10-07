@@ -4,7 +4,7 @@
 
 Name: loudmouth
 Version: 1.4.3
-Release: alt4.1
+Release: alt4.1.1
 
 Summary: Jabber library for C
 Group: System/Libraries
@@ -130,6 +130,9 @@ and yet extensible to let you do anything the Jabber protocol allows.
 %endif # enabled static
 
 %changelog
+* Wed Oct 07 2015 Sergey V Turchin <zerg at altlinux dot org> 1.4.3-alt4.1.1
+- rebuild against new gnutls
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt4.1
 - Fixed build
 
