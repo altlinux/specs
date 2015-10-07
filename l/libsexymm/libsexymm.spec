@@ -1,6 +1,6 @@
 Name: libsexymm
 Version: 0.1.9
-Release: alt2.1.qa1
+Release: alt3
 
 Summary: collection of additional gtkmm widgets - library
 Group: System/Libraries
@@ -20,7 +20,6 @@ Requires: libsexy >= %libsexy_ver
 BuildPreReq: libgtkmm2-devel >= %gtkmm_ver
 BuildPreReq: libsexy-devel >= %libsexy_ver
 
-# Automatically added by buildreq on Wed May 07 2008
 BuildRequires: gcc-c++ libgtkmm2-devel libsexy-devel
 
 %description
@@ -47,6 +46,7 @@ These are the C++ bindings (header files).
 %setup -q
 
 %build
+%add_optflags -std=c++11
 %configure \
 	--disable-static
 %make_build
@@ -72,6 +72,9 @@ These are the C++ bindings (header files).
 %_pkgconfigdir/libsexymm.pc
 
 %changelog
+* Wed Oct 07 2015 Andrey Cherepanov <cas@altlinux.org> 0.1.9-alt3
+- Fix build with gcc5
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.9-alt2.1.qa1
 - NMU: rebuilt for debuginfo.
 
