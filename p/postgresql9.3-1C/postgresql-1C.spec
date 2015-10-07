@@ -8,7 +8,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     3
-%define postgresql_subminor  9
+%define postgresql_subminor  10
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -758,5 +758,8 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Oct 07 2015 Alexei Takaseev <taf@altlinux.org> 9.3.10-alt1
+- 9.3.10
+
 * Tue Jul 28 2015 Alexei Takaseev <taf@altlinux.org> 9.3.9-alt1
 - Initial build for ALT Linux Sisyphus
