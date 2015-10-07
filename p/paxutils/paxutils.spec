@@ -1,5 +1,5 @@
 Name: paxutils
-Version: 0.0.1.113.edfd8bc
+Version: 0.0.1.119.45af
 Release: alt1
 
 Summary: GNU pax library
@@ -33,6 +33,9 @@ ln gnulib.modules %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Fri Nov 07 2014 Dmitry V. Levin <ldv@altlinux.org> 0.0.1.119.45af-alt1
+- Updated to v0.0.1-119-g45af.
+
 * Tue Oct 22 2013 Dmitry V. Levin <ldv@altlinux.org> 0.0.1.113.edfd8bc-alt1
 - Updated to v0.0.1-113-gedfd8bc.
 
