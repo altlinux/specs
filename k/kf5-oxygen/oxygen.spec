@@ -1,7 +1,7 @@
 %define rname oxygen
 
 Name: kf5-%rname
-Version: 5.4.1
+Version: 5.4.2
 Release: alt1
 %K5init altplace
 
@@ -22,7 +22,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-x11extras-devel
 BuildRequires: kf5-frameworkintegration-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
-BuildRequires: kf5-kdecoration-devel
+BuildRequires: kf5-kdecoration-devel kf5-kcmutils-devel
 
 %description
 Artwork, styles and assets for the Breeze visual style for the Plasma Desktop.
@@ -77,6 +77,7 @@ KF5 library
 %_K5plug/org.kde.kdecoration2/*.so
 %_K5snd/Oxygen*
 %_K5icon/Oxygen_*/
+%_K5icon/*/*/apps/oxygen-settings.*
 %_K5icon/KDE_Classic/
 %_K5data/plasma/look-and-feel/org.kde.oxygen/
 %_K5plug/*oxygen*.so
@@ -90,6 +91,9 @@ KF5 library
 %_K5lib/liboxygenstyleconfig5.so.*
 
 %changelog
+* Wed Oct 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- new version
+
 * Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
 - new version
 
