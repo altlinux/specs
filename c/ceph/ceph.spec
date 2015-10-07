@@ -2,7 +2,7 @@
 
 Name: ceph
 Version: 0.94.3
-Release: alt2
+Release: alt3
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -154,6 +154,8 @@ install -pDm0644 systemd/ceph-mon@.service %buildroot%_unitdir/ceph-mon@.service
 install -pDm0644 systemd/ceph-osd@.service %buildroot%_unitdir/ceph-osd@.service
 install -pDm0644 systemd/ceph.target       %buildroot%_unitdir/ceph.target
 
+install -Dpm 644 %name.tmpfiles %buildroot%_tmpfilesdir/%name.conf
+
 ln -sf ../../etc/init.d/ceph %buildroot%_sbindir/rcceph
 ln -sf ../../etc/init.d/ceph-radosgw %buildroot%_sbindir/rcceph-radosgw
 install -m 0644 -D src/logrotate.conf %buildroot%_sysconfdir/logrotate.d/ceph
@@ -217,6 +219,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %config %_sysconfdir/bash_completion.d/radosgw-admin
 %config %_sysconfdir/bash_completion.d/rbd
 %config(noreplace) %_sysconfdir/logrotate.d/ceph
+%config(noreplace) %_tmpfilesdir/*
 %_sysconfdir/ceph/
 %_mandir/man8/ceph-mon.8*
 %_mandir/man8/ceph-mds.8*
@@ -297,6 +300,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Oct 07 2015 Alexei Takaseev <taf@altlinux.org> 0.94.3-alt3
+- add tmpfiles.d file (ALT:#31315)
+
 * Wed Sep 23 2015 Alexei Takaseev <taf@altlinux.org> 0.94.3-alt2
 - Fix path to ceph-osd-prestart.sh, add lost ceph.target
   (ALT:#31295)
