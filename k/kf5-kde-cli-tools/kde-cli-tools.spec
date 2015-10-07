@@ -5,8 +5,8 @@
 %add_findreq_skiplist %_K5exec/kdeeject
 
 Name: kf5-%rname
-Version: 5.4.1
-Release: alt3
+Version: 5.4.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -80,6 +80,9 @@ KF5 library
 %_K5srv/*.desktop
 
 %changelog
+* Wed Oct 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- new version
+
 * Fri Oct 02 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt3
 - fix requires
 

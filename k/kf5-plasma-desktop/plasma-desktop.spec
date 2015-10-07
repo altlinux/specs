@@ -9,8 +9,8 @@
 
 
 Name: kf5-%rname
-Version: 5.4.1
-Release: alt4
+Version: 5.4.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -193,6 +193,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Wed Oct 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- new version
+
 * Tue Sep 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt4
 - add default multimedia players chooser
 

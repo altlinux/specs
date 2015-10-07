@@ -14,8 +14,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.4.1
-Release: alt3
+Version: 5.4.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -257,6 +257,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Wed Oct 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- new version
+
 * Tue Oct 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt3
 - add default plasma action to run konsole
 - don't lock screen on resume by default
