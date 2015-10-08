@@ -1,8 +1,8 @@
 %define cfg %_builddir/%name-%version/
-%define rev 48817
+%define rev 49992
 
 Name:       lazarus
-Version:    1.4.2
+Version:    1.4.4
 Release:    alt1
 Epoch:      1
 
@@ -189,6 +189,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Thu Oct 08 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.4.4-alt1
+- New version (http://forum.lazarus.freepascal.org/index.php/topic,29886.0.html)
+
 * Wed Jul 15 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.4.2-alt1
 - New version
 
