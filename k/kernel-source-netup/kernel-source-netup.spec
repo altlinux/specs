@@ -1,6 +1,6 @@
 Name: kernel-source-netup
 Version: 0.0.1
-Release: alt2
+Release: alt3
 
 Summary: NetUP Universal Dual DVB-CI card module for Linux kernel
 License: GPLv2
@@ -29,6 +29,9 @@ tar -cjf %kernel_srcdir/netup-%version.tar.bz2 netup-%version
 %attr(0644,root,root) %kernel_src/netup-%version.tar.bz2
 
 %changelog
+* Thu Oct 08 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.0.1-alt3
+- build with kernel 4.1 fixed
+
 * Thu Aug 06 2015 Alexei Takaseev <taf@altlinux.org> 0.0.1-alt2
 - Add firmware for support DRE CAM-modules
 
