@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	4.2
 %define kernel_sublevel	.3
@@ -544,6 +544,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Oct 08 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.2.3-alt2
+- CONFIG_NO_HZ_FULL disabled (closes: #31342)
+
 * Mon Oct 05 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.2.3-alt1
 - 4.2.3
 
