@@ -10,7 +10,7 @@
 
 Name:                wicd
 Version:             1.7.3
-Release:             alt1
+Release:             alt2
 Summary:             Wireless and wired network connection manager
 
 Group:               System/Base
@@ -261,6 +261,9 @@ desktop-file-install \
 %{_datadir}/wicd/icons/*
 
 %changelog
+* Thu Oct 08 2015 Andrey Cherepanov <cas@altlinux.org> 1.7.3-alt2
+- Rebuild with fixed python-module-babel
+
 * Sat May 23 2015 Andrey Cherepanov <cas@altlinux.org> 1.7.3-alt1
 - New version
 - Remove dependency on pm-utils (https://bugzilla.redhat.com/show_bug.cgi?id=1208313)
