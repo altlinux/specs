@@ -1,5 +1,5 @@
 Name: gnupg2
-Version: 2.0.25
+Version: 2.0.29
 Release: alt1
 
 Group: Text tools
@@ -14,7 +14,7 @@ Source2: gnupg-agent-wrapper.sh
 
 Patch1: gnupg-1.6.9-xloadimage.patch
 Patch2: gnupg-1.9.20-alt-libpcsclite.patch
-Patch3: gnupg-2.0.18-alt-agent-fix-password-request.patch
+Patch3: gnupg-2.0.29-alt-agent-fix-password-request.patch
 Patch4: gnupg-2.0.19-alt-texinfo.patch
 Patch11: gnupg-2.0.20-rh-ocsp-keyusage.patch
 
@@ -101,6 +101,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Thu Oct 08 2015 Sergey V Turchin <zerg@altlinux.org> 2.0.29-alt1
+- new version
+
 * Mon Jun 30 2014 Dmitry V. Levin <ldv@altlinux.org> 2.0.25-alt1
 - Updated to 2.0.25 (fixes CVE-2014-4617).
 
