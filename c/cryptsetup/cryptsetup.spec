@@ -5,7 +5,7 @@
 
 Name: cryptsetup
 Version: 1.6.8
-Release: alt1
+Release: alt2
 
 Summary: utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: libdevmapper-devel libpopt-devel libuuid-devel
 BuildRequires: libudev-devel libselinux-devel
 BuildRequires: python-devel
-BuildRequires: libpwquality-devel >= 1.0.0
+BuildRequires: libpasswdqc-devel
 
 # Need support for fixed gcrypt PBKDF2 and fixed Whirlpool hash.
 BuildRequires: libgcrypt-devel  >= 1.6.1
@@ -37,36 +37,36 @@ Provides:  cryptsetup-luks = %version
 Obsoletes: cryptsetup-luks < %version-%release
 
 %description
-LUKS ( Linux Unified Key Setup ) is the upcoming standard for 
-Linux disk encryption. By providing a standard on-disk-format, 
+LUKS ( Linux Unified Key Setup ) is the upcoming standard for
+Linux disk encryption. By providing a standard on-disk-format,
 it does not only facilitate compatibility among distributions,
 but also provide secure management of multiple user passwords.
-In contrast to existing solution,  LUKS stores all  necessary 
+In contrast to existing solution,  LUKS stores all  necessary
 setup information  in the partition header, enabling the user
 to transport or migrate his data seamlessly.
 
-This package contains cryptsetup utility to setup a encrypted 
-disks based on  dm-crypt  module for 2.6 kernel, with support 
+This package contains cryptsetup utility to setup a encrypted
+disks based on  dm-crypt  module for 2.6 kernel, with support
 for LUKS infrastructure. Also cryptsetup can handle old 2.4.x
 cryptoloop devices.
 
 %description -l ru_RU.UTF-8
-LUKS ( Linux Unified Key Setup ) - разрабатываемый стандарт 
+LUKS ( Linux Unified Key Setup ) - разрабатываемый стандарт
 для шифрования дисков в Linux. Определяя стандартный формат
-хранения  информации на дисках,  он не только  способствует 
-совместимости  между различными  дистрибутивами,  но  также 
-предоставляет возможность управлять безопасностью доступа к 
+хранения  информации на дисках,  он не только  способствует
+совместимости  между различными  дистрибутивами,  но  также
+предоставляет возможность управлять безопасностью доступа к
 данным  путём  использования  нескольких   пользовательских
 паролей. По сравнению с существующими решениями, в LUKS вся
-необходимая  информация по  настройке параметров шифрования 
+необходимая  информация по  настройке параметров шифрования
 хранится в заголовке  раздела диска, облегчая пользователям
 перемещение или миграцию данных.
 
-Данный пакет содержит  утилиту  cryptsetup  для  управления 
+Данный пакет содержит  утилиту  cryptsetup  для  управления
 зашифрованными  дисками, основанными на модуле dm-crypt для
-ядер Linux 2.6.x,  с поддержкой  инфраструктуры LUKS. Также 
-cryptsetup может  управлять старыми дисками,  использующими 
-модуль cryptoloop ядер 2.4.x. 
+ядер Linux 2.6.x,  с поддержкой  инфраструктуры LUKS. Также
+cryptsetup может  управлять старыми дисками,  использующими
+модуль cryptoloop ядер 2.4.x.
 
 %package -n lib%name
 Group: System/Libraries
@@ -86,28 +86,28 @@ Provides:  %name-devel = %version-%release
 Obsoletes: %name-devel < %version-%release
 
 %description -n lib%name-devel
-LUKS ( Linux Unified Key Setup ) is the upcoming standard for 
-Linux disk encryption. By providing a standard on-disk-format, 
+LUKS ( Linux Unified Key Setup ) is the upcoming standard for
+Linux disk encryption. By providing a standard on-disk-format,
 it does not only facilitate compatibility among distributions,
 but also provide secure management of multiple user passwords.
-In contrast to existing solution,  LUKS stores all  necessary 
+In contrast to existing solution,  LUKS stores all  necessary
 setup information  in the partition header, enabling the user
 to transport or migrate his data seamlessly.
 
-This package includes  the  development libraries  and header 
+This package includes  the  development libraries  and header
 files needed for developing applications  that use LUKS.  You
-need it only  if  You  plan to  develop or  compile some LUKS 
+need it only  if  You  plan to  develop or  compile some LUKS
 applications.
 
 %description -n lib%name-devel -l ru_RU.UTF-8
-LUKS ( Linux Unified Key Setup ) - разрабатываемый стандарт 
+LUKS ( Linux Unified Key Setup ) - разрабатываемый стандарт
 для шифрования дисков в Linux. Определяя стандартный формат
-хранения  информации на дисках,  он не только  способствует 
-совместимости  между различными  дистрибутивами,  но  также 
-предоставляет возможность управлять безопасностью доступа к 
+хранения  информации на дисках,  он не только  способствует
+совместимости  между различными  дистрибутивами,  но  также
+предоставляет возможность управлять безопасностью доступа к
 данным  путём  использования  нескольких   пользовательских
 паролей. По сравнению с существующими решениями, в LUKS вся
-необходимая  информация по  настройке параметров шифрования 
+необходимая  информация по  настройке параметров шифрования
 хранится в заголовке  раздела диска, облегчая пользователям
 перемещение или миграцию данных.
 
@@ -155,7 +155,7 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
 %autoreconf
-%configure --sbindir=%_root_sbindir --libdir=/%_lib --enable-cryptsetup-reencrypt --enable-python --enable-pwquality
+%configure --sbindir=%_root_sbindir --libdir=/%_lib --enable-cryptsetup-reencrypt --enable-python --enable-passwdqc=/etc/passwdqc.conf
 %make
 
 gcc debian/askpass.c -o debian/askpass
@@ -222,6 +222,9 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %exclude %python_sitelibdir/*.la
 
 %changelog
+* Thu Oct 08 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.8-alt2
+- Replaced libpwquality with libpasswdqc.
+
 * Tue Sep 08 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.8-alt1
 - 1.6.8
 - build with libpwquality
@@ -318,10 +321,10 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
  -- Fix 64 bit compiler warning issues
  -- Add support for reading binary keys from stdin using the "-" as key file
  -- Add support to allow user selection of key slot
-  
+
 * Mon Jul 10 2006 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.3-alt1
 - New version 1.0.3
- -- Fix sector size of the temporary mapping to be an integral 
+ -- Fix sector size of the temporary mapping to be an integral
     of the block's sector size.
  -- Add LUKS key copy cmd: luksKeyCopy
  -- Add option to supply a master key directly for LUKS commands:
@@ -338,7 +341,7 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
   * Add LUKS key copy cmd: luksKeyCopy
   * Add option to supply a master key directly for LUKS commands:
     luksFormat, luksOpen and luksAddKey.
-	 
+
 * Fri Jan 27 2006 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.1-alt2
 - Fix incompatibility with libdevmapper 1.02.02
 - SPEC file cleanup
