@@ -1,6 +1,6 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.248
-%define module_release alt5
+%define module_release alt9
 
 %define flavour		std-pae
 BuildRequires(pre): rpm-build-kernel
@@ -25,6 +25,10 @@ ExclusiveOS: Linux
 Url: http://www.broadcom.com/support/802.11/linux_sta.php
 Patch1: bcmwl-build-kernel3.15.patch
 Patch2: bcmwl-build-kernel3.17.patch
+Patch3: bcmwl-build-kernel3.18.patch
+Patch4: bcmwl-build-kernel4.0.patch
+Patch5: bcmwl-fix.patch
+Patch6: bcmwl-build-4.2.patch
 BuildRequires: perl sharutils
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-source-%module_name = %module_version
@@ -53,6 +57,10 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 pushd bcmwl
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p2
 popd
 
 %build
@@ -96,6 +104,18 @@ __EOF__
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Oct  5 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt9
+- build with kernel 4.2 fixed
+
+* Mon Sep 28 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt8
+- #30807 fixed
+
+* Thu May 28 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt7
+- build with kernel 4.0 fixed
+
+* Fri Dec 12 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt6
+- build with kernel 3.18 fixed
 
 * Fri Nov 14 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt5
 - blacklist split
