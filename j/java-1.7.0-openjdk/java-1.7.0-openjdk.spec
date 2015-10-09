@@ -156,7 +156,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt1_2.3.10.3jpp7
+Release: alt1_2.3.10.3jpp7.1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -1116,6 +1116,9 @@ done
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Fri Oct 09 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0:1.7.0.25-alt1_2.3.10.3jpp7.1
+- build hackarouded
+
 * Fri Jun 06 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.25-alt1_2.3.10.3jpp7
 - converted from JPackage by jppimport script
 
