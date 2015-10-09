@@ -1,6 +1,6 @@
 Name:    texmf-latex-beamer
 Version: 3.36
-Release: alt1
+Release: alt2
 Summary: A LaTeX class that allows create pdf-presentations
 Summary(ru_RU.UTF-8): LaTeX класс для подготовки презентаций в pdf-формате
 License: GPL
@@ -130,6 +130,9 @@ install -pD -m644 emacs/beamer.el %buildroot%_emacslispdir/
 %_emacslispdir/beamer.el
 
 %changelog
+* Fri Oct 09 2015 Andrey Bergman <vkni@altlinux.org> 3.36-alt2
+- Update to post 3.36 commit 3dd33d7, which includes important fixes.
+
 * Sat Aug 08 2015 Andrey Bergman <vkni@altlinux.org> 3.36-alt1
 - Update to version 3.36.
 
