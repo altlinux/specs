@@ -1,6 +1,6 @@
 Name: audacity
-Version: 2.0.5
-Release: alt4.1
+Version: 2.1.0
+Release: alt1
 
 Summary: Cross-platform audio editor
 License: GPL
@@ -20,9 +20,9 @@ Packager: Alex Karpov <karpov@altlinux.ru>
 
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 
-# Automatically added by buildreq on Thu Apr 24 2014
-# optimized out: cmake cmake-modules fontconfig fontconfig-devel glib2-devel glibc-devel-static gnu-config libatk-devel libcairo-devel libcloog-isl4 libflac-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config zlib-devel
-BuildRequires: ccmake ctest gcc-c++ libalsa-devel libexpat-devel libflac++-devel libgtk+2-devel libid3tag-devel libjack-devel liblame-devel libmad-devel libportaudio2-devel libsndfile-devel libsoundtouch-devel libstdc++-devel-static libtwolame-devel libvamp-devel libvorbis-devel libwxGTK-devel
+# Automatically added by buildreq on Fri Oct 09 2015
+# optimized out: fontconfig fontconfig-devel glib2-devel glibc-devel-static gnu-config libX11-devel libatk-devel libcairo-devel libflac-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config xorg-xproto-devel zlib-devel
+BuildRequires: gcc-c++ libalsa-devel libexpat-devel libflac++-devel libgtk+2-devel libid3tag-devel libjack-devel liblame-devel libmad-devel libportaudio2-devel libsndfile-devel libsoundtouch-devel libsoxr-devel libstdc++-devel-static libtwolame-devel libvamp-devel libvorbis-devel libwxGTK-devel
 
 BuildRequires: libopencore-amrnb0 libopencore-amrwb0
 BuildRequires: desktop-file-utils shared-mime-info
@@ -44,7 +44,7 @@ WAV, AIFF, AU, IRCAM, MP3, Ogg Vorbis, и поддерживает все осн
 
 %prep
 %setup -n %name-src-%version
-%patch0
+#patch0
 grep -Irl "libmp3lame.so" . | xargs sed -i "s/libmp3lame.so/libmp3lame.so.0.0/"
 
 %build
@@ -77,17 +77,16 @@ rm -f src/.gchdepend
 
 %install
 %makeinstall_std
-install -pD -m644 %SOURCE2 %buildroot%_liconsdir/%name.xpm
-install -pD -m644 %SOURCE3 %buildroot%_niconsdir/%name.xpm
-install -pD -m644 %SOURCE4 %buildroot%_miconsdir/%name.xpm
+install -pDm644 %SOURCE2 %buildroot%_liconsdir/%name.xpm
+install -pDm644 %SOURCE3 %buildroot%_niconsdir/%name.xpm
+install -pDm644 %SOURCE4 %buildroot%_miconsdir/%name.xpm
 mkdir %buildroot%_datadir/%name/help
 tar -xf %SOURCE6 -C %buildroot%_datadir/%name/help/
-
+rm -rf %buildroot%_defaultdocdir/%name
 %find_lang %name
 
 %files -f %name.lang
 %doc *.txt
-#exclude %_docdir/%name-%version
 %_bindir/*
 %_mandir/man?/*
 %_iconsdir/*/*/apps/%name.*
@@ -97,8 +96,14 @@ tar -xf %SOURCE6 -C %buildroot%_datadir/%name/help/
 %_datadir/%name
 %_datadir/applications/%name.desktop
 %_datadir/mime/packages/%name.xml
+%_datadir/appdata/audacity.appdata.xml
+%_pixmapsdir/*.xpm
 
 %changelog
+* Fri Oct 09 2015 Michael Shigorin <mike@altlinux.org> 2.1.0-alt1
+- 2.1.0 (closes: #31343)
+- buildreq for libsoxr-devel
+
 * Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.5-alt4.1
 - Rebuilt for gcc5 C++11 ABI.
 
