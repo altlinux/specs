@@ -1,9 +1,9 @@
 %define appdir  %_datadir/%name
-%def_enable    opengl
-%def_without   jit
+%def_enable     opengl
+%def_without    jit
 
 Name:		gambas3
-Version:	3.8.1
+Version:	3.8.2
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -153,6 +153,7 @@ Requires:	%name-gb-qt4 = %version-%release
 Requires:	%name-gb-qt4-ext = %version-%release
 Requires:	%name-gb-qt4-webkit = %version-%release
 Requires:	%name-gb-settings = %version-%release
+Requires:       %name-gb-util = %version-%release
 Requires:	%name-gb-net = %version-%release
 Requires:	%name-gb-net-curl = %version-%release
 
@@ -1091,6 +1092,7 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_bindir/gbx3
 %_datadir/pixmaps/%name.png
 %_datadir/applications/*.desktop
+%_datadir/%name/template/
 %_datadir/appdata/%name.appdata.xml
 %dir %appdir/
 %dir %appdir/info/
@@ -1531,6 +1533,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.qt5.webkit.*
 
 %changelog
+* Wed Oct 07 2015 Andrey Cherepanov <cas@altlinux.org> 3.8.2-alt1
+- New version (http://gambaswiki.org/wiki/doc/release/3.8.2)
+
 * Sat Sep 05 2015 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1
 - New version (http://gambaswiki.org/wiki/doc/release/3.8.1)
 
