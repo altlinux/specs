@@ -1,7 +1,7 @@
 %define module_name	virtualbox
 %define module_version	4.3.30
 
-%define module_release	alt1
+%define module_release	alt2
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -22,6 +22,8 @@ Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
 License: GPL
 Group: System/Kernel and hardware
+
+Patch0: virtualbox-fix-kernel4.2.patch
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
@@ -56,6 +58,9 @@ or in your /etc/modules.conf file.
 %prep
 %setup -T -c -n kernel-source-%module_name-%module_version
 tar jxvf %kernel_src/kernel-source-%drv_module_name-%module_version.tar.bz2
+pushd kernel-source-%drv_module_name-%module_version
+%patch0 -p3
+popd
 tar jxvf %kernel_src/kernel-source-%pci_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%net_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%net_module_adaptor_name-%module_version.tar.bz2
@@ -95,6 +100,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Oct  9 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.3.30-alt2
+- work with kernel 4.2 fixed
 
 * Mon Aug 31 2015 Aleksey Avdeev <solo@altlinux.org> 4.3.30-alt1
 - Update template for virtualbox 4.3.30.
