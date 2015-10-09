@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	3.18
-%define kernel_sublevel	.22
+%define kernel_base_version	4.1
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -87,7 +87,7 @@ BuildRequires: ccache
 BuildRequires: ccache
 %endif
 
-Requires: bootloader-utils >= 0.4.13-alt1
+Requires: bootloader-utils >= 0.4.24-alt1
 Requires: module-init-tools >= 3.1
 Requires: mkinitrd >= 1:2.9.9-alt1
 Requires: startup >= 0.8.3-alt1
@@ -314,7 +314,7 @@ in the kernel and update the documentation to reflect these changes.
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
 rm -rf kernel-source-%kernel_base_version
-tar -jxf %kernel_src/kernel-source-%kernel_base_version.tar.bz2
+tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1
 
@@ -494,6 +494,7 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/ide/
 %exclude %modules_dir/kernel/arch/x86/kvm
 %exclude %modules_dir/kernel/net/netfilter/ipset
+%exclude %modules_dir/kernel/net/netfilter/xt_set.ko
 /lib/firmware/*
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
@@ -543,14 +544,66 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Oct 07 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.10-alt1
+- 4.1.10
+
 * Mon Oct 05 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.22-alt1
 - 3.18.22
 
-* Fri Sep 18 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.21-alt1
-- 3.18.21
+* Tue Sep 22 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.8-alt1
+- 4.1.8
 
-* Mon Sep 14 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.52-alt1
-- 3.14.52
+* Mon Aug 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.6-alt1
+- 4.1.6
+
+* Tue Aug 11 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.5-alt1
+- 4.1.5
+
+* Wed Aug 05 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.4-alt1
+- 4.1.4
+
+* Tue Aug 04 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.9-alt1
+- 4.0.9
+
+* Mon Jul 13 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.8-alt1
+- 4.0.8
+
+* Tue Jun 23 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.6-alt1
+- 4.0.6
+- dependence on bootloader-utils upgraded
+
+* Tue Jun 09 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.5-alt1
+- 4.0.5
+
+* Thu May 21 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.4-alt1
+- 4.0.4
+
+* Mon May 18 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.3-alt1
+- 4.0.3
+
+* Tue May 12 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.8-alt1
+- 3.19.8
+
+* Mon Apr 27 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.0-alt1
+- 4.0.0
+
+* Mon Apr 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.5-alt1
+- 3.19.5
+
+* Mon Apr 13 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.4-alt1
+- 3.19.4
+
+* Thu Mar 26 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.3-alt1
+- 3.19.3
+
+* Wed Mar 18 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.2-alt1
+- 3.19.2
+
+* Sun Mar 08 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.1-alt1
+- 3.19.1
+
+* Tue Feb 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.0-alt1
+- 3.19
 
 * Wed Feb 11 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.7-alt1
 - 3.18.7
