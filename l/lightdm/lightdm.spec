@@ -6,7 +6,7 @@
 
 Name: lightdm
 Version: 1.14.0
-Release: alt1
+Release: alt1.1
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -242,6 +242,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Oct 09 2015 Sergey V Turchin <zerg@altlinux.org> 1.14.0-alt1.1
+- NMU: rebuild with new libgcrypt (ALT#31350)
+
 * Tue May 12 2015 Alexey Shabalin <shaba@altlinux.ru> 1.14.0-alt1
 - 1.14.0
 
