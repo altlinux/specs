@@ -1,4 +1,4 @@
-%define		svn 7102
+%define		svn 7165
 
 %define		rel alt1
 
@@ -9,7 +9,7 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT4
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	14.9.0
+Version:	15.9.0
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
@@ -104,6 +104,9 @@ export OPTFLAGS="%optflags"
 %endif
 
 %changelog
+* Fri Oct 09 2015 Motsyo Gennadi <drool@altlinux.ru> 15.9.0-alt1.7165
+- 15.9.0 version (svn7102)
+
 * Sun Sep 06 2015 Motsyo Gennadi <drool@altlinux.ru> 14.9.0-alt1.7102
 - svn7102
 
