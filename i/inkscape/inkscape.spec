@@ -4,7 +4,7 @@
 %define pre %nil
 Name: inkscape
 Version: 0.91
-Release: alt2
+Release: alt3
 
 Summary: A Vector Drawing Application
 
@@ -82,7 +82,7 @@ inkview is standalone viewer for Inkscape files (SVG)
 #cat %%SOURCE1 >po/ru.po
 
 %build
-%add_optflags -fpermissive
+%add_optflags -fpermissive -std=gnu++11
 %autoreconf
 subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%_python_version|" ./configure
 %configure \
@@ -130,6 +130,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Fri Oct 09 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.91-alt3
+- build fixed
+
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 0.91-alt2
 - build with libcdr and libvisio
 
