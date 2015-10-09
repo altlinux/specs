@@ -8,8 +8,8 @@
 # file, is the same license as for the pristine package itself.
 
 Name: qupzilla
-Version: 1.8.6
-Release: alt2
+Version: 1.8.7
+Release: alt1
 
 Summary: A very fast open source browser based on WebKit core
 License: GPLv3+
@@ -23,6 +23,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 # Automatically added by buildreq on Mon Feb 09 2015
 # optimized out: libGL-devel libX11-devel libcloog-isl4 libgst-plugins1.0 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config qt5-base-devel qt5-declarative-devel qt5-tools xorg-xproto-devel
 BuildRequires: gcc-c++ libssl-devel qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel
+BuildRequires: qt5-x11extras-devel
 
 BuildRequires: pkgconfig(Qt5Concurrent)
 BuildRequires: pkgconfig(Qt5Core)
@@ -79,6 +80,12 @@ make INSTALL_ROOT=%buildroot install
 # - move shared libraries to a subpackage?
 
 %changelog
+* Fri Oct 09 2015 Michael Shigorin <mike@altlinux.org> 1.8.7-alt1
+- 1.8.7
+
+* Wed Sep 16 2015 Michael Shigorin <mike@altlinux.org> 1.8.6-alt3
+- amended BR:
+
 * Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 1.8.6-alt2
 - rebuilt against qt5
 
