@@ -1,5 +1,5 @@
 Name: tar
-Version: 1.27.1
+Version: 1.28.0.32.cdf41c
 Release: alt1
 
 Summary: A GNU file archiving program
@@ -14,7 +14,10 @@ Source: %srcname.tar
 %def_enable selinux
 BuildRequires: libacl-devel libattr-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-BuildRequires: gnulib >= 0.0.8061.5191b35, paxutils >= 0.0.1.111.0b3d84a
+BuildRequires: gnulib >= 0.1.585.2fda85, paxutils >= 0.0.1.119.45af
+
+# for test suite
+%{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
 
 %description
 The GNU tar program saves many files together into one archive and
@@ -33,9 +36,11 @@ echo -n %version-%release > .tarball-version
 # Generate LINGUAS file.
 ls po | sed -n 's/^\([^.]\+\)\.po$/\1/p' > po/LINGUAS
 
+rmdir paxutils
+ln -s %_datadir/paxutils .
+
 %build
-./bootstrap --force --skip-po --gnulib-srcdir=%_datadir/gnulib \
-	--paxutils-srcdir=%_datadir/paxutils
+./bootstrap --force --skip-po --gnulib-srcdir=%_datadir/gnulib
 export tar_cv_path_RSH=no
 %configure --bindir=/bin --with-rmt=/sbin/rmt --disable-silent-rules
 %make_build -C po update-po
@@ -59,6 +64,11 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Thu Sep 24 2015 Dmitry V. Levin <ldv@altlinux.org> 1.28.0.32.cdf41c-alt1
+- Updated to release_1_28-32-gcdf41c.
+- Imported some patches by Pavel Raiskup from Fedora tar-1.28-6 package.
+- Built with gnulib v0.1-585-g2fda85e.
+
 * Sun Nov 17 2013 Dmitry V. Levin <ldv@altlinux.org> 1.27.1-alt1
 - Updated to 1.27.1.
 

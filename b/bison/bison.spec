@@ -1,5 +1,5 @@
 Name: bison
-Version: 2.7.1
+Version: 3.0.4.0.14.8bf2
 Release: alt1
 
 Summary: A GNU general-purpose parser generator
@@ -8,7 +8,7 @@ Group: Development/Other
 Url: http://www.gnu.org/software/bison/
 
 %define srcname %name-%version-%release
-# git://git.altlinux.org/people/ldv/packages/bison refs/heads/bison-current
+# git://git.altlinux.org/people/ldv/packages/bison refs/heads/master
 Source0: %srcname.tar
 # git://git.altlinux.org/people/ldv/packages/bison refs/heads/po-current
 Source1: po-%version-%release.tar
@@ -19,7 +19,7 @@ Provides: byacc = %version-%release
 Obsoletes: byacc
 
 BuildRequires: flex, gcc-c++, help2man
-BuildRequires: gnulib >= 0.0.7902.92f3a4c
+BuildRequires: gnulib >= 0.1.585.2fda85
 
 %description
 Bison is a general purpose parser generator which converts a grammar
@@ -54,12 +54,11 @@ echo -n %version > .tarball-version
 # Generate LINGUAS file.
 ls po/*.po | sed 's|.*/||; s|\.po$||' > po/LINGUAS
 
-# Install autoconf files.
-rm m4/m4.m4 data/m4sugar/{foreach,m4sugar}.m4
-install -pm644 %_aclocaldir/m4.m4 m4/
-install -pm644 %_datadir/autoconf/m4sugar/{foreach,m4sugar}.m4 data/m4sugar/
-
-xz -9k NEWS
+# Install submodule files.
+rm m4/m4.m4 data/m4sugar/{foreach,m4sugar}.m4 build-aux/move-if-change
+ln -s %_aclocaldir/m4.m4 m4/
+ln -s %_datadir/autoconf/m4sugar/{foreach,m4sugar}.m4 data/m4sugar/
+ln -s %_datadir/gnulib/build-aux/move-if-change build-aux/
 
 %build
 ./bootstrap --no-git --skip-po --gnulib-srcdir=%_datadir/gnulib
@@ -77,17 +76,22 @@ touch src/scan-????.l
 %make_build -k check
 
 %files -f %name.lang
-%doc AUTHORS NEWS.xz README THANKS
 %_bindir/*
 %_libdir/lib*.a
 %_datadir/bison/
 %_datadir/aclocal/*
 %_mandir/man?/*
 %_infodir/*.info*
+%doc %_docdir/%name/
 
 %files -f %name-runtime.lang runtime
 
 %changelog
+* Thu Sep 24 2015 Dmitry V. Levin <ldv@altlinux.org> 3.0.4.0.14.8bf2-alt1
+- Update to bison v3.0.4-14-g8bf276d.
+- Updated translations from translationproject.org.
+- Built with gnulib v0.1-585-g2fda85e.
+
 * Tue Apr 16 2013 Dmitry V. Levin <ldv@altlinux.org> 2.7.1-alt1
 - Updated to bison 2.7.1.
 - Updated translations from translationproject.org.

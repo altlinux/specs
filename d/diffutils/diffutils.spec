@@ -1,6 +1,6 @@
 Name: diffutils
-Version: 3.3
-Release: alt2
+Version: 3.3.0.33.b4ef
+Release: alt1
 %define srcname %name-%version-%release
 
 Summary: A GNU collection of diff utilities
@@ -20,7 +20,7 @@ Patch: %name-%version-%release.patch
 
 Conflicts: man-pages <= 1.52-alt1
 
-BuildRequires: gnulib >= 0.0.8061.5191b35
+BuildRequires: gnulib >= 0.1.585.2fda85
 BuildRequires: gperf help2man
 
 %description
@@ -48,9 +48,6 @@ sed -i '/^\(git\|rsync\)[[:space:]]/d' bootstrap.conf
 # Generate LINGUAS file.
 ls po/*.po | sed 's|.*/||; s|\.po$||' > po/LINGUAS
 
-# Use bootstrap from gnulib
-install -pm755 %_datadir/gnulib/build-aux/bootstrap .
-
 %build
 ./bootstrap --skip-po --gnulib-srcdir=%_datadir/gnulib
 # Predefine location of the pr utility.
@@ -72,6 +69,11 @@ export PR_PROGRAM=%_bindir/pr
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Thu Sep 24 2015 Dmitry V. Levin <ldv@altlinux.org> 3.3.0.33.b4ef-alt1
+- Updated to v3.3-33-gb4efca9.
+- Updated translations from translationproject.org.
+- Built with gnulib v0.1-585-g2fda85e.
+
 * Mon Oct 28 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3-alt2
 - Updated to v3.3-12-g1875453.
 - Updated translations from translationproject.org.
