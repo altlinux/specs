@@ -1,5 +1,5 @@
 Name: audacity
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Cross-platform audio editor
@@ -41,6 +41,17 @@ WAV, AIFF, AU, IRCAM, MP3, Ogg Vorbis, и поддерживает все осн
 операции редактирования, такие как Вырезать, Скопировать, Вставить,
 а также возможность микширования дорожек и применения эффектов,
 предоставляемых подключаемыми модулями, к любой части звука.
+
+%package manual
+Summary: Audacity manual (offline install)
+Group: Documentation
+BuildArch: noarch
+
+%description manual
+Audacity Manual can be installed locally if preferred, or accessed
+on-line if internet connection is available.
+
+For the most up to date manual content, use the on-line manual.
 
 %prep
 %setup -n %name-src-%version
@@ -87,19 +98,32 @@ rm -rf %buildroot%_defaultdocdir/%name
 
 %files -f %name.lang
 %doc *.txt
+%doc lib-src/libnyquist/nyquist/license.txt
+%doc lib-src/libnyquist/nyquist/Readme.txt
 %_bindir/*
 %_mandir/man?/*
 %_iconsdir/*/*/apps/%name.*
 %_liconsdir/*
 %_niconsdir/*.xpm
 %_miconsdir/*
-%_datadir/%name
+%dir %_datadir/%name
+%_datadir/%name/*.xml
+%_datadir/%name/nyquist
+%_datadir/%name/plug-ins
 %_datadir/applications/%name.desktop
 %_datadir/mime/packages/%name.xml
 %_datadir/appdata/audacity.appdata.xml
 %_pixmapsdir/*.xpm
 
+%files manual
+%dir %_datadir/%name
+%_datadir/%name/help
+
 %changelog
+* Fri Oct 09 2015 Michael Shigorin <mike@altlinux.org> 2.1.1-alt1
+- 2.1.1
+- manual moved to a separate subpackage (not unlike fedora)
+
 * Fri Oct 09 2015 Michael Shigorin <mike@altlinux.org> 2.1.0-alt1
 - 2.1.0 (closes: #31343)
 - buildreq for libsoxr-devel
