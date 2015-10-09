@@ -1,12 +1,14 @@
 Summary: Prelude Hybrid Intrusion Detection System Library
 Name: libprelude
 Version: 1.2.6rc1
-Release: alt1.git20140916.1
+Release: alt1.git20140916.1.1
 License: GPLv2
 Group: System/Libraries
 Url: http://www.prelude-ids.org/
 
 Source: %name-%version.tar
+# Ubuntu
+Patch1: gcc5.diff
 
 %def_enable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
@@ -131,6 +133,7 @@ Install perl-%name if you want to use any perl scripts that use %name.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -190,6 +193,10 @@ rm -f %buildroot%_libdir/PreludeEasy.*
 %perl_vendor_archlib/Prelude*
 
 %changelog
+* Fri Oct 09 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.6rc1-alt1.git20140916.1.1
+- FTBFS with gcc5
+- rebuild with new libgcrypt (ALT#31349)
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6rc1-alt1.git20140916.1
 - rebuild with new perl 5.20.1
 
