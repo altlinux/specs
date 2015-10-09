@@ -1,10 +1,6 @@
-%define status rc3
-
-
-
 Name: lyx
-Version: 2.0.5.1
-Release: alt1.1
+Version: 2.1.4
+Release: alt1
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
 License: GPL
@@ -12,7 +8,6 @@ Group: Publishing
 Epoch: 2
 Url: http://www.lyx.org
 
-Packager: Alex Karpov <karpov@altlinux.ru>
 Source: %name-%version.tar
 Source1: %name.desktop
 Source2: %{name}16.xpm
@@ -20,10 +15,11 @@ Source3: %{name}32.xpm
 Source4: %{name}48.xpm
 Source5: lyxcat
 
-#Patch: lyx-qt4.3-from_ascii-lyx2lyx.alt.patch
+Patch1: 0001-Work-around-a-gcc5-bug.patch
+Patch2: lyx-2.1.2-xdg_open.patch
 
 BuildPreReq: desktop-file-utils kde-common-devel
-BuildRequires: gcc-c++ imake libaspell-devel libSM-devel python-devel 
+BuildRequires: gcc-c++ imake libaspell-devel libSM-devel python-devel bc
 BuildRequires: libaiksaurus-devel boost-signals-devel boost-devel boost-filesystem-devel
 BuildRequires: libqt4-devel >= 4.3
 
@@ -63,7 +59,9 @@ BuildArch: noarch
 Virtual package that install required set of tex packages for LyX.
 
 %prep
-%setup -qn %name-%version
+%setup
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure --without-included-boost
@@ -89,6 +87,7 @@ install -m 755 %SOURCE5 %buildroot%_bindir/
 TEXMF=%_datadir/texmf
 mkdir -p %buildroot$TEXMF/tex/latex
 cp -ar %buildroot%_datadir/%name/tex %buildroot$TEXMF/tex/latex/%name
+
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Office:WordProcessor:KDE:Qt \
 	--add-category=Office \
@@ -103,7 +102,7 @@ cd %_datadir/%name
 python configure.py
 
 %files -f %name.lang
-%doc ANNOUNCE COPYING INSTALL* README* NEWS UPGRADING RELEASE-NOTES ABOUT-NLS
+%doc ANNOUNCE COPYING INSTALL* README* NEWS UPGRADING RELEASE-NOTES
 %_bindir/*
 %_man1dir/*
 %_datadir/%name
@@ -116,6 +115,9 @@ python configure.py
 %files -n lyx-tex
 
 %changelog
+* Fri Oct 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.1.4-alt1
+- Updated to 2.1.4.
+
 * Mon Feb 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.0.5.1-alt1.1
 - Rebuilt with Boost 1.53.0
 
