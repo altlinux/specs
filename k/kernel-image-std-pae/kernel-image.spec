@@ -1,8 +1,8 @@
 Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
-%define kernel_base_version	3.14
-%define kernel_sublevel .52
+%define kernel_base_version	4.1
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -87,7 +87,7 @@ BuildRequires: ccache
 BuildRequires: ccache
 %endif
 
-Requires: bootloader-utils >= 0.4.13-alt1
+Requires: bootloader-utils >= 0.4.24-alt1
 Requires: module-init-tools >= 3.1
 Requires: mkinitrd >= 1:2.9.9-alt1
 Requires: startup >= 0.8.3-alt1
@@ -314,7 +314,7 @@ in the kernel and update the documentation to reflect these changes.
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
 rm -rf kernel-source-%kernel_base_version
-tar -jxf %kernel_src/kernel-source-%kernel_base_version.tar.bz2
+tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1
 
@@ -338,8 +338,7 @@ find . -name "*.orig" -delete -or -name "*~" -delete
 
 %build
 export ARCH=%base_arch
-# use *at least* %%nprocs jobs
-[ "%__nprocs" -gt "%nprocs" ] || export NPROCS=%nprocs
+export NPROCS=%nprocs
 KernelVer=%kversion-%flavour-%krelease
 
 echo "Building Kernel $KernelVer"
@@ -349,8 +348,6 @@ echo "Building Kernel $KernelVer"
 cp -vf config-%_target_cpu .config
 
 %make_build oldconfig
-# just to add difference between given and actual config to build log
-diff -u config-%_target_cpu .config ||:
 #%make_build include/linux/version.h
 %make_build bzImage
 %make_build modules
@@ -423,12 +420,7 @@ KbuildFiles="
 	scripts/kconfig/conf
 	scripts/mkcompile_h
 	scripts/makelst
-	scripts/Makefile.modpost
-	scripts/Makefile.modinst
-	scripts/Makefile.lib
-	scripts/Makefile.host
-	scripts/Makefile.clean
-	scripts/Makefile.build
+	scripts/Makefile.*
 	scripts/Makefile
 	scripts/Kbuild.include
 	scripts/kallsyms
@@ -552,131 +544,168 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Oct 07 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.10-alt1
+- 4.1.10
+
+* Mon Oct 05 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.22-alt1
+- 3.18.22
+
+* Tue Sep 22 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.8-alt1
+- 4.1.8
+
 * Mon Sep 14 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.52-alt1
 - 3.14.52
 
-* Mon Aug 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.51-alt1
-- 3.14.51
+* Mon Aug 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.6-alt1
+- 4.1.6
 
-* Tue Aug 11 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.50-alt1
-- 3.14.50
+* Tue Aug 11 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.5-alt1
+- 4.1.5
 
-* Tue Aug 04 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.49-alt1
-- Updated to 3.14.49.
+* Wed Aug 05 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.4-alt1
+- 4.1.4
 
-* Fri Jul 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.14.48-alt1
-- Updated to 3.14.48.
+* Tue Aug 04 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.9-alt1
+- 4.0.9
 
-* Sat Jul 04 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.14.47-alt1
-- Updated to 3.14.47.
+* Mon Jul 13 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.8-alt1
+- 4.0.8
 
-* Wed Jul 01 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.14.46-alt1
-- Updated to 3.14.46.
-- spec: added some useful tweaks.
+* Tue Jun 23 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.6-alt1
+- 4.0.6
+- dependence on bootloader-utils upgraded
 
-* Tue Jun 23 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.45-alt1
-- 3.14.45
+* Tue Jun 09 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.5-alt1
+- 4.0.5
 
-* Tue Jun 09 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.44-alt1
-- 3.14.44
+* Thu May 21 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.4-alt1
+- 4.0.4
 
-* Mon May 18 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.43-alt1
-- 3.14.43
+* Mon May 18 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.3-alt1
+- 4.0.3
 
-* Thu May 07 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.41-alt1
-- 3.14.41
+* Tue May 12 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.8-alt1
+- 3.19.8
 
-* Thu Apr 30 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.40-alt1
-- 3.14.40
+* Mon Apr 27 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.0.0-alt1
+- 4.0.0
 
-* Mon Apr 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.39-alt1
-- 3.14.39
+* Mon Apr 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.5-alt1
+- 3.19.5
 
-* Mon Apr 13 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.38-alt1
-- 3.14.38
+* Mon Apr 13 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.4-alt1
+- 3.19.4
 
-* Thu Mar 26 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.37-alt1
-- 3.14.37
+* Thu Mar 26 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.3-alt1
+- 3.19.3
 
-* Wed Mar 18 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.36-alt1
-- 3.14.36
+* Wed Mar 18 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.2-alt1
+- 3.19.2
 
-* Sun Mar 08 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.35-alt1
-- 3.14.35
-- SECCOMP_FILTER_FLAG_TSYNC backported
+* Sun Mar 08 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.1-alt1
+- 3.19.1
 
-* Fri Feb 27 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.34-alt1
-- 3.14.34
-- more in-kernel ipset excluded
+* Tue Feb 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.19.0-alt1
+- 3.19
 
-* Wed Feb 11 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.33-alt1
-- 3.14.33
+* Wed Feb 11 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.7-alt1
+- 3.18.7
+- adjtimex on 32-bit fixed
 - in-kernel ipset excluded
-- updated netlabel patch
+- netlabel patch updated
 
-* Tue Feb 10 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.32-alt2
-- closes: #30712
+* Sat Feb 07 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.6-alt1
+- 3.18.6
 
-* Sat Feb 07 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.32-alt1
-- 3.14.32
+* Fri Jan 30 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.5-alt1
+- 3.18.5
 
-* Fri Jan 30 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.31-alt1
-- 3.14.31
+* Wed Jan 28 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.4-alt1
+- 3.18.4
 
-* Wed Jan 28 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.30-alt1
-- 3.14.30
+* Sat Jan 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.3-alt1
+- 3.18.3
 
-* Sat Jan 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.29-alt1
-- 3.14.29
+* Fri Jan 09 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.2-alt1
+- 3.18.2
 
-* Fri Jan 09 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.28-alt1
-- 3.14.28
+* Wed Dec 17 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.1-alt1
+- 3.18.1
 
-* Wed Dec 17 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.27-alt1
-- 3.14.27
+* Mon Dec 08 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.0-alt1
+- 3.18.0
 
-* Sun Dec 07 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.26-alt1
-- 3.14.26
+* Mon Dec 08 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.17.6-alt1
+- 3.17.6
 
-* Sat Nov 22 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.25-alt1
-- 3.14.25
+* Sun Dec 07 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.17.5-alt1
+- 3.17.5
+
+* Sat Nov 22 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.17.4-alt1
+- 3.17.4
 - set HZ=1000 on x86_64
 
-* Sun Nov 16 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.24-alt1
-- 3.14.24
+* Sun Nov 16 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.17.3-alt1
+- 3.17.3
 
-* Fri Oct 31 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.23-alt1
-- 3.14.23
+* Fri Oct 31 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.17.2-alt1
+- 3.17.2
 
-* Wed Oct 15 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.22-alt1
-- 3.14.22
+* Fri Oct 17 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.17.1-alt1
+- 3.17.1
 
-* Fri Oct 10 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.21-alt1
-- 3.14.21
+* Wed Oct 15 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.6-alt1
+- 3.16.6
 
-* Mon Oct 06 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.20-alt1
-- 3.14.20
+* Fri Oct 10 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.5-alt1
+- 3.16.5
 
-* Thu Oct 02 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.19-alt2
-- patches from ldv added
+* Mon Oct 06 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.4-alt1
+- 3.16.4
 
-* Thu Sep 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.19-alt1
-- 3.14.19
+* Thu Oct 02 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.3-alt2
+- ldv and sem patches added
 
-* Sun Sep 07 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.18-alt1
-- 3.14.18
+* Thu Sep 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.3-alt1
+- 3.16.3
 
-* Mon Sep 01 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.17-alt1
-- 3.14.17
+* Mon Sep 08 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.2-alt1
+- 3.16.2
 
-* Thu Aug 28 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.27-alt1
-- 3.12.27
+* Wed Aug 20 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.1-alt1
+- 3.16.1
 
-* Wed Aug 20 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.26-alt2.1
-- UKSM off by default
+* Mon Aug 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.0-alt1
+- 3.16.0
 
-* Mon Aug 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.26-alt2
-- UKSM patch added and enabled
+* Mon Aug 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.10-alt1
+- 3.15.10
+
+* Fri Aug 01 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.8-alt1
+- 3.15.8
+
+* Thu Jul 31 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.7-alt1
+- 3.15.7
+
+* Wed Jul 16 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.5-alt2
+- EFI_MIXED enabled
+
+* Wed Jul 09 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.5-alt1
+- 3.15.5
+
+* Mon Jul 07 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.4-alt1
+- 3.15.4
+
+* Tue Jul 01 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.3-alt1
+- 3.15.3
+
+* Fri Jun 27 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.2-alt1
+- 3.15.2
+- LEGACY_PTYS disabled
+- AUFS added
+
+* Tue Jun 17 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.1-alt1
+- 3.15.1
 
 * Tue Jun 17 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.8-alt1
 - 3.14.7
