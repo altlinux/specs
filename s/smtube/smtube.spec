@@ -1,5 +1,5 @@
 Name:		smtube
-Version:	15.8.0
+Version:	15.9.0
 Release:	alt1
 Summary:	Youtube Browser for SMPlayer
 Summary(ru_RU.UTF8):	Браузер YouTube для SMPlayer
@@ -12,8 +12,6 @@ Url:		http://smtube.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/smtube/SMTube/%version/%name-%version.tar.bz2
 
 BuildRequires:	gcc-c++ libqt4-devel
-
-Patch0:		%name-15.5.7_ru-uk_desktop.diff
 
 %description
 SMTube is a tool for searching and downloading videos from YouTube.
@@ -35,7 +33,6 @@ SMTube є утилітою для пошуку та завантаження в�
 
 %prep
 %setup -n %name-%version
-%patch0 -p1
 
 %build
 subst 's|share/doc/smtube|share/doc/smtube-%version|g' Makefile
@@ -58,6 +55,9 @@ cd ./src && qmake "QMAKE_CXXFLAGS+=%optflags -DTRANSLATION_PATH=%_datadir/%name/
 %_datadir/%name/translations/*.qm
 
 %changelog
+* Sat Oct 10 2015 Motsyo Gennadi <drool@altlinux.ru> 15.9.0-alt1
+- 15.9.0
+
 * Sat Sep 05 2015 Motsyo Gennadi <drool@altlinux.ru> 15.8.0-alt1
 - 15.8.0
 
