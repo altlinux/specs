@@ -11,7 +11,7 @@
 %def_enable vala
 
 Name: %bname
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 Epoch: 1
 
@@ -20,6 +20,7 @@ License: LGPLv2+
 Group: System/Libraries
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
+Patch: %name-2.40.11-alt-duplicate_testcase_path.patch
 
 # From configure.ac
 %define glib_ver 2.24.0
@@ -124,6 +125,7 @@ GObject introspection devel data for the %name library
 
 %prep
 %setup -n %bname-%version
+%patch
 
 %build
 %autoreconf
@@ -181,6 +183,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sat Oct 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.11-alt1
+- 2.40.11
+
 * Sat Aug 08 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.10-alt1
 - 2.40.10
 
