@@ -1,6 +1,6 @@
 Name: vpnc
 Version: 0.5.3
-Release: alt5
+Release: alt5.1
 
 Summary: Client for cisco vpn concentrator
 Group: Networking/Remote access
@@ -75,6 +75,9 @@ touch %buildroot%_runtimedir/%name/defaultroute \
 %config(noreplace) %_sysconfdir/%name/vpnc-script
 
 %changelog
+* Sat Oct 10 2015 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt5.1
+- NMU: rebuild with new libgcrypt (ALT#31332)
+
 * Wed Jun 18 2014 Alexey Shabalin <shaba@altlinux.ru> 0.5.3-alt5
 - svn snapshot r550 (fixed ALT#26600, ALT#29351, ALT#26761, ALT#26726)
 - add JunOS support from https://github.com/ndpgroup/vpnc (ALT#30117)
