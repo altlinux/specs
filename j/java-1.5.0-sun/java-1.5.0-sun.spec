@@ -50,7 +50,7 @@
 
 Name:           %jppname
 Version:        %{javaver}.%{buildver}
-Release:        alt4
+Release:        alt5
 Epoch:          0
 Summary:        Java 2 Runtime Environment, Standard Edition
 License:        Operating System Distributor License for Java version 1.1
@@ -70,6 +70,7 @@ Packager:       Igor Yu. Vlasenko <viy@altlinux.org>
 %define cgibindir       %{_var}/www/cgi-bin
 # --- jpackage compatibility stuff ends here ---
 
+%def_enable headless
 %def_enable demo
 %def_enable fonts
 %def_disable accessibility
@@ -118,6 +119,7 @@ Provides:       jre-%{origin} = %{epoch}:%{version}-%{release}
 Provides:       jre-%{javaver}, java-%{javaver}, jre = %{epoch}:%{javaver}
 Provides:       java-%{origin} = %{epoch}:%{version}-%{release}
 Provides:       java = %{epoch}:%{javaver}
+%if_disabled headless
 Provides:       jndi = %{epoch}:%{version}, jndi-ldap = %{epoch}:%{version}
 Provides:       jndi-cos = %{epoch}:%{version}, jndi-rmi = %{epoch}:%{version}
 Provides:       jndi-dns = %{epoch}:%{version}
@@ -126,11 +128,14 @@ Provides:       jsse = %{epoch}:%{version}
 Provides:       jce = %{epoch}:%{version}
 Provides:       jdbc-stdext = %{epoch}:3.0, jdbc-stdext = %{epoch}:%{version}
 Provides:       java-sasl = %{epoch}:%{version}
+%endif
 # --- jpackage compatibility stuff ends here ---
 
 Obsoletes: j2se%major-%origin
 
-
+%if_enabled headless
+Requires: %{name}-headless = %{?epoch:%epoch:}%version-%release
+%endif
 Requires: fonts-ttf-j2se-%origin >= %version-%release
 Requires: java-common
 Requires: /proc
@@ -192,6 +197,51 @@ necessary to run programs written in the Java programming language.
 It is not a development environment and does not contain development 
 tools such as compilers or debuggers.  For development tools, see the 
 Java SDK, Standard Edition.
+
+
+%if_enabled headless
+%package        headless
+Summary:        Java Runtime Environment, without audio and video support
+Group:          Development/Java
+Requires: fonts-ttf-%name >= %version-%release
+Requires(post,preun): alternatives >= 0.4
+
+# --- fedora compatibility stuff starts here ---
+Provides:       jre-%{javaver}-%{origin}-headless = %{epoch}:%{version}-%{release}
+Provides:       jre-%{origin}-headless = %{epoch}:%{version}-%{release}
+Provides:       jre-%{javaver}-headless = %{epoch}:%{version}-%{release}
+Provides:       java-%{javaver}-headless = %{epoch}:%{version}-%{release}
+Provides:       jre-headless = %{javaver}
+Provides:       java-%{origin}-headless = %{epoch}:%{version}-%{release}
+Provides:       java-headless = %{epoch}:%{javaver}
+# --- fedora compatibility stuff ends here ---
+
+# --- jpackage compatibility stuff starts here ---
+Provides:       jndi = %{epoch}:%{version}, jndi-ldap = %{epoch}:%{version}
+Provides:       jndi-cos = %{epoch}:%{version}, jndi-rmi = %{epoch}:%{version}
+Provides:       jndi-dns = %{epoch}:%{version}
+Provides:       jaas = %{epoch}:%{version}
+Provides:       jsse = %{epoch}:%{version}
+Provides:       jce = %{epoch}:%{version}
+Provides:       jdbc-stdext = %{epoch}:4.1, jdbc-stdext = %{epoch}:%{version}
+Provides:       java-sasl = %{epoch}:%{version}
+# --- jpackage compatibility stuff ends here ---
+
+%description    headless
+This package contains the Java Runtime Environment for %{name}
+without audio and video support.
+Install this package if you need to run Java applications
+in server mode.
+
+For audio and video support install the %{name} package.
+
+The Java Runtime Environment contains the Java virtual machine, 
+runtime class libraries, and Java application launcher that are 
+necessary to run programs written in the Java programming language. 
+It is not a development environment and does not contain development 
+tools such as compilers or debuggers.  For development tools, see the 
+Java SDK, Standard Edition.
+%endif
 
 %package        devel
 Summary:        Java 2 SDK, Standard Edition
@@ -747,7 +797,11 @@ for i in $RPM_BUILD_ROOT%_man1dir/*.1; do
     [ -f $i ] && gzip -9 $i
 done
 
+%if_enabled headless
+%post headless
+%else
 %post
+%endif
 %force_update_alternatives
 
 ##################################################
@@ -756,6 +810,20 @@ done
 
 
 %files
+%if_enabled headless
+%{_jvmdir}/%{jredir}/bin/policytool
+%{_jvmdir}/%{jredir}/lib/%libarch/awt_robot
+%{_jvmdir}/%{jredir}/lib/%libarch/libjsoundalsa.so
+%{_jvmdir}/%{jredir}/lib/%libarch/motif21/libmawt.so
+%{_jvmdir}/%{jredir}/lib/%libarch/xawt/libmawt.so
+
+%files headless
+%exclude %{_jvmdir}/%{jredir}/bin/policytool
+%exclude %{_jvmdir}/%{jredir}/lib/%libarch/awt_robot
+%exclude %{_jvmdir}/%{jredir}/lib/%libarch/libjsoundalsa.so
+%exclude %{_jvmdir}/%{jredir}/lib/%libarch/motif21/libmawt.so
+%exclude %{_jvmdir}/%{jredir}/lib/%libarch/xawt/libmawt.so
+%endif
 %doc jre/CHANGES jre/COPYRIGHT jre/LICENSE jre/README jre/Welcome.html
 %doc jre/THIRDPARTYLICENSEREADME.txt
 %doc README.alt
@@ -970,6 +1038,9 @@ done
 
 
 %changelog
+* Sat Oct 10 2015 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0.22-alt5
+- added headless subpackage
+
 * Tue Aug 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0.22-alt4
 - added epoch to strict Requires
 
