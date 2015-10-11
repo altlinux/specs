@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Attribute-Handlers
 Name: perl-%dist
-Version: 0.96
+Version: 0.99
 Release: alt1
 
 Summary: Simpler definition of attribute handlers
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SM/SMUELLER/Attribute-Handlers-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Attribute-Handlers-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -38,6 +38,9 @@ the compilation phases (i.e. in a BEGIN, CHECK, INIT, or END block).
 %perl_vendor_privlib/Attribute
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
+- automated CPAN update
+
 * Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1
 - automated CPAN update
 
