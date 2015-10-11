@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist File-Tail
 Name: perl-%dist
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Perl extension for reading from continously updated files
@@ -36,6 +37,9 @@ chmod -x logwatch select_demo
 %perl_vendor_privlib/File
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1
 - automated CPAN update
 
