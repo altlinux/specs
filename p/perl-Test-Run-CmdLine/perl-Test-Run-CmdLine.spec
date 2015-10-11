@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(IO/All.pm) perl(List/Util.pm) perl(MRO/Compat.pm) perl(Pod/Usage.pm) perl(Test/Manifest.pm) perl(Test/Run/Base.pm) perl(Test/Run/Iface.pm) perl(Test/Run/Obj.pm) perl(Test/Run/Trap/Obj.pm) perl(base.pm) perl-base perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Test-Run-CmdLine
-%define upstream_version 0.0126
+%define upstream_version 0.0128
 
 Name:       perl-%{upstream_name}
-Version:    0.0126
+Version:    0.0128
 Release:    alt1
 
 Summary:    Command line front-end for Test-Run
@@ -57,6 +58,9 @@ installed or available in the path.
 /usr/bin/runprove
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.0128-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.0126-alt1
 - automated CPAN update
 
