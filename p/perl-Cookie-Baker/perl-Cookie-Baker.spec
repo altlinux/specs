@@ -1,20 +1,20 @@
-%define module_version 0.05
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.06
 %define module_name Cookie-Baker
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Cookie/Baker/XS.pm) perl(Exporter.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(Test/Time.pm) perl(URI/Escape.pm) perl(base.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.05
-Release: alt2
+Version: 0.06
+Release: alt1
 Summary: Cookie string generator / parser
 Group: Development/Perl
 License: perl
 URL: https://github.com/kazeburo/Cookie-Baker
 
-Source0: http://cpan.org.ua/authors/id/K/KA/KAZEBURO/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/K/KA/KAZEBURO/Cookie-Baker-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/C*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
 - moved to Sisyphus as dependency
 
