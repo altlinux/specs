@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Image-Xbm
 Name: perl-%dist
-Version: 1.08
-Release: alt3
+Version: 1.09
+Release: alt1
 
 Summary: Load, create, manipulate and save xbm image files.
 License: LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SR/SREZIC/Image-Xbm-%{version}.tar.gz
 
 Patch0: perl-Image-Xbm-1.08-cpan-7439-filehandle.patch
 Patch1: perl-Image-Xbm-1.08-alt-perlio.patch
@@ -41,6 +42,9 @@ additional manipulation functionality.
 %perl_vendor_privlib/Image/Xbm.pm
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
+- automated CPAN update
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 1.08-alt3
 - rebuilt
 
