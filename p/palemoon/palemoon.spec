@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 25.7.2
-Release: alt1
+Release: alt2
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -73,9 +73,18 @@ These helper macros provide possibility to rebuild
 cd %name
 
 tar -xf %SOURCE1
-pushd browser/locales/generic/
+pushd browser/locales/en-US/
 tar -xf %SOURCE2
+#pushd searchplugins
+#> ./list.txt
+#for fil in *.xml
+#do
+#    bn=`basename $fil .xml`
+#    echo $bn >> ./list.txt
+#done
+#popd
 popd
+
 
 #patch5  -p1
 %patch6  -p1
@@ -294,6 +303,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Sun Oct 11 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.7.2-alt2
+- Fix searchplugins
+
 * Mon Oct 05 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.7.2-alt1
 - New Version
 
