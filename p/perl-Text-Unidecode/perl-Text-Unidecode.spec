@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-Unidecode
 Name: perl-%dist
-Version: 1.23
+Version: 1.24
 Release: alt1
 
 Summary: US-ASCII transliterations of Unicode text
@@ -40,6 +40,9 @@ the pronunciation expressed by the text in some other writing system.
 %perl_vendor_privlib/Text
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
 - automated CPAN update
 
