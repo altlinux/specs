@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Pod-Simple
 Name: perl-%dist
-Version: 3.30
+Version: 3.31
 Release: alt1
 
 Summary: Framework for parsing Pod
@@ -8,7 +9,7 @@ Group: Development/Perl
 License: GPL or Artistic
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DW/DWHEELER/Pod-Simple-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARCGREEN/Pod-Simple-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -45,6 +46,9 @@ rm t/search50.t
 %doc	%perl_vendor_privlib/Pod/Simple/*.pod
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 3.31-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 3.30-alt1
 - automated CPAN update
 
