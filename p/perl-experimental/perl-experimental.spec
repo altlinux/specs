@@ -1,15 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: perl(Module/Build.pm)
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build/Tiny.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-experimental
-Version:        0.014
-Release:        alt1_1
+Version:        0.016
+Release:        alt1
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/experimental/
-Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/experimental-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/L/LE/LEONT/experimental-%{version}.tar.gz
 # Replace Build.PL to not require Module::Build::Tiny because experimental is
 # a core dual-lived module and Module::Build::Tiny is not.
 Source1:        Makefile.PL
@@ -55,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
+- automated CPAN update
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_1
 - update to new release by fcimport
 
