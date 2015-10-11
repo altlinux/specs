@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Types-DateTime
 Name: perl-%dist
-Version: 0.10
+Version: 0.13
 Release: alt1
 
 Summary: DateTime related constraints and coercions for Moose
@@ -34,6 +34,9 @@ designed to work with the DateTime suite of objects.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
