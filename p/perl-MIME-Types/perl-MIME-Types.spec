@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MIME-Types
 Name: perl-MIME-Types
-Version: 2.09
+Version: 2.11
 Release: alt1
 
 Summary: Definition of MIME types
@@ -45,6 +45,9 @@ by RFCs and vendors, so the list is long but not complete.
 %doc	%perl_vendor_privlib/MojoX/MIME/*.pod
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
 - automated CPAN update
 
