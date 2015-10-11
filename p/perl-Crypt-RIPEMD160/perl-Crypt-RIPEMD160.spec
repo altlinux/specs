@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Crypt-RIPEMD160
 Name: perl-%dist
-Version: 0.05
-Release: alt4.1
+Version: 0.06
+Release: alt1
 
 Summary: Perl extension for the RIPEMD-160 Hash function
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TODDR/Crypt-RIPEMD160-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-devel
@@ -35,6 +36,9 @@ Katholieke Universiteit Leuven.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt4.1
 - rebuild with new perl 5.20.1
 
