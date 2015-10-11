@@ -1,8 +1,7 @@
 %define _unpackaged_files_terminate_build 1
-%define _unpackaged_files_terminate_build 1
 %define dist Perl-OSType
 Name: perl-%dist
-Version: 1.008
+Version: 1.009
 Release: alt1
 
 Summary: Map Perl operating system names to generic types
@@ -43,6 +42,9 @@ Microsoft operating systems are given the type 'Windows' rather than
 %perl_vendor_privlib/Perl
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.009-alt1
+- automated CPAN update
+
 * Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.008-alt1
 - automated CPAN update
 
