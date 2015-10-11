@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module Number-Format
 
 Name: perl-%module
-Version: 1.73
-Release: alt1.1
+Version: 1.75
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -11,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/W/WR/WRW/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/W/WR/WRW/Number-Format-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -40,6 +41,9 @@ by the user.
 %perl_vendor_privlib/Number*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.75-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.73-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
