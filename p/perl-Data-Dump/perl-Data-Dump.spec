@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Data-Dump
 Name: perl-%dist
-Version: 1.22
+Version: 1.23
 Release: alt1
 
 Summary: Pretty printing of data structures
@@ -34,6 +35,9 @@ when "eval"ed, produces a deep copy of the original arguments.
 %perl_vendor_privlib/Data
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
 - automated CPAN update
 
