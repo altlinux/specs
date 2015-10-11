@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Cellular/Automata/Wolfram.pm) perl(Data/Dumper.pm) perl(Data/Float.pm) perl(Devel/Comments.pm) perl(Devel/Peek.pm) perl(Devel/TimeThis.pm) perl(File/Map.pm) perl(File/Slurp.pm) perl(FindBin.pm) perl(Geometry/AffineTransform.pm) perl(Graph.pm) perl(Graph/Easy.pm) perl(IPC/Run.pm) perl(Image/Base.pm) perl(Image/Base/Text.pm) perl(Inline.pm) perl(Language/Logo.pm) perl(List/MoreUtils.pm) perl(List/Pairwise.pm) perl(Math/BaseCnv.pm) perl(Math/BigRat.pm) perl(Math/Complex.pm) perl(Math/ContinuedFraction.pm) perl(Math/Factor/XS.pm) perl(Math/Matrix.pm) perl(Math/NumSeq/Abundant.pm) perl(Math/NumSeq/All.pm) perl(Math/NumSeq/BalancedBinary.pm) perl(Math/NumSeq/Base/IterateIth.pm) perl(Math/NumSeq/DigitCount.pm) perl(Math/NumSeq/DigitCountLow.pm) perl(Math/NumSeq/Fibbinary.pm) perl(Math/NumSeq/FibbinaryBitCount.pm)
@@ -5,7 +6,7 @@ BuildRequires: perl(Math/NumSeq/Fibonacci.pm) perl(Math/NumSeq/FibonacciWord.pm)
 BuildRequires: perl(Wx/App.pm) perl(Wx/Event.pm) perl(base.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-PlanePath
-Version:        118
+Version:        120
 Release:        alt1
 Summary:        Mathematical paths through the 2-D plane
 License:        GPLv3+
@@ -72,6 +73,9 @@ make test
 %{perl_vendor_privlib}/Math*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 120-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 118-alt1
 - automated CPAN update
 
