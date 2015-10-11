@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-DOM
 Name: perl-%dist
-Version: 1.44
-Release: alt3
+Version: 1.45
+Release: alt1
 
 Summary: A module for building DOM Level 1 compliant document structures
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TJ/TJMATHER/XML-DOM-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +35,9 @@ with a DOM Level 1 compliant interface.
 %perl_vendor_privlib/XML
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.45-alt1
+- automated CPAN update
+
 * Mon Nov 14 2011 Alexey Tourbin <at@altlinux.ru> 1.44-alt3
 - rebuilt as plain src.rpm
 
