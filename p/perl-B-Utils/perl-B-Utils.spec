@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist B-Utils
 Name: perl-%dist
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Summary: Helper functions for op tree manipulation
@@ -31,6 +32,9 @@ B::Utils - Helper functions for op tree manipulation
 %perl_vendor_archlib/B
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
