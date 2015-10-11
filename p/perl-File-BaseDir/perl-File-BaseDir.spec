@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %define dist File-BaseDir
 Name: perl-%dist
-Version: 0.03
-Release: alt2
+Version: 0.07
+Release: alt1
 
 Summary: Use the Freedesktop.org base directory specification
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/K/KI/KIMRYAN/File-BaseDir-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 27 2011
-BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl(IPC/System/Simple.pm) perl(File/Which.pm)
 
 %description
 This module can be used to find directories and files as specified
@@ -37,6 +38,9 @@ layout can just as well be used for non-GUI applications.
 %perl_vendor_privlib/File
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Wed Apr 27 2011 Alexey Tourbin <at@altlinux.ru> 0.03-alt2
 - fixed unpackaged directory
 
