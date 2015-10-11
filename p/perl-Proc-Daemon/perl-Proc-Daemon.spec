@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Proc-Daemon
 Name: perl-%dist
-Version: 0.14
+Version: 0.21
 Release: alt1
 
 Summary: Run Perl program as a daemon process
@@ -8,12 +9,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DE/DETI/Proc/Proc-Daemon-0.14.tar.gz
+Source: http://www.cpan.org/authors/id/A/AK/AKREAL/Proc-Daemon-%{version}.tar.gz
 
 Buildarch: noarch
 
 # Automatically added by buildreq on Mon Apr 25 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Proc/ProcessTable.pm)
 
 %description
 Proc::Daemon provides the capability for a Perl program to run
@@ -29,10 +30,13 @@ as a Unix daemon process.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %perl_vendor_privlib/Proc
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
