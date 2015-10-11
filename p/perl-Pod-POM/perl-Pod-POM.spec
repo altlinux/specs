@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Pod-POM
 Name: perl-%dist
-Version: 0.29
+Version: 2.00
 Release: alt1
 
 Summary: Pod Object Model
@@ -8,12 +9,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AN/ANDREWF/Pod-POM-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Pod-POM-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: perl-Encode perl-File-Slurp perl-Test-Differences perl-devel perl-parent
+BuildRequires: perl-Encode perl-File-Slurp perl-Test-Differences perl-devel perl-parent perl(File/Slurper.pm) perl(Pod/Man.pm)
 
 %description
 This module implements a parser to convert Pod documents into a simple
@@ -38,9 +39,13 @@ generate an output representation in one form or another.
 %doc Changes README
 %_bindir/pod*
 %_bindir/pom*
+%_man1dir/*
 %perl_vendor_privlib/Pod
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
+- automated CPAN update
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
 - automated CPAN update
 
