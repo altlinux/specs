@@ -1,20 +1,20 @@
-%define module_version 0.002002
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.002003
 %define module_name Data-Show
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Contextual/Return.pm) perl(Data/Dump.pm) perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(re.pm) perl(version.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.002002
-Release: alt2
+Version: 0.002003
+Release: alt1
 Summary: Dump data structures with name and point-of-origin
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/D/DC/DCONWAY/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DC/DCONWAY/Data-Show-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.002003-alt1
+- automated CPAN update
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.002002-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
