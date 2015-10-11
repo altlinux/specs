@@ -4,10 +4,10 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(MIME/Base64.pm) perl(Storable.pm) perl(Test.pm) perl(URI.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    HTTP-Headers-Fast
-%define upstream_version 0.17
+%define upstream_version 0.19
 
 Name:       perl-%{upstream_name}
-Version:    0.17
+Version:    0.19
 Release:    alt1
 
 Summary:    Faster implementation of HTTP::Headers
@@ -46,6 +46,9 @@ The interface is the same as HTTP::Headers.
 %perl_vendor_privlib/*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
