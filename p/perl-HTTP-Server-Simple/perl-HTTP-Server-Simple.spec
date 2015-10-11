@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist HTTP-Server-Simple
 Name: perl-%dist
-Version: 0.50
+Version: 0.51
 Release: alt1
 
 Summary: Lightweight HTTP server
@@ -8,7 +9,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/F/FA/FALCONE/HTTP-Server-Simple-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/B/BP/BPS/HTTP-Server-Simple-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +35,9 @@ your existing tools.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
+- automated CPAN update
+
 * Wed Feb 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
 - automated CPAN update
 
