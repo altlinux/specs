@@ -4,7 +4,7 @@
 %define _name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.0.1
+Version: %ver_major.1
 Release: alt1
 
 Summary: Maps is a map application for GNOME
@@ -90,6 +90,9 @@ Maps is a map application for GNOME.
 %exclude %_girdir/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sun Oct 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
 * Fri Sep 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0.1-alt1
 - 3.18.0.1
 
