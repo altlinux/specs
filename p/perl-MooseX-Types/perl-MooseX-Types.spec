@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: perl(Module/Build.pm)
-%define _unpackaged_files_terminate_build 1
+BuildRequires: perl(Module/Build.pm) perl(namespace/autoclean.pm) perl(Sub/Exporter/ForMethods.pm)
 BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist MooseX-Types
 Name: perl-%dist
-Version: 0.45
+Version: 0.46
 Release: alt1
 
 Summary: Organise your Moose types in libraries
@@ -38,6 +37,9 @@ libraries. As a nice side effect, it catches typos at compile-time too.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
+- automated CPAN update
+
 * Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1
 - automated CPAN update
 
