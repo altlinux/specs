@@ -1,20 +1,20 @@
-%define module_version 0.03
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.06
 %define module_name Struct-Dumb
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.03
-Release: alt2
+Version: 0.06
+Release: alt1
 Summary: make simple lightweight record-like structures
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/P/PE/PEVANS/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/P/PE/PEVANS/Struct-Dumb-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/S*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2
 - moved to Sisyphus as dependency
 
