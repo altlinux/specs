@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-DesktopEntry
 Name: perl-%dist
-Version: 0.08
+Version: 0.12
 Release: alt1
 
 Summary: Object to handle .desktop files
@@ -36,6 +36,9 @@ these files.
 %perl_vendor_privlib/File
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Tue Oct 08 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
