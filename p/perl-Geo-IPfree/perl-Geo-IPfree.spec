@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Geo-IPfree
 
 Name: perl-%module
-Version: 1.143630
+Version: 1.151940
 Release: alt1
 
 Summary: Geo::IPfree - Look up country by IP Address
@@ -30,10 +31,13 @@ is free and small.
 %perl_vendor_install
 
 %files
-%doc Changes benchmark
+%doc Changes
 %perl_vendor_privlib/Geo
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.151940-alt1
+- automated CPAN update
+
 * Sat Jan 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.143630-alt1
 - automated CPAN update
 
