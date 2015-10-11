@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Lingua-EN-Numbers-Ordinate
 
 Name: perl-%module_name
-Version: 1.03
+Version: 1.04
 Release: alt1
 
 Summary: Go from cardinal number (3) to ordinal ("3rd")
@@ -37,6 +38,9 @@ giving the ordinal form of a number, given its cardinal value.
 %perl_vendor_privlib/Lingua*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
