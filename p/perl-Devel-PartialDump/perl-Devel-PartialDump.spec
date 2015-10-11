@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Devel-PartialDump
 Name: perl-%dist
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: Partial dumping of data structures, optimized for argument printing
@@ -33,6 +33,9 @@ This module is a data dumper optimized for logging of arbitrary parameters.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
