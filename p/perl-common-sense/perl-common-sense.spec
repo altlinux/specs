@@ -2,7 +2,7 @@
 %define module common-sense
 
 Name: perl-%module
-Version: 3.73
+Version: 3.74
 Release: alt1
 
 Summary: "Common sense" Perl defaults
@@ -38,6 +38,9 @@ typical (or not so typical - use your common sense) specimens of Perl coders:
 %perl_vendor_archlib/common
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 3.74-alt1
+- automated CPAN update
+
 * Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 3.73-alt1
 - automated CPAN update
 
