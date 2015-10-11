@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Cairo
 Name: perl-%dist
-Version: 1.105
+Version: 1.106
 Release: alt1
 
 Summary: Perl interface to the cairo vector graphics library
@@ -48,6 +49,9 @@ Cairo produces identical output on all those targets.
 %perl_vendor_archlib/Cairo/Install
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.106-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.105-alt1
 - automated CPAN update
 
