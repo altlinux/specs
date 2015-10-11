@@ -1,20 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Exporter.pm) perl(ExtUtils/CBuilder.pm) perl(File/Temp.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(parent.pm)
 # END SourceDeps(oneline)
-%define module_version 0.05
+%define module_version 0.06
 %define module_name Devel-CheckCompiler
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.05
-Release: alt2
+Version: 0.06
+Release: alt1
 Summary: Check the compiler's availability
 Group: Development/Perl
 License: perl
 URL: https://github.com/tokuhirom/Devel-CheckCompiler
 
-Source0: http://cpan.org.ua/authors/id/S/SY/SYOHEX/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SY/SYOHEX/Devel-CheckCompiler-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
 - moved to Sisyphus as perl update dependency
 
