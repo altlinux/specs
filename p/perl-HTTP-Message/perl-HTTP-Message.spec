@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist HTTP-Message
 Name: perl-%dist
-Version: 6.06
-Release: alt2
+Version: 6.11
+Release: alt1
 
 Summary: HTTP style messages
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/G/GA/GAAS/HTTP-Message-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/HTTP-Message-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 Provides: perl(HTTP/Request/Common.pm) = 6.060
@@ -36,6 +37,9 @@ The following methods are available:
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 6.11-alt1
+- automated CPAN update
+
 * Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 6.06-alt2
 - updated provides
 
