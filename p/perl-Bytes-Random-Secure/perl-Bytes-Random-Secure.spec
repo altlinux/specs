@@ -1,20 +1,20 @@
-%define module_version 0.28
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.29
 %define module_name Bytes-Random-Secure
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Crypt/Random/Seed.pm) perl(Digest/SHA.pm) perl(English.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(MIME/Base64.pm) perl(MIME/QuotedPrint.pm) perl(Math/Random/ISAAC.pm) perl(Scalar/Util.pm) perl(Test/Kwalitee.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(Time/HiRes.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.28
-Release: alt2
+Version: 0.29
+Release: alt1
 Summary: Perl extension to generate cryptographically-secure random bytes.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/D/DA/DAVIDO/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAVIDO/Bytes-Random-Secure-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -63,6 +63,9 @@ through the functions interface.
 %perl_vendor_privlib/B*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.28-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
