@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Test-Inter
 Name: perl-%dist
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: Framework for more readable interactive test scripts
@@ -30,12 +31,15 @@ not a drop-in replacement.
 %perl_vendor_install
 
 %files
-%doc	ChangeLog README
+%doc	Changes README
 %dir	%perl_vendor_privlib/Test
 	%perl_vendor_privlib/Test/Inter.pm
 %doc	%perl_vendor_privlib/Test/Inter.pod
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
