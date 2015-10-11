@@ -1,9 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %add_findreq_skiplist %_bindir/cpancover
 %add_findreq_skiplist %perl_vendor_archlib/Devel/Cover/Collection.pm
-%define _unpackaged_files_terminate_build 1
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 1.18
+Version: 1.21
 Release: alt1
 
 Summary: Code coverage metrics for Perl
@@ -49,6 +49,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %exclude /hack.pm
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
