@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Scalar/Util.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-List-UtilsBy
-Version:        0.09
-Release:        alt2_8
+Version:        0.10
+Release:        alt1
 Summary:        Higher-order list utility functions
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/List-UtilsBy/
-Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/List-UtilsBy-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/P/PE/PEVANS/List-UtilsBy-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -49,6 +50,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_8
 - update to new release by fcimport
 
