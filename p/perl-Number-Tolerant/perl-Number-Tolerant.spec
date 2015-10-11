@@ -1,13 +1,13 @@
-%define module_version 1.706
+%define _unpackaged_files_terminate_build 1
+%define module_version 1.707
 %define module_name Number-Tolerant
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Math/BigFloat.pm) perl(Math/BigRat.pm) perl(Scalar/Util.pm) perl(Sub/Exporter.pm) perl(Sub/Exporter/Util.pm) perl(Test/Builder.pm) perl(Test/More.pm) perl(Test/Tester.pm) perl(base.pm) perl(overload.pm) perl(parent.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.706
+Version: 1.707
 Release: alt1
 Summary: tolerance ranges for inexact numbers
 Group: Development/Perl
@@ -35,6 +35,9 @@ BuildArch: noarch
 %perl_vendor_privlib/N*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.707-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.706-alt1
 - automated CPAN update
 
