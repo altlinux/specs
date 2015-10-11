@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist SOAP-Lite
 Name: perl-%dist
-Version: 1.13
+Version: 1.19
 Release: alt1
 
 Summary: Perl's Web Services Toolkit
@@ -18,7 +18,7 @@ BuildArch: noarch
 Requires: perl-XML-Parser
 
 # Automatically added by buildreq on Tue Oct 25 2011
-BuildRequires: apache-mod_perl-base perl-Class-Inspector perl-Crypt-SSLeay perl-DIME-Tools perl-HTTP-Daemon perl-IO-Socket-SSL perl-MIME-Lite perl-MIME-tools perl-Task-Weaken perl-Test-Differences perl-Test-MockObject perl-UNIVERSAL-require perl-XML-Parser perl(XMLRPC/Lite.pm)
+BuildRequires: apache-mod_perl-base perl-Class-Inspector perl-Crypt-SSLeay perl-DIME-Tools perl-HTTP-Daemon perl-IO-Socket-SSL perl-MIME-Lite perl-MIME-tools perl-Task-Weaken perl-Test-Differences perl-Test-MockObject perl-UNIVERSAL-require perl-XML-Parser perl(XMLRPC/Lite.pm) perl(Pod/Man.pm) perl(Test/Warn.pm) perl(XML/Parser/Lite.pm)
 
 %description
 SOAP::Lite is a collection of Perl modules which provides a simple and
@@ -45,6 +45,7 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %files
 %doc Changes README examples
 %_bindir/*.pl
+%_man1dir/*
 %perl_vendor_privlib/Apache/SOAP.pm
 %perl_vendor_privlib/SOAP
 # belong to perl-IO-SessionData
@@ -52,6 +53,9 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %exclude %perl_vendor_privlib/IO/SessionSet*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
+- automated CPAN update
+
 * Sat Jan 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
 - automated CPAN update
 
