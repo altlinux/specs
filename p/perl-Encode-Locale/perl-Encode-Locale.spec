@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Encode-Locale
 Name: perl-%dist
-Version: 1.04
+Version: 1.05
 Release: alt1
 
 Summary: Determine the locale encoding
@@ -33,6 +34,9 @@ should be used when interfacing to various external interfaces.
 %perl_vendor_privlib/Encode
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
 - automated CPAN update
 
