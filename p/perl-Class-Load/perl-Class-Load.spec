@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Class-Load
 Name: perl-%dist
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: A working (require "Class::Name") and more
@@ -35,6 +35,9 @@ not "Class::Name". How frustrating! For that, we provide
 %perl_vendor_privlib/Class
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
