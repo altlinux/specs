@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist MooseX-Types-Path-Class
 Name: perl-%dist
-Version: 0.06
+Version: 0.08
 Release: alt1
 
 Summary: A Path::Class type library for Moose
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/T/TH/THEPLER/MooseX-Types-Path-Class-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Types-Path-Class-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +35,9 @@ with Path::Class objects as Moose attributes.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
