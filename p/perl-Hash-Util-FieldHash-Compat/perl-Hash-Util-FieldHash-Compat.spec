@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Hash-Util-FieldHash-Compat
 Name: perl-%dist
-Version: 0.08
+Version: 0.10
 Release: alt1
 
 Summary: Use Hash::Util::FieldHash or ties, depending on availability
@@ -17,7 +17,7 @@ BuildArch: noarch
 %add_findreq_skiplist */Hash/Util/FieldHash/Compat/Heavy.pm
 
 # Automatically added by buildreq on Sun Nov 20 2011
-BuildRequires: perl-Test-use-ok
+BuildRequires: perl-Test-use-ok perl(Module/Metadata.pm)
 
 %description
 Under older perls this module provides a drop in compatible api to
@@ -37,6 +37,9 @@ available it will use that instead.
 %perl_vendor_privlib/Hash
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
