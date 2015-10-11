@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Email-MessageID
 Name: perl-%dist
-Version: 1.405
+Version: 1.406
 Release: alt1
 
 Summary: Generate world unique message-ids
@@ -33,6 +34,9 @@ a message uniquely. This software generates a unique message-id.
 %perl_vendor_privlib/Email*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.406-alt1
+- automated CPAN update
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.405-alt1
 - automated CPAN update
 
