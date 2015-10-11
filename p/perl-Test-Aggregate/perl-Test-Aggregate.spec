@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/NoWarnings.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Test-Aggregate
-Version:    0.372
-Release:    alt1_3
+Version:    0.373
+Release:    alt1
 # lib/Test/Aggregate.pm -> GPL+ or Artistic
 # lib/Test/Aggregate/Builder.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Aggregate *.t tests to make them run faster
-Source:     http://search.cpan.org/CPAN/authors/id/R/RW/RWSTAUNER/Test-Aggregate-%{version}.tar.gz
+Source:     http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Test-Aggregate-%{version}.tar.gz
 # Do not touch Test::Builder internals that will change in 2.0, CPAN RT#64604
 Patch0:     Test-Aggregate-0.371-Don-t-grab-at-Test-Builder-hash-keys.patch
 Url:        http://search.cpan.org/dist/Test-Aggregate
@@ -72,6 +73,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.373-alt1
+- automated CPAN update
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.372-alt1_3
 - update to new release by fcimport
 
