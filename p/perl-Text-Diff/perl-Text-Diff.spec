@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Text-Diff
 Name: perl-%dist
-Version: 1.41
+Version: 1.43
 Release: alt1
 
 Summary: Perform diffs on files and record sets
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Text-Diff-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +37,9 @@ generally slower on larger files.
 %perl_vendor_privlib/Text
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.43-alt1
+- automated CPAN update
+
 * Wed Oct 05 2011 Alexey Tourbin <at@altlinux.ru> 1.41-alt1
 - 1.37 -> 1.41
 - rebuild as plain src.rpm
