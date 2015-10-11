@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 BuildRequires: perl-podlators
 %define dist Convert-BinHex
 Name: perl-%dist
-Version: 1.123
-Release: alt2
+Version: 1.124
+Release: alt1
 
 Summary: Extract data from Macintosh BinHex files
 License: GPL or Artistic
@@ -50,6 +51,9 @@ scripts for %name
 
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.124-alt1
+- automated CPAN update
+
 * Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.123-alt2
 - fixed build
 
