@@ -1,9 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 # fresh Test::More -not in perl 5.18.2
 %def_without test
-%define _unpackaged_files_terminate_build 1
 %define dist CPAN-Meta-YAML
 Name: perl-%dist
-Version: 0.014
+Version: 0.016
 Release: alt1
 
 Summary: Read and write a subset of YAML for CPAN Meta files
@@ -39,6 +39,9 @@ task.
 %perl_vendor_privlib/CPAN
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1
 - automated CPAN update
 
