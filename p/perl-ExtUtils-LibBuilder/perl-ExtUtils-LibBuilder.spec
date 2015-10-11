@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist ExtUtils-LibBuilder
 Name: perl-%dist
-Version: 0.06
+Version: 0.07
 Release: alt1
 
 Summary: A tool to build C libraries
@@ -37,6 +38,9 @@ This module main goal is to help in that task.
 %perl_vendor_privlib/ExtUtils
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
