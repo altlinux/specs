@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist ExtUtils-F77
 Name: perl-%dist
-Version: 1.17
+Version: 1.18
 Release: alt1
 
 Summary: Simple interface to F77 libs
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CH/CHM/ExtUtils-F77-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -54,6 +55,9 @@ __EOF__
 %perl_vendor_privlib/ExtUtils
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 1.17-alt1
 - 1.15 -> 1.17
 
