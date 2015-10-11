@@ -1,8 +1,9 @@
+BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
 %define module Text-Trac
 
 Name: perl-%module
-Version: 0.16
+Version: 0.18
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -17,10 +18,19 @@ Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Text-Trac-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Nov 30 2009
-BuildRequires: perl-Class-Accessor perl-Class-Data-Inheritable perl-HTML-Parser perl-List-MoreUtils perl-Test-Base perl-Test-Pod perl-Test-Pod-Coverage perl-Tie-IxHash perl-UNIVERSAL-require
+BuildRequires: perl-Class-Accessor perl-Class-Data-Inheritable perl-HTML-Parser perl-List-MoreUtils perl-Test-Base perl-Test-Pod perl-Test-Pod-Coverage perl-Tie-IxHash perl-UNIVERSAL-require perl(Path/Tiny.pm)
 
 %description
 Text::Trac parses text with Trac WikiFormatting and convert it to html format.
+
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %{?epoch:%epoch:}%name = %version-%release
+
+%description scripts
+scripts for %name
+
 
 %prep
 %setup -n %module-%version
@@ -34,7 +44,15 @@ Text::Trac parses text with Trac WikiFormatting and convert it to html format.
 %files
 %perl_vendor_privlib/Text/
 
+%files scripts
+%_bindir/*
+#%_man1dir/*
+
+
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Mon Sep 15 2014 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
