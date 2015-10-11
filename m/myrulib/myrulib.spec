@@ -1,7 +1,7 @@
 # TODO: use external wxsqlite3 (from altautoimports)
 Name: myrulib
 Version: 0.29.16.git0fe54bf16
-Release: alt1
+Release: alt2
 
 Summary: Tool for maintaining fb2 files collection
 
@@ -59,6 +59,9 @@ install sources/MyRuLib/desktop/home-64x64.png %buildroot%_iconsdir/hicolor/64x6
 %_iconsdir/hicolor/64x64/apps/myrulib.png
 
 %changelog
+* Sun Oct 11 2015 Vitaly Lipatov <lav@altlinux.ru> 0.29.16.git0fe54bf16-alt2
+- Rebuilt for new gcc5 C++11 ABI
+
 * Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 0.29.16.git0fe54bf16-alt1
 - build from last git
 
