@@ -1,20 +1,20 @@
-%define module_version 1.05
+%define _unpackaged_files_terminate_build 1
+%define module_version 1.07
 %define module_name Hash-MostUtils
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(FindBin.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(base.pm) perl(overload.pm) perl(provide.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.05
-Release: alt2
+Version: 1.07
+Release: alt1
 Summary: Pairwise list manipulators
 Group: Development/Perl
 License: perl
 URL: https://github.com/belden/perl-hash-mostutils
 
-Source0: http://cpan.org.ua/authors/id/B/BE/BELDEN/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BE/BELDEN/Hash-MostUtils-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -36,6 +36,9 @@ rm t/leach.t
 %perl_vendor_privlib/H*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Sun Oct 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2
 - Sisyphus build. required by Test-Easy update
 
