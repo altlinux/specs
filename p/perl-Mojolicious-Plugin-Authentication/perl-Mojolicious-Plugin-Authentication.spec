@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Mojolicious-Plugin-Authentication
 
 Name: perl-%dist
-Version: 1.26
+Version: 1.28
 Release: alt1
 Summary: A plugin to make authentication a bit easier
 
@@ -24,11 +25,16 @@ BuildRequires: perl-Module-Build perl-Mojolicious
 
 %install
 %perl_vendor_install
+rm -f %buildroot/%perl_vendor_privlib/Mojolicious/Plugin/README.pod
 
 %files
+%doc README*
 %perl_vendor_privlib/Mojolicious/Plugin/*.pm
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
+- automated CPAN update
+
 * Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
 - automated CPAN update
 
