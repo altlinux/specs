@@ -1,8 +1,8 @@
-BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl-podlators perl(Digest/SHA.pm)
 %define dist Crypt-OpenPGP
 Name: perl-%dist
-Version: 1.08
+Version: 1.12
 Release: alt1
 
 Summary: Pure-Perl OpenPGP-compatible PGP implementation
@@ -51,6 +51,9 @@ scripts for %name
 
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
 - automated CPAN update
 
