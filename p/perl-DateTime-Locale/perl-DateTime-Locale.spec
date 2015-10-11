@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DateTime-Locale
 Name: perl-%dist
-Version: 0.46
+Version: 0.92
 Release: alt1
 
 Summary: Localization support for DateTime.pm
@@ -39,6 +39,9 @@ on available locales.
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
 - automated CPAN update
 
