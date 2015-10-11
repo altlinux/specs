@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Compress-LZF
 Name: perl-%dist
-Version: 3.7
-Release: alt1.1
+Version: 3.8
+Release: alt1
 Epoch: 1
 
 Summary: Extremely light-weight Lempel-Ziv-Free compression
@@ -9,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/Compress-LZF-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -41,6 +42,9 @@ patents.
 %perl_vendor_autolib/Compress
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1:3.8-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.7-alt1.1
 - rebuild with new perl 5.20.1
 
