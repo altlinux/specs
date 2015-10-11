@@ -2,7 +2,7 @@
 BuildRequires: perl-podlators
 %define dist Date-Manip
 Name: perl-Date-Manip
-Version: 6.49
+Version: 6.51
 Release: alt1
 
 Summary: Date manipulation routines
@@ -65,6 +65,9 @@ scripts for %name
 %_man1dir/*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 6.51-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 6.49-alt1
 - automated CPAN update
 
