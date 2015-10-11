@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Config.pm) perl(Exporter.pm) perl(Fatal.pm) perl(Moose/Exporter.pm) perl(POSIX.pm) perl(Time/HiRes.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Test-Run
-%define upstream_version 0.0302
+%define upstream_version 0.0303
 
 Name:       perl-%{upstream_name}
-Version:    0.0302
+Version:    0.0303
 Release:    alt1
 
 Summary:    Named sprintf according to the
@@ -60,6 +61,9 @@ same as of
 %perl_vendor_privlib/*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.0303-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.0302-alt1
 - automated CPAN update
 
