@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Net-EPP
 
 Name: perl-%module
-Version: 0.19
+Version: 0.21_1
 Release: alt1
 
 Summary: Perl interface to EPP
@@ -9,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/G/GB/GBROWN/Net-EPP-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/G/GB/GBROWN/Net-EPP-0.21-1.tar.gz
 
 # Automatically added by buildreq on Sun Jul 17 2011
 BuildRequires: perl-Digest-SHA perl-IO-Socket-SSL perl-XML-LibXML perl-devel
@@ -21,7 +22,8 @@ This package offers a number of Perl modules which implement various EPP-related
 functions.
 
 %prep
-%setup -n %module-%version
+%setup -n %module-0.21
+#%version
 
 %build
 find lib/Net/EPP -type f -name '*.pm' -print0 |xargs -r0 chmod -x
@@ -34,6 +36,9 @@ find lib/Net/EPP -type f -name '*.pm' -print0 |xargs -r0 chmod -x
 %perl_vendor_privlib/Net
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.21_1-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
