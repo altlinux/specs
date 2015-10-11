@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Data-Random
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Perl module to generate random data
@@ -30,7 +30,7 @@ BuildArch: noarch
 Source: http://www.cpan.org/authors/id/B/BA/BAREFOOT/Data-Random-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 11 2007
-BuildRequires: perl-Date-Calc perl-devel perl-GD2
+BuildRequires: perl-Date-Calc perl-devel perl-GD2 perl(Time/Piece.pm)
 
 %description
 A module used to generate random data.  Useful mostly for test programs.
@@ -47,6 +47,9 @@ A module used to generate random data.  Useful mostly for test programs.
 %perl_vendor_privlib/Data*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
