@@ -1,11 +1,12 @@
-%define ver_major 0.5
-%define api_ver 1.0
+%define ver_major 0.6
+%define api_ver 1.6
 %define gst_api_ver 1.0
+
 %def_enable wayland
 %def_disable gtk_doc
 
 Name: gstreamer-vaapi
-Version: %ver_major.9
+Version: %ver_major.1
 Release: alt1
 
 Summary: GStreamer plugins to use VA-API video acceleration
@@ -13,8 +14,11 @@ Group: System/Libraries
 License: LGPLv2.1
 Url: http://freedesktop.org/wiki/Software/vaapi/
 
-# VCS: git://gitorious.org/vaapi/gstreamer-vaapi.git
+# VCS: https://github.com/01org/gstreamer-vaapi.git
+# Source: %name/%name-%version.tar
 Source: http://www.freedesktop.org/software/vaapi/releases/%name/%name-%version.tar.bz2
+# VA/GLX specific APIs dropped in 5.10
+Patch: %name-0.6.1-alt-pkgconfig.patch
 
 %define glib_ver 2.28
 %define gst_ver 1.0
@@ -24,7 +28,8 @@ BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: gst-plugins-bad%gst_api_ver-devel >= %gst_ver
 BuildRequires: libva-devel >= %va_ver
-BuildRequires: libdrm-devel libudev-devel libGL-devel libvpx-devel
+BuildRequires: libdrm-devel libudev-devel libvpx-devel
+BuildRequires: libGL-devel libXrandr-devel libXrender-devel
 BuildRequires: gtk-doc
 %{?_enable_wayland:BuildRequires: wayland-devel libwayland-client-devel libwayland-server-devel}
 
@@ -44,8 +49,20 @@ Requires: %name = %version-%release
 The %name-devel package contains libraries and header files for
 developing applications that use %name helper libraries.
 
+%package devel-doc
+Summary: Development documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name < %version
+
+%description devel-doc
+This package provides development documentation for the collection of
+plugins and helper libraries to use VA-API video acceleration from
+GStreamer applications.
+
 %prep
 %setup
+%patch
 
 %build
 %autoreconf
@@ -61,7 +78,12 @@ developing applications that use %name helper libraries.
 %makeinstall_std
 
 %files
-%_libdir/*.so.*
+%_libdir/libgstvaapi-%api_ver.so.*
+%_libdir/libgstvaapi-drm-%api_ver.so.*
+%_libdir/libgstvaapi-glx-%api_ver.so.*
+%_libdir/libgstvaapi-wayland-%api_ver.so.*
+%_libdir/libgstvaapi-x11-%api_ver.so.*
+%_libdir/libgstvaapi-egl-%api_ver.so.*
 %_libdir/gstreamer-%gst_api_ver/*.so
 %doc AUTHORS NEWS README
 
@@ -72,7 +94,15 @@ developing applications that use %name helper libraries.
 %_libdir/*.so
 %_pkgconfigdir/gstreamer-vaapi*.pc
 
+%if_enabled gtk_doc
+%files devel-doc
+%_datadir/gtk-doc/html/%name/
+%endif
+
 %changelog
+* Sun Oct 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
 * Mon Nov 17 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5.9-alt1
 - first build for Sisyphus
 
