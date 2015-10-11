@@ -2,7 +2,7 @@
 %def_without bootstrap
 %define dist DateTime
 Name: perl-%dist
-Version: 1.18
+Version: 1.21
 Release: alt1
 
 Summary: DateTime base objects
@@ -46,6 +46,9 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
+- automated CPAN update
+
 * Mon Jan 12 2015 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
