@@ -3,7 +3,7 @@
 
 Name: lib%_name-scripts
 Version: %ver_major.19
-Release: alt1
+Release: alt2
 
 Summary: Lua scripts for parsing the media details
 Group: System/Libraries
@@ -13,6 +13,8 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: http://downloads.sourceforge.net/project/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-0.4.4-alt-pkgconfig.patch
+
+Requires: lua5 lua-module-luasocket
 
 BuildArch: noarch
 BuildRequires: quvi
@@ -54,6 +56,9 @@ This package provides files needed for building applications against
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.19-alt2
+- reqs: lua5 lua-module-luasocket (ALT #31354)
+
 * Fri Oct 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.19-alt1
 - 0.4.19
 
