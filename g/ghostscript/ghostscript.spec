@@ -1,5 +1,5 @@
 Name: ghostscript
-Version: 9.15
+Version: 9.16
 Release: alt1
 
 %define ijsver	0.35
@@ -28,24 +28,17 @@ Patch4: FC-runlibfileifexists.patch
 Patch5: FC-icc-missing-check.patch
 Patch6: FC-Fontmap.local.patch
 Patch7: FC-wrf-snprintf.patch
+Patch8: FC-system-openjpeg2.patch
+Patch9: FC-system-zlib.patch
+Patch10: FC-urw-fonts-naming.patch
 
 ## Ubuntu patches
 Patch101: Ubuntu-2001_docdir_fix_for_debian.patch
 Patch102: Ubuntu-2002_gs_man_fix_debian.patch
 Patch103: Ubuntu-2003_support_multiarch.patch
-Patch104: Ubuntu-020130903-5ae4180-ps-interpreter-dont-interpolate-imagemask-data-for-high-level-devices.patch
-Patch105: Ubuntu-020131023-ad3e3ed-handle-type-0-font-in-annotation.patch
-Patch106: Ubuntu-020131127-87a7fd8-cups-pwg-raster-output-ppd-less-support.patch
-Patch107: Ubuntu-020131218-5ddd13e-ps2write-dont-emit-a-page-size-change-if-the-last-request-failed.patch
-Patch108: Ubuntu-020131219-d997bc4-pwgraster-output-device.patch
-Patch109: Ubuntu-020140313-5d6b18a-set-correct-portrait-landscape-orientation-on-pcl-5ce.patch
-Patch110: Ubuntu-020140313-6498483-ps2write-fix-a-dsc-comment.patch
-Patch111: Ubuntu-020140313-095ae57-ps2write-fix-missing-beginresource-comment-for-fontfile-objects.patch
-Patch112: Ubuntu-020140324-b780ff0-protection-against-pxl-segfault-with-image-data-without-colorspace-info.patch
-Patch113: Ubuntu-020140331-4b44b41-pxlcolor-support-jpeg-in-output.patch
-Patch114: Ubuntu-020140331-41ab485-pxl-transform-deep-images-with-icc-transform-to-emit-high-level-images.patch
-Patch115: Ubuntu-020140331-8ae4ee2-fixes-pxl-segfault-with-trying-to-set-up-icc-transform-for-bitmasks.patch
-Patch116: Ubuntu-1002_pxl-make-dicctransform-default.patch
+Patch104: Ubuntu-1002_pxl-make-dicctransform-default.patch
+Patch105: Ubuntu-1003_gdevcups-fix-cupsrasteropen-pwg-raster.patch
+Patch106: Ubuntu-020150413_3e71154_pdfwrite_optimise_pdf_foget_resource_with_charproc_resources.patch
 
 ## ALT patches
 Patch500: ghostscript-alt-ijs-version.patch
@@ -191,24 +184,17 @@ rm -rf -- libpng zlib jpeg jasper freetype
 %patch5 -p1 -b .icc-missing-check
 %patch6 -p1
 %patch7 -p1 -b .wrf-snprintf
+%patch8 -p1 -b .system-openjpeg2
+%patch9 -p1 -b .system-zlib
+%patch10 -p1 -b .urw-fonts-naming
 
 ## Ubuntu apply patches
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
-#patch104 -p1
-#patch105 -p1
+%patch104 -p1
+%patch105 -p1
 #patch106 -p1
-#patch107 -p1
-##patch108 -p1
-#patch109 -p1
-##patch110 -p1
-#patch111 -p1
-#patch112 -p1
-#patch113 -p1
-#patch114 -p1
-#patch115 -p1
-%patch116 -p1
 
 ## ALT apply patches
 %patch500 -p1
@@ -320,6 +306,10 @@ mv %buildroot/%_datadir/doc/ghostscript/examples %buildroot%_docdir/%name-%versi
 %_includedir/ijs
 
 %changelog
+* Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 9.16-alt1
+- Autobuild version bump to 9.16
+- Freshen third-party patches
+
 * Mon Sep 29 2014 Fr. Br. George <george@altlinux.ru> 9.15-alt1
 - Autobuild version bump to 9.15
 - Freshen third-party patches
