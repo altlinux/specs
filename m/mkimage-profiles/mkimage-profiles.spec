@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.75
+Version: 1.1.76
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Oct 12 2015 Michael Shigorin <mike@altlinux.org> 1.1.76-alt1
+- no more GREP_OPTIONS
+
 * Mon Sep 28 2015 Michael Shigorin <mike@altlinux.org> 1.1.75-alt1
 - systemd-specific hook for installer (solo@)
 
