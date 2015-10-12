@@ -3,7 +3,7 @@
 %define api_ver 2.90
 
 Name: %{_name}3_%api_ver
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 %def_disable pty_helper
@@ -20,7 +20,7 @@ Requires: lib%name = %version-%release
 Requires: gnome-pty-helper
 %endif
 
-Source: ftp://gnome.org/pub/gnome/sources/%name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 %define gtk3_ver 3.1.9
 %define glib_ver 2.31.13
@@ -181,6 +181,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.36.5-alt1
+- 0.36.5
+
 * Sat Sep 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.36.3-alt1
 - first build for Sisyphus
 
