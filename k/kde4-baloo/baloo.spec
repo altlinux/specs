@@ -1,16 +1,21 @@
 %define _kde_alternate_placement 1
+%def_disable separate_polkit
 
 %define rname baloo
 Name: kde4-baloo
 Version: 4.14.3
-Release: alt2.1
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: A framework for searching and managing metadata
 Url: https://projects.kde.org/projects/kde/kdelibs/baloo
 License: GPLv2 / LGPLv2
 
+%if_enabled separate_polkit
 Requires: polkit-kde-baloo
+%else
+Conflicts: polkit-kde-baloo
+%endif
 
 Conflicts: kde4base-runtime-core < 4.12.90
 
@@ -95,6 +100,9 @@ Requires: %name-common = %EVR
 
 %files common
 %files
+%if_disabled separate_polkit
+%_datadir/polkit-1/actions/org.kde.baloo.filewatch.policy
+%endif
 %_sysconfdir/dbus-1/system.d/org.kde.baloo.filewatch.conf
 %_kde4_bindir/akonadi_baloo_indexer
 %_kde4_bindir/baloo_file
@@ -142,6 +150,9 @@ Requires: %name-common = %EVR
 %_K4libdir/libbalooqueryparser.so.*
 
 %changelog
+* Tue Oct 13 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt3
+- don't use separate polkit files
+
 * Sun Jun 07 2015 Michael Shigorin <mike@altlinux.org> 4.14.3-alt2.1
 - MNU: rebuilt against current libxapian
 
