@@ -4,15 +4,18 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        2.0
-Release:        alt1.git20150205
+Version:        1.9.1
+Release:        alt1
+Epoch:          1
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
 License:        LGPLv2+
 URL:            https://networkx.lanl.gov/trac
 # https://github.com/networkx/networkx.git
-Source:         %oname-%version.tar.gz
+Source:         %oname-%version.tar
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+BuildArch:      noarch
 
 BuildRequires: python-devel
 BuildPreReq: python-module-pygraphviz ipython libnumpy-devel
@@ -26,22 +29,71 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python-tools-2to3 python3-module-setuptools
 %endif
 
-Requires: python-module-pygraphviz ipython python-module-numpy
-Requires: python-module-pydot python-module-matplotlib
-Requires: python-module-yaml python-module-scipy
-Requires: %name-tests = %version-%release
-%add_python_req_skip tests
+Requires: %name-drawing = %EVR
 
 %description
 NetworkX is a Python package for the creation, manipulation, and
 study of the structure, dynamics, and functions of complex networks.
 
+%package core
+Summary: Creates and Manipulates Graphs and Networks
+Group: Development/Python
+Requires: python-module-decorator
+Requires: python-module-yaml
+Requires: python-module-numpy
+Requires: python-module-scipy
+%add_python_req_skip tests
+
+%description core
+NetworkX is a Python package for the creation, manipulation, and
+study of the structure, dynamics, and functions of complex networks.
+
+%package drawing
+Summary: Creates and Manipulates Graphs and Networks
+Group: Development/Python
+Requires: %name-core = %EVR
+Requires: python-module-pygraphviz
+Requires: python-module-pydot
+Requires: python-module-matplotlib
+
+%description drawing
+NetworkX is a Python package for the creation, manipulation, and
+study of the structure, dynamics, and functions of complex networks.
+
+This package provides support for graph visualizations.
+
 %if_with python3
+%package -n python3-module-%oname-core
+Summary: Creates and Manipulates Graphs and Networks (Python 3)
+Group: Development/Python3
+Requires: python3-module-decorator
+Requires: python3-module-yaml
+Requires: python3-module-numpy
+Requires: python3-module-scipy
+%add_python3_req_skip tests
+
+%description -n python3-module-%oname-core
+NetworkX is a Python package for the creation, manipulation, and
+study of the structure, dynamics, and functions of complex networks.
+
+%package -n python3-module-%oname-drawing
+Summary: Creates and Manipulates Graphs and Networks (Python 3)
+Group: Development/Python3
+Requires: python3-module-%oname-core = %EVR
+Requires: python3-module-pygraphviz
+Requires: python3-module-pydot
+Requires: python3-module-matplotlib
+
+%description -n python3-module-%oname-drawing
+NetworkX is a Python package for the creation, manipulation, and
+study of the structure, dynamics, and functions of complex networks.
+
+This package provides support for graph visualizations.
+
 %package -n python3-module-%oname
 Summary: Creates and Manipulates Graphs and Networks (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname-tests = %version-%release
-%add_python3_req_skip tests
+Requires: python3-module-%oname-drawing = %EVR
 
 %description -n python3-module-%oname
 NetworkX is a Python package for the creation, manipulation, and
@@ -50,7 +102,7 @@ study of the structure, dynamics, and functions of complex networks.
 %package -n python3-module-%oname-tests
 Summary: Tests for NetworkX (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
 NetworkX is a Python package for the creation, manipulation, and
@@ -86,7 +138,7 @@ This package contains pickles for NetworkX.
 %package tests
 Summary: Tests for NetworkX
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 NetworkX is a Python package for the creation, manipulation, and
@@ -111,17 +163,18 @@ sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 %endif
 
 %build
-%python_build_debug
+#python_build_debug
 #pushd nose_plugin
-#python_build
+%python_build
 #popd
 
 %if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+#find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 find -type f -name '*.py' -exec sed -i \
 	's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
-%python3_build_debug
+#python3_build_debug
+%python3_build
 popd
 %endif
 
@@ -137,10 +190,6 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
-
 %if_enabled docs
 export PYTHONPATH=$PYTHONPATH:%buildroot%python_sitelibdir
 #make -C doc latex ||:
@@ -154,23 +203,24 @@ mv %buildroot%_docdir/%oname-%{version}* ./installed-docs
 cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
-mv %buildroot%python_sitelibdir/%oname-%{version}.*-py%_python_version.egg-info \
-	%buildroot%python_sitelibdir/%oname-%{version}-py%_python_version.egg-info
-%if_with python3
-mv %buildroot%python3_sitelibdir/%oname-%{version}.*-py%_python3_version.egg-info \
-	%buildroot%python3_sitelibdir/%oname-%{version}-py%_python3_version.egg-info
-%endif
-
 %files
+%files core
 %python_sitelibdir/*
 #exclude %python_sitelibdir/networkxdoctest.py*
 %if_enabled docs
 %exclude %python_sitelibdir/%oname/pickle
 %endif
+%exclude %python_sitelibdir/%oname/drawing
+%exclude %python_sitelibdir/%oname/readwrite/nx_shp.py*
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/testing
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/tests
+
+%files drawing
+%python_sitelibdir/%oname/drawing
+%python_sitelibdir/%oname/readwrite/nx_shp.py*
+%exclude %python_sitelibdir/%oname/drawing/tests
 
 %files tests
 #python_sitelibdir/networkxdoctest.py*
@@ -192,11 +242,20 @@ mv %buildroot%python3_sitelibdir/%oname-%{version}.*-py%_python3_version.egg-inf
 
 %if_with python3
 %files -n python3-module-%oname
+
+%files -n python3-module-%oname-core
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/drawing
+%exclude %python3_sitelibdir/%oname/readwrite/nx_shp.py*
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/testing
 %exclude %python3_sitelibdir/*/*/tests
-%exclude %python3_sitelibdir/*/*/*/tests
+%exclude  %python3_sitelibdir/*/*/*/tests
+
+%files -n python3-module-%oname-drawing
+%python3_sitelibdir/%oname/drawing
+%python3_sitelibdir/%oname/readwrite/nx_shp.py*
+%exclude %python3_sitelibdir/%oname/drawing/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
@@ -206,6 +265,9 @@ mv %buildroot%python3_sitelibdir/%oname-%{version}.*-py%_python3_version.egg-inf
 %endif
 
 %changelog
+* Mon Oct 12 2015 Alexey Shabalin <shaba@altlinux.ru> 1:1.9.1-alt1
+- downgrade to 1.9.1 release
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.git20150205
 - New snapshot
 
