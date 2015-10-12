@@ -1,5 +1,7 @@
 %define rname kde-baseapps
 
+%def_disable text2speech
+
 %define kf5konq_sover 6
 %define libkf5konq libkf5konq%kf5konq_sover
 %define konquerorprivate_sover 5
@@ -9,7 +11,7 @@
 
 Name: kde5-baseapps
 Version: 4.97.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -33,8 +35,10 @@ Patch101: alt-passwd-len.patch
 # optimized out: alternatives cmake cmake-modules desktop-file-utils docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-svg libqt5-test libqt5-texttospeech libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kded kf5-kded-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdesu-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libtidy-devel python-module-google qt5-script-devel qt5-speech-devel qt5-x11extras-devel rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
-BuildRequires: qt5-script-devel qt5-speech-devel qt5-x11extras-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-script-devel qt5-x11extras-devel
+%if_enabled text2speech
+BuildRequires: qt5-speech-devel
+%endif
 BuildRequires: libtidy-devel zlib-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
@@ -254,7 +258,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5plug/kded_konqy_preloader.so
 %_K5plug/kf5/kded/kded_favicons.so
 %_K5plug/khtmlsettingsplugin.so
+%if_enabled text2speech
 %_K5plug/khtmlttsplugin.so
+%endif
 %_K5plug/kimgallery.so
 %_K5plug/konq_aboutpage.so
 %_K5plug/konq_shellcmdplugin.so
@@ -322,5 +328,8 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkbookmarkmodel_private.so.*
 
 %changelog
+* Mon Oct 12 2015 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt2
+- rebuild without qt5-speech
+
 * Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt1
 - initial build
