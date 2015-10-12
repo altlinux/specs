@@ -1,5 +1,5 @@
 Name: spice-protocol
-Version: 0.12.8
+Version: 0.12.10
 Release: alt1
 Summary: Spice protocol header files
 Group: Development/C
@@ -10,6 +10,7 @@ Source: http://www.spice-space.org/download/releases/%name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
+BuildRequires: python-module-pyparsing python-module-six
 
 %description
 Header files describing the spice protocol and the para-virtual graphics card QXL.
@@ -28,10 +29,14 @@ Header files describing the spice protocol and the para-virtual graphics card QX
 
 %files
 %doc COPYING NEWS
-%_includedir/spice-1
+%_includedir/*
 %_datadir/pkgconfig/*.pc
+%_datadir/spice-protocol
 
 %changelog
+* Mon Oct 12 2015 Alexey Shabalin <shaba@altlinux.ru> 0.12.10-alt1
+- 0.12.10
+
 * Fri Jul 03 2015 Alexey Shabalin <shaba@altlinux.ru> 0.12.8-alt1
 - 0.12.8
 

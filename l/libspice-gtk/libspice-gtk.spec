@@ -1,4 +1,3 @@
-%set_automake_version 1.11
 
 %define _libexecdir %_prefix/libexec
 %define _name spice-gtk
@@ -15,7 +14,7 @@
 %def_with gtk3
 
 Name: libspice-gtk
-Version: 0.29
+Version: 0.30
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -25,7 +24,7 @@ Url: http://spice-space.org/page/Spice-Gtk
 
 Source: %name-%version.tar
 Source2: spice-common.tar
-Source3: spice-protocol.tar
+#Source3: spice-protocol.tar
 # Patch: %name-%version-%release.patch
 # Patch2: %name-alt-fix.patch
 
@@ -39,7 +38,7 @@ BuildRequires: hwdatabase >= 0.3.31-alt1
 
 BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
-BuildRequires: spice-protocol >= 0.10.1
+BuildRequires: spice-protocol >= 0.12.10
 BuildRequires: glib2-devel >= 2.28 libgio-devel >= 2.10.0 libcairo-devel >= 1.2.0
 BuildRequires: libopus-devel >= 0.9.14
 %{?_enable_webdav:BuildRequires: libphodav-devel >= 2.0 glib2-devel >= 2.43.90 libsoup-devel >= 2.49.91}
@@ -204,7 +203,7 @@ screen-shots of a SPICE desktop
 %prep
 %setup -q -c
 %__tar -xf %SOURCE2 -C %name-%version/spice-common
-%__tar -xf %SOURCE3 -C %name-%version/spice-common/spice-protocol
+#%__tar -xf %SOURCE3 -C %name-%version/spice-common/spice-protocol
 mv %name-%version %_name-%version
 cd %_name-%version
 # %patch -p1
@@ -350,6 +349,9 @@ cd ..
 %endif
 
 %changelog
+* Mon Oct 12 2015 Alexey Shabalin <shaba@altlinux.ru> 0.30-alt1
+- 0.30
+
 * Fri Jul 03 2015 Alexey Shabalin <shaba@altlinux.ru> 0.29-alt1
 - 0.29
 
