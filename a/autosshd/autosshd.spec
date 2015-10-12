@@ -5,7 +5,7 @@
 
 Name: autosshd
 Version: 0.0.3
-Release: alt8
+Release: alt11
 
 Summary: System administration - AutoSSH system level service
 
@@ -35,12 +35,12 @@ Run autossh as system service at startup.
 mkdir -p %buildroot%_sysconfdir/autossh.d/
 
 mkdir -p %buildroot%_runtimedir/%name/
-mkdir -p %buildroot%_locksubsysdir/%name/
+mkdir -p %buildroot%_locksubsysdir/autossh.d/
 mkdir -p %buildroot/%_tmpfilesdir/
 
 cat <<EOF >%buildroot/%_tmpfilesdir/%name.conf
 d %_runtimedir/%name 0755 %autossh_user %autossh_group
-d %_locksubsysdir/%name 0755 root root
+d %_locksubsysdir/autossh.d/ 0755 root root
 EOF
 
 mkdir -p %buildroot/%autossh_dir/.ssh/
@@ -56,9 +56,11 @@ install -m644 etc/autossh.d/*.conf.template %buildroot%_sysconfdir/autossh.d/
 
 mkdir -p %buildroot%_datadir/%name/
 mkdir -p %buildroot%_bindir/
+mkdir -p %buildroot/lib/systemd/system/
 cp usr/bin/autosshd-ssh %buildroot%_bindir/
 cp share/autossh-conf %buildroot%_datadir/%name/
 cp share/autosshd.setup* %buildroot%_datadir/%name/
+cp lib/systemd/system/autosshd.service %buildroot/lib/systemd/system/autosshd.service 
 
 %pre
 # Add the "_autossh" user
@@ -81,14 +83,30 @@ cp share/autosshd.setup* %buildroot%_datadir/%name/
 %_initdir/%name
 %_tmpfilesdir/%name.conf
 %attr(750,%autossh_user,%autossh_group) %dir %_runtimedir/%name/
-%dir %_locksubsysdir/%name/
+%dir %_locksubsysdir/autossh.d/
 %dir %_datadir/%name/
 %_datadir/%name/autossh-conf
 %_datadir/%name/autosshd.setup
 %_datadir/%name/autosshd.setup.user
 %_bindir/autosshd-ssh
+/lib/systemd/system/autosshd.service 
 
 %changelog
+* Mon Oct 12 2015 Danil Mikhailov <danil@altlinux.org> 0.0.3-alt11
+- Fix inheritance error
+
+* Tue Oct 06 2015 Danil Mikhailov <danil@altlinux.org> 0.0.3-alt10
+- fixed bug with not stop properly by adding mainlockfile
+- fixed /var/lock/subsys/autossh.d/ dir name
+- change home dir var, fix var name permission
+- fixed /var/lock/subsys/autossh.d/ dir name in spec
+- change systemd service type to forking [work]
+
+* Wed Sep 30 2015 Danil Mikhailov <danil@altlinux.org> 0.0.3-alt9
+- Added initial realisation of systemd init service
+- Change runlevel to 60
+- Added 400 permission as allowed 
+
 * Mon Dec 29 2014 Danil Mikhailov <danil@altlinux.org> 0.0.3-alt8
 - fixed test sudo autosshd-ssh anyssh.ru
 
