@@ -1,15 +1,15 @@
 %define pypi_name taskflow
 
 Name:           python-module-%{pypi_name}
-Version:        0.8.0
+Version:        0.7.1
 Release:        alt1
+Epoch:          1
 Summary:        Taskflow structured state management library
 
 Group:          Development/Python
 License:        ASL 2.0
 URL:            https://launchpad.net/taskflow
 Source0:        %name-%version.tar
-Patch0:         remove-pbr.patch
 BuildArch:      noarch
 
 BuildRequires: python-devel
@@ -26,7 +26,7 @@ BuildRequires: python-module-oslo.utils
 
 Requires: python-module-six
 Requires: python-module-jsonschema
-Requires: python-module-networkx
+Requires: python-module-networkx-core
 Requires: python-module-stevedore
 Requires: python-module-futures
 Requires: python-module-oslo.serialization
@@ -47,10 +47,6 @@ This package contains the associated documentation.
 
 %prep
 %setup
-
-#%patch0 -p1
-
-#sed -i 's/REDHATVERSION/%{version}/; s/REDHATRELEASE/%{release}/' %{pypi_name}/version.py
 
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
@@ -83,6 +79,9 @@ rm -fr %buildroot%python_sitelibdir/*/examples
 %doc html
 
 %changelog
+* Mon Oct 12 2015 Alexey Shabalin <shaba@altlinux.ru> 1:0.7.1-alt1
+- downgrade to 0.7.1
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 0.8.0-alt1
 - 0.8.0
 
