@@ -47,7 +47,7 @@
 
 Name: kde5-pim
 Version: 15.08.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -74,7 +74,8 @@ Patch2: alt-akonadi-resources-dir.patch
 #BuildRequires: extra-cmake-modules gcc-c++ grantlee5-devel kde5-akonadi-calendar-devel kde5-akonadi-search-devel kde5-gpgmepp-devel kde5-kalarmcal-devel kde5-kblog-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kldap-devel kde5-kmailtransport-devel kde5-kmbox-devel kde5-kmime-devel kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-pimlibs-devel kde5-syndication-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdewebkit-devel kf5-kdnssd-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kross-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-kxmlrpcclient-devel kf5-libkgapi-devel kf5-solid-devel kf5-sonnet-devel libassuan-devel libgpgme-devel libldap-devel libsasl2-devel python-module-google qt5-quick1-devel qt5-speech-devel qt5-tools-devel-static qt5-x11extras-devel rpm-build-python3 rpm-build-ruby xsltproc zlib-devel-static
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
-BuildRequires: qt5-quick1-devel qt5-speech-devel qt5-tools-devel-static qt5-x11extras-devel
+BuildRequires: qt5-quick1-devel qt5-tools-devel-static qt5-x11extras-devel
+#BuildRequires: qt5-speech-devel
 BuildRequires: xsltproc grantlee5-devel libassuan-devel libgpgme-devel libldap-devel libsasl2-devel zlib-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-search-devel kde5-gpgmepp-devel kde5-kalarmcal-devel kde5-kblog-devel kde5-kcalcore-devel
 BuildRequires: kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kldap-devel
@@ -893,6 +894,9 @@ done
 %_K5lib/libtemplateparser.so.*
 
 %changelog
+* Mon Oct 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt2
+- build without qt5-speech
+
 * Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
 - new version
 
