@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	4.1
 %define kernel_sublevel	.10
@@ -544,6 +544,10 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Mon Oct 12 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.10-alt2
+- fix for #31352, thanks to vsu@ (closes: #31352)
+- CONFIG_FW_LOADER_USER_HELPER disabled
+
 * Wed Oct 07 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.10-alt1
 - 4.1.10
 
@@ -552,6 +556,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 
 * Tue Sep 22 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.8-alt1
 - 4.1.8
+
+* Mon Sep 14 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.52-alt1
+- 3.14.52
 
 * Mon Aug 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.6-alt1
 - 4.1.6
