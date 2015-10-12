@@ -1,6 +1,6 @@
 Name: mazen
 Version: 1.0.1
-Release: alt1.qa1.1
+Release: alt2
 
 Summary: Simple Gnome-base maze creator
 License: GPLv3
@@ -22,6 +22,7 @@ Can create various types of mazes, and export them in PDF, PNG or SVG formats.
 %setup -q
 
 %build
+%add_optflags -std=gnu++11
 %autoreconf
 %configure
 %make_build
@@ -56,6 +57,9 @@ EOF
 %_desktopdir/*
 
 %changelog
+* Fri Oct 09 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt2
+- Fix build with gcc5
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1-alt1.qa1.1
 - Rebuilt for gcc5 C++11 ABI.
 
