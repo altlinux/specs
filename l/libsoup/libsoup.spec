@@ -9,7 +9,7 @@
 %def_enable vala
 
 Name: libsoup
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -221,6 +221,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.52.1-alt1
+- 2.52.1
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.52.0-alt1
 - 2.52.0
 
