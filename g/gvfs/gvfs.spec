@@ -27,7 +27,7 @@
 %def_enable google
 
 Name: gvfs
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -346,16 +346,21 @@ killall -USR1 gvfsd >&/dev/null || :
 # daemon
 %_libexecdir/gvfsd
 %config %_datadir/glib-2.0/schemas/org.gnome.system.gvfs.enums.xml
+%_prefix/lib/systemd/user/gvfs-daemon.service
+%_prefix/lib/systemd/user/gvfs-metadata.service
 # monitors
 %_libexecdir/gvfs-gphoto2-volume-monitor
+%_prefix/lib/systemd/user/gvfs-gphoto2-volume-monitor.service
 %{?_enable_hal:%_libexecdir/gvfs-hal-volume-monitor}
 %{?_enable_gdu:%_libexecdir/gvfs-gdu-volume-monitor}
 %{?_enable_udisks2:%_libexecdir/gvfs-udisks2-volume-monitor}
+%{?_enable_udisks2:%_prefix/lib/systemd/user/gvfs-udisks2-volume-monitor.service}
 %_datadir/dbus-1/services/*
 # gio modules
 %_libdir/gio/modules/*.so
 # default backends
 %_libexecdir/gvfsd-*
+
 %exclude %_libexecdir/gvfsd-fuse
 
 %dir %_datadir/%name
@@ -459,6 +464,7 @@ killall -USR1 gvfsd >&/dev/null || :
 %_libexecdir/gvfs-afc-volume-monitor
 %_datadir/%name/mounts/afc.mount
 %_datadir/%name/remote-volume-monitors/afc.monitor
+%_prefix/lib/systemd/user/gvfs-afc-volume-monitor.service
 %endif
 
 %if_enabled afp
@@ -479,6 +485,7 @@ killall -USR1 gvfsd >&/dev/null || :
 %files backend-goa
 %_libexecdir/%name-goa-volume-monitor
 %_datadir/%name/remote-volume-monitors/goa.monitor
+%_prefix/lib/systemd/user/gvfs-goa-volume-monitor.service
 %endif
 
 %if_enabled libmtp
@@ -488,6 +495,7 @@ killall -USR1 gvfsd >&/dev/null || :
 %_datadir/%name/mounts/mtp.mount
 %_datadir/%name/remote-volume-monitors/mtp.monitor
 %_datadir/dbus-1/services/org.gtk.vfs.MTPVolumeMonitor.service
+%_prefix/lib/systemd/user/gvfs-mtp-volume-monitor.service
 %endif
 
 %if_enabled nfs
@@ -521,6 +529,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt1
+- 1.26.1
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
 - 1.26.0
 - new google backend
