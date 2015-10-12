@@ -9,7 +9,7 @@
 %def_enable libthai
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -42,7 +42,7 @@ Obsoletes: gscript
 %define fontconfig_ver 2.10.91
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
-%define hb_ver 0.9.29
+%define hb_ver 0.9.30
 %define thai_ver 0.1.9
 
 # We need to prereq these so we can run pango-querymodules in post
@@ -189,6 +189,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt1
+- 1.38.1
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1.38.0-alt1
 - 1.38.0
 
