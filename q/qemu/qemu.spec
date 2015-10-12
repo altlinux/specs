@@ -34,7 +34,6 @@
 %def_enable vnc_png
 %def_enable vde
 %def_enable alsa
-%def_disable esound
 %def_enable pulseaudio
 %def_enable oss
 %def_enable aio
@@ -54,11 +53,11 @@
 %def_enable libnfs
 %def_disable seccomp
 %def_enable glusterfs
-%def_enable gtk
+%def_disable gtk
+%def_enable gnutls
 %def_enable tpm
 %def_enable libssh2
 %def_enable vhdx
-%def_enable quorum
 %def_enable numa
 %def_enable rdma
 %def_enable lzo
@@ -66,7 +65,7 @@
 %def_enable bzip2
 %def_enable xen
 
-%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_sdl2:sdl} %{?_enable_esound:esd} %{?_enable_pulseaudio:pa}
+%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_sdl2:sdl} %{?_enable_pulseaudio:pa}
 
 %define _group vmusers
 %define rulenum 90
@@ -162,8 +161,8 @@
 # }}}
 
 Name: qemu
-Version: 2.3.0
-Release: alt5
+Version: 2.4.0.1
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -189,7 +188,7 @@ BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
-BuildRequires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d seavgabios seabios >= 1.7.4-alt2 libfdt-devel
+BuildRequires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.4.0
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: iasl
 %{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel}
@@ -197,9 +196,8 @@ BuildRequires: iasl
 %{?_enable_curses:BuildRequires: libncurses-devel}
 %{?_enable_bluez:BuildRequires: libbluez-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
-%{?_enable_esound:BuildRequires: libesd-devel}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
-%{?_enable_vnc_tls:BuildRequires: libgnutls-devel}
+%{?_enable_vnc_tls:BuildRequires: libgnutls-devel libnettle-devel}
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vnc_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_vnc_png:BuildRequires: libpng-devel}
@@ -209,7 +207,7 @@ BuildRequires: iasl
 %{?_enable_uuid:BuildRequires: libuuid-devel}
 %{?_enable_smartcard_nss:BuildRequires: libnss-devel >= 3.12.8}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
-%{?_enable_opengl:BuildRequires: libGL-devel libX11-devel}
+%{?_enable_opengl:BuildRequires: libGL-devel libX11-devel libGLES-devel libepoxy-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel >= 2.38 python-base}
 %{?_enable_rbd:BuildRequires: ceph-devel}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
@@ -217,10 +215,10 @@ BuildRequires: iasl
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.1.1}
 %{?_enable_glusterfs:BuildRequires: pkgconfig(glusterfs-api)}
 %{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 pkgconfig(vte-2.90) >= 0.32.0}
+%{?_enable_gnutls:BuildRequires: libgnutls-devel >= 2.9.10}
 %{?_enable_libssh2:BuildRequires: libssh2-devel >= 1.2.8}
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
 %{?_enable_rdma:BuildRequires: librdmacm-devel libibverbs-devel}
-%{?_enable_quorum:BuildRequires: libgnutls-devel >= 2.10.0}
 %{?_enable_numa:BuildRequires: libnuma-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_enable_snappy:BuildRequires: libsnappy-devel}
@@ -398,7 +396,7 @@ export CFLAGS="%optflags"
 	--disable-libnfs \
 	--disable-glusterfs \
 	--disable-libssh2 \
-	--disable-quorum \
+	--disable-gnutls \
 	--disable-lzo \
 	--disable-numa \
 	--disable-gtk
@@ -427,7 +425,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--libdir=%_libdir \
 	--extra-cflags="%optflags" \
 	%{subst_enable werror} \
-	%{?_enable_sdl:--enable-sdl} \
+	%{?_enable_sdl:--enable-sdl --with-sdlabi=1.2} \
 	%{?_enable_sdl2:--enable-sdl --with-sdlabi=2.0} \
 	%{?_disable_curses:--disable-curses} \
 	%{subst_enable bluez} \
@@ -440,7 +438,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{?_disable_vde:--disable-vde} \
 	%{?_disable_aio:--disable-linux-aio} \
 	%{?_disable_blobs: --disable-blobs} \
-	%{?_disable_spice:--disable-spice} \
+	%{subst_enable spice} \
 	%{?_disable_uuid:--disable-uuid} \
 	--disable-debug-tcg \
 	--disable-sparse \
@@ -467,7 +465,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{subst_enable libssh2} \
 	%{subst_enable vhdx} \
 	%{subst_enable rdma} \
-	%{subst_enable quorum} \
+	%{subst_enable gnutls} \
 	%{subst_enable numa} \
 	%{subst_enable lzo} \
 	%{subst_enable snappy} \
@@ -615,7 +613,6 @@ fi
 %if_enabled vnc_sasl
 %config(noreplace) %_sysconfdir/sasl2/%name.conf
 %endif
-%_sysconfdir/%name
 
 %files system -f %name.lang
 %_bindir/qemu
@@ -674,6 +671,10 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Fri Oct 02 2015 Alexey Shabalin <shaba@altlinux.ru> 2.4.0.1-alt1
+- 2.4.0.1
+- build without gtk3 ui
+
 * Thu Jun 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt5
 - Fixes a crash during image compression (RH#1214855)
 
