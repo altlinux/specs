@@ -1,7 +1,7 @@
 %define rname baloo
 
 Name: kf5-%rname
-Version: 5.14.0
+Version: 5.15.0
 Release: alt1
 %K5init altplace
 
@@ -10,7 +10,7 @@ Summary: KDE Workspace 5 framework for searching and managing metadata
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: polkit-kde-baloo
+#Requires: polkit-kde-baloo
 
 Source: %rname-%version.tar
 Patch1: alt-disable-indexing.patch
@@ -88,18 +88,18 @@ KF5 library
 
 %files
 %_K5bin/baloo*
-%_K5libexecdir/kauth/*baloo*
+#%_K5libexecdir/kauth/*baloo*
 %_K5plug/kf5/kded/baloosearchmodule.so
 %_K5plug/kf5/kio/*.so
 %_K5qml/org/kde/baloo/
 %_K5start/baloo*.desktop
 %_K5srv/*.protocol
-%_K5conf_dbus_sysd/*.conf
-%_K5dbus_sys_srv/*.service
+#%_K5conf_dbus_sysd/*.conf
+#%_K5dbus_sys_srv/*.service
 %_K5icon/hicolor/*/apps/baloo.*
 
-%files -n polkit-kde-baloo
-%_datadir/polkit-1/actions/*baloo*filewatch*.policy
+#%files -n polkit-kde-baloo
+#%_datadir/polkit-1/actions/*baloo*filewatch*.policy
 
 %files devel
 %_K5inc/baloo_version.h
@@ -115,6 +115,9 @@ KF5 library
 %_K5lib/libKF5BalooEngine.so.*
 
 %changelog
+* Mon Oct 12 2015 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
+- new version
+
 * Mon Sep 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt1
 - new version
 

@@ -1,8 +1,8 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.14.0
-Release: alt2
+Version: 5.15.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -101,6 +101,9 @@ KF5 library
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Mon Oct 12 2015 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
+- new version
+
 * Tue Oct 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt2
 - don't use gpg by default
 
