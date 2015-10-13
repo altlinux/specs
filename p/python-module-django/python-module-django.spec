@@ -1,6 +1,6 @@
 %define branch 1.8
-%define version %branch
-%define release alt2
+%define version %branch.5
+%define release alt1
 %define origname Django
 %define oname django
 %define py3_name python3-module-%oname
@@ -383,6 +383,10 @@ popd
 %endif
 
 %changelog
+* Tue Oct 13 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.5-alt1
+- 1.8.5
+- fixed CVE-2015-5143, CVE-2015-5144, CVE-2015-5145, CVE-2015-5964, CVE-2015-5963
+
 * Thu Apr 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8-alt2
 - Version 1.8
 
