@@ -6,7 +6,7 @@
 %def_enable modemlights
 
 Name: gnome-applets
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -22,7 +22,7 @@ Patch: %name-2.9.90-alt-modemlights.patch
 # From configure.ac
 %define gtk_ver 3.16.0
 %define glib_ver 2.44.0
-%define gnome_panel_ver 3.18.0
+%define gnome_panel_ver 3.18.1
 %define libgtop_ver 2.11.92
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
@@ -459,7 +459,7 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_datadir/dbus-1/services/org.gnome.panel.applet.TrashAppletFactory.service
 
 %files windowpicker -f windowpicker.lang
-%gnome_appletsdir/%panel_api_ver/libwindow-picker-applet.so.*
+%gnome_appletsdir/%panel_api_ver/libwindow-picker-applet.so
 %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-picker-applet.gschema.xml
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.WindowPicker.panel-applet
 
@@ -510,6 +510,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %_iconsdir/hicolor/*/*/invest-applet*
 
 %changelog
+* Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
 * Sun Sep 27 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 - new -brightness, -inhibit, -tracker subpackages
