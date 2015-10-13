@@ -1,6 +1,6 @@
 Name: apt-indicator
-Version: 0.2.10
-Release: alt1.1.1.1
+Version: 0.2.11
+Release: alt1
 
 Summary: Applet for indication that newer packages are available
 License: GPL
@@ -69,6 +69,9 @@ install -m644 pixmaps/* %buildroot/%_datadir/%name/pixmaps
 
 
 %changelog
+* Tue Oct 13 2015 Sergey V Turchin <zerg at altlinux dot org> 0.2.11-alt1
+- fix system tray icon pixmap
+
 * Thu May 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.10-alt1.1.1.1
 - Rebuilt for:
  + libapt-pkg-libc6.9-6.so.5.
@@ -79,6 +82,9 @@ install -m644 pixmaps/* %buildroot/%_datadir/%name/pixmaps
 
 * Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.10-alt1.1
 - NMU: rebuild with libapt
+
+* Wed Oct 09 2013 Sergey V Turchin <zerg at altlinux dot org> 0.2.10-alt0.M70P.1
+- built for M70P
 
 * Wed Oct 09 2013 Sergey V Turchin <zerg at altlinux dot org> 0.2.10-alt1
 - minimize checker process priority
