@@ -5,7 +5,7 @@
 %def_enable gtk_doc
 
 Name: %{_name}3
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: Library integrating clutter with GTK+3
@@ -104,6 +104,9 @@ touch AUTHORS
 %endif
 
 %changelog
+* Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.6-alt1
+- 1.6.6
+
 * Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
 - 1.6.4
 
