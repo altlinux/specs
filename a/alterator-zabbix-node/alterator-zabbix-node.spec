@@ -1,11 +1,10 @@
 Name: alterator-zabbix-node
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Deployment tool for a Zabbix node
 License: GPL
 Group: System/Configuration/Other
-Packager: Paul Wolneykien <manowar@altlinux.ru>
 BuildArch: noarch
 
 Source: %name-%version.tar.gz
@@ -14,7 +13,7 @@ BuildPreReq: help2man alterator-service-functions alterator-php-functions
 
 BuildRequires: alterator
 
-Requires: zabbix-phpfrontend-apache2 zabbix-phpfrontend-php5 zabbix-phpfrontend-engine apache2-mod_php5 zabbix-agent
+Requires:  zabbix-phpfrontend-php5 zabbix-phpfrontend-engine zabbix-agent
 Requires: alterator-service-functions >= 2.0.0-alt1
 Requires: alterator-DBTYPE-functions
 
@@ -29,83 +28,14 @@ Group: System/Configuration/Other
 %description common
 Library files for Zabbix node configuration programs.
 
-%package -n grow-zabbix-node
-Summary: Tool for preparing a Zabbix node configuration package offline
-Group: System/Configuration/Other
-Requires: grow-zabbix-node-db
-Requires: %name-common
-
-%description -n grow-zabbix-node
-Grows a complete configuration of a Zabbix node including database
-contents and configuration files from an initial database dump and
-a simple XML configuration file.
-
-%package -n grow-zabbix-node-examples
-Summary: Example base configuration files for grow-zabbix-node
-Group: System/Configuration/Other
-
-%description -n grow-zabbix-node-examples
-Example base configuration files for grow-zabbix-node program.
-
-%package -n grow-zabbix-node-mysql
-Summary: Zabbix DB dump generation transformers for MySQL
-Group: System/Configuration/Other
-Requires: grow-zabbix-node
-Provides: grow-zabbix-node-db
-
-%description -n grow-zabbix-node-mysql
-The set of XSLTs for "unfolding" of a rather simple XML configuration
-file to the corresponding Zabbix DB dump of a DM node.
-
-%package mysql
-Summary: Deployment tool for a Zabbix node (Zabbix-MySQL dependencies)
-Group: System/Configuration/Other
-Requires: %name zabbix-server-mysql
-Requires: alterator-mysql-functions
-Provides: alterator-DBTYPE-functions
-Provides: alterator-DBTYPE-functions(mysql)
-
-%description mysql
-Grows a complete configuration of a Zabbix node including database
-contents and configuration files from an initial database dump and
-a simple XML configuration file.
-
-This package has dependencies for the MySQL verision of the Zabbix
-server.
-
-%package -n grow-zabbix-node-altlinux-dump-mysql
+%package -n zabbix-mysql-data-altlinux
 Summary: Base dump with ALT linux templates to grow from (MySQL version)
 Group: System/Configuration/Other
 
-%description -n grow-zabbix-node-altlinux-dump-mysql
+%description -n zabbix-mysql-data-altlinux
 Base dump with ALT linux templates to grow from.
 This pacakge contains the MySQL version of the dump.
 
-%package -n grow-zabbix-node-altlinux-chainmail-dump-mysql
-Summary: Base dump with ALT linux and Chainmail templates to grow from (MySQL version)
-Group: System/Configuration/Other
-
-%description -n grow-zabbix-node-altlinux-chainmail-dump-mysql
-Base dump with ALT linux and Chainmail templates to grow from.
-This pacakge contains the MySQL version of the dump.
-
-%package -n grow-zabbix-node-altlinux-templates
-Summary: An XML bundle of ALT linux templates for a Zabbix node
-Group: System/Configuration/Other
-
-%description -n grow-zabbix-node-altlinux-templates
-An XML bundle of ALT linux templates for a Zabbix node. The templates in
-this package can be imported to a working Zabbix configuration using the
-"Templates/Import template" operation.
-
-%package -n grow-zabbix-node-chainmail-templates
-Summary: An XML bundle of Chainmail templates for a Zabbix node
-Group: System/Configuration/Other
-
-%description -n grow-zabbix-node-chainmail-templates
-An XML bundle of Chainmail templates for a Zabbix node. The templates in
-this package can be imported to a working Zabbix configuration using the
-"Templates/Import template" operation.
 
 %package -n alterator-zabbix-agent
 Summary: Alterator module for the Zabbix agent configuration
@@ -115,6 +45,15 @@ Requires: alterator-l10n >= 2.9-alt21
 
 %description -n alterator-zabbix-agent
 Alterator module for the Zabbix agent configuration
+
+%package -n zabbix-chainmail-parameters
+Summary: IVK ChainMail configuration files for Zabbix agent
+Group: System/Configuration/Other
+Requires: zabbix-agent
+Requires: alterator-l10n >= 2.9-alt21
+
+%description -n zabbix-chainmail-parameters
+IVK ChainMail configuration files for Zabbix agent
 
 %prep
 %setup
@@ -128,60 +67,26 @@ Alterator module for the Zabbix agent configuration
 %files common
 %_bindir/zabbix-sh-functions
 
-%files
-%_sbindir/alterator-zabbix-node-helper
-%_mandir/man1/alterator-zabbix-node-helper.1.gz
-
-%files -n grow-zabbix-node
-%_bindir/grow-zabbix-node
-%_mandir/man1/grow-zabbix-node.1.gz
-%dir %_datadir/grow-zabbix-node
-%dir %_datadir/grow-zabbix-node/xslt
-%_datadir/grow-zabbix-node/xslt/extract-map-filenames.xslt
-%_datadir/grow-zabbix-node/xslt/extract-metadata.xslt
-%_datadir/grow-zabbix-node/xslt/includes.xslt
-%_datadir/grow-zabbix-node/xslt/insert.xslt
-%_datadir/grow-zabbix-node/xslt/reset.xslt
-%_datadir/grow-zabbix-node/xslt/update-node.xslt
-%dir %_datadir/grow-zabbix-node/refconf
-%_datadir/grow-zabbix-node/refconf/zabbix.conf.php
-%_datadir/grow-zabbix-node/refconf/zabbix_agentd.conf
-%_datadir/grow-zabbix-node/refconf/zabbix_server.conf
-%dir %_datadir/grow-zabbix-node/dumps
-%dir %_datadir/grow-zabbix-node/templates
-%_datadir/grow-zabbix-node/template.xml
-
-%files -n grow-zabbix-node-mysql
-%_datadir/grow-zabbix-node/xslt/mysql-includes.xslt
-%_datadir/grow-zabbix-node/xslt/mysql-insert.xslt
-%_datadir/grow-zabbix-node/xslt/mysql-reset.xslt
-%_datadir/grow-zabbix-node/xslt/mysql-update-node.xslt
-
-%files -n grow-zabbix-node-examples
-%dir %_docdir/grow-zabbix-node
-%dir %_docdir/grow-zabbix-node/examples
-%_docdir/grow-zabbix-node/examples/Moscow
-
-%files mysql
-
-%files -n grow-zabbix-node-altlinux-dump-mysql
-%_datadir/grow-zabbix-node/dumps/zabbix-mysql-altlinux-dump.sql
-
-%files -n grow-zabbix-node-altlinux-chainmail-dump-mysql
-%_datadir/grow-zabbix-node/dumps/zabbix-mysql-altlinux-chainmail-dump.sql
-
-%files -n grow-zabbix-node-altlinux-templates
-%_datadir/grow-zabbix-node/templates/base-templates.xml
-
-%files -n grow-zabbix-node-chainmail-templates
-%_datadir/grow-zabbix-node/templates/chainmail-templates.xml
+%files -n zabbix-mysql-data-altlinux
+%_datadir/zabbix-altlinux/data.sql
 
 %files -n alterator-zabbix-agent
+%_sysconfdir/zabbix/zabbix_agentd.conf.d/Ident.conf
 %_alterator_datadir/applications/zabbix-agent.desktop
 %_alterator_datadir/ui/zabbix-agent
 %_alterator_backend3dir/zabbix-agent
 
+%files -n zabbix-chainmail-parameters
+%_sysconfdir/zabbix/zabbix_agentd.conf.d/Chainmail.conf
+
 %changelog
+* Mon May 25 2015 Anton Farygin <rider@altlinux.ru> 1.3.2-alt1
+- simplified creation of zabbix node
+- fixed zabbix_agent restart, when button "apply" was used in WEB-interface
+- add default items system.version (which alaways returns uname) and MetadataItem=system.version for zabbix_agent
+- always set ServerActive in alterator-zabbix-agent with Server value
+- add zabbix-chainmail-parameters subpackage with default zabbix agent config for IVK Chainmail
+
 * Tue Sep 16 2014 Mikhail Efremov <sem@altlinux.org> 1.3.1-alt1
 - Fix alterator menu category.
 
