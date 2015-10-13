@@ -1,6 +1,6 @@
 Name: paman
 Version: 0.9.4
-Release: alt4.qa2.1
+Release: alt4.qa3
 
 Summary: PulseAudio Manager
 License: GPL
@@ -28,6 +28,7 @@ PulseAudio sound server.
 %patch0 -p1
 
 %build
+%add_optflags -std=gnu++11
 %configure
 %make_build
 
@@ -45,6 +46,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/applications/paman.desktop
 
 %changelog
+* Tue Oct 13 2015 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt4.qa3
+- Fix build with gcc5
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.4-alt4.qa2.1
 - Rebuilt for gcc5 C++11 ABI.
 
