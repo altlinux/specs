@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.0.1
+Version: %ver_major.1
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -153,6 +153,9 @@ GObject introspection devel data for the %name library.
 %_datadir/appdata/%_name1.appdata.xml
 
 %changelog
+* Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0.1-alt1
 - 3.18.0.1
 
