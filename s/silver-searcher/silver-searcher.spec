@@ -1,5 +1,5 @@
 Name: silver-searcher
-Version: 0.30.0
+Version: 0.31.0
 Release: alt0.1
 
 Summary: A code searching tool similar to ack, with a focus on speed.
@@ -52,6 +52,9 @@ install -pm644 README.md %buildroot%docdir/
 %docdir/*
 
 %changelog
+* Mon Oct 12 2015 Andrey Bergman <vkni@altlinux.org> 0.31.0-alt0.1
+- Version update.
+
 * Sat Jun 06 2015 Andrey Bergman <vkni@altlinux.org> 0.30.0-alt0.1
 - Initial release for Sisyphus.
 
