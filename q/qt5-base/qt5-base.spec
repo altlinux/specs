@@ -23,7 +23,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.5.0
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -31,7 +31,8 @@ License: LGPLv2 with exceptions / GPLv3 with exceptions
 Url: http://qt-project.org/
 
 Source: %rname-opensource-src-%version.tar
-Source1: rpm-macros-addon
+Source1: rpm-macros
+Source2: rpm-macros-addon
 # FC
 Patch1: qt-everywhere-opensource-src-5.3.2-QTBUG-35459.patch
 # upstream
@@ -42,28 +43,13 @@ Patch1002: alt-dont-require-plugin-file.patch
 
 # macros
 %define _qt5 %gname
-%define _qt5_prefix %_datadir/qt5
-%define _qt5_datadir %_datadir/qt5
-%define _qt5_archdatadir %_libdir/qt5
-#
-%define _qt5_bindir %_qt5_prefix/bin
-%define _qt5_docdir %_defaultdocdir/qt5
-%define _qt5_examplesdir %_qt5_archdatadir/examples
-%define _qt5_headerdir %_includedir/qt5
-%define _qt5_importdir %_qt5_archdatadir/imports
-%define _qt5_qmldir %_qt5_archdatadir/qml
-%define _qt5_libdir %_libdir
-%define _qt5_libexecdir %_qt5_archdatadir/libexec
-%define _qt5_plugindir %_qt5_archdatadir/plugins
-%define _qt5_settingsdir %_sysconfdir/xdg
-%define _qt5_sysconfdir %_qt5_settingsdir
-%define _qt5_translationdir %_qt5_datadir/translations
+%include %SOURCE1
 
 # Automatically added by buildreq on Fri Sep 20 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcom_err-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libssl-devel libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxml2-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel libharfbuzz-devel
-BuildRequires: libpcre-devel libudev-devel libdrm-devel libgbm-devel zlib-devel libgtk+2-devel
+BuildRequires: libpcre-devel libudev-devel libdrm-devel libgbm-devel zlib-devel libgtk+2-devel libinput-devel
 BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl)
 BuildRequires: libX11-devel libXi-devel libxkbcommon-devel libxkbcommon-x11-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
@@ -112,6 +98,7 @@ Requires: %name-devel
 %package -n rpm-macros-%gname
 Summary: Set of RPM macros for packaging Qt%major-based applications
 Group: Development/KDE and QT
+BuildArch: noarch
 Requires: %name-common = %version-%release
 %description -n rpm-macros-%gname
 Set of RPM macros for packaging Qt%major-based applications for %distribution
@@ -308,22 +295,7 @@ EGL integration library for the Qt%major toolkit
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
-bin/syncqt.pl -private \
-    -module QtCore \
-    -module QtGui \
-    -module QtXml \
-    -module QtNetwork \
-    -module QtSql \
-    -module QtTest \
-    -module QtDBus \
-    -module QtConcurrent \
-    -module QtPlatformSupport \
-    -module QtPlatformHeaders \
-    -module QtWidgets \
-    -module QtOpenGL \
-    -module QtOpenGLExtensions \
-    -module QtPrintSupport \
-    ./
+bin/syncqt.pl -private
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
 # install optflags
@@ -464,27 +436,9 @@ cat >%buildroot/%_rpmmacrosdir/%gname <<__EOF__
 %%_qt5_epoch %{?epoch}%{!?epoch:0}
 %%_qt5_version %version
 %%_qt5_evr %EVR
-%%_qt5_prefix %_qt5_prefix
-%%_qt5_archdatadir %_qt5_archdatadir
-%%_qt5_bindir %_qt5_bindir
-%%_qt5_datadir %_qt5_datadir
-%%_qt5_docdir %_qt5_docdir
-%%_qt5_examplesdir %_qt5_examplesdir
-%%_qt5_headerdir %_qt5_headerdir
-%%_qt5_importdir %_qt5_importdir
-%%_qt5_qmldir %_qt5_qmldir
-%%_qt5_libdir %_qt5_libdir
-%%_qt5_libdatadir %_qt5_prefix/lib
-%%_qt5_libexecdir %_qt5_libexecdir
-%%_qt5_plugindir %_qt5_plugindir
-%%_qt5_settingsdir %_qt5_settingsdir
-%%_qt5_sysconfdir %_qt5_sysconfdir
-%%_qt5_translationdir %_qt5_translationdir
-
-%%_qt5_qmake %_qt5_bindir/qmake
-
 __EOF__
-cat %SOURCE1 >>%buildroot/%_rpmmacrosdir/%gname
+cat %SOURCE1 | sed 's|define[[:space:]][[:space:]]*||' >>%buildroot/%_rpmmacrosdir/%gname
+cat %SOURCE2 >>%buildroot/%_rpmmacrosdir/%gname
 
 # create compatibility symlinks to dirs
 for d in imports libexec mkspecs plugins ; do
@@ -525,7 +479,7 @@ popd
 
 # install libs into qt prefix
 mkdir -p %buildroot/%_qt5_prefix/lib
-ls -1d %buildroot/%_qt5_libdir/* | \
+ls -1d %buildroot/%_qt5_libdir/*.{a,so,prl} 2>/dev/null | \
 while read f ; do
     [ -d "$f" ] && continue
     fname=`basename $f`
@@ -676,19 +630,15 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 %files -n lib%{gname}-core
 %_qt5_libdir/libQt%{major}Core.so.*
-%_qt5_prefix/lib/libQt%{major}Core.so.*
 
 %files -n lib%{gname}-concurrent
 %_qt5_libdir/libQt%{major}Concurrent.so.*
-%_qt5_prefix/lib/libQt%{major}Concurrent.so.*
 
 %files -n lib%{gname}-dbus
 %_qt5_libdir/libQt%{major}DBus.so.*
-%_qt5_prefix/lib/libQt%{major}DBus.so.*
 
 %files -n lib%{gname}-gui
 %_qt5_libdir/libQt%{major}Gui.so.*
-%_qt5_prefix/lib/libQt%{major}Gui.so.*
 %_qt5_plugindir/egldeviceintegrations/*
 %_qt5_plugindir/generic/*
 %_qt5_plugindir/imageformats/*
@@ -699,46 +649,40 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 %files -n lib%{gname}-network
 %_qt5_libdir/libQt%{major}Network.so.*
-%_qt5_prefix/lib/libQt%{major}Network.so.*
 %_qt5_plugindir/bearer/*
 
 %files -n lib%{gname}-opengl
 %_qt5_libdir/libQt%{major}OpenGL.so.*
-%_qt5_prefix/lib/libQt%{major}OpenGL.so.*
 
 %files -n lib%{gname}-printsupport
 %_qt5_libdir/libQt%{major}PrintSupport.so.*
-%_qt5_prefix/lib/libQt%{major}PrintSupport.so.*
 %_qt5_plugindir/printsupport/*
 
 %files -n lib%{gname}-sql
 %_qt5_libdir/libQt%{major}Sql.so.*
-%_qt5_prefix/lib/libQt%{major}Sql.so.*
 %_qt5_plugindir/sqldrivers/libqsqlite.so
 
 %files -n lib%{gname}-test
 %_qt5_libdir/libQt%{major}Test.so.*
-%_qt5_prefix/lib/libQt%{major}Test.so.*
 
 %files -n lib%{gname}-widgets
 %_qt5_libdir/libQt%{major}Widgets.so.*
-%_qt5_prefix/lib/libQt%{major}Widgets.so.*
 #%_qt5_plugindir/accessible/*
 
 %files -n lib%{gname}-xml
 %_qt5_libdir/libQt%{major}Xml.so.*
-%_qt5_prefix/lib/libQt%{major}Xml.so.*
 
 %files -n lib%{gname}-egldeviceintegration
 %_qt5_libdir/libQt%{major}EglDeviceIntegration.so.*
-%_qt5_prefix/lib/libQt%{major}EglDeviceIntegration.so.*
 
 %files -n lib%{gname}-xcbqpa
 %_qt5_libdir/libQt%{major}XcbQpa.so.*
-%_qt5_prefix/lib/libQt%{major}XcbQpa.so.*
 
 
 %changelog
+* Tue Oct 13 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt4
+- make rpm-macros package noarch (ALT#31357)
+
 * Tue Jul 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt3
 - link include directory to qt prefix
 
