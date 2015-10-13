@@ -1,6 +1,6 @@
 Name: dirmngr
 Version: 1.1.1
-Release: alt2
+Release: alt3
 
 Summary: Client for Managing/Downloading CRLs
 Group: System/Libraries
@@ -9,6 +9,8 @@ Url: http://www.gnupg.org/
 
 # ftp://ftp.gnupg.org/gcrypt/dirmngr/%name-%version.tar.bz2
 Source: %name-%version.tar
+# Arch
+Patch1: dirmngr-pth-fix.patch
 
 BuildRequires: libassuan-devel libgcrypt-devel libksba-devel libldap-devel libpth-devel
 
@@ -22,6 +24,7 @@ the dirmngr-client tool.
 
 %prep
 %setup
+%patch1 -p0
 %autoreconf
 
 %build
@@ -48,6 +51,9 @@ install -pm644 AUTHORS NEWS README THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Tue Oct 13 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt3
+- fix segfault with libgcrypt-1.6 (ALT#31358)
+
 * Wed Jun 24 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt2
 - rebuild with new libgcrypt
 
