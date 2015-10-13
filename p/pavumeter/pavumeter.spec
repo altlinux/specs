@@ -1,6 +1,6 @@
 Name: pavumeter
 Version: 0.9.3
-Release: alt3.qa2
+Release: alt3.qa3
 
 Summary: PulseAudio Volume Meter
 Group: Sound
@@ -27,6 +27,7 @@ the PulseAudio sound server.
 %patch0 -p1
 
 %build
+%add_optflags -std=gnu++11
 %configure
 %make_build
 
@@ -46,6 +47,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/applications/pavumeter-record.desktop
 
 %changelog
+* Tue Oct 13 2015 Andrey Cherepanov <cas@altlinux.org> 0.9.3-alt3.qa3
+- Fix build with gcc5
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.3-alt3.qa2
 - NMU: rebuilt for updated dependencies.
 
