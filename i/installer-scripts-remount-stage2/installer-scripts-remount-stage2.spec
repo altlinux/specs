@@ -1,6 +1,6 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.2
-Release: alt2
+Version: 0.5.3
+Release: alt1
 
 Summary: Shared installer scripts: remount
 License: GPLv2+
@@ -36,6 +36,10 @@ install -pDm755 initinstall/stop-md-dm.sh \
 %_datadir/install2/initinstall.d/89-stop-md-dm.sh
 
 %changelog
+* Tue Oct 13 2015 Aleksey Avdeev <solo@altlinux.org> 0.5.3-alt1
+- Use cp in the absence of installable system
+  /usr/share/make-initrd/tools/put-file
+
 * Tue Oct 13 2015 Aleksey Avdeev <solo@altlinux.org> 0.5.2-alt2
 - Add copying the libraries necessary for binaries copied (ALT#31351).
   To copy using a script /usr/share/make-initrd/tools/put-file
