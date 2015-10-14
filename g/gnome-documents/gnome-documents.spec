@@ -6,7 +6,7 @@
 
 Name: gnome-documents
 Version: %ver_major.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: A document manager application for GNOME
 Group: Office
@@ -132,6 +132,7 @@ GObject introspection devel data for the %name library.
 %_man1dir/gnome-books.1.*
 # contains arch dependent scripts
 %pkgdatadir/
+%exclude %pkgdatadir/gir-1.0
 %doc README AUTHORS NEWS TODO
 
 %files gir
@@ -140,7 +141,6 @@ GObject introspection devel data for the %name library.
 %pkglibdir/girepository-1.0/GdPrivate-1.0.typelib
 
 %files data -f %name.lang
-%exclude %pkgdatadir/gir-1.0
 %_desktopdir/%_name.desktop
 %_desktopdir/%_name1.desktop
 %_datadir/dbus-1/services/%_name.service
@@ -155,6 +155,9 @@ GObject introspection devel data for the %name library.
 %_datadir/appdata/%_name1.appdata.xml
 
 %changelog
+* Wed Oct 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1.2
+- fixed files section
+
 * Wed Oct 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1.1
 - %%pkgdatadir/ moved to main package
 
