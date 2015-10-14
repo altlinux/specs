@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -36,6 +36,9 @@ install -pDm755 initinstall/stop-md-dm.sh \
 %_datadir/install2/initinstall.d/89-stop-md-dm.sh
 
 %changelog
+* Wed Oct 14 2015 Aleksey Avdeev <solo@altlinux.org> 0.5.4-alt1
+- Fix unmount the root after copying
+
 * Tue Oct 13 2015 Aleksey Avdeev <solo@altlinux.org> 0.5.3-alt1
 - Use cp in the absence of installable system
   /usr/share/make-initrd/tools/put-file
