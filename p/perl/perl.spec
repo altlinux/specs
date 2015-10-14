@@ -1,6 +1,6 @@
 Name: perl
-Version: 5.20.1
-Release: alt2
+Version: 5.20.3
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -178,6 +178,11 @@ pushd cpan/IO-Socket-IP
 popd
 
 %patch50 -p1
+
+# .orig files can break some test
+# at least t/porting/readme.t :
+# Failed test 39 - Maintainers.pl.orig is mentioned in Porting/README.pod at porting/readme.t line 36
+find -name '*.orig' -delete
 
 %build
 %define ver %(v=%version IFS=.; set $v; echo $1.$2)
@@ -740,6 +745,9 @@ EOF
 	%autolib/Unicode/Normalize
 
 %changelog
+* Wed Oct 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.20.3-alt1
+- Updated to 5.20.3.
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.20.1-alt2
 - cpan update: Socket-2.013 to Socket-2.016
 
