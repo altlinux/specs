@@ -1,12 +1,15 @@
 %set_verify_elf_method textrel=relaxed
+# Disable cross-reference autoreq problem for shared libraries
+%add_findreq_skiplist  %_libdir/chromium/lib/*
 
 %def_disable debug
 %def_disable nacl
 %def_disable verbose
 %def_disable clang
-%def_disable shared_libraries
+%def_enable  shared_libraries
+%def_disable v8_internal
 
-%define v8_version 4.5.103.35
+%define v8_version 4.6.85.25
 
 %if_enabled debug
 %define buildtype Debug
@@ -15,7 +18,7 @@
 %endif
 
 Name:           chromium
-Version:        45.0.2454.101
+Version:        46.0.2490.71
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -33,7 +36,6 @@ Source100:      %name.sh
 Source101:      chromium.desktop
 Source102:      chromium.xml
 Source200:      %name.default
-Source201:		libs
 
 Provides:       chromium-browser = %version
 Obsoletes:      chromium-browser < %version
@@ -56,8 +58,6 @@ Patch66:	chromium-sandbox-pie.patch
 Patch8:		chromium-codechanges-zlib.patch
 # PATCH-FIX-OPENSUSE patches in system glew library
 Patch17:	chromium-system-glew.patch
-# PATCH-FIX-OPENSUSE patches in system speex library
-Patch28:	chromium-system-speex.patch
 # PATCH-FIX-OPENSUSE patches in the system libvpx library
 Patch32:	chromium-system-libvpx.patch
 
@@ -126,11 +126,12 @@ BuildRequires:  libpci-devel
 BuildRequires:  libpng12-devel
 BuildRequires:  libpulseaudio-devel
 BuildRequires:  libspeechd-devel >= 0.8
-BuildRequires:  libspeex-devel
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
+%if_disabled v8_internal
 BuildRequires:  libv8-chromium-devel = %v8_version
+%endif
 BuildRequires:  libvpx-devel
 BuildRequires:  libwebp-devel
 BuildRequires:  libx264-devel
@@ -225,8 +226,9 @@ tar xf %SOURCE10 -C src
 %patch14 -p2
 %patch17 -p1
 %patch20 -p0 -d src
-%patch28 -p2
+%if_disabled v8_internal
 %patch63 -p1 -d src
+%endif
 %patch64 -p0 -d src
 %patch66 -p1
 %patch69 -p2
@@ -243,11 +245,13 @@ tar xf %SOURCE10 -C src
 %patch96 -p0
 #patch98 -p0
 
+%if_disabled v8_internal
 # Replace anywhere v8 to system package
 subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
 subst 's,v8_libplatform,v8,' src/third_party/pdfium/samples/samples.gyp
 sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi src/chrome/js_unittest_rules.gypi
 grep -Rl '^#include [<"]v8/include' * 2>/dev/null | while read f;do subst 's,^\(#include [<"]\)v8/include/,\1,' "$f";done
+%endif
 
 # Move vpx/internal/vpx_codec_internal.h to one directory up
 grep -Rl 'vpx/internal/vpx_codec_internal.h' src/third_party/libvpx | xargs subst 's,vpx/internal/vpx_codec_internal.h,vpx/vpx_codec_internal.h,'
@@ -494,7 +498,6 @@ cd src
 	-Duse_system_protobuf=0 \
 	-Duse_system_re2=1 \
 	-Duse_system_snappy=1 \
-	-Duse_system_speex=1 \
 	-Duse_system_sqlite=0 \
 	-Duse_system_ssl=0 \
 	-Duse_system_v8=1 \
@@ -557,7 +560,7 @@ cp -av lib*.so %buildroot%_libdir/chromium/
 %if_enabled shared_libraries
 mkdir -p %buildroot%_libdir/chromium/lib
 pushd lib
-cp -v `cat %SOURCE201` %buildroot%_libdir/chromium/lib
+cp -av *.so %buildroot%_libdir/chromium/lib
 popd
 %endif
 
@@ -652,6 +655,18 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Wed Oct 14 2015 Andrey Cherepanov <cas@altlinux.org> 46.0.2490.71-alt1
+- New version
+- Security fixes:
+  - High CVE-2015-6755: Cross-origin bypass in Blink.
+  - High CVE-2015-6756: Use-after-free in PDFium.
+  - High CVE-2015-6757: Use-after-free in ServiceWorker.
+  - High CVE-2015-6758: Bad-cast in PDFium.
+  - Medium CVE-2015-6759: Information leakage in LocalStorage.
+  - Medium CVE-2015-6760: Improper error handling in libANGLE.
+  - Medium CVE-2015-6761: Memory corruption in FFMpeg.
+  - Low CVE-2015-6762: CORS bypass via CSS fonts.
+
 * Mon Sep 28 2015 Andrey Cherepanov <cas@altlinux.org> 45.0.2454.101-alt1
 - New version
 - Security fixes:
