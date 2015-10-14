@@ -1,5 +1,5 @@
 Name: postfix
-Version: 2.11.3
+Version: 2.11.7
 Release: alt1
 Epoch: 1
 
@@ -151,6 +151,13 @@ Requires: %name = %epoch:%version-%release
 
 %description html
 This package provides documentation for Postfix in html format.
+
+%package test-tools
+Summary: Postfix testing tools
+Group: System/Servers
+
+%description test-tools
+Various postfix testing tools
 
 %prep
 %setup
@@ -428,6 +435,9 @@ env -i "LD_LIBRARY_PATH=%buildroot%_libdir" \
 		install_root=%buildroot \
 		tempdir=%_tmppath
 
+# install testing tools
+install bin/*-* %buildroot%_bindir/
+
 # install minimal main.cf
 mv %buildroot%config_directory/main.cf{,.dist}
 install -pm644 %_buildaltdir/main.cf %buildroot%config_directory/
@@ -440,6 +450,7 @@ rln smtp %daemon_directory/lmtp
 
 %if_with tls
 install -pm755 libexec/{*-tls,tlsmgr,tlsproxy} %buildroot%daemon_directory/
+install -pm755 bin/posttls* %buildroot%_bindir/
 %endif #with tls
 
 # Finish postqueue install.
@@ -606,6 +617,7 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %_bindir/qshape
 %_bindir/rmail
 %_mandir/man?/*
+%exclude %_mandir/man1/*-*
 %if_with tls
 %exclude %_mandir/man?/*tls*
 %endif #with tls
@@ -622,6 +634,10 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %attr(644,root,root) %verify(not md5 mtime size) %ghost %ROOT%_sysconfdir/*
 %attr(666,root,root) %ghost %ROOT/dev/log
 %ghost %config(missingok) %verify(not md5 mtime size) %ROOT/var/nis/NIS_COLD_START
+
+%files test-tools
+%_bindir/*-*
+%_mandir/man1/*-*
 
 %files html
 %dir %docdir
@@ -666,7 +682,7 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %if_with tls
 %files tls
 %_sbindir/postfix-generate-ssl-certificate
-%_mandir/man?/*tls*
+%_mandir/man8/*tls*
 %dir %daemon_directory
 %daemon_directory/*-tls
 %daemon_directory/tlsmgr
@@ -676,6 +692,10 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Wed Oct 14 2015 Fr. Br. George <george@altlinux.ru> 1:2.11.7-alt1
+- Version upgrade (still on legacy branch)
+- Test tools package addded (closes: #28476)
+
 * Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 1:2.11.3-alt1
 - Autobuild version bump to 2.11.3
 
