@@ -1,45 +1,38 @@
-# vim: set ft=spec: -*- mode: rpm-spec; -*-
-# $Id: xqf,v 1.2 2003/09/21 21:23:04 raorn Exp $
-
-%def_disable debug
-
-%if_enabled debug
-%set_strip_method none
-%endif
-
-Name: xqf
-Version: 1.0.5
-Release: alt2.1.qa1
+Name:    xqf
+Version: 1.0.6.2
+Release: alt1
 Summary: X11 QStat Frontend
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 License: GPL
-Group: Networking/Other
-URL: http://www.linuxgames.com/xqf/
+Group:   Networking/Other
+URL:     https://xqf.github.io/en/
+# VCS:   https://github.com/XQF/xqf
 
 Requires: qstat = 2.11
 Requires: gzip
 Requires: wget
 
-Source: %name-%version.tar.gz
-Patch: %name-1.0.5-alt-DSO.patch
+Source: %name-%version.tar
+Patch:  %name-%version.patch
 
-# Automatically added by buildreq on Sun Nov 06 2005
-BuildRequires: fontconfig-devel freetype2-devel glib2-devel libGeoIP-devel libatk-devel libcairo-devel libglitz-devel libgtk+2-devel libpango-devel libpng-devel perl-XML-Parser pkg-config qstat zlib-devel
+BuildRequires: fontconfig-devel freetype2-devel glib2-devel libGeoIP-devel
+BuildRequires: libatk-devel libcairo-devel libglitz-devel libgtk+2-devel
+BuildRequires: libpango-devel libpng-devel perl-XML-Parser pkg-config qstat
+BuildRequires: zlib-devel intltool
 
 %description
-XQF is a 3D action game (such as Quake, sequels and derivatives)
-server browser. It uses X and is written using the GIMP Tool Kit.                                       
-XQF is a front-end to QStat, a program by Steve Jankowsk which
-is used to retrieve server info.
+XQF is a 3D action game (such as Quake, sequels and derivatives) server
+browser. It uses X and is written using the GIMP Tool Kit. XQF is a
+front-end to QStat, a program by Steve Jankowsk which is used to
+retrieve server info.
 
 %prep
 %setup
-%patch -p2
+%patch -p1
 
 %build
-#./autogen.sh
-export CPPFLAGS=-I/usr/include/GeoIP
-
+sh autogen.sh
+%autoreconf
 %configure \
 		--enable-bzip2 \
 		--disable-gtk \
@@ -51,28 +44,22 @@ export CPPFLAGS=-I/usr/include/GeoIP
 %make_build
 
 %install
-#%__mkdir -p %buildroot%_menudir
-%make_install DESTDIR=%buildroot install
-
-#cat <<EOF > %%buildroot%%_menudir/%%name
-#?package(%%name): needs=x11 \
-#        command="xqf" \
-#        section="Networking/Other" \
-#        title="X11 Quake Frontend"
-#EOF
-
+%makeinstall_std
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS BUGS ChangeLog INSTALL NEWS TODO docs/xqfdocs.html
-%_bindir/xqf
-%_mandir/man6/xqf.6*
-%_datadir/pixmaps/*
-%_datadir/applications/xqf.desktop
+%doc README.md AUTHORS.md BUGS ChangeLog NEWS.md TODO GUIDELINES.md docs/xqfdocs.html
+%_bindir/%name
 %_datadir/%name
-#%%_menudir/%name
+%_pixmapsdir/*
+%_desktopdir/%name.desktop
+%_man6dir/%name.6*
 
 %changelog
+* Wed Oct 14 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.6.2-alt1
+- New version from upstream Git repository
+- Spec cleanup
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.5-alt2.1.qa1
 - NMU: rebuilt for updated dependencies.
 
