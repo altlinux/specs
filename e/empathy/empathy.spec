@@ -14,16 +14,16 @@
 %define gst_api_ver 1.0
 
 Name: empathy
-Version: %ver_major.10
-Release: alt2
+Version: %ver_major.11
+Release: alt1
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
 Group: Networking/Instant messaging
 Url: https://live.gnome.org/Empathy
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Conflicts: telepathy-haze-aim
 Obsoletes: libempathy libempathy-gtk python-module-empathy
@@ -133,7 +133,7 @@ NOCONFIGURE=1 ./autogen.sh
 %make
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome --output=%name.lang %name %name-tpaw
 
@@ -165,7 +165,6 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Empathy.FileTransfer.service
 %dir %_datadir/%name
 %_datadir/%name/*.ui
-#%_datadir/%name/*.dtd
 %_datadir/%name/irc-networks.xml
 %_datadir/%name/Template.html
 %_datadir/%name/%name.css
@@ -186,6 +185,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Wed Oct 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.11-alt1
+- 3.12.11
+
 * Tue Aug 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.10-alt2
 - updated to 3.12.10_e567bbbb
 
