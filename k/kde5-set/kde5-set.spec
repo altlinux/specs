@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt16
+Release: alt17
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -55,6 +55,7 @@ Requires: kf5-kwrited kf5-milou kf5-plasma-nm-maxi
 Requires: kf5-user-manager
 Requires: kde5-konversation kde5-kate kde5-print-manager
 Requires: kde5-pim kde5-baseapps kde5-kcron kde5-kruler
+Requires: kf5-plasma-mediacenter
 
 %package -n kde5-maxi
 Summary: %summary
@@ -95,6 +96,9 @@ Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts
 %files -n kde5-somedevel
 
 %changelog
+* Wed Oct 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt17
+- update requires
+
 * Tue Oct 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt16
 - update requires
 
