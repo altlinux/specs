@@ -2,7 +2,7 @@ Name: thewidgetfactory
 Summary: Test tool for GTK2 theme
 Summary(ru_RU.UTF8): Утилита для тестирования созданной темы GTK2
 Version: 0.2.1
-Release: alt3.qa1
+Release: alt3.qa2
 License: GPL
 Group: Development/Other
 
@@ -17,6 +17,8 @@ Source3: %name.48x48.png
 Patch0: %name-newwidgets.patch
 #patch the two makefile.in to avoid warnings of autoconf
 Patch1: %name-fix-makefile-datadir.patch
+Patch2: %name-add-missing-includes.patch
+
 Url: http://www.stellingwerff.com/?page_id=10
 
 # Automatically added by buildreq on Fri May 29 2009
@@ -34,6 +36,7 @@ TheWidgetFactory - фабрика элементов графического и
 %setup -q
 %patch0 -p1 -b .newwidgets
 %patch1 -p1 -b .fixmakefile
+%patch2 -p2 -b .missing_includes
 
 %build
 # %undefine __libtoolize
@@ -73,6 +76,9 @@ install -m 644 %SOURCE3 $RPM_BUILD_ROOT%_liconsdir/%name.png
 %_niconsdir/%name.png
 
 %changelog
+* Wed Oct 14 2015 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt3.qa2
+- Fix build
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.1-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
