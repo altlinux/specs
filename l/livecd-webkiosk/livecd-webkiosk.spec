@@ -1,6 +1,6 @@
 Name: livecd-webkiosk
 Version: 0.4.3
-Release: alt1
+Release: alt3
 
 Summary: start the browser for a suitable webkiosk environment
 License: Public domain
@@ -10,6 +10,7 @@ Url: http://en.altlinux.org/starterkits
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: ratpoison xinit
+BuildArch: noarch
 
 %define skeldir %_sysconfdir/skel
 %define ifacedir %_sysconfdir/net/ifaces/eth0
@@ -25,7 +26,6 @@ Summary: seamonkey webkiosk setup
 Group: System/X11
 Requires: %name = %version-%release
 Requires: seamonkey
-BuildArch: noarch
 
 %description seamonkey
 %summary
@@ -36,13 +36,12 @@ Summary: firefox webkiosk setup
 Group: System/X11
 Requires: %name = %version-%release
 Requires: livecd-firefox firefox-r-kiosk
-BuildArch: noarch
 
 %description firefox
 %summary
 (the browser == firefox)
 
-%ifarch x86_64
+#ifarch x86_64
 %package chromium
 Summary: chromium webkiosk setup
 Group: System/X11
@@ -52,14 +51,13 @@ Requires: chromium
 %description chromium
 %summary
 (the browser == chromium)
-%endif
+#endif
 
 %package qupzilla
 Summary: qupzilla webkiosk setup
 Group: System/X11
 Requires: %name = %version-%release
 Requires: qupzilla >= 1.8.0
-BuildArch: noarch
 
 %description qupzilla
 %summary
@@ -110,14 +108,14 @@ exec firefox "\$@"
 _EOF_
 chmod +x %wrapper
 
-%ifarch x86_64
+#ifarch x86_64
 %post chromium
 cat > %wrapper << _EOF_
 #!/bin/sh
 exec chromium --kiosk --start-maximized --disable-translate --no-first-run "\$@"
 _EOF_
 chmod +x %wrapper
-%endif
+#endif
 
 %post qupzilla
 cat > %wrapper << _EOF_
@@ -135,13 +133,20 @@ chmod +x %wrapper
 
 %files firefox
 
-%ifarch x86_64
+#ifarch x86_64
 %files chromium
-%endif
+#endif
 
 %files qupzilla
 
 %changelog
+* Wed Oct 14 2015 Michael Shigorin <mike@altlinux.org> 0.4.3-alt3
+- the whole livecd-webkiosk source package should be made noarch
+
+* Wed Oct 14 2015 Michael Shigorin <mike@altlinux.org> 0.4.3-alt2
+- reenabled non-x86_64 build for chromium subpackage
+  (and actually made it noarch)
+
 * Tue Sep 08 2015 Michael Shigorin <mike@altlinux.org> 0.4.3-alt1
 - tweaked chromium options as its kiosk doesn't mute "first run"
 
