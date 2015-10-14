@@ -10,7 +10,7 @@
 %global shortcommit 4e9bbfa
 
 Name:       %{repo}-io
-Version:    1.8.1
+Version:    1.8.3
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -272,7 +272,7 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %files devel
-%doc AUTHORS CHANGELOG.md CONTRIBUTING.md LICENSE MAINTAINERS NOTICE README.md 
+%doc AUTHORS CHANGELOG.md CONTRIBUTING.md LICENSE MAINTAINERS NOTICE README.md
 %dir %{gopath}/src/%{provider}.%{provider_tld}/%{project}
 %dir %{gopath}/src/%{import_path}
 %dir %{gopath}/src/%{import_path}/*
@@ -292,7 +292,7 @@ exit 0
 %exclude %{gopath}/src/%{import_path}/pkg/*/*/*/*
 
 %files pkg-devel
-%doc AUTHORS CHANGELOG.md CONTRIBUTING.md LICENSE MAINTAINERS NOTICE README.md 
+%doc AUTHORS CHANGELOG.md CONTRIBUTING.md LICENSE MAINTAINERS NOTICE README.md
 %dir %{gopath}/src/%{provider}.%{provider_tld}/%{project}
 %dir %{gopath}/src/%{import_path}
 %dir %{gopath}/src/%{import_path}/pkg
@@ -309,6 +309,11 @@ exit 0
 %{gopath}/src/%{import_path}/pkg/*/*/*/*.tar
 
 %changelog
+* Tue Oct 13 2015 Vladimir Didenko <cow@altlinux.org> 1.8.3-alt1
+- New version.
+- Return CAP_AUDIT_READ since std-def kernel supports it now
+- Fix build with golang 1.5
+
 * Mon Aug 24 2015 Vladimir Didenko <cow@altlinux.org> 1.8.1-alt1
 - New version.
 
