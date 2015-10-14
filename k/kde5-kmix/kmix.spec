@@ -1,7 +1,7 @@
 %define rname kmix
 
 Name: kde5-%rname
-Version: 15.08.1
+Version: 15.08.2
 Release: alt1
 %K5init altplace
 
@@ -64,6 +64,7 @@ developing applications that use %name.
 %_K5lib/libkdeinit5_*.so
 %_K5plug/*kmix*.so
 %_K5data/kmix/
+%_K5xmlgui/kmix/
 %_K5xdgapp/kmix.desktop
 %_K5srv/*.desktop
 %_K5srv/kded/*.desktop
@@ -73,6 +74,9 @@ developing applications that use %name.
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Oct 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
+- new version
+
 * Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
 - new version
 

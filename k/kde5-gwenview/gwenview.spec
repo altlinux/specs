@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 15.08.1
+Version: 15.08.2
 Release: alt1
 %K5init
 
@@ -29,7 +29,7 @@ BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-ki
 BuildRequires: kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel
 BuildRequires: kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
-BuildRequires: kf5-baloo-devel
+BuildRequires: kf5-baloo-devel kf5-kfilemetadata-devel
 #BuildRequires: kf5-kdcraw-devel kf5-kipi-devel
 
 
@@ -98,6 +98,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Wed Oct 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
+- new version
+
 * Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
 - new version
 

@@ -3,7 +3,7 @@
 %define libkaccounts libkaccounts%sover
 
 Name: kde5-%rname
-Version: 15.08.1
+Version: 15.08.2
 Release: alt1
 %K5init altplace
 
@@ -70,6 +70,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 mkdir -p %buildroot/%_K5plug/kaccounts/ui
+mkdir -p %buildroot/%_K5plug/kaccounts/{ui,daemonplugins}
 
 %files common -f %name.lang
 %doc COPYING*
@@ -86,12 +87,15 @@ mkdir -p %buildroot/%_K5plug/kaccounts/ui
 %_K5lib/libkaccounts.so.%sover
 %_K5lib/libkaccounts.so.*
 %_K5plug/*accounts.so
-%_K5plug/kaccounts/daemonplugins/kaccounts_*.so
+#%_K5plug/kaccounts/daemonplugins/kaccounts_*.so
 %_K5qml/org/kde/kaccounts/
 %_K5srv/*_kaccounts.desktop
 %_K5srv/kded/accounts.desktop
 
 %changelog
+* Wed Oct 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
+- new version
+
 * Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
 - new version
 
