@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.4.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -58,7 +58,9 @@ KF5 library
 %setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+    -DSDDM_CONFIG_FILE=/etc/X11/sddm/sddm.conf \
+    #
 
 %install
 %K5install
@@ -76,6 +78,9 @@ KF5 library
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Wed Oct 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt2
+- fix path to sddm.conf
+
 * Wed Oct 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
 - new version
 
