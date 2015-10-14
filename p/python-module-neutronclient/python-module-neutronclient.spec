@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-neutronclient
-Version: 2.3.12
+Version: 2.4.0
 Release: alt1
 Summary: Python API and CLI for OpenStack Neutron
 Group: Development/Python
@@ -9,6 +9,8 @@ Group: Development/Python
 License: ASL 2.0
 Url: http://launchpad.net/python-neutronclient/
 Source0: %name-%version.tar
+
+Patch0001: 0001-Add-missing-tenant_id.patch
 
 Provides: python-module-quantumclient
 Obsoletes: python-module-quantumclient
@@ -23,13 +25,13 @@ BuildRequires: python-module-pbr >= 0.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-babel >= 1.3
-BuildRequires: python-module-six >= 1.7.0
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-argparse
-BuildRequires: python-module-cliff >= 1.7.0
+BuildRequires: python-module-cliff >= 1.10.0
 BuildRequires: python-module-iso8601 >= 0.1.9
 BuildRequires: python-module-netaddr >= 0.7.12
-BuildRequires: python-module-oslo.i18n >= 1.3.0
-BuildRequires: python-module-oslo.serialization >= 1.2.0
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
 BuildRequires: python-module-oslo.utils >= 1.4.0
 BuildRequires: python-module-requests >= 2.2.0
 BuildRequires: python-module-keystoneclient >= 1.1.0
@@ -44,12 +46,12 @@ BuildRequires: python3-module-pbr >= 0.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-argparse
-BuildRequires: python3-module-cliff >= 1.7.0
+BuildRequires: python3-module-cliff >= 1.10.0
 BuildRequires: python3-module-iso8601 >= 0.1.9
 BuildRequires: python3-module-netaddr >= 0.7.12
-BuildRequires: python3-module-oslo.i18n >= 1.3.0
-BuildRequires: python3-module-oslo.serialization >= 1.2.0
-BuildRequires: python3-module-oslo.utils >= 1.2.0
+BuildRequires: python3-module-oslo.i18n >= 1.5.0
+BuildRequires: python3-module-oslo.serialization >= 1.4.0
+BuildRequires: python3-module-oslo.utils >= 1.4.0
 BuildRequires: python3-module-requests >= 2.2.0
 BuildRequires: python3-module-keystoneclient >= 1.1.0
 BuildRequires: python3-module-simplejson >= 2.2.0
@@ -84,6 +86,7 @@ This package contains auto-generated documentation.
 
 %prep
 %setup
+%patch0001 -p1
 
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
@@ -141,6 +144,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Wed Oct 14 2015 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt1
+- 2.4.0
+
 * Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2.3.12-alt1
 - 2.3.12 (no changes)
 
