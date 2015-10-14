@@ -1,5 +1,5 @@
 Name: youtube-dl
-Version: 2015.07.28
+Version: 2015.10.13
 Release: alt1
 
 Summary: Download videos from YouTube
@@ -29,6 +29,12 @@ cp -r youtube_dl %buildroot%python_sitelibdir/
 %python_sitelibdir/youtube_dl
 
 %changelog
+* Wed Oct 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2015.10.13-alt1
+- Updated to 2015.10.13.
+
+* Thu Aug 27 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2015.08.23-alt1
+- Updated to 2015.08.23.
+
 * Sun Aug 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2015.07.28-alt1
 - Updated to 2015.07.28.
 
