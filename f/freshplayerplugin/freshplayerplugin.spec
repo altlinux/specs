@@ -1,7 +1,7 @@
-%define _libname libfreshwrapper-pepperflash
+%define _libname libfreshwrapper-flashplayer
 
 Name: freshplayerplugin
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 Summary: PPAPI-host NPAPI-plugin adapter
 License: MIT
@@ -52,6 +52,9 @@ make -C BUILD check
 %config %_sysconfdir/freshwrapper.conf
 
 %changelog
+* Wed Oct 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.3-alt1
+- Updated to 0.3.3.
+
 * Wed Aug 26 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.2-alt1
 - Updated to 0.3.2.
 
