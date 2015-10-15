@@ -1,5 +1,5 @@
 Name: perl-Plack
-Version: 1.0033
+Version: 1.0037
 Release: alt1
 
 Summary: Plack - Perl Superglue for Web frameworks and Web Servers (PSGI toolkit)
@@ -9,7 +9,7 @@ Group: Development/Perl
 Url: %CPAN Plack
 Source: %name-%version.tar
 
-BuildRequires: perl-Apache-LogFormat-Compiler perl-HTTP-Tiny perl-File-ShareDir-Install perl-File-ShareDir perl-unicore perl-devel perl-Hash-MultiValue perl-Devel-StackTrace-AsHTML perl-Try-Tiny perl-libwww perl-Devel-StackTrace perl-Test-TCP perl-HTTP-Body perl-Test-Requires perl-URI perl-Filesys-Notify-Simple perl-parent perl-CGI-Emulate-PSGI perl-CGI-Compile perl-FCGI-Client perl-CGI perl-libapreq apache2-mod_perl perl-FCGI perl-HTTP-Server-Simple-PSGI perl-Moose perl-Net-FastCGI perl-Module-Refresh perl-podlators perl-Stream-Buffered
+BuildRequires: perl-Apache-LogFormat-Compiler perl-HTTP-Tiny perl-File-ShareDir-Install perl-File-ShareDir perl-unicore perl-devel perl-Hash-MultiValue perl-Devel-StackTrace-AsHTML perl-Try-Tiny perl-libwww perl-Devel-StackTrace perl-Test-TCP perl-HTTP-Body perl-Test-Requires perl-URI perl-Filesys-Notify-Simple perl-parent perl-CGI-Emulate-PSGI perl-CGI-Compile perl-FCGI-Client perl-CGI perl-libapreq apache2-mod_perl perl-FCGI perl-HTTP-Server-Simple-PSGI perl-Moose perl-Net-FastCGI perl-Module-Refresh perl-podlators perl-Stream-Buffered perl(Cookie/Baker.pm) perl(HTTP/Headers/Fast.pm)
 BuildArch: noarch
 
 %description
@@ -81,6 +81,9 @@ sed -i "/author_tests/d" Makefile.PL
 %perl_vendor_privlib/Plack/Handler/FCGI.pm
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.0037-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.0033-alt1
 - automated CPAN update
 
