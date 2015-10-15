@@ -5,13 +5,13 @@
 %def_disable bootstrap
 
 Name: qt5-webkit
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
 License: LGPLv2 / GPLv3
-Url: http://qt-project.org/
+Url: http://qt.io/
 Source: %qt_module-opensource-src-%version.tar
 
 # FC
@@ -29,8 +29,9 @@ BuildRequires: libXcomposite-devel libXext-devel libXrender-devel libGL-devel
 BuildRequires: python-module-distribute python-module-simplejson rpm-build-python
 BuildRequires: rpm-build-ruby
 BuildRequires: perl(Term/ANSIColor.pm) perl(Perl/Version.pm) perl(Digest/Perl/MD5.pm)
-BuildRequires: zlib-devel
-BuildRequires: qt5-base-devel qt5-declarative-devel
+BuildRequires: zlib-devel libxml2-devel
+#BuildRequires: libleveldb-devel
+BuildRequires: qt5-base-devel qt5-xmlpatterns-devel qt5-declarative-devel qt5-location-devel qt5-multimedia-devel qt5-sensors-devel qt5-webchannel-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
 %endif
@@ -82,13 +83,7 @@ Requires: %name-common = %EVR
 %setup -n %qt_module-opensource-src-%version
 %patch1 -p1 -b .save_memory
 %patch10 -p1
-syncqt.pl-qt5 \
-    Source \
-    -version %version \
-    -private \
-    -module QtWebKit \
-    -module QtWebKitWidgets \
-    #
+syncqt.pl-qt5 Source -version %version -private
 
 # remove rpath
 find ./ -type f -name \*.pr\* | \
@@ -97,6 +92,9 @@ while read f; do
     sed -i 's|\([[:space:]]CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
 done
 
+# fix linking
+echo 'QMAKE_LIBS_OPENGL += -lpthread' >> Source/api.pri
+
 echo "nuke bundled code..."
 # nuke bundled code
 mkdir Source/ThirdParty/orig
@@ -104,7 +102,13 @@ mv Source/ThirdParty/{gtest/,qunit/} \
    Source/ThirdParty/orig/
 
 %build
-%qmake_qt5
+%remove_optflags '-g'
+export LDFLAGS="$LDFLAGS -Wl,--reduce-memory-overheads -Wl,--no-keep-memory"
+%qmake_qt5 \
+%ifnarch %arm %ix86 x86_64
+    DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 \
+%endif
+    #
 %make_build
 %if_disabled bootstrap
 %make docs
@@ -138,12 +142,17 @@ mv Source/ThirdParty/{gtest/,qunit/} \
 %files devel
 %_qt5_headerdir/Qt*/
 %_qt5_libdir/libQt*.so
+%_qt5_libdatadir/libQt*.so
 %_qt5_libdir/libQt*.prl
+%_qt5_libdatadir/libQt*.prl
 %_qt5_libdir/cmake/Qt*/
 %_qt5_archdatadir/mkspecs/modules/*.pri
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Mon Jul 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 

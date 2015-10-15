@@ -2,16 +2,17 @@
 %global qt_module qtsvg
 
 Name: qt5-svg
-Version: 5.5.0
-Release: alt2
+Version: 5.5.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - Support for rendering and displaying SVG
+Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 
-BuildRequires: gcc-c++ glibc-devel qt5-base-devel pkgconfig(zlib) qt5-tools
+BuildRequires: gcc-c++ glibc-devel qt5-base-devel > 5.5.0-alt3 pkgconfig(zlib) qt5-tools
 
 %description
 Scalable Vector Graphics (SVG) is an XML-based language for describing
@@ -59,11 +60,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
-syncqt.pl-qt5 \
-    -version %version \
-    -private \
-    -module QtSvg \
-    #
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
@@ -74,20 +71,11 @@ syncqt.pl-qt5 \
 %install_qt5
 %make INSTALL_ROOT=%buildroot install_docs ||:
 
-# install libs into qt prefix
-mkdir -p %buildroot/%_qt5_prefix/lib
-ls -1d %buildroot/%_qt5_libdir/* | \
-while read f ; do
-    [ -d "$f" ] && continue
-    fname=`basename $f`
-    ln -s `relative $f %buildroot/%_qt5_libdatadir/$fname` %buildroot/%_qt5_libdatadir/$fname
-done
 
 %files common
 %files -n libqt5-svg
 %doc LGPL_EXCEPTION.txt
 %_qt5_libdir/libQt?Svg.so.*
-%_qt5_libdatadir/libQt?Svg.so.*
 %_qt5_plugindir/iconengines/libqsvgicon.so
 %_qt5_plugindir/imageformats/libqsvg.so
 
@@ -107,6 +95,9 @@ done
 %_qt5_docdir/qtsvg/
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Tue Jul 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt2
 - install libs into qt prefix
 

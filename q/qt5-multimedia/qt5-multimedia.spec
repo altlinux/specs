@@ -1,21 +1,19 @@
 
 %global qt_module qtmultimedia
-%define gname qt5
-
+%def_disable bootstrap
 
 Name: qt5-multimedia
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
-Url: http://qt-project.org/
+Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 
-BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-declarative-devel
-BuildRequires: qt5-tools
+BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-xmlpatterns-devel qt5-declarative-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-app-1.0)
@@ -27,6 +25,9 @@ BuildRequires: pkgconfig(gstreamer-video-1.0)
 BuildRequires: pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib)
 BuildRequires: pkgconfig(openal)
 BuildRequires: pkgconfig(xv)
+%if_disabled bootstrap
+BuildRequires: qt5-tools
+%endif
 
 %description
 The Qt Multimedia module provides a rich feature set that enables you to
@@ -75,22 +76,20 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
-syncqt.pl-qt5 \
-    -version %version \
-    -private \
-    -module QtMultimedia \
-    -module QtMultimediaWidgets \
-    -module QtMultimediaQuick_p \
-    #
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5 GST_VERSION=1.0
 %make_build
+%if_disabled bootstrap
 %make docs
+%endif
 
 %install
 %install_qt5
+%if_disabled bootstrap
 %make INSTALL_ROOT=%buildroot install_docs ||:
+%endif
 
 
 %files common
@@ -110,15 +109,22 @@ syncqt.pl-qt5 \
 %files devel
 %_qt5_headerdir/QtMultimedia*/
 %_qt5_libdir/lib*.so
+%_qt5_libdatadir/lib*.so
 %_qt5_libdir/lib*.prl
+%_qt5_libdatadir/lib*.prl
 %_qt5_libdir/cmake/Qt*/
 %_qt5_libdir/pkgconfig/Qt*.pc
 %_qt5_archdatadir/mkspecs/modules/*.pri
 
 %files doc
+%if_disabled bootstrap
 %_qt5_docdir/*
+%endif
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 

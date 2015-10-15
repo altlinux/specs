@@ -1,13 +1,13 @@
 %global qt_module qtquickcontrols
 
 Name: qt5-quickcontrols
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - module with set of QtQuick controls
 License: LGPLv2 / GPLv3
-Url: http://qt-project.org/
+Url: http://qt.io/
 
 Source: %qt_module-opensource-src-%version.tar
 
@@ -15,7 +15,8 @@ Source: %qt_module-opensource-src-%version.tar
 # optimized out: elfutils libGL-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-widgets libqt5-xml libstdc++-devel python-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: gcc-c++ glibc-devel-static python-module-distribute qt5-jsbackend-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-gir rpm-build-python3 rpm-build-ruby
 BuildRequires: gcc-c++ glibc-devel
-BuildRequires: qt5-script-devel qt5-declarative-devel qt5-tools
+BuildRequires: qt5-xmlpatterns-devel qt5-declarative-devel
+BuildRequires: qt5-tools
 
 %description
 The Qt Quick Controls module provides a set of controls that can be used to
@@ -39,11 +40,7 @@ This package contains documentation for Qt5 %qt_module
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-#syncqt.pl-qt5 \
-#    -version %version \
-#    -private \
-#    -module QtQuickControls \
-#    #
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
@@ -64,6 +61,9 @@ This package contains documentation for Qt5 %qt_module
 %_qt5_docdir/qtquick*s/
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 

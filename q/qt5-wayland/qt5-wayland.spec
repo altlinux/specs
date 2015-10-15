@@ -2,12 +2,12 @@
 %global qt_module qtwayland
 
 Name: qt5-wayland
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - Wayland platform support and QtCompositor module
-Url: http://qt-project.org/
+Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
@@ -15,11 +15,10 @@ Source: %qt_module-opensource-src-%version.tar
 # Automatically added by buildreq on Thu Jul 17 2014 (-bi)
 # optimized out: elfutils fontconfig glibc-devel-static libGL-devel libX11-devel libXfixes-devel libcloog-isl4 libfreetype-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-script-devel ruby ruby-stdlibs wayland-devel xorg-compositeproto-devel xorg-fixesproto-devel xorg-xproto-devel
 #BuildRequires: fontconfig-devel gcc-c++ git-core glib2-devel libEGL-devel libXcomposite-devel libXext-devel libXrender-devel libudev-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel libxkbcommon-devel python-module-protobuf qt5-base-devel-static qt5-phonon-devel qt5-quick1-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-ruby
-BuildRequires: fontconfig-devel gcc-c++ git-core glib2-devel libEGL-devel libXcomposite-devel libXext-devel libXrender-devel
-BuildRequires: libinput-devel
+BuildRequires: fontconfig-devel gcc-c++ glib2-devel libEGL-devel libXcomposite-devel libXext-devel libXrender-devel
+BuildRequires: libinput-devel libts-devel libmtdev-devel
 BuildRequires: libudev-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel libxkbcommon-devel
-BuildRequires: qt5-base-devel-static qt5-tools-devel
-#BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-base-devel-static qt5-tools
+BuildRequires: qt5-base-devel-static qt5-declarative-devel qt5-tools-devel
 
 %description
 %summary.
@@ -72,28 +71,28 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-#syncqt.pl-qt5 \
-#	-version %version \
-#	-private \
-#	-module QtWaylandClient \
-#	-module QtCompositor \
-#    #
+#for d in gl nogl; do
+#mkdir $d
+#syncqt.pl-qt5 -version %version -private -outdir $d
+#done
+mkdir -p nogl
+syncqt.pl-qt5 -version %version -private -outdir nogl
+syncqt.pl-qt5 -version %version -private
 
 %build
-# Presence of repository tricks qmake into invoking syncqt for us with
-# correct arguments at make time.
-git init
+pushd nogl
+%qmake_qt5 QT_WAYLAND_GL_CONFIG=nogl ..
+popd
+%qmake_qt5 CONFIG+=wayland-compositor
 
-%qmake_qt5 -o gl/Makefile CONFIG+=wayland-compositor
-%qmake_qt5 -o nogl/Makefile QT_WAYLAND_GL_CONFIG=nogl
 %make_build -C nogl
-%make_build -C gl
-%make -C gl docs
+%make_build
+%make docs
 
 %install
 %install_qt5 -C nogl
-%install_qt5 -C gl
-%make -C gl INSTALL_ROOT=%buildroot install_docs ||:
+%install_qt5
+%make INSTALL_ROOT=%buildroot install_docs ||:
 
 %files common
 
@@ -114,7 +113,9 @@ git init
 %_bindir/qtwaylandscanner*
 %_qt5_headerdir/Qt*/
 %_qt5_libdir/libQt*.so
+%_qt5_libdatadir/libQt*.so
 %_qt5_libdir/libQt*.prl
+%_qt5_libdatadir/libQt*.prl
 %_qt5_libdir/cmake/Qt*/
 %_qt5_libdir/pkgconfig/Qt*.pc
 %_qt5_archdatadir/mkspecs/modules/*.pri
@@ -123,6 +124,9 @@ git init
 #%_qt5_docdir/*
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 

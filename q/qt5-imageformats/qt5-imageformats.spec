@@ -2,12 +2,12 @@
 %global qt_module qtimageformats
 
 Name: qt5-imageformats
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtImageFormats component
-Url: http://qt-project.org/
+Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Requires: %name-common = %EVR
@@ -17,7 +17,7 @@ Source: %qt_module-opensource-src-%version.tar
 # Automatically added by buildreq on Tue Jun 03 2014 (-bi)
 # optimized out: elfutils libGL-devel libcloog-isl4 libjpeg-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-sql libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs zlib-devel
 #BuildRequires: gcc-c++ glibc-devel-static libjasper-devel libmng-devel libtiff-devel libwebp-devel python-module-protobuf qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-ruby
-BuildRequires: gcc-c++ glibc-devel libjasper-devel libmng-devel libtiff-devel libwebp-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel
+BuildRequires: gcc-c++ glibc-devel libjasper-devel libmng-devel libtiff-devel libwebp-devel qt5-base-devel
 BuildRequires: qt5-tools
 
 %description
@@ -45,11 +45,7 @@ This package contains documentation for Qt5 %qt_module
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-#syncqt.pl-qt5 \
-#    -version %version \
-#    -private \
-#    -module QtImageFormats \
-#    #
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
@@ -70,6 +66,9 @@ This package contains documentation for Qt5 %qt_module
 %_qt5_docdir/*
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 

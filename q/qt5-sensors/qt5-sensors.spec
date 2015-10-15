@@ -1,13 +1,14 @@
 
 %global qt_module qtsensors
+%def_disable bootstrap
 
 Name: qt5-sensors
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtSensors component
-Url: http://qt-project.org/
+Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
@@ -15,7 +16,10 @@ Source: %qt_module-opensource-src-%version.tar
 # Automatically added by buildreq on Fri Feb 28 2014 (-bi)
 # optimized out: elfutils libGL-devel libcloog-isl4 libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-sql libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: gcc-c++ glibc-devel-static qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-ruby
-BuildRequires: gcc-c++ glibc-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel
+BuildRequires: gcc-c++ glibc-devel qt5-declarative-devel qt5-xmlpatterns-devel
+%if_disabled bootstrap
+BuildRequires: qt5-tools-devel
+%endif
 
 %description
 The Qt Sensors API provides access to sensor hardware via QML and C++
@@ -62,20 +66,20 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
-syncqt.pl-qt5 \
-    -version %version \
-    -private \
-    -module QtSensors \
-    #
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
 %make_build
+%if_disabled bootstrap
 %make docs
+%endif
 
 %install
 %install_qt5
+%if_disabled bootstrap
 %make INSTALL_ROOT=%buildroot install_docs ||:
+%endif
 
 %files common
 %files -n libqt5-sensors
@@ -87,15 +91,22 @@ syncqt.pl-qt5 \
 %files devel
 %_qt5_headerdir/Qt*/
 %_qt5_libdir/libQt*.so
+%_qt5_libdatadir/libQt*.so
 %_qt5_libdir/libQt*.prl
+%_qt5_libdatadir/libQt*.prl
 %_qt5_libdir/cmake/Qt*/
 %_qt5_libdir/pkgconfig/Qt*.pc
 %_qt5_archdatadir/mkspecs/modules/qt_lib_*.pri
 
 %files doc
+%if_disabled bootstrap
 %_qt5_docdir/*
+%endif
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 
