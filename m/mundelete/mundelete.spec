@@ -1,6 +1,6 @@
 Name: mundelete
 Version: 1.0
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: mundelete is a program to undelete files from MsDos/Windows disks (FAT filesystems)
 Summary(ru_RU.KOI8-R): mundelete -- программа для восстановления удалённых файлов с файловых систем DOS/Windows (FAT)
@@ -39,6 +39,7 @@ FAT12/FAT16/FAT32 и vfat. Работает под операционными системами Unix.
 %patch -p1
 
 %build
+%add_optflags -std=gnu89
 rm -rf {mundelete,bin/*}
 %make_build CFLAGS="%optflags"
 
@@ -53,6 +54,9 @@ install -pD -m644 man/%name.1 %buildroot/%_man1dir
 %_man1dir/*
 
 %changelog
+* Thu Oct 15 2015 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1.qa2
+- Fix build with gcc5
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
