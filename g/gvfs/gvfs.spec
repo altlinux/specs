@@ -27,7 +27,7 @@
 %def_enable google
 
 Name: gvfs
-Version: %ver_major.1
+Version: %ver_major.1.1
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -529,6 +529,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Thu Oct 15 2015 Yuri N. Sedunov <aris@altlinux.org> 1.26.1.1-alt1
+- 1.26.1.1
+
 * Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt1
 - 1.26.1
 
