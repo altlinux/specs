@@ -1,6 +1,6 @@
 Name: crm114
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: The Controllable Regex Mutilator
 License: GPLv2
@@ -23,7 +23,7 @@ Criteria for categorization of data can be via a host of methods,
 including regexes, approximate regexes, a Hidden Markov Model,
 Bayesian Chain Rule Orthogonal Sparse Bigrams, Winnow, Correlation,
 KNN/Hyperspace, Bit Entropy, CLUMP, SVM, Neural Networks
-(or by other means- it's all programmable). 
+(or by other means- it's all programmable).
 
 %package samples
 Summary: Sample programs for CRM114
@@ -44,10 +44,11 @@ BuildArch: noarch
 This package provides CRM114 mode for Emacs.
 
 %prep
-%setup -q 
+%setup -q
 %patch0 -p1
 
 %build
+export CFLAGS="-std=gnu89"
 %make_build
 
 %install
@@ -80,5 +81,8 @@ install -m 644 %name-mode.el %buildroot%_emacslispdir/%name-mode/
 %_emacslispdir/%name-mode/*.el*
 
 %changelog
+* Thu Oct 15 2015 Vladimir Didenko <cow@altlinux.org> 1.0-alt2
+- Fix build with GCC 5
+
 * Tue Oct 22 2013 Vladimir Didenko <cow@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus
