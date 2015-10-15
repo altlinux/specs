@@ -1,5 +1,5 @@
 Name: perl-MetaCPAN-API
-Version: 0.44
+Version: 0.50
 Release: alt1
 
 Summary: A comprehensive, DWIM-featured API to MetaCPAN
@@ -10,7 +10,7 @@ Url: %CPAN MetaCPAN-API
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl(URI/Escape.pm) perl(Test/Fatal.pm) perl(Test/TinyMocker.pm) perl(HTTP/Tiny.pm) perl(Module/Build.pm) perl(Try/Tiny.pm) perl-devel perl(Any/Moose.pm) perl(JSON.pm) perl(Mouse.pm)
+BuildRequires: perl(URI/Escape.pm) perl(Test/Fatal.pm) perl(Test/TinyMocker.pm) perl(HTTP/Tiny.pm) perl(Module/Build.pm) perl(Try/Tiny.pm) perl-devel perl(Any/Moose.pm) perl(JSON.pm) perl(Mouse.pm) perl(Moo.pm) perl(Types/Standard.pm) perl(namespace/autoclean.pm)
 
 %description
 %summary
@@ -31,6 +31,9 @@ rm t/author.t t/autocomplete.t t/distribution.t t/favorite.t t/fetch.t t/file.t 
 %doc Changes LICENSE README
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
+- automated CPAN update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
 - automated CPAN update
 
