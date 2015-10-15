@@ -3,8 +3,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -46,6 +46,7 @@ See %_docdir/%name-%version/README for more information.
 ## Classic mode
 %_datadir/gnome-session/sessions/gnome-classic.session
 %_datadir/gnome-shell/modes/classic.json
+%_datadir/gnome-shell/theme/calendar-today.svg
 %_datadir/gnome-shell/theme/classic-toggle-off-intl.svg
 %_datadir/gnome-shell/theme/classic-toggle-off-us.svg
 %_datadir/gnome-shell/theme/classic-toggle-on-intl.svg
@@ -171,6 +172,9 @@ See %_docdir/%name-%version/README for more information.
 %endif
 
 %changelog
+* Fri Oct 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
 * Wed Oct 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt2
 - removed /usr/bin/startgnome-classic
 
