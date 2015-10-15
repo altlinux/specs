@@ -1,17 +1,19 @@
 %define major_version 1.1
+%define minor_version 14
 
-Name: idm-console-framework
-Version: 1.1.7
+Name:    idm-console-framework
+Version: %major_version.%minor_version
 Release: alt1
-Group: Networking/Other
-Url: http://port389.org
+Group:   Networking/Other
+Url:     http://port389.org
+# VCS:   https://git.fedorahosted.org/git/idm-console-framework.git
 License: LGPLv2
-Summary:  Identity Management Console Framework
+Summary: Identity Management Console Framework
 BuildArch: noarch
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: %name-%version.tar.bz2
-Patch: %name-alt-classnames.patch
+#Patch: %name-alt-classnames.patch
 BuildRequires(Pre): rpm-build-java
 BuildRequires: java-devel
 BuildRequires: ant
@@ -19,21 +21,15 @@ BuildRequires: ldapsdk
 BuildRequires: jss
 
 Requires: java
-Requires: ldapsdk
+Requires: ldapjdk
 Requires: jss
-
-Provides: fedora-ds-conosole = %version-%release
-Obsoletes: fedora-ds-conosole < %version-%release
-
-Provides: fedora-ds-conosole-framework = %version-%release
-Obsoletes: fedora-ds-conosole-framework < %version-%release
 
 %description
 A Java Management Console framework used for remote server management.
 
 %prep
 %setup -q
-%patch -p1
+#patch -p1
 
 %build
 %ant -Dldapjdk.jar.name=ldapsdk.jar -Djss.local.location=%_javadir -Dlib.dir=%_libdir -Dbuilt.dir=`pwd`/built -Dclassdest=%_javadir
@@ -42,38 +38,19 @@ A Java Management Console framework used for remote server management.
 install -d %buildroot%_javadir
 install -m777 built/release/jars/idm-console-* %buildroot%_javadir
 
-# create symlinks
-pushd %buildroot%_javadir
-ln -s idm-console-base-%version.jar idm-console-base-%major_version.jar
-ln -s idm-console-base-%version.jar idm-console-base.jar
-ln -s idm-console-mcc-%version.jar idm-console-mcc-%major_version.jar
-ln -s idm-console-mcc-%version.jar idm-console-mcc.jar
-ln -s idm-console-mcc-%{version}_en.jar idm-console-mcc-%{major_version}_en.jar
-ln -s idm-console-mcc-%{version}_en.jar idm-console-mcc_en.jar
-ln -s idm-console-nmclf-%version.jar idm-console-nmclf-%major_version.jar
-ln -s idm-console-nmclf-%version.jar idm-console-nmclf.jar
-ln -s idm-console-nmclf-%{version}_en.jar idm-console-nmclf-%{major_version}_en.jar
-ln -s idm-console-nmclf-%{version}_en.jar idm-console-nmclf_en.jar
-popd
-
 %files
-%_javadir/idm-console-base-%version.jar
-%_javadir/idm-console-base-%major_version.jar
 %_javadir/idm-console-base.jar
-%_javadir/idm-console-mcc-%version.jar
-%_javadir/idm-console-mcc-%major_version.jar
 %_javadir/idm-console-mcc.jar
-%_javadir/idm-console-mcc-%{version}_en.jar
-%_javadir/idm-console-mcc-%{major_version}_en.jar
 %_javadir/idm-console-mcc_en.jar
-%_javadir/idm-console-nmclf-%version.jar
-%_javadir/idm-console-nmclf-%major_version.jar
 %_javadir/idm-console-nmclf.jar
-%_javadir/idm-console-nmclf-%{version}_en.jar
-%_javadir/idm-console-nmclf-%{major_version}_en.jar
 %_javadir/idm-console-nmclf_en.jar
 
 %changelog
+* Wed Nov 18 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.14-alt1
+- New version
+- Build from upstream git repository
+- Drop obsoleted patch
+
 * Fri Sep 30 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.7-alt1
 - 1.1.7
 

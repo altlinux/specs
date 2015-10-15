@@ -1,15 +1,15 @@
 %define major_version 1.1
-%define minor_version 6
+%define minor_version 15
 
-Name: 389-console
-Version: 1.1.7
+Name:    389-console
+Version: %major_version.%minor_version
 Release: alt1
 Summary: Fedora Management Console
 
-Group: Networking/Other
+Group:   Networking/Other
 License: LGPL
-Url: http://port389.org
-
+Url:     http://port389.org
+# VCS:	 https://git.fedorahosted.org/git/389/console.git
 BuildArch: noarch
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
@@ -36,18 +36,21 @@ Administration Server and Fedora Directory Server.
 %setup -q
 
 %build
-%ant -Dlib.dir=%_libdir -Dbuilt.dir=`pwd`/built -Dldapjdk.jar.name=ldapsdk.jar -Djss.local.location=%_javadir
+%ant -Dlib.dir=%_libdir -Dbuilt.dir=`pwd`/built -Dldapjdk.jar.name=ldapsdk.jar \
+     -Djss.local.location=%_javadir -Dman.dir=`pwd`/built%_mandir
 
 %install
 install -d %buildroot%_javadir
-install -m777 built/*.jar %buildroot%_javadir
+install -m644 built/*.jar %buildroot%_javadir
 install -d %buildroot%_bindir
-install -m777 built/%name %buildroot%_bindir
+install -m755 built/%name %buildroot%_bindir
+install -d %buildroot%_man8dir
+install -m644 built/%_man8dir/* %buildroot%_man8dir
 
 # create symlinks
 pushd %buildroot%_javadir
-ln -s %name-%{version}_en.jar %name-%{major_version}_en.jar
-ln -s %name-%{version}_en.jar %{name}_en.jar
+ln -s %{name}_en.jar %name-%{version}_en.jar
+ln -s %{name}_en.jar %name-%{major_version}_en.jar
 popd
 
 %files
@@ -55,8 +58,12 @@ popd
 %_javadir/%name-%{major_version}_en.jar
 %_javadir/%{name}_en.jar
 %_bindir/%name
+%_man8dir/*
 
 %changelog
+* Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.15-alt1
+- New version
+
 * Fri Aug 05 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.7-alt1
 - merge upstream 1.1.7
 

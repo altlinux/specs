@@ -1,14 +1,15 @@
 %define major_version 1.1
-%define minor_version 5
+%define minor_version 10
 
 %define shortname 389-admin
-%define pkgname fedora-ds
+%define pkgname dirsrv
 
 Name: 389-admin-console
-Version: 1.1.7
+Version: %major_version.%minor_version
 Release: alt1
-Group: Networking/Other
-Url: http://port389.org
+Group:   Networking/Other
+Url:     http://port389.org
+# VCS:	 https://git.fedorahosted.org/git/389/admin-console.git
 License: GPLv2
 Summary: 389 Admin Server Management Console
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
@@ -82,6 +83,10 @@ popd
 %doc %_datadir/%pkgname/manual/en/admin/help/*.html
 
 %changelog
+* Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.10-alt1
+- New version
+- Use dirsrv as pkgname
+
 * Fri Aug 05 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.7-alt1
 - 1.1.7
 

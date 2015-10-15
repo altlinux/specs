@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 %define fedora 19
 Name:           jss
 Version:        4.2.6
-Release:        alt5_31jpp7
+Release:        alt6_31jpp7
 Summary:        Java Security Services (JSS)
 
 Group:          System/Libraries
@@ -49,6 +49,7 @@ Patch20:        jss-ECC-Phase2KeyArchivalRecovery.patch
 Patch21:        jss-undo-JCA-deprecations.patch
 Patch22:        jss-undo-BadPaddingException-deprecation.patch
 Patch23:        jss-fixed-build-issue-on-F17-or-newer.patch
+Patch24:	jss-support-TLS1_1-TLS1_2.patch
 Source44: import.info
 Patch33: jss-link-alt.patch
 
@@ -92,6 +93,7 @@ This package contains the API documentation for JSS.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
+%patch24 -p1
 %patch33 -p1
 
 %build
@@ -212,6 +214,9 @@ ln -s %_libdir/java/jss4.jar %buildroot%_javadir/jss4.jar
 
 
 %changelog
+* Wed Nov 18 2015 Andrey Cherepanov <cas@altlinux.org> 4.2.6-alt6_31jpp7
+- Provide Tomcat support for TLS v1.1 and TLS v1.2 via NSS through JSS
+
 * Wed Oct 09 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt5_31jpp7
 - any-kernel patch thanks to gleb
 
