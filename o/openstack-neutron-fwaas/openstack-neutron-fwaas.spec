@@ -1,7 +1,7 @@
 %define sname neutron-fwaas
 
 Name: openstack-%sname
-Version: 2015.1.1
+Version: 2015.1.2
 Release: alt1
 Summary: OpenStack Networking FWaaS
 
@@ -19,7 +19,7 @@ BuildRequires: python-module-pbr
 BuildRequires: python-module-six
 BuildRequires: python-module-d2to1
 
-Requires: openstack-neutron >= 2015.1.1
+Requires: openstack-neutron >= 2015.1.2
 Requires: python-module-%sname = %version-%release
 
 %description
@@ -66,6 +66,9 @@ This package contains the neutron Python library.
 
 
 %changelog
+* Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
+- 2015.1.2
+
 * Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
 - 2015.1.1
 
