@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Perl-Tidy
 Name: perl-%dist
-Version: 20140711
+Version: 20150815
 Release: alt1
 
 Summary: Parses and beautifies perl source
@@ -18,7 +18,7 @@ Provides: perltidy = %version
 Obsoletes: perltidy < %version
 
 # Automatically added by buildreq on Fri Dec 24 2010
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Pod/Man.pm)
 
 %description
 Perltidy is a tool to indent and reformat perl scripts. It can also
@@ -35,11 +35,15 @@ write scripts in html format.
 %perl_vendor_install
 
 %files
-%_bindir/perltidy
-%perl_vendor_privlib/Perl*
 %doc CHANGES README BUGS examples docs/tutorial.pod docs/stylekey.pod
+%perl_vendor_privlib/Perl*
+%_bindir/perltidy
+%_man1dir/*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 20150815-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 20140711-alt1
 - automated CPAN update
 
