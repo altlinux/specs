@@ -1,5 +1,5 @@
 Name: perl-RRDTool-OO
-Version: 0.35
+Version: 0.36
 Release: alt1
 
 Summary: RRDTool::OO - Object-oriented interface to RRDTool
@@ -30,6 +30,9 @@ BuildArch: noarch
 %doc Changes README 
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - automated CPAN update
 
