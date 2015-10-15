@@ -1,5 +1,5 @@
 Name: perl-Dancer
-Version: 1.3132
+Version: 1.3142
 Release: alt1
 Summary: lightweight yet powerful web application framework
 
@@ -12,7 +12,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: perl-devel perl-Encode perl-MIME-Types perl-HTTP-Body perl-URI perl-HTTP-Server-Simple-PSGI perl-Plack perl-YAML perl-Clone perl-podlators perl-Try-Tiny perl-Test-TCP perl-Template perl-Test-Output perl-JSON perl-Test-Pod perl(Hash/Merge/Simple.pm)
+BuildRequires: perl-devel perl-Encode perl-MIME-Types perl-HTTP-Body perl-URI perl-HTTP-Server-Simple-PSGI perl-Plack perl-YAML perl-Clone perl-podlators perl-Try-Tiny perl-Test-TCP perl-Template perl-Test-Output perl-JSON perl-Test-Pod perl(Hash/Merge/Simple.pm) perl(Test/NoWarnings.pm)
 Requires: perl-Clone
 
 %description
@@ -35,9 +35,12 @@ to scale to much more complex applications.
 %_bindir/dancer
 %_man1dir/dancer.1*
 %perl_vendor_privlib/Dancer*
-%doc LICENSE Changes README.md
+%doc LICENSE Changes README*
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.3142-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.3132-alt1
 - automated CPAN update
 
