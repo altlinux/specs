@@ -7,8 +7,8 @@
 %def_enable mellanox
 
 Name: openstack-neutron
-Version: 2015.1.1
-Release: alt6
+Version: 2015.1.2
+Release: alt1
 Provides: openstack-quantum = %version-%release
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
 Summary: OpenStack Networking Service
@@ -49,8 +49,6 @@ Source120: neutron-metering-agent.init
 Source121: neutron-sriov-nic-agent.init
 Source122: neutron-netns-cleanup.init
 
-Patch: neutron-netaddr-broadcast-bug.patch
-
 BuildArch: noarch
 
 BuildRequires: crudini
@@ -62,7 +60,7 @@ BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-eventlet >= 0.16.1
-BuildRequires: python-module-oslo.concurrency >= 1.8.0
+BuildRequires: python-module-oslo.concurrency >= 1.8.2
 BuildRequires: python-module-oslo.config >= 1.9.3
 BuildRequires: python-module-oslo.context >= 0.2.0
 BuildRequires: python-module-oslo.db >= 1.7.0
@@ -104,7 +102,7 @@ Obsoletes: python-module-quantum < 2013.2-0.4.b3
 Requires: python-module-keystoneclient >= 1.2.0
 Requires: python-module-keystonemiddleware >= 1.5.0
 Requires: python-module-oslo.config >= 1.9.0
-Requires: python-module-neutronclient >= 2.3.11
+Requires: python-module-neutronclient >= 2.4.0
 Requires: python-module-novaclient >= 2.22.0
 Requires: sudo
 
@@ -406,7 +404,6 @@ SR-IOV network cards.
 
 %prep
 %setup
-%patch0 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -788,6 +785,9 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
+- 2015.1.2
+
 * Fri Oct 02 2015 Lenar Shakirov <snejok@altlinux.ru> 2015.1.1-alt6
 - neutron-netaddr-broadcast-bug.patch added
 
