@@ -1,5 +1,5 @@
 Name: starman
-Version: 0.4011
+Version: 0.4014
 Release: alt1
 Serial: 1
 Summary: High-performance preforking PSGI/Plack web server
@@ -86,6 +86,9 @@ mkdir -p %buildroot/var/log/%name
 %doc Changes README.md
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1:0.4014-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.4011-alt1
 - automated CPAN update
 
