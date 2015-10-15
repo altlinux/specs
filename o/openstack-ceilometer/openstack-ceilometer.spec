@@ -2,7 +2,7 @@
 %def_without doc
 
 Name: openstack-ceilometer
-Version: 2015.1.1
+Version: 2015.1.2
 Release: alt1
 Summary: OpenStack measurement collection service
 
@@ -63,7 +63,7 @@ BuildRequires: python-module-jsonschema >= 2.0.0
 BuildRequires: python-module-PasteDeploy >= 1.5.0
 BuildRequires: python-module-oslo.context >= 0.2.0
 BuildRequires: python-module-oslo.db >= 1.7.0
-BuildRequires: python-module-oslo.concurrency >= 1.8.0
+BuildRequires: python-module-oslo.concurrency >= 1.8.2
 BuildRequires: python-module-oslo.config >= 1.9.3
 BuildRequires: python-module-oslo.i18n >= 1.5.0
 BuildRequires: python-module-oslo.policy >= 0.3.1
@@ -77,8 +77,8 @@ BuildRequires: python-module-oslo.vmware
 BuildRequires: python-module-keystonemiddleware >= 1.5.0
 BuildRequires: python-module-lxml >= 2.3
 BuildRequires: python-module-novaclient
-BuildRequires: python-module-neutronclient
-BuildRequires: python-module-ceilometerclient
+BuildRequires: python-module-neutronclient >= 2.4.0
+BuildRequires: python-module-ceilometerclient >= 1.1.1
 BuildRequires: python-module-glanceclient
 BuildRequires: python-module-swiftclient
 
@@ -453,6 +453,9 @@ crudini --set %ceilometer_conf database connection mongodb://localhost:27017/cei
 %_initdir/%name-polling
 
 %changelog
+* Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
+- 2015.1.2
+
 * Fri Aug 28 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
 - 2015.1.1
 - drop common package
