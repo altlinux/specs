@@ -1,6 +1,6 @@
 %define m_distro Test-Script
 Name: perl-Test-Script
-Version: 1.07
+Version: 1.10
 Release: alt1
 Summary: Test::Script - Basic cross-platform tests for scripts
 
@@ -12,7 +12,7 @@ Url: http://search.cpan.org/~adamk/Test-Script/
 
 BuildArch: noarch
 Source: %m_distro-%version.tar
-BuildRequires: perl-devel perl-IPC-Run3 perl-Probe-Perl
+BuildRequires: perl-devel perl-IPC-Run3 perl-Probe-Perl perl(Test/Tester.pm)
 
 %description
 %summary
@@ -31,5 +31,8 @@ BuildRequires: perl-devel perl-IPC-Run3 perl-Probe-Perl
 %doc Changes README 
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Tue Jan 19 2010 Vladimir Lettiev <crux@altlinux.ru> 1.07-alt1
 - initial build
