@@ -1,8 +1,8 @@
 %def_without python3
 
 Name: openstack-keystone
-Version: 2015.1.1
-Release: alt3
+Version: 2015.1.2
+Release: alt1
 Summary: OpenStack Identity Service
 
 %add_python_req_skip xmldsig
@@ -15,6 +15,7 @@ Source1: %name.logrotate
 Source2: %name.service
 Source3: %name.sysctl
 Source4: %name.tmpfiles
+Source5: %name.conf
 Source100: %name.init
 
 BuildArch: noarch
@@ -26,6 +27,7 @@ Requires: /usr/bin/uuidgen
 
 Requires(pre): shadow-utils
 
+BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: python-devel
 BuildRequires: python-module-sphinx >= 1.0
 BuildRequires: python-module-oslosphinx >= 2.5.0
@@ -39,7 +41,7 @@ BuildRequires: python-module-SQLAlchemy >= 0.9.7
 BuildRequires: python-module-migrate >= 0.9.5
 BuildRequires: python-module-jsonschema >= 2.0.0
 BuildRequires: python-module-oslo.config >= 1.9.3
-BuildRequires: python-module-oslo.concurrency >= 1.8.0
+BuildRequires: python-module-oslo.concurrency >= 1.8.2
 BuildRequires: python-module-oslo.messaging >= 1.8.0
 BuildRequires: python-module-oslo.db >= 1.7.0
 BuildRequires: python-module-oslo.i18n >= 1.5.0
@@ -54,7 +56,10 @@ BuildRequires: python-module-paste
 BuildRequires: python-module-PasteDeploy >= 1.5.0
 BuildRequires: python-module-keystoneclient >= 1.2.0
 BuildRequires: python-module-dogpile-cache >= 0.5.3
-BuildRequires: python-module-ldap
+BuildRequires: python-module-ldap python-module-ldappool
+BuildRequires: python-module-memcached
+BuildRequires: python-module-pysaml2
+BuildRequires: python-module-keystonemiddleware
 BuildRequires: python-module-oauthlib >= 0.6
 BuildRequires: python-module-eventlet >= 0.16.1
 BuildRequires: python-module-cryptography >= 0.8
@@ -75,7 +80,7 @@ BuildRequires: python3-module-SQLAlchemy >= 0.9.7
 BuildRequires: python3-module-migrate >= 0.9.5
 BuildRequires: python3-module-jsonschema >= 2.0.0
 BuildRequires: python3-module-oslo.config >= 1.9.3
-BuildRequires: python3-module-oslo.concurrency >= 1.8.0
+BuildRequires: python3-module-oslo.concurrency >= 1.8.2
 BuildRequires: python3-module-oslo.messaging >= 1.8.0
 BuildRequires: python3-module-oslo.db >= 1.7.0
 BuildRequires: python3-module-oslo.i18n >= 1.5.0
@@ -218,6 +223,14 @@ install -p -D -m 755 %SOURCE100 %buildroot%_initdir/%name
 install -p -D -m 644 httpd/keystone.py  %buildroot%_datadir/keystone/keystone.wsgi
 install -p -D -m 644 httpd/wsgi-keystone.conf  %buildroot%_datadir/keystone/
 
+install -m 0644 -D -p %SOURCE5 %buildroot%apache2_sites_available/openstack-keystone.conf
+mkdir -p %buildroot%apache2_sites_enabled
+touch %buildroot%apache2_sites_enabled/openstack-keystone.conf
+mkdir -p %buildroot%webserver_cgibindir/keystone
+ln -s %_datadir/keystone/keystone.wsgi %buildroot%webserver_cgibindir/keystone/admin
+ln -s %_datadir/keystone/keystone.wsgi %buildroot%webserver_cgibindir/keystone/main
+
+
 install -d -m 755 %buildroot%_sharedstatedir/keystone
 install -d -m 750 %buildroot%_logdir/keystone
 install -d -m 755 %buildroot%_runtimedir/keystone
@@ -267,8 +280,12 @@ fi
 %_bindir/python3-keystone-manage
 %endif
 %dir %_datadir/keystone
-%attr(0644, root, keystone) %_datadir/keystone/keystone.wsgi
-%attr(0644, root, keystone) %_datadir/keystone/wsgi-keystone.conf
+%_datadir/keystone/keystone.wsgi
+%_datadir/keystone/wsgi-keystone.conf
+%config(noreplace) %apache2_sites_available/*.conf
+%ghost %apache2_sites_enabled/*.conf
+%attr(2771,root,%webserver_webmaster) %dir %webserver_cgibindir/keystone
+%webserver_cgibindir/keystone/*
 %_unitdir/%name.service
 %_initdir/%name
 %_tmpfilesdir/openstack-keystone.conf
@@ -306,6 +323,10 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
+- 2015.1.2
+- add apcahe2 config to %%apache2_sites_available/openstack-keystone.conf
+
 * Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt3
 - update requires
 
