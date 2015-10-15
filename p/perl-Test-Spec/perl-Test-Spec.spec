@@ -1,5 +1,5 @@
 Name: perl-Test-Spec
-Version: 0.47
+Version: 0.51
 Release: alt1
 
 Summary: Write tests in a declarative specification style
@@ -26,9 +26,12 @@ BuildRequires: perl-Tie-IxHash perl-Package-Stash perl-devel perl-Test-Trap perl
 
 %files
 %perl_vendor_privlib/Test/Spec*
-%doc Changes README
+%doc Changes README*
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
+- automated CPAN update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1
 - automated CPAN update
 
