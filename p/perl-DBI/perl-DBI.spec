@@ -1,6 +1,6 @@
 %define dist DBI
 Name: perl-%dist
-Version: 1.632
+Version: 1.634
 Release: alt1
 
 Summary: Database independent interface for Perl
@@ -150,6 +150,7 @@ mv blib/lib/DBI/FAQ.{pm,pod}
 
 %files devel
 	%_bindir/dbilogstrip
+	%_man1dir/dbilogstrip.*
 %dir	%perl_vendor_archlib/DBI
 %dir	%perl_vendor_archlib/DBI/DBD
 	%perl_vendor_archlib/DBI/DBD.pm
@@ -164,6 +165,7 @@ mv blib/lib/DBI/FAQ.{pm,pod}
 
 %files Profile
 	%_bindir/dbiprof
+	%_man1dir/dbiprof.*
 %dir	%perl_vendor_archlib/DBI
 	%perl_vendor_archlib/DBI/Profile*
 
@@ -189,6 +191,7 @@ mv blib/lib/DBI/FAQ.{pm,pod}
 
 %files ProxyServer
 	%_bindir/dbiproxy
+	%_man1dir/dbiproxy.*
 %dir	%perl_vendor_archlib/DBI
 	%perl_vendor_archlib/DBI/ProxyServer.pm
 
@@ -201,6 +204,9 @@ mv blib/lib/DBI/FAQ.{pm,pod}
 	%perl_vendor_archlib/DBD/Gofer*
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.634-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.632-alt1
 - automated CPAN update
 
