@@ -2,10 +2,10 @@
 %define module Net-DNS
 
 # hack to save perl autodep finder from crashing (suggested by Alexey Tourbin)
-%define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MNet::DNS'
+%define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MNet::DNS'
 
 Name: perl-%module
-Version: 0.83
+Version: 1.02
 Release: alt1
 
 Packager: Vladimir Didenko <cow@altlinux.org>
@@ -13,6 +13,7 @@ Packager: Vladimir Didenko <cow@altlinux.org>
 Summary: Net::DNS is a DNS resolver implemented in Perl
 License: Perl
 Group: Development/Perl
+BuildArch: noarch
 
 Url: %CPAN %module
 # another URL: http://www.net-dns.org/
@@ -42,13 +43,16 @@ sed -i- '/sock->sockaddr/s/;/ if $sock;/' t/01-resolver.t
 
 %files
 %doc Changes README demo contrib
-%perl_vendor_archlib/Net
-%perl_vendor_autolib/Net
+%perl_vendor_privlib/Net
+#%perl_vendor_autolib/Net
 # no more installed
 #exclude %perl_vendor_archlib/Net/DNS/Resolver/Cygwin.pm
 #exclude %perl_vendor_archlib/Net/DNS/Resolver/Win32.pm
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.83-alt1
 - automated CPAN update
 
