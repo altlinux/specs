@@ -2,8 +2,8 @@
 %add_python_req_skip hp3parclient
 
 Name: openstack-cinder
-Version: 2015.1.1
-Release: alt2
+Version: 2015.1.2
+Release: alt1
 Summary: OpenStack Volume service
 
 Group: System/Servers
@@ -50,7 +50,7 @@ BuildRequires: python-module-migrate >= 0.9.5
 BuildRequires: python-module-iso8601
 BuildRequires: python-module-PasteDeploy
 BuildRequires: python-module-oslo.config >= 1.9.3
-BuildRequires: python-module-oslo.concurrency >= 1.8.0
+BuildRequires: python-module-oslo.concurrency >= 1.8.2
 BuildRequires: python-module-oslo.context >= 0.2.0
 BuildRequires: python-module-oslo.db >= 1.7.0
 BuildRequires: python-module-oslo.log >= 1.0.0
@@ -190,10 +190,10 @@ rm -f %buildroot/usr/share/doc/cinder/README*
 %define cinder_conf %buildroot%_sysconfdir/cinder/cinder.conf
 crudini --set %cinder_conf DEFAULT log_dir /var/log/cinder
 crudini --set %cinder_conf DEFAULT state_path /var/lib/cinder
-crudini --set %cinder_conf DEFAULT lock_path /var/run/cinder
+crudini --set %cinder_conf oslo_concurrency lock_path /var/run/cinder
 crudini --set %cinder_conf DEFAULT volumes_dir /etc/cinder/volumes
 crudini --set %cinder_conf DEFAULT iscsi_helper lioadm
-crudini --set %cinder_conf DEFAULT sql_connection mysql://cinder:cinder@localhost/cinder
+crudini --set %cinder_conf database connection mysql://cinder:cinder@localhost/cinder
 crudini --set %cinder_conf DEFAULT rootwrap_config /etc/cinder/rootwrap.conf
 crudini --set %cinder_conf DEFAULT auth_strategy keystone
 #NOTE(saschpe): Can't hurt to set the default volume_group, only the LVM driver has a it otherwise:
@@ -203,9 +203,8 @@ crudini --set %cinder_conf keystone_authtoken signing_dir /var/cache/cinder/keys
 crudini --set %cinder_conf keystone_authtoken admin_tenant_name %%SERVICE_TENANT_NAME%%
 crudini --set %cinder_conf keystone_authtoken admin_user %%SERVICE_USER%%
 crudini --set %cinder_conf keystone_authtoken admin_password %%SERVICE_PASSWORD%%
-crudini --set %cinder_conf keystone_authtoken auth_host 127.0.0.1
-crudini --set %cinder_conf keystone_authtoken auth_port 35357
-crudini --set %cinder_conf keystone_authtoken auth_protocol http
+crudini --set %cinder_conf keystone_authtoken auth_uri http://localhost:5000/v2.0
+crudini --set %cinder_conf keystone_authtoken identity_uri http://localhost:35357
 
 %pre
 # 165:165 for ceilometer (openstack-cinder)
@@ -258,6 +257,9 @@ crudini --set %cinder_conf keystone_authtoken auth_protocol http
 %doc doc/build/html
 
 %changelog
+* Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
+- 2015.1.2
+
 * Fri Sep 18 2015 Lenar Shakirov <snejok@altlinux.ru> 2015.1.1-alt2
 - .service files fixed
 
