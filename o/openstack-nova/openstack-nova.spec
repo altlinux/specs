@@ -1,8 +1,8 @@
 %add_findreq_skiplist %python_sitelibdir/nova/cloudpipe/*.template
 
 Name: openstack-nova
-Version: 2015.1.1
-Release: alt4
+Version: 2015.1.2
+Release: alt1
 Summary: OpenStack Compute (nova)
 
 Group: System/Servers
@@ -64,7 +64,7 @@ BuildRequires: python-module-six
 BuildRequires: python-module-babel
 BuildRequires: python-module-PasteDeploy
 BuildRequires: python-module-websockify >= 0.6.0 python-module-numpy
-BuildRequires: python-module-oslo.concurrency
+BuildRequires: python-module-oslo.concurrency >= 1.8.2
 BuildRequires: python-module-oslo.config >= 1.9.3
 BuildRequires: python-module-oslo.context >= 0.2.0
 BuildRequires: python-module-oslo.log >= 1.0.0
@@ -82,7 +82,7 @@ BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-netaddr
 BuildRequires: python-module-cinderclient >= 1.1.0
-BuildRequires: python-module-neutronclient >= 2.3.11
+BuildRequires: python-module-neutronclient >= 2.4.0
 BuildRequires: python-module-glanceclient >= 0.15.0
 BuildRequires: python-module-barbicanclient
 # Required to build module documents
@@ -550,7 +550,7 @@ rm -f %buildroot/usr/share/doc/nova/README*
 crudini --set %nova_conf DEFAULT log_dir /var/log/nova
 crudini --set %nova_conf DEFAULT state_path /var/lib/nova
 crudini --set %nova_conf DEFAULT connection_type libvirt
-crudini --set %nova_conf DEFAULT lock_path %_runtimedir/nova
+crudini --set %nova_conf oslo_concurrency lock_path %_runtimedir/nova
 crudini --set %nova_conf DEFAULT compute_driver libvirt.LibvirtDriver
 crudini --set %nova_conf DEFAULT image_service nova.image.glance.GlanceImageService
 crudini --set %nova_conf DEFAULT volume_api_class nova.volume.cinder.API
@@ -562,11 +562,17 @@ crudini --set %nova_conf DEFAULT injected_network_template /usr/share/nova/inter
 crudini --set %nova_conf neutron admin_username neutron
 crudini --set %nova_conf neutron admin_password '%%SERVICE_PASSWORD%%'
 crudini --set %nova_conf neutron admin_tenant_name '%%SERVICE_TENANT_NAME%%'
+crudini --set %nova_conf neutron url http://localhost:9696
+crudini --set %nova_conf neutron auth_strategy keystone
+crudini --set %nova_conf neutron admin_auth_url http://localhost:35357/v2.0
 crudini --set %nova_conf database connection mysql://nova:nova@localhost/nova
 crudini --set %nova_conf keystone_authtoken signing_dir /var/cache/nova/keystone-signing
 crudini --set %nova_conf keystone_authtoken admin_tenant_name '%%SERVICE_TENANT_NAME%%'
 crudini --set %nova_conf keystone_authtoken admin_user nova
 crudini --set %nova_conf keystone_authtoken admin_password '%%SERVICE_PASSWORD%%'
+crudini --set %nova_conf keystone_authtoken auth_uri http://localhost:5000/v2.0
+crudini --set %nova_conf keystone_authtoken identity_uri http://localhost:35357
+
 
 %pre common
 # 162:162 for nova (openstack-nova)
@@ -780,6 +786,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
+- 2015.1.2
+
 * Thu Sep 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt4
 - update BR: for fix generate sample config file
 - drop dist configs in /usr/share
