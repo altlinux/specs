@@ -1,5 +1,5 @@
 Name: perl-HTML-Shakan
-Version: 2.00
+Version: 2.02
 Release: alt1
 
 Summary: HTML::Shakan - form html generator/validator
@@ -32,6 +32,9 @@ BuildRequires: perl-devel perl-Mouse perl-FormValidator-Lite perl-Test-Requires 
 %doc TODO Changes
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
 - automated CPAN update
 
