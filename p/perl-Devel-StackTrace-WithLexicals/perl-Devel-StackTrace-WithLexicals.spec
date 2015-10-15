@@ -1,6 +1,6 @@
 %define m_distro Devel-StackTrace-WithLexicals
 Name: perl-Devel-StackTrace-WithLexicals
-Version: 2.00
+Version: 2.01
 Release: alt1
 Summary: Devel::StackTrace + PadWalker
 
@@ -35,6 +35,9 @@ traces with all your callers' lexical variables.
 %doc Changes 
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
 - automated CPAN update
 
