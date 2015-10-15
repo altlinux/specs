@@ -1,6 +1,6 @@
 %define dist XML-Parser
 Name: perl-%dist
-Version: 2.43
+Version: 2.44
 Release: alt1
 
 Summary: Perl module for parsing XML files
@@ -40,6 +40,9 @@ find blib/lib/XML/Parser/Encodings -type f -not -name '*.enc' -print -delete
 %perl_vendor_autolib/XML
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.44-alt1
+- automated CPAN update
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.43-alt1
 - automated CPAN update
 
