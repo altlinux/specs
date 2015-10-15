@@ -1,6 +1,6 @@
 
 Name: openstack-glance
-Version: 2015.1.1
+Version: 2015.1.2
 Release: alt1
 Summary: OpenStack Image Service
 
@@ -25,7 +25,7 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-oslo.config >= 1.9.3
-BuildRequires: python-module-oslo.concurrency >= 1.8.0
+BuildRequires: python-module-oslo.concurrency >= 1.8.2
 BuildRequires: python-module-oslo.context >= 0.2.0
 BuildRequires: python-module-oslo.utils >= 1.4.0
 BuildRequires: python-module-oslo.db >= 1.7.0
@@ -81,7 +81,7 @@ Requires: python-module-keystonemiddleware >= 1.5.0
 Requires: python-module-swiftclient >= 2.2.0
 Requires: python-module-oslo.vmware >= 0.11.1
 Requires: python-module-oslo.config >= 1.9.3
-Requires: python-module-oslo.concurrency >= 1.8.0
+Requires: python-module-oslo.concurrency >= 1.8.2
 Requires: python-module-oslo.context >= 0.2.0
 Requires: python-module-oslo.utils >= 1.4.0
 Requires: python-module-oslo.log >= 1.0.0
@@ -219,6 +219,9 @@ install -d -m 755 %buildroot%_logdir/glance
 %doc doc/build/html
 
 %changelog
+* Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
+- 2015.1.2
+
 * Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
 - 2015.1.1
 
