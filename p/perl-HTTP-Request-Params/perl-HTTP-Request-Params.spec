@@ -1,15 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist HTTP-Request-Params
 Name: perl-%dist
-Version: 1.01
-Release: alt3
+Version: 1.02
+Release: alt1
 
 Summary: Retrieve GET/POST Parameters from HTTP Requests
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-Patch: HTTP-Request-Params-1.01-use-Email-MIME.patch
+Source: http://www.cpan.org/authors/id/K/KI/KIZ/HTTP-Request-Params-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Oct 04 2011
@@ -21,7 +21,6 @@ incoming query parameters.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ incoming query parameters.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
+- automated CPAN update
+
 * Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3
 - fixed build
 
