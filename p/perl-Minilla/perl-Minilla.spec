@@ -1,5 +1,5 @@
 Name: perl-Minilla
-Version: 2.3.0
+Version: 2.5.0
 Release: alt1
 
 Summary: CPAN module authoring tool
@@ -31,6 +31,9 @@ BuildRequires: perl(Module/Metadata.pm) perl(Test/Requires.pm) perl(CPAN/Meta/Va
 %doc Changes LICENSE README.md
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1
 - automated CPAN update
 
