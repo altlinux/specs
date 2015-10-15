@@ -1,7 +1,7 @@
 %define rname ktp-text-ui
 
 Name: kde5-%rname
-Version: 15.08.0
+Version: 15.08.2
 Release: alt1
 %K5init altplace
 
@@ -88,7 +88,7 @@ KF5 library
 %_K5srv/*.protocol
 %_K5srvtyp/ktptxtui_*.desktop
 %_K5xmlgui/ktp-text-ui/
-%_K5xdgapp/ktp-log-viewer.desktop
+%_K5xdgapp/org.kde.ktplogviewer.desktop
 %_K5dbus_srv/org.freedesktop.Telepathy.Client.KTp.*.service
 %_datadir/telepathy/clients/KTp.*.client
 
@@ -107,6 +107,9 @@ KF5 library
 %_K5lib/libktpimagesharer.so.*
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
+- new version
+
 * Tue Sep 08 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
