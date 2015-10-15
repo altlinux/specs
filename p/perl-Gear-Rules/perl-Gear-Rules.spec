@@ -1,8 +1,8 @@
 %define module Gear-Rules
 
 Name: perl-%module
-Version: 0.15
-Release: alt2
+Version: 0.16
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -33,8 +33,12 @@ Requires: gear perl(Pod/Text.pm)
 #doc README
 %perl_vendor_privlib/G*
 %_bindir/*
+%_man1dir/*
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- support for .gear/uupdate_ignore_commits
+
 * Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2
 - bugfix release
 
