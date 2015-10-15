@@ -4,7 +4,7 @@
 %define api_ver 1.0
 
 Name: gnome-builder
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -23,6 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define devhelp_ver 3.16.0
 %define gjs_ver 1.42
 %define xml_ver 2.9.0
+%define vala_ver 0.30
 
 # use python3
 AutoReqProv: nopython
@@ -30,7 +31,7 @@ AutoReqProv: nopython
 %add_python3_compile_include %_libdir/%name/plugins
 
 PreReq: %name-data = %version-%release
-Requires: devhelp uncrustify
+Requires: devhelp uncrustify ctags
 Requires: libpeas-python3-loader
 
 BuildRequires: /proc gcc-c++ intltool yelp-tools gtk-doc libappstream-glib-devel
@@ -42,6 +43,7 @@ BuildRequires: libxml2-devel >= %xml_ver libpeas-devel libvte3-devel
 BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libgtksourceview3-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
+BuildRequires: libvala-devel >= %vala_ver vala-tools
 
 %description
 Builder attempts to be an IDE for writing software for GNOME. It does not
@@ -99,6 +101,7 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 %_libdir/%name/plugins/libsymbol-tree.so
 %_libdir/%name/plugins/libsysmon.so
 %_libdir/%name/plugins/libterminal.so
+%_libdir/%name/plugins/libvala-pack-plugin.so
 %_libdir/%name/plugins/libxml-pack-plugin.so
 %_libdir/%name/plugins/jedi_plugin.py
 %_libdir/%name/plugins/python_gi_imports_completion.py
@@ -121,6 +124,7 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 
 #%files -n libide-gir
 %dir %_libdir/%name/girepository-1.0
+%_libdir/%name/girepository-1.0/Egg-%api_ver.typelib
 %_libdir/%name/girepository-1.0/Ide-%api_ver.typelib
 %_libdir/%name/girepository-1.0/Builder-%api_ver.typelib
 %doc README AUTHORS NEWS
@@ -145,13 +149,16 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 %exclude %_pkgconfigdir/libide-%api_ver.pc
 
 #%files -n libide-gir-devel
-%exclude %_girdir/Ide-%api_ver.gir
-%exclude %_girdir/Builder-%api_ver.gir
+#%exclude %_girdir/Ide-%api_ver.gir
+#%exclude %_girdir/Builder-%api_ver.gir
 
 #%files -n libide-devel-doc
 %exclude %_datadir/gtk-doc/html/libide/
 
 %changelog
+* Thu Oct 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
