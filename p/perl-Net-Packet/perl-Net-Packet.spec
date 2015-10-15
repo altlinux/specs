@@ -1,20 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Net-Packet
 Name: perl-%dist
-Version: 3.27
-Release: alt2
+Version: 3.28
+Release: alt1
 
 Summary: A framework to easily send and receive frames from layer 2 to layer 7
 License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-Patch: Net-Packet-3.27-alt-no-warn.patch
+Source: http://www.cpan.org/authors/id/G/GO/GOMOR/Net-Packet-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Fri Nov 11 2011
-BuildRequires: net-tools perl-Bit-Vector perl-Net-IPv6Addr perl-Net-Libdnet perl-Net-Write perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: net-tools perl-Bit-Vector perl-Net-IPv6Addr perl-Net-Libdnet perl-Net-Write perl-Test-Pod perl-Test-Pod-Coverage perl(Socket6.pm)
 
 %description
 This module is a unified framework to craft, send and receive packets at
@@ -30,9 +30,8 @@ and matched against the request.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
 
-sed -i -e 's,^=head1,=encoding ISO8859-1\n\n=head1,' `find . -name '*.pm'`
+#sed -i -e 's,^=head1,=encoding ISO8859-1\n\n=head1,' `find . -name '*.pm'`
 
 %build
 %perl_vendor_build
@@ -45,6 +44,9 @@ sed -i -e 's,^=head1,=encoding ISO8859-1\n\n=head1,' `find . -name '*.pm'`
 %perl_vendor_privlib/Net
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 3.28-alt1
+- automated CPAN update
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.27-alt2
 - fixed build (pod encoding patch)
 
