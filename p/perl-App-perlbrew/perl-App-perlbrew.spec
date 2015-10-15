@@ -1,5 +1,5 @@
 Name: perl-App-perlbrew
-Version: 0.72
+Version: 0.73
 Release: alt1
 
 Summary: Manage perl installations in your $HOME
@@ -33,6 +33,9 @@ BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-T
 %doc Changes LICENSE README
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1
+- automated CPAN update
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
 - automated CPAN update
 
