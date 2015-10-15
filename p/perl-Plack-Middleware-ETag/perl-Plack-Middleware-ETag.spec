@@ -1,5 +1,5 @@
 Name: perl-Plack-Middleware-ETag
-Version: 0.03
+Version: 0.05
 Release: alt1
 
 Summary: Adds automatically an ETag header
@@ -28,9 +28,12 @@ BuildRequires: perl-parent perl-devel perl-Plack perl-HTTP-Message perl-Digest-S
 
 %files
 %perl_vendor_privlib/Plack/Middleware/ETag*
-%doc Changes README
+%doc Changes README*
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Mon Nov 26 2012 Vladimir Lettiev <crux@altlinux.ru> 0.03-alt1
 - initial build for ALTLinux
 
