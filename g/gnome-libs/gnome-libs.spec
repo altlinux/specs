@@ -1,6 +1,6 @@
 Name: gnome-libs
 Version: 1.4.2
-Release: alt11.3.qa1
+Release: alt11.3.qa2
 
 Summary: Main GNOME libraries
 License: LGPL
@@ -243,6 +243,9 @@ cp %{SOURCE1} $RPM_BUILD_ROOT%_bindir
 %endif	# enabled static
 
 %changelog
+* Thu Oct 15 2015 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt11.3.qa2
+- Fix build
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.2-alt11.3.qa1
 - NMU: rebuilt for updated dependencies.
 
