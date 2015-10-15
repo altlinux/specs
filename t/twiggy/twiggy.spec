@@ -1,5 +1,5 @@
 Name: twiggy
-Version: 0.1024
+Version: 0.1025
 Release: alt1
 Summary: Twiggy - AnyEvent HTTP server for PSGI (like Thin)
 
@@ -25,12 +25,16 @@ BuildRequires: perl-Test-TCP perl-devel perl-Plack perl-Try-Tiny perl-Test-Requi
 
 %files
 %_bindir/%name
+%_man1dir/%name.*
 %perl_vendor_privlib/Twiggy*
 %perl_vendor_privlib/Plack/Handler/Twiggy.pm
 %perl_vendor_privlib/AnyEvent/Server/PSGI.pm
 %doc Changes README.md
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.1025-alt1
+- automated CPAN update
+
 * Fri Jul 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.1024-alt1
 - automated CPAN update
 
