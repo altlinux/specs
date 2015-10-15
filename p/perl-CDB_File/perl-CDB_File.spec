@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist CDB_File
 Name: perl-%dist
-Version: 0.97
-Release: alt5.1
+Version: 0.98
+Release: alt1
 
 Summary: Perl extension for access to cdb databases
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TODDR/CDB_File-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -26,6 +27,7 @@ package for creating and reading constant databases.
 
 %install
 %perl_vendor_install
+rm -f %buildroot%perl_vendor_archlib/bun-x.pl
 
 %files
 %doc ACKNOWLEDGE CHANGES COPYRIGHT README
@@ -33,6 +35,9 @@ package for creating and reading constant databases.
 %perl_vendor_autolib/CDB_File*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.97-alt5.1
 - rebuild with new perl 5.20.1
 
