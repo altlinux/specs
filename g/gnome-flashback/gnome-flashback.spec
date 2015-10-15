@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-flashback
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -78,25 +78,6 @@ NOTE: This session is not supported by GNOME in any way!
 
 %install
 %makeinstall_std
-cat <<__START_GNOME_FLASHBACK__ >start%name
-#!/bin/sh
-
-. %_datadir/gnome-session/startgnome-common
-
-exec %_libexecdir/%name-metacity "\$@"
-__START_GNOME_FLASHBACK__
-
-install -pD -m755 start%name %buildroot%_bindir/start%name
-
-mkdir -p %buildroot%_sysconfdir/X11/wmsession.d/
-cat << __EOF__ > %buildroot%_sysconfdir/X11/wmsession.d/09GnomeFlashback
-NAME=Gnome-Flashback
-ICON=%_iconsdir/gnome.svg
-DESC=Gnome Flashback
-EXEC=%_bindir/start%name
-SCRIPT:
-exec %_bindir/start%name
-__EOF__
 
 # link to our gnome3 menus
 ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
@@ -108,7 +89,6 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/start%name
 %_libexecdir/%name-compiz
 %_libexecdir/%name-metacity
 %_desktopdir/%name.desktop
@@ -117,7 +97,6 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_datadir/desktop-directories/X-GNOME-Flashback-Settings.directory
 %_datadir/gnome-session/sessions/%name-compiz.session
 %_datadir/gnome-session/sessions/%name-metacity.session
-#%config %_sysconfdir/X11/wmsession.d/09GnomeFlashback
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_xdgmenusdir/%name-applications.menu
 %_datadir/xsessions/%name-metacity.desktop
@@ -129,6 +108,12 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Thu Oct 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
+* Wed Oct 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt2
+- removed /usr/bin/startgnome-flashback
+
 * Fri Sep 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

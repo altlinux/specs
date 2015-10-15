@@ -5,7 +5,7 @@
 %def_disable consolekit
 
 Name: gnome-session
-Version: %ver_major.0
+Version: %ver_major.1.1
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -25,8 +25,8 @@ Patch1: %name-3.8.2-alt-lfs.patch
 Patch11: gnome-session-3.3.92-nv30.patch
 
 # From configure.ac
-%define glib_ver 2.36.0
-%define gtk_ver 3.0.0
+%define glib_ver 2.46.0
+%define gtk_ver 3.18.0
 %define polkit_ver 0.91
 %define upower_ver 0.9
 %define systemd_ver 209
@@ -35,7 +35,7 @@ PreReq: xinitrc libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
 Requires: gnome-filesystem
-Requires: gnome-settings-daemon >= 3.9.92
+Requires: gnome-settings-daemon >= 3.18.0
 Requires: upower gcr
 Requires: xdg-user-dirs
 
@@ -57,7 +57,7 @@ BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-dev
 BuildRequires: docbook-dtds docbook-style-xsl
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel libsystemd-journal-devel libpolkit-devel}
 %{?_enable_consolekit:BuildRequires: libdbus-glib-devel}
-#BuildRequires: libdbus-glib-devel
+
 
 %description
 GNOME (GNU Network Object Model Environment) is a user-friendly set of
@@ -107,126 +107,40 @@ This package permits to log into GNOME using Wayland.
 %install
 %makeinstall_std
 
-cat <<__START_GNOME_COMMON__ >startgnome-common
-#!/bin/sh
-
-# turn on fonts antialiasing
-export GDK_USE_XFT=1
-
-# set default browser to whatever GNOME user likes
-# obsolete since gnome3
-# export BROWSER=gnome-open
-
-# tell restored browsers where plugins are
-export MOZ_PLUGIN_PATH="\${MOZ_PLUGIN_PATH:+"\$MOZ_PLUGIN_PATH:"}\${HOME:+"\$HOME/.mozilla/plugins:"}%_libdir/mozilla/plugins:%_libdir/netscape/plugins:%browser_plugins_path"
-
-export HELP_BROWSER=yelp
-
-# use prefixed .menu files
-export XDG_MENU_PREFIX="gnome3-"
-
-#### use /usr/share/gnome as a part of XDG_DATA_DIRS
-#### export XDG_DATA_DIRS="\${XDG_DATA_DIRS:+"\$XDG_DATA_DIRS:"}%_datadir/gnome"
-
-# Since shared-mime-info-0.90-alt3 XDG_DATA_DIRS not exported. We need to define
-# the set of base directories explicitly.
-
-export XDG_DATA_DIRS="%_datadir/gnome:%_datadir:/usr/local/share"
-
-# to avoid gnome-shell crash
-#/bin/rm -f "\$HOME"/.config/gnome-session/saved-session/gnome-shell.desktop >/dev/null 2>&1
-
-# saved gnome-shell-classic.desktop is lacking --mode=classic due to gnome-session bug
-desktop="\$HOME"/.config/gnome-session/saved-session/gnome-shell-classic.desktop
-string="--mode=classic"
-if [ -a "\$desktop" ]; then
-grep -qs "'\$string'" "\$desktop" || subst 's/\(Exec=gnome-shell\)/\1 '\$string'/' "\$desktop"
-fi
-__START_GNOME_COMMON__
-
-cat <<__START_GNOME__ >startgnome
-#!/bin/sh
-
-. %_datadir/%name/startgnome-common
-
-exec %_bindir/gnome-session "\$@"
-__START_GNOME__
-
-install -pD -m755 startgnome %buildroot%_bindir/startgnome
-install -pD -m755 startgnome-common %buildroot%_datadir/%name/startgnome-common
-
-mkdir -p %buildroot%_sysconfdir/X11/wmsession.d/
-cat << __EOF__ > %buildroot%_sysconfdir/X11/wmsession.d/02Gnome
-NAME=Gnome
-ICON=%_iconsdir/gnome.svg
-DESC=Gnome Environment
-EXEC=%_bindir/startgnome
-SCRIPT:
-exec %_bindir/startgnome
-__EOF__
-
-%if_enabled session_selector
-cat <<__START_GNOME__ >startgnome
-#!/bin/sh
-
-. %_datadir/gnome-session/startgnome-common
-
-exec %_bindir/gnome-session-custom-session "\$@"
-__START_GNOME__
-
-install -pD -m755 startgnome %buildroot%_bindir/startgnome-custom
-
-cat << __EOF__ > %buildroot%_sysconfdir/X11/wmsession.d/04Gnome-custom
-NAME=Gnome-custom
-ICON=%_iconsdir/gnome.svg
-DESC=Gnome Session Selector
-EXEC=%_bindir/startgnome-custom
-SCRIPT:
-exec %_bindir/startgnome-custom
-__EOF__
-%endif
-
-install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
-
 %find_lang --with-gnome --output=%name.lang %name-3.0
 
 %check
 %make check
 
 %files -f %name.lang
-%_bindir/gnome-session
-%_bindir/gnome-session-inhibit
-%_bindir/gnome-session-quit
-%_bindir/startgnome
-%_libexecdir/gnome-session-check-accelerated
-%_libexecdir/gnome-session-check-accelerated-helper
-%_libexecdir/gnome-session-failed
+%_bindir/%name
+%_bindir/%name-inhibit
+%_bindir/%name-quit
+%_libexecdir/%name-binary
+%_libexecdir/%name-check-accelerated
+%_libexecdir/%name-check-accelerated-helper
+%_libexecdir/%name-failed
 %dir %_datadir/%name
 %_datadir/%name/hardware-compatibility
-%_datadir/%name/startgnome-common
 %_datadir/%name/session-properties.ui
 %dir %_datadir/%name/sessions
 %_datadir/%name/sessions/gnome.session
 %_datadir/%name/sessions/gnome-dummy.session
 %_datadir/xsessions/gnome.desktop
-%_iconsdir/gnome.svg
 %_iconsdir/hicolor/*/apps/session-properties*
-#%config %_sysconfdir/X11/wmsession.d/02Gnome
 %config %_datadir/glib-2.0/schemas/org.gnome.SessionManager.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
-%_man1dir/gnome-session-inhibit.*
-%_man1dir/gnome-session-quit.*
-%_man1dir/gnome-session.*
+%_man1dir/%name-inhibit.*
+%_man1dir/%name-quit.*
+%_man1dir/%name.*
 %doc AUTHORS NEWS README
 
 %if_enabled session_selector
 %files selector
-#%config %_sysconfdir/X11/wmsession.d/04Gnome-custom
-%_bindir/startgnome-custom
-%_bindir/gnome-session-custom-session
-%_bindir/gnome-session-selector
+%_bindir/%name-custom-session
+%_bindir/%name-selector
 %_datadir/%name/session-selector.ui
-%_man1dir/gnome-session-selector.*
+%_man1dir/%name-selector.*
 %_datadir/xsessions/gnome-custom-session.desktop
 %endif
 
@@ -235,6 +149,9 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_datadir/%name/sessions/gnome-wayland.session
 
 %changelog
+* Wed Oct 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1.1-alt1
+- 3.18.1.1
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

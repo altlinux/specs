@@ -4,7 +4,7 @@
 
 Name: gnome-shell-extensions
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -40,33 +40,10 @@ See %_docdir/%name-%version/README for more information.
 %install
 %makeinstall_std
 
-cat <<__START_GNOME__ >startgnome
-#!/bin/sh
-
-. %_datadir/gnome-session/startgnome-common
-
-exec %_bindir/gnome-session --session gnome-classic "\$@"
-__START_GNOME__
-
-install -pD -m755 startgnome %buildroot%_bindir/startgnome-classic
-
-mkdir -p %buildroot%_sysconfdir/X11/wmsession.d/
-cat << __EOF__ > %buildroot%_sysconfdir/X11/wmsession.d/03Gnome-classic
-NAME=Gnome-classic
-ICON=%_iconsdir/gnome.svg
-DESC=Gnome Classic Mode
-EXEC=%_bindir/startgnome-classic
-SCRIPT:
-exec %_bindir/startgnome-classic
-__EOF__
-
-
 %find_lang %name
 
 %files -f %name.lang
 ## Classic mode
-%_bindir/startgnome-classic
-#%_sysconfdir/X11/wmsession.d/03Gnome-classic
 %_datadir/gnome-session/sessions/gnome-classic.session
 %_datadir/gnome-shell/modes/classic.json
 %_datadir/gnome-shell/theme/classic-toggle-off-intl.svg
@@ -194,6 +171,9 @@ __EOF__
 %endif
 
 %changelog
+* Wed Oct 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt2
+- removed /usr/bin/startgnome-classic
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
