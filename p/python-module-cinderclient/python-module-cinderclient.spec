@@ -1,8 +1,9 @@
 %def_with python3
 
 Name: python-module-cinderclient
-Version: 1.11.1
+Version: 1.1.2
 Release: alt1
+Epoch: 1
 Summary: Python API and CLI for OpenStack Cinder
 
 Group: Development/Python
@@ -26,11 +27,11 @@ BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-argparse
 BuildRequires: python-module-prettytable >= 0.7
-BuildRequires: python-module-keystoneclient >= 0.10.0
-BuildRequires: python-module-requests >= 1.2.1
+BuildRequires: python-module-keystoneclient >= 1.2.0
+BuildRequires: python-module-requests >= 2.2.0
 BuildRequires: python-module-simplejson >= 2.2.0
 BuildRequires: python-module-babel >= 1.3
-BuildRequires: python-module-six >= 1.7.0
+BuildRequires: python-module-six >= 1.9.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -42,11 +43,11 @@ BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-argparse
 BuildRequires: python3-module-prettytable >= 0.7
-BuildRequires: python3-module-keystoneclient >= 0.10.0
-BuildRequires: python3-module-requests >= 1.2.1
+BuildRequires: python3-module-keystoneclient >= 1.2.0
+BuildRequires: python3-module-requests >= 2.2.0
 BuildRequires: python3-module-simplejson >= 2.2.0
 BuildRequires: python3-module-babel >= 1.3
-BuildRequires: python3-module-six >= 1.7.0
+BuildRequires: python3-module-six >= 1.9.0
 %endif
 
 %description
@@ -143,6 +144,10 @@ rm -fr html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
+* Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 1:1.1.2-alt1
+- 1.1.2
+- fixed version
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.11.1-alt1
 - 1.11.1
 - add python3 package
