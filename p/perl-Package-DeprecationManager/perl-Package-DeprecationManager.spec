@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Package-DeprecationManager
 Name: perl-%dist
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Manage deprecation warnings for your distribution
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Package-DeprecationManager-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -28,10 +29,13 @@ This module allows you to manage a set of deprecations for one or more modules.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %perl_vendor_privlib/Package*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 0.13-alt1
 - 0.11 -> 0.13
 - fixed build with Carp >= 1.25
