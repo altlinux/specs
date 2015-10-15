@@ -2,7 +2,7 @@
 %define dist Text-RecordParser
 
 Name: perl-%dist
-Version: 1.6.3
+Version: 1.6.5
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -12,7 +12,7 @@ License: GPLv2 only
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/K/KC/KCLARK/Text-RecordParser-v%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/K/KC/KCLARK/Text-RecordParser-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -31,7 +31,7 @@ module aims to provide a consistent interface for handling sequential records in
 a file however they may be delimited. 
 
 %prep
-%setup -n %dist-v%version
+%setup -n %dist-%version
 
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
@@ -45,6 +45,9 @@ a file however they may be delimited.
 %_man1dir/*
 
 %changelog
+* Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.3-alt1
 - automated CPAN update
 
