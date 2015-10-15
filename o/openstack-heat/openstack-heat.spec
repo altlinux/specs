@@ -3,7 +3,7 @@
 
 Name: openstack-heat
 Summary: OpenStack Orchestration (heat)
-Version: 2015.1.1
+Version: 2015.1.2
 Release: alt1
 License: ASL 2.0
 Group: System/Servers
@@ -54,7 +54,7 @@ BuildRequires: python-module-stevedore >= 1.3.0
 BuildRequires: python-module-requests >= 2.2.0
 
 BuildRequires: python-module-oslo.config >= 1.9.3
-BuildRequires: python-module-oslo.concurrency >= 1.8.0
+BuildRequires: python-module-oslo.concurrency >= 1.8.2
 BuildRequires: python-module-oslo.context >= 0.2.0
 BuildRequires: python-module-oslo.db >= 1.7.0
 BuildRequires: python-module-oslo.i18n >= 1.5.0
@@ -67,12 +67,12 @@ BuildRequires: python-module-osprofiler >= 0.3.0
 BuildRequires: python-module-oslo.versionedobjects >= 0.1.1
 BuildRequires: python-module-keystonemiddleware >= 1.5.0
 
-BuildRequires: python-module-ceilometerclient >= 1.0.13
+BuildRequires: python-module-ceilometerclient >= 1.1.1
 BuildRequires: python-module-cinderclient >= 1.1.0
 BuildRequires: python-module-glanceclient >= 0.15.0
 BuildRequires: python-module-heatclient >= 0.3.0
 BuildRequires: python-module-keystoneclient >= 1.2.0
-BuildRequires: python-module-neutronclient >= 2.3.11
+BuildRequires: python-module-neutronclient >= 2.4.0
 BuildRequires: python-module-novaclient >= 2.22.0
 BuildRequires: python-module-saharaclient >= 0.8.0
 BuildRequires: python-module-swiftclient >= 2.2.0
@@ -224,7 +224,7 @@ install -p -m 644 etc/heat/templates/*.yaml %buildroot%_sysconfdir/heat/template
 
 %define heat_conf %buildroot%_sysconfdir/heat/heat.conf
 crudini --set %heat_conf DEFAULT log_dir %_logdir/heat
-crudini --set %heat_conf DEFAULT lock_path %_runtimedir/heat
+crudini --set %heat_conf oslo_concurrency lock_path %_runtimedir/heat
 crudini --set %heat_conf keystone_authtoken signing_dir %_cachedir/heat/keystone-signing
 crudini --set %heat_conf keystone_authtoken admin_tenant_name '%%SERVICE_TENANT_NAME%%'
 crudini --set %heat_conf keystone_authtoken admin_user heat
@@ -329,6 +329,9 @@ crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 %_prefix/lib/heat/docker
 
 %changelog
+* Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
+- 2015.1.2
+
 * Mon Aug 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.1-alt1
 - 2015.1.1
 - drop common package
