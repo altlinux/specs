@@ -11,7 +11,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -33,7 +33,7 @@ Patch35: %name-2.22.1-umountfstab.patch
 %define desktop_file_utils_ver 0.8
 
 # From configure.ac
-%define glib_ver 2.43.4
+%define glib_ver 2.46.1
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
 %define gtk_ver 3.18.0
@@ -49,7 +49,7 @@ PreReq: gnome-icon-theme >= %icon_theme_ver
 
 Requires: shared-mime-info
 Requires: common-licenses
-Requires: gvfs >= 1.19
+Requires: gvfs >= 1.26.1.1
 
 BuildPreReq: pkgconfig >= %pkgconfig_ver
 BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
@@ -200,6 +200,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Thu Oct 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
