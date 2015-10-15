@@ -4,8 +4,8 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 15.08.1
-Release: alt2
+Version: 15.08.2
+Release: alt1
 %K5init
 
 Group: Terminals
@@ -113,6 +113,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Wed Oct 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
+- new version
+
 * Mon Sep 21 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt2
 - disable transparency by default
 - add profile entry for root

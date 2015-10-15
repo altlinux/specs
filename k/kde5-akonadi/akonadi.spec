@@ -1,7 +1,7 @@
 %define rname akonadi
 
 Name: kde5-%rname
-Version: 15.08.1
+Version: 15.08.2
 Release: alt1
 %K5init altplace
 
@@ -175,6 +175,9 @@ mkdir -p %buildroot/%_datadir/akonadi5/{agents,contact,plugins,accountwizard}
 %_K5lib/libKF5AkonadiPrivate.so.*
 
 %changelog
+* Wed Oct 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
+- new version
+
 * Wed Sep 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
 - new version
 
