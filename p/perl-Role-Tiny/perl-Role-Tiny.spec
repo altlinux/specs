@@ -1,5 +1,5 @@
 Name: perl-Role-Tiny
-Version: 1.003004
+Version: 2.000001
 Release: alt1
 
 Summary: Role::Tiny - minimalist role composition tool
@@ -32,6 +32,9 @@ BuildArch: noarch
 %doc Changes
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.000001-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.003004-alt1
 - automated CPAN update
 
