@@ -1,5 +1,5 @@
 Name: perl-Plack-Middleware-Session
-Version: 0.25
+Version: 0.30
 Release: alt1
 Summary: Plack::Middleware::Session - Middleware for session management
 
@@ -29,6 +29,9 @@ BuildRequires: perl-devel perl-Plack perl-Test-Fatal perl-Test-Requires perl-Dig
 %doc Changes README*
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- automated CPAN update
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
 - automated CPAN update
 
