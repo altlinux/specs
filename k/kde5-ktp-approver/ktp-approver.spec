@@ -1,7 +1,7 @@
 %define rname ktp-approver
 
 Name: kde5-%rname
-Version: 15.08.0
+Version: 15.08.2
 Release: alt1
 %K5init altplace
 
@@ -42,6 +42,9 @@ BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5
 %_K5srvtyp/*.desktop
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
+- new version
+
 * Tue Sep 08 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
