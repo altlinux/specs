@@ -10,7 +10,7 @@
 
 Name: clip
 Version: 1.2.0cvs
-Release: alt3.qa3
+Release: alt3.qa4
 
 Summary: XBASE/Clipper compatible program compiler
 Summary(ru_RU.KOI8-R): Совместимый с XBASE/Clipper компилятор программ
@@ -73,7 +73,7 @@ This package provides headers files for CLIP package
 %patch1 -p1
 
 %build
-export OPTFLAGS="%optflags_shared"
+export OPTFLAGS="%optflags_shared -std=gnu89"
 CLIPROOT=%_libdir/clip BINDIR=%_bindir ./configure -s -stack || exit 1
 export CLIPROOT=%buildroot%_libdir/clip
 export CLIP_LOCALE_ROOT=`pwd`
@@ -173,6 +173,9 @@ subst "s,%FCLIPDIR/lib,," /etc/ld.so.conf
 
 
 %changelog
+* Thu Oct 15 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt3.qa4
+- Fix build with gcc5
+
 * Wed Sep 28 2011 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt3.qa3
 - Remove wrong directory permissions
 
