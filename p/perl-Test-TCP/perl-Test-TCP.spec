@@ -1,5 +1,5 @@
 Name: perl-Test-TCP
-Version: 2.06
+Version: 2.14
 Release: alt1
 
 Summary: Test::TCP - testing TCP program
@@ -11,7 +11,7 @@ Url: %CPAN Test-TCP
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-Test-SharedFork perl-CPAN-Meta perl-Module-Build
+BuildRequires: perl-devel perl-Test-SharedFork perl-CPAN-Meta perl-Module-Build perl(IO/Socket/IP.pm)
 
 %description
 Test::TCP is test utilities for TCP/IP program.
@@ -31,6 +31,9 @@ Test::TCP is test utilities for TCP/IP program.
 %doc Changes README.md
 
 %changelog
+* Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1
+- automated CPAN update
+
 * Fri Jul 04 2014 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
 - automated CPAN update
 
