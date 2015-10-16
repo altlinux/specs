@@ -2,7 +2,7 @@
 %define otrs_user otrs
 
 Name: otrs
-Version: 4.0.12
+Version: 4.0.13
 Release: alt1
 
 Summary: Open source Ticket Request System
@@ -150,6 +150,10 @@ cd %installdir/bin/
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Fri Oct 16 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.0.13-alt1
+- New version
+- fixed otrs-hold.conf
+
 * Wed Sep 16 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.0.12-alt1
 - New version
 - added perl-Archive-Tar to Requires
