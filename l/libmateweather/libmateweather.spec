@@ -1,7 +1,7 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize glib2-devel libgio-devel python-devel pkgconfig(libxml-2.0)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize glib2-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libxml-2.0) python-devel
 # END SourceDeps(oneline)
 # for --enable-python
 BuildRequires: python-module-pygobject-devel
@@ -10,12 +10,12 @@ BuildRequires: python-module-pygtk-devel
 
 %define _libexecdir %_prefix/libexec
 Name:          libmateweather
-Version:       1.8.0
-Release:       alt1_1
+Version:       1.10.0
+Release:       alt1_2
 Summary:       Libraries to allow MATE Desktop to display weather information
 License:       GPLv2+ and LGPLv2+
 URL:           http://mate-desktop.org
-Source0:       http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
+Source0:       http://pub.mate-desktop.org/releases/1.9/%{name}-%{version}.tar.xz
 
 BuildRequires: gtk2-devel
 BuildRequires: libsoup-devel
@@ -94,6 +94,9 @@ cat libmateweather-locations.lang >> %{name}.lang
 
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_2
+- new fc release
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
