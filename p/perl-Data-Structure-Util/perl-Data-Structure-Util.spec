@@ -1,17 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Data-Structure-Util
 Name: perl-%dist
-Version: 0.15
-Release: alt6.1
+Version: 0.16
+Release: alt1
 
 Summary: Change nature of data within a structure
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-
-# Fix for RT#88257
-Patch0:         Data-Structure-Util-0.15-Remove-failed-test-cases.patch
+Source: http://www.cpan.org/authors/id/A/AN/ANDYA/Data-Structure-Util-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-File-Find-Rule perl-Test-Pod perl-CPAN-Meta
@@ -28,11 +26,6 @@ detect if there is a circular reference.
 
 %prep
 %setup -q -n %dist-%version
-%patch0 -p1
-if [ %version = 0.15 ]; then
-sed -i -e '43,$d' Makefile.PL
-fi
-
 
 %build
 %perl_vendor_build
@@ -46,6 +39,9 @@ fi
 %perl_vendor_autolib/Data
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt6.1
 - rebuild with new perl 5.20.1
 
