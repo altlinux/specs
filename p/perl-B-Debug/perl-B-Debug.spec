@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-B-Debug
-Version: 1.22
+Version: 1.23
 Release: alt1
 Summary: B::Debug - Walk Perl syntax tree, printing debug info about ops
 
@@ -29,6 +29,9 @@ BuildRequires: perl-devel
 %doc Changes README Artistic Copying
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
+- automated CPAN update
+
 * Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
 - automated CPAN update
 
