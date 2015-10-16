@@ -1,6 +1,6 @@
 Name:    qt5-gstreamer1
 Version: 1.2.0
-Release: alt2
+Release: alt3
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -42,6 +42,23 @@ for %name.
 %setup -qn qt-gstreamer-%version
 
 %build
+for subd in src elements/gstqtvideosink
+do
+pushd $subd
+if [ ! -e %_includedir/gstreamer-1.0/gst/gstconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gstconfig.h ]
+then
+    mkdir -p gst
+    [ -e gst/gstconfig.h ] || \
+       ln -s %_libdir/gstreamer-1.0/include/gst/gstconfig.h gst/gstconfig.h
+fi
+if [ ! -e %_includedir/gstreamer-1.0/gst/gl/gstglconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h ]
+then
+    mkdir -p gst/gl
+    [ -e gst/gl/gstglconfig.h ] || \
+       ln -s %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h gst/gl/gstglconfig.h
+fi
+popd
+done
 %Kbuild \
     -DQT_VERSION=5 \
     -DQTGSTREAMER_STATIC=OFF \
@@ -85,6 +102,9 @@ for %name.
 
 
 %changelog
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt3
+- fix against ugly gstreamer includes placement
+
 * Fri Sep 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt2
 - fix requires
 
