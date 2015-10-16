@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module	Convert-UUlib
 
 Name: perl-%module
-Version: 1.4
-Release: alt4.1
+Version: 1.5
+Release: alt1
 Epoch: 2
 Summary: Perl interface to the uulib library (a.k.a. uudeview/uuenview)
 
@@ -12,12 +13,12 @@ Url: http://search.cpan.org/dist/%module/
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 # BuildArch: noarch
-Source: %module-%version.tar.gz
-Patch1: Convert-UUlib-1.32-alt-system-libuu.patch
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/Convert-UUlib-%{version}.tar.gz
+Patch1: Convert-UUlib-1.5-alt-system-libuu.patch
 Patch2: Convert-UUlib-1.32-alt_strip_stuff_not_in_libuu.patch
 
 # Automatically added by buildreq on Mon Oct 10 2011
-BuildRequires: libuu-devel perl-devel
+BuildRequires: libuu-devel perl-devel perl(Canary/Stability.pm)
 
 %description
 The UUDeview library is a highly portable set of functions
@@ -42,6 +43,9 @@ binary files into all of these representations except BinHex.
 %perl_vendor_autolib/Convert
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 2:1.5-alt1
+- automated CPAN update
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2:1.4-alt4.1
 - rebuild with new perl 5.20.1
 
