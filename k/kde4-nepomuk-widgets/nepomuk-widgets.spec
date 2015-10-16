@@ -7,7 +7,7 @@ Name: kde4-nepomuk-widgets
 %define minor 12
 %define bugfix 2
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Nepomuk widgets library
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Dec 11 2012 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-test libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby ruby-stdlibs soprano-backend-redland soprano-backend-virtuoso xorg-kbproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4-nepomuk-core-devel libicu libqt3-devel python-module-distribute rpm-build-ruby soprano xorg-xf86miscproto-devel zlib-devel-static
-BuildRequires: gcc-c++ glib2-devel kde4-nepomuk-core-devel kde-common-devel
+BuildRequires: gcc-c++ glib2-devel libsoprano-devel kde4-nepomuk-core-devel kde-common-devel
 #BuildRequires: xorg-xf86miscproto-devel
 
 %description
@@ -63,6 +63,12 @@ Development files for %name
 
 
 %changelog
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt2
+- fix build requires
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt0.M70P.1
+- built for M70P
+
 * Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
 - new version
 
