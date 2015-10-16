@@ -5,7 +5,7 @@
 %define _disable_test 0
 
 Name: po4a
-Version: 0.45
+Version: 0.47
 Release: alt1
 
 Summary: Tools for helping translation of documentation
@@ -14,13 +14,14 @@ License: GPL
 Group: Text tools
 
 Url: http://po4a.alioth.debian.org/
+# VCS: https://alioth.debian.org/anonscm/git/po4a/po4a.git
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
 # Note! change this magic number before upgrade
-Source: http://alioth.debian.org/frs/download.php/file/3942/%m_distro-%version.tar
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Sep 07 2013
 # optimized out: docbook-dtds libgpg-error perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Text-CharWidth perl-devel perl-podlators python3-base xml-common
@@ -32,8 +33,9 @@ BuildRequires: perl-podlators
 
 BuildRequires:  perl-Module-Build >= 0.40
 BuildRequires:  perl-SGMLSpm >= 1.03ii
-
-# recommended: Unicode::GCString
+BuildRequires:  perl-Pod-Parser
+# for Unicode::GCString
+BuildRequires:  perl-Unicode-LineBreak 
 
 
 %description
@@ -51,9 +53,10 @@ sub-modules:
  - LaTeX: generic TeX or LaTeX format
 
 %prep
-%setup -n %m_distro-%version
+%setup
 
 %build
+export LC_ALL=en_US.UTF-8
 %perl_vendor_build --install_path bindoc=%_man1dir
 
 %check
@@ -65,17 +68,23 @@ rm t/24-tex.t
 %perl_vendor_install
 %find_lang %name
 # remove localized man pages
-rm -rf %buildroot%_mandir/??
+rm -rf %buildroot%_mandir/??{,_??}
 rm -rf %buildroot%perl_vendor_privlib/i386-linux/
 
 %files -f %name.lang
 %_bindir/*
 # Locale already created in perl-Locale-gettext
 %perl_vendor_privlib/Locale/Po4a/
-#%_man1dir/*
-#%_man7dir/*
+%_man1dir/*
+%_man3dir/*
+%_man5dir/*
+%_man7dir/*
 
 %changelog
+* Fri Oct 16 2015 Andrey Cherepanov <cas@altlinux.org> 0.47-alt1
+- New version from https://alioth.debian.org/anonscm/git/po4a/po4a.git
+- Package man pages
+
 * Sat Sep 07 2013 Vitaly Lipatov <lav@altlinux.ru> 0.45-alt1
 - new version 0.45 (with rpmrb script)
 
