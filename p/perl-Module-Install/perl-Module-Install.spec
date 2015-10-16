@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Install
 Name: perl-%dist
-Version: 1.14
+Version: 1.16
 Release: alt1
 
 Summary: Standalone, extensible Perl module installer
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-Install-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/Module-Install-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ EOF
 /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
+- automated CPAN update
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 
