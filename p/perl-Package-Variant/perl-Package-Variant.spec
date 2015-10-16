@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-Package-Variant
-Version: 1.002002
+Version: 1.003002
 Release: alt1
 
 Summary: Parameterizable packages
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/CPAN/authors/id/P/PH/PHAYLON/Package-Variant-1.00100
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/H/HA/HAARG/Package-Variant-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/M/MS/MSTROUT/Package-Variant-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Oct 18 2012
 BuildRequires: perl-Test-Fatal perl-devel perl(Package.pm) perl(MouseX/Getopt.pm) perl(strictures.pm) perl(Import/Into.pm)
@@ -52,6 +52,9 @@ not care about what kind of package it builds.
 %perl_vendor_privlib/Package/*
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.003002-alt1
+- automated CPAN update
+
 * Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.002002-alt1
 - automated CPAN update
 
