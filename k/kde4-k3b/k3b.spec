@@ -14,7 +14,7 @@
 %define rname k3b
 Name: kde4-%rname
 Version: 2.0.3
-Release: alt2
+Release: alt3
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -31,6 +31,7 @@ Source0: %rname-%version.tar
 Patch101: k3b-1.92-alt-check-cdrecord-ver.patch
 Patch102: k3b-2.0.2-alt-k3bsetup.patch
 Patch103: k3b-2.0.3-libav10.patch
+Patch104: alt-fix-build.patch
 
 # Automatically added by buildreq on Wed Nov 12 2014 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libavcodec-devel libavutil-devel libcloog-isl4 libdbus-devel libdbusmenu-qt2 libflac-devel libfreetype-devel libgpg-error libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-svg libqt4-webkit libqt4-xml libsoprano-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby ruby-stdlibs shared-mime-info xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -111,7 +112,7 @@ KDE 4 library.
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
-
+%patch104 -p1
 
 %build
 %K4cmake \
@@ -157,6 +158,9 @@ KDE 4 library.
 %_K4includedir/*.h
 
 %changelog
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt3
+- fix FTBFS
+
 * Fri Apr 10 2015 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt2
 - rebuild with new libav
 
