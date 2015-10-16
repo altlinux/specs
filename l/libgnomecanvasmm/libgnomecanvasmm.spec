@@ -4,7 +4,7 @@
 
 Name: libgnomecanvasmm
 Version: %major.0
-Release: alt1.qa2
+Release: alt2.qa2
 
 Summary: A C++ interface for GNOME 2 canvas library
 License: LGPL
@@ -15,10 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/libgnomecanvasmm/%major/%name-%version.tar.bz2
 
-# Automatically added by buildreq on Sun Jan 13 2008
-BuildRequires: doxygen gcc-c++ libgnomecanvas-devel libgtkmm2-devel
-
-BuildRequires: libgtkmm2-devel >= 2.8.0
+BuildRequires: doxygen gcc-c++ libgnomecanvas-devel libgtkmm2-devel >= 2.8.0
 
 %description
 This package provides a C++ interface for gnomecanvas2. It is a subpackage
@@ -46,9 +43,10 @@ Conflicts: %name < %version
 This package provides API documentation for %name library.
 
 %prep
-%setup -q
+%setup
 
 %build
+%add_optflags -std=c++11
 %configure \
 		--disable-maintainer-mode \
 		--disable-static \
@@ -75,6 +73,9 @@ cd docs/reference && %make
 %doc docs/reference/html
 
 %changelog
+* Fri Oct 16 2015 Yuri N. Sedunov <aris@altlinux.org> 2.26.0-alt2.qa2
+- rebuilt with newer *mm libraries
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.26.0-alt1.qa2
 - NMU: rebuilt for debuginfo.
 
