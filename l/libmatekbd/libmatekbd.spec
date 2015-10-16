@@ -1,15 +1,15 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize libSM-devel libgio-devel
+BuildRequires: /usr/bin/glib-gettextize libSM-devel libgio-devel pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-x11-2.0) pkgconfig(gdk-x11-3.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           libmatekbd
-Version:        1.8.0
-Release:        alt1_1
+Version:        1.10.0
+Release:        alt1_2
 Summary:        Libraries for mate kbd
 License:        LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.9/%{name}-%{version}.tar.xz
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gsettings-desktop-schemas-devel
@@ -34,11 +34,10 @@ Development libraries for libmatekbd
 %prep
 %setup -q
 
-
 %build
 autoreconf -fisv
 # To work around rpath issue
-autoreconf -fi
+#autoreconf -fi
 
 %configure                   \
    --disable-static          \
@@ -75,6 +74,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/matekbd.convert
 %{_libdir}/libmatekbd.so
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_2
+- new fc release
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
