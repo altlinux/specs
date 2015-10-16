@@ -6,7 +6,7 @@
 %define bugfix 0
 Name: ruby-kde4
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Development/Ruby
 Summary: Korundum Ruby-KDE library
@@ -48,13 +48,13 @@ chmod a+x %buildroot/%ruby_sitelibdir/khtml/khtml.rb
 %files
 %ruby_sitearchdir/*.so
 %ruby_sitelibdir/KDE/
-%ruby_sitelibdir/soprano/
+#%ruby_sitelibdir/soprano/
 %ruby_sitelibdir/akonadi/
 %ruby_sitelibdir/kio/
 %ruby_sitelibdir/khtml/
 %ruby_sitelibdir/ktexteditor/
 %ruby_sitelibdir/solid/
-%ruby_sitelibdir/nepomuk/
+#%ruby_sitelibdir/nepomuk/
 #%ruby_sitelibdir/okular/
 %_K4lib/krubypluginfactory.so
 %_K4bindir/krubyapplication
@@ -65,5 +65,8 @@ chmod a+x %buildroot/%ruby_sitelibdir/khtml/khtml.rb
 %_K4apps/plasma_ruby_digital_clock/
 
 %changelog
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt2
+- rebuild with gcc5
+
 * Thu Aug 21 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - initial build

@@ -4,7 +4,7 @@
 
 Name: smokeqt
 Version: 4.14.0
-Release: alt3
+Release: alt4
 
 Group: Development/KDE and QT
 Summary: Bindings for Qt libraries
@@ -19,7 +19,8 @@ Source: %name-%version.tar
 # optimized out: cmake-modules elfutils fontconfig libGL-devel libGLU-devel libqscintilla2-6-qt4 libqt4-clucene libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-help libqt4-multimedia libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libstdc++-devel pkg-config
 #BuildRequires: cmake gcc-c++ libqimageblitz-devel libqscintilla2-qt4-devel libqt3-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 phonon-devel smokegen-devel
 BuildRequires: cmake gcc-c++ libqimageblitz-devel libqscintilla2-qt4-devel libqt4-devel phonon-devel smokegen-devel
-BuildRequires: kde-common-devel libsoprano-devel kde4libs-devel
+#BuildRequires: kde-common-devel libsoprano-devel kde4libs-devel
+BuildRequires: kde-common-devel kde4libs-devel
 %if_enabled qwt
 BuildRequires: libqwt-devel
 %endif
@@ -311,7 +312,7 @@ Qt generic bindings library.
 
 %build
 %Kcmake
-%Kmake
+%Kmake VERBOSE=1
 
 %install
 %Kinstall
@@ -370,6 +371,9 @@ Qt generic bindings library.
 
 
 %changelog
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt4
+- rebuild with gcc5
+
 * Tue Apr 21 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt3
 - rebuild with new qscintilla
 
