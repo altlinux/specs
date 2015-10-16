@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define api_ver 2.4
 %define ver_major 2.52
@@ -10,7 +10,7 @@
 
 Name: libsoup
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
@@ -221,6 +221,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Fri Oct 16 2015 Yuri N. Sedunov <aris@altlinux.org> 2.52.1-alt2
+- 2.52.1_c4d290d9
+
 * Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.52.1-alt1
 - 2.52.1
 
