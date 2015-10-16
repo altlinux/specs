@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Params-Validate
 Name: perl-%dist
-Version: 0.19
+Version: 0.21
 Release: alt1
 
 Summary: an extension of Params::Validate for using Moose's types
@@ -35,6 +35,9 @@ be considered the "official" one by any means though.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
