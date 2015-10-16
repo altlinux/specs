@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist IO-CaptureOutput
 Name: perl-%dist
-Version: 1.1103
+Version: 1.1104
 Release: alt1
 
 Summary: Capture STDOUT and STDERR from Perl code, subprocesses or XS
@@ -34,6 +35,9 @@ or C modules.
 %perl_vendor_privlib/IO
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.1104-alt1
+- automated CPAN update
+
 * Sat Mar 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1103-alt1
 - automated CPAN update
 
