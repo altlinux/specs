@@ -3,7 +3,7 @@
 
 
 Name: perl-XML-Entities
-Version: 1.0001
+Version: 1.0002
 Release: alt1
 
 Packager: Pavel Zilke <zidex at altlinux dot org>
@@ -46,6 +46,9 @@ numify( $entity_set, $string, ... )
 %perl_vendor_privlib/%module_dir/*
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.0002-alt1
+- automated CPAN update
+
 * Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0001-alt1
 - automated CPAN update
 
