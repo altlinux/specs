@@ -1,26 +1,29 @@
 Group: Graphical desktop/Other
 %define _libexecdir %_prefix/libexec
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-icon-theme
-%define version 1.8.0
+%define version 1.10.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.8
+%global branch 1.10
 
 # Settings used for build from snapshots.
-%{!?rel_build:%global commit 19719ce9f4910e678062dccf90affb61cf03eb0e}
-%{!?rel_build:%global commit_date 20140101}
+%{!?rel_build:%global commit cdb0d70862035cd1b65c4deb495ea1016ea2d206}
+%{!?rel_build:%global commit_date 20150530}
 %{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
 %{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
 %{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-icon-theme
-Version:        %{branch}.0
-Release:        alt1_1
-#Release:        0.6%{?git_rel}%{?dist}
+Version:        %{branch}.1
+%if 0%{?rel_build}
+Release:        alt1_2
+%else
+Release:        alt1_2
+%endif
 Summary:        Icon theme for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -51,8 +54,13 @@ Development files for mate-icon-theme
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-# needed for git snapshots
+%if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# for snapshots
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 
 %build
 %configure  --enable-icon-mapping
@@ -73,6 +81,9 @@ make %{?_smp_mflags} V=1
 
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt1_2
+- new fc release
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
