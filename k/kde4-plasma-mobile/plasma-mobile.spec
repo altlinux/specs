@@ -4,7 +4,7 @@
 %define rname plasma-mobile
 Name: kde4-plasma-mobile
 Version: 0.5
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: KDE mobile environment
@@ -24,7 +24,7 @@ Patch1: plasma-mobile-0.4-alt-fix-compile.patch
 #BuildRequires: akonadi-devel boost-devel-headers gcc-c++ glib2-devel kde4-kactivities kde4base-workspace-devel kde4pimlibs-devel libqt3-devel python-module-distribute rpm-build-ruby soprano zlib-devel-static
 BuildRequires: akonadi-devel boost-devel gcc-c++
 BuildRequires: kde4base-workspace-devel kde4pimlibs-devel kde4-kactivities qt4-mobility-devel libqt4-webkit-devel
-BuildRequires: shared-desktop-ontologies soprano-backend-redland soprano-backend-virtuoso soprano shared-desktop-ontologies-devel
+BuildRequires: libsoprano-devel shared-desktop-ontologies
 BuildRequires: kde4-nepomuk-core kde4-nepomuk-core-devel
 BuildRequires: kde-common-devel
 
@@ -126,6 +126,9 @@ rm -rf %buildroot/%_K4lib/imports/org/kde/dirmodel/
 
 
 %changelog
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 0.5-alt3
+- fix build requires
+
 * Mon May 18 2015 Sergey V Turchin <zerg@altlinux.org> 0.5-alt2
 - rebuild with new qtwebkit
 
