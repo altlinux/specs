@@ -2,11 +2,11 @@ Group: Development/Tools
 %define _libexecdir %_prefix/libexec
 Name:           mate-common
 Summary:        mate common build files
-Version:        1.8.0
-Release:        alt1_1
+Version:        1.10.0
+Release:        alt1_2
 License:        GPLv3+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/mate-common-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.8/mate-common-%{version}.tar.xz
 BuildArch:      noarch
 BuildRequires:  automake autoconf
 Requires:       automake
@@ -44,6 +44,9 @@ make %{?_smp_mflags} V=1
 %{_mandir}/man1/*
 
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_2
+- new fc release
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
