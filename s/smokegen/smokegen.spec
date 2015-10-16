@@ -1,8 +1,8 @@
 %add_findpackage_path %_kde4_bindir
 
 Name: smokegen
-Version: 4.14.0
-Release: alt1
+Version: 4.14.1
+Release: alt2
 
 Group: Graphical desktop/Other
 Summary: Smoke Generator
@@ -15,6 +15,7 @@ License: LGPLv2 and GPLv2+
 Source: %name-%version.tar
 # ALT
 Patch1000: smokegen-4.7.1-fix-compile-smokekde.patch
+Patch1001: alt-find-generator.patch
 
 # Automatically added by buildreq on Wed Sep 14 2011 (-bi)
 # optimized out: cmake-modules elfutils libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-xml libstdc++-devel python-base ruby
@@ -43,10 +44,11 @@ applications for KDE 4.
 %prep
 %setup
 %patch1000 -p1 -b .fix-compile-smokekde
+%patch1001 -p1
 
 %build
 %Kcmake
-%Kmake
+%Kmake VERBOSE=1
 
 %install
 %Kinstall
@@ -67,6 +69,13 @@ mkdir -p %buildroot/%_includedir/smoke/
 %_datadir/smokegen/
 
 %changelog
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.1-alt2
+- fix find generator
+
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.1-alt1
+- new version
+- rebuild with gcc5
+
 * Fri Aug 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - new version
 

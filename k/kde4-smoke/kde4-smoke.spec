@@ -5,7 +5,7 @@
 %define rname smokekde
 Name: kde4-smoke
 Version: 4.11.1
-Release: alt3
+Release: alt4
 
 Group: Development/KDE and QT
 Summary: Bindings for KDE libraries
@@ -21,7 +21,7 @@ Patch1: smokekde-4.7.1-alt-find-okular.patch
 
 BuildRequires: cmake gcc-c++ phonon-devel smokegen-devel smokeqt-devel kde4base-workspace-devel
 BuildRequires: kde4pimlibs-devel kde4-kate-devel akonadi-devel libqimageblitz-devel attica-devel
-BuildRequires: libsoprano-devel soprano soprano-backend-redland
+#BuildRequires: libsoprano-devel soprano soprano-backend-redland
 BuildRequires: libqscintilla2-qt4-devel shared-desktop-ontologies-devel
 BuildRequires: kde-common-devel
 %if_enabled okular
@@ -367,25 +367,28 @@ NPROCS=1 %K4make
 %_libdir/libsmokektexteditor.so.*
 %files -n libsmokekutils4
 %_libdir/libsmokekutils.so.*
-%files -n libsmokenepomuk4
-%_libdir/libsmokenepomuk.so.*
-%files -n libsmokenepomukquery4
-%_libdir/libsmokenepomukquery.so.*
+#%files -n libsmokenepomuk4
+#%_libdir/libsmokenepomuk.so.*
+#%files -n libsmokenepomukquery4
+#%_libdir/libsmokenepomukquery.so.*
 #%files -n libsmokeokular4
 #%_libdir/libsmokeokular.so.*
 %files -n libsmokeplasma4
 %_libdir/libsmokeplasma.so.*
 %files -n libsmokesolid4
 %_libdir/libsmokesolid.so.*
-%files -n libsmokesoprano4
-%_libdir/libsmokesoprano.so.*
-%files -n libsmokesopranoclient4
-%_libdir/libsmokesopranoclient.so.*
-%files -n libsmokesopranoserver4
-%_libdir/libsmokesopranoserver.so.*
+#%files -n libsmokesoprano4
+#%_libdir/libsmokesoprano.so.*
+#%files -n libsmokesopranoclient4
+#%_libdir/libsmokesopranoclient.so.*
+#%files -n libsmokesopranoserver4
+#%_libdir/libsmokesopranoserver.so.*
 
 
 %changelog
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt4
+- rebuild with gcc5
+
 * Wed Aug 20 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt3
 - rebuild
 
