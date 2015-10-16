@@ -2,7 +2,7 @@
 %define ver_major 6.1
 Name: %{oname}6
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: 2D plotting widget extension to the Qt GUI
 
@@ -129,6 +129,9 @@ chrpath -d %buildroot%_libdir/qt4/plugins/designer/libqwt_designer_plugin.so
 #_man3dir/*
 
 %changelog
+* Fri Oct 16 2015 Yuri N. Sedunov <aris@altlinux.org> 6.1.2-alt2
+- rebuilt with gcc5
+
 * Mon Apr 13 2015 Yuri N. Sedunov <aris@altlinux.org> 6.1.2-alt1
 - 6.1.2
 
