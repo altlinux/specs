@@ -1,24 +1,23 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(FindBin.pm) perl(Test/CPAN/Changes.pm) perl(Test/EOL.pm) perl(Test/Kwalitee.pm) perl(Test/NoTabs.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-MooseX-App-Cmd
-Version:    0.27
-Release:    alt1_4
+Version:    0.32
+Release:    alt1
 # see lib/MooseX/App/Cmd.pm
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Mashes up MooseX::Getopt and App::Cmd
-Source:     http://search.cpan.org/CPAN/authors/id/M/MJ/MJGARDNER/MooseX-App-Cmd-%{version}.tar.gz
-# Adapt to Params-Validate-1.09, bug #1099738, in upstream after 0.27
-Patch0:     MooseX-App-Cmd-0.27-adapt_tests_to_params_validate_1_09.patch
+Source:     http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-App-Cmd-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/MooseX-App-Cmd
 BuildArch:  noarch
 
 BuildRequires: perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(strict.pm)
-BuildRequires: perl(warnings.pm)
+BuildRequires: perl(warnings.pm) perl(MooseX/NonMoose.pm)
 
 # Run-time:
 BuildRequires: perl(Any/Moose.pm)
@@ -114,7 +113,6 @@ Moose or Mouse.
 
 %prep
 %setup -q -n MooseX-App-Cmd-%{version}
-%patch0 -p1
 # Test::use::ok is useless,
 # <https://github.com/mjgardner/moosex-app-cmd/issues/11>
 sed -i -e '/Test::use::ok/d' Makefile.PL META.*
@@ -132,14 +130,13 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 make test
 
 %files
-%doc Changes LICENSE README TODO
+%doc Changes LICENSE README
 %{perl_vendor_privlib}/MooseX
 
-%files -n perl-MouseX-App-Cmd
-%doc LICENSE
-%{perl_vendor_privlib}/MouseX
-
 %changelog
+* Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- automated CPAN update
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1_4
 - update to new release by fcimport
 
