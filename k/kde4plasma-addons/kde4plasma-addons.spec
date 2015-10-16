@@ -7,13 +7,21 @@
 %def_enable desktop
 %endif
 
+%if_enabled gcc5ready
+%def_enable scim
+%else
+%def_disable scim
+%endif
+
+%def_disable qalculate
+
 %define rname kdeplasma-addons
 Name: kde4plasma-addons
 %define major 4
 %define minor 14
 %define bugfix 7
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: kdeplasma is a compilation of plasma items ( runners, applets, plasmoids ) for kde4
@@ -67,7 +75,9 @@ Requires: plasma-applet-unitconverter = %version-%release
 Requires: plasma-applet-plasmaboard = %version-%release
 Requires: plasma-applet-webslice = %version-%release
 Requires: plasma-applet-spellcheck = %version-%release
+%if_enabled qalculate
 Requires: plasma-applet-qalculate = %version-%release
+%endif
 Requires: plasma-applet-knowledgebase = %version-%release
 Requires: plasma-applet-kimpanel = %version-%release
 Requires: plasma-applet-news = %version-%release
@@ -116,8 +126,13 @@ Requires: plasma-qmlwallpapers = %version-%release
 # Automatically added by buildreq on Mon Sep 15 2008 (-bi)
 #BuildRequires: gcc-c++ kde4base-workspace-core kde4base-workspace-devel kde4network-kopete kde4pim-kmail kde4pimlibs-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libldap-devel libxkbfile-devel nvidia_glx_173.14.12 python-modules-xml rpm-build-ruby shared-mime-info xorg-xf86vidmodeproto-devel
 BuildRequires(pre): kde4base-workspace-devel kde4pimlibs-devel
-BuildRequires: gcc-c++ libldap-devel scim-devel attica-devel libqca2-devel libqalculate-devel
-BuildRequires: soprano soprano-backend-redland libsoprano-devel
+BuildRequires: gcc-c++ libldap-devel attica-devel libqca2-devel
+%if_enabled scim
+BuildRequires: scim-devel
+%endif
+%if_enabled qalculate
+%endif
+#BuildRequires: soprano soprano-backend-redland libsoprano-devel
 BuildRequires: python-modules-xml shared-mime-info libibus-devel libgio-devel
 BuildRequires: python-devel eigen2 libdbusmenu-qt-devel qoauth-devel qjson-devel
 BuildRequires: kde4network-devel kde4pim-devel kde4graphics-devel
@@ -955,7 +970,9 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4srv/plasma-dataengine-kimpanel.desktop
 
 %files -n plasma-applet-kimpanel
+%if_enabled scim
 %_K4exec/kimpanel-scim-panel
+%endif
 %_K4exec/kimpanel-ibus-panel
 %_K4lib/plasma_applet_kimpanel.so
 %_K4cfg/kimpanelconfig.kcfg
@@ -984,9 +1001,11 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4lib/plasma_applet_spellcheck.so
 %_K4srv/plasma-applet-spellcheck.desktop
 
+%if_enabled qalculate
 %files -n plasma-applet-qalculate
 %_K4lib/plasma_applet_qalculate.so
 %_K4srv/plasma-applet-qalculate.desktop
+%endif
 
 %files -n plasma-applet-knowledgebase
 %_K4lib/plasma_applet_knowledgebase.so
@@ -1322,6 +1341,9 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4link/*.so
 
 %changelog
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.7-alt2
+- rebuild with gcc5
+
 * Thu Apr 23 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.7-alt1
 - new version
 
