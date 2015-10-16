@@ -1,7 +1,7 @@
 
 Name: skanlite
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: Image scanning application
@@ -49,6 +49,12 @@ sed -i \
 %doc %_K4doc/*/%name
 
 %changelog
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 1.1-alt2
+- rebuild
+
+* Fri Feb 21 2014 Sergey V Turchin <zerg@altlinux.org> 1.1-alt0.M70P.1
+- built for M70P
+
 * Tue Feb 18 2014 Sergey V Turchin <zerg@altlinux.org> 1.1-alt1
 - new version
 
