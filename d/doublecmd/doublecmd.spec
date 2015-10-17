@@ -1,6 +1,6 @@
 Name:		doublecmd
 Summary:	Twin-panel (commander-style) file manager (GTK2 and QT4)
-Version:	0.6.5
+Version:	0.6.6
 Release:	alt1
 Url:		http://doublecmd.sourceforge.net
 
@@ -55,7 +55,7 @@ Common files for Double Commander
 
 %build
 ./build.sh beta qt
-mv ./%name ./%name-qt
+mv ./%name ./%name-qt && mv ./%name.zdli ./%name-qt.zdli
 ./clean.sh
 ./build.sh beta gtk2
 
@@ -65,22 +65,27 @@ mv ./%name ./%name-qt
 %install
 install/linux/install.sh --install-prefix=%buildroot
 install ./%name-qt %buildroot%_libdir/%name/%name-qt
+install -m 0644 ./%name-qt.zdli %buildroot%_libdir/%name/%name-qt.zdli
 ln -s ../%_lib/%name/%name-qt %buildroot%_bindir/%name-qt
 install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt.desktop
 
 %files -n %name-gtk
 %_bindir/%name
 %_libdir/%name/%name
+%_libdir/%name/%name.zdli
 %_desktopdir/%name.desktop
 
 %files -n %name-qt
 %_bindir/%name-qt
 %_libdir/%name/%name-qt
+%_libdir/%name/%name-qt.zdli
 %_desktopdir/%name-qt.desktop
 
 %files -n %name-common
 %exclude %_libdir/%name/%name
 %exclude %_libdir/%name/%name-qt
+%exclude %_libdir/%name/%name.zdli
+%exclude %_libdir/%name/%name-qt.zdli
 %exclude %_bindir/%name
 %exclude %_bindir/%name-qt
 %_libdir/%name
@@ -89,6 +94,9 @@ install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt.desktop
 %_pixmapsdir/%name.*
 
 %changelog
+* Sat Oct 17 2015 Motsyo Gennadi <drool@altlinux.ru> 0.6.6-alt1
+- 0.6.6
+
 * Sun Aug 16 2015 Motsyo Gennadi <drool@altlinux.ru> 0.6.5-alt1
 - 0.6.5
 
