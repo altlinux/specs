@@ -1,3 +1,5 @@
+# For update, merge with new tag and do gear-update-tag -a
+
 %define oname glusterfs
 %define major 3.7
 %define _with_fusermount yes
@@ -25,8 +27,8 @@
 
 
 Name: glusterfs3
-Version: %major.3
-Release: alt1
+Version: %major.5
+Release: alt2
 
 Summary: Cluster File System
 
@@ -358,6 +360,7 @@ rm -rf %buildroot/usr/lib/ocf/
 %endif
 
 mv %buildroot/etc/ganesha/ganesha-ha.conf.sample %buildroot/etc/ganesha/ganesha.conf
+touch %buildroot%_sysconfdir/sysconfig/ganesha
 
 # TODO: move common part to -common?
 %files
@@ -455,6 +458,7 @@ mv %buildroot/etc/ganesha/ganesha-ha.conf.sample %buildroot/etc/ganesha/ganesha.
 %files ganesha
 %dir /etc/ganesha/
 %config(noreplace) /etc/ganesha/ganesha.conf
+%config(noreplace) %_sysconfdir/sysconfig/ganesha
 %dir /usr/lib/ganesha/
 /usr/lib/ganesha/create-export-ganesha.sh
 /usr/lib/ganesha/dbus-send.sh
@@ -496,6 +500,13 @@ mv %buildroot/etc/ganesha/ganesha-ha.conf.sample %buildroot/etc/ganesha/ganesha.
 %preun_service glusterd
 
 %changelog
+* Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.5-alt2
+- 3.7.5-alt1
+- fix ganesha requires
+
+* Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.5-alt1
+- new version 3.7.5
+
 * Mon Aug 10 2015 Vitaly Lipatov <lav@altlinux.ru> 3.7.3-alt1
 - new version 3.7.3
 
