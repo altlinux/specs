@@ -1,9 +1,9 @@
 Name: sendmail
 
-%define tarbolversion 8.15.1
+%define tarbolversion 8.15.2
 
 Version: %tarbolversion
-Release: alt2
+Release: alt1
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -493,6 +493,9 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Sat Oct 17 2015 Sergey Y. Afonin <asy@altlinux.ru> 8.15.2-alt1
+- New version
+
 * Fri Dec 12 2014 Sergey Y. Afonin <asy@altlinux.ru> 8.15.1-alt2
 - added FEATURE(`nocanonify') to *.mc
 - removed old examples of *.mc
