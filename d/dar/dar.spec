@@ -1,5 +1,5 @@
 Name: dar
-Version: 2.4.15
+Version: 2.4.18
 Release: alt1
 
 Summary: DAR - Disk ARchive tool
@@ -85,6 +85,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 #%_libdir/*.a
 
 %changelog
+* Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.18-alt1
+- new version 2.4.18 (with rpmrb script)
+
 * Wed Sep 24 2014 Vitaly Lipatov <lav@altlinux.ru> 2.4.15-alt1
 - new version 2.4.15 (with rpmrb script)
 
