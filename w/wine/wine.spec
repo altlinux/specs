@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.7.47
+Version: 1.7.53
 Release: alt1
 Epoch: 1
 
@@ -93,7 +93,7 @@ Requires: fonts-ttf-core
 %endif
 
 # We need predownloaded Gecko engine
-Requires: wine-gecko = 2.36
+Requires: wine-gecko = 2.40
 
 Requires: lib%name = %epoch:%version-%release
 Provides: %name-utils
@@ -155,6 +155,8 @@ Summary(ru_RU.UTF-8): Мета пакет Wine
 Group: Emulators
 Requires: %name = %version-%release
 Requires: lib%name-gl = %version-%release
+
+Requires: wine-mono >= 4.5.6
 
 %description full
 Wine meta package
@@ -434,6 +436,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.53-alt1
+- new version 1.7.53 (uses wine-gecko 2.40)
+
 * Tue Jul 14 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.47-alt1
 - new version 1.7.45
 
