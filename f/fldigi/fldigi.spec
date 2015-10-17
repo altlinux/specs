@@ -1,6 +1,6 @@
 Name:    fldigi
-Version: 3.23.03
-Release: alt2
+Version: 3.23.04
+Release: alt1
 Summary: Fldigi is a software modem for Amateur Radio use
 
 License: GPLv3+
@@ -58,6 +58,9 @@ ARQ data via fldigi.
 %doc %_man1dir/*
 
 %changelog
+* Sat Oct 17 2015 Andrey Cherepanov <cas@altlinux.org> 3.23.04-alt1
+- New version
+
 * Sun Oct 11 2015 Andrey Cherepanov <cas@altlinux.org> 3.23.03-alt2
 - Fix watch file
 
