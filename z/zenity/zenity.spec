@@ -3,7 +3,7 @@
 %def_enable webkitgtk
 
 Name: zenity
-Version: %ver_major.0
+Version: %ver_major.1.1
 Release: alt1
 
 Summary: The GNOME port of dialog(1)
@@ -24,7 +24,7 @@ BuildPreReq: glib2-devel
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: perl-XML-Parser xsltproc
 %{?_enable_libnotify:BuildPreReq: libnotify-devel >= 0.7.0}
-%{?_enable_webkitgtk:BuildRequires: libwebkitgtk3-devel}
+%{?_enable_webkitgtk:BuildRequires: libwebkit2gtk-devel}
 
 %description
 Zenity is a tool that allows you to display Gtk+ dialog boxes from
@@ -57,6 +57,9 @@ a cooler name.
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Sat Oct 17 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1.1-alt1
+- 3.18.1.1
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
