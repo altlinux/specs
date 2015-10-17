@@ -1,5 +1,5 @@
 Name: freeswitch
-Version: 1.4.20
+Version: 1.4.23
 Release: alt1
 Epoch: 1
 
@@ -707,6 +707,9 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Oct 13 2015 Anton Farygin <rider@altlinux.ru> 1:1.4.23-alt1
+- new version
+
 * Wed Jul 15 2015 Anton Farygin <rider@altlinux.ru> 1:1.4.20-alt1
 - build 1.4.20 as new version
 
