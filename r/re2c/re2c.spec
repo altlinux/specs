@@ -1,6 +1,6 @@
 Name: re2c
-Version: 0.13.5
-Release: alt1.qa1
+Version: 0.14.3
+Release: alt1
 
 Summary: re2c - A tool for generating C-based recognizers from regular expressions
 
@@ -48,6 +48,9 @@ install -m 0755 re2c.1 %buildroot%_man1dir/
 %doc README examples doc/* lessons
 
 %changelog
+* Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 0.14.3-alt1
+- new version (0.14.3) with rpmgs script
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.13.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
