@@ -1,6 +1,6 @@
 Name: logjam
-Version: 4.5.3
-Release: alt9.qa2
+Version: 4.6.2
+Release: alt1
 
 Summary: LogJam is a client for LiveJournal.com
 Summary(ru_RU.UTF-8): LogJam - клиент для LiveJournal.com
@@ -11,44 +11,8 @@ Url: http://logjam.danga.com
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://logjam.danga.com/download/%name-%version.tar
-Source1: ru_RU.po
-
-# Patches from Fedora package
-Patch2:		logjam-4.4.1-backdated.patch
-Patch3:		logjam-4.4.1-cleanups.patch
-Patch4:		logjam-4.4.1-fedora-desktop.patch
-Patch5:		logjam-4.5-patch8-manfix.patch
-Patch6:		logjam-4.5.3-gtkhtml314.patch
-Patch7:		logjam-4.4.1-ru.po.asp.patch
-Patch8:		logjam-4.5.3-gtkspell.patch
-Patch9:		http://people.freebsd.org/~novel/patches/non-freebsd/logjam_docklet_context_menu.diff
-Patch10:	logjam-4.5.3-rhythmbox-fix.patch
-Patch11:	logjam-libsoup24.patch
-Patch12:	logjam-4.5.3-disable-threads.patch
-Patch13:	logjam-title.patch
-Patch14:	logjam-4.5.3-tags.patch
-Patch15:	logjam-4.5.3-default-spelllang-en-US.patch
-
-# Additional patches (see bug #15821)
-Patch20:	logjam-4.5.3-close_when_send.patch
-Patch21:	logjam-4.5.3-start_in_dock2.patch
-Patch22:	logjam-4.5.3-no_quit_when_docked2.patch
-
-# Bug #21193
-Patch23:	logjam-4.5.3-useragent.patch
-
-Patch24:	logjam-4.5.3-localequotes.patch
-Patch25:	logjam-4.5.3-potfiles.patch
-
-# Bug #19768
-Patch26:	logjam-4.5.3-mpris.patch
-
-# Bug #19776
-Patch27:	logjam-4.5.3-tagsdialog.patch
-
-# Bug #9516
-Patch28:	logjam-4.5.3-docname.patch
+# Source-url: http://andy-shev.github.io/LogJam/download/logjam-%version.tar.bz2
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Oct 24 2010
 BuildRequires: glibc-devel intltool libdbus-glib-devel libgtkhtml3-devel libgtkspell-devel librsvg-devel libsoup-devel libsqlite3-devel libxml2-devel
@@ -61,46 +25,17 @@ corner of your screen, waiting for you to have something worthwhile to
 tell the world.
 
 %prep
-%setup -q
-#%patch0 -p1
-%patch2 -p1 -b .backdated
-%patch3 -p1 -b .cleanups
-%patch4 -p1 -b .desktop
-%patch5 -p1 -b .manfix
-%patch6 -p1 -b .gtkhtml318
-#%patch7 -p1 -b .ru.po
-%patch8 -p1 -b .bz186906
-%patch9 -p1 -b .docklet-context-menu
-%patch10 -p1 -b .rhythmboxfix
-%patch11 -p1 -b .libsoup
-%patch12 -p1 -b .disable-threads
-%patch13 -p1 -b .title
-%patch14 -p1 -b .tags
-%patch15 -p1 -b .default-spelllang-en-US
-%patch20 -p1 -b .close
-
-%patch21 -p1 -b .dock
-%patch22 -p1 -b .no_quit
-%patch23 -p1 -b .useragent
-%patch24 -p2 -b .localquotes
-%patch25 -p2 -b .potfiles
-
-%patch26 -p1 -b .mpris
-%patch27 -p1 -b .tagsdialog
-%patch28 -p2 -b .docname
-
-cp -f %SOURCE1 po/ru_RU.po
+%setup
 
 %build
 #sed -i 's,\.la,.so,' configure
-touch protocol/liblivejournal/NEWS protocol/liblivejournal/AUTHORS NEWS AUTHORS README
-%autoreconf
+#touch protocol/liblivejournal/NEWS protocol/liblivejournal/AUTHORS NEWS AUTHORS README
 
 # Fixing locale files
-sed -i 's,ru_RU,ru,'  configure
-sed -i 's,uk_UA,uk,'  configure
-mv po/ru_RU.po po/ru.po
-mv po/uk_UA.po po/uk.po
+#sed -i 's,ru_RU,ru,'  configure
+#sed -i 's,uk_UA,uk,'  configure
+#mv po/ru_RU.po po/ru.po
+#mv po/uk_UA.po po/uk.po
 
 %configure --with-gtkhtml314
 
@@ -124,6 +59,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc doc/TODO doc/README COPYING ChangeLog
 
 %changelog
+* Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 4.6.2-alt1
+- new version (4.6.2) with rpmgs script
+- drop out all patches
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.3-alt9.qa2
 - Fixed build
 
