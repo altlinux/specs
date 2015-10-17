@@ -6,7 +6,7 @@
 %def_with crashtests
 
 Name: obnam
-Version: 1.13
+Version: 1.17
 Release: alt1
 
 Summary: An easy, secure backup program
@@ -75,7 +75,7 @@ recommended.
 
 %prep
 %setup
-%patch1 -p1 -b .cov40
+#patch1 -p1 -b .cov40
 
 %build
 %python_build
@@ -103,6 +103,9 @@ exit 0
 %python_sitelibdir/*
 
 %changelog
+* Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 1.17-alt1
+- new version 1.17 (with rpmrb script)
+
 * Wed Aug 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1.13-alt1
 - initial build for ALT Linux Sisyphus
 
