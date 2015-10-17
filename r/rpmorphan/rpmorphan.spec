@@ -1,5 +1,5 @@
 Name: rpmorphan
-Version: 1.12
+Version: 1.15
 Release: alt1
 
 Summary: Find orphaned RPM packages
@@ -15,6 +15,8 @@ Source: http://prdownloads.sourceforge.net/rpmorphan/%version/%name-%version.tar
 BuildArch: noarch
 
 BuildRequires: perl-Pod-Parser
+
+Requires: perl-podlators
 
 %description
 rpmorphan  finds  "orphaned"  packages  on  your system. It determines
@@ -60,6 +62,9 @@ rm -f %buildroot%_logdir/*
 %_var/lib/rpmorphan/keep
 
 %changelog
+* Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 1.15-alt1
+- new version 1.15 (with rpmrb script)
+
 * Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.12-alt1
 - new version 1.12 (with rpmrb script)
 
