@@ -1,13 +1,13 @@
 Name:		alexandra
-Version:	1.3.0
-Release:	alt1.1
+Version:	1.4.0
+Release:	alt1
 Summary:	A small and user friendly opensource video library with great potential
 License:	GPLv2
 Group:		Video
 Url:		http://alexandra-qt.sourceforge.net/
 Source0:	%name-%version.tar.gz
 
-BuildRequires: gcc-c++ libmediainfo-devel qt5-base-devel
+BuildRequires: gcc-c++ libmediainfo-devel qt5-base-devel qt5-tools qt5-translations
 
 %description
 Alexandra Video Library - a simple and convenient program for the organization
@@ -24,7 +24,7 @@ written in C++ using Qt5 framework.
 %setup
 
 %build
-%qmake_qt5 src/%name.pro
+%qmake_qt5 %name.pro
 %make_build
 
 %install
@@ -33,10 +33,13 @@ make INSTALL_ROOT=%buildroot install
 %files
 %doc LICENSE README.md
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/*.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sun Oct 18 2015 Motsyo Gennadi <drool@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Sat Aug 29 2015 Motsyo Gennadi <drool@altlinux.ru> 1.3.0-alt1.1
 - fix BuildRequires (tnx to Gleb Fotengauer-Malinovskiy for note)
 
