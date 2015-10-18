@@ -1,6 +1,8 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define dist Alien-SDL
 Name: perl-%dist
-Version: 1.440
+Version: 1.446
 Release: alt1
 
 Summary: Building, finding and using SDL binaries
@@ -22,12 +24,23 @@ installed SDL and related libraries.  Based on your platform it offers the
 possibility to download and install prebuilt binaries or to build SDL & co.
 from source codes.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %{?epoch:%epoch:}%name = %version-%release
+
+%description scripts
+scripts for %name
+
+
 %prep
 %setup -q -n %dist-%version
 %patch -p2
 
 %build
-%perl_vendor_build --with-sdl-config
+#perl_vendor_build --with-sdl-config
+echo 1 | %{__perl} Build.PL --installdirs=vendor
+./Build
 
 %install
 %perl_vendor_install
@@ -36,7 +49,15 @@ from source codes.
 %doc Changes README
 %perl_vendor_privlib/Alien
 
+%files scripts
+%_bindir/*
+#%_man1dir/*
+
+
 %changelog
+* Sun Oct 18 2015 Igor Vlasenko <viy@altlinux.ru> 1.446-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.440-alt1
 - automated CPAN update
 
