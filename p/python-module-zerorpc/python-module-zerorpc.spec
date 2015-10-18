@@ -2,7 +2,7 @@
 %define oname zerorpc-python
 
 Name: python-module-zerorpc
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: An easy to use, intuitive, and cross-language RPC
@@ -87,5 +87,8 @@ popd
 %endif
 
 %changelog
+* Sun Oct 18 2015 Vitaly Lipatov <lav@altlinux.ru> 0.5.2-alt1
+- new version 0.5.2 (with rpmrb script)
+
 * Thu Aug 06 2015 Vitaly Lipatov <lav@altlinux.ru> 0.5.1-alt1
 - initial build for ALT Linux Sisyphus
