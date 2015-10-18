@@ -2,15 +2,16 @@ Summary: GTK+ based GUI for controlling CDEmu daemon
 Summary(ru_RU.UTF-8): Основанная на GTK+ GUI для управления CDEmu
 Name: gcdemu
 Version: 3.0.0
-Release: alt1
+Release: alt2
 Group: Emulators
 License: GPLv2+
 Url: http://cdemu.sourceforge.net/
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+Patch1: autostart.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake intltool
-Requires: cdemu-daemon python-module-notify python-module-appindicator
+Requires: cdemu-daemon cdemu-client python-module-notify python-module-appindicator
 BuildArch: noarch
 
 %description
@@ -25,12 +26,12 @@ In addition, it listens to signals emitted by CDEmu daemon and provides
 notifications via libnotify.
 
 %description -l ru_RU.UTF-8
-gCDEmu -  базирующаяся на Gtk+ программа с графическим интерфейсом для
+gCDEmu - базирующийся на Gtk+ и Appindicator апплет в области уведомлений для
 управления службой CDEmu. Является частью проекта CDEmu, свободного (GPL)
-эмулятора устройства CD/DVD-ROM для Линукс. 
+эмулятора устройства CD/DVD-ROM для Линукс.
 
 Обеспечивает графический интерфейс, который позволяет выполнять основные задачи,
-связанные с управления службой CDEmu, например монтирование и отмонтирование
+связанные с управлением службой CDEmu, например монтирование и размонтирование
 образов, отображение статуса виртуальных устройств CD/DVD-ROM.
 
 Кроме того, он слушает сигналы, посылаемые службой CDEmu и обеспечивает вывод
@@ -38,6 +39,7 @@ gCDEmu -  базирующаяся на Gtk+ программа с графич�
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %cmake_insource
@@ -58,5 +60,9 @@ install -m644 %buildroot/%_desktopdir/%name.desktop %buildroot/%_sysconfdir/xdg/
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Sun Oct 18 2015 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt2
+- Added autostart.patch;
+- Added requires: cdemu-client.
+
 * Mon Sep 21 2015 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
 - Initial build for ALT Linux Sisyphus.
