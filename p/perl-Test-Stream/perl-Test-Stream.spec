@@ -1,21 +1,21 @@
-%define module_version 1.302016
+%define _unpackaged_files_terminate_build 1
+%define module_version 1.302017
 %define module_name Test-Stream
 %filter_from_requires /^perl.Sub.Util.pm/d
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B.pm) perl(Carp.pm) perl(Config.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(List/Util.pm) perl(PerlIO.pm) perl(Scalar/Util.pm) perl(Storable.pm) perl(Test/Harness.pm) perl(Unicode/GCString.pm) perl(base.pm) perl(overload.pm) perl(threads.pm) perl(threads/shared.pm) perl(utf8.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.302016
+Version: 1.302017
 Release: alt1
 Summary: Comming soon
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/E/EX/EXODIST/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/EX/EXODIST/Test-Stream-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -37,6 +37,9 @@ rm -f t/modules/Table.t
 %perl_vendor_privlib/T*
 
 %changelog
+* Sun Oct 18 2015 Igor Vlasenko <viy@altlinux.ru> 1.302017-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.302016-alt1
 - regenerated from template by package builder
 
