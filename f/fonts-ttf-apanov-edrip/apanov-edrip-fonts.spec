@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname apanov-edrip-fonts
 %global fontname apanov-edrip
 %global fontconf 61-%{fontname}.conf
@@ -8,18 +9,16 @@
 
 Name:    fonts-ttf-apanov-edrip
 Version: 20100430
-Release: alt2_7
+Release: alt2_10
 Summary: A decorative contrast sans-serif font
 
-Group:     System/Fonts/True type
 License:   OFL
 URL:       http://code.google.com/p/%{googlename}/
-
 # Upstream has still not completed hosting switching
 Source0:   ftp://ftp.dvo.ru/pub/Font/edrip/%{archivename}.tar.xz
 #Source0:   http://%{googlename}.googlecode.com/files/%{archivename}.tar.xz
 Source1:   %{oldname}-fontconfig.conf
-
+Source2:   %{fontname}.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontforge xgridfit >= 2.2-4.a.20100725cvs.fc14
@@ -39,8 +38,6 @@ Latin alphabets.
 make %{?_smp_mflags}
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *\.ttf %{buildroot}%{_fontdir}
 
@@ -51,6 +48,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -86,14 +87,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc *.txt README
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Oct 18 2015 Igor Vlasenko <viy@altlinux.ru> 20100430-alt2_10
+- new version
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 20100430-alt2_7
 - update to new release by fcimport
 
