@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-symbola
 Version:        8.00
-Release:        alt1_3
+Release:        alt1_4
 Summary:        A symbol font
 
 # https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
@@ -19,9 +19,8 @@ Summary:        A symbol font
 License:        Public Domain
 URL:            http://users.teilar.gr/~g1951d/
 Source0:        http://users.teilar.gr/~g1951d/Symbola.zip
-Source1:        http://users.teilar.gr/~g1951d/Symbola.pdf
-Source2:        %{oldname}-fontconfig.conf
-Source3:        %{fontname}.metainfo.xml
+Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -40,7 +39,6 @@ It was created by George Douros.
 
 %prep
 %setup -n %{oldname}-%{version} -q -c
-cp -p %{SOURCE1} .
 
 %build
 
@@ -51,12 +49,12 @@ install -m 0644 -p Symbola.ttf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE2} \
+install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
-install -Dm 0644 -p %{SOURCE3} \
+install -Dm 0644 -p %{SOURCE2} \
         %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -106,6 +104,9 @@ appstream-util validate-relax --nonet \
 %doc Symbola.pdf
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 8.00-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 8.00-alt1_3
 - update to new release by fcimport
 
