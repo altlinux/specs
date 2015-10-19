@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison gcc-c++ pkgconfig(libcurl)
+BuildRequires: /usr/bin/bison gcc-c++ libossp-uuid-devel pkgconfig(libcurl)
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
-Version: 3.13.3
+Version: 3.15.1
 Release: alt1_1
 
 License: LGPLv2+
@@ -17,13 +17,18 @@ Patch0:  libdap-offline.patch
 
 # For autoreconf
 BuildRequires: libtool
+BuildRequires: bison
 BuildRequires: cppunit-devel
 BuildRequires: curl-devel
 BuildRequires: doxygen
+BuildRequires: flex
 BuildRequires: graphviz
 BuildRequires: libuuid-devel
 BuildRequires: libxml2-devel
 BuildRequires: libssl-devel
+%ifnarch s390
+BuildRequires: valgrind
+%endif
 
 Provides: bundled(gnulib)
 Source44: import.info
@@ -73,6 +78,7 @@ mv COPYRIGHT_W3C.utf8 COPYRIGHT_W3C
 # To fix rpath
 autoreconf -f -i
 %configure --disable-static --disable-dependency-tracking
+# --enable-valgrind - missing valgrind exclusions file
 make %{?_smp_mflags}
 
 make docs
@@ -80,7 +86,8 @@ make docs
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
-rm $RPM_BUILD_ROOT%{_libdir}/libtest-types.a
+mkdir -p $RPM_BUILD_ROOT%{_libdir}/libdap
+mv $RPM_BUILD_ROOT%{_libdir}/libtest-types.a $RPM_BUILD_ROOT%{_libdir}/libdap/
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 mv $RPM_BUILD_ROOT%{_bindir}/dap-config-pkgconfig $RPM_BUILD_ROOT%{_bindir}/dap-config
 
@@ -99,10 +106,12 @@ done
 
 %files
 %{_bindir}/getdap
-%{_libdir}/libdap.so.*
-%{_libdir}/libdapclient.so.*
-%{_libdir}/libdapserver.so.*
+%{_bindir}/getdap4
+%{_libdir}/libdap.so.17*
+%{_libdir}/libdapclient.so.6*
+%{_libdir}/libdapserver.so.7*
 %{_mandir}/man1/getdap.1*
+%{_mandir}/man1/getdap4.1*
 %doc README NEWS COPYING COPYRIGHT_URI README.dodsrc
 %doc COPYRIGHT_W3C
 
@@ -110,6 +119,7 @@ done
 %{_libdir}/libdap.so
 %{_libdir}/libdapclient.so
 %{_libdir}/libdapserver.so
+%{_libdir}/libdap/
 %{_libdir}/pkgconfig/libdap*.pc
 %{_bindir}/dap-config
 %{_includedir}/libdap/
@@ -122,6 +132,9 @@ done
 
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 3.15.1-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 3.13.3-alt1_1
 - update to new release by fcimport
 
