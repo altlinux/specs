@@ -17,7 +17,7 @@ BuildRequires: python-modules-xml python-devel
 
 Name:           openni
 Version:        1.5.7.10
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Library for human-machine Natural Interaction
 
 Group:          System/Libraries
@@ -72,7 +72,7 @@ Group:          Development/C
 Requires:       %{name} = %{version}-%{release}
 BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
-Requires:       java
+Requires:       java-headless
 Requires:       jpackage-utils
 
 %description    java
@@ -218,6 +218,9 @@ fi
 
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt1_6
+- update to new release by fcimport
+
 * Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt1_4
 - update to new release by fcimport
 
