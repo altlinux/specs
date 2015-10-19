@@ -1,19 +1,29 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %global pkgname Tie-Function
 
 Name:           perl-Tie-Function
 Version:        0.02
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Wrap functions in tied hash sugar
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Tie-Function/
 Source0:        http://www.cpan.org/authors/id/D/DA/DAVIDNICO/handy_tied_functions/%{pkgname}-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  make
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Run-time:
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(warnings.pm)
+# Tests:
+BuildRequires:  perl(Test.pm)
+Requires:       perl(warnings.pm)
 Source44: import.info
 
 %description
@@ -41,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_8
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_7
 - update to new release by fcimport
 
