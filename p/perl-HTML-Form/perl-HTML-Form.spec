@@ -1,25 +1,37 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Encode.pm) perl(HTTP/Response.pm) perl(Test.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-Form
 Version:        6.03
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Class that represents an HTML form element
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/HTML-Form/
 Source0:        http://www.cpan.org/authors/id/G/GA/GAAS/HTML-Form-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  make
+BuildRequires:  perl
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Encode.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(HTML/TokeParser.pm)
 BuildRequires:  perl(HTTP/Request.pm)
 BuildRequires:  perl(HTTP/Request/Common.pm)
+BuildRequires:  perl(HTTP/Response.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(Test.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(URI.pm)
+BuildRequires:  perl(vars.pm)
+BuildRequires:  perl(warnings.pm)
 Requires:       perl(HTML/TokeParser.pm)
 Requires:       perl(HTTP/Request.pm) >= 6
-Requires:       perl(HTTP/Request/Common.pm) >= 6
+Requires:       perl(HTTP/Request/Common.pm) >= 6.03
 
 
 Source44: import.info
@@ -54,6 +66,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_11
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_10
 - update to new release by fcimport
 
