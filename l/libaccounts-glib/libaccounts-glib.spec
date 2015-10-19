@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/gtkdocize /usr/bin/xmllint /usr/bin/xsltproc docbook-dtds pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) python-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 Name:		libaccounts-glib
 Version:	1.18
-Release:	alt1_2
-Group:		System/Libraries
+Release:	alt1_3
 Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
 URL:        https://gitlab.com/accounts-sso/libaccounts-glib
@@ -26,9 +26,9 @@ Source44: import.info
 %{summary}.
 
 %package devel
+Group: Development/C
 Summary:	Development files for %{name}
-Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -59,6 +59,9 @@ make install DESTDIR=%{buildroot}
 
 rm -f %{buildroot}%{_libdir}/*.la
 
+# create/own data dirs
+mkdir -p %{buildroot}%{_datadir}/accounts/{applications,providers,services,service_types}
+
 # add docs manuall to %%doc instead
 rm -rf %{buildroot}%{_prefix}/doc/reference
 
@@ -76,22 +79,27 @@ rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 %dir %{_datadir}/backup-framework
 %dir %{_datadir}/backup-framework/applications
 %{_datadir}/backup-framework/applications/*.conf
-%{_libdir}/%{name}.so.*
+%{_libdir}/libaccounts-glib.so.0*
 %{_libdir}/girepository-1.0/Accounts-1.0.typelib
 %dir %{_datadir}/xml/
 %dir %{_datadir}/xml/accounts/
 %dir %{_datadir}/xml/accounts/schema/
 %dir %{_datadir}/xml/accounts/schema/dtd
 %{_datadir}/xml/accounts/schema/dtd/accounts-*.dtd
+%dir %{_datadir}/accounts/
+%dir %{_datadir}/accounts/applications/
+%dir %{_datadir}/accounts/providers/
+%dir %{_datadir}/accounts/services/
+%dir %{_datadir}/accounts/service_types/
 
 %files devel
-%{_libdir}/%{name}.so
-%{_libdir}/pkgconfig/%{name}.pc
-%{_includedir}/%{name}
+%{_libdir}/libaccounts-glib.so
+%{_libdir}/pkgconfig/libaccounts-glib.pc
+%{_includedir}/libaccounts-glib
 %{_datadir}/gir-1.0/Accounts-1.0.gir
-%{_libdir}/libaccounts-glib
+%{_libdir}/libaccounts-glib/
 %{_datadir}/dbus-1/interfaces/*.xml
-%{_datadir}/libaccounts-glib
+%{_datadir}/libaccounts-glib/
 %{_datadir}/vala/vapi/libaccounts-glib.deps
 %{_datadir}/vala/vapi/libaccounts-glib.vapi
 
@@ -99,6 +107,9 @@ rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 %doc %{_datadir}/gtk-doc/html/libaccounts-glib/
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1_3
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1_2
 - update to new release by fcimport
 
