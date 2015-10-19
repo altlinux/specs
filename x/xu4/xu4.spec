@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%define svndate 20120106
-%define svnrev 2999
+%define svndate 20150221
+%define svnrev 3087
 
 Name:           xu4
 Version:        1.1
-Release:        alt2_0.22.%{svndate}svn%{svnrev}
+Release:        alt2_0.25.%{svndate}svn%{svnrev}
 Summary:        Ultima IV recreated
 Group:          Games/Other
 License:        GPLv2+
@@ -18,8 +18,9 @@ Source2:        xu4.autodlrc
 Source3:        u4download.txt
 Patch0:         xu4-1.0beta3-desktop.patch
 Patch1:         xu4-1.1-unbundle.patch
+Patch2:         xu4-1.1-format-security.patch
 BuildRequires:  libSDL_mixer-devel libxml2-devel libminizip-devel
-BuildRequires:  libpng-devel desktop-file-utils
+BuildRequires:  libicns-utils libpng-devel desktop-file-utils
 Requires:       icon-theme-hicolor autodownloader
 Source44: import.info
 
@@ -38,8 +39,9 @@ spirit of the original game will be added.
 
 %prep
 %setup -q -n u4
-%patch0 -p1 -z .desktop
-%patch1 -p1 -z .unbundle
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 if [ "%{_lib}" = "lib64" ]; then
   sed -i 's|/usr/lib|%{_libdir}|g' src/u4file.cpp
 fi
@@ -52,6 +54,10 @@ make DEBUGCXXFLAGS="%{optflags}" EXTRALIBS=-lminizip\
   bindir=%{_bindir} datadir=%{_datadir} libdir=%{_libdir} %{?_smp_mflags}
 popd
 
+# The apple icns file has a higher resolution icon, but still not 256x256.
+pushd icons
+icns2png -x xu4.icns
+popd
 
 %install
 pushd src
@@ -67,14 +73,15 @@ install -p -m 755 %{SOURCE1} %{buildroot}/%{_bindir}/u4
 install -p -m 644 %{SOURCE2} %{buildroot}/%{_libdir}/u4
 
 # below is the desktop file and icon stuff.
-desktop-file-install         \
-  --dir %{buildroot}/%{_datadir}/applications \
-  --delete-original                             \
-  %{buildroot}/%{_datadir}/applications/u4.desktop
+desktop-file-install \
+    --dir %{buildroot}/%{_datadir}/applications \
+    --delete-original \
+    %{buildroot}/%{_datadir}/applications/u4.desktop
 
-mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/64x64/apps
-mv %{buildroot}/%{_datadir}/pixmaps/u4.png \
-  %{buildroot}/%{_datadir}/icons/hicolor/64x64/apps
+mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/128x128/apps
+install -p -m 655 icons/xu4_128x128x32.png \
+     %{buildroot}/%{_datadir}/icons/hicolor/128x128/apps/u4.png
+rm -rf %{buildroot}/%{_datadir}/pixmaps
 
 
 %files
@@ -82,12 +89,14 @@ mv %{buildroot}/%{_datadir}/pixmaps/u4.png \
 %doc doc/U4Notes.txt doc/tools.txt u4download.txt
 %{_bindir}/u4*
 %{_libdir}/u4
-%{_datadir}/pixmaps/u4.bmp
 %{_datadir}/applications/u4.desktop
-%{_datadir}/icons/hicolor/64x64/apps/u4.png
+%{_datadir}/icons/hicolor/128x128/apps/u4.png
 
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.25.20150221svn3087
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.22.20120106svn2999
 - update to new release by fcimport
 
