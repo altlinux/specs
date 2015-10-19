@@ -2,7 +2,7 @@
 %def_enable zart
 
 Name: gmic
-Version: 1.6.5.0
+Version: 1.6.6.1
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -11,7 +11,6 @@ Group: Graphics
 Url: http://gmic.sourceforge.net/
 
 Source: http://gmic.eu/files/source/%{name}_%version.tar.gz
-Patch: gmic-1.6.3.1-alt-makefile.patch
 
 Requires: lib%name = %version-%release
 
@@ -75,7 +74,6 @@ multi-spectral image datasets.
 %prep
 %setup -n gmic-%version
 dos2unix src/Makefile
-%patch -p1
 subst 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
 
 %build
@@ -84,7 +82,7 @@ export QTDIR=%_qt4dir
 export PATH=%_qt4dir/bin:$PATH
 %endif
 pushd src
-%make_build
+%make_build NOSTRIP=1
 popd
 
 %install
@@ -122,6 +120,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Mon Oct 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.6.1-alt1
+- 1.6.6.1
+
 * Tue Jun 23 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.5.0-alt1
 - 1.6.5.0
 
