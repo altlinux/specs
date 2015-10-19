@@ -2,7 +2,7 @@
 %define my_subversion b7
 Name:           html2ps
 Version:        1.0
-Release:        alt2_0.18.%{my_subversion}
+Release:        alt2_0.20.%{my_subversion}
 Summary:        HTML to PostScript converter
 
 Group:          Publishing
@@ -74,7 +74,7 @@ mkdir -p $RPM_BUILD_ROOT%{_bindir}
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man{1,5}
 
 sed -e 's;/etc/html2psrc;%{_sysconfdir}/html2psrc;' \
-    -e 's;/usr/share/doc/html2ps;%{_pkgdocdir};' \
+    -e 's;/usr/share/doc/html2ps;%{_docdir}/%{name};' \
         html2ps > $RPM_BUILD_ROOT%{_bindir}/html2ps
 chmod 0755 $RPM_BUILD_ROOT%{_bindir}/html2ps
 install -p -m0644 html2ps.1 $RPM_BUILD_ROOT%{_mandir}/man1
@@ -102,6 +102,9 @@ desktop-file-install \
 %{_datadir}/applications/*xhtml2ps.desktop
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.20.b7
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.18.b7
 - update to new release by fcimport
 
