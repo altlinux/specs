@@ -3,27 +3,24 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gdouros-analecta-fonts
+%global fontname gdouros-analecta
+%global fontconf 65-%{fontname}.conf
+
+Name:           fonts-otf-gdouros-analecta
+Version:        5.00
+Release:        alt1_1
+Summary:        An ecclesiastic scripts font
+
 # https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
 # "in lieu of a licence:
 # Fonts and documents in this site are not pieces of property or merchandise
 # items; they carry no trademark, copyright, license or other market tags;
 # they are free for any use. George Douros"
-
-%global fontname gdouros-analecta
-%global fontconf 65-%{fontname}.conf
-%global checkout 20150430
-
-Name:           fonts-otf-gdouros-analecta
-Version:        4.02
-Release:        alt1_0.4.20150430
-Summary:        An ecclesiastic scripts font
-
 License:        Public Domain
 URL:            http://users.teilar.gr/~g1951d/
 Source0:        http://users.teilar.gr/~g1951d/Analecta.zip
-Source1:        http://users.teilar.gr/~g1951d/Analecta.pdf
-Source2:        %{oldname}-fontconfig.conf
-Source3:        %{fontname}.metainfo.xml
+Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -39,7 +36,6 @@ It was created by George Douros.
 
 %prep
 %setup -n %{oldname}-%{version} -q -c
-cp -p %{SOURCE1} .
 
 %build
 
@@ -50,12 +46,12 @@ install -m 0644 -p Analecta.ttf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE2} \
+install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
-install -Dm 0644 -p %{SOURCE3} \
+install -Dm 0644 -p %{SOURCE2} \
         %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -105,6 +101,9 @@ appstream-util validate-relax --nonet \
 %doc Analecta.pdf
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 5.00-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 4.02-alt1_0.4.20150430
 - update to new release by fcimport
 
