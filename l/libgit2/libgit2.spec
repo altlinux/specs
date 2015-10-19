@@ -1,5 +1,5 @@
 Name: libgit2
-Version: 0.23.2
+Version: 0.23.3
 Release: alt1
 
 Summary: linkable library for Git
@@ -11,7 +11,7 @@ URL: http://libgit2.github.com
 Source: %name-%version.tar.gz
 
 BuildPreReq: rpm-macros-cmake
-BuildRequires: cmake python-modules zlib-devel libssl-devel libssh2-devel
+BuildRequires: cmake python-modules zlib-devel libssl-devel libssh2-devel libcurl-devel
 
 %description
 libgit2 is a portable, pure C implementation of the Git core methods
@@ -58,6 +58,9 @@ sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Oct 19 2015 Yuri N. Sedunov <aris@altlinux.org> 0.23.3-alt1
+- 0.23.3
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 0.23.2-alt1
 - 0.23.2
 
