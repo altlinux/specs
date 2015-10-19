@@ -1,18 +1,18 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Event-ICal
 Version:        0.13
-Release:        alt1
+Release:        alt1_1
 Summary:        Perl DateTime extension for computing rfc2445 recurrences
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Event-ICal/
-Source:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-ICal-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-ICal-%{version}.tar.gz
 BuildArch:      noarch
 # Build
+BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
@@ -24,6 +24,7 @@ BuildRequires:  perl(DateTime/Event/Recurrence.pm)
 BuildRequires:  perl(DateTime/Set.pm)
 BuildRequires:  perl(DateTime/Span.pm)
 BuildRequires:  perl(DateTime/SpanSet.pm)
+BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(Params/Validate.pm)
 BuildRequires:  perl(vars.pm)
 # Test suite
@@ -40,22 +41,25 @@ DateTime::Set objects for rfc2445 style recurrences.
 %setup -q -n DateTime-Event-ICal-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} +
 # %{_fixperms} %{buildroot}
 
 %check
 make test
 
 %files
-%doc Changes LICENSE README TODO
-%{perl_vendor_privlib}/DateTime/
+%doc LICENSE
+%doc Changes README TODO
+%{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_1
+- update to new release by fcimport
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
