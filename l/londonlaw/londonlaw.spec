@@ -1,20 +1,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
-%define fedora 21
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           londonlaw
-Version:        0.2.1
-Release:        alt2_17
+Version:        0.3.0
+Release:        alt1_0.2.pre2
 Summary:        Online multiplayer version of a well known detective boardgame
 License:        GPLv2
 Group:          Games/Other
-URL:            http://pessimization.com/software/londonlaw/
-Source0:        http://pessimization.com/software/%{name}/%{name}-%{version}.tar.gz
+URL:            http://github.com/anyc/londonlaw
+Source0:        http://github.com/anyc/londonlaw/archive/v0.3.0_pre2.tar.gz
 Source1:        %{name}.desktop
 Source2:        %{name}-server.desktop
-Patch0:         londonlaw-0.2.1-new-twisted.patch
 BuildRequires:  python-devel python-module-wx ghostscript-utils ghostscript ImageMagick
 BuildRequires: /usr/bin/latex texlive-latex-recommended texlive-latex-recommended desktop-file-utils
 BuildArch:      noarch
@@ -33,8 +31,7 @@ Law features an attractive map overlaid on high-resolution satellite imagery.
 
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %{name}-%{version}_pre2
 chmod +x setup.py
 
 
@@ -45,38 +42,29 @@ make -C doc manual.pdf
 
 %install
 ./setup.py install --prefix=%{_prefix} --root=$RPM_BUILD_ROOT
-# already in /usr/bin
-rm $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/%{name}/london-{client,server}.py
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 convert londonlaw/guiclient/images/playericon1.jpg -resize 48x48 \
    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-      \
-%endif
-  --dir=${RPM_BUILD_ROOT}%{_datadir}/applications  \
-  %{SOURCE1}
-desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-      \
-%endif
-  --dir=${RPM_BUILD_ROOT}%{_datadir}/applications  \
-  %{SOURCE2}
+desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE1}
+desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE2}
 
 
 %files
-%doc COPYING ChangeLog doc/TODO doc/*.pdf doc/readme.protocol
+%doc COPYING doc/ChangeLog doc/TODO doc/*.pdf doc/readme.protocol
 %{_bindir}/london-*
 %{_datadir}/%{name}
 %{python_sitelibdir_noarch}/%{name}
-%{python_sitelibdir_noarch}/%{name}-%{version}-py?.?.egg-info
+%{python_sitelibdir_noarch}/%{name}-%{version}*-py?.?.egg-info
 %{_datadir}/applications/*%{name}*.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_0.2.pre2
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2_17
 - update to new release by fcimport
 
