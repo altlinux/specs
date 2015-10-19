@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ perl(IO/Handle.pm)
 %define _hardened_build 1
 Name:             fuse-zfs
 Version:          0.7.0
-Release:          alt1_20
+Release:          alt1_22
 Summary:          ZFS ported to Linux FUSE
 Group:            System/Base
 License:          CDDL
@@ -21,7 +21,7 @@ Patch2:           zfs-fuse-printf-format.patch
 Patch3:           zfs-fuse-0.7.0-ppc64le.patch
 BuildRequires:    libfuse-devel libaio-devel scons zlib-devel libssl-devel libattr-devel
 %ifnarch aarch64 ppc64le
-BuildRequires:    prelink
+BuildRequires:    /usr/bin/execstack
 %endif
 BuildRequires:    systemd
 Requires:         fuse >= 2.7.4-1
@@ -100,9 +100,9 @@ fi
 %preun_service zfs-fuse
 
 %postun
-#echo "Removing files since we removed the last package"
-#rm -rf /var/run/zfs
-#rm -rf /var/lock/zfs
+echo "Removing files since we removed the last package"
+rm -rf /var/run/zfs
+rm -rf /var/lock/zfs
 
 %files
 %doc BUGS CHANGES contrib HACKING LICENSE README 
@@ -126,6 +126,9 @@ fi
 %config(noreplace) %_initdir/zfs-fuse
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_22
+- update to new release by fcimport
+
 * Mon Sep 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_20
 - new release (closes: #30364)
 
