@@ -1,69 +1,91 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: accounts-qt5-devel gcc-c++ libqt4-devel pkgconfig(glib-2.0) pkgconfig(gobject-2.0)
+BuildRequires: accounts-qt5-devel gcc-c++ pkgconfig(glib-2.0) pkgconfig(gobject-2.0)
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
-Name:		libaccounts-qt
-Version:	1.11
-Release:	alt1_7
-Summary:	Accounts framework Qt bindings
-Group:		System/Libraries
-License:	LGPLv2
-URL:		http://code.google.com/p/accounts-sso/
-Source0:	http://accounts-sso.googlecode.com/files/accounts-qt-%{version}.tar.bz2
-Patch1:		libaccounts-qt-64bitarchs.patch
-BuildRequires:	qt4-devel libaccounts-glib-devel
-BuildRequires:	doxygen graphviz
+
+%global commit0 2a9cc22ff7b0b62b60541423763cb3dd992c0f40
+
+Name:           libaccounts-qt
+Summary:        Accounts framework Qt bindings
+Version:        1.13
+Release:        alt1_1
+
+License:        LGPLv2
+URL:            https://gitlab.com/accounts-sso/libaccounts-qt
+
+Source0:        https://gitlab.com/accounts-sso/libaccounts-qt/repository/archive.tar.gz?ref=%{version}#/libaccounts-qt-%{version}-%{commit0}.tar.gz
+
+Patch1:         libaccounts-qt-64bitarchs.patch
+
+## upstream patches
+Patch102: 0002-Fix-memory-leaks-found-by-valgrind.patch
+patch105: 0005-Use-gboolean-instead-of-bool.patch
+
+BuildRequires:  pkgconfig(QtGui)
+BuildRequires:  pkgconfig(libaccounts-glib)
+BuildRequires:  doxygen
+BuildRequires:  graphviz
 Source44: import.info
 
 %description
-Framework to provide accounts for Qt.
+%{summary}.
 
-%package devel
-Summary:	Development files for accounts-qt
-Group:		Development/C
-Requires:	%{name}%{?_isa} = %{version}-%{release}
-Requires:	qt4-devel%{?_isa}
+%package        devel
+Group: Development/C
+Summary:        Development files for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+%description    devel
+%{summary}.
 
-%description devel
-Headers, development libraries and documentation for accounts-qt.
 
 %prep
-%setup -q -n accounts-qt-%{version}
+%setup -q -n libaccounts-qt-%{version}-%{commit0}
+
 %patch1 -p1 -b .64bitarchs
+%patch102 -p1 -b .0002
+%patch105 -p1 -b .0005
+
 
 %build
-export PATH=%{_qt4_bindir}:$PATH
-qmake-qt4 QMF_INSTALL_ROOT=%{_prefix} \
-    CONFIG+=release accounts-qt.pro
+%{qmake_qt4} \
+    QMF_INSTALL_ROOT=%{_prefix} \
+    CONFIG+=release \
+    accounts-qt.pro
 
 make %{?_smp_mflags}
+
 
 %install
 make install INSTALL_ROOT=%{buildroot}
 
-rm -f %{buildroot}/%{_datadir}/doc/accounts-qt/html/installdox
+rm -fv %{buildroot}%{_datadir}/doc/accounts-qt/html/installdox
 
 #remove tests for now
-rm -rf %{buildroot}%{_datadir}/%{name}-tests
-rm -f %{buildroot}%{_bindir}/accountstest
+rm -rfv %{buildroot}%{_datadir}/libaccounts-qt-tests
+rm -fv %{buildroot}%{_bindir}/accountstest
 
 # move installed docs to include them in subpackage via %%doc magic
 rm -rf __tmp_doc ; mkdir __tmp_doc
 mv %{buildroot}%{_docdir}/accounts-qt __tmp_doc
 
+
 %files
 %doc COPYING
-%{_libdir}/lib*.so.*
+%{_libdir}/libaccounts-qt.so.*
 
 %files devel
-%{_libdir}/lib*.so
+%{_libdir}/libaccounts-qt.so
 %{_includedir}/accounts-qt/
 %{_libdir}/pkgconfig/accounts-qt.pc
-%{_libdir}/cmake/AccountsQt
+%{_libdir}/cmake/AccountsQt/
 %doc __tmp_doc/accounts-qt/*
 
+
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1_7
 - update to new release by fcimport
 
