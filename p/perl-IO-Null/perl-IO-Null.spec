@@ -1,17 +1,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(IO/Handle.pm) perl(Test.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-IO-Null
 Version:        1.01
-Release:        alt2_21
+Release:        alt2_22
 Summary:        Class for null filehandles
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/IO-Null/
 Source0:        http://www.cpan.org/authors/id/S/SB/SBURKE/IO-Null-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  make
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(IO/Handle.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(Test.pm)
+BuildRequires:  perl(vars.pm)
 Source44: import.info
 
 %description
@@ -45,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_22
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_21
 - update to new release by fcimport
 
