@@ -8,13 +8,13 @@
 %global archivename2 Cantarell-Regular
 
 Name: fonts-otf-abattis-cantarell
-Version: 0.0.16
-Release: alt1_2
+Version: 0.0.17.2
+Release: alt1_1
 Summary: Cantarell, a Humanist sans-serif font family
 
 Group: System/Fonts/True type
 License: OFL
-URL: http://abattis.org/cantarell/
+URL: https://git.gnome.org/browse/cantarell-fonts/
 Source0: http://download.gnome.org/sources/%{actualname}-fonts/0.0/%{actualname}-fonts-%{version}.tar.xz
 Source1: %{fontname}.metainfo.xml
 
@@ -30,16 +30,16 @@ It is a sans-serif humanist typeface family.
 %prep
 %setup -q -n %{actualname}-fonts-%{version}
 
+# Force regeneration
+rm otf/*.otf
+
 %build
-%configure
+%configure --enable-source-rebuild
 make %{?_smp_mflags}
-ls -l ./src/
-fontforge -lang=ff -c 'Open($1); Generate($2);' src/%{archivename1}.sfd %{archivename1}.otf
-fontforge -lang=ff -c 'Open($1); Generate($2);' src/%{archivename2}.sfd %{archivename2}.otf
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.otf %{buildroot}%{_fontdir}
+install -m 0644 -p otf/*.otf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 install -m 0644 -p fontconfig/%{fontconf} \
@@ -89,10 +89,14 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
-%doc COPYING NEWS README
+%doc COPYING
+%doc NEWS README
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.17.2-alt1_1
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.16-alt1_2
 - update to new release by fcimport
 
