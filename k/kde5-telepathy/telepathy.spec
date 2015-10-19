@@ -1,6 +1,6 @@
 Name: kde5-telepathy
-Version: 15.4.3
-Release: alt2
+Version: 15.08.2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: KDE Telepathy handler
@@ -11,6 +11,7 @@ BuildArch: noarch
 
 Requires: mjpegtools
 #
+Requires: telepathy-accounts-signon
 Requires: telepathy-mission-control
 Requires: telepathy-gabble
 Requires: telepathy-haze
@@ -39,6 +40,9 @@ Requires: kde5-kaccounts-providers
 %files
 
 %changelog
+* Mon Oct 19 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt3
+- update requires
+
 * Tue Aug 04 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt2
 - update requires
 
