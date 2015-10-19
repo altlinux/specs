@@ -1,23 +1,22 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Data/Show.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Prompter.pm) perl(Smart/Comments.pm) perl(Time/HiRes.pm) perl(charnames.pm) perl(overload.pm) perl(re.pm) perl-Module-Build perl-base perl-devel perl-podlators perl(B/Hooks/Parser.pm) perl(B/Hooks/Parser.pm)
+BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Data/Show.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Prompter.pm) perl(Smart/Comments.pm) perl(Time/HiRes.pm) perl(charnames.pm) perl(overload.pm) perl(re.pm) perl-Module-Build perl-base perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Regexp-Grammars
 Version:	1.042
-Release:	alt1
+Release:	alt1_1
 Summary:	Add grammatical parsing features to perl regular expressions
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Regexp-Grammars/
-Source:	http://www.cpan.org/authors/id/D/DC/DCONWAY/Regexp-Grammars-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/D/DC/DCONWAY/Regexp-Grammars-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl(Module/Build.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Scalar/Util.pm)
 BuildRequires:	perl(Data/Dumper.pm)
-BuildRequires:	perl(Lexical/Var.pm)
+BuildRequires:	perl(B/Hooks/Parser.pm)
 BuildRequires:	perl(List/Util.pm)
 BuildRequires:	perl(Moose.pm)
 BuildRequires:	perl(Moose/Util/TypeConstraints.pm)
@@ -56,6 +55,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/Regexp/
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.042-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.042-alt1
 - automated CPAN update
 
