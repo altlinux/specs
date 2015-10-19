@@ -1,6 +1,6 @@
 Name: dosemu
 Version: 1.4.1
-Release: alt0.1
+Release: alt0.2
 Epoch: 1
 
 Summary: The Linux DOS emulator
@@ -180,6 +180,9 @@ fi
 %_libdir/%name/libplugin_sndfile.so
 
 %changelog
+* Mon Oct 19 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:1.4.1-alt0.2
+- build with gcc5 fixed
+
 * Tue Sep 25 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.4.1-alt0.1
 - Updated to https://dosemu.svn.sourceforge.net/svnroot/dosemu/trunk@2080
   (closes: #24643, #26471).
