@@ -3,11 +3,11 @@ BuildRequires: gcc-c++ libSDL-devel perl(FileHandle.pm) perl(SDL/Rect.pm) perl(S
 # END SourceDeps(oneline)
 Name:           nazghul
 Version:        0.7.1
-Release:        alt2_5.20120228gitb0a402a
+Release:        alt2_14.20120228gitb0a402a
 Summary:        A computer role-playing game (CRPG) engine
 
 License:        GPLv2+
-URL:            http://myweb.cableone.net/gmcnutt/nazghul.html
+URL:            http://sourceforge.net/projects/nazghul/
 Group:          Games/Other
 
 # Occasionally upstream names things with an underscore.
@@ -16,14 +16,17 @@ Group:          Games/Other
 #Source0:        nazghul-20120228gitb0a402a.txz
 
 # Construct cvs checkout tarball with:
-#  ./nazghul-make-snapshot %{cvsdate}
+#  ./nazghul-make-snapshot %%{cvsdate}
 Source0:        nazghul-20120228gitb0a402a.txz
 Source1:        haxima-music-license
 Patch0:         nazghul-desktop.patch
+Patch1:         nazghul-format-security.patch
+Patch2:         nazghul-armbuild.patch
 
 # For building from a CVS snapshot
 BuildRequires:  automake autoconf
-BuildRequires:  libSDL_image-devel libSDL_mixer-devel desktop-file-utils libpng-devel
+BuildRequires:  libSDL_image-devel libSDL_mixer-devel desktop-file-utils
+BuildRequires:  libpng-devel xcftools
 Source44: import.info
 
 %description
@@ -52,7 +55,9 @@ You must install Nazghul in order to play Haxima.
 
 %prep
 %setup -q -n %{name}
-%patch0 -b .orig
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 # clean up CVS directories left in the source tarball
 find . -depth -type d -name CVS -exec rm -rf {} \;
@@ -70,6 +75,10 @@ cp %SOURCE1 .
 %configure
 make %{?_smp_mflags}
 
+# Want a 256x256 icon, so generate one from the existing .xcf file
+pushd icons
+xcf2png haxima.xcf > haxima.png
+
 
 %install
 make install DESTDIR=%{buildroot}
@@ -82,6 +91,39 @@ desktop-file-install \
 
 install -D -m 644 icons/haxima.png %{buildroot}/%{_datadir}/pixmaps/haxima.png
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/haxima.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ryan Lerch <rlerch@redhat.com> -->
+<!--
+BugReportURL: https://sourceforge.net/p/nazghul/support-requests/5/
+SentUpstream: 2014-09-24
+-->
+<application>
+  <id type="desktop">haxima.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>Top view 2D role playing game</summary>
+  <description>
+    <p>
+      Haxima is a 2D role playing game (RPG) that runs on the Nazghul engine.
+      You start out as a defenseless wanderer, you have to equip yourself,
+      learn spells, and travel the land completing quests.
+    </p>
+  </description>
+  <url type="homepage">http://myweb.cableone.net/gmcnutt/nazghul.html</url>
+  <screenshots>
+    <screenshot type="default">https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/haxima/a.png</screenshot>
+    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/haxima/b.png</screenshot>
+  </screenshots>
+</application>
+EOF
 
 %files
 %{_bindir}/nazghul
@@ -93,12 +135,16 @@ install -D -m 644 icons/haxima.png %{buildroot}/%{_datadir}/pixmaps/haxima.png
 %files -n haxima
 %{_bindir}/haxima
 %{_datadir}/nazghul/haxima
+%{_datadir}/appdata/*.appdata.xml
 %{_datadir}/applications/*haxima.desktop
 %{_datadir}/pixmaps/haxima.png
 %doc USERS_GUIDE haxima-music-license
 
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_14.20120228gitb0a402a
+- update to new release by fcimport
+
 * Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_5.20120228gitb0a402a
 - update to new release by fcimport
 
