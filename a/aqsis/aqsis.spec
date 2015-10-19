@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ python-devel swig
 # END SourceDeps(oneline)
 Name:		aqsis
 Version:	1.8.2
-Release:	alt2_20
+Release:	alt2_21
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -14,6 +14,10 @@ Source0:	http://downloads.sourceforge.net/aqsis/aqsis-%{version}.tar.gz
 
 # fix build against ilmbase-2.x, kudos to arch linux
 Patch1: imfinputfile-forward-declaration.diff
+# Work-around boost-1.59 having dropped
+# dropped boost/serialization/pfto.hpp
+# and BOOST_MAKE_PFTO_WRAPPER
+Patch2: aqsis-1.8.2-boost-1.59.patch
 
 BuildRequires:  desktop-file-utils
 
@@ -110,7 +114,7 @@ integration with third-party applications.
 %setup -q
 
 %patch1 -p1 -b imfinputfile-forward-declaration
-
+%patch2 -p1
 
 %build
 ## Do not Enable pdiff=yes Because it will conflict with Printdiff :
@@ -180,7 +184,8 @@ if [ $1 -eq 0 ] ; then
 fi
 
 %files
-%doc AUTHORS COPYING README
+%doc AUTHORS README
+%doc COPYING
 %{_bindir}/eqsl
 %{_bindir}/piqsl
 %{_bindir}/ptview
@@ -235,6 +240,9 @@ fi
 
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_21
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_20
 - update to new release by fcimport
 
