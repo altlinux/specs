@@ -1,26 +1,21 @@
-Name:		afce
-%define rel 51
-Version:	0.9.0
-#Release:	alt1.%rel
-Release:	alt2.nntc095
-License:	GPL
-Group:		Development/Other
-Source1:	http://vicking.narod.ru/flowchart/%name-%version-%rel.tar.gz
-Source:		afce-095-nntc-edition.tar.gz
-URL:		http://vicking.narod.ru/flowchart
+Name: afce
+Version: 0.9.8
+Release: alt1
+License: GPL
+Group: Development/Other
+Source: v%version.tar.gz
+Url: http://vicking.narod.ru/flowchart
 %define summary_en Flowchart editor with code generation and vector graphics
-%define summary_ru Редактор блок-схем с генерацией исходных текстов и векторных диаграмм
-Summary:		%summary_en
-Summary(ru_RU.UTF-8):	%summary_ru
+Summary: %summary_en
+Summary(ru_RU.UTF-8):	Редактор блок-схем с генерацией исходных текстов и векторных диаграмм
 
-# Automatically added by buildreq on Wed Jul 28 2010
-BuildRequires: gcc-c++ libqt4-devel
+
+# Automatically added by buildreq on Mon Oct 19 2015
+# optimized out: libGL-devel libqt5-core libqt5-gui libqt5-printsupport libqt5-svg libqt5-widgets libqt5-xml libstdc++-devel qt5-base-devel
+BuildRequires: gcc-c++ qt5-svg-devel qt5-tools qt5-translations
 
 %description
 %name -- %summary_en
-
-There's no english documentation on %name, although it's interface
-supports english so you can easily try it on you intuition.
 
 %description -l ru_RU.UTF-8
 Вашему вниманию представляется программа, которая предназначена для
@@ -35,8 +30,6 @@ JPEG, PNG, TIFF, ICO, PPM, XBM, XPM, SVG. Программа распростр�
 на языке C++ на основе библиотеки Qt 4
 
 Возможности
-	
- 
 
     * генерация исходного кода на основе блок-схемы в различные языки программирования;
     * автоматическое размещение блоков на схеме;
@@ -51,47 +44,39 @@ JPEG, PNG, TIFF, ICO, PPM, XBM, XPM, SVG. Программа распростр�
     * кроссплатформенность: имеются сборки для Microsoft Windows и GNU/Linux.
 
 %prep
-#setup -n %name-%version-%rel
-%setup -n %name
-sed -i 's@/usr/share/doc/packages/afce@%_datadir/%name@g' thelpwindow.cpp
-mv doc/primer.PNG doc/primer.png
-cat > %name.desktop <<@@@
-[Desktop Entry]
-Name=Flowchart editor
-Name[ru]=Редактор блок-схем
-Comment=%summary_en
-Comment[ru]=%summary_ru
-Type=Application
-Exec=%name
-Icon=%name
-Categories=QT;Development;GUIDesigner;
-@@@
+%setup
+sed -i "/Category=/aEducation;" afce.desktop
 
 %build
-qmake-qt4
-make clean
+qmake-qt5
 %make_build
 
 %install
-mkdir -p %buildroot%_datadir/%name
-install *.ts %buildroot%_datadir/%name/
-install doc/* %buildroot%_datadir/%name/
-install -D %name %buildroot%_bindir/%name
+INSTALL_ROOT=%buildroot %make install STRIP=touch
+
+# TODO checko if this still needed
+install locale/afce*.qm %buildroot%_datadir/%name/locale/
+
 install -D %name.png %buildroot%_niconsdir/%name.png
 install -D %name.png %buildroot%_liconsdir/%name.png
-install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
-%doc doc README*
+%doc README*
 %_bindir/*
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/*
+%_iconsdir/*.ico
+%_pixmapsdir/*.png
 %_desktopdir/*
+%_xdgmimedir/packages/*
 
 %changelog
+* Mon Oct 19 2015 Fr. Br. George <george@altlinux.ru> 0.9.8-alt1
+- Autobuild version bump to 0.9.8
+- Rebuild with Qt5
+
 * Fri Sep 23 2011 Fr. Br. George <george@altlinux.ru> 0.9.0-alt2.nntc095
 - Temporary build new version from http://blog.nntc.nnov.ru/?p=1326
 
 * Wed Jul 28 2010 Fr. Br. George <george@altlinux.ru> 0.9.0-alt1.51
 - Initial build from scratch
-
