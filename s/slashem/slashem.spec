@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           slashem
 Version:        0.0.8
-Release:        alt2_0.18.E0F1
+Release:        alt2_0.19.E0F1
 Summary:        Super Lotsa Added Stuff Hack - Extended Magic
 
 Group:          Games/Other
@@ -19,6 +19,7 @@ Patch1:         slashem-libpng-1.5.patch
 Patch2:         slashem-format-security.patch
 
 BuildRequires:  /usr/bin/appstream-util
+BuildRequires:  /usr/bin/convert
 BuildRequires:  ncurses-devel
 BuildRequires:  bison flex desktop-file-utils
 BuildRequires:  bdftopcf libX11-devel libXext-devel
@@ -27,6 +28,8 @@ BuildRequires:  libSDL-devel libGL-devel libpng-devel zlib-devel
 BuildRequires:  pkgconfig(xaw7)
 # to compress save files
 Requires:       bzip2
+# For icon theme directories.
+Requires:       icon-theme-hicolor
 # for X11 core fonts
 
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
@@ -35,7 +38,7 @@ Requires:       bzip2
 %global fa_save     /var/games/%{name}/save
 %global fa_share    %{_datadir}/games/%{name}
 %global fa_unshare  %{_libdir}/games/%{name}
-%global fa_doc      %{_pkgdocdir}
+%global fa_doc      %{_docdir}/%{name}
 Source44: import.info
 
 %description
@@ -129,7 +132,8 @@ rm %{buildroot}%{_mandir}/man6/[^s]*
 
 sed -i -e 's:^!\(SlashEM.tile_file.*\):\1:' %{buildroot}%{fa_share}/SlashEM.ad
 
-install -Dpm 0644 win/X11/nh_icon.xpm %{buildroot}%{_datadir}/pixmaps/slashem.xpm
+install -d %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
+convert win/X11/nh_icon.xpm %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 install -Dpm 0644 %{SOURCE2} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 
@@ -149,7 +153,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.ap
 %{_mandir}/man6/*
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/slashem.desktop
-%{_datadir}/pixmaps/slashem.xpm
+%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 %defattr(0664,root,games)
 %config(noreplace) %{fa_var}/logfile
 %config(noreplace) %{fa_var}/perm
@@ -160,6 +164,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.ap
 
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.19.E0F1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.18.E0F1
 - update to new release by fcimport
 
