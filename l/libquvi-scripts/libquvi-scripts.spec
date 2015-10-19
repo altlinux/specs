@@ -3,13 +3,12 @@
 
 Name: lib%_name-scripts
 Version: %ver_major.19
-Release: alt2
+Release: alt2.1
 
 Summary: Lua scripts for parsing the media details
 Group: System/Libraries
 License: LGPLv2+
 Url: http://quvi.sourceforge.net/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: http://downloads.sourceforge.net/project/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-0.4.4-alt-pkgconfig.patch
@@ -33,7 +32,7 @@ This package provides files needed for building applications against
 %name.
 
 %prep
-%setup -q
+%setup
 %patch
 
 %build
@@ -45,17 +44,20 @@ This package provides files needed for building applications against
 #%%make check
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_datadir/%name/
-%_man7dir/%name.*
+%exclude %_man7dir/%name.*
 %doc NEWS README AUTHORS
 
 %files devel
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Oct 19 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.19-alt2.1
+- fixed file conflict with libquvi-scripts0.9 (ALT #31361)
+
 * Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.19-alt2
 - reqs: lua5 lua-module-luasocket (ALT #31354)
 
