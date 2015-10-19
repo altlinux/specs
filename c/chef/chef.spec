@@ -1,6 +1,6 @@
 
 Name:    chef
-Version: 12.4.4
+Version: 12.5.1
 Release: alt1
 
 Summary: Clients for the chef systems integration framework
@@ -25,10 +25,9 @@ Source4: chef-client.rb
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 BuildRequires: chef-zero >= 4.2.2
-BuildRequires: chef-zero < 4.3.2
 BuildRequires: erubis >= 2.7
-BuildRequires: ohai >= 8.0
-BuildRequires: ohai < 8.6
+#BuildRequires: ohai >= 8.6
+BuildRequires: ohai
 BuildRequires: ruby-activesupport
 BuildRequires: ruby-diff-lcs >= 1.2.4
 BuildRequires: ruby-highline >= 1.6.9
@@ -45,6 +44,7 @@ BuildRequires: ruby-syslog-logger >= 1.6.0
 BuildRequires: ruby-ucf
 BuildRequires: ruby-ffi-yajl >= 2.2
 
+Requires: chef-config
 Requires: ruby-highline
 
 %description
@@ -59,6 +59,14 @@ Ruby DSL.
 
 This package contains the chef-client, chef-solo and knife binaries as
 well as the chef library.
+
+%package config
+Summary:   Chef's default configuration and config loading
+Group:     Development/Ruby
+BuildArch: noarch
+
+%description config
+Chef's default configuration and config loading.
 
 %package doc
 Summary:   Documentation for %name
@@ -126,8 +134,12 @@ cp distro/common/man/man8/*.8 %buildroot%_man8dir/
 %dir %attr(0750, _chef, _chef) %_var/lib/chef
 %dir %attr(0750, _chef, _chef) %_var/cache/chef
 %ruby_sitelibdir/*
+%exclude %ruby_sitelibdir/chef-config/*
 %_man1dir/*
 %_man8dir/*
+
+%files config
+%ruby_sitelibdir/chef-config/*
 
 %files doc
 %ruby_ri_sitedir/*
@@ -137,6 +149,10 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Mon Oct 19 2015 Andrey Cherepanov <cas@altlinux.org> 12.5.1-alt1
+- New version
+- Package chef-config as separate package (need ro build ohai)
+
 * Fri Oct 02 2015 Andrey Cherepanov <cas@altlinux.org> 12.4.4-alt1
 - New version
 
