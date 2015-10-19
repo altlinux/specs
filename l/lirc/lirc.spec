@@ -1,5 +1,5 @@
 Name: lirc
-Version: 0.9.2a
+Version: 0.9.3a
 Release: alt1
 
 Summary: The Linux Infrared Remote Control package
@@ -13,13 +13,12 @@ Source2: lircd.sysconfig
 Source3: lircd.service
 Source4: liblircclient0.pc
 
-Patch1: %name-0.8.1-alt-configure.patch
-Patch2: lirc-0.9.2a-mode2-fix-sigsegv.patch
+Patch2: lirc-0.9.3a-mode2-fix-sigsegv.patch
 Patch3: lirc-0.9.2a-linking.patch
 
 Obsoletes: %name-remotes
 
-BuildRequires: libX11-devel libalsa-devel libftdi-devel python3 rpm-build-python3
+BuildRequires: libX11-devel libalsa-devel libftdi-devel python3 rpm-build-python3 xsltproc gcc-c++
 
 Requires: liblirc = %version-%release
 
@@ -54,7 +53,6 @@ LIRC configuration process.
 
 %prep
 %setup
-%patch1 -p1
 %patch2 -p2
 %patch3 -p2
 
@@ -105,7 +103,7 @@ fi
 %preun
 %preun_service lircd
 %files
-%doc NEWS TODO doc/lirc.css doc/irxevent.keys doc/html doc/images configs contrib
+%doc NEWS doc/irxevent.keys doc/html configs contrib
 %config(noreplace) %_sysconfdir/sysconfig/lircd
 %config(noreplace) %_sysconfdir/lirc/*
 %dir %_sysconfdir/lirc
@@ -122,14 +120,17 @@ fi
 %exclude %_mandir/man1/irdb-get*
 %exclude %_mandir/man1/lirc-config-tool*
 %exclude %_mandir/man1/lirc-setup*
+%_man4dir/*.4*
 %_man5dir/*.5*
 %_man8dir/*.8*
 %_tmpfilesdir/lirc.conf
 %_runtimedir/lirc
+%_datadir/lirc/plugindocs/*
 
 %files -n liblirc
 %_libdir/liblirc_client.so.*
 %_libdir/liblirc.so.*
+%_libdir/libirrecord.so.*
 %_libdir/liblirc_driver.so.*
 %_libdir/lirc
 
@@ -153,6 +154,9 @@ fi
 %exclude %_datadir/lirc/configs/audio.conf
 
 %changelog
+* Mon Oct 19 2015 Anton Farygin <rider@altlinux.ru> 0.9.3a-alt1
+- new version
+
 * Mon Feb 09 2015 Anton Farygin <rider@altlinux.ru> 0.9.2a-alt1
 - new version
 
