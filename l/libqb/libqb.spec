@@ -3,26 +3,27 @@ BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ libs
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libqb
-Version:        0.17.1
-Release:        alt1_2
+Version:        0.17.2
+Release:        alt1_1
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
 License:        LGPLv2+
-URL:            http://www.libqb.org
+URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://fedorahosted.org/releases/q/u/quarterback/%{name}-%{version}.tar.xz
+Patch1:         https://github.com/ClusterLabs/libqb/commit/aec4cde4312ada559888371554b0ae862cf91b9a.patch
 
-BuildRequires:  libtool doxygen procps libcheck-devel automake
+BuildRequires:  autoconf automake libtool doxygen procps libcheck-devel
 Source44: import.info
 
-#Requires: <nothing>
-
 %description
-libqb provides high performance client server reusable features.
-Initially these are IPC and poll.
+libqb provides high-performance, reusable features for client-server
+architecture, such as logging, tracing, inter-process communication (IPC),
+and polling.
 
 %prep
 %setup -q
+%patch1 -p1
 
 # Make sure the timestamps are correct
 find . -exec touch \{\} \;
@@ -51,7 +52,8 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %files          devel
-%doc COPYING README.markdown
+%doc README.markdown
+%doc COPYING
 %{_includedir}/qb/
 %{_libdir}/libqb.so
 %{_libdir}/pkgconfig/libqb.pc
@@ -59,6 +61,9 @@ developing applications that use %{name}.
 %{_mandir}/man8/qb-blackbox.8*
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.17.2-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.17.1-alt1_2
 - update to new release by fcimport
 
