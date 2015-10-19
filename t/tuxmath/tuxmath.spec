@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/makensis gcc-c++ libxml2-devel pkgconfig(cairo) pkgconfi
 # END SourceDeps(oneline)
 Name:           tuxmath
 Version:        2.0.1
-Release:        alt2_7
+Release:        alt2_9
 Summary:        Educational math tutor for children
 
 Group:          Games/Other
@@ -11,6 +11,7 @@ License:        GPLv3+ and CC-BY and OFL
 URL:            http://tux4kids.alioth.debian.org/
 Source0:        https://alioth.debian.org/frs/download.php/3272/%{name}_w_fonts-%{version}.tar.gz
 Patch0:	        tuxmath_w_fonts-2.0.1-scandir.patch
+Patch1:         tuxmath_w_fonts-2.0.1-gcc5.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libSDL-devel
@@ -32,6 +33,7 @@ different types of gameplay, at a variety of difficulty levels.
 # remove unneeded font files
 rm -f data/fonts/*.ttf
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure
@@ -41,7 +43,6 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 
-rm -rf $RPM_BUILD_ROOT%{_datadir}/doc
 %find_lang %{name}
 
 desktop-file-install --vendor="" \
@@ -49,7 +50,7 @@ desktop-file-install --vendor="" \
 
 
 %files -f %{name}.lang
-%doc doc/changelog doc/GPL_VERSIONS doc/COPYING_GPL3 doc/README_DATA_LICENSES doc/README doc/TODO doc/OFL
+%{_docdir}/%{name}
 %{_bindir}/%{name}*
 %{_bindir}/generate_lesson
 %dir %{_datadir}/%{name}
@@ -58,6 +59,9 @@ desktop-file-install --vendor="" \
 
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_9
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_7
 - update to new release by fcimport
 
