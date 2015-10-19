@@ -1,21 +1,27 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/Aggregate/Nested.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Locale/Maketext.pm)
 Name:           perl-Catalyst-Controller-HTML-FormFu
 Version:        1.00
-Release:        alt1_3
+Release:        alt1_4
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/Catalyst-Controller-HTML-FormFu/
 Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
+# Do not use Test::Aggregate::Nested for running tests, bug #1231204
+Patch0:         Catalyst-Controller-HTML-FormFu-1.00-Execute-tests-recusively-under-t.patch
 BuildArch:      noarch
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install/Metadata.pm)
+BuildRequires:  sed
 # Run-time:
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
@@ -48,7 +54,7 @@ BuildRequires:  perl(Catalyst/Plugin/Session.pm)
 BuildRequires:  perl(Catalyst/Plugin/Session/State/Cookie.pm)
 BuildRequires:  perl(Catalyst/Plugin/Session/Store/File.pm)
 BuildRequires:  perl(Catalyst/View/TT.pm)
-BuildRequires:  perl(Test/Aggregate/Nested.pm)
+# Test::Aggregate::Nested disabled
 # Config::General not used
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(FindBin.pm)
@@ -76,6 +82,13 @@ This base controller merges the functionality of HTML::FormFu with Catalyst.
 
 %prep
 %setup -q -n Catalyst-Controller-HTML-FormFu-%{version}
+%patch0 -p1
+# Do not use Test::Aggregate::Nested for running tests, bug #1231204
+rm t/aggregate.t
+sed -i -e '/^t\/aggregate\.t/d' MANIFEST
+mv t-aggregate/* t
+find t -type f -exec sed -i -e 's|\<t-aggregate\>|t|' {} +
+sed -i -e 's|^t-aggregate/|t/|' MANIFEST
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -98,6 +111,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_3
 - update to new release by fcimport
 
