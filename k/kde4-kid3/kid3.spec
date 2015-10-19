@@ -1,7 +1,7 @@
 
 %define rname kid3
 Name: kde4-%rname
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Group: Sound
@@ -22,7 +22,7 @@ BuildRequires(pre): kde4libs-devel
 #BuildRequires: gcc-c++ glib2-devel id3lib-devel kde4libs-devel libavdevice-devel libavformat-devel libchromaprint-devel libflac++-devel libicu libmpeg4ip-devel libqt3-devel libswscale-devel libtag-devel libvorbis-devel zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel id3lib-devel libavdevice-devel libavformat-devel libchromaprint-devel libflac++-devel libswscale-devel libtag-devel libvorbis-devel
 # libmpeg4ip-devel
-BuildRequires: phonon-devel libreadline-devel /usr/bin/xsltproc
+BuildRequires: libqt4-devel phonon-devel libreadline-devel /usr/bin/xsltproc
 
 %description
 Kid3 - Efficient Audio Tagger
@@ -166,6 +166,9 @@ Requires: %rname-common = %EVR
 %_libdir/libkid3-gui.so.*
 
 %changelog
+* Mon Oct 19 2015 Sergey V Turchin <zerg@altlinux.org> 3.3.0-alt1
+- new version
+
 * Wed Apr 15 2015 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt1
 - new version
 
