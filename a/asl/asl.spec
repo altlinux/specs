@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
 %define fedora 21
 # spec file for package asl
 # 
@@ -7,12 +10,12 @@
 #
 # Spec file for Fedora modified by Eric Smith <eric@brouhaha.com>
 
-%global patchlevel bld93
+%global patchlevel bld97
 
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.23.%{patchlevel}
+Release:        alt2_0.25.%{patchlevel}
 Group:          Development/Tools
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -45,7 +48,7 @@ used in workstations and PCs in the target list.
 %patch0 -p0 -b .m-def
 %patch1 -p0 -b .sysdefs
 %patch2 -p1 -b .install
-%patch3 -p0 -b .destdir
+%patch3 -p1 -b .destdir
 %patch4 -p1 -b .aarch64
 
 %build
@@ -84,11 +87,15 @@ done
 %{_mandir}/man1/pbind.1*
 %{_mandir}/man1/plist.1*
 %{_mandir}/man1/alink.1*
-%doc COPYING README README.LANGS TODO BENCHES changelog
+%doc COPYING
+%doc README README.LANGS TODO BENCHES changelog
 %doc doc/as-EN.html doc/as-EN.txt doc/as-EN.ps doc/as-EN.pdf doc/as-EN.dvi
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.25.bld97
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.23.bld93
 - update to new release by fcimport
 
