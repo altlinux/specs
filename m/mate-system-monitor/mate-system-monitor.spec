@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ libgio-devel pkgconfig(giomm-2.4
 %define _libexecdir %_prefix/libexec
 Name:           mate-system-monitor
 Version:        1.8.0
-Release:        alt2_1.1
+Release:        alt2_1.2
 Summary:        Process and resource monitor
 
 License:        GPLv2+
@@ -26,6 +26,7 @@ BuildRequires: mate-icon-theme-devel
 Requires: mate-desktop
 Source44: import.info
 
+%add_optflags -std=gnu++11
 
 %description
 mate-system-monitor allows to graphically view and manipulate the running
@@ -66,6 +67,9 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/mate-system-monitor.convert
 
 
 %changelog
+* Mon Oct 19 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.0-alt2_1.2
+- build with gcc 5.2 fixed
+
 * Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.0-alt2_1.1
 - Rebuilt for gcc5 C++11 ABI.
 
