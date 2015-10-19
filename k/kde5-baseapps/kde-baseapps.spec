@@ -8,10 +8,12 @@
 %define libkonquerorprivate libkonquerorprivate%konquerorprivate_sover
 %define kbookmarkmodel_private_sover 6
 %define libkbookmarkmodel_private libkbookmarkmodel_private%kbookmarkmodel_private_sover
+%define konqsidebarplugin_sover 5
+%define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-baseapps
 Version: 4.97.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -88,6 +90,13 @@ Requires: %name-common = %EVR
 %description -n %libkbookmarkmodel_private
 KF5 library
 
+%package -n %libkonqsidebarplugin
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %EVR
+%description -n %libkonqsidebarplugin
+KF5 library
+
 %package -n kde5-kdepasswd
 Group: Graphical desktop/KDE
 Summary: User account configuration
@@ -161,7 +170,9 @@ Various Plasma applets
 %K5install
 cp -arl %buildroot/%_K5data/konqueror/* %buildroot/%_datadir/konqueror/
 rm -rf %buildroot/%_K5data/konqueror/
-%K5install_move data akregator doc dolphinpart domtreeviewer fsview kcmcss kcontrol khtml kwebkitpart templates konqueror
+%K5install_move data akregator doc dolphinpart domtreeviewer fsview kcmcss kcontrol khtml konqsidebartng kwebkitpart templates konqueror
+
+mv %buildroot/%_includedir/konqsidebarplugin.h %buildroot/%_K5inc/
 
 # install alternatives
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
@@ -186,10 +197,11 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
     --add-mime-type=x-scheme-handler/http \
     --add-mime-type=x-scheme-handler/https \
     %buildroot/%_K5xdgapp/kfmclient_html.desktop
-desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
-    --add-mime-type=x-scheme-handler/ftp \
-    --add-mime-type=x-scheme-handler/trash \
-    %buildroot/%_K5xdgapp/kfmclient_dir.desktop
+#desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
+#    --add-mime-type=x-scheme-handler/ftp \
+#    --add-mime-type=x-scheme-handler/trash \
+#    %buildroot/%_K5xdgapp/kfmclient_dir.desktop
+rm -f %buildroot/%_K5xdgapp/kfmclient_dir.desktop
 # add desktop categories
 desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
     --add-category=X-PersonalSettings \
@@ -206,6 +218,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %files -n kde5-konqueror
 %config /%_sysconfdir/alternatives/packages.d/kde5-konqueror
 %config(noreplace) %_K5xdgconf/translaterc
+%config(noreplace) %_K5xdgconf/konqsidebartngrc
 %_K5bin/konqueror
 %_K5bin/kfmclient
 %_K5bin/fsview
@@ -219,6 +232,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5data/kcmcss/
 %_K5data/dolphinpart/
 %_K5data/domtreeviewer/
+%_K5data/konqsidebartng/
 %_K5data/akregator/pics/*
 %_K5data/kcontrol/pics/*
 %_K5cfg/konqueror.kcfg
@@ -236,6 +250,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5srv/fsview_part.desktop
 %_K5srv/*konq*.desktop
 %_K5srv/kcmperformance.desktop
+%_K5srv/kcmhistory.desktop
 %_K5srv/filebehavior.desktop
 %_K5srv/webarchivethumbnail.desktop
 %_K5srvtyp/konq*.desktop
@@ -255,6 +270,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5plug/kcm_konq.so
 %_K5plug/kcm_konqhtml.so
 %_K5plug/kcm_performance.so
+%_K5plug/kcm_history.so
+%_K5plug/konq_sidebar.so
+%_K5plug/konqsidebar_*.so
 %_K5plug/kded_konqy_preloader.so
 %_K5plug/kf5/kded/kded_favicons.so
 %_K5plug/khtmlsettingsplugin.so
@@ -326,8 +344,14 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %files -n %libkbookmarkmodel_private
 %_K5lib/libkbookmarkmodel_private.so.%kbookmarkmodel_private_sover
 %_K5lib/libkbookmarkmodel_private.so.*
+%files -n %libkonqsidebarplugin
+%_K5lib/libkonqsidebarplugin.so.%konqsidebarplugin_sover
+%_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Mon Oct 19 2015 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt3
+- update from frameworks branch
+
 * Mon Oct 12 2015 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt2
 - rebuild without qt5-speech
 
