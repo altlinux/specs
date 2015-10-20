@@ -1,6 +1,6 @@
 Name: ghc7.6.1
 Version: 7.6.1
-Release: alt5
+Release: alt6
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
@@ -9,6 +9,7 @@ Url: http://haskell.org/ghc/
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
+Source1: ghc.macros
 Patch: ghc-%version-%release.patch
 
 Requires: %name-common
@@ -43,6 +44,42 @@ specifications, documentation, compilers, interpreters, references,
 contact information, links to research groups) are available from the
 Haskell home page at <http://www.haskell.org/>.
 
+%package common
+BuildArch: noarch
+Summary: Selects the default version of Glasgow Haskell Compilation system
+Group: Development/Haskell
+
+Requires: haskell-filetrigger
+Requires: rpm-build-haskell
+Conflicts: ghc <= 7.6.1-alt1
+Conflicts: ghc7.4.1-common
+Conflicts: ghc7.4.2-common
+
+Requires: rpm-macros-%{name}-common = %{version}-%{release}
+
+%description common
+Install this package to select %{version} as the default version
+of Glasgow Haskell Compiler.
+
+It will provide the common names for the GHC executables
+(like unversioned /usr/bin/ghc).
+
+And it will make rpm-build-haskell use this version of GHC for
+building other Haskell packages
+(if their .spec refers to %%ghc_version and %%_ghclibdir).
+
+%package -n rpm-macros-%{name}-common
+Summary: Set of RPM macros for packaging %name-based applications
+Group: Development/Other
+# uncomment if macroses are platform-neutral
+BuildArch: noarch
+# helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
+Conflicts: ghc7.6.1-common <= 7.6.1-alt1
+
+%description -n rpm-macros-%{name}-common
+Set of RPM macros for packaging %name-based applications for ALT Linux.
+Install this package if you want to create RPM packages that use %name.
+
 %package doc
 Summary: Documentation for GHC
 Group: Development/Haskell
@@ -76,9 +113,9 @@ cp -a ANNOUNCE LICENSE README docs/comm %buildroot%docdir/
 # generate fake .pkg configs for core packages.
 # haskell.prov will convert them to package provides.
 for lib in %buildroot%_libdir/ghc-%version/*-[0-9]*; do
-	namever=`basename $lib`
-	name=${namever%%-*}
-	echo -e "name: $name\nversion: ${namever##*-}" >$lib/$name.pkg
+	namever="$(basename "$lib")"
+	name="${namever%%-*}"
+	echo -e "name: $name\nversion: ${namever##*-}" >"$lib/$name.pkg"
 done
 
 # generate the file list for lib/ _excluding_ all files needed for profiling
@@ -91,14 +128,13 @@ done
 #   interpret the argument as a relative path; however, we have to include the
 #   leading / again in the final file list (otherwise, rpm complains)
 # * isn't there an easier way to do all this?
-dir=`pwd`
-cd %buildroot
-libdir=`echo %_libdir | sed 's|^/||'`
-find $libdir ! -type d ! -name 'package.conf*' \
-     -print | sed 's|^|/|'\
-     >$dir/rpm-files
-find $libdir -type d -print | sed 's|^|%%dir /|' >>$dir/rpm-files
-cd $dir
+{
+pushd %buildroot >/dev/null
+find .%_libdir ! -type d ! -name 'package.conf*' \
+     -print | sed 's|^\.||'
+find .%_libdir -type d -print | sed 's|^\.|%%dir |'
+popd >/dev/null
+} > rpm-files 
 
 # touch our "ghost". ghc-pkg may create him later.
 touch %buildroot%_libdir/ghc-%version/package.conf.old
@@ -109,34 +145,54 @@ mkdir -p %buildroot%_libdir/ghc-%version/lib
 
 # need for multiple ghc versions installed
 for s in hp2ps hpc hsc2hs; do
-    mv %buildroot%_bindir/$s %buildroot%_bindir/$s-%version
+    mv %buildroot%_bindir/"$s" %buildroot%_bindir/"$s"-%version
+    ln -s "$s"-%version %buildroot%_bindir/"$s"
+done
+
+# Check the correctness of our packaging:
+# all unversioned executables must be symlinks:
+for s in %buildroot%_bindir/*; do
+    case "$s" in
+    *-%{version}) :
+    ;;
+    *) test -L "$s"
+    ;;
+    esac
 done
 
 mv %buildroot%_man1dir/ghc.1 %buildroot%_man1dir/%name.1
 
 sed -i 's!/html/!/!' %buildroot%_libdir/ghc-%version/package.conf.d/*.conf
 
-%files
-%exclude %_bindir/ghc
-%exclude %_bindir/ghci
-%exclude %_bindir/ghc-pkg
-%exclude %_bindir/haddock
-%exclude %_bindir/runghc
-%exclude %_bindir/runhaskell
+# install and fix up the macros file
+mkdir -p %buildroot%_rpmmacrosdir
+install %SOURCE1 %buildroot%_rpmmacrosdir/ghc
+sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 
+%files
 %_libdir/ghc-%version
 %dir %docdir/
 %docdir/[ALR]*
-%_bindir/*
+%_bindir/*-%version
 %_man1dir/%name.1*
 %ghost %_libdir/ghc-%version/package.conf.old
 %dir %_libdir/ghc-%version/package.conf.d
+
+%files common
+%exclude %_bindir/*-%version
+%_bindir/*
+
+%files -n rpm-macros-%{name}-common
+%_rpmmacrosdir/*
 
 %files doc
 %docdir/
 %exclude %docdir/[AR]*
 
 %changelog
+* Tue Oct 20 2015 Ivan Zakharyaschev <imz@altlinux.org> 7.6.1-alt6
+- Simplified the packaging of ghc7.6.1-common.
+
 * Sun Apr 28 2013 Dmitry V. Levin <ldv@altlinux.org> 7.6.1-alt5
 - Added libffi-devel runtime requirement because ghc now
   unconditionally adds -lffi to linker options.
