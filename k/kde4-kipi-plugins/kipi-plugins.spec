@@ -4,7 +4,7 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 4.13.0
+Version: 4.14.0
 Release: alt1
 
 Group: Graphics
@@ -164,6 +164,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Tue Oct 20 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Fri Sep 11 2015 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 
