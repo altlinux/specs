@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 1.9.2
+Version: 1.9.4
 Release: alt1
 
 Group: System/Libraries
@@ -60,6 +60,9 @@ cp -va library/* %buildroot%python_sitelibdir/%name/modules
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md ISSUE_TEMPLATE.md
 
 %changelog
+* Tue Oct 20 2015 Terechkov Evgenii <evg@altlinux.org> 1.9.4-alt1
+- 1.9.4
+
 * Sat Jun 27 2015 Terechkov Evgenii <evg@altlinux.org> 1.9.2-alt1
 - 1.9.2 (ALT#30995)
 
