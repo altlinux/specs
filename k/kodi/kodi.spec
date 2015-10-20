@@ -1,5 +1,5 @@
 Name: kodi
-Version: 15.1
+Version: 15.2
 Release: alt1
 
 Summary: Kodi Media Center
@@ -148,6 +148,9 @@ E_O_F
 %_libdir/kodi/*.cmake
 
 %changelog
+* Tue Oct 20 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.2-alt1
+- 15.2 Isengard released
+
 * Tue Aug 18 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.1-alt1
 - 15.1 Isengard released
 
