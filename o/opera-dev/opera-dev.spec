@@ -1,5 +1,5 @@
 %define		softver 34.0
-%define		buildver 2011.0
+%define		buildver 2023.0
 
 Name:		opera-dev
 Version:	%softver.%buildver
@@ -62,37 +62,41 @@ subst 's|PepperFlash/libpepflashplayer.so|pepper-plugins/libpepflashplayer.so|g'
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
 %_datadir/lintian
+%_datadir/mime/packages/*.xml
 
 %changelog
+* Tue Oct 20 2015 Motsyo Gennadi <drool@altlinux.ru> 34.0.2023.0-alt1
+- packaged 34.0.2023.0 snapshot
+
 * Fri Oct 09 2015 Motsyo Gennadi <drool@altlinux.ru> 34.0.2011.0-alt1
-- packed 34.0.2011.0 snapshot
+- packaged 34.0.2011.0 snapshot
 
 * Sat Sep 26 2015 Motsyo Gennadi <drool@altlinux.ru> 34.0.1996.0-alt1
-- packed 34.0.1996.0 snapshot
+- packaged 34.0.1996.0 snapshot
 
 * Fri Sep 11 2015 Motsyo Gennadi <drool@altlinux.ru> 33.0.1982.0-alt1
-- packed 33.0.1982.0 snapshot
+- packaged 33.0.1982.0 snapshot
 
 * Wed Sep 02 2015 Motsyo Gennadi <drool@altlinux.ru> 33.0.1967.0-alt1
-- packed 33.0.1967.0 snapshot
+- packaged 33.0.1967.0 snapshot
 
 * Sun Aug 23 2015 Motsyo Gennadi <drool@altlinux.ru> 33.0.1963.0-alt1
-- packed 33.0.1963.0 snapshot
+- packaged 33.0.1963.0 snapshot
 
 * Thu Jul 23 2015 Motsyo Gennadi <drool@altlinux.ru> 32.0.1933.0-alt1
-- packed 32.0.1933.0 snapshot
+- packaged 32.0.1933.0 snapshot
 
 * Thu Jul 16 2015 Motsyo Gennadi <drool@altlinux.ru> 32.0.1926.0-alt1.1
 - change git folders
 
 * Thu Jul 16 2015 Motsyo Gennadi <drool@altlinux.ru> 32.0.1926.0-alt1
-- packed 32.0.1926.0 snapshot
+- packaged 32.0.1926.0 snapshot
 
 * Thu Jul 02 2015 Motsyo Gennadi <drool@altlinux.ru> 32.0.1910.0-alt1
-- packed 32.0.1910.0 snapshot
+- packaged 32.0.1910.0 snapshot
 
 * Thu Jun 18 2015 Motsyo Gennadi <drool@altlinux.ru> 32.0.1899.0-alt1
-- packed 32.0.1899.0 snapshot
+- packaged 32.0.1899.0 snapshot
 
 * Thu Jun 11 2015 Motsyo Gennadi <drool@altlinux.ru> 31.0.1876.0-alt1
-- packed for ALT Linux
+- packaged for ALT Linux
