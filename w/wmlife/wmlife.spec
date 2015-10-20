@@ -1,6 +1,6 @@
 Name: wmlife
 Version: 1.0.1
-Release: alt1.1
+Release: alt2
 
 Summary: WindowMaker dock-app running Conway's Game of Life
 License: GPL
@@ -38,7 +38,7 @@ the grid wraps at the edges from top to bottom and left to right.
 %patch1 -p1
 
 %build
-export CFLAGS="$CFLAGS %optflags"
+export CFLAGS="$CFLAGS %optflags -std=gnu89"
 %autoreconf
 %configure --enable-session
 %make_build
@@ -60,6 +60,9 @@ install -pDm644 %SOURCE2  %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Tue Oct 20 2015 Michael Shigorin <mike@altlinux.org> 1.0.1-alt2
+- gcc5 FTBFS workaround (-std=gnu89)
+
 * Mon Apr 28 2014 Michael Shigorin <mike@altlinux.org> 1.0.1-alt1.1
 - fix FTBFS (-lm)
 
