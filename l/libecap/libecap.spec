@@ -3,8 +3,8 @@
 
 %define bname ecap
 Name: lib%bname
-Version: 1.0.0
-Release: alt1.1
+Version: 1.0.1
+Release: alt1
 Summary: libecap library implements eCAP API in C++
 License: BSD
 Group: System/Legacy libraries
@@ -110,6 +110,9 @@ install -p -m 0644 LICENSE CREDITS NOTICE README %buildroot%_docdir/%name-%versi
 
 
 %changelog
+* Tue Oct 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Tue Oct 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.0-alt1.1
 - rebuild with c++11 abi
 

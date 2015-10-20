@@ -8,9 +8,9 @@
 %def_with gnutls
 
 Name: squid
-Version: 3.5.3
-Release: alt1.1
-%define langpack_ver 20150329
+Version: 3.5.10
+Release: alt1
+%define langpack_ver 20150704
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -43,7 +43,7 @@ Obsoletes: %name-conf-default
 
 BuildConflicts: bind-devel
 BuildPreReq: rpm-build >= 4.0.4-alt10
-BuildRequires: doxygen  graphviz fonts-ttf-freefont
+BuildRequires: doxygen  graphviz fonts-ttf-freefont linuxdoc-tools
 #BuildRequires: fonts-otf-drehatlas-widelands fonts-ttf-msimonson-anonymouspro
 BuildRequires: gcc-c++ libcap-devel libdb4-devel libldap-devel libltdl-devel
 BuildRequires: libpam-devel libsasl2-devel libssl-devel perl-Pod-Parser
@@ -209,7 +209,7 @@ install -pD -m 0644 %SOURCE8 %buildroot%_tmpfilesdir/%name.conf
 install -d -m 0755 %buildroot%_docdir/%name-%version/{helpers,html,scripts}
 #install -d -m 0755 %buildroot%_docdir/%name-%version/html/Programming-Guide
 #install -p -m 0644 doc/Programming-Guide/html/*{css,html,png} %buildroot%_docdir/%name-%version/html/Programming-Guide/
-install -p -m 0644 doc/release-notes/*.html %buildroot%_docdir/%name-%version/html/
+#install -p -m 0644 doc/release-notes/*.html %buildroot%_docdir/%name-%version/html/
 install -p -m 0644 COPYING README ChangeLog QUICKSTART SPONSORS doc/debug-sections.txt %buildroot%_docdir/%name-%version/
 install -p -m 0644 scripts/*.pl %buildroot%_docdir/%name-%version/scripts/
 for i in LDAP_group file_userip kerberos_ldap_group; do
@@ -302,6 +302,10 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Tue Oct 20 2015 Alexey Shabalin <shaba@altlinux.ru> 3.5.10-alt1
+- 3.5.10
+- fixed CVE-2015-5400
+
 * Tue Oct 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 3.5.3-alt1.1
 - rebuild with c++11 abi
 
