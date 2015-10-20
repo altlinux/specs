@@ -1,6 +1,6 @@
 Summary: Terminal multiplexer
 Name: tmux
-Version: 2.0
+Version: 2.1
 Release: alt1
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 License: BSD
@@ -33,6 +33,9 @@ install -D -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Tue Oct 20 2015 Fr. Br. George <george@altlinux.ru> 2.1-alt1
+- Autobuild version bump to 2.1
+
 * Sun May 10 2015 Fr. Br. George <george@altlinux.ru> 2.0-alt1
 - Autobuild version bump to 2.0
 
