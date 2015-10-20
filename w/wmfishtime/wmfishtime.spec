@@ -1,6 +1,6 @@
 Name: wmfishtime
 Version: 1.24
-Release: alt1.1
+Release: alt2
 
 Summary: WindowMaker clock dock-app featuring swimming fish
 License: GPL
@@ -47,7 +47,7 @@ happens.
 sed -i 's,/usr/X11R6,%prefix,g' Makefile
 
 %build
-export CFLAGS="$CFLAGS %optflags \
+export CFLAGS="$CFLAGS %optflags -std=gnu89 \
 	-funroll-loops \
 	-fexpensive-optimizations \
 	-fomit-frame-pointer"
@@ -69,8 +69,12 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 #   + usleep back to 20ms (or the fish gets too lazy)
 #   + tweak too bright clock face bullets down
 #   + (ideally) move second hand knob to a runtime option
+#   + host not found as of Oct 2015
 
 %changelog
+* Tue Oct 20 2015 Michael Shigorin <mike@altlinux.org> 1.24-alt2
+- gcc5 FTBFS workaround (-std=gnu89)
+
 * Mon Apr 28 2014 Michael Shigorin <mike@altlinux.org> 1.24-alt1.1
 - fix FTBFS (-lm)
 
