@@ -1,6 +1,6 @@
 Name: stardict
 Version: 3.0.5
-Release: alt1
+Release: alt1.1
 
 Summary: StarDict dictionary
 # The entire source code is GPLv3+ except
@@ -85,6 +85,8 @@ Requires: %name = %version-%release
 This package contains dictdotcn netdict plugin for stardict,
 querying dict.cn via network.
 Warning: this package is insecure. Use at your own risk.
+
+%add_optflags -std=gnu++11
 
 %prep
 %setup
@@ -179,6 +181,9 @@ hardlink -cv %buildroot%_datadir
 %endif
 
 %changelog
+* Tue Oct 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 3.0.5-alt1.1
+- build with gcc 5.2 fixed
+
 * Fri Nov 14 2014 Dmitry V. Levin <ldv@altlinux.org> 3.0.5-alt1
 - 3.0.4 -> 3.0.5.
 
