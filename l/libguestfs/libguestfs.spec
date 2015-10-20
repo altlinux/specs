@@ -17,8 +17,8 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.29.6
-Release: alt2
+Version: 1.31.17
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -45,7 +45,7 @@ BuildRequires: libncurses-devel libtinfo-devel libreadline-devel
 BuildRequires: libpcre-devel libmagic-devel libvirt-devel libxml2-devel libconfig-devel hivex-devel
 BuildRequires: libacl-devel libcap-devel
 BuildRequires: netpbm
-BuildRequires: libyajl-devel
+BuildRequires: libyajl-devel >= 2.0.4
 BuildRequires: libsystemd-journal-devel >= 196
 BuildRequires: liblzma-devel
 # BuildRequires: supermin >= 5.1.0
@@ -274,6 +274,17 @@ Requires: %name = %version-%release
 %description -n erlang-%name
 erlang-%name contains Erlang bindings for %name.
 
+%package -n virt-dib
+Summary: Safe and secure diskimage-builder replacement
+Group: Development/Other
+License: GPLv2+
+Requires: %name = %version-%release
+
+%description -n virt-dib
+Virt-dib is a safe and secure alternative to the OpenStack
+diskimage-builder command.  It is compatible with most
+diskimage-builder elements.
+
 %package -n virt-v2v
 Summary: Convert a virtual machine to run on KVM
 Group: Development/Other
@@ -462,6 +473,8 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man1dir/virt-filesystems.1*
 %_bindir/virt-format
 %_man1dir/virt-format.1*
+%_bindir/virt-get-kernel
+%_man1dir/virt-get-kernel.1*
 %_bindir/virt-index-validate
 %_man1dir/virt-index-validate.1*
 %_bindir/virt-inspector
@@ -495,6 +508,10 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man1dir/guestfs-faq.1*
 %_man1dir/guestfs-performance.1*
 %_man1dir/guestfs-release-notes.1*
+
+%files -n virt-dib
+%_bindir/virt-dib
+%_man1dir/virt-dib.1*
 
 %files -n virt-v2v
 %doc COPYING README v2v/TODO
@@ -595,6 +612,12 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Tue Oct 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.31.17-alt1
+- 1.31.17
+
+* Thu Sep 17 2015 Alexey Shabalin <shaba@altlinux.ru> 1.31.6-alt1
+- 1.31.6
+
 * Thu Jul 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1.29.6-alt2
 - vkni@: Rebuild with new rpm-build-ocaml4. Renamed ocaml packages to ocaml4-.
 
