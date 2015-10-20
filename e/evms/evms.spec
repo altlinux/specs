@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt30
+Release: alt31
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -95,7 +95,7 @@ GTK+ ui tool for EVMS
 
 %build
 %autoreconf
-%add_optflags -DEVMS_DEBUG
+%add_optflags -DEVMS_DEBUG -std=gnu89
 %configure  --libdir=/%_lib --sbindir=/sbin \
     --disable-s390 \
     %{subst_enable gpt} \
@@ -165,6 +165,9 @@ EOF
 %endif
 
 %changelog
+* Tue Oct 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.5.5-alt31
+- build with gcc 5.2 fixed
+
 * Wed Feb 06 2013 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt30
 - fix discover NTFS on non dos partitions (closes: 28510)
  
