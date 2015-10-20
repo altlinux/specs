@@ -1,5 +1,5 @@
 Name: git-cola
-Version: 2.0.4
+Version: 2.4
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -8,7 +8,7 @@ Group: Development/Tools
 
 Url: http://cola.tuxfamily.org
 # https://github.com/git-cola/git-cola.git
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
 
@@ -47,6 +47,9 @@ and caffeine-inspired features.
 %python_sitelibdir/*
 
 %changelog
+* Tue Oct 20 2015 Michael Shigorin <mike@altlinux.org> 2.4-alt1
+- 2.4
+
 * Fri Jul 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt1
 - Version 2.0.4
 
