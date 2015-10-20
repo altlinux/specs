@@ -2,14 +2,14 @@
 
 %define pkgname mime-types
 
-Name: ruby-%pkgname
-Version: 1.18
-Release: alt1.1
+Name:    ruby-%pkgname
+Version: 2.6.2
+Release: alt1
 
 Summary: Manages a MIME Content-Type database that will return the Content-Type for a given filename
-Group: Development/Ruby
+Group:   Development/Ruby
 License: Ruby/Perl/GPLv2+
-Url: https://github.com/halostatue/mime-types/
+Url:     https://github.com/mime-types/ruby-mime-types
 
 BuildArch: noarch
 
@@ -52,8 +52,13 @@ rm -f %buildroot%ruby_ri_sitedir/created.rid
 
 %files doc
 %ruby_ri_sitedir/MIME
+%ruby_ri_sitedir/lib/mime
 
 %changelog
+* Mon Oct 19 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.2-alt1
+- New version
+- Update homepage to https://github.com/mime-types/ruby-mime-types
+
 * Fri Dec 07 2012 Led <led@altlinux.ru> 1.18-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
