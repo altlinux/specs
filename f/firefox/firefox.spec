@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        41.0
+Version:        41.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -296,6 +296,11 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Oct 20 2015 Alexey Gladkov <legion@altlinux.ru> 41.0.2-alt1
+- New release (41.0.2).
+- Fixed:
+  + 2015-115 Cross-origin restriction bypass using Fetch 
+
 * Sat Sep 26 2015 Alexey Gladkov <legion@altlinux.ru> 41.0-alt1
 - New release (41.0).
 - Fixed:
