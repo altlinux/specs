@@ -1,6 +1,6 @@
 
 Name: krb5
-Version: 1.13.1
+Version: 1.13.2
 Release: alt1
 
 %define _docdir %_defaultdocdir/%name-%version
@@ -27,6 +27,10 @@ Patch86: krb5-1.9-fedora-debuginfo.patch
 Patch105: krb5-fedora-kvno-230379.patch
 Patch129: krb5-1.11-fedora-run_user_0.patch
 Patch134: krb5-1.11-fedora-kpasswdtest.patch
+Patch140: krb5-1.14-Support-KDC_ERR_MORE_PREAUTH_DATA_REQUIRED.patch
+Patch143: krb5-tests_use_libs_from_build.patch
+Patch144: krb5-1.13.3-bindresvport_sa_port_byte_swap_bug_triggering_selinux_avc_denial.patch
+Patch146: krb5-1.14-client_referral_principal.patch
 
 BuildRequires: /dev/pts /proc
 BuildRequires: flex libcom_err-devel libkeyutils-devel
@@ -161,6 +165,10 @@ MIT Kerberos.
 # DIR:/run/user/%%{uid}/krb5cc.
 %patch129 -p1 -b .run_user_0
 %patch134 -p1 -b .kpasswdtest
+%patch140 -p1 -b .krb5-1.14-support-kdc_err_more_preauth_data_required
+%patch143 -p1 -b .krb5-tests_use_libs_from_build
+%patch144 -p1 -b .krb5-1.13.3-bindresvport_sa_port_byte_swap_bug_triggering_selinux_avc_denial
+%patch146 -p1 -b .client_referral_principal.patch
 
 %build
 # Go ahead and supply tcl info, because configure doesn't know how to find it.
@@ -181,6 +189,7 @@ util/reconf --verbose --force
 	--localstatedir=%_localstatedir/kerberos \
 	--with-system-et \
 	--with-system-ss \
+	--with-system-verto \
 	--with-ldap \
 	--enable-dns-for-realm \
 	--with-dirsrv-account-locking \
@@ -237,6 +246,8 @@ make -C src install \
 # Server init scripts, sample client config file and sample KDC config files.
 tar xf %SOURCE2 -C %buildroot
 
+mkdir -p %buildroot%_sysconfdir/krb5.conf.d
+
 # Fix preporcessor loop
 # sed -i 's,<krb5/krb5.h>,<krb5/krb5/krb5.h>,' %buildroot%_includedir/krb5/krb5.h
 
@@ -286,10 +297,11 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %preun_service kprop
 
 %files -n lib%name -f mit-krb5.lang
-%config(noreplace) %_sysconfdir/krb5.conf
+%verify(not md5 size mtime) %config(noreplace) %_sysconfdir/krb5.conf
 %ghost %config(noreplace) %attr(600,root,root) %_sysconfdir/krb5.keytab
-%dir /etc/gss
-%dir /etc/gss/mech.d
+%dir %_sysconfdir/gss
+%dir %_sysconfdir/gss/mech.d
+%dir %_sysconfdir/krb5.conf.d
 %dir %_localstatedir/kerberos
 %dir %_localstatedir/kerberos/krb5
 %dir %_localstatedir/kerberos/krb5/user
@@ -410,6 +422,11 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Tue Oct 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.13.2-alt1
+- 1.13.2
+- fixed CVE-2014-5355, CVE-2015-2694
+- add patches from fedora
+
 * Sun Feb 22 2015 Ivan A. Melnikov <iv@altlinux.org> 1.13.1-alt1
 - 1.13.1;
 - drop patches already applied by upstream.
