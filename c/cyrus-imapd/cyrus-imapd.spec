@@ -7,8 +7,11 @@
 %define _contribdir %_datadir/%name/contrib
 %define _cyrusconf %_confdir/prefork.conf
 
+# http://bugzilla.altlinux.org/31381
+%def_without unit_tests
+
 Name: cyrus-imapd
-Version: 2.4.18
+Version: 2.5.5
 Release: alt1
 
 Summary: A high-performance mail store with IMAP and POP3 support
@@ -17,7 +20,7 @@ Group: System/Servers
 
 # old import was made by:
 # $ git-cvsimport -v -r git-cvs -i -k -d :pserver:anoncvs@cvs.andrew.cmu.edu:/cvs cyrus
-# fresh sources available via git at git://git.cyrusimap.org/cyrus-imapd/
+# fresh sources available via git at https://git.cyrus.foundation/diffusion/I/cyrus-imapd
 Url: http://www.cyrusimap.org/
 
 Source0: %name-%version.tar
@@ -47,9 +50,20 @@ PreReq: e2fsprogs /sbin/chkconfig /sbin/service cert-sh-functions
 Requires: su
 Provides: MDA imap IMAPD POP3D
 
-BuildRequires: control flex gcc-c++ groff-extra groff-ps libdb4-devel libldap-devel libsasl2-devel
-BuildRequires: libssl-devel perl-Pod-Parser perl-Term-ReadLine-Gnu perl-devel transfig zlib-devel
-BuildRequires: libwrap-devel libnet-snmp-devel libnl-devel libsensors3-devel
+%if_with unit_tests
+BuildRequires: CUnit-devel
+BuildRequires: valgrind-devel
+%endif
+
+BuildRequires: control flex gcc-c++ libdb4-devel zlib-devel libwrap-devel libldap-devel libuuid-devel
+BuildRequires: libsasl2-devel libssl-devel libnet-snmp-devel libnl-devel libsensors3-devel libpcre-devel
+
+# http (CalDAV and CardDAV)
+BuildRequires: libjansson-devel libical-devel libxml2-devel libsqlite3-devel
+
+BuildRequires: perl-devel perl-Pod-Parser perl-Term-ReadLine-Gnu perl-Net-Server perl-Unix-Syslog
+
+#BuildRequires: groff-extra groff-ps transfig
 
 %description
 The %name package contains the core of the Cyrus IMAP server.
@@ -63,8 +77,9 @@ other IMAP server implementations in that it is run on "sealed"
 servers, where users are not normally permitted to log in. The mailbox
 database is stored in parts of the filesystem that are private to the
 Cyrus IMAP server. All user access to mail is through software using
-the IMAP, POP3, or KPOP protocols. TLSv1 and SSL are supported for
-security.
+the IMAP, POP3, or KPOP protocols. TLS supported for security.
+
+CalDAV and CardDAV protocols are supported since Cyrus IMAP v2.5.
 
 %package murder
 Group: System/Servers
@@ -124,23 +139,22 @@ Cyrus IMAP server.
 %prep
 %setup
 
-%build
 # kerberos include is needed (because of openssl-0.9.7 ?)
-CPPFLAGS="`krb5-config --cflags` $CPPFLAGS"
-export CPPFLAGS
-CFLAGS="$RPM_OPT_FLAGS -fPIC $CFLAGS"
-export CFLAGS
-LDFLAGS="`krb5-config --libs` $LDFLAGS"
-export LDFLAGS
+#CPPFLAGS="`krb5-config --cflags` $CPPFLAGS"
+#export CPPFLAGS
+#CFLAGS="$RPM_OPT_FLAGS -fPIC $CFLAGS"
+#export CFLAGS
+#LDFLAGS="`krb5-config --libs` $LDFLAGS"
+#export LDFLAGS
 
-pushd makedepend
-./configure
-make
-popd
+# hack for really enable pcre
+sed "s|pcreposix\.h|pcre/pcreposix.h|g" -i configure.ac
+sed 's|if test "$ac_cv_header_pcreposix_h" = "yes"|ac_cv_header_pcreposix_h="yes"; if test "$ac_cv_header_pcreposix_h" = "yes"|' -i configure.ac
+%add_optflags -I%_includedir/pcre
+sed "s|pcre\.h|pcre/pcre.h|" -i  lib/util.h		#  include <pcre.h>
+sed "s|pcreposix\.h|pcre/pcreposix.h|" -i  lib/util.h	#  include <pcreposix.h>
 
-aclocal -I cmulocal
-autoheader
-autoconf
+autoreconf -v -i
 
 # this is hack
 #echo '#define CYRUS_CVSDATE 20071211' > imap/xversion.h
@@ -148,7 +162,15 @@ autoconf
 %configure \
   --enable-netscapehack \
   --enable-nntp \
+  --enable-http \
   --enable-murder \
+  --enable-autocreate \
+  --enable-idled \
+  --enable-replication \
+  --enable-pcre \
+%if_with unit_tests
+  --enable-unit-tests \
+%endif
   --with-snmp \
   --with-perl=perl \
   --with-ldap \
@@ -157,16 +179,12 @@ autoconf
   --with-service-path=%_cyrexecdir \
   --with-cyrus-user=%_cyrususer \
   --with-cyrus-group=%_cyrusgroup \
-  --enable-idled \
   --with-bdb-incdir=%_includedir/db4 \
-  --enable-replication
+  #
 
-#  --with-krb=%prefix/lib/krb5
-
+%build
+%add_optflags -lcrypto -lsasl2 -lssl
 make
-
-# produce doc/man
-make -C doc -f Makefile.dist dist
 
 # Modify docs master --> cyrus-master
 pushd man
@@ -174,9 +192,6 @@ pushd man
 popd
 pushd doc
   sed -i 's/master/cyrus-master/g' man.html
-popd
-pushd doc/man
-  sed -i 's/master(8)/cyrus-master(8)/' *html
 popd
 
 # Modify path in perl scripts
@@ -189,14 +204,24 @@ find doc -name "*~" -type f | xargs -r rm -f --
 rm -f doc/Makefile.dist
 rm -f doc/text/htmlstrip.c
 
+%if_with unit_tests
+%check
+make check
+%endif
+
 %install
+
+# libcyrus*.so.* contains big count undefined symbols. Is it plugins possible ?
+# So, libcyrus*.so.* in main package while question in resolving statuis:
+# http://lists.andrew.cmu.edu/pipermail/info-cyrus/2015-October/038550.html
+%set_verify_elf_method unresolved=relaxed
+
 # Do what the regular make install does
 make install DESTDIR=%buildroot PREFIX=%prefix mandir=%_mandir \
 	INSTALLDIRS=vendor
-make -C man install DESTDIR=%buildroot PREFIX=%prefix mandir=%_mandir
 
 install -m 755 imtest/imtest		%buildroot%_cyrexecdir/
-install -m 755 perl/imap/cyradm	%buildroot%_cyrexecdir/
+install -m 755 perl/imap/cyradm		%buildroot%_cyrexecdir/
 
 # Install tools
 for tool in tools/* ; do
@@ -222,6 +247,7 @@ install -m 644 %SOURCE7    %buildroot%_sysconfdir/pam.d/imap
 install -m 644 %SOURCE7    %buildroot%_sysconfdir/pam.d/sieve
 install -m 644 %SOURCE7    %buildroot%_sysconfdir/pam.d/mupdate
 install -m 644 %SOURCE7    %buildroot%_sysconfdir/pam.d/lmtp
+install -m 644 %SOURCE7    %buildroot%_sysconfdir/pam.d/http
 install -m 644 %SOURCE10   %buildroot%_sysconfdir/sysconfig/%name
 
 install -m 755 %SOURCE21    %buildroot%_initdir/%name
@@ -239,7 +265,6 @@ install -m 644 %SOURCE19 %SOURCE20 %SOURCE5 doc/
 # Rename 'master' binary and manpage to avoid crash with postfix
 mv -f %buildroot%_cyrexecdir/master	%buildroot%_cyrexecdir/cyrus-master
 mv -f %buildroot%_mandir/man8/master.8 %buildroot%_mandir/man8/cyrus-master.8
-mv -f doc/man/master.8.html doc/man/cyrus-master.8.html
 
 # Move utilites from /usr/libexec/cyrus to /usr/bin
 for i in arbitronsort.pl cyradm imtest mupdate-loadgen.pl convert-sieve.pl \
@@ -277,7 +302,7 @@ install -dm750 %buildroot%_vardata/ssl
 # imap sessions logs
 mkdir -p %buildroot%_vardata/log/cyrus
 
-# needed for %ghost
+# needed for %%ghost
 touch %buildroot%_vardata/ssl/cyrus.cert
 touch %buildroot%_vardata/ssl/cyrus.key
 
@@ -315,6 +340,7 @@ done
 %config(noreplace) %_sysconfdir/imapd.conf
 %config(noreplace) %_sysconfdir/pam.d/imap
 %config(noreplace) %_sysconfdir/pam.d/lmtp
+%config(noreplace) %_sysconfdir/pam.d/http
 %config(noreplace) %_sysconfdir/pam.d/pop
 %config(noreplace) %_sysconfdir/pam.d/sieve
 %config(noreplace) %attr(640,root,%_cyrusgroup) %_sysconfdir/sasl2/Cyrus.conf
@@ -348,8 +374,10 @@ done
 %exclude %_cyrexecdir/ptloader
 %exclude %_contribdir
 
+%_libdir/libcyrus*.so.*
+
 %files doc
-%doc COPYRIGHT README README.autocreate
+%doc COPYING README
 %doc $RPM_SOURCE_DIR/cyrus-procmailrc
 %doc $RPM_SOURCE_DIR/cyrus-user-procmailrc.template
 %doc $RPM_SOURCE_DIR/%name-procmail+cyrus.mc
@@ -369,12 +397,15 @@ done
 
 %files devel
 %_includedir/cyrus
-%_libdir/lib*.a
+%_libdir/*.so
+#_libdir/lib*.a
 %_man3dir/*
+%_libdir/pkgconfig/*
 
 %files -n perl-Cyrus
 %perl_vendor_autolib/Cyrus*
 %perl_vendor_archlib/Cyrus*
+%perl_vendor_privlib/Cyrus*
 %doc perl/imap/README
 %doc perl/imap/Changes
 %doc perl/imap/examples
@@ -386,6 +417,12 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Tue Oct 20 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.5.5-alt1
+- 2.5.5 (git 20150831 of "cyrus-imapd-2.5" branch)
+- reverted patches:
+  branch 005-autocreate (merged with upstream)
+  branch 012-getline (not needed more)
+
 * Fri Jul 10 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.4.18-alt1
 - 2.4.18
 - added lsb init header
@@ -651,4 +688,3 @@ done
 
 * Fri Jul 25 2003 Alexei Takaseev <taf@altlinux.ru> 2.2.1-alt1
 - first build for ALT
-
