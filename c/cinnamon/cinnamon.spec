@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: cinnamon
-Version: 2.6.13
-Release: alt3
+Version: 2.8.0
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -124,68 +124,6 @@ Development docs package for Cinnamon.
 %setup -n %name-%version
 %patch0 -p1
 
-# make changes for settings move to /usr/share
-mv files/usr/lib/cinnamon-settings files/usr/share
-sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-settings \
-  files/usr/share/cinnamon-settings/cinnamon-settings.py \
-  files/usr/share/cinnamon-settings/modules/*
-
-find files/usr/share/cinnamon-settings/bin/* ! -name capi.py -exec sed -i -e 's@/usr/lib@/usr/share@g' {} +
-
-# make changes for menu-editor move to /usr/share
-mv files/usr/lib/cinnamon-menu-editor files/usr/share
-
-# make changes for cinnamon-screensaver-lock-dialog move to /usr/share
-mv files/usr/lib/cinnamon-screensaver-lock-dialog files/usr/share
-sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-screensaver-lock-dialog \
-  files/usr/share/cinnamon-screensaver-lock-dialog/cinnamon-screensaver-lock-dialog.py
-
-# make changes for cinnamon-desktop-editor move to /usr/share
-mv files/usr/lib/cinnamon-desktop-editor files/usr/share
-sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-desktop-editor \
-  files/usr/share/cinnamon-desktop-editor/cinnamon-desktop-editor.py
-
-# make changes for cinnamon-json-makepot move to /usr/share
-mv files/usr/lib/cinnamon-json-makepot files/usr/share
-sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-json-makepot \
-  files/usr/share/cinnamon-json-makepot/cinnamon-json-makepot.py
-
-# make changes for cinnamon-settings-users move to /usr/share
-mv files/usr/lib/cinnamon-settings-users files/usr/share
-sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-settings-users \
-  files/usr/share/cinnamon-settings-users/cinnamon-settings-users.py
-
-# make changes for cinnamon-looking-glass move to /usr/share
-mv files/usr/lib/cinnamon-looking-glass files/usr/share
-sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-looking-glass \
-  files/usr/share/cinnamon-looking-glass/cinnamon-looking-glass.py
-
-# make changes for cinnamon-slideshow move to /usr/share
-mv files/usr/lib/cinnamon-slideshow files/usr/share
-sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-slideshow \
-  files/usr/share/cinnamon-slideshow/cinnamon-slideshow.py
-
-#rm -rf files/usr/lib
-sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-menu-editor
-
-# remove and replace the session files as they don't work with alt linux (can't be bothered to patch it)
-rm -f files/usr/share/xsessions/cinnamon.desktop \
- files/usr/share/cinnamon-session/sessions/cinnamon2d.session \
- files/usr/share/cinnamon-session/sessions/cinnamon.session
-
-
-# files replaced with alt linux files
-rm -f files/usr/share/desktop-directories/cinnamon-*.directory \
-      files/etc/xdg/menus/cinnamon-applications.menu \
-      files/etc/xdg/menus/cinnamon-settings.menu
-
-# adjust font size
-sed -i -e 's,font-size: 9.5pt,font-size: 10pt,g' data/theme/cinnamon.css
-sed -i -e 's,font-size: 9pt,font-size: 10pt,g' data/theme/cinnamon.css
-sed -i -e 's,font-size: 8.5pt,font-size: 10pt,g' data/theme/cinnamon.css
-sed -i -e 's,font-size: 8pt,font-size: 10pt,g' data/theme/cinnamon.css
-sed -i -e 's,font-size: 7.5pt,font-size: 10pt,g' data/theme/cinnamon.css
-
 rm -rf debian
 
 %build
@@ -228,35 +166,24 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %files
 %exclude %_bindir/%{name}-launcher
 %_bindir/*
-%exclude %_sysconfdir/xdg/menus/cinnamon-applications-merged
 %_libdir/cinnamon/
 %dir %_libexecdir/cinnamon/
 %_libexecdir/cinnamon/cinnamon-hotplug-sniffer
 %_libexecdir/cinnamon/cinnamon-perf-helper
 
 %files data
-%_sysconfdir/cinnamon
+%exclude %_xdgmenusdir/cinnamon-applications-merged
+%exclude %_xdgmenusdir/cinnamon-applications.menu
 %_datadir/glib-2.0/schemas/*.xml
-%_datadir/applications/cinnamon.desktop
-%_datadir/applications/cinnamon2d.desktop
-%_datadir/applications/cinnamon-settings.desktop
-%_datadir/applications/cinnamon-menu-editor.desktop
-%_datadir/applications/cinnamon-settings-*.desktop
-%_datadir/applications/polkit-cinnamon-authentication-agent-1.desktop
-%_datadir/applications/cinnamon-killer-daemon.desktop
-%exclude %_datadir/xsessions/cinnamon2d.desktop
+%_datadir/applications/*.desktop
+%exclude %_datadir/xsessions/*.desktop
 %_datadir/cinnamon/
-%_datadir/cinnamon-menu-editor/
-%_datadir/cinnamon-settings/
-%_datadir/cinnamon-looking-glass/
-%_datadir/cinnamon-screensaver-lock-dialog/
-%_datadir/cinnamon-settings-users/
-%_datadir/cinnamon-desktop-editor/
-%_datadir/cinnamon-json-makepot/
-%_datadir/cinnamon-slideshow/
 %_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
+%_datadir/icons/hicolor/*/actions/*.svg
 %_datadir/icons/hicolor/*/categories/*.svg
 %_datadir/icons/hicolor/*/emblems/*.svg
+%_datadir/desktop-directories/*.directory
+%exclude %_datadir/cinnamon-session/sessions/*.session
 
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
 %_datadir/dbus-1/services/org.Cinnamon.Melange.service
@@ -270,6 +197,12 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Wed Oct 21 2015 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
+* Mon Oct 19 2015 Vladimir Didenko <cow@altlinux.org> 2.7.0-alt1
+- 2.6.13-272-g6027667
+
 * Tue Sep 8 2015 Vladimir Didenko <cow@altlinux.org> 2.6.13-alt3
 - Add python-module-PAM to requirements (closes: #31262)
 

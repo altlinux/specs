@@ -1,4 +1,4 @@
-%define ver_major 2.6
+%define ver_major 2.8
 %define api_ver 3.0
 
 %def_enable exempi
@@ -8,7 +8,7 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -126,7 +126,7 @@ GObject introspection devel data for the nemo-extension library
 
 %prep
 %setup -q
-%patch0 -p1 
+%patch0 -p1
 
 rm -f data/*.desktop
 
@@ -209,6 +209,12 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Wed Oct 21 2015 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
+- 2.8.0-1-g4252c3e
+
+* Mon Oct 19 2015 Vladimir Didenko <cow@altlinux.org> 2.7.0-alt1
+- 2.7.0
+
 * Tue Jun 23 2015 Vladimir Didenko <cow@altlinux.org> 2.6.7-alt1
 - 2.6.7
 
@@ -319,7 +325,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 * Fri Mar 22 2013 Vladimir Didenko <cow@altlinux.org> 1.7.1-alt3
 - don't show desktop icons on default
-- don't autostart nemo 
+- don't autostart nemo
 
 * Tue Mar 12 2013 Vladimir Didenko <cow@altlinux.org> 1.7.1-alt2
 - clean up code to build with gnome-3.7
