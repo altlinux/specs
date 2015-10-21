@@ -4,7 +4,7 @@
 #============================================================================
 Name: libsodium
 Summary: %name
-Version: 1.0.2
+Version: 1.0.4
 Release: alt1
 License: ISC license
 Group: System/Libraries
@@ -63,6 +63,9 @@ Group: System/Libraries
 %_libdir/libsodium.so.13*
 
 %changelog
+* Wed Oct 21 2015 Denis Smirnov <mithraen@altlinux.ru> 1.0.4-alt1
+- new version 1.0.4
+
 * Sat Jan 17 2015 Denis Smirnov <mithraen@altlinux.ru> 1.0.2-alt1
 - new version 1.0.2
 
