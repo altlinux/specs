@@ -4,11 +4,10 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 BuildRequires: /usr/bin/db2html
 %define _libexecdir %_prefix/libexec
 %define oldname caja-actions
-%define fedora 21
 Summary:	Caja extension for customizing the context menu
 Name:		mate-file-manager-actions
-Version:	1.7.1
-Release:	alt2_1
+Version:	1.8.0
+Release:	alt1_2
 Group:		Graphical desktop/MATE
 License:	GPLv2+ and LGPLv2+
 
@@ -18,11 +17,7 @@ License:	GPLv2+ and LGPLv2+
 URL:		https://github.com/NiceandGently/caja-actions
 Source0:	http://raveit65.fedorapeople.org/Mate/SOURCE/%{oldname}-%{version}.tar.xz
 
-%if 0%{?fedora} > 20
 BuildRequires:	mate-file-manager-devel
-%else
-BuildRequires:	mate-file-manager-devel
-%endif
 BuildRequires:	libuuid-devel
 BuildRequires:	libSM-devel
 BuildRequires:	libunique-devel
@@ -60,7 +55,7 @@ with caja-actions.
 
 %prep
 %setup -n %{oldname}-%{version} -q
-NOCONFIGURE=1 ./autogen.sh
+#NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure \
@@ -87,6 +82,8 @@ rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/ChangeLog-2011
 rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/ChangeLog-2012
 rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/MAINTAINERS
 
+# move doc dir for > f19
+mv -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version} $RPM_BUILD_ROOT%_docdir/%name-%version
 
 %find_lang %{oldname} --with-gnome --all-name
 
@@ -96,7 +93,12 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 
 %files
-%doc AUTHORS COPYING COPYING-DOCS ChangeLog NEWS README
+#doc AUTHORS COPYING COPYING-DOCS ChangeLog NEWS README
+%doc %_docdir/%name-%version/AUTHORS
+%doc %_docdir/%name-%version/COPYING*
+%doc %_docdir/%name-%version/ChangeLog
+%doc %_docdir/%name-%version/NEWS
+%doc %_docdir/%name-%version/README
 %{_bindir}/caja-actions-run
 %{_bindir}/caja-actions-config-tool
 %{_bindir}/caja-actions-new
@@ -110,9 +112,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 %{_datadir}/applications/cact.desktop
 
 %files doc -f %{oldname}.lang
-%{_docdir}/caja-actions-%{version}/html/
-%{_docdir}/caja-actions-%{version}/pdf/
-%{_docdir}/caja-actions-%{version}/objects-hierarchy.odg
+%{_docdir}/*/html/
+%{_docdir}/*/pdf/
+%{_docdir}/*/objects-hierarchy.odg
 
 %files devel
 %{_includedir}/caja-actions/
@@ -120,6 +122,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 
 %changelog
+* Wed Oct 21 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_2
+- new version
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt2_1
 - rebuild with libgtop
 
