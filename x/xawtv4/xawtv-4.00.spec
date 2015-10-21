@@ -17,7 +17,7 @@ Version: 4.0
 %define motv motv
 %define fbtv fbtv
 %define xawtv %origname
-Release: alt3.cvs%dateversion.12.qa2
+Release: alt3.git%dateversion.1
 
 Summary: A X11 program for watching TV
 Summary(ru_RU.UTF-8): Программа для просмотра ТВ
@@ -53,6 +53,7 @@ Patch101: %name-%version-x86_64.patch
 Patch102: xawtv-4.0-page.patch
 Patch103: xawtv-4.0-lx11.patch
 Patch104: xawtv4-4.0-alt-DSO.patch
+Patch105: xawtv-gcc.patch
 
 BuildPreReq: fontconfig-devel freetype2-devel gcc-c++ glib-devel
 BuildPreReq: glib2 hostinfo libalsa-devel libdv-devel libgpm-devel libjpeg-devel
@@ -280,7 +281,7 @@ application.
 Check the xawtv(1) manpage for details about the config file format.
 
 %description -n %fbtv -l ru_RU.UTF-8
-Fbtv - программа для просмотра ТВ, использующая графическую консоль
+                         Fbtv - программа для просмотра ТВ, использующая графическую консоль
 (устройство /dev/fb0). Её достоинство в том, что для просмотра телепрограмм
 не требуется X-сервер. Fbtv использует тот же файл настроек ($HOME/.tv/*),
 что и основная программа %xawtv.
@@ -393,6 +394,7 @@ popd
 
 %patch103  -p1
 %patch104 -p2
+%patch105 -p1
 
 %build
 %autoreconf
@@ -408,7 +410,8 @@ cp "$inst" .
 	%{subst_enable aa} \
 	%{subst_enable arts}
 
-%make CFLAFS="%optflags"
+%add_optflags -std=gnu89
+%make CFLAFS="%optflags %add_optflags"
 
 %install
 %make_install DESTDIR=%buildroot \
@@ -597,6 +600,9 @@ install -pD -m644 desktop-new/*.desktop %buildroot%_desktopdir/
 %_bindir/webcam
 
 %changelog
+* Wed Oct 21 2015 Hihin Ruslan <ruslandh@altlinux.ru> 4.0-alt3.git20081014.1
+- Fix Build
+
 * Tue Jun 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt3.cvs20081014.12.qa2
 - Fixed build
 
@@ -883,4 +889,5 @@ install -pD -m644 desktop-new/*.desktop %buildroot%_desktopdir/
 
 * Tue Apr 18 2000 J. Nick Koston <bdraco@darkorb.net> 3.12-1mdk
 - Madrakeified
+
 
