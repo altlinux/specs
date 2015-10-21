@@ -2,21 +2,20 @@
 %global qt_module qtquick1
 
 Name: qt5-quick1
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: System/Libraries
 Summary: A declarative language for describing user interfaces in Qt5
 License: LGPLv2 / GPLv3
-Url: http://qt-project.org/
+Url: http://qt.io/
 
 Source: %qt_module-opensource-src-%version.tar
 
 BuildRequires: gcc-c++ glibc-devel
-BuildRequires: qt5-base-devel qt5-script-devel qt5-webkit-devel qt5-xmlpatterns-devel qt5-tools qt5-tools-devel
+BuildRequires: qt5-base-devel qt5-script-devel qt5-declarative-devel qt5-webkit-devel qt5-xmlpatterns-devel qt5-tools qt5-tools-devel
 BuildRequires: libxslt-devel libxml2-devel gstreamer-devel gst-plugins-devel libudev-devel libgio-devel libsqlite3-devel
 BuildRequires: libicu-devel
-
 
 %description
 Qt Quick is a collection of technologies that are designed to help
@@ -69,11 +68,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-syncqt.pl-qt5 \
-    -version %version \
-    -private \
-    -module QtDeclarative \
-    #
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
@@ -112,6 +107,9 @@ syncqt.pl-qt5 \
 #%_qt5_docdir/*
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 

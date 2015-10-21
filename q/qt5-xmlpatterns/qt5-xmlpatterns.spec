@@ -3,12 +3,12 @@
 %def_disable bootstrap
 
 Name: qt5-xmlpatterns
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtXmlPatterns component
-Url: http://qt-project.org/
+Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
@@ -63,11 +63,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-syncqt.pl-qt5 \
-    -version %version \
-    -private \
-    -module QtXmlPatterns \
-    #
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
@@ -92,7 +88,9 @@ syncqt.pl-qt5 \
 %_bindir/xmlpatterns*
 %_qt5_headerdir/Qt*/
 %_qt5_libdir/libQt*.so
+%_qt5_libdatadir/libQt*.so
 %_qt5_libdir/libQt*.prl
+%_qt5_libdatadir/libQt*.prl
 %_qt5_libdir/cmake/Qt*/
 %_qt5_libdir/pkgconfig/Qt*.pc
 %_qt5_archdatadir/mkspecs/modules/*.pri
@@ -103,6 +101,9 @@ syncqt.pl-qt5 \
 %endif
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Mon Jul 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 

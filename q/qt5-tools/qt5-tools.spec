@@ -8,12 +8,12 @@
 %define minor 5
 %define bugfix 0
 Name: qt5-tools
-Version: %major.%minor.%bugfix
-Release: alt2
+Version: 5.5.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
-Url: http://qt-project.org/
+Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Requires: %name-common = %EVR
@@ -32,7 +32,7 @@ Patch1: alt-build-qtconfig.patch
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute qt5-webkit-devel rpm-build-python3 rpm-build-ruby
 BuildRequires: desktop-file-utils gcc-c++ glibc-devel libicu-devel /usr/bin/convert
-BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-webkit-devel
+BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-webkit-devel qt5-xmlpatterns-devel
 BuildRequires: libXext-devel libX11-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
@@ -149,16 +149,7 @@ Requires: %name-common = %EVR
 %if_enabled qtconfig
 %patch1 -p1
 %endif
-syncqt.pl-qt5 \
-    -version %version \
-    -private \
-    -module QtCLucene \
-    -module QtHelp \
-    -module QtUiTools \
-    -module QtUiPlugin \
-    -module QtDesigner \
-    -module QtDesignerComponents \
-    #
+syncqt.pl-qt5 -version %version -private
 %qmake_qt5
 
 
@@ -318,6 +309,9 @@ done
 
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Fri Sep 25 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt2
 - add alternavices for qdbus and qdbusviewer
 

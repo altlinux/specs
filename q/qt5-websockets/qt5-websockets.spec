@@ -1,20 +1,24 @@
 
 %global qt_module qtwebsockets
+%def_disable bootstrap
 
 Name: qt5-websockets
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebSockets component
-Url: http://qt-project.org/
+Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 
 # Automatically added by buildreq on Mon Jun 16 2014 (-bi)
 # optimized out: elfutils libcloog-isl4 libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-sql libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs
-BuildRequires: gcc-c++ glibc-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel
+BuildRequires: gcc-c++ glibc-devel qt5-script-devel qt5-webkit-devel qt5-xmlpatterns-devel
+%if_disabled bootstrap
+BuildRequires: qt5-tools-devel
+%endif
 
 %description
 QtWebSockets is a pure Qt implementation of WebSockets - both client and server.
@@ -61,20 +65,20 @@ Requires: qt5-declarative-common
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-syncqt.pl-qt5 \
-    -version %version \
-    -private \
-    -module QtWebSockets \
-    #
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
 %make_build
+%if_disabled bootstrap
 %make docs
+%endif
 
 %install
 %install_qt5
+%if_disabled bootstrap
 %make INSTALL_ROOT=%buildroot install_docs ||:
+%endif
 
 %files common
 %files -n libqt5-websockets
@@ -85,15 +89,22 @@ syncqt.pl-qt5 \
 %files devel
 %_qt5_headerdir/Qt*/
 %_qt5_libdir/libQt*.so
+%_qt5_libdatadir/libQt*.so
 %_qt5_libdir/libQt*.prl
+%_qt5_libdatadir/libQt*.prl
 %_qt5_libdir/cmake/Qt*/
 %_qt5_libdir/pkgconfig/Qt*.pc
 %_qt5_archdatadir/mkspecs/modules/*.pri
 
 %files doc
+%if_disabled bootstrap
 %_qt5_docdir/*
+%endif
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 

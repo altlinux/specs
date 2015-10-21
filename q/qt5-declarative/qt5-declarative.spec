@@ -4,12 +4,12 @@
 %def_disable bootstrap
 
 Name: qt5-declarative
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
-Url: http://qt-project.org/
+Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
@@ -91,16 +91,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
-syncqt.pl-qt5 \
-    -version %version \
-    -private \
-    -module QtQml \
-    -module QtQmlDevTools \
-    -module QtQuick \
-    -module QtQuickTest \
-    -module QtQuickParticles \
-    -module QtQuickWidgets \
-    #
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
@@ -164,7 +155,9 @@ syncqt.pl-qt5 \
 %_bindir/qml*
 %_qt5_bindir/qml*
 %_qt5_libdir/libQt*.so
+%_qt5_libdatadir/libQt*.so
 %_qt5_libdir/libQt*.prl
+%_qt5_libdatadir/libQt*.prl
 %_qt5_headerdir/Qt*/
 %_qt5_archdatadir/mkspecs/modules/*.pri
 %_libdir/cmake/Qt*/
@@ -173,9 +166,13 @@ syncqt.pl-qt5 \
 
 %files devel-static
 %_qt5_libdir/libQt?QmlDevTools.a
+%_qt5_libdatadir/libQt?QmlDevTools.a
 %_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Mon Jul 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 

@@ -1,11 +1,12 @@
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
 %def_disable sql_tds
 %def_disable sql_sqlite2
+%def_disable journald
 
 %define platform linux-g++
 %define graphicssystem raster
@@ -22,19 +23,20 @@
 %define minor  5
 %define bugfix 0
 Name: qt5-base
-Version: 5.5.0
-Release: alt4
+Version: 5.5.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
 License: LGPLv2 with exceptions / GPLv3 with exceptions
-Url: http://qt-project.org/
+Url: http://qt.io/
 
 Source: %rname-opensource-src-%version.tar
 Source1: rpm-macros
 Source2: rpm-macros-addon
 # FC
-Patch1: qt-everywhere-opensource-src-5.3.2-QTBUG-35459.patch
+Patch1: qtbase-opensource-src-5.3.2-QTBUG-35459.patch
+Patch2: qtbase-opensource-src-5.4.0-QTBUG-43057.patch
 # upstream
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
@@ -49,11 +51,13 @@ Patch1002: alt-dont-require-plugin-file.patch
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcom_err-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libssl-devel libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxml2-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel libharfbuzz-devel
-BuildRequires: libpcre-devel libudev-devel libdrm-devel libgbm-devel zlib-devel libgtk+2-devel libinput-devel
+BuildRequires: libpcre-devel libudev-devel libdrm-devel libgbm-devel zlib-devel libgtk+2-devel
+BuildRequires: libmtdev-devel libinput-devel libts-devel
 BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl)
 BuildRequires: libX11-devel libXi-devel libxkbcommon-devel libxkbcommon-x11-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
+%{?_enable_journald:BuildRequires: pkgconfig(libsystemd-journal)}
 %{?_enable_sql_tds:BuildRequires: libfreetds-devel}
 %{?_enable_sql_ibase:BuildRequires: firebird-devel}
 %{?_enable_sql_odbc:BuildRequires: libunixODBC-devel}
@@ -292,6 +296,7 @@ EGL integration library for the Qt%major toolkit
 %prep
 %setup -n %rname-opensource-src-%version
 %patch1 -p1 -b .QTBUG-35459
+%patch2 -p1 -b .QTBUG-43057
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
@@ -360,8 +365,13 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -no-separate-debug-info \
     -no-strip \
     -no-use-gold-linker \
+%ifarch %ix86
+    -no-sse2 \
+%endif
 %ifarch %ix86 x86_64
     -reduce-relocations \
+%else
+    -no-reduce-relocations \
 %endif
     -opengl %opengl_type -egl -eglfs -kms \
     -system-sqlite \
@@ -426,7 +436,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.5.0
+Version: 5.5.1
 __EOF__
 
 # rpm macros
@@ -680,6 +690,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Tue Oct 13 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt4
 - make rpm-macros package noarch (ALT#31357)
 

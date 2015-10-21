@@ -1,13 +1,14 @@
 
 %global qt_module qtlocation
+%def_disable bootstrap
 
 Name: qt5-location
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtLocation component
-Url: http://qt-project.org/
+Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
@@ -15,8 +16,11 @@ Source: %qt_module-opensource-src-%version.tar
 # Automatically added by buildreq on Fri Feb 28 2014 (-bi)
 # optimized out: elfutils glib2-devel libGL-devel libcloog-isl4 libdbus-devel libdbus-glib libdbus-glib-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-quick libqt5-sql libqt5-widgets libqt5-xml libstdc++-devel libxml2-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: gcc-c++ glibc-devel-static libGConf-devel libgeoclue-devel libgypsy-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-ruby
-BuildRequires: gcc-c++ glibc-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel
+BuildRequires: gcc-c++ glibc-devel qt5-declarative-devel qt5-xmlpatterns-devel
 BuildRequires: pkgconfig(geoclue) pkgconfig(gypsy) pkgconfig(gconf-2.0)
+%if_disabled bootstrap
+BuildRequires: qt5-tools-devel
+%endif
 
 %description
 The Qt Positioning API gives developers the ability to determine a position
@@ -60,6 +64,9 @@ This package contains documentation for Qt5 %qt_module
 Summary: Qt5 library
 Group: System/Libraries
 Requires: %name-common = %EVR
+%if_disabled bootstrap
+Requires: qt5-quickcontrols
+%endif
 %description -n libqt5-positioning
 %summary
 
@@ -67,26 +74,28 @@ Requires: %name-common = %EVR
 Summary: Qt5 library
 Group: System/Libraries
 Requires: %name-common = %EVR
+%if_disabled bootstrap
+Requires: qt5-quickcontrols
+%endif
 %description -n libqt5-location
 %summary
 
 %prep
 %setup -n %qt_module-opensource-src-%version
-syncqt.pl-qt5 \
-    -version %version \
-    -private \
-    -module QtLocation \
-    -module QtPositioning \
-    #
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
 %make_build
+%if_disabled bootstrap
 %make docs
+%endif
 
 %install
 %install_qt5
+%if_disabled bootstrap
 %make INSTALL_ROOT=%buildroot install_docs ||:
+%endif
 
 %files common
 %files -n libqt5-positioning
@@ -103,15 +112,22 @@ syncqt.pl-qt5 \
 %_qt5_headerdir/QtPositioning/
 %_qt5_headerdir/QtLocation/
 %_qt5_libdir/libQt*.so
+%_qt5_libdatadir/libQt*.so
 %_qt5_libdir/libQt*.prl
+%_qt5_libdatadir/libQt*.prl
 %_qt5_libdir/cmake/Qt*/
 %_qt5_libdir/pkgconfig/Qt*.pc
 %_qt5_archdatadir/mkspecs/modules/qt_lib_*.pri
 
 %files doc
+%if_disabled bootstrap
 %_qt5_docdir/*
+%endif
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 

@@ -2,12 +2,12 @@
 %global qt_module qtdoc
 
 Name: qt5-doc
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: Development/KDE and QT
 Summary: Main Qt5 Reference Documentation
-Url: http://qt-project.org/
+Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 BuildArch: noarch
@@ -15,6 +15,8 @@ BuildArch: noarch
 Source: %qt_module-opensource-src-%version.tar
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-tools
+BuildRequires: qt5-script-devel qt5-svg-devel qt5-xmlpatterns-devel qt5-declarative-devel
+BuildRequires: qt5-tools qt5-tools-devel
 
 %description
 QtDoc contains the main Qt Reference Documentation, which includes
@@ -61,6 +63,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
@@ -75,6 +78,9 @@ Requires: %name-common = %EVR
 %_qt5_docdir/*
 
 %changelog
+* Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Tue Jul 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - new version
 
