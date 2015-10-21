@@ -1,6 +1,6 @@
 Name: audit
-Version: 2.4.2
-Release: alt2
+Version: 2.4.4
+Release: alt1
 
 Packager: Anton Farygin <rider@altlinux.com>
 
@@ -168,6 +168,9 @@ install -pD -m755 init.d/%{name}d.restart %buildroot/usr/libexec/service/legacy-
 %python_sitelibdir/*
 
 %changelog
+* Wed Oct 21 2015 Anton Farygin <rider@altlinux.ru> 2.4.4-alt1
+- new version
+
 * Tue May 26 2015 Anton Farygin <rider@altlinux.ru> 2.4.2-alt2
 - rebuild for new environment
 
