@@ -1,5 +1,5 @@
 Name: mergerfs
-Version: 2.4.0
+Version: 2.7.0
 Release: alt1
 Summary: A FUSE union filesystem
 
@@ -17,6 +17,15 @@ mergerfs is similar to mhddfs, unionfs, and aufs. Like mhddfs in that it too
 uses FUSE. Like aufs in that it provides multiple policies for how to handle
 behavior.
 
+%package fsck
+Summary: fsck python helper for %name
+Group: File tools
+
+Requires: %name = %version-%release
+
+%description fsck
+Fsck python helper for %name
+
 %prep
 %setup
 %patch0 -p1
@@ -29,11 +38,20 @@ make man
 %makeinstall_std PREFIX=%_prefix
 
 %files
-%_bindir/*
+%_bindir/clone
+%_bindir/mergerfs
+%_bindir/mount.mergerfs
 %_man1dir/*.1*
 %doc README.md
 
+%files fsck
+%_sbindir/fsck.mergerfs
+
 %changelog
+* Wed Oct 21 2015 Terechkov Evgenii <evg@altlinux.org> 2.7.0-alt1
+- 2.7.0
+- fsck subpackage (dont require python for main package)
+
 * Mon Sep  7 2015 Terechkov Evgenii <evg@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
