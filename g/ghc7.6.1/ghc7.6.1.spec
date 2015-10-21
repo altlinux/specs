@@ -1,12 +1,11 @@
 Name: ghc7.6.1
 Version: 7.6.1
-Release: alt6
+Release: alt6.1
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
 Group: Development/Haskell
 Url: http://haskell.org/ghc/
-Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
 Source1: ghc.macros
@@ -14,10 +13,35 @@ Patch: ghc-%version-%release.patch
 
 Requires: %name-common
 Requires: libffi-devel libgmp-devel
+# <https://bugzilla.altlinux.org/show_bug.cgi?id=31576>:
+# maybe this bug requires more investigation to understand
+# who goes crazy: a GHC lib or glibc,
+# but now we simply work-around it:
+Requires: glibc-gconv-modules
+
+# The installed Haskell libs will be processed:
+PreReq: haskell-filetrigger
+# <https://www.altlinux.org/RPM_Macros_Packaging_Policy>:
+Requires: rpm-build-haskell >= 1-alt26
+# (rpm-build-haskell-1-alt26 has been adapted to allow builds
+# of Haskell modules without ghcN.N.N-common.)
+
+# Build with the same version, previous release.
+BuildPreReq: ghc7.6.1-common
+
+# Generally, this could work with APT, after the "ghc" pseudo-package
+# is brought back through Provides (allowing to rebuild this package in
+# different environments):
+#
+# <https://ghc.haskell.org/trac/ghc/wiki/Building/Preparation/Tools>:
+# In general, we support building with the previous 2 major releases, e.g.:
+#BuildPreReq: ghc >= 7.2
+# Newer GHC may be incompatible with the code of the current GHC:
+#BuildPreReq: ghc <= %version
 
 # Automatically added by buildreq on Fri Apr 26 2013
 # optimized out: ghc7.6.1-common gnu-config libgpg-error libtinfo-devel pkg-config python-base time xml-common xml-utils zlib-devel
-BuildRequires: binutils-devel docbook-dtds docbook-style-xsl ghc7.6.1 libelf-devel libffi-devel libgmp-devel libncurses-devel xsltproc
+BuildRequires: binutils-devel docbook-dtds docbook-style-xsl libelf-devel libffi-devel libgmp-devel libncurses-devel xsltproc
 
 # Can't build when installed
 #BuildRequires: dblatex
@@ -49,16 +73,21 @@ BuildArch: noarch
 Summary: Selects the default version of Glasgow Haskell Compilation system
 Group: Development/Haskell
 
-Requires: haskell-filetrigger
-Requires: rpm-build-haskell
-Conflicts: ghc <= 7.6.1-alt1
+Provides: ghc = %EVR
+Conflicts: ghc < %EVR
+Conflicts: ghc > %EVR
+
+Requires: %name = %EVR
+Requires: rpm-macros-%{name}-common = %EVR
+
+# <https://www.haskell.org/ghc/download_ghc_7_6_1>:
+Conflicts: cabal-install < 0.8
+
 Conflicts: ghc7.4.1-common
 Conflicts: ghc7.4.2-common
 
-Requires: rpm-macros-%{name}-common = %{version}-%{release}
-
 %description common
-Install this package to select %{version} as the default version
+Install this package to select %version as the default version
 of Glasgow Haskell Compiler.
 
 It will provide the common names for the GHC executables
@@ -190,6 +219,15 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Wed Oct 21 2015 Ivan Zakharyaschev <imz@altlinux.org> 7.6.1-alt6.1
+- "ghc-pkg recache" went crazy without glibc-gconv-modules (ALT#31576);
+  we workaround it for now without an investigation whether it's a Haskell
+  lib or glibc which goes crazy.
+- Rearranged Reqs/Provs to make them more clear and to prepare for
+  independent co-existence of several versions; not yet ready to make
+  ghc7.6.1-common optional (it should be installed only to select the
+  default GHC).
+
 * Tue Oct 20 2015 Ivan Zakharyaschev <imz@altlinux.org> 7.6.1-alt6
 - Simplified the packaging of ghc7.6.1-common.
 
