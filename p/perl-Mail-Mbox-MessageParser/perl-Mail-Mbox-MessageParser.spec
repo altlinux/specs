@@ -1,6 +1,6 @@
 %define dist Mail-Mbox-MessageParser
 Name: perl-%dist
-Version: 1.5002
+Version: 1.5105
 Release: alt1
 
 Summary: A fast and simple mbox folder reader
@@ -9,10 +9,11 @@ Group: Development/Perl
 URL: %CPAN %dist
 BuildArch: noarch
 # http://git.altlinux.org/gears/p/%name.git
-Source: %name-%version-%release.tar
+Source: %dist-%version.tar.gz
+Patch: Mail-Mbox-MessageParser-1.5105-alt.patch
 
 # Automatically added by buildreq on Tue Feb 27 2007
-BuildRequires: perl-FileHandle-Unget perl-Module-Install perl-Storable perl-Text-Diff
+BuildRequires: perl-FileHandle-Unget perl-Module-Install perl-Storable perl-Text-Diff perl(File/Slurp.pm)
 
 %description
 Mail::Mbox::MessageParser is a feature-poor but very fast mbox parser.
@@ -20,7 +21,7 @@ It uses the best of three strategies for parsing a mailbox: either using
 cached folder information, GNU grep, or highly optimized Perl.
 
 %prep
-%setup -n %name-%version-%release
+%setup -n %dist-%version
 
 %build
 %perl_vendor_build
@@ -37,6 +38,11 @@ cached folder information, GNU grep, or highly optimized Perl.
 %perl_vendor_privlib/Mail/Mbox/MessageParser/*.pm
 
 %changelog
+* Wed Oct 21 2015 Igor Vlasenko <viy@altlinux.ru> 1.5105-alt1
+- new version
+- rediffed changes to Mail-Mbox-MessageParser-1.5105-alt.patch
+- uploaded as srpm (due to broken design of gear repository)
+
 * Tue Nov 16 2010 Dmitry V. Levin <ldv@altlinux.org> 1.5002-alt1
 - Updated to 1.5002.
 - Applied fix for CPAN#58053, fixes grepmail with perl 5.12.
