@@ -1,6 +1,6 @@
 %define rname owncloudclient
 Name: owncloud-client
-Version: 1.8.4
+Version: 2.0.1
 Release: alt1
 
 Group: Networking/File transfer
@@ -45,9 +45,10 @@ desktop-file-install \
     --dir=%buildroot/%_desktopdir \
     %{SOURCE1}
 
-%find_lang --with-qt %rname
+%find_lang --with-qt --output=%name.lang client
 
-%files -f %rname.lang
+%files -f %name.lang
+%doc ChangeLog README.md
 %config(noreplace) %_sysconfdir/ownCloud/sync-exclude.lst
 %_bindir/owncloud
 %_bindir/owncloudcmd
@@ -58,6 +59,12 @@ desktop-file-install \
 %_iconsdir/hicolor/*/apps/ownCloud_*.*
 
 %changelog
+* Wed Oct 21 2015 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt1
+- new version
+
+* Wed Oct 21 2015 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt0.M70P.1
+- build for M70P
+
 * Mon Jul 13 2015 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt1
 - new version
 
