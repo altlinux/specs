@@ -1,4 +1,4 @@
-%define ver_major 2.6
+%define ver_major 2.8
 %define api_ver 1.0
 
 %def_disable debug
@@ -44,7 +44,7 @@ Requires: %name-translations
 
 # For /usr/share/gnome
 Requires: gnome-filesystem
-Requires: cinnamon-settings-daemon 
+Requires: cinnamon-settings-daemon
 # for graphical passwd changing apps
 Requires: accountsservice
 #Requires: userpasswd
@@ -78,7 +78,7 @@ BuildRequires: libcinnamon-menus-devel
 # for test-endianess
 BuildRequires: glibc-i18ndata
 BuildRequires: libnm-gtk-devel >= %nm_ver
-BuildRequires: libnm-glib-devel >= %nm_ver 
+BuildRequires: libnm-glib-devel >= %nm_ver
 BuildRequires: libnm-glib-vpn-devel >= %nm_ver
 BuildRequires: libnm-util-devel >= %nm_ver
 BuildRequires: libmm-glib-devel
@@ -139,7 +139,7 @@ you'll want to install this package.
 %find_lang %name-timezones
 
 %files
-#cinnamon-control-center binary doesn't work at x64 so temporary disable it. 
+#cinnamon-control-center binary doesn't work at x64 so temporary disable it.
 %exclude %_bindir/*
 %dir %_libdir/%{name}-1/panels
 %_libdir/%{name}-1/panels/libcolor.so
@@ -176,6 +176,9 @@ you'll want to install this package.
 
 
 %changelog
+* Mon Oct 19 2015 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Tue May 19 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
 - 2.6.0
 

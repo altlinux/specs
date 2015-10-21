@@ -1,10 +1,10 @@
-%define ver_major 2.6
+%define ver_major 2.8
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -63,7 +63,7 @@ BuildRequires: libcinnamon-desktop-devel
 Cinnamon is a Linux desktop which provides advanced innovative features
 and a traditional user experience. The desktop layout is similar to Gnome 2.
 The underlying technology is forked from Gnome Shell. The emphasis is put on
-making users feel at home and providing them with an easy to use and comfortable 
+making users feel at home and providing them with an easy to use and comfortable
 desktop experience.
 
 This package provides the Cinnamon session manager.
@@ -126,6 +126,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Oct 19 2015 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Tue Jun 23 2015 Vladimir Didenko <cow@altlinux.org> 2.6.3-alt1
 - 2.6.3
 

@@ -1,7 +1,7 @@
-%define ver_major 2.6
+%define ver_major 2.8
 
 Name: cinnamon-translations
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Translations for Cinnamon
@@ -81,6 +81,12 @@ rm -f %{buildroot}%{_datadir}/locale/*/LC_MESSAGES/cinnamon-bluetooth.mo
 %files -n cinnamon-session-translations -f cinnamon-session.lang
 
 %changelog
+* Wed Oct 21 2015 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
+* Mon Oct 19 2015 Vladimir Didenko <cow@altlinux.org> 2.7.0-alt1
+- 2.6.3-9-ga2a26c3
+
 * Wed Jul 1 2015 Vladimir Didenko <cow@altlinux.org> 2.6.3-alt1
 - 2.6.3
 

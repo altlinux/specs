@@ -1,8 +1,8 @@
-%define ver_major 2.6
+%define ver_major 2.8
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -30,7 +30,7 @@ Requires: cinnamon-session
 Requires: muffin >= %ver_major
 
 %description -n cinnamon-minimal
-This package provides minimal set of components to run 
+This package provides minimal set of components to run
 Cinnamon desktop.
 
 %package -n cinnamon-default
@@ -46,9 +46,9 @@ Requires: nemo nemo-share
 # Control Center
 Requires: cinnamon-control-center
 # Default terminal
-Requires: gnome-terminal 
+Requires: gnome-terminal
 # Screensaver
-Requires: cinnamon-screensaver  
+Requires: cinnamon-screensaver
 #Gvfs
 Requires: gvfs gvfs-backends gvfs-utils
 # Char map - required by cinnamon keyboard applet
@@ -81,10 +81,10 @@ Requires: gnome-keyring
 Requires: seahorse
 # Clipboard manager
 Requires: parcellite
-# Display manager 
+# Display manager
 Requires: lightdm lightdm-gtk-greeter
 
-# Default web-browser 
+# Default web-browser
 Requires: firefox
 # Default mailer
 Requires: thunderbird
@@ -95,10 +95,10 @@ Requires: pidgin
 Requires: evince
 # Default text editor
 Requires: gedit
-Requires: gedit-plugins 
+Requires: gedit-plugins
 
 # Utilities
-Requires: gnome-utils 
+Requires: gnome-utils
 Requires: gconf-editor >= 3.0
 Requires: dconf-editor >= 0.10
 Requires: gcalctool
@@ -110,9 +110,9 @@ Requires: totem gst-libav
 # Default image viewer
 Requires: gthumb
 # Default CD/DVD burning interface
-Requires: brasero 
+Requires: brasero
 
-Requires: gnome-power-manager 
+Requires: gnome-power-manager
 Requires: NetworkManager-gnome >= 0.8.995
 #Bluetooth configuration
 Requires: blueberry
@@ -128,6 +128,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Wed Oct 21 2015 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Tue Sep 8 2015 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt3
 - add gnome-backgrounds to requirements (closes: #31262)
 
@@ -186,7 +189,7 @@ of default applications.
 * Tue Jan 28 2013 Vladimir Didenko <cow@altlinux.org> 1.6.0-alt3
 - deleted gnome-tweak-tool due dependency to gnome-shell
 - added gcalctool
-- renamed full package to regular - see 
+- renamed full package to regular - see
   http://www.altlinux.org/Desktop_Environment_Policy
 - replaced gnome-mplayer by totem
 
@@ -203,4 +206,3 @@ of default applications.
 
 * Thu Apr 12 2012 Michael Shigorin <mike@altlinux.org> 1.4.0-alt1
 - initial release
-
