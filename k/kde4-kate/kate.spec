@@ -19,7 +19,7 @@
 %define bugfix 7
 Name: kde4-kate
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Editors
 Summary: Advanced text editor
@@ -223,6 +223,9 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Thu Oct 22 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.7-alt2
+- update from KDE/4.14 branch
+
 * Thu Apr 23 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.7-alt1
 - new version
 
