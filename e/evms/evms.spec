@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt31
+Release: alt32
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -18,6 +18,8 @@ Source: %name-%version-%release.tar
 
 BuildRequires: glib2-devel libe2fs-devel libncurses-devel libreadline-devel libuuid-devel
 BuildRequires: libcryptsetup-devel >= 1.4.0
+BuildRequires: gcc4.7
+%set_gcc_version 4.7
 
 %if_with x
 BuildRequires: gtk+-devel
@@ -94,8 +96,9 @@ GTK+ ui tool for EVMS
 %setup
 
 %build
+export CC=gcc
 %autoreconf
-%add_optflags -DEVMS_DEBUG -std=gnu89
+%add_optflags -DEVMS_DEBUG
 %configure  --libdir=/%_lib --sbindir=/sbin \
     --disable-s390 \
     %{subst_enable gpt} \
@@ -165,6 +168,9 @@ EOF
 %endif
 
 %changelog
+* Thu Oct 22 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.5.5-alt32
+- rebuild with gcc 4.7 (closes: #31388)
+
 * Tue Oct 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.5.5-alt31
 - build with gcc 5.2 fixed
 
