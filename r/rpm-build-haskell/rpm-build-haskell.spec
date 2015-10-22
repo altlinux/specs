@@ -1,6 +1,6 @@
 Name: rpm-build-haskell
 Version: 1
-Release: alt25
+Release: alt26
 BuildArch: noarch
 
 Summary: RPM helpers to rebuild Haskell packages
@@ -39,6 +39,10 @@ install -D -m 755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelis
 %_libexecdir/%name
 
 %changelog
+* Thu Oct 22 2015 Ivan Zakharyaschev <imz@altlinux.org> 1-alt26
+- allow to build SRPMs which don't build-require ghc or
+  ghc%ghc_version-common (legacy ones).
+
 * Thu Oct 22 2015 Ivan Zakharyaschev <imz@altlinux.org> 1-alt25
 - .spec: do own our directory.
 
