@@ -4,7 +4,7 @@
 %define rname marble
 %define major 15
 %define minor 4
-%define bugfix 2
+%define bugfix 3
 Name: kde4-marble
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -71,6 +71,7 @@ KDE 4 library
 %build
 %K4build \
     -DBoostPython_FOUND=ON \
+    -DQT5BUILD=OFF \
     -DKDE4_BUILD_TESTS:BOOL=OFF \
     -DNOVA_INCLUDE_DIR=%_includedir/libnova \
     -DNOVA_LIBRARIES="-lnova" \
@@ -126,6 +127,9 @@ KDE 4 library
 
 
 %changelog
+* Thu Oct 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt1
+- new version
+
 * Wed Jun 17 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.2-alt1
 - new version
 
