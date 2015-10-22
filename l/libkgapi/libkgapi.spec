@@ -10,7 +10,7 @@
 %define rname libkgapi
 Name: libkgapi
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Google services APIs
@@ -94,6 +94,9 @@ Development files for %name
 
 
 %changelog
+* Thu Oct 22 2015 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt2
+- update from LibKGAPI/2.2 branch
+
 * Mon Aug 11 2014 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt1
 - new version
 
