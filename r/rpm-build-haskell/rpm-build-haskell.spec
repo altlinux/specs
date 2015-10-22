@@ -1,6 +1,6 @@
 Name: rpm-build-haskell
 Version: 1
-Release: alt23
+Release: alt25
 BuildArch: noarch
 
 Summary: RPM helpers to rebuild Haskell packages
@@ -13,7 +13,8 @@ Source1: macros
 Source2: buildreq-ignore
 
 # Uses the modular reqprov subsystem
-Requires: rpm-build >= 4.0.4-alt78
+#Requires: rpm-build >= 4.0.4-alt78
+Conflicts: rpm-build < 4.0.4-alt78
 
 %description
 RPM macros and reqprov helpers to be used in Haskell packages.
@@ -24,21 +25,29 @@ There is currently no support for compilers other than GHC.
 %setup -n scripts-%version
 
 %install
-%define rpmdir %prefix/lib/rpm
-mkdir -p %buildroot%rpmdir
-cp haskell.* %buildroot%rpmdir/
-install -D %SOURCE1 %buildroot%_sysconfdir/rpm/macros.d/haskell
+mkdir -p %buildroot%_rpmlibdir
+cp haskell.* %buildroot%_rpmlibdir/
+install -D %SOURCE1 %buildroot%_rpmmacrosdir/haskell
 install -D %SOURCE2 \
 	%buildroot%_sysconfdir/buildreqs/files/ignore.d/rpm-build-haskell
 install -D -m 755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelist.sh
 
 %files
-%rpmdir/haskell.*
-%_sysconfdir/rpm/macros.d/haskell
+%_rpmlibdir/haskell.*
+%_rpmmacrosdir/haskell
 %_sysconfdir/buildreqs/files/ignore.d/rpm-build-haskell
-%_libexecdir/%name/hs_gen_filelist.sh
+%_libexecdir/%name
 
 %changelog
+* Thu Oct 22 2015 Ivan Zakharyaschev <imz@altlinux.org> 1-alt25
+- .spec: do own our directory.
+
+* Thu Oct 22 2015 Ivan Zakharyaschev <imz@altlinux.org> 1-alt24
+- .spec: do not require rpm-build (express the compatibility with
+  Conflicts).
+- .spec: use standard new /usr/lib/locations for the scripts
+  according to https://www.altlinux.org/RPM_Macros_Packaging_Policy.
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 1-alt23
 - fix building haskell packages with binaries and without libraries
 
