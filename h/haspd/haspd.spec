@@ -1,4 +1,4 @@
-# Etersoft (c) 2006, 2007, 2008, 2009, 2010, 2013
+# Etersoft (c) 2006, 2007, 2008, 2009, 2010, 2013, 2015
 # Multiplatform spec for autobuild system Korinf
 
 # For build install,
@@ -10,10 +10,10 @@
 # 	kernel-source-XXXX for Slackware / MOPSLinux
 
 Name: haspd
-Version: 3.3
-Release: alt10
+Version: 7.40
+Release: alt2
 
-Summary: HASP drivers and license managers
+Summary: Hardware key protection drivers and license managers
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -44,7 +44,7 @@ Provides: aksusbd-suse
 #
 #ifarch x86_64
 #BuildPreReq: i586-glibc-core i586-glibc-pthread
-# we need 32bit glibc in any case
+# we need 32bit glibc in any caseOC
 BuildPreReq: ld-linux.so.2 libpthread.so.0
 #else
 Provides: sntl-sud = 7.3.0-0
@@ -92,6 +92,7 @@ Please send any comments to hasp@etersoft.ru
 Copyright 1985-2008 Aladdin Knowledge Systems http://www.aladdin.com
 Copyright 2006-2007 Eutron SPA http://www.smartkey.eutron.com
 Copyright 2006-2006 SafeNet Sentinel http://www.safenet-inc.com
+Copyright 2015 SafeNet http://safenet-sentinel.ru/
 
 %package modules
 Summary: Linux kernel modules for HASP LPT keys
@@ -146,17 +147,17 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 
 %_sbindir/hasplmd
 
-%_sbindir/haspdemo
-%_sbindir/nethaspdemo
+#%_sbindir/haspdemo
+#%_sbindir/nethaspdemo
 %_sbindir/usbkeytest
 %dir %_sysconfdir/haspd/
 %_sysconfdir/haspd/hasplm.conf
 
 %_udevrulesdir/80-hasp.rules
 
-# not for MCBC
-%if %_vendor != "RPM"
-%doc aksparlnx/README.html aksparlnx/INSTALL hasplm/hasplm.txt doc/NETHASP.INI.example LICENSE.UTF-8.txt doc/README.UTF-8.txt
+%doc winehasp/readme.txt
+%doc aksparlnx/README.html aksparlnx/INSTALL hasplm/hasplm.txt
+%doc doc/NETHASP.INI.example LICENSE.UTF-8.txt doc/README.UTF-8.txt
 %doc smartkey-server-11.5/README.smartkey sentinel/licenseagreement.txt sentinel/sntlconfig.xml sentinel/readme.pdf
 
 # Eutron
@@ -173,8 +174,6 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 %_libdir/sentinel/
 %endif
 
-%endif
-
 %_man1dir/*
 %_man5dir/*
 
@@ -186,6 +185,19 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 #module_dir/2*
 
 %changelog
+* Thu Oct 22 2015 Vitaly Lipatov <lav@altlinux.ru> 7.40-alt2
+- fix aksparlnx source dir version
+
+* Mon Sep 14 2015 Vitaly Lipatov <lav@altlinux.ru> 7.40-alt1
+- update binaries for Sentinel^(R) LDK and Sentinel HASP^(R) v 7.40 (August, 2015)
+
+* Tue Aug 25 2015 Vitaly Lipatov <lav@altlinux.ru> 7.32-alt1
+- update binaries for Sentinel^(R) LDK and Sentinel HASP^(R) v 7.32 (April, 2015)
+
+* Mon Aug 24 2015 Vitaly Lipatov <lav@altlinux.ru> 4.0-alt1
+- update binaries for Sentinel^(R) LDK and Sentinel HASP^(R) v 2.0 (2012)
+- do not pack haspdemo and nethaspdemo
+
 * Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt10
 - fix udev rule replacement
 
