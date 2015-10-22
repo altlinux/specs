@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.14
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -43,7 +43,7 @@ Requires: kde4-kio-upnp-ms
 Requires: kde4-k3b
 Requires: kde4-k9copy
 Requires: kde4-amarok
-Requires: kde4-kaffeine
+Requires: kde4-smplayer
 Requires: rekonq
 Requires: konversation
 Requires: kde4-smb4k
@@ -82,6 +82,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Thu Oct 22 2015 Sergey V Turchin <zerg@altlinux.org> 4.14-alt3
+- using kde4-smplayer instead of kde4-kaffeine
+
 * Wed Aug 05 2015 Sergey V Turchin <zerg@altlinux.org> 4.14-alt2
 - remove kdenlive because KDE5 now
 
