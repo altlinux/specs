@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.26
+Version: 1.27
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -50,6 +50,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Thu Oct 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
+- <before_subtask_id> support in girar-nmu-helper-task-add-srpm
+
 * Tue Oct 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.26-alt1
 - girar-nmu-helper-task-add-git: fixed typo.
 
