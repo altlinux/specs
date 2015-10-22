@@ -1,6 +1,6 @@
 Name: farsight
 Version: 0.1.28
-Release: alt3.1.qa1
+Release: alt3.1.qa2
 
 Summary: A audio/video conferencing framework
 Group: System/Libraries
@@ -80,6 +80,9 @@ developing applications that use %name.
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Oct 22 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.1.28-alt3.1.qa2
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.28-alt3.1.qa1
 - NMU: rebuilt for debuginfo.
 
