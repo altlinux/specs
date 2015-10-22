@@ -100,7 +100,7 @@
 %define with_loader_nvram "%_datadir/ovmf/ovmf_code-x64.bin:%_datadir/ovmf/ovmf_vars-x64.bin:%_datadir/ovmf/ovmf_code-ia32.bin:%_datadir/ovmf/ovmf_vars-ia32.bin"
 
 Name: libvirt
-Version: 1.2.18
+Version: 1.2.20
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -582,7 +582,7 @@ gzip -9 ChangeLog
 %install
 %makeinstall_std
 
-for i in apparmor object-events dominfo domsuspend hellolibvirt object-events openauth xml/nwfilter systemtap dommigrate domtop
+for i in apparmor object-events dominfo domsuspend hellolibvirt object-events openauth xml/nwfilter rename systemtap dommigrate domtop
 do
   (cd examples/$i ; make clean ; rm -rf .deps .libs Makefile Makefile.in)
 done
@@ -930,6 +930,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Oct 22 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.20-alt1
+- 1.2.20
+- fixed CVE-2015-5247
+
 * Tue Aug 11 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.18-alt1
 - 1.2.18
 
