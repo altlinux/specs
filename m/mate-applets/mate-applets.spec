@@ -1,18 +1,19 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/jw /usr/bin/xsltproc libX11-devel libapm-devel libgio-devel pkgconfig(NetworkManager) pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtksourceview-3.0) pkgconfig(gucharmap-2) pkgconfig(gucharmap-2.90) pkgconfig(libgtop-2.0) pkgconfig(libwnck-3.0) pkgconfig(pygobject-3.0) python-devel xorg-kbproto-devel
+BuildRequires: /usr/bin/glib-gettextize libX11-devel libapm-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtksourceview-3.0) pkgconfig(gucharmap-2) pkgconfig(gucharmap-2.90) pkgconfig(libgtop-2.0) pkgconfig(libwnck-3.0) pkgconfig(pygobject-3.0) python-devel xorg-kbproto-devel
 # END SourceDeps(oneline)
+BuildRequires: libcpupower-devel
 BuildRequires: xvfb-run
 %define _libexecdir %_prefix/libexec
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-applets
-%define version 1.8.0
+%define version 1.10.3
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.8
+%global branch 1.10
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit c3b48ea39ab358b45048e300deafaa3f569748ad}
@@ -23,9 +24,12 @@ BuildRequires: xvfb-run
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-applets
-Version:        %{branch}.0
-Release:        alt4_1
-#Release:        0.1%{?git_rel}%{?dist}
+Version:        %{branch}.3
+%if 0%{?rel_build}
+Release:        alt1_1
+%else
+Release:        alt1_1
+%endif
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -36,10 +40,6 @@ URL:            http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
-#Add patch to fix cpufreq compilation (Thanks Wolfgang)
-Patch0:  cpufreq.patch
-
-#BuildRequires: gucharmap-devel
 BuildRequires: libgtop2-devel
 BuildRequires: libnotify-devel
 BuildRequires: libmateweather-devel
@@ -55,36 +55,26 @@ BuildRequires: mate-icon-theme-devel
 BuildRequires: mate-notification-daemon
 BuildRequires: mate-panel-devel
 BuildRequires: libpolkit-devel
-BuildRequires: python-module-pygtk-devel
+BuildRequires: libunique-devel
 BuildRequires: python-module-pygobject3-devel
 BuildRequires: libstartup-notification-devel
 Buildrequires: libupower-devel
 Buildrequires: libgtksourceview-devel
 %ifnarch s390 s390x sparc64
-BuildRequires: libcpufreq-devel
+#BuildRequires: libcpufreq-devel
 %endif
-
-Requires: icon-theme-hicolor
 Source44: import.info
 Patch33: mate-applets-1.5.1-alt-geyes_schema.patch
 Patch34: gnome-applets-2.6.0-alt-install_makefile.patch
 Source45: 01-cpufreq.pkla
-
 
 %description
 MATE Desktop panel applets
 
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
-
-%patch0 -p1 -b .cpufreq
-# needed for cpufreq patch
-autoreconf -fi
 %patch33 -p1
 %patch34 -p1
-
-# needed for git snapshots
-#NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure   \
@@ -93,10 +83,10 @@ autoreconf -fi
     --disable-static                         \
     --with-x                                 \
     --enable-polkit                          \
-    --enable-networkmanager                  \
     --enable-ipv6                            \
     --enable-stickynotes                     \
-    --libexecdir=%{_libexecdir}/mate-applets
+    --libexecdir=%{_libexecdir}/mate-applets \
+    --with-cpufreq-lib=cpupower
 
 xvfb-run -a make %{?_smp_mflags} V=1
 
@@ -154,16 +144,17 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 %{_datadir}/icons/hicolor/scalable/apps/mate-invest-applet.svg
 %{_datadir}/icons/hicolor/scalable/apps/mate-cpu-frequency-applet.svg
 %{_datadir}/icons/mate/48x48/apps/ax-applet.png
-%{_datadir}/mate-2.0/ui/accessx-status-applet-menu.xml
-%{_datadir}/mate-2.0/ui/battstat-applet-menu.xml
-%{_datadir}/mate-2.0/ui/charpick-applet-menu.xml
-%{_datadir}/mate-2.0/ui/drivemount-applet-menu.xml
-%{_datadir}/mate-2.0/ui/geyes-applet-menu.xml
-%{_datadir}/mate-2.0/ui/stickynotes-applet-menu.xml
-%{_datadir}/mate-2.0/ui/trashapplet-menu.xml
-%{_datadir}/mate-2.0/ui/mateweather-applet-menu.xml
-%{_datadir}/mate-2.0/ui/multiload-applet-menu.xml
-%{_datadir}/mate-2.0/ui/cpufreq-applet-menu.xml
+%{_mandir}/man1/*
+%{_datadir}/mate/ui/accessx-status-applet-menu.xml
+%{_datadir}/mate/ui/battstat-applet-menu.xml
+%{_datadir}/mate/ui/charpick-applet-menu.xml
+%{_datadir}/mate/ui/drivemount-applet-menu.xml
+%{_datadir}/mate/ui/geyes-applet-menu.xml
+%{_datadir}/mate/ui/stickynotes-applet-menu.xml
+%{_datadir}/mate/ui/trashapplet-menu.xml
+%{_datadir}/mate/ui/mateweather-applet-menu.xml
+%{_datadir}/mate/ui/multiload-applet-menu.xml
+%{_datadir}/mate/ui/cpufreq-applet-menu.xml
 %{_datadir}/pixmaps/mate-accessx-status-applet
 %{_datadir}/pixmaps/mate-stickynotes
 %{_datadir}/pixmaps/mate-cpufreq-applet
@@ -171,6 +162,9 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 
 
 %changelog
+* Thu Oct 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.3-alt1_1
+- new version
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt4_1
 - rebuilt against libupower-glib.so.3
 
