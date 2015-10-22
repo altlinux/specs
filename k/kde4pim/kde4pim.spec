@@ -19,7 +19,7 @@
 %define bugfix 10
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -1741,6 +1741,9 @@ based on kdepim.
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Oct 22 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt3
+- update from upstream/KDE/4.14
+
 * Fri Aug 28 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt2
 - update from upstream/KDE/4.14
 
