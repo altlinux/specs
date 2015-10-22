@@ -1,6 +1,6 @@
 Name: rpm-build-tcl
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: RPM helpers to use with Tcl scripts
 License: GPL
@@ -9,8 +9,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 
-PreReq: rpm-build >= 4.0.4-alt44
-Requires: /etc/rpm/macros.d
+Conflicts: rpm-build < 4.0.4-alt44
 Conflicts: tcl-devel < 0:8.4.7-alt2
 
 %description
@@ -21,8 +20,8 @@ build process
 %setup -c
 
 %install
-install -p -m0644 -D tcl-macros %buildroot%_sysconfdir/rpm/macros.d/tcl
-install -p -m0644 -D tcl-macros.env %buildroot%_sysconfdir/rpm/macros.d/tcl.env
+install -p -m0644 -D tcl-macros %buildroot%_rpmmacrosdir/tcl
+install -p -m0644 -D tcl-macros.env %buildroot%_rpmmacrosdir/tcl.env
 install -p -m0755 -D tcl.req %buildroot%_rpmlibdir/tcl.req
 install -p -m0755 -D tcl.req.files %buildroot%_rpmlibdir/tcl.req.files
 install -p -m0755 tcl.prov %buildroot%_rpmlibdir/tcl.prov
@@ -30,11 +29,17 @@ install -p -m0755 tcl.prov.files %buildroot%_rpmlibdir/tcl.prov.files
 
 %files
 %doc README*
-%config %_sysconfdir/rpm/macros.d/tcl
-%config %_sysconfdir/rpm/macros.d/tcl.env
+%_rpmmacrosdir/tcl
+%_rpmmacrosdir/tcl.env
 %_rpmlibdir/tcl.*
 
 %changelog
+* Thu Oct 22 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt2
+- .spec: do not require rpm-build (express the compatibility with
+  Conflicts).
+- .spec: use standard  %%_rpmmacrosdir for the macros according
+  to https://www.altlinux.org/RPM_Macros_Packaging_Policy.
+
 * Fri Dec 21 2007 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4-alt1
 - modified for use with tm modules, found in tcl8.5
 
