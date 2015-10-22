@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name:     alterator-mass-management
-Version:  0.1.6
+Version:  0.1.7
 Release:  alt1
 
 Source:   %name-%version.tar
@@ -54,6 +54,9 @@ getent passwd %amm_pull_user > /dev/null || \
 
 
 %changelog
+* Thu Oct 22 2015 Andrey Cherepanov <cas@altlinux.org> 0.1.7-alt1
+- pull mode: Fix SSH key's file ownership
+
 * Thu Oct 08 2015 Andrey Cherepanov <cas@altlinux.org> 0.1.6-alt1
 - Remove \r from imported files
 
