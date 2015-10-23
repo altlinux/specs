@@ -2,7 +2,7 @@
 # $Id: emacs-base.spec,v 1.10 2006/05/03 08:50:57 eugene Exp $
 
 Name: emacs-base
-Version: 0.0.7
+Version: 0.0.8
 Release: alt1
 
 Group: Editors
@@ -12,6 +12,9 @@ License: GPL
 Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 
 BuildArch: noarch
+
+# for Fedora compatibility
+Provides: emacs-filesystem
 
 Provides: %_sysconfdir/emacs/site-start.d
 Provides: %_emacslispdir
@@ -56,12 +59,14 @@ install -m 644 site-start.d/* %buildroot%_sysconfdir/emacs/site-start.d
 # Buildreq filter for emacs.
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/buildreqs/files/ignore.d/%name
 
-mkdir -p %buildroot%_emacslispdir
+mkdir -p %buildroot%_emacslispdir/site-start.d
 mkdir -p %buildroot%_datadir/emacs/etc
 
 %files
 %dir %_sysconfdir/emacs
 %dir %_sysconfdir/emacs/site-start.d
+# reserved for future use
+%dir %_emacslispdir/site-start.d
 %config(noreplace) %_sysconfdir/emacs/site-start.el
 %config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
 %dir %_datadir/emacs
@@ -77,6 +82,10 @@ mkdir -p %buildroot%_datadir/emacs/etc
 # 1. Добавить check-shadows?
 
 %changelog
+* Fri Oct 23 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt1
+- added Provides: emacs-filesystem
+- added %_emacslispdir/site-start.d for the future use
+
 * Sat Sep 29 2007 Eugene Vlasov <eugvv@altlinux.ru> 0.0.7-alt1
 - Removed 00auto-compr.el, 10fontlock.el, 10frames.el, 
   10more-cyrillic.el
