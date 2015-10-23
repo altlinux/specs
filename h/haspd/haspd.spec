@@ -11,7 +11,7 @@
 
 Name: haspd
 Version: 7.40
-Release: alt2
+Release: alt3
 
 Summary: Hardware key protection drivers and license managers
 
@@ -185,6 +185,9 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 #module_dir/2*
 
 %changelog
+* Fri Oct 23 2015 Vitaly Lipatov <lav@altlinux.ru> 7.40-alt3
+- usbkeytest: fix build (thanks to Alexander R)
+
 * Thu Oct 22 2015 Vitaly Lipatov <lav@altlinux.ru> 7.40-alt2
 - fix aksparlnx source dir version
 
