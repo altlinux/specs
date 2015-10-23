@@ -11,7 +11,7 @@
 %def_without unit_tests
 
 Name: cyrus-imapd
-Version: 2.5.5
+Version: 2.5.6
 Release: alt1
 
 Summary: A high-performance mail store with IMAP and POP3 support
@@ -28,7 +28,7 @@ Source1: cyrus-procmailrc
 Source2: cyrus-user-procmailrc.template
 Source3: %name.logrotate
 Source4: %name.imapd-conf
-Source5: README.ALT
+Source5: README.ALT.rus
 Source6: %name.control
 Source7: %name.pam-config
 Source8: %name-procmail+cyrus.mc
@@ -55,10 +55,10 @@ BuildRequires: CUnit-devel
 BuildRequires: valgrind-devel
 %endif
 
-BuildRequires: control flex gcc-c++ libdb4-devel zlib-devel libwrap-devel libldap-devel libuuid-devel
+BuildRequires: control flex gcc-c++ transfig libdb4-devel zlib-devel libwrap-devel libldap-devel libuuid-devel
 BuildRequires: libsasl2-devel libssl-devel libnet-snmp-devel libnl-devel libsensors3-devel libpcre-devel
 
-# http (CalDAV and CardDAV)
+# http (CalDAV, CardDAV e.t.c.)
 BuildRequires: libjansson-devel libical-devel libxml2-devel libsqlite3-devel
 
 BuildRequires: perl-devel perl-Pod-Parser perl-Term-ReadLine-Gnu perl-Net-Server perl-Unix-Syslog
@@ -159,6 +159,8 @@ autoreconf -v -i
 # this is hack
 #echo '#define CYRUS_CVSDATE 20071211' > imap/xversion.h
 
+%add_optflags -lcrypto -lsasl2 -lssl
+
 %configure \
   --enable-netscapehack \
   --enable-nntp \
@@ -183,8 +185,7 @@ autoreconf -v -i
   #
 
 %build
-%add_optflags -lcrypto -lsasl2 -lssl
-make
+%make
 
 # Modify docs master --> cyrus-master
 pushd man
@@ -192,6 +193,9 @@ pushd man
 popd
 pushd doc
   sed -i 's/master/cyrus-master/g' man.html
+
+  fig2dev -L png murder.fig murder.png
+  fig2dev -L png netnews.fig netnews.png
 popd
 
 # Modify path in perl scripts
@@ -417,6 +421,10 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Fri Oct 23 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.5.6-alt1
+- 2.5.6 (git 20151016 of "cyrus-imapd-2.5" branch)
+- renamed README.ALT to README.ALT.rus; updated README.ALT.rus
+
 * Tue Oct 20 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.5.5-alt1
 - 2.5.5 (git 20150831 of "cyrus-imapd-2.5" branch)
 - reverted patches:
