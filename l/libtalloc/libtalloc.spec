@@ -1,5 +1,5 @@
 Name: libtalloc
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: The talloc library
@@ -78,6 +78,9 @@ rm -f %buildroot%_datadir/swig/*/talloc.i
 
 
 %changelog
+* Fri Oct 23 2015 Alexey Shabalin <shaba@altlinux.ru> 2.1.4-alt1
+- 2.1.4
+
 * Tue Aug 18 2015 Alexey Shabalin <shaba@altlinux.ru> 2.1.3-alt1
 - 2.1.3
 
