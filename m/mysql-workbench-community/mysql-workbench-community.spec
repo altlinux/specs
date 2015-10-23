@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 6.3.4
-Release: alt1
+Release: alt2
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Summary: A MySQL visual database modeling tool
@@ -141,6 +141,9 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Fri Oct 23 2015 Sergey Y. Afonin <asy@altlinux.ru> 6.3.4-alt2
+- updated mysql-workbench-6.3.4-c++11.patch from http://bugs.mysql.com/78668
+
 * Mon Oct 12 2015 Sergey Y. Afonin <asy@altlinux.ru> 6.3.4-alt1
 - Updated to last release (renamed to mysql-workbench-community)
 - Removed patches for mysql-workbench 5.x
