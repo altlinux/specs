@@ -9,14 +9,21 @@
 # note: flag dropped upstream
 %def_enable udevacl
 %def_disable halacl
+%def_without python3
 %if_with backport
 %define cups_filters foomatic-filters
 %else
 %define cups_filters cups-filters >= 1.0.46-alt1
 %endif
+%if_with python3
+%define pysuffix 3
+%else
+%define pysuffix %nil
+%endif
+
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
-Version: 3.14.10
+Version: 3.15.9
 Release: alt1
 License: GPL/MIT/BSD
 Group: Publishing
@@ -47,9 +54,13 @@ Requires: gnupg
 
 %if_enabled python_code
 ###Requires: python
+%if_with python3
+%add_python3_lib_path %_datadir/%name
+%else
 %add_python_lib_path %_datadir/%name
+%endif
 # Andy Kuleshov report
-Requires: python-module-dbus python-modules-ctypes
+Requires: python%{pysuffix}-module-dbus python%{pysuffix}-modules-ctypes
 %endif
 
 Requires: service => 0.5.9-alt1
@@ -60,9 +71,9 @@ BuildRequires: gcc-c++ libcups-devel libjpeg-devel libnet-snmp-devel libssl-deve
 
 %if_enabled python_code
 #BuildRequires: python-module-qt-devel
-BuildRequires: python-module-PyQt4-devel
+BuildRequires: python%{pysuffix}-module-PyQt4-devel
 #RemovedBuildRequires: python-base python-dev python-modules-compiler python-modules-encodings
-BuildRequires: python-devel
+BuildRequires: python%{pysuffix}-devel
 %endif
 
 %if_enabled PPDs
@@ -97,35 +108,37 @@ Patch1: hplip-3.12.9-alt-urlhandler.patch
 # dead patch 2
 Patch2: hplip-3.9.12-alt-fix-udev-rules-ppdev.patch
 Patch4: hplip-3.9.12-alt-hplip-desktop.patch
+Patch5: hplip-3.15.9-alt-link-libhpipp.patch
+Patch6: hplip-3.15.9-alt-systemd.patch
+Patch7: hplip-3.15.9-alt-link-python2.patch
 
 Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.patch
 # it is patch 10 rediffed
 Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
 
 # fedora patches
-Patch101: fedora-3.14.10-4-hplip-pstotiff-is-rubbish.patch
-Patch102: fedora-3.14.10-4-hplip-strstr-const.patch
-Patch103: fedora-3.14.10-4-hplip-ui-optional.patch
-Patch104: fedora-3.14.10-4-hplip-no-asm.patch
-Patch105: fedora-3.14.10-4-hplip-deviceIDs-drv.patch
-Patch106: fedora-3.14.10-4-hplip-udev-rules.patch
-Patch107: fedora-3.14.10-4-hplip-retry-open.patch
-Patch108: fedora-3.14.10-4-hplip-snmp-quirks.patch
-Patch109: fedora-3.14.10-4-hplip-hpijs-marker-supply.patch
-Patch110: fedora-3.14.10-4-hplip-clear-old-state-reasons.patch
-Patch111: fedora-3.14.10-4-hplip-hpcups-sigpipe.patch
-Patch112: fedora-3.14.10-4-hplip-logdir.patch
-Patch113: fedora-3.14.10-4-hplip-bad-low-ink-warning.patch
-Patch114: fedora-3.14.10-4-hplip-deviceIDs-ppd.patch
-Patch115: fedora-3.14.10-4-hplip-ppd-ImageableArea.patch
-Patch116: fedora-3.14.10-4-hplip-scan-tmp.patch
-Patch117: fedora-3.14.10-4-hplip-codec.patch
-Patch118: fedora-3.14.10-4-hplip-log-stderr.patch
-Patch119: fedora-3.14.10-4-hplip-avahi-parsing.patch
-Patch120: fedora-3.14.10-4-hplip-reportlab.patch
-Patch121: fedora-3.14.10-4-hplip-device_open.patch
-#TODO:Fixed build against libjpeg-turbo 1.3.90.
-#Patch122: fedora-3.14.10-4-hplip-jpeg.patch
+Patch101: fedora-3.15.9-2-hplip-pstotiff-is-rubbish.patch
+Patch102: fedora-3.15.9-2-hplip-strstr-const.patch
+Patch103: fedora-3.15.9-2-hplip-ui-optional.patch
+Patch104: fedora-3.15.9-2-hplip-no-asm.patch
+Patch105: fedora-3.15.9-2-hplip-deviceIDs-drv.patch
+Patch106: fedora-3.15.9-2-hplip-udev-rules.patch
+Patch107: fedora-3.15.9-2-hplip-retry-open.patch
+Patch108: fedora-3.15.9-2-hplip-snmp-quirks.patch
+Patch109: fedora-3.15.9-2-hplip-hpijs-marker-supply.patch
+Patch110: fedora-3.15.9-2-hplip-clear-old-state-reasons.patch
+Patch111: fedora-3.15.9-2-hplip-hpcups-sigpipe.patch
+Patch112: fedora-3.15.9-2-hplip-logdir.patch
+Patch113: fedora-3.15.9-2-hplip-bad-low-ink-warning.patch
+Patch114: fedora-3.15.9-2-hplip-deviceIDs-ppd.patch
+Patch115: fedora-3.15.9-2-hplip-ppd-ImageableArea.patch
+Patch116: fedora-3.15.9-2-hplip-scan-tmp.patch
+Patch117: fedora-3.15.9-2-hplip-log-stderr.patch
+Patch118: fedora-3.15.9-2-hplip-avahi-parsing.patch
+Patch120: fedora-3.15.9-2-hplip-dj990c-margin.patch
+Patch121: fedora-3.15.9-2-hplip-strncpy.patch
+Patch122: fedora-3.15.9-2-hplip-no-write-bytecode.patch
+Patch123: fedora-3.15.9-2-hplip-silence-ioerror.patch
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -159,21 +172,22 @@ Obsoletes: xojpanel <= 0.91
 Obsoletes: hpoj-xojpanel <= 0.91
 Obsoletes: hplip-tools < 2.0
 Provides: hplip-tools = 2.0
+BuildArch: noarch
 
 %if_enabled qt3
-Requires: python-module-qt >= 3.16
+Requires: python%{pysuffix}-module-qt >= 3.16
 %else
-Requires: python-module-PyQt4
+Requires: python%{pysuffix}-module-PyQt4
 %endif
 
 # some utils do require dbus user session
 Requires: dbus-tools-gui
 # for hp-scan -n
-Requires: python-module-imaging
+Requires: python%{pysuffix}-module-imaging
 # from fedora 3.10.9-9 patch 33 (= 133)
 # Enable D-Bus threading (and require pygobject2) (bug #600932).
 # patch33 -p1 -b .dbus-threads
-Requires: python-module-pygobject
+Requires: python%{pysuffix}-module-pygobject
 
 Requires: %name = %version-%release
 %if_enabled PPDs
@@ -375,7 +389,10 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 
 # # Fix desktop file.
 %patch4 -p1 -b .desktop
-	  
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+
 # The pstotiff filter is rubbish so replace it (launchpad #528394).
 %patch101 -p1 -b .pstotiff-is-rubbish
 
@@ -389,33 +406,8 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 %patch104 -p1 -b .no-asm
 
 # Corrected several IEEE 1284 Device IDs using foomatic data.
-# Color LaserJet CM1312nfi (bug #581005)
-# Color LaserJet 3800 (bug #581935)
-# Color LaserJet 2840 (bug #582215)
-# Color LaserJet CP1518ni (bug #613689)
-# Color LaserJet 2600n (bug #613712)
-# Color LaserJet 2500/3700/4550/4600/4650/4700/5550/CP1515n/CP2025n
-#                CP3525/CP4520 Series/CM2320nf (bug #659040)
-# Color LaserJet CP2025dn (bug #651509)
-# Color LaserJet CM4730 MFP (bug #658831)
-# Color LaserJet CM3530 MFP (bug #659381)
-# LaserJet 4050 Series/4100 Series/2100 Series/4350/5100 Series/8000 Series
-#          P3005/P3010 Series/P4014/P4515 (bug #659039)
-# LaserJet Professional P1606dn (bug #708472)
-# LaserJet Professional M1212nf MFP (bug #742490)
-# LaserJet M1536dnf MFP (bug #743915)
-# LaserJet M1522nf MFP (bug #745498)
-# LaserJet M1319f MFP (bug #746614)
-# LaserJet M1120 MFP (bug #754139)
-# LaserJet P1007 (bug #585272)
-# LaserJet P1505 (bug #680951)
-# LaserJet P2035 (Ubuntu #917703)
-# PSC 1600 series (bug #743821)
-# Officejet 6300 series (bug #689378)
-# LaserJet Professional P1102w (bug #795958)
-# Color LaserJet CM4540 MFP (bug #968177)
-# Color LaserJet cp4005 (bug #980976)
-# HP LaserJet Professional M1132 MFP (bug #1158743)
+# Color LaserJet 2500 series (bug #659040)
+# LaserJet 4100 Series/2100 Series (bug #659039)
 %patch105 -p1 -b .deviceIDs-drv
 chmod +x %{SOURCE102}
 mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
@@ -423,7 +415,8 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
        prnt/drv/hpijs.drv.in.deviceIDs-drv-hpijs \
        > prnt/drv/hpijs.drv.in
 
-# Don't add printer queue, just check plugin.
+# Move udev rule for calling hp-config_usb_printer into separate file.
+# Don't specify python version in hplip-printer@.service.
 # Move udev rules from /etc/ to /usr/lib/ (bug #748208).
 %patch106 -p1 -b .udev-rules
 
@@ -448,23 +441,7 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 # Fixed Device ID parsing code in hpijs's dj9xxvip.c (bug #510926).
 %patch113 -p1 -b .bad-low-ink-warning
 
-# LaserJet 1200 (bug #577308)
-# LaserJet 1320 series (bug #579920)
-# LaserJet 2300 (bug #576928)
-# LaserJet P2015 Series (bug #580231)
-# LaserJet 4250 (bug #585499)
-# Color LaserJet 2605dn (bug #583953)
-# Color LaserJet 3800 (bug #581935)
-# Color LaserJet 2840 (bug #582215)
-# LaserJet 4050 Series/4100 Series/2100 Series/2420/4200/4300/4350/5100 Series
-#          8000 Series/M3027 MFP/M3035 MFP/P3005/P3010 Series (bug #659039)
-# Color LaserJet 2500/2550/2605dn/3700/4550/4600
-#                4650/4700/5550/CP3525 (bug #659040)
-# Color LaserJet CM4730 MFP (bug #658831)
-# Color LaserJet CM3530 MFP (bug #659381)
-# Designjet T770 (bug #747957)
-# Color LaserJet CM4540 MFP (bug #968177)
-# Color LaserJet cp4005 (bug #980976)
+# Add Device ID for
 # HP LaserJet Color M451dn (bug #1159380)
 %patch114 -p1 -b .deviceIDs-ppd
 
@@ -474,25 +451,23 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 # Scan to /var/tmp instead of /tmp (bug #1076954).
 %patch116 -p1 -b .scan-tmp
 
-# Fixed codec issue (bug #984167).
-%patch117 -p1 -b .codec
-
 # Treat logging before importing of logger module (bug #984699).
-%patch118 -p1 -b .log-stderr
+%patch117 -p1 -b .log-stderr
 
 # Fix parsing of avahi-daemon output (bug #1096939).
-%patch119 -p1 -b .parsing
+%patch118 -p1 -b .parsing
 
-# Fixed version comparisons for x.y.z-style versions such as
-# reportlab (bug #1121433).
-%patch120 -p1 -b .reportlab
+# Fixed left/right margins for HP DeskJet 990C (LP #1405212).
+%patch120 -p1 -b .dj990c-margin
 
-# Fixed incorrect name in function call in makeURI when a parallel
-# port device is used (bug #1159161).
-%patch121 -p1 -b .device_open
+# Fixed uses of strncpy throughout.
+%patch121 -p1 -b .strncpy
 
-# Fixed build against libjpeg-turbo 1.3.90.
-#patch122 -p1 -b .jpeg
+# Don't try to write bytecode cache for hpfax backend (bug #1192761).
+%patch122 -p1 -b .no-write-bytecode
+
+# Ignore IOError when logging output (bug #712537).
+%patch123 -p1 -b .silence-ioerror
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -500,7 +475,6 @@ sed -i.duplex-constraints \
     prnt/drv/hpcups.drv.in
 
 
-fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python,'
 tar -xf %SOURCE6
 
 #pushd prnt/hpijs
@@ -509,10 +483,7 @@ tar -xf %SOURCE6
 # it is patch 10 rediffed
 %patch11 -p1
 
-# from fedora spec
-# Change shebang /usr/bin/env python -> /usr/bin/python (bug #618351).
-find -name '*.py' -print0 | xargs -0 \
-    sed -i.env-python -e 's,^#!/usr/bin/env python,#!/usr/bin/python,'
+fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
 
 %build
 
@@ -593,6 +564,9 @@ EOF
 %else
     --disable-scan-build \
 %endif
+%if_with python3
+	 PYTHON=%{__python3}
+%endif
 %else
     --enable-hpijs-only-build 
 %endif
@@ -612,7 +586,12 @@ install -d $RPM_BUILD_ROOT/%_datadir/cups/model/
 install -m644 fax/ppd/HP-Fax-hplip.ppd $RPM_BUILD_ROOT/%_datadir/cups/model/
 %endif
 
-%make DESTDIR=$RPM_BUILD_ROOT install
+%make DESTDIR=$RPM_BUILD_ROOT install \
+%if_with python3
+	 PYTHON=%{__python3}
+%endif
+
+
 %if_enabled python_code
 
 %if_disabled udevacl
@@ -670,9 +649,9 @@ rm -f %{buildroot}%{_datadir}/hplip/uninstall.*
 rm -f %{buildroot}%{_bindir}/hp-uninstall
 rm -f %{buildroot}%{_datadir}/hplip/upgrade.*
 rm -f %{buildroot}%{_bindir}/hp-upgrade
-rm -f %{buildroot}%{_bindir}/hp-config_usb_printer
-rm -f %{buildroot}%{_datadir}/hplip/config_usb_printer.*
-rm -f %{buildroot}%{_unitdir}/hplip-printer@.service
+#rm -f %{buildroot}%{_bindir}/hp-config_usb_printer
+#rm -f %{buildroot}%{_datadir}/hplip/config_usb_printer.*
+#rm -f %{buildroot}%{_unitdir}/hplip-printer@.service
 %endif # python_code
 
 # Install other files for HPIJS
@@ -705,7 +684,8 @@ install -p -m644 %{SOURCE100} %{buildroot}%{_datadir}/hal/fdi/policy/10osvendor/
 %endif
 
 # hack to properly compile .py files
-python -m compileall $RPM_BUILD_ROOT%_datadir/%name
+python%{pysuffix} -m compileall $RPM_BUILD_ROOT%_datadir/%name
+
 
 # removing unpackaged files
 pushd $RPM_BUILD_ROOT
@@ -742,6 +722,10 @@ if [ "$RPM_INSTALL_ARG1" -eq 0 ]; then
     /sbin/service cups condrestart ||:
 fi
 
+#fedora use it in post...
+#%post hpijs
+#%{_bindir}/hpcups-update-ppds &>/dev/null ||:
+
 %if_enabled sane_backend
 %preun sane
 # no more /etc/sane.d/dll.conf - using /etc/sane.d/dll.d
@@ -773,6 +757,7 @@ fi
 %{_bindir}/hp-check
 %{_bindir}/hp-clean
 %{_bindir}/hp-colorcal
+%{_bindir}/hp-config_usb_printer
 %{_bindir}/hp-devicesettings
 %{_bindir}/hp-diagnose_plugin
 %{_bindir}/hp-diagnose_queues
@@ -807,6 +792,7 @@ fi
 %{_datadir}/hplip/check-plugin.py*
 %{_datadir}/hplip/clean.py*
 %{_datadir}/hplip/colorcal.py*
+%{_datadir}/hplip/config_usb_printer.py*
 %{_datadir}/hplip/devicesettings.py*
 %{_datadir}/hplip/diagnose_plugin.py*
 %{_datadir}/hplip/diagnose_queues.py*
@@ -840,6 +826,8 @@ fi
 %if_enabled policykit
 %{_datadir}/hplip/pkservice.py*
 %{_datadir}/PolicyKit/policy/com.hp.hplip.policy
+%{_udevrulesdir}/56-hp_conf_usb.rules
+%{_unitdir}/hplip-printer@.service
 %endif
 # global dbus service
 %{_datadir}/dbus-1/system-services/com.hp.hplip.service
@@ -924,7 +912,7 @@ fi
 
 %if_enabled PPDs
 %files PPDs
-### TODO !!!!
+### moved to foomatic
 ###%_datadir/cups/model/foomatic-ppds
 %files hpijs-PPDs
 %_datadir/ppd/HP/*-hpijs*.ppd*
@@ -944,7 +932,7 @@ fi
 # HPIP
 %_libdir/libhpip*so*
 %_libdir/libhpmud*so*
-/lib/udev/rules.d/*.rules
+%{_udevrulesdir}/56-hpmud.rules
 %{_tmpfilesdir}/hplip.conf
 
 %files hpijs
@@ -976,6 +964,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Oct 23 2015 Igor Vlasenko <viy@altlinux.ru> 3.15.9-alt1
+- new version
+
 * Thu Nov 20 2014 Igor Vlasenko <viy@altlinux.ru> 3.14.10-alt1
 - new version
 
