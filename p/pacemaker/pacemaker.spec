@@ -1,9 +1,10 @@
 Name: pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 1.1.10
-Release: alt4
+Version: 1.1.13
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url: http://www.clusterlabs.org
+# VCS: https://github.com/ClusterLabs/pacemaker.git
 Group: System/Servers
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -61,12 +62,12 @@ manager for Linux-HA (Heartbeat) and/or Corosync.
 The lib%name package contains shared libraries needed for cluster
 nodes and those just running the CLI tools.
 
-%package -n %name-remote
+%package remote
 License: GPLv2+ and LGPLv2+
 Summary: Pacemaker remote daemon for non-cluster nodes
 Group: System/Servers
 
-%description -n %name-remote
+%description remote
 Pacemaker is an advanced, scalable High-Availability cluster resource
 manager for Linux-HA (Heartbeat) and/or Corosync.
 
@@ -78,7 +79,6 @@ nodes not running the full corosync/cluster stack.
 License: GPLv2+ and LGPLv2+
 Summary: Pacemaker development package
 Group: Development/C
-#Requires: %name-cts = %version-%release
 Requires: lib%name = %version-%release
 Requires: libqb-devel libuuid-devel
 Requires: libxml2-devel libxslt-devel bzlib-devel glib2-devel
@@ -142,6 +142,9 @@ mkdir -p %buildroot%_var/lib/pacemaker/cores
 install -D -m 644 mcp/pacemaker.sysconfig %buildroot%_sysconfdir/sysconfig/pacemaker
 install -D -m 755 pacemaker.init %buildroot%_initdir/pacemaker
 
+# Copy configuration for pacemaker_remote and use it in init script
+install -D -m 644 mcp/pacemaker.sysconfig %buildroot%_sysconfdir/sysconfig/pacemaker_remote
+subst 's|/etc/sysconfig/pacemaker|/etc/sysconfig/pacemaker_remote|' %buildroot%_initdir/pacemaker_remote
 
 # Scripts that should be executable
 chmod a+x %buildroot%_datadir/pacemaker/tests/cts/CTSlab.py
@@ -157,7 +160,7 @@ find %buildroot -name '*.a' -type f -print0 | xargs -0 rm -f
 find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 
 # Do not package these either
-rm -f %buildroot/%_libdir/service_crm.so
+rm -rf %buildroot/%_libdir/service_crm.so %buildroot%_datadir/pacemaker/tests/cts
 
 GCOV_BASE=%buildroot/%_var/lib/pacemaker/gcov
 mkdir -p $GCOV_BASE
@@ -185,22 +188,17 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %preun_service pacemaker_remote
 
 %files
+%doc COPYING AUTHORS ChangeLog
 %exclude %_datadir/pacemaker/tests
 %exclude %_libexecdir/pacemaker/lrmd_test
 %exclude %_sbindir/pacemaker_remoted
-
 %config(noreplace) %_sysconfdir/sysconfig/pacemaker
 %_sbindir/pacemakerd
 %_initdir/pacemaker
-
-%_unitdir/pacemaker.service
-
+%_logrotatedir/%name
 %_datadir/pacemaker
 %_datadir/snmp/mibs/PCMK-MIB.txt
 %_libexecdir/pacemaker/*
-
-#_libdir/heartbeat/*
-
 %_sbindir/crm_attribute
 %_sbindir/crm_master
 %_sbindir/crm_node
@@ -209,36 +207,26 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_sbindir/fence_legacy
 %_sbindir/fence_pcmk
 %_sbindir/crm_resource
-#_bindir/ccs_flatten
-#_bindir/disable_rgmanager
 %_sbindir/stonith_admin
-#_sbindir/crm_uuid
-
-%doc %_mandir/man8/attrd_updater.*
-%doc %_mandir/man8/crm_attribute.*
-%doc %_mandir/man8/crm_node.*
-%doc %_mandir/man8/crm_master.*
-%doc %_mandir/man8/fence_pcmk.*
-%doc %_mandir/man8/pacemakerd.*
-%doc %_mandir/man8/stonith_admin.*
-
-%doc COPYING AUTHORS ChangeLog
-
+%_man8dir/attrd_updater.*
+%_man8dir/crm_attribute.*
+%_man8dir/crm_node.*
+%_man8dir/crm_master.*
+%_man8dir/fence_pcmk.*
+%_man8dir/pacemakerd.*
+%_man8dir/stonith_admin.*
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/cib
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/cores
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/pengine
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/blackbox
-%ghost %dir %attr (750, %uname, %gname) %_var/run/crm
 %dir /usr/lib/ocf
 %dir /usr/lib/ocf/resource.d
+/usr/lib/ocf/resource.d/.isolation
 /usr/lib/ocf/resource.d/pacemaker
-
-#_libexecdir/lcrso/pacemaker.lcrso
 
 %files cli
 %_sbindir/cibadmin
-#_sbindir/cibsecret
 %_sbindir/crm_diff
 %_sbindir/crm_error
 %_sbindir/crm_failcount
@@ -250,19 +238,18 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_sbindir/crm_simulate
 %_sbindir/crm_report
 %_sbindir/crm_ticket
-%doc %_mandir/man8/*
-%exclude %_mandir/man8/attrd_updater.*
-%exclude %_mandir/man8/crm_attribute.*
-%exclude %_mandir/man8/crm_node.*
-%exclude %_mandir/man8/crm_master.*
-%exclude %_mandir/man8/fence_pcmk.*
-%exclude %_mandir/man8/pacemakerd.*
-%exclude %_mandir/man8/pacemaker_remoted.*
-%exclude %_mandir/man8/stonith_admin.*
-
-%doc COPYING AUTHORS ChangeLog
+%doc %_man8dir/*
+%exclude %_man8dir/attrd_updater.*
+%exclude %_man8dir/crm_attribute.*
+%exclude %_man8dir/crm_node.*
+%exclude %_man8dir/crm_master.*
+%exclude %_man8dir/fence_pcmk.*
+%exclude %_man8dir/pacemakerd.*
+%exclude %_man8dir/pacemaker_remoted.*
+%exclude %_man8dir/stonith_admin.*
 
 %files -n lib%name
+%doc COPYING.LIB AUTHORS
 %_libdir/libcib.so.*
 %_libdir/liblrmd.so.*
 %_libdir/libcrmservice.so.*
@@ -273,35 +260,31 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_libdir/libstonithd.so.*
 %_libdir/libtransitioner.so.*
 %_libdir/libcrmcluster.so.*
-%doc COPYING.LIB AUTHORS
 
-%files -n %name-remote
-%config(noreplace) %_sysconfdir/sysconfig/pacemaker
+%files remote
+%doc COPYING.LIB AUTHORS
+%config(noreplace) %_sysconfdir/sysconfig/pacemaker_remote
 %_initdir/pacemaker_remote
-%_unitdir/pacemaker_remote.service
-
 %_sbindir/pacemaker_remoted
-%_mandir/man8/pacemaker_remoted.*
-%doc COPYING.LIB AUTHORS
+%_man8dir/pacemaker_remoted.*
 
 %files doc
 %doc %_docdir/%name
 
 %files cts
 %python_sitelibdir/cts
-%_datadir/pacemaker/tests/cts
 %_libexecdir/pacemaker/lrmd_test
-%doc COPYING.LIB AUTHORS
 
 %files -n lib%name-devel
-%exclude %_datadir/pacemaker/tests/cts
 %_datadir/pacemaker/tests
 %_includedir/pacemaker
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
-%doc COPYING.LIB AUTHORS
 
 %changelog
+* Sat Oct 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.13-alt1
+- New version
+
 * Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt4
 - NMU: added missing Pod dependencies
 
