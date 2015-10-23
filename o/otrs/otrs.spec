@@ -2,7 +2,7 @@
 %define otrs_user otrs
 
 Name: otrs
-Version: 4.0.13
+Version: 5.0.1
 Release: alt1
 
 Summary: Open source Ticket Request System
@@ -73,8 +73,8 @@ find %buildroot%installdir -name *.conf -delete
 
 #install default config
 cp %buildroot%installdir/Kernel/Config.pm.dist %buildroot%installdir/Kernel/Config.pm
-cd %buildroot%installdir/Kernel/Config/
-for foo in *.dist; do cp $foo `basename $foo .dist`; done
+# cd %buildroot%installdir/Kernel/Config/
+# for foo in *.dist; do cp $foo `basename $foo .dist`; done
 cd %buildroot%installdir/var/cron/
 for foo in *.dist; do cp $foo `basename $foo .dist`; done
 
@@ -135,7 +135,7 @@ cd %installdir/bin/
 %defattr(0775,root, %webserver_group)
 %dir %installdir
 %config(noreplace) %attr(0660,root,%webserver_group) %installdir/Kernel/Config.pm
-%config(noreplace) %attr(0660,root,%webserver_group) %installdir/Kernel/Config/GenericAgent.pm
+#config(noreplace) %attr(0660,root,%webserver_group) %installdir/Kernel/Config/GenericAgent.pm
 %installdir/bin
 %installdir/Kernel
 %installdir/scripts
@@ -150,6 +150,11 @@ cd %installdir/bin/
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Fri Oct 23 2015 Sergey Y. Afonin <asy@altlinux.ru> 5.0.1-alt1
+- New version
+- updated otrs-InnoDBLogFileSize.patch
+- updated README.ALT.rus
+
 * Fri Oct 16 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.0.13-alt1
 - New version
 - fixed otrs-hold.conf
