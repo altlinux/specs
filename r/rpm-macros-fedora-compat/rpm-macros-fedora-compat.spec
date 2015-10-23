@@ -1,8 +1,8 @@
 %define module fedora-compat
 Name: rpm-macros-%module
 Summary: Fedora compatibility set of macro
-Version: 0.08
-Release: alt5
+Version: 0.09
+Release: alt1
 License: GPL
 Group: System/Base
 BuildArch: noarch
@@ -28,6 +28,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Oct 23 2015 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- added _jsdir
+
 * Mon Dec 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt5
 - added GNAT_arches
 
