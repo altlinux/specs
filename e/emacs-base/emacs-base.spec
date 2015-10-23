@@ -3,7 +3,7 @@
 
 Name: emacs-base
 Version: 0.0.8
-Release: alt1
+Release: alt2
 
 Group: Editors
 Summary: Common site start scripts for GNU Emacs
@@ -14,7 +14,7 @@ Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 BuildArch: noarch
 
 # for Fedora compatibility
-Provides: emacs-filesystem
+Provides: emacs-filesystem = 24
 
 Provides: %_sysconfdir/emacs/site-start.d
 Provides: %_emacslispdir
@@ -82,6 +82,9 @@ mkdir -p %buildroot%_datadir/emacs/etc
 # 1. Добавить check-shadows?
 
 %changelog
+* Fri Oct 23 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2
+- Provides: emacs-filesystem = 24
+
 * Fri Oct 23 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt1
 - added Provides: emacs-filesystem
 - added %_emacslispdir/site-start.d for the future use
