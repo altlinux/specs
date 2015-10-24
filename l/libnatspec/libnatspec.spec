@@ -1,16 +1,17 @@
 Name: libnatspec
 Version: 0.3.1
-Release: alt1
+Release: alt2
 
 Summary: Library for national and language-specific issues
 
 License: LGPL
 Group: System/Libraries
-Url: http://sourceforge.net/projects/natspec
+Url: https://github.com/vitlav/libnatspec
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%name/%name-%version.tar.bz2
+# Source-git: https://github.com/vitlav/libnatspec
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Fri Jul 22 2005
 BuildRequires: libpopt-devel
@@ -23,7 +24,9 @@ This library provides userful functions for
 mount, submount, mkisofs, multimedia players.
 This library try to help resolve charset hell (encoding problem)
 in a various programs depends on locale and messages.
-See detailed description at %url.
+See detailed description at
+http://www.freesource.info/wiki/Lokalizacija/NATSPECDescription
+or http://freesource.info/wiki/Lokalizacija/BibliotekaNATSPEC
 
 %package devel
 Summary: Development package of library for national and language-specific issues
@@ -92,6 +95,11 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Sat Oct 24 2015 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt2
+- update version and add comment about automate it
+- add p7zip patch from https://github.com/buzztaiki/pkgbuild-p7zip-natspec/
+- fix URL and path to source
+
 * Sat Oct 24 2015 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
 - add travis support
 - fix some build issues, thanks to Travis CI and Coverity
