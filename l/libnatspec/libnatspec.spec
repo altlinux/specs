@@ -1,5 +1,5 @@
 Name: libnatspec
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Library for national and language-specific issues
@@ -92,6 +92,14 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Sat Oct 24 2015 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
+- add travis support
+- fix some build issues, thanks to Travis CI and Coverity
+- update version and cleanup doxygen file
+- natspec: fix error with compiling without popt
+- fix printf size_t issues
+- get_charset: fix memory leak detected by Coverity
+
 * Sun Aug 16 2015 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
 - netspec cli: always print with \n
 - README-ru recode to utf8
