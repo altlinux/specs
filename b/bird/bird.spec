@@ -1,7 +1,7 @@
 %define _localstatedir %_var
 
 Name: bird
-Version: 1.4.4
+Version: 1.5.0
 Release: alt1
 Summary: BIRD Internet Routing Daemon
 
@@ -63,6 +63,10 @@ Requires: %name = %version-%release
 autoconf
 %define _configure_script ../configure
 
+# gcc detects overflow in strncpy at proto/rip/auth.c:134
+# but it's false alarm, relax gcc
+export CFLAGS="%optflags -D_FORTIFY_SOURCE=1"
+
 mkdir build-bird6
 pushd build-bird6
 %configure --enable-ipv6 --with-protocols=all
@@ -120,6 +124,9 @@ install -pD -m644 %SOURCE4 %buildroot%_unitdir/%{name}6.service
 %_sbindir/%{name}cl6
 
 %changelog
+* Sun Oct 25 2015 Vladimir Lettiev <crux@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+
 * Tue Sep 09 2014 Alexey Shabalin <shaba@altlinux.ru> 1.4.4-alt1
 - 1.4.4
 - add separate bird6 service
