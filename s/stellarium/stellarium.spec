@@ -1,14 +1,13 @@
 %define _optlevel s
 
 Name: stellarium
-Version: 0.13.2
+Version: 0.14.0
 Release: alt1
 
 Group: Education
 Summary: Astronomical Sky Simulator
 Url: http://www.stellarium.org/
 License: GPL
-Packager: Mikhail E. Rudachenko (ali) <ali@altlinux.org>
 
 Source0: %name-%version.tar.gz
 
@@ -52,6 +51,9 @@ popd
 %_datadir/pixmaps/%name.xpm
 
 %changelog
+* Sun Oct 25 2015 Alexei Takaseev <taf@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Fri Feb 20 2015 Mikhail E. Rudachenko (ali) <ali@altlinux.org> 0.13.2-alt1
 - new version
 - specfile cleanup
