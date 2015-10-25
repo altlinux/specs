@@ -3,7 +3,7 @@
 %define real_name MooX-Types-MooseLike
 
 Name: perl-MooX-Types-MooseLike
-Version: 0.27
+Version: 0.29
 Release: alt1
 
 Summary: Perl module with some Moosish types and a type builder
@@ -46,6 +46,9 @@ tar xvf %SOURCE1
 %perl_vendor_privlib/MooX*
 
 %changelog
+* Sun Oct 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.29-alt1
+- New version
+
 * Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.27-alt1
 - New version
 
