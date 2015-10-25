@@ -1,5 +1,5 @@
 Name: rrd
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 
 %define native rrdtool
@@ -24,7 +24,6 @@ Patch0: rrd-1.4.5-alt-build-tcl.patch
 Patch1: rrdtool-1.4.5-automake-1.11.2.patch
 Patch2: rrdtool-1.4.7-alt-DSO.patch
 Patch3: rrdtool-1.5.3-top-dir.patch
-Patch4: rrdtool-1.5.3-arm-crash-fix.patch
 
 Requires: lib%name = %version-%release
 
@@ -210,7 +209,6 @@ This package contains tcl extension for access the Round Robin Databases.
 #patch1 -p1
 #patch2 -p2
 %patch3 -p1
-%patch4 -p1
 
 find doc bindings/perl-piped -type f -print0 |
 	xargs -r0 fgrep -l /usr/local |
@@ -334,6 +332,9 @@ rm -rf %buildroot/usr/lib/perl
 %endif
 
 %changelog
+* Sun Oct 25 2015 Sergey Y. Afonin <asy@altlinux.ru> 1.5.4-alt1
+- 1.5.4
+
 * Sat Jun 20 2015 Sergey Y. Afonin <asy@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 
