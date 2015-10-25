@@ -1,5 +1,5 @@
 Name: redis
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -24,6 +24,9 @@ Source9: redis.service
 
 # for check section
 BuildPreReq: tcl >= 8.5
+
+# Automatically added by buildreq on Sun Oct 25 2015
+BuildRequires: git-core xsltproc
 
 %description
 Redis is an advanced key-value store. It is similar to memcached but
@@ -132,6 +135,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_sysconfdir/tmpfile
 
 
 %changelog
+* Sun Oct 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.5-alt1
+- New version (3.0.5)
+
 * Wed Sep 23 2015 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.4-alt1
 - New version (3.0.4)
 
