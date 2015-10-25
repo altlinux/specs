@@ -1,6 +1,6 @@
 Name:    texmf-latex-beamer
 Version: 3.36
-Release: alt2
+Release: alt3
 Summary: A LaTeX class that allows create pdf-presentations
 Summary(ru_RU.UTF-8): LaTeX класс для подготовки презентаций в pdf-формате
 License: GPL
@@ -42,11 +42,12 @@ emacs support for beamer LaTeX class
 %setup -q -n %name-%version
 
 %build
+#%%make
 %__mv base/emulation/examples doc/emulation
 
 %install
 # Основные каталоги
-%__mkdir_p %buildroot%_texmfmain/tex/latex/beamer/base/{emulation,multimedia,themes/{color,font,inner,outer,theme/compatibility}}
+%__mkdir_p %buildroot%_texmfmain/tex/latex/beamer/base/{art,emulation,multimedia,themes/{color,font,inner,outer,theme/compatibility}}
 
 %__mkdir_p %buildroot%_texmfmain/tex/latex/beamer/base/translator/dicts/{translator-basic-dictionary,translator-bibliography-dictionary,translator-environment-dictionary,translator-months-dictionary,translator-numbers-dictionary,translator-theorem-dictionary}
 
@@ -59,6 +60,7 @@ emacs support for beamer LaTeX class
 install -pD -m644 base/*.sty %buildroot%_texmfmain/tex/latex/beamer/base/
 install -pD -m644 base/*.cls %buildroot%_texmfmain/tex/latex/beamer/base/
 
+install -pD -m644 base/art/* %buildroot%_texmfmain/tex/latex/beamer/base/art/
 install -pD -m644 base/emulation/*.sty %buildroot%_texmfmain/tex/latex/beamer/base/emulation/
 
 install -pD -m644 base/multimedia/* %buildroot%_texmfmain/tex/latex/beamer/base/multimedia/
@@ -130,6 +132,9 @@ install -pD -m644 emacs/beamer.el %buildroot%_emacslispdir/
 %_emacslispdir/beamer.el
 
 %changelog
+* Sun Oct 25 2015 Andrey Bergman <vkni@altlinux.org> 3.36-alt3
+- Added missing art files.
+
 * Fri Oct 09 2015 Andrey Bergman <vkni@altlinux.org> 3.36-alt2
 - Update to post 3.36 commit 3dd33d7, which includes important fixes.
 
