@@ -4,7 +4,7 @@
 
 Name: python-module-django-horizon
 Version: 2015.1.2
-Release: alt1
+Release: alt2
 Summary: Django application for talking to Openstack
 
 Group: System/Servers
@@ -24,6 +24,7 @@ Patch0007: 0007-Don-t-escape-request.get_full_path-in-Django1.8.patch
 Patch0008: 0008-Remove-un-related-nova-quota-in-test-data.patch
 Patch0019: 0019-Add-back-reference-to-AUTH_USER_MODEL.patch
 Patch0020: 0020-Update-WSGI-app.patch
+Patch0021: 0021-fix-utf8.patch
 Patch1011: 0001-Do-not-load-jasmine-without-DEBUG-setting.patch
 
 
@@ -232,6 +233,7 @@ Documentation for the Django Horizon application for talking with Openstack
 %patch0008 -p1
 %patch0019 -p1
 %patch0020 -p1
+%patch0021 -p1
 %patch1011 -p1
 
 # remove precompiled egg-info
@@ -332,6 +334,7 @@ mkdir -p %buildroot%_datadir/openstack-dashboard/static
 cp -a openstack_dashboard/static/* %buildroot%_datadir/openstack-dashboard/static
 cp -a horizon/static/* %buildroot%_datadir/openstack-dashboard/static
 cp -a static/* %buildroot%_datadir/openstack-dashboard/static
+ln -r -s %buildroot%_datadir/openstack-dashboard/static/themes %buildroot%_datadir/openstack-dashboard/openstack_dashboard/static/themes
 
 # create /var/run/openstack-dashboard/ and own it
 mkdir -p %buildroot%_sharedstatedir/openstack-dashboard
@@ -399,6 +402,9 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %doc html
 
 %changelog
+* Mon Oct 26 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt2
+- add patch for utf8 error
+
 * Wed Oct 14 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
 - 2015.1.2
 - update patches
