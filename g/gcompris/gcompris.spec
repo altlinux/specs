@@ -1,6 +1,6 @@
 
 Name:    gcompris
-Version: 15.02
+Version: 15.10
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
@@ -15,7 +15,6 @@ Source4: %name-16x16.png
 Source5: %name-32x32.png
 Source6: %name-48x48.png
 Source10: voices-%version.tar
-Patch: %name-%version-%release.patch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -374,7 +373,6 @@ All voices in Slovak for GCompris
 
 %prep
 %setup -q
-%patch -p1
 
 #Fix build on x86_64
 sed -i "s|br_cv_valid_prefixes=no|br_cv_valid_prefixes=yes|g" acinclude.m4
@@ -403,8 +401,8 @@ mkdir -p %buildroot%_miconsdir
 mkdir -p %buildroot%_liconsdir
 mkdir -p %buildroot%_niconsdir
 
-install -p -m 644 %SOURCE2 %buildroot%_datadir/applications
-install -p -m 644 %SOURCE3 %buildroot%_datadir/applications
+#install -p -m 644 %SOURCE2 %buildroot%_datadir/applications
+#install -p -m 644 %SOURCE3 %buildroot%_datadir/applications
 install -p -m 644 %SOURCE4 %buildroot%_miconsdir/%name.png
 install -p -m 644 %SOURCE5 %buildroot%_niconsdir/%name.png
 install -p -m 644 %SOURCE6 %buildroot%_liconsdir/%name.png
@@ -431,11 +429,14 @@ desktop-file-install --dir %buildroot%_desktopdir \
 # data 
 %_datadir/%name
 
-#icons
+# icons
 %_datadir/pixmaps/*
 %_miconsdir/*
 %_liconsdir/*
 %_niconsdir/*
+
+# appdata
+%_datadir/appdata/%name.appdata.xml
 
 # exclude sounds
 %exclude %_datadir/gcompris/boards/voices/ar
@@ -594,6 +595,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/sk
 
 %changelog
+* Mon Oct 26 2015 Andrey Cherepanov <cas@altlinux.org> 15.10-alt1
+- New version
+
 * Sun Mar 01 2015 Andrey Cherepanov <cas@altlinux.org> 15.02-alt1
 - New version
 
