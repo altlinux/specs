@@ -8,7 +8,7 @@
 
 Name: openstack-neutron
 Version: 2015.1.2
-Release: alt1
+Release: alt2
 Provides: openstack-quantum = %version-%release
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
 Summary: OpenStack Networking Service
@@ -104,7 +104,7 @@ Requires: python-module-keystonemiddleware >= 1.5.0
 Requires: python-module-oslo.config >= 1.9.0
 Requires: python-module-neutronclient >= 2.4.0
 Requires: python-module-novaclient >= 2.22.0
-Requires: sudo
+Requires: sudo conntrack-tools
 
 %description -n python-module-neutron
 Neutron provides an API to dynamically request and configure virtual
@@ -785,6 +785,10 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Mon Oct 26 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt2
+- add read config from /etc/sysconfig/neutron to l3-agent
+- add R:conntrack-tools
+
 * Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
 - 2015.1.2
 
