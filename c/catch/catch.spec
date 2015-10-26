@@ -1,12 +1,12 @@
 Name: catch
 Version: 1.2.1
-Release: alt2
+Release: alt3
 
 Summary: C++ Unit Test framework ("all in one header")
 
 License: GPL
 Group: Development/C++
-Url: http://wiki.etersoft.ru/UniSet
+Url: https://github.com/philsquared/Catch
 
 Packager: Pavel Vainerman <pv@altlinux.ru>
 BuildArch: noarch
@@ -36,6 +36,9 @@ mv -f single_include/catch.hpp %buildroot%_includedir
 %_includedir/*.hpp
 
 %changelog
+* Mon Oct 26 2015 Pavel Vainerman <pv@altlinux.ru> 1.2.1-alt3
+- spec: fix URL for project
+
 * Mon Oct 26 2015 Pavel Vainerman <pv@altlinux.ru> 1.2.1-alt2
 - new build (merge changes from master repository)
 
@@ -62,5 +65,3 @@ mv -f single_include/catch.hpp %buildroot%_includedir
 
 * Tue Sep 30 2014 Pavel Vainerman <pv@altlinux.ru> 1.0-alt0.1
 - initial commit
-
-
