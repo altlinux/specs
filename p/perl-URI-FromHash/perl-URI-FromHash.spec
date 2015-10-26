@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(Test/CPAN/Changes.pm) perl(URI/QueryParam.pm) perl-devel perl-podlators
+BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(Test/CPAN/Changes.pm) perl(URI/QueryParam.pm) perl-devel perl-podlators perl(Test/Fatal.pm)
 # END SourceDeps(oneline)
 Name:          perl-URI-FromHash 
-Version:       0.04
-Release:       alt2_7
+Version:       0.05
+Release:       alt1
 Summary:       Build a URI from a set of named parameters 
 # see lib/URI/FromHash.pm
 License:       GPL+ or Artistic
 
 Url:           http://search.cpan.org/dist/URI-FromHash
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/URI-FromHash-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DR/DROLSKY/URI-FromHash-%{version}.tar.gz
 
 BuildArch:     noarch
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -55,10 +56,13 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
 make test
 
 %files
-%doc Changes README LICENSE
+%doc Changes README* LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_7
 - update to new release by fcimport
 
