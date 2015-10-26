@@ -1,7 +1,7 @@
 %def_disable libcap
 
 Name: pinentry
-Version: 0.9.4
+Version: 0.9.6
 Release: alt1
 
 Group: File tools
@@ -27,7 +27,7 @@ BuildRequires(pre): libqt4-devel
 BuildRequires: libcap-devel
 %endif
 BuildRequires: gcc-c++ libgtk+2-devel libncursesw-devel
-BuildRequires: libsecret-devel gcr-libs-devel
+BuildRequires: libsecret-devel gcr-libs-devel libassuan-devel
 
 %description
 This is simple PIN or passphrase entry dialog which
@@ -92,7 +92,7 @@ mv %name-%version gui
 
 pushd gui
 rm doc/*.info
-pushd qt4
+pushd qt
 rm -f *.moc
 for h in *.h; do
     m="${h%%.h}.moc"
@@ -116,8 +116,8 @@ pushd gui
     --disable-pinentry-curses \
     --disable-pinentry-tty \
     --enable-pinentry-gtk2 \
-    --enable-pinentry-qt4 \
-    --enable-pinentry-qt4-clipboard \
+    --enable-pinentry-qt \
+    --enable-pinentry-qt-clipboard \
     --enable-pinentry-gnome3 \
     --enable-libsecret \
     %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
@@ -131,7 +131,7 @@ pushd tui
     --enable-pinentry-curses \
     --enable-pinentry-tty \
     --disable-pinentry-gtk2 \
-    --disable-pinentry-qt4 \
+    --disable-pinentry-qt \
     --disable-pinentry-gnome3 \
     --disable-libsecret \
     %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
@@ -149,7 +149,7 @@ popd
 rm %buildroot%_bindir/%name
 
 ln -s %name-gtk-2 %buildroot/%_bindir/%name-gtk
-ln -s %name-qt4 %buildroot/%_bindir/%name-qt
+ln -s %name-qt %buildroot/%_bindir/%name-qt4
 
 install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 
@@ -172,6 +172,9 @@ install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Mon Oct 26 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt1
+- new version
+
 * Tue Jun 23 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.4-alt1
 - new version
 
