@@ -1,16 +1,16 @@
-%define pname cracklib
-Name: %pname-words
-Version: 20080507
+%define _name cracklib
+
+Name: %_name-words
+Version: 2.9.6
 Release: alt1
+Epoch: 1
 
 Summary: Well-known words for cracklib
 License: Freely distributable
 Group: System/Libraries
-Url: http://sourceforge.net/projects/%pname
+Url: https://github.com/%_name/%_name
 
-Packager: Alexey Rusakov <ktirf@altlinux.org>
-
-Source: http://downloads.sourceforge.net/%pname/%name-%version.gz
+Source: https://github.com/%_name/%_name/releases/download/%_name-%version/%name-%version.gz
 
 BuildArch: noarch
 
@@ -20,13 +20,16 @@ cracklib-based programs to check your passwords seriously, don't
 forget to install this package.
 
 %install
-mkdir -p %buildroot%_datadir/%pname
-gzip -cd %SOURCE0 >%buildroot%_datadir/%pname/%name
+mkdir -p %buildroot%_datadir/%_name
+gzip -cd %SOURCE0 >%buildroot%_datadir/%_name/%name
 
 %files
-%_datadir/%pname/%name
+%_datadir/%_name/%name
 
 %changelog
+* Mon Oct 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.9.6-alt1
+- 2.9.6 (new url & epoch)
+
 * Thu May 17 2007 Alexey Rusakov <ktirf@altlinux.org> 20080507-alt1
 - Initial Sisyphus version.
 

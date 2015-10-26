@@ -1,15 +1,15 @@
 %def_enable python3
 
 Name: cracklib
-Version: 2.9.5
+Version: 2.9.6
 Release: alt1
 
 Summary: A password-checking library.
 License: %lgpl2plus
 Group: System/Libraries
-Url: http://sourceforge.net/projects/%name
+Url: https://github.com/%name/%name
 
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
+Source: https://github.com/%name/%name/releases/download/%name-%version/%name-%version.tar.gz
 
 Requires: %name-utils = %version-%release
 
@@ -81,8 +81,7 @@ mv %name-%version py3build
 %build
 %autoreconf
 %configure \
-	--disable-static \
-	--with-x
+	--disable-static
 %make_build
 
 %if_enabled python3
@@ -154,6 +153,9 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 %endif
 
 %changelog
+* Mon Oct 26 2015 Yuri N. Sedunov <aris@altlinux.org> 2.9.6-alt1
+- 2.9.6
+
 * Wed Sep 09 2015 Yuri N. Sedunov <aris@altlinux.org> 2.9.5-alt1
 - 2.9.5
 - python3-module subpackage
