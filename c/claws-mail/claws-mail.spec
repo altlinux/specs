@@ -4,19 +4,13 @@
 
 %def_disable 	appdata
 
-# libchamplain-gtk is only gtk3
-%if_enabled gtk3
-%def_enable 	geolocation
-%else
-%def_disable	geolocation
-%endif
 %def_disable	bsfilter
 %def_disable	tnef
 %def_enable 	gdata
 
 Name:   	claws-mail
-Version:	3.12.0
-Release: 	alt3
+Version:	3.13.0
+Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -84,11 +78,6 @@ BuildRequires: libcanberra-gtk2-devel
 %endif
 %{?_enable_indicator:BuildRequires: libindicate-devel >=  0.3.0}
 %{?_enable_hotkeys:BuildRequires: libgio-devel >= 2.15.6}
-
-# For plugin-geolocation
-%if_enabled geolocation
-BuildRequires: libchamplain-gtk3-devel >= 0.8.0 libsoup-devel
-%endif
 
 # For plugin-tnef
 %if_enabled tnef
@@ -163,9 +152,6 @@ Requires:	%name-plugin-fancy = %version-%release
 Requires:	%name-plugin-fetchinfo = %version-%release
 %if_enabled gdata
 Requires:	%name-plugin-gdata = %version-%release
-%endif
-%if_enabled geolocation
-Requires:	%name-plugin-geolocation = %version-%release
 %endif
 Requires:	%name-plugin-libravatar = %version-%release
 Requires:	%name-plugin-mailmbox = %version-%release
@@ -357,14 +343,6 @@ Requires:	%name = %version-%release
 Access to GData (Google services) for Claws Mail.
 The only currently implemented feature is inclusion of
 Google contacts into the Tab-address completion.
-
-%package	plugin-geolocation
-Summary:	Geolocation functionality for Claws Mail
-Group:		Networking/Mail
-Requires:	%name = %version-%release
-
-%description	plugin-geolocation
-This Claws Mail plugin provides GeoLocation functionality.
 
 %package	plugin-libravatar
 Summary:	Pligin displays libravatar/gravatar profiles' images
@@ -578,9 +556,6 @@ cp -p %SOURCE1 po/
 		%if_disabled gdata
 		--disable-gdata-plugin \
 		%endif
-		%if_disabled geolocation
-		--disable-geolocation-plugin \
-		%endif
 		%if_disabled bsfilter
 		--disable-bsfilter-plugin \
 		%endif
@@ -744,18 +719,6 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %endif
 %endif
 
-%if_enabled geolocation
-%files plugin-geolocation
-%_claws_plugins_path/geolocation.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-geolocation.metainfo.xml
-%endif
-%else
-%if_enabled appdata
-%exclude %_datadir/appdata/claws-mail-geolocation.metainfo.xml
-%endif
-%endif
-
 %files plugin-libravatar
 %doc src/plugins/libravatar/README*
 %_claws_plugins_path/libravatar.so
@@ -845,6 +808,16 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Mon Oct 26 2015 Mikhail Efremov <sem@altlinux.org> 3.13.0-alt1
+- Patches from upstream:
+  + fix syntax error
+  + Fix Debian bug #801375 "Segfault when activating
+    the plugin with the Code from Google"
+  + fix bug 3375, 'Crash (SEGV) at gtkcmctree.c:4514 after deleting
+    an unread message'
+- Drop geolocation plugin from spec.
+- Updated to 3.13.0.
+
 * Mon Oct 05 2015 Mikhail Efremov <sem@altlinux.org> 3.12.0-alt3
 - Patches from upstream:
   + Fix several memory leaks in RSSyl.
