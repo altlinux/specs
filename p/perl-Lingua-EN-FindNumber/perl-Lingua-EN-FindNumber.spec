@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Lingua-EN-FindNumber
-Version: 1.31
+Version: 1.32
 Release: alt1
 
 Summary: Locate (written) numbers in English text
@@ -50,6 +50,9 @@ numbers.
 %perl_vendor_privlib/Lingua/*
 
 %changelog
+* Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
 - automated CPAN update
 
