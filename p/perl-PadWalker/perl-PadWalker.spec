@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist PadWalker
 Name: perl-%dist
-Version: 2.1
+Version: 2.2
 Release: alt1
 
 Summary: Inspect lexical variables in any subroutine which called you
@@ -42,6 +43,9 @@ in production.
 %perl_vendor_autolib/PadWalker*
 
 %changelog
+* Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1
 - automated CPAN update
 
