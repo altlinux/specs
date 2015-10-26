@@ -1,5 +1,5 @@
 Name:    guake
-Version: 0.8.0
+Version: 0.8.3
 Release: alt1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
@@ -66,6 +66,9 @@ fi
 %_iconsdir/hicolor/*/apps/%{name}*.png
 
 %changelog
+* Mon Oct 26 2015 Andrey Cherepanov <cas@altlinux.org> 0.8.3-alt1
+- New version
+
 * Mon Aug 24 2015 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt1
 - New version
 - Build from upstream Git repository
