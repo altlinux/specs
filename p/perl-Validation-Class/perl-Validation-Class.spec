@@ -1,13 +1,13 @@
-%define module_version 7.900056
+%define _unpackaged_files_terminate_build 1
+%define module_version 7.900057
 %define module_name Validation-Class
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Class/Forward.pm) perl(Class/Method/Modifiers.pm) perl(Clone.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(FindBin.pm) perl(Hash/Flatten.pm) perl(Hash/Merge.pm) perl(List/MoreUtils.pm) perl(Module/Find.pm) perl(Module/Runtime.pm) perl(Perl/Critic.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(base.pm) perl(overload.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 7.900056
+Version: 7.900057
 Release: alt1
 Summary: Centralized Data Validation Framework
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/V*
 
 %changelog
+* Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 7.900057-alt1
+- automated CPAN update
+
 * Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 7.900056-alt1
 - automated CPAN update
 
