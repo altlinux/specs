@@ -1,9 +1,10 @@
 %define _name geoclue
-%define ver_major 2.3
+%define __name org.freedesktop.GeoClue2
+%define ver_major 2.4
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 Name: %{_name}2
 Version: %ver_major.0
@@ -24,6 +25,7 @@ Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%v
 BuildRequires: intltool yelp-tools gtk-doc libgio-devel >= %glib_ver
 BuildRequires: libjson-glib-devel libsoup-devel >= %soup_ver libmm-glib-devel >= %mm_ver
 BuildRequires: libdbus-devel libavahi-glib-devel libnotify-devel systemd-devel
+BuildRequires: gobject-introspection-devel
 # for check
 BuildRequires: /proc dbus-tools-gui
 
@@ -40,14 +42,57 @@ Requires: %name = %version-%release
 %description devel
 Files for development with GeoClue.
 
+%package -n lib%name
+Summary: GeoClue Convenience Library
+Group: System/Libraries
+
+%description -n lib%name
+This package provides convenience shared library that makes interacting with
+Geoclue very easy.
+
+%package -n lib%name-devel
+Summary: Header files for GeoClue library
+Group: Development/C
+Requires: lib%name = %version-%release
+
+%description -n lib%name-devel
+This package provides development files for GeoClue library.
+
+%package -n lib%name-gir
+Summary: GObject introspection data for the GeoClue library
+Group: System/Libraries
+Requires: lib%name = %version-%release
+
+%description -n lib%name-gir
+GObject introspection data for the GeoClue library.
+
+%package -n lib%name-gir-devel
+Summary: GObject introspection devel data for the GeoClue library
+Group: Development/Other
+BuildArch: noarch
+Requires: lib%name-gir = %version-%release
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-gir-devel
+GObject introspection devel data for the GeoClue library.
+
 %package devel-doc
 Summary: Developer documentation for GeoClue
-Group: Development/C
+Group: Development/Documentation
 Conflicts: %name < %version
 BuildArch: noarch
 
 %description devel-doc
 Developer documentation for GeoClue.
+
+%package -n lib%name-devel-doc
+Summary: Developer documentation for GeoClue library
+Group: Development/Documentation
+Conflicts: lib%name < %version
+BuildArch: noarch
+
+%description -n lib%name-devel-doc
+Developer documentation for GeoClue library.
 
 %package demo
 Summary: Demo programs for GeoClue
@@ -57,11 +102,9 @@ Requires: %name = %version-%release
 %description demo
 This package contains demo programs for GeoClue.
 
-
 %prep
 %setup -n %_name-%version
 rm -f demo/*.desktop.in
-
 
 %build
 %autoreconf
@@ -88,22 +131,42 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 %files
 %_libexecdir/%_name
-%_sysconfdir/dbus-1/system.d/org.freedesktop.GeoClue2.conf
-%_sysconfdir/dbus-1/system.d/org.freedesktop.GeoClue2.Agent.conf
-%_datadir/dbus-1/system-services/org.freedesktop.GeoClue2.service
-%_datadir/dbus-1/interfaces/org.freedesktop.GeoClue2.Agent.xml
-%_datadir/dbus-1/interfaces/org.freedesktop.GeoClue2.xml
+%_sysconfdir/dbus-1/system.d/%__name.conf
+%_sysconfdir/dbus-1/system.d/%__name.Agent.conf
+%_datadir/dbus-1/interfaces/%__name.Agent.xml
+%_datadir/dbus-1/interfaces/%__name.Client.xml
+%_datadir/dbus-1/interfaces/%__name.Location.xml
+%_datadir/dbus-1/interfaces/%__name.Manager.xml
+%_datadir/dbus-1/interfaces/%__name.xml
+%_datadir/dbus-1/system-services/%__name.service
 %systemd_unitdir/%_name.service
 %config %_sysconfdir/%_name/%_name.conf
 %attr(1770, %_name, %_name) %dir %_localstatedir/%_name
 %doc README NEWS
 
 %files devel
-%_libdir/pkgconfig/%_name-%api_ver.pc
+%_pkgconfigdir/%_name-%api_ver.pc
+
+%files -n lib%name
+%_libdir/lib%_name-2.so.*
+
+%files -n lib%name-devel
+%_includedir/lib%_name-%api_ver/
+%_libdir/lib%_name-2.so
+%_pkgconfigdir/lib%_name-%api_ver.pc
+
+%files -n lib%name-gir
+%_typelibdir/Geoclue-%api_ver.typelib
+
+%files -n lib%name-gir-devel
+%_girdir/Geoclue-%api_ver.gir
 
 %if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/%_name/
+
+%files -n lib%name-devel-doc
+%_datadir/gtk-doc/html/lib%_name/
 %endif
 
 %files demo
@@ -112,6 +175,10 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 
 %changelog
+* Tue Oct 27 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+- new libgeoclue2-* subpackages
+
 * Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
