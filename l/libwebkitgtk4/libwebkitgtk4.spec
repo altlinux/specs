@@ -14,7 +14,7 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.10.2
+Version: 2.10.3
 Release: alt1
 
 Summary: Web browser engine
@@ -195,24 +195,23 @@ rm -rf Source/ThirdParty/qunit/
 
 %cmake \
 -DPORT=GTK \
-%{?_enable_gtkdoc:-DENABLE_GTKDOC:BOOL=ON} \
 -DCMAKE_BUILD_TYPE=Release \
 -DENABLE_MINIBROWSER=ON \
 -DENABLE_TOUCH_EVENTS:BOOL=ON \
 -DENABLE_TOUCH_ICON_LOADING:BOOL=ON \
 -DENABLE_TOUCH_SLIDER:BOOL=ON \
--DENABLE_FTPDIR:BOOL=ON \
+%{?_enable_gtkdoc:-DENABLE_GTKDOC:BOOL=ON} \
 %{?_enable_x11:-DENABLE_X11_TARGET:BOOL=ON} \
 %{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
 %{?_disable_gnu_ld:-DUSE_LD_GOLD:BOOL=OFF} \
 %{?_enable_media_stream:-DENABLE_MEDIA_STREAM:BOOL=ON}
+#-DENABLE_FTPDIR:BOOL=ON \
 #-DENABLE_TELEPHONE_NUMBER_DETECTION:BOOL=ON \
 #-DENABLE_BATTERY_STATUS:BOOL=ON \
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
 #-DENABLE_ORIENTATION_EVENTS:BOOL=ON
 
 %cmake_build
-#%make -C BUILD
 
 %install
 %cmakeinstall_std
@@ -273,6 +272,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Tue Oct 27 2015 Yuri N. Sedunov <aris@altlinux.org> 2.10.3-alt1
+- 2.10.3
+
 * Thu Oct 15 2015 Yuri N. Sedunov <aris@altlinux.org> 2.10.2-alt1
 - 2.10.2
 
