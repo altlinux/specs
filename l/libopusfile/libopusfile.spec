@@ -1,7 +1,7 @@
 %define		srcname opusfile
 
 Name:		lib%srcname
-Version:	0.2
+Version:	0.6
 Release:	alt1
 Summary:	A high-level API for decoding and seeking within .opus files
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
@@ -66,5 +66,8 @@ make DESTDIR=%buildroot install
 %_libdir/libopusfile.a
 
 %changelog
+* Tue Oct 27 2015 Motsyo Gennadi <drool@altlinux.ru> 0.6-alt1
+- 0.6
+
 * Sat Mar 09 2013 Motsyo Gennadi <drool@altlinux.ru> 0.2-alt1
 - initial build for ALT Linux
