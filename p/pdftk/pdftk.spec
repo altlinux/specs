@@ -1,96 +1,70 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: gcc-c++
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global itextvers 2.1.7
+BuildRequires: gcc-java gcc-c++ /usr/bin/dos2unix java-1.5.0-gcj
+%define gcj_support	1
 
-Summary:        The PDF Tool Kit
-Name:           pdftk
-Version:        1.44
-Release:        alt2_11jpp7
-License:        GPLv2+
-URL:            http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
-Source0:        http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/%{name}-%{version}-src.zip
-Patch0:         pdftk-use-internal-itext.patch
-# Solves ".afm files not found" error. RHBZ#494785:
-Patch1:         pdftk-classpath.patch
-Patch2:         pdftk-1.44-gcjfix.patch
-Group:          Publishing
-# Solves #712013 wjocj requires gcc 4.7.0-2 as minimum
-BuildRequires:  gcc-java >= 4.7.0-2
-BuildRequires:  libgcj-devel >= 4.7.0-2
-
-BuildRequires:  itext >= %{itextvers}
-
-Requires:       itext%{?_isa} >= 2.1.7-6
-
-%{echo 
-%filter_from_requires /\.jar\.so/d
-
-}
+Name:		pdftk
+Version:	2.02
+Release:	alt1_2
+Summary:	PDF Tool Kit
+License:	GPLv2+
+Group:		Publishing
+URL:		https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
+Source0:	https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/%{name}-%{version}-src.zip
+# since the gcj version is hardcoded in this patch, don't forget to updated it
+# when gcc is updated, current version is 5.2.1
+Patch0:		pdftk-1.44-makefile-fix.patch
 Source44: import.info
 
+
 %description
-If PDF is electronic paper, then pdftk is an electronic staple-remover,
-hole-punch, binder, secret-decoder-ring, and X-Ray-glasses. Pdftk is a simple
-tool for doing everyday things with PDF documents. Keep one in the top drawer
-of your desktop and use it to:
-
-   * Merge PDF Documents
-   * Split PDF Pages into a New Document
-   * Decrypt Input as Necessary (Password Required)
-   * Encrypt Output as Desired
-   * Burst a PDF Document into Single Pages
-   * Report on PDF Metrics, including Metadata and Bookmarks
-   * Uncompress and Re-Compress Page Streams
-   * Repair Corrupted PDF (Where Possible)
-
-Pdftk is also an example of how to use a library of Java classes in a
-stand-alone C++ program. Specifically, it demonstrates how GCJ and CNI allow
-C++ code to use iText's (itext-paulo) Java classes.
+Pdftk is a simple tool for doing everyday things with PDF documents.
+Keep one in the top drawer of your desktop and use it to:
+- Merge PDF Documents
+- Split PDF Pages into a New Document
+- Decrypt Input as Necessary (Password Required)
+- Encrypt Output as Desired
+- Fill PDF Forms with FDF Data and/or Flatten Forms
+- Apply a Background Watermark
+- Report on PDF Metrics, including Metadata and Bookmarks
+- Update PDF Metadata
+- Attach Files to PDF Pages or the PDF Document
+- Unpack PDF Attachments
+- Burst a PDF Document into Single Pages
+- Uncompress and Re-Compress Page Streams
+- Repair Corrupted PDF (Where Possible)
 
 %prep
 %setup -q -n %{name}-%{version}-dist
-%patch0 -p1
-%patch1 -p0 -b .classpath
-%patch2 -p1 -b .gcjfix
+%patch0 -p0 -b .makefix
 
-# Remove bundled libraries from the source tree
-rm -rf java
+dos2unix changelog.txt pdftk.1.txt
 
-# Fix EOL encoding
-for file in *.txt license_gpl_pdftk//*.txt; do
-    sed 's|\r||' $file > $file.tmp
-    touch -r $file $file.tmp
-    mv $file.tmp $file
-done
+chmod 0644 pdftk.1.html pdftk.1.txt changelog.txt
+
+GCC_VERSION=$(gcc -dumpversion)
+sed -i s/'^export VERSUFF=$'/"export VERSUFF=-${GCC_VERSION}"/ pdftk/Makefile.Redhat
 
 %build
-# Requires as a workaround for gcc BZ #39380
-export CFLAGS="${RPM_OPT_FLAGS}"
-jar tf %{_javadir}/itext-%{itextvers}.jar | grep '\.class$' | sed 's/\.class//' | sed 's|/|\.|g' > classes
-    gjavah -d java -cni -classpath=%{_javadir}/itext-%{itextvers}.jar \
-       `cat classes`
-    cd pdftk
-    make -f Makefile.Redhat LIBDIR=%{_libdir} %{?_smp_mflags} ITEXTVERS="%{itextvers}" 
+pushd pdftk
+	GCJFLAGS="%{optflags} -I`pwd`/../java -Wno-all" make -f Makefile.Redhat
+popd
 
 %install
-mkdir -p $RPM_BUILD_ROOT/%{_bindir}
-mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1
-install -m 0755 pdftk/pdftk $RPM_BUILD_ROOT/%{_bindir}/pdftk
-install -m 0644 pdftk.1 $RPM_BUILD_ROOT/%{_mandir}/man1/pdftk.1
+install -Dpm 0755 pdftk/pdftk %{buildroot}%{_bindir}/%{name}
+install -Dpm 0644 pdftk.1 %{buildroot}%{_mandir}/man1/%{name}.1
 
 %files
-%doc changelog.html changelog.notes changelog.txt
-%doc pdftk.1.html pdftk.1.notes pdftk.1.txt
-%doc license_gpl_pdftk/pdftk_gpl_license.txt license_gpl_pdftk/readme.txt
+%doc pdftk.1.html pdftk.1.txt changelog.txt
 %{_bindir}/%{name}
-%{_mandir}/man1/%{name}*
+%{_mandir}/man1/%{name}.1*
+
 
 %changelog
+* Tue Oct 27 2015 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1_2
+- new version (closes: #31407)
+
 * Thu Nov 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.44-alt2_11jpp7
 - new version
 
