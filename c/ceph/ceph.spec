@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: ceph
-Version: 0.94.4
+Version: 0.94.5
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -300,6 +300,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Oct 27 2015 Alexei Takaseev <taf@altlinux.org> 0.94.5-alt1
+- 0.94.5
+
 * Tue Oct 20 2015 Alexei Takaseev <taf@altlinux.org> 0.94.4-alt1
 - 0.94.4
 
