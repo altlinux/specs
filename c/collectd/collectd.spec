@@ -5,7 +5,7 @@
 %def_enable dbi
 %def_enable ganglia
 %def_enable ipmi
-%def_enable libvirt
+%def_enable virt
 %def_enable memcached
 %def_disable modbus
 %def_disable monitorus
@@ -29,8 +29,8 @@
 %def_disable static
 
 Name: collectd
-Version: 5.4.2
-Release: alt2
+Version: 5.5.0
+Release: alt1
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -120,7 +120,7 @@ BuildArch: noarch
 %{?_enable_curl:Requires: %name-curl}
 %{?_enable_dbi:Requires: %name-dbi}
 %{?_enable_ipmi:Requires: %name-ipmi}
-%{?_enable_libvirt:Requires: %name-libvirt}
+%{?_enable_virt:Requires: %name-virt}
 %{?_enable_mysql:Requires: %name-mysql}
 %{?_enable_netlink:Requires: %name-netlink}
 %{?_enable_nginx:Requires: %name-nginx}
@@ -257,14 +257,16 @@ BuildRequires: libopenipmi-devel
 This plugin provides ipmi support for collectd
 %endif
 
-%if_enabled libvirt
-%package libvirt
-Summary: libvirt support module for collectd
+%if_enabled virt
+%package virt
+Summary: virt support module for collectd
 Group: Monitoring
 Requires: collectd = %version-%release
 BuildRequires: libvirt-devel libxml2-devel
+Provides: %name-libvirt = %version
+Obsoletes: %name-libvirt < %version
 
-%description libvirt
+%description virt
 This plugin provides virtual machines support for collectd
 %endif
 
@@ -301,6 +303,7 @@ Summary: Monitorus support module for collectd
 Group: Monitoring
 BuildArch: noarch
 Requires: collectd = %version-%release
+Requires: perl-Collectd = %version-%release
 
 %description monitorus
 This plugin provides Monitorus support for collectd
@@ -379,6 +382,7 @@ Summary: OpenVZ support module for collectd
 Group: Monitoring
 BuildArch: noarch
 Requires: collectd = %version-%release
+Requires: perl-Collectd = %version-%release
 
 %description openvz
 This plugin provides OpenVZ support for collectd
@@ -496,6 +500,15 @@ mkdir libltdl
 #libtoolize --ltdl --copy --force
 #%autoreconf
 ./build.sh
+
+# fixed warnings:
+# python.so: underlinked libraries: /lib64/libpthread.so.0
+# gmond.so: underlinked libraries: /lib64/libpthread.so.0
+# rrdcached.so: underlinked libraries: /lib64/libpthread.so.0
+# rrdtool.so: underlinked libraries: /lib64/libpthread.so.0
+# notify_desktop.so: underlinked libraries: /usr/lib64/libgobject-2.0.so.0
+%add_optflags -lpthread -lgobject-2.0
+
 # seems like mainstream uses /var for localstatedir, ALT uses /var/lib
 %configure \
 	--disable-apple_sensors \
@@ -508,7 +521,7 @@ mkdir libltdl
 	%{subst_enable dbi} \
 	%{subst_enable ganglia} \
 	%{subst_enable ipmi} \
-	%{subst_enable libvirt} \
+	%{subst_enable virt} \
 	%if_enabled memcached
 	--enable-memcachec \
 	%endif
@@ -564,6 +577,15 @@ EOF
 
 install -pDm644 contrib/collectd.service %buildroot%_unitdir/collectd.service
 
+# --disable-monitorus is not working
+%if_disabled monitorus
+rm -f %buildroot%perl_vendor_privlib/*/*/Monitorus.pm
+%endif
+
+%pre
+# Plugin libvirt renamed to virt in 5.5.0
+sed -i "s/Plugin libvirt/Plugin virt/g" %_sysconfdir/%name.conf 2>/dev/null ||:
+
 %post
 %post_service %name
 
@@ -618,7 +640,7 @@ service %name condrestart ||:
 %{?_enable_dbi:%exclude %_libdir/%name/dbi.so}
 %{?_enable_ganglia:%exclude %_libdir/%name/gmond.so}
 %{?_enable_ipmi:%exclude %_libdir/%name/ipmi.so}
-%{?_enable_libvirt:%exclude %_libdir/%name/libvirt.so}
+%{?_enable_virt:%exclude %_libdir/%name/virt.so}
 %{?_enable_memcached:%exclude %_libdir/%name/memcachec.so}
 %{?_enable_memcached:%exclude %_libdir/%name/memcached.so}
 %{?_enable_modbus:%exclude %_libdir/%name/modbus.so}
@@ -648,6 +670,7 @@ service %name condrestart ||:
 
 %if_enabled perl
 %files -n perl-Collectd
+%dir %perl_vendor_privlib/Collectd
 %perl_vendor_privlib/*.pm
 %perl_vendor_privlib/*/*.pm
 %endif
@@ -699,9 +722,9 @@ service %name condrestart ||:
 %_libdir/%name/ipmi.so
 %endif
 
-%if_enabled libvirt
-%files libvirt
-%_libdir/%name/libvirt.so
+%if_enabled virt
+%files virt
+%_libdir/%name/virt.so
 %endif
 
 %if_enabled memcached
@@ -717,6 +740,7 @@ service %name condrestart ||:
 
 %if_enabled monitorus
 %files monitorus
+%dir %perl_vendor_privlib/Collectd/Plugins
 %perl_vendor_privlib/*/*/Monitorus.pm
 %endif
 
@@ -752,6 +776,7 @@ service %name condrestart ||:
 
 %if_enabled openvz
 %files openvz
+%dir %perl_vendor_privlib/Collectd/Plugins
 %perl_vendor_privlib/*/*/OpenVZ.pm
 %endif
 
@@ -808,10 +833,15 @@ service %name condrestart ||:
 # - consider building with: libiokit, liboconfig (system),
 #   libiptc [kernhdrs], libjvm?, libkvm, libcredis,
 #   libnotify, librabbitmq, libvarnish, libyajl, ipvs
-# - gmond.so: underlinked libraries: /lib64/libpthread.so.0 (seems linked)
 # - macroize repetitive sections
 
 %changelog
+* Tue Oct 27 2015 Sergey Y. Afonin <asy@altlinux.ru> 5.5.0-alt1
+- new version (closes: #31402)
+  + changed: libvirt plugin renamed to virt
+- added perl-Collectd to requires of perl-based plugins
+- added lsb init header (fixed repocop's warning)
+
 * Sat Feb 28 2015 Anton Farygin <rider@altlinux.ru> 5.4.2-alt2
 - cherry-pick from upstream 'snmp plugin: add hostname to "csnmp_instance_list_add" error message'
   close #30344 again.
