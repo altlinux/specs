@@ -1,11 +1,12 @@
 %define _name appstream-glib
 %define ver_major 0.5
 %define api_ver 1.0
+%define asb_ver 4
 %def_disable rpm
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -15,8 +16,8 @@ Url: http://www.freedesktop.org/wiki/Distributions/AppStream/
 
 Source: http://people.freedesktop.org/~hughsient/%_name/releases/%_name-%version.tar.xz
 
-%define glib_ver 2.45.8
-%define soup_ver 2.51.92
+%define glib_ver 2.46
+%define soup_ver 2.52
 
 Obsoletes: appdata-tools < 0.1.9
 Provides: appdata-tools = %version-%release
@@ -26,7 +27,7 @@ BuildRequires: libarchive-devel libsoup-devel >= %soup_ver libgdk-pixbuf-devel
 BuildRequires: libpango-devel libsqlite3-devel
 BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel
 BuildRequires: gtk-doc docbook-utils docbook-dtds
-BuildRequires: libyaml-devel gcab gperf
+BuildRequires: libyaml-devel gcab libgcab-devel gperf
 %{?_enable_rpm:BuildRequires: librpm-devel}
 
 %description
@@ -138,7 +139,6 @@ the functionality of the installed %_name library.
 
 %files -f %_name.lang
 %_bindir/appstream-util
-%_bindir/appdata-validate
 %_libdir/%name.so.*
 %_man1dir/appstream-util.1.*
 %_datadir/bash-completion/completions/appstream-util
@@ -163,12 +163,12 @@ the functionality of the installed %_name library.
 %files -n libappstream-builder
 %_bindir/appstream-builder
 %_libdir/libappstream-builder.so.*
-%dir %_libdir/asb-plugins-2
-%_libdir/asb-plugins-2/*.so
+%dir %_libdir/asb-plugins-%asb_ver
+%_libdir/asb-plugins-%asb_ver/*.so
 %_man1dir/appstream-builder.1.*
 %_datadir/bash-completion/completions/appstream-builder
 
-%exclude %_libdir/asb-plugins-2/*.la
+%exclude %_libdir/asb-plugins-%asb_ver/*.la
 
 %files -n libappstream-builder-devel
 %_libdir/libappstream-builder.so
@@ -190,6 +190,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Tue Oct 27 2015 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
+- 0.5.2
+
 * Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
 - 0.5.1
 
