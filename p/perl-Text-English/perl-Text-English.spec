@@ -2,7 +2,7 @@
 %define dist perlindex
 Name: perl-Text-English
 Version: 1.606
-Release: alt1
+Release: alt1.1
 
 Summary: Pod indexer, Porter's stemming algorithm
 License: GPL or Artistic
@@ -41,9 +41,13 @@ algorithm.
 %files
 %doc ChangeLog README
 %_bindir/perlindex
+%_man1dir/perlindex.1.*
 %perl_vendor_privlib/Text*
 
 %changelog
+* Wed Oct 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.606-alt1.1
+- Fixed FTBFS.
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.606-alt1
 - automated CPAN update
 
