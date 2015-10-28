@@ -1,5 +1,5 @@
 Name: menu-icons-default
-Version: 0.2.0.16
+Version: 0.2.0.17
 Release: alt1
 
 Group: Graphical desktop/Other
@@ -55,6 +55,9 @@ install -m644 64x64/apps/*.png %buildroot%_iconsdir/hicolor/64x64/apps/
 %_iconsdir/hicolor/scalable/apps/*
 
 %changelog
+* Wed Oct 28 2015 Andrey Cherepanov <cas@altlinux.org> 0.2.0.17-alt1
+- Add altlinux.png icon for all popular icon sizes and in SVG format
+
 * Wed Apr 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0.16-alt1
 - added feed
 
