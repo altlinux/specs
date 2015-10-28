@@ -1,7 +1,7 @@
 %def_with python3
 
 Name:		python-module-migrate
-Version:	0.9.5
+Version:	0.10.0
 Release:	alt1
 Summary:	Schema migration tools for SQLAlchemy
 
@@ -27,7 +27,7 @@ BuildRequires:	python-module-nose
 BuildRequires:	python-module-sphinx
 BuildRequires:	python-module-decorator
 BuildRequires:	python-module-tempita >= 0.4
-BuildRequires:	python-module-pbr
+BuildRequires:	python-module-pbr >= 1.3
 BuildRequires:	python-module-six >= 1.4.1
 BuildRequires:	python-module-sqlparse
 %if_with python3
@@ -39,7 +39,7 @@ BuildRequires:	python3-module-nose
 BuildRequires:	python3-module-sphinx
 BuildRequires:	python3-module-decorator
 BuildRequires:	python3-module-tempita >= 0.4
-BuildRequires:	python3-module-pbr
+BuildRequires:	python3-module-pbr >= 1.3
 BuildRequires:	python3-module-six >= 1.4.1
 BuildRequires:	python3-module-sqlparse
 BuildPreReq: python-tools-2to3
@@ -103,8 +103,9 @@ Tests for Schema migration tools for SQLAlchemy.
 
 %prep
 %setup
-%patch0 -p1 -b .db2
-%patch1 -p1 -b .py27
+#%patch0 -p1 -b .db2
+echo '' > migrate/tests/changeset/databases/test_ibmdb2.py
+#%patch1 -p1 -b .py27
 %patch100 -p1 -b .rename
 
 # use real unittest in python 2.7 and up
@@ -175,6 +176,9 @@ echo 'sqlite:///__tmp__' > test_db.cfg
 %endif
 
 %changelog
+* Tue Oct 27 2015 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1
+- 0.10.0
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.5-alt1
 - 0.9.5
 

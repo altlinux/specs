@@ -1,15 +1,14 @@
 %def_disable embrane
-%def_disable plumgrid
 %def_enable linuxbridge
 %def_enable brocade
-%def_enable cisco
 %def_enable openvswitch
 %def_enable mellanox
 
 Name: openstack-neutron
-Version: 2015.1.2
-Release: alt2
-Provides: openstack-quantum = %version-%release
+Version: 7.0.0
+Release: alt1
+Epoch: 1
+Provides: openstack-quantum = %EVR
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
 Summary: OpenStack Networking Service
 
@@ -26,7 +25,6 @@ Source5: neutron.sysconfig
 Source10: neutron-server.service
 Source11: neutron-linuxbridge-agent.service
 Source12: neutron-openvswitch-agent.service
-Source14: neutron-nec-agent.service
 Source15: neutron-dhcp-agent.service
 Source16: neutron-l3-agent.service
 Source17: neutron-metadata-agent.service
@@ -35,11 +33,12 @@ Source19: neutron-mlnx-agent.service
 Source20: neutron-metering-agent.service
 Source21: neutron-sriov-nic-agent.service
 Source22: neutron-netns-cleanup.service
+Source28: neutron-dev-server.service
+Source29: neutron-rpc-server.service
 
 Source110: neutron-server.init
 Source111: neutron-linuxbridge-agent.init
 Source112: neutron-openvswitch-agent.init
-Source114: neutron-nec-agent.init
 Source115: neutron-dhcp-agent.init
 Source116: neutron-l3-agent.init
 Source117: neutron-metadata-agent.init
@@ -48,31 +47,55 @@ Source119: neutron-mlnx-agent.init
 Source120: neutron-metering-agent.init
 Source121: neutron-sriov-nic-agent.init
 Source122: neutron-netns-cleanup.init
+Source128: neutron-dev-server.init
+Source129: neutron-rpc-server.init
 
 BuildArch: noarch
 
 BuildRequires: crudini
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-eventlet >= 0.16.1
-BuildRequires: python-module-oslo.concurrency >= 1.8.2
-BuildRequires: python-module-oslo.config >= 1.9.3
+BuildRequires: python-module-PasteDeploy
+BuildRequires: python-module-routes >= 1.12.3
+BuildRequires: python-module-debtcollector >= 0.3.0
+BuildRequires: python-module-eventlet >= 0.17.4
+BuildRequires: python-module-pecan >= 1.0.0
+BuildRequires: python-module-greenlet >= 0.3.2
+BuildRequires: python-module-httplib2 >= 0.7.5
+BuildRequires: python-module-requests >= 2.5.2
+BuildRequires: python-module-keystonemiddleware >= 2.0.0
+BuildRequires: python-module-netaddr >= 0.7.12
+BuildRequires: python-module-neutronclient >= 2.6.0
+BuildRequires: python-module-retrying >= 1.2.3
+BuildRequires: python-module-ryu >= 3.23.2
+BuildRequires: python-module-SQLAlchemy >= 0.9.9
+BuildRequires: python-module-keystoneclient >= 1.6.0
+BuildRequires: python-module-alembic >= 0.8.0
+BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-oslo.concurrency >= 2.3.0
+BuildRequires: python-module-oslo.config >= 2.3.0
 BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.db >= 1.7.0
+BuildRequires: python-module-oslo.db >= 2.4.1 python-module-oslo.db-tests
 BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.log >= 1.0.0
-BuildRequires: python-module-oslo.messaging >= 1.8.0
-BuildRequires: python-module-oslo.middleware >= 1.0.0
-BuildRequires: python-module-oslo.rootwrap >= 1.6.0
+BuildRequires: python-module-oslo.log >= 1.8.0
+BuildRequires: python-module-oslo.messaging >= 1.16.0
+BuildRequires: python-module-oslo.middleware >= 1.8.0
+BuildRequires: python-module-oslo.policy >= 0.5.0
+BuildRequires: python-module-oslo.rootwrap >= 2.0.0
 BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.utils >= 1.4.0
+BuildRequires: python-module-oslo.service >= 0.7.0
+BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-oslo.versionedobjects >= 0.9.0
+BuildRequires: python-module-novaclient >= 2.28.1
 
-Requires: python-module-neutron = %version-%release
+
+Requires: python-module-neutron = %EVR
+Requires: python-module-PasteDeploy
 Requires: python-module-oslo.rootwrap
 Requires: openstack-utils
 
@@ -96,7 +119,7 @@ capabilities (e.g., QoS, ACLs, network monitoring, etc.)
 Summary: Neutron Python libraries
 Group: Development/Python
 
-Provides: python-module-quantum = %version-%release
+Provides: python-module-quantum = %EVR
 Obsoletes: python-module-quantum < 2013.2-0.4.b3
 
 Requires: python-module-keystoneclient >= 1.2.0
@@ -112,14 +135,38 @@ networks.
 
 This package contains the neutron Python library.
 
+%package rpc-server
+Summary: Neutron (RPC only) Server
+Group: System/Servers
+Requires: %name = %EVR
+
+%description rpc-server
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains an alternative Neutron server that handles AMQP RPC
+workload only.
+
+%package dev-server
+Summary: Neutron Server (WSGI pecan)
+Group: System/Servers
+Requires: %name = %EVR
+
+%description dev-server
+Neutron provides an API to dynamically request and configure virtual
+networks.
+
+This package contains an alternative Neutron server implementation that uses
+pecan library as its WSGI backend.
+
 %package bigswitch
 Summary: Neutron Big Switch plugin
 Group: Development/Python
 
-Provides: openstack-quantum-bigswitch = %version-%release
+Provides: openstack-quantum-bigswitch = %EVR
 Obsoletes: openstack-quantum-bigswitch < 2013.2-0.4.b3
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description bigswitch
 Neutron provides an API to dynamically request and configure virtual
@@ -133,10 +180,10 @@ Networks Controller.
 Summary: Neutron Brocade plugin
 Group: Development/Python
 
-Provides: openstack-quantum-brocade = %version-%release
+Provides: openstack-quantum-brocade = %EVR
 Obsoletes: openstack-quantum-brocade < 2013.2-0.4.b3
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: python-module-ncclient
 
 %description brocade
@@ -146,27 +193,11 @@ networks.
 This package contains the neutron plugin that implements virtual
 networks using Brocade VCS switches running NOS.
 
-%package cisco
-Summary: Neutron Cisco plugin
-Group: Development/Python
-Provides: openstack-quantum-cisco = %version-%release
-Obsoletes: openstack-quantum-cisco < 2013.2-0.4.b3
-
-Requires: %name = %version-%release
-Requires: python-module-ncclient
-
-%description cisco
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the neutron plugin that implements virtual
-networks using Cisco UCS and Nexus.
-
 %package embrane
 Summary: Neutron Embrane plugin
 Group: Development/Python
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description embrane
 Neutron provides an API to dynamically request and configure virtual
@@ -178,28 +209,15 @@ L3-L7 network services using Embrane's heleos platform.
 This package contains the neutron plugin that implements virtual
 networks using Microsoft Hyper-V.
 
-%package ibm
-Summary: Neutron IBM plugin
-Group: Development/Python
-
-Requires: %name = %version-%release
-
-%description ibm
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the neutron plugin that implements virtual
-networks from IBM.
-
 %package linuxbridge
 Summary: Neutron linuxbridge plugin
 Group: Development/Python
 
-Provides: openstack-quantum-linuxbridge = %version-%release
+Provides: openstack-quantum-linuxbridge = %EVR
 Obsoletes: openstack-quantum-linuxbridge < 2013.2-0.4.b3
 
 Requires: bridge-utils
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description linuxbridge
 Neutron provides an API to dynamically request and configure virtual
@@ -212,36 +230,23 @@ networks as VLANs using Linux bridging.
 Summary: Neutron Mellanox plugin
 Group: Development/Python
 
-Provides: openstack-quantum-mellanox = %version-%release
+Provides: openstack-quantum-mellanox = %EVR
 Obsoletes: openstack-quantum-mellanox < 2013.2-0.4.b3
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description mellanox
 This plugin implements Neutron v2 APIs with support for Mellanox embedded
 switch functionality as part of the VPI (Ethernet/InfiniBand) HCA.
 
-%package metaplugin
-Summary: Neutron meta plugin
-Group: Development/Python
-
-Provides: openstack-quantum-metaplugin = %version-%release
-Obsoletes: openstack-quantum-metaplugin < 2013.2-0.4.b3
-
-Requires: %name = %version-%release
-
-%description metaplugin
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
 %package midonet
 Summary: Neutron MidoNet plugin
 Group: Development/Python
 
-Provides: openstack-quantum-midonet = %version-%release
+Provides: openstack-quantum-midonet = %EVR
 Obsoletes: openstack-quantum-midonet < 2013.2-0.4.b3
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description midonet
 Neutron provides an API to dynamically request and configure virtual
@@ -254,10 +259,10 @@ networks using MidoNet from Midokura.
 Summary: Neutron ML2 plugin
 Group: Development/Python
 
-Provides: openstack-quantum-ml2 = %version-%release
+Provides: openstack-quantum-ml2 = %EVR
 Obsoletes: openstack-quantum-ml2 < 2013.2-0.4.b3
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description ml2
 Neutron provides an API to dynamically request and configure virtual
@@ -267,27 +272,11 @@ This package contains a neutron plugin that allows the use of drivers
 to support separately extensible sets of network types and the mechanisms
 for accessing those types.
 
-%package nec
-Summary: Neutron NEC plugin
-Group: Development/Python
-
-Provides: openstack-quantum-nec = %version-%release
-Obsoletes: openstack-quantum-nec < 2013.2-0.4.b3
-
-Requires: %name = %version-%release
-
-%description nec
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the Neutron plugin that implements virtual
-networks using the NEC OpenFlow controller.
-
 %package nuage
 Summary: Neutron Nuage plugin
 Group: Development/Python
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description nuage
 This plugin implements Neutron v2 APIs with support for Nuage Networks
@@ -297,7 +286,7 @@ Virtual Service Platform (VSP).
 Summary: Neutron One Convergence NVSD plugin
 Group: Development/Python
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description oneconvergence-nvsd
 Neutron provides an API to dynamnically request and configure virtual
@@ -310,7 +299,7 @@ networks using One Convergence NVSD
 Summary: Neutron OpenContrail plugin
 Group: Development/Python
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description opencontrail
 This plugin implements Neutron v2 APIs with support for the OpenContrail
@@ -320,7 +309,7 @@ plugin.
 Summary: Neutron openvswitch plugin
 Group: Development/Python
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: openvswitch
 
 %description openvswitch
@@ -334,7 +323,7 @@ networks using Open vSwitch.
 Summary: Neutron OVSvApp vSphere plugin
 Group: Development/Python
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description ovsvapp
 Neutron provides an API to dynamically request and configure virtual
@@ -343,46 +332,12 @@ networks.
 This package contains the neutron plugin that implements virtual
 networks using OVSvApp vSphere L2 agent.
 
-%package plumgrid
-Summary: Neutron PLUMgrid plugin
-Group: Development/Python
-
-Provides: openstack-quantum-plumgrid = %version-%release
-Obsoletes: openstack-quantum-plumgrid < 2013.2-0.4.b3
-
-Requires: %name = %version-%release
-
-%description plumgrid
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the neutron plugin that implements virtual
-networks using the PLUMgrid platform.
-
-%package vmware
-Summary: Neutron Nicira plugin
-Group: Development/Python
-
-Provides: openstack-quantum-nicira = %version-%release
-Obsoletes: openstack-quantum-nicira < 2013.2-0.4.b3
-Provides: %name-nicira = %version-%release
-Obsoletes: %name-nicira < 2014.1-0.5.b2
-
-Requires: %name = %version-%release
-
-%description vmware
-Neutron provides an API to dynamically request and configure virtual
-networks.
-
-This package contains the neutron plugin that implements virtual
-networks using VMware NSX.
-
 
 %package metering-agent
 Summary: Neutron bandwidth metering agent
 Group: Development/Python
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description metering-agent
 Neutron provides an API to measure bandwidth utilization
@@ -394,7 +349,7 @@ utilization notifications.
 Summary: Neutron SR-IOV NIC agent
 Group: Development/Python
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description sriov-nic-agent
 Neutron allows to run virtual instances using SR-IOV NIC hardware
@@ -451,7 +406,6 @@ install -p -D -m 644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/neutron
 install -p -D -m 644 %SOURCE10 %buildroot%_unitdir/neutron-server.service
 install -p -D -m 644 %SOURCE11 %buildroot%_unitdir/neutron-linuxbridge-agent.service
 install -p -D -m 644 %SOURCE12 %buildroot%_unitdir/neutron-openvswitch-agent.service
-install -p -D -m 644 %SOURCE14 %buildroot%_unitdir/neutron-nec-agent.service
 install -p -D -m 644 %SOURCE15 %buildroot%_unitdir/neutron-dhcp-agent.service
 install -p -D -m 644 %SOURCE16 %buildroot%_unitdir/neutron-l3-agent.service
 install -p -D -m 644 %SOURCE17 %buildroot%_unitdir/neutron-metadata-agent.service
@@ -460,12 +414,13 @@ install -p -D -m 644 %SOURCE19 %buildroot%_unitdir/neutron-mlnx-agent.service
 install -p -D -m 644 %SOURCE20 %buildroot%_unitdir/neutron-metering-agent.service
 install -p -D -m 644 %SOURCE21 %buildroot%_unitdir/neutron-sriov-nic-agent.service
 install -p -D -m 644 %SOURCE22 %buildroot%_unitdir/neutron-netns-cleanup.service
+install -p -D -m 644 %SOURCE28 %buildroot%_unitdir/neutron-dev-server.service
+install -p -D -m 644 %SOURCE29 %buildroot%_unitdir/neutron-rpc-server.service
 
 # Install sysV init scripts
 install -p -D -m 755 %SOURCE110 %buildroot%_initdir/neutron-server
 install -p -D -m 755 %SOURCE111 %buildroot%_initdir/neutron-linuxbridge-agent
 install -p -D -m 755 %SOURCE112 %buildroot%_initdir/neutron-openvswitch-agent
-install -p -D -m 755 %SOURCE114 %buildroot%_initdir/neutron-nec-agent
 install -p -D -m 755 %SOURCE115 %buildroot%_initdir/neutron-dhcp-agent
 install -p -D -m 755 %SOURCE116 %buildroot%_initdir/neutron-l3-agent
 install -p -D -m 755 %SOURCE117 %buildroot%_initdir/neutron-metadata-agent
@@ -474,6 +429,8 @@ install -p -D -m 755 %SOURCE119 %buildroot%_initdir/neutron-mlnx-agent
 install -p -D -m 755 %SOURCE120 %buildroot%_initdir/neutron-metering-agent
 install -p -D -m 755 %SOURCE121 %buildroot%_initdir/neutron-sriov-nic-agent
 install -p -D -m 755 %SOURCE122 %buildroot%_initdir/neutron-netns-cleanup
+install -p -D -m 755 %SOURCE128 %buildroot%_initdir/neutron-dev-server
+install -p -D -m 755 %SOURCE129 %buildroot%_initdir/neutron-rpc-server
 
 # Setup directories
 install -d -m 755 %buildroot%_sharedstatedir/neutron
@@ -527,7 +484,17 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %preun_service neutron-netns-cleanup
 
 %post linuxbridge
+oldconf=%_sysconfdir/neutron/plugins/linuxbridge/linuxbridge_conf.ini
+newconf=%_sysconfdir/neutron/plugins/ml2/linuxbridge_agent.ini
+if [ $1 -gt 1 ]; then
+    if [ -e $oldconf ]; then
+        # Imitate noreplace
+        cp $newconf ${newconf}.rpmnew
+        cp $oldconf $newconf
+    fi
+fi
 %post_service neutron-linuxbridge-agent
+
 %preun linuxbridge
 %preun_service neutron-linuxbridge-agent
 
@@ -536,12 +503,17 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %preun mellanox
 %preun_service neutron-mlnx-agent
 
-%post nec
-%post_service neutron-nec-agent
-%preun nec
-%preun_service neutron-nec-agent
-
 %post openvswitch
+oldconf=%_sysconfdir/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
+newconf=%_sysconfdir/neutron/plugins/ml2/openvswitch_agent.ini
+if [ $1 -gt 1 ]; then
+    if [ -e $oldconf ]; then
+        # Imitate noreplace
+        cp $newconf ${newconf}.rpmnew
+        cp $oldconf $newconf
+    fi
+fi
+
 %post_service neutron-openvswitch-agent
 %post_service neutron-ovs-cleanup
 
@@ -566,11 +538,13 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %_bindir/neutron-db-manage
 %_bindir/neutron-debug
 %_bindir/neutron-dhcp-agent
+%_bindir/neutron-ipset-cleanup
 %_bindir/neutron-keepalived-state-change
 %_bindir/neutron-l3-agent
 %_bindir/neutron-metadata-agent
 %_bindir/neutron-netns-cleanup
 %_bindir/neutron-ns-metadata-proxy
+%_bindir/neutron-pd-notify
 %_bindir/neutron-rootwrap
 %_bindir/neutron-rootwrap-daemon
 #%_bindir/neutron-rootwrap-xen-dom0
@@ -609,7 +583,6 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %dir %_sysconfdir/neutron/rootwrap.d
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/rootwrap.d/*.filters
 %exclude %_sysconfdir/neutron/rootwrap.d/linuxbridge-plugin.filters
-%exclude %_sysconfdir/neutron/rootwrap.d/nec-plugin.filters
 %exclude %_sysconfdir/neutron/rootwrap.d/openvswitch-plugin.filters
 
 %files -n python-module-neutron
@@ -617,13 +590,20 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %doc README.rst
 %python_sitelibdir/neutron
 %python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/neutron/plugins/openvswitch/agent/xenapi
+%exclude %python_sitelibdir/neutron/plugins/ml2/drivers/openvswitch/agent/xenapi
 %if_disabled embrane
 %exclude %python_sitelibdir/neutron/plugins/embrane
 %endif
-%if_disabled plumgrid
-%exclude %python_sitelibdir/neutron/plugins/plumgrid
-%endif
+
+%files rpc-server
+%_bindir/neutron-rpc-server
+%_unitdir/neutron-rpc-server.service
+%_initdir/neutron-rpc-server
+
+%files dev-server
+%_bindir/neutron-dev-server
+%_unitdir/neutron-dev-server.service
+%_initdir/neutron-dev-server
 
 %files bigswitch
 %doc LICENSE
@@ -642,15 +622,6 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/brocade/vyatta/*.ini
 %endif
 
-%if_enabled cisco
-%files cisco
-%doc LICENSE
-%doc neutron/plugins/cisco/README
-%_bindir/neutron-cisco-apic-host-agent
-%_bindir/neutron-cisco-apic-service-agent
-%dir %_sysconfdir/neutron/plugins/cisco
-%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/cisco/*.ini
-%endif
 
 %if_enabled embrane
 %files embrane
@@ -660,23 +631,14 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/embrane/*.ini
 %endif
 
-%files ibm
-%doc LICENSE
-%_bindir/neutron-ibm-agent
-%doc neutron/plugins/ibm/README
-%dir %_sysconfdir/neutron/plugins/ibm
-%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/ibm/*.ini
-
 %if_enabled linuxbridge
 %files linuxbridge
 %doc LICENSE
-%doc neutron/plugins/linuxbridge/README
 %_bindir/neutron-linuxbridge-agent
 %_unitdir/neutron-linuxbridge-agent.service
 %_initdir/neutron-linuxbridge-agent
 %config %_sysconfdir/neutron/rootwrap.d/linuxbridge-plugin.filters
-%dir %_sysconfdir/neutron/plugins/linuxbridge
-%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/linuxbridge/*.ini
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/ml2/linuxbridge_agent.ini
 %endif
 
 %if_enabled mellanox
@@ -690,12 +652,6 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/mlnx/*.ini
 %endif
 
-%files metaplugin
-%doc LICENSE
-%doc neutron/plugins/metaplugin/README
-%dir %_sysconfdir/neutron/plugins/metaplugin
-%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/metaplugin/*.ini
-
 %files midonet
 %doc LICENSE
 #%%doc neutron/plugins/midonet/README
@@ -707,16 +663,8 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %doc neutron/plugins/ml2/README
 %dir %_sysconfdir/neutron/plugins/ml2
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/ml2/*.ini
-
-%files nec
-%doc LICENSE
-%doc neutron/plugins/nec/README
-%_bindir/neutron-nec-agent
-%_unitdir/neutron-nec-agent.service
-%_initdir/neutron-nec-agent
-%config %_sysconfdir/neutron/rootwrap.d/nec-plugin.filters
-%dir %_sysconfdir/neutron/plugins/nec
-%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/nec/*.ini
+%exclude %_sysconfdir/neutron/plugins/ml2/linuxbridge_agent.ini
+%exclude %_sysconfdir/neutron/plugins/ml2/openvswitch_agent.ini
 
 %files nuage
 %doc LICENSE
@@ -739,7 +687,6 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %if_enabled openvswitch
 %files openvswitch
 %doc LICENSE
-%doc neutron/plugins/openvswitch/README
 %_bindir/neutron-openvswitch-agent
 %_bindir/neutron-ovs-cleanup
 %_unitdir/neutron-openvswitch-agent.service
@@ -747,8 +694,7 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %_unitdir/neutron-ovs-cleanup.service
 %_initdir/neutron-ovs-cleanup
 %config %_sysconfdir/neutron/rootwrap.d/openvswitch-plugin.filters
-%dir %_sysconfdir/neutron/plugins/openvswitch
-%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/openvswitch/*.ini
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/ml2/openvswitch_agent.ini
 %endif
 
 %files ovsvapp
@@ -757,19 +703,6 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 # TODO: add a systemd unit file
 %dir %_sysconfdir/neutron/plugins/ovsvapp
 %config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/ovsvapp/*.ini
-
-%if_enabled plumgrid
-%files plumgrid
-%doc LICENSE
-%doc neutron/plugins/plumgrid/README
-%dir %_sysconfdir/neutron/plugins/plumgrid
-%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/plumgrid/*.ini
-%endif
-
-%files vmware
-%doc LICENSE
-%dir %_sysconfdir/neutron/plugins/vmware
-%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/plugins/vmware/*.ini
 
 %files metering-agent
 %doc LICENSE
@@ -785,6 +718,9 @@ crudini --set %buildroot/etc/neutron/dhcp_agent.ini DEFAULT dhcp_delete_namespac
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Fri Oct 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.0-alt1
+- 7.0.0 Liberty Release
+
 * Mon Oct 26 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt2
 - add read config from /etc/sysconfig/neutron to l3-agent
 - add R:conntrack-tools

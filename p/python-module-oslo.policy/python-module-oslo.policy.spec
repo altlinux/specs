@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 0.3.1
+Version: 0.11.0
 Release: alt1
 Summary: RBAC policy enforcement library for OpenStack
 Group: Development/Python
@@ -15,24 +15,27 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-oslo.config >= 1.9.0
-BuildRequires: python-module-oslo.i18n >= 1.3.0
-BuildRequires: python-module-oslo.serialization >= 1.2.0
-
+BuildRequires: python-module-oslo.config >= 2.3.0
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-six >= 1.9.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 0.6
+BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-oslo.config >= 1.9.0
-BuildRequires: python3-module-oslo.i18n >= 1.3.0
-BuildRequires: python3-module-oslo.serialization >= 1.2.0
+BuildRequires: python3-module-oslo.config >= 2.3.0
+BuildRequires: python3-module-oslo.i18n >= 1.5.0
+BuildRequires: python3-module-oslo.serialization >= 1.4.0
+BuildRequires: python3-module-oslo.utils >= 2.0.0
+BuildRequires: python3-module-six >= 1.9.0
 %endif
 
 %description
@@ -107,5 +110,8 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 0.11.0-alt1
+- 0.11.0
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 0.3.1-alt1
 - Initial release

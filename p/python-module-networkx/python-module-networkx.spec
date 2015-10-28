@@ -4,7 +4,7 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        1.9.1
+Version:        1.10
 Release:        alt1
 Epoch:          1
 Summary:        Creates and Manipulates Graphs and Networks
@@ -265,6 +265,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Oct 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1:1.10-alt1
+- 1.10
+
 * Mon Oct 12 2015 Alexey Shabalin <shaba@altlinux.ru> 1:1.9.1-alt1
 - downgrade to 1.9.1 release
 

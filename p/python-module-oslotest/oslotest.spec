@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5.1
+Version: 1.11.0
 Release: alt1
 Summary: OpenStack test framework
 License: ASLv2.0
@@ -16,20 +16,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests git
-BuildPreReq: python-module-pbr python-module-discover
-BuildPreReq: python-module-fixtures python-module-subunit
+BuildPreReq: python-module-pbr >= 1.6
+BuildPreReq: python-module-fixtures >= 1.3.1 python-module-subunit
 BuildPreReq: python-module-six python-module-testrepository
 BuildPreReq: python-module-testscenarios python-module-testtools
-BuildPreReq: python-module-mock python-module-mox3
+BuildPreReq: python-module-mock >= 1.2 python-module-mox3
 BuildPreReq: python-module-hacking python-module-coverage
 BuildPreReq: python-module-mimeparse python-module-mccabe
 BuildPreReq: python-module-flake8 pyflakes
 BuildPreReq: python-module-sphinx-devel python-module-oslosphinx
 BuildPreReq: python-module-requests
+#BuildPreReq: python-module-os-client-config >= 1.4.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pbr python3-module-discover
+BuildPreReq: python3-module-pbr >= 1.6
 BuildPreReq: python3-module-fixtures python3-module-subunit
 BuildPreReq: python3-module-six python3-module-testrepository
 BuildPreReq: python3-module-testscenarios python3-module-testtools
@@ -39,6 +40,7 @@ BuildPreReq: python3-module-mimeparse python3-module-mccabe
 BuildPreReq: python3-module-flake8 python3-pyflakes
 BuildPreReq: python3-module-sphinx python3-module-oslosphinx
 BuildPreReq: python3-module-requests
+#BuildPreReq: python-module-os-client-config
 %endif
 
 %py_provides %oname
@@ -75,6 +77,8 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+# let RPM handle deps
+rm -rf {test-,}requirements.txt
 
 git init-db
 git config user.email "real at altlinux.org"
@@ -161,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1.11.0-alt1
+- 1.11.0
+
 * Fri May 15 2015 Alexey Shabalin <shaba@altlinux.ru> 1.5.1-alt1
 - 1.5.1
 

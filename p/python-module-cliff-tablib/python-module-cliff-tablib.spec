@@ -1,10 +1,10 @@
 %global modname cliff-tablib
 
-%def_without python3
+%def_with python3
 
 Name:             python-module-%modname
 Version:          1.1
-Release:          alt1
+Release:          alt2
 Summary:          tablib formatters for cliff
 
 Group:            Development/Python
@@ -85,5 +85,8 @@ popd
 %endif
 
 %changelog
+* Tue Nov 03 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1-alt2
+- enable python3 package
+
 * Wed Aug 26 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1-alt1
 - Initial release for Sisyphus

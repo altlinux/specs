@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.0.1
-Release: alt1.git20141002
+Version: 2.2.1
+Release: alt1
 Summary: Higher Level Zookeeper Client
 License: ASLv2.0
 Group: Development/Python
@@ -16,19 +16,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-coverage python-module-mock
-BuildPreReq: python-module-nose python-module-gevent
-BuildPreReq: python-module-greenlet python-module-jinja2
-BuildPreReq: python-module-Pygments python-module-docutils
-BuildPreReq: python-module-sphinx-devel
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-coverage python-module-mock
+BuildRequires: python-module-nose python-module-gevent
+BuildRequires: python-module-greenlet python-module-jinja2
+BuildRequires: python-module-Pygments python-module-docutils
+BuildRequires: python-module-sphinx-devel
+BuildRequires: python-module-flake8
+BuildRequires: python-module-eventlet python-module-gevent
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-coverage python3-module-mock
-BuildPreReq: python3-module-nose python3-module-gevent
-BuildPreReq: python3-module-greenlet python3-module-jinja2
-BuildPreReq: python3-module-Pygments python3-module-docutils
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-coverage python3-module-mock
+BuildRequires: python3-module-nose python3-module-gevent
+BuildRequires: python3-module-greenlet python3-module-jinja2
+BuildRequires: python3-module-Pygments python3-module-docutils
+BuildRequires: python3-module-flake8
+BuildRequires: python3-module-eventlet python3-module-gevent
 %endif
 
 %py_provides %oname
@@ -158,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 29 2015 Alexey Shabalin <shaba@altlinux.ru> 2.2.1-alt1
+- 2.2.1
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1.git20141002
 - Initial build for Sisyphus
 

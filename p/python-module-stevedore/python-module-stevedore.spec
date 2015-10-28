@@ -3,21 +3,19 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        1.4.0
+Version:        1.8.0
 Release:        alt1
 Summary:        Manage dynamic plugins for Python applications
 
 Group:		Development/Python
 License:        ASL 2.0
 URL:            https://github.com/dreamhost/stevedore
-Source0:        %{name}-%{version}.tar
-Patch: stevedore-alt-requirements.patch
-Patch1: stevedore-alt-docs.patch
+Source0:        %name-%version.tar
 BuildArch:      noarch
 
 BuildRequires:  python-devel python-module-argparse
 BuildRequires:  python-module-setuptools-tests
-BuildRequires:  python-module-pbr python-module-six
+BuildRequires:  python-module-pbr >= 1.6 python-module-six >= 1.9
 BuildRequires:  python-module-argparse
 BuildRequires:  python-module-Pillow python-module-oslotest
 BuildRequires:  python-module-discover python-module-testrepository
@@ -29,7 +27,7 @@ BuildRequires:  python-module-oslosphinx
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel python3-module-argparse
 BuildRequires:  python3-module-setuptools-tests
-BuildRequires:  python3-module-pbr python3-module-six
+BuildRequires:  python3-module-pbr >= 1.6 python3-module-six >= 1.9
 BuildRequires:  python3-module-argparse
 BuildRequires:  python3-module-Pillow python3-module-oslotest
 BuildRequires:  python3-module-discover python3-module-testrepository
@@ -93,8 +91,6 @@ This package contains tests for %oname.
 
 %prep
 %setup
-#%patch -p2
-#%patch1 -p2
 
 sed -i 's|^argparse.*||' requirements.txt
 sed -i 's|^pbr.*||' requirements.txt
@@ -176,6 +172,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Oct 27 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1
 - Version 1.4.0
 

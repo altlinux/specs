@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 1.8.2
+Version: 2.6.0
 Release: alt1
 Summary: OpenStack oslo.concurrency library
 Group: Development/Python
@@ -16,35 +16,34 @@ BuildArch: noarch
 Provides: python-module-oslo-concurrency = %EVR
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-iso8601 >= 0.1.9
-BuildRequires: python-module-oslo.config >= 1.9.3
+BuildRequires: python-module-oslo.config >= 2.3.0
 BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.utils >= 1.4.0
-BuildRequires: python-module-fixtures >= 0.3.14
+BuildRequires: python-module-oslo.utils >= 2.0.0
 BuildRequires: python-module-retrying >= 1.2.3
+BuildRequires: python-module-fasteners >= 0.7
 
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 0.6
+BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-iso8601 >= 0.1.9
-BuildRequires: python3-module-oslo.config >= 1.9.3
+BuildRequires: python3-module-oslo.config >= 2.3.0
 BuildRequires: python3-module-oslo.i18n >= 1.5.0
-BuildRequires: python3-module-oslo.utils >= 1.4.0
-BuildRequires: python3-module-fixtures >= 0.3.14
+BuildRequires: python3-module-oslo.utils >= 2.0.0
 BuildRequires: python3-module-retrying >= 1.2.3
-
+BuildRequires: python3-module-fasteners >= 0.7
 %endif
 
 %description
@@ -132,6 +131,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Tue Oct 27 2015 Alexey Shabalin <shaba@altlinux.ru> 2.6.0-alt1
+- 2.6.0
+
 * Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.2-alt1
 - 1.8.2
 

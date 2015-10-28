@@ -4,7 +4,7 @@
 
 Name:       python-module-%sname
 Epoch:      1
-Version:    1.8.3
+Version:    2.5.0
 Release:    alt1
 Summary:    OpenStack common messaging library
 
@@ -19,27 +19,37 @@ BuildArch:  noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-iso8601
-BuildRequires: python-module-oslo.config >= 1.9.3
-BuildRequires: python-module-oslo.utils >= 1.4.0
+BuildRequires: python-module-futurist >= 0.1.2
+BuildRequires: python-module-oslo.config >= 2.3.0
+BuildRequires: python-module-oslo.context >= 0.2.0
+BuildRequires: python-module-oslo.log >= 1.8.0
+BuildRequires: python-module-oslo.utils >= 2.0.0
 BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-oslo.service >= 0.7.0
 BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.middleware >= 1.0.0
+BuildRequires: python-module-oslo.middleware >= 2.8.0
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-stevedore >= 1.3.0
+BuildRequires: python-module-cachetools >= 1.0.0
+BuildRequires: python-module-stevedore >= 1.5.0
 BuildRequires: python-module-yaml >= 3.1.0
-BuildRequires: python-module-kombu >= 2.5.0
+BuildRequires: python3-module-amqp >= 1.4.0
+BuildRequires: python-module-kombu >= 3.0.7
 #BuildRequires: python-module-qpid-proton
-BuildRequires: python-module-eventlet >= 0.16.1
+BuildRequires: python-module-eventlet >= 0.17.4
+BuildRequires: python-module-greenlet >= 0.3.2
 BuildRequires: python-module-fixtures
 BuildRequires: python-module-babel
 BuildRequires: python-module-futures >= 2.1.6
 BuildRequires: python-module-aioeventlet >= 0.4
 BuildRequires: python-module-trollius >= 1.0
+BuildRequires: python-module-futurist
+BuildRequires: python-module-contextlib2
+BuildRequires: python-module-zmq
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -50,17 +60,24 @@ BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-iso8601
-BuildRequires: python3-module-oslo.config >= 1.9.3
-BuildRequires: python3-module-oslo.utils >= 1.4.0
+BuildRequires: python3-module-futurist >= 0.1.2
+BuildRequires: python3-module-oslo.config >= 2.3.0
+BuildRequires: python3-module-oslo.context >= 0.2.0
+BuildRequires: python3-module-oslo.log >= 1.8.0
+BuildRequires: python3-module-oslo.utils >= 2.0.0
 BuildRequires: python3-module-oslo.serialization >= 1.4.0
+BuildRequires: python3-module-oslo.service >= 0.7.0
 BuildRequires: python3-module-oslo.i18n >= 1.5.0
-BuildRequires: python3-module-oslo.middleware >= 1.0.0
+BuildRequires: python3-module-oslo.middleware >= 2.8.0
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-stevedore >= 1.3.0
+BuildRequires: python3-module-cachetools >= 1.0.0
+BuildRequires: python3-module-stevedore >= 1.5.0
 BuildRequires: python3-module-yaml >= 3.1.0
-BuildRequires: python3-module-kombu >= 2.5.0
+BuildRequires: python3-module-amqp >= 1.4.0
+BuildRequires: python3-module-kombu >= 3.0.7
 # BuildRequires: python3-module-qpid-proton
-BuildRequires: python3-module-eventlet >= 0.16.1
+BuildRequires: python3-module-eventlet >= 0.17.4
+BuildRequires: python3-module-greenlet >= 0.3.2
 BuildRequires: python3-module-fixtures
 BuildRequires: python3-module-babel
 BuildRequires: python3-module-aioeventlet >= 0.4
@@ -162,6 +179,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html LICENSE
 
 %changelog
+* Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1:2.5.0-alt1
+- 2.5.0
+
 * Mon Aug 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1:1.8.3-alt1
 - 1.8.3
 

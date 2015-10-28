@@ -1,14 +1,15 @@
 %add_findreq_skiplist %python_sitelibdir/nova/cloudpipe/*.template
 
 Name: openstack-nova
-Version: 2015.1.2
+Version: 12.0.0
 Release: alt1
+Epoch: 1
 Summary: OpenStack Compute (nova)
 
 Group: System/Servers
 License: ASL 2.0
 Url: http://openstack.org/projects/compute/
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 Source6: nova.logrotate
 
@@ -58,55 +59,68 @@ BuildRequires: /proc
 BuildRequires: crudini
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-d2to1
-BuildRequires: python-module-six
-BuildRequires: python-module-babel
+BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-SQLAlchemy >= 0.9.9
+BuildRequires: python-module-eventlet >= 0.17.4
+BuildRequires: python-module-migrate >= 0.9.6
+BuildRequires: python-module-iso8601
+BuildRequires: python-module-keystonemiddleware >= 2.0.0
+BuildRequires: python-module-routes >= 1.12.3
+BuildRequires: python-module-cryptography >= 1.0
 BuildRequires: python-module-PasteDeploy
-BuildRequires: python-module-websockify >= 0.6.0 python-module-numpy
-BuildRequires: python-module-oslo.concurrency >= 1.8.2
-BuildRequires: python-module-oslo.config >= 1.9.3
-BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.log >= 1.0.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.utils >= 1.4.0
-BuildRequires: python-module-oslo.db >= 1.7.0
-BuildRequires: python-module-oslo.rootwrap >= 1.6.0
-BuildRequires: python-module-oslo.messaging >= 1.8.0
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-rfc3986 >= 0.2.0
-BuildRequires: python-module-oslo.middleware >= 1.0.0
-BuildRequires: python-module-oslo.vmware >= 0.11.1
-BuildRequires: python-module-psutil >= 1.1.1
+BuildRequires: python-module-numpy
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-netaddr
-BuildRequires: python-module-cinderclient >= 1.1.0
-BuildRequires: python-module-neutronclient >= 2.4.0
-BuildRequires: python-module-glanceclient >= 0.15.0
+BuildRequires: python-module-netaddr >= 0.7.12
+BuildRequires: python-module-netifaces >= 0.10.4
+BuildRequires: python-module-jsonschema >= 2.0.0
+BuildRequires: python-module-cinderclient >= 1.3.1
+BuildRequires: python-module-keystoneclient >= 1.6.0
+BuildRequires: python-module-neutronclient >= 2.6.0
+BuildRequires: python-module-glanceclient >= 0.18.0
+BuildRequires: python-module-requests >= 2.5.2
+BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-setuptools >= 16.0
+BuildRequires: python-module-websockify >= 0.6.1
+BuildRequires: python-module-oslo.concurrency >= 2.3.0
+BuildRequires: python-module-oslo.config >= 2.3.0
+BuildRequires: python-module-oslo.context >= 0.2.0
+BuildRequires: python-module-oslo.log >= 1.8.0
+BuildRequires: python-module-oslo.reports >= 0.1.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-oslo.db >= 2.4.1
+BuildRequires: python-module-oslo.rootwrap >= 2.0.0
+BuildRequires: python-module-oslo.messaging >= 1.16.0
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.service >= 0.7.0
+BuildRequires: python-module-rfc3986 >= 0.2.0
+BuildRequires: python-module-oslo.middleware >= 2.8.0
+BuildRequires: python-module-psutil >= 1.1.1
+BuildRequires: python-module-oslo.versionedobjects >= 0.9.0
+BuildRequires: python-module-alembic >= 0.8.0
+BuildRequires: python-module-os-brick >= 0.4.0
 BuildRequires: python-module-barbicanclient
+BuildRequires: python-module-oslo.vmware >= 1.16.0
 # Required to build module documents
 BuildRequires: python-module-boto
-BuildRequires: python-module-eventlet >= 0.16.1
-BuildRequires: python-module-routes
-BuildRequires: python-module-SQLAlchemy >= 0.9.7
 BuildRequires: python-module-webob
-BuildRequires: python-module-migrate >= 0.9.5
-BuildRequires: python-module-iso8601
-BuildRequires: python-module-keystonemiddleware >= 1.5.0
+BuildRequires: python-module-babel
 
 BuildRequires: graphviz
 
-Requires: %name-compute = %version-%release
-Requires: %name-cert = %version-%release
-Requires: %name-scheduler = %version-%release
-Requires: %name-api = %version-%release
-Requires: %name-network = %version-%release
-Requires: %name-objectstore = %version-%release
-Requires: %name-conductor = %version-%release
-Requires: %name-console = %version-%release
-Requires: %name-cells = %version-%release
-Requires: %name-novncproxy = %version-%release
+Requires: %name-compute = %EVR
+Requires: %name-cert = %EVR
+Requires: %name-scheduler = %EVR
+Requires: %name-api = %EVR
+Requires: %name-network = %EVR
+Requires: %name-objectstore = %EVR
+Requires: %name-conductor = %EVR
+Requires: %name-console = %EVR
+Requires: %name-cells = %EVR
+Requires: %name-novncproxy = %EVR
 
 %description
 OpenStack Compute (codename Nova) is open source software designed to
@@ -122,9 +136,9 @@ standard hardware configurations and seven major hypervisors.
 Summary: Components common to all OpenStack Nova services
 Group: System/Servers
 
-Requires: python-module-nova = %version-%release
-Requires: python-module-oslo.rootwrap >= 1.6.0
-Requires: python-module-oslo.messaging >= 1.8.0
+Requires: python-module-nova = %EVR
+Requires: python-module-oslo.rootwrap >= 2.0.0
+Requires: python-module-oslo.messaging >= 1.16.0
 Requires(pre): shadow-utils
 
 %description common
@@ -144,7 +158,7 @@ between all the OpenStack nova services.
 Summary: OpenStack Nova Virtual Machine control service
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 Requires: curl
 Requires: open-iscsi
 Requires: iptables iptables-ipv6
@@ -177,7 +191,7 @@ This package contains the Nova service for controlling Virtual Machines.
 Summary: OpenStack Nova Network control service
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 Requires: radvd
 Requires: bridge-utils
 Requires: dnsmasq
@@ -200,7 +214,7 @@ This package contains the Nova service for controlling networking.
 Summary: OpenStack Nova VM distribution service
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 
 %description scheduler
 OpenStack Compute (codename Nova) is open source software designed to
@@ -219,7 +233,7 @@ to run Virtual Machines in the cloud.
 Summary: OpenStack Nova certificate management service
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 
 %description cert
 OpenStack Compute (codename Nova) is open source software designed to
@@ -237,7 +251,7 @@ This package contains the Nova service for managing certificates.
 Summary: OpenStack Nova API services
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 
 %description api
 OpenStack Compute (codename Nova) is open source software designed to
@@ -255,7 +269,7 @@ This package contains the Nova services providing programmatic access.
 Summary: OpenStack Nova Conductor services
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 
 %description conductor
 OpenStack Compute (codename Nova) is open source software designed to
@@ -274,7 +288,7 @@ the compute service
 Summary: OpenStack Nova simple object store service
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 
 %description objectstore
 OpenStack Compute (codename Nova) is open source software designed to
@@ -292,7 +306,7 @@ This package contains the Nova service providing a simple object store.
 Summary: OpenStack Nova console access services
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 Requires: python-module-websockify
 
 %description console
@@ -312,7 +326,7 @@ console access services to Virtual Machines.
 Summary: OpenStack Nova Cells services
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 
 %description cells
 OpenStack Compute (codename Nova) is open source software designed to
@@ -331,7 +345,7 @@ scaling and (geographic) distribution for compute services.
 Summary: OpenStack Nova noVNC proxy service
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 Requires: novnc
 Requires: python-module-websockify
 
@@ -352,8 +366,9 @@ VNC traffic over browser websockets connections.
 Summary: OpenStack Nova Spice HTML5 console access service
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 Requires: python-module-websockify
+Requires: spice-html5
 
 %description spicehtml5proxy
 OpenStack Compute (codename Nova) is open source software designed to
@@ -372,7 +387,7 @@ spice HTML5 console access service to Virtual Machines.
 Summary: OpenStack Nova serial console access service
 Group: System/Servers
 
-Requires: openstack-nova-common = %version-%release
+Requires: openstack-nova-common = %EVR
 Requires: python-module-websockify
 
 %description serialproxy
@@ -432,10 +447,16 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
 %build
 %python_build
+
+# Remove this once sphinxcontrib.seqdiag becomes available
+sed -i -e '/sphinxcontrib.seqdiag/d' doc/source/conf.py
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build -b man doc/source doc/build/man
 sphinx-build -b html doc/source doc/build/html
-bash tools/config/generate_sample.sh -b . -p nova -o etc/nova
+# remove the sphinx-build leftovers
+rm -rf doc/build/html/.{doctrees,buildinfo}
+
+oslo-config-generator --config-file=etc/nova/nova-config-generator.conf
 
 %install
 %python_install
@@ -675,9 +696,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 
 %_bindir/nova-manage
 %_bindir/nova-rootwrap
+%_bindir/nova-rootwrap-daemon
 
 %_datadir/nova
-%dir %_cachedir/nova
 %_man1dir/nova*.1.*
 
 %defattr(-, nova, nova, -)
@@ -691,8 +712,6 @@ usermod -a -G fuse nova 2>/dev/null ||:
 
 %files compute
 %config %_sysconfdir/nova/rootwrap.d/compute.filters
-%config %_sysconfdir/nova/rootwrap.d/baremetal-compute-ipmi.filters
-%config %_sysconfdir/nova/rootwrap.d/baremetal-deploy-helper.filters
 %_bindir/nova-compute
 %_bindir/nova-idmapshift
 %_unitdir/%name-compute.service
@@ -786,6 +805,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Oct 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:12.0.0-alt1
+- 12.0.0 Liberty Release
+
 * Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
 - 2015.1.2
 

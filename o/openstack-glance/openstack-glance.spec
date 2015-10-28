@@ -1,7 +1,8 @@
 
 Name: openstack-glance
-Version: 2015.1.2
+Version: 11.0.0
 Release: alt1
+Epoch: 1
 Summary: OpenStack Image Service
 
 Group: System/Servers
@@ -23,40 +24,47 @@ Patch0001: 0001-notify-calling-process-we-are-ready-to-serve.patch
 BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-oslo.config >= 1.9.3
-BuildRequires: python-module-oslo.concurrency >= 1.8.2
+BuildRequires: python-module-SQLAlchemy >= 0.9.9
+BuildRequires: python-module-eventlet >= 0.17.4
+BuildRequires: python-module-routes >= 1.12.3
+BuildRequires: python-module-PasteDeploy >= 1.5.0
+BuildRequires: python-module-migrate >= 0.9.6
+BuildRequires: python-module-oslo.config >= 2.3.0
+BuildRequires: python-module-oslo.concurrency >= 2.3.0
 BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.utils >= 1.4.0
-BuildRequires: python-module-oslo.db >= 1.7.0
+BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-oslo.service >= 0.7.0
+BuildRequires: python-module-oslo.db >= 2.4.1
 BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.messaging >= 1.8.0
-BuildRequires: python-module-oslo.policy >= 0.3.1
+BuildRequires: python-module-oslo.log >= 1.8.0
+BuildRequires: python-module-oslo.messaging >= 1.16.0
+BuildRequires: python-module-oslo.middleware >= 2.8.0
+BuildRequires: python-module-oslo.policy >= 0.5.0
 BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.vmware >= 0.11.1
-BuildRequires: python-module-stevedore >= 1.3.0
-BuildRequires: python-module-taskflow >= 0.7.1
-BuildRequires: python-module-keystonemiddleware >= 1.5.0
-BuildRequires: python-module-keystoneclient >= 1.2.0
-BuildRequires: python-module-glance_store >= 0.3.0
+BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-futurist >= 0.1.2
+BuildRequires: python-module-taskflow >= 1.16.0
+BuildRequires: python-module-keystonemiddleware >= 2.0.0
+BuildRequires: python-module-wsme >= 0.7
+BuildRequires: python-module-keystoneclient >= 1.6.0
+BuildRequires: python-module-OpenSSL >= 0.14
+BuildRequires: python-module-glance_store >= 0.7.1
 BuildRequires: python-module-semantic_version >= 2.3.1
 BuildRequires: python-module-jsonschema >= 2.0.0
+BuildRequires: python-module-castellan >= 0.2.0
+BuildRequires: python-module-cryptography >= 1.0
 
 # Required to build module documents
 BuildRequires: python-module-boto
-BuildRequires: python-module-eventlet >= 0.16.1
-BuildRequires: python-module-routes
-BuildRequires: python-module-SQLAlchemy >= 0.9.7
-BuildRequires: python-module-migrate >= 0.9.5
 BuildRequires: python-module-webob
-BuildRequires: python-module-pbr >= 0.6
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-sphinx
-BuildRequires: python-module-eventlet >= 0.16.1
 BuildRequires: python-module-elasticsearch
 
 Requires(pre): shadow-utils
-Requires: python-module-glance = %version-%release
+Requires: python-module-glance = %EVR
 Requires: python-module-glanceclient
 Requires: python-module-PasteDeploy
 
@@ -76,18 +84,19 @@ This package contains the API and registry servers.
 %package -n python-module-glance
 Summary: Glance Python libraries
 Group: Development/Python
-Requires: python-module-keystoneclient >= 1.1.0
-Requires: python-module-keystonemiddleware >= 1.5.0
-Requires: python-module-swiftclient >= 2.2.0
-Requires: python-module-oslo.vmware >= 0.11.1
-Requires: python-module-oslo.config >= 1.9.3
-Requires: python-module-oslo.concurrency >= 1.8.2
+Requires: python-module-keystoneclient >= 1.6.0
+Requires: python-module-keystonemiddleware >= 2.0.0
+Requires: python-module-oslo.config >= 2.3.0
+Requires: python-module-oslo.concurrency >= 2.3.0
 Requires: python-module-oslo.context >= 0.2.0
-Requires: python-module-oslo.utils >= 1.4.0
-Requires: python-module-oslo.log >= 1.0.0
-Requires: python-module-oslo.db >= 1.7.0
+Requires: python-module-oslo.service >= 0.7.0
+Requires: python-module-oslo.utils >= 2.0.0
+Requires: python-module-oslo.log >= 1.8.0
+Requires: python-module-oslo.db >= 2.4.1
 Requires: python-module-oslo.i18n >= 1.5.0
-Requires: python-module-oslo.messaging >= 1.8.0
+Requires: python-module-oslo.messaging >= 1.16.0
+Requires: python-module-oslo.policy >= 0.5.0
+Requires: python-module-oslo.serialization >= 1.4.0
 
 %description -n python-module-glance
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -98,7 +107,7 @@ This package contains the glance Python library.
 %package doc
 Summary: Documentation for OpenStack Image Service
 Group: Development/Documentation
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description doc
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -144,6 +153,7 @@ mkdir -p %buildroot%_mandir/man1
 install -p -D -m 644 doc/build/man/*.1 %buildroot%_mandir/man1/
 
 install -d -m 0755 %buildroot%_sysconfdir/glance
+install -d -m 0755 %buildroot%_sysconfdir/glance/metadefs
 cp -pr etc/* %buildroot%_sysconfdir/glance
 rm -rf %buildroot%_sysconfdir/glance/oslo-config-generator
 mv %buildroot%_sysconfdir/glance/glance-swift.conf{.sample,}
@@ -171,6 +181,8 @@ install -d -m 755 %buildroot%_runtimedir/glance
 # Install log directory
 install -d -m 755 %buildroot%_logdir/glance
 
+# Delete unneeded files
+rm -rf %buildroot/usr/etc/glance
 
 %pre
 # 161:161 for glance (openstack-glance)
@@ -219,6 +231,9 @@ install -d -m 755 %buildroot%_logdir/glance
 %doc doc/build/html
 
 %changelog
+* Fri Oct 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.0-alt1
+- 11.0.0 Liberty release
+
 * Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
 - 2015.1.2
 

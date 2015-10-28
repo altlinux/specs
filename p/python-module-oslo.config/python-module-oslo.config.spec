@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:       python-module-%sname
-Version:    1.9.3
+Version:    2.4.0
 Release:    alt1
 Summary:    OpenStack common configuration library
 
@@ -21,28 +21,28 @@ Obsoletes: python-module-oslo-config < %EVR
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr
+BuildRequires: python-module-pbr >= 1.3
 BuildRequires: python-module-d2to1
-BuildRequires: python-module-six >= 1.7.0
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-argparse
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-netaddr >= 0.7.12
 BuildRequires: python-module-fixtures
-BuildRequires: python-module-stevedore >= 0.14
+BuildRequires: python-module-stevedore >= 1.5.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr
+BuildRequires: python3-module-pbr >= 1.3
 BuildRequires: python3-module-d2to1
-BuildRequires: python3-module-six >= 1.7.0
+BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-argparse
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-netaddr >= 0.7.12
 BuildRequires: python3-module-fixtures
-BuildRequires: python3-module-stevedore >= 0.14
+BuildRequires: python3-module-stevedore >= 1.5.0
 %endif
 
 %description
@@ -144,6 +144,9 @@ rm -fr doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Oct 27 2015 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt1
+- 2.4.0
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 1.9.3-alt1
 - 1.9.3
 

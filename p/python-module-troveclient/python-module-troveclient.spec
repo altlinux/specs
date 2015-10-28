@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-troveclient
-Version: 1.0.8
+Version: 1.3.0
 Release: alt1
 Summary: Client library for OpenStack DBaaS API
 Group: Development/Python
@@ -10,22 +10,18 @@ License: ASL 2.0
 Url: http://www.openstack.org/
 Source0: %name-%version.tar
 
-#
-# patches_base=1.0.5
-#
-Patch0001: 0001-Remove-runtime-dependency-on-python-pbr.patch
-
 BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-argparse
 BuildRequires: python-module-prettytable >= 0.7
-BuildRequires: python-module-requests >= 2.2.0
-BuildRequires: python-module-six >= 1.7.0
-BuildRequires: python-module-keystoneclient >= 0.11.1
+BuildRequires: python-module-requests >= 2.5.2
+BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-keystoneclient >= 1.6.0
 BuildRequires: python-module-simplejson >= 2.2.0
 BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-sphinx
@@ -35,13 +31,14 @@ BuildRequires: python-module-oslosphinx
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr
+BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-argparse
 BuildRequires: python3-module-prettytable >= 0.7
-BuildRequires: python3-module-requests >= 2.2.0
-BuildRequires: python3-module-six >= 1.7.0
-BuildRequires: python3-module-keystoneclient >= 0.11.1
+BuildRequires: python3-module-requests >= 2.5.2
+BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-oslo.utils >= 2.0.0
+BuildRequires: python3-module-keystoneclient >= 1.6.0
 BuildRequires: python3-module-simplejson >= 2.2.0
 BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-sphinx
@@ -79,11 +76,6 @@ This package contains auto-generated documentation.
 
 %prep
 %setup
-
-%patch0001 -p1
-
-# We provide version like this in order to remove runtime dep on pbr
-sed -i s/REDHATTROVECLIENTVERSION/%version/ troveclient/__init__.py
 
 # Remove bundled egg-info
 rm -rf %name.egg-info
@@ -139,6 +131,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Tue Nov 03 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
+- 1.3.0
+
 * Wed Mar 11 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.8-alt1
 - 1.0.8
 - add python3 package
