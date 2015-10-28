@@ -6,7 +6,7 @@
 
 Name: libcds
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: C++ template library of lock-free and fine-grained algorithms
 
@@ -79,6 +79,9 @@ cp -a cds/ %buildroot%_includedir/
 %_includedir/cds/
 
 %changelog
+* Thu Oct 29 2015 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2
+- real 2.0.0 build
+
 * Tue Aug 11 2015 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - new version 2.0.0 (with rpmrb script)
 
