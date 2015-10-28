@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.15.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -127,6 +127,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Wed Oct 28 2015 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
+- fix trash config dialog defaults
+
 * Mon Oct 12 2015 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
 - new version
 
