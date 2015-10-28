@@ -1,6 +1,6 @@
 Name:		libmozjs24
 Version:	24.2.0
-Release:	alt2
+Release:	alt3
 
 Summary:	Mozilla SpiderMonkey (JavaScript-C) Engine
 Group:		System/Libraries
@@ -110,6 +110,9 @@ ln -s libmozjs-24.so.1.0 libmozjs-24.so
 %_libdir/*.a
 
 %changelog
+* Wed Oct 28 2015 Yuri N. Sedunov <aris@altlinux.org> 24.2.0-alt3
+- rebuild
+
 * Sun Jan 26 2014 Yuri N. Sedunov <aris@altlinux.org> 24.2.0-alt2
 - s/17/24/
 - removed obsolete e4x configure option
