@@ -32,15 +32,15 @@
 
 Name: %{_name}5
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
 License: LGPL
 Url: http://www.gnome-db.org/
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-#Source: %_name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: %_name-%version.tar
 
 Obsoletes: libgda2 < %version
 Provides: libgda2 = %version-%release
@@ -402,15 +402,14 @@ databases.
 touch config.rpath
 
 %if_enabled crypto
-#sed -e 's/^[[:blank:]]//' libgda/libgda.symbols |grep '^_' > libgda/private.sym
-#%%define private_sym _gda_server_operation_new_from_string|_split_identifier_string|_gda_vconnection_change_working_obj|_gda_vconnection_set_working_obj
+sed -e 's/^[[:blank:]]//' libgda/libgda.symbols |grep '^_' > libgda/private.sym
+%define private_sym _gda_server_operation_new_from_string|_split_identifier_string|_gda_vconnection_change_working_obj|_gda_vconnection_set_working_obj
 %endif
 
 %build
-#gnome-doc-prepare -f
 %autoreconf
 export ac_cv_path_VAPIGEN=%_bindir/vapigen
-export VALA_API_VERSION=0.28
+export VALA_API_VERSION=0.30
 %configure \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
@@ -626,6 +625,9 @@ export VALA_API_VERSION=0.28
 %exclude %_datadir/%_name-%abi_ver/php
 
 %changelog
+* Wed Oct 28 2015 Yuri N. Sedunov <aris@altlinux.org> 5.2.4-alt2
+- 5.2.4_bc89eb08
+
 * Mon Jul 06 2015 Yuri N. Sedunov <aris@altlinux.org> 5.2.4-alt1
 - 5.2.4
 
