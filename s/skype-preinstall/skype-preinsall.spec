@@ -1,6 +1,6 @@
 Name:     skype-preinstall
 Version:  1.0
-Release:  alt1
+Release:  alt2
 Summary:  Compatible layer for install official Skype package for OpenSUSE
 License:  Public Domain
 Group:    Networking/Instant messaging
@@ -22,6 +22,10 @@ BuildRequires: libX11
 BuildRequires: libXext
 BuildRequires: libXScrnSaver
 BuildRequires: libXv
+
+# skype-4.3.0.37-suse.i586.rpm requires these
+Requires: libqt4-x11 >= 4.6
+Requires: libqt4 >= 4.6
 
 Provides: libQtWebKit4
 Provides: libasound_module_pcm_pulse.so
@@ -57,5 +61,8 @@ done
 %_libdir/%name
 
 %changelog
+* Wed Oct 28 2015 Michael Shigorin <mike@altlinux.org> 1.0-alt2
+- Added explicit R: libqt4 libqt4-x11 so rpminstall is enough
+
 * Tue Sep 02 2014 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus
