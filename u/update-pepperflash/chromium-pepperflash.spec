@@ -1,6 +1,6 @@
 Name: 	  update-pepperflash
 Version:  1.5.3
-Release:  alt2
+Release:  alt2.1
 
 Summary:  Pepper Flash Player downloader
 License:  GPLv3+
@@ -65,6 +65,9 @@ exit 0
 %files -n firefox-pepperflash
 
 %changelog
+* Fri Oct 23 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.3-alt2.1
+- Bumped release to force PPAPI flashplayer upgrade.
+
 * Wed Jul 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.3-alt2
 - Bumped release to force pepflashplayer upgrade.
 
