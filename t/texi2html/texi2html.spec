@@ -1,6 +1,6 @@
 Name: texi2html
 Version: 1.82
-Release: alt1
+Release: alt1.1
 License: GPL
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
 Group: Text tools
@@ -21,6 +21,7 @@ output not specified in the Texinfo input file to be specified.
 %setup -q
 
 %build
+%_configure_update_config
 ./configure \
              --prefix=%prefix \
              --exec-prefix=%_exec_prefix \
@@ -48,6 +49,9 @@ output not specified in the Texinfo input file to be specified.
 %_datadir/%name
 
 %changelog
+* Wed Oct 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.82-alt1.1
+- Updated config.{sub,guess} configs.
+
 * Fri Jan 03 2014 Michael Pozhidaev <msp@altlinux.ru> 1.82-alt1
 - New version: 1.82
 
