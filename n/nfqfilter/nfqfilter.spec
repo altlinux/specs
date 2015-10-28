@@ -1,12 +1,12 @@
 Name: nfqfilter
 Version: 0.1
-Release: alt1
+Release: alt3
 Summary: Filtration system packages based on patterns
 Group: Networking/Other
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
-License: LGPLv3
+License: GPLv3
 Url: https://github.com/max197616/nfqfilter
 Source0: %name-%version.tar
 
@@ -42,7 +42,7 @@ install -m 0644 -D contrib/urls      %buildroot%_localstatedir/%name/urls
 
 
 %files
-%doc README
+%doc README COPYING
 %_sysconfdir/%name
 %_sysconfdir/sysconfig/%name
 %_initdir/%name
@@ -51,5 +51,11 @@ install -m 0644 -D contrib/urls      %buildroot%_localstatedir/%name/urls
 %_localstatedir/%name
 
 %changelog
+* Wed Oct 28 2015 Alexei Takaseev <taf@altlinux.org> 0.1-alt3
+- Added error handler
+
+* Fri Oct 02 2015 Alexei Takaseev <taf@altlinux.org> 0.1-alt2
+- Correct License LGPL3 -> GPL3
+
 * Wed Sep 30 2015 Alexei Takaseev <taf@altlinux.org> 0.1-alt1
 - Initial RPM release
