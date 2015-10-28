@@ -3,7 +3,7 @@
 %define _name libxml++
 
 Name: %{_name}2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
@@ -67,6 +67,9 @@ This package contains the development documentation for libxml++ library.
 %_docdir/%_name-%xml_ver/*
 
 %changelog
+* Wed Oct 28 2015 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt1
+- 2.40.1
+
 * Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
 - 2.40.0
 
