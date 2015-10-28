@@ -1,13 +1,13 @@
 Name: galculator
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: GTK3 based scientific calculator
 License: GPL
 Group: Sciences/Mathematics
 
-Url: http://galculator.sourceforge.net
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
+Url: http://galculator.mnim.org
+Source: %url/downloads/%name-%version.tar.gz
 Source100: galculator.watch
 Patch: galculator-1.3.4-alt-desktop.patch
 
@@ -42,6 +42,7 @@ rm -rf %buildroot%_pixmapsdir/
 %_liconsdir/%name.png
 %_liconsdir/%name.xpm
 %_datadir/%name
+%_datadir/appdata/*.xml
 %_man1dir/*
 %doc AUTHORS ChangeLog NEWS README THANKS
 
@@ -49,6 +50,10 @@ rm -rf %buildroot%_pixmapsdir/
 # - 32x32 and 16x16? (%%_niconsdir and %%_miconsdir)
 
 %changelog
+* Wed Oct 28 2015 Michael Shigorin <mike@altlinux.org> 2.1.4-alt1
+- new version (watch file uupdate)
+- added appdata file
+
 * Wed Nov 26 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt1
 - 2.1.3
 
