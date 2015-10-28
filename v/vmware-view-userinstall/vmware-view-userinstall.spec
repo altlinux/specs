@@ -3,7 +3,7 @@
 
 Name: vmware-view-userinstall
 Version: 3.4.0
-Release: alt1
+Release: alt2
 
 Summary: VMware Horizon Client pre-installation scripts
 License: public domain
@@ -14,8 +14,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 Requires: vmware-view-preinstall >= 3.4.0-alt3
-Requires: userinstall-helper
-Requires: wget zenity
+Requires: userinstall-helper >= 0.2
 
 %define uinstdir %_cachedir/userinstall
 
@@ -45,6 +44,9 @@ cp -a checksums %buildroot%uinstdir/goodsums
 %uinstdir/goodsums/*
 
 %changelog
+* Wed Oct 28 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt2
+- rewrote to use userinstall-sh-functions too
+
 * Fri Sep 25 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt1
 - split off vmware-view-preinstall 3.4.0-alt2
 - rewrote to rely upon userinstall-helper
