@@ -5,12 +5,13 @@
 
 %def_disable introspection
 %def_disable libs_subpackage
+%def_disable dbus
 
 # it uses webkit
 %def_disable epub
 
 Name:           %_name-gtk
-Version:        1.10.0
+Version:        1.11.0
 Release:        alt1
 Summary:        Document viewer
 
@@ -31,7 +32,6 @@ BuildRequires:  libjpeg-devel
 BuildRequires:  libspectre-devel
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
-BuildRequires:  mate-icon-theme-devel
 BuildRequires:  libtool
 BuildRequires:  intltool
 BuildRequires:  t1lib-devel
@@ -161,6 +161,8 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable introspection} \
 	--without-keyring \
 	--disable-caja \
+	--without-matedesktop \
+	%{subst_enable dbus} \
 	--disable-gtk-doc
 
 %make_build V=1 LIBTOOL=/usr/bin/libtool
@@ -188,8 +190,10 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_datadir}/icons/hicolor/*/apps/atril.*
 %{_mandir}/man1/atril*.1.*
 %{_libexecdir}/atril-convert-metadata
+%if_enabled dbus
 %{_libexecdir}/atrild
 %{_datadir}/dbus-1/services/org.mate.atril.Daemon.service
+%endif
 %{_datadir}/glib-2.0/schemas/org.mate.Atril.gschema.xml
 %{_datadir}/MateConf/gsettings/atril.convert
 %{_datadir}/thumbnailers/atril.thumbnailer
@@ -263,6 +267,12 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Wed Oct 28 2015 Mikhail Efremov <sem@altlinux.org> 1.11.0-alt1
+- Disabled DBUS support.
+- Drop mate-icon-theme-devel from BR.
+- Drop obsoleted patches.
+- Updated to 1.11.0.
+
 * Tue Jun 16 2015 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
 - Don't use MateAboutDialog.
 - Update "Drop lockdown functionality" patch.
