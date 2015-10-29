@@ -2,8 +2,8 @@
 %define major 1.23
 
 Name: mediawiki
-Version: %major.8
-Release: alt2
+Version: %major.11
+Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -287,6 +287,10 @@ exit 0
 
 
 %changelog
+* Thu Oct 29 2015 Vitaly Lipatov <lav@altlinux.ru> 1.23.11-alt1
+- new version 1.23.11 (with rpmrb script)
+- security fixes
+
 * Sat Feb 21 2015 Vitaly Lipatov <lav@altlinux.ru> 1.23.8-alt2
 - it seems PdfHandler was bundled by mistake. drop provides/obsoletes for it
 - enable StringFunctions by default
