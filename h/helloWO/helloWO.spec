@@ -1,6 +1,6 @@
 Name:		helloWO
 Version:	5.4.3
-Release:	alt4
+Release:	alt5
 Summary:	WebObjects starter-application "HelloWOrld"  with complete WebObjects libraries set
 Summary(ru_RU.UTF-8): стартовое WebObjects-приложение "HelloWOrld" с полным набором библиотек WebObjects
 
@@ -109,6 +109,8 @@ fi
 %dir %wo_logdir
 
 %changelog
+* Thu Oct 29 2015 Gennady Kushnir <baywind@altlinux.org> 5.4.3-alt5
+- timezone update 2014
 * Mon Dec 03 2012 Gennady Kushnir <baywind@altlinux.org> 5.4.3-alt4
 - actually updated frameworks from 5.4.2 to 5.4.3
 - updated timezone information
