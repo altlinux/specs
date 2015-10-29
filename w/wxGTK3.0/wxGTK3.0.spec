@@ -2,7 +2,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.3
-Release: alt4.git20150312
+Release: alt5.git20150312
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -15,6 +15,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # branch: WX_3_0_BRANCH
 Source: %name-%version.tar
 Source2: ld_shared_wrapper.pl
+
+Patch1: wxGTK3.0-disable-ABI-checking.patch
 
 # Automatically added by buildreq on Wed Dec 10 2008
 BuildRequires: gcc-c++ libGL-devel libSDL-devel libSM-devel
@@ -66,6 +68,8 @@ wxGTK example programs.
 
 %prep
 %setup
+%patch1 -p1
+
 subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
 
 %build
@@ -141,6 +145,9 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Thu Oct 29 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.3-alt5.git20150312
+- Disabled ABI checking.
+
 * Thu Oct 29 2015 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt4.git20150312
 - Rebuilt for new gcc5 C++11 ABI.
 
