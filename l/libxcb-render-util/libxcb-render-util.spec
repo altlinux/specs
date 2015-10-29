@@ -1,7 +1,7 @@
 %define rname util-renderutil
 Name: libxcb-render-util
 Version: 0.3.9
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 URL: http://xcb.freedesktop.org
@@ -52,5 +52,8 @@ install -m0644 altlinux/*.m4 m4/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 29 2015 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt2
+- update to 0.3.9 release
+
 * Mon Dec 10 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt1
 - initial build
