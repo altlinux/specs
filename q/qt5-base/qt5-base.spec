@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.5.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -38,6 +38,10 @@ Source2: rpm-macros-addon
 Patch1: qtbase-opensource-src-5.3.2-QTBUG-35459.patch
 Patch2: qtbase-opensource-src-5.4.0-QTBUG-43057.patch
 # upstream
+# SuSE
+Patch100: 0001-Fix-QWidget-setWindowRole.patch
+Patch101: 0005-Restore-documented-behavior-for-the-WA_X11NetWmWindo.patch
+Patch102: libqt5-do-not-use-shm-if-display-name-doesnt-look-local.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
@@ -68,6 +72,7 @@ BuildRequires: libsqlite3-devel
 %if_disabled bootstrap
 BuildRequires: qt5-base-devel qt5-tools
 %endif
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 
 %description
 Qt is a software toolkit for developing applications.
@@ -297,6 +302,9 @@ EGL integration library for the Qt%major toolkit
 %setup -n %rname-opensource-src-%version
 %patch1 -p1 -b .QTBUG-35459
 %patch2 -p1 -b .QTBUG-43057
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
@@ -690,6 +698,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Oct 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt3
+- sync SuSE patches
+
 * Fri Oct 23 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt2
 - build docs
 
