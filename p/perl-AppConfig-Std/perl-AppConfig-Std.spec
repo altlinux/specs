@@ -1,6 +1,6 @@
 %define dist AppConfig-Std
 Name: perl-%dist
-Version: 1.09
+Version: 1.10
 Release: alt1
 
 Summary: Subclass of AppConfig that provides standard options
@@ -35,6 +35,9 @@ handling global configuration variables.
 %perl_vendor_privlib/AppConfig
 
 %changelog
+* Thu Oct 29 2015 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
 - automated CPAN update
 
