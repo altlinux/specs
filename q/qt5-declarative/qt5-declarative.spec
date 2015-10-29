@@ -5,7 +5,7 @@
 
 Name: qt5-declarative
 Version: 5.5.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -13,6 +13,8 @@ Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
+# FC
+Patch1: qtdeclarative-opensource-src-5.5.0-no_sse2.patch
 
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-xmlpatterns-devel
 %if_disabled bootstrap
@@ -91,6 +93,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
+%patch1 -p1
 syncqt.pl-qt5 -version %version -private
 
 %build
@@ -170,6 +173,9 @@ syncqt.pl-qt5 -version %version -private
 %_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Thu Oct 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt2
+- force SSE2 compile flags for ix86
+
 * Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
 - new version
 
