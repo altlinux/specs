@@ -1,5 +1,5 @@
 Name: hiawatha
-Version: 9.12
+Version: 9.15
 Release: alt1
 
 Summary: A secure and advanced webserver
@@ -10,8 +10,8 @@ Url: http://www.hiawatha-webserver.org/
 Source0: http://www.hiawatha-webserver.org/files/hiawatha-%version.tar.gz
 Source1: hiawatha.init
 Source2: hiawatha.logrotate
-Patch0: hiawatha-9.12-nobody99.patch
-Patch1: hiawatha-9.12-libs-in-system-place.patch
+Patch0: hiawatha-9.15-nobody99.patch
+Patch1: hiawatha-9.15-libs-in-system-place.patch
 
 BuildRequires(pre): cmake
 # Automatically added by buildreq on Tue Feb 17 2015
@@ -48,7 +48,7 @@ are offering.
     -DENABLE_IPV6=On \
     -DENABLE_MONITOR=On \
     -DENABLE_RPROXY=On \
-    -DENABLE_SSL=On \
+    -DENABLE_TLS=On \
     -DENABLE_TOMAHAWK=On \
     -DENABLE_TOOLKIT=On \
     -DENABLE_XSLT=On \
@@ -85,6 +85,10 @@ install -pDm644 %_sourcedir/hiawatha.logrotate \
 %_logdir/%name
 
 %changelog
+* Thu Oct 29 2015 Michael Shigorin <mike@altlinux.org> 9.15-alt1
+- 9.15
+- updated patches
+
 * Tue Feb 17 2015 Michael Shigorin <mike@altlinux.org> 9.12-alt1
 - 9.12 (closes: #30743, #30748)
 - built with mbedtls instead of polarssl, see
