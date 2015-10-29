@@ -1,20 +1,19 @@
 %define rname pugixml
 
-Name:           libpugixml
-Version:        1.6
-Release:        alt1
-Summary:        A light-weight C++ XML processing library
+Name: libpugixml
+Version: 1.7
+Release: alt1
+Summary: A light-weight C++ XML processing library
 
-Group:          System/Libraries
-License:        MIT
-URL:            http://pugixml.org
-# VCS:		https://github.com/zeux/pugixml/
+Group: System/Libraries
+License: MIT
+Url: http://pugixml.org
 
-Source0:        http://pugixml.googlecode.com/files/%rname-%version.tar.gz
+Source0: %rname-%version.tar.gz
 
-BuildRequires:  ctest cmake
-BuildRequires:  gcc-c++
-Provides:	%rname = %version-%release
+BuildRequires: ctest cmake
+BuildRequires: gcc-c++
+Provides: %rname = %version-%release
 
 %description
 pugixml is a light-weight C++ XML processing library.
@@ -26,32 +25,25 @@ It features:
 - Full Unicode support with Unicode interface variants and automatic
   encoding conversions
 
-
 %package devel
-Summary:        Development files for %{name}
-Group:          Development/Other
-Requires: 	%name = %version-%release
-Provides: 	%rname-devel = %version-%release
+Summary: Development files for %name
+Group: Development/Other
+Requires: %name = %version-%release
+Provides: %rname-devel = %version-%release
 
 %description devel
-Development files for package %{name}
+Development files for package %name
 
 %prep
-%setup -q -n %rname-%version
+%setup -n %rname-%version
 cp scripts/CMakeLists.txt .
 
 %build
-%cmake -DBUILD_SHARED_LIBS=1
-%make_build -C BUILD
+%cmake -DBUILD_SHARED_LIBS=1 ../scripts
+%cmake_build
 
 %install
-mkdir -p %buildroot%_datadir/%rname/contrib/
-mkdir -p %buildroot%_includedir/
-mkdir -p %buildroot%_libdir/
-install -p -m 0644 contrib/* %buildroot%_datadir/%rname/contrib/
-install -p -m 0644 src/*.hpp %buildroot%_includedir/
-install -p -m 0755 BUILD/*.so.* %buildroot%_libdir/
-mv BUILD/*.so %buildroot%_libdir/
+%cmakeinstall_std
 
 %files
 %doc readme.txt
@@ -60,10 +52,13 @@ mv BUILD/*.so %buildroot%_libdir/
 %files devel
 %doc docs/*
 %_libdir/*.so
-%_datadir/%rname
+%_libdir/cmake/pugixml/
 %_includedir/*.hpp
 
 %changelog
+* Thu Oct 29 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7-alt1
+- Updated to 1.7.
+
 * Sat Oct 03 2015 Andrey Cherepanov <cas@altlinux.org> 1.6-alt1
 - New version
 
