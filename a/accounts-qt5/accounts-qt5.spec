@@ -3,7 +3,7 @@
 %define libname libaccounts-qt5%sover
 Name: accounts-qt5
 Version: 1.13
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Accounts framework Qt 5 bindings
@@ -15,6 +15,8 @@ License: LGPLv2
 Source: %name-%version.tar
 # FC
 Patch1: libaccounts-qt-64bitarchs.patch
+Patch2: 0002-Fix-memory-leaks-found-by-valgrind.patch
+Patch3: 0005-Use-gboolean-instead-of-bool.patch
 
 # Automatically added by buildreq on Mon May 25 2015 (-bi)
 # optimized out: elfutils fontconfig fonts-bitmap-misc glib2-devel kf5-attica-devel kf5-kjs-devel libaccounts-glib libgio-devel libqt5-core libqt5-xml libstdc++-devel libwayland-client libwayland-server pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-webkit-devel ruby ruby-stdlibs
@@ -40,7 +42,9 @@ Headers, development libraries and documentation for %name.
 
 %prep
 %setup -n %name-%version
-%patch1 -p1 -b .64bitarchs
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 sed -i '/^SUBDIRS/s|tests||'  accounts-qt.pro
 
 %build
@@ -74,6 +78,9 @@ mv %buildroot/%_docdir/accounts-qt/qch/accounts.qch %buildroot/%_qt5_docdir/
 %_qt5_docdir/accounts.qch
 
 %changelog
+* Thu Oct 29 2015 Sergey V Turchin <zerg@altlinux.org> 1.13-alt3
+- sync patches with FC
+
 * Wed Jun 03 2015 Sergey V Turchin <zerg@altlinux.org> 1.13-alt2
 - fix requires
 
