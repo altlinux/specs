@@ -1,5 +1,5 @@
 Name: bedup
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Deduplication for Btrfs
@@ -10,12 +10,18 @@ Url: https://github.com/g2p/bedup
 License: GPLv2
 Group: File tools
 
-# https://github.com/g2p/bedup.git
+# Source-git: https://github.com/g2p/bedup.git
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-cffi python-module-pycparser python-module-distribute
+BuildPreReq: rpm-build-python3
 
-Requires: python-module-pycparser python-module-markupsafe python-module-pysqlite2
+BuildRequires: python3-dev python3-module-pycparser python3-module-distribute
+BuildRequires: python3-module-cffi >= 0.4.2
+
+Requires: python3-module-pycparser python3-module-markupsafe python3-modules-sqlite3
+
+# pkg_resources.DistributionNotFound: The 'python-editor>=0.3' distribution was not found and is required by alembic
+Requires: python3-module-editor
 
 %description
 bedup looks for new and changed files, making sure that multiple copies
@@ -26,17 +32,21 @@ so that scans are incremental and low-impact.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %_bindir/%name
-%python_sitelibdir/%name/
-%python_sitelibdir/%name-%version-*.egg-info
+%python3_sitelibdir/%name/
+%python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Thu Oct 29 2015 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt1
+- new version, use python3
+- fix requires (ALT bug #31380)
+
 * Mon Apr 29 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
 - new version
 - fix requires
