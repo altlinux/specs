@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Log-Report
 Name: perl-%dist
-Version: 1.05
+Version: 1.09
 Release: alt1
 
 Summary: Report a problem, pluggable handlers and language support
@@ -14,7 +14,7 @@ Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Log-Report-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 27 2011
-BuildRequires: perl-Log-Log4perl perl-PPI perl-Test-Pod perl(Devel/GlobalDestruction.pm) perl-Log-Report-Optional perl(Mojo/Base.pm)
+BuildRequires: perl-Log-Log4perl perl-PPI perl-Test-Pod perl(Devel/GlobalDestruction.pm) perl-Log-Report-Optional perl(Mojo/Base.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(Dancer/Logger/Abstract.pm) perl(Dancer2/Core/Types.pm)
 
 %description
 Handling messages to users can be a hassle, certainly when the same
@@ -23,6 +23,20 @@ has to cope with internationalization at the same time; this set of
 modules tries to simplify this.  Log::Report combines gettext features
 with Log::Dispatch-like features.  However, you can also use this
 module to do only translations or only message dispatching.
+
+%package Dancer
+Group: Development/Perl
+Summary: %dist plugin for Dancer
+
+%description Dancer
+%dist plugin for Dancer
+
+%package Dancer2
+Group: Development/Perl
+Summary: %dist plugin for Dancer2
+
+%description Dancer2
+%dist plugin for Dancer2
 
 %prep
 %setup -q -n %dist-%version
@@ -39,12 +53,29 @@ module to do only translations or only message dispatching.
 # XXX Can't locate object method "new" via package "Log::Report::Translator::POT"
 %add_findreq_skiplist */Log/Report/Translator/*
 
+%add_findreq_skiplist */Dancer2/Plugin/LogReport*
+
 %files
 %doc ChangeLog README
 %perl_vendor_privlib/Log
 %perl_vendor_privlib/MojoX/Log
 
+%files Dancer
+%perl_vendor_privlib/Dancer/Logger/LogReport.pm
+%perl_vendor_privlib/Dancer/Logger/LogReport.pod
+
+%files Dancer2
+%perl_vendor_privlib/Dancer2/Logger/LogReport.pm
+%perl_vendor_privlib/Dancer2/Logger/LogReport.pod
+%perl_vendor_privlib/Dancer2/Plugin/LogReport.pm
+%perl_vendor_privlib/Dancer2/Plugin/LogReport.pod
+%perl_vendor_privlib/Dancer2/Plugin/LogReport/Message.pm
+%perl_vendor_privlib/Dancer2/Plugin/LogReport/Message.pod
+
 %changelog
+* Thu Oct 29 2015 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
+- automated CPAN update
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
