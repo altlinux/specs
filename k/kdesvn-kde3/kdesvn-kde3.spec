@@ -2,7 +2,7 @@
 %define oname kdesvn
 Name: kdesvn-kde3
 Version: 1.0.6
-Release: alt4
+Release: alt5
 
 Summary: A subversion client for the KDE with KIO integration
 
@@ -15,6 +15,7 @@ Source: %oname-%version.tar.bz2
 Patch: kdesvn-1.0.0-asneeded.patch
 Patch1: kde-svn-alt-compile-fix.patch
 Patch2: kdesvn-1.0.6-buildTDE.patch
+Patch3: kdesvn-detect-gcc5-version.patch
 
 BuildPreReq: cmake libsqlite3-devel libexpat-devel
 BuildPreReq: gcc-c++ kdelibs-devel libsubversion-devel xml-utils
@@ -57,6 +58,7 @@ Development files for libsvnqt
 %setup -n %oname-%version
 %patch -p1
 %patch2 -p1
+%patch3 -p2
 
 # gentoo
 # Force kdesvn to recognize kio_svn protocol name instead of kio_ksvn
@@ -111,6 +113,9 @@ fi
 %_includedir/svnqt
 
 %changelog
+* Thu Oct 29 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.6-alt5
+- Support gcc5 version detection
+
 * Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 1.0.6-alt4
 - Build with -O2 and -g.
 - Release TDE version 3.5.13.1
