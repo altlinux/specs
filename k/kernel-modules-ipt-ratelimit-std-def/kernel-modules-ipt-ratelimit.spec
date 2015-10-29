@@ -1,6 +1,6 @@
 %define module_name             ipt-ratelimit
 %define module_version          0.1
-%define module_release 		alt2
+%define module_release 		alt3
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -17,7 +17,7 @@ Release: %module_release.%kcode.%kbuildrelease
 Summary: Linux kernel module for ipt-ratelimit
 License: GPLv2
 Group: System/Kernel and hardware
-Url: http://sourceforge.net/projects/accel-ppp/
+Url: https://github.com/aabc/ipt-ratelimit
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
@@ -55,6 +55,9 @@ install -m644 -D xt_ratelimit.ko %buildroot/%module_dir/xt_ratelimit.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Oct 29 2015 Alexei Takaseev <taf@altlinux.org> 0.1-alt3
+- Fix URL
 
 * Sun Sep 27 2015 Alexei Takaseev <taf@altlinux.org> 0.1-alt2
 - fix compilation for kernels > 3.18
