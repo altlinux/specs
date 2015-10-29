@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Math-BigInt
 Name: perl-%dist
-Version: 1.999704
+Version: 1.999706
 Release: alt1
 
 Summary: Arbitrary size integer math package
@@ -17,7 +17,7 @@ Requires: perl-Math-BigInt-FastCalc
 
 BuildArch: noarch
 
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl-Math-BigInt-FastCalc
+BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl-Math-BigInt-FastCalc perl(Math/Complex.pm)
 
 %description
 This package contains the following perl modules:
@@ -43,6 +43,9 @@ sed -i- 's/eval " require/eval " die/' Makefile.PL
 %perl_vendor_privlib/Math
 
 %changelog
+* Thu Oct 29 2015 Igor Vlasenko <viy@altlinux.ru> 1.999706-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.999704-alt1
 - automated CPAN update
 
