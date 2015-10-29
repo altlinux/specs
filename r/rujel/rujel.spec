@@ -1,8 +1,8 @@
 %define backup_dir %_localstatedir/%{name}/previous_versions/`date +%%F_%%H%%M`
 
 Name:		rujel
-Version:	0.9.8
-Release:	alt4
+Version:	1.0.1
+Release:	alt1
 
 Summary:	RUJEL is a web-portal application for maintaining online markbook in schools.
 Summary(ru_RU.UTF-8): РУЖЭЛЬ — веб-приложение для ведения классного журнала.
@@ -19,7 +19,7 @@ Source:		%{name}-%{version}.tar
 Patch1:		%{name}-alt-config.patch
 
 BuildRequires(pre):	rpm-macros-webobjects
-Requires: 	java >= 1.5 webobjects mysql junixsocket
+Requires: 	java >= 1.6 webobjects junixsocket
 
 Provides:	Rujel RujelDiary PListWOEditor
 
@@ -152,8 +152,8 @@ for f in *.framework; do
   fi
 done
 
-ln -fns %_datadir/java/junixsocket/junixsocket.jar %wo_localroot/Library/WebObjects/Extensions
-ln -fns %_datadir/java/junixsocket/junixsocket-mysql.jar %wo_localroot/Library/WebObjects/Extensions
+ln -fns %_datadir/java/junixsocket/junixsocket.jar %wo_localroot/Library/WebObjects/Extensions/
+ln -fns %_datadir/java/junixsocket/junixsocket-mysql.jar %wo_localroot/Library/WebObjects/Extensions/
 
 if [ "$1" = 1 ] ; then
   grep -iq "rujel" %wo_configdir/SiteConfig.xml > /dev/null 2>&1 ||
@@ -213,6 +213,10 @@ fi
 %config %wo_configdir/rujel/RujelReports
 
 %changelog
+* Thu Oct 29 2015 Gennady Kushnir <baywind@altlinux.org> 1.0.1-alt1
+- upstream update (944117a1...)
+* Tue Aug 04 2015 Gennady Kushnir <baywind@altlinux.org> 1.0-alt1
+- upstream update (d5e4d802...)
 * Thu Dec 26 2013 Gennady Kushnir <baywind@altlinux.org> 0.9.8-alt4
 - upstream update (416b53c7...)
 * Tue Dec 03 2013 Gennady Kushnir <baywind@altlinux.org> 0.9.8-alt3
