@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -58,6 +58,14 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Fri Oct 30 2015 Vitaly Lipatov <lav@altlinux.ru> 0.2.9-alt1
+- update limits
+- stop-crack: add rules for Joomla xmlrpc.php and Bitrix admin
+- add hostreq limit for per site restriction
+- add log write to deny rules
+- fix anti injection rules and add write to log
+- stop-crack: fix bitrix rule, add phpbb rule
+
 * Thu Aug 06 2015 Vitaly Lipatov <lav@altlinux.ru> 0.2.8-alt1
 - log.conf: add logdata
 - mediawiki: improve
