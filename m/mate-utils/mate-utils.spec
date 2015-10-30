@@ -1,43 +1,47 @@
-BuildRequires: chrpath
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libgtop-2.0) pkgconfig(xext) zlib-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libgtop-2.0) pkgconfig(libmatepanelapplet-4.0) pkgconfig(x11) pkgconfig(xext) zlib-devel
 # END SourceDeps(oneline)
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
-Name:           mate-utils
-Version:        1.8.0
-Release:        alt2_1
-Summary:        MATE utility programs
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name mate-utils
+%define version 1.10.3
+# Conditional for release and snapshot builds. Uncomment for release-builds.
+%global rel_build 1
 
+# This is needed, because src-url contains branched part of versioning-scheme.
+%global branch 1.10
+
+# Settings used for build from snapshots.
+%{!?rel_build:%global commit d3538696e2b4e4372e9f526a0a4e2e4be08fc832}
+%{!?rel_build:%global commit_date 20150629}
+%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
+%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
+%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
+%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
+
+Name:           mate-utils
+Version:        %{branch}.3
+%if 0%{?rel_build}
+Release:        alt1_1
+%else
+Release:        alt1_1
+%endif
+Summary:        MATE utility programs
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
 
-BuildRequires:  desktop-file-utils
-BuildRequires:  e2fsprogs-devel
-BuildRequires:  hardlink
-BuildRequires:  libcanberra-devel
-BuildRequires:  libgtop2-devel
-BuildRequires:  libX11-devel
-BuildRequires:  libXmu-devel
-BuildRequires:  mate-common
-BuildRequires:  mate-desktop-devel
-BuildRequires:  mate-panel-devel
-BuildRequires:  libGL-devel
-BuildRequires:  popt-devel
-BuildRequires:  consolehelper
-BuildRequires:  yelp-tools
-
-Requires: mate-dictionary = %{version}-%{release}
-Requires: mate-screenshot = %{version}-%{release}
-Requires: mate-search-tool = %{version}-%{release}
-Requires: mate-system-log = %{version}-%{release}
-Requires: mate-disk-usage-analyzer = %{version}-%{release}
+# for downloading the tarball use 'spectool -g -R mate-utils.spec'
+# Source for release-builds.
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
+# Source for snapshot-builds.
+%{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 Source44: import.info
 Obsoletes: Obsoletes: mate-utils-libs < 1.5.0-alt2_1
 Conflicts: mate-utils-libs < 1.5.0-alt2_1
-Obsoletes: Obsoletes: mate-utils-libs < 1.5.0-alt2_1
-Conflicts: mate-utils-libs < 1.5.0-alt2_1
+
+
 
 %description
 The mate-utils package contains a set of small "desk accessory" utility
@@ -57,7 +61,6 @@ Summary: Development files for mate-utils
 # short-lived mate-dictionary-devel subpkg
 Obsoletes: mate-dictionary-devel < 1.6.0-8
 #Provides:  mate-dictionary-devel = %{version}-%{release}
-Requires:  mate-dictionary%{?_isa} = %{version}-%{release}
 %description devel
 The mate-utils-devel package contains header files and other resources
 needed to develop programs using the libraries contained in mate-utils.
@@ -65,46 +68,48 @@ needed to develop programs using the libraries contained in mate-utils.
 %package -n mate-system-log
 Group: File tools
 Summary: A log file viewer for the MATE desktop
-Requires: %{name}-common = %{version}-%{release}
-Requires: consolehelper
 # rhbz (#1016935)
-Requires: libmate-desktop
 %description -n mate-system-log
 An application that lets you view various system log files.
 
 %package -n mate-screenshot
 Group: File tools
 Summary: A utility to take a screen-shot of the desktop
-Requires: %{name}-common = %{version}-%{release}
 %description -n mate-screenshot
 An application that let you take a screen-shot of your desktop.
 
 %package -n mate-dictionary
 Group: File tools
 Summary: A dictionary for MATE Desktop
-Requires: %{name}-common = %{version}-%{release}
 %description -n mate-dictionary
 The mate-dictionary package contains a dictionary application for MATE Desktop.
 
 %package -n mate-search-tool
 Group: File tools
 Summary: A file searching tool for MATE Desktop
-Requires: %{name}-common = %{version}-%{release}
-Requires: libmate-desktop
 %description -n mate-search-tool
 An application to search for files on your computer.
 
 %package -n mate-disk-usage-analyzer
 Group: File tools
 Summary: A disk usage analyzing tool for MATE Desktop
-Requires: %{name}-common = %{version}-%{release}
 %description -n mate-disk-usage-analyzer
 An application to help analyze disk usage.
 
 %prep
-%setup -q
+%setup -q%{!?rel_build:n %{name}-%{commit}}
+
+%if 0%{?rel_build}
+#NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# for snapshots
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
+
 
 %build
+NOCONFIGURE=1 ./autogen.sh
 %configure \
     --disable-static            \
     --disable-schemas-compile   \
@@ -149,15 +154,11 @@ desktop-file-install                          \
   --dir %{buildroot}%{_datadir}/applications  \
 %{buildroot}%{_datadir}/applications/*
 
-%find_lang %{name} --with-gnome --all-name
-%find_lang mate-disk-usage-analyzer --with-gnome --all-name
-%find_lang mate-dictionary --with-gnome --all-name
-%find_lang mate-search-tool --with-gnome --all-name
-%find_lang mate-system-log --with-gnome --all-name
-# kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
-	chrpath -d $i ||:
-done
+%find_lang %{name} --with-gnome
+%find_lang mate-disk-usage-analyzer --with-gnome
+%find_lang mate-dictionary --with-gnome
+%find_lang mate-search-tool --with-gnome
+%find_lang mate-system-log --with-gnome
 
 
 %files
@@ -186,15 +187,18 @@ done
 %files -n mate-screenshot
 %{_bindir}/mate-screenshot
 %{_bindir}/mate-panel-screenshot
+%{_datadir}/appdata/mate-screenshot.appdata.xml
 %{_datadir}/applications/mate-screenshot.desktop
 %{_datadir}/mate-screenshot
 %{_mandir}/man1/mate-screenshot.1*
+%{_mandir}/man1/mate-panel-screenshot.1*
 %{_datadir}/glib-2.0/schemas/org.mate.screenshot.gschema.xml
 
 %files -n mate-dictionary -f mate-dictionary.lang
 %doc mate-dictionary/AUTHORS
 %doc mate-dictionary/README
 %{_bindir}/mate-dictionary
+%{_datadir}/appdata/mate-dictionary.appdata.xml
 %{_datadir}/applications/mate-dictionary.desktop
 %{_datadir}/mate-dict/
 %{_datadir}/mate-dictionary/
@@ -207,6 +211,7 @@ done
 
 %files -n mate-search-tool -f mate-search-tool.lang
 %{_bindir}/mate-search-tool
+%{_datadir}/appdata/mate-search-tool.appdata.xml
 %{_datadir}/applications/mate-search-tool.desktop
 %{_mandir}/man1/mate-search-tool.1*
 %{_datadir}/glib-2.0/schemas/org.mate.search-tool.gschema.xml
@@ -216,6 +221,7 @@ done
 %doc baobab/AUTHORS
 %doc baobab/README
 %{_bindir}/mate-disk-usage-analyzer
+%{_datadir}/appdata/mate-disk-usage-analyzer.appdata.xml
 %{_datadir}/applications/mate-disk-usage-analyzer.desktop
 %{_datadir}/mate-disk-usage-analyzer
 %{_mandir}/man1/mate-disk-usage-analyzer.1*
@@ -224,6 +230,9 @@ done
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.3-alt1_1
+- new version
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
 - rebuild with libgtop
 
