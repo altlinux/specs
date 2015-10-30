@@ -1,8 +1,8 @@
-%define ver_major 1.8
+%define ver_major 1.9
 
 Name: mate
 Version: %ver_major.0
-Release: alt0.1
+Release: alt1
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -294,7 +294,8 @@ Requires: mate-file-manager-share
 #Requires: mate-keyring-pam
 Requires: mate-system-log
 Requires: mate-user-share
-Requires: mate-mplayer
+#Requires: mate-mplayer
+#Requires: gnome-mplayer-caja
 Requires: mate-file-manager-actions
 Requires: mate-file-manager-terminal >= 0.9
 
@@ -392,6 +393,9 @@ itself).
 #%files a11y
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1
+- preparations to add gnome-mplayer-caja
+
 * Thu Oct 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt0.1
 - preparations for 1.10 mate release
 - added blueman (replaces mate-bluetooth)
