@@ -1,8 +1,8 @@
-%define ver_major 1.7
+%define ver_major 1.8
 
 Name: mate
 Version: %ver_major.0
-Release: alt2
+Release: alt0.1
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -49,7 +49,8 @@ Provides: %name-core = %version-%release
 Provides: %name-mini = %version-%release
 
 # components
-Requires: mate-dialogs
+#Requires: mate-dialogs
+Requires: zenity
 Requires: mate-polkit
 Requires: mate-settings-daemon
 
@@ -60,17 +61,20 @@ Requires: mate-control-center >= %ver_major
 Requires: mate-desktop >= %ver_major
 # Window manager
 # Requires: mate-wm (see altbug #15947)
-Requires: mate-window-manager
+Requires: mate-window-manager >= %ver_major
 
 # Help browser
-Requires: yelp >= %ver_major
+Requires: yelp
+# tutorial
+Requires: mate-user-guide >= %ver_major
 Requires: mate-menus >= %ver_major
 
 # MATE Utilities
 #Requires: mate-search-tool >= %ver_major
 Requires: mate-system-monitor >= %ver_major
 Requires: gucharmap
-Requires: mate-calc >= %ver_major
+# TODO: repalce with galculator in 1.11!!!
+Requires: mate-calc 
 
 # Applications
 ## Default file manager
@@ -186,6 +190,7 @@ Requires: mate-power-manager >= %ver_major
 #Requires: NetworkManager-mate >= %network_manager_ver
 ## Bluetooth pairing and control applet
 #Requires: mate-bluetooth
+Requires: blueman
 ## frontend for various networking tools
 #Requires: mate-nettool
 # user settings utility
@@ -197,14 +202,16 @@ Requires: mate-file-manager-sendto
 Requires: mate-file-manager-open-terminal
 Requires: mate-file-manager-image-converter
 Requires: mate-file-manager-extensions
+Requires: mate-file-manager-wallpaper
 Requires: mate-netspeed
 Requires: python-module-caja
 Requires: mate-backgrounds
 
+Requires: mate-document-viewer-thumbnailer
 Requires: mate-document-viewer-caja
 Requires: mate-document-viewer-djvu
 Requires: mate-document-viewer-pixbuf
-#Requires: mate-document-viewer-impress
+##Requires: mate-document-viewer-impress
 Requires: mate-document-viewer-xps
 Requires: mate-document-viewer-dvi
 
@@ -289,7 +296,7 @@ Requires: mate-system-log
 Requires: mate-user-share
 Requires: mate-mplayer
 Requires: mate-file-manager-actions
-Requires: mate-file-manager-terminal
+Requires: mate-file-manager-terminal >= 0.9
 
 %description maxi
 This virtual package installs full MATE Desktop except components from
@@ -385,6 +392,13 @@ itself).
 #%files a11y
 
 %changelog
+* Thu Oct 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt0.1
+- preparations for 1.10 mate release
+- added blueman (replaces mate-bluetooth)
+- added zenity (replaces mate-dialogs)
+- added mate-user-guide
+- not yet added galculator (will replace mate-calc)
+
 * Thu Mar 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt2
 - dropped mate-character-map in favor of gucharmap
 
