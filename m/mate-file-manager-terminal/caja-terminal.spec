@@ -1,6 +1,8 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel
 # END SourceDeps(oneline)
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname caja-terminal
 # package include only on python file
@@ -8,23 +10,22 @@ BuildRequires(pre): rpm-build-python
 %global debug_package %{nil}
 
 Name:           mate-file-manager-terminal
-Version:        0.8.1
-Release:        alt1_5
+Version:        0.9
+Release:        alt1_1
 Summary:        Terminal embedded in Caja
 
 Group:          Shells
 License:        GPLv3+
-URL:            https://github.com/NiceandGently/%{oldname}
+URL:            https://github.com/yselkowitz/%{oldname}
 # upstream is located at github, but links from tag releases doesn't match copied link in
 # web-browser, in result fedora-rewiew-tool will fail.
 # so i decided to release on fedorapeople to have a valid download link
-Source0:        http://raveit65.fedorapeople.org/Mate/SOURCE/%{oldname}-%{version}.tar.gz
+Source0:        https://github.com/yselkowitz/caja-terminal/archive/%{oldname}-%{version}.tar.gz
+Source44: import.info
+BuildArch: noarch
 
-BuildRequires:  gettext python-devel
 
 # needed for run caja-terminal
-Requires:       pygtk2 vte
-Source44: import.info
 
 %description
 Caja Terminal is a terminal embedded in Caja, the MATE file browser.
@@ -42,22 +43,23 @@ sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' code/caja-terminal.py
 mkdir -p $RPM_BUILD_ROOT
 %{makeinstall_std}
 
-%if %{_lib} == lib64
-bash install-64.sh --package $RPM_BUILD_ROOT
-%else
 bash install.sh --package $RPM_BUILD_ROOT
-%endif
 
-rm -rf $RPM_BUILD_ROOT%{_datadir}/doc
+#rm -rf $RPM_BUILD_ROOT%{_datadir}/doc
 
-%find_lang %{oldname}
+%find_lang %{oldname} --with-gnome --all-name
+
 
 %files -f %{oldname}.lang
 %doc COPYING AUTHORS README
 %{_datadir}/%{oldname}/
-%{_libdir}/caja/extensions-2.0/python/%{oldname}.py*
+%{_datadir}/caja-python/extensions/%{oldname}.*
+
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_1
+- new version
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_5
 - new fc release
 
