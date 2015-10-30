@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/glib-compile-schemas /usr/bin/msgfmt pkgconfig(glib-2.0)
 
 Summary:  MATE Keyboard LED indicator 
 Name:     mate-applet-lockkeys
-Version:  0.2.0
-Release:  alt1_3
+Version:  0.2.4
+Release:  alt1_0
 Group:    File tools
 License:  GPLv2+
 URL:      http://www.zavedil.com/mate-lock-keys-applet/
@@ -61,6 +61,9 @@ fi
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_0
+- new version
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_3
 - new fc release
 
