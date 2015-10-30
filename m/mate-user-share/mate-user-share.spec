@@ -5,12 +5,12 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-co
 %define fedora 21
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-user-share
-%define version 1.8.0
+%define version 1.10.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.8
+%global branch 1.10
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit c0f0c63c670d799dee4fa7577083d0cbace56db4}
@@ -23,8 +23,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-co
 Summary:         Mate user file sharing
 Name:            mate-user-share
 Version:         %{branch}.0
-Release:         alt2_1
-#Release:         0.1%{?git_rel}%{?dist}
+Release:         alt1_0
 License:         GPLv2+
 Group:           System/Libraries
 URL:             http://mate-desktop.org
@@ -39,7 +38,8 @@ BuildRequires:  mate-file-manager-devel
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  yelp-tools
-BuildRequires:  gtk2-devel
+BuildRequires:  libgtk+2-devel
+BuildRequires:  libgtk+3-devel
 BuildRequires:  httpd
 BuildRequires:  libcanberra-devel
 BuildRequires:  libICE-devel
@@ -53,16 +53,8 @@ BuildRequires:  perl(XML/Parser.pm)
 BuildRequires:  libunique-devel
 
 # disable bluetooth support for bluez5
-%if 0%{?fedora} > 19
 #BuildRequires: mate-bluetooth-devel
-%else
-BuildRequires:  mate-bluetooth-devel
-%endif
-%if 0%{?fedora} > 20
 BuildRequires: mate-file-manager-devel
-%else
-BuildRequires: mate-file-manager-devel
-%endif
 
 
 Requires: httpd
@@ -97,17 +89,11 @@ The program also allows to share files using ObexFTP over Bluetooth.
 
 %build
 # disable bluetooth support for bluez5
-%if 0%{?fedora} > 19
 %configure \
     --disable-static \
     --disable-bluetooth \
     --disable-schemas-compile
-%else
-%configure \
-    --disable-scrollkeeper \
-    --disable-static \
-    --disable-schemas-compile
-%endif
+
 make %{?_smp_mflags}
 
 %install
@@ -125,14 +111,12 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/mate-user-share.convert
 %if 0%{?fedora} > 19
 rm -f ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-obexftp.desktop
 rm -f desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-obexpush.desktop
-desktop-file-validate ${RPM_BUILD_ROOT}/%{_datadir}/applications/mate-user-share-properties.desktop
-desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-webdav.desktop
 %else
-desktop-file-validate ${RPM_BUILD_ROOT}/%{_datadir}/applications/mate-user-share-properties.desktop
 desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-obexftp.desktop
 desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-obexpush.desktop
-desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-webdav.desktop
 %endif
+desktop-file-validate ${RPM_BUILD_ROOT}/%{_datadir}/applications/mate-user-share-properties.desktop
+desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-webdav.desktop
 
 %files -f %{name}.lang
 %doc README COPYING NEWS
@@ -150,11 +134,15 @@ desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-s
 %endif
 %{_datadir}/icons/hicolor/*/apps/mate-obex-server.png
 %{_libdir}/caja/extensions-2.0/*.so
+%{_datadir}/caja/extensions/libcaja-user-share.caja-extension
 %{_datadir}/glib-2.0/schemas/org.mate.FileSharing.gschema.xml
 %{_mandir}/man1/mate-file-share-properties.1.*
 
 
 %changelog
+* Thu Oct 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_0
+- new version
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
 - new fc release
 
