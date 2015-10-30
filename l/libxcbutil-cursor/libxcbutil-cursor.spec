@@ -1,5 +1,5 @@
 Name: libxcbutil-cursor
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 Summary: Client and window-manager helper library on top of libxcb
 License: MIT
@@ -48,5 +48,8 @@ Development and header files for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Oct 30 2015 Sergey V Turchin <zerg@altlinux.org> 0.1.2-alt1
+- new version
+
 * Sat Dec 21 2013 Terechkov Evgenii <evg@altlinux.org> 0.1.1-alt1
 - Initial build for ALT Linux Sisyphus

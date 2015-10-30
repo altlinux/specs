@@ -1,5 +1,5 @@
 Name: libxcbutil-image
-Version: 0.3.9
+Version: 0.4.0
 Release: alt1
 Summary: Port of Xlib's XImage and XShmImage functions on top of libxcb
 License: MIT
@@ -48,5 +48,8 @@ Development and header files for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Oct 30 2015 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
+- new version
+
 * Wed Sep  5 2012 Terechkov Evgenii <evg@altlinux.org> 0.3.9-alt1
 - Initial build for ALT Linux Sisyphus
