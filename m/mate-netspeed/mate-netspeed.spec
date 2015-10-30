@@ -1,21 +1,18 @@
 Group: Networking/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfig(libgtop-2.0)
+BuildRequires: /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfig(libgtop-2.0) pkgconfig(libmatepanelapplet-4.0) pkgconfig(mate-desktop-2.0)
 # END SourceDeps(oneline)
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Name:           mate-netspeed
-Version:        1.8.0
-Release:        alt2_1
+Version:        1.10.2
+Release:        alt1_1
 Summary:        MATE netspeed
 License:        GPLv2+
 URL:            http://www.mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
-
-BuildRequires:  mate-common
-BuildRequires:  libgtop2-devel
-BuildRequires:  mate-panel-devel
-BuildRequires:  gtk2-devel
+Source0:        http://pub.mate-desktop.org/releases/1.10/%{name}-%{version}.tar.xz
 Source44: import.info
+
 
 
 %description
@@ -47,7 +44,7 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 %{_datadir}/glib-2.0/schemas/org.mate.panel.applet.netspeed.gschema.xml
 %{_datadir}/icons/hicolor/*x*/apps/*.png
 %{_datadir}/icons/hicolor/*x*/devices/*.png
-%{_datadir}/help/*/mate_netspeed_applet
+%{_datadir}/help/*/mate-netspeed-applet
 %{_datadir}/icons/hicolor/*x*/status/*.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-netspeed-applet.svg
 %{_datadir}/mate-panel/applets/org.mate.panel.NetspeedApplet.mate-panel-applet
@@ -55,6 +52,9 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_1
+- new version
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
 - rebuild with libgtop
 
