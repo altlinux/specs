@@ -1,7 +1,7 @@
 %define _name hargyllcms
 
 Name: argyllcms
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary: ICC compatible color management system
@@ -77,6 +77,9 @@ export LIBS="$LIBS -lpng"
 %exclude %_datadir/doc
 
 %changelog
+* Fri Oct 30 2015 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
+- 1.8.3
+
 * Sun Sep 13 2015 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
