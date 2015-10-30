@@ -1,76 +1,79 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/xsltproc
+BuildRequires(pre): rpm-build-python
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/xsltproc pkgconfig(libcaja-extension) pkgconfig(pygobject-3.0) python-devel python-module-pygobject-devel
 # END SourceDeps(oneline)
+%py_provides caja
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname python-caja
 Name:           python-module-caja
-Version:        1.8.0
-Release:        alt1_0
+Version:        1.10.0
+Release:        alt1_1
+Epoch:          1
 Summary:        Python bindings for Caja
 
 Group:          Development/C
-License:        GPLv2+
+License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.4/%{oldname}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.10/%{oldname}-%{version}.tar.xz
+Source44: import.info
 
-BuildRequires:  python-devel
-BuildRequires:  mate-file-manager-devel
-BuildRequires:  python-module-pygobject-devel
-BuildRequires:  gtk-doc
-BuildRequires:  autoconf automake libtool
-BuildRequires: 	mate-common
-BuildRequires: 	python-module-pygtk-devel
-#BuildRequires: 	python-module-mate-devel
 
-Requires:       mate-file-manager
-
-Obsoletes: 		caja-python
-Provides:  		python-caja
-%py_provides caja
 
 %description
 Python bindings for Caja
 
-
 %package -n python-module-caja-devel
 Summary:        Python bindings for Caja
 Group:          Development/C
-Requires:       python-module-caja = %{version}-%{release}
-Obsoletes: 		caja-python-devel
-Provides:  		python-caja-devel
 
 %description -n python-module-caja-devel
 Python bindings for Caja
 
 
 %prep
-%setup -q -n %{oldname}-%{version}
-NOCONFIGURE=1 ./autogen.sh
+%setup -n %{oldname}-%{version} -q
+sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' examples/background-image.py
+sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' examples/block-size-column.py
+sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' examples/location-widget-provider.py
+sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' examples/md5sum-property-page.py
+sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' examples/open-terminal.py
+sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' examples/submenu.py
+sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' examples/update-file-info-async.py
 
 %build
 
 %configure \
-	--disable-static
+     --disable-static
 
 make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{oldname}/extensions
+%{makeinstall_std}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/caja-python/extensions
 find $RPM_BUILD_ROOT -name '*.la' -delete
+rm -rf %buildroot%{_docdir}/python-caja
+rm examples/Makefile*
 
-%files
+%find_lang %{oldname} --with-gnome --all-name
+
+%files -f %{oldname}.lang
 %doc README AUTHORS COPYING NEWS
 %{_libdir}/caja/extensions-2.0/libcaja-python.so
-%dir %{_datadir}/%{oldname}/extensions
+%{_datadir}/caja/extensions/libcaja-python.caja-extension
+%dir %{_datadir}/caja-python
+%dir %{_datadir}/caja-python/extensions
 
 %files -n python-module-caja-devel
-%doc README AUTHORS COPYING NEWS
+%doc examples
 %{_libdir}/pkgconfig/caja-python.pc
-%{_datadir}/doc/*
+
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.10.0-alt1_1
+- new version
+
 * Sat Mar 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_0
 - new version
 
