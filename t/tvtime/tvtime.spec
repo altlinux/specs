@@ -1,88 +1,55 @@
 Name: tvtime
-Version: 1.0.2
-Release: alt13
+Version: 1.0.8
+Release: alt1
 
-Summary: A high quality TV application
-License: GPL
+Summary: A high quality TV viewer
+License: GPLv2+ and LGPLv2+
 Group: Video
 
-Url: http://tvtime.sourceforge.net
+Url: http://tvtime.net
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar.gz
-Source2: %name-README.ALT
+Source0: http://linuxtv.org/downloads/%name/%name-%version.tar.gz
+Source1: tvtime.watch
 Source3: tvtime-1.0.2-icons.tar.bz2
 Source4: tvtime.desktop
 
 Patch0: tvtime-1.0.2-alt-tango.patch
-Patch2: tvtime-1.0.2-alt-locale_t.patch
-Patch3: tvtime-1.0.2-alt-confdir.patch
-
-Patch100: tvtime-1.0.1-gcc4.1.patch
-Patch101: tvtime-1.0.2-videoinput.patch
-Patch102: tvtime-1.0.1-fsbadval.patch
-Patch103: tvtime-1.0.1-header.patch
-
-Patch200: tvtime-1.0.2-alsamixer.patch
-Patch201: tvtime-1.0.2-alsamixer2.patch
-
-Patch300: tvtime-1.0.2-alt-xss.patch
+Patch3: tvtime-1.0.8-alt-confdir.patch
 Patch301: tvtime-1.0.2-alt-drop-freefont.patch
 
-Patch400: tvtime-libpng-1.5.patch
-Patch401: tvtime-1.0.2-linuxheaders.patch
+# Automatically added by buildreq on Fri Oct 30 2015
+# optimized out: libICE-devel libX11-devel libXext-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel xz zlib-devel
+BuildRequires: gcc-c++ libSM-devel libXScrnSaver-devel libXinerama-devel libXv-devel libXxf86vm-devel libalsa-devel libfreetype-devel libpng-devel libxml2-devel
 
-BuildRequires: gcc-c++ libSM-devel libXScrnSaver-devel libXinerama-devel libXtst-devel libXv-devel
-BuildRequires: libXxf86vm-devel libalsa-devel libfreetype-devel libpng-devel libxml2-devel
-BuildRequires: zlib-devel libv4l-devel glibc-kernheaders
+Requires: fonts-ttf-freefont
 
 %description
-tvtime is a high quality television application for use with video capture
-cards. tvtime processes the input from a capture card and displays it on a
-computer monitor or projector.
+tvtime is a high quality television application for use with
+video capture cards. tvtime processes the input from a capture
+card and displays it on a computer monitor or projector.
 
 %prep
 %setup
-
 %patch0 -p1
-%patch2 -p1
 %patch3 -p1
-
-%patch100 -p1
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-
-%patch200 -p1
-%patch201 -p1
-
-%patch300 -p1
 %patch301 -p1
-
-%patch400 -p1
-%patch401 -p1
-
-tar -xjf %SOURCE3
-
-rm -f src/{videodev.h,videodev2.h}
+tar xf %SOURCE3
 
 %build
 %autoreconf
 %configure
-
 %make_build
 
 %install
 %makeinstall_std
-
-install -pDm644 %SOURCE2 README.ALT
 install -pm644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
-ln -sf ../fonts/ttf/liberation/LiberationSans-Bold.ttf %buildroot%_datadir/%name/tvtimeSansBold.ttf
-
+ln -sf ../fonts/ttf/liberation/LiberationSans-Bold.ttf \
+	%buildroot%_datadir/%name/tvtimeSansBold.ttf
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README* docs/html
+%doc AUTHORS ChangeLog NEWS README docs/html
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/*
 %_bindir/*
@@ -92,8 +59,21 @@ ln -sf ../fonts/ttf/liberation/LiberationSans-Bold.ttf %buildroot%_datadir/%name
 %_iconsdir/hicolor/*/apps/%name.png
 %_man1dir/*.1*
 %_man5dir/*.5*
+%_mandir/*/man?/*.*
 
 %changelog
+* Fri Oct 30 2015 Michael Shigorin <mike@altlinux.org> 1.0.8-alt1
+- 1.0.8
+- updated source url
+- dropped patches 2, 100, 101, 102, 103, 200, 201, 300, 400
+  (fixed/merged upstream)
+- dropped patch401 (v4l1 is gone)
+- updated patch3
+- dropped README.ALT (obsolete)
+- added translated manpages
+- added watch file
+- buildreq
+
 * Mon Feb 04 2013 Michael Shigorin <mike@altlinux.org> 1.0.2-alt13
 - fixed FTBFS
   + added a few patches from gentoo, vectorlinux
