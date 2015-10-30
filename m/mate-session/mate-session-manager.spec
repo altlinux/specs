@@ -1,43 +1,33 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto /usr/bin/xsltproc libICE-devel libXau-devel libXext-devel libgio-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libsystemd-login) pkgconfig(upower-glib) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto /usr/bin/xsltproc libXext-devel libgio-devel libwrap-devel pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libsystemd-login) pkgconfig(mate-desktop-2.0) pkgconfig(sm) pkgconfig(upower-glib) pkgconfig(x11) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender) pkgconfig(xtst) xorg-xtrans-devel
 # END SourceDeps(oneline)
 BuildRequires(pre): browser-plugins-npapi-devel
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname mate-session-manager
 Name:           mate-session
-Version:        1.8.1
-Release:        alt2_1
+Version:        1.10.2
+Release:        alt1_2
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.8/%{oldname}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.10/%{oldname}-%{version}.tar.xz
 
-BuildRequires:  libdbus-glib-devel
-BuildRequires:  desktop-file-utils
-BuildRequires:  gtk2-devel
-BuildRequires:  libSM-devel
-BuildRequires:  mate-common
-BuildRequires:  libpangox-compat-devel
-BuildRequires:  systemd-devel
-BuildRequires:  xmlto
-BuildRequires:  libXtst-devel
-BuildRequires:  xorg-xtrans-devel
-BuildRequires:  tcp_wrappers-devel
-
-# Needed for mate-settings-daemon
-Requires: mate-control-center
-# we need an authentication agent in the session
-Requires: mate-polkit
-# and we want good defaults
-Requires: polkit
-Requires: icon-theme-hicolor
+# overlay scrollbars
+# http://git.mate-desktop.org/mate-session-manager/commit/?id=7259109
+Patch0:         mate-session-manager_overlay-scrollbars.patch
 Source44: import.info
 Patch33: mate-session-manager-cflags.patch
 Provides: mate-session-manager = %version-%release
 Provides: mate-session-xsession = %version-%release
 Requires: mate-desktop
 Source45: MATE64.png
+
+
+# Needed for mate-settings-daemon
+# we need an authentication agent in the session
+# and we want good defaults
 
 %description
 This package contains a session that can be started from a display
@@ -46,16 +36,18 @@ full-featured user session.
 
 %prep
 %setup -n %{oldname}-%{version} -q
+
+%patch0 -p1 -b .overlay-scrollbars
 %patch33 -p1
 
 %build
 %configure                    \
-    --disable-upower          \
     --disable-static          \
     --enable-ipv6             \
     --with-gtk=2.0            \
     --with-default-wm=marco   \
     --with-systemd            \
+    --disable-upower          \
     --enable-docbook-docs     \
     --disable-schemas-compile \
     --with-x
@@ -122,6 +114,7 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 %doc AUTHORS COPYING README
 %{_mandir}/man1/*
 %{_bindir}/mate-session
+%{_bindir}/mate-session-inhibit
 %{_bindir}/mate-session-properties
 %{_bindir}/mate-session-save
 %{_bindir}/mate-wm
@@ -141,6 +134,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_2
+- new version
+
 * Mon Mar 31 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2_1
 - disabled upower support (not compatible with upower 0.99)
 

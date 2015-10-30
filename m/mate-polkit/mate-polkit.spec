@@ -1,25 +1,21 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libpolkit-gir-devel pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgtk+3-gir-devel libpolkit-gir-devel pkgconfig(appindicator-0.1) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-introspection-1.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(polkit-agent-1) pkgconfig(polkit-gobject-1)
 # END SourceDeps(oneline)
 BuildRequires: libgtk+2-gir-devel
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Name:		mate-polkit
-Version:	1.8.0
+Version:	1.10.2
 Release:	alt1_1
 Summary:	Integrates polkit authentication for MATE desktop
 License:	LGPLv2+
 URL:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/1.8/%name-%version.tar.xz
+Source0:	http://pub.mate-desktop.org/releases/1.10/%name-%version.tar.xz
 
-BuildRequires:	gtk2-devel
-BuildRequires:	mate-common
-BuildRequires:	libpolkit-devel
-BuildRequires:	gobject-introspection-devel
 # needed for gobject-introspection support somehow,
 # https://bugzilla.redhat.com/show_bug.cgi?id=847419#c17 asserts this is a bug (elsewhere)
 # but I'm not entirely sure -- rex
-BuildRequires: 	libcairo-gobject-devel
 
 Provides:	PolicyKit-authentication-agent
 Source44: import.info
@@ -30,7 +26,6 @@ Integrates polkit with the MATE Desktop environment
 
 %package devel
 Group: Development/C
-Requires: %{name}%{?_isa} = %{version}-%{release}
 Summary:	Integrates polkit with the MATE Desktop environment
 
 %description devel
@@ -39,12 +34,12 @@ Development libraries for mate-polkit
 %prep
 %setup -q
 
-
 %build
 %configure  \
         --disable-static       \
-        --with-gtk=2.0         \
+        --with-gtk=3.0         \
         --enable-introspection \
+        --enable-accountsservice \
         --enable-gtk-doc-html
 
 
@@ -52,7 +47,7 @@ make %{?_smp_mflags} V=1
 
 
 %install
-make install DESTDIR=%{buildroot}
+%{makeinstall_std}
 
 %find_lang %{name}
 
@@ -77,6 +72,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_1
+- new version
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 

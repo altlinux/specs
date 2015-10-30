@@ -1,29 +1,32 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libwnck-3.0) pkgconfig(x11)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libnotify) pkgconfig(libwnck-1.0) pkgconfig(libwnck-3.0) pkgconfig(x11) mate-common
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-notification-daemon
-%define version 1.8.0
+%define version 1.10.2
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.8
+%global branch 1.10
 
 # Settings used for build from snapshots.
-%{!?rel_build:%global commit 0280831e27ff5dc2d7c7473cd3bf9041f805299e}
-%{!?rel_build:%global commit_date 20131227}
+%{!?rel_build:%global commit f9aedafffba0ecc55072a933f28500c0e24c9bf1}
+%{!?rel_build:%global commit_date 20150724}
 %{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
 %{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
 %{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-notification-daemon
-Version:        %{branch}.0
-#Release:        0.2%{?git_rel}%{?dist}
+Version:        %{branch}.2
+%if 0%{?rel_build}
 Release:        alt1_1
+%else
+Release:        alt1_1
+%endif
 Summary:        Notification daemon for MATE Desktop
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -34,13 +37,6 @@ URL:            http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
-BuildRequires:  libdbus-glib-devel
-BuildRequires:  desktop-file-utils
-BuildRequires:  libcanberra-devel
-BuildRequires:  libnotify-devel
-BuildRequires:  libwnck-devel
-BuildRequires:  mate-common
-BuildRequires:  mate-desktop-devel
 
 Provides:       desktop-notification-daemon
 Source44: import.info
@@ -51,10 +47,15 @@ Notification daemon for MATE Desktop
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-# needed for git snapshots
+%if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 
 %build
+NOCONFIGURE=1 ./autogen.sh
 %configure --disable-schemas-compile   \
            --with-gtk=2.0
 
@@ -87,6 +88,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-notification-daemon.conve
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_1
+- new version
+
 * Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 

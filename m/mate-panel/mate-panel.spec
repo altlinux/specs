@@ -1,17 +1,19 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize libX11-devel libXau-devel libgio-devel pkgconfig(NetworkManager) pkgconfig(cairo) pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libwnck-3.0) pkgconfig(pango) pkgconfig(x11) pkgconfig(xau) pkgconfig(xrandr) python-devel libgtk+2-gir-devel
-# END SourceDeps(oneline)
 Serial: 1
 Group: Graphical desktop/Other
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize gobject-introspection-devel libX11-devel libXau-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(cairo) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmate-menu) pkgconfig(librsvg-2.0) pkgconfig(libwnck-1.0) pkgconfig(libwnck-3.0) pkgconfig(mate-desktop-2.0) pkgconfig(mateweather) pkgconfig(pango) pkgconfig(sm) pkgconfig(x11) pkgconfig(xau) pkgconfig(xrandr) python-devel
+# END SourceDeps(oneline)
+BuildRequires: libXi-devel
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-panel
-%define version 1.8.0
+%define version 1.10.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.8
+%global branch 1.10
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 838555a41dc08a870b408628f529b66e2c8c4054}
@@ -22,9 +24,12 @@ Group: Graphical desktop/Other
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-panel
-Version:        %{branch}.0
+Version:        %{branch}.1
+%if 0%{?rel_build}
 Release:        alt1_1
-#Release:        0.1%{?git_rel}%{?dist}
+%else
+Release:        alt1_1
+%endif
 Summary:        MATE Desktop panel and applets
 #libs are LGPLv2+ applications GPLv2+
 License:        GPLv2+
@@ -37,34 +42,15 @@ URL:            http://mate-desktop.org
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 Source1:        mate-panel_fedora.layout
-
-Requires:       %{name}-libs%{?_isa} = %{?serial:%serial:}%{version}-%{release}
-# needed as nothing else requires it
-Requires:       mate-session-manager
-#for fish
-Requires:       fortune-mod
-Requires:       icon-theme-hicolor
-# rhbz (#1007219)
-Requires:       mate-file-manager-schemas
-
-BuildRequires:  libdbus-glib-devel
-BuildRequires:  desktop-file-utils
-BuildRequires:  gobject-introspection-devel
-BuildRequires:  gtk2-devel
-BuildRequires:  libcanberra-devel
-BuildRequires:  libmateweather-devel
-BuildRequires:  libwnck-devel
-BuildRequires:  libnm-gtk-devel
-BuildRequires:  librsvg-devel
-BuildRequires:  libSM-devel
-BuildRequires:  mate-common
-BuildRequires:  mate-desktop-devel
-BuildRequires:  mate-menus-devel
-BuildRequires:  yelp-tools
 Source44: import.info
 Requires: tzdata
 # let us keep it just in case
 Requires:       gsettings-desktop-schemas
+
+# needed as nothing else requires it
+#for fish
+# rhbz (#1007219)
+
 
 %description
 MATE Desktop panel applets
@@ -74,7 +60,6 @@ MATE Desktop panel applets
 Group: Development/C
 Summary:     Shared libraries for mate-panel
 License:     LGPLv2+
-Requires:    %{name}%{?_isa} = %{?serial:%serial:}%{version}-%{release}
 
 %description libs
 Shared libraries for libmate-desktop
@@ -82,7 +67,6 @@ Shared libraries for libmate-desktop
 %package devel
 Group: Development/C
 Summary:     Development files for mate-panel
-Requires:    %{name}-libs%{?_isa} = %{?serial:%serial:}%{version}-%{release}
 
 %description devel
 Development files for mate-panel
@@ -90,11 +74,12 @@ Development files for mate-panel
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-# To work around rpath
-#autoreconf -fi
-
+%if 0%{?rel_build}
+#NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
 # needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 
 %build
 autoreconf -fisv
@@ -104,7 +89,6 @@ autoreconf -fisv
            --disable-static                       \
            --disable-schemas-compile              \
            --with-x                               \
-           --enable-network-manager               \
            --libexecdir=%{_libexecdir}/mate-panel \
            --with-gtk=2.0                         \
            --enable-introspection                 \
@@ -164,6 +148,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-panel.convert
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.10.1-alt1_1
+- new version
+
 * Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.8.0-alt1_1
 - new fc release
 

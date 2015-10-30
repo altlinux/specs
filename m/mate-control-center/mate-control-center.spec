@@ -1,18 +1,19 @@
 Serial: 1
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(unique-3.0) pkgconfig(xcursor) pkgconfig(xft) pkgconfig(xi) xorg-kbproto-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libSM-devel libX11-devel libXxf86misc-devel libgio-devel pkgconfig(appindicator-0.1) pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmarco-private) pkgconfig(libmate-menu) pkgconfig(libmatekbd) pkgconfig(libmatekbdui) pkgconfig(librsvg-2.0) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(mate-settings-daemon) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(xcursor)
+BuildRequires: pkgconfig(xft) pkgconfig(xi) xorg-kbproto-devel
 # END SourceDeps(oneline)
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
-%define fedora 21
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-control-center
-%define version 1.8.1
+%define version 1.10.2
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.8
+%global branch 1.10
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 922d0e0219b1bedcece8624e4b5fd7e15e7a9bd5}
@@ -23,9 +24,12 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-control-center
-Version:       %{branch}.1
-Release:       alt2_1
+Version:       %{branch}.2
+%if 0%{?rel_build}
+Release:       alt1_1
+%else
 #Release:       0.6%{?git_rel}%{?dist}
+%endif
 Summary:       MATE Desktop control-center
 License:       LGPLv2+ and GPLv2+
 URL:           http://mate-desktop.org
@@ -35,35 +39,13 @@ URL:           http://mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
-
-BuildRequires: libdconf-devel
-BuildRequires: desktop-file-utils
-BuildRequires: gtk2-devel
-BuildRequires: libcanberra-devel
-BuildRequires: libmatekbd-devel
-BuildRequires: librsvg-devel
-BuildRequires: libSM-devel
-BuildRequires: libXScrnSaver-devel
-BuildRequires: libXxf86misc-devel
-BuildRequires: mate-common
-BuildRequires: mate-desktop-devel
-BuildRequires: mate-menus-devel
-BuildRequires: mate-settings-daemon-devel
-BuildRequires: mate-window-manager-devel
-BuildRequires: libunique-devel
-
-Requires: gsettings-desktop-schemas
-Requires: icon-theme-hicolor
-# keyring support
-%if 0%{?fedora} > 19
-Requires: gnome-keyring
-%else
-Requires: mate-keyring
-%endif
-Provides: %{name}-filesystem%{?_isa} = %{version}-%{release}
 Source44: import.info
 Patch33: gnome-control-center-2.22.1-alt-background-location.patch
 Patch34: gnome-control-center-2.28.0-passwd.patch
+
+
+# rhbz (#1234438)
+# keyring support
 
 
 %description 
@@ -85,42 +67,23 @@ utilities.
 %package devel
 Group: Development/C
 Summary:      Development files for mate-settings-daemon
-Requires:       %{name}%{?_isa} = %{?serial:%serial:}%{version}-%{release}
-Requires: libslab-devel
+
 %description devel
 Development files for mate-control-center
-
-%package -n libslab-devel
-Group: Development/C
-Summary:        Development files for libslab-devel
-Requires: libslab = %{?serial:%serial:}%{version}-%{release}
-
-%description -n libslab-devel
-Development files for libslab-devel
-
-%package -n libslab
-Group: Graphical desktop/MATE
-License:        LGPLv2+
-Summary:        MATE Desktop libslab port
- 
-%description -n libslab
-This package provides libslab which is used in MATE control panel and in
-gnome-main-menu.
-%description 
-MATE Control Center configures system settings such as themes, keyboards shortcuts, etc.
-
 
 
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-# To work around rpath
-autoreconf -fi
+%if 0%{?rel_build}
+#NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# for snapshots
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 %patch33 -p1
 %patch34 -p1
-
-# needed for git snapshots
-#NOCONFIGURE=1 ./autogen.sh
 
 %build
 autoreconf -fisv
@@ -161,6 +124,7 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 %{_bindir}/mate-*
 %{_libdir}/libmate-window-settings.so.*
 %{_libdir}/window-manager-settings
+%{_libdir}/libmate-slab.so.*
 %{_sbindir}/mate-display-properties-install-systemwide
 %{_datadir}/applications/*.desktop
 %{_datadir}/desktop-directories/matecc.directory
@@ -172,15 +136,10 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 %{_datadir}/mime/packages/mate-theme-package.xml
 %{_datadir}/thumbnailers/mate-font-viewer.thumbnailer
 %{_datadir}/polkit-1/actions/org.mate.randr.policy
-%{_mandir}/man1/mate-about-me.1.*
-%{_mandir}/man1/mate-appearance-properties.1.*
-%{_mandir}/man1/mate-default-applications-properties.1.*
+%{_mandir}/man1/mate-*.1.*
 # %%files filesystem
 %dir %{_datadir}/mate-control-center
 %dir %{_datadir}/mate-control-center/keybindings
-
-%files -n libslab
-%{_libdir}/libslab.so.*
 
 %files devel
 %{_includedir}/mate-window-settings-2.0
@@ -188,14 +147,15 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 %{_libdir}/libmate-window-settings.so
 %{_libdir}/pkgconfig/mate-default-applications.pc
 %{_libdir}/pkgconfig/mate-keybindings.pc
-
-%files -n libslab-devel
-%{_includedir}/libslab
-%{_libdir}/libslab.so
-%{_libdir}/pkgconfig/libslab.pc
+%{_includedir}/libmate-slab/
+%{_libdir}/libmate-slab.so
+%{_libdir}/pkgconfig/mate-slab.pc
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.10.2-alt1_1
+- new version
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.8.1-alt2_1
 - new fc release
 

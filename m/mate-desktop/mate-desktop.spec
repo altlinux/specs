@@ -1,50 +1,50 @@
+Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize gobject-introspection-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libstartup-notification-1.0) pkgconfig(x11) pkgconfig(xrandr) intltool itstool mate-common desktop-file-utils
 # END SourceDeps(oneline)
-Group: System/Libraries
 %define _libexecdir %_prefix/libexec
-%define fedora 21
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name mate-desktop
+%define version 1.10.2
+# Conditional for release and snapshot builds. Uncomment for release-builds.
+%global rel_build 1
+
+# This is needed, because src-url contains branched part of versioning-scheme.
+%global branch 1.10
+
+# Settings used for build from snapshots.
+%{!?rel_build:%global commit a6a0a5879533b0915901ab69703eaf327bbca846 }
+%{!?rel_build:%global commit_date 20141215}
+%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
+%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
+%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
+%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
+
 Summary:        Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
-Version:        1.8.0
-Release:        alt2_0
-Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-1.8.0.tar.xz
+Version:        %{branch}.2
+%if 0%{?rel_build}
+Release:        alt1_0
+%else
+Release:        alt1_0
+%endif
 URL:            http://mate-desktop.org
 
-# fix fedora backgrounds and
-# workaround for x-caja-desktop window issue
-Source1:        mate-fedora.gschema.override
-Source2:        gnu-cat.gif
-Source3:        gnu-cat_navideno_v3.png
-Source4:        mate-fedora-f20.gschema.override
-Source5:        mate-fedora-f21.gschema.override
+# for downloading the tarball use 'spectool -g -R mate-desktop.spec'
+# Source for release-builds.
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
+# Source for snapshot-builds.
+%{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
-#enable gnucat
-%if 0%{?fedora} > 20
-Patch0:         mate-desktop_enable_gnucat-f21.patch
-%else
-Patch0:         mate-desktop_enable_gnucat.patch
-%endif
+Source1:        mate-fedora-f23.gschema.override
+Requires:	altlinux-mime-defaults >= 0.30
+
+# overlay scrollbars
+# http://git.mate-desktop.org/mate-desktop/commit/?id=f66c53e
+Patch0:         mate-desktop_overlay-scrollbars.patch
 
 
-BuildRequires:  libdconf-devel
-BuildRequires:  desktop-file-utils
-BuildRequires:  mate-common
-BuildRequires:  libstartup-notification-devel
-BuildRequires:  libunique-devel
-%if 0%{?fedora} > 20
-BuildRequires:  itstool
-%else
-BuildRequires:  mate-doc-utils
-%endif
-
-Requires: lib%{name} = %{version}-%{release}
-Requires: altlinux-freedesktop-menu-common
-Requires: pygtk2
-Requires: xdg-user-dirs-gtk
-Requires: mate-control-center-filesystem
-Requires: mate-panel
 
 Obsoletes: libmate
 Obsoletes: libmate-devel
@@ -65,25 +65,21 @@ Obsoletes: mate-mime-data-devel
 Obsoletes: mate-vfs
 Obsoletes: mate-vfs-devel
 Obsoletes: mate-vfs-smb
-# switch to gnome-keyring > f19
-%if 0%{?fedora} > 19
 Obsoletes: libmatekeyring
 Obsoletes: libmatekeyring-devel
 Obsoletes: mate-keyring
 Obsoletes: mate-keyring-pam
 Obsoletes: mate-keyring-devel
-%endif
-# temporarily solution for f20 until mate-bluetooth
-# is ported to bluez5
-%if 0%{?fedora} > 19
 Obsoletes: mate-bluetooth < 1:1.6.0-6
 Obsoletes: mate-bluetooth-libs < 1:1.6.0-6
 Obsoletes: mate-bluetooth-devel < 1:1.6.0-6
-%endif
-%if 0%{?fedora} > 20
+Obsoletes: mate-doc-utils
+Obsoletes: mate-character-map
+Obsoletes: mate-character-map-devel 
 Obsoletes: libmatewnck
 Obsoletes: libmatewnck-devel
-%endif
+#Obsoletes: mate-dialogs
+#Obsoletes: mate-user-share
 Source44: import.info
 Patch33: mate-desktop-1.5.0-alt-settings.patch
 Patch34: mate-desktop-1.5.5-alt-default_background_path.patch
@@ -107,25 +103,30 @@ Shared libraries for libmate-desktop
 Group: Development/C
 Summary:    Libraries and headers for libmate-desktop
 License:    LGPLv2+
-Requires:   libmate-desktop = %{version}-%{release}
 
 %description devel
 Libraries and header files for the MATE-internal private library
 libmatedesktop.
 
 %prep
-%setup -q
-%patch0 -p1 -b .gnucat
-cp %SOURCE2 mate-about/gnu-cat.gif
-cp %SOURCE3 mate-about/gnu-cat_navideno_v3.png
+%setup -q%{!?rel_build:n %{name}-%{commit}}
 
-# needed for gnucat patch
+%patch0 -p1 -b .overlay-scrollbars
+
+%if 0%{?rel_build}
+# for releases
 %patch33 -p1
 %patch34 -p1
-autoreconf -fi
+#NOCONFIGURE=1 ./autogen.sh
+%else
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif
+
 
 %build
-%if 0%{?fedora} > 20
+#autoreconf -fisv
+NOCONFIGURE=1 ./autogen.sh
 %configure                                                 \
      --enable-desktop-docs                                 \
      --disable-schemas-compile                             \
@@ -135,19 +136,8 @@ autoreconf -fi
      --enable-unique                                       \
      --enable-mpaste                                       \
      --with-pnp-ids-path="%{_datadir}/hwdatabase/pnp.ids"      \
-     --enable-gtk-doc-html
-%else
-%configure \
-     --disable-scrollkeeper                                \
-     --disable-schemas-compile                             \
-     --with-gtk=2.0                                        \
-     --with-x                                              \
-     --disable-static                                      \
-     --enable-unique                                       \
-     --with-pnp-ids-path="%{_datadir}/hwdatabase/pnp.ids"      \
-     --with-omf-dir=%{_datadir}/omf/mate-desktop           \
-     --enable-gnucat
-%endif
+     --enable-gtk-doc-html                                 \
+     --enable-introspection=yes
 
 make %{?_smp_mflags} V=1
 
@@ -163,77 +153,80 @@ desktop-file-install                                         \
         --dir=%{buildroot}%{_datadir}/applications           \
 %{buildroot}%{_datadir}/applications/mate-about.desktop
 
-%if 0%{?fedora} > 20
+desktop-file-install                              \
+    --delete-original                             \
+    --dir=%{buildroot}%{_datadir}/applications \
+%{buildroot}%{_datadir}/applications/mate-user-guide.desktop
+
 desktop-file-install                                         \
         --delete-original                                    \
         --dir=%{buildroot}%{_datadir}/applications           \
-%{buildroot}%{_datadir}/applications/mate-user-guide.desktop
-%endif
+%{buildroot}%{_datadir}/applications/mate-color-select.desktop
 
-%if 0%{?fedora} > 19
-%if 0%{?fedora} > 20
-install -D -m 0644 %SOURCE5 %{buildroot}%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
-%else
-install -D -m 0644 %SOURCE4 %{buildroot}%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
-%endif
-%else
-install -D -m 0644 %SOURCE1 %{buildroot}%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
-%endif
+#install -D -m 0644 %SOURCE1 %{buildroot}%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
+
 
 # remove needless gsettings convert file
 rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-desktop.convert
-
-%if 0%{?fedora} > 20
-# remove conflicting files with gnome
-rm -fr %{buildroot}%{_datadir}/help/*/fdl
-rm -fr %{buildroot}%{_datadir}/help/*/gpl
-rm -fr %{buildroot}%{_datadir}/help/*/lgpl
-%endif
 
 %find_lang %{name} --with-gnome --all-name
 
 mkdir -p %buildroot%{_datadir}/mate-about
 
 
+mkdir -p %buildroot%{_datadir}/X11/xorg.conf.d/
+ln -sf %{_datadir}/X11/xorg.conf.d/50-synaptics.conf %buildroot%{_datadir}/X11/xorg.conf.d/99-synaptics-mate.conf
+
+%package synaptics
+Group: Graphical desktop/MATE
+Summary:    Synaptics touchpad support for mate-desktop
+Requires:   %name = %version-%release
+
+%description synaptics
+Synaptics touchpad stops working as MATE starts.
+This has to do with libinput, which is going to replace the other input
+drivers. As the old synaptics touchpad driver use evdev, we need to give it
+a higher priority to be preferred over libinput for your touchpad.
+
+This package contains symlink /usr/share/X11/xorg.conf.d/99-synaptics-mate.conf
+that is a hack around this problem.
+
+%files synaptics
+%{_datadir}/X11/xorg.conf.d/99-synaptics-mate.conf
+
+
+
+
 %files
 %doc AUTHORS COPYING COPYING.LIB NEWS README
-%if 0%{?fedora} > 20
 %{_bindir}/mate-about
-%{_bindir}/mate-gsettings-toggle
 %{_bindir}/mpaste
+%{_bindir}/mate-color-select
 %{_datadir}/applications/mate-about.desktop
+%{_datadir}/applications/mate-color-select.desktop
 %{_datadir}/applications/mate-user-guide.desktop
 %{_datadir}/mate-about
-%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
+#%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
 %{_mandir}/man1/*
-%{_datadir}/pixmaps/gnu-cat.gif
-%{_datadir}/pixmaps/gnu-cat_navideno_v3.png
-%{_datadir}/help/*/mate-user-guide
-%else
-%{_bindir}/mate-about
-%{_bindir}/mate-gsettings-toggle
-%{_datadir}/applications/mate-about.desktop
-%{_datadir}/mate
-%{_datadir}/omf/mate-desktop
-%{_datadir}/mate-about
-%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
-%{_mandir}/man1/*
-%{_datadir}/pixmaps/gnu-cat.gif
-%{_datadir}/pixmaps/gnu-cat_navideno_v3.png
-%endif
 
 %files -n libmate-desktop -f %{name}.lang
 %{_libdir}/libmate-desktop-2.so.*
 %{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
+%{_libdir}/girepository-1.0/MateDesktop-2.0.typelib
 
 %files devel
 %{_libdir}/libmate-desktop-2.so
 %{_libdir}/pkgconfig/mate-desktop-2.0.pc
 %{_includedir}/mate-desktop-2.0
 %doc %{_datadir}/gtk-doc/html/mate-desktop
+%{_datadir}/gir-1.0/MateDesktop-2.0.gir
 
 
 %changelog
+* Thu Oct 29 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_0
+- new version
+- not yet Obsoletes: mate-dialogs & Obsoletes: mate-user-share
+
 * Tue Mar 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_0
 - intermediat build
 
