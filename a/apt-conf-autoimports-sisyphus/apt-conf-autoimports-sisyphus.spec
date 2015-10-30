@@ -3,7 +3,7 @@ Name: apt-conf-autoimports-sisyphus
 Summary(ru_RU.UTF-8): Настройки для использования пакетов из репозитория Autoimports/%{destbranch}
 Summary: Autoimports repository for %{destbranch}
 Version: 1.0
-Release: alt2
+Release: alt3
 
 # branches conflicts with Sisyphus
 Conflicts: apt-conf-autoimports-p7
@@ -37,7 +37,7 @@ Autoimports возложена на пользователей.
 
 Если вы заметили в пакете из Autoimports ошибку, сообщите, пожалуйста,
 об этом в bugzilla.altlinux.org, зарегистрировав ошибку
-на product=Autoimports (p7),
+на product=Autoimports (%{destbranch}),
 указав имя пакета, версию-релиз и подробности ошибки.
 
 Open Source модель подразумевает ваше личное участие в создании вашего
@@ -61,11 +61,20 @@ rpm [cronbuild] ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/autoimports/%{d
 rpm [cronbuild] ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/autoimports/%{destbranch}/ %{_arch} autoimports
 EOF
 
+mkdir -p %buildroot%_sysconfdir/apt/apt.conf.d
+# Double the main part of the number from apt-0.5.15lorg2-alt50.x86_64.rpm
+# -- <http://git.altlinux.org/gears/a/apt.git?p=apt.git;a=commitdiff;h=abf6d39f75266c153fbfcb2c0f38131f05b67bd4>.
+echo "APT::Cache-Limit $(( (2*64 + 32) * 1024 * 1024 ));" > %buildroot%_sysconfdir/apt/apt.conf.d/50-autoimports-cache-limit.conf
+
 %files
 %config %_sysconfdir/apt/vendors.list.d/autoimports-%{destbranch}.list
 %config %_sysconfdir/apt/sources.list.d/autoimports-%{destbranch}.list
+%config %_sysconfdir/apt/apt.conf.d/50-autoimports-cache-limit.conf
 
 %changelog
+* Fri Oct 30 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt3
+- Currently, Sisyphus+Autoimports need a bigger APT cache limit (ALT#31411).
+
 * Sat Oct 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2
 - use official mirror on ftp.altlinux.ru
 
