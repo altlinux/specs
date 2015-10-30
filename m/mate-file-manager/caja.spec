@@ -1,17 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/pkg-config /usr/bin/update-mime-database libICE-devel libX11-devel libXrender-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(pango) pkgconfig(unique-3.0) xorg-xproto-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/pkg-config /usr/bin/update-mime-database gobject-introspection-devel libICE-devel libSM-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel libselinux-devel pkgconfig(exempi-2.0) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libexif) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(xext) pkgconfig(xrender) xorg-xproto-devel mate-common /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname caja
-%define fedora 21
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name caja
-%define version 1.8.0
+%define version 1.10.4
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.8
+%global branch 1.10
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit ee0a62c8759040d84055425954de1f860bac8652}
@@ -23,11 +22,14 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtk-up
 
 Name:        mate-file-manager
 Summary:     File manager for MATE
-Version:     %{branch}.0
-Release:     alt1_2
-#Release:     0.1%{?git_rel}%{?dist}
+Version:     %{branch}.4
+%if 0%{?rel_build}
+Release:     alt1_1
+%else
+Release:     alt1_1
+%endif
 License:     GPLv2+ and LGPLv2+
-Group:       Graphical desktop/Other
+Group:       Graphical desktop/MATE
 URL:         http://mate-desktop.org
 
 # for downloading the tarball use 'spectool -g -R caja.spec'
@@ -36,48 +38,19 @@ URL:         http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
-# upstream patches
-# fix https://github.com/mate-desktop/mate-file-manager/issues/122
-# http://git.mate-desktop.org/caja/commit/?id=910b9141ac634a86d8f53fda534e33787a160efb
-Patch1:    caja_allow-dropping-files-to-bookmarks.patch
-# http://git.mate-desktop.org/caja/commit/?id=60d4f83b0fab7633e73e8f4689f4c6931927c2ba
-Patch2:    caja_rearranged-caja-sidebar-to-1.4-style.patch
-# http://git.mate-desktop.org/caja/commit/?id=4f1e756e08e61840eb9a52de4debee30006ea31e
-Patch3:    caja_x-caja-windows-fix.patch
-# http://git.mate-desktop.org/caja/commit/?id=06264fc91212150d3b741a723422955e7e97614c
-Patch4:    caja_remove-ck-usage.patch
+# http://git.mate-desktop.org/caja/commit/?id=d2dd87a
+Patch0:         caja_do-not-save-position-from-last-window.patch
 
-BuildRequires:  libdbus-glib-devel
-BuildRequires:  desktop-file-utils
-BuildRequires:  libexempi-devel
-BuildRequires:  gobject-introspection-devel
-BuildRequires:  libexif-devel
-BuildRequires:  libselinux-devel
-BuildRequires:  libSM-devel
-BuildRequires:  libxml2-devel
-BuildRequires:  mate-common
-BuildRequires:  mate-desktop-devel
-BuildRequires:  libpangox-compat-devel
-BuildRequires:  libstartup-notification-devel
-BuildRequires:  libunique-devel
 
-Requires:   gamin
-Requires:   filesystem
-Requires:   altlinux-freedesktop-menu-common
-Requires:   gvfs
 
 # the main binary links against libcaja-extension.so
 # don't depend on soname, rather on exact version
-Requires:       mate-file-manager-extensions = %{version}-%{release}
 
 # needed for using mate-text-editor as stanalone in another DE
-Requires:       mate-file-manager-schemas = %{version}-%{release}
 
-%if 0%{?fedora} && 0%{?fedora} > 20
 Provides: mate-file-manager%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager = %{version}-%{release}
 Obsoletes: mate-file-manager < %{version}-%{release}
-%endif
 Source44: import.info
 Patch33: mate-file-manager-1.2.2-alt-fix-linkage.patch
 Patch34: nautilus-2.22.1-umountfstab.patch
@@ -94,12 +67,9 @@ It is also responsible for handling the icons on the MATE desktop.
 %package extensions
 Group: Development/C
 Summary:  Mate-file-manager extensions library
-Requires: mate-file-manager = %{version}-%{release}
-%if 0%{?fedora} && 0%{?fedora} > 20
 Provides: mate-file-manager-extensions%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager-extensions = %{version}-%{release}
 Obsoletes: mate-file-manager-extensions < %{version}-%{release}
-%endif
 
 %description extensions
 This package provides the libraries used by caja extensions.
@@ -109,11 +79,9 @@ This package provides the libraries used by caja extensions.
 Group: Development/C
 Summary:  Mate-file-manager schemas
 License:  LGPLv2+
-%if 0%{?fedora} && 0%{?fedora} > 20
 Provides: mate-file-manager-schemas%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager-schemas = %{version}-%{release}
 Obsoletes: mate-file-manager-schemas < %{version}-%{release}
-%endif
 
 %description schemas
 This package provides the gsettings schemas for caja.
@@ -121,12 +89,9 @@ This package provides the gsettings schemas for caja.
 %package devel
 Group: Development/C
 Summary:  Support for developing mate-file-manager extensions
-Requires: mate-file-manager = %{version}-%{release}
-%if 0%{?fedora} && 0%{?fedora} > 20
 Provides: mate-file-manager-devel%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager-devel = %{version}-%{release}
 Obsoletes: mate-file-manager-devel < %{version}-%{release}
-%endif
 
 %description devel
 This package provides libraries and header files needed
@@ -135,21 +100,22 @@ for developing caja extensions.
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
 
-%patch1 -p1 -b .bookmarks
-%patch2 -p1 -b .1.4-style
-%patch3 -p1 -b .x-caja-windows-fix
-%patch4 -p1 -b .remove-ck-usage
+%patch0 -p1 -b .position
 
-# needed for git snapshots
+%if 0%{?rel_build}
 %patch33 -p1
 %patch35 -p1
 #NOCONFIGURE=1 ./autogen.sh
-
-# To work around rpath
-autoreconf -fi
+%else # 0%{?rel_build}
+# for snapshots
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 %patch34 -p1
 
+
 %build
+NOCONFIGURE=1 ./autogen.sh
 %configure \
         --disable-static \
         --enable-unique \
@@ -183,6 +149,18 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 # remove needless gsettings convert file
 rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/caja.convert
 
+# Avoid prelink to mess with caja - rhbz (#1228874)
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/prelink.conf.d
+cat << EOF > ${RPM_BUILD_ROOT}%{_sysconfdir}/prelink.conf.d/caja.conf
+-b %{_libdir}/caja/
+-b %{_libdir}/libcaja-extension.so.*
+-b %{_libexecdir}/caja-convert-metadata
+-b %{_bindir}/caja
+-b %{_bindir}/caja-autorun-software
+-b %{_bindir}/caja-connect-server
+-b %{_bindir}/caja-file-management-properties
+EOF
+
 %find_lang %{oldname}
 
 
@@ -191,18 +169,18 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/caja.convert
 %{_bindir}/*
 %{_datadir}/caja
 %{_libdir}/caja/
+%{_sysconfdir}/prelink.conf.d/caja.conf
 %{_datadir}/pixmaps/caja/
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/*/apps/caja.png
-%{_datadir}/icons/hicolor/scalable/apps/caja.svg
+%{_datadir}/icons/hicolor/*/apps/caja.*
 %{_datadir}/icons/hicolor/*/emblems/emblem-note.png
 %{_mandir}/man1/*
 %{_libexecdir}/caja-convert-metadata
+%{_datadir}/appdata/caja.appdata.xml
 %{_datadir}/mime/packages/caja.xml
 %{_datadir}/dbus-1/services/org.mate.freedesktop.FileManager1.service
 
 %files extensions
-%{_datadir}/gtk-doc/html/libcaja-extension
 %{_libdir}/libcaja-extension.so.*
 %{_libdir}/girepository-1.0/*.typelib
 
@@ -214,9 +192,13 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/caja.convert
 %{_libdir}/pkgconfig/*
 %{_libdir}/*.so
 %{_datadir}/gir-1.0/*.gir
+%{_datadir}/gtk-doc/html/libcaja-extension
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.4-alt1_1
+- new version
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_2
 - new fc release
 

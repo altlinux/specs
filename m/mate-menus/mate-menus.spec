@@ -1,25 +1,21 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/glib-gettextize
+BuildRequires: /usr/bin/glib-gettextize gobject-introspection-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) python-devel
 # END SourceDeps(oneline)
 Requires: altlinux-freedesktop-menu-mate
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Name:           mate-menus
-Version:        1.8.0
-Release:        alt1_1
+Version:        1.10.0
+Release:        alt1_2
 Summary:        Displays menus for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
-Source1:        mate-preferences-categories.menu
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+Source1: 		mate-preferences-categories.menu
 
-BuildRequires:  chrpath
-BuildRequires:  gobject-introspection-devel
-BuildRequires:  mate-common
-BuildRequires:  python-devel
 
-Requires:       libmate-menus = %{version}-%{release}
 
 # we don't want to provide private python extension libs
 %{echo 
@@ -37,7 +33,6 @@ Displays menus for MATE Desktop
 %package -n libmate-menus
 Group: System/Libraries
 Summary: Shared libraries for mate-menus
-Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description -n libmate-menus
 Shared libraries for mate-menus
@@ -45,7 +40,6 @@ Shared libraries for mate-menus
 %package preferences-category-menu
 Group: System/Libraries
 Summary: Categories for the preferences menu
-Requires:	libmate-menus = %{version}-%{release}
 
 %description preferences-category-menu
 Categories for the preferences menu
@@ -53,7 +47,6 @@ Categories for the preferences menu
 %package devel
 Group: Development/C
 Summary: Development files for mate-menus
-Requires:	libmate-menus = %{version}-%{release}
 
 %description devel
 Development files for mate-menus
@@ -61,15 +54,14 @@ Development files for mate-menus
 %prep
 %setup -q
 
-# fedora specific
-# fix for usage of multimedia-menus package
-sed -i -e '/<!-- End Other -->/ a\  <MergeFile>applications-merged/multimedia-categories.menu</MergeFile>' layout/mate-applications.menu
 %patch33 -p0
 %patch34 -p1
 
+#NOCONFIGURE=1 ./autogen.sh
 
 
 %build
+NOCONFIGURE=1 ./autogen.sh
 %configure \
  --disable-static \
  --enable-python \
@@ -81,10 +73,8 @@ make %{?_smp_mflags} V=1
 %install
 %{makeinstall_std}
 
-install -p -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/xdg/menus
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name '*.a' -exec rm -f {} ';'
-chrpath --delete $RPM_BUILD_ROOT%{python_sitelibdir}/matemenu.so
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -109,6 +99,9 @@ chrpath --delete $RPM_BUILD_ROOT%{python_sitelibdir}/matemenu.so
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_2
+- new version
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
