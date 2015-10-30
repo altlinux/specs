@@ -1,15 +1,17 @@
 Name: irqbalance
-Version: 1.0.7
+Version: 1.0.9
 Release: alt1
 
 Summary: Evenly distribute interrupt load across CPUs
 License: GPLv2
 Group: System/Kernel and hardware
 
-Url: https://code.google.com/p/irqbalance
+Url: https://github.com/Irqbalance/irqbalance
 Source: %name-%version.tar
 
 BuildRequires: gccmakedep glib2-devel libcap-ng-devel libnuma-devel
+
+%define sysconfig %_sysconfdir/sysconfig/%name
 
 %description
 irqbalance distributes interrupts over the processors and cores
@@ -21,7 +23,7 @@ will ever notice it's there or want to turn it off.
 
 %prep
 %setup
-subst "s|/path/to/irqbalance.env|%_sysconfdir/sysconfig/%name|g" misc/%name.service
+sed -i "s|/path/to/irqbalance.env|%sysconfig|g" misc/%name.service
 
 %build
 mkdir -p m4
@@ -31,25 +33,30 @@ mkdir -p m4
 
 %install
 %makeinstall_std
-
-install -pDm755 %name.init %buildroot/%_initdir/%name
-install -pDm644 misc/%name.env %buildroot/%_sysconfdir/sysconfig/%name
-install -pDm644 misc/%name.service %buildroot/%systemd_unitdir/%name.service
+install -pDm755 %name.init %buildroot%_initdir/%name
+install -pDm644 misc/%name.env %buildroot%sysconfig
+install -pDm644 misc/%name.service %buildroot%systemd_unitdir/%name.service
 
 %preun
 %preun_service %name
+
 %post
 %post_service %name
 
 %files
 %doc AUTHORS COPYING
 %_sbindir/%name
-%config(noreplace) %_sysconfdir/sysconfig/%name
+%config(noreplace) %sysconfig
 %_initdir/%name
 %_man1dir/%name.1*
 %systemd_unitdir/%name.service
 
 %changelog
+* Fri Oct 30 2015 Michael Shigorin <mike@altlinux.org> 1.0.9-alt1
+- 1.0.9
+- updated Url:
+- minor spec cleanup
+
 * Sat Dec 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.7-alt1
 - new version
 
