@@ -1,18 +1,23 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/xsltproc libX11-devel libgio-devel libsensors3-devel pkgconfig(cairo) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/xsltproc libX11-devel libgio-devel libsensors3-devel pkgconfig(cairo) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
 # dlopen plugins with plugin_name ?
 %set_verify_elf_method unresolved=relaxed
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-sensors-applet
-Version:        1.8.0
+Version:        1.10.4
 Release:        alt1_1
 Summary:        MATE panel applet for hardware sensors
 Group:          Graphical desktop/MATE
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.7/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.10/%{name}-%{version}.tar.xz
+
+# http://git.mate-desktop.org/mate-sensors-applet/commit/?id=1d5f590
+Patch1:         mate-sensors-applet_new-nvidia-sensor.patch
+# http://git.mate-desktop.org/mate-sensors-applet/commit/?id=cba9085
+Patch2:         mate-sensors-applet_udisks.patch
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  libatasmart-devel
@@ -47,8 +52,11 @@ developing applications that use mate-sensors-applet.
 %prep
 %setup -q
 
+%patch1 -p1 -b .nvidia
+%patch2 -p1 -b .udisks
+
 %build
-NOCONFIGURE=1 ./autogen.sh
+autoreconf -fisv
 %configure \
     --disable-static \
     --disable-schemas-compile \
@@ -56,7 +64,7 @@ NOCONFIGURE=1 ./autogen.sh
     --with-nvidia
 
 # remove unused-direct-shlib-dependency
-sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
+#sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 
 make %{?_smp_mflags}
 
@@ -88,6 +96,9 @@ find $RPM_BUILD_ROOT -name "*.la" -exec rm -rf {} ';'
 
 
 %changelog
+* Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.4-alt1_1
+- update to mate 1.10
+
 * Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
