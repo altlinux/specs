@@ -3,7 +3,7 @@
 
 Name: mediawiki
 Version: %major.11
-Release: alt1
+Release: alt3
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -11,7 +11,7 @@ License: %gpl2plus
 Group: Networking/WWW
 Url: http://www.mediawiki.org/
 
-Packager: Aleksey Avdeev <solo@altlinux.ru>
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
@@ -29,13 +29,14 @@ Patch1: 0001-disable-skin-using-autodiscovery-mechanism-warning.patch
 
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-mediawiki >= 0.5
+BuildRequires(pre): rpm-build-webserver-common
+
 BuildPreReq: apache2-devel
-BuildPreReq: rpm-build-webserver-common
-BuildPreReq: rpm-build-mediawiki >= 0.3
 
 Requires: %name-common = %version-%release
 Requires: %name-apache2 %name-mysql
-# In php prev to 5.5 you can use php5-apc
+
 Requires: php5-dom ImageMagick
 
 %description
@@ -150,10 +151,10 @@ Requires: %name-common = %version-%release
 %install
 mkdir -p %buildroot%_mediawikidir
 
-# Copy to buildroot all files and directories exclude unneeded
+# Copying to buildroot all files and directories and remove unneeded
 cp -r * %buildroot%_mediawikidir/
 
-# Not needed in the package
+# Not needed in the package (generate extra dependencies)
 rm -rf %buildroot%_mediawikidir/maintenance/dev/
 rm -rf %buildroot%_mediawikidir/maintenance/cssjanus/
 rm -rf %buildroot%_mediawikidir/maintenance/{Makefile,mwjsduck-gen,jsduck/,resources/update-oojs.sh}
@@ -161,6 +162,12 @@ rm -rf %buildroot%_mediawikidir/tests/
 rm -rf %buildroot%_mediawikidir/{*.php5,*.phtml}
 rm -rf %buildroot%_mediawikidir/{COPYING,CREDITS,FAQ,HISTORY,README*,RELEASE-NOTES-*,UPGRADE}
 rm -rf %buildroot%_mediawikidir/resources/lib/oojs-ui/update-oojs-ui.sh
+rm -fr %buildroot%_mediawikidir/includes/zhtable
+
+find %buildroot%_mediawikidir/ \
+  \( -name .htaccess -or -name \*.cmi \) \
+  -print0 \
+  | xargs -r0 rm
 
 # packed as docs
 rm -rf %buildroot%_mediawikidir/docs/
@@ -177,20 +184,14 @@ install -m 755 %SOURCE3 ./
 install -m 644 %SOURCE4 ./
 install -m 644 %SOURCE5 ./
 
-# remove unneeded parts
-rm -fr %buildroot%_mediawikidir/includes/zhtable
-find %buildroot%_mediawikidir/ \
-  \( -name .htaccess -or -name \*.cmi \) \
-  -print0 \
-  | xargs -r0 rm
 
 # fix permissions
 #chmod +x %buildroot%_mediawikidir/bin/*
 find %buildroot%_mediawikidir -name \*.pl -print0 | xargs -r0 chmod +x
 
 
-mkdir -p %buildroot%webappdir
-cd %buildroot%_mediawikidir
+mkdir -p %buildroot%webappdir/
+cd %buildroot%_mediawikidir/
 mv cache images %buildroot%webappdir/
 ln -sf %webappdir/{cache,images} .
 
@@ -210,6 +211,7 @@ tar xvSf %SOURCE1
 find -name \*.conf |xargs sed -i "s|WEBAPPDIR|%webappdir|"
 popd
 
+# TODO: use macro
 # config for enable bundled ParserFunctions
 cat > %buildroot%_mediawiki_settings_dir/50-ParserFunctions.php << EOF
 <?php
@@ -217,8 +219,7 @@ cat > %buildroot%_mediawiki_settings_dir/50-ParserFunctions.php << EOF
 require_once("\$IP/extensions/ParserFunctions/ParserFunctions.php");
 
 # enable StringFunctions (like {{#pos, {{#len) by default
-$wgPFEnableStringFunctions = true;
-?>
+\$wgPFEnableStringFunctions = true;
 EOF
 
 
@@ -236,10 +237,11 @@ fi
 %post -n %name-common
 if [ $1 -eq 2 ] ; then
 	cat <<EOF
-After MediaWiki update run:
- # php maintenance/update.php
+Running MediaWiki update:
+ # php %webappdir/wiki/maintenance/update.php
 Check full upgrading manual on https://www.mediawiki.org/wiki/Manual:Upgrading
 EOF
+php %webappdir/wiki/maintenance/update.php || :
 fi
 
 %post -n %name-apache2
@@ -287,6 +289,12 @@ exit 0
 
 
 %changelog
+* Fri Oct 30 2015 Vitaly Lipatov <lav@altlinux.ru> 1.23.11-alt3
+- cleanup spec, fix error in post install script
+
+* Fri Oct 30 2015 Vitaly Lipatov <lav@altlinux.ru> 1.23.11-alt2
+- cleanup spec, fix error in config
+
 * Thu Oct 29 2015 Vitaly Lipatov <lav@altlinux.ru> 1.23.11-alt1
 - new version 1.23.11 (with rpmrb script)
 - security fixes
