@@ -1,32 +1,19 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize gcc-c++ libgio-devel pkgconfig(giomm-2.4) pkgconfig(glib-2.0) pkgconfig(glibmm-2.4) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtkmm-3.0) pkgconfig(libgtop-2.0) pkgconfig(libwnck-3.0)
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libgio-devel pkgconfig(giomm-2.4) pkgconfig(glib-2.0) pkgconfig(glibmm-2.4) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtkmm-2.4) pkgconfig(gtkmm-3.0) pkgconfig(libgtop-2.0) pkgconfig(librsvg-2.0) pkgconfig(libsystemd-login) pkgconfig(libwnck-1.0) pkgconfig(libwnck-3.0) pkgconfig(libxml-2.0) pkgconfig(mate-icon-theme)
 # END SourceDeps(oneline)
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Name:           mate-system-monitor
-Version:        1.8.0
-Release:        alt2_1.2
+Version:        1.10.1
+Release:        alt1_1
 Summary:        Process and resource monitor
-
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
-
-BuildRequires: libdbus-glib-devel
-BuildRequires: desktop-file-utils
-BuildRequires: gtk2-devel
-BuildRequires: libgtkmm2-devel
-BuildRequires: libgtop2-devel
-BuildRequires: librsvg-devel
-BuildRequires: libwnck-devel
-BuildRequires: libxml2-devel
-BuildRequires: mate-common
-BuildRequires: mate-icon-theme-devel
-
-Requires: mate-desktop
+Source0:        http://pub.mate-desktop.org/releases/1.9/%{name}-%{version}.tar.xz
 Source44: import.info
 
-%add_optflags -std=gnu++11
+
 
 %description
 mate-system-monitor allows to graphically view and manipulate the running
@@ -37,6 +24,7 @@ such as CPU and memory.
 %setup -q
 
 %build
+%add_optflags -std=c++11
 %configure \
         --disable-static \
         --with-gtk=2.0 \
@@ -60,6 +48,7 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/mate-system-monitor.convert
 %files -f %{name}.lang
 %doc AUTHORS NEWS COPYING README
 %{_bindir}/mate-system-monitor
+%{_datadir}/appdata/mate-system-monitor.appdata.xml
 %{_datadir}/applications/mate-system-monitor.desktop
 %{_datadir}/pixmaps/mate-system-monitor/
 %{_datadir}/glib-2.0/schemas/org.mate.system-monitor.*.xml
@@ -67,6 +56,9 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/mate-system-monitor.convert
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt1_1
+- new version
+
 * Mon Oct 19 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.0-alt2_1.2
 - build with gcc 5.2 fixed
 
