@@ -1,32 +1,26 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize libICE-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(vte-2.90) pkgconfig(x11)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize libICE-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(mate-desktop-2.0) pkgconfig(sm) pkgconfig(vte) pkgconfig(vte-2.90) pkgconfig(x11)
 # END SourceDeps(oneline)
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Summary:        Terminal emulator for MATE
 Name:           mate-terminal
-Version:        1.8.0
-Release:        alt1_1
+Version:        1.10.1
+Release:        alt1_2
 License:        GPLv3+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.10/%{name}-%{version}.tar.xz
 
 #Default to black bg white fg, unlimited scrollback, turn off use theme default
 Patch0:        mate-terminal_better_defaults.patch
-
-BuildRequires: libdconf-devel
-BuildRequires: desktop-file-utils
-BuildRequires: glib2-devel
-BuildRequires: gtk2-devel
-BuildRequires: libSM-devel
-BuildRequires: mate-common
-BuildRequires: libvte-devel
-
-# needed to get a gsettings schema, rhbz #908105
-Requires:      libmate-desktop
-Requires:      gsettings-desktop-schemas
+# http://git.mate-desktop.org/mate-terminal/commit/?h=1.10&id=97a4204
+Patch1:        mate-terminal_fix-tab-usage-with-command-line.patch
 Source44: import.info
 Provides: xvt
+
+
+# needed to get a gsettings schema, rhbz #908105
 
 %description
 Mate-terminal is a terminal emulator for MATE. It supports translucent
@@ -35,7 +29,8 @@ clickable URLs.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch0 -p1 -b .better_defaults
+%patch1 -p1 -b .fix-tab-usage
 
 %build
 %configure --disable-static                \
@@ -68,11 +63,15 @@ EOF
 %{_datadir}/mate-terminal/
 %{_datadir}/applications/mate-terminal.desktop
 %{_datadir}/glib-2.0/schemas/org.mate.terminal.gschema.xml
+%{_datadir}/appdata/mate-terminal.appdata.xml
 %{_mandir}/man1/*
 %_altdir/%name
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt1_2
+- new version
+
 * Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
