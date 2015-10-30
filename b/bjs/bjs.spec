@@ -1,11 +1,12 @@
 Name: bjs
 Version: 0.1.3
-Release: alt3.1
+Release: alt3.2
 Summary: 3D tank battle
 License: GPLv2
 Group: Games/Arcade
 Url: http://bjs.sourceforge.net/
 Source: %name-%version.tar.gz
+Patch1: %name-fix-build.patch
 
 # Automatically added by buildreq on Wed Jan 05 2011
 BuildRequires: cegui06-devel gcc-c++ zlib-devel libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libfreetype-devel liblua5-devel libomniORB-devel libopenal-devel python-modules
@@ -19,6 +20,7 @@ tanks, 6 maps, 9 powerups and 4 weapons.
 
 %prep
 %setup -q
+%patch1 -p2
 #rm -rf src/libs/{SDL_gfx,freealut,glew,ode-0.7,tinyxml}
 #find . -type f -print0 | xargs -r0 subst "s|tinyxml/tinyxml.h|tinyxml.h|g"
 subst "s|lua5.1|lua|g" Makefile
@@ -41,6 +43,9 @@ make idl
 %_datadir/games/%name
 
 %changelog
+* Fri Oct 30 2015 Andrey Cherepanov <cas@altlinux.org> 0.1.3-alt3.2
+- Fix build
+
 * Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt3.1
 - Rebuilt with updated libomniORB
 
