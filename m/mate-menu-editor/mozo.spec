@@ -1,26 +1,25 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache pkgconfig(libmate-menu) python-devel python-module-pygobject
 # END SourceDeps(oneline)
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname mozo
-%define fedora 21
+%define fedora 22
 Name:           mate-menu-editor
-Version:        1.8.0
-Release:        alt1_1
+Version:        1.10.1
+Release:        alt1_2
 Summary:        MATE Desktop menu editor
 License:        LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.8/%{oldname}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.10/%{oldname}-%{version}.tar.xz
 
-BuildRequires:  desktop-file-utils
-BuildRequires:  mate-common
-BuildRequires:  mate-menus-devel
-BuildRequires: python-module-pygobject python-module-pygobject-devel
-BuildRequires:  python-devel
+# rhbz (#1202674)
+# https://github.com/infirit/mozo/commit/acf2f98
+Patch0:         mozo_Use-Gtk-selection-mode.patch
 
-Requires:       mate-menus
+
 
 %if 0%{?fedora} && 0%{?fedora} > 20
 %endif
@@ -34,11 +33,12 @@ MATE Desktop menu editor
 
 %prep
 %setup -n %{oldname}-%{version} -q
-%patch33 -p1
-#NOCONFIGURE=1 ./autogen.sh
 
+%patch0 -p1 -b .selection-mode
+%patch33 -p1
 
 %build
+#NOCONFIGURE=1 ./autogen.sh
 %configure
 
 make %{?_smp_mflags} V=1
@@ -64,6 +64,9 @@ desktop-file-install                                  \
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt1_2
+- new version
+
 * Sat Mar 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
