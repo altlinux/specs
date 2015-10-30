@@ -1,18 +1,19 @@
 Group: Archiving/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums libgio-devel pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(json-glib-1.0)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(json-glib-1.0) pkgconfig(libcaja-extension)
 # END SourceDeps(oneline)
+BuildRequires: libmagic-devel libSM-devel
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname engrampa
-%define fedora 21
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name engrampa
-%define version 1.8.0
+%define version 1.10.2
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.8
+%global branch 1.10
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit f4611c3411c44e792f729a0780c31b0aa55fe004}
@@ -23,9 +24,12 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-file-archiver
-Version:       %{branch}.0
-Release:       alt1_1
-#Release:       0.2%{?git_rel}%{?dist}
+Version:       %{branch}.2
+%if 0%{?rel_build}
+Release:       alt1_2
+%else
+Release:       alt1_2
+%endif
 Summary:       MATE Desktop file archiver
 License:       GPLv2+ and LGPLv2+
 URL:           http://mate-desktop.org
@@ -36,21 +40,11 @@ URL:           http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
-BuildRequires:  mate-common
-BuildRequires:  desktop-file-utils
-BuildRequires:  gtk2-devel
-%if 0%{?fedora} > 20
-BuildRequires:  mate-file-manager-devel
-%else
-BuildRequires:  mate-file-manager-devel
-%endif
-BuildRequires:  mate-desktop-devel
-BuildRequires:  libSM-devel
-
-%if 0%{?fedora} && 0%{?fedora} <= 25
-%endif
-Patch33: file-roller-2.28.2-alt-7z.patch
+# http://git.mate-desktop.org/engrampa/commit/?h=1.10&id=483f7b7
+Patch0:         engrampa_extract-multiple-files.patch
 Source44: import.info
+
+
 
 %description
 Mate File Archiver is an application for creating and viewing archives files,
@@ -59,10 +53,15 @@ such as zip, xv, bzip2, cab, rar and other compress formats.
 
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
-%patch33 -p0
 
-# nedded to create missing configure and make files
+%patch0 -p1 -b .engrampa_extract-multiple-files
+
+%if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 
 
 %build
@@ -70,7 +69,9 @@ such as zip, xv, bzip2, cab, rar and other compress formats.
    --disable-schemas-compile \
    --disable-static        \
    --with-gtk=2.0          \
-   --enable-caja-actions
+   --enable-caja-actions   \
+   --enable-magic          \
+   --disable-packagekit
 
 make %{?_smp_mflags} V=1
 
@@ -95,15 +96,22 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/engrampa.convert
 %{_mandir}/man1/*
 %{_bindir}/engrampa
 %{_libexecdir}/engrampa
+%{_libexecdir}/engrampa-server
+%{_libdir}/caja/extensions-2.0/libcaja-engrampa.so
 %{_datadir}/engrampa
+%{_datadir}/appdata/engrampa.appdata.xml
 %{_datadir}/applications/engrampa.desktop
+%{_datadir}/caja/extensions/libcaja-engrampa.caja-extension
+%{_datadir}/dbus-1/services/org.mate.Engrampa.service
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 %{_datadir}/glib-2.0/schemas/org.mate.engrampa.gschema.xml
-%{_libdir}/caja/extensions-2.0/libcaja-engrampa.so
 
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_2
+- new version
+
 * Sat Mar 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
