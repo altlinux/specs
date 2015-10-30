@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.31
+Version: 0.32
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -10,7 +10,7 @@ URL: http://altlinux.org/
 Source: mimeapps.list
 Source1: mimeapps-KDE.list
 Source2: defaults-GNOME.list
-Source3: mimeapps-MATE.list
+Source3: defaults-MATE.list
 Packager: Igor Vlasenko <viy@altlinux.org>
 
 BuildArch: noarch
@@ -26,7 +26,7 @@ System-wide MIME preferences.
 install -D -m 644 %{SOURCE0} %buildroot%_desktopdir/mimeapps.list
 install -D -m 644 %{S:1} %buildroot/%_datadir/kde4/applications/kde4/mimeapps.list
 install -D -m 644 %{S:2} %buildroot/%_datadir/gnome/applications/defaults.list
-install -D -m 644 %{S:3} %buildroot/%_datadir/applications/mate-mimeapps.list
+install -D -m 644 %{S:3} %buildroot/%_datadir/mate/applications/defaults.list
 ln -s kde4/mimeapps.list %buildroot/%_datadir/kde4/applications/mimeapps.list
 
 touch %buildroot/%_desktopdir/defaults.list
@@ -35,13 +35,16 @@ touch %buildroot/%_desktopdir/defaults.list
 %files
 #%doc README
 %_desktopdir/mimeapps.list
-%_desktopdir/mate-mimeapps.list
 %_datadir/kde4/applications/kde4/mimeapps.list
 %_datadir/kde4/applications/mimeapps.list
 %_datadir/gnome/applications/defaults.list
+%_datadir/mate/applications/defaults.list
 %_desktopdir/defaults.list
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- switched to defaults.list for mate
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - support for MATE
 
