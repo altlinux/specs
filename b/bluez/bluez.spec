@@ -2,7 +2,7 @@
 %def_enable obex
 
 Name: bluez
-Version: 5.35
+Version: 5.36
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -15,7 +15,6 @@ Conflicts: udev-extras < 169
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: %name-5.35-alt-duplicate_test_case_path.patch
 # fc
 Patch10: 0001-Allow-using-obexd-without-systemd-in-the-user-session.patch
 
@@ -57,7 +56,6 @@ This package contains the CUPS backend
 %prep
 %setup
 %patch -p1
-%patch1
 %patch10 -p1
 
 %build
@@ -128,6 +126,11 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Fri Oct 30 2015 Yuri N. Sedunov <aris@altlinux.org> 5.36-alt1
+- 5.36
+- probably fixed problem with daemon under sysv init (ALT #30562)
+- removed bluez-5.35-alt-duplicate_test_case_path.patch (fixed by upstream)
+
 * Thu Oct 01 2015 Yuri N. Sedunov <aris@altlinux.org> 5.35-alt1
 - 5.35
 
