@@ -1,7 +1,7 @@
 %define ver_major 0.6
 
 Name: libcroco
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: A CSS2 parsing library
@@ -23,7 +23,7 @@ BuildPreReq: libxml2-devel >= %libxml2_ver
 BuildRequires: gtk-doc doxygen zlib-devel
 
 %description
-CSS2 parsing library for GNOME.
+Libcroco is a standalone CSS2 parsing and manipulation library.
 
 %package devel
 Summary: Libraries and include files for developing with %name
@@ -89,6 +89,9 @@ export LDFLAGS="-Wl,--as-needed"
 %_bindir/csslint-%ver_major
 
 %changelog
+* Sat Oct 31 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.9-alt1
+- 0.6.9
+
 * Fri Oct 26 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6.8-alt1
 - 0.6.8
 
