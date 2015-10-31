@@ -2,7 +2,7 @@
 %def_enable zart
 
 Name: gmic
-Version: 1.6.6.1
+Version: 1.6.7
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -120,6 +120,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Sat Oct 31 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.7-alt1
+- 1.6.7
+
 * Mon Oct 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.6.1-alt1
 - 1.6.6.1
 
