@@ -2,7 +2,7 @@
 %def_disable dbusmenu
 
 Name: plank
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Elegant, simple, clean dock
@@ -116,6 +116,9 @@ This package provides Vala language bindings for plank library.
 %_datadir/vala/vapi/plank.vapi
 
 %changelog
+* Sat Oct 31 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
+- 0.10.1
+
 * Thu Sep 17 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0
 
