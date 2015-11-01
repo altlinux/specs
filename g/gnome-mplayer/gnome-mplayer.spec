@@ -1,6 +1,6 @@
 Name: gnome-mplayer
-Version: 1.0.8
-Release: alt1
+Version: 1.0.9
+Release: alt1.r2476
 
 Summary: is a simple GUI for MPlayer
 License: GPL
@@ -13,7 +13,7 @@ Requires: mplayer
 
 BuildPreReq: rpm-build-gnome gnome-common
 
-BuildRequires: intltool libgtk+3-devel libgmlib-devel libgmtk-devel libgio-devel libdbus-glib-devel libXScrnSaver-devel libdconf-devel libalsa-devel libpulseaudio-devel libnotify-devel libgpod-devel libnautilus-devel libmusicbrainz3-devel libcurl-devel
+BuildRequires: intltool libGConf-devel libgtk+3-devel libgmlib-devel libgmtk-devel libgio-devel libdbus-glib-devel libXScrnSaver-devel libdconf-devel libalsa-devel libpulseaudio-devel libnotify-devel libgpod-devel libnautilus-devel libmusicbrainz3-devel libcurl-devel libnemo-devel mate-file-manager-devel
 
 %description
 A GTK3 interface to MPlayer. The power of MPlayer combined with a
@@ -46,11 +46,28 @@ Requires: %name = %version-%release
 %description -n nautilus-%name-properties-page
 %summary
 
+%package -n nemo-%name-properties-page
+Summary: extension for nemo
+Group: Graphical desktop/Other
+Requires: %name = %version-%release
+
+%description -n nemo-%name-properties-page
+%summary
+
+%package -n caja-%name-properties-page
+Summary: extension for caja
+Group: Graphical desktop/MATE
+Requires: %name = %version-%release
+
+%description -n caja-%name-properties-page
+%summary
+
 %prep
 %setup -q
 
 %build
-%configure
+%autoreconf
+%configure --enable-nautilus --enable-nemo --enable-caja
 %make_build
 
 %install
@@ -69,9 +86,19 @@ rm -rf %buildroot%_docdir/%name
 %doc COPYING ChangeLog README DOCS/tech/dbus.txt DOCS/tech/plugin-interaction.txt DOCS/keyboard_shortcuts.txt
 
 %files -n nautilus-%name-properties-page
-%nautilus_extdir/lib%name-properties-page.so*
+%_libdir/nautilus/extensions-3.0/lib%name-properties-page.so*
+
+%files -n nemo-%name-properties-page
+%_libdir/nemo/extensions-3.0/lib%name-nemo-properties-page.so*
+
+%files -n caja-%name-properties-page
+%_libdir/caja/extensions-2.0/lib%name-caja-properties-page.so*
 
 %changelog
+* Sun Nov 01 2015 Vladimir Lettiev <crux@altlinux.ru> 1.0.9-alt1.r2476
+- svn checkout r2476
+- build nemo/caja extensions (Closes: #31418)
+
 * Mon May 06 2013 Vladimir Lettiev <crux@altlinux.ru> 1.0.8-alt1
 - New version 1.0.8
 
