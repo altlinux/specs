@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.69
+Version: 1.70
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -12,13 +12,13 @@ Group: Development/Tools
 Url: http://sourceforge.net/projects/cppcheck/
 
 Source: %name-%version.tar.bz2
-Patch1: cppcheck-makefile-docbook_xsl.patch
+Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
 Patch2: cppcheck-1.67-norebuild.patch
 Patch3: cppcheck-1.67-appPath.patch
 
-# Automatically added by buildreq on Wed Nov 26 2014
-# optimized out: docbook-dtds fontconfig libcloog-isl4 libgpg-error libqt4-core libqt4-gui libstdc++-devel phonon-devel pkg-config python-base python-modules xml-common
-BuildRequires: ImageMagick-tools docbook-style-xsl gcc-c++ gdb libpcre-devel libqt4-devel xsltproc
+# Automatically added by buildreq on Sun Nov 01 2015
+# optimized out: docbook-dtds fontconfig libgpg-error libqt4-core libqt4-devel libqt4-gui libstdc++-devel phonon-devel pkg-config python-base python-modules xml-common
+BuildRequires: ImageMagick-tools docbook-style-xsl gcc-c++ gdb libpcre-devel libqt4-webkit-devel python-modules-compiler xsltproc
 
 %description
 Static analysis of C/C++ code. Checks for: memory leaks, mismatching
@@ -34,7 +34,7 @@ Requires: %name = %version-%release
 
 %prep
 %setup
-%patch1 -p2
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
@@ -109,6 +109,9 @@ install -D gui/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Nov 01 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.70-alt1
+- Version 1.70
+
 * Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 1.69-alt1
 - Autobuild version bump to 1.69
 
