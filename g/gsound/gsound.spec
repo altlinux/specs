@@ -3,7 +3,7 @@
 %define api_ver 1.0
 
 Name: gsound
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GSound is a small library for playing system sounds
@@ -111,6 +111,9 @@ GObject introspection devel data for the GSound library.
 %_girdir/GSound-%api_ver.gir
 
 %changelog
+* Sun Nov 01 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Mon Dec 01 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
