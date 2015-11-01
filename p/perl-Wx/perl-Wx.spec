@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Wx
 Version: 0.9927
-Release: alt1
+Release: alt2
 
 Summary: wxPerl - Perl bindings for wxWindows
 License: GPL
@@ -60,6 +60,7 @@ xvfb-run -a make test
 %files devel
 %doc Changes samples
 %_bindir/wx*
+%_man1dir/wxperl_overload.*
 %dir %perl_vendor_archlib/Wx
 %perl_vendor_archlib/Wx/Overload
 %perl_vendor_archlib/Wx/build
@@ -67,6 +68,9 @@ xvfb-run -a make test
 %perl_vendor_archlib/Wx/typemap
 
 %changelog
+* Sun Nov 01 2015 Vladimir Lettiev <crux@altlinux.ru> 0.9927-alt2
+- added man(1) for wxperl_overload
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.9927-alt1
 - automated CPAN update
 
