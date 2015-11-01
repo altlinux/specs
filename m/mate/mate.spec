@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -164,8 +164,6 @@ Requires: mate-notification-daemon
 ## Stock multimedia applications
 Requires: mate-media
 Requires: gst-plugins-good
-## Default music player
-#Requires: rhythmbox
 ## Default media player
 #Requires: totem
 ## Stock MATE games
@@ -242,6 +240,9 @@ Requires: %name-default = %version-%release
 Provides: %name-full = %version
 
 # Sound & graphics & video
+## Default music player
+#Requires: rhythmbox
+Requires: exaile
 ## All Rhythmbox plugins
 #Requires: rhythmbox-plugins
 ## module player
@@ -295,7 +296,7 @@ Requires: mate-file-manager-share
 Requires: mate-system-log
 Requires: mate-user-share
 #Requires: mate-mplayer
-#Requires: gnome-mplayer-caja
+Requires: caja-gnome-mplayer-properties-page
 Requires: mate-file-manager-actions
 Requires: mate-file-manager-terminal >= 0.9
 
@@ -393,6 +394,10 @@ itself).
 #%files a11y
 
 %changelog
+* Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt2
+- added exaile as audioplayer
+- added gnome-mplayer-caja
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1
 - preparations to add gnome-mplayer-caja
 
