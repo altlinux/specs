@@ -1,6 +1,7 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/pkg-config /usr/bin/update-mime-database gobject-introspection-devel libICE-devel libSM-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel libselinux-devel pkgconfig(exempi-2.0) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libexif) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(xext) pkgconfig(xrender) xorg-xproto-devel mate-common /usr/bin/desktop-file-install
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/pkg-config /usr/bin/update-mime-database libICE-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(exempi-2.0) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libexif) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(xext) pkgconfig(xrender) xorg-xproto-devel
 # END SourceDeps(oneline)
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname caja
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -24,9 +25,9 @@ Name:        mate-file-manager
 Summary:     File manager for MATE
 Version:     %{branch}.4
 %if 0%{?rel_build}
-Release:     alt1_1
+Release:     alt2_1
 %else
-Release:     alt1_1
+Release:     alt2_0.2%{?git_rel}
 %endif
 License:     GPLv2+ and LGPLv2+
 Group:       Graphical desktop/MATE
@@ -41,12 +42,31 @@ URL:         http://mate-desktop.org
 # http://git.mate-desktop.org/caja/commit/?id=d2dd87a
 Patch0:         caja_do-not-save-position-from-last-window.patch
 
+BuildRequires:  libdbus-glib-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  libexempi-devel
+BuildRequires:  gobject-introspection-devel
+BuildRequires:  libexif-devel
+BuildRequires:  libselinux-devel
+BuildRequires:  libSM-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-desktop-devel
+BuildRequires:  libpangox-compat-devel
+BuildRequires:  libstartup-notification-devel
+BuildRequires:  libunique-devel
 
+Requires:   gamin
+Requires:   filesystem
+Requires:   altlinux-freedesktop-menu-common
+Requires:   gvfs
 
 # the main binary links against libcaja-extension.so
 # don't depend on soname, rather on exact version
+Requires:       mate-file-manager-extensions = %{version}-%{release}
 
 # needed for using mate-text-editor as stanalone in another DE
+Requires:       mate-file-manager-schemas = %{version}-%{release}
 
 Provides: mate-file-manager%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager = %{version}-%{release}
@@ -67,6 +87,7 @@ It is also responsible for handling the icons on the MATE desktop.
 %package extensions
 Group: Development/C
 Summary:  Mate-file-manager extensions library
+Requires: mate-file-manager = %{version}-%{release}
 Provides: mate-file-manager-extensions%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager-extensions = %{version}-%{release}
 Obsoletes: mate-file-manager-extensions < %{version}-%{release}
@@ -89,6 +110,7 @@ This package provides the gsettings schemas for caja.
 %package devel
 Group: Development/C
 Summary:  Support for developing mate-file-manager extensions
+Requires: mate-file-manager = %{version}-%{release}
 Provides: mate-file-manager-devel%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager-devel = %{version}-%{release}
 Obsoletes: mate-file-manager-devel < %{version}-%{release}
@@ -109,7 +131,6 @@ for developing caja extensions.
 %else # 0%{?rel_build}
 # for snapshots
 # needed for git snapshots
-NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
 %patch34 -p1
 
@@ -196,6 +217,9 @@ EOF
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.4-alt2_1
+- fixed dependencies
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.4-alt1_1
 - new version
 
