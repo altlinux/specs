@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libgio-devel libsocket pkgconfig(enchant) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtksourceview-2.0) pkgconfig(gtksourceview-3.0) pkgconfig(iso-codes) pkgconfig(libsoup-2.4) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(pygtk-2.0) pkgconfig(pygtksourceview-2.0) pkgconfig(sm) pkgconfig(x11) python-devel python-module-pygobject-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libgio-devel libsocket pkgconfig(enchant) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtksourceview-2.0) pkgconfig(gtksourceview-3.0) pkgconfig(iso-codes) pkgconfig(libsoup-2.4) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(pygtk-2.0) pkgconfig(pygtksourceview-2.0) pkgconfig(sm) pkgconfig(x11)
 # END SourceDeps(oneline)
 BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
@@ -27,9 +27,9 @@ Summary:  Text editor for the MATE desktop
 Name:     mate-text-editor
 Version:  %{branch}.2
 %if 0%{?rel_build}
-Release:  alt1_1
+Release:  alt2_1
 %else
-Release:  alt1_1
+Release:  alt2_0.1%{?git_rel}
 %endif
 License:  GPLv2+ and LGPLv2+
 Group:    Editors
@@ -41,10 +41,31 @@ URL:      http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
+BuildRequires: desktop-file-utils
+BuildRequires: libenchant-devel
+BuildRequires: libsoup-devel
+BuildRequires: gtk2-devel
+BuildRequires: libgtksourceview-devel
+BuildRequires: iso-codes-devel
+BuildRequires: libSM-devel
+BuildRequires: mate-common
+BuildRequires: python-module-pygobject-devel
+BuildRequires: python-module-pygtksourceview-devel
+BuildRequires: python-devel
+BuildRequires: rarian-compat
+BuildRequires: yelp-tools
+BuildRequires: mate-desktop-devel
 
+Requires: %{name}-data = %{version}-%{release}
+Requires: pygtk2
+Requires: python-module-pygobject
+Requires: python-module-pygtksourceview
 # needed to get a gsettings schema, #959607
+Requires: libmate-desktop
 # needed to get a gsettings schema, #959607
+Requires: mate-file-manager-schemas
 # the run-command plugin uses zenity
+Requires: zenity
 
 %if 0%{?fedora} && 0%{?fedora} > 19
 %endif
@@ -65,6 +86,7 @@ adjusting indentation levels.
 Summary:   Data files for pluma
 Group:     Editors
 BuildArch: noarch
+Requires:  mate-text-editor = %{version}-%{release}
 
 %description data
 This package contains shared data needed for pluma.
@@ -72,6 +94,7 @@ This package contains shared data needed for pluma.
 %package devel
 Summary:   Support for developing plugins for the mate-text-editor text editor
 Group:     Development/C
+Requires:  mate-text-editor = %{version}-%{release}
 %if 0%{?fedora} && 0%{?fedora} > 19
 Provides:  mate-text-editor-devel%{?_isa} = %{version}-%{release}
 Provides:  mate-text-editor-devel = %{version}-%{release}
@@ -157,6 +180,9 @@ fi
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_1
+- fixed dependencies
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_1
 - new version
 
