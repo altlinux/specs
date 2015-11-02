@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 1.302018
+%define module_version 1.302021
 %define module_name Test-Stream
 %filter_from_requires /^perl.Sub.Util.pm/d
 # BEGIN SourceDeps(oneline):
@@ -8,7 +8,7 @@ BuildRequires: perl(B.pm) perl(Carp.pm) perl(Config.pm) perl(ExtUtils/MakeMaker.
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.302018
+Version: 1.302021
 Release: alt1
 Summary: Comming soon
 Group: Development/Perl
@@ -37,6 +37,9 @@ rm -f t/modules/Table.t
 %perl_vendor_privlib/T*
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.302021-alt1
+- automated CPAN update
+
 * Thu Oct 29 2015 Igor Vlasenko <viy@altlinux.ru> 1.302018-alt1
 - automated CPAN update
 
