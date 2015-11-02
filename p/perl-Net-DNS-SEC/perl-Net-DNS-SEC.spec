@@ -2,7 +2,7 @@
 %define module_name Net-DNS-SEC
 
 Name: perl-%module_name
-Version: 0.20
+Version: 1.02
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -16,7 +16,7 @@ Source: http://www.cpan.org/authors/id/N/NL/NLNETLABS/Net-DNS-SEC-%{version}.tar
 
 BuildArch: noarch
 
-BuildRequires: perl-Net-DNS > 0.63
+BuildRequires: perl-Net-DNS > 0.63 perl(Crypt/OpenSSL/EC.pm) perl(Crypt/OpenSSL/ECDSA.pm) perl(Digest/GOST.pm)
 # Automatically added by buildreq on Thu Apr 08 2010
 BuildRequires: perl-Crypt-OpenSSL-DSA perl-Crypt-OpenSSL-RSA perl-Digest-SHA perl-Digest-SHA1 perl-MIME-Base32 perl-Math-BigInt perl-Test-Pod
 
@@ -37,6 +37,9 @@ DNSSEC extensions to Net::DNS.
 %perl_vendor_privlib/Net/DNS
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
