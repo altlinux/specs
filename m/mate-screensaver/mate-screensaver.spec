@@ -25,9 +25,9 @@ BuildRequires: mate-common
 Name:           mate-screensaver
 Version:        %{branch}.2
 %if 0%{?rel_build}
-Release:        alt1_2
+Release:        alt2_2
 %else
-Release:        alt1_2
+Release:        alt2_0.2%{?git_rel}
 %endif
 Summary:        MATE Screensaver
 License:        GPLv2+ and LGPLv2+
@@ -41,11 +41,33 @@ URL:            http://pub.mate-desktop.org
 
 # https://github.com/mate-desktop/mate-screensaver/pull/80
 Patch0:         mate-screensaver_fix-broken-systemd-support.patch
+
+Requires:       altlinux-freedesktop-menu-common
+Requires:       pam_gnome-keyring
+
+BuildRequires:  libdbus-glib-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  gtk2-devel
+BuildRequires:  libX11-devel
+BuildRequires:  libXScrnSaver-devel
+BuildRequires:  libXinerama-devel
+BuildRequires:  libXmu-devel
+BuildRequires:  libXtst-devel
+BuildRequires:  libXxf86misc-devel
+BuildRequires:  libXxf86vm-devel
+BuildRequires:  libmatekbd-devel
+BuildRequires:  libnotify-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-desktop-devel
+BuildRequires:  mate-menus-devel
+BuildRequires:  libGL-devel
+BuildRequires:  pam-devel
+BuildRequires:  systemd-devel
+BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
+BuildRequires:  xmlto
 Source44: import.info
 Patch33: mate-screensaver-1.8.0-alt-pam.patch
 Source45: unix2_chkpwd.c
-
-
 
 %description
 mate-screensaver is a screen saver and locker that aims to have
@@ -55,6 +77,7 @@ simple, sane, secure defaults and be well integrated with the desktop.
 %package devel
 Group: Toys
 Summary: Development files for mate-screensaver
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 Development files for mate-screensaver
@@ -143,6 +166,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_2
+- fixed dependencies
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_2
 - new version
 
