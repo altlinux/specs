@@ -28,9 +28,9 @@ BuildRequires: mate-common
 Name:           mate-themes
 Version:        %{rel_ver}
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt2_1
 %else
-Release:        alt1_1
+Release:        alt2_0.1%{?git_rel}
 %endif
 Summary:        MATE Desktop themes
 License:        GPLv2+
@@ -42,9 +42,15 @@ BuildArch:      noarch
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{gtk3_ver}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
+
+BuildRequires:  mate-common
+BuildRequires:  gtk2-devel
+BuildRequires:  libgdk-pixbuf-devel
+
+Requires:       mate-icon-theme
+Requires:       libgtk-engines-default
+Requires:       libgtk-engine-murrine
 Source44: import.info
-
-
 
 %description
 MATE Desktop themes
@@ -110,6 +116,9 @@ fi
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.6-alt2_0.1.git20151005.5fec168
+- fixed dependencies
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.6-alt1_1
 - new version
 
