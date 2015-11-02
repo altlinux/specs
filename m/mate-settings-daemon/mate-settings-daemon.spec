@@ -1,6 +1,6 @@
 Group: System/Servers
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmatekbd) pkgconfig(libmatekbdui) pkgconfig(libmatemixer) pkgconfig(libnotify) pkgconfig(libpulse) pkgconfig(libxklavier) pkgconfig(mate-desktop-2.0) pkgconfig(nss) pkgconfig(polkit-gobject-1)
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libmatekbd) pkgconfig(libmatekbdui) pkgconfig(libmatemixer) pkgconfig(libnotify) pkgconfig(libpulse) pkgconfig(libxklavier) pkgconfig(mate-desktop-2.0) pkgconfig(nss) pkgconfig(polkit-gobject-1)
 # END SourceDeps(oneline)
 BuildRequires: libXext-devel libXi-devel
 BuildRequires: mate-common
@@ -26,9 +26,9 @@ BuildRequires: mate-common
 Name:           mate-settings-daemon
 Version:        %{branch}.2
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt2_1
 %else
-Release:        alt1_1
+Release:        alt2_0.1%{?git_rel}
 %endif
 Summary:        MATE Desktop settings daemon
 License:        GPLv2+
@@ -44,13 +44,31 @@ URL:            http://mate-desktop.org
 # http://git.mate-desktop.org/mate-settings-daemon/commit/?id=33cb903
 Patch0:         mate-settings-daemon_touchpad.patch
 
+BuildRequires:  libdbus-glib-devel
+BuildRequires:  libdconf-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  gtk2-devel
+BuildRequires:  libmatemixer-devel
+BuildRequires:  libcanberra-devel
 # needed for f23
 %if 0%{?fedora} > 22
+BuildRequires: libcanberra-gtk2
 %endif
+BuildRequires:  libmatekbd-devel
+BuildRequires:  libnotify-devel
+BuildRequires:  libSM-devel
+BuildRequires:  libXxf86misc-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-desktop-devel
+BuildRequires:  mate-polkit-devel
+BuildRequires:  nss-devel
+BuildRequires:  libpulseaudio-devel
+
+Requires:       libmatekbd%{?_isa} >= 0:1.6.1-1
+# needed for xrandr capplet
+#Requires:       mate-control-center-filesystem
 Source44: import.info
 Requires: dconf
-
-# needed for xrandr capplet
 
 %description
 This package contains the daemon which is responsible for setting the
@@ -60,6 +78,7 @@ under it.
 %package devel
 Group: Development/C
 Summary:        Development files for mate-settings-daemon
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 This package contains the daemon which is responsible for setting the
@@ -129,6 +148,9 @@ desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/mate-settings-dae
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_1
+- fixed dependencies
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_1
 - new version
 
