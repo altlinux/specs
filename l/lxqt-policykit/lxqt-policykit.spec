@@ -1,5 +1,5 @@
 Name: lxqt-policykit
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Policykit authentication agent
@@ -37,6 +37,9 @@ Obsoletes: razorqt-polkit-agent < 0.7.0
 %doc AUTHORS
 
 %changelog
+* Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
 - 0.9.0
 

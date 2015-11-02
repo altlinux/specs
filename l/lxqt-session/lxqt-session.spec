@@ -1,5 +1,5 @@
 Name: lxqt-session
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Session manager
@@ -44,6 +44,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS
 
 %changelog
+* Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
 - 0.9.0
 

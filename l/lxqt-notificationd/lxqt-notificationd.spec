@@ -1,5 +1,5 @@
 Name: lxqt-notificationd
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Notification service
@@ -38,6 +38,9 @@ Obsoletes: razorqt-notificationd < 0.7.0
 %doc AUTHORS
 
 %changelog
+* Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
 - 0.9.0
 

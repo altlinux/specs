@@ -1,6 +1,6 @@
 Name: lxqt-panel
-Version: 0.9.0
-Release: alt1
+Version: 0.10.0
+Release: alt2
 
 Summary: Desktop panel
 License: LGPL
@@ -11,14 +11,16 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel liblxqt-mount-devel
+BuildRequires: liblxqt-devel kf5-solid-devel
 BuildRequires: libqtxdg-devel qt5-base-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kguiaddons-devel
+BuildRequires: libdbusmenu-qt5-devel
 BuildRequires: lxqt-globalkeys-devel
 BuildRequires: libalsa-devel
 BuildRequires: libXdmcp-devel libXdamage-devel
 BuildRequires: libXcomposite-devel libXrender-devel libxcbutil-devel
 BuildRequires: libmenu-cache-devel libstatgrab-devel libsensors3-devel
+BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel
 
 BuildRequires: libsysstat-devel >= 0.3.0
 
@@ -26,7 +28,7 @@ Provides: razorqt-panel = %version
 Obsoletes: razorqt-panel < 0.7.0
 
 Requires: menu-cache
-Requires: udisks2 gvfs qt5-dbus
+Requires: udisks2 gvfs
 
 %description
 %summary
@@ -42,10 +44,6 @@ This package provides the development files for %name.
 
 %prep
 %setup
-# FIXME: 0.8.0 glitch?
-sed -i 's,^#include <LXQtMount/Mount>,#include <lxqtmount/LXQtMount/Mount>,' \
-	plugin-mount/popup.cpp plugin-mount/menudiskitem.cpp \
-	plugin-mount/lxqtmountplugin.cpp plugin-mount/actions/deviceaction.h
 
 %build
 %cmake_insource
@@ -53,8 +51,6 @@ sed -i 's,^#include <LXQtMount/Mount>,#include <lxqtmount/LXQtMount/Mount>,' \
 
 %install
 %makeinstall_std
-# bad ELF symbols: _ZN28LxQtKbIndicatorConfiguration* (still in 0.8.0)
-rm -f %buildroot%_libdir/%name/libpanelkbindicator.so
 
 %files
 %_bindir/*
@@ -67,6 +63,12 @@ rm -f %buildroot%_libdir/%name/libpanelkbindicator.so
 %_includedir/*/*.h
 
 %changelog
+* Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt2
+- drop R: qt5-dbus (tosses dev tools into menu for no good reason)
+
+* Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
 - 0.9.0
 

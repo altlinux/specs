@@ -1,5 +1,5 @@
 Name: libsysstat
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Library used to query system info and statistics
@@ -45,6 +45,9 @@ which is used to query system info and statistics.
 %_datadir/cmake/*/
 
 %changelog
+* Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 0.3.0-alt1
 - 0.3.0 built against qt5
 
