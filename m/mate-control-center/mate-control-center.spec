@@ -1,8 +1,7 @@
 Serial: 1
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libSM-devel libX11-devel libXxf86misc-devel libgio-devel pkgconfig(appindicator-0.1) pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmarco-private) pkgconfig(libmate-menu) pkgconfig(libmatekbd) pkgconfig(libmatekbdui) pkgconfig(librsvg-2.0) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(mate-settings-daemon) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(xcursor)
-BuildRequires: pkgconfig(xft) pkgconfig(xi) xorg-kbproto-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(appindicator-0.1) pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmarco-private) pkgconfig(libmate-menu) pkgconfig(libmatekbd) pkgconfig(libmatekbdui) pkgconfig(librsvg-2.0) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(mate-settings-daemon) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(xcursor) pkgconfig(xi) xorg-kbproto-devel
 # END SourceDeps(oneline)
 BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
@@ -26,7 +25,7 @@ BuildRequires: mate-common
 Name:          mate-control-center
 Version:       %{branch}.2
 %if 0%{?rel_build}
-Release:       alt1_1
+Release:       alt2_1
 %else
 #Release:       0.6%{?git_rel}%{?dist}
 %endif
@@ -39,13 +38,33 @@ URL:           http://mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
+
+BuildRequires: libdconf-devel
+BuildRequires: desktop-file-utils
+BuildRequires: gtk2-devel
+BuildRequires: libcanberra-devel
+BuildRequires: libmatekbd-devel
+BuildRequires: librsvg-devel
+BuildRequires: libSM-devel
+BuildRequires: libXScrnSaver-devel
+BuildRequires: libXxf86misc-devel
+BuildRequires: mate-common
+BuildRequires: mate-desktop-devel
+BuildRequires: mate-menus-devel
+BuildRequires: mate-settings-daemon-devel
+BuildRequires: mate-window-manager-devel
+BuildRequires: libunique-devel
+
+Requires: gsettings-desktop-schemas
+# rhbz (#1234438)
+Requires: mate-settings-daemon
+# keyring support
+Requires: gnome-keyring
+Provides: %{name}-filesystem%{?_isa} = %{version}-%{release}
 Source44: import.info
 Patch33: gnome-control-center-2.22.1-alt-background-location.patch
 Patch34: gnome-control-center-2.28.0-passwd.patch
-
-
-# rhbz (#1234438)
-# keyring support
+Patch35: mate-control-center-1.10.2-alt-ru.po.patch
 
 
 %description 
@@ -67,6 +86,7 @@ utilities.
 %package devel
 Group: Development/C
 Summary:      Development files for mate-settings-daemon
+Requires:       %{name}%{?_isa} = %{?serial:%serial:}%{version}-%{release}
 
 %description devel
 Development files for mate-control-center
@@ -84,6 +104,7 @@ NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
 %patch33 -p1
 %patch34 -p1
+%patch35 -p1
 
 %build
 autoreconf -fisv
@@ -153,6 +174,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.10.2-alt2_1
+- fixed dependencies
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.10.2-alt1_1
 - new version
 
