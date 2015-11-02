@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Valgrind
 Summary:	Generate suppressions, analyze and test any command with valgrind
-Version:	1.14
-Release:	alt2_3
+Version:	1.15
+Release:	alt1
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Valgrind/
-Source0:	http://search.cpan.org/CPAN/authors/id/V/VP/VPIT/Test-Valgrind-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/V/VP/VPIT/Test-Valgrind-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl(base.pm)
 BuildRequires:	perl(Carp.pm)
@@ -98,6 +99,9 @@ fi
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.14-alt2_3
 - update to new release by fcimport
 
