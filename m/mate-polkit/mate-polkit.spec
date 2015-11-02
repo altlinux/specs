@@ -7,15 +7,21 @@ BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Name:		mate-polkit
 Version:	1.10.2
-Release:	alt1_1
+Release:	alt2_1
 Summary:	Integrates polkit authentication for MATE desktop
 License:	LGPLv2+
 URL:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/1.10/%name-%version.tar.xz
 
+BuildRequires:	libgtk+3-devel
+BuildRequires:	mate-common
+BuildRequires:	libpolkit-devel
+BuildRequires:	gobject-introspection-devel
+BuildRequires:	libdbus-glib-devel
 # needed for gobject-introspection support somehow,
 # https://bugzilla.redhat.com/show_bug.cgi?id=847419#c17 asserts this is a bug (elsewhere)
 # but I'm not entirely sure -- rex
+BuildRequires: 	libcairo-gobject-devel
 
 Provides:	PolicyKit-authentication-agent
 Source44: import.info
@@ -26,6 +32,7 @@ Integrates polkit with the MATE Desktop environment
 
 %package devel
 Group: Development/C
+Requires: %{name}%{?_isa} = %{version}-%{release}
 Summary:	Integrates polkit with the MATE Desktop environment
 
 %description devel
@@ -72,6 +79,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_1
+- fixed dependencies
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_1
 - new version
 
