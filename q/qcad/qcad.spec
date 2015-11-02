@@ -1,9 +1,9 @@
 # TODO: translation change is not affect ui
 
 Name: 	 qcad
-Summary: a professional CAD system
+Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
-Version: 3.11.3.0
+Version: 3.11.6.0
 Release: alt1
 
 Url: 	 http://www.ribbonsoft.com/qcad.html
@@ -16,14 +16,22 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0: qcad-%version.tar
 Source1: qcad.desktop
 
-BuildRequires: gcc-c++ libqt4-devel python
-BuildRequires: libqt4-webkit-devel
+BuildRequires: gcc-c++ qt5-base-devel python
+BuildRequires: desktop-file-utils
+BuildRequires: libdbus-devel
 BuildRequires: libGL-devel
 BuildRequires: libGLU-devel
 BuildRequires: libssl-devel
-BuildRequires: libdbus-devel
+BuildRequires: qt5-designer
+BuildRequires: qt5-imageformats
+BuildRequires: qt5-script-devel
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: qt5-tools-devel-static
+BuildRequires: qt5-webkit-devel
+BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: qtscriptgenerator
-BuildRequires: desktop-file-utils
+BuildRequires: zlib-devel
 
 %description
 QCad is a professional CAD System. With QCad you can easily construct
@@ -35,17 +43,18 @@ as AutoCAD(TM) and many others.
 QCad это профессиональная CAD система. С QCad вы можете легко создавать
 и изменять рисунки с вставленным текстом и сохранять это в DXF файлы.
 Через DXF файлы есть возможность обмениваться данными с другими CAD
-системами (например AutoCAD(TM)).
+системами (например, AutoCAD).
 
 %prep
 %setup -q
-%qmake_qt4
-lupdate-qt4 %name.pro
+%qmake_qt5
+#lupdate-qt5 %name.pro
 
 %build
 %make_build
 
 %install
+%install_qt5
 # Main executable
 install -Dm755 release/qcad-bin %buildroot%_libdir/%name/qcad-bin
 
@@ -103,6 +112,10 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Nov 02 2015 Andrey Cherepanov <cas@altlinux.org> 3.11.6.0-alt1
+- New version
+- Built with Qt5
+
 * Sat Oct 17 2015 Andrey Cherepanov <cas@altlinux.org> 3.11.3.0-alt1
 - New version
 
