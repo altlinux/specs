@@ -1,6 +1,6 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dbus-binding-tool /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libSM-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel libjpeg-devel pkgconfig(dbus-glib-1) pkgconfig(exempi-2.0) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-unix-print-3.0) pkgconfig(lcms2) pkgconfig(libexif) pkgconfig(librsvg-2.0) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(pygtk-2.0) pkgconfig(shared-mime-info) pkgconfig(x11) python-devel python-module-pygobject-devel xorg-xproto-devel zlib-devel
+BuildRequires: /usr/bin/dbus-binding-tool /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libSM-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(dbus-glib-1) pkgconfig(exempi-2.0) pkgconfig(gmodule-2.0) pkgconfig(lcms2) pkgconfig(libexif) pkgconfig(librsvg-2.0) pkgconfig(libxml-2.0) pkgconfig(pygtk-2.0) pkgconfig(x11) python-devel python-module-pygobject-devel xorg-xproto-devel
 # END SourceDeps(oneline)
 BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
@@ -26,9 +26,9 @@ BuildRequires: mate-common
 Name:          mate-image-viewer
 Version:       %{branch}.5
 %if 0%{?rel_build}
-Release:       alt1_1
+Release:       alt2_1
 %else
-Release:       alt1_1
+Release:       alt2_0.2%{?git_rel}
 %endif
 Summary:       Eye of MATE image viewer
 License:       GPLv2+ and LGPLv2+ 
@@ -40,8 +40,25 @@ URL:           http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
+BuildRequires: zlib-devel
+BuildRequires: libcairo-gobject-devel
+BuildRequires: gtk2-devel
+BuildRequires: libexif-devel
+BuildRequires: libexempi-devel
+BuildRequires: gobject-introspection-devel
+BuildRequires: libxml2-devel
+BuildRequires: librsvg-devel
+BuildRequires: mate-desktop-devel
+BuildRequires: liblcms2-devel
+BuildRequires: mate-icon-theme-devel
+BuildRequires: python-module-pygtk-devel
+BuildRequires: libdbus-glib-devel
+BuildRequires: libjpeg-devel
+BuildRequires: desktop-file-utils
+BuildRequires: mate-common
 
 #fix rhbz (#1008249)
+Requires:      libmate-desktop
 
 %if 0%{?fedora} && 0%{?fedora} > 19
 %endif
@@ -56,6 +73,7 @@ Eye of Mate is extensible through a plugin system.
 %package devel
 Summary:  Support for developing plugins for the eom image viewer
 Group:    Development/C
+Requires: mate-image-viewer = %{version}-%{release}
 %if 0%{?fedora} && 0%{?fedora} > 19
 Provides: mate-image-viewer-devel%{?_isa} = %{version}-%{release}
 Provides: mate-image-viewer-devel = %{version}-%{release}
@@ -127,6 +145,9 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/eom.convert
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.5-alt2_1
+- fixed dependencies
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.5-alt1_1
 - new version
 
