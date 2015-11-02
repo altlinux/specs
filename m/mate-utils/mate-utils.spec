@@ -1,6 +1,6 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libgtop-2.0) pkgconfig(libmatepanelapplet-4.0) pkgconfig(x11) pkgconfig(xext) zlib-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgtop-2.0) pkgconfig(libmatepanelapplet-4.0) pkgconfig(x11) pkgconfig(xext) zlib-devel pkgconfig(libcanberra-gtk)
 # END SourceDeps(oneline)
 BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
@@ -24,9 +24,9 @@ BuildRequires: mate-common
 Name:           mate-utils
 Version:        %{branch}.3
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt2_1
 %else
-Release:        alt1_1
+Release:        alt2_0.1%{?git_rel}
 %endif
 Summary:        MATE utility programs
 License:        GPLv2+ and LGPLv2+
@@ -37,11 +37,30 @@ URL:            http://mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
+
+BuildRequires:  desktop-file-utils
+BuildRequires: e2fsprogs-devel libe2fs-devel
+BuildRequires:  hardlink
+BuildRequires:  libcanberra-devel
+BuildRequires:  libgtop2-devel
+BuildRequires:  libX11-devel
+BuildRequires:  libXmu-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-desktop-devel
+BuildRequires:  mate-panel-devel
+BuildRequires:  libGL-devel
+BuildRequires:  popt-devel
+BuildRequires:  consolehelper
+BuildRequires:  yelp-tools
+
+Requires: mate-dictionary = %{version}-%{release}
+Requires: mate-screenshot = %{version}-%{release}
+Requires: mate-search-tool = %{version}-%{release}
+Requires: mate-system-log = %{version}-%{release}
+Requires: mate-disk-usage-analyzer = %{version}-%{release}
 Source44: import.info
 Obsoletes: Obsoletes: mate-utils-libs < 1.5.0-alt2_1
 Conflicts: mate-utils-libs < 1.5.0-alt2_1
-
-
 
 %description
 The mate-utils package contains a set of small "desk accessory" utility
@@ -61,6 +80,7 @@ Summary: Development files for mate-utils
 # short-lived mate-dictionary-devel subpkg
 Obsoletes: mate-dictionary-devel < 1.6.0-8
 #Provides:  mate-dictionary-devel = %{version}-%{release}
+Requires:  mate-dictionary%{?_isa} = %{version}-%{release}
 %description devel
 The mate-utils-devel package contains header files and other resources
 needed to develop programs using the libraries contained in mate-utils.
@@ -68,31 +88,39 @@ needed to develop programs using the libraries contained in mate-utils.
 %package -n mate-system-log
 Group: File tools
 Summary: A log file viewer for the MATE desktop
+Requires: %{name}-common = %{version}-%{release}
+Requires: consolehelper
 # rhbz (#1016935)
+Requires: libmate-desktop
 %description -n mate-system-log
 An application that lets you view various system log files.
 
 %package -n mate-screenshot
 Group: File tools
 Summary: A utility to take a screen-shot of the desktop
+Requires: %{name}-common = %{version}-%{release}
 %description -n mate-screenshot
 An application that let you take a screen-shot of your desktop.
 
 %package -n mate-dictionary
 Group: File tools
 Summary: A dictionary for MATE Desktop
+Requires: %{name}-common = %{version}-%{release}
 %description -n mate-dictionary
 The mate-dictionary package contains a dictionary application for MATE Desktop.
 
 %package -n mate-search-tool
 Group: File tools
 Summary: A file searching tool for MATE Desktop
+Requires: %{name}-common = %{version}-%{release}
+Requires: libmate-desktop
 %description -n mate-search-tool
 An application to search for files on your computer.
 
 %package -n mate-disk-usage-analyzer
 Group: File tools
 Summary: A disk usage analyzing tool for MATE Desktop
+Requires: %{name}-common = %{version}-%{release}
 %description -n mate-disk-usage-analyzer
 An application to help analyze disk usage.
 
@@ -230,6 +258,9 @@ desktop-file-install                          \
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.3-alt2_1
+- fixed dependencies
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.3-alt1_1
 - new version
 
