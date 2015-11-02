@@ -7,7 +7,7 @@
 
 Name: signon
 Version: 8.57
-Release: alt3
+Release: alt4
 
 Group: System/Servers
 Summary: Accounts framework for Linux and POSIX based platforms
@@ -81,6 +81,11 @@ Requires: %name-common = %version-%release
 %patch1 -p1 -b .no_static
 %patch10 -p1
 
+find -type f -name \*.pc.in -o -name \*.h | \
+while read f ; do
+    sed -i 's|/usr/lib|%_libdir|' $f
+done
+
 %build
 export PATH=%_qt5_bindir:$PATH
 %qmake_qt5 \
@@ -135,6 +140,9 @@ mkdir -p %buildroot/%_libdir/signon/extensions/
 %_libdir/libsignon-qt5.so.*
 
 %changelog
+* Mon Nov 02 2015 Sergey V Turchin <zerg@altlinux.org> 8.57-alt4
+- fix .pc files
+
 * Tue Aug 04 2015 Sergey V Turchin <zerg@altlinux.org> 8.57-alt3
 - fix package shared directories
 
