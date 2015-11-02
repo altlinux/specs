@@ -1,8 +1,8 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(alsa) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib)
 # END SourceDeps(oneline)
-BuildRequires: chrpath
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libmatemixer
@@ -24,7 +24,7 @@ BuildRequires: chrpath
 Name:        libmatemixer
 Summary:     Mixer library for MATE desktop
 Version:     %{branch}.0
-Release:     alt1_2
+Release:     alt2_2
 #Release:     0.1%{?git_rel}%{?dist}
 License:     GPLv2+
 URL:         http://mate-desktop.org
@@ -58,9 +58,9 @@ Development libraries for libmatemixer
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
 # needed for git snapshots
-#NOCONFIGURE=1 ./autogen.sh
 
 %build
+NOCONFIGURE=1 ./autogen.sh
 %configure \
         --disable-static \
         --enable-pulseaudio \
@@ -79,10 +79,6 @@ make %{?_smp_mflags} V=1
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %find_lang %{name} --with-gnome --all-name
-# kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
-	chrpath -d $i ||:
-done
 
 
 %files -f %{name}.lang
@@ -98,6 +94,9 @@ done
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt2_2
+- rebuild
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_2
 - new version
 
