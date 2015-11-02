@@ -1,18 +1,17 @@
-# 4.4.1.2
+# 5.0.3.1
 %def_with forky
 %def_with parallelism
 %def_without fetch
 %def_without lto
 
-Name: LibreOffice4
-Version: 4.4
-%define urelease 1.2
+Name: LibreOffice
+Version: 5.0
+%define urelease 3.1
 %define uversion %version.%urelease
-%define oopfx lo4
 %define lodir %_libdir/%name
-%define uname libreoffice4
+%define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -27,6 +26,7 @@ Provides: %name-full = %version-%release
 Provides: libreoffice = %version-%release
 Obsoletes: libreoffice < 3.99
 Obsoletes: %name-full < %version-%release
+Obsoletes: LibreOffice4
 
 %define with_lang ru be de fr uk pt-BR es kk tt
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
@@ -45,30 +45,35 @@ Source200:	oasis-master-document-template.icns
 Source300:	update_from_fc
 
 # FC patches files
-Patch3: 0001-disable-failing-test-on-rhel.patch
 Patch8: 0001-disable-failing-test-on-rhel-6.patch
-Patch9: 0001-disable-swui-test-on-RHEL-7.patch
 Patch10: 0001-disable-libe-book-support.patch
-Patch11: 0001-disable-failing-while-libmwaw-fix-pending.patch
 Patch12: 0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
 Patch13: 0001-disable-firebird-unit-test.patch
 Patch14: 0001-never-run-autogen.sh.patch
 Patch15: 0001-add-X-TryExec-entries-to-desktop-files.patch
 Patch16: 0001-disable-PSD-import-test-which-deadlocks-on-ARM.patch
-Patch17: 0001-Resolves-fdo-37559-revert-adding-extra-dummy-polygon.patch
-Patch18: 0001-radio-check-top-center-bottom-alignment-for-table-ce.patch
-Patch19: 0001-allow-comparing-documents-which-only-differ-by-frame.patch
-Patch20: 0001-Use-the-same-advanced-Ellipse-and-Rectangle-shapes-i.patch
-Patch21: 0001-fix-linker-error.patch
-Patch22: 0001-Resolves-rhbz-1193971-clear-hard-coded-char-props-in.patch
+Patch17: 0001-Resolves-tdf-89905-don-t-copy-palettes-from-shared-t.patch
+Patch18: 0001-Resolves-tdf-49407-enable-CaseMap-property-in-impres.patch
+Patch19: 0001-rhbz-1233420-handle-inexistent-cond.-format.patch
+Patch20: 0001-allow-slide-design-to-affect-multiple-standard-pages.patch
+Patch21: 0001-implement-equalize-width-and-height-for-impress-draw.patch
+Patch22: 0001-f22-openjdk-for-ppc64le-has-both-these-dirs-but-jawt.patch
+Patch23: 0001-implement-undo-for-equalize-marked-objects.patch
+Patch24: 0001-time-stamp-object-selections-and-use-newest-as-ref-f.patch
+Patch25: 0001-Resolves-rhbz-1256843-no-obvious-means-to-close-temp.patch
+Patch26: 0001-implement-undo-of-delete-impress-cell-contents.patch
+Patch28: 0001-Fix-export-of-tdf-93675-to-.docx-as-much-as-is-possi.patch
+Patch29: 0001-default-to-as-character-caption-contents.patch
+Patch30: 0001-Related-tdf-93676-msword-wraps-slightly-differently-.patch
+Patch31: 0002-Related-tdf-93676-msword-wraps-slightly-differently-.patch
+Patch33: 0001-implement-save-slide-background-for-impress.patch
+Patch34: 0001-Related-tdf-72880-presumably-using-startcenter-as-ge.patch
+Patch35: 0001-implement-dialog-control-over-enhanced-shape-control.patch
 
 
 
 
 # Long-term FC patches
-Patch300: openoffice.org-2.0.2.rh188467.printingdefaults.patch
-Patch301: openoffice.org-3.0.0.ooo88341.sc.verticalboxes.patch
-Patch302: openoffice.org-3.1.0.ooo101274.opening-a-directory.patch
 
 # ALT patches
 Patch401:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
@@ -97,25 +102,16 @@ other office packages, except of language packs and GNOME/KDE bindings.
 %package common
 Summary: Basic installation of %name
 Group: Office
+Obsoletes: LibreOffice4-common
 AutoReqProv: yes, noshell, nopython
 %description common
 Common part of %name that does not interfere with other packages
-
-%package standalone
-Summary: Renamed binaries, icons and desktop files for %name
-Group: Office
-Provides: %uname = %version-%release
-Conflicts: %name-integrated
-Requires: %name-common = %version-%release
-%description standalone
-Wrapper scripts, icons and desktop files for running renamed version of %name
-as lo4write, lo4draw etc.
 
 %package integrated
 Summary: Binaries, icons and desktop files for %name
 Group: Office
 Provides: %uname = %version-%release
-Conflicts: %name-standalone
+Obsoletes: LibreOffice4-integrated
 Requires: %name-common = %version-%release
 %description integrated
 Wrapper scripts, icons and desktop files for running %name
@@ -181,51 +177,43 @@ echo Direct build
 %patch401 -p0
 ##patch402 -p1
 %patch403 -p2
-%patch404 -p0
+##patch404 -p0
 
 # FC patches applying (## -- unsuccsessful but seems meaningful)
-#patch3 -p1
-#patch8 -p1
-#patch9 -p1
+%patch8 -p1
 #patch10 -p1
-#patch11 -p1
-#patch12 -p1
-#patch13 -p1
-#patch14 -p1
-#patch15 -p1
-#patch16 -p1
-#patch17 -p1
-#patch18 -p1
-#patch19 -p1
-#patch20 -p1
-#patch21 -p1
-#patch22 -p1
-
-
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
+##patch28 -p1
+%patch29 -p1
+%patch30 -p1
+%patch31 -p1
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
 
 
 # Long-term FC patches applying
-#patch300 -p1
-##patch301 -p1
-##patch302 -p1
 
 # Hacked git binary patch
 cp %SOURCE300 sysui/desktop/icons/
 
-# Hack GCC_VERSION usage
-sed -i.GCC_VERSION '
-s/\(GCC_VERSION=`echo $_gcc_version\)[^`]*`/\1|cut -d. -f1-2`/
-' configure.ac
-
-%ifarch %ix86
-# TODO: check when this became obsolete
-sed -i.DLLPUB 's/DECL_LISTENERMULTIPLEXER_START(/DECL_LISTENERMULTIPLEXER_START_DLLPUB(/g' include/toolkit/helper/listenermultiplexer.hxx
-#sed -i.gccvisbroken 's/gccvisbroken=no/gccvisbroken=yes/g' configure.ac
-#sed -i.VISIBILITY 's/HAVE_GCC_VISIBILITY_BROKEN=$/HAVE_GCC_VISIBILITY_BROKEN="YES"/g' configure.ac
-%endif
-
-# TODO: check if this still needed after 4.4.0.3-alt1
-sed -i.gridprinter '/gridprinter.hxx/i#include <algorithm>' svl/source/misc/gridprinter.cxx
+# Unhack liborcus version from configure
+# TODO check after 5.0.2.1
+sed -Ei 's/(libo_CHECK_SYSTEM_MODULE.*liborcus)-[0-9.]+/\1/' configure.ac
 
 rm -fr %name-tnslations/git-hooks
 
@@ -233,7 +221,7 @@ install -D %SOURCE100 forky.c
 
 # create shell wrappers
 for n in office writer impress calc base draw math qstart; do
-	oname=%{oopfx}$n
+	oname=lo$n
 	case "$n" in 
 		office) opt=""; oname=libreoffice%version;;
 		qstart) opt="--quickstart --nologo --nodefault";;
@@ -255,6 +243,8 @@ test -r %conffile && . %conffile ||:
 /# STAR_PROFILE_LOCKING_DISABLED/,/#.*JITC_PROCESSOR_TYPE_EXPORT/d' desktop/scripts/soffice.sh
 
 %build
+export CC=%_target_platform-gcc
+export CXX=%_target_platform-g++
 ./autogen.sh \
         --with-vendor="ALT Linux Team" \
         --disable-gnome-vfs \
@@ -289,6 +279,7 @@ test -r %conffile && . %conffile ||:
 	--enable-ext-wiki-publisher \
 	--enable-ext-ct2n \
 	--enable-ext-barcode \
+	--disable-ext-languagetool \
   \
 	--enable-release-build \
 	--with-help \
@@ -307,7 +298,8 @@ test -r %conffile && . %conffile ||:
 %if_with fetch
 	--enable-fetch-external
 %else
-        --with-system-libs \
+	--with-system-libs \
+	--without-system-orcus \
 	--disable-fetch-external
 %endif
 
@@ -323,18 +315,16 @@ gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so
 echo Using forky
 export forky_divider=16
 export forky_max_procs=`awk '/^Max processes/{print int(5*$3/'$forky_divider')}' < /proc/self/limits`
-##export forky_max_vsz=`awk '/^CommitLimit/{print int(5*$2/'$forky_divider')}' < /proc/meminfo`
-##export forky_max_rss=$(($forky_max_vsz/3))
-export forky_max_rss=6000000
-export forky_max_vsz=$((3*$forky_max_rss))
+export forky_max_rss=6400000
+export forky_max_vsz=$((2*$forky_max_rss))
 export forky_verbose=1
 echo "max_procs $forky_max_procs / max_vsz $forky_max_vsz / max_rss $forky_max_rss" | tee $HOME/forky.log
 export LD_PRELOAD=`pwd`/forky.so
 
-%make || { tail -100 $HOME/forky.log; head -1 $HOME/forky.log; wc $HOME/forky.log; false; }
+%make build-nocheck || { tail -100 $HOME/forky.log; head -1 $HOME/forky.log; wc $HOME/forky.log; false; }
 test -r $HOME/forky.log && echo "Fork() was `wc -l $HOME/forky.log` times delayed" || :
 %else
-%make
+%make build-nocheck
 %endif
 
 %install
@@ -366,30 +356,23 @@ find .%lodir/program/*kde*
 
 unset RPM_PYTHON
 
-# Install renamed wrappers
-for n in l*4*.sh; do install -m755 -D $n %buildroot%_bindir/${n%%.sh}; done
 # Install wrappers
-for n in lo4*.sh; do m="lo${n##lo4}"; install -m755 -D $n %buildroot%_bindir/${m%%.sh}; done
+for n in lo*.sh; do install -m755 -D $n %buildroot%_bindir/${n%%.sh}; done
 install -m755 -D libreoffice%version.sh %buildroot%_bindir/loffice
+install -m755 libreoffice%version.sh %buildroot%_bindir/libreoffice%version
 
-# Install renamed icons
-for n in `( cd sysui/desktop/icons; find hicolor -type f )`; do
-	m=libreoffice%version-`basename "$n"`
-	d=`dirname "$n"`
-	install -D sysui/desktop/icons/$n %buildroot%_iconsdir/$d/$m
-done
-# install unrenamed icons
-for n in `( cd sysui/desktop/icons; find hicolor -type f )`; do
-	d=`dirname "$n"`
-	install -D sysui/desktop/icons/$n %buildroot%_iconsdir/$d/$n
+# install icons
+for f in `( cd sysui/desktop/icons; find hicolor -type f )`; do
+	d=`dirname "$f"`; n=`basename "$f"`
+	install -D sysui/desktop/icons/$f %buildroot%_iconsdir/$d/$n
+	ln -sr %buildroot%_iconsdir/$d/$n %buildroot%_iconsdir/$d/libreoffice%version-$n
 done
 
 # TODO icon-themes/
 
 mkdir -p %buildroot%_desktopdir
 for n in writer impress calc base draw math qstart; do
-	ln -s %lodir/share/xdg/$n.desktop %buildroot%_desktopdir/libreoffice%version-$n.desktop
-	ln -s %lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
+	ln -sr %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
 done
 
 # TODO some other hack with .mime (?)
@@ -412,18 +395,10 @@ install -D libreoffice.config %buildroot%conffile
 #lodir/share/extensions/presentation-minimizer
 %_iconsdir/*/*/apps/libreoffice%{version}-*.*g
 
-%files standalone
-%_bindir/lo4*
-%exclude %_bindir/libreoffice%version
-%_desktopdir/libreoffice%{version}-*
-%exclude %_iconsdir/*/*/apps/libreoffice%{version}-*.*g
-
 %files integrated
 %_bindir/*
-%exclude %_bindir/lo4*
 %exclude %_bindir/libreoffice%version
 %_desktopdir/*
-%exclude %_desktopdir/libreoffice%{version}-*
 %_iconsdir/*/*/mimetypes/*
 %_iconsdir/*/*/apps/*
 %exclude %_iconsdir/*/*/apps/libreoffice%{version}-*.*g
@@ -453,6 +428,11 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l tt -n Tatar
 
 %changelog
+* Wed Sep 16 2015 Fr. Br. George <george@altlinux.ru> 5.0-alt1
+- Update to 5.0.3.1
+- Rename package
+- Remove -standalone package
+
 * Tue Feb 24 2015 Fr. Br. George <george@altlinux.ru> 4.4-alt2
 - Update to 4.4.1.2
 
