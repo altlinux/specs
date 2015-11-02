@@ -1,12 +1,11 @@
-%define nm_version 1.0.0
-%define nm_applet_version 1.0.0
+%define nm_version 1.0.6
+%define nm_applet_version 1.0.6
 %define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20110510
-%define gtkver 3
 
 Name: NetworkManager-vpnc
-Version: 1.0.2
+Version: 1.0.6
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -22,7 +21,7 @@ BuildRequires: perl-XML-Parser
 BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
-BuildRequires: libgtk+%gtkver-devel
+BuildRequires: libgtk+3-devel
 BuildRequires: libsecret-devel
 BuildRequires: libdbus-devel             >= 1.1
 BuildRequires: libpng-devel
@@ -91,6 +90,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Aug 31 2015 Mikhail Efremov <sem@altlinux.org> 1.0.6-alt1
+- Minor spec cleanup.
+- Updated to 1.0.6.
+
 * Fri May 08 2015 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1
 - Updated to 1.0.2.
 
