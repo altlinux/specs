@@ -1,7 +1,8 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize gobject-introspection-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libstartup-notification-1.0) pkgconfig(x11) pkgconfig(xrandr) intltool itstool mate-common desktop-file-utils
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(x11)
 # END SourceDeps(oneline)
+BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-desktop
@@ -25,9 +26,9 @@ Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
 Version:        %{branch}.2
 %if 0%{?rel_build}
-Release:        alt1_0
+Release:        alt2_0
 %else
-Release:        alt1_0
+Release:        alt1_0.1%{?git_rel}
 %endif
 URL:            http://mate-desktop.org
 
@@ -38,13 +39,27 @@ URL:            http://mate-desktop.org
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 Source1:        mate-fedora-f23.gschema.override
-Requires:	altlinux-mime-defaults >= 0.30
 
 # overlay scrollbars
 # http://git.mate-desktop.org/mate-desktop/commit/?id=f66c53e
 Patch0:         mate-desktop_overlay-scrollbars.patch
 
+BuildRequires:  libdconf-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  mate-common
+BuildRequires:  libstartup-notification-devel
+BuildRequires:  libunique-devel
+BuildRequires:  gobject-introspection-devel
+BuildRequires:  libcairo-gobject-devel
+BuildRequires:  itstool
 
+Requires: lib%{name} = %{version}-%{release}
+Requires: altlinux-freedesktop-menu-common
+Requires: pygtk2
+Requires: xdg-user-dirs-gtk
+#Requires: mate-control-center-filesystem
+Requires: mate-panel
+Requires: mate-notification-daemon
 
 Obsoletes: libmate
 Obsoletes: libmate-devel
@@ -78,11 +93,12 @@ Obsoletes: mate-character-map
 Obsoletes: mate-character-map-devel 
 Obsoletes: libmatewnck
 Obsoletes: libmatewnck-devel
-#Obsoletes: mate-dialogs
+Obsoletes: mate-dialogs
 #Obsoletes: mate-user-share
 Source44: import.info
 Patch33: mate-desktop-1.5.0-alt-settings.patch
 Patch34: mate-desktop-1.5.5-alt-default_background_path.patch
+Requires:      altlinux-mime-defaults >= 0.30
 
 
 %description
@@ -103,6 +119,7 @@ Shared libraries for libmate-desktop
 Group: Development/C
 Summary:    Libraries and headers for libmate-desktop
 License:    LGPLv2+
+Requires:   libmate-desktop = %{version}-%{release}
 
 %description devel
 Libraries and header files for the MATE-internal private library
@@ -112,20 +129,12 @@ libmatedesktop.
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
 %patch0 -p1 -b .overlay-scrollbars
-
-%if 0%{?rel_build}
-# for releases
 %patch33 -p1
 %patch34 -p1
-#NOCONFIGURE=1 ./autogen.sh
-%else
-# needed for git snapshots
-NOCONFIGURE=1 ./autogen.sh
-%endif
 
 
 %build
-#autoreconf -fisv
+# needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
 %configure                                                 \
      --enable-desktop-docs                                 \
@@ -181,7 +190,7 @@ ln -sf %{_datadir}/X11/xorg.conf.d/50-synaptics.conf %buildroot%{_datadir}/X11/x
 Group: Graphical desktop/MATE
 Summary:    Synaptics touchpad support for mate-desktop
 Requires:   %name = %version-%release
-
+Requires:   xorg-drv-synaptics
 %description synaptics
 Synaptics touchpad stops working as MATE starts.
 This has to do with libinput, which is going to replace the other input
@@ -193,8 +202,6 @@ that is a hack around this problem.
 
 %files synaptics
 %{_datadir}/X11/xorg.conf.d/99-synaptics-mate.conf
-
-
 
 
 %files
@@ -223,6 +230,11 @@ that is a hack around this problem.
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_0
+- fixed dependencies
+- not yet Obsoletes: mate-user-share
+- yet w/o custom gschema.override
+
 * Thu Oct 29 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_0
 - new version
 - not yet Obsoletes: mate-dialogs & Obsoletes: mate-user-share
