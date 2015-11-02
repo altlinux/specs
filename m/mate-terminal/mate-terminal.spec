@@ -1,13 +1,13 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize libICE-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(mate-desktop-2.0) pkgconfig(sm) pkgconfig(vte) pkgconfig(vte-2.90) pkgconfig(x11)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize libICE-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(mate-desktop-2.0) pkgconfig(vte) pkgconfig(vte-2.90)
 # END SourceDeps(oneline)
 BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Summary:        Terminal emulator for MATE
 Name:           mate-terminal
 Version:        1.10.1
-Release:        alt1_2
+Release:        alt2_2
 License:        GPLv3+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.10/%{name}-%{version}.tar.xz
@@ -16,11 +16,21 @@ Source0:        http://pub.mate-desktop.org/releases/1.10/%{name}-%{version}.tar
 Patch0:        mate-terminal_better_defaults.patch
 # http://git.mate-desktop.org/mate-terminal/commit/?h=1.10&id=97a4204
 Patch1:        mate-terminal_fix-tab-usage-with-command-line.patch
-Source44: import.info
-Provides: xvt
 
+BuildRequires: libdconf-devel
+BuildRequires: desktop-file-utils
+BuildRequires: glib2-devel
+BuildRequires: gtk2-devel
+BuildRequires: libSM-devel
+BuildRequires: mate-common
+BuildRequires: libvte-devel
+BuildRequires: mate-desktop-devel
 
 # needed to get a gsettings schema, rhbz #908105
+Requires:      libmate-desktop
+Requires:      gsettings-desktop-schemas
+Source44: import.info
+Provides: xvt
 
 %description
 Mate-terminal is a terminal emulator for MATE. It supports translucent
@@ -69,6 +79,9 @@ EOF
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt2_2
+- fixed dependencies
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt1_2
 - new version
 
