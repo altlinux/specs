@@ -1,7 +1,7 @@
 %filter_from_requires s,python-module-zope\.app\.appsetup,,
 
 Name: os-prober
-Version: 1.61
+Version: 1.70
 Release: alt1
 
 Summary: Operating systems detector
@@ -60,6 +60,10 @@ mkdir -p %buildroot%_localstatedir/%name
 %_localstatedir/%name
 
 %changelog
+* Mon Nov 02 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.70-alt1
+- 1.70
+- Fix (ALT #31347)
+
 * Thu May 23 2013 Mikhail Efremov <sem@altlinux.org> 1.61-alt1
 - 1.61
 
