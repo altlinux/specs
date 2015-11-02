@@ -1,17 +1,18 @@
 Name: phantomjs
-Version: 1.7.0
+Version: 2.0.0
 Release: alt1
 
 Summary: headless WebKit with JavaScript API
 License: BSD
 Group: Networking/WWW
-Url: http://code.google.com/p/phantomjs/
+Url: http://phantomjs.org
 
 # git://github.com/ariya/phantomjs.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ fontconfig-devel libssl-devel libjpeg-devel libpng-devel zlib-devel chrpath
+BuildPreReq: /proc
+BuildRequires: gcc-c++ libharfbuzz-devel gperf ruby ruby-tools flex perl-Term-ANSIColor fontconfig-devel libssl-devel libjpeg-devel libpng-devel zlib-devel chrpath libsqlite3-devel libicu-devel libX11-devel libpcre-devel python-module-simplejson python-modules-xml
 
 %description
 PhantomJS is a headless WebKit with JavaScript API.
@@ -25,7 +26,7 @@ FreeBSD, and Mac OS X.
 %patch -p1
 
 %build
-MAKEFLAGS=-j1 ./build.sh
+MAKEFLAGS='' ./build.sh --confirm --qtdeps=system --qt-config -I/usr/include/pcre
 
 %install
 mkdir -p %buildroot%_bindir
@@ -37,6 +38,9 @@ chrpath -d %buildroot%_bindir/%name
 %doc ChangeLog LICENSE.BSD examples
 
 %changelog
+* Mon Nov 02 2015 Vladimir Lettiev <crux@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+
 * Wed Nov 07 2012 Vladimir Lettiev <crux@altlinux.ru> 1.7.0-alt1
 - 1.7.0
 - Statical build with bundled Qt
