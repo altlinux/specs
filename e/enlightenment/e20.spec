@@ -1,9 +1,10 @@
-%define ver_major 0.19
-%define efl_ver_major 1.15
-%define snapshot 2015-07-21
-%define cvs_date dddbe2a5
+%define ver_major 0.20
+%define beta %nil
+%define efl_ver_major 1.16
+%define snapshot 2015-10-28
+%define cvs_date 5469c3b6
 %undefine cvs_date
-%define rel alt0.6
+%define rel alt0.1
 
 %def_disable static
 # only bluez4 supported
@@ -17,7 +18,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.99.0
+Version: %ver_major.0
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -34,7 +35,7 @@ URL: http://www.enlightenment.org/
 %ifdef cvs_date
 Source: %name-%version-%cvs_date.tar
 %else
-Source: http://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
+Source: http://download.enlightenment.org/rel/apps/%name/%name-%version%beta.tar.xz
 %endif
 
 Source1: E.png
@@ -107,7 +108,7 @@ Development headers for Enlightenment.
 %ifdef cvs_date
 %setup -n %name-%version-%cvs_date
 %else
-%setup -n %name-%version
+%setup -n %name-%version%beta
 %endif
 #%%patch0 -p2
 #%patch1 -p2
@@ -187,6 +188,8 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %dir %_libdir/%name/
 %_libdir/%name/*
 %_liconsdir/*.png
+# !
+%_iconsdir/emixer.png
 %_bindir/*
 %_datadir/%name/
 %_datadir/xsessions/%name.desktop
@@ -204,6 +207,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Oct 29 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.20.0-alt0.1
+- v0.20.0-beta-6-g5469c3b
+
 * Wed Aug 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.6
 - 0.19.99.0_6bef668a
 
@@ -213,7 +219,7 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 
 * Tue Jul 21 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.4
 - 0.19.99.0_aae280bf
-- built with efl/elementary-1.15.0-beta2
+- built with efl/elementary-1.15.0-beta3
 
 * Tue Jul 14 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.99.0-alt0.3
 - 0.19.99.0_964fabe6

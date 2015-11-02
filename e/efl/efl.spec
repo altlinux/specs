@@ -1,6 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
+%define ver_major 1.16
+%define beta -beta3
 %define gst_api_ver 1.0
+
 %def_enable wayland
 %def_disable wayland_egl
 %def_enable multisense
@@ -15,22 +18,22 @@
 %def_enable gstreamer1
 
 Name: efl
-Version: 1.15.1
-Release: alt1
+Version: %ver_major.0
+Release: alt0.1
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
 
-Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.xz
+Source: http://download.enlightenment.org/rel/libs/%name/%name-%version%beta.tar.xz
 # 9b167d9
 #Source: %name-%version.tar
 Patch: efl-1.15.0-alt-ecore_fb.patch
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
-BuildRequires: libpng-devel libjpeg-devel libopenjpeg-devel libtiff-devel libgif-devel libwebp-devel
+BuildRequires: libpng-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel libgif-devel libwebp-devel
 BuildRequires: fontconfig-devel libfreetype-devel libfribidi-devel libharfbuzz-devel
 BuildRequires: libpulseaudio-devel libsndfile-devel libbullet-devel  zlib-devel
 BuildRequires: libluajit-devel libssl-devel libcurl-devel libdbus-devel
@@ -140,7 +143,7 @@ This package contains headers, development libraries, test programs and
 documentation for EFL.
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%version%beta
 %patch -p1
 #subst 's/xcb-xprint//
 #	/ECORE_XCB_XPRINT/d' configure.ac
@@ -309,6 +312,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Mon Oct 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt0.1
+- 1.16.0-beta3
+
 * Wed Aug 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.15.1-alt1
 - 1.15.1
 
