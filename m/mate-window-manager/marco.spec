@@ -1,6 +1,6 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/zenity libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgtop-2.0) pkgconfig(libstartup-notification-1.0) pkgconfig(mate-desktop-2.0) pkgconfig(pango) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xdamage) pkgconfig(xfixes) pkgconfig(xrender)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/zenity libICE-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libstartup-notification-1.0) pkgconfig(xcomposite)
 # END SourceDeps(oneline)
 BuildRequires: libcanberra-gtk2-devel
 BuildRequires: mate-common
@@ -27,9 +27,9 @@ BuildRequires: mate-common
 Name:          mate-window-manager
 Version:       %{branch}.2
 %if 0%{?rel_build}
-Release:       alt1_1
+Release:       alt2_1
 %else
-Release:       alt1_1
+Release:       alt2_0.2%{?git_rel}
 %endif
 Summary:       MATE Desktop window manager
 License:       LGPLv2+ and GPLv2+
@@ -51,10 +51,23 @@ Source5:       window.png
 # needed for fixing initial-setup issue, rhbz (#962009)
 Patch0:        marco_add-pixbuf-inline-icons_1.9.x.patch
 
+Requires:      libmate-desktop
 
+BuildRequires: desktop-file-utils
+BuildRequires: gtk2-devel
+BuildRequires: libcanberra-devel
 # needed for f23
 %if 0%{?fedora} > 22
+BuildRequires: libcanberra-gtk2
 %endif
+BuildRequires: libgtop2-devel
+BuildRequires: libSM-devel
+BuildRequireS: libsoup-devel
+BuildRequires: libXdamage-devel
+BuildRequires: mate-common
+BuildRequires: zenity
+BuildRequires: libstartup-notification-devel
+BuildRequires: yelp-tools
 
 # http://bugzilla.redhat.com/873342
 # https://bugzilla.redhat.com/962009
@@ -80,6 +93,7 @@ MATE Desktop window manager
 %package devel
 Group: Development/C
 Summary: Development files for mate-window-manager
+Requires: mate-window-manager = %{version}-%{release}
 %if 0%{?fedora} && 0%{?fedora} > 19
 Provides: mate-window-manager-devel%{?_isa} = %{version}-%{release}
 Provides: mate-window-manager-devel = %{version}-%{release}
@@ -185,6 +199,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/marco.convert
 
 
 %changelog
+* Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_1
+- fixed dependencies
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_1
 - new version
 
