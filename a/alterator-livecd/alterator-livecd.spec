@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-livecd
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 
 Summary: special steps for LiveCD installers
@@ -42,6 +42,9 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.8.5-alt1
+- Work around "Can't remove /mnt/destination" (see also #31435).
+
 * Tue Mar 04 2014 Mikhail Efremov <sem@altlinux.org> 0.8.4-alt1
 - Mount /sys/fs/cgroup/* to the newly installed system.
 
