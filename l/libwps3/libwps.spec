@@ -1,12 +1,13 @@
-Name: libwps
-Version: 0.4.1
-Release: alt1
-Summary: Library for reading and converting Microsoft Works word processor documents
-License: LGPL
-Group: System/Libraries
-Url: http://libwps.sourceforge.net/
 
-Source: %name-%version.tar.xz
+Name: libwps3
+Version: 0.3.0
+Release: alt2
+Summary: Library for reading and converting Microsoft Works word processor documents
+
+Group: System/Libraries
+License: LGPLv2+ or MPLv2.0
+Url: http://libwps.sourceforge.net/
+Source: libwps-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
@@ -16,7 +17,16 @@ BuildRequires: doxygen
 BuildRequires: gperf
 
 %description
-Library that handles Microsoft Works documents
+Library that handles Microsoft Works documents and spreadsheets.
+
+%package devel
+Summary: Development files for %name
+Group: Development/C++
+Requires: %name = %version-%release
+
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
 
 %package tools
 Summary: Tools to transform Works documents into other formats
@@ -24,16 +34,8 @@ Group: Publishing
 Requires: %name = %version-%release
 
 %description tools
-Tools to transform Works documents into other formats.
-Currently supported: html, raw, text
-
-%package devel
-Summary: Files for developing with libwps
-Group: Development/C++
-Requires: %name = %version-%release
-
-%description devel
-Includes and definitions for developing with libwps
+Tools to transform Works documents and spreadsheets into other formats.
+Currently supported: CSV, HTML, raw, text
 
 %package doc
 Summary: Documentation of %name API
@@ -44,7 +46,7 @@ BuildArch: noarch
 The %name-doc package contains documentation files for %name
 
 %prep
-%setup
+%setup -n libwps-%version
 
 %build
 mkdir -p m4
@@ -56,35 +58,30 @@ mkdir -p m4
 %makeinstall_std
 
 # we install API docs directly from build
-rm -rf %buildroot%_defaultdocdir/%name
+rm -rf %buildroot%_defaultdocdir/libwps
 
 %files
+%doc COPYING.LGPL COPYING.MPL CREDITS NEWS README
 %_libdir/*.so.*
 
-%files tools
-%_bindir/*
-
 %files devel
+%doc HACKING
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+
+%files tools
+%_bindir/*
+# ??? GONE
+#_man1dir/man1/*.1*
 
 %files doc
 %doc COPYING.LGPL COPYING.MPL
 %doc docs/doxygen/html
 
 %changelog
-* Mon Sep 21 2015 Fr. Br. George <george@altlinux.ru> 0.4.1-alt1
-- Autobuild version bump to 0.4.1
+* Mon Nov 02 2015 Fr. Br. George <george@altlinux.ru> 0.3.0-alt2
+- Build legacy version
 
 * Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.3.0-alt1
-- 0.3.0
-
-* Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1.1
-- Removed bad RPATH
-
-* Tue Dec 06 2011 Valery Inozemtsev <shrek@altlinux.ru> 0.2.4-alt1
-- 0.2.4
-
-* Sat Dec 04 2010 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt1
-- initial release
+- initial build

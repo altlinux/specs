@@ -1,11 +1,11 @@
-Name: libcmis
-Version: 0.5.0
-Release: alt2.1
+Name: libcmis4
+Version: 0.4.1
+Release: alt3
 Summary: A C++ client library for the CMIS interface
 Group: System/Libraries
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 Url: http://sourceforge.net/projects/libcmis/
-Source: %name-%version.tar.gz
+Source: libcmis-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libcurl)
@@ -15,8 +15,8 @@ BuildRequires: boost-devel boost-program_options-devel
 BuildRequires: doxygen
 BuildRequires: xmlto
 
-Patch: %name-0.4.1-alt2.1.patch
-Patch1: libcmis-0.5.0-fix-build-with-cpp5.patch
+Patch: %name-%version-%release.patch
+Provides: libcmis = %version-%release
 
 %description
 LibCMIS is a C++ client library for the CMIS interface. This allows C++
@@ -27,28 +27,22 @@ Alfresco, Nuxeo for the open source ones.
 Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %version-%release
+Provides: libcmis-devel = %version-%release
 
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package tools
-Summary: Command line tool to access CMIS
-Group: Publishing
-Requires: %name = %version-%release
-
-%description tools
-The %name-tools package contains a tool for accessing CMIS from the
-command line.
-
 %prep
-%setup
+%setup -n libcmis-%version
 %patch -p1
-%patch1 -p2
-
-%build
 touch ChangeLog
 mkdir -p m4
+sed -i '/_BOOST_SED_CPP.*boost-lib-version =/c\
+     _BOOST_SED_CPP([/^[[^#]][[^\\"]]*\\"/{s///;s/\\"//g;p;g;}],
+' m4/boost.m4
+
+%build
 %autoreconf
 %configure --disable-static --disable-werror --disable-tests DOCBOOK2MAN='xmlto man'
 %make_build
@@ -59,26 +53,18 @@ mkdir -p m4
 %files
 %doc AUTHORS COPYING.* NEWS README
 %_libdir/*.so.*
+%exclude %_bindir/*
+%exclude %_man1dir/*.1*
 
 %files devel
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
-%files tools
-%_bindir/*
-%_man1dir/*.1*
-
 %changelog
-* Sun Jun 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.0-alt2.1
-- Rebuilt for gcc5 C++11 ABI.
-
-* Wed Feb 04 2015 Fr. Br. George <george@altlinux.ru> 0.5.0-alt2
-- Fix incomplete source import
-
-* Tue Feb 03 2015 Fr. Br. George <george@altlinux.ru> 0.5.0-alt1
-- Autobuild version bump to 0.5.0
-- Change packaging scheme
+* Mon Oct 19 2015 Fr. Br. George <george@altlinux.ru> 0.4.1-alt3
+- build legacy libcmis4 version
+- rebuild with gcc5
 
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.4.1-alt2.1
 - rebuild with boost 1.57.0
