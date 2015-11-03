@@ -1,6 +1,6 @@
 Name: libbelle-sip
-Version: 1.4.1
-Release: alt3
+Version: 1.4.2
+Release: alt1
 Summary: Linphone sip stack
 
 Group: System/Libraries
@@ -74,6 +74,9 @@ popd
 %_libdir/pkgconfig/belle-sip.pc
 
 %changelog
+* Tue Nov 03 2015 Alexei Takaseev <taf@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Thu Jul 30 2015 Alexei Takaseev <taf@altlinux.org> 1.4.1-alt3
 - Disable system libmbedtls, use polarssl from linphone.org
 
