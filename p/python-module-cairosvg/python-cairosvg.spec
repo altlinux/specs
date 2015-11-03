@@ -3,13 +3,14 @@
 %define eggname CairoSVG
 
 Name:               python-module-cairosvg
-Version:            1.0.18
+Version:            1.0.19
 Release:            alt1
 Summary:            A Simple SVG Converter for Cairo
 
 Group:              Development/Python
 License:            LGPLv3+
-URL:                http://pypi.python.org/pypi/CairoSVG
+URL:                http://cairosvg.org/
+# VCS:		    git://github.com/Kozea/CairoSVG.git
 Source0:            http://pypi.python.org/packages/source/C/%{eggname}/%{eggname}-%{version}.tar.gz
 
 BuildArch:          noarch
@@ -81,6 +82,10 @@ mv %buildroot%_bindir/{,python3-}cairosvg
 %endif
 
 %changelog
+* Tue Nov 03 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.19-alt1
+- New version
+- Build from upstream Git repository
+
 * Sun Oct 25 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.18-alt1
 - New version
 
