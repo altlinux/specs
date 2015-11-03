@@ -1,5 +1,5 @@
 %define branch 0.10
-%define svn svn5598
+%define svn svn5734
 
 %define rel alt1
 
@@ -899,6 +899,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Tue Nov 03 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn5734
+- 0.10.0 svn5734 version
+
 * Sat Sep 26 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn5598
 - 0.10.0 svn5598 version
 - bump version
