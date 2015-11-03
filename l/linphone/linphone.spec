@@ -1,5 +1,5 @@
 Name: linphone
-Version: 3.8.5
+Version: 3.9.0
 Release: alt1
 License: GPLv2+
 Url: http://www.linphone.org/
@@ -100,6 +100,7 @@ This package contains development files for %name.
 %_desktopdir/%name.desktop
 %_desktopdir/audio-assistant.desktop
 %_pixmapsdir/%name
+%_iconsdir/hicolor/*/*/%{name}*.*
 %_man1dir/linphone.1.gz
 %_datadir/sounds/%name
 %_datadir/%name
@@ -124,6 +125,9 @@ This package contains development files for %name.
 %_datadir/tutorials/%name
 
 %changelog
+* Tue Nov 03 2015 Alexei Takaseev <taf@altlinux.org> 3.9.0-alt1
+- 3.9.0
+
 * Thu Jul 02 2015 Alexei Takaseev <taf@altlinux.org> 3.8.5-alt1
 - 3.8.5
 

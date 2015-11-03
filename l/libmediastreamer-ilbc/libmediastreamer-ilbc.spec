@@ -1,5 +1,5 @@
 Name: libmediastreamer-ilbc
-Version: 2.1.0
+Version: 2.1.2
 Release: alt1
 
 Group: System/Libraries
@@ -37,6 +37,9 @@ export ILBC_CFLAGS=-I/usr
 %_libdir/mediastreamer/plugins/*
 
 %changelog
+* Tue Nov 03 2015 Alexei Takaseev <taf@altlinux.org> 2.1.2-alt1
+- 2.1.2
+
 * Fri Mar 13 2015 Alexei Takaseev <taf@altlinux.org> 2.1.0-alt1
 - 2.1.0
 - Rebuild with new libmediastreamer
