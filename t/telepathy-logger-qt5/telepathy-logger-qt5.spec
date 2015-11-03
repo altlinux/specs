@@ -1,7 +1,7 @@
 
 Name: telepathy-logger-qt5
 Version: 15.4.0
-Release: alt1
+Release: alt2
 %define sover 5
 %define libname libtelepathy-logger-qt%sover
 
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 # optimized out: cmake cmake-modules elfutils glib2-devel libcloog-isl4 libdbus-devel libdbus-glib libdbus-glib-devel libgio-devel libqt5-core libqt5-dbus libqt5-network libqt5-xml libstdc++-devel libtelepathy-glib libtelepathy-glib-devel libtelepathy-logger libtelepathy-qt5 libtelepathy-qt5-devel libxml2-devel pkg-config python-base python-devel python-modules python-modules-encodings python-modules-xml ruby ruby-stdlibs xml-utils
 BuildRequires: doxygen extra-cmake-modules gcc-c++ graphviz libtelepathy-logger-devel libtelepathy-qt5-devel-static
 BuildRequires: phonon-devel qt5-base-devel kde-common-devel
-BuildRequires: pkgconfig(Qt5GLib-2.0)
 
 %description
 Telepathy-logger-qt5 is a Qt Wrapper around the TpLogger client library.
@@ -25,7 +24,7 @@ It is needed by KDE Telepathy in order to log the chat activity.
 %package devel
 Group: Development/KDE and QT
 Summary: Qt Wrapper around TpLogger client library
-Requires: pkgconfig(Qt5GLib-2.0) libtelepathy-qt5-devel
+Requires: libtelepathy-qt5-devel
 %description devel
 Telepathy-logger-qt4 is a Qt Wrapper around the TpLogger client library.
 It is needed by KDE Telepathy in order to log the chat activity.
@@ -44,7 +43,7 @@ It is needed by KDE Telepathy in order to log the chat activity.
 #%patch3 -p1
 
 %build
-export QTDIR=%_qt4dir
+export QTDIR=%_qt5_prefix
 %Kbuild
 
 %install
@@ -61,5 +60,8 @@ export QTDIR=%_qt4dir
 %_libdir/lib*.so
 
 %changelog
+* Tue Nov 03 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt2
+- fix requires
+
 * Mon May 18 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
 - initial build
