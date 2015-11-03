@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20150310
+Version: 20151103
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 20151103-alt1
+- modules.c: silence modprobe (some could be compiled in at times)
+
 * Tue Mar 10 2015 Michael Shigorin <mike@altlinux.org> 20150310-alt1
 - cdrom.c, disk.c: poke lazy udev to do its job while waiting for disk
   (#30315 again)
