@@ -4,7 +4,7 @@
 
 Name: telepathy-qt4
 Version: 0.9.6.1
-Release: alt1
+Release: alt2
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -75,6 +75,7 @@ export QT_DOC_DIR=%_docdir/qt-%qt4_ver
     -DENABLE_EXAMPLES=OFF \
     -DENABLE_TESTS=OFF \
     -DDISABLE_WERROR=ON \
+    -DDATA_INSTALL_DIR=%_datadir/telepathy \
     #
 
 # hack against broken gstreamer1.0-devel
@@ -117,6 +118,9 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Tue Nov 03 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6.1-alt2
+- fix data dir path
+
 * Wed Jun 17 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6.1-alt1
 - new version
 
