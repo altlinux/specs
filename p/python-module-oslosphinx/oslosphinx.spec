@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.0.0
+Version: 3.2.0
 Release: alt1
 Summary: OpenStack Sphinx Extensions and Theme
 License: ASLv2.0
@@ -17,10 +17,10 @@ BuildArch: noarch
 
 BuildPreReq: git
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pbr python-module-sphinx-devel
+BuildPreReq: python-module-pbr >= 1.6 python-module-sphinx-devel
 BuildPreReq: python-module-hacking python-module-mccabe
 BuildPreReq: python-module-flake8 pyflakes
-BuildPreReq: python-module-requests
+BuildPreReq: python-module-requests >= 2.5.2
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 3.2.0-alt1
+- 3.2.0
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1
 - Version 3.0.0
 

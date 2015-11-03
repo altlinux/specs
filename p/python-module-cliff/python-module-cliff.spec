@@ -3,23 +3,27 @@
 %def_with python3
 
 Name:             python-module-%modname
-Version:          1.12.0
+Version:          1.15.0
 Release:          alt1
 Summary:          Command Line Interface Formulation Framework
 
 Group:            Development/Python
 License:          ASL 2.0
 URL:              http://pypi.python.org/pypi/cliff
-Source0:          %{name}-%{version}.tar
+Source:          %name-%version.tar
+Patch1: 0001-only-use-unicodecsv-for-python-2.x.patch
 
 BuildArch:        noarch
 
 BuildRequires:    python-devel
 BuildRequires:    python-module-setuptools
-BuildRequires:    python-module-pbr
+BuildRequires:    python-module-pbr >= 1.6
 BuildRequires:    python-module-prettytable >= 0.7
+BuildRequires:    python-module-argparse
 BuildRequires:    python-module-cmd2 >= 0.6.7
-BuildRequires:    python-module-stevedore >= 1.1.0
+BuildRequires:    python-module-stevedore >= 1.5.0
+BuildRequires:    python-module-unicodecsv >= 0.8.0
+BuildRequires:    python-module-yaml >= 3.1.0
 BuildRequires:    python-module-six >= 1.9.0
 
 # Required for the test suite
@@ -36,11 +40,12 @@ BuildPreReq: python-module-sphinx-devel python-module-oslosphinx
 BuildRequires(pre): rpm-build-python3
 BuildRequires:    python3-devel
 BuildRequires:    python3-module-setuptools
-BuildRequires:    python3-module-pbr
-BuildRequires:    python3-module-prettytable
+BuildRequires:    python3-module-pbr >= 1.6
+BuildRequires:    python3-module-prettytable >= 0.7
 BuildRequires:    python3-module-cmd2 >= 0.6.7
-BuildRequires:    python3-module-stevedore
-BuildRequires:    python3-module-six
+BuildRequires:    python3-module-stevedore  >= 1.5.0
+BuildRequires:    python3-module-six  >= 1.9.0
+BuildRequires:    python3-module-yaml >= 3.1.0
 BuildRequires:    python3-module-nose
 BuildRequires:    python3-module-mock
 BuildRequires:    python3-module-argparse
@@ -68,9 +73,13 @@ http://readthedocs.org/docs/cliff/en/latest/
 
 %prep
 %setup
+%patch1 -p1
 
-sed -i 's|^pbr.*||' requirements.txt
-sed -i 's|^argparse.*||' requirements.txt
+# Let RPM handle the dependencies
+rm -f test-requirements.txt requirements.txt
+
+#sed -i 's|^pbr.*||' requirements.txt
+#sed -i 's|^argparse.*||' requirements.txt
 
 # Remove bundled egg info
 rm -rf *.egg-info
@@ -108,6 +117,7 @@ export PYTHONPATH=$PWD
 PYTHONPATH=. nosetests
 %if_with python3
 pushd ../python3
+sed -i 's/nosetests/nosetests3/' cliff/tests/test_help.py
 PYTHONPATH=. nosetests3
 popd
 %endif
@@ -125,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1.15.0-alt1
+- 1.15.0
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.0-alt1
 - Version 1.12.0
 

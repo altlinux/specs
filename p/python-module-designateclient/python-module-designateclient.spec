@@ -2,7 +2,7 @@
 %def_without python3
 
 Name: python-module-%component
-Version: 1.1.1
+Version: 1.5.0
 Release: alt1
 Summary: Openstack DNS (Designate) API Client
 License: Apache-2.0
@@ -14,14 +14,15 @@ BuildArch:  noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-d2to1
-BuildRequires: python-module-keystoneclient >= 0.11.1
-BuildRequires: python-module-requests >= 2.2.0
-BuildRequires: python-module-six >= 1.7.0
-BuildRequires: python-module-stevedore >= 1.1.0
-BuildRequires: python-module-cliff >= 1.7.0
+BuildRequires: python-module-keystoneclient >= 1.6.0
+BuildRequires: python-module-requests >= 2.5.2
+BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-cliff >= 1.14.0
 BuildRequires: python-module-jsonschema >= 2.0.0
+BuildRequires: python-module-debtcollector >= 0.3.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: fdupes
@@ -30,14 +31,15 @@ BuildRequires: fdupes
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr
+BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-d2to1
-BuildRequires: python3-module-keystoneclient >= 0.11.1
-BuildRequires: python3-module-requests >= 2.2.0
-BuildRequires: python3-module-six >= 1.7.0
-BuildRequires: python3-module-stevedore >= 1.1.0
-BuildRequires: python3-module-cliff >= 1.7.0
+BuildRequires: python3-module-keystoneclient >= 1.6.0
+BuildRequires: python3-module-requests >= 2.5.2
+BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-stevedore >= 1.5.0
+BuildRequires: python3-module-cliff >= 1.14.0
 BuildRequires: python3-module-jsonschema >= 2.0.0
+BuildRequires: python3-module-debtcollector >= 0.3.0
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
 %endif
@@ -95,8 +97,8 @@ mv %buildroot%_bindir/designate %buildroot%_bindir/python3-designate
 %python_install
 
 # Delete tests
-rm -fr %buildroot%python_sitelibdir/keystoneclient/tests
-rm -fr %buildroot%python3_sitelibdir/keystoneclient/tests
+rm -fr %buildroot%python_sitelibdir/*/tests
+rm -fr %buildroot%python3_sitelibdir/*/tests
 
 # Build HTML docs and man page
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
@@ -121,6 +123,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
+* Tue Nov 03 2015 Alexey Shabalin <shaba@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+
 * Wed Mar 11 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt1
 - 1.1.1
 

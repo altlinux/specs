@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%sname
-Version: 1.0.0
+Version: 1.11.0
 Release: alt1
 Summary: OpenStack oslo.log library
 Group: Development/Python
@@ -16,34 +16,36 @@ BuildArch: noarch
 Provides: python-module-oslo-log = %EVR
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-iso8601 >= 0.1.9
-BuildRequires: python-module-oslo.config >= 1.9.0
+BuildRequires: python-module-oslo.config >= 2.3.0
 BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.i18n >= 1.3.0
-BuildRequires: python-module-oslo.utils >= 1.2.0
-BuildRequires: python-module-oslo.serialization >= 1.2.0
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-debtcollector >= 0.3.0
 
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 0.6
+BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-babel >= 1.3
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-iso8601 >= 0.1.9
-BuildRequires: python3-module-oslo.config >= 1.9.0
+BuildRequires: python3-module-oslo.config >= 2.3.0
 BuildRequires: python3-module-oslo.context >= 0.2.0
-BuildRequires: python3-module-oslo.i18n >= 1.3.0
-BuildRequires: python3-module-oslo.utils >= 1.2.0
-BuildRequires: python3-module-oslo.serialization >= 1.2.0
+BuildRequires: python3-module-oslo.i18n >= 1.5.0
+BuildRequires: python3-module-oslo.utils >= 2.0.0
+BuildRequires: python3-module-oslo.serialization >= 1.4.0
+BuildRequires: python3-module-debtcollector >= 0.3.0
 %endif
 
 %description
@@ -57,12 +59,12 @@ support for context specific logging (like resource id's etc).
 * Bugs: http://bugs.launchpad.net/oslo.log
 
 %if_with python3
-%package -n python3-module-oslo.log
+%package -n python3-module-%sname
 Summary: OpenStack oslo.log library
 Group: Development/Python3
 Provides: python3-module-oslo-log = %EVR
 
-%description -n python3-module-oslo.log
+%description -n python3-module-%sname
 OpenStack logging configuration library provides standardized configuration for
 all openstack projects. It also provides custom formatters, handlers and
 support for context specific logging (like resource id's etc).
@@ -125,7 +127,7 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %python_sitelibdir/*
 
 %if_with python3
-%files -n python3-module-oslo.log
+%files -n python3-module-%sname
 %python3_sitelibdir/*
 %endif
 
@@ -133,5 +135,8 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1.11.0-alt1
+- 1.11.0
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
 - Initial release

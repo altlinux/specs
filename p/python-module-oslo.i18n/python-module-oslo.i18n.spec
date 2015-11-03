@@ -2,8 +2,8 @@
 
 %def_with python3
 
-Name: python-module-oslo.i18n
-Version: 1.5.0
+Name: python-module-%sname
+Version: 2.6.0
 Release: alt1
 Summary: OpenStack i18n library
 Group: Development/Python
@@ -15,24 +15,24 @@ Provides: python-module-oslo-i18n = %EVR
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-babel >= 1.3
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-sphinx >= 1.1.2
+BuildRequires: python-module-oslosphinx >= 2.5.0
 BuildRequires: python-module-fixtures
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 0.6
+BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-babel >= 1.3
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
+BuildRequires: python3-module-sphinx >= 1.1.2
+BuildRequires: python3-module-oslosphinx >= 2.5.0
 BuildRequires: python3-module-fixtures
 %endif
 
@@ -44,12 +44,12 @@ The oslo.i18n library contain utilities for working with internationalization
 or library.
 
 %if_with python3
-%package -n python3-module-oslo.i18n
+%package -n python3-module-%sname
 Summary:    OpenStack common configuration library
 Group: Development/Python3
 Provides: python3-module-oslo-i18n = %EVR
 
-%description -n python3-module-oslo.i18n
+%description -n python3-module-%sname
 The oslo.i18n library contain utilities for working with internationalization
 (i18n) features, especially translation for text strings in an application
 or library.
@@ -110,7 +110,7 @@ rm -fr doc/build/html/.buildinfo
 %python_sitelibdir/*
 
 %if_with python3
-%files -n python3-module-oslo.i18n
+%files -n python3-module-%sname
 %python3_sitelibdir/*
 %endif
 
@@ -118,6 +118,9 @@ rm -fr doc/build/html/.buildinfo
 %doc doc/build/html
 
 %changelog
+* Tue Oct 27 2015 Alexey Shabalin <shaba@altlinux.ru> 2.6.0-alt1
+- 2.6.0
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.5.0-alt1
 - 1.5.0
 

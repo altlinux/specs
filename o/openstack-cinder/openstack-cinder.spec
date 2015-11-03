@@ -2,8 +2,9 @@
 %add_python_req_skip hp3parclient
 
 Name: openstack-cinder
-Version: 2015.1.2
+Version: 7.0.0
 Release: alt1
+Epoch: 1
 Summary: OpenStack Volume service
 
 Group: System/Servers
@@ -14,8 +15,7 @@ Source1: cinder-dist.conf
 Source2: cinder.logrotate
 Source3: cinder-tgt.conf
 Source4: %name.tmpfiles
-Source5: cinder.conf.sample
-
+Source5: %name.conf
 Source10: openstack-cinder-api.service
 Source11: openstack-cinder-scheduler.service
 Source12: openstack-cinder-volume.service
@@ -28,56 +28,66 @@ Source113: openstack-cinder-backup.init
 
 Source20: cinder-sudoers
 
-Patch101: openstack-cinder-2015.1.1-alt-fix-genconfig.patch
+Patch1: fix-alt-urllib3.patch
 
 BuildArch: noarch
+BuildRequires: /proc
+BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: crudini
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-pbr
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-netaddr
-
 BuildRequires: graphviz
-BuildRequires: python-module-eventlet >= 0.16.1
+
+BuildRequires: python-module-enum34
+BuildRequires: python-module-eventlet >= 0.17.4
 BuildRequires: python-module-routes >= 1.12.3
-BuildRequires: python-module-SQLAlchemy >= 0.9.7
+BuildRequires: python-module-SQLAlchemy >= 0.9.9
 BuildRequires: python-module-webob
-BuildRequires: python-module-migrate >= 0.9.5
+BuildRequires: python-module-migrate >= 0.9.6
 BuildRequires: python-module-iso8601
 BuildRequires: python-module-PasteDeploy
-BuildRequires: python-module-oslo.config >= 1.9.3
-BuildRequires: python-module-oslo.concurrency >= 1.8.2
+BuildRequires: python-module-netaddr >= 0.7.12
+BuildRequires: python-module-oslo.config >= 2.3.0
+BuildRequires: python-module-oslo.concurrency >= 2.3.0
 BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.db >= 1.7.0
-BuildRequires: python-module-oslo.log >= 1.0.0
-BuildRequires: python-module-oslo.messaging >= 1.8.0
-BuildRequires: python-module-oslo.middleware >= 1.0.0
-BuildRequires: python-module-oslo.rootwrap >= 1.6.0
+BuildRequires: python-module-oslo.db >= 2.4.1
+BuildRequires: python-module-oslo.log >= 1.8.0
+BuildRequires: python-module-oslo.messaging >= 1.16.0
+BuildRequires: python-module-oslo.middleware >= 2.8.0
+BuildRequires: python-module-oslo.policy >= 0.5.0
+BuildRequires: python-module-oslo.reports >= 0.1.0
+BuildRequires: python-module-oslo.rootwrap >= 2.0.0
 BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.utils >= 1.4.0
+BuildRequires: python-module-oslo.service >= 0.7.0
+BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-oslo.versionedobjects >= 0.9.0
 BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.vmware >= 0.11.1
-BuildRequires: python-module-keystonemiddleware >= 1.5.0
+BuildRequires: python-module-oslo.vmware >= 0.16.0
+BuildRequires: python-module-os-brick >= 0.4.0
+BuildRequires: python-module-kombu >= 3.0.7
+BuildRequires: python-module-keystonemiddleware >= 2.0.0
 BuildRequires: python-module-osprofiler >= 0.3.0
-BuildRequires: python-module-glanceclient >= 0.15.0
 BuildRequires: python-module-paramiko >= 1.13.0
-BuildRequires: python-module-taskflow >= 0.7.1
+BuildRequires: python-module-taskflow >= 1.16.0
 BuildRequires: python-module-anyjson
 BuildRequires: python-module-mox
 BuildRequires: python-module-testtools
 BuildRequires: python-module-testrepository
 BuildRequires: python-module-oslotest
+BuildRequires: python-module-requests >= 2.5.2
+BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-barbicanclient >= 3.3.0
+BuildRequires: python-module-glanceclient >= 0.18.0
+BuildRequires: python-module-novaclient >= 2.28.1
 BuildRequires: python-module-swiftclient >= 2.2.0
-BuildRequires: python-module-barbicanclient >= 3.0.1
-BuildRequires: python-module-glanceclient >= 0.15.0
-BuildRequires: python-module-novaclient >= 2.22.0
 
 Requires: openstack-utils
-Requires: python-module-cinder = %version-%release
+Requires: python-module-cinder = %EVR
 Requires: python-module-PasteDeploy
 
 Requires(pre): shadow-utils
@@ -116,7 +126,7 @@ This package contains documentation files for cinder.
 
 %prep
 %setup
-%patch101 -p1
+%patch1 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -127,13 +137,14 @@ find cinder -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
 %build
+# Generate config file
+PYTHONPATH=. tools/config/generate_sample.sh from_tox
+
 %python_build
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build -b man doc/source doc/build/man
 sphinx-build -b html doc/source doc/build/html
-#install -p -D -m 640 %SOURCE5 etc/cinder/cinder.conf.sample
-bash tools/config/generate_sample.sh -b . -p cinder -o etc/cinder
 
 %install
 %python_install
@@ -156,6 +167,12 @@ install -p -D -m 644 etc/cinder/{api-paste.ini,policy.json,rootwrap.conf} %build
 cp -a etc/cinder/rootwrap.d %buildroot%_sysconfdir/cinder/
 install -d -m 755 %buildroot%_sysconfdir/cinder/volumes
 install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/tgt/conf.d/cinder.conf
+install -d -m 755 %buildroot%_sysconfdir/cinder/rootwrap.d
+install -p -D -m 644 etc/cinder/rootwrap.d/* %buildroot%_sysconfdir/cinder/rootwrap.d/
+# Symlinks to rootwrap config files
+for filter in %_sysconfdir/os-brick/rootwrap.d/*.filters; do
+ln -s $filter %buildroot%_sysconfdir/cinder/rootwrap.d/
+done
 
 # Install initscripts for services
 install -p -D -m 644 %SOURCE10 %buildroot%_unitdir/openstack-cinder-api.service
@@ -177,6 +194,18 @@ install -p -D -m 644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/openstack-cinde
 
 # Install pid directory
 install -d -m 755 %buildroot%_runtimedir/cinder
+
+# Install sample HTTPD integration files
+install -p -D -m 644 cinder/wsgi/wsgi.py %buildroot%_datadir/cinder/cinder.wsgi
+install -p -D -m 644 etc/cinder/api-httpd.conf  %buildroot%_datadir/cinder/
+
+# apache2 settings
+install -m 0644 -D -p %SOURCE5 %buildroot%apache2_sites_available/openstack-cinder-api.conf
+mkdir -p %buildroot%apache2_sites_enabled
+touch %buildroot%apache2_sites_enabled/openstack-cinder-api.conf
+mkdir -p %buildroot%webserver_cgibindir
+ln -s %_datadir/cinder/cinder.wsgi %buildroot%webserver_cgibindir/cinder-osapi_volume
+
 
 # Remove unneeded in production stuff
 rm -f %buildroot%_bindir/cinder-debug
@@ -228,6 +257,7 @@ crudini --set %cinder_conf keystone_authtoken identity_uri http://localhost:3535
 %files
 %doc LICENSE
 %dir %_sysconfdir/cinder
+%dir %_sysconfdir/cinder/rootwrap.d
 %config(noreplace) %attr(0640, root, cinder) %_sysconfdir/cinder/cinder.conf
 %config %attr(0640, root, cinder) %_sysconfdir/cinder/api-paste.ini
 %config %_sysconfdir/cinder/rootwrap.conf
@@ -235,6 +265,13 @@ crudini --set %cinder_conf keystone_authtoken identity_uri http://localhost:3535
 %config(noreplace) %_sysconfdir/logrotate.d/openstack-cinder
 %config(noreplace) %_sysconfdir/sudoers.d/cinder
 %config(noreplace) %_sysconfdir/tgt/conf.d/cinder.conf
+%config(noreplace) %_sysconfdir/cinder/rootwrap.d/*
+%dir %_datadir/cinder
+%_datadir/cinder/cinder.wsgi
+%_datadir/cinder/*.conf
+%config(noreplace) %apache2_sites_available/*.conf
+%ghost %apache2_sites_enabled/*.conf
+%webserver_cgibindir/*
 
 %dir %attr(0750, cinder, root) %_logdir/cinder
 %dir %attr(0755, cinder, root) %_runtimedir/cinder
@@ -249,7 +286,6 @@ crudini --set %cinder_conf keystone_authtoken identity_uri http://localhost:3535
 %dir %attr(0755, cinder, cinder) %_sharedstatedir/cinder
 %dir %attr(0755, cinder, cinder) %_cachedir/cinder
 
-
 %files -n python-module-cinder
 %python_sitelibdir/*
 
@@ -257,6 +293,10 @@ crudini --set %cinder_conf keystone_authtoken identity_uri http://localhost:3535
 %doc doc/build/html
 
 %changelog
+* Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.0-alt1
+- 7.0.0 Liberty release
+- add configs for run api over apache2
+
 * Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
 - 2015.1.2
 

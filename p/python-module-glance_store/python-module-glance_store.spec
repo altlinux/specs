@@ -1,9 +1,10 @@
 %define sname glance_store
 
+# for python3 need python3.3(glance)
 %def_without python3
 
 Name: python-module-%sname
-Version: 0.4.0
+Version: 0.9.1
 Release: alt1
 Summary: OpenStack Image Service Store Library
 Group: Development/Python
@@ -13,40 +14,39 @@ Source: %name-%version.tar
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-d2to1
-BuildRequires: python-module-six >= 1.4.1
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-oslo.config >= 1.6.0
-BuildRequires: python-module-oslo.i18n >= 0.1.0
-BuildRequires: python-module-oslo.serialization
-BuildRequires: python-module-oslo.utils >= 1.2.0
-BuildRequires: python-module-oslo.concurrency >= 1.4.1
-BuildRequires: python-module-stevedore >= 0.12
+BuildRequires: python-module-oslo.config >= 2.3.0
+BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-oslo.concurrency >= 2.3.0
+BuildRequires: python-module-stevedore >= 1.5.0
 BuildRequires: python-module-enum34
-BuildRequires: python-module-cinderclient >= 1.0.6
-BuildRequires: python-module-eventlet >= 0.13.0
+BuildRequires: python-module-cinderclient >= 1.3.1
+BuildRequires: python-module-eventlet >= 0.17.4
 BuildRequires: python-module-jsonschema >= 2.0.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 0.6
+BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-d2to1
-BuildRequires: python3-module-six >= 1.7.0
+BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-oslo.config >= 1.6.0
-BuildRequires: python3-module-oslo.i18n >= 0.1.0
-BuildRequires: python3-module-oslo.serialization
-BuildRequires: python3-module-oslo.utils >= 1.2.0
-BuildRequires: python3-module-oslo.concurrency >= 1.4.1
-BuildRequires: python3-module-stevedore >= 0.12
-BuildRequires: python3-module-enum34
-BuildRequires: python-module-cinderclient >= 1.0.6
-BuildRequires: python3-module-eventlet >= 0.13.0
+BuildRequires: python3-module-oslo.config >= 2.3.0
+BuildRequires: python3-module-oslo.i18n >= 1.5.0
+BuildRequires: python3-module-oslo.serialization >= 1.4.0
+BuildRequires: python3-module-oslo.utils >= 2.0.0
+BuildRequires: python3-module-oslo.concurrency >= 2.3.0
+BuildRequires: python3-module-stevedore >= 1.5.0
+BuildRequires: python-module-cinderclient >= 1.3.1
+BuildRequires: python3-module-eventlet >= 0.17.4
 BuildRequires: python3-module-jsonschema >= 2.0.0
 %endif
 
@@ -126,6 +126,9 @@ rm -fr doc/build/html/.buildinfo
 %doc doc/build/html
 
 %changelog
+* Fri Oct 30 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.1-alt1
+- 0.9.1
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 0.4.0-alt1
 - 0.4.0
 

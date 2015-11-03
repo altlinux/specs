@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1
-Release: alt1.git20141129
+Version: 0.4
+Release: alt1
 Summary: An implementation of time.monotonic() for Python 2 & Python 3
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/monotonic/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/atdt/monotonic.git
 Source: %name-%version.tar
@@ -80,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 0.4-alt1
+- 0.4
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20141129
 - Initial build for Sisyphus
 

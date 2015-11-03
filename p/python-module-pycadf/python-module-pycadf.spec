@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 0.8.0
+Version: 1.1.0
 Release: alt1
 Summary: DMTF Cloud Audit (CADF) data model
 
@@ -16,30 +16,24 @@ BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-babel >= 1.3
-BuildRequires: python-module-oslo.config >= 1.6.0
-BuildRequires: python-module-oslo.context >= 0.1.0
-BuildRequires: python-module-oslo.i18n >= 1.3.0
-BuildRequires: python-module-oslo.serialization >= 1.2.0
+BuildRequires: python-module-sphinx >= 1.1.2
+BuildRequires: python-module-oslosphinx >= 2.5.0
+BuildRequires: python-module-oslo.config >= 2.1.0
+BuildRequires: python-module-oslo.serialization >= 1.4.0
 BuildRequires: python-module-pytz
-BuildRequires: python-module-six >= 1.7.0
+BuildRequires: python-module-six >= 1.9.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-babel >= 1.3
-BuildRequires: python3-module-oslo.config >= 1.6.0
-BuildRequires: python3-module-oslo.context >= 0.1.0
-BuildRequires: python3-module-oslo.i18n >= 1.3.0
-BuildRequires: python3-module-oslo.serialization >= 1.2.0
+BuildRequires: python3-module-sphinx >= 1.1.2
+BuildRequires: python3-module-oslosphinx >= 2.5.0
+BuildRequires: python3-module-oslo.config >= 2.1.0
+BuildRequires: python3-module-oslo.serialization >= 1.4.0
 BuildRequires: python3-module-pytz
-BuildRequires: python3-module-six >= 1.7.0
+BuildRequires: python3-module-six >= 1.9.0
 %endif
 
 %description
@@ -112,6 +106,9 @@ rm -rf %buildroot/%python3_sitelibdir/%pypi_name/tests
 %doc html
 
 %changelog
+* Tue Oct 27 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 0.8.0-alt1
 - 0.8.0
 - add python3 module

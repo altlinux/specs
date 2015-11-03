@@ -3,8 +3,9 @@
 
 Name: openstack-heat
 Summary: OpenStack Orchestration (heat)
-Version: 2015.1.2
+Version: 5.0.0
 Release: alt1
+Epoch: 1
 License: ASL 2.0
 Group: System/Servers
 Url: http://www.openstack.org
@@ -28,17 +29,17 @@ BuildRequires: crudini
 # BuildRequires: git
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-argparse
-BuildRequires: python-module-eventlet >= 0.16.1
+BuildRequires: python-module-croniter >= 0.3.4
+BuildRequires: python-module-cryptography >= 1.0
+BuildRequires: python-module-eventlet >= 0.17.4
 BuildRequires: python-module-greenlet >= 0.3.2
-BuildRequires: python-module-httplib2
-BuildRequires: python-module-iso8601
-BuildRequires: python-module-kombu
-BuildRequires: python-module-lxml
-BuildRequires: python-module-netaddr
+BuildRequires: python-module-kombu >= 3.0.7
+BuildRequires: python-module-lxml >= 2.3
+BuildRequires: python-module-netaddr >= 0.7.12
 BuildRequires: python-module-memcached
-BuildRequires: python-module-migrate >= 0.9.5
+BuildRequires: python-module-migrate >= 0.9.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-yaml
 BuildRequires: python-module-sphinx
@@ -46,43 +47,50 @@ BuildRequires: python-module-oslosphinx
 # These are required to build due to the requirements check added
 BuildRequires: python-module-PasteDeploy
 BuildRequires: python-module-routes >= 1.12.3
-BuildRequires: python-module-SQLAlchemy >= 0.9.7
+BuildRequires: python-module-SQLAlchemy >= 0.9.9
 BuildRequires: python-module-webob
 BuildRequires: python-module-d2to1
-BuildRequires: python-module-qpid
-BuildRequires: python-module-stevedore >= 1.3.0
-BuildRequires: python-module-requests >= 2.2.0
-
-BuildRequires: python-module-oslo.config >= 1.9.3
-BuildRequires: python-module-oslo.concurrency >= 1.8.2
+BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-requests >= 2.5.2
+BuildRequires: python-module-oslo.cache >= 0.4.0
+BuildRequires: python-module-oslo.config >= 2.3.0
+BuildRequires: python-module-oslo.concurrency >= 2.3.0
 BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.db >= 1.7.0
+BuildRequires: python-module-oslo.db >= 2.4.1
 BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.log >= 1.0.0
-BuildRequires: python-module-oslo.messaging >= 1.8.0
-BuildRequires: python-module-oslo.middleware >= 1.0.0
+BuildRequires: python-module-oslo.log >= 1.8.0
+BuildRequires: python-module-oslo.messaging >= 1.16.0
+BuildRequires: python-module-oslo.middleware >= 2.8.0
+BuildRequires: python-module-oslo.policy >= 0.5.0
+BuildRequires: python-module-oslo.reports >= 0.1.0
 BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.utils >= 1.4.0
+BuildRequires: python-module-oslo.service >= 0.7.0
+BuildRequires: python-module-oslo.utils >= 2.0.0
 BuildRequires: python-module-osprofiler >= 0.3.0
-BuildRequires: python-module-oslo.versionedobjects >= 0.1.1
-BuildRequires: python-module-keystonemiddleware >= 1.5.0
-
-BuildRequires: python-module-ceilometerclient >= 1.1.1
-BuildRequires: python-module-cinderclient >= 1.1.0
-BuildRequires: python-module-glanceclient >= 0.15.0
+BuildRequires: python-module-oslo.versionedobjects >= 0.9.0
+BuildRequires: python-module-keystonemiddleware >= 2.0.0
+BuildRequires: python-module-barbicanclient >= 3.3.0
+BuildRequires: python-module-ceilometerclient >= 1.5.0
+BuildRequires: python-module-cinderclient >= 1.3.1
+BuildRequires: python-module-designateclient >= 1.0.0
+BuildRequires: python-module-glanceclient >= 0.18.0
 BuildRequires: python-module-heatclient >= 0.3.0
-BuildRequires: python-module-keystoneclient >= 1.2.0
-BuildRequires: python-module-neutronclient >= 2.4.0
-BuildRequires: python-module-novaclient >= 2.22.0
-BuildRequires: python-module-saharaclient >= 0.8.0
+BuildRequires: python-module-keystoneclient >= 1.6.0
+BuildRequires: python-module-magnumclient >= 0.2.1
+BuildRequires: python-module-manilaclient >= 1.3.0
+BuildRequires: python-module-mistralclient >= 1.0.0
+BuildRequires: python-module-neutronclient >= 2.6.0
+BuildRequires: python-module-novaclient >= 2.28.1
+BuildRequires: python-module-saharaclient >= 0.10.0
 BuildRequires: python-module-swiftclient >= 2.2.0
-BuildRequires: python-module-troveclient >= 1.0.7
+BuildRequires: python-module-troveclient >= 1.2.0
+BuildRequires: python-module-zaqarclient >= 0.1.1
 
-Requires: python-module-heat = %version-%release
+Requires: python-module-heat = %EVR
 Requires(pre): shadow-utils
 
-Provides: %name-common  = %version-%release
-Obsoletes: %name-common  < %version-%release
+Provides: %name-common  = %EVR
+Obsoletes: %name-common  < %EVR
 
 %package -n python-module-heat
 Summary: Openstack Orchestration (Heat) - Python module
@@ -109,7 +117,7 @@ Heat provides AWS CloudFormation and CloudWatch functionality for OpenStack.
 Summary: The Heat engine
 Group: System/Servers
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description engine
 OpenStack API for starting CloudFormation templates on OpenStack
@@ -118,7 +126,7 @@ OpenStack API for starting CloudFormation templates on OpenStack
 Summary: The Heat API
 Group: System/Servers
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description api
 OpenStack-native ReST API to the Heat Engine
@@ -127,7 +135,7 @@ OpenStack-native ReST API to the Heat Engine
 Summary: Heat CloudFormation API
 Group: System/Servers
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description api-cfn
 AWS CloudFormation-compatible API to the Heat Engine
@@ -136,7 +144,7 @@ AWS CloudFormation-compatible API to the Heat Engine
 Summary: Heat CloudWatch API
 Group: System/Servers
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description api-cloudwatch
 AWS CloudWatch-compatible API to the Heat Engine
@@ -144,8 +152,8 @@ AWS CloudWatch-compatible API to the Heat Engine
 %package plugin-heat_docker
 Summary: OpenStack Orchestration (Heat) - Support for Docker
 Group: System/Servers
-Requires: %name = %version-%release
-Requires: %name-engine = %version-%release
+Requires: %name = %EVR
+Requires: %name-engine = %EVR
 
 %description plugin-heat_docker
 This plugin enables using Docker containers as resources in a Heat template.
@@ -329,6 +337,9 @@ crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 %_prefix/lib/heat/docker
 
 %changelog
+* Mon Nov 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1:5.0.0-alt1
+- 5.0.0 Liberty Release
+
 * Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.2-alt1
 - 2015.1.2
 

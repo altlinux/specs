@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 1.4.0
+Version: 2.5.0
 Release: alt1
 Summary: OpenStack Oslo Utility library
 Group: Development/Python
@@ -15,16 +15,19 @@ BuildArch: noarch
 Provides: python-module-oslo-utils = %EVR
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 0.6
+BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-babel
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-oslo.i18n >= 1.3.0
+BuildRequires: python-module-oslo.i18n >= 1.5.0
 BuildRequires: python-module-iso8601 >= 0.1.9
 BuildRequires: python-module-netaddr >= 0.7.12
 BuildRequires: python-module-netifaces >= 0.10.4
+BuildRequires: python-module-monotonic >= 0.3
+BuildRequires: python-module-pytz >= 2013.6
+BuildRequires: python-module-debtcollector
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -40,6 +43,9 @@ BuildRequires: python3-module-oslo.i18n >= 1.3.0
 BuildRequires: python3-module-iso8601 >= 0.1.9
 BuildRequires: python3-module-netaddr >= 0.7.12
 BuildRequires: python3-module-netifaces >= 0.10.4
+BuildRequires: python3-module-monotonic >= 0.3
+BuildRequires: python3-module-pytz >= 2013.6
+BuildRequires: python3-module-debtcollector
 
 %endif
 
@@ -120,6 +126,9 @@ rm -fr doc/build/html/.buildinfo
 %doc doc/build/html LICENSE
 
 %changelog
+* Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
+- 2.5.0
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 

@@ -2,18 +2,17 @@
 
 %def_with python3
 
-Name:		python-module-%{pypi_name}
-Version:	1.3.0
+Name:		python-module-%pypi_name
+Version:	1.8.1
 Release:	alt1
 Summary:	Python Build Reasonableness
 Group:		Development/Python
 
 License:	ASL 2.0
 URL:		http://pypi.python.org/pypi/pbr
-Source0:	%{name}-%{version}.tar.gz
+Source0:	%name-%version.tar.gz
 BuildArch:	noarch
 
-Requires:	python-module-pip
 
 BuildRequires:	python-devel
 BuildRequires:	python-module-d2to1 >= 0.2.10
@@ -48,6 +47,22 @@ OpenStack hit 18 different projects each with at least 3 active
 branches, it seems like a good time to make that code into a proper
 re-usable library.
 
+%package -n python3-module-%pypi_name-tests
+Summary: Tests for PBR library (Python 3)
+Group: Development/Python3
+Requires: python3-module-%pypi_name = %version-%release
+
+%description -n python3-module-%pypi_name-tests
+Tests for PBR library (Python 3)
+
+%package tests
+Summary: Tests for PBR library
+Group: Development/Python
+Requires: %name = %version-%release
+
+%description tests
+Tests for PBR library
+
 %prep
 %setup
 # Remove the requirements file so that pbr hooks don't add it
@@ -62,6 +77,7 @@ cp -fR . ../python3
 %endif
 
 %build
+export SKIP_PIP_INSTALL=1
 %python_build
 
 %if_with python3
@@ -95,18 +111,32 @@ popd
 %if_with python3
 %exclude %_bindir/*.py3
 %endif
-%{python_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
-%{python_sitelibdir}/%{pypi_name}
+%python_sitelibdir/%pypi_name-*.egg-info
+%python_sitelibdir/%pypi_name
+%exclude %python_sitelibdir/%pypi_name/tests
+
+%files tests
+%python_sitelibdir/%pypi_name/tests
+
 
 %if_with python3
 %files -n python3-module-%pypi_name
 %doc README.rst LICENSE
 %_bindir/*.py3
-%{python3_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
-%{python3_sitelibdir}/%{pypi_name}
+%python3_sitelibdir/%pypi_name-*.egg-info
+%python3_sitelibdir/%pypi_name
+%exclude %python3_sitelibdir/%pypi_name/tests
+
+%files -n python3-module-%pypi_name-tests
+%python3_sitelibdir/%pypi_name/tests
+
 %endif
 
 %changelog
+* Tue Oct 27 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+- add tests subpackage
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1
 - Version 1.3.0
 

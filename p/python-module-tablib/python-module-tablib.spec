@@ -1,24 +1,33 @@
-%global raw_version 0.9.11
-%global checkout 20120702git752443f
 
-Name:		python-module-tablib
-Version:	%{raw_version}.%{checkout}
+%def_with python3
+%define modname tablib
+
+Name:		python-module-%modname
+Version:	0.10.0
 Release:	alt1
 Summary:	Format agnostic tabular data library (XLS, JSON, YAML, CSV)
 
 Group:		Development/Python
 License:	MIT
 URL:		http://github.com/kennethreitz/tablib
-Source0:	%{name}-%{version}.tar.gz
-
-# https://github.com/kennethreitz/tablib/pull/68
-Patch0:		%{name}-py3-support.patch
-Patch1:		%{name}-broken-setup.py.patch
+Source0:	%name-%version.tar
 
 BuildArch:	noarch
 
-BuildRequires:	python-devel
-Requires:	python-module-yaml
+BuildRequires:    python-devel
+BuildRequires:    python-module-setuptools
+BuildRequires:    python-module-pbr
+BuildRequires:    python-module-yaml
+BuildPreReq: python-module-sphinx-devel python-module-oslosphinx
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires:    python-tools-2to3
+BuildRequires:    python3-devel
+BuildRequires:    python3-module-setuptools
+BuildRequires:    python3-module-pbr
+BuildRequires:    python3-module-yaml
+%endif
 
 %description
 Tablib is a format-agnostic tabular dataset library, written in Python.
@@ -32,10 +41,27 @@ Output formats supported:
  - TSV (Sets)
  - CSV (Sets)
 
+%package -n python3-module-%modname
+Summary:        Format agnostic tabular data library (XLS, JSON, YAML, CSV)
+Group:            Development/Python3
+
+%add_python3_req_skip UserDict
+%add_python3_req_skip odf
+
+%description -n python3-module-%modname
+Tablib is a format-agnostic tabular dataset library, written in Python.
+
+Output formats supported:
+
+ - Excel (Sets + Books)
+ - JSON (Sets + Books)
+ - YAML (Sets + Books)
+ - HTML (Sets)
+ - TSV (Sets)
+ - CSV (Sets)
+
 %prep
-%setup -q
-%patch0 -p1 -b .py3_support
-%patch1 -p1 -b .broken_setup_py
+%setup
 
 # Remove shebangs
 for lib in $(find . -name "*.py"); do
@@ -44,17 +70,49 @@ for lib in $(find . -name "*.py"); do
  mv $lib.new $lib
 done
 
+%if_with python3
+cp -fR . ../python3
+pushd ../python3
+sed -i "/\(xlwt\|odf\|xlrd\|openpyxl\|openpyxl\..*\|yaml\)'/d" setup.py
+find . -name "*.py" | grep -v 3 | xargs 2to3 -w
+popd
+%endif
+
+sed -i '/tablib.packages.*3/d' setup.py
+
 %build
-%{__python} setup.py build
+%python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
-%{__python} setup.py install -O1 --skip-build --root=%{buildroot}
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
-%doc README.rst LICENSE AUTHORS HACKING HISTORY.rst NOTICE TODO.rst
-%{python_sitelibdir}/tablib
-%{python_sitelibdir}/tablib-%{raw_version}*
+%doc README.rst AUTHORS LICENSE
+%python_sitelibdir/*
+
+%if_with python3
+%files -n python3-module-%modname
+%doc README.rst AUTHORS LICENSE
+%python3_sitelibdir/*
+%endif
 
 %changelog
+* Tue Nov 03 2015 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1
+- 0.10.0
+- cleanup spec
+- python3 package
+
 * Thu Sep 27 2012 Pavel Shilovsky <piastry@altlinux.org> 0.9.11.20120702git752443f-alt1
 - Initial release for Sisyphus (based on Fedora)
