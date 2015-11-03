@@ -3,7 +3,7 @@
 %define grass_version 7.0.1
 
 Name:    qgis
-Version: 2.10.1
+Version: 2.12.0
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -63,6 +63,7 @@ BuildRequires: libsqlite3-devel
 BuildRequires: python-module-qscintilla2-qt4-devel
 BuildRequires: libqscintilla2-qt4-devel
 BuildRequires: python-module-OWSLib
+BuildRequires: libqca2-devel
 BuildRequires: gzip
 
 Requires: libqt4-sql-sqlite
@@ -267,6 +268,7 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_datadir/%name/doc
 %dir %_datadir/%name/i18n/
 %_libdir/lib%{name}_analysis.so.*
+%_libdir/lib%{name}_app.so.*
 %_libdir/lib%{name}_core.so.*
 %_libdir/lib%{name}_gui.so.*
 %_libdir/lib%{name}_networkanalysis.so.*
@@ -317,6 +319,9 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Tue Nov 03 2015 Andrey Cherepanov <cas@altlinux.org> 2.12.0-alt1
+- New version
+
 * Thu Oct 08 2015 Andrey Cherepanov <cas@altlinux.org> 2.10.1-alt1
 - New version
 - Add libqt4-sql-sqlite to requirements for work with bookmarks
