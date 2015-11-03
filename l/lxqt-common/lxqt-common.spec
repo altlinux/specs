@@ -1,6 +1,6 @@
 Name: lxqt-common
-Version: 0.9.0
-Release: alt1.1
+Version: 0.10.0
+Release: alt1
 Serial: 1
 
 Summary: Default configuration files for LXQt desktop session
@@ -43,13 +43,16 @@ sed -i 's,^Exec=.*$,Exec=LXQt,' xsession/lxqt.desktop.in
 %files
 %_bindir/*
 %_xdgconfigdir/*/*
-%_datadir/apps/kdm/sessions/*.desktop
+%_datadir/kdm/sessions/*.desktop
 %_datadir/xsessions/*.desktop
 %_datadir/lxqt/
-#_datadir/desktop-directories/lxqt-*.directory
-#_iconsdir/*/*/*/*
+%_datadir/desktop-directories/lxqt-*.directory
+%_iconsdir/*/*/*/*
 
 %changelog
+* Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 1:0.10.0-alt1
+- 0.10.0
+
 * Wed Oct 07 2015 Michael Shigorin <mike@altlinux.org> 1:0.9.0-alt1.1
 - rollback to 0.9.0 for the time being (regressions)
 

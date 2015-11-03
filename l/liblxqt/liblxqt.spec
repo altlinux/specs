@@ -1,5 +1,5 @@
 Name: liblxqt
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Core utility library for LXDE-Qt components
@@ -61,6 +61,9 @@ This package provides the development files for LXQt library.
 %_datadir/cmake/*/
 
 %changelog
+* Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
 - 0.9.0 built against qt5
 

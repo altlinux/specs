@@ -1,5 +1,5 @@
 Name: lxqt-runner
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Tool used to launch programs quickly by typing their names
@@ -13,7 +13,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel qt5-script-devel
 BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: libqtxdg-devel
+BuildRequires: libqtxdg-devel libmenu-cache-devel
 BuildRequires: lxqt-globalkeys-devel
 
 Provides: razorqt-runner = %version
@@ -38,6 +38,9 @@ Obsoletes: razorqt-runner < 0.7.0
 %doc AUTHORS
 
 %changelog
+* Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
 - 0.9.0
 

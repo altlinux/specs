@@ -1,6 +1,6 @@
 Name: obconf-qt
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Openbox configuration tool
 License: %gpl2plus
@@ -38,6 +38,9 @@ BuildRequires: libopenbox-devel libXdmcp-devel
 %doc AUTHORS
 
 %changelog
+* Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt2
+- rebuilt against current libraries
+
 * Mon Sep 14 2015 Aleksey Avdeev <solo@altlinux.org> 0.9.0-alt1
 - 0.9.0
 - Fix license
