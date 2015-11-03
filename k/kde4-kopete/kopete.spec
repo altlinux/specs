@@ -20,7 +20,7 @@
 
 %define rname kopete
 Name: kde4-kopete
-Version: 15.08.0
+Version: 15.08.2
 Release: alt1
 
 Group: Networking/Instant messaging
@@ -315,6 +315,9 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Nov 03 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
+- new version
+
 * Tue Sep 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
