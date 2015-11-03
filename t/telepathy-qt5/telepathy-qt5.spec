@@ -3,7 +3,7 @@
 
 Name: telepathy-qt5
 Version: 0.9.6.1
-Release: alt1
+Release: alt2
 
 Summary: Telepathy framework - Qt5 connection manager library 
 License: GPLv2
@@ -68,6 +68,7 @@ export QT_DOC_DIR=%_qt5_docdir
     -DENABLE_TESTS=OFF \
     -DENABLE_EXAMPLES=OFF \
     -DDISABLE_WERROR=ON \
+    -DDATA_INSTALL_DIR=%_datadir/telepathy \
     #
 
 # hack against broken gstreamer1.0-devel
@@ -108,6 +109,9 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Tue Nov 03 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6.1-alt2
+- fix data dir path
+
 * Wed Jun 17 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6.1-alt1
 - new version
 
