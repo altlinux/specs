@@ -2,7 +2,7 @@
 %define rname kscreen
 Name: kde4-kscreen
 Version: 1.0.2.1
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE Display Management software
@@ -25,6 +25,8 @@ KCM and KDED modules for managing displays in KDE.
 
 %prep
 %setup -qn %rname-%version
+mv altlinux/po .
+echo "add_subdirectory(po)" >> CMakeLists.txt
 
 
 %build
@@ -55,6 +57,12 @@ KCM and KDED modules for managing displays in KDE.
 
 
 %changelog
+* Tue Nov 03 2015 Sergey V Turchin <zerg@altlinux.org> 1.0.2.1-alt2
+- update from kdelibs4 branch
+
+* Wed Dec 04 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.2.1-alt0.M70P.1
+- built for M70P
+
 * Wed Dec 04 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.2.1-alt1
 - new version
 
