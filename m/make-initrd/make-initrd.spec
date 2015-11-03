@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 0.8.8
-Release: alt3
+Release: alt4
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -168,6 +168,9 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.8.8-alt4
+- functions: silence logger (closes: #31070)
+
 * Fri Feb 06 2015 Anton Farygin <rider@altlinux.ru> 0.8.8-alt3
 - fixed plymouth rules requires (closes: #30704)
 
