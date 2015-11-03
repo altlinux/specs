@@ -1,6 +1,6 @@
 Name: qjson
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Lightweight data-interchange format
@@ -62,6 +62,9 @@ Development files for %name
 %_pkgconfigdir/*son*.pc
 
 %changelog
+* Tue Nov 03 2015 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt2
+- rebuild with new cmake
+
 * Fri Dec 07 2012 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1
 - new version
 
