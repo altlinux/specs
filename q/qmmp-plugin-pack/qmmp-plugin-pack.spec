@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
-%define		branch 0.9
-%define		svn svn5545
+%define		branch 0.10
+%define		svn svn5734
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -111,6 +111,10 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %_libdir/qmmp/Input/libxmp.so
 
 %changelog
+* Tue Nov 03 2015 Motsyo Gennadi <drool@altlinux.ru> 0.10.0-alt1.svn5734
+- build svn5734
+- bump version
+
 * Sun Sep 06 2015 Motsyo Gennadi <drool@altlinux.ru> 0.9.0-alt1.svn5545
 - build svn5545
 
