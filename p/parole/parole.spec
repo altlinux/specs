@@ -1,5 +1,5 @@
 Name: parole
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 # '1' for gstreamer-1.0
@@ -100,6 +100,9 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Oct 26 2015 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+- Updated to 0.8.1.
+
 * Fri Mar 13 2015 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
 - Enable clutter support.
 - Updated to 0.8.0.
