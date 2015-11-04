@@ -4,7 +4,7 @@
 Summary: PKCS#11 engine for OpenSSL
 Name: openssl-%oname
 Version: 0.1.8
-Release: alt2.qa1
+Release: alt2.qa2
 License: BSD
 Group: System/Libraries
 Source0: http://www.opensc-project.org/files/%oname/%oname-%version.tar.gz
@@ -68,6 +68,9 @@ mv doc/nonpersistent/wiki.out doc/wiki
 %exclude %_datadir/doc/engine_pkcs11
 
 %changelog
+* Fri Oct 30 2015 Michael Shigorin <mike@altlinux.org> 0.1.8-alt2.qa2
+- NMU: rebuilt against recent libp11
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.8-alt2.qa1
 - NMU: rebuilt for debuginfo.
 

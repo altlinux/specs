@@ -1,25 +1,27 @@
-%define _customdocdir %_defaultdocdir/%name-%version
-
 Name: libp11
-Version: 0.2.7
-Release: alt1.qa3
+Version: 0.3.0
+Release: alt1
 
 Summary: Library for using PKCS#11 modules
-Group: System/Legacy libraries
+Group: System/Libraries
 License: LGPLv2+
 
-URL: http://www.opensc-project.org/libp11
+Url: https://github.com/OpenSC/libp11/wiki
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-
-Packager: Lebedev Sergey <barabashka@altlinux.org>
+Patch: libp11-err-remove-state.patch
 
 # Automatically added by buildreq on Fri Aug 28 2009
 BuildRequires: doxygen libltdl7-devel libssl-devel xsltproc
 
+BuildRequires: openssl-devel
+BuildRequires: pkgconfig
+
+# needed for testsuite
+BuildRequires: softhsm opensc
+
 %description
-Libp11 is a library implementing a small layer on top of PKCS#11 API to
-make using PKCS#11 implementations easier.
+Libp11 is a library implementing a small layer on top of PKCS#11 API
+to make using PKCS#11 implementations easier.
 
 %package devel
 Summary: Development files for %name
@@ -31,38 +33,45 @@ Requires: libssl-devel
 Development files for %name.
 
 %prep
-%setup -q
-%patch -p1
+%setup
+%patch -p1 -b .test-suite
 
 %build
 %autoreconf
-%configure \
-	--docdir=%_customdocdir \
-	--disable-static \
-	--enable-doc \
-	--enable-api-doc
+%configure --disable-static --enable-api-doc
 %make_build
 
 %install
 %makeinstall_std
 
+# Use %%doc to install documentation in a standard location
+mkdir __docdir
+mv %buildroot%_datadir/doc/%name/api/ __docdir/
+rm -rf %buildroot%_datadir/doc/%name/
+
 %files
-#dir %_customdocdir
-#_customdocdir/README
-#_customdocdir/NEWS
+%doc COPYING NEWS
 %_libdir/*.so.*
-#%%_defaultdocdir/%%name-%%version
 
-#files devel
-#dir %_customdocdir
-#_customdocdir/api
-#_customdocdir/wiki
-#_libdir/*.so
-#_includedir/*
-#_pkgconfigdir/%name.pc
-
+%files devel
+%doc examples/ __docdir/api/
+%_libdir/libp11.so
+%_libdir/pkgconfig/libp11.pc
+%_includedir/libp11.h
 
 %changelog
+* Fri Oct 30 2015 Michael Shigorin <mike@altlinux.org> 0.3.0-alt1
+- 0.3.0
+- recreated gear repo to use upstream git
+- applied fedora patch and spec bits for API docs
+
+* Mon Sep 21 2015 Michael Shigorin <mike@altlinux.org> 0.2.8-alt1
+- 0.2.8
+- updated Url:
+- reverted Group: (it's not legacy but rather a layer)
+- dropped API docs
+- minor spec cleanup
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.7-alt1.qa3
 - Moved this version into System/Legacy libraries
 
