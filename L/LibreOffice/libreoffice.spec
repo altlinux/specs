@@ -1,4 +1,4 @@
-# 5.0.3.1
+# 5.0.3.2
 %def_with forky
 %def_with parallelism
 %def_without fetch
@@ -6,12 +6,12 @@
 
 Name: LibreOffice
 Version: 5.0
-%define urelease 3.1
+%define urelease 3.2
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -428,6 +428,9 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l tt -n Tatar
 
 %changelog
+* Wed Nov 04 2015 Fr. Br. George <george@altlinux.ru> 5.0-alt2
+- Update to 5.0.3.2
+
 * Wed Sep 16 2015 Fr. Br. George <george@altlinux.ru> 5.0-alt1
 - Update to 5.0.3.1
 - Rename package
