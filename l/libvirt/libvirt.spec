@@ -100,7 +100,7 @@
 %define with_loader_nvram "%_datadir/ovmf/ovmf_code-x64.bin:%_datadir/ovmf/ovmf_vars-x64.bin:%_datadir/ovmf/ovmf_code-ia32.bin:%_datadir/ovmf/ovmf_vars-ia32.bin"
 
 Name: libvirt
-Version: 1.2.20
+Version: 1.2.21
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -930,6 +930,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Nov 05 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.21-alt1
+- 1.2.21
+
 * Thu Oct 22 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.20-alt1
 - 1.2.20
 - fixed CVE-2015-5247
