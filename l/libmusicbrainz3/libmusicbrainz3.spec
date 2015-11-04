@@ -1,6 +1,6 @@
 Name: libmusicbrainz3
 Version: 3.0.3
-Release: alt1
+Release: alt1.1
 Summary: A software library for accesing MusicBrainz servers
 License: LGPLv2+
 Group: Sound
@@ -58,6 +58,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_VERBOSE_MAKEFILE=1 \
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Nov 03 2015 Sergey V Turchin <zerg@altlinux.org> 3.0.3-alt1.1
+- rebuild with gcc5
+
 * Wed Sep 28 2011 Dmitry V. Levin <ldv@altlinux.org> 3.0.3-alt1
 - Updated to 3.0.3.
 - Fixed interpackage dependencies.
