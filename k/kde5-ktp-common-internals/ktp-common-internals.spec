@@ -8,7 +8,7 @@
 %define libktpwidgets libktpwidgets%sover
 
 Name: kde5-ktp-common-internals
-Version: 15.08.2
+Version: 15.08.3
 Release: alt1
 %K5init altplace
 
@@ -24,6 +24,7 @@ Source0: %rname-%version.tar
 #BuildRequires: doxygen extra-cmake-modules gcc-c++ graphviz kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpeople-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libdb4-devel libotr-devel libtelepathy-qt5-devel-static python-module-google rpm-build-python3 rpm-build-ruby telepathy-logger-qt5-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: doxygen extra-cmake-modules gcc-c++ graphviz
+BuildRequires: qt5-declarative-devel
 BuildRequires: libotr-devel
 # rpm-build-python3
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
@@ -160,6 +161,9 @@ developing applications that use %name.
 %_libdir/cmake/KTp/
 
 %changelog
+* Thu Nov 05 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
+- new version
+
 * Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
 - new version
 
