@@ -1,13 +1,13 @@
+Name:    usb-modeswitch-data
+Version: 20151101
+Release: alt1
+
 Summary: Data and udev-rules for usb-modeswitch
-Name: usb-modeswitch-data
-Version: 20140529
-Release: alt2
-License: GPL
+License: GPLv2+
+Group:   System/Configuration/Hardware
+Url:     http://www.draisberghof.de/usb_modeswitch/
 
-Group: System/Configuration/Hardware
-Url: http://www.draisberghof.de/usb_modeswitch/
-
-Source: %name-%version.tar
+Source:  %name-%version.tar
 
 BuildArch: noarch
 Requires: usb-modeswitch >= 1.2.2
@@ -21,7 +21,7 @@ Data and udev-rules for usb-modeswitch
 %setup
 
 %install
-DESTDIR=%buildroot make install
+%makeinstall_std
 
 %files
 %doc ChangeLog README
@@ -29,6 +29,9 @@ DESTDIR=%buildroot make install
 /lib/udev/rules.d/*
 
 %changelog
+* Thu Nov 05 2015 Andrey Cherepanov <cas@altlinux.org> 20151101-alt1
+- New version (ALT #30058)
+
 * Wed Jan 14 2015 Andrey Cherepanov <cas@altlinux.org> 20140529-alt2
 - Add support of Huawei 3272
 
