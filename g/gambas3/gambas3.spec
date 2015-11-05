@@ -3,7 +3,7 @@
 %def_without    jit
 
 Name:		gambas3
-Version:	3.8.2
+Version:	3.8.3
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -1533,6 +1533,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.qt5.webkit.*
 
 %changelog
+* Thu Nov 05 2015 Andrey Cherepanov <cas@altlinux.org> 3.8.3-alt1
+- New version (http://gambaswiki.org/wiki/doc/release/3.8.3)
+
 * Wed Oct 07 2015 Andrey Cherepanov <cas@altlinux.org> 3.8.2-alt1
 - New version (http://gambaswiki.org/wiki/doc/release/3.8.2)
 
