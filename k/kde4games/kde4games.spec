@@ -7,7 +7,7 @@
 Name: kde4games
 %define major 15
 %define minor 4
-%define bugfix 0
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -586,25 +586,38 @@ do
     [ "$d" == "$newdirname" ] || mv $d $newdirname
 done
 
-ls -d1 * | \
-while read d
-do
-    [ "$d" == "${d#lib}" ] || continue
-    [ -d "$d" ] || continue
-    echo "add_subdirectory($d)" >> CMakeLists.txt
-done
 %patch1 -p1
 %patch2 -p1
 
 
 %build
-%K4build \
+ls -d1 * | \
+while read d ; do
+[ -d "$d" ] || continue
+pushd $d
+%K4cmake \
     -DKDE4_BUILD_TESTS=OFF \
-    #
+    || exit 1
+popd
+done
+
+ls -d1 * | \
+while read d ; do
+[ -d "$d" ] || continue
+pushd $d
+%K4make
+popd
+done
 
 
 %install
+ls -d1 * | \
+while read d ; do
+[ -d "$d" ] || continue
+pushd $d
 %K4install
+popd
+done
 
 
 %files
@@ -696,6 +709,8 @@ done
 %_K4xdg_apps/ksnakeduel.desktop
 %_K4iconsdir/hicolor/*/*/ksnakeduel.*
 %endif
+%_K4cfg/ksnakeduel.kcfg
+%_K4conf/ksnakeduel.knsrc
 %_K4apps/ksnakeduel
 %_K4apps/ktron
 %_K4doc/en/ksnakeduel
@@ -1204,6 +1219,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Thu Nov 05 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt1
+- new version
+
 * Thu Apr 23 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
 - new version
 
