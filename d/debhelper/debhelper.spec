@@ -1,14 +1,16 @@
 Name: debhelper
-Version: 9.20140228
+Version: 9.20151005
 Release: alt1
 
 Summary: Tools for Debian Packages
-Group: System/Configuration/Packaging
+
 License: GPLv2+
+Group: System/Configuration/Packaging
 Url: http://packages.debian.org/unstable/devel/%name
+
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# ftp://ftp.debian.org/debian/pool/main/d/%name/%{name}_%version.tar.gz
+# Source-url: ftp://ftp.debian.org/debian/pool/main/d/%name/%{name}_%version.tar.xz
 Source: %{name}_%version.tar
 
 BuildArch: noarch
@@ -59,6 +61,9 @@ install -m 755 dh_*[^1-9] %buildroot%_bindir
 %_man7dir/*
 
 %changelog
+* Thu Nov 05 2015 Vitaly Lipatov <lav@altlinux.ru> 9.20151005-alt1
+- new version 9.20151005 (with rpmrb script)
+
 * Wed Apr 23 2014 Fr. Br. George <george@altlinux.ru> 9.20140228-alt1
 - Updated to 9.20140228 (fix build)
 
