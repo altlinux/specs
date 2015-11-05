@@ -3,7 +3,7 @@
 
 Name: python-module-efl
 Version: 1.15.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for EFL libraries
 Group: Development/Python
@@ -38,7 +38,7 @@ Provides: python-module-evas = %version-%release
 
 BuildPreReq: efl-libs-devel >= %efl_ver libelementary-devel >= %efl_ver
 BuildRequires: python-module-Cython python-module-dbus-devel
-BuildRequires: rpm-build-python3 python3-devel
+BuildRequires: rpm-build-python3 python3-devel python3-module-Cython
 # for check
 BuildRequires: python-modules-unittest
 
@@ -90,6 +90,9 @@ popd
 %doc AUTHORS README* ChangeLog
 
 %changelog
+* Thu Nov 05 2015 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt2
+- rebuilt against newest 1.16.0-beta3 e-libraries (ALT #31444)
+
 * Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
 - 1.15.0
 
