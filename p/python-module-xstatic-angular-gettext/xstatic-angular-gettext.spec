@@ -1,16 +1,15 @@
 %define mname xstatic
-%define oname %mname-font-awesome
+%define oname %mname-angular-gettext
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.3.0.0
+Version: 2.1.0.2
 Release: alt1
-Summary: Font-Awesome (XStatic packaging standard)
-License: GPL
+Summary: Angular-Gettext (XStatic packaging standard)
+License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/XStatic-Font-Awesome/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.python.org/pypi/XStatic-Angular-Gettext/
 
 Source: %name-%version.tar
 
@@ -22,26 +21,24 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-%mname
 %endif
 
-%py_provides %mname.pkg.font_awesome
+%py_provides %mname.pkg.angular_gettext
 %py_requires %mname.pkg
 
 %description
-Font Awesome icons packaged for setuptools (easy_install) / pip.
+Angular-Gettext javascript library packaged for setuptools (easy_install) / pip.
 
-This package is intended to be used by **any** project that needs these
-files.
+This package is intended to be used by **any** project that needs these files.
 
 %package -n python3-module-%oname
-Summary: Font-Awesome (XStatic packaging standard)
+Summary: Angular-Gettext (XStatic packaging standard)
 Group: Development/Python3
-%py3_provides %mname.pkg.font_awesome
+%py3_provides %mname.pkg.angular_gettext
 %py3_requires %mname.pkg
 
 %description -n python3-module-%oname
-Font Awesome icons packaged for setuptools (easy_install) / pip.
+Angular-Gettext javascript library packaged for setuptools (easy_install) / pip.
 
-This package is intended to be used by **any** project that needs these
-files.
+This package is intended to be used by **any** project that needs these files.
 
 %prep
 %setup
@@ -93,12 +90,5 @@ popd
 %endif
 
 %changelog
-* Thu Nov 05 2015 Alexey Shabalin <shaba@altlinux.ru> 4.3.0.0-alt1
-- 4.3.0.0
-
-* Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0.0-alt1
-- Version 4.2.0.0
-
-* Mon Nov 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0.0-alt1
+* Thu Nov 05 2015 Alexey Shabalin <shaba@altlinux.ru> 2.1.0.2-alt1
 - Initial build for Sisyphus
-
