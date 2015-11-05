@@ -161,7 +161,7 @@
 # }}}
 
 Name: qemu
-Version: 2.4.0.1
+Version: 2.4.1
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -671,6 +671,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Thu Nov 05 2015 Alexey Shabalin <shaba@altlinux.ru> 2.4.1-alt1
+- 2.4.1
+
 * Fri Oct 02 2015 Alexey Shabalin <shaba@altlinux.ru> 2.4.0.1-alt1
 - 2.4.0.1
 - build without gtk3 ui
