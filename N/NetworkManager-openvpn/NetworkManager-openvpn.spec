@@ -6,7 +6,7 @@
 
 Name: NetworkManager-openvpn
 Version: 1.0.6
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for OpenVPN
@@ -86,6 +86,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Nov 05 2015 Mikhail Efremov <sem@altlinux.org> 1.0.6-alt2
+- Use 'openvpn' user/group (closes: #31437).
+
 * Mon Nov 02 2015 Mikhail Efremov <sem@altlinux.org> 1.0.6-alt1
 - Minor spec cleanup.
 - Updated to 1.0.6.
