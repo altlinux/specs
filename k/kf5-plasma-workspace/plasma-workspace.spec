@@ -15,7 +15,7 @@
 
 Name: kf5-%rname
 Version: 5.4.2
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -145,6 +145,9 @@ KF5 library
 %K5install_move data drkonqi ksmserver ksplash kstyle solid
 %K5install_move data desktop-directories doc kconf_update kio_desktop
 
+# fix dbus service
+sed -i 's|^Exec=.*|Exec=%_K5bin/krunner|' %buildroot/%_K5dbus_srv/org.kde.krunner.service
+
 mkdir -p %buildroot/%_bindir
 ln -s `relative %_kf5_bin/startkde %_bindir/startkde5` %buildroot/%_bindir/startkde5
 ln -s startkde %buildroot/%_kf5_bin/startkde5
@@ -259,6 +262,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Fri Nov 06 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt3
+- fix krunner dbus service
+
 * Tue Oct 27 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt2
 - lock widgets at login
 
