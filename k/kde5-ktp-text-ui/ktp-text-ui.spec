@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 15.08.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -65,12 +65,13 @@ KF5 library
 %patch1 -p1
 
 %build
-%K5build
+%K5build \
+    -DLIBEXEC_INSTALL_DIR=%_K5exec \
+    #
 
 %install
 %K5install
 %K5install_move data ktelepathy ktp-log-viewer
-%K5install_move exec all
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -107,6 +108,9 @@ KF5 library
 %_K5lib/libktpimagesharer.so.*
 
 %changelog
+* Fri Nov 06 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt2
+- fix LIBEXEC_INSTALL_DIR
+
 * Thu Nov 05 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 
