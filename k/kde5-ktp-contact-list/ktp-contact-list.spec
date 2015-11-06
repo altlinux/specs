@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 15.08.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -61,6 +61,9 @@ KF5 library
 %K5install
 %find_lang %name --with-kde --all-name
 
+# fix dbus service
+sed -i 's|^Exec=.*|Exec=%_K5bin/ktp-contactlist|' %buildroot/%_K5dbus_srv/org.kde.ktpcontactlist.service
+
 %files -f %name.lang
 %doc COPYING*
 %_K5bin/ktp-contactlist
@@ -78,6 +81,9 @@ KF5 library
 #%_K5lib/libktp-contact-list.so.*
 
 %changelog
+* Fri Nov 06 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt2
+- fix dbus service
+
 * Thu Nov 05 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 
