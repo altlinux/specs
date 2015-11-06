@@ -1,5 +1,5 @@
 Name:		gis-weather
-Version:	0.7.8.7
+Version:	0.7.9
 Release:	alt1
 License:	GPLv3
 Summary:	Customizable weather widget
@@ -61,6 +61,9 @@ grep -rl '^#!' %buildroot%_datadir/%name/ | xargs chmod 0755
 %_datadir/%name
 
 %changelog
+* Fri Nov 06 2015 Motsyo Gennadi <drool@altlinux.ru> 0.7.9-alt1
+- 0.7.9
+
 * Sun Aug 23 2015 Motsyo Gennadi <drool@altlinux.ru> 0.7.8.7-alt1
 - 0.7.8.7
 
