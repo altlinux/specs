@@ -1,6 +1,6 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(x11)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(x11) pkgconfig(libstartup-notification-1.0) pkgconfig(xrandr)
 # END SourceDeps(oneline)
 BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
@@ -26,7 +26,7 @@ Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
 Version:        %{branch}.2
 %if 0%{?rel_build}
-Release:        alt2_0
+Release:        alt3_0
 %else
 Release:        alt1_0.1%{?git_rel}
 %endif
@@ -230,6 +230,11 @@ that is a hack around this problem.
 
 
 %changelog
+* Fri Nov 06 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt3_0
+- updated dependencies (added xrandr)
+- not yet Obsoletes: mate-user-share
+- yet w/o custom gschema.override
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_0
 - fixed dependencies
 - not yet Obsoletes: mate-user-share
