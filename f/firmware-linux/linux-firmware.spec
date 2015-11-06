@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20150824
+Version: 20151104
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -61,6 +61,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Fri Nov 06 2015 Michael Shigorin <mike@altlinux.org> 20151104-alt1
+- updated from git
+
 * Thu Sep 10 2015 Michael Shigorin <mike@altlinux.org> 20150824-alt1
 - updated from git
   + NB: amdgpu* have arrived (thx lakostis@ for the notice)
