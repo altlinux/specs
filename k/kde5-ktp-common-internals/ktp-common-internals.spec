@@ -9,7 +9,7 @@
 
 Name: kde5-ktp-common-internals
 Version: 15.08.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -103,12 +103,12 @@ developing applications that use %name.
 %setup -qn %rname-%version
 
 %build
-%K5build
+%K5build \
+    -DLIBEXEC_INSTALL_DIR=%_K5exec \
+    #
 
 %install
 %K5install
-%K5install_move exec all
-
 
 %files common
 %dir %_datadir/telepathy/clients
@@ -161,6 +161,9 @@ developing applications that use %name.
 %_libdir/cmake/KTp/
 
 %changelog
+* Fri Nov 06 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt2
+- fix LIBEXEC_INSTALL_DIR
+
 * Thu Nov 05 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 
