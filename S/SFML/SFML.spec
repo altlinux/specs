@@ -1,7 +1,7 @@
 %define soversion 2.3
 
 Name: SFML
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: Simple and Fast Multimedia Library
@@ -10,6 +10,7 @@ Group: System/Libraries
 
 Url: http://www.sfml-dev.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
+# https://github.com/%name/%name/archive/%version.tar.gz
 Source: %name-%version.tar.gz
 
 BuildRequires: cmake
@@ -84,10 +85,16 @@ popd
 %_libdir/libsfml-*.so.*
 
 %files -n lib%name-devel
+%dir %_datadir/%name
+%dir %_datadir/%name/cmake
+%dir %_datadir/%name/cmake/Modules
 %_datadir/%name/cmake/Modules/Find%name.cmake
 %_includedir/%name
 %_libdir/libsfml-*.so
 
 %changelog
+* Sat Nov 07 2015 Nazarov Denis <nenderus@altlinux.org> 2.3.2-alt1
+- Version 2.3.2
+
 * Sun Aug 02 2015 Nazarov Denis <nenderus@altlinux.org> 2.3.1-alt1
 - Initial release for ALT Linux
