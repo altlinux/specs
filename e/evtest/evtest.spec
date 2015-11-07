@@ -1,5 +1,5 @@
 Name: evtest
-Version: 1.32
+Version: 1.33
 Release: alt1
 
 Summary: Input device event monitor and query tool
@@ -61,6 +61,9 @@ X.Org issue.
 %_man1dir/%name.1*
 
 %changelog
+* Sat Nov 07 2015 Nazarov Denis <nenderus@altlinux.org> 1.33-alt1
+- Version 1.33
+
 * Thu Sep 18 2014 Nazarov Denis <nenderus@altlinux.org> 1.32-alt1
 - Version 1.32
 
