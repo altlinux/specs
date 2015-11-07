@@ -1,9 +1,9 @@
+%set_gcc_version 4.9
 BuildRequires: ca-certificates-java
 # ALT arm fix by Gleb Fotengauer-Malinovskiy <glebfm@altlinux.org>
 %ifarch %{arm}
 %set_verify_elf_method textrel=relaxed
 %endif
-%set_gcc_version 4.9
 %def_enable accessibility
 %def_disable javaws
 %def_disable moz_plugin
@@ -157,7 +157,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt1_2.3.10.3jpp7.3
+Release: alt2_2.3.10.3jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -955,6 +955,7 @@ fi
 %_bindir/javac	%{_jvmdir}/%{sdkdir}/bin/javac	%priority
 %_prefix/lib/jdk	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 %_man1dir/javac.1.gz	%_man1dir/javac%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/javac
+%_prefix/lib/jvm/java-%{javaver}-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
 
 # binaries and manuals
@@ -1116,6 +1117,9 @@ done
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.25-alt2_2.3.10.3jpp7
+- added /usr/lib/jvm/java-1.7.0-openjdk alternative in javac
+
 * Tue Oct 13 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0:1.7.0.25-alt1_2.3.10.3jpp7.3
 - rebuild with gcc 4.9
 
