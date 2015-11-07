@@ -3,7 +3,7 @@
 %define real_name Module-Info
 
 Name: perl-Module-Info
-Version: 0.36
+Version: 0.37
 Release: alt1
 
 Summary: Information about Perl modules
@@ -22,9 +22,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildPreReq: rpm-build-licenses
 
-# Automatically added by buildreq on Sun Oct 25 2015
-# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-devel perl-podlators perl-threads
-BuildRequires: perl-B-Utils perl-Module-Info perl-Test-Pod perl-Text-Soundex
+# Automatically added by buildreq on Sat Nov 07 2015
+# optimized out: perl-B-Utils perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-devel perl-podlators perl-threads
+BuildRequires: perl-Module-Info perl-Test-Pod perl-Text-Soundex perl-podlators
 
 %description
 Perl module Module::Info gives an information about Perl modules
@@ -47,8 +47,12 @@ to modules and should work on any perl code.
 %perl_vendor_privlib/B*
 %_bindir/pfunc
 %_bindir/module_info
+%_man1dir/*
 
 %changelog
+* Sat Nov 07 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.37-alt1
+- New version
+
 * Sun Oct 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.36-alt1
 - New version
 
