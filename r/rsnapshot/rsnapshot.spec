@@ -1,6 +1,6 @@
 Name:    rsnapshot
-Version: 1.3.1
-Release: alt3
+Version: 1.4.1
+Release: alt1
 
 Summary: local and remote filesystem snapshot utility
 
@@ -16,11 +16,11 @@ Source1: %name.logrotate
 Source2: %name.cron
 
 Patch0:  %name-1.3.1-alt-conf_file.patch
-Patch1:  %name-1.3.1-alt-pod_fix.patch
 
 BuildRequires(pre): rpm-build-licenses
 
 Requires: %_bindir/rsync, %_bindir/ssh, %_bindir/logger
+Requires: perl(Lchown.pm)
 
 # Automatically added by buildreq on Sun Nov 28 2010
 BuildRequires: openssh-clients perl-Pod-Parser rsync
@@ -29,17 +29,16 @@ BuildRequires: openssh-clients perl-Pod-Parser rsync
 rsnapshot is an rsync-based filesystem snapshot utility. It can take
 incremental backups of local and remote filesystems for any number of
 machines. rsnapshot makes extensive use of hard links, so disk space
-required is just a little more than the space of one full backup, 
-plus incrementals. 
- 
-Depending on your configuration, it is quite possible to set up in 
+required is just a little more than the space of one full backup,
+plus incrementals.
+
+Depending on your configuration, it is quite possible to set up in
 just a few minutes. Files can be restored by the users who own them,
-without the root user getting involved. 
+without the root user getting involved.
 
 %prep
 %setup
 %patch0
-%patch1
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -59,16 +58,22 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %make_build
 
 # Tune different pathes in scripts, etc. 
-%__subst 's#/etc/%{name}#/etc/%name/%{name}#g' utils/rsnapshotdb/{INSTALL.txt,rsnapshotDB.pl}
-%__subst 's#%_logdir/#%_logdir/%{name}/#g' utils/random_file_verify.sh utils/rsnapshotdb/rsnapshotDB.pl
-%__subst 's#/usr/local/pgsql/bin/pg_dumpall#%_bindir/pg_dumpall#g' utils/backup_pgsql.sh
-%__subst 's#/usr/local/samba/bin/smbclient#%_bindir/smbclient#g' utils/backup_smb_share.sh
-%__subst 's#/usr/local/bin/#%_bindir/#g' utils/rsnapshot_if_mounted.sh
+sed -e 's#/etc/%{name}#/etc/%name/%{name}#g' -i utils/rsnapshotdb/{INSTALL.txt,rsnapshotDB.pl}
+sed -e 's#%_logdir/#%_logdir/%{name}/#g' -i  utils/random_file_verify.sh utils/rsnapshotdb/rsnapshotDB.pl
+sed -e 's#/usr/local/pgsql/bin/pg_dumpall#%_bindir/pg_dumpall#g' -i utils/backup_pgsql.sh
+sed -e 's#/usr/local/samba/bin/smbclient#%_bindir/smbclient#g' -i utils/backup_smb_share.sh
+sed -e 's#/usr/local/bin/#%_bindir/#g' -i utils/rsnapshot_if_mounted.sh
 
-%__subst 's@#!/usr/bin/env perl@#!%__perl@' utils/rsnapreport.pl
+sed -e 's@#!/usr/bin/env perl@#!%__perl@' -i utils/rsnapreport.pl
 
-%__subst 's#B<%_sysconfdir/%name.conf#B<%_sysconfdir/%name/%name.conf#g' rsnapshot
-%__subst 's#/%_logdir/%{name}#%_logdir/%name/%name.log#' rsnapshot rsnapshot.1
+sed -e 's#B<%_sysconfdir/%name.conf#B<%_sysconfdir/%name/%name.conf#g' -i rsnapshot
+sed -e 's#/%_logdir/%{name}#%_logdir/%name/%name.log#' -i rsnapshot rsnapshot.1
+
+sed -e 's#/path/to/mount#/bin/mount#'        \
+    -e 's#/path/to/umount#/bin/umount#'      \
+    -e 's#/path/to/lvcreate#/sbin/lvcreate#' \
+    -e 's#/path/to/lvremove#/sbin/lvremove#' \
+    -i rsnapshot.conf.default
 
 %install
 install -d -- %buildroot%_bindir
@@ -121,8 +126,8 @@ else
 fi
 exit 0
 
-%files 
-%doc AUTHORS ChangeLog README INSTALL TODO
+%files
+%doc AUTHORS ChangeLog README.md INSTALL.md
 %doc --no-dereference COPYING
 %doc docs/Upgrading_from_1.1 docs/HOWTOs/rsnapshot-HOWTO.en.html
 %doc utils
@@ -142,6 +147,9 @@ exit 0
 %_man1dir/rsnapshot*
 
 %changelog
+* Sat Nov 7 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.1-alt1
+- New version
+
 * Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.3.1-alt3
 - fix POD syntax
 
