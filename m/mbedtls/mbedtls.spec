@@ -1,16 +1,17 @@
 %define soversion 10
+%def_disable static
 
 Name: mbedtls
-Version: 2.0.0
+Version: 2.1.2
 Release: alt1
 
 Summary: Light-weight cryptographic and SSL/TLS library
-License: GPLv2
+License: Apache
 Group: System/Libraries
 
 Url: https://tls.mbed.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
-Source: https://tls.mbed.org/download/start/%name-%version-gpl.tgz
+Source: https://tls.mbed.org/download/%name-%version-apache.tgz
 
 BuildRequires: cmake
 BuildRequires: pkcs11-helper-devel
@@ -90,7 +91,7 @@ popd
 %__rm -rf %buildroot%_bindir
 
 %files -n lib%name%soversion
-%doc ChangeLog LICENSE README.rst
+%doc apache-2.0.txt ChangeLog LICENSE README.md
 %_libdir/libmbedcrypto.so.*
 %_libdir/lib%name.so.*
 %_libdir/libmbedx509.so.*
@@ -104,6 +105,7 @@ popd
 
 %if_enabled static
 %files -n lib%name-devel-static
+%_libdir/libmbedcrypto.a
 %_libdir/lib%name.a
 %_libdir/libmbedx509.a
 %endif
@@ -113,6 +115,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Sat Nov 07 2015 Nazarov Denis <nenderus@altlinux.org> 2.1.2-alt1
+- Version 2.1.2
+
 * Wed Jul 29 2015 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt1
 - Version 2.0.0
 
