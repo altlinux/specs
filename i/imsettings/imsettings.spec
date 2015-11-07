@@ -4,8 +4,8 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize gcc-c++ glib2-devel p
 %add_findreq_skiplist %_libexecdir/xinputinfo.sh
 %add_findreq_skiplist /etc/X11/xinit/xinitrc.d/50-xinput.sh
 Name:		imsettings
-Version:	1.6.7
-Release:	alt2
+Version:	1.6.8
+Release:	alt1
 License:	LGPLv2+
 URL:		https://tagoh.bitbucket.org/%{name}/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -27,6 +27,8 @@ Patch1:		%{name}-disable-xim.patch
 Patch2:		%{name}-xinput-xcompose.patch
 ## Fedora specific: Force enable the IM management on imsettings for Cinnamon
 Patch3:		%{name}-force-enable-for-cinnamon.patch
+Patch4:		%{name}-fix-configure.patch
+
 
 Summary:	Delivery framework for general Input Method configuration
 Group:		File tools
@@ -199,8 +201,11 @@ This package contains a module to get this working on Cinnamon.
 %patch1 -p1 -b .1-xim
 %patch2 -p1 -b .2-xcompose
 %patch3 -p1 -b .3-force-cinnamon
+%patch4 -p1 -b .4-fix-configure
+
 
 %build
+autoreconf -f
 %configure	\
 	--with-xinputsh=50-xinput.sh \
 	--disable-static \
@@ -320,6 +325,10 @@ fi
 
 
 %changelog
+* Sat Nov 07 2015 Ilya Mashkin <oddity@altlinux.ru> 1.6.8-alt1
+- 1.6.8
+- update patchset
+
 * Tue Aug 26 2014 Ilya Mashkin <oddity@altlinux.ru> 1.6.7-alt2
 - build for Sisyphus
 
