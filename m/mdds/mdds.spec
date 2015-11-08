@@ -1,5 +1,7 @@
+# This spec is backported to ALTLinux t7 automatically by rpmbph script. Do not edit it.
+#
 Name: mdds
-Version: 0.12.1
+Version: 1.0
 Release: alt1
 Summary: A collection of multi-dimensional data structures and indexing algorithms
 
@@ -8,7 +10,12 @@ License: MIT
 Url: http://code.google.com/p/multidimalgorithm/
 Source0: http://kohei.us/files/%name/src/%{name}_%version.tar.bz2
 
-BuildRequires: boost-devel boost-interprocess-devel gcc-c++
+# Automatically added by buildreq on Sun Nov 08 2015
+# optimized out: libstdc++-devel python3-base
+BuildRequires: boost-devel-headers doxygen gcc-c++ python3
+
+#BuildRequires: boost-interprocess-devel
+
 
 %description
 A collection of multi-dimensional data structures and indexing algorithms.
@@ -30,16 +37,31 @@ BuildArch: noarch
 Requires: boost-devel
 Provides: %name-static = %version-%release
 
+%package doc
+Group: Development/C++
+Summary: Docs for %name
+BuildArch: noarch
+Provides: %name-static = %version-%release
+
 %description devel
 Headers for %name.
+
+%description doc
+Docs for %name.
 
 %prep
 %setup -n %{name}_%version
 # this is only used in tests
+./autogen.sh
 sed -i -e '/^CPPFLAGS_NODEBUG=/s/=.*/="%optflags"/' configure
+%make pre
 
 %build
 %configure
+%make all
+%make check
+#sphinx3_rel
+%make build-doc-doxygen
 
 %install
 mkdir -p %buildroot/%_includedir
@@ -49,15 +71,32 @@ mkdir -p %buildroot/%_datadir
 mkdir %buildroot/%_datadir/pkgconfig
 cp -p misc/%name.pc %buildroot/%_datadir/pkgconfig
 
-%check
-%make check
+install -dm 755 %buildroot/%_docdir/%name-%version
+install -dm 755 %buildroot/%_docdir/%name-%version/html
+install -dm 755 %buildroot/%_docdir/%name-%version/html/search
+install -Dm 644 AUTHORS README.md VERSION %buildroot/%_docdir/%name-%version
+cp ./doc/html/search/*.*  %buildroot/%_docdir/%name-%version/html/search
+cp ./doc/html/*.* %buildroot/%_docdir/%name-%version/html/
+
+
+#check
+#make check
+
+%files doc
+%exclude %_docdir/%name-%version/AUTHORS
+%exclude %_docdir/%name-%version/README.md
+%exclude %_docdir/%name-%version/VERSION
+%_docdir/%name-%version/html
 
 %files devel
 %_includedir/%name
 %_datadir/pkgconfig/%name.pc
-%doc AUTHORS COPYING NEWS README
+%doc AUTHORS README.md VERSION
 
 %changelog
+* Sun Nov 08 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.0-alt1
+- Version 1.00
+
 * Wed Sep 16 2015 Fr. Br. George <george@altlinux.ru> 0.12.1-alt1
 - Autobuild version bump to 0.12.1
 
