@@ -2,7 +2,7 @@
 
 Name: gnustep-sqlclient
 Version: 1.7.0
-Release: alt5.svn20140221
+Release: alt5.svn20140221.1
 Summary: Provide a simple interface to SQL databases for GNUstep applications
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -13,10 +13,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-java
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel gnustep-performance-devel /proc
-BuildPreReq: java-devel-default postgresql-devel libsqlite3-devel
-BuildPreReq: libMySQL-devel
+BuildRequires: clang-devel gnustep-make-devel gnustep-base-devel
+BuildRequires: libgnustep-objc2-devel gnustep-performance-devel /proc
+BuildRequires: java-1.6.0-devel postgresql-devel libsqlite3-devel
+BuildRequires: libMySQL-devel
 
 Requires: lib%name = %version-%release
 Requires: gnustep-back
@@ -129,6 +129,9 @@ buildIt $libSQLClient
 %_docdir/GNUstep
 
 %changelog
+* Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt5.svn20140221.1
+- rebuild with java-1.6.0-devel
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt5.svn20140221
 - Fixed build
 
