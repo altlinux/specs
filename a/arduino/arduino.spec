@@ -1,19 +1,19 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		arduino
 Epoch:		1
-Version:	1.0.5
-Release:	alt1_7jpp7
+Version:	1.0.6
+Release:	alt1_3jpp7
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
 URL:		http://www.arduino.cc/
 
 # There are lots of binaries in the "source" tarball.  Remove them with:
-# version=1.0.5; curl -L http://arduino.googlecode.com/files/arduino-$version-src.tar.gz | tar -xzf - && rm -r arduino-$version/build/linux/dist/tools/* && rm -r arduino-$version/hardware/arduino/firmwares/wifishield && find arduino-$version \( -type d \( -name macosx -o -name windows \) -o -type f \( -iname '*.jar' -or -iname '*.tgz' -or -iname '*.tar.gz' -or -iname '*.so' \) \) -print0 | xargs -0 rm -rf && tar -cJf arduino-$version.tar.xz arduino-$version
+# version=1.0.6; curl -L https://github.com/arduino/Arduino/archive/$version.tar.gz | tar -xzf - && mv Arduino-$version arduino-$version && rm -r arduino-$version/build/linux/dist/tools/* && rm -r arduino-$version/hardware/arduino/firmwares/wifishield && find arduino-$version \( -type d \( -name macosx -o -name windows \) -o -type f \( -iname '*.jar' -or -iname '*.tgz' -or -iname '*.tar.gz' -or -iname '*.so' \) \) -print0 | xargs -0 rm -rf && tar -cJf arduino-$version.tar.xz arduino-$version
 # See also http://code.google.com/p/arduino/issues/detail?id=193
 Source0:	%{name}-%{version}.tar.xz
 
@@ -104,11 +104,7 @@ echo -e "\n# By default, don't notify the user of a new upstream version." \
         "\nupdate.check=false" \
     >> build/shared/lib/preferences.txt
 
-# "git apply" fails silently if pwd is git-controlled.
-pwd=`pwd`
-cd /
-git apply --directory=$pwd %{PATCH4}
-cd $pwd
+git apply %{PATCH4}
 
 %patch10 -p1
 
@@ -137,9 +133,9 @@ rm $RPM_BUILD_ROOT/%{_datadir}/%{name}/lib/*.jar
 rm -r $RPM_BUILD_ROOT/%{_datadir}/%{name}/hardware/tools
 
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
-mkdir -p $RPM_BUILD_ROOT/%{_pkgdocdir}
-cp -a ../../license.txt ../../readme.txt ../../todo.txt reference $RPM_BUILD_ROOT/%{_pkgdocdir}/
-ln -s %{_pkgdocdir}/reference $RPM_BUILD_ROOT/%{_datadir}/%{name}/reference
+mkdir -p $RPM_BUILD_ROOT/%{_docdir}/%{name}
+cp -a ../../license.txt ../../README.md reference $RPM_BUILD_ROOT/%{_docdir}/%{name}/
+ln -s %{_docdir}/%{name}/reference $RPM_BUILD_ROOT/%{_datadir}/%{name}/reference
 
 # Requested upstream in http://github.com/arduino/Arduino/pull/4:
 find $RPM_BUILD_ROOT -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname *.txt -or -iname makefile -or -iname key*.txt -or -iname pref*.txt | xargs chmod -x;
@@ -206,9 +202,8 @@ fi
 
 
 %files -n %{name}-core
-%{_pkgdocdir}/license.txt
-%{_pkgdocdir}/readme.txt 
-%{_pkgdocdir}/todo.txt
+%{_docdir}/%{name}/license.txt
+%{_docdir}/%{name}/README.md
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/boards.txt
 %config(noreplace) %{_sysconfdir}/%{name}/programmers.txt
@@ -222,10 +217,13 @@ fi
 
 
 %files -n %{name}-doc
-%{_pkgdocdir}/
+%{_docdir}/%{name}/
 
 
 %changelog
+* Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.0.6-alt1_3jpp7
+- update to new release by jppimport
+
 * Wed Jun 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.5-alt1_7jpp7
 - update to new release by jppimport
 
