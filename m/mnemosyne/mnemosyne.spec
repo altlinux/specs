@@ -1,10 +1,11 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 Name:		mnemosyne
 Summary:	Flash-card learning tool
-Version:	2.3.2
+Version:	2.3.4
 Release:	alt1_1
 URL:		http://www.mnemosyne-proj.org/
 Source0:	http://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
@@ -16,6 +17,12 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	python-devel
 BuildRequires:	python-module-setuptools
 Requires:	icon-theme-hicolor
+Requires:	python-module-PyQt4
+Requires:	python-module-matplotlib-qt4
+# Until bug #1219556 is fixed
+Requires:	python-module-matplotlib-qt5
+Requires:	python-module-cherrypy
+Requires:	python-module-webob
 Source44: import.info
 
 %description
@@ -31,10 +38,10 @@ Optional dependencies:
 %patch0 -p1 -b .d
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
+%python_build
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%python_install
 
 install -d %{buildroot}%{_datadir}/applications
 desktop-file-install --vendor="" \
@@ -61,6 +68,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.4-alt1_1
+- new version
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_1
 - update to new release by fcimport
 
