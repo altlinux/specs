@@ -3,7 +3,7 @@ Name: appliance-build-asterisk
 Summary: Packages required for build Asterisk
 BuildArch: noarch
 Version: 4.0.2
-Release: alt3
+Release: alt4
 License: GPL
 Group: System/Base
 
@@ -70,7 +70,7 @@ Requires: libspandsp6-devel
 Requires: libspeex-devel
 Requires: libsqlite3-devel
 Requires: libsqlite-devel
-Requires: libsrtp
+Requires: libsrtp-devel
 Requires: libss7-devel
 Requires: libssl-devel
 Requires: libstdc++-devel
@@ -101,6 +101,9 @@ Requires: zlib-devel
 %files
 
 %changelog
+* Sun Nov 08 2015 Denis Smirnov <mithraen@altlinux.ru> 4.0.2-alt4
+- libsrtp -> libsrtp-devel
+
 * Thu Aug 29 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.2-alt3
 - libcorosync-devel -> libcorosync2-devel
 
