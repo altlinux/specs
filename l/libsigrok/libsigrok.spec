@@ -1,31 +1,26 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(check) pkgconfig(libudev)
-# END SourceDeps(oneline)
 Group: Other
-%add_optflags %optflags_shared
+# BEGIN SourceDeps(oneline):
+BuildRequires: pkgconfig(check) pkgconfig(libftdi) pkgconfig(libusb-1.0) pkgconfig(libzip)
+# END SourceDeps(oneline)
 Name:           libsigrok
-Version:        0.2.2
-Release:        alt1_4
+Version:        0.3.0
+Release:        alt1_3
 Summary:        Basic hardware access drivers for logic analyzers
 # Combined GPLv3+ and GPLv2+ and BSD
 License:        GPLv3+
 URL:            http://www.sigrok.org/
 Source0:        http://sigrok.org/download/source/libsigrok/%{name}-%{version}.tar.gz
-# http://sigrok.org/gitweb/?p=libsigrok.git;a=commit;h=8dce54f7aa9eed362f2c9e41412c6b71ba1a32b6
-Patch0:		%{name}-0.2.1-udev.patch
-# update for libftdi-1 detection
-Patch1:		%{name}-0.2.2-libftdi1.patch
+# backport libftdi-1 detection from master
+Patch1:         %{name}-0.3.0-libftdi1.patch
 
 BuildRequires:  glib2-devel
 BuildRequires:  libzip-devel
 BuildRequires:  zlib-devel
 BuildRequires:  libusb-devel
 BuildRequires:  libftdi-devel
-BuildRequires:  libalsa-devel
+BuildRequires:  libserialport-devel
 BuildRequires:  doxygen
 BuildRequires:  graphviz
-# link-mso19 driver was disabed by upstream for this release (only udev user)
-#BuildRequires:  libudev-devel
 BuildRequires:	libtool
 Source44: import.info
 
@@ -57,17 +52,14 @@ with %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .udev
 %patch1 -p1 -b .ftdi1
 
 autoreconf -vif
 
 
 %build
-# alsa is the only driver that gets autodisabled when alsa-lib-devel is not
-# found, so we explicitly enable it to be sure we compile it
-%configure --disable-static --enable-alsa
-make %{?_smp_mflags}
+%configure --disable-static
+make %{?_smp_mflags} V=1
 
 # This builds documentation for the -doc package
 doxygen Doxyfile
@@ -78,13 +70,12 @@ doxygen Doxyfile
 # Install udev rules
 install -D -p -m 0644 contrib/z60_libsigrok.rules %{buildroot}%{_udevrulesdir}/60-libsigrok.rules
 
-
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %files
 %doc README README.devices NEWS COPYING
-%{_libdir}/libsigrok.so.1*
+%{_libdir}/libsigrok.so.2*
 %{_udevrulesdir}/60-libsigrok.rules
 
 %files devel
@@ -97,6 +88,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_3
+- new version
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_4
 - update to new release by fcimport
 
