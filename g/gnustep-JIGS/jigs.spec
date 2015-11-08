@@ -2,7 +2,7 @@
 
 Name: gnustep-JIGS
 Version: 1.6.2
-Release: alt1.1
+Release: alt1.2
 Summary: Java Interface for GnuStep
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -11,11 +11,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
-BuildPreReq: gnustep-gui-devel
-BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
-BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
-BuildPreReq: java-devel-default texlive-latex-base
+BuildRequires: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildRequires: gnustep-gui-devel
+BuildRequires: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildRequires: libxslt-devel libffi-devel libicu-devel zlib-devel
+BuildRequires: java-1.6.0-devel texlive-latex-base
 
 Requires: lib%name = %EVR
 Requires: gnustep-back
@@ -96,12 +96,12 @@ This package contains documentation for JIGS.
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh 
 
-export JAVA_HOME=%java_home
+export JAVA_HOME=/usr/lib/jvm/java-1.6.0
 
 %ifarch x86_64
-JAVA_SERVER=%java_home/jre/lib/amd64/server
+JAVA_SERVER=$JAVA_HOME/jre/lib/amd64/server
 %else
-JAVA_SERVER=%java_home/jre/lib/i386/server
+JAVA_SERVER=$JAVA_HOME/jre/lib/i386/server
 %endif
 
 %make_build \
@@ -135,6 +135,9 @@ cp -fR Examples Testing %buildroot%_docdir/GNUstep/Developer/JIGS/
 %_docdir/GNUstep
 
 %changelog
+* Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1.2
+- rebuild with java-1.6.0
+
 * Sat Jun 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1.1
 - rebuild with new openjdk java
 
