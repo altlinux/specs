@@ -1,11 +1,12 @@
+BuildRequires: gcc-c++ libgnutls-devel
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(net6-1.3) pkgconfig(sigc++-2.0)
+BuildRequires: gcc-c++ pkgconfig(avahi-client)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname obby
 Name:           libobby
 Version:        0.4.8
-Release:        alt1_9
+Release:        alt1_11
 Summary:        A library which provides synced document buffers
 
 Group:          Development/C
@@ -13,7 +14,7 @@ License:        GPLv2+
 URL:            http://releases.0x539.de/obby
 Source0:        http://releases.0x539.de/obby/%{oldname}-%{version}.tar.gz
 
-BuildRequires:  net6-devel libgmp-devel libgmp_cxx-devel gettext-devel libavahi-devel
+BuildRequires:  net6-devel libgmp-devel libgmp_cxx-devel, gettext-devel, libavahi-devel
 Source44: import.info
 Provides: obby = %{version}-%{release}
 
@@ -27,6 +28,7 @@ Unix-like platforms.
 Summary:        Development libraries for obby
 Group:          Development/C
 Requires:       %{name} = %{version}-%{release}
+Requires:       pkgconfig
 Provides: obby-devel = %{version}-%{release}
 
 %description devel
@@ -39,6 +41,7 @@ contains the header files and library required to link against libobby.
 
 
 %build
+%add_optflags -std=c++11
 %configure --disable-static --enable-ipv6 --with-zeroconf
 make %{?_smp_mflags}
 
@@ -60,6 +63,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt1_11
+- new version
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt1_9
 - update to new release by fcimport
 

@@ -1,19 +1,20 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ pkgconfig(gnutls) pkgconfig(sigc++-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname net6
 Name:           libnet6
 Version:        1.3.14
-Release:        alt1_8
+Release:        alt1_11
 Summary:        A TCP protocol abstraction for library C++
 
 Group:          Development/C
 License:        LGPLv2
 URL:            http://releases.0x539.de/net6/
 Source0:        http://releases.0x539.de/net6/%{oldname}-%{version}.tar.gz
+Patch1:         net6-1.3.14-drop-deprecated-gnutls-call.patch
 
-BuildRequires:  libsigc++2-devel libgnutls-devel
+BuildRequires:  libsigc++2-devel, libgnutls-devel
 Requires:       libgnutls
 Source44: import.info
 Provides: net6 = %{version}-%{release}
@@ -28,6 +29,7 @@ the Windows and Unix-like platforms.
 Summary:        Development libraries for net6
 Group:          Development/C
 Requires:       %{name} = %{version}-%{release}
+Requires:       pkgconfig
 Provides: net6-devel = %{version}-%{release}
 
 %description devel
@@ -41,9 +43,14 @@ library.
 
 %prep
 %setup -n %{oldname}-%{version} -q
+%patch1 -p1
 
 
 %build
+# Build in C++11 mode as glibmm headers use C++11 features. This can be dropped
+# when GCC in Fedora switches to C++11 by default (with GCC 6, most likely).
+export CXXFLAGS="%{optflags} -std=c++11"
+
 %configure --disable-static
 make %{?_smp_mflags}
 
@@ -66,6 +73,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.14-alt1_11
+- new version
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.14-alt1_8
 - update to new release by fcimport
 
