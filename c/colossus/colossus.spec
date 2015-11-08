@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -8,7 +9,7 @@ Name:           colossus
 %global         revdate    20130917
 Version:        0.14.0
 %global         branch    %{nil}
-Release:        alt1_2jpp7
+Release:        alt1_4jpp7
 Summary:        Allows people to play Titan against each other or AIs
 
 Group:          Games/Other
@@ -131,16 +132,54 @@ mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
 cp -rpv build/ant/javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 chmod -R og=u-w $RPM_BUILD_ROOT%{_javadocdir}
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ravi Srinivasan <ravishankar.srinivasan@gmail.com> -->
+<!--
+BugReportURL: https://sourceforge.net/p/colossus/feature-requests/225/
+SentUpstream: 2014-09-24
+-->
+<application>
+  <id type="desktop">colossus.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>A fantasy board game with strategic and tactical battle elements</summary>
+  <description>
+    <p>
+      Colossus is a clone of Avalon Hill's "Titan" Board game.
+    </p>
+    <p>
+      It is a fantasy board game where you lead an army of mythological creatures
+      against other players.
+    </p>
+  </description>
+  <url type="homepage">http://colossus.sourceforge.net/</url>
+  <screenshots>
+    <screenshot type="default">http://colossus.sourceforge.net/pics/screenshots/Colossi.jpg</screenshot>
+  </screenshots>
+</application>
+EOF
+
 %post
 touch --no-create %{_datadir}/pixmaps || :
 
+
 %postun
 touch --no-create %{_datadir}/pixmaps || :
+
 
 %files
 %{_javadir}/*
 %{_bindir}/*
 %{_datadir}/pixmaps/*
+%{_datadir}/appdata/*.appdata.xml
 %{_datadir}/applications/*
 %doc docs/*
 
@@ -148,6 +187,9 @@ touch --no-create %{_datadir}/pixmaps || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_4jpp7
+- update to new release by jppimport
+
 * Wed Jun 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_2jpp7
 - update to new release by jppimport
 
