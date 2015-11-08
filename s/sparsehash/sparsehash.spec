@@ -1,15 +1,16 @@
 Name: sparsehash
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Google's extremely memory-efficient C++ hash_map implementation
 License: BSD
 Group: Development/C++
 
-URL: http://code.google.com/p/sparsehash/
+URL: https://github.com/%name/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: http://sparsehash.googlecode.com/files/%name-%version.tar.gz
+# https://github.com/%name/%name/archive/%name-%version.tar.gz
+Source: %name-%name-%version.tar.gz
 
 BuildRequires: gcc-c++
 
@@ -46,7 +47,7 @@ characteristics, including an implementation that optimizes for space
 and one that optimizes for speed.
 
 %prep
-%setup
+%setup -n %name-%name-%version
 
 %build
 %configure
@@ -56,7 +57,7 @@ and one that optimizes for speed.
 %makeinstall_std
 
 %files -n lib%name
-%doc %_docdir/sparsehash-%version
+%doc %_docdir/%name-2.0.2
 
 %files -n lib%name-devel
 %_includedir/google
@@ -64,6 +65,9 @@ and one that optimizes for speed.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Sun Nov 08 2015 Nazarov Denis <nenderus@altlinux.org> 2.0.3-alt1
+- Version 2.0.3
+
 * Mon Sep 23 2013 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt1
 - Version 2.0.2
 
