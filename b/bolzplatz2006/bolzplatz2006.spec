@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:           bolzplatz2006
 Version:        1.0.3
-Release:        alt1_26jpp7
+Release:        alt1_30jpp7
 Summary:        Slam Soccer 2006 is a funny football game in 3D-comic-style
 Summary(fr):    Coup de Foot 2006 est un jeu comique en 3D
 Summary(de):    Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
@@ -41,6 +41,7 @@ Patch7:         %{name}-no-xrandr.patch
 Patch8:         %{name}-versioned-openal.patch
 Patch9:         %{name}-1.0.3-libpng15.patch
 Patch10:        %{name}-class-version15.patch
+Patch11:        %{name}-use-system-extgl.patch
 BuildRequires:  ant sdljava dom4j vecmath1.2 swig xml-commons-apis
 BuildRequires:  libGLU-devel libdevil-devel libXxf86vm-devel libjpeg-devel
 BuildRequires:  libpng-devel libXext-devel libXrandr-devel libXcursor-devel
@@ -134,11 +135,12 @@ popd
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 cp %{SOURCE7} .
 sed -i 's/\r//' license.txt
 # we use the system versions of these
 rm -r libsrc/irrlicht-0.14-patched/libpng libsrc/irrlicht-0.14-patched/zlib \
-  libsrc/irrlicht-0.14-patched/jpeglib
+  libsrc/irrlicht-0.14-patched/jpeglib libsrc/irrlicht-0.14-patched/glext.h
 
 
 %build
@@ -232,6 +234,9 @@ install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
 
 
 %changelog
+* Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_30jpp7
+- update to new release by jppimport
+
 * Wed Jun 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_26jpp7
 - update to new release by jppimport
 
