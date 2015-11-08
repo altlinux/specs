@@ -1,6 +1,6 @@
 Name: celestia
 Version: 1.6.1
-Release: alt3
+Release: alt4
 License: GPL
 Group: Education
 Summary: A real-time visual space simulation
@@ -170,6 +170,9 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/celestia.sche
 /etc/alternatives/packages.d/%name-kde
 
 %changelog
+* Thu Nov 05 2015 Michael Shigorin <mike@altlinux.org> 1.6.1-alt4
+- Rebuilt against gcc5-built qt3.
+
 * Fri Dec 26 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.1-alt3
 - Recovered celestia package for Sisyphus.
 - Fixed build.

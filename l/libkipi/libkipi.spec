@@ -1,6 +1,6 @@
 Name: libkipi
 Version: 0.1.6
-Release: alt5
+Release: alt6
 Serial: 1
 
 Group:   System/Libraries
@@ -28,7 +28,7 @@ Requires: %name = %serial:%version-%release
 develop programs which make use of %name.
 
 %prep
-%setup -q
+%setup
 %patch1 -p0
 %patch2 -p0
 make -f admin/Makefile.common cvs ||:
@@ -57,6 +57,9 @@ make -f admin/Makefile.common cvs ||:
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Oct 29 2015 Michael Shigorin <mike@altlinux.org> 1:0.1.6-alt6
+- NMU: rebuilt for gcc5 C++ ABI
+
 * Tue Apr 26 2011 Sergey V Turchin <zerg@altlinux.org> 1:0.1.6-alt5
 - fix build requires
 

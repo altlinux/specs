@@ -36,7 +36,7 @@
 %define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt7.1.1
+Release: alt7.2
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -2005,6 +2005,9 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Wed Oct 28 2015 Andrey Cherepanov <cas@altlinux.org> 3.5.13.2-alt7.2
+- Rebuilt for gcc5 C++11 ABI
+
 * Sun Mar 15 2015 Dmitriy Khanzhin <jinn@altlinux.org> 3.5.13.2-alt7.1.1
 - NMU:
   + fix typo in some .desktop files

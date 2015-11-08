@@ -1,6 +1,6 @@
 Name: pdfedit
 Version: 0.4.5
-Release: alt3
+Release: alt4
 
 Summary: Editor for manipulating PDF documents
 License: GPL
@@ -98,6 +98,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %doc doc/user/OEBPS/*
 
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 0.4.5-alt4
+- rebuilt against gcc5-built qt3
+
 * Tue Jun 10 2014 Michael Shigorin <mike@altlinux.org> 0.4.5-alt3
 - fixed build with fedora patches
 

@@ -1,13 +1,12 @@
 Name: kniga
 Version: 0.1.11
-Release: alt4.qa1
+Release: alt5
 
 Summary: Kniga is Qt-based advanced text viewer for Linux
 License: GPL
 Group: Office
 
-Url: http://kniga.linux.kiev.ua
-Source: %name-%version.tar.bz2
+Source0: %name-%version.tar.bz2
 Source1: %name.menu
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -65,6 +64,10 @@ EOF
 %_liconsdir/%name.png
 
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 0.1.11-alt5
+- rebuilt with gcc5-built qt3
+- dropped Url:
+
 * Fri Apr 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.1.11-alt4.qa1
 - NMU: converted menu to desktop file
 

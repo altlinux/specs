@@ -2,7 +2,7 @@
 
 Name:    kipi-plugins
 Version: 0.1.7
-Release: alt1
+Release: alt2
 Serial:  3
 
 Group:   Graphics
@@ -78,6 +78,9 @@ done
 %lang(pt_BR) %_K3doc/pt_BR/%name
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 3:0.1.7-alt2
+- rebuilt against gcc5-built qt3
+
 * Thu Feb 05 2015 Andrey Cherepanov <cas@altlinux.org> 3:0.1.7-alt1
 - New version
 - Fix project url

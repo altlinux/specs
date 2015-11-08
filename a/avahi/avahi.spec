@@ -13,7 +13,7 @@
 
 Name: avahi
 Version: 0.6.31
-Release: alt5
+Release: alt6
 
 Summary: Local network service discovery
 License: LGPL
@@ -665,6 +665,9 @@ fi
 %endif		    
 
 %changelog
+* Mon Oct 05 2015 Michael Shigorin <mike@altlinux.org> 0.6.31-alt6
+- Rebuilt against qt3-3.3.8d-alt8 for gcc5 C++ ABI
+
 * Mon Jan 20 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.31-alt5
 - FTBFS workaround
 

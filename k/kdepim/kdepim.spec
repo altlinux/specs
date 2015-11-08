@@ -20,7 +20,7 @@
 
 Name: kdepim
 Version: 3.5.13.2
-Release: alt5.1
+Release: alt5.2
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -998,6 +998,9 @@ done
 %_K3includedir/index
 
 %changelog
+* Wed Oct 28 2015 Andrey Cherepanov <cas@altlinux.org> 1:3.5.13.2-alt5.2
+- Rebuilt for gcc5 C++11 ABI
+
 * Mon Feb 24 2014 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt5.1
 - Rebild without dependency to kdelibs-devel-cxx
 

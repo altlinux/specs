@@ -1,6 +1,6 @@
 Name:		picmicrosim
 Version:	1.0
-Release:	alt1
+Release:	alt2
 Summary:	PIC Microprocessor Simulator on Linux
 
 License:	GPLv2+
@@ -46,6 +46,9 @@ cp -a documentation images %buildroot%_datadir/apps/microsim
 %_datadir/apps/microsim
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 1.0-alt2
+- rebuilt against gcc5-built qt3
+
 * Tue Feb 10 2015 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build in Sisyphus
 

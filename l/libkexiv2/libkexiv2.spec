@@ -10,7 +10,7 @@
 
 Name: libkexiv2
 Version: 0.1.9
-Release: alt9
+Release: alt10
 
 Group: System/Libraries
 Summary: KDE Exiv2 Interface
@@ -104,6 +104,9 @@ bzip2 --best --keep --force ChangeLog
 
 
 %changelog
+* Thu Oct 29 2015 Michael Shigorin <mike@altlinux.org> 0.1.9-alt10
+- NMU: rebuilt for new gcc5 C++ ABI
+
 * Mon Jun 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt9
 - rebuilt against libexiv2.so.14
 

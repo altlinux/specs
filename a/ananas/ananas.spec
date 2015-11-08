@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: ananas
 Version: 0.9.5
-Release: alt8
+Release: alt9
 
 Summary: Runtime and development environment of Finance Applications
 Summary(ru_RU.UTF8): Среда разработки и исполнения прикладных решений автоматизации оперативного, бухгалтерского и других видов учета.
@@ -264,6 +264,9 @@ mysql -u root -e "create database ananas_inventory_demo character set utf8" > /d
 %_datadir/ananas/inventory/
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt9
+- rebuilt against gcc5-built qt3
+
 * Fri Feb 28 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt8
 - Fix missing path delimiters for uic
 - Fix desktop files

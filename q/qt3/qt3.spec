@@ -24,7 +24,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt6
+%define rlz alt9
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -34,12 +34,11 @@ Release: %rlz
 %define libname	lib%rname%major
 %define kdedir  %prefix
 
-Group: System/Libraries
 Summary: Shared library for the Qt%major GUI toolkit
-Url: http://www.trolltech.com/products/qt/
 License: GPLv2 / GPLv3 / QPL
+Group: System/Libraries
 
-Requires: lib%name, %name-sql, %name-doc %name-assistant
+Url: http://www.trolltech.com/products/qt/
 
 %if %qt_copy
 Source0: qt-copy-%version%beta.tar
@@ -73,7 +72,6 @@ Source101: %rname.16.png
 Source102: %rname.32.png
 Source103: %rname.48.png
 
-Source200: Xinerama.tar
 %if %build_qsa
 Source1000: qsa-x11-free-%qsa_ver.tar
 %endif
@@ -144,7 +142,6 @@ Patch9007: 9100-qt-x11-free-3.3.8-fix_shortcuts.patch
 # Automatically added by buildreq on Wed Sep 04 2002
 #BuildRequires: XFree86-devel XFree86-libs freetype2-devel gcc-c++ libMySQL-devel libcups-devel libjpeg-devel liblcms libmng-devel libpng-devel libssl libstdc++-devel libunixODBC-devel postgresql-devel postgresql-libs zlib-devel
 
-
 BuildRequires: libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel
 BuildRequires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel libXft-devel libXmu-devel
 BuildRequires: xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel
@@ -165,6 +162,8 @@ BuildRequires: libunixODBC-devel
 #libiodbc-devel
 %endif
 #BuildRequires: libXft-devel
+
+Requires: lib%name, %name-sql, %name-doc %name-assistant
 
 %description
 Qt is a GUI software toolkit. Qt simplifies the task of writing and maintaining
@@ -300,6 +299,7 @@ Requires: lib%name-postgresql lib%name-sqlite
 %if %build_odbc
 Requires: lib%name-odbc
 %endif
+BuildArch: noarch
 %description sql
 Amount package for SQL support of Qt%major GUI toolkit
 
@@ -344,6 +344,7 @@ Requires: %name-assistant = %version
 Requires: %name-doc-html = %version
 Requires: %name-doc-man = %version
 Requires: %name-doc-examples = %version
+BuildArch: noarch
 
 %description doc
 This package contains documentation and sources for example programs.
@@ -362,6 +363,7 @@ This package contains documentation in html format.
 Summary: Document for developing apps which will use Qt%major
 Group: Development/KDE and QT
 Conflicts: qt3-doc <= 3.3.3-alt6
+BuildArch: noarch
 
 %description doc-man
 This package contains documentation in man format.
@@ -371,6 +373,7 @@ This package contains documentation in man format.
 Summary: Examples for developing apps which will use Qt%major
 Group: Development/KDE and QT
 Conflicts: qt3-doc <= 3.3.3-alt6
+BuildArch: noarch
 
 %description doc-examples
 This package contains sources for example programs.
@@ -438,7 +441,7 @@ Install this package if you want to create RPM packages that use %name.
 %define buildsubdir %rname-x11-free-%version%beta
 %endif
 
-%setup -q -n %buildsubdir
+%setup -n %buildsubdir
 
 %patch2 -p1
 %patch3 -p1
@@ -540,15 +543,10 @@ find . -type f -name .cvsignore | xargs rm -f
 [ -f Makefile.cvs ] && make -f Makefile.cvs
 
 %build
-rm -rf %buildroot
-
 %if %versioning_hack
+#if "%%__gcc_version_major" == "4"
 cat > ./src/libqt_add.map <<__EOF__
-%if "%__gcc_version_major" == "4"
 CXX3 {
-%else
-CXX%__gcc_version_major {
-%endif
     global:
 	extern "C++"  {
 	    QObject::QObject*;
@@ -653,14 +651,6 @@ fi
     make distclean
     rm -rf lib/*
 }
-
-# HACK until XFree86 is fixed
-mkdir -p Xinerama
-#tar xjf %SOURCE200 -C Xinerama
-#pushd Xinerama
-#gcc %optflags -fno-use-cxa-atexit -fPIC -c -I/usr/X11R6/include/X11/extensions -I. Xinerama.c
-#ar r libXinerama.a Xinerama.o
-#popd
 
 # Build STATIC NON-THREADED libraries #
 %if %static_nonthr
@@ -1295,6 +1285,16 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Nov 05 2015 Michael Shigorin <mike@altlinux.org> 3.3.8d-alt9
+- Hardwire "CXX3" for any gcc not just 4.x (thx glebfm@ for suggestion).
+
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 3.3.8d-alt8
+- Some doc subpackages made noarch.
+- Minor spec cleanup.
+
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 3.3.8d-alt7
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Nov 01 2013 Roman Savochenko <rom_as@altlinux.ru> 3.3.8d-alt6
 - Icons hide fix.
 

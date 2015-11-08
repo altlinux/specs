@@ -2,7 +2,7 @@
 
 Name: qalculate
 Version: 0.9.7
-Release: alt2.1
+Release: alt2.2
 
 Summary: A very versatile desktop calculator
 Group: Office
@@ -71,15 +71,15 @@ This package contains common files used by qalculate frontends.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 # remove non-packaged files
-%__rm -f %buildroot%_libdir/*.la
+rm -f %buildroot%_libdir/*.la
 %if_without static
-%__rm -f %buildroot%_libdir/*.a
+rm -f %buildroot%_libdir/*.a
 %endif
 
-%find_lang %name
+%find_lang --output=%name.lang lib%name
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -102,6 +102,11 @@ This package contains common files used by qalculate frontends.
 %endif
 
 %changelog
+* Sun Nov 08 2015 Andrey Cherepanov <cas@altlinux.org> 0.9.7-alt2.2
+- Rebuild for gcc5 C++11 ABI
+- Package all lolalization files
+- Spec cleanup
+
 * Mon Feb 07 2011 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt2.1
 - rebuild
 

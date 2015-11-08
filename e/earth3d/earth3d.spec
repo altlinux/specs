@@ -1,6 +1,6 @@
 Name: earth3d
 Version: 1.0.5
-Release: alt3.2
+Release: alt4
 
 Summary: A program that visualizes the earth in realtime in a 3D view
 License: GPL
@@ -53,8 +53,8 @@ qmake earth3d.pro
 %make
 
 %install
-install -pD -m755 %name   %buildroot%_bindir/%name
-install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
+install -pDm755 %name   %buildroot%_bindir/%name
+install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 
 %files
 %doc README
@@ -66,6 +66,9 @@ install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
 #   on perfectly present in GROUPS one)
 
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 1.0.5-alt4
+- rebuilt with gcc5-built qt3
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt3.2
 - Rebuilt with libpng15
 

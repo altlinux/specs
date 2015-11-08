@@ -1,6 +1,6 @@
 Name:             ktechlab
 Version:          0.3.7
-Release:          alt3.20090304
+Release:          alt4.20090304
 # revision checkout 238
 
 Summary:          Development and simulation of micro-controllers and electronic circuits
@@ -100,6 +100,9 @@ done
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 0.3.7-alt4.20090304
+- rebuilt against gcc5-built qt3
+
 * Thu Oct 01 2015 Andrey Cherepanov <cas@altlinux.org> 0.3.7-alt3.20090304
 - Rebuild with new verison of gpsim
 

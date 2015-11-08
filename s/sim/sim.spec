@@ -18,7 +18,7 @@
 
 Name: sim
 Version: 0.9.6
-Release: alt0.1.%svn.5
+Release: alt0.1.%svn.6
 Serial: 1
 
 Group: Networking/Instant messaging
@@ -255,6 +255,9 @@ rm -rf %buildroot%_libdir/libsim.so
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Thu Nov 05 2015 Michael Shigorin <mike@altlinux.org> 1:0.9.6-alt0.1.svn3186.6
+- Rebuilt against gcc5-built qt3
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.9.6-alt0.1.svn3186.5
 - Fixed build
 

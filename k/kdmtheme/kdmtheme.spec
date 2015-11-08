@@ -3,7 +3,7 @@
 
 Name:		kdmtheme
 Version:	1.2.2
-Release:	alt5
+Release:	alt6
 Summary:	Theme Manager for KDM
 
 License:	GPL
@@ -63,6 +63,9 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_libdir/kde3/kcm_%name.la
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt6
+- rebuilt against gcc5-built qt3
+
 * Sat Oct 19 2013 Roman Savochenko <rom_as@altlinux.ru> 1.2.2-alt5
 - kdmtheme.desktop category set to Qt;KDE;System;X-KDE-settings-system;
 - Release TDE version 3.5.13.2

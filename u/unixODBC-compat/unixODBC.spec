@@ -2,7 +2,7 @@
 
 Name: unixODBC-compat
 Version: 2.2.12
-Release: alt10
+Release: alt11
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -95,6 +95,9 @@ find doc -name Makefile\* -delete
 %exclude %_libdir/libodbcpsql.so.2*
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 2.2.12-alt11
+- rebuilt against gcc5-built qt3
+
 * Mon Jun 17 2013 Andrey Cherepanov <cas@altlinux.org> 2.2.12-alt10
 - Provide libunixODBC for smooth upgrade (ALT #29080)
 

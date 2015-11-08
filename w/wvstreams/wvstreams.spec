@@ -1,6 +1,6 @@
 Name: wvstreams
 Version: 4.6.1
-Release: alt1
+Release: alt2
 
 %define soffix .so.4.6
 %def_disable kdoc
@@ -276,6 +276,9 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/pkgconfig/libwvqt.pc
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt2
+- rebuilt against gcc5-built qt3
+
 * Fri Nov 29 2013 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt1
 - New version
 - Apply Fedora patches
