@@ -1,30 +1,54 @@
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: libsrtp
-Version: 1.5.0
-Release: alt1
-
 Summary: Secure Real-time Transport Protocol implementation
+Version: 1.5.2
+Release: alt1
 License: BSD-like
 Group: System/Libraries
-
+BuildRequires: gcc-c++ libstdc++-devel
+Packager: Denis Smirnov <mithraen@altlinux.ru>
 Url: https://github.com/cisco/libsrtp
 Source: %name-%version.tar
+Source100: %name.watch
+Patch1: %name-%version-%release.patch
 
-# Automatically added by buildreq on Sun Jun 19 2005
-BuildRequires: gcc-c++ libstdc++-devel
+%package devel
+Summary: %summary
+Group: System/Libraries
+
+%description devel
+%summary
+
+%package devel-static
+Summary: %summary
+Group: System/Libraries
+Requires: %name-devel
+
+%description devel-static
+%summary
+
+%package -n libsrtp1
+Summary: %summary
+Group: System/Libraries
+
+%description -n libsrtp1
+%summary
 
 %description
 The libSRTP library is an open-source implementation of the Secure Real-time
 Transport Protocol (SRTP) originally authored by Cisco Systems, Inc. It is
 available under a BSD-style license.
-
 SRTP is a security profile for RTP that adds confidentiality, message
 authentication, and replay protection to that protocol. It is specified in RFC
 3711
 
+
 %prep
 %setup
+%patch1 -p1
 
 %build
 touch NEWS AUTHORS ChangeLog
@@ -32,21 +56,30 @@ touch NEWS AUTHORS ChangeLog
 export CFLAGS
 CFLAGS="$CFLAGS -fPIC -Wall -O2 -fexpensive-optimizations -funroll-loops"
 %configure --enable-pic
-%make_build
-
+%make_build all shared_library
 %check
-#make runtest
 
 %install
 %makeinstall
 
-%files
+%files devel
 %dir %_includedir/srtp
 %_includedir/srtp/*.h
-%_libdir/libsrtp.a
+%_libdir/libsrtp.so
 %_pkgconfigdir/libsrtp.pc
 
+%files devel-static
+%_libdir/libsrtp.a
+
+%files -n libsrtp1
+%_libdir/libsrtp.so.*
+
 %changelog
+* Sun Nov 08 2015 Denis Smirnov <mithraen@altlinux.ru> 1.5.2-alt1
+- 1.5.2
+- add watch-file
+- Build shared library (ALT #31448)
+
 * Sat Jan 17 2015 Denis Smirnov <mithraen@altlinux.ru> 1.5.0-alt1
 - 1.5.0
 
@@ -62,3 +95,4 @@ CFLAGS="$CFLAGS -fPIC -Wall -O2 -fexpensive-optimizations -funroll-loops"
 
 * Sun May 28 2006 Denis Smirnov <mithraen@altlinux.ru> 1.4.2-alt1
 - first build for Sisyphus
+

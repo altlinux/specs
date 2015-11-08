@@ -1,7 +1,7 @@
 %define oname pjproject
 Name: libpjsip
 Version: 2.4.5
-Release: alt1
+Release: alt2
 
 Summary: Libraries for building embedded/non-embedded VoIP applications
 
@@ -31,7 +31,7 @@ Patch5: pjproject-ppc64.patch
 BuildRequires: gcc-c++
 BuildRequires: libalsa-devel
 BuildRequires: libgsm-devel
-BuildRequires: libsrtp
+BuildRequires: libsrtp-devel
 BuildRequires: libuuid-devel
 BuildRequires: libssl-devel
 BuildRequires: pkg-config
@@ -160,6 +160,9 @@ echo -e '\n' >> %buildroot%_includedir/pj/config_site.h
 %_pkgconfigdir/libpjproject.pc
 
 %changelog
+* Sun Nov 08 2015 Denis Smirnov <mithraen@altlinux.ru> 2.4.5-alt2
+- rebuild with libsrtp-devel
+
 * Thu Aug 20 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.5-alt1
 - new version 2.4.5 (with rpmrb script)
 
