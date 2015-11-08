@@ -1,5 +1,5 @@
 Name: repocop-unittest-rpm-filesystem
-Version: 0.15
+Version: 0.16
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,6 +13,8 @@ Requires: perl-RPM-Source-Editor >= 0.70
 Requires: repocop-collector-rpm-ext >= 0.07
 
 Source: %name-%version.tar
+
+BuildRequires: perl(Data/Array2ArrayMap/Hash/XSTree.pm)
 
 %description
 integration test for repocop test platform.
@@ -28,14 +30,21 @@ for i in *.distrotest; do
     install -pD -m 755 $testname.distrotest %buildroot%_datadir/repocop/pkgtests/$testname/distrotest
 done
 
+
+install -m 755 -D repocop-unittest-rpm-filesystem-conflict-file-file-message-filter %buildroot%_bindir/repocop-unittest-rpm-filesystem-conflict-file-file-message-filter
+
 #mkdir -p %buildroot%_datadir/repocop/fixscripts/
 #install -m 644 *.pl %buildroot%_datadir/repocop/fixscripts/
 
 %files
+%_bindir/repocop-unittest-rpm-filesystem-conflict-file-file-message-filter
 %_datadir/repocop/pkgtests/*
 #%_datadir/repocop/fixscripts/*
 
 %changelog
+* Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- pretty formatting of file-file conflict message (closes: #30862)
+
 * Sat Oct 31 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - dropped *-debuginfo conflicts (they mirror their main packages)
 - properly added mailx exceptions (closes: #30866)
