@@ -1,9 +1,8 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/pkg-config /usr/bin/swig gcc-c++ libhocr-devel pkgconfig(glib-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/pkg-config /usr/bin/swig gcc-c++ libhocr-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
-%add_optflags %optflags_shared
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libhocr
 %define version 0.10.17
@@ -16,13 +15,13 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_18
+Release:	alt2_21
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
 License:	GPLv3+
-URL:		http://hocr.berlios.de
-Source0:	http://download.berlios.de/hocr/%{name}-%{version}.tar.bz2
+URL:		http://sourceforge.net/projects/hocr.berlios
+Source0:	http://sourceforge.net/projects/hocr.berlios/files/%{name}-%{version}.tar.bz2
 # Sent upstream (private mail, the project has no mailing list)
 Patch0:		libhocr-missing-incl.patch
 # Fix fedora bugs #574259, #577657, #574631
@@ -32,13 +31,13 @@ Patch1:		libhocr-no-scanner.patch
 # Upstream isn't responsive for years, so we maintain our own patches.
 Patch2:		format-security.patch
 
-BuildRequires:	libfftw3-devel libhspell-devel libtiffxx-devel libtiff-devel
+BuildRequires:	libfftw3-devel, libhspell-devel libtiffxx-devel libtiff-devel
 BuildRequires:	desktop-file-utils
-BuildRequires:	swig python-devel gtk2-devel gettext
+BuildRequires:	swig, python-devel, gtk2-devel, gettext
 # Fix #925761
 # Upstream use very old autoconf, breaks aarm64 builds
 # So we use autoreconf
-BuildRequires:	autoconf automake libtool
+BuildRequires:	autoconf, automake, libtool, pkgconfig
 Source44: import.info
 
 %description
@@ -53,6 +52,7 @@ Summary:	Development files for %{name}
 Group:		Development/C
 Requires:	%{name} = %{version}-%{release}
 # We ship *.pc files (requires the -devel of contained libs)
+Requires:	pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -63,6 +63,7 @@ developing applications that use %{name}.
 Summary:	GTK+ application for %{name}
 Group:		Text tools
 Requires:	%{name} = %{version}-%{release}
+Requires:	python-module-sane, python-module-pygtk
 Requires:	python(hocr) = %{version}-%{release}
 # We use gtktextbuffer which uses gtkspell which have a runtime
 # check of the spellcheck backends... so here it is:
@@ -75,6 +76,7 @@ The %{name}-gtk package contains a GUI application that uses %{name}.
 Summary:	Python bindings for %{name}
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	python > 2.5
 Provides:	python(hocr) = %{version}-%{release}
 
 %description    -n python-module-libhocr
@@ -174,6 +176,9 @@ done
 
 
 %changelog
+* Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_21
+- new version
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_18
 - update to new release by fcimport
 
