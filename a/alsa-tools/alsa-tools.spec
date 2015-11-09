@@ -1,7 +1,7 @@
-%define basever 1.0.26
+%define basever 1.1.0
 
 Name: alsa-tools
-Version: 1.0.29
+Version: 1.1.0
 Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) tools
@@ -129,9 +129,9 @@ done
 
 # convert hotplug stuff to udev
 rm -f %buildroot%_sysconfdir/hotplug/usb/tascam_fw.usermap
-mkdir -p %buildroot{%udevdir,%_sysconfdir/udev/rules.d}
+mkdir -p %buildroot{%udevdir,%_udevrulesdir}
 mv %buildroot%_sysconfdir/hotplug/usb/* %buildroot%udevdir/
-install -pm644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/
+install -pm644 %SOURCE1 %buildroot%_udevrulesdir/
 
 %files
 %exclude %_bindir/hdajackretask
@@ -140,7 +140,7 @@ install -pm644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/
 %_bindir/*
 %_datadir/sounds/opl3
 %_man1dir/*
-%config(noreplace) %_sysconfdir/udev/rules.d/*.rules
+%_udevrulesdir/*.rules
 %udevdir/tascam_fpga
 %udevdir/tascam_fw
 
@@ -167,6 +167,14 @@ install -pm644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/
 # - consider http://cvs.fedoraproject.org/viewvc/rpms/alsa-tools/devel/
 
 %changelog
+* Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
+* Mon Mar 02 2015 Michael Shigorin <mike@altlinux.org> 1.0.29-alt2
+- moved 90-alsa-tools-firmware.rules file
+  from %_sysconfdir/udev/rules.d/
+    to %_udevrulesdir/
+
 * Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 1.0.29-alt1
 - 1.0.29
 
