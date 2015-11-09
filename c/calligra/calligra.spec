@@ -6,7 +6,7 @@
 %define koffice_ver 4:2.3.70
 
 Name: calligra
-Version: 2.9.7
+Version: 2.9.9
 Release: alt1
 Epoch: 0
 %define libname lib%name
@@ -34,6 +34,7 @@ Requires: %name-okular-odf = %EVR
 Source: http://download.kde.org/stable/calligra-%version/calligra-%version.tar
 Source1: FindOkular.cmake
 # FC
+Patch1: adapt-to-libwps-0.4.patch
 # ALT
 Patch101: alt-build-active.patch
 Patch102: alt-fix-compile.patch
@@ -48,7 +49,7 @@ BuildRequires: libexiv2-devel libfftw3-devel libfreetds-devel libglew-devel libg
 BuildRequires: liblcms2-devel libmysqlclient-devel libopenjpeg-devel libpoppler-qt4-devel
 BuildRequires: libqca2-devel libsqlite3-devel sqlite3 libxbase-devel openexr-devel postgresql-devel
 BuildRequires: libvisio-devel libwpg-devel libwpd10-devel libwps-devel libodfgen-devel libetonyek-devel libxml2-devel
-BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
+#BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
 
 %description
 %summary.
@@ -258,6 +259,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup
+%patch1 -p1
 #%patch101 -p1
 %patch102 -p1
 %patch103 -p1
@@ -692,6 +694,9 @@ mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 %_K4libdir/libkritacolord.so
 
 %changelog
+* Mon Nov 09 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.9.9-alt1
+- new version
+
 * Fri Sep 04 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.9.7-alt1
 - new version
 
