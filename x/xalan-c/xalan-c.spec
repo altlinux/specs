@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           xalan-c
 Version:        1.11.0
-Release:        alt1_4
+Release:        alt1_7
 Summary:        Xalan XSLT processor for C
 
 Group:          System/Libraries
@@ -46,6 +46,7 @@ find -type d -name CVS -print0 | xargs -0 rm -rf
 chmod 644 NOTICE
 
 # Update config.guess for new architectures
+# cp /usr/lib/rpm/config.guess config.guess
 
 %build
 export XALANCROOT="${PWD}"
@@ -82,6 +83,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_7
+- new version
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_4
 - dependency
 
