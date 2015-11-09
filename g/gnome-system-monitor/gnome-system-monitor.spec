@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.0.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Simple process monitor
@@ -75,6 +75,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
+- 3.18.2
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0.1-alt1
 - 3.18.0.1
 
