@@ -3,7 +3,7 @@
 
 Name: python-module-%pypi_name
 Version: 1.0.3
-Release: alt1
+Release: alt2
 Summary: A lean WSGI object-dispatching web framework
 Group: Development/Python
 
@@ -34,6 +34,10 @@ BuildRequires: python3-module-webtest >= 1.3.1
 BuildRequires: python3-module-argparse
 BuildRequires: python3-module-logutils
 %endif
+
+Requires: python-module-singledispatch
+Requires: python-module-argparse
+Requires: python-module-logutils
 
 %description
 A WSGI object-dispatching web framework, designed to be lean and
@@ -104,6 +108,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 
 
 %changelog
+* Mon Nov 09 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.3-alt2
+- update R:
+
 * Fri Oct 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.3-alt1
 - 1.0.3
 - add python3 package
