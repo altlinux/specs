@@ -1,6 +1,6 @@
 Name: alsa-plugins
-Version: 1.0.29
-Release: alt2
+Version: 1.1.0
+Release: alt1
 Serial: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) plugins
@@ -66,6 +66,9 @@ __EOF__
 %_datadir/alsa/alsa.conf.d/50-pulseaudio.conf
 
 %changelog
+* Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 1:1.1.0-alt1
+- 1.1.0
+
 * Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 1:1.0.29-alt2
 - added 50-pulseaudio.conf
 - converted spec to UTF-8
