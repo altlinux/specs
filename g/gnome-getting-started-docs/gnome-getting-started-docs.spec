@@ -1,14 +1,13 @@
 %define ver_major 3.18
 
 Name: gnome-getting-started-docs
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Help for a new GNOME users
 License: %fdl
 Group: Graphical desktop/GNOME
 Url: ftp://ftp.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
@@ -39,6 +38,9 @@ yelp. It is normally used together with gnome-initial-setup.
 %doc AUTHORS README NEWS
 
 %changelog
+* Tue Nov 10 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
+- 3.18.2
+
 * Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 
