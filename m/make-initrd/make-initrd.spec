@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 0.8.8
-Release: alt4
+Release: alt5
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -168,6 +168,10 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 0.8.8-alt5
+- add-modules: fixed harmless typo (closes: #29907)
+- 975-cleanup: silence ipconfig
+
 * Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.8.8-alt4
 - functions: silence logger (closes: #31070)
 
