@@ -1,5 +1,5 @@
 %define oldname liberation-fonts
-%global priority  59
+%global priority 60
 %global fontname liberation-narrow
 %global fontconf %{priority}-%{fontname}
 
@@ -7,7 +7,7 @@ Name:             fonts-ttf-%fontname
 Summary:          Sans-serif Narrow fonts to replace commonly used Microsoft Arial Narrow
 
 Version:          1.07.4
-Release:          alt1
+Release:          alt2
 # The license of the Liberation Fonts is a EULA that contains GPLv2 and two
 # exceptions:
 # The first exception is the standard FSF font exception.
@@ -59,6 +59,9 @@ install -m 0644 -p %{SOURCE5} \
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}.conf
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 1.07.4-alt2
+- lowered priority to 60 (closes: #30669)
+
 * Mon Jul 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.07.4-alt1
 - as of 2.00 liberation-narrow is not included in liberation fonts 
   due to license incompatibilities. Use release 1.07.4
