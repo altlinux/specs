@@ -4,7 +4,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname paratype-pt-serif-fonts
 %global fontname paratype-pt-serif
-%global fontconf 57-%{fontname}
+%global fontconf 59-%{fontname}
 
 %global common_desc \
 The PT Serif family was developed as a second part of the project \
@@ -26,7 +26,7 @@ of Olga Umpeleva and under supervision of Vladimir Yefimov. \
 
 Name:           fonts-ttf-paratype-pt-serif
 Version:        20141121
-Release:        alt1_2
+Release:        alt2_2
 Summary:        A pan-Cyrillic typeface
 
 License:        OFL
@@ -139,6 +139,9 @@ fi
 
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 20141121-alt2_2
+- lowered .conf priority
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 20141121-alt1_2
 - new version
 
