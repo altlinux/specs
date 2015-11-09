@@ -3,8 +3,8 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.6.4
-Release:        alt3
+Version:        5.6.5
+Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
@@ -40,7 +40,7 @@ Patch40:	mintmenu-5.6.2-alt-xfce-logout.patch
 # Use Synaptic via consolehelper intead of gksu
 Patch41:	mintmenu-alt-fix-package-manager.patch
 
-Requires: GConf2 alacarte gnome-search-tool
+Requires: GConf2 mozo gnome-search-tool
 Requires: python-module-gnome-menus
 Requires: python-module-pygnome-desktop
 Requires: python-module-pyxdg
@@ -142,6 +142,10 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Mon Nov 09 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.5-alt1
+- New version
+- Replace alacarte with mozo
+
 * Fri Sep 04 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.4-alt3
 - Change menu icon to 22x22 simplified ALT Linux logo
 
