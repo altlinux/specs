@@ -4,7 +4,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname paratype-pt-mono-fonts
 %global fontname paratype-pt-mono
-%global fontconf 57-%{fontname}
+%global fontconf 59-%{fontname}
 
 %global common_desc \
 Font PT Monoa.. is the last addition to the pan-Cyrillic font superfamily \
@@ -24,7 +24,7 @@ Isabella Chaeva and with financial support of Google.\
 
 Name:           fonts-ttf-paratype-pt-mono
 Version:        20141121
-Release:        alt1_2
+Release:        alt2_2
 Summary:        A pan-Cyrillic monospace typeface
 
 License:        OFL
@@ -112,6 +112,9 @@ fi
 
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 20141121-alt2_2
+- lowered .conf priority
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 20141121-alt1_2
 - new version
 
