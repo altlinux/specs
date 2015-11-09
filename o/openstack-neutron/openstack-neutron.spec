@@ -6,7 +6,7 @@
 
 Name: openstack-neutron
 Version: 7.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Provides: openstack-quantum = %EVR
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
@@ -718,6 +718,9 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Mon Nov 09 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.0-alt2
+- fix systemd units and sysv scripts
+
 * Fri Oct 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.0-alt1
 - 7.0.0 Liberty Release
 
