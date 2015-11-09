@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define ver_major 1.16
-%define beta -beta3
+%define beta %nil
 
 Name: elementary
 Version: %ver_major.0
-Release: alt0.1
+Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
 Group: Graphical desktop/Enlightenment
@@ -105,6 +105,9 @@ developing applications that use Elementary libraries.
 %_iconsdir/*.png
 
 %changelog
+* Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0 release
+
 * Mon Oct 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt0.1
 - 1.16.0-beta3
 

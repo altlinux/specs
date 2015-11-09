@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 %define ver_major 1.16
-%define beta -beta3
+%define beta %nil
 %define gst_api_ver 1.0
 
 %def_enable wayland
@@ -19,7 +19,7 @@
 
 Name: efl
 Version: %ver_major.0
-Release: alt0.1
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -312,6 +312,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0 release
+
 * Mon Oct 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt0.1
 - 1.16.0-beta3
 
