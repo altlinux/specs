@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libreadline-devel
 # END SourceDeps(oneline)
 Name:           malaga
 Version:        7.12 
-Release:        alt2_15
+Release:        alt2_18
 Summary:        A programming language for automatic language analysis
 
 Group:          Development/Other
@@ -99,6 +99,9 @@ chmod 0755 $RPM_BUILD_ROOT%{_libdir}/libmalaga.so*
 
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_18
+- new version
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_15
 - update to new release by fcimport
 
