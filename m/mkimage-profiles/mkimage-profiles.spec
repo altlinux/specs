@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.77
+Version: 1.1.78
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 1.1.78-alt1
+- regular-enlightenment
+
 * Mon Oct 19 2015 Michael Shigorin <mike@altlinux.org> 1.1.77-alt1
 - webkiosk improvements
 
