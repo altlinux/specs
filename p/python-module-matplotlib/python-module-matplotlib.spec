@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt3.git20150829
+Release: alt4.git20150829
 
 Summary: Matlab(TM) style python plotting package
 
@@ -25,32 +25,32 @@ Source1: setup.cfg
 
 %setup_python_module pylab
 
-BuildPreReq: python3-module-pygobject3 git
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-matplotlib python-module-numpydoc ipython 
-BuildRequires: dvipng gcc-c++ libgtk+2-devel python-module-PyQt4-devel
-BuildPreReq: python-module-ctypes python-module-pygtk_git-devel
-BuildPreReq: python-module-qt python-module-wx2.9 graphviz
-BuildPreReq: python-modules-encodings python-modules-tkinter
-BuildPreReq: rpm-build-java rpm-build-mono libwxGTK2.9-devel
-BuildPreReq: texlive-latex-base tk-devel xorg-sdk xpdf
-BuildPreReq: libnumpy-devel latex2html texlive-latex-recommended
-BuildPreReq: linuxdoc-tools python-module-sphinx-devel
-BuildPreReq: libgeos-devel python-module-geos zlib-devel
-BuildPreReq: python-module-scipy-devel rpm-macros-make
-BuildPreReq: libpng-devel libfreetype-devel
-BuildPreReq: python-module-pytz python-module-dateutil
-BuildPreReq: python-module-markupsafe strace libgtk+3-devel
-BuildPreReq: python-module-pyparsing
+BuildRequires: python3-module-pygobject3 git
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-matplotlib python-module-numpydoc ipython 
+BuildRequires: dvipng gcc-c++ libgtk+2-devel python-module-PyQt4-devel python-module-PyQt5-devel
+BuildRequires: python-module-ctypes python-module-pygtk_git-devel
+BuildRequires: python-module-qt python-module-wx2.9 graphviz
+BuildRequires: python-modules-encodings python-modules-tkinter
+BuildRequires: rpm-build-java rpm-build-mono libwxGTK2.9-devel
+BuildRequires: texlive-latex-base tk-devel xorg-sdk xpdf
+BuildRequires: libnumpy-devel latex2html texlive-latex-recommended
+BuildRequires: linuxdoc-tools python-module-sphinx-devel
+BuildRequires: libgeos-devel python-module-geos zlib-devel
+BuildRequires: python-module-scipy-devel rpm-macros-make
+BuildRequires: libpng-devel libfreetype-devel
+BuildRequires: python-module-pytz python-module-dateutil
+BuildRequires: python-module-markupsafe strace libgtk+3-devel
+BuildRequires: python-module-pyparsing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
-BuildPreReq: python3-module-setuptools-tests
-BuildPreReq: python3-module-scipy-devel python3-module-markupsafe
-BuildPreReq: python3-module-pytz python3-module-dateutil
-BuildPreReq: python3-module-PySide
-BuildPreReq: python3-module-pycairo python3-module-pygobject3-devel
-BuildPreReq: python3-module-pyparsing
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-scipy-devel python3-module-markupsafe
+BuildRequires: python3-module-pytz python3-module-dateutil
+BuildRequires: python3-module-PySide
+BuildRequires: python3-module-pycairo python3-module-pygobject3-devel
+BuildRequires: python3-module-pyparsing
 %endif
 
 #Requires: dvipng %name-gtk = %version-%release
@@ -105,6 +105,14 @@ Requires: python3-module-%oname = %version-%release
 
 %description -n python3-module-%oname-fltk
 fltk backend for %oname.
+
+%package -n python3-module-%oname-qt5
+Summary: qt5 backend for %oname (Python 3)
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-qt5
+qt5 backend for %oname.
 
 %package -n python3-module-%oname-qt4
 Summary: qt4 backend for %oname (Python 3)
@@ -237,6 +245,14 @@ Requires: %name = %version-%release
 
 %description fltk
 fltk backend for %oname.
+
+%package qt5
+Summary: qt5 backend for %oname
+Group: Development/Python
+Requires: %name = %version-%release
+
+%description qt5
+qt5 backend for %oname.
 
 %package qt4
 Summary: qt4 backend for %oname
@@ -531,8 +547,11 @@ done
 %python_sitelibdir/matplotlib/backends/tk*
 %python_sitelibdir/matplotlib/backends/_tkagg*
 
+%files qt5
+%python_sitelibdir/matplotlib/backends/backend_qt5*
+
 %files qt4
-%python_sitelibdir/matplotlib/backends/backend_qt?*
+%python_sitelibdir/matplotlib/backends/backend_qt4*
 %python_sitelibdir/matplotlib/backends/qt?_compat.*
 %python_sitelibdir/matplotlib/backends/qt_compat.*
 %python_sitelibdir/matplotlib/backends/qt_editor
@@ -660,9 +679,13 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/backends/__pycache__/tk*
 #python3_sitelibdir/matplotlib/backends/_tkagg*
 
+%files -n python3-module-%oname-qt5
+%python3_sitelibdir/matplotlib/backends/backend_qt5*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5*
+
 %files -n python3-module-%oname-qt4
-%python3_sitelibdir/matplotlib/backends/backend_qt?*
-%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt?*
+%python3_sitelibdir/matplotlib/backends/backend_qt4*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt4*
 %python3_sitelibdir/matplotlib/backends/qt?_compat.*
 %python3_sitelibdir/matplotlib/backends/qt_compat.*
 %python3_sitelibdir/matplotlib/backends/__pycache__/qt?_compat.*
@@ -689,6 +712,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt4.git20150829
+- Added qt5 backend
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.git20150829
 - New snapshot
 
