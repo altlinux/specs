@@ -1,11 +1,11 @@
-%define priority  59
+%define priority 60 
 %define fontname liberation
 %define fontconf %{priority}-%{fontname}
 %define oldname liberation-fonts
 
 Name: fonts-ttf-%fontname
 Version: 2.00.1
-Release: alt1
+Release: alt2
 
 Summary: Fonts to replace commonly used Microsoft Windows Fonts
 
@@ -64,6 +64,9 @@ done
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-*.conf
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 2.00.1-alt2
+- lowered priority to 60 (see ALT#30669 for details)
+
 * Mon Jul 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.00.1-alt1
 - new version (closes: #30161)
 - new license
