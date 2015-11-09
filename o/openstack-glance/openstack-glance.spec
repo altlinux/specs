@@ -1,7 +1,7 @@
 
 Name: openstack-glance
 Version: 11.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Image Service
 
@@ -231,6 +231,9 @@ rm -rf %buildroot/usr/etc/glance
 %doc doc/build/html
 
 %changelog
+* Mon Nov 09 2015 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.0-alt2
+- update systemd patch
+
 * Fri Oct 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.0-alt1
 - 11.0.0 Liberty release
 
