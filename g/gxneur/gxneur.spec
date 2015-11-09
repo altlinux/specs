@@ -3,14 +3,13 @@ BuildRequires: desktop-file-utils
 
 Name: gxneur
 Version: 0.17.0
-Release: alt2
+Release: alt4
 
 Summary: GTK frontend for X Neural Switcher
-
 License: GPL
 Group: Office
-Url: http://xneur.ru/
 
+Url: http://xneur.ru/
 Source: %{name}_%version.orig.tar.gz
 Source1: %name.png
 
@@ -20,9 +19,20 @@ BuildRequires: libGConf libGConf-devel libglade-devel libxneur-devel
 
 Requires: xneur >= %version
 
+%define flagsdir %_iconsdir/flags
+
 %description
 Xneur is program like Punto Switcher, but has other
 functionality and features for configuring.
+
+%package -n icon-flags
+Summary: Custom country flags for language layout indicators
+Group: Graphics
+BuildArch: noarch
+
+%description -n icon-flags
+Custom country flags for language layout indicators
+(from gxneur sources).
 
 %prep
 %setup
@@ -55,6 +65,13 @@ StartupNotify=false
 Terminal=false
 EOF
 
+# use 24x24 as these won't require scalingh
+#mkdir -p %buildroot%flagsdir
+#cp -al pixmaps/??.png %buildroot%flagsdir/
+for src in %buildroot%_iconsdir/hicolor/24x24/apps/gxneur-??.png; do
+	install -pDm644 "$src" %buildroot%flagsdir/"${src##*-}"
+done
+
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README TODO
 %_bindir/gxneur
@@ -65,7 +82,16 @@ EOF
 %_iconsdir/hicolor/scalable/apps/%name.*
 %_pixmapsdir/%name.png
 
+%files -n icon-flags
+%flagsdir/??.png
+
 %changelog
+* Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 0.17.0-alt4
+- Changed to 24x24 flag icons for MATE (these fit better)
+
+* Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 0.17.0-alt3
+- Added icon-flags subpackage
+
 * Sun Mar 08 2015 Michael Shigorin <mike@altlinux.org> 0.17.0-alt2
 - NMU: fix desktop file
 
