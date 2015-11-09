@@ -1,15 +1,18 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install perl(diagnostics.pm) perl(open.pm)
+# END SourceDeps(oneline)
 Summary: A clock for the X Window System
 Name: xdaliclock
-Version: 2.25
-Release: alt3_12
+Version: 2.43
+Release: alt1_1
 Group: Graphics
 License: BSD
 URL: http://www.jwz.org/xdaliclock/
 Source0: http://www.jwz.org/xdaliclock/xdaliclock-%{version}.tar.gz
 Source1: xdaliclock.desktop
 BuildRequires: desktop-file-utils
-BuildRequires: libICE-devel libXmu-devel libSM-devel xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
-BuildRequires: libXext-devel libXaw-devel libXt-devel
+BuildRequires: libICE-devel, libXmu-devel, libSM-devel xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
+BuildRequires: libXext-devel, libXaw-devel, libXt-devel
 Source44: import.info
 
 %description
@@ -23,9 +26,6 @@ for window transparency.
 %setup
 
 %build
-# easier than patching configure to read those files from own directory
-#cp /usr/lib/rpm/redhat/config.{guess,sub} .
-
 cd X11
 %configure
 make %{?_smp_mflags}
@@ -57,6 +57,9 @@ desktop-file-install  \
 %{_datadir}/applications/*
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 2.43-alt1_1
+- new version
+
 * Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 2.25-alt3_12
 - update to new release by fcimport
 
