@@ -26,7 +26,7 @@
 %define init_script systemd
 
 Name: lxc
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
@@ -187,6 +187,9 @@ __EOF__
 
 
 %changelog
+* Mon Nov 09 2015 Denis Pynkin <dans@altlinux.org> 1.1.4-alt1
+- New version.
+
 * Tue Sep 15 2015 Denis Pynkin <dans@altlinux.org> 1.1.3-alt1
 - New version.
   Security fixes and ABI changes in upstream.
