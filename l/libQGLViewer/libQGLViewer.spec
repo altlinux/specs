@@ -1,10 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libqt4-devel
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
 Name:           libQGLViewer
-Version:        2.3.9
-Release:        alt2_8
+Version:        2.5.1
+Release:        alt1_8
 Summary:        Qt based OpenGL generic 3D viewer library
 
 Group:          System/Libraries
@@ -18,13 +17,13 @@ Patch0:         libQGLViewer-2.3.1-exit.patch
 
 # libQGLViewer .pro files explicitely remove "-g" from compile flags. Make
 # them back.
-Patch1:         libQGLViewer-2.3.6-dbg.patch
+Patch1:         libQGLViewer-2.5.1-dbg.patch
 
-# Need to include <GL/glu.h> explicitely: <GL/glut.h> is no longer sufficent
-Patch2:         libQGLViewer-2.3.9-glu.patch
+# Compilation error
+Patch2:         libQGLViewer-2.5.1-qflag.patch
 
 
-BuildRequires:  qt4-devel
+BuildRequires:  qt4-devel qt5-base-devel
 Source44: import.info
 Patch33: libQGLViewer-alt-glu.patch
 
@@ -33,10 +32,22 @@ Patch33: libQGLViewer-alt-glu.patch
 3D viewers. It provides some of the typical 3D viewer functionality, such
 as the possibility to move the camera using the mouse, which lacks in most
 of the other APIs. Other features include mouse manipulated frames,
-interpolated keyFrames, object selection, stereo display, screenshot saving
+interpolated key-frames, object selection, stereo display, screenshot saving
 and much more. It can be used by OpenGL beginners as well as to create
 complex applications, being fully customizable and easy to extend.
 
+%package        qt5
+Summary:        Qt5 version of %{name}
+Group:          Development/C
+
+%description    qt5
+%{name} is a C++ library based on Qt that eases the creation of OpenGL
+3D viewers. It provides some of the typical 3D viewer functionality, such
+as the possibility to move the camera using the mouse, which lacks in most
+of the other APIs. Other features include mouse manipulated frames,
+interpolated key-frames, object selection, stereo display, screenshot saving
+and much more. It can be used by OpenGL beginners as well as to create
+complex applications, being fully customizable and easy to extend.
 
 %package        devel
 Summary:        Development files for %{name}
@@ -46,6 +57,15 @@ Requires:       %{name} = %{version}-%{release}
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
+
+%package        qt5-devel
+Summary:        Development files for %{name} using Qt5
+Group:          Development/C
+Requires:       %{name}-qt5 = %{version}-%{release}
+
+%description    qt5-devel
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name} and Qt5.
 
 
 %package doc
@@ -60,35 +80,44 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .exit
 %patch1 -p1 -b .dbg
-%patch2 -p1 -b .glu
+%patch2 -p1 -b .qflag
 
-# Fix the encoding of several files, so that they all use utf-8.
-for f in doc/*.html doc/examples/*.html \
-        examples/contribs/terrain/quadtree.cpp \
-        examples/contribs/terrain/viewer.cpp \
-        examples/contribs/quarto/piece.cpp \
-        examples/contribs/dvonn/dvonnwindowimpl.cpp \
-        examples/luxo/luxo.cpp \
-        examples/contribs/quarto/jeu.cpp \
-        examples/contribs/terrain/terrain.cpp \
-        examples/contribs/quarto/rules.txt;
-do
-  cp -a $f $f.bak
-  rm -f $f
-  sed -e 's/charset=iso-8859-1/charset=utf-8/' < $f.bak | iconv -f l1 -t utf8 > $f;
-  touch -r $f.bak $f
-  rm -f $f.bak
-done
-%patch33 -p2
+%patch33 -p1
+rm -rf ../%{name}-%{version}-qt5
+cp -a ../%{name}-%{version} ../%{name}-%{version}-qt5
+sed -i -e 's/TARGET = QGLViewer/TARGET = QGLViewer-qt5/' ../%{name}-%{version}-qt5/QGLViewer/QGLViewer.pro
 
 %build
 
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
+%{!?_qt4_qmake: %define _qt4_qmake /usr/bin/qmake-qt4}
+%{!?qmake_qt4: %define qmake_qt4 \
+  qmake-qt4 \\\
+  QMAKE_CFLAGS_DEBUG="${CFLAGS:-%optflags}" \\\
+  QMAKE_CFLAGS_RELEASE="${CFLAGS:-%optflags}" \\\
+  QMAKE_CXXFLAGS_DEBUG="${CXXFLAGS:-%optflags}" \\\
+  QMAKE_CXXFLAGS_RELEASE="${CXXFLAGS:-%optflags}" \\\
+  QMAKE_LFLAGS_DEBUG="${LDFLAGS:-%{?__global_ldflags}}" \\\
+  QMAKE_LFLAGS_RELEASE="${LDFLAGS:-%{?__global_ldflags}}" \\\
+  QMAKE_STRIP=
+}
+%{!?_qt5_qmake: %define _qt5_qmake /usr/bin/qmake-qt5}
+%{!?qmake_qt5: %define qmake_qt5 \
+  %{_qt5_qmake} \\\
+  QMAKE_CFLAGS_DEBUG="${CFLAGS:-%optflags}" \\\
+  QMAKE_CFLAGS_RELEASE="${CFLAGS:-%optflags}" \\\
+  QMAKE_CXXFLAGS_DEBUG="${CXXFLAGS:-%optflags}" \\\
+  QMAKE_CXXFLAGS_RELEASE="${CXXFLAGS:-%optflags}" \\\
+  QMAKE_LFLAGS_DEBUG="${LDFLAGS:-%{?__global_ldflags}}" \\\
+  QMAKE_LFLAGS_RELEASE="${LDFLAGS:-%{?__global_ldflags}}" \\\
+  QMAKE_STRIP=
+}
+
 cd QGLViewer
-qmake-qt4 \
+%{qmake_qt4} \
           LIB_DIR=%{_libdir} \
-          DOC_DIR=%{_pkgdocdir} \
+          DOC_DIR=%{_docdir}/%{name} \
           INCLUDE_DIR=%{_includedir} \
           TARGET_x=%{name}.so.%{version}
 # The TARGET_x variable gives the SONAME. However, qmake behavior is not
@@ -98,12 +127,24 @@ qmake-qt4 \
 make %{?_smp_mflags}
 
 cd ../designerPlugin
-qmake-qt4 LIB_DIR=../QGLViewer
+%{qmake_qt4} LIB_DIR=../QGLViewer
+make %{?_smp_mflags}
+
+cd ../../%{name}-%{version}-qt5/QGLViewer
+%{qmake_qt5} \
+    LIB_DIR=%{_libdir} \
+    DOC_DIR=%{_docdir}/%{name} \
+    INCLUDE_DIR=%{_includedir} \
+    TARGET_x=%{name}-qt5.so.%{version}
+# The TARGET_x variable gives the SONAME. However, qmake behavior is not
+# correct when the SONAME is customized: it create wrong symbolic links
+# that must be cleaned after the installation.
+
 make %{?_smp_mflags}
 
 %install
 cd QGLViewer
-make -f Makefile -e INSTALL_ROOT=$RPM_BUILD_ROOT install_target install_include
+make -f Makefile -e INSTALL_ROOT=$RPM_BUILD_ROOT install_target install_include STRIP=/usr/bin/true
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer.prl
 
@@ -112,7 +153,15 @@ rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer.so.?.? \
    $RPM_BUILD_ROOT%{_libdir}/libQGLViewer.so.%{version}\\*
 
 cd ../designerPlugin
-make -e INSTALL_ROOT=$RPM_BUILD_ROOT install
+make -e INSTALL_ROOT=$RPM_BUILD_ROOT install STRIP=/usr/bin/true
+
+cd ../../%{name}-%{version}-qt5/QGLViewer
+make -f Makefile -e INSTALL_ROOT=$RPM_BUILD_ROOT install_target install_include STRIP=/usr/bin/true
+find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt5.prl
+# Clean symbolic links
+rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt5.so.?.?
+rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt5.so.%{version}\\* || true
 
 %files
 %doc README LICENCE CHANGELOG GPL_EXCEPTION
@@ -123,11 +172,22 @@ make -e INSTALL_ROOT=$RPM_BUILD_ROOT install
 %{_libdir}/libQGLViewer.so
 %{_libdir}/qt4/plugins/designer/libqglviewerplugin.so
 
+%files qt5
+%doc README LICENCE CHANGELOG GPL_EXCEPTION
+%{_libdir}/libQGLViewer-qt5.so.%{version}
+
+%files qt5-devel
+%{_includedir}/QGLViewer/
+%{_libdir}/libQGLViewer-qt5.so
+
 %files doc
 %doc doc
 %doc examples
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_8
+- new version
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.3.9-alt2_8
 - update to new release by fcimport
 
