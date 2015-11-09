@@ -8,7 +8,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -164,6 +164,9 @@ the functionality of the EOG GUI.
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
 * Mon Sep 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
