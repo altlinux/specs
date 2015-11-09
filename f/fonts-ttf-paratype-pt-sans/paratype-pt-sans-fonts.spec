@@ -4,7 +4,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname paratype-pt-sans-fonts
 %global fontname paratype-pt-sans
-%global fontconf 57-%{fontname}
+%global fontconf 59-%{fontname}
 
 %global archivename PTSans.zip
 
@@ -34,7 +34,7 @@ A. A a.'titlea.' language is named after an ethnic group.
 
 Name:           fonts-ttf-paratype-pt-sans
 Version:        20141121
-Release:        alt1_1
+Release:        alt1_2
 Summary:        A pan-Cyrillic typeface
 
 License:        OFL
@@ -167,6 +167,9 @@ fi
 
 
 %changelog
+* Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 20141121-alt1_2
+- lowered .conf priority
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20141121-alt1_1
 - update to new release by fcimport
 
