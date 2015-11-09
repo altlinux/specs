@@ -1,6 +1,6 @@
 Name: alsa-utils
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Serial: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
@@ -45,6 +45,19 @@ Group: Sound
 amixer allows command-line control of the mixer for the ALSA soundcard
 driver.  amixer supports multiple soundcards.
 
+%package -n alsa-bat
+Summary: Basic Audio Tester
+License: GPL
+Group: Sound
+Conflicts: bacula-bat
+
+%description -n alsa-bat
+BAT(Basic Audio Tester) is a simple command-line utility intended
+to help automate audio driver and sound server testing with
+little human interaction. BAT can be used to test audio quality,
+stress test features and test audio before and after PM state
+changes.
+
 %prep
 %setup
 %patch -p1
@@ -69,6 +82,7 @@ touch config.rpath
 %exclude %_bindir/aplay
 %exclude %_bindir/arecord
 %exclude %_bindir/amixer
+%exclude %_bindir/bat
 %_sbindir/*
 %_datadir/alsa/speaker-test
 %_datadir/alsa/init
@@ -77,6 +91,7 @@ touch config.rpath
 %exclude %_man1dir/aplay.1*
 %exclude %_man1dir/arecord.1*
 %exclude %_man1dir/amixer.1*
+%exclude %_man1dir/bat.1*
 %_man7dir/*.7*
 
 %files -n aplay
@@ -89,7 +104,14 @@ touch config.rpath
 %_bindir/amixer
 %_man1dir/amixer.1*
 
+%files -n alsa-bat
+%_bindir/bat
+%_man1dir/bat.1*
+
 %changelog
+* Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 1:1.1.0-alt1.1
+- added alsa-bat subpackage (Conflicts: bacula-bat over %_bindir/bat)
+
 * Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 1:1.1.0-alt1
 - 1.1.0
 

@@ -1,0 +1,65 @@
+Name: tinycompress
+Version: 1.1.0
+Release: alt1
+
+Summary: Userspace Interface to Kernel ALSA Compressed Audio APIs
+License: LGPLv2+ or BSD
+Group: Sound
+
+Url: http://git.alsa-project.org/?p=tinycompress.git
+Source: %name-%version.tar
+
+BuildRequires: libalsa-devel
+BuildRequires: glibc-kernheaders
+
+%description
+This package contains cplay and crecord command line utilities which
+demonstrate the usage of ALSA Compressed Audio API via tinycompress.
+
+%package -n lib%name
+Summary: Userspace Interface to Kernel ALSA Compressed Audio APIs
+Group: System/Libraries
+
+%description -n lib%name
+Userspace library for anyone who wants to use the ALSA compressed APIs
+introduced in Linux 3.3
+
+This library provides the APIs to open a ALSA compressed device
+and read/write compressed data like MP3 etc to it.
+
+%package -n lib%name-devel
+Summary: Headers and libraries for %name development
+Group: Development/C
+Requires: lib%name = %version-%release
+
+%description -n lib%name-devel
+Development files for %name.
+
+%prep
+%setup
+rm -r include/sound
+ln -s %_includedir/sound include/
+
+%build
+%autoreconf
+%configure
+%make_build
+
+%install
+%makeinstall_std
+
+%files
+%_bindir/*
+
+%files -n lib%name
+%_libdir/lib%name.so.*
+
+%files -n lib%name-devel
+%doc README
+%_includedir/%name
+%_libdir/lib%name.so
+
+%changelog
+* Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1
+- built for ALT Linux (based on Mageia 0.2.0 package)
+
