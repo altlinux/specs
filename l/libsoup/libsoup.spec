@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define api_ver 2.4
 %define ver_major 2.52
@@ -9,8 +9,8 @@
 %def_enable vala
 
 Name: libsoup
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
@@ -192,6 +192,7 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %_libdir/%name-%api_ver.so
 %_libdir/pkgconfig/%name-%api_ver.pc
 %{?_enable_vala:%_vapidir/%name-%api_ver.vapi}
+%{?_enable_vala:%_vapidir/%name-%api_ver.deps}
 
 %files gnome-devel
 %_includedir/%name-gnome-%api_ver/
@@ -221,6 +222,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 2.52.2-alt1
+- 2.52.2
+
 * Fri Oct 16 2015 Yuri N. Sedunov <aris@altlinux.org> 2.52.1-alt2
 - 2.52.1_c4d290d9
 
