@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        41.0.2
+Version:        42.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -29,6 +29,9 @@ Patch6:         firefox3-alt-disable-werror.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 #Patch17:       firefox-disable-installer.patch
+
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1220399
+Patch20:        mozilla-bug-1220399-building-with-libproxy-support-fails.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -69,9 +72,9 @@ BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
 # Mozilla requires
-BuildRequires: libnspr-devel       >= 4.10.8-alt1
-BuildRequires: libnss-devel        >= 3.18.0-alt1
-BuildRequires: libnss-devel-static >= 3.18.0-alt1
+BuildRequires: libnspr-devel       >= 4.10.9-alt1
+BuildRequires: libnss-devel        >= 3.20.1-alt1
+BuildRequires: libnss-devel-static >= 3.20.1-alt1
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -117,7 +120,7 @@ tar -xf %SOURCE2
 %patch6  -p1
 %patch14 -p1
 %patch16 -p1
-#patch17 -p1
+%patch20 -p1
 
 #echo firefox_version > browser/config/version.txt
 
@@ -296,6 +299,28 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Nov 05 2015 Alexey Gladkov <legion@altlinux.ru> 42.0-alt1
+- New release (42.0).
+- Fixed:
+  + 2015-133 NSS and NSPR memory corruption issues
+  + 2015-132 Mixed content WebSocket policy bypass through workers
+  + 2015-131 Vulnerabilities found through code inspection
+  + 2015-130 JavaScript garbage collection crash with Java applet
+  + 2015-129 Certain escaped characters in host of Location-header are being treated as non-escaped
+  + 2015-128 Memory corruption in libjar through zip files
+  + 2015-127 CORS preflight is bypassed when non-standard Content-Type headers are received
+  + 2015-126 Crash when accessing HTML tables with accessibility tools on OS X
+  + 2015-125 XSS attack through intents on Firefox for Android
+  + 2015-124 Android intents can be used on Firefox for Android to open privileged files
+  + 2015-123 Buffer overflow during image interactions in canvas
+  + 2015-122 Trailing whitespace in IP address hostnames can bypass same-origin policy
+  + 2015-121 Disabling scripts in Add-on SDK panels has no effect
+  + 2015-120 Reading sensitive profile files through local HTML file on Android
+  + 2015-119 Firefox for Android addressbar can be removed after fullscreen mode
+  + 2015-118 CSP bypass due to permissive Reader mode whitelist
+  + 2015-117 Information disclosure through NTLM authentication
+  + 2015-116 Miscellaneous memory safety hazards (rv:42.0 / rv:38.4)
+
 * Tue Oct 20 2015 Alexey Gladkov <legion@altlinux.ru> 41.0.2-alt1
 - New release (41.0.2).
 - Fixed:
