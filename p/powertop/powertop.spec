@@ -1,6 +1,6 @@
 Name: powertop
-Version: 2.7
-Release: alt2
+Version: 2.8
+Release: alt1
 Serial: 1
 
 Summary: Tool that helps you find what software is using the most power
@@ -65,6 +65,9 @@ touch %cachedir/saved_{parameters,results}.powertop
 %_initdir/%name
 
 %changelog
+* Tue Nov 10 2015 Michael Shigorin <mike@altlinux.org> 1:2.8-alt1
+- new version (watch file uupdate)
+
 * Sun May 31 2015 Michael Shigorin <mike@altlinux.org> 1:2.7-alt2
 - add the initscript
 
