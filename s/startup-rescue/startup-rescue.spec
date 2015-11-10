@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.24
+Version: 0.25
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -54,6 +54,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Tue Nov 10 2015 Michael Shigorin <mike@altlinux.org> 0.25-alt1
+- bump DHCP timeout to 35 so STP isn't a problem
+
 * Mon Jun 01 2015 Michael Shigorin <mike@altlinux.org> 0.24-alt1
 - added rescue-remote initscript
 - eliminated mdadm.conf spam (shows up during multiple live_rw boots)
