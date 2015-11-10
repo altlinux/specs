@@ -1,8 +1,10 @@
 %define soversion 1.12
+%define libglew libGLEW%soversion
+%define libglewmx libGLEWmx%soversion
 
 Name: GLEW%soversion
 Version: %soversion.0
-Release: alt4
+Release: alt5
 
 Summary: The OpenGL Extension Wrangler library
 License: BSD, MIT
@@ -22,29 +24,30 @@ which OpenGL extensions are supported on the target platform. OpenGL core and ex
 functionality is exposed in a single header file. GLEW has been tested on a variety of 
 operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
 
-%package -n lib%name
+%package -n %libglew
 Summary: The OpenGL Extension Wrangler library
 Group: System/Legacy libraries
 Provides: libGLEW = %version-%release
 Obsoletes: libGLEW = 1.12.0-alt1
 Obsoletes: libGLEW = 1.12.0-alt2
 
-%description -n lib%name
+%description -n %libglew
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
 extension loading library. GLEW provides efficient run-time mechanisms for determining 
 which OpenGL extensions are supported on the target platform. OpenGL core and extension
 functionality is exposed in a single header file. GLEW has been tested on a variety of 
 operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
 
-%package -n lib%{name}mx
+%package -n %libglewmx
 Summary: The OpenGL Extension Wrangler MX library
 Group: System/Legacy libraries
-Requires: lib%name = %version-%release
 Provides: libGLEWmx = %version-%release
+Provides: libGLEW1.12mx = %version-%release
+Obsoletes: libGLEW1.12mx < %version-%release
 Obsoletes: libGLEWmx = 1.12.0-alt1
 Obsoletes: libGLEWmx = 1.12.0-alt2
 
-%description -n lib%{name}mx
+%description -n %libglewmx
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
 extension loading library. GLEW provides efficient run-time mechanisms for determining 
 which OpenGL extensions are supported on the target platform. OpenGL core and extension
@@ -65,16 +68,18 @@ mkdir -p %buildroot%_libdir
 %__install -Dp -m0644 lib/libGLEW.so.%version %buildroot%_libdir
 %__install -Dp -m0644 lib/libGLEWmx.so.%version %buildroot%_libdir
 
-%__ln_s libGLEW.so.%version %buildroot%_libdir/libGLEW.so.%soversion
-%__ln_s libGLEWmx.so.%version %buildroot%_libdir/libGLEWmx.so.%soversion
+%files -n %libglew
+%_libdir/libGLEW.so.%soversion
+%_libdir/libGLEW.so.%soversion.*
 
-%files -n lib%name
-%_libdir/libGLEW.so.*
-
-%files -n lib%{name}mx
-%_libdir/libGLEWmx.so.*
+%files -n %libglewmx
+%_libdir/libGLEWmx.so.%soversion
+%_libdir/libGLEWmx.so.%soversion.*
 
 %changelog
+* Tue Nov 10 2015 Sergey V Turchin <zerg@altlinux.org> 1.12.0-alt5
+- fix deps; clean specfile
+
 * Mon Nov 09 2015 Nazarov Denis <nenderus@altlinux.org> 1.12.0-alt4
 - Built as legacy library
 
