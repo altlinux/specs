@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Build
 Name: perl-%dist
-Version: 0.4210
+Version: 0.4214
 Release: alt1
 
 Summary: Build and install Perl modules
@@ -12,6 +12,9 @@ URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/L/LE/LEONT/Module-Build-%{version}.tar.gz
 
 BuildArch: noarch
+
+# moved to separate package
+Requires: perl(inc/latest.pm)
 
 # loaded with try_require
 Requires: perl-CPAN-Meta
@@ -36,8 +39,7 @@ bzip2 -k Changes
 %files
 %doc	Changes.bz2 README
 	%_bindir/config_data
-%dir	%perl_vendor_privlib/inc
-	%perl_vendor_privlib/inc/latest*
+	%_man1dir/config_data*
 %dir	%perl_vendor_privlib/Module
 	%perl_vendor_privlib/Module/Build.pm
 %dir	%perl_vendor_privlib/Module/Build
@@ -57,6 +59,9 @@ bzip2 -k Changes
 %exclude %perl_vendor_privlib/Module/Build/Platform/os2.pm
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.4214-alt1
+- new version
+
 * Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.4210-alt1
 - automated CPAN update
 
