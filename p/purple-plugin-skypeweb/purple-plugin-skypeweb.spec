@@ -1,5 +1,5 @@
 Name: purple-plugin-skypeweb
-Version: 0.1
+Version: 1.0
 Release: alt1
 
 Summary: SkypeWeb Plugin for Pidgin
@@ -8,7 +8,7 @@ Group: Networking/Instant messaging
 URL: https://github.com/EionRobb/skype4pidgin
 Packager: Mikhail Kolchin <mvk@altlinux.org>
 
-Source: skype4pidgin-master.tar.gz
+Source: skype4pidgin-%version.tar.gz
 
 # Automatically added by buildreq on Tue Aug 25 2015
 # optimized out: glib2-devel libcloog-isl4 libgio-devel libjson-glib pkg-config
@@ -18,14 +18,12 @@ BuildRequires: libjson-glib-devel libpurple-devel zlib-devel
 SkypeWeb Plugin for Pidgin
 
 %prep
-%setup -n skype4pidgin-master
+%setup -n skype4pidgin-%version/skypeweb
 
 %build
-cd skypeweb
 %make_build
 
 %install
-cd skypeweb
 %makeinstall_std
 
 %files
@@ -33,5 +31,8 @@ cd skypeweb
 %_pixmapsdir/pidgin/protocols/*/skype.png
 
 %changelog
+* Tue Nov 10 2015 Mikhail Kolchin <mvk@altlinux.org> 1.0-alt1
+- New version
+
 * Tue Aug 25 2015 Mikhail Kolchin <mvk@altlinux.org> 0.1-alt1
-- initial build for ALT Linux Sisyphus
+- Initial build for ALT Linux Sisyphus
