@@ -4,7 +4,7 @@
 
 Name:           mintmenu
 Version:        5.6.5
-Release:        alt2
+Release:        alt3
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
@@ -32,7 +32,7 @@ Patch9:         mintmenu-change_locale_directory.patch
 # alt patches
 Patch34:	mintmenu-5.6.3-alt-drop-mintinstall-check.patch
 Patch35:	mintmenu-5.6.3-alt-apt-cache.patch
-Patch36:	mintmenu-5.2.1-alt-no-mintengines.patch
+Patch36:	mintmenu-5.6.5-alt-no-mintengines.patch
 Patch37:	mintmenu-5.6.3-alt-GPL-path.patch
 Patch38:	mintmenu-5.5.1-alt-use-rpminstall.patch
 #Patch39:	mintmenu-5.2.1-alt-cyrillic.patch
@@ -79,7 +79,7 @@ added to your gnome-panel or launched in its own window.
 %else
 %patch35 -p0
 %endif
-#%%patch36 -p1
+%patch36 -p1
 %patch37 -p0
 %patch38 -p1
 #%%patch39 -p1
@@ -142,6 +142,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Tue Nov 10 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.5-alt3
+- Remove Mint-specific search engines (ALT #31463)
+
 * Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 5.6.5-alt2
 - Replace gnome-search-tool with mate-search-tool
 
