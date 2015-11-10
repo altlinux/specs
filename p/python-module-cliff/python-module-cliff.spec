@@ -4,7 +4,7 @@
 
 Name:             python-module-%modname
 Version:          1.15.0
-Release:          alt1
+Release:          alt2
 Summary:          Command Line Interface Formulation Framework
 
 Group:            Development/Python
@@ -14,6 +14,11 @@ Source:          %name-%version.tar
 Patch1: 0001-only-use-unicodecsv-for-python-2.x.patch
 
 BuildArch:        noarch
+
+Requires:    python-module-unicodecsv >= 0.8.0
+Requires:    python-module-argparse
+Requires:    python-module-prettytable >= 0.7
+Requires:    python-module-yaml >= 3.1.0
 
 BuildRequires:    python-devel
 BuildRequires:    python-module-setuptools
@@ -29,9 +34,9 @@ BuildRequires:    python-module-six >= 1.9.0
 # Required for the test suite
 BuildRequires:    python-module-nose
 BuildRequires:    python-module-mock
+
 BuildRequires:    bash
 BuildRequires:    bash-completion
-
 BuildRequires:    python-module-argparse
 
 BuildPreReq: python-module-sphinx-devel python-module-oslosphinx
@@ -135,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.15.0-alt2
+- update R:
+
 * Thu Oct 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1.15.0-alt1
 - 1.15.0
 
