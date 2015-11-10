@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.11.1
-Release: alt3
+Release: alt4
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -142,6 +142,12 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Tue Nov 10 2015 Sergey V Turchin <zerg@altlinux.org> 2.11.1-alt4
+- increase priority of alt-post-user.conf (ALT#31462)
+
+* Mon Aug 11 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.1-alt2.M70P.1
+- built for M70P
+
 * Wed Jul 23 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.1-alt3
 - sync patches with FC
 
