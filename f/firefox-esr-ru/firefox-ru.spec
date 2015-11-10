@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-esr-ru
-Version:	38.3.0
+Version:	38.4.0
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Firefox
 
@@ -78,6 +78,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %firefox_prefix/distribution/searchplugins/locale/ru
 
 %changelog
+* Tue Nov 10 2015 Andrey Cherepanov <cas@altlinux.org> 38.4.0-alt1
+- New version
+
 * Wed Sep 23 2015 Andrey Cherepanov <cas@altlinux.org> 38.3.0-alt1
 - New version
 

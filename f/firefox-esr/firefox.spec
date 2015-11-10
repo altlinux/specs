@@ -9,8 +9,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        38.3.0
-Release:        alt2
+Version:        38.4.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -288,6 +288,18 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Wed Nov 04 2015 Andrey Cherepanov <cas@altlinux.org> 38.4.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2015-133 NSS and NSPR memory corruption issues
+  + MFSA 2015-132 Mixed content WebSocket policy bypass through workers
+  + MFSA 2015-131 Vulnerabilities found through code inspection
+  + MFSA 2015-130 JavaScript garbage collection crash with Java applet
+  + MFSA 2015-128 Memory corruption in libjar through zip files
+  + MFSA 2015-127 CORS preflight is bypassed when non-standard Content-Type headers are received
+  + MFSA 2015-123 Buffer overflow during image interactions in canvas
+  + MFSA 2015-122 Trailing whitespace in IP address hostnames can bypass same-origin policy
+
 * Mon Sep 28 2015 Andrey Cherepanov <cas@altlinux.org> 38.3.0-alt2
 - Use GStreamer 1.0 (ALT #31305)
 

@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-esr-be
-Version:	38.3.0
+Version:	38.4.0
 Release:	alt1
 Summary:	Belarusian (BE) Language Pack for Firefox
 
@@ -76,6 +76,9 @@ ln -s %_datadir/myspell/be_BY.dic %buildroot/%cid_dict_dir/dictionaries/be.dic
 %firefox_prefix/distribution/searchplugins/locale/be
 
 %changelog
+* Tue Nov 10 2015 Andrey Cherepanov <cas@altlinux.org> 38.4.0-alt1
+- New version
+
 * Wed Sep 23 2015 Andrey Cherepanov <cas@altlinux.org> 38.3.0-alt1
 - New version
 
