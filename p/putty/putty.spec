@@ -1,5 +1,5 @@
 Name: putty
-Version: 0.65
+Version: 0.66
 Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
@@ -9,7 +9,7 @@ Group: Networking/Remote access
 Url: http://www.chiark.greenend.org.uk/~sgtatham/putty/
 Source0: http://the.earth.li/~sgtatham/putty/latest/%name-%version.tar.gz
 Source1: %name-icons.tar.bz2
-Source2: http://the.earth.li/~sgtatham/putty/latest/%name-%version.tar.gz.DSA
+Source2: http://the.earth.li/~sgtatham/putty/latest/%name-%version.tar.gz.gpg
 Source3: putty.desktop
 Source4: %name.watch
 
@@ -24,7 +24,7 @@ Ctrl-rightclick, multiple X11 authentication protocols, and various
 other interesting things not provided by ssh in an xterm.
 
 %prep
-%setup -n %name-%version
+%setup
 %setup -T -D -a1 -n %name-%version
 sed -i 's|g_strncasecmp|g_ascii_strncasecmp|g' unix/gtkfont.c
 sed -i 's|g_strcasecmp|g_ascii_strcasecmp|g' unix/gtkfont.c
@@ -36,14 +36,14 @@ cd unix
 %make_build
 
 mkdir -p %buildroot{%_bindir,%_man1dir}
-make install DESTDIR=%buildroot prefix=%prefix mandir=%_mandir
+%makeinstall_std prefix=%prefix mandir=%_mandir
 
 # icon
-install -D -m 644 ../putty48.png %buildroot%_liconsdir/%name.png
-install -D -m 644 ../putty32.png %buildroot%_niconsdir/%name.png
-install -D -m 644 ../putty16.png %buildroot%_miconsdir/%name.png
+install -pDm644 ../putty48.png %buildroot%_liconsdir/%name.png
+install -pDm644 ../putty32.png %buildroot%_niconsdir/%name.png
+install -pDm644 ../putty16.png %buildroot%_miconsdir/%name.png
 
-install -pD -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
+install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 
 %files
 %doc LICENCE README
@@ -55,6 +55,10 @@ install -pD -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Tue Nov 10 2015 Michael Shigorin <mike@altlinux.org> 0.66-alt1
+- new version (watch file uupdate)
+- spec cleanup
+
 * Mon Jul 27 2015 Michael Shigorin <mike@altlinux.org> 0.65-alt1
 - new version (watch file uupdate)
 
