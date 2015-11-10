@@ -2,14 +2,14 @@
 
 Name: python-module-glanceclient
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: Python API and CLI for OpenStack Glance
 
 Group: Development/Python
 License: ASL 2.0
 Url: http://github.com/openstack/python-glanceclient
 Source: %name-%version.tar
-
+Patch1: fix-alt-urllib3.patch
 
 BuildArch: noarch
 
@@ -77,6 +77,7 @@ This package contains auto-generated documentation.
 
 %prep
 %setup
+%patch1 -p1
 
 # Remove bundled egg-info
 rm -rf python_glanceclient.egg-info
@@ -138,6 +139,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Tue Nov 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt2
+- fix work with system urllib3
+
 * Thu Oct 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 
