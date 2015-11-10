@@ -1,9 +1,9 @@
 %define ver_major 1.16
-%define beta -beta3
+%define beta %nil
 
 Name: evas_generic_loaders
 Version: %ver_major.0
-Release: alt0.1
+Release: alt1
 
 Summary: A set of loaders for Evas
 License: LGPLv2.1+
@@ -57,6 +57,9 @@ subst 's@/usr/lib@%_libdir@' src/bin/pdf/evas_generic_pdf_loader.libreoffice
 %doc AUTHORS COPYING README
 
 %changelog
+* Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0 release
+
 * Mon Oct 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt0.1
 - 1.16.0-beta3
 
