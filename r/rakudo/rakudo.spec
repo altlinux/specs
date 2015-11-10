@@ -1,6 +1,6 @@
 Name: rakudo
 Version: 2015.10
-Release: alt1
+Release: alt2
 Summary: Perl 6 compiler for the MoarVM
 
 Group: Development/Other
@@ -31,17 +31,10 @@ AutoProv: noperl
 
 %build
 perl Configure.pl --prefix=%_prefix --backends=moar
-%make_build
+%make_build LIBDIR=%_libdir
 
 %install
-%makeinstall_std
-mkdir -p %buildroot%_libdir/perl6/runtime
-
-# hack: rakudo install arch dependent extensions in data dir
-mv %buildroot%_datadir/perl6/runtime/dynext %buildroot%_libdir/perl6/runtime
-ln -s \
-    $(relative %_libdir/perl6/runtime/dynext %_datadir/perl6/runtime/dynext) \
-    %buildroot%_datadir/perl6/runtime/dynext
+%makeinstall_std LIBDIR=%_libdir
 
 mkdir -p %buildroot%_datadir/perl6/{vendor,site}/lib
 
@@ -58,6 +51,9 @@ mkdir -p %buildroot%_datadir/perl6/{vendor,site}/lib
 %doc LICENSE README.md CREDITS
 
 %changelog
+* Tue Nov 10 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.10-alt2
+- fixed install of shared lib
+
 * Tue Oct 27 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.10-alt1
 - initial build
 
