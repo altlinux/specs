@@ -1,6 +1,6 @@
 %define bname Data-Validate-Domain
 Name: perl-%bname
-Version: 0.10
+Version: 0.11
 Release: alt1
 Summary: Domain validation methods Perl module
 Group: Development/Perl
@@ -29,10 +29,13 @@ untainting easier and more readable.
 
 
 %files
-%doc Changes README
+%doc Changes README*
 %perl_vendor_privlib/*
 
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Sun Jan 26 2014 Led <led@altlinux.ru> 0.10-alt1
 - initial build
