@@ -1,5 +1,5 @@
 Name: perl-IO-Async
-Version: 0.68
+Version: 0.69
 Release: alt1
 
 Summary: Asynchronous event-driven programming
@@ -31,6 +31,9 @@ BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Test/Refco
 %doc Changes LICENSE README
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.69-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.68-alt1
 - automated CPAN update
 
