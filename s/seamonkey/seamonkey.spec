@@ -14,8 +14,8 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.38
-Release: alt2
+Version: 2.39
+Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
 License: MPL/NPL
@@ -143,8 +143,7 @@ These helper macros provide possibility to rebuild
 seamonkey packages by some Alt Linux Team Policy compatible way.
 
 %prep
-%setup -q -n %name-%version -c
-cd comm-release
+%setup
 
 ### Moved enigmail to mailnews
 %if_with enigmail
@@ -178,8 +177,6 @@ echo 'ac_add_options --enable-calendar' >> .mozconfig
 %endif
 
 %build
-cd comm-release
-
 %add_optflags %optflags_shared
 %add_findprov_lib_path %sm_prefix
 
@@ -236,8 +233,6 @@ cd -
 %endif
 
 %install
-cd comm-release
-
 dir="$PWD/objdir"
 
 mkdir -p \
@@ -399,6 +394,9 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Tue Nov 10 2015 Andrey Cherepanov <cas@altlinux.org> 1:2.39-alt1
+- 2.39
+
 * Mon Oct 12 2015 Michael Shigorin <mike@altlinux.org> 1:2.38-alt2
 - Enabled logging, see https://bugzilla.mozilla.org/1129718
 
