@@ -1,15 +1,20 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(HTML/Entities.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test/Warn.pm) perl(Text/ParseWords.pm) perl(overload.pm) perl(parent.pm) perl(strict.pm) perl(utf8.pm) perl(warnings.pm)
+# END SourceDeps(oneline)
+%define module_version 4.22
+%define module_name CGI
 %define _unpackaged_files_terminate_build 1
-%define dist CGI.pm
 Name: perl-CGI
-Version: 4.03
+Version: 4.22
 Release: alt1
 
 Summary: Simple CGI class for Perl
-License: GPL or Artistic
+License: perl
 Group: Development/Perl
 
-URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/L/LE/LEEJO/CGI.pm-%{version}.tar.gz
+URL: https://metacpan.org/module/CGI
+Source0: http://cpan.org.ua/authors/id/L/LE/LEEJO/%{module_name}-%{module_version}.tar.gz
+Patch0:  CGI-4.15-Make-Test-Deep-and-Test-NoWarnings-tests-optional.patch
 
 BuildArch: noarch
 
@@ -21,16 +26,34 @@ BuildArch: noarch
 %filter_from_requires /^perl.Apache/d
 %filter_from_requires /^perl.ModPerl/d
 
+# back compatibility package for any code explicitly checking
+# that the filehandle object is a Fh
+%filter_from_requires /^perl.Fh/d
+%filter_from_provides /^perl.Fh/d
+
 # Automatically added by buildreq on Wed Sep 26 2012
-BuildRequires: perl-Encode perl-FCGI perl-devel
+BuildRequires: perl-Encode perl-FCGI perl-devel perl-podlators
 
 %description
 This is CGI.pm, an easy-to-use Perl5 library for writing
 World Wide Web CGI scripts.
 
+CGI.pm is a stable, complete and mature solution for processing and preparing
+HTTP requests and responses. Major features including processing form
+submissions, file uploads, reading and writing cookies, query string
+generation and manipulation, and processing and preparing HTTP headers. Some
+HTML generation utilities are included as well.
+
+CGI.pm performs very well in in a vanilla CGI.pm environment and also comes 
+with built-in support for mod_perl and mod_perl2 as well as FastCGI.
+
 %prep
-%setup -q -n %dist-%version
-bzip2 -k Changes
+%setup -q -n %{module_name}-%{module_version}
+%patch0 -p1
+iconv -f iso8859-1 -t utf-8 < Changes > Changes.1
+mv Changes.1 Changes
+sed -i 's?usr/bin perl?usr/bin/perl?' t/init.t
+chmod -c -x examples/*
 
 %build
 %perl_vendor_build
@@ -39,10 +62,15 @@ bzip2 -k Changes
 %perl_vendor_install
 
 %files
-%doc Changes.bz2 README examples
+%doc Changes README.md examples
 %perl_vendor_privlib/CGI*
+%perl_vendor_privlib/Fh.pm
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 4.22-alt1
+- new version; switched branches:
+  from L/LE/LEEJO/CGI.pm-4.03.tar.gz to L/LE/LEEJO/CGI-4.22.tar.gz
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.03-alt1
 - automated CPAN update
 
