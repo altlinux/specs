@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Lingua-EN-Numbers
-Version:        2.02
-Release:        alt1_4
+Version:        2.03
+Release:        alt1
 Summary:        Turn "407" into "four hundred and seven", etc
 License:        GPLv2
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Lingua-EN-Numbers/
-Source0:        http://www.cpan.org/authors/id/N/NE/NEILB/Lingua-EN-Numbers-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/N/NE/NEILB/Lingua-EN-Numbers-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -54,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1
+- automated CPAN update
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1_4
 - update to new release by fcimport
 
