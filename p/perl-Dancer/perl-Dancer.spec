@@ -1,5 +1,5 @@
 Name: perl-Dancer
-Version: 1.3142
+Version: 1.3202
 Release: alt1
 Summary: lightweight yet powerful web application framework
 
@@ -38,6 +38,9 @@ to scale to much more complex applications.
 %doc LICENSE Changes README*
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.3202-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.3142-alt1
 - automated CPAN update
 
