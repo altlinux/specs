@@ -1,5 +1,5 @@
 Name: perl-Minilla
-Version: 2.5.0
+Version: 3.0.0
 Release: alt1
 
 Summary: CPAN module authoring tool
@@ -10,7 +10,7 @@ Url: %CPAN Minilla
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl(Module/Metadata.pm) perl(Test/Requires.pm) perl(CPAN/Meta/Validator.pm) perl(File/Which.pm) perl(Time/Piece.pm) perl(TOML.pm) perl(Data/Section/Simple.pm) perl(CPAN/Meta.pm) perl(Module/Build.pm) perl(Archive/Tar.pm) perl(Pod/Markdown.pm) perl(Test/Output.pm) perl(CPAN/Meta/Prereqs.pm) perl-devel perl(Text/MicroTemplate.pm) perl(Try/Tiny.pm) perl(Term/ANSIColor.pm) perl(parent.pm) perl(File/pushd.pm) perl(Moo.pm) perl-App-cpanminus perl(Module/CPANfile.pm) perl(File/Copy/Recursive.pm) perl(Config/Identity/PAUSE.pm)
+BuildRequires: perl(Module/Metadata.pm) perl(Test/Requires.pm) perl(CPAN/Meta/Validator.pm) perl(File/Which.pm) perl(Time/Piece.pm) perl(TOML.pm) perl(Data/Section/Simple.pm) perl(CPAN/Meta.pm) perl(Module/Build/Tiny.pm) perl(Archive/Tar.pm) perl(Pod/Markdown.pm) perl(Test/Output.pm) perl(CPAN/Meta/Prereqs.pm) perl-devel perl(Text/MicroTemplate.pm) perl(Try/Tiny.pm) perl(Term/ANSIColor.pm) perl(parent.pm) perl(File/pushd.pm) perl(Moo.pm) perl-App-cpanminus perl(Module/CPANfile.pm) perl(File/Copy/Recursive.pm) perl(Config/Identity/PAUSE.pm)
 
 %description
 %summary
@@ -31,6 +31,9 @@ BuildRequires: perl(Module/Metadata.pm) perl(Test/Requires.pm) perl(CPAN/Meta/Va
 %doc Changes LICENSE README.md
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1
 - automated CPAN update
 
