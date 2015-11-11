@@ -9,7 +9,7 @@
 %def_enable multimedia
 
 Name: evince
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A document viewer
@@ -203,6 +203,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Wed Nov 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
+- 3.18.2
+
 * Wed Oct 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 
