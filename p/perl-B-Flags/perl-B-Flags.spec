@@ -1,5 +1,5 @@
 Name: perl-B-Flags
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: B::Flags - Friendlier flags for B
@@ -30,6 +30,9 @@ BuildRequires: perl-devel
 %perl_vendor_autolib/B/Flags
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
