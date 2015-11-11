@@ -1,5 +1,5 @@
 Name: perl-Text-TestBase
-Version: 0.12
+Version: 0.13
 Release: alt1
 
 Summary: Parser for Test::Base format
@@ -31,6 +31,9 @@ BuildRequires: perl(Test/Requires.pm) perl(parent.pm) perl(Class/Accessor/Lite.p
 %doc Changes LICENSE README.md
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Tue Oct 15 2013 Vladimir Lettiev <crux@altlinux.ru> 0.12-alt1
 - initial build for ALTLinux
 
