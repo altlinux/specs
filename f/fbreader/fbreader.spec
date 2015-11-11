@@ -1,64 +1,62 @@
 Name: fbreader
-Version: 0.12.10
-Release: alt3
+Version: 0.99.5
+Release: alt1
 Summary: E-Book Reader
 Summary (ru_RU.UTF-8): Программа для чтения электронных книг (E-Book, Ebook)
 License: GPL
 Group: Text tools
-URL: http://only.mawhrin.net/fbreader/
-Source: %name-sources-%version.tar
+URL: https://fbreader.org
+Source: FBReader-%version.tar.gz
 Source1: watch
 Source2: %{name}16.png
 Source3: %{name}32.png
 Source4: %{name}48.png
 Source5: x-fb2.desktop
-Patch1: %name-c++.patch
 
-BuildRequires: bzlib-devel gcc-c++ libcurl-devel libexpat-devel libfribidi-devel liblinebreak-devel-static libqt4-devel libsqlite3-devel
+# Automatically added by buildreq on Wed Nov 11 2015
+# optimized out: fontconfig libqt4-core libqt4-gui libqt4-network libstdc++-devel pkg-config
+BuildRequires: bzlib-devel gcc-c++ libexpat-devel libfribidi-devel libqt4-devel libsqlite3-devel libunibreak-devel zlib-devel
 
 %description
 E-Book Reader. Supports several e-book formats: fb2 (fictionbook), html, plucker, palmdoc, zTxt, plain text.
---
 
 %description -l ru_RU.UTF-8
 Программа для чтения электронных книг (E-book, Ebook). Поддерживает форматы: fb2 (fictionbook), html, plucker, palmdoc, zTxt, plain text.
----
 
 %prep
-%setup -q
-%patch1 -p1
+%setup -n FBReader-%version
 
 %build
-export QTDIR=%_qt4dir
-%make LIBDIR=%_libdir INSTALLDIR=/usr TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=release MOC=%_qt4dir/bin/moc UILIBS="-L%_qt4dir/lib -lQtGui"
-
+%make ZLSHARED=no TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=release
 
 %install
-%__subst "s,mozilla,firefox," fbreader/data/default/external.desktop.xml
-%__subst "s,FBReader.png,fbreader.png," fbreader/desktop/desktop
-%make LIBDIR=%_libdir DESTDIR=%buildroot INSTALLDIR=/usr TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=release MOC=%_qt4dir/bin/moc UILIBS="-L%_qt4dir/lib -lQtGui" install
+#%__subst "s,mozilla,firefox," fbreader/data/default/external.desktop.xml
+#%__subst "s,FBReader.png,fbreader.png," fbreader/desktop/desktop
+%make ZLSHARED=no LIBDIR=%_libdir DESTDIR=%buildroot INSTALLDIR=/usr TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=release MOC=%_qt4dir/bin/moc install
 ln -s FBReader %buildroot%_bindir/fbreader
 %__install -pD -m644 %SOURCE2 %buildroot%_miconsdir/%name.png
 %__install -pD -m644 %SOURCE3 %buildroot%_niconsdir/%name.png
 %__install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
-%__install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 %__install -pD -m644 %SOURCE5 %buildroot%_datadir/mimelnk/application/x-fb2.desktop
-echo "MimeType=application/x-zip-compressed-fb2;application/x-fb2;application/rtf;application/x-chm;application/vnd.palm" >>%buildroot%_datadir/applications/FBReader.desktop
-
+#echo "MimeType=application/x-zip-compressed-fb2;application/x-fb2;application/rtf;application/x-chm;application/vnd.palm" >>%buildroot%_datadir/applications/FBReader.desktop
 
 %files
 %_bindir/*
 %_datadir/FBReader
 %_datadir/pixmaps/*
 %_datadir/zlibrary
-%_libdir/*.so.*
-%_libdir/zlibrary
+#%_libdir/*.so.*
+#%_libdir/zlibrary
 %_datadir/applications/FBReader.desktop
 %_datadir/mimelnk/application/x-fb2.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
+
 %changelog
+* Wed Nov 11 2015 Mikhail Kolchin <mvk@altlinux.org> 0.99.5-alt1
+- new version
+
 * Mon May 23 2011 Anton Farygin <rider@altlinux.ru> 0.12.10-alt3
 - added application/x-zip-compressed-fb2  mime type (closes: #25604)
 - removed text/plain from mime-types (closes: #21149)
@@ -215,4 +213,3 @@ echo "MimeType=application/x-zip-compressed-fb2;application/x-fb2;application/rt
 
 * Sat Apr 29 2006 Anton Farygin <rider@altlinux.ru> 0.7.3-alt1
 - first build for Sisyphus
-
