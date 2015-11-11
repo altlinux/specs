@@ -1,6 +1,6 @@
 %define m_distro Test-Strict
 Name: perl-Test-Strict
-Version: 0.28
+Version: 0.32
 Release: alt1
 Summary: Check syntax, presence of use strict; and test coverage
 
@@ -12,7 +12,7 @@ Url: http://search.cpan.org/~pdenis/Test-Strict/
 
 BuildArch: noarch
 Source: %m_distro-%version.tar
-BuildRequires: perl-Test-Pod-Coverage perl-Test-Pod perl-CGI perl-devel perl-Devel-Cover perl-Storable perl-B-Debug
+BuildRequires: perl-Test-Pod-Coverage perl-Test-Pod perl-CGI perl-devel perl-Devel-Cover perl-Storable perl-B-Debug perl(IO/Scalar.pm)
 
 %description
 %summary
@@ -33,6 +33,9 @@ mkdir cover_db
 %doc Changes README 
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 
