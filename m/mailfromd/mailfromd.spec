@@ -3,10 +3,10 @@
 
 Name: mailfromd
 
-%define baseversion 7.99.92
+%define baseversion 7.99.94
 
 %if %snapshot
-%define snapshotdate 20130730
+%define snapshotdate 20151112
 Version: %baseversion
 Release: alt0.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
@@ -47,7 +47,6 @@ Source32: mailfromd-shared.wl
 
 Source50: mailfromd-clamav_only.mf
 
-
 # "not_found" placed to the cache when the MX is not responding
 # too. SMTP reply 5xx must not be returned at this case. This
 # behavior discovered in 7.99.92 (git 2012-03-21).
@@ -57,12 +56,13 @@ Patch1: mailfromd-savsrv.c-not_cache_mf_timeout.diff
 #Errata
 #Patch100:
 
+BuildRequires(pre): rpm-build-licenses
+
 # Automatically added by buildreq on Mon Oct 07 2013
 # optimized out: emacs-X11 emacs-base emacs-cedet-speedbar emacs-common fontconfig libX11-locales libgdk-pixbuf libgpg-error libp11-kit libtinfo-devel mailutils pkg-config
 BuildRequires: emacs-X11 flex libdb4-devel libdspam-devel libgcrypt-devel libgdbm-devel libgnutls-devel libldap-devel libncurses-devel libpam-devel libreadline-devel libtokyocabinet-devel
 
-BuildRequires: rpm-build-licenses
-BuildRequires: libmailutils-devel >= 2.99.96-alt0.20120325
+BuildRequires: libmailutils-devel >= 2.99.99
 BuildRequires: mailutils
 
 %description
@@ -145,12 +145,16 @@ gzip ChangeLog
 #undefine __libtoolize
 #libtoolize --ltdl --copy --force
 
-export LIBS="-lresolv"
-%configure --sysconfdir=%_sysconfdir/mailfromd --with-berkeley-db --enable-ipv6
-# --enable-syslog-async
+LIBS="-lresolv" \
+%configure \
+    --sysconfdir=%_sysconfdir/mailfromd \
+    --with-berkeley-db \
+    --enable-ipv6 \
+#   --enable-syslog-async \
+    #
 
 # NO SMP BUILD
-%make
+%make V=1
 
 %check
 
@@ -295,6 +299,10 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Thu Nov 12 2015 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20151112.1
+- new version
+- updated configuration (fixed some errors)
+
 * Mon Oct 07 2013 Sergey Y. Afonin <asy@altlinux.ru> 7.99.92-alt0.20130730.1
 - new snapshot
 - disabled cacheing result "mf_timeout"
