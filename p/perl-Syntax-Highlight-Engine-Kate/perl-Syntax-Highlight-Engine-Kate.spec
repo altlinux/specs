@@ -1,47 +1,83 @@
-%define _unpackaged_files_terminate_build 1
-%define dist Syntax-Highlight-Engine-Kate
-Name: perl-%dist
-Version: 0.09
-Release: alt1
-
-Summary: Port to Perl of the syntax highlight engine of the Kate texteditor
-License: %perl_license
-Group: Development/Perl
-Packager: Artem Zolochevskiy <azol@altlinux.ru>
-
-URL: %CPAN %dist
-# http://search.cpan.org/CPAN/authors/id/S/SZ/SZABGAB/Syntax-Highlight-Engine-Kate-0.06.tar.gz
-Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Syntax-Highlight-Engine-Kate-%{version}.tar.gz
-
-BuildArch: noarch
-
-BuildRequires(pre): rpm-build-licenses
-
-# Automatically added by buildreq on Tue Jan 19 2010
-BuildRequires: perl-Module-Install perl(Test/Differences.pm) perl(Test/Warn.pm)
-
-BuildRequires: perl-XML-Dumper perl-HTML-Parser perl-XML-TokeParser
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: gcc-c++ perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Path/Tiny.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl-devel perl-podlators
+# END SourceDeps(oneline)
+Name:           perl-Syntax-Highlight-Engine-Kate
+Version:        0.10
+Release:        alt1_1
+Summary:        Port to Perl of the syntax highlight engine of the Kate text editor
+License:        GPL+ or Artistic
+Group:          Development/Perl
+URL:            http://search.cpan.org/dist/Syntax-Highlight-Engine-Kate/
+Source0:        http://www.cpan.org/authors/id/S/SZ/SZABGAB/Syntax-Highlight-Engine-Kate-%{version}.tar.gz
+BuildArch:      noarch
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  perl
+BuildRequires:  perl(inc/Module/Install.pm)
+BuildRequires:  perl(Module/Install/Metadata.pm)
+BuildRequires:  perl(Module/Install/WriteAll.pm)
+BuildRequires:  sed
+# Run-time:
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(File/Basename.pm)
+# lib not used
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Term::ANSIColor not used
+BuildRequires:  perl(XML/Dumper.pm)
+BuildRequires:  perl(XML/TokeParser.pm)
+# Tests:
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(diagnostics.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(File/Find.pm)
+BuildRequires:  perl(File/Spec/Functions.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(Term/ANSIColor.pm)
+BuildRequires:  perl(Test/Differences.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/Warn.pm)
+BuildRequires:  perl(Time/HiRes.pm)
+# Optional tests:
+# Test::Pod 1.00 not used
+Requires:       perl(base.pm)
+Source44: import.info
 
 %description
 Syntax::Highlight::Engine::Kate is a port to perl of the syntax highlight
 engine of the Kate text editor.
 
 %prep
-%setup -n %dist-%version
-# newer kate engine; diff, not regression
-[ %version = 0.09 ] && rm t/perl_highlighting.t
+%setup -q -n Syntax-Highlight-Engine-Kate-%{version}
+find -type f -exec chmod -c -x {} +
+# Remove bundled modules
+rm -rf ./inc
+sed -i '/^inc\//d' MANIFEST
 
 %build
-%perl_vendor_build
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+make %{?_smp_mflags}
 
 %install
-%perl_vendor_install
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -exec rm -f {} +
+# %{_fixperms} %{buildroot}/*
+
+%check
+make test
 
 %files
-%doc Changes README samples
-%perl_vendor_privlib/Syntax/
+%doc Changes README REGISTERED
+%{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
+- new version
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
