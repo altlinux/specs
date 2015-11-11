@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-FormatText-WithLinks-AndTables
-Version:        0.02
-Release:        alt2_9
+Version:        0.06
+Release:        alt1
 Summary:        Converts HTML to Text with tables in tact
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/HTML-FormatText-WithLinks-AndTables/
 BuildArch:      noarch
 
-Source0:        http://www.cpan.org/authors/id/S/SF/SFRYER/HTML-FormatText-WithLinks-AndTables-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DA/DALEEVANS/HTML-FormatText-WithLinks-AndTables-%{version}.tar.gz
 Patch0:         RT-74392.patch
 Patch1:         col_0_fix.patch
 
@@ -35,9 +36,9 @@ preserve multi-line text inside of a <TD> element provided it is broken
 using <BR/> tags.
 
 %prep
-%setup -q -n HTML-FormatText-WithLinks-AndTables
-%patch0 -p 1
-%patch1 -p 1
+%setup -q -n HTML-FormatText-WithLinks-AndTables-%version
+#patch0 -p 1
+#patch1 -p 1
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -55,10 +56,13 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc Changes README
+%doc Changes README*
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_9
 - update to new release by fcimport
 
