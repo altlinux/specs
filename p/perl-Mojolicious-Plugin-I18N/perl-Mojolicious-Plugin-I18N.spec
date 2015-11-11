@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Mojolicious-Plugin-I18N
-Version: 1.3
+Version: 1.6
 Release: alt1
 
 Summary: Mojolicious::Plugin::I18N - Internationalization Plugin for Mojolicious
@@ -49,6 +49,9 @@ Mojolicious::Plugin::I18N - Internationalization Plugin for Mojolicious
 %perl_vendor_privlib/Mojolicious/
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1
+- automated CPAN update
+
 * Sun Sep 14 2014 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
 - initial build for ALT Linux Sisyphus
 
