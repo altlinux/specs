@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-WWW-Contact
-Version: 0.47
+Version: 0.50
 Release: alt1
 
 Summary: WWW-Contact - Perl module
@@ -50,6 +50,9 @@ None.
 %perl_vendor_privlib/WWW/*
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
+- automated CPAN update
+
 * Thu May 24 2012 Denis Smirnov <mithraen@altlinux.ru> 0.47-alt1
 - initial build for ALT Linux Sisyphus
 
