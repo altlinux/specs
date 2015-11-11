@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IPTables-Parse
 Name: perl-%dist
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Summary: Perl extension for parsing iptables firewall rulesets
@@ -38,6 +38,9 @@ rules exist.
 %perl_vendor_privlib/IPTables
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1
 - automated CPAN update
 
