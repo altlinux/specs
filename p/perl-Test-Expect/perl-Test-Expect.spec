@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Test-Expect
-Version: 0.31
+Version: 0.33
 Release: alt1
 
 Summary: Test::Expect - Automated driving and testing of terminal-based programs
@@ -27,7 +27,7 @@ Url: http://mirrors.nlab.su/CPAN/authors/id/L/LB/LBROCARD/
 Packager: Malo Skryleve <malo@altlinux.org>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BP/BPS/Test-Expect-%{version}.tar.gz
 
 Requires: perl-Expect-Simple perl-Class-Accessor-Chained
 # Automatically added by buildreq on Wed Feb 16 2011
@@ -65,6 +65,9 @@ Test::Expect предназначен для маяния в тестовых с
 %perl_vendor_privlib/Test/*
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Wed Feb 16 2011 Malo Skryleve <malo@altlinux.org> 0.31-alt1
 - initial build for ALT Linux Sisyphus
 
