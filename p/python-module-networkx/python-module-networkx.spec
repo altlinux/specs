@@ -5,7 +5,7 @@
 
 Name:           python-module-%oname
 Version:        1.10
-Release:        alt1
+Release:        alt2
 Epoch:          1
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
@@ -43,6 +43,8 @@ Requires: python-module-yaml
 Requires: python-module-numpy
 Requires: python-module-scipy
 %add_python_req_skip tests
+%add_python_req_skip networkx.drawing
+%add_python_req_skip networkx.tests.test
 
 %description core
 NetworkX is a Python package for the creation, manipulation, and
@@ -265,6 +267,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Nov 11 2015 Alexey Shabalin <shaba@altlinux.ru> 1:1.10-alt2
+- fixed import optional modules
+
 * Thu Oct 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1:1.10-alt1
 - 1.10
 
