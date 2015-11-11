@@ -14,7 +14,7 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.10.3
+Version: 2.10.4
 Release: alt1
 
 Summary: Web browser engine
@@ -192,6 +192,9 @@ rm -rf Source/ThirdParty/qunit/
 # Decrease debuginfo verbosity and use linker flags to reduce memory consumption
 %{?_disable_gnu_ld:%define optflags_debug -g1}
 %{?_disable_gnu_ld:%add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads}
+%ifarch %ix86
+%add_optflags -D_FILE_OFFSET_BITS=64
+%endif
 
 %cmake \
 -DPORT=GTK \
@@ -204,14 +207,14 @@ rm -rf Source/ThirdParty/qunit/
 %{?_enable_x11:-DENABLE_X11_TARGET:BOOL=ON} \
 %{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
 %{?_disable_gnu_ld:-DUSE_LD_GOLD:BOOL=OFF} \
-%{?_enable_media_stream:-DENABLE_MEDIA_STREAM:BOOL=ON}
+%{?_enable_media_stream:-DENABLE_MEDIA_STREAM:BOOL=ON} \
 #-DENABLE_FTPDIR:BOOL=ON \
 #-DENABLE_TELEPHONE_NUMBER_DETECTION:BOOL=ON \
 #-DENABLE_BATTERY_STATUS:BOOL=ON \
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
 #-DENABLE_ORIENTATION_EVENTS:BOOL=ON
 
-%cmake_build
+%cmake_build VERBOSE=1
 
 %install
 %cmakeinstall_std
@@ -272,6 +275,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Wed Nov 11 2015 Yuri N. Sedunov <aris@altlinux.org> 2.10.4-alt1
+- 2.10.4
+
 * Tue Oct 27 2015 Yuri N. Sedunov <aris@altlinux.org> 2.10.3-alt1
 - 2.10.3
 
