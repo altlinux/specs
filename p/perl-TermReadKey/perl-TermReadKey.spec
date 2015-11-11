@@ -1,20 +1,21 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: libsowing-devel perl(AutoLoader.pm) perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm)
-# END SourceDeps(oneline)
-%define module_version 2.32
+%def_without test
+%define module_version 2.33
 %define module_name TermReadKey
+# BEGIN SourceDeps(oneline):
+BuildRequires: libsowing-devel perl(AutoLoader.pm) perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(Test/More.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.32
-Release: alt1.1
+Version: 2.33
+Release: alt1
 Summary: unknown
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/J/JS/JSTOWE/TermReadKey-%{version}.tar.gz
+Source0: http://cpan.org.ua/authors/id/J/JS/JSTOWE/%{module_name}-%{module_version}.tar.gz
 Provides: perl-Term-ReadKey = %version
 Obsoletes: perl-Term-ReadKey < 2.31
 
@@ -208,7 +209,7 @@ This call does nothing under Windows.
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{module_version}
 
 %build
 %perl_vendor_build
@@ -217,11 +218,14 @@ This call does nothing under Windows.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc Changes README example
 %perl_vendor_archlib/T*
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 2.33-alt1
+- new version
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.32-alt1.1
 - rebuild with new perl 5.20.1
 
