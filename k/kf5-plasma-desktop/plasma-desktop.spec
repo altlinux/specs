@@ -9,8 +9,8 @@
 
 
 Name: kf5-%rname
-Version: 5.4.2
-Release: alt3
+Version: 5.4.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -197,6 +197,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Wed Nov 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt1
+- new version
+
 * Tue Oct 27 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt3
 - set desktop defaults
 
