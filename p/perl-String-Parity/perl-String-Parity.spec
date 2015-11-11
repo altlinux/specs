@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm)
 # END SourceDeps(oneline)
-%define module_version 1.33
+%define module_version 1.34
 %define module_name String-Parity
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.33
+Version: 1.34
 Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/S*
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.34-alt1
+- automated CPAN update
+
 * Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
 - automated CPAN update
 
