@@ -2,7 +2,7 @@
 %define module Geo-GeoNames
 
 Name: perl-%module
-Version: 1.01
+Version: 1.03
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -12,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Geo-GeoNames-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/N/NI/NICOMEN/Geo-GeoNames-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -43,6 +43,9 @@ is found, a list of locations will be returned.
 %perl_vendor_privlib/Geo
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Thu Oct 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
 - automated CPAN update
 
