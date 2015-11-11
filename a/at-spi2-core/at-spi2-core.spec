@@ -5,7 +5,7 @@
 %def_enable x11
 
 Name: at-spi2-core
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -123,6 +123,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Wed Nov 11 2015 Yuri N. Sedunov <aris@altlinux.org> 2.18.3-alt1
+- 2.18.3
+
 * Sun Nov 08 2015 Yuri N. Sedunov <aris@altlinux.org> 2.18.2-alt1
 - 2.18.2
 
