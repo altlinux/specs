@@ -1,14 +1,15 @@
 %define dist gettext
 Name: perl-Locale-gettext
-Version: 1.05
-Release: alt7.1
+Version: 1.07
+Release: alt1
 
 Summary: Gettext routines for Perl
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version-%release.tar
+Source: %dist-%version.tar
+Patch: perl-Locale-gettext-%version-%release.patch
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: perl-Encode perl-devel
@@ -19,7 +20,8 @@ of functions for retrieving message strings from databases constructed
 to internationalize software.
 
 %prep
-%setup -n %dist-%version-%release
+%setup -n %dist-%version
+%patch -p1
 
 %build
 # non-POSIX locale required for tests
@@ -35,6 +37,9 @@ export LC_ALL=en_US
 %perl_vendor_archlib/Locale
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- new version
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt7.1
 - rebuild with new perl 5.20.1
 
