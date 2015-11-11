@@ -1,6 +1,6 @@
 Name: kumir2
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: New version of Kumir - simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Новая версия системы Кумир - простого учебного языка программирования и среды разработки
@@ -57,6 +57,9 @@ cd build
 %_iconsdir/*/*/*/*
 
 %changelog
+* Wed Nov 11 2015 Denis Kirienko <dk@altlinux.org> 2.1.0-alt2
+- Increase release to alt2
+
 * Wed Nov 11 2015 Denis Kirienko <dk@altlinux.org> 2.1.0-alt1
 - Version 2.1.0
 
