@@ -6,7 +6,7 @@
 
 Name: GLEW
 Version: 1.13.0
-Release: alt2
+Release: alt3
 
 Summary: The OpenGL Extension Wrangler library
 License: BSD, MIT
@@ -57,6 +57,10 @@ This package contains lib%name variant with multiple rendering contexts.
 %package -n %glew_devel
 Summary: The OpenGL Extension Wrangler library development files
 Group: Development/C
+Provides: libglew-devel = %version-%release
+Obsoletes: libglew-devel < %version-%release
+Provides: %glewmx_devel = %EVR
+Obsoletes: %glewmx_devel < %EVR
 
 %description -n %glew_devel
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
@@ -66,22 +70,6 @@ functionality is exposed in a single header file. GLEW has been tested on a vari
 operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
 
 The package contains the C headers to compile programs based on %name.
-
-%package -n %glewmx_devel
-Summary: The OpenGL Extension Wrangler MX library development files
-Group: System/Libraries
-Requires: %glew_devel = %version-%release
-Provides: libglew-devel = %version-%release
-Obsoletes: libglew-devel < %version-%release
-
-%description -n %glewmx_devel
-The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
-extension loading library. GLEW provides efficient run-time mechanisms for determining 
-which OpenGL extensions are supported on the target platform. OpenGL core and extension
-functionality is exposed in a single header file. GLEW has been tested on a variety of 
-operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
-
-The package contains the C headers to compile programs based on %{name}mx.
 
 %package doc
 Summary: The OpenGL Extension Wrangler library documentation
@@ -138,12 +126,8 @@ ln -s lib%{name}mx.so.%version %buildroot%_libdir/lib%{name}mx.so
 
 %files -n %glew_devel
 %_includedir/GL/*.h
-%_libdir/libGLEW.so
-%_pkgconfigdir/glew.pc
-
-%files -n %glewmx_devel
-%_libdir/libGLEWmx.so
-%_pkgconfigdir/glewmx.pc
+%_libdir/lib*.so
+%_pkgconfigdir/*.pc
 
 %files doc
 %doc doc/*
@@ -153,6 +137,9 @@ ln -s lib%{name}mx.so.%version %buildroot%_libdir/lib%{name}mx.so
 %_libexecdir/%name/*
 
 %changelog
+* Wed Nov 11 2015 Sergey V Turchin <zerg@altlinux.org> 1.13.0-alt3
+- merge devel subpackages
+
 * Tue Nov 10 2015 Sergey V Turchin <zerg@altlinux.org> 1.13.0-alt2
 - obsolete libglew-devel (ALT#30963)
 - fix deps; clean specfile
