@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Pod-POM
 Name: perl-%dist
-Version: 2.00
+Version: 2.01
 Release: alt1
 
 Summary: Pod Object Model
@@ -36,13 +36,16 @@ generate an output representation in one form or another.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README*
 %_bindir/pod*
 %_bindir/pom*
 %_man1dir/*
 %perl_vendor_privlib/Pod
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
 - automated CPAN update
 
