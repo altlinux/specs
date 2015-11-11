@@ -1,5 +1,5 @@
 Name: perl-Mojolicious
-Version: 6.24
+Version: 6.29
 Release: alt1
 Summary: Real-time web framework
 
@@ -63,6 +63,9 @@ cp %SOURCE2 %buildroot/%_sysconfdir/sysconfig/hypnotoad
 %doc LICENSE Changes
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 6.29-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 6.24-alt1
 - automated CPAN update
 
