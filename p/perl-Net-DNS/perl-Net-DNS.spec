@@ -5,7 +5,7 @@
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MNet::DNS'
 
 Name: perl-%module
-Version: 1.02
+Version: 1.03
 Release: alt1
 
 Packager: Vladimir Didenko <cow@altlinux.org>
@@ -30,10 +30,10 @@ perform nearly any type of DNS query from a Perl script.
 %setup -n %module-%version
 
 # Fix test that will not succeed in Sisyphus build environment.
-sed -i- 's/tests=>12/tests=>11/; s/use Net::DNS::Nameserver;/exit;/' t/11-inet6.t
+#sed -i- 's/tests=>12/tests=>11/; s/use Net::DNS::Nameserver;/exit;/' t/11-inet6.t
 
 # Try to fix another failing test.
-sed -i- '/sock->sockaddr/s/;/ if $sock;/' t/01-resolver.t
+#sed -i- '/sock->sockaddr/s/;/ if $sock;/' t/01-resolver.t
 
 %build
 %perl_vendor_build --no-online-tests
@@ -50,6 +50,9 @@ sed -i- '/sock->sockaddr/s/;/ if $sock;/' t/01-resolver.t
 #exclude %perl_vendor_archlib/Net/DNS/Resolver/Win32.pm
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
 - automated CPAN update
 
