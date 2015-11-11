@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-CHI
-Version: 0.59
+Version: 0.60
 Release: alt1
 Summary: CHI - Unified cache handling interface
 
@@ -11,7 +11,7 @@ Url: %CPAN CHI
 Source: http://www.cpan.org/authors/id/J/JS/JSWARTZ/CHI-%{version}.tar.gz
 
 BuildArch: noarch
-BuildRequires: perl-Log-Any perl-Time-Duration perl-Data-UUID perl-Try-Tiny perl-Moose perl-JSON perl-List-MoreUtils perl-Task-Weaken perl-Hash-MoreUtils perl-Digest-JHash perl-Time-Duration perl-Time-Duration-Parse perl-Carp-Assert perl-Test-Deep perl-Test-Exception perl-TimeDate perl-Test-Warn perl-Test-Class perl-IO-Compress perl-Cache-Cache perl-Cache-FastMmap perl-String-RewritePrefix perl-Moo perl-MooX-Types-MooseLike perl-MooX-Types-MooseLike-Numeric
+BuildRequires: perl-Log-Any perl-Time-Duration perl-Data-UUID perl-Try-Tiny perl-Moose perl-JSON perl-List-MoreUtils perl-Task-Weaken perl-Hash-MoreUtils perl-Digest-JHash perl-Time-Duration perl-Time-Duration-Parse perl-Carp-Assert perl-Test-Deep perl-Test-Exception perl-TimeDate perl-Test-Warn perl-Test-Class perl-IO-Compress perl-Cache-Cache perl-Cache-FastMmap perl-String-RewritePrefix perl-Moo perl-MooX-Types-MooseLike perl-MooX-Types-MooseLike-Numeric perl(JSON/MaybeXS.pm)
 
 %description
 %summary
@@ -31,6 +31,9 @@ BuildRequires: perl-Log-Any perl-Time-Duration perl-Data-UUID perl-Try-Tiny perl
 %doc Changes LICENSE
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
+- automated CPAN update
+
 * Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1
 - automated CPAN update
 
