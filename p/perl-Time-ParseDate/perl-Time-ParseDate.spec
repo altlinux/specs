@@ -1,20 +1,20 @@
-%define module_version 2013.1113
+%define _unpackaged_files_terminate_build 1
+%define module_version 2015.103
 %define module_name Time-ParseDate
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(Time/Local.pm)
+BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(Time/Local.pm) perl(Time/Piece.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2013.1113
-Release: alt2
+Version: 2015.103
+Release: alt1
 Summary: Parse and format time values
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/M/MU/MUIR/modules/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MU/MUIR/modules/Time-ParseDate-%{version}.tar.gz
 BuildArch: noarch
 
 Provides: perl-Time-modules = %version
@@ -38,6 +38,9 @@ Conflicts: perl-Time-modules < %version
 %perl_vendor_privlib/T*
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 2015.103-alt1
+- automated CPAN update
+
 * Thu Apr 03 2014 Igor Vlasenko <viy@altlinux.ru> 2013.1113-alt2
 - moved to Sisyphus (Obsoletes: perl-Time-modules)
 
