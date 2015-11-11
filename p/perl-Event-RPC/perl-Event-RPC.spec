@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Event-RPC
 Name: perl-%dist
-Version: 1.05
+Version: 1.08
 Release: alt1
 
 Summary: Event based transparent Client/Server RPC framework
@@ -14,7 +15,7 @@ Patch: perl-Event-RPC-ipv6.patch
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 27 2011
-BuildRequires: perl-Event perl-AnyEvent perl-Glib perl-IO-Socket-SSL perl-devel
+BuildRequires: perl-Event perl-AnyEvent perl-Glib perl-IO-Socket-SSL perl-devel perl(JSON/XS.pm) perl(Sereal.pm)
 
 %description
 Event::RPC supports you in developing Event based networking
@@ -38,6 +39,9 @@ an extensible API. Currently Event and Glib are implemented.
 %perl_vendor_privlib/Event
 
 %changelog
+* Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
