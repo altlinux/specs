@@ -1,5 +1,5 @@
 Name: ZeroBraneStudio
-Version: 1.10
+Version: 1.20
 Release: alt1
 Summary: lightweight cross-platform Lua IDE
 License: MIT
@@ -49,12 +49,15 @@ desktop-file-install \
 %add_findreq_skiplist %_datadir/%name/build/*
 
 %files
-%doc CHANGELOG.md LICENSE README*
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE README*
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/*.desktop
 
 %changelog
+* Tue Nov 10 2015 Ildar Mulyukov <ildar@altlinux.ru> 1.20-alt1
+- new version
+
 * Fri Sep 11 2015 Ildar Mulyukov <ildar@altlinux.ru> 1.10-alt1
 - new version
 - luadist integration should fail
