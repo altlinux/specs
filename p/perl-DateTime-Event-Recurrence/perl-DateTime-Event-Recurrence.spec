@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DateTime/Span.pm) perl(DateTime/SpanSet.pm) perl(Params/Validate.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Event-Recurrence
-Version:        0.16
-Release:        alt2_24
+Version:        0.18
+Release:        alt1
 Summary:        DateTime::Set extension for create basic recurrence sets
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Event-Recurrence/
-Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-Recurrence-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-Recurrence-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Class/ISA.pm)
 BuildRequires:  perl(DateTime.pm)
@@ -48,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Nov 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2_24
 - update to new release by fcimport
 
