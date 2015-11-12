@@ -4,17 +4,17 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/TAP/DOM.pm
 %define upstream_name    TAP-DOM
-%define upstream_version 0.11
+%define upstream_version 0.12
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_4
+Version:    0.12
+Release:    alt1
 
 Summary:    Accessors for TAP::DOM summary part
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/TAP/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/S/SC/SCHWIGON/TAP-DOM-%{version}.tar.gz
 
 BuildRequires: perl(Class/XSAccessor.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -60,6 +60,9 @@ change, so your data tools can, well, rely on it.
 %perl_vendor_privlib/*
 
 %changelog
+* Thu Nov 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_4
 - update by mgaimport
 
