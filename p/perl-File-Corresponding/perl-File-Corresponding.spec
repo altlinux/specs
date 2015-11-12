@@ -1,29 +1,41 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(File/HomeDir.pm) perl(File/chdir.pm) perl(List/MoreUtils.pm) perl(Moose.pm) perl(Moose/Autobox.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Types/Path/Class.pm) perl(Path/Class.pm) perl(Pod/Usage.pm) perl(Test/Differences.pm) perl(Test/Exception.pm) perl(YAML/Tiny.pm)
 # END SourceDeps(oneline)
-%define module_version 0.003
+%define module_version 0.004
 %define module_name File-Corresponding
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators perl(Module/Build.pm)
 
 Name: perl-%module_name
-Version: %module_version
-Release: alt3
+Version: 0.004
+Release: alt1
 Summary: File::Corresponding - Find corresponding files in the directory tree
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/A/AN/ANDY/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JO/JOHANL/File-Corresponding-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 In a source tree it is common to have files with the same name, but in
 different places in the directory tree.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %{?epoch:%epoch:}%name = %version-%release
+
+%description scripts
+scripts for %name
+
+
 %prep
 %setup -n %module_name-%module_version
-[ %version == 0.003 ] && rm t/corresponding-group-corresponding.t t/corresponding-corresponding.t t/corresponding-config.t
+# they say die is ok
+rm t/corresponding-config.t
+#[ %version == 0.004 ] && rm t/corresponding-group-corresponding.t t/corresponding-corresponding.t t/corresponding-config.t
 
 %build
 %perl_vendor_build
@@ -34,9 +46,15 @@ different places in the directory tree.
 %files
 %doc Changes
 %perl_vendor_privlib/F*
-%exclude %_bindir/*
+
+%files scripts
+%_bindir/*
+%_man1dir/*
 
 %changelog
+* Thu Nov 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
+- automated CPAN update
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3
 - fixed build
 
