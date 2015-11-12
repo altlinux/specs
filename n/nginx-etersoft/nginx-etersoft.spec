@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.9
+Version: 0.2.10
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -58,6 +58,11 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Thu Nov 12 2015 Vitaly Lipatov <lav@altlinux.ru> 0.2.10-alt1
+- stop-injection: replace 401 with 406 error code
+- stop-injection: fix against sleep
+- do not wait so long for login to admin part
+
 * Fri Oct 30 2015 Vitaly Lipatov <lav@altlinux.ru> 0.2.9-alt1
 - update limits
 - stop-crack: add rules for Joomla xmlrpc.php and Bitrix admin
