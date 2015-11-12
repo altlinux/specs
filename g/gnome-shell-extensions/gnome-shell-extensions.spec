@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -172,6 +172,9 @@ See %_docdir/%name-%version/README for more information.
 %endif
 
 %changelog
+* Thu Nov 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
+- 3.18.2
+
 * Fri Oct 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 
