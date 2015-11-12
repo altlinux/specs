@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: cert-sh-functions
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 BuildArch: noarch
@@ -28,6 +28,10 @@ install -Dpm644 %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Thu Nov 12 2015 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1
+- Make DH bits and certificate days configurable.
+- Always separate rm's options from arguments.
+
 * Wed Jul 08 2015 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - Minor spec cleanup.
 - ssl_generate(): Make errors fatal.
