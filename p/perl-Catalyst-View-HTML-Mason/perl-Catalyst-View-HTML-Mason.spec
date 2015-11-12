@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Catalyst/ScriptRunner.pm) perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Catalyst-View-HTML-Mason
-%define upstream_version 0.18
+%define upstream_version 0.19
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt2_3
+Version:    0.19
+Release:    alt1
 
 Summary:    Helper for L<Catalyst::View::HTML::Mason> views
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Catalyst/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/J/JJ/JJNAPIORK/Catalyst-View-HTML-Mason-%{version}.tar.gz
 
 BuildRequires: perl(Capture/Tiny.pm)
 BuildRequires: perl(Catalyst.pm)
@@ -72,6 +72,9 @@ rm t/exceptions.t
 
 
 %changelog
+* Thu Nov 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_3
 - fixed build
 
