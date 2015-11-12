@@ -1,8 +1,8 @@
 %define rname sddm-kcm
 
 Name: kf5-%rname
-Version: 5.4.2
-Release: alt2
+Version: 5.4.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -78,6 +78,9 @@ KF5 library
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Wed Nov 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt1
+- new version
+
 * Wed Oct 14 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt2
 - fix path to sddm.conf
 

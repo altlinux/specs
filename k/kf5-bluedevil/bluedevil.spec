@@ -1,7 +1,7 @@
 %define rname bluedevil
 
 Name: kf5-%rname
-Version: 5.4.2
+Version: 5.4.3
 Release: alt1
 %K5init altplace
 
@@ -91,6 +91,9 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %_K5xdgmime/*.xml
 
 %changelog
+* Wed Nov 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt1
+- new version
+
 * Wed Oct 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
 - new version
 
