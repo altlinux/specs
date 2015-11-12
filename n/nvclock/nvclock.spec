@@ -1,16 +1,17 @@
 Name: nvclock
-Version: 0.8b
-Release: alt4.cvs20080308.qa2
+Version: 0.8b4
+Release: alt5
 
 Summary: An overclocking tool for NVIDIA cards
 License: GPL
 Group: System/Configuration/Hardware
 
 Url: http://www.linuxhardware.org/nvclock/
-Source0: %name%version.tar.gz
-Source2: %name.png
-Patch: nvclock-0.8b-alt-makefile.patch
+Source0: %url/%name%version.tar.bz2
+Source1: %name.png
+Patch0: nvclock-0.8b-alt-makefile.patch
 Patch1: nvclock-0.8b-alt-DSO.patch
+Patch2: %{name}0.8b4-makefile.patch
 Packager: Vyacheslav Dikonov <slava@altlinux.ru>
 
 Requires: NVIDIA_GLX
@@ -47,14 +48,13 @@ your NVIDIA based graphics card to reach their peak performance.
 
 %description gtk -l ru_RU.UTF-8
 GTK-интерфейс для nvclock - программы, которая позволяет вручную изменять 
-тактовую частоту процессоров графических карт на основе набора микросхем NVIDIA, 
-чтобы добиться предельной производительности.
+тактовую частоту процессоров графических карт на основе набора микросхем
+NVIDIA, чтобы добиться предельной производительности.
 
 %description gtk -l uk_UA.UTF-8
-GTK-iнтерфейс для nvclock - програми, яка дозволяє користувачу змінювати тактову 
-частоту процесорів графічних карток на базі набору мікросхем NVIDIA для досягнення 
-найбільшої продуктивності.
-
+GTK-iнтерфейс для nvclock - програми, яка дозволяє користувачу змінювати
+тактову частоту процесорів графічних карток на базі набору мікросхем NVIDIA
+для досягнення найбільшої продуктивності.
 
 %package qt
 Summary: An overclocking tool for NVIDIA cards
@@ -69,20 +69,20 @@ This is the Qt interface for nvclock - a program the allows you to overclock
 your NVIDIA based graphics card to reach their peak performance.
 
 %description qt -l ru_RU.UTF-8
-Qt-интерфейс для nvclock - программы, которая позволяет вручную изменять 
-тактовую частоту процессоров графических карт на основе набора микросхем NVIDIA, 
-чтобы добиться предельной производительности.
+Qt-интерфейс для nvclock - программы, которая позволяет вручную изменять
+тактовую частоту процессоров графических карт на основе набора микросхем
+NVIDIA, чтобы добиться предельной производительности.
 
 %description qt -l uk_UA.UTF-8
-Qt-iнтерфейс для nvclock - програми, яка дозволяє користувачу змінювати тактову 
-частоту процесорів графічних карток на базі набору мікросхем NVIDIA для досягнення 
-найбільшої продуктивності.
-
+Qt-iнтерфейс для nvclock - програми, яка дозволяє користувачу змінювати
+тактову частоту процесорів графічних карток на базі набору мікросхем NVIDIA
+для досягнення найбільшої продуктивності.
 
 %prep
 %setup -n %name%version
-%patch -p1
+%patch0 -p1
 %patch1 -p2
+%patch2 -p1
 
 %build
 unset QTDIR || : ; . /etc/profile.d/qt3dir.sh
@@ -94,9 +94,9 @@ export PATH=$QTDIR/bin:$PATH
 
 %install
 %makeinstall
-install -p -m644 -D %SOURCE2 $RPM_BUILD_ROOT%_datadir/pixmaps/%name.png
+install -pDm644 %SOURCE1 $RPM_BUILD_ROOT%_datadir/pixmaps/%name.png
 # Menu
-install -m755 -d %buildroot%_desktopdir/
+install -dm755 %buildroot%_desktopdir/
 cat > %buildroot%_desktopdir/%{name}-qt.desktop <<EOF
 [Desktop Entry]
 Version=1.0
@@ -147,8 +147,11 @@ rm -rf %_docdir/%name/
 %_liconsdir/%name.*
 %_desktopdir/%name-qt.desktop
 
-
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 0.8b4-alt5
+- 0.8b4 rebuilt with gcc5-built qt3
+- added mageia patch
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8b-alt4.cvs20080308.qa2
 - Fixed build
 

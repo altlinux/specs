@@ -7,7 +7,7 @@
 
 Name: arts
 Version: 1.5.10
-Release: alt5.2
+Release: alt6
 Serial: 1
 
 Source: %name-%version.tar
@@ -275,6 +275,9 @@ mv %buildroot/%_includedir/artsc %buildroot/%_K3includedir/
 %endif
 
 %changelog
+* Mon Oct 05 2015 Michael Shigorin <mike@altlinux.org> 1:1.5.10-alt6
+- Rebuilt against qt3-3.3.8d-alt8 for gcc5 C++ ABI
+
 * Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.5.10-alt5.2
 - Rebuilt with new audiofile
 

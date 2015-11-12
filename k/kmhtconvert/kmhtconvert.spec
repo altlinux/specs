@@ -1,6 +1,6 @@
 Name:         kmhtconvert
 Version:      0.6
-Release:      alt2.1
+Release:      alt3
 URL:          http://users.otenet.gr/~geosp/kmhtconvert/
 License:      GPL
 Group:        Networking/WWW
@@ -51,6 +51,9 @@ fi
 %_kde3_iconsdir/*/*/*/*
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 0.6-alt3
+- rebuilt against gcc5-built qt3
+
 * Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2.1
 - Fixed build
 

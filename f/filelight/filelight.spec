@@ -1,12 +1,11 @@
 Name: filelight
 Version: 1.0
-Release: alt11.3
+Release: alt12
 
 Summary: Graphical disk usage display
 License: GPLv2
 Group: Graphical desktop/KDE
 
-Url: http://www.methylblue.com/filelight
 Source: %name-%version.tar.bz2
 Patch0: filelight-1.0-alt-sparsefiles.patch
 Patch1: filelight-1.0-alt-desktop.patch
@@ -16,8 +15,8 @@ Patch4: filelight-1.0-alt-DSO.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Summary(de): Eine grafische Anzeige der Festplattenbelegung
-Summary(ru_RU.KOI8-R): Графическая визуализация занимаемого места на диске
-Summary(uk_UA.KOI8-U): Граф╕чна в╕зуал╕зац╕я зайнятого м╕сця на диску
+Summary(ru_RU.UTF-8): п⌠я─п╟я└п╦я┤п╣я│п╨п╟я▐ п╡п╦п╥я┐п╟п╩п╦п╥п╟я├п╦я▐ п╥п╟п╫п╦п╪п╟п╣п╪п╬пЁп╬ п╪п╣я│я┌п╟ п╫п╟ п╢п╦я│п╨п╣
+Summary(uk_UA.UTF-8): п⌠я─п╟я└я√я┤п╫п╟ п╡я√п╥я┐п╟п╩я√п╥п╟я├я√я▐ п╥п╟п╧п╫я▐я┌п╬пЁп╬ п╪я√я│я├я▐ п╫п╟ п╢п╦я│п╨я┐
 
 # Automatically added by buildreq on Wed Jul 29 2009
 BuildRequires: gcc-c++ imake kdelibs-devel libXt-devel libjpeg-devel qt3-designer xml-utils xorg-cf-files
@@ -33,22 +32,22 @@ For KDE4, see also filelight-kde4 package.
 For GNOME, see also gdmap package.
 
 %description -l de
-Filelight zeigt eine aufwДndige grafische Darstellung der Dateien
+Filelight zeigt eine aufwп■ndige grafische Darstellung der Dateien
 und Verzeichnisse.
 
-%description -l ru_RU.KOI8-R
-Filelight создает графическое представление места, занимаемого
-файлами и каталогами на вашем диске.
+%description -l ru_RU.UTF-8
+Filelight я│п╬п╥п╢п╟п╣я┌ пЁя─п╟я└п╦я┤п╣я│п╨п╬п╣ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╦п╣ п╪п╣я│я┌п╟, п╥п╟п╫п╦п╪п╟п╣п╪п╬пЁп╬
+я└п╟п╧п╩п╟п╪п╦ п╦ п╨п╟я┌п╟п╩п╬пЁп╟п╪п╦ п╫п╟ п╡п╟я┬п╣п╪ п╢п╦я│п╨п╣.
 
-Для KDE4 см. тж. пакет filelight-kde4.
-Для GNOME см. тж. пакет gdmap.
+п■п╩я▐ KDE4 я│п╪. я┌п╤. п©п╟п╨п╣я┌ filelight-kde4.
+п■п╩я▐ GNOME я│п╪. я┌п╤. п©п╟п╨п╣я┌ gdmap.
 
-%description -l uk_UA.KOI8-U
-Filelight створю╓ граф╕чне уявлення м╕сця, яке займають файли
-та теки на вашому диску.
+%description -l uk_UA.UTF-8
+Filelight я│я┌п╡п╬я─я▌я■ пЁя─п╟я└я√я┤п╫п╣ я┐я▐п╡п╩п╣п╫п╫я▐ п╪я√я│я├я▐, я▐п╨п╣ п╥п╟п╧п╪п╟я▌я┌я▄ я└п╟п╧п╩п╦
+я┌п╟ я┌п╣п╨п╦ п╫п╟ п╡п╟я┬п╬п╪я┐ п╢п╦я│п╨я┐.
 
-Для KDE4 див. також пакунок filelight-kde4.
-Для GNOME див. також пакунок gdmap.
+п■п╩я▐ KDE4 п╢п╦п╡. я┌п╟п╨п╬п╤ п©п╟п╨я┐п╫п╬п╨ filelight-kde4.
+п■п╩я▐ GNOME п╢п╦п╡. я┌п╟п╨п╬п╤ п©п╟п╨я┐п╫п╬п╨ gdmap.
 
 %add_optflags %optflags_shared
 
@@ -86,6 +85,9 @@ make -f admin/Makefile.common
 %_libdir/kde3/lib%name.*
 
 %changelog
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 1.0-alt12
+- rebuilt with gcc5-built qt3
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt11.3
 - Fixed build
 

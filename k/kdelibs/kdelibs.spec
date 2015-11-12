@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.2
-%define rel alt4
+%define rel alt4.1
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -366,9 +366,7 @@ BD=%_builddir/%name-%version/BUILD
 
 export LD_LIBRARY_PATH=$BD/kdecore:$BD/kdefx:$BD/kdeui:$BD/kio:$BD/dcop:$BD/kdesu:$BD/kwallet/client:$LD_LIBRARY_PATH
 export PATH=%_K3bindir:$PATH
-#add_optflags -DNEED_BZ2_PREFIX -DAVAHI_API_0_6 -I%_includedir/linux-libc-headers/include
 export QTDIR=%qtdir
-export LDFLAGS="-L%buildroot/%_libdir -L%buildroot/%_libdir/kde3 -L%qtdir/lib"
 export DESTDIR=%buildroot
 # export LIBDIR=/%_libdir/kde3
 
@@ -660,6 +658,10 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Tue Oct 27 2015 Andrey Cherepanov <cas@altlinux.org> 3.5.13.2-alt4.1
+- Rebuilt for gcc5 C++11 ABI
+- Fix build by removing harmful redefinition of LDFLAGS
+
 * Thu Jan 30 2014 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt4
 - KRandr translation using fix.
 - Save KeepWindowPermanent state of KJobViewer to config and set default to checked.

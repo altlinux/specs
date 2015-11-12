@@ -26,7 +26,7 @@
 
 Name: kdemultimedia
 Version: 3.5.13.2
-Release: alt2.2
+Release: alt2.3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Multimedia
@@ -662,6 +662,9 @@ install -m 0644 %buildroot/%_K3xdg_apps/kmix.desktop %buildroot/%_K3start/kmix.d
 %_K3includedir/mpeglib
 
 %changelog
+* Tue Oct 27 2015 Andrey Cherepanov <cas@altlinux.org> 3.5.13.2-alt2.3
+- Rebuilt for gcc5 C++11 ABI
+
 * Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.13.2-alt2.2
 - Rebuilt with new audiofile
 

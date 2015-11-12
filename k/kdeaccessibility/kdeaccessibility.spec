@@ -11,7 +11,7 @@
 
 Name: kdeaccessibility
 Version: 3.5.13.2
-Release: alt2.1
+Release: alt2.2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - accessibility programs
@@ -274,6 +274,9 @@ export PATH=%_bindir:$PATH
 %_K3apps/kicker/applets/kbstateapplet.desktop
 
 %changelog
+* Wed Oct 28 2015 Andrey Cherepanov <cas@altlinux.org> 3.5.13.2-alt2.2
+- Rebuilt for gcc5 C++11 ABI
+
 * Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2.1
 - Build for Automake 1.13 and 1.14 is added.
 

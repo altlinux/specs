@@ -2,7 +2,7 @@
 
 Name:    qtcurve
 Version: 1.8.15
-Release: alt1
+Release: alt2
 Serial:  1
 
 Summary: QtCurve (KDE and GTK2 style)
@@ -139,6 +139,9 @@ install -pD -m644 QtCurve-KDE4/BUILD-%_target_platform-qt/style/%name.so %buildr
 
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.8.15-alt2
+- rebuilt against gcc5-built qt3
+
 * Thu Jan 03 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.8.15-alt1
 - New versions: 1.8.15 (Gtk2), 1.8.14 (KDE4), 1.8.5 (KDE3) (ALT #27481)
 

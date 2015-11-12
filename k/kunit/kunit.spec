@@ -1,6 +1,6 @@
 Name: kunit
 Version: 0.5
-Release: alt9.qa1
+Release: alt10
 
 Summary: KUnit - units converter
 Summary(ru-Ru.KOI8-R): Конвертер физических величин
@@ -87,6 +87,9 @@ install -pD -m644 %SOURCE7 %buildroot%_datadir/applications/kde/%name.desktop
 %_miconsdir/%name.png
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 0.5-alt10
+- rebuilt against gcc5-built qt3
+
 * Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.5-alt9.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:

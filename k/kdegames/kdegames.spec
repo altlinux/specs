@@ -12,7 +12,7 @@
 Name: kdegames
 Summary: KDE - Games
 Version: 3.5.13.2
-Release: alt2.1
+Release: alt2.2
 
 Group: Graphical desktop/KDE
 Url: http://www.kde.org/
@@ -788,6 +788,9 @@ export PATH=%_bindir:$PATH
 %_K3doc/en/kdegames-%version-apidocs
 
 %changelog
+* Tue Oct 27 2015 Andrey Cherepanov <cas@altlinux.org> 3.5.13.2-alt2.2
+- Rebuilt for gcc5 C++11 ABI
+
 * Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2.1
 - Build for Automake 1.13 and 1.14 is added.
 

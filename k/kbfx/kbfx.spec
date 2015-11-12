@@ -3,7 +3,7 @@
 
 Name:    kbfx
 Version: 0.4.9.3.1
-Release: alt10
+Release: alt11
 
 Summary: KBFX is an alternative to the classical K-Menu button and it's menu
 Summary(ru_RU.UTF-8): Альтернативное меню KDE
@@ -82,6 +82,9 @@ rm -f %buildroot%_K3libdir/libkbfx*.la
 %_miconsdir/*
 
 %changelog
+* Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 0.4.9.3.1-alt11
+- rebuilt against gcc5-built qt3
+
 * Fri Jun 22 2012 Roman Savochenko <rom_as@altlinux.ru> 0.4.9.3.1-alt10
 - Rebuild for TDE 3.5.13 release.
 - Plugins place and translations is fixed.

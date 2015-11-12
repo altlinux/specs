@@ -16,7 +16,7 @@
 
 Name: kdeaddons
 Version: 3.5.13.2
-Release: alt2.1
+Release: alt2.2
 
 Group: Graphical desktop/KDE
 Summary: KDE addons
@@ -516,6 +516,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Tue Nov 10 2015 Andrey Cherepanov <cas@altlinux.org> 3.5.13.2-alt2.2
+- Rebuilt for gcc5 C++11 ABI
+
 * Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.13.2-alt2.1
 - Fixed build
 

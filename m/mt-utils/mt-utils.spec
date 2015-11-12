@@ -1,6 +1,6 @@
 Name: mt-utils
 Version: 0.0.1
-Release: alt4.1
+Release: alt4.2
 
 Summary: multitran command line utilities
 License: LGPL
@@ -37,6 +37,9 @@ multitran utils:
 
 
 %changelog
+* Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 0.0.1-alt4.2
+- NMU: rebuilt against current libraries
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt4.1
 - Fixed build
 

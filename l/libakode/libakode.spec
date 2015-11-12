@@ -7,9 +7,9 @@ Version: 2.0.2
 %define beta %nil
 %define rlz alt11
 %if "%beta" == "%nil"
-Release: %rlz.qa1
+Release: %rlz.qa2
 %else
-Release: %rlz.%beta.qa1
+Release: %rlz.%beta.qa2
 %endif
 
 Group: Sound
@@ -19,7 +19,7 @@ License: GPL
 %else
 License: LGPL
 %endif
-Url: http://carewolf.com/akode/
+Url: http://kde-apps.org/content/show.php/aKode?content=30375
 #http://www.kde-apps.org/usermanager/search.php?username=carewolf
 
 
@@ -33,57 +33,49 @@ Source1: admin.tar.bz2
 Patch1: akode-pulseaudio.patch
 
 # MDK
-Patch11: akode-2.0.2-ffmpeg-new-location.patch
-Patch12: akode-2.0.2-ffmpeg-int64_c.patch
+#Patch11: akode-2.0.2-ffmpeg-new-location.patch
+#Patch12: akode-2.0.2-ffmpeg-int64_c.patch
 Patch13: akode-2.0.2-flac113-portable.patch
-Patch14: akode-2.0.2-ffmpeg-extern-c.patch
+#Patch14: akode-2.0.2-ffmpeg-extern-c.patch
 Patch15: akode-2.0.2-fix-gcc-build.patch
-Patch16: akode-2.0.2-alt-ffmpeg-new.patch
+#Patch16: akode-2.0.2-alt-ffmpeg-new.patch
 
 # ALT
 Patch101: akode-2.0.2-alt-ffmpeg-new.patch
-Patch102: akode-2.0.2-alt-libav07.patch
+#Patch102: akode-2.0.2-alt-libav07.patch
+#Patch103: akode-2.0.2-ffmpeg-fix-deprecated-macros-and-types.patch
 
-#BuildRequires: gcc-c++ jackit-devel libalsa-devel libffmpeg-devel libflac-devel
-#BuildRequires: libmad-devel libogg-devel liboggflac-devel libsamplerate-devel
-#BuildRequires: libstdc++-devel libtheora-devel libvorbis-devel
-#BuildRequires: pkg-config zlib-devel libspeex-devel libfaad-devel
-#BuildRequires: libfaac-devel libdts-devel libx264-devel libdc1394-devel
-#BuildRequires: libxvid-devel liblame-devel libgsm-devel
-
-# Automatically added by buildreq on Mon May 28 2007
-#BuildRequires: gcc-c++ gcc-fortran jackit-devel libalsa-devel libavformat-devel libflac-devel libmad-devel libsamplerate-devel libspeex-devel libvorbis-devel zlib-devel
 BuildRequires: gcc-c++ jackit-devel libalsa-devel libavformat-devel libflac-devel libmad-devel libsamplerate-devel
 BuildRequires: libspeex-devel libvorbis-devel zlib-devel pkg-config
 %if_enabled with_polyp
-BuildRequires: libpolypaudio-devel
+BuildRequires: libpulseaudio-devel
 %endif
 
 %description
-aKode is a simple audio-decoding frame-work that provides a uniform 
-interface to decode the most common audio-formats. It also has a 
-direct playback option for a number of audio-outputs. 
-aKode currently has the following decoder plugins: 
- mpeg: Uses libMAD to decoder all MPEG 1/2 layer I-III audio. 
-       GPL licensed and 
-       patent issue in the US. 
- mpc:  Decodes musepack aka mpc audio. LGPL licensed. 
- xiph: Decodes FLAC, Ogg/FLAC, Speex and Ogg Vorbis audio. LGPL 
-       licensed, patent free. 
- ffmpeg: Experimental decoder using the FFMPEG decoding library. 
-       Enables WMA and 
-       RealAudio 
-       playback. LGPL and possible patent and reengineering issues 
-       in the US. 
+aKode is a simple audio-decoding frame-work that provides a uniform
+interface to decode the most common audio-formats. It also has a
+direct playback option for a number of audio-outputs.
+aKode currently has the following decoder plugins:
+ mpeg: Uses libMAD to decoder all MPEG 1/2 layer I-III audio.
+       GPL licensed and
+       patent issue in the US.
+ mpc:  Decodes musepack aka mpc audio. LGPL licensed.
+ xiph: Decodes FLAC, Ogg/FLAC, Speex and Ogg Vorbis audio. LGPL
+       licensed, patent free.
+ ffmpeg: Experimental decoder using the FFMPEG decoding library.
+       Enables WMA and
+       RealAudio
+       playback. LGPL and possible patent and reengineering issues
+       in the US.
 
-aKode also has the following audio outputs: 
+aKode also has the following audio outputs:
  oss:  Outputs to the OSS (Open Sound System) of for instance FreeBSD
-       and Linux 2.4 
- alsa: Outputs to ALSA of Linux 2.6 (version 0.9 or 1.x required) 
-       (dmix is recommended). 
- sun:  Outputs to Sun OS/Solaris audio device . 
- jack: Outputs using Jack audio backend. 
- polyp:Output to the polypaudio server. Recommended for network 
+       and Linux 2.4
+ alsa: Outputs to ALSA of Linux 2.6 (version 0.9 or 1.x required)
+       (dmix is recommended).
+ sun:  Outputs to Sun OS/Solaris audio device .
+ jack: Outputs using Jack audio backend.
+ polyp:Output to the polypaudio server. Recommended for network
        transparent audio.
 
 %package devel
@@ -113,17 +105,17 @@ Polypaudio support for %name
 %setup -q -n %rname-%version%beta -a1
 %patch1 -p1
 #
-%patch11 -p0
-%patch12 -p1
+#patch11 -p0
+#patch12 -p1
 %patch13 -p4
-%patch14 -p1
+#patch14 -p1
 %patch15 -p0
 #
-%patch101 -p1
-%patch102 -p1
+%patch101 -p2
+#patch102 -p1
+#patch103 -p2
 
 %make -f admin/Makefile.common cvs
-
 
 %build
 %add_optflags -I%_includedir/speex
@@ -162,8 +154,6 @@ Polypaudio support for %name
 %install
 %make DESTDIR=%buildroot install
 
-
-
 %files
 %_bindir/akodeplay
 %_libdir/libakode.*
@@ -189,6 +179,12 @@ Polypaudio support for %name
 
 
 %changelog
+* Fri Nov 21 2014 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt11.qa2
+- Fix build (libpulseaudio-devel does not provide libpolypaudio-devel)
+- Fix deprecated libav macros and types
+- Fix Url from orphan website
+- Spec cleanup
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.2-alt11.qa1
 - NMU: rebuilt for updated dependencies.
 

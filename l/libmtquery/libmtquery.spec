@@ -1,6 +1,6 @@
 Name: libmtquery
 Version: 0.0.1
-Release: alt3.1.qa3
+Release: alt3.1.qa4
 
 Summary: multitran translation query library
 License: LGPL
@@ -53,6 +53,9 @@ Contents static libraries for %name
 %_libdir/*.a
 
 %changelog
+* Sun Nov 08 2015 Michael Shigorin <mike@altlinux.org> 0.0.1-alt3.1.qa4
+- rebuilt for gcc5 C++ ABI
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt3.1.qa3
 - Fixed build
 

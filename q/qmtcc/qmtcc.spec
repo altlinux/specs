@@ -1,6 +1,6 @@
 Name: qmtcc
 Version: 0.0.1
-Release: alt4.1
+Release: alt4.2
 
 Summary: Qt based graphical frontend to multitran dictionary
 License: GPL
@@ -45,6 +45,9 @@ install -Dpm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*
 
 %changelog
+* Thu Nov 05 2015 Michael Shigorin <mike@altlinux.org> 0.0.1-alt4.2
+- rebuilt against gcc5-built qt3
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt4.1
 - Fixed build
 
