@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 93
 %define nv_minor %nil
-%define pkg_rel alt139
+%define pkg_rel alt140
 %ifarch x86_64
 %def_enable egl
 %else
@@ -86,6 +86,7 @@ Source2: nvidia.xinf
 Source100: nvidia_create_xinf
 
 Patch1: buildfix_kernel_3.14.patch
+Patch2: buildfix_kernel_4.3.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel
@@ -192,6 +193,7 @@ cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
 %patch1 -p1
+%patch2 -p1
 rm -rf precompiled
 popd
 
@@ -342,6 +344,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 340.93-alt140
+- add fix against 4.3 kernel
+
 * Thu Sep 03 2015 Sergey V Turchin <zerg@altlinux.org> 340.93-alt139
 - new version
 
