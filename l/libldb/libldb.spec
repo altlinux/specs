@@ -1,6 +1,6 @@
 Name: libldb
 Version: 1.1.21
-Release: alt1
+Release: alt1.1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -107,6 +107,9 @@ rm -f %buildroot/%_man3dir/_*
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Wed Nov 11 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.21-alt1.1
+- Fix path to samba_dsdb.so module (exists only in samba-DC)
+
 * Thu Sep 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.21-alt1
 - 1.1.21
 
