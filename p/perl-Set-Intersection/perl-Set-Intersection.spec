@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Set-Intersection
-%define upstream_version 0.02
+%define upstream_version 0.04
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_2
+Version:    0.04
+Release:    alt1
 
 Summary:    Get intersection (of set theory) of arrays
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Set/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TU/TURUGINA/Set-Intersection-%{version}.tar.gz
 
 BuildRequires: perl(Exporter.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -47,6 +47,9 @@ arrays.
 
 
 %changelog
+* Thu Nov 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_2
 - mageia import by cas@ requiest
 
