@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.29
+Version: 1.8.30
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Nov 12 2015 Anton Farygin <rider@altlinux.ru> 1.8.30-alt1
+- add mmbclk*boot* to evms exclude list
+
 * Mon May 11 2015 Andrey Cherepanov <cas@altlinux.org> 1.8.29-alt1
 - If there is 'poweroff' option in kernel command line then power off
   instead of reboot (useful for autoinstall)
