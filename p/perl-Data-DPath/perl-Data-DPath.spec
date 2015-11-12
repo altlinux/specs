@@ -3,19 +3,19 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Data-DPath
-%define upstream_version 0.54
+%define upstream_version 0.55
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    0.55
+Release:    alt1
 
 Summary:    Magic functions available inside filter conditions
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Data/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/S/SC/SCHWIGON/Data-DPath-%{version}.tar.gz
 
 BuildRequires: perl(Class/XSAccessor.pm)
 BuildRequires: perl(Class/XSAccessor/Array.pm)
@@ -61,6 +61,9 @@ no description found
 
 
 %changelog
+* Thu Nov 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
+- automated CPAN update
+
 * Mon Sep 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1_1
 - update by mgaimport
 
