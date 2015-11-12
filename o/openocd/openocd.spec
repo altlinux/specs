@@ -1,6 +1,6 @@
 Name: openocd
-Version: 0.8.0
-Release: alt1.git8fa67bd
+Version: 0.9.0
+Release: alt1
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 
 Group: Development/Tools
@@ -86,6 +86,9 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 %_mandir/man1/*
 
 %changelog
+* Thu Nov 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.0-alt1
+- Updated to v0.9.0.
+
 * Mon May 05 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.0-alt1.git8fa67bd
 - Updated to v0.8.0-1-g8fa67bd.
 
