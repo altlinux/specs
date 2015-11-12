@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 # Disable cross-reference autoreq problem for shared libraries
-%add_findreq_skiplist  %_libdir/chromium/lib/*
+%add_findreq_skiplist  %_libdir/chromium/lib/lib*.so
 
 %def_disable debug
 %def_disable nacl
@@ -9,7 +9,7 @@
 %def_enable  shared_libraries
 %def_disable v8_internal
 
-%define v8_version 4.6.85.25
+%define v8_version 4.6.85.31
 
 %if_enabled debug
 %define buildtype Debug
@@ -18,7 +18,7 @@
 %endif
 
 Name:           chromium
-Version:        46.0.2490.71
+Version:        46.0.2490.86
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -655,6 +655,14 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Wed Nov 11 2015 Andrey Cherepanov <cas@altlinux.org> 46.0.2490.86-alt1
+- New version
+- Security fixes:
+  - High CVE-2015-1302: Information leak in PDF viewer.
+
+* Mon Nov 02 2015 Andrey Cherepanov <cas@altlinux.org> 46.0.2490.80-alt1
+- New version
+
 * Wed Oct 14 2015 Andrey Cherepanov <cas@altlinux.org> 46.0.2490.71-alt1
 - New version
 - Security fixes:
