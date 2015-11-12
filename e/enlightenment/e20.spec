@@ -4,7 +4,7 @@
 %define snapshot 2015-10-28
 %define cvs_date 5469c3b6
 %undefine cvs_date
-%define rel alt0.1
+%define rel alt0.5
 
 %def_disable static
 # only bluez4 supported
@@ -207,6 +207,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Nov 12 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.20.0-alt0.5
+- 0.20.0-rc
+
 * Thu Oct 29 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.20.0-alt0.1
 - v0.20.0-beta-6-g5469c3b
 
