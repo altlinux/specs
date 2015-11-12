@@ -1,7 +1,7 @@
 %define module_name	virtualbox
 %define module_version	4.3.30
 
-%define module_release	alt2
+%define module_release	alt3
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -24,6 +24,8 @@ License: GPL
 Group: System/Kernel and hardware
 
 Patch0: virtualbox-fix-kernel4.2.patch
+Patch1: virtualbox-fix-kernel4.3.patch
+Patch2: virtualbox-fix-kernel4.3-netadp.patch
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
@@ -60,10 +62,14 @@ or in your /etc/modules.conf file.
 tar jxvf %kernel_src/kernel-source-%drv_module_name-%module_version.tar.bz2
 pushd kernel-source-%drv_module_name-%module_version
 %patch0 -p3
+%patch1 -p6
 popd
 tar jxvf %kernel_src/kernel-source-%pci_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%net_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%net_module_adaptor_name-%module_version.tar.bz2
+pushd kernel-source-%net_module_adaptor_name-%module_version
+%patch2 -p6
+popd
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -100,6 +106,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Nov 12 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.3.30-alt3
+- build with kernel 4.3 fixed
 
 * Fri Oct  9 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.3.30-alt2
 - work with kernel 4.2 fixed
