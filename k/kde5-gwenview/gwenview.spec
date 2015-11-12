@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 15.08.2
+Version: 15.08.3
 Release: alt1
 %K5init
 
@@ -98,6 +98,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
+- new version
+
 * Wed Oct 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
 - new version
 

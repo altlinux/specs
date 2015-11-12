@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/lokalize/scripts/*.py
 
 Name: kde5-%rname
-Version: 15.08.2
+Version: 15.08.3
 Release: alt1
 %K5init altplace
 
@@ -54,6 +54,9 @@ Lokalize is the localization tool for KDE and other open source software.
 %_K5xmlgui/lokalize/
 
 %changelog
+* Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
+- new version
+
 * Wed Oct 14 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
 - new version
 
