@@ -1,9 +1,6 @@
-%define commit 72bbd6c5a327bdc1d5ea8cb12502640860b1fc44
-%define shortcommit 72bbd6c
-
 Name: jimtcl
-Version: 0.75
-Release: alt1.git%shortcommit
+Version: 0.76
+Release: alt1
 Summary: A small embeddable Tcl interpreter
 
 License: BSD
@@ -70,5 +67,8 @@ popd
 %_libdir/libjim.so
 
 %changelog
+* Thu Nov 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.76-alt1
+- Updated to 0.76.
+
 * Mon May 05 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.75-alt1.git72bbd6c
 - Initial build.
