@@ -1,6 +1,6 @@
 Name: girar-nmu
 Version: 1.27
-Release: alt1
+Release: alt2
 
 Summary: git.alt client utilities for NMU automation
 License: GPL
@@ -50,6 +50,15 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Fri Nov 13 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.27-alt2
+- girar-nmu-helper-clone-and-setup-build-commit: configure the remote
+  in a standard way (like "git remote add" does; ALT#31482).
+- minor tweaks in the code:
+  - factored out git://git.altlinux.org/gears and
+    git://git.altlinux.org/srpms as variables (to become environment
+    parameters in future).
+  - typo in documentation.
+
 * Thu Oct 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
 - <before_subtask_id> support in girar-nmu-helper-task-add-srpm
 
