@@ -1,5 +1,5 @@
 Name: nautilus-dropbox
-Version: 2015.02.12
+Version: 2015.10.28
 Release: alt1
 
 Summary: Dropbox integration for Nautilus
@@ -8,8 +8,6 @@ Summary(ru_RU.UTF-8): Интеграция Dropbox с Nautilus
 License: GPL, CC BY-ND 3.0
 Group: Graphical desktop/GNOME
 Url: http://www.dropbox.com/
-
-Packager: Maxim Zhukov <mzhukov@altlinux.org>
 
 Source: https://www.dropbox.com/download?dl=packages/%name-%version.tar
 
@@ -71,6 +69,9 @@ The *dropbox* command provides a command line interface to the Dropbox.
 %_man1dir/*.1*
 
 %changelog
+* Fri Nov 13 2015 Mikhail Efremov <sem@altlinux.org> 2015.10.28-alt1
+- Updated to 2015.10.28.
+
 * Wed Apr 08 2015 Mikhail Efremov <sem@altlinux.org> 2015.02.12-alt1
 - Updated to 2015.02.12.
 
