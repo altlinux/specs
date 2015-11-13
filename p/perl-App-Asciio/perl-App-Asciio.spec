@@ -1,7 +1,7 @@
 %define m_distro App-Asciio
 Name: perl-App-Asciio
-Version: 1.02.71
-Release: alt2
+Version: 1.51.3
+Release: alt1
 Summary: Plain ASCII diagram
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -33,13 +33,21 @@ xvfb-run -a perl Build test
 
 %install
 %perl_vendor_install
+rm %buildroot%_bindir/A
+
+# need DISPLAY for perl.req
+%{expand:%%global __find_requires xvfb-run -a %__find_requires}
 
 %files
 %_bindir/asciio
+%_bindir/asciio_to_text
 %perl_vendor_privlib/App/Asciio*
 %doc README 
 
 %changelog
+* Fri Nov 13 2015 Vladimir Lettiev <crux@altlinux.ru> 1.51.3-alt1
+- 1.51.3
+
 * Wed Nov 17 2010 Vladimir Lettiev <crux@altlinux.ru> 1.02.71-alt2
 - fixed test (ignoring warning message)
 - fixed check with perl.req
