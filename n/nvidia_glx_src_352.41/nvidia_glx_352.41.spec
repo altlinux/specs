@@ -14,13 +14,13 @@
 %define nv_version 352
 %define nv_release 41
 %define nv_minor %nil
-%define pkg_rel alt146
+%define pkg_rel alt147
 %ifarch x86_64
 %def_enable egl
 %else
 %def_enable egl
 %endif
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -346,6 +346,9 @@ fi
 %endif
 
 %changelog
+* Fri Nov 13 2015 Sergey V Turchin <zerg@altlinux.org> 352.41-alt147
+- don't package kernel module sources
+
 * Wed Sep 30 2015 Sergey V Turchin <zerg@altlinux.org> 352.41-alt146
 - ignore kernel CONFIG_X86_DMA_REMAP
 
