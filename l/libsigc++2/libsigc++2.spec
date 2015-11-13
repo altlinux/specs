@@ -2,7 +2,7 @@
 %define ver_major 2.6
 
 Name: %{_name}2
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -10,8 +10,8 @@ License: LGPLv2+
 Group: System/Libraries
 Url: http://libsigc.sourceforge.net/
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-Source: %_name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+#Source: %_name-%version.tar
 
 Provides: libsigc++2.0 = %version-%release
 Obsoletes: libsigc++2.0 < %version-%release
@@ -79,6 +79,9 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %doc %_datadir/devhelp/books/*
 
 %changelog
+* Fri Nov 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
+- 2.6.2
+
 * Mon Sep 28 2015 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
 - 2.6.1
 
