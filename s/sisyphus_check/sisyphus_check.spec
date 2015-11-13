@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.39
+Version: 0.8.40
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,10 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Fri Nov 13 2015 Dmitry V. Levin <ldv@altlinux.org> 0.8.40-alt1
+- 090-check-nvr (check_nvr):
+  + allowed single symbol package names (closes: #28834, #31481).
+
 * Mon Jun 03 2013 Dmitry V. Levin <ldv@altlinux.org> 0.8.39-alt1
 - 210-check-kernel (kernel_version_code):
   + changed algorithm for 4-component kernel versions support.
