@@ -4,8 +4,8 @@
 %define _root_sbindir /sbin
 
 Name: cryptsetup
-Version: 1.6.8
-Release: alt2
+Version: 1.7.0
+Release: alt1
 
 Summary: utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
@@ -222,6 +222,9 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %exclude %python_sitelibdir/*.la
 
 %changelog
+* Thu Nov 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.0-alt1
+- Updated to 1.7.0.
+
 * Thu Oct 08 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.8-alt2
 - Replaced libpwquality with libpasswdqc.
 
