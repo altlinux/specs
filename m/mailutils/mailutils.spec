@@ -1,13 +1,17 @@
-#def_enable python
+# see http://lists.altlinux.org/pipermail/devel/2012-February/193243.html
+%def_disable python
+
+# see http://bugzilla.altlinux.org/31466
+%def_disable guile
 
 %define snapshot 1
 
 Name: mailutils
 
-%define baseversion 2.99.98
+%define baseversion 2.99.99
 
 %if %snapshot
-%define snapshotdate 20130822
+%define snapshotdate 20151110
 Version: %baseversion
 Release: alt0.%snapshotdate.1
 %define srcdir %name-%snapshotdate
@@ -40,13 +44,15 @@ Provides: /bin/mail
 
 %add_findreq_skiplist */usr/bin/guimb
 
-Requires: libmailutils = %{version}-%{release}, guile >= 1.8, libreadline
+BuildRequires(pre): rpm-build-licenses
+
+Requires: libmailutils = %{version}-%{release}
+Requires: libreadline
 
 # Automatically added by buildreq on Mon Feb 06 2012
 # optimized out: emacs-X11 emacs-base emacs-cedet-speedbar emacs-common fontconfig guile18 libX11-locales libgdk-pixbuf libgmp-devel libgpg-error libltdl7-devel libncurses-devel libstdc++-devel libtinfo-devel python-base python-modules
-BuildRequires: bzlib-devel emacs-git flex gcc-c++ glibc-devel guile18-devel libdb4-devel libgcrypt-devel libgdbm-devel libgnutls-devel libldap-devel libpam-devel libreadline-devel libtokyocabinet-devel libwrap-devel python-devel zlib-devel
+BuildRequires: bzlib-devel emacs-git flex gcc-c++ glibc-devel libdb4-devel libgcrypt-devel libgdbm-devel libgnutls-devel libldap-devel libpam-devel libreadline-devel libtokyocabinet-devel libwrap-devel python-devel zlib-devel
 
-BuildRequires: rpm-build-licenses
 BuildRequires: /dev/pts
 BuildRequires: emacs-X11
 
@@ -154,6 +160,7 @@ both in traditional mode, reading the message from its standard input,
 and in LMTP mode. Maidag is able to deliver mail to any mailbox
 format, supported by GNU Mailutils.
 
+%if_enabled guile
 %package guile
 Summary: GNU Mailutils: Guile bindings.
 License: %gpl3plus
@@ -161,8 +168,11 @@ Requires: libmailutils = %{version}-%{release}
 Requires: guile >= 1.8
 Group: System/Libraries
 
+BuildRequires: guile18-devel
+
 %description guile
 Guile bindings for GNU Mailutils.
+%endif
 
 %package locales
 Summary: National Language files for mailutils
@@ -234,6 +244,9 @@ do
 done
 popd
 
+# see http://bugzilla.altlinux.org/31449
+sed "s/^@hashchar{}/#/" -i doc/texinfo/programs.texi
+
 %build
 
 #autoreconf -f -i -s
@@ -241,11 +254,18 @@ popd
 %set_verify_elf_method unresolved=relaxed
 #undefine __libtoolize
 
-CFLAGS="-ltinfo"
+CFLAGS="-llber" \
 %configure \
+    --disable-rpath \
+    --enable-ipv6 \
     --with-mh-bindir=%_libexecdir/mu-mh \
+    %if_enabled guile
     --with-guile-site-dir=%_datadir/guile/site \
-    %{!?_enable_python: --disable-python}
+    %else
+    --without-guile \
+    %endif
+    %{!?_enable_python: --disable-python} \
+    #
 
 # SMP-incompatible build.
 %make V=1
@@ -265,11 +285,13 @@ pushd $RPM_BUILD_ROOT%_bindir
     ln -s mail mailx
 popd
 
+%if_enabled guile
 pushd $RPM_BUILD_ROOT%_libdir
     NAME1=`ls libguile-mailutils*.so`
     NAME2=`find libmu_scm.so.* -type f`
     ln -sf $NAME2 $NAME1
 popd
+%endif
 
 rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.a
 rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
@@ -277,11 +299,10 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %find_lang %name
 
 %files -n mailutils
-%_bindir/mu
+%_bindir/mailutils
 %_bindir/dotlock
 %_bindir/frm
 %_bindir/from
-%_bindir/guimb
 %_bindir/mail
 %_bindir/mailx
 %_bindir/Mail
@@ -306,6 +327,7 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %_libdir/mailutils/editheader.so
 
 %_libdir/libmailutils.so.*
+%_libdir/libmuaux.so.*
 
 %exclude %_libdir/libmu_*.so
 %_libdir/libmu_*.so.*
@@ -320,6 +342,7 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %_datadir/aclocal/mailutils.m4
 %_libdir/libmu_argp.a
 %_libdir/libmailutils.so
+%_libdir/libmuaux.so
 %_libdir/libmu_*.so
 
 %files -n libmailutils-devel-static
@@ -357,17 +380,17 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %files sieve
 %_bindir/sieve
 
-
+%if_enabled guile
 %files guile
-#dir #_datadir/guile/site
 %dir %_datadir/guile/site/mailutils
 %dir %_datadir/guile/site/mailutils/sieve-modules
-#_bindir/sieve.scm
+%_bindir/guimb
 %_bindir/sieve2scm
 %_datadir/guile/site/mailutils/*.scm
 %_datadir/guile/site/mailutils/*.txt
 %_datadir/guile/site/mailutils/sieve-modules/*.scm
 %_libdir/libguile-mailutils*.so
+%endif
 
 %files locales -f %name.lang
 
@@ -393,6 +416,10 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %endif
 
 %changelog
+* Wed Nov 11 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.99.99-alt0.20151110.1
+- New version
+- disabled sub package with Guile ( see http://bugzilla.altlinux.org/31466 )
+
 * Thu Sep 05 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.99.98-alt0.20130822.1
 - New version
 
