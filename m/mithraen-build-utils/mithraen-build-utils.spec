@@ -1,7 +1,7 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.27
-Release: alt2
+Version: 0.1.28
+Release: alt1
 License: GPL
 Group: Development/Other
 
@@ -35,6 +35,9 @@ install -m644 share/* %buildroot%_datadir/%name
 %_bindir/*
 %_datadir/%name
 %changelog
+* Fri Nov 13 2015 Denis Smirnov <mithraen@altlinux.ru> 0.1.28-alt1
+- gear-clone: fix origin remote config (ALT #31479)
+
 * Wed Nov 11 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.1.27-alt2
 - gear-clone: minor tweak (unneeded extra argument in the code removed)
   (ALT#31473).
