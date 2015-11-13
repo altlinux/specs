@@ -1,5 +1,5 @@
-Version: 4.7.0
-Release: alt1
+Version: 4.7.2
+Release: alt1.git
 Serial: 3
 
 %define _unpackaged_files_terminate_build 1
@@ -492,11 +492,8 @@ done
 %_K4lib/kcm_kdev_makebuilder.so
 %_K4lib/kdevmakebuilder.so
 
-%_K4lib/kdevcompilerprovider.so
-
 %_K4lib/kdevdefinesandincludesmanager.so
 %_K4lib/kcm_kdevcustomdefinesandincludes.so
-%_K4libdir/libkdev4includesdefinessettings.so
 
 %_K4apps/kdevcppsupport
 %_K4lib/kdevcpplanguagesupport.so
@@ -546,6 +543,7 @@ done
 %_K4libdir/libkdev4cppduchain.so
 %_K4libdir/libkdev4cppparser.so
 %_K4libdir/libkdev4cpprpp.so
+%_K4libdir/libkdevcompilerprovider.so
 
 %if_enabled okteta
 %files -n %kdevelop-okteta -f kdevokteta.lang
@@ -566,6 +564,9 @@ done
 %_K4apps/kdevfiletemplates/templates/python_*.tar.bz2
 
 %changelog
+* Fri Nov 13 2015 Alexey Morozov <morozov@altlinux.org> 3:4.7.2-alt1.git
+- post v4.7.2 release build (rev.ac55d7a858d9648fceaa96037a2bb74078998806)
+
 * Mon Jan 12 2015 Alexey Morozov <morozov@altlinux.org> 3:4.7.0-alt1
 - v4.7.0 release
 - translations are taken from the upstream release, w/o local fixes
