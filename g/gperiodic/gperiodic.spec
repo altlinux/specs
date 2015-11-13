@@ -1,5 +1,5 @@
 Name: gperiodic
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Program for browsing the periodic table
@@ -9,6 +9,7 @@ Group: Sciences/Chemistry
 Url: http://www.frantz.fi/software/gperiodic.php
 Source0: http://www.frantz.fi/software/%name-%version.tar.gz
 Source1: gperiodic.1
+Source2: gperiodic.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Mar 14 2015
@@ -41,6 +42,9 @@ install -pDm644 %SOURCE1 %buildroot%_man1dir/
 %doc README AUTHORS ChangeLog gpl.txt
 
 %changelog
+* Fri Nov 13 2015 Michael Shigorin <mike@altlinux.org> 3.0.1-alt1
+- new version (watch file uupdate)
+
 * Sun Mar 15 2015 Michael Shigorin <mike@altlinux.org> 3.0.0-alt1
 - 3.0.0
 - dropped patches, hooray!
