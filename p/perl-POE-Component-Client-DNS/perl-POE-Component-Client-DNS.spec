@@ -1,7 +1,7 @@
 %define module POE-Component-Client-DNS
 
 Name: perl-POE-Component-Client-DNS
-Version: 1.053
+Version: 1.054
 Release: alt1
 
 Summary: Non-blocking/concurrent DNS queries using Net::DNS and POE
@@ -34,6 +34,9 @@ while waiting for name servers to respond.
 %perl_vendor_privlib/POE/*
 
 %changelog
+* Fri Nov 13 2015 Igor Vlasenko <viy@altlinux.ru> 1.054-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.053-alt1
 - automated CPAN update
 
