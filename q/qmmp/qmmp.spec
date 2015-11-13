@@ -1,5 +1,5 @@
 %define branch 0.10
-%define svn svn5734
+%define svn svn5769
 
 %define rel alt1
 
@@ -276,6 +276,14 @@ Requires: qmmp = %version-%release
 
 %description -n %name-out-jack
 Qmmp Jack Output Plugin
+
+%package -n %name-out-qtmultimedia
+Summary: Qmmp Qt Multimedia Output Plugin
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-out-qtmultimedia
+Qmmp Qt Multimedia Output Plugin
 
 %package -n %name-out-null
 Summary: Qmmp Null Output Plugin
@@ -660,6 +668,7 @@ Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager qmmp-rgscan
 Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-sid
 Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste qmmp-eff-extrastereo
+Requires: qmmp-out-qtmultimedia
 
 %if "%rel" != "alt0.M51"
 # disable for 5.1
@@ -747,6 +756,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 %files -n %name-out-jack
 %_libdir/%name/Output/libjack*
+
+%files -n %name-out-qtmultimedia
+%_libdir/%name/Output/libqtmultimedia*
 
 %files -n %name-out-null
 %_libdir/%name/Output/libnull*
@@ -899,6 +911,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Fri Nov 13 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn5769
+- 0.10.0 svn5769 version
+
 * Tue Nov 03 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn5734
 - 0.10.0 svn5734 version
 
