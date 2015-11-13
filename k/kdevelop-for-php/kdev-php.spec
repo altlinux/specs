@@ -27,8 +27,8 @@
 %define kdevelop_pg_qt kdevelop-pg-qt
 
 Name: %kdevelop-for-php
-Version: 1.7.0
-Release: alt1.git
+Version: 1.7.2
+Release: alt1
 Serial: 3
 
 Summary: PHP Language Plugin for KDevelop/Quanta.
@@ -105,6 +105,9 @@ find %buildroot -name 'desktop_extragear*.mo' -exec rm {} \;
 %_K4srv/*
 
 %changelog
+* Fri Nov 13 2015 Alexey Morozov <morozov@altlinux.org> 3:1.7.2-alt1
+- v1.7.2
+
 * Tue Jan 15 2014 Alexey Morozov <morozov@altlinux.org> 3:1.7.0-alt1.git
 - v1.7.0 + 2 small fixes from git (up to 59d7b3d6053797f472dfe2b19eb01af6e162d9ed)
 - Translations are taken from the release without local fixes and enhancements

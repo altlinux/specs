@@ -22,8 +22,8 @@
 %define kdevelop_other kdevelop%{pkg_sfx_other}
 
 Name: %kdevplatform
-Version: 1.7.0
-Release: alt1
+Version: 1.7.2
+Release: alt1.git
 Serial: 1
 
 Group: Development/Tools
@@ -362,6 +362,9 @@ done
 %_K4link/lib*.so
 
 %changelog
+* Fri Nov 13 2015 Alexey Morozov <morozov@altlinux.org> 1:1.7.2-alt1.git
+- post-v1.7.2 release (rev. fbf4cd63aed7bc20e0c0cddccacce04e161cb3f7)
+
 * Mon Jan 12 2015 Alexey Morozov <morozov@altlinux.org> 1:1.7.0-alt1
 - v1.7.0 release
 - translations are taken from the upstream release, w/o local fixes
