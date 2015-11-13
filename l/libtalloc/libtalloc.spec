@@ -1,5 +1,7 @@
+%def_enable tests
+
 Name: libtalloc
-Version: 2.1.4
+Version: 2.1.5
 Release: alt1
 
 Summary: The talloc library
@@ -9,8 +11,8 @@ Group: System/Libraries
 Url: http://talloc.samba.org/
 
 Source: http://samba.org/ftp/talloc/talloc-%version.tar.gz
+Patch1: talloc-fix-tests.patch
 
-# Automatically added by buildreq on Thu Jan 26 2012
 BuildRequires: docbook-dtds docbook-style-xsl libacl-devel libcap-devel python-devel xsltproc
 
 %description
@@ -42,6 +44,7 @@ Header files needed to develop programs that link against the Talloc library.
 
 %prep
 %setup -q -n talloc-%version
+%patch1
 
 %build
 %undefine _configure_gettext
@@ -58,6 +61,12 @@ Header files needed to develop programs that link against the Talloc library.
 rm -f %buildroot%_libdir/*.a
 rm -f %buildroot%_datadir/swig/*/talloc.i
 
+%if_enabled tests
+%check
+export LD_LIBRARY_PATH=./bin/shared:$LD_LIBRARY_PATH
+make test
+%endif
+
 %files
 %_libdir/libtalloc.so.*
 
@@ -65,7 +74,7 @@ rm -f %buildroot%_datadir/swig/*/talloc.i
 %_includedir/talloc.h
 %_libdir/libtalloc.so
 %_pkgconfigdir/talloc.pc
-%_mandir/man3/talloc.3.*
+%_man3dir/talloc.3.*
 
 %files -n libpytalloc
 %_libdir/libpytalloc-util.so.*
@@ -78,6 +87,10 @@ rm -f %buildroot%_datadir/swig/*/talloc.i
 
 
 %changelog
+* Fri Nov 13 2015 Andrey Cherepanov <cas@altlinux.org> 2.1.5-alt1
+- 2.1.5
+- Enable tests
+
 * Fri Oct 23 2015 Alexey Shabalin <shaba@altlinux.ru> 2.1.4-alt1
 - 2.1.4
 
