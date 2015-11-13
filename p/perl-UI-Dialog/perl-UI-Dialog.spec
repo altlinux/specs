@@ -4,17 +4,17 @@ BuildRequires: perl(Config.pm) perl(FileHandle.pm) perl(Gnome2/GConf.pm) perl(Te
 # END SourceDeps(oneline)
 %filter_from_requires /^perl.Gnome2.GConf.pm/d
 %define upstream_name    UI-Dialog
-%define upstream_version 1.09
+%define upstream_version 1.09_2
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt3_4
+Version:    1.09_2
+Release:    alt1
 
 Summary:    OOPerl wrapper for the various dialog applications
 License:    GPL
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/UI/%{upstream_name}-%{upstream_version}-2.tar.gz
+Source:    http://www.cpan.org/authors/id/K/KC/KCK/UI-Dialog-1.09-2.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Text/Wrap.pm)
@@ -44,7 +44,7 @@ was done to break away from the bad choice of name (UserDialogPerlModule) and
 to implement a cleaner, more detached, OOPerl interface.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-1.09
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -61,6 +61,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Nov 13 2015 Igor Vlasenko <viy@altlinux.ru> 1.09_2-alt1
+- automated CPAN update
+
 * Thu Nov 12 2015 Igor Vlasenko <viy@altlinux.ru> 1.09-alt3_4
 - to Sisyphus
 
