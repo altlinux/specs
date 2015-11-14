@@ -1,5 +1,5 @@
 Name: repocop-demo-menu-altlinux-sisyphus
-Version: 0.04.20151031
+Version: 0.04.20151114
 Release: alt1
 
 Summary: menu test with demo applications
@@ -49,6 +49,9 @@ install -Dm644 demo-menu-entry.png %buildroot%_liconsdir/demo-menu-entry.png
 %_desktopdir/*
 
 %changelog
+* Sat Nov 14 2015 Cronbuild Service <cronbuild@altlinux.org> 0.04.20151114-alt1
+- repocop cronbuild 20151114. At your service.
+
 * Sat Oct 31 2015 Cronbuild Service <cronbuild@altlinux.org> 0.04.20151031-alt1
 - repocop cronbuild 20151031. At your service.
 
