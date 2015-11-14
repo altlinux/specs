@@ -1,5 +1,5 @@
 Name: xorg-conf-synaptics
-Version: 0.2
+Version: 0.3
 Release: alt1
 Summary: Config file for Synaptics touchpads
 License: %pubdomain
@@ -23,6 +23,9 @@ install -Dm0644 %SOURCE0 %buildroot/%_sysconfdir/X11/xorg.conf.d/20-synaptics.co
 %config(noreplace) %_sysconfdir/X11/xorg.conf.d/20-synaptics.conf
 
 %changelog
+* Sat Nov 14 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt1
+- added an example how to disable the tap.
+
 * Tue Dec 24 2013 Mikhail Efremov <sem@altlinux.org> 0.2-alt1
 - added elantech soft-button example (by Michael Shigorin).
 
