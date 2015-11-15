@@ -1,7 +1,7 @@
 %define dist Term-ReadLine-Gnu
 Name: perl-%dist
-Version: 1.22
-Release: alt2
+Version: 1.24
+Release: alt1
 
 Summary: Perl interface to the GNU Readline library
 License: GPL or Artistic
@@ -66,6 +66,9 @@ cp -f %{SOURCE2} Makefile.PL
 %perl_vendor_autolib/Term
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
+- new version 1.24
+
 * Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.22-alt2
 - updated Term-ReadLine to 1.15 from perl 5.22
 - switched to patches (commits still are in history)
