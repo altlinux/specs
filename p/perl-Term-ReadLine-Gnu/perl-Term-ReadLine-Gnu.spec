@@ -1,15 +1,32 @@
 %define dist Term-ReadLine-Gnu
 Name: perl-%dist
 Version: 1.22
-Release: alt1
+Release: alt2
 
 Summary: Perl interface to the GNU Readline library
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar
-Patch: %name-%version-%release.patch
+Source0: %dist-%version.tar
+Source1: Term-ReadLine.tar
+Source2: Makefile.PL
+
+Patch1: perl-Term-ReadLine-Gnu-at-Gnu.pm-use-XSLoader.patch
+Patch2: perl-Term-ReadLine-Gnu-at-Gnu.pm-debian-20new.patch
+# two merged in one Patch3 file
+# hist/perl-Term-ReadLine-Gnu-at-Gnu.xs-use-curses.patch
+# hist/perl-Term-ReadLine-Gnu-at-dont-use-xmalloc.patch
+Patch3: perl-Term-ReadLine-Gnu-1.22-at-xmalloc-at-curses.patch
+Patch4: perl-Term-ReadLine-Gnu-at-Gnu.xs-debian-30outstream.patch
+Patch5: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-remove-AutoLoader.patch
+Patch6: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-pass-syntax-check.patch
+Patch7: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-debian-10term.patch
+Patch8: perl-Term-ReadLine-Gnu-at-add-Term-Readline-to-MANIFEST.patch
+Patch9: perl-Term-ReadLine-Gnu-at-perlsh-dont-import-POSIX.patch
+Patch10: perl-Term-ReadLine-Gnu-at-disable-Tk-test.patch
+Patch11: Term-ReadLine-1.15-at.patch
+
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libncurses-devel libreadline-devel perl-devel
@@ -20,8 +37,21 @@ Readline library.  This module gives you input line editing facility,
 input history management facility, word completion facility, etc.
 
 %prep
-%setup -q -n %dist-%version
-%patch -p1
+%setup -q -n %dist-%version -a1
+mv Makefile.PL Makefile.PL.orig
+cp -f %{SOURCE2} Makefile.PL
+
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p0
 
 %build
 %perl_vendor_build
@@ -36,6 +66,10 @@ input history management facility, word completion facility, etc.
 %perl_vendor_autolib/Term
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.22-alt2
+- updated Term-ReadLine to 1.15 from perl 5.22
+- switched to patches (commits still are in history)
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
 - new version 1.22
 
