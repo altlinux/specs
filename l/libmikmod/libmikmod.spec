@@ -1,5 +1,5 @@
 Name: libmikmod
-Version: 3.3.7
+Version: 3.3.8
 Release: alt1
 
 Summary: A portable sound library for Unix
@@ -69,6 +69,9 @@ will use the %name library.
 # - consider --enable-simd (marked unstable as of 3.3.7)
 
 %changelog
+* Sun Nov 15 2015 Michael Shigorin <mike@altlinux.org> 3.3.8-alt1
+- 3.3.8
+
 * Wed Sep 10 2014 Michael Shigorin <mike@altlinux.org> 3.3.7-alt1
 - 3.3.7
 - dropped 3.1.12 patches
