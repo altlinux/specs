@@ -8,7 +8,7 @@
 # file, is the same license as for the pristine package itself.
 
 Name: qupzilla
-Version: 1.8.8
+Version: 1.8.9
 Release: alt1
 
 Summary: A very fast open source browser based on WebKit core
@@ -80,6 +80,9 @@ make INSTALL_ROOT=%buildroot install
 # - move shared libraries to a subpackage?
 
 %changelog
+* Sun Nov 15 2015 Michael Shigorin <mike@altlinux.org> 1.8.9-alt1
+- 1.8.9
+
 * Thu Oct 29 2015 Michael Shigorin <mike@altlinux.org> 1.8.8-alt1
 - 1.8.8
 
