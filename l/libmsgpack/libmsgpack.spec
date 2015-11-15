@@ -1,7 +1,7 @@
 %define oname msgpack
 Name: libmsgpack
-Version: 0.5.9
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: Binary-based efficient object serialization library
 
@@ -42,7 +42,7 @@ Libraries and header files for %name
 
 %prep
 %setup
-%patch0 -p1 -b .fix-int-float-test
+#patch0 -p1 -b .fix-int-float-test
 
 %build
 %autoreconf
@@ -66,6 +66,12 @@ make check
 %_pkgconfigdir/msgpack.pc
 
 %changelog
+* Sun Nov 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+
+* Sun Nov 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+
 * Sun Nov 15 2015 Vitaly Lipatov <lav@altlinux.ru> 0.5.9-alt2
 - initial manual build for ALT Linux
 
