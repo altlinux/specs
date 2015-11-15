@@ -1,5 +1,5 @@
 Name:		phototonic
-Version:	1.6.26
+Version:	1.7.1
 Release:	alt1
 Summary:	An image viewer and organizer
 Group:		Graphics
@@ -55,5 +55,8 @@ cp -r translations/*.qm %buildroot%_datadir/%name/translations
 %_iconsdir/hicolor/*x*/apps/%name.png
 
 %changelog
+* Sun Nov 15 2015 Motsyo Gennadi <drool@altlinux.ru> 1.7.1-alt1
+- 1.7.1
+
 * Sun Oct 18 2015 Motsyo Gennadi <drool@altlinux.ru> 1.6.26-alt1
 - initial build for ALT Linux from Mageia srpm package
