@@ -1,5 +1,5 @@
 Name: giter
-Version: 1.7
+Version: 1.8
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -41,6 +41,13 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Sun Nov 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8-alt1
+- giter: fix for empty run
+- gpull: print note if fast forward failed
+- gremote: add github support in -p option
+- gamend: add git add before amend
+- gamend: don't reset author by default
+
 * Sun Oct 11 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt1
 - gpush: make options unpositional
 - small cleanup comments
