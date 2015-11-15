@@ -3,7 +3,7 @@
 
 Name: gparted
 Version: 0.24.0
-Release: alt1
+Release: alt2
 
 Summary: %Name Partition Editor
 Summary(ru_RU.UTF-8): Редактор разделов %Name
@@ -19,6 +19,7 @@ Source2: %name-security
 
 AutoReq: yes, noshell
 
+Requires: consolehelper
 Requires: hdparm
 #Requires: ntfs-3g btrfs-progs >= 4.1
 
@@ -75,6 +76,7 @@ install -pD -m640 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
 install -pD -m640 %SOURCE2 %buildroot%_sysconfdir/security/console.apps/%name
 install -d -m 0755 %buildroot%_bindir
 ln -s %_bindir/consolehelper %buildroot%_bindir/%name
+sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 
 %find_lang --with-gnome %name
 
@@ -91,6 +93,9 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sun Nov 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt2
+- improved consolehelper support (ALT #31487)
+
 * Wed Oct 28 2015 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
 - 0.24.0
 
