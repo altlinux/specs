@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.0.12
+Version: 2.1.1
 Release: alt1
 
 Summary: Korinf multidistro single source build system
@@ -10,14 +10,13 @@ Url: http://freesource.info/wiki/korinf
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# git-clone http://git.altlinux.org/people/lav/packages/korinf.git
-# git-clone http://git.etersoft.ru/people/lav/packages/korinf.git
+# Source-git: https://github.com/vitlav/korinf
 Source: %name-%version.tar
 
 BuildArchitectures: noarch
 
 Requires: eepm >= 1.5.1
-Requires: etersoft-build-utils >= 2.1.0
+Requires: etersoft-build-utils >= 2.4.0
 Requires: alien >= 8.86-alt3
 
 %description
@@ -47,6 +46,17 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Sat Nov 07 2015 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- windows: add korinf/mingwbuild.sh
+- fix bug with 2 file created
+- korinf: print help when --help in the last position
+- switch to convert deb packages via target system alien (eterbug #8345)
+- install: add hack to install alien, fakeroot and debhelper requires for deb
+
+* Mon Aug 24 2015 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- korinf: full rewrite, fix args handling
+- fix korinf command using
+
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 2.0.12-alt1
 - remove unsupported ALT Linux 4.0/4.1
 - last_rpm: use more correct rpmevrcmp
