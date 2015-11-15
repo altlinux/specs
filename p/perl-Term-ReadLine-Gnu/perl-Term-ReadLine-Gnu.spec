@@ -1,6 +1,6 @@
 %define dist Term-ReadLine-Gnu
 Name: perl-%dist
-Version: 1.24
+Version: 1.25
 Release: alt1
 
 Summary: Perl interface to the GNU Readline library
@@ -66,6 +66,9 @@ cp -f %{SOURCE2} Makefile.PL
 %perl_vendor_autolib/Term
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1
+- new version 1.25
+
 * Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
 - new version 1.24
 
