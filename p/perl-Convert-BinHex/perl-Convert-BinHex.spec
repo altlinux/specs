@@ -2,7 +2,7 @@
 BuildRequires: perl-podlators
 %define dist Convert-BinHex
 Name: perl-%dist
-Version: 1.124
+Version: 1.125
 Release: alt1
 
 Summary: Extract data from Macintosh BinHex files
@@ -51,6 +51,9 @@ scripts for %name
 
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.125-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.124-alt1
 - automated CPAN update
 
