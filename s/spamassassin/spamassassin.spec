@@ -4,7 +4,7 @@
 %def_enable ssl
 
 Name: spamassassin
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Summary: Spam filter for email written in perl
@@ -19,6 +19,7 @@ Source3: spamd.sysconfig
 
 # from Debian:
 Patch10: spamassassin-3.4.0-debian-change_config_paths.patch
+Patch11: spamassassin-3.4.0-sa-check_spamd-man.patch
 
 %def_without test
 # normal method nukes on errors :(
@@ -138,6 +139,7 @@ subpackages versions with.
 %prep
 %setup -n %pname-%version
 %patch10 -p1
+%patch11 -p0
 
 %build
 cp -f spamc/spamc.pod spamc/spamc
@@ -177,9 +179,22 @@ install -d -m700 %buildroot%_sysconfdir/spamassassin/sa-update-keys
 
 pod2man spamc/spamc.pod %buildroot%_man1dir/spamc.1
 
+install -d %buildroot%_sysconfdir/cron.d
+cat <<EOF >%buildroot%_sysconfdir/cron.d/sa-update
+# you can switch "space" to "tab" between minutes and hours
+# for stop randomization when when spamassasin installing
+30 01 * * *    root    %_bindir/sa-update && [ -f /var/run/spamd.pid ] && %_initdir/spamd restart
+EOF
+
 #warning: Installed (but unpackaged) file(s) found:
 #    /usr/lib/perl5/perllocal.pod
 rm -f %buildroot%perl_vendor_archlib/perllocal.pod
+
+%post
+# randomize time of sa rules updating
+RNDM1=$[$RANDOM/555]   # 0-59
+RNDM2=$[$RANDOM/1424]  # 0-23
+sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev/null 2>&1 ||:
 
 %post spamd
 %post_service spamd
@@ -203,6 +218,7 @@ rm -f %buildroot%perl_vendor_archlib/perllocal.pod
 %_bindir/sa-compile
 %_bindir/sa-learn
 %_bindir/sa-update
+%config(noreplace) %_sysconfdir/cron.d/sa-update
 %_man1dir/spamassassin*
 %_man1dir/sa-compile*
 %_man1dir/sa-learn*
@@ -240,6 +256,10 @@ rm -f %buildroot%perl_vendor_archlib/perllocal.pod
 #%_man3dir/*
 
 %changelog
+* Sun Nov 15 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.4.1-alt1
+- NMU: 3.4.1
+- added cron's rule for sa-update (ALT #26682)
+
 * Thu Jun 19 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.4.0-alt1
 - NMU: 3.4.0 (ALT #30063)
 - fixed start, stop, reload and status options in init.d/spamd (ALT #28789)
