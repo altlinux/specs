@@ -1,21 +1,21 @@
-%define module_version 3.005
+%define _unpackaged_files_terminate_build 1
+%define module_version 3.006
 %define module_name Sereal
 Serial: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Sereal/Decoder.pm) perl(Sereal/Encoder.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.005
-Release: alt2
+Version: 3.006
+Release: alt1
 Summary: Fast, compact, powerful binary (de-)serialization
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/Y/YV/YVES/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/Y/YV/YVES/Sereal-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -56,6 +56,9 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 %perl_vendor_privlib/S*
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 1:3.006-alt1
+- automated CPAN update
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1:3.005-alt2
 - moved to Sisyphus
 
