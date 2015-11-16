@@ -1,5 +1,5 @@
 Name: valgrind
-Version: 3.10.0
+Version: 3.11.0
 Release: alt1
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
@@ -16,13 +16,13 @@ Source: http://www.valgrind.org/downloads/%name-%version.tar
 Patch0: valgrind-alt-arm.patch
 Patch1: valgrind-rh-cachegrind-improvements.patch
 Patch2: valgrind-rh-helgrind-race-supp.patch
-Patch3: valgrind-rh-stat_h.patch
-Patch4: valgrind-rh-ldso-supp.patch
-Patch6: valgrind-rh-aarch64-syscalls.patch
-Patch7: valgrind-rh-aarch64-dmb-sy.patch
-Patch8: valgrind-rh-aarch64-frint.patch
-Patch9: valgrind-rh-aarch64-fcvtmu.patch
-Patch10:valgrind-rh-aarch64-fcvta.patch
+Patch3: valgrind-rh-ldso-supp.patch
+Patch4: valgrind-rh-arm64-xattr.patch
+Patch5: valgrind-rh-arm64-sigpending.patch
+Patch6: valgrind-rh-no-rdrand.patch
+Patch7: valgrind-rh-rexw-cvtps2pd.patch
+Patch8: valgrind-rh-s390-hwcap.patch
+Patch9: valgrind-rh-wrapmalloc.patch
 
 # valgrind needs /proc to work
 Requires: /proc
@@ -85,12 +85,11 @@ needed to compile Valgrind tools separately from the Valgrind core.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#patch5 -p1
+%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
 
 %build
 #%{?cvsdate:./autogen.sh}
@@ -182,6 +181,10 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Mon Nov 16 2015 Dmitry V. Levin <ldv@altlinux.org> 3.11.0-alt1
+- Updated to 3.11.0.
+- Merged with valgrind-3.11.0-5 from Fedora.
+
 * Fri Nov 14 2014 Dmitry V. Levin <ldv@altlinux.org> 3.10.0-alt1
 - Updated to 3.10.0.
 - Merged with valgrind-3.10.0-5 from Fedora.
