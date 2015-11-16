@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist BSD-Resource
 Name: perl-%dist
-Version: 1.2908
+Version: 1.2909
 Release: alt1
 
 Summary: BSD process resource limit and priority functions
@@ -33,6 +33,9 @@ limits and priorities.
 %perl_vendor_autolib/BSD
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.2909-alt1
+- automated CPAN update
+
 * Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 1.2908-alt1
 - automated CPAN update
 
