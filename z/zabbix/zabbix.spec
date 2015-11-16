@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 2.4.6
+Version: 2.4.7
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -461,6 +461,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Fri Nov 13 2015 Alexei Takaseev <taf@altlinux.org> 1:2.4.7-alt1
+- 2.4.7
+
 * Tue Aug 11 2015 Alexei Takaseev <taf@altlinux.org> 1:2.4.6-alt1
 - 2.4.6
 
