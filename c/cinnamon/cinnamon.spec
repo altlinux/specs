@@ -1,7 +1,7 @@
 %def_enable gtk_doc
 
 Name: cinnamon
-Version: 2.8.2
+Version: 2.8.4
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -197,6 +197,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Mon Nov 16 2015 Vladimir Didenko <cow@altlinux.org> 2.8.4-alt1
+- 2.8.4-2-g7384c43
+
 * Mon Nov 2 2015 Vladimir Didenko <cow@altlinux.org> 2.8.2-alt1
 - 2.8.2-2-g2bce9b5
 
