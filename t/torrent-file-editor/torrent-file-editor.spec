@@ -1,5 +1,5 @@
 Name:		torrent-file-editor
-Version:	0.2.0
+Version:	0.2.1
 Release:	alt1
 License:	GPLv3+
 Summary:	Torrent File Editor
@@ -40,5 +40,8 @@ cd ./build
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Mon Nov 16 2015 Motsyo Gennadi <drool@altlinux.ru> 0.2.1-alt1
+- 0.2.1
+
 * Sun Aug 09 2015 Motsyo Gennadi <drool@altlinux.ru> 0.2.0-alt1
 - initial build for ALT Linux
