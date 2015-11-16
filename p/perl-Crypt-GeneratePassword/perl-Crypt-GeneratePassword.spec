@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Crypt-GeneratePassword
-Version: 0.04
+Version: 0.05
 Release: alt1
 
 Summary: generate secure random pronounceable passwords
@@ -69,6 +69,9 @@ computer speed has improved a little since 1977.
 %perl_vendor_privlib/Crypt/
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - automated CPAN update
 
