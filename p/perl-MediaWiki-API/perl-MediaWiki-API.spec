@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-MediaWiki-API
-Version: 0.40
+Version: 0.41
 Release: alt1
 
 Summary: Provides a Perl interface to the MediaWiki API (http://www.mediawiki.org/wiki/API)
@@ -51,6 +51,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/MediaWiki/*
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
+- automated CPAN update
+
 * Mon Sep 15 2014 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
