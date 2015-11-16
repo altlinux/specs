@@ -1,8 +1,8 @@
 %def_without xtdesktop
 %def_without desklaunch
 Name: icewm-startup
-Version: 0.15
-Release: alt2
+Version: 0.16
+Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -93,6 +93,27 @@ AutoReq: no
 kdesktop plug-in for simple pluggable IceWM autostart manager.
 %description -l ru_RU.UTF-8 kdesktop
 kdesktop plug-in для менеджера автозапуска программ при старте IceWM.
+
+%package mount-tray
+Group: Graphical desktop/Icewm
+Summary: mount-tray autostart at IceWM startup
+Summary(ru_RU.UTF-8): автозапуск mount-tray при старте IceWM
+Requires: mount-tray
+AutoReq: no
+
+%description mount-tray
+mount-tray is a small Qt-based tray application for mount and unmount
+removable devices like USB storage or CD and DVD-ROM. It used udisks
+for mount and unmount operations, udev for device detection and DBus
+for take information about external mounting and unmounting.
+
+This package provides mount-tray plug-in for IceWM autostart manager.
+
+%description -l ru_RU.UTF-8 kdesktop
+mount-tray - это небольшой аплет для монтирования и размонтирования
+извлекаемых устройств наподобие USB флешки, CD или DVD-ROM.
+
+Установите этот пакет, если вы хотите запускать mount-tray при старте IceWM.
 
 %package xxkb
 Group: Graphical desktop/Icewm
@@ -352,6 +373,7 @@ EOF
 
 echo 'xtoolwait gkrellm'> %buildroot/%icewmconfdir/startup.d/001-gkrellm
 echo 'kdesktop&'> %buildroot/%icewmconfdir/startup.d/kdesktop
+echo 'mount-tray&'> %buildroot/%icewmconfdir/startup.d/mount-tray
 echo 'ivman&'> %buildroot/%icewmconfdir/startup.d/ivman
 
 cat <<EOF > %buildroot/%icewmconfdir/startup.d/020-idesk
@@ -507,6 +529,9 @@ fi
 %files kdesktop
 %config %icewmconfdir/startup.d/kdesktop
 
+%files mount-tray
+%config %icewmconfdir/startup.d/mount-tray
+
 %files update-menus
 %config %icewmconfdir/startup.d/001-update-menus
 
@@ -535,6 +560,9 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- added mount-tray subpackage
+
 * Sat Sep 26 2015 Dmitriy Khanzhin <jinn@altlinux.org> 0.15-alt2
 - updated requires for networkmanager subpackage
 
