@@ -4,7 +4,7 @@
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -126,6 +126,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Nov 16 2015 Vladimir Didenko <cow@altlinux.org> 2.8.2-alt1
+- 2.8.2
+
 * Mon Oct 19 2015 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
 - 2.8.0
 

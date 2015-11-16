@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 2.8.1
-Release: alt2
+Version: 2.8.3
+Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -156,6 +156,9 @@ GObject introspection devel data for the Muffin library
 
 
 %changelog
+* Mon Nov 16 2015 Vladimir Didenko <cow@altlinux.org> 2.8.3-alt1
+- 2.8.3-1-g0315e39
+
 * Mon Nov 2 2015 Vladimir Didenko <cow@altlinux.org> 2.8.1-alt2
 - 2.8.1-2-g72dacf5
 
