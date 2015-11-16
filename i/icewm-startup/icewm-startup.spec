@@ -1,8 +1,9 @@
+%def_with networkmanager
 %def_without xtdesktop
 %def_without desklaunch
 Name: icewm-startup
 Version: 0.16
-Release: alt1
+Release: alt2
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -98,7 +99,7 @@ kdesktop plug-in для менеджера автозапуска програм
 Group: Graphical desktop/Icewm
 Summary: mount-tray autostart at IceWM startup
 Summary(ru_RU.UTF-8): автозапуск mount-tray при старте IceWM
-Requires: mount-tray
+Requires: %name mount-tray
 AutoReq: no
 
 %description mount-tray
@@ -547,8 +548,10 @@ fi
 %config %icewmconfdir/startup.d/060-xxkb-tray
 %icewmconfdir/XXkb.conf
 
+%if_with networkmanager
 %files networkmanager
 %config %icewmconfdir/startup.d/080-networkmanager
+%endif
 
 %files tray_mixer_plus
 %config %icewmconfdir/startup.d/070-tray_mixer_plus
@@ -560,6 +563,9 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2
+- conditional def_with networkmanager (t7 support)
+
 * Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - added mount-tray subpackage
 
