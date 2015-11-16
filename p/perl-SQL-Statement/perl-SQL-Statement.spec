@@ -1,18 +1,18 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
-# END SourceDeps(oneline)
-Name:           perl-SQL-Statement
-Version:        1.407
-Release:        alt1_4
-Summary:        SQL parsing and processing engine
-Group:          Development/Perl
-License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/SQL-Statement/
-Source0:        http://www.cpan.org/authors/id/R/RE/REHSACK/SQL-Statement-%{version}.tar.gz
-BuildArch:      noarch
+%define dist SQL-Statement
+Name: perl-%dist
+Version: 1.407
+Release: alt2
+
+Summary: SQL parsing and processing engine
+License: GPL or Artistic
+Group: Development/Perl
+
+URL: http://search.cpan.org/dist/SQL-Statement/
+Source: %dist-%version.tar.gz
+
+BuildArch: noarch
+
 # Build
-BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -32,7 +32,6 @@ BuildRequires:  perl(Math/Trig.pm)
 BuildRequires:  perl(Module/Runtime.pm)
 BuildRequires:  perl(Params/Util.pm)
 BuildRequires:  perl(Scalar/Util.pm)
-# XXX: BuildRequires:  perl(SQL::UserDefs)
 BuildRequires:  perl(sort.pm)
 BuildRequires:  perl(Text/Balanced.pm)
 BuildRequires:  perl(Text/Soundex.pm)
@@ -55,48 +54,37 @@ BuildRequires:  perl(DBD/DBM.pm)
 BuildRequires:  perl(DBD/File.pm)
 BuildRequires:  perl(DBD/SQLite.pm)
 BuildRequires:  perl(MLDBM.pm)
-Requires:       perl(Clone.pm) >= 0.30
-Requires:       perl(DBI.pm) >= 1.616
-Requires:       perl(Math/Base/Convert.pm)
-Requires:       perl(Params/Util.pm) >= 1.00
-Requires:       perl(Scalar/Util.pm) >= 1.0
-# This module doesn't seem to exist...
-# XXX: Requires:       perl(SQL::UserDefs)
-Requires:       perl(Text/Soundex.pm)
-
-
-Source44: import.info
-%filter_from_requires /^perl\\((Clone|Params.Util|Scalar.Util).pm\\)$/d
 
 %description
 The SQL::Statement module implements a pure Perl SQL parsing and execution
-engine.  While it by no means implements full ANSI standard, it does support
+engine. While it by no means implements full ANSI standard, it does support
 many features including column and table aliases, built-in and user-defined
-functions, implicit and explicit joins, complexly nested search conditions, and
-other features.
+functions, implicit and explicit joins, complex nested search conditions,
+and other features.
 
 %prep
-%setup -q -n SQL-Statement-%{version}
-find -type f -exec chmod a-x {} +
-sed -i -e 's/\r//' README
+%setup -q -n %dist-%version
+
+%ifdef __buildreqs
+# don't check for conflicts under buildreq
+perl -pi -e 's/ = CheckConflicts/ = 0 && CheckConflicts/' Makefile.PL
+%endif
 
 %build
 export SQL_STATEMENT_WARN_UPDATE=sure
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%perl_vendor_build NO_PACKLIST=1
 
 %install
-make pure_install DESTDIR=%{buildroot}
-chmod -R u+w %{buildroot}/*
-
-%check
-make test
+%perl_vendor_install
 
 %files
 %doc Changes README
-%{perl_vendor_privlib}/SQL/
+%perl_vendor_privlib/SQL
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.407-alt2
+- dropped Requires: perl-DBI (create loop)
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.407-alt1_4
 - new version
 
