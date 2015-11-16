@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.161
+Version: 0.164
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle compiled objects
@@ -12,7 +12,7 @@ Source: %name-%version-%release.tar
 Requires: libelf = %version-%release
 
 %def_enable static
-%def_disable check
+%def_enable check
 
 BuildRequires: bzlib-devel flex liblzma-devel zlib-devel
 %{?_enable_check:BuildRequires: /proc}
@@ -161,6 +161,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Nov 16 2015 Dmitry V. Levin <ldv@altlinux.org> 0.164-alt1
+- Updated to 0.164-14-gf8443bd.
+
 * Sat Dec 20 2014 Dmitry V. Levin <ldv@altlinux.org> 0.161-alt1
 - Updated to 0.161.
 
