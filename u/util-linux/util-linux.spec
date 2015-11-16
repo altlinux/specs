@@ -3,7 +3,7 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.26.2
+Version: 2.27.1
 Release: alt1
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
@@ -20,7 +20,6 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 %def_disable newgrp
 %def_disable vipw
 %def_enable schedutils
-%def_without nfs
 %def_enable fsck
 %def_with selinux
 %def_with audit
@@ -125,7 +124,6 @@ PreReq: %name-control = %version-%release
 Requires: libblkid = %version-%release
 Requires: libmount = %version-%release
 Requires: libsmartcols = %version-%release
-%{!?_with_nfs:Requires: nfs-utils >= 1:1.0.10-alt3}
 
 %description -n mount
 The %name package contains the mount, umount, swapon and swapoff
@@ -516,14 +514,14 @@ mv blkid.static rpm/blkid.initramfs
 # build util-linux-ng
 %make_build
 
-# build nologin
 %ifarch %ix86 x86_64
 %__cc %optflags stacktest.c -o stacktest
 %endif
-%__cc -Os -static -nostartfiles -o pause pause.c
+# build nologin
 klcc -Wall -Wextra -Werror nologin.c -o nologin
 
 %__cc %optflags clock_unsynced.c -o clock_unsynced
+%__cc %optflags pause.c -o pause
 
 
 %check
@@ -755,9 +753,6 @@ fi
 %_man5dir/fstab.*
 %_man8dir/*mount*
 %_man8dir/swapo*
-%if_with nfs
-%_man5dir/nfs.*
-%endif #with nfs
 
 %files -n losetup
 /sbin/losetup
@@ -907,6 +902,11 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Mon Nov 16 2015 Alexey Gladkov <legion@altlinux.ru> 2.27.1-alt1
+- New version (2.27.1).
+- Remove explicit nfs-utils requirement (ALT#31498).
+- Rewrite pause in a portable way (thx: glebfm@).
+
 * Sun May 03 2015 Alexey Gladkov <legion@altlinux.ru> 2.26.2-alt1
 - New version (2.26.2).
 - Add libsmartcols, libfdisk.
