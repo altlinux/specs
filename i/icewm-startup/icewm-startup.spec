@@ -1,9 +1,9 @@
-%def_with networkmanager
+%def_without p7_backport
 %def_without xtdesktop
 %def_without desklaunch
 Name: icewm-startup
 Version: 0.16
-Release: alt2
+Release: alt3
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -38,8 +38,8 @@ which allows one to configure IceWM default autostart via installing correspondi
 автозапуска.
 
 Имеющиеся модули позволяют при старте icewm обновлять локальное меню пользователя
-(если у него оно есть), запускать ivman, gkrellm, xxkb,
-запускать рабочий стол (idesk, xtdesktop, desklaunch, kdesktop) и т. д.
+(если у него оно есть), запускать ivman, gkrellm, xxkb, mount-tray, WiFi manager,
+запускать рабочий стол (idesk, kdesktop) и т. д.
 
 %package delay
 Group: Graphical desktop/Icewm
@@ -221,8 +221,12 @@ update-menus plug-in для менеджера автозапуска прогр
 %package networkmanager
 Group: Graphical desktop/Icewm
 Summary: start gnome networkmanager applet
+%if_with p7_backport
+Requires: %name NetworkManager-gnome polkit-gnome
+%else
 Requires: %name ModemManager NetworkManager-applet-gtk
 Requires: NetworkManager-wifi usb-modeswitch
+%endif
 AutoReq: no
 
 %description networkmanager
@@ -548,10 +552,8 @@ fi
 %config %icewmconfdir/startup.d/060-xxkb-tray
 %icewmconfdir/XXkb.conf
 
-%if_with networkmanager
 %files networkmanager
 %config %icewmconfdir/startup.d/080-networkmanager
-%endif
 
 %files tray_mixer_plus
 %config %icewmconfdir/startup.d/070-tray_mixer_plus
@@ -563,6 +565,12 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt3
+- updated description
+
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt0.M70T.1
+- backport for t7
+
 * Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2
 - conditional def_with networkmanager (t7 support)
 
