@@ -4,8 +4,8 @@
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-libinput
-Version: 0.14.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 
 Summary: Xorg libinput input driver
 Group: System/X11
@@ -53,14 +53,12 @@ Xorg libinput input driver development files.
 %build
 %autoreconf
 %configure --disable-static \
-	--with-xorg-module-dir=%_x11modulesdir
+	--with-xorg-module-dir=%_x11modulesdir \
+	--with-xorg-conf-dir=%_xconfdir
 %make_build
 
 %install
 %makeinstall_std
-
-install -d %buildroot%_xconfdir
-install -p -m 0644 %SOURCE1 %buildroot%_xconfdir/90-libinput.conf
 
 %files
 %config(noreplace) %_xconfdir/90-libinput.conf
@@ -75,6 +73,9 @@ install -p -m 0644 %SOURCE1 %buildroot%_xconfdir/90-libinput.conf
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Mon Nov 16 2015 Yuri N. Sedunov <aris@altlinux.org> 0.15.0-alt1
+- updated to 0.15.0-1-gc8861d2
+
 * Sat Sep 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt2
 - updated to 0.14.0_6abd3412
 - mv {90,99}-libinput.conf to overlap 95-input-keyboard.conf
