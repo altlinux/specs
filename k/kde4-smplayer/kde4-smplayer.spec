@@ -1,6 +1,8 @@
 
+%def_enable mpv
+
 %define rname smplayer
-%define svn 7148
+%define svn 7213
 %define xde kde4
 %define XDE KDE4
 %define xapp kde4
@@ -18,6 +20,7 @@ Url: http://www.smplayer.info/
 License: GPLv2
 
 Requires: %name-backend %name-common = %EVR
+Provides: %xde-video-player
 
 Source: %name-%version.tar
 Patch1: alt-defines.patch
@@ -140,7 +143,9 @@ done
 %dir %_datadir/%name
 %dir %_datadir/%name/translations/
 
+%if_enabled mpv
 %files backend-2-mpv
+%endif
 %files backend-4-mplayer
 
 %files
@@ -153,6 +158,9 @@ done
 
 
 %changelog
+* Mon Nov 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.9.0.7213-alt1
+- update for mplayer 1.2 detection
+
 * Wed Sep 30 2015 Sergey V Turchin <zerg@altlinux.org> 15.9.0.7148-alt1
 - new version
 
