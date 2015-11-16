@@ -1,13 +1,14 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 1.9.4
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 License: GPLv3
 Source0: %name-%version.tar
 Source1: %name-modules-core-%version.tar
 Source2: %name-modules-extras-%version.tar
+Source3: README.ALT
 
 Patch0:%name-%version-alt.patch
 Patch1: %name-modules-core-%version-alt.patch
@@ -29,6 +30,8 @@ over SSH and does not require any software or daemons to be installed
 on remote nodes. Extension modules can be written in any language and
 are transferred to managed machines automatically.
 
+Please read README.ALT for distribution-specific notes.
+
 %prep
 %setup
 %patch0 -p1
@@ -40,6 +43,7 @@ popd
 
 %build
 %python_build
+cp -v %SOURCE3 .
 
 %install
 %python_install
@@ -57,9 +61,12 @@ cp -va library/* %buildroot%python_sitelibdir/%name/modules
 %_man1dir/%{name}*
 %python_sitelibdir/%{name}*
 %doc examples/playbooks examples/scripts examples/hosts
-%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md ISSUE_TEMPLATE.md
+%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md ISSUE_TEMPLATE.md README.ALT
 
 %changelog
+* Mon Nov 16 2015 Terechkov Evgenii <evg@altlinux.org> 1.9.4-alt2
+- README.ALT added with distro-specific notes
+
 * Tue Oct 20 2015 Terechkov Evgenii <evg@altlinux.org> 1.9.4-alt1
 - 1.9.4
 
