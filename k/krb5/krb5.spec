@@ -1,7 +1,7 @@
 
 Name: krb5
 Version: 1.13.2
-Release: alt1
+Release: alt2
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -422,6 +422,10 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Mon Nov 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.13.2-alt2
+- Comment out includedir directive in /etc/krb5.conf because samba
+  cannot get Kerberos context while domain provision
+
 * Tue Oct 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.13.2-alt1
 - 1.13.2
 - fixed CVE-2014-5355, CVE-2015-2694
