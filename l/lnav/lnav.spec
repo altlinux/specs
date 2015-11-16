@@ -1,6 +1,6 @@
 Name: lnav
-Version: 0.7.3
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 Summary: The log file navigator
 License: BSD
@@ -29,6 +29,7 @@ the user to quickly and efficiently zero in on problems.
 
 %prep
 %setup
+sed -i 's,var/log/syslog,&/messages,g' src/lnav.cc
 touch AUTHORS ChangeLog COPYING
 
 %build
@@ -50,6 +51,10 @@ touch AUTHORS ChangeLog COPYING
 #   (putting out meaningful diags otherwise, e.g. in a chroot)
 
 %changelog
+* Mon Nov 16 2015 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
+- new version (watch file uupdate)
+- tweaked default logfile location
+
 * Thu May 28 2015 Michael Shigorin <mike@altlinux.org> 0.7.3-alt2
 - rebuilt against current libpcre*
 
