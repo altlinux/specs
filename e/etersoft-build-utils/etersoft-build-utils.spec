@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.3.3
+Version: 2.4.2
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -22,7 +22,7 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: giter >= 1.2
+Requires: giter >= 1.4
 Requires: eepm >= 1.5.0
 Requires: erc >= 0.8
 
@@ -70,6 +70,41 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Nov 16 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
+- rpmgs: allow https urls
+- rpmgp: use curl -s, add http source support for multi letter dirs
+- fix get tar rule from .gear/rules
+- rpmcs: update
+- remove_bashism: add replacement for echo -e '\n'
+- make ccache optional
+- add pkgrepls for build qt project
+- repos/srpms: big update
+- repos/rsync: add p8
+
+* Fri Oct 09 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt1
+- pkgrepl: fix util-linux name
+- rpmrb: check for extra options
+- rpmgs: force update dir from tarball by default
+- rpmgp: fix pub git url postfix
+- rpmgp: do not call ssh after switch to public
+- rpmgp: print help by default, fix exit code
+
+* Mon Aug 24 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
+- rpmgp: rewrite via giter, use full paths
+- rpmgs: fix get dir name from gear rules
+- rpmgs: full rewrite
+- rpmurl: fix handle -t, small optimize
+- rpmreqs: fix for x86_64
+- rpmreqs: fix for already installed packages
+- rpmbs: fix upload srpms
+- rpmbs: improve help
+- use colors for fatal, warning and info messages
+- remove obsoleted commands rpmU, rpmqf, rpmbk
+- update QuickHelp, TODO
+- remove obsoleted aliases
+- grpmbs: fix GEARHOST
+- fix pkgrepls
+
 * Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 2.3.3-alt1
 - rpmcs: fix replace build requires
 - rpmgp: fix for get via public url
