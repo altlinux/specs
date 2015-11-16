@@ -3,7 +3,7 @@
 %define gst_api_ver 1.0
 
 Name: sound-juicer
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Clean and lean CD ripper
@@ -63,6 +63,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Nov 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
