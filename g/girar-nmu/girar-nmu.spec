@@ -1,6 +1,6 @@
 Name: girar-nmu
-Version: 1.27
-Release: alt2
+Version: 1.28
+Release: alt1
 
 Summary: git.alt client utilities for NMU automation
 License: GPL
@@ -50,6 +50,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
+- improved debug output in girar-nmu-sort-transaction
+
 * Fri Nov 13 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.27-alt2
 - girar-nmu-helper-clone-and-setup-build-commit: configure the remote
   in a standard way (like "git remote add" does; ALT#31482).
