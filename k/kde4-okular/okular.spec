@@ -6,7 +6,7 @@
 Name: kde4-okular
 %define major 15
 %define minor 08
-%define bugfix 2
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -132,6 +132,9 @@ Development files for %name
 
 
 %changelog
+* Mon Nov 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
+- new version
+
 * Fri Oct 23 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
 - new version
 
