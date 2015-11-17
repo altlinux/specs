@@ -1,6 +1,6 @@
 Name:		torrent-file-editor
 Version:	0.2.1
-Release:	alt1
+Release:	alt2
 License:	GPLv3+
 Summary:	Torrent File Editor
 Group:		File tools
@@ -40,6 +40,9 @@ cd ./build
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Tue Nov 17 2015 Motsyo Gennadi <drool@altlinux.ru> 0.2.1-alt2
+- fix open files with cyrillic symbols
+
 * Mon Nov 16 2015 Motsyo Gennadi <drool@altlinux.ru> 0.2.1-alt1
 - 0.2.1
 
