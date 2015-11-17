@@ -8,7 +8,7 @@
 Name: kde4sdk
 %define major 15
 %define minor 08
-%define bugfix 2
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -580,6 +580,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Tue Nov 17 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
+- new version
+
 * Thu Oct 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
 - new version
 
