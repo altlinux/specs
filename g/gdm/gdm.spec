@@ -22,16 +22,16 @@
 %def_enable xsession
 
 Name: gdm
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
 URL: http://wiki.gnome.org/Projects/GDM
 Group: Graphical desktop/GNOME
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 # while we have no new Mesa and Xorg
 Patch: gdm-3.18.0-alt-disable_wayland.patch
 Source1: gdm_xdmcp.control
@@ -302,6 +302,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Nov 17 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
+- 3.18.2
+
 * Thu Oct 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt2
 - 3.18.0_76e2a54a (fixed BGO #754814)
 
