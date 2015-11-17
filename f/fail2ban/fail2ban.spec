@@ -1,6 +1,6 @@
 Name: fail2ban
 Version: 0.9.2
-Release: alt4
+Release: alt5
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -12,6 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: alt-initd
 Source2: fail2ban.service
+Source3: fail2ban-logrotate
 
 BuildArch: noarch
 
@@ -47,6 +48,8 @@ ln -s %python_sitelibdir/%name %buildroot%_datadir/
 install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
 install -pD -m 644 %SOURCE2 %buildroot%_unitdir/%name.service
 install -pD -m 644 files/fail2ban-tmpfiles.conf %buildroot%_tmpfilesdir/%name.conf
+install -pD -m 644 %SOURCE3 %buildroot%_logrotatedir/fail2ban
+
 %python_install --optimize=2
 rm -rf %buildroot/%_docdir/%name/
 
@@ -71,8 +74,13 @@ rm -fR %_datadir/%name
 %_man1dir/*
 %_man5dir/*
 %_tmpfilesdir/%name.conf
+%_logrotatedir/%name
 
 %changelog
+* Tue Nov 17 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt5
+- use pid file, fix start/stop logic (ALT bug #29756)
+- add logrotate config (ALT bug #29756)
+
 * Wed Jul 08 2015 Eugeny A. Rostovtsev <real at altlinux.org> 0.9.2-alt4
 - Fixed for i586 (ALT #31119)
 
