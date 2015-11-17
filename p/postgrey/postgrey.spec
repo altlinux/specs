@@ -3,7 +3,7 @@
 %define postgrey_home %_localstatedir/%name
 
 Name: postgrey
-Version: 1.35
+Version: 1.36
 Release: alt1
 
 Summary: Greylisting Policy Server for Postfix and Exim
@@ -11,6 +11,7 @@ License: GPL
 Group: System/Servers
 
 URL: http://postgrey.schweikert.ch
+# Download from http://postgrey.schweikert.ch/pub/
 BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %name.init
@@ -19,8 +20,9 @@ Source3: %{name}_clients_dump
 Source6: %name.README.ALT
 
 BuildPreReq: perl perl-base perl-IO-Multiplex perl-Net-Server perl-BerkeleyDB perl-Net-DNS
-Requires: perl-IO-Multiplex
+BuildRequires: perl-NetAddr-IP
 BuildRequires: perl-podlators
+Requires: perl-IO-Multiplex
 
 %description
 Postgrey is a Postfix policy server implementing greylisting.
@@ -94,6 +96,9 @@ install -pD -m0644 postgreyreport.1  %buildroot%_man1dir/postgreyreport.1
 %doc README* Changes
 
 %changelog
+* Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.36-alt1
+- New version
+
 * Tue Jun 02 2015 Andrey Cherepanov <cas@altlinux.org> 1.35-alt1
 - New version, new build fix ALT #31037
 
