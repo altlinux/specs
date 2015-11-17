@@ -3,7 +3,7 @@
 %define lngg Russian
 
 Name: kde4-i18n-%lng
-Version: 15.08.2
+Version: 15.08.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -119,6 +119,9 @@ fi
 %lang(%lng) %_K4apps/autocorrect/%{lng}_*.xml
 
 %changelog
+* Tue Nov 17 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
+- new version
+
 * Fri Oct 23 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
 - new version
 
