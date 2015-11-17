@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.16
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ Requires: gear perl(Pod/Text.pm)
 %_man1dir/*
 
 %changelog
+* Tue Nov 17 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2
+- etersoft in git commits is friendly
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - support for .gear/uupdate_ignore_commits
 
