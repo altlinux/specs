@@ -1,15 +1,22 @@
-Name: tdb
-Version: 1.3.7
+%def_enable tests
+%def_without python3
+
+Name: libtdb
+Version: 1.3.8
 Release: alt1
 
 Summary: A trivial database system
 License: GPL
-Group: Databases
+Group: System/Libraries
 Url: http://tdb.samba.org/
 
-Source: http://samba.org/ftp/tdb/%name-%version.tar.gz
+Source: tdb-%version.tar
 
-BuildRequires: docbook-dtds docbook-style-xsl xsltproc python-devel
+BuildRequires: docbook-dtds docbook-style-xsl xsltproc
+BuildRequires: rpm-build-python python-devel 
+%if_with python3
+BuildRequires: rpm-build-python3 python3-devel
+%endif
 
 %description
 This is a simple database API. It was inspired by the realisation that
@@ -25,12 +32,12 @@ able to have multiple writers to the databases at one time.
 
 This is the primary library.
 
-%package utils
+%package -n tdb-utils
 Summary: a trivial database system utils
 Group: Databases
-Requires: lib%name = %version-%release
+Requires: %name = %version-%release
 
-%description utils
+%description -n tdb-utils
 This is a simple database API. It was inspired by the realisation that
 in Samba we have several ad-hoc bits of code that essentially
 implement small databases for sharing structures between parts of
@@ -44,30 +51,12 @@ able to have multiple writers to the databases at one time.
 
 This package contains some utils for managing tdb databases
 
-%package -n lib%name
-Summary: a trivial database system
-Group: System/Libraries
-
-%description -n lib%name
-This is a simple database API. It was inspired by the realisation that
-in Samba we have several ad-hoc bits of code that essentially
-implement small databases for sharing structures between parts of
-Samba. As I was about to add another I realised that a generic
-database module was called for to replace all the ad-hoc bits.
-
-I based the interface on gdbm. I couldn't use gdbm as we need to be
-able to have multiple writers to the databases at one time.
-
-(I == tridge@samba.org)
-
-This is the primary library.
-
-%package -n lib%name-devel
+%package devel
 Summary: a trivial database system development files
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: %name = %version-%release
 
-%description -n lib%name-devel
+%description devel
 This is a simple database API. It was inspired by the realisation that
 in Samba we have several ad-hoc bits of code that essentially
 implement small databases for sharing structures between parts of
@@ -81,49 +70,77 @@ able to have multiple writers to the databases at one time.
 
 These are the development files.
 
-%package -n python-module-%name
+%package -n python-module-tdb
 Group: Development/Python
 Summary: Python bindings for the Tdb library
-Requires: lib%name = %version-%release
+Requires: %name = %version-%release
 
-%description -n python-module-%name
+%description -n python-module-tdb
 Python bindings for libtdb
 
+%if_with python3
+%package -n python3-module-tdb
+Group: Development/Python3
+Summary: Python3 bindings for the Tdb library
+Requires: %name = %version-%release
 
+%description -n python3-module-tdb
+Python3 bindings for libtdb
+%endif
 
 %prep
-%setup
+%setup -n tdb-%version
 
 %build
 %undefine _configure_gettext
-%configure --disable-rpath
+%configure --disable-rpath \
+%if_with python3
+	   --extra-python=python3 \
+%endif
+           --bundled-libraries=NONE \
+	   --builtin-libraries=replace
+
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 rm -f %buildroot%_libdir/libtdb.a
 
-%files utils
-%_bindir/*
-%_man8dir/*
+%if_enabled tests
+%check
+make test
+%endif
 
-%files -n lib%name
+%files
 %_libdir/libtdb.so.*
 %doc docs/README
 
-%files -n lib%name-devel
+%files -n tdb-utils
+%_bindir/*
+%_man8dir/*
+
+%files devel
 %_libdir/libtdb.so
 %_includedir/tdb.h
 %_pkgconfigdir/tdb.pc
 
-#files -n lib%name-devel-static
-#%_libdir/*.a
-
-%files -n python-module-%name
+%files -n python-module-tdb
 %python_sitelibdir/tdb.so
+%python_sitelibdir/_tdb_text.py*
+
+%if_with python3
+%files -n python3-module-tdb
+%python3_sitelibdir/tdb.so
+%endif
 
 %changelog
+* Fri Nov 13 2015 Andrey Cherepanov <cas@altlinux.org> 1.3.8-alt1
+- 1.3.8
+- Enable tests
+- Rename from tdb to libtdb
+- Optional build python3 module (disaled by default)
+
 * Tue Aug 18 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.7-alt1
 - 1.3.7
 

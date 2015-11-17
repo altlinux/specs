@@ -1,16 +1,14 @@
+%def_enable tests
+
 Name: libtevent
-Version: 0.9.25
+Version: 0.9.26
 Release: alt1
 Summary: The tevent library
 License: LGPLv3+
 Group: System/Libraries
 Url: http://tevent.samba.org/
 
-Source: %name-%version.tar
-Source10: buildtools.tar
-Source11: replace.tar
-Source12: talloc.tar
-Source13: third_party.tar
+Source: tevent-%version.tar.gz
 
 BuildRequires: libtalloc-devel >= 2.1.0
 BuildRequires: libpytalloc-devel >= 2.1.0
@@ -40,10 +38,7 @@ Requires: %name = %version-%release
 Python bindings for libtevent
 
 %prep
-%setup -q -a 10 -a 11 -a 12 -a 13
-mkdir lib
-mv -f replace lib/
-mv -f talloc lib/
+%setup -n tevent-%version
 
 %build
 %undefine _configure_gettext
@@ -59,6 +54,12 @@ mv -f talloc lib/
 
 rm -f %buildroot%_libdir/*.a
 
+%if_enabled tests
+%check
+export LD_LIBRARY_PATH=./bin/shared:$LD_LIBRARY_PATH
+make test
+%endif
+
 %files
 %_libdir/*.so.*
 
@@ -72,6 +73,10 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/tevent.py*
 
 %changelog
+* Fri Nov 13 2015 Andrey Cherepanov <cas@altlinux.org> 0.9.26-alt1
+- 0.9.26
+- Enable tests
+
 * Wed Jul 15 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.25-alt1
 - 0.9.25
 

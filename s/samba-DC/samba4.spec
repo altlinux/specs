@@ -23,7 +23,7 @@
 %def_with docs
 
 %def_with dc
-%def_without clustering_support
+%def_with clustering_support
 %def_without testsuite
 
 %if_with testsuite
@@ -45,7 +45,7 @@
 
 Name:    samba-DC
 Version: 4.3.1
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -118,7 +118,6 @@ BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-
 %{?_without_tdb:BuildRequires: libtdb-devel >= 1.2.11  python-module-tdb}
 %{?_without_ntdb:BuildRequires: libntdb-devel >= 0.9  python-module-ntdb}
 %{?_without_ldb:BuildRequires: libldb-devel >= 1.1.21 python-module-pyldb-devel}
-%{?_with_clustering_support:BuildRequires: ctdb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
 %{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_enable_avahi:BuildRequires: libavahi-devel}
@@ -1142,6 +1141,9 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n task-samba-dc
 
 %changelog
+* Mon Nov 16 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.1-alt2
+- Enable clustering support
+
 * Tue Oct 20 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.1-alt1
 - New version (https://www.samba.org/samba/history/samba-4.3.1.html)
 - New metapackage task-samba-dc to install complete Domain Controller

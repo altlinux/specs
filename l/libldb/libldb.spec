@@ -1,16 +1,15 @@
+%def_enable tests
+
 Name: libldb
-Version: 1.1.21
-Release: alt1.1
+Version: 1.1.23
+Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
 Url: http://ldb.samba.org/
 
-Source: http://samba.org/ftp/ldb/%name-%version.tar
-Source2: lib.tar
-Source3: buildtools.tar
-Source4: third_party.tar
-Source5: ldb-modules.sh
+Source: http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
+Source1: ldb-modules.sh
 
 BuildRequires: python-devel python-module-tdb libpytalloc-devel python-module-tevent
 BuildRequires: libtalloc-devel libtdb-devel libtevent-devel libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
@@ -53,7 +52,7 @@ Requires: %name-devel = %version-%release
 Development files for the Python bindings for the LDB library
 
 %prep
-%setup -q -a2 -a3 -a4
+%setup -n ldb-%version
 
 %build
 %undefine _configure_gettext
@@ -69,11 +68,18 @@ Development files for the Python bindings for the LDB library
 %install
 %makeinstall_std
 
-install -D -m755 %SOURCE5 %buildroot%_sysconfdir/profile.d/ldb-modules.sh
+install -D -m755 %SOURCE1 %buildroot%_sysconfdir/profile.d/ldb-modules.sh
 sed -i s,@libdir@,%_libdir,g %buildroot%_sysconfdir/profile.d/ldb-modules.sh
 
 rm -f %buildroot%_libdir/*.a
 rm -f %buildroot/%_man3dir/_*
+
+%if_enabled tests
+%check
+export LD_LIBRARY_PATH=./bin/shared:./bin/shared/private:$LD_LIBRARY_PATH
+export LDB_MODULES_PATH=./bin/modules/ldb:$LDB_MODULES_PATH
+make test
+%endif
 
 %files
 %_libdir/libldb.so.*
@@ -99,6 +105,7 @@ rm -f %buildroot/%_man3dir/_*
 
 %files -n python-module-pyldb
 %python_sitelibdir/ldb.so
+%python_sitelibdir/_ldb_text.py*
 %_libdir/libpyldb-util.so.1*
 
 %files -n python-module-pyldb-devel
@@ -107,6 +114,10 @@ rm -f %buildroot/%_man3dir/_*
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Fri Nov 13 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.23-alt1
+- 1.1.23
+- Enable tests
+
 * Wed Nov 11 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.21-alt1.1
 - Fix path to samba_dsdb.so module (exists only in samba-DC)
 
