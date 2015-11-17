@@ -9,7 +9,7 @@
 %define bugfix 0
 Name: qt5-tools
 Version: 5.5.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -26,7 +26,10 @@ Source22: linguist.desktop
 Source23: qdbusviewer.desktop
 Source24: qtconfig.desktop
 
-Patch1: alt-build-qtconfig.patch
+# FC
+Patch1: qttools-opensource-src-5.5.0-qmake-qt5.patch
+# ALT
+Patch10: alt-build-qtconfig.patch
 
 # Automatically added by buildreq on Tue Oct 01 2013 (-bi)
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
@@ -146,8 +149,9 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
-%if_enabled qtconfig
 %patch1 -p1
+%if_enabled qtconfig
+%patch10 -p1
 %endif
 syncqt.pl-qt5 -version %version -private
 %qmake_qt5
@@ -309,6 +313,9 @@ done
 
 
 %changelog
+* Tue Nov 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt2
+- fix find qmake
+
 * Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
 - new version
 
