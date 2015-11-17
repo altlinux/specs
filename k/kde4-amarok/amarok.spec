@@ -1,8 +1,8 @@
 
 %define rname amarok
 Name: kde4-%rname
-Version: 2.8.0
-Release: alt6
+Version: 2.8.90
+Release: alt1
 
 Summary: Amarok is a music player for KDE.
 License: GPLv2
@@ -15,18 +15,12 @@ Conflicts: amarok <= 1.4.10-alt10
 
 Source0: ftp://ftp.kde.org/pub/kde/stable/amarok/%version/src/%rname-%version.tar
 # upstream
-Patch1: 0001-Don-t-add-the-analyzer-applet-when-Phonon-doesn-t-su.patch
-Patch2: 0002-Don-t-allow-adding-Analyzer-applet-when-not-supporte.patch
-#
-Patch4: 0004-Fix-reading-Album-Artist-Compilation-Disc-Number-in-.patch
-Patch5: 0005-Sync-playlist-search-config-instantly.patch
-Patch6: 0006-Don-t-suppress-html-tag-like-characters.patch
-Patch7: 0007-Fix-performance-issue-with-large-podcast-feeds.patch
 # SuSE
 Patch21: flac_mimetype_bnc671581.diff
 # ALT
-Patch100: amarok-2.8.0-alt-fix-compile.patch
-Patch101: amarok-2.8.0-alt-disable-analizer.patch
+Patch100: alt-fix-compile.patch
+Patch101: alt-disable-analizer.patch
+Patch102: alt-find-taglib.patch
 
 # Automatically added by buildreq on Thu Nov 19 2009 (-bi)
 #BuildRequires: dbus-tools-gui doxygen gcc-c++ git-core glibc-devel-static groff-ps kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel libloudmouth-devel libmtp-devel libncursesw-devel libqca2-devel libqt3-devel libtag-devel libtag-extras-devel libxkbfile-devel libxml2-devel qtscriptbindings rpm-build-ruby tetex-latex time xorg-xf86vidmodeproto-devel
@@ -41,7 +35,6 @@ BuildRequires: libtunepimp-devel libusb-devel libSDL-devel
 BuildRequires: qjson-devel libmygpo-qt-devel
 BuildRequires: libavresample-devel libavdevice-devel libpostproc-devel libswscale-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
-BuildRequires: soprano soprano-backend-redland libsoprano-devel
 BuildRequires: /proc
 
 
@@ -105,18 +98,12 @@ with various devices that uses Media Transfer Protocol (MTP)
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
-%patch2 -p1
-#
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
 %patch21 -p1
 %patch100 -p1
 %ifarch %arm
 %patch101 -p1
 %endif
+%patch102 -p1
 
 %build
 %K4cmake \
@@ -179,8 +166,10 @@ fi
 %_K4lib/amarok_collection-*.so
 %_K4lib/amarok_containment_vertical.so
 %_K4lib/amarok_context_applet_*.so
+%_K4lib/amarok_importer-*.so
 %_K4lib/amarok_data_engine_*.so
 %_K4lib/amarok_service_*.so
+%_K4lib/amarok_storage-*.so
 %_K4lib/kcm_amarok_service_*.so
 #
 %_K4apps/%rname/
@@ -195,6 +184,8 @@ fi
 %_K4srv/amarok-context-applet-*.desktop
 %_K4srv/amarok-data-engine-*.desktop
 %_K4srv/amarok_service_*.desktop
+%_K4srv/amarok_importer-*.desktop
+%_K4srv/amarok_storage-*.desktop
 %_K4srv/amaroklastfm.protocol
 %_K4srvtyp/amarok_codecinstall.desktop
 %_K4srvtyp/amarok_context_applet.desktop
@@ -211,6 +202,9 @@ fi
 
 
 %changelog
+* Tue Nov 17 2015 Sergey V Turchin <zerg@altlinux.org> 2.8.90-alt1
+- new version
+
 * Thu Jun 25 2015 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt6
 - rebuild with new libgcrypt
 
