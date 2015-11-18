@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name: scim-thai
 Version: 0.1.1
-Release: alt2
+Release: alt2.qa1
 Summary: Thai Input Method Engine for SCIM
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: System/Libraries
@@ -50,6 +50,9 @@ rm $RPM_BUILD_ROOT%_libdir/scim-1.0/*/{IMEngine,SetupUI}/thai*.la
 %_datadir/scim/icons/scim-thai.png
 
 %changelog
+* Sat Oct 17 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.1.1-alt2.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 0.1.1-alt2
 - build for Sisyphus
 

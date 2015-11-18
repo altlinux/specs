@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name: scim-pinyin
 Version: 0.5.92
-Release: alt2
+Release: alt2.qa1
 Summary: Smart Pinyin IMEngine for Smart Common Input Method platform
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License: GPLv2
@@ -61,6 +61,9 @@ rm -f $RPM_BUILD_ROOT%_libdir/scim-1.0/*/Helper/*.la
 %_datadir/scim/icons/smart-pinyin.png
 
 %changelog
+* Sat Oct 17 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.5.92-alt2.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 0.5.92-alt2
 - build for Sisyphus
 

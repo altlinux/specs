@@ -6,7 +6,7 @@
 Name: scim-bridge
 
 Version: 0.4.16
-Release: alt1
+Release: alt1.qa1
 Summary: SCIM Bridge Gtk IM module
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: System/Libraries
@@ -145,6 +145,9 @@ rm doc/{Makefile.*,doxygen.conf}
 %endif
 
 %changelog
+* Wed Nov 18 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.4.16-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 0.4.16-alt1
 - build for Sisyphus
 

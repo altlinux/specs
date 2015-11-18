@@ -1,6 +1,6 @@
 Name: scim-fcitx
 Version: 3.1.1
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: FCITX Input Method Engine for SCIM
 
 Group: System/Libraries
@@ -51,6 +51,9 @@ rm $RPM_BUILD_ROOT/%_libdir/scim-1.0/*/IMEngine/fcitx.la
 %_bindir/*
 
 %changelog
+* Sat Oct 17 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 3.1.1-alt1.1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt1.1
 - Fixed build with glibc 2.16
 

@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++
 
 Name: scim-tables
 Version: 0.5.12
-Release: alt2
+Release: alt2.qa1
 Summary: SCIM Generic Table IMEngine
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License: GPLv2+
@@ -441,6 +441,9 @@ rm $RPM_BUILD_ROOT/%_datadir/scim/{icons,tables}/{Hangul,Hanja,HIRAGANA,KATAKANA
 %_datadir/scim/icons/Uyghur.png
 
 %changelog
+* Wed Nov 18 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.5.12-alt2.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 0.5.12-alt2
 - build for Sisyphus
 

@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name: scim-m17n
 Version: 0.2.3
-Release: alt2
+Release: alt2.qa1
 Summary: SCIM IMEngine for m17n-lib
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: System/Libraries
@@ -40,6 +40,9 @@ rm $RPM_BUILD_ROOT%_libdir/scim-1.0/*/IMEngine/m17n.la
 %_datadir/scim/icons/*
 
 %changelog
+* Sat Oct 17 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.2.3-alt2.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 0.2.3-alt2
 - build for Sisyphus
 
