@@ -1,8 +1,13 @@
+#### TODO : hack! drop it when update to 3.x!
+%set_gcc_version 4.9
+BuildRequires: gcc4.9
+### END hack ###
+
 %def_disable static
 
 Name: owfs
 Version: 2.9p5
-Release: alt1.1
+Release: alt2
 
 Summary: 1-Wire Virtual File System
 License: GPL
@@ -10,8 +15,9 @@ Group: System/Kernel and hardware
 
 Url: http://sourceforge.net/projects/owfs
 Source: %name-%version.tar.gz
+Patch: owfs-2.9-alt-gcc5.patch
 
-BuildPreReq: chrpath
+BuildRequires: chrpath
 
 # Automatically added by buildreq on Tue Oct 18 2011
 BuildRequires: libfuse-devel libusb-compat-devel perl-devel python-devel swig
@@ -161,7 +167,7 @@ owserver, owftpd, owshell, owperl, owtcl) and also all the supported
 
 %prep
 %setup
-
+%patch -p2
 sed -i- 's/) Makefile.PL/& INSTALLDIRS=vendor/' module/*/perl5/Makefile.am
 
 %build
@@ -311,6 +317,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %python_sitelibdir/*
 
 %changelog
+* Wed Nov 18 2015 Igor Vlasenko <viy@altlinux.ru> 2.9p5-alt2
+- fixed build
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.9p5-alt1.1
 - rebuild with new perl 5.20.1
 
