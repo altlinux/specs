@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.4.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-buttons-order.patch
 
 # Automatically added by buildreq on Tue Apr 07 2015 (-bi)
 # optimized out: at-spi2-atk cmake cmake-modules elfutils fontconfig fontconfig-devel glib2-devel kf5-attica-devel libEGL-devel libGL-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcloog-isl4 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server libxcbutil-keysyms pkg-config python-base ruby ruby-stdlibs xorg-xproto-devel
@@ -52,6 +53,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -73,6 +75,9 @@ KF5 library
 %_K5icon/*/*/apps/kde-gtk-config.*
 
 %changelog
+* Wed Nov 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt2
+- set buttons order
+
 * Wed Nov 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt1
 - new version
 
