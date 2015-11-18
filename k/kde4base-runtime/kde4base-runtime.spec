@@ -8,7 +8,7 @@
 %define rname kdebase-runtime
 %define major 15
 %define minor 08
-%define bugfix 1
+%define bugfix 3
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -22,6 +22,7 @@ Url: http://www.kde.org/
 Requires: %name-core = %EVR
 
 Source0: ftp://ftp.kde.org/pub/kde/stable/%version/src/kdebase-runtime-%version.tar
+Source1: kde4
 Source10: search-yandex.desktop
 Source11: search-altbugzilla.desktop
 # ALT
@@ -37,7 +38,7 @@ BuildRequires(pre): kde4pimlibs-devel attica-devel
 BuildRequires: gcc-c++ cmake bzlib-devel liblzma-devel xml-utils
 BuildRequires: libalsa-devel libclucene-core-devel libjpeg-devel libpcre-devel libgcrypt-devel
 BuildRequires: libqt4-devel libsmbclient-devel NetworkManager-glib-devel
-BuildRequires: soprano soprano-backend-redland soprano-backend-virtuoso libsoprano-devel libstrigi-devel
+BuildRequires: libsoprano-devel libstrigi-devel
 BuildRequires: kde4-kactivities-devel
 BuildRequires: libungif-devel libxkbfile-devel openexr-devel libwebp-devel
 BuildRequires: libcanberra-devel glib2-devel libpulseaudio-devel
@@ -112,16 +113,7 @@ Menu resources for the original KDE menu.
 install -m 0644 %SOURCE10 kurifilter-plugins/ikws/searchproviders/yandex.desktop
 install -m 0644 %SOURCE11 kurifilter-plugins/ikws/searchproviders/altbugzilla.desktop
 
-cat >kde4 <<__EOF__
-#!/bin/sh
-#  Script for launching KDE4 applications from outside of the KDE4 desktop
-
-%ifdef _kde_alternate_placement
-PATH="%_kde4_bindir:\$PATH" exec "\$@"
-%else
-PATH="%_K4bindir:\$PATH" exec "\$@"
-%endif
-__EOF__
+cat %SOURCE1 >kde4
 
 %build
 %K4build \
@@ -231,6 +223,10 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Nov 18 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
+- new version
+- update kde4 wrapper
+
 * Tue Sep 29 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.1-alt1
 - new version
 - fix requires to qdbus
