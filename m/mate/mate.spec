@@ -1,8 +1,8 @@
-%define ver_major 1.9
+%define ver_major 1.10
 
 Name: mate
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -242,7 +242,7 @@ Provides: %name-full = %version
 # Sound & graphics & video
 ## Default music player
 #Requires: rhythmbox
-Requires: exaile
+#Requires: exaile ???
 ## All Rhythmbox plugins
 #Requires: rhythmbox-plugins
 ## module player
@@ -394,6 +394,9 @@ itself).
 #%files a11y
 
 %changelog
+* Wed Nov 18 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1
+- exale is not the best choice for a music player
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt2
 - added exaile as audioplayer
 - added gnome-mplayer-caja
