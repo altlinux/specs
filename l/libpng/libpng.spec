@@ -1,5 +1,5 @@
 Name: libpng
-Version: 1.5.21
+Version: 1.5.24
 Release: alt1
 
 Summary: A library of functions for manipulating PNG image format files
@@ -61,7 +61,7 @@ linked programs using the PNG (Portable Network Graphics) library.
 %build
 %autoreconf
 %configure %{subst_enable static}
-%make_build DFA_XTRA=pngusr.dfa
+%make_build
 
 %install
 %makeinstall_std
@@ -98,6 +98,9 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %endif
 
 %changelog
+* Wed Nov 18 2015 Dmitry V. Levin <ldv@altlinux.org> 1.5.24-alt1
+- Updated to 1.5.24.
+
 * Wed Dec 24 2014 Dmitry V. Levin <ldv@altlinux.org> 1.5.21-alt1
 - Updated to 1.5.21.
 
