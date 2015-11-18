@@ -1,7 +1,7 @@
 %define dist CGI-SpeedyCGI
 Name: perl-%dist
 Version: 2.22
-Release: alt4.1
+Release: alt5
 
 Summary: Speed up perl scripts by running them persistently
 License: GPL
@@ -10,6 +10,14 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
+# Patches from Fedora
+Patch0:		perl-CGI-SpeedyCGI-2.22-documentation.patch
+Patch1:		perl-CGI-SpeedyCGI-2.22-empty_param.patch
+Patch2:		perl-CGI-SpeedyCGI-2.22-strerror.patch
+Patch3:		perl-CGI-SpeedyCGI-2.22-brigade_foreach.patch
+Patch4:		perl-CGI-SpeedyCGI-2.22-exit_messages.patch
+Patch5:		perl-CGI-SpeedyCGI-2.22-perl_510.patch
+Patch6:		perl-CGI-SpeedyCGI-2.22-c99_inline.patch
 # Patches from Debian
 Patch10: 10big-socket-buffers.patch
 Patch20: 20makefile-manpage.patch    
@@ -37,6 +45,7 @@ programs.
 
 %prep
 %setup -q -n %dist-%version
+%if 0
 %patch10 -p1
 %patch20 -p1
 %patch30 -p1
@@ -50,6 +59,14 @@ programs.
 %patch95 -p1
 %patch96 -p1
 %patch97 -p1
+%endif
+%patch0 -p1 -b .documentation
+%patch1 -p1 -b .empty_param
+%patch2 -p1 -b .strerror
+%patch3 -p1 -b .brigade_foreach
+%patch4 -p1 -b .exit_messages
+%patch5 -p1 -b .perl_510
+%patch6 -p1 -b .c99_inline
 
 %build
 # Hackaround for SMP build
@@ -65,6 +82,9 @@ NPROCS=1
 %perl_vendor_privlib/CGI
 
 %changelog
+* Wed Nov 18 2015 Igor Vlasenko <viy@altlinux.ru> 2.22-alt5
+- updated patches from fedora
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.22-alt4.1
 - rebuild with new perl 5.20.1
 
