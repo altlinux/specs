@@ -1,6 +1,6 @@
 Name: shadow
-Version: 4.1.4.2
-Release: alt9
+Version: 4.2.1
+Release: alt3
 Serial: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -33,7 +33,7 @@ BuildPreReq: mktemp >= 1:1.3.1, rpm-build >= 4.0.4-alt10
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
 
 %if_with selinux
-BuildPreReq: libselinux-devel
+BuildPreReq: libselinux-devel libsemanage-devel
 %endif
 
 # Automatically added by buildreq on Mon Oct 28 2002
@@ -154,6 +154,17 @@ This package includes utilities for execute command as different group ID:
 + newgrp: is used to change the current group ID during a login session;
 + sg: is used to execute command as different group ID.
 
+%package submap
+Summary: Utilities for creating uid and gid mappings in user namespaces
+Group: System/Base
+PreReq: %name-utils = %serial:%version-%release
+
+%description submap
+This package includes utilities for creating uid and gid mappings
+in user namespaces:
+* newuidmap: set the uid mapping of a user namespace;
+* newgidmap: set the gid mapping of a user namespace.
+
 %package log
 Summary: Utilities for examining lastlog and faillog files
 Group: System/Base
@@ -176,6 +187,7 @@ Requires: %name-edit = %serial:%version-%release
 Requires: %name-groups = %serial:%version-%release
 Requires: %name-log = %serial:%version-%release
 Requires: %name-utils = %serial:%version-%release
+Requires: %name-submap = %serial:%version-%release
 
 %description suite
 This virtual package unifies all shadow suite subpackages.
@@ -192,9 +204,10 @@ grep -qs ^ACLOCAL_AMFLAGS Makefile.am ||
 
 %build
 %autoreconf
-%add_optflags -DEXTRA_CHECK_HOME_DIR -DSHADOWTCB
+%add_optflags -Werror -Wno-error=address -DEXTRA_CHECK_HOME_DIR
 %configure \
 	%{subst_enable shared} \
+	--with-tcb \
 	--with-libpam \
 	--without-libcrack \
 	%{subst_with selinux} \
@@ -237,6 +250,9 @@ install -pD -m755 %_sourcedir/chsh.control %buildroot%_controldir/chsh
 install -pD -m755 %_sourcedir/gpasswd.control %buildroot%_controldir/gpasswd
 install -pD -m755 %_sourcedir/newgrp.control %buildroot%_controldir/newgrp
 install -pD -m755 %_sourcedir/groupmems.control %buildroot%_controldir/groupmems
+
+touch %buildroot%_sysconfdir/subuid
+touch %buildroot%_sysconfdir/subgid
 
 %find_lang %name
 
@@ -344,6 +360,16 @@ fi
 %_mandir/man?/sg.*
 %_man8dir/groupmems.*
 
+%files submap
+%config(noreplace) %_sysconfdir/subuid
+%config(noreplace) %_sysconfdir/subgid
+%_bindir/newuidmap
+%_bindir/newgidmap
+%_man1dir/newuidmap.*
+%_man1dir/newgidmap.*
+%_man5dir/subuid.*
+%_man5dir/subgid.*
+
 %files log
 %_bindir/*log
 %_mandir/man?/*log.*
@@ -365,6 +391,30 @@ fi
 %exclude %_man8dir/nologin.8.*
 
 %changelog
+* Mon Oct 26 2015 Mikhail Efremov <sem@altlinux.org> 1:4.2.1-alt3
+- chage: Fix work with tcb.
+
+* Fri Oct 23 2015 Mikhail Efremov <sem@altlinux.org> 1:4.2.1-alt2
+- Package /etc/subuid and /etc/subgid files.
+- Add -Werror to optflags.
+- Explicitly use --with-tcb configure option.
+- Fix compiler warnings.
+- vipw: Check link() return status.
+- useradd: Check chown/chmod return status.
+- Fix uninitialized variable.
+- Fix usermod's manpage.
+
+* Tue Oct 20 2015 Mikhail Efremov <sem@altlinux.org> 1:4.2.1-alt1
+- Add submap subpackage (closes: #31201).
+- Merge ALT-specific tcb patch.
+- userdel.c: Fix variable name in case of tcb.
+- Add missing include in case of tcb.
+- Fix build with --as-needed in case of tcb.
+- Makefile: Drop passwd from suidubins.
+- Update ALT-specific patches.
+- Drop obsoleted patches.
+- Updated to 4.2.1.
+
 * Thu Nov 07 2013 Mikhail Efremov <sem@altlinux.org> 1:4.1.4.2-alt9
 - Fix build: Remove deprecated AM_C_PROTOTYPES.
 
