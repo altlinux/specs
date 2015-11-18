@@ -13,7 +13,7 @@
 
 Name: kde5-baseapps
 Version: 4.97.0
-Release: alt4
+Release: alt5
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -351,6 +351,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Wed Nov 18 2015 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt5
+- update from frameworks branch
+
 * Thu Nov 05 2015 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt4
 - update from frameworks branch
 - fix kfmclient openUrl

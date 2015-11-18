@@ -1,7 +1,7 @@
 %define rname frameworkintegration
 
 Name: kf5-%rname
-Version: 5.15.0
+Version: 5.16.0
 Release: alt1
 %K5init altplace
 
@@ -61,11 +61,13 @@ KF5 library
 
 %install
 %K5install
+%K5install_move data kconf_update
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
+%_K5data/kconf_update/frameworksintegration*
 
 %files devel
 %_K5inc/frameworkintegration_version.h
@@ -82,6 +84,9 @@ KF5 library
 %_K5notif/*.notifyrc
 
 %changelog
+* Wed Nov 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.16.0-alt1
+- new version
+
 * Mon Oct 12 2015 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
 - new version
 
