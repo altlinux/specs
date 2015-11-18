@@ -1,12 +1,12 @@
-Name: 389-adminutil
-Version: 1.1.15
-Release: alt1.qa1
+Name:    389-adminutil
+Version: 1.1.22
+Release: alt1
 License: LGPLv2
-Url: http://port389.org
-Group: System/Libraries
+Url:     http://port389.org
+# VCS: 	 https://git.fedorahosted.org/git/389/adminutil.git
+Group:   System/Libraries
 Summary: Utility library for directory server administration
 
-# Automatically added by buildreq on Mon Aug 17 2009
 BuildRequires: gcc-c++ libicu-devel mozldap-devel
 
 BuildRequires: libsvrcore-devel libsasl2-devel openldap-devel
@@ -42,11 +42,13 @@ that use %name.
 %setup
 
 %build
-%configure --disable-test- --with-openldap
+%undefine _configure_gettext
+%configure --disable-test- \
+           --with-openldap
 %make
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 rm -f %buildroot%_libdir/lib*.a
 rm -f %buildroot%_libdir/lib*.la
 
@@ -62,6 +64,9 @@ rm -f %buildroot%_libdir/lib*.la
 %_includedir/libadmsslutil
 
 %changelog
+* Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.22-alt1
+- New version
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.15-alt1.qa1
 - NMU: rebuilt with libicuuc.so.50.
 

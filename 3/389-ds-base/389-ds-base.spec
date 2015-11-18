@@ -1,36 +1,67 @@
 %global pkgname		dirsrv
-%global groupname	%{pkgname}.target
+%global groupname	%pkgname.target
+%def_without selinux
 
-Summary: 389 Directory Server
-Name: 389-ds
-Version: 1.3.2.15
-Release: alt3.e9f86dab
-License: GPLv2
-Url: http://port389.org
-Group: System/Servers
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
-Source: %name-%version-%release.tar
+Summary: 389 Directory Server (base)
+Name: 	 389-ds-base
+Version: 1.3.4.4
+Release: alt1
+License: GPLv3+ with exceptions
+Url: 	 http://port389.org
+Group: 	 System/Servers
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-# Automatically added by buildreq on Thu May 05 2011
-BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel libldap-devel libnet-snmp-devel libnl-devel libpam-devel libpcre-devel libsasl2-devel libsensors3-devel libsvrcore-devel perl-Mozilla-LDAP perl-libnet perl-bignum
-BuildRequires: systemd-units
-BuildRequires: perl-DBM perl-NetAddr-IP
+Source:  %name-%version.tar
+# VCS:   https://git.fedorahosted.org/git/389/ds.git
+Patch1:  %name-fix-initscripts.patch
 
-Provides: fedora-ds = %version-%release
+BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel 
+BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel 
+BuildRequires: libpcre-devel libsasl2-devel libsensors3-devel libsvrcore-devel
+BuildRequires: perl-Mozilla-LDAP perl-libnet perl-bignum
+BuildRequires: perl-DBM
+BuildRequires: perl-NetAddr-IP
+BuildRequires: perl-Archive-Tar
+
+Provides:  fedora-ds = %version-%release
 Obsoletes: fedora-ds < %version-%release
+Provides:  ldif2ldbm
 
 # AutoReq: yes, noperl
-%add_perl_lib_path %_libdir/%{pkgname}/perl
-%add_findprov_skiplist %_datadir/%{pkgname}/script-templates/*
-%add_findreq_skiplist %_datadir/%{pkgname}/script-templates/*
+%add_perl_lib_path %_libdir/%pkgname/perl
+%add_findprov_skiplist %_datadir/%pkgname/script-templates/*
+%add_findreq_skiplist %_datadir/%pkgname/script-templates/* %_sbindir/*-%pkgname
 
 %description
-389 Directory Server is an LDAPv3 compliant server. Use setup-ds.pl to setup instances.
+389 Directory Server is an LDAPv3 compliant server. Use setup-ds.pl to
+setup instances.
+
+%package -n 389-ds
+Summary: 389 Directory, Administration, and Console Suite
+Group: System/Servers
+BuildArch: noarch
+Requires: 389-ds-base
+Requires: 389-admin
+Requires: idm-console-framework
+Requires: 389-console
+Requires: 389-ds-console
+Requires: 389-ds-console-doc
+Requires: 389-admin-console
+Requires: 389-admin-console-doc
+Requires: 389-dsgw
+
+%description -n 389-ds
+The 389 Directory Server, Administration Server, and Console Suite
+provide the LDAPv3 server, the httpd daemon used to administer the
+server, and the console GUI application used for server and user/group
+administration.
 
 %package devel
 Summary: Development libraries for 389 Directory Server
 Group: Development/C
 Requires: %name = %version-%release
+Provides:  389-ds-devel = %version-%release
+Obsoletes: 389-ds-devel < %version-%release
 
 %description devel
 Development Libraries and heades for 389 Directory Server.
@@ -38,23 +69,38 @@ Development Libraries and heades for 389 Directory Server.
 %package libs
 Summary: Core libraries for 389 Directory Server
 Group: System/Libraries
+Provides:  389-ds-libs = %version-%release
+Obsoletes: 389-ds-libs < %version-%release
 
 %description libs
-Core libraries for the 389 Directory Server base package.  These libraries
-are used by the main package and the -devel package.  This allows the -devel
-package to be installed with just the -libs package and without the main package.
+Core libraries for the 389 Directory Server base package.  These
+libraries are used by the main package and the -devel package.  This
+allows the -devel package to be installed with just the -libs package
+and without the main package.
 
 %prep
 %setup -n %name-%version
+%patch1 -p1
 %autoreconf
+# Install SysVInit scripts anyway
+subst 's/^@SYSTEMD_FALSE@//g' Makefile.in
 
 %build
-NSSARGS="--with-svrcore-inc=%{_includedir} --with-svrcore-lib=%{_libdir} --with-nss-lib=%{_libdir} --with-nss-inc=%{_includedir}/nss"
-./configure --prefix=/usr --exec-prefix=/usr --bindir=%_bindir --sbindir=%_sbindir --sysconfdir=%_sysconfdir \
- --datadir=%_datadir --includedir=%_includedir --libdir=%_libdir --libexecdir=%_libexecdir --localstatedir=/var \
- --sharedstatedir=/usr/com --mandir=/usr/share/man --infodir=/usr/share/info --with-openldap --with-selinux \
- --enable-autobind --with-systemdsystemunitdir=%{_unitdir} --with-systemdsystemconfdir=%{_sysconfdir}/systemd/system \
- --with-perldir=/usr/bin --with-systemdgroupname=%{groupname} $NSSARGS
+%configure  \
+	--with-openldap \
+%if_with selinux
+	--with-selinux \
+%endif
+	--localstatedir=/var \
+ 	--enable-autobind \
+	--with-systemdsystemunitdir=%_unitdir \
+	--with-systemdsystemconfdir=%_sysconfdir/systemd/system \
+	--with-systemdgroupname=%groupname \
+	--with-perldir=%_bindir \
+	--with-svrcore-inc=%_includedir \
+	--with-svrcore-lib=%_libdir \
+	--with-nss-lib=%_libdir \
+	--with-nss-inc=%_includedir/nss
 
 export XCFLAGS=$RPM_OPT_FLAGS
 
@@ -68,74 +114,82 @@ export USE_64=1
 %make_build
 
 %install
-%make DESTDIR="%buildroot" install
+%makeinstall_std
 
-mkdir -p %buildroot/var/log/%{pkgname}
-mkdir -p %buildroot/var/lib/%{pkgname}
-mkdir -p %buildroot/var/lock/%{pkgname}
+mkdir -p %buildroot/{%_lockdir,%_localstatedir,%_logdir,%_var/tmp}/%pkgname
 
 # for systemd
 mkdir -p %buildroot%{_sysconfdir}/systemd/system/%{groupname}.wants
 
 # remove libtool and static libs
-rm -f %buildroot%{_libdir}/%{pkgname}/*.a
-rm -f %buildroot%{_libdir}/%{pkgname}/*.la
-rm -f %buildroot%{_libdir}/%{pkgname}/plugins/*.a
-rm -f %buildroot%{_libdir}/%{pkgname}/plugins/*.la
+rm -f %buildroot%_libdir/%pkgname/{,plugins/}*.{a,la}
 
 # make sure perl scripts have a proper shebang 
-sed -i -e 's|#{{PERL-EXEC}}|#!/usr/bin/perl|' %buildroot%{_datadir}/%{pkgname}/script-templates/template-*.pl
+subst 's|#{{PERL-EXEC}}|#!%_bindir/perl|' %buildroot%_datadir/%pkgname/script-templates/template-*.pl
+subst 's|File::Spec->tmpdir|"/tmp"|' %buildroot%_libdir/%pkgname/perl/DSCreate.pm
 
-#move main libraries to common directory
-mv %buildroot%_libdir/%{pkgname}/*.so* %buildroot%_libdir/
+# move main libraries to common directory
+mv %buildroot%_libdir/%pkgname/*.so* %buildroot%_libdir/
 
 %files
-%defattr(-,root,root,-)
-%doc LICENSE EXCEPTION LICENSE.GPLv2
-%dir %{_sysconfdir}/%{pkgname}
-%dir %{_sysconfdir}/%{pkgname}/schema
-%config(noreplace)%{_sysconfdir}/%{pkgname}/schema/*.ldif
-%dir %{_sysconfdir}/%{pkgname}/config
-%dir %{_sysconfdir}/systemd/system/%{groupname}.wants
-%config(noreplace)%{_sysconfdir}/%{pkgname}/config/slapd-collations.conf
-%config(noreplace)%{_sysconfdir}/%{pkgname}/config/certmap.conf
-%config(noreplace)%{_sysconfdir}/%{pkgname}/config/ldap-agent.conf
-%config(noreplace)%{_sysconfdir}/%{pkgname}/config/template-initconfig
-%config(noreplace)%{_sysconfdir}/sysconfig/%{pkgname}
-%config(noreplace)%{_sysconfdir}/sysconfig/%{pkgname}.systemd
-%{_datadir}/%{pkgname}
-%{_unitdir}
-%{_bindir}/*
-%{_sbindir}/*
-%{_libdir}/%{pkgname}/perl
-%{_libdir}/%{pkgname}/python
-%dir %{_libdir}/%{pkgname}/plugins
-%{_libdir}/%{pkgname}/plugins/*.so
-%dir /var/lib/%{pkgname}
-%dir /var/log/%{pkgname}
-%ghost %dir /var/lock/%{pkgname}
-%{_mandir}/man1/*
-%{_mandir}/man8/*
+%doc LICENSE LICENSE.GPLv3+ LICENSE.openssl README 
+%dir %_sysconfdir/%pkgname
+%dir %_sysconfdir/%pkgname/schema
+%config(noreplace)%_sysconfdir/%pkgname/schema/*.ldif
+%dir %_sysconfdir/%pkgname/config
+%dir %_sysconfdir/systemd/system/%groupname.wants
+%config(noreplace)%_sysconfdir/%pkgname/config/slapd-collations.conf
+%config(noreplace)%_sysconfdir/%pkgname/config/certmap.conf
+%config(noreplace)%_sysconfdir/%pkgname/config/ldap-agent.conf
+%config(noreplace)%_sysconfdir/%pkgname/config/template-initconfig
+%config(noreplace)%_sysconfdir/sysconfig/%pkgname
+%config(noreplace)%_sysconfdir/sysconfig/%pkgname.systemd
+%_datadir/%pkgname
+%_unitdir/*
+%_bindir/*
+%_sbindir/*
+%_libdir/%pkgname/perl
+%_libdir/%pkgname/python
+%_libdir/%pkgname/plugins/*.so
+%dir %_libdir/%pkgname/plugins
+%dir %_localstatedir/%pkgname
+%dir %_logdir/%pkgname
+%ghost %dir %_lockdir/%pkgname
+%_initdir/*
+%_man1dir/*
+%_man8dir/*
+
+%files -n 389-ds
 
 %files devel
-%defattr(-,root,root,-)
-%doc LICENSE EXCEPTION LICENSE.GPLv2
-%{_includedir}/%{pkgname}
-%{_libdir}/libslapd.so
-%{_libdir}/pkgconfig/*
+%_includedir/%pkgname
+%_libdir/*.so
+%_pkgconfigdir/*.pc
 
 %files libs
-%defattr(-,root,root,-)
-%doc LICENSE EXCEPTION LICENSE.GPLv2
-%dir %{_libdir}/%{pkgname}
-%{_libdir}/libslapd.so.*
-%{_libdir}/libns-dshttpd.so*
+%dir %_libdir/%pkgname
+%_libdir/libslapd.so.*
+%_libdir/libns-dshttpd.so.*
 
 %triggerpostun -- 389-ds < 1.2.10.0-alt1
 echo "Upgrading 389-ds < 1.2.10.0, manual Offline upgrade is required!
 Turn 389-ds off and make 'setup-ds -u' then"
 
+%post
+%post_service %pkgname
+%post_service %pkgname-snmp
+
+%preun
+%preun_service %pkgname
+%preun_service %pkgname-snmp
+
 %changelog
+* Thu Oct 15 2015 Andrey Cherepanov <cas@altlinux.org> 1.3.4.4-alt1
+- New version
+- Make 389-ds as metapackage for complete suite install
+- Simplify spec
+- SELinux support is disabled
+
 * Wed Nov 05 2014 Michael Shigorin <mike@altlinux.org> 1.3.2.15-alt3.e9f86dab
 - cherry-picked 9df31ed to fix https://fedorahosted.org/389/ticket/47589
 

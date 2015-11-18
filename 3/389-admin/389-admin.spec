@@ -1,73 +1,97 @@
 %global pkgname		dirsrv
 %global groupname	%{pkgname}.target
+%def_without selinux
 
 Summary: 389 Administration Server
-Name: 389-admin
-Version: 1.1.35
+Name:    389-admin
+Version: 1.1.42
 Release: alt1
 License: GPLv2
-Url: http://port389.org/
-Group: System/Servers
-# Automatically added by buildreq on Mon Aug 17 2009
-BuildRequires: 389-adminutil-devel apache2-devel apache2-mod_nss gcc-c++ libicu-devel libsasl2-devel perl-Mozilla-LDAP perl-CGI 389-ds mozldap-devel
+Url:     http://port389.org/
+# VCS:   https://git.fedorahosted.org/git/389/admin.git
+Group:   System/Servers
+
+BuildRequires: 389-adminutil-devel apache2-devel apache2-mod_nss gcc-c++
+BuildRequires: libicu-devel libsasl2-devel perl-Mozilla-LDAP perl-CGI
+BuildRequires: 389-ds-base mozldap-devel
 
 Requires: apache2-httpd-worker
 Requires: apache2-mod_nss
-Requires: 389-ds
+Requires: 389-ds-base
 
 Provides: fedora-ds-adminserver = %version-%release
 Obsoletes: fedora-ds-adminserver < %version-%release
 
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
-Source: %name-%version-%release.tar
+Source0: %name-%version-%release.tar
+Source1: %{pkgname}-admin
 
 %add_perl_lib_path %_libdir/%{pkgname}/perl
 
 %description
-Administration Server for 389 Directory Server. Use setup-ds-admin.pl to setup.
+Administration Server for 389 Directory Server. Use setup-ds-admin.pl to
+setup.
 
 %prep
 %setup
-# rm -f ltmain.sh
-# %autoreconf
 
 %build
 export icu_lib=-L%_libdir/
 export adminutil_lib=-L%_libdir/
 export adminutil_inc=/usr/include/libadminutil/
 
-%configure --localstatedir=/var --with-modnss-lib=%_libdir/apache2/modules/ \
-           --with-httpd=%_sbindir/httpd2.worker --with-apxs=%_sbindir/apxs2 \
-           --with-openldap --with-selinux \
+%undefine _configure_gettext
+%configure --localstatedir=/var \
+           --with-modnss-lib=%_libdir/apache2/modules/ \
+           --with-httpd=%_sbindir/httpd2.worker \
+	   --with-apxs=%_sbindir/apxs2 \
+           --with-openldap \
+%if_with selinux
+           --with-selinux \
+%endif
            --with-systemdsystemunitdir=%{_unitdir} \
            --with-systemddirsrvgroupname=%{groupname}
 
 %make
 
 %install
+%makeinstall_std
 
-%make_install DESTDIR=%buildroot install
-%__subst 's|%_libdir/httpd|%_libdir/apache2|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
-%__subst 's|libmodnss.so|mod_nss.so|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
-%__subst 's|%_sysconfdir/mime.types|%_sysconfdir/httpd2/conf/mime.types|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
-%__subst 's|LoadModule file_cache_module|#LoadModule file_cache_module|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
-%__subst 's|HostnameLookups off|HostnameLookups on|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/httpd.conf
+subst 's|%_libdir/httpd|%_libdir/apache2|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
+subst 's|libmodnss.so|mod_nss.so|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
+subst 's|%_sysconfdir/mime.types|%_sysconfdir/httpd2/conf/mime.types|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
+subst 's|LoadModule file_cache_module|#LoadModule file_cache_module|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
+subst 's|HostnameLookups off|HostnameLookups on|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/httpd.conf
+
+install -pDm755 %SOURCE1 %buildroot%_initdir/%{pkgname}-admin
+
+rm -f %buildroot%_libdir/*.so
+
+%post
+%post_service %{pkgname}-admin
+
+%preun
+%preun_service %{pkgname}-admin
 
 %files
-%defattr(-,root,root,-)
 %doc LICENSE
-%dir %{_sysconfdir}/%{pkgname}/admin-serv
-%config(noreplace)%{_sysconfdir}/%{pkgname}/admin-serv/*.conf
-%{_datadir}/%{pkgname}
-%config(noreplace)%{_sysconfdir}/sysconfig/%{pkgname}-admin
-%{_unitdir}/%{pkgname}-admin.service
-%{_sbindir}/*
-%{_libdir}/*.so.*
-%{_libdir}/%{pkgname}
-%{_mandir}/man8/*
+%dir %_sysconfdir/%pkgname/admin-serv
+%config(noreplace)%_sysconfdir/%pkgname/admin-serv/*.conf
+%_initdir/%{pkgname}-admin
+%_datadir/%pkgname
+%config(noreplace)%_sysconfdir/sysconfig/%{pkgname}-admin
+%_unitdir/%{pkgname}-admin.service
+%_sbindir/*
+%_libdir/*.so.*
+%_libdir/%pkgname
+%_man8dir/*
 
 %changelog
+* Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.42-alt1
+- New version
+- SELinux support is disabled
+
 * Fri Mar 21 2014 Timur Aitov <timonbl4@altlinux.org> 1.1.35-alt1
 - 1.1.35
 

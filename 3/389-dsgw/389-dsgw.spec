@@ -1,15 +1,17 @@
+%define pkgname dirsrv
+
 Summary:  389 Directory Server Gateway (dsgw)
 
-Name: 389-dsgw
-Version: 1.1.9
-Release: alt1.qa1
-License: GPLv2
+Name:     389-dsgw
+Version:  1.1.11
+Release:  alt1
+License:  GPLv2
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
-Url: http://port389.org
-Group: System/Servers
+Url:      http://port389.org
+# VCS:	  https://git.fedorahosted.org/git/389/dsgw.git
+Group:    System/Servers
 
 BuildRequires: 389-adminutil-devel gcc-c++ libicu-devel libsasl2-devel libicu-devel mozldap-devel
-
 BuildRequires: perl-Mozilla-LDAP perl-CGI
 
 Provides: fedora-ds-dsgw = %version-%release
@@ -40,22 +42,30 @@ export adminutil_inc=/usr/include/libadminutil
 export adminutil_lib=-L%_libdir/
 
 # force the use of the admin server
-%configure --with-admserv=/usr/share/fedora-ds/html/ --with-ldapsdk-inc=/usr/include/mozldap --with-ldapsdk-lib=%_libdir --with-instconfigdir=/etc/fedora-ds/ --with-adminserver
+%undefine _configure_gettext
+%configure --with-admserv=/usr/share/%pkgname/html/ \
+           --with-ldapsdk-inc=/usr/include/mozldap \
+	   --with-ldapsdk-lib=%_libdir \
+	   --with-instconfigdir=/etc/%pkgname/ \
+	   --with-adminserver
 
-%make
+%make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
-%config %_sysconfdir/fedora-ds/dsgw/*
-%_libdir/fedora-ds/dsgw-cgi-bin/*
-%_datadir/fedora-ds/dsgw/*
-%_datadir/fedora-ds/manual/en/dsgw/*
-%_datadir/fedora-ds/properties/dsgw/*
+%config %_sysconfdir/%pkgname/dsgw/*
+%_libdir/%pkgname/dsgw-cgi-bin/*
+%_datadir/%pkgname/dsgw/*
+%_datadir/%pkgname/manual/en/dsgw/*
+%_datadir/%pkgname/properties/dsgw/*
 %_sbindir/setup-ds-dsgw
 
 %changelog
+* Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.11-alt1
+- New version
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.9-alt1.qa1
 - NMU: rebuilt with libicuuc.so.50.
 

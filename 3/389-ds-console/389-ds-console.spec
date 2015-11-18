@@ -1,10 +1,11 @@
 %define major_version 1.2
-%define minor_version 3
+%define minor_version 12
+
 %define shortname 389-ds
-%define pkgname   fedora-ds
+%define pkgname   dirsrv
 
 Name: 389-ds-console
-Version: 1.2.6
+Version: %major_version.%minor_version
 Release: alt1
 Group: Networking/Other
 Url: http://port389.org
@@ -76,6 +77,9 @@ popd
 %doc %_datadir/%pkgname/manual/en/slapd/help/*.html
 
 %changelog
+* Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.12-alt1
+- New version
+
 * Fri Aug 05 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.6-alt1
 - merge upstream 1.2.6
 
