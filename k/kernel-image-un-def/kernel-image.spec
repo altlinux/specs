@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.2
-%define kernel_sublevel	.6
+%define kernel_base_version	4.3
+%define kernel_sublevel	.0
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -69,6 +69,7 @@ BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeri
 BuildRequires: module-init-tools >= 3.16
 BuildRequires: lzma-utils
 BuildRequires: bc
+BuildRequires: openssl-devel 
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
@@ -544,6 +545,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Nov 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.3.0-alt1
+- 4.3.0
+
 * Tue Nov 10 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.2.6-alt1
 - 4.2.6
 
