@@ -1,7 +1,7 @@
 # NB: we track "superstable" upstream releases, see Url:
 
 Name: netpbm
-Version: 10.35.96
+Version: 10.35.97
 Release: alt1
 
 Summary: Tools for manipulating graphics files in netpbm supported formats
@@ -312,6 +312,9 @@ cp -a userguide %buildroot%pkgdocdir/html
 %endif
 
 %changelog
+* Mon Nov 16 2015 Fr. Br. George <george@altlinux.ru> 10.35.97-alt1
+- Autobuild version bump to 10.35.97
+
 * Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 10.35.96-alt1
 - Autobuild version bump to 10.35.96
 
