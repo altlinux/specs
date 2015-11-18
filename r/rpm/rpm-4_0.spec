@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.85
+Release: alt100.86
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -530,6 +530,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Wed Nov 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.86
+- Made rpm2cpio exit code accurate for large packages.
+
 * Tue Sep 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.85
 - Added aarch64 architecture support.
 
