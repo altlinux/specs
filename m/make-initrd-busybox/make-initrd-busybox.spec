@@ -1,7 +1,5 @@
-%define busybox_version 1.21.0
-
 Name: make-initrd-busybox
-Version: 0.2
+Version: 1.24.1
 Release: alt1
 
 Summary: Busybox for make-initrd
@@ -14,7 +12,7 @@ Source0: %name-%version.tar
 Requires: make-initrd >= 0.8.2-alt1
 
 %description
-Busybox (%busybox_version) for make-initrd.
+Busybox (%version) for make-initrd.
 
 %prep
 %setup
@@ -26,7 +24,6 @@ cd busybox
 
 %install
 mkdir -p -- %buildroot/lib/initrd/var/run
-	
 
 cd busybox
 %make install CONFIG_PREFIX=%buildroot/lib/initrd
@@ -40,6 +37,9 @@ ln -s ../usr/sbin/chroot  sbin/chroot
 /lib/initrd/*
 
 %changelog
+* Wed Nov 18 2015 Alexey Gladkov <legion@altlinux.ru> 1.24.1-alt1
+- New busybox version (1.24.1).
+
 * Fri Jul 04 2014 Alexey Gladkov <legion@altlinux.ru> 0.2-alt1
 - Add more utilities.
 
