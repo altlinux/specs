@@ -1,7 +1,8 @@
+%set_gcc_version 4.9
 %define dist HTML-CTPP2
 Name: perl-%dist
 Version: 2.6.7
-Release: alt4.1
+Release: alt5
 
 Summary: Perl interface for CTPP2 library
 License: GPL or Artistic
@@ -11,7 +12,7 @@ URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
 # Automatically added by buildreq on Tue Oct 18 2011
-BuildRequires: gcc-c++ libctpp-devel perl-IO-stringy perl-devel
+BuildRequires: gcc4.9-c++ gcc-c++ libctpp-devel perl-IO-stringy perl-devel
 
 %description
 This module is very similar to well-known Sam Tregar's HTML::Template
@@ -27,6 +28,7 @@ mv t/test06.t{,.orig}
 mv t/test10.t{,.orig}
 
 %build
+%add_optflags -std=c++11
 export CTPP2_LIB=%_libdir
 %perl_vendor_build
 
@@ -39,6 +41,9 @@ export CTPP2_LIB=%_libdir
 %perl_vendor_autolib/HTML
 
 %changelog
+* Wed Nov 18 2015 Igor Vlasenko <viy@altlinux.ru> 2.6.7-alt5
+- fixed build (built with gcc4.9-c++)
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.7-alt4.1
 - rebuild with new perl 5.20.1
 
