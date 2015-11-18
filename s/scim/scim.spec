@@ -1,6 +1,6 @@
 Name: scim
 Version: 1.4.15
-Release: alt1
+Release: alt1.qa1
 Summary: Smart Common Input Method platform
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License: LGPLv2+
@@ -220,6 +220,9 @@ install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_xinputconf
 %_libdir/qt4/plugins/
 
 %changelog
+* Thu Nov 12 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.4.15-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Feb 20 2015 Ilya Mashkin <oddity@altlinux.ru> 1.4.15-alt1
 - 1.4.15
 - fix postun sections

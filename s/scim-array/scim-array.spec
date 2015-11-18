@@ -1,6 +1,6 @@
 Name: scim-array
 Version: 1.0.1
-Release: alt1.qa1
+Release: alt1.qa2
 Summary: SCIM Array 30 Input Method Engine
 
 Group: System/Libraries
@@ -41,6 +41,9 @@ rm -f $RPM_BUILD_ROOT%_libdir/scim-1.0/1.4.0/SetupUI/*.la
 %_datadir/scim/icons/scim-array.png
 
 %changelog
+* Sat Oct 17 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0.1-alt1.qa2
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

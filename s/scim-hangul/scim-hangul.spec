@@ -1,6 +1,6 @@
 Name: scim-hangul
 Version: 0.3.2
-Release: alt1.2
+Release: alt1.2.qa1
 
 License: GPLv3
 Url: http://www.scim-im.org/
@@ -42,6 +42,9 @@ rm $RPM_BUILD_ROOT%_libdir/scim-1.0/*/{IMEngine,SetupUI}/hangul*.la
 %_datadir/scim/hangul
 
 %changelog
+* Sat Oct 17 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.3.2-alt1.2.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri May 30 2014 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt1.2
 - Rebuild with new version of libhangul
 

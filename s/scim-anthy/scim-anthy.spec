@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name: scim-anthy
 Version: 1.2.7
-Release: alt2
+Release: alt2.qa1
 
 License: GPLv2+
 Url: http://scim-imengine.sourceforge.jp/
@@ -50,6 +50,9 @@ rm $RPM_BUILD_ROOT%_libdir/scim-1.0/*/*/*.la
 %_datadir/scim/icons/*png
 
 %changelog
+* Sat Oct 17 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.2.7-alt2.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 1.2.7-alt2
 - build for Sisyphus
 
