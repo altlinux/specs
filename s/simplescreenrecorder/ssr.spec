@@ -1,5 +1,5 @@
 Name: simplescreenrecorder
-Version: 0.3.3
+Version: 0.3.6
 Release: alt1
 Summary: Simple Screen Recording with OpenGL capture
 
@@ -37,6 +37,9 @@ sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LI
 %_datadir/%name
 
 %changelog
+* Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 0.3.6-alt1
+- Autobuild version bump to 0.3.6
+
 * Mon Feb 02 2015 Fr. Br. George <george@altlinux.ru> 0.3.3-alt1
 - Autobuild version bump to 0.3.3
 - Libavformat has no channels support still
