@@ -1,5 +1,5 @@
 Name: cups
-Version: 1.7.5
+Version: 2.1.0
 Release: alt1
 
 Summary: Common Unix Printing System - server package
@@ -28,94 +28,85 @@ Source98: pofix.py
 Patch1: FC-no-gzip-man.patch
 Patch2: FC-system-auth.patch
 Patch3: FC-multilib.patch
-Patch4: FC-str4396.patch
-Patch5: FC-banners.patch
-Patch6: FC-serverbin-compat.patch
-Patch7: FC-no-export-ssllibs.patch
-Patch8: FC-direct-usb.patch
-Patch9: FC-lpr-help.patch
-Patch10: FC-peercred.patch
-Patch11: FC-pid.patch
-Patch12: FC-eggcups.patch
-Patch13: FC-driverd-timeout.patch
-Patch14: FC-strict-ppd-line-length.patch
-Patch15: FC-logrotate.patch
-Patch16: FC-usb-paperout.patch
-Patch17: FC-res_init.patch
-Patch18: FC-filter-debug.patch
-Patch19: FC-uri-compat.patch
-Patch20: FC-str3382.patch
-Patch21: FC-0755.patch
-Patch22: FC-hp-deviceid-oid.patch
-Patch23: FC-dnssd-deviceid.patch
-Patch24: FC-ricoh-deviceid-oid.patch
-Patch25: FC-systemd-socket.patch
-Patch26: FC-lpd-manpage.patch
-Patch27: FC-avahi-address.patch
-Patch28: FC-enum-all.patch
-Patch29: FC-dymo-deviceid.patch
-Patch30: FC-freebind.patch
-Patch31: FC-no-gcry.patch
-Patch32: FC-libusb-quirks.patch
-Patch33: FC-use-ipp1.1.patch
-Patch34: FC-avahi-no-threaded.patch
-Patch35: FC-ipp-multifile.patch
-Patch36: FC-web-devices-timeout.patch
-Patch37: FC-final-content-type.patch
-Patch38: FC-journal.patch
-Patch39: FC-synconclose.patch
-Patch40: FC-str4461.patch
-Patch41: FC-str2913.patch
-Patch42: FC-lspp.patch
+Patch4: FC-banners.patch
+Patch5: FC-serverbin-compat.patch
+Patch6: FC-no-export-ssllibs.patch
+Patch7: FC-direct-usb.patch
+Patch8: FC-lpr-help.patch
+Patch9: FC-peercred.patch
+Patch10: FC-pid.patch
+Patch11: FC-eggcups.patch
+Patch12: FC-driverd-timeout.patch
+Patch13: FC-strict-ppd-line-length.patch
+Patch14: FC-logrotate.patch
+Patch15: FC-usb-paperout.patch
+Patch16: FC-res_init.patch
+Patch17: FC-filter-debug.patch
+Patch18: FC-uri-compat.patch
+Patch19: FC-str3382.patch
+Patch20: FC-0755.patch
+Patch21: FC-hp-deviceid-oid.patch
+Patch22: FC-dnssd-deviceid.patch
+Patch23: FC-ricoh-deviceid-oid.patch
+Patch24: FC-systemd-socket.patch
+Patch25: FC-avahi-address.patch
+Patch26: FC-enum-all.patch
+Patch27: FC-dymo-deviceid.patch
+Patch28: FC-freebind.patch
+Patch29: FC-no-gcry.patch
+Patch30: FC-libusb-quirks.patch
+Patch31: FC-use-ipp1.1.patch
+Patch32: FC-avahi-no-threaded.patch
+Patch33: FC-ipp-multifile.patch
+Patch34: FC-web-devices-timeout.patch
+Patch35: FC-synconclose.patch
+Patch36: FC-lspp.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-pwg-raster-attributes.patch
-Patch102: Ubuntu-manpage-hyphen-minus.patch
-Patch103: Ubuntu-rootbackends-worldreadable.patch
-Patch104: Ubuntu-fixes-for-jobs-with-multiple-files-and-multiple-formats.patch
-Patch105: Ubuntu-cupsd-idleexittimeout.patch
-Patch106: Ubuntu-no-gcrypt.patch
-Patch107: Ubuntu-restore-access-to-logfiles.patch
-Patch108: Ubuntu-color-management-extension.patch
-Patch109: Ubuntu-systemd-optional-socket-activation.patch
-Patch110: Ubuntu-cupsd-upstart-support.patch
-Patch111: Ubuntu-tests-ignore-warnings.patch
-Patch112: Ubuntu-tests-ignore-usb-crash.patch
-Patch113: Ubuntu-tests-ignore-kfreebsd-amd64-not-a-pdf.patch
-Patch114: Ubuntu-tests-ignore-system-bus-failure.patch
-Patch115: Ubuntu-test-i18n-nonlinux.patch
-Patch116: Ubuntu-tests-wait-on-unfinished-jobs-everytime.patch
-Patch117: Ubuntu-tests-fix-ppdLocalize-on-unclean-env.patch
-Patch118: Ubuntu-tests-use-cupsfilters.patch
-Patch119: Ubuntu-move-cupsd-conf-default-to-share.patch
-Patch120: Ubuntu-drop_unnecessary_dependencies.patch
-Patch121: Ubuntu-read-embedded-options-from-incoming-postscript-and-add-to-ipp-attrs.patch
-Patch122: Ubuntu-deviced-allow-device-ids-with-newline.patch
-Patch123: Ubuntu-airprint-support.patch
-Patch124: Ubuntu-snmp-oids-device-id-hp-ricoh.patch
-Patch125: Ubuntu-no-conffile-timestamp.patch
-Patch126: Ubuntu-pidfile.patch
-Patch127: Ubuntu-ppd-poll-with-client-conf.patch
-Patch128: Ubuntu-removecvstag.patch
-Patch129: Ubuntu-revert-upstream-change-to-FINAL_CONTENT_TYPE-to-fix-printing-to-remote-CUPS-servers.patch
-Patch130: Ubuntu-do-not-broadcast-with-hostnames.patch
-Patch131: Ubuntu-reactivate_recommended_driver.patch
-Patch132: Ubuntu-add-ipp-backend-of-cups-1.4.patch
-Patch133: Ubuntu-logfiles_adm_readable.patch
-Patch134: Ubuntu-default_log_settings.patch
-Patch135: Ubuntu-confdirperms.patch
-Patch136: Ubuntu-printer-filtering.patch
-Patch137: Ubuntu-show-compile-command-lines.patch
-Patch138: Ubuntu-ppdc-dynamic-linking.patch
-Patch139: Ubuntu-log-debug-history-nearly-unlimited.patch
-Patch140: Ubuntu-cupsd-set-default-for-SyncOnClose-to-Yes.patch
-Patch141: Ubuntu-man-cups-lpd-drop-dangling-references.patch
-Patch142: Ubuntu-cupsd-idleexittimeout-systemd.patch
-Patch143: Ubuntu-cupsd-idleexittimeout-upstart.patch
-Patch144: Ubuntu-cupsd-write-systemd-Port.patch
-Patch145: Ubuntu-lppasswd-manpage-mention-dpkg-statoverride.patch
-Patch146: Ubuntu-debianize_cups-config.patch
-Patch147: Ubuntu-manpage-translations.patch
+Patch101: Ubuntu-usb-backend-fix-infinite-loop-when-usblp-module-attached.patch
+Patch102: Ubuntu-usb-backend-delayed-closing-for-old-laserjets.patch
+Patch103: Ubuntu-fix-ppd-file-load-for-ipp-printers.patch
+Patch104: Ubuntu-pwg-raster-attributes.patch
+Patch105: Ubuntu-manpage-hyphen-minus.patch
+Patch106: Ubuntu-rootbackends-worldreadable.patch
+Patch107: Ubuntu-fixes-for-jobs-with-multiple-files-and-multiple-formats.patch
+Patch108: Ubuntu-cupsd-upstart-support.patch
+Patch109: Ubuntu-tests-ignore-warnings.patch
+Patch110: Ubuntu-tests-ignore-usb-crash.patch
+Patch111: Ubuntu-tests-ignore-kfreebsd-amd64-not-a-pdf.patch
+Patch112: Ubuntu-tests-ignore-system-bus-failure.patch
+Patch113: Ubuntu-tests-ignore-ipv6-address-family-not-supported.patch
+Patch114: Ubuntu-test-i18n-nonlinux.patch
+Patch115: Ubuntu-tests-wait-on-unfinished-jobs-everytime.patch
+Patch116: Ubuntu-tests-fix-ppdLocalize-on-unclean-env.patch
+Patch117: Ubuntu-tests-use-cupsfilters.patch
+Patch118: Ubuntu-tests-fix-mips-getjobs.patch
+Patch119: Ubuntu-tests-use-ipv4-lo-address.patch
+Patch120: Ubuntu-move-cupsd-conf-default-to-share.patch
+Patch121: Ubuntu-drop_unnecessary_dependencies.patch
+Patch122: Ubuntu-read-embedded-options-from-incoming-postscript-and-add-to-ipp-attrs.patch
+Patch123: Ubuntu-deviced-allow-device-ids-with-newline.patch
+Patch124: Ubuntu-airprint-support.patch
+Patch125: Ubuntu-snmp-oids-device-id-hp-ricoh.patch
+Patch126: Ubuntu-no-conffile-timestamp.patch
+Patch127: Ubuntu-pidfile.patch
+Patch128: Ubuntu-ppd-poll-with-client-conf.patch
+Patch129: Ubuntu-removecvstag.patch
+Patch130: Ubuntu-rename-systemd-units.patch
+Patch131: Ubuntu-do-not-broadcast-with-hostnames.patch
+Patch132: Ubuntu-reactivate_recommended_driver.patch
+Patch133: Ubuntu-add-ipp-backend-of-cups-1.4.patch
+Patch134: Ubuntu-logfiles_adm_readable.patch
+Patch135: Ubuntu-default_log_settings.patch
+Patch136: Ubuntu-confdirperms.patch
+Patch137: Ubuntu-printer-filtering.patch
+Patch138: Ubuntu-show-compile-command-lines.patch
+Patch139: Ubuntu-ppdc-dynamic-linking.patch
+Patch140: Ubuntu-log-debug-history-nearly-unlimited.patch
+Patch141: Ubuntu-cupsd-set-default-for-SyncOnClose-to-Yes.patch
+Patch142: Ubuntu-man-cups-lpd-drop-dangling-references.patch
+Patch143: Ubuntu-debianize_cups-config.patch
+Patch144: Ubuntu-manpage-translations.patch
 
 ## ALT patches
 Patch500: ALT-1.6.1-hardening.patch
@@ -139,10 +130,10 @@ Provides: cups-libs = %version
 Requires: printer-testpages bc cups-filters
 
 # Automatically added by buildreq on Tue Dec 24 2013
-# optimized out: libcom_err-devel libkrb5-devel libstdc++-devel libsystemd-daemon pkg-config python-base
+# optimized out: libcom_err-devel libkrb5-devel libstdc++-devel libsystemd-daemon pkg-config
 BuildRequires: gcc-c++ libacl-devel libaudit-devel libavahi-devel libdbus-devel libpam-devel libpaper-devel libselinux-devel libssl-devel libsystemd-daemon-devel systemd-devel libusb-devel xdg-utils zlib-devel
 
-BuildRequires: dbus
+BuildRequires: dbus python python-module-polib
 
 %description
 The Common Unix Printing System provides a portable printing layer for
@@ -197,57 +188,51 @@ services using the main CUPS library "libcups".
 %patch1 -p1 -b .no-gzip-man
 %patch2 -p1 -b .system-auth
 #patch3 -p1 -b .multilib
-%patch4 -p1 -b .str4396
-%patch5 -p1 -b .banners
-#patch6 -p1 -b .serverbin-compat
-%patch7 -p1 -b .no-export-ssllibs
-%patch8 -p1 -b .direct-usb
-%patch9 -p1 -b .lpr-help
-%patch10 -p1 -b .peercred
-%patch11 -p1 -b .pid
-%patch12 -p1 -b .eggcups
-%patch13 -p1 -b .driverd-timeout
-%patch14 -p1 -b .strict-ppd-line-length
-%patch15 -p1 -b .logrotate
-%patch16 -p1 -b .usb-paperout
-%patch17 -p1 -b .res_init
-%patch18 -p1 -b .filter-debug
-#patch19 -p1 -b .uri-compat
-%patch20 -p1 -b .str3382
-%patch21 -p1 -b .0755
-%patch22 -p1 -b .hp-deviceid-oid
-%patch23 -p1 -b .dnssd-deviceid
-%patch24 -p1 -b .ricoh-deviceid-oid
-%patch25 -p1 -b .systemd-socket
-%patch26 -p1 -b .lpd-manpage
-%patch27 -p1 -b .avahi-address
-%patch28 -p1 -b .enum-all
-%patch29 -p1 -b .dymo-deviceid
-%patch30 -p1 -b .freebind
-%patch31 -p1 -b .no-gcry
-%patch32 -p1 -b .libusb-quirks
-%patch33 -p1 -b .use-ipp1.1
-%patch34 -p1 -b .avahi-no-threaded
-%patch35 -p1 -b .ipp-multifile
-%patch36 -p1 -b .web-devices-timeout
-%patch37 -p1 -b .final-content-type
-%patch38 -p1 -b .journal
-%patch39 -p1 -b .synconclose
-%patch40 -p1 -b .str4461
-%patch41 -p1 -b .str2913
-%patch42 -p1 -b .lspp
+%patch4 -p1 -b .banners
+#patch5 -p1 -b .serverbin-compat
+%patch6 -p1 -b .no-export-ssllibs
+%patch7 -p1 -b .direct-usb
+%patch8 -p1 -b .lpr-help
+%patch9 -p1 -b .peercred
+%patch10 -p1 -b .pid
+%patch11 -p1 -b .eggcups
+%patch12 -p1 -b .driverd-timeout
+%patch13 -p1 -b .strict-ppd-line-length
+%patch14 -p1 -b .logrotate
+%patch15 -p1 -b .usb-paperout
+%patch16 -p1 -b .res_init
+%patch17 -p1 -b .filter-debug
+#patch18 -p1 -b .uri-compat
+%patch19 -p1 -b .str3382
+%patch20 -p1 -b .0755
+%patch21 -p1 -b .hp-deviceid-oid
+%patch22 -p1 -b .dnssd-deviceid
+%patch23 -p1 -b .ricoh-deviceid-oid
+%patch24 -p1 -b .systemd-socket
+%patch25 -p1 -b .avahi-address
+%patch26 -p1 -b .enum-all
+%patch27 -p1 -b .dymo-deviceid
+%patch28 -p1 -b .freebind
+%patch29 -p1 -b .no-gcry
+%patch30 -p1 -b .libusb-quirks
+%patch31 -p1 -b .use-ipp1.1
+%patch32 -p1 -b .avahi-no-threaded
+%patch33 -p1 -b .ipp-multifile
+%patch34 -p1 -b .web-devices-timeout
+%patch35 -p1 -b .synconclose
+%patch36 -p1 -b .lspp
 
 ## Ubuntu apply patches
-#patch101 -p1
-##patch102 -p1
+%patch101 -p1
+%patch102 -p1
 %patch103 -p1
 #patch104 -p1
-#patch105 -p1
-#patch106 -p1
-%patch107 -p1
-%patch108 -p1
-#patch109 -p1
-#patch110 -p1
+##patch105 -p1
+%patch106 -p1
+#patch107 -p1
+#patch108 -p1
+%patch109 -p1
+%patch110 -p1
 %patch111 -p1
 %patch112 -p1
 %patch113 -p1
@@ -257,37 +242,34 @@ services using the main CUPS library "libcups".
 %patch117 -p1
 %patch118 -p1
 %patch119 -p1
-#patch120 -p1
-%patch121 -p1
+%patch120 -p1
+#patch121 -p1
 %patch122 -p1
 %patch123 -p1
-##patch124 -p1
-%patch125 -p1
+%patch124 -p1
+##patch125 -p1
 %patch126 -p1
 %patch127 -p1
 %patch128 -p1
-#patch129 -p1
+%patch129 -p1
 %patch130 -p1
 %patch131 -p1
 %patch132 -p1
-#patch133 -p1
-%patch134 -p1
+%patch133 -p1
+#patch134 -p1
 %patch135 -p1
 %patch136 -p1
 %patch137 -p1
-##patch138 -p1
-%patch139 -p1
-#patch140 -p1
-##patch141 -p1
+%patch138 -p1
+##patch139 -p1
+%patch140 -p1
+#patch141 -p1
 ##patch142 -p1
 #patch143 -p1
-%patch144 -p1
-%patch145 -p1
-#patch146 -p1
-##patch147 -p1
+##patch144 -p1
 
 ## ALT apply patches
-%patch500 -p1
+##patch500 -p1
 %patch501 -p1
 %patch502 -p1
 %patch503 -p1
@@ -302,22 +284,6 @@ services using the main CUPS library "libcups".
 
 # make some temporary hacks
 sed -i 's/EndComments comment."/EndComments comment.\\n"/' systemv/cupstestdsc.c
-
-## create some files
-cat > cups-lps.xinetd <<@@@
-# default: off
-# description: The cups-lpd mini daemon enable cups accepting jobs from a
-#       remote LPD client
-service printer
-{
-        socket_type     = stream
-        protocol        = tcp
-        wait            = no
-        user            = lp
-        server          = /usr/lib/cups/daemon/cups-lpd
-        disable         = yes
-}
-@@@
 
 cp %SOURCE98 %SOURCE97 %SOURCE10 %SOURCE11 .
 cp %SOURCE21 scheduler/cups.sh.in
@@ -353,7 +319,7 @@ autoconf -I config-scripts
 (
 cd locale
 make pot
-mv cups_ru.po cups_old.po
+mv cups_ru.po cups_old_ru.po
 msgmerge cups_old_ru.po cups.pot -C ../alt_ru.po -o cups_ru.po
 python ../pofix.py cups_ru.po
 )
@@ -361,8 +327,19 @@ python ../pofix.py cups_ru.po
 %install
 make BUILDROOT=%buildroot install
 
+# fixup funny org.cups.*.* names
+( cd %buildroot%_unitdir;
+for f in *; do
+  case "$f" in
+    org.cups.cupsd.*) ln -s "$f" cups."${f##*.}";;
+    org.cups.*) ln -s "$f" "${f/org.cups./}";;
+  esac;
+done;
+echo "###"; ls
+)
+
 ### install non-upstream files
-##install -D cups-lps.xinetd %buildroot%_sysconfdir/xinetd.d/cups-lpd
+install -D scheduler/cups-lpd.xinetd %buildroot%_sysconfdir/xinetd.d/cups-lpd
 install -Dpm 755 %SOURCE20 %buildroot%_controldir/%name
 
 alternate() { # priority files \
@@ -406,7 +383,7 @@ install -D %name.alternative %buildroot%_altdir/%name
 %config(noreplace) %_sysconfdir/pam.d/%name
 %config(noreplace) %_sysconfdir/dbus-1/system.d/*
 %_controldir/%name
-%_unitdir/cups.*
+%_unitdir/*
 %_initdir/%name
 %_prefix/lib/%name
 %_man1dir/*
@@ -432,9 +409,6 @@ install -D %name.alternative %buildroot%_altdir/%name
 %exclude %_datadir/%name/examples
 %exclude %_sysconfdir/rc.d/rc*.d
 
-%exclude %_datadir/%name/data/testprint
-%exclude %_datadir/%name/banners/*
-
 %files -n lib%name
 %_libdir/*.so.*
 
@@ -453,6 +427,20 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Wed Nov 11 2015 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
+- Version up
+- Refresh patches
+- Keep old-style service names
+
+* Tue Apr 28 2015 Fr. Br. George <george@altlinux.ru> 2.0.2-alt1
+- Version up
+- Refresh patches
+- Drop port hardening patch
+- Fix translation script typo
+
+* Mon Nov 24 2014 Fr. Br. George <george@altlinux.ru> 2.0.1-alt1
+- Version up (major version ups is not really major difference)
+
 * Wed Aug 27 2014 Fr. Br. George <george@altlinux.ru> 1.7.5-alt1
 - Version up
 
