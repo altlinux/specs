@@ -3,7 +3,7 @@
 %define dist Moose
 Name: perl-%dist
 Version: 2.1604
-Release: alt1
+Release: alt2
 
 Summary: A postmodern object system for Perl 5
 License: GPL or Artistic
@@ -29,7 +29,7 @@ Provides: perl-Class-MOP = %version
 Obsoletes: perl-Class-MOP < %version
 
 # Automatically added by buildreq on Wed Nov 16 2011 (-bi)
-BuildRequires: perl-Algorithm-C3 perl-DateTime perl-Devel-GlobalDestruction perl-Eval-Closure perl-Filter-Simple perl-HTTP-Message perl-IO-String perl-Locale-US perl-MRO-Compat perl-Module-Refresh perl-Params-Coerce perl-Regexp-Common perl-Sub-Name perl-Task-Weaken perl-Test-Deep perl-Test-Fatal perl-Test-Output perl-Test-Requires perl-namespace-clean perl-Test-CheckDeps perl-Package-DeprecationManager perl-Class-Load-XS perl-Throwable perl(Devel/StackTrace.pm) perl(ExtUtils/CBuilder.pm) perl(Test/CleanNamespaces.pm) perl(Devel/OverloadInfo.pm) perl(Test/Warnings.pm)
+BuildRequires: perl-Algorithm-C3 perl-DateTime perl-Devel-GlobalDestruction perl-Eval-Closure perl-Filter-Simple perl-HTTP-Message perl-IO-String perl-Locale-US perl-MRO-Compat perl-Module-Refresh perl-Params-Coerce perl-Regexp-Common perl-Sub-Name perl-Task-Weaken perl-Test-Deep perl-Test-Fatal perl-Test-Output perl-Test-Requires perl-namespace-clean perl-Test-CheckDeps perl-Package-DeprecationManager perl-Class-Load-XS perl-Throwable perl(Devel/StackTrace.pm) perl(ExtUtils/CBuilder.pm) perl(Test/CleanNamespaces.pm) perl(Devel/OverloadInfo.pm) perl(Test/Warnings.pm) perl(List/MoreUtils.pm)
 
 %if_without bootstrap
 BuildRequires: perl-Specio
@@ -64,6 +64,9 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Wed Nov 18 2015 Igor Vlasenko <viy@altlinux.ru> 2.1604-alt2
+- fixed build for perl 5.22
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 2.1604-alt1
 - automated CPAN update
 
