@@ -1,5 +1,5 @@
 Name: liblangtag
-Version: 0.5.7
+Version: 0.5.8
 Release: alt1
 Summary: An interface library to access tags for identifying languages
 
@@ -71,6 +71,9 @@ make install DESTDIR=%buildroot
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 0.5.8-alt1
+- Autobuild version bump to 0.5.8
+
 * Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 0.5.7-alt1
 - Autobuild version bump to 0.5.7
 
