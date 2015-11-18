@@ -1,5 +1,5 @@
 Name: python-module-pygame_sdl2
-Version: 6.99.0.303
+Version: 6.99.6.739
 Release: alt1
 %setup_python_module pygame_sdl2
 
@@ -42,7 +42,7 @@ functionality in a pythonic manner.
 Install %name-devel if you need the API development environment.
 
 %prep
-%setup -n %modulename-renpy-%{version}
+%setup -n %modulename-renpy-%version
 sed -i 's/sdl_libs = /sdl_libs = ["m"]+/' setup.py
 
 %build
@@ -60,6 +60,9 @@ sed -i 's/sdl_libs = /sdl_libs = ["m"]+/' setup.py
 %python_includedir/%modulename/
 
 %changelog
+* Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 6.99.6.739-alt1
+- Autobuild version bump to 6.99.6.739
+
 * Thu Apr 23 2015 Fr. Br. George <george@altlinux.ru> 6.99.0.303-alt1
 - Initial build for ALT
 
