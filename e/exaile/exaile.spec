@@ -1,5 +1,5 @@
 Name: exaile
-Version: 3.3.2
+Version: 3.4.5
 Release: alt1
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
@@ -8,13 +8,15 @@ Group: Sound
 Url: http://www.exaile.org
 
 BuildArch: noarch
-Source: https://launchpad.net/%name/3.3.x/%version/+download/%name-%version.tar.gz
+Source: https://github.com/exaile/%name/releases/download/%version/%name-%version.tar.gz
 Patch0: %name-%version-%release.patch
 
 %add_python_req_skip xl
 %add_python_req_skip xlgui
 
 BuildRequires: help2man python-module-pygobject python-devel
+
+Requires: gst-plugins-base
 
 %description
 Exaile is a music player aiming to be similar to KDE's Amarok, but for
@@ -69,6 +71,7 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %exclude %_datadir/%name/plugins/ipod
 %exclude %_datadir/%name/plugins/exfalso
 %_datadir/%name
+%_datadir/appdata/exaile.appdata.xml
 %_datadir/dbus-1/services/org.exaile.Exaile.service
 %_liconsdir/%name.png
 %_niconsdir/%name.png
@@ -83,6 +86,10 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %_datadir/%name/plugins/exfalso
 
 %changelog
+* Thu Nov 19 2015 Vladimir Lettiev <crux@altlinux.ru> 3.4.5-alt1
+- New version 3.4.5
+- Dependency on gst-plugins-base (Closes: #31517)
+
 * Mon Dec 16 2013 Vladimir Lettiev <crux@altlinux.ru> 3.3.2-alt1
 - New version 3.3.2
 
