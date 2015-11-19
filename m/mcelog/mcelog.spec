@@ -1,5 +1,5 @@
 Name: mcelog
-Version: 125
+Version: 128
 Release: alt1
 
 Summary: Tool to translate x86_64 CPU Machine Check Exception data
@@ -67,6 +67,9 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 %_sysconfdir/logrotate.d/mcelog
 
 %changelog
+* Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 128-alt1
+- Autobuild version bump to 128
+
 * Mon Sep 14 2015 Fr. Br. George <george@altlinux.ru> 125-alt1
 - Autobuild version bump to 125
 
