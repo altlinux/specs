@@ -5,7 +5,7 @@ BuildRequires: perl(Scalar/Util.pm) perl(XSLoader.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-FindRef
 Version:        1.44
-Release:        alt1_3.1
+Release:        alt2_3
 Summary:        Where is that reference to my variable hiding?
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -15,6 +15,8 @@ Source0:        http://www.cpan.org/authors/id/M/ML/MLEHMANN/Devel-FindRef-%{ver
 Patch0:         perl-Devel-FindRef-1.44-fix-format-warnings.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=786085
 Patch2:         Devel-FindRef-fix.patch
+# https://rt.cpan.org/Public/Bug/Display.html?id=101077
+Patch3:		823247.patch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(common/sense.pm)
 Source44: import.info
@@ -29,7 +31,7 @@ references "backwards" is usually possible.
 %setup -q -n Devel-FindRef-%{version}
 %patch0 -p1
 %patch2 -p1
-
+%patch3 -p1
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
@@ -43,8 +45,6 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
-# %{_fixperms} $RPM_BUILD_ROOT/*
-
 %check
 make test
 
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_archlib}/Devel
 
 %changelog
+* Thu Nov 19 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.44-alt2_3
+- fixed build with new perl 5.22
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.44-alt1_3.1
 - rebuild with new perl 5.20.1
 
