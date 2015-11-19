@@ -56,7 +56,7 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 226
+Version: 228
 Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
@@ -144,12 +144,15 @@ BuildRequires: libaudit-devel
 %{?_enable_xz:BuildRequires: pkgconfig(liblzma)}
 %{?_enable_zlib:BuildRequires: pkgconfig(zlib)}
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
-%{?_enable_lz4:BuildRequires: liblz4-devel}
+%{?_enable_lz4:BuildRequires: pkgconfig(liblz4) >= 125}
 BuildRequires: libkmod-devel >= 15 kmod
 BuildRequires: kexec-tools
 BuildRequires: quota
 BuildRequires: pkgconfig(blkid) >= 2.24
-BuildRequires: pkgconfig(mount) >= 2.20
+# temporarily lower libmount version check
+# util-linux 2.27.1's configure.ac still claims to be 2.27.0, which breaks our version check
+BuildRequires: libmount-devel >= 2.27.1
+BuildRequires: pkgconfig(mount) >= 2.27
 BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 1.6.0}
@@ -167,7 +170,7 @@ Requires: udev = %EVR
 Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 Requires: acl
-Requires: util-linux >= 2.26
+Requires: util-linux >= 2.27.1
 
 # Requires: selinux-policy >= 3.8.5
 
@@ -493,7 +496,7 @@ Zsh completion for journalctl from systemd
 Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
 License: GPLv2+
-PreReq: shadow-utils dmsetup kmod >= 15 util-linux >= 2.26 losetup >= 2.19.1
+PreReq: shadow-utils dmsetup kmod >= 15 util-linux >= 2.27.1 losetup >= 2.19.1
 PreReq: udev-rules = %EVR
 PreReq: udev-hwdb = %EVR
 PreReq: systemd-utils = %EVR
@@ -664,7 +667,9 @@ intltoolize --force --automake
 	%{subst_enable efi} \
 	%{subst_enable networkd} \
 	%{subst_enable resolved} \
+	--with-dns-servers="" \
 	%{subst_enable timesyncd} \
+	--with-ntp-servers="" \
 	%{subst_enable sysusers} \
 	%{subst_enable ldconfig} \
 	%{subst_enable firstboot} \
@@ -693,10 +698,10 @@ install -m755 %SOURCE2 %buildroot/lib/systemd/systemd-sysv-install
 ln -s rc-local.service %buildroot%_unitdir/local.service
 install -m644 %SOURCE4 %buildroot%_unitdir/altlinux-openresolv.path
 install -m644 %SOURCE5 %buildroot%_unitdir/altlinux-openresolv.service
+ln -s ../altlinux-openresolv.path %buildroot%_unitdir/multi-user.target.wants
 install -m644 %SOURCE6 %buildroot%_unitdir/altlinux-libresolv.path
-ln -s ../altlinux-libresolv.path %buildroot%_unitdir/multi-user.target.wants
 install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-libresolv.service
-ln -s ../altlinux-libresolv.service %buildroot%_unitdir/multi-user.target.wants
+ln -s ../altlinux-libresolv.path %buildroot%_unitdir/multi-user.target.wants
 install -m644 %SOURCE8 %buildroot%_unitdir/altlinux-clock-setup.service
 ln -s ../altlinux-clock-setup.service %buildroot%_unitdir/sysinit.target.wants
 ln -s altlinux-clock-setup.service %buildroot%_unitdir/clock.service
@@ -964,8 +969,12 @@ chmod g+s  /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2> /dev/null`
 # Apply ACL to the journal directory
 /usr/bin/setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx %_localstatedir/log/journal/ >/dev/null 2>&1 || :
 
-# remove obsolete systemd-readahead file
+# remove obsolete systemd-readahead file and services symlink
 rm -f /.readahead > /dev/null 2>&1 || :
+[ -L %_sysconfdir/systemd/system/default.target.wants/systemd-readahead-collect.service ] && rm -f %_sysconfdir/systemd/system/default.target.wants/systemd-readahead-collect.service
+[ -L %_sysconfdir/systemd/system/default.target.wants/systemd-readahead-replay.service ] && rm -f %_sysconfdir/systemd/system/default.target.wants/systemd-readahead-replay.service
+[ -L %_sysconfdir/systemd/system/system-update.target.wants/systemd-readahead-drop.service ] && rm -f %_sysconfdir/systemd/system/system-update.target.wants/systemd-readahead-drop.service
+
 
 if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
@@ -1018,7 +1027,6 @@ if [ $1 -eq 1 ] ; then
                 systemd-networkd.service \
                 systemd-networkd-wait-online.service \
                 systemd-resolved.service \
-                altlinux-openresolv.service \
                  >/dev/null 2>&1 || :
 fi
 
@@ -1028,7 +1036,6 @@ if [ $1 -eq 0 ] ; then
                 systemd-networkd.service \
                 systemd-networkd-wait-online.service \
                 systemd-resolved.service \
-                altlinux-openresolv.service \
                  >/dev/null 2>&1 || :
 fi
 %endif
@@ -1131,7 +1138,7 @@ update_chrooted all
 
 %if_enabled libcurl
 %_sbindir/groupadd -r -f systemd-journal-upload ||:
-%_sbindir/useradd -g systemd-journal-upload -c 'Journal Upload' \
+%_sbindir/useradd -g systemd-journal-upload -G systemd-journal -c 'Journal Upload' \
     -d %_localstatedir/log/journal/upload -s /dev/null -r -l systemd-journal-upload >/dev/null 2>&1 ||:
 %endif
 
@@ -1289,7 +1296,6 @@ update_chrooted all
 %_man5dir/systemd.scope*
 %_man5dir/systemd.service*
 %_man5dir/systemd.slice*
-%_man5dir/systemd.snapshot*
 %_man5dir/systemd.socket*
 %_man5dir/systemd.swap*
 %_man5dir/systemd.target*
@@ -1459,7 +1465,6 @@ update_chrooted all
 %_mandir/*/*backlight*
 %ghost %dir %_localstatedir/lib/systemd/backlight
 
-/lib/systemd/systemd-machine-id-commit
 /sbin/systemd-machine-id-setup
 %_man1dir/systemd-machine-id-*
 
@@ -1724,6 +1729,14 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Nov 18 2015 Alexey Shabalin <shaba@altlinux.ru> 1:228-alt1
+- 228
+- update altlinux-libresolv and altlinux-openresolv units
+- disable use compiled-in list of DNS and NTP Google servers
+
+* Tue Nov 03 2015 Alexey Shabalin <shaba@altlinux.ru> 1:227-alt1
+- 227
+
 * Tue Sep 08 2015 Alexey Shabalin <shaba@altlinux.ru> 1:226-alt1
 - 226
 
