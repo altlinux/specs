@@ -1,6 +1,6 @@
 Name:		cqrlog
 Version:	1.9.0
-Release:	alt2
+Release:	alt3
 Summary:	An amateur radio contact logging program
 
 Group:		Communications
@@ -18,7 +18,7 @@ BuildRequires:	libssl-devel
 BuildRequires:	desktop-file-utils
 
 Requires:	mariadb-server
-#Requires:	trustedqsl
+Requires:	trustedqsl
 Requires:       hamlib
 
 %description
@@ -61,6 +61,9 @@ rm -rf %buildroot%_datadir/%name/cqrlog-apparmor-fix
 %_man1dir/%name.1.*
 
 %changelog
+* Thu Nov 19 2015 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt3
+- Add trustedqsl in requirements
+
 * Mon Nov 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt2
 - Add hamlib to requirements
 
