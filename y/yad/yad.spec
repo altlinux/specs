@@ -1,5 +1,5 @@
 Name: yad
-Version: 0.31.2
+Version: 0.31.3
 Release: alt1
 Summary: Display graphical dialogs from shell scripts or command line
 
@@ -51,6 +51,9 @@ desktop-file-install --remove-key Encoding     \
 %_desktopdir/*
 
 %changelog
+* Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 0.31.3-alt1
+- Autobuild version bump to 0.31.3
+
 * Wed Oct 21 2015 Fr. Br. George <george@altlinux.ru> 0.31.2-alt1
 - Autobuild version bump to 0.31.2
 
