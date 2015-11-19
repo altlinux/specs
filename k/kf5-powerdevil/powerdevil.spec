@@ -9,7 +9,7 @@
 
 Name: kf5-%rname
 Version: 5.4.3
-Release: alt1
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -127,6 +127,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Thu Nov 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt3
+- rebuild
+
 * Wed Nov 11 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt1
 - new version
 
