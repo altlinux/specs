@@ -7,12 +7,7 @@
 %def_enable desktop
 %endif
 
-%if_enabled gcc5ready
 %def_enable scim
-%else
-%def_disable scim
-%endif
-
 %def_disable qalculate
 
 %define rname kdeplasma-addons
@@ -21,7 +16,7 @@ Name: kde4plasma-addons
 %define minor 14
 %define bugfix 7
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: kdeplasma is a compilation of plasma items ( runners, applets, plasmoids ) for kde4
@@ -131,6 +126,7 @@ BuildRequires: gcc-c++ libldap-devel attica-devel libqca2-devel
 BuildRequires: scim-devel
 %endif
 %if_enabled qalculate
+BuildRequires: libqalculate-devel
 %endif
 #BuildRequires: soprano soprano-backend-redland libsoprano-devel
 BuildRequires: python-modules-xml shared-mime-info libibus-devel libgio-devel
@@ -1341,6 +1337,9 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4link/*.so
 
 %changelog
+* Thu Nov 19 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.7-alt3
+- enable scim support
+
 * Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.7-alt2
 - rebuild with gcc5
 
