@@ -1,6 +1,6 @@
 Name: libabigail
 Version: 1.0
-Release: alt0.1.git088f077
+Release: alt0.2.rc0
 Summary: Set of ABI analysis tools
 Group: Development/Other
 
@@ -97,5 +97,8 @@ cat tests/test-suite.log
 %_infodir/abigail.info*
 
 %changelog
+* Thu Nov 19 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt0.2.rc0
+- Updated to 1.0.rc0.
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt0.1.git088f077
 - Initial build.
