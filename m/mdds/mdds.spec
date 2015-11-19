@@ -1,7 +1,7 @@
 # This spec is backported to ALTLinux t7 automatically by rpmbph script. Do not edit it.
 #
 Name: mdds
-Version: 1.0
+Version: 1.0.0
 Release: alt1
 Summary: A collection of multi-dimensional data structures and indexing algorithms
 
@@ -15,7 +15,6 @@ Source0: http://kohei.us/files/%name/src/%{name}_%version.tar.bz2
 BuildRequires: boost-devel-headers doxygen gcc-c++ python3
 
 #BuildRequires: boost-interprocess-devel
-
 
 %description
 A collection of multi-dimensional data structures and indexing algorithms.
@@ -78,7 +77,6 @@ install -Dm 644 AUTHORS README.md VERSION %buildroot/%_docdir/%name-%version
 cp ./doc/html/search/*.*  %buildroot/%_docdir/%name-%version/html/search
 cp ./doc/html/*.* %buildroot/%_docdir/%name-%version/html/
 
-
 #check
 #make check
 
@@ -94,6 +92,9 @@ cp ./doc/html/*.* %buildroot/%_docdir/%name-%version/html/
 %doc AUTHORS README.md VERSION
 
 %changelog
+* Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 1.0.0-alt1
+- Autobuild version bump to 1.0.0
+
 * Sun Nov 08 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.0-alt1
 - Version 1.00
 
