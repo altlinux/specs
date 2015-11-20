@@ -1,7 +1,7 @@
 %define oname pjproject
 Name: libpjsip
 Version: 2.4.5
-Release: alt2
+Release: alt4
 
 Summary: Libraries for building embedded/non-embedded VoIP applications
 
@@ -36,6 +36,8 @@ BuildRequires: libuuid-devel
 BuildRequires: libssl-devel
 BuildRequires: pkg-config
 BuildRequires: libportaudio2-devel
+# TODO: check for correct version
+#BuildRequires: libresample-devel
 BuildRequires: libspeex-devel
 # when libspeex > 1.2
 #BuildRequires: libspeexdsp-devel
@@ -85,7 +87,7 @@ rm -rf third_party/gsm
 rm -rf third_party/milenage
 rm -rf third_party/mp3
 rm -rf third_party/portaudio
-rm -rf third_party/resample
+#rm -rf third_party/resample
 rm -rf third_party/speex
 rm -rf third_party/srtp
 rm -rf third_party/ilbc
@@ -94,7 +96,7 @@ rm -rf third_party/build/g7221
 rm -rf third_party/build/gsm
 rm -rf third_party/build/milenage
 rm -rf third_party/build/portaudio/src
-rm -rf third_party/build/resample
+#rm -rf third_party/build/resample
 rm -rf third_party/build/samplerate
 rm -rf third_party/build/speex
 rm -rf third_party/build/srtp
@@ -114,8 +116,8 @@ export CFLAGS="-DPJ_HAS_IPV6=1 ${ARCHFLAGS} %optflags"
            --with-external-speex  \
            --with-external-srtp   \
            --disable-opencore-amr \
-           --disable-resample     \
-           --disable-sound        \
+           --enable-resample      \
+           --enable-sound         \
            --disable-video        \
            --disable-v4l2         \
            --disable-ilbc-codec   \
@@ -126,7 +128,7 @@ export CFLAGS="-DPJ_HAS_IPV6=1 ${ARCHFLAGS} %optflags"
 %make_build
 
 %install
-%make_build DESTDIR=%buildroot install
+%makeinstall_std
 
 # Remove the static libraries, as they aren't wanted
 find %buildroot -type f -name "*.a" -delete
@@ -134,14 +136,14 @@ find %buildroot -type f -name "*.a" -delete
 find %buildroot -type f -name "*.fsf" -delete
 
 # rpmlint complains that this is an empty file, so let's fix that
-echo -e '\n' >> %buildroot%_includedir/pj/config_site.h
+echo "" >> %buildroot%_includedir/pj/config_site.h
 
 %files
 %doc README.txt README-RTEMS
 %attr(755, root, root) %_libdir/lib*.so.*
 
 %files devel
-%attr(755, root, root) %_libdir/lib*.so
+%_libdir/lib*.so
 %_includedir/pj++/
 %_includedir/pj/
 %_includedir/pjlib-util/
@@ -160,6 +162,11 @@ echo -e '\n' >> %buildroot%_includedir/pj/config_site.h
 %_pkgconfigdir/libpjproject.pc
 
 %changelog
+* Fri Nov 20 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.5-alt4
+- cleanup spec
+- build with internal resample from http://ccrma.stanford.edu/~jos/resample/
+- enable sound
+
 * Sun Nov 08 2015 Denis Smirnov <mithraen@altlinux.ru> 2.4.5-alt2
 - rebuild with libsrtp-devel
 
