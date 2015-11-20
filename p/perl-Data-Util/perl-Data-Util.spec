@@ -8,13 +8,15 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.63
-Release: alt1.1
+Release: alt2
 Summary: A selection of utilities for data and data types
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
 Source: http://www.cpan.org/authors/id/G/GF/GFUJI/Data-Util-%{version}.tar.gz
+# https://rt.cpan.org/Public/Bug/Display.html?id=99097
+Patch: open_4mpiMXrc.diff
 
 %description
 This module provides utility functions for data and data types,
@@ -28,6 +30,7 @@ There are many benchmarks in the DIST-DIR/benchmark/ directory.
 
 %prep
 %setup -n %module_name-%module_version
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -41,6 +44,9 @@ There are many benchmarks in the DIST-DIR/benchmark/ directory.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Nov 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.63-alt2
+- fixed build with new perl 5.22
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1.1
 - rebuild with new perl 5.20.1
 
