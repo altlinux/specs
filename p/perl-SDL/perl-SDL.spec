@@ -1,7 +1,7 @@
 %define dist SDL_Perl
 Name: perl-SDL
 Version: 2.2.6
-Release: alt5.1
+Release: alt6
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL
@@ -9,6 +9,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-v%version.tar.gz
+Patch: SDL_Perl-v2.2.6-alt-perl522-syntax.patch
 
 # avoid crazy dependencies
 %add_findreq_skiplist */SDL/Tutorial*
@@ -33,6 +34,7 @@ using 2d (SDL), or 3d (OpenGL), or a combination of both if you wish.
 
 %prep
 %setup -q -n %dist-v%version
+%patch -p1
 
 # avoid build dependency on YAML
 sed -i- '/^use YAML/d' Build.PL
@@ -63,6 +65,12 @@ objdump -p %buildroot%perl_vendor_autolib/SDL_perl/SDL_perl.so |egrep 'NEEDED[[:
 %perl_vendor_autolib/SDL/OpenGL*
 
 %changelog
+* Fri Nov 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt6
+- syntax fixes for perl 5.22
+
+* Thu Nov 19 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt5.1.1
+- rebuild with new perl 5.20.1
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt5.1
 - rebuild with new perl 5.20.1
 
