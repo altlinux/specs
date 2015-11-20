@@ -1,6 +1,6 @@
 Name: perl-B-C
 Version: 1.52
-Release: alt1
+Release: alt2
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -9,6 +9,13 @@ Group: Development/Perl
 URL: %CPAN B-C
 # Cloned from git https://code.google.com/p/perl-compiler
 Source: %name-%version.tar
+
+# kill me on update
+%if 1
+%define _without_test 1
+Patch1: git.diff
+Patch2: B-C-1.52-fix-build.patch
+%endif
 
 BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel libdb4-devel perl-B-Flags perldoc perl-threads perl(Attribute/Handlers.pm) perl(AnyDBM_File.pm) perl(Encode/JP.pm)
 
@@ -21,6 +28,16 @@ for t in issue305
 do
  mv t/$t.t t/$t.t.failed
 done
+
+# kill me on update
+if [ %version = 1.52 ]; then
+%patch1 -p1
+%patch2 -p1
+else
+echo "please, remove Patch1+2"
+echo "and clean spec file, please"
+exit 3
+fi
 
 %build
 %perl_vendor_build
@@ -39,6 +56,10 @@ done
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Fri Nov 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.52-alt2
+- bunch of hacks from mageia to fix build under perl 5.22
+- to be removed when upstream release the proper version
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1
 - automated CPAN update
 - locally tests pass, but disabled issue305 for incoming
