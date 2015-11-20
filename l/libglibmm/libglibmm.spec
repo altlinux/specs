@@ -1,9 +1,11 @@
-%define rname glibmm
-%define major 2.46
 %def_disable snapshot
 
+%define rname glibmm
+%define major 2.46
+%define api_ver 2.4
+
 Name: libglibmm
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -19,7 +21,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%major/%rname-%version.tar.
 
 %define glib_ver 2.46.0
 
-AutoReq: yes, noperl
+%add_perl_lib_path %_libdir/glibmm-%api_ver/proc/pm
+
 BuildRequires: gcc-c++ libgio-devel >= %glib_ver libsigc++2.0-devel
 BuildRequires: mm-common perl-XML-Parser doxygen xsltproc graphviz
 
@@ -52,7 +55,6 @@ for use with non-GUI software written in C++.
 
 This package contains all API documentation for glibmm.
 
-%add_findreq_skiplist %_libdir/%rname-2.4/proc/*
 
 %prep
 %setup -n %rname-%version
@@ -84,16 +86,21 @@ mm-common-prepare --force --copy
 %_libdir/*.so.*
 
 %files devel
-%_includedir/g*mm-2.4
+%_includedir/glibmm-%api_ver/
+%_includedir/giomm-%api_ver/
 %_libdir/*.so
-%_libdir/g*mm-2.4
+%_libdir/glibmm-%api_ver/
+%_libdir/giomm-%api_ver/
 %_pkgconfigdir/*.pc
-%_datadir/devhelp/books/%rname-2.4
 
 %files doc
-%_docdir/%rname-2.4
+%_docdir/%rname-%api_ver/
+%_datadir/devhelp/books/%rname-%api_ver
 
 %changelog
+* Fri Nov 20 2015 Yuri N. Sedunov <aris@altlinux.org> 2.46.2-alt1
+- 2.46.2
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 2.46.1-alt1
 - 2.46.1
 
