@@ -1,6 +1,6 @@
 Name: razor
 Version: 2.85
-Release: alt3.1
+Release: alt4
 
 Summary: Spam detection and filtering network
 License: Artistic 2.0
@@ -8,6 +8,7 @@ Group: Networking/Mail
 
 URL: http://razor.sourceforge.net/
 Source: http://download.sourceforge.net/razor/razor-agents-%version.tar.bz2
+Patch: razor-agents-2.85-alt-perl-5.22-fix.patch
 
 Requires: perl-Razor = %version-%release
 
@@ -28,6 +29,7 @@ Perl modules for Razor.
 
 %prep
 %setup -n razor-agents-%version
+%patch -p1
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir INSTALLMAN5DIR=%_man5dir
@@ -46,6 +48,9 @@ Perl modules for Razor.
 %perl_vendor_autolib/Razor2
 
 %changelog
+* Thu Nov 19 2015 Igor Vlasenko <viy@altlinux.ru> 2.85-alt4
+- bugfix for perl 5.22
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.85-alt3.1
 - rebuild with new perl 5.20.1
 
