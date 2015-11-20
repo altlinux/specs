@@ -1,5 +1,5 @@
 Name: libxml2
-Version: 2.9.2
+Version: 2.9.3
 Release: alt1
 Epoch: 1
 
@@ -10,7 +10,7 @@ Url: http://xmlsoft.org/
 
 %def_with python3
 %def_disable static
-%define srcname libxml2-v2.9.2-5-g7580ce0
+%define srcname %name-%version
 
 Source: %srcname.tar
 # http://www.w3.org/XML/Test/xmlts20080827.tar.gz
@@ -244,6 +244,9 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Fri Nov 20 2015 Dmitry V. Levin <ldv@altlinux.org> 1:2.9.3-alt1
+- Updated to v2.9.3.
+
 * Wed Nov 12 2014 Dmitry V. Levin <ldv@altlinux.org> 1:2.9.2-alt1
 - Updated to v2.9.2-5-g7580ce0 (closes: #30267).
 - Built and packaged python3-module-%name.
