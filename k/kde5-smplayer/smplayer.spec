@@ -8,7 +8,7 @@
 %define xapp kf5
 Name: %xde-%rname
 Version: 15.9.0.%svn
-Release: alt1
+Release: alt2
 
 %define qt_bin_dir %_qt5_bindir
 %define configure_qmake %qmake_qt5
@@ -31,6 +31,7 @@ Patch1: alt-defines.patch
 Patch2: alt-defaults.patch
 Patch3: alt-ui-defaults.patch
 Patch4: alt-config-dir.patch
+Patch5: alt-youtube-browser.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-tools-devel qt5-script-devel zlib-devel
 
@@ -94,6 +95,7 @@ MPlayer %name backend
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 sed -i 's|@APP_PREFIX@|%xde|' src/paths.cpp
 
@@ -160,6 +162,9 @@ done
 
 
 %changelog
+* Fri Nov 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.9.0.7213-alt2
+- set default youtube browser
+
 * Mon Nov 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.9.0.7213-alt1
 - update for mplayer 1.2 detection
 
