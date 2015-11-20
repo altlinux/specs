@@ -3,11 +3,9 @@
 %define plasmacomicprovidercore_sover 0
 %define libplasmacomicprovidercore libplasmacomicprovidercore%plasmacomicprovidercore_sover
 
-%def_disable gcc5ready
-
 Name: kf5-%rname
 Version: 5.4.3
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -26,9 +24,7 @@ Patch1: alt-comic-sover.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel qt5-x11extras-devel qt5-script-devel
 BuildRequires: libibus-devel
-%if_enabled gcc5ready
 BuildRequires: scim-devel
-%endif
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
@@ -102,6 +98,9 @@ KF5 library
 %_K5lib/libplasmacomicprovidercore.so.%plasmacomicprovidercore_sover
 
 %changelog
+* Fri Nov 20 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt4
+- build with scim
+
 * Thu Nov 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt3
 - rebuild
 
