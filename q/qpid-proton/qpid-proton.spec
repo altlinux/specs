@@ -1,8 +1,11 @@
+# a hack: should be fixed
+%def_without doc
+
 %define proton_datadir %_datadir/proton-%version
 
 Name: qpid-proton
 Version: 0.8
-Release: alt1
+Release: alt2
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
 
@@ -127,8 +130,10 @@ Perl language bindings for Qpid Proton
 %_libdir/cmake/Proton
 %_datadir/proton/examples
 
+%if_with doc
 %files -n lib%name-devel-doc
 %doc %proton_datadir/docs/api-c
+%endif
 
 %files -n python-module-qpid-proton
 %python_sitelibdir/_cproton.so
@@ -136,12 +141,19 @@ Perl language bindings for Qpid Proton
 %python_sitelibdir/proton.*
 
 
+%if_with doc
 %files -n python-module-qpid-proton-doc
 %doc %proton_datadir/docs/api-py
+%endif
 
 %files -n perl-qpid_proton
 %perl_vendor_archlib/*
 
 %changelog
+* Fri Nov 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2
+- fixed build for perl 5.22 update
+- (conditional doc; quick hack to fix the build)
+
+
 * Tue Feb 17 2015 Alexey Shabalin <shaba@altlinux.ru> 0.8-alt1
 - initial build
