@@ -8,7 +8,11 @@
 %define xapp kde4
 Name: %xde-%rname
 Version: 15.9.0.%svn
-Release: alt1
+Release: alt2
+
+%define qt_bin_dir %_qt4dir/bin
+%define configure_qmake %qmake_qt4
+%define qt_qmake %qt_bin_dir/qmake
 
 Summary: A great MPlayer/MPV front-end
 Summary(ru_RU.UTF8): Мощный интерфейс для MPlayer/MPV
@@ -22,15 +26,13 @@ License: GPLv2
 Requires: %name-backend %name-common = %EVR
 Provides: %xde-video-player
 
-Source: %name-%version.tar
+Source: %rname-%version.tar
 Patch1: alt-defines.patch
 Patch2: alt-defaults.patch
 Patch3: alt-ui-defaults.patch
 Patch4: alt-config-dir.patch
+Patch5: alt-youtube-browser.patch
 
-# Automatically added by buildreq on Thu Jul 23 2015 (-bi)
-# optimized out: elfutils fontconfig glibc-devel-static libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-script libqt4-xml libstdc++-devel phonon-devel python-base python3 python3-base zlib-devel
-#BuildRequires: gcc-c++ libqt4-webkit-devel rpm-build-python3 ruby ruby-stdlibs zlib-devel-static
 BuildRequires: gcc-c++ libqt4-devel
 
 %package common
@@ -88,15 +90,16 @@ MPV %name backend
 MPlayer %name backend
 
 %prep
-%setup
+%setup -qn %rname-%version
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 sed -i 's|@APP_PREFIX@|%xde|' src/paths.cpp
 
-export PATH=%_qt4dir/bin:$PATH
+export PATH=%qt_bin_dir:$PATH
 
 sed -i 's|^PREFIX=.*|PREFIX=%_prefix|' Makefile
 sed -i 's|^DATA_PATH=.*|DATA_PATH=%_datadir/%name|' Makefile
@@ -107,12 +110,13 @@ sed -i 's|^SHORTCUTS_PATH=.*|SHORTCUTS_PATH=%_datadir/%name/shortcuts|' Makefile
 
 pushd src
 echo '#define SVN_REVISION "%svn"' > svn_revision.h
-%qmake_qt4 smplayer.pro
+%configure_qmake smplayer.pro
 popd
 
 
 %build
-export PATH=%_qt4dir/bin:$PATH
+export PATH=%qt_bin_dir:$PATH
+export QMAKE=%qt_qmake
 %make_build src/smplayer
 
 
@@ -158,6 +162,9 @@ done
 
 
 %changelog
+* Fri Nov 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.9.0.7213-alt2
+- set default youtube browser
+
 * Mon Nov 16 2015 Sergey V Turchin <zerg@altlinux.org> 15.9.0.7213-alt1
 - update for mplayer 1.2 detection
 
