@@ -5,7 +5,7 @@ BuildRequires: perl(B/Concise.pm) perl(Bit/Vector.pm) perl(Class/Singleton.pm) p
 # END SourceDeps(oneline)
 Name:           perl-Math-NumSeq
 Version:        71
-Release:        alt1
+Release:        alt2
 Summary:        Number sequences
 License:        GPLv3+
 Group:          Development/Perl
@@ -20,7 +20,7 @@ BuildRequires:  perl(constant/defer.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(Data/Dumper.pm)
-BuildRequires:  perl(Devel/FindRef.pm)
+#BuildRequires:  perl(Devel/FindRef.pm)
 BuildRequires:  perl(Devel/StackTrace.pm)
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -101,6 +101,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_privlib}/Math/*
 
 %changelog
+* Sat Nov 21 2015 Igor Vlasenko <viy@altlinux.ru> 71-alt2
+- dropped BR: perl(Devel/FindRef.pm)
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 71-alt1
 - automated CPAN update
 
