@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(CPAN/SQLite.pm) perl(CPAN/SQLite/Index.pm) per
 # END SourceDeps(oneline)
 Name:           perl-podlinkcheck
 Version:        12
-Release:        alt2_5
+Release:        alt3_5
 Summary:        Check Perl POD L<> link references
 License:        GPLv3+
 Group:          Development/Perl
@@ -82,6 +82,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Sat Nov 21 2015 Igor Vlasenko <viy@altlinux.ru> 12-alt3_5
+- dropped BR: perl(Devel/FindRef.pm) 
+
 * Thu Dec 18 2014 Igor Vlasenko <viy@altlinux.ru> 12-alt2_5
 - update to new release by fcimport
 
