@@ -5,7 +5,7 @@ BuildRequires: perl(Scalar/Util.pm) perl(XSLoader.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-FindRef
 Version:        1.44
-Release:        alt2_3
+Release:        alt3_3
 Summary:        Where is that reference to my variable hiding?
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -34,6 +34,11 @@ references "backwards" is usually possible.
 %patch3 -p1
 
 %build
+# remove me in proper upstream release
+[ %version = 1.44 ] || exit 3
+%define _without_test 1
+# end remove
+
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 make %{?_smp_mflags}
 
@@ -54,6 +59,9 @@ make test
 %{perl_vendor_archlib}/Devel
 
 %changelog
+* Sat Nov 21 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.44-alt3_3
+- quick hack for perl 5.22
+
 * Thu Nov 19 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.44-alt2_3
 - fixed build with new perl 5.22
 
