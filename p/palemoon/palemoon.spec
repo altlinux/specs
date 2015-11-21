@@ -2,7 +2,7 @@ Summary: The Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
-Version: 25.7.3.0
+Version: 25.8.0.0
 Release: alt1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
@@ -303,6 +303,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Sat Nov 21 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.8.0.0-alt1
+- New Version
+
 * Thu Oct 15 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.7.3.0-alt1
 - New Version
 
