@@ -1,6 +1,6 @@
 Name: python-module-zabbix-api
-Version: 0.2
-Release: alt1
+Version: 0.3
+Release: alt2
 Summary: Zabbix API
 
 Group: Development/Python
@@ -11,10 +11,19 @@ Source: %name-%version.tar
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch: noarch
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
 Requires: python-modules-json
 
 %description
+Zabbix API
+
+%package -n python3-module-zabbix-api
+Summary: Zabbix API
+Group: Development/Python3
+
+%description -n python3-module-zabbix-api
 Zabbix API
 
 %prep
@@ -23,16 +32,28 @@ Zabbix API
 %build
 cd zabbix
 %python_build
+%python3_build
 
 %install
 cd zabbix
 %python_install
+%python3_install
 
 %files
 %python_sitelibdir/zabbix_api*
-%doc zabbix/README zabbix/examples zabbix/zabbix_rpc_test.py zabbix/zabbix_item_add_example.py
+%doc zabbix/README.md zabbix/examples
+
+%files -n python3-module-zabbix-api
+%python3_sitelibdir/zabbix_api*
 
 %changelog
+* Sat Nov 21 2015 Terechkov Evgenii <evg@altlinux.org> 0.3-alt2
+- Update code to work with unverified/selfsigned SSL certificates
+
+* Thu Nov 19 2015 Terechkov Evgenii <evg@altlinux.org> 0.3-alt1
+- 0.3
+- python3 module
+
 * Wed Oct  1 2014 Evgenii Terechkov <evg@altlinux.org> 0.2-alt1
 - Update code to work with zabbix-2.4
 
