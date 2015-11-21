@@ -6,7 +6,7 @@ BuildRequires: pkgconfig(fftw3f)
 Name:           libspeexdsp
 Version:        1.2
 %global rc_ver  rc3
-Release:        alt1_0.7.%{rc_ver}
+Release:        alt2_0.7.%{rc_ver}
 Summary:        A voice compression format (DSP)
 
 Group:          System/Libraries
@@ -24,6 +24,7 @@ BuildRequires: libtool autoconf automake
 Conflicts: speex <= 1.2-0.21.rc1
 Source44: import.info
 Provides: speexdsp = %{version}-%{release}
+Conflicts: libspeex < 1.2-alt0.6
 
 %description
 Speex is a patent-free compression format designed especially for
@@ -42,6 +43,7 @@ Requires: 	%{name}%{?_isa} = %{version}-%{release}
 # speex, a versioned conflict is required.
 Conflicts: libspeex-devel <= 1.2-0.21.rc1
 Provides: speexdsp-devel = %{version}-%{release}
+Conflicts: libspeex-devel < 1.2-alt0.6
 
 %description devel
 Speex is a patent-free compression format designed especially for
@@ -80,6 +82,9 @@ find %{buildroot} -type f -name "*.la" -delete
 %{_libdir}/libspeexdsp.so
 
 %changelog
+* Sat Nov 21 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.7.rc3
+- added conflict with old speex
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.7.rc3
 - new version
 
