@@ -3,7 +3,7 @@
 
 Name: cppcheck
 Version: 1.71
-Release: alt1
+Release: alt2
 
 Summary: A tool for static C/C++ code analysis
 
@@ -109,6 +109,9 @@ install -D gui/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Nov 21 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.71-alt2
+- Fix Version in help
+
 * Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 1.71-alt1
 - Autobuild version bump to 1.71
 
