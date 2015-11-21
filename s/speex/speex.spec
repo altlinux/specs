@@ -2,8 +2,8 @@
 
 Name: speex
 Version: 1.2
-%define prerel pre1
-Release: alt0.5.pre1
+%define prerel rc2
+Release: alt0.6.rc2
 Summary: An open-source, patent-free speech codec
 License: BSD-style
 Group: Sound
@@ -15,7 +15,12 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
 Requires: lib%name = %version-%release
 
+BuildRequires: pkgconfig(fftw3f)
+#BuildRequires:	pkgconfig(ogg)
 BuildRequires: libogg-devel >= 1.1
+#BuildRequires:	pkgconfig(speexdsp)
+BuildRequires:	libspeexdsp-devel
+
 
 %description
 Speex is a patent-free audio codec designed especially for voice
@@ -68,6 +73,7 @@ Speex-based software.
 %configure \
 %ifarch pentium4 x86_64 athlon_xp k8 nocona
     --enable-sse \
+    --enable-binaries \
 %endif
 %{subst_enable static}
 %make_build
@@ -104,6 +110,9 @@ install -m 0644 COPYING AUTHORS NEWS README %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sat Nov 21 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt0.6.rc2
+- updated to 1.2-rc2
+
 * Mon Jan 09 2012 Denis Smirnov <mithraen@altlinux.ru> 1.2-alt0.5.pre1
 - fix build
 
