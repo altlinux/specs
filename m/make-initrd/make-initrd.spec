@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 0.8.8
-Release: alt5
+Version: 0.8.9
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -168,6 +168,9 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Fri Nov 13 2015 Anton Farygin <rider@altlinux.ru> 0.8.9-alt1
+- added mmc feature with mmc_block detection logic (closes: #30240)
+
 * Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 0.8.8-alt5
 - add-modules: fixed harmless typo (closes: #29907)
 - 975-cleanup: silence ipconfig
