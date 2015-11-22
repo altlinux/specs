@@ -7,7 +7,7 @@
 %define pname palemoon-tabgroups
 
 Name: palemoon-tabgroups
-Version: 0.2
+Version: 0.2.1
 Release: alt1.1
 Summary: Provides tab groups (Panorama)
 
@@ -56,6 +56,9 @@ fi
 %cid_dir
 
 %changelog
+* Sun Nov 22 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.2.1-alt1.1
+- New version
+
 * Fri Jul 31 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.2-alt1.1
 - Fix requires
 
