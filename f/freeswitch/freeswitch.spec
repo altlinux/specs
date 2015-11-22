@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.4.23
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -18,7 +18,7 @@ Source4: modules.conf
 BuildRequires: gcc-c++ gsmlib-devel libalsa-devel
 BuildRequires: libgnutls-devel libncurses-devel libssl-devel libunixODBC-devel
 BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
-BuildRequires: libspeex-devel libsqlite3-devel libX11-devel libmp4v2-devel
+BuildRequires: libspeex-devel libspeexdsp-devel libsqlite3-devel libX11-devel libmp4v2-devel
 BuildRequires: libxmlrpc-devel libyaml-devel libiksemel-devel libedit-devel
 BuildRequires: libsndfile-devel libpcre-devel liblua5-devel
 BuildRequires: libilbc1-devel libjs-devel libjson-devel flite-devel
@@ -707,6 +707,9 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Sun Nov 22 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.4.23-alt2
+- fixed build: added libspeexdsp to BR:.
+
 * Tue Oct 13 2015 Anton Farygin <rider@altlinux.ru> 1:1.4.23-alt1
 - new version
 
