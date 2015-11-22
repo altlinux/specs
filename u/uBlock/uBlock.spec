@@ -4,8 +4,8 @@
 %define cidf_dir       %firefox_noarch_extensionsdir/%cid
 
 Name: uBlock
-Version: 1.0.0.1
-Release: alt1.2
+Version: 1.3.5.0
+Release: alt1
 
 Summary: uBlock: an efficient blocker extension for your browser. Fast, potent, and lean
 License: GPLv3
@@ -83,6 +83,9 @@ popd
 %cidf_dir
 
 %changelog
+* Sun Nov 22 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.3.5.0-alt1
+- new Version
+
 * Fri Jul 31 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.0.1-alt1.2
 - Add  Requires
 
