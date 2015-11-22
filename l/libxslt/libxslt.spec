@@ -1,6 +1,6 @@
 Name: libxslt
 Version: 1.1.28
-Release: alt3
+Release: alt4
 
 Summary: Library providing XSLT support
 License: MIT
@@ -8,7 +8,7 @@ Group: System/Libraries
 Url: http://xmlsoft.org/
 
 %def_disable static
-%define srcname %name-v1.1.28-36-g73e08bf
+%define srcname %name-v1.1.28-46-g7ca19df
 
 # git://git.gnome.org/libxslt.git
 Source: %srcname.tar
@@ -175,6 +175,9 @@ make check
 %pkgdocdir/python/examples/*.xsl
 
 %changelog
+* Sun Nov 22 2015 Dmitry V. Levin <ldv@altlinux.org> 1.1.28-alt4
+- Updated to v1.1.28-46-g7ca19df.
+
 * Tue Oct 06 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.28-alt3
 - Rebuild with libgcrypt.
 
