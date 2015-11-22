@@ -1,3 +1,5 @@
+%set_gcc_version 4.9
+BuildRequires: gcc4.9-c++
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/xprop /usr/bin/xvfb-run libgif-devel pkgconfig(xproto) pkgconfig(xrender) unzip xorg-xproto-devel zlib-devel
 # END SourceDeps(oneline)
@@ -156,7 +158,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt21_65.1.11jpp6
+Release: alt22_65.1.11jpp6
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -191,6 +193,8 @@ Patch2:   java-1.6.0-openjdk-java-access-bridge-idlj.patch
 Patch3:	  java-1.6.0-openjdk-java-access-bridge-security.patch
 Patch4:   java-1.6.0-openjdk-accessible-toolkit.patch
 
+Patch33: icedtea-native-vsyscall.patch
+Patch34: java-1.6.0-openjdk-old-times.patch
 
 BuildRequires: libalsa-devel
 BuildRequires: libcups-devel
@@ -295,6 +299,13 @@ Provides: java = %version
 Provides: java-1.6.0 = %version
 Provides: java-openjdk = %version
 Provides: java-sasl = %version
+# headless provides
+Provides: java-headless = %version
+Provides: java-1.6.0-headless = %version
+Provides: java-openjdk-headless = %version
+Provides: jre-headless = %version
+Provides: jre-1.6.0-headless = %version
+Provides: jre-openjdk-headless = %version
 #define mozilla_java_plugin_so %{_jvmdir}/%{jrelnk}/lib/%{archinstall}/gcjwebplugin.so
 %define mozilla_java_plugin_so %{_jvmdir}/%{jrelnk}/lib/%{archinstall}/IcedTeaPlugin.so
 %define altname %name
@@ -434,10 +445,15 @@ export CFLAGS="$CFLAGS -mieee"
 make MEMORY_LIMIT=-J-Xmx512m stamps/patch-ecj.stamp
 %endif
 
-make MEMORY_LIMIT=-J-Xmx512m patch
+make MEMORY_LIMIT=-J-Xmx512m patch REQUIRED_ALSA_VERSION=1
 patch -l -p0 < %{PATCH3}
 patch -l -p0 < %{PATCH4}
-make MEMORY_LIMIT=-J-Xmx512m
+
+patch -l -p0 < %{PATCH33}
+patch -l -p0 < %{PATCH34}
+
+
+make MEMORY_LIMIT=-J-Xmx512m REQUIRED_ALSA_VERSION=1 DISABLE_HOTSPOT_OS_VERSION_CHECK=1
 
 export JAVA_HOME=$(pwd)/%{buildoutputdir}/j2sdk-image
 
@@ -931,6 +947,9 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Nov 22 2015 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.0-alt22_65.1.11jpp6
+- fixed build
+
 * Wed Mar 20 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.0-alt21_65.1.11jpp6
 - fixed build
 
