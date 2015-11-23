@@ -1,6 +1,6 @@
 Name: libglpng
 Version: 1.45
-Release: alt1.2
+Release: alt2
 Summary: Toolkit for loading PNG images as OpenGL textures
 Group: System/Libraries
 License: MIT
@@ -10,9 +10,8 @@ Source0: http://ftp.de.debian.org/debian/pool/main/libg/%name/%{name}_%version.o
 # From Debian - a Makefile. Yay.
 Source1: libglpng-1.45-makefile
 # Debian patch, couple of small fixes.
-Patch0: libglpng-1.45-debian.patch
+Patch0: libglpng-1.45-alt-nopaletteEXT.patch
 Patch1: libglpng-1.45-alt-libpng.patch
-Packager: Fr. Br. George <george@altlinux.ru>
 
 BuildRequires: libpng-devel libGL-devel
 
@@ -51,6 +50,10 @@ cp %SOURCE1 Makefile
 %_libdir/%name.so
 
 %changelog
+* Wed Nov 25 2015 Fr. Br. George <george@altlinux.ru> 1.45-alt2
+- Rebuild with new mesa
+- Fix patch
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.45-alt1.2
 - Rebuilt with libpng15
 
