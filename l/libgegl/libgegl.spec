@@ -2,7 +2,7 @@
 
 Name: libgegl
 Version: 0.2.0
-Release: alt2
+Release: alt3
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
 Group: System/Libraries
@@ -62,6 +62,9 @@ developing with %name.
 %endif
 
 %changelog
+* Mon Nov 23 2015 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt3
+- rebuilt for gcc5 C++11 ABI
+
 * Wed Jun 04 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.0-alt2
 - rebuilt with libav10
 
