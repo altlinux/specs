@@ -17,7 +17,9 @@
 %ifarch %arm
 %def_without javahl
 %else
-%def_with javahl
+#def_with javahl
+# disabled before perl 5.22 update - to enable again
+%def_without javahl
 %endif
 %def_with swig_py
 %def_with swig_pl
@@ -63,7 +65,7 @@
 
 Name:     subversion
 Version:  1.8.13
-Release:  alt1
+Release:  alt1.1
 
 Summary:  A version control system
 Group:    Development/Other
@@ -760,6 +762,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.13-alt1.1
+- disabled javahl for perl 5.22 update - to enable again
+
 * Mon Aug 03 2015 Andrey Cherepanov <cas@altlinux.org> 1.8.13-alt1
 - New version 1.8.13 (ALT #29846)
 
