@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -12,9 +13,8 @@ BuildRequires: jpackage-compat
 
 Name:      lpg
 Version:   %{_version}
-Release:   alt1_11jpp7
+Release:   alt1_18jpp7
 Summary:   LALR Parser Generator
-Group:     Development/Java
 # although the text of the licence isn't distributed with some of the source,
 # the author has exlicitly stated that everything is covered under the EPL
 # see: http://sourceforge.net/forum/forum.php?thread_id=3277926&forum_id=523519
@@ -42,6 +42,9 @@ Patch0:    %{name}-bootstrap-target.patch
 
 # change build script to build the base jar with osgi bundle info
 Patch1:    %{name}-osgi-jar.patch
+
+# fix segfault caused by aggressive optimisation of null checks in gcc 4.9
+Patch2:    %{name}-segfault.patch
 Source44: import.info
 
 %description
@@ -51,8 +54,8 @@ backtracking (to resolve ambiguity), automatic AST generation and grammar
 inheritance.
 
 %package       java
+Group: Development/Java
 Summary:       Java runtime library for LPG
-Group:         Development/Java
 
 BuildArch:     noarch
 
@@ -65,9 +68,9 @@ Java runtime library for parsers generated with the LALR Parser Generator
 (LPG).
 
 %package       java-compat
+Group: Development/Java
 Version:       %{_compat_version}
 Summary:       Compatibility Java runtime library for LPG 1.x
-Group:         Development/Java
 
 BuildArch:     noarch
 
@@ -97,6 +100,7 @@ cp -p %{SOURCE5} lpgdistribution/MANIFEST.MF
 # apply patches
 %patch0 -p0 -b .orig
 %patch1 -p0 -b .orig
+%patch2 -p0 -b .orig
 
 %build
 # build java stuff
@@ -111,24 +115,20 @@ pushd lpg-generator-cpp/src
 # ARCH just tells us what tools to use, so this can be the same on all arches
 # we build twice in order to bootstrap the grammar parser
 make clean install ARCH=linux_x86 \
-  LOCAL_CFLAGS="%{optflags}" LOCAL_CXXFLAGS="%{optflags}"
+  LOCAL_CFLAGS="%{optflags} -Wno-strict-overflow" LOCAL_CXXFLAGS="%{optflags} -Wno-strict-overflow"
 make bootstrap ARCH=linux_x86
 make clean install ARCH=linux_x86 \
-  LOCAL_CFLAGS="%{optflags}" LOCAL_CXXFLAGS="%{optflags}"
+  LOCAL_CFLAGS="%{optflags} -Wno-strict-overflow" LOCAL_CXXFLAGS="%{optflags} -Wno-strict-overflow"
 
 popd
 
 %install
 install -pD -T lpg-java-runtime/%{name}runtime.jar \
-  %{buildroot}%{_javadir}/%{name}runtime-%{_version}.jar
+  %{buildroot}%{_javadir}/%{name}runtime.jar
 install -pD -T lpgdistribution/%{name}javaruntime.jar \
-  %{buildroot}%{_javadir}/%{name}javaruntime-%{_compat_version}.jar
+  %{buildroot}%{_javadir}/%{name}javaruntime.jar
 install -pD -T lpg-generator-cpp/bin/%{name}-linux_x86 \
   %{buildroot}%{_bindir}/%{name}
-
-# create unversioned symlinks to jars
-(cd %{buildroot}%{_javadir} && for jar in *-%{_version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{_version}||g"`; done)
-(cd %{buildroot}%{_javadir} && for jar in *-%{_compat_version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{_compat_version}||g"`; done)
 
 %files
 %doc lpg-generator-templates/docs/*
@@ -136,13 +136,16 @@ install -pD -T lpg-generator-cpp/bin/%{name}-linux_x86 \
 
 %files java
 %doc lpg-java-runtime/Eclipse*.htm
-%{_javadir}/%{name}runtime*
+%{_javadir}/%{name}runtime.jar
 
 %files java-compat
 %doc lpg-java-runtime/Eclipse*.htm
-%{_javadir}/%{name}javaruntime*
+%{_javadir}/%{name}javaruntime.jar
 
 %changelog
+* Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_18jpp7
+- new jpp release
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_11jpp7
 - new release
 
