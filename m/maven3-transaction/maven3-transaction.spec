@@ -5,15 +5,11 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt5jpp
+Release: alt6jpp
 
-Provides: subversion-javahl = 1.9
 Requires: activemq
 Requires: apache-commons-math
 Requires: arquillian-osgi
-#Requires: eclipse-cdt
-#Requires: eclipse-jgit
-#Requires: eclipse-swtbot
 Requires: gshell
 Requires: hibernate3
 Requires: hibernate-validator
@@ -55,6 +51,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt6jpp
+- updated dependencies
+
 * Sat Nov 21 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5jpp
 - updated dependencies
 
