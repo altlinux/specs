@@ -2,7 +2,7 @@
 
 Name: perl-Coro
 Version: 6.49
-Release: alt1
+Release: alt2
 
 Summary: cooperative multitasking Perl module
 
@@ -17,6 +17,7 @@ Packager: Nikolay Fetisov <naf@altlinux.ru>
 
 Source: %real_name-%version.tar
 Patch0: Coro-5.372-alt-EV_test_fix.patch
+Patch1: Coro-6.48-rurban-perl-5.22.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -37,6 +38,7 @@ in Perl.
 %prep
 %setup -q -n %real_name-%version
 %patch
+%patch1 -p4
 cp -p Coro/libcoro/LICENSE LICENSE.libcoro
 
 %build
@@ -54,6 +56,9 @@ export CORO_INTERFACE=u
 %perl_vendor_autolib/Coro
 
 %changelog
+* Sun Nov 22 2015 Vladimir Lettiev <crux@altlinux.ru> 6.49-alt2
+- Fixed build for perl 5.22 (based on patch from Reini Urban)
+
 * Sun Oct 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 6.49-alt1
 - New version
 
