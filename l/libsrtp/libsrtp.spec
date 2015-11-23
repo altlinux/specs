@@ -5,7 +5,7 @@
 Name: libsrtp
 Summary: Secure Real-time Transport Protocol implementation
 Version: 1.5.2
-Release: alt1
+Release: alt2
 License: BSD-like
 Group: System/Libraries
 BuildRequires: gcc-c++ libstdc++-devel
@@ -33,6 +33,9 @@ Requires: %name-devel
 %package -n libsrtp1
 Summary: %summary
 Group: System/Libraries
+Obsoletes: libsrtp < %version-%release
+Conflicts: libsrtp < %version-%release
+Provides:  libsrtp = %version-%release
 
 %description -n libsrtp1
 %summary
@@ -75,6 +78,9 @@ CFLAGS="$CFLAGS -fPIC -Wall -O2 -fexpensive-optimizations -funroll-loops"
 %_libdir/libsrtp.so.*
 
 %changelog
+* Mon Nov 23 2015 Denis Smirnov <mithraen@altlinux.ru> 1.5.2-alt2
+- Fix shared library (ALT #31448)
+
 * Sun Nov 08 2015 Denis Smirnov <mithraen@altlinux.ru> 1.5.2-alt1
 - 1.5.2
 - add watch-file
