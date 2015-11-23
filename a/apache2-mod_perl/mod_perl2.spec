@@ -1,13 +1,11 @@
-%define _without_test 1
-BuildRequires: libgdbm-devel
 # Spec file for mod_perl2 module for Apache 2.0 server
 
 %define real_name    mod_perl
 %define module_name  perl
 
 Name:    apache2-mod_perl
-Version: 2.0.8
-Release: alt3.1
+Version: 2.0.10
+Release: alt0.1
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -21,15 +19,15 @@ Source1: perl.load
 Source2: perl.conf
 Source3: perl.start
 
-Source4: Apache-Test-1.37.tar
+Source4: Apache-Test-1.39.tar
 Source5: Apache-SizeLimit-0.96.tar
-Source6: Apache-Reload-0.12.tar
+Source6: Apache-Reload-0.13.tar
 Source7: docs-2.0.tar
 
 
 Patch1: mod_perl-2.0.5-lfs.patch
-Patch2: mod_perl-2.0.7-alt-HTTP_Headers_version_fix.patch
-Patch3: mod_perl-2.0.7-alt-disable_prctl_set_name.patch
+Patch2: mod_perl-2.0.7-alt-disable_prctl_set_name.patch
+Patch3: mod_perl-2.0.10-rt101962.patch
 
 Provides: mod_perl = %version
 
@@ -37,6 +35,7 @@ Requires(pre): apache2 >= %apache2_version
 BuildRequires(pre): apache2-devel >= 2.2.5
 BuildRequires: apache2-httpd-prefork
 BuildRequires: %apache2_apr_buildreq
+BuildRequires: libgdbm-devel
 
 # Automatically added by buildreq on Wed Oct 26 2011 (-bi)
 BuildRequires: apache2-devel libexpat-devel perl-BSD-Resource perl-CGI perl-DBD-DBM perl-Devel-Symdump perl-LWP-Protocol-https perl-Linux-Pid perl-Math-BigInt perl-Test-Pod perl-pod perl-podlators perl-threads
@@ -128,7 +127,7 @@ module.
 %setup -n mod_perl-%version
 %patch1 -p1
 %patch2
-%patch3
+%patch3 -p1
 
 # Complete installation with separate projects
 tar xvf %SOURCE4
@@ -146,11 +145,12 @@ sed -e "s#VERSION = do { require mod_perl2; \$mod_perl2::VERSION }#VERSION = \"$
 
 
 %ifdef __BTE
-rm -f -- t/apr-ext/finfo.t t/apr/finfo.t
+rm -f -- t/response/TestAPR/finfo.pm t/apr-ext/finfo.t t/lib/TestAPRlib/finfo.pm
 %endif
 
 %build
-%perl_vendor_build MP_APXS=%apache2_apxs MP_APR_CONFIG=%apache2_apr_config
+%perl_vendor_build MP_APXS=%apache2_apxs MP_APR_CONFIG=%apache2_apr_config \
+    MP_CCOPTS=-fgnu89-inline
 
 %install
 %perl_vendor_install
@@ -254,6 +254,16 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 %doc docs/*
 
 %changelog
+* Mon Nov 23 2015 Vladimir Lettiev <crux@altlinux.ru> 2.0.10-alt0.1
+- 2.0.10-dev
+- fixed build with Perl 5.22: patch from RT#101962
+- fixed build with GCC 5
+- updated Apache::Test 1.39, Apache::Reload 0.13
+- enabled tests
+
+* Sat Nov 21 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.8-alt3.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.8-alt3.1
 - rebuild with new perl 5.20.1
 
