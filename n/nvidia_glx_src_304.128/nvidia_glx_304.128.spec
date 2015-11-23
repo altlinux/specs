@@ -14,8 +14,8 @@
 %define nv_version 304
 %define nv_release 128
 %define nv_minor %nil
-%define pkg_rel alt126
-%def_enable kernelsource
+%define pkg_rel alt127
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -319,6 +319,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 23 2015 Sergey V Turchin <zerg@altlinux.org> 304.128-alt127
+- don't package kernel module sources
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 304.128-alt126
 - add fix against 4.3 kernel
 
