@@ -1,8 +1,7 @@
 Group: Other
-%add_optflags %optflags_shared
 Name:           libesedb
 Version:        20120102
-Release:        alt1_7
+Release:        alt2_7
 Summary:        Library to access the Extensible Storage Engine (ESE) Database File (EDB) format
 
 License:        GPLv3+
@@ -32,6 +31,7 @@ developing applications that use %{name}.
 
 
 %build
+%add_optflags -fgnu89-inline
 %configure --disable-static
 make %{?_smp_mflags}
 
@@ -57,6 +57,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 20120102-alt2_7
+- fixed build
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 20120102-alt1_7
 - update to new release by fcimport
 
