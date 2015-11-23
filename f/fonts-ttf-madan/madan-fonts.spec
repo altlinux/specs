@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -7,9 +8,8 @@ BuildRequires: unzip
 
 Name: fonts-ttf-madan
 Version: 2.000
-Release: alt3_14
+Release: alt3_16
 Summary: Font for Nepali language
-Group: System/Fonts/True type
 License: GPL+
 URL: http://madanpuraskar.org/
 # Found new following working Source URL. Use wget to download this archive
@@ -108,6 +108,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_16
+- fixed build
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_14
 - update to new release by fcimport
 
