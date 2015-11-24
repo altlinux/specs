@@ -6,7 +6,7 @@
 
 Name: kde4-%rname
 Version: 4.3.1
-Release: alt3
+Release: alt4
 
 Group:     Networking/File transfer
 Summary:   KDE client for BitTorrent network 
@@ -17,7 +17,10 @@ Conflicts: ktorrent <= 2.2.8-alt2
 Requires: kde4-kross-python
 
 Source:   http://ktorrent.org/downloads/%version/%rname-%version.tar
-Patch1: alt-remove-magnet-protocol.patch
+# FC
+Patch1: ktorrent-4.2.0-mimetype_magnet.patch
+Patch2: 0026-Fix-compilation-of-ipblocklisttest-target.patch
+Patch3: 0015-Backport-ipfilter-extraction-fixes-from-master-branc.patch
 
 # Automatically added by buildreq on Tue Jun 01 2010 (-bi)
 #BuildRequires: gcc-c++ glib2-devel glibc-devel-static kde4base-workspace-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libktorrent-devel libqt3-devel libtag-devel libxkbfile-devel qt4-assistant qt4-designer rpm-build-ruby
@@ -32,6 +35,10 @@ ktorrent - KDE BitTorrent client. It comes with many useful plugins.
 %prep
 %setup -q -n %rname-%version
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
 %build
 %K4build \
@@ -64,6 +71,11 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K4xdg_apps \
 
 
 %changelog
+* Tue Nov 24 2015 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt4
+- rebuild (ALT#31153)
+- sync patches with FC
+- don't build plasma applet
+
 * Mon Jul 20 2015 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt3
 - rebuild (ALT#31153)
 
