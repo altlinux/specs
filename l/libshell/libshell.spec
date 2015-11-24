@@ -1,5 +1,5 @@
 Name: libshell
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: A library of shell functions
@@ -43,6 +43,13 @@ as single file.
 /bin/shell-lib
 
 %changelog
+* Tue Nov 24 2015 Alexey Gladkov <legion@altlinux.ru> 0.4.1-alt1
+- New version (0.4.1).
+- shell-ini-config changes:
+  + Return error if config file does not exist (ALT#31151).
+- shell-getopt changes:
+  + Fix getopt option completion (ALT#31480).
+
 * Sat May 30 2015 Alexey Gladkov <legion@altlinux.ru> 0.4.0-alt1
 - New version (0.4.0).
 - New utilities:
