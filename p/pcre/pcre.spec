@@ -1,6 +1,6 @@
 Name: pcre
-Version: 8.37
-Release: alt3
+Version: 8.38
+Release: alt1
 
 Summary: Perl-compatible regular expression library
 License: BSD-style
@@ -12,25 +12,6 @@ Source: pcre-%version.tar
 Source1: pcre-config.1
 
 Patch: pcre-%version-%release.patch
-
-# Fix CVE-2015-3210, rhbz#1236659
-Patch2: pcre-8.37-Fix-buffer-overflow-for-named-recursive-back-referen.patch
-# Fix CVE-2015-5073, rhbz#1237224
-Patch3: pcre-8.37-Fix-buffer-overflow-for-forward-reference-within-bac.patch
-# Needed for Fix-buffer-overflow-for-named-references-in-situatio.patch,
-# in upstream after 8.37
-Patch4: pcre-8.37-Fix-named-forward-reference-to-duplicate-group-numbe.patch
-# Needed for Fix-buffer-overflow-for-named-references-in-situatio.patch,
-# in upstream after 8.37
-Patch5: pcre-8.37-Fix-another-buffer-overflow.patch
-# Fix a buffer overflow with duplicated named groups and an occurrence of "(?|",
-# <https://bugs.exim.org/show_bug.cgi?id=1667>, rhbz#1250946,
-# in upstream after 8.37
-Patch6: pcre-8.37-Fix-buffer-overflow-for-named-references-in-situatio.patch
-# Fix a heap overflow when compiling certain expression with named references,
-# <https://bugs.exim.org/show_bug.cgi?id=1672>, rhbz#1256452,
-# in upstream after 8.37
-Patch7: pcre-8.37-Hack-in-yet-other-patch-for-a-bug-in-size-computatio.patch
 
 Summary(ru_RU.UTF-8): Библиотека для работы с Perl-совместимыми регулярными выражениями
 
@@ -219,12 +200,6 @@ regular expressions.
 %prep
 %setup
 %patch -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
 
 rm aclocal.m4 m4/{libtool,lt*}.m4
 
@@ -322,6 +297,9 @@ rm %buildroot%_libdir/*.la
 %_man1dir/pcretest.*
 
 %changelog
+* Tue Nov 24 2015 Dmitry V. Levin <ldv@altlinux.org> 8.38-alt1
+- Updated to 8.38.
+
 * Wed Oct 07 2015 Dmitry V. Levin <ldv@altlinux.org> 8.37-alt3
 - Imported some upstream fixes from Fedora pcre-8.37-4 package.
 
