@@ -1,5 +1,5 @@
 Name:           inxi
-Version:        2.2.28
+Version:        2.2.31
 Release:        alt1
 Summary:        A full featured system information script
 Summary(ru):    Скрипт вывода полной информации об оборудовании и системе
@@ -49,6 +49,9 @@ install -p -D -m 644 %name.1.gz %buildroot/%_man1dir/%name.1.gz
 %_man1dir/%name.1*
 
 %changelog
+* Tue Nov 24 2015 Andrey Cherepanov <cas@altlinux.org> 2.2.31-alt1
+- New version
+
 * Sun Aug 30 2015 Andrey Cherepanov <cas@altlinux.org> 2.2.28-alt1
 - New version
 - Build from upstream Git repository
