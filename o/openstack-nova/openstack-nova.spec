@@ -2,7 +2,7 @@
 
 Name: openstack-nova
 Version: 12.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Compute (nova)
 
@@ -52,6 +52,8 @@ Source23: nova-polkit.rules
 Source22: nova-ifc-template
 Source24: nova-sudoers
 Source30: %name-novncproxy.sysconfig
+
+Patch0001: 0001-Fix-attibute-error-when-cloning-raw-images-in-Ceph.patch
 
 BuildArch: noarch
 # /proc need for generate sample config fix "nova.cmd.novncproxy: [Errno 2] No such file or directory: '/proc/stat'"
@@ -436,6 +438,7 @@ This package contains documentation files for nova.
 
 %prep
 %setup
+%patch0001 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -805,6 +808,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Nov 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1:12.0.0-alt2
+- add patch for fix attibute error when cloning raw images in Ceph
+
 * Fri Oct 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:12.0.0-alt1
 - 12.0.0 Liberty Release
 
