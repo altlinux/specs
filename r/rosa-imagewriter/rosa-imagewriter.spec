@@ -1,7 +1,7 @@
 
 Name:		rosa-imagewriter
 Version:	2.6.1.0
-Release:	alt1
+Release:	alt2
 Summary:	Utility for writing raw disk images and hybrid isos to USB keys
 
 License:	GPLv3
@@ -18,6 +18,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  qt5-base-devel
 BuildRequires:  qt5-tools
 BuildRequires:  libudev-devel
+Requires: 	qt5-translations
 
 %description
 Utility for writing raw disk images and hybrid isos to USB keys.
@@ -54,6 +55,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Nov 24 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.1.0-alt2
+- Require Qt5 translations
+
 * Sun Oct 04 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.1.0-alt1
 - New version
 
