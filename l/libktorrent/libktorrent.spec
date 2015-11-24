@@ -4,7 +4,7 @@
 
 Name: libktorrent
 Version: 1.3.1
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 Summary: BitTorrent library for KDE
@@ -53,8 +53,9 @@ This package contains the development files for %name.
 %patch1 -p1
 
 %build
-%K4cmake
-%K4make
+%K4build \
+  -DKDE4_BUILD_TESTS=OFF \
+  #
 
 %install
 %K4install
@@ -72,6 +73,9 @@ This package contains the development files for %name.
 %_K4link/lib*.so
 
 %changelog
+* Tue Nov 24 2015 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt5
+- don't build tests
+
 * Mon Jul 20 2015 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt4
 - rebuild
 
