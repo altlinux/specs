@@ -2,7 +2,7 @@
 
 %define rname	flashblock
 %define version 1.5.17
-%define release alt2
+%define release alt3
 %define cid 	\{3d7eb24f-2740-49df-8937-200b1cc08f8a\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -56,6 +56,10 @@ fi
 %ciddir
 
 %changelog
+* Tue Nov 24 2015 Andrey Cherepanov <cas@altlinux.org> 1.5.17-alt3
+- Fix support new Firefox version by increase extension version (ALT #31323)
+- Support Firefox < 43.0
+
 * Wed Jun 03 2015 Andrey Cherepanov <cas@altlinux.org> 1.5.17-alt2
 - Support Firefox 38.x
 
