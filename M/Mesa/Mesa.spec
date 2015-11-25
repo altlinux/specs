@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 10.5.5
+Version: 11.0.6
 Release: alt1
 Epoch: 4
 License: MIT
@@ -22,7 +22,7 @@ BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel l
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
 BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libssl-devel
-BuildRequires: python-module-mako
+BuildRequires: python-module-mako python-module-argparse
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -384,6 +384,36 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Mon Nov 23 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:11.0.6-alt1
+- 11.0.6
+
+* Sun Oct 25 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:11.0.4-alt1
+- 11.0.4
+
+* Mon Oct 05 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:11.0.2-alt1
+- 11.0.2
+
+* Sun Sep 13 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:11.0.0-alt1
+- 11.0.0
+
+* Sun Aug 23 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.6.5-alt1
+- 10.6.5
+
+* Wed Aug 12 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.6.4-alt1
+- 10.6.4
+
+* Sun Jul 12 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.6.2-alt1
+- 10.6.2
+
+* Mon Jun 29 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.6.1-alt1
+- 10.6.1
+
+* Sun Jun 07 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.5.7-alt1
+- 10.5.7
+
+* Wed May 27 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.5.6-alt1
+- 10.5.6
+
 * Wed May 13 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:10.5.5-alt1
 - 10.5.5
 
