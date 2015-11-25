@@ -6,7 +6,7 @@
 %define req_std_burning cdrkit cdrdao dvd+rw-tools
 %define req_std_kde kde4libs >= %{get_version kde4libs}
 %define req_std_common alterator-control
-%define req_multimedia sox-play transcode vcdimager >= 0.7 normalize lame flac mpc
+%define req_multimedia sox-play libsox-fmt-pulseaudio transcode vcdimager >= 0.7 normalize lame flac mpc
 
 %define req_mini %req_std_burning %req_std_kde %req_std_common
 %define req_all %req_mini %req_multimedia
@@ -14,7 +14,7 @@
 %define rname k3b
 Name: kde4-%rname
 Version: 2.0.3
-Release: alt3
+Release: alt4
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -158,6 +158,9 @@ KDE 4 library.
 %_K4includedir/*.h
 
 %changelog
+* Wed Nov 25 2015 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt4
+- update requires
+
 * Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt3
 - fix FTBFS
 
