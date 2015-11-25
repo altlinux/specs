@@ -1,5 +1,5 @@
 Name: iproute2
-Version: 3.14.0
+Version: 4.3.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -13,9 +13,9 @@ Requires: libnetlink = %version-%release
 Provides: iproute = %version-%release
 Obsoletes: iproute < %version
 
-# Automatically added by buildreq on Wed Oct 10 2012
-# optimized out: groff-base pkg-config tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex
-BuildRequires: OpenSP flex libatm-devel libdb4-devel libiptables-devel linuxdoc-tools sgml-common
+# Automatically added by buildreq on Wed Nov 25 2015
+# optimized out: groff-base perl-parent pkg-config sgml-common tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex
+BuildRequires: OpenSP flex libatm-devel libdb4-devel libelf-devel libiptables-devel libmnl-devel libselinux-devel linuxdoc-tools
 
 # buildreq overoptimizes these:
 BuildRequires: texlive-latex-recommended
@@ -73,7 +73,7 @@ rm -r %buildroot%_docdir/%name
 mkdir -p %buildroot{%_bindir,%_sbindir,%_localstatedir/arpd}
 pushd %buildroot/sbin
 rm rtpr
-mv arpd bridge ctstat genl ifstat lnstat nstat routef routel rtacct rtstat ss \
+mv arpd bridge ctstat genl ifstat lnstat nstat routef routel rtacct rtstat ss tipc \
 	%buildroot%_sbindir/
 popd
 
@@ -119,6 +119,12 @@ done
 %_man3dir/*
 
 %changelog
+* Wed Nov 25 2015 Dmitry V. Levin <ldv@altlinux.org> 4.3.0-alt1
+- Updated to 4.3.0.
+- Packaged tipc(8).
+- Enabled eBPF support in tc(8).
+- Enabled SELinux support in ss(8).
+
 * Fri Apr 25 2014 Dmitry V. Levin <ldv@altlinux.org> 3.14.0-alt1
 - Updated to 3.14.0.
 
