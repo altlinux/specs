@@ -1,7 +1,7 @@
 %define dist Passwd-Linux
 Name: perl-%dist
 Version: 1.2
-Release: alt4.1
+Release: alt4.1.1
 
 Summary: Perl module for manipulating the passwd and shadow files
 License: GPL or Artistic
@@ -37,6 +37,9 @@ mv test.pl test.pl.orig
 %perl_vendor_autolib/Passwd
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4.1
 - rebuild with new perl 5.20.1
 

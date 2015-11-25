@@ -1,6 +1,6 @@
 Name: perl-B-C
 Version: 1.52
-Release: alt2
+Release: alt2.1
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -56,6 +56,9 @@ fi
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.52-alt2.1
+- rebuild with new perl 5.22.0
+
 * Fri Nov 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.52-alt2
 - bunch of hacks from mageia to fix build under perl 5.22
 - to be removed when upstream release the proper version

@@ -5,7 +5,7 @@
 
 Name: qpid-proton
 Version: 0.8
-Release: alt2
+Release: alt2.1
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
 
@@ -150,6 +150,9 @@ Perl language bindings for Qpid Proton
 %perl_vendor_archlib/*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2.1
+- rebuild with new perl 5.22.0
+
 * Fri Nov 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2
 - fixed build for perl 5.22 update
 - (conditional doc; quick hack to fix the build)

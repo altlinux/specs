@@ -65,7 +65,7 @@
 
 Name:     subversion
 Version:  1.8.13
-Release:  alt1.1
+Release:  alt1.1.1
 
 Summary:  A version control system
 Group:    Development/Other
@@ -762,6 +762,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.13-alt1.1.1
+- rebuild with new perl 5.22.0
+
 * Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.13-alt1.1
 - disabled javahl for perl 5.22 update - to enable again
 

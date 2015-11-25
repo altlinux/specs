@@ -8,7 +8,7 @@
 
 Name: graphviz
 Version: 2.38.0
-Release: alt2
+Release: alt2.1
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -316,6 +316,9 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 # - enable/fix/test language bindings
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.38.0-alt2.1
+- rebuild with new perl 5.22.0
+
 * Wed Feb 18 2015 Michael Shigorin <mike@altlinux.org> 2.38.0-alt2
 - reenabled python bindings (closes: #30756)
 

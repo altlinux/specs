@@ -2,7 +2,7 @@
 
 Name: perl-Imager
 Version: 1.004
-Release: alt1
+Release: alt1.1
 
 Summary: Perl module for generating 24 bit Images
 Summary(ru_RU.UTF-8): Модуль Perl для создания 24-x битных изображений
@@ -48,6 +48,9 @@ IM_SUPPRESS_PROM=1 %perl_vendor_build
 %exclude /.perl.req
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1.1
+- rebuild with new perl 5.22.0
+
 * Sun Nov 15 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.004-alt1
 - New version
 

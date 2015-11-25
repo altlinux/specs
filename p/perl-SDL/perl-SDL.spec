@@ -1,7 +1,7 @@
 %define dist SDL_Perl
 Name: perl-SDL
 Version: 2.2.6
-Release: alt6
+Release: alt6.1
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL
@@ -65,6 +65,9 @@ objdump -p %buildroot%perl_vendor_autolib/SDL_perl/SDL_perl.so |egrep 'NEEDED[[:
 %perl_vendor_autolib/SDL/OpenGL*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt6.1
+- rebuild with new perl 5.22.0
+
 * Fri Nov 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt6
 - syntax fixes for perl 5.22
 

@@ -6,7 +6,7 @@
 
 Name: linux-tools-%kernel_base_version
 Version: %kernel_base_version
-Release: alt5
+Release: alt5.1
 
 Summary: Performance analysis tools for Linux
 License: GPLv2
@@ -84,6 +84,9 @@ popd
 %doc %_docdir/%name
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 3.14-alt5.1
+- rebuild with new perl 5.22.0
+
 * Sun Jul 12 2015 Terechkov Evgenii <evg@altlinux.org> 3.14-alt5
 - Return bin/trace (hardlink to bin/perf) for usage convience
 - Additional alternatives (man1dir/bash_completion/trace)

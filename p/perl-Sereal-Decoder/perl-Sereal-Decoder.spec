@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 3.006
-Release: alt1
+Release: alt1.1
 Summary: Fast, compact, powerful binary deserialization
 Group: Development/Perl
 License: perl
@@ -52,6 +52,9 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 3.006-alt1.1
+- rebuild with new perl 5.22.0
+
 * Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 3.006-alt1
 - automated CPAN update
 

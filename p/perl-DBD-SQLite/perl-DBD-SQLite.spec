@@ -1,7 +1,7 @@
 %define dist DBD-SQLite
 Name: perl-%dist
 Version: 1.42
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: SQLite driver for DBI interface in Perl
 License: GPL or Artistic
@@ -43,6 +43,9 @@ sed -i- 's/require DBD::SQLite/die/' Makefile.PL
 	%perl_vendor_autolib/DBD
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.42-alt1.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.42-alt1.1
 - rebuild with new perl 5.20.1
 

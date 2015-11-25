@@ -44,7 +44,7 @@
 Name: %Name
 %define lname lib%name
 Version: 1.3.20
-Release: alt1.1.1
+Release: alt1.1.1.1
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -505,6 +505,9 @@ __MENU__
 %endif
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.20-alt1.1.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.20-alt1.1.1
 - Rebuilt for gcc5 C++11 ABI.
 

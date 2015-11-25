@@ -1,7 +1,7 @@
 %define dist DBI
 Name: perl-%dist
 Version: 1.634
-Release: alt1
+Release: alt1.1
 
 Summary: Database independent interface for Perl
 License: GPL or Artistic
@@ -204,6 +204,9 @@ mv blib/lib/DBI/FAQ.{pm,pod}
 	%perl_vendor_archlib/DBD/Gofer*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.634-alt1.1
+- rebuild with new perl 5.22.0
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.634-alt1
 - automated CPAN update
 

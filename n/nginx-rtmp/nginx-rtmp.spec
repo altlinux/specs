@@ -16,7 +16,7 @@
 %define _name nginx
 Name: nginx-rtmp
 Version: 1.4.5
-Release: alt2.1
+Release: alt2.1.1
 
 Summary: Fast HTTP server + rtmp-module
 License: BSD
@@ -263,6 +263,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.4.5-alt2.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.5-alt2.1
 - rebuild with new perl 5.20.1
 

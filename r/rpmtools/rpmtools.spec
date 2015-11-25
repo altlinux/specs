@@ -1,6 +1,6 @@
 Name: rpmtools
 Version: 3.1
-Release: alt8.1
+Release: alt8.1.1
 
 Summary: Contains various rpm command-line tools
 License: GPL
@@ -35,6 +35,9 @@ perl Makefile.PL PREFIX=/usr INSTALLDIRS=vendor
 %perl_vendor_autolib/rpmtools*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 3.1-alt8.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt8.1
 - rebuild with new perl 5.20.1
 

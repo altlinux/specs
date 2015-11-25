@@ -3,7 +3,7 @@ BuildRequires: perl(Module/Build.pm)
 %define dist IO-Interface
 Name: perl-%dist
 Version: 1.09
-Release: alt1
+Release: alt1.1
 
 Summary: extention for IO::Socket
 License: GPL or Artistic
@@ -38,6 +38,9 @@ as the ability to multicast.
 %perl_vendor_autolib/IO
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
 - automated CPAN update
 

@@ -1,6 +1,6 @@
 Name: perl-PPerl
 Version: 0.25
-Release: alt4.1
+Release: alt4.1.1
 
 Summary: Make perl scripts persistent in memory
 License: GPL or Artistic
@@ -56,6 +56,9 @@ rm t/10tie.t
 %perl_vendor_autolib/PPerl
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.25-alt4.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt4.1
 - rebuild with new perl 5.20.1
 

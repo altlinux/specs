@@ -1,5 +1,5 @@
 Name: perl
-Version: 5.20.3
+Version: 5.22.0
 Release: alt1
 Epoch: 1
 
@@ -11,16 +11,16 @@ Packager: Perl Maintainers Team <cpan@altlinux.ru>
 
 Source: perl-%version.tar
 
-Patch01: perl-5.20.1-alt-644-at-ExtUtils-Install.patch
-Patch02: perl-5.20.1-alt-644-at-installperl.patch
-Patch03: perl-5.20.1-alt-644-viy-ExtUtils-Install-fix-test.patch
-Patch04: perl-5.20.1-alt-at-MM_Unix-link-xs-with-libperl.patch
-Patch05: perl-5.20.1-alt-at-MM_Unix-shabang.patch
+Patch01: perl-5.22.0-alt-644-at-ExtUtils-Install.patch
+Patch02: perl-5.22.0-alt-644-at-installperl.patch
+Patch03: perl-5.22.0-alt-644-viy-ExtUtils-Install-fix-test.patch
+Patch04: perl-5.22.0-alt-at-MM_Unix-link-xs-with-libperl.patch
+Patch05: perl-5.22.0-alt-at-MM_Unix-shabang.patch
 Patch06: perl-5.20.1-alt-at-Storable-no-early-dep-on-Log-Agent.patch
 Patch07: perl-5.20.1-alt-at-debian-Errno_pm.patch
-Patch08: perl-5.20.1-alt-at-disable-Cpan-Meta-under-rpm.patch
+Patch08: perl-5.22.0-alt-at-disable-Cpan-Meta-under-rpm.patch
 Patch09: perl-5.20.1-alt-at-libperl-soname.patch
-Patch10: perl-5.20.1-alt-at-no-rpath-for-std-libs.patch
+Patch10: perl-5.22.0-alt-at-no-rpath-for-std-libs.patch
 Patch11: perl-5.20.1-alt-at-perl5db-findreq-cleanup.patch
 Patch12: perl-5.20.1-alt-at-perlbug-findreq-cleanup.patch
 Patch13: perl-5.20.1-alt-at-skip-deprecation-warning.patch
@@ -28,13 +28,10 @@ Patch14: perl-5.20.1-alt-crux-Cwd-use-realpath.patch
 # or hsh with --mountpoints=/proc
 Patch15: perl-5.20.1-alt-crux-fix-test-without-proc.patch
 Patch16: perl-5.20.1-alt-ldv-support-for-alt-gcc-wrapper.patch
+Patch17: perl-5.22.0-alt-viy-Unicode-Normalize-fix-deps.patch
 
-# patches from excluded Sisyphus modules
-# or just drop the tests from the test suite, as we exclude IO-Socket-IP anyway
-Patch30: perl-IO-Socket-IP-0.31-alt1.patch
-
-# cpan update
-Patch50: cpan-update-Socket-2.013-to-Socket-2.016.diff
+# cpan update patches here. use format below:
+#Patch50: cpan-update-Socket-2.013-to-Socket-2.016.diff
 
 # there's a problem with strict.pm
 %add_findreq_skiplist */strict.pm
@@ -49,6 +46,11 @@ Patch50: cpan-update-Socket-2.013-to-Socket-2.016.diff
 # Pod::Html requires Pod::Simple
 %add_findreq_skiplist */Pod/Html.pm
 %add_findreq_skiplist */pod2html
+# It requires Encode which we split out
+%add_findreq_skiplist */ExtUtils/MakeMaker.pm
+%add_findreq_skiplist */ExtUtils/MakeMaker/Locale.pm
+# It requires Term::Readline which is moved to Term-Readline-Gnu
+%add_findreq_skiplist */perl5db.pl
 
 # do not provide auxiliary unicore libraries
 %add_findprov_skiplist */unicore/*/*
@@ -72,6 +74,9 @@ Obsoletes: perl-Digest-MD5 perl-Time-HiRes perl-MIME-Base64
 Summary: Perl header files and development modules
 Group: Development/Perl
 Requires: perl-base = %epoch:%version-%release
+Provides: perl-Test-Tester = 0.2
+Obsoletes: perl-Test-Tester < 0.2
+Conflicts: perl-Test-Tester < 0.2
 
 %package pod
 Summary: Perl documentation
@@ -172,12 +177,7 @@ equivalent text will have identical binary representations.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-
-pushd cpan/IO-Socket-IP
-%patch30 -p1
-popd
-
-%patch50 -p1
+%patch17 -p1
 
 # .orig files can break some test
 # at least t/porting/readme.t :
@@ -231,7 +231,6 @@ make test
 ln -snf perl%version %buildroot%_bindir/perl
 ln -snf perl%version %buildroot%_bindir/perl5
 ln -snf c2ph %buildroot%_bindir/pstruct
-ln -snf psed %buildroot%_bindir/s2p
 
 # skeleton
 mkdir -p %buildroot%privlib/auto
@@ -252,13 +251,12 @@ rm -r %buildroot%privlib/Archive/Tar* %buildroot%_bindir/ptar*
 rm -r %buildroot%privlib/autodie* %buildroot%privlib/Fatal.pm
 rm -r %buildroot%privlib/Attribute/Handlers*
 rm %buildroot%privlib/B/Debug.pm
-rm -r %buildroot%privlib/CGI*
 rm -r %buildroot%privlib/CPAN* %buildroot%privlib/App/Cpan.pm %buildroot%_bindir/cpan*
 rm -r %buildroot{%privlib,%archlib,%autolib}/Compress
 rm %buildroot%privlib/Devel/SelfStubber.pm
 rm -r %buildroot{%archlib,%autolib}/Digest/SHA* %buildroot%_bindir/shasum
 rm -r %buildroot{%privlib,%archlib,%autolib}/Encode*
-rm %buildroot%archlib/encoding.pm %buildroot%_bindir/{enc2xs,piconv}
+rm %buildroot%archlib/encoding.pm %buildroot%_bindir/{enc2xs,encguess,piconv}
 rm %buildroot%privlib/encoding/warnings.pm
 rm %buildroot%privlib/experimental.pm
 rm -r %buildroot%privlib/ExtUtils/CBuilder*
@@ -280,12 +278,10 @@ rm -r %buildroot%privlib/Locale
 rm -r %buildroot{%privlib,%archlib,%autolib}/Math/Big* %buildroot%privlib/big*.pm
 rm -r %buildroot%privlib/Math/{Complex,Trig}.pm
 rm -r %buildroot%privlib/Memoize*
-rm -r %buildroot%privlib/Module/Build* %buildroot%privlib/inc %buildroot%_bindir/config_data
 rm -r %buildroot%privlib/Module/Load*
 rm -r %buildroot%privlib/Module/CoreList* %buildroot%_bindir/corelist
 rm %buildroot%privlib/Module/Metadata.pm
 rm %buildroot%privlib/NEXT.pm
-rm %buildroot%privlib/Package/Constants.pm
 rm %buildroot%privlib/Params/Check.pm
 rm %buildroot%privlib/Parse/CPAN/Meta.pm
 rm %buildroot%privlib/Perl/OSType.pm
@@ -357,6 +353,7 @@ EOF
 	%privlib/less.pm
 	%archlib/lib.pm
 	%privlib/locale.pm
+	%privlib/meta_notation.pm
 	%archlib/mro.pm
 	%autolib/mro
 	%privlib/open.pm
@@ -394,6 +391,8 @@ EOF
 	%autolib/List/Util*
 %dir	%archlib/Scalar
 	%archlib/Scalar/Util*
+%dir	%archlib/Sub
+	%archlib/Sub/Util*
 # initial unicode support
 %dir	%privlib/unicore
 	%privlib/unicore/Heavy.pl
@@ -577,15 +576,11 @@ EOF
 %exclude %privlib/parent.pm
 
 %files	devel
-	%_bindir/a2p
-	%_bindir/find2perl
 	%_bindir/h2xs
 	%_bindir/instmodsh
 	%_bindir/perlbug
 	%_bindir/perlthanks
 	%_bindir/prove
-	%_bindir/psed
-	%_bindir/s2p
 	%_bindir/splain
 	%_bindir/xsubpp
 # perl4-compat scripts
@@ -624,6 +619,8 @@ EOF
 	%privlib/ExtUtils/MakeMaker.pm
 %dir	%privlib/ExtUtils/MakeMaker
 	%privlib/ExtUtils/MakeMaker/*.pm
+%dir	%privlib/ExtUtils/MakeMaker/version
+	%privlib/ExtUtils/MakeMaker/version/*.pm
 %doc	%privlib/ExtUtils/MakeMaker/*.pod
 	%privlib/ExtUtils/MM.pm
 	%privlib/ExtUtils/MM_Any.pm
@@ -650,19 +647,27 @@ EOF
 	%_bindir/pod2html
 	%privlib/Test.pm
 %dir	%privlib/Test
-	%privlib/Test/Builder*
-	%privlib/Test/Harness.pm
-	%privlib/Test/More.pm
-	%privlib/Test/Simple.pm
 %doc	%privlib/Test/Tutorial.pod
 %dir	%privlib/pod
-%doc	%privlib/pod/a2p.pod
 # perldiag.pod is NOT a doc; it used by diagnostics.pm
 	%privlib/pod/perldiag.pod
+# Test-Simple pieces
+	%privlib/ok.pm
+	%privlib/Test/Builder*
+	%privlib/Test/More.pm
+	%privlib/Test/Simple.pm
+%dir	%privlib/Test/use
+	%privlib/Test/use/ok.pm
+	%privlib/Test/Tester.pm
+%dir	%privlib/Test/Tester
+	%privlib/Test/Tester/Capture.pm
+	%privlib/Test/Tester/CaptureRunner.pm
+	%privlib/Test/Tester/Delegate.pm
 # Test-Harness pieces
 %dir	%privlib/App
 	%privlib/App/Prove*
 	%privlib/TAP
+	%privlib/Test/Harness.pm
 
 %files	pod
 %dir	%privlib/pod
@@ -733,18 +738,18 @@ EOF
 	%autolib/GDBM_File
 	%archlib/SDBM_File.pm
 	%autolib/SDBM_File
-	%autolib/sdbm
 	%privlib/DBM_Filter*
 %dir	%privlib/pod
 %doc	%privlib/pod/perldbmfilter.pod
 
 %files	Unicode-Normalize
-%dir	%archlib/Unicode
-	%archlib/Unicode/Normalize.pm
-%dir	%autolib/Unicode
-	%autolib/Unicode/Normalize
+%dir	%privlib/Unicode
+	%privlib/Unicode/Normalize.pm
 
 %changelog
+* Tue Nov 10 2015 Igor Vlasenko <viy@altlinux.ru> 1:5.22.0-alt1
+- 5.20.3 -> 5.22.0
+
 * Wed Oct 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.20.3-alt1
 - Updated to 5.20.3.
 

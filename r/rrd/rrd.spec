@@ -1,6 +1,6 @@
 Name: rrd
 Version: 1.5.4
-Release: alt1
+Release: alt1.1
 
 %define native rrdtool
 %define abiversion 4
@@ -332,6 +332,9 @@ rm -rf %buildroot/usr/lib/perl
 %endif
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1.1
+- rebuild with new perl 5.22.0
+
 * Sun Oct 25 2015 Sergey Y. Afonin <asy@altlinux.ru> 1.5.4-alt1
 - 1.5.4
 

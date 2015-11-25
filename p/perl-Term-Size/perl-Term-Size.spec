@@ -1,7 +1,7 @@
 %define dist Term-Size
 Name: perl-%dist
 Version: 0.207
-Release: alt3.1
+Release: alt3.1.1
 
 Summary: Perl module for get the size of the terminal
 License: GPL or Artistic
@@ -32,6 +32,9 @@ the size of the terminal (or window) on which a script is running.
 %perl_vendor_autolib/Term
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.207-alt3.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.207-alt3.1
 - rebuild with new perl 5.20.1
 

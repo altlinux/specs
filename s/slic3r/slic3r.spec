@@ -1,6 +1,6 @@
 Name: slic3r
 Version: 1.2.1
-Release: alt1
+Release: alt1.1
 Summary: G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 # Images are CC-BY, code is AGPLv3
 License: AGPLv3 and CC-BY
@@ -130,6 +130,9 @@ desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE1
 %_datadir/%name
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1.1
+- rebuild with new perl 5.22.0
+
 * Mon Nov 17 2014 Dmitry Derjavin <dd@altlinux.org> 1.2.1-alt1
 - 1.2.1;
 - BuildRequires errors work around.

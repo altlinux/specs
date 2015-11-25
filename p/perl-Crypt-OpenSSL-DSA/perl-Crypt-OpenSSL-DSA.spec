@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.15
-Release: alt1
+Release: alt1.1
 
 Summary: Digital Signature Algorithm using OpenSSL 
 License: Perl
@@ -35,6 +35,9 @@ library, located at http://www.openssl.org
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.1
+- rebuild with new perl 5.22.0
+
 * Wed Feb 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 

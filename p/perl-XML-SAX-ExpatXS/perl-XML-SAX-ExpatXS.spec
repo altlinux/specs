@@ -5,7 +5,7 @@ BuildRequires: perl(ExtUtils/Liblist.pm) perl(overload.pm) perl-devel perl-podla
 %filter_from_requires /^perl.XML.SAX.ExpatXS.Preload.pm./d
 Name:           perl-XML-SAX-ExpatXS
 Version:        1.33
-Release:        alt3_12
+Release:        alt3_12.1
 Summary:        Perl SAX 2 XS extension to Expat parser
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -68,6 +68,9 @@ fi
 %{perl_vendor_archlib}/XML*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.33-alt3_12.1
+- rebuild with new perl 5.22.0
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.33-alt3_12
 - update to new release by fcimport
 

@@ -2,7 +2,7 @@
 %define dist Cache-FastMmap
 Name: perl-%dist
 Version: 1.43
-Release: alt1
+Release: alt1.1
 
 Summary: Uses an mmap'ed file to act as a shared memory interprocess cache
 License: GPL or Artistic
@@ -34,6 +34,9 @@ cache shared between processes.
 %perl_vendor_autolib/Cache
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.43-alt1.1
+- rebuild with new perl 5.22.0
+
 * Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 1.43-alt1
 - automated CPAN update
 

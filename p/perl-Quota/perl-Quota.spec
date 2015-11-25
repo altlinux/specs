@@ -2,7 +2,7 @@
 %define dist Quota
 Name: perl-%dist
 Version: 1.7.2
-Release: alt1
+Release: alt1.1
 
 Summary: Perl interface to file system quotas
 License: GPL or Artistic
@@ -40,6 +40,9 @@ sed -i- 's/Linux 2/Linux/' Makefile.PL
 %perl_vendor_autolib/Quota
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.7.2-alt1.1
+- rebuild with new perl 5.22.0
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.7.2-alt1
 - automated CPAN update
 

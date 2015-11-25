@@ -1,7 +1,7 @@
 %define dist Crypt-Blowfish
 Name: perl-%dist
 Version: 2.14
-Release: alt2.1
+Release: alt2.1.1
 
 Summary: Perl Blowfish encryption module
 License: GPLR Artistic
@@ -34,6 +34,9 @@ from this module.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.14-alt2.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.14-alt2.1
 - rebuild with new perl 5.20.1
 

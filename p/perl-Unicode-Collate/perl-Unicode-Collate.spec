@@ -2,7 +2,7 @@
 %define dist Unicode-Collate
 Name: perl-%dist
 Version: 1.14
-Release: alt1
+Release: alt1.1
 
 Summary: Unicode Collation Algorithm
 License: GPL or Artistic
@@ -40,6 +40,9 @@ as described by Unicode Technical Standard #10 (UTS #10).
 %perl_vendor_autolib/Unicode
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1.1
+- rebuild with new perl 5.22.0
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 

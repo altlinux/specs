@@ -15,7 +15,7 @@
 
 Name: perl-Date-Simple
 Version: 3.03
-Release: alt3.1
+Release: alt3.1.1
 
 Summary: a simple date object
 
@@ -95,6 +95,9 @@ should be public.
 %perl_vendor_autolib/Date/*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 3.03-alt3.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 3.03-alt3.1
 - rebuild with new perl 5.20.1
 

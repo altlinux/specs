@@ -1,6 +1,6 @@
 Name: perl-Glib-Object-Introspection
 Version: 0.028
-Release: alt1
+Release: alt1.1
 
 Summary: Dynamically create Perl language bindings
 Group: Development/Perl
@@ -31,6 +31,9 @@ export LANG=ru_RU.UTF-8
 %doc LICENSE NEWS README
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.028-alt1.1
+- rebuild with new perl 5.22.0
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.028-alt1
 - automated CPAN update
 

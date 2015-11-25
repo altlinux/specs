@@ -2,7 +2,7 @@
 
 Name: perl-Coro
 Version: 6.49
-Release: alt2
+Release: alt2.1
 
 Summary: cooperative multitasking Perl module
 
@@ -56,6 +56,9 @@ export CORO_INTERFACE=u
 %perl_vendor_autolib/Coro
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 6.49-alt2.1
+- rebuild with new perl 5.22.0
+
 * Sun Nov 22 2015 Vladimir Lettiev <crux@altlinux.ru> 6.49-alt2
 - Fixed build for perl 5.22 (based on patch from Reini Urban)
 

@@ -2,7 +2,7 @@
 
 Name: perl-Net-CUPS
 Version: 0.61
-Release: alt5
+Release: alt5.1
 
 Summary: Perl interface to the Common Unix Printing System API
 Summary(ru_RU.UTF-8): интерфейс Perl к API Common Unix Printing System
@@ -53,6 +53,9 @@ Printing System (CUPS). Он предоставляет возможность �
 %perl_vendor_archlib/Net
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.61-alt5.1
+- rebuild with new perl 5.22.0
+
 * Thu Nov 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.61-alt5
 - fix for cups > 2
 

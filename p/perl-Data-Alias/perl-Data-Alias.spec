@@ -2,7 +2,7 @@
 %define dist Data-Alias
 Name: perl-%dist
 Version: 1.20
-Release: alt1
+Release: alt1.1
 
 Summary: Comprehensive set of aliasing operations
 License: GPL or Artistic
@@ -35,6 +35,9 @@ when compared to using references.
 %perl_vendor_autolib/Data
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1.1
+- rebuild with new perl 5.22.0
+
 * Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
 - automated CPAN update
 

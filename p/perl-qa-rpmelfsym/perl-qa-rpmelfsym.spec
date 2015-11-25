@@ -1,7 +1,7 @@
 %define dist qa-rpmelfsym
 Name: perl-%dist
 Version: 0.12.1
-Release: alt1
+Release: alt1.1
 
 Summary: Faster rpmelfsym(1) and bad_elf_symbols implementation
 License: GPLv2+
@@ -37,6 +37,9 @@ rm %buildroot%perl_vendor_archlib/qa/*.pl
 %perl_vendor_autolib/qa*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.12.1-alt1.1
+- rebuild with new perl 5.22.0
+
 * Mon Sep 28 2015 Dmitry V. Levin <ldv@altlinux.org> 0.12.1-alt1
 - rpmelfsym.pm: tolerate wider class of symbol names in nm(1) output.
 
