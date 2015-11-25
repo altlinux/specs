@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: less
-Version: 451
+Version: 481
 Release: alt1
 
 Summary: A text file browser similar to more, but better
@@ -28,13 +28,15 @@ Source12: less.sh
 Source13: less.csh
 Source14: lesspipe-color.sh
 
-Patch1: less-394-alt-configure.patch
-Patch3: less-394-rh-Foption.patch
-Patch4: less-394-rh-search.patch
-Patch6: less-394-suse-strict-aliasing.patch
-Patch7: less-alt-old-bot-at-start.patch
-Patch8: less-alt-pcre_include_path.patch
-Patch9:	less-alt-colorenv.patch
+Patch1:  less-394-alt-configure.patch
+Patch3:  less-444-Foption.v2.patch
+Patch4:  less-394-rh-search.patch
+Patch6:  less-394-suse-strict-aliasing.patch
+Patch7:  less-alt-old-bot-at-start.patch
+Patch8:  less-alt-pcre_include_path.patch
+Patch9:  less-alt-colorenv.patch
+Patch10: less-436-manpage-add-old-bot-option.patch
+Patch11: less-458-old-bot-in-help.patch
 
 Requires: file >= 4.26-alt3, mktemp >= 1:1.3.1
 
@@ -57,12 +59,14 @@ example, vi).
 %prep
 %setup
 %patch1 -p1
-%patch3 -p1
+%patch3 -p2
 %patch4 -p1
 %patch6 -p1
 %patch7 -p2
 %patch8 -p1
-%patch9 -p1
+%patch9 -p2
+%patch10 -p1
+%patch11 -p1
 
 install -pm644 %_sourcedir/faq.html .
 bzip2 -9k NEWS
@@ -105,6 +109,9 @@ ln -s lesspipe.1 %buildroot%_man1dir/lessfile.1
 %doc NEWS.bz2 *.html
 
 %changelog
+* Wed Nov 25 2015 Alexey Gladkov <legion@altlinux.ru> 481-alt1
+- New version 481.
+
 * Sun Mar 03 2013 Alexey Gladkov <legion@altlinux.ru> 451-alt1
 - New version 451.
 
