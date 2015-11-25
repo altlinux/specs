@@ -1,11 +1,12 @@
 %define _name gssdp
+%define ver_major 0.14
 
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: 0.14.11
+Version: %ver_major.12
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -13,7 +14,7 @@ Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gupnp.org/
 
-Source: http://www.gupnp.org/sources/%_name/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildRequires: gnome-common gtk-doc libsoup-devel >= 2.26.1 libgio-devel >= 2.32
 BuildRequires: vala-tools rpm-build-vala libvala-devel
@@ -101,6 +102,9 @@ GObject introspection devel data for the GSSDP library
 
 
 %changelog
+* Wed Nov 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.14.12-alt1
+- 0.14.12
+
 * Thu Jan 08 2015 Yuri N. Sedunov <aris@altlinux.org> 0.14.11-alt1
 - 0.4.11
 
