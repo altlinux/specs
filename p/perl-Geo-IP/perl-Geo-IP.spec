@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 1.45
-Release: alt1
+Release: alt1.1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -39,6 +39,9 @@ find lib/ example/ -type f -print0 | xargs -r0 %__subst -p 's./usr/local/share/G
 %perl_vendor_autolib/Geo
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.45-alt1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.45-alt1
 - automated CPAN update
 

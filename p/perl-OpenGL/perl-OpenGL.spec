@@ -1,6 +1,6 @@
 Name: perl-OpenGL
 Version: 0.6704
-Release: alt2
+Release: alt2.1
 
 Summary: Perl bindings to OpenGL API
 Group: Development/Perl
@@ -33,6 +33,9 @@ rm test.pl
 %doc TODO CHANGES README COPYRIGHT KNOWN_PROBLEMS Release_Notes SUPPORTS
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.6704-alt2.1
+- rebuild with new perl 5.22.0
+
 * Wed Nov 25 2015 Vladimir Lettiev <crux@altlinux.ru> 0.6704-alt2
 - fix build with mesa 11.0.6
 

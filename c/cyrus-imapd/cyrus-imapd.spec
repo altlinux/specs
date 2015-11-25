@@ -12,7 +12,7 @@
 
 Name: cyrus-imapd
 Version: 2.5.6
-Release: alt1
+Release: alt1.1
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -421,6 +421,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.5.6-alt1.1
+- rebuild with new perl 5.22.0
+
 * Fri Oct 23 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.5.6-alt1
 - 2.5.6 (git 20151016 of "cyrus-imapd-2.5" branch)
 - renamed README.ALT to README.ALT.rus; updated README.ALT.rus

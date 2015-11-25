@@ -29,7 +29,7 @@
 
 Name: apache
 Version: %apache_version
-Release: %branch_release alt8
+Release: %branch_release alt8.1
 
 Summary: The most widely used Web server on the Internet
 License: %asl
@@ -1461,6 +1461,9 @@ fi
 # - macro for %_cachedir/httpd/
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.42rusPL30.24-alt8.1
+- rebuild with new perl 5.22.0
+
 * Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 1.3.42rusPL30.24-alt8
 - added apache-1.3.41-mod_perl-gcc43.patch by Salvador Ortiz Garcia
 

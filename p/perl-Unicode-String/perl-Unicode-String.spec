@@ -1,7 +1,7 @@
 %define dist Unicode-String
 Name: perl-%dist
 Version: 2.09
-Release: alt4
+Release: alt4.1
 
 Summary: Perl module to represent strings of Unicode chars 
 License: GPL or Artistic
@@ -37,6 +37,9 @@ perl included native UTF8 support.
 %perl_vendor_autolib/Unicode
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.09-alt4.1
+- rebuild with new perl 5.22.0
+
 * Thu Nov 19 2015 Igor Vlasenko <viy@altlinux.ru> 2.09-alt4
 - fixed build with perl 5.22
 

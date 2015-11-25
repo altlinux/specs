@@ -21,7 +21,7 @@
 
 Name: %prog_name%postgresql_major.%postgresql_minor-1C
 Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
-Release: alt%postgresql_altrel
+Release: alt%postgresql_altrel.1
 
 %define PGSQL pgsql
 %define ROOT %_localstatedir/%PGSQL-root
@@ -758,5 +758,8 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 9.4.5-alt1.1
+- rebuild with new perl 5.22.0
+
 * Thu Nov 05 2015 Alexei Takaseev <taf@altlinux.org> 9.4.5-alt1
 - Initial build for ALT Linux Sisyphus

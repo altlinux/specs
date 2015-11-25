@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
 Version: 2.2.0
-Release: alt4.1
+Release: alt4.1.1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -454,6 +454,9 @@ fi
 %_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt4.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt4.1
 - rebuild with new perl 5.20.1
 

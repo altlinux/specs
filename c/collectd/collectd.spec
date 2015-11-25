@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -836,6 +836,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 5.5.0-alt1.1
+- rebuild with new perl 5.22.0
+
 * Tue Oct 27 2015 Sergey Y. Afonin <asy@altlinux.ru> 5.5.0-alt1
 - new version (closes: #31402)
   + changed: libvirt plugin renamed to virt

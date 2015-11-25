@@ -1,7 +1,7 @@
 %define dist B-Hooks-OP-Check
 Name: perl-%dist
 Version: 0.19
-Release: alt3.1
+Release: alt3.1.1
 
 Summary: Wrap OP check callbacks
 License: GPL or Artistic
@@ -32,6 +32,9 @@ of PL_check.
 %perl_vendor_autolib/B
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.19-alt3.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt3.1
 - rebuild with new perl 5.20.1
 

@@ -1,6 +1,6 @@
 Name: perl-TokyoCabinet
 Version: 1.34
-Release: alt4.1
+Release: alt4.1.1
 
 Summary: TokyoCabinet - Perl module
 License: LGPL
@@ -50,6 +50,9 @@ cp -a example/* %buildroot%pkgdocdir/example/
 %pkgdocdir
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.34-alt4.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.34-alt4.1
 - rebuild with new perl 5.20.1
 

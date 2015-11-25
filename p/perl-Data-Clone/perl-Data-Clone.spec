@@ -4,7 +4,7 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Clone.pm) perl(Config.pm) p
 # END SourceDeps(oneline)
 Name:           perl-Data-Clone
 Version:        0.004
-Release:        alt1_5
+Release:        alt1_5.1
 Summary:        Polymorphic data cloning
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -64,6 +64,9 @@ make test
 %{perl_vendor_archlib}/Data*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_5.1
+- rebuild with new perl 5.22.0
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_5
 - update to new release by fcimport
 

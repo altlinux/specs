@@ -1,7 +1,7 @@
 %define dist Gtk2-ImageView
 Name: perl-%dist
 Version: 0.05
-Release: alt3.1
+Release: alt3.1.1
 
 Summary: Perl bindings for the GtkImageView widget
 License: LPGL
@@ -47,6 +47,9 @@ should be considered the canonical documentation.
 	%perl_vendor_archlib/Gtk2/ImageView/Install
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.05-alt3.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt3.1
 - rebuild with new perl 5.20.1
 

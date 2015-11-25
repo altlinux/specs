@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.16
-Release: alt1
+Release: alt1.1
 Summary: Interface to perl's parser variables
 Group: Development/Perl
 License: perl
@@ -36,6 +36,9 @@ modify code while it's being parsed.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1.1
+- rebuild with new perl 5.22.0
+
 * Wed Oct 14 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - regenerated from template by package builder
 

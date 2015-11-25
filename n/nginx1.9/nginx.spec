@@ -20,7 +20,7 @@ Conflicts: nginx nginx1.6 nginx1.8
 # epoch need for Sisyphus because I work mainly with t7/branch
 Epoch: 1
 Version: 1.9.3
-Release: alt1
+Release: alt1.1
 
 Summary: Fast HTTP server
 License: BSD
@@ -314,6 +314,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %oname
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.9.3-alt1.1
+- rebuild with new perl 5.22.0
+
 * Mon Jul 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.9.3-alt1
 - Version 1.9.3
 

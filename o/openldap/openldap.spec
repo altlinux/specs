@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.42
-Release: alt1
+Release: alt1.1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -697,6 +697,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.42-alt1.1
+- rebuild with new perl 5.22.0
+
 * Wed Sep 30 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.4.42-alt1
 - updated to 2.4.42
 - obsolete patches removed

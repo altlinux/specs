@@ -1,6 +1,6 @@
 Name: perl-mop
 Version: 0.02
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: A new object system for Perl 5
 Group: Development/Perl
@@ -30,6 +30,9 @@ BuildRequires: perl-devel perl(Devel/CallParser.pm) perl(parent.pm)
 %doc Changes README.md
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.1
 - rebuild with new perl 5.20.1
 

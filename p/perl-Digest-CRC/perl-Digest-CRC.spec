@@ -16,7 +16,7 @@
 
 Name: perl-Digest-CRC
 Version: 0.21
-Release: alt1
+Release: alt1.1
 
 Summary: Digest::CRC - Generic CRC functions
 
@@ -50,6 +50,9 @@ functions with the correct parameters for CRC-CCITT, CRC-16 and CRC-32.
 %doc README Changes
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1.1
+- rebuild with new perl 5.22.0
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - automated CPAN update
 

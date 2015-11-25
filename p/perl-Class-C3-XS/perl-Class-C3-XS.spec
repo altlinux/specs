@@ -1,7 +1,7 @@
 %define dist Class-C3-XS
 Name: perl-%dist
 Version: 0.13
-Release: alt4.1
+Release: alt4.1.1
 
 Summary: XS speedups for Class::C3
 License: GPL or Artistic
@@ -34,6 +34,9 @@ instead.
 %perl_vendor_autolib/Class
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt4.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.13-alt4.1
 - rebuild with new perl 5.20.1
 

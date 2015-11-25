@@ -1,6 +1,6 @@
 Name: perl-Proc-FastSpawn
 Version: 1.2
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: fork+exec, or spawn, a subprocess as quickly as possible
 Group: Development/Perl
@@ -29,6 +29,9 @@ BuildRequires: perl-devel
 %doc README Changes
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1.1.1
+- rebuild with new perl 5.22.0
+
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1.1
 - rebuild with new perl 5.20.1
 

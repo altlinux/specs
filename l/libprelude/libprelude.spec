@@ -1,7 +1,7 @@
 Summary: Prelude Hybrid Intrusion Detection System Library
 Name: libprelude
 Version: 1.2.6rc1
-Release: alt1.git20140916.1.1
+Release: alt1.git20140916.1.1.1
 License: GPLv2
 Group: System/Libraries
 Url: http://www.prelude-ids.org/
@@ -193,6 +193,9 @@ rm -f %buildroot%_libdir/PreludeEasy.*
 %perl_vendor_archlib/Prelude*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.6rc1-alt1.git20140916.1.1.1
+- rebuild with new perl 5.22.0
+
 * Fri Oct 09 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.6rc1-alt1.git20140916.1.1
 - FTBFS with gcc5
 - rebuild with new libgcrypt (ALT#31349)

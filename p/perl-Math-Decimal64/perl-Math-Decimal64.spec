@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.14
-Release: alt1
+Release: alt1.1
 Summary: (alpha) perl interface to C's _Decimal64 operations.
 Group: Development/Perl
 License: perl
@@ -67,6 +67,9 @@ Note that this module is alpha software. It seems to work ok
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1.1
+- rebuild with new perl 5.22.0
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
