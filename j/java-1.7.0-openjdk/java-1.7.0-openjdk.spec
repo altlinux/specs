@@ -1,4 +1,3 @@
-%set_gcc_version 4.9
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -12,7 +11,7 @@ BuildRequires: ca-certificates-java
 %def_disable moz_plugin
 %def_disable systemtap
 %def_disable desktop
-BuildRequires: unzip gcc4.9-c++ libstdc++-devel-static
+BuildRequires: unzip gcc-c++ libstdc++-devel-static
 BuildRequires: libXext-devel libXrender-devel libfreetype-devel libkrb5-devel
 BuildRequires(pre): browser-plugins-npapi-devel lsb-release
 BuildRequires(pre): rpm-build-java
@@ -206,7 +205,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt1_2.5.5.0jpp7
+Release: alt2_2.5.5.0jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -411,11 +410,21 @@ Provides: java-fonts = %{epoch}:%{version}
 Source44: import.info
 %filter_from_provides /^(%{_privatelibs})$/d
 %filter_from_requires /^(%{_privatelibs})$/d
+Patch33: java-1.7.0-openjdk-gcc-cxx-5-5d0a13adec23.patch
 
 %define altname %name
 %define label -%{name}
 %define javaws_ver      %{javaver}
 
+%def_with gcc49
+%if_with gcc49
+%set_gcc_version 4.9
+BuildRequires: gcc4.9-c++
+%endif
+# gcc5? links in a strange way that generates additional requires :(
+# findprov below did not help at all :(
+%add_findprov_lib_path %{_jvmdir}/%{jredir}/lib/%archinstall
+%add_findprov_lib_path %{_jvmdir}/%{jredir}/lib/%archinstall/jli
 # it is needed for those apps which links with libjvm.so
 %add_findprov_lib_path %{_jvmdir}/%{jredir}/lib/%archinstall/server
 %ifnarch x86_64
@@ -432,9 +441,7 @@ Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so(SUNWprivate_1.
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/client/libjvm.so()
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/client/libjvm.so(SUNWprivate_1.1)
 %endif
-Patch33: java-1.7.0-openjdk-alt-no-Werror.patch
-Requires: java-common
-Requires: /proc
+Patch34: java-1.7.0-openjdk-alt-no-Werror.patch
 
 %description
 The OpenJDK runtime environment.
@@ -444,13 +451,15 @@ Summary: The OpenJDK runtime environment without audio and video support
 Group:   Development/Java
 
 Requires: liblcms2 >= 2.5
-Requires: libjpeg 
+Requires: libjpeg
 # Require /etc/pki/java/cacerts.
 Requires: ca-certificates
 # Require jpackage-utils for ant.
-Requires: jpackage-utils >= 1.7.3
+Requires: jpackage-utils >= 1.7.3-1jpp.2
 # Require zoneinfo data provided by tzdata-java subpackage.
 Requires: tzdata-java
+# Post requires alternatives to install tool alternatives.
+# Postun requires alternatives to uninstall tool alternatives.
 
 Provides: jre-%{javaver}-%{origin}-headless = %{epoch}:%{version}-%{release}
 Provides: jre-%{origin}-headless = %{epoch}:%{version}-%{release}
@@ -470,6 +479,8 @@ Provides: jsse = %{epoch}:%{version}
 Provides: jce = %{epoch}:%{version}
 Provides: jdbc-stdext = 4.1
 Provides: java-sasl = %{epoch}:%{version}
+Requires: java-common
+Requires: /proc
 
 %description headless
 The OpenJDK runtime environment without audio and video 
@@ -481,9 +492,7 @@ Group:   Development/Java
 # Require base package.
 Requires:         %{name} = %{epoch}:%{version}-%{release}
 # Post requires alternatives to install tool alternatives.
-Requires(post):   alternatives
 # Postun requires alternatives to uninstall tool alternatives.
-Requires(postun): alternatives
 
 # Standard JPackage devel provides.
 Provides: java-sdk-%{javaver}-%{origin} = %{epoch}:%{version}
@@ -521,6 +530,9 @@ Summary: OpenJDK API Documentation
 Group:   Development/Java
 Requires: jpackage-utils
 BuildArch: noarch
+
+# Post requires alternatives to install javadoc alternative.
+# Postun requires alternatives to uninstall javadoc alternative.
 
 # Standard JPackage javadoc provides.
 Provides: java-javadoc = %{epoch}:%{version}-%{release}
@@ -628,8 +640,9 @@ tar xzf %{SOURCE9}
 %patch404
 %endif
 %patch405
+%patch33 -p0
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
-%patch33 -p1
+%patch34 -p1
 
 %build
 # How many cpu's do we have?
@@ -978,12 +991,29 @@ find $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/demo \
     echo "assistive_technologies=org.GNOME.Accessibility.AtkWrapper" >> accessibility.properties
     echo "" >> accessibility.properties
   popd
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/javadocdir_java-1.7.0-openjdk-javadoc<<EOF
-%{_javadocdir}/java	%{_javadocdir}/%{uniquejavadocdir}/api	%{priority}
-EOF
+
+# touching all ghosts; hack for rpm 4.0.4
+for rpm_404_ghost in %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/classes.jsa
+do
+    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
+    touch %buildroot"$rpm_404_ghost"
+done
 
 %__subst 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
 %__subst 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
+
+##### javadoc Alt specific #####
+echo java-javadoc >java-javadoc-buildreq-substitute
+mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
+install -m644 java-javadoc-buildreq-substitute \
+    %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-javadoc
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/%altname-javadoc<<EOF
+%{_javadocdir}/java	%{_javadocdir}/%{uniquejavadocdir}/api	%{priority}
+EOF
+# move soundfont to java
+grep /audio/default.sf2 java-1.7.0-openjdk.files-headless >> java-1.7.0-openjdk.files
+grep -v /audio/default.sf2 java-1.7.0-openjdk.files-headless > java-1.7.0-openjdk.files-headless-new
+mv java-1.7.0-openjdk.files-headless-new java-1.7.0-openjdk.files-headless
 
 
 ##################################################
@@ -1116,6 +1146,9 @@ done
 %{_jvmdir}/java-%{javaver}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmjardir}/java-%{javaver}	%{_jvmjardir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
+##### TODO --- 
+#%{_jvmdir}/java-%{javaver}-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
+
 # ----- end: JPackage compatibility alternatives ------
 
 %if_enabled moz_plugin
@@ -1143,12 +1176,23 @@ for i in $RPM_BUILD_ROOT%_man1dir/*.1; do
     [ -f $i ] && gzip -9 $i
 done
 
-%post
-%force_update_alternatives
-
 ##################################################
 # - END alt linux specific, shared with openjdk -#
 ##################################################
+
+
+echo "install passed past alt linux specific."
+
+%post headless
+# java should be available ASAP
+%force_update_alternatives
+
+%ifarch %{jit_arches}
+#see https://bugzilla.redhat.com/show_bug.cgi?id=513605
+java=%{jrebindir}/java
+$java -Xshare:dump >/dev/null 2>/dev/null
+%endif
+
 
 
 
@@ -1192,14 +1236,15 @@ done
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/nss.cfg
 %{_jvmdir}/%{jredir}/lib/audio/
 %ifarch %{jit_arches}
-#attr(664, root, root) %ghost %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa
-#attr(664, root, root) %ghost %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/classes.jsa
+%attr(644, root, root) %ghost %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/classes.jsa
+%attr(644, root, root) %ghost %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/classes.jsa
 %endif
 %{_jvmdir}/%{jredir}/lib/%{archinstall}/server/
 %{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
 %{_sysconfdir}/.java/
 %{_sysconfdir}/.java/.systemPrefs
 %{_jvmdir}/%{sdkdir}/jre-abrt
+%exclude %{_jvmdir}/%{jredir}/lib/audio/default.sf2
 
 
 %files devel
@@ -1265,7 +1310,8 @@ done
 %{_jvmdir}/%{sdkdir}/src.zip
 
 %files javadoc
-%_altdir/javadocdir_java-1.7.0-openjdk-javadoc
+%_altdir/%altname-javadoc
+%_sysconfdir/buildreqs/packages/substitute.d/%name-javadoc
 %doc %{_javadocdir}/%{uniquejavadocdir}
 %doc %{buildoutputdir}/j2sdk-image/jre/LICENSE
 
@@ -1275,6 +1321,11 @@ done
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt2_2.5.5.0jpp7
+- added javadoc alternatives
+- supports build with gcc 5
+- now creates classes.jsa in %%post
+
 * Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt1_2.5.5.0jpp7
 - new jpp release
 
