@@ -2,7 +2,7 @@
 %define abiversion 0
 
 Name: iperf3
-Version: 3.0.8
+Version: 3.1.1
 Release: alt1
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
@@ -16,9 +16,6 @@ Source2: iperf3-udp.init
 Source3: iperf3.sysconfig
 Source4: iperf3-tcp.service
 Source5: iperf3-udp.service
-
-# Milestone-future Milestone-3.1a1
-Patch100: iperf-3.0.8-pidfile.patch
 
 BuildRequires: rpm-build-licenses
 
@@ -61,8 +58,6 @@ This package contains development files of iperf3
 %prep
 %setup -q -n %native-%version
 
-%patch100 -p1
-
 %build
 
 # fixed RPATH issue
@@ -103,7 +98,7 @@ install -pDm0644 %SOURCE3 %buildroot/%_sysconfdir/sysconfig/%name
 %_initdir/%name-*
 %_unitdir/%name-*.service
 %config(noreplace) %_sysconfdir/sysconfig/%name
-%doc AUTHORS LICENSE README.md RELEASE_NOTES
+%doc LICENSE README.md RELEASE_NOTES
 
 %files -n lib%name-%abiversion
 /%_libdir/lib%native.so.*
@@ -114,5 +109,8 @@ install -pDm0644 %SOURCE3 %buildroot/%_sysconfdir/sysconfig/%name
 
 
 %changelog
+* Thu Nov 26 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.1.1-alt1
+- New version
+
 * Thu Oct 09 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.0.8-alt1
 - Initial build for ALTLinux
