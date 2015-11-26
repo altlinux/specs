@@ -6,7 +6,7 @@
 
 
 Name: branding-%brand-%theme
-Version: 20140902
+Version: 20151126
 Release: alt1
 BuildArch: noarch
 
@@ -151,15 +151,26 @@ Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "brandi
 %description kde3-settings
 KDE3 settings for %Brand %version %Theme
 
+%package themes
+
+Summary: Themes for %Brand %version %Theme
+License: Distributable
+Group: Graphical desktop/GNOME
+Provides: gnome-theme-%brand-%theme = %version-%release
+Provides: metacity-theme-%brand-%theme = %version-%release
+Provides: metacity-theme
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-themes ";done )
+
+%description themes
+%Brand %version %Theme themes
+
 %package gnome-settings
 
 Summary: GNOME settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/GNOME
 Requires: gtk2-theme-mist
-Provides: gnome-theme-%brand-%theme = %version-%release
-Provides: metacity-theme-%brand-%theme = %version-%release
-Provides: metacity-theme
+Requires: %name-themes = %version-%release
 #Provides: gnome-menus
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-gnome-settings ";done )
 
@@ -172,6 +183,7 @@ Summary: XFCE settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
+Requires: %name-themes = %version-%release
 Obsoletes: xfce-settings-lite xfce-settings-school-lite
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-xfce-settings ";done )
 
@@ -413,8 +425,10 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 %_sysconfdir/skel/.kde
 %_datadir/apps/ksplash/Themes/*
 
-%files gnome-settings
+%files themes
 %_datadir/themes/*
+
+%files gnome-settings
 #/etc/gnome/xdg/menus/applications-merged/
 #/etc/xdg/menus/*
 /etc/skel/.gconf
@@ -439,13 +453,15 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 /etc/skel/.config
 /etc/skel/.config
 /etc/skel/.local
-/usr/share/themes/*
 /usr/share/xfce4/backdrops
 /etc/sysconfig/xinitrc.xfce
 %_bindir/*
 
 
 %changelog
+* Thu Nov 26 2015 Aleksey Avdeev <solo@altlinux.org> 20151126-alt1
+- move themes to subpackages
+
 * Tue Sep 02 2014 Michael Shigorin <mike@altlinux.org> 20140902-alt1
 - updated company address
 
