@@ -13,7 +13,7 @@
 
 Name: kde5-baseapps
 Version: 4.97.0
-Release: alt5
+Release: alt6
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -21,11 +21,13 @@ Summary: KDE Workspace 5 base applications
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
+#Requires: kde5-konqueror      = %EVR
+Requires: /usr/bin/xbrowser
+#
 Requires: kde5-kdepasswd      = %EVR
 Requires: kde5-kdialog        = %EVR
 Requires: kde5-keditbookmarks = %EVR
 Requires: kde5-kfind          = %EVR
-Requires: kde5-konqueror      = %EVR
 #Requires: kde5-nsplugins      = %EVR
 #Requires: %name-plasma-applets = %EVR
 
@@ -351,6 +353,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Thu Nov 26 2015 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt6
+- allow to replace konqueror
+
 * Wed Nov 18 2015 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt5
 - update from frameworks branch
 
