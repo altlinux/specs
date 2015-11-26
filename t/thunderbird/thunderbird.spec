@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	38.0.1
+Version:	38.4.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -92,7 +92,7 @@ organizational needs.
 
 %if_with enigmail
 %package enigmail
-%define engimail_version 1.7
+%define engimail_version 1.8.2
 %define enigmail_ciddir %mozilla_arch_extdir/%tbird_cid/\{847b3a00-7ab1-11d4-8f02-006008948af5\}
 Summary: Enigmail - GPG support for Mozilla Thunderbird
 Group: Networking/Mail
@@ -448,6 +448,22 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Nov 26 2015 Alexey Gladkov <legion@altlinux.ru> 38.4.0-alt1
+- New version (38.4.0).
+- Enigmail (1.8.2).
+- Fixed:
+  + 2015-90 Vulnerabilities found through code inspection
+  + 2015-88 Heap overflow in gdk-pixbuf when scaling bitmap images
+  + 2015-85 Out-of-bounds write with Updater and malicious MAR file
+  + 2015-84 Arbitrary file overwriting through Mozilla Maintenance Service with hard links
+  + 2015-79 Miscellaneous memory safety hazards (rv:40.0 / rv:38.2)
+  + 2015-71 NSS incorrectly permits skipping of ServerKeyExchange
+  + 2015-70 NSS accepts export-length DHE keys with regular DHE cipher suites
+  + 2015-67 Key pinning is ignored when overridable errors are encountered
+  + 2015-66 Vulnerabilities found through code inspection
+  + 2015-63 Use-after-free in Content Policy due to microtask execution error
+  + 2015-59 Miscellaneous memory safety hazards (rv:39.0 / rv:31.8 / rv:38.1)
+
 * Sat Jun 20 2015 Alexey Gladkov <legion@altlinux.ru> 38.0.1-alt1
 - New version (38.0.1).
 
