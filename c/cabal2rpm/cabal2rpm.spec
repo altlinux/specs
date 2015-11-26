@@ -1,6 +1,6 @@
 Name: cabal2rpm
 Version: 0.20.08
-Release: alt10
+Release: alt11
 License: GPL2+
 Group: Development/Haskell
 Source: %name-%version.tar
@@ -29,6 +29,10 @@ install -D -m755 cabal2gear %buildroot%_bindir/cabal2gear
 %_bindir/cabal2gear
 
 %changelog
+* Thu Nov 26 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.20.08-alt11
+- cabal2gear: make the remote config consistent with git-remote
+  (like in ALT bug 31479).
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.20.08-alt10
 - autocreate watch file
 - simplify spec-file
