@@ -1,5 +1,5 @@
 Name: enblend
-Version: 4.1.3
+Version: 4.1.4
 Release: alt1
 
 Summary: A tool for combine images (make a panoramas) using a multiresolution spline
@@ -43,6 +43,9 @@ the  input  images  invisible and very suitable to make panoramas.
 
 
 %changelog
+* Fri Nov 27 2015 Yuri N. Sedunov <aris@altlinux.org> 4.1.4-alt1
+- 4.1.4
+
 * Sun Jul 12 2015 Yuri N. Sedunov <aris@altlinux.org> 4.1.3-alt1
 - 4.1.3
 
