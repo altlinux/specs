@@ -3,7 +3,7 @@
 
 Name: iperf3
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
 License: %bsd
@@ -11,11 +11,9 @@ Group: Monitoring
 
 Url: http://software.es.net/iperf
 Source0: http://downloads.es.net/pub/iperf/%native-%version.tar.gz
-Source1: iperf3-tcp.init
-Source2: iperf3-udp.init
-Source3: iperf3.sysconfig
-Source4: iperf3-tcp.service
-Source5: iperf3-udp.service
+Source1: iperf3.sysconfig
+Source2: iperf3.init
+Source3: iperf3.service
 
 BuildRequires: rpm-build-licenses
 
@@ -75,28 +73,22 @@ autoconf
 
 rm -f %buildroot/%_libdir/*.a
 
-install -pDm0755 %SOURCE1 %buildroot/%_initdir/%name-tcp
-install -pDm0755 %SOURCE2 %buildroot/%_initdir/%name-udp
+install -pDm0644 %SOURCE1 %buildroot/%_sysconfdir/sysconfig/%name
 
-install -pDm0644 %SOURCE4 %buildroot/%_unitdir/%name-tcp.service
-install -pDm0644 %SOURCE5 %buildroot/%_unitdir/%name-udp.service
-
-install -pDm0644 %SOURCE3 %buildroot/%_sysconfdir/sysconfig/%name
+install -pDm0755 %SOURCE2 %buildroot/%_initdir/%name
+install -pDm0644 %SOURCE3 %buildroot/%_unitdir/%name.service
 
 %post
-%post_service %name-tcp
-%post_service %name-udp
+%post_service %name
 
 %preun
-%preun_service %name-tcp
-%preun_service %name-udp
-
+%preun_service %name
 
 %files
 %_bindir/*
 %_mandir/man?/*
-%_initdir/%name-*
-%_unitdir/%name-*.service
+%_initdir/%name
+%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %doc LICENSE README.md RELEASE_NOTES
 
@@ -109,6 +101,10 @@ install -pDm0644 %SOURCE3 %buildroot/%_sysconfdir/sysconfig/%name
 
 
 %changelog
+* Thu Nov 26 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.1.1-alt2
+- Removed init and service files for udp service:
+  one tcp daemon is serves all in Iperf3
+
 * Thu Nov 26 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.1.1-alt1
 - New version
 
