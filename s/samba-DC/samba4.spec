@@ -45,7 +45,7 @@
 
 Name:    samba-DC
 Version: 4.3.1
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -99,7 +99,6 @@ BuildRequires: python-devel
 BuildRequires: libreadline-devel
 BuildRequires: libldap-devel
 BuildRequires: zlib-devel
-BuildRequires: libxfs-qa-devel
 BuildRequires: libarchive-devel >= 3.1.2
 
 %if_with mitkrb5
@@ -337,6 +336,63 @@ Conflicts: %rname-winbind-devel
 
 %description winbind-devel
 The samba-winbind package provides developer tools for the wbclient library.
+%endif
+
+%if_with clustering_support
+%package ctdb
+Summary: A Clustered Database based on Samba's Trivial Database (TDB)
+Group: System/Servers
+
+Requires: %name-libs = %version-%release
+
+# for ps and killall
+Requires: psmisc
+Requires: tdb-utils
+# for pkill and pidof:
+Requires: procps
+# for netstat:
+Requires: net-tools
+Requires: ethtool
+# for ip:
+Requires: iproute
+Requires: iptables
+# for flock, getopt, kill:
+Requires: util-linux
+Conflicts: ctdb
+
+%description ctdb
+CTDB is a cluster implementation of the TDB database used by Samba and other
+projects to store temporary data. If an application is already using TDB for
+temporary data it is very easy to convert that application to be cluster aware
+and use CTDB instead.
+
+%package ctdb-devel
+Summary: CTDB clustered database development package
+Group: Development/C
+Requires: %name-ctdb = %version-%release
+Conflicts: ctdb-devel
+
+%description ctdb-devel
+Libraries, include files, etc you can use to develop CTDB applications.
+CTDB is a cluster implementation of the TDB database used by Samba and other
+projects to store temporary data. If an application is already using TDB for
+temporary data it is very easy to convert that application to be cluster aware
+and use CTDB instead.
+
+%package ctdb-tests
+Summary: CTDB clustered database test suite
+Group: Development/Other
+Requires: %name-libs = %version-%release
+Requires: %name-ctdb = %version-%release
+Requires: nc
+Conflicts: ctdb-tests
+
+%description ctdb-tests
+Test suite for CTDB.
+CTDB is a cluster implementation of the TDB database used by Samba and other
+projects to store temporary data. If an application is already using TDB for
+temporary data it is very easy to convert that application to be cluster aware
+and use CTDB instead.
 %endif
 
 %if_with docs
@@ -596,7 +652,7 @@ cp -a docs-xml/output/htmldocs %buildroot%_defaultdocdir/%rname/
 
 # Cleanup man pages
 %if_without libsmbclient
-/bin/rm -f %buildroot%_man7dir/libsmbclient.7.gz
+/bin/rm -f %buildroot%_man7dir/libsmbclient.7*
 %endif
 
 %find_lang pam_winbind
@@ -1138,9 +1194,71 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/winbind_krb5_locator.7*
 %endif
 
+%if_with clustering_support
+%files ctdb
+#doc ctdb/README
+%config(noreplace) %_sysconfdir/sysconfig/ctdb
+%dir %_sysconfdir/ctdb
+%config(noreplace) %_sysconfdir/ctdb/notify.sh
+%config(noreplace) %_sysconfdir/ctdb/debug-hung-script.sh
+%config(noreplace) %_sysconfdir/ctdb/ctdb-crash-cleanup.sh
+%config(noreplace) %_sysconfdir/ctdb/gcore_trace.sh
+%config(noreplace) %_sysconfdir/ctdb/functions
+%config(noreplace) %_sysconfdir/ctdb/debug_locks.sh
+%_sysconfdir/ctdb/statd-callout
+%dir /var/lib/ctdb
+%_unitdir/ctdb.service
+%_initdir/ctdb
+%_tmpfilesdir/ctdb.conf
+
+%_sysconfdir/ctdb/nfs-checks.d
+%_sysconfdir/ctdb/nfs-linux-kernel-callout
+%_sysconfdir/sudoers.d/ctdb
+%_sysconfdir/ctdb/events.d
+%dir %_sysconfdir/ctdb/notify.d
+%_sysconfdir/ctdb/notify.d/README
+%_sbindir/ctdbd
+%_sbindir/ctdbd_wrapper
+%_bindir/ctdb
+%_bindir/smnotify
+%_bindir/ping_pong
+%_bindir/ltdbtool
+%_bindir/ctdb_diagnostics
+%_bindir/onnode
+%_bindir/ctdb_lock_helper
+%_bindir/ctdb_event_helper
+
+%_man1dir/ctdb.1*
+%_man1dir/ctdbd.1*
+%_man1dir/onnode.1*
+%_man1dir/ltdbtool.1*
+%_man1dir/ping_pong.1*
+%_man1dir/ctdbd_wrapper.1*
+%_man5dir/ctdbd.conf.5*
+%_man7dir/ctdb.7*
+%_man7dir/ctdb-tunables.7*
+%_man7dir/ctdb-statistics.7*
+
+%files ctdb-devel
+%_includedir/samba-4.0/ctdb*
+%_libdir/pkgconfig/ctdb.pc
+
+%files ctdb-tests
+%_libdir/samba-dc/ctdb-tests
+%_bindir/ctdb_run_tests
+%_bindir/ctdb_run_cluster_tests
+%_datadir/ctdb-tests
+%endif
+
+
+
 %files -n task-samba-dc
 
 %changelog
+* Thu Nov 26 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.1-alt3
+- Remove libxfs-qa-devel from build requirements
+- Package samba-DC-ctdb, samba-DC-ctdb-devel and samba-DC-ctdb-tests
+
 * Mon Nov 16 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.1-alt2
 - Enable clustering support
 
