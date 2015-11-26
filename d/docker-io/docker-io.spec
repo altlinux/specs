@@ -10,7 +10,7 @@
 %global shortcommit 4e9bbfa
 
 Name:       %{repo}-io
-Version:    1.9.0
+Version:    1.9.1
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -344,6 +344,9 @@ exit 0
 %{gopath}/src/%{import_path}/pkg/*/*/*/*.tar
 
 %changelog
+* Wed Nov 25 2015 Vladimir Didenko <cow@altlinux.org> 1.9.1-alt1
+- New version.
+
 * Fri Nov 6 2015 Vladimir Didenko <cow@altlinux.org> 1.9.0-alt1
 - New version.
 
