@@ -1,5 +1,5 @@
 %define branch 1.8
-%define version %branch.5
+%define version %branch.7
 %define release alt1
 %define origname Django
 %define oname django
@@ -383,6 +383,10 @@ popd
 %endif
 
 %changelog
+* Fri Nov 27 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.7-alt1
+- 1.8.7
+- fixed CVE-2015-8213
+
 * Tue Oct 13 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.5-alt1
 - 1.8.5
 - fixed CVE-2015-5143, CVE-2015-5144, CVE-2015-5145, CVE-2015-5964, CVE-2015-5963
