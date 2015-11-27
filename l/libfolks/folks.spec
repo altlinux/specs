@@ -11,15 +11,15 @@
 
 Name: lib%_name
 Version: %ver_major.2
-Release: alt0.1
+Release: alt1
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
 License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Folks
 
-#Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
-Source: %_name-%version.tar
+Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
+#Source: %_name-%version.tar
 
 %define glib_ver 2.40.0
 %define tp_glib_ver 0.19.9
@@ -175,6 +175,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Fri Nov 27 2015 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt1
+- 0.11.2 release
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt0.1
 - 0.11.2_46e5abf5
 
