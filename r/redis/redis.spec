@@ -1,6 +1,6 @@
 Name: redis
 Version: 3.0.5
-Release: alt1
+Release: alt2
 
 Summary: Redis is an advanced key-value store
 
@@ -91,7 +91,7 @@ mkdir -p %buildroot%_sysconfdir/sysconfig
 install -m 0640 %SOURCE8 %buildroot%_sysconfdir/sysconfig/%name
 
 mkdir -p  %buildroot%_unitdir
-install -m 0755 %SOURCE9 %buildroot%_unitdir/%name.service
+install -m 0644 %SOURCE9 %buildroot%_unitdir/%name.service
 
 mkdir -p  %buildroot%_sysconfdir/tmpfiles.d
 echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_sysconfdir/tmpfiles.d/%name.conf
@@ -135,6 +135,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_sysconfdir/tmpfile
 
 
 %changelog
+* Fri Nov 27 2015 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.5-alt2
+- Fix unit file access rights (Closes: #31545)
+
 * Sun Oct 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.5-alt1
 - New version (3.0.5)
 
