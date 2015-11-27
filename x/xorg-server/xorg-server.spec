@@ -1,4 +1,4 @@
-%define mesaversion 10.3
+%define mesaversion 11.0
 %define xorgversion 7.7.0
 
 %define _libexecdir /usr/libexec
@@ -21,7 +21,7 @@
 %endif
 
 Name: xorg-server
-Version: 1.16.4
+Version: 1.18.0
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -31,9 +31,9 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 # grep ABI_ hw/xfree86/common/xf86Module.h
-Provides: XORG_ABI_VIDEODRV = 18.0
-Provides: XORG_ABI_XINPUT = 21.0
-Provides: XORG_ABI_EXTENSION = 8.0
+Provides: XORG_ABI_VIDEODRV = 20.0
+Provides: XORG_ABI_XINPUT = 22.1
+Provides: XORG_ABI_EXTENSION = 9.0
 Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoch:%version-%release
 %if_enabled glamor
 Provides: xorg-glamor = %epoch:%version-%release
@@ -43,6 +43,8 @@ PreReq: xorg-server-control >= 1.3-alt1 %name-common = %epoch:%version-%release 
 Requires: xset iceauth xdpyinfo glxinfo xdriinfo xorg-drv-fbdev xorg-drv-evdev
 %ifarch %ix86 x86_64
 Requires: xorg-drv-vesa
+Provides: xorg-drv-modesetting = %epoch:%version-%release
+Obsoletes: xorg-drv-modesetting < %epoch:%version-%release
 %endif
 
 Source: %name-%version.tar
@@ -54,7 +56,7 @@ BuildRequires: libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel 
 BuildRequires: xorg-damageproto-devel xorg-dri2proto-devel xorg-randrproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
 BuildRequires: xorg-xcmiscproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel
 BuildRequires: xorg-font-utils xorg-xtrans-devel xorg-util-macros libselinux-devel libaudit-devel xmlto xorg-sgml-doctools
-BuildRequires: xorg-glproto-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel
+BuildRequires: xorg-glproto-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libdrm-devel
 %if_enabled glamor
 BuildRequires: libEGL-devel libgbm-devel libepoxy-devel
 %endif
@@ -62,7 +64,7 @@ BuildRequires: libEGL-devel libgbm-devel libepoxy-devel
 BuildRequires: libwayland-client-devel
 %endif
 %if_enabled xephyr
-BuildRequires: libxcbutil-devel libxcbutil-image-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel
+BuildRequires: libxcbutil-devel libxcbutil-image-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libxcb-render-util-devel
 %endif
 
 %description
@@ -80,15 +82,6 @@ Obsoletes: libXiconfig
 
 %description common
 %name-common is common files for X.Org
-
-%package -n xorg-drv-multimedia
-Summary: Multimedia drivers
-Group: System/X11
-Requires: %name = %epoch:%version-%release
-Provides: %_sysconfdir/X11/app-defaults
-
-%description -n xorg-drv-multimedia
-Multimedia drivers for X server
 
 %package -n xorg-xvfb
 Summary: A virtual framebuffer X Windows System server for X.Org
@@ -175,7 +168,7 @@ Xwayland is an X server for running X clients under Wayland
 %package -n xorg-sdk
 Summary: SDK for X server driver module development
 Group: Development/C
-Requires: xorg-util-macros
+Requires: xorg-util-macros xorg-dri3proto-devel xorg-presentproto-devel
 %if_enabled glamor
 Provides: xorg-glamor-devel = %epoch:%version-%release
 Obsoletes: xorg-glamor-devel < %epoch:%version-%release
@@ -219,7 +212,6 @@ drivers, input drivers, or other X modules should install this package.
 	%{subst_enable glamor} \
 	%{subst_enable dmx} \
 	%{subst_enable xnest} \
-	--enable-glx-tls \
 	%{subst_enable xephyr} \
 	%{subst_enable kdrive} \
 	--enable-aiglx \
@@ -288,6 +280,11 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_man4dir/exa.4*
 %_man5dir/xorg.conf.5*
 %_man5dir/xorg.conf.d.5*
+# modesetting - video driver for framebuffer device
+%ifarch %ix86 x86_64
+%_modulesdir/drivers/modesetting_drv.so
+%_man4dir/modesetting.4*
+%endif
 
 %files common
 %dir %_sysconfdir/X11/app-defaults
@@ -298,9 +295,6 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_datadir/X11/protocol.txt
 %dir %_modulesdir
 %_localstatedir/xkb
-
-%files -n xorg-drv-multimedia
-%_modulesdir/multimedia
 
 %files -n xorg-xvfb
 %_bindir/Xvfb
@@ -336,6 +330,18 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Mon Nov 23 2015 Valery Inozemtsev <shrek@altlinux.ru> 2:1.18.0-alt1
+- 1.18.0
+
+* Mon Oct 26 2015 Valery Inozemtsev <shrek@altlinux.ru> 2:1.17.3-alt1
+- 1.17.3
+
+* Mon Oct 05 2015 Valery Inozemtsev <shrek@altlinux.ru> 2:1.17.2-alt1
+- 1.17.2
+
+* Mon Feb 16 2015 Valery Inozemtsev <shrek@altlinux.ru> 2:1.17.1-alt1
+- 1.17.1
+
 * Wed Feb 11 2015 Valery Inozemtsev <shrek@altlinux.ru> 2:1.16.4-alt1
 - 1.16.4
 

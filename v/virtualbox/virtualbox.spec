@@ -57,7 +57,7 @@
 
 Name: virtualbox
 Version: 4.3.30
-Release: alt2
+Release: alt3
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -243,7 +243,6 @@ Summary: The X.org driver for video in VirtualBox guests
 Group: System/X11
 Provides: xorg-x11-drv-vboxvideo = %version-%release
 Obsoletes: xorg-x11-drv-vboxvideo < %version
-Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
 
 %description -n xorg-drv-vboxvideo
 The X.org driver for video in VirtualBox guests
@@ -747,6 +746,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Fri Nov 27 2015 Valery Inozemtsev <shrek@altlinux.ru> 4.3.30-alt3
+- removed requires XORG_ABI_VIDEODRV
+
 * Tue Sep 01 2015 Aleksey Avdeev <solo@altlinux.org> 4.3.30-alt2
 - Add subpackage virtualbox-sdk-xpcom (Closes: 31178)
 - Add synonyms lowercase (Closes: 31245)

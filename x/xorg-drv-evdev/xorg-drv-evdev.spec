@@ -1,7 +1,7 @@
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-evdev
-Version: 2.9.1
+Version: 2.10.0
 Release: alt1
 Epoch: 2
 Summary: Generic Linux input driver
@@ -54,6 +54,7 @@ install -m644 *.conf %buildroot%_xconfdir/
 %files
 %config(noreplace) %_xconfdir/*.conf
 %_x11modulesdir/input/*.so
+%_xorgsysconfigdir/*.conf
 %_man4dir/*
 
 %files devel
@@ -61,6 +62,12 @@ install -m644 *.conf %buildroot%_xconfdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Nov 26 2015 Valery Inozemtsev <shrek@altlinux.ru> 2:2.10.0-alt1
+- 2.10.0
+
+* Mon Oct 05 2015 Valery Inozemtsev <shrek@altlinux.ru> 2:2.9.2-alt1
+- 2.9.2
+
 * Wed Dec 17 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:2.9.1-alt1
 - 2.9.1
 

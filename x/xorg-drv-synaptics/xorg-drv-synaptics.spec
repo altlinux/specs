@@ -1,5 +1,5 @@
 Name: xorg-drv-synaptics
-Version: 1.8.1
+Version: 1.8.3
 Release: alt1
 Epoch: 1
 Summary: Synaptics touchpad input driver
@@ -59,6 +59,9 @@ Synaptics touchpad input driver development package
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Nov 27 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:1.8.3-alt1
+- 1.8.3
+
 * Fri Oct 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:1.8.1-alt1
 - 1.8.1
 

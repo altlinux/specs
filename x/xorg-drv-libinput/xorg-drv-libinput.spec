@@ -5,7 +5,7 @@
 
 Name: xorg-drv-libinput
 Version: 0.15.0
-Release: alt1
+Release: alt2
 
 Summary: Xorg libinput input driver
 Group: System/X11
@@ -28,7 +28,7 @@ Requires: libinput >= %libinput_ver
 Requires: xkeyboard-config
 
 BuildRequires(Pre): xorg-sdk >= 1.14
-BuildRequires: libinput-devel >= %libinput_ver
+BuildRequires: libinput-devel >= %libinput_ver xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 This is an X driver based on libinput. It is a thin wrapper around libinput,
@@ -73,6 +73,9 @@ Xorg libinput input driver development files.
 %_includedir/xorg/libinput-properties.h
 
 %changelog
+* Fri Nov 27 2015 Valery Inozemtsev <shrek@altlinux.ru> 0.15.0-alt2
+- rebuild for XORG_ABI_XINPUT = 22.1
+
 * Mon Nov 16 2015 Yuri N. Sedunov <aris@altlinux.org> 0.15.0-alt1
 - updated to 0.15.0-1-gc8861d2
 
