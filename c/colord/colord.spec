@@ -11,7 +11,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.2.12
+Version: 1.3.1
 Release: alt1
 
 Summary: Color daemon
@@ -159,6 +159,8 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_datadir/dbus-1/services/org.freedesktop.ColorHelper.service
 %_datadir/polkit-1/actions/org.freedesktop.color.policy
 /lib/udev/rules.d/*.rules
+%_tmpfilesdir/%name.conf
+%_prefix/lib/systemd/user/%name-session.service
 
 %dir %_libdir/colord-sensors
 %_libdir/colord-sensors/libcolord_sensor_dummy.so
@@ -166,6 +168,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_libdir/colord-sensors/libcolord_sensor_colorhug.so
 %_libdir/colord-sensors/libcolord_sensor_argyll.so
 %_libdir/colord-sensors/libcolord_sensor_dtp94.so
+%_libdir/colord-sensors/libcolord_sensor_spark.so
 %_libdir/colord-sensors/libdtp94-private.so
 %_libdir/colord-sensors/libhuey-private.so
 %_libdir/colord-sensors/libmunki-private.so
@@ -281,6 +284,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Fri Nov 27 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Wed Aug 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.2.12-alt1
 - 1.2.12
 
