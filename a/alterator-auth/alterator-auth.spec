@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.29.1
+Version: 0.29.2
 Release: alt1
 
 BuildArch: noarch
@@ -42,19 +42,21 @@ Alterator module for system wide auth settings
 
 %install
 %makeinstall
-install -Dpm755 bin/ini-config %buildroot/%_bindir/ini-config
 install -Dpm755 sbin/system-auth %buildroot/%_sbindir/system-auth
 install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 
 %files
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*/
-%_bindir/ini-config
 %_sbindir/system-auth
 %_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Nov 27 2015 Andrey Cherepanov <cas@altlinux.org> 0.29.2-alt1
+- Replace entire section [global] in /etc/samba/smb.conf by new config
+- Support mapping parameters both for Samba 3.x and 4.x
+
 * Fri Sep 25 2015 Andrey Cherepanov <cas@altlinux.org> 0.29.1-alt1
 - Read domain name from domain parameter of resolvconf -l
 
