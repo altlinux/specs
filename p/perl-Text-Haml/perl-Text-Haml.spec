@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Digest/MD5.pm) perl(File/Path.pm) perl(Module/Build.pm) perl(Test/More.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Digest/MD5.pm) perl(File/Path.pm) perl(Test/More.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Text-Haml
 %define upstream_version 0.990116
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_5
 
 Summary:    Haml Perl implementation
 License:    GPL+ or Artistic
@@ -22,6 +22,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Basename.pm)
 BuildRequires: perl(File/Spec.pm)
 BuildRequires: perl(IO/File.pm)
+BuildRequires: perl(Module/Build.pm)
 BuildRequires: perl(Scalar/Util.pm)
 BuildRequires: perl(URI/Escape.pm)
 BuildArch:  noarch
@@ -56,6 +57,9 @@ rm -f %{buildroot}/%{perl_vendor_privlib}/Text/README.pod
 
 
 %changelog
+* Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.990116-alt1_5
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.990116-alt1_4
 - update by mgaimport
 
