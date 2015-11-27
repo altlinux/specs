@@ -1,20 +1,22 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/TAP/DOM.pm
 %define upstream_name    TAP-DOM
 %define upstream_version 0.12
 
+%{?perl_default_filter}
+
 Name:       perl-%{upstream_name}
-Version:    0.12
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Accessors for TAP::DOM summary part
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/S/SC/SCHWIGON/TAP-DOM-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/TAP/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Class/XSAccessor.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -45,7 +47,7 @@ change, so your data tools can, well, rely on it.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -57,9 +59,12 @@ change, so your data tools can, well, rely on it.
 
 %files
 %doc Changes LICENSE META.json META.yml  README
-%perl_vendor_privlib/*
+%{perl_vendor_privlib}/*
 
 %changelog
+* Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_1
+- update by mgaimport
+
 * Thu Nov 12 2015 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
