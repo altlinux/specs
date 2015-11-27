@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 25.8.0.0
-Release: alt1
+Release: alt2
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -32,6 +32,8 @@ Patch16: firefox-cross-desktop.patch
 #Patch17:	mozilla-disable-installer.patch
 Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX.patch
+Patch21: cpp_check.patch
+
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -42,6 +44,8 @@ BuildRequires(pre): browser-plugins-npapi-devel
 BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins-devel imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel python-modules-json unzip xorg-cf-files yasm zip
 
 BuildRequires: autoconf_2.13
+BuildRequires: libpixman-devel
+
 %set_autoconf_version 2.13
 
 # Protection against fraudulent DigiNotar certificates
@@ -70,6 +74,7 @@ These helper macros provide possibility to rebuild
 
 %prep
 %setup -n %name-%version -c
+%patch21 -p1
 cd %name
 
 tar -xf %SOURCE1
@@ -142,7 +147,7 @@ export MOZ_BUILD_APP=browser
 MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
                 sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
 export CFLAGS="$MOZ_OPT_FLAGS"
-export CXXFLAGS="$MOZ_OPT_FLAGS"
+export CXXFLAGS="$MOZ_OPT_FLAGS -D_GNUC_"
 
 # Add fake RPATH
 rpath="/$(printf %%s '%palemoon_prefix' |tr '[:print:]' '_')"
@@ -303,6 +308,10 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Fri Nov 27 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.8.0.0-alt2
+- add BuildRequires libpixman-devel
+- add cpp_check.patch
+
 * Sat Nov 21 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.8.0.0-alt1
 - New Version
 
@@ -338,3 +347,4 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+
