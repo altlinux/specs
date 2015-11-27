@@ -8,7 +8,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_5
 
 Summary:    Receive test reports
 License:    GPL+ or Artistic
@@ -83,7 +83,11 @@ Tapper Distribution for Recevining Test Reports.
 /usr/share/man/man1/tapper-reports-receiver-daemon.1*
 /usr/share/man/man1/tapper-reports-receiver.1*
 
+
 %changelog
+* Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1_5
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1_4
 - update by mgaimport
 
