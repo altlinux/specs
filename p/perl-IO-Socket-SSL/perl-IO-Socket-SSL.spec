@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Socket-SSL
 Name: perl-%dist
-Version: 2.012
+Version: 2.020
 Release: alt1
 
 Summary: SSL socket interface class
@@ -10,7 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/S/SU/SULLR/IO-Socket-SSL-%{version}.tar.gz
-Patch: IO-Socket-SSL-2.007-alt-deps.patch
+Patch: IO-Socket-SSL-2.020-alt-deps.patch
 
 BuildArch: noarch
 
@@ -24,9 +24,13 @@ interface methods.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p0
+#%patch -p0
 # needs internet connection
 rm t/external/*.t
+# needs network (share_network=1)
+rm -f t/auto_verify_hostname.t t/cert_no_file.t t/acceptSSL-timeout.t t/core.t
+# some tests hang for a long time w/o network
+rm t/[d-z]*t
 
 %build
 %perl_vendor_build
@@ -39,6 +43,9 @@ rm t/external/*.t
 %perl_vendor_privlib/IO
 
 %changelog
+* Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 2.020-alt1
+- automated CPAN update
+
 * Wed Feb 11 2015 Igor Vlasenko <viy@altlinux.ru> 2.012-alt1
 - automated CPAN update
 
