@@ -8,7 +8,7 @@
 %define xapp kf5
 Name: %xde-%rname
 Version: 15.9.0.%svn
-Release: alt2
+Release: alt3
 
 %define qt_bin_dir %_qt5_bindir
 %define configure_qmake %qmake_qt5
@@ -105,7 +105,7 @@ sed -i 's|^PREFIX=.*|PREFIX=%_prefix|' Makefile
 sed -i 's|^DATA_PATH=.*|DATA_PATH=%_datadir/%name|' Makefile
 sed -i 's|^TRANSLATION_PATH=.*|TRANSLATION_PATH=%_datadir/%name/translations|' Makefile
 sed -i 's|^DOC_PATH=.*|DOC_PATH=%_docdir/%name-%version|' Makefile
-sed -i 's|^THEMES_PATH=.*|THEMES_PATH=%_datadir/%name/themes|' Makefile
+sed -i 's|^THEMES_PATH=.*|THEMES_PATH=%_datadir/smplayer/themes|' Makefile
 sed -i 's|^SHORTCUTS_PATH=.*|SHORTCUTS_PATH=%_datadir/%name/shortcuts|' Makefile
 
 pushd src
@@ -162,6 +162,9 @@ done
 
 
 %changelog
+* Fri Nov 27 2015 Sergey V Turchin <zerg@altlinux.org> 15.9.0.7213-alt3
+- allow smplayer themes
+
 * Fri Nov 20 2015 Sergey V Turchin <zerg@altlinux.org> 15.9.0.7213-alt2
 - set default youtube browser
 
