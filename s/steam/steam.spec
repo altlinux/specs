@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.50
+Version: 1.0.0.51
 Release: alt1
 
 Summary: Launcher for the Steam software distribution service
@@ -47,15 +47,25 @@ savegame and screenshot functionality, and many social features.
 %_desktopdir/*
 %_docdir/*
 %_miconsdir/*
+%dir %_iconsdir/hicolor/24x24
+%dir %_iconsdir/hicolor/24x24/apps
 %_iconsdir/hicolor/24x24/apps/*
 %_niconsdir/*
 %_liconsdir/*
+%dir %_iconsdir/hicolor/256x256
+%dir %_iconsdir/hicolor/256x256/apps
 %_iconsdir/hicolor/256x256/apps/*
 %_man6dir/*
 %_pixmapsdir/*
 %config %_udevrulesdir/99-%name-controller-perms.rules
 
 %changelog 
+* Fri Nov 27 2015 Nazarov Denis <nenderus@altlinux.org> 1.0.0.51-alt1
+- Version 1.0.0.51
+
+* Wed May 06 2015 Nazarov Denis <nenderus@altlinux.org> 1.0.0.50-alt0.M70P.1
+- Build for branch p7
+
 * Wed May 06 2015 Nazarov Denis <nenderus@altlinux.org> 1.0.0.50-alt1
 - Version 1.0.0.50
 
