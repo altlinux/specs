@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-disk-utility
-Version: %ver_major.2
+Version: %ver_major.3.1
 Release: alt1
 
 Summary: Disk management application
@@ -79,6 +79,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Fri Nov 27 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.3.1-alt1
+- 3.18.3.1
+
 * Sat Nov 07 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 
