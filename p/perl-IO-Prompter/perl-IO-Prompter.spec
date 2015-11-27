@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Contextual/Return.pm) perl(ExtUtils/MakeMaker.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(Test/More.pm) perl(diagnostics.pm)
 # END SourceDeps(oneline)
-%define module_version 0.004013
+%define module_version 0.004014
 %define module_name IO-Prompter
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.004013
+Version: 0.004014
 Release: alt1
 Summary: Prompt for input, read it, clean it, return it.
 Group: Development/Perl
@@ -83,6 +83,9 @@ designed to be a drop-in replacement for `readline' or `<>'.
 %perl_vendor_privlib/I*
 
 %changelog
+* Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.004014-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.004013-alt1
 - automated CPAN update
 
