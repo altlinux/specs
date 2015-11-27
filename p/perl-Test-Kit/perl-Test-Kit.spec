@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 2.13
+%define module_version 2.14
 %define module_name Test-Kit
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Import/Into.pm) perl(Module/Runtime.pm) perl(Scalar/Util.pm) perl(Sub/Delete.pm) perl(Test/Aggregate.pm) perl(Test/Aggregate/Nested.pm) perl(Test/Builder.pm) perl(Test/CPAN/Changes.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warn.pm) perl(parent.pm) perl(Hook/LexWrap.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Import/Into.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.13
+Version: 2.14
 Release: alt1
 Summary: Build custom test packages with only the features you want.
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/T*
 
 %changelog
+* Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1
+- automated CPAN update
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1
 - automated CPAN update
 
