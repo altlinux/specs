@@ -3,12 +3,11 @@ Summary:	Themes icons for SMPlayer
 License:	%gpl2plus %lgpl3only CCPL_Attribution_2.5 CCPL_Attribution-ShareAlike_2.5 (see README.txt for themes)
 Group:		Video
 Url:		http://smplayer.sourceforge.net/
-Version:	0.1.20
+Version:	15.6.0
 Release:	alt1
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://smplayer.sourceforge.net/uk/linux/download/%name-%version.tar.bz2
 BuildArch:	noarch
-Requires:	smplayer >= 0.5.29
 BuildPreReq:	rpm-build-licenses
 
 %description
@@ -31,6 +30,10 @@ cp -r ./themes/* %buildroot%_datadir/smplayer/themes/
 %_datadir/smplayer/themes
 
 %changelog
+* Fri Nov 27 2015 Motsyo Gennadi <drool@altlinux.ru> 15.6.0-alt1
+- 15.6.0
+- don't require smplayer
+
 * Tue Feb 23 2010 Motsyo Gennadi <drool@altlinux.ru> 0.1.20-alt1
 - 0.1.20
 
