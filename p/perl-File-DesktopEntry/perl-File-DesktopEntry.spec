@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-DesktopEntry
 Name: perl-%dist
-Version: 0.12
+Version: 0.21
 Release: alt1
 
 Summary: Object to handle .desktop files
@@ -14,7 +14,7 @@ Source: http://www.cpan.org/authors/id/M/MI/MICHIELB/File-DesktopEntry-%{version
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 27 2011
-BuildRequires: perl-File-BaseDir perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-File-BaseDir perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl(URI/Escape.pm)
 
 %description
 This module is used to work with .desktop files.  The format of these files
@@ -32,10 +32,13 @@ these files.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes
 %perl_vendor_privlib/File
 
 %changelog
+* Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
