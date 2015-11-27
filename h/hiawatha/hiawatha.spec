@@ -1,5 +1,5 @@
 Name: hiawatha
-Version: 9.15
+Version: 10.0
 Release: alt1
 
 Summary: A secure and advanced webserver
@@ -85,6 +85,9 @@ install -pDm644 %_sourcedir/hiawatha.logrotate \
 %_logdir/%name
 
 %changelog
+* Fri Nov 27 2015 Michael Shigorin <mike@altlinux.org> 10.0-alt1
+- new version 10.0
+
 * Thu Oct 29 2015 Michael Shigorin <mike@altlinux.org> 9.15-alt1
 - 9.15
 - updated patches
