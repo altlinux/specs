@@ -1,5 +1,5 @@
 Name: xorg-drv-qxl
-Version: 0.1.2
+Version: 0.1.4
 Release: alt1
 Epoch: 1
 Summary: QEMU QXL paravirt video
@@ -38,6 +38,9 @@ Driver for QEMU QXL paravirt video
 %_x11modulesdir/drivers/*.so
 
 %changelog
+* Fri Nov 27 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:0.1.4-alt1
+- 0.1.4
+
 * Thu Oct 23 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:0.1.2-alt1
 - 0.1.2
 

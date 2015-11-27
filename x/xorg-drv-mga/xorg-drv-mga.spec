@@ -1,6 +1,6 @@
 Name: xorg-drv-mga
-Version: 1.6.3
-Release: alt2
+Version: 1.6.4
+Release: alt1
 Epoch: 1
 Summary: Matrox video driver
 License: MIT/X11
@@ -53,6 +53,9 @@ cards).
 %_man4dir/*
 
 %changelog
+* Fri Nov 27 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.4-alt1
+- 1.6.4
+
 * Fri Oct 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.3-alt2
 - requires XORG_ABI_VIDEODRV = 18.0
 

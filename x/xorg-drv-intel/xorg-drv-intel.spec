@@ -1,5 +1,5 @@
 Name: xorg-drv-intel
-Version: 2.99.916
+Version: 2.99.917
 Release: alt3
 Epoch: 7
 Summary: Intel integrated graphics chipsets
@@ -39,7 +39,6 @@ and 24 for the 830M and later
 %configure \
 	--libexecdir=%_prefix/libexec \
 	--with-xorg-module-dir=%_x11modulesdir \
-	--disable-dri3 \
 	--disable-static
 
 %make_build
@@ -57,6 +56,18 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Thu Nov 26 2015 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt3
+- git snapshot master.0995ad2
+
+* Mon Oct 05 2015 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt2
+- git snapshot master.4e668dd
+
+* Tue Feb 17 2015 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt1
+- git snapshot master.127aae5
+
+* Thu Feb 05 2015 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.916-alt4
+- requires XORG_ABI_VIDEODRV = 19.0
+
 * Fri Oct 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.916-alt3
 - requires XORG_ABI_VIDEODRV = 18.0
 
