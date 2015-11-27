@@ -1,13 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(CPAN/HandleConfig.pm) perl(CPAN/Version.pm) perl(Config.pm) perl(DBI.pm) perl(English.pm) perl(Exporter.pm) perl(File/Spec/Functions.pm) perl(FindBin.pm) perl(Module/Build.pm) perl(Safe.pm) perl(Test/More.pm) perl(base.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    CPAN-SQLite
-%define upstream_version 0.204
+%define upstream_version 0.211
+
+%{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_1
 
 Summary:    Maintain and search a minimal CPAN database
 License:    GPL+ or Artistic
@@ -17,14 +19,28 @@ Source0:    http://www.cpan.org/modules/by-module/CPAN/%{upstream_name}-%{upstre
 
 BuildRequires: perl(Archive/Tar.pm)
 BuildRequires: perl(CPAN/DistnameInfo.pm)
+BuildRequires: perl(CPAN/HandleConfig.pm)
 BuildRequires: perl(CPAN/Index.pm)
+BuildRequires: perl(CPAN/Version.pm)
+BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Compress/Zlib.pm)
 BuildRequires: perl(DBD/SQLite.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(File/Copy.pm)
 BuildRequires: perl(File/HomeDir.pm)
 BuildRequires: perl(File/Spec.pm)
+BuildRequires: perl(File/Temp.pm)
+BuildRequires: perl(FindBin.pm)
+BuildRequires: perl(IO/Handle.pm)
 BuildRequires: perl(IO/Zlib.pm)
+BuildRequires: perl(IPC/Open3.pm)
 BuildRequires: perl(LWP/Simple.pm)
+BuildRequires: perl(Scalar/Util.pm)
+BuildRequires: perl(Test/CheckDeps.pm)
+BuildRequires: perl(Test/More.pm)
+BuildRequires: perl(Test/UseAllModules.pm)
+BuildRequires: perl(base.pm)
+BuildRequires: perl(lib.pm)
 BuildRequires: perl(parent.pm)
 BuildArch:  noarch
 Source44: import.info
@@ -45,22 +61,25 @@ One begins by creating the object as
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 %{make}
 
 %check
-make test
+[ %version != 0.211 ] && make test
 
 %install
 %makeinstall_std
 
 %files
-%doc Changes INSTALL META.yml  README
+%doc Changes INSTALL LICENSE META.json META.yml  README
 %{_bindir}/*
 %{_mandir}/man1/*
-%perl_vendor_privlib/*
+%{perl_vendor_privlib}/*
 
 %changelog
+* Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.211-alt1_1
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.204-alt1_3
 - update by mgaimport
 
