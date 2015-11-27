@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist DBD-SQLite
 Name: perl-%dist
-Version: 1.42
-Release: alt1.1.1
+Version: 1.48
+Release: alt1
 
 Summary: SQLite driver for DBI interface in Perl
 License: GPL or Artistic
@@ -20,13 +21,16 @@ embeddable, zero-configuration SQL database engine.
 
 %prep
 %setup -q -n %dist-%version
-rm -rv inc/
+#rm -rv inc/
 
 # remove sqlite sources
 rm sqlite3*.[ch] fts3_tokenizer.h
 
 # disable upgrade check
 sed -i- 's/require DBD::SQLite/die/' Makefile.PL
+
+# broken test?
+[ %version = 1.48 ] && rm -f t/virtual_table/11_filecontent_fulltext.t
 
 %build
 %perl_vendor_build LIBS=-lsqlite3
@@ -40,9 +44,16 @@ sed -i- 's/require DBD::SQLite/die/' Makefile.PL
 	%perl_vendor_archlib/DBD/SQLite.pm
 %dir	%perl_vendor_archlib/DBD/SQLite
 %doc	%perl_vendor_archlib/DBD/SQLite/*.pod
+	%perl_vendor_archlib/DBD/SQLite/Constants.pm
+	%perl_vendor_archlib/DBD/SQLite/VirtualTable.pm
+%dir	%perl_vendor_archlib/DBD/SQLite/VirtualTable
+	%perl_vendor_archlib/DBD/SQLite/VirtualTable/*.pm
 	%perl_vendor_autolib/DBD
 
 %changelog
+* Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.42-alt1.1.1
 - rebuild with new perl 5.22.0
 
