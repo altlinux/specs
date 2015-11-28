@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-TAP-Harness-Archive
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: Create an archive of TAP test results
@@ -53,6 +53,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %doc TODO Changes
 
 %changelog
+* Sat Nov 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
