@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Test-Deep
-Version: 0.119
+Version: 1.120
 Release: alt1
 
 Summary: Test-Deep - Perl module
@@ -49,6 +49,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Test/*
 
 %changelog
+* Sat Nov 28 2015 Igor Vlasenko <viy@altlinux.ru> 1.120-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.119-alt1
 - automated CPAN update
 
