@@ -1,8 +1,8 @@
 %define dist XML-LibXML
-%def_with bootstrap
+%def_without bootstrap
 Name: perl-%dist
 Version: 2.0122
-Release: alt1.1
+Release: alt1.2
 
 Summary: Perl binding for libxml2
 License: GPL or Artistic
@@ -61,6 +61,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Sat Nov 28 2015 Igor Vlasenko <viy@altlinux.ru> 2.0122-alt1.2
+- unbootstrap
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.0122-alt1.1
 - rebuild with new perl 5.22.0
 
