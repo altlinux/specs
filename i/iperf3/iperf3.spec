@@ -3,7 +3,7 @@
 
 Name: iperf3
 Version: 3.1.1
-Release: alt2
+Release: alt3
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
 License: %bsd
@@ -101,6 +101,10 @@ install -pDm0644 %SOURCE3 %buildroot/%_unitdir/%name.service
 
 
 %changelog
+* Sat Nov 28 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.1.1-alt3
+- removed listen port from $ARGS (5201 is default for iperf3)
+- removed --displayname from start_daemon in init script
+
 * Thu Nov 26 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.1.1-alt2
 - Removed init and service files for udp service:
   one tcp daemon is serves all in Iperf3
