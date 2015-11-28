@@ -1,10 +1,10 @@
-%def_with bootstrap
+%def_without bootstrap
 %add_findreq_skiplist %perl_vendor_archlib/Readonly/XS.pm
 %define dist Readonly-XS
 
 Name: perl-%dist
 Version: 1.05
-Release: alt5.2.1
+Release: alt5.3
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -40,6 +40,9 @@ scalar variables.
 %perl_vendor_autolib/Readonly
 
 %changelog
+* Sat Nov 28 2015 Igor Vlasenko <viy@altlinux.ru> 1.05-alt5.3
+- unbootstrap
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.05-alt5.2.1
 - rebuild with new perl 5.22.0
 
