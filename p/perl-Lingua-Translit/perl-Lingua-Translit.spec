@@ -3,7 +3,7 @@
 %define real_name Lingua-Translit
 
 Name: perl-Lingua-Translit
-Version: 0.22
+Version: 0.24
 Release: alt1
 
 Summary: Perl module to transliterate text between writing systems
@@ -47,6 +47,9 @@ is supported.
 %_bindir/translit
 
 %changelog
+* Sun Nov 29 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.24-alt1
+- New version
+
 * Sun Aug 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.22-alt1
 - New version
 
