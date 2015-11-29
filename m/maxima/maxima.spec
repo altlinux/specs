@@ -22,8 +22,8 @@
 %define CVS_BUILD	0
 
 Name: maxima
-Version: 5.37.1
-%define maxima_version 5.37.1
+Version: 5.37.3
+%define maxima_version 5.37.3
 Release: alt1
 Summary: Maxima Computer Algebra System
 License: GPL
@@ -43,6 +43,19 @@ Source7: breqn-0.94.tar.bz2
 
 Patch1: maxima-5.14.0-gnuplot-pm3d.patch
 Patch6: maxima-5.9.4-gcl_setarch.patch
+
+## upstreamable patches
+# https://bugzilla.redhat.com/show_bug.cgi?id=837142
+# https://sourceforge.net/tracker/?func=detail&aid=3539587&group_id=4933&atid=104933
+Patch50: maxima-5.37.1-clisp-noreadline.patch
+
+# Build the fasl while building the executable to avoid double initialization
+Patch51: maxima-5.30.0-build-fasl.patch
+
+
+## Other maxima reference docs
+Source10: http://starship.python.net/crew/mike/TixMaxima/macref.pdf
+Source11: http://maxima.sourceforge.net/docs/maximabook/maximabook-19-Sept-2004.pdf
 
 
 %description
@@ -236,8 +249,29 @@ Maxima book
 #patch1 -p1
 #%patch2 -p1
 #patch6 -p1 -b .gcl-setarch
+
+%patch50 -p1 -b .clisp-noreadline
+%patch51 -p1 -b .build-fasl
+
+# Extra docs
+install -p -m644 %{SOURCE10} .
+install -D -p -m644 %{SOURCE11} doc/maximabook/maxima.pdf
+
+sed -i -e 's|@ARCH@|%{_target_cpu}|' src/maxima.in
+
+sed -i -e 's:/usr/local/info:/usr/share/info:' \
+  interfaces/emacs/emaxima/maxima.el
+sed -i -e \
+  's/(defcustom\s+maxima-info-index-file\s+)(\S+)/$1\"maxima.info-16\"/' \
+  interfaces/emacs/emaxima/maxima.el
+
+# remove CVS crud
+find -name CVS -type d | xargs --no-run-if-empty rm -rv
+
+
+
 %build
-#export SBCL_HOME=%_libdir/sbcl/
+export SBCL_HOME=%_libdir/sbcl/
 %if %CVS_BUILD
 #%set_automake_version 1.7
 ./bootstrap
@@ -383,6 +417,7 @@ cd %maxima_dir
 %makeinstall
 
 %files common
+%doc doc/maximabook/maxima.pdf
 %_bindir/maxima
 %_bindir/rmaxima
 %_infodir/*
@@ -538,6 +573,10 @@ cd %maxima_dir
 
 
 %changelog
+
+* Sun Nov 29 2015 Ilya Mashkin <oddity@altlinux.ru> 5.37.3-alt1
+- 5.37.3
+
 * Mon Sep 07 2015 Ilya Mashkin <oddity@altlinux.ru> 5.37.1-alt1
 - 5.37.1
 
