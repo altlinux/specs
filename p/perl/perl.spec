@@ -1,6 +1,6 @@
 Name: perl
 Version: 5.22.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -77,6 +77,9 @@ Requires: perl-base = %epoch:%version-%release
 Provides: perl-Test-Tester = 0.2
 Obsoletes: perl-Test-Tester < 0.2
 Conflicts: perl-Test-Tester < 0.2
+Provides: perl-Test-use-ok = 0.12
+Obsoletes: perl-Test-use-ok < 0.12
+Conflicts: perl-Test-use-ok < 0.12
 
 %package pod
 Summary: Perl documentation
@@ -747,6 +750,9 @@ EOF
 	%privlib/Unicode/Normalize.pm
 
 %changelog
+* Sun Nov 29 2015 Igor Vlasenko <viy@altlinux.ru> 1:5.22.0-alt2
+- added Provides/Conflicts on perl-Test-use-ok (now in perl-devel)
+
 * Tue Nov 10 2015 Igor Vlasenko <viy@altlinux.ru> 1:5.22.0-alt1
 - 5.20.3 -> 5.22.0
 
