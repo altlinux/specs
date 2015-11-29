@@ -1,8 +1,8 @@
 %def_without smb
 
 Name: mc
-Version: 4.8.14
-Release: alt2
+Version: 4.8.15
+Release: alt1
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -16,6 +16,7 @@ Source3: mc-dark.color
 Source4: mc-16.png
 Source5: mc-32.png
 Source6: mc.zsh
+Source7: mc-f90.syntax
 
 %add_findreq_skiplist */lib/mc/ext.d/*
 %add_findreq_skiplist */lib/mc/extfs.d/*
@@ -97,7 +98,7 @@ cat <<EOF > version.h
 #endif
 EOF
 
-subst 's|@@VERSION@@|%version-%release|' version.h
+sed 's|@@VERSION@@|%version-%release|' -i version.h
 
 #%%autoreconf
 ./autogen.sh
@@ -123,6 +124,9 @@ install -m644 %SOURCE3 .
 
 # Install SynCE VFS ( http://www.midnight-commander.org/ticket/2905 )
 install -m755 synce-mcfs/src/synce* %buildroot%_libexecdir/%name/extfs.d/
+
+# http://bugzilla.altlinux.org/31520
+cp -f %SOURCE7 %buildroot%_datadir/mc/syntax/f90.syntax
 
 # .desktop
 cat <<__EOF__>%name.desktop
@@ -176,6 +180,10 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Sun Nov 29 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.8.15-alt1
+- 4.8.15
+- replaced f90.syntax (ALT #31520)
+
 * Thu Apr 02 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.8.14-alt2
 - rebuilt without smb vfs (http://bugzilla.altlinux.org/30649#c10)
 - fixed incorrect merge with tag '4.8.14'
