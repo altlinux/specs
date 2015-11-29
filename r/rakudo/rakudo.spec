@@ -1,6 +1,6 @@
 Name: rakudo
-Version: 2015.10
-Release: alt2
+Version: 2015.11
+Release: alt1
 Summary: Perl 6 compiler for the MoarVM
 
 Group: Development/Other
@@ -51,6 +51,9 @@ mkdir -p %buildroot%_datadir/perl6/{vendor,site}/lib
 %doc LICENSE README.md CREDITS
 
 %changelog
+* Sun Nov 29 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.11-alt1
+- 2015.11
+
 * Tue Nov 10 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.10-alt2
 - fixed install of shared lib
 
