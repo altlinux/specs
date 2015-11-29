@@ -1,7 +1,7 @@
 # Spec file for Perl module Proc::Simple
 
 Name: perl-Proc-Simple
-Version: 1.31
+Version: 1.32
 Release: alt1
 
 Summary: Perl module Proc::Simple
@@ -44,6 +44,9 @@ processes from a user's point of view.
 %exclude /.perl.req
 
 %changelog
+* Sun Nov 29 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.32-alt1
+- New version
+
 * Sun Nov 25 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.31-alt1
 - New version
 
