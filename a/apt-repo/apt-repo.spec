@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.2.1
+Version:  1.2.2
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,17 @@ gzip %buildroot%_man8dir/%name.8
 %doc %_man8dir/%name.8.gz
 
 %changelog
+* Mon Nov 30 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.2.2-alt1
+- implement the support for hasher (for "update" and "test" commands)
+  if an explicit apt.conf is given.
+  (TODO: update the manpage; apt-repo --help is already up-to-date)
+  + "no task arepo" hack: if NO_TASK_AREPO_HACK is not empty,
+    the x86_64-i586 source is not added for a task.
+    (Otherwise "update" and "test" fails on such tasks.)
+    (TODO: come up with a clean fix for such tasks.)
+- warn about non-expanded tilde in APT_CONFIG, and give info about it.
+- minor corrections in the new Perl code (from 1.2.1) for querying `apt-config`.
+
 * Mon Nov 30 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.2.1-alt1
 - added the ability to manipulate arbitrary local sources.list
   by relying on `apt-config` and honoring APT_CONFIG (ALT#31385).
