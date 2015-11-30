@@ -2,7 +2,7 @@
 
 Name: mc
 Version: 4.8.15
-Release: alt1
+Release: alt2
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -128,6 +128,9 @@ install -m755 synce-mcfs/src/synce* %buildroot%_libexecdir/%name/extfs.d/
 # http://bugzilla.altlinux.org/31520
 cp -f %SOURCE7 %buildroot%_datadir/mc/syntax/f90.syntax
 
+# http://www.midnight-commander.org/ticket/3574
+sed 's#&) ||#) ||#' -i %buildroot%_libexecdir/mc/ext.d/*.sh
+
 # .desktop
 cat <<__EOF__>%name.desktop
 [Desktop Entry]
@@ -180,6 +183,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Mon Nov 30 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.8.15-alt2
+- Fixed handling of MC_XDG_OPEN in ext.d/*.sh (MC Ticket #3574)
+
 * Sun Nov 29 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.8.15-alt1
 - 4.8.15
 - replaced f90.syntax (ALT #31520)
