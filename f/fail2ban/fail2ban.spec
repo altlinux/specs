@@ -1,6 +1,6 @@
 Name: fail2ban
-Version: 0.9.2
-Release: alt5
+Version: 0.9.3
+Release: alt1
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -9,6 +9,7 @@ Group: Development/Python
 Url: http://www.fail2ban.org
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# Source-url: https://github.com/fail2ban/fail2ban/archive/%version.tar.gz
 Source: %name-%version.tar
 Source1: alt-initd
 Source2: fail2ban.service
@@ -77,6 +78,9 @@ rm -fR %_datadir/%name
 %_logrotatedir/%name
 
 %changelog
+* Tue Nov 17 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
+- new version 0.9.3 (with rpmrb script)
+
 * Tue Nov 17 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt5
 - use pid file, fix start/stop logic (ALT bug #29756)
 - add logrotate config (ALT bug #29756)
