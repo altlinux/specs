@@ -12,7 +12,7 @@
 
 Name: quake3
 Version: 1.36
-Release: alt1.svn%revision
+Release: alt2.svn%revision
 
 Summary: Quake 3: Arena by ID Software
 License: GPL
@@ -38,7 +38,7 @@ Requires: %name-common = %version-%release
 
 # Automatically added by buildreq on Tue Nov 27 2012
 # optimized out: libGL-devel libGLU-devel libogg-devel pkg-config
-BuildRequires: libSDL-devel libcurl-devel libopenal-devel libspeex-devel libvorbis-devel zlib-devel
+BuildRequires: libSDL-devel libcurl-devel libopenal-devel libspeex-devel libvorbis-devel zlib-devel libspeexdsp-devel
 
 Obsoletes: quake3-client-up
 Provides: quake3-client-up = %version-%release
@@ -184,6 +184,9 @@ echo "In order to actually play the game, you'll need pak-files from original ga
 %dir %attr(1770,root,%_group) %_home
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.36-alt2.svn2349
+- NMU: added BR: libspeexdsp-devel
+
 * Thu Jan 17 2013 Igor Zubkov <icesik@altlinux.org> 1.36-alt1.svn2349
 - Bump version
 
