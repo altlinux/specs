@@ -1,6 +1,6 @@
 Name: kdoc
 Version: 3.0.0
-Release: alt2
+Release: alt2.1
 Serial: 1
 
 Group: Development/KDE and QT
@@ -9,6 +9,7 @@ Url: http://www.kde.org/
 License: GPL
 
 Source: %name-%version.tar.bz2
+Patch: kdoc-3.0.0-alt-perl522.patch
 
 BuildRequires: rpm-build perl-podlators
 
@@ -20,6 +21,7 @@ Documentation tools for the K Desktop Environment %version.
 
 %prep
 %setup -q -n %name-%version
+%patch -p2
 
 make -f Makefile.cvs ||:
 
@@ -46,6 +48,9 @@ install -m644 doc/index.cache.bz2 %buildroot/%_docdir/HTML/en/%name/index.cache.
 %_datadir/%name
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 1:3.0.0-alt2.1
+- bugfixes for perl 5.22
+
 * Sat Mar 05 2011 Sergey V Turchin <zerg@altlinux.org> 1:3.0.0-alt2
 - fix to build
 
