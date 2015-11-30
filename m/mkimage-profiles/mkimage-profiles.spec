@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.79
+Version: 1.1.80
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Nov 30 2015 Michael Shigorin <mike@altlinux.org> 1.1.80-alt1
+- pre-starterkit cleanups
+
 * Mon Nov 16 2015 Michael Shigorin <mike@altlinux.org> 1.1.79-alt1
 - faked workaround
 
