@@ -1,13 +1,14 @@
 %define Name Disc-cover
 Name: disc-cover
 Version: 1.5.6
-Release: alt3
+Release: alt3.1
 Summary: Makes covers for audio CDs using CDDB info
 Summary(uk_UA.CP1251): Виготовлення обкладинок для аудіо-CD з використанням CDDB-інформації
 License: %gpl2plus
 Group: Sound
 Source: http://www.vanhemert.co.uk/files/%name-%version.tar
 Patch: %name-cvs-20070116.patch
+Patch1: disc-cover-1.5.6-alt-perl5.22.patch
 URL: http://www.vanhemert.co.uk/%name.html
 Requires: %_bindir/latex, %_bindir/pdflatex, %_bindir/dvips, %_bindir/convert
 BuildArch: noarch
@@ -27,6 +28,7 @@ covers ;-)
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 
 %build
@@ -46,6 +48,9 @@ install -m 0644 templates/* %buildroot%_datadir/%name/templates/
 
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.5.6-alt3.1
+- bugfixes for perl 5.22
+
 * Wed Oct 07 2009 Grigory Batalov <bga@altlinux.ru> 1.5.6-alt3
 - Replace tetex dependence with latex/dvips binaries.
 
