@@ -1,12 +1,12 @@
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.001
+Version: 0.002
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
-Summary: %module - Perl extension for quering Gear rules files
+Summary: %module - Perl extension for quering Gear remotes files
 Group: Development/Perl
 License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
@@ -35,5 +35,8 @@ Requires: gear perl(Pod/Text.pm)
 %_bindir/*
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 0.002-alt1
+- new version
+
 * Wed Jul 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.001-alt1
 - new version
