@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.2.0
+Version:  1.2.1
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,11 @@ gzip %buildroot%_man8dir/%name.8
 %doc %_man8dir/%name.8.gz
 
 %changelog
+* Mon Nov 30 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.2.1-alt1
+- added the ability to manipulate arbitrary local sources.list
+  by relying on `apt-config` and honoring APT_CONFIG (ALT#31385).
+- manpage: fix formattting bugs (closes: ALT#31562).
+
 * Thu Nov 07 2013 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - Add `apt-repo test task <num>` for install all task packages
   (except *-debuginfo)
