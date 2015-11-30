@@ -1,6 +1,6 @@
 Name: texinfo
-Version: 4.13
-Release: alt9
+Version: 6.0
+Release: alt1
 
 Summary: Tools needed to create Texinfo format documentation files
 License: GPLv3+
@@ -18,34 +18,39 @@ Source6: uninstall_info
 Source7: texi2pdf
 Source8: texi2pdf.man
 
-Patch0: texinfo-4.13-cvs-info.patch
-Patch1: texinfo-4.13-alt-zio.patch
-Patch2: texinfo-4.13-rh-alt-readfile.patch
-Patch3: texinfo-4.13-alt-ru.po.patch
-Patch4: texinfo-4.13-alt-texi2dvi-recode.patch
-Patch5: texinfo-4.13-alt-texinfo.patch
-Patch6: texinfo-4.13-alt-tinfo.patch
-Patch7: texinfo-4.13-alt-install-info-rpm.patch
-Patch8: texinfo-4.11-alt-baroque-shells.patch
-Patch9: texinfo-4.13-alt-dvips.patch
-Patch10: texinfo-4.13-alt-texi2dvi-tex.patch
-Patch11: texinfo-4.13-deb-po.patch
+Patch1: texinfo-alt-install-info-dot_exe.patch
+Patch2: texinfo-alt-install-info-zio.patch
+Patch3: texinfo-alt-install-info-rpm.patch
+Patch4: texinfo-alt-texi2dvi-baroque-shells.patch
+Patch5: texinfo-svn6390-index-deterministic.patch
 
 Requires: makeinfo = %version-%release
 Requires: texi2dvi = %version-%release
 
 BuildRequires(pre): rpm-build-texmf
 BuildRequires: cvs bzlib-devel help2man libtinfo-devel libzio-devel zlib-devel
-%{?!_without_check:%{?!_disable_check:BuildRequires: gzip-utils}}
+BuildRequires: perl-devel
+BuildRequires: perl(Locale/Messages.pm)
+BuildRequires: perl(Pod/Simple/PullParser.pm)
+BuildRequires: perl(Text/Unidecode.pm)
+BuildRequires: perl(Unicode/EastAsianWidth.pm)
+BuildRequires: perl(Unicode/Normalize.pm)
+%{?!_without_check:%{?!_disable_check:BuildRequires: gzip-utils /dev/pts}}
+
+%define _perl_lib_path %perl_vendor_privlib:%_datadir/texinfo
+%{?filter_from_provides:%filter_from_provides /^perl(/d}
+%{?filter_from_requires:%filter_from_requires /^perl(\(\(Debug\)\?Texinfo\/\|Pod\/Simple\/Texinfo\)/d}
 
 %package -n makeinfo
 Summary: Utilities for translating texinfo source documentation to various other formats
 Group: Publishing
+BuildArch: noarch
 Requires: rpm-macros-info-install = %version-%release
 
 %package -n texi2dvi
 Summary: Utilities for translating texinfo source documents to dvi, ps, and pdf
 Group: Publishing
+BuildArch: noarch
 Requires: rpm-macros-info-install = %version-%release
 # due to texi2pdf and %_texmfmain/tex/texinfo
 Conflicts: tetex-core <= 0:2.0-alt8
@@ -76,8 +81,8 @@ document.  The GNU Project uses the Texinfo file format for most of its
 documentation.
 
 %description -n makeinfo
-This package contains makeinfo - a translator of texinfo source
-documentation to various other formats.
+This package contains texi2all a.k.a. makeinfo - a translator of
+texinfo source documentation to various other formats.
 
 %description -n texi2dvi
 This package contains texi2dvi and related utilities for translating
@@ -97,26 +102,22 @@ This packages contains new RPM macros for packaging texinfo files.
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
 
 install -pm755 %_sourcedir/texi2pdf util/
-sed -i s/dist-lzma/dist-xz/ configure.ac
 
 %build
 rm po/*.gmo po/stamp*
 %autoreconf
-%configure
+%configure \
+	--with-external-libintl-perl \
+	--with-external-Text-Unidecode \
+	--with-external-Unicode-EastAsianWidth \
+	#
 %make_build MAKEINFOFLAGS=--no-split
 xz -k9 NEWS
 
@@ -151,9 +152,10 @@ install -pm755 %_sourcedir/update-info-dir %buildroot%_sbindir/
 mkdir -p %buildroot%_man8dir
 install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 
-%find_lang texinfo
+%find_lang --output=texinfo.lang texinfo texinfo_document
 
 %check
+export ALL_TESTS=yes
 %make_build -k check
 
 %files -f texinfo.lang
@@ -161,7 +163,11 @@ install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 
 %files -n makeinfo
 %_bindir/makeinfo
+%_bindir/texi2any
+%_bindir/pod2texi
 %_man1dir/makeinfo.*
+%_man1dir/texi2any.*
+%_man1dir/pod2texi.*
 %_man5dir/texinfo.*
 %_infodir/texinfo.*
 %_datadir/texinfo/
@@ -177,9 +183,7 @@ install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 
 %files -n info
 %_bindir/info
-%_bindir/infokey
 %_mandir/man?/info.*
-%_mandir/man?/infokey.*
 %_infodir/info*.info*
 
 %files -n info-install
@@ -195,6 +199,12 @@ install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Nov 30 2015 Dmitry V. Levin <ldv@altlinux.org> 6.0-alt1
+- Updated to 6.0 (closes: #31449).
+
+* Sat Nov 02 2013 Dmitry V. Levin <ldv@altlinux.org> 5.2-alt1
+- Updated to 5.2.
+
 * Sat Nov 02 2013 Dmitry V. Levin <ldv@altlinux.org> 4.13-alt9
 - Split texinfo into makeinfo and texi2dvi.
 
