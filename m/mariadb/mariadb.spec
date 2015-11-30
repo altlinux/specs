@@ -1,3 +1,6 @@
+%add_findreq_skiplist %_datadir/mysql/mysql-test/mysql-test-run.pl
+%add_findreq_skiplist %_bindir/wsrep_sst_xtrabackup
+%add_findreq_skiplist %_bindir/wsrep_sst_xtrabackup-v2
 
 %def_with libs
 %def_with devel
@@ -21,8 +24,8 @@
 %endif
 
 Name: mariadb
-Version: 10.0.21
-Release: alt4
+Version: 10.1.9
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -56,15 +59,22 @@ Source27: mysql-clients.cnf
 Source28: server-chroot.cnf
 Source29: server-no-chroot.cnf
 
+Source70: clustercheck.sh
+Source71: clustercheck.sysconfig
+Source72: mariadbcheck.socket
+Source73: mariadbcheck@.service
+Source74: mariadbcheck.xinetd
+
 
 Patch0: %name-%version-%release.patch
 
 # ALTLinux
 Patch1: mariadb-10.0.21-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
-Patch4: mariadb-10.0.21-alt-client.patch
+Patch4: mariadb-10.1.8-alt-client.patch
 #Patch5: mariadb-10.0.21-alt-load_defaults.patch
-Patch7: mysql-5.5.25-alt-mysql_config-libs.patch
+Patch7: mariadb-10.1.8-alt-config-libs.patch
+Patch8: mysql-5.5.43-alt-aarch64-lib64.patch
 
 # Patches specific for this mysql package
 Patch30: mariadb-errno.patch
@@ -76,15 +86,20 @@ Patch36: mariadb-ssltest.patch
 
 Requires: %name-server = %EVR %name-client = %EVR
 
-BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel libpam0-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
-BuildRequires: libaio-devel libjemalloc-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel liblz4-devel
+BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam0-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
+BuildRequires: libaio-devel libjemalloc-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
+BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel
 BuildRequires: chrooted control
 %{?_with_pcre:BuildRequires: libpcre-devel >= 8.35}
 BuildRequires: libxml2-devel
+BuildRequires: libsystemd-devel
+
+Provides: %name-galera = %EVR
+Obsoletes: %name-galera < %EVR
 
 %define soname 18
 
-%add_findreq_skiplist %_datadir/mysql/mysql-test/mysql-test-run.pl
+
 
 %description
 The MariaDB software delivers a very fast, multi-threaded, multi-user,
@@ -133,9 +148,10 @@ Obsoletes: %name-engine-obsolete < %EVR
 Provides: %name-engine-tokudb = %EVR
 Obsoletes: %name-engine-tokudb < %EVR
 %endif
-
+Provides: %name-galera-server = %EVR
+Obsoletes: %name-galera-server < %EVR
 Conflicts: MySQL-server
-Conflicts: mariadb-galera-server
+Requires: libgalera_smm rsync lsof
 
 %description server
 Core mysqld server. For a full MariaDB database server, install
@@ -147,7 +163,9 @@ Group: Databases
 Requires: %name-server = %EVR
 Conflicts: %name-server < %EVR
 Conflicts: MySQL-server-perl
-Conflicts: mariadb-galera-server-perl
+Provides: %name-galera-server-perl = %EVR
+Obsoletes: %name-galera-server-perl < %EVR
+
 BuildArch: noarch
 
 %description server-perl
@@ -163,7 +181,6 @@ Group: Databases
 Requires: lib%name = %EVR %name-common = %EVR
 Provides: mysql-client = %version-%release
 Conflicts: MySQL-client
-Conflicts: mariadb-galera-client
 
 %description client
 This package contains the standard MariaDB clients.
@@ -173,7 +190,6 @@ Summary: Common files used in client and servers
 Group: Databases
 BuildArch: noarch
 Conflicts: MySQL-server
-Conflicts: mariadb-galera-common
 #Conflicts: %name-server < 5.5.33a
 
 %description common
@@ -185,7 +201,6 @@ Group: System/Servers
 Requires: %name-client = %EVR
 Provides: mysql-bench = %version-%release
 Conflicts: MySQL-bench
-Conflicts: mariadb-galera-bench
 
 %description bench
 This package contains MariaDB benchmark scripts and data.
@@ -250,10 +265,11 @@ version.
 %patch4 -p1
 #%patch5 -p1
 %patch7 -p1
+%patch8 -p1
 %patch30 -p1
 %patch31 -p1
 %patch32 -p1
-%patch33 -p1
+#%patch33 -p1
 %patch34 -p1
 %patch36 -p1
 
@@ -306,10 +322,13 @@ export LDFLAGS
 	-DWITH_INNOBASE_STORAGE_ENGINE=ON \
 	-DWITH_PARTITION_STORAGE_ENGINE=ON \
 	-DWITH_FEDERATED_STORAGE_ENGINE=ON \
+	-DWITH_WSREP=ON \
+	-DWITH_INNODB_DISALLOW_WRITES=1 \
 	-DENABLED_LOCAL_INFILE=ON \
 	-DWITH_EMBEDDED_SERVER=ON \
 	-DWITHOUT_EXAMPLE_STORAGE_ENGINE=ON \
 	-DWITH_FAST_MUTEXES=ON \
+	-DWITH_SYSTEMD=ON \
 	-DWITHOUT_DAEMON_EXAMPLE=ON \
 	-DCOMPILATION_COMMENT="(%distribution)" \
 	-DMYSQL_SERVER_SUFFIX="-%release"
@@ -321,7 +340,7 @@ export LDFLAGS
 
 %install
 mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_infodir,%_datadir/sql-bench,/var/log/mysql}
-mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%_libdir/mysql/plugin/,dev,log,tmp,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
+mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%_libdir/mysql/plugin/,%_libdir/galera,dev,log,tmp,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
 touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START}
 
 # don't fiddle with the initscript!
@@ -344,7 +363,7 @@ install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/mysql
 install -pD -m755 %SOURCE3 %buildroot%_sbindir/safe_mysqld
 install -pD -m755 %SOURCE4 %buildroot%_sbindir/mysqld_wrapper
 install -pD -m750 %SOURCE6 %buildroot%_sysconfdir/chroot.d/mysql.lib
-%ifarch x86_64
+%if "%_libdir" == "/usr/lib64"
 sed -i s,usr/lib,usr/lib64,g %buildroot%_sysconfdir/chroot.d/mysql.lib
 %endif
 install -pD -m750 %SOURCE7 %buildroot%_sysconfdir/chroot.d/mysql.conf
@@ -361,6 +380,8 @@ install -pD -m644 %SOURCE26 %buildroot%_sysconfdir/my.cnf.d/server.cnf
 install -pD -m644 %SOURCE27 %buildroot%_sysconfdir/my.cnf.d/mysql-clients.cnf
 install -pD -m644 %SOURCE28 %buildroot%_sysconfdir/my.cnf.server/server-chroot.cnf
 install -pD -m644 %SOURCE29 %buildroot%_sysconfdir/my.cnf.server/server-no-chroot.cnf
+# install galera config file
+install -p -m 0644 BUILD/support-files/wsrep.cnf %buildroot%_sysconfdir/my.cnf.d/galera.cnf
 
 %if_with tokudb
 install -pD -m644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
@@ -369,6 +390,14 @@ install -pD -m644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/toku
 install -pD -m644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
 install -pD -m644 %SOURCE21 %buildroot%_unitdir/mysqld.service
 install -pD -m644 %SOURCE22 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/user.conf
+ln -s mysqld.service %buildroot%_unitdir/mariadb.service
+
+# install the clustercheck script
+install -pD -m755 %SOURCE70 %buildroot%_bindir/clustercheck
+install -pD -m644 %SOURCE71 %buildroot%_sysconfdir/sysconfig/clustercheck
+install -pD -m644 %SOURCE72 %buildroot%_unitdir/mariadbcheck.socket
+install -pD -m644 %SOURCE73 %buildroot%_unitdir/mariadbcheck@.service
+install -pD -m644 %SOURCE74 %buildroot%_sysconfdir/xinetd.d/mariadbcheck
 
 
 # Backwards compatibility symlinks (ALT #14863)
@@ -523,12 +552,14 @@ fi
 %config %_sysconfdir/chroot.d/*
 %config(noreplace) %_sysconfdir/my.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/galera.cnf
 %config(noreplace) %_sysconfdir/my.cnf.server/*.cnf
 %if_with tokudb
 %config(noreplace) %_sysconfdir/my.cnf.d/tokudb.cnf
 %endif
 %_tmpfilesdir/mysql.conf
 %_unitdir/mysqld.service
+%_unitdir/mariadb.service
 %config(noreplace) %_sysconfdir/systemd/system/mysqld.service.d/user.conf
 
 %_bindir/aria*
@@ -548,6 +579,13 @@ fi
 %_datadir/mysql/mroonga
 %endif
 
+%_bindir/wsrep_*
+
+%_bindir/clustercheck
+%_unitdir/mariadbcheck.socket
+%_unitdir/mariadbcheck@.service
+%config(noreplace) %_sysconfdir/xinetd.d/mariadbcheck
+
 %_sbindir/*
 %_libdir/mysql/plugin
 %attr(750,mysql,adm) %dir %_logdir/mysql
@@ -561,6 +599,7 @@ fi
 %attr(710,root,mysql) %dir %ROOT/%_libdir
 %attr(710,root,mysql) %dir %ROOT/%_libdir/mysql
 %attr(710,root,mysql) %dir %ROOT/%_libdir/mysql/plugin
+%attr(710,root,mysql) %dir %ROOT/%_libdir/galera
 %attr(710,root,mysql) %dir %ROOT%_sysconfdir
 %ghost %ROOT%_sysconfdir/hosts
 %ghost %ROOT%_sysconfdir/services
@@ -584,7 +623,6 @@ fi
 %if_with common
 %files common
 %_datadir/mysql
-%exclude %_datadir/mysql/SELinux
 %if_with tokudb
 %exclude %_datadir/mysql/mroonga
 %endif
@@ -658,6 +696,7 @@ fi
 #_mandir/man1/comp_err.1*
 %_man1dir/mysql_config.1*
 %_aclocaldir/mysql.m4
+%_datadir/pkgconfig/mariadb.pc
 # mysqlservices library is static, because it doesn't contain any code
 # itself, and is meant to be statically linked to all plugins.
 %_libdir/libmysqlservices.a
@@ -674,6 +713,16 @@ fi
 %endif
 
 %changelog
+* Mon Nov 30 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.9-alt1
+- 10.1.9
+- fix typo in logrotate script (ALT #31532)
+
+* Tue Oct 20 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.8-alt1
+- 10.1.8
+- update BR: for use compress
+- build with systemd notify support
+- provides/obsoletes mariadb-galera
+
 * Thu Oct 01 2015 Alexey Shabalin <shaba@altlinux.ru> 10.0.21-alt4
 - snapshot branch upstream/10.0
 - comment empty options in /etc/sysconfig/mysqld (ALT #31293)
