@@ -7,7 +7,7 @@
 Name: quagga
 
 %define baseversion 0.99.24.1
-Release: alt1
+Release: alt2
 
 %if %cvs
 %define cvsdate 20060505
@@ -71,7 +71,7 @@ Requires:	libquagga = %{version}-%{release}
 BuildRequires: /proc
 BuildRequires: rpm-build-licenses
 
-BuildRequires: gcc-c++ libcap-devel libpam-devel libpcap-devel libreadline-devel libtinfo-devel libnet-snmp-devel texi2html
+BuildRequires: gcc-c++ libcap-devel libpam-devel libpcap-devel libreadline-devel libtinfo-devel libnet-snmp-devel texi2html makeinfo
 
 %description
 Quagga is a free software that manages TCP/IP based routing protocol.
@@ -313,6 +313,11 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Tue Dec 01 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.99.24.1-alt2
+- added makeinfo to BuildRequires
+  https://lists.altlinux.org/pipermail/devel/2015-November/200445.html
+- fixed Short-Description in LSB init header of some init scripts
+
 * Sat Mar 07 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.99.24.1-alt1
 - new version
 
