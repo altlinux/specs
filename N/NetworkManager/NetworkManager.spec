@@ -1,5 +1,5 @@
-%define git_date .git20151102
-#define git_date %nil
+#define git_date .git20151102
+%define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -31,7 +31,7 @@
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 
 Name: NetworkManager
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -647,6 +647,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Nov 30 2015 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt1
+- Updated to 1.0.8.
+
 * Mon Nov 02 2015 Mikhail Efremov <sem@altlinux.org> 1.0.7-alt1.git20151102
 - nm-dispatcher-sh-functions: Drop debug output.
 - Enable vala bindings (closes: #31422).
