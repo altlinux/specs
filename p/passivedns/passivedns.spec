@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: libjansson-devel libnuma-devel libpfring-devel perl(DBI.pm) perl(Date/Simple.pm) perl(DateTime.pm) perl(Time/Local.pm)
+# END SourceDeps(oneline)
 Name: passivedns
-Version: 1.1.3
-Release: alt1.git20140826
+Version: 1.2.0
+Release: alt1
 Summary: A network sniffer that logs all DNS server replies for use in a passive DNS setup
 License: GPLv2
 Group: Monitoring
@@ -41,8 +44,11 @@ subst 's|/var/log/passivedns.log|/var/log/passivedns/passivedns.log|g' src/passi
 subst 's|/var/run/passivedns.pid|/var/run/passivedns/passivedns.pid|g' src/passivedns.c
 
 %build
-export CC="gcc %optflags"
-%make_build -C src
+%autoreconf
+#export CC="gcc %optflags"
+%configure
+%make_build
+#-C src
 
 %install
 install -pD -m755 src/%name %buildroot%_sbindir/%name
@@ -110,6 +116,12 @@ EOF
 %_bindir/*.pl
 
 %changelog
+* Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1
+- NMU: new version (fixes build)
+
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1.git20140826.1
+- bugfixes for perl 5.22
+
 * Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20140826
 - New snapshot
 
