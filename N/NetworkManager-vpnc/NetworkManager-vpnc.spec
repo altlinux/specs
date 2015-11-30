@@ -5,7 +5,7 @@
 #define git_date .git20110510
 
 Name: NetworkManager-vpnc
-Version: 1.0.6
+Version: 1.0.8
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -90,6 +90,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Nov 30 2015 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt1
+- Updated to 1.0.8.
+
 * Mon Aug 31 2015 Mikhail Efremov <sem@altlinux.org> 1.0.6-alt1
 - Minor spec cleanup.
 - Updated to 1.0.6.

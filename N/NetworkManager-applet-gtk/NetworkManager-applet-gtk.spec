@@ -1,11 +1,11 @@
 %define nm_version 1.0.0
-%define git_date .git20151102
-#define git_date %nil
+#define git_date .git20151102
+%define git_date %nil
 
 %def_without bluetooth
 
 Name: NetworkManager-applet-gtk
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -159,6 +159,9 @@ make check
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Mon Nov 30 2015 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt1
+- Updated to 1.0.8.
+
 * Mon Nov 02 2015 Mikhail Efremov <sem@altlinux.org> 1.0.7-alt1.git20151102
 - Upstream git snapshot (nma-1-0 branch).
 

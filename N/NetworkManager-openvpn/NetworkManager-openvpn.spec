@@ -5,8 +5,8 @@
 #define git_date .git20111101
 
 Name: NetworkManager-openvpn
-Version: 1.0.6
-Release: alt2%git_date
+Version: 1.0.8
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for OpenVPN
@@ -86,6 +86,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Nov 30 2015 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt1
+- Updated to 1.0.8.
+
 * Thu Nov 05 2015 Mikhail Efremov <sem@altlinux.org> 1.0.6-alt2
 - Use 'openvpn' user/group (closes: #31437).
 
