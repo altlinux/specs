@@ -2,7 +2,7 @@
 
 Name: python-module-mwlib
 Version: 0.15.14
-Release: alt1
+Release: alt1.1
 
 Summary: MediaWiki conversion library for Python
 
@@ -14,15 +14,16 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://pypi.python.org/packages/source/m/mwlib/mwlib-%version.zip
 Source: %name-%version.tar
+Patch: python-module-mwlib-0.15.14-alt-perl522.patch
 
-BuildPreReq: rpm-build-python
+BuildRequires: rpm-build-python
 
 %setup_python_module %modulename
 
 # Write manually:
-BuildPreReq: gcc-c++ re2c python-devel >= 2.5 python-module-docutils
-BuildPreReq: python-module-flup python-module-odfpy
-BuildPreReq: python-module-pyparsing python-module-simplejson python-module-imaging
+BuildRequires: gcc-c++ re2c python-devel >= 2.5 python-module-docutils
+BuildRequires: python-module-flup python-module-odfpy
+BuildRequires: python-module-pyparsing python-module-simplejson python-module-imaging
 Requires: python-module-twisted-core >= 8.2.0 python-module-twisted-web >= 8.2.0
 Requires: python-module-flup >= 1.0 python-module-qserve
 
@@ -39,6 +40,7 @@ MediaWiki articles.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %python_build
@@ -79,6 +81,9 @@ install -m 0640 -- mwserve.logrotate %buildroot%_sysconfdir/logrotate.d/mwserve
 
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 0.15.14-alt1.1
+- bugfixes for perl 5.22
+
 * Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.14-alt1
 - Version 0.15.14
 
