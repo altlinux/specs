@@ -1,6 +1,6 @@
 Name: alsa-plugins
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Serial: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) plugins
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ libalsa-devel libavcodec-devel libdbus-devel
-BuildRequires: libpulseaudio-devel libsamplerate-devel libspeex-devel
+BuildRequires: libpulseaudio-devel libsamplerate-devel libspeex-devel libspeexdsp-devel
 
 Summary(ru_RU.UTF-8): Плагины ALSA
 Summary(uk_UA.UTF-8): Плагіни ALSA
@@ -66,6 +66,9 @@ __EOF__
 %_datadir/alsa/alsa.conf.d/50-pulseaudio.conf
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.1.0-alt1.1
+- NMU: added BR: libspeexdsp-devel
+
 * Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 1:1.1.0-alt1
 - 1.1.0
 
