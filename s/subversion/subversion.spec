@@ -62,8 +62,8 @@
 %define modname dav_svn_module
 
 Name:     subversion
-Version:  1.8.13
-Release:  alt2
+Version:  1.9.2
+Release:  alt1
 
 Summary:  A version control system
 Group:    Development/Other
@@ -85,8 +85,8 @@ Source10: %module_name.start
 Source11: sqlite3-amalgamation-3.6.11.c
 
 Patch4: %name-1.5.4-alt-perl-DESTROY.patch
-Patch5: %name-1.7.8-alt-custom-libtool.patch
-Patch6: %name-1.8.13-alt-kwallet-build.patch
+Patch5: %name-1.9.2-alt-custom-libtool.patch
+Patch6: %name-1.9.2-alt-kwallet-build.patch
 
 # http://bugs.gentoo.org/show_bug.cgi?id=219959
 Patch16: %name-1.6.0-gentoo-java-headers.patch
@@ -95,14 +95,12 @@ Patch16: %name-1.6.0-gentoo-java-headers.patch
 Patch17: %name-1.6.6-deb-ssh-no-controlmaster.patch
 
 # Patches from Fedora
-Patch20: subversion-1.8.0-rpath.patch
+Patch20: subversion-1.9.2-rpath.patch
 Patch21: subversion-1.8.0-pie.patch
 Patch22: subversion-1.8.0-rubybind.patch
 Patch23: subversion-1.8.5-swigplWall.patch
-Patch24: subversion-1.8.13-r1655262+.patch
 Patch25: subversion-1.8.13-swigpython.patch
 Patch26: subversion-1.8.11-ruby22-fixes.rb
-Patch27: subversion-1.8-sqlite-r1672295.patch
 
 Requires: lib%name = %version-%release
 
@@ -358,10 +356,8 @@ install -pD -m644 %SOURCE11 sqlite-amalgamation/sqlite3.c
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
-%patch24 -p1
 %patch25 -p1
 %patch26 -p0
-%patch27 -p0
 
 %build
 %add_optflags %optflags_shared
@@ -653,6 +649,8 @@ fi
 %_bindir/svnversion
 %_bindir/svnrdump
 %_bindir/svnsync
+%_bindir/svnbench
+%_bindir/svnfsfs
 %_bindir/svnmucc
 %_man1dir/svn.1.*
 %_man1dir/svnversion.1.*
@@ -760,6 +758,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 30 2015 Andrey Cherepanov <cas@altlinux.org> 1.9.2-alt1
+- New version
+
 * Sat Nov 28 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.13-alt2
 - enabled javahl again
 
