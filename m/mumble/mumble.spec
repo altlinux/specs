@@ -4,7 +4,7 @@
 
 Name: mumble
 Version: 1.2.8
-Release: alt2.1
+Release: alt2.1.1
 
 Summary: Voice chat software primarily intended for use while gaming
 License: BSD
@@ -29,7 +29,7 @@ Patch2: mumble-overlay.patch
 %endif
 
 BuildRequires: boost-python-devel gcc-c++ libGL-devel libX11-devel libXi-devel libalsa-devel libavahi-devel libcap-devel libice-devel libogg-devel libprotobuf-devel libpulseaudio-devel libqt4-devel libsndfile-devel libspeechd-devel protobuf-compiler
-BuildRequires: libspeex-devel
+BuildRequires: libspeex-devel libspeexdsp-devel
 BuildRequires: libopus-devel
 
 %if_with sys_celt
@@ -210,6 +210,9 @@ mkdir -p %buildroot%_var/run/mumble-server/
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.8-alt2.1.1
+- NMU: added BR: libspeexdsp-devel
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.8-alt2.1
 - Rebuilt for gcc5 C++11 ABI.
 
