@@ -1,6 +1,6 @@
 Name: libextractor
 Version: 1.3
-Release: alt2
+Release: alt2.1
 
 Summary: libextractor is a simple library for keyword extraction
 
@@ -21,6 +21,7 @@ BuildRequires: iso-codes-devel libgif-devel libarchive-devel libtidy-devel
 BuildRequires: libjpeg-devel
 BuildRequires: gst-plugins1.0-devel libavcodec-devel libavutil-devel
 BuildRequires: libavformat-devel libavresample-devel libswscale-devel
+BuildRequires: makeinfo
 
 %description
 libextractor is a simple library for keyword extraction.
@@ -92,6 +93,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Mon Nov 30 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt2.1
+- buildreqs: added makeinfo
+
 * Mon Jun 29 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt2
 - rebuilt against libexiv2.so.14
 

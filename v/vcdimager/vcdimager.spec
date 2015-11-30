@@ -5,7 +5,7 @@
 
 Name: vcdimager
 Version: %ver_major.24
-%define release alt1
+%define release alt1.1
 
 %ifdef cvsdate
 Release: %{release}cvs%cvsdate
@@ -28,7 +28,7 @@ Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 
 Requires: libvcd = %version-%release
 
-BuildPreReq: help2man
+BuildPreReq: help2man makeinfo
 BuildPreReq: libcdio-devel >= %libcdio_ver
 
 BuildRequires: gcc-c++ libcdio-devel libpopt-devel
@@ -146,6 +146,9 @@ done
 %endif
 
 %changelog
+* Mon Nov 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.7.24-alt1.1
+- buildreqs: added makeinfo
+
 * Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.7.24-alt1
 - 0.7.24
 
