@@ -1,6 +1,6 @@
 Name: libcdio
 Version: 0.93
-Release: alt1
+Release: alt1.1
 
 Summary: CD-ROM/CD-image access library
 License: GPLv3+
@@ -9,11 +9,11 @@ Url: http://www.gnu.org/software/%name/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 # ftp://ftp.gnu.org/gnu/libcdio/%name-%version.tar.gz
+# git://git.sv.gnu.org/libcdio.git
 Source: %name-%version.tar
-# git://git.altlinux.org/gears/l/libcdio.git
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libcddb-devel libncurses-devel help2man
+BuildRequires: gcc-c++ libcddb-devel libncurses-devel help2man makeinfo
 
 %description
 This library is to encapsulate CD-ROM reading and control. Applications
@@ -94,6 +94,9 @@ info.
 %_man1dir/*.1*
 
 %changelog
+* Mon Nov 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.93-alt1.1
+- buildreqs: added makeinfo
+
 * Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.93-alt1
 - 0.93 (0.94_4f41eb68)
 

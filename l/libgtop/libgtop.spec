@@ -8,7 +8,7 @@
 
 Name: libgtop
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: LibGTop library
 License: GPLv2+
@@ -29,6 +29,7 @@ BuildPreReq: rpm-build-gnome
 BuildPreReq: intltool >= 0.35
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: gtk-doc >= 1.4
+BuildRequires: makeinfo
 BuildRequires: libICE-devel libX11-devel perl-XML-Parser
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7}
@@ -161,6 +162,9 @@ rm -rf doc/*.info
 %endif
 
 %changelog
+* Mon Nov 30 2015 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1.1
+- buildreqs: added makeinfo
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
 - 2.32.0
 
