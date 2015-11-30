@@ -1,5 +1,5 @@
 Name: wxMaxima
-Version: 14.12.1
+Version: 15.08.2
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -15,10 +15,10 @@ Source3: %name-48.xpm
 Source4: %name.desktop
 Source5: wxmaxima-ru.po.bz2
 
-Requires: maxima wxGTK
+Requires: maxima libwxGTK3.1
 
-BuildRequires: autoconf_2.60
-BuildRequires: gcc-c++ wxGTK-devel libpango-devel libxml2-devel zlib-devel
+#BuildRequires: autoconf_2.60
+BuildRequires: gcc-c++ libwxGTK3.1 libwxGTK3.1-devel libpango-devel libxml2-devel zlib-devel wxGTK3.1-examples makeinfo
 
 %description
 wxMaxima is a wxWidgets GUI for the computer algebra system Maxima. 
@@ -37,12 +37,15 @@ bzcat %SOURCE5 >locales/ru.po
 
 %build
 
-%set_automake_version 1.10
-%set_autoconf_version 2.60
+#set_automake_version 1.10
+#set_autoconf_version 2.60
 
 #./bootstrap
 
-%configure --disable-xmltest
+#configure --disable-xmltest
+%configure \
+  --with-wx-config=/usr/bin/wx-config
+
 %make
 
 
@@ -66,8 +69,22 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/%name
 %_datadir/%name/*
 
+%{_datadir}/appdata/wxmaxima.appdata.xml
+%{_datadir}/bash-completion/completions/wxmaxima
+%{_datadir}/pixmaps/wxmaxima*
+%{_datadir}/pixmaps/*wxma*svg
+%{_datadir}/mime/packages/x-wxmathml.xml
+%{_datadir}/mime/packages/x-wxmaxima-batch.xml
+%{_docdir}/wxmaxima/
+%{_mandir}/man1/wxmaxima.1*
+
+
 
 %changelog
+* Tue Dec 01 2015 Ilya Mashkin <oddity@altlinux.ru> 15.08.2-alt1
+- 15.08.2
+- missing files added
+
 * Mon Jan 12 2015 Ilya Mashkin <oddity@altlinux.ru> 14.12.1-alt1
 - 14.12.1
 
