@@ -1,7 +1,7 @@
 %define oname pjproject
 Name: libpjsip
 Version: 2.4.5
-Release: alt4
+Release: alt4.1
 
 Summary: Libraries for building embedded/non-embedded VoIP applications
 
@@ -39,8 +39,7 @@ BuildRequires: libportaudio2-devel
 # TODO: check for correct version
 #BuildRequires: libresample-devel
 BuildRequires: libspeex-devel
-# when libspeex > 1.2
-#BuildRequires: libspeexdsp-devel
+BuildRequires: libspeexdsp-devel
 
 %description
 This package provides the Open Source, comprehensive, high performance,
@@ -162,6 +161,9 @@ echo "" >> %buildroot%_includedir/pj/config_site.h
 %_pkgconfigdir/libpjproject.pc
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.5-alt4.1
+- NMU: added BR: libspeexdsp-devel
+
 * Fri Nov 20 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.5-alt4
 - cleanup spec
 - build with internal resample from http://ccrma.stanford.edu/~jos/resample/
