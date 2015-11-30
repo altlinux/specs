@@ -1,6 +1,6 @@
 Name: AlephOne
 Version: 1.0.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: 3D first-person shooter game
 License: %gpl2plus
@@ -17,7 +17,7 @@ Source3: alephone-wrapper.sh
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Tue Jan 26 2010
-BuildRequires: boost-devel gcc-c++ libGL-devel libSDL_image-devel libSDL_net-devel libSDL_ttf-devel libalsa-devel libmad-devel libpng-devel libsmpeg-devel libsndfile-devel libspeex-devel libvorbis-devel zziplib-devel
+BuildRequires: boost-devel gcc-c++ libGL-devel libSDL_image-devel libSDL_net-devel libSDL_ttf-devel libalsa-devel libmad-devel libpng-devel libsmpeg-devel libsndfile-devel libspeex-devel libspeexdsp-devel libvorbis-devel zziplib-devel
 BuildRequires: desktop-file-utils
 
 %description
@@ -62,6 +62,9 @@ install -pD -m755 %SOURCE3 %buildroot%_gamesbindir/
 %_man6dir/*
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1.2
+- fixed build - added BR libspeexdsp-devel
+
 * Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.1
 - Rebuilt with libpng15
 
