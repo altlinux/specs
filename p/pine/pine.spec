@@ -63,7 +63,7 @@
 
 Name:           pine
 Version:        %{fullversion}
-Release:        alt8.1
+Release:        alt8.2
 License:        Other License(s), see package, FSR
 Group: Networking/Mail
 Summary: %mainsummary
@@ -903,11 +903,15 @@ done
 %files addrbk-tools
 %doc doc/README.addrbk-tools ldif2pine-%ldifver/*.txt
 %attr(0755,root,root) %_bindir/*2pine
+%exclude %_bindir/elm2pine
 %attr(0755,root,root) %_bindir/pine2*
 %attr(0644,root,root) %_libdir/pwd2pine
 #------------ end ALT part --------------------
 
 %changelog -n pine
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 4.64L-alt8.2
+- excluded elm2pine from addrbk-tools
+
 * Wed Oct 16 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.64L-alt8.1
 - NMU: rebuilt with cyrus-sasl 2.1.26
 
