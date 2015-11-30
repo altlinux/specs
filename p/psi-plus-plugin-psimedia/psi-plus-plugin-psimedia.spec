@@ -1,6 +1,6 @@
 Name: psi-plus-plugin-psimedia
 Version: 1.0.3
-Release: alt2.1
+Release: alt2.1.1
 
 Summary: PsiMedia plugin for Psi+
 License: GPLv2.1
@@ -24,7 +24,7 @@ BuildRequires: gcc-c++
 BuildRequires: gst-plugins-devel >= 0.10.22
 BuildRequires: liboil-devel >= 0.3
 BuildRequires: libqt4-network >= 4.4.0
-BuildRequires: libspeex-devel >= 1.2
+BuildRequires: libspeex-devel libspeexdsp-devel
 BuildRequires: phonon-devel
 BuildRequires: python-module-z3c
 BuildRequires: python-module-z3c.recipe
@@ -56,6 +56,9 @@ install -Dp -m 0644 gstprovider/libgstprovider.so %buildroot%_libdir/psi-plus/pl
 %_libdir/psi-plus/plugins/libgstprovider.so
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2.1.1
+- NMU: added BR: libspeexdsp-devel
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt2.1
 - Fixed build
 
