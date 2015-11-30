@@ -1,6 +1,6 @@
 Name: libmediastreamer
 Version: 2.12.1
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: Audio/Video real-time streaming
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: intltool doxygen gcc-c++ libSDL-devel libX11-devel libalsa-devel
-BuildRequires: libavcodec-devel libpulseaudio-devel libspeex-devel
+BuildRequires: libavcodec-devel libpulseaudio-devel libspeex-devel libspeexdsp-devel
 BuildRequires: libswscale-devel libtheora-devel libv4l-devel libgsm-devel
 BuildRequires: libXv-devel libjack-devel libsamplerate-devel libglew-devel
 BuildRequires: libvpx-devel libortp-devel >= 0.17 vim-common
@@ -86,6 +86,9 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_includedir/*
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 2.12.1-alt1.1
+- fixed build - added BR: libspeexdsp-devel
+
 * Tue Nov 17 2015 Alexei Takaseev <taf@altlinux.org> 2.12.1-alt1
 - 2.12.1
 
