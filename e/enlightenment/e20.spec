@@ -4,7 +4,7 @@
 %define snapshot 2015-10-28
 %define cvs_date 5469c3b6
 %undefine cvs_date
-%define rel alt0.5
+%define rel alt1
 
 %def_disable static
 # only bluez4 supported
@@ -188,10 +188,10 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %dir %_libdir/%name/
 %_libdir/%name/*
 %_liconsdir/*.png
-# !
-%_iconsdir/emixer.png
 %_bindir/*
 %_datadir/%name/
+#!
+%_datadir/pixmaps/emixer.png
 %_datadir/xsessions/%name.desktop
 %_datadir/applications/*.desktop
 %{?_enable_systemd:%_prefix/lib/systemd/user/%name.service}
@@ -207,6 +207,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Dec 01 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.20.0-alt1
+- 0.20.0 release
+
 * Thu Nov 12 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.20.0-alt0.5
 - 0.20.0-rc
 
