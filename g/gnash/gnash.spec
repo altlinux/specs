@@ -1,6 +1,6 @@
 Name: gnash
 Version: 0.8.10
-Release: alt7.1
+Release: alt7.2
 
 Summary: GNU Flash player
 License: GPLv3
@@ -15,7 +15,7 @@ BuildRequires(Pre): browser-plugins-npapi-devel
 BuildRequires: boost-program_options-devel doxygen gcc-c++ kde4libs-devel libSDL-devel libXi-devel
 BuildRequires: libXinerama-devel libXt-devel libXv-devel libcurl-devel libexpat-devel libgtk+2-devel libjpeg-devel
 BuildRequires: libavformat-devel libavcodec-devel libavresample-devel libswscale-devel
-BuildRequires: libjemalloc-devel libltdl-devel libspeex-devel libcairo-devel xulrunner-devel
+BuildRequires: libjemalloc-devel libltdl-devel libspeex-devel libcairo-devel xulrunner-devel libspeexdsp-devel
 
 %description
 Standalone GNU Flash Player
@@ -114,6 +114,9 @@ cp -r gui/icons/hicolor %buildroot%_iconsdir/
 %browser_plugins_path/libgnashplugin.so
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.10-alt7.2
+- NMU: added BR: libspeexdsp-devel
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.8.10-alt7.1
 - rebuild with boost 1.57.0;
 - fix build with recent boost.
