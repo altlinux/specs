@@ -1,6 +1,6 @@
 Name:    pydxcluster
 Version: 2.21
-Release: alt1
+Release: alt2
 
 Summary: pyDxCluster is python (tk) HAM Dx Cluster for Linux users
 License: GPLv3
@@ -44,7 +44,7 @@ Feautres:
 %install
 install -Dm0755 pyDxCluster_v2_21.py %buildroot%_bindir/%name
 install -d %buildroot%_datadir/%name
-cp pydxcluster.cfg default.col %buildroot%_datadir/%name
+cp pydxcluster.cfg default.col bell.wav %buildroot%_datadir/%name
 
 %files
 %doc LICENSE.txt LICENSZ_HUN.txt
@@ -53,5 +53,8 @@ cp pydxcluster.cfg default.col %buildroot%_datadir/%name
 %_datadir/%name/*
 
 %changelog
+* Mon Nov 30 2015 Andrey Cherepanov <cas@altlinux.org> 2.21-alt2
+- Fix playing reminders
+
 * Sun Nov 29 2015 Andrey Cherepanov <cas@altlinux.org> 2.21-alt1
 - Initial build for ALT Linux
