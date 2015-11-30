@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.86
+Release: alt100.87
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -101,7 +101,7 @@ PreReq: librpmbuild = %version-%release, %name = %version-%release
 PreReq: shadow-utils
 Requires: autoconf autoconf-common automake automake-common bison coreutils cpio
 Requires: gcc gettext-tools glibc-devel gnu-config file kernel-headers libtool m4 make
-Requires: procps psmisc sed service texinfo which
+Requires: procps psmisc sed service which
 Requires: bash >= 0:3.1.17-alt4
 Requires: bzip2 >= 1:1.0.2-alt4
 Requires: gzip >= 0:1.3.3-alt2
@@ -530,6 +530,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Mon Nov 30 2015 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.87
+- rpm-build: removed texinfo from requirements.
+
 * Wed Nov 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.86
 - Made rpm2cpio exit code accurate for large packages.
 
