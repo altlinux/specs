@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt9
+Release: alt10
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -133,6 +133,9 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Mon Nov 30 2015 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt10
+- rebuild
+
 * Mon Dec 01 2014 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt9
 - sync patches with SuSE
 
