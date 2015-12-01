@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.2.2
+Version:  1.2.3
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,9 @@ gzip %buildroot%_man8dir/%name.8
 %doc %_man8dir/%name.8.gz
 
 %changelog
+* Tue Dec  1 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.2.3-alt1
+- do not proceed if hsh --initroot-only hasn't completed successfully
+
 * Mon Nov 30 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.2.2-alt1
 - implement the support for hasher (for "update" and "test" commands)
   if an explicit apt.conf is given.
