@@ -3,7 +3,7 @@
 
 Name: tetex
 Version: 2.0
-Release: alt12
+Release: alt12.1
 
 %define pkgname         teTeX
 %define texversion    2.0-rc1
@@ -52,6 +52,7 @@ Patch22: %pkgname-CVE-2005-0064.patch
 Patch23: %pkgname-CVE-2005-3191_3192.patch
 
 Patch24: tetex-2.0-alt-libpng15.patch
+Patch25: tetex-perl522.patch
 
 Obsoletes: tetex-texmf-src
 PreReq: tetex-core = %PACKAGE_VERSION-%release, cm-super-fonts-tex
@@ -306,6 +307,7 @@ grep -ErlZ 'exec /bin/(sh5|bsh)' . |
 %patch23 -p1
 
 %patch24 -p2
+%patch25 -p2
 
 # Fix build with glibc-2.10+
 sed -i s/getline/texk_getline/g \
@@ -526,6 +528,9 @@ x=/usr/bin/updmap && [ -x "$x" ] && "$x"  2>/dev/null ||:
 %doc PROBLEMS* README ChangeLog
 
 %changelog
+* Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 2.0-alt12.1
+- QA NMU: fixed build with perl 522
+
 * Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt12
 - Rebuilt with libpng15
 
