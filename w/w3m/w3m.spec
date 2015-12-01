@@ -2,26 +2,71 @@
 # $Id: w3m.spec,v 1.2 2006/02/14 08:39:36 eugene Exp $
 
 Name: w3m
-Version: 0.5.2
-Release: alt3.3
+Version: 0.5.3
+Release: alt1
 License: BSD
 Group: Networking/WWW
 Summary: w3m is a pager with Web browsing capability
 Url: http://w3m.sourceforge.net/
 
 Source: %name-%version.tar.gz
-Patch: %name-0.5.2-alt-DSO.patch
-Patch1: %name-0.5.2-alt-glibc-2.16.patch
-Patch2: %name-0.5.2-alt-libgc-7.2d.patch
+Patch10: %name-0.5.3-alt-DSO.patch
+Patch11: %name-0.5.2-alt-glibc-2.16.patch
+Patch12: %name-0.5.2-alt-libgc-7.2d.patch
+Patch13: w3m-0.5.3-alt-perl522.patch
 
-# Patch0: w3m-0.5.1-fix-format-string.patch
+#### FEDORA PATCHES ############################
+
+# commented in favor of Patch12: %name-0.5.2-alt-libgc-7.2d.patch
+# Change for function call GC_get_warn_proc()
+# https://sourceforge.net/tracker/?func=detail&aid=3595876&group_id=39518&atid=425441
+#Patch0:  %{name}-rh555467_FTBFS.patch
+
+# commented in favor of Patch10: %name-0.5.3-alt-DSO.patch
+# w3mimgdisplay need to be linked with -lX11 to build against gcc 4.5
+# https://sourceforge.net/tracker/?func=detail&aid=3126430&group_id=39518&atid=425441
+#Patch1:  %{name}-rh566101_Fix-DSO-X11.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=604864
+# verify SSL certificates by default. SSL support really is pointless
+# without doing that. Also disable use of SSLv2 by default as it's 
+# insecure, deprecated, dead since last century.
+# https://sourceforge.net/tracker/?func=detail&aid=3595801&group_id=39518&atid=425441
+Patch2:  %{name}-0.5.2-ssl_verify_server_on.patch
+
+# commented in favor of Patch11: %name-0.5.2-alt-glibc-2.16.patch
+# Now glib-2.14 owns structure name file_handle
+# https://sourceforge.net/tracker/?func=detail&aid=3595814&group_id=39518&atid=425441
+#Patch3:  %{name}-0.5.2-glibc2.14-fix_file_handle_error.patch
+
+# Resolves a bug of when given following command w3m crashes
+# w3m https://www.example.coma
+# but following command works fine by giving can't load error
+# w3m http://www.example.coma
+# https://sourceforge.net/tracker/?func=detail&aid=3595167&group_id=39518&atid=425441
+Patch4:  %{name}-rh707994-fix-https-segfault.patch
+
+#https://sourceforge.net/tracker/?group_id=39518&atid=425441
+Patch5:  %{name}-0.5.3-parallel-make.patch
+
+#https://bugzilla.redhat.com/show_bug.cgi?id=1037380
+Patch6:  %{name}-0.5.3-format-security.patch
+
+#https://bugzilla.redhat.com/show_bug.cgi?id=1038009
+Patch7:  %{name}-0.5.3-FTBFS-sys-errlist.patch
+
+
 
 Packager: Eugene Vlasov <eugvv@altlinux.ru>
 
 %add_findreq_skiplist %_libexecdir/w3m/cgi-bin/w3mhelp.cgi
 
 # Automatically added by buildreq on Fri Mar 25 2011
-BuildRequires: imlib2-devel libgc-devel libgpm-devel libgtk+2-devel libssl-devel man zlib-devel
+BuildRequires: imlib2-devel libgc-devel libgpm-devel libgtk+2-devel libssl-devel man zlib-devel automake gcc-c++
+BuildRequires: lynx
+# JP support, currently in autoimports
+#BuildRequires:  nkf
+
 
 %description
 w3m is a pager with WWW capability. It IS a pager, but it can be
@@ -49,14 +94,29 @@ linux framebuffer.
 
 %prep
 %setup -q
-%patch0 -p2
-%patch1 -p2
-%patch2 -p2
+#  fedora patches
+#patch0 -p0
+#patch1 -p0
+%patch2 -p1
+#patch3 -p1
+%patch4 -p0
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+# alt patches
+%patch10 -p2
+%patch11 -p2
+%patch12 -p2
+%patch13 -p1
 
 %build
 %add_optflags -I%_includedir/gc
 export CPPFLAGS="$CPPFLAGS -I%_includedir/gc"
-%configure --enable-m17n --enable-unicode --enable-nls --with-editor=/bin/vi --with-termlib=terminfo --disable-rpath 
+%configure --enable-m17n --enable-unicode --enable-nls --with-editor=/bin/vi --with-termlib=terminfo --disable-rpath --with-charset=UTF-8 --enable-keymap=w3m
+# TODO: see fedora spec
+# --with-mailer="gnome-open mailto:%s" --with-browser=gnome-open --with-gc --with-termlib=ncurses --enable-nntp --enable-gopher --enable-image=x11,fb --with-imagelib=gtk2
+
+
 %make
 
 %install
@@ -80,6 +140,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_libexecdir/w3m/w3mimgdisplay
 
 %changelog
+* Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1
+- new version (QA NMU)
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt3.3
 - Fixed build with libgc 7.2d
 
