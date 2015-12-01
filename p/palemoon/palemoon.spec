@@ -2,11 +2,12 @@ Summary: The Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
-Version: 25.8.1.0
-Release: alt1
+Version: 25.8.0.0
+Release: alt3
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
+Epoch: 1
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -308,6 +309,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Dec 01 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1:25.8.0.0-alt3
+- Backport to 25.8.0
+
 * Mon Nov 30 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.8.1.0-alt1
 - New Version
 
