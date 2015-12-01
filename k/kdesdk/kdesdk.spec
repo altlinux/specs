@@ -14,7 +14,7 @@
 
 Name: kdesdk
 Version: 3.5.13.2
-Release: alt2
+Release: alt2.1
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Group: Development/KDE and QT
@@ -46,6 +46,8 @@ Patch13: kdesdk-3.5.6-alt-find-libapr.patch
 Patch14: kdesdk-3.5.13.2-trinityHomeToKDE.patch
 Patch15: tde-3.5.13-build-defdir.patch
 Patch16: kdesdk-3.5.13-fix-POD.patch
+Patch17: kdesdk-3.5.13.2-perl522.patch
+Patch18: tdesdk-subversion-1.9.patch
 
 # Automatically added by buildreq on Thu Mar 18 2004 (-bi)
 #BuildRequires: XFree86-devel XFree86-libs cvs flex fontconfig freetype2 gcc-c++ kde-settings kdelibs-devel less libarts-devel libdb4.2-devel libiberty-devel libjpeg-devel libpng-devel libqt3-devel libstdc++-devel perl-DBM python qt3-designer termutils xml-utils zlib-devel
@@ -245,6 +247,8 @@ Misc utils for KDE development
 %patch14 -p1
 %patch15
 %patch16 -p1
+%patch17 -p1
+%patch18 -p1
 
 %if %cmake
 %else
@@ -593,6 +597,9 @@ mv %buildroot/%_K3bindir/svn-clean %buildroot/%_K3bindir/svnclean
 %_K3bindir/zonetab2pot.*
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 3.5.13.2-alt2.1
+- bugfixes for perl 5.22
+
 * Fri Aug 02 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
 - Allow and switch to build by cmake.
 
