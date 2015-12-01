@@ -1,6 +1,6 @@
 Name: 	  update-pepperflash
 Version:  1.5.3
-Release:  alt2.1
+Release:  alt3
 
 Summary:  Pepper Flash Player downloader
 License:  GPLv3+
@@ -23,7 +23,7 @@ user license agreement is available at Google.
 Summary:  Pepper Flash Player - browser plugin for Chromium
 Group: Networking/WWW
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %version
 Requires: chromium
 
 %description -n chromium-pepperflash
@@ -33,12 +33,25 @@ Pepper Flash Player - browser plugin for Chromium (virtual package)
 Summary:  Pepper Flash Player - browser plugin for Firefox
 Group: Networking/WWW
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %version
 Requires: /usr/bin/firefox
 Requires: freshplayerplugin
 
 %description -n firefox-pepperflash
 Pepper Flash Player - browser plugin for Firefox (virtual package)
+
+
+%package -n palemoon-pepperflash
+Summary:  Pepper Flash Player - browser plugin for Pale Moon
+Group: Networking/WWW
+BuildArch: noarch
+Requires: %name = %version
+Requires: /usr/bin/palemoon
+Requires: freshplayerplugin
+
+%description -n palemoon-pepperflash
+Pepper Flash Player - browser plugin for Firefox (virtual package)
+
 
 %prep
 
@@ -63,8 +76,12 @@ exit 0
 
 %files -n chromium-pepperflash
 %files -n firefox-pepperflash
+%files -n palemoon-pepperflash
 
 %changelog
+* Tue Dec 01 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.5.3-alt3
+- Add palemoon-pepperflash virtual package.
+
 * Fri Oct 23 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.3-alt2.1
 - Bumped release to force PPAPI flashplayer upgrade.
 
