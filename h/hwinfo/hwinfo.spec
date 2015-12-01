@@ -2,8 +2,8 @@
 
 Name: hwinfo
 %define lname lib%name
-Version: 18.5
-Release: alt3
+Version: 21.23
+Release: alt1
 Summary: Hardware detection tool
 License: GPL2
 Group: System/Kernel and hardware
@@ -11,17 +11,18 @@ URL: http://download.opensuse.org/source/factory/repo/oss/suse/src
 # http://download.opensuse.org/source/factory/repo/oss/suse/src/%name-%version-2.1.src.rpm
 Source: %name-%version.tar
 Patch0: %name-14.19-kbd.c-tiocgdev_undefined.patch
-Patch1: %name-13.57-as-needed.patch
-Patch2: %name-14.19-makefile.patch
+Patch1: %name-21.23-as-needed.patch
+Patch2: %name-21.23-makefile.patch
 Patch3: %name-14.19-alt.patch
 Patch4: %name-alt-no-hal.patch
+Patch5: hwinfo-21.23-perl522.patch
+
 Requires: %lname = %version-%release
-Packager: Fr. Br. George <george@altlinux.ru>
+
 # Automatically added by buildreq on Thu Sep 25 2008 (-bi)
 BuildRequires: doxygen flex perl-XML-Parser perl-XML-Writer perl-devel
 BuildRequires: rpm-build-licenses
-
-BuildPreReq: libdbus-devel libx86emu-devel
+BuildRequires: libdbus-devel libx86emu-devel
 
 %description
 A simple program that lists results from the hardware detection
@@ -88,10 +89,11 @@ on a system.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch5 -p2
 
 
 %build
-%make RPM_OPT_FLAGS="%optflags"
+%make RPM_OPT_FLAGS="%optflags" 
 %make_build doc
 bzip2 --best --keep --force changelog
 
@@ -105,7 +107,7 @@ install -m 0644 doc/libhd/html/* %buildroot%_docdir/%lname-%version/html/
 
 
 %files
-%doc changelog.* README
+%doc changelog.* README*
 %_sbindir/%name
 %_man8dir/*
 
@@ -141,6 +143,9 @@ install -m 0644 doc/libhd/html/* %buildroot%_docdir/%lname-%version/html/
 
 
 %changelog
+* Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 21.23-alt1
+- new version (QA NMU)
+
 * Tue Mar 22 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 18.5-alt3
 - %name-utils: avoid requirement on hal
 

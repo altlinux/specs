@@ -15,7 +15,7 @@ Version: %major.%minor
 %else
 Version: %major.%minor.%bugfix
 %endif
-Release: alt4.1
+Release: alt4.1.1
 
 Group: Graphical desktop/KDE
 Summary: KIO-Slave to show system information
@@ -89,6 +89,9 @@ popd
 
 
 %changelog
+* Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 2.0-alt4.1.1
+- rebuild with new hwinfo
+
 * Mon Mar 21 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt4.1
 - Rebuilt with hwinfo 18.5
 
