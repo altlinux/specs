@@ -1,6 +1,6 @@
 %define module_name	fglrx
-%define module_version	15.201.1151
-%define module_release alt3
+%define module_version	15.301.1025
+%define module_release alt1
 
 %define flavour std-def
 BuildRequires(pre): kernel-headers-modules-std-def
@@ -65,6 +65,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Dec 1 2015 barssc <barssc@altlinux.org> 2:15.301.1025-alt1
+- Catalyst 15.11
 
 * Tue Oct  06 2015 barssc <barssc@altlinux.org> 2:15.201.1151-alt3
 - modifed spec file
