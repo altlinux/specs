@@ -1,7 +1,7 @@
 
 Name: qt4-webkit
 Version: 2.3.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Group: System/Libraries
@@ -42,6 +42,7 @@ BuildRequires: libqt4-devel qt4-mobility-devel phonon-devel
 Summary: %summary
 Group: System/Libraries
 #Requires: qt4-common
+Provides: libQtWebKit4 = %version-%release
 %description -n libqt4-webkit
 %summary
 
@@ -120,6 +121,9 @@ done
 %_pkgconfigdir/QtWebKit.pc
 
 %changelog
+* Tue Dec 01 2015 Sergey V Turchin <zerg@altlinux.org> 1:2.3.4-alt2
+- provide libQtWebKit4
+
 * Fri May 15 2015 Sergey V Turchin <zerg@altlinux.org> 1:2.3.4-alt1
 - initial build
 
