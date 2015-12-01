@@ -8,7 +8,7 @@ Name: mailfromd
 %if %snapshot
 %define snapshotdate 20151112
 Version: %baseversion
-Release: alt0.%snapshotdate.1
+Release: alt0.%snapshotdate.2
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
@@ -64,6 +64,7 @@ BuildRequires: emacs-X11 flex libdb4-devel libdspam-devel libgcrypt-devel libgdb
 
 BuildRequires: libmailutils-devel >= 2.99.99
 BuildRequires: mailutils
+BuildRequires: makeinfo
 
 %description
 Milter-filter for Sendmail v8, MeTA1 and Postfix (since 2.3; please
@@ -299,6 +300,10 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Tue Dec 01 2015 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20151112.2
+- added makeinfo to BuildRequires
+  https://lists.altlinux.org/pipermail/devel/2015-November/200445.html
+
 * Thu Nov 12 2015 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20151112.1
 - new version
 - updated configuration (fixed some errors)
