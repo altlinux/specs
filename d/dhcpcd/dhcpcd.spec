@@ -1,6 +1,6 @@
 Name: dhcpcd
 Epoch: 1
-Version: 6.9.3
+Version: 6.9.4
 Release: alt1
 
 Summary: DHCP Client
@@ -71,6 +71,11 @@ fi
 %exclude /lib/%name/%name-hooks/15-timezone
 
 %changelog
+* Tue Dec 01 2015 Mikhail Efremov <sem@altlinux.org> 1:6.9.4-alt1
+- Update 50-ntp.conf.
+- Drop obsoleted patch.
+- Updated to 6.9.4.
+
 * Thu Nov 12 2015 Mikhail Efremov <sem@altlinux.org> 1:6.9.3-alt1
 - Force the sending of the short hostname by default (closes: #31203).
 - Always honor hostname_short option.
