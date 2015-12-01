@@ -1,6 +1,6 @@
 Name: libopal
 Version: 3.10.10
-Release: alt3
+Release: alt3.1
 Epoch: 1
 Summary: Library for H323 spec
 Url: http://www.opalvoip.org/
@@ -12,7 +12,11 @@ Obsoletes: libopenh323
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libgsm-devel libspeex-devel libtheora-devel libavcodec-devel libx264-devel
+### hack to fix build ###
+%set_gcc_version 4.9
+BuildRequires: gcc4.9-c++
+
+BuildRequires: gcc-c++ libgsm-devel libspeex-devel libtheora-devel libavcodec-devel libx264-devel libspeexdsp-devel
 BuildRequires: libssl-devel
 BuildRequires: libpt-devel >= 2.10.1
 
@@ -55,6 +59,9 @@ Header files for development with opal.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 1:3.10.10-alt3.1
+- NMU: added BR: libspeexdsp-devel, fixed build (set gcc 4.9)
+
 * Tue May 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.10.10-alt3
 - rebuilt with recent libav/libx264, again
 
