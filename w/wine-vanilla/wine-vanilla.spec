@@ -1,6 +1,6 @@
 Name: wine-vanilla
-Version: 1.7.53
-Release: alt1
+Version: 1.8.0
+Release: alt0rc2
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -234,10 +234,10 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 %if_without build64
 %_bindir/wine
-%_bindir/wine-*
+%_bindir/wine-preloader
 %else
 %_bindir/wine64
-%_bindir/wine64-*
+%_bindir/wine64-preloader
 %endif
 
 %_bindir/regsvr32
@@ -261,7 +261,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 #%_initdir/wine.outformat
 %_desktopdir/*
 
+%if_without build64
 %_man1dir/wine.*
+%endif
 %_man1dir/msiexec.*
 %_man1dir/notepad.*
 %_man1dir/regedit.*
@@ -363,6 +365,15 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Tue Dec 01 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt0rc2
+- new version 1.8-rc2
+
+* Sun Nov 22 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt0rc1
+- new version 1.8-rc1
+
+* Fri Oct 30 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.54-alt1
+- new version 1.7.54
+
 * Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.53-alt1
 - new version 1.7.53, requires wine-gecko = 2.40
 
