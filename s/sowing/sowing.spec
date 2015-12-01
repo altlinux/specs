@@ -1,8 +1,8 @@
 %define somver 1
-%define sover %somver.1.12
+%define sover %somver.1.18
 Name: sowing
-Version: 1.1.16
-Release: alt4
+Version: 1.1.18
+Release: alt1
 Summary: The program development and maintenance environment
 License: Free
 Group: Development/Tools
@@ -129,6 +129,9 @@ sed -i '1s|/sh|/bash|' %buildroot%_bindir/pstoxbm
 %_libdir/*.a
 
 %changelog
+* Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.18-alt1
+- NMU: new version - bugfix for perl 5.22
+
 * Fri Feb 11 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.16-alt4
 - Rebuilt for debuginfo
 
