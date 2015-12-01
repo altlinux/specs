@@ -44,8 +44,8 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.3.1
-Release: alt3
+Version: 4.3.2
+Release: alt1
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -536,8 +536,7 @@ Microsoft Active Directory.
 %if_with profiling_data
 	--with-profiling-data \
 %endif
-	%{subst_enable avahi} \
-	--disable-rpath-install
+	%{subst_enable avahi}
 
 [ -n "$NPROCS" ] || NPROCS=%__nprocs; export JOBS=$NPROCS
 %make_build NPROCS=%__nprocs
@@ -1136,6 +1135,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/masktest
 %_bindir/ndrdump
 %_bindir/smbtorture
+%_bindir/async_connect_send_test
 %_samba_libdir/libtorture.so.*
 %if_with dc
 %_samba_mod_libdir/libdlz-bind9-for-torture-samba4.so
@@ -1250,11 +1250,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_datadir/ctdb-tests
 %endif
 
-
-
 %files -n task-samba-dc
 
 %changelog
+* Tue Dec 01 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.2-alt1
+- New version (https://www.samba.org/samba/history/samba-4.3.2.html)
+- Enable RPATH in installed files to correct link using .pc files
+
 * Thu Nov 26 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.1-alt3
 - Remove libxfs-qa-devel from build requirements
 - Package samba-DC-ctdb, samba-DC-ctdb-devel and samba-DC-ctdb-tests
