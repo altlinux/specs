@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.18.alpha
-Release: alt1.1
+Version: 0.0.19.alpha
+Release: alt1
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -10,13 +10,12 @@ Url: http://www.wildfiregames.com/0ad/
 Requires: %name-data = %epoch:%version
 Source: %name-%version.tar
 
-Patch: 0ad-0.0.18-fix-build-with-gcc5.patch
-
 BuildRequires: gcc-c++ python zip cmake
 BuildRequires: boost-devel boost-filesystem-devel boost-flyweight-devel boost-signals-devel 
 BuildRequires: libgamin-devel libgamin-fam libcurl-devel libjpeg-devel libpng-devel libvorbis-devel
 BuildRequires: libxml2-devel libopenal-devel libSDL-devel wxGTK-devel libXcursor-devel libgloox-devel
 BuildRequires: libnspr-devel python-dev python-modules-json libicu-devel libenet-devel libminiupnpc-devel
+BuildRequires: libSDL2-devel
 
 %description
 0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
@@ -35,8 +34,6 @@ educational celebration of game development and ancient history.
 
 %prep
 %setup
-
-%patch -p1
 
 %build
 mkdir -p libraries/source/fcollada/src/output/debug/FCollada
@@ -75,6 +72,9 @@ cp -a binaries/data/* %buildroot/%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Mon Nov 30 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:0.0.19.alpha-alt1
+- 0.0.19
+
 * Sun Jun 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:0.0.18.alpha-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
