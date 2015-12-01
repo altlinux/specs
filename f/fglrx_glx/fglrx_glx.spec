@@ -10,34 +10,35 @@
 
 %define _libexecdir %_prefix/libexec
 %define _switchdir %_libexecdir/X11/drv.d
-%define new_version 15.9
+%define new_version 15.11
 
 %define bname fglrx
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
-%define real_version 15.201.1151
-Version: 15.201.1151
-Release: alt3
+%define real_version 15.30.1025
+Version: 15.301.1025
+Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
 URL: http://www.amd.com
 License: Proprietary
-Source0: AMD-Catalyst-%new_version-Linux-installer-%real_version-x86.x86_64.run
+Source0: amd-driver-installer-%real_version-x86.x86_64.run
 Source1: atieventsd.service
 Source2: %bname-switch.c
 Source3: authatieventsd.sh
+Source4: amdcccle.desktop
+Source5: amdccclesu.desktop
 Source7: a-ac-aticonfig
 Source8: a-lid-aticonfig
 Source9: ati-powermode.sh
 Source11: atieventsd.init
 Source12: aticonfig.1
 Patch0: %bname-13.20.16-printk-loglevel.patch
-Patch1: %bname-firegl-4.3.patch
-Patch2: %bname-kcl-4.1.patch
-Patch3: %bname-kcl-acpi-4.3.patch
-Patch4: %bname-kcl-str-4.3.patch
+Patch1: %bname-firegl-4.4.patch
+Patch2: %bname-drmP-4.4.patch
+
 
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
@@ -113,11 +114,9 @@ ATI/AMD %bname (Radeon video card driver) module sources for Linux kernel.
 %setup -T -c
 sh %SOURCE0 --extract .
 cd common/lib/modules/%bname/build_mod
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
-#%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch2 -p1
 
 cd -
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
@@ -171,17 +170,10 @@ install -p -m 0755 %archdir/usr/%_lib/%bname/* %buildroot%_libdir/%bname/
 
 # tools install
 # Create a proper desktop file in the right location
-cat > %buildroot%_desktopdir/amdcccle.desktop <<__EOF__
-[Desktop Entry]
-Name=AMD Catalyst Control Center
-GenericName=AMD Catalyst Control Center
-Comment=The ATI Catalyst Control Center For Linux
-Exec=amdcccle
-Icon=amdcccle
-Type=Application
-Categories=Qt;Application;System;
-__EOF__
-install -pD -m 0644 {common/usr/share/icons/ccc_large,%buildroot%_liconsdir/amdcccle}.png
+
+install -m 0644 %SOURCE4 %buildroot/%_desktopdir/
+install -m 0644 %SOURCE5 %buildroot/%_desktopdir/
+install -pD -m 0644 {common/usr/share/icons/ccc_large,%buildroot%_liconsdir/ccc_large}.xpm
 install -p -m 0644 common/usr/share/ati/amdcccle/* %buildroot%_datadir/ati/amdcccle/
 for p in amdcccle qt; do
 	ls %buildroot%_datadir/ati/amdcccle/${p}_*.qm | sed "s|^%buildroot\(%_datadir/ati/amdcccle/${p}_\(.*\)\.qm\)|%%lang(\2) \1|"
@@ -219,7 +211,6 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 %{?brp_strip_none:%brp_strip_none %_x11x11libdir/fgl*.so}
 %set_verify_elf_method textrel=relaxed,unresolved=relaxed,lint=relaxed
 
-
 %post -n %bname-tools
 %post_service atieventsd
 
@@ -227,6 +218,15 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 %preun -n %bname-tools
 %preun_service atieventsd
 
+%postun
+ln -sf ../../..%_libdir/X11/libGL.so.1.2 %_sysconfdir/X11/%_lib/libGL.so.1
+ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
+ln -sf ../../..%_libdir/X11/libEGL.so.1.0.0 %_sysconfdir/X11/%_lib/libEGL.so.1
+ln -sf ../..%_sysconfdir/X11/%_lib/libEGL.so.1 %_libdir/
+ln -sf ../../..%_libdir/X11/libGLESv2.so.2.0.0 %_sysconfdir/X11/%_lib/libGLESv2.so.2
+ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
+ln -sf ../../..%_libdir/X11/libglx.so %_sysconfdir/X11/%_lib/libglx.so
+ln -sf ../..%_sysconfdir/X11/%_lib/libglx.so %_libdir/
 
 %files
 %_sysconfdir/ati
@@ -269,6 +269,12 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Thu Dec 1 2015 barssc <barssc@altlinux.ru> 2:15.301.1025-alt1
+- Catalyst 15.11
+- Kernel module: fixed build for kernel 4.4.0-rc2
+- Add amdccclesu.desktop
+- Modify amdcccle.desktop
+
 * Sat Sep 26 2015 barssc <barssc@altlinux.ru> 2:15.201.1151-alt3
 - Kernel module: fixed build for kernel 3.18
 
