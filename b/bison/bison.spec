@@ -1,6 +1,6 @@
 Name: bison
 Version: 3.0.4.0.14.8bf2
-Release: alt1
+Release: alt2
 
 Summary: A GNU general-purpose parser generator
 License: GPLv3+
@@ -18,7 +18,7 @@ Requires: %name-runtime = %version-%release
 Provides: byacc = %version-%release
 Obsoletes: byacc
 
-BuildRequires: flex, gcc-c++, help2man
+BuildRequires: flex, gcc-c++, help2man, makeinfo
 BuildRequires: gnulib >= 0.1.585.2fda85
 
 %description
@@ -87,6 +87,9 @@ touch src/scan-????.l
 %files -f %name-runtime.lang runtime
 
 %changelog
+* Wed Dec 02 2015 Dmitry V. Levin <ldv@altlinux.org> 3.0.4.0.14.8bf2-alt2
+- Added makeinfo to BuildRequires.
+
 * Thu Sep 24 2015 Dmitry V. Levin <ldv@altlinux.org> 3.0.4.0.14.8bf2-alt1
 - Update to bison v3.0.4-14-g8bf276d.
 - Updated translations from translationproject.org.
