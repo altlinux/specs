@@ -1,3 +1,4 @@
+%def_disable snapshot
 %define _name p11-kit
 %define _libexecdir %_prefix/libexec
 
@@ -8,7 +9,7 @@
 #%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
 
 Name: lib%_name
-Version: 0.22.1
+Version: 0.23.1
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -16,7 +17,12 @@ Group: System/Libraries
 License: BSD
 Url: http://p11-glue.freedesktop.org/p11-kit.html
 
+%if_enabled snapshot
+Source: %_name-%version.tar
+%else
 Source: http://p11-glue.freedesktop.org/releases/%_name-%version.tar.gz
+%endif
+
 Source1: p11-kit-extract-trust
 Patch: %name-0.19.3-alt-lfs.patch
 
@@ -72,9 +78,8 @@ This package contains development documentation for %_name library.
 
 %prep
 %setup -n %_name-%version
+%{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
 %patch
-
-#subst 's/ serial-tests//' configure.ac
 
 %build
 %autoreconf
@@ -137,6 +142,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Wed Dec 02 2015 Yuri N. Sedunov <aris@altlinux.org> 0.23.1-alt1
+- 0.23.1 (ALT #31583)
+
 * Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 0.22.1-alt1
 - 0.22.1
 
