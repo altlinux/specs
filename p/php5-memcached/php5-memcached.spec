@@ -4,7 +4,7 @@
 
 Name:	 	php5-%{php5_extension}
 Version:	%php5_version
-Release:	%php5_release
+Release:	%php5_release.1
 
 Summary:	PHP5 extension for interfacing with memcached via libmemcached library
 
@@ -71,6 +71,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with new libmemcached 1.0.18
+
+* Mon May 18 2015 Anton Farygin (Rider) <rider@altlinux.org> 5.5.25.20150514-alt1
 - Rebuild with php5-%php5_version-%php5_release
 - New version 2.2.0
 

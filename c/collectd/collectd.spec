@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.5.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -836,6 +836,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Wed Dec 02 2015 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt1.2
+- rebuild with new libmemcached 1.0.18
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 5.5.0-alt1.1
 - rebuild with new perl 5.22.0
 
