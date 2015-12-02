@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt11
+Release: alt12
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -36,7 +36,7 @@ BuildRequires: nasm perl-Crypt-PasswdMD5 perl-Digest-SHA1 libe2fs-devel
 #linux-libc-headers
 BuildRequires: libuuid-devel
 
-%set_gcc_version 4.9
+%set_gcc_version 4.7
 
 %description
 Syslinux is a simple kernel loader. It normally loads the kernel (and an 
@@ -135,6 +135,9 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Wed Dec 02 2015 Michael Shigorin <mike@altlinux.org> 2:4.04-alt12
+- rebuilt with gcc4.7 (see #31534 again)
+
 * Tue Dec 01 2015 Michael Shigorin <mike@altlinux.org> 2:4.04-alt11
 - built with gcc4.9 (see #31534)
 
