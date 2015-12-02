@@ -1,6 +1,6 @@
 Name: texinfo
 Version: 6.0
-Release: alt1
+Release: alt2
 
 Summary: Tools needed to create Texinfo format documentation files
 License: GPLv3+
@@ -199,6 +199,9 @@ export ALL_TESTS=yes
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Dec 03 2015 Dmitry V. Levin <ldv@altlinux.org> 6.0-alt2
+- Raised default split size from 300000 to 33554432.
+
 * Mon Nov 30 2015 Dmitry V. Levin <ldv@altlinux.org> 6.0-alt1
 - Updated to 6.0 (closes: #31449).
 

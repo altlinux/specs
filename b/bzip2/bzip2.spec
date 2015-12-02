@@ -1,6 +1,6 @@
 Name: bzip2
 Version: 1.0.6
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Extremely powerful file compression utility
@@ -21,7 +21,7 @@ Patch6: bzip2-1.0.6-alt-progname.patch
 Patch7: bzip2-1.0.6-flok-show-progress.patch
 
 PreReq: bzlib = %epoch:%version-%release
-BuildPreReq: glibc-devel-static
+BuildPreReq: glibc-devel-static makeinfo
 
 %package -n bzlib
 Summary: The bzlib compression and decompression library
@@ -174,6 +174,9 @@ install -pm644 CHANGES LICENSE README *.html %buildroot%docdir/
 %docdir/*.html
 
 %changelog
+* Wed Dec 02 2015 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.6-alt4
+- Regenerated texinfo documentation.
+
 * Sat Feb 19 2011 Alexey Tourbin <at@altlinux.ru> 1:1.0.6-alt3
 - Disabled symbol versioning.
 
