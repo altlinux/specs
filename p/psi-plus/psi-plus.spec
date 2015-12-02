@@ -1,5 +1,5 @@
 Name: psi-plus
-Version: 0.16.309
+Version: 0.16.475.1
 Release: alt1
 
 Summary: Psi+ Jabber client
@@ -12,6 +12,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/%name/%name-snapshots/archive/%version.tar.gz
 Source: %name-snapshots-%version.tar.gz
+Patch0: %name-qca2-alt.patch
 
 BuildRequires(pre): libqt4-devel
 
@@ -622,6 +623,7 @@ Yandex.Narod support for %name
  
 %prep
 %setup -n %name-snapshots-%version
+%patch0 -p1
 
 %build
 ./configure \
@@ -1025,6 +1027,9 @@ popd
 %_libdir/%name/plugins/libyandexnarodplugin.so
 
 %changelog
+* Wed Dec 02 2015 Nazarov Denis <nenderus@altlinux.org> 0.16.475.1-alt1
+- Version 0.16.475.1 (ALT #31565)
+
 * Sun Mar 23 2014 Nazarov Denis <nenderus@altlinux.org> 0.16.309-alt1
 - Version 0.16.309
 
