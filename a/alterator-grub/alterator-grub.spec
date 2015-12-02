@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.9.9
+Version: 0.10
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -15,7 +15,7 @@ Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.9-alt10
 Requires: alterator-sh-functions >= 0.6-alt1
 Requires: alterator-hw-functions >= 0.7.3-alt1
-Requires: grub2-pc >= 2.00-alt7
+Requires: grub2-pc > 2.00-alt20
 Conflicts: guile-evms < 0.4-alt13
 
 BuildPreReq: alterator >= 4.7-alt5
@@ -47,6 +47,14 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Wed Dec 02 2015 Michael Shigorin <mike@altlinux.org> 0.10-alt1
+- added GRUB2 hashed password support
+- NB: depends on fixes made after grub-2.00-alt20 to *not* require
+      boot password given default boot options for a menuentry
+
+* Tue Sep 02 2014 Michael Shigorin <mike@altlinux.org> 0.9.10-alt1
+- care for efivars
+
 * Wed Jun 11 2014 Michael Shigorin <mike@altlinux.org> 0.9.9-alt1
 - convert GRUB_AUTOUPDATE_DEVICE members to stable symlinks (closes: #29546)
 
