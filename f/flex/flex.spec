@@ -1,6 +1,6 @@
 Name: flex
-Version: 2.5.37
-Release: alt2
+Version: 2.6.0
+Release: alt1
 
 Summary: A fast lexical analyzer generator
 License: BSD-style
@@ -13,7 +13,7 @@ Source: %name-%version-%release.tar
 Requires: m4 >= 0:1.4
 Conflicts: flex-old
 
-BuildRequires: flex, help2man
+BuildRequires: flex, help2man, makeinfo
 %{?!_without_check:%{?!_disable_check:BuildRequires: gcc-c++}}
 
 %description
@@ -39,7 +39,7 @@ C mode.  The package flex-old provides the older behaviour.
 
 %build
 %autoreconf
-%configure
+%configure --disable-shared
 %make_build CFLAGS='%optflags -D_REENTRANT' MAKEINFOFLAGS=--no-split dist_doc_DATA=
 
 %install
@@ -65,6 +65,9 @@ ln -s flex.1 %buildroot%_man1dir/flex++.1
 %_infodir/*.info*
 
 %changelog
+* Wed Dec 02 2015 Dmitry V. Levin <ldv@altlinux.org> 2.6.0-alt1
+- Updated to v2.6.0-8-g9ba6e52.
+
 * Fri Sep 07 2012 Dmitry V. Levin <ldv@altlinux.org> 2.5.37-alt2
 - Reverted upstream commit flex-2.5.37-10-gec2fdb8 that introduced
   certain regressions.

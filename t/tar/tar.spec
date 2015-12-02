@@ -1,5 +1,5 @@
 Name: tar
-Version: 1.28.0.32.cdf41c
+Version: 1.28.0.39.d02c
 Release: alt1
 
 Summary: A GNU file archiving program
@@ -12,7 +12,7 @@ Url: http://www.gnu.org/software/tar/
 Source: %srcname.tar
 
 %def_enable selinux
-BuildRequires: libacl-devel libattr-devel
+BuildRequires: libacl-devel libattr-devel makeinfo
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 BuildRequires: gnulib >= 0.1.585.2fda85, paxutils >= 0.0.1.119.45af
 
@@ -64,6 +64,9 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Tue Dec 01 2015 Dmitry V. Levin <ldv@altlinux.org> 1.28.0.39.d02c-alt1
+- Updated to release_1_28-39-gd02c81d.
+
 * Thu Sep 24 2015 Dmitry V. Levin <ldv@altlinux.org> 1.28.0.32.cdf41c-alt1
 - Updated to release_1_28-32-gcdf41c.
 - Imported some patches by Pavel Raiskup from Fedora tar-1.28-6 package.
