@@ -11,16 +11,15 @@
 %def_enable vala
 
 Name: %bname
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 Epoch: 1
 
-Summary: An SVG library based on libart
+Summary: SVG rendering library
 License: LGPLv2+
 Group: System/Libraries
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
-Patch: %name-2.40.11-alt-duplicate_testcase_path.patch
 
 # From configure.ac
 %define glib_ver 2.24.0
@@ -46,7 +45,7 @@ BuildRequires: gcc-c++ gtk-doc intltool sgml-common zlib-devel
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver rpm-build-vala}
 
 %description
-An SVG library based on libart.
+A high performance SVG rendering library associated with the Gnome Project.
 
 %package devel
 Summary: Libraries and include files for developing with librsvg
@@ -125,7 +124,6 @@ GObject introspection devel data for the %name library
 
 %prep
 %setup -n %bname-%version
-%patch
 
 %build
 %autoreconf
@@ -183,6 +181,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Wed Dec 02 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.12-alt1
+- 2.40.12
+
 * Sat Oct 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.11-alt1
 - 2.40.11
 
