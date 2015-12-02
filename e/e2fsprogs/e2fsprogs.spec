@@ -1,6 +1,6 @@
 Name: e2fsprogs
 Version: 1.42.13
-Release: alt1
+Release: alt2
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
 License: GPLv2
@@ -23,6 +23,7 @@ Requires: libss = %version-%release
 %{!?_enable_libuuid:BuildRequires: libuuid-devel}
 %{?_enable_libblkid:Requires: libblkid = %version-%release}
 %{?_enable_libuuid:Requires: libuuid = %version-%release}
+BuildRequires: makeinfo
 
 %description
 This package contains a number of utilities for creating, checking,
@@ -387,6 +388,9 @@ mv tests/m_no_opt/expect.1{.ext2,}
 %endif # libuuid
 
 %changelog
+* Wed Dec 02 2015 Dmitry V. Levin <ldv@altlinux.org> 1.42.13-alt2
+- Updated to maint v1.42.13-18-g19961cd.
+
 * Tue Nov 17 2015 Dmitry V. Levin <ldv@altlinux.org> 1.42.13-alt1
 - Updated to maint v1.42.13-9-gb9ba837.
 
