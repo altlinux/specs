@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.2.3
+Version:  1.2.4
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,12 @@ gzip %buildroot%_man8dir/%name.8
 %doc %_man8dir/%name.8.gz
 
 %changelog
+* Wed Dec 02 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.2.4-alt1
+- prepare a smaller basesystem in hasher as girar's install check does
+  (rather than the default one with rpm-build). This will allow to
+  catch the same bugs as in girar, like that one:
+  https://bugzilla.altlinux.org/show_bug.cgi?id=31576 .
+
 * Tue Dec  1 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.2.3-alt1
 - do not proceed if hsh --initroot-only hasn't completed successfully
 
