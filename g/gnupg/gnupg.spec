@@ -1,5 +1,5 @@
 Name: gnupg
-Version: 1.4.18
+Version: 1.4.19
 Release: alt1
 
 Summary: The GNU Privacy Guard
@@ -27,7 +27,7 @@ Conflicts: gnupg2-common < 2.0.13
 %define _libexecdir %_prefix/libexec
 %def_enable ldap
 
-BuildPreReq: bzlib-devel libreadline-devel zlib-devel
+BuildPreReq: bzlib-devel libreadline-devel makeinfo zlib-devel
 %if_enabled ldap
 BuildPreReq: libldap-devel
 %endif #enabled ldap
@@ -128,6 +128,9 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 
 %changelog
+* Wed Dec 02 2015 Dmitry V. Levin <ldv@altlinux.org> 1.4.19-alt1
+- Updated to gnupg-1.4.19-13-g8b5cb54.
+
 * Mon Jun 30 2014 Dmitry V. Levin <ldv@altlinux.org> 1.4.18-alt1
 - Updated to 1.4.18.
 
