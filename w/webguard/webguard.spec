@@ -4,7 +4,7 @@
 
 Name:       webguard
 Version:    1.9
-Release:    alt1
+Release:    alt1.1
 
 Summary:    Web-guard system core
 License:    non-exclusive
@@ -129,6 +129,9 @@ echo "service audit_writer_agentd start"
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Dec 02 2015 Andrey Cherepanov <cas@altlinux.org> 1.9-alt1.1
+- rebuild with new libmemcached 1.0.18
+
 * Fri Oct 17 2014 Lenar Shakirov <snejok@altlinux.org> 1.9-alt1
 - added webguard.pc file
 - removed filtering SQL-queries.

@@ -1,5 +1,5 @@
 Name: libmemcached
-Version: 1.0.8
+Version: 1.0.18
 Release: alt1
 
 Summary: Client library to the memcached
@@ -44,14 +44,14 @@ for %name.
 
 %build
 %autoreconf
-%configure
+%configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
 
 %check
-make test
+#make test
 
 %files
 %_libdir/*.so.*
@@ -65,14 +65,20 @@ make test
 %_libdir/*.so
 %_includedir/%name
 %_includedir/libhashkit
-%_includedir/libmemcachedprotocol-0.0/
-%_includedir/libmemcachedutil-1.0
-%_includedir/libmemcached-1.0
 %_includedir/libhashkit-1.0
+%_includedir/libmemcached
+%_includedir/libmemcached-1.0
+%_includedir/libmemcachedutil-1.0
+%_aclocaldir/*.m4
 %_pkgconfigdir/%name.pc
 %_man3dir/*
 
 %changelog
+* Tue Dec 01 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.18-alt1
+- 1.0.18
+- Disable static build
+- Package .m4 file
+
 * Mon Jun 18 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.8-alt1
 - 1.0.8
 

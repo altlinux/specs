@@ -2,7 +2,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt3.rel.a
+Release: alt3.rel.a.1
 
 %define _libexecdir %{expand:%_libdir}
 %def_disable tests
@@ -665,6 +665,9 @@ fi
 %_controldir/%name
 
 %changelog
+* Wed Dec 02 2015 Andrey Cherepanov <cas@altlinux.org> 1.3.5-alt3.rel.a.1
+- Rebuild with new libmemcached 1.0.18
+
 * Fri May 29 2015 L.A. Kostis <lakostis@altlinux.ru> 1.3.5-alt3.rel.a
 - 1.3.5a release.
 - Increased rlimit to 64M for xinetd.
