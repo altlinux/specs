@@ -1,6 +1,6 @@
 Name: fail2ban
 Version: 0.9.3
-Release: alt1
+Release: alt2
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 Source1: alt-initd
 Source2: fail2ban.service
 Source3: fail2ban-logrotate
+Source4: paths-altlinux.conf
 
 BuildArch: noarch
 
@@ -30,6 +31,7 @@ interface to a packet-control system or firewall installed locally
 
 %prep
 %setup
+%__subst "s|paths-debian.conf|paths-altlinux.conf|g" config/jail.conf
 
 %build
 %python_build
@@ -50,17 +52,19 @@ install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
 install -pD -m 644 %SOURCE2 %buildroot%_unitdir/%name.service
 install -pD -m 644 files/fail2ban-tmpfiles.conf %buildroot%_tmpfilesdir/%name.conf
 install -pD -m 644 %SOURCE3 %buildroot%_logrotatedir/fail2ban
+install -pD -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/paths-altlinux.conf
 
 %python_install --optimize=2
-rm -rf %buildroot/%_docdir/%name/
 
-%pre
-rm -fR %_datadir/%name
+rm -rf %buildroot/%_docdir/%name/
+rm -f %buildroot%_sysconfdir/%name/paths-{debian,fedora,freebsd,osx}.conf
+
+mkdir -p %buildroot%_var/lib/fail2ban/
 
 %files
 %doc ChangeLog README.md THANKS TODO
 %python_sitelibdir/*
-%_datadir/%name
+%_datadir/%name/
 %_bindir/%name-*
 %dir %_sysconfdir/%name/
 %dir %_sysconfdir/%name/*.d
@@ -69,7 +73,8 @@ rm -fR %_datadir/%name
 %config(noreplace) %_sysconfdir/%name/*.d/*.conf
 %config(noreplace) %_sysconfdir/%name/*.d/*.py
 %config(noreplace) %_sysconfdir/%name/filter.d/ignorecommands/*
-%_var/run/fail2ban
+%_var/run/fail2ban/
+%_var/lib/fail2ban/
 %_initdir/fail2ban
 %_unitdir/%name.service
 %_man1dir/*
@@ -78,6 +83,10 @@ rm -fR %_datadir/%name
 %_logrotatedir/%name
 
 %changelog
+* Wed Dec 02 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt2
+- fix paths, drop rm -rf from pre script
+- create directory for persistent database
+
 * Tue Nov 17 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
 - new version 0.9.3 (with rpmrb script)
 
