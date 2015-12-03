@@ -2,7 +2,7 @@
 
 Name: cdcd
 Version: 0.6.6
-Release: alt6.git20140208
+Release: alt6.git20140208.1
 Summary: Command Driven CD player
 License: %gpl2plus
 Group: Sound
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: glib2-devel libcdaudio-devel libreadline-devel
 BuildPreReq: libsocket-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 %name takes a different approach from conventional console (or X) based
@@ -71,6 +73,9 @@ __MENU__
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt6.git20140208.1
+- NMU: added BR: texinfo
+
 * Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.6-alt6.git20140208
 - Snapshot from git
 
