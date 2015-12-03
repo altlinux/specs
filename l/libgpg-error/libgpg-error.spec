@@ -2,7 +2,7 @@
 
 Name: libgpg-error
 Version: 1.20
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: Error library for GnuPG and related projects
@@ -17,6 +17,8 @@ BuildRequires: glibc-devel
 %if_enabled static
 BuildRequires: glibc-devel-static
 %endif
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package devel
 Summary: Development files for the %name package
@@ -80,6 +82,9 @@ ln -sf ../../%_lib/libgpg-error.so.0 %buildroot%_libdir/libgpg-error.so
 %endif
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1.1
+- NMU: added BR: texinfo
+
 * Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 1.20-alt1
 - new version
 
