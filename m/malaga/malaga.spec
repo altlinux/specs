@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libreadline-devel
 # END SourceDeps(oneline)
 Name:           malaga
 Version:        7.12 
-Release:        alt2_18
+Release:        alt2_18.1
 Summary:        A programming language for automatic language analysis
 
 Group:          Development/Other
@@ -23,6 +23,8 @@ Patch2:         malaga-aarch64.patch
 BuildRequires:  gtk2-devel readline-devel
 Requires: lib%{name} = %{version}-%{release}
 Source44: import.info
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 A software package for the development and application of
@@ -99,6 +101,9 @@ chmod 0755 $RPM_BUILD_ROOT%{_libdir}/libmalaga.so*
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_18.1
+- NMU: added BR: texinfo
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_18
 - new version
 
