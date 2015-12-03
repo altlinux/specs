@@ -1,6 +1,6 @@
 Name: gambit
 Version: 4.7.7
-Release: alt1
+Release: alt1.1
 
 Summary: Gambit-C Scheme programming system
 License: Apache-2.0
@@ -23,6 +23,8 @@ BuildRequires: gambit >= %bootstrap_version
 BuildRequires: emacs-leim emacs-nox libX11-locales libncurses-devel /usr/bin/texi2html /usr/bin/texi2dvi /usr/bin/pdf2ps /usr/bin/gs perl(Encode.pm) perl(Unicode/Normalize.pm) tetex-latex
 
 BuildPreReq: alternatives
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Gambit-C includes a Scheme interpreter and a Scheme compiler which can be used
@@ -166,6 +168,9 @@ cd %name-%version
 %_infodir/*.info*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.7.7-alt1.1
+- NMU: added BR: texinfo
+
 * Thu Jul 16 2015 Cronbuild Service <cronbuild@altlinux.org> 4.7.7-alt1
 - repocop cronbuild 20150716. At your service.
 
