@@ -1,6 +1,6 @@
 Name: ddrutility
 Version: 2.7
-Release: alt1
+Release: alt1.1
 
 Summary: Utility for use with gnuddrescue to aid with data recovery
 License: GPLv3+
@@ -9,6 +9,8 @@ Group: Archiving/Backup
 Url: http://sourceforge.net/projects/ddrutility/
 Source0: %name-%version.tar.gz
 Source1: %name.watch
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 %name is meant to be a compliment to gnuddrescue.
@@ -35,6 +37,9 @@ ddru_ntfsfindbad
 %_infodir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1.1
+- NMU: added BR: texinfo
+
 * Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 2.7-alt1
 - new version (watch file uupdate)
 
