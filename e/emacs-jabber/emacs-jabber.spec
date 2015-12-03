@@ -4,7 +4,7 @@
 Epoch: 1
 
 Version: 0.8.92
-Release: alt7
+Release: alt7.1
 Name: emacs-jabber
 License: %gpl2plus
 Group: Networking/Instant messaging
@@ -25,6 +25,8 @@ BuildPreReq: rpm-build-licenses
 BuildPreReq: emacs-gnus >= 5.10
 # We need automake >= 1.12 to support LOG_COMPILER:
 BuildPreReq: automake >= 1.12
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 jabber.el is a minimal Jabber client running under Emacs.
@@ -81,6 +83,9 @@ install -m 644 jabber-fallback-lib/hexrgb.elc %buildroot%_emacslispdir/%pkg_name
 %doc %pkg_name.texi
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1:0.8.92-alt7.1
+- NMU: added BR: texinfo
+
 * Sun Jun 28 2015 Terechkov Evgenii <evg@altlinux.org> 1:0.8.92-alt7
 - git-20150628
 
