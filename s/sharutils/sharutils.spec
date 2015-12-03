@@ -1,6 +1,6 @@
 Name: sharutils
 Version: 4.6.3
-Release: alt1.1.qa2
+Release: alt1.1.qa2.1
 
 Summary: The GNU shar utilities for packaging and unpackaging shell archives
 License: GPL
@@ -14,6 +14,8 @@ Patch8: %name-4.3.77-alt-tmp.patch
 BuildPreReq: help2man
 
 Summary(ru_RU.KOI8-R): Утилиты GNU для создания и распаковки текстовых архивов
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package -n remsync
 Summary: Remote synchronization of directories
@@ -122,6 +124,9 @@ subst 's,info remsync,info sharutils,' remsync.1
 %_mandir/man?/remsync*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.6.3-alt1.1.qa2.1
+- NMU: added BR: texinfo
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.6.3-alt1.1.qa2
 - NMU: rebuilt for debuginfo.
 
