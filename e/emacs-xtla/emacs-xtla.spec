@@ -1,6 +1,6 @@
 Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 Version: 1.1
-Release: alt2.1
+Release: alt2.1.1
 #Epoch: %(date +%%Y%%m%%d)
 Name: emacs-xtla
 License: GPL
@@ -18,6 +18,8 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Thu Jan 06 2005
 BuildRequires: emacs-common tla emacs-gnus
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 %name is an Emacs interface for GNU Arch (tla). It is similar to PCL-CVS 
@@ -81,6 +83,9 @@ You need to install %name-el only if you intend to modify any of the
 %_emacslispdir/xtla/*.el
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2.1.1
+- NMU: added BR: texinfo
+
 * Wed Nov 04 2009 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2.1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-install-info for emacs-xtla
