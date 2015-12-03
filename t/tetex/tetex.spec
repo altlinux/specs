@@ -3,7 +3,7 @@
 
 Name: tetex
 Version: 2.0
-Release: alt12.1
+Release: alt12.1.1
 
 %define pkgname         teTeX
 %define texversion    2.0-rc1
@@ -56,6 +56,8 @@ Patch25: tetex-perl522.patch
 
 Obsoletes: tetex-texmf-src
 PreReq: tetex-core = %PACKAGE_VERSION-%release, cm-super-fonts-tex
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package core
 Summary: The core of TeX text formatting system
@@ -528,6 +530,9 @@ x=/usr/bin/updmap && [ -x "$x" ] && "$x"  2>/dev/null ||:
 %doc PROBLEMS* README ChangeLog
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.0-alt12.1.1
+- NMU: added BR: texinfo
+
 * Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 2.0-alt12.1
 - QA NMU: fixed build with perl 522
 
