@@ -2,7 +2,7 @@
 
 Name: libcommoncpp2
 Version: 1.8.1
-Release: alt3.1
+Release: alt3.1.1
 
 %define docdir %_docdir/%name-%version
 
@@ -17,6 +17,8 @@ Patch: libcommoncpp2-1.8.1-alt-no-overflow.patch
 
 BuildRequires: gcc-c++ libstdc++-devel zlib-devel libxml2-devel doxygen
 BuildRequires: info
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Common C++ is a GNU package which offers portable "abstraction" of system
@@ -88,6 +90,9 @@ cp -a AUTHORS NEWS README THANKS TODO doc/html %buildroot%docdir
 %_infodir/commoncpp2.*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt3.1.1
+- NMU: added BR: texinfo
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt3.1
 - Fixed overflow of destination buffer
 
