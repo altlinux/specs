@@ -16,7 +16,7 @@
 Summary:	general multi-lingual speech synthesis system
 Name:		festival
 Version:	%{fst_version}
-Release:	alt4
+Release:	alt4.1
 Group:		Sound
 Packager:	Igor Vlasenko <viy@altlinux.ru>
 # the emacs file is GPL+, there is one TCL licensed source file
@@ -317,6 +317,8 @@ Conflicts: festvox_nitech_us_clb_arctic_hts < 0.20070000
 Conflicts: festvox_nitech_us_jmk_arctic_hts < 0.20070000
 Conflicts: festvox_nitech_us_rms_arctic_hts < 0.20070000
 Conflicts: festvox_nitech_us_slt_arctic_hts < 0.20070000
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 
 %description
@@ -827,6 +829,9 @@ grep '^%festival_user:' /etc/passwd >/dev/null || \
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.95-alt4.1
+- NMU: added BR: texinfo
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.95-alt4
 - fixed build
 
