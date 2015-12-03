@@ -1,6 +1,6 @@
 Name: autogen
 Version: 5.18.4
-Release: alt1
+Release: alt1.1
 
 Summary: AutoGen - The Automated Program Generator
 License: %gpl3plus
@@ -13,6 +13,8 @@ Patch1: autogen-5.18.4-masquerade-deps.patch
 BuildPreReq: rpm-build-licenses rpm-build-compat
 
 BuildPreReq: texi2html guile18-devel libxml2-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 AutoGen is a tool designed to simplify the creation and maintenance
@@ -106,6 +108,9 @@ mv %buildroot%_datadir/pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %_man3dir/*.3.*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 5.18.4-alt1.1
+- NMU: added BR: texinfo
+
 * Thu Oct 16 2014 Mikhail Efremov <sem@altlinux.org> 5.18.4-alt1
 - Don't require /usr/xpg4/bin/sh.
 - Minor spec cleanup.
