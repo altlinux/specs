@@ -1,6 +1,6 @@
 Name: autoconf-archive
 Version: 2015.02.24
-Release: alt1
+Release: alt1.1
 Summary: The Autoconf Macro Archive
 
 Group: Development/Other
@@ -12,6 +12,8 @@ Patch: %name-%version-%release.patch
 BuildArch: noarch
 
 BuildRequires: gnulib python-modules
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The GNU Autoconf Archive is a collection of more than 450 macros for
@@ -52,6 +54,9 @@ rm -rf %buildroot%_datadir/%name
 %_infodir/autoconf-archive.info*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2015.02.24-alt1.1
+- NMU: added BR: texinfo
+
 * Mon May 18 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.02.24-alt1
 - 2015.02.24
 
