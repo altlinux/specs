@@ -1,6 +1,6 @@
 Name: gnuplotfortran
 Version: 0.2.2.1
-Release: alt1
+Release: alt1.1
 Summary: Provides an interface between Fortran 90/95 and GNUPlot
 License: LGPLv2.1+
 Group: Development/Tools
@@ -10,6 +10,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: libfortranposix gcc-fortran
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 This library is a Fortran 95 gnuplot interface for some Unix like OS'es.
@@ -90,6 +92,9 @@ popd
 %doc *.pdf
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.2.1-alt1.1
+- NMU: added BR: texinfo
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2.1-alt1
 - Version 0.2.2-1
 
