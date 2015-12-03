@@ -1,6 +1,6 @@
 Name: wdiff
 Version: 1.2.2
-Release: alt1
+Release: alt1.1
 Summary: Comparing files on a word per word basis
 License: GPL
 Group: Text tools
@@ -9,6 +9,8 @@ Source: %name-%version.tar.gz
 
 # Needs for check
 BuildRequires: screen
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The program wdiff is a front end to diff for comparing files on a word
@@ -41,6 +43,9 @@ differences between the original files.
 %_infodir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1.1
+- NMU: added BR: texinfo
+
 * Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 1.2.2-alt1
 - Autobuild version bump to 1.2.2
 
