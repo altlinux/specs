@@ -2,7 +2,7 @@
 
 Name: ccrtp
 Version: 2.1.2
-Release: alt1
+Release: alt1.1
 %define sover 3
 %define libccrtp libccrtp%sover
 %define docdir %_docdir/%name-%version
@@ -19,6 +19,8 @@ Source: %name-%version.tar
 # optimized out: elfutils libcloog-isl4 libgpg-error libgpg-error-devel libstdc++-devel makeinfo pkg-config python-base ruby ruby-stdlibs
 #BuildRequires: doxygen gcc-c++ glibc-devel-static libgcrypt-devel rpm-build-ruby ucommon-devel
 BuildRequires: doxygen gcc-c++ glibc-devel libgcrypt-devel ucommon-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 ccRTP is a generic, extensible and efficient C++ framework for
@@ -92,6 +94,9 @@ cp -a AUTHORS COPYING.addendum README doc/srcmodel* doc/html %buildroot%docdir
 %endif
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt1.1
+- NMU: added BR: texinfo
+
 * Mon Jun 15 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt1
 - new version
 
