@@ -4,7 +4,7 @@
 %define pkg_name w3m
 
 Version: 1.5
-Release: alt0.1.20120203
+Release: alt0.1.20120203.1
 Name: emacs-%pkg_name
 License: GPL
 Group: Editors
@@ -21,6 +21,8 @@ Source1: %name-start-script.el
 BuildRequires: emacs-common emacs-devel
 
 Requires: emacs-common emacsen-startscripts w3m
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Emacs-%pkg_name is a simple Emacs interface to %pkg_name. 
@@ -72,6 +74,9 @@ gzip -f -9 ChangeLog*
 %_emacslispdir/%pkg_name/*.el
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt0.1.20120203.1
+- NMU: added BR: texinfo
+
 * Fri Feb 03 2012 Michael Pozhidaev <msp@altlinux.ru> 1.5-alt0.1.20120203
 - New version from CVS
 
