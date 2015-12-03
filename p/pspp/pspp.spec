@@ -1,6 +1,6 @@
 Name: pspp
 Version: 0.8.5
-Release: alt1
+Release: alt1.1
 Summary: A program for statistical analysis of sampled data
 Group: Sciences/Mathematics
 License: GPLv3+
@@ -12,6 +12,8 @@ BuildRequires: fonts-ttf-liberation
 # Automatically added by buildreq on Mon May 26 2014
 # optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libncurses-devel libpango-devel libtinfo-devel libwayland-client libwayland-server makeinfo pkg-config tzdata xml-utils zlib-devel
 BuildRequires: libgsl-devel libgtksourceview-devel libreadline-devel libxml2-devel perl-devel perl-podlators
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 PSPP is a program for statistical analysis of sampled data. It
@@ -65,6 +67,9 @@ make check
 %doc %_datadir/doc/pspp
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1.1
+- NMU: added BR: texinfo
+
 * Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 0.8.5-alt1
 - Autobuild version bump to 0.8.5
 - Package mans
