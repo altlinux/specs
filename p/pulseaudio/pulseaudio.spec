@@ -1,6 +1,6 @@
 Name: pulseaudio
 Version: 7.0
-Release: alt1
+Release: alt1.1
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -18,7 +18,7 @@ BuildRequires: libsndfile-devel libspeex-devel libssl-devel libwrap-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libjson-c-devel libgtk+2-devel libGConf-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
-BuildRequires: libsystemd-devel xen-devel
+BuildRequires: libsystemd-devel xen-devel libspeexdsp-devel
 
 Requires: %name-utils = %version-%release
 Requires: %name-daemon = %version-%release
@@ -387,6 +387,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 7.0-alt1.1
+- NMU: added BR: libspeexdsp-devel
+
 * Fri Sep 25 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.0-alt1
 - 7.0 released
 
