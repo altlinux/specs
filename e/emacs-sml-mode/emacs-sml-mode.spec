@@ -1,6 +1,6 @@
 %define pkg_name sml-mode
 Version: 3.9.5
-Release: alt7
+Release: alt7.1
 Name: emacs-%pkg_name
 License: GPL
 Group: Editors
@@ -18,6 +18,8 @@ Requires: emacs-common
 BuildPreReq: emacs-devel >= 0.0.1-alt2
 # Automatically added by buildreq on Thu Aug 05 2002
 BuildRequires: emacs-common
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 This package contains an emacs major mode for editing Standard ML source code.
@@ -53,6 +55,9 @@ install -m 644 %SOURCE1 %buildroot%_sysconfdir/emacs/site-start.d/%pkg_name.el
 %_sysconfdir/emacs/site-start.d/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.9.5-alt7.1
+- NMU: added BR: texinfo
+
 * Sat Oct 24 2009 Igor Vlasenko <viy@altlinux.ru> 3.9.5-alt7
 - applied repocop patch: removed obsolete (un)install_info macros
 
