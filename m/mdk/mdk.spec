@@ -1,6 +1,6 @@
 Name: mdk
 Version: 1.2.8
-Release: alt1
+Release: alt1.1
 
 Summary: GNU MIX Development Kit
 Summary(ru_RU.UTF-8): Комплект разработки для MIX
@@ -19,6 +19,8 @@ Patch1: %name-1.2.7-enable-deprecated.patch
 BuildRequires: cvs flex guile18-devel libglade-devel libncurses-devel libreadline-devel
 # FIXME:
 BuildPreReq:  intltool
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 MDK stands for MIX Development Kit, and provides tools for developing and
@@ -79,6 +81,9 @@ rm -f %buildroot%_infodir/dir
 %_emacslispdir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.8-alt1.1
+- NMU: added BR: texinfo
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.2.8-alt1
 - new version 1.2.8 (with rpmrb script)
 
