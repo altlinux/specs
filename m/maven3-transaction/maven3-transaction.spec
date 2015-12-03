@@ -5,7 +5,7 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt6jpp
+Release: alt7jpp
 
 Requires: activemq
 Requires: apache-commons-math
@@ -14,8 +14,6 @@ Requires: gshell
 Requires: hibernate3
 Requires: hibernate-validator
 Requires: infinispan
-Requires: jacoco
-Requires: jasypt
 Requires: jaxb2-maven-plugin
 Requires: jbosgi-deployment
 Requires: jbosgi-framework
@@ -51,6 +49,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt7jpp
+- updated dependencies
+
 * Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt6jpp
 - updated dependencies
 
