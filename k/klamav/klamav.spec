@@ -1,9 +1,9 @@
 Name: klamav
 Version: 0.46
-Release: alt2.qa3
+Release: alt3
 
 Summary: KDE frontend for the Clam AntiVirus virus scanner
-Summary(ru_RU.KOI8-R): KDE-оболочка для антивирусного сканера Clam AntiVirus
+Summary(ru_RU.UTF-8): KDE-п╬п╠п╬п╩п╬я┤п╨п╟ п╢п╩я▐ п╟п╫я┌п╦п╡п╦я─я┐я│п╫п╬пЁп╬ я│п╨п╟п╫п╣я─п╟ Clam AntiVirus
 
 License: GPL
 Group: File tools
@@ -91,6 +91,10 @@ rm -rf %buildroot%_K3datadir/applnk/Utilities/klamav.desktop
 #%_iconsdir/locolor/*/apps/%name.png
 
 %changelog
+* Thu Dec 03 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.46-alt3
+- NMU: rebuilt with new libclamav
+- changed codepage of "Summary" to UTF-8
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.46-alt2.qa3
 - Fixed build with zlib 1.2.7
 

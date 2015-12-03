@@ -1,6 +1,6 @@
 Name: havp
 Version: 0.92
-Release: alt1.qa1
+Release: alt2
 
 Summary: (HTTP Antivirus Proxy) is a proxy with anti-virus scanner
 
@@ -48,6 +48,10 @@ a parent and transparent proxy mode. It can be used with squid or standalone.
 
 find %_builddir/%name-%version/etc/%name -type d -print0 | xargs -r0 chmod 755
 find %_builddir/%name-%version/etc/%name -type f -print0 | xargs -r0 chmod 644
+
+# HAVP 0.92a - security fix
+sed "s|^\*sourceforge.net|*.sourceforge.net|" -i %_builddir/%name-%version/%_sysconfdir/%name/whitelist
+sed "s|^# \*server-side.de|# *.server-side.de|" -i %_builddir/%name-%version/%_sysconfdir/%name/whitelist
 
 %build
 %configure --localstatedir=/var --enable-ssl-tunnel
@@ -123,6 +127,10 @@ EOF
 %dir %attr(3770,%name,root) %_logdir/%name
 
 %changelog
+* Thu Dec 03 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.92-alt2
+- NMU: rebuilt with new libclamav
+- applied security fix from 0.92a
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.92-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
