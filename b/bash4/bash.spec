@@ -2,7 +2,7 @@ Name: bash4
 %define bash_version 4.2
 %define bash_patchlevel .50
 Version: %bash_version%bash_patchlevel
-Release: alt1
+Release: alt1.1
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
@@ -25,6 +25,8 @@ AutoReq: yes, noshell
 Requires: sh4 = %version-%release
 
 BuildPreReq: libtinfo-devel, libreadline-devel >= 6.1, mktemp >= 1:1.3.1
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package -n sh4
 Summary: The GNU Bourne Again SHell (/bin/sh)
@@ -269,6 +271,9 @@ EOF
 %_includedir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.2.50-alt1.1
+- NMU: added BR: texinfo
+
 * Sun Sep 28 2014 Dmitry V. Levin <ldv@altlinux.org> 4.2.50-alt1
 - Updated to 4.2 patchlevel 50 (fixes: CVE-2014-6278).
 
