@@ -10,7 +10,7 @@
 %define sover 4.4
 Name: %oname%sover
 Version: %major.%minor.%bugfix
-Release: alt4.qa1
+Release: alt4.qa1.1
 
 Group: System/Libraries
 Summary: Game programming library
@@ -37,6 +37,8 @@ BuildPreReq: libXxf86vm-devel
 %ifarch %ix86 x86_64
 BuildRequires: svgalib-devel
 %endif
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package -n lib%name
 Group: System/Libraries
@@ -137,6 +139,9 @@ gzip CHANGES
 %_pkgconfigdir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.4.2-alt4.qa1.1
+- NMU: added BR: texinfo
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.4.2-alt4.qa1
 - NMU: rebuilt for updated dependencies.
 
