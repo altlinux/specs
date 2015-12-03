@@ -1,6 +1,6 @@
 Name: asymptote
 Version: 2.35
-Release: alt1
+Release: alt1.1
 
 Summary: Descriptive vector graphics language
 
@@ -20,6 +20,8 @@ Patch2: asymptote-2.28-alt-gsl1.16.patch
 BuildRequires: flex gcc-c++ libGL-devel libfftw3-devel libfreeglut-devel libgc-devel libgsl-devel libncurses-devel libreadline-devel zlib-devel
 
 BuildPreReq: texlive-latex-recommended ghostscript-utils /proc rpm-build-texmf
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Asymptote is a powerful descriptive vector graphics language for technical
@@ -67,6 +69,9 @@ gzip ChangeLog
 %_infodir/%name/*.info*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.35-alt1.1
+- NMU: added BR: texinfo
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 2.35-alt1
 - new version 2.35 (with rpmrb script)
 
