@@ -8,14 +8,15 @@
 
 Name: tinyca2
 Version: 0.7.5
-Release: alt4
+Release: alt5
 
 Summary: graphical tool for managing a Certification Authority
 Summary(ru_RU.UTF-8): графическая утилита для управления Certification Authority
 
 License: GPL
 Group: Security/Networking
-URL: http://tinyca.sm-zone.net/
+#URL: http://tinyca.sm-zone.net/
+URL: https://github.com/simonswine/tinyca2_debian
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
@@ -23,7 +24,7 @@ BuildArch: noarch
 Provides: tinyca = %version
 Obsoletes: tinyca
 
-Source0: http://tinyca.sm-zone.net/%name-%version.tar
+Source0: %name-%version.tar
 #Source1: %%name.png
 Source2: %name.po
 
@@ -34,10 +35,11 @@ Source5: %name-48.png
 Patch0: %name-0.7.0-alt-ru_po.patch
 Patch1: %name-0.7.2-alt-Gtk2_init.patch
 Patch2: %name-0.72-alt-desktop_l10n.patch
-Patch3: %name-0.7.5-alt-fix_qw_parentheses.patch
-Patch4: %name-0.7.5-debian-fix_openssl.patch
 
-AutoReqProv: perl, yes
+Patch3: %name-0.7.5_6-alt-sha1.patch
+Patch4: %name-0.7.5_6-alt-sha256.patch
+Patch5: %name-0.7.5_6-alt-sort.patch
+
 BuildRequires: perl-devel, perl-Glib, perl-Gtk2, perl-Locale-gettext
 Requires: openssl
 
@@ -72,8 +74,8 @@ TinyCA2 поддерживает:
 - создание и управление SubCA
 
 
-%define libdir		%_datadir/TinyCA2/lib
-%define templatesdir	%_datadir/TinyCA2/templates
+%define libdir		%_datadir/tinyca
+%define templatesdir	%_sysconfdir/tinyca
 %define localedir	%_datadir/locale
 
 # Defining _perl_lib_path for correct work of AutoReqProv
@@ -88,8 +90,10 @@ TinyCA2 поддерживает:
 
 %patch1 -p1
 %patch2
+
 %patch3
-%patch4 -p2
+%patch4
+%patch5
 
 %if "%with_ru" == "1"
   /bin/install -m 0644 %SOURCE2 po/ru.po
@@ -98,6 +102,8 @@ TinyCA2 поддерживает:
 
 %build
 # Configure sources
+./install.sh
+
 sed -e 's@./lib@%libdir@g' -i %name
 sed -e 's@./templates@%templatesdir@g' -i %name
 sed -e 's@./locale@%localedir@g' -i %name
@@ -139,13 +145,20 @@ done
 %doc CHANGES INSTALL
 
 %_bindir/%name
-%_datadir/TinyCA2*
+%{libdir}*
+%dir %templatesdir
+%config %templatesdir/openssl.cnf
 %_desktopdir/%name.desktop
 %_miconsdir/%{name}*
 %_niconsdir/%{name}*
 %_liconsdir/%{name}*
 
 %changelog
+* Wed Dec 02 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.7.5-alt5
+- Switching to the Debian fork
+- Set default message digest to SHA256
+- Mark SHA1 as insecure
+
 * Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 0.7.5-alt4
 - updated debian fix for OpenSSL 1.0.1e
 
