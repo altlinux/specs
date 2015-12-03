@@ -1,6 +1,6 @@
 Version: 5.12
 %define snap 20100721
-Release: alt4.%snap
+Release: alt4.%snap.1
 Name: emacs-ilisp
 License: Custom, see COPYING
 Group: Editors
@@ -18,6 +18,8 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Wed Mar 10 2004
 BuildRequires: emacs tetex-dvips tetex-latex tcsh
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 ILISP is a powerful GNU Emacs interface to many dialects of Lisp, including
@@ -61,6 +63,9 @@ install -m 644 docs/*.info %buildroot/%_infodir/
 %_sysconfdir/emacs/site-start.d/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 5.12-alt4.20100721.1
+- NMU: added BR: texinfo
+
 * Wed Jul 21 2010 Igor Vlasenko <viy@altlinux.org> 5.12-alt4.20100721
 - updated CVS snapshot; fixed build (emacs 23 not recognized)
 
