@@ -3,7 +3,7 @@ Name: readline5
 %define rl_patch 14
 %define srcname readline-%rl_version
 Version: %rl_version.%rl_patch
-Release: alt5
+Release: alt5.1
 
 Summary: A library for editing typed in command lines
 License: GPLv2+
@@ -18,6 +18,8 @@ Patch: readline-%version-%release.patch
 
 # Automatically added by buildreq on Mon Sep 02 2002
 BuildRequires: libtinfo-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package -n lib%name
 Summary: A library for editing typed in command lines
@@ -134,6 +136,9 @@ popd
 %_libdir/*.a
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 5.2.14-alt5.1
+- NMU: added BR: texinfo
+
 * Tue Dec 17 2013 Dmitry V. Levin <ldv@altlinux.org> 5.2.14-alt5
 - Converted internal sh_* functions into weak aliases,
   to fix the problem described by Sergey Vlasov in
