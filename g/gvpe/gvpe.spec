@@ -6,7 +6,7 @@
 
 Name: gvpe
 Version: %version
-Release: alt1.1.qa1
+Release: alt1.1.qa1.1
 
 Summary: virtual ethernet SSL VPN
 
@@ -29,6 +29,8 @@ BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Sun Jul 19 2009
 BuildRequires: cvs gcc-c++ libssl-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The GNU Virtual Private Ethernet suite implements a virtual
@@ -91,6 +93,9 @@ cp -- %SOURCE5 README.ALT.utf-8
 %_infodir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.22-alt1.1.qa1.1
+- NMU: added BR: texinfo
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.22-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
