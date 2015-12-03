@@ -1,6 +1,6 @@
 Name: libabigail
 Version: 1.0
-Release: alt0.2.rc0
+Release: alt0.2.rc0.1
 Summary: Set of ABI analysis tools
 Group: Development/Other
 
@@ -11,6 +11,8 @@ Source0: %name-%version.tar
 # Automatically added by buildreq on Tue May 19 2015 (-ba)
 # optimized out: elfutils fontconfig fonts-bitmap-misc libcloog-isl4 libelf-devel libstdc++-devel libwayland-client libwayland-server makeinfo pkg-config python-base python-module-BeautifulSoup python-module-PyStemmer python-module-Pygments python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest
 BuildRequires: dos2unix doxygen elfutils-devel gcc-c++ graphviz libxml2-devel python-module-cssselect python-module-docutils python-module-html5lib time
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The libabigail package comprises four command line utilities: abidiff,
@@ -97,6 +99,9 @@ cat tests/test-suite.log
 %_infodir/abigail.info*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.2.rc0.1
+- NMU: added BR: texinfo
+
 * Thu Nov 19 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt0.2.rc0
 - Updated to 1.0.rc0.
 
