@@ -7,7 +7,7 @@
 
 Name: %sname-%sover-seq
 Version: %major.2
-Release: alt2
+Release: alt2.1
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF) v3, C++ interface
 
@@ -36,6 +36,8 @@ BuildRequires: flex gcc-c++ gcc-fortran zlib-devel libhdf5-devel
 
 BuildPreReq: libnetcdf-devel
 BuildPreReq: libcurl-devel libexpat-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 NetCDF (network Common Data Form) is an interface for array-oriented
@@ -171,6 +173,9 @@ popd
 %_infodir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.2-alt2.1
+- NMU: added BR: texinfo
+
 * Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt2
 - Rebuilt with new libhdf5
 
