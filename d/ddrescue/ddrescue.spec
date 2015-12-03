@@ -2,7 +2,7 @@
 
 Name: ddrescue
 Version: 1.20
-Release: alt1
+Release: alt1.1
 
 Summary: Data copying in presence of I/O errors
 License: GPLv3+
@@ -15,6 +15,8 @@ Source1: ddrescue.watch
 # Automatically added by buildreq on Wed Dec 31 2008
 BuildRequires: gcc-c++ lzip
 %{?_with_static: BuildRequires: libstdc++-devel-static}
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 ddrescue copies data from one file or block device (hard disk, cdrom...)
@@ -62,6 +64,9 @@ make check
 %endif
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1.1
+- NMU: added BR: texinfo
+
 * Sat Sep 12 2015 Michael Shigorin <mike@altlinux.org> 1.20-alt1
 - new version (watch file uupdate)
 
