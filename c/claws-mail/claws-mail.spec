@@ -10,7 +10,7 @@
 
 Name:   	claws-mail
 Version:	3.13.0
-Release: 	alt2.1
+Release: 	alt3
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -593,7 +593,7 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %doc AUTHORS ChangeLog* COPYING INSTALL NEWS README* TODO* RELEASE_NOTES 
 %_bindir/%name
 %_bindir/%_oldname
-%_man1dir/%name.1.gz
+%_man1dir/%name.1.*
 %_desktopdir/*.desktop
 %if_enabled appdata
 %_datadir/appdata/claws-mail.appdata.xml
@@ -808,6 +808,13 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Thu Dec 03 2015 Mikhail Efremov <sem@altlinux.org> 3.13.0-alt3
+- Patches from upstream:
+    + Fix 'end of file' message on checking sign of a key not
+      found.
+- Don't explicitly specify man page's extension.
+- Rebuild with gnutls-3.4.7.
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 3.13.0-alt2.1
 - rebuild with new perl 5.22.0
 
