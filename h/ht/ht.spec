@@ -1,6 +1,6 @@
 Name: ht
 Version: 2.0.22
-Release: alt1
+Release: alt1.1
 Summary: Disassembler, object dumper and hex editor
 License: GPLv2
 Group: Development/Tools
@@ -9,6 +9,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: flex gcc-c++ liblzo2-devel libncursesw-devel libX11-devel xorg-xproto-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 HT is a file editor/viewer/analyzer for executables. The goal is to combine
@@ -38,5 +40,8 @@ install -pD -m 0644 {doc,%buildroot%_infodir}/%name.info
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.22-alt1.1
+- NMU: added BR: texinfo
+
 * Wed Feb 05 2014 Led <led@altlinux.ru> 2.0.22-alt1
 - initial build
