@@ -2,7 +2,7 @@
 
 Name: wget
 Version: 1.17
-Release: alt1
+Release: alt1.1
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPLv3
@@ -27,6 +27,8 @@ Summary(pl_PL.UTF-8): Wsadowy klient HTTP/FTP
 Summary(pt_BR.UTF-8): Cliente na linha de comando para baixar arquivos WWW/FTP com recursão opcional
 Summary(ru_RU.UTF-8): Утилита для получения файлов по протоколам HTTP и FTP
 Summary(uk_UA.UTF-8): Утиліта для отримання файлів по протоколам HTTP та FTP
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 GNU Wget is a file retrieval utility which can use either the HTTP,
@@ -133,6 +135,9 @@ find doc -type f -print0 |
 %doc AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1.1
+- NMU: added BR: texinfo
+
 * Mon Nov 16 2015 Michael Shigorin <mike@altlinux.org> 1.17-alt1
 - 1.17
 
