@@ -1,6 +1,6 @@
 Name: gnupg2
 Version: 2.0.29
-Release: alt1
+Release: alt1.1
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -37,6 +37,8 @@ BuildRequires: libgcrypt-devel >= 1.4, libksba-devel >= 0.9.13
 
 # Automatically added by buildreq on Fri Apr 08 2011
 BuildRequires: bzlib-devel libassuan-devel libcurl-devel libgcrypt-devel libksba-devel libldap-devel libpth-devel libreadline-devel zlib-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 GnuPG is GNU's tool for secure communication and data storage.  It can
@@ -101,6 +103,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.29-alt1.1
+- NMU: added BR: texinfo
+
 * Thu Oct 08 2015 Sergey V Turchin <zerg@altlinux.org> 2.0.29-alt1
 - new version
 
