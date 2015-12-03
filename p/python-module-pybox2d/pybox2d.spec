@@ -9,13 +9,15 @@ BuildRequires: gcc-c++ unzip
 
 Name:           python-module-pybox2d
 Version:        2.0.2b2
-Release:        alt1_8
+Release:        alt1_13
 Summary:        A 2D rigid body simulation library for Python
 
 Group:          Development/Python
 License:        zlib
 URL:            http://code.google.com/p/pybox2d/
 Source0:        http://pybox2d.googlecode.com/files/pybox2d-2.0.2b2.zip
+# Fix comments for SWIG 3.0.3 and higher
+Patch0:         pybox2d-Fix_comments_for_swig_3.0.3.patch
 
 BuildRequires:  gcc
 BuildRequires:  python-devel
@@ -33,6 +35,7 @@ actors around, you can let Sir Isaac Newton do the directing.
 
 %prep
 %setup -q -n Box2D-%{version}
+%patch0 -p1
 
 # calm rpmlint down
 sed -i LICENSE README -e 's/\r//'
@@ -58,6 +61,9 @@ sed -i %{buildroot}%{python_sitelibdir}/Box2D/__init__.py -e 's/\r//'
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.2b2-alt1_13
+- fixed build
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.2b2-alt1_8
 - new version
 
