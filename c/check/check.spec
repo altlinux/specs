@@ -3,7 +3,7 @@
 
 Name: check
 Version: 0.10.0
-Release: alt1
+Release: alt1.1
 Epoch: 20121107
 
 Summary: A unit test framework for C
@@ -20,6 +20,8 @@ Requires: lib%name-devel = %EVR
 Requires: info-install
 
 %add_optflags %optflags_shared
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Check is a unit test framework for C. It features a simple
@@ -97,6 +99,9 @@ rm -rf %buildroot/usr/share/doc/check/
 %endif
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 20121107:0.10.0-alt1.1
+- NMU: added BR: texinfo
+
 * Mon Aug 03 2015 Michael Shigorin <mike@altlinux.org> 20121107:0.10.0-alt1
 - new version (watch file uupdate)
 
