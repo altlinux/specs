@@ -9,7 +9,7 @@
 Name: tcc
 %define lname lib%name
 Version: 0.9.26
-Release: alt1
+Release: alt1.1
 Summary: A small but hyper fast C compiler
 Group: Development/C
 License: LGPLv2.1+
@@ -22,6 +22,8 @@ Provides: %alias = %version-%release
 BuildRequires: tcc >= 0.9.23-alt3
 %endif
 BuildPreReq: perl-podlators /usr/bin/texi2html
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 %Alias (aka %Name) is a small but hyper fast C compiler. Unlike other C
@@ -139,6 +141,9 @@ make test
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.26-alt1.1
+- NMU: added BR: texinfo
+
 * Thu Apr 18 2013 Led <led@altlinux.ru> 0.9.26-alt1
 - 0.9.26
 - Makefile:
