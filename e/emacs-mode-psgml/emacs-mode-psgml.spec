@@ -2,7 +2,7 @@
 
 Name: emacs-mode-%modename
 Version: 1.2.5
-Release: alt3
+Release: alt3.1
 
 Summary: A GNU Emacs major mode for editing SGML/XML documents
 Group: Editors
@@ -25,6 +25,8 @@ PreReq: emacs sgml-common sgml-tools docbook-dtds openjade xml-utils
 
 # Automatically added by buildreq on Thu Sep 25 2008 (-bi)
 BuildRequires: emacs-leim emacs-nox libX11-locales
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Emacs is an advanced and extensible editor. An Emacs major mode
@@ -137,6 +139,9 @@ done
 %modedir/*.el
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt3.1
+- NMU: added BR: texinfo
+
 * Sat Oct 24 2009 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt3
 - applied repocop patch: removed obsolete (un)install_info macros
 
