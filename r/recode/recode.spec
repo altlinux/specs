@@ -5,7 +5,7 @@
 
 Name: recode
 Version: 3.6
-Release: alt11.1
+Release: alt11.1.1
 
 Summary: The `recode' library converts files between character sets and usages
 License: GPL
@@ -21,6 +21,8 @@ Requires: lib%name = %version-%release
 BuildRequires: chrpath
 
 Summary(ru_RU.KOI8-R): Библиотека recode конвертирует файлы из разных кодировок
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The `recode' program is a handy front-end to the `recode' library;
@@ -104,6 +106,9 @@ chrpath -d %buildroot%_bindir/%name
 # - keep an eye on 3.7 (now in beta) and eventually 4.0
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.6-alt11.1.1
+- NMU: added BR: texinfo
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6-alt11.1
 - Fixed build
 
