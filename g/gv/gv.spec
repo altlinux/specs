@@ -1,6 +1,6 @@
 Name: gv
 Version: 3.7.4
-Release: alt2
+Release: alt2.1
 Serial: 1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -23,6 +23,8 @@ Requires: file
 # Automatically added by buildreq on Sun Mar 27 2011 (-bi)
 # optimized out: elfutils fontconfig glibc-pthread libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel xorg-xproto-devel
 BuildRequires: ImageMagick-tools bzlib-devel flex imake libXaw3d-devel libXinerama-devel libXmu-devel libXpm-devel xorg-cf-files zlib-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Gv provides a user interface for the ghostscript PostScript(TM)
@@ -94,6 +96,9 @@ mv %buildroot/%_datadir/%name/GV %buildroot%_sysconfdir/X11/app-defaults/
 %_liconsdir/*.png
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1:3.7.4-alt2.1
+- NMU: added BR: texinfo
+
 * Wed May 29 2013 Vladislav Zavjalov <slazav@altlinux.org> 1:3.7.4-alt2
 - rebuild with libXaw3d-1.6.2
 
