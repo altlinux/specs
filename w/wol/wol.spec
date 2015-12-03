@@ -1,7 +1,7 @@
 Summary: The Wake On Lan client
 Name: wol
 Version: 0.7.1
-Release: alt3
+Release: alt3.1
 License: GPL
 Group: Networking/Other
 Url: http://ahh.sf.net/wol/
@@ -9,6 +9,8 @@ Packager: Mikhail Pokidko <pma@altlinux.ru>
 Source: %name-%version.tar.gz
 
 BuildRequires: perl-podlators
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 wol is the Wake On Lan client. It wakes up magic packet compliant machines
@@ -40,6 +42,9 @@ provided by wol.
 %_bindir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt3.1
+- NMU: added BR: texinfo
+
 * Tue Mar 01 2011 Timur Aitov <timonbl4@altlinux.org> 0.7.1-alt3
 - Fixed build man page
 
