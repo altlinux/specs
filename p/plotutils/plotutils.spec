@@ -7,7 +7,7 @@
 
 Name: plotutils
 Version: 2.6
-Release: alt1
+Release: alt1.1
 
 Summary: GNU Plotutils -- plotting utilities
 
@@ -28,6 +28,8 @@ Patch3: %name-2.5.1-alt-libpng15.patch
 BuildRequires: flex gcc-c++ glibc-devel imake libXaw-devel libXext-devel libpng-devel xorg-cf-files
 
 BuildPreReq: rpm-build-fonts gcc-fortran
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The GNU plotting utilities include:
@@ -173,6 +175,9 @@ gzip -9nf *.pcf || :
 %_includedir/xmi.h
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1.1
+- NMU: added BR: texinfo
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.6-alt1
 - new version 2.6 (with rpmrb script)
 
