@@ -7,7 +7,7 @@
 
 Name: libgcrypt
 Version: 1.6.4
-Release: alt1
+Release: alt1.1
 
 %define soname %{name}%{soversion}
 
@@ -24,6 +24,8 @@ BuildRequires: glibc-devel-static
 %if_enabled pth
 BuildRequires: libpth-devel
 %endif
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package -n %soname
 Summary: The GNU crypto library
@@ -165,6 +167,9 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt1.1
+- NMU: added BR: texinfo
+
 * Tue Sep 08 2015 Sergey V Turchin <zerg@altlinux.org> 1.6.4-alt1
 - new version
 
