@@ -1,6 +1,6 @@
 Name: stress
 Version: 1.0.4
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -10,6 +10,8 @@ Group: System/Kernel and hardware
 
 URL: http://weather.ou.edu/~apw/projects/stress
 Source: %url/stress-%version.tar.gz
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 stress is a tool which imposes a configurable amount of CPU, I/O, RAM, and
@@ -39,6 +41,9 @@ system is under heavy load.
 %_infodir/stress*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1.qa1.1
+- NMU: added BR: texinfo
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
