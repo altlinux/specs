@@ -9,7 +9,7 @@ Version: %ver_base.%ver_snap
 %else
 Version: %ver_base
 %endif
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Summary: Programs for dealing with floppy disks
 License: GPLv2+
@@ -31,6 +31,8 @@ Requires: util-linux >= 2.11h-alt2
 BuildRequires: flex libe2fs-devel tetex-latex
 
 Summary(ru_RU.KOI8-R): Утилиты для форматирования дискет и управления флоппи-драйвером Линукса
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 This package contains utilities for configuring and debugging the
@@ -72,6 +74,9 @@ chmod 755 %buildroot%_bindir/*
 %doc CREDITS Changelog doc/FAQ.html doc/README doc/floppy_formats
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 5.5.20081027-alt1.qa1.1
+- NMU: added BR: texinfo
+
 * Sat Nov 14 2009 Repocop Q. A. Robot <repocop@altlinux.org> 5.5.20081027-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-install-info for fdutils
