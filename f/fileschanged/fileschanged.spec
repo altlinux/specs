@@ -1,7 +1,7 @@
 Summary: The fileschanged utility reports when files have been altered
 Name: fileschanged
 Version: 0.6.9
-Release: alt2.1
+Release: alt2.1.1
 License: GPL
 Group: File tools
 Url: http://savannah.nongnu.org/projects/%name/
@@ -13,6 +13,8 @@ Patch1: fileschanged-0.6.9-alt-no-Werror.patch
 
 # Automatically added by buildreq on Sat Oct 04 2008
 BuildRequires: gcc-c++ libgamin-devel help2man
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 This software is a client to the FAM (File Alteration Monitor) server.
@@ -43,6 +45,9 @@ it displays the filename on the standard-output.
 %_datadir/info/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.6.9-alt2.1.1
+- NMU: added BR: texinfo
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.9-alt2.1
 - Fixed build
 
