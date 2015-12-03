@@ -3,16 +3,17 @@
 
 Name:           fonts-bitmap-wqy-unibit
 Version:        1.1.0
-Release:        alt3_14
+Release:        alt3_16
 Summary:        WenQuanYi Unibit Bitmap Font
 
 Group:          System/Fonts/True type
 License:        GPLv2 with exceptions
 URL:            http://wenq.org/enindex.cgi
 Source0:        http://downloads.sourceforge.net/wqy/wqy-unibit-bdf-%{version}-1.tar.gz
+Patch0:         wqy-unibit-fixes-build.patch
 
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel bdftopcf
+BuildRequires:  fontpackages-devel, bdftopcf
 Source44: import.info
 
 %description
@@ -35,6 +36,7 @@ http://wenq.org/eindex.cgi?Unicode_Chart_EN
 
 %prep
 %setup -q -n %{fontname}
+%patch0 -p1 -b .build
 
 
 %build
@@ -90,6 +92,9 @@ fi
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt3_16
+- fixed build
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt3_14
 - update to new release by fcimport
 
