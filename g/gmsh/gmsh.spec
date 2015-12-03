@@ -6,7 +6,7 @@
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
 Version: 2.8.5
-Release: alt2.svn20140707
+Release: alt2.svn20140707.1
 Group: Graphics
 License: GPL v2
 URL: http://www.geuz.org/gmsh/
@@ -34,6 +34,8 @@ BuildPreReq: libslepc-real-devel flex libamesos10 swig
 BuildPreReq: libepetraext10 libifpack10 libtrilinos10 libgaleri10
 BuildPreReq: libopencascade-devel libmmg3d-devel libdakota-devel
 BuildPreReq: libnumpy-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
@@ -197,6 +199,9 @@ rm -fR %buildroot/usr/gmshpy
 %_docdir/%name/tutorial
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.8.5-alt2.svn20140707.1
+- NMU: added BR: texinfo
+
 * Thu Mar 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.5-alt2.svn20140707
 - Rebuilt with OpenCASCADE 6.8.0
 
