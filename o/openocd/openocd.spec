@@ -1,6 +1,6 @@
 Name: openocd
 Version: 0.9.0
-Release: alt1
+Release: alt1.1
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 
 Group: Development/Tools
@@ -11,6 +11,8 @@ Source10: git2cl.tar
 Patch1: openocd-jimtcl0_75.patch
 
 BuildRequires: chrpath libftdi-devel jimtcl-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The Open On-Chip Debugger (OpenOCD) provides debugging, in-system
@@ -82,10 +84,13 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 %_datadir/%name/scripts
 %_datadir/%name/OpenULINK
 %_bindir/%name
-%_infodir/%name.info*.gz
+%_infodir/%name.info*
 %_mandir/man1/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1.1
+- NMU: added BR: texinfo
+
 * Thu Nov 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.0-alt1
 - Updated to v0.9.0.
 
