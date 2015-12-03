@@ -1,5 +1,5 @@
 Name: libpng
-Version: 1.5.24
+Version: 1.5.25
 Release: alt1
 
 Summary: A library of functions for manipulating PNG image format files
@@ -98,6 +98,9 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %endif
 
 %changelog
+* Thu Dec 03 2015 Dmitry V. Levin <ldv@altlinux.org> 1.5.25-alt1
+- Updated to 1.5.25.
+
 * Wed Nov 18 2015 Dmitry V. Levin <ldv@altlinux.org> 1.5.24-alt1
 - Updated to 1.5.24.
 
