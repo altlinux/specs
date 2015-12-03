@@ -1,6 +1,6 @@
 Name: dirmngr
 Version: 1.1.1
-Release: alt3
+Release: alt3.1
 
 Summary: Client for Managing/Downloading CRLs
 Group: System/Libraries
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 Patch1: dirmngr-pth-fix.patch
 
 BuildRequires: libassuan-devel libgcrypt-devel libksba-devel libldap-devel libpth-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Dirmngr is a server for managing and downloading certificate
@@ -51,6 +53,9 @@ install -pm644 AUTHORS NEWS README THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3.1
+- NMU: added BR: texinfo
+
 * Tue Oct 13 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt3
 - fix segfault with libgcrypt-1.6 (ALT#31358)
 
