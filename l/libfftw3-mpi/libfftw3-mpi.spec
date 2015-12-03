@@ -5,7 +5,7 @@
 
 Name: libfftw3-mpi
 Version: 3.3.4
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Library for computing Fast Fourier Transforms (with MPI support)
@@ -20,6 +20,8 @@ Source: fftw-%version.tar
 BuildPreReq: gcc-fortran ghostscript-classic glibc-devel ocaml
 BuildPreReq: libgfortran-devel
 BuildPreReq: %mpiimpl-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 FFTW is a free collection of fast C routines for computing the Discrete
@@ -130,6 +132,9 @@ sed -i 's|^\(includedir\).*|\1=%_includedir/fftw3-mpi|' \
 %doc doc/html doc/*.pdf
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1:3.3.4-alt1.1
+- NMU: added BR: texinfo
+
 * Mon Mar 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.3.4-alt1
 - Version 3.3.4
 
