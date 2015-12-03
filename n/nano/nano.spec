@@ -1,6 +1,6 @@
 Name: nano
 Version: 2.2.4
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Summary: Pico editor clone with enhancements
 License: %gpl3plus/%fdl v1.2+
@@ -29,6 +29,8 @@ BuildRequires: desktop-file-utils
 
 # Automatically added by buildreq on Thu Dec 31 2009
 BuildRequires: groff-extra groff-ps libncursesw-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 GNU nano is a small and friendly text editor.  It aims to emulate the
@@ -78,6 +80,9 @@ install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/xorg.nanorc
 %config(noreplace) %_sysconfdir/nanorc
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1.qa1.1
+- NMU: added BR: texinfo
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
