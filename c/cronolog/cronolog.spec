@@ -1,6 +1,6 @@
 Name: cronolog
 Version: 1.6.2
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Summary: A file rotation program for Apache.
 License: GPL
@@ -8,6 +8,8 @@ Group: System/Servers
 
 Url: http://www.%name.org
 Source: http://www.%name.org/download/%name-%version.tar.gz
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Cronolog is a simple program that reads log messages from its input
@@ -34,6 +36,9 @@ template uses the same format specifiers as the Unix date command
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1.qa1.1
+- NMU: added BR: texinfo
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
