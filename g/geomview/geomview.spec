@@ -5,7 +5,7 @@ Summary: geomview -- interactive geometry viewing program
 
 Name: geomview
 Version: 1.9.4
-Release: alt4%pre.qa3
+Release: alt4%pre.qa3.1
 
 License: GPL
 Group: Sciences/Mathematics
@@ -31,6 +31,8 @@ BuildPreReq: libxforms-devel
 %endif
 
 %define DIRSETTINGS moduledir=%_libdir/%{name} geomdatadir=%_datadir/%{name}/data
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 #BuildRequires: rpm-build-compat >= 0.4
 
@@ -140,6 +142,9 @@ EOF
 %exclude %_libdir/lib%name.a
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.9.4-alt4.qa3.1
+- NMU: added BR: texinfo
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt4.qa3
 - Fixed build
 
