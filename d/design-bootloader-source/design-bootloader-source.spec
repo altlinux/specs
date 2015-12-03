@@ -1,7 +1,7 @@
 %define base_name design-bootloader
 
 Name: %base_name-source
-Version: 7.1
+Version: 7.2
 Release: alt1
 
 Group: Graphics
@@ -34,6 +34,9 @@ cp -a * %buildroot/usr/src/%base_name-source
 /usr/src/%base_name-source
 
 %changelog
+* Wed Dec 02 2015 Aleksey Avdeev <solo@altlinux.org> 7.2-alt1
+- Fix use 'defined(%hash)' (for perl 5.22)
+
 * Thu Apr 02 2015 Mikhail Efremov <sem@altlinux.org> 7.1-alt1
 - Fix Droid fonts path.
 
