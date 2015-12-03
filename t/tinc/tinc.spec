@@ -1,6 +1,6 @@
 Name: tinc
 Version: 1.0.8
-Release: alt2.1.qa2
+Release: alt2.1.qa2.1
 
 Summary: Virtual Private Network (VPN) daemon that uses tunnelling and encryption to create a secure private network between hosts on the Internet.
 Summary(ru_RU.KOI8-R): Небольшой демон для создания шифрованных туннелей и частных виртуальных сетей между хостами в сети Интернет
@@ -18,6 +18,8 @@ PreReq(post,preun): chkconfig
 
 # Automatically added by buildreq on Fri Apr 04 2008
 BuildRequires: liblzo2-devel libssl-devel tetex-latex zlib-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 %name is a Virtual Private Network (VPN) daemon that uses tunnelling
@@ -103,6 +105,9 @@ popd
 %doc AUTHORS ChangeLog COPYING COPYING.README INSTALL README NEWS THANKS doc/sample-config.tar.gz doc/tinc.pdf
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2.1.qa2.1
+- NMU: added BR: texinfo
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.8-alt2.1.qa2
 - NMU: rebuilt for debuginfo.
 
