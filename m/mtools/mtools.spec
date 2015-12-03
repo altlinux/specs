@@ -2,7 +2,7 @@
 
 Name: mtools
 Version: 4.0.18
-Release: alt1
+Release: alt1.1
 
 Summary: Programs for accessing FAT formatted media without mounting it
 License: GPLv3
@@ -31,6 +31,8 @@ BuildRequires: imake libSM-devel libX11-devel libXau-devel xorg-cf-files
 %define inetd_floppyd %inetd_dir/floppyd
 
 Summary(ru_RU.UTF-8): Утилиты для работы с дисками MS-DOS
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package floppyd
 Group: File tools
@@ -126,6 +128,9 @@ find %buildroot -name floppyd\* -print0 | xargs -r0 rm -fv --
 # - review, rediff and send upstream patch1, patch2
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.0.18-alt1.1
+- NMU: added BR: texinfo
+
 * Wed Feb 20 2013 Michael Shigorin <mike@altlinux.org> 4.0.18-alt1
 - new version (watch file uupdate)
 
