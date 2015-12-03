@@ -3,7 +3,7 @@
 Name: libginac
 Version: 1.6.2
 Epoch: 1
-Release: alt1.git20140518.1
+Release: alt1.git20140518.1.1
 
 Summary: C++ class library for symbolic calculations
 
@@ -19,6 +19,8 @@ Source: ginac-%version.tar
 BuildRequires: doxygen flex gcc-c++ libcln-devel libncurses-devel
 BuildRequires: libreadline-devel texlive-latex-base transfig
 BuildPreReq: autogen python-modules
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 GiNaC is Not a Cocktail.
@@ -90,6 +92,9 @@ for developing GiNaC applications.
 %_infodir/*.info*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.6.2-alt1.git20140518.1.1
+- NMU: added BR: texinfo
+
 * Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.6.2-alt1.git20140518.1
 - Rebuilt for gcc5 C++11 ABI.
 
