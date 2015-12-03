@@ -1,7 +1,7 @@
 
 Name:           hamlib
 Version:        3.0
-Release:        alt1.1
+Release:        alt1.1.1
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
@@ -16,6 +16,8 @@ BuildRequires:  libusb-devel, pkgconfig, boost-devel, libltdl3-devel
 BuildRequires:  doxygen
 BuildRequires:  perl-devel
 BuildRequires:  libusb-compat-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Hamlib provides a standardized programming interface that applications
@@ -175,6 +177,9 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/tcl/Hamlib/hamlibtcl*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1.1.1
+- NMU: added BR: texinfo
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1.1
 - rebuild with new perl 5.22.0
 
