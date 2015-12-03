@@ -1,6 +1,6 @@
 Name: rumor
 Version: 1.0.3
-Release: alt1.beta.qa1
+Release: alt1.beta.qa1.1
 
 Summary: Really Unintelligent Music transcriptOR
 License: %gpl2only
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Sun Sep 27 2009
 BuildRequires: gcc-c++ guile18-devel libalsa-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Rumor is a realtime monophonic (with chords) MIDI keyboard to Lilypond
@@ -42,6 +44,9 @@ command-line options.
 %_infodir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1.beta.qa1.1
+- NMU: added BR: texinfo
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.beta.qa1
 - NMU: rebuilt for debuginfo.
 
