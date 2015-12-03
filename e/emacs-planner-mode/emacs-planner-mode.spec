@@ -4,7 +4,7 @@
 %define mode_name planner
 
 Version: 3.41
-Release: alt2
+Release: alt2.1
 Name: emacs-%mode_name-mode
 License: GPL
 Group: Editors
@@ -24,6 +24,8 @@ BuildArch: noarch
 BuildPreReq: emacs-misc-modes >= 0.2-alt3
 BuildPreReq: emacs-devel >= 0.0.1-alt2
 BuildPreReq: emacs-muse-mode emacs-w3m emacs-bbdb emacs-erc emacs-gnus
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Planner is a Personal Information Manager (PIM) by John Wiegley. You can
@@ -66,6 +68,9 @@ cp contrib/schedule.el .
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.41-alt2.1
+- NMU: added BR: texinfo
+
 * Sat Oct 24 2009 Igor Vlasenko <viy@altlinux.ru> 3.41-alt2
 - applied repocop patch: removed obsolete (un)install_info macros
 
