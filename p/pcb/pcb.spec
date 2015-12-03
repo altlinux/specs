@@ -1,13 +1,11 @@
 Name: pcb
 Version: 20081128
-Release: alt4
+Release: alt4.1
 
 Summary: PCB
 License: GPL
 Group: Development/Other
-Url: http://pcb.sourceforge.net/
-
-Packager: Alexander Gvozdev <gab@altlinux.ru>
+Url: http://pcb.geda-project.org
 
 Source0: %name-%version.tar.gz
 
@@ -15,6 +13,8 @@ BuildRequires: gcc-c++ libX11-devel flex gtk+2 libgd2-devel libgd2 libdbus-devel
 BuildRequires: libgtk+2-devel libgtk+2 libjpeg libjpeg-devel gd2-utils libpng-devel zlib-devel libXpm-devel libfreetype-devel perl-XML-Parser desktop-file-utils
 Requires: dbus-tools-gui
 Requires(post,postun): shared-mime-info >= 0.15-alt2
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 PCB is a CAD (computer aided design) program for the physical
@@ -124,7 +124,7 @@ CFLAGS="-fno-stack-protector"
 %_datadir/mime/aliases
 %_datadir/mime/generic-icons
 %_datadir/mime/icons
-%doc /usr/share/man/man1/pcb.1.gz
+%doc /usr/share/man/man1/pcb.1*
 %doc /usr/share/info/pcb*
 %_desktopdir/pcb.desktop
 
@@ -149,6 +149,10 @@ CFLAGS="-fno-stack-protector"
 %doc /usr/share/doc/pcb/*.ps
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 20081128-alt4.1
+- NMU: added BR: texinfo
+- WARN: look orphaned: modern pcb has version 2014-03-17
+
 * Wed Apr 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 20081128-alt4
 - fix build
 
