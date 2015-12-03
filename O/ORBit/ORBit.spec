@@ -1,6 +1,6 @@
 Name: ORBit
 Version: 0.5.17
-Release: alt3.qa4
+Release: alt3.qa4.1
 
 Summary: High-performance CORBA Object Request Broker
 License: LGPL/GPL
@@ -20,6 +20,8 @@ Requires: lib%name = %version-%release
 BuildRequires: flex glib-devel glibc-devel libwrap-devel
 
 BuildPreReq: libpopt-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 %name is a high-performance CORBA ORB (object request broker).
@@ -130,6 +132,9 @@ mkdir -p $RPM_BUILD_ROOT%prefix
 %_libdir/libORBit*.a
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.5.17-alt3.qa4.1
+- NMU: added BR: texinfo
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.17-alt3.qa4
 - Built with external libpopt
 
