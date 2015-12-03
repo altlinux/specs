@@ -1,6 +1,6 @@
 Name: bbe
 Version: 0.2.2
-Release: alt5.qa1
+Release: alt5.qa1.1
 
 Summary: Binary block editor
 Group: Text tools
@@ -12,6 +12,8 @@ Source0: %name-%version.tar.gz
 Patch0: bbe-0.1.9-alt-texinfo.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The bbe program is a sed-like editor for binary files. bbe performs basic
@@ -43,6 +45,9 @@ install -p AUTHORS ChangeLog %buildroot%_docdir/%name-%version/
 %doc %_docdir/%name-%version/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt5.qa1.1
+- NMU: added BR: texinfo
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.2-alt5.qa1
 - NMU: rebuilt for debuginfo.
 
