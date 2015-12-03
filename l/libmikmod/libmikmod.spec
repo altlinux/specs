@@ -1,6 +1,6 @@
 Name: libmikmod
 Version: 3.3.8
-Release: alt1
+Release: alt1.1
 
 Summary: A portable sound library for Unix
 License: GPLv2 and LGPLv2+
@@ -15,6 +15,8 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Thu Mar 03 2011
 BuildRequires: libalsa-devel libesd-devel libpulseaudio-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Libmikmod is a portable sound library, capable of playing samples as
@@ -69,6 +71,9 @@ will use the %name library.
 # - consider --enable-simd (marked unstable as of 3.3.7)
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.3.8-alt1.1
+- NMU: added BR: texinfo
+
 * Sun Nov 15 2015 Michael Shigorin <mike@altlinux.org> 3.3.8-alt1
 - 3.3.8
 
