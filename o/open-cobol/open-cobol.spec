@@ -1,6 +1,6 @@
 Name: open-cobol
 Version: 1.1
-Release: alt3
+Release: alt3.1
 
 Summary: OpenCOBOL - COBOL compiler
 License: GPLv2+ and LGPLv2+
@@ -17,6 +17,8 @@ BuildRequires: libdb4-devel libgmp-devel libncurses-devel
 
 Requires: libcob = %version-%release
 Obsoletes: libcob-devel < %version
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 OpenCOBOL is an open-source COBOL compiler, which translates COBOL
@@ -67,6 +69,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_libdir/libcob.so.*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3.1
+- NMU: added BR: texinfo
+
 * Wed Jun 06 2012 Dmitry V. Levin <ldv@altlinux.org> 1.1-alt3
 - Rebuilt with libgmp10.
 
