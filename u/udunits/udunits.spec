@@ -1,6 +1,6 @@
 Name: udunits
 Version: 2.2.16
-Release: alt1
+Release: alt1.1
 Summary: Conversion of unit specifications between formatted and binary forms, etc
 License: Open source
 Group: Sciences/Physics
@@ -12,6 +12,8 @@ Source: %name-%version.tar
 BuildPreReq: libexpat-devel flex CUnit-devel gcc-fortran
 
 Requires: lib%name = %version-%release
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 UDUNITS supports conversion of unit specifications between formatted and
@@ -89,6 +91,9 @@ rm -fR expat
 %_infodir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.16-alt1.1
+- NMU: added BR: texinfo
+
 * Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.16-alt1
 - Version 2.2.16
 
