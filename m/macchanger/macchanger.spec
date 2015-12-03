@@ -1,6 +1,6 @@
 Name: macchanger
 Version: 1.5
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Summary: utility for viewing/manipulating the MAC address of network interfaces
 License: GPL v2+
@@ -9,6 +9,8 @@ Url: http://www.alobbs.com/macchanger
 Packager: Maxim Ivanov <redbaron@altlinux.org>
 
 Source: %url/%name-%version.tar
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Features:
@@ -38,6 +40,9 @@ Features:
 #%doc %_docdir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1.qa1.1
+- NMU: added BR: texinfo
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
