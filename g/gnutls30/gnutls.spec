@@ -1,18 +1,27 @@
-Name: gnutls28
-Version: 3.3.19
-Release: alt1
+%define libgnutls_soname 30
+%define libgnutlsxx28_soname 28
+%define libgnutls_openssl_soname 27
+
+Name: gnutls%libgnutls_soname
+Version: 3.4.7
+Release: alt2
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
 License: LGPLv2.1+ and GPLv3+
-Group: System/Legacy libraries
+Group: System/Libraries
 Url: http://gnutls.org/
 # ftp://ftp.gnutls.org/pub/gnutls/gnutls-%version.tar.bz2
 Source: gnutls-%version.tar
 
+%define libcxx libgnutlsxx%libgnutlsxx28_soname
+%define libssl libgnutls%{libgnutls_openssl_soname}-openssl
+%def_disable guile
+#set_automake_version 1.11
+
 # Automatically added by buildreq on Thu Dec 08 2011
-BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel zlib-devel
-BuildRequires: libnettle-devel autogen libopts-devel
+BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
+BuildRequires: libnettle-devel autogen libopts-devel libidn-devel
 %if_enabled guile
 BuildRequires: guile-devel
 %endif
@@ -26,7 +35,7 @@ group.
 %package -n lib%name
 Summary: Transport Layer Security library
 License: LGPLv2.1+
-Group: System/Legacy libraries
+Group: System/Libraries
 Provides: libgnutls = %version
 Obsoletes: libgnutls < %version
 Obsoletes: libgnutls-new < %version
@@ -39,12 +48,143 @@ group.
 
 This package contains the GnuTLS runtime library.
 
+%package -n libgnutls-devel
+Summary: Development files for lib%name
+Group: Development/C
+Requires: lib%name = %version-%release
+Provides: libgnutls-devel = %version
+Obsoletes: libgnutls-new-devel < %version
+
+%description -n libgnutls-devel
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains headers and other development files required to
+build GnuTLS-based software.
+
+%package -n %libcxx
+Summary: Transport Layer Security C++ library
+Group: System/Libraries
+License: GPLv3+
+Requires: lib%name = %version-%release
+Provides: libgnutlsxx = %version
+Obsoletes: libgnutlsxx < %version
+Obsoletes: libgnutls-newxx < %version
+
+%description -n %libcxx
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains the GnuTLS C++ runtime library.
+
+%package -n libgnutlsxx-devel
+Summary: Development files for libgnutlsxx
+Group: Development/C++
+Requires: %libcxx = %version-%release
+Requires: libgnutls-devel = %version-%release
+Obsoletes: libgnutls-newxx-devel < %version
+
+%description -n libgnutlsxx-devel
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains headers and other development files required to
+build GnuTLS-based software using C++.
+
+%package -n %libssl
+Summary: OpenSSL compatibility layer for the GnuTLS library
+Group: System/Libraries
+Requires: lib%name = %version-%release
+Provides: libgnutls-openssl = %version
+Obsoletes: libgnutls-openssl < %version
+Obsoletes: libgnutls-new-openssl < %version
+
+%description -n %libssl
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains the GnuTLS runtime OpenSSL compatibility library.
+
+%package -n libgnutls-openssl-devel
+Summary: Development files for %libssl
+Group: Development/C
+Requires: %libssl = %version-%release
+Requires: libgnutls-devel = %version-%release
+Obsoletes: libgnutls-new-openssl-devel < %version
+
+%description -n libgnutls-openssl-devel
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains headers and other development files required to
+build applications using the GnuTLS compatibility OpenSSL library.
+
+%package -n gnutls-utils
+Summary: TLS protocol utilities
+Group: Security/Networking
+Obsoletes: gnutls-utils26 < %version-%release
+Obsoletes: gnutls-utils28 < %version-%release
+
+%description -n gnutls-utils
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains command line TLS client and server, and
+certificate manipulation tools.
+
+%package -n libgnutls-guile
+Summary: GnuTLS Guile bindings
+Group: Development/Other
+Requires: lib%name = %version-%release
+Obsoletes: libgnutls-new-guile < %version
+
+%description -n libgnutls-guile
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains Guile bindings for the library.
+
+%package devel-doc
+Summary: Development documentation for GnuTLS
+Group: Development/C
+Conflicts: libgnutls-devel < %version
+Provides: gnutls-devel-doc = %version
+Obsoletes: gnutls-devel-doc < %version
+Obsoletes: gnutls-new-devel-doc < %version
+BuildArch: noarch
+
+%description devel-doc
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains the GnuTLS API Reference Manual.
+
 %prep
 %setup -n gnutls-%version
+touch doc/*.texi
+rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
 # Thanks to USE_POSIX_THREADS_WEAK feature, we have to link
 # tests with @LIBMULTITHREAD@ in --no-as-needed mode.
 sed -i 's/^\(test_[^ +=]\+\)_LDADD.*@LIBMULTITHREAD@.*/&\n\1_LDFLAGS = -Wl,--no-as-needed/' gl/tests/Makefile.*
+# Use soname in the names of locale files
+sed -i -r 's/^DOMAIN = [^[:blank:]#]+/&%libgnutls_soname/' po/Makevars
 
 %build
 %autoreconf
@@ -59,40 +199,92 @@ sed -i 's/^\(test_[^ +=]\+\)_LDADD.*@LIBMULTITHREAD@.*/&\n\1_LDFLAGS = -Wl,--no-
 	%{subst_enable guile} \
 	--disable-local-libopts \
 	--with-included-libtasn1=no \
-	--disable-doc \
-	--disable-cxx \
-	--disable-openssl-compatibility
-make
+	--enable-openssl-compatibility \
+	--with-idn
+make MAKEINFOFLAGS=--no-split
 
 %install
 %makeinstall_std
+find %buildroot%_infodir/ -name '*.png' -delete -print
 %define docdir %_docdir/gnutls-%version
-mkdir -p %buildroot%docdir/
+mkdir -p %buildroot%docdir/{examples,reference}
 install -p -m644 AUTHORS NEWS README THANKS %buildroot%docdir/
+install -p -m644 doc/*.{cfg,css,html,png} %buildroot%docdir/
+install -pm644 doc/examples/*.[hc]* %buildroot%docdir/examples/
+install -pm644 doc/reference/html/* %buildroot%docdir/reference/
 ln -s %_licensedir/GPL-2 %buildroot%docdir/COPYING
 ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 
-%find_lang gnutls
+%find_lang gnutls%libgnutls_soname
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
 
 %check
 %make_build -k check
 
-%files -n lib%name -f gnutls.lang
+%files -n lib%name -f gnutls%libgnutls_soname.lang
 %dir %docdir
 %docdir/[ACNRT]*
 %_libdir/libgnutls.so.*
 
-%exclude %_includedir/gnutls
-%exclude %_bindir/*
-%exclude %_libdir/libgnutls.so
-%exclude %_pkgconfigdir/gnutls.pc
+%files -n %libcxx
+%_libdir/libgnutlsxx.so.*
+
+%files -n %libssl
+%_libdir/libgnutls-openssl.so.*
+
+%files -n libgnutls-devel
+%_includedir/gnutls/
+%exclude %_includedir/gnutls/gnutlsxx.h
+%exclude %_includedir/gnutls/openssl.h
+%_libdir/libgnutls.so
+%_pkgconfigdir/gnutls.pc
+
+%files -n libgnutlsxx-devel
+%dir %_includedir/gnutls/
+%_includedir/gnutls/gnutlsxx.h
+%_libdir/libgnutlsxx.so
+
+
+%files -n libgnutls-openssl-devel
+%dir %_includedir/gnutls/
+%_includedir/gnutls/openssl.h
+%_libdir/libgnutls-openssl.so
+
+%files devel-doc
+%dir %docdir
+%docdir/*.css
+%docdir/*.html
+%docdir/*.png
+%docdir/examples/
+%docdir/reference/
+%_man3dir/*
+%_infodir/*
+
+%files -n gnutls-utils
+%_bindir/*
+%_man1dir/*
+%dir %docdir
+%docdir/*.cfg
+
+%if_enabled guile
+# %%_datadir/guile belongs to guile package
+# %%_datadir/guile/site may contain not only gnutls guile files.
+# therefore %%_datadir/guile and %%_datadir/guile/site are not packaged. 
+# is there some package using 'site' directory?
+%files -n libgnutls-guile
+%_libdir/libguile*
+%_datadir/guile/site/gnutls
+%_datadir/guile/site/gnutls.scm
+%endif
 
 %changelog
-* Wed Dec 02 2015 Mikhail Efremov <sem@altlinux.org> 3.3.19-alt1
-- Build as legacy library.
-- Updated to 3.3.19.
+* Thu Dec 03 2015 Mikhail Efremov <sem@altlinux.org> 3.4.7-alt2
+- Use soname in the names of locale files.
+
+* Mon Nov 30 2015 Mikhail Efremov <sem@altlinux.org> 3.4.7-alt1
+- Enabled libidn support.
+- Updated to 3.4.7.
 
 * Mon Sep 21 2015 Mikhail Efremov <sem@altlinux.org> 3.3.18-alt1
 - Updated to 3.3.18.
