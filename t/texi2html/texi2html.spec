@@ -1,6 +1,6 @@
 Name: texi2html
 Version: 1.82
-Release: alt1.1
+Release: alt1.1.1
 License: GPL
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
 Group: Text tools
@@ -10,6 +10,8 @@ Source0: %name-%version.tar.bz2
 Url: http://www.nongnu.org/texi2html
 BuildArch: noarch
 Conflicts: tetex-core
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The basic purpose of texi2html is to convert Texinfo documents into HTML,
@@ -49,6 +51,9 @@ output not specified in the Texinfo input file to be specified.
 %_datadir/%name
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.82-alt1.1.1
+- NMU: added BR: texinfo
+
 * Wed Oct 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.82-alt1.1
 - Updated config.{sub,guess} configs.
 
