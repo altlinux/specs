@@ -1,6 +1,6 @@
 Name: dvipng
 Version: 1.14
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Summary: Makes PNG graphics from DVI files
 License: LGPLv3+
@@ -11,6 +11,8 @@ Source: http://download.sourceforge.net/dvipng/dvipng-%version.tar.gz
 
 # Automatically added by buildreq on Fri Dec 17 2010
 BuildRequires: libfreetype-devel libgd2-devel libkpathsea-devel libpng-devel t1lib-devel texlive-generic-recommended texlive-latex-base
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 This program makes PNG graphics from DVI files as obtained from TeX and its
@@ -34,6 +36,9 @@ make dvipng.info
 %exclude %_infodir/dir
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1.qa1.1
+- NMU: added BR: texinfo
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.14-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
