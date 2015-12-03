@@ -1,6 +1,6 @@
 Name: guile-ncurses
 Version: 1.4
-Release: alt1
+Release: alt1.1
 
 Summary: GNU Guile-Ncurses is a library for the Guile Scheme interpreter
 License: %gpl3only
@@ -15,6 +15,8 @@ BuildPreReq: rpm-build-licenses
 BuildPreReq: libncursesw-devel
 BuildPreReq: libunistring-devel
 BuildPreReq: guile18-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package -n lib%name
 Summary: GNU Guile-Ncurses is a library for the Guile Scheme interpreter
@@ -66,5 +68,8 @@ for easy interactive development with GNU Guile-Ncurses library.
 %_bindir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1.1
+- NMU: added BR: texinfo
+
 * Tue Jun 04 2013 Ivan Ovcherenko <asdus@altlinux.org> 1.4-alt1
 - Initial build
