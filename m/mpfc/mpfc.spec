@@ -14,7 +14,7 @@
 Name: mpfc
 %define lname lib%name
 Version: 1.3.8
-Release: alt0.5.qa2
+Release: alt0.5.qa2.1
 Summary: %Name is music player for console
 License: %gpl2plus
 Group: Sound
@@ -38,6 +38,8 @@ BuildRequires: cvs libncursesw-devel gettext-tools
 %{?_enable_mp3:BuildRequires: libmad-devel}
 %{?_enable_ogg:BuildRequires: libvorbis-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 %Name is an abbrevation for Music Player For Console.
@@ -135,6 +137,9 @@ install -d -m 0755 %buildroot%_libdir/%name/general
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.8-alt0.5.qa2.1
+- NMU: added BR: texinfo
+
 * Thu Jun 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.8-alt0.5.qa2
 - Fixed build
 
