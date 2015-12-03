@@ -24,7 +24,7 @@ Name: parted
 %define lname lib%name
 Version: 3.2
 %define prerel %nil
-Release: alt2
+Release: alt2.1
 
 Summary: Flexible partitioning tool
 Summary(uk_UA.CP1251): Универсальний інструмент для роботи з разділами диску
@@ -48,6 +48,8 @@ BuildRequires: libcheck-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
 # for check
 BuildRequires: e2fsprogs xfsprogs dosfstools perl-Digest-CRC bc
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 GNU %Name is a program that allows you to create, destroy, resize,
@@ -221,6 +223,9 @@ __MENU__
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.2-alt2.1
+- NMU: added BR: texinfo
+
 * Mon Oct 27 2014 Michael Shigorin <mike@altlinux.org> 3.2-alt2
 - added patch to fix crash on FAT16 resize (bgo#735669)
 
