@@ -1,6 +1,6 @@
 Name: units
 Version: 2.12
-Release: alt1
+Release: alt1.1
 
 Summary: A utility for converting amounts from one unit to another
 License: GPLv3+
@@ -9,6 +9,8 @@ Url: http://www.gnu.org/software/units/units.html
 # ftp://ftp.gnu.org/pub/gnu/%name/%name-%version.tar.gz
 Source: %name-%version.tar
 BuildRequires: libreadline-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Units converts an amount from one unit to another, or tells you what
@@ -40,6 +42,9 @@ ln -s units.1 %buildroot%_man1dir/units_cur.1
 %doc NEWS README
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1.1
+- NMU: added BR: texinfo
+
 * Thu Oct 15 2015 Dmitry V. Levin <ldv@altlinux.org> 2.12-alt1
 - 2.11 -> 2.12.
 
