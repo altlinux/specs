@@ -1,6 +1,6 @@
 Name: vlc
 Version: 2.2.1
-Release: alt3
+Release: alt3.1
 
 Summary: VLC media player
 License: GPLv2
@@ -19,7 +19,7 @@ BuildRequires: libtwolame-devel libssh2-devel liba52-devel libalsa-devel
 BuildRequires: libcaca-devel libcdio-devel libdvbpsi-devel libdvdnav-devel
 BuildRequires: libdvdread-devel libflac-devel libgcrypt-devel librsvg-devel
 BuildRequires: libgnutls-devel libgpg-error-devel libjpeg-devel liblirc-devel
-BuildRequires: libmad-devel libmodplug-devel libspeex-devel libmpcdec-devel
+BuildRequires: libmad-devel libmodplug-devel libspeex-devel libspeexdsp-devel libmpcdec-devel
 BuildRequires: libncurses-devel libncursesw-devel libogg-devel libpng-devel
 BuildRequires: libstdc++-devel libtheora-devel libtiff-devel libtinfo-devel
 BuildRequires: libvcd-devel libvorbis-devel libxml2-devel
@@ -1352,6 +1352,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt3.1
+- fixed build - added BR: libspeexdsp-devel
+
 * Tue Aug 04 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt3
 - rebuilt with recent libdvbpsi, libcdio, live555 and x265
 
