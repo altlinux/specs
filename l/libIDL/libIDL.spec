@@ -3,7 +3,7 @@
 
 Name: libIDL
 Version: %ver_major.14
-Release: alt3
+Release: alt4
 
 Summary: Library for parsing IDL (Interface Definition Language)
 Group: System/Libraries
@@ -17,7 +17,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 %define pkgconfig_ver 0.15-alt3.2
 %define glib_ver 2.4.0
 
-BuildPreReq: rpm-build-licenses rpm-build-gnome
+BuildPreReq: rpm-build-licenses rpm-build-gnome texinfo
 BuildPreReq: pkgconfig >= %pkgconfig_ver
 BuildPreReq: glib2-devel >= %glib_ver
 
@@ -101,6 +101,9 @@ mkdir %buildroot%_datadir/idl
 %endif
 
 %changelog
+* Thu Dec 03 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.14-alt4
+- buildreqs: added texinfo
+
 * Wed Mar 02 2011 Alexey Tourbin <at@altlinux.ru> 0.8.14-alt3
 - rebuilt for debuginfo
 
