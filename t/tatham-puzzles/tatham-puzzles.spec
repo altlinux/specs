@@ -1,6 +1,6 @@
 Name: tatham-puzzles
 Version: 10286
-Release: alt1
+Release: alt1.1
 License: MIT
 Group: Games/Puzzles
 Url: http://www.chiark.greenend.org.uk/~sgtatham/puzzles/
@@ -16,6 +16,8 @@ Summary(ru_RU.UTF-8): Коллекция небольших логических
 
 # Automatically added by buildreq on Sun Oct 11 2009
 BuildRequires: ImageMagick-tools fonts-type1-urw libgtk+2-devel xvfb-run xauth halibut
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 A collection of little puzzle games you can pop up in a window and play for two or three minutes while you take a break from whatever else you were doing.
@@ -111,6 +113,9 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 10286-alt1.1
+- NMU: added BR: texinfo
+
 * Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 10286-alt1
 - Autobuild version bump to 10286
 
