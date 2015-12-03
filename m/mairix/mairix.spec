@@ -1,6 +1,6 @@
 Name: mairix
 Version: 0.17.1
-Release: alt1.qa2
+Release: alt1.qa2.1
 
 Summary: A maildir indexer and searcher
 License: GPL
@@ -11,6 +11,8 @@ Source: http://www.rc0.org.uk/%name/%name-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Jul 14 2005
 BuildRequires: flex samba-common tetex-core tetex-latex
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 mairix is a tool for indexing email messages stored in maildir format folders
@@ -36,6 +38,9 @@ make docs
 %doc README mairix.txt mairix.html mairix.dvi mairix.pdf dotmairixrc.eg
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.17.1-alt1.qa2.1
+- NMU: added BR: texinfo
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.17.1-alt1.qa2
 - NMU: rebuilt for debuginfo.
 
