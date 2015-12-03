@@ -1,6 +1,6 @@
 Name: cflow
 Version: 1.4
-Release: alt2
+Release: alt2.1
 
 Summary: Analyzes C files charting control flow within the program
 
@@ -19,6 +19,8 @@ Requires(post):  info
 Requires(preun): info
 
 Source44: import.info
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 GNU cflow analyzes a collection of C source files and prints a graph,
@@ -52,6 +54,9 @@ make check
 %_datadir/emacs/site-lisp/%name-mode.el
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2.1
+- NMU: added BR: texinfo
+
 * Tue Nov 17 2015 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt2
 - initial manual build for ALT Linux Sisyphus
 
