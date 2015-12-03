@@ -2,7 +2,7 @@
 
 Name: libconfig
 Version: 1.5
-Release: alt1
+Release: alt1.1
 
 Summary: C/C++ Configuration File Library
 License: LGPLv2.1+
@@ -14,6 +14,8 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Sat Oct 08 2011
 # optimized out: libstdc++-devel
 BuildRequires: flex gcc-c++
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Libconfig is a simple library for manipulating structured configuration
@@ -120,6 +122,9 @@ sed -i '/examples.*Makefile/d' configure.ac
 %endif
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1.1
+- NMU: added BR: texinfo
+
 * Mon Sep 28 2015 Michael Shigorin <mike@altlinux.org> 1.5-alt1
 - new version 1.5
 
