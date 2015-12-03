@@ -1,7 +1,7 @@
 Name: blitz
 Summary: C++ class library for scientific computing
 Version: 0.10
-Release: alt1.hg20120703
+Release: alt1.hg20120703.1
 Group: Sciences/Mathematics
 License: LGPL v2.1
 URL: http://www.oonumerics.org/blitz/
@@ -14,6 +14,8 @@ Requires: lib%name = %version-%release
 
 BuildPreReq: gcc-c++ gcc-fortran liblapack-devel
 BuildPreReq: doxygen graphviz
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Blitz++ is a C++ class library for scientific computing which provides
@@ -120,6 +122,9 @@ bzip2 ChangeLog*
 %_docdir/%name/examples
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1.hg20120703.1
+- NMU: added BR: texinfo
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1.hg20120703
 - New snapshot
 
