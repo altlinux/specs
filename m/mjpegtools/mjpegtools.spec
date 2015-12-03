@@ -4,7 +4,7 @@
 
 Name: mjpegtools
 Version: 2.1.0
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
 License: GPL
@@ -26,6 +26,8 @@ BuildPreReq: libdv >= %libdv_ver
 BuildRequires: glibc-kernheaders libjpeg-devel libSDL_gfx-devel gcc-c++
 BuildRequires: libpng-devel libXxf86dga-devel libgtk+2-devel libSDL-devel
 BuildRequires: libXt-devel libv4l-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 #BuildRequires: libICE-devel libSDL-devel libSM-devel libX11-devel libXext-devel libXt-devel libXxf86dga-devel libatk-devel libcairo-devel libdv-devel libgtk+2-devel libpango-devel libpng-devel libquicktime-devel libstdc++-devel pkg-config xorg-cf-files xorg-x11-proto-devel zlib-devel libjpeg-mmx-devel
    
@@ -126,6 +128,9 @@ rm -f %buildroot%_infodir/dir
 %_libdir/*.a
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1.1.1
+- NMU: added BR: texinfo
+
 * Fri Dec 05 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1.1
 - rebuilt against libSDL_gfx.so.15
 
