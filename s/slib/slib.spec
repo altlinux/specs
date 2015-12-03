@@ -2,7 +2,7 @@
 # guile -c "(use-modules (ice-9 slib)) (require 'printf)"
 Name: slib
 Version: 3b5
-Release: alt1
+Release: alt1.1
 
 Summary: platform independent library for scheme
 License: distributable, see individual files for copyright
@@ -22,6 +22,8 @@ Source: http://groups.csail.mit.edu/mac/ftpdir/scm/%name-%version.tar
 # for 3a4, update with new version (made manually due automatic build overhead)
 Source1: slibcat
 Patch: slib-3a4-guile.patch
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 "SLIB" is a portable library for the programming language Scheme.
@@ -120,6 +122,9 @@ install -m644 %SOURCE1 %buildroot%_datadir/guile/site/slibcat
 #%ghost %_libdir/plt2/slibcat
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3b5-alt1.1
+- NMU: added BR: texinfo
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3b5-alt1
 - new version 3b5 (with rpmrb script)
 
