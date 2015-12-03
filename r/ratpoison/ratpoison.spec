@@ -1,6 +1,6 @@
 Name: ratpoison
 Version: 1.4.8
-Release: alt1.git20140917
+Release: alt1.git20140917.1
 
 Group: Graphical desktop/Other
 Summary: ratpoison - Simple window manager with no fat library dependencies
@@ -13,6 +13,8 @@ Source1: RATPOISON.xpm
 # Automatically added by buildreq on Thu Apr 08 2010 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glibc-pthread libX11-devel libXrender-devel libfreetype-devel pkg-config xorg-inputproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: imake libICE-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXtst-devel libreadline-devel xorg-cf-files
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 ratpoison is a simple Window Manager with no fat library
@@ -72,6 +74,9 @@ EOF
 %doc README TODO AUTHORS NEWS ChangeLog doc/sample.ratpoisonrc doc/ipaq.ratpoisonrc
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt1.git20140917.1
+- NMU: added BR: texinfo
+
 * Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.8-alt1.git20140917
 - Version 1.4.8
 
