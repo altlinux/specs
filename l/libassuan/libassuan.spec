@@ -1,6 +1,6 @@
 Name: libassuan
 Version: 2.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: IPC library used by some GnuPG related software
 License: LGPLv2.1+
@@ -13,6 +13,8 @@ Source: libassuan-%version.tar
 BuildRequires: libgpg-error-devel
 
 %def_disable static
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package devel
 Summary: Development files for the libassuan library
@@ -69,6 +71,9 @@ mv %buildroot%_libdir/libassuan{2,}.so
 %endif
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1.1
+- NMU: added BR: texinfo
+
 * Fri Aug 28 2015 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt1
 - new version
 
