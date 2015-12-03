@@ -1,6 +1,6 @@
 Name: lzlib
 Version: 1.3
-Release: alt1
+Release: alt1.1
 
 Summary: The lzlib compression library provides in-memory LZMA compression and decompression functions
 License: GPLv3+
@@ -8,6 +8,8 @@ Group: System/Libraries
 
 URL: http://www.nongnu.org/lzip/lzlib.html
 Source: http://download.savannah.gnu.org/releases-noredirect/lzip/lzlib-%version.tar.gz
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The lzlib compression library provides in-memory LZMA compression and
@@ -47,6 +49,9 @@ ln -s liblz.so.?.? %buildroot%_libdir/liblz.so
 %_infodir/*.info*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1.1
+- NMU: added BR: texinfo
+
 * Sun Apr 15 2012 Victor Forsiuk <force@altlinux.org> 1.3-alt1
 - 1.3
 
