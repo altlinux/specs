@@ -1,6 +1,6 @@
 Name: gtk+
 Version: 1.2.10
-Release: alt21
+Release: alt21.1
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs for X
 License: LGPL
@@ -86,6 +86,8 @@ BuildRequires: glib-devel glibc-devel-static imake libXi-devel libXt-devel xorg-
 # it's also currently required by xorg-server-common
 # but let's be explicit just in case
 Requires: fonts-bitmap-misc
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package devel
 Summary: Development tools for GTK+ (GIMP ToolKit) applications
@@ -217,6 +219,9 @@ cp -a docs/{*.txt,html,text} %buildroot%pkgdocdir/devel
 %endif
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.10-alt21.1
+- NMU: added BR: texinfo
+
 * Tue Jun 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.10-alt21
 - Rebuilt for new glib cflags.
 
