@@ -1,11 +1,13 @@
 Name: dap
 Version: 3.10
-Release: alt1
+Release: alt1.1
 Summary: A small statistics and graphics package based on C
 Url: http://www.gnu.org/software/dap/
 Group: Sciences/Mathematics
 License: GPL
 Source: %name-%version.tar.gz
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 This directory and its subdirectories contain the source code for
@@ -48,6 +50,9 @@ Summary: Development environment for %name, %summary
 %_includedir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.10-alt1.1
+- NMU: added BR: texinfo
+
 * Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 3.10-alt1
 - Autobuild version bump to 3.10
 
