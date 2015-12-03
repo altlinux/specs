@@ -1,6 +1,6 @@
 Name: gsl
 Version: 1.16
-Release: alt1.git20150121
+Release: alt1.git20150121.1
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -16,6 +16,8 @@ Conflicts: lib%name-devel < %version-%release
 
 # Automatically added by buildreq on Wed Jun 06 2007
 BuildRequires: ghostscript-module-X ghostscript-utils
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 #BuildPreReq: texlive-latex-recommended texlive-generic-recommended
 
@@ -150,6 +152,9 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 %doc %_docdir/lib%name-%version/examples
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1.git20150121.1
+- NMU: added BR: texinfo
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16-alt1.git20150121
 - New snapshot
 
