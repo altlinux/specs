@@ -1,6 +1,6 @@
 Name: barcode
 Version: 0.98
-Release: alt5.qa2
+Release: alt5.qa2.1
 Group: Graphics
 Summary: Utility to generate printable barcodes in PostScript format
 Summary(ru_RU.UTF-8): Утилита для генерации штрих-кодов для печати в формате PostScript
@@ -12,6 +12,8 @@ Patch: %name-info.patch
 
 # Automatically added by buildreq on Wed Jul 08 2009
 BuildRequires: ghostscript-utils /usr/bin/tex gcc
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description 
 The package is meant to solve most needs in barcode creation with a
@@ -87,6 +89,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_libdir/libbarcode.a
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.98-alt5.qa2.1
+- NMU: added BR: texinfo
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.98-alt5.qa2
 - NMU: rebuilt for debuginfo.
 
