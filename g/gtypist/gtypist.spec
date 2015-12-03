@@ -1,6 +1,6 @@
 Name: gtypist
 Version: 2.9.4
-Release: alt1
+Release: alt1.1
 
 Summary: GNU Typist is a universal typing tutor
 Summary(ru_RU.UTF8): Клавиатурный тренажер для консоли
@@ -18,6 +18,8 @@ Source4: %name-64.png
 BuildRequires: libncursesw-devel libtinfo-devel
 BuildRequires: emacs-common emacs-leim
 BuildRequires: help2man
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 GNU Typist (or gtypist) is free software that assist you in learning
@@ -130,6 +132,9 @@ __INIT__
 %_emacslispdir/%name-mode.el
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1.1
+- NMU: added BR: texinfo
+
 * Mon Feb 03 2014 Yuri N. Sedunov <aris@altlinux.org> 2.9.4-alt1
 - 2.9.4
 
