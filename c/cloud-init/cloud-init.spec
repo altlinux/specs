@@ -1,6 +1,6 @@
 Name:    cloud-init
 Version: 0.7.6
-Release: alt1
+Release: alt2.20151202
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -8,20 +8,27 @@ License: GPLv3
 Url:     http://launchpad.net/cloud-init
 
 Source0: %name-%version.tar
-Source1: %name-alt.cfg
 
-Patch1: %name-0.7.6-alt-sshd-config.patch
-Patch2: %name-add-alt-distro.patch
-Patch3: %name-0.7.6-alt-blkid-path.patch
+Patch1: %name-%version-%release.patch
 
 BuildArch: noarch
+
 BuildRequires: python-devel python-module-distribute python-module-nose python-module-mocker
 BuildRequires: python-module-yaml python-module-cheetah python-module-oauth
 # For tests
-BuildRequires: python-modules-json python-module-requests python-module-jsonpatch python-module-configobj
-BuildRequires: python-module-httpretty python-module-serial iproute2 util-linux net-tools python-module-jinja2
+BuildRequires: python-modules-json python-module-requests python-module-jsonpatch python-module-configobj python-module-mock python-module-oauthlib
+BuildRequires: python-module-httpretty python-module-serial iproute2 util-linux net-tools python-module-jinja2 python-module-contextlib2 python-module-prettytable
 
-Requires: systemd-sysvinit sudo
+Requires: sudo
+Requires: e2fsprogs
+Requires: cloud-utils-growpart
+Requires: procps
+Requires: iproute net-tools
+Requires: shadow-utils
+Requires: /bin/run-parts
+# add not autoreq'ed
+%py_requires Cheetah
+%py_requires jinja2
 
 %description
 Cloud-init is a set of init scripts for cloud instances.  Cloud instances
@@ -30,48 +37,51 @@ ssh keys and to let the user run various scripts.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
+%patch1 -p1
 
 %build
 %python_build
 
-%check
-# Ignore test_netconfig.py because test_simple_write_freebsd is broken
-make test noseopts="-I test_netconfig.py"
-
 %install
 %python_install --init-system=systemd
 
-# We supply our own config file since our software differs from Ubuntu's.
-cp -p %SOURCE1 %buildroot/%_sysconfdir/cloud/cloud.cfg
+install -pD -m644 altlinux/cloud-init-alt.cfg %buildroot%_sysconfdir/cloud/cloud.cfg
+install -pD -m644 altlinux/cloud-init-tmpfiles.conf %buildroot%_tmpfilesdir/cloud-init.conf
+install -pD -m755 altlinux/cloud-config %buildroot%_initdir/cloud-config
+install -pD -m755 altlinux/cloud-final %buildroot%_initdir/cloud-final
+install -pD -m755 altlinux/cloud-init %buildroot%_initdir/cloud-init
+install -pD -m755 altlinux/cloud-init-local %buildroot%_initdir/cloud-init-local
 
-mkdir -p %buildroot/%_sharedstatedir/cloud
+mkdir -p %buildroot%_libexecdir
+mv %buildroot/usr/libexec/%name %buildroot%_libexecdir/
+mkdir -p %buildroot%_sharedstatedir/cloud
 
-%pre
-%_sbindir/useradd -G wheel -c "EC2 administrative account" ec2-user >/dev/null 2>&1 ||:
+# Don't ship the tests
+rm -r %buildroot%python_sitelibdir/tests
+
+# Remove non-ALTLinux templates
+rm -f %buildroot%_sysconfdir/cloud/templates/*.debian.*
+rm -f %buildroot%_sysconfdir/cloud/templates/*.freebsd.*
+rm -f %buildroot%_sysconfdir/cloud/templates/*.redhat.*
+rm -f %buildroot%_sysconfdir/cloud/templates/*.suse.*
+rm -f %buildroot%_sysconfdir/cloud/templates/*.ubuntu.*
+
+%check
+export PATH=/sbin:/usr/sbin:/bin:/usr/bin:$PATH
+# Ignore test_netconfig.py because test_simple_write_freebsd is broken
+make test noseopts="-I test_cloudstack.py"
 
 %post
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    # Enabled by default per "runs once then goes away" exception
-    /bin/systemctl enable cloud-config.service     >/dev/null 2>&1 || :
-    /bin/systemctl enable cloud-final.service      >/dev/null 2>&1 || :
-    /bin/systemctl enable cloud-init.service       >/dev/null 2>&1 || :
-    /bin/systemctl enable cloud-init-local.service >/dev/null 2>&1 || :
-    echo "%%wheel ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-fi
+%post_service cloud-config
+%post_service cloud-final
+%post_service cloud-init
+%post_service cloud-init-local
 
 %preun
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable cloud-config.service >/dev/null 2>&1 || :
-    /bin/systemctl --no-reload disable cloud-final.service  >/dev/null 2>&1 || :
-    /bin/systemctl --no-reload disable cloud-init.service   >/dev/null 2>&1 || :
-    /bin/systemctl --no-reload disable cloud-init-local.service >/dev/null 2>&1 || :
-    # One-shot services -> no need to stop
-fi
+%preun_service cloud-config
+%preun_service cloud-final
+%preun_service cloud-init
+%preun_service cloud-init-local
 
 %files
 %doc ChangeLog TODO.rst
@@ -81,18 +91,23 @@ fi
 %doc               %_sysconfdir/cloud/cloud.cfg.d/README
 %dir               %_sysconfdir/cloud/templates
 %config(noreplace) %_sysconfdir/cloud/templates/*
-%systemd_unitdir/cloud-config.service
-%systemd_unitdir/cloud-config.target
-%systemd_unitdir/cloud-final.service
-%systemd_unitdir/cloud-init-local.service
-%systemd_unitdir/cloud-init.service
+/lib/udev/rules.d/66-azure-ephemeral.rules
+%_initdir/*
+%_unitdir/*
+%_tmpfilesdir/*
 %python_sitelibdir/*
-/usr/lib/%name
+%_libexecdir/%name
 %_bindir/cloud-init*
 %doc %_datadir/doc/%name
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Wed Dec 02 2015 Alexey Shabalin <shaba@altlinux.ru> 0.7.6-alt2.20151202
+- upstream snapshot
+- add ALTLinux support
+- add SysV init scripts
+- don't add ec2-user user
+
 * Thu May 28 2015 Andrey Cherepanov <cas@altlinux.org> 0.7.6-alt1
 - New version
 
