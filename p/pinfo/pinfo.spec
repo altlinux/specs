@@ -1,6 +1,6 @@
 Name: pinfo
 Version: 0.6.9
-Release: alt3.qa1
+Release: alt3.qa1.1
 
 Summary: Przemek's Info Viewer - a (much) better info
 Group: System/Base
@@ -14,6 +14,8 @@ Requires: url_handler
 
 # Automatically added by buildreq on Tue Oct 28 2003
 BuildRequires: libncursesw-devel libtinfo-devel libncursesxx-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 
 %description
@@ -45,6 +47,9 @@ ln -s %name %buildroot%_bindir/pman
 %_infodir/*.info*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.6.9-alt3.qa1.1
+- NMU: added BR: texinfo
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.9-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
