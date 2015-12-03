@@ -1,6 +1,6 @@
 Name: wipefreespace
 Version: 1.6.1
-Release: alt4
+Release: alt4.1
 
 Summary: Program for secure cleaning of free space on file systems
 License: GPLv2
@@ -14,6 +14,8 @@ Packager: Michael Shigorin <mike@altlinux.org>
 Requires: xfsprogs
 BuildRequires: glibc-kernheaders
 BuildRequires: libe2fs-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 #BuildRequires: libxfs-devel
 
 %description
@@ -51,6 +53,9 @@ FAT12/16/32, MinixFSv1/2, JFS, HFS+ and OCFS.
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt4.1
+- NMU: added BR: texinfo
+
 * Wed Aug 15 2012 Michael Shigorin <mike@altlinux.org> 1.6.1-alt4
 - moved %_bindir/%name to /bin
 
