@@ -2,7 +2,7 @@
 # $Id: emacs-misc-modes.spec,v 1.8 2006/02/04 17:54:06 eugene Exp $
 
 Version: 0.2
-Release: alt10.1
+Release: alt10.1.1
 Name: emacs-misc-modes
 License: GPL
 Group: Editors
@@ -21,6 +21,8 @@ BuildPreReq: emacs24-X11-athena
 
 # Automatically added by buildreq on Tue Dec 24 2002
 BuildRequires: emacs-bbdb emacs-cedet emacs-elib emacs-gnus
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Various packages for Emacs.
@@ -43,6 +45,9 @@ install -m 644 *.info* %buildroot%_infodir/
 %_infodir/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.2-alt10.1.1
+- NMU: added BR: texinfo
+
 * Sat Nov 24 2012 Terechkov Evgenii <evg@altlinux.org> 0.2-alt10.1
 - Rebuild by emacs-X11 instead of emacs-nox
 
