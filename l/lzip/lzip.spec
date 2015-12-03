@@ -1,6 +1,6 @@
 Name: lzip
 Version: 1.17
-Release: alt1
+Release: alt1.1
 
 Summary: LZMA file compressor
 License: GPL v3+
@@ -15,6 +15,8 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: gcc-c++
 
 Summary(pl.UTF-8): Kompresor plików oparty na algorytmie LZMA
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Lzip is a lossless file compressor based on the LZMA
@@ -55,6 +57,9 @@ make all info
 %_infodir/lzip.info*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1.1
+- NMU: added BR: texinfo
+
 * Mon Jul 27 2015 Michael Shigorin <mike@altlinux.org> 1.17-alt1
 - new version (watch file uupdate)
 
