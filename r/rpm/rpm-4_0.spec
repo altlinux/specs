@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.87
+Release: alt100.88
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -104,6 +104,7 @@ Requires: gcc gettext-tools glibc-devel gnu-config file kernel-headers libtool m
 Requires: procps psmisc sed service which
 Requires: bash >= 0:3.1.17-alt4
 Requires: bzip2 >= 1:1.0.2-alt4
+Requires: xz
 Requires: gzip >= 0:1.3.3-alt2
 Requires: mktemp >= 1:1.3.1
 Requires: patch >= 2.5
@@ -530,6 +531,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Wed Dec 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.88
+- compress_files: changed default method to xz.
+
 * Mon Nov 30 2015 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.87
 - rpm-build: removed texinfo from requirements.
 
