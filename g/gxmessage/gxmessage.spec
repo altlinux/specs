@@ -1,6 +1,6 @@
 Name: gxmessage
 Version: 2.20.1
-Release: alt1
+Release: alt1.1
 
 Summary: GTK2 based xmessage clone
 License: GPL
@@ -12,6 +12,8 @@ Source: %name-%version.tar.gz
 # Automatically added by buildreq on Sat Oct 08 2011
 # optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel perl-XML-Parser pkg-config
 BuildRequires: intltool libgtk+2-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 A GTK2 based xmessage clone, gxmessage tries to be
@@ -41,6 +43,9 @@ running a mostly GTK desktop.
 # - consider building gtk2/gtk3 versions as conflicting/alternatives
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.20.1-alt1.1
+- NMU: added BR: texinfo
+
 * Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 2.20.1-alt1
 - 2.20.1
 
