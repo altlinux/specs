@@ -4,7 +4,7 @@
 
 Name: mgetty
 Version: 1.1.37
-Release: alt1.1
+Release: alt1.1.1
 
 %define verdate Jun05
 
@@ -58,6 +58,8 @@ PreReq: /var/lock/serial
 # Automatically added by buildreq on Tue Oct 06 2009
 BuildRequires: gccmakedep groff-base imake libX11-devel libXext-devel xorg-cf-files
 BuildRequires: texlive-base
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package sendfax
 Summary: Provides support for sending faxes over a modem
@@ -342,6 +344,9 @@ find samples -type f |xargs chmod a-x
 # - Consider Gentoo patches
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.37-alt1.1.1
+- NMU: added BR: texinfo
+
 * Sat May 05 2012 Michael Shigorin <mike@altlinux.org> 1.1.37-alt1.1
 - doc subpackage made noarch
 - vgetty(8) manpage duplicate no longer shipped with mgetty,
