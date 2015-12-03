@@ -2,7 +2,7 @@
 
 Name:           heroes-sdl
 Version:        0.21
-Release:        alt2
+Release:        alt2.1
 
 Summary:        Heroes - Game like Nibbles but different.
 License:	GPL
@@ -19,6 +19,8 @@ Provides: heroes
 Requires: heroes-data
 # Automatically added by buildreq on Wed Oct 04 2006
 BuildRequires: esound help2man liballegro-devel libmikmod-devel libSDL-devel libSDL_mixer-devel linux-libc-headers perl-Locale-gettext
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Heroes is similar to the "Tron" and "Nibbles" games of yore, but includes
@@ -77,6 +79,9 @@ install -D misc/heroes-1.xpm %buildroot%_liconsdir/%name.xpm
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt2.1
+- NMU: added BR: texinfo
+
 * Fri May 25 2012 Fr. Br. George <george@altlinux.ru> 0.21-alt2
 - DSO list completion
 
