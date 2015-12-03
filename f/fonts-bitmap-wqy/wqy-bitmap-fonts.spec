@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname wqy-bitmap-fonts
 %define fontname  wqy-bitmap
 %define fontconf  61-wqy-bitmapsong.conf
@@ -5,17 +6,16 @@
 
 Name:           fonts-bitmap-wqy
 Version:        1.0.0
-Release:        alt3_0.7.rc1
+Release:        alt3_0.9.rc1
 Summary:        WenQuanYi Bitmap Chinese Fonts
 
-Group:          System/Fonts/True type
 License:        GPLv2 with exceptions
 URL:            http://wenq.org/enindex.cgi
 Source0:        http://downloads.sourceforge.net/wqy/wqy-bitmapsong-bdf-1.0.0-RC1.tar.gz
 Source1:        61-wqy-bitmapsong.conf
 
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel bdftopcf
+BuildRequires:  fontpackages-devel, bdftopcf
 Source44: import.info
 
 %description
@@ -33,15 +33,13 @@ Korean Hangul glyphs (U+AC00~U+D7A3) are also included.
 
 %prep
 %setup -q -n %{wqyroot}
-
+sed -i 's/shift(ARGV)/shift(@ARGV)/g' bdfmerge.pl
 
 %build
 make wqyv1
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.pcf %{buildroot}%{_fontdir}
 
@@ -93,12 +91,12 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.pcf
-
 %doc AUTHORS ChangeLog COPYING README LOGO.png
-%dir %{_fontbasedir}/*/%{_fontstem}
-
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_0.9.rc1
+- fixed build
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_0.7.rc1
 - update to new release by fcimport
 
