@@ -1,6 +1,6 @@
 Name: polipo
 Version: 1.1.1
-Release: alt2
+Release: alt2.1
 Summary: Single-threaded non blocking HTTP proxy
 License: %mit
 Group: System/Servers
@@ -13,6 +13,8 @@ Source2: %name.service
 BuildRequires: symlinks
 
 BuildRequires: rpm-build-licenses
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Polipo is single-threaded, non blocking HTTP proxy. It listens to
@@ -71,6 +73,9 @@ install -p -m644 %SOURCE2 %buildroot%_unitdir/
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2.1
+- NMU: added BR: texinfo
+
 * Sun Sep 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt2
 - Added .service file (ALT #30188)
 
