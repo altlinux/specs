@@ -1,6 +1,6 @@
 Name: gnugo
 Version: 3.8
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -14,6 +14,8 @@ Source1: gnugo.desktop
 
 # Automatically added by buildreq on Tue Jun 30 2009
 BuildRequires: libncurses-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 GNU Go is a free program that plays the game of Go. GNU Go has played thousands
@@ -38,6 +40,9 @@ install -pD -m644 %SOURCE1 %buildroot%_desktopdir/gnugo.desktop
 %_infodir/gnugo.*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1.qa1.1
+- NMU: added BR: texinfo
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.8-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
