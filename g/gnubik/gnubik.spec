@@ -1,6 +1,6 @@
 Name: gnubik
 Version: 2.4.1
-Release: alt1
+Release: alt1.1
 
 Summary: gnubik -  an interactive, graphic Magic cube program
 Summary(ru_RU.UTF-8): gnubik - трёхмерный кубик-рубик
@@ -17,6 +17,8 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # Automatically added by buildreq on Wed Dec 03 2008
 BuildRequires: guile18-devel imake libfreeglut-devel libgtkglext-devel xorg-cf-files
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 gnubik - an interactive, graphic Magic cube program.
@@ -53,6 +55,9 @@ install -pD -m644 doc/%name.6 %buildroot%_man6dir
 %_man6dir/gnubik.*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1.1
+- NMU: added BR: texinfo
+
 * Sat Jun 15 2013 Fr. Br. George <george@altlinux.ru> 2.4.1-alt1
 - Autobuild version bump to 2.4.1
 - Package icons
