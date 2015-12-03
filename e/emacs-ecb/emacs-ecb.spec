@@ -2,7 +2,7 @@
 # $Id: emacs-ecb.spec,v 1.6 2005/12/14 22:27:41 eugene Exp $
 
 Version: 2.41
-Release: alt1.gitf68d13d22a
+Release: alt1.gitf68d13d22a.1
 Name:    emacs-ecb
 License: GPL
 Group:   Editors
@@ -27,6 +27,8 @@ BuildRequires(build): emacs-cedet >= 1.0-alt0.13.pre7
 
 # Automatically added by buildreq on Mon Nov 01 2004
 BuildRequires: emacs-common emacs-elib emacs-jdee emacs-leim
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 This is code browser for Emacs for C, C++, Java
@@ -98,6 +100,9 @@ install -m 644 NEWS %buildroot%_docdir/%name/
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.41-alt1.gitf68d13d22a.1
+- NMU: added BR: texinfo
+
 * Thu Apr 18 2013 Andrey Cherepanov <cas@altlinux.org> 2.41-alt1.gitf68d13d22a
 - Build ecb from alexott git: git://github.com/emacsmirror/ecb.git
 
