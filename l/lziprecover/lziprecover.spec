@@ -1,6 +1,6 @@
 Name: lziprecover
 Version: 1.17
-Release: alt1
+Release: alt1.1
 
 Summary: LZMA compressed file recovery
 License: GPL v3+
@@ -13,6 +13,8 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Sep 20 2009
 BuildRequires: gcc-c++ lzip
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Lzip is a lossless file compressor based on the LZMA
@@ -37,6 +39,9 @@ make all info
 %_infodir/%name.info*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1.1
+- NMU: added BR: texinfo
+
 * Sat Jun 06 2015 Michael Shigorin <mike@altlinux.org> 1.17-alt1
 - new version (watch file uupdate)
 
