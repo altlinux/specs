@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/less /usr/bin/perl /usr/bin/pg /usr/sbin/zdump libncurse
 
 Name:		gcal
 Version:	4
-Release:	alt1_2
+Release:	alt1_2.1
 Summary:	GNU Gregorian calendar program
 
 Group:		Text tools
@@ -26,6 +26,8 @@ Requires(preun): info
 # https://fedoraproject.org/wiki/Packaging:No_Bundled_Libraries#Packages_granted_exceptions
 Provides: bundled(gnulib)
 Source44: import.info
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Gcal is a program for calculating and printing calendars.  Gcal
@@ -68,6 +70,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/*.1*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4-alt1_2.1
+- NMU: added BR: texinfo
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 4-alt1_2
 - update to new release by fcimport
 
