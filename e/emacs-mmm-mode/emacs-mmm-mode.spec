@@ -1,5 +1,5 @@
 Version: 0.4.8
-Release: alt2
+Release: alt2.1
 Name: emacs-mmm-mode
 Copyright: GPL
 Group: Editors
@@ -14,6 +14,8 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Thu Jul 18 2002
 BuildRequires: emacs-common 
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 MMM Mode is a minor mode for Emacs that allows Multiple Major Modes
@@ -77,6 +79,9 @@ install -m 644 %SOURCE1 $RPM_BUILD_ROOT/etc/emacs/site-start.d/mmm.el
 %{_emacslispdir}/mmm/*.el
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2.1
+- NMU: added BR: texinfo
+
 * Sat Oct 24 2009 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2
 - applied repocop patch: removed obsolete (un)install_info macros
 
