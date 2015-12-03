@@ -3,7 +3,7 @@
 
 Name: msmtp
 Version: 1.4.27
-Release: alt1
+Release: alt1.1
 
 Summary: Mail delivering agent (MDA) that uses customizable SMTP-server
 License: GPLv3+
@@ -16,6 +16,8 @@ Source: http://download.sourceforge.net/sourceforge/msmtp/msmtp-%version.tar.bz2
 # optimized out: glib2-devel libgnome-keyring libgpg-error pkg-config
 # for gnutls libs:
 BuildRequires: libgnome-keyring-devel libgnutls-devel libgsasl-devel libidn-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 # for openssl ssl libs:
 #BuildRequires: libgnome-keyring-devel libgsasl-devel libidn-devel libssl-devel
@@ -59,6 +61,9 @@ Features include:
 %doc NEWS README doc/Mutt+msmtp.txt doc/msmtprc-*.example
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.4.27-alt1.1
+- NMU: added BR: texinfo
+
 * Sun Jan 08 2012 Victor Forsiuk <force@altlinux.org> 1.4.27-alt1
 - 1.4.27
 
