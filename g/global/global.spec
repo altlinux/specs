@@ -1,7 +1,7 @@
 # TODO: see spec from PLD with separate packages
 Name: global
 Version: 6.3.3
-Release: alt1
+Release: alt1.1
 
 Summary: Source code tag system
 
@@ -18,6 +18,8 @@ Source: http://tamacom.com/global/global-%version.tar
 # Automatically added by buildreq on Tue Apr 17 2012
 # optimized out: emacs-base emacs-cedet-speedbar emacs-common emacs-ecb emacs23-cedet fontconfig libX11-locales libgdk-pixbuf libtinfo-devel libwayland-client libwayland-server
 BuildRequires: ctags glibc-devel libltdl7-devel libncurses-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 GNU GLOBAL is a source code tag system that works the same way across
@@ -76,6 +78,9 @@ rm -f %buildroot%_libdir/gtags/*.la
 %_man1dir/gozilla*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 6.3.3-alt1.1
+- NMU: added BR: texinfo
+
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 6.3.3-alt1
 - new version 6.3.3 (with rpmrb script)
 
