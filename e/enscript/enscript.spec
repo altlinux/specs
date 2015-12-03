@@ -1,6 +1,6 @@
 Name: enscript
 Version: 1.6.6
-Release: alt1
+Release: alt1.1
 
 Summary: Converts plain ASCII to PostScript
 License: GPL
@@ -41,6 +41,8 @@ Patch504: enscript-1.6.3-alt-encodings.patch
 # Automatically added by buildreq on Thu May 29 2014
 # optimized out: xz
 BuildRequires: flex libpaper-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Enscript is a print filter. It can take ASCII input
@@ -108,6 +110,9 @@ ln -s %_bindir/enscript $RPM_BUILD_ROOT%_bindir/nenscript
 %_infodir/*.info*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt1.1
+- NMU: added BR: texinfo
+
 * Wed May 28 2014 Fr. Br. George <george@altlinux.ru> 1.6.6-alt1
 - Autobuild version bump to 1.6.6
 - Upstream switch
