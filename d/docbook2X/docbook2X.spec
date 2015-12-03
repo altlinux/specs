@@ -1,6 +1,6 @@
 Name: docbook2X
 Version: 0.8.8
-Release: alt1
+Release: alt1.1
 
 Summary: Convert docbook into man and Texinfo
 
@@ -17,6 +17,8 @@ BuildRequires: OpenSP perl-XML-SAX tidy xml-commons-resolver xml-utils xsltproc
 
 BuildRequires: libxslt openjade
 Requires: libxslt openjade texinfo xsltproc
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 docbook2X converts DocBook documents into man pages and Texinfo
@@ -56,6 +58,9 @@ find %buildroot -type d -depth -exec rmdir {} 2>/dev/null ';'
 %_infodir/docbook2*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.8-alt1.1
+- NMU: added BR: texinfo
+
 * Mon Mar 11 2013 Vitaly Lipatov <lav@altlinux.ru> 0.8.8-alt1
 - cleanup spec
 - just import docbook2X-0.8.8.tar with rpmgs script
