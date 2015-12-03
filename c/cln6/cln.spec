@@ -4,7 +4,7 @@
 
 Name: %oname%abiversion
 Version: 1.3.3
-Release: alt1
+Release: alt1.1
 
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
@@ -15,6 +15,8 @@ Source: %oname-%version.tar
 
 # Automatically added by buildreq on Fri Jun 17 2005
 BuildRequires: gcc-c++ libgmp-devel libstdc++-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Class Library for Numbers.
@@ -121,6 +123,9 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/pi
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt1.1
+- NMU: added BR: texinfo
+
 * Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.3-alt1
 - Version 1.3.3
 
