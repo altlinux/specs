@@ -8,8 +8,9 @@
 %def_disable clang
 %def_enable  shared_libraries
 %def_disable v8_internal
+%def_disable libchromiumcontent
 
-%define v8_version 4.6.85.31
+%define v8_version 4.7.80.23
 
 %if_enabled debug
 %define buildtype Debug
@@ -18,7 +19,7 @@
 %endif
 
 Name:           chromium
-Version:        46.0.2490.86
+Version:        47.0.2526.73
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -28,6 +29,7 @@ Url:            http://code.google.com/p/chromium/
 
 Source0:        %name-%version.tar.gz
 Source10:		depot_tools.tar
+Source11:		libchromiumcontent.tar
 
 Source30:       master_preferences
 Source31:       default_bookmarks.html
@@ -221,6 +223,8 @@ to Gnome's Keyring.
 %prep
 %setup -q -n %name
 tar xf %SOURCE10 -C src
+tar xf %SOURCE11 -C src
+cp -a src/libchromiumcontent/chromiumcontent src
 
 %patch8  -p2
 %patch14 -p2
@@ -504,7 +508,12 @@ cd src
 	-Duse_system_xdg_utils=1 \
 	-Duse_system_yasm=1 \
 	-Duse_system_zlib=1 \
-	-Dwant_separate_host_toolset=0
+	-Dwant_separate_host_toolset=0 \
+	-Dmac_mas_build=0 \
+%if_enabled libchromiumcontent
+	-Ichromiumcontent/chromiumcontent.gypi \
+%endif
+	%nil
 # Unused flags
 #	-Dlinux_use_tcmalloc=0 \
 
@@ -655,6 +664,33 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Wed Dec 02 2015 Andrey Cherepanov <cas@altlinux.org> 47.0.2526.73-alt1
+- New version
+- Security fixes:
+  - Critical CVE-2015-6765: Use-after-free in AppCache.
+  - High CVE-2015-6766: Use-after-free in AppCache.
+  - High CVE-2015-6767: Use-after-free in AppCache.
+  - High CVE-2015-6768: Cross-origin bypass in DOM.
+  - High CVE-2015-6769: Cross-origin bypass in core.
+  - High CVE-2015-6770: Cross-origin bypass in DOM.
+  - High CVE-2015-6771: Out of bounds access in v8.
+  - High CVE-2015-6772: Cross-origin bypass in DOM.
+  - High CVE-2015-6764: Out of bounds access in v8.
+  - High CVE-2015-6773: Out of bounds access in Skia.
+  - High CVE-2015-6774: Use-after-free in Extensions.
+  - High CVE-2015-6775: Type confusion in PDFium.
+  - High CVE-2015-6776: Out of bounds access in PDFium.
+  - High CVE-2015-6777: Use-after-free in DOM.
+  - Medium CVE-2015-6778: Out of bounds access in PDFium.
+  - Medium CVE-2015-6779: Scheme bypass in PDFium.
+  - Medium CVE-2015-6780: Use-after-free in Infobars.
+  - Medium CVE-2015-6781: Integer overflow in Sfntly.
+  - Medium CVE-2015-6782: Content spoofing in Omnibox.
+  - Low CVE-2015-6784: Escaping issue in saved pages.
+  - Low CVE-2015-6785: Wildcard matching issue in CSP.
+  - Low CVE-2015-6786: Scheme bypass in CSP.
+- Include libchromiumcontent (build disabled by default)
+
 * Wed Nov 11 2015 Andrey Cherepanov <cas@altlinux.org> 46.0.2490.86-alt1
 - New version
 - Security fixes:

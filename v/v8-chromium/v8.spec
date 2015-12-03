@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     4
-%define MINOR_VERSION     6
-%define BUILD_NUMBER      85
-%define PATCH_LEVEL       31
+%define MINOR_VERSION     7
+%define BUILD_NUMBER      80
+%define PATCH_LEVEL       23
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 %def_without tests
@@ -100,7 +100,7 @@ install -p -m644 include/*.h %buildroot%_includedir/
 
 %check
 %if_with tests
-# TODO: need depot_tools in PATH
+# need depot_tools in PATH
 LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 		--no-presubmit \
 		--outdir=out \
@@ -121,6 +121,9 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Wed Dec 02 2015 Andrey Cherepanov <cas@altlinux.org> 4.7.80.23-alt1
+- New version for chromium-47.0.2526.73
+
 * Wed Nov 11 2015 Andrey Cherepanov <cas@altlinux.org> 4.6.85.31-alt1
 - New version for chromium-46.0.2490.86
 
