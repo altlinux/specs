@@ -1,6 +1,6 @@
 Name: hello
 Version: 2.10
-Release: alt1
+Release: alt1.1
 
 Summary: GNU hello, THE greeting printing program
 Group: Development/C
@@ -9,6 +9,8 @@ License: GPLv3+
 Url: ftp://ftp.gnu.org/gnu/hello/
 
 Source: %name-%version.tar.gz
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The GNU `hello' program produces a familiar, friendly greeting.  It
@@ -36,6 +38,9 @@ GNU General Public License, users are free to share and change it.
 %_mandir/man?/*
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1.1
+- NMU: added BR: texinfo
+
 * Mon Nov 17 2014 Fr. Br. George <george@altlinux.ru> 2.10-alt1
 - Autobuild version bump to 2.10
 - Use autoreconf for educational purpose
