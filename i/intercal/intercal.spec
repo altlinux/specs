@@ -1,6 +1,6 @@
 Name: intercal
 Version: 0.29
-Release: alt1.git20140828
+Release: alt1.git20140828.1
 
 Summary: The language that kills the weak and drives mad the strong
 License: GPL, except for ick-wrap.c
@@ -13,6 +13,8 @@ Source: %url/%name-%version.tar.gz
 BuildPreReq: flex groff-base groff-ps tidy
 
 Requires: gcc
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 An implementation of the language INTERCAL, legendary for
@@ -50,6 +52,9 @@ rm -fr examples/{lib,Makefile}
 %doc BUGS NEWS README HISTORY doc/ examples/ etc/%name.el
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1.git20140828.1
+- NMU: added BR: texinfo
+
 * Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.29-alt1.git20140828
 - Version 0.29
 
