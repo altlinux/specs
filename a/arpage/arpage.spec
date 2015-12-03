@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize gcc-c++ pkgconfig(gthread-2.0)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize gcc-c++ pkgconfig(gthread-2.0) pkgconfig(gtkmm-2.4) pkgconfig(jack) pkgconfig(libxml++-2.6)
 # END SourceDeps(oneline)
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name arpage
@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ pkgconfig(gthread-2.0)
 
 Name:		arpage
 Version:	0.3.3
-Release:	alt2_19
+Release:	alt3_19
 Summary:	A JACK MIDI arpeggiator
 
 Group:		Sound
@@ -46,6 +46,7 @@ data, synchronized to JACK.
 chmod 644 %{_builddir}/%{name}-%{version}/src/main.cc
 
 %build
+%add_optflags -std=c++11
 
 # Fix for aarch64 build
 #automake --add-missing
@@ -56,7 +57,7 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=%{buildroot} arpagedocdir=%{_pkgdocdir}
+make install DESTDIR=%{buildroot} arpagedocdir=%{_docdir}/%{name}
 
 desktop-file-install --dir=%{buildroot}/%{_datadir}/applications %{SOURCE1}
 
@@ -74,6 +75,9 @@ install -m 644 %{_builddir}/%{name}-%{version}/src/arpage.png %{buildroot}%{_dat
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt3_19
+- fixed build
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_19
 - update to new release by fcimport
 
