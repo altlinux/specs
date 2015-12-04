@@ -1,7 +1,7 @@
 # stalled, check 14.01.2009
 Name: libbinio
 Version: 1.4
-Release: alt3.qa2
+Release: alt3.qa2.1
 
 Summary: Binary I/O stream class library
 
@@ -17,6 +17,8 @@ Patch1: %name.patch
 
 # Automatically added by buildreq on Sun Jan 14 2007
 BuildRequires: gcc-c++
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 The binary I/O stream class library presents a platform-independent
@@ -69,6 +71,9 @@ Static libbinio library.
 #%_libdir/lib*.a
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3.qa2.1
+- NMU: added BR: texinfo
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt3.qa2
 - NMU: rebuilt for debuginfo.
 
