@@ -1,6 +1,6 @@
 Name: adplay
 Version: 1.7
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: Sound
 Url: http://adplug.sourceforge.net
@@ -34,6 +34,9 @@ of output devices.
 %_man1dir/adplay.1*
 
 %changelog
+* Fri Dec 04 2015 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1.1
+- rebuild with libbinio
+
 * Sun Sep 09 2012 Ildar Mulyukov <ildar@altlinux.ru> 1.7-alt1
 - new version
 
