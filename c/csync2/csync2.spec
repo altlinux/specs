@@ -2,7 +2,7 @@
 
 Name: csync2
 Version: 1.34
-Release: alt9.%svn_rev
+Release: alt10.%svn_rev
 
 Summary: Csync2 is a cluster synchronization tool
 
@@ -70,6 +70,9 @@ touch %buildroot/etc/%name/csync2_ssl_key.pem
 %ghost /etc/%name/csync2_ssl_key.pem
 
 %changelog
+* Fri Dec 04 2015 Mikhail Efremov <sem@altlinux.org> 1.34-alt10.r409
+- Rebuild with libgnutls30.
+
 * Fri Aug 22 2014 Mikhail Efremov <sem@altlinux.org> 1.34-alt9.r409
 - Rebuild with libgnutls28.
 
