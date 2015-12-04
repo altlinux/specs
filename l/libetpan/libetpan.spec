@@ -1,6 +1,6 @@
 Name: libetpan
 Version: 1.6
-Release: alt1
+Release: alt2
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access.
 License: %bsdstyle
@@ -73,6 +73,9 @@ ln -s README.md README
 %_libdir/%name.so
 
 %changelog
+* Fri Dec 04 2015 Mikhail Efremov <sem@altlinux.org> 1.6-alt2
+- Rebuild with gnutls-3.4.x.
+
 * Mon Nov 10 2014 Mikhail Efremov <sem@altlinux.org> 1.6-alt1
 - Updated to 1.6.
 
