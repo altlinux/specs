@@ -1,7 +1,7 @@
 %define rname plasma-workspace-wallpapers
 
 Name: kf5-%rname
-Version: 5.4.1
+Version: 5.5.0
 Release: alt1
 %K5init
 
@@ -37,5 +37,8 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 %_datadir/wallpapers/*
 
 %changelog
+* Fri Dec 04 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Wed Sep 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
 - initial build
