@@ -3,7 +3,7 @@
 Summary: Base library for gmerlin applications
 Name: gmerlin
 Version: 1.2.0
-Release: alt1.3
+Release: alt1.4
 License: GPL
 Group: Development/C++
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -39,6 +39,8 @@ BuildRequires: libxml2-devel xorg-cf-files
 
 BuildRequires: libcdio-paranoia-devel libcdio-devel >=  0.93
 BuildRequires: desktop-file-utils
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Base library for gmerlin applications.
@@ -641,9 +643,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name-player.desktop
 %_niconsdir/%name-player.png
 %exclude %_liconsdir/%name-player.png
-%doc %_man1dir/%name.1.gz
-%doc %_man1dir/%{name}_play.1.gz
-%doc %_man1dir/%{name}_remote.1.gz
+%doc %_man1dir/%name.1*
+%doc %_man1dir/%{name}_play.1*
+%doc %_man1dir/%{name}_remote.1*
 
 %files recorder
 %_bindir/%name-record
@@ -651,7 +653,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name-recorder.desktop
 %_niconsdir/%name-recorder.png
 %exclude %_liconsdir/%name-recorder.png
-%doc %_man1dir/%name-record.1.bz2
+%doc %_man1dir/%name-record.1*
 
 %files transcoder
 %_bindir/%{name}_transcoder
@@ -659,8 +661,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name-transcoder.desktop
 %_niconsdir/%name-transcoder.png
 %exclude %_liconsdir/%name-transcoder.png
-%doc %_man1dir/%{name}_transcoder.1.gz
-%doc %_man1dir/%{name}_transcoder_remote.1.gz
+%doc %_man1dir/%{name}_transcoder.1*
+%doc %_man1dir/%{name}_transcoder_remote.1*
 
 %files visualizer
 %_bindir/%{name}_visualize
@@ -688,6 +690,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_liconsdir/%name-plugincfg.png
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1.4
+- NMU: added BR: texinfo
+
 * Wed Aug 05 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.2.0-alt1.3
 - Add Patchs from http://git.pld-linux.org/gitweb.cgi?p=packages/gmerlin.git
 
