@@ -1,5 +1,5 @@
 Name: psi-plus-l10n
-Version: 0.16.289
+Version: 0.16.475.1
 Release: alt1
 
 Summary: Translations for Psi+
@@ -37,6 +37,12 @@ lrelease-qt4 translations/*.ts
 %_datadir/psi-plus/*.qm
 
 %changelog
+* Fri Dec 04 2015 Nazarov Denis <nenderus@altlinux.org> 0.16.475.1-alt1
+- Version 0.16.475.1
+
+* Fri Mar 07 2014 Nazarov Denis <nenderus@altlinux.org> 0.16.289-alt0.M70T.1
+- Build for branch t7
+
 * Fri Mar 07 2014 Nazarov Denis <nenderus@altlinux.org> 0.16.289-alt1
 - Version 0.16.289
 
