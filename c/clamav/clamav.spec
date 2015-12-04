@@ -1,5 +1,5 @@
-%set_automake_version 1.11
-%def_without milter
+%def_without	milter
+%def_without	systemllvm
 
 %def_with ownconfdir
 
@@ -12,8 +12,9 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.98.7
+Version: 0.99
 Release: alt1
+%define abiversion 7
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -49,7 +50,7 @@ Source23: virusstat.cron.example
 Patch1: clamav-config.patch
 Patch2: freshclam-config.patch
 
-Patch20: clamav-0.97.2-libs.private.patch
+Patch20: clamav-0.99-pkgconfig.patch
 
 # Package with clamd should require libclamav, not vice versa.
 # Corresponding libclamav version need to be updated before, or clamd restart may fail!
@@ -64,8 +65,10 @@ Requires(post): sed >= 1:3.02-alt1
 # sed used by configure script
 BuildRequires: sed
 
-BuildRequires: gcc-c++ bzlib-devel libcheck-devel libncurses-devel zlib-devel libcurl-devel libssl-devel libxml2-devel
-BuildRequires: git-core graphviz groff-extra gv zip doxygen
+BuildRequires: gcc-c++ bzlib-devel libcheck-devel libncurses-devel zlib-devel libcurl-devel libssl-devel libxml2-devel libpcre-devel
+BuildRequires: git-core graphviz groff-extra gv zip doxygen flex
+
+%{?_with_systemllvm:BuildRequires: llvm-devel}
 
 # ...and edited manually to separate conditional buildreqs
 %{?_with_milter:BuildRequires: sendmail-devel}
@@ -81,22 +84,24 @@ and a tool for automatic updating via Internet. The programs are based on a
 shared library distributed with the Clam AntiVirus package, which you can use in
 your own software.
 
-%package -n lib%{name}
+%package -n lib%{name}%{abiversion}
 Summary: Shared libraries for clamav
-Group: Development/C
+Group: System/Libraries
+Provides: lib%name = %version-%release
 
-%description -n lib%{name}
+%description -n lib%{name}%{abiversion}
 Shared libraries for clamav.
 
 %package -n lib%{name}-devel
 Summary: Development header files and libraries for clamav
 Group: Development/C
-Requires: %name = %version
+Requires: lib%name = %version-%release
 
 %description -n lib%{name}-devel
 This package contains the development header files and libraries
 necessary to develop clamav client applications.
 
+%if_with milter
 %package milter
 Summary: clamav-milter for sendmail
 Group: File tools
@@ -105,6 +110,7 @@ Requires: clamav = %version, /usr/sbin/sendmail
 %description milter
 This package contains the filter for Sendmail necessary to
 integrate clamav with Sendmail MTA.
+%endif
 
 %package manual
 Summary: ClamAV User Manual
@@ -142,7 +148,10 @@ database automatically. It uses the freshclam(1) utility for this task.
 	--disable-clamav \
 	--with-user=mail \
 	--with-group=mail \
-	--with-dbdir=/var/lib/%name %{?_with_milter: --enable-milter}
+	--with-dbdir=/var/lib/%name \
+	%{?_with_systemllvm: --with-system-llvm} \
+	%{?_with_milter: --enable-milter} \
+#
 
 # Safety belt for IPv6 enabling. We want to build clamav with IPv6 support,
 # but can not rely on configure check as it can fail if build host set up
@@ -229,11 +238,13 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %preun
 %preun_service clamd
 
+%if_with milter
 %post milter
 %post_service clamav-milter
 
 %preun milter
 %preun_service clamav-milter
+%endif
 
 %files
 %doc docs/signatures.*
@@ -264,7 +275,7 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %attr(3771,root,mail) %dir %_logdir/clamav
 %attr(640,mail,root) %ghost %_logdir/clamav/clamd.log
 
-%files -n lib%{name}
+%files -n lib%{name}%{abiversion}
 %_libdir/lib*.so.*
 
 %files freshclam
@@ -302,6 +313,11 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Thu Dec 03 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.99-alt1
+- 0.99
+- built with libpcre-devel
+- renamed libclamav to libclamav7 (according SharedLibsPolicy)
+
 * Thu Apr 30 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.98.7-alt1
 - 0.98.7 (multiple CVEs)
 - viruses database is not deleted during update anymore
