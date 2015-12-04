@@ -1,6 +1,6 @@
 Name: 	  update-pepperflash
-Version:  1.5.3
-Release:  alt3
+Version:  1.5.4
+Release:  alt1
 
 Summary:  Pepper Flash Player downloader
 License:  GPLv3+
@@ -79,6 +79,9 @@ exit 0
 %files -n palemoon-pepperflash
 
 %changelog
+* Fri Dec 04 2015 Andrey Cherepanov <cas@altlinux.org> 1.5.4-alt1
+- Replace strings  call by sed regexp (do not require binutils)
+
 * Tue Dec 01 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.5.3-alt3
 - Add palemoon-pepperflash virtual package.
 
