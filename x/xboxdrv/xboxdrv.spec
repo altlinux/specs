@@ -1,5 +1,5 @@
 Name: xboxdrv
-Version: 0.8.6
+Version: 0.8.8
 Release: alt1
 
 Summary: Xbox/Xbox360 USB Gamepad Driver for Userspace
@@ -51,6 +51,15 @@ works for you there is no need to try this driver.
 %_man1dir/%name.1*
 
 %changelog
+* Fri Dec 04 2015 Nazarov Denis <nenderus@altlinux.org> 0.8.8-alt1
+- Version 0.8.8
+
+* Mon Nov 09 2015 Nazarov Denis <nenderus@altlinux.org> 0.8.6-alt0.M70P.1
+- Build for branch p7
+
+* Sun Nov 08 2015 Nazarov Denis <nenderus@altlinux.org> 0.8.6-alt0.M70T.1
+- Build for branch t7
+
 * Sat Nov 07 2015 Nazarov Denis <nenderus@altlinux.org> 0.8.6-alt1
 - Version 0.8.6
 
