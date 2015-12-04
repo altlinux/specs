@@ -1,7 +1,7 @@
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.002
+Version: 0.003
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -15,6 +15,7 @@ Url: http://search.cpan.org/dist/%module
 # Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm) perl(RPM/uscan.pm)
 Requires: gear perl(Pod/Text.pm)
+Provides: gear-remotes = %version
 
 %description
 %summary
@@ -35,6 +36,9 @@ Requires: gear perl(Pod/Text.pm)
 %_bindir/*
 
 %changelog
+* Fri Dec 04 2015 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1
+- added gear-remotes-set-from-url utility
+
 * Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 0.002-alt1
 - new version
 
