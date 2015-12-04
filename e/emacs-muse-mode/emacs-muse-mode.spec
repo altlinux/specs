@@ -6,9 +6,9 @@
 
 Version: 3.20
 %ifdef beta_ver
-Release: %base_rel.%beta_ver
+Release: %base_rel.%beta_ver.1
 %else
-Release: %base_rel
+Release: %base_rel.1
 %endif
 Name: emacs-%modename-mode
 License: GPL
@@ -33,6 +33,8 @@ BuildPreReq: emacs-devel
 
 # Automatically added by buildreq on Sat May 27 2006
 BuildRequires: fontconfig
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Emacs Muse is an authoring and publishing environment for Emacs. It
@@ -91,6 +93,9 @@ install -m 644 %SOURCE1 %buildroot%_emacs_sitestart_dir/%modename.el
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.20-alt1.1
+- NMU: added BR: texinfo
+
 * Fri Apr 05 2013 Eugene Vlasov <eugvv@altlinux.ru> 3.20-alt1
 - New version
 - Removed build requires on emacs-w3
