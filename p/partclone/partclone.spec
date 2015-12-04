@@ -1,6 +1,8 @@
+%def_disable xfs
+
 Name: partclone
 Version: 0.2.58
-Release: alt3
+Release: alt3.1
 
 Summary: File System Clone Utilities
 License: GPLv2+
@@ -8,23 +10,23 @@ Group: System/Configuration/Hardware
 
 Url: http://partclone.org
 Source: http://download.sourceforge.net/partclone/partclone-%version.tar.gz
-Patch1: partclone-0.2.22-alt-group_desc.patch
 
 # Automatically added by buildreq on Sat Apr 23 2011
 # optimized out: libaal-devel libcom_err-devel libgpg-error libncurses-devel libtinfo-devel pkg-config
 BuildRequires: libe2fs-devel libncursesw-devel libntfs-devel libprogsreiserfs-devel libreiser4-devel libuuid-devel
 BuildRequires: libvmfs-devel > 0.2.1-alt1
+%if_enabled xfs
 BuildRequires: libxfs-qa-devel
+%endif
 
 # TODO: build with ufs (need libufs2), jfs (need fixed build of jfsutils)
 
 %description
-A set of file system clone utilities, including ext2/3/4, %{?_enable_xfs:xfs, }reiserfs,
-reiser4, btrfs, ntfs, fat, vmfs, hfs+ file system.
+A set of file system clone utilities, including ext2/3/4,%{?_enable_xfs: xfs,}
+reiserfs, reiser4, btrfs, ntfs, fat, vmfs, hfs+ file system.
 
 %prep
 %setup
-#%patch1 -p1
 
 subst 's/ -static//g' configure.ac configure
 # Exclude fail-mbr from build process
@@ -44,7 +46,9 @@ subst 's/ fail-mbr//g' Makefile.in Makefile.am
 	--enable-fat \
 	--enable-ntfs \
 	--enable-vmfs \
+%if_enabled xfs
 	--enable-xfs \
+%endif
 	--enable-ncursesw
 %make_build CC="gcc -I/usr/include/vmfs"
 
@@ -58,6 +62,9 @@ subst 's/ fail-mbr//g' Makefile.in Makefile.am
 %_man8dir/*
 
 %changelog
+* Fri Dec 04 2015 Michael Shigorin <mike@altlinux.org> 0.2.58-alt3.1
+- disabled XFS support by default (FTBFS against libxfs-3.1.11-alt1)
+
 * Sat Aug 31 2013 Led <led@altlinux.ru> 0.2.58-alt3
 - rebuild with libreiser4 1.0.8 (libreiser4-1.0.so.8)
 

@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: xfsprogs
-Version: 3.1.8
-Release: alt2
+Version: 3.1.11
+Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
 License: LGPL v2.1 (libhandle), GPL v2 (the rest)
@@ -22,7 +22,7 @@ BuildPreReq: rpm-build >= 4.0.4-alt96.11
 BuildConflicts: libxfs-devel
 
 # Automatically added by buildreq on Wed May 27 2009 (-bi)
-BuildRequires: chrpath libuuid-devel
+BuildRequires: libuuid-devel
 
 %description
 XFS is a high performance journaling filesystem which originated
@@ -116,9 +116,6 @@ done
 rm -f %buildroot/%_lib/*.{so,*a}
 rm -rf %buildroot%_datadir/doc/%name
 
-# workaround for broken RPATH (3.1.1)
-chrpath -d %buildroot%_libdir/libxlog.so*
-
 %find_lang %name
 
 %files -f %name.lang
@@ -201,9 +198,13 @@ chrpath -d %buildroot%_libdir/libxlog.so*
 %_libdir/*.a
 %endif
 
-# TODO: consider http://cvs.pld-linux.org/cgi-bin/cvsweb/packages/xfsprogs/
-
 %changelog
+* Thu Nov 26 2015 Michael Shigorin <mike@altlinux.org> 3.1.11-alt1
+- 3.1.11
+  + reset to pristine source, effectively reverting all patches
+- applied patch series extracted from opensuse 13.1 updates'
+  3.1.11-2.3.1 package to fix CVE-2012-2150
+
 * Fri Apr 12 2013 Andrey Cherepanov <cas@altlinux.org> 3.1.8-alt2
 - Create new package libxfs-qa-devel with full pack of includes
 
