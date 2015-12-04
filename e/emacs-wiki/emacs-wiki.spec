@@ -5,9 +5,9 @@
 
 Version: 2.72
 %ifdef cvsdate
-Release: %base_rel.%cvsdate
+Release: %base_rel.%cvsdate.1
 %else
-Release: %base_rel
+Release: %base_rel.1
 %endif
 Name: emacs-wiki
 License: GPL
@@ -32,6 +32,8 @@ BuildPreReq: emacs-devel
 
 # Automatically added by buildreq on Wed Nov 16 2005
 BuildRequires: emacs-common fontconfig freetype2 libX11-locales
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Emacs-wiki allows you to create a wiki on your local system and export
@@ -89,6 +91,9 @@ gzip ChangeLog*
 
 
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.72-alt3.1
+- NMU: added BR: texinfo
+
 * Tue Apr 09 2013 Andrey Cherepanov <cas@altlinux.org> 2.72-alt3
 - Fix build with new xorg
 
