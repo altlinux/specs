@@ -1,22 +1,23 @@
-%def_disable xfs
+%def_enable xfs
 
 Name: partclone
-Version: 0.2.58
-Release: alt3.1
+Version: 0.2.84
+Release: alt1
 
 Summary: File System Clone Utilities
 License: GPLv2+
 Group: System/Configuration/Hardware
 
 Url: http://partclone.org
-Source: http://download.sourceforge.net/partclone/partclone-%version.tar.gz
+Source: http://download.sourceforge.net/partclone/partclone-%version.tar
 
-# Automatically added by buildreq on Sat Apr 23 2011
-# optimized out: libaal-devel libcom_err-devel libgpg-error libncurses-devel libtinfo-devel pkg-config
-BuildRequires: libe2fs-devel libncursesw-devel libntfs-devel libprogsreiserfs-devel libreiser4-devel libuuid-devel
+# Automatically added by buildreq on Fri Dec 04 2015
+# optimized out: libaal-devel libcom_err-devel libncurses-devel libntfs-3g libtinfo-devel pkg-config xz
+BuildRequires: libblkid-devel libe2fs-devel libncursesw-devel libntfs-3g-devel libprogsreiserfs-devel libreiser4-devel libuuid-devel libvmfs-devel
+
 BuildRequires: libvmfs-devel > 0.2.1-alt1
 %if_enabled xfs
-BuildRequires: libxfs-qa-devel
+BuildRequires: libxfs-devel
 %endif
 
 # TODO: build with ufs (need libufs2), jfs (need fixed build of jfsutils)
@@ -27,6 +28,7 @@ reiserfs, reiser4, btrfs, ntfs, fat, vmfs, hfs+ file system.
 
 %prep
 %setup
+echo '#define git_version "%version"' > src/version.h
 
 subst 's/ -static//g' configure.ac configure
 # Exclude fail-mbr from build process
@@ -34,6 +36,7 @@ subst 's/ fail-mbr//g' Makefile.in Makefile.am
 
 
 %build
+%autoreconf
 # NB: Due to buggy configure checks --disable-somefeature options does not
 # switch off configure requirement for correspondent devel packages and
 # configure will fail as if --enable-somefeature was in effect.
@@ -54,7 +57,6 @@ subst 's/ fail-mbr//g' Makefile.in Makefile.am
 
 %install
 %makeinstall_std
-
 %find_lang %name
 
 %files -f %name.lang
@@ -62,6 +64,13 @@ subst 's/ fail-mbr//g' Makefile.in Makefile.am
 %_man8dir/*
 
 %changelog
+* Fri Dec 04 2015 Michael Shigorin <mike@altlinux.org> 0.2.84-alt1
+- 0.2.84
+- use ntfs-3g instead of libntfs
+- reenabled XFS support by default
+- added debian watch file
+- buildreq
+
 * Fri Dec 04 2015 Michael Shigorin <mike@altlinux.org> 0.2.58-alt3.1
 - disabled XFS support by default (FTBFS against libxfs-3.1.11-alt1)
 
