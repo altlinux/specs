@@ -1,6 +1,6 @@
 Name: man-pages
-Version: 4.02
-Release: alt2
+Version: 4.03
+Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
 Summary(ru_RU.UTF8): Руководства пользователя Linux Documentation Project
@@ -8,18 +8,11 @@ License: distributable
 Group: Documentation
 Url: http://www.kernel.org/doc/man-pages/
 
-# http://www.kernel.org/pub/linux/docs/man-pages/%name-%version.tar.bz2
-Source: %name-%version.tar.gz
-#Source3: netman-cvs.tar
-# Where to find it ????
-#Source4: man9-19971126.tar
-#Source5: %name-goodies.tar
-Source6: %name-extra.tar
+# http://www.kernel.org/pub/linux/docs/man-pages/%name-%version.tar.xz
+Source: %name-%version.tar
+Source1: %name-extra.tar
 
-Source100: libtoolize.1
-Source101: libtool.1
-
-Patch7: man-pages-1.39-owl-ccldso.patch
+Patch1: man-pages-1.39-owl-ccldso.patch
 
 Requires: man >= 1.5i2-alt4
 BuildArch: noarch
@@ -38,6 +31,9 @@ Conflicts: libcint-devel <= 7.3.00-alt1.svn20090707
 Conflicts: attr < 2.4.47.0.35.dce9
 # due to *attr.2
 Conflicts: libattr-devel < 2.4.47.0.35.dce9
+
+# due to fd.4
+Conflicts: fdutils < 5.5.20081027-alt2
 
 %description
 A large collection of man pages (reference material) from the Linux
@@ -80,20 +76,10 @@ They may be useful for downstream man-pages package maintainers or for
 man-pages translators.
 
 %prep
-%setup -b6
-%patch7 -p1
-
-find man3 -type f -print0 |
-	xargs -r0 grep -l '.*\.3 '|
-	xargs -r perl -pi -e 's/\.3 /.3/'
+%setup -b1
+%patch1 -p1
 
 %build
-# quota
-rm -f man*/quota*
-
-# fdutils
-rm -f man4/fd.4
-
 # Refer to original crypt(3)
 %define cryptpfx std
 mv man3/crypt.3 man3/crypt-%cryptpfx.3
@@ -110,15 +96,13 @@ manual page.\
 ' < man3/crypt-owl.3 > man3/crypt.3
 
 %install
-mkdir -p %buildroot{%_mandir,%_datadir/%name}
-cp -a man? %buildroot%_mandir
-cp scripts/* %buildroot%_datadir/%name
-chmod -R a+rX,go-w %buildroot%_mandir
-install %SOURCE100 %buildroot%_man1dir/
-install %SOURCE101 %buildroot%_man1dir/
+mkdir -p %buildroot%_datadir/%name
+%makeinstall_std
+install -pm644 scripts/* %buildroot%_datadir/%name/
 
 # strip COLOPHON section
-find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.sh
+find %buildroot%_mandir -type f -print0 |
+	xargs -r0 sh scripts/remove_COLOPHON.sh
 
 %files
 %doc README* *.Announce *.lsm
@@ -129,6 +113,12 @@ find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.s
 %_datadir/%name/
 
 %changelog
+* Sat Dec 05 2015 Dmitry V. Levin <ldv@altlinux.org> 4.03-alt1
+- 4.02 -> 4.03.
+- Packaged fd(4), iconv(1), locale(1), localedef(1), quotactl(2),
+  and sprof(1) from the Linux man-pages project.
+- Stopped erroneous editing of man3 pages.
+
 * Tue Sep 15 2015 Dmitry V. Levin <ldv@altlinux.org> 4.02-alt2
 - Packaged *attr(2).
 
