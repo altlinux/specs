@@ -4,7 +4,7 @@
 
 Name: librep
 Version: 0.92.3
-Release: alt2.git20120908
+Release: alt2.git20120908.1
 
 Summary: An embeddable LISP environment
 License: GPL
@@ -21,6 +21,8 @@ Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Fri Dec 26 2008
 BuildRequires: libffi-devel libgdbm-devel libgmp-devel libncurses-devel libreadline-devel
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 This is a lightweight LISP environment for UNIX. It contains a LISP
@@ -46,6 +48,7 @@ Link libraries and C header files for librep development.
 cp -pfv %_datadir/automake/config.{guess,sub} .
 
 %build
+%add_optflags -fgnu89-inline
 %autoreconf
 %configure \
 	--disable-static \
@@ -103,6 +106,10 @@ EOF
 %_man1dir/repdoc.1*
 
 %changelog
+* Sat Dec 05 2015 Igor Vlasenko <viy@altlinux.ru> 0.92.3-alt2.git20120908.1
+- NMU: added BR: texinfo
+- add_optflags -fgnu89-inline to fix build
+
 * Mon Dec 10 2012 Dmitry Derjavin <dd@altlinux.org> 0.92.3-alt2.git20120908
 - Fixed version info.
 
