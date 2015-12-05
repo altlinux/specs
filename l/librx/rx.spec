@@ -4,12 +4,14 @@ Version: 1.5
 
 Packager: Alexey Voinov <voins@altlinux.ru>
 
-Release: alt8
+Release: alt8.1
 License: GPL
 Group: Development/C
 Url: http://www.gnu.org/software/rx/rx.html
 
 Source0: %name-%version.tar
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Rx is, among other things, an implementation of the interface
@@ -73,6 +75,9 @@ install -m 644 doc/rx.info $RPM_BUILD_ROOT%_infodir
 %_libdir/*.a
 
 %changelog
+* Sat Dec 05 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt8.1
+- NMU: added BR: texinfo
+
 * Mon Mar 07 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt8
 - Rebuilt for debuginfo
 
