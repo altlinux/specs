@@ -5,7 +5,7 @@
 
 Name:     cutycapt
 Version:  0.0
-Release:  alt1.svn20111130
+Release:  alt2
 
 Summary: utility to capture WebKit's rendering of a web page
 
@@ -20,8 +20,12 @@ Packager: Nikolay Fetisov <naf@altlinux.ru>
 Source0: %real_name-%version.tar
 Patch0:  %real_name-%version-%release.patch
 
-Patch1:  %real_name-svn20111130-debian-01-assume_http_as_default.patch
-Patch2:  %real_name-svn20111130-alt-ignore_ssl_errors.patch
+Patch1:  %real_name-bea8c782-debian-01-assume_http_as_default.patch
+Patch2:  %real_name-bea8c782-alt-ignore_ssl_errors.patch
+Patch3:  %real_name-bea8c782-alt-fix_build.patch
+
+Patch4:  %real_name-bea8c782-alt-method.patch
+Patch5:  %real_name-bea8c782-alt-image-save-quality.patch
 
 Source1: README
 Source2: README.alt
@@ -43,8 +47,12 @@ JPEG, TIFF, GIF, and BMP.
 %setup  -n %real_name-%version
 %patch0 -p1
 
-%patch1 -p1
+%patch1
 %patch2
+%patch3
+
+%patch4
+%patch5
 
 install -m 0644 %SOURCE1 .
 install -m 0644 %SOURCE2 .
@@ -62,6 +70,9 @@ install -m 0755 %real_name %buildroot%_bindir/%real_name
 %_bindir/%real_name
 
 %changelog
+* Sat Dec 05 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.0-alt2
+- Fix build with QT5
+
 * Thu Apr 12 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.0-alt1.svn20111130
 - Initial build for ALT Linux Sisyphus
 
