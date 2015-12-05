@@ -2,7 +2,7 @@
 
 Name: libcommoncpp2
 Version: 1.8.1
-Release: alt3.1.1
+Release: alt4
 
 %define docdir %_docdir/%name-%version
 
@@ -12,7 +12,7 @@ License: GPL
 Group: Development/C++
 Url: http://cplusplus.sourceforge.net/
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 Patch: libcommoncpp2-1.8.1-alt-no-overflow.patch
 
 BuildRequires: gcc-c++ libstdc++-devel zlib-devel libxml2-devel doxygen
@@ -60,11 +60,11 @@ Documentation for %name
 %build
 %autoreconf
 %configure %{subst_enable static}
-# SMP-b0rken
+# SMP-broken
 make
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 mkdir -p %buildroot%docdir
 cp -a AUTHORS NEWS README THANKS TODO doc/html %buildroot%docdir
 
@@ -77,7 +77,7 @@ cp -a AUTHORS NEWS README THANKS TODO doc/html %buildroot%docdir
 %_bindir/*
 %_libdir/*.so
 %_datadir/aclocal/*
-%_includedir/*
+%_includedir/cc++/
 %_pkgconfigdir/*
 
 %if_enabled statc
@@ -90,6 +90,9 @@ cp -a AUTHORS NEWS README THANKS TODO doc/html %buildroot%docdir
 %_infodir/commoncpp2.*
 
 %changelog
+* Sun Dec 06 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt4
+- cleanup build
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt3.1.1
 - NMU: added BR: texinfo
 
