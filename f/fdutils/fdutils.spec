@@ -9,13 +9,12 @@ Version: %ver_base.%ver_snap
 %else
 Version: %ver_base
 %endif
-Release: alt1.qa1.1
+Release: alt2
 
 Summary: Programs for dealing with floppy disks
 License: GPLv2+
 Group: System/Kernel and hardware
 Url: http://fdutils.linux.lu
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # %url/%srcname.tar.gz
 Source: %srcname.tar
@@ -25,14 +24,14 @@ Patch1: %name-%ver_base-%ver_snap.diff
 %endif
 Patch2: fdutils-5.5-20060227-alt-headers.patch
 Patch3: fdutils-5.4-alt-texinfo.patch
+Patch4: fdutils-alt-nodvi.patch
+Patch5: fdutils-alt-ext2_fs.patch
 
 Requires: util-linux >= 2.11h-alt2
 
-BuildRequires: flex libe2fs-devel tetex-latex
+BuildRequires: flex libe2fs-devel makeinfo
 
-Summary(ru_RU.KOI8-R): Утилиты для форматирования дискет и управления флоппи-драйвером Линукса
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+Summary(ru_RU.UTF-8): пёя┌п╦п╩п╦я┌я▀ п╢п╩я▐ я└п╬я─п╪п╟я┌п╦я─п╬п╡п╟п╫п╦я▐ п╢п╦я│п╨п╣я┌ п╦ я┐п©я─п╟п╡п╩п╣п╫п╦я▐ я└п╩п╬п©п©п╦-п╢я─п╟п╧п╡п╣я─п╬п╪ п⌡п╦п╫я┐п╨я│п╟
 
 %description
 This package contains utilities for configuring and debugging the
@@ -40,10 +39,10 @@ Linux floppy driver, for formatting extra capacity disks (up to 1992K
 on a high density disk), for sending raw commands to the floppy
 controller, etc.
 
-%description -l ru_RU.KOI8-R
-Утилиты для настройки и отладки системного драйвера флоппи-дисков,
-форматирования дискет с увеличенной плотностью (до 1992 килобайт),
-прямого управления контроллером дисковода и т.д.
+%description -l ru_RU.UTF-8
+пёя┌п╦п╩п╦я┌я▀ п╢п╩я▐ п╫п╟я│я┌я─п╬п╧п╨п╦ п╦ п╬я┌п╩п╟п╢п╨п╦ я│п╦я│я┌п╣п╪п╫п╬пЁп╬ п╢я─п╟п╧п╡п╣я─п╟ я└п╩п╬п©п©п╦-п╢п╦я│п╨п╬п╡,
+я└п╬я─п╪п╟я┌п╦я─п╬п╡п╟п╫п╦я▐ п╢п╦я│п╨п╣я┌ я│ я┐п╡п╣п╩п╦я┤п╣п╫п╫п╬п╧ п©п╩п╬я┌п╫п╬я│я┌я▄я▌ (п╢п╬ 1992 п╨п╦п╩п╬п╠п╟п╧я┌),
+п©я─я▐п╪п╬пЁп╬ я┐п©я─п╟п╡п╩п╣п╫п╦я▐ п╨п╬п╫я┌я─п╬п╩п╩п╣я─п╬п╪ п╢п╦я│п╨п╬п╡п╬п╢п╟ п╦ я┌.п╢.
 
 %prep
 %setup -q -n %srcname
@@ -52,7 +51,8 @@ controller, etc.
 %endif
 %patch2 -p1
 %patch3 -p1
-sed -i 's|<linux/ext2_fs.h>|<ext2fs/ext2_fs.h>|' src/fdmount.c
+%patch4 -p1
+%patch5 -p1
 
 %build
 %configure
@@ -66,6 +66,9 @@ mkdir -p %buildroot{%_sysconfdir,%_bindir,%_infodir,%_man1dir,%_man4dir}
 install -p -m644 src/mediaprm %buildroot%_sysconfdir
 chmod 755 %buildroot%_bindir/*
 
+# man-pages
+rm %buildroot%_man4dir/fd.4*
+
 %files
 %config %_sysconfdir/mediaprm
 %_bindir/*
@@ -74,6 +77,10 @@ chmod 755 %buildroot%_bindir/*
 %doc CREDITS Changelog doc/FAQ.html doc/README doc/floppy_formats
 
 %changelog
+* Sat Dec 05 2015 Dmitry V. Levin <ldv@altlinux.org> 5.5.20081027-alt2
+- Replaced texinfo and tetex-latex in BRs with makeinfo.
+- Unpackaged fd(4) in favour of man-pages.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 5.5.20081027-alt1.qa1.1
 - NMU: added BR: texinfo
 
