@@ -1,16 +1,19 @@
 Summary:  Library for kicad (creation of electronic schematic diagrams)
+Summary(ru_RU.UTF-8): Библиотеки для kicad (разработка печатных плат)
 Name:     kicad-library
-Version:  r240
+Version:  4.0.0
+Epoch:    1
 Release:  alt1
-Source0:  ~kicad-product-committers-%name-%version.tgz
+Source0:  %name-%version.tar
 License:  GPLv2+
 Group:    Sciences/Computer science
 Url: 	  https://code.launchpad.net/kicad
 #Url: 	  http://bazaar.launchpad.net/~kicad-product-committers/kicad/library
+#Url: 	  https://github.com/KiCad/kicad-library
 
-# Automatically added by buildreq on Fri Feb 13 2009
-BuildRequires: ccmake gcc-c++ cmake >= 2.6.1 cmake-modules glibc-pthread libstdc++-devel
+Packager: Anton Midyukov <antohami@altlinux.org>
 BuildArch: noarch
+BuildRequires(pre): cmake rpm-macros-cmake gcc-c++
 
 %description
 Kicad is an open source (GPL) software for the creation of electronic
@@ -18,23 +21,34 @@ schematic diagrams and printed circuit board artwork.
 
 Kicad-library is a set of library needed by kicad.
 
+%description -l ru_RU.UTF-8
+Kicad - это программное обеспечение с открытым исходным кодом для
+проектирования электронных схем и получения на их основе печатных плат.
+
+Kicad-library содержит в себе библиотеки для kicad.
+
 %prep
-%setup -n ~kicad-product-committers/kicad/library/ 
+%setup
 
 %build
-export LC_ALL=C
-cmake -DBUILD_SHARED_LIBS:BOOL=OFF -DCMAKE_INSTALL_PREFIX=/usr
-%make
+%cmake \
+    -DKICAD_STABLE_VERSION:BOOL=ON \
+    -DCMAKE_BUILD_TYPE=Release
+%make_build -C BUILD
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std -C BUILD
 
 %files
-%_datadir/kicad/library/*
-%_datadir/kicad/modules/*
-#%_datadir/kicad/template/*
+%dir %_datadir/kicad
+%_datadir/kicad/library
+%_datadir/kicad/modules
+%_datadir/kicad/template
 
 %changelog
+* Sat Dec 05 2015 Anton Midyukov <antohami@altlinux.org> 1:4.0.0-alt1
+- New version.
+
 * Sat Nov 29 2014 barssc <barssc@altlinux.ru> r240-alt1
 - new version
 
@@ -47,4 +61,3 @@ cmake -DBUILD_SHARED_LIBS:BOOL=OFF -DCMAKE_INSTALL_PREFIX=/usr
 
 * Fri Feb 13 2009 Alexey Shentzev <ashen@altlinux.ru> 1.0-alt0.1
 - first build for ALT Linux
-
