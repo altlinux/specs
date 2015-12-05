@@ -1,6 +1,6 @@
 Name: xmorph
 Version: 20060817
-Release: alt3
+Release: alt3.1
 Packager: Fr. Br. George <george@altlinux.ru>
 
 Summary: An X Window System tool for creating morphed images
@@ -21,6 +21,8 @@ Patch3: xmorph-gcc43.patch
 # Automatically added by buildreq on Fri Jan 20 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-xproto-devel
 BuildRequires: chrpath gcc-c++ imake libXaw-devel libXext-devel libfftw3-devel libgtk+2-devel xorg-bitmaps xorg-cf-files
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package -n libmorph
 Summary: Internal library required for xmorph/gtkmorph
@@ -59,6 +61,7 @@ Development static libs for xmorph and gtkmorph.
 tar xvf %SOURCE1
 
 %build
+%add_optflags -fgnu89-inline
 %configure %{subst_enable static} --disable-rpath
 %make_build
 chrpath -d */.libs/*morph
@@ -99,6 +102,9 @@ install morph/morph %buildroot%_bindir/morph
 %endif #static
 
 %changelog
+* Sat Dec 05 2015 Igor Vlasenko <viy@altlinux.ru> 20060817-alt3.1
+- NMU: added BR: texinfo
+
 * Fri Jan 20 2012 Fr. Br. George <george@altlinux.ru> 20060817-alt3
 - Fix build
 - NoX11 binary
