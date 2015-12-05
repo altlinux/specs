@@ -1,6 +1,6 @@
 Name: jed
 Version: 0.99.19
-Release: alt2.qa2
+Release: alt2.qa2.1
 Serial: 2
 
 %define srcname %name-0.99-19
@@ -38,6 +38,8 @@ Requires: %name-common = %{?serial:%serial:}%version-%release
 BuildRequires: libXft-devel libXt-devel libgpm-devel libncurses-devel libslang2-devel
 
 BuildRequires: /proc
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %package common
 Summary: Files needed by any Jed editor
@@ -218,6 +220,9 @@ while ps -C jed > /dev/null; do sleep 1; done
 %_man1dir/rgrep.1*
 
 %changelog
+* Sat Dec 05 2015 Igor Vlasenko <viy@altlinux.ru> 2:0.99.19-alt2.qa2.1
+- NMU: added BR: texinfo
+
 * Wed Mar 20 2013 Fr. Br. George <george@altlinux.ru> 2:0.99.19-alt2.qa2
 - Renew buildreq
 
