@@ -1,6 +1,6 @@
 Name: emacs-mew
 Version: 6.2.52
-Release: alt1.qa1
+Release: alt1.qa1.1
 License: GPL
 Group: Editors
 Url: http://www.mew.org/
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Tue Apr 07 2009
 BuildRequires: emacs-nox
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 Mew is a user interface for text messages, multimedia messages (MIME),
@@ -60,6 +62,9 @@ make install DESTDIR=%buildroot
 %_emacslispdir/mew/*.el
 
 %changelog
+* Sat Dec 05 2015 Igor Vlasenko <viy@altlinux.ru> 6.2.52-alt1.qa1.1
+- NMU: added BR: texinfo
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.2.52-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
