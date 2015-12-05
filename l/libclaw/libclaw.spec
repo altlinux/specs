@@ -1,53 +1,59 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ /proc
 # END SourceDeps(oneline)
 Name:           libclaw
-Version:        1.7.0
-Release:        alt3_5.1
+Version:        1.7.4
+Release:        alt1_12
 Summary:        C++ Library of various utility functions
 Group:          System/Libraries
 License:        LGPLv2
 URL:            http://libclaw.sourceforge.net/
 Source0:        http://dl.sourceforge.net/project/%{name}/%{version}/%{name}-%{version}.tar.gz
 Patch0:         libclaw-1.6.1-nostrip.patch
-Patch1:         libclaw-1.7.0-libdir.patch
+Patch1:         libclaw-1.7.4-libdir.patch
 Patch5:         libclaw-1.7.0-gcc46.patch
 Patch6:		libclaw-1.7.0-zlib-fix.patch
 BuildRequires:  libjpeg-devel
 BuildRequires:  libpng-devel
 BuildRequires:  zlib-devel
-BuildRequires:  ctest cmake
+BuildRequires: ctest cmake
 BuildRequires:  doxygen
 BuildRequires:	gettext-devel
-BuildRequires:	boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 Source44: import.info
+Patch33: libclaw-1.7.4-alt-linkage.patch
 
 %description
 Claw (C++ Library Absolutely Wonderful) is a C++ library of various utility
 functions. In doesn't have a particular objective but being useful to
 anyone.
 
+
 %package devel
 Summary:        Development files for Claw library
 Group:          Development/C
 Requires:       libclaw = %{version}-%{release}
-Requires:       ctest cmake
+Requires: ctest cmake
 
 %description devel
 This package contains files needed to develop and build software against
 Claw (C++ Library Absolutely Wonderful).
 
+
 %prep
 %setup -q
 %patch0 -p1 -b .nostrip
 %patch1 -p1 -b .libdir
-%patch5 -p1 -b .gcc46
-%patch6 -p1 -b .zlibfix
+%patch33 -p1
+
 
 %build
 %{fedora_cmake} .
 make %{?_smp_mflags} VERBOSE=1
+#make install DESTDIR=%{buildroot} VERBOSE=1
+#make clean
+#make %{?_smp_mflags} VERBOSE=1
 find examples -type f |
 while read F
 do
@@ -56,26 +62,32 @@ do
         mv .utf8 $F
 done
 
-%install
-make install DESTDIR=$RPM_BUILD_ROOT VERBOSE=1
 
+%install
+make install DESTDIR=%{buildroot} VERBOSE=1
 %find_lang %{name}
+
 
 %files -f %{name}.lang
 %{_libdir}/*.so.*
 %doc %dir %{_datadir}/doc/libclaw1
 %doc %{_datadir}/doc/libclaw1/COPYING
 
+
 %files devel
 %{_bindir}/claw-config
-%{_datadir}/cmake/libclaw/libclaw-config.cmake
+%{_datadir}/cmake/%{name}
 %{_includedir}/claw
 %{_libdir}/*.so
 %exclude %{_libdir}/*.a
 %doc %{_datadir}/doc/libclaw1
 %doc examples
 
+
 %changelog
+* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.7.4-alt1_12
+- fixed build
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt3_5.1
 - Rebuilt with libpng15
 
