@@ -3,7 +3,7 @@
 
 Name: lib%origname
 Version: 2.2.1
-Release: alt1.1
+Release: alt1.1.1
 Summary: AdLib sound player library
 Url: http://adplug.sourceforge.net/
 License: LGPL
@@ -20,6 +20,8 @@ BuildRequires: chrpath gcc-c++ libbinio-devel
 %if_enabled static
 BuildPreReq: glibc-devel-static
 %endif
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 AdPlug is a free, multi-platform, hardware independent AdLib sound player
@@ -98,6 +100,9 @@ cp -a %dbver %buildroot%_datadir/%origname
 %endif
 
 %changelog
+* Sat Dec 05 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1.1.1
+- NMU: added BR: texinfo
+
 * Fri Dec 04 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1.1
 - rebuild with libbinio
 
