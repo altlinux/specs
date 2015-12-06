@@ -1,40 +1,44 @@
 Name: twinkle
-Version: 1.4.2
-Release: alt4.8
+Version: 1.9.0
+Release: alt1
 
-Summary: twinkle - SIP Soft Phone
+Summary: twinkle Qt5 port - SIP Soft Phone
 
 License: GPL
 Group: Communications
-Url: http://www.twinklephone.com/
-Packager: Sergey Bolshakov <sbolshakov@altlinux.ru>
+Url: http://twinkle.dolezel.info/
 
-Source: %name-%version-%release.tar
+# Source-git: https://github.com/LubosD/twinkle.git
+Source: %name-%version.tar
 
-BuildRequires: boost-regex-devel libalsa-devel libccrtp-devel >= 1.6.0 libdnet-devel
-BuildRequires: libgsm-devel libilbc-devel libjpeg-devel libmagic-devel libqt3-devel
-BuildRequires: libsndfile-devel libspeex-devel libxml2-devel libzrtpcpp-devel >= 1.3.0
+BuildRequires: qt5-declarative-devel qt5-imageformats qt5-quick1-devel qt5-tools-devel
+BuildRequires: boost-regex-devel libdnet-devel
+BuildRequires: libgsm-devel libilbc-devel libjpeg-devel libmagic-devel qt5-base-devel
+BuildRequires: libalsa-devel libsndfile-devel libspeex-devel libspeexdsp-devel libxml2-devel libbcg729-devel
+# TODO: update zrtpcpp
+#BuildRequires: libzrtpcpp-devel >= 1.3.0
+BuildRequires: ucommon-devel ccrtp-devel
 BuildRequires: libreadline-devel xml-utils
 
-BuildPreReq: flex libdnet-devel libpng-devel
+BuildPreReq: gcc-c++ ccmake cmake flex libdnet-devel libpng-devel
+
+BuildRequires(pre): rpm-macros-cmake
 
 %description
-Twinkle is a SIP based soft phone for making telephone calls over IP
+Twinkle is a SIP based soft phone for making telephone calls over IP.
+Port to Qt5.
 
 %prep
 %setup
 
 %build
-#unset QTDIR || : ; . /etc/profile.d/qt3dir.sh
-export QTDIR=%_qt3dir
-
-%autoreconf
-%configure --disable-rpath
-
-%make_build
+# TODO
+# -DWITH_ZRTP=On
+%cmake -DWITH_QT5=On -DWITH_G729=On -DWITH_SPEEX=On -DWITH_ILBC=On
+%make_build -C BUILD
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std -C BUILD
 sed -i 's/^Icon=.\+$/Icon=%name/' twinkle.desktop.in
 install -pD -m0644 twinkle.desktop.in %buildroot%_desktopdir/%name.desktop
 
@@ -44,14 +48,18 @@ install -pD -m0644 src/gui/images/twinkle32.png %buildroot%_niconsdir/%name.png
 install -pD -m0644 src/gui/images/twinkle16.png %buildroot%_miconsdir/%name.png
 
 %files
-%doc AUTHORS ChangeLog NEWS README THANKS
+%doc NEWS README.md THANKS
 %_bindir/*
 %_datadir/%name
 %_datadir/services/sip.protocol
+%_pixmapsdir/%name.png
 %_iconsdir/*/*/*/%name.png
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Dec 06 2015 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
+- build new version 1.9.0
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt4.8
 - Rebuilt with Boost 1.53.0
 
