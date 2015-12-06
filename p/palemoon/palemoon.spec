@@ -2,8 +2,8 @@ Summary: The Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
-Version: 25.8.0.0
-Release: alt3
+Version: 26.0.0.0
+Release: alt0.b4
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -32,7 +32,7 @@ Patch6: firefox3-alt-disable-werror.patch
 Patch16: firefox-cross-desktop.patch
 #Patch17:	mozilla-disable-installer.patch
 Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
-Patch20: mozilla_palimoon-bug-1025605-GLIBCXX.patch
+Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: cpp_check.patch
 
 
@@ -76,6 +76,8 @@ These helper macros provide possibility to rebuild
 %prep
 %setup -n %name-%version -c
 %patch21 -p1
+%patch20 -p1
+
 cd %name
 
 tar -xf %SOURCE1
@@ -98,7 +100,6 @@ popd
 %patch16 -p1
 #patch17 -p1
 %patch18 -p1
-%patch20 -p1
 
 cat >> browser/confvars.sh <<EOF
 MOZ_UPDATER=
@@ -162,7 +163,7 @@ export LIBIDL_CONFIG=%_bindir/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
 
-%__autoconf
+#__autoconf
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
 MOZ_SMP_FLAGS=-j1
@@ -309,12 +310,15 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Sun Dec 06 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1:26.0.0.0-alt0.b4
+- New Version
+- Removed support for palemoon-ru
+
 * Tue Dec 01 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1:25.8.0.0-alt3
-- Backport to 25.8.0
+- Rollback to 25.8.0
 
 * Mon Nov 30 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.8.1.0-alt1
 - New Version
-
 * Fri Nov 27 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.8.0.0-alt2
 - add BuildRequires libpixman-devel
 - add cpp_check.patch
