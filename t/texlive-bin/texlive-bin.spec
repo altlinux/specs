@@ -1,6 +1,6 @@
 Name: texlive-bin
 Version: 2008.0
-Release: alt0.15.5
+Release: alt0.15.6
 
 Summary: Essential binaries
 License: Distributable
@@ -16,6 +16,8 @@ Source6: tlmgr
 #Patch0: %name-%version-%release.patch
 Patch1: texlive-source-%version-%release.patch
 Patch2: texlive-source-2008.0-alt-mubyte_cswrite.patch
+Patch3: texlive-bin-2008-alt-perl522.patch
+Source7: texlive-bin-texmf-dist-2008.0-alt-perl522.patch
 
 # Automatically added by buildreq on Mon Sep 22 2008
 BuildRequires: flex fontconfig-devel libfreetype-devel gcc-c++ libXaw-devel libfreetype-devel libgd2-devel libpng12-devel libtinfo-devel libXpm-devel t1lib-devel
@@ -159,6 +161,7 @@ sed -e 's,@TEXMFSYSVAR@,%_cachedir/texmf,g' %SOURCE6 > alt-linux/tlmgr
 cd source
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
 
 sed -i  -e 's,^TEXMFSYSCONFIG =.*,TEXMFSYSCONFIG = %_sysconfdir/texmf,g' \
 	-e 's,^TEXMFSYSVAR =.*,TEXMFSYSVAR = %_cachedir/texmf,g' \
@@ -204,6 +207,10 @@ tar xf %SOURCE0 -C %buildroot/%_datadir/
 tar xf %SOURCE1 -C %buildroot/%_datadir/
 # patch dvipdfm version; don't forget to apply in source tree
 sed -i -e 's,^V 2$,V 3,g' %buildroot/%_texmfmain/dvipdfm/config/config
+
+pushd %buildroot/%_datadir/texmf-dist
+patch -p0 < %SOURCE7
+popd
 
 mkdir -p %buildroot/%_sysconfdir/texmf/{updmap.d,language.d}
 cp alt-linux/*.cfg %buildroot/%_sysconfdir/texmf/updmap.d/
@@ -659,6 +666,9 @@ ln -s %_sysconfdir/texmf/web2c/texmf.cnf %buildroot%_datadir/texmf/web2c/texmf.c
 %files -n texlive-xetex -f alt-linux/texlive-xetex.files
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 2008.0-alt0.15.6
+- bugfixes for perl 5.22
+
 * Tue Apr 09 2013 Fr. Br. George <george@altlinux.ru> 2008.0-alt0.15.5
 - Fix off-by-one bug in tex
 
