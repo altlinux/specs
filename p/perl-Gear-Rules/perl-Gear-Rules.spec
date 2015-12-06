@@ -1,8 +1,8 @@
 %define module Gear-Rules
 
 Name: perl-%module
-Version: 0.16
-Release: alt2
+Version: 0.17
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ Requires: gear perl(Pod/Text.pm)
 %_man1dir/*
 
 %changelog
+* Sun Dec 06 2015 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- new version
+
 * Tue Nov 17 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2
 - etersoft in git commits is friendly
 
