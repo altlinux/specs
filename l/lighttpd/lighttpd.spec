@@ -13,7 +13,7 @@
 %define svnrev 2961
 
 Name: lighttpd
-Version: 1.4.37
+Version: 1.4.38
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -201,6 +201,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Sun Dec 06 2015 Alexei Takaseev <taf@altlinux.org> 1.4.38-alt1
+- 1.4.38
+
 * Mon Aug 31 2015 Alexei Takaseev <taf@altlinux.org> 1.4.37-alt1
 - 1.4.37
 
