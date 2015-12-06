@@ -1,20 +1,20 @@
 Name: pcb
-Version: 20081128
-Release: alt4.1
+Version: 20140316
+Release: alt1
 
 Summary: PCB
 License: GPL
 Group: Development/Other
-Url: http://pcb.geda-project.org
+Url: http://ftp.geda-project.org/pcb/pcb-20140316/
+
+Packager: barssc <barssc@altlinux.ru>
 
 Source0: %name-%version.tar.gz
 
-BuildRequires: gcc-c++ libX11-devel flex gtk+2 libgd2-devel libgd2 libdbus-devel libdbus libdbus-glib libdbus-glib-devel tk
+BuildRequires: gcc-c++ libX11-devel flex gtk+2 libgd2-devel libgd2 libdbus-devel libdbus libdbus-glib libdbus-glib-devel tk intltool libGL-devel libGLU-devel libgtkglext-devel
 BuildRequires: libgtk+2-devel libgtk+2 libjpeg libjpeg-devel gd2-utils libpng-devel zlib-devel libXpm-devel libfreetype-devel perl-XML-Parser desktop-file-utils
 Requires: dbus-tools-gui
 Requires(post,postun): shared-mime-info >= 0.15-alt2
-# explicitly added texinfo for info files
-BuildRequires: texinfo
 
 %description
 PCB is a CAD (computer aided design) program for the physical
@@ -32,6 +32,7 @@ Summary(ru_RU.UTF-8): Документация для PCB
 License: GPL
 Group: Development/Other
 Requires: %name = %version-%release
+BuildArch: noarch
 
 %description -n %name-doc
 This documentation narrates about PCB programm and pcb creation flow witn gEda and PCB.
@@ -45,6 +46,7 @@ Summary(ru_RU.UTF-8): Примеры для PCB
 License: GPL
 Group: Development/Other
 Requires: %name = %version-%release
+BuildArch: noarch
 
 %description -n %name-examples
 Example of pcb created in PCB.
@@ -58,13 +60,7 @@ Summary(ru_RU.UTF-8): Библиотеки компонентов для PCB
 License: GPL
 Group: Development/Other
 Requires: %name = %version-%release
-
-%package -n %name-library-m4
-Summary: Old component library for PCB
-Summary(ru_RU.UTF-8): Старые библиотеки компонентов для PCB
-License: GPL
-Group: Development/Other
-Requires: %name = %version-%release
+BuildArch: noarch
 
 %description -n %name-library
 Component library for PCB. Contains basic set of thru-hole and SMD components.
@@ -74,25 +70,16 @@ For example: TSSOP, SO, SOIC, MSOP, TQFP, LQFP and etc.
 Библиотека компонентов для PCB. Собержит базовый набор выводных и безвыводных компонентов.
 В том числе: TSSOP, SO, SOIC, MSOP, TQFP, LQFP и т.д.
 
-%description -n %name-library-m4
-Old M4 library for PCB.
-
-%description -l ru_RU.UTF-8 -n %name-library-m4
-Старые библиотеки формата M4. Иногда они требуются.
-
 %set_verify_elf_method textrel=relaxed, unresolved=relaxed
 
 %prep
 %setup -q
 
-##%patch0 -p1
-
 %build
-CFLAGS="-fno-stack-protector"
-
 %configure	\
     --enable-doc \
     --enable-dbus \
+    --disable-toporouter \
     --with-gui=gtk
 
 %make_build
@@ -120,35 +107,34 @@ CFLAGS="-fno-stack-protector"
 %_datadir/mimelnk/application/*
 %_datadir/mime/application/*
 %_datadir/mime/packages/pcb.xml
-%_datadir/mime/XMLnamespaces
-%_datadir/mime/aliases
-%_datadir/mime/generic-icons
-%_datadir/mime/icons
-%doc /usr/share/man/man1/pcb.1*
-%doc /usr/share/info/pcb*
+%_datadir/locale/ru/*
+%_datadir/gEDA/scheme/gnet-pcbfwd.scm
+%_man1dir/*
+%doc %_datadir/info/pcb*
 %_desktopdir/pcb.desktop
 
 %files -n %name-examples
-%_datadir/pcb/examples/*
-%_datadir/pcb/tutorial/*
+%_datadir/doc/pcb/examples/*
+%_datadir/doc/pcb/tutorial/*
 
-%files -n %name-library-m4
+%files -n %name-library
 %_datadir/pcb/m4/*
+%_datadir/pcb/newlib/*
+%_datadir/pcb/pcblib-newlib/*
 %_datadir/pcb/pcblib
 %_datadir/pcb/pcblib.contents
 
-%files -n %name-library
-%_datadir/pcb/newlib/*
-%_datadir/pcb/pcblib-newlib/*
 
 %files -n %name-doc
-%doc /usr/share/doc/pcb/*html*
-%doc /usr/share/doc/pcb/*.gif
-%doc /usr/share/doc/pcb/*.png
-%doc /usr/share/doc/pcb/*.pdf
-%doc /usr/share/doc/pcb/*.ps
+%doc %_datadir/doc/%name/*html*
+%doc %_datadir/doc/%name/*.png
+%doc %_datadir/doc/%name/*.pdf
+
 
 %changelog
+* Sun Dec 6 2015 barssc <barssc@altlinux.ru> 20140316-alt1
+- New version 20140316.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 20081128-alt4.1
 - NMU: added BR: texinfo
 - WARN: look orphaned: modern pcb has version 2014-03-17
