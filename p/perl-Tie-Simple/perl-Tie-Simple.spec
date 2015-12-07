@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Tie-Simple
 Name: perl-%dist
-Version: 1.03
+Version: 1.04
 Release: alt1
 
 Summary: Variable ties made easier
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/H/HA/HANENKAMP/Tie-Simple-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,5 +35,8 @@ and make the programmers life easier when it comes to single-use ties.
 %perl_vendor_privlib/Tie
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Sat Feb 26 2011 Alexey Tourbin <at@altlinux.ru> 1.03-alt1
 - initial revision
