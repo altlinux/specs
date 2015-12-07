@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist podlators
 Name: perl-%dist
-Version: 2.5.3
-Release: alt2
+Version: 4.03
+Release: alt1
 
 Summary: Convert POD data to various other formats
 License: GPL or Artistic
@@ -34,7 +34,7 @@ to subclass.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc Changes README
 %_bindir/pod2man
 %_bindir/pod2text
 %_man1dir/perlpodstyle.*
@@ -43,6 +43,9 @@ to subclass.
 %perl_vendor_privlib/Pod*
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 4.03-alt1
+- automated CPAN update
+
 * Mon Nov 02 2015 Vladimir Lettiev <crux@altlinux.ru> 2.5.3-alt2
 - added man pages
 
