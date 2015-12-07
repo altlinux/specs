@@ -15,7 +15,7 @@
 
 Name: perl-Math-Random-Secure
 Version: 0.06
-Release: alt1
+Release: alt1.1
 
 Summary: Cryptographically-secure, cross-platform replacement for rand()
 
@@ -30,7 +30,7 @@ Source: %m_distro-%version.tar.gz
 
 # Automatically added by buildreq on Mon May 02 2011 (-bi)
 # optimized out: perl-Any-Moose perl-B-Hooks-EndOfScope perl-Data-OptList perl-Module-Find perl-Package-Stash perl-Params-Util perl-Sub-Exporter perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Uplevel perl-Tree-DAG_Node perl-Variable-Magic perl-devel perl-namespace-clean
-BuildRequires: perl-Crypt-Random-Source perl-List-MoreUtils perl-Math-Random-ISAAC perl-Mouse perl-Test-Warn
+BuildRequires: perl-Crypt-Random-Source perl-List-MoreUtils perl-Math-Random-ISAAC perl-Mouse perl-Test-Warn perl(Any/Moose.pm)
 
 %description
 None.
@@ -49,6 +49,9 @@ None.
 
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1.1
+- NMU: fixed build
+
 * Mon May 02 2011 Denis Baranov <baraka@altlinux.ru> 0.06-alt1
 - initial build for ALT Linux Sisyphus
 
