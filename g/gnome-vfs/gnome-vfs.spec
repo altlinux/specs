@@ -5,8 +5,8 @@
 %def_disable howl
 
 # Choose one
-%def_disable openssl
-%def_enable gnutls
+%def_enable openssl
+%def_disable gnutls
 
 # Choose one
 %def_disable fam
@@ -31,7 +31,7 @@
 
 Name: gnome-vfs
 Version: %ver_major.4
-Release: alt9
+Release: alt10
 Serial: 1
 
 Summary: The GNOME virtual file-system libraries
@@ -370,6 +370,9 @@ fi
 %exclude %vfsmodulesdir/*.la
 
 %changelog
+* Mon Dec 07 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt10
+- rebuilt with openssl instead gnutls
+
 * Mon Nov 03 2014 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt9
 - fixed build
 
