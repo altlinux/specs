@@ -15,7 +15,7 @@
 
 Name: perl-Net-Shared
 Version: 0.30
-Release: alt1.1
+Release: alt2
 
 Summary: Shared variables across processes that are either local or remote.
 
@@ -23,10 +23,10 @@ License: Artistic
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Net-Shared/
 
-Packager: Michael Bochkaryov <misha@altlinux.ru>
-
 BuildArch: noarch
 Source: http://search.cpan.org//CPAN/authors/id/J/JR/JRYAN/%m_distro-%version.tar.gz
+
+Patch: Net-Shared-0.30-alt-perl522.patch
 
 # Automatically added by buildreq on Fri Sep 05 2008 (-bi)
 BuildRequires: perl-Log-Agent perl-Storable perl-devel
@@ -39,6 +39,7 @@ also see the examples for more info.
 
 %prep
 %setup -q -n %m_distro
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -51,6 +52,9 @@ also see the examples for more info.
 %doc Changes README examples/*
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.30-alt2
+- NMU: fixed build
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
