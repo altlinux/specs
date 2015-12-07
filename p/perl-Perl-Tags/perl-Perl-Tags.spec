@@ -3,15 +3,13 @@
 
 Name: perl-Perl-Tags
 Version: 0.32
-Release: alt1
+Release: alt2
 
 Summary: Generate (possibly exuberant) Ctags style tags for Perl sourcecode
 
 License: Artistic
 Group: Development/Perl
 Url: %CPAN %dist
-
-Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/O/OS/OSFAMERON/Perl-Tags-%{version}.tar.gz
@@ -50,12 +48,16 @@ rm -f %buildroot%perl_vendor_privlib/Perl/README.pod
 %files
 %_bindir/perl-tags
 %_bindir/require-perl-tags*
+%_man1dir/*
 %perl_vendor_privlib/Perl/Tags*
 %perl_vendor_privlib/App/*
 %perl_vendor_privlib/Test/Perl/Tags*
 %doc README Changes
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2
+- NMU: fixed build
+
 * Mon May 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
