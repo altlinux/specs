@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.4.23
-Release: alt2.2
+Version: 1.4.26
+Release: alt1
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -707,6 +707,9 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Mon Dec 07 2015 Anton Farygin <rider@altlinux.ru> 1:1.4.26-alt1
+- new version
+
 * Wed Dec 02 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.4.23-alt2.2
 - rebuild with new libmemcached 1.0.18
 
