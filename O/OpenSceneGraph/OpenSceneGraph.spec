@@ -5,11 +5,11 @@
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 
-%define apiver 3.2.3
-%define osgbranch 3.2
+%define apiver 3.4.0
+%define osgbranch 3.4
 
 Name: OpenSceneGraph
-Version: 3.2.3
+Version: 3.4.0
 Release: alt1
 
 Summary: High performance real-time graphics toolkit
@@ -290,7 +290,7 @@ Sample applications for OpenSceneGraph
 
 %_bindir/osgatomiccounter
 %_bindir/osgcomputeshaders
-%_bindir/osgframerenderer
+#_bindir/osgframerenderer
 %_bindir/osgkeystone
 %_bindir/osgmultiplemovies
 %_bindir/osgmultitouch
@@ -298,6 +298,13 @@ Sample applications for OpenSceneGraph
 %_bindir/osgsimplegl3
 %_bindir/osgsimpleshaders
 %_bindir/osgtessellationshaders
+
+%_bindir/osgSSBO
+%_bindir/osgblenddrawbuffers
+%_bindir/osggpucull
+%_bindir/osgtexture2DArray
+%_bindir/osgtransferfunction
+%_bindir/osgtransformfeedback
 
 %_datadir/OpenSceneGraph
 
@@ -334,6 +341,10 @@ Development files for OpenThreads
 %_includedir/OpenThreads
 
 %changelog
+* Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 3.4.0-alt1
+- 3.4.0
+- updated example filelist
+
 * Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 3.2.3-alt1
 - 3.2.3
 
