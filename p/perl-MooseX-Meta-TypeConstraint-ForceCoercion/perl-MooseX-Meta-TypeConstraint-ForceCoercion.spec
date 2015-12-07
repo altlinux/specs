@@ -1,7 +1,7 @@
 %define dist MooseX-Meta-TypeConstraint-ForceCoercion
 Name: perl-%dist
 Version: 0.01
-Release: alt1
+Release: alt2
 
 Summary: Force coercion when validating type constraints
 License: GPL or Artistic
@@ -13,7 +13,7 @@ Source: %dist-%version.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Nov 20 2011
-BuildRequires: perl-Devel-PartialDump perl-devel perl-namespace-autoclean
+BuildRequires: perl-Devel-PartialDump perl-devel perl-namespace-autoclean perl(Moose/Util/TypeConstraints.pm)
 
 %description
 This class allows to wrap any Moose::Meta::TypeConstraint in a way that will
@@ -33,5 +33,8 @@ force coercion of the value when checking or validating a value against it.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2
+- NMU: fixed build
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 0.01-alt1
 - initial revision
