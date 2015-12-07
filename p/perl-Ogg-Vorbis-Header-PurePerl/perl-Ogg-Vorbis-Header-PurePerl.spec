@@ -16,7 +16,7 @@ BuildRequires: perl(Module/Build.pm)
 
 Name: perl-Ogg-Vorbis-Header-PurePerl
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: An object-oriented interface to Ogg Vorbis
 
@@ -28,7 +28,6 @@ Packager: Sir Raorn <raorn@altlinux.ru>
 
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/D/DA/DANIEL/Ogg-Vorbis-Header-PurePerl-%{version}.tar.gz
-Patch: %m_distro-0.07-alt1.1.patch
 
 # Automatically added by buildreq on Thu Jan 04 2007
 BuildRequires: perl-devel
@@ -41,7 +40,7 @@ supports only read operations).
 
 %prep
 %setup -q -n %m_distro-%version
-%patch -p1
+[ %version = 1.0 ] && rm test.pl
 
 %build
 %perl_vendor_build
@@ -53,6 +52,9 @@ supports only read operations).
 %perl_vendor_privlib/Ogg*
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2
+- NMU: fixed build
+
 * Sun Sep 25 2011 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1
 - automated CPAN update
 
