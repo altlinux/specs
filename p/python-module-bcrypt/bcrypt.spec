@@ -1,11 +1,11 @@
 %def_with python3
 
 Summary: An implementation the OpenBSD Blowfish password hashing algorithm
-Version: 1.1.1
+Version: 2.0.0
 Release: alt1
 %setup_python_module bcrypt
 Name: python-module-bcrypt
-Source0: py-bcrypt-%version.tar.gz
+Source0: %version.tar.gz
 Source1: bfhash
 Source2: bfhash.1
 License: BSD
@@ -47,7 +47,7 @@ parametised, so it can be increased as computers get faster.
 %endif
 
 %prep
-%setup -n py-%modulename-%version
+%setup -n %modulename-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -89,10 +89,20 @@ sed -i 's|python|python3|' %buildroot%_bindir/bfhash.py3
 %doc *.rst
 %python3_sitelibdir/*
 %_bindir/*.py3
+%exclude %_man1dir/bfhash*
 %_man1dir/*
 %endif
 
+%check
+python setup.py test
+python3 setup.py test
+
 %changelog
+* Mon Dec 07 2015 Fr. Br. George <george@altlinux.ru> 2.0.0-alt1
+- Autobuild version bump to 2.0.0
+- Update bfhash(1)
+- Provide check section
+
 * Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1
 - Version 1.1.1
 - Added module for Python 3
