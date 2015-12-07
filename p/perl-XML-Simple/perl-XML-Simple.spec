@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-Simple
 Name: perl-%dist
-Version: 2.20
+Version: 2.22
 Release: alt1
 
 Summary: Easy API to read/write XML
@@ -8,7 +9,7 @@ Group: Development/Perl
 License: GPL or Artistic
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GR/GRANTM/XML-Simple-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +37,9 @@ XML parsing module (either XML::Parser or one of the SAX2 parser modules).
 %doc	%perl_vendor_privlib/XML/Simple/*.pod
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.22-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.20-alt1
 - 2.18 -> 2.20
 
