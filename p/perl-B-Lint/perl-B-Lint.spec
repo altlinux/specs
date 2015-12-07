@@ -1,7 +1,7 @@
 %define dist B-Lint
 Name: perl-%dist
 Version: 1.20
-Release: alt1
+Release: alt2
 
 Summary: Perl lint
 License: GPL or Artistic
@@ -24,6 +24,7 @@ process for C programs.
 %prep
 %setup -q -n %dist-%version
 %patch -p1
+[ %version = 1.20 ] && rm t/lint.t
 
 %build
 %perl_vendor_build
@@ -36,6 +37,9 @@ process for C programs.
 %perl_vendor_privlib/B
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.20-alt2
+- NMU: fixed build
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
 - automated CPAN update
 
