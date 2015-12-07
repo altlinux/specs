@@ -1,6 +1,6 @@
 Name: vice
 Version: 2.1
-Release: alt7.2
+Release: alt7.3
 
 Summary: Versatile Commodore Emulator
 License: GPL v2+
@@ -27,11 +27,13 @@ Patch4: vice-2.1-fix-alsa-fragment.patch
 Patch5: vice-2.1-gcc44.patch
 Patch6: vice-2.1-alt-DSO.patch
 Patch7: vice-2.1-alt-libpng15.patch
+Patch8: texi2html-perl522.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Mon Mar 16 2009
 BuildRequires: flex gcc-c++ libGL-devel libSDL-devel libXrandr-devel libesd-devel libgtk+2-devel libjpeg-devel liblame-devel libreadline-devel libungif-devel
 BuildRequires: libpng-devel zlib-devel libX11-devel libXxf86vm-devel libalsa-devel
+BuildRequires: texinfo
 
 Summary(pl.UTF-8):	Uniwersalny emulator Commodore
 
@@ -59,6 +61,7 @@ pasował do tej linii), CBM-II (C610) oraz Plus4.
 %patch5 -p0
 %patch6 -p2
 %patch7 -p2
+%patch8 -p1
 
 %build
 touch ABOUT-NLS config.rpath
@@ -114,6 +117,9 @@ popd
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.1-alt7.3
+- Fixed build with perl 522
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt7.2
 - Fixed build with libpng15
 
