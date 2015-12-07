@@ -7,7 +7,7 @@
 %define	systemdsystemunitdir /lib/systemd/system
 
 Name: dbus
-Version: 1.8.18
+Version: 1.10.6
 Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
@@ -124,6 +124,8 @@ ln -sf dbus.service %buildroot/lib/systemd/system/messagebus.service
 
 cp -a doc/api/html api
 
+mkdir -p %buildroot%_sysconfdir/dbus-1/system.d
+mkdir -p %buildroot%_sysconfdir/dbus-1/session.d
 mkdir -p %buildroot%_datadir/dbus-1/interfaces
 mkdir -p %buildroot%system_socket_dir
 mkdir -p %buildroot%session_socket_dir
@@ -163,11 +165,16 @@ fi
 /bin/dbus-daemon
 /bin/dbus-uuidgen
 /bin/dbus-run-session
+/bin/dbus-update-activation-environment
 %dir /lib/dbus-1
 %attr(4510,root,messagebus) /lib/dbus-1/dbus-daemon-launch-helper
 %dir %_datadir/dbus-1
+%dir %_datadir/dbus-1/system.d
+%dir %_datadir/dbus-1/session.d
 %dir %_datadir/dbus-1/services
 %dir %_datadir/dbus-1/system-services
+%_datadir/dbus-1/session.conf
+%_datadir/dbus-1/system.conf
 %attr(0755,root,root) %dir %system_socket_dir
 %attr(1777,root,root) %dir %session_socket_dir
 %dir %_localstatedir/dbus
@@ -176,6 +183,7 @@ fi
 %_man1dir/dbus-daemon.1*
 %_man1dir/dbus-uuidgen.1*
 %_man1dir/dbus-run-session.1*
+%_man1dir/dbus-update-activation-environment.1*
 
 %files tools
 /bin/dbus-send
@@ -194,6 +202,7 @@ fi
 /%_lib/libdbus-1.so.*
 
 %files -n lib%name-devel
+/bin/dbus-test-tool
 %_datadir/doc/%name
 %_includedir/dbus-1.*
 %_libdir/libdbus-1.so
@@ -201,8 +210,12 @@ fi
 %_pkgconfigdir/dbus-1.pc
 %dir %_datadir/dbus-1
 %dir %_datadir/dbus-1/interfaces
+%_man1dir/dbus-test-tool.1*
 
 %changelog
+* Sun Dec 06 2015 Valery Inozemtsev <shrek@altlinux.ru> 1.10.6-alt1
+- 1.10.6
+
 * Sat May 16 2015 Valery Inozemtsev <shrek@altlinux.ru> 1.8.18-alt1
 - 1.8.18
 
