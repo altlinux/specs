@@ -2,7 +2,7 @@
 %define dist MooseX-Role-Parameterized
 Name: perl-%dist
 Version: 1.08
-Release: alt1
+Release: alt2
 
 Summary: Roles with composition parameters
 License: GPL or Artistic
@@ -14,7 +14,7 @@ Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Role-Parameterized-%{ve
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Oct 26 2011
-BuildRequires: perl-Module-Install perl-Moose perl-Test-Fatal perl(Test/Requires.pm) perl(Test/Requires.pm) perl(CPAN/Meta/Check.pm)
+BuildRequires: perl-Module-Install perl-Moose perl-Test-Fatal perl(Test/Requires.pm) perl(Test/Requires.pm) perl(CPAN/Meta/Check.pm) perl(namespace/autoclean.pm)
 
 %description
 Roles are composable units of behavior.  They are useful for factoring out
@@ -50,6 +50,9 @@ Parameterized roles offer a solution to these (and other) kinds of problems.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.08-alt2
+- NMU: fixed build
+
 * Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
 - automated CPAN update
 
