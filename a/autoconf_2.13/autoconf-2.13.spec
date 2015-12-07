@@ -4,22 +4,22 @@
 
 Name: %realname%dialect
 Version: 2.13
-Release: alt11
+Release: alt12
 Serial: 2
 
-%set_compress_method gzip
+%set_compress_method xz
 
 Summary: A GNU tool for automatically configuring source code
 License: GPLv2+
 Group: Development/Other
 Url: http://www.gnu.org/software/%realname/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 BuildArch: noarch
 
 %define srcname %realname-%version
 Source: ftp://ftp.gnu.org/gnu/%realname/%srcname.tar.bz2
 Source1: %realname-2.13-manpages.tar
 
+Patch0: %realname-2.13-up-autoscan.patch
 Patch1: %realname-2.13-alt-tmp.patch
 Patch2: %realname-2.13-alt-c++exit.patch
 Patch3: %realname-2.13-alt-headers.patch
@@ -30,12 +30,14 @@ Patch7: %realname-2.13-alt-texinfo.patch
 Patch8: %realname-2.13-alt-acdatadir.patch
 Patch9: %realname-2.13-alt-dnet.patch
 Patch10: %realname-2.13-alt-ac_extension.patch
+Patch11: %realname-2.13-alt-autoscan-perl.patch
 
 Provides: %realname = %serial:%version-%release
 Obsoletes: %realname
 
 PreReq: autoconf-common, alternatives >= 0:0.4
 Requires: m4 >= 1.4, mktemp >= 1:1.3.1
+BuildRequires: makeinfo
 
 %description
 GNU's Autoconf is a tool for configuring source code and Makefiles.
@@ -54,7 +56,8 @@ Autoconf is only required for the generation of the scripts, not
 their use.
 
 %prep
-%setup -q -n %srcname -a1
+%setup -n %srcname -a1
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -65,6 +68,7 @@ their use.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 find -type f -print0 |
 	xargs -r0 grep -FZl 'mawk gawk' |
@@ -120,7 +124,7 @@ mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
 %_bindir/%realname-default	%_bindir/%realname%suff	20
 %_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.gz	%_infodir/%realname%suff.info.gz	%_bindir/%realname%suff
+%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
 EOF
 
 for i in autoheader autom4te autoreconf autoscan autoupdate ifnames; do
@@ -131,7 +135,7 @@ done
 
 for i in %realname autoheader autom4te autoreconf autoscan autoupdate config.guess config.sub ifnames; do
 cat >>%buildroot%_altdir/%name <<EOF
-%_man1dir/$i.1.gz	%_man1dir/$i%suff.1.gz	%_bindir/%realname%suff
+%_man1dir/$i.1.xz	%_man1dir/$i%suff.1.xz	%_bindir/%realname%suff
 EOF
 done
 
@@ -145,6 +149,10 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Mon Dec 07 2015 Dmitry V. Levin <ldv@altlinux.org> 2:2.13-alt12
+- Changed compress method from gzip to xz.
+- autoscan: fixed perl regexp syntax.
+
 * Wed Sep 09 2009 Dmitry V. Levin <ldv@altlinux.org> 2:2.13-alt11
 - Removed obsolete %%install_info/%%uninstall_info calls.
 

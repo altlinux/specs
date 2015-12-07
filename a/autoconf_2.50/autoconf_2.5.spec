@@ -4,17 +4,16 @@
 
 Name: %realname%dialect
 Version: 2.59
-Release: alt10
+Release: alt11
 Epoch: 2
 
 Summary: A GNU tool for automatically configuring source code
 License: GPLv2+
 Group: Development/Other
 Url: http://www.gnu.org/software/%realname/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 BuildArch: noarch
 
-%set_compress_method gzip
+%set_compress_method xz
 %define srcname %realname-%version
 %define __spec_autodep_custom_pre export autom4te_perllibdir=%buildroot%_datadir/%realname%suff
 
@@ -38,7 +37,7 @@ Obsoletes: %{realname}_2.5
 PreReq: autoconf-common, alternatives >= 0:0.4
 Requires: m4 >= 1.4, mktemp >= 1:1.3.1
 
-BuildRequires: help2man, alternatives >= 0:0.4
+BuildRequires: help2man, makeinfo, alternatives >= 0:0.4
 
 %description
 GNU's Autoconf is a tool for configuring source code and Makefiles.
@@ -57,7 +56,7 @@ Autoconf is only required for the generation of the scripts, not
 their use.
 
 %prep
-%setup -q -n %srcname
+%setup -n %srcname
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -110,7 +109,7 @@ mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
 %_bindir/%realname-default	%_bindir/%realname%suff	30
 %_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.gz	%_infodir/%realname%suff.info.gz	%_bindir/%realname%suff
+%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
 EOF
 
 for i in autoheader autom4te autoreconf autoscan autoupdate ifnames; do
@@ -121,7 +120,7 @@ done
 
 for i in %realname autoheader autom4te autoreconf autoscan autoupdate config.guess config.sub ifnames; do
 cat >>%buildroot%_altdir/%name <<EOF
-%_man1dir/$i.1.gz	%_man1dir/$i%suff.1.gz	%_bindir/%realname%suff
+%_man1dir/$i.1.xz	%_man1dir/$i%suff.1.xz	%_bindir/%realname%suff
 EOF
 done
 
@@ -135,6 +134,9 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Mon Dec 07 2015 Dmitry V. Levin <ldv@altlinux.org> 2:2.59-alt11
+- Changed compress method from gzip to xz.
+
 * Tue May 19 2009 Dmitry V. Levin <ldv@altlinux.org> 2:2.59-alt10
 - Removed obsolete %%install_info/%%uninstall_info calls.
 - Switched to alternatives-0.4.
