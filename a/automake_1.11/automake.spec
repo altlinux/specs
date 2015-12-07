@@ -6,10 +6,10 @@
 
 Name: %realname%dialect
 Version: 1.11.6
-Release: alt5
+Release: alt6
 
 %define mydatadir %_datadir/%realname%suff
-%set_compress_method gzip
+%set_compress_method xz
 %define _perl_lib_path %perl_vendor_privlib:%mydatadir
 %{?filter_from_requires:%filter_from_requires /^perl(Automake/d}
 %{?filter_from_provides:%filter_from_provides /^perl(Automake/d}
@@ -31,7 +31,7 @@ Obsoletes: %realname
 PreReq: automake-common, alternatives >= 0:0.4
 Requires: autoconf >= 2:2.62
 
-BuildPreReq: autoconf >= 2:2.58, texinfo >= 4.7, gnu-config, help2man, perl-threads
+BuildPreReq: autoconf >= 2:2.58, gnu-config, help2man, makeinfo, perl-threads
 %{!?__buildreqs:%{!?_without_check:%{!?_disable_check:BuildRequires: dejagnu expect flex gcc-c++ gcc-fortran makedepend}}}
 
 %description
@@ -78,10 +78,10 @@ mkdir -p %buildroot%_altdir
 cat <<EOF >%buildroot%_altdir/%name
 %_bindir/%realname-default	%_bindir/%realname%suff	%altver
 %_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%realname%suff
-%_man1dir/%realname.1.gz	%_man1dir/%realname%suff.1.gz	%_bindir/%realname%suff
-%_man1dir/aclocal.1.gz	%_man1dir/aclocal%suff.1.gz	%_bindir/%realname%suff
+%_man1dir/%realname.1.xz	%_man1dir/%realname%suff.1.xz	%_bindir/%realname%suff
+%_man1dir/aclocal.1.xz	%_man1dir/aclocal%suff.1.xz	%_bindir/%realname%suff
 %_datadir/%realname	%mydatadir	%_bindir/%realname%suff
-%_infodir/%realname.info.gz	%_infodir/%realname%suff.info.gz	%_bindir/%realname%suff
+%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
 EOF
 
 install -pm644 AUTHORS README THANKS NEWS.bz2 TODO.bz2 \
@@ -98,13 +98,17 @@ install -pm644 AUTHORS README THANKS NEWS.bz2 TODO.bz2 \
 %config %_sysconfdir/buildreqs/files/ignore.d/*
 %_altdir/%name
 %_bindir/*%suff
-%_man1dir/*%suff.1.gz
+%_man1dir/*%suff.1*
 %_datadir/aclocal%suff
 %mydatadir
 %_infodir/*.info*
 %docdir
 
 %changelog
+* Mon Dec 07 2015 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt6
+- automake: fixed perl regexp syntax (gnu#21001).
+- Changed compress method from gzip to xz.
+
 * Mon Oct 28 2013 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt5
 - tests: fixed build with autoconf 2.69.
 

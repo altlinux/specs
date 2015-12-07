@@ -7,11 +7,11 @@
 
 Name: %realname%dialect
 Version: 1.10.3
-Release: alt3
+Release: alt4
 Epoch: 1
 
 %define mydatadir %_datadir/%apiname
-%set_compress_method gzip
+%set_compress_method xz
 %define _perl_lib_path %perl_vendor_privlib:%mydatadir
 %{?filter_from_requires:%filter_from_requires /^perl(Automake/d}
 %{?filter_from_provides:%filter_from_provides /^perl(/d}
@@ -33,7 +33,7 @@ Obsoletes: %realname
 PreReq: automake-common, alternatives >= 0:0.4
 Requires: autoconf_2.60
 
-BuildPreReq: autoconf >= 2:2.58, texinfo >= 4.7
+BuildPreReq: autoconf >= 2:2.58, makeinfo
 
 %description
 Automake is a tool for automatically generating `Makefile.in'
@@ -78,7 +78,7 @@ cat <<EOF >%buildroot%_altdir/%name
 %_bindir/%realname-default	%_bindir/%apiname	%altver
 %_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%apiname
 %_datadir/%realname	%mydatadir	%_bindir/%apiname
-%_infodir/%realname.info.gz	%_infodir/%apiname.info.gz	%_bindir/%apiname
+%_infodir/%realname.info.xz	%_infodir/%apiname.info.xz	%_bindir/%apiname
 EOF
 
 install -pm644 AUTHORS README THANKS NEWS.* \
@@ -98,6 +98,10 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 %docdir/
 
 %changelog
+* Mon Dec 07 2015 Dmitry V. Levin <ldv@altlinux.org> 1:1.10.3-alt4
+- automake: fixed perl regexp syntax (gnu#21001).
+- Changed compress method from gzip to xz.
+
 * Thu Oct 31 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.10.3-alt3
 - tests: backported upstream fix for autoconf 2.69.
 - spec: synced with 1.14.

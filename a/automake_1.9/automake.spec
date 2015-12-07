@@ -7,11 +7,11 @@
 
 Name: %realname%dialect
 Version: 1.9.6
-Release: alt5
+Release: alt6
 Epoch: 1
 
 %define mydatadir %_datadir/%apiname
-%set_compress_method gzip
+%set_compress_method xz
 %define _perl_lib_path %perl_vendor_privlib:%mydatadir
 %{?filter_from_requires:%filter_from_requires /^perl(Automake/d}
 %{?filter_from_provides:%filter_from_provides /^perl(/d}
@@ -35,6 +35,7 @@ Patch3: automake-1.9.5-cvs-20070722-tests.patch
 Patch4: automake-1.9.6-git-20091129.patch
 Patch5: automake-1.9.6-git-20091201.patch
 Patch6: automake-1.9.6-git-20110113.patch
+Patch7: automake-1.9.6-makeinfo.patch
 
 Provides: %realname = %epoch:%version-%release
 Provides: aclocal(libtool)
@@ -42,7 +43,7 @@ Obsoletes: %realname
 PreReq: automake-common, alternatives >= 0:0.4
 Requires: autoconf_2.5 >= 2:2.58
 
-BuildPreReq: autoconf >= 2:2.58, texinfo >= 4.7
+BuildPreReq: autoconf >= 2:2.58, makeinfo
 
 %description
 Automake is a tool for automatically generating `Makefile.in'
@@ -57,6 +58,7 @@ files compliant with the GNU Coding Standards.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 install -pm644 %SOURCE1 m4/objc.m4
 xz -k9 NEWS
 
@@ -95,7 +97,7 @@ cat <<EOF >%buildroot%_altdir/%name
 %_bindir/%realname-default	%_bindir/%apiname	%altver
 %_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%apiname
 %_datadir/%realname	%mydatadir	%_bindir/%apiname
-%_infodir/%realname.info.gz	%_infodir/%apiname.info.gz	%_bindir/%apiname
+%_infodir/%realname.info.xz	%_infodir/%apiname.info.xz	%_bindir/%apiname
 EOF
 
 mkdir -p %buildroot%docdir
@@ -116,6 +118,10 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 %docdir/
 
 %changelog
+* Mon Dec 07 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.9.6-alt6
+- Changed BR: texinfo -> makeinfo.
+- Switched to compress_method xz.
+
 * Thu Oct 31 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.9.6-alt5
 - tests: backported upstream fix for autoconf 2.69.
 - spec: synced with 1.14.
