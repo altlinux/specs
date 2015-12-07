@@ -1,7 +1,7 @@
 Summary:	Mouse and keyboard sharing utility
 Name:		synergy
-Version:	1.6.3
-Release:	alt1.1
+Version:	1.7.4
+Release:	alt1
 License:	GPL
 Group:		Accessibility
 URL:		http://synergy-project.org/
@@ -14,6 +14,7 @@ Packager:	Evgeny Sinelnikov <sin@altlinux.ru>
 BuildRequires: gcc-c++ libXtst-devel
 BuildRequires: libcurl-devel
 BuildRequires: libcryptopp-devel
+BuildRequires: libssl-devel
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake
 
@@ -60,7 +61,7 @@ install -D -m0644 doc/synergyc.man %buildroot/%_man1dir/synergyc.1
 #%endif
 
 %files
-%doc ChangeLog COPYING README
+%doc ChangeLog LICENSE README
 %doc doc/synergy.conf*
 %_bindir/synergyc
 %_bindir/synergys
@@ -69,6 +70,9 @@ install -D -m0644 doc/synergyc.man %buildroot/%_man1dir/synergyc.1
 %_man1dir/synergyc*
 
 %changelog
+* Mon Dec 07 2015 Anton Farygin <rider@altlinux.ru> 1.7.4-alt1
+- new version
+
 * Sat Jul 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.3-alt1.1
 - Rebuilt with gcc5
 
