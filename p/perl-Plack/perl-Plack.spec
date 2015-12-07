@@ -1,5 +1,5 @@
 Name: perl-Plack
-Version: 1.0037
+Version: 1.0039
 Release: alt1
 
 Summary: Plack - Perl Superglue for Web frameworks and Web Servers (PSGI toolkit)
@@ -81,6 +81,9 @@ sed -i "/author_tests/d" Makefile.PL
 %perl_vendor_privlib/Plack/Handler/FCGI.pm
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.0039-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.0037-alt1
 - automated CPAN update
 
