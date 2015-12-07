@@ -1,19 +1,20 @@
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: sipp
-Version: 3.3
+Version: 3.4.0
 Release: alt1
 
 Summary: SIPp -- test tool / traffic generator for the SIP
 License: GPL
 Group: System/Servers
 
-Url: http://sipp.sf.net
+Url: https://github.com/SIPp/sipp
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Wed Mar 29 2006
-BuildRequires: gcc-c++ libncurses-devel libpcap-devel libssl-devel
+# Automatically added by buildreq on Tue Dec 08 2015
+# optimized out: gnu-config libcom_err-devel libkrb5-devel libstdc++-devel libtinfo-devel pkg-config
+BuildRequires: gcc-c++ libgsl-devel liblksctp-devel libncurses-devel libpcap-devel libssl-devel
 
 %description
 SIPp is a free Open Source test tool / traffic generator for the SIP
@@ -31,7 +32,16 @@ emulate live users.
 %setup 
 
 %build
-%make_build pcapplay_ossl
+%configure \
+  --enable-epoll \
+  --with-pcap \
+  --with-rtpstream \
+  --with-openssl \
+  --with-sctp \
+  --with-gsl
+    
+
+%make_build
 
 %install
 install -D sipp %buildroot%_bindir/sipp
@@ -42,6 +52,9 @@ install -D sipp %buildroot%_bindir/sipp
 %doc pcap sipp.dtd
 
 %changelog
+* Tue Dec 08 2015 Denis Smirnov <mithraen@altlinux.ru> 3.4.0-alt1
+- 3.4.0
+
 * Wed Feb 27 2013 Denis Smirnov <mithraen@altlinux.ru> 3.3-alt1
 - 3.3
 
