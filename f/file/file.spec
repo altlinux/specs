@@ -1,6 +1,6 @@
 Name: file
 Version: 4.26
-Release: alt11
+Release: alt12
 
 Summary: A utility for determining file types
 License: BSD-style
@@ -123,6 +123,9 @@ make -k check
 %python_sitelibdir/*
 
 %changelog
+* Tue Dec 08 2015 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt12
+- Added magic for GNU M4 frozen state files.
+
 * Fri Apr 05 2013 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt11
 - libmagic: fixed &-prefixed offsets support in magic that uses string flags.
 - Enhanced #!/usr/bin/env magic, removed "a " prefix from its output.
