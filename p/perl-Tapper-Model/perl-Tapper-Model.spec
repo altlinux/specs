@@ -2,13 +2,13 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
-BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm)
+BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(File/Slurp.pm)
 %define upstream_name    Tapper-Model
 %define upstream_version 4.1.2
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_5
+Release:    alt2_5
 
 Summary:    Tapper - Context sensitive connected DBIC schema
 License:    GPL+ or Artistic
@@ -57,6 +57,9 @@ Context sensitive and connected DBIC schema for Tapper.
 %perl_vendor_privlib/*
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt2_5
+- NMU: fixed build
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_5
 - update by mgaimport
 
