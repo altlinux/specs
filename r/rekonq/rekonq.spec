@@ -1,6 +1,6 @@
 Name:         rekonq
 Version:      2.4.2
-Release:      alt2
+Release:      alt3
 
 Group:        Networking/WWW
 Summary:      Web browser easy for use
@@ -11,6 +11,7 @@ PreReq(post,preun): alternatives >= 0.2
 Provides: webclient
 
 Source:      %name-%version.tar
+Source10: ru.po
 
 # Automatically added by buildreq on Wed Mar 23 2011 (-bi)
 #BuildRequires: cvs gcc-c++ git-core glib2-devel kde4libs-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libqt3-devel libxkbfile-devel mercurial openssh-common qt4-designer subversion valgrind zlib-devel-static
@@ -26,6 +27,12 @@ Web browser easy for use.
 
 %prep
 %setup -q
+mkdir -p po/ru/
+cp -ar po/de/CMakeLists.txt po/ru/
+sed -i 's|GETTEXT_PROCESS_PO_FILES.*INSTALL_DESTINATION|GETTEXT_PROCESS_PO_FILES(ru ALL INSTALL_DESTINATION|' po/ru/CMakeLists.txt
+echo 'add_subdirectory(ru)' >> po/CMakeLists.txt
+install -m 0644 %SOURCE10 po/ru/rekonq.po
+
 
 %build
 %K4cmake
@@ -61,6 +68,9 @@ desktop-file-install --dir %buildroot/%_K4xdg_apps --add-mime-type=x-scheme-hand
 %_K4cfg/%name.kcfg
 
 %changelog
+* Mon Dec 07 2015 Sergey V Turchin <zerg@altlinux.org> 2.4.2-alt3
+- add Russian translation; thanks Koi@forum.altlinux (ALT#31595)
+
 * Tue Jun 24 2014 Sergey V Turchin <zerg@altlinux.org> 2.4.2-alt2
 - built with Activities support
 
