@@ -4,7 +4,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.27.1
-Release: alt1
+Release: alt2
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
 URL: ftp://ftp.kernel.org/pub/linux/utils/util-linux
@@ -12,6 +12,7 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 ### Macros
 %def_enable raw
+%def_enable uuidd
 %def_with setarch
 %def_disable login
 %def_disable sulogin
@@ -230,6 +231,16 @@ The login application opens an interactive session with a Linux workstation.
 It is one of the first applications a user interacts with, but is generally
 not invoked by a normal user.  Instead some program like mingetty(8) will
 invoke login.
+
+%package -n uuidd
+Summary: Helper daemon to guarantee uniqueness of time-based UUIDs
+Group: System/Servers
+Requires: libuuid = %version-%release
+
+%description -n uuidd
+The uuidd package contains a userspace daemon (uuidd) which guarantees
+uniqueness of time-based UUID generation even at very high rates on
+SMP systems.
 
 %package -n setarch
 Summary: Personality setter
@@ -501,7 +512,7 @@ mv blkid.static rpm/blkid.initramfs
 	--enable-libblkid \
 	--enable-libuuid \
 	%{subst_enable fsck} \
-	--disable-uuidd \
+	%{subst_enable uuidd} \
 	%{subst_with udev} \
 	%{subst_with selinux} \
 	%{subst_with audit} \
@@ -663,7 +674,7 @@ done > setarch.files
 
 	# sbindir
 	ls -1 %buildroot/%_sbindir |
-		egrep -v '(fdisk|hwclock)' |
+		egrep -v '(fdisk|hwclock|uuidd)' |
     		sed -e 's|^\(.*\)$|%%_sbindir/\1|g'
 
 	# man1dir
@@ -679,7 +690,7 @@ done > setarch.files
 	# man8dir
 	ls -1 %buildroot%_man8dir |
 		egrep -v "^($exclude_archs)\.8*\$" |
-		egrep -v '(mount|^swapo|losetup|lsblk|clock|getty|fdisk|part)' |
+		egrep -v '(mount|^swapo|losetup|lsblk|clock|getty|fdisk|part|uuidd)' |
 		sed -e 's|^\(.*\)$|%%_man8dir/\1*|g'
 
 	# /bin
@@ -857,6 +868,12 @@ fi
 %files -n libuuid-devel-static
 %_libdir/libuuid.a
 
+%if_enabled uuidd
+%files -n uuidd
+%_sbindir/uuidd
+%_man8dir/uuidd.*
+%endif #enabled uuidd
+
 %files -n libmount
 /%_lib/libmount.so.*
 
@@ -902,6 +919,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Mon Dec 07 2015 Alexey Gladkov <legion@altlinux.ru> 2.27.1-alt2
+- Add uuidd subpackage.
+
 * Mon Nov 16 2015 Alexey Gladkov <legion@altlinux.ru> 2.27.1-alt1
 - New version (2.27.1).
 - Remove explicit nfs-utils requirement (ALT#31498).
