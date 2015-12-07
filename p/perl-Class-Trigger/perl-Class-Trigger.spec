@@ -1,7 +1,7 @@
 %define dist Class-Trigger
 Name: perl-%dist
 Version: 0.14
-Release: alt2
+Release: alt3
 
 Summary: Mixin to add / call inheritable triggers
 License: GPL or Artistic
@@ -13,7 +13,7 @@ Source: %dist-%version.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Oct 04 2011
-BuildRequires: perl-IO-stringy perl-Test-Base
+BuildRequires: perl-IO-stringy perl-Test-Base perl(inc/Module/Install.pm)
 
 %description
 Class::Trigger is a mixin class to add / call triggers (or hooks)
@@ -22,6 +22,7 @@ that get called at some points you specify.
 %prep
 %setup -q -n %dist-%version
 rm -r inc/
+sed -i /use_test_base/d Makefile.PL
 
 %build
 %perl_vendor_build
@@ -34,6 +35,9 @@ rm -r inc/
 %perl_vendor_privlib/Class
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt3
+- NMU: fixed build
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 0.14-alt2
 - rebuilt as plain src.rpm
 
