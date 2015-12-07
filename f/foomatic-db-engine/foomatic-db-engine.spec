@@ -3,7 +3,7 @@
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Name: foomatic-db-engine
-Version: 4.0.8
+Version: 4.0.12
 Release: alt1
 
 Provides: foomatic-addon = %version
@@ -21,6 +21,7 @@ Source: http://www.linuxprinting.org/download/foomatic/%name-%version.tar
 Source1: foomatic-db-engine.alternatives
 
 Patch1: foomatic-db-engine-3.0.2-suse-A4.patch
+Patch2:	foomatic-db-engine-4.0.12-alt-perl522.patch
 
 %define _compress_method gzip
 
@@ -37,6 +38,7 @@ for printer administration, and for printing.
 %prep
 %setup -q -n %name-%version
 %patch1 -p1
+%patch2 -p2
 
 %build
 %configure
@@ -98,6 +100,9 @@ install -d $RPM_BUILD_ROOT/var/cache/foomatic/compiled
 %perl_vendor_privlib/Foomatic*
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 4.0.12-alt1
+- 4.0.12
+
 * Thu Jan 19 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 4.0.8-alt1
 - 4.0.8
 
