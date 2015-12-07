@@ -15,7 +15,7 @@
 
 Name: perl-Net-OpenID-JanRain
 Version: 1.1.1
-Release: alt2
+Release: alt3
 
 Summary: OpenID Server and Consumer with JanRain API
 
@@ -30,7 +30,7 @@ Source: http://search.cpan.org/CPAN/authors/id/A/AR/ARNESOND/%m_distro-%version.
 
 # Automatically added by buildreq on Sat Oct 08 2011 (-bi)
 # optimized out: perl-DBI perl-Digest-HMAC perl-Digest-SHA perl-HTTP-Date perl-HTTP-Message perl-IO-Socket-INET6 perl-Math-BigInt perl-Math-BigInt-FastCalc perl-Net-DNS perl-Socket6 perl-URI perl-XML-Parser perl-XML-XPath perl-libwww
-BuildRequires: perl-CGI perl-Crypt-DH perl-DBD-Pg perl-Digest-SHA1 perl-LWPx-ParanoidAgent perl-Net-Yadis perl-devel
+BuildRequires: perl-CGI perl-Crypt-DH perl-DBD-Pg perl-Digest-SHA1 perl-LWPx-ParanoidAgent perl-Net-Yadis perl-devel perl(Digest/HMAC_SHA1.pm)
 
 %description
 To use this library, put the contents of the lib directory into your
@@ -56,6 +56,9 @@ different SQL database stores, SQLite, MySQL, and PostgreSQL.
 %perl_vendor_privlib/Net/
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3
+- NMU: fixed build
+
 * Thu Oct 06 2011 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt2
 - update buildreqs
 
