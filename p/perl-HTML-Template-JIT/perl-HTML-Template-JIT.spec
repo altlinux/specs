@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.05
-Release: alt2.1
+Release: alt2.2
 
 Summary: A just-in-time compiler for HTML::Template
 Group: Development/Perl
@@ -13,7 +13,7 @@ Packager: Stanislav Yadykin <tosick@altlinux.ru>
 Requires: perl-HTML-Template >= 2.8
 
 # Automatically added by buildreq on Thu Dec 11 2008
-BuildRequires: perl-HTML-Template perl-Inline perl-Parse-RecDescent
+BuildRequires: perl-HTML-Template perl-Inline perl-Inline-C perl-Parse-RecDescent
 
 %description
 This module provides a just-in-time compiler for HTML::Template.  See
@@ -33,6 +33,9 @@ the module docs for more information.
 %perl_vendor_privlib/HTML/Template/*
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2.2
+- fixed build
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
