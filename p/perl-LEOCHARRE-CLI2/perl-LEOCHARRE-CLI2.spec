@@ -15,7 +15,7 @@
 
 Name: perl-LEOCHARRE-CLI2
 Version: 1.16
-Release: alt1
+Release: alt2
 
 Summary: Some quick help for writing cli scripts
 
@@ -27,6 +27,7 @@ Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
 Source: http://search.cpan.org/CPAN/authors/id/L/LE/LEOCHARRE/%m_distro-%version.tar.gz
+Patch: LEOCHARRE-CLI2-1.16-alt-perl522.patch
 
 # Automatically added by buildreq on Fri Nov 18 2011
 BuildRequires: perl-Devel-Symdump perl-String-ShellQuote perl-YAML perl-devel
@@ -40,6 +41,8 @@ Also we automatically generate HELP.
 
 %prep
 %setup -n %m_distro-%version
+%patch -p1
+
 %build
 %perl_vendor_build
 
@@ -50,6 +53,9 @@ Also we automatically generate HELP.
 %perl_vendor_privlib/LEOCHARRE/*
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt2
+- NMU: fixed build
+
 * Fri Nov 18 2011 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
 - initial build for ALT Linux Sisyphus
 
