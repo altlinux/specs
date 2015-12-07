@@ -1,14 +1,14 @@
-%define module_version 1.0605
+%define _unpackaged_files_terminate_build 1
+%define module_version 1.0701
 %define module_name Function-Parameters
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Dir/Self.pm) perl(ExtUtils/MakeMaker.pm) perl(Moo.pm) perl(Moose.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Types.pm) perl(MooseX/Types/Moose.pm) perl(Test/Deep.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(aliased.pm) perl(attributes.pm) perl(constant.pm) perl(overload.pm) perl(strict.pm) perl(utf8.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.0605
-Release: alt1.1
+Version: 1.0701
+Release: alt1
 Summary: subroutine definitions with parameter lists
 Group: Development/Perl
 License: perl
@@ -41,6 +41,9 @@ rm t/unicode*.t
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.0701-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.0605-alt1.1
 - rebuild with new perl 5.22.0
 
