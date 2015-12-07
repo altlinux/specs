@@ -1,6 +1,6 @@
 Name: perl-Data-MessagePack
-Version: 0.48
-Release: alt1.1.1
+Version: 0.49
+Release: alt1
 
 Summary: MessagePack serialising/deserialising
 License: Perl
@@ -33,6 +33,9 @@ But unlike JSON, it is very fast and small.
 %perl_vendor_autolib/Data/MessagePack
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1.1.1
 - rebuild with new perl 5.22.0
 
