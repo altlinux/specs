@@ -1,7 +1,7 @@
 %define oname python-xlib
 Name: python-module-xlib
 Version: 0.15
-Release: alt1.rc1.svn20131015
+Release: alt2.rc1.svn20131015
 
 Summary: Python X Library
 
@@ -12,6 +12,7 @@ Url: http://python-xlib.sourceforge.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %oname-%version.tar
+Patch: python-xlib-perl.patch
 
 #%%setup_python_module Xlib
 #%add_python_req_skip audio image video misc
@@ -39,6 +40,7 @@ This package contains documentation and examples for Python X Library.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 %build
 %python_build
@@ -61,6 +63,9 @@ test -d %buildroot%_libdir || mv %buildroot%prefix/lib %buildroot%_libdir || :
 %doc examples doc/html/*.html
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2.rc1.svn20131015
+- added perl patch
+
 * Wed Aug 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15-alt1.rc1.svn20131015
 - Snapshot from svn
 
