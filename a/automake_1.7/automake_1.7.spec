@@ -5,11 +5,11 @@
 
 Name: %realname%dialect
 Version: 1.7.9
-Release: alt2
+Release: alt3
 Serial: 1
 
 %add_findreq_skiplist %_datadir/%realname%suff/config.guess
-%set_compress_method gzip
+%set_compress_method xz
 %define _perl_lib_path %perl_vendor_privlib:%_datadir/%realname%suff
 
 Summary: A GNU tool for automatically creating Makefiles
@@ -31,7 +31,7 @@ Provides: aclocal(libtool)
 Obsoletes: %realname
 PreReq: automake-common, alternatives >= 0:0.4
 
-BuildPreReq: autoconf >= 2.54, texinfo >= 4.5-alt2
+BuildPreReq: autoconf >= 2.54, makeinfo
 
 # Automatically added by buildreq on Sat May 03 2003
 BuildRequires: tetex-core
@@ -71,7 +71,7 @@ cat <<EOF >%buildroot%_altdir/%name
 %_bindir/%realname-default	%_bindir/%realname%suff	%altver
 %_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%realname%suff
 %_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.gz	%_infodir/%realname%suff.info.gz	%_bindir/%realname%suff
+%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
 EOF
 
 %files
@@ -85,6 +85,10 @@ EOF
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
 
 %changelog
+* Mon Dec 07 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.7.9-alt3
+- Changed BR: texinfo -> makeinfo.
+- Switched to compress_method xz.
+
 * Wed Sep 09 2009 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.9-alt2
 - Removed obsolete %%install_info/%%uninstall_info calls.
 - Moved "make check" to %%check section.

@@ -6,11 +6,11 @@
 Name: %realname%dialect
 %define patchlevel p6
 Version: %realver%patchlevel
-Release: alt6
+Release: alt7
 Epoch: 1
 
 %add_findreq_skiplist %_datadir/%realname%suff/config.guess
-%set_compress_method gzip
+%set_compress_method xz
 
 Summary: A GNU tool for automatically creating Makefiles
 License: GPLv2+
@@ -32,6 +32,8 @@ Patch4: automake-1.4-rh-subdirs-89656.patch
 Patch5: automake-1.4-alt-texinfo.patch
 Patch6: automake-1.4-alt-aclocal_libtool.patch
 Patch7: 0001-automake.in-finish_languages-Use-not-do-.-From-Pavel.patch
+
+BuildRequires: makeinfo
 
 Provides: %realname = %epoch:%realver-%{release}0.%patchlevel
 Provides: aclocal(libtool)
@@ -74,7 +76,7 @@ cat <<EOF >%buildroot%_altdir/%name
 %_bindir/%realname-default	%_bindir/%realname%suff	20
 %_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%realname%suff
 %_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.gz	%_infodir/%realname%suff.info.gz	%_bindir/%realname%suff
+%_infodir/%realname.info.xz	%_infodir/%realname%suff.info.xz	%_bindir/%realname%suff
 EOF
 
 %files
@@ -88,6 +90,10 @@ EOF
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Mon Dec 07 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.4p6-alt7
+- Added BR: makeinfo.
+- Switched to compress_method xz.
+
 * Tue Jun 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.4p6-alt6
 - Fixed for perl >= 5.20.
 
