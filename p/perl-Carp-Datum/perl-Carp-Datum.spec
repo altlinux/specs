@@ -2,7 +2,7 @@
 
 Name: perl-%module_name
 Version: 0.1.3
-Release: alt1.1
+Release: alt1.2
 
 Summary: %module_name module for perl
 License: Artistic
@@ -10,6 +10,7 @@ Group: Development/Perl
 
 Url: %CPAN %module_name
 Source: http://www.cpan.org/modules/by-module/Carp/%module_name-%version.tar.gz
+Patch: Carp-Datum-0.1.3-alt-perl522.patch
 
 BuildArch: noarch
 # Automatically added by buildreq on Tue Jul 03 2007
@@ -26,6 +27,7 @@ assertions, and debugging traces.
 
 %prep
 %setup -n %module_name-%version
+%patch -p1
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -39,6 +41,9 @@ assertions, and debugging traces.
 %exclude /.perl.req
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt1.2
+- NMU: fixed build
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
