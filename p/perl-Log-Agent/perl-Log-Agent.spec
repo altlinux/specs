@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Log-Agent
 
 Name: perl-%module_name
-Version: 1.000
+Version: 1.001
 Release: alt1
 
 Summary: %module_name module for perl
@@ -36,6 +37,9 @@ choice, one may use logwarn() for instance to emit a warning.
 %perl_vendor_privlib/auto/Log*
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1
+- automated CPAN update
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1
 - automated CPAN update
 
