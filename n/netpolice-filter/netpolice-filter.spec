@@ -1,6 +1,6 @@
 Name: netpolice-filter
 Version: 1.01
-Release: alt2.5
+Release: alt3
 Packager: Anton Pischulin <letanton@altlinux.ru>
 
 Summary: url filter for c-icap server
@@ -9,8 +9,8 @@ Group: System/Servers
 Url: http://www.netpolice.ru/
 
 Source0: %name-%version.tar.gz
+Patch:   %name-fix-func-name-typo.patch
 
-# Automatically added by buildreq on Thu Apr 09 2009
 BuildRequires: gcc4.4-c++ c-icap-devel libmemcache-devel opendbx-devel zlib-devel
 
 Requires(pre): shadow-utils
@@ -26,28 +26,29 @@ ICAP module for checking URL against blacklist.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
-aclocal
-autoconf  
-autoheader
-cp /usr/share/libtool/config/ltmain.sh ltmain.sh
-automake --add-missing --copy  
-cp INSTALL INSTALL.txt
-
+%autoreconf
 %undefine __libtoolize
-%configure cicapincdir=%_includedir/c-icap
-%make_build --debug -j
+%undefine _configure_gettext
+%configure cicapincdir=%_includedir/c_icap cicaplibs=-licapapi
+%make_build
 
 %install
-%make_install DESTDIR=%buildroot install
-mv %buildroot%_libdir/%name/ %buildroot%_libdir/c-icap
+%makeinstall_std
+mv %buildroot%_libdir/%name/ %buildroot%_libdir/c_icap
+rm -f %buildroot%_libdir/c_icap/*.la
 
 %files
-%doc AUTHORS README INSTALL.txt TODO
-%_libdir/c-icap/srv_url_filter.so
+%doc AUTHORS README TODO
+%_libdir/c_icap/srv_url_filter.so
 
 %changelog
+* Mon Dec 07 2015 Andrey Cherepanov <cas@altlinux.org> 1.01-alt3
+- Rebuild with new version of c-icap
+- Fix typo in c-icap function name
+
 * Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.01-alt2.5
 - Fixed build
 
