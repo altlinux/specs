@@ -16,7 +16,7 @@
 
 Name: perl-Package
 Version: 0.26
-Release: alt1
+Release: alt2
 
 Summary: Parameterizable packages
 
@@ -31,6 +31,7 @@ Source: http://www.cpan.org/authors/id/I/IN/INGY/Package-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Oct 18 2012
 BuildRequires: perl-devel perl(Hash/Merge.pm) perl(IO/All.pm) perl(Mouse.pm) perl(MouseX/App/Cmd.pm) perl(Template/Toolkit/Simple.pm) perl(YAML/XS.pm) perl(App/Cmd.pm) perl(MouseX/Getopt.pm)
+#BuildRequires: perl(MouseX/App/Cmd.pm)
 
 %description
 This module allows you to build packages that return different variations
@@ -50,9 +51,13 @@ not care about what kind of package it builds.
 
 %files
 %_bindir/pkg
+%_man1dir/pkg*
 %perl_vendor_privlib/Package*
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.26-alt2
+- NMU: fixed build
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
