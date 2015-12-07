@@ -1,6 +1,6 @@
 Name: autobench
 Version: 2.1.2
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary:  Utils for automatic benchmarking a web server
 License: GPL
@@ -9,6 +9,7 @@ Group: Networking/Other
 Url: http://www.xenoclast.org/autobench
 
 Source: %name-%version.tar
+Patch: autobench-2.1.2-alt-perl522.patch
 
 Requires: httperf gnuplot
 
@@ -24,6 +25,7 @@ into a spreadsheet for analysis/graphing.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %make_build
@@ -46,6 +48,9 @@ into a spreadsheet for analysis/graphing.
 
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt1.qa2
+- NMU: fix for perl 5.22
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
