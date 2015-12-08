@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 2.19
-Release: alt1
+Release: alt2
 
 Summary: Interface to the GraphViz graphing tool
 License: Perl
@@ -11,6 +11,7 @@ Group: Development/Perl
 
 URL: %CPAN %module
 Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/GraphViz-%{version}.tgz
+Patch: GraphViz-2.19-alt-perl522.patch
 
 BuildArch: noarch
 
@@ -26,6 +27,7 @@ undirected graphs in a variety of formats (PostScript, PNG, etc.) using the
 
 %prep
 %setup -n %module-%version
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -38,6 +40,9 @@ undirected graphs in a variety of formats (PostScript, PNG, etc.) using the
 %perl_vendor_privlib/Devel/GraphViz*
 
 %changelog
+* Tue Dec 08 2015 Igor Vlasenko <viy@altlinux.ru> 2.19-alt2
+- NMU: fixed build with perl 522
+
 * Fri Nov 13 2015 Igor Vlasenko <viy@altlinux.ru> 2.19-alt1
 - automated CPAN update
 
