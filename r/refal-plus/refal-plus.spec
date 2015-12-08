@@ -1,11 +1,12 @@
 Name:		refal-plus
-Version:	2412
-Release:	alt1.2
+# `svnversion`
+Version:	4137
+Release:	alt1
 Summary:	A modern dialect of Refal programming language
-Summary(ru_RU.UTF8): Современный диалект языка программирования Рефал
+Summary(ru_RU.KOI8-R): Современный диалект языка программирования Рефал
 Source:		refal-r%{version}-src.zip
-Source1:	http://wiki.botik.ru/twiki/pub/Refaldevel/Download/RefalPlusReferenceManual.pdf
-Patch:		refal-r2412.patch
+# svn checkout --config-option servers:global:http-chunked-requests=no http://svn.botik.ru/refal/to-imperative/trunk
+Source1:	http://rfp.botik.ru/rfp/RefalPlusReferenceManual.pdf
 License:	GPLv2
 Group:		Development/Functional
 URL:		http://rfp.botik.ru/
@@ -51,7 +52,7 @@ following features:
     * Operations on boxes, vectors, and tables
     * "Vector" representation of ground expressions
 
-%description -l ru_RU.UTF8
+%description -l ru_RU.KOI8-R
 Рефал Плюс представляет собой один из диалектов языка программирования
 Рефал.
 
@@ -107,7 +108,6 @@ Sample applications for %name
 
 %prep
 %setup -n refal-r%{version}-src
-%patch -p1
 touch c++/rules.mk
 
 %build
@@ -127,7 +127,7 @@ mv %buildroot%_prefix/lib/lib* %buildroot%_libdir/
 %endif
 
 %files
-%doc doc AUTHORS ChangeLog Developers README *.pdf
+%doc doc AUTHORS DEVELOPERS README *.pdf
 %_bindir/*
 %dir %_prefix/lib/%name
 %_prefix/lib/%name/*
@@ -137,9 +137,13 @@ mv %buildroot%_prefix/lib/lib* %buildroot%_libdir/
 %_includedir/*
 
 %files samples
-%doc compiler rfp rfpfilt samples trefal
+%doc compiler rfp rfpfilt samples RfpUpgrader
 
 %changelog
+* Thu Dec 03 2015 Fr. Br. George <george@altlinux.ru> 4137-alt1
+- Update from SVN
+- Drop patch
+
 * Sat Feb 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 2412-alt1.2
 - (ALT bug #30780)
 
