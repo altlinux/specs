@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: gammu
-Version: 1.36.7
+Version: 1.36.8
 Release: alt1
 
 Summary: Mobile phones management utility
@@ -10,6 +10,7 @@ Group: Communications
 
 Url: http://wammu.eu/gammu/
 Source: http://dl.cihar.com/gammu/releases/%name-%version.tar.xz
+Source100: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -183,6 +184,9 @@ cp -R contrib/bash-completion %buildroot%_gammu_docdir/other/
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Tue Dec 08 2015 Michael Shigorin <mike@altlinux.org> 1.36.8-alt1
+- new version (watch file uupdate)
+
 * Sun Nov 29 2015 Michael Shigorin <mike@altlinux.org> 1.36.7-alt1
 - 1.36.7
 
