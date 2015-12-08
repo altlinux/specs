@@ -1,7 +1,7 @@
 %define freetypemajorversion 6
 
 Name: libfreetype-infinality
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
@@ -13,12 +13,13 @@ Packager: Vladimir Didenko <cow@altlinux.ru>
 Source0: %name-%version.tar
 
 Source91: infinality-settings.sh
-Source92: README.infinality
+Source92: xft-settings.sh
+Source93: CHANGELOG
 
 Patch1: freetype-2.4.10-rh-enable-valid.patch
 # Infinality patches. Now we use bohoomil upstream:
 # https://github.com/bohoomil/fontconfig-ultimate/
-Patch91: freetype-2.6.1-bohoomil-infinality-20151005.patch
+Patch91: freetype-2.6.2-bohoomil-infinality-20151205.patch
 
 Provides: freetype2-infinality = %version
 Obsoletes: freetype2-infinality < %version
@@ -68,6 +69,7 @@ chmod 644 %buildroot%ld_so_conf
 
 mkdir -p %buildroot%_sysconfdir/X11/profile.d
 install -pm755 %SOURCE91 %buildroot%_sysconfdir/X11/profile.d/
+install -pm755 %SOURCE92 %buildroot%_sysconfdir/X11/profile.d/
 
 %define docdir %{_docdir}/%name-%version
 mkdir -p %buildroot%docdir
@@ -75,9 +77,7 @@ cp -a docs/{FTL.TXT,LICENSE.TXT,CHANGES} %buildroot%docdir/
 pushd %buildroot%docdir
     bzip2 -9 CHANGES
 popd
-cp %SOURCE91 %buildroot%docdir
-cp %SOURCE92 %buildroot%docdir
-cp %PATCH91 %buildroot%docdir
+cp %SOURCE93 %buildroot%docdir
 
 #remove devel data. Infinality package is not oriented on any development
 rm -f %buildroot%_bindir/*-config
@@ -93,10 +93,17 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %exclude %_mandir/
 %docdir
 %_libdir/%name/
-%config %_sysconfdir/X11/profile.d/infinality-settings.sh
+%config(noreplace) %_sysconfdir/X11/profile.d/infinality-settings.sh
+%config(noreplace) %_sysconfdir/X11/profile.d/xft-settings.sh
 %config %ld_so_conf
 
 %changelog
+* Tue Dec 8 2015 Vladimir Didenko <cow@altlinux.ru> 2.6.2-alt1
+- 2.6.2
+- use separate script to set xft settings
+- don't set xft.dpi by default
+- update infinality patch
+
 * Mon Oct 5 2015 Vladimir Didenko <cow@altlinux.ru> 2.6.1-alt1
 - 2.6.1
 - Remove debug(libfreetype.so) from provides (closes: #31325)
