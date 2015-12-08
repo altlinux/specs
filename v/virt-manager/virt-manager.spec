@@ -7,7 +7,7 @@
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.2.1
+Version: 1.3.1
 Release: alt1
 Summary: Virtual Machine Manager
 
@@ -16,13 +16,13 @@ License: GPLv2+
 Url: http://virt-manager.org/
 BuildArch: noarch
 
-# git://git.fedorahosted.org/virt-manager.git
+# https://github.com/virt-manager/virt-manager
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires: virt-manager-common = %version-%release
 Requires: virt-install = %version-%release
-Requires: python-module-pygobject3
+Requires: python-module-pygobject3 >= 3.4
 Requires: python-module-libxml2
 Requires: vte3
 Requires: dconf
@@ -104,7 +104,9 @@ python setup.py configure \
 
 %install
 #%%python_install
-python setup.py install --root=%buildroot
+python setup.py \
+	--no-update-icon-cache --no-compile-schemas \
+	install --root=%buildroot
 
 %find_lang --with-gnome %name
 
@@ -144,6 +146,9 @@ python setup.py install --root=%buildroot
 %_man1dir/virt-xml.1*
 
 %changelog
+* Tue Dec 08 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt1
+- 1.3.1
+
 * Mon Jun 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.1-alt1
 - git snapshot
 
