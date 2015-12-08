@@ -1,6 +1,6 @@
 Name: 	 tellico
-Version: 2.3.10
-Release: alt2
+Version: 2.3.11
+Release: alt1
 
 Summary: A collection manager for KDE
 License: GPLv2+
@@ -58,6 +58,9 @@ cp %SOURCE2 cmake/modules/FindKSane.cmake
 %_K4xdg_mime/%name.xml
 
 %changelog
+* Tue Dec 08 2015 Andrey Cherepanov <cas@altlinux.org> 2.3.11-alt1
+- New version
+
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 2.3.10-alt2
 - rebuild with new libyaz 5.13
 
