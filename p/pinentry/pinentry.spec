@@ -1,7 +1,8 @@
 %def_disable libcap
+%def_disable qt5
 
 Name: pinentry
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 
 Group: File tools
@@ -22,12 +23,17 @@ Patch10: alt-mask-xprop.patch
 
 
 # due to qt macros
+%if_enabled qt5
+BuildRequires(pre): qt5-base-devel
+%else
 BuildRequires(pre): libqt4-devel
+%endif
 %if_enabled libcap
 BuildRequires: libcap-devel
 %endif
 BuildRequires: gcc-c++ libgtk+2-devel libncursesw-devel
 BuildRequires: libsecret-devel gcr-libs-devel libassuan-devel
+BuildRequires: texinfo
 
 %description
 This is simple PIN or passphrase entry dialog which
@@ -116,7 +122,12 @@ pushd gui
     --disable-pinentry-curses \
     --disable-pinentry-tty \
     --enable-pinentry-gtk2 \
+%if_enabled qt5
     --enable-pinentry-qt \
+%else
+    --enable-pinentry-qt \
+    --disable-pinentry-qt5 \
+%endif
     --enable-pinentry-qt-clipboard \
     --enable-pinentry-gnome3 \
     --enable-libsecret \
@@ -172,6 +183,12 @@ install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt1
+- new version
+
+* Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt2
+- fix build requires
+
 * Mon Oct 26 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt1
 - new version
 
