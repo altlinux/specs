@@ -21,7 +21,7 @@
 %define rname kopete
 Name: kde4-kopete
 Version: 15.08.2
-Release: alt1
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -48,7 +48,7 @@ BuildRequires: libexpat-devel libidn-devel libjasper-devel libjpeg-devel
 BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel jsoncpp-devel
 BuildRequires: libmeanwhile-devel libmediastreamer-devel libmediastreamer-ilbc libmsn-devel libotr5-devel libalsa-devel
 BuildRequires: libqca2-devel libqimageblitz-devel libsqlite3-devel 
-BuildRequires: libsrtp libortp-devel libv4l-devel libxslt-devel python-devel
+BuildRequires: libsrtp-devel libortp-devel libv4l-devel libxslt-devel python-devel
 BuildRequires: kde-common-devel rpm-macros-browser-plugins
 
 %description
@@ -315,6 +315,12 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt2
+- fix build requires
+
+* Wed Nov 11 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt0.M70P.1
+- build for M70P
+
 * Tue Nov 03 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt1
 - new version
 
@@ -326,6 +332,9 @@ based on %name.
 
 * Wed Apr 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.0-alt1
 - new version
+
+* Thu Mar 26 2015 Andrey Cherepanov <cas@altlinux.org> 14.12.3-alt2.M70P.2
+- Rebuild with new verson of libmediastreamer
 
 * Wed Mar 25 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.3-alt2.M70P.1
 - build for M70P
