@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 228
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -847,6 +847,8 @@ install -m 0644 %SOURCE36 %buildroot/lib/systemd/system-preset/
 install -m 0644 %SOURCE37 %buildroot/lib/systemd/system-preset/
 install -m 0644 %SOURCE38 %buildroot/lib/systemd/system-preset/
 
+mkdir -p %buildroot%_sysconfdir/systemd/network
+
 # The following services are currently installed by initscripts
 #pushd %buildroot%_unitdir/graphical.target.wants && {
 #	rm -f display-manager.service
@@ -1525,6 +1527,7 @@ update_chrooted all
 %if_enabled networkd
 %files networkd
 /sbin/networkctl
+%dir %_sysconfdir/systemd/network
 %config(noreplace) %_sysconfdir/systemd/resolved.conf
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.resolve1.conf
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.network1.conf
@@ -1729,6 +1732,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Dec 08 2015 Alexey Shabalin <shaba@altlinux.ru> 1:228-alt2
+- package dir /etc/systemd/network to systemd-networkd
+
 * Wed Nov 18 2015 Alexey Shabalin <shaba@altlinux.ru> 1:228-alt1
 - 228
 - update altlinux-libresolv and altlinux-openresolv units
