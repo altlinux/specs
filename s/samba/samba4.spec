@@ -33,7 +33,7 @@
 
 Name: samba
 Version: 4.3.1
-Release: alt1
+Release: alt1.1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -109,7 +109,6 @@ BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel >= 3.4.0.16}
 %{?_with_libcephfs:BuildRequires: ceph-devel}
 %{?_with_dc:BuildRequires: libgnutls-devel}
-BuildRequires: perl-Perl4-CoreLibs
 
 %description
 Samba is the standard Windows interoperability suite of programs for Linux and Unix.
@@ -1329,6 +1328,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Tue Dec 08 2015 Igor Vlasenko <viy@altlinux.ru> 4.3.1-alt1.1
+- NMU: dropped unused prehistoric BR: perl-Perl4-CoreLibs
+
 * Fri Oct 23 2015 Alexey Shabalin <shaba@altlinux.ru> 4.3.1-alt1
 - 4.3.1
 
