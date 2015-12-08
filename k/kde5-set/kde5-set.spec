@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt18
+Release: alt19
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -12,7 +12,8 @@ BuildArch: noarch
 %package -n kde5-runtime
 Summary: %summary
 Group: Graphical desktop/KDE
-Requires: kf5-kio kf5-kded qt5-phonon-backend qt5-quickcontrols kf5-kwayland-integration
+Requires: qt5-phonon-backend qt5-quickcontrols qt5-graphicaleffects
+Requires: kf5-kio kf5-kded kf5-kwayland-integration
 
 %package -n kde5-mini
 Summary: %summary
@@ -31,6 +32,7 @@ Requires: kf5-sddm-kcm kf5-polkit-kde-agent kf5-kio-extras kf5-breeze kf5-powerd
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kf5-kde-cli-tools
 Requires: kde5-ark kde5-konsole kde5-gwenview kde5-kwrite kde5-kwalletmanager
 Requires: kde5-kdepasswd kde5-kcalc kde5-kdebugsettings kde5-kross-python
+Requires: kf5-milou
 
 %package -n kde5
 Summary: %summary
@@ -52,7 +54,7 @@ Group: Graphical desktop/KDE
 Requires: kde5
 #Requires: kde5-telepathy
 Requires: kf5-plasma-workspace-wallpapers
-Requires: kf5-kwrited kf5-milou kf5-plasma-nm-maxi
+Requires: kf5-kwrited kf5-plasma-nm-maxi
 Requires: kf5-user-manager
 Requires: kde5-konversation kde5-kate kde5-print-manager
 Requires: kde5-pim kde5-baseapps kde5-kcron kde5-kruler
@@ -97,6 +99,9 @@ Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts
 %files -n kde5-somedevel
 
 %changelog
+* Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt19
+- fix requires
+
 * Tue Nov 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt18
 - update requires
 
