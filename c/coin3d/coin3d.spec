@@ -1,6 +1,6 @@
 Name: coin3d
 Version: 3.1.3
-Release: alt9
+Release: alt10
 Summary: OpenGL-based, 3D graphics library
 License: GPL
 Group: Development/Tools
@@ -8,6 +8,7 @@ Url: http://www.coin3d.org
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://ftp.coin3d.org/coin/src/all/Coin-%version.tar.gz
+Patch1: %name-add-debugerror-includes.patch
 
 Requires: lib%name = %version-%release
 Requires: %name-common = %version-%release
@@ -106,6 +107,7 @@ This package contains architecture independent files of Coin3D.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 #sed -i 's|^libdir.*|libdir=%_libdir|' Coin.pc.in
@@ -176,6 +178,9 @@ mv %buildroot%_datadir/aclocal/coin.m4 \
 %exclude %_datadir/Coin/conf/coin-default.cfg
 
 %changelog
+* Tue Dec 08 2015 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt10
+- Add debugerror.h include in base include file (for freecad build)
+
 * Thu Feb 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.3-alt9
 - Fixed build with gcc 4.8
 
