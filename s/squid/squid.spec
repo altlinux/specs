@@ -8,7 +8,7 @@
 %def_with gnutls
 
 Name: squid
-Version: 3.5.10
+Version: 3.5.12
 Release: alt1
 %define langpack_ver 20150704
 Summary: The Squid proxy caching server
@@ -302,6 +302,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Tue Dec 08 2015 Alexey Shabalin <shaba@altlinux.ru> 3.5.12-alt1
+- 3.5.12
+
 * Tue Oct 20 2015 Alexey Shabalin <shaba@altlinux.ru> 3.5.10-alt1
 - 3.5.10
 - fixed CVE-2015-5400
