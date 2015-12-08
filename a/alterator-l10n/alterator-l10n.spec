@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.22
+Version: 2.9.23
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -111,6 +111,9 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Dec 08 2015 Andrey Cherepanov <cas@altlinux.org> 2.9.23-alt1
+- Update Russian translation of alterator-users
+
 * Wed Dec 02 2015 Andrey Cherepanov <cas@altlinux.org> 2.9.22-alt1
 - Update Russian translation of alterator-grub
 
