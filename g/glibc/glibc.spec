@@ -1,6 +1,6 @@
 Name: glibc
-Version: 2.17
-Release: alt8
+Version: 2.22
+Release: alt1
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -26,7 +26,7 @@ Url: http://www.gnu.org/software/glibc/
 %def_disable multiarch
 %endif
 
-%define enablekernel 2.6.18
+%define enablekernel 2.6.32
 
 %define basever 2.5.1
 
@@ -62,6 +62,8 @@ BuildPreReq: rpm-build >= 4.0.4-alt61
 
 # This is required for building auxiliary programs.
 BuildPreReq: libgd2-devel
+
+BuildPreReq: makeinfo
 
 # g++ and /proc are required for test suite.
 %{?!_without_check:%{?!_disable_check:BuildPreReq: gcc-c++ libstdc++-devel-static /proc}}
@@ -314,10 +316,7 @@ export CC=%__cc CXX=%__cxx \
 	ac_cv_path_KSH=/bin/sh \
 	#
 
-AddOns=nptl,libidn
-%ifarch %arm
-AddOns="$AddOns,ports"
-%endif
+AddOns=libidn
 
 rm -rf %buildtarget
 mkdir %buildtarget
@@ -374,8 +373,6 @@ for n in %renamed_locales; do
 	ln -s "$n" "$t"
 done
 %endif #with locales
-
-ln -sf libbsd-compat.a %buildroot%_libdir/libbsd.a
 
 mkdir -p %buildroot{%_initdir,%_unitdir,/etc/sysconfig,/lib/tmpfiles.d}
 install -pm644 alt/nsswitch.conf %buildroot/etc/
@@ -484,7 +481,47 @@ done |sort -u >>libc.lang
 %check
 cat /proc/self/maps >/dev/null
 export TIMEOUTFACTOR=10
-make %PARALLELMFLAGS -C %buildtarget -k check fast-check=yes LDFLAGS=-Wl,--no-as-needed ||:
+
+cat > %buildtarget/xfail.mk <<@@@
+%ifarch x86_64
+export test-xfail-ISO/assert.h/linknamespace=yes
+export test-xfail-ISO/ctype.h/linknamespace=yes
+export test-xfail-ISO/errno.h/linknamespace=yes
+export test-xfail-ISO/locale.h/linknamespace=yes
+export test-xfail-ISO/math.h/linknamespace=yes
+export test-xfail-ISO/setjmp.h/linknamespace=yes
+export test-xfail-ISO/signal.h/linknamespace=yes
+export test-xfail-ISO/stdio.h/linknamespace=yes
+export test-xfail-test-double=yes
+export test-xfail-test-double-vlen2=yes
+export test-xfail-test-double-vlen4=yes
+export test-xfail-test-idouble=yes
+%endif
+%ifarch %ix86
+export test-xfail-ISO/assert.h/linknamespace=yes
+export test-xfail-ISO/ctype.h/linknamespace=yes
+export test-xfail-ISO/errno.h/linknamespace=yes
+export test-xfail-ISO/locale.h/linknamespace=yes
+export test-xfail-ISO/math.h/linknamespace=yes
+export test-xfail-ISO/setjmp.h/linknamespace=yes
+export test-xfail-ISO/signal.h/linknamespace=yes
+export test-xfail-ISO/stdio.h/linknamespace=yes
+export test-xfail-test-double=yes
+export test-xfail-test-float=yes
+export test-xfail-test-idouble=yes
+export test-xfail-test-ifloat=yes
+export test-xfail-tst-cleanupx4=yes
+%endif
+
+include Makefile
+@@@
+
+make %PARALLELMFLAGS -C %buildtarget -f xfail.mk -k check fast-check=yes LDFLAGS=-Wl,--no-as-needed || {
+  rc=$?
+  if grep -qs '^export test-xfail' %buildtarget/xfail.mk; then
+    exit $rc
+  fi
+}
 
 %pre core -p /sbin/glibc_preinstall
 %post core -p /sbin/glibc_post_upgrade
@@ -660,6 +697,9 @@ fi
 %_datadir/i18n
 
 %changelog
+* Tue Dec 08 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.22-alt1
+- Updated to 2.22 branch with backports from master and fedora.
+
 * Wed Jan 15 2014 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt8
 - libc.so: link libc.so.6 both before and after libc_nonshared.a,
   to fix spurious undefined reference with --as-needed reported
