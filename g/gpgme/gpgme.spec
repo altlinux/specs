@@ -1,6 +1,6 @@
 Name: gpgme
 Version: 1.5.5
-Release: alt1
+Release: alt2
 
 %define min_gnupg_version 1.9.6
 
@@ -23,6 +23,7 @@ Requires: gnupg2-gpg >= %min_gnupg_version
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
 BuildRequires: /proc gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
+BuildRequires: texinfo
 
 %package -n lib%name
 Summary: GnuPG Made Easy!
@@ -131,6 +132,9 @@ export PATH=$PWD/tmp_bin:$PATH
 %endif
 
 %changelog
+* Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 1.5.5-alt2
+- fix build requires
+
 * Wed Aug 26 2015 Sergey V Turchin <zerg@altlinux.org> 1.5.5-alt1
 - new version
 
