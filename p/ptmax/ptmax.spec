@@ -1,5 +1,5 @@
 Name: ptmax
-Version: 2012
+Version: 2015
 Release: alt1
 
 Summary: Maximize partition in partition table to include it's trailing unallocated space
@@ -69,6 +69,9 @@ install %name -D %buildroot%_sbindir/%name
 %_sbindir/%name
 
 %changelog
+* Tue Dec  8 2015 Terechkov Evgenii <evg@altlinux.org> 2015-alt1
+- git-20151208
+
 * Wed Feb 12 2014 Vitaly Lipatov <lav@altlinux.ru> 2012-alt1
 - add support for cciss device names
 - use sysfs to detect correct device parent name
