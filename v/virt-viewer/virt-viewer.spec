@@ -1,5 +1,5 @@
 Name: virt-viewer
-Version: 2.0
+Version: 3.0
 Release: alt1
 
 Summary: Virtual Machine Viewer
@@ -15,7 +15,7 @@ BuildRequires: glib2-devel >= 2.22.0
 BuildRequires: libxml2-devel
 BuildRequires: libvirt-devel >= 0.9.7
 BuildRequires: perl-podlators intltool
-BuildRequires: libspice-gtk3-devel >= 0.22 spice-protocol >= 0.10.1
+BuildRequires: libspice-gtk3-devel >= 0.30 spice-protocol >= 0.12.7
 BuildRequires: libgtk3vnc-devel >= 0.4.0
 BuildRequires: libgovirt-devel >= 0.3.2
 
@@ -58,6 +58,9 @@ intltoolize --force
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Tue Dec 08 2015 Alexey Shabalin <shaba@altlinux.ru> 3.0-alt1
+- 3.0
+
 * Tue Jan 27 2015 Alexey Shabalin <shaba@altlinux.ru> 2.0-alt1
 - 2.0
 
