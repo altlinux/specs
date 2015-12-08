@@ -45,7 +45,7 @@
 
 Name:    samba-DC
 Version: 4.3.2
-Release: alt1
+Release: alt1.1
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -122,7 +122,6 @@ BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-
 %{?_enable_avahi:BuildRequires: libavahi-devel}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel >= 3.4.0.16}
 %{?_with_libcephfs:BuildRequires: ceph-devel}
-BuildRequires: perl-Perl4-CoreLibs
 
 %description
 Samba is the standard Windows interoperability suite of programs for Linux and Unix.
@@ -1253,6 +1252,9 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n task-samba-dc
 
 %changelog
+* Tue Dec 08 2015 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1.1
+- NMU: dropped unused prehistoric BR: perl-Perl4-CoreLibs
+
 * Tue Dec 01 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.2-alt1
 - New version (https://www.samba.org/samba/history/samba-4.3.2.html)
 - Enable RPATH in installed files to correct link using .pc files
