@@ -6,7 +6,7 @@
 %define tname soundkonverter
 Name: kde4-soundkonverter
 Version: 2.1.2
-Release: alt2
+Release: alt3
 
 Summary: A frontend to various audio converters
 License: GPLv2
@@ -45,6 +45,8 @@ Supported formats are: (encode/decode)
 %patch1 -p1
 %endif
 
+rm -f cmake/modules/FindTaglib.cmake
+
 for f in po/*/*.po; do
     newname=`echo $f| sed 's|\(.*/\)[[:alpha:]]*\(\.po\)|\1%tname\2|'`
     [ "$f" == "$newname" ] || mv $f $newname
@@ -73,6 +75,9 @@ done
 %_K4srvtyp/%{tname}_*.desktop
 
 %changelog
+* Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt3
+- fix find taglib
+
 * Wed May 20 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt2
 - rebuild with gcc5
 
