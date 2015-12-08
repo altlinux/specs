@@ -2,7 +2,7 @@
 
 Name: libtag-extras
 Version: 1.0.1
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Unofficial TagLib file type plugins maintained by the Amarok project
@@ -12,7 +12,8 @@ License: LGPL
 Provides: %rname = %version-%release
 Obsoletes: %rname < %version-%release
 
-Source: %rname-%version.tar.bz2
+Source: %rname-%version.tar
+Source1: FindTaglib.cmake
 
 #Patch0: taglib-extras-0.1-multilib-1.patch
 
@@ -37,6 +38,7 @@ library.
 
 %prep
 %setup -q -n %rname-%version
+cat %SOURCE1 > cmake/modules/FindTaglib.cmake
 
 %build
 %Kcmake \
@@ -58,6 +60,9 @@ library.
 %_includedir/%rname
 
 %changelog
+* Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt4
+- fix find taglib
+
 * Wed Mar 02 2011 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt3
 - fix to build
 
