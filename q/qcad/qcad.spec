@@ -1,7 +1,7 @@
 Name: 	 qcad
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
-Version: 3.12.1.0
+Version: 3.12.3.3
 Release: alt1
 
 Url: 	 http://www.ribbonsoft.com/qcad.html
@@ -110,6 +110,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Dec 08 2015 Andrey Cherepanov <cas@altlinux.org> 3.12.3.3-alt1
+- New version
+
 * Fri Nov 13 2015 Andrey Cherepanov <cas@altlinux.org> 3.12.1.0-alt1
 - New version
 
