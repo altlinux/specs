@@ -1,6 +1,6 @@
 Name: netpolice
 Version: 1.02
-Release: alt2.2
+Release: alt3
 Packager: Anton Pischulin <letanton@altlinux.ru>
 
 Summary: Netpolice is content filtering system
@@ -20,7 +20,7 @@ Summary: netpolice meta package
 Group: System/Servers 
 Requires: squid >= 3.0
 Requires: memcached
-Requires: c-icap >= 20080706.01
+Requires: c-icap 
 Requires: netpolice-filter
 Requires: squid-conf-host2cat >= 1.01
 Requires: host2cat >= 1.01
@@ -36,6 +36,9 @@ install -pD -m644 %SOURCE0 %buildroot%_docdir/%name/%name
 %doc %_docdir/%name/%name
 
 %changelog
+* Mon Dec 07 2015 Andrey Cherepanov <cas@altlinux.org> 1.02-alt3
+- Rebuild with new version if c-icap
+
 * Thu Nov 11 2010 Anton Pischulin <letanton@altlinux.ru> 1.02-alt2.2
 - Fix changelog.
 

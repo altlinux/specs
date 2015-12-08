@@ -1,19 +1,24 @@
-Name: c-icap
-Version: 20080706.01
-Release: alt2.3
-Packager: Grigory Batalov <bga@altlinux.ru>
+%def_without clamav
+
+Name: 	 c-icap
+Version: 0.4.2
+Release: alt1
+Epoch:	 1
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Summary: ICAP server
-License: GPL
-Group: System/Servers
-Url: http://c-icap.sourceforge.net/
+License: LGPLv2
+Group: 	 System/Servers
+Url: 	 http://c-icap.sourceforge.net/
 
 Source0: %name-%version.tar.gz
 Source1: %name.init
-Patch: %name-20080706-alt.patch
+Source2: %name.watch
 
-# Automatically added by buildreq on Thu Apr 09 2009
-BuildRequires: gcc4.4-c++ libadns-devel libclamav-devel libmemcache-devel opendbx-devel zlib-devel
+BuildRequires: gcc-c++ libadns-devel libmemcache-devel opendbx-devel zlib-devel
+%if_with clamav
+BuildRequires: libclamav-devel
+%endif
 
 Requires(pre): shadow-utils
 
@@ -26,9 +31,10 @@ Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
-Headers and libraries for an Internet Content Adaptation Protocol (ICAP) 
+Headers and libraries for an Internet Content Adaptation Protocol (ICAP)
 server implementation.
 
+%if_with clamav
 %package clamav
 Summary: ICAP ClamAV module
 Group: System/Servers
@@ -36,25 +42,19 @@ Requires: %name = %version-%release
 
 %description clamav
 ICAP module for scanning content with ClamAV.
+%endif
 
 %prep
 %setup -q
-%patch -p1
 
 %build
-aclocal
-autoconf
-autoheader
-cp /usr/share/libtool/config/ltmain.sh ltmain.sh
-automake --add-missing --copy
-cp INSTALL INSTALL.txt
-
-%undefine __libtoolize
+%autoreconf
+%undefine _configure_gettext
 %configure
-%make_build --debug -j
+%make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 mkdir -p %buildroot%_sbindir
@@ -65,9 +65,21 @@ touch %buildroot%_logdir/%name/{server,access}.log
 
 mkdir -p %buildroot{%_var/run/%name,%_cachedir/%name}
 
+rm -f %buildroot%_libdir/c_icap/*.la
+
+# Fix configuration
+. shell-config
+%define cfg_set shell_config_set %buildroot%_sysconfdir/%name.conf
+%cfg_set PidFile     %_runtimedir/%name/%name.pid ' ' ' '
+%cfg_set ModulesDir  %_libdir/c_icap ' ' ' '
+%cfg_set ServicesDir %_libdir/c_icap ' ' ' '
+%cfg_set ServerLog   %_logdir/%name/server.log ' ' ' '
+%cfg_set AccessLog   %_logdir/%name/access.log ' ' ' '
+%cfg_set LoadMagicFile %_sysconfdir/%name.magic ' ' ' '
+
 %pre
 /usr/sbin/groupadd -r -f _c_icap ||:
-/usr/sbin/useradd -M -n _c_icap -r -d /dev/null -s /dev/null -c "system user for %name" -g _c_icap > /dev/null 2>&1 ||:
+/usr/sbin/useradd -M -n _c_icap -r -d %_runtimedir/%name -s /dev/null -c "System user for %name" -g _c_icap > /dev/null 2>&1 ||:
 
 %post
 %post_service %name
@@ -75,36 +87,49 @@ mkdir -p %buildroot{%_var/run/%name,%_cachedir/%name}
 %preun
 %preun_service %name
 
+%if_with clamav
 %post clamav
 /sbin/service %name condrestart ||:
 
 %preun clamav
 /sbin/service %name condrestart ||:
+%endif
 
 %files
-%doc AUTHORS README INSTALL.txt TODO contrib/get_file.pl
+%doc AUTHORS README TODO contrib/get_file.pl
 %config(noreplace) %_sysconfdir/%name.conf*
 %config(noreplace) %_sysconfdir/%name.magic*
 %attr (755,root,root) %_initdir/%name
 %_bindir/*
 %attr (755,root,root) %_sbindir/%name
-%dir %_libdir/%name/
-%exclude %_libdir/%name/srv_clamav.so
-%_libdir/%name/*.so
+%dir %_libdir/c_icap/
+%_libdir/c_icap/*.so
 %_libdir/libicapapi.so.*
+%if_with clamav
+%exclude %_libdir/c_icap/srv_clamav.so
+%endif
 %dir %attr (750,_c_icap,root) %_logdir/%name/
 %ghost %_logdir/%name/*.log
 %dir %attr (750,_c_icap,root) %_var/run/%name/
 %dir %attr (750,_c_icap,root) %_cachedir/%name/
+%_man8dir/c-icap*.8.*
 
 %files devel
-%_includedir/%name
+%_includedir/c_icap
 %_libdir/libicapapi.so
 
+%if_with clamav
 %files clamav
-%_libdir/%name/srv_clamav.so
+%_libdir/c_icap/srv_clamav.so
+%endif
 
 %changelog
+* Mon Dec 07 2015 Andrey Cherepanov <cas@altlinux.org> 1:0.4.2-alt1
+- New version
+- Spec cleanup
+- Remove clamav support
+- Rename libdir and includedir to c_icap as in upstream
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20080706.01-alt2.3
 - Fixed build
 
