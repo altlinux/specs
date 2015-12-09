@@ -1,6 +1,8 @@
+%def_disable kactivities
+
 Name:         rekonq
 Version:      2.4.2
-Release:      alt3
+Release:      alt4
 
 Group:        Networking/WWW
 Summary:      Web browser easy for use
@@ -20,7 +22,9 @@ BuildRequires: libalternatives-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel
 BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86vm-devel
 BuildRequires: libxkbfile-devel desktop-file-utils
+%if_enabled kactivities
 BuildRequires: kde4-kactivities-devel
+%endif
 
 %description
 Web browser easy for use.
@@ -32,6 +36,10 @@ cp -ar po/de/CMakeLists.txt po/ru/
 sed -i 's|GETTEXT_PROCESS_PO_FILES.*INSTALL_DESTINATION|GETTEXT_PROCESS_PO_FILES(ru ALL INSTALL_DESTINATION|' po/ru/CMakeLists.txt
 echo 'add_subdirectory(ru)' >> po/CMakeLists.txt
 install -m 0644 %SOURCE10 po/ru/rekonq.po
+
+%if_disabled kactivities
+sed -i 's|.*FIND_PACKAGE.*KActivities.*||' CMakeLists.txt
+%endif
 
 
 %build
@@ -68,6 +76,12 @@ desktop-file-install --dir %buildroot/%_K4xdg_apps --add-mime-type=x-scheme-hand
 %_K4cfg/%name.kcfg
 
 %changelog
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 2.4.2-alt4
+- disable Activities support
+
+* Mon Dec 07 2015 Sergey V Turchin <zerg@altlinux.org> 2.4.2-alt2.M70P.1
+- built for M70P
+
 * Mon Dec 07 2015 Sergey V Turchin <zerg@altlinux.org> 2.4.2-alt3
 - add Russian translation; thanks Koi@forum.altlinux (ALT#31595)
 
