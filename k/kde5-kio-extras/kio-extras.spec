@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 15.08.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -21,6 +21,7 @@ Provides: kf5-kio-extras = %EVR
 Obsoletes: kf5-kio-extras < %EVR
 
 Source: %rname-%version.tar
+Patch1: alt-fix-build.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils glibc-devel-static ilmbase-devel kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs samba-libs shared-mime-info xml-common xml-utils
@@ -70,6 +71,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -117,6 +119,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libmolletnetwork5.so.%molletnetwork_sover
 
 %changelog
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt2
+- fix to build
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 
