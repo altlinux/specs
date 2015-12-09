@@ -1,6 +1,6 @@
 Name: aspell
 Version: 0.60.6.1
-Release: alt1
+Release: alt1.1
 
 Summary: An Open Source interactive spelling checker program
 License: LGPL
@@ -15,6 +15,8 @@ BuildRequires: gcc-c++ libncursesw-devel
 Requires: lib%name = %version-%release
 
 %def_disable static
+# explicitly added texinfo for info files
+BuildRequires: texinfo
 
 %description
 GNU Aspell is a spell checker designed to eventually replace Ispell.
@@ -119,10 +121,13 @@ rm -rf %buildroot%_libdir/%name/*.la
 %_bindir/pre*
 %_bindir/run-with-aspell
 %_bindir/word-list-compress
-%_infodir/aspell.info.bz2
+%_infodir/aspell.info.*
 %_man1dir/*.1.*
 
 %changelog
+* Tue Dec 08 2015 Igor Vlasenko <viy@altlinux.ru> 0.60.6.1-alt1.1
+- NMU: added BR: texinfo
+
 * Tue Dec 20 2011 Damir Shayhutdinov <damir@altlinux.ru> 0.60.6.1-alt1
 - Updated to 0.60.6.1
 - Make interpackage dependencies strict
