@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.2
-%define rel alt4.1
+%define rel alt4.2
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -175,6 +175,8 @@ Patch5047: tdelibs-3.5.13-CUPS_IPP-memoryleak.patch
 Patch5048: tdelibs-3.5.13-use-new-QT-hiden-items-icon-seach.patch
 Patch5049: tdelibs-3.5.13-KJobViewer-crash.patch
 Patch5050: tdelibs-3.5.13-krandrTransl.patch
+Patch5051: kdelibs-3.5.12-alt-perl522.patch
+Patch5052: kdelibs-3.5.12-CUPS_21.patch
 # security patches
 # end security patches
 
@@ -320,6 +322,8 @@ subst "s|kde@MAJOR@rc|kde%{major}rc|" kdecore/kconfigbackend.cpp
 %patch5048 -p1
 %patch5049 -p1
 %patch5050 -p1
+%patch5051 -p1
+%patch5052 -p1
 
 # security
 # end security
@@ -658,6 +662,11 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 3.5.13.2-alt4.2
+- NMU:
+- Fix perl522 issues (Patch5051)
+- Fix build with cups 2 (Patch5052: kdelibs-3.5.12-CUPS_21.patch)
+
 * Tue Oct 27 2015 Andrey Cherepanov <cas@altlinux.org> 3.5.13.2-alt4.1
 - Rebuilt for gcc5 C++11 ABI
 - Fix build by removing harmful redefinition of LDFLAGS
