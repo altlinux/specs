@@ -3,7 +3,7 @@
 %define rname kffmpegthumbnailer
 Name: kde4-kffmpegthumbnailer
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Group: Video
 Summary: A video thumbnailer for kde based on ffmpegthumbnailer
@@ -36,5 +36,8 @@ The thumbnailer uses ffmpeg to decode frames from the video files.
 %_K4lib/kffmpegthumbnailer.so
 
 %changelog
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt2
+- rebuild with gcc5
+
 * Thu Mar 21 2013 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
 - initial build
