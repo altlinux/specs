@@ -1,8 +1,8 @@
 %define libwbc_alternatives_version 0.12.0
 
 Name: sssd
-Version: 1.13.1
-Release: alt0.2
+Version: 1.13.2
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -380,6 +380,7 @@ install -D -m644 src/examples/logrotate %buildroot%_sysconfdir/logrotate.d/%name
 
 touch %buildroot%mcpath/passwd
 touch %buildroot%mcpath/group
+touch %buildroot%mcpath/initgroups
 
 install -D -m755 %SOURCE2 %buildroot%_initdir/%name
 install -D -m644 %SOURCE3 %buildroot%_pamdir/system-auth-sss
@@ -476,6 +477,7 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %attr(755,%sssd_user,%sssd_user) %dir %mcpath
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/passwd
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/group
+%ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/initgroups
 %attr(755,%sssd_user,%sssd_user) %dir %pipepath
 %attr(755,%sssd_user,%sssd_user) %dir %gpocachepath
 %attr(755,%sssd_user,%sssd_user) %dir %pubconfpath
@@ -503,8 +505,6 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %files -n python-module-sss
 %python_sitelibdir/pysss.so
 %python_sitelibdir/pysss_murmur.so
-%python_sitelibdir/_py2sss.so
-%python_sitelibdir/_py2sss_murmur.so
 
 %files ldap
 %_libdir/%name/libsss_ldap.so
@@ -532,7 +532,6 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 
 %files ad
 %_libdir/%name/libsss_ad.so
-%_libdir/%name/libsss_ad_common.so
 %_libexecdir/%name/gpo_child
 %_man5dir/sssd-ad*
 %_datadir/%name/sssd.api.d/sssd-ad.conf
@@ -584,7 +583,6 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 
 %files -n python-module-ipa_hbac
 %python_sitelibdir/pyhbac.so
-%python_sitelibdir/_py2hbac.so
 
 %files -n libsss_nss_idmap
 %_libdir/libsss_nss_idmap.so.*
@@ -615,7 +613,6 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 
 %files -n python-module-sss_nss_idmap
 %python_sitelibdir/pysss_nss_idmap.so
-%python_sitelibdir/_py2sss_nss_idmap.so
 
 %files -n libwbclient-%name
 %_libdir/%name/modules/libwbclient.so.*
@@ -631,6 +628,9 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_altdir/libwbclient-sss-devel
 
 %changelog
+* Wed Dec 09 2015 Alexey Shabalin <shaba@altlinux.ru> 1.13.2-alt1
+- 1.13.2
+
 * Mon Nov 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.13.1-alt0.2
 - Rebuild with libldb-1.1.23
 
