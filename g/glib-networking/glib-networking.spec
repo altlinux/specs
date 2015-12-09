@@ -4,7 +4,7 @@
 
 Name: glib-networking
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Networking support for GIO
 Group: System/Libraries
@@ -80,6 +80,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 2.46.1-alt2
+- rebuilt against libgnutls.so.30
+
 * Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.46.1-alt1
 - 2.46.1
 

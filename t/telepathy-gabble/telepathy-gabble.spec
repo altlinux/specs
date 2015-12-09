@@ -1,6 +1,8 @@
+%define _libexecdir %_prefix/libexec
+
 Name: telepathy-gabble
 Version: 0.18.3
-Release: alt1
+Release: alt2
 
 Summary: Jabber/XMPP connection manager
 License: LGPL
@@ -33,7 +35,6 @@ with Jabber/XMPP servers, including Google Talk.
 
 
 %build
-# automake-1.13 required
 %autoreconf
 %configure \
 	--disable-static \
@@ -41,7 +42,7 @@ with Jabber/XMPP servers, including Google Talk.
 %make_build
 
 %install
-%make_build DESTDIR=%buildroot install
+%makeinstall_std
 
 %check
 #%make check
@@ -68,6 +69,9 @@ with Jabber/XMPP servers, including Google Talk.
 %exclude %_libdir/telepathy/gabble-0/*/*.la
 
 %changelog
+* Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.18.3-alt2
+- rebuilt against libgnutls.so.30
+
 * Sat May 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.18.3-alt1
 - 0.18.3
 

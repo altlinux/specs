@@ -4,7 +4,7 @@
 
 Name: %{_name}3
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 %def_disable static
 %def_enable introspection
@@ -175,6 +175,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.42.1-alt2
+- rebuilt against libgnutls.so.30
+
 * Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.42.1-alt1
 - 0.42.1
 

@@ -1,6 +1,6 @@
 Name: telepathy-salut
 Version: 0.8.1
-Release: alt2
+Release: alt3
 
 Summary: A link-local XMPP connection manager
 License: LGPLv2.1+
@@ -50,6 +50,9 @@ rm -rf %buildroot%_docdir/%name/
 %exclude %_libdir/telepathy/salut-0/lib/*.la
 
 %changelog
+* Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt3
+- rebuilt against libgnutls.so.30
+
 * Wed Oct 07 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt2
 - rebuild (ALT #31331)
 
