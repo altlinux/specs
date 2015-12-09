@@ -23,9 +23,13 @@
 %def_without mroonga
 %endif
 
+%if_with tokudb
+%def_with jemalloc
+%endif
+
 Name: mariadb
 Version: 10.1.9
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -87,9 +91,10 @@ Patch36: mariadb-ssltest.patch
 Requires: %name-server = %EVR %name-client = %EVR
 
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam0-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
-BuildRequires: libaio-devel libjemalloc-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
+BuildRequires: libaio-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel
 BuildRequires: chrooted control
+%{?_with_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_with_pcre:BuildRequires: libpcre-devel >= 8.35}
 BuildRequires: libxml2-devel
 BuildRequires: libsystemd-devel
@@ -311,12 +316,13 @@ export LDFLAGS
 	-DMYSQL_USER=mysql \
 	-DWITH_READLINE=ON \
 	-DWITH_LIBWRAP=ON \
-	-DWITH_JEMALLOC=system \
+	%{?_with_jemalloc:-DWITH_JEMALLOC=system} \
+	%{?_without_jemalloc:-DWITH_JEMALLOC=no} \
 	-DWITH_SSL=system \
 	-DWITH_ZLIB=system \
-	%{?_with_pcre: -DWITH_PCRE=system -DPCRE_INCLUDES=/usr/include/pcre} \
-	%{?_without_tokudb: -DWITHOUT_TOKUDB=ON} \
-	%{?_without_mroonga: -DWITHOUT_MROONGA=ON} \
+	%{?_with_pcre:-DWITH_PCRE=system -DPCRE_INCLUDES=/usr/include/pcre} \
+	%{?_without_tokudb:-DWITHOUT_TOKUDB=ON} \
+	%{?_without_mroonga:-DWITHOUT_MROONGA=ON} \
 	-DWITH_PIC=ON \
 	-DWITH_EXTRA_CHARSETS=all \
 	-DWITH_INNOBASE_STORAGE_ENGINE=ON \
@@ -328,7 +334,6 @@ export LDFLAGS
 	-DWITH_EMBEDDED_SERVER=ON \
 	-DWITHOUT_EXAMPLE_STORAGE_ENGINE=ON \
 	-DWITH_FAST_MUTEXES=ON \
-	-DWITH_SYSTEMD=ON \
 	-DWITHOUT_DAEMON_EXAMPLE=ON \
 	-DCOMPILATION_COMMENT="(%distribution)" \
 	-DMYSQL_SERVER_SUFFIX="-%release"
@@ -580,6 +585,7 @@ fi
 %endif
 
 %_bindir/wsrep_*
+%_bindir/galera_new_cluster
 
 %_bindir/clustercheck
 %_unitdir/mariadbcheck.socket
@@ -713,6 +719,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 09 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.9-alt2
+- fixed run with systemd type=notify (fixed link mysqld with libsystemd)
+
 * Mon Nov 30 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.9-alt1
 - 10.1.9
 - fix typo in logrotate script (ALT #31532)
