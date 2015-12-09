@@ -1,6 +1,6 @@
 Name: magicpoint
 Version: 1.13a
-Release: alt2.20140908
+Release: alt3.20140908
 
 Summary: Presentation tool
 Group: Office
@@ -66,6 +66,9 @@ sed -i 's|\(CDEBUGFLAGS =.*\)|\1 -g|' Makefile
 %doc COPYRIGHT FAQ README* RELNOTES SYNTAX USAGE sample
 
 %changelog
+* Wed Dec 09 2015 Igor Vlasenko <viy@altlinux.ru> 1.13a-alt3.20140908
+- NMU: Fixed build (also - snapshot from 20151207 is the same as 20140908)
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13a-alt2.20140908
 - Fixed build
 
