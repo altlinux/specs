@@ -10,7 +10,7 @@
 %def_disable v8_internal
 %def_disable libchromiumcontent
 
-%define v8_version 4.7.80.23
+%define v8_version 4.7.80.25
 
 %if_enabled debug
 %define buildtype Debug
@@ -19,7 +19,7 @@
 %endif
 
 Name:           chromium
-Version:        47.0.2526.73
+Version:        47.0.2526.80
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -664,6 +664,13 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Wed Dec 09 2015 Andrey Cherepanov <cas@altlinux.org> 47.0.2526.80-alt1
+- New version
+- Security fixes:
+  - High CVE-2015-6788: Type confusion in extensions.
+  - High CVE-2015-6789: Use-after-free in Blink.
+  - Medium CVE-2015-6790: Escaping issue in saved pages.
+
 * Wed Dec 02 2015 Andrey Cherepanov <cas@altlinux.org> 47.0.2526.73-alt1
 - New version
 - Security fixes:
