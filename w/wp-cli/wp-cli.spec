@@ -1,5 +1,5 @@
 Name: wp-cli
-Version: 0.19.1
+Version: 0.20.4
 Release: alt1
 
 Summary: WP-CLI is a set of command-line tools for managing WordPress installations.
@@ -57,6 +57,9 @@ EOF
 %wpcli/*
 
 %changelog
+* Wed Dec 09 2015 Vitaly Lipatov <lav@altlinux.ru> 0.20.4-alt1
+- update wp-cli to 0.20.4
+
 * Fri May 29 2015 Danil Mikhailov <danil@altlinux.org> 0.19.1-alt1
 - initial build for ALT Linux Sisyphus
 
