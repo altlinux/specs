@@ -3,7 +3,7 @@
 
 Name: vino
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A remote desktop system for GNOME
 License: GPL
@@ -48,6 +48,9 @@ connect to a running GNOME session using VNC.
 %doc AUTHORS NEWS README docs/TODO docs/remote-desktop.txt docs/debugging.txt
 
 %changelog
+* Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt2
+- rebuilt against libgnutls.so.30
+
 * Thu Nov 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

@@ -6,7 +6,7 @@
 
 Name: libinfinity
 Version: %ver_major.7
-Release: alt1
+Release: alt2
 
 Summary: A library to build collaborative text editors
 Group: System/Libraries
@@ -197,6 +197,9 @@ This package contains development documentation for %name (GTK+3 widgets).
 
 
 %changelog
+* Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.7-alt2
+- rebuilt against libgnutls.so.30
+
 * Tue Oct 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.7-alt1
 - 0.6.7
 

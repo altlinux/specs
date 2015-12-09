@@ -15,7 +15,7 @@
 
 Name: empathy
 Version: %ver_major.11
-Release: alt1
+Release: alt2
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
@@ -185,6 +185,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.11-alt2
+- rebuilt against libgnutls.so.30
+
 * Wed Oct 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.11-alt1
 - 3.12.11
 
