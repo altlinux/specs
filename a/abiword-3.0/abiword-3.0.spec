@@ -9,10 +9,11 @@
 %def_with libical
 %def_with eds
 %def_with python
+%def_disable collabnet
 
 Name: %_name-%abi_ver
 Version: %ver_major.1
-Release: alt3
+Release: alt4
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -41,7 +42,7 @@ BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgsf-gir-devel
 BuildRequires: libgtk+3-devel librsvg-devel libfribidi-devel libredland-devel libots-devel
 BuildRequires: liblink-grammar-devel libgsf-devel bzlib-devel zlib-devel libjpeg-devel libpng-devel libxslt-devel
 BuildRequires: libwv-devel libwpd10-devel libwpg-devel libwmf-devel libexpat-devel
-BuildRequires: telepathy-glib-devel libdbus-glib-devel libgnutls-devel libsoup-devel libgcrypt-devel
+BuildRequires: telepathy-glib-devel libdbus-glib-devel
 #BuildRequires: libaiksaurus-devel
 %{?_enable_spell:BuildRequires: libenchant-devel}
 %{?_with_goffice:BuildRequires: libgnomeoffice0.10-devel}
@@ -49,6 +50,7 @@ BuildRequires: telepathy-glib-devel libdbus-glib-devel libgnutls-devel libsoup-d
 %{?_with_libical:BuildRequires: libical-devel}
 %{?_with_eds:BuildRequires: evolution-data-server-devel}
 %{?_with_python:BuildRequires: python-module-pygobject3-devel python-module-setuptools}
+%{?_enable_collabnet:BuildRequires: libgnutls-devel libsoup-devel libgcrypt-devel}
 
 %description
 AbiWord is a cross-platform, Open Source Word Processor developed
@@ -137,6 +139,7 @@ Python bindings for developing with AbiWord library
 	%{subst_with champlain} \
 	%{subst_with libical} \
 	%{?_without_eds:--without-evolution-data-server} \
+	%{?_enable_collabnet:--enable-collab-backend-service} \
 	--disable-static
 
 # failed paralell build
@@ -156,8 +159,8 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %dir %_libdir/%_name-%ver_major/plugins
 %_libdir/%_name-%ver_major/plugins/*.so
 %exclude %_libdir/abiword-%ver_major/plugins/*.la
-%_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.AbiCollab.service
-%_datadir/telepathy/clients/AbiCollab.client
+%{?_enable_collabnet:%_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.AbiCollab.service}
+%{?_enable_collabnet:%_datadir/telepathy/clients/AbiCollab.client}
 
 %files data
 %_desktopdir/%_name.desktop
@@ -181,6 +184,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt4
+- temporarily disabled abicollab.net support incompatible with gnutls > 3.4
+
 * Mon Aug 24 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt3
 - rebuilt against libebook-contacts-1.2.so.2
 
