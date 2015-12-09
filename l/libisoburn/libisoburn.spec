@@ -1,6 +1,6 @@
 Name: libisoburn
 Version: 1.3.4
-Release: alt2
+Release: alt3
 
 Summary: ISO9660 filesystem creation library
 License: GPLv2
@@ -74,6 +74,7 @@ or DVD but rather incorporates the libraries of libburnia-project.org .
 Summary: Graphical utility to create ISO9660 image
 Group: Archiving/Cd burning
 Requires: xorriso = %version
+BuildArch: noarch
 
 %description -n xorriso-x11
 This package contains GUI for xorriso, a program to create
@@ -123,6 +124,9 @@ fi
 %_bindir/xorriso-tcltk
 
 %changelog
+* Thu Dec 10 2015 Michael Shigorin <mike@altlinux.org> 1.3.4-alt3
+- x11 subpackage made noarch
+
 * Wed Dec 09 2015 Michael Shigorin <mike@altlinux.org> 1.3.4-alt2
 - added explicit BR: texinfo to fix FTBFS
 
