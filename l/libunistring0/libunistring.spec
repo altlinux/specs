@@ -1,14 +1,16 @@
-Name: libunistring
+Name: libunistring0
 Version: 0.9.3
-Release: alt3
+Release: alt4
 
 Summary: GNU Unicode string library
 License: LGPLv3+
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://www.gnu.org/software/libunistring/
-# ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
-Source: %name-%version.tar
-%def_disable static
+%define srcname libunistring-%version
+# ftp://ftp.gnu.org/gnu/libunistring/%srcname.tar.gz
+Source: %srcname.tar
+Provides: libunistring = %version-%release
+Obsoletes: libunistring < %version-%release
 
 %description
 This portable C library implements Unicode string types in three
@@ -17,23 +19,15 @@ processing (names, classifications, properties) and functions for
 string processing (iteration, formatted output, width, word breaks,
 line breaks, normalization, case folding and regular expressions).
 
-%package devel
-Summary: GNU Unicode string library development files
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel
-Development files for programs building with libunistring.
-
 %prep
-%setup
+%setup -n %srcname
 
 %build
 # Disable printf_safe for a while,
 # required to enforce build using system vfprintf().
-sed -i 's/gl_printf_safe=yes/gl_printf_safe=/' \
+subst --preserve 's/gl_printf_safe=yes/gl_printf_safe=/' \
 	gnulib-m4/gnulib-comp.m4 configure
-%configure %{subst_enable static}
+%configure --disable-static
 %make_build
 
 %install
@@ -42,18 +36,16 @@ sed -i 's/gl_printf_safe=yes/gl_printf_safe=/' \
 %files
 %_libdir/*.so.*
 %doc AUTHORS BUGS NEWS THANKS
-%exclude %_docdir/%name/%{name}*
-
-%files devel
-%_libdir/*.so
-%_includedir/*
-%_infodir/*.info*
-
-%if_enabled static
-%_libdir/*.a
-%endif
+%exclude %_docdir/libunistring/
+%exclude %_libdir/*.so
+%exclude %_includedir/*
+%exclude %_infodir/*.info*
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 0.9.3-alt4
+- Renamed: libunistring -> libunistring0.
+- Group: System/Libraries -> System/Legacy libraries.
+
 * Sat Apr 30 2011 Dmitry V. Levin <ldv@altlinux.org> 0.9.3-alt3
 - Rebuilt for debuginfo.
 
