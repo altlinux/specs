@@ -1,6 +1,6 @@
 Name: libisoburn
 Version: 1.3.4
-Release: alt1
+Release: alt2
 
 Summary: ISO9660 filesystem creation library
 License: GPLv2
@@ -12,6 +12,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: zlib-devel libacl-devel libattr-devel libreadline-devel
 BuildRequires: libburn-devel >= %version, libisofs-devel >= %version
+BuildRequires: texinfo
 # For tests
 BuildRequires: gcc-c++
 
@@ -122,6 +123,9 @@ fi
 %_bindir/xorriso-tcltk
 
 %changelog
+* Wed Dec 09 2015 Michael Shigorin <mike@altlinux.org> 1.3.4-alt2
+- added explicit BR: texinfo to fix FTBFS
+
 * Fri Dec 20 2013 Michael Shigorin <mike@altlinux.org> 1.3.4-alt1
 - 1.3.4
 - updated Url:
