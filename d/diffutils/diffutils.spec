@@ -1,5 +1,5 @@
 Name: diffutils
-Version: 3.3.0.33.b4ef
+Version: 3.3.0.40.a3ea
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -21,7 +21,7 @@ Patch: %name-%version-%release.patch
 Conflicts: man-pages <= 1.52-alt1
 
 BuildRequires: gnulib >= 0.1.585.2fda85
-BuildRequires: gperf help2man
+BuildRequires: gperf help2man makeinfo
 
 %description
 Diffutils includes four utilities: diff, cmp, diff3 and sdiff:
@@ -69,6 +69,9 @@ export PR_PROGRAM=%_bindir/pr
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 3.3.0.40.a3ea-alt1
+- Updated to v3.3-40-ga3ea9cd.
+
 * Thu Sep 24 2015 Dmitry V. Levin <ldv@altlinux.org> 3.3.0.33.b4ef-alt1
 - Updated to v3.3-33-gb4efca9.
 - Updated translations from translationproject.org.
