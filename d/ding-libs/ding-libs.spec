@@ -1,6 +1,6 @@
 Name: ding-libs
-Version: 0.4.0
-Release: alt2
+Version: 0.5.0
+Release: alt3
 
 Summary: "Ding is not GLib" assorted utility libraries
 License: LGPLv3+
@@ -11,10 +11,10 @@ Source: %name-%version.tar
 
 %define path_utils_version 0.2.1
 %define dhash_version 0.4.3
-%define collection_version 0.6.2
-%define ref_array_version 0.1.4
+%define collection_version 0.7.0
+%define ref_array_version 0.1.5
 %define basicobjects_version 0.1.1
-%global ini_config_version 1.1.0
+%global ini_config_version 1.2.0
 
 BuildRequires: pkgconfig(check) >= 0.9.5
 BuildRequires: doxygen
@@ -208,6 +208,9 @@ structure
 %_pkgconfigdir/ini_config.pc
 
 %changelog
+* Thu Dec 10 2015 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt3
+- 0.5.0
+
 * Wed Jun 04 2014 Alexey Shabalin <shaba@altlinux.ru> 0.4.0-alt2
 - increase release
 
