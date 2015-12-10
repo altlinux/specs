@@ -1,5 +1,5 @@
 Name: gettext
-Version: 0.19.4
+Version: 0.19.6
 Release: alt1
 
 %define libintl libintl3
@@ -24,6 +24,8 @@ Patch23: gettext-alt-tmp-autopoint.patch
 Patch24: gettext-alt-gcc.patch
 Patch25: gettext-alt-doc.patch
 Patch26: gettext-alt-urlview.patch
+Patch27: gettext-alt-texi2html.patch
+Patch28: gettext-gnulib-tests-hack.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -176,6 +178,8 @@ a formatted output library for C++.
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
+%patch27 -p1
+%patch28 -p1
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive
@@ -328,6 +332,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Tue Dec 08 2015 Dmitry V. Levin <ldv@altlinux.org> 0.19.6-alt1
+- Updated to 0.19.6.
+
 * Tue May 26 2015 Dmitry V. Levin <ldv@altlinux.org> 0.19.4-alt1
 - Updated to 0.19.4 (closes: #31007).
 
