@@ -1,6 +1,6 @@
 Name: flex-old
 Version: 2.5.4a
-Release: alt3
+Release: alt4
 
 Summary: The old version of the fast lexical analyzer generator
 License: BSD
@@ -38,14 +38,10 @@ rm skel.c
 
 autoconf
 %configure
-
 %make_build
-cd MISC/texinfo
-makeinfo --no-split flex
 
 %install
 %makeinstall mandir="%buildroot%_man1dir"
-install -pD -m644 MISC/texinfo/flex.info %buildroot%_infodir/flex.info
 ln -s flex %buildroot%_bindir/lex
 ln -s libfl.a %buildroot%_libdir/libl.a
 ln -s flex.1 %buildroot%_man1dir/lex.1
@@ -59,10 +55,12 @@ ln -s flex.1 %buildroot%_man1dir/flex++.1
 %_libdir/*.*a
 %_includedir/*
 %_mandir/man?/*
-%_infodir/*.info*
 %doc COPYING NEWS README MISC/testxxLexer.l
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 2.5.4a-alt4
+- Dropped texinfo documentation.
+
 * Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 2.5.4a-alt3
 - Built with LFS support enabled.
 
