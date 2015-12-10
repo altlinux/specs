@@ -1,6 +1,6 @@
 Name: gdb
 Version: 7.9
-Release: alt1
+Release: alt2
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -333,6 +333,7 @@ Patch982: gdb-no-dg-extract-results-py.patch
 %def_with python
 
 BuildRequires: flex libreadline-devel libexpat-devel liblzma-devel zlib-devel
+BuildRequires: makeinfo
 BuildRequires: %{?_with_python:python-devel} libstdc++6 %{?_enable_tui:libncursesw-devel}
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu glibc-devel-static gcc-c++ gcc-fortran gcc-java gcc-objc prelink valgrind /proc /dev/pts}}
 %if_with python
@@ -634,6 +635,10 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Thu Dec 10 2015 Andrey Cherepanov <cas@altlinux.org> 7.9-alt2
+- Fix configure by adding makeinfo to build requirements
+- Rebuild fixes redundant repl_strstr function in libgdb.a
+
 * Tue Sep 08 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.9-alt1
 - 7.9 released, synced with fedora 7.9-11
 
