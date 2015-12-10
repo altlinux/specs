@@ -1,13 +1,12 @@
 Name: ed
 Version: 0.2
-Release: alt9
+Release: alt10
 Epoch: 1
 
 Summary: The GNU line-oriented text editor
 License: GPLv2+
 Group: Text tools
 Url: http://www.gnu.org/software/ed/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # ftp://ftp.gnu.org/gnu/ed/ed-%version.tar.gz
 Source: ed-%version.tar
@@ -25,6 +24,8 @@ Patch10: ed-0.2-alt-glibc.patch
 Patch11: ed-0.2-alt-warnings.patch
 Patch12: ed-0.2-alt-bound.patch
 
+BuildRequires: makeinfo
+
 %description
 ed is a line-oriented text editor, used to create, display, and modify
 text files (both interactively and via shell scripts).
@@ -32,7 +33,7 @@ For most purposes, ed has been replaced in normal usage by full-screen
 editors such as vi and emacs.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -56,9 +57,8 @@ rm getopt.h regex.h
 %add_optflags -Dlint
 # glibc does have sigsetjmp, it's just a macro, which confuses autoconf.
 export ac_cv_func_sigsetjmp=yes
-autoreconf -fisv
+%autoreconf
 %configure
-
 %make_build
 
 %check
@@ -74,6 +74,9 @@ autoreconf -fisv
 %doc ChangeLog NEWS POSIX README THANKS TODO
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 1:0.2-alt10
+- Added makeinfo to BuildRequires.
+
 * Wed Sep 09 2009 Dmitry V. Levin <ldv@altlinux.org> 1:0.2-alt9
 - Moved "make check" to %%check section.
 
