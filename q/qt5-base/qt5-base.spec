@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.5.1
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -93,6 +93,7 @@ Summary: Development files for %name
 Requires: %name-common = %EVR
 Requires: pkgconfig(gl) pkgconfig(egl)
 Requires: rpm-macros-%gname = %EVR
+Requires: gcc-c++
 %description devel
 %summary.
 
@@ -131,6 +132,31 @@ Requires: %name-common = %EVR
 #Requires: %gname-assistant
 %description doc
 This package contains documentation and sources for example programs.
+
+%package -n qt5-qtbase
+Summary: qt5-qtbase compatibility package
+Group: System/Libraries
+Requires: lib%{gname}-concurrent
+Requires: lib%{gname}-core
+Requires: lib%{gname}-dbus
+Requires: lib%{gname}-network
+Requires: lib%{gname}-sql
+Requires: lib%{gname}-test
+Requires: lib%{gname}-xml
+%description -n qt5-qtbase
+qt5-qtbase compatibility package
+
+%package -n qt5-qtbase-gui
+Summary: qt5-qtbase-gui compatibility package
+Group: System/Libraries
+Requires: lib%{gname}-gui
+Requires: lib%{gname}-opengl
+Requires: lib%{gname}-printsupport
+Requires: lib%{gname}-widgets
+Requires: lib%{gname}-xcbqpa
+Provides: qt5-qtbase-x11 = %version-%release
+%description -n qt5-qtbase-gui
+qt5-qtbase-gui compatibility package
 
 %package -n %gname-sql
 BuildArch: noarch
@@ -514,6 +540,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %_sysconfdir/xdg/qtchooser/*.conf
 %endif
 
+%files -n qt5-qtbase
+%files -n qt5-qtbase-gui
+
 %files common
 %doc LICENSE.* LGPL_EXCEPTION.txt
 %dir %_qt5_docdir/
@@ -698,6 +727,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Dec 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt4
+- add qt5-qtbase-gui and qt5-qtbase compat packages
+
 * Thu Oct 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt3
 - sync SuSE patches
 
