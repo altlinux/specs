@@ -1,6 +1,6 @@
 Name: time
 Version: 1.7
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: The GNU time program for measuring system resource usage
@@ -10,6 +10,7 @@ Url: http://www.gnu.org/software/time/
 # ftp://ftp.gnu.org/gnu/time/time-%version.tar.gz
 Source: time-%version.tar
 Patch: time-%version-%release.patch
+BuildRequires: makeinfo
 
 %description
 The GNU time command runs another program, then displays information
@@ -42,6 +43,9 @@ printf-style format string to include various resource measurements.
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 1:1.7-alt4
+- Synced Debian patchset with 1.7-25.
+
 * Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.7-alt3
 - Merged two fixes from Fedora (closes: #28749).
 - Built with LFS support enabled.
