@@ -1,6 +1,6 @@
 Name: fastjar
 Version: 0.98
-Release: alt2
+Release: alt3
 
 Summary: Archive tool for Java archives
 License: GPLv2+
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires: zlib-devel
+BuildRequires: makeinfo zlib-devel
 
 %description
 fastjar is an implementation of Sun's jar utility that comes with the
@@ -39,6 +39,9 @@ fgrep -lZ _LT_ m4/* |xargs -r0 rm -fv --
 %doc AUTHORS README NEWS TODO
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 0.98-alt3
+- Added makeinfo to BuildRequires.
+
 * Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 0.98-alt2
 - Built with LFS support enabled.
 
