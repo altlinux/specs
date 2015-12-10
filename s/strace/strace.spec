@@ -1,5 +1,5 @@
 Name: strace
-Version: 4.10.0.484.bb74
+Version: 4.10.0.566.bab4e
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -52,7 +52,7 @@ cd build
 %set_verify_elf_method strict
 
 %check
-export SLEEP_A_BIT='sleep 0.1'
+export SLEEP_A_BIT='sleep 0.1' VERBOSE=1
 %make_build -k check -C build VERBOSE=1
 
 %files
@@ -65,6 +65,9 @@ export SLEEP_A_BIT='sleep 0.1'
 %_bindir/strace-graph
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 4.10.0.566.bab4e-alt1
+- Updated to v4.10-566-gbab4ef4.
+
 * Thu Nov 26 2015 Dmitry V. Levin <ldv@altlinux.org> 4.10.0.484.bb74-alt1
 - Updated to v4.10-484-gbb746ff.
 
