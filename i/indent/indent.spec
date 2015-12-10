@@ -1,6 +1,6 @@
 Name: indent
 Version: 2.2.11
-Release: alt2
+Release: alt3
 
 Summary: A GNU program for formatting C code
 License: GPLv3+
@@ -19,8 +19,12 @@ Patch6: indent-2.2.11-rh-Return-non-zero-exit-code-on-tests-failure.patch
 Patch7: indent-2.2.11-rh-Fix-compiler-warnings.patch
 Patch8: indent-2.2.11-rh-Allow-64-bit-stat.patch
 Patch9: indent-2.2.11-rh-Fix-copying-overlapping-comment.patch
+Patch10: indent-2.2.11-rh-Support-hexadecimal-floats.patch
+Patch11: indent-2.2.11-rh-Modernize-texi2html-arguments.patch
+Patch12: indent-2.2.11-rh-doc-Correct-a-typo-about-enabling-control-comment.patch
+Patch13: indent-2.2.11-rh-Fix-nbdfa-and-nbdfe-typo.patch
 
-BuildRequires: gperf
+BuildRequires: gperf makeinfo
 
 %description
 Indent is a GNU program for formatting C code so that it is easier to
@@ -40,6 +44,10 @@ handle things properly.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 rm src/gperf*.c
 rm po/*.gmo
 sed -i 's/^\(all-local\|install-data-local\):.*/\1:/' doc/Makefile.*
@@ -64,6 +72,9 @@ make -C regression
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 2.2.11-alt3
+- Merged fixes from Fedora indent-2.2.11-19.
+
 * Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 2.2.11-alt2
 - Merged fixes from Fedora.
 - Enabled LFS support.
