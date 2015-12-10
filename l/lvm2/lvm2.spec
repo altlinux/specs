@@ -1,5 +1,5 @@
-%define lvm2version 2.02.130
-%define dmversion 1.02.107
+%define lvm2version 2.02.137
+%define dmversion 1.02.113
 
 %def_disable cluster
 %def_enable selinux
@@ -496,6 +496,9 @@ sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 %python_sitelibdir/*
 
 %changelog
+* Thu Dec 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.137-alt1
+- 2.02.137
+
 * Thu Sep 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.130-alt1
 - 2.02.130
 
