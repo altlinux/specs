@@ -1,9 +1,9 @@
 # TODO: use special user
 Name: maldetect
-Version: 1.4.2
-Release: alt3
+Version: 1.5
+Release: alt1
 
-Summary: inux Malware Detect (LMD) is a malware scanner for Linux 
+Summary: Linux Malware Detect (LMD) is a malware scanner for Linux
 
 License: GPLv2
 Group: File tools
@@ -24,7 +24,9 @@ Provides: maldet = %version-%release
 # manually removed: rpm-build-python3 ruby ruby-stdlibs
 # Automatically added by buildreq on Sun Sep 22 2013 (-bi)
 # optimized out: ed python-base python3 python3-base
-BuildRequires: mailx
+BuildRequires: mailx rpm-build-intro
+
+Requires: wget
 
 %description
 Linux Malware Detect (LMD) is a malware scanner for Linux released under the GNU GPLv2 license,
@@ -41,11 +43,12 @@ See also http://habrahabr.ru/post/194346/
 
 %prep
 %setup
-%__subst "s|/usr/local/maldetect|%maldetdir|g" files/{maldet,ignore_paths,inotify/tlog,conf.maldet,*.pl}
+%__subst "s|/usr/local/maldetect|%maldetdir|g" files/{maldet,ignore_paths,internals/tlog,conf.maldet,internals/*.pl,service/maldet.sysconfig}
 %__subst "s|/usr/local/maldetect/maldet|maldet|g" files/modsec.sh
+%__subst "s|/usr/local/sbin/maldet|%_sbindir/maldet|g" files/internals/scan.etpl files/ignore_paths
 %__subst "s|/usr/local/lmd_update|/tmp/lmd_update|g" files/maldet
 # unsupported
-%__subst "s|/scripts/suspendacct|$disabled_scripts_suspendacct|g" files/maldet
+%__subst "s|/scripts/suspendacct|$disabled_scripts_suspendacct|g" files/maldet files/internals/functions
 
 %install
 mkdir -p %buildroot%_sbindir/
@@ -53,13 +56,18 @@ mkdir -p %buildroot%maldetdir/
 cp -pR files/* %buildroot%maldetdir/
 mv %buildroot%maldetdir/maldet %buildroot%_sbindir/
 ln -s maldet %buildroot%_sbindir/lmd
+rm -f %buildroot%maldetdir/uninstall.sh
+
+# TODO: restore service and inotify?
+rm -rf %buildroot%maldetdir/service/
 rm -rf %buildroot%maldetdir/inotify/*inotify*
 
 mkdir -p %buildroot/%_sysconfdir/%name/
 mv %buildroot%maldetdir/conf.maldet %buildroot/%_sysconfdir/%name/
 ln -s %_sysconfdir/%name/conf.maldet %buildroot%maldetdir/conf.maldet
 
-#cp $inspath/inotify/libinotifytools.so.0 /usr/lib/
+install -m644 -D files/service/maldet.sysconfig %buildroot%_sysconfigdir/maldet
+
 
 mkdir -p %buildroot/etc/cron.daily/
 cat <<EOF >%buildroot/etc/cron.daily/maldet
@@ -83,13 +91,17 @@ EOF
 
 %files
 %doc CHANGELOG README
-%config(noreplace) %attr (0755, root, root) %_sysconfdir/%name/conf.maldet
-%config(noreplace) %attr (0755, root, root) %_sysconfdir/cron.daily/maldet
+%config(noreplace) %_sysconfdir/%name/conf.maldet
+%config(noreplace) %_sysconfdir/cron.daily/maldet
+%config(noreplace) %_sysconfigdir/maldet
 %_sbindir/maldet
 %_sbindir/lmd
 %maldetdir/
 
 %changelog
+* Thu Dec 10 2015 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt1
+- new version 1.5 (with rpmrb script)
+
 * Fri Aug 14 2015 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt3
 - update to real 1.4.2 version
 - detection and alerting of openssl heartbleed vulnerability
