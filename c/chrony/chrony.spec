@@ -1,7 +1,7 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 1.31
+Version: 2.2
 Release: alt1
 
 Summary: Chrony clock synchronization program
@@ -14,6 +14,7 @@ Source1: chronyd.init
 
 BuildRequires: libcap-devel libncurses-devel libreadline-devel
 BuildRequires: libnss-devel
+BuildRequires: makeinfo
 
 Conflicts: ntpd openntpd
 
@@ -35,7 +36,7 @@ Internet. chronyd can also act as an RFC1305-compatible NTP server.
 # version in version.txt file
 echo %version > version.txt
 mandate=$(date +'%B %Y')
-for m in chrony.1 chronyc.1.in chrony.conf.5.in chronyd.8.in; do
+for m in chronyc.1.in chrony.conf.5.in chronyd.8.in; do
   sed -e "s|@VERSION@|%version|;s|@MAN_DATE@|${mandate}|" \
     < $m > ${m}_
   mv -f ${m}_ $m
@@ -58,6 +59,7 @@ sed -i -e 's/OPTIONS/CHRONYD_ARGS/' examples/chronyd.service
 %build
 %configure \
 	--with-user=_chrony \
+	--with-hwclockfile=%_sysconfdir/adjtime \
 	--with-sendmail=%_sbindir/sendmail
 
 %make_build all docs
@@ -67,6 +69,7 @@ sed -i -e 's/OPTIONS/CHRONYD_ARGS/' examples/chronyd.service
 install -pD -m755 %_sourcedir/chronyd.init %buildroot%_initrddir/chronyd
 install -pD -m644 chrony.conf %buildroot%_sysconfdir/chrony.conf
 install -pD -m644 chrony.keys %buildroot%_sysconfdir/chrony.keys
+install -pD -m755 examples/chrony.nm-dispatcher %buildroot%_sysconfdir/NetworkManager/dispatcher.d/20-chrony
 install -pD -m644 examples/chrony.logrotate %buildroot%_sysconfdir/logrotate.d/chrony
 install -pD -m644 chronyd.sysconfig %buildroot%_sysconfdir/sysconfig/chronyd
 install -pD -m644 examples/chronyd.service %buildroot%_unitdir/chronyd.service
@@ -97,7 +100,6 @@ gzip -9 -f -k chrony.txt
 %preun_service chronyd
 
 %files
-%exclude %_docdir/chrony
 %doc COPYING NEWS README chrony.txt.gz
 %_initrddir/chronyd
 %_unitdir/*.service
@@ -106,6 +108,7 @@ gzip -9 -f -k chrony.txt
 %config(noreplace) %_sysconfdir/chrony.conf
 %config(noreplace) %verify(not md5 size mtime) %attr(640,root,_chrony) %_sysconfdir/chrony.keys
 %config(noreplace) %_sysconfdir/logrotate.d/chrony
+%_sysconfdir/NetworkManager/dispatcher.d/20-chrony
 %_bindir/*
 %_sbindir/*
 %dir %attr(-,_chrony,_chrony) %_localstatedir/lib/%name
@@ -117,6 +120,9 @@ gzip -9 -f -k chrony.txt
 %_man8dir/*
 
 %changelog
+* Thu Dec 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.2-alt1
+- 2.2
+
 * Wed Sep 17 2014 Alexey Shabalin <shaba@altlinux.ru> 1.31-alt1
 - 1.31
 
