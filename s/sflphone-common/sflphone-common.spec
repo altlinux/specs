@@ -2,7 +2,7 @@
 
 Name: sflphone-common
 Version: 1.4.1
-Release: alt3
+Release: alt4
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -23,7 +23,7 @@ Patch13: sflphone-1.4.1-fix-build-with-gcc5.patch
 #BuildRequires: glibc-devel-static libSDL-devel libalsa-devel libavformat-devel libdbus-c++-devel libexpat-devel libgsm-devel libopencore-amrnb-devel libpcre-devel libpulseaudio-devel libsamplerate-devel libspeex-devel libssl-devel libswscale-devel libuuid-devel libv4l-devel libyaml-devel libzrtpcpp-devel perl-Pod-Parser python-module-distribute rpm-build-ruby
 BuildRequires: gcc-c++ glibc-devel libSDL-devel libalsa-devel libavformat-devel libdbus-c++-devel libexpat-devel
 BuildRequires: libgsm-devel libopencore-amrnb-devel libpcre-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel
-BuildRequires: libspeex-devel libssl-devel libswscale-devel libuuid-devel libv4l-devel libyaml-devel
+BuildRequires: libspeex-devel libspeexdsp-devel libssl-devel libswscale-devel libuuid-devel libv4l-devel libyaml-devel
 BuildRequires: zrtpcpp-devel perl-Pod-Parser python-devel ilbc-devel libopus-devel
 BuildRequires: libudev-devel libavdevice-devel libswscale-devel
 BuildRequires: libgnutls-devel
@@ -85,6 +85,9 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Thu Dec 10 2015 Sergey V Turchin <zerg@altlinux.org> 1.4.1-alt4
+- fix build requires
+
 * Mon Jun 15 2015 Sergey V Turchin <zerg@altlinux.org> 1.4.1-alt3
 - rebuild with new ucommon, ccrtp
 
