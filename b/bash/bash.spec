@@ -1,6 +1,6 @@
 Name: bash
 %define bash_version 3.2
-%define bash_patchlevel 54
+%define bash_patchlevel 57
 Version: %bash_version.%bash_patchlevel
 Release: alt1
 
@@ -28,6 +28,7 @@ Provides: bash2 = %version-%release
 Obsoletes: bash2
 
 BuildPreReq: libreadline-devel >= 5.1, mktemp >= 1:1.3.1
+BuildRequires: makeinfo texi2dvi
 
 %package -n sh
 Summary: The GNU Bourne Again SHell (/bin/sh)
@@ -290,6 +291,9 @@ EOF
 %_includedir/*
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 3.2.57-alt1
+- Updated to 3.2 patchlevel 57.
+
 * Sun Sep 28 2014 Dmitry V. Levin <ldv@altlinux.org> 3.2.54-alt1
 - Updated to 3.2 patchlevel 54.
 
