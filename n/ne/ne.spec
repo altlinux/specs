@@ -1,24 +1,17 @@
 Summary:  The Nice Editor
 
 Name:     ne
-Version:  2.1
-Release:  alt2
+Version:  3.0.1
+Release:  alt1
 License:  GPL2
 Group:    Editors
-Url:      http://ne.dsi.unimi.it/
+Url:      https://github.com/vigna/ne
 Packager: Alexey Gladkov <legion@altlinux.org>
 
 Source0: %name-%version.tar
 
-Patch0:  ne-keys.patch
-Patch1:  ne-libs.patch
-Patch2:  ne-use-libmagic.patch
-
-# syntax patches
-Patch50: ne-syntax-change.patch
-Patch51: ne-syntax-make.patch
-
-BuildRequires: libncursesw-devel libmagic-devel
+BuildRequires: libncursesw-devel
+BuildRequires: texinfo
 
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
@@ -38,18 +31,13 @@ Some of the features of ne are:
 %prep
 %setup
 
-%patch1  -p0
-%patch2  -p1 -b .magic
-
-%patch50 -p0
-%patch51 -p0
-
 %build
-cd src
-%make_build \
+make -C src \
+	CC=gcc \
 	NE_GLOBAL_DIR=%_datadir/%name \
-	NE_MAGIC=1 \
 #
+make -C doc \
+        ne.info.gz
 
 %install
 mkdir -p -- \
@@ -60,7 +48,6 @@ install -D -m755 src/ne         %buildroot/%_bindir/%name
 install -D -m644 doc/ne.1       %buildroot/%_man1dir/%name.1
 install -D -m644 doc/ne.info.gz %buildroot/%_infodir/%name.info.gz
 install -m644 syntax/*.jsf      %buildroot/%_datadir/%name/syntax/
-install -m644 src/magic.syntax  %buildroot/%_datadir/%name/magic.syntax
 
 %files
 %_bindir/%name
@@ -70,6 +57,12 @@ install -m644 src/magic.syntax  %buildroot/%_datadir/%name/magic.syntax
 %doc doc/default.keys doc/default.menus
 
 %changelog
+* Wed Dec 09 2015 Alexey Gladkov <legion@altlinux.ru> 3.0.1-alt1
+- New version (3.0.1)
+
+* Wed Nov 16 2011 Alexey Gladkov <legion@altlinux.ru> 2.3-alt1
+- New version (2.3)
+
 * Mon Mar 07 2011 Alexey Gladkov <legion@altlinux.ru> 2.1-alt2
 - Add libmagic support.
 
