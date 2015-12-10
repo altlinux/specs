@@ -1,7 +1,7 @@
 Name: fvwm
 Version: 2.6.5
 #define cvsdate 20031019
-Release: alt3
+Release: alt4
 
 %def_with fribidi
 %def_with libstroke
@@ -45,6 +45,10 @@ Patch11: fvwm-2.5.23-alt-configure-datarootdir.patch
 Patch12: fvwm-2.5.26-alt-bound.patch
 Patch13: fvwm-2.5.27-alt-format.patch
 Patch14: fvwm-2.5.27-alt-fvwm_msg-echo.patch
+Patch15: fvwm-2.6.5-alt-perl-syntax.patch
+Patch16: fvwm-git-manpage-error.patch
+Patch17: fvwm-rh-FvwmPager-be-more-careful-with-window-labels.patch
+Patch18: fvwm-rh-Change-html-viewer-to-xdg-open.patch
 
 %{?_with_fribidi:BuildPreReq: fribidi libfribidi-devel}
 %{?_with_libstroke:BuildPreReq: libstroke-devel}
@@ -235,6 +239,10 @@ fvwm.
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
 
 # Fix default fonts.
 find -type f -print0 |
@@ -421,6 +429,10 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %_miconsdir/*.xpm
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 2.6.5-alt4
+- fvwm-perllib, FvwmConsoleC.pl: fixed perl syntax.
+- Merged several fixes from Debian and Fedora.
+
 * Thu Sep 27 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6.5-alt3
 - Rebuilt with libpng15.
 
