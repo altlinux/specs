@@ -5,7 +5,7 @@ Name: readline
 %define rl_patch .8
 %define srcname readline-%rl_version
 Version: %rl_version%rl_patch
-Release: alt1
+Release: alt2
 
 Summary: A library for editing typed in command lines
 License: GPLv2+
@@ -19,7 +19,7 @@ Source: readline-%version.tar
 Patch: readline-%version-%release.patch
 
 # Automatically added by buildreq on Mon Sep 02 2002
-BuildRequires: libtinfo-devel
+BuildRequires: libtinfo-devel makeinfo
 
 %package -n lib%name%sover
 Summary: A library for editing typed in command lines
@@ -65,7 +65,7 @@ programs which use the readline library to provide an easy to use
 and more intuitive command line interface for users.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 rm examples/*.tar*
 
@@ -137,6 +137,9 @@ popd
 %_libdir/*.a
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 6.3.8-alt2
+- Added makeinfo to BuildRequires.
+
 * Wed Dec 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.8-alt1
 - Updated to 6.3 patchlevel 8.
 
