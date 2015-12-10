@@ -34,7 +34,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt4
+%define rlz alt5
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -80,6 +80,7 @@ Patch103: 0191-listview-alternate-row-colors.diff
 Patch104: 0195-compositing-properties.diff
 Patch105: 0225-invalidate-tabbar-geometry-on-refresh.patch
 # FC
+Patch200: qt-aarch64.patch
 Patch201: qt-everywhere-opensource-src-4.8.5-QTBUG-22829.patch
 Patch202: qt-4.0.1-sans-mono.patch
 Patch203: qt-everywhere-opensource-src-4.6.2-cups.patch
@@ -687,6 +688,7 @@ Install this package if you want to create RPM packages that use %name
 %patch104 -p0
 %patch105 -p0
 # FC
+%patch200 -p1
 %patch201 -p1
 %patch202 -p1
 %patch203 -p1
@@ -1445,6 +1447,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Thu Dec 10 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt5
+- add aarch64 support
+
 * Fri Oct 02 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt4
 - adds patch for sni-qt system tray plugin support
 
