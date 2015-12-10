@@ -1,16 +1,16 @@
 Name: gperf
-Version: 3.0.4
-Release: alt3
+Version: 3.0.4.0.33.1a05
+Release: alt1
 
 Summary: A perfect hash function generator
 License: GPLv3+
 Group: Development/C
 Url: http://www.gnu.org/software/gperf/
-
-Source: ftp://ftp.gnu.org/gnu/gperf/gperf-%version.tar
-Patch: gperf-%version-%release.patch
-
-BuildRequires: gcc-c++
+%define srcname %name-%version-%release
+# http://git.savannah.gnu.org/cgit/gperf.git
+Source: %srcname.tar
+BuildRequires: gnulib >= 0.1.585.2fda85
+BuildRequires: gcc-c++ help2man makeinfo
 
 %description
 Gperf is a perfect hash function generator written in C++.  Simply
@@ -19,17 +19,21 @@ that allows recognition of a key word in a set of words using exactly
 one probe into the data structure.
 
 %prep
-%setup
-%patch -p1
+%setup -n %srcname
+# Build scripts expect to find the %name version in this file.
+echo -n %version > .tarball-version
+# Use system help2man
+ln -snf %_bindir/help2man doc/
 
 %build
-%{expand:%%add_optflags %(getconf LFS_CFLAGS) -fno-strict-aliasing}
-%define docdir %_docdir/%name-%version
+GNULIB_TOOL='gnulib-tool ' ./autogen.sh
+%add_optflags -fno-strict-aliasing
+%define docdir %_docdir/%name
 %configure --docdir=%docdir
 %make_build
 
 %check
-make -k check
+%make_build -k check
 
 %install
 %makeinstall_std
@@ -39,9 +43,12 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %_bindir/*
 %_mandir/man?/*
 %_infodir/*.info*
-%docdir
+%docdir/
 
 %changelog
+* Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 3.0.4.0.33.1a05-alt1
+- Updated to v3.0.4-33-g1a05152.
+
 * Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 3.0.4-alt3
 - Built with LFS support enabled.
 
