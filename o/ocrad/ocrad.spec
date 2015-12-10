@@ -1,5 +1,5 @@
 Name: ocrad
-Version: 0.22
+Version: 0.25
 Release: alt1
 
 Summary: Ocrad is an OCR program based on a feature extraction method
@@ -45,6 +45,9 @@ make install-man DESTDIR=%buildroot
 %_man1dir/*
 
 %changelog
+* Thu Dec 10 2015 Ilya Mashkin <oddity@altlinux.ru> 0.25-alt1
+- 0.25
+
 * Wed Sep 04 2013 Ilya Mashkin <oddity@altlinux.ru> 0.22-alt1
 - 0.22
 
