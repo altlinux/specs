@@ -7,10 +7,11 @@
 %def_disable	bsfilter
 %def_disable	tnef
 %def_enable 	gdata
+%def_disable 	archive
 
 Name:   	claws-mail
 Version:	3.13.0
-Release: 	alt3
+Release: 	alt4
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -37,7 +38,9 @@ BuildRequires: libgtk+2-devel
 %endif
 
 # For plugin-archive:
+%if_enabled archive
 BuildRequires: libarchive-devel
+%endif
 
 # For plugin-fancy, plugin-rssyl, plugin-spamreport, plugin-vcalendar, plugin-libravatar
 BuildRequires: libcurl-devel
@@ -141,7 +144,9 @@ Requires:	%name-plugin-pgpinline = %version-%release
 Requires:	%name-plugin-smime = %version-%release
 Requires:	%name-plugin-acpinotifier = %version-%release
 Requires:	%name-plugin-addresskeeper = %version-%release
+%if_enabled archive
 Requires:	%name-plugin-archive = %version-%release
+%endif
 Requires:	%name-plugin-attachwarner = %version-%release
 Requires:	%name-plugin-attremover = %version-%release
 %if_enabled bsfilter
@@ -562,6 +567,9 @@ cp -p %SOURCE1 po/
 		%if_disabled tnef
 		--disable-tnef_parse-plugin \
 		%endif
+		%if_disabled archive
+		--disable-archive-plugin \
+		%endif
 		%if_enabled debug
 		--enable-crash-dialog
 		%else
@@ -663,10 +671,12 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %_datadir/appdata/claws-mail-address_keeper.metainfo.xml
 %endif
 
+%if_enabled archive
 %files plugin-archive
 %_claws_plugins_path/archive.so
 %if_enabled appdata
 %_datadir/appdata/claws-mail-archive.metainfo.xml
+%endif
 %endif
 
 %files plugin-attachwarner
@@ -808,6 +818,9 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Fri Dec 11 2015 Mikhail Efremov <sem@altlinux.org> 3.13.0-alt4
+- Disable archive plugin.
+
 * Thu Dec 03 2015 Mikhail Efremov <sem@altlinux.org> 3.13.0-alt3
 - Patches from upstream:
     + Fix 'end of file' message on checking sign of a key not
