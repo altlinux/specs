@@ -1,4 +1,4 @@
-%define		svn 7165
+%define		svn 7273
 
 %define		rel alt1
 
@@ -9,12 +9,12 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT4
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	15.9.0
+Version:	15.11.0
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
 Patch0:		smplayer-paths-fix-alt.patch
-Patch1:		smplayer-14.9.0-disable_update_autoshutdown.patch
+Patch1:		smplayer-15.11.0-disable_update_autoshutdown.patch
 
 BuildRequires:	gcc-c++ libqt4-devel >= 4.2
 Provides: %name
@@ -104,6 +104,9 @@ export OPTFLAGS="%optflags"
 %endif
 
 %changelog
+* Fri Dec 11 2015 Motsyo Gennadi <drool@altlinux.ru> 15.11.0-alt1.7273
+- 15.11.0 version (svn7273)
+
 * Fri Oct 09 2015 Motsyo Gennadi <drool@altlinux.ru> 15.9.0-alt1.7165
 - 15.9.0 version (svn7102)
 
