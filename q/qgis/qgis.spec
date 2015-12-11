@@ -1,9 +1,9 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 7.0.1
+%define grass_version 7.0.2
 
 Name:    qgis
-Version: 2.12.0
+Version: 2.12.1
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -319,6 +319,9 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Fri Dec 11 2015 Andrey Cherepanov <cas@altlinux.org> 2.12.1-alt1
+- New version
+
 * Tue Nov 03 2015 Andrey Cherepanov <cas@altlinux.org> 2.12.0-alt1
 - New version
 

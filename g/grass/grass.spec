@@ -1,5 +1,5 @@
 Name:    grass
-Version: 7.0.1
+Version: 7.0.2
 Release: alt1
 
 %def_with mysql
@@ -9,11 +9,12 @@ Release: alt1
 Summary: Geographic Resources Analysis Support System
 License: %gpl2plus
 Group:   Sciences/Geosciences
-URL:     http://grass.itc.it/
+URL:     https://grass.osgeo.org
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.watch
 
 Patch0: %name-pkgconf.patch
 Patch1: %name-use-simplejson.patch
@@ -302,6 +303,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Fri Dec 11 2015 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt1
+- New version (https://grass.osgeo.org/news/50/15/GRASS-GIS-7-0-2-released/)
+
 * Wed Oct 07 2015 Andrey Cherepanov <cas@altlinux.org> 7.0.1-alt1
 - New version
 
