@@ -1,5 +1,5 @@
 Name: alterator-x11
-Version: 1.98.8
+Version: 1.98.9
 Release: alt1
 
 Url: http://www.altlinux.com
@@ -85,6 +85,9 @@ Scripts which creates simple configuration files in
 %_bindir/xsetup*
 
 %changelog
+* Fri Dec 11 2015 Mikhail Efremov <sem@altlinux.org> 1.98.9-alt1
+- Fix build with recent glibc.
+
 * Wed Mar 11 2015 Mikhail Efremov <sem@altlinux.org> 1.98.8-alt1
 - Use driver name if description is not found (closes: #26581).
 - Blacklist other drivers in case of vesa (closes: #29435).
