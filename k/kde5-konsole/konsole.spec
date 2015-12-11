@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 15.08.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Terminals
@@ -15,6 +15,7 @@ License: GPLv2+ / LGPLv2+
 
 PreReq(post,preun): alternatives >= 0.2
 Provides: xvt, %_x11bindir/xvt
+Requires: fonts-bitmap-terminus
 
 Source: %rname-%version.tar
 Patch10: alt-no-transparency.patch
@@ -113,6 +114,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Fri Dec 11 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt2
+- set Terminus font by default
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 
