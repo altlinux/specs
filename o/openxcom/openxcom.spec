@@ -1,7 +1,7 @@
 %define rev 598395d1
 Name: openxcom
 Version: 1.0
-Release: alt4.%rev
+Release: alt5.%rev
 Summary: OpenXcom is an open-source clone of the original X-COM
 License: GPL
 Group: Games/Strategy
@@ -47,6 +47,9 @@ install -pm 644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Dec 2 2015 Vladimir Didenko <cow@altlinux.org> 1.0-alt5.598395d1
+- Rebuilt for gcc5 C++11 ABI
+
 * Sat Dec 6 2014 Andrew Clark <andyc@altlinux.org> 1.0-alt4.598395d1
 - version update to 1.0-alt4.598395d1
 

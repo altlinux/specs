@@ -3,7 +3,7 @@
 
 Name: lib%origname%soversion
 Version: 0.5.1
-Release: alt3
+Release: alt4
 
 Summary: A YAML parser and emitter for C++
 License: MIT
@@ -59,6 +59,9 @@ This package contains static development files for YAML.
 
 
 %changelog
+* Tue Dec 1 2015 Vladimir Didenko <cow@altlinux.ru> 0.5.1-alt4
+- Rebuild with gcc5
+
 * Tue Mar 24 2015 Vladimir Didenko <cow@altlinux.ru> 0.5.1-alt3
 - spec cleanup
 - add dependency on corresponding library to devel package

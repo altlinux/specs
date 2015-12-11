@@ -1,6 +1,6 @@
 Name: mongo
-Version: 2.6.9
-Release: alt1
+Version: 3.2.0
+Release: alt1.rc4
 Summary: mongo client shell and tools
 License: AGPL 3.0
 Url: http://www.mongodb.org
@@ -11,15 +11,8 @@ Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source: %name-%version.tar
 
 Patch1:         mongodb-2.4.5-no-term.patch
-##Patch 2 - make it possible to use system libraries
-Patch2:         mongodb-2.4.5-use-system-version.patch
-##Patch 8 - Compile with GCC 4.8
-Patch8:         mongodb-2.4.5-gcc48.patch
-##Patch 12: add includes to make it build under gcc 4.9
-Patch12:        mongodb-2.4.9-alt-fix-includes.patch
 
-
-BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons boost-devel boost-filesystem-devel boost-program_options-devel libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel libpcap-devel libsnappy-devel libv8-3.15-devel systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel libyaml-cpp-devel
+BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons boost-devel boost-filesystem-devel boost-program_options-devel libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel libpcap-devel libsnappy-devel libv8-3.24-devel systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel libyaml-cpp-devel valgrind-devel zlib-devel
 
 %description
 Mongo (from "huMONGOus") is a schema-free document-oriented database.
@@ -61,38 +54,39 @@ MongoDB instance.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch8 -p1
-%patch12 -p1
 
-
-# spurious permissions
-chmod -x README
-
-# Fixed in upstream - version 2.7.3
-sed -i -r "s|(conf.FindSysLibDep\(\"yaml\", \[\"yaml)(\"\]\))|\1-cpp\2|" SConstruct
-
-# wrong end-of-file encoding
+# CRLF -> LF
 sed -i 's/\r//' README
 
-# Put lib dir in correct place
-# https://jira.mongodb.org/browse/SERVER-10049
-sed -i -e "s@\$INSTALL_DIR/lib@\$INSTALL_DIR/%_lib@g" src/SConscript.client
-
+# Disable optimization for s2 library
+# https://jira.mongodb.org/browse/SERVER-17511
+sed -i -r "s|(env.Append\(CCFLAGS=\['-DDEBUG_MODE=false')(\]\))|\1,'-O0'\2|"  src/third_party/s2/SConscript
 
 %build
 # NOTE: Build flags must be EXACTLY the same in the install step!
 # If you fail to do this, mongodb will be built twice...
 %define common_opts \\\
 	-j %__nprocs \\\
-	--use-system-all \\\
+	--use-system-tcmalloc \\\
+	--use-system-pcre \\\
+	--use-system-boost \\\
+	--use-system-snappy \\\
+	--use-system-valgrind \\\
+	--use-system-zlib \\\
+	--use-system-stemmer \\\
+	--use-system-yaml \\\
 	--prefix=%buildroot%_prefix \\\
-	--extrapath=%_prefix \\\
 	--nostrip \\\
 %ifarch x86_64 \
 	--use-sasl-client \\\
+	--wiredtiger=on \\\
+%else \
+	--wiredtiger=off \\\
 %endif \
-	--ssl
+	--ssl \\\
+	--disable-warnings-as-errors \\\
+	MONGO_VERSION="%{version}-%{release}" \\\
+	CCFLAGS="%{?optflags} `pkg-config --cflags libpcrecpp`"
 
 scons %common_opts
 
@@ -146,30 +140,21 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %doc README GNU-AGPL-3.0.txt APACHE-2.0.txt
 
 %_bindir/mongo
-%_bindir/mongodump
-%_bindir/mongoexport
-%_bindir/mongofiles
-%_bindir/mongoimport
-%_bindir/mongorestore
-%_bindir/mongostat
-%_bindir/mongotop
-%_bindir/bsondump
-%_bindir/mongooplog
 %_bindir/mongoperf
 %_bindir/mongosniff
 
 %_man1dir/mongo.1*
-%_man1dir/mongodump.1*
-%_man1dir/mongoexport.1*
-%_man1dir/mongofiles.1*
-%_man1dir/mongoimport.1*
-%_man1dir/mongorestore.1*
 %_man1dir/mongosniff.1*
-%_man1dir/mongostat.1*
-%_man1dir/bsondump.1*
-%_man1dir/mongotop.1*
-%_man1dir/mongooplog.1*
 %_man1dir/mongoperf.1*
+%exclude %_man1dir/mongodump.1*
+%exclude %_man1dir/mongoexport.1*
+%exclude %_man1dir/mongofiles.1*
+%exclude %_man1dir/mongoimport.1*
+%exclude %_man1dir/mongorestore.1*
+%exclude %_man1dir/mongostat.1*
+%exclude %_man1dir/bsondump.1*
+%exclude %_man1dir/mongotop.1*
+%exclude %_man1dir/mongooplog.1*
 
 %files server-mongod
 %doc GNU-AGPL-3.0.txt APACHE-2.0.txt
@@ -199,6 +184,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Dec 2 2015 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1.rc4
+- 3.2.0 rc4 (closes: #31540)
+
 * Wed Mar 25 2015 Vladimir Didenko <cow@altlinux.org> 2.6.9-alt1
 - 2.6.9
 - enable ssl support
