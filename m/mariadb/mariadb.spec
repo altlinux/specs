@@ -29,7 +29,7 @@
 
 Name: mariadb
 Version: 10.1.9
-Release: alt2
+Release: alt3
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -56,6 +56,7 @@ Source17: mysqld-chroot.control
 Source20: mysql.tmpfiles.d
 Source21: mysqld.service
 Source22: mysqld.service.d
+Source23: galera_new_cluster.sh
 
 Source25: client.cnf
 Source26: server.cnf
@@ -396,6 +397,9 @@ install -pD -m644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
 install -pD -m644 %SOURCE21 %buildroot%_unitdir/mysqld.service
 install -pD -m644 %SOURCE22 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/user.conf
 ln -s mysqld.service %buildroot%_unitdir/mariadb.service
+# rm upstream script
+rm -f %buildroot%_bindir/galera_new_cluster
+install -pD -m755 %SOURCE23 %buildroot%_bindir/galera_new_cluster
 
 # install the clustercheck script
 install -pD -m755 %SOURCE70 %buildroot%_bindir/clustercheck
@@ -719,6 +723,10 @@ fi
 %endif
 
 %changelog
+* Fri Dec 11 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.9-alt3
+- add target new-cluster to init script
+- fix galera_new_cluster for systemd and sysv
+
 * Wed Dec 09 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.9-alt2
 - fixed run with systemd type=notify (fixed link mysqld with libsystemd)
 
