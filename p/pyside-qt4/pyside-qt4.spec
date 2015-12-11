@@ -1,6 +1,6 @@
 Name: pyside-qt4
 Version: 1.2.2
-Release: alt1.git20140501
+Release: alt2.git20140501
 Summary: Python bindings for the Qt cross-platform application and UI framework
 License: LGPLv2.1
 Group: Development/Tools
@@ -98,7 +98,7 @@ cmake \
 %endif
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DENABLE_GCC_OPTIMIZATION:BOOL=ON \
-	-DENABLE_VERSION_SUFFIX:BOOL=ON \
+	-DENABLE_VERSION_SUFFIX:BOOL=OFF \
 	-DQT_SRC_DIR:PATH=%_datadir/graphviz \
 	-DUSE_XVFB:BOOL=ON \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
@@ -110,10 +110,6 @@ cmake \
 
 %install
 %makeinstall_std
-
-mv %buildroot%python_sitelibdir/PySide-*/* \
-	%buildroot%python_sitelibdir/PySide/
-rmdir %buildroot%python_sitelibdir/PySide-*
 
 pushd doc
 export PATH=$PATH:%_qt4dir/bin
@@ -140,6 +136,10 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Tue Dec 08 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt2.git20140501
+- Exclude ENABLE_VERSION_SUFFIX to prevent difference between
+  /usr/include/PySide-1.2/QtGui and /usr/include/PySide/QtGui
+
 * Wed Jul 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.git20140501
 - New snapshot
 
