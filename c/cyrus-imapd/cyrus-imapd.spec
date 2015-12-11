@@ -11,8 +11,8 @@
 %def_without unit_tests
 
 Name: cyrus-imapd
-Version: 2.5.6
-Release: alt1.1
+Version: 2.5.7
+Release: alt1
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -47,7 +47,7 @@ Source21: %name.init
 #Patch7: http://servercc.oakton.edu/~jwade/cyrus/cyrus-imapd-2.1.3/cyrus-imapd-2.1.3-flock.patch
 
 PreReq: e2fsprogs /sbin/chkconfig /sbin/service cert-sh-functions
-Requires: su
+Requires: su, tzdata
 Provides: MDA imap IMAPD POP3D
 
 %if_with unit_tests
@@ -153,6 +153,8 @@ sed 's|if test "$ac_cv_header_pcreposix_h" = "yes"|ac_cv_header_pcreposix_h="yes
 %add_optflags -I%_includedir/pcre
 sed "s|pcre\.h|pcre/pcre.h|" -i  lib/util.h		#  include <pcre.h>
 sed "s|pcreposix\.h|pcre/pcreposix.h|" -i  lib/util.h	#  include <pcreposix.h>
+sed "s|@ZLIB@|@ZLIB@ -lpcreposix|" -i perl/imap/Makefile.PL.in
+sed "s|@ZLIB@|@ZLIB@ -lpcreposix|" -i perl/sieve/managesieve/Makefile.PL.in
 
 autoreconf -v -i
 
@@ -421,6 +423,10 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Fri Dec 11 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.5.7-alt1
+- 2.5.7 (CVE-2015-8077, CVE-2015-8078; Closes: #31611)
+- added tzdata to "Requires" (Closes: #31612)
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.5.6-alt1.1
 - rebuild with new perl 5.22.0
 
