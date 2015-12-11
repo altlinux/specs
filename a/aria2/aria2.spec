@@ -1,6 +1,6 @@
 Name: aria2
 Version: 1.19.3
-Release: alt1
+Release: alt2
 
 Summary: aria2 - a simple utility for downloading files faster
 License: GPLv2+ with exceptions
@@ -14,7 +14,7 @@ Source: %name-%version.tar.xz
 BuildRequires: gcc-c++ libssl-devel libstdc++-devel
 BuildRequires: bison
 BuildRequires: cppunit-devel
-BuildRequires: gettext
+BuildRequires: gettext libasprintf-devel
 BuildRequires: libcares-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libgnutls-devel libgnutls-openssl-devel
@@ -96,6 +96,7 @@ mv %buildroot%_docdir/aria2/* %buildroot%_docdir/%name-%version
 
 %files -f aria2.lang
 #doc AUTHORS ChangeLog README*
+%dir %_docdir/aria2-%version
 %_bindir/%name
 %_bindir/aria2c
 %_man1dir/aria2c.1.bz2
@@ -108,6 +109,9 @@ mv %buildroot%_docdir/aria2/* %buildroot%_docdir/%name-%version
 
 
 %changelog
+* Fri Dec 11 2015 Ilya Mashkin <oddity@altlinux.ru> 1.19.3-alt2
+- spec updates
+
 * Wed Dec 09 2015 Ilya Mashkin <oddity@altlinux.ru> 1.19.3-alt1
 - 1.19.3
 
