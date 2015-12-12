@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Dec 12 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt1
+- rpmreqs: support locally resolved multiple provides
+- rpmbph: comment out -m64 removing for 32on64 (use configure32 instead)
+- mask gcc-c++ replacement with rpmcs
+- update pkgreqs
+
 * Mon Nov 16 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
 - rpmgs: allow https urls
 - rpmgp: use curl -s, add http source support for multi letter dirs
