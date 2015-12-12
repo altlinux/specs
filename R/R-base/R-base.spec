@@ -1,5 +1,5 @@
 Name: R-base
-Version: 3.1.2
+Version: 3.2.3
 Release: alt1
 
 Summary: A language for data analysis and graphics
@@ -12,7 +12,7 @@ Source: R-%version.tar
 Patch: R-%version-%release.patch
 
 # Automatically added by buildreq on Thu Mar 03 2011
-BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre-devel libpng-devel libreadline-devel libtiff-devel texlive-fonts-recommended texlive-generic-recommended texlive-xetex tk-devel zlib-devel
+BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre-devel libpng-devel libreadline-devel libtiff-devel texlive-fonts-recommended texlive-generic-recommended texlive-xetex tk-devel zlib-devel makeinfo texi2dvi
 
 BuildPreReq: liblapack-devel libicu-devel
 
@@ -113,10 +113,7 @@ rm -fv %buildroot%_infodir/dir*
 
 %check
 export TZ="GMT"
-# don't test for i586 (unstable version)
-%ifarch x86_64
 make check
-%endif
 
 %files
 	%doc doc/NEWS README
@@ -284,6 +281,9 @@ classification, clustering, ...).
 %doc	%Rdocdir/html/*
 %dir	%Rdocdir/manual/
 %doc	%Rdocdir/manual/*.html
+%dir    %Rdocdir/manual/images/
+%doc    %Rdocdir/manual/images/*.png
+
 
 %package -n R-doc-pdf
 Summary: PDF manuals for the R Statistical Environment
@@ -322,6 +322,9 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Sat Dec 12 2015 Kirill Maslinsky <kirill@altlinux.org> 3.2.3-alt1
+- Version 3.2.3
+
 * Wed Feb 11 2015 Kirill Maslinsky <kirill@altlinux.org> 3.1.2-alt1
 - Version 3.1.2
 
