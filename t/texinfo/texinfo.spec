@@ -1,6 +1,6 @@
 Name: texinfo
 Version: 6.0
-Release: alt2
+Release: alt3
 
 Summary: Tools needed to create Texinfo format documentation files
 License: GPLv3+
@@ -22,7 +22,9 @@ Patch1: texinfo-alt-install-info-dot_exe.patch
 Patch2: texinfo-alt-install-info-zio.patch
 Patch3: texinfo-alt-install-info-rpm.patch
 Patch4: texinfo-alt-texi2dvi-baroque-shells.patch
-Patch5: texinfo-svn6390-index-deterministic.patch
+Patch5: texinfo-alt-texi2any-version.patch
+Patch6: texinfo-alt-makeinfo-split-size.patch
+Patch7: texinfo-svn6390-index-deterministic.patch
 
 Requires: makeinfo = %version-%release
 Requires: texi2dvi = %version-%release
@@ -107,6 +109,8 @@ This packages contains new RPM macros for packaging texinfo files.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 install -pm755 %_sourcedir/texi2pdf util/
 
@@ -199,6 +203,10 @@ export ALL_TESTS=yes
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Dec 11 2015 Dmitry V. Levin <ldv@altlinux.org> 6.0-alt3
+- makeinfo: changed --version output to be compatible
+  with earlier versions of makeinfo.
+
 * Thu Dec 03 2015 Dmitry V. Levin <ldv@altlinux.org> 6.0-alt2
 - Raised default split size from 300000 to 33554432.
 
