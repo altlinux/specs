@@ -3,7 +3,7 @@
 
 Name: perl-XML-AutoWriter
 Version: 0.40
-Release: alt2
+Release: alt3
 
 Summary: provides DTD based XML output
 Summary(ru_RU.UTF-8): вывод данных в формате XML соглано описанию DTD
@@ -19,6 +19,7 @@ BuildArch: noarch
 
 Source: %real_name-%version.tar
 Patch0: %real_name-0.04-alt-Makefile.patch
+Patch1: %real_name-0.04-debian-UNIVERSAL.patch
 
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel
@@ -39,6 +40,7 @@ XML, с использованием имеющихся определений D
 %prep
 %setup -q -n %real_name-%version
 %patch0
+%patch1 -p 1
 
 %build
 %perl_vendor_build
@@ -53,6 +55,9 @@ XML, с использованием имеющихся определений D
 %perl_vendor_privlib/XML/ValidWriter*
 
 %changelog
+* Sat Dec 12 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.40-alt3
+- Fix for Perl 5.22.0
+
 * Tue Sep 11 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.40-alt2
 - Fix build with Perl 5.16.1
 
