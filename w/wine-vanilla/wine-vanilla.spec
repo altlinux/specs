@@ -1,6 +1,6 @@
 Name: wine-vanilla
 Version: 1.8.0
-Release: alt0rc2
+Release: alt0rc4
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -365,6 +365,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat Dec 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt0rc4
+- new version 1.8-rc4
+
 * Tue Dec 01 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt0rc2
 - new version 1.8-rc2
 
