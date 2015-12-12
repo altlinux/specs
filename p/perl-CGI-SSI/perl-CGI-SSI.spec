@@ -3,7 +3,7 @@
 
 Name: perl-CGI-SSI
 Version: 0.92
-Release: alt1
+Release: alt2
 
 Summary: Perl module for using SSI from CGI scripts
 
@@ -17,6 +17,7 @@ BuildArch: noarch
 %define real_name CGI-SSI
 Source: %real_name-%version.tar
 Patch0: %real_name-0.92-alt-drop_network_tests.patch
+Patch1: %real_name-0.92-debian-tests_tmpname.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -36,6 +37,7 @@ make some SSI directives impossible to imitate from a CGI script.
 %prep
 %setup  -n %real_name-%version
 %patch0
+%patch1
 
 %build
 %perl_vendor_build
@@ -49,5 +51,8 @@ make some SSI directives impossible to imitate from a CGI script.
 %perl_vendor_privlib/CGI
 
 %changelog
+* Sat Dec 12 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.92-alt2
+- Fix tests
+
 * Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.92-alt1
 - Initial build for ALT Linux Sisyphus
