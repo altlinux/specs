@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: numactl
-Version: 2.0.10
-Release: alt2
+Version: 2.0.11
+Release: alt1
 
 Summary: Simple NUMA policy support
 License: GPL
@@ -62,6 +62,7 @@ developing applications that use %name.
 %files
 %doc README CHANGES DESIGN TODO
 %_bindir/*
+#_man2dir/* -- see man-pages package
 %_man3dir/*
 %_man8dir/*
 
@@ -78,6 +79,9 @@ developing applications that use %name.
 %endif
 
 %changelog
+* Sun Dec 13 2015 Michael Shigorin <mike@altlinux.org> 2.0.11-alt1
+- new version (watch file uupdate)
+
 * Mon Oct 06 2014 Michael Shigorin <mike@altlinux.org> 2.0.10-alt2
 - dropped numactl(2) page conflicting with man-pages package
 
