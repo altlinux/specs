@@ -1,8 +1,8 @@
 %define beta %nil
 
 Name: wget
-Version: 1.17
-Release: alt1.1
+Version: 1.17.1
+Release: alt1
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPLv3
@@ -135,6 +135,9 @@ find doc -type f -print0 |
 %doc AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Sun Dec 13 2015 Michael Shigorin <mike@altlinux.org> 1.17.1-alt1
+- 1.17.1
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1.1
 - NMU: added BR: texinfo
 
