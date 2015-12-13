@@ -1,6 +1,6 @@
 Name: curl
 Version: 7.46.0
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -15,7 +15,7 @@ Patch0: curl-%version-%release.patch
 Requires: lib%name = %version-%release
 
 # Automatically added by buildreq on Tue Mar 15 2011
-BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel zlib-devel python-modules
+BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel zlib-devel python-modules libnghttp2-devel
 
 %package -n lib%name
 Summary: The shared library for file transfer
@@ -142,6 +142,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Sun Dec 13 2015 Anton Farygin <rider@altlinux.ru> 7.46.0-alt2
+- enabled http2 support (closes: #31617)
+
 * Mon Dec 07 2015 Anton Farygin <rider@altlinux.ru> 7.46.0-alt1
 - new version
 
