@@ -1,6 +1,6 @@
 Name: logrotate
-Version: 3.7.9
-Release: alt3
+Version: 3.9.1
+Release: alt1
 
 Summary: Rotates, compresses, and mails system logs
 License: GPLv2+
@@ -11,16 +11,15 @@ Url: https://fedorahosted.org/logrotate/
 Source: logrotate-%version.tar
 Source1: logrotate.cron
 
-Patch1: logrotate-3.7.9-alt-config.patch
-Patch2: logrotate-3.7.9-alt-taboo.patch
-Patch3: logrotate-3.7.9-alt-messages.patch
-Patch4: logrotate-3.7.9-alt-open-fchmod-race.patch
+Patch1: logrotate-alt-config.patch
+Patch2: logrotate-alt-file_type.patch
+Patch3: logrotate-alt-taboo.patch
 
 Provides: /etc/logrotate.d
 
 %def_with selinux
 
-BuildRequires: libpopt-devel
+BuildRequires: libacl-devel libpopt-devel
 %{?_with_selinux:BuildPreReq: libselinux-devel}
 
 %description
@@ -36,16 +35,15 @@ a daily cron job.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
-%make_build %{?_with_selinux:WITH_SELINUX=yes}
+touch AUTHORS ChangeLog NEWS README
+%autoreconf
+%configure %{subst_with selinux}
+%make_build
 
 %install
-%makeinstall_std \
-	PREFIX=%buildroot \
-	BINDIR=%_sbindir \
-	MANDIR=%_mandir
+%makeinstall_std
 mkdir -p %buildroot/etc/logrotate.d
 
 install -pD -m640 examples/logrotate-default %buildroot/etc/logrotate.conf
@@ -71,6 +69,9 @@ fi
 %doc CHANGES
 
 %changelog
+* Sun Dec 13 2015 Dmitry V. Levin <ldv@altlinux.org> 3.9.1-alt1
+- Updated to 3.9.1 (closes: #12593, #29681, #31616).
+
 * Thu Jul 21 2011 Dmitry V. Levin <ldv@altlinux.org> 3.7.9-alt3
 - Dropped unused /var/run/logrotate directory (closes: #25583).
 
