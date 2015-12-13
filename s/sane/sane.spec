@@ -2,8 +2,8 @@
 %define oname %name-backends
 
 Name: sane
-Version: 1.0.24
-Release: alt2.3
+Version: 1.0.25
+Release: alt1
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -38,7 +38,7 @@ Provides: %oname-drivers-scanners = %version-%release
 # manually removed: libsane-devel
 # Automatically added by buildreq on Wed Sep 05 2012
 # optimized out: libexif-devel libusb-compat pkg-config tex-common texlive-base texlive-base-bin texlive-common texlive-fonts-recommended texlive-generic-recommended texlive-latex-base
-BuildRequires: glibc-devel libcups-devel libgphoto2-devel libieee1284-devel libjpeg-devel libtiff-devel libusb-devel libv4l-devel
+BuildRequires: glibc-devel libcups-devel libgphoto2-devel libieee1284-devel libjpeg-devel libtiff-devel libusb-devel libv4l-devel libnet-snmp-devel
 
 BuildPreReq: libusb-devel
 BuildPreReq: rpm-build-intro
@@ -250,6 +250,10 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Sat Dec 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1.0.25-alt1
+- new version 1.0.25 (with rpmrb script) (ALT bug #31327)
+- add libnet-snmp-devel build requires
+
 * Thu Feb 05 2015 Michael Shigorin <mike@altlinux.org> 1.0.24-alt2.3
 - rebuilt against recent libgphoto2
 
