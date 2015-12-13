@@ -1,5 +1,5 @@
 Name: giter
-Version: 1.8
+Version: 1.9
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -41,6 +41,10 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Sun Dec 13 2015 Vitaly Lipatov <lav@altlinux.ru> 1.9-alt1
+- gremote: process all git@ aliases like urls when -p
+- giter: fix number clean
+
 * Sun Nov 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8-alt1
 - giter: fix for empty run
 - gpull: print note if fast forward failed
