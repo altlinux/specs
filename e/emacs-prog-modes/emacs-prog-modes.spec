@@ -4,7 +4,7 @@
 %define pkg_name prog-modes
 
 Version: 0.2
-Release: alt6
+Release: alt7
 Name: emacs-%pkg_name
 License: GPL
 Group: Editors
@@ -32,13 +32,15 @@ BuildRequires: emacs-cedet emacs-common emacs-elib emacs-leim fontconfig freetyp
 
 %description
 Various programming packages for Emacs, including packages for editing
-programms on C, Scheme, Fortran and others.
+programms on C, Scheme, Fortran and others, as well as additional
+modes for editing Autoconf/Automake and RPM spec files, for debugging,
+and more.
 
 %description -l ru_RU.UTF-8
 Дополнительные пакеты Emacs для работы с исходными текстами программ на
-языках С, Fortran, Scheme и других, а также различные вспомогательные
-режимы для редактирования файлов Autoconf/Automake, отладки и многого
-другого.
+языках С, Fortran, Scheme, RPM и других, а также различные вспомогательные
+режимы для редактирования файлов Autoconf/Automake и RPM spec, отладки
+и многого другого.
 
 %prep
 %setup -q -n %name
@@ -66,6 +68,13 @@ install -pD -m0644 %SOURCE9 %buildroot%_emacs_sitestart_dir/xbase.el
 
 
 %changelog
+* Sun Dec 13 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt7
+- rpm-spec-mode:
+  + do our best for the automatic initial filling not to intervene in
+    the operation of emerge; 
+  + honor rpm-spec-initialize-sections (whether to do it in other cases);
+  + use <https://www.altlinux.org/SampleSpecs/empty> as the template.
+
 * Fri Jan 30 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt6
 - rpm-spec-mode: use variables `user-mail-address` and
   `user-full-name` instead of functions (because no function
