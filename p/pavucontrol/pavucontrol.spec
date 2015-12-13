@@ -1,6 +1,6 @@
 Name: pavucontrol
 Version: 3.0
-Release: alt1.1
+Release: alt2
 
 Summary: PulseAudio Volume Control
 Group: Sound
@@ -23,6 +23,7 @@ the volume of hardware devices and of each playback stream seperately.
 %setup
 
 %build
+%add_optflags -std=c++11
 %autoreconf
 %configure --disable-gtk3
 %make_build
@@ -40,6 +41,9 @@ the volume of hardware devices and of each playback stream seperately.
 %doc README doc/README.html doc/style.css
 
 %changelog
+* Sun Dec 13 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0-alt2
+- update from upstream 290485e8
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
