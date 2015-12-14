@@ -3,7 +3,7 @@
 
 Name:       lazarus
 Version:    1.4.4
-Release:    alt1
+Release:    alt2
 Epoch:      1
 
 Summary:    Lazarus Component Library and IDE
@@ -189,6 +189,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Mon Dec 14 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.4.4-alt2
+- Rebuild with fpc-3.0.0
+
 * Thu Oct 08 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.4.4-alt1
 - New version (http://forum.lazarus.freepascal.org/index.php/topic,29886.0.html)
 
