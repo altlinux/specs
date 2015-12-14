@@ -1,7 +1,7 @@
 Name: ntp
 Version: 4.2.8
 #define vers_rc p5
-Release: alt2
+Release: alt3
 %define srcname %name-%version%{?vers_rc:%vers_rc}
 
 Summary: The Network Time Protocol (NTP)
@@ -21,6 +21,10 @@ Source11: ntp.1
 Source12: ntpd.8
 Source13: ntpdate.8
 Source14: ntpsweep.8
+
+Source21: chrooted-ntpd.all
+Source22: chrooted-ntpd.conf
+Source23: chrooted-ntpd.lib
 
 Patch1: %name-4.2.6p5-alt-compile-dirty-hack-NANO.patch
 
@@ -76,7 +80,6 @@ Requires: /var/empty
 %package -n ntpd
 Summary: The Network Time Protocol daemon
 Group: System/Servers
-Requires: ntpdate = %version-%release
 Obsoletes: xntp3
 Requires(pre): shadow-utils
 PreReq: service, coreutils
@@ -180,13 +183,15 @@ make DESTDIR=$RPM_BUILD_ROOT perllibdir=%perl_vendor_privlib install
 %__install -p -m755 scripts/ntpsweep/ntpsweep $RPM_BUILD_ROOT%_sbindir/
 
 # Manpages.
+%set_compress_method skip
 %__mkdir_p $RPM_BUILD_ROOT{%_man1dir,%_man8dir}
 #__install -p -m644 ntp.1 $RPM_BUILD_ROOT%_man1dir/
 sed "s|@VERSION@|%version|" < ntp.1 > $RPM_BUILD_ROOT%_man1dir/ntp.1
 %__install -p -m644 {ntpd,ntpdate,ntpsweep}.8 $RPM_BUILD_ROOT%_man8dir/
+find $RPM_BUILD_ROOT%_mandir -type f -regex '.*\.[1-8]$' -print0 | xargs -r0 bzip2 -9
 for f in $RPM_BUILD_ROOT%_sbindir/*; do
-	t="$RPM_BUILD_ROOT%_man8dir/${f##*/}.8"
-	[ -f "$t" ] || %__ln_s ../man1/ntp.1 "$t"
+	t="$RPM_BUILD_ROOT%_man8dir/${f##*/}.8.bz2"
+	[ -f "$t" ] || %__ln_s ../man1/ntp.1.bz2 "$t"
 done
 
 # Docs.
@@ -203,13 +208,15 @@ mv $RPM_BUILD_ROOT%_docdir/sntp $RPM_BUILD_ROOT%docdir
 
 # Prepare for chroot
 %__mkdir_p $RPM_BUILD_ROOT%ROOT/tmp
+%__mkdir_p $RPM_BUILD_ROOT%ROOT/%_lib
 %__install -pD -m600 %SOURCE4 $RPM_BUILD_ROOT%ROOT%_sysconfdir/%name/keys
 touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/%name/{drift,step-tickers}
 %__ln_s ..%ROOT%_sysconfdir/%name $RPM_BUILD_ROOT%_sysconfdir/
-cat <<EOF >$RPM_BUILD_ROOT%ROOT%_sysconfdir/services
-ntp	123/tcp		# Network Time Protocol
-ntp	123/udp		# Network Time Protocol
-EOF
+# scripts for update_chrooted
+%__mkdir_p $RPM_BUILD_ROOT%_sysconfdir/chroot.d
+%__install -pD -m700 %SOURCE21 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.all
+%__install -pD -m700 %SOURCE22 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.conf
+%__install -pD -m700 %SOURCE23 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.lib
 
 %define r_dir %ROOT%_sysconfdir/%name
 %define r_link %_sysconfdir/%name
@@ -228,6 +235,7 @@ if [ -d "$f" -a ! -L "$f" ]; then
 fi
 
 %post -n ntpd
+%_sysconfdir/chroot.d/ntpd.all
 if [ $1 = 1 ]; then
         /sbin/chkconfig --add ntpd
 fi
@@ -269,7 +277,7 @@ fi
 %_mandir/man?/*
 %exclude %_sbindir/ntpd
 %exclude %_sbindir/ntpdate
-%exclude %_man1dir/ntpd.1
+%exclude %_man1dir/ntpd.*
 %exclude %_man8dir/ntpd.*
 %exclude %_man8dir/ntpdate.*
 
@@ -282,14 +290,15 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/ntpd
 %config(noreplace) %_sysconfdir/%name.conf
 %_sysconfdir/%name
+%_sysconfdir/chroot.d/ntpd.*
 %_sbindir/ntpd
+%_man1dir/ntpd.*
 %_man8dir/ntpd.*
-%_man1dir/ntpd.1
 
 %defattr(640,root,ntpd,710)
 %dir %ROOT
 %dir %ROOT%_sysconfdir
-%ROOT%_sysconfdir/services
+%dir %ROOT/%_lib
 %attr(1770,root,ntpd) %dir %ROOT/tmp
 %attr(1770,root,ntpd) %dir %ROOT%_sysconfdir/%name
 %config(noreplace) %ROOT%_sysconfdir/%name/keys
@@ -297,6 +306,14 @@ fi
 %attr(640,ntpd,ntpd) %ghost %ROOT%_sysconfdir/%name/drift
 
 %changelog
+* Mon Dec 14 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt3
+- 4.2.8p4 (multiple CVEs; see "NEWS" file)
+- ntpdate is not used in init script (obsoleted by --panicgate),
+  removed ntpdate from "Requires" in the ntpd subpackage
+- updated chrooted environment (update_chrooted is used now)
+- added IPv6 localhost as trusted source
+- compressed manual pages
+
 * Tue Jul 07 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt2
 - 4.2.8p3
 - used chroot by default
