@@ -1,17 +1,17 @@
 
-%define sover 4
+%define sover 2
 %define libname libzip%sover
-%define utilsname libzip-utils
-Name: libzip
-Version: 1.0.1
-Release: alt1
+Name: libzip%sover
+Version: 0.11.2
+Release: alt3
 Summary: C library for reading, creating, and modifying zip archives
 
 Group: System/Libraries
 License: BSD
 Url: http://www.nih.at/libzip/
 
-Source: %name-%version.tar
+Source0: libzip-%version.tar.bz2
+Patch1: libzip-0.11.2-CVE-2015-2331.patch
 
 BuildRequires: gcc-c++ zlib-devel
 
@@ -21,34 +21,9 @@ can be added from data buffers, files, or compressed data copied directly from
 other zip archives. Changes made without closing the archive can be reverted.
 The API is documented by man pages.
 
-%package -n %utilsname
-Group: System/Libraries
-Summary: Zip-file processing utilities
-Requires: %libname = %version-%release
-Conflicts: libzip <= libzip-0.9.3-alt2
-%description -n %utilsname
-Zip-file processing utilities
-
-%package -n %libname
-Group: System/Libraries
-Summary: C library for reading, creating, and modifying zip archives
-%description -n %libname
-libzip is a C library for reading, creating, and modifying zip archives. Files
-can be added from data buffers, files, or compressed data copied directly from
-other zip archives. Changes made without closing the archive can be reverted.
-The API is documented by man pages.
-
-%package devel
-Summary: Development files for %name
-Group: Development/C
-Requires: %libname = %version-%release
-%description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
-
-
 %prep
-%setup -q
+%setup -qn libzip-%version
+%patch1 -p1
 
 %autoreconf
 
@@ -66,27 +41,15 @@ developing applications that use %name.
 %make DESTDIR=%buildroot install
 
 
-%files -n %utilsname
-%doc AUTHORS NEWS README THANKS TODO
-%_bindir/*
-%_man1dir/*zip*
-
 %files -n %libname
 %doc AUTHORS NEWS README THANKS TODO
 %_libdir/*.so.%sover
 %_libdir/*.so.%sover.*
 
-%files devel
-%_libdir/*.so
-%_libdir/pkgconfig/*.pc
-%_libdir/%name/include
-%_includedir/%name/
-%_man3dir/*zip*
-%_man3dir/*ZIP*
 
 %changelog
-* Mon Dec 14 2015 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt1
-- new version
+* Mon Dec 14 2015 Sergey V Turchin <zerg@altlinux.org> 0.11.2-alt3
+- build only libzip
 
 * Mon Dec 14 2015 Sergey V Turchin <zerg@altlinux.org> 0.11.2-alt1.M70P.1
 - build for M70P
