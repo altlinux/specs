@@ -4,25 +4,21 @@
 
 %define		rname kvkbd
 Name:		kde4-%rname
-Version:	0.6
-Release:	alt1.2
+Version:	0.7.2
+Release:	alt1
 
 Group:		Accessibility
 Summary:	Virtual Keyboard for KDE4
 Summary(ru_RU.UTF8): Виртуальная (экранная) клавиатура для KDE4
 License:	GPLv2
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
-Url:		http://www.kde-apps.org/content/show.php/Kvkbd+-+KDE4?content=%content
+Url:		http://kde-apps.org/content/show.php/Kvkbd?content=56019
 
 Provides:	%rname = %version-%release
-Requires:	kde4libs >= %{get_version kde4libs}
 
-Source0:	http://www.kde-apps.org/CONTENT/content-files/%content-%rname-%version.tar.bz2
-Patch0:   kde4-kvkbd-0.6-alt-DSO.patch
+Source0:	%rname-%version.tar
 
 BuildRequires(pre): kde4libs-devel
-
-
 # Automatically added by buildreq on Wed Aug 26 2009 (-bi)
 BuildRequires: gcc-c++ kde4libs-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libqt4-devel libxkbfile-devel libxslt-devel xorg-xf86vidmodeproto-devel xsltproc
 
@@ -40,13 +36,9 @@ Kvkbd - виртуальная клавиатура для KDE4, обладаю�
 
 %prep
 %setup -q -n %rname-%version
-%patch0 -p2
 
 %build
-%K4cmake \
-    -DCMAKE_CXX_FLAGS:STRING="%optflags" \
-    -DCMAKE_C_FLAGS:STRING="%optflags"
-%K4make
+%K4build
 
 %install
 %K4install
@@ -55,11 +47,14 @@ Kvkbd - виртуальная клавиатура для KDE4, обладаю�
 
 %files -f %rname.lang
 %doc AUTHORS TODO README ChangeLog
-%__kde4_bindir/%rname
-%__kde4_xdg_apps/%rname.desktop
-%_K4apps/%rname
+%_kde4_bindir/%rname
+%_kde4_xdg_apps/%rname.desktop
+%_K4apps/%rname/
 
 %changelog
+* Mon Dec 14 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt1
+- new version
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.2
 - Fixed build
 
