@@ -1,6 +1,6 @@
 Name: cpio
-Version: 2.11
-Release: alt2
+Version: 2.12
+Release: alt1
 
 Summary: A GNU archiving program
 License: GPLv3+
@@ -11,6 +11,7 @@ Url: http://www.gnu.org/software/cpio/
 Source: cpio-%version.tar
 Patch: cpio-%version-%release.patch
 
+BuildPreReq: makeinfo
 # Due to static subpackage.
 BuildPreReq: glibc-devel-static
 
@@ -84,7 +85,7 @@ find -type f -print0 |
 %make_build -k check
 
 %install
-%makeinstall bindir=%buildroot%_bindir mandir=%buildroot%_mandir
+%makeinstall_std
 mkdir -p %buildroot/bin
 mv %buildroot%_bindir/cpio %buildroot/bin/
 mv %buildroot%_bindir/cpio{,.}static
@@ -96,12 +97,17 @@ mv %buildroot%_bindir/cpio{,.}static
 %_infodir/cpio.info*
 %_mandir/man?/cpio.*
 %doc AUTHORS NEWS README THANKS TODO
-%exclude %_man1dir/mt.*
 
 %files static
 %_bindir/cpio.static
 
+%define _unpackaged_files_terminate_build 1
+
 %changelog
+* Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 2.12-alt1
+- 2.11 -> 2.12.
+- Merged some patches and synced manpage with Fedora cpio-2.12-2.
+
 * Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 2.11-alt2
 - Synced cpio manpage with Fedora cpio-2.11-11.
 - Fixed build with glibc-2.16.
