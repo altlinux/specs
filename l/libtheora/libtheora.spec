@@ -1,6 +1,6 @@
 Name: libtheora
 Version: 1.1.1
-Release: alt5
+Release: alt6
 Epoch: 2
 
 Summary: Theora Video Compression Codec
@@ -10,6 +10,11 @@ Url: http://www.theora.org/
 # http://downloads.xiph.org/releases/theora/%name-%version.tar.bz2
 Source: %name-%version.tar
 Patch: libtheora-1.1.1-alt-link.patch
+Patch1: 0001-Correct-an-operator-precedence-error-in-the-visualiz.patch
+Patch2: 0002-Fix-pp_sharp_mod-calculation.patch
+Patch3: 0003-examples-fix-underlinking.patch
+Patch4: 0004-examples-png_sizeof-no-longer-available-since-libpng.patch
+Patch5: 0005-Make-autoreconf-i-f-work.patch
 
 # Automatically added by buildreq on Tue Nov 23 2010
 BuildRequires: doxygen libSDL-devel libpng-devel libvorbis-devel
@@ -53,7 +58,11 @@ theora bitstreams.
 %prep
 %setup
 %patch -p1
-ln -s m4/as-ac-expand.m4 acinclude.m4
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 %autoreconf
@@ -98,6 +107,9 @@ install -pm644 AUTHORS CHANGES COPYING LICENSE README %buildroot%docdir/
 %_bindir/*
 
 %changelog
+* Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 2:1.1.1-alt6
+- Backported several upstream fixes.
+
 * Thu Sep 27 2012 Dmitry V. Levin <ldv@altlinux.org> 2:1.1.1-alt5
 - Rebuilt with libpng15.
 
