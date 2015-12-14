@@ -1,7 +1,7 @@
 Summary:   An intrusion detection system
 Name:      snort
 Version:   2.9.7.0
-Release:   alt1
+Release:   alt2
 License: %gpl2only
 Group:     Security/Networking
 Url:       http://www.snort.org
@@ -28,8 +28,7 @@ PreReq:    alternatives >= 0.2.0-alt0.7
 BuildPreReq: libltdl-devel, m4, bzip2
 BuildRequires: rpm-build-licenses
 
-# Automatically added by buildreq on Fri Jan 14 2005, explicit versions added manually
-BuildRequires: libnet1-devel >= 1.0.2a, libpcap-devel >= 0.4, libpcre-devel
+BuildRequires: libpcap-devel >= 0.4, libpcre-devel
 BuildRequires: zlib-devel libdnet-devel libdaq-devel flex
 
 Conflicts: snort-rules < 2.8
@@ -103,18 +102,15 @@ Summary: Snort (plain) with Flexible Response
 Summary(ru_RU.UTF-8): Snort с поддержкой автоматического блокирования соединений
 Group: Security/Networking
 Requires: %name = %version
-Requires: libnet1
 %description plain+flexresp
 Snort compiled with flexresp support.
 Flexible Response allows snort to actively close offending connections.
-Requires snort libnet rpm.
 %description -l ru_RU.UTF-8 plain+flexresp
 Snort, скомпилированный с поддержкой flexresp. Flexible Responses означает
 возможность автоматически блокировать соединения, признанные злонамеренными
-на основании соответствующих правил. Требует библиотеку libnet.
+на основании соответствующих правил.
 %description -l uk_UA.UTF-8 plain+flexresp
 Snort, скомп╕льований з п╕дтримкою flexresp.
-Вимага╓ б╕бл╕отеку libnet.
 
 %package inline
 Summary: Snort with IPTables support
@@ -323,6 +319,9 @@ touch %buildroot%_sysconfdir/%name/rules/black_list.rules
 %doc doc/snort_manual.*
 
 %changelog
+* Mon Dec 14 2015 Mikhail Efremov <sem@altlinux.org> 2.9.7.0-alt2
+- Drop libnet from BR.
+
 * Fri Dec 12 2014 Anton Farygin <rider@altlinux.ru> 2.9.7.0-alt1
 - new version
 
