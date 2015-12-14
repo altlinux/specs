@@ -6,7 +6,7 @@
 
 Name: libtool_%ltversion
 Version: 1.5.26
-Release: alt10
+Release: alt11
 Epoch: 3
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
@@ -15,7 +15,7 @@ Group: Development/Other
 Url: http://www.gnu.org/software/libtool/libtool.html
 
 %add_findreq_skiplist %_datadir/%libtool/config.guess
-%set_compress_method gzip
+%set_compress_method xz
 
 Provides: libtool = %epoch:%version-%release
 Obsoletes: libtool
@@ -28,7 +28,7 @@ Source: libtool-%version.tar
 
 Patch: libtool-%version-%release.patch
 
-BuildRequires: gcc-c++, gcc-g77
+BuildRequires: gcc-c++ gcc-g77 makeinfo
 
 %package -n %libltdl
 Summary: dlopen wrapper for GNU libtool
@@ -144,7 +144,8 @@ make MAKEINFOFLAGS=--no-split
 #sed -i "s/`hostname`/%buildhost/g" libtool
 
 %check
-%make_build -k check
+# SMP incompatible check
+make -k check
 
 %install
 %makeinstall
@@ -164,7 +165,7 @@ cat >%buildroot%_altdir/%name <<EOF
 %_bindir/libtool-default	%_bindir/%libtool	%priority
 %_bindir/libtoolize-default	%_bindir/libtoolize-%ltversion	%_bindir/%libtool
 %_datadir/libtool	%_datadir/%libtool	%_bindir/%libtool
-%_infodir/libtool.info.gz	%_infodir/%libtool.info.gz	%_bindir/%libtool
+%_infodir/libtool.info.xz	%_infodir/%libtool.info.xz	%_bindir/%libtool
 EOF
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
@@ -228,6 +229,9 @@ cp -p install-sh missing %buildroot%ltdocdir/demo/
 %ltdocdir/*demo*
 
 %changelog
+* Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 3:1.5.26-alt11
+- Changed compress method to xz.
+
 * Thu Sep 06 2012 Dmitry V. Levin <ldv@altlinux.org> 3:1.5.26-alt10
 - Fixed %libltdl-devel interpackage requirements.
 
