@@ -9,7 +9,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -196,6 +196,9 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-background
 
 %changelog
+* Mon Dec 14 2015 Vladimir Didenko <cow@altlinux.org> 2.8.3-alt1
+- 2.8.3
+
 * Tue Nov 24 2015 Vladimir Didenko <cow@altlinux.org> 2.8.2-alt1
 - 2.8.2
 
