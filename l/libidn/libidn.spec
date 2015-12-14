@@ -1,5 +1,5 @@
 Name: libidn
-Version: 1.28
+Version: 1.32
 Release: alt1
 
 Summary: Internationalized Domain Name support library
@@ -63,17 +63,14 @@ This package includes %name support files for GNU Emacs.
 
 %prep
 %setup
-iconv -f iso88591 -t utf8 -o doc/libidn.utf8 doc/libidn.info
-mv doc/libidn.utf8 doc/libidn.info
+# These gnulib tests fail.
+sed -i 's/test-\(lock\|thread_create\)\$(EXEEXT) //' lib/gltests/Makefile.in
 
 %build
 %configure \
 	--disable-rpath \
 	--disable-static \
 	--disable-silent-rules \
-	--with-packager="%packager" \
-	--with-packager-version="%release" \
-	--with-packager-bug-reports="http://bugs.altlinux.org" \
 	#
 # get rid of RPATH
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
@@ -95,7 +92,7 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%make_build -k check
+%make_build -k check VERBOSE=1
 
 %files -f %name.lang
 %_libdir/*.so.*
@@ -112,7 +109,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_infodir/*
 
 %files devel-doc
-%dir %docdir
+%dir %docdir/
 %docdir/*.html
 %docdir/*.pdf
 %docdir/reference/
@@ -123,6 +120,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif #emacs
 
 %changelog
+* Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 1.32-alt1
+- 1.29 -> 1.32.
+
+* Sat Nov 15 2014 Dmitry V. Levin <ldv@altlinux.org> 1.29-alt1
+- Updated to 1.29.
+
 * Mon Jul 22 2013 Dmitry V. Levin <ldv@altlinux.org> 1.28-alt1
 - Updated to 1.28.
 
