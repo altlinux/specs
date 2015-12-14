@@ -8,8 +8,8 @@
 
 Name: 	  fpc
 Epoch:    2
-Version:  2.6.4
-Release:  alt3
+Version:  3.0.0
+Release:  alt1
 
 Summary:  Free Pascal Compiler -- Meta Package
 License:  GPL
@@ -38,27 +38,37 @@ Patch1: fpc-fpkeys.patch
 Patch2: fpc-process-window-info.patch
 # Don't show message on mouse click
 Patch3: fpc-mouse-click.patch
-# Fix http://bugs.freepascal.org/view.php?id=25230
-Patch4: fpc-fix-incorrect-hints.patch
-# Fix http://bugs.freepascal.org/view.php?id=25239
-Patch5: fpc-help-buttons.patch
 # Fix http://bugs.freepascal.org/view.php?id=25280
 Patch6: fpc-fix-min-size.patch
 
 # Patches from Debian
-Patch10: fpc-add-a-new-directive-CFGDIR.patch
-Patch11: fpc-change-path-of-localization-files.patch
 Patch12: fpc-fix-FPCDIR-in-fpcmake.patch
 Patch13: fpc-fix-encoding-of-localization-files-to-be-utf8.patch
 Patch14: fpc-fix-spell-errors.patch
+Patch15: fpc-add_arm64_manpage.patch
+Patch16: fpc-add-arm64-support.patch
+Patch17: fpc-change-path-of-localization-files-to-fit-Debian-standar.patch
+Patch18: fpc-disable_building_gnome1_and_gtk1.patch
+Patch19: fpc-fix_FTBFS_on_linux_not_amd64.patch
+Patch20: fpc-fix-IDE-data-file-location.patch
+Patch21: fpc-fix_source_location_for_documentation.patch
+Patch22: fpc-fix_typo_in_ppc64.patch
+Patch23: fpc-honor_SOURCE_DATE_EPOCH_in_date.patch
+Patch24: fpc-prevent_date_in_fpcdocs.patch
+Patch25: fpc-prevent_date_in_fpcMakefiles.patch
+Patch26: fpc-relpath.patch
+Patch27: fpc-rename-instantfpc-to-ifpc.patch
+Patch28: fpc-use-bfd-explicitly.patch
 
 # Other patches
 # Set path to ide without version and text/ subdirectory. Use ~/fpc/ide instead of ~/.fp for personal stuff for IDE.
-Patch20: fpc-fix-path-to-ide.patch
+Patch30: fpc-fix-path-to-ide.patch
 # Add note about install fpc-docs in helpsystem message about missing documentation
-Patch21: fpc-docs-message.patch
+Patch31: fpc-docs-message.patch
 # Automatically add help index from /usr/share/doc/fpc/fpctoc.htx if it exists
-Patch22: fpc-auto-add-help-index.patch
+Patch32: fpc-auto-add-help-index.patch
+# Show progress in writeidx
+Patch33: fpc-writeidx-show-progress.patch
 
 ExclusiveArch: %ix86 amd64 x86_64
 
@@ -68,15 +78,15 @@ Requires: fpc-units-base
 Requires: fpc-ide
 Requires: fpc-units-fcl
 Requires: fpc-units-fv
-Requires: fpc-units-gtk
 Requires: fpc-units-gtk2
-Requires: fpc-units-gnome1
 Requires: fpc-units-db
 Requires: fpc-units-gfx
 Requires: fpc-units-net
 Requires: fpc-units-math
 Requires: fpc-units-misc
 Requires: fpc-units-multimedia
+
+Requires: rpm-build-fpc
 
 BuildRequires(pre): rpm-build-fpc fpc-compiler
 BuildRequires: fpc-utils
@@ -87,6 +97,10 @@ BuildRequires: unzip
 %if_with doc
 BuildRequires: tex4ht texlive-generic-recommended texlive-latex-recommended fpc-units-fcl
 %endif
+
+%define fpc_docdir  %_defaultdocdir/%name
+%define fpc_fpmdir  %fpc_dir/fpmkinst/%ppctarget
+%define fpc_unitdir %fpc_dir/units/%ppctarget
 
 %ifarch %ix86
 %define ppctarget i386-linux
@@ -120,18 +134,29 @@ pushd fpcsrc
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
-%patch4 -p0
-%patch5 -p0
 %patch6 -p0
 popd
-%patch10 -p1
-#%%patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-%patch20 -p2
-%patch21 -p2
-%patch22 -p2
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
+%patch27 -p1
+%patch28 -p1
+%patch30 -p2
+%patch31 -p0
+%patch32 -p2
+%patch33 -p2
 
 %if_with sources
 cp -a fpcsrc{,.orig}
@@ -163,46 +188,14 @@ export PATH=:$PATH
 %endif
 
 pushd fpcsrc
-export PATH=$PWD:$PATH
-
-# Make new compiler
-%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C rtl
-%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C compiler
-cp -fv compiler/%ppcname $PWD
-
-# Make new fpcmake
-%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C packages fcl_smart
-%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C utils
-cp -pv utils/fpcm/fpcmake fpcmake
+export PATH=$PWD/compiler:$PATH
 
 #Fix path
 %ifarch x86_64
 sed -i "s|/lib/fpc/lexyacc|/lib64/fpc/lexyacc|g" utils/tply/Makefile.fpc
 %endif
 
-# Begin make target use new fpcmake
-fpcmake -r
-
-# Make IDE:
-%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C ide gdb
-
-%ifnarch %ix86
-%fpc_make  FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD CROSSINSTALL=1 PPC_TARGET=i386 -C compiler
-cp -pv compiler/ppc386 ppc386
-%endif
-
-%ifarch %makewin32
-#Build for win32
-%fpc_build_win32 FPC=ppc386 FPCMAKE=fpcmake FPCDIR=$PWD -C rtl
-%endif
-
-# Make tests
-%if_with tests
-make TEST_FPC=$PWD/%ppcname FPCDIR=$PWD QUICKTEST=YES -C tests digest
-%endif
-
-# Make help index generator
-%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C installer writeidx
+make build VERBOSE=1 FPC=%ppcname
 
 popd
 
@@ -222,12 +215,8 @@ popd
 
 %install
 pushd fpcsrc
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name -C compiler
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name -C rtl
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name INSTALL_PREFIX=%buildroot%_usr -C packages
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name -C ide
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name INSTALL_PREFIX=%buildroot%_usr -C utils
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name INSTALL_PREFIX=%buildroot%_usr -C installer
+%makeinstall_std INSTALL_PREFIX=%buildroot%_usr
+%makeinstall_std INSTALL_PREFIX=%buildroot%_usr -C installer
 
 # this symbolic link must be absolute (so that fpcmake can detect FPCDIR)
 ln -s %fpc_dir/%ppcname %buildroot%_bindir/%ppcname
@@ -237,13 +226,20 @@ ln -s %fpc_dir/%ppcname %buildroot%_bindir/%ppcname
 %fpc_install_win32 FPC=$PWD/ppc386 FPCMAKE=$PWD/fpcmake -C rtl
 %endif
 
+# TODO [HACK] Fix lib dir for x86_64 and remove version from installed path of fpc_dir and unit documentation
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+mv %buildroot%fpc_dir/%version/* %buildroot%fpc_dir
+rmdir %buildroot%fpc_dir/%version
+mv %buildroot%fpc_docdir-%version %buildroot%fpc_docdir
+
 # Install fp.cfg and create fpc.cfg
 install -Dpm 644 %SOURCE3 %buildroot%_sysconfdir/fp.cfg
 chmod 755 compiler/utils/samplecfg
 compiler/utils/samplecfg "%fpc_dir" %buildroot%_sysconfdir
-iconv -f CP866 -t UTF8 %buildroot%fpc_dir/msg/errorr.msg > %buildroot%fpc_dir/msg/errorru.msg
 
-# Fix for depend
+# Fix configuration for depend
 %ifarch x86_64
 install -p -m 644 utils/fppkg/units/x86_64-linux/*.{o,ppu} %buildroot%fpc_dir/units/x86_64-linux/fppkg/
 sed -i "s|\$fpctarget|x86_64-linux|g" %buildroot%_sysconfdir/%name.cfg
@@ -273,7 +269,6 @@ install -p -m 644 install/unix/fp32x32.xpm %buildroot%_niconsdir/fp.xpm
 install -p -m 644 %SOURCE4 %buildroot%_miconsdir/fp.xpm
 install -p -m 644 %SOURCE5 %buildroot%_liconsdir/fp.xpm
 
-
 #Install src
 %if_with sources
 mkdir -p %buildroot%_datadir/fpcsrc
@@ -286,23 +281,21 @@ cp -fR fpcsrc.orig/* %buildroot%_datadir/fpcsrc
 make INSTALL_PREFIX=%buildroot%_datadir -C install/man installman
 
 #Instal docs
-mkdir -p %buildroot%_defaultdocdir/%name
-install -p -m 644 install/doc/copying* install/doc/whatsnew.txt install/doc/readme.txt install/doc/faq.txt %buildroot%_defaultdocdir/%name
+mkdir -p %buildroot%fpc_docdir
+install -p -m 644 install/doc/copying* install/doc/whatsnew.txt install/doc/readme.txt install/doc/faq.txt %buildroot%fpc_docdir
 
 %if_with doc
-make INSTALL_DOCDIR=%buildroot%_defaultdocdir/%name DESTDIR=%buildroot -C fpcdocs htmlinstall #pdfinstall
+make INSTALL_DOCDIR=%buildroot%fpc_docdir DESTDIR=%buildroot -C fpcdocs htmlinstall #pdfinstall
 %if_with help_index
-install -p -m 644 fpcdocs/fpctoc.htx %buildroot%_defaultdocdir/%name
+install -p -m 644 fpcdocs/fpctoc.htx %buildroot%fpc_docdir
 %else
-install -p -m 644 %SOURCE9 %buildroot%_defaultdocdir/%name
+install -p -m 644 %SOURCE9 %buildroot%fpc_docdir
 %endif
 %endif
-
-# TODO: where is package unit libvlc?
-rm -rf %buildroot%fpc_dir/units/%ppctarget/libvlc
 
 # Remove hacker ASCII art picture as IDE background by renaming fp.ans to fp.ans.original
 mv %buildroot%fpc_dir/ide/fp.ans{,.original}
+
 # Remove installer executable
 rm -f %buildroot%_bindir/installer
 
@@ -322,7 +315,7 @@ ansistrings). This package contains the common files and dirs.
 
 %files common
 %dir %fpc_dir
-%dir %_defaultdocdir/%name
+%dir %fpc_docdir
 
 %package compiler
 Summary: Free Pascal -- Compiler
@@ -348,10 +341,13 @@ This package contains the command line compiler.
 
 %files compiler
 %config(noreplace) %_sysconfdir/%name.cfg
-%doc %_defaultdocdir/%name/copying*
-%doc %_defaultdocdir/%name/whatsnew.txt
-%doc %_defaultdocdir/%name/readme.txt
-%doc %_defaultdocdir/%name/faq.txt
+%config(noreplace) %_sysconfdir/fppkg.cfg
+%dir %_sysconfdir/fppkg
+%config(noreplace) %_sysconfdir/fppkg/default
+%doc %fpc_docdir/copying*
+%doc %fpc_docdir/whatsnew.txt
+%doc %fpc_docdir/readme.txt
+%doc %fpc_docdir/faq.txt
 %_bindir/fpc
 %_bindir/ppc*
 %_bindir/fpcsubst
@@ -364,6 +360,7 @@ This package contains the command line compiler.
 %_man1dir/fpc.*
 %_man1dir/fpcmkcfg.*
 %_man1dir/fpcsubst.*
+%_man1dir/fppkg.1*
 %_man1dir/ppc*.*
 %_man1dir/grab_vcsa.*
 %_man5dir/fpc.cfg.*
@@ -389,64 +386,80 @@ Compiler:
   - plex/pyacc  Pascal Lex/Yacc implementation
 
 %files utils
-%_bindir/pas2fpm
-%_bindir/pas2ut
-%_bindir/ppufiles
-%_bindir/ppudump
-%_bindir/ppumove
-%_bindir/ppdep
-%_bindir/ptop
-%_bindir/rstconv
-%_bindir/data2inc
+%doc fpcsrc/utils/fpcm/fpcmake.ini
 %_bindir/bin2obj
-%_bindir/delp
-%_bindir/plex
-%_bindir/pyacc
-%_bindir/h2pas
-%_bindir/h2paspp
-%_bindir/postw32
-%_bindir/fpcmake
-%_bindir/fpcres
-%_bindir/fprcp
-%_bindir/fpdoc
-%_bindir/makeskel
-%_bindir/unitdiff
-%_bindir/rmcvsdir
-%_bindir/fpclasschart
 %_bindir/chmcmd
 %_bindir/chmls
+%_bindir/data2inc
+%_bindir/delp
+%_bindir/fpcjres
+%_bindir/fpclasschart
+%_bindir/fpcmake
+%_bindir/fpcres
+%_bindir/fpdoc
+%_bindir/fprcp
+%_bindir/h2pas
+%_bindir/h2paspp
+%_bindir/ifpc
+%_bindir/makeskel
+%_bindir/makeskel.rsj
 %_bindir/mkarmins
 %_bindir/mkx86ins
-%_bindir/instantfpc
+%_bindir/pas2fpm
+%_bindir/pas2jni
+%_bindir/pas2ut
+%_bindir/plex
+%_bindir/postw32
+%_bindir/ppdep
+%_bindir/ppudump
+%_bindir/ppufiles
+%_bindir/ppumove
+%_bindir/ptop
+%_bindir/ptop.rsj
+%_bindir/pyacc
+%_bindir/relpath
+%_bindir/rmcvsdir
+%_bindir/rstconv
+%_bindir/unitdiff
 %_bindir/writeidx
-%doc fpcsrc/utils/fpcm/fpcmake.ini
-%fpc_dir/units/%ppctarget/lexyacc
+# Other utilities
+%_bindir/cldrparser
+%_bindir/mkinsadd
+%_bindir/unihelper
+#
 %fpc_dir/lexyacc
+%fpc_unitdir/utils-lexyacc
+%fpc_fpmdir/utils-lexyacc.fpm
 %_man1dir/bin2obj.1*
+%_man1dir/chmcmd.1*
+%_man1dir/chmls.1*
 %_man1dir/data2inc.1*
+%_man1dir/delp.1*
+%_man1dir/fpcjres.1*
+%_man1dir/fpclasschart.1*
+%_man1dir/fpcmake.1*
+%_man1dir/fpcres.1*
+%_man1dir/fpdoc.1*
 %_man1dir/fprcp.1*
+%_man1dir/ifpc.1*
+%_man1dir/h2pas.1*
 %_man1dir/h2paspp.1*
 %_man1dir/makeskel.1*
-%_man1dir/postw32.1*
-%_man1dir/unitdiff.1*
-%_man1dir/delp.1*
-%_man1dir/fpcmake.1*
-%_man1dir/h2pas.1*
+%_man1dir/pas2fpm.1*
+%_man1dir/pas2jni.1*
+%_man1dir/pas2ut.1*
 %_man1dir/plex.1*
+%_man1dir/postw32.1*
 %_man1dir/ppdep.1*
 %_man1dir/ppudump.1*
 %_man1dir/ppufiles.1*
 %_man1dir/ppumove.1*
 %_man1dir/ptop.1*
 %_man1dir/pyacc.1*
-%_man1dir/rstconv.1*
-%_man1dir/fpdoc.1*
-%_man1dir/fpcres.1*
-%_man1dir/fppkg.1*
+%_man1dir/relpath.1*
 %_man1dir/rmcvsdir.1*
-%_man1dir/chmcmd.1*
-%_man1dir/chmls.1*
-%_man1dir/fpclasschart.1*
+%_man1dir/rstconv.1*
+%_man1dir/unitdiff.1*
 %_man5dir/fpcmake.5*
 %_man5dir/ptop.cfg.5*
 
@@ -462,8 +475,13 @@ Compiler.
 
 %files units-rtl
 %dir %fpc_dir/units
-%dir %fpc_dir/units/%ppctarget
-%fpc_dir/units/%ppctarget/rtl
+%dir %fpc_unitdir
+%fpc_unitdir/rtl
+%fpc_unitdir/rtl-console
+%fpc_unitdir/rtl-extra
+%fpc_unitdir/rtl-objpas
+%fpc_unitdir/rtl-unicode
+%fpc_fpmdir/rtl-*.fpm
 
 # packages/base
 %package units-base
@@ -478,16 +496,31 @@ these units are also required by the Free Component Library:
  - ZLib
 
 %files units-base
-#%%doc /usr/share/doc/fp-units-base
-%fpc_dir/units/%ppctarget/paszlib
-%fpc_dir/units/%ppctarget/pasjpeg
-%fpc_dir/units/%ppctarget/ncurses
-%fpc_dir/units/%ppctarget/x11
-%fpc_dir/units/%ppctarget/regexpr
-%fpc_dir/units/%ppctarget/hash
-%fpc_dir/units/%ppctarget/uuid
-%fpc_dir/units/%ppctarget/fppkg
-%fpc_dir/units/%ppctarget/iconvenc
+%doc %fpc_docdir/hash
+%doc %fpc_docdir/iconvenc
+%doc %fpc_docdir/ncurses
+%doc %fpc_docdir/pasjpeg
+%doc %fpc_docdir/paszlib
+%doc %fpc_docdir/regexpr
+%doc %fpc_docdir/uuid
+%fpc_unitdir/fppkg
+%fpc_unitdir/hash
+%fpc_unitdir/iconvenc
+%fpc_unitdir/ncurses
+%fpc_unitdir/pasjpeg
+%fpc_unitdir/paszlib
+%fpc_unitdir/regexpr
+%fpc_unitdir/uuid
+%fpc_unitdir/x11
+%fpc_fpmdir/fppkg.fpm
+%fpc_fpmdir/hash.fpm
+%fpc_fpmdir/iconvenc.fpm
+%fpc_fpmdir/ncurses.fpm
+%fpc_fpmdir/pasjpeg.fpm
+%fpc_fpmdir/paszlib.fpm
+%fpc_fpmdir/regexpr.fpm
+%fpc_fpmdir/uuid.fpm
+%fpc_fpmdir/x11.fpm
 
 # packages/fcl
 %package units-fcl
@@ -499,23 +532,26 @@ This package contains the Free Component Library for the Free Pascal
 Compiler.
 
 %files units-fcl
-#%doc /usr/share/doc/fp-units-fcl
-%fpc_dir/units/%ppctarget/fcl-base
-%fpc_dir/units/%ppctarget/fcl-db
-%fpc_dir/units/%ppctarget/fcl-fpcunit
-%fpc_dir/units/%ppctarget/fcl-image
-%fpc_dir/units/%ppctarget/fcl-net
-%fpc_dir/units/%ppctarget/fcl-passrc
-%fpc_dir/units/%ppctarget/fcl-registry
-%fpc_dir/units/%ppctarget/fcl-web
-%fpc_dir/units/%ppctarget/fcl-xml
-%fpc_dir/units/%ppctarget/fcl-process
-%fpc_dir/units/%ppctarget/fcl-json
-%fpc_dir/units/%ppctarget/fcl-async
-%fpc_dir/units/%ppctarget/fcl-res
-%fpc_dir/units/%ppctarget/fcl-extra
-%fpc_dir/units/%ppctarget/fcl-js
-#fpc_dir/units/%ppctarget/fcl-stl
+%doc %fpc_docdir/fcl-*
+%fpc_unitdir/fcl-async
+%fpc_unitdir/fcl-base
+%fpc_unitdir/fcl-db
+%fpc_unitdir/fcl-extra
+%fpc_unitdir/fcl-fpcunit
+%fpc_unitdir/fcl-image
+%fpc_unitdir/fcl-js
+%fpc_unitdir/fcl-json
+%fpc_unitdir/fcl-net
+%fpc_unitdir/fcl-passrc
+%fpc_unitdir/fcl-process
+%fpc_unitdir/fcl-registry
+%fpc_unitdir/fcl-res
+%fpc_unitdir/fcl-sdo
+%fpc_unitdir/fcl-sound
+%fpc_unitdir/fcl-stl
+%fpc_unitdir/fcl-web
+%fpc_unitdir/fcl-xml
+%fpc_fpmdir/fcl-*.fpm
 
 # packages/fv
 %package units-fv
@@ -527,22 +563,9 @@ This package contains the Free Vision units for the Free Pascal
 Compiler.
 
 %files units-fv
-#%doc /usr/share/doc/fp-units-fv
-%fpc_dir/units/%ppctarget/fv
-
-# packages/gtk
-%package units-gtk
-Summary: Free Pascal -- GTK+ 1.2 units
-Group: Development/Other
-
-%description units-gtk
-This package contains Free Pascal units and examples to create
-programs with GTK+ 1.2.
-
-%files units-gtk
-#%doc /usr/share/doc/fp-units-gtk
-%fpc_dir/units/%ppctarget/gtk1
-%fpc_dir/units/%ppctarget/fpgtk
+%doc %fpc_docdir/fv
+%fpc_unitdir/fv
+%fpc_fpmdir/fv.fpm
 
 # packages/gtk2
 %package units-gtk2
@@ -554,22 +577,9 @@ This package contains Free Pascal units and examples to create
 programs with GTK+ 2.x.
 
 %files units-gtk2
-#%doc /usr/share/doc/fp-units-gtk2
-%fpc_dir/units/%ppctarget/gtk2
-
-# packages/gnome1
-%package units-gnome1
-Summary: Free Pascal -- GNOME 1 units
-Group: Development/Other
-
-%description units-gnome1
-This package contains Free Pascal units and examples to create
-programs for GNOME 1.
-
-%files units-gnome1
-#%doc /usr/share/doc/fp-units-gnome1
-%fpc_dir/units/%ppctarget/imlib
-%fpc_dir/units/%ppctarget/gnome1
+%doc %fpc_docdir/gtk2
+%fpc_unitdir/gtk2
+%fpc_fpmdir/gtk2.fpm
 
 # packages/db
 %package units-db
@@ -587,17 +597,34 @@ This package contains Free Pascal units with bindings for:
  - SQLite
 
 %files units-db
-#%doc /usr/share/doc/fp-units-db
-%fpc_dir/units/%ppctarget/mysql
-%fpc_dir/units/%ppctarget/ibase
-%fpc_dir/units/%ppctarget/postgres
-%fpc_dir/units/%ppctarget/oracle
-%fpc_dir/units/%ppctarget/odbc
-%fpc_dir/units/%ppctarget/gdbm
-%fpc_dir/units/%ppctarget/sqlite
-%fpc_dir/units/%ppctarget/ldap
-%fpc_dir/units/%ppctarget/pxlib
-%fpc_dir/units/%ppctarget/dblib
+%doc %fpc_docdir/gdbm
+%doc %fpc_docdir/ibase
+%doc %fpc_docdir/mysql
+%doc %fpc_docdir/odbc
+%doc %fpc_docdir/oracle
+%doc %fpc_docdir/postgres
+%doc %fpc_docdir/pxlib
+%doc %fpc_docdir/sqlite
+%fpc_unitdir/dblib
+%fpc_unitdir/gdbm
+%fpc_unitdir/ibase
+%fpc_unitdir/ldap
+%fpc_unitdir/mysql
+%fpc_unitdir/odbc
+%fpc_unitdir/oracle
+%fpc_unitdir/postgres
+%fpc_unitdir/pxlib
+%fpc_unitdir/sqlite
+%fpc_fpmdir/dblib.fpm
+%fpc_fpmdir/gdbm.fpm
+%fpc_fpmdir/ibase.fpm
+%fpc_fpmdir/ldap.fpm
+%fpc_fpmdir/mysql.fpm
+%fpc_fpmdir/odbc.fpm
+%fpc_fpmdir/oracle.fpm
+%fpc_fpmdir/postgres.fpm
+%fpc_fpmdir/pxlib.fpm
+%fpc_fpmdir/sqlite.fpm
 
 # packages/gfx
 %package units-gfx
@@ -608,35 +635,54 @@ Requires: libX11-devel libXext-devel libXrandr-devel libXxf86dga-devel libXxf86v
 %description units-gfx
 This package contains Free Pascal units with bindings for:
  - opengl: OpenGL
+ - opengles
  - forms: Forms 0.88
  - svgalib: Svgalib
  - ggi: General Graphical Interface
  - libgd
  - libpng
  - graph
- - openal
  - cairo
 
 %files units-gfx
-#%doc /usr/share/doc/fp-units-gfx
-%fpc_dir/units/%ppctarget/opengl
-%fpc_dir/units/%ppctarget/xforms
-%fpc_dir/units/%ppctarget/svgalib
-%fpc_dir/units/%ppctarget/ggi
-%fpc_dir/units/%ppctarget/libgd
-%fpc_dir/units/%ppctarget/libpng
-%fpc_dir/units/%ppctarget/graph
-%fpc_dir/units/%ppctarget/openal
-%fpc_dir/units/%ppctarget/cairo
-%fpc_dir/units/%ppctarget/imagemagick
-%fpc_dir/units/%ppctarget/rsvg
-%fpc_dir/units/%ppctarget/hermes
-%fpc_dir/units/%ppctarget/opencl
-%fpc_dir/units/%ppctarget/ptc
-#%fpc_dir/units/%ppctarget/fpvectorial
+%doc %fpc_docdir/ggi
+%doc %fpc_docdir/imagemagick
+%doc %fpc_docdir/libgd
+%doc %fpc_docdir/opengl
+%doc %fpc_docdir/opengles
+%doc %fpc_docdir/ptc
+%doc %fpc_docdir/svgalib
+%doc %fpc_docdir/xforms
+%fpc_unitdir/cairo
+%fpc_unitdir/ggi
+%fpc_unitdir/graph
+%fpc_unitdir/hermes
+%fpc_unitdir/imagemagick
+%fpc_unitdir/libgd
+%fpc_unitdir/libpng
+%fpc_unitdir/opencl
+%fpc_unitdir/opengl
+%fpc_unitdir/opengles
+%fpc_unitdir/ptc
+%fpc_unitdir/rsvg
+%fpc_unitdir/svgalib
+%fpc_unitdir/xforms
 %_bindir/fd2pascal
 %_man1dir/fd2pascal.1*
-
+%fpc_fpmdir/cairo.fpm
+%fpc_fpmdir/ggi.fpm
+%fpc_fpmdir/graph.fpm
+%fpc_fpmdir/hermes.fpm
+%fpc_fpmdir/imagemagick.fpm
+%fpc_fpmdir/libgd.fpm
+%fpc_fpmdir/libpng.fpm
+%fpc_fpmdir/opencl.fpm
+%fpc_fpmdir/opengl.fpm
+%fpc_fpmdir/opengles.fpm
+%fpc_fpmdir/ptc.fpm
+%fpc_fpmdir/rsvg.fpm
+%fpc_fpmdir/svgalib.fpm
+%fpc_fpmdir/xforms.fpm
 
 # packages/net
 %package units-net
@@ -658,13 +704,24 @@ This package contains Free Pascal units for creating network tools:
  - pcap
 
 %files units-net
-#%doc /usr/share/doc/fp-units-net
-%fpc_dir/units/%ppctarget/libcurl
-%fpc_dir/units/%ppctarget/dbus
-%fpc_dir/units/%ppctarget/httpd*
-%fpc_dir/units/%ppctarget/openssl
-%fpc_dir/units/%ppctarget/pcap
-%fpc_dir/units/%ppctarget/fastcgi
+%doc %fpc_docdir/dbus
+%doc %fpc_docdir/httpd*
+%doc %fpc_docdir/libcurl
+%doc %fpc_docdir/openssl
+%fpc_unitdir/dbus
+%fpc_unitdir/fastcgi
+%fpc_unitdir/httpd*
+%fpc_unitdir/libcurl
+%fpc_unitdir/openssl
+%fpc_unitdir/pcap
+%fpc_unitdir/zorba
+%fpc_fpmdir/dbus.fpm
+%fpc_fpmdir/fastcgi.fpm
+%fpc_fpmdir/httpd*.fpm
+%fpc_fpmdir/libcurl.fpm
+%fpc_fpmdir/openssl.fpm
+%fpc_fpmdir/pcap.fpm
+%fpc_fpmdir/zorba.fpm
 
 # packages/math
 %package units-math
@@ -679,11 +736,17 @@ This package contains Free Pascal math interfacing units for:
  - symbolic: symbolic computing
 
 %files units-math
-#%doc /usr/share/doc/fp-units-math
-%fpc_dir/units/%ppctarget/gmp
-%fpc_dir/units/%ppctarget/proj4
-%fpc_dir/units/%ppctarget/numlib
-%fpc_dir/units/%ppctarget/symbolic
+%doc %fpc_docdir/gmp
+%doc %fpc_docdir/numlib
+%doc %fpc_docdir/symbolic
+%fpc_unitdir/gmp
+%fpc_unitdir/numlib
+%fpc_unitdir/proj4
+%fpc_unitdir/symbolic
+%fpc_fpmdir/gmp.fpm
+%fpc_fpmdir/numlib.fpm
+%fpc_fpmdir/proj4.fpm
+%fpc_fpmdir/symbolic.fpm
 
 # packages/misc
 %package units-misc
@@ -697,33 +760,66 @@ This package contains Free Pascal miscellaneous units for:
  - PasZLib (Pascal-only zlib implementation)
 
 %files units-misc
-#%doc /usr/share/doc/fp-units-misc
+%doc %fpc_docdir/aspell
+%doc %fpc_docdir/bzip2
+%doc %fpc_docdir/cdrom
+%doc %fpc_docdir/fftw
+%doc %fpc_docdir/gdbint
+%doc %fpc_docdir/libsee
+%doc %fpc_docdir/libxml2
+%doc %fpc_docdir/newt
+%doc %fpc_docdir/syslog
+%doc %fpc_docdir/tcl
+%doc %fpc_docdir/users
+%doc %fpc_docdir/utmp
 %ifarch %ix86
-%fpc_dir/units/%ppctarget/libc
-%fpc_dir/units/%ppctarget/unixutil
+%fpc_unitdir/libc
+%fpc_unitdir/unixutil
 %endif
-
-%fpc_dir/units/%ppctarget/utmp
-%fpc_dir/units/%ppctarget/pthreads
-%fpc_dir/units/%ppctarget/zlib
-%fpc_dir/units/%ppctarget/tcl
-%fpc_dir/units/%ppctarget/cdrom
-%fpc_dir/units/%ppctarget/bfd
-%fpc_dir/units/%ppctarget/syslog
-%fpc_dir/units/%ppctarget/gdbint
-%fpc_dir/units/%ppctarget/unzip
-%fpc_dir/units/%ppctarget/newt
-%fpc_dir/units/%ppctarget/fftw
-%fpc_dir/units/%ppctarget/fpmkunit
-%fpc_dir/units/%ppctarget/users
-%fpc_dir/units/%ppctarget/aspell
-%fpc_dir/units/%ppctarget/chm
-%fpc_dir/units/%ppctarget/libxml2
-%fpc_dir/units/%ppctarget/lua
-%fpc_dir/units/%ppctarget/bzip2
-%fpc_dir/units/%ppctarget/zorba
-%fpc_dir/units/%ppctarget/libsee
-%fpc_dir/units/%ppctarget/fpindexer
+%fpc_unitdir/aspell
+%fpc_unitdir/bfd
+%fpc_unitdir/bzip2
+%fpc_unitdir/cdrom
+%fpc_unitdir/chm
+%fpc_unitdir/fftw
+%fpc_unitdir/fpindexer
+%fpc_unitdir/fpmkunit
+%fpc_unitdir/gdbint
+%fpc_unitdir/jni
+%fpc_unitdir/libsee
+%fpc_unitdir/libtar
+%fpc_unitdir/libxml2
+%fpc_unitdir/lua
+%fpc_unitdir/newt
+%fpc_unitdir/pthreads
+%fpc_unitdir/syslog
+%fpc_unitdir/tcl
+%fpc_unitdir/unzip
+%fpc_unitdir/users
+%fpc_unitdir/utmp
+%fpc_unitdir/zlib
+%fpc_fpmdir/aspell.fpm
+%fpc_fpmdir/bfd.fpm
+%fpc_fpmdir/bzip2.fpm
+%fpc_fpmdir/cdrom.fpm
+%fpc_fpmdir/chm.fpm
+%fpc_fpmdir/fftw.fpm
+%fpc_fpmdir/fpindexer.fpm
+%fpc_fpmdir/fpmkunit.fpm
+%fpc_fpmdir/gdbint.fpm
+%fpc_fpmdir/jni.fpm
+%fpc_fpmdir/libsee.fpm
+%fpc_fpmdir/libtar.fpm
+%fpc_fpmdir/libxml2.fpm
+%fpc_fpmdir/lua.fpm
+%fpc_fpmdir/newt.fpm
+%fpc_fpmdir/pthreads.fpm
+%fpc_fpmdir/syslog.fpm
+%fpc_fpmdir/tcl.fpm
+%fpc_fpmdir/unzip.fpm
+%fpc_fpmdir/users.fpm
+%fpc_fpmdir/utmp.fpm
+%fpc_fpmdir/zlib.fpm
 
 # packages/media
 %package units-multimedia
@@ -735,18 +831,30 @@ Provides: fpc-units-media
 %description units-multimedia
 This package contains Free Pascal multimedia interfacing units for:
  - oggvorbis
+ - openal
  - a52
  - dts (http://www.videolan.org/developers/libdca.html)
  - mad
  - modplug
 
 %files units-multimedia
-%fpc_dir/units/%ppctarget/a52
-%fpc_dir/units/%ppctarget/dts
-%fpc_dir/units/%ppctarget/oggvorbis
-%fpc_dir/units/%ppctarget/mad
-%fpc_dir/units/%ppctarget/modplug
-%fpc_dir/units/%ppctarget/sdl
+%doc %fpc_docdir/openal
+%fpc_unitdir/a52
+%fpc_unitdir/dts
+%fpc_unitdir/libvlc
+%fpc_unitdir/mad
+%fpc_unitdir/modplug
+%fpc_unitdir/oggvorbis
+%fpc_unitdir/openal
+%fpc_unitdir/sdl
+%fpc_fpmdir/a52.fpm
+%fpc_fpmdir/dts.fpm
+%fpc_fpmdir/libvlc.fpm
+%fpc_fpmdir/mad.fpm
+%fpc_fpmdir/modplug.fpm
+%fpc_fpmdir/oggvorbis.fpm
+%fpc_fpmdir/openal.fpm
+%fpc_fpmdir/sdl.fpm
 
 # ide
 %package ide
@@ -759,13 +867,13 @@ This package contains the Integrated Development Environment (IDE) for
 Free Pascal. The IDE has an internal compiler.
 
 %files ide
-#%doc /usr/share/doc/fp-ide
 %config(noreplace) %_sysconfdir/fp.cfg
 %_bindir/fp
 %_bindir/fp-bin
 %fpc_dir/ide/*
+%fpc_fpmdir/ide.fpm
 %_man1dir/fp.1*
-%doc %_defaultdocdir/%name/readme.ide
+%doc %fpc_docdir/ide/readme.ide
 %_pixmapsdir/*
 %_miconsdir/*
 %_liconsdir/*
@@ -798,12 +906,17 @@ This package provides documentation for the Free Pascal Compiler in HTML
 and PDF format.
 
 %files docs
-%doc %_defaultdocdir/%name/*
-%exclude %_defaultdocdir/%name/readme.ide
-%exclude %_defaultdocdir/%name/copying*
-%exclude %_defaultdocdir/%name/whatsnew.txt
-%exclude %_defaultdocdir/%name/readme.txt
-%exclude %_defaultdocdir/%name/faq.txt
+%doc %fpc_docdir/buttons
+%doc %fpc_docdir/chart
+%doc %fpc_docdir/fcl
+%doc %fpc_docdir/fclres
+%doc %fpc_docdir/fpctoc.*
+%doc %fpc_docdir/fpdoc
+%doc %fpc_docdir/pics
+%doc %fpc_docdir/prog
+%doc %fpc_docdir/ref
+%doc %fpc_docdir/rtl
+%doc %fpc_docdir/user
 %endif
 
 %if_with win32
@@ -826,6 +939,16 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Mon Dec 14 2015 Andrey Cherepanov <cas@altlinux.org> 2:3.0.0-alt1
+- New version
+- Drop support of gtk1 and gnome1
+- Move examples to unit subpackages
+- Auto add existing documentation now works even ini file is missing
+- Show progress in writeidx
+
+* Thu Oct 22 2015 Andrey Cherepanov <cas@altlinux.org> 2:2.6.4-alt4
+- Require rpm-build-fpc (ALT #31394)
+
 * Tue Dec 02 2014 Andrey Cherepanov <cas@altlinux.org> 2:2.6.4-alt3
 - Set path to ide without version and text/ subdirectory. Use ~/fpc/ide
   instead of ~/.fp for personal stuff for IDE. (ALT #29549)
@@ -833,8 +956,8 @@ Free Pascal runtime library units cross-compiled for win32.
   documentation
 - Build help index generator -- writeidx
 - Generate or use generated help index
-- Package documentation to /usr/share/doc/fpc without version
-- Automatically add help index from /usr/share/doc/fpc/fpctoc.htx if it
+- Package documentation to %_defaultdocdir/fpc without version
+- Automatically add help index from %_defaultdocdir/fpc/fpctoc.htx if it
   exists
 
 * Mon Oct 06 2014 Andrey Cherepanov <cas@altlinux.org> 2:2.6.4-alt2
