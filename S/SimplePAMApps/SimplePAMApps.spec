@@ -1,6 +1,6 @@
 Name: SimplePAMApps
 Version: 0.60
-Release: alt33
+Release: alt34
 
 %def_with login
 %def_with su
@@ -16,6 +16,7 @@ Source1: login.pamd
 Source2: su.pamd
 Source3: su.control
 
+Patch0: %name-0.60-alt-_BSD_SOURCE.patch
 Patch1: %name-0.60-owl-alt-login.patch
 Patch2: %name-0.60-owl-alt-su.patch
 Patch3: %name-0.60-owl-alt-login-su-ut_id.patch
@@ -63,6 +64,7 @@ is that of the local superuser (UID=0).
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -150,6 +152,9 @@ fi
 %endif #with su
 
 %changelog
+* Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt34
+- Fixed build with fresh glibc.
+
 * Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt33
 - su: fixed build with fresh glibc.
 
