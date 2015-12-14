@@ -5,7 +5,7 @@
 
 Name: libtool_%ltversion
 Version: 1.4.3
-Release: alt11
+Release: alt12
 Epoch: 3
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
@@ -14,7 +14,7 @@ Group: Development/Other
 Url: http://www.gnu.org/software/libtool/libtool.html
 
 %add_findreq_skiplist %_datadir/%libtool/config.guess-%ltversion
-%set_compress_method gzip
+%set_compress_method xz
 %set_libtool_version 1.5
 %set_automake_version 1.4
 %set_autoconf_version 2.13
@@ -51,7 +51,7 @@ Patch23: libtool-1.5-alt-makefile.patch
 Patch24: libtool-1.5-alt-libtoolize-libtool.m4.patch
 
 # Automatically added by buildreq on Tue Aug 19 2003
-BuildRequires: gcc-c++ gcc-g77 libstdc++-devel
+BuildRequires: gcc-c++ gcc-g77 libstdc++-devel makeinfo
 
 %description
 The libtool package contains the GNU libtool, a set of shell scripts
@@ -157,7 +157,7 @@ cat >%buildroot%_altdir/%name <<EOF
 %_bindir/libtool-default	%_bindir/%libtool	%priority
 %_bindir/libtoolize-default	%_bindir/libtoolize-%ltversion	%_bindir/%libtool
 %_datadir/libtool	%_datadir/%libtool	%_bindir/%libtool
-%_infodir/libtool.info.gz	%_infodir/%libtool.info.gz	%_bindir/%libtool
+%_infodir/libtool.info.xz	%_infodir/%libtool.info.xz	%_bindir/%libtool
 EOF
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
@@ -199,6 +199,9 @@ rln %_licensedir/LGPL-2.1 %ltdldocdir/COPYING.LIB
 %ltdocdir/[A-Z]*
 
 %changelog
+* Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.3-alt12
+- Changed compress method to xz.
+
 * Sat Jun 05 2010 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.3-alt11
 - Prevented build host name leaks into generated libtool scripts.
 - Fixed build with gettext >= 0.18.

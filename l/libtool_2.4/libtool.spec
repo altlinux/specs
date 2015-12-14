@@ -6,7 +6,7 @@
 
 Name: libtool_%ltversion
 Version: 2.4.2
-Release: alt4
+Release: alt5
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -14,7 +14,7 @@ Group: Development/Other
 Url: http://www.gnu.org/software/libtool/libtool.html
 
 %add_findreq_skiplist %_datadir/%libtool/config.guess
-%set_compress_method gzip
+%set_compress_method xz
 
 Provides: libtool = 3:%version-%release
 Obsoletes: libtool
@@ -121,7 +121,7 @@ cat >%buildroot%_altdir/%name <<EOF
 %_bindir/libtool-default	%_bindir/%libtool	%priority
 %_bindir/libtoolize-default	%_bindir/libtoolize-%ltversion	%_bindir/%libtool
 %_datadir/libtool	%_datadir/%libtool	%_bindir/%libtool
-%_infodir/libtool.info.gz	%_infodir/%libtool.info.gz	%_bindir/%libtool
+%_infodir/libtool.info.xz	%_infodir/%libtool.info.xz	%_bindir/%libtool
 EOF
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
@@ -188,6 +188,9 @@ done
 %ltdocdir/*demo*
 
 %changelog
+* Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 2.4.2-alt5
+- Changed compress method to xz.
+
 * Wed Sep 30 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.2-alt4
 - Changed libtool.m4 to use lib64 suffix for AArch64 architecture.
 
