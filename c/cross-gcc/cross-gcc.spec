@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr/bin/pdflatex /usr/bin/perl /usr/bin/pod2html /usr/bin/runtest /usr/bin/texi2dvi clang-devel gcc-c++ libX11-devel libalsa-devel libjack-devel perl(English.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(IPC/Open2.pm) perl(Pod/LaTeX.pm) python-devel
+BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr/bin/runtest gcc-c++ perl(English.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(IPC/Open2.pm) python-devel swig
 # END SourceDeps(oneline)
 # due to explicit symlinks
 %set_compress_method gzip
@@ -7,16 +7,16 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 %global __find_debuginfo_files %nil
 %add_debuginfo_skiplist /usr
 
-%define fedora 21
+%define fedora 22
 # %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define release 2
+%define release 4
 %define cross cross
 %define rpmprefix %{nil}
 
-%define build_all		1
-%define build_aarch64		%{build_all}
+%define build_all		0
+%define build_aarch64		1
 %define build_alpha		%{build_all}
-%define build_arm		%{build_all}
+%define build_arm		1
 %define build_avr32		%{build_all}
 %define build_blackfin		%{build_all}
 %define build_c6x		%{build_all}
@@ -31,13 +31,14 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 %define build_microblaze	%{build_all}
 %define build_mips64		%{build_all}
 %define build_mn10300		%{build_all}
+%define build_nios2		%{build_all}
 %define build_powerpc64		%{build_all}
 %define build_s390x		%{build_all}
 %define build_sh		%{build_all}
 %define build_sh64		%{build_all}
 %define build_sparc64		%{build_all}
 %define build_tile		%{build_all}
-%define build_x86_64		%{build_all}
+%define build_x86_64		1
 %define build_xtensa		%{build_all}
 
 # built compiler generates lots of ICEs
@@ -64,38 +65,39 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 # not available in binutils-2.22
 %define build_unicore32		0
 
-%global build_cloog 1
 %global multilib_64_archs sparc64 ppc64 s390x x86_64
 
 # we won't build libgcc for these as it depends on C library or kernel headers
-%define no_libgcc_targets	cris*|s390*|sh*|tile-*
+%define no_libgcc_targets	nios2*|tile-*
 
 ###############################################################################
 #
 # The gcc versioning information.  In a sed command below, the specfile winds
 # pre-release version numbers in BASE-VER back to the last actually-released
 # number.
-%global DATE 20140120
-%global SVNREV 206854
-%global gcc_version 4.8.2
+%global DATE 20151104
+%global SVNREV 229753
+%global gcc_version 5.2.1
 
 # Note, cross_gcc_release must be integer, if you want to add suffixes
 # to %{release}, append them after %{cross_gcc_release} on Release:
 # line.  gcc_release is the Fedora gcc release that the patches were
 # taken from.
-%global gcc_release 15
-%global cross_gcc_release 2
-%global cross_binutils_version 2.24-2
+%global gcc_release 5
+%global cross_gcc_release 4
+%global cross_binutils_version 2.25.1
+%global isl_version 0.14
 
 Summary: Cross C compiler
 Name: %{cross}-gcc
 Version: %{gcc_version}
-Release: alt1_2
+Release: alt1_%{cross_gcc_release}
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
 # GCC Runtime Exception.
 License: GPLv3+ and GPLv3+ with exceptions and GPLv2+ with exceptions and LGPLv2+ and BSD
 Group: Development/Other
 URL: http://gcc.gnu.org
+BuildRequires: libisl-devel >= %{isl_version}
 
 # The source for this package was pulled from upstream's vcs.  Use the
 # following commands to generate the tarball:
@@ -103,54 +105,40 @@ URL: http://gcc.gnu.org
 # tar cf - gcc-%{version}-%{DATE} | bzip2 -9 > gcc-%{version}-%{DATE}.tar.bz2
 %define srcdir gcc-%{version}-%{DATE}
 Source0: %{srcdir}.tar.bz2
-%global isl_version 0.11.1
-Source1: ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-%{isl_version}.tar.bz2
-%global cloog_version 0.18.0
-Source2: ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-%{cloog_version}.tar.gz
 
-Patch0: gcc48-hack.patch
-Patch1: gcc48-java-nomulti.patch
-Patch2: gcc48-ppc32-retaddr.patch
-Patch3: gcc48-rh330771.patch
-Patch4: gcc48-i386-libgomp.patch
-Patch5: gcc48-sparc-config-detection.patch
-Patch6: gcc48-libgomp-omp_h-multilib.patch
-Patch7: gcc48-libtool-no-rpath.patch
-Patch8: gcc48-cloog-dl.patch
-Patch9: gcc48-cloog-dl2.patch
-Patch10: gcc48-pr38757.patch
-Patch11: gcc48-libstdc++-docs.patch
-Patch12: gcc48-no-add-needed.patch
-Patch13: gcc48-pr56564.patch
-Patch14: gcc48-pr56493.patch
-Patch15: gcc48-color-auto.patch
-Patch16: gcc48-pr28865.patch
-Patch17: gcc48-libgo-p224.patch
-Patch18: gcc48-pr60137.patch
-Patch19: gcc48-pr60010.patch
-Patch20: gcc48-pr60046.patch
+Patch0: gcc5-hack.patch
+Patch1: gcc5-java-nomulti.patch
+Patch2: gcc5-ppc32-retaddr.patch
+Patch3: gcc5-rh330771.patch
+Patch4: gcc5-i386-libgomp.patch
+Patch5: gcc5-sparc-config-detection.patch
+Patch6: gcc5-libgomp-omp_h-multilib.patch
+Patch7: gcc5-libtool-no-rpath.patch
+Patch8: gcc5-isl-dl.patch
+Patch10: gcc5-libstdc++-docs.patch
+Patch11: gcc5-no-add-needed.patch
+Patch12: gcc5-libgo-p224.patch
+Patch13: gcc5-aarch64-async-unw-tables.patch
+Patch14: gcc5-libsanitize-aarch64-va42.patch
+Patch15: gcc5-pr65689.patch
 
-Patch100: cross-intl-filename.patch
+Patch900: cross-intl-filename.patch
 # ia64 - http://gcc.gnu.org/bugzilla/show_bug.cgi?id=44553
 # m68k - http://gcc.gnu.org/bugzilla/show_bug.cgi?id=53557
 # alpha - http://gcc.gnu.org/bugzilla/show_bug.cgi?id=55344
-Patch101: cross-gcc-with-libgcc.patch
-Patch102: cross-gcc-sh-libgcc.patch
-Patch103: gcc48-tmake_in_config.patch
+Patch901: cross-gcc-with-libgcc.patch
+Patch902: cross-gcc-bfin.patch
+Patch903: cross-gcc-format-config.patch
+Patch904: cross-gcc-microblaze.patch
 
-Patch1100: isl-%{isl_version}-aarch64-config.patch
-
-BuildRequires: binutils >= 2.20.51.0.2-12
-BuildRequires: zlib-devel gettext dejagnu bison flex texinfo sharutils
+BuildRequires: binutils >= 2.24
+BuildRequires: zlib-devel, gettext, dejagnu, bison, flex, texinfo, sharutils
 BuildRequires: %{cross}-binutils-common >= %{cross_binutils_version}
 
 # Make sure pthread.h doesn't contain __thread tokens
 # Make sure glibc supports stack protector
 # Make sure glibc supports DT_GNU_HASH
 BuildRequires: glibc-devel >= 2.4.90-13
-%ifarch %{multilib_64_archs} sparcv9 ppc
-# Ensure glibc{,-devel} is installed for both multilib arches
-%endif
 BuildRequires: elfutils-devel >= 0.147
 BuildRequires: libelf-devel >= 0.147
 BuildRequires: libgmp-devel libgmp_cxx-devel libmpfr-devel >= 2.3.1 libmpc-devel >= 0.8.1
@@ -174,6 +162,12 @@ building kernels for other architectures.  No support for cross-building
 user space programs is currently supplied as that would massively multiply the
 number of packages.
 
+
+###############################################################################
+#
+# Conditional arch package definition
+#
+###############################################################################
 %define do_package() \
 %if %2 \
 %package -n %{rpmprefix}gcc-%1 \
@@ -247,6 +241,7 @@ the number of packages. \
 %do_package mips-linux-gnu	%{build_mips}
 %do_package mips64-linux-gnu	%{build_mips64}
 %do_package mn10300-linux-gnu	%{build_mn10300}
+%do_package nios2-linux-gnu	%{build_nios2}
 %do_package openrisc-linux-gnu	%{build_openrisc}
 %do_package powerpc-linux-gnu	%{build_powerpc}
 %do_package powerpc64-linux-gnu	%{build_powerpc64}
@@ -272,7 +267,7 @@ the number of packages. \
 ###############################################################################
 %prep
 
-%setup -q -n %{srcdir} -c -a 1 -a 2
+%setup -q -n %{srcdir} -c
 cd %{srcdir}
 %patch0 -p0 -b .hack~
 %patch1 -p0 -b .java-nomulti~
@@ -282,58 +277,30 @@ cd %{srcdir}
 %patch5 -p0 -b .sparc-config-detection~
 %patch6 -p0 -b .libgomp-omp_h-multilib~
 %patch7 -p0 -b .libtool-no-rpath~
-%if %{build_cloog}
-%patch8 -p0 -b .cloog-dl~
-%patch9 -p0 -b .cloog-dl2~
-%endif
-%patch10 -p0 -b .pr38757~
-
-
-
-%patch12 -p0 -b .no-add-needed~
-%patch13 -p0 -b .pr56564~
-%patch14 -p0 -b .pr56493~
-%if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
-%patch15 -p0 -b .color-auto~
-%endif
-%patch16 -p0 -b .pr28865~
-%patch17 -p0 -b .libgo-p224~
+%patch11 -p0 -b .no-add-needed~
+%patch12 -p0 -b .libgo-p224~
 rm -f libgo/go/crypto/elliptic/p224{,_test}.go
-%patch18 -p0 -b .pr60137~
-%patch19 -p0 -b .pr60010~
-%patch20 -p0 -b .pr60046~
+%patch13 -p0 -b .aarch64-async-unw-tables~
+%patch14 -p0 -b .libsanitize-aarch64-va42~
+%patch15 -p0 -b .pr65689~
+sed -i -e 's/ -Wl,-z,nodlopen//g' gcc/ada/gcc-interface/Makefile.in
 
-%patch100 -p0 -b .cross-intl~
-%patch101 -p1 -b .with-libgcc~
-%patch102 -p0 -b .sh-libgcc~
-%patch103 -p0 -b .tmake~
+%patch900 -p0 -b .cross-intl~
+%patch901 -p1 -b .with-libgcc~
+%patch902 -p0 -b .bfin~
+%patch903 -p0 -b .format-config~
+%patch904 -p0 -b .microblaze~
 
-cd ..
-%patch1100 -p0 -b .isl-aarch64~
-cd -
-
-# Move the version number back to 4.8.2
-sed -i -e 's/4\.8\.3/4.8.2/' gcc/BASE-VER
-echo 'Red Hat %{version}-%{cross_gcc_release}' > gcc/DEV-PHASE
-
-%if 0%{?fedora} >= 16 || 0%{?rhel} >= 7
-# Default to -gdwarf-4 -fno-debug-types-section rather than -gdwarf-2
-sed -i '/UInteger Var(dwarf_version)/s/Init(2)/Init(4)/' gcc/common.opt
-sed -i '/flag_debug_types_section/s/Init(1)/Init(0)/' gcc/common.opt
-sed -i '/dwarf_record_gcc_switches/s/Init(0)/Init(1)/' gcc/common.opt
-sed -i 's/\(may be either 2, 3 or 4; the default version is \)2\./\14./' gcc/doc/invoke.texi
-%else
-# Default to -gdwarf-3 rather than -gdwarf-2
-sed -i '/UInteger Var(dwarf_version)/s/Init(2)/Init(3)/' gcc/common.opt
-sed -i 's/\(may be either 2, 3 or 4; the default version is \)2\./\13./' gcc/doc/invoke.texi
-sed -i 's/#define[[:blank:]]*EMIT_ENTRY_VALUE[[:blank:]].*$/#define EMIT_ENTRY_VALUE 0/' gcc/{var-tracking,dwarf2out}.c
-sed -i 's/#define[[:blank:]]*EMIT_TYPED_DWARF_STACK[[:blank:]].*$/#define EMIT_TYPED_DWARF_STACK 0/' gcc/dwarf2out.c
-sed -i 's/#define[[:blank:]]*EMIT_DEBUG_MACRO[[:blank:]].*$/#define EMIT_DEBUG_MACRO 0/' gcc/dwarf2out.c
-%endif
+echo 'Red Hat Cross %{version}-%{cross_gcc_release}' > gcc/DEV-PHASE
 
 ./contrib/gcc_update --touch
 
 LC_ALL=C sed -i -e 's/\xa0/ /' gcc/doc/options.texi
+
+sed -i -e 's/Common Driver Var(flag_report_bug)/& Init(1)/' gcc/common.opt
+
+# This test causes fork failures, because it spawns way too many threads
+rm -f gcc/testsuite/go.test/test/chan/goroutines.go
 
 function prep_target () {
     target=$1
@@ -346,6 +313,8 @@ function prep_target () {
 }
 
 cd ..
+
+
 (
     prep_target alpha-linux-gnu		%{build_alpha}
     prep_target arm-linux-gnu		%{build_arm}
@@ -367,6 +336,7 @@ cd ..
     prep_target mips-linux-gnu		%{build_mips}
     prep_target mips64-linux-gnu	%{build_mips64}
     prep_target mn10300-linux-gnu	%{build_mn10300}
+    prep_target nios2-linux-gnu		%{build_nios2}
     prep_target openrisc-linux-gnu	%{build_openrisc}
     prep_target powerpc-linux-gnu	%{build_powerpc}
     prep_target powerpc64-linux-gnu	%{build_powerpc64}
@@ -408,65 +378,26 @@ fi
 # Undo the broken autoconf change in recent Fedora versions
 export CONFIG_SITE=NONE
 
-#
-# Configure and build the ISL and CLooG libraries
-#
-%if %{build_cloog}
-
-%define isl_source %{builddir}/isl-%{isl_version}
-%define isl_build %{builddir}/isl-build
-%define isl_install %{builddir}/isl-install
-
-mkdir %{isl_build} %{isl_install}
-%ifarch s390 s390x
-ISL_FLAG_PIC=-fPIC
-%else
-ISL_FLAG_PIC=-fpic
+CC=gcc
+CXX=g++
+OPT_FLAGS=`echo %{optflags}|sed -e 's/\(-Wp,\)\?-D_FORTIFY_SOURCE=[12]//g'`
+OPT_FLAGS=`echo $OPT_FLAGS|sed -e 's/-m64//g;s/-m32//g;s/-m31//g'`
+OPT_FLAGS=`echo $OPT_FLAGS|sed -e 's/-mfpmath=sse/-mfpmath=sse -msse2/g'`
+OPT_FLAGS=`echo $OPT_FLAGS|sed -e 's/ -pipe / /g'`
+%ifarch sparc
+OPT_FLAGS=`echo $OPT_FLAGS|sed -e 's/-mcpu=ultrasparc/-mtune=ultrasparc/g;s/-mcpu=v[78]//g'`
 %endif
-cd %{isl_build}
-%{isl_source}/configure \
-    --disable-shared \
-    CC=/usr/bin/gcc \
-    CXX=/usr/bin/g++ \
-    CFLAGS="${CFLAGS:-%optflags} $ISL_FLAG_PIC" \
-    --prefix=%{isl_install}
-make %{?_smp_mflags}
-make install
-cd ..
-
-%define cloog_source %{builddir}/cloog-%{cloog_version}
-%define cloog_build %{builddir}/cloog-build
-%define cloog_install %{builddir}/cloog-install
-
-mkdir %{cloog_build} %{builddir}/cloog-install
-cd %{cloog_build}
-cat >> %{cloog_source}/source/isl/constraints.c << \EOF
-#include <isl/flow.h>
-static void __attribute__((used)) *s1 = (void *) isl_union_map_compute_flow;
-static void __attribute__((used)) *s2 = (void *) isl_map_dump;
-EOF
-sed -i 's|libcloog|libgcc48privatecloog|g' \
-    %{cloog_source}/{,test/}Makefile.{am,in}
-
-%{cloog_source}/configure \
-    --with-isl=system \
-    --with-isl-prefix=%{isl_install} \
-    CC=/usr/bin/gcc \
-    CXX=/usr/bin/g++ \
-    CFLAGS="${CFLAGS:-%optflags}" \
-    CXXFLAGS="${CXXFLAGS:-%optflags}" \
-    --prefix=%{cloog_install}
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-make %{?_smp_mflags}
-make %{?_smp_mflags} install
-cd %{cloog_install}/lib
-rm libgcc48privatecloog-isl.so{,.4}
-mv libgcc48privatecloog-isl.so.4.0.0 libcloog-isl.so.4
-ln -sf libcloog-isl.so.4 libcloog-isl.so
-ln -sf libcloog-isl.so.4 libcloog.so
-
+%ifarch %{ix86}
+OPT_FLAGS=`echo $OPT_FLAGS|sed -e 's/-march=i.86//g'`
 %endif
+OPT_FLAGS=`echo $OPT_FLAGS|sed -e 's/-Werror=format-security/-Wformat-security/g'`
+OPT_FLAGS=`echo "$OPT_FLAGS" | sed -e 's/[[:blank:]]\+/ /g'`
+case "$OPT_FLAGS" in
+  *-fasynchronous-unwind-tables*)
+    sed -i -e 's/-fno-exceptions /-fno-exceptions -fno-asynchronous-unwind-tables /' \
+      %{srcdir}/libgcc/Makefile.in
+    ;;
+esac
 
 #
 # Configure the compiler
@@ -488,10 +419,10 @@ function config_target () {
 	h8300-*)	target=h8300-elf;;
 	mn10300-*)	target=am33_2.0-linux;;
 	m68knommu-*)	target=m68k-linux;;
-	openrisc-*)	target=or32-linux;;
+	openrisc-*)	target=or1k-linux;;
 	parisc-*)	target=hppa-linux;;
 	score-*)	target=score-elf;;
-	sh64-*)		target=sh64-linux;;
+	sh64-*)		target=sh64-linux-elf;;
 	tile-*)		target=tilegx-linux;;
 	v850-*)		target=v850e-linux;;
 	x86-*)		target=x86_64-linux;;
@@ -503,35 +434,38 @@ function config_target () {
 
     CONFIG_FLAGS=
     case $arch in
-	arm)
-	    CONFIG_FLAGS="--with-cpu=cortex-a8 --with-tune=cortex-a8 --with-arch=armv7-a \
+	arm-*)
+	    CONFIG_FLAGS="--with-tune=cortex-a8 --with-arch=armv7-a \
 		--with-float=hard --with-fpu=vfpv3-d16 --with-abi=aapcs-linux"
 	    ;;
-	powerpc-*|powerpc64-*)
-	    CONFIG_FLAGS="--with-cpu-32=power4 --with-tune-32=power6 --with-cpu-64=power4 --with-tune-64=power6 --enable-secureplt"
+	powerpc-*|powerpc64-*|ppc-*|ppc64-*)
+	    CONFIG_FLAGS="--with-cpu-32=power7 --with-tune-32=power8 --with-cpu-64=power7 --with-tune-64=power8 --enable-secureplt --enable-targets=all"
 	    ;;
 	s390*-*)
 	    CONFIG_FLAGS="--with-arch=z9-109 --with-tune=z10 --enable-decimal-float"
 	    ;;
 	sh-*)
-	    CONFIG_FLAGS=--with-multilib-list=m1,m2,m2e,m4,m4-single,m4-single-only,m2a,m2a-single,!m2a,!m2a-single
+	    CONFIG_FLAGS=--with-multilib-list=m1,m2,m2e,m4,m4-single,m4-single-only,m2a,m2a-single
 	    ;;
 	sh64-*)
 	    CONFIG_FLAGS=--with-multilib-list=m5-32media,m5-32media-nofpu,m5-compact,m5-compact-nofpu,m5-64media,m5-64media-nofpu
 	    ;;
 	sparc-*)
-	    CONFIG_FLAGS="--disable-linux-futex"
+	    CONFIG_FLAGS="--disable-linux-futex --with-cpu=v7"
+	    ;;
+	sparc64-*)
+	    CONFIG_FLAGS="--disable-linux-futex --with-cpu=ultrasparc"
 	    ;;
 	tile-*)
 	    #CONFIG_FLAGS="--with-arch_32=tilepro"
 	    ;;
-	x86-*)
-	    CONFIG_FLAGS="--with-arch_32=i686"
+	x86_64-*)
+	    CONFIG_FLAGS="--with-arch_32=i686 --with-tune=generic"
 	    ;;
     esac
 
     case $arch in
-	alpha|powerpc*|s390*|sparc*)
+	alpha|powerpc*|ppc*|s390*|sparc*)
 	    CONFIG_FLAGS="$CONFIG_FLAGS --with-long-double-128" ;;
     esac
 
@@ -540,6 +474,12 @@ function config_target () {
 
     # We could optimize the cross builds size by --enable-shared but the produced
     # binaries may be less convenient in the embedded environment.
+    CC="$CC" \
+    CXX="$CXX" \
+    CFLAGS="$OPT_FLAGS" \
+    CXXFLAGS="`echo " $OPT_FLAGS " | sed 's/ -Wall / /g;s/ -fexceptions / /g' \
+    		  | sed 's/ -Werror=format-security / -Wformat -Werror=format-security /'`" \
+    CFLAGS_FOR_TARGET="-g -O2 -Wall -fexceptions" \
     AR_FOR_TARGET=%{_bindir}/$arch-ar \
     AS_FOR_TARGET=%{_bindir}/$arch-as \
     DLLTOOL_FOR_TARGET=%{_bindir}/$arch-dlltool \
@@ -547,6 +487,7 @@ function config_target () {
     NM_FOR_TARGET=%{_bindir}/$arch-nm \
     OBJDUMP_FOR_TARGET=%{_bindir}/$arch-objdump \
     RANLIB_FOR_TARGET=%{_bindir}/$arch-ranlib \
+    READELF_FOR_TARGET=%{_bindir}/$arch-readelf \
     STRIP_FOR_TARGET=%{_bindir}/$arch-strip \
     WINDRES_FOR_TARGET=%{_bindir}/$arch-windres \
     WINDMC_FOR_TARGET=%{_bindir}/$arch-windmc \
@@ -558,23 +499,36 @@ function config_target () {
 	--disable-decimal-float \
 	--disable-dependency-tracking \
 	--disable-gold \
+	--disable-libgcj \
 	--disable-libgomp \
 	--disable-libmudflap \
 	--disable-libquadmath \
 	--disable-libssp \
+	--disable-libunwind-exceptions \
 	--disable-nls \
 	--disable-plugin \
 	--disable-shared \
 	--disable-silent-rules \
 	--disable-sjlj-exceptions \
 	--disable-threads \
-	--enable-checking=$checking \
+	--with-ld=/usr/bin/$arch-ld \
+	--enable-__cxa_atexit \
+	--enable-checking=release \
+%if 0%{?fedora} >= 21 || 0%{?rhel} >= 7
+%ifarch %{ix86} x86_64 ppc ppc64 ppc64le ppc64p7 s390 s390x %{arm} aarch64
+	--enable-gnu-indirect-function \
+%endif
+%endif
 	--enable-gnu-unique-object \
 	--enable-initfini-array \
 	--enable-languages=c,c++ \
 	--enable-linker-build-id \
 	--enable-nls \
 	--enable-obsolete \
+	--enable-plugin \
+%ifarch ppc ppc64 ppc64le ppc64p7
+	--enable-secureplt \
+%endif
 	--enable-targets=all \
 	--exec-prefix=%{_exec_prefix} \
 	--host=%{_target_platform} \
@@ -589,22 +543,30 @@ function config_target () {
 	--sharedstatedir=%{_sharedstatedir} \
 	--sysconfdir=%{_sysconfdir} \
 	--target=$target \
-	--with-bugurl=http://bugzilla.altlinux.org/ \
+	--with-bugurl=http://bugzilla.redhat.com/bugzilla/ \
+%if 0%{fedora} >= 21 && 0%{fedora} <= 22
+	--with-default-libstdcxx-abi=gcc4-compatible \
+%endif
+	--with-isl \
 	--with-linker-hash-style=gnu \
 	--with-newlib \
-	--with-sysroot=%{_libexecdir}/$arch/sys-root \
+	--with-sysroot=%{_libexecdir}/$target/sys-root \
 	--with-system-libunwind \
 	--with-system-zlib \
 	--without-headers \
-%if %{build_cloog}
-	--with-isl=%{isl_install} --with-cloog=%{cloog_install} \
-%else
-	--without-isl --without-cloog \
-%endif
 	$CONFIG_FLAGS
 %if 0
 	--libdir=%{_libdir} # we want stuff in /usr/lib/gcc/ not /usr/lib64/gcc
 %endif
+
+    # Fix the ARM build for PR65956
+    case $arch in
+	arm-*)
+	    mkdir gcc
+	    sed -e 's/align != TYPE_ALIGN/align < TYPE_ALIGN/' \
+		<../%{srcdir}/gcc/tree-sra.c >gcc/tree-sra.c
+	    ;;
+    esac
     cd ..
 }
 
@@ -619,6 +581,13 @@ function build_target () {
     arch=$1
     build_dir=$1
 
+    BUILD_FLAGS=
+    case $arch in
+	x86_64-*)
+	    BUILD_FLAGS="gcc_cv_libc_provides_ssp=yes gcc_cv_as_ix86_tlsldm=yes"
+	    ;;
+    esac
+
     AR_FOR_TARGET=%{_bindir}/$arch-ar \
     AS_FOR_TARGET=%{_bindir}/$arch-as \
     DLLTOOL_FOR_TARGET=%{_bindir}/$arch-dlltool \
@@ -626,11 +595,13 @@ function build_target () {
     NM_FOR_TARGET=%{_bindir}/$arch-nm \
     OBJDUMP_FOR_TARGET=%{_bindir}/$arch-objdump \
     RANLIB_FOR_TARGET=%{_bindir}/$arch-ranlib \
+    READELF_FOR_TARGET=%{_bindir}/$arch-readelf \
     STRIP_FOR_TARGET=%{_bindir}/$arch-strip \
     WINDRES_FOR_TARGET=%{_bindir}/$arch-windres \
     WINDMC_FOR_TARGET=%{_bindir}/$arch-windmc \
-    make -C $build_dir %{_smp_mflags} tooldir=%{_prefix} all-gcc
+    make -C $build_dir %{_smp_mflags} tooldir=%{_prefix} $BUILD_FLAGS all-gcc
 
+    echo "=== BUILDING LIBGCC $1"
     case $arch in
 	%{no_libgcc_targets})
 	    ;;
@@ -686,14 +657,6 @@ do
 done
 
 grep ^powerpc target.list | sed -e s/powerpc/ppc/ >symlink-target.list
-
-# We have to copy cloog somewhere graphite can dlopen it from
-%if %{build_cloog}
-for i in %{buildroot}%{_prefix}/lib/gcc/*/%{gcc_version}
-do
-    cp -a %{cloog_install}/lib/libcloog-isl.so.4 $i
-done
-%endif
 
 # For cross-gcc we drop the documentation.
 rm -rf %{buildroot}%{_infodir}
@@ -757,7 +720,7 @@ function install_lang () {
 	bfin)		target_cpu=bfin;;
 	h8300)		target_cpu=h8300;;
 	mn10300)	target_cpu=am33_2.0;;
-	openrisc)	target_cpu=openrisc;;
+	openrisc)	target_cpu=or1k;;
 	parisc)		target_cpu=hppa;;
 	score)		target_cpu=score;;
 	tile)		target_cpu=tilegx;;
@@ -767,10 +730,9 @@ function install_lang () {
     esac
 
     (
-	echo '%%defattr(-,root,root,-)'
 	echo '%{_bindir}/'$arch'*-cpp'
 	echo '%{_bindir}/'$arch'*-gcc'
-	echo '%{_bindir}/'$arch'*-gcov'
+	echo '%{_bindir}/'$arch'*-gcov*'
 	echo '%{_mandir}/man1/'$arch'*-cpp*'
 	echo '%{_mandir}/man1/'$arch'*-gcc*'
 	echo '%{_mandir}/man1/'$arch'*-gcov*'
@@ -782,13 +744,12 @@ function install_lang () {
 		echo '%{_libexecdir}/gcc/'$target_cpu'*/*/cc1'
 		echo '%{_libexecdir}/gcc/'$target_cpu'*/*/collect2'
 		echo '%{_libexecdir}/gcc/'$target_cpu'*/*/[abd-z]*'
-		echo %{_libexecdir}/$arch/sys-root
+		echo '%{_libexecdir}/'$target'/sys-root'
 	esac
 
     ) >files.$arch
 
     (
-	echo '%%defattr(-,root,root,-)'
 	echo '%{_bindir}/'$arch'*-c++'
 	echo '%{_bindir}/'$arch'*-g++'
 	echo '%{_mandir}/man1/'$arch'*-g++*'
@@ -820,8 +781,6 @@ EOF
 chmod +x %{__ar_no_strip}
 %undefine __strip
 %define __strip %{__ar_no_strip}
-# inside a symlink - not for rpm404
-#sed -i -e /sys-root/d files.ppc64-linux-gnu
 
 ###############################################################################
 #
@@ -859,6 +818,7 @@ chmod +x %{__ar_no_strip}
 %do_files mips-linux-gnu	%{build_mips}
 %do_files mips64-linux-gnu	%{build_mips64}
 %do_files mn10300-linux-gnu	%{build_mn10300}
+%do_files nios2-linux-gnu	%{build_nios2}
 %do_files openrisc-linux-gnu	%{build_openrisc}
 %do_files powerpc-linux-gnu	%{build_powerpc}
 %do_files powerpc64-linux-gnu	%{build_powerpc64}
@@ -878,6 +838,10 @@ chmod +x %{__ar_no_strip}
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Fri Dec 11 2015 Alexey Shabalin <shaba@altlinux.ru> 5.2.1-alt1_4
+- new version
+- build only aarch64, arm, x86_64
+
 * Fri Apr 04 2014 Igor Vlasenko <viy@altlinux.ru> 4.8.2-alt1_2
 - new version
 
@@ -889,4 +853,5 @@ chmod +x %{__ar_no_strip}
 
 * Wed Aug 14 2013 Igor Vlasenko <viy@altlinux.ru> 4.7.1-alt1_0.1.20120606.1
 - fc import
+
 
