@@ -12,8 +12,8 @@
 %define debug %nil
 
 Name: wine
-Version: 1.7.53
-Release: alt1
+Version: 1.8.0
+Release: alt0.rc4
 Epoch: 1
 
 Summary: Environment for running Windows applications (Etersoft edition)
@@ -241,7 +241,7 @@ make depend
 
 %install
 %makeinstall_std
-%__make -C etersoft initdir=%_initdir DESTDIR=%buildroot install-etersoft
+%__make -C etersoft initdir=%_initdir sysconfdir=%_sysconfdir localstatedir=%_localstatedir DESTDIR=%buildroot install-etersoft
 
 # Do not pack non english man pages yet
 rm -rf %buildroot%_mandir/*.UTF-8
@@ -331,7 +331,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %_datadir/wine/winesplash.xpm.conf
 %_datadir/wine/winesplash.png
 %_datadir/wine/winesplash.png.conf
+%ifnarch x86_64
 %_man1dir/wine.1*
+%endif
 %_man1dir/wineserver.1*
 %_man1dir/winedbg.1.*
 
@@ -436,6 +438,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Sat Dec 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.8.0-alt0.rc4
+- new version 1.8-rc4
+
 * Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.53-alt1
 - new version 1.7.53 (uses wine-gecko 2.40)
 
