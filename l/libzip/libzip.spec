@@ -4,7 +4,7 @@
 %define utilsname libzip-utils
 Name: libzip
 Version: 0.11.2
-Release: alt1
+Release: alt2
 Summary: C library for reading, creating, and modifying zip archives
 
 Group: System/Libraries
@@ -12,6 +12,7 @@ License: BSD
 Url: http://www.nih.at/libzip/
 
 Source0: http://www.nih.at/libzip/%name-%version.tar.bz2
+Patch1: libzip-0.11.2-CVE-2015-2331.patch
 
 BuildRequires: gcc-c++ zlib-devel
 
@@ -49,6 +50,7 @@ developing applications that use %name.
 
 %prep
 %setup -q
+%patch1 -p1
 
 %autoreconf
 
@@ -84,6 +86,12 @@ developing applications that use %name.
 %_man3dir/*zip*
 
 %changelog
+* Mon Dec 14 2015 Sergey V Turchin <zerg@altlinux.org> 0.11.2-alt2
+- security fix: CVE-2015-2331 (ALT#31619)
+
+* Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.11.2-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.11.2-alt1
 - new version
 
