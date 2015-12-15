@@ -1,6 +1,6 @@
 Name: installer-distro-chainmail
 Version: 3.0.0
-Release: alt6
+Release: alt7
 
 Summary: Installer files for IVK chainmail
 License: GPL
@@ -29,6 +29,7 @@ Requires: installer-feature-server-raid-fixup-stage2
 Requires: x-cursor-theme-jimmac
 Requires: udev-rule-generator-net
 Requires: installer-step-chainmail-domain
+Requires: installer-step-chainmail-expert-mode
 
 %description stage2
 Installer IVK chainmail stage2.
@@ -45,6 +46,9 @@ Requires: alterator-distro-chainmail >= 3.0.0-alt2
 Requires: alterator-net-eth
 Requires: installer-feature-vm-ofs-stage3
 Requires: alterator-auth
+# Should be in the installed system too:
+# backend will be used from /mnt/destination
+Requires: installer-step-chainmail-expert-mode
 
 %description stage3
 Installer IVK chainmail stage3.
@@ -75,6 +79,10 @@ cp -a * %buildroot%install2dir/
 %install2dir/ivk-scripts/
 
 %changelog
+* Tue Dec 15 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt7
+- Add expert-mode installer step.
+- alterator-menu: Add modules to module-expert-list.
+
 * Thu Sep 17 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt6
 - Setup chainmail-specific login interface again.
 
