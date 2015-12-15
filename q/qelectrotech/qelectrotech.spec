@@ -1,6 +1,3 @@
-%global rdate  20141110
-%global upver  0.4rc1
-
 Name:        qelectrotech
 
 Summary:     An electric diagrams editor
@@ -17,8 +14,8 @@ Summary(pl): Edytor schematów elektrycznych
 Summary(pt): Um editor de esquemas eléctricos
 Summary(ru): Редактор электрических схем
 
-Version:     0.4
-Release:     alt0.rc1
+Version:     0.5
+Release:     alt1
 Epoch:	     1
 
 Group:       Engineering
@@ -27,11 +24,20 @@ Group:       Engineering
 License:    GPLv2+
 
 Url:        http://qelectrotech.org/
-Source0:    http://download.tuxfamily.org/qet/tags/%{rdate}/qelectrotech-%{upver}-src.tar.gz
+Source0:    qelectrotech-%version-src.tar.gz
+Source1:    %name.watch
 
 BuildRequires:    desktop-file-utils
 BuildRequires:    gcc-c++
-BuildRequires:    qt4-devel >= 4.6.0
+BuildRequires:    qt5-base-devel
+BuildRequires:    qt5-svg-devel
+BuildRequires:    qt5-tools
+BuildRequires:    libqt5-xml
+BuildRequires:    libqt5-svg
+BuildRequires:    libqt5-network
+BuildRequires:    libqt5-widgets
+BuildRequires:    libqt5-printsupport
+
 Requires:         qelectrotech-symbols = %version-%release
 
 
@@ -126,15 +132,15 @@ Colecção de elementos para QElectroTech.
 
 
 %prep
-%setup -q -n %name-%upver-src
+%setup -q -n %name-%version-src
 
 sed -e s,/usr/local/,%_prefix/, \
     -e /QET_MAN_PATH/s,'man/','share/man', \
     -e /QET_MIME/s,../,, \
     -i %name.pro
 
-lrelease-qt4 %name.pro
-qmake-qt4 %name.pro
+lrelease-qt5 %name.pro
+qmake-qt5 %name.pro
 
 %build
 %make_build
@@ -156,9 +162,7 @@ mv %buildroot%_mandir/fr.UTF-8 %buildroot%_mandir/fr
 # QT translation provided by QT.
 rm -f %buildroot%_datadir/%name/lang/qt_*.qm
 
-%find_lang qet          --with-qt
-%find_lang qelectrotech --with-man
-cat qet.lang >>qelectrotech.lang
+%find_lang --output=qelectrotech.lang --with-qt --with-man qet qelectrotech
 
 %files -f %name.lang
 %doc CREDIT LICENSE examples
@@ -179,6 +183,9 @@ cat qet.lang >>qelectrotech.lang
 %_datadir/%name/titleblocks
 
 %changelog
+* Fri Dec 11 2015 Andrey Cherepanov <cas@altlinux.org> 1:0.5-alt1
+- New version
+
 * Tue Dec 09 2014 Andrey Cherepanov <cas@altlinux.org> 1:0.4-alt0.rc1
 - New version
 
