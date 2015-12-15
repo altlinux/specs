@@ -12,8 +12,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.1
-Release: alt11
+Version: 2.2
+Release: alt13
 
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -30,6 +30,13 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Mon May 11 2015
 # optimized out: fontconfig gcc-c++ libcloog-isl4 libstdc++-devel libwayland-client libwayland-server libxml2-devel pkg-config python-base python-devel python-module-omniidl python-modules
 BuildRequires: libcommoncpp2-devel libomniORB-devel libsigc++2-devel
+
+# for uniset2-codegen
+BuildPreReq: xsltproc
+
+# due -std=c++11 using
+# BuildPreReq: gcc5 >= 4.8
+# Must be gcc >= 4.7
 
 %if_enabled io
 BuildRequires: libcomedi-devel
@@ -64,7 +71,11 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: doxygen
 %endif
 
-%set_verify_elf_method textrel=strict,rpath=strict,unresolved=strict
+%if_enabled tests
+BuildRequires: catch
+%endif
+
+#set_verify_elf_method textrel=strict,rpath=strict,unresolved=strict
 
 %description
 UniSet is a library for distributed control systems.
@@ -323,7 +334,6 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 
 %files extension-mysql-devel
 %_pkgconfigdir/libUniSet2MySQL.pc
-%dir %_includedir/%oname/extensions/mysql
 %_includedir/%oname/extensions/mysql/
 %endif
 
@@ -334,7 +344,6 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 
 %files extension-sqlite-devel
 %_pkgconfigdir/libUniSet2SQLite.pc
-%dir %_includedir/%oname/extensions/sqlite
 %_includedir/%oname/extensions/sqlite/
 %endif
 
@@ -345,21 +354,17 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 
 %files extension-pgsql-devel
 %_pkgconfigdir/libUniSet2PostgreSQL.pc
-%dir %_includedir/%oname/extensions/pgsql
 %_includedir/%oname/extensions/pgsql/
 %endif
 
 %if_enabled python
 %files -n python-module-%oname
-%dir %python_sitelibdir/%oname
-%python_sitelibdir/*
-%python_sitelibdir/%oname/*
-
+%python_sitelibdir/%oname/
 %endif
 
 %if_enabled docs
 %files docs
-%_docdir/%oname
+%_docdir/%oname/
 %endif
 
 %files extension-common
@@ -395,7 +400,6 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 %files extension-logicproc-devel
 %_pkgconfigdir/libUniSet2Log*.pc
 %_libdir/libUniSet2LP*.so
-%dir %_includedir/%oname/extensions/logicproc
 %_includedir/%oname/extensions/logicproc/
 %endif
 
@@ -407,7 +411,6 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 %files extension-rrd-devel
 %_pkgconfigdir/libUniSet2RRD*.pc
 %_libdir/libUniSet2RRD*.so
-%dir %_includedir/%oname/extensions/rrd
 %_includedir/%oname/extensions/rrd/
 %endif
 
@@ -421,7 +424,6 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 %files extension-io-devel
 %_libdir/libUniSet2IO*.so
 %_pkgconfigdir/libUniSet2IO*.pc
-%dir %_includedir/%oname/extensions/io
 %_includedir/%oname/extensions/io/
 %endif
 
@@ -441,13 +443,6 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 %_pkgconfigdir/libUniSet2Network*.pc
 %_pkgconfigdir/libUniSet2UNet*.pc
 
-#%exclude %_includedir/%oname/extensions/mysql
-#%exclude %_includedir/%oname/extensions/sqlite
-#%exclude %_includedir/%oname/extensions/pgsql
-#%exclude %_includedir/%oname/extensions/logicproc
-#%exclude %_includedir/%oname/extensions/io
-#%exclude %_includedir/%oname/extensions/rrd
-
 #%_pkgconfigdir/libUniSet2SMDBServer.pc
 #%_pkgconfigdir/libUniSet2*.pc
 %exclude %_pkgconfigdir/libUniSet2.pc
@@ -456,6 +451,113 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Wed Dec 16 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt13
+- set public for UniSetObject::askTimer 
+
+* Mon Dec 14 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt12
+- refactoring: remove xxx_LT classes
+- add new function for LT_Object
+- add userparam for UniSetObject::getInfo( int userparam)
+- codegen: add function: long* valptr(ObjectId) and --gen-vmap parameter
+
+* Tue Nov 03 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt11
+- RRDServer: add support 'dsname', check RRD_MAX_DSNAME_LEN
+
+* Fri Oct 30 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt10
+- fixes after coverity scan..
+- minor fixes
+- use char* --> std::string
+
+* Wed Oct 14 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt9
+- new release
+
+* Wed Oct 14 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt8.1
+- (VMonit): sort output 
+
+* Thu Oct 08 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt8
+- (uniset-codegen): minor fixes in resetMsg()  mechanism
+
+* Mon Oct 05 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt7
+- (ModbusServer): rename receive(ModbusAddress addr..) --> receive_one(ModbusAddress addr..)
+
+* Mon Oct 05 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt6
+- (ModbusServer): add helper function addr2vaddr()
+
+* Fri Oct 02 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt5
+- (ModbusSlave): added support for multiple addresses for MBSlave
+
+* Fri Oct 02 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt4
+- (ModbusSlave): added support setBroadcastMode() // addr = 255
+- (codegen): change log for 'unknown message id' crit --> level8
+
+* Mon Sep 21 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt3
+- (ModbusMaster): modify check "not respond" mechanism
+
+* Sun Sep 20 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt2
+- minor fixes after 'cppcheck'
+
+* Thu Sep 17 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt1
+- new UNetUDP: support 'sendfactor'
+
+* Mon Sep 14 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt25
+- (PassiveTimer): fixed bug in default init
+- (Pulse): refactoring
+
+* Thu Sep 10 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt24
+- (LogServer): refactoring (more use shared_ptr)
+
+* Mon Sep 07 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt23
+- (ModbusPersistentSlave): fixed bug in end connection processing
+- (uniset-log): fixed bug in end connection processing
+
+* Sun Sep 06 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt22
+- refactoring (use shared_ptr), change pollfactor realisation..
+
+* Sat Sep 05 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt21
+- (modbus slave): add more logs.. 
+
+* Sat Aug 29 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt20
+- (ModbusSession): add setKeepAliveParams()
+
+* Sat Aug 29 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt19
+- (ModbusSlave): rename ModbusMultiSlave --> ModbusPersistentSlave, minor fixes
+
+* Thu Aug 27 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt18
+- (ModbusExchange):  add reinit_timeout timer..
+
+* Fri Aug 21 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt17
+- up build
+
+* Fri Aug 21 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt16.2
+- (ModbusTCP): fixed bug in update respond sensor in SharedMemory
+
+* Thu Aug 20 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt16.1
+- (ModbusTCP): add more vmonit parameters
+
+* Thu Aug 20 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt16
+- (modbustcptest): add 'check' for connection
+
+* Tue Aug 18 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt15.3
+- minor build
+
+* Fri Aug 14 2015 Pavel Vainerman <pv@etersoft.ru> 2.1-alt15.2
+- up build
+
+* Thu Aug 13 2015 Pavel Vainerman <pv@etersoft.ru> 2.1-alt15.1
+- test build for new UNetUDP
+
+* Wed Aug 12 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt15
+- (Modbus): add new property "pollfactor" (see docs)
+
+* Sun Aug 09 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt14
+- (UTCPStream): add new function "setKeepAliveParams"
+
+* Sat Aug 08 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt13
+- (ModbusMultiMaster): minor fixes (add "force" for <GateList>)
+
+* Sat Aug 08 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt12
+- (Modbus): minor fixes in ModbusMultiMaster
+
 * Tue Jul 21 2015 Pavel Vainerman <pv@altlinux.ru> 2.1-alt11
 - minor fixes in uniset2-codegen
 - ModbusMaster: add --prefix-query-max-count val - the maximum 
