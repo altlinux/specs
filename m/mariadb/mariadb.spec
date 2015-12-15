@@ -29,7 +29,7 @@
 
 Name: mariadb
 Version: 10.1.9
-Release: alt3
+Release: alt4
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -53,6 +53,7 @@ Source15: alt-mysql_install_db.sh
 Source16: mysql.control
 Source17: mysqld-chroot.control
 
+Source19: var-lib-mysql-run-systemd-notify.mount
 Source20: mysql.tmpfiles.d
 Source21: mysqld.service
 Source22: mysqld.service.d
@@ -346,8 +347,8 @@ export LDFLAGS
 
 %install
 mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_infodir,%_datadir/sql-bench,/var/log/mysql}
-mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%_libdir/mysql/plugin/,%_libdir/galera,dev,log,tmp,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
-touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START}
+mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%_libdir/mysql/plugin/,%_libdir/galera,dev,log,tmp,run/systemd,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
+touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START,/run/systemd/notify}
 
 # don't fiddle with the initscript!
 export DONT_GPRINTIFY=1
@@ -393,6 +394,7 @@ install -p -m 0644 BUILD/support-files/wsrep.cnf %buildroot%_sysconfdir/my.cnf.d
 install -pD -m644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
 %endif
 
+install -pD -m644 %SOURCE19 %buildroot%_unitdir/var-lib-mysql-run-systemd-notify.mount
 install -pD -m644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
 install -pD -m644 %SOURCE21 %buildroot%_unitdir/mysqld.service
 install -pD -m644 %SOURCE22 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/user.conf
@@ -569,6 +571,7 @@ fi
 %_tmpfilesdir/mysql.conf
 %_unitdir/mysqld.service
 %_unitdir/mariadb.service
+%_unitdir/var-lib-mysql-run-systemd-notify.mount
 %config(noreplace) %_sysconfdir/systemd/system/mysqld.service.d/user.conf
 
 %_bindir/aria*
@@ -629,6 +632,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/log
 %attr(660,mysql,mysql) %ghost %verify(not md5 mtime size) %ROOT/log/*
 %attr(3770,root,mysql) %dir %ROOT/tmp
+%dir %ROOT/run
+%dir %ROOT/run/systemd
+%ghost %ROOT/run/systemd/notify
 
 %if_with common
 %files common
@@ -723,6 +729,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 15 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.9-alt4
+- add mount --bind /run/systemd/notify to chroot for run as Type=notify unit
+
 * Fri Dec 11 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.9-alt3
 - add target new-cluster to init script
 - fix galera_new_cluster for systemd and sysv
