@@ -3,7 +3,7 @@
 %def_without test
 %define dist CPAN-Meta-YAML
 Name: perl-%dist
-Version: 0.016
+Version: 0.018
 Release: alt1
 
 Summary: Read and write a subset of YAML for CPAN Meta files
@@ -39,6 +39,9 @@ task.
 %perl_vendor_privlib/CPAN
 
 %changelog
+* Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.018-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
 - automated CPAN update
 
