@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist ExtUtils-F77
 Name: perl-%dist
-Version: 1.18
+Version: 1.19
 Release: alt1
 
 Summary: Simple interface to F77 libs
@@ -55,6 +55,9 @@ __EOF__
 %perl_vendor_privlib/ExtUtils
 
 %changelog
+* Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
