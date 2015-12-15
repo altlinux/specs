@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Log/Log4perl/Appender/TestBuffer.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(Test/Perl/Critic.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-MooseX-Log-Log4perl
-Version:    0.46
-Release:    alt2_8
+Version:    0.47
+Release:    alt1
 # see lib/MooseX/Log/Log4perl.pm
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    A Logging Role for Moose based on Log::Log4perl
-Source:     http://search.cpan.org/CPAN/authors/id/L/LA/LAMMEL/MooseX-Log-Log4perl-%{version}.tar.gz
+Source:     http://www.cpan.org/authors/id/L/LA/LAMMEL/MooseX-Log-Log4perl-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/MooseX-Log-Log4perl
 BuildArch:  noarch
 
@@ -59,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1
+- automated CPAN update
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.46-alt2_8
 - update to new release by fcimport
 
