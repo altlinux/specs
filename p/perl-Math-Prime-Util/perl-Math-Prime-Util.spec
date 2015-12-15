@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.55
+%define module_version 0.56
 %define module_name Math-Prime-Util
 %add_findreq_skiplist %perl_vendor_archlib/Math/Prime/Util.pm
 # BEGIN SourceDeps(oneline):
@@ -8,8 +8,8 @@ BuildRequires: libsowing-devel perl(Benchmark.pm) perl(Bytes/Random/Secure.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.55
-Release: alt1.1
+Version: 0.56
+Release: alt1
 Summary: Utilities related to prime numbers, including fast sieves and factoring
 Group: Development/Perl
 License: perl
@@ -92,6 +92,9 @@ rm -f t/11-clusters.t
 %_bindir/*
 
 %changelog
+* Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1.1
 - rebuild with new perl 5.22.0
 
