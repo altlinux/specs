@@ -11,7 +11,7 @@
 
 Name: tor
 Version: 0.2.7.6
-Release: alt1
+Release: alt2
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -132,7 +132,7 @@ fi
 
 %defattr(640,root,%toruser,2710)
 %_tor_root
-%defattr(640,root,%toruser,2770)
+%defattr(640,root,%toruser,3770)
 %_var/log/%name
 %defattr(640,root,%toruser,2730)
 %_var/run/%name
@@ -140,6 +140,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Tue Dec 15 2015 Vladimir Didenko <cow@altlinux.ru> 0.2.7.6-alt2
+- add sticky bit on log directory
+
 * Mon Dec 14 2015 Vladimir Didenko <cow@altlinux.ru> 0.2.7.6-alt1
 - new version
 
