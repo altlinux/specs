@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist CPAN-Meta-Requirements
 Name: perl-%dist
-Version: 2.133
+Version: 2.140
 Release: alt1
 
 Summary: a set of version requirements for a CPAN dist
@@ -39,6 +39,9 @@ them to the simplest representation.
 %perl_vendor_privlib/CPAN
 
 %changelog
+* Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.140-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 2.133-alt1
 - automated CPAN update
 
