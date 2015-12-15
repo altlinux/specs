@@ -1,7 +1,7 @@
 Name: ntp
 Version: 4.2.8
 #define vers_rc p5
-Release: alt3
+Release: alt4
 %define srcname %name-%version%{?vers_rc:%vers_rc}
 
 Summary: The Network Time Protocol (NTP)
@@ -177,6 +177,9 @@ echo '#define HAVE_LIBREADLINE 1' >>config.h
 
 %make_build
 
+%check
+make check
+
 %install
 make DESTDIR=$RPM_BUILD_ROOT perllibdir=%perl_vendor_privlib install
 
@@ -217,6 +220,16 @@ touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/%name/{drift,step-tickers}
 %__install -pD -m700 %SOURCE21 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.all
 %__install -pD -m700 %SOURCE22 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.conf
 %__install -pD -m700 %SOURCE23 $RPM_BUILD_ROOT%_sysconfdir/chroot.d/ntpd.lib
+# ghost files from update_chrooted
+touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/host.conf
+touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/hosts
+touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/nsswitch.conf
+touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/resolv.conf
+touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/services
+touch $RPM_BUILD_ROOT%ROOT/%_lib/libnsl.so.1
+touch $RPM_BUILD_ROOT%ROOT/%_lib/libnss_dns.so.2
+touch $RPM_BUILD_ROOT%ROOT/%_lib/libnss_files.so.2
+touch $RPM_BUILD_ROOT%ROOT/%_lib/libresolv.so.2
 
 %define r_dir %ROOT%_sysconfdir/%name
 %define r_link %_sysconfdir/%name
@@ -305,7 +318,22 @@ fi
 %config(noreplace) %verify(not md5 size mtime) %ROOT%_sysconfdir/%name/step-tickers
 %attr(640,ntpd,ntpd) %ghost %ROOT%_sysconfdir/%name/drift
 
+# ghost files from update_chrooted
+%ghost %ROOT%_sysconfdir/host.conf
+%ghost %ROOT%_sysconfdir/hosts
+%ghost %ROOT%_sysconfdir/nsswitch.conf
+%ghost %ROOT%_sysconfdir/resolv.conf
+%ghost %ROOT%_sysconfdir/services
+%ghost %ROOT/%_lib/libnsl.so.1
+%ghost %ROOT/%_lib/libnss_dns.so.2
+%ghost %ROOT/%_lib/libnss_files.so.2
+%ghost %ROOT/%_lib/libresolv.so.2
+
 %changelog
+* Tue Dec 15 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt4
+- added files produced by update_chrooted as ghost
+- added check section
+
 * Mon Dec 14 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt3
 - 4.2.8p4 (multiple CVEs; see "NEWS" file)
 - ntpdate is not used in init script (obsoleted by --panicgate),
