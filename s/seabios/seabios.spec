@@ -1,7 +1,7 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.8.2
+Version: 1.9.0
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -23,8 +23,10 @@ Source15: config.csm
 Source16: config.coreboot
 Source17: config.seabios-128k
 Source18: config.seabios-256k
+Source19: config.vga.virtio
 
-BuildRequires: python-base python-modules iasl
+BuildRequires: python-base python-modules python-modules-logging
+BuildRequires: acpica
 BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
 Conflicts: qemu-common < 1.6.0-alt1
 
@@ -49,11 +51,9 @@ SeaVGABIOS is an open-source VGABIOS implementation.
 
 echo %version > .version
 
-
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
 mkdir -p binaries
-
 
 build_bios() {
 	make clean distclean
@@ -61,7 +61,7 @@ build_bios() {
 	echo "CONFIG_DEBUG_LEVEL=%{debug_level}" >> .config
 	make oldnoconfig V=1
 	make V=1 \
-		VERSION=%version \
+		EXTRAVERSION="-%{release}" \
 		HOSTCC=gcc \
 		CC=x86_64-linux-gnu-gcc \
 		AS=x86_64-linux-gnu-as \
@@ -78,10 +78,11 @@ build_bios %SOURCE15 Csm16.bin bios-csm.bin
 build_bios %SOURCE16 bios.bin.elf bios-coreboot.bin
 build_bios %SOURCE17 bios.bin bios.bin
 build_bios %SOURCE18 bios.bin bios-256k.bin
+
 cp out/src/fw/*dsdt*.aml binaries
 
 # seavgabios
-for config in %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14; do
+for config in %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE19; do
 	name=${config#*config.vga.}
 	build_bios ${config} vgabios.bin vgabios-${name}.bin out/vgabios.bin
 done
@@ -109,6 +110,10 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Tue Dec 15 2015 Alexey Shabalin <shaba@altlinux.ru> 1.9.0-alt1
+- 1.9.0
+- build vgabios-virtio
+
 * Fri Jun 19 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.2-alt1
 - 1.8.2
 
