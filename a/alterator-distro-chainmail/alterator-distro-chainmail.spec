@@ -1,6 +1,6 @@
 Name: alterator-distro-chainmail
 Version: 3.0.0
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar
 
@@ -42,6 +42,13 @@ Conflicts: installer-feature-network-shares-stage3 < 0.5-alt1
 Create domain and set external interfaces
 during installation.
 
+%package -n installer-step-chainmail-expert-mode
+Summary: Installer step for setup alterator menu mode
+Group: System/Configuration/Other
+
+%description -n installer-step-chainmail-expert-mode
+%summary
+
 %prep
 %setup
 
@@ -59,12 +66,22 @@ during installation.
 %_datadir/alterator/ui/chainmail/login/
 %_libexecdir/alterator/hooks/*.d/*
 %_datadir/alterator/interfaces/guile/workflow/*
+%_libexecdir/alterator/backend3/chainmail-menu-default
 
 %files -n installer-step-chainmail-domain
 %_datadir/alterator/ui/chainmail/domain/
-%_datadir/install2/steps/*.desktop
+%_datadir/install2/steps/domain.desktop
+
+%files -n installer-step-chainmail-expert-mode
+%_datadir/alterator/ui/chainmail/expert-mode/
+%_datadir/install2/steps/expert-mode.desktop
+%_libexecdir/alterator/backend3/chainmail-expert-mode
 
 %changelog
+* Tue Dec 15 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt3
+- Add expert-mode installer step.
+- workflow: Make mode default configurable.
+
 * Fri Sep 18 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt2
 - login: Set focus to login field by default.
 - Add /chainmail/login interface again.
