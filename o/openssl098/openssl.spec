@@ -1,5 +1,5 @@
 Name: openssl098
-Version: 0.9.8zc
+Version: 0.9.8zh
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -32,7 +32,6 @@ Patch33: openssl-0.9.8g-rh-default-paths.patch
 Patch34: openssl-0.9.8g-rh-no-extssl.patch
 Patch35: openssl-0.9.8s-alt-shlib-version.patch
 Patch36: openssl-0.9.8g-rh-alt-soversion.patch
-Patch37: openssl-0.9.8h-kssl-keytab-available.patch
 Patch38: openssl-0.9.8-pkcs12-fix.patch
 Patch39: openssl-0.9.8l-up-x86_64-crypto-sha1.patch
 Patch41: openssl-0.9.8n-alt-ssl-dtls1.patch
@@ -245,7 +244,6 @@ on the command line.
 %patch34 -p1
 %patch35 -p1
 %patch36 -p1
-%patch37 -p1
 %patch38 -p1
 %patch39 -p1
 %patch41 -p1
@@ -467,6 +465,14 @@ fi
 %endif
 
 %changelog
+* Thu Dec 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.8zh-alt1
+- Updated to 0.9.8zh (CVE-2014-3570 CVE-2014-8275 CVE-2015-0204
+  CVE-2014-3572 CVE-2014-3569 CVE-2014-3571 CVE-2015-0288
+  CVE-2015-0209 CVE-2015-0293 CVE-2015-0289 CVE-2015-0287
+  CVE-2015-0286 CVE-2015-1791 CVE-2015-1792 CVE-2015-1790
+  CVE-2015-1789 CVE-2015-1788 CVE-2015-3195).
+- Dropped patch: openssl-0.9.8h-kssl-keytab-available.patch.
+
 * Mon Dec 08 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.8zc-alt1
 - Updated to 0.9.8zc (fixes multiple CVEs).
 - Fixed build with krb5 >= 1.13-alt1.
