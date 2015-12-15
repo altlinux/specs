@@ -1,7 +1,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 6.9.4
-Release: alt1
+Release: alt2
 
 Summary: DHCP Client
 License: %bsdstyle
@@ -71,6 +71,9 @@ fi
 %exclude /lib/%name/%name-hooks/15-timezone
 
 %changelog
+* Tue Dec 15 2015 Mikhail Efremov <sem@altlinux.org> 1:6.9.4-alt2
+- Fix up hostname (closes: #31632).
+
 * Tue Dec 01 2015 Mikhail Efremov <sem@altlinux.org> 1:6.9.4-alt1
 - Update 50-ntp.conf.
 - Drop obsoleted patch.
