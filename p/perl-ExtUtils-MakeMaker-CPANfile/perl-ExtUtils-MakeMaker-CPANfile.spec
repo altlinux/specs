@@ -1,20 +1,20 @@
-%define module_version 0.06
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.07
 %define module_name ExtUtils-MakeMaker-CPANfile
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Path.pm) perl(File/Spec/Functions.pm) perl(FindBin.pm) perl(Module/CPANfile.pm) perl(Test/More.pm) perl(version.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.06
-Release: alt2
+Version: 0.07
+Release: alt1
 Summary: cpanfile support for EUMM
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/I/IS/ISHIGAKI/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/I/IS/ISHIGAKI/ExtUtils-MakeMaker-CPANfile-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -42,6 +42,9 @@ ExtUtils::MakeMaker doesn't know, to avoid warnings.
 %perl_vendor_privlib/E*
 
 %changelog
+* Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Tue Apr 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2
 - moved to Sisyphis as dependency
 
