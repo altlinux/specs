@@ -1,6 +1,6 @@
 %define module_name	eprd
 %define module_version	0.5.0
-%define module_release	alt2
+%define module_release	alt3
 
 %define flavour		std-def
 BuildRequires(pre): kernel-headers-modules-std-def
@@ -60,12 +60,17 @@ install -D -m 644 README %buildroot%_docdir/%module_name-%module_version/README
 %files
 %defattr(644,root,root,755)
 %module_dir
-%attr(755, root, root) %_sbindir/eprd_setup
+%_sbindir/eprd_setup
 %_docdir/%module_name-%module_version/README
+%dir %_docdir/%module_name-%module_version
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 15 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5.0-alt3
+- Minor .spec updates
+- (ALT #31626)
 
 * Sun Sep 06 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5.0-alt2
 - Spec changed (updated summary)
