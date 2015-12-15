@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Catalyst/Runtime.pm) perl(Data/DPath.pm) perl(DateTime.pm) perl(DateTime/Format/DateParse.pm) perl(File/Find/Rule.pm) perl(File/stat.pm) perl(FindBin.pm) perl(Hash/Merge.pm) perl(Moose/Role.pm) perl(Perl6/Junction.pm) perl(Pod/Usage.pm) perl(Test/WWW/Mechanize/Catalyst.pm) perl(XML/Feed.pm) perl(YAML.pm) perl(common/sense.pm) perl(namespace/autoclean.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(Tapper/Cmd/Init.pm) perl(Tapper/Base.pm)
 %define upstream_name    Tapper-CLI
-%define upstream_version 4.1.3
+%define upstream_version 4.1.7
 
 Name:       perl-%{upstream_name}
-Version:    4.1.3
-Release:    alt3nt
+Version:    4.1.7
+Release:    alt1
 %if %release == alt3nt
 %define _without_test 1
 %endif
@@ -96,6 +97,9 @@ Command line tools for Tapper.
 
 
 %changelog
+* Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 4.1.7-alt1
+- automated CPAN update
+
 * Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt3nt
 - disabled tests - waiting for the new release
 
