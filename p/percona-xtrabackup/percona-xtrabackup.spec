@@ -1,78 +1,96 @@
-%define ibx_ver 1.5.1
+%define ROOT %_localstatedir/mysql
+%add_findreq_skiplist %_datadir/xtrabackup-test/run.sh
 
 Summary: XtraBackup online backup for MySQL / InnoDB
 Name: percona-xtrabackup
-Version: 2.1.6
-Release: alt1
+Version: 2.3.2
+Release: alt2
 Group: Databases
 License: GPLv2
 Packager: Evgenii Terechkov <evg@altlinux.org>
 Url: http://www.percona.com/software/percona-xtrabackup/
 
 Source: %name-%version.tar.gz
-Source1: PerconaXtraBackup-2.1.6.pdf
 
-Patch1: percona-xtrabackup-2.1.5-srv_buf_size.patch
-
-BuildRequires: libaio-devel libgcrypt-devel gcc-c++ cmake bzr bison libtool libncurses-devel zlib-devel python-module-sphinx perl-podlators libevent-devel libssl-devel
+BuildRequires: libaio-devel libgcrypt-devel gcc-c++ cmake bzr bison libtool libncurses-devel zlib-devel python-module-sphinx perl-podlators libev-devel libssl-devel libcurl-devel xxd texlive-latex-base texlive-latex-recommended
 
 BuildRequires: /proc
 
-Requires: perl-podlators
+Requires: perl-podlators rsync
 
 %description
 Percona XtraBackup is OpenSource online (non-blockable) backup solution for InnoDB and XtraDB engines.
 
+%package tests
+Summary: XtraBackup online backup for MySQL / InnoDB (testsuite)
+License: GPLv2
+Group: Databases
+
+%description tests
+Percona XtraBackup is OpenSource online (non-blockable) backup solution for InnoDB and XtraDB engines.
+
+This subpackage contains testsuite.
+
 %prep
 %setup
-%patch1 -p1
 
 %build
-set -ue
-export CC=${CC-"gcc"}
-export CXX=${CXX-"g++"}
-export CFLAGS="-DXTRABACKUP_VERSION=\\\"%version\\\" -DXTRABACKUP_REVISION=\\\"undefined\\\""
-export CXXFLAGS="-DXTRABACKUP_VERSION=\\\"%version\\\" -DXTRABACKUP_REVISION=\\\"undefined\\\""
-./utils/build.sh xtradb
-cp src/xtrabackup .
-./utils/build.sh xtradb55
-cp src/xtrabackup_55 src/xbstream src/xbcrypt .
-./utils/build.sh xtradb56
-cp src/xtrabackup_56 .
+cmake \
+      -DBUILD_CONFIG=xtrabackup_release \
+      -DCMAKE_INSTALL_PREFIX=%_prefix \
+      -DCMAKE_VERBOSE_MAKEFILE=ON \
+      -DMYSQL_DATADIR="%ROOT" \
+      -DSYSCONFDIR="%ROOT" \
+      -DINSTALL_LAYOUT=RPM \
+      -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+      -DWITH_PDF_DOCS=ON \
+      -DFEATURE_SET="community"
 
-pushd doc
+%make_build
+
+pushd storage/innobase/xtrabackup/doc/source
 make man
 popd
-cp %SOURCE1 .
-pod2man innobackupex > innobackupex.1
-mv innobackupex innobackupex-%ibx_ver
 
 %install
-# install binaries and configs
 mkdir -p %buildroot%_bindir %buildroot%_datadir %buildroot%_man1dir
-install -m 755 xtrabackup %buildroot%_bindir
-install -m 755 xtrabackup_55 %buildroot%_bindir
-install -m 755 xtrabackup_56 %buildroot%_bindir
-install -m 755 innobackupex-%ibx_ver %buildroot%_bindir
-ln -s innobackupex-%ibx_ver %buildroot%_bindir/innobackupex
-install -m 755 xbstream %buildroot%_bindir
-install -m 755 xbcrypt %buildroot%_bindir
+%makeinstall_std
 
-install -m 755 doc/build/man/xtrabackup.1 %buildroot%_man1dir
-install -m 755 innobackupex.1 %buildroot%_man1dir
+install -m 644 storage/innobase/xtrabackup/doc/source/build/man/xtrabackup.1 %buildroot%_man1dir
+install -m 644 storage/innobase/xtrabackup/doc/source/build/man/xbcrypt.1 %buildroot%_man1dir
+install -m 644 storage/innobase/xtrabackup/doc/source/build/man/xbstream.1 %buildroot%_man1dir
+install -m 644 storage/innobase/xtrabackup/doc/source/build/man/innobackupex.1 %buildroot%_man1dir
 
 %files
 %_bindir/innobackupex
-%_bindir/innobackupex-%ibx_ver
 %_bindir/xbcrypt
 %_bindir/xbstream
 %_bindir/xtrabackup
-%_bindir/xtrabackup_55
-%_bindir/xtrabackup_56
+%_bindir/xbcloud
+%_bindir/xbcloud_osenv
 %_man1dir/*.1.*
-%doc contrib/backup_mysql_cron.sh PerconaXtraBackup-2.1.6.pdf
+%doc storage/innobase/xtrabackup/contrib/backup_mysql_cron.sh storage/innobase/xtrabackup/doc/source/build/latex/PerconaXtraBackup-2.3.pdf
+
+%files tests
+%_datadir/xtrabackup-test
 
 %changelog
+* Wed Dec 16 2015 Terechkov Evgenii <evg@altlinux.org> 2.3.2-alt2
+- Build pdf manual from source
+
+* Wed Dec  2 2015 Terechkov Evgenii <evg@altlinux.org> 2.3.2-alt1
+- 2.3.2
+
+* Thu Dec 11 2014 Terechkov Evgenii <evg@altlinux.org> 2.2.7-alt1
+- 2.2.7
+- N.B.: xtrabackup >= 2.2.6 will not work with "chroot" option in my.cnf (see relnotes)!
+
+* Sat Aug  9 2014 Terechkov Evgenii <evg@altlinux.org> 2.2.3-alt1
+- 2.2.3
+
+* Mon Feb 10 2014 Evgenii Terechkov <evg@altlinux.org> 2.1.7-alt1
+- 2.1.7
+
 * Wed Dec 18 2013 Terechkov Evgenii <evg@altlinux.org> 2.1.6-alt1
 - 2.1.6
 
