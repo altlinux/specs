@@ -2,7 +2,7 @@
 %define dist MIME-Types
 Name: perl-MIME-Types
 Version: 2.12
-Release: alt1
+Release: alt2
 
 Summary: Definition of MIME types
 License: GPL or Artistic
@@ -25,6 +25,14 @@ This module maintains a set of MIME::Type|MIME::Type objects, which
 each describe one known mime type.  There are many types defined
 by RFCs and vendors, so the list is long but not complete.
 
+%package -n perl-MojoX-MIME-Types
+Group: Development/Perl
+Summary: Definition of MIME types for Mojolicious
+Requires: %name = %version-%release
+
+%description -n perl-MojoX-MIME-Types
+%summary
+
 %prep
 %setup -q -n %dist-%version
 
@@ -40,11 +48,16 @@ by RFCs and vendors, so the list is long but not complete.
 	%perl_vendor_privlib/MIME/*.pm
 	%perl_vendor_privlib/MIME/*.db
 %doc	%perl_vendor_privlib/MIME/*.pod
+
+%files -n perl-MojoX-MIME-Types
 %dir	%perl_vendor_privlib/MojoX/MIME
 	%perl_vendor_privlib/MojoX/MIME/*.pm
 %doc	%perl_vendor_privlib/MojoX/MIME/*.pod
 
 %changelog
+* Tue Dec 15 2015 Vladimir Lettiev <crux@altlinux.ru> 2.12-alt2
+- separated package for MojoX::MIME::Types (Closes: #31614)
+
 * Thu Nov 12 2015 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1
 - automated CPAN update
 
