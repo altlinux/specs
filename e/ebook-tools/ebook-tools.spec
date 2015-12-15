@@ -1,7 +1,7 @@
 
 Name: ebook-tools
 Version: 0.2.2
-Release: alt1
+Release: alt2
 
 Group: Publishing
 Summary: Tools for accessing and converting various ebook file formats
@@ -66,6 +66,9 @@ based on %name
 %_libdir/lib*.so
 
 %changelog
+* Tue Dec 15 2015 Sergey V Turchin <zerg@altlinux.org> 0.2.2-alt2
+- rebuild with new libzip
+
 * Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 0.2.2-alt1
 - new version
 
