@@ -4,13 +4,13 @@
 Summary: XtraBackup online backup for MySQL / InnoDB
 Name: percona-xtrabackup
 Version: 2.3.2
-Release: alt2
+Release: alt3
 Group: Databases
 License: GPLv2
 Packager: Evgenii Terechkov <evg@altlinux.org>
-Url: http://www.percona.com/software/percona-xtrabackup/
+Url: https://github.com/percona/percona-xtrabackup.git
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: libaio-devel libgcrypt-devel gcc-c++ cmake bzr bison libtool libncurses-devel zlib-devel python-module-sphinx perl-podlators libev-devel libssl-devel libcurl-devel xxd texlive-latex-base texlive-latex-recommended
 
@@ -75,6 +75,9 @@ install -m 644 storage/innobase/xtrabackup/doc/source/build/man/innobackupex.1 %
 %_datadir/xtrabackup-test
 
 %changelog
+* Wed Dec 16 2015 Terechkov Evgenii <evg@altlinux.org> 2.3.2-alt3
+- Build from upstream git repo
+
 * Wed Dec 16 2015 Terechkov Evgenii <evg@altlinux.org> 2.3.2-alt2
 - Build pdf manual from source
 
