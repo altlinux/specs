@@ -18,7 +18,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.0
+Version: %ver_major.1
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -82,6 +82,7 @@ BuildRequires: efl-libs-devel >= %efl_ver_major libelementary-devel >= %efl_ver_
 BuildRequires: libpam-devel libalsa-devel libudev-devel libxcbutil-keysyms-devel
 BuildRequires: libdbus-devel libp11-kit-devel xorg-xproto-devel libxcbutil-keysyms-devel
 BuildRequires: libuuid-devel libpulseaudio-devel
+BuildRequires: libxkbcommon-devel libdrm-devel libgbm-devel
 BuildRequires: doxygen
 # for sysv
 BuildRequires: pm-utils
@@ -207,6 +208,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.20.1-alt1
+- 0.20.1
+
 * Tue Dec 01 2015 Yuri N. Sedunov <aris@altlinux.org> 1:0.20.0-alt1
 - 0.20.0 release
 
