@@ -9,7 +9,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        38.4.0
+Version:        38.5.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -288,6 +288,16 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 38.5.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2015-149 Cross-site reading attack through data and view-source URIs
+  + MFSA 2015-147 Integer underflow and buffer overflow processing MP4 metadata in libstagefright
+  + MFSA 2015-146 Integer overflow in MP4 playback in 64-bit versions
+  + MFSA 2015-145 Underflow through code inspection
+  + MFSA 2015-139 Integer overflow allocating extremely large textures
+  + MFSA 2015-138 Use-after-free in WebRTC when datachannel is used after being destroyed
+
 * Wed Nov 04 2015 Andrey Cherepanov <cas@altlinux.org> 38.4.0-alt1
 - New ESR version
 - Security fixes:
