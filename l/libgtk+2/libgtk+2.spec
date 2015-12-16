@@ -17,7 +17,7 @@
 %def_enable introspection
 
 Name: libgtk+2
-Version: %ver_major.28
+Version: %ver_major.29
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
@@ -374,6 +374,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %_datadir/gir-1.0/*
 
 %changelog
+* Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 2.24.29-alt1
+- 2.24.29
+
 * Wed May 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.24.28-alt1
 - 2.24.28
 
