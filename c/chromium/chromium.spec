@@ -19,7 +19,7 @@
 %endif
 
 Name:           chromium
-Version:        47.0.2526.80
+Version:        47.0.2526.106
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -177,6 +177,8 @@ BuildRequires:  zlib-devel
 Provides: 		webclient, /usr/bin/xbrowser
 BuildPreReq: 	alternatives >= 0.2.0
 PreReq(post,preun): alternatives >= 0.2
+
+Requires: libalsa libGConf libgtk+2 libjpeg libpci libpulseaudio libXScrnSaver libxslt libXtst
 
 %description
 Chromium is an open-source browser project that aims to build a safer,
@@ -664,6 +666,11 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 47.0.2526.106-alt1
+- New version
+- Security fix CVE-2015-6792: Fixes from internal audits and fuzzing
+- Add missing requirements skipping by autoreq (ALT #31397)
+
 * Wed Dec 09 2015 Andrey Cherepanov <cas@altlinux.org> 47.0.2526.80-alt1
 - New version
 - Security fixes:
