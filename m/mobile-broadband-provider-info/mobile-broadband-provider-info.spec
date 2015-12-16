@@ -1,5 +1,5 @@
 Name: mobile-broadband-provider-info
-Version: 20150608
+Version: 20151214
 Release: alt1
 
 Summary: Mobile Broadband Service Provider Database
@@ -7,7 +7,7 @@ Group: System/Configuration/Networking
 License: Creative Commons Public Domain
 Url: https://wiki.gnome.org/Projects/NetworkManager/MobileBroadband/ServiceProviders
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar.xz
 
 BuildArch: noarch
 
@@ -20,8 +20,8 @@ associated network and plan information.
 
 %prep
 %setup
-# subst date as version
-sed -i -e 's|, [0-9]*,|, %version,|' configure.ac
+# subst date as version for git snapshot
+#sed -i -e 's|, [0-9]*,|, %version,|' configure.ac
 
 %build
 %autoreconf
@@ -40,6 +40,9 @@ sed -i -e 's|, [0-9]*,|, %version,|' configure.ac
 %doc ChangeLog COPYING NEWS README
 
 %changelog
+* Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 20151214-alt1
+- updated to 20151214 ftp release
+
 * Tue Aug 11 2015 Yuri N. Sedunov <aris@altlinux.org> 20150608-alt1
 - uptaed to git snapshot (4c6b2437b71)
 
