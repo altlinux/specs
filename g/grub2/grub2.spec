@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt20
+Release: alt21
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -36,12 +36,16 @@ Patch9: grub2-fix-locale-en.mo.gz-not-found-error-message.patch
 Patch10: grub-2.00-r4586-one-by-off.patch
 Patch11: grub-2.00-install-uefi-signed.patch
 Patch12: grub2-stfu.patch
+Patch13: grub-2.00-fedora-unrestricted.patch
+Patch14: grub-2.00-texinfo.patch
+Patch15: 0001-Fix-CVE-2015-8370-Grub2-user-pass-vulnerability.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
 BuildRequires: libdevmapper-devel
+BuildRequires: texinfo
 BuildRequires: pesign >= 0.109-alt4
 BuildRequires: rpm-macros-uefi
 
@@ -164,6 +168,9 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch10 -p0
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version/%version-%release/" configure.ac
 
@@ -357,6 +364,19 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Wed Dec 02 2015 Michael Shigorin <mike@altlinux.org> 2.00-alt21
+- CVE-2015-8370: those who have set up GRUB passwords MUST
+  upgrade or find their use of this "protection" inefficient:
+  http://hmarco.org/bugs/CVE-2015-8370-Grub2-authentication-bypass.html
+  (closes: #31631)
+- added fedora patch to piggyback --unrestricted through CLASS
+  thus changing the default for password-protected menuentry items
+  to request password only when an attempt to change boot parameters
+  is made (but to let the system boot by default); see also
+  http://altlinux.org/grub#password
+- added upstream texinfo patch to fix FTBFS
+- explicit BR: texinfo
+
 * Tue Dec 17 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt20
 - updated pesign macros use, reworked binaries installation
 - prepare for production signing
