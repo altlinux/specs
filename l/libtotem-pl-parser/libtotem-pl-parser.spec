@@ -1,10 +1,11 @@
 %define _name totem-pl-parser
 %define ver_major 3.10
+%define _libexecdir %_prefix/libexec
 %def_enable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
@@ -67,7 +68,6 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the Totem playlist parser library
 
-%define _libexecdir %_libdir/%name
 
 %prep
 %setup -n %_name-%version
@@ -90,13 +90,13 @@ GObject introspection devel data for the Totem playlist parser library
 %files -f %name.lang
 %doc AUTHORS NEWS README
 %_libdir/*.so.*
-%dir %_libdir/%name
-%_libdir/%name/%_name-videosite
+%dir %_libexecdir/%_name
+%_libexecdir/%_name/99-%_name-videosite
 
 %files -n %name-devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*.pc
 
 %files -n %name-devel-doc
 %_datadir/gtk-doc/html/*
@@ -110,6 +110,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 3.10.6-alt1
+- 3.10.6
+
 * Thu Apr 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.10.5-alt1
 - 3.10.5
 
