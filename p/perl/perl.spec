@@ -1,6 +1,6 @@
 Name: perl
-Version: 5.22.0
-Release: alt2
+Version: 5.22.1
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -750,6 +750,9 @@ EOF
 	%privlib/Unicode/Normalize.pm
 
 %changelog
+* Wed Dec 16 2015 Igor Vlasenko <viy@altlinux.ru> 1:5.22.1-alt1
+- 5.22.0 -> 5.22.1
+
 * Sun Nov 29 2015 Igor Vlasenko <viy@altlinux.ru> 1:5.22.0-alt2
 - added Provides/Conflicts on perl-Test-use-ok (now in perl-devel)
 
