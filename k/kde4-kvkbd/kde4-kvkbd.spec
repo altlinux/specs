@@ -5,7 +5,7 @@
 %define		rname kvkbd
 Name:		kde4-%rname
 Version:	0.7.2
-Release:	alt1
+Release:	alt2
 
 Group:		Accessibility
 Summary:	Virtual Keyboard for KDE4
@@ -17,6 +17,8 @@ Url:		http://kde-apps.org/content/show.php/Kvkbd?content=56019
 Provides:	%rname = %version-%release
 
 Source0:	%rname-%version.tar
+Patch1: alt-hide-extent.patch
+Patch2: alt-def-geometry.patch
 
 BuildRequires(pre): kde4libs-devel
 # Automatically added by buildreq on Wed Aug 26 2009 (-bi)
@@ -36,6 +38,13 @@ Kvkbd - виртуальная клавиатура для KDE4, обладаю�
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
+%patch2 -p1
+
+# swap standart and light color themes
+mv src/standart.css src/standart-old.css
+mv colors/light.css src/standart.css
+mv src/standart-old.css colors/light.css
 
 %build
 %K4build
@@ -52,6 +61,12 @@ Kvkbd - виртуальная клавиатура для KDE4, обладаю�
 %_K4apps/%rname/
 
 %changelog
+* Wed Dec 16 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt2
+- setup defaults
+
+* Tue Dec 15 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt0.M70P.1
+- build for M70P
+
 * Mon Dec 14 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt1
 - new version
 
