@@ -1,6 +1,5 @@
-
 Name:    appstream
-Version: 0.8.4
+Version: 0.9.0
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -24,6 +23,8 @@ BuildRequires: libyaml-devel
 BuildRequires: libxapian-devel
 BuildRequires: xmlto
 BuildRequires: ctest
+BuildRequires: libprotobuf-lite-devel
+BuildRequires: protobuf-compiler
 
 #Requires: appstream-data
 
@@ -83,7 +84,7 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %doc AUTHORS LICENSE.GPLv2 LICENSE.LGPLv2.1
 %config(noreplace) %_sysconfdir/appstream.conf
 %_bindir/appstreamcli
-%_libdir/girepository-1.0/AppStream-0.8.typelib
+%_libdir/girepository-1.0/AppStream-1.0.typelib
 %_libdir/libappstream.so.*
 %dir %_datadir/app-info/
 %dir %_datadir/app-info/icons
@@ -100,7 +101,7 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_includedir/AppStream/
 %_libdir/libappstream.so
 %_libdir/pkgconfig/appstream.pc
-%_datadir/gir-1.0/AppStream-0.8.gir
+%_datadir/gir-1.0/AppStream-1.0.gir
 
 %files qt
 %_libdir/libAppstreamQt.so.*
@@ -111,6 +112,9 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_libdir/libAppstreamQt.so
 
 %changelog
+* Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 0.9.0-alt1
+- New version
+
 * Mon Sep 14 2015 Andrey Cherepanov <cas@altlinux.org> 0.8.4-alt1
 - New version
 
