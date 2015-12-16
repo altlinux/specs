@@ -1,7 +1,7 @@
 %def_enable tests
 
 Name: libldb
-Version: 1.1.23
+Version: 1.1.24
 Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
@@ -114,6 +114,12 @@ make test
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.24-alt1
+- 1.1.24
+- Security fixes:
+  - CVE-2015-5330 (Remote memory read in Samba LDAP server)
+  - CVE-2015-3223 (Denial of service in Samba Active Directory server)
+
 * Fri Nov 13 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.23-alt1
 - 1.1.23
 - Enable tests

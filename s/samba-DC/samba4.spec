@@ -44,8 +44,8 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.3.2
-Release: alt1.1
+Version: 4.3.3
+Release: alt1
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -1252,6 +1252,20 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n task-samba-dc
 
 %changelog
+* Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.3-alt1
+- New version (https://www.samba.org/samba/history/samba-4.3.3.html)
+- Security fixes:
+  - CVE-2015-3223 (Denial of service in Samba Active Directory
+  server)
+  - CVE-2015-5252 (Insufficient symlink verification in smbd)
+  - CVE-2015-5299 (Missing access control check in shadow copy
+  code)
+  - CVE-2015-5296 (Samba client requesting encryption vulnerable
+  to downgrade attack)
+  - CVE-2015-8467 (Denial of service attack against Windows
+  Active Directory server)
+  - CVE-2015-5330 (Remote memory read in Samba LDAP server)
+
 * Tue Dec 08 2015 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1.1
 - NMU: dropped unused prehistoric BR: perl-Perl4-CoreLibs
 
