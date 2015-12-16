@@ -1,6 +1,6 @@
 Name: installer-distro-chainmail
 Version: 3.0.0
-Release: alt7
+Release: alt8
 
 Summary: Installer files for IVK chainmail
 License: GPL
@@ -79,6 +79,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/ivk-scripts/
 
 %changelog
+* Wed Dec 16 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt8
+- module-order-list: Add ivkcrypto.
+
 * Tue Dec 15 2015 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt7
 - Add expert-mode installer step.
 - alterator-menu: Add modules to module-expert-list.
