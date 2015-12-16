@@ -2,7 +2,7 @@
 
 Name: gnustep-base
 Version: 1.24.6
-Release: alt4.svn20140226
+Release: alt5.svn20140226
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -18,7 +18,7 @@ Source1: %name.init
 Requires: lib%name = %epoch:%version-%release
 
 BuildRequires: gnustep-make gnustep-make-devel libgnutls-devel
-BuildRequires: libgnustep-objc2-devel pkgconfig clang-devel libssl-devel
+BuildRequires: libgnustep-objc2-devel pkgconfig gcc-objc libssl-devel
 BuildRequires: libxml2-devel libxslt-devel zlib-devel libffi-devel mount
 BuildPreReq: libffcall-devel libgmp-devel libbfd-devel libgcrypt-devel
 Requires: gnustep-make >= 2.0.6-alt4 glibc-locales glibc-gconv-modules
@@ -68,7 +68,7 @@ Development documentation for %name.
 %define _libexecdir %_libdir
 
 %build
-. %_datadir/GNUstep/Makefiles/GNUstep.sh
+#. %_datadir/GNUstep/Makefiles/GNUstep.sh
 %undefine __libtoolize
 
 %{expand:%%add_optflags %(pkg-config --cflags libffi) -D__GNUSTEP_RUNTIME__}
@@ -78,7 +78,9 @@ Development documentation for %name.
 	--enable-pass-arguments \
 	--with-openssl-include=%_includedir/openssl \
 	--with-openssl-library=/%_lib/ \
-	CC=clang CXX=clang++
+	CC=gcc CPP='gcc -E'
+#	--disable-environment-config-file \
+#	--disable-importing-config-file \
 
 %make \
 	messages=yes \
@@ -150,6 +152,9 @@ rm -f /etc/services.orig
 %_infodir/*
  
 %changelog
+* Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.24.6-alt5.svn20140226
+- Build with gcc instead of clang
+
 * Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt4.svn20140226
 - New snapshot
 
