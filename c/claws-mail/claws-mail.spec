@@ -7,11 +7,11 @@
 %def_disable	bsfilter
 %def_disable	tnef
 %def_enable 	gdata
-%def_disable 	archive
+%def_enable 	archive
 
 Name:   	claws-mail
 Version:	3.13.0
-Release: 	alt4
+Release: 	alt5
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -818,6 +818,9 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Wed Dec 16 2015 Mikhail Efremov <sem@altlinux.org> 3.13.0-alt5
+- Enable archive plugin again.
+
 * Fri Dec 11 2015 Mikhail Efremov <sem@altlinux.org> 3.13.0-alt4
 - Disable archive plugin.
 
