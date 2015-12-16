@@ -3,7 +3,7 @@
 
 Name: libarchive
 Version: 3.1.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
@@ -109,6 +109,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 16 2015 Sergey V Turchin <zerg@altlinux.org> 3.1.2-alt3
+- rebuild with new libnettle
+
 * Wed Aug 05 2015 Sergey V Turchin <zerg@altlinux.org> 3.1.2-alt2
 - merge SuSE and FC patches
 - security fixes: CVE-2013-0211
