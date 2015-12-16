@@ -1,5 +1,5 @@
 Name: gmp
-Version: 6.0.0a
+Version: 6.1.0
 Release: alt1
 
 Summary: GNU MP arbitrary precision arithmetic library
@@ -11,8 +11,9 @@ Url: http://gmplib.org/
 Source: gmp-%version.tar
 Patch: gmp-%version-%release.patch
 
-# Automatically added by buildreq on Mon Jun 16 2003
-BuildRequires: flex gcc-c++ libreadline-devel
+# Automatically added by buildreq on Wed Dec 16 2015
+# optimized out: elfutils libstdc++-devel perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore python-base xz
+BuildRequires: flex gcc-c++ libreadline-devel makeinfo
 
 %def_enable cxx
 %ifarch %ix86
@@ -145,9 +146,6 @@ __gmpn_bdiv_qr
 __gmpn_bdiv_qr_itch
 __gmpn_broot
 __gmpn_brootinv
-__gmpn_clz_tab
-__gmpn_copyd
-__gmpn_copyi
 __gmpn_cpuvec
 __gmpn_cpuvec_init
 __gmpn_cpuvec_initialized
@@ -157,8 +155,6 @@ __gmpn_dcpi1_div_q
 __gmpn_dcpi1_div_qr
 __gmpn_dcpi1_divappr_q
 __gmpn_div_q
-__gmpn_divexact
-__gmpn_divexact_1
 __gmpn_dump
 __gmpn_get_d
 __gmpn_hgcd
@@ -169,7 +165,6 @@ __gmpn_hgcd_matrix_init
 __gmpn_invert
 __gmpn_invert_limb
 __gmpn_jacobi_base
-__gmpn_kara_mul_n
 __gmpn_matrix22_mul
 __gmpn_matrix22_mul_itch
 __gmpn_mod_1_1p
@@ -199,21 +194,19 @@ __gmpn_mulmod_bnm1
 __gmpn_mulmod_bnm1_next_size
 __gmpn_powlo
 __gmpn_preinv_divrem_1
-__gmpn_sb_div_qr_sec
-__gmpn_sb_div_r_sec
 __gmpn_sbpi1_bdiv_q
 __gmpn_sbpi1_bdiv_qr
 __gmpn_sbpi1_div_q
 __gmpn_sbpi1_div_qr
 __gmpn_sbpi1_divappr_q
 __gmpn_sqr_basecase
+__gmpn_sqrlo
 __gmpn_sqrmod_bnm1
 __gmpn_sqrmod_bnm1_next_size
 __gmpn_toom22_mul
 __gmpn_toom2_sqr
 __gmpn_toom32_mul
 __gmpn_toom33_mul
-__gmpn_toom3_mul_n
 __gmpn_toom3_sqr
 __gmpn_toom42_mul
 __gmpn_toom43_mul
@@ -266,6 +259,9 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %endif #cxx
 
 %changelog
+* Wed Dec 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.0-alt1
+- Updated to 6.1.0.
+
 * Fri May 08 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.0.0a-alt1
 - Updated to 6.0.0a.
 
