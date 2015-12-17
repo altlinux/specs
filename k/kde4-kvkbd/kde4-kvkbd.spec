@@ -5,7 +5,7 @@
 %define		rname kvkbd
 Name:		kde4-%rname
 Version:	0.7.2
-Release:	alt2
+Release:	alt3
 
 Group:		Accessibility
 Summary:	Virtual Keyboard for KDE4
@@ -19,6 +19,7 @@ Provides:	%rname = %version-%release
 Source0:	%rname-%version.tar
 Patch1: alt-hide-extent.patch
 Patch2: alt-def-geometry.patch
+Patch3: alt-visibility.patch
 
 BuildRequires(pre): kde4libs-devel
 # Automatically added by buildreq on Wed Aug 26 2009 (-bi)
@@ -40,6 +41,7 @@ Kvkbd - виртуальная клавиатура для KDE4, обладаю�
 %setup -q -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # swap standart and light color themes
 mv src/standart.css src/standart-old.css
@@ -61,6 +63,9 @@ mv src/standart-old.css colors/light.css
 %_K4apps/%rname/
 
 %changelog
+* Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt3
+- fix visibility
+
 * Wed Dec 16 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt2
 - setup defaults
 
