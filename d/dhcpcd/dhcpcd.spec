@@ -1,7 +1,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 6.9.4
-Release: alt2
+Release: alt3
 
 Summary: DHCP Client
 License: %bsdstyle
@@ -10,6 +10,10 @@ Group: System/Servers
 URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+# Patch from upstream
+# http://roy.marples.name/projects/dhcpcd/info/ebdb4b447a516ed9
+# Drop it when new version will be released
+Patch1: dhcpcd-6.9.4-fix-routing-table.patch
 AutoReq: yes, noshell
 
 BuildRequires: rpm-build-licenses
@@ -29,6 +33,7 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
 
 %build
 %configure \
@@ -71,6 +76,9 @@ fi
 %exclude /lib/%name/%name-hooks/15-timezone
 
 %changelog
+* Thu Dec 17 2015 Mikhail Efremov <sem@altlinux.org> 1:6.9.4-alt3
+- Fix routing table (patch from upstream).
+
 * Tue Dec 15 2015 Mikhail Efremov <sem@altlinux.org> 1:6.9.4-alt2
 - Fix up hostname (closes: #31632).
 
