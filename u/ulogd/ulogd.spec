@@ -1,6 +1,6 @@
 Name: ulogd
 Version: 2.0.5
-Release: alt1
+Release: alt2
 
 %def_disable nfacct
 
@@ -99,16 +99,15 @@ install %SOURCE1 %buildroot/%_sysconfdir/rc.d/init.d/%name
 
 install -pDm644 %SOURCE3 %buildroot/%_unitdir/%name.service
 
-mkdir -p %buildroot/%_sysconfdir/logrotate.d
-install %SOURCE2 %buildroot/%_sysconfdir/logrotate.d/%name
+install -pDm644 %SOURCE2 %buildroot/%_sysconfdir/logrotate.d/%name
 
 mkdir -p %buildroot/%_datadir/%name
-install doc/*.sql %buildroot/%_datadir/%name/
-install doc/sqlite3.table %buildroot/%_datadir/ulogd/
+install -pm644 doc/*.sql %buildroot/%_datadir/%name/
+install -pm644 doc/sqlite3.table %buildroot/%_datadir/ulogd/
 mkdir -p %buildroot/%_localstatedir/ulogd/
 
 mkdir -p %buildroot/%_man8dir
-install %name.8 %buildroot/%_man8dir/%name.8
+install -pm644 %name.8 %buildroot/%_man8dir/%name.8
 
 install -Dm0640 %name.conf %buildroot%_sysconfdir/%name.conf
 
@@ -159,6 +158,11 @@ sed -i -r 's;^(plugin="%_libdir/ulogd/ulogd_inpflow_NFACCT\.so");#\1;' %buildroo
 %_libdir/%name/ulogd_output_DBI.so
 
 %changelog
+* Thu Dec 17 2015 Mikhail Efremov <sem@altlinux.org> 2.0.5-alt2
+- Fix documentation files mode.
+- Fix logrotate config mode.
+- Fix logrotate config.
+
 * Thu May 21 2015 Mikhail Efremov <sem@altlinux.org> 2.0.5-alt1
 - Updated to 2.0.5.
 
