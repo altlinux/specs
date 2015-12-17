@@ -3,7 +3,7 @@
 %define real_name               python
 Name: %real_name
 
-Version: 2.7.10
+Version: 2.7.11
 Release: alt1
 
 %define package_name		%real_name
@@ -377,9 +377,9 @@ the database using a nonstandard variant of the SQL query language.
 Some applications can use SQLite for internal data storage.  It's also
 possible to prototype an application using SQLite and then port the
 code to a larger database such as PostgreSQL or Oracle.
- 
+
 pysqlite was written by Gerhard Ha:ring and provides a SQL interface
-compliant with the DB-API 2.0 specification described by PEP 249. 
+compliant with the DB-API 2.0 specification described by PEP 249.
 
 %package modules-logging
 Summary: Logging package for Python
@@ -905,6 +905,7 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %python_libdir/pydoc_data
 %python_libdir/importlib
 %python_libdir/config
+%python_sitelibdir/README
 %_includedir/%python_name/pyconfig.h
 
 %files -n libpython
@@ -1013,6 +1014,7 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 
 %files tools-webchecker
 %python_tooldir/webchecker/*.py*
+%exclude %python_tooldir/webchecker/README
 %_bindir/wcgui
 %_bindir/webchecker
 %_bindir/websucker
@@ -1063,6 +1065,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %python_libdir/lib-dynload/_tkinter.so
 
 %changelog
+* Mon Dec 14 2015 Vladimir Didenko <cow@altlinux.org> 2.7.11-alt1
+- New version
+
 * Fri Sep 18 2015 Vladimir Didenko <cow@altlinux.org> 2.7.10-alt1
 - New version (closes: #31270)
 - Enable bluetooth support (closes: #31261)
@@ -1666,4 +1671,3 @@ test_linuxaudiodev test_nis test_sunaudiodev test_winreg test_winsound)
 
 * Thu Jul 10 1997 Erik Troan <ewt@redhat.com>
 - built against glibc
-
