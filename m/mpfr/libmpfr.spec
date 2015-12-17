@@ -1,5 +1,5 @@
 Name: mpfr
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 
 Summary: Multiple Precision Floating-Point library
@@ -10,7 +10,9 @@ Url: http://www.mpfr.org/
 # Don't build static library by default
 %def_disable static
 
-BuildRequires: libgmp-devel
+# Automatically added by buildreq on Wed Dec 16 2015
+# optimized out: elfutils perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore python-base xz
+BuildRequires: libgmp-devel makeinfo
 
 # http://www.mpfr.org/mpfr-current/mpfr-%version.tar.bz2
 Source0: mpfr-%version.tar
@@ -105,6 +107,9 @@ install -pm644 %_sourcedir/mpfrxx.h %buildroot%_includedir/
 %endif
 
 %changelog
+* Wed Dec 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.3-alt1
+- Updated to v3.1.3.
+
 * Thu Apr 25 2013 Dmitry V. Levin <ldv@altlinux.org> 3.1.2-alt1
 - Updated to v3.1.2.
 
