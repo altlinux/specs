@@ -1,8 +1,8 @@
-%def_with bootstrap
+%def_without bootstrap
 
 Name: rpm-build-perl
 Version: 0.84
-Release: alt7
+Release: alt7.1
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPL
@@ -75,6 +75,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Thu Dec 17 2015 Igor Vlasenko <viy@altlinux.ru> 0.84-alt7.1
+- unbootstrap
+
 * Sat Nov 14 2015 Igor Vlasenko <viy@altlinux.ru> 0.84-alt7
 - support for perl 5.22 in B::PerlReq, B::Walker
 - bootstrap for perl 5.22
