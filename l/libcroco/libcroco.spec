@@ -1,7 +1,7 @@
 %define ver_major 0.6
 
 Name: libcroco
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: A CSS2 parsing library
@@ -56,10 +56,9 @@ This package provides csslint - program to parse CSS files. It is useful
 for detecting errors both in CSS code and in the CSS parser itself.
 
 %prep
-%setup -q
+%setup
 
 %build
-export LDFLAGS="-Wl,--as-needed"
 %configure --disable-static
 
 %make_build
@@ -89,6 +88,9 @@ export LDFLAGS="-Wl,--as-needed"
 %_bindir/csslint-%ver_major
 
 %changelog
+* Thu Dec 17 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.11-alt1
+- 0.6.11
+
 * Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.10-alt1
 - 0.6.10
 
