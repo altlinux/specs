@@ -14,8 +14,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.4.3
-Release: alt4
+Version: 5.5.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -29,14 +29,14 @@ Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-ki
 Requires: kf5-polkit-kde-agent kf5-kwin kf5-kdeclarative
 
 Source: %rname-%version.tar
-Source10: pam-kf5-screensaver
 Patch100: alt-startkde.patch
-Patch101: alt-disable-screenlocker.patch
+#
 Patch102: alt-def-wallpaper-image.patch
 Patch103: alt-plasma-konsole.patch
 Patch104: alt-def-digital-clock.patch
 Patch105: alt-lock-widgets.patch
 Patch106: alt-digital-clock-date.patch
+Patch107: alt-userswitcher.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel kf5-kjs-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcln-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel libxml2-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-webkit-devel rpm-build-gir ruby ruby-stdlibs wayland-devel xml-common xml-utils xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -50,7 +50,8 @@ BuildRequires: libdbusmenu-qt5-devel libgps-devel libpam0-devel zlib-devel
 libqalculate-devel
 %endif
 BuildRequires: libwayland-client-devel libwayland-server-devel
-BuildRequires: libxapian-devel prison-devel
+BuildRequires: libxapian-devel prison-devel libnm-devel
+BuildRequires: libxcbutil-image-devel libxcbutil-devel
 BuildRequires: iceauth xmessage xprop xrdb xset xsetroot
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
@@ -63,7 +64,7 @@ BuildRequires: kf5-kpackage-devel kf5-kparts-devel kf5-kpty-devel kf5-krunner-de
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-libksysguard-devel kf5-plasma-framework-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kxmlrpcclient-devel
-BuildRequires: kf5-networkmanager-qt-devel libnm-devel
+BuildRequires: kf5-networkmanager-qt-devel kf5-kscreenlocker-devel
 
 %description
 KDE Plasma Workspace
@@ -123,12 +124,13 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch100 -p1 -b .startkde
-%patch101 -p1
+#
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
 %patch106 -p1
+%patch107 -p1
 
 %build
 %K5build \
@@ -136,9 +138,6 @@ KF5 library
     -DLIBEXEC_INSTALL_DIR=%_K5exec \
     -DKDE4_COMMON_PAM_SERVICE="kf5" \
     -DKDE_COMMON_PAM_SERVICE="kf5" \
-    -DKDE4_KSCREENSAVER_PAM_SERVICE="kf5-screensaver" \
-    -DKDE_KSCREENSAVER_PAM_SERVICE="kf5-screensaver" \
-    -DKSCREENSAVER_PAM_SERVICE="kf5-screensaver" \
     #
 
 %install
@@ -177,10 +176,6 @@ cat <<__EOF__ > %buildroot/%_menudir/kde5-session
 			icon="kwin.png"
 __EOF__
 
-# Install kde pam configuration files
-install -d -m 0755 %buildroot/%_sysconfdir/pam.d/
-install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
-
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -190,7 +185,6 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 
 %files
 %config(noreplace) %x11confdir/wmsession.d/*PLASMA*
-%config(noreplace) %_sysconfdir/pam.d/kf5-screensaver
 %_menudir/kde5-session
 %dir %_K5plug/plasma/
 %dir %_K5plug/plasma/*/
@@ -202,12 +196,12 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_bindir/*
 %_K5bin/*
 %_K5exec/*
-%attr(2711,root,chkpwd) %_K5exec/kcheckpass
 %_K5lib/libkdeinit5_*.so
 %_K5plug/plasma/*/*.so
 %_K5plug/phonon_platform/*.so
 %_K5plug/*.so
 %_K5plug/kpackage/
+%_K5plug/kf5/kded/*.so
 %_K5plug/kf5/kio/desktop.so
 %_K5qml/org/kde/plasma/private/*
 %_K5qml/org/kde/plasma/wallpapers/*
@@ -219,7 +213,6 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5data/ksplash/
 %_K5data/kstyle/
 %_K5data/ksmserver/
-%_K5data/kconf_update/*
 %_K5data/desktop-directories/*
 %_K5data/solid/actions/*.desktop
 %_K5xdgapp/*.desktop
@@ -228,15 +221,14 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5cfg/*.kcfg
 %_K5srv/*.desktop
 %_K5srv/*.protocol
-%_K5srv/kded/*.desktop
 %_K5srvtyp/*.desktop
 %_K5dbus_srv/*.service
 %_datadir/dbus-1/services/*.service
 %_datadir/xsessions/plasma.desktop
+%_datadir/wayland-sessions/plasmawayland.desktop
 %_datadir/sddm/themes/*/
 
 %files devel
-#%_K5inc/plasma-workspace_version.h
 %_K5inc/KDE/
 %_K5inc/kworkspace5/
 %_K5inc/plasma/
@@ -246,8 +238,6 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5lib/cmake/KSMServerDBusInterface
 %_K5lib/cmake/LibKWorkspace
 %_K5lib/cmake/LibTaskManager
-%_K5lib/cmake/ScreenSaverDBusInterface
-#%_K5archdata/mkspecs/modules/qt_Plasma-Workspace.pri
 %_K5dbus_iface/*.xml
 
 %files -n %libkworkspace5
@@ -264,6 +254,12 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screensaver
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt4
 - add compact date to digital clock
 

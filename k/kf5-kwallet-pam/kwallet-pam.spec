@@ -1,8 +1,8 @@
 %define rname kwallet-pam
 
 Name: kf5-%rname
-Version: 5.4.3
-Release: alt3
+Version: 5.5.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -46,10 +46,10 @@ cp -ar kde4 kde5
 
 %build
 pushd kde4
-%K5build -DKWALLET4=1
+%K5build -DKWALLET4=1 -DCMAKE_INSTALL_LIBDIR=/%_lib
 popd
 pushd kde5
-%K5build -DKWALLET5=1
+%K5build -DKWALLET5=1 -DCMAKE_INSTALL_LIBDIR=/%_lib
 popd
 
 %install
@@ -68,6 +68,12 @@ done
 %_pam_modules_dir/pam_kwallet5.so
 
 %changelog
+* Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Thu Nov 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt3
 - rebuild
 

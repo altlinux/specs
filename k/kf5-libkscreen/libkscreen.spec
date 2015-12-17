@@ -1,8 +1,8 @@
 %define rname libkscreen
 
 Name: kf5-%rname
-Version: 5.4.3
-Release: alt3
+Version: 5.5.1
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -73,8 +73,15 @@ KF5 library
 %_K5lib/libKF5Screen.so.*
 %_K5exec/kscreen_backend_launcher
 %_K5plug/kf5/kscreen/
+%_K5dbus_srv/org.kde.kscreen.service
 
 %changelog
+* Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Thu Nov 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt3
 - rebuild
 

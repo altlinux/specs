@@ -4,8 +4,8 @@
 %define libqpulseaudioprivate libqpulseaudioprivate%sover
 
 Name: kf5-%rname
-Version: 5.4.3
-Release: alt3
+Version: 5.5.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -27,6 +27,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdeclarative-devel
 BuildRequires: kf5-kglobalaccel-devel kf5-ki18n-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-plasma-framework-devel
+BuildRequires: kf5-kdoctools kf5-kdoctools-devel kf5-kdoctools-devel-static
 
 %description
 %summary
@@ -89,6 +90,12 @@ KF5 library
 %_K5lib/libQPulseAudioPrivate.so.*
 
 %changelog
+* Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Thu Nov 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt3
 - rebuild
 

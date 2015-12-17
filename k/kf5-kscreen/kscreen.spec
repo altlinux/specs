@@ -1,14 +1,16 @@
 %define rname kscreen
 
 Name: kf5-%rname
-Version: 5.4.3
-Release: alt3
+Version: 5.5.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Display Management software
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: xrandr
 
 Source: %rname-%version.tar
 
@@ -52,6 +54,8 @@ KF5 library
 %prep
 %setup -n %rname-%version
 
+sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
+
 %build
 %K5build \
     -DDATA_INSTALL_DIR=%_K5data \
@@ -65,9 +69,10 @@ KF5 library
 #%doc COPYING.LIB README.md
 %_K5bin/*
 %_K5plug/*.so
+%_K5plug/kf5/kded/*.so
 %_K5data/kcm_kscreen/
 %_K5srv/*.desktop
-%_K5srv/kded/*.desktop
+#%_K5srv/kded/*.desktop
 %_K5icon/*/*/actions/*.*
 
 #%files devel
@@ -81,6 +86,12 @@ KF5 library
 #%_K5lib/libKF5Screen.so.*
 
 %changelog
+* Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Thu Nov 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt3
 - rebuild
 

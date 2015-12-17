@@ -8,8 +8,8 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: kf5-%rname
-Version: 5.4.3
-Release: alt3
+Version: 5.5.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -20,7 +20,6 @@ License: GPLv2+
 Requires: upower
 
 Source: %rname-%version.tar
-Patch1: alt-nohal.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -37,7 +36,7 @@ BuildRequires: kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjob
 BuildRequires: kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kservice-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel kf5-plasma-workspace-devel kf5-solid-devel kf5-sonnet-devel
-BuildRequires: kf5-libkscreen-devel kf5-kactivities-devel
+BuildRequires: kf5-libkscreen-devel kf5-kactivities-devel kf5-kwayland-devel
 
 %description
 Advanced power management settings.
@@ -81,7 +80,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 find ./ -type f | \
 while read f ; do
@@ -102,7 +100,7 @@ done
 %config %_K5conf_dbus_sysd/*.conf
 %_K5libexecdir/kauth/*
 %_K5plug/*.so
-%_K5srv/kded/*.desktop
+%_K5plug/kf5/kded/*.so
 %_K5srv/*.desktop
 %_K5srvtyp/*.desktop
 %_K5notif/*.notifyrc
@@ -127,6 +125,12 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Thu Nov 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt3
 - rebuild
 

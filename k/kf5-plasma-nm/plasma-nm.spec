@@ -2,8 +2,8 @@
 %def_disable openswan
 
 Name: kf5-%rname
-Version: 5.4.3
-Release: alt3
+Version: 5.5.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -14,6 +14,7 @@ License: GPLv2+ / LGPLv2+
 Requires: NetworkManager-daemon
 Requires: NetworkManager-adsl NetworkManager-wifi
 Requires: mobile-broadband-provider-info
+Requires: qca-qt5-ossl
 
 Source: %rname-%version.tar
 Source10: 01-plasma-nm.js
@@ -23,7 +24,7 @@ Source10: 01-plasma-nm.js
 #BuildRequires: ModemManager-devel extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libmm-qt-devel kf5-networkmanager-qt-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libnm-devel libopenconnect-devel python-module-google qt5-declarative-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel
-BuildRequires: mobile-broadband-provider-info
+BuildRequires: mobile-broadband-provider-info libqca-qt5-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel
@@ -161,13 +162,14 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %doc COPYING*
 %_K5bin/kde5-nm-connection-editor
 %_K5lib/libplasmanm_*.so
-%_K5plug/kded_networkmanagement.so
+#%_K5plug/kded_networkmanagement.so
+%_K5plug/kf5/kded/networkmanagement.so
 %_K5qml/org/kde/plasma/networkmanagement/
 %_K5xdgapp/kde5-nm-connection-editor.desktop
 %_K5data/plasma/plasmoids/org.kde.plasma.networkmanagement/
 %_K5data/plasma/updates/*
 %_K5notif/networkmanagement.notifyrc
-%_K5srv/kded/networkmanagement.desktop
+#%_K5srv/kded/networkmanagement.desktop
 %_K5srv/plasma-applet-org.kde.plasma.networkmanagement.desktop
 %_K5srvtyp/*.desktop
 %_K5xmlgui/kde5-nm-connection-editor/
@@ -212,6 +214,12 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Thu Nov 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt3
 - rebuild
 
