@@ -1,18 +1,20 @@
-%define ver_major 0.50
+%define ver_major 0.51
 
 Name: intltool
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Scripts and assorted auto* magic for i18nalizing various kinds of data files
 License: %gpl2plus
 Group: Development/GNOME and GTK+
 Url: http://www.freedesktop.org/wiki/Software/%name
-# http://edge.launchpad.net/intltool/trunk/0.41.1/+download/intltool-0.41.1.tar.gz
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.gz
-Patch: %name-0.50.2-alt-intltoolize.patch
 
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Source: https://launchpad.net/intltool/trunk/%version/+download/%name-%version.tar.gz
+Patch: %name-0.50.2-alt-intltoolize.patch
+Patch1: %name-0.51.0-perl-5.22.patch
+# https://bugs.launchpad.net/intltool/+bug/1505260
+# https://bugzilla.redhat.com/show_bug.cgi?id=1249051
+Patch2: intltool-merge-Create-cache-file-atomically.patch
 
 Requires: perl-XML-Parser
 Obsoletes: xml-i18n-tools
@@ -37,24 +39,33 @@ The intltool collection can be used to do these things:
    time.
 
 %prep
-%setup -q
+%setup
 %patch
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
+
+%check
+%make check
 
 %files
 %_bindir/*
-%_datadir/%name
+%_datadir/%name/
 %_datadir/aclocal/*
 %_man8dir/*
-%doc AUTHORS README TODO NEWS doc/*-HOWTO
+%doc AUTHORS README TODO NEWS ChangeLog doc/*-HOWTO
 
 %changelog
+* Thu Dec 17 2015 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1
+- updated to 0.51.0
+- fixed potential incompatibility with perl > 5.22
+
 * Mon Jun 04 2012 Yuri N. Sedunov <aris@altlinux.org> 0.50.2-alt1
 - 0.50.2
 - fixed intltoolize for (ALT #27397)
