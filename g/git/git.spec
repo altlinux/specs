@@ -1,5 +1,5 @@
 Name: git
-Version: 2.1.4
+Version: 2.6.4
 Release: alt1
 
 Summary: Git core and tools
@@ -279,13 +279,24 @@ popd
 
 %install
 %makeinstall_std \
-	install-lib install-include \
+	install-lib \
 	%{!?_without_doc:install-man install-html}
+
+mkdir -p %buildroot%_includedir/git
+find -name \*.d -print0 |
+	xargs -0 sed -n 's/^\([^:[:space:]]*\.h\)[[:space:]]*:.*/\1/p' -- |
+	sort -u |
+	xargs realpath -e --relative-to=. -- |
+	sort -u > headers.list
+tr / '\n' < headers.list |
+	grep -Fv .h |
+	sort -u |
+	xargs -i ln -s . %buildroot%_includedir/git/'{}'
+xargs install -pm644 -t %buildroot%_includedir/git -- < headers.list
 find %buildroot%_includedir -type f -print0 |
-	xargs -r0 grep -lZ 'include.*SHA1_HEADER' -- |
-	xargs -r0 sed -i '/include/ s/SHA1_HEADER/"sha1.h"/' --
-ln -s . %buildroot%_includedir/git/compat
-ln -s . %buildroot%_includedir/git/xdiff
+	xargs -0 grep -lZ 'include.*SHA1_HEADER' -- |
+	xargs -0 sed -i '/include/ s/SHA1_HEADER/"sha1.h"/' --
+
 chmod a-x %buildroot%gitexecdir/git-sh-setup
 install -pDm644 contrib/completion/git-completion.bash \
 	%buildroot/etc/bash_completion.d/git
@@ -487,6 +498,9 @@ popd
 %endif #emacs
 
 %changelog
+* Wed Dec 16 2015 Dmitry V. Levin <ldv@altlinux.org> 2.6.4-alt1
+- 2.1.4 -> 2.6.4.
+
 * Wed Dec 17 2014 Dmitry V. Levin <ldv@altlinux.org> 2.1.4-alt1
 - Updated to maint 2.1.4.
 
