@@ -7,7 +7,7 @@
 %def_enable gtk_doc
 
 Name: %{_name}2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -98,6 +98,7 @@ Developer documentation for GeoClue library.
 Summary: Demo programs for GeoClue
 Group: Development/C
 Requires: %name = %version-%release
+Requires: lib%name = %version-%release
 
 %description demo
 This package contains demo programs for GeoClue.
@@ -121,7 +122,6 @@ rm -f demo/*.desktop.in
 mkdir -p %buildroot%_localstatedir/%_name
 
 %check
-# https://bugs.freedesktop.org/show_bug.cgi?id=68395
 #%make check
 
 %pre
@@ -175,6 +175,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 
 %changelog
+* Thu Dec 17 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Tue Oct 27 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 - new libgeoclue2-* subpackages
