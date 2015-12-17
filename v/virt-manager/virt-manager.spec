@@ -8,7 +8,7 @@
 
 Name: virt-manager
 Version: 1.3.1
-Release: alt1
+Release: alt2
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -32,7 +32,7 @@ Requires: librsvg
 
 # add requires based on "from gi.repository import foo"
 Requires: typelib(GObject)
-Requires: typelib(LibvirtGLib)
+Requires: typelib(LibvirtGLib) = 1.0
 Requires: typelib(Gtk) = 3.0
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
@@ -42,8 +42,8 @@ Requires: typelib(Gio)
 Requires: typelib(GtkVnc) = 2.0
 Requires: typelib(SpiceClientGtk) = 3.0
 Requires: typelib(SpiceClientGLib)
-Requires: typelib(Vte)
-Requires: typelib(Libosinfo)
+Requires: typelib(Vte) = 2.91
+Requires: typelib(Libosinfo) = 1.0
 
 BuildRequires: python-devel python-module-distribute
 BuildRequires: libgio
@@ -146,6 +146,9 @@ python setup.py \
 %_man1dir/virt-xml.1*
 
 %changelog
+* Thu Dec 17 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt2
+- update requires (ALT #31635)
+
 * Tue Dec 08 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt1
 - 1.3.1
 
