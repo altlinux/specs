@@ -5,7 +5,7 @@
 %define		rname kvkbd
 Name:		kde4-%rname
 Version:	0.7.2
-Release:	alt3
+Release:	alt4
 
 Group:		Accessibility
 Summary:	Virtual Keyboard for KDE4
@@ -63,6 +63,9 @@ mv src/standart-old.css colors/light.css
 %_K4apps/%rname/
 
 %changelog
+* Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt4
+- fix default visibility
+
 * Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt3
 - fix visibility
 
