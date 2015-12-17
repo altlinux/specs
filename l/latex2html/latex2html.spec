@@ -1,9 +1,6 @@
 Name: latex2html
-Version: 2008
+Version: 2012
 Release: alt1
-
-%define compactversion 2002-2-1
-%define srcname %name-%compactversion
 
 Summary: LaTeX to HTML converter
 License: GPLv2
@@ -11,10 +8,8 @@ Group: Publishing
 Url: http://saftsack.fs.uni-bayreuth.de/~latex2ht
 BuildArch: noarch
 
-Source: %url/current/%srcname.tar.bz2
+Source: %url/current/%name-%version.tar
 Patch0: latex2html-2002-gsfonts.patch
-Patch1: latex2html-utf8.patch
-Patch2: latex2html-koi8r.patch
 Patch3: latex2html-2002-path.patch
 Patch4: latex2html-2002-alt-perl-path.patch
 Patch5: latex2html-2002-alt-perl-syntax.patch
@@ -23,12 +18,14 @@ Patch7: latex2html-2002-alt-perlpath.patch
 Patch8: latex2html-2002-rh-grayimg.patch
 Patch9: latex2html-2002-rh-tabularx.patch
 
+Patch30: latex2html-2012-alt-perl522.patch
+
 Requires: /usr/bin/latex /usr/bin/dvips
 Requires: netpbm
 
 # note that gs is required by tetex-dvips
 Requires: %_bindir/gs
-BuildPreReq: %_bindir/gs
+BuildRequires: %_bindir/gs
 
 BuildRequires(pre): rpm-build-texmf
 # Automatically added by buildreq on Thu Mar 27 2008
@@ -39,10 +36,8 @@ Elaborate perl program to convert latex documents to html,
 using LaTeX to process images and equations.
 
 %prep
-%setup -q -n %srcname
+%setup -q
 %patch0 -p1
-#%patch1 -p1
-#%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -50,6 +45,7 @@ using LaTeX to process images and equations.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch30 -p1
 
 %build
 %define _perl_lib_path %_datadir/%name
@@ -106,6 +102,12 @@ sed -i '1s|/usr/local/bin/|/usr/bin/|' \
 %doc Changes FAQ LICENSE LICENSE.orig README readme.hthtml TODO BUGS INSTALL dot.latex2html-init example docs/manual.ps.bz2
 
 %changelog
+* Thu Dec 17 2015 Igor Vlasenko <viy@altlinux.ru> 2012-alt1
+- QA NMU: new version && perl 522 patch
+- Note, everyone: Kirill wants to give this package away.
+- feel free to take it.
+- see https://bugzilla.altlinux.org/31598
+
 * Tue May 19 2009 Kirill Maslinsky <kirill@altlinux.ru> 2008-alt1
 - NMU
 - 2002-2-1 -> 2008
