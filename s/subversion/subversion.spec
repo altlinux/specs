@@ -63,7 +63,7 @@
 
 Name:     subversion
 Version:  1.9.2
-Release:  alt1
+Release:  alt2
 
 Summary:  A version control system
 Group:    Development/Other
@@ -115,6 +115,7 @@ BuildRequires: libaprutil1-devel >= %apu_ver
 BuildRequires: libneon-devel libkeyutils-devel
 
 BuildRequires: libserf-devel
+BuildRequires: libsasl2-devel
 
 # since 1.6.0 subversion requires sqlite
 # if sqlite_external is enabled subversion will be linked with system's sqlite
@@ -373,6 +374,7 @@ LIBTOOL_M4=%{_datadir}/libtool/aclocal ./autogen.sh
         --with-apr=%prefix --with-apr-util=%prefix \
 	--with-apache-libexecdir=%apache2_moduledir \
 	--with-swig --with-serf=%prefix \
+	--with-sasl \
         %{?_with_gnome_keyring:--with-gnome-keyring} \
         %{subst_with kwallet} \
         %{?_with_dav:--with-apxs=%apache2_apxs} \
@@ -758,6 +760,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.9.2-alt2
+- Build with SASL support
+
 * Mon Nov 30 2015 Andrey Cherepanov <cas@altlinux.org> 1.9.2-alt1
 - New version
 
