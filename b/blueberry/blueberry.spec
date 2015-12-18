@@ -1,6 +1,6 @@
 Name: blueberry
-Version: 1.0.9
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: A Bluetooth configuration tool
 License: %gpl3only
@@ -43,6 +43,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Dec 18 2015 Vladimir Didenko <cow@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Sat Jun 27 2015 Vladimir Didenko <cow@altlinux.org> 1.0.9-alt2
 - add wmctrl to deps
 
