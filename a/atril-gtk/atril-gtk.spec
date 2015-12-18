@@ -11,7 +11,7 @@
 %def_disable epub
 
 Name:           %_name-gtk
-Version:        1.12.0
+Version:        1.12.2
 Release:        alt1
 Summary:        Document viewer
 
@@ -267,6 +267,9 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Fri Dec 18 2015 Mikhail Efremov <sem@altlinux.org> 1.12.2-alt1
+- Updated to 1.12.2.
+
 * Fri Nov 06 2015 Mikhail Efremov <sem@altlinux.org> 1.12.0-alt1
 - Patch from upstream:
   + dvi: fix crash due to regression.
