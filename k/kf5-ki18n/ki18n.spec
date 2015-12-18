@@ -1,7 +1,7 @@
 %define rname ki18n
 
 Name: kf5-%rname
-Version: 5.16.0
+Version: 5.17.0
 Release: alt1
 %K5init altplace
 
@@ -17,7 +17,7 @@ Patch1: alt-fallback.diff
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt5-concurrent libqt5-core libqt5-script libqt5-test libstdc++-devel python-base python-modules qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google python-modules-encodings qt5-script-devel rpm-build-gir rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ qt5-script-devel python-modules-encodings
+BuildRequires: extra-cmake-modules gcc-c++ qt5-script-devel qt5-declarative-devel python-modules-encodings
 
 %description
 KI18n provides functionality for internationalizing user interface text
@@ -79,6 +79,9 @@ KF5 library
 %_K5plug/kf5/ktranscript.so
 
 %changelog
+* Fri Dec 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.17.0-alt1
+- new version
+
 * Wed Nov 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.16.0-alt1
 - new version
 
