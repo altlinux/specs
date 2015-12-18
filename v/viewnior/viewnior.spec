@@ -5,8 +5,8 @@
 %def_without gnome
 
 Name: viewnior
-Version: 1.5
-Release: alt1.2
+Version: 1.6
+Release: alt1
 
 Summary: Elegant image viewer
 License: GPLv3+
@@ -38,7 +38,7 @@ space for your images. Among its features are:
 * Configurable mouse actions
 
 %prep
-%setup
+%setup -n Viewnior-%name-%version
 # fix spurious executable perms
 chmod 644 AUTHORS COPYING NEWS README TODO src/*
 
@@ -64,6 +64,9 @@ chmod 644 AUTHORS COPYING NEWS README TODO src/*
 %_datadir/%name/
 
 %changelog
+* Fri Dec 18 2015 Michael Shigorin <mike@altlinux.org> 1.6-alt1
+- new version (watch file uupdate)
+
 * Tue Jun 30 2015 Michael Shigorin <mike@altlinux.org> 1.5-alt1.2
 - rebuilt against libexiv2.so.14
 
