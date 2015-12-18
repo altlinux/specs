@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.16.0
+Version: 5.17.0
 Release: alt1
 %K5init altplace
 
@@ -75,7 +75,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data locale
+%K5install_move data locale kdevappwizard
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
@@ -96,12 +96,13 @@ KF5 library
 %_K5inc/?lasma/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Plasma*
+%_K5data/kdevappwizard/templates/*
 #%_K5archdata/mkspecs/modules/qt_Plasma-Framework.pri
-%_K5dbus_iface/*.xml
+#%_K5dbus_iface/*.xml
 
 %files -n libkf5plasma
 %_K5lib/libKF5Plasma.so.*
-%_K5plug/kf5/kded/platformstatus.so
+#%_K5plug/kf5/kded/platformstatus.so
 %_K5plug/plasma_engine_testengine.so
 
 %files -n libkf5plasmaquick
@@ -123,6 +124,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Fri Dec 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.17.0-alt1
+- new version
+
 * Wed Nov 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.16.0-alt1
 - new version
 

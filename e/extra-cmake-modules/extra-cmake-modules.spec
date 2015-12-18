@@ -1,6 +1,6 @@
 
 Name: extra-cmake-modules
-Version: 5.16.0
+Version: 5.17.0
 Release: alt1
 
 Group: Development/Other
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Wed Dec 24 2014 (-bi)
 # optimized out: cmake-modules libcloog-isl4 libqt5-core python-base python-devel python-module-BeautifulSoup python-module-PyStemmer python-module-cffi python-module-docutils python-module-google python-module-google-apputils python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-numpy python-module-pyExcelerator python-module-pycparser python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest qt5-base-devel qt5-tools
 #BuildRequires: cmake python-module-Pillow python-module-Pygments python-module-Reportlab python-module-html5lib python-module-matplotlib python-module-nss python-module-protobuf python-module-pygobject3 python-module-xlwt python-modules-tkinter qt5-tools-devel ruby ruby-stdlibs time
-BuildRequires: cmake qt5-tools
+BuildRequires: cmake qt5-tools qt5-tools-devel
 BuildRequires: /usr/bin/sphinx-build
 
 
@@ -41,6 +41,9 @@ Additional modules for CMake build system needed by KDE Frameworks.
 %doc %_man7dir/*
 
 %changelog
+* Fri Dec 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.17.0-alt1
+- new version
+
 * Wed Nov 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.16.0-alt1
 - new version
 
