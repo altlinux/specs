@@ -1,6 +1,6 @@
 Name: redis
 Version: 3.0.5
-Release: alt2
+Release: alt2.1
 
 Summary: Redis is an advanced key-value store
 
@@ -131,10 +131,13 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_sysconfdir/tmpfile
 %_man1dir/*
 
 %attr(0770,root,%redis_group) %dir %_localstatedir/%name
-%attr(0770,root,%redis_group) %dir %_logdir/%name
+%attr(1770,root,%redis_group) %dir %_logdir/%name
 
 
 %changelog
+* Sat Dec 19 2015 Terechkov Evgenii <evg@altlinux.org> 3.0.5-alt2.1
+- Change mode of /var/log/redis to 1770 according to ALT Secure Packaging Policy
+
 * Fri Nov 27 2015 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.5-alt2
 - Fix unit file access rights (Closes: #31545)
 
