@@ -1,5 +1,5 @@
 Name: sqlite3
-Version: 3.8.10.2
+Version: 3.9.2
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
@@ -166,6 +166,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Thu Dec 17 2015 Mikhail Efremov <sem@altlinux.org> 3.9.2-alt1
+- 3.9.2.
+
 * Wed May 27 2015 Mikhail Efremov <sem@altlinux.org> 3.8.10.2-alt1
 - Update sqlite3-fedora-no-malloc-usable-size.patch.
 - 3.8.10.2.
