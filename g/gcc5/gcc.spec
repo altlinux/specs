@@ -8,7 +8,7 @@
 %define if_gcc_arch() %if %(A='%{?_cross_platform:%_cross_platform}%{!?_cross_platform:%_target_platform}'; [ %1 = ${A%%%%-*} ] && echo 1 || echo 0)
 
 Name: gcc%gcc_branch
-Version: 5.2.1
+Version: 5.3.1
 Release: alt1
 
 Summary: GNU Compiler Collection
@@ -24,7 +24,7 @@ Url: http://gcc.gnu.org/
 %endif
 
 %define priority 511
-%define snapshot 20150716
+%define snapshot 20151207
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -60,9 +60,9 @@ Url: http://gcc.gnu.org/
 %define java_binaries gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert
 
 %define libquadmath_arches	%ix86 x86_64
-%define libasan_arches		%ix86 x86_64 %arm
+%define libasan_arches		%ix86 x86_64 %arm aarch64
 %define libtsan_arches		x86_64
-%define libubsan_arches		%ix86 x86_64 %arm
+%define libubsan_arches		%ix86 x86_64 %arm aarch64
 %define libatomic_arches	%ix86 x86_64 %arm aarch64
 %define libitm_arches		%ix86 x86_64 %arm aarch64
 %define libcilkrts_arches	%ix86 x86_64
@@ -82,7 +82,7 @@ Url: http://gcc.gnu.org/
 %def_with libsanitizer
 %endif
 
-%set_compress_method bzip2
+%set_compress_method xz
 %ifarch %arm
 %set_verify_elf_method textrel=relaxed
 %endif
@@ -214,6 +214,7 @@ Patch719: alt-libitm-fix-build-with-_FORTIFY_SOURCE.patch
 Patch721: alt-alt-gcc-base-version.patch
 Patch722: alt-defaults-trampolines.patch
 Patch723: alt-libgo-Werror-unused-result.patch
+Patch724: alt-aarch64-ld-linux-path.patch
 Patch800: alt-libtool.m4-gcj.patch
 
 Provides: gcc = %version, %_bindir/%gcc_target_platform-gcc, %_bindir/gcc
@@ -1169,6 +1170,7 @@ version %version.
 %patch721 -p1
 %patch722 -p1
 %patch723 -p1
+%patch724 -p1
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1211957
 sed -i -e 's/ -Wl,-z,nodlopen//g' gcc/ada/gcc-interface/Makefile.in
@@ -1727,7 +1729,7 @@ EOF
 %if_with cxx
 # no valid g++ manpage exists in 4.1+ series.
 rm %buildroot%_man1dir/g++%psuffix.1
-ln -s gcc%psuffix.1.bz2 %buildroot%_man1dir/g++%psuffix.1.bz2
+ln -s gcc%psuffix.1.xz %buildroot%_man1dir/g++%psuffix.1.xz
 
 %ifndef _cross_platform
 mkdir -p %buildroot%gcc_gdb_auto_load
@@ -1749,7 +1751,7 @@ popd
 install -d %buildroot%_altdir
 cat >%buildroot%_altdir/cpp%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-cpp	%_bindir/%gcc_target_platform-cpp%psuffix	%priority
-%_man1dir/cpp.1.bz2	%_man1dir/cpp%psuffix.1.bz2	%_bindir/%gcc_target_platform-cpp%psuffix
+%_man1dir/cpp.1.xz	%_man1dir/cpp%psuffix.1.xz	%_bindir/%gcc_target_platform-cpp%psuffix
 EOF
 
 cat >%buildroot%_altdir/%name <<EOF
@@ -1759,21 +1761,21 @@ cat >%buildroot%_altdir/%name <<EOF
 %_bindir/%gcc_target_platform-gcc-ar	%_bindir/%gcc_target_platform-gcc-ar%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
 %_bindir/%gcc_target_platform-gcc-nm	%_bindir/%gcc_target_platform-gcc-nm%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
 %_bindir/%gcc_target_platform-gcc-ranlib	%_bindir/%gcc_target_platform-gcc-ranlib%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
-%_man1dir/gcc.1.bz2	%_man1dir/gcc%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcc%psuffix
-%_man1dir/gcov.1.bz2	%_man1dir/gcov%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcc%psuffix
+%_man1dir/gcc.1.xz	%_man1dir/gcc%psuffix.1.xz	%_bindir/%gcc_target_platform-gcc%psuffix
+%_man1dir/gcov.1.xz	%_man1dir/gcov%psuffix.1.xz	%_bindir/%gcc_target_platform-gcc%psuffix
 EOF
 
 %if_with cxx
 cat >%buildroot%_altdir/c++%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-g++	%_bindir/%gcc_target_platform-g++%psuffix	%priority
-%_man1dir/g++.1.bz2	%_man1dir/g++%psuffix.1.bz2	%_bindir/%gcc_target_platform-g++%psuffix
+%_man1dir/g++.1.xz	%_man1dir/g++%psuffix.1.xz	%_bindir/%gcc_target_platform-g++%psuffix
 EOF
 %endif #with_cxx
 
 %if_with fortran
 cat >%buildroot%_altdir/gfortran%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-gfortran	%_bindir/%gcc_target_platform-gfortran%psuffix	%priority
-%_man1dir/gfortran.1.bz2	%_man1dir/gfortran%psuffix.1.bz2	%_bindir/%gcc_target_platform-gfortran%psuffix
+%_man1dir/gfortran.1.xz	%_man1dir/gfortran%psuffix.1.xz	%_bindir/%gcc_target_platform-gfortran%psuffix
 EOF
 %endif #with_fortran
 
@@ -1784,7 +1786,7 @@ $(for i in %java_binaries; do
 	echo "%_bindir/%gcc_target_platform-$i	%_bindir/%gcc_target_platform-$i%psuffix	%_bindir/%gcc_target_platform-gcj%psuffix"
 done)
 $(for i in gcj %java_binaries; do
-	echo "%_man1dir/$i.1.bz2	%_man1dir/$i%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcj%psuffix"
+	echo "%_man1dir/$i.1.xz	%_man1dir/$i%psuffix.1.xz	%_bindir/%gcc_target_platform-gcj%psuffix"
 done)
 EOF
 %endif #with_java
@@ -1792,7 +1794,7 @@ EOF
 %if_with go
 cat >%buildroot%_altdir/gccgo%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-gccgo	%_bindir/%gcc_target_platform-gccgo%psuffix	%priority
-%_man1dir/gccgo.1.bz2	%_man1dir/gccgo%psuffix.1.bz2	%_bindir/%gcc_target_platform-gccgo%psuffix
+%_man1dir/gccgo.1.xz	%_man1dir/gccgo%psuffix.1.xz	%_bindir/%gcc_target_platform-gccgo%psuffix
 EOF
 %endif #with_go
 
@@ -1940,6 +1942,7 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %if_with fortran
 %exclude %gcc_target_libdir/libgfortranbegin.la
 %endif
+%exclude %_bindir/%gcc_target_platform-gcc-tmp
 %exclude %gcc_target_libdir/include-fixed
 %exclude %gcc_target_libdir/include/ssp
 %exclude %gcc_target_libdir/libcaf_single.la
@@ -2152,6 +2155,7 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %config %_sysconfdir/buildreqs/packages/substitute.d/libstdc++%gcc_branch-devel-static
 %dir %gcc_target_libdir/
 %gcc_target_libdir/libstdc++.a
+%gcc_target_libdir/libstdc++fs.a
 
 %endif # _cross_platform
 
@@ -2440,6 +2444,12 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %endif # _cross_platform
 
 %changelog
+* Thu Dec 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.3.1-alt1
+- Updated to redhat/gcc-5-branch 231358.
+- Synced with Fedora gcc-5.3.1-2 and Debian 5.3.1-4.
+- Added patch for aarch64 linker path.
+- Changed compress_method to xz.
+
 * Tue Aug 04 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.1-alt1
 - Updated to redhat/gcc-5-branch 225895.
 - Synced with Fedora gcc-5.2.1-1 and Debian gcc-5.2.1-15.
