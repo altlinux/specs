@@ -62,6 +62,7 @@
 %def_with yajl
 %def_without sanlock
 %def_with fuse
+%def_with pm_utils
 
 %endif #server_drivers
 
@@ -100,7 +101,7 @@
 %define with_loader_nvram "%_datadir/ovmf/ovmf_code-x64.bin:%_datadir/ovmf/ovmf_vars-x64.bin:%_datadir/ovmf/ovmf_code-ia32.bin:%_datadir/ovmf/ovmf_vars-ia32.bin"
 
 Name: libvirt
-Version: 1.2.21
+Version: 1.3.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -148,6 +149,7 @@ Requires: libvirt-client = %version-%release
 %{?_with_hyperv:BuildRequires: libwsman-devel}
 %{?_with_audit:BuildRequires: libaudit-devel}
 %{?_with_fuse:BuildRequires: libfuse-devel >= 2.8.6}
+%{?_with_pm_utils:BuildRequires: pm-utils}
 %{?_with_wireshark:BuildRequires: glib2-devel wireshark tshark wireshark-devel}
 
 BuildRequires: bridge-utils libblkid-devel
@@ -182,6 +184,7 @@ Summary: Server side daemon and supporting files for libvirt library
 Group: System/Servers
 Requires: %name-client = %version-%release
 Requires: iptables
+%{?_with_pm_utils:Requires: pm-utils}
 
 %description daemon
 Server side daemon required to manage the virtualization capabilities
@@ -486,7 +489,6 @@ Requires: dmidecode
 # Needed by virt-pki-validate script
 Requires: gnutls-utils
 # Needed for probing the power management features of the host.
-Requires: pm-utils
 Conflicts: %name < 0.9.11
 
 %description client
@@ -563,6 +565,7 @@ sed -i 's/vircgrouptest //' tests/Makefile.am
 		%{subst_with sanlock} \
 		%{subst_with fuse} \
 		%{subst_with dbus} \
+		%{?_with_pm_utils:--with-pm-utils} \
 		%{subst_with polkit} \
 		%{subst_with firewalld} \
 		%{subst_with capng} \
@@ -632,6 +635,12 @@ rm -rf %buildroot%_sysconfdir/libvirt/nwfilter
 
 install -pD -m644 libvirtd.tmpfiles %buildroot/lib/tmpfiles.d/libvirtd.conf
 
+# Temporarily get rid of not-installed admin-related files
+rm -f %buildroot%_libdir/libvirt-admin.so
+rm -f %buildroot%_bindir/virt-admin
+rm -f %buildroot%_man1dir/virt-admin.1*
+rm -f %buildroot%_sysconfdir/libvirt/libvirt-admin.conf
+
 %find_lang %name
 
 %check
@@ -658,12 +667,16 @@ if [ $1 -eq 1 ]; then
 	echo host_uuid = \"$UUID2\" >> /etc/libvirt/libvirtd.conf
     fi
 fi
-%post_service libvirtd
+
 %post_service virtlockd
+%post_service virtlogd
+%post_service libvirtd
 
 %preun daemon
 %preun_service libvirtd
+%preun_service virtlogd
 %preun_service virtlockd
+
 
 %if_with network
 %post daemon-config-network
@@ -748,17 +761,26 @@ fi
 
 #virtlockd
 %config(noreplace) %_sysconfdir/libvirt/qemu-lockd.conf
-%_initdir/virtlockd
 %config(noreplace) %_sysconfdir/sysconfig/virtlockd
 %config(noreplace) %_sysconfdir/libvirt/virtlockd.conf
-%_unitdir/virtlockd.service
-%_unitdir/virtlockd.socket
+%_initdir/virtlockd
+%_unitdir/virtlockd.*
 %_libdir/%name/lock-driver/lockd.so
 %_sbindir/virtlockd
 %_datadir/augeas/lenses/libvirt_lockd.aug
 %_datadir/augeas/lenses/virtlockd.aug
 %_datadir/augeas/lenses/tests/test_virtlockd.aug
 %_man8dir/virtlockd.*
+
+#virtlogd
+%config(noreplace) %_sysconfdir/libvirt/virtlogd.conf
+%config(noreplace) %_sysconfdir/sysconfig/virtlogd
+%_initdir/virtlogd
+%_unitdir/virtlogd.*
+%_sbindir/virtlogd
+%_datadir/augeas/lenses/tests/test_virtlogd.aug
+%_datadir/augeas/lenses/virtlogd.aug
+%_man8dir/virtlogd.*
 
 %if_with qemu
 %_datadir/augeas/lenses/tests/test_libvirt_lockd.aug
@@ -930,6 +952,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Dec 18 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
+- 1.3.0
+- fixed CVE-2015-5313
+
 * Thu Nov 05 2015 Alexey Shabalin <shaba@altlinux.ru> 1.2.21-alt1
 - 1.2.21
 
