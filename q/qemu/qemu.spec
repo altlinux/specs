@@ -17,10 +17,11 @@
 %def_with sparc
 %def_with s390x
 %def_with lm32
-%def_with unicore32
 %def_without xtensa
 %def_with moxie
+%def_with tilegx
 %def_with tricore
+%def_with unicore32
 
 %def_disable werror
 %def_enable sdl
@@ -28,7 +29,6 @@
 %def_enable curses
 %def_enable bluez
 %def_enable vnc
-%def_enable vnc_tls
 %def_enable vnc_sasl
 %def_enable vnc_jpeg
 %def_enable vnc_png
@@ -39,7 +39,7 @@
 %def_enable aio
 %def_enable blobs
 %def_enable uuid
-%def_enable smartcard_nss
+%def_enable smartcard
 %def_enable libusb
 %def_enable usb_redir
 %def_enable vhost_net
@@ -51,14 +51,19 @@
 %def_enable libiscsi
 %def_enable rbd
 %def_enable libnfs
-%def_disable seccomp
+%def_enable seccomp
 %def_enable glusterfs
 %def_disable gtk
+%def_disable gtk_gl
 %def_enable gnutls
+%def_enable nettle
+%def_disable gcrypt
+%def_enable virglrenderer
 %def_enable tpm
 %def_enable libssh2
 %def_enable vhdx
 %def_enable numa
+%def_enable jemalloc
 %def_enable rdma
 %def_enable lzo
 %def_enable snappy
@@ -71,7 +76,6 @@
 %define rulenum 90
 %define _libexecdir /usr/libexec
 %define _localstatedir /var
-%define _sharedstatedir /var
 
 %global target_list_system %nil
 %global target_list_user %nil
@@ -155,13 +159,16 @@
 %endif
 
 %if_with tricore
-%global target_list_system %target_list_system tricore-softmmu 
+%global target_list_system %target_list_system tricore-softmmu
 %endif
 
+%if_with tilegx
+%global target_list_user %target_list_user tilegx-linux-user
+%endif
 # }}}
 
 Name: qemu
-Version: 2.4.1
+Version: 2.5.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -174,11 +181,11 @@ Source0: %name-%version.tar
 Source1: qemu.binfmt
 Source2: qemu-kvm.control.in
 Source4: qemu-kvm.rules
+# qemu-kvm back compat wrapper
+Source5: qemu-kvm.sh
 Source8: qemu-guest-agent.rules
 Source9: qemu-guest-agent.service
-
-# qemu-kvm back compat wrapper
-Source13: qemu-kvm.sh
+Source10: qemu-guest-agent.init
 
 Patch0: qemu-alt.patch
 
@@ -197,7 +204,6 @@ BuildRequires: iasl
 %{?_enable_bluez:BuildRequires: libbluez-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
-%{?_enable_vnc_tls:BuildRequires: libgnutls-devel libnettle-devel}
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vnc_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_vnc_png:BuildRequires: libpng-devel}
@@ -205,21 +211,26 @@ BuildRequires: iasl
 %{?_enable_aio:BuildRequires: libaio-devel}
 %{?_enable_spice:BuildRequires: libspice-server-devel >= 0.12.0 spice-protocol >= 0.12.3}
 %{?_enable_uuid:BuildRequires: libuuid-devel}
-%{?_enable_smartcard_nss:BuildRequires: libnss-devel >= 3.12.8}
+%{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.0}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
-%{?_enable_opengl:BuildRequires: libGL-devel libX11-devel libGLES-devel libepoxy-devel}
+%{?_enable_opengl:BuildRequires: libX11-devel libepoxy-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel >= 2.38 python-base}
 %{?_enable_rbd:BuildRequires: ceph-devel}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
 %{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
-%{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.1.1}
+%{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.2.3}
 %{?_enable_glusterfs:BuildRequires: pkgconfig(glusterfs-api)}
 %{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 pkgconfig(vte-2.90) >= 0.32.0}
 %{?_enable_gnutls:BuildRequires: libgnutls-devel >= 2.9.10}
+%{?_enable_nettle:BuildRequires: libnettle-devel}
+%{?_enable_gcrypt:BuildRequires: libgcrypt-devel}
+BuildRequires: libtasn1-devel
+%{?_enable_virglrenderer:BuildRequires: pkgconfig(virglrenderer)}
 %{?_enable_libssh2:BuildRequires: libssh2-devel >= 1.2.8}
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
 %{?_enable_rdma:BuildRequires: librdmacm-devel libibverbs-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel}
+%{?_enable_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_enable_snappy:BuildRequires: libsnappy-devel}
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
@@ -340,30 +351,12 @@ good emulation speed by using dynamic translation.
 
 This is an auxiliary package.
 
-%package -n libcacard
-Summary: CA Card library
-Group: System/Libraries
-License: LGPLv2.1+
+%package -n ivshmem-tools
+Summary: Client and server for QEMU ivshmem device
+Group: Emulators
 
-%description -n libcacard
-Common Access Card (CAC) emulation library.
-
-%package -n libcacard-devel
-Summary: CAC Emulation devel
-Group: Development/C
-Requires: libcacard = %version-%release
-License: LGPLv2.1+
-
-%description -n libcacard-devel
-CAC emulation development files.
-
-%package -n libcacard-tools
-Summary: CAC Emulation tools
-Group: Development/Other
-Requires: libcacard = %version-%release
-
-%description -n libcacard-tools
-CAC emulation tools.
+%description -n ivshmem-tools
+This package provides client and server tools for QEMU's ivshmem device.
 
 %prep
 %setup
@@ -377,15 +370,19 @@ export CFLAGS="%optflags"
 ./configure \
 	--target-list='%target_list_user' \
 	--prefix=%_prefix \
+	--sysconfdir=%_sysconfdir \
+	--libdir=%_libdir \
+	--mandir=%_mandir \
+	--libexecdir=%_libexecdir \
+	--localstatedir=%_localstatedir \
 	--static \
 	--disable-debug-tcg \
 	--disable-sparse \
 	--disable-strip \
 	--disable-system \
-	--enable-guest-base \
 	--disable-attr \
 	--disable-xfsctl \
-	--disable-smartcard-nss \
+	--disable-smartcard \
 	--disable-usb-redir \
 	--disable-linux-aio \
 	--disable-linux-aio \
@@ -397,8 +394,12 @@ export CFLAGS="%optflags"
 	--disable-glusterfs \
 	--disable-libssh2 \
 	--disable-gnutls \
+	--disable-nettle \
+	--disable-gcrypt \
+	--disable-virglrenderer \
 	--disable-lzo \
 	--disable-numa \
+	--disable-jemalloc \
 	--disable-gtk
 
 # Please do not touch this
@@ -423,6 +424,9 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--prefix=%_prefix \
 	--sysconfdir=%_sysconfdir \
 	--libdir=%_libdir \
+	--mandir=%_mandir \
+	--libexecdir=%_libexecdir \
+	--localstatedir=%_localstatedir \
 	--extra-cflags="%optflags" \
 	%{subst_enable werror} \
 	%{?_enable_sdl:--enable-sdl --with-sdlabi=1.2} \
@@ -449,15 +453,17 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--enable-curl \
 	--enable-fdt \
 	--enable-kvm \
+	%{subst_enable virglrenderer} \
 	%{subst_enable tpm} \
 	%{subst_enable xen} \
 	--with-system-pixman \
 	%{?_enable_vhost_net:--enable-vhost-net} \
 	%{?_enable_vhost_scsi:--enable-vhost-scsi } \
-	%{?_enable_smartcard_nss:--enable-smartcard-nss} \
+	%{subst_enable smartcard} \
 	%{subst_enable libusb} \
 	%{?_enable_usb_redir:--enable-usb-redir} \
 	%{subst_enable opengl} \
+	%{subst_enable seccomp} \
 	%{subst_enable libiscsi} \
 	%{subst_enable rbd} \
 	%{subst_enable libnfs} \
@@ -466,13 +472,15 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{subst_enable vhdx} \
 	%{subst_enable rdma} \
 	%{subst_enable gnutls} \
+	%{subst_enable nettle} \
+	%{subst_enable gcrypt} \
 	%{subst_enable numa} \
+	%{subst_enable jemalloc} \
 	%{subst_enable lzo} \
 	%{subst_enable snappy} \
 	%{subst_enable bzip2} \
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
-	--enable-guest-base \
 	--enable-pie
 
 %make_build
@@ -490,7 +498,7 @@ install -m644 LICENSE MAINTAINERS %buildroot%docdir/
 find -regex '.*linux-user/qemu.*\.static' -exec install -m755 '{}' %buildroot%_bindir ';'
 %endif
 
-install -m 0755 %SOURCE13 %buildroot%_bindir/qemu-kvm
+install -m 0755 %SOURCE5 %buildroot%_bindir/qemu-kvm
 ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/kvm
 ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/qemu
 
@@ -502,6 +510,7 @@ install -D -m 0755 %name-kvm.control.in %buildroot%_controldir/kvm
 
 install -D -m 0644 %SOURCE8 %buildroot/lib/udev/rules.d/%rulenum-%name-guest-agent.rules
 install -D -m 0644 %SOURCE9 %buildroot%_unitdir/%name-guest-agent.service
+install -D -m 0755 %SOURCE10 %buildroot%_initdir/%name-guest-agent
 
 %if_enabled vnc_sasl
 install -D -p -m 0644 qemu.sasl %buildroot%_sysconfdir/sasl2/%name.conf
@@ -534,7 +543,7 @@ for rom in e1000 ne2k_pci pcnet rtl8139 virtio ; do
   ln -r -s %buildroot%_datadir/ipxe.efi/efi-${rom}.rom %buildroot%_datadir/%name/efi-${rom}.rom
 done
 
-for bios in vgabios vgabios-cirrus vgabios-qxl vgabios-stdvga vgabios-vmware ; do
+for bios in vgabios vgabios-cirrus vgabios-qxl vgabios-stdvga vgabios-vmware vgabios-virtio ; do
   ln -r -s %buildroot%_datadir/seavgabios/${bios}.bin %buildroot%_datadir/%name/${bios}.bin
 done
 
@@ -650,6 +659,7 @@ fi
 %_bindir/qemu-ga
 /lib/udev/rules.d/%rulenum-%name-guest-agent.rules
 %_unitdir/%name-guest-agent.service
+%_initdir/%name-guest-agent
 
 %files doc
 %docdir/
@@ -659,18 +669,21 @@ fi
 %dir %docdir/
 %docdir/LICENSE
 
-%files -n libcacard
-%_libdir/libcacard.so.*
-
-%files -n libcacard-devel
-%_includedir/cacard
-%_pkgconfigdir/libcacard.pc
-%_libdir/libcacard.so
-
-%files -n libcacard-tools
-%_bindir/vscclient
+%files -n ivshmem-tools
+%_bindir/ivshmem-client
+%_bindir/ivshmem-server
 
 %changelog
+* Fri Dec 18 2015 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
+- 2.5.0
+- add tilegx arch
+- build with jemalloc support
+- libcacard is now a standalone project
+- build with virgl support
+- build with seccomp support
+- add ivshmem-tools package
+- add qemu-guest-agent sysv script
+
 * Thu Nov 05 2015 Alexey Shabalin <shaba@altlinux.ru> 2.4.1-alt1
 - 2.4.1
 
