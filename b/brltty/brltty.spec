@@ -1,7 +1,7 @@
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 
-%define pkg_version 5.2
-%define api_ver 0.6.3
+%define pkg_version 5.3
+%define api_ver 0.6.4
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
 
@@ -395,6 +395,9 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%name.service
 %endif
 
 %changelog
+* Fri Dec 18 2015 Yuri N. Sedunov <aris@altlinux.org> 5.3-alt1
+- 5.3
+
 * Fri May 15 2015 Yuri N. Sedunov <aris@altlinux.org> 5.2-alt1
 - 5.2
 
