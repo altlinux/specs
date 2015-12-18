@@ -1,6 +1,6 @@
 Name: psi
-Version: 0.14
-Release: alt3.1
+Version: 0.16
+Release: alt1.git1.ccc24db
 Group: Networking/Instant messaging
 Summary: Psi Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi
@@ -16,6 +16,7 @@ Patch1: psi-0.14-alt-glibc-2.16.patch
 Requires: sound_handler ca-certificates
 # Automatically added by buildreq on Tue Nov 25 2008
 BuildRequires: gcc-c++ libXScrnSaver-devel libaspell-devel libcom_err-devel libqt4-devel libqca2-devel
+BuildRequires: libidn-devel
 
 Conflicts: qssl < 2.0 psi0.11
 Obsoletes: psi0.11
@@ -49,8 +50,8 @@ mkdir -p lang/
     --bindir=%_bindir \
     --datadir=%_datadir \
     --qtdir=%_qt4dir \
-    --disable-bundled-qca \
-    --certstore-path=%_datadir/ca-certificates/ca-bundle.crt
+	--with-qca-inc=%_includedir/qt4/ \
+	--with-qca-lib=%_libdir
 %make
 
 lrelease-qt4 psi_ru.ts
@@ -74,6 +75,10 @@ rm -Rf %buildroot%_datadir/psi/{README,COPYING,certs}
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Fri Dec 18 2015 Mikhail Efremov <sem@altlinux.org> 0.16-alt1.git1.ccc24db
+- Drop history dialog patch.
+- Updated to current git.
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14-alt3.1
 - Fixed for build with glibc 2.16
 
