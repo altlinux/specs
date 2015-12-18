@@ -2,7 +2,7 @@
 
 Name: chrony
 Version: 2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Chrony clock synchronization program
 License: GPLv2 only
@@ -114,12 +114,15 @@ gzip -9 -f -k chrony.txt
 %dir %attr(-,_chrony,_chrony) %_localstatedir/lib/%name
 %ghost %attr(-,_chrony,_chrony) %_localstatedir/lib/%name/drift
 %ghost %attr(-,_chrony,_chrony) %_localstatedir/lib/%name/rtc
-%dir %attr(-,_chrony,adm) %_localstatedir/log/%name
+%dir %attr(1775,root,_chrony) %_localstatedir/log/%name
 %_man1dir/*
 %_man5dir/*
 %_man8dir/*
 
 %changelog
+* Sat Dec 19 2015 Terechkov Evgenii <evg@altlinux.org> 2.2-alt1.1
+- change ownership/mode of logdir according to SPP (ALT #31640)
+
 * Thu Dec 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.2-alt1
 - 2.2
 
