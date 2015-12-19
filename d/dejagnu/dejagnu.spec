@@ -1,6 +1,6 @@
 Name: dejagnu
-Version: 1.5.1
-Release: alt0.3
+Version: 1.5.3.0.24.db24
+Release: alt1
 Epoch: 1
 
 Summary: A front end for testing other programs
@@ -13,8 +13,8 @@ BuildArch: noarch
 Source: %name-%version-%release.tar
 
 Requires: expect /dev/pts
-BuildRequires: expect gcc-c++
-%{?!_without_check:%{?!_disable_check:BuildRequires: screen /dev/pts}}
+BuildRequires: expect gcc-c++ makeinfo
+%{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
 
 %description
 DejaGnu is an Expect/Tcl based framework for testing other programs.
@@ -39,17 +39,7 @@ find %buildroot%_datadir/%name -type f -name \*.exp -print0 |
 
 %check
 [ -w /dev/ptmx ] || exit 0
-# Dejagnu test suite also has to test reporting to user.  It needs a
-# terminal for that.  That doesn't compute in mock.  Work around it by
-# running the test under screen and communicating back to test runner
-# via temporary file.  If you have better idea, we accept patches.
-t=$(mktemp %name.XXXXXXXX)
-SCREENDIR=$HOME/.screen \
-screen -D -m sh -c '(make check RUNTESTFLAGS="RUNTEST=$PWD/runtest"; echo $?) >'$t
-r=$(tail -n1 $t)
-cat $t
-rm $t
-exit $r
+%make_build -k check
 
 %files
 %_bindir/*
@@ -60,6 +50,9 @@ exit $r
 %doc NEWS README AUTHORS ChangeLog
 
 %changelog
+* Sat Dec 19 2015 Dmitry V. Levin <ldv@altlinux.org> 1:1.5.3.0.24.db24-alt1
+- Updated to dejagnu-1.5.3-release~2-24-gdb24ef8.
+
 * Wed Apr 11 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.5.1-alt0.3
 - Added /dev/pts to requirements.
 
