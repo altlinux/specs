@@ -4,8 +4,8 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 %define module RPM-Source-Convert
 
 Name: perl-%module
-Version: 0.59
-Release: alt4
+Version: 0.600
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -43,6 +43,9 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Sat Dec 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.600-alt1
+- bugfix release
+
 * Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 0.59-alt4
 - stable release
 
