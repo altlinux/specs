@@ -1,8 +1,9 @@
 %define ver_major 0.2
 
 Name: grilo
-Version: %ver_major.14
+Version: %ver_major.15
 Release: alt1
+
 Summary: Content discovery framework
 Group: Sound
 License: LGPLv2+
@@ -99,7 +100,7 @@ Tools for the %name library
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 mkdir -p %buildroot%_libdir/grilo-%ver_major %buildroot%_datadir/grilo-%ver_major/plugins
 
 %find_lang %name
@@ -135,6 +136,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %_gtk_docdir/*
 
 %changelog
+* Sat Dec 19 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.15-alt1
+- 0.2.15
+
 * Sat Sep 12 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.14-alt1
 - 0.2.14
 
