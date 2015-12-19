@@ -3,8 +3,8 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.6.5
-Release:        alt3
+Version:        5.6.6
+Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
@@ -142,6 +142,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Sat Dec 19 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.6-alt1
+- New version
+
 * Tue Nov 10 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.5-alt3
 - Remove Mint-specific search engines (ALT #31463)
 
