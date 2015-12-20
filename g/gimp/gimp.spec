@@ -2,7 +2,7 @@
 %define oldver 2.0
 
 Name: gimp
-Version: %ver_major.14
+Version: %ver_major.16
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: bzlib-devel gcc-c++ gtk-doc iso-codes-devel intltool libXmu-devel libXpm-devel libalsa-devel libart_lgpl-devel
-BuildRequires: libexif-devel libexpat-devel libfreetype-devel libgtkhtml2-devel libjpeg-devel liblcms-devel libmng-devel
+BuildRequires: libexif-devel libexpat-devel libfreetype-devel libgtkhtml2-devel libjpeg-devel liblcms2-devel libmng-devel
 BuildRequires: libpng-devel librsvg-devel libtiff-devel libwmf-devel perl-XML-Parser xml-utils xsltproc libpoppler-glib-devel
 BuildRequires: libcurl-devel libdbus-glib-devel gvfs-devel libXext-devel python-dev python-module-pygtk-devel libgio-devel
 BuildRequires: libwebkitgtk2-devel libbabl-devel libgegl-devel libjasper-devel libgudev-devel libXcursor-devel libgs-devel
@@ -99,6 +99,7 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_libdir/%name/%oldver/interpreters
 %_libdir/%name/%oldver/python
 %_datadir/%name
+%_datadir/appdata/%name.appdata.xml
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/%name.desktop
 %_man1dir/*
@@ -116,6 +117,10 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Sun Dec 20 2015 Valery Inozemtsev <shrek@altlinux.ru> 2.8.16-alt1
+- 2.8.16
+- compiled with liblcms2 (closes: #29940)
+
 * Wed Aug 27 2014 Valery Inozemtsev <shrek@altlinux.ru> 2.8.14-alt1
 - 2.8.14
 
