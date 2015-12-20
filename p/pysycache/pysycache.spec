@@ -1,6 +1,6 @@
 Name:     pysycache
 Version:  3.1
-Release:  alt1.1
+Release:  alt2
 
 Summary:  Pysycache  - educational software to learn to manipulate the mouse with pleasant activities.
 Summary(ru_RU.UTF-8): Pysycache - обучающая программа для детей, помогающая освоить манипулятор "мышь"
@@ -51,12 +51,15 @@ done
 %_bindir/%name
 %_sysconfdir/%name/%name.dfg
 %_datadir/applications/*.desktop
-%_man1dir/%name.1.gz
+%_man1dir/%name.1.*
 %_datadir/%name/*
 %_datadir/pixmaps/*
 %_var/lib/%name/*
 
 %changelog
+* Mon Dec 21 2015 Andrey Cherepanov <cas@altlinux.org> 3.1-alt2
+- Do not use strict extension for man pages
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.1-alt1.1
 - Rebuild with Python-2.7
 
