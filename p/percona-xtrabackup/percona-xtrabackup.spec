@@ -3,8 +3,8 @@
 
 Summary: XtraBackup online backup for MySQL / InnoDB
 Name: percona-xtrabackup
-Version: 2.3.2
-Release: alt3
+Version: 2.3.3
+Release: alt1
 Group: Databases
 License: GPLv2
 Packager: Evgenii Terechkov <evg@altlinux.org>
@@ -75,6 +75,9 @@ install -m 644 storage/innobase/xtrabackup/doc/source/build/man/innobackupex.1 %
 %_datadir/xtrabackup-test
 
 %changelog
+* Sun Dec 20 2015 Terechkov Evgenii <evg@altlinux.org> 2.3.3-alt1
+- 2.3.3
+
 * Wed Dec 16 2015 Terechkov Evgenii <evg@altlinux.org> 2.3.2-alt3
 - Build from upstream git repo
 
