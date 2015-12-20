@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt16.svn20140202
+Release: alt17.svn20140202
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
@@ -50,16 +50,15 @@ LIB_SUFF=64
 sed -i "s|@64@|$LIB_SUFF|g" FilesystemLayouts/fhs-system-alt
 
 %build
-export CC=clang CXX=clang++ CPP='clang -E'
-OBJCFLAGS="%optflags -fobjc-runtime=gnustep-1.7 -fobjc-nonfragile-abi"
-export OBJCFLAGS="$OBJCFLAGS -DGNUSTEP -DGNU_RUNTIME -mtune=%_arch"
+export CC=gcc CXX=gcc-c++ CPP='gcc -E'
+OBJCFLAGS="%optflags"
+export OBJCFLAGS="$OBJCFLAGS -DGNUSTEP -DGNU_RUNTIME"
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
 	--enable-flattened \
 	--with-layout=fhs-system-alt \
 	--with-objc-lib-flag=-lobjc2 \
-	--enable-objc-nonfragile-abi \
 	--enable-native-objc-exceptions \
 	--enable-debug-by-default
 
@@ -136,6 +135,9 @@ rm -f %buildroot%_infodir/*
 %_docdir/GNUstep
 
 %changelog
+* Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.6-alt17.svn20140202
+- Use gcc as compiler instead of clang
+
 * Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt16.svn20140202
 - Moved /etc/profile.d/GNUstep.sh from %name into %name-devel (ALT #31199)
 
