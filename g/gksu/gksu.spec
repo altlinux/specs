@@ -3,7 +3,7 @@ BuildRequires: desktop-file-utils
 
 Name: gksu
 Version: 2.0.2
-Release: alt5
+Release: alt6
 
 Summary: A Gtk+-based 'su' wrapper
 License: %gpl2plus
@@ -96,13 +96,16 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/%name-*.png
 %_liconsdir/%name-*.png
 %_desktopdir/%name.desktop
-%_man1dir/*.1.gz
+%_man1dir/*.1.*
 
 %files -n nautilus-gksu
 %nautilus_extdir/libnautilus-%name.so
 %exclude %nautilus_extdir/*.la
 
 %changelog
+* Mon Dec 21 2015 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt6
+- Do not use strict extension for man pages
+
 * Mon Dec 03 2012 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt5
 - Set correct terminal emulator
 - Requires xvt
