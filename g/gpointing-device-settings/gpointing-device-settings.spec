@@ -2,12 +2,13 @@
 
 Name:     gpointing-device-settings
 Version:  1.5.1
-Release:  alt4.1
+Release:  alt5
 Summary:  Configuration tool for pointing devices
 
 Group:    System/Configuration/Hardware
 License:  LGPLv3+
-Url:      http://live.gnome.org/GPointingDeviceSettings
+Url:      https://wiki.gnome.org/Attic/GPointingDeviceSettings
+# VCS:    git://git.gnome.org/gpointing-device-settings
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
@@ -118,7 +119,7 @@ fi
 %_desktopdir/*
 %_pixmapsdir/touchpad.png
 %_libdir/*.so.*
-%_man1dir/gpointing-device-settings.1.gz
+%_man1dir/gpointing-device-settings.1.*
 
 %files devel
 %_includedir/*
@@ -126,6 +127,10 @@ fi
 %_libdir/*.so
 
 %changelog
+* Mon Dec 21 2015 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt5
+- Fix project url and source code repository
+- Remove strict extension for man pages
+
 * Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt4.1
 - Fixed build
 
