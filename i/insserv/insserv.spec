@@ -1,7 +1,6 @@
-
 Name:       insserv
 Version:    1.16.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Tool for process controlling in System V boot scripts 
 License:    GPLv2+
@@ -36,9 +35,12 @@ rm -f %buildroot%_libexecdir/lsb/*_initd
 %files
 %config(noreplace) %_sysconfdir/%name.conf
 /sbin/%name
-%_man8dir/%name.8.gz
+%_man8dir/%name.8.*
 
 %changelog
+* Mon Dec 21 2015 Andrey Cherepanov <cas@altlinux.org> 1.16.0-alt2
+- Do not use strict extension for man pages
+
 * Sun Jun 14 2015 Andrey Cherepanov <cas@altlinux.org> 1.16.0-alt1
 - New version
 - Fix build with GCC 5
