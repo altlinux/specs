@@ -1,6 +1,6 @@
 Name: redis
-Version: 3.0.5
-Release: alt2.1
+Version: 3.0.6
+Release: alt1
 
 Summary: Redis is an advanced key-value store
 
@@ -93,8 +93,8 @@ install -m 0640 %SOURCE8 %buildroot%_sysconfdir/sysconfig/%name
 mkdir -p  %buildroot%_unitdir
 install -m 0644 %SOURCE9 %buildroot%_unitdir/%name.service
 
-mkdir -p  %buildroot%_sysconfdir/tmpfiles.d
-echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+mkdir -p  %buildroot%_tmpfilesdir
+echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.conf
 
 %pre
 # Add the "_redis" user
@@ -116,10 +116,10 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_sysconfdir/tmpfile
 
 %config %_logrotatedir/redis-server
 %config %_sysconfdir/bash_completion.d/redis-cli
-%config %_sysconfdir/tmpfiles.d/%name.conf
 %attr(0750,root,%redis_group) %config(noreplace) %_sysconfdir/sysconfig/%name
 %config %_initdir/%name
 %_unitdir/%name.service
+%_tmpfilesdir/%name.conf
 
 %_bindir/redis-check-aof
 %_bindir/redis-check-dump
@@ -135,6 +135,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_sysconfdir/tmpfile
 
 
 %changelog
+* Sun Dec 20 2015 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.6-alt1
+- New version
+
 * Sat Dec 19 2015 Terechkov Evgenii <evg@altlinux.org> 3.0.5-alt2.1
 - Change mode of /var/log/redis to 1770 according to ALT Secure Packaging Policy
 
