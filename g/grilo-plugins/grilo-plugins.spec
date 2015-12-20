@@ -1,9 +1,11 @@
+%def_disable snapshot
+
 %define ver_major 0.2
 
 %def_disable lua_factory
 
 Name: grilo-plugins
-Version: %ver_major.16
+Version: %ver_major.17
 Release: alt1
 
 Summary: Plugins for the Grilo framework
@@ -11,19 +13,22 @@ Group: Sound
 License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Grilo
 
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%endif
 
 BuildRequires: gnome-common intltool >= 0.40.0
 BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.36
-BuildRequires: libgrilo-devel >= 0.2.14
+BuildRequires: libgrilo-devel >= 0.2.15
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp-devel >= 0.13
 BuildRequires: libgupnp-av-devel >= 0.5
 BuildRequires: libgssdp-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libgdata-devel >= 0.9.1
-BuildRequires: libquvi-devel >= 0.4.0
 BuildRequires: libgom-devel >= 0.3.0
 BuildRequires: libsoup-devel
 BuildRequires: libgcrypt-devel
@@ -87,6 +92,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Sun Dec 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.17-alt1
+- 0.2.17
+
 * Thu Sep 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.16-alt1
 - 0.2.16
 
