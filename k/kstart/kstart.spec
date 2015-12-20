@@ -1,6 +1,6 @@
 Name: kstart
 Version: 4.1
-Release: alt1
+Release: alt2
 
 Summary: Daemon version of kinit for Kerberos v5
 License: MIT
@@ -37,10 +37,13 @@ credentials and refresh those credentials until the command exits.
 %doc NEWS README
 %_bindir/k5start
 %_bindir/krenew
-%_mandir/man1/k5start.1.bz2
-%_mandir/man1/krenew.1.bz2
+%_mandir/man1/k5start.1.*
+%_mandir/man1/krenew.1.*
 
 %changelog
+* Mon Dec 21 2015 Andrey Cherepanov <cas@altlinux.org> 4.1-alt2
+- Do not use strict extension for man pages
+
 * Wed Feb 13 2013 Andrey Cherepanov <cas@altlinux.org> 4.1-alt1
 - Initial build in Sisyphus
 
