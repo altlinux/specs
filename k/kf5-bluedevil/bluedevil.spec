@@ -1,8 +1,8 @@
 %define rname bluedevil
 
 Name: kf5-%rname
-Version: 5.4.3
-Release: alt3
+Version: 5.5.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -78,7 +78,7 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %_K5bin/*
 %_K5plug/*.so
 %_K5plug/kf5/kded/*.so
-%_K5exec/*
+#%_K5exec/*
 %_K5qml/org/kde/plasma/private/bluetooth/
 %_K5data/plasma/plasmoids/org.kde.plasma.bluetooth/
 %_K5data/bluedevilwizard/
@@ -91,6 +91,12 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %_K5xdgmime/*.xml
 
 %changelog
+* Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Thu Nov 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt3
 - rebuild
 

@@ -1,8 +1,8 @@
 %define rname breeze
 
 Name: kf5-%rname
-Version: 5.4.3
-Release: alt3
+Version: 5.5.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -10,8 +10,9 @@ Summary: KDE Workspace 5 visual style
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
+Requires: icon-theme-breeze
+
 Source: %rname-%version.tar
-Patch1: alt-icons-defaults.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs
@@ -21,7 +22,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-x11extras-devel
 BuildRequires: kf5-frameworkintegration-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdecoration-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
-BuildRequires: kf5-kcmutils-devel
+BuildRequires: kf5-kcmutils-devel kf5-plasma-framework-devel kf5-kpackage-devel
 
 %description
 Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
@@ -51,7 +52,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
@@ -60,7 +60,6 @@ KF5 library
 %K5install
 
 %K5install_move data kstyle color-schemes kconf_update wallpapers
-mv %buildroot/%_datadir/icons/* %buildroot/%_K5data/icons/
 
 %find_lang %name --all-name
 
@@ -76,12 +75,19 @@ mv %buildroot/%_datadir/icons/* %buildroot/%_K5data/icons/
 %_K5srv/*.desktop
 %_K5data/kstyle/themes/*
 %_K5data/color-schemes/*
+%_K5data/plasma/look-and-feel/org.kde.breezedark.desktop/
 %_K5icon/?reeze*/
 %_K5icon/hicolor/*/apps/breeze-settings.*
 %_K5cf_upd/*
 %_K5wall/*
 
 %changelog
+* Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
+* Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- new version
+
 * Thu Nov 19 2015 Sergey V Turchin <zerg@altlinux.org> 5.4.3-alt3
 - rebuild
 
