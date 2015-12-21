@@ -5,8 +5,8 @@
 %define patchlevel %nil
 
 Name: dhcp
-Version: 4.3.1
-Release: alt3
+Version: 4.3.3
+Release: alt1
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -42,42 +42,40 @@ Source26: dhcpd6.service
 Source27: dhcrelay.service
 Source28: dhcrelay6.service
 
-Patch0001: 0001-Apply-dst_api-fd-leak-fixes-from-dhcp-3.0.5-alt-warn.patch
-Patch0002: 0002-Apply-dhcp-3.0.5-alt-warnings.patch.patch
-Patch0003: 0003-Apply-dhcp-3.0.3-alt-defaults.patch.patch
-Patch0004: 0004-Apply-dhcp-3.0.3-alt-daemonize.patch.patch
-Patch0005: 0005-Apply-dhcp-3.0.5-owl-alt-support-contact.patch.patch
-Patch0006: 0006-Update-and-apply-dhcp-3.0.4-owl-bound.patch.patch
-Patch0007: 0007-Apply-dhcp-3.0.3-rh-dhcpctl-man.patch.patch
-Patch0008: 0008-Apply-dhcp-3.0.3-rh-assemble_udp_ip_header.patch.patch
-Patch0009: 0009-Apply-dhcp-3.0.3-rh-failover-ports.patch.patch
-Patch0010: 0010-Apply-manpage-correction-from-RH-184484.patch
-Patch0011: 0011-Update-and-apply-dhcp-3.0.3-owl-alt-drop_priv.patch.patch
-Patch0012: 0012-Build-with-libisc-export-devel-RH-dhcp-4.2.2-remove-.patch
-Patch0013: 0013-dhclient-Add-several-command-line-options-which-etcn.patch
-Patch0014: 0014-Don-t-build-libdst.patch
-Patch0015: 0015-dhclient-Check-if-dhclient-already-running.patch
-Patch0016: 0016-dhclient-Request-more-options-by-default.patch
-Patch0017: 0017-Prevent-file-descriptors-leak.patch
-Patch0018: 0018-Drop-garbage-char.patch
-Patch0019: 0019-Do-not-segfault-if-the-ipv6-kernel-module-is-not-loa.patch
-Patch0020: 0020-Fix-segfault-in-case-of-NULL-timeout.patch
-Patch0021: 0021-Ensure-64-bit-platforms-parse-lease-file-dates-times.patch
-Patch0022: 0022-Support-Classless-Static-Route-Option-for-DHCPv4-RFC.patch
-Patch0023: 0023-dhclient-Don-t-confirm-expired-lease.patch
-Patch0024: 0024-Build-dhcp-s-libraries-as-shared-libs-instead-of-sta.patch
-Patch0025: 0025-Don-t-send-log-messages-to-the-stderr-with-f-option.patch
-Patch0026: 0026-Use-getifaddrs-to-scan-for-interfaces.patch
-Patch0027: 0027-dhclient-Don-t-use-fallback_interface-when-releasing.patch
-Patch0028: 0028-Support-DHCPv6-Options-for-Network-Boot-RFC5970.patch
-Patch0029: 0029-Fix-infinite-leases-on-x64.patch
-Patch0030: 0030-Document-ALT-specific-in-the-dhclient-script-manpage.patch
-Patch0031: 0031-Ignore-checksums-on-the-loopback-interface.patch
-Patch0032: 0032-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
-Patch0033: 0033-examples-dhcpd-dhcpv6.conf-Drop-dhcpv6-lease-file-na.patch
-Patch0034: 0034-fix-segfault-on-x86-64-on-8-network.patch
-Patch0035: 0035-Fix-Makefiles-for-dhcpctl-relay-and-omapip.patch
-Patch0036: 0036-Remove-duplicate-ISC_R_MULTIPLE-definition.patch
+Patch0001: 0001-Apply-dhcp-3.0.5-alt-warnings.patch.patch
+Patch0002: 0002-Apply-dhcp-3.0.3-alt-defaults.patch.patch
+Patch0003: 0003-Apply-dhcp-3.0.3-alt-daemonize.patch.patch
+Patch0004: 0004-Apply-dhcp-3.0.5-owl-alt-support-contact.patch.patch
+Patch0005: 0005-Update-and-apply-dhcp-3.0.4-owl-bound.patch.patch
+Patch0006: 0006-Apply-dhcp-3.0.3-rh-dhcpctl-man.patch.patch
+Patch0007: 0007-Apply-dhcp-3.0.3-rh-assemble_udp_ip_header.patch.patch
+Patch0008: 0008-Apply-dhcp-3.0.3-rh-failover-ports.patch.patch
+Patch0009: 0009-Apply-manpage-correction-from-RH-184484.patch
+Patch0010: 0010-Update-and-apply-dhcp-3.0.3-owl-alt-drop_priv.patch.patch
+Patch0011: 0011-Build-with-libisc-export-devel-RH-dhcp-4.2.2-remove-.patch
+Patch0012: 0012-dhclient-Add-several-command-line-options-which-etcn.patch
+Patch0013: 0013-Don-t-build-libdst.patch
+Patch0014: 0014-dhclient-Check-if-dhclient-already-running.patch
+Patch0015: 0015-dhclient-Request-more-options-by-default.patch
+Patch0016: 0016-Prevent-file-descriptors-leak.patch
+Patch0017: 0017-Drop-garbage-char.patch
+Patch0018: 0018-Do-not-segfault-if-the-ipv6-kernel-module-is-not-loa.patch
+Patch0019: 0019-Fix-segfault-in-case-of-NULL-timeout.patch
+Patch0020: 0020-Ensure-64-bit-platforms-parse-lease-file-dates-times.patch
+Patch0021: 0021-Support-Classless-Static-Route-Option-for-DHCPv4-RFC.patch
+Patch0022: 0022-dhclient-Don-t-confirm-expired-lease.patch
+Patch0023: 0023-Build-dhcp-s-libraries-as-shared-libs-instead-of-sta.patch
+Patch0024: 0024-Don-t-send-log-messages-to-the-stderr-with-f-option.patch
+Patch0025: 0025-Use-getifaddrs-to-scan-for-interfaces.patch
+Patch0026: 0026-dhclient-Don-t-use-fallback_interface-when-releasing.patch
+Patch0027: 0027-Support-DHCPv6-Options-for-Network-Boot-RFC5970.patch
+Patch0028: 0028-Fix-infinite-leases-on-x64.patch
+Patch0029: 0029-Document-ALT-specific-in-the-dhclient-script-manpage.patch
+Patch0030: 0030-Ignore-checksums-on-the-loopback-interface.patch
+Patch0031: 0031-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
+Patch0032: 0032-examples-dhcpd-dhcpv6.conf-Drop-dhcpv6-lease-file-na.patch
+Patch0033: 0033-fix-segfault-on-x86-64-on-8-network.patch
+Patch0034: 0034-Fix-Makefiles-for-dhcpctl-relay-and-omapip.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -227,8 +225,6 @@ server
 %patch0032 -p2
 %patch0033 -p2
 %patch0034 -p2
-%patch0035 -p2
-%patch0036 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -547,6 +543,17 @@ fi
 # }}}
 
 %changelog
+* Mon Dec 21 2015 Fr. Br. George <george@altlinux.ru> 1:4.3.3-alt1
+- Update to 4.3.3
+- Fix patches
+
+* Mon Dec 21 2015 Fr. Br. George <george@altlinux.ru> 1:4.3.2-alt1
+- Update to 4.3.2
+- Fix patches
+
+* Mon Dec 21 2015 Fr. Br. George <george@altlinux.ru> 1:4.3.1-alt4
+- Rabuild with bind-9.9.8
+
 * Wed Jul 29 2015 Fr. Br. George <george@altlinux.ru> 1:4.3.1-alt3
 - Rebuild with bind-9.9.7
 
