@@ -1,7 +1,7 @@
 Name:           nftables
 Epoch: 1
-Version:        0.3
-Release:        alt1.git20140915
+Version:        0.5
+Release:        alt1
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
 License:        LGPLv2.1+
@@ -43,6 +43,9 @@ This library is currently used by nftables.
 
 
 %changelog
+* Mon Dec 21 2015 Alexei Takaseev <taf@altlinux.org> 1:0.5-alt1
+- Version 0.5
+
 * Wed Sep 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.3-alt1.git20140915
 - Version 0.3
 
