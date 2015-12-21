@@ -2,7 +2,7 @@ Summary: A DBA's (s)wiss-(a)rmy-(k)nif(e) for mysql
 Name: dbsake
 License: GPLv2
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
@@ -60,5 +60,8 @@ find %buildroot%python_sitelibdir/%name -type f -name '*distutils_ext.py*' -dele
 %doc docs/_build/html HISTORY.rst README.rst AUTHORS.rst CONTRIBUTING.rst
 
 %changelog
+* Mon Dec 21 2015 Terechkov Evgenii <evg@altlinux.org> 2.1.0-alt2
+- Add missed submodules
+
 * Sun Dec 20 2015 Terechkov Evgenii <evg@altlinux.org> 2.1.0-alt1
 - Initial build for ALT Linux Sisyphus
