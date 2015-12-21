@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.07
+%define module_version 0.08
 %define module_name Struct-Dumb
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/Fatal
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.07
+Version: 0.08
 Release: alt1
 Summary: make simple lightweight record-like structures
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/S*
 
 %changelog
+* Mon Dec 21 2015 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - automated CPAN update
 
