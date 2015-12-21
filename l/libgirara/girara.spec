@@ -2,21 +2,21 @@
 %define _soname 2
 
 Name: lib%_name
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
 License: %bsdstyle
 Group: System/Libraries
 URL: http://pwmt.org/projects/girara
-# git://pwmt.org/girara.git
+# https://git.pwmt.org/pwmt/girara.git
 Source: %name-%version.tar
 
 Patch: %_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: libgtk+3-devel libnotify-devel
+BuildRequires: libgtk+3-devel >= 3.4 libnotify-devel
 BuildRequires: intltool
 
 %description
@@ -47,7 +47,8 @@ export CFLAGS="%optflags"
 
 %files -f %name-gtk3-%_soname.lang
 %doc AUTHORS README LICENSE
-%_libdir/*.so.*
+%_libdir/*.so.%_soname
+%_libdir/*.so.%_soname.*
 
 %files devel
 %_includedir/*
@@ -57,6 +58,9 @@ export CFLAGS="%optflags"
 %exclude %_libdir/*.a
 
 %changelog
+* Mon Dec 21 2015 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt1
+- Updated to 0.2.5.
+
 * Fri Apr 17 2015 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
 - Updated to 0.2.4.
 
