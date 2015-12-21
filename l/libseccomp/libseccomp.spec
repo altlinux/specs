@@ -3,16 +3,17 @@
 %def_with python3
 
 Name: lib%oname
-Version: 2.1.1
-Release: alt2.git20141021
+Version: 2.2.3
+Release: alt1
 Summary: High level interface to the Linux Kernel's seccomp filter
-License: LGPLv2
+License: LGPLv2.1+
 Group: System/Libraries
-Url: http://sourceforge.net/projects/libseccomp/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://github.com/seccomp/libseccomp
 
-# git://git.code.sf.net/p/libseccomp/libseccomp
+#https://github.com/seccomp/libseccomp.git
 Source: %name-%version.tar
+
+Patch100: 0001-Tune-config.patch
 
 BuildPreReq: python-devel python-module-Cython
 %if_with python3
@@ -73,6 +74,7 @@ This package contains python bindings of %name.
 
 %prep
 %setup
+%patch100 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -108,10 +110,20 @@ mv buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir/
 popd
 %endif
 
+mkdir -p %buildroot/%_lib
+# Relocate shared libraries from %_libdir/ to /%_lib/.
+for f in %buildroot%_libdir/lib*.so; do
+        t=`objdump -p "$f" |awk '/SONAME/ {print $2}'`
+        [ -n "$t" ]
+        ln -snf ../../%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
+
+
 %files
 %doc CHANGELOG CREDITS README SUBMITTING_PATCHES
 %_bindir/*
-%_libdir/*.so.*
+/%_lib/lib*.so.*
 %_man1dir/*
 
 %files devel
@@ -129,6 +141,10 @@ popd
 %endif
 
 %changelog
+* Thu Dec 17 2015 Alexey Shabalin <shaba@altlinux.ru> 2.2.3-alt1
+- 2.2.3
+- relocate shared libraries from %_libdir/ to /%_lib/.
+
 * Thu Aug 27 2015 Afanasov Dmitry <ender@altlinux.org> 2.1.1-alt2.git20141021
 - fix version in pkg-config file
 
