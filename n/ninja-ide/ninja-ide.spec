@@ -1,12 +1,13 @@
 Name:       ninja-ide
 Version:    2.3
-Release:    alt1
+Release:    alt2
 Summary:    Ninja IDE for Python development
 
 Group:	    Development/Python
 License:    GPLv3
 URL:        http://www.ninja-ide.org/
 Source0:    https://github.com/downloads/%{name}/%{name}/%{name}-%{version}.zip
+# VCS:      https://github.com/ninja-ide/ninja-ide
 Source1:    %{name}.desktop
 Source2:    %{name}.1.gz
 
@@ -51,8 +52,11 @@ find %buildroot -name 'pep8mod.py' | xargs chmod 0755
 %python_sitelibdir/NINJA_IDE-2.3-py2.7.egg-info/
 %_pixmapsdir/%{name}.png
 %_desktopdir/%{name}.desktop
-%_man1dir/%{name}.1.gz
+%_man1dir/%{name}.1.*
 
 %changelog
+* Mon Dec 21 2015 Andrey Cherepanov <cas@altlinux.org> 2.3-alt2
+- Do not use strict extension for man pages
+
 * Thu Apr 17 2014 Andrey Cherepanov <cas@altlinux.org> 2.3-alt1
 - Initial build for ALT Linux (based on Fedora spec)
