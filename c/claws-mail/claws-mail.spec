@@ -10,8 +10,8 @@
 %def_enable 	archive
 
 Name:   	claws-mail
-Version:	3.13.0
-Release: 	alt5
+Version:	3.13.1
+Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -20,7 +20,6 @@ Group: 		Networking/Mail
 Url:		http://www.claws-mail.org
 
 Source: %name-%version.tar
-Source1: ru.po
 Patch:	%name-%version-%release.patch
 
 Obsoletes:	%_oldname < %version
@@ -541,10 +540,6 @@ echo 'echo "%version"' >./version
 
 %patch -p1
 
-# Replace Russian translation from the claws-mail repository
-# with translation from Serg A. Kotlyarov
-cp -p %SOURCE1 po/
-
 %autoreconf
 
 %build
@@ -818,6 +813,10 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Mon Dec 21 2015 Mikhail Efremov <sem@altlinux.org> 3.13.1-alt1
+- Use Russian translation from upstream.
+- Updated to 3.13.1.
+
 * Wed Dec 16 2015 Mikhail Efremov <sem@altlinux.org> 3.13.0-alt5
 - Enable archive plugin again.
 
