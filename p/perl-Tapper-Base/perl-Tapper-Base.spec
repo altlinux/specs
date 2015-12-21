@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Devel/AssertOS.pm) perl(Devel/CheckOS.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Find/Rule.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Tapper-Base
-%define upstream_version 4.1.4
+%define upstream_version 5.0.0
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_5
+Version:    5.0.0
+Release:    alt1
 
 Summary:    Require that we are running on a particular OS
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Base-%{version}.tar.gz
 
 BuildRequires: perl(English.pm)
 BuildRequires: perl(Fcntl.pm)
@@ -61,6 +62,9 @@ Linux, Solaris, AIX etc.
 
 
 %changelog
+* Mon Dec 21 2015 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.4-alt1_5
 - update by mgaimport
 
