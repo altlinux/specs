@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Data/Show.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Prompter.pm) perl(Smart/Comments.pm) perl(Time/HiRes.pm) perl(charnames.pm) perl(overload.pm) perl(re.pm) perl-Module-Build perl-base perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Regexp-Grammars
-Version:	1.043
+Version:	1.044
 Release:	alt1
 Summary:	Add grammatical parsing features to perl regular expressions
 License:	GPL+ or Artistic
@@ -56,6 +56,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/Regexp/
 
 %changelog
+* Mon Dec 21 2015 Igor Vlasenko <viy@altlinux.ru> 1.044-alt1
+- automated CPAN update
+
 * Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.043-alt1
 - automated CPAN update
 
