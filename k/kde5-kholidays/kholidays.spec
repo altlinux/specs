@@ -1,7 +1,7 @@
 %define rname kholidays
 
 Name: kde5-%rname
-Version: 15.08.3
+Version: 15.12.0
 Release: alt1
 %K5init altplace
 
@@ -74,12 +74,15 @@ KF5 library
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Holidays/
 %_K5archdata/mkspecs/modules/qt_KHolidays.pri
-%_K5plug/designer/*.so
+#%_K5plug/designer/*.so
 
 %files -n libkf5holidays
 %_K5lib/libKF5Holidays.so.*
 
 %changelog
+* Mon Dec 21 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 

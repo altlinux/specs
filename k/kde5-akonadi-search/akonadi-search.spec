@@ -1,7 +1,7 @@
 %define rname akonadi-search
 
 Name: kde5-%rname
-Version: 15.08.3
+Version: 15.12.0
 Release: alt1
 %K5init altplace
 
@@ -27,6 +27,7 @@ BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin
 BuildRequires: kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-krunner-devel kf5-kcmutils-devel kf5-plasma-framework-devel kf5-kpackage-devel
 
 %description
 %summary.
@@ -67,6 +68,13 @@ Requires: %name-common = %version-%release
 %description -n libkf5akonadisearchpim
 KF5 library
 
+%package -n libkf5akonadisearchdebug
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5akonadisearchdebug
+KF5 library
+
 
 %prep
 %setup -n %rname-%version
@@ -86,6 +94,8 @@ KF5 library
 %files
 %_K5bin/*
 %_K5plug/akonadi/*.so
+%_K5plug/*.so
+%_K5srv/*.desktop
 %_datadir/akonadi5/agents/*.desktop
 
 %files devel
@@ -101,8 +111,13 @@ KF5 library
 %_K5lib/libKF5AkonadiSearchCore.so.*
 %files -n libkf5akonadisearchpim
 %_K5lib/libKF5AkonadiSearchPIM.so.*
+%files -n libkf5akonadisearchdebug
+%_K5lib/libKF5AkonadiSearchDebug.so.*
 
 %changelog
+* Mon Dec 21 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 
