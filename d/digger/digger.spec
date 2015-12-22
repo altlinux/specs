@@ -1,22 +1,26 @@
 Name: digger
-Version: 20020314
-Release: alt4.qa3
+Version: 20130313
+Release: alt1
 
 Summary: A Game of Digger
+
 License: Distributable
 Group: Games/Arcade
-
 Url: http://www.digger.org
+
 Source: %url/%name-%version.tar.gz
 Patch: digger-20020314-alt-gcc34.patch
 
-#Packager: Sergey Balbeko <balbeko@altlinux.org> 
+Source11: %name-16x16.png
+Source12: %name-32x32.png
+Source13: %name-48x48.png
+
+#Packager: Sergey Balbeko <balbeko@altlinux.org>
 #Packager: Michael Shigorin <mike@altlinux.ru>
 #Packager: Dima Pashko <troll@watersport.com.ua>
 
-
 # Automatically added by buildreq on Mon Mar 31 2008
-BuildRequires: libSDL-devel zlib-devel libalsa libaudiofile esound
+BuildRequires: libSDL-devel zlib-devel libalsa libaudiofile esound cmake
 
 #BuildRequires: XFree86-libs esound libSDL-devel libalsa libaudiofile zlib-devel
 
@@ -24,17 +28,18 @@ BuildRequires: libSDL-devel zlib-devel libalsa libaudiofile esound
 Digger is one of most popular games on IBM PC.
 
 %prep
-%setup -q
-%patch -p1
+%setup
+#patch -p1
 
 %build
-%make_build -f Makefile.sdl
+%cmake_insource
+%make_build
 
 %install
-%__install -pD -m755 digger %buildroot%_gamesbindir/%name
+install -pD -m755 digger %buildroot%_gamesbindir/%name
 
-mkdir -p $RPM_BUILD_ROOT%_desktopdir
-cat > $RPM_BUILD_ROOT%_desktopdir/%{name}.desktop <<EOF
+mkdir -p %buildroot%_desktopdir
+cat > %buildroot%_desktopdir/%name.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
@@ -49,12 +54,23 @@ EOF
 
 echo "Please see %url/faq.html" >> FAQ
 
+install -m644 %SOURCE11 -D %buildroot%_miconsdir/%name.png
+install -m644 %SOURCE12 -D %buildroot%_iconsdir/%name.png
+install -m644 %SOURCE13 -D %buildroot%_liconsdir/%name.png
+
 %files
 %doc digger.txt FAQ
 %_gamesbindir/*
 %_desktopdir/*
+%_miconsdir/%name.png
+%_iconsdir/%name.png
+%_liconsdir/%name.png
 
 %changelog
+* Tue Dec 22 2015 Vitaly Lipatov <lav@altlinux.ru> 20130313-alt1
+- upgrade source to 20130313 (ALT bug #31573)
+- build with cmake, add icons
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20020314-alt4.qa3
 - NMU: rebuilt for updated dependencies.
 
