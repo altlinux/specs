@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9.24
-Release: alt1
+Release: alt2
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -111,6 +111,9 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Dec 22 2015 Andrey Cherepanov <cas@altlinux.org> 2.9.24-alt2
+- Fix typo
+
 * Thu Dec 17 2015 Andrey Cherepanov <cas@altlinux.org> 2.9.24-alt1
 - Add Russian localization and help files for alterator-distro-chainmail
   and alterator-ivkcrypto
