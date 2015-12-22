@@ -1,5 +1,5 @@
 Name: rsync
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 %define srcname rsync-%version
 
@@ -103,6 +103,9 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Tue Dec 22 2015 Dmitry V. Levin <ldv@altlinux.org> 3.1.2-alt1
+- Updated to v3.1.2.
+
 * Fri Nov 28 2014 Dmitry V. Levin <ldv@altlinux.org> 3.1.1-alt1
 - Updated to v3.1.1.
 - server: packaged systemd unit files (closes: #30508).
