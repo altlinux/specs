@@ -1,7 +1,7 @@
 %define rname kaccounts-providers
 
 Name: kde5-%rname
-Version: 15.08.3
+Version: 15.12.0
 Release: alt1
 %K5init altplace
 
@@ -10,18 +10,21 @@ Summary: KDE Accounts Providers
 Url: http://www.kde.org
 License: GPLv2+
 
-BuildArch: noarch
+#BuildArch: noarch
 #Requires: signon-ui
 
 Source: %rname-%version.tar
 
-# Automatically added by buildreq on Fri Aug 21 2015 (-bi)
-# optimized out: cmake cmake-modules libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-widgets libstdc++-devel perl-Encode perl-XML-Parser pkg-config python-base python3 python3-base qt5-base-devel
-#BuildRequires: accounts-qt5-devel extra-cmake-modules gcc-c++ intltool kde5-kaccounts-integration-devel kf5-kcoreaddons-devel rpm-build-python3 ruby ruby-stdlibs signon-devel
+# Automatically added by buildreq on Wed Dec 23 2015 (-bi)
+# optimized out: cmake cmake-modules elfutils gcc-c++ gtk-update-icon-cache libEGL-devel libGL-devel libaccounts-glib libaccounts-qt51 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsignon-qt51 libstdc++-devel libxcbutil-keysyms perl-Encode perl-XML-Parser pkg-config python-base python-module-google python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs
+#BuildRequires: accounts-qt5-devel extra-cmake-modules intltool kde5-kaccounts-integration-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel qt5-declarative-devel rpm-build-python3 rpm-build-ruby signon-devel
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: accounts-qt5-devel signon-devel intltool
-BuildRequires: kde5-kaccounts-integration-devel kf5-kcoreaddons-devel
+BuildRequires: extra-cmake-modules qt5-declarative-devel
+BuildRequires: kde5-kaccounts-integration-devel
+BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
+BuildRequires: kf5-kcoreaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
+BuildRequires: kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
 
 %description
 %summary.
@@ -42,14 +45,20 @@ Requires: kf5-filesystem
 
 %install
 %K5install
+%K5install_move data kpackage
 #%find_lang %name --with-kde --all-name
 
 %files
 %config(noreplace) /etc/signon-ui/webkit-options.d/*.conf
+%_K5plug/kaccounts/ui/*.so
 %_datadir/accounts/providers/*.provider
+%_K5data/kpackage/genericqml/org.kde.kaccounts.owncloud/
 
 
 %changelog
+* Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 

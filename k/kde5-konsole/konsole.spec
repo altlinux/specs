@@ -4,8 +4,8 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 15.08.3
-Release: alt2
+Version: 15.12.0
+Release: alt1
 %K5init
 
 Group: Terminals
@@ -73,7 +73,7 @@ KF5 library
 %prep
 %setup -q -n %rname-%version
 %patch10 -p1
-%patch11 -p1
+#%patch11 -p1
 
 %build
 %K5build
@@ -114,6 +114,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Fri Dec 11 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt2
 - set Terminus font by default
 
