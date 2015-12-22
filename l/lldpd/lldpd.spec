@@ -1,7 +1,5 @@
-%set_automake_version 1.11
-
 Name: lldpd
-Version: 0.7.15
+Version: 0.7.19
 Release: alt1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
@@ -10,8 +8,8 @@ License: GPL
 
 Source1: lldpd.init
 Source2: lldpd.sysconfig
-Source3: lldpd.all
-Source4: lldpd.conf
+Source3: lldpd.all.chroot
+Source4: lldpd.conf.chroot
 
 %def_enable cdp
 %def_enable fdp
@@ -110,7 +108,10 @@ mkdir libevent
     --with-privsep-user=_lldpd \
     --with-privsep-group=_lldpd \
     --with-privsep-chroot=%_localstatedir/%name \
-    --with-systemdsystemunitdir=%_unitdir
+    --with-systemdsystemunitdir=%_unitdir \
+    --without-embedded-libevent \
+    --with-lldpd-ctl-socket=%{_runtimedir}/%{name}.socket \
+    --with-lldpd-pid-file=%{_runtimedir}/%{name}.pid \
 
 %make
 
@@ -122,8 +123,6 @@ install -m644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/lldpd
 install -m750 -D %SOURCE3 %buildroot%_sysconfdir/chroot.d/lldpd.all
 install -m750 -D %SOURCE4 %buildroot%_sysconfdir/chroot.d/lldpd.conf
 mkdir -p %buildroot%_localstatedir/%name/etc
-
-mv %buildroot/etc/bash_completion.d/lldpcli.bash-completion %buildroot/etc/bash_completion.d/lldpcli
 
 mkdir %buildroot%_datadir/zsh/site-functions -p
 mv %buildroot/usr/share/zsh/vendor-completions/_lldpcli %buildroot%_datadir/zsh/site-functions
@@ -160,12 +159,15 @@ fi
 %_pkgconfigdir/*
 
 %files -n bash-completion-lldpd
-%_sysconfdir/bash_completion.d/*
+%{_datadir}/bash-completion/completions/*
 
 %files -n zsh-completion-lldpd
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Tue Dec 22 2015 Afanasov Dmitry <ender@altlinux.org> 0.7.19-alt1
+- 0.7.19
+
 * Wed Aug 26 2015 Afanasov Dmitry <ender@altlinux.org> 0.7.15-alt1
 - 0.7.15
 - add json output and seccomp support
