@@ -1,6 +1,6 @@
 Name: nfqfilter
 Version: 0.2
-Release: alt1
+Release: alt2
 Summary: Filtration system packages based on patterns
 Group: Networking/Other
 
@@ -51,6 +51,9 @@ install -m 0644 -D contrib/urls      %buildroot%_localstatedir/%name/urls
 %_localstatedir/%name
 
 %changelog
+* Tue Dec 22 2015 Alexei Takaseev <taf@altlinux.org> 0.2-alt2
+- update to git:85992b9d957848d99b1192c2b6bad550ec49ed54
+
 * Tue Nov 24 2015 Alexei Takaseev <taf@altlinux.org> 0.2-alt1
 - 0.2
     * use send rst for https without iptables
