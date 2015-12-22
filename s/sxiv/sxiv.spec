@@ -1,6 +1,6 @@
 Name: sxiv
-Version: 1.31
-Release: alt1.2
+Version: 1.32
+Release: alt1
 
 Summary: Simple X Image Viewer
 License: GPLv2
@@ -60,6 +60,9 @@ install -pm644 {README.md,LICENSE} %buildroot%docdir/
 %doc %docdir/*
 
 %changelog
+* Tue Dec 22 2015 Andrey Bergman <vkni@altlinux.org> 1.32-alt1
+- Version update.
+
 * Tue Mar 31 2015 Andrey Bergman <vkni@altlinux.org> 1.31-alt1.2
 - Added skiplist.
 
