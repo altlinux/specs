@@ -29,7 +29,7 @@
 
 Name: mariadb
 Version: 10.1.9
-Release: alt4
+Release: alt5
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -53,11 +53,13 @@ Source15: alt-mysql_install_db.sh
 Source16: mysql.control
 Source17: mysqld-chroot.control
 
-Source19: var-lib-mysql-run-systemd-notify.mount
+Source19: galera_new_cluster.sh
+
 Source20: mysql.tmpfiles.d
 Source21: mysqld.service
-Source22: mysqld.service.d
-Source23: galera_new_cluster.sh
+Source22: mysqld.service.d-user
+Source23: mysqld.service.d-notify
+Source24: mysqld.service.d-notify-chroot
 
 Source25: client.cnf
 Source26: server.cnf
@@ -394,14 +396,16 @@ install -p -m 0644 BUILD/support-files/wsrep.cnf %buildroot%_sysconfdir/my.cnf.d
 install -pD -m644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
 %endif
 
-install -pD -m644 %SOURCE19 %buildroot%_unitdir/var-lib-mysql-run-systemd-notify.mount
 install -pD -m644 %SOURCE20 %buildroot%_tmpfilesdir/mysql.conf
 install -pD -m644 %SOURCE21 %buildroot%_unitdir/mysqld.service
 install -pD -m644 %SOURCE22 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/user.conf
+install -pD -m644 %SOURCE23 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/notify.conf
+install -pD -m644 %SOURCE24 %buildroot%_sysconfdir/systemd/system/mysqld.service.d/notify-chroot.conf
+
 ln -s mysqld.service %buildroot%_unitdir/mariadb.service
 # rm upstream script
 rm -f %buildroot%_bindir/galera_new_cluster
-install -pD -m755 %SOURCE23 %buildroot%_bindir/galera_new_cluster
+install -pD -m755 %SOURCE19 %buildroot%_bindir/galera_new_cluster
 
 # install the clustercheck script
 install -pD -m755 %SOURCE70 %buildroot%_bindir/clustercheck
@@ -571,8 +575,7 @@ fi
 %_tmpfilesdir/mysql.conf
 %_unitdir/mysqld.service
 %_unitdir/mariadb.service
-%_unitdir/var-lib-mysql-run-systemd-notify.mount
-%config(noreplace) %_sysconfdir/systemd/system/mysqld.service.d/user.conf
+%config(noreplace) %_sysconfdir/systemd/system/mysqld.service.d/*.conf
 
 %_bindir/aria*
 %_bindir/*isam*
@@ -729,6 +732,15 @@ fi
 %endif
 
 %changelog
+* Tue Dec 22 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.9-alt5
+- snapshot of 10.1 branch (d58a77020)
+- drop mount --bind /run/systemd/notify to chroot
+- set Type=simple to systemd unit
+- add drop-in examples to /etc/systemd/system/mysqld.service.d :
+  + for run as mysql user
+  + set Type=notify
+  + run PreStart mount --bind /run/systemd/notify to chroot
+
 * Tue Dec 15 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.9-alt4
 - add mount --bind /run/systemd/notify to chroot for run as Type=notify unit
 
