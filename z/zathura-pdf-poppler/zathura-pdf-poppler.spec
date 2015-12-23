@@ -1,13 +1,13 @@
 Name: zathura-pdf-poppler
-Version: 0.2.5
-Release: alt2
+Version: 0.2.6
+Release: alt1
 
 Summary: PDF support for zathura (poppler)
 License: %bsdstyle
 Group: Office
 
 URL: http://pwmt.org/projects/zathura/plugins/zathura-pdf-poppler
-# git://pwmt.org/zathura-pdf-poppler.git
+# https://git.pwmt.org/pwmt/zathura-pdf-poppler.git
 Source: %name-%version.tar
 #Patch: %name-%version-%release.patch
 
@@ -38,8 +38,12 @@ export CFLAGS="%optflags"
 %doc AUTHORS LICENSE
 %_desktopdir/*.desktop
 %_libdir/zathura/*.so
+%_datadir/appdata/*.xml
 
 %changelog
+* Wed Dec 23 2015 Mikhail Efremov <sem@altlinux.org> 0.2.6-alt1
+- Updated to 0.2.6.
+
 * Fri Apr 17 2015 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt2
 - Rebuild with libgirara-0.2.4.
 
