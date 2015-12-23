@@ -70,6 +70,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php5-%version-%release
+
 * Tue Aug 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 5.5.25.20150514-alt2
 - Initial build for ALT Linux Sisyphus
 

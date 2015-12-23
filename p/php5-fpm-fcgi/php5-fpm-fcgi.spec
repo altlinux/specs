@@ -21,7 +21,7 @@ Source5: php5-fpm.service
 Source6: php5-fpm.rotate
 
 Patch0: php5-fpm-fcgi-5.3.3.20100722-config.m4.patch
-Patch2: php5-fpm-fcgi-5.4.15.20130509-build.patch
+Patch2: php5-fpm-fcgi-5.6.16.20150514-build.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires:	php5-devel = %php5_version
