@@ -1,13 +1,13 @@
 Name: zathura-djvu
-Version: 0.2.4
-Release: alt2
+Version: 0.2.5
+Release: alt1
 
 Summary: DjVU support for zathura
 License: %bsdstyle
 Group: Office
 
 URL: http://pwmt.org/projects/zathura/plugins/%name
-# git://pwmt.org/zathura-djvu.git
+# https://git.pwmt.org/pwmt/zathura-djvu.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -40,6 +40,9 @@ export CFLAGS="%optflags"
 %_desktopdir/*.desktop
 
 %changelog
+* Wed Dec 23 2015 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt1
+- Updated to 0.2.5.
+
 * Fri Apr 17 2015 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt2
 - Rebuild with libgirara-0.2.4.
 
