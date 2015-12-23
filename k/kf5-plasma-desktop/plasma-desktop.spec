@@ -10,7 +10,7 @@
 
 Name: kf5-%rname
 Version: 5.5.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -30,6 +30,7 @@ Patch5: alt-multimedia-player-chooser.patch
 Patch6: alt-def-panel.patch
 Patch7: alt-def-desktop.patch
 Patch8: alt-def-apps-menu2.patch
+Patch9: alt-def-apps-menu1.patch
 
 # Automatically added by buildreq on Mon Mar 23 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libusb-compat libxcb-devel libxcbutil-image libxcbutil-keysyms libxkbfile-devel mkfontscale pkg-config python-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -107,13 +108,14 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-#%patch2 -p1
-%patch3 -p1
+###%patch2 -p1
+#%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
+#%patch8 -p1
+%patch9 -p1
 
 %build
 %K5cmake \
@@ -201,6 +203,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Wed Dec 23 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt2
+- simplify menu favorites apps patch
+
 * Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
 - new version
 
