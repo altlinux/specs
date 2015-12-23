@@ -1,6 +1,6 @@
 Name: strace
 Version: 4.11
-Release: alt1
+Release: alt2
 
 Summary: Tracks and displays system calls associated with a running process
 License: BSD-style
@@ -14,6 +14,10 @@ Source: %name-%version-%release.tar
 Conflicts: rpm-utils <= 0:0.9.11-alt1
 
 BuildRequires: libacl-devel
+%ifarch %ix86 x86_64
+# for experimental -k option
+BuildRequires: libunwind-devel
+%endif
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
@@ -65,6 +69,9 @@ export SLEEP_A_BIT='sleep 0.1' VERBOSE=1
 %_bindir/strace-graph
 
 %changelog
+* Wed Dec 23 2015 Dmitry V. Levin <ldv@altlinux.org> 4.11-alt2
+- Enabled experimental -k option for x86 and x86_64.
+
 * Mon Dec 21 2015 Dmitry V. Levin <ldv@altlinux.org> 4.11-alt1
 - Updated to v4.11.
 
