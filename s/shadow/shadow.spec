@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.2.1
-Release: alt3
+Release: alt4
 Serial: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -391,6 +391,9 @@ fi
 %exclude %_man8dir/nologin.8.*
 
 %changelog
+* Wed Dec 23 2015 Mikhail Efremov <sem@altlinux.org> 1:4.2.1-alt4
+- Lazy link with -lsemanage (by Dmitry V. Levin).
+
 * Mon Oct 26 2015 Mikhail Efremov <sem@altlinux.org> 1:4.2.1-alt3
 - chage: Fix work with tcb.
 
