@@ -11,8 +11,8 @@
 %define licensepath	%_docdir
 
 Name: zarafa
-Version: 7.1.11
-Release: alt9
+Version: 7.1.14
+Release: alt1
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -22,10 +22,11 @@ Url: http://www.zarafa.com/
 Source: %name-%version.tar.gz
 Source1: php-zarafa.params
 Patch: zarafa-7.1.0beta1-alt-makefile.patch
-Patch1: zarafa-7.1.8-alt-ossbuild.patch
-Patch2: zarafa-7.1.6-alt-php-ext-makefile.patch
+Patch1: zarafa-7.1.14-alt-ossbuild.patch
+Patch2: zarafa-7.1.14-alt-php-ext-makefile.patch
 Patch3: zarafa-7.1.8-alt-fix-userscript-path.patch
-Patch4: zarafa-7.1.8-alt-configure.patch
+Patch4: zarafa-7.1.14-alt-configure.patch
+Patch5: zarafa-7.1.14-alt-boost.m4-update.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires(pre): rpm-build-apache2
@@ -258,6 +259,7 @@ modern web browser.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %build
 %add_optflags -fPIC -L%_libdir
@@ -685,6 +687,12 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Tue Dec 22 2015 Anton Farygin <rider@altlinux.ru> 7.1.14-alt1
+- new version
+
+* Tue Dec 22 2015 Anton Farygin <rider@altlinux.ru> 7.1.11-alt10
+- rebuild with php-5.6.16
+
 * Mon May 18 2015 Anton Farygin <rider@altlinux.ru> 7.1.11-alt9
 - rebuild with php-5.5.25
 

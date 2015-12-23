@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.5.25
-Release: alt2
+Version: 5.6.16
+Release: alt1
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.5
-%define _php5_snapshot 20150514
+%define _php5_snapshot 20151125
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -45,18 +45,17 @@ Patch39: php-set-session-save-path.patch
 Patch40: php5-5.2.13-alt-lsattr_path.patch
 Patch41: php5-alt-checklibs.patch
 Patch51: php-5.3.5-alt-build-gcc-version.patch
-Patch60: php-5.4.15-alt-bison-2.7.1.patch
+Patch60: php-%version-bison-pregenerated.patch
 Patch61: php5-5.5.9-phar-phppath.patch
 Patch62: php-mysqlnd-socket.patch
-Patch70: php-5.4.15-alt-modules-syms-visibility.patch
+Patch63: php5-5.6-syms-visibility.patch
 
 PreReq:  php5-libs = %version-%release
 Requires(post):  php5-suhosin
 Provides: php-engine = %version-%release
 Provides: %name = %rpm_build_version-%release
 
-# Automatically added by buildreq on Mon Mar 21 2011 (-bi)
-BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel
+BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison
 
 BuildRequires(pre): rpm-build-php5
 
@@ -172,10 +171,13 @@ in use by other PHP5-related packages.
 %patch40 -p1
 %patch41 -p2
 %patch51 -p2
-%patch60 -p2
+pushd Zend
+%patch60 -p1
+popd
 %patch61 -p1
 %patch62 -p1
-%patch70 -p2
+%patch63 -p1
+
 
 cp Zend/LICENSE Zend/ZEND_LICENSE
 cp Zend/ZEND_CHANGES Zend/ZEND_ChangeLog 
@@ -314,10 +316,10 @@ cp -dpR include                   %buildroot%_usrsrc/php5-devel/sapi/BUILD
 # install headers for PDO subpackages
 install -m644 -D ext/pdo/php_pdo.h %buildroot%_includedir/php/%_php5_version/ext/pdo/php_pdo.h
 install -m644 -D ext/pdo/php_pdo_driver.h %buildroot%_includedir/php/%_php5_version/ext/pdo/php_pdo_driver.h
+install -m644 -D ext/pdo/php_pdo_error.h %buildroot%_includedir/php/%_php5_version/ext/pdo/php_pdo_error.h
 
 # install headers for mysqlnd subpackages
 install -m644 -D ext/mysqlnd/mysqlnd.h %buildroot%_includedir/php/%_php5_version/ext/mysqlnd/mysqlnd.h
-install -m644 -D ext/mysqlnd/php_mysqlnd_config.h %buildroot%_includedir/php/%_php5_version/ext/mysqlnd/php_mysqlnd_config.h
 install -m644 -D ext/mysqlnd/mysqlnd_portability.h %buildroot%_includedir/php/%_php5_version/ext/mysqlnd/mysqlnd_portability.h
 install -m644 -D ext/mysqlnd/mysqlnd_enum_n_def.h %buildroot%_includedir/php/%_php5_version/ext/mysqlnd/mysqlnd_enum_n_def.h
 install -m644 -D ext/mysqlnd/mysqlnd_structs.h %buildroot%_includedir/php/%_php5_version/ext/mysqlnd/mysqlnd_structs.h
@@ -404,6 +406,16 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+
+* Fri Dec 18 2015 Anton Farygin <rider@altlinux.ru> 5.6.16-alt1
+- new version
+
+* Thu Oct 22 2015 Anton Farygin <rider@altlinux.ru> 5.6.14-alt1
+- new version
+
+* Thu Oct 22 2015 Anton Farygin <rider@altlinux.ru> 5.5.30-alt1
+- new version
+
 * Thu Jun 11 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.5.25-alt2
 - build fixed
 

@@ -1,7 +1,7 @@
 %define svnrevision	603
 Name: libvmime
 Version: 0.9.2
-Release: alt5
+Release: alt6
 Summary: Powerful library for MIME messages and Internet messaging services
 Group: System/Libraries
 License: GPLv3+
@@ -19,7 +19,7 @@ BuildRequires: sendmail
 BuildRequires: libgsasl-devel
 BuildRequires: libgnutls-devel
 BuildRequires: gcc-c++
-BuildRequires: libgnutls-extra-devel
+#BuildRequires: libgnutls-extra-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: iconv
 
@@ -68,6 +68,9 @@ export EXTRA_CFLAGS="-g -DVMIME_ALWAYS_GENERATE_7BIT_PARAMETER=1"
 %_pkgconfigdir/vmime.pc
 
 %changelog
+* Tue Dec 22 2015 Anton Farygin <rider@altlinux.ru> 0.9.2-alt6
+- rebuild in new environment
+
 * Tue Jun 12 2012 Radik Usupov <radik@altlinux.org> 0.9.2-alt5
 - Added vmime-0.9.2-qp-in-buffers.diff
 - Updated buildrequires

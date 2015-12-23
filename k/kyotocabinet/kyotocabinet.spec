@@ -1,6 +1,6 @@
 Name: kyotocabinet
 Version: 1.2.76
-Release: alt1
+Release: alt2
 Summary: library of routines for managing a database
 
 Group: Databases
@@ -87,6 +87,9 @@ rm %buildroot%_libdir/lib%name.a
 %_defaultdocdir/%name-%version
 
 %changelog
+* Tue Dec 22 2015 Anton Farygin <rider@altlinux.ru> 1.2.76-alt2
+- rebuild with new gcc
+
 * Wed Jul 04 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.76-alt1
 - New version 1.2.76
 
