@@ -1,6 +1,6 @@
 Name: ldapexplorertool2
 Version: 2.0.1
-Release: alt1.svn89
+Release: alt2.svn89
 
 Summary: LDAP Explorer Tool
 License: BSD
@@ -30,6 +30,9 @@ mkdir -p %buildroot/%_bindir
 %_datadir/%name
 
 %changelog
+* Thu Dec 24 2015 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt2.svn89
+- Rebuild with new wx
+
 * Tue Feb 26 2013 Eugene Prokopiev <enp@altlinux.ru> 2.0.1-alt1.svn89
 - first build for Sisyphus
 
