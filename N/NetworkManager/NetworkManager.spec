@@ -30,8 +30,10 @@
 %define _name %name-daemon
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 
+%define _unpackaged_files_terminate_build 1
+
 Name: NetworkManager
-Version: 1.0.8
+Version: 1.0.10
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -647,6 +649,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Dec 24 2015 Mikhail Efremov <sem@altlinux.org> 1.0.10-alt1
+- Patch from upstream:
+  + man: fix typos.
+- Updated to 1.0.10.
+
 * Mon Nov 30 2015 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt1
 - Updated to 1.0.8.
 

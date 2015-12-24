@@ -4,8 +4,10 @@
 
 %def_without bluetooth
 
+%define _unpackaged_files_terminate_build 1
+
 Name: NetworkManager-applet-gtk
-Version: 1.0.8
+Version: 1.0.10
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -159,6 +161,9 @@ make check
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Dec 24 2015 Mikhail Efremov <sem@altlinux.org> 1.0.10-alt1
+- Updated to 1.0.10.
+
 * Mon Nov 30 2015 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt1
 - Updated to 1.0.8.
 
