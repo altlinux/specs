@@ -1,5 +1,5 @@
 Name: xorg-cf-files
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 Summary: config files for Xorg build
 License: MIT/X11
@@ -84,6 +84,9 @@ done
 %_libdir/%name/*
 
 %changelog
+* Thu Dec 24 2015 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
