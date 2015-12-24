@@ -1,12 +1,12 @@
 Name: alien
-Version: 8.86
-Release: alt3
+Version: 8.95
+Release: alt1
 
 Summary: Install Debian and Slackware Packages with RPM
 
 Group: Archiving/Other
 License: GPL
-Url: http://kitenet.net/programs/alien/
+Url: https://github.com/mildred/alien
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -51,6 +51,9 @@ rm -rf %buildroot%_datadir/%name/
 %_man3dir/*
 
 %changelog
+* Thu Dec 24 2015 Hihin Ruslan <ruslandh@altlinux.ru> 8.95-alt1
+- new version
+
 * Thu Mar 29 2012 Dmitriy Kruglikov <dkr@altlinux.ru> 8.86-alt3
 - Help message redirected into stdout
 
