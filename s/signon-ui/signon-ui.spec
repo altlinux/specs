@@ -1,6 +1,6 @@
 Name: signon-ui
 Version: 0.17
-Release: alt0.1
+Release: alt0.2
 
 Group: System/Libraries
 Summary: Online Accounts Sign-on Ui
@@ -59,5 +59,8 @@ mkdir -p %buildroot/%_sysconfdir/signon-ui/webkit-options.d
 %_sysconfdir/signon-ui
 
 %changelog
+* Thu Dec 24 2015 Sergey V Turchin <zerg@altlinux.org> 0.17-alt0.2
+- update to 0.17+15.10.20150810
+
 * Thu Jul 09 2015 Sergey V Turchin <zerg@altlinux.org> 0.17-alt0.1
 - initial build
