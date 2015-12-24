@@ -45,7 +45,7 @@
 
 Name:    samba-DC
 Version: 4.3.3
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -598,6 +598,7 @@ for i in nmb smb winbind samba; do
     cat packaging/systemd/$i.service | sed -e 's@\[Service\]@[Service]\nEnvironment=KRB5CCNAME=FILE:/run/samba/krb5cc_samba@g' >tmp$i.service
     install -m 0644 tmp$i.service %buildroot%_unitdir/$i.service
 done
+subst 's,Type=notify,Type=forking,' %buildroot%_unitdir/*.service
 %if_with clustering_support
 install -m755 %SOURCE12 %buildroot%_initrddir/ctdb
 install -m 0644 ctdb/config/ctdb.service %buildroot%_unitdir
@@ -1252,6 +1253,9 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n task-samba-dc
 
 %changelog
+* Thu Dec 24 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.3-alt2
+- Change services type from notify to forking
+
 * Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.3-alt1
 - New version (https://www.samba.org/samba/history/samba-4.3.3.html)
 - Security fixes:
