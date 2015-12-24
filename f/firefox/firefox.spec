@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        42.0
+Version:        43.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -299,6 +299,26 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Dec 22 2015 Alexey Gladkov <legion@altlinux.ru> 43.0.1-alt1
+- New release (43.0.1).
+- Fixed:
+  + 2015-149 Cross-site reading attack through data and view-source URIs
+  + 2015-148 Privilege escalation vulnerabilities in WebExtension APIs
+  + 2015-147 Integer underflow and buffer overflow processing MP4 metadata in libstagefright
+  + 2015-146 Integer overflow in MP4 playback in 64-bit versions
+  + 2015-145 Underflow through code inspection
+  + 2015-144 Buffer overflows found through code inspection
+  + 2015-143 Linux file chooser crashes on malformed images due to flaws in Jasper library
+  + 2015-142 DOS due to malformed frames in HTTP/2
+  + 2015-141 Hash in data URI is incorrectly parsed
+  + 2015-140 Cross-origin information leak through web workers error events
+  + 2015-139 Integer overflow allocating extremely large textures
+  + 2015-138 Use-after-free in WebRTC when datachannel is used after being destroyed
+  + 2015-137 Firefox allows for control characters to be set in cookies
+  + 2015-136 Same-origin policy violation using perfomance.getEntries and history navigation
+  + 2015-135 Crash with JavaScript variable assignment with unboxed objects
+  + 2015-134 Miscellaneous memory safety hazards (rv:43.0 / rv:38.5)
+
 * Thu Nov 05 2015 Alexey Gladkov <legion@altlinux.ru> 42.0-alt1
 - New release (42.0).
 - Fixed:
