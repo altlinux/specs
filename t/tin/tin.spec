@@ -1,5 +1,5 @@
 Name: tin
-Version: 2.0.1
+Version: 2.2.1
 Release: alt1
 
 Summary: A basic Internet news reader
@@ -7,7 +7,8 @@ License: BSD
 Group: Networking/News
 
 URL: http://www.tin.org/
-Source: ftp://ftp.tin.org/pub/news/clients/tin/stable/tin-%version.tar.lzma
+Source0: ftp://ftp.tin.org/pub/news/clients/tin/stable/%{name}-%{version}.tar.xz
+Source1: tin.watch
 Source2: tin.attributes
 
 Patch1: tin-2.0.1-enable_coloring.patch
@@ -69,6 +70,10 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %exclude %_man5dir/mmdf.*
 
 %changelog
+* Thu Dec 24 2015 Michael Shigorin <mike@altlinux.org> 2.2.1-alt1
+- added debian watch file
+- new version (watch file uupdate)
+
 * Wed Dec 28 2011 Victor Forsiuk <force@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
