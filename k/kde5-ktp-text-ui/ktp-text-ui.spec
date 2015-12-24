@@ -1,8 +1,8 @@
 %define rname ktp-text-ui
 
 Name: kde5-%rname
-Version: 15.08.3
-Release: alt2
+Version: 15.12.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -108,6 +108,9 @@ KF5 library
 %_K5lib/libktpimagesharer.so.*
 
 %changelog
+* Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Fri Nov 06 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt2
 - fix LIBEXEC_INSTALL_DIR
 

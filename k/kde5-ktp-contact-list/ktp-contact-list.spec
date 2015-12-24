@@ -1,8 +1,8 @@
 %define rname ktp-contact-list
 
 Name: kde5-%rname
-Version: 15.08.3
-Release: alt2
+Version: 15.12.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -81,6 +81,9 @@ sed -i 's|^Exec=.*|Exec=%_K5bin/ktp-contactlist|' %buildroot/%_K5dbus_srv/org.kd
 #%_K5lib/libktp-contact-list.so.*
 
 %changelog
+* Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Fri Nov 06 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt2
 - fix dbus service
 

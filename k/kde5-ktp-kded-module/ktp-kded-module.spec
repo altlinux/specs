@@ -1,7 +1,7 @@
 %define rname ktp-kded-module
 
 Name: kde5-%rname
-Version: 15.08.3
+Version: 15.12.0
 Release: alt1
 %K5init altplace
 
@@ -9,6 +9,8 @@ Group: Graphical desktop/KDE
 Summary: KDE integration for telepathy
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: /bin/dbus-send
 
 Source: %rname-%version.tar
 
@@ -78,6 +80,9 @@ KF5 library
 #%_K5lib/libktp-kded-module.so.*
 
 %changelog
+* Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Thu Nov 05 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 

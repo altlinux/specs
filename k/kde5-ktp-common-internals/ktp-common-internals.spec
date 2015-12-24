@@ -8,8 +8,8 @@
 %define libktpwidgets libktpwidgets%sover
 
 Name: kde5-ktp-common-internals
-Version: 15.08.3
-Release: alt2
+Version: 15.12.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -161,6 +161,9 @@ developing applications that use %name.
 %_libdir/cmake/KTp/
 
 %changelog
+* Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Fri Nov 06 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt2
 - fix LIBEXEC_INSTALL_DIR
 
