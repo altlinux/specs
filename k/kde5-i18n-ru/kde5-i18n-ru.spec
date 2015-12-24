@@ -3,7 +3,7 @@
 %define lngg Russian
 
 Name: kde5-i18n-%lng
-Version: 15.08.3
+Version: 15.12.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -51,7 +51,7 @@ done
 
 %install
 %K5install
-%K5install_move data locale doc klettres katepart apps
+%K5install_move data all
 
 %files
 %dir %_K5doc/%lng/
@@ -67,8 +67,8 @@ done
 #%lang(%lng) %_K5i18n/%lng/LC_SCRIPTS/*
 #
 %lang(%lng) %_K5data/apps/kvtml/%lng/
-#%lang(%lng) %_K5data/ktuberling/sounds/%lng
-#%lang(%lng) %_K5data/ktuberling/sounds/%lng.soundtheme
+%lang(%lng) %_K5data/ktuberling/sounds/%lng
+%lang(%lng) %_K5data/ktuberling/sounds/%lng.soundtheme
 #%lang(%lng) %_K5data/khangman/%lng.txt
 %lang(%lng) %_K5data/klettres/%lng
 %lang(%lng) %_K5data/katepart/syntax/logohighlightstyle.%lng.xml
@@ -77,6 +77,9 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Thu Dec 24 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Tue Nov 17 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 
