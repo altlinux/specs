@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/lokalize/scripts/*.py
 
 Name: kde5-%rname
-Version: 15.08.3
+Version: 15.12.0
 Release: alt1
 %K5init altplace
 
@@ -26,7 +26,7 @@ BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-de
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel
 BuildRequires: kf5-kparts-devel kf5-kross-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel kf5-kcrash-devel
 
 %description
 Lokalize is the localization tool for KDE and other open source software.
@@ -54,6 +54,9 @@ Lokalize is the localization tool for KDE and other open source software.
 %_K5xmlgui/lokalize/
 
 %changelog
+* Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 

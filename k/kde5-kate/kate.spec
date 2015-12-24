@@ -4,7 +4,7 @@
 %define libkateinterfaces libkateinterfaces%sover
 
 Name: kde5-%rname
-Version: 15.08.3
+Version: 15.12.0
 Release: alt1
 %K5init
 
@@ -125,22 +125,22 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 %files common -f %name.lang
 %doc COPYING*
 %_K5icon/hicolor/*/apps/kate.*
-%_K5icon/hicolor/*/actions/*.*
+#%_K5icon/hicolor/*/actions/*.*
 
 #%files core
 
 %files
-%config(noreplace) %_K5xdgconf/katerc
-%config(noreplace) %_K5xdgconf/ktexteditor*
+#%config(noreplace) %_K5xdgconf/katerc
+#%config(noreplace) %_K5xdgconf/ktexteditor*
 %_K5bin/kate
-%_K5lib/libkdeinit5_kate.so
+#%_K5lib/libkdeinit5_kate.so
 %_K5plug/ktexteditor/
 %_K5plug/plasma/dataengine/*_kate*.so
 %_K5xdgapp/org.kde.kate.desktop
 %_K5data/plasma/plasmoids/org.kde.plasma.katesessions/
 %_K5data/plasma/services/org.kde.plasma.katesessions.*
 %_K5srv/plasma-*katesessions.desktop
-%_K5srv/kate*.desktop
+#%_K5srv/kate*.desktop
 %_K5data/kateproject/
 %_K5data/katexmltools/
 %_K5xmlgui/*
@@ -148,8 +148,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 
 %files -n kde5-kwrite
 %_K5bin/kwrite
-%_K5lib/libkdeinit5_kwrite.so
+#%_K5lib/libkdeinit5_kwrite.so
 %_K5xdgapp/org.kde.kwrite.desktop
+%_K5icon/hicolor/*/apps/kwrite.*
 #%_K5data/kwrite/
 #%_K5doc/en/kwrite/
 
@@ -164,6 +165,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 #%_K5link/lib*.so
 
 %changelog
+* Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %add_findreq_skiplist %_K5bin/package_crystalsvg
 
 Name: kde5-dev-scripts
-Version: 15.08.3
+Version: 15.12.0
 Release: alt1
 %K5init altplace
 
@@ -56,6 +56,9 @@ popd
 %_K5bin/*
 
 %changelog
+* Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 

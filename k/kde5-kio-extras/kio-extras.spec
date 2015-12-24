@@ -6,8 +6,8 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 15.08.3
-Release: alt2
+Version: 15.12.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -94,12 +94,13 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %files
 %_K5plug/kf5/kio/*.so
 %_K5plug/*.so
+%_K5plug/kf5/kded/*.so
 %_K5data/kio_*/
 %_K5data/konqsidebartng
 %_K5data/konqueror
 %_K5data/remoteview
 %_K5srv/*.desktop
-%_K5srv/kded/*.desktop
+#%_K5srv/kded/*.desktop
 %_K5srv/*.protocol
 %_K5srvtyp/*.desktop
 %_K5data/solid/actions/*.desktop
@@ -119,6 +120,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libmolletnetwork5.so.%molletnetwork_sover
 
 %changelog
+* Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Wed Dec 09 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt2
 - fix to build
 

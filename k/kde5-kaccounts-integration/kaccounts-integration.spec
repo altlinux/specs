@@ -3,7 +3,7 @@
 %define libkaccounts libkaccounts%sover
 
 Name: kde5-%rname
-Version: 15.08.3
+Version: 15.12.0
 Release: alt1
 %K5init altplace
 
@@ -27,7 +27,7 @@ BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin
 BuildRequires: kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel
-BuildRequires: kf5-sonnet-devel
+BuildRequires: kf5-sonnet-devel kf5-kdeclarative-devel kf5-kpackage-devel
 
 %description
 Accounts-SSO is the framework we are using to store secrets (tokens, passwords)
@@ -93,6 +93,9 @@ mkdir -p %buildroot/%_K5plug/kaccounts/{ui,daemonplugins}
 %_K5srv/kded/accounts.desktop
 
 %changelog
+* Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 
