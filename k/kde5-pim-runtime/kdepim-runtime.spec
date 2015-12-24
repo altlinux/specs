@@ -8,7 +8,7 @@
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 
 Name: kde5-pim-runtime
-Version: 15.08.3
+Version: 15.12.0
 Release: alt1
 %K5init altplace
 
@@ -122,7 +122,7 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_datadir/akonadi5/firstrun/*
 %_datadir/akonadi5/plugins/*
 %_K5srv/akonadi.protocol
-%_K5srv/*.desktop
+#%_K5srv/*.desktop
 %_K5srv/akonadi/davgroupware-providers/
 %_K5srvtyp/*provider.desktop
 %_K5notif/akonadi_*
@@ -148,6 +148,9 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Mon Dec 21 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
+- new version
+
 * Thu Nov 12 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 
