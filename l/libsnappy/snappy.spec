@@ -1,10 +1,10 @@
 Name: libsnappy
-Version: 1.1.1
-Release: alt2
+Version: 1.1.3
+Release: alt1
 Summary: Google fast compression/decompression library
 Group: System/Libraries
 License: BSD
-Url: http://code.google.com/p/snappy/
+Url: http://google.github.io/snappy/
 Source: snappy-%version.tar.gz
 
 # Automatically added by buildreq on Wed Mar 30 2011
@@ -57,6 +57,9 @@ rm -rf %buildroot/%_defaultdocdir/snappy
 %_libdir/*.a
 
 %changelog
+* Thu Dec 24 2015 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
+- Autobuild version bump to 1.1.3
+
 * Tue Dec 1 2015 Vladimir Didenko <cow@altlinux.org> 1.1.1-alt2
 - Rebuild with gcc5
 
