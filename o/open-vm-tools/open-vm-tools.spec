@@ -9,8 +9,8 @@
 %def_with gtkmm
 
 %global majorversion    10.0
-%global minorversion    0
-%global toolsbuild      3000743
+%global minorversion    5
+%global toolsbuild      3227872
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 
@@ -83,15 +83,8 @@ rm -rf autom4te.cache
 rm -f configure
 
 %build
-# Use -Wno-unused-local-typedefs to build with GCC 4.8
-# Use -Wno-deprecated-declarations for version 9.4.0+
-# Use _DEFAULT_SOURCE to suppress warning until upstream
-# is fixed. Refer https://sourceware.org/bugzilla/show_bug.cgi?id=16632.
-export CFLAGS="$RPM_OPT_FLAGS -Wno-unused-local-typedefs -Wno-deprecated-declarations -D_DEFAULT_SOURCE"
-export CXXLAGS="$RPM_OPT_FLAGS -Wno-unused-local-typedefs -Wno-deprecated-declarations -D_DEFAULT_SOURCE"
-# Required for version 9.4.0+
+export CXXFLAGS="$RPM_OPT_FLAGS -std=gnu++11"
 export CUSTOM_PROCPS_NAME=procps
-# Required for version 9.4.6
 %autoreconf
 %undefine _configure_gettext
 %configure \
@@ -114,7 +107,10 @@ export CUSTOM_PROCPS_NAME=procps
 
 # Remove exec bit from config files
 chmod a-x %buildroot%_sysconfdir/pam.d/*
-
+%if_enabled vgauth
+chmod a-x %buildroot%_sysconfdir/vmware-tools/*.conf
+chmod a-x %buildroot%_sysconfdir/vmware-tools/vgauth/schemas/*
+%endif
 # Remove the DOS line endings
 sed -i "s|\r||g" README
 
@@ -125,6 +121,9 @@ sed -i "s|^Encoding.*$||g" %buildroot%_sysconfdir/xdg/autostart/vmware-user.desk
 find %buildroot%_libdir -name '*.la' -delete
 rm -fr %buildroot%_defaultdocdir
 rm -f docs/api/build/html/FreeSans.ttf
+
+# Remove mount.vmhgfs & symlink
+rm -fr %buildroot%_sbindir %buildroot/sbin/mount.vmhgfs
 
 # Move vm-support to /usr/bin
 mv %buildroot%_sysconfdir/vmware-tools/vm-support %buildroot%_bindir
@@ -160,7 +159,16 @@ fi
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README
 %config(noreplace) %_sysconfdir/pam.d/*
-%_sysconfdir/vmware-tools/
+%dir %_sysconfdir/vmware-tools
+%if_enabled vgauth
+%dir %_sysconfdir/vmware-tools/vgauth
+%dir %_sysconfdir/vmware-tools/vgauth/schemas
+%config(noreplace) %_sysconfdir/vmware-tools/vgauth.conf
+%config %_sysconfdir/vmware-tools/vgauth/schemas/*
+%endif
+%_sysconfdir/vmware-tools/*-vm-default
+%_sysconfdir/vmware-tools/scripts
+%_sysconfdir/vmware-tools/statechange.subr
 %_bindir/vmtoolsd
 %_bindir/vmware-checkvm
 %_bindir/vmware-hgfsclient
@@ -177,9 +185,7 @@ fi
 %_libdir/%name/plugins/common/*.so
 %dir %_libdir/%name/plugins/vmsvc
 %_libdir/%name/plugins/vmsvc/*.so
-%exclude %_sbindir/mount.vmhgfs
 %_datadir/%name/
-%exclude /sbin/
 %_unitdir/%toolsdaemon.service
 %_initdir/%toolsdaemon
 %_udevrulesdir/*.rules
@@ -201,6 +207,9 @@ fi
 %_libdir/libvmtools.so
 
 %changelog
+* Fri Dec 25 2015 Alexey Shabalin <shaba@altlinux.ru> 10.0.5-alt1.3227872
+- 10.0.5
+
 * Mon Sep 14 2015 Alexey Shabalin <shaba@altlinux.ru> 10.0.0-alt1.3000743
 - open-vm-tools-10.0.0-3000743
 
