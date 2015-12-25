@@ -3,7 +3,7 @@
 %define beta %nil
 
 Name: elementary
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
@@ -15,7 +15,7 @@ Source: http://download.enlightenment.org/rel/libs/%name/%name-%version%beta.tar
 # ef4c303
 #Source: %name-%version.tar
 
-BuildRequires: efl-libs-devel >= %ver_major
+BuildRequires: efl-libs-devel >= %ver_major.1
 BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
 
 %description
@@ -105,6 +105,9 @@ developing applications that use Elementary libraries.
 %_iconsdir/*.png
 
 %changelog
+* Fri Dec 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
+- 1.16.1
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0 release
 
