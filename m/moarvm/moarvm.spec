@@ -1,5 +1,5 @@
 Name: moarvm
-Version: 2015.11
+Version: 2015.12
 Release: alt1
 Summary: 6model-based VM for NQP and Rakudo Perl 6
 
@@ -80,6 +80,9 @@ perl Configure.pl --prefix=%_prefix --libdir=%_libdir \
 %_datadir/pkgconfig/moar.pc
 
 %changelog
+* Fri Dec 25 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.12-alt1
+- 2015.12
+
 * Sun Nov 29 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.11-alt1
 - 2015.11
 
