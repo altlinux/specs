@@ -4,21 +4,23 @@
 %define beta %nil
 %define gst_api_ver 1.0
 
-%def_enable wayland
-%def_disable wayland_egl
 %def_enable multisense
 %def_enable fb
 # fb requires tslib?
 %def_disable tslib
-%def_disable egl
 %def_disable xcb
 %def_enable drm
-%def_disable gl_drm
 %def_enable ibus
 %def_enable gstreamer1
 
+%def_enable wayland
+%def_disable wayland_egl
+%def_disable egl
+# currently with GLES only
+%def_disable gl_drm
+
 Name: efl
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -27,7 +29,6 @@ Group: System/Libraries
 Url: http://www.enlightenment.org/
 
 Source: http://download.enlightenment.org/rel/libs/%name/%name-%version%beta.tar.xz
-# 9b167d9
 #Source: %name-%version.tar
 Patch: efl-1.15.0-alt-ecore_fb.patch
 
@@ -312,6 +313,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Fri Dec 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
+- 1.16.1
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0 release
 
