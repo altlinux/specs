@@ -1,15 +1,16 @@
 %def_with	enigmail
 %def_with	lightning
+%define 	r_name thunderbird
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	38.4.0
+Version:	38.5.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
 URL:		http://www.mozillamessaging.com
 
-Packager:	Alexey Gladkov <legion@altlinux.ru>
+Packager:	Andrey Cherepanov <cas@altlinux.org>
 
 Source0:	thunderbird-source.tar
 Source1:	enigmail-source.tar
@@ -33,7 +34,7 @@ BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: bzlib-devel zlib-devel
 BuildRequires: mozldap-devel
 BuildRequires: zip unzip
-BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libcairo-devel libpixman-devel
 BuildRequires: libGL-devel
 BuildRequires: libwireless-devel
@@ -48,6 +49,8 @@ BuildRequires: libffi-devel
 BuildRequires: libproxy-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXdamage-devel
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -65,6 +68,7 @@ Provides:	mailclient
 Obsoletes:	thunderbird-calendar
 Obsoletes:	thunderbird-calendar-timezones
 
+Conflicts:	thunderbird
 Provides:	thunderbird-gnome-support = %version-%release
 Obsoletes:	thunderbird-gnome-support
 
@@ -78,10 +82,10 @@ BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
 
 %define tbird_cid                    \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
-%define tbird_prefix                 %_libdir/%name
-%define tbird_datadir                %_datadir/%name
-%define tbird_idldir                 %_datadir/idl/%name
-%define tbird_includedir             %_includedir/%name
+%define tbird_prefix                 %_libdir/%r_name
+%define tbird_datadir                %_datadir/%r_name
+%define tbird_idldir                 %_datadir/idl/%r_name
+%define tbird_includedir             %_includedir/%r_name
 %define tbird_develdir               %tbird_prefix-devel
 
 %description
@@ -100,6 +104,7 @@ Url: http://enigmail.mozdev.org/
 
 Provides: %name-enigmail = %engimail_version
 Requires: %name = %version-%release
+Conflicts: %r_name-enigmail
 
 Obsoletes: thunderbird-enigmail < 0.95.7-alt2
 
@@ -118,6 +123,7 @@ Url: http://www.mozilla.org/projects/calendar/lightning/
 
 Provides: %name-lightning = 1.9b1
 Requires: %name = %version-%release
+Conflicts: %r_name-lightning
 
 %description lightning
 An integrated calendar for Thunderbird.
@@ -130,7 +136,8 @@ Group: Office
 Url: http://www.mozilla.org/projects/calendar/lightning/
 
 Requires: %name = %version-%release
-Requires: thunderbird-lightning = %version-%release
+Requires: %name-lightning = %version-%release
+Conflicts: %r_name-google-calendar
 
 Provides: gdata-provider = %version-%release
 
@@ -142,6 +149,7 @@ Allows bidirectional access to Google Calendar
 Summary:	Thunderbird development kit.
 Group:		Development/C++
 Requires:	%name = %version-%release
+Conflicts:      %r_name-devel
 
 Requires:	python-base
 AutoReq:	yes, nopython
@@ -149,15 +157,16 @@ AutoReq:	yes, nopython
 %description devel
 Thunderbird development kit.
 
-%package -n rpm-build-thunderbird
+%package -n rpm-build-%name
 Summary: 	RPM helper macros to rebuild thunderbird packages
 Group:		Development/Other
 BuildArch:	noarch
 
 Requires:	mozilla-common-devel
 Requires:	rpm-build-mozilla.org
+Conflicts:      rpm-build-%r_name
 
-%description -n rpm-build-thunderbird
+%description -n rpm-build-%name
 These helper macros provide possibility to rebuild
 thunderbird packages by some Alt Linux Team Policy compatible way.
 
@@ -173,7 +182,7 @@ tar -xf %SOURCE2
 
 %patch6 -p1
 #patch8 -p2
-%patch9 -p1
+%patch9 -p0
 
 #echo %version > mail/config/version.txt
 
@@ -357,12 +366,12 @@ chmod 755 %buildroot/%_bindir/thunderbird
 # rpm-build-thunderbird files
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
 
-cp -a rpm-build/rpm.macros %buildroot/%_sysconfdir/rpm/macros.d/%name
+cp -a rpm-build/rpm.macros %buildroot/%_sysconfdir/rpm/macros.d/%r_name
 
 sed -i \
 	-e 's,@tbird_version@,%version,' \
 	-e 's,@tbird_release@,%release,' \
-	%buildroot/%_sysconfdir/rpm/macros.d/%name
+	%buildroot/%_sysconfdir/rpm/macros.d/%r_name
 
 %if_with enigmail
 mv -f -- \
@@ -410,7 +419,7 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %mozilla_arch_extdir/%tbird_cid
 %mozilla_noarch_extdir/%tbird_cid
 %defattr(0644,root,root,0755)
-%_datadir/applications/%name.desktop
+%_datadir/applications/%r_name.desktop
 %_iconsdir/hicolor/16x16/apps/thunderbird.png
 %_iconsdir/hicolor/22x22/apps/thunderbird.png
 %_iconsdir/hicolor/24x24/apps/thunderbird.png
@@ -444,10 +453,18 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %tbird_includedir
 %tbird_develdir
 
-%files -n rpm-build-thunderbird
-%_sysconfdir/rpm/macros.d/%name
+%files -n rpm-build-%name
+%_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Sat Dec 26 2015 Andrey Cherepanov <cas@altlinux.org> 38.5.0-alt1
+- New version
+- Security fixes:
+  + MFSA 2015-149 Cross-site reading attack through data and view-source URIs
+  + MFSA 2015-146 Integer overflow in MP4 playback in 64-bit versions
+  + MFSA 2015-145 Underflow through code inspection
+  + MFSA 2015-139 Integer overflow allocating extremely large textures
+
 * Thu Nov 26 2015 Alexey Gladkov <legion@altlinux.ru> 38.4.0-alt1
 - New version (38.4.0).
 - Enigmail (1.8.2).
