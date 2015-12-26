@@ -4,7 +4,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		%r_name-esr
-Version:	38.4.0
+Version:	38.5.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -456,6 +456,14 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Sat Dec 26 2015 Andrey Cherepanov <cas@altlinux.org> 38.5.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2015-149 Cross-site reading attack through data and view-source URIs
+  + MFSA 2015-146 Integer overflow in MP4 playback in 64-bit versions
+  + MFSA 2015-145 Underflow through code inspection
+  + MFSA 2015-139 Integer overflow allocating extremely large textures
+
 * Thu Nov 26 2015 Andrey Cherepanov <cas@altlinux.org> 38.4.0-alt1
 - New ESR version
 
