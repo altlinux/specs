@@ -1,5 +1,5 @@
 Name: qxmpp
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 
 Summary: Qt XMPP library
@@ -113,6 +113,9 @@ install -m644 AUTHORS CHANGELOG README.md %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name/README.md
 
 %changelog
+* Sat Dec 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.3-alt1
+- 0.9.3
+
 * Wed Sep 02 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
 - 0.9.1
 
