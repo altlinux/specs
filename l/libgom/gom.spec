@@ -5,7 +5,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A GObject to SQLite object mapper
@@ -107,6 +107,9 @@ This package contains development documentation for the Gom library.
 %endif
 
 %changelog
+* Sat Dec 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Wed Apr 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
