@@ -11,8 +11,8 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.24
-Release: alt1.1
+Version: %ver_major.25
+Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -29,7 +29,7 @@ Provides: %name-light = %version-%release
 %define gsf_ver 1.14.34
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.24
+%define goffice_ver 0.10.25
 %if_with python
 # Provided by python_loader.so
 Provides: python%__python_version(Gnumeric)
@@ -180,6 +180,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Sat Dec 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.25-alt1
+- 1.12.25
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.12.24-alt1.1
 - rebuild with new perl 5.22.0
 
