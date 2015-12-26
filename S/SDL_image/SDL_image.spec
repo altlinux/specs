@@ -1,6 +1,6 @@
 Name: SDL_image
 Version: 1.2.12
-Release: alt1
+Release: alt2
 
 Summary: Image loading library for SDL
 Group: System/Libraries
@@ -91,6 +91,9 @@ install -pm755 .libs/showimage %buildroot%_bindir/
 %endif
 
 %changelog
+* Sat Dec 26 2015 Dmitry V. Levin <ldv@altlinux.org> 1.2.12-alt2
+- Applied a png fix from Fedora.
+
 * Mon Sep 17 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.12-alt1
 - Updated to 1.2.12.
 
