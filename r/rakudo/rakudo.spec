@@ -1,6 +1,6 @@
 Name: rakudo
 Version: 2015.12
-Release: alt1
+Release: alt2
 Summary: Perl 6 compiler for the MoarVM
 
 Group: Development/Other
@@ -34,23 +34,36 @@ perl Configure.pl --prefix=%_prefix --backends=moar
 %make_build LIBDIR=%_libdir
 
 %install
+export RAKUDO_PREFIX=%buildroot%_datadir/perl6
 %makeinstall_std LIBDIR=%_libdir
-
-mkdir -p %buildroot%_datadir/perl6/{vendor,site}/lib
 
 %files
 %_bindir/perl6*
 %_datadir/nqp/lib/Perl6
-%_datadir/perl6/lib/*
-%_datadir/perl6/runtime/*
 %_libdir/perl6/runtime/dynext
-%dir %_datadir/perl6/vendor
-%dir %_datadir/perl6/vendor/lib
+%dir %_libdir/perl6
+%dir %_libdir/perl6/runtime
+%dir %_datadir/perl6/bin
+%dir %_datadir/perl6/dist
+%dir %_datadir/perl6/short
 %dir %_datadir/perl6/site
-%dir %_datadir/perl6/site/lib
+%dir %_datadir/perl6/sources
+%dir %_datadir/perl6/resources
+%dir %_datadir/perl6/runtime
+%dir %_datadir/perl6/vendor
+%_datadir/perl6/dist/*
+%_datadir/perl6/runtime/*
+%_datadir/perl6/short/*
+%_datadir/perl6/site/*
+%_datadir/perl6/sources/*
+%_datadir/perl6/vendor/*
 %doc LICENSE README.md CREDITS
+%exclude %_datadir/perl6/repo.lock
 
 %changelog
+* Sat Dec 26 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.12-alt2
+- fix install
+
 * Sat Dec 26 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.12-alt1
 - 2015.12
 
