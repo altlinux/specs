@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.10.0
-Release: alt1
+Release: alt2
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,10 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Sat Dec 26 2015 Alexei Takaseev <taf@altlinux.org> 1.10.0-alt2
+- ppp_auth: fixed broken noauth mode
+- pppd_compat: change mode of radattr files to 0644
+
 * Tue Dec 22 2015 Alexei Takaseev <taf@altlinux.org> 1.10.0-alt1
 - 1.10.0
 
