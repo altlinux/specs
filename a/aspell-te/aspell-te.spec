@@ -1,13 +1,13 @@
-%define debug_package %{nil}
-%define lang te
-%define langrelease 2
+Group: Text tools
+%global debug_package %{nil}
+%global lang te
+%global langrelease 2
 
 Name:           aspell-te
 Version:        0.01
-Release:        alt2_13
+Release:        alt2_14
 Summary:        GNU Aspell Telugu Dictionary Package
 
-Group:          Text tools
 License:        GPLv2+
 URL:            http://aspell.net/
 Source0:        ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
@@ -33,23 +33,23 @@ GNU Aspell Telugu Dictionary Package
 %prep
 %setup -q -n aspell6-%{lang}-%{version}-%{langrelease}
 
-
 %build
 ./configure
 make %{?_smp_mflags}
 
-
 %install
 make install DESTDIR=%{buildroot}
 
-
 %files
-%doc COPYING Copyright
+%doc Copyright
+%doc COPYING
 %{_libdir}/aspell/*
 %{_datadir}/aspell/*
 
-
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_13
 - update to new release by fcimport
 
