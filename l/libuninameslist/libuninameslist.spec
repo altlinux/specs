@@ -1,17 +1,14 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libuninameslist
-Version:        20130501
-Release:        alt1_4
+Version:        20150701
+Release:        alt1_1
 
 Summary:        A library providing Unicode character names and annotations
 
 Group:          System/Libraries
 License:        BSD
-URL:            http://libuninameslist.sourceforge.net
-Source0:        https://github.com/fontforge/libuninameslist/archive/Version_0.3.20130501.zip
+URL:            https://github.com/fontforge/libuninameslist
+Source0:        https://github.com/fontforge/libuninameslist/archive/0.5.20150701.tar.gz
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
@@ -31,7 +28,7 @@ This package contains header files and static libraries for %{name}.
 
 
 %prep
-%setup -q -n libuninameslist-Version_0.3.20130501
+%setup -q -n libuninameslist-0.5.20150701
 
 %build
 autoreconf -i
@@ -52,9 +49,12 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 %files devel
 %{_libdir}/*.so
 %{_includedir}/*
-
+%{_libdir}/pkgconfig/libuninameslist.pc
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 20150701-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20130501-alt1_4
 - update to new release by fcimport
 
