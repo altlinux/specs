@@ -1,13 +1,13 @@
-%define debug_package %{nil}
-%define lang bn
-%define langrelease 1
+Group: Text tools
+%global debug_package %{nil}
+%global lang bn
+%global langrelease 1
 
 Name:           aspell-bn
 Version:        0.01.1
-Release:        alt2_13
+Release:        alt2_14
 Summary:        GNU Aspell Bengali Dictionary Package
 
-Group:          Text tools
 License:        GPLv2+
 URL:            http://aspell.net/
 Source0:        ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
@@ -42,14 +42,17 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=%{buildroot}
 
-
 %files
-%doc COPYING Copyright
+%doc Copyright
+%doc COPYING
 %{_libdir}/aspell/*
 %{_datadir}/aspell/*
 
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.01.1-alt2_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.01.1-alt2_13
 - update to new release by fcimport
 
