@@ -2,15 +2,15 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+Group: Development/C
 %add_optflags %optflags_shared
+%global majorver 2
+
 Name: libapogee
 Version: 2.2
-Release: alt2_16
+Release: alt2_17
 Summary: Library for Apogee CCD Cameras
 
-%define majorver 2
-
-Group: Development/C
 License: GPLv2+
 URL: http://indi.sourceforge.net/index.php
 
@@ -32,8 +32,8 @@ Source44: import.info
 Apogee library is used by applications to control Apogee CCDs.
 
 %package devel
-Summary: Libraries, includes, etc. used to develop an application with %{name}
 Group: Development/C
+Summary: Libraries, includes, etc. used to develop an application with %{name}
 Requires: %{name}%{?_isa} = %{version}-%{release}
 %description devel
 These are the header files needed to develop a %{name} application
@@ -57,15 +57,17 @@ rm -fr %{buildroot}
 make install DESTDIR=%{buildroot}
 
 %files
-%doc AUTHORS ChangeLog README LICENSE
+%doc %doc AUTHORS ChangeLog README
 %{_libdir}/*.so.*
 
 %files devel
-%doc LICENSE
 %{_includedir}/*
 %{_libdir}/*.so
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_17
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_16
 - update to new release by fcimport
 
