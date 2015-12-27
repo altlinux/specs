@@ -1,14 +1,12 @@
 Group: Text tools
 Name:           colordiff
-Version:        1.0.15
+Version:        1.0.16
 Release:        alt1_1
 Summary:        Color terminal highlighter for diff files
 
 License:        GPLv2+
 URL:            http://www.colordiff.org/
 Source0:        http://www.colordiff.org/%{name}-%{version}.tar.gz
-# https://github.com/daveewart/colordiff/pull/21
-Patch0:         https://github.com/scop/colordiff/commit/6f719aa.patch
 
 BuildArch:      noarch
 Requires:       diffutils
@@ -27,7 +25,6 @@ pretty syntax highlighting.  Color schemes can be customized.
 
 %prep
 %setup -q
-%patch0 -p1
 
 # those are defaults of old 1.0.8a-alt1 by Pavlov Konstantin <thresh@>
 sed -i -e 's/banner=yes/banner=no/' colordiffrc-*
@@ -38,12 +35,11 @@ sed -i -e 's/banner=yes/banner=no/' colordiffrc-*
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
+%makeinstall_std INSTALL_DIR=%{_bindir} \
     ETC_DIR=%{_sysconfdir} MAN_DIR=%{_mandir}/man1
 
 
 %files
-%{!?_licensedir:%global license %%doc}
 %doc COPYING
 %doc BUGS CHANGES colordiffrc colordiffrc-gitdiff colordiffrc-lightbg README
 %config(noreplace) %{_sysconfdir}/colordiffrc
@@ -54,6 +50,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
 
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.16-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.15-alt1_1
 - update to new release by fcimport
 
