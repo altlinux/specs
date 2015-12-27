@@ -2,64 +2,81 @@
 BuildRequires: /usr/bin/guile /usr/bin/guile-config /usr/bin/indent guile18-devel libnlopt-devel libreadline-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
+Group: System/Libraries
 %add_optflags %optflags_shared
 Name:           libctl
-Version:        3.2.1
+Version:        3.2.2
 Release:        alt1_2
 Summary:        Guile-based support for flexible control files
-
-Group:          System/Libraries
 # integrator.c and cintergrator.c contain code licensed under GPLv2+
 # The rest of the code is LGPLv2+, but most restrictive license wins
 # for the package.
 License:        GPLv2+
 URL:            http://ab-initio.mit.edu/wiki/index.php/Libctl
 Source0:        http://ab-initio.mit.edu/libctl/libctl-%{version}.tar.gz
-BuildRequires:  gcc-fortran guile-devel
+Patch0:         0001-Add-check-for-sincos-function-from-libm-to-configure.patch
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  gcc-fortran
+BuildRequires:  guile-devel
+BuildRequires:  libtool
 Requires:       guile
 Source44: import.info
 
 %description
-The libctl package is a Guile-based library that provides support for
+libctl is a Guile-based library that provides support for
 flexible control files in scientific simulations.
 
-%package devel
-Summary:        Development files for libctl
-Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+%package        devel
+Group: Development/C
+Summary:        Development files for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description devel
-This package contains the development files for libctl.
+%description    devel
+This package contains libraries and header files for
+developing applications that use %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
-%configure F77=gfortran --enable-shared --disable-static \
-  --includedir=%{_includedir}/ctl LDFLAGS='%{optflags} -lm'
-make %{?_smp_mflags}
+autoreconf -fiv
+F77=gfortran              \
+%configure                \
+        --disable-rpath   \
+        --enable-shared   \
+        --disable-static  \
+        --includedir=%{_includedir}/ctl
+
+%make_build
 
 %install
-make install DESTDIR=%{buildroot}
-rm -f %{buildroot}%{_libdir}/*.la
+%makeinstall_std
+
+find %{buildroot} -name '*.la' -delete -print
 # kill rpath
 for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
 done
 
 %files
-%doc COPYING AUTHORS NEWS 
-%{_libdir}/*.so.*
+%doc COPYING COPYRIGHT
+%{_libdir}/libctl*.so.*
 
 %files devel
-%doc ChangeLog
+%doc AUTHORS NEWS
+%doc doc/
 %{_bindir}/gen-ctl-io
-%{_includedir}/ctl
-%{_libdir}/*.so
-%{_mandir}/man1/*
-%{_datadir}/libctl
+%{_includedir}/ctl/
+%{_libdir}/libctl*.so
+%{_mandir}/man1/gen-ctl-io.1*
+%{_datadir}/libctl/
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1_2
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_2
 - update to new release by fcimport
 
