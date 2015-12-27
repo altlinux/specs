@@ -1,20 +1,18 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: zlib-devel
-# END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 Name:		libax25
-Version:	0.0.12
-Release:	alt2_0.9.rc2
+Version:        1.0.5
+Release:        alt1_1
 Summary:	AX.25 library for hamradio applications
 
-Group:		System/Libraries
 License:	LGPLv2+
-URL:		http://ax25.sourceforge.net/
-Source0:	http://downloads.sourceforge.net/ax25/%{name}-%{version}-rc2.tar.gz
+URL:		http://www.linux-ax25.org/wiki/Libax25
+Source0:	http://www.linux-ax25.org/pub/libax25/%{name}-%{version}.tar.gz
+
+BuildRequires:  autoconf automake libtool
+BuildRequires:  zlib-devel
 Source44: import.info
 
-#BuildRequires:  
-#Requires:       
 
 %description
 libax25 is a library for ham radio applications that use the ax25 protocol. 
@@ -23,10 +21,9 @@ config file parsing, etc.
 
 
 %package	devel
-
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -34,7 +31,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -qn %{name}-%{version}-rc2
+%setup -q
 # hack; added -lz; report upstream
 sed -i -e "s,libax25_la_SOURCES,libax25_la_LIBADD = -lz\nlibax25_la_SOURCES," Makefile.am
 sed -i -e "s,libax25io_la_SOURCES,libax25io_la_LIBADD = -lz\nlibax25io_la_SOURCES," Makefile.am
@@ -43,27 +40,38 @@ sed -i -e "s,libax25io_la_SOURCES,libax25io_la_LIBADD = -lz\nlibax25io_la_SOURCE
 
 %build
 autoreconf -fisv
+./autogen.sh
 %configure --disable-static
 make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+
+# Create /etc/ax25
+mkdir -p %{buildroot}%{_sysconfdir}/ax25
+
+# These headers conflict with glibc-headers.
+rm -f %{buildroot}%{_includedir}/{netax25/ax25.h,netrom/netrom.h,netrose/rose.h}
 
 
 %files
-%doc AUTHORS ChangeLog COPYING README
+%doc AUTHORS ChangeLog README
+%doc COPYING
 %{_libdir}/*.so.*
 %{_mandir}/man?/*
+%dir %{_sysconfdir}/ax25
 
 %files devel
-%doc AUTHORS ChangeLog COPYING README
 %{_includedir}/*
 %{_libdir}/*.so
 
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.12-alt2_0.9.rc2
 - update to new release by fcimport
 
