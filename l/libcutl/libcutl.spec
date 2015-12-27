@@ -1,13 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 %define fedora 22
 # The base of the version (just major and minor without point)
-%global base_version 1.9
+%global base_version 1.10
 
 Name:           libcutl
 Version:        %{base_version}.0
-Release:        alt1_6
+Release:        alt1_1
 Summary:        C++ utility library from Code Synthesis
 
 Group:          System/Libraries
@@ -28,7 +29,6 @@ BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave
 BuildRequires: boost141-devel
 %endif
 # Uses pkgconfig
-BuildRequires: pkgconfig
 BuildRequires: expat-devel
 Source44: import.info
 
@@ -89,6 +89,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_1
+- update to new release by fcimport
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1_6
 - new version
 
