@@ -1,14 +1,15 @@
 Name:    texmf-latex-beamer
 Version: 3.36
-Release: alt3
+Release: alt4
 Summary: A LaTeX class that allows create pdf-presentations
 Summary(ru_RU.UTF-8): LaTeX класс для подготовки презентаций в pdf-формате
 License: GPL
 Group:   Publishing
-URL:     http://latex-beamer.sourceforge.net
+URL:     https://bitbucket.org/rivanvx/beamer/commits/all
 
 BuildArchitectures: noarch
 BuildRequires(pre): rpm-build-texmf
+BuildRequires: texmf-latex-beamer
 Conflicts: tetex-latex-beamer
 
 Packager: Andrey Bergman <vkni@altlinux.org>
@@ -44,6 +45,9 @@ emacs support for beamer LaTeX class
 %build
 #%%make
 %__mv base/emulation/examples doc/emulation
+cd doc
+%make
+cd ..
 
 %install
 # Основные каталоги
@@ -55,7 +59,7 @@ emacs support for beamer LaTeX class
 %__mkdir_p %buildroot%_emacslispdir
 
 # Документация
-%__mkdir_p %buildroot%_texmfdoc/tex/latex/beamer/{themes,emulation,examples/{a-conference-talk,a-lecture},solutions/{conference-talks,generic-talks,short-talks}}
+%__mkdir_p %buildroot%_texmfdoc/tex/latex/beamer/{emulation,examples/{a-conference-talk,a-lecture},solutions/{conference-talks,generic-talks,short-talks}}
 
 install -pD -m644 base/*.sty %buildroot%_texmfmain/tex/latex/beamer/base/
 install -pD -m644 base/*.cls %buildroot%_texmfmain/tex/latex/beamer/base/
@@ -89,7 +93,7 @@ install -pD -m644 base/translator/dicts/translator-theorem-dictionary/* %buildro
 
 # Документация
 install -pD -m644 {AUTHORS,ChangeLog,FILES,INSTALL,README,TODO} %buildroot%_texmfdoc/tex/latex/beamer/
-#install -pD -m644 doc/beameruserguide.pdf %buildroot%_texmfdoc/tex/latex/beamer/
+install -pD -m644 doc/*.pdf %buildroot%_texmfdoc/tex/latex/beamer/
 install -pD -m644 doc/emulation/* %buildroot%_texmfdoc/tex/latex/beamer/emulation/
 
 # Примеры
@@ -132,6 +136,9 @@ install -pD -m644 emacs/beamer.el %buildroot%_emacslispdir/
 %_emacslispdir/beamer.el
 
 %changelog
+* Sun Dec 27 2015 Andrey Bergman <vkni@altlinux.org> 3.36-alt4
+- Added Beamer User Guide. 
+
 * Sun Oct 25 2015 Andrey Bergman <vkni@altlinux.org> 3.36-alt3
 - Added missing art files.
 
