@@ -1,25 +1,45 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(ExtUtils/MM_Unix.pm) perl(File/Basename.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Socket.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-NoTabs
 Version:	1.4
-Release:	alt1
+Release:	alt1_3
 Summary:	Check the presence of tabs in your project
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-NoTabs/
-Source:	http://www.cpan.org/authors/id/B/BO/BOBTFISH/Test-NoTabs-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/B/BO/BOBTFISH/Test-NoTabs-%{version}.tar.gz
 BuildArch:	noarch
+# Module Build
+BuildRequires:	perl
+BuildRequires:	perl(Carp.pm)
+BuildRequires:	perl(Config.pm)
 BuildRequires:	perl(Cwd.pm)
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+BuildRequires:	perl(ExtUtils/Manifest.pm)
+BuildRequires:	perl(Fcntl.pm)
+BuildRequires:	perl(File/Path.pm)
+BuildRequires:	perl(FileHandle.pm)
+BuildRequires:	perl(Parse/CPAN/Meta.pm)
+BuildRequires:	perl(YAML/Tiny.pm)
+BuildRequires:	tar > 1.15.1
+# Module Runtime
+BuildRequires:	perl(File/Find.pm)
 BuildRequires:	perl(File/Spec.pm)
-BuildRequires:	perl(File/Temp.pm)
+BuildRequires:	perl(FindBin.pm)
+BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test/Builder.pm)
+BuildRequires:	perl(vars.pm)
+BuildRequires:	perl(warnings.pm)
+# Test Suite
+BuildRequires:	perl(File/Temp.pm)
 BuildRequires:	perl(Test/More.pm)
+# Optional Tests
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 Source44: import.info
+# Runtime
 
 %description
 This module scans your project/distribution for any perl files (scripts,
@@ -45,6 +65,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_3
+- update to new release by fcimport
+
 * Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1
 - automated CPAN update
 
