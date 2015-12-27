@@ -1,23 +1,23 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(Test/CPAN/Changes.pm) perl(URI/QueryParam.pm) perl-devel perl-podlators perl(Test/Fatal.pm)
+BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Pod/Coverage/TrustPod.pm) perl(Pod/Wordlist.pm) perl(Test/CPAN/Changes.pm) perl(Test/EOL.pm) perl(Test/Mojibake.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(Test/Spelling.pm) perl(Test/Synopsis.pm) perl(Test/Version.pm) perl(blib.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:          perl-URI-FromHash 
 Version:       0.05
-Release:       alt1
+Release:       alt1_1
 Summary:       Build a URI from a set of named parameters 
 # see lib/URI/FromHash.pm
 License:       GPL+ or Artistic
 
 Url:           http://search.cpan.org/dist/URI-FromHash
-Source:        http://www.cpan.org/authors/id/D/DR/DROLSKY/URI-FromHash-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/URI-FromHash-%{version}.tar.gz
 
 BuildArch:     noarch
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Module/Build/Compat.pm)
 BuildRequires: perl(Params/Validate.pm)
+BuildRequires: perl(Test/Fatal.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(URI.pm)
 
@@ -42,24 +42,25 @@ TT2.
 %setup -q -n URI-FromHash-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
-
+make pure_install DESTDIR=%{buildroot}
 # %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
-%doc Changes README* LICENSE
-%{perl_vendor_privlib}/*
+%doc Changes
+%doc LICENSE
+%{perl_vendor_privlib}/URI*
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - automated CPAN update
 
