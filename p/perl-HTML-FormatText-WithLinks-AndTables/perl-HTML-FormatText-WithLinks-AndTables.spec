@@ -1,26 +1,28 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(base.pm) perl-devel perl-podlators
+BuildRequires: perl(English.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-FormatText-WithLinks-AndTables
 Version:        0.06
-Release:        alt1
+Release:        alt1_1
 Summary:        Converts HTML to Text with tables in tact
-License:        GPL+ or Artistic
+License:        Artistic 2.0
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/HTML-FormatText-WithLinks-AndTables/
 BuildArch:      noarch
 
-Source:        http://www.cpan.org/authors/id/D/DA/DALEEVANS/HTML-FormatText-WithLinks-AndTables-%{version}.tar.gz
-Patch0:         RT-74392.patch
-Patch1:         col_0_fix.patch
+Source0:        http://www.cpan.org/authors/id/D/DA/DALEEVANS/HTML-FormatText-WithLinks-AndTables-%{version}.tar.gz
 
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  perl
+BuildRequires:  perl(base.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(HTML/FormatText/WithLinks.pm)
 BuildRequires:  perl(HTML/TreeBuilder.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/More.pm)
-Requires:       perl(Test/More.pm)
+BuildRequires:  perl(warnings.pm)
 Source44: import.info
 
 %description
@@ -36,16 +38,14 @@ preserve multi-line text inside of a <TD> element provided it is broken
 using <BR/> tags.
 
 %prep
-%setup -q -n HTML-FormatText-WithLinks-AndTables-%version
-#patch0 -p 1
-#patch1 -p 1
+%setup -q -n HTML-FormatText-WithLinks-AndTables-%{version}
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
@@ -56,10 +56,14 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc Changes README*
+%doc LICENSE
+%doc Changes README.pod
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_1
+- update to new release by fcimport
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
