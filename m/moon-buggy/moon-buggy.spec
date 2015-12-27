@@ -1,10 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
 # Enable oldstyle to have a nearly nothing requiring package after rebuilding
-%global oldstyle 1
+%global oldstyle 0
 
 Summary:         Drive and jump with some kind of car across the moon
 Name:            moon-buggy
 Version:         1.0.51
-Release:         alt2_15
+Release:         alt2_16
 License:         GPL+
 Group:           Games/Other
 URL:             http://seehuhn.de/pages/%{name}
@@ -14,9 +17,9 @@ Source2:         %{name}.desktop
 Source3:         %{name}-sound.desktop
 Patch0:          moon-buggy-1.0.51-pause.patch
 Patch1:          moon-buggy-1.0.51-sound.patch
-BuildRequires:   ncurses-devel texinfo
+BuildRequires:   ncurses-devel, texinfo
 %if !%{oldstyle}
-BuildRequires:   esound-devel desktop-file-utils autoconf automake
+BuildRequires:   esound-devel, desktop-file-utils, autoconf, automake
 %endif
 Source44: import.info
 
@@ -87,6 +90,9 @@ mv -f TODO.utf8 TODO
 %verify(not md5 size mtime) %config(noreplace) %attr(664,root,games) %{_var}/games/%{name}/mbscore
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_16
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_15
 - update to new release by fcimport
 
