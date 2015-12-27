@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 Name:		mnemosyne
 Summary:	Flash-card learning tool
-Version:	2.3.4
+Version:	2.3.5
 Release:	alt1_1
 URL:		http://www.mnemosyne-proj.org/
 Source0:	http://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
@@ -59,7 +59,7 @@ popd
 %doc ChangeLog README
 # https://bugs.launchpad.net/mnemosyne-proj/+bug/1346903
 # http://bazaar.launchpad.net/~peter-bienstman/mnemosyne-proj/trunk/view/head:/mnemosyne/mnemosyne/LICENSE
-#%%doc docmnemosyne/libmnemosyne/LICENSE
+#%%license docmnemosyne/libmnemosyne/LICENSE
 %{_bindir}/%{name}
 %{python_sitelibdir_noarch}/mnemosyne
 %{python_sitelibdir_noarch}/Mnemosyne-%{version}-*.egg-info
@@ -68,6 +68,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_1
+- update to new release by fcimport
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.4-alt1_1
 - new version
 
