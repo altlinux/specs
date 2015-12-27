@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/xmlto boost-devel-headers gcc-c++ libpq-devel
+BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/xmlto boost-devel-headers gcc-c++ libpq5.7-devel libsocket
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -7,8 +7,8 @@ Group: System/Libraries
 Name:           libpqxx
 Summary:        C++ client API for PostgreSQL
 Epoch:          1
-Version:        3.2
-Release:        alt2_0.6.1
+Version:        4.0.1
+Release:        alt1_5
 
 License:        BSD
 URL:            http://pqxx.org/
@@ -18,6 +18,7 @@ Source1:        http://pqxx.org/download/software/libpqxx/libpqxx-%{version}.tar
 Patch3:         libpqxx-2.6.8-multilib.patch
 
 BuildRequires:  postgresql-devel
+BuildRequires:  python
 Source44: import.info
 
 %description
@@ -68,7 +69,7 @@ make %{?_smp_mflags} check ||:
 
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README VERSION
-%{_libdir}/libpqxx-3.2.so
+%{_libdir}/libpqxx-4.0.so
 
 %files devel
 %doc README-UPGRADE
@@ -82,6 +83,9 @@ make %{?_smp_mflags} check ||:
 
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1:4.0.1-alt1_5
+- update to new release by fcimport
+
 * Sat Jul 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.2-alt2_0.6.1
 - Rebuilt for gcc5 C++11 ABI (ALT#31135).
 
