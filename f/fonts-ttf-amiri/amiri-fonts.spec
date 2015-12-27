@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -18,12 +19,12 @@ O.U.O.O. O.U.O.U.U.O.U. U.U. O.O.U.O.O. U.U.O.O.U.O.O. U.U.O.O. O.U.O.O.O.O.U. O
 O.U.U.O.O. O.U. U.O.O.O.O. O.U.U.O.U. U.U.O. O.U.O.O.U. O.U.U.O.U. O.U.O.O.O.U.U.O. U.O.U.O.U. O.O.U.O. \
 O.U.O.U.O. O.O.U.U.O.O.O.O. O.U.O.U.U.O.U.O.O. U.U.U. U.U.O. O.O.O. O.U.O.O. O.O.U.U..
 
-Name:    fonts-ttf-amiri
-Version: 0.107
-Release: alt1_3
+Name: fonts-ttf-amiri
+Version: 0.108
+Release: alt1_1
 License: OFL
 
-Source0: http://downloads.sourceforge.net/project/amiri/%{fontname}-%{version}.zip
+Source0: https://github.com/khaledhosny/amiri-font/releases/download/%{version}/%{fontname}-%{version}.zip
 Source1: %{fontname}-quran-fontconfig.conf
 Source2: %{fontname}-fontconfig.conf
 
@@ -31,15 +32,6 @@ BuildArch: noarch
 BuildRequires: fontpackages-devel
 Requires: %{name}-common = %{version}-%{release}
 
-# Enable the disabled-lines when rebuilding of Amiri fonts possible.
-#BuildRequires: general-purpose-preprocessor
-#BuildRequires: python
-#BuildRequires: sortsmill
-#BuildRequires: latexmk
-#BuildRequires: fntsample
-#BuildRequires: sfnttool (or sfntly - need to edit Makefile)
-
-Group: System/Fonts/True type
 Summary: A classical Arabic font in Naskh style
 Summary(ar): الخطوط الأميرية ذات المظهر الأنيق و التّراث العريق
 URL: http://www.amirifont.org
@@ -86,9 +78,7 @@ This package contains Quran type of Amiri fonts.
 %setup -q -n %{fontname}-%{version}
 
 %build
-# Enable the disabled-lines when rebuilding of Amiri fonts possible.
-#make %{?_smp_mflags} clean
-make %{?_smp_mflags}
+#Nothing to build
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
@@ -147,6 +137,7 @@ fi
 %{_fontconfig_templatedir}/67-%{fontname}-quran.conf
 %config(noreplace) %{_fontconfig_confdir}/67-%{fontname}-quran.conf
 %{_fontbasedir}/*/%{_fontstem}/amiri-quran.ttf
+%{_fontbasedir}/*/%{_fontstem}/amiri-quran-colored.ttf
 
 %files
 %{_fontconfig_templatedir}/67-%{fontname}.conf
@@ -157,9 +148,13 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/amiri-boldslanted.ttf
 
 %files -n fonts-ttf-amiri-common
-%doc documentation/* OFL.txt OFL-FAQ.txt
+%doc OFL.txt
+%doc amiri-table.pdf NEWS README README-Arabic NEWS-Arabic documentation-arabic.pdf
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.108-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.107-alt1_3
 - update to new release by fcimport
 
