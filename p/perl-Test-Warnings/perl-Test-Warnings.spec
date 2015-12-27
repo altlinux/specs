@@ -1,18 +1,19 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Warnings
-Version:	0.022
-Release:	alt1
+Version:	0.023
+Release:	alt1_1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-Warnings
-Source:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
 # Build
+BuildRequires:	coreutils
+BuildRequires:	findutils
 BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
@@ -23,7 +24,6 @@ BuildRequires:	perl(parent.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(warnings.pm)
 # Test Suite
-BuildRequires:	perl(CPAN/Meta.pm)
 BuildRequires:	perl(CPAN/Meta/Check.pm)
 BuildRequires:	perl(CPAN/Meta/Prereqs.pm)
 BuildRequires:	perl(CPAN/Meta/Requirements.pm)
@@ -32,6 +32,9 @@ BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(if.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Tester.pm)
+# Optional Tests
+BuildRequires:	perl(CPAN/Meta.pm)
+BuildRequires:	perl(PadWalker.pm)
 # Runtime
 Requires:	perl(Carp.pm)
 Source44: import.info
@@ -74,11 +77,14 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 make test
 
 %files
-%doc LICEN*E
+%doc LICENCE
 %doc Changes CONTRIBUTING README examples/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.023-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 21 2015 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1
 - automated CPAN update
 
