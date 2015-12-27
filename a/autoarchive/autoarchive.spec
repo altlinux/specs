@@ -5,7 +5,7 @@ BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           autoarchive
 Version:        1.1.1
-Release:        alt1_4
+Release:        alt1_5
 Summary:        A simple backup tool that uses tar
 
 License:        GPLv3
@@ -51,6 +51,9 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{name}-%{version}/
 %{python3_sitelibdir_noarch}/%{name}*.egg-info
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_4
 - update to new release by fcimport
 
