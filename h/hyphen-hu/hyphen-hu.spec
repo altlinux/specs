@@ -2,7 +2,7 @@ Name: hyphen-hu
 Summary: Hungarian hyphenation rules
 %define upstreamid 20090612
 Version: 0.%{upstreamid}
-Release: alt1_12
+Release: alt1_13
 Source: http://download.github.com/nagybence-huhyphn-aa3fc85.tar.gz
 Group: Text tools
 URL: http://www.tipogral.hu/
@@ -26,13 +26,16 @@ make
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
-cp -p hyph_hu.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_hu_HR.dic
+cp -p hyph_hu.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_hu_HU.dic
 
 %files
 %doc gpl.txt README doc/huhyphn.pdf
 %{_datadir}/hyphen/*
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.20090612-alt1_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20090612-alt1_12
 - update to new release by fcimport
 
