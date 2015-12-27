@@ -1,12 +1,13 @@
 Group: Text tools
-%define debug_package %{nil}
-%define lang or
-%define langrelease 1
+%global debug_package %{nil}
+%global lang or
+%global langrelease 1
 
 Name:           aspell-or
 Version:        0.03
-Release:        alt2_14
+Release:        alt2_15
 Summary:        GNU Aspell Odia Dictionary Package
+
 License:        GPLv2+
 URL:            http://aspell.net/
 Source0:        ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
@@ -32,22 +33,23 @@ GNU Aspell Odia Dictionary Package
 %prep
 %setup -q -n aspell6-%{lang}-%{version}-%{langrelease}
 
-
 %build
 ./configure
 make %{?_smp_mflags}
-
 
 %install
 make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 %files
-%doc COPYING Copyright
+%doc Copyright
+%doc COPYING
 %{_libdir}/aspell/*
 %{_datadir}/aspell/*
 
-
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_14
 - update to new release by fcimport
 
